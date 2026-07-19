@@ -1,0 +1,325 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3eee1;
+  --paper-deep: #eae3cf;
+  --card: #fdfbf3;
+  --card-warm: #faf6e9;
+  --ink: #20293a;
+  --ink-soft: #4d5669;
+  --ink-faint: #8a91a1;
+  --line: rgba(32, 41, 58, 0.16);
+  --line-soft: rgba(32, 41, 58, 0.09);
+  --accent: #16665c;
+  --accent-deep: #0d4a42;
+  --accent-wash: rgba(22, 102, 92, 0.08);
+  --gold: #a97e22;
+  --gold-wash: rgba(169, 126, 34, 0.12);
+  --rust: #a8442a;
+  --rust-wash: rgba(168, 68, 42, 0.09);
+  --m-low: #b8472a;
+  --m-mid: #cf9227;
+  --m-high: #2c7a56;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-card: var(--card);
+  --color-card-warm: var(--card-warm);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-wash: var(--accent-wash);
+  --color-gold: var(--gold);
+  --color-gold-wash: var(--gold-wash);
+  --color-rust: var(--rust);
+  --color-rust-wash: var(--rust-wash);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-spline);
+  --font-mono: var(--font-spline-mono);
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-spline), "Avenir Next", "Segoe UI", sans-serif;
+  font-feature-settings: "ss01";
+  /* fine ruled-paper grid + warm vignette */
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(253, 251, 243, 0.9), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 85% 110%, rgba(22, 102, 92, 0.05), transparent 60%),
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 56px 56px, 56px 56px;
+  background-attachment: fixed;
+}
+
+/* grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: rgba(22, 102, 92, 0.22);
+}
+
+/* ---------- shared primitives ---------- */
+
+.rule-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-spline-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.rule-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-spline-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  background: var(--card);
+  white-space: nowrap;
+}
+
+.ledger-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 1px 2px rgba(32, 41, 58, 0.05),
+    0 12px 32px -18px rgba(32, 41, 58, 0.25);
+}
+
+/* passport-stamp provenance card */
+.passport {
+  position: relative;
+  background:
+    radial-gradient(ellipse 120% 90% at 20% 0%, rgba(169, 126, 34, 0.07), transparent 55%),
+    var(--card-warm);
+  border: 1.5px dashed rgba(169, 126, 34, 0.55);
+  border-radius: 0.625rem;
+  overflow: hidden;
+}
+.passport::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(169, 126, 34, 0.25);
+  border-radius: 0.4rem;
+  pointer-events: none;
+}
+
+.stamp-seal {
+  transform: rotate(-8deg);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  border-radius: 0.375rem;
+  font-family: var(--font-spline-mono);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  opacity: 0.85;
+  box-shadow: 0 0 0 1px rgba(22, 102, 92, 0.15) inset;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.14'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='60' height='60' filter='url(%23n)' fill='%2316665c'/%3E%3C/svg%3E");
+}
+
+/* ---------- motion ---------- */
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(28px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.96) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes stamp-in {
+  0% { opacity: 0; transform: rotate(-8deg) scale(1.6); }
+  60% { opacity: 1; transform: rotate(-8deg) scale(0.94); }
+  100% { opacity: 0.85; transform: rotate(-8deg) scale(1); }
+}
+@keyframes draw-edge {
+  from { stroke-dashoffset: var(--edge-len, 400); }
+  to { stroke-dashoffset: 0; }
+}
+/* Ask the Spine: AI-citation choreography on the graph */
+@keyframes cite-ring {
+  0% { box-shadow: 0 0 0 0 rgba(22, 102, 92, 0.55); opacity: 1; }
+  75% { box-shadow: 0 0 0 15px rgba(22, 102, 92, 0); opacity: 1; }
+  100% { box-shadow: 0 0 0 15px rgba(22, 102, 92, 0); opacity: 0; }
+}
+.anim-cite-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: 0.55rem;
+  pointer-events: none;
+  border: 1.5px solid rgba(22, 102, 92, 0.65);
+  animation: cite-ring 1.3s cubic-bezier(0.22, 1, 0.36, 1) 2 both;
+}
+@keyframes think-dot {
+  0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-3px); }
+}
+
+.anim-rise { animation: rise-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-fade { animation: fade-in 0.4s ease both; }
+.anim-panel { animation: slide-in-right 0.38s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-pop { animation: pop-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-stamp { animation: stamp-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both; }
+
+/* ---------- KaTeX integration ---------- */
+
+.katex {
+  font-size: 1.06em;
+}
+.tex-block .katex-display {
+  margin: 0.4em 0;
+}
+
+/* thin scrollbars for panels */
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+/* ---------- adaptive lesson modes (learn / review) ---------- */
+
+/* verdict-stamp color variants (base .stamp-seal is viridian) */
+.stamp-seal--gold {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(169, 126, 34, 0.18) inset;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.14'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='60' height='60' filter='url(%23n)' fill='%23a97e22'/%3E%3C/svg%3E");
+}
+.stamp-seal--rust {
+  border-color: var(--rust);
+  color: var(--rust);
+  box-shadow: 0 0 0 1px rgba(168, 68, 42, 0.18) inset;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.14'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='60' height='60' filter='url(%23n)' fill='%23a8442a'/%3E%3C/svg%3E");
+}
+
+/* comprehension-dial sweep (path is normalized with pathLength=100) */
+@keyframes dial-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+}
+.anim-dial {
+  animation: dial-draw 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+}
+
+/* ---------- visual primitives (components/viz) ---------- */
+/* All viz elements carry pathLength=100 when drawn, so one keyframe fits all. */
+
+@keyframes viz-draw {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes viz-pop {
+  0% { opacity: 0; transform: scale(0.4); }
+  70% { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes viz-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes viz-grow-y {
+  from { transform: scaleY(0.001); }
+  to { transform: scaleY(1); }
+}
+@keyframes viz-grow-x {
+  from { transform: scaleX(0.001); }
+  to { transform: scaleX(1); }
+}
+@keyframes viz-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+/* count-ticker numeral: visible only during its window */
+@keyframes viz-tick {
+  0% { opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ---------- lesson focus mode + whiteboard (Wave B2) ---------- */
+
+/* focus mode: the lesson surface owns the whole viewport — no global nav.
+   (body[data-focus] is set by LessonSession; header/footer are the direct
+   children of <body> in the root layout.) */
+body[data-focus="lesson"] > header,
+body[data-focus="lesson"] > footer {
+  display: none;
+}
+
+/* board figure: cap the SVG height so the mobile sheet stays ≤40dvh and the
+   desktop column never overflows; the viewBox keeps the aspect ratio. */
+.board-figure svg {
+  max-height: 26dvh;
+}
+@media (min-width: 768px) {
+  .board-figure svg {
+    max-height: 46dvh;
+  }
+}
+
+/* listening mic pulse */
+@keyframes mic-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(168, 68, 42, 0.45);
+  }
+  55% {
+    box-shadow: 0 0 0 9px rgba(168, 68, 42, 0);
+  }
+}
+.anim-mic {
+  animation: mic-pulse 1.4s ease-out infinite;
+}
