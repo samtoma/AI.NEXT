@@ -1,4 +1,5 @@
 import { makeElevenLabsProvider } from "./elevenlabs";
+import { makeOpenAiProvider } from "./openai";
 import { makeMockProvider } from "./mock";
 import type { TtsProvider } from "./types";
 
@@ -14,50 +15,64 @@ export interface TtsConfig {
   providerName: string;
 }
 
-// ElevenLabs' default "Rachel" — a natural English voice. Overridable.
-const DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM";
-// Low-latency, multilingual-capable (so Arabic works when we add it later).
-const DEFAULT_MODEL = "eleven_turbo_v2_5";
+// Per-provider defaults (all overridable via env).
+const OPENAI_DEFAULT_VOICE = "nova"; // warm, friendly English
+const OPENAI_DEFAULT_MODEL = "gpt-4o-mini-tts"; // steerable, natural
+const ELEVEN_DEFAULT_VOICE = "21m00Tcm4TlvDq8ikWAM"; // "Rachel"
+const ELEVEN_DEFAULT_MODEL = "eleven_turbo_v2_5";
 
 /**
  * Select the TTS provider from env.
  *
- *   AINEXT_TTS_PROVIDER = elevenlabs | webspeech
- *     default: elevenlabs if ELEVENLABS_API_KEY is set, else webspeech
+ *   AINEXT_TTS_PROVIDER = openai | elevenlabs | webspeech
+ *     default: openai if OPENAI_API_KEY set, else elevenlabs if
+ *     ELEVENLABS_API_KEY set, else webspeech.
  *
- * `webspeech` (or a missing key) yields provider:null → the route returns 501
+ * `webspeech` (or no usable key) yields provider:null → the route returns 501
  * { fallback: "webspeech" } and the client speaks locally. Never throws.
  *
- * AINEXT_TTS_MOCK=1 swaps in a deterministic in-process provider that returns a
- * tiny valid mp3 — used only to exercise the with-key path in tests without a
- * real key or network. Guard is off by default, so real behavior is unchanged.
+ * AINEXT_TTS_MOCK=1 swaps in a deterministic in-process provider (tiny valid
+ * mp3) to exercise the with-key path in tests without a real key or network.
  */
 export function getTtsConfig(): TtsConfig {
-  const voiceId = process.env.ELEVENLABS_VOICE_ID?.trim() || DEFAULT_VOICE_ID;
-  const model = process.env.ELEVENLABS_MODEL?.trim() || DEFAULT_MODEL;
-
-  const key = process.env.ELEVENLABS_API_KEY?.trim();
+  const openaiKey = process.env.OPENAI_API_KEY?.trim();
+  const elevenKey = process.env.ELEVENLABS_API_KEY?.trim();
   const requested = process.env.AINEXT_TTS_PROVIDER?.trim().toLowerCase();
-  const provider = requested || (key ? "elevenlabs" : "webspeech");
+  const provider =
+    requested || (openaiKey ? "openai" : elevenKey ? "elevenlabs" : "webspeech");
 
   if (process.env.AINEXT_TTS_MOCK === "1") {
     return {
       provider: makeMockProvider(),
-      voiceId,
-      model,
+      voiceId: "mock",
+      model: "mock",
       providerName: "mock",
     };
   }
 
-  if (provider === "elevenlabs" && key) {
+  if (provider === "openai" && openaiKey) {
     return {
-      provider: makeElevenLabsProvider(key),
-      voiceId,
-      model,
+      provider: makeOpenAiProvider(openaiKey),
+      voiceId: process.env.OPENAI_TTS_VOICE?.trim() || OPENAI_DEFAULT_VOICE,
+      model: process.env.OPENAI_TTS_MODEL?.trim() || OPENAI_DEFAULT_MODEL,
+      providerName: "openai",
+    };
+  }
+
+  if (provider === "elevenlabs" && elevenKey) {
+    return {
+      provider: makeElevenLabsProvider(elevenKey),
+      voiceId: process.env.ELEVENLABS_VOICE_ID?.trim() || ELEVEN_DEFAULT_VOICE,
+      model: process.env.ELEVENLABS_MODEL?.trim() || ELEVEN_DEFAULT_MODEL,
       providerName: "elevenlabs",
     };
   }
 
-  // webspeech, or elevenlabs requested without a key → fall back.
-  return { provider: null, voiceId, model, providerName: "webspeech" };
+  // webspeech, or a provider requested without its key → fall back.
+  return {
+    provider: null,
+    voiceId: "webspeech",
+    model: "webspeech",
+    providerName: "webspeech",
+  };
 }
