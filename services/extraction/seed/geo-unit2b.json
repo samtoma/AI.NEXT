@@ -1,0 +1,3903 @@
+{
+ "extraction_run": {
+  "extractor": "claude via claude-code (angles-arcs-B agent)",
+  "extractor_version": "poc-3",
+  "schema_version": "1"
+ },
+ "syllabus_version": "2025-2026",
+ "nodes": [
+  {
+   "id": "lo:geo2-4-1",
+   "kind": "learning_objective",
+   "label": "The concept of the cyclic quadrilateral",
+   "description": "Define the cyclic quadrilateral as a quadrilateral figure whose four vertices belong to one circle, and identify whether a given figure is cyclic.",
+   "syllabus_ref": "T2 Lesson 5-4",
+   "source_page": 85,
+   "order_in_parent": 41
+  },
+  {
+   "id": "lo:geo2-4-2",
+   "kind": "learning_objective",
+   "label": "Proving a quadrilateral is cyclic using equal angles on a base",
+   "description": "Prove a figure is a cyclic quadrilateral when two drawn angles on a base are equal in measure and in one direction of it, including the two-right-angles case where the base becomes a diameter.",
+   "syllabus_ref": "T2 Lesson 5-4",
+   "source_page": 86,
+   "order_in_parent": 42
+  },
+  {
+   "id": "lo:geo2-5-1",
+   "kind": "learning_objective",
+   "label": "Opposite angles of a cyclic quadrilateral are supplementary (Theorem 3)",
+   "description": "State and apply Theorem 3: in a cyclic quadrilateral each two opposite angles are supplementary; compute missing angles, including algebraic and diameter configurations.",
+   "syllabus_ref": "T2 Lesson 5-5",
+   "source_page": 88,
+   "order_in_parent": 51
+  },
+  {
+   "id": "lo:geo2-5-2",
+   "kind": "learning_objective",
+   "label": "Exterior angle of a cyclic quadrilateral equals the opposite interior angle",
+   "description": "Apply the corollary of Theorem 3: the exterior angle at a vertex of a cyclic quadrilateral equals the interior angle at the opposite vertex.",
+   "syllabus_ref": "T2 Lesson 5-5",
+   "source_page": 90,
+   "order_in_parent": 52
+  },
+  {
+   "id": "lo:geo2-5-3",
+   "kind": "learning_objective",
+   "label": "Proving a quadrilateral is cyclic (converse of Theorem 3)",
+   "description": "Prove a quadrilateral is cyclic using the converse of Theorem 3 (supplementary opposite angles) or its corollary (exterior angle equal to the opposite interior angle).",
+   "syllabus_ref": "T2 Lesson 5-5",
+   "source_page": 91,
+   "order_in_parent": 53
+  },
+  {
+   "id": "lo:geo2-6-1",
+   "kind": "learning_objective",
+   "label": "Tangent segments from an external point (Theorem 4) and its corollaries",
+   "description": "Prove and apply Theorem 4: the two tangent segments drawn to a circle from an external point are equal in length; use the axis-of-symmetry and angle-bisection corollaries.",
+   "syllabus_ref": "T2 Lesson 5-6",
+   "source_page": 93,
+   "order_in_parent": 61
+  },
+  {
+   "id": "lo:geo2-6-2",
+   "kind": "learning_objective",
+   "label": "The inscribed circle of a polygon and common tangents of two circles",
+   "description": "Use the inscribed circle of a polygon (touching all sides internally) in perimeter/area problems, and identify and compute with common internal and external tangents of two circles.",
+   "syllabus_ref": "T2 Lesson 5-6",
+   "source_page": 97,
+   "order_in_parent": 62
+  },
+  {
+   "id": "lo:geo2-7-1",
+   "kind": "learning_objective",
+   "label": "The angle of tangency and Theorem 5",
+   "description": "Define the angle of tangency (half the enclosed arc) and apply Theorem 5 and its corollary: it equals the inscribed angle, and half the central angle, subtended by the same arc.",
+   "syllabus_ref": "T2 Lesson 5-7",
+   "source_page": 100,
+   "order_in_parent": 71
+  },
+  {
+   "id": "lo:geo2-7-2",
+   "kind": "learning_objective",
+   "label": "Proving a ray is a tangent (converse of Theorem 5)",
+   "description": "Use the supplementary relation between the angle of tangency and the inscribed angle on its chord, and the converse of Theorem 5 to prove a ray is a tangent to a circle.",
+   "syllabus_ref": "T2 Lesson 5-7",
+   "source_page": 102,
+   "order_in_parent": 72
+  }
+ ],
+ "edges": [
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-4-1",
+   "type": "teaches"
+  },
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-4-2",
+   "type": "teaches"
+  },
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-5-1",
+   "type": "teaches"
+  },
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-5-2",
+   "type": "teaches"
+  },
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-5-3",
+   "type": "teaches"
+  },
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-6-1",
+   "type": "teaches"
+  },
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-6-2",
+   "type": "teaches"
+  },
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-7-1",
+   "type": "teaches"
+  },
+  {
+   "src": "module:geo-u2",
+   "dst": "lo:geo2-7-2",
+   "type": "teaches"
+  },
+  {
+   "src": "lo:geo2-4-1",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-4-2",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-5-1",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-5-2",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-5-3",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-6-1",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-6-2",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-7-1",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-7-2",
+   "dst": "topic:geometry",
+   "type": "about"
+  },
+  {
+   "src": "lo:geo2-3-1",
+   "dst": "lo:geo2-4-1",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-3-3",
+   "dst": "lo:geo2-4-2",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-4-1",
+   "dst": "lo:geo2-4-2",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-4-1",
+   "dst": "lo:geo2-5-1",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-2-2",
+   "dst": "lo:geo2-5-1",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-5-1",
+   "dst": "lo:geo2-5-2",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-5-1",
+   "dst": "lo:geo2-5-3",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-5-2",
+   "dst": "lo:geo2-5-3",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo1-2-2",
+   "dst": "lo:geo2-6-1",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-6-1",
+   "dst": "lo:geo2-6-2",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo1-2-2",
+   "dst": "lo:geo2-7-1",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-2-2",
+   "dst": "lo:geo2-7-1",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-7-1",
+   "dst": "lo:geo2-7-2",
+   "type": "prerequisite_of"
+  },
+  {
+   "src": "lo:geo2-5-3",
+   "dst": "lo:geo2-7-2",
+   "type": "prerequisite_of"
+  }
+ ],
+ "questions": [
+  {
+   "id": "q:geo2-4-1:001",
+   "lo": "lo:geo2-4-1",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "A cyclic quadrilateral is a quadrilateral figure whose four vertices …",
+   "answer": "A",
+   "solution": [
+    "By definition (p.85): the cyclic quadrilateral \"is a quadrilateral figure whose four vertices belong to one circle.\"",
+    "So all four vertices must lie on the same circle — three on a circle with the fourth elsewhere is not enough."
+   ],
+   "source_page": 85,
+   "source_note": "Original question; definition of the cyclic quadrilateral, p.85",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "belong to one circle"
+    },
+    {
+     "key": "B",
+     "text": "lie on two different circles"
+    },
+    {
+     "key": "C",
+     "text": "are equidistant from one of its diagonals"
+    },
+    {
+     "key": "D",
+     "text": "lie on one straight line"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-4-1:002",
+   "lo": "lo:geo2-4-1",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "In a figure, the vertices A, B and C of quadrilateral ABCD lie on circle M, while the vertex D lies inside the circle. Is ABCD a cyclic quadrilateral?",
+   "answer": "B",
+   "solution": [
+    "A cyclic quadrilateral is a quadrilateral figure whose four vertices belong to one circle (definition, p.85).",
+    "Here D lies inside circle M, not on it, so the four vertices do not belong to one circle.",
+    "$\\therefore$ ABCD is not a cyclic quadrilateral."
+   ],
+   "source_page": 85,
+   "source_note": "Original question; identifying non-cyclic figures, p.85",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "Yes, because three of its vertices lie on the circle"
+    },
+    {
+     "key": "B",
+     "text": "No, because all four vertices must belong to one circle"
+    },
+    {
+     "key": "C",
+     "text": "Yes, because every quadrilateral is cyclic"
+    },
+    {
+     "key": "D",
+     "text": "It cannot be decided"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-4-1:003",
+   "lo": "lo:geo2-4-1",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "PQRS is a square whose diagonals intersect at N. Which point is the center of the circle passing through the vertices P, Q, R and S?",
+   "answer": "A",
+   "solution": [
+    "The diagonals of a square are equal in length and bisect each other at N.",
+    "$\\therefore NP = NQ = NR = NS$, so the four vertices are at one distance from N.",
+    "$\\therefore$ the circle with center N passing through P also passes through Q, R and S — every square is a cyclic quadrilateral (its four vertices belong to one circle, p.85)."
+   ],
+   "source_page": 85,
+   "source_note": "Original question; the square as a cyclic quadrilateral, p.85",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "N, the intersection point of the diagonals"
+    },
+    {
+     "key": "B",
+     "text": "the midpoint of the side PQ"
+    },
+    {
+     "key": "C",
+     "text": "the vertex P"
+    },
+    {
+     "key": "D",
+     "text": "no such circle exists"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-4-1:004",
+   "lo": "lo:geo2-4-1",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "ABCD is a quadrilateral whose diagonals intersect at E, $m(\\angle ACB) = 54°$ and $m(\\angle CED) = 92°$. Find in degrees $m(\\angle DBC)$.",
+   "answer": "38",
+   "solution": [
+    "$\\angle CED$ is an exterior angle of triangle $EBC$ at E, because D, E, B lie on the diagonal $\\overline{DB}$.",
+    "$\\therefore m(\\angle CED) = m(\\angle EBC) + m(\\angle ECB)$ (exterior angle of a triangle).",
+    "$\\therefore 92° = m(\\angle DBC) + 54°$",
+    "$\\therefore m(\\angle DBC) = 92° - 54° = 38°$"
+   ],
+   "source_page": 85,
+   "source_note": "Original question; diagonal configuration as in Think and Discuss, p.85",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-4-1:005",
+   "lo": "lo:geo2-4-1",
+   "tier": "standard",
+   "type": "mcq",
+   "stem": "In the quadrilateral of the previous configuration, the diagonals of ABCD intersect at E with $m(\\angle DBC) = 38°$ and $m(\\angle DAC) = 38°$. Can a circle be drawn passing through the vertices of ABCD?",
+   "answer": "A",
+   "solution": [
+    "$\\angle DAC$ and $\\angle DBC$ are two drawn angles on the base $\\overline{DC}$ and in one direction of it, and $m(\\angle DAC) = m(\\angle DBC) = 38°$.",
+    "As in Lesson 5-4 (p.85): they are two equal drawn angles on the base and in one direction of it, so a circle can be drawn passing through the points D, C, B and A.",
+    "$\\therefore$ ABCD is a cyclic quadrilateral."
+   ],
+   "source_page": 85,
+   "source_note": "Original question; Think and Discuss with changed numbers, p.85",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "Yes — the two equal angles on base DC and in one direction of it put the four vertices on one circle"
+    },
+    {
+     "key": "B",
+     "text": "No — the diagonals do not bisect each other"
+    },
+    {
+     "key": "C",
+     "text": "Yes — every quadrilateral has such a circle"
+    },
+    {
+     "key": "D",
+     "text": "No — the two angles must be right angles"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-4-1:006",
+   "lo": "lo:geo2-4-1",
+   "tier": "advanced",
+   "type": "mcq",
+   "stem": "Which of the following quadrilaterals is certainly a cyclic quadrilateral?",
+   "answer": "A",
+   "solution": [
+    "The diagonals of a rectangle are equal in length and bisect each other, so their intersection point is at one distance from the four vertices.",
+    "$\\therefore$ the four vertices of a rectangle always belong to one circle — a rectangle is always a cyclic quadrilateral (definition, p.85).",
+    "A general parallelogram, rhombus or trapezium does not have its four vertices on one circle."
+   ],
+   "source_page": 85,
+   "source_note": "Original question; identifying which special quadrilaterals are cyclic, p.85",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "a rectangle"
+    },
+    {
+     "key": "B",
+     "text": "any parallelogram"
+    },
+    {
+     "key": "C",
+     "text": "any rhombus"
+    },
+    {
+     "key": "D",
+     "text": "any trapezium"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-4-2:001",
+   "lo": "lo:geo2-4-2",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "Complete: if two drawn angles on a base are equal in measure and in one direction of it, then …",
+   "answer": "C",
+   "solution": [
+    "This is the criterion used in Lesson 5-4 (p.85): two equal drawn angles on the base and in one direction of it mean a circle can be drawn passing through the two vertices of the angles and the two endpoints of the base.",
+    "$\\therefore$ the four points belong to one circle, and the figure they form is a cyclic quadrilateral."
+   ],
+   "source_page": 85,
+   "source_note": "Original question; cyclic criterion statement, p.85",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "the two angles are right angles"
+    },
+    {
+     "key": "B",
+     "text": "the base is a diameter of every circle through its endpoints"
+    },
+    {
+     "key": "C",
+     "text": "the four points belong to one circle"
+    },
+    {
+     "key": "D",
+     "text": "the two angles are supplementary"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-4-2:002",
+   "lo": "lo:geo2-4-2",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "XYZL is a quadrilateral in which $m(\\angle YXZ) = m(\\angle YLZ) = 40°$, where X and L lie on the same side of $\\overline{YZ}$. Why is XYZL a cyclic quadrilateral?",
+   "answer": "B",
+   "solution": [
+    "$m(\\angle YXZ) = m(\\angle YLZ) = 40°$, and they are two drawn angles on the base $\\overline{YZ}$ and in one direction of it.",
+    "As in Lesson 5-4 (p.85): a circle can be drawn passing through the points X, Y, Z and L.",
+    "i.e. the vertices of figure XYZL belong to one circle, so XYZL is a cyclic quadrilateral."
+   ],
+   "source_page": 85,
+   "source_note": "Original question; XYZL example with changed numbers, p.85",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "because its diagonals are equal"
+    },
+    {
+     "key": "B",
+     "text": "because two equal angles are drawn on the base YZ and in one direction of it"
+    },
+    {
+     "key": "C",
+     "text": "because the sum of its angles is 360°"
+    },
+    {
+     "key": "D",
+     "text": "because XY is parallel to LZ"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-4-2:003",
+   "lo": "lo:geo2-4-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ is a diameter of circle M, X is the midpoint of the chord $\\overline{AC}$, and ray $\\overrightarrow{XM}$ intersects the tangent to the circle at B in the point Y. Find in degrees $m(\\angle AXY) + m(\\angle ABY)$.",
+   "answer": "180",
+   "solution": [
+    "X is the midpoint of the chord $\\overline{AC}$ $\\therefore \\overline{MX} \\perp \\overline{AC}$ (the segment from the center to the midpoint of a chord), so $m(\\angle AXY) = 90°$.",
+    "$\\overline{AB}$ is a diameter and $\\overrightarrow{BY}$ is a tangent at B $\\therefore \\overrightarrow{BY} \\perp \\overline{AB}$, so $m(\\angle ABY) = 90°$.",
+    "$\\therefore m(\\angle AXY) + m(\\angle ABY) = 90° + 90° = 180°$",
+    "Note: since $m(\\angle AXY) = m(\\angle ABY) = 90°$ are two equal drawn angles on the base $\\overline{AY}$ and in one direction of it, AXBY is a cyclic quadrilateral (Example 1, p.86)."
+   ],
+   "source_page": 86,
+   "source_note": "Original question; Example 1 configuration, p.86",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-4-2:004",
+   "lo": "lo:geo2-4-2",
+   "tier": "advanced",
+   "type": "mcq",
+   "stem": "In triangle ABC, $\\overline{BD} \\perp \\overline{AC}$ at D and $\\overline{CE} \\perp \\overline{AB}$ at E. Which of the following figures is a cyclic quadrilateral?",
+   "answer": "A",
+   "solution": [
+    "$m(\\angle BEC) = m(\\angle BDC) = 90°$",
+    "They are two equal drawn angles on the base $\\overline{BC}$ and in one direction of it (D and E are on the same side of $\\overline{BC}$).",
+    "$\\therefore$ a circle passes through B, C, D and E, so BCDE is a cyclic quadrilateral (Lesson 5-4 criterion, p.86)."
+   ],
+   "source_page": 87,
+   "source_note": "Original question; altitude-feet configuration as in the drill, p.92",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "BCDE"
+    },
+    {
+     "key": "B",
+     "text": "ABDE"
+    },
+    {
+     "key": "C",
+     "text": "ABCD"
+    },
+    {
+     "key": "D",
+     "text": "no cyclic quadrilateral appears in the figure"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-4-2:005",
+   "lo": "lo:geo2-4-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "In circle M, X and Y are the midpoints of the chords $\\overline{AB}$ and $\\overline{AC}$ respectively, and $m(\\angle XMY) = 110°$. Find in degrees $m(\\angle XAY)$.",
+   "answer": "70",
+   "solution": [
+    "X is the midpoint of $\\overline{AB}$ $\\therefore \\overline{MX} \\perp \\overline{AB}$, so $m(\\angle AXM) = 90°$; similarly $m(\\angle AYM) = 90°$.",
+    "In the quadrilateral AXMY the sum of the angle measures is $360°$.",
+    "$\\therefore m(\\angle XAY) = 360° - 90° - 90° - 110° = 70°$"
+   ],
+   "source_page": 87,
+   "source_note": "Original question; two-midpoints drill configuration with changed numbers, p.87",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-4-2:006",
+   "lo": "lo:geo2-4-2",
+   "tier": "standard",
+   "type": "mcq",
+   "stem": "In circle M, X and Y are the midpoints of the chords $\\overline{AB}$ and $\\overline{AC}$. A circle passes through the points A, X, M and Y. Which segment is a diameter of that circle?",
+   "answer": "A",
+   "solution": [
+    "$m(\\angle AXM) = m(\\angle AYM) = 90°$ (segment from the center to the midpoint of a chord is perpendicular to it).",
+    "They are two equal drawn angles on the base $\\overline{AM}$ and in one direction of it, so AXMY is a cyclic quadrilateral (Lesson 5-4, p.86).",
+    "The inscribed angle $\\angle AXM = 90°$ must be subtended by a diameter, $\\therefore \\overline{AM}$ is a diameter of the circle passing through A, X, M and Y (as in the drill, p.87)."
+   ],
+   "source_page": 87,
+   "source_note": "Original question; drill third request, p.87",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "$\\overline{AM}$"
+    },
+    {
+     "key": "B",
+     "text": "$\\overline{XY}$"
+    },
+    {
+     "key": "C",
+     "text": "$\\overline{AX}$"
+    },
+    {
+     "key": "D",
+     "text": "$\\overline{MY}$"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-5-1:001",
+   "lo": "lo:geo2-5-1",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "Complete: in a cyclic quadrilateral, each two opposite angles are …",
+   "answer": "B",
+   "solution": [
+    "\"In a cyclic quadrilateral, each two opposite angles are supplementary.\" (Theorem 3, p.88)",
+    "Supplementary means the sum of their measures is $180°$: $m(\\angle A) + m(\\angle C) = 180°$ and $m(\\angle B) + m(\\angle D) = 180°$."
+   ],
+   "source_page": 88,
+   "source_note": "Original question; Theorem 3 statement, p.88",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "equal in measure"
+    },
+    {
+     "key": "B",
+     "text": "supplementary"
+    },
+    {
+     "key": "C",
+     "text": "complementary"
+    },
+    {
+     "key": "D",
+     "text": "each of measure 90°"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-5-1:002",
+   "lo": "lo:geo2-5-1",
+   "tier": "basic",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral in which $m(\\angle A) = 75°$. Find in degrees $m(\\angle C)$.",
+   "answer": "105",
+   "solution": [
+    "\"In a cyclic quadrilateral, each two opposite angles are supplementary.\" (Theorem 3, p.88)",
+    "$\\therefore m(\\angle A) + m(\\angle C) = 180°$",
+    "$\\therefore m(\\angle C) = 180° - 75° = 105°$"
+   ],
+   "source_page": 88,
+   "source_note": "Original question; direct application of Theorem 3, p.88",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-1:003",
+   "lo": "lo:geo2-5-1",
+   "tier": "basic",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral in which $m(\\angle B) = 98°$. Find in degrees $m(\\angle D)$.",
+   "answer": "82",
+   "solution": [
+    "\"In a cyclic quadrilateral, each two opposite angles are supplementary.\" (Theorem 3, p.88)",
+    "$\\therefore m(\\angle B) + m(\\angle D) = 180°$",
+    "$\\therefore m(\\angle D) = 180° - 98° = 82°$"
+   ],
+   "source_page": 88,
+   "source_note": "Original question; direct application of Theorem 3, p.88",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-1:004",
+   "lo": "lo:geo2-5-1",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral in which $m(\\angle A) = 4y°$, $m(\\angle C) = 108°$, $m(\\angle B) = 5x°$ and $m(\\angle D) = (2x + 40)°$. Find the value of $x$.",
+   "answer": "20",
+   "solution": [
+    "\"In a cyclic quadrilateral, each two opposite angles are supplementary.\" (Theorem 3, p.88)",
+    "$\\therefore m(\\angle B) + m(\\angle D) = 180°$, i.e. $5x + 2x + 40 = 180$",
+    "$\\therefore 7x = 140$, so $x = 20$",
+    "(Check with the other pair: $4y + 108 = 180 \\Rightarrow y = 18$, so the data is consistent.)"
+   ],
+   "source_page": 89,
+   "source_note": "Original question; symbol drill with changed numbers, p.89",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-1:005",
+   "lo": "lo:geo2-5-1",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral in which $m(\\angle A) : m(\\angle C) = 2 : 3$. Find in degrees $m(\\angle A)$.",
+   "answer": "72",
+   "solution": [
+    "\"In a cyclic quadrilateral, each two opposite angles are supplementary.\" (Theorem 3, p.88) $\\therefore m(\\angle A) + m(\\angle C) = 180°$",
+    "Let $m(\\angle A) = 2k$ and $m(\\angle C) = 3k$, then $2k + 3k = 180°$",
+    "$\\therefore 5k = 180°$, so $k = 36°$ and $m(\\angle A) = 2 \\times 36° = 72°$"
+   ],
+   "source_page": 89,
+   "source_note": "Original question; ratio variant of Theorem 3, p.88-89",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-1:006",
+   "lo": "lo:geo2-5-1",
+   "tier": "advanced",
+   "type": "numeric",
+   "stem": "ABCD is a quadrilateral inscribed in circle M where $M \\in \\overline{AB}$, $CB = CD$ and $m(\\angle BCD) = 132°$. Find in degrees $m(\\angle ADC)$.",
+   "answer": "114",
+   "solution": [
+    "ABCD is a cyclic quadrilateral $\\therefore m(\\angle A) + m(\\angle BCD) = 180°$ \"In a cyclic quadrilateral, each two opposite angles are supplementary.\" (Theorem 3, p.88)",
+    "$\\therefore m(\\angle A) = 180° - 132° = 48°$",
+    "Draw $\\overline{BD}$: in triangle BCD, $CB = CD$ $\\therefore m(\\angle CDB) = m(\\angle CBD) = \\dfrac{180° - 132°}{2} = 24°$",
+    "$M \\in \\overline{AB}$ $\\therefore \\overline{AB}$ is a diameter of circle M $\\therefore m(\\angle ADB) = 90°$ (inscribed angle in a semicircle).",
+    "$\\therefore m(\\angle ADC) = m(\\angle ADB) + m(\\angle BDC) = 90° + 24° = 114°$"
+   ],
+   "source_page": 89,
+   "source_note": "Original question; Example 1 with changed numbers, p.89",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-2:001",
+   "lo": "lo:geo2-5-2",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "Complete: the measure of the exterior angle at a vertex of a cyclic quadrilateral is equal to …",
+   "answer": "C",
+   "solution": [
+    "\"The measure of the exterior angle at a vertex of a cyclic quadrilateral is equal to the measure of the interior angle at the opposite vertex.\" (Corollary, p.90)",
+    "The exterior angle and the interior angle at the same vertex are supplementary, and the interior angle at the opposite vertex is also supplementary to it (Theorem 3) — the supplements of one angle are equal in measure."
+   ],
+   "source_page": 90,
+   "source_note": "Original question; corollary statement, p.90",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "the measure of the interior angle at the same vertex"
+    },
+    {
+     "key": "B",
+     "text": "half the measure of the opposite arc"
+    },
+    {
+     "key": "C",
+     "text": "the measure of the interior angle at the opposite vertex"
+    },
+    {
+     "key": "D",
+     "text": "90°"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-5-2:002",
+   "lo": "lo:geo2-5-2",
+   "tier": "basic",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral, $E \\in \\overrightarrow{AB}$, $E \\notin \\overline{AB}$, and $m(\\angle D) = 76°$. Find in degrees $m(\\angle CBE)$.",
+   "answer": "76",
+   "solution": [
+    "$\\angle CBE$ is an exterior angle at the vertex B of the cyclic quadrilateral ABCD, and $\\angle D$ is the interior angle at the opposite vertex.",
+    "\"The measure of the exterior angle at a vertex of a cyclic quadrilateral is equal to the measure of the interior angle at the opposite vertex.\" (Corollary, p.90)",
+    "$\\therefore m(\\angle CBE) = m(\\angle D) = 76°$"
+   ],
+   "source_page": 90,
+   "source_note": "Original question; direct corollary application, p.90",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-2:003",
+   "lo": "lo:geo2-5-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral, $F \\in \\overrightarrow{CB}$, $F \\notin \\overline{CB}$, and $m(\\angle ABF) = 95°$. Find in degrees $m(\\angle ADC)$.",
+   "answer": "95",
+   "solution": [
+    "$\\angle ABF$ is an exterior angle at the vertex B of the cyclic quadrilateral ABCD, and $\\angle ADC$ is the interior angle at the opposite vertex D.",
+    "\"The measure of the exterior angle at a vertex of a cyclic quadrilateral is equal to the measure of the interior angle at the opposite vertex.\" (Corollary, p.90)",
+    "$\\therefore m(\\angle ADC) = m(\\angle ABF) = 95°$"
+   ],
+   "source_page": 90,
+   "source_note": "Original question; exterior angle on the other ray, p.90",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-2:004",
+   "lo": "lo:geo2-5-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral, $E \\in \\overrightarrow{AB}$, $E \\notin \\overline{AB}$, $m(\\overset{\\frown}{AB}) = 100°$ and $m(\\angle CBE) = 80°$. Find in degrees $m(\\angle BDC)$.",
+   "answer": "30",
+   "solution": [
+    "$m(\\overset{\\frown}{AB}) = 100°$ and $\\angle ADB$ is an inscribed angle subtended by $\\overset{\\frown}{AB}$ $\\therefore m(\\angle ADB) = \\dfrac{1}{2} \\times 100° = 50°$",
+    "$\\angle CBE$ is an exterior angle at a vertex of the cyclic quadrilateral ABCD $\\therefore m(\\angle CBE) = m(\\angle CDA) = 80°$ \"The measure of the exterior angle at a vertex of a cyclic quadrilateral is equal to the measure of the interior angle at the opposite vertex.\" (Corollary, p.90)",
+    "$\\therefore m(\\angle BDC) = m(\\angle CDA) - m(\\angle ADB) = 80° - 50° = 30°$"
+   ],
+   "source_page": 90,
+   "source_note": "Original question; Example 2 with changed numbers, p.90",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-2:005",
+   "lo": "lo:geo2-5-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral, $E \\in \\overrightarrow{BC}$, $E \\notin \\overline{BC}$, $m(\\angle BAD) = 3x°$ and $m(\\angle DCE) = (2x + 20)°$. Find the value of $x$.",
+   "answer": "20",
+   "solution": [
+    "$\\angle DCE$ is an exterior angle at the vertex C of the cyclic quadrilateral ABCD, and $\\angle BAD$ is the interior angle at the opposite vertex A.",
+    "\"The measure of the exterior angle at a vertex of a cyclic quadrilateral is equal to the measure of the interior angle at the opposite vertex.\" (Corollary, p.90) $\\therefore 3x = 2x + 20$",
+    "$\\therefore x = 20$"
+   ],
+   "source_page": 90,
+   "source_note": "Original question; algebraic corollary drill, p.90",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-2:006",
+   "lo": "lo:geo2-5-2",
+   "tier": "advanced",
+   "type": "numeric",
+   "stem": "ABCD is a cyclic quadrilateral, $E \\in \\overrightarrow{AB}$, $E \\notin \\overline{AB}$, $m(\\angle CBE) = 100°$ and in triangle ACD, $m(\\angle CAD) = 35°$. Find in degrees $m(\\angle ACD)$.",
+   "answer": "45",
+   "solution": [
+    "$\\angle CBE$ is an exterior angle at the vertex B of the cyclic quadrilateral ABCD $\\therefore m(\\angle ADC) = m(\\angle CBE) = 100°$ \"The measure of the exterior angle at a vertex of a cyclic quadrilateral is equal to the measure of the interior angle at the opposite vertex.\" (Corollary, p.90)",
+    "In triangle ACD: $m(\\angle ACD) = 180° - m(\\angle ADC) - m(\\angle CAD)$",
+    "$\\therefore m(\\angle ACD) = 180° - 100° - 35° = 45°$"
+   ],
+   "source_page": 90,
+   "source_note": "Original question; corollary combined with the triangle angle sum, p.90",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-3:001",
+   "lo": "lo:geo2-5-3",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "Complete: if two opposite angles of a quadrilateral are supplementary, then the quadrilateral is …",
+   "answer": "A",
+   "solution": [
+    "\"If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic.\" (Converse of Theorem 3, p.90)",
+    "So checking that one pair of opposite angles adds up to $180°$ is enough to prove that a circle passes through the four vertices."
+   ],
+   "source_page": 90,
+   "source_note": "Original question; converse of Theorem 3 statement, p.90",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "cyclic"
+    },
+    {
+     "key": "B",
+     "text": "a parallelogram"
+    },
+    {
+     "key": "C",
+     "text": "a rectangle"
+    },
+    {
+     "key": "D",
+     "text": "impossible to draw"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-5-3:002",
+   "lo": "lo:geo2-5-3",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "ABCD is a quadrilateral in which $m(\\angle A) = 97°$ and $m(\\angle C) = 83°$. Is ABCD a cyclic quadrilateral?",
+   "answer": "A",
+   "solution": [
+    "$m(\\angle A) + m(\\angle C) = 97° + 83° = 180°$, so the two opposite angles A and C are supplementary.",
+    "\"If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic.\" (Converse of Theorem 3, p.90)",
+    "$\\therefore$ ABCD is a cyclic quadrilateral."
+   ],
+   "source_page": 91,
+   "source_note": "Original question; drill with changed numbers, p.91",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "Yes, because two opposite angles are supplementary"
+    },
+    {
+     "key": "B",
+     "text": "No, because the two angles are not equal"
+    },
+    {
+     "key": "C",
+     "text": "Yes, because the sum of all its angles is 360°"
+    },
+    {
+     "key": "D",
+     "text": "It cannot be decided from the given data"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-5-3:003",
+   "lo": "lo:geo2-5-3",
+   "tier": "standard",
+   "type": "mcq",
+   "stem": "ABCD is a quadrilateral, $E \\in \\overrightarrow{AB}$, $E \\notin \\overline{AB}$, $m(\\angle CBE) = 78°$ and $m(\\angle ADC) = 78°$. What can you conclude?",
+   "answer": "B",
+   "solution": [
+    "$\\angle CBE$ is an exterior angle at the vertex B of the quadrilateral ABCD, and $\\angle ADC$ is the interior angle at the opposite vertex D, and they are equal in measure.",
+    "\"If the measure of the exterior angle at a vertex of a quadrilateral figure is equal to the measure of the interior angle at the opposite vertex, then the figure is a cyclic quadrilateral.\" (Corollary, p.91)",
+    "$\\therefore$ ABCD is a cyclic quadrilateral."
+   ],
+   "source_page": 91,
+   "source_note": "Original question; exterior-angle converse drill, p.91",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "ABCD is a parallelogram"
+    },
+    {
+     "key": "B",
+     "text": "ABCD is a cyclic quadrilateral"
+    },
+    {
+     "key": "C",
+     "text": "$\\overline{BC} \\parallel \\overline{AD}$"
+    },
+    {
+     "key": "D",
+     "text": "nothing can be concluded"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-5-3:004",
+   "lo": "lo:geo2-5-3",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "In quadrilateral ABCD the diagonal $\\overline{AC}$ is drawn, $m(\\angle DAC) = 40°$, $m(\\angle CAB) = 35°$ and $m(\\angle BCD) = 105°$. Find in degrees $m(\\angle DAB) + m(\\angle BCD)$, then decide whether ABCD is cyclic.",
+   "answer": "180",
+   "solution": [
+    "$m(\\angle DAB) = m(\\angle DAC) + m(\\angle CAB) = 40° + 35° = 75°$",
+    "$\\therefore m(\\angle DAB) + m(\\angle BCD) = 75° + 105° = 180°$",
+    "\"If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic.\" (Converse of Theorem 3, p.90)",
+    "$\\therefore$ ABCD is a cyclic quadrilateral."
+   ],
+   "source_page": 91,
+   "source_note": "Original question; proving cyclic via supplementary opposite angles, p.91",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-5-3:005",
+   "lo": "lo:geo2-5-3",
+   "tier": "advanced",
+   "type": "mcq",
+   "stem": "ABCD is a trapezium in which $\\overline{AD} \\parallel \\overline{BC}$ and $m(\\angle B) = m(\\angle C) = 70°$ (an isosceles trapezium). Why is ABCD a cyclic quadrilateral?",
+   "answer": "C",
+   "solution": [
+    "$\\overline{AD} \\parallel \\overline{BC}$ and $\\overline{AB}$ is a transversal $\\therefore m(\\angle A) + m(\\angle B) = 180°$ (co-interior angles), so $m(\\angle A) = 180° - 70° = 110°$",
+    "$\\therefore m(\\angle A) + m(\\angle C) = 110° + 70° = 180°$: two opposite angles are supplementary.",
+    "\"If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic.\" (Converse of Theorem 3, p.90)",
+    "$\\therefore$ every isosceles trapezium is a cyclic quadrilateral."
+   ],
+   "source_page": 91,
+   "source_note": "Original question; isosceles trapezium drill configuration, p.91",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "because its diagonals bisect each other"
+    },
+    {
+     "key": "B",
+     "text": "because it has a pair of parallel sides"
+    },
+    {
+     "key": "C",
+     "text": "because two opposite angles turn out to be supplementary"
+    },
+    {
+     "key": "D",
+     "text": "because all its angles are equal"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-5-3:006",
+   "lo": "lo:geo2-5-3",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "ABCD is a quadrilateral in which $m(\\angle A) = 3x°$ and $m(\\angle C) = (x + 60)°$. Find the value of $x$ which makes ABCD a cyclic quadrilateral.",
+   "answer": "30",
+   "solution": [
+    "\"If two opposite angles of a quadrilateral are supplementary, then the quadrilateral is cyclic.\" (Converse of Theorem 3, p.90) — so ABCD is cyclic when $m(\\angle A) + m(\\angle C) = 180°$.",
+    "$3x + x + 60 = 180$",
+    "$\\therefore 4x = 120$, so $x = 30$",
+    "(Then $m(\\angle A) = 90°$ and $m(\\angle C) = 90°$, which are indeed supplementary.)"
+   ],
+   "source_page": 91,
+   "source_note": "Original question; algebraic converse application, p.91",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-1:001",
+   "lo": "lo:geo2-6-1",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "Complete: the two tangent segments drawn to a circle from a point outside it are …",
+   "answer": "B",
+   "solution": [
+    "\"The two tangent-segments drawn to a circle from a point outside it are equal in length.\" (Theorem 4, p.93)",
+    "The proof (p.93-94): the two triangles ABM and ACM have $m(\\angle B) = m(\\angle C) = 90°$, $MB = MC$ (lengths of radii) and $\\overline{AM}$ a common side, so $\\triangle ABM \\equiv \\triangle ACM$ and $AB = AC$."
+   ],
+   "source_page": 93,
+   "source_note": "Original question; Theorem 4 statement, p.93",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "perpendicular to each other"
+    },
+    {
+     "key": "B",
+     "text": "equal in length"
+    },
+    {
+     "key": "C",
+     "text": "parallel"
+    },
+    {
+     "key": "D",
+     "text": "equal to the radius length"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-6-1:002",
+   "lo": "lo:geo2-6-1",
+   "tier": "basic",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to circle M at B and C, and $AB = 7$ cm. Find in cm the length of $\\overline{AC}$.",
+   "answer": "7",
+   "solution": [
+    "\"The two tangent-segments drawn to a circle from a point outside it are equal in length.\" (Theorem 4, p.93)",
+    "$\\therefore AC = AB = 7$ cm"
+   ],
+   "source_page": 93,
+   "source_note": "Original question; direct application of Theorem 4, p.93",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-1:003",
+   "lo": "lo:geo2-6-1",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to circle M at B and C, and $m(\\angle BAC) = 48°$. Find in degrees $m(\\angle BMC)$.",
+   "answer": "132",
+   "solution": [
+    "$\\overline{AB}$ is a tangent segment $\\therefore \\overline{MB} \\perp \\overline{AB}$, so $m(\\angle ABM) = 90°$; similarly $m(\\angle ACM) = 90°$.",
+    "In the quadrilateral ABMC the sum of the angle measures is $360°$.",
+    "$\\therefore m(\\angle BMC) = 360° - 90° - 90° - 48° = 132°$"
+   ],
+   "source_page": 95,
+   "source_note": "Original question; tangents drill with changed numbers, p.95",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-1:004",
+   "lo": "lo:geo2-6-1",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to circle M at B and C, and $m(\\angle A) = 42°$. Find in degrees $m(\\angle ABC)$.",
+   "answer": "69",
+   "solution": [
+    "\"The two tangent-segments drawn to a circle from a point outside it are equal in length.\" (Theorem 4, p.93) $\\therefore AB = AC$",
+    "$\\therefore$ triangle ABC is isosceles, so $m(\\angle ABC) = m(\\angle ACB)$",
+    "$\\therefore m(\\angle ABC) = \\dfrac{180° - 42°}{2} = 69°$"
+   ],
+   "source_page": 95,
+   "source_note": "Original question; isosceles triangle of two tangents, p.95",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-1:005",
+   "lo": "lo:geo2-6-1",
+   "tier": "basic",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to circle M at B and C, and $\\overrightarrow{AM}$ intersects $\\overline{BC}$ at D. If $BC = 9.6$ cm, find in cm the length of $\\overline{BD}$.",
+   "answer": "4.8",
+   "solution": [
+    "\"The straight line passing through the center of the circle and the intersection point of the two tangents is an axis of symmetry to the chord of tangency of those two tangents.\" (Corollary 1, p.94)",
+    "$\\therefore \\overrightarrow{AM}$ is the axis of symmetry of the chord of tangency $\\overline{BC}$, so $\\overrightarrow{AM} \\perp \\overline{BC}$ and $BD = DC$.",
+    "$\\therefore BD = \\dfrac{9.6}{2} = 4.8$ cm"
+   ],
+   "source_page": 94,
+   "source_note": "Original question; Corollary 1 application, p.94",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-1:006",
+   "lo": "lo:geo2-6-1",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ and $\\overline{AC}$ are two tangent segments to circle M at B and C, and $m(\\angle BMC) = 140°$. Find in degrees $m(\\angle AMB)$.",
+   "answer": "70",
+   "solution": [
+    "\"The straight line passing through the center of the circle and the intersection point of its two tangents bisects the angle between these two tangents. It also bisects the angle between the two radii passing through the two points of tangency.\" (Corollary 2, p.94)",
+    "$\\therefore \\overrightarrow{MA}$ bisects $\\angle BMC$, so $m(\\angle AMB) = m(\\angle AMC)$",
+    "$\\therefore m(\\angle AMB) = \\dfrac{140°}{2} = 70°$"
+   ],
+   "source_page": 94,
+   "source_note": "Original question; Corollary 2 application, p.94",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-1:007",
+   "lo": "lo:geo2-6-1",
+   "tier": "advanced",
+   "type": "numeric",
+   "stem": "$\\overrightarrow{XA}$ and $\\overrightarrow{XB}$ are two tangents to a circle at A and B, $m(\\angle AXB) = 64°$, and ABCD is a cyclic quadrilateral in that circle with $m(\\angle DCB) = 122°$. Find in degrees $m(\\angle XAB)$, and hence show that $\\overline{AB}$ bisects $\\angle DAX$.",
+   "answer": "58",
+   "solution": [
+    "$\\overrightarrow{XA}$ and $\\overrightarrow{XB}$ are two tangent segments \"The two tangent-segments drawn to a circle from a point outside it are equal in length.\" (Theorem 4, p.93) $\\therefore XA = XB$",
+    "In triangle XAB: $m(\\angle XAB) = m(\\angle XBA) = \\dfrac{180° - 64°}{2} = 58°$",
+    "ABCD is a cyclic quadrilateral $\\therefore m(\\angle DAB) = 180° - m(\\angle DCB) = 180° - 122° = 58°$ \"In a cyclic quadrilateral, each two opposite angles are supplementary.\" (Theorem 3, p.88)",
+    "$\\therefore m(\\angle XAB) = m(\\angle DAB) = 58°$, i.e. $\\overline{AB}$ bisects $\\angle DAX$."
+   ],
+   "source_page": 95,
+   "source_note": "Original question; Example 1 with changed numbers, p.95",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-2:001",
+   "lo": "lo:geo2-6-2",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "Complete: the inscribed circle of a polygon is the circle which …",
+   "answer": "A",
+   "solution": [
+    "\"The inscribed circle of a polygon is the circle which touches all of its sides internally.\" (Definition, p.97)",
+    "i.e. the polygon is drawn outside the circle and each side touches the circle at exactly one point."
+   ],
+   "source_page": 97,
+   "source_note": "Original question; inscribed circle definition, p.97",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "touches all of its sides internally"
+    },
+    {
+     "key": "B",
+     "text": "passes through all of its vertices"
+    },
+    {
+     "key": "C",
+     "text": "touches two of its sides only"
+    },
+    {
+     "key": "D",
+     "text": "has the polygon inside it"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-6-2:002",
+   "lo": "lo:geo2-6-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "M is an inscribed circle of the quadrilateral ABCD with radius length $4$ cm, $AB = 8$ cm and $CD = 13$ cm. Find in cm the perimeter of ABCD.",
+   "answer": "42",
+   "solution": [
+    "The circle touches the four sides, so the tangent segments drawn from each vertex are equal in length \"The two tangent-segments drawn to a circle from a point outside it are equal in length.\" (Theorem 4, p.93)",
+    "Adding the tangent segments as in Example 3 (p.98): $AB + CD = AD + BC = \\dfrac{1}{2}$ the perimeter of ABCD.",
+    "$AB + CD = 8 + 13 = 21$ cm",
+    "$\\therefore$ perimeter of ABCD $= 2 \\times 21 = 42$ cm"
+   ],
+   "source_page": 97,
+   "source_note": "Original question; Example 3 with changed numbers, p.97-98",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-2:003",
+   "lo": "lo:geo2-6-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "M is an inscribed circle of the quadrilateral ABCD with radius length $6$ cm, $AB = 8$ cm and $CD = 15$ cm. Find in cm² the area of ABCD.",
+   "answer": "138",
+   "solution": [
+    "As in Example 3 (p.98): $AB + CD = \\dfrac{1}{2}$ the perimeter, so perimeter $= 2(8 + 15) = 46$ cm.",
+    "Area of ABCD $= \\dfrac{1}{2} AB \\times r + \\dfrac{1}{2} BC \\times r + \\dfrac{1}{2} CD \\times r + \\dfrac{1}{2} AD \\times r = \\dfrac{1}{2}$ perimeter $\\times r$",
+    "$\\therefore$ Area $= \\dfrac{1}{2} \\times 46 \\times 6 = 138$ cm²"
+   ],
+   "source_page": 98,
+   "source_note": "Original question; Example 3 area formula with changed numbers, p.98",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-2:004",
+   "lo": "lo:geo2-6-2",
+   "tier": "advanced",
+   "type": "numeric",
+   "stem": "The inscribed circle of triangle ABC touches its three sides, where $AB = 7$ cm, $BC = 8$ cm and $CA = 9$ cm. Find in cm the length of the tangent segment drawn from the vertex A.",
+   "answer": "4",
+   "solution": [
+    "Let the tangent lengths from A, B, C be $p$, $q$, $r$. The two tangent segments from each vertex are equal \"The two tangent-segments drawn to a circle from a point outside it are equal in length.\" (Theorem 4, p.93)",
+    "$\\therefore p + q = AB = 7$, $q + r = BC = 8$, $r + p = CA = 9$",
+    "Adding: $2(p + q + r) = 24$, so $p + q + r = 12$",
+    "$\\therefore p = 12 - (q + r) = 12 - 8 = 4$ cm"
+   ],
+   "source_page": 98,
+   "source_note": "Original question; triangle tangent-segments drill with changed numbers, p.98",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-2:005",
+   "lo": "lo:geo2-6-2",
+   "tier": "advanced",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ is a common external tangent to the two circles M and N at A and B respectively, with radii lengths $10$ cm and $3$ cm, and $MN = 25$ cm. Find in cm the length of $\\overline{AB}$.",
+   "answer": "24",
+   "solution": [
+    "$\\overline{MA} \\perp \\overline{AB}$ and $\\overline{NB} \\perp \\overline{AB}$ (each radius is perpendicular to the tangent at the point of tangency).",
+    "Draw from N a segment parallel to $\\overline{AB}$ meeting $\\overline{MA}$ at F: then ABNF is a rectangle, $NF = AB$ and $MF = 10 - 3 = 7$ cm.",
+    "In the right triangle MFN: $NF = \\sqrt{MN^2 - MF^2} = \\sqrt{25^2 - 7^2} = \\sqrt{625 - 49} = \\sqrt{576} = 24$",
+    "$\\therefore AB = 24$ cm"
+   ],
+   "source_page": 99,
+   "source_note": "Original question; common external tangent drill with changed numbers, p.99",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-6-2:006",
+   "lo": "lo:geo2-6-2",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "$\\overleftrightarrow{AB}$ is called a common internal tangent to the two circles M and N when …",
+   "answer": "C",
+   "solution": [
+    "As on p.98: $\\overleftrightarrow{AB}$ is a common internal tangent to the two circles M and N because the two circles are located at two different sides of $\\overleftrightarrow{AB}$.",
+    "If the two circles are located on the same side of the tangent line, it is a common external tangent."
+   ],
+   "source_page": 98,
+   "source_note": "Original question; common tangents definitions, p.98",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "it passes through the two centers"
+    },
+    {
+     "key": "B",
+     "text": "the two circles lie on the same side of it"
+    },
+    {
+     "key": "C",
+     "text": "the two circles lie on two different sides of it"
+    },
+    {
+     "key": "D",
+     "text": "it touches one circle only"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-6-2:007",
+   "lo": "lo:geo2-6-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ is a tangent segment to circle M at B, the radius length is $6$ cm and $AB = 8$ cm. If $\\overline{AM}$ intersects the circle at D where D lies between A and M, find in cm the length of $\\overline{AD}$.",
+   "answer": "4",
+   "solution": [
+    "$\\overline{AB}$ is a tangent at B $\\therefore \\overline{MB} \\perp \\overline{AB}$, so triangle ABM is right-angled at B.",
+    "$AM = \\sqrt{MB^2 + AB^2} = \\sqrt{6^2 + 8^2} = \\sqrt{100} = 10$ cm",
+    "$\\therefore AD = AM - MD = 10 - 6 = 4$ cm"
+   ],
+   "source_page": 98,
+   "source_note": "Original question; tangent-length drill with changed numbers, p.98",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-1:001",
+   "lo": "lo:geo2-7-1",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "The angle of tangency is the angle which is composed of the union of two rays, where …",
+   "answer": "B",
+   "solution": [
+    "\"The angle which is composed of the union of two rays, one is a tangent to the circle and the other contains a chord of the circle passing through the point of tangency.\" (Definition of the angle of tangency, p.100)",
+    "Its measure equals half the measure of the arc between its two sides: $m(\\angle ABC) = \\dfrac{1}{2} m(\\overset{\\frown}{AB})$."
+   ],
+   "source_page": 100,
+   "source_note": "Original question; angle of tangency definition, p.100",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "both rays are tangents to the circle"
+    },
+    {
+     "key": "B",
+     "text": "one is a tangent to the circle and the other contains a chord passing through the point of tangency"
+    },
+    {
+     "key": "C",
+     "text": "both rays contain chords of the circle"
+    },
+    {
+     "key": "D",
+     "text": "one passes through the center and the other is a tangent"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-7-1:002",
+   "lo": "lo:geo2-7-1",
+   "tier": "basic",
+   "type": "numeric",
+   "stem": "$\\overrightarrow{BC}$ is a tangent to a circle at B, $\\overline{AB}$ is a chord in it, and the measure of the arc AB lying between the sides of $\\angle ABC$ is $130°$. Find in degrees $m(\\angle ABC)$.",
+   "answer": "65",
+   "solution": [
+    "$\\angle ABC$ is an angle of tangency \"The angle which is composed of the union of two rays, one is a tangent to the circle and the other contains a chord of the circle passing through the point of tangency.\" (Definition of the angle of tangency, p.100)",
+    "The measure of the angle of tangency is half the measure of the arc between its two sides (p.100): $m(\\angle ABC) = \\dfrac{1}{2} m(\\overset{\\frown}{AB})$",
+    "$\\therefore m(\\angle ABC) = \\dfrac{1}{2} \\times 130° = 65°$"
+   ],
+   "source_page": 100,
+   "source_note": "Original question; half-arc rule with changed numbers, p.100",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-1:003",
+   "lo": "lo:geo2-7-1",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "$\\overrightarrow{BC}$ is a tangent to a circle at B and $\\overline{AB}$ is a chord in it. If the measure of the arc AB lying outside $\\angle ABC$ is $210°$, find in degrees $m(\\angle ABC)$.",
+   "answer": "75",
+   "solution": [
+    "The whole circle measures $360°$, so the arc AB between the sides of $\\angle ABC$ measures $360° - 210° = 150°$.",
+    "The measure of the angle of tangency is half the measure of the arc between its two sides (p.100).",
+    "$\\therefore m(\\angle ABC) = \\dfrac{1}{2} \\times 150° = 75°$"
+   ],
+   "source_page": 101,
+   "source_note": "Original question; drill 1 style with changed numbers, p.101",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-1:004",
+   "lo": "lo:geo2-7-1",
+   "tier": "basic",
+   "type": "numeric",
+   "stem": "$\\overline{AB}$ is a diameter of circle M and $\\overrightarrow{BC}$ is a tangent to the circle at B. Find in degrees $m(\\angle ABC)$.",
+   "answer": "90",
+   "solution": [
+    "$\\overline{AB}$ is a diameter, so the arc AB between the sides of $\\angle ABC$ is a semicircle of measure $180°$.",
+    "$m(\\angle ABC) = \\dfrac{1}{2} \\times 180° = 90°$",
+    "(This agrees with: the tangent at B is perpendicular to the diameter $\\overline{AB}$.)"
+   ],
+   "source_page": 101,
+   "source_note": "Original question; drill 2 configuration, p.101",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-1:005",
+   "lo": "lo:geo2-7-1",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "$\\overrightarrow{BC}$ is a tangent to a circle at B, $\\overline{AB}$ is a chord, and $m(\\angle ABC) = 54°$. If D is a point on the arc AB lying outside $\\angle ABC$, find in degrees $m(\\angle ADB)$.",
+   "answer": "54",
+   "solution": [
+    "$\\angle ABC$ is an angle of tangency and $\\angle ADB$ is an inscribed angle subtended by the same arc AB.",
+    "\"The measure of the angle of tangency is equal to the measure of the inscribed angle subtended by the same arc.\" (Theorem 5, p.101)",
+    "$\\therefore m(\\angle ADB) = m(\\angle ABC) = 54°$"
+   ],
+   "source_page": 101,
+   "source_note": "Original question; Theorem 5 with changed numbers, p.101",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-1:006",
+   "lo": "lo:geo2-7-1",
+   "tier": "advanced",
+   "type": "numeric",
+   "stem": "$\\overrightarrow{BC}$ is a tangent to circle M at B, $\\overline{AB}$ is a chord of tangency, and $m(\\angle ABC) = 62°$. Find in degrees $m(\\angle MAB)$.",
+   "answer": "28",
+   "solution": [
+    "\"The measure of the angle of tangency is half the measure of the central angle subtended by the same arc.\" (Corollary, p.101) $\\therefore m(\\angle ABC) = \\dfrac{1}{2} m(\\angle AMB)$",
+    "$\\therefore m(\\angle AMB) = 2 \\times 62° = 124°$",
+    "In triangle AMB: $MA = MB$ (lengths of radii), so it is isosceles.",
+    "$\\therefore m(\\angle MAB) = m(\\angle MBA) = \\dfrac{180° - 124°}{2} = 28°$"
+   ],
+   "source_page": 101,
+   "source_note": "Original question; corollary combined with the isosceles radii triangle, p.101",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-2:001",
+   "lo": "lo:geo2-7-2",
+   "tier": "basic",
+   "type": "mcq",
+   "stem": "A ray is drawn from one end of a chord of a circle so that the angle between this ray and the chord is equal in measure to the inscribed angle subtended by the chord in the alternate side. Then this ray is …",
+   "answer": "A",
+   "solution": [
+    "\"If a ray is drawn from one end of a chord of a circle so that the angle between this ray and the chord is equal in measure to the inscribed angle subtended by the chord in the alternate side, then this ray is a tangent to this circle.\" (Converse of Theorem 5, p.103)",
+    "This is the tool used to prove that a given ray or line touches a circle without knowing its center."
+   ],
+   "source_page": 103,
+   "source_note": "Original question; converse of Theorem 5 statement, p.103",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "a tangent to the circle"
+    },
+    {
+     "key": "B",
+     "text": "a diameter of the circle"
+    },
+    {
+     "key": "C",
+     "text": "an axis of symmetry of the chord"
+    },
+    {
+     "key": "D",
+     "text": "parallel to the chord"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-7-2:002",
+   "lo": "lo:geo2-7-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "$\\overrightarrow{BC}$ is a tangent to a circle at B, $\\overline{AB}$ is a chord, and $m(\\angle ABC) = 68°$. If E is a point on the arc AB lying between the sides of $\\angle ABC$, find in degrees $m(\\angle AEB)$.",
+   "answer": "112",
+   "solution": [
+    "\"The angle of tangency is supplementary to the drawn inscribed angle on the chord of the angle of tangency and in one side of it.\" (Important notice, p.102)",
+    "$\\angle AEB$ is the inscribed angle drawn on the chord $\\overline{AB}$ and in one side of the angle of tangency $\\angle ABC$.",
+    "$\\therefore m(\\angle AEB) = 180° - m(\\angle ABC) = 180° - 68° = 112°$"
+   ],
+   "source_page": 102,
+   "source_note": "Original question; important notice with changed numbers, p.102",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-2:003",
+   "lo": "lo:geo2-7-2",
+   "tier": "standard",
+   "type": "mcq",
+   "stem": "ABC is a triangle inscribed in a circle. A ray $\\overrightarrow{AD}$ is drawn where D and C are on opposite sides of $\\overleftrightarrow{AB}$, with $m(\\angle DAB) = 62°$ and $m(\\angle ACB) = 62°$. What can you conclude?",
+   "answer": "B",
+   "solution": [
+    "$\\angle DAB$ is the angle between the ray $\\overrightarrow{AD}$ and the chord $\\overline{AB}$, and $\\angle ACB$ is the inscribed angle subtended by $\\overline{AB}$ in the alternate side, and they are equal in measure ($62°$).",
+    "\"If a ray is drawn from one end of a chord of a circle so that the angle between this ray and the chord is equal in measure to the inscribed angle subtended by the chord in the alternate side, then this ray is a tangent to this circle.\" (Converse of Theorem 5, p.103)",
+    "$\\therefore \\overrightarrow{AD}$ is a tangent to the circle at A."
+   ],
+   "source_page": 103,
+   "source_note": "Original question; converse drill with changed numbers, p.103",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "$\\overrightarrow{AD}$ passes through the center of the circle"
+    },
+    {
+     "key": "B",
+     "text": "$\\overrightarrow{AD}$ is a tangent to the circle at A"
+    },
+    {
+     "key": "C",
+     "text": "$\\overrightarrow{AD} \\parallel \\overline{BC}$"
+    },
+    {
+     "key": "D",
+     "text": "D lies on the circle"
+    }
+   ]
+  },
+  {
+   "id": "q:geo2-7-2:004",
+   "lo": "lo:geo2-7-2",
+   "tier": "standard",
+   "type": "numeric",
+   "stem": "In triangle ABC, $m(\\angle BAC) = 50°$ and $m(\\angle ABC) = 60°$. A ray $\\overrightarrow{AD}$ is drawn on the opposite side of $\\overleftrightarrow{AB}$ from C. Find in degrees the measure of $\\angle DAB$ which makes $\\overrightarrow{AD}$ a tangent to the circle passing through the vertices of the triangle.",
+   "answer": "70",
+   "solution": [
+    "In triangle ABC: $m(\\angle ACB) = 180° - 50° - 60° = 70°$",
+    "\"If a ray is drawn from one end of a chord of a circle so that the angle between this ray and the chord is equal in measure to the inscribed angle subtended by the chord in the alternate side, then this ray is a tangent to this circle.\" (Converse of Theorem 5, p.103)",
+    "$\\angle ACB$ is the inscribed angle subtended by the chord $\\overline{AB}$ in the alternate side of $\\overrightarrow{AD}$.",
+    "$\\therefore \\overrightarrow{AD}$ is a tangent when $m(\\angle DAB) = m(\\angle ACB) = 70°$"
+   ],
+   "source_page": 103,
+   "source_note": "Original question; converse drill with changed numbers, p.103",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-2:005",
+   "lo": "lo:geo2-7-2",
+   "tier": "advanced",
+   "type": "numeric",
+   "stem": "ABC is a triangle inscribed in a circle, $\\overrightarrow{AD}$ is a tangent to the circle at A, $X \\in \\overline{AB}$ and $Y \\in \\overline{AC}$ where $\\overline{XY} \\parallel \\overline{BC}$, and $m(\\angle ACB) = 48°$. Find in degrees $m(\\angle AYX)$, and hence deduce that $\\overrightarrow{AD}$ is a tangent to the circle passing through A, X and Y.",
+   "answer": "48",
+   "solution": [
+    "$\\overline{XY} \\parallel \\overline{BC}$ and $\\overline{AC}$ is a transversal $\\therefore m(\\angle AYX) = m(\\angle ACB) = 48°$ (corresponding angles).",
+    "$\\overrightarrow{AD}$ is a tangent and $\\overline{AB}$ is the chord of tangency $\\therefore m(\\angle DAB) = m(\\angle ACB) = 48°$ \"The measure of the angle of tangency is equal to the measure of the inscribed angle subtended by the same arc.\" (Theorem 5, p.101)",
+    "$\\therefore m(\\angle DAX) = m(\\angle AYX) = 48°$",
+    "By the converse of Theorem 5 (p.103), $\\overrightarrow{AD}$ is a tangent to the circle passing through the points A, X and Y (Example 4, p.103)."
+   ],
+   "source_page": 103,
+   "source_note": "Original question; Example 4 with changed numbers, p.103",
+   "verified": true
+  },
+  {
+   "id": "q:geo2-7-2:006",
+   "lo": "lo:geo2-7-2",
+   "tier": "advanced",
+   "type": "mcq",
+   "stem": "ABC is a triangle inscribed in a circle, $\\overrightarrow{BD}$ is a tangent to the circle at B, $X \\in \\overline{AB}$ and $Y \\in \\overline{BC}$ where $\\overline{XY} \\parallel \\overrightarrow{BD}$. Then the figure AXYC is …",
+   "answer": "A",
+   "solution": [
+    "$\\overrightarrow{BD}$ is a tangent at B and $\\overline{AB}$ is a chord of tangency $\\therefore m(\\angle DBA) = m(\\angle ACB)$ \"The measure of the angle of tangency is equal to the measure of the inscribed angle subtended by the same arc.\" (Theorem 5, p.101)",
+    "$\\overline{XY} \\parallel \\overrightarrow{BD}$ and $\\overline{AB}$ intersects both of them $\\therefore m(\\angle BXY) = m(\\angle DBA)$, so $m(\\angle BXY) = m(\\angle ACB)$.",
+    "$\\angle BXY$ is an exterior angle at the vertex X of the quadrilateral XYCA, equal to the interior angle at the opposite vertex C.",
+    "\"If the measure of the exterior angle at a vertex of a quadrilateral figure is equal to the measure of the interior angle at the opposite vertex, then the figure is a cyclic quadrilateral.\" (Corollary, p.91)",
+    "$\\therefore$ AXYC is a cyclic quadrilateral (Example 1, p.102)."
+   ],
+   "source_page": 102,
+   "source_note": "Original question; Example 1 structure, p.102",
+   "verified": true,
+   "choices": [
+    {
+     "key": "A",
+     "text": "a cyclic quadrilateral"
+    },
+    {
+     "key": "B",
+     "text": "a parallelogram"
+    },
+    {
+     "key": "C",
+     "text": "a trapezium that is never cyclic"
+    },
+    {
+     "key": "D",
+     "text": "a rectangle"
+    }
+   ]
+  }
+ ],
+ "visuals": [
+  {
+   "id": "v:geo2-4:001",
+   "lo": "lo:geo2-4-1",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 0,
+      "y": 0,
+      "label": "M"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 3,
+      "y": 4,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 4,
+      "y": -3,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -3,
+      "y": -4,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -4,
+      "y": 3,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       4,
+       -3
+      ],
+      "to": [
+       -3,
+       -4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -3,
+       -4
+      ],
+      "to": [
+       -4,
+       3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -4,
+       3
+      ],
+      "to": [
+       3,
+       4
+      ]
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "All four vertices of ABCD sit on circle M — that is exactly what makes it a cyclic quadrilateral.",
+   "source_page": 85
+  },
+  {
+   "id": "v:geo2-4:002",
+   "lo": "lo:geo2-4-1",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -4,
+      "y": 3,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 3,
+      "y": 4,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 4,
+      "y": -3,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": -2,
+      "y": -2,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -4,
+       3
+      ],
+      "to": [
+       3,
+       4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 5,
+      "from": [
+       4,
+       -3
+      ],
+      "to": [
+       -2,
+       -2
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 5,
+      "from": [
+       -2,
+       -2
+      ],
+      "to": [
+       -4,
+       3
+      ]
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "D fell inside the circle, so ABCD is NOT cyclic: all four vertices must land on the circle itself.",
+   "source_page": 85
+  },
+  {
+   "id": "v:geo2-4:003",
+   "lo": "lo:geo2-4-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "point",
+      "step": 1,
+      "x": -4,
+      "y": -3,
+      "label": "Y"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 4,
+      "y": -3,
+      "label": "Z"
+     },
+     {
+      "type": "segment",
+      "step": 1,
+      "from": [
+       -4,
+       -3
+      ],
+      "to": [
+       4,
+       -3
+      ],
+      "label": "base"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 3,
+      "y": 4,
+      "label": "X"
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       -4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 3,
+      "at": [
+       3,
+       4
+      ],
+      "fromDeg": 225,
+      "toDeg": 278.1,
+      "label": "53°"
+     },
+     {
+      "type": "point",
+      "step": 4,
+      "x": -3,
+      "y": 4,
+      "label": "L"
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -3,
+       4
+      ],
+      "to": [
+       -4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -3,
+       4
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       -3,
+       4
+      ],
+      "fromDeg": 261.9,
+      "toDeg": 315,
+      "label": "53°"
+     },
+     {
+      "type": "circle",
+      "step": 6,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Two equal angles drawn on base YZ from the same side — so one circle passes through X, Y, Z and L.",
+   "source_page": 85
+  },
+  {
+   "id": "v:geo2-4:004",
+   "lo": "lo:geo2-4-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "point",
+      "step": 1,
+      "x": -4,
+      "y": 0,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 4,
+      "y": 0,
+      "label": "Y"
+     },
+     {
+      "type": "segment",
+      "step": 1,
+      "from": [
+       -4,
+       0
+      ],
+      "to": [
+       4,
+       0
+      ],
+      "label": "AY"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -2.4,
+      "y": 3.2,
+      "label": "X"
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       -4,
+       0
+      ],
+      "to": [
+       -2.4,
+       3.2
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       -2.4,
+       3.2
+      ],
+      "to": [
+       4,
+       0
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 3,
+      "at": [
+       -2.4,
+       3.2
+      ],
+      "fromDeg": 243.4,
+      "toDeg": 333.4,
+      "label": "90°"
+     },
+     {
+      "type": "point",
+      "step": 4,
+      "x": 2.4,
+      "y": 3.2,
+      "label": "B"
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -4,
+       0
+      ],
+      "to": [
+       2.4,
+       3.2
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       2.4,
+       3.2
+      ],
+      "to": [
+       4,
+       0
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       2.4,
+       3.2
+      ],
+      "fromDeg": 206.6,
+      "toDeg": 296.6,
+      "label": "90°"
+     },
+     {
+      "type": "circle",
+      "step": 6,
+      "cx": 0,
+      "cy": 0,
+      "r": 4
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Two right angles on base AY put A, X, B, Y on one circle — and AY must be its diameter.",
+   "source_page": 86
+  },
+  {
+   "id": "v:geo2-4:005",
+   "lo": "lo:geo2-4-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 0,
+      "y": 0,
+      "label": "M"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 3,
+      "y": 4,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -5,
+      "y": 0,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 5,
+      "y": 0,
+      "label": "C"
+     },
+     {
+      "type": "chord",
+      "step": 2,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       -5,
+       0
+      ],
+      "label": "AB"
+     },
+     {
+      "type": "chord",
+      "step": 2,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       5,
+       0
+      ],
+      "label": "AC"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": -1,
+      "y": 2,
+      "label": "X"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": 4,
+      "y": 2,
+      "label": "Y"
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       0,
+       0
+      ],
+      "to": [
+       -1,
+       2
+      ],
+      "label": "MX"
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       0,
+       0
+      ],
+      "to": [
+       4,
+       2
+      ],
+      "label": "MY"
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       -1,
+       2
+      ],
+      "fromDeg": -63.4,
+      "toDeg": 26.6,
+      "label": "90°"
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       4,
+       2
+      ],
+      "fromDeg": 116.6,
+      "toDeg": 206.6,
+      "label": "90°"
+     },
+     {
+      "type": "segment",
+      "step": 6,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       0,
+       0
+      ],
+      "label": "AM"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "X and Y are midpoints of two chords: both see AM under a right angle, so AXMY is cyclic with AM a diameter.",
+   "source_page": 87
+  },
+  {
+   "id": "v:geo2-5:001",
+   "lo": "lo:geo2-5-1",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 3,
+      "y": 4,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 5,
+      "y": 0,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 3,
+      "y": -4,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -4,
+      "y": 3,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       5,
+       0
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       3,
+       -4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       3,
+       -4
+      ],
+      "to": [
+       -4,
+       3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       -4,
+       3
+      ],
+      "to": [
+       3,
+       4
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 4,
+      "at": [
+       3,
+       4
+      ],
+      "fromDeg": 188.1,
+      "toDeg": 296.6,
+      "label": "∠A"
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       3,
+       -4
+      ],
+      "fromDeg": 63.4,
+      "toDeg": 135,
+      "label": "∠C"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Opposite angles of a cyclic quadrilateral: ∠A + ∠C = 180° (and ∠B + ∠D = 180° too).",
+   "source_page": 88
+  },
+  {
+   "id": "v:geo2-5:002",
+   "lo": "lo:geo2-5-1",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 0,
+      "y": 0,
+      "label": "M"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -5,
+      "y": 0,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 5,
+      "y": 0,
+      "label": "B"
+     },
+     {
+      "type": "diameter",
+      "step": 2,
+      "from": [
+       -5,
+       0
+      ],
+      "to": [
+       5,
+       0
+      ],
+      "label": "AB"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": 4,
+      "y": -3,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": -3,
+      "y": -4,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       4,
+       -3
+      ],
+      "to": [
+       -3,
+       -4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       -3,
+       -4
+      ],
+      "to": [
+       -5,
+       0
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -3,
+       -4
+      ],
+      "to": [
+       5,
+       0
+      ],
+      "label": "DB"
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       -3,
+       -4
+      ],
+      "fromDeg": 26.6,
+      "toDeg": 116.6,
+      "label": "90°"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "AB is a diameter, so ∠ADB = 90°: split ∠ADC into 90° plus ∠BDC to solve diameter problems.",
+   "source_page": 89
+  },
+  {
+   "id": "v:geo2-5:003",
+   "lo": "lo:geo2-5-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -4,
+      "y": -3,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 4,
+      "y": -3,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 4,
+      "y": 3,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -3,
+      "y": 4,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       -4,
+       -3
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       4,
+       -3
+      ],
+      "to": [
+       4,
+       3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       4,
+       3
+      ],
+      "to": [
+       -3,
+       4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       -3,
+       4
+      ],
+      "to": [
+       -4,
+       -3
+      ]
+     },
+     {
+      "type": "point",
+      "step": 4,
+      "x": 7,
+      "y": -3,
+      "label": "E"
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       4,
+       -3
+      ],
+      "to": [
+       7,
+       -3
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       4,
+       -3
+      ],
+      "fromDeg": 0,
+      "toDeg": 90,
+      "label": "∠CBE"
+     },
+     {
+      "type": "angle",
+      "step": 6,
+      "at": [
+       -3,
+       4
+      ],
+      "fromDeg": 261.9,
+      "toDeg": 351.9,
+      "label": "∠D"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Extend AB to E: the exterior angle ∠CBE equals the interior angle at the opposite vertex D.",
+   "source_page": 90
+  },
+  {
+   "id": "v:geo2-5:004",
+   "lo": "lo:geo2-5-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -5,
+      "y": 0,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -3,
+      "y": -4,
+      "label": "B"
+     },
+     {
+      "type": "arc",
+      "step": 2,
+      "startDeg": 180,
+      "endDeg": 233.1,
+      "label": "arc AB"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": 4,
+      "y": -3,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": 3,
+      "y": 4,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -5,
+       0
+      ],
+      "to": [
+       -3,
+       -4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -3,
+       -4
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       4,
+       -3
+      ],
+      "to": [
+       3,
+       4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       -5,
+       0
+      ]
+     },
+     {
+      "type": "point",
+      "step": 5,
+      "x": -2,
+      "y": -6,
+      "label": "E"
+     },
+     {
+      "type": "segment",
+      "step": 5,
+      "from": [
+       -3,
+       -4
+      ],
+      "to": [
+       -2,
+       -6
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 6,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       -3,
+       -4
+      ],
+      "label": "DB"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Example 2's trick: the arc AB gives ∠ADB, the exterior angle at B gives all of ∠ADC — subtract to get ∠BDC.",
+   "source_page": 90
+  },
+  {
+   "id": "v:geo2-5:005",
+   "lo": "lo:geo2-5-3",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "point",
+      "step": 1,
+      "x": 3,
+      "y": 4,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 5,
+      "y": 0,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 3,
+      "y": -4,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": -4,
+      "y": 3,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       5,
+       0
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       3,
+       -4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       3,
+       -4
+      ],
+      "to": [
+       -4,
+       3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       -4,
+       3
+      ],
+      "to": [
+       3,
+       4
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 3,
+      "at": [
+       3,
+       4
+      ],
+      "fromDeg": 188.1,
+      "toDeg": 296.6,
+      "label": "x°"
+     },
+     {
+      "type": "angle",
+      "step": 4,
+      "at": [
+       3,
+       -4
+      ],
+      "fromDeg": 63.4,
+      "toDeg": 135,
+      "label": "180°−x°"
+     },
+     {
+      "type": "circle",
+      "step": 5,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Converse of Theorem 3: once ∠A + ∠C = 180°, a circle MUST pass through all four vertices.",
+   "source_page": 91
+  },
+  {
+   "id": "v:geo2-5:006",
+   "lo": "lo:geo2-5-3",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "point",
+      "step": 1,
+      "x": -3,
+      "y": 4,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": -4,
+      "y": -3,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 4,
+      "y": -3,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 3,
+      "y": 4,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       -3,
+       4
+      ],
+      "to": [
+       -4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       -4,
+       -3
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       4,
+       -3
+      ],
+      "to": [
+       3,
+       4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       3,
+       4
+      ],
+      "to": [
+       -3,
+       4
+      ],
+      "label": "AD ∥ BC"
+     },
+     {
+      "type": "angle",
+      "step": 3,
+      "at": [
+       -4,
+       -3
+      ],
+      "fromDeg": 0,
+      "toDeg": 81.9,
+      "label": "θ"
+     },
+     {
+      "type": "angle",
+      "step": 3,
+      "at": [
+       4,
+       -3
+      ],
+      "fromDeg": 98.1,
+      "toDeg": 180,
+      "label": "θ"
+     },
+     {
+      "type": "circle",
+      "step": 4,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "An isosceles trapezium: equal base angles force ∠A + ∠C = 180°, so it is always cyclic.",
+   "source_page": 91
+  },
+  {
+   "id": "v:geo2-6:001",
+   "lo": "lo:geo2-6-1",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 3
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 0,
+      "y": 0,
+      "label": "M"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 5,
+      "y": 0,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 1.8,
+      "y": 2.4,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 1.8,
+      "y": -2.4,
+      "label": "C"
+     },
+     {
+      "type": "tangent",
+      "step": 3,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       1.8,
+       2.4
+      ],
+      "label": "AB"
+     },
+     {
+      "type": "tangent",
+      "step": 3,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       1.8,
+       -2.4
+      ],
+      "label": "AC"
+     },
+     {
+      "type": "radius",
+      "step": 4,
+      "from": [
+       0,
+       0
+      ],
+      "to": [
+       1.8,
+       2.4
+      ],
+      "label": "MB"
+     },
+     {
+      "type": "radius",
+      "step": 4,
+      "from": [
+       0,
+       0
+      ],
+      "to": [
+       1.8,
+       -2.4
+      ],
+      "label": "MC"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Two tangent segments from the same outside point A: AB = AC, always (Theorem 4).",
+   "source_page": 93
+  },
+  {
+   "id": "v:geo2-6:002",
+   "lo": "lo:geo2-6-1",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 3
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 0,
+      "y": 0,
+      "label": "M"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 5,
+      "y": 0,
+      "label": "A"
+     },
+     {
+      "type": "tangent",
+      "step": 2,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       1.8,
+       2.4
+      ],
+      "label": "AB"
+     },
+     {
+      "type": "tangent",
+      "step": 2,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       1.8,
+       -2.4
+      ],
+      "label": "AC"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 1.8,
+      "y": 2.4,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 1.8,
+      "y": -2.4,
+      "label": "C"
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       0,
+       0
+      ],
+      "to": [
+       5,
+       0
+      ],
+      "label": "MA"
+     },
+     {
+      "type": "chord",
+      "step": 4,
+      "from": [
+       1.8,
+       2.4
+      ],
+      "to": [
+       1.8,
+       -2.4
+      ],
+      "label": "BC"
+     },
+     {
+      "type": "point",
+      "step": 4,
+      "x": 1.8,
+      "y": 0,
+      "label": "D"
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       1.8,
+       0
+      ],
+      "fromDeg": 90,
+      "toDeg": 180,
+      "label": "90°"
+     },
+     {
+      "type": "angle",
+      "step": 6,
+      "at": [
+       5,
+       0
+      ],
+      "fromDeg": 143.1,
+      "toDeg": 180,
+      "label": "½∠A"
+     },
+     {
+      "type": "angle",
+      "step": 6,
+      "at": [
+       5,
+       0
+      ],
+      "fromDeg": 180,
+      "toDeg": 216.9,
+      "label": "½∠A"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "The line MA is an axis of symmetry of the chord of tangency BC, and it bisects ∠A and ∠BMC.",
+   "source_page": 94
+  },
+  {
+   "id": "v:geo2-6:003",
+   "lo": "lo:geo2-6-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "point",
+      "step": 1,
+      "x": -3,
+      "y": 3,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 3,
+      "y": 3,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 3,
+      "y": -3,
+      "label": "C"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": -3,
+      "y": -3,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       -3,
+       3
+      ],
+      "to": [
+       3,
+       3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       3,
+       3
+      ],
+      "to": [
+       3,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       3,
+       -3
+      ],
+      "to": [
+       -3,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       -3,
+       -3
+      ],
+      "to": [
+       -3,
+       3
+      ]
+     },
+     {
+      "type": "circle",
+      "step": 3,
+      "cx": 0,
+      "cy": 0,
+      "r": 3
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": 0,
+      "y": 0,
+      "label": "M"
+     },
+     {
+      "type": "point",
+      "step": 4,
+      "x": 0,
+      "y": 3,
+      "label": "X"
+     },
+     {
+      "type": "point",
+      "step": 4,
+      "x": 3,
+      "y": 0,
+      "label": "Y"
+     },
+     {
+      "type": "point",
+      "step": 4,
+      "x": 0,
+      "y": -3,
+      "label": "Z"
+     },
+     {
+      "type": "point",
+      "step": 4,
+      "x": -3,
+      "y": 0,
+      "label": "L"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "An inscribed circle touches every side of the polygon internally — tangent segments from each vertex are equal.",
+   "source_page": 97
+  },
+  {
+   "id": "v:geo2-6:004",
+   "lo": "lo:geo2-6-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": -4,
+      "cy": 1,
+      "r": 1.5
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": -4,
+      "y": 1,
+      "label": "N"
+     },
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 3,
+      "cy": 2,
+      "r": 2.5
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 3,
+      "y": 2,
+      "label": "M"
+     },
+     {
+      "type": "tangent",
+      "step": 2,
+      "from": [
+       -4,
+       -0.5
+      ],
+      "to": [
+       3,
+       -0.5
+      ],
+      "label": "BA"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -4,
+      "y": -0.5,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 3,
+      "y": -0.5,
+      "label": "A"
+     },
+     {
+      "type": "radius",
+      "step": 3,
+      "from": [
+       -4,
+       1
+      ],
+      "to": [
+       -4,
+       -0.5
+      ],
+      "label": "r"
+     },
+     {
+      "type": "radius",
+      "step": 3,
+      "from": [
+       3,
+       2
+      ],
+      "to": [
+       3,
+       -0.5
+      ],
+      "label": "R"
+     },
+     {
+      "type": "segment",
+      "step": 4,
+      "from": [
+       -4,
+       1
+      ],
+      "to": [
+       3,
+       2
+      ],
+      "label": "MN"
+     },
+     {
+      "type": "segment",
+      "step": 5,
+      "from": [
+       -4,
+       1
+      ],
+      "to": [
+       3,
+       1
+      ],
+      "label": "NF"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "A common external tangent: both circles on the same side. The rectangle trick gives AB² = MN² − (R − r)².",
+   "source_page": 99
+  },
+  {
+   "id": "v:geo2-6:005",
+   "lo": "lo:geo2-6-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": -4,
+      "cy": 2,
+      "r": 2
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": -4,
+      "y": 2,
+      "label": "N"
+     },
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 4,
+      "cy": -2,
+      "r": 2
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 4,
+      "y": -2,
+      "label": "M"
+     },
+     {
+      "type": "tangent",
+      "step": 2,
+      "from": [
+       -6,
+       0
+      ],
+      "to": [
+       6,
+       0
+      ],
+      "label": "AB"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": -4,
+      "y": 0,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": 4,
+      "y": 0,
+      "label": "A"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "A common internal tangent: the two circles lie on different sides of the tangent line.",
+   "source_page": 98
+  },
+  {
+   "id": "v:geo2-7:001",
+   "lo": "lo:geo2-7-1",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 0,
+      "y": -5,
+      "label": "B"
+     },
+     {
+      "type": "tangent",
+      "step": 2,
+      "from": [
+       0,
+       -5
+      ],
+      "to": [
+       6,
+       -5
+      ],
+      "label": "BC"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": 3,
+      "y": 4,
+      "label": "A"
+     },
+     {
+      "type": "chord",
+      "step": 3,
+      "from": [
+       0,
+       -5
+      ],
+      "to": [
+       3,
+       4
+      ],
+      "label": "AB"
+     },
+     {
+      "type": "arc",
+      "step": 4,
+      "startDeg": -90,
+      "endDeg": 53.1,
+      "label": "enclosed arc"
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       0,
+       -5
+      ],
+      "fromDeg": 0,
+      "toDeg": 71.6,
+      "label": "½ arc"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "The angle of tangency at B: one ray is the tangent, the other holds a chord — its measure is half the enclosed arc.",
+   "source_page": 100
+  },
+  {
+   "id": "v:geo2-7:002",
+   "lo": "lo:geo2-7-1",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 0,
+      "y": -5,
+      "label": "B"
+     },
+     {
+      "type": "tangent",
+      "step": 1,
+      "from": [
+       0,
+       -5
+      ],
+      "to": [
+       6,
+       -5
+      ],
+      "label": "BC"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 3,
+      "y": 4,
+      "label": "A"
+     },
+     {
+      "type": "chord",
+      "step": 1,
+      "from": [
+       0,
+       -5
+      ],
+      "to": [
+       3,
+       4
+      ],
+      "label": "AB"
+     },
+     {
+      "type": "angle",
+      "step": 2,
+      "at": [
+       0,
+       -5
+      ],
+      "fromDeg": 0,
+      "toDeg": 71.6,
+      "label": "∠ABC"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": -4,
+      "y": 3,
+      "label": "D"
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       -4,
+       3
+      ],
+      "to": [
+       3,
+       4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       -4,
+       3
+      ],
+      "to": [
+       0,
+       -5
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 4,
+      "at": [
+       -4,
+       3
+      ],
+      "fromDeg": -63.4,
+      "toDeg": 8.1,
+      "label": "∠D = ∠ABC"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Theorem 5: the angle of tangency equals the inscribed angle ∠ADB drawn on the same arc AB.",
+   "source_page": 101
+  },
+  {
+   "id": "v:geo2-7:003",
+   "lo": "lo:geo2-7-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 0,
+      "y": -5,
+      "label": "B"
+     },
+     {
+      "type": "tangent",
+      "step": 1,
+      "from": [
+       0,
+       -5
+      ],
+      "to": [
+       6,
+       -5
+      ],
+      "label": "BC"
+     },
+     {
+      "type": "point",
+      "step": 1,
+      "x": 3,
+      "y": 4,
+      "label": "A"
+     },
+     {
+      "type": "chord",
+      "step": 1,
+      "from": [
+       0,
+       -5
+      ],
+      "to": [
+       3,
+       4
+      ],
+      "label": "AB"
+     },
+     {
+      "type": "angle",
+      "step": 2,
+      "at": [
+       0,
+       -5
+      ],
+      "fromDeg": 0,
+      "toDeg": 71.6,
+      "label": "∠ABC"
+     },
+     {
+      "type": "point",
+      "step": 3,
+      "x": 5,
+      "y": 0,
+      "label": "E"
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       3,
+       4
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 3,
+      "from": [
+       5,
+       0
+      ],
+      "to": [
+       0,
+       -5
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 4,
+      "at": [
+       5,
+       0
+      ],
+      "fromDeg": 116.6,
+      "toDeg": 225,
+      "label": "180°−∠ABC"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "E sits on the arc inside the tangency angle: ∠AEB is supplementary to the angle of tangency ∠ABC.",
+   "source_page": 102
+  },
+  {
+   "id": "v:geo2-7:004",
+   "lo": "lo:geo2-7-2",
+   "question": null,
+   "kind": "geo_scene",
+   "spec": {
+    "elements": [
+     {
+      "type": "circle",
+      "step": 1,
+      "cx": 0,
+      "cy": 0,
+      "r": 5
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 0,
+      "y": 5,
+      "label": "A"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": -4,
+      "y": -3,
+      "label": "B"
+     },
+     {
+      "type": "point",
+      "step": 2,
+      "x": 4,
+      "y": -3,
+      "label": "C"
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       0,
+       5
+      ],
+      "to": [
+       -4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       -4,
+       -3
+      ],
+      "to": [
+       4,
+       -3
+      ]
+     },
+     {
+      "type": "segment",
+      "step": 2,
+      "from": [
+       4,
+       -3
+      ],
+      "to": [
+       0,
+       5
+      ]
+     },
+     {
+      "type": "angle",
+      "step": 3,
+      "at": [
+       4,
+       -3
+      ],
+      "fromDeg": 116.6,
+      "toDeg": 180,
+      "label": "α"
+     },
+     {
+      "type": "tangent",
+      "step": 4,
+      "from": [
+       0,
+       5
+      ],
+      "to": [
+       -6,
+       5
+      ],
+      "label": "AD"
+     },
+     {
+      "type": "angle",
+      "step": 5,
+      "at": [
+       0,
+       5
+      ],
+      "fromDeg": 180,
+      "toDeg": 243.4,
+      "label": "α"
+     }
+    ],
+    "animate": "sequence"
+   },
+   "caption": "Converse of Theorem 5: ∠DAB equals the inscribed angle ∠ACB in the alternate side, so AD must be the tangent at A.",
+   "source_page": 103
+  }
+ ],
+ "external_node_refs": [
+  "module:geo-u2",
+  "topic:geometry",
+  "lo:geo2-2-2",
+  "lo:geo2-3-1",
+  "lo:geo2-3-3",
+  "lo:geo1-2-2"
+ ]
+}
