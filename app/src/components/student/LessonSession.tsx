@@ -29,13 +29,8 @@ import {
   boardKeyOf,
   type BoardItem,
 } from "@/components/student/WhiteboardPanel";
-import {
-  cancelSpeech,
-  makeRecognition,
-  speak,
-  sttSupported,
-  ttsSupported,
-} from "@/lib/voice";
+import { makeRecognition, sttSupported, ttsSupported } from "@/lib/voice";
+import { speakRemote, stopSpeaking, unlockAudio } from "@/lib/tts-client";
 
 /**
  * The adaptive lesson surface — same engine, two temperaments.
@@ -277,7 +272,7 @@ export function LessonSession({
     setTtsOK(ttsSupported());
     setSttOK(sttSupported());
     return () => {
-      cancelSpeech();
+      stopSpeaking();
       if (finishTimer.current) clearTimeout(finishTimer.current);
       if (tapTimer.current) clearTimeout(tapTimer.current);
       if (saveTimer.current) clearTimeout(saveTimer.current);
@@ -317,7 +312,7 @@ export function LessonSession({
   const finish = useCallback(async () => {
     if (finishing.current) return;
     finishing.current = true;
-    cancelSpeech();
+    stopSpeaking();
     setPhase("rating");
     try {
       const transcript = msgsRef.current
@@ -492,7 +487,8 @@ export function LessonSession({
 
   const onAssistantDone = useCallback((text: string) => {
     if (voiceOnRef.current) {
-      speak(text, {
+      // Neural voice via /api/tts, with automatic Web Speech fallback.
+      void speakRemote(text, {
         onStart: () => setSpeaking(true),
         onEnd: () => setSpeaking(false),
       });
@@ -523,9 +519,12 @@ export function LessonSession({
   );
 
   const toggleVoice = () => {
+    // First tap is a user gesture — unlock programmatic <audio> playback so the
+    // neural voice can start later without a click (browser autoplay policy).
+    unlockAudio();
     setVoiceOn((v) => {
       if (v) {
-        cancelSpeech();
+        stopSpeaking();
         setSpeaking(false);
       }
       return !v;

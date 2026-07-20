@@ -79,16 +79,42 @@ function pickVoice(): SpeechSynthesisVoice | null {
   return pickedVoice;
 }
 
-export function speak(
+/**
+ * Chrome loads voices asynchronously: getVoices() returns [] until it fires
+ * `voiceschanged`. Awaiting this before the first utterance fixes the
+ * long-standing bug where the first spoken line after page load was silent.
+ * Resolves as soon as voices are available, or after a short timeout so a
+ * browser that never fires the event still speaks (with the default voice).
+ */
+function ensureVoices(): Promise<void> {
+  if (!ttsSupported()) return Promise.resolve();
+  const synth = window.speechSynthesis;
+  if (synth.getVoices().length > 0) return Promise.resolve();
+  return new Promise<void>((resolve) => {
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      synth.removeEventListener?.("voiceschanged", finish);
+      resolve();
+    };
+    synth.addEventListener?.("voiceschanged", finish);
+    // Fallback: don't block forever if the event never arrives.
+    setTimeout(finish, 1000);
+  });
+}
+
+export async function speak(
   text: string,
   handlers?: { onStart?: () => void; onEnd?: () => void }
-): void {
+): Promise<void> {
   if (!ttsSupported()) return;
   try {
     const synth = window.speechSynthesis;
     synth.cancel(); // new message interrupts the previous one
     const clean = sanitizeForSpeech(text);
     if (!clean) return;
+    await ensureVoices(); // never speak before voices exist (first-line-silent fix)
     const utter = new SpeechSynthesisUtterance(clean);
     const voice = pickVoice();
     if (voice) utter.voice = voice;
