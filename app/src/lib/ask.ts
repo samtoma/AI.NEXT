@@ -1,6 +1,8 @@
 import { pool } from "./db";
 import { getAllVisuals } from "./visuals";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
+import { subjectOfCourse } from "./lesson";
+import type { Subject } from "./types";
 
 /**
  * "Ask the Spine" — server-side grounding assembly.
@@ -104,6 +106,23 @@ export async function buildAskContext(
     ? qRes.rows.find((q) => q.id === questionId)
     : undefined;
   if (focusQRow) focusLos.add(focusQRow.lo_id);
+
+  // Subject plumbing (ADR-0004 Wave 0): when a question is in scope, its
+  // LO → module → course chain keys the language/grounding sections of the
+  // system prompt. No question in scope → "math-en" (original behavior).
+  let subject: Subject = "math-en";
+  if (focusQRow) {
+    const courseRes = await pool.query(
+      `SELECT c.id FROM graph_edges t
+       JOIN graph_edges p
+         ON p.src_id = t.src_id AND p.edge_type = 'part_of' AND p.system_to IS NULL
+       JOIN graph_nodes c ON c.id = p.dst_id AND c.kind = 'course'
+       WHERE t.edge_type = 'teaches' AND t.system_to IS NULL AND t.dst_id = $1
+       LIMIT 1`,
+      [focusQRow.lo_id]
+    );
+    subject = subjectOfCourse(courseRes.rows[0]?.id);
+  }
   const byWeakness = [...losRes.rows].sort(
     (a, b) => (current.get(a.id) ?? 0) - (current.get(b.id) ?? 0)
   );
@@ -168,15 +187,28 @@ export async function buildAskContext(
     : undefined;
   if (focusQ) {
     const steps = (
-      (focusQ.canonical_solution ?? []) as { step: number; text_md: string }[]
+      (focusQ.canonical_solution ?? []) as {
+        step: number;
+        text_md?: string;
+        claim_ar?: string;
+        evidence_page?: number;
+      }[]
     )
-      .map((s) => `  Step ${s.step}. ${s.text_md}`)
+      .map((s) =>
+        s.text_md != null
+          ? `  Step ${s.step}. ${s.text_md}`
+          : `  Step ${s.step}. ${s.claim_ar ?? ""}${s.evidence_page != null ? ` [evidence: p.${s.evidence_page}]` : ""}`
+      )
       .join("\n");
     const choices = focusQ.choices
       ? (focusQ.choices as { key: string; text: string }[])
           .map((c) => `    (${c.key}) ${c.text}`)
           .join("\n")
       : "    (numeric answer)";
+    const solutionHeading =
+      subject === "social-ar"
+        ? `HUMAN-REVIEWED MODEL ANSWER WITH EVIDENCE (الإجابة النموذجية — v${focusQ.solution_version}) — the ONLY permitted factual path for explaining this question:`
+        : `HUMAN-REVIEWED CANONICAL SOLUTION (v${focusQ.solution_version}) — the ONLY permitted mathematical path for explaining this question:`;
     focusBlock = `
 QUESTION IN SCOPE (the one being discussed right now):
 ${focusQ.id} | ${focusQ.lo_id} | ${focusQ.tier} | book p.${focusQ.source_page ?? "—"}
@@ -185,7 +217,7 @@ Choices:
 ${choices}
 Correct answer: ${focusQ.correct_answer}
 ${wrongAnswer ? `${student}'s wrong answer: "${wrongAnswer}"` : ""}
-HUMAN-REVIEWED CANONICAL SOLUTION (v${focusQ.solution_version}) — the ONLY permitted mathematical path for explaining this question:
+${solutionHeading}
 ${steps}
 `;
   }
@@ -242,19 +274,34 @@ ${focusBlock}`;
   };
 
   return {
-    systemPrompt: systemPromptFor(surface, student),
+    systemPrompt: systemPromptFor(surface, student, subject),
     dataBlock,
     grounding,
   };
 }
 
-function systemPromptFor(surface: AskSurface, student: string): string {
-  const base = `You are "Ask the Spine" — the AI tutor of AI.Next, an adaptive math tutor whose brain is a curriculum knowledge graph ("the spine") extracted, with provenance, from the official Egyptian ministry textbook. You are chatting inside a live demo about the student ${student}. Voice: a warm, precise human tutor. Concise. English.
-
-HARD GROUNDING RULES (non-negotiable):
+function systemPromptFor(
+  surface: AskSurface,
+  student: string,
+  subject: Subject = "math-en"
+): string {
+  const social = subject === "social-ar";
+  const voiceLine = social
+    ? `Voice: a warm, precise Egyptian tutor. Concise. ARABIC — Egyptian-flavored Modern Standard Arabic (صياغة فصيحة مبسّطة بروح مصرية), ministry terminology verbatim from the data (مصطلحات كتاب الوزارة حرفيًا — flag any missing term with [[term?:المصطلح]]), Arabic-Indic numerals in prose; Latin characters ONLY inside [[…]] citations and {{…}} directives.`
+    : `Voice: a warm, precise human tutor. Concise. English.`;
+  const groundingRules = social
+    ? `HARD GROUNDING RULES (non-negotiable):
+1. The curriculum data provided below is your ONLY source of truth. لا تذكر أي معلومة تاريخية أو جغرافية — تاريخ، رقم، اسم، مكان، سبب، نتيجة — غير واردة نصًا في البيانات. THE BOOK'S STATEMENT WINS even when you believe the world disagrees: كلام الكتاب هو الإجابة الصحيحة في الامتحان، والاستشهاد بالصفحة واجب.
+2. NEVER state or explain facts from your own knowledge. الإجابة النموذجية (the HUMAN-REVIEWED MODEL ANSWER WITH EVIDENCE) is the ONLY permitted factual path — walk its claim-steps; a different pedagogical angle is allowed, different or additional facts are not. If no model answer is in scope for a question, do not state its answer — push the question card or point to it.
+3. OUTSIDE THE BOOK — acknowledge → decline → redirect, always in that order: welcome the question, explain we study from كتاب الوزارة because it is what the exam grades, then redirect to the nearest in-book claim with its citation. NEVER answer first and disclaim after.
+4. SENSITIVE CONTENT (hard rule): historical and political material is explained strictly as the book presents it — no commentary of your own, no modern political parallels, no evaluative judgments beyond the book's own framing.`
+    : `HARD GROUNDING RULES (non-negotiable):
 1. The curriculum data provided below is your ONLY source of truth. Never state a fact about the syllabus, the student, a question, or a page that is not derivable from it.
 2. NEVER solve a math problem from scratch. You may only walk through mathematics using a provided HUMAN-REVIEWED CANONICAL SOLUTION. If no canonical solution is in scope for a question, do not derive its answer — instead push the question card or point to it.
-3. If asked about anything outside the ingested units listed in the data, say plainly that it is outside the ingested syllabus slice, and point to what IS covered.
+3. If asked about anything outside the ingested units listed in the data, say plainly that it is outside the ingested syllabus slice, and point to what IS covered.`;
+  const base = `You are "Ask the Spine" — the AI tutor of AI.Next, an adaptive ${social ? "" : "math "}tutor whose brain is a curriculum knowledge graph ("the spine") extracted, with provenance, from the official Egyptian ministry textbook. You are chatting inside a live demo about the student ${student}. ${voiceLine}
+
+${groundingRules}
 
 CITATIONS (mandatory — this is the product's signature):
 Embed inline receipt markers right after each substantive claim:
@@ -274,6 +321,17 @@ FORMAT:
 - 60–120 words in 2–3 beats. Separate beats with {{beat}} alone on its own line — it renders as a natural pause, never as text. One beat = 1–2 short sentences, or one figure, or one interactive directive; if the message has an interactive directive it is the LAST beat, with nothing after it. Answer first, then evidence.`;
 
   if (surface === "student_chat") {
+    if (social) {
+      return `${base}
+
+MODE — RE-EXPLANATION TO THE STUDENT (you are talking directly to ${student} now):
+He answered the QUESTION IN SCOPE wrongly and the model-answer claim-steps were already shown to him once. Your job:
+- Diagnose, from his specific wrong answer, where his thinking most likely diverged — name the confusion gently (خلط بين مصطلحين، رقم متشابه، سبب في غير موضعه…).
+- Re-explain using ONLY the الإجابة النموذجية claim-steps, but through a DIFFERENT pedagogical angle than a plain restatement (start from the map or definition, contrast his answer with the book's claim to show the mismatch, or rebuild the enumeration item by item) — each claim cited [[page:N]].
+- Never introduce facts beyond the claim-steps and never change the final answer. If in doubt, quote the claim-step verbatim.
+- Do NOT emit {{show_question:...}} in this mode. Cite [[q:...]], [[lo:...]] and [[page:...]] as usual.
+- End with one short encouraging line. Address him as "you" (بصيغة المخاطب).`;
+    }
     return `${base}
 
 MODE — RE-EXPLANATION TO THE STUDENT (you are talking directly to ${student} now):

@@ -6,8 +6,9 @@
  *
  * One renderer library, hundreds of data specs: producers (extraction
  * agents, the lesson AI) emit {kind, spec} rows; this registry maps them to
- * the nine primitives. A bad or unknown spec NEVER crashes the surface —
- * it degrades to a quiet "spec error" chip.
+ * the twelve primitives (nine math + three social-studies, VIZ_SPEC v2).
+ * A bad or unknown spec NEVER crashes the surface — it degrades to a quiet
+ * "spec error" chip.
  */
 
 import {
@@ -27,12 +28,15 @@ import {
 } from "./core";
 import { ArrowMap } from "./ArrowMap";
 import { CoordinatePlot } from "./CoordinatePlot";
+import { FlowChain } from "./FlowChain";
 import { FunctionGraph } from "./FunctionGraph";
 import { GeoScene } from "./GeoScene";
+import { MapScene } from "./MapScene";
 import { NumberLine } from "./NumberLine";
 import { ProductGrid } from "./ProductGrid";
 import { RatioBars } from "./RatioBars";
 import { StatChart } from "./StatChart";
+import { Timeline } from "./Timeline";
 import { TrigTriangle } from "./TrigTriangle";
 
 export const VIZ_KINDS = [
@@ -45,6 +49,10 @@ export const VIZ_KINDS = [
   "trig_triangle",
   "geo_scene",
   "number_line",
+  // VIZ_SPEC v2 — social studies (ADR-0004 Wave 0)
+  "map_scene",
+  "timeline",
+  "flow_chain",
 ] as const;
 
 export type VizKind = (typeof VIZ_KINDS)[number];
@@ -62,6 +70,9 @@ const REGISTRY: Record<
   trig_triangle: TrigTriangle,
   geo_scene: GeoScene,
   number_line: NumberLine,
+  map_scene: MapScene,
+  timeline: Timeline,
+  flow_chain: FlowChain,
 };
 
 export function Visual({

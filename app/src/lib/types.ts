@@ -1,5 +1,13 @@
 export type Tier = "basic" | "standard" | "advanced";
 
+/**
+ * Subject key, derived from the lesson's course node in the graph
+ * (ADR-0004 Wave 0): course:prep3-math-en → "math-en",
+ * course:prep3-social-ar → "social-ar". Selects the language contract and
+ * grounding hard rules injected into every tutor prompt.
+ */
+export type Subject = "math-en" | "social-ar";
+
 export interface Choice {
   key: string;
   text: string;
@@ -9,6 +17,31 @@ export interface SolutionStep {
   step: number;
   text_md: string;
 }
+
+/** One normalized fact inside a social-studies claim-step (dates/numbers/names/places) —
+ *  raw material for the cross-consistency check and explanation audits (ADR-0004). */
+export interface ClaimFact {
+  kind: string; // "date" | "coordinate" | "area" | "name" | "place" | "cause" | "result" | ...
+  entity: string;
+  value: string;
+}
+
+/**
+ * Social-studies grounding unit: one claim-step of a model answer with
+ * evidence (الإجابة النموذجية بالأدلة). Lives in the same `canonical_solution`
+ * jsonb column as math's SolutionStep — see
+ * docs/specs/social-extraction-contract.md for the authoring contract.
+ */
+export interface ClaimStep {
+  step: number;
+  claim_ar: string;
+  evidence_page: number;
+  evidence_kind: "text" | "map" | "concept_box" | "enrichment_box";
+  facts?: ClaimFact[];
+}
+
+/** What actually sits in `canonical_solution` jsonb: math steps or social claim-steps. */
+export type CanonicalStep = SolutionStep | ClaimStep;
 
 export interface Provenance {
   source: string;
@@ -145,6 +178,8 @@ export interface LessonInfo {
   title: string;
   moduleId: string;
   moduleLabel: string;
+  courseId: string | null; // "course:prep3-math-en" — module's part_of course
+  subject: Subject;
   los: LessonLo[];
 }
 
@@ -153,6 +188,8 @@ export interface LessonData {
   lessonRef: string; // "Lesson 1-1"
   title: string; // "Cartesian product"
   moduleLabel: string; // "Unit 1 — Relations and Functions"
+  courseId: string | null; // "course:prep3-math-en"
+  subject: Subject; // selects language contract + grounding rules
   los: LessonLo[];
   questions: SpineQuestion[];
   visuals: LessonViz[];

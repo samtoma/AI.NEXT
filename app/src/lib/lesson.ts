@@ -3,12 +3,14 @@ import type { AskContext } from "./ask";
 import { getVisualsForLos } from "./visuals";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import type {
+  ClaimStep,
   LessonData,
   LessonInfo,
   LessonLo,
   LessonMode,
   SolutionStep,
   SpineQuestion,
+  Subject,
   Tier,
 } from "./types";
 
@@ -38,6 +40,17 @@ const SLUG_RE = /^[a-z0-9]{1,12}-[0-9]{1,3}$/;
 /** "lo:geo1-2-1" → lesson slug "geo1-2" (LO-id prefix minus the last part). */
 function slugOfLo(loId: string): string {
   return loId.replace(/^lo:/, "").replace(/-[0-9]+$/, "");
+}
+
+/**
+ * Subject detection (ADR-0004 Wave 0): the lesson's module sits `part_of` a
+ * course node; the course id keys the language contract + grounding rules.
+ *   course:prep3-math-en   → "math-en"
+ *   course:prep3-social-ar → "social-ar"
+ * Unknown/missing course → "math-en" (the original single-subject behavior).
+ */
+export function subjectOfCourse(courseId: string | null | undefined): Subject {
+  return courseId?.endsWith("-social-ar") ? "social-ar" : "math-en";
 }
 
 /** Short display titles per lesson slug; fallback = first LO label. */
@@ -76,11 +89,15 @@ const LO_MODULE_SELECT = `
   SELECT lo.id, lo.label, lo.description, lo.syllabus_ref, lo.source_page,
          lo.order_in_parent,
          m.id AS module_id, m.label AS module_label,
-         m.order_in_parent AS module_order
+         m.order_in_parent AS module_order,
+         c.id AS course_id
   FROM graph_nodes lo
   LEFT JOIN graph_edges e
     ON e.dst_id = lo.id AND e.edge_type = 'teaches' AND e.system_to IS NULL
   LEFT JOIN graph_nodes m ON m.id = e.src_id AND m.kind = 'module'
+  LEFT JOIN graph_edges ec
+    ON ec.src_id = m.id AND ec.edge_type = 'part_of' AND ec.system_to IS NULL
+  LEFT JOIN graph_nodes c ON c.id = ec.dst_id AND c.kind = 'course'
   WHERE lo.kind = 'learning_objective'
 `;
 
@@ -113,6 +130,8 @@ export async function getLessonCatalog(): Promise<LessonInfo[]> {
         title: LESSON_TITLES[slug] ?? r.label,
         moduleId: r.module_id ?? "module:unfiled",
         moduleLabel: r.module_label ?? "Unfiled",
+        courseId: r.course_id ?? null,
+        subject: subjectOfCourse(r.course_id),
         los: [],
       };
       bySlug.set(slug, info);
@@ -213,6 +232,8 @@ export async function getLessonData(
     lessonRef: first?.syllabus_ref ?? safeSlug,
     title: LESSON_TITLES[safeSlug] ?? first?.label ?? safeSlug,
     moduleLabel: first?.module_label ?? "Unfiled",
+    courseId: first?.course_id ?? null,
+    subject: subjectOfCourse(first?.course_id),
     los,
     questions,
     visuals: visuals.map((v) => ({
@@ -237,11 +258,34 @@ const isGeoLesson = (data: LessonData) => data.slug.startsWith("geo");
 /* Grounding block shared by both modes + the rating pass              */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Formats canonical steps for the prompt. Math steps ({step, text_md}) render
+ * exactly as before (byte-identical). Social claim-steps ({step, claim_ar,
+ * evidence_page, …} — see docs/specs/social-extraction-contract.md) render the
+ * Arabic claim with its per-claim evidence page so the model can cite it.
+ */
 function fmtSteps(steps: SolutionStep[]): string {
-  return steps.map((s) => `Step ${s.step}. ${s.text_md}`).join(" | ");
+  return steps
+    .map((s) => {
+      const c = s as Partial<SolutionStep> & Partial<ClaimStep>;
+      if (c.text_md != null) return `Step ${s.step}. ${c.text_md}`;
+      const ev =
+        c.evidence_page != null
+          ? ` [evidence: p.${c.evidence_page}${c.evidence_kind ? `, ${c.evidence_kind}` : ""}]`
+          : "";
+      return `Step ${s.step}. ${c.claim_ar ?? ""}${ev}`;
+    })
+    .join(" | ");
 }
 
 export function lessonDataBlock(data: LessonData): string {
+  const social = data.subject === "social-ar";
+  const solutionLabel = social
+    ? "MODEL ANSWER WITH EVIDENCE (الإجابة النموذجية — v"
+    : "CANONICAL SOLUTION (v";
+  const bankNote = social
+    ? "each with its human-reviewed model answer — الإجابة النموذجية بالأدلة — the ONLY permitted factual path"
+    : "each with its human-reviewed canonical solution — the ONLY permitted mathematical paths";
   const loLines = data.los
     .map(
       (l) =>
@@ -254,7 +298,7 @@ export function lessonDataBlock(data: LessonData): string {
       const choices = q.choices
         ? q.choices.map((c) => `(${c.key}) ${c.text}`).join(" ")
         : "(numeric)";
-      return `- ${q.id} | ${q.loId} | ${q.tier} | ${q.questionType} | p.${q.provenance.sourcePage ?? "—"}\n  Stem: ${q.stem}\n  Choices: ${choices}\n  Correct: ${q.correctAnswer}\n  CANONICAL SOLUTION (v${q.solutionVersion}, human-reviewed): ${fmtSteps(q.solution)}`;
+      return `- ${q.id} | ${q.loId} | ${q.tier} | ${q.questionType} | p.${q.provenance.sourcePage ?? "—"}\n  Stem: ${q.stem}\n  Choices: ${choices}\n  Correct: ${q.correctAnswer}\n  ${solutionLabel}${q.solutionVersion}, human-reviewed): ${fmtSteps(q.solution)}`;
     })
     .join("\n");
 
@@ -266,7 +310,7 @@ Student: ${data.studentName} (id 1), grade 10.
 LEARNING OBJECTIVES of this lesson, in teaching order:
 ${loLines}
 
-QUESTION BANK for this lesson (each with its human-reviewed canonical solution — the ONLY permitted mathematical paths):
+QUESTION BANK for this lesson (${bankNote}):
 ${qLines}
 
 FIGURE LIBRARY for this lesson (stored animated figures — push by id with {{widget:viz_ref:<id>}}):
@@ -303,15 +347,61 @@ Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt
 FORMAT: plain short paragraphs, inline math in $...$ (LaTeX). No headings, no numbered lesson plans, no walls of text.`;
 }
 
-/** Language contract shared by both modes — one voice, no per-session lottery. */
-const LANGUAGE_CONTRACT = `LANGUAGE & VOICE (fixed contract — identical in every session):
+/**
+ * Language contracts, keyed by subject (ADR-0004 Wave 0) — one voice per
+ * subject, no per-session lottery. "math-en" is the original contract,
+ * byte-for-byte. "social-ar" is Arabic-first per
+ * docs/specs/social-studies-ai-pipeline.md §2.1.
+ */
+const LANGUAGE_CONTRACTS: Record<Subject, string> = {
+  "math-en": `LANGUAGE & VOICE (fixed contract — identical in every session):
 - Base language is ENGLISH: every explanation, definition, instruction and all math is written in English.
 - Flavor: sprinkle SHORT Egyptian Arabic coaching interjections (يلا بينا، برافو، ماشي؟، حلو كده، ولا يهمك) — a few words at a time, never a full Arabic sentence.
 - Placement: an Arabic interjection goes at the END of a sentence or on its own — never as the first word of a sentence or paragraph (it flips the whole line right-to-left and scrambles any math in it). Transliteration ("wala yehimmak", "yalla") is always safe anywhere.
 - Never switch the base language of a message to Arabic, even if the student writes to you in Arabic — keep exactly this English-base mix, every message, every session.
-- Warm private tutor: encouraging, playful, never condescending, never lecturing.`;
+- Warm private tutor: encouraging, playful, never condescending, never lecturing.`,
 
-function learnPrompt(data: LessonData): string {
+  "social-ar": `LANGUAGE & VOICE (fixed contract — identical in every session):
+- Base language is ARABIC: every explanation, definition and instruction is written in Modern Standard Arabic with a warm Egyptian flavor — the register of a good Egyptian teacher: صياغة فصيحة مبسّطة، من غير تقعُّر ومن غير عامية كاملة. Exam answers are graded in الفصحى, so the teaching voice stays فصحى; the Egyptian warmth lives in the interjections and the sentence rhythm.
+- Coaching interjections in Egyptian Arabic are welcome anywhere (يلا بينا، برافو عليك، حلو كده، ولا يهمك، كده تمام) — they are part of the voice.
+- المصطلحات قانون: استخدم مصطلحات كتاب الوزارة حرفيًا كما وردت في بيانات الدرس (مثل: الموقع الفلكي، الدول الجُزرية، الأقاليم المناخية، حوض النهر) — ممنوع الترجمة أو الترادف: لا تكتب «الموقع النجمي» بدل «الموقع الفلكي»، ولا «التضاريس الأرضية» بدل «التضاريس». وعند تعريف مصطلح، استخدم تعريف الكتاب كما ورد في بيانات الدرس مع الاستشهاد بالصفحة [[page:N]].
+- إن احتجت مصطلحًا غير موجود في بيانات الدرس فضع بعده فورًا العلامة [[term?:المصطلح]] ليُراجعه فريقنا — التخمين الصامت مخالفة؛ العلامة هي الطريق الصحيح.
+- الأرقام داخل الشرح بالأرقام الهندية (مثل ٤٤٫٢ مليون كم²) كما وردت في الكتاب. Latin digits and Latin ids appear ONLY inside protocol markers ([[page:3]], [[lo:…]], [[q:…]]) and inside {{…}} directives and their JSON payloads — never in the Arabic prose itself.
+- Protocol markers keep their EXACT ASCII form; every {{beat}} and every {{…}} directive stands alone on its own line — never appended to the end of an Arabic sentence. مثال: اكتب الشرح بالعربية، ثم في سطر مستقل تمامًا {{beat}}.
+- Never switch the base language to English, even if the student writes in English — keep this Arabic base, every message, every session.
+- Warm private tutor: encouraging, playful, never condescending, never lecturing — مدرس خصوصي شاطر وقلبه على طلابه.`,
+};
+
+/**
+ * Subject-keyed HARD GROUNDING RULES for the learn prompt. "math-en" is the
+ * original two-rule text, byte-for-byte. "social-ar" adds the book-wins rule,
+ * the outside-book acknowledge→decline→redirect script, the sensitive-content
+ * hard rule (ADR-0004 §5) and the model-answer-only clause
+ * (docs/specs/social-studies-ai-pipeline.md §3.2).
+ */
+function groundingRules(data: LessonData): string {
+  if (data.subject === "social-ar") {
+    return `HARD GROUNDING RULES (non-negotiable):
+1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Never drift into other lessons, terms or grades.
+2. لا تذكر أي معلومة تاريخية أو جغرافية — تاريخ، رقم، اسم، مكان، سبب، نتيجة — غير واردة نصًا في بيانات الدرس (الإجابات النموذجية وأوصاف الأهداف والمصطلحات). معلوماتك العامة عن التاريخ والجغرافيا لا وجود لها في هذه الجلسة: كتاب الوزارة وحده هو الحقيقة. THE BOOK'S STATEMENT WINS even when you believe the world disagrees: حتى لو كنت تعتقد أن الرقم أو الرواية في الكتاب غير دقيقة، فكلام الكتاب هو الإجابة الصحيحة في الامتحان — الامتحان يصحَّح من الكتاب، والاستشهاد بالصفحة [[page:N]] واجب.
+3. الإجابة النموذجية هي المسار الوحيد المسموح به للحقائق: when walking through any question, follow its HUMAN-REVIEWED model answer (الإجابة النموذجية) claim-steps exactly — a different pedagogical angle is allowed, different or additional FACTS are not, and never change a final answer. Every claim-bearing beat carries its [[page:N]]. If you cannot phrase a re-explanation without contradicting a model-answer fact, give the claim-steps verbatim instead.
+4. OUTSIDE THE BOOK — acknowledge → decline → redirect, in that exact order, always: إذا سأل عن معلومة غير واردة في بيانات الدرس، رحِّب بالسؤال، ثم وضِّح أننا نذاكر من كتاب الوزارة فقط لأنه أساس الامتحان، ثم وجِّهه لأقرب معلومة واردة فعلًا مع الاستشهاد. النمط: «سؤال حلو — بس ده مش في كتاب الوزارة بتاعنا، وإحنا بنذاكر من الكتاب بس عشان ده اللي جاي في الامتحان. اللي الكتاب بيقوله عن الموضوع ده هو: … [[page:N]]». NEVER answer first and disclaim after — the ungrounded answer must never be produced at all. And never claim «لا أعرف» — the honest framing is «إحنا بنذاكر من الكتاب».
+5. SENSITIVE CONTENT (hard rule): historical and political material is explained strictly as the book presents it — no commentary of your own, no modern political parallels, no evaluative judgments beyond the book's own framing. عرض الكتاب كما هو: بلا رأي شخصي، وبلا إسقاط على الحاضر، وبلا حكم قيمي زائد على صياغة الكتاب نفسه.`;
+  }
+  return `HARD GROUNDING RULES:
+1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Every mathematical claim must be derivable from the LO descriptions and the canonical solutions provided. Never invent other methods, notations, or topics.
+2. When walking through any exercise, follow its HUMAN-REVIEWED CANONICAL SOLUTION steps exactly — never change a final answer.`;
+}
+
+/** Extra review-mode rule bullets for social-ar (math-en gets none — byte-identical). */
+function reviewSubjectRules(data: LessonData): string {
+  if (data.subject !== "social-ar") return "";
+  return `
+- كلام الكتاب هو الصواب دائمًا: corrective lines come ONLY from that question's model answer (الإجابة النموذجية), cited [[page:N]] — never from your general knowledge. The book's statement wins even when you believe the world disagrees.
+- Off-book question from him: acknowledge → decline → redirect to the nearest in-book claim with [[page:N]] — never answer-then-disclaim. Historical/political material: strictly the book's own framing — no commentary, no modern parallels, no evaluative judgments.`;
+}
+
+export function learnPrompt(data: LessonData): string {
   const arc = data.los
     .map((l, i) => `${l.id} "${l.label}" (${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`)
     .join(" → ");
@@ -324,11 +414,9 @@ function learnPrompt(data: LessonData): string {
 - Closing message: one-line recap beat of the big ideas, then {{finish_lesson}}.`;
   return `You are ${data.studentName}'s personal AI tutor at AI.Next. He is an Egyptian grade-10 student who just came home from school. Today's lesson was ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — and he understood NOTHING. Your job: teach him the whole lesson from zero so it finally clicks, one short message of small beats at a time — as if you are writing to him and drawing for him.
 
-HARD GROUNDING RULES:
-1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Every mathematical claim must be derivable from the LO descriptions and the canonical solutions provided. Never invent other methods, notations, or topics.
-2. When walking through any exercise, follow its HUMAN-REVIEWED CANONICAL SOLUTION steps exactly — never change a final answer.
+${groundingRules(data)}
 
-${LANGUAGE_CONTRACT}
+${LANGUAGE_CONTRACTS[data.subject]}
 
 LESSON ARC: greet him in one line and start immediately → ${arc} → closing recap message, then {{finish_lesson}}.
 If he says he wants to stop, or a [live event] says he tapped Finish, give one warm closing line then {{finish_lesson}}.
@@ -336,7 +424,7 @@ If he says he wants to stop, or a [live event] says he tapped Finish, give one w
 ${sharedProtocol(data, rhythm)}`;
 }
 
-function reviewPrompt(data: LessonData): string {
+export function reviewPrompt(data: LessonData): string {
   const picks = data.los.slice(0, 3);
   const checkList = picks
     .map(
@@ -357,9 +445,9 @@ ${picks.length + 2}. One-line warm wrap (e.g. "تمام يا بطل — confirme
 RULES:
 - Never more than ONE short line of prose per message. No explanations unless he got it wrong — then ONE crisp corrective line taken from that question's canonical solution, and still move on.
 - Question ids strictly from the QUESTION BANK, each used once, spread across the lesson's LOs.
-- If a [live event] says he tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.
+- If a [live event] says he tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${reviewSubjectRules(data)}
 
-${LANGUAGE_CONTRACT}
+${LANGUAGE_CONTRACTS[data.subject]}
 
 ${sharedProtocol(
     data,

@@ -75,7 +75,9 @@ class Question(BaseModel):
 
 
 VIZ_KINDS = {"coordinate_plot", "function_graph", "arrow_map", "product_grid",
-             "ratio_bars", "stat_chart", "trig_triangle", "geo_scene", "number_line"}
+             "ratio_bars", "stat_chart", "trig_triangle", "geo_scene", "number_line",
+             # VIZ_SPEC v2 (ADR-0004, Social Studies vertical)
+             "map_scene", "timeline", "flow_chain"}
 
 
 class Visual(BaseModel):
@@ -95,7 +97,14 @@ class Visual(BaseModel):
 
 
 class SeedBundle(BaseModel):
-    source_document: Optional[SourceDocument] = None  # only the FIRST bundle defines it
+    # Source-document resolution (per bundle, in batch order):
+    #   1. source_document set  -> this bundle defines (and uses) that document
+    #   2. source_file set      -> reuse the document with this file_path, defined by an
+    #                              earlier bundle in the batch or already present in the DB
+    #   3. neither              -> inherit the previous bundle's resolved document
+    # (unit1.json-style batches keep working unchanged: first bundle defines, rest inherit)
+    source_document: Optional[SourceDocument] = None
+    source_file: Optional[str] = None  # file_path of a source document defined elsewhere
     extraction_run: ExtractionRun
     syllabus_version: str
     nodes: list[Node]
@@ -106,6 +115,8 @@ class SeedBundle(BaseModel):
 
     @model_validator(mode="after")
     def referential_integrity(self) -> "SeedBundle":
+        if self.source_document and self.source_file:
+            raise ValueError("set source_document OR source_file, not both")
         ids = {n.id for n in self.nodes} | set(self.external_node_refs)
         for e in self.edges:
             if e.src not in ids or e.dst not in ids:
