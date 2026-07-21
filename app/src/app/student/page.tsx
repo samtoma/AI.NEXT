@@ -59,12 +59,14 @@ export default async function StudentPage({
 
   // A subject is chosen (or only one exists) → its lessons in the check-in.
   const courseId = subject ? COURSE_OF[subject] : undefined;
-  const [lesson, allLessons] = await Promise.all([
-    getLessonData(lessonSlug),
-    getLessonCatalog(),
-  ]);
+  const allLessons = await getLessonCatalog();
   const lessons = courseId
     ? allLessons.filter((l) => l.courseId === courseId)
     : allLessons;
+  // The assigned-lesson card must belong to the CHOSEN subject — otherwise it
+  // falls back to the global default (a math lesson) and the whole check-in
+  // renders as math even though the picker is social.
+  const effectiveSlug = lessonSlug ?? (courseId ? lessons[0]?.slug : undefined);
+  const lesson = await getLessonData(effectiveSlug);
   return <LessonCheckIn lesson={lesson} lessons={lessons} />;
 }
