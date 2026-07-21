@@ -20,6 +20,10 @@ import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
 import { PairPlotter } from "@/components/student/widgets/PairPlotter";
 import { ProductBuilder } from "@/components/student/widgets/ProductBuilder";
+import { LocateOnMap } from "@/components/student/widgets/LocateOnMap";
+import { TimelineBuilder } from "@/components/student/widgets/TimelineBuilder";
+import { ChainBuilder } from "@/components/student/widgets/ChainBuilder";
+import { TermMatch } from "@/components/student/widgets/TermMatch";
 import { renderVizWidget } from "@/components/viz/render-viz-widget";
 import { ReportCard } from "@/components/student/ReportCard";
 import {
@@ -79,6 +83,31 @@ const MODE_COPY: Record<
 };
 
 type Phase = "session" | "rating" | "report" | "error";
+
+/**
+ * Arabic-first surface copy for social-ar lessons (ADR-0004 Wave 1). Math
+ * lessons keep MODE_COPY untouched — every RTL/Arabic branch in this file
+ * gates on lesson.subject so the math surface stays pixel-identical.
+ */
+const AR_MODE_COPY: Record<
+  LessonMode,
+  { chip: string; finish: string; placeholder: string; strip: string }
+> = {
+  learn: {
+    chip: "درس تفاعلي · خطوة خطوة",
+    finish: "خلّص الدرس",
+    placeholder: "اكتب إجابتك أو اسأل أي حاجة…",
+    strip: "✦ كل جملة من كتاب الوزارة",
+  },
+  review: {
+    chip: "مراجعة سريعة · ٣ دقايق",
+    finish: "خلّص دلوقتي",
+    placeholder: "اكتب إجابتك هنا…",
+    strip: "✦ كل جملة من كتاب الوزارة",
+  },
+};
+
+const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تانية", "فهمت — كمّل ✓"];
 
 /* ---------------- session persistence (sessionStorage) ---------------- */
 
@@ -306,6 +335,11 @@ export function LessonSession({
 
   const copy = MODE_COPY[mode];
   const first = lesson.studentName.split(" ")[0];
+  // subject-conditional RTL flip (social-ar only): dir on the app frame flips
+  // the grid (board lands on the LEFT so the reading eye starts at the text),
+  // the stepper and the chips; logical CSS below keeps math LTR unchanged.
+  const rtl = lesson.subject === "social-ar";
+  const arCopy = AR_MODE_COPY[mode];
 
   /* ---------------- finish → honest rating ---------------- */
 
@@ -448,6 +482,112 @@ export function LessonSession({
           );
         }
       }
+      // ---- social-studies widgets (ADR-0004 Wave 1) — same contract as
+      // pair_plotter: deterministic client grading, one onResult note into
+      // the [live event] + auto-continue flow. Bad payloads render nothing.
+      if (name === "locate_on_map") {
+        const base = props.base;
+        const target = props.target;
+        if (
+          typeof base === "string" &&
+          /^[a-z_]{1,32}$/.test(base) &&
+          typeof target === "string" &&
+          target.trim().length > 0
+        ) {
+          const decoys = Array.isArray(props.decoys)
+            ? props.decoys
+                .filter((d): d is string => typeof d === "string" && !!d.trim())
+                .slice(0, 4)
+            : undefined;
+          return (
+            <LocateOnMap
+              base={base}
+              prompt={String(props.prompt ?? "حدد المكان على الخريطة")}
+              target={target}
+              decoys={decoys}
+              onResult={emitNote}
+            />
+          );
+        }
+      }
+      if (name === "timeline_builder") {
+        const events = props.events;
+        if (
+          Array.isArray(events) &&
+          events.length >= 2 &&
+          events.length <= 8 &&
+          events.every((e) => typeof e === "string" && e.trim().length > 0)
+        ) {
+          const order = Array.isArray(props.correctOrder)
+            ? props.correctOrder.filter((n): n is number => Number.isInteger(n))
+            : undefined;
+          return (
+            <TimelineBuilder
+              prompt={String(props.prompt ?? "رتب الأحداث زي ما حصلت")}
+              events={events as string[]}
+              correctOrder={order}
+              onResult={emitNote}
+            />
+          );
+        }
+      }
+      if (name === "chain_builder") {
+        const rawCards = props.cards;
+        if (Array.isArray(rawCards) && rawCards.length >= 2 && rawCards.length <= 6) {
+          const cards: { label: string; role?: string }[] = [];
+          for (const c of rawCards) {
+            if (c === null || typeof c !== "object" || Array.isArray(c)) continue;
+            const label = String((c as { label?: unknown }).label ?? "");
+            const role = (c as { role?: unknown }).role;
+            if (!label) continue;
+            cards.push(
+              typeof role === "string" ? { label, role } : { label }
+            );
+          }
+          if (cards.length === rawCards.length) {
+            const chain = Array.isArray(props.correctChain)
+              ? props.correctChain.filter((n): n is number => Number.isInteger(n))
+              : undefined;
+            return (
+              <ChainBuilder
+                prompt={String(props.prompt ?? "ركّب السلسلة بالترتيب")}
+                cards={cards}
+                correctChain={chain}
+                onResult={emitNote}
+              />
+            );
+          }
+        }
+      }
+      if (name === "term_match") {
+        const rawPairs = props.pairs;
+        if (Array.isArray(rawPairs) && rawPairs.length >= 1 && rawPairs.length <= 6) {
+          const pairs = rawPairs.filter(
+            (p): p is { term: string; definition?: string; def?: string } =>
+              p !== null &&
+              typeof p === "object" &&
+              !Array.isArray(p) &&
+              typeof (p as { term?: unknown }).term === "string"
+          );
+          if (pairs.length === rawPairs.length) {
+            const decoyDefs = Array.isArray(props.decoyDefs)
+              ? props.decoyDefs
+                  .filter((d): d is string => typeof d === "string" && !!d.trim())
+                  .slice(0, 4)
+              : undefined;
+            return (
+              <TermMatch
+                prompt={
+                  typeof props.prompt === "string" ? props.prompt : undefined
+                }
+                pairs={pairs}
+                decoyDefs={decoyDefs}
+                onResult={emitNote}
+              />
+            );
+          }
+        }
+      }
       return null;
     },
     []
@@ -465,6 +605,13 @@ export function LessonSession({
         return {
           title: q ? "Reviewed question" : c.id,
           sub: `${c.id} · human-approved canonical solution`,
+        };
+      }
+      if (c.kind === "term") {
+        // [[term?:…]] — a term outside the lesson data, flagged for review
+        return {
+          title: c.id,
+          sub: "مصطلح غير موجود في بيانات الدرس — للمراجعة",
         };
       }
       const lo = loById.get(c.id);
@@ -535,12 +682,16 @@ export function LessonSession({
 
   if (phase === "report" && check) {
     return (
-      <main className="mx-auto max-w-3xl px-6 pb-16 pt-10">
+      <main
+        dir={rtl ? "rtl" : undefined}
+        className="mx-auto max-w-3xl px-6 pb-16 pt-10"
+      >
         <ReportCard
           check={check}
           mode={mode}
           costUsd={ratingCost}
           studentName={lesson.studentName}
+          rtl={rtl}
         />
       </main>
     );
@@ -548,19 +699,23 @@ export function LessonSession({
 
   if (phase === "rating" || phase === "error") {
     return (
-      <main className="mx-auto max-w-3xl px-6 pb-16 pt-10">
+      <main
+        dir={rtl ? "rtl" : undefined}
+        className="mx-auto max-w-3xl px-6 pb-16 pt-10"
+      >
         <section className="ledger-card anim-pop mx-auto max-w-xl px-8 py-10 text-center">
           {phase === "rating" ? (
             <>
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint">
-                grading the whole session · honestly
+                {rtl ? "بنقيّم الجلسة كلها · بأمانة" : "grading the whole session · honestly"}
               </p>
               <p className="mt-3 font-display text-2xl font-medium text-ink">
-                How much of it really landed?
+                {rtl ? "قد إيه فعلاً رسّخ معاك؟" : "How much of it really landed?"}
               </p>
               <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">
-                The tutor is re-reading everything you did — every answer, every
-                tap on a widget — and writing your comprehension report.
+                {rtl
+                  ? "المدرّس بيرجع يقرأ كل اللي عملته النهاردة — كل إجابة وكل لمسة — وبيكتب تقرير فهمك."
+                  : "The tutor is re-reading everything you did — every answer, every tap on a widget — and writing your comprehension report."}
               </p>
               <span className="mt-5 inline-flex gap-[5px]">
                 {[0, 1, 2].map((i) => (
@@ -577,16 +732,18 @@ export function LessonSession({
           ) : (
             <>
               <p className="font-display text-2xl font-medium text-ink">
-                The grader is unavailable
+                {rtl ? "المصحّح مش متاح دلوقتي" : "The grader is unavailable"}
               </p>
               <p className="mt-2 text-[13.5px] text-ink-soft">
-                Your session is safe — try the rating again.
+                {rtl
+                  ? "جلستك محفوظة — جرّب التقييم تاني."
+                  : "Your session is safe — try the rating again."}
               </p>
               <button
                 onClick={() => finish()}
                 className="mt-5 rounded-full bg-ink px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep"
               >
-                Retry rating →
+                {rtl ? "جرّب التقييم تاني ←" : "Retry rating →"}
               </button>
             </>
           )}
@@ -601,23 +758,26 @@ export function LessonSession({
     lesson.los[0];
 
   return (
-    <main className="mx-auto flex h-dvh min-h-[540px] w-full max-w-6xl flex-col px-4 pb-3 pt-4 md:px-6">
+    <main
+      dir={rtl ? "rtl" : undefined}
+      className="mx-auto flex h-dvh min-h-[540px] w-full max-w-6xl flex-col px-4 pb-3 pt-4 md:px-6"
+    >
       {/* header */}
       <section className="anim-rise shrink-0">
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
           {/* triple-tap = founders' easter egg: toggles the receipts back on */}
           <div onClick={headerTap} className="select-none">
-            <p className="rule-label mb-1 pr-2">
-              {copy.chip} · {first}
+            <p className="rule-label mb-1 pe-2">
+              {rtl ? arCopy.chip : copy.chip} · {first}
               {debug && (
-                <span className="ml-2 text-gold" title="debug receipts on">
+                <span className="ms-2 text-gold" title="debug receipts on">
                   · receipts on
                 </span>
               )}
             </p>
             <h1 className="font-display text-xl font-medium tracking-tight text-ink md:text-2xl">
               {lesson.lessonRef} — {lesson.title}
-              <span dir="rtl" className="ml-3 text-[16px] text-accent-deep">
+              <span dir="rtl" className="ms-3 text-[16px] text-accent-deep">
                 {copy.ar}
               </span>
             </h1>
@@ -659,7 +819,7 @@ export function LessonSession({
               onClick={() => requestFinish(0)}
               className="h-8 rounded-full bg-ink px-4 text-[12px] font-semibold text-paper transition-all duration-150 hover:-translate-y-px hover:bg-accent-deep"
             >
-              {copy.finish} →
+              {rtl ? `${arCopy.finish} ←` : `${copy.finish} →`}
             </button>
           </div>
         </div>
@@ -681,7 +841,8 @@ export function LessonSession({
           </span>
           <span dir="rtl" className="text-[12.5px] font-semibold text-ink">
             {arDigits(stepNow)} من {arDigits(lesson.los.length)} ·{" "}
-            <span dir="ltr" className="font-normal text-ink-soft">
+            {/* social LO labels are Arabic — keep them in the RTL flow */}
+            <span dir={rtl ? undefined : "ltr"} className="font-normal text-ink-soft">
               {currentLo?.label}
             </span>
           </span>
@@ -727,9 +888,15 @@ export function LessonSession({
           {/* lesson stream */}
           <section className="ledger-card flex min-h-0 flex-1 flex-col overflow-hidden md:order-1">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-card-warm px-4 py-2">
-              <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
-                ✦ grounded in the reviewed spine · {lesson.lessonRef} only
-              </span>
+              {rtl ? (
+                <span dir="rtl" className="text-[10.5px] font-semibold text-accent-deep">
+                  {arCopy.strip} · {lesson.lessonRef}
+                </span>
+              ) : (
+                <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
+                  ✦ grounded in the reviewed spine · {lesson.lessonRef} only
+                </span>
+              )}
               {debug ? (
                 <span className="font-mono text-[9px] text-ink-faint">
                   {mode === "review"
@@ -755,11 +922,17 @@ export function LessonSession({
               debug={debug}
               openingLine={copy.opening}
               placeholder={
-                mode === "learn" ? "Answer or ask anything…" : "Answer here…"
+                rtl
+                  ? arCopy.placeholder
+                  : mode === "learn"
+                    ? "Answer or ask anything…"
+                    : "Answer here…"
               }
               suggestions={
                 mode === "learn"
-                  ? ["لسه مش فاهم — say it another way", "Got it — next ✓"]
+                  ? rtl
+                    ? AR_SUGGESTIONS
+                    : ["لسه مش فاهم — say it another way", "Got it — next ✓"]
                   : []
               }
               lookupQuestion={lookupQuestion}
@@ -786,16 +959,28 @@ export function LessonSession({
         <div className="min-h-0 flex-1" />
       )}
 
-      <p className="mt-2 shrink-0 text-center font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint">
-        every beat grounded in human-reviewed solutions · session ends with an
-        honest comprehension score ·{" "}
-        <Link
-          href="/student"
-          className="underline decoration-dotted underline-offset-2 hover:text-accent-deep"
-        >
-          back to check-in
-        </Link>
-      </p>
+      {rtl ? (
+        <p dir="rtl" className="mt-2 shrink-0 text-center text-[10px] text-ink-faint">
+          كل جملة من كتاب الوزارة، بمراجعة بشرية · وفي الآخر تقرير فهم بأمانة ·{" "}
+          <Link
+            href="/student"
+            className="underline decoration-dotted underline-offset-2 hover:text-accent-deep"
+          >
+            ارجع للبداية
+          </Link>
+        </p>
+      ) : (
+        <p className="mt-2 shrink-0 text-center font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint">
+          every beat grounded in human-reviewed solutions · session ends with an
+          honest comprehension score ·{" "}
+          <Link
+            href="/student"
+            className="underline decoration-dotted underline-offset-2 hover:text-accent-deep"
+          >
+            back to check-in
+          </Link>
+        </p>
+      )}
     </main>
   );
 }

@@ -18,11 +18,12 @@
  * never sees half-typed protocol syntax.
  */
 
-export type CiteKind = "lo" | "q" | "page";
+export type CiteKind = "lo" | "q" | "page" | "term";
 
 export interface Cite {
   kind: CiteKind;
-  /** full id: "lo:u1-4-3", "q:u1-4-3:002", or "22" for pages */
+  /** full id: "lo:u1-4-3", "q:u1-4-3:002", "22" for pages, or the flagged
+   *  Arabic term itself for "term" ([[term?:المصطلح]] — social-ar contract) */
   id: string;
 }
 
@@ -38,7 +39,10 @@ export type Block =
   | { t: "check_in" }
   | { t: "finish" };
 
-const CITE_RE = /\[\[(lo|q|page):([^\]\n]{1,80})\]\]/g;
+const CITE_RE = /\[\[(lo|q|page|term\?):([^\]\n]{1,80})\]\]/g;
+
+/** Marker keyword → CiteKind ("term?" flags a missing ministry term). */
+const citeKind = (k: string): CiteKind => (k === "term?" ? "term" : (k as CiteKind));
 
 /** True once the (complete, non-streaming) text carries {{finish_lesson}}. */
 export function hasFinishDirective(text: string): boolean {
@@ -46,7 +50,7 @@ export function hasFinishDirective(text: string): boolean {
 }
 
 const fullId = (kind: string, rest: string) =>
-  kind === "page" ? rest.trim() : `${kind}:${rest.trim()}`;
+  kind === "page" || kind === "term?" ? rest.trim() : `${kind}:${rest.trim()}`;
 
 /* ------------------------------------------------------------------ */
 /* Directive scanning (string-aware, supports nested widget JSON)      */
@@ -250,7 +254,7 @@ export function extractCites(text: string): Cite[] {
     const key = `${m[1]}|${id}`;
     if (!seen.has(key)) {
       seen.add(key);
-      out.push({ kind: m[1] as CiteKind, id });
+      out.push({ kind: citeKind(m[1]), id });
     }
   }
   return out;
@@ -278,7 +282,7 @@ function parseInlines(text: string): Inline[] {
   CITE_RE.lastIndex = 0;
   while ((m = CITE_RE.exec(text))) {
     if (m.index > last) inlines.push({ t: "text", v: text.slice(last, m.index) });
-    inlines.push({ t: "cite", kind: m[1] as CiteKind, id: fullId(m[1], m[2]) });
+    inlines.push({ t: "cite", kind: citeKind(m[1]), id: fullId(m[1], m[2]) });
     last = m.index + m[0].length;
   }
   if (last < text.length) inlines.push({ t: "text", v: text.slice(last) });

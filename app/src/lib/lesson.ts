@@ -1,7 +1,13 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { pool } from "./db";
 import type { AskContext } from "./ask";
 import { getVisualsForLos } from "./visuals";
-import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
+import {
+  figureDirectivesDoc,
+  socialFigureDirectivesDoc,
+  visualsCatalogLines,
+} from "./viz-prompt";
 import type {
   ClaimStep,
   LessonData,
@@ -219,6 +225,37 @@ export async function getLessonData(
   }));
 
   const first = losRes.rows[0];
+  const subject = subjectOfCourse(first?.course_id);
+
+  // Distinct base maps referenced by the stored map_scene figures (≤2, in
+  // first-appearance order) — keys the gazetteer injection for social lessons.
+  const mapBases: string[] = [];
+  for (const v of visuals) {
+    if (v.kind !== "map_scene") continue;
+    const base = (v.spec as { base?: unknown }).base;
+    if (
+      typeof base === "string" &&
+      /^[a-z_]{1,32}$/.test(base) &&
+      !mapBases.includes(base)
+    ) {
+      mapBases.push(base);
+      if (mapBases.length >= 2) break;
+    }
+  }
+
+  // Social lessons name their actual source book (كتاب الوزارة) in the data
+  // block; math stays null so its prompts remain byte-identical.
+  let docTitle: string | null = null;
+  if (subject === "social-ar" && first?.course_id) {
+    const docRes = await pool.query(
+      `SELECT d.title FROM graph_nodes c
+       JOIN source_documents d ON d.sha256 = c.source_sha256
+       WHERE c.id = $1`,
+      [first.course_id]
+    );
+    docTitle = (docRes.rows[0]?.title as string | undefined) ?? null;
+  }
+
   const los: LessonLo[] = losRes.rows.map((r) => ({
     id: r.id,
     label: r.label,
@@ -233,7 +270,7 @@ export async function getLessonData(
     title: LESSON_TITLES[safeSlug] ?? first?.label ?? safeSlug,
     moduleLabel: first?.module_label ?? "Unfiled",
     courseId: first?.course_id ?? null,
-    subject: subjectOfCourse(first?.course_id),
+    subject,
     los,
     questions,
     visuals: visuals.map((v) => ({
@@ -243,6 +280,8 @@ export async function getLessonData(
       caption: v.caption,
       sourcePage: v.sourcePage,
     })),
+    mapBases,
+    docTitle,
     studentName: (studentRes.rows[0]?.display_name as string) ?? "Omar",
   };
 }
@@ -303,8 +342,12 @@ export function lessonDataBlock(data: LessonData): string {
     .join("\n");
 
   const vizLines = visualsCatalogLines(data.visuals);
+  const bookName =
+    social && data.docTitle
+      ? `كتاب الوزارة «${data.docTitle}»`
+      : "Egyptian ministry textbook";
 
-  return `LESSON DATA — your ONLY source of truth (school ${data.lessonRef}: ${data.title} — ${data.moduleLabel}, Egyptian ministry textbook)
+  return `LESSON DATA — your ONLY source of truth (school ${data.lessonRef}: ${data.title} — ${data.moduleLabel}, ${bookName})
 Student: ${data.studentName} (id 1), grade 10.
 
 LEARNING OBJECTIVES of this lesson, in teaching order:
@@ -318,6 +361,59 @@ ${vizLines || "(none for this lesson — compose custom figures with {{widget:vi
 }
 
 /* ------------------------------------------------------------------ */
+/* Gazetteer injection (social lessons — Wave 1)                       */
+/* ------------------------------------------------------------------ */
+
+const GAZ_KIND_ORDER = ["point", "region", "line", "sea"];
+
+/**
+ * Compact gazetteer name lists (names only, grouped by kind) for the ≤2 base
+ * maps referenced by a social lesson's stored visuals, read server-side from
+ * app/public/maps/<base>.json. Appended to the lesson data block so the model
+ * only ever names places the hit-tester can resolve. Empty string when no
+ * base resolves — the data block is unchanged then.
+ */
+async function gazetteerBlock(bases: string[]): Promise<string> {
+  const sections: string[] = [];
+  for (const base of bases.slice(0, 2)) {
+    if (!/^[a-z_]{1,32}$/.test(base)) continue;
+    try {
+      const raw = await readFile(
+        path.join(process.cwd(), "public", "maps", `${base}.json`),
+        "utf8"
+      );
+      const gaz = JSON.parse(raw) as {
+        places?: Record<string, { kind?: unknown }>;
+      };
+      const byKind = new Map<string, string[]>();
+      for (const [name, p] of Object.entries(gaz.places ?? {})) {
+        const kind = typeof p?.kind === "string" ? p.kind : "point";
+        const arr = byKind.get(kind) ?? [];
+        arr.push(name);
+        byKind.set(kind, arr);
+      }
+      if (byKind.size === 0) continue;
+      const kinds = [
+        ...GAZ_KIND_ORDER.filter((k) => byKind.has(k)),
+        ...[...byKind.keys()].filter((k) => !GAZ_KIND_ORDER.includes(k)),
+      ];
+      sections.push(
+        `[base "${base}"]\n${kinds
+          .map((k) => `  ${k}: ${byKind.get(k)!.join("، ")}`)
+          .join("\n")}`
+      );
+    } catch {
+      /* missing/corrupt gazetteer asset — skip this base */
+    }
+  }
+  if (sections.length === 0) return "";
+  return `
+
+GAZETTEER — أسماء الأماكن المعتمدة (the base maps used by this lesson's figures). In every map widget and map_scene ("target", "decoys", "place", every "through" entry) use ONLY these names, copied EXACTLY as written — never invent a place, never use coordinates:
+${sections.join("\n")}`;
+}
+
+/* ------------------------------------------------------------------ */
 /* System prompts                                                      */
 /* ------------------------------------------------------------------ */
 
@@ -325,6 +421,26 @@ function sharedProtocol(data: LessonData, rhythm: string): string {
   const exLo = data.los[0]?.id.replace(/^lo:/, "") ?? "u1-1-1";
   const exQ = data.questions[0]?.id.replace(/^q:/, "") ?? "u1-1-1:001";
   const exPage = data.los[0]?.sourcePage ?? 8;
+  if (data.subject === "social-ar") {
+    const exViz = data.visuals[0]?.id ?? "v:soc1-1:001";
+    return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Flag any needed term missing from the LESSON DATA with [[term?:المصطلح]] right after it — never guess a definition silently.
+
+MESSAGE RHYTHM:
+${rhythm}
+
+INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive per message, always as its LAST beat — {{beat}} itself is a pause marker, not an interactive directive):
+- {{show_question:q:${exQ}}} — pushes that live question card (ids from the QUESTION BANK only; each id at most once per session).
+- {{widget:locate_on_map:{"base":"egypt","prompt":"فين قناة السويس؟ دوس على مكانها","target":"قناة السويس","decoys":["نهر النيل","خليج العقبة"]}}} — «حدد على الخريطة» as a tap. "base" is one of the GAZETTEER bases below; "target" and every "decoys" entry are EXACT gazetteer names. Give 2–3 decoys for the easier pick-among-markers mode; omit "decoys" for the harder free tap. Payload must be flat JSON exactly in this shape.
+- {{widget:timeline_builder:{"prompt":"رتب الأحداث زي ما حصلت","events":["وصول الحملة الفرنسية","موقعة إمبابة","ثورة القاهرة الأولى"],"correctOrder":[0,1,2]}}} — «رتب الأحداث» by tapping. List "events" (3–5 short Arabic labels, facts strictly from the model answers) in story order; "correctOrder" is their indexes in that order.
+- {{widget:chain_builder:{"prompt":"ركّب سلسلة «بم تفسر»","cards":[{"label":"فرض الضرائب الفادحة","role":"سبب"},{"label":"ثورة القاهرة الأولى","role":"حدث"},{"label":"إعدام عدد من الثوار","role":"نتيجة"}],"correctChain":[0,1,2]}}} — the student assembles the سبب → حدث → نتيجة chain in causal order (3–4 cards, facts strictly from the model answers).
+- {{widget:term_match:{"prompt":"وصّل المصطلح بمعناه","pairs":[{"term":"الموقع الفلكي","definition":"موقع المكان بالنسبة لدوائر العرض وخطوط الطول"}],"decoyDefs":["تعريف قريب للتشتيت"]}}} — «ضع المصطلح» matching, 2–4 pairs; terms and definitions VERBATIM from the LESSON DATA (المصطلحات قانون); "decoyDefs" optional.
+- ${socialFigureDirectivesDoc(exViz)}
+  A figure counts as the ONE directive of its message. This is a SOCIAL-STUDIES lesson: اشرح بالرسم — a map_scene for every place, a timeline for every sequence of events, a flow_chain for every «بم تفسر» — pick the stored library figure when one fits the beat.
+- {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
+Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
+
+FORMAT: plain short Arabic paragraphs. No headings, no numbered lesson plans, no walls of text.`;
+  }
   const exViz = data.visuals[0]?.id ?? "v:geo1-1:001";
   const vizGuidance = isGeoLesson(data)
     ? `This is a GEOMETRY lesson: lean on figures — open almost every teaching beat with a stored geo_scene from the FIGURE LIBRARY ({{widget:viz_ref:…}}), or compose one, so he SEES every definition and theorem drawn out. pair_plotter/product_builder rarely fit here.`
@@ -405,11 +521,15 @@ export function learnPrompt(data: LessonData): string {
   const arc = data.los
     .map((l, i) => `${l.id} "${l.label}" (${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`)
     .join(" → ");
+  const tapWidgets =
+    data.subject === "social-ar"
+      ? "figure / locate_on_map / term_match"
+      : "figure / pair_plotter / product_builder";
   const rhythm = `- Every message is 2–4 beats, separated by {{beat}} alone on its own line ({{beat}} renders as a natural writing pause, never as text).
 - One beat = at most 2 short sentences (≤25 words total), OR one figure directive, OR one interactive directive.
 - The LAST beat of a message carries its single interactive directive (widget or check question), with nothing after it — make him DO something in almost every message.
 - Open with one warm beat reacting to his latest [live event]. If he got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking him toward the correct answer — never open with the correct letter.
-- After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (figure / pair_plotter / product_builder) — never a harder question.
+- After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
 - Never repeat a widget, figure or question he already saw.
 - Closing message: one-line recap beat of the big ideas, then {{finish_lesson}}.`;
   return `You are ${data.studentName}'s personal AI tutor at AI.Next. He is an Egyptian grade-10 student who just came home from school. Today's lesson was ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — and he understood NOTHING. Your job: teach him the whole lesson from zero so it finally clicks, one short message of small beats at a time — as if you are writing to him and drawing for him.
@@ -425,16 +545,22 @@ ${sharedProtocol(data, rhythm)}`;
 }
 
 export function reviewPrompt(data: LessonData): string {
+  const social = data.subject === "social-ar";
   const picks = data.los.slice(0, 3);
+  const openerEg = social
+    ? `"فهمت كله؟ حلو — يلا نثبّته في ٣ دقايق ⏱"`
+    : `"فهمت كله؟ حلو — let's lock it in. 3 minutes ⏱"`;
   const checkList = picks
     .map(
       (l, i) =>
-        `${i + 1}. ${i === 0 ? `One warm opener line (e.g. "فهمت كله؟ حلو — let's lock it in. 3 minutes ⏱") + immediately` : "One-line reaction (max 12 words) +"} {{show_question:...}} with a ${i === 0 ? "basic" : "basic or standard"}-tier question from ${l.id}.`
+        `${i + 1}. ${i === 0 ? `One warm opener line (e.g. ${openerEg}) + immediately` : "One-line reaction (max 12 words) +"} {{show_question:...}} with a ${i === 0 ? "basic" : "basic or standard"}-tier question from ${l.id}.`
     )
     .join("\n");
-  const widgetMoment = isGeoLesson(data)
-    ? `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask him ONE quick question about what it shows — he answers in chat.`
-    : `ONE widget moment: {{widget:product_builder:{"X":[1,2],"Y":[4,5],"prompt":"Last one - build X x Y yourself"}}} (or a pair_plotter / stored figure if it fits this lesson better).`;
+  const widgetMoment = social
+    ? `ONE widget moment: {{widget:term_match:{"prompt":"آخر واحدة — وصّل المصطلح بمعناه","pairs":[…2–3 pairs, terms and definitions VERBATIM from the LESSON DATA…]}}} (or a locate_on_map / stored map figure if it fits this lesson better — gazetteer names only).`
+    : isGeoLesson(data)
+      ? `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask him ONE quick question about what it shows — he answers in chat.`
+      : `ONE widget moment: {{widget:product_builder:{"X":[1,2],"Y":[4,5],"prompt":"Last one - build X x Y yourself"}}} (or a pair_plotter / stored figure if it fits this lesson better).`;
   return `You are ${data.studentName}'s AI tutor at AI.Next. He is an Egyptian grade-10 student who came home saying he understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
 
 HARD BUDGET: at most 5 messages total, then the session ends. Follow this script exactly:
@@ -462,9 +588,16 @@ export async function buildLessonContext(
   lessonSlug?: string
 ): Promise<AskContext> {
   const data = await getLessonData(sanitizeLessonSlug(lessonSlug));
+  // Social lessons append the gazetteer name lists of their referenced base
+  // maps (≤2) — math data blocks stay byte-identical (mapBases only ever
+  // gates in for social bundles' map_scene visuals).
+  const gazetteer =
+    data.subject === "social-ar" && data.mapBases.length > 0
+      ? await gazetteerBlock(data.mapBases)
+      : "";
   return {
     systemPrompt: mode === "learn" ? learnPrompt(data) : reviewPrompt(data),
-    dataBlock: lessonDataBlock(data),
+    dataBlock: lessonDataBlock(data) + gazetteer,
     grounding: {
       lo_ids: data.los.map((l) => l.id),
       question_ids: data.questions.map((q) => q.id),

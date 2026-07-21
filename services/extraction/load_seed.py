@@ -33,11 +33,29 @@ import random
 import sys
 from pathlib import Path
 
-from schemas import SeedBundle, SourceDocument
+from schemas import ClaimStep, SeedBundle, SourceDocument
 
 HERE = Path(__file__).resolve().parent
 
 STUDENT_DATA_TABLES = ("attempts", "mastery", "understanding_checks", "explanation_log")
+
+
+def canonical_solution_json(solution: list) -> str:
+    """Serialize a Question.solution for the canonical_solution jsonb column.
+
+    Math (list[str])       -> [{"step": n, "text_md": ...}]           (byte-compatible, unchanged)
+    Social (list[ClaimStep]) -> [{"step": n, "claim_ar": ..., "evidence_page": ...,
+                                  "evidence_kind": ..., "facts": [...]}]
+    matching ClaimStep in app/src/lib/types.ts / fmtSteps in app/src/lib/lesson.ts.
+    """
+    if solution and isinstance(solution[0], ClaimStep):
+        return json.dumps([
+            {"step": i + 1, "claim_ar": s.claim_ar, "evidence_page": s.evidence_page,
+             "evidence_kind": s.evidence_kind,
+             "facts": [f.model_dump() for f in (s.facts or [])]}
+            for i, s in enumerate(solution)
+        ])
+    return json.dumps([{"step": i + 1, "text_md": t} for i, t in enumerate(solution)])
 
 
 def sha256_of(path: Path) -> str:
@@ -264,7 +282,7 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                     (q.id, q.lo, q.tier, q.type, q.stem,
                      json.dumps([c.model_dump() for c in q.choices]) if q.choices else None,
                      q.answer,
-                     json.dumps([{"step": i + 1, "text_md": t} for i, t in enumerate(q.solution)]),
+                     canonical_solution_json(q.solution),
                      "live" if live else "review", sha, q.source_page, q.source_note,
                      run_id, reviewer, live))
                 total_q += 1

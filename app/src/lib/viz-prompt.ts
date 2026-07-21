@@ -39,3 +39,22 @@ export function figureDirectivesDoc(exampleRefId: string): string {
 ${SPEC_CHEATSHEET}
 WHEN to show a figure: whenever the answer touches geometry, graphs, plotting, statistics or anything spatial, SHOW it — at most one figure per answer beat, each on its OWN line immediately after the sentence it illustrates. Figures complement the [[lo:]]/[[q:]]/[[page:]] citations, never replace them.`;
 }
+
+const SOCIAL_SPEC_CHEATSHEET = `SPEC CHEAT SHEET (the 3 social-studies kinds — VIZ_SPEC v2; flat JSON, double quotes; labels/captions in Arabic; dates in Arabic-Indic digits «١٧٩٨م»; every element carries "step" 1,2,3… — the draw order, sequence it the way a teacher would draw on the board):
+· map_scene {"base":"egypt","marks":[{"kind":"region","place":"سيناء","step":1},{"kind":"point","place":"القاهرة","step":2},{"kind":"route","through":["الإسكندرية","رشيد","القاهرة"],"label":"خط السير","step":3},{"kind":"badge","place":"أبو قير","label":"موقعة أبي قير ١٧٩٨م","step":4}],"animate":"sequence"} — base ∈ egypt|nile_valley|arab_world|africa|asia|world|mediterranean_east; mark kinds point|region|route|badge|label; "place" and every "through" entry MUST be an exact name from the GAZETTEER lists in the lesson data — never invent a place, never use coordinates.
+· timeline {"era":[1798,1801],"events":[{"label":"وصول الحملة الفرنسية","when":"١٧٩٨م","step":1},{"label":"ثورة القاهرة الأولى","when":"أكتوبر ١٧٩٨م","step":2}],"animate":"sequence"} — الأقدم على اليمين (RTL); "when" is a short Arabic display string; list events in story order.
+· flow_chain {"nodes":[{"label":"فرض الضرائب الفادحة","role":"سبب","step":1},{"label":"ثورة القاهرة الأولى","role":"حدث","step":2},{"label":"إعدام عدد من الثوار","role":"نتيجة","step":3}],"animate":"sequence"} — سبب → حدث → نتيجة boxes, RTL flow; use it for every «بم تفسر».`;
+
+/**
+ * The two figure directives for the social-ar subject (ADR-0004 Wave 1):
+ * same {{widget:viz_ref}}/{{widget:viz}} protocol, but the cheat sheet
+ * documents the three VIZ_SPEC v2 social kinds instead of the nine math ones.
+ * Math surfaces keep figureDirectivesDoc byte-identical.
+ */
+export function socialFigureDirectivesDoc(exampleRefId: string): string {
+  return `FIGURES — show, don't only tell (اشرح بالرسم):
+- {{widget:viz_ref:${exampleRefId}}} — pushes a STORED, human-curated animated figure from the FIGURE LIBRARY below, by id (no JSON). PREFER this whenever a library figure fits the point being made — these were drawn for the exact book pages you cite.
+- {{widget:viz:{"kind":"map_scene","spec":{…},"caption":"سطر واحد قصير"}}} — compose a CUSTOM animated figure when no stored one fits (nested JSON allowed in this directive only).
+${SOCIAL_SPEC_CHEATSHEET}
+WHEN to show a figure: خريطة لكل مكان، خط زمني لكل تتابع أحداث، سلسلة سبب ونتيجة لكل تفسير — at most one figure per beat, each on its OWN line immediately after the sentence it illustrates. Figures complement the [[lo:]]/[[q:]]/[[page:]] citations, never replace them.`;
+}

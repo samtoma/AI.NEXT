@@ -23,19 +23,37 @@ export function LessonCheckIn({
   lessons: LessonInfo[];
 }) {
   const first = lesson.studentName.split(" ")[0];
+  // social-ar lessons render the assigned-lesson card + doors RTL Arabic-first
+  // (ADR-0004 Wave 1); math check-in stays pixel-identical.
+  const social = lesson.subject === "social-ar";
+  const ar = (s: string | number) =>
+    String(s).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[+d]);
   const pages = lesson.los
     .map((l) => l.sourcePage)
     .filter((p): p is number => p != null);
   const pageSpan = pages.length
-    ? `p.${Math.min(...pages)}–${Math.max(...pages)}`
+    ? social
+      ? `ص${ar(Math.min(...pages))}–${ar(Math.max(...pages))}`
+      : `p.${Math.min(...pages)}–${Math.max(...pages)}`
     : "";
 
   // group the catalog by module, preserving order
-  const modules: { id: string; label: string; lessons: LessonInfo[] }[] = [];
+  const modules: {
+    id: string;
+    label: string;
+    subject: LessonInfo["subject"];
+    lessons: LessonInfo[];
+  }[] = [];
   for (const l of lessons) {
     const m = modules.find((x) => x.id === l.moduleId);
     if (m) m.lessons.push(l);
-    else modules.push({ id: l.moduleId, label: l.moduleLabel, lessons: [l] });
+    else
+      modules.push({
+        id: l.moduleId,
+        label: l.moduleLabel,
+        subject: l.subject,
+        lessons: [l],
+      });
   }
 
   const isGeoModule = (id: string) => id.startsWith("module:geo");
@@ -60,27 +78,59 @@ export function LessonCheckIn({
         className="ledger-card anim-rise overflow-hidden"
         style={{ animationDelay: "100ms" }}
       >
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-card-warm px-5 py-2.5">
-          <span className="font-mono text-[9.5px] uppercase tracking-[0.18em] text-ink-faint">
-            Today at school
-          </span>
-          <span className="font-mono text-[9.5px] text-ink-faint">
-            Ministry textbook · {pageSpan}
-          </span>
+        <div
+          dir={social ? "rtl" : undefined}
+          className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-card-warm px-5 py-2.5"
+        >
+          {social ? (
+            <>
+              <span className="text-[10.5px] font-semibold tracking-wide text-ink-faint">
+                النهاردة في المدرسة
+              </span>
+              <span className="text-[10.5px] text-ink-faint">
+                كتاب الوزارة · {pageSpan}
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="font-mono text-[9.5px] uppercase tracking-[0.18em] text-ink-faint">
+                Today at school
+              </span>
+              <span className="font-mono text-[9.5px] text-ink-faint">
+                Ministry textbook · {pageSpan}
+              </span>
+            </>
+          )}
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-4">
+        <div
+          dir={social ? "rtl" : undefined}
+          className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-4"
+        >
           <div>
             <p className="font-display text-xl font-medium text-ink">
               {selectedIsGeo && (
-                <span dir="rtl" className="mr-2 text-[15px] text-gold">
+                <span dir="rtl" className="me-2 text-[15px] text-gold">
                   هندسة
                 </span>
               )}
+              {social && (
+                <span className="ms-0 me-2 text-[15px] text-gold">دراسات</span>
+              )}
               {lesson.lessonRef} — {lesson.title}
             </p>
-            <p className="mt-0.5 font-mono text-[10.5px] text-ink-faint">
-              {selectedIsGeo ? "Term 2 · " : "Term 1 · "}
+            <p
+              className={
+                social
+                  ? "mt-0.5 text-[11.5px] text-ink-faint"
+                  : "mt-0.5 font-mono text-[10.5px] text-ink-faint"
+              }
+            >
+              {social
+                ? "دراسات اجتماعية · "
+                : selectedIsGeo
+                  ? "Term 2 · "
+                  : "Term 1 · "}
               {lesson.moduleLabel}
             </p>
           </div>
@@ -122,15 +172,31 @@ export function LessonCheckIn({
           >
             مش فاهم حاجة
           </p>
-          <p className="relative mt-1.5 text-[14.5px] font-semibold text-ink">
-            I didn&apos;t get it — teach me from zero.
-          </p>
-          <p className="relative mt-3 font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
-            interactive lesson · figures · voice · honest score
-          </p>
-          <span className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-rust px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:translate-x-1">
-            Teach me →
-          </span>
+          {social ? (
+            <>
+              <p dir="rtl" className="relative mt-1.5 text-[14.5px] font-semibold text-ink">
+                اشرحهولي من الأول خالص.
+              </p>
+              <p dir="rtl" className="relative mt-3 text-[10.5px] text-ink-faint">
+                درس تفاعلي · خرايط ورسومات · تقرير فهم بأمانة
+              </p>
+              <span dir="rtl" className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-rust px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:-translate-x-1">
+                علّمني ←
+              </span>
+            </>
+          ) : (
+            <>
+              <p className="relative mt-1.5 text-[14.5px] font-semibold text-ink">
+                I didn&apos;t get it — teach me from zero.
+              </p>
+              <p className="relative mt-3 font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
+                interactive lesson · figures · voice · honest score
+              </p>
+              <span className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-rust px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:translate-x-1">
+                Teach me →
+              </span>
+            </>
+          )}
         </Link>
 
         <Link
@@ -152,15 +218,31 @@ export function LessonCheckIn({
           >
             فهمت كله ✓
           </p>
-          <p className="relative mt-1.5 text-[14.5px] font-semibold text-ink">
-            I got it — quick revision, 3 minutes.
-          </p>
-          <p className="relative mt-3 font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
-            3 quick checks · 1 challenge · ≤ 5 AI turns
-          </p>
-          <span className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent-deep px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:translate-x-1">
-            Lock it in →
-          </span>
+          {social ? (
+            <>
+              <p dir="rtl" className="relative mt-1.5 text-[14.5px] font-semibold text-ink">
+                فاهمه — مراجعة سريعة في ٣ دقايق.
+              </p>
+              <p dir="rtl" className="relative mt-3 text-[10.5px] text-ink-faint">
+                ٣ أسئلة سريعة · تحدي واحد · وخلصنا
+              </p>
+              <span dir="rtl" className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent-deep px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:-translate-x-1">
+                ثبّته ←
+              </span>
+            </>
+          ) : (
+            <>
+              <p className="relative mt-1.5 text-[14.5px] font-semibold text-ink">
+                I got it — quick revision, 3 minutes.
+              </p>
+              <p className="relative mt-3 font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
+                3 quick checks · 1 challenge · ≤ 5 AI turns
+              </p>
+              <span className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent-deep px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:translate-x-1">
+                Lock it in →
+              </span>
+            </>
+          )}
         </Link>
       </section>
 
@@ -195,31 +277,42 @@ export function LessonCheckIn({
               key={m.id}
               className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5"
             >
-              <span className="w-full font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint sm:w-56 sm:shrink-0">
-                {/* the two curricula both carry a "Unit 4" — keep them apart */}
-                {isGeoModule(m.id) ? "Term 2 · " : "Term 1 · "}
-                {m.label}
-              </span>
+              {m.subject === "social-ar" ? (
+                <span
+                  dir="rtl"
+                  className="w-full text-[10.5px] font-semibold text-ink-faint sm:w-56 sm:shrink-0"
+                >
+                  دراسات اجتماعية · {m.label}
+                </span>
+              ) : (
+                <span className="w-full font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint sm:w-56 sm:shrink-0">
+                  {/* the two curricula both carry a "Unit 4" — keep them apart */}
+                  {isGeoModule(m.id) ? "Term 2 · " : "Term 1 · "}
+                  {m.label}
+                </span>
+              )}
               <span className="flex flex-wrap gap-1.5">
                 {m.lessons.map((l) => {
                   const selected = l.slug === lesson.slug;
                   const geo = isGeoModule(m.id);
+                  const soc = m.subject === "social-ar";
                   return (
                     <Link
                       key={l.slug}
                       href={q(l.slug)}
                       scroll={false}
                       prefetch={false}
-                      title={`${geo ? "Geometry · " : ""}${l.ref} — ${l.title}`}
+                      dir={soc ? "rtl" : undefined}
+                      title={`${geo ? "Geometry · " : soc ? "دراسات اجتماعية · " : ""}${l.ref} — ${l.title}`}
                       aria-current={selected ? "true" : undefined}
-                      className={`rounded-full border px-2.5 py-1 font-mono text-[10px] leading-none transition-all duration-150 ${
+                      className={`rounded-full border px-2.5 py-1 ${soc ? "" : "font-mono "}text-[10px] leading-none transition-all duration-150 ${
                         selected
                           ? "border-accent bg-accent text-paper shadow-sm"
                           : "border-line bg-card text-ink-soft hover:-translate-y-px hover:border-accent/50 hover:text-accent-deep"
                       }`}
                     >
                       {geo && (
-                        <span dir="rtl" className="mr-1">
+                        <span dir="rtl" className="me-1">
                           هندسة
                         </span>
                       )}

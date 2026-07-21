@@ -51,6 +51,33 @@ class Choice(BaseModel):
     text: str
 
 
+class ClaimFact(BaseModel):
+    """One checkable atom inside a claim (date, area, name, cause, result...).
+
+    Raw material for the scripted cross-consistency check (contract §4.2).
+    """
+    kind: str
+    entity: str
+    value: str
+
+
+class ClaimStep(BaseModel):
+    """Social-studies claim-step: one atomic Arabic claim with page evidence
+    (الإجابة النموذجية بالأدلة — docs/specs/social-extraction-contract.md §3).
+    `step` is assigned by the loader from list order, mirroring math strings.
+    """
+    claim_ar: str = Field(min_length=1)
+    evidence_page: int
+    evidence_kind: Literal["text", "map", "concept_box", "enrichment_box"]
+    facts: Optional[list[ClaimFact]] = None
+
+    @model_validator(mode="after")
+    def claim_not_blank(self) -> "ClaimStep":
+        if not self.claim_ar.strip():
+            raise ValueError("claim_ar must be non-empty")
+        return self
+
+
 class Question(BaseModel):
     id: str
     lo: str
@@ -59,7 +86,11 @@ class Question(BaseModel):
     stem: str
     choices: Optional[list[Choice]] = None
     answer: str
-    solution: list[str] = Field(min_length=1, description="Canonical step-by-step solution")
+    # Math: list[str] (canonical step-by-step solution, unchanged).
+    # Social: list[ClaimStep] (model answer with per-claim evidence, contract §3).
+    # Mixed lists are rejected by the union: all-str or all-ClaimStep.
+    solution: list[str] | list[ClaimStep] = Field(
+        min_length=1, description="Canonical solution: math strings or social claim-steps")
     source_page: int
     source_note: str
     verified: bool = False  # True only after an INDEPENDENT re-solve confirmed the answer
@@ -96,6 +127,17 @@ class Visual(BaseModel):
         return self
 
 
+class KeyTerm(BaseModel):
+    """مفاهيم أتعلمها glossary entry (contract §2.2) — verbatim ministry terminology.
+
+    Validated at bundle level; DB storage deferred (human verbatim-check artifact).
+    """
+    term_ar: str
+    definition_ar: str
+    page: int
+    lesson: str
+
+
 class SeedBundle(BaseModel):
     # Source-document resolution (per bundle, in batch order):
     #   1. source_document set  -> this bundle defines (and uses) that document
@@ -111,6 +153,7 @@ class SeedBundle(BaseModel):
     edges: list[Edge]
     questions: list[Question]
     visuals: list[Visual] = []
+    key_terms: list[KeyTerm] = []  # contract §2.2 (social); empty for math bundles
     external_node_refs: list[str] = []  # node ids defined by an earlier bundle (e.g. course:...)
 
     @model_validator(mode="after")

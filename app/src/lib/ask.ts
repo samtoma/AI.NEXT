@@ -68,11 +68,12 @@ export async function buildAskContext(
       ),
       pool.query(`
         SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
-               canonical_solution, solution_version, source_page
+               canonical_solution, solution_version, source_page, source_sha256
         FROM questions WHERE status = 'live' ORDER BY lo_id, tier, id
       `),
       pool.query(
-        `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
+        `SELECT sha256, title, publisher, edition, grade, subject
+         FROM source_documents ORDER BY ingested_at, sha256`
       ),
       pool.query(`SELECT display_name FROM students WHERE id = $1`, [
         STUDENT_ID,
@@ -85,7 +86,14 @@ export async function buildAskContext(
       getAllVisuals(),
     ]);
 
-  const doc = docRes.rows[0] ?? { title: "ministry textbook", publisher: "" };
+  const docs = docRes.rows as {
+    sha256: string;
+    title: string;
+    publisher: string;
+    edition: string | null;
+    grade: string;
+    subject: string;
+  }[];
   const student =
     (studentRes.rows[0]?.display_name as string) ?? "the demo student";
 
@@ -123,6 +131,29 @@ export async function buildAskContext(
     );
     subject = subjectOfCourse(courseRes.rows[0]?.id);
   }
+
+  // Per-course source doc (Wave 1): a question in scope pins the document it
+  // was actually extracted from (its bundle sha) instead of whichever book
+  // `LIMIT 1` happened to return. No question in scope (spine explorer):
+  // a single-doc install reads exactly as before; a multi-doc install lists
+  // every loaded book.
+  const focusDoc = focusQRow
+    ? docs.find((d) => d.sha256 === focusQRow.source_sha256)
+    : undefined;
+  const doc = focusDoc ??
+    docs[0] ?? {
+      title: "ministry textbook",
+      publisher: "",
+      edition: null,
+      grade: "",
+      subject: "",
+    };
+  const sourceLine =
+    focusDoc || docs.length <= 1
+      ? `Source book: "${doc.title}" — ${doc.publisher} (edition ${doc.edition}, ${doc.subject}, grade ${doc.grade}). Syllabus 2025–2026.`
+      : `Source books (all ingested): ${docs
+          .map((d) => `"${d.title}" — ${d.publisher} (${d.subject}, grade ${d.grade})`)
+          .join("; ")}. Syllabus 2025–2026.`;
   const byWeakness = [...losRes.rows].sort(
     (a, b) => (current.get(a.id) ?? 0) - (current.get(b.id) ?? 0)
   );
@@ -241,7 +272,7 @@ ${steps}
     .join("\n");
 
   const dataBlock = `CURRICULUM DATA — your only source of truth
-Source book: "${doc.title}" — ${doc.publisher} (edition ${doc.edition}, ${doc.subject}, grade ${doc.grade}). Syllabus 2025–2026.
+${sourceLine}
 Ingested units: ${moduleLines}.
 Student: ${student} (id 1). Mastery is 0–100%; "baseline" is his placement diagnostic, "today" is a snapshot taken when this chat began.
 

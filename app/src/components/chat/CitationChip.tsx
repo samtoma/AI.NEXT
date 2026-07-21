@@ -34,16 +34,24 @@ export function CitationChip({
     lo: "border-accent/55 bg-accent-wash text-accent-deep hover:bg-accent hover:text-paper",
     q: "border-ink/40 bg-card text-ink-soft hover:bg-ink hover:text-paper",
     page: "border-gold/60 bg-gold-wash text-gold hover:bg-gold hover:text-paper",
+    // [[term?:…]] — a term missing from the lesson data, flagged for review
+    // (social-ar contract). Subtle ochre, review-flag semantics, no action.
+    term: "cursor-default border-gold/50 bg-gold-wash/70 text-gold",
   };
-  const label = friendly
-    ? cite.kind === "page"
-      ? `من الكتاب ص${cite.id}`
-      : cite.kind === "q"
-        ? "تمرين من الكتاب"
-        : (resolve?.(cite)?.title ?? cite.id)
-    : cite.kind === "page"
-      ? `p.${cite.id}`
-      : cite.id;
+  const label =
+    cite.kind === "term"
+      ? friendly
+        ? "مصطلح؟"
+        : `term? ${cite.id}`
+      : friendly
+        ? cite.kind === "page"
+          ? `من الكتاب ص${cite.id}`
+          : cite.kind === "q"
+            ? "تمرين من الكتاب"
+            : (resolve?.(cite)?.title ?? cite.id)
+        : cite.kind === "page"
+          ? `p.${cite.id}`
+          : cite.id;
 
   return (
     <span
@@ -54,6 +62,7 @@ export function CitationChip({
       <button
         dir="auto"
         onClick={() => {
+          if (cite.kind === "term") return; // review flag — no click action yet
           if (cite.kind === "page") setPinned((p) => !p);
           onActivate?.(cite);
         }}
@@ -64,6 +73,7 @@ export function CitationChip({
         {cite.kind === "lo" && <span aria-hidden>◈</span>}
         {cite.kind === "q" && <span aria-hidden>#</span>}
         {cite.kind === "page" && <span aria-hidden>❡</span>}
+        {cite.kind === "term" && <span aria-hidden>✱</span>}
         {label}
       </button>
 
@@ -75,7 +85,9 @@ export function CitationChip({
                 ? "learning objective"
                 : cite.kind === "q"
                   ? "question · reviewed"
-                  : "source reference"}
+                  : cite.kind === "term"
+                    ? "term · flagged for review"
+                    : "source reference"}
             </span>
             <span className="mt-1 block text-[11px] font-medium leading-snug text-ink">
               {info.title}

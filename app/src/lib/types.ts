@@ -193,6 +193,13 @@ export interface LessonData {
   los: LessonLo[];
   questions: SpineQuestion[];
   visuals: LessonViz[];
+  /** distinct base-map ids referenced by this lesson's stored map_scene
+   *  visuals (≤2, first-appearance order) — keys the server-side gazetteer
+   *  injection into the social lesson data block (Wave 1). */
+  mapBases: string[];
+  /** the course's source document title (social lessons only — names
+   *  كتاب الوزارة in the data block); null for math (byte-identical prompts) */
+  docTitle: string | null;
   studentName: string;
 }
 

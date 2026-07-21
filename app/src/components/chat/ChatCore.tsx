@@ -681,7 +681,7 @@ export function ChatCore({
               key={s}
               onClick={() => send(s)}
               disabled={streaming}
-              className="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-1 text-left text-[11px] font-medium leading-snug text-accent-deep transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent enabled:hover:text-paper disabled:opacity-40"
+              className="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-1 text-start text-[11px] font-medium leading-snug text-accent-deep transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent enabled:hover:text-paper disabled:opacity-40"
             >
               {s}
             </button>
@@ -777,7 +777,7 @@ const MessageRow = memo(function MessageRow({
       <div className="anim-pop flex justify-end">
         <div
           dir="auto"
-          className="max-w-[85%] rounded-xl rounded-br-sm bg-ink px-3.5 py-2 text-[13px] leading-relaxed text-paper shadow-sm"
+          className="max-w-[85%] rounded-xl rounded-ee-sm bg-ink px-3.5 py-2 text-[13px] leading-relaxed text-paper shadow-sm"
           style={{ textAlign: "start" }}
         >
           {m.text}
@@ -793,7 +793,7 @@ const MessageRow = memo(function MessageRow({
         <div className="anim-pop flex justify-start" style={dimStyle}>
           <div
             dir="auto"
-            className="max-w-[85%] rounded-xl rounded-bl-sm border border-line-soft bg-card-warm px-3.5 py-2 text-[13px] leading-relaxed text-ink-soft shadow-sm"
+            className="max-w-[85%] rounded-xl rounded-es-sm border border-line-soft bg-card-warm px-3.5 py-2 text-[13px] leading-relaxed text-ink-soft shadow-sm"
             style={{ textAlign: "start" }}
           >
             {m.text}
@@ -822,7 +822,7 @@ const MessageRow = memo(function MessageRow({
     <div className="anim-pop flex justify-start" style={dimStyle}>
       <div
         dir="auto"
-        className={`max-w-[94%] rounded-xl rounded-bl-sm border px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-sm ${
+        className={`max-w-[94%] rounded-xl rounded-es-sm border px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-sm ${
           m.error
             ? "border-rust/40 bg-rust-wash/50"
             : "border-line-soft bg-card-warm"
@@ -897,7 +897,7 @@ const MessageRow = memo(function MessageRow({
           }
           if (b.t === "list") {
             return (
-              <ul key={i} className="my-1.5 space-y-1 pl-1">
+              <ul key={i} className="my-1.5 space-y-1 ps-1">
                 {b.items.map((item, k) => (
                   <li key={k} className="flex gap-1.5" dir="auto">
                     <span className="mt-[1px] shrink-0 text-accent">·</span>
@@ -949,7 +949,7 @@ const MessageRow = memo(function MessageRow({
         })}
 
         {m.streaming && visibleText.length > 0 && (
-          <span className="ml-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-[1px] bg-accent" />
+          <span className="ms-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-[1px] bg-accent" />
         )}
 
         {debug && m.meta && (
