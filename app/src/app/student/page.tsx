@@ -1,8 +1,16 @@
 import { getStudentPlan } from "@/lib/queries";
 import { getLessonCatalog, getLessonData } from "@/lib/lesson";
+import { getSubjectSummaries } from "@/lib/subject-queries";
 import { StudentLoop } from "@/components/student/StudentLoop";
 import { LessonCheckIn } from "@/components/student/LessonCheckIn";
 import { LessonSession } from "@/components/student/LessonSession";
+import { SubjectHome } from "@/components/student/SubjectHome";
+
+/** ?subject → which course's lessons the check-in should show. */
+const COURSE_OF: Record<string, string> = {
+  math: "course:prep3-math-en",
+  social: "course:prep3-social-ar",
+};
 
 export const dynamic = "force-dynamic";
 
@@ -20,11 +28,16 @@ export const metadata = {
 export default async function StudentPage({
   searchParams,
 }: {
-  searchParams: Promise<{ mode?: string | string[]; lesson?: string | string[] }>;
+  searchParams: Promise<{
+    mode?: string | string[];
+    lesson?: string | string[];
+    subject?: string | string[];
+  }>;
 }) {
   const sp = await searchParams;
   const mode = Array.isArray(sp.mode) ? sp.mode[0] : sp.mode;
   const lessonSlug = Array.isArray(sp.lesson) ? sp.lesson[0] : sp.lesson;
+  const subject = Array.isArray(sp.subject) ? sp.subject[0] : sp.subject;
 
   if (mode === "practice") {
     const plan = await getStudentPlan();
@@ -36,9 +49,22 @@ export default async function StudentPage({
     return <LessonSession mode={mode} lesson={lesson} />;
   }
 
-  const [lesson, lessons] = await Promise.all([
+  // No subject chosen yet → the per-subject home (never a blended score).
+  if (!subject) {
+    const summaries = await getSubjectSummaries();
+    // Only show the home when more than one subject is loaded; otherwise the
+    // single-subject check-in is the natural landing (math-only stays as-is).
+    if (summaries.length > 1) return <SubjectHome summaries={summaries} />;
+  }
+
+  // A subject is chosen (or only one exists) → its lessons in the check-in.
+  const courseId = subject ? COURSE_OF[subject] : undefined;
+  const [lesson, allLessons] = await Promise.all([
     getLessonData(lessonSlug),
     getLessonCatalog(),
   ]);
+  const lessons = courseId
+    ? allLessons.filter((l) => l.courseId === courseId)
+    : allLessons;
   return <LessonCheckIn lesson={lesson} lessons={lessons} />;
 }

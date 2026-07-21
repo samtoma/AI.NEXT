@@ -2,13 +2,47 @@ import { pool } from "./db";
 import type {
   PlanItem,
   PlanReason,
+  SpineBridge,
   SpineData,
   SpineLo,
   SpineQuestion,
+  SpineSubject,
   Tier,
 } from "./types";
 
 const STUDENT_ID = 1;
+
+/* ------------------------------------------------------------------ */
+/* Subject dimension (Wave 1.5)                                        */
+/* ------------------------------------------------------------------ */
+
+/** Fallback subject derivation until the `node_subject` view lands: the
+ *  `lo:soc*` id convention marks social; everything else is math. */
+function subjectFromId(id: string): SpineSubject {
+  return id.startsWith("lo:soc") ? "social" : "math";
+}
+
+function normalizeSubject(raw: unknown, id: string): SpineSubject {
+  return raw === "social" || raw === "math"
+    ? (raw as SpineSubject)
+    : subjectFromId(id);
+}
+
+/** True if a relation/view exists (avoids querying a table the data agent
+ *  hasn't created yet — the multi-subject contract lands in parallel). */
+async function relationExists(qualified: string): Promise<boolean> {
+  const r = await pool.query(`SELECT to_regclass($1) AS reg`, [qualified]);
+  return r.rows[0]?.reg !== null;
+}
+
+async function columnExists(table: string, column: string): Promise<boolean> {
+  const r = await pool.query(
+    `SELECT 1 FROM information_schema.columns
+      WHERE table_name = $1 AND column_name = $2 LIMIT 1`,
+    [table, column]
+  );
+  return (r.rowCount ?? 0) > 0;
+}
 
 /* ------------------------------------------------------------------ */
 /* Home                                                                */
@@ -74,14 +108,42 @@ function computeLayers(
 }
 
 export async function getSpineData(): Promise<SpineData> {
-  const [losRes, edgesRes, masteryRes, questionsRes, docRes, countsRes, studentRes] =
-    await Promise.all([
-      pool.query(`
+  // The multi-subject contract (node_subject view, relates_to edges +
+  // rationale column) is built in parallel — detect what's live and degrade
+  // gracefully (id-prefix subject fallback; no bridges) until it lands.
+  const [hasSubjectView, hasRationale] = await Promise.all([
+    relationExists("node_subject"),
+    columnExists("graph_edges", "rationale"),
+  ]);
+
+  const loQuery = hasSubjectView
+    ? `
+        SELECT n.id, n.label, n.description, n.syllabus_ref, n.source_page,
+               n.order_in_parent, ns.subject
+        FROM graph_nodes n
+        LEFT JOIN node_subject ns ON ns.node_id = n.id
+        WHERE n.kind = 'learning_objective'
+        ORDER BY n.order_in_parent
+      `
+    : `
         SELECT id, label, description, syllabus_ref, source_page, order_in_parent
         FROM graph_nodes
         WHERE kind = 'learning_objective'
         ORDER BY order_in_parent
-      `),
+      `;
+
+  // relates_to bridges: only queryable once the rationale column exists.
+  const bridgesPromise = hasRationale
+    ? pool.query(`
+        SELECT src_id, dst_id, rationale
+        FROM graph_edges
+        WHERE edge_type = 'relates_to' AND system_to IS NULL
+      `)
+    : Promise.resolve({ rows: [] as { src_id: string; dst_id: string; rationale: string }[] });
+
+  const [losRes, edgesRes, masteryRes, questionsRes, docRes, countsRes, studentRes, bridgesRes] =
+    await Promise.all([
+      pool.query(loQuery),
       pool.query(`
         SELECT src_id, dst_id, syllabus_version
         FROM graph_edges
@@ -112,6 +174,7 @@ export async function getSpineData(): Promise<SpineData> {
       ),
       pool.query(`SELECT count(*) AS attempts FROM attempts`),
       pool.query(`SELECT display_name FROM students WHERE id = $1`, [STUDENT_ID]),
+      bridgesPromise,
     ]);
 
   const edges = edgesRes.rows.map((r) => ({
@@ -156,7 +219,19 @@ export async function getSpineData(): Promise<SpineData> {
     prereqIds: prereqsOf.get(r.id) ?? [],
     baseline: baseline.get(r.id) ?? 0,
     current: current.get(r.id) ?? 0,
+    subject: normalizeSubject(r.subject, r.id),
   }));
+
+  // Cross-subject bridges: keep only edges whose endpoints are both real LOs
+  // in this graph (defensive — a bridge to a pruned node is meaningless).
+  const loIdSet = new Set(los.map((l) => l.id));
+  const bridges: SpineBridge[] = bridgesRes.rows
+    .filter((r) => loIdSet.has(r.src_id) && loIdSet.has(r.dst_id))
+    .map((r) => ({
+      src: r.src_id as string,
+      dst: r.dst_id as string,
+      rationale: (r.rationale as string) ?? "",
+    }));
 
   const questions: SpineQuestion[] = questionsRes.rows.map((r) => ({
     id: r.id,
@@ -187,6 +262,7 @@ export async function getSpineData(): Promise<SpineData> {
   return {
     los,
     edges,
+    bridges,
     questions,
     doc: docRes.rows[0],
     syllabusVersion: (edgesRes.rows[0]?.syllabus_version as string) ?? "2025-2026",

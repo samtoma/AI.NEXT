@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type {
   AttemptResult,
   ChatMsg,
@@ -143,6 +144,7 @@ export function LessonSession({
   mode: LessonMode;
   lesson: LessonData;
 }) {
+  const router = useRouter();
   const [phase, setPhase] = useState<Phase>("session");
   const [check, setCheck] = useState<UnderstandingCheck | null>(null);
   const [ratingCost, setRatingCost] = useState(0);
@@ -947,6 +949,7 @@ export function LessonSession({
               onCapped={() => requestFinish(2200)}
               onTotalChange={onTotalChange}
               onMessagesChange={onMessagesChange}
+              onSwitchSubject={(subj) => router.push(`/student?subject=${subj}`)}
               inputAccessory={
                 sttOK
                   ? (api) => <MicButton setInput={api.setInput} />

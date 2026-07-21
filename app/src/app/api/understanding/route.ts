@@ -242,8 +242,8 @@ ${transcriptText}`;
 
     const ins = await pool.query(
       `INSERT INTO understanding_checks
-         (student_id, lo_id, mode, score, verdict, strengths, gaps, next_step, turns)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+         (student_id, lo_id, mode, score, verdict, strengths, gaps, next_step, turns, subject)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
        RETURNING id`,
       [
         STUDENT_ID,
@@ -255,6 +255,7 @@ ${transcriptText}`;
         JSON.stringify(rating.gaps),
         rating.next_step,
         turns,
+        data.subject === "social-ar" ? "social" : "math",
       ]
     );
     const id = Number(ins.rows[0].id);

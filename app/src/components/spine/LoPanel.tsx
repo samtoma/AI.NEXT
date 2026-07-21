@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import type { SpineLo, SpineQuestion, Tier } from "@/lib/types";
+import type { SpineBridge, SpineLo, SpineQuestion, Tier } from "@/lib/types";
 import type { VisualRow } from "@/lib/visuals";
 import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
 import { TeX } from "@/components/TeX";
@@ -18,10 +18,16 @@ export const tierStyle: Record<Tier, string> = {
   advanced: "bg-rust-wash text-rust border-rust/30",
 };
 
+const SUBJECT_CHIP: Record<string, { label: string; cls: string }> = {
+  math: { label: "الرياضيات", cls: "border-accent/40 text-accent-deep bg-accent-wash" },
+  social: { label: "الدراسات الاجتماعية", cls: "border-gold/45 text-gold bg-gold-wash" },
+};
+
 export function LoPanel({
   lo,
   allLos,
   questions,
+  bridges = [],
   asOf,
   onClose,
   onSelectLo,
@@ -30,6 +36,8 @@ export function LoPanel({
   lo: SpineLo;
   allLos: SpineLo[];
   questions: SpineQuestion[];
+  /** cross-subject relates_to links touching this LO */
+  bridges?: SpineBridge[];
   asOf: AsOf;
   onClose: () => void;
   onSelectLo: (id: string) => void;
@@ -37,6 +45,14 @@ export function LoPanel({
 }) {
   const delta = lo.current - lo.baseline;
   const byId = new Map(allLos.map((l) => [l.id, l]));
+  const subjectChip = SUBJECT_CHIP[lo.subject];
+  // resolve each bridge's far endpoint (the LO in the OTHER subject)
+  const connections = bridges
+    .map((b) => {
+      const otherId = b.src === lo.id ? b.dst : b.src;
+      return { other: byId.get(otherId) ?? null, rationale: b.rationale };
+    })
+    .filter((c) => c.other);
 
   return (
     <aside className="anim-panel ledger-card thin-scroll w-[372px] shrink-0 self-stretch overflow-y-auto"
@@ -72,10 +88,36 @@ export function LoPanel({
         )}
 
         <div className="flex flex-wrap gap-2">
+          {subjectChip && (
+            <span className={`chip border ${subjectChip.cls}`}>{subjectChip.label}</span>
+          )}
           <span className="chip">source page {lo.sourcePage ?? "—"}</span>
           <span className="chip">{lo.syllabusRef}</span>
           <span className="chip">{questions.length} questions</span>
         </div>
+
+        {connections.length > 0 && (
+          <div>
+            <p className="rule-label mb-2.5">🔗 صلات بمواد أخرى · cross-subject connections</p>
+            <div className="space-y-2">
+              {connections.map((c) => (
+                <button
+                  key={c.other!.id}
+                  onClick={() => onSelectLo(c.other!.id)}
+                  className="block w-full rounded-lg border border-gold/35 bg-gold-wash/50 px-3 py-2 text-start transition-colors hover:bg-gold-wash"
+                >
+                  <span className="flex items-center gap-1.5 text-[12.5px] font-semibold text-gold">
+                    <span aria-hidden>↗</span>
+                    {c.other!.label}
+                  </span>
+                  <span className="mt-0.5 block text-[11.5px] leading-snug text-ink-soft">
+                    {c.rationale}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* mastery trend */}
         <div>

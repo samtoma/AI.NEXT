@@ -20,6 +20,16 @@
   --m-low: #b8472a;
   --m-mid: #cf9227;
   --m-high: #2c7a56;
+  /* subject territories (Wave 1.5): math = ink/viridian world; social = warm
+     sepia/ochre world. Bridge gold is deliberately brighter than social so the
+     rare cross-subject arcs never read as territory chrome. */
+  --subject-math: #16665c;
+  --subject-math-wash: rgba(22, 102, 92, 0.05);
+  --subject-math-line: rgba(22, 102, 92, 0.28);
+  --subject-social: #8a5a2c;
+  --subject-social-wash: rgba(138, 90, 44, 0.06);
+  --subject-social-line: rgba(138, 90, 44, 0.32);
+  --bridge-gold: #c79a3a;
 }
 
 @theme inline {
@@ -202,6 +212,14 @@ body::before {
 @keyframes think-dot {
   0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
   40% { opacity: 1; transform: translateY(-3px); }
+}
+/* cross-subject bridge: a slow travelling dash, so the rare gold arc reads as
+   a "live connection" rather than another static edge. */
+@keyframes bridge-flow {
+  to { stroke-dashoffset: -22; }
+}
+.anim-bridge {
+  animation: bridge-flow 1.6s linear infinite;
 }
 
 .anim-rise { animation: rise-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }

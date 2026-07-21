@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { pool } from "./db";
 import type { AskContext } from "./ask";
+import { getLessonBridges } from "./subject-queries";
 import { getVisualsForLos } from "./visuals";
 import {
   figureDirectivesDoc,
@@ -10,6 +11,7 @@ import {
 } from "./viz-prompt";
 import type {
   ClaimStep,
+  LessonBridge,
   LessonData,
   LessonInfo,
   LessonLo,
@@ -19,6 +21,11 @@ import type {
   Subject,
   Tier,
 } from "./types";
+
+const BRIDGE_SUBJECT_LABEL: Record<LessonBridge["otherSubject"], string> = {
+  math: "الرياضيات",
+  social: "الدراسات الاجتماعية",
+};
 
 /**
  * Adaptive lesson modes — "How did today's lesson go?"
@@ -414,8 +421,45 @@ ${sections.join("\n")}`;
 }
 
 /* ------------------------------------------------------------------ */
+/* Cross-subject connections (bridge-aware hint — Wave 1.5 §5)          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The curated `relates_to` links touching this lesson, formatted as an
+ * OPTIONAL grounding hint. Grounded because each connection is human-approved
+ * with its own rationale — the tutor cites it, never fabricates one. Empty
+ * string when the lesson has no bridges (so those lessons' prompts are
+ * unchanged). Appended to the data block, like the gazetteer.
+ */
+function bridgeBlock(bridges: LessonBridge[]): string {
+  if (bridges.length === 0) return "";
+  const lines = bridges
+    .map(
+      (b) =>
+        `- this "${b.thisLabel}" ↔ ${BRIDGE_SUBJECT_LABEL[b.otherSubject]} «${b.otherLabel}»: ${b.rationale}`
+    )
+    .join("\n");
+  return `
+
+CROSS-SUBJECT CONNECTIONS (curated, human-approved links between THIS lesson and another subject — mention naturally ONLY IF the student reaches this idea; cite the connection, never fabricate one; at most ONE gentle one-line hint per lesson, then move on):
+${lines}
+The hint is light and optional — e.g. «فكرة الإحداثيات دي شفتها في الرياضيات» / "you already met this coordinates idea in math" — dropped at the natural moment, never forced, never a second lesson.`;
+}
+
+/* ------------------------------------------------------------------ */
 /* System prompts                                                      */
 /* ------------------------------------------------------------------ */
+
+/**
+ * Cross-subject recognition + offered handoff (Wave 1.5 — Samuel's core call:
+ * seamless awareness, never a hard pause, never a blind inline answer). Added
+ * IDENTICALLY to every subject's lesson prompt: a math session must recognize
+ * a history question, and a social session a math question. The literal string
+ * is shared so the only prompt delta this wave introduces is byte-for-byte the
+ * same in math and social. `{{switch_subject:…}}` is parsed into a warm
+ * handoff card, NOT answered from memory — that keeps grounding honest.
+ */
+const CROSS_SUBJECT_RULE = `CROSS-SUBJECT AWARENESS (subjects stay separate; offer a clean handoff): if the student asks about a DIFFERENT school subject — e.g. a history or geography question during a math lesson, or a math question during a social-studies lesson (NOT merely another lesson inside THIS subject) — do NOT answer it from memory or from this lesson's data. Give ONE short warm acknowledgment in your own voice, then emit {{switch_subject:<subject>}} alone on its own line, where <subject> is exactly "math" or "social". This offers a handoff to that subject; it is NOT one of the interactive directives above and does not count as this message's single directive.`;
 
 function sharedProtocol(data: LessonData, rhythm: string): string {
   const exLo = data.los[0]?.id.replace(/^lo:/, "") ?? "u1-1-1";
@@ -439,6 +483,8 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
 - {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
+${CROSS_SUBJECT_RULE}
+
 FORMAT: plain short Arabic paragraphs. No headings, no numbered lesson plans, no walls of text.`;
   }
   const exViz = data.visuals[0]?.id ?? "v:geo1-1:001";
@@ -459,6 +505,8 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
   A figure counts as the ONE directive of its message. ${vizGuidance}
 - {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
+
+${CROSS_SUBJECT_RULE}
 
 FORMAT: plain short paragraphs, inline math in $...$ (LaTeX). No headings, no numbered lesson plans, no walls of text.`;
 }
@@ -595,9 +643,13 @@ export async function buildLessonContext(
     data.subject === "social-ar" && data.mapBases.length > 0
       ? await gazetteerBlock(data.mapBases)
       : "";
+  // Curated cross-subject bridges touching this lesson's LOs (§5). Fetched for
+  // every subject — the connection is symmetric — and appended only when some
+  // exist, so lessons without a bridge keep byte-identical data blocks.
+  const bridges = bridgeBlock(await getLessonBridges(data.los.map((l) => l.id)));
   return {
     systemPrompt: mode === "learn" ? learnPrompt(data) : reviewPrompt(data),
-    dataBlock: lessonDataBlock(data) + gazetteer,
+    dataBlock: lessonDataBlock(data) + gazetteer + bridges,
     grounding: {
       lo_ids: data.los.map((l) => l.id),
       question_ids: data.questions.map((q) => q.id),

@@ -37,6 +37,7 @@ export type Block =
   | { t: "widget"; name: string; props: Record<string, unknown> }
   | { t: "beat" }
   | { t: "check_in" }
+  | { t: "switch_subject"; subject: "math" | "social" }
   | { t: "finish" };
 
 const CITE_RE = /\[\[(lo|q|page|term\?):([^\]\n]{1,80})\]\]/g;
@@ -65,6 +66,7 @@ interface Action {
 
 const SIMPLE_RE = /^\{\{(show_question|highlight):([^}\n]{1,160})\}\}/;
 const WIDGET_HEAD_RE = /^\{\{widget:([a-z_]{1,40}):/;
+const SWITCH_RE = /^\{\{switch_subject:(math|social)\}\}/;
 const FINISH = "{{finish_lesson}}";
 const BEAT = "{{beat}}";
 const CHECK_IN = "{{check_in}}";
@@ -116,6 +118,14 @@ function parseActionAt(s: string, i: number): Action | null {
   }
   if (head.startsWith(CHECK_IN)) {
     return { start: i, end: i + CHECK_IN.length, block: { t: "check_in" } };
+  }
+  const sw = SWITCH_RE.exec(head);
+  if (sw) {
+    return {
+      start: i,
+      end: i + sw[0].length,
+      block: { t: "switch_subject", subject: sw[1] as "math" | "social" },
+    };
   }
   const w = WIDGET_HEAD_RE.exec(head);
   if (w && w[1] === "viz_ref") {
@@ -183,6 +193,7 @@ const DIRECTIVE_KEYWORDS = [
   "finish_lesson}}",
   "beat}}",
   "check_in}}",
+  "switch_subject:",
 ];
 
 /** True when "{{" at `i` opens a directive that is not yet complete. */

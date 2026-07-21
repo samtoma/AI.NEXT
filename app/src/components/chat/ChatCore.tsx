@@ -97,6 +97,8 @@ export interface ChatCoreProps {
   onAssistantDone?: (text: string) => void;
   /** fired when a fully revealed assistant message carries {{finish_lesson}} */
   onFinishDirective?: () => void;
+  /** the "open" button of a {{switch_subject:…}} handoff card was tapped */
+  onSwitchSubject?: (subject: "math" | "social") => void;
   /** fired when the server turn cap is reached */
   onCapped?: () => void;
   /** transcript mirror for the parent (rating pass) */
@@ -150,6 +152,7 @@ export function ChatCore({
   handleRef,
   onAssistantDone,
   onFinishDirective,
+  onSwitchSubject,
   onCapped,
   onMessagesChange,
   inputAccessory,
@@ -669,6 +672,7 @@ export function ChatCore({
             onOpenQuestion={handleOpenQuestion}
             interceptWidget={interceptWidget}
             onDirective={onDirective}
+            onSwitchSubject={onSwitchSubject}
           />
         ))}
       </div>
@@ -747,6 +751,7 @@ const MessageRow = memo(function MessageRow({
   onCheckIn,
   interceptWidget,
   onDirective,
+  onSwitchSubject,
 }: {
   msg: ChatMsg;
   debug: boolean;
@@ -764,6 +769,7 @@ const MessageRow = memo(function MessageRow({
   onCheckIn?: (choice: string) => void;
   interceptWidget?: ChatCoreProps["interceptWidget"];
   onDirective?: ChatCoreProps["onDirective"];
+  onSwitchSubject?: ChatCoreProps["onSwitchSubject"];
 }) {
   if (m.hidden) return null;
 
@@ -924,6 +930,17 @@ const MessageRow = memo(function MessageRow({
               </ul>
             );
           }
+          if (b.t === "switch_subject") {
+            return (
+              <SubjectHandoffCard
+                key={i}
+                subject={b.subject}
+                onOpen={
+                  onSwitchSubject ? () => onSwitchSubject(b.subject) : undefined
+                }
+              />
+            );
+          }
           return (
             <p
               key={i}
@@ -969,6 +986,52 @@ const MessageRow = memo(function MessageRow({
     </div>
   );
 });
+
+/**
+ * Cross-subject handoff (Wave 1.5, multi-subject spine §3): the tutor stays
+ * in its subject and OFFERS to switch rather than answering out-of-subject
+ * (which would break grounding). "Open" navigates; "stay" collapses the card.
+ */
+function SubjectHandoffCard({
+  subject,
+  onOpen,
+}: {
+  subject: "math" | "social";
+  onOpen?: () => void;
+}) {
+  const [dismissed, setDismissed] = useState(false);
+  const label = subject === "social" ? "الدراسات الاجتماعية" : "الرياضيات";
+  if (dismissed) {
+    return (
+      <p className="my-1 text-[11px] text-ink-faint" dir="auto">
+        — نكمل اللي إحنا فيه ✓
+      </p>
+    );
+  }
+  return (
+    <div dir="rtl" className="my-2 rounded-xl border border-gold/45 bg-gold-wash/50 p-3">
+      <p className="text-[13px] font-medium leading-relaxed text-ink">
+        ده سؤال في <strong>{label}</strong> — تحب نفتح المادة دي، ولا نكمل اللي
+        إحنا فيه ونرجعله بعدين؟
+      </p>
+      <div className="mt-2.5 flex gap-2">
+        <button
+          onClick={onOpen}
+          disabled={!onOpen}
+          className="rounded-full bg-ink px-3.5 py-1.5 text-[12.5px] font-medium text-paper transition-opacity hover:opacity-90 disabled:opacity-40"
+        >
+          افتح {label} ←
+        </button>
+        <button
+          onClick={() => setDismissed(true)}
+          className="rounded-full border border-line px-3.5 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:text-ink"
+        >
+          نكمل
+        </button>
+      </div>
+    </div>
+  );
+}
 
 /**
  * Transcript stand-in for a board-intercepted figure/question — keeps the

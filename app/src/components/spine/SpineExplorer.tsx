@@ -2,7 +2,12 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { AttemptResult, SpineData, SpineQuestion } from "@/lib/types";
+import type {
+  AttemptResult,
+  SpineData,
+  SpineQuestion,
+  SpineSubject,
+} from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
 import { GraphCanvas, type AsOf } from "./GraphCanvas";
 import { LoPanel } from "./LoPanel";
@@ -22,6 +27,7 @@ const fmtDate = (iso: string) =>
 export function SpineExplorer({ data }: { data: SpineData }) {
   const router = useRouter();
   const [asOf, setAsOf] = useState<AsOf>("today");
+  const [subjectFilter, setSubjectFilter] = useState<"all" | SpineSubject>("all");
   const [selectedLoId, setSelectedLoId] = useState<string | null>(null);
   const [openQuestion, setOpenQuestion] = useState<SpineQuestion | null>(null);
   // AI-citation choreography: cited nodes glow; each cite fires a pulse ring
@@ -50,6 +56,39 @@ export function SpineExplorer({ data }: { data: SpineData }) {
     () => new Map(data.los.map((l) => [l.id, l])),
     [data.los]
   );
+
+  // Subjects present in the loaded graph (the filter only appears when >1).
+  const subjectsPresent = useMemo(() => {
+    const s = new Set<SpineSubject>();
+    for (const l of data.los) s.add(l.subject);
+    return [...s];
+  }, [data.los]);
+
+  // The graph shows one territory (filtered) or all (territories side by side).
+  const visibleLos = useMemo(
+    () =>
+      subjectFilter === "all"
+        ? data.los
+        : data.los.filter((l) => l.subject === subjectFilter),
+    [data.los, subjectFilter]
+  );
+  const visibleLoIds = useMemo(
+    () => new Set(visibleLos.map((l) => l.id)),
+    [visibleLos]
+  );
+  // A bridge only draws when BOTH its endpoints are on screen.
+  const visibleBridges = useMemo(
+    () =>
+      data.bridges.filter(
+        (b) => visibleLoIds.has(b.src) && visibleLoIds.has(b.dst)
+      ),
+    [data.bridges, visibleLoIds]
+  );
+
+  const SUBJECT_LABEL: Record<SpineSubject, string> = {
+    math: "Mathematics",
+    social: "الدراسات الاجتماعية",
+  };
 
   const pulseLo = useCallback((loIds: string[]) => {
     if (loIds.length === 0) return;
@@ -136,7 +175,15 @@ export function SpineExplorer({ data }: { data: SpineData }) {
   );
 
   const avg = (key: "baseline" | "current") =>
-    data.los.reduce((s, l) => s + l[key], 0) / Math.max(1, data.los.length);
+    visibleLos.reduce((s, l) => s + l[key], 0) / Math.max(1, visibleLos.length);
+
+  const pickSubject = (s: "all" | SpineSubject) => {
+    setSubjectFilter(s);
+    // drop a selection that's about to leave the view
+    setSelectedLoId((cur) =>
+      cur && s !== "all" && losById.get(cur)?.subject !== s ? null : cur
+    );
+  };
 
   return (
     <main className="mx-auto max-w-[1400px] px-6 pb-12">
@@ -170,7 +217,24 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         className="anim-rise mb-4 flex flex-wrap items-center justify-between gap-4"
         style={{ animationDelay: "90ms" }}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
+          {subjectsPresent.length > 1 && (
+            <div className="ledger-card flex items-center gap-1 rounded-full! p-1">
+              {(["all", ...subjectsPresent] as const).map((key) => (
+                <button
+                  key={key}
+                  onClick={() => pickSubject(key)}
+                  className={`rounded-full px-3.5 py-1.5 text-[12.5px] font-medium transition-all duration-300 ${
+                    subjectFilter === key
+                      ? "bg-ink text-paper shadow-sm"
+                      : "text-ink-soft hover:text-ink"
+                  }`}
+                >
+                  {key === "all" ? "All subjects" : SUBJECT_LABEL[key]}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="ledger-card flex items-center gap-1 rounded-full! p-1">
             {(
               [
@@ -231,13 +295,15 @@ export function SpineExplorer({ data }: { data: SpineData }) {
       >
         <div className="ledger-card min-w-0 flex-1 overflow-hidden">
           <GraphCanvas
-            los={data.los}
+            los={visibleLos}
             edges={data.edges}
+            bridges={visibleBridges}
+            showTerritories={subjectFilter === "all" && subjectsPresent.length > 1}
             asOf={asOf}
             selectedLoId={selectedLoId}
             questionCounts={
               new Map(
-                data.los.map((l) => [l.id, questionsByLo.get(l.id)?.length ?? 0])
+                visibleLos.map((l) => [l.id, questionsByLo.get(l.id)?.length ?? 0])
               )
             }
             onSelect={(id) =>
@@ -263,6 +329,9 @@ export function SpineExplorer({ data }: { data: SpineData }) {
             lo={selectedLo}
             allLos={data.los}
             questions={questionsByLo.get(selectedLo.id) ?? []}
+            bridges={data.bridges.filter(
+              (b) => b.src === selectedLo.id || b.dst === selectedLo.id
+            )}
             asOf={asOf}
             onClose={() => setSelectedLoId(null)}
             onSelectLo={setSelectedLoId}

@@ -21,6 +21,14 @@ All 178 pages of the ministry PDF (Term-1 + Term-2 books) are in the spine: **10
 ## Tutor Experience v2 — SHIPPED (2026-07-18, spec: docs/specs/tutor-experience-v2.md)
 All three waves verified: **A** (7 correctness bugs), **B1** (beat protocol + paced reveal, grounding slices + prompt caching — spine $0.28→$0.014/turn, lesson EGP 32-46→6-7 — latency theater, language lock, softened failures, de-instrumented student surface w/ triple-tap debug), **B2** (persistent whiteboard السبورة with figure/question focus + filmstrip, controlled-step figures across all 9 primitives — draw once slowly, tap-advance, no infinite loops — focus mode + labeled Arabic stepper, doors-first check-in with Term-disambiguated picker, sessionStorage lesson resume). Repo: https://github.com/samtoma/AI.NEXT (commit at each verified milestone).
 
+## Multi-Subject Spine — Wave 1.5 SHIPPED (2026-07-21, ADR-0004; spec: multi-subject-spine.md)
+Subjects are now separated everywhere, bridged by exception. Verified live:
+- **Graph territories:** Evidence Walk splits into per-subject territories (math ink/viridian, social sepia/ochre) with a subject filter (All / Mathematics / الدراسات الاجتماعية); per-subject avg (never blended).
+- **`relates_to` bridges (the "revolutionary" hint):** new cross-subject, non-prerequisite edge type (migration 006: rationale column + edge_type CHECK widened; `node_subject` view; understanding_checks.subject). 2 curated bridges in `db/bridges.sql` (map-reading↔coordinate-plane; campaign-route↔distance-between-points) — honest scope; more unlock in Wave 2. Rendered as gold arcs + in LoPanel "cross-subject connections" with bilingual rationale. Loader preserves relates_to across scoped reloads.
+- **Cross-subject chat handoff (Samuel's core Q):** lesson prompt rule → `{{switch_subject:...}}` → warm handoff card (open the other subject / stay); NEVER answers out-of-subject inline (keeps grounding honest). Bridge-aware hint in lesson grounding (getLessonBridges).
+- **Per-subject home + ratings:** `/student` → SubjectHome (two subject cards, per-subject mastery/weakest/last-check, never blended); check-in filters by ?subject; understanding_checks tagged by subject.
+- 3 background agents stalled (watchdog) mid-build; coordinator finished all three tracks by hand. tsc + build clean, all pages 200. **Handoff card is code-complete but only the graph/home/bridge were live-screenshotted; the card firing needs one real cross-subject AI turn in a demo.**
+
 ## Social Studies — ADR-0004 accepted; Wave 0 SHIPPED (2026-07-20)
 Samuel accepted all recommendations (voice vendor deferred). Wave 0 complete & verified:
 - **Viz v2:** 7 Ledger SVG base maps + Arabic gazetteers (`app/public/maps/`), map_scene / RTL timeline / flow_chain primitives, 4 widgets (LocateOnMap, TimelineBuilder, ChainBuilder, TermMatch) — all step-driven via the core seam; VIZ_SPEC v2 with canonical place-name lists.

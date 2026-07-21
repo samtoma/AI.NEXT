@@ -9,7 +9,7 @@ from typing import Literal, Optional
 from pydantic import BaseModel, Field, model_validator
 
 NodeKind = Literal["program", "course", "module", "learning_objective", "topic"]
-EdgeType = Literal["part_of", "teaches", "prerequisite_of", "about"]
+EdgeType = Literal["part_of", "teaches", "prerequisite_of", "about", "relates_to"]
 Tier = Literal["basic", "standard", "advanced"]
 QuestionType = Literal["mcq", "numeric", "short"]
 

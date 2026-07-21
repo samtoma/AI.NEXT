@@ -159,7 +159,10 @@ def delete_course_subtree(cur, course_id: str, subtree: set[str]) -> None:
     d("visuals", "DELETE FROM visuals WHERE lo_id = ANY(%s) OR question_id = ANY(%s)",
       (ids, qids))
     d("questions", "DELETE FROM questions WHERE id = ANY(%s)", (qids,))
-    d("edges", "DELETE FROM graph_edges WHERE src_id = ANY(%s) OR dst_id = ANY(%s)", (ids, ids))
+    # Preserve cross-subject 'relates_to' bridges: a bridge has one endpoint in
+    # another course, so a scoped reload must not delete it (see db/bridges.sql).
+    d("edges", "DELETE FROM graph_edges WHERE (src_id = ANY(%s) OR dst_id = ANY(%s)) "
+      "AND edge_type <> 'relates_to'", (ids, ids))
     d("nodes", "DELETE FROM graph_nodes WHERE id = ANY(%s)", (ids,))
 
     print(f"--course {course_id}: replaced subtree of {counts['nodes']} nodes, "

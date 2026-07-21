@@ -1,6 +1,16 @@
 export type Tier = "basic" | "standard" | "advanced";
 
 /**
+ * Spine-graph subject dimension (Wave 1.5 multi-subject spine).
+ * Sourced from the `node_subject` DB view (course join); falls back to the
+ * `lo:soc*` id-prefix convention when the view isn't present yet. Distinct from
+ * the lesson-prompt `Subject` above ("math-en"/"social-ar") — this is the
+ * graph-territory key: math and social are separate territories, bridged by
+ * exception. See docs/specs/multi-subject-spine.md §2.
+ */
+export type SpineSubject = "math" | "social";
+
+/**
  * Subject key, derived from the lesson's course node in the graph
  * (ADR-0004 Wave 0): course:prep3-math-en → "math-en",
  * course:prep3-social-ar → "social-ar". Selects the language contract and
@@ -80,11 +90,26 @@ export interface SpineLo {
   prereqIds: string[];
   baseline: number;
   current: number;
+  /** graph-territory key (math | social) — Wave 1.5 */
+  subject: SpineSubject;
+}
+
+/**
+ * A cross-subject associative link (`relates_to` edge). NOT a prerequisite:
+ * never gates a lesson, never touches the DAG or mastery. Rendered as a rare
+ * dashed-gold bridge between territories. `rationale` is the one-line "why".
+ */
+export interface SpineBridge {
+  src: string; // LO id
+  dst: string; // LO id
+  rationale: string;
 }
 
 export interface SpineData {
   los: SpineLo[];
   edges: { src: string; dst: string }[];
+  /** cross-subject associative links (rare) — rendered as gold bridges */
+  bridges: SpineBridge[];
   questions: SpineQuestion[];
   doc: {
     title: string;
@@ -203,6 +228,20 @@ export interface LessonData {
   studentName: string;
 }
 
+/**
+ * A curated cross-subject connection (`relates_to` edge) touching one of the
+ * current lesson's LOs (Wave 1.5, multi-subject spine §5). `otherLo` is the
+ * far endpoint (in ANOTHER subject); the tutor MAY surface it as ONE gentle
+ * grounded hint at the natural moment — it is never fabricated. */
+export interface LessonBridge {
+  thisLo: string;
+  thisLabel: string;
+  otherLo: string;
+  otherLabel: string;
+  otherSubject: SpineSubject;
+  rationale: string;
+}
+
 export type Verdict = "got_it" | "nearly" | "needs_work";
 
 export interface UnderstandingCheck {
@@ -224,4 +263,27 @@ export interface AttemptResult {
   loLabel: string;
   oldScore: number;
   newScore: number;
+}
+
+/* ---- Per-subject roll-up (Wave 1.5 — subject home; never blended) ---- */
+
+/**
+ * One subject's overview for the student home. Mastery is rolled up ONLY
+ * within a subject — the product never shows a single blended score across
+ * math and social (docs/specs/multi-subject-spine.md §4). */
+export interface SubjectSummary {
+  subject: SpineSubject; // "math" | "social"
+  courseId: string | null;
+  courseLabel: string; // course node label (math LTR / social Arabic)
+  avgMastery: number; // 0–1, over this subject's current-mastery rows
+  weakestLo: { id: string; label: string; mastery: number } | null;
+  lessonsCount: number; // distinct teachable lessons in this subject
+  /** the subject's default lesson slug for "continue" (first in teach order) */
+  defaultSlug: string | null;
+  lastCheck: {
+    score: number;
+    verdict: Verdict;
+    mode: LessonMode;
+    createdAt: string;
+  } | null;
 }
