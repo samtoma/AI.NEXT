@@ -32,9 +32,15 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://ainext:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}@db:5432/ainext_poc
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?set ANTHROPIC_API_KEY in deploy/.env}
       AINEXT_THINKING_BUDGET: "6000"
       NODE_ENV: production
+      # No API key: the bundled `claude` CLI runs on your Claude SUBSCRIPTION.
+      # You log in ONCE (see DEPLOY.md); creds live in the claude_cfg volume and
+      # survive every `up -d --build`. Only `down -v` wipes them.
+      CLAUDE_CONFIG_DIR: /repo/.claude
+    volumes:
+      # persists the `claude` login across redeploys (decoupled from the image)
+      - claude_cfg:/repo/.claude
     depends_on:
       db:
         condition: service_healthy
@@ -46,3 +52,4 @@ services:
 
 volumes:
   ainext_pg:
+  claude_cfg:

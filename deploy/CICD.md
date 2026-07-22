@@ -31,19 +31,23 @@ sudo usermod -aG docker "$USER"    # then re-login / restart the runner service
 > private repo you control. It runs as its own user — do **not** run it as root, and it
 > never needs access to the talent.reletix.com stack.
 
-### 2. Put the secrets on the box (never in GitHub)
+### 2. Put the secret on the box (never in GitHub)
 ```bash
 cat > ~/ainext.env <<'EOF'
-ANTHROPIC_API_KEY=sk-ant-...
 POSTGRES_PASSWORD=your-strong-password
 EOF
 chmod 600 ~/ainext.env
 ```
 The deploy workflow copies this into `deploy/.env` at build time. `deploy/.env` is gitignored.
+There's **no API key** — the `claude` CLI runs on your Claude subscription (next step).
 
-### 3. First deploy
+### 3. First deploy + one-time Claude login
 - Merge the branch to `main`, **or** go to **Actions → Deploy to OCI → Run workflow** and
   pick your branch. The runner builds and starts the stack, then health-checks it.
+- **Log the CLI in once** (OAuth can't run inside CI — it needs your browser):
+  `cd <repo>/deploy && docker compose exec app claude` → approve in your browser.
+  The login lives in the `claude_cfg` volume and **survives every future auto-deploy**
+  (`up -d --build` never touches the volume). You only re-login after a `docker compose down -v`.
 - Do the Cloudflare tunnel step once (see `deploy/DEPLOY.md` + `cloudflared-ingress.example.yml`).
 
 ## After that
