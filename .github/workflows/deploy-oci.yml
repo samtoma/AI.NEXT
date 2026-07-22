@@ -1,0 +1,56 @@
+name: Deploy to OCI
+
+# Runs ON your OCI box via a self-hosted runner (label: oci). No inbound SSH;
+# the runner polls GitHub. Secrets never touch GitHub — they live in
+# ~/ainext.env on the box (see deploy/CICD.md). Rebuilds the isolated Docker
+# stack alongside talent.reletix.com and health-checks it.
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "services/extraction/seed/content/**"
+      - "deploy/**"
+      - ".github/workflows/deploy-oci.yml"
+
+concurrency:
+  group: deploy-oci
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, oci]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Provide box-resident secrets
+        run: |
+          if [ ! -f "$HOME/ainext.env" ]; then
+            echo "::error::~/ainext.env not found on the runner box. Create it once — see deploy/CICD.md"
+            exit 1
+          fi
+          cp "$HOME/ainext.env" deploy/.env
+
+      - name: Build & start
+        working-directory: deploy
+        run: |
+          docker compose up -d --build
+          docker compose ps
+
+      - name: Health check
+        working-directory: deploy
+        run: |
+          for i in $(seq 1 40); do
+            if curl -sSf http://localhost:3100/ >/dev/null; then
+              echo "app healthy on :3100"; exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::app did not become healthy"
+          docker compose logs --tail=100 app
+          exit 1
+
+      - name: Prune dangling images
+        if: always()
+        run: docker image prune -f
