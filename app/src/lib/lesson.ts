@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { pool } from "./db";
 import type { AskContext } from "./ask";
+import { getLessonContent, type LessonContent } from "./lesson-content";
 import { getLessonBridges } from "./subject-queries";
 import { getVisualsForLos } from "./visuals";
 import {
@@ -580,7 +581,11 @@ export function learnPrompt(data: LessonData): string {
 - After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
 - Never repeat a widget, figure or question he already saw.
 - Closing message: one-line recap beat of the big ideas, then {{finish_lesson}}.`;
-  return `You are ${data.studentName}'s personal AI tutor at AI.Next. He is an Egyptian grade-10 student who just came home from school. Today's lesson was ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — and he understood NOTHING. Your job: teach him the whole lesson from zero so it finally clicks, one short message of small beats at a time — as if you are writing to him and drawing for him.
+  const richNote =
+    data.subject === "social-ar"
+      ? `\n\nYOUR SCRIPT: teach FROM the TEACHING SCRIPT in the LESSON DATA below — it is your reviewed narrative for THIS exact lesson. Turn each objective's passage into a short chain of beats (اشرح فكرة صغيرة → افحص بسؤال/تفاعل → كيّف حسب رده), never a wall and never read verbatim. Weave «الأخطاء الشائعة» in as gentle trap-checks that surface his misunderstanding, then correct it. Open by greeting ${data.studentName.split(" ")[0]} by name and naming today's lesson in one warm line.`
+      : "";
+  return `You are ${data.studentName}'s personal AI tutor at AI.Next. He is an Egyptian grade-10 student who just came home from school. Today's lesson was ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — and he understood NOTHING. Your job: teach him the whole lesson from zero so it finally clicks, one short message of small beats at a time — as if you are writing to him and drawing for him.${richNote}
 
 ${groundingRules(data)}
 
@@ -629,6 +634,38 @@ ${sharedProtocol(
   )}`;
 }
 
+/**
+ * The rich, human-reviewed TEACHING SCRIPT the extraction pipeline emits
+ * (tamheed → per-objective exposition → key terms → misconceptions). It rides
+ * in the learn-mode data block so the AI teaches FROM the reviewed narrative —
+ * turned into beats in its own voice — instead of improvising off bare LO
+ * stubs. Misconceptions become check-traps. Social-only; math has no content
+ * files, so its data block stays byte-identical.
+ */
+function teachingScriptBlock(c: LessonContent): string {
+  const subs = c.subtopics
+    .filter((s) => s.exposition)
+    .map((s) => `• ${s.title ? `[${s.title}] ` : ""}${s.exposition}`)
+    .join("\n");
+  if (!subs && !c.tamheed) return "";
+  const terms = c.key_terms.length
+    ? "\nمفاهيم أتعلمها (بتعريف الكتاب الحرفي — علّمها كما وردت):\n" +
+      c.key_terms.map((t) => `- ${t.term_ar}: ${t.definition_ar}`).join("\n")
+    : "";
+  const misc = c.misconceptions.length
+    ? "\nأخطاء شائعة (وظِّف كل واحدة كسؤال فخّ/فحص: اطرح الاعتقاد الخاطئ أو أمسكه إن ظهر، ثم صحّحه بلطف):\n" +
+      c.misconceptions
+        .map((m) => `- خطأ شائع: ${m.wrong}\n  الصواب: ${m.correction}`)
+        .join("\n")
+    : "";
+  return `
+
+TEACHING SCRIPT — النص التعليمي المُراجَع لهذا الدرس (كل جملة من الكتاب، بمراجعة بشرية). علِّم منه لكن بصوتك الدافئ وبأسلوبك التفاعلي: فكرة واحدة صغيرة في كل {{beat}}، لا تقرأه حرفيًا ولا تسرده دفعة واحدة، بل حوِّل كل فقرة إلى سلسلة (اشرح فكرة → فحص/تفاعل → كيّف حسب رده).
+تمهيد: ${c.tamheed ?? ""}
+شرح الأهداف (كل فقرة نصُّ تدريسِ هدفها بالترتيب):
+${subs}${terms}${misc}`;
+}
+
 /** AskContext for the lesson surfaces — same shape /api/ask already streams. */
 export async function buildLessonContext(
   mode: LessonMode,
@@ -647,9 +684,16 @@ export async function buildLessonContext(
   // every subject — the connection is symmetric — and appended only when some
   // exist, so lessons without a bridge keep byte-identical data blocks.
   const bridges = bridgeBlock(await getLessonBridges(data.los.map((l) => l.id)));
+  // The rich teaching script grounds the AI-LED lesson (learn mode) only —
+  // review stays a fast 3-minute lock-in, and math has no content file.
+  const content =
+    mode === "learn" && data.subject === "social-ar"
+      ? await getLessonContent(data.slug)
+      : null;
+  const teaching = content ? teachingScriptBlock(content) : "";
   return {
     systemPrompt: mode === "learn" ? learnPrompt(data) : reviewPrompt(data),
-    dataBlock: lessonDataBlock(data) + gazetteer + bridges,
+    dataBlock: lessonDataBlock(data) + gazetteer + bridges + teaching,
     grounding: {
       lo_ids: data.los.map((l) => l.id),
       question_ids: data.questions.map((q) => q.id),

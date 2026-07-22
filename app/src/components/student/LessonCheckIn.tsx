@@ -18,9 +18,12 @@ import { masteryColor, pct } from "@/lib/mastery";
 export function LessonCheckIn({
   lesson,
   lessons,
+  hasContent = false,
 }: {
   lesson: LessonData;
   lessons: LessonInfo[];
+  /** true when this lesson has a rich «شرح الدرس» content bundle to read */
+  hasContent?: boolean;
 }) {
   const first = lesson.studentName.split(" ")[0];
   // social-ar lessons render the assigned-lesson card + doors RTL Arabic-first
@@ -245,6 +248,11 @@ export function LessonCheckIn({
           )}
         </Link>
       </section>
+
+      {/* The rich lesson content now powers the AI-LED lesson ("علّمني" door):
+          the tutor teaches from the reviewed teaching script, chunked into
+          beats and adapted to the student — replacing the old static read page,
+          which was a dead-end wall of text with no progression. */}
 
       {/* the picker — collapsed behind "درس تاني؟" (doors stay first) */}
       <details

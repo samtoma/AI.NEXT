@@ -1,9 +1,11 @@
 import { getStudentPlan } from "@/lib/queries";
 import { getLessonCatalog, getLessonData } from "@/lib/lesson";
+import { getLessonContent } from "@/lib/lesson-content";
 import { getSubjectSummaries } from "@/lib/subject-queries";
 import { StudentLoop } from "@/components/student/StudentLoop";
 import { LessonCheckIn } from "@/components/student/LessonCheckIn";
 import { LessonSession } from "@/components/student/LessonSession";
+import { LessonContentView } from "@/components/student/LessonContentView";
 import { SubjectHome } from "@/components/student/SubjectHome";
 
 /** ?subject → which course's lessons the check-in should show. */
@@ -49,6 +51,14 @@ export default async function StudentPage({
     return <LessonSession mode={mode} lesson={lesson} />;
   }
 
+  // «شرح الدرس» — the readable rich-content surface (exposition, glossary,
+  // enrichment, misconceptions, interactive beats). Falls through to the
+  // check-in when the lesson has no content bundle yet.
+  if (mode === "read") {
+    const content = await getLessonContent(lessonSlug ?? "");
+    if (content) return <LessonContentView content={content} />;
+  }
+
   // No subject chosen yet → the per-subject home (never a blended score).
   if (!subject) {
     const summaries = await getSubjectSummaries();
@@ -68,5 +78,9 @@ export default async function StudentPage({
   // renders as math even though the picker is social.
   const effectiveSlug = lessonSlug ?? (courseId ? lessons[0]?.slug : undefined);
   const lesson = await getLessonData(effectiveSlug);
-  return <LessonCheckIn lesson={lesson} lessons={lessons} />;
+  // Offer the readable «شرح الدرس» door only when this lesson has a bundle.
+  const hasContent = (await getLessonContent(lesson.slug)) !== null;
+  return (
+    <LessonCheckIn lesson={lesson} lessons={lessons} hasContent={hasContent} />
+  );
 }

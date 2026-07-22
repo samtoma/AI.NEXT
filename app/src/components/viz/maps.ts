@@ -25,6 +25,11 @@ export const BASE_MAPS = [
   "asia",
   "world",
   "mediterranean_east",
+  // Phase-A continent maps (see app/public/maps/generate.cjs)
+  "europe",
+  "north_america",
+  "south_america",
+  "australia",
 ] as const;
 
 export type BaseMapId = (typeof BASE_MAPS)[number];

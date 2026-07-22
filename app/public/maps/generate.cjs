@@ -230,6 +230,11 @@ emit("egypt", { W: 24.3, E: 37.5, S: 21.3, N: 32.3, s: 30 }, ({ proj, g, pl }) =
   };
   for (const [n, [ll, al]] of Object.entries(cities)) pl(n, "point", ll, 13, { aliases: al });
 
+  // history battle/incident sites (soc4-2 Urabi revolution, soc4-3 national struggle)
+  pl("التل الكبير", "point", [31.76,30.55], 13, { aliases: ["tel el-kebir", "tell el kebir"] });
+  pl("كفر الدوار", "point", [30.13,31.13], 13, { aliases: ["kafr el-dawwar"] });
+  pl("دنشواي", "point", [30.79,30.64], 13, { aliases: ["denshawai", "dinshway"] });
+
   pl("سيناء", "region", [33.7,29.7], 42, { ref: "r-sinai", aliases: ["sinai", "شبه جزيرة سيناء"] });
   pl("الدلتا", "region", [31.1,30.9], 26, { ref: "r-delta", aliases: ["delta", "دلتا النيل"] });
   pl("الصحراء الغربية", "region", [27.5,26.5], 60, { ref: "r-west", aliases: ["western desert"] });
@@ -422,6 +427,12 @@ emit("arab_world", { W: -18, E: 62, S: 0.5, N: 38.8, s: 6.6 }, ({ proj, g, pl })
     "الجزائر العاصمة": [[3.05,36.75],["algiers"]], "تونس العاصمة": [[10.2,36.8],["tunis"]],
   };
   for (const [n, [ll, al]] of Object.entries(capitals)) pl(n, "point", ll, 8, { aliases: al });
+
+  // Muhammad Ali — Hejaz / Arabia campaign against the Wahhabis (soc3-4)
+  pl("الحجاز", "region", [39.5,23.5], 14, { aliases: ["hejaz", "الحجاز"] });
+  pl("الدرعية", "point", [46.57,24.73], 8, { aliases: ["diriyah", "دِرعية"] });
+  pl("مكة المكرمة", "point", [39.83,21.42], 8, { aliases: ["mecca", "makkah", "مكة"] });
+  pl("المدينة المنورة", "point", [39.61,24.47], 8, { aliases: ["medina", "madinah", "المدينة"] });
 
   pl("البحر المتوسط", "sea", [18.0,35.3], 30, { aliases: ["mediterranean"] });
   pl("البحر الأحمر", "sea", [37.8,20.8], 18, { aliases: ["red sea"] });
@@ -683,6 +694,17 @@ emit("world", { W: -170, E: 190, S: -64, N: 80, s: 1.4 }, ({ proj, g, pl }) => {
   pl("القارة القطبية الجنوبية", "region", [10.0,-62.6], 40, { ref: "antarctica", aliases: ["antarctica", "أنتاركتيكا"] });
   pl("جرينلاند", "region", [-40.0,70.0], 16, { ref: "greenland", aliases: ["greenland"] });
   pl("مصر", "point", [30.5,27.0], 8, { aliases: ["egypt"] });
+  // population distribution zones (soc2-2) — thematic anchors, no drawn poly
+  // (matches the ref-less continent-region convention above)
+  pl("شرق آسيا", "region", [116.0,33.0], 18, { aliases: ["east asia"] });
+  pl("جنوب آسيا", "region", [80.0,23.0], 16, { aliases: ["south asia"] });
+  pl("غرب أوروبا", "region", [7.0,49.0], 12, { aliases: ["western europe"] });
+  pl("شمال شرق أمريكا الشمالية", "region", [-77.0,41.0], 12, { aliases: ["northeast north america"] });
+  pl("وادي النيل", "region", [31.0,26.0], 8, { aliases: ["nile valley"] });
+  pl("الصحراء الكبرى", "region", [15.0,23.0], 20, { aliases: ["sahara"] });
+  pl("حوض الأمازون", "region", [-63.0,-4.0], 16, { aliases: ["amazon basin"] });
+  pl("حوض الكونغو", "region", [21.0,-1.0], 12, { aliases: ["congo basin"] });
+  pl("المناطق القطبية الشمالية", "region", [95.0,74.0], 20, { aliases: ["arctic regions", "polar regions"] });
   pl("المحيط الهادي", "sea", [-140.0,0.0], 50, { aliases: ["pacific", "المحيط الهادئ"] });
   pl("المحيط الأطلنطي", "sea", [-35.0,25.0], 36, { aliases: ["atlantic", "المحيط الأطلسي"] });
   pl("المحيط الهندي", "sea", [80.0,-20.0], 36, { aliases: ["indian ocean"] });
@@ -764,12 +786,21 @@ emit("mediterranean_east", { W: 2.5, E: 42, S: 26.8, N: 46.8, s: 10 }, ({ proj, 
   pl("عكا", "point", [35.07,32.93], 8, { aliases: ["acre", "akka"] });
   pl("دمشق", "point", [36.3,33.5], 8, { aliases: ["damascus"] });
   pl("القسطنطينية", "point", [29.0,41.1], 9, { aliases: ["istanbul", "إسطنبول", "الأستانة"] });
+  // Ottoman conquest of Egypt (soc3-1): route القسطنطينية → حلب/مرج دابق → الشام → الريدانية
+  pl("حلب", "point", [37.16,36.20], 8, { aliases: ["aleppo"] });
+  pl("مرج دابق", "point", [37.40,36.57], 8, { aliases: ["marj dabiq"] });
+  pl("الريدانية", "point", [31.35,30.12], 8, { aliases: ["ridaniya", "raydaniyya"] });
+  // Muhammad Ali campaigns — Greek & Syrian theaters (soc3-4)
+  pl("قونية", "point", [32.50,37.87], 8, { aliases: ["konya"] });
+  pl("نصيبين", "point", [37.79,37.00], 8, { aliases: ["nezib", "nizip"] });
+  pl("نافارين", "point", [21.70,36.92], 8, { aliases: ["navarino"] });
   pl("فرنسا", "region", [4.2,45.3], 16, { aliases: ["france"] });
   pl("إيطاليا", "region", [12.8,43.2], 14, { aliases: ["italy", "ايطاليا"] });
   pl("اليونان", "region", [22.0,39.3], 10, { aliases: ["greece", "بلاد اليونان"] });
   pl("مصر", "region", [30.0,29.3], 18, { aliases: ["egypt"] });
   pl("الشام", "region", [36.6,34.6], 14, { aliases: ["بلاد الشام", "levant", "سوريا"] });
   pl("الدولة العثمانية", "region", [33.0,39.3], 22, { aliases: ["ottoman empire", "الأناضول", "تركيا"] });
+  pl("المورة", "region", [22.2,37.2], 10, { aliases: ["morea", "peloponnese", "بلاد المورة"] });
   pl("صقلية", "region", [14.2,37.6], 8, { ref: "sicily", aliases: ["sicily"] });
   pl("كريت", "region", [24.9,35.05], 8, { ref: "crete", aliases: ["crete"] });
   pl("قبرص", "region", [33.3,35.2], 8, { ref: "cyprus", aliases: ["cyprus"] });
@@ -795,6 +826,298 @@ emit("mediterranean_east", { W: 2.5, E: 42, S: 26.8, N: 46.8, s: 10 }, ({ proj, 
     `<path id="damietta-branch" d="${g.river(EG.damietta)}" ${S.riverThin}/>`,
     seaLabel(proj.X(19.5), proj.Y(34.6), "البحر المتوسط", 9),
     seaLabel(proj.X(35.5), proj.Y(44.2), "البحر الأسود", 8),
+  ];
+});
+
+/* ================= EUROPE ================= */
+
+emit("europe", { W: -11, E: 52, S: 34, N: 71.5, s: 12.5 }, ({ proj, g, pl }) => {
+  const mainland = g.chain(
+    [
+      // Atlantic + North Sea + Baltic-south + Finland + Arctic (west & north coast)
+      { pts: [
+        [-5.7,36.1],[-9.0,37.0],[-9.4,38.7],[-8.9,41.1],[-9.1,43.0],[-4.5,43.6],[-1.6,43.4],
+        [-1.2,45.6],[-2.0,47.3],[-4.7,48.3],[-1.6,49.7],[1.6,50.95],[3.4,51.6],[4.8,52.9],
+        [7.0,53.6],[8.4,55.4],[8.6,57.6],[10.6,57.3],[12.5,54.6],[14.2,54.0],[18.7,54.6],
+        [20.5,55.3],[21.0,56.8],[24.0,57.5],[24.5,59.5],[28.2,59.4],[30.2,60.0],[25.0,60.2],
+        [21.8,60.5],[21.5,63.3],[24.5,65.8],[28.0,68.5],[33.0,69.6],[40.5,68.5],[44.0,68.0],
+        [48.0,68.2],[52.0,68.5]
+      ], smooth: true },
+      // east frame cut
+      { pts: [[52.0,68.5],[52.0,46.5]], smooth: false },
+      // south coast: Volga/Caucasus -> Black Sea north -> Balkans -> Italy -> Iberia Med
+      { pts: [
+        [52.0,46.5],[49.0,47.0],[47.5,45.0],[46.0,43.2],[41.5,43.2],[39.5,43.4],[38.5,46.0],
+        [35.5,46.5],[33.5,46.3],[30.7,46.5],[29.7,45.3],[28.5,43.5],[28.0,41.9],[26.5,40.9],
+        [24.0,40.6],[23.5,38.0],[23.1,37.0],[21.8,37.0],[20.9,39.0],[19.3,42.0],[18.5,42.9],
+        [15.2,44.2],[13.6,45.7],[12.5,44.5],[15.5,41.9],[18.4,40.1],[16.2,38.9],[15.7,38.0],
+        [15.9,40.0],[14.0,40.8],[11.2,42.4],[10.0,44.0],[7.6,43.7],[5.2,43.3],[3.0,42.4],
+        [1.0,41.1],[-0.3,39.4],[-1.5,37.5],[-4.5,36.7],[-5.7,36.1]
+      ], smooth: true },
+    ],
+    true
+  );
+  // faded neighbour: Anatolia + Caucasus-south + NW Iran (bounds Black & Caspian seas)
+  const anatolia = g.poly([
+    [28.0,41.0],[31.0,41.2],[35.0,42.0],[38.0,41.3],[41.5,41.4],[45.0,41.4],[48.0,39.2],
+    [50.5,38.2],[52.0,37.8],[52.0,34.0],[42.0,34.0],[38.0,35.3],[36.1,36.6],[33.7,36.15],
+    [30.5,36.3],[27.9,36.7],[26.9,38.4],[26.6,39.6],[27.0,40.6]
+  ]);
+  const blacksea = g.coast([
+    [28.2,41.3],[31.0,41.2],[35.0,41.5],[38.5,41.2],[41.5,41.5],[40.0,43.5],[36.0,45.2],
+    [33.0,46.0],[31.0,46.3],[29.5,45.0],[28.2,42.0]
+  ]);
+  const caspian = g.coast([
+    [47.5,44.5],[49.0,46.5],[51.5,46.0],[52.0,44.0],[52.0,38.5],[50.5,37.5],[49.0,38.5],
+    [47.8,40.5],[47.3,42.5]
+  ]);
+  const scandinavia = g.coast([
+    [7.0,58.0],[5.2,59.0],[5.0,60.8],[7.0,63.0],[10.5,64.0],[12.5,66.0],[14.5,67.6],
+    [17.0,68.6],[20.0,69.8],[25.5,71.0],[28.5,70.6],[26.0,69.0],[24.5,65.8],[21.5,63.3],
+    [18.5,61.0],[17.5,60.7],[18.8,58.5],[16.5,56.3],[14.5,56.1],[12.6,56.2],[11.8,58.0],[9.5,58.9]
+  ]);
+  const britain = g.coast([
+    [-5.2,50.0],[-3.5,50.3],[0.5,50.8],[1.7,52.6],[-0.2,53.6],[-3.0,54.5],[-3.2,56.0],
+    [-2.0,57.5],[-3.5,58.6],[-5.2,58.4],[-5.8,56.5],[-4.9,54.6],[-4.2,53.3],[-4.8,52.9],
+    [-4.2,52.2],[-5.3,51.7],[-3.5,51.3]
+  ]);
+  const ireland = g.coast([
+    [-10.2,51.6],[-6.5,52.2],[-6.0,53.4],[-6.3,54.4],[-8.0,55.3],[-10.0,54.3],[-9.8,53.2],[-9.9,52.2]
+  ]);
+  const sicily = g.coast([[12.4,37.8],[15.3,37.1],[15.65,38.25],[13.7,38.1]]);
+  const sardinia = g.coast([[8.3,38.9],[9.6,39.2],[9.5,41.2],[8.2,40.9]]);
+  const corsica = g.coast([[8.6,41.4],[9.5,42.0],[9.35,43.0],[8.6,42.6]]);
+  const crete = g.coast([[23.5,35.25],[26.2,35.3],[25.6,34.85],[24.0,34.85]]);
+
+  const rPlain = g.poly([[3,52],[15,54],[30,56],[45,55],[50,50],[38,49],[22,50],[10,50.5]]);
+  const rMeseta = g.poly([[-8,40],[-2,41],[-1,39],[-6,38.5]]);
+  const rMassif = g.poly([[1.5,45.8],[4.0,45.5],[4.2,44.2],[2.0,44.3]]);
+
+  const volga = g.river([[36.5,57.0],[40.0,57.5],[44.5,56.5],[47.5,53.5],[46.0,50.5],[47.5,48.0],[49.0,46.6]]);
+  const rhine = g.river([[8.6,46.9],[7.6,48.0],[7.2,49.5],[6.4,51.0],[6.0,51.9],[4.3,52.0]]);
+  const danube = g.river([[8.3,48.0],[11.0,48.7],[14.0,48.3],[16.9,48.1],[19.0,47.8],[20.5,46.0],[22.5,44.7],[25.0,44.0],[27.5,44.2],[28.8,45.2],[29.7,45.3]]);
+
+  const alpsLine = [[6.0,45.2],[8.0,45.9],[10.5,46.5],[13.0,47.0],[15.0,47.2]];
+  const pyreneesLine = [[-1.4,43.0],[0.5,42.7],[2.5,42.4]];
+  const dinaricLine = [[14.5,45.5],[16.5,44.2],[18.5,43.2],[19.5,42.2]];
+
+  pl("جبال الألب", "region", [10.5,46.4], 16, { aliases: ["alps", "الألب"] });
+  pl("جبال البرانس", "region", [0.3,42.7], 10, { aliases: ["pyrenees"] });
+  pl("جبال الألب الدينارية", "region", [17.5,44.0], 10, { aliases: ["dinaric alps"] });
+  pl("هضبة المزيتا", "region", [-4.0,40.2], 14, { ref: "r-meseta", aliases: ["meseta"] });
+  pl("هضبة فرنسا الوسطى", "region", [2.8,45.0], 10, { ref: "r-massif", aliases: ["massif central"] });
+  pl("السهل الأوروبي العظيم", "region", [24.0,53.0], 40, { ref: "r-plain", aliases: ["great european plain"] });
+  pl("نهر الفولجا", "line", [46.5,52.0], 14, { ref: "volga", aliases: ["volga", "الفولغا"] });
+  pl("نهر الراين", "line", [7.0,50.0], 10, { ref: "rhine", aliases: ["rhine"] });
+  pl("نهر الدانوب", "line", [20.0,45.5], 14, { ref: "danube", aliases: ["danube", "الدانوب"] });
+  pl("المحيط الأطلنطي", "sea", [-9.5,47.0], 20, { aliases: ["atlantic", "المحيط الأطلسي"] });
+  pl("البحر المتوسط", "sea", [16.0,36.0], 20, { aliases: ["mediterranean"] });
+  pl("بحر الشمال", "sea", [2.5,56.0], 12, { aliases: ["north sea"] });
+  pl("البحر الأسود", "sea", [34.5,43.5], 14, { aliases: ["black sea"] });
+  pl("بحر البلطيق", "sea", [19.5,58.0], 12, { aliases: ["baltic sea"] });
+  pl("بحر قزوين", "sea", [50.0,43.0], 10, { aliases: ["caspian sea", "بحر قزوين"] });
+
+  return [
+    `<path d="${anatolia}" ${S.neighbor}/>`,
+    `<path d="${blacksea}" ${S.water}/>`,
+    `<path d="${caspian}" ${S.water}/>`,
+    `<path id="land" d="${mainland}" ${S.land}/>`,
+    `<path id="scandinavia" d="${scandinavia}" ${S.land}/>`,
+    `<path d="${britain}" ${S.landThin}/>`,
+    `<path d="${ireland}" ${S.landThin}/>`,
+    `<path d="${sicily}" ${S.landThin}/>`,
+    `<path d="${sardinia}" ${S.landThin}/>`,
+    `<path d="${corsica}" ${S.landThin}/>`,
+    `<path d="${crete}" ${S.landThin}/>`,
+    `<path id="r-plain" d="${rPlain}" ${S.hidden}/>`,
+    `<path id="r-meseta" d="${rMeseta}" ${S.hidden}/>`,
+    `<path id="r-massif" d="${rMassif}" ${S.hidden}/>`,
+    `<path id="volga" d="${volga}" ${S.river}/>`,
+    `<path id="rhine" d="${rhine}" ${S.riverThin}/>`,
+    `<path id="danube" d="${danube}" ${S.river}/>`,
+    carets(proj, alpsLine, 6),
+    carets(proj, pyreneesLine, 3),
+    carets(proj, dinaricLine, 4),
+    seaLabel(proj.X(-9.5), proj.Y(47.8), "المحيط الأطلنطي", 8),
+    seaLabel(proj.X(16.5), proj.Y(35.7), "البحر المتوسط", 8.5),
+    seaLabel(proj.X(2.5), proj.Y(56.3), "بحر الشمال", 8),
+    seaLabel(proj.X(34.5), proj.Y(43.6), "البحر الأسود", 8),
+    seaLabel(proj.X(19.5), proj.Y(58.3), "بحر البلطيق", 8),
+  ];
+});
+
+/* ================= NORTH AMERICA ================= */
+
+emit("north_america", { W: -168, E: -52, S: 7, N: 74, s: 5.4 }, ({ proj, g, pl }) => {
+  const land = g.coast([
+    [-168,66.0],[-166,68.5],[-156,71.0],[-145,70.0],[-130,70.2],[-124,70.0],[-115,68.8],
+    [-105,68.5],[-96,68.2],[-92,63.5],[-94,60.0],[-92,57.0],[-88,56.5],[-85,55.2],[-82,55.3],
+    [-80,53.0],[-79.5,55.0],[-78,58.0],[-77,62.0],[-72,61.0],[-70,63.0],[-64,60.5],[-62,56.0],
+    [-60,53.5],[-56,52.5],[-55,50.5],[-58,50.0],[-60,47.5],[-64,49.5],[-66,49.0],[-64,45.5],
+    [-66,44.5],[-70,43.0],[-74,40.5],[-76,37.5],[-76,35.0],[-81,31.0],[-80,25.2],[-83,29.0],
+    [-84,30.0],[-89,29.0],[-94,29.5],[-97,25.9],[-97,22.5],[-95,18.7],[-91,18.6],[-90,21.2],
+    [-87,21.5],[-88,17.8],[-84,15.8],[-83.5,11.0],[-81,8.9],[-78,8.5],[-79,9.5],[-83,8.5],
+    [-87,13.2],[-92,15.2],[-96,16.0],[-101,17.5],[-105,20.0],[-106,23.2],[-109.5,23.0],
+    [-112,26.5],[-114,31.0],[-117,32.5],[-121,34.4],[-122,37.0],[-124,40.5],[-124,46.0],
+    [-123,48.3],[-126,49.8],[-129,51.5],[-133,54.5],[-136,57.5],[-140,59.5],[-146,60.2],
+    [-150,59.2],[-152,59.8],[-155,58.5],[-158,56.0],[-162,55.0],[-160,58.5],[-164,60.5],
+    [-162,63.0],[-165,64.5],[-168,65.5]
+  ]);
+  const cuba = g.coast([[-84.9,22.0],[-81,23.2],[-77,21.5],[-74,20.3],[-77,19.9],[-82,21.9]]);
+  const superior = g.coast([[-92,46.8],[-88,48.6],[-84.5,48.5],[-84.6,46.6],[-89,46.4]]);
+  const michHuron = g.coast([[-88,41.7],[-86.7,45.9],[-84.2,45.9],[-82.0,44.8],[-82.6,43.0],[-83.5,41.8]]);
+  const erieOnt = g.coast([[-83,41.5],[-79,42.6],[-76.6,43.2],[-77.2,44.2],[-79.6,43.4],[-82.5,41.4]]);
+
+  const rMexPlateau = g.poly([[-106,20],[-99,20],[-99,25],[-106,26]]);
+  const rLabrador = g.poly([[-74,52],[-64,53],[-62,58],[-70,58]]);
+  const rPlains = g.poly([[-104,30],[-96,29],[-95,49],[-108,49],[-110,40]]);
+
+  const mississippi = g.river([[-95,47.2],[-91.5,43.5],[-90.5,38.7],[-89.5,35.0],[-91.0,32.0],[-89.5,29.3]]);
+  const stlawrence = g.river([[-79.5,43.6],[-76,44.2],[-73.5,45.5],[-70,47.5],[-66,48.8],[-63,49.2]]);
+  const nelson = g.river([[-98.5,52.5],[-96,54.0],[-93,56.0],[-92.5,57.0]]);
+
+  const rockiesLine = [[-148,62],[-138,60],[-128,54],[-120,50],[-115,45],[-111,41],[-107,37],[-105,34]];
+  const appalachLine = [[-71,45.5],[-75,42],[-79,39],[-82,36],[-84,34.5]];
+
+  pl("جبال روكي", "region", [-113,44], 26, { aliases: ["rocky mountains", "rockies", "الروكي"] });
+  pl("جبال الأبلاش", "region", [-80,38], 16, { aliases: ["appalachian", "الأبلاش"] });
+  pl("هضبة المكسيك", "region", [-103,23.5], 16, { ref: "r-mexplateau", aliases: ["mexican plateau"] });
+  pl("هضبة لبرادور", "region", [-68,54], 16, { ref: "r-labrador", aliases: ["labrador plateau"] });
+  pl("البحيرات العظمى", "region", [-84,45.5], 14, { ref: "great-lakes", aliases: ["great lakes"] });
+  pl("السهول الوسطى", "region", [-100,42], 30, { ref: "r-plains", aliases: ["great plains", "central plains"] });
+  pl("نهر المسيسيبي", "line", [-90.5,36], 14, { ref: "mississippi", aliases: ["mississippi"] });
+  pl("نهر سانت لورانس", "line", [-72,46.5], 12, { ref: "stlawrence", aliases: ["st lawrence"] });
+  pl("نهر نلسن", "line", [-94,55], 10, { ref: "nelson", aliases: ["nelson river"] });
+  pl("المحيط الأطلنطي", "sea", [-56,40], 20, { aliases: ["atlantic", "المحيط الأطلسي"] });
+  pl("المحيط الهادي", "sea", [-150,32], 24, { aliases: ["pacific", "المحيط الهادئ"] });
+  pl("المحيط المتجمد الشمالي", "sea", [-120,72.5], 20, { aliases: ["arctic ocean"] });
+  pl("خليج المكسيك", "sea", [-90,25.5], 14, { aliases: ["gulf of mexico"] });
+  pl("خليج هدسن", "sea", [-86,59.5], 14, { aliases: ["hudson bay"] });
+  pl("البحر الكاريبي", "sea", [-75,13.5], 14, { aliases: ["caribbean"] });
+
+  return [
+    `<path id="land" d="${land}" ${S.land}/>`,
+    `<path d="${cuba}" ${S.landThin}/>`,
+    `<path id="great-lakes" d="${superior}" ${S.water}/>`,
+    `<path d="${michHuron}" ${S.water}/>`,
+    `<path d="${erieOnt}" ${S.water}/>`,
+    `<path id="r-mexplateau" d="${rMexPlateau}" ${S.hidden}/>`,
+    `<path id="r-labrador" d="${rLabrador}" ${S.hidden}/>`,
+    `<path id="r-plains" d="${rPlains}" ${S.hidden}/>`,
+    `<path id="mississippi" d="${mississippi}" ${S.river}/>`,
+    `<path id="stlawrence" d="${stlawrence}" ${S.river}/>`,
+    `<path id="nelson" d="${nelson}" ${S.riverThin}/>`,
+    carets(proj, rockiesLine, 8),
+    carets(proj, appalachLine, 5),
+    seaLabel(proj.X(-56), proj.Y(40.5), "المحيط الأطلنطي", 8),
+    seaLabel(proj.X(-150), proj.Y(32), "المحيط الهادي", 8),
+    seaLabel(proj.X(-118), proj.Y(73), "المحيط المتجمد الشمالي", 7.5),
+    seaLabel(proj.X(-90), proj.Y(25.5), "خليج المكسيك", 7.5),
+    seaLabel(proj.X(-86), proj.Y(59.5), "خليج هدسن", 7.5),
+    seaLabel(proj.X(-75), proj.Y(13.7), "البحر الكاريبي", 7.5),
+  ];
+});
+
+/* ================= SOUTH AMERICA ================= */
+
+emit("south_america", { W: -82, E: -34, S: -56, N: 13, s: 8 }, ({ proj, g, pl }) => {
+  const land = g.coast([
+    [-77.5,8.0],[-75.5,10.8],[-71.5,12.4],[-64,10.7],[-60,8.5],[-52,5.0],[-50,0.5],[-44,-2.8],
+    [-38.5,-4.5],[-35.2,-6.5],[-37.5,-11.0],[-39,-13.5],[-40.5,-18.0],[-42,-22.5],[-48,-25.5],
+    [-53,-33.5],[-57.5,-38.5],[-62,-40.5],[-65.5,-45.0],[-68.5,-50.0],[-68,-52.5],[-65.5,-55.0],
+    [-70,-53.0],[-73,-50.0],[-73.7,-45.0],[-73,-40.0],[-72,-35.0],[-71.5,-30.0],[-70.5,-23.0],
+    [-70.5,-18.3],[-75.5,-14.5],[-79,-8.0],[-81,-6.0],[-80.8,-3.0],[-80,-1.0],[-78.5,1.5],
+    [-77.5,4.0],[-77,7.5]
+  ]);
+  const rBrazil = g.poly([[-55,-12],[-42,-12],[-40,-22],[-52,-24]]);
+  const rGuiana = g.poly([[-68,2],[-58,3],[-58,7],[-66,7]]);
+  const rPatagonia = g.poly([[-72,-42],[-66,-42],[-66,-50],[-71,-51]]);
+  const rAmazon = g.poly([[-73,-5],[-55,-6],[-50,-1],[-58,3],[-70,2]]);
+
+  const amazon = g.river([[-74,-5.5],[-70,-4.2],[-64,-3.3],[-58,-3.0],[-52,-1.5],[-50,-0.3]]);
+  const parana = g.river([[-49,-17],[-52,-22],[-55,-27],[-58,-32],[-58.5,-34.3]]);
+  const orinoco = g.river([[-67,3.5],[-66,6.5],[-63,8.0],[-61,9.0]]);
+
+  const andesLine = [[-73,4],[-76,-1],[-78,-6],[-73,-14],[-70,-20],[-70,-27],[-71,-34],[-72,-41],[-72,-48]];
+
+  pl("جبال الإنديز", "region", [-70,-24], 26, { aliases: ["andes", "الأنديز"] });
+  pl("هضبة البرازيل", "region", [-47,-17], 22, { ref: "r-brazil", aliases: ["brazilian highlands"] });
+  pl("هضبة جيانا", "region", [-62,4], 14, { ref: "r-guiana", aliases: ["guiana highlands"] });
+  pl("هضبة باتاجونيا", "region", [-68,-45], 16, { ref: "r-patagonia", aliases: ["patagonia"] });
+  pl("سهل الأمازون", "region", [-62,-3], 30, { ref: "r-amazon", aliases: ["amazon basin"] });
+  pl("نهر الأمازون", "line", [-62,-2.5], 16, { ref: "amazon", aliases: ["amazon", "الأمازون"] });
+  pl("نهر بارانا", "line", [-56,-27], 12, { ref: "parana", aliases: ["parana"] });
+  pl("نهر أورينوكو", "line", [-64,6.5], 10, { ref: "orinoco", aliases: ["orinoco"] });
+  pl("المحيط الأطلنطي", "sea", [-40,-33], 22, { aliases: ["atlantic", "المحيط الأطلسي"] });
+  pl("المحيط الهادي", "sea", [-80,-28], 20, { aliases: ["pacific", "المحيط الهادئ"] });
+  pl("البحر الكاريبي", "sea", [-70,12.0], 12, { aliases: ["caribbean"] });
+  pl("خط الاستواء", "line", [-72,0], 10, { ref: "equator", aliases: ["equator"] });
+
+  const eq = proj.Y(0);
+  return [
+    `<path id="land" d="${land}" ${S.land}/>`,
+    `<path id="r-brazil" d="${rBrazil}" ${S.hidden}/>`,
+    `<path id="r-guiana" d="${rGuiana}" ${S.hidden}/>`,
+    `<path id="r-patagonia" d="${rPatagonia}" ${S.hidden}/>`,
+    `<path id="r-amazon" d="${rAmazon}" ${S.hidden}/>`,
+    `<line id="equator" x1="0" y1="${eq}" x2="${proj.width}" y2="${eq}" ${S.grat}/>`,
+    `<path id="amazon" d="${amazon}" ${S.river}/>`,
+    `<path id="parana" d="${parana}" ${S.river}/>`,
+    `<path id="orinoco" d="${orinoco}" ${S.riverThin}/>`,
+    carets(proj, andesLine, 9),
+    `<text x="${proj.X(-79.5)}" y="${eq - 3}" style="fill:var(--gold,#a97e22);font-size:7px;opacity:0.85">خط الاستواء</text>`,
+    seaLabel(proj.X(-40), proj.Y(-33), "المحيط الأطلنطي", 8),
+    seaLabel(proj.X(-80), proj.Y(-28), "المحيط الهادي", 8),
+    seaLabel(proj.X(-70), proj.Y(12.3), "البحر الكاريبي", 7.5),
+  ];
+});
+
+/* ================= AUSTRALIA ================= */
+
+emit("australia", { W: 112, E: 154, S: -44, N: -9, s: 12.5 }, ({ proj, g, pl }) => {
+  const land = g.coast([
+    [113.5,-22],[114,-26],[115,-30],[115.6,-33],[117.5,-35],[120,-34],[124,-33.5],[129,-31.6],
+    [131.5,-31.5],[134,-32.5],[135.6,-34.8],[137.8,-35.5],[139.5,-37],[141,-38.4],[144,-38.4],
+    [146.5,-38.8],[148,-37.8],[150,-37.5],[151.5,-33],[153,-31],[153.5,-28],[153,-25],[151,-24],
+    [149,-21],[146,-19],[145.5,-17],[143,-14],[142.5,-11],[141.8,-12.5],[140.8,-17.3],[139,-17.4],
+    [137,-16],[136.5,-14],[135.5,-12],[133,-11.5],[130.5,-12.5],[129,-15],[126,-14],[123,-16],
+    [122,-18],[119,-20],[116,-20.5],[114,-21.5]
+  ]);
+  const tasmania = g.coast([[145,-40.7],[148,-40.8],[148.3,-43.2],[146.5,-43.6],[145,-42.2]]);
+  const reefLine = [[145.8,-16],[147.5,-18],[149.2,-20],[151,-22],[152,-23.5]];
+
+  const rWestPlateau = g.poly([[115,-20],[128,-20],[128,-31],[116,-31]]);
+  const rDesert = g.poly([[125,-20],[138,-20],[138,-30],[126,-31]]);
+
+  const murray = g.river([[148,-36.3],[145,-35.4],[143,-34.4],[141,-34.2],[139.6,-35.3]]);
+  const darling = g.river([[148.8,-28.5],[147,-30],[145,-32],[143.2,-34.0]]);
+
+  const dividingLine = [[146,-19],[148,-24],[149.5,-29],[149,-34],[147.5,-37]];
+
+  pl("جبال الحاجز الكبير", "region", [149,-30], 22, { aliases: ["great dividing range"] });
+  pl("الهضبة الغربية", "region", [122,-25], 26, { ref: "r-westplateau", aliases: ["western plateau"] });
+  pl("الصحراء الأسترالية", "region", [131,-25], 28, { ref: "r-desert", aliases: ["australian desert"] });
+  pl("الحاجز المرجاني العظيم", "region", [149,-18], 16, { ref: "reef", aliases: ["great barrier reef"] });
+  pl("نهر موري", "line", [143,-34.6], 14, { ref: "murray", aliases: ["murray"] });
+  pl("نهر دارلنج", "line", [146,-31], 12, { ref: "darling", aliases: ["darling"] });
+  pl("المحيط الهادي", "sea", [152,-14], 16, { aliases: ["pacific", "المحيط الهادئ"] });
+  pl("المحيط الهندي", "sea", [114,-30], 18, { aliases: ["indian ocean"] });
+  pl("الخليج الأسترالي الكبير", "sea", [130,-37], 14, { aliases: ["great australian bight"] });
+  pl("بحر تسمان", "sea", [152,-39], 12, { aliases: ["tasman sea"] });
+
+  return [
+    `<path id="land" d="${land}" ${S.land}/>`,
+    `<path d="${tasmania}" ${S.landThin}/>`,
+    `<path id="r-westplateau" d="${rWestPlateau}" ${S.hidden}/>`,
+    `<path id="r-desert" d="${rDesert}" ${S.hidden}/>`,
+    `<path id="reef" d="${g.river(reefLine)}" ${S.grat}/>`,
+    `<path id="murray" d="${murray}" ${S.river}/>`,
+    `<path id="darling" d="${darling}" ${S.riverThin}/>`,
+    carets(proj, dividingLine, 6),
+    seaLabel(proj.X(151), proj.Y(-13.5), "المحيط الهادي", 8),
+    seaLabel(proj.X(114.5), proj.Y(-30), "المحيط الهندي", 8),
+    seaLabel(proj.X(130), proj.Y(-37.2), "الخليج الأسترالي الكبير", 7.5),
+    seaLabel(proj.X(152), proj.Y(-39), "بحر تسمان", 7.5),
   ];
 });
 

@@ -1,7 +1,7 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-07-17
+> Last updated: 2026-07-21
 
 ## Phase
 **PoC built (v0, 2026-07-17).** Working end-to-end slice of the spine: ministry book (Prep-3 Math EN, Unit 1) → content-addressed source + typed extraction (Pydantic, DAG-validated) → Postgres curriculum graph (11 LOs, 29 live questions, provenance on every fact) → adaptive student loop (Elo mastery, temporal rows) → **Evidence Walk demo** (investor-grade, ADR-0003 P0). Run: `brew services start postgresql@17`, then `npm run dev` in `app/` → http://localhost:3000 (/, /spine, /student). Reseed: `uv run load_seed.py seed/unit1.json --approve-all --demo-student` in `services/extraction/`.
@@ -20,6 +20,22 @@ All 178 pages of the ministry PDF (Term-1 + Term-2 books) are in the spine: **10
 
 ## Tutor Experience v2 — SHIPPED (2026-07-18, spec: docs/specs/tutor-experience-v2.md)
 All three waves verified: **A** (7 correctness bugs), **B1** (beat protocol + paced reveal, grounding slices + prompt caching — spine $0.28→$0.014/turn, lesson EGP 32-46→6-7 — latency theater, language lock, softened failures, de-instrumented student surface w/ triple-tap debug), **B2** (persistent whiteboard السبورة with figure/question focus + filmstrip, controlled-step figures across all 9 primitives — draw once slowly, tap-advance, no infinite loops — focus mode + labeled Arabic stepper, doors-first check-in with Term-disambiguated picker, sessionStorage lesson resume). Repo: https://github.com/samtoma/AI.NEXT (commit at each verified milestone).
+
+## FULL SOCIAL BOOK — Phase B SHIPPED, reviewed & loaded (2026-07-21)
+The entire Term-1 Social Studies book (14 lessons, 4 units, geography+history) is extracted at the **rich** contract, independently reviewed, and live. Spec: `docs/specs/rich-content-fullbook.md`.
+- **Richer contract:** every lesson now yields tamheed + per-subtopic exposition passages, key_terms (مفاهيم أتعلمها), enrichment boxes (معلومات إثرائية), misconceptions, style-varied questions (recall/explain_why/compare/consequence/order/locate/concept), and 3–5 widgets incl. interactives. Rendered by a new student surface (`app/src/components/student/LessonContentView.tsx`, `mode=read`) reading `services/extraction/seed/content/<lessonId>.json` via `getLessonContent`.
+- **DB (loaded):** 84 social LOs across all 14 lessons, **762 questions (483 live / 279 review)**, 34 map visuals, 4 unit modules, 2 bridges preserved, math 450 untouched. Spine now shows **174 LOs / 933 live questions** total.
+- **Pipeline:** `rich-lesson.workflow.js` (auto-segments each lesson; tiered Haiku+Sonnet; per-subtopic fan-out; coverage oracle). Assembled by `assemble_fullbook.py` + `merge_final.py`.
+- **Review pass (all agents' work audited):** 0 MCQ answer errors across 754 Qs (independent re-solve). Sonnet re-audit of 33 Haiku-flagged claims → 29 valid (87%); **4 real defects found & dropped** (soc3-1 17th→18th-c date error; soc1-3 two over-claims; soc3-2 one unsupported) + 3 dependent questions. soc2-1/soc2-3 re-run to GREEN. Session-limit cascade (soc2-3 only) recovered via targeted re-run.
+- **Base maps:** 4 continent maps (europe/n-america/s-america/australia) added to `generate.cjs`; registered in `maps.ts` BASE_MAPS (was silently blanking them). 24 gazetteer places added for U2–U4.
+- **Follow-ups:** widget map_scene yield low (34 loaded — many proposed places outside gazetteer, pruned); stale "PREP-3 MATHEMATICS" footer on social pages (cosmetic); 279 review-status Qs await Samuel's pass; loader-hardening + cost-meter (task #6).
+
+## Extraction Line — ADR-0005 accepted; Phase A SHIPPED (2026-07-21)
+Root-cause finding: there was **no extraction pipeline** — seed JSON was hand-authored, so Geography Unit-1 Lesson-2 (تضاريس العالم) shipped **Africa-only** (a six-continent lesson) and Unit-1 L1/L3 were never authored. Fix (ADR-0005, spec: `docs/specs/extraction-pipeline.md`): a per-lesson **agentic conveyor** — segment→outline/LO→claims→questions→visuals→independent-verify→assemble+validate→human-gate→load — whose load-bearing addition is the **coverage oracle** (printed objectives/headings vs content produced) that makes "one continent of six" structurally impossible to reship.
+- **Substrate:** Claude Workflow `services/extraction/runbook/extract-lesson.workflow.js` (reusable runbook); tiered models (Haiku mechanical, Sonnet content/verify, grader≠author); Stage-0 manifest `services/extraction/manifest/social-prep3-t1.json` (printed page = PDF index − 7, all 14 term-1 lessons).
+- **Phase A result (Geography L2, all 6 continents):** first run RED — coverage oracle **caught a page-boundary bug I planted** (Asia's fluvial plains sat on a page assigned to Africa); fixed via cached resume → **GREEN**. 66 claims, 35 questions (was 17 Africa-only), **0 MCQ contradictions** on independent re-solve, Pydantic+DAG valid. 7 low-severity Haiku provenance flags for spot-check. Bundle `seed/social-t1.json` **loaded** (`--course` scoped): social 62 Qs (35 geo live=20/review=15 + 27 history preserved), 2 bridges restored, math 450 untouched. Verified live on /spine.
+- **Loader gap found:** `--course` reload of a bridged node FK-fails (bridge preserved but endpoint node deleted) — worked around by drop→load→re-apply `db/bridges.sql`; proper fix queued (task #6). Workflow cost not yet piped to `ai_interactions` (task #6).
+- **In flight:** visual fast-follow (Samuel chose the quality path) — design-system-lead building 4 missing base maps (europe/n-america/s-america/australia) in `app/public/maps/generate.cjs`; per-continent map_scenes wired after. **Next:** Phase B (Unit-1 L1/L3 + rest of term-1), Phase C (back-audit math + old skeleton with the coverage oracle). 15 short-answer Qs await human review.
 
 ## Multi-Subject Spine — Wave 1.5 SHIPPED (2026-07-21, ADR-0004; spec: multi-subject-spine.md)
 Subjects are now separated everywhere, bridged by exception. Verified live:
