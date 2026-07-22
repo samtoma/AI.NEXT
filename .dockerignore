@@ -1,0 +1,17 @@
+# Keep the build context lean (context is the repo root).
+.git
+**/node_modules
+**/.next
+**/.venv
+**/__pycache__
+**/.DS_Store
+**/.env
+**/.env.local
+deploy/.env
+*.log
+# heavy source assets not needed at runtime
+AI.Next - Google Folder*/
+docs/Source/*.pdf
+docs/**/*.pdf
+# scratch
+services/extraction/.audit

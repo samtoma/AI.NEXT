@@ -1,0 +1,25 @@
+# Cloudflare tunnel — expose the tutor at a new hostname, ALONGSIDE
+# talent.reletix.com (do not remove or reorder the existing rules).
+#
+# Find your existing config (commonly one of):
+#   ~/.cloudflared/config.yml   |   /etc/cloudflared/config.yml
+# Add the AI.Next hostname ABOVE the catch-all 404 rule.
+
+# tunnel: <your-existing-tunnel-uuid-or-name>
+# credentials-file: /path/to/<tunnel>.json
+
+ingress:
+  # ---- NEW: AI.Next tutor ----
+  - hostname: ainext.reletix.com          # pick your hostname
+    service: http://localhost:3100
+
+  # ---- existing talent.reletix.com rules stay exactly as they are ----
+  # - hostname: preprod-talent.reletix.com
+  #   service: http://localhost:<its-port>
+
+  # catch-all MUST stay last
+  - service: http_status:404
+
+# Then create the DNS route and reload cloudflared:
+#   cloudflared tunnel route dns <TUNNEL_NAME> ainext.reletix.com
+#   sudo systemctl reload cloudflared    # or: restart, or re-run `cloudflared tunnel run`

@@ -1,0 +1,48 @@
+# AI.Next tutor — isolated stack that co-exists with talent.reletix.com.
+# App is bound to 127.0.0.1 only; a Cloudflare tunnel fronts it (see
+# cloudflared-ingress.example.yml). `docker compose down -v` removes it cleanly.
+#
+#   cd deploy && cp .env.example .env   # then fill ANTHROPIC_API_KEY + POSTGRES_PASSWORD
+#   docker compose up -d --build
+name: ainext
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ainext_poc
+      POSTGRES_USER: ainext
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
+    volumes:
+      - ainext_pg:/var/lib/postgresql/data
+      # seeded on FIRST boot only (empty volume): full math + social book
+      - ./db/ainext_poc.sql.gz:/docker-entrypoint-initdb.d/10-seed.sql.gz:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ainext -d ainext_poc"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    mem_limit: 1g
+
+  app:
+    build:
+      context: ..                 # repo root — see Dockerfile note
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://ainext:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}@db:5432/ainext_poc
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?set ANTHROPIC_API_KEY in deploy/.env}
+      AINEXT_THINKING_BUDGET: "6000"
+      NODE_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      # localhost ONLY — never exposed to the internet directly; cloudflared fronts it.
+      # Change 3100 if that port is already taken on the box.
+      - "127.0.0.1:3100:3000"
+    mem_limit: 2g
+
+volumes:
+  ainext_pg:
