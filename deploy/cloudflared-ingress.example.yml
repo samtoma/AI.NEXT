@@ -10,7 +10,7 @@
 
 ingress:
   # ---- NEW: AI.Next tutor ----
-  - hostname: ainext.reletix.com          # pick your hostname
+  - hostname: poc.reletix.com          # pick your hostname
     service: http://localhost:3100
 
   # ---- existing talent.reletix.com rules stay exactly as they are ----
@@ -21,5 +21,5 @@ ingress:
   - service: http_status:404
 
 # Then create the DNS route and reload cloudflared:
-#   cloudflared tunnel route dns <TUNNEL_NAME> ainext.reletix.com
+#   cloudflared tunnel route dns <TUNNEL_NAME> poc.reletix.com
 #   sudo systemctl reload cloudflared    # or: restart, or re-run `cloudflared tunnel run`

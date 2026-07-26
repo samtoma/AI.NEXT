@@ -46,7 +46,7 @@ docker compose exec app sh -lc 'claude -p "reply OK" --model claude-sonnet-5 --m
 
 # 7. expose via the tunnel (see cloudflared-ingress.example.yml)
 #   add the hostname rule to your existing cloudflared config, then:
-cloudflared tunnel route dns <TUNNEL_NAME> ainext.reletix.com
+cloudflared tunnel route dns <TUNNEL_NAME> poc.reletix.com
 sudo systemctl reload cloudflared
 ```
 
