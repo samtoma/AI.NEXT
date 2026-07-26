@@ -1,63 +1,66 @@
-# CI/CD — GitHub Actions → OCI
+# CI/CD — one gated GitHub Actions pipeline → OCI
 
-Two workflows:
+**`.github/workflows/ci-cd.yml`** is a single workflow with two jobs:
 
-- **`.github/workflows/ci.yml`** — on every push/PR touching `app/**`, GitHub-hosted:
-  `npm ci` → `tsc --noEmit` → `next build`. Catches breakage before it can deploy.
-- **`.github/workflows/deploy-oci.yml`** — on push to `main` (or manual **Run workflow**),
-  runs **on the OCI box** via a self-hosted runner: rebuilds the Docker stack in `deploy/`
-  and health-checks `localhost:3100`. No inbound SSH; secrets stay on the box.
+- **`build`** (GitHub-hosted; every branch + PR touching `app/**`): `npm ci` → `tsc --noEmit`
+  → `next build`. A fast breakage gate.
+- **`deploy`** (`needs: build`, `if: github.ref == 'refs/heads/main'`): runs **on the OCI box**
+  via the self-hosted runner. Because deploy `needs: build`, a broken build never reaches the box.
+  Feature branches / PRs get the build check only.
+
+The deploy job: `git fetch`es the persistent checkout at **`/opt/reletix/AI.NEXT`**, verifies
+`deploy/.env`, `docker compose up -d --build`, health-checks `127.0.0.1:3100`, then trims dangling
+images. No inbound SSH; the runner polls GitHub; secrets stay on the box.
 
 ## One-time setup on the OCI box
 
-### 1. Register a self-hosted runner (outbound-only; polls GitHub)
-GitHub → repo **Settings → Actions → Runners → New self-hosted runner** (Linux · x64).
-Run the download/config commands it shows you. When prompted for **labels, add `oci`**:
-
+### 1. Self-hosted runner (outbound-only)
+Already installed as **`ainext-oci-1`** at `/opt/reletix/actions-runner-ainext` — systemd service,
+repo-scoped to `samtoma/AI.NEXT`, labels `self-hosted,oci`, runs as `ubuntu` (∈ docker group).
+To recreate:
 ```bash
-# (GitHub gives you the exact ./config.sh line + token)
-./config.sh --url https://github.com/samtoma/AI.NEXT --token <TOKEN> --labels oci --name oci-box
-# install as a service so it survives reboots:
-sudo ./svc.sh install
-sudo ./svc.sh start
+mkdir -p /opt/reletix/actions-runner-ainext && cd "$_"
+VER=$(curl -fsSL https://api.github.com/repos/actions/runner/releases/latest | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+curl -fsSL -o r.tgz "https://github.com/actions/runner/releases/download/v${VER}/actions-runner-linux-arm64-${VER}.tar.gz"
+tar xzf r.tgz && rm r.tgz
+./config.sh --url https://github.com/samtoma/AI.NEXT --token <REG_TOKEN> --labels oci --name ainext-oci-1 --unattended
+sudo ./svc.sh install ubuntu && sudo ./svc.sh start
 ```
+> The box is **ARM64** — use the `linux-arm64` runner. Get `<REG_TOKEN>` from repo
+> **Settings → Actions → Runners → New self-hosted runner**, or
+> `gh api -X POST repos/samtoma/AI.NEXT/actions/runners/registration-token --jq .token`.
+> A self-hosted runner executes repo workflow code — fine for a repo you control; runs as its own
+> non-root user and never needs access to the talent stack.
 
-Make sure the runner's user can talk to Docker:
+### 2. Secret on the box (never in GitHub)
+Self-contained in the app folder — gitignored, and preserved by the deploy's git sync:
 ```bash
-sudo usermod -aG docker "$USER"    # then re-login / restart the runner service
+umask 077; mkdir -p /opt/reletix/AI.NEXT/deploy
+printf 'POSTGRES_PASSWORD=%s\n' 'a-strong-password' > /opt/reletix/AI.NEXT/deploy/.env
+chmod 600 /opt/reletix/AI.NEXT/deploy/.env
 ```
+There is **no API key** — `claude` runs on your subscription (one-time login, see `DEPLOY.md`).
 
-> Security note: a self-hosted runner executes workflow code from the repo. Fine for a
-> private repo you control. It runs as its own user — do **not** run it as root, and it
-> never needs access to the talent.reletix.com stack.
-
-### 2. Put the secret on the box (never in GitHub)
-```bash
-cat > ~/ainext.env <<'EOF'
-POSTGRES_PASSWORD=your-strong-password
-EOF
-chmod 600 ~/ainext.env
-```
-The deploy workflow copies this into `deploy/.env` at build time. `deploy/.env` is gitignored.
-There's **no API key** — the `claude` CLI runs on your Claude subscription (next step).
-
-### 3. First deploy + one-time Claude login
-- Merge the branch to `main`, **or** go to **Actions → Deploy to OCI → Run workflow** and
-  pick your branch. The runner builds and starts the stack, then health-checks it.
-- **Log the CLI in once** (OAuth can't run inside CI — it needs your browser):
-  `cd <repo>/deploy && docker compose exec app claude` → approve in your browser.
-  The login lives in the `claude_cfg` volume and **survives every future auto-deploy**
-  (`up -d --build` never touches the volume). You only re-login after a `docker compose down -v`.
-- Do the Cloudflare tunnel step once (see `deploy/DEPLOY.md` + `cloudflared-ingress.example.yml`).
+### 3. First deploy + Claude login + tunnel/Access
+- Push to `main` (or **Actions → CI/CD → Run workflow**). Build gates, then the runner deploys.
+- One-time `claude` login (browser OAuth — can't run in CI): `DEPLOY.md` bootstrap step 3.
+- Add the public hostname + Access application once: `DEPLOY.md` → "Expose it".
 
 ## After that
-Every push to `main` (touching app/content/deploy) redeploys automatically. The Postgres
-volume persists across deploys; the seed runs only on the first boot. To reload data after
-content changes, `docker compose down -v` on the box then re-run the workflow.
+Every push to `main` touching `app/**`, `services/extraction/seed/content/**`, `deploy/**`, or the
+workflow redeploys automatically. `ainext_pg` (DB) and `claude_cfg` (login) persist; the seed runs
+only on first boot. To reload content: `docker compose down -v` on the box, then re-run.
 
-## Alternative (if you can't run a runner on the box)
-Switch `deploy-oci.yml` to `runs-on: ubuntu-latest` and SSH in with
-[`appleboy/ssh-action`], using a deploy key + host stored as GitHub secrets, running
-`cd <path> && git pull && cd deploy && docker compose up -d --build`. This needs the box
-reachable by SSH (public IP or a Cloudflare tunnel for SSH). The self-hosted runner avoids
-opening any inbound port, which is why it's the default here.
+> **Doc-only commit?** Put `[skip ci]` in the message to skip a needless build+deploy.
+
+## Image hygiene (shared box)
+Build-on-box uses a **stable tag** (`ainext-app`), so each real rebuild leaves exactly one dangling
+image, which the deploy removes with `docker image prune -f` → the box keeps a **single**
+`ainext-app`. The pipeline **never** uses `-a` / `docker system prune` / global `docker builder
+prune`, which would delete other stacks' (talent, mailu, …) images or shared build cache. BuildKit's
+own GC bounds the shared build cache.
+
+## Alternative (no runner on the box)
+Switch the `deploy` job to `runs-on: ubuntu-latest` and SSH in via `appleboy/ssh-action` (deploy key
++ host as GitHub secrets), running the same git-sync + `docker compose up -d --build`. That needs the
+box reachable by SSH; the self-hosted runner avoids opening any inbound port, which is why it's the default.

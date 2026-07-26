@@ -2,7 +2,7 @@
 # App is bound to 127.0.0.1 only; a Cloudflare tunnel fronts it (see
 # cloudflared-ingress.example.yml). `docker compose down -v` removes it cleanly.
 #
-#   cd deploy && cp .env.example .env   # then fill ANTHROPIC_API_KEY + POSTGRES_PASSWORD
+#   cd deploy && cp .env.example .env   # then set POSTGRES_PASSWORD (no API key — claude uses your subscription)
 #   docker compose up -d --build
 name: ainext
 
