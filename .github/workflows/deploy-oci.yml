@@ -1,9 +1,19 @@
 name: Deploy to OCI
 
-# Runs ON your OCI box via a self-hosted runner (label: oci). No inbound SSH;
-# the runner polls GitHub. Secrets never touch GitHub — they live in
-# ~/ainext.env on the box (see deploy/CICD.md). Rebuilds the isolated Docker
-# stack alongside talent.reletix.com and health-checks it.
+# Runs ON the OCI box via a self-hosted runner (labels: self-hosted, oci) that is
+# scoped to THIS repo. No inbound SSH; the runner polls GitHub.
+#
+# Mirrors the TalentReletix deploy model:
+#   * the job manages a persistent, pipeline-owned checkout at /opt/reletix/AI.NEXT
+#     (git fetch/reset — never a hand-run clone), sitting beside talent/ & talent-preprod/;
+#   * builds the app image natively on the box (ARM64) and brings up the isolated
+#     `ainext` compose stack next to talent.reletix.com;
+#   * persistent state (Claude CLI login, seeded Postgres) lives in NAMED Docker
+#     volumes under compose project `ainext`, so it survives every redeploy —
+#     the checkout dir is disposable, the volumes are not.
+#
+# Secrets never touch GitHub: POSTGRES_PASSWORD lives in ~/ainext.env on the box
+# (see deploy/CICD.md).
 on:
   workflow_dispatch: {}
   push:
@@ -21,34 +31,52 @@ concurrency:
 jobs:
   deploy:
     runs-on: [self-hosted, oci]
+    env:
+      APP_DIR: /opt/reletix/AI.NEXT
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Provide box-resident secrets
+      - name: Sync repo into persistent app dir (pipeline-managed, no hand-clone)
         run: |
+          set -euo pipefail
+          REPO_URL="https://github.com/${{ github.repository }}.git"
+          REF="${{ github.ref_name }}"
+          mkdir -p "$APP_DIR"
+          if [ ! -d "$APP_DIR/.git" ]; then
+            git clone --branch "$REF" --single-branch "$REPO_URL" "$APP_DIR"
+          fi
+          cd "$APP_DIR"
+          git remote set-url origin "$REPO_URL"
+          git fetch --prune origin "$REF"
+          git checkout -B "$REF" "origin/$REF"
+          git reset --hard "origin/$REF"
+          echo "Deploying commit: $(git rev-parse --short HEAD) on $REF"
+
+      - name: Provide box-resident secret (POSTGRES_PASSWORD)
+        run: |
+          set -euo pipefail
           if [ ! -f "$HOME/ainext.env" ]; then
             echo "::error::~/ainext.env not found on the runner box. Create it once — see deploy/CICD.md"
             exit 1
           fi
-          cp "$HOME/ainext.env" deploy/.env
+          install -m 600 "$HOME/ainext.env" "$APP_DIR/deploy/.env"
 
-      - name: Build & start
-        working-directory: deploy
+      - name: Build & start (isolated `ainext` stack)
+        working-directory: /opt/reletix/AI.NEXT/deploy
         run: |
-          docker compose up -d --build
+          set -euo pipefail
+          docker compose up -d --build --remove-orphans
           docker compose ps
 
-      - name: Health check
-        working-directory: deploy
+      - name: Health check (127.0.0.1:3100)
+        working-directory: /opt/reletix/AI.NEXT/deploy
         run: |
           for i in $(seq 1 40); do
-            if curl -sSf http://localhost:3100/ >/dev/null; then
+            if curl -sSf http://127.0.0.1:3100/ >/dev/null; then
               echo "app healthy on :3100"; exit 0
             fi
             sleep 3
           done
           echo "::error::app did not become healthy"
-          docker compose logs --tail=100 app
+          docker compose logs --tail=120 app
           exit 1
 
       - name: Prune dangling images
