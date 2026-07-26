@@ -9,11 +9,12 @@ name: Deploy to OCI
 #   * builds the app image natively on the box (ARM64) and brings up the isolated
 #     `ainext` compose stack next to talent.reletix.com;
 #   * persistent state (Claude CLI login, seeded Postgres) lives in NAMED Docker
-#     volumes under compose project `ainext`, so it survives every redeploy —
-#     the checkout dir is disposable, the volumes are not.
+#     volumes under compose project `ainext`, so it survives every redeploy.
 #
-# Secrets never touch GitHub: POSTGRES_PASSWORD lives in ~/ainext.env on the box
-# (see deploy/CICD.md).
+# Secrets never touch GitHub and stay self-contained in the app folder:
+# POSTGRES_PASSWORD lives in /opt/reletix/AI.NEXT/deploy/.env (gitignored, so the
+# git sync below preserves it — `reset --hard` only touches TRACKED files, never
+# this untracked .env). Create it once on the box (see deploy/CICD.md).
 on:
   workflow_dispatch: {}
   push:
@@ -34,30 +35,36 @@ jobs:
     env:
       APP_DIR: /opt/reletix/AI.NEXT
     steps:
-      - name: Sync repo into persistent app dir (pipeline-managed, no hand-clone)
+      - name: Sync code into persistent app dir (git init/fetch — preserves deploy/.env)
         run: |
           set -euo pipefail
           REPO_URL="https://github.com/${{ github.repository }}.git"
           REF="${{ github.ref_name }}"
           mkdir -p "$APP_DIR"
-          if [ ! -d "$APP_DIR/.git" ]; then
-            git clone --branch "$REF" --single-branch "$REPO_URL" "$APP_DIR"
-          fi
           cd "$APP_DIR"
-          git remote set-url origin "$REPO_URL"
-          git fetch --prune origin "$REF"
-          git checkout -B "$REF" "origin/$REF"
-          git reset --hard "origin/$REF"
+          # git init (not clone) so a pre-placed, gitignored deploy/.env can coexist.
+          if [ ! -d .git ]; then
+            git init -q
+            git remote add origin "$REPO_URL"
+          else
+            git remote set-url origin "$REPO_URL"
+          fi
+          git fetch --prune origin "+refs/heads/$REF:refs/remotes/origin/$REF"
+          git checkout -f -B "$REF" "origin/$REF"
+          git reset --hard "origin/$REF"   # tracked files only — untracked deploy/.env is untouched
           echo "Deploying commit: $(git rev-parse --short HEAD) on $REF"
 
-      - name: Provide box-resident secret (POSTGRES_PASSWORD)
+      - name: Verify in-folder secret (deploy/.env)
         run: |
           set -euo pipefail
-          if [ ! -f "$HOME/ainext.env" ]; then
-            echo "::error::~/ainext.env not found on the runner box. Create it once — see deploy/CICD.md"
+          ENV_FILE="$APP_DIR/deploy/.env"
+          if [ ! -f "$ENV_FILE" ]; then
+            echo "::error::$ENV_FILE missing. Create it once on the box (self-contained, gitignored):"
+            echo "::error::  umask 077; printf 'POSTGRES_PASSWORD=%s\\n' 'STRONG_PW' > $ENV_FILE"
             exit 1
           fi
-          install -m 600 "$HOME/ainext.env" "$APP_DIR/deploy/.env"
+          grep -Eq '^POSTGRES_PASSWORD=.+' "$ENV_FILE" || { echo "::error::POSTGRES_PASSWORD not set in $ENV_FILE"; exit 1; }
+          echo "secret present in $ENV_FILE"
 
       - name: Build & start (isolated `ainext` stack)
         working-directory: /opt/reletix/AI.NEXT/deploy
