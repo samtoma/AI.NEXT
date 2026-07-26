@@ -53,6 +53,15 @@ export interface ClaimStep {
 /** What actually sits in `canonical_solution` jsonb: math steps or social claim-steps. */
 export type CanonicalStep = SolutionStep | ClaimStep;
 
+/**
+ * The renderable text of a canonical step, whichever shape it is: math steps
+ * carry `text_md`, social claim-steps carry `claim_ar`. Both jsonb shapes land
+ * in the same `SolutionStep[]`-typed field, so read defensively.
+ */
+export function stepText(s: { text_md?: string; claim_ar?: string }): string {
+  return s.text_md ?? s.claim_ar ?? "";
+}
+
 export interface Provenance {
   source: string;
   sourceSha256: string;

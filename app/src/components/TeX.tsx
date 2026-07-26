@@ -32,6 +32,9 @@ function escapeHtml(s: string): string {
 }
 
 function renderMixed(text: string): string {
+  // Defensive: never crash on a missing/non-string field (e.g. a social
+  // claim-step has no text_md). Render nothing rather than throw.
+  if (typeof text !== "string" || text.length === 0) return "";
   // split on $...$ (non-greedy, no escaped-dollar handling needed for this corpus)
   const parts = text.split(/(\$[^$]+\$)/g);
   return parts

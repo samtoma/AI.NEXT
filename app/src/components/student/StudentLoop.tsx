@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { AttemptResult, PlanItem, PlanReason } from "@/lib/types";
+import { stepText } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
 import { TeX } from "@/components/TeX";
 import { ChatCore } from "@/components/chat/ChatCore";
@@ -338,7 +339,7 @@ export function StudentLoop({
                             {s.step}
                           </span>
                           <span className="tex-block pt-0.5 text-[14px] leading-relaxed text-ink">
-                            <TeX text={s.text_md} />
+                            <TeX text={stepText(s)} />
                           </span>
                         </li>
                       ))}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { SpineData, SpineLo, SpineQuestion } from "@/lib/types";
+import { stepText } from "@/lib/types";
 import { TeX } from "@/components/TeX";
 import { tierStyle } from "./LoPanel";
 
@@ -153,7 +154,7 @@ export function QuestionModal({
                     {s.step}
                   </span>
                   <span className="tex-block pt-0.5 text-[14px] leading-relaxed text-ink">
-                    <TeX text={s.text_md} />
+                    <TeX text={stepText(s)} />
                   </span>
                 </li>
               ))}

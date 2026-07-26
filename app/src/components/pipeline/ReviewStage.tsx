@@ -1,5 +1,6 @@
 import { TeX } from "@/components/TeX";
 import type { ReviewQuestion } from "@/lib/pipeline-queries";
+import { stepText } from "@/lib/types";
 
 function fmtDate(iso: string | null): string {
   if (!iso) return "—";
@@ -82,7 +83,7 @@ export function ReviewStage({
                     {String(s.step).padStart(2, "0")}
                   </span>
                   <span>
-                    <TeX text={s.text_md} />
+                    <TeX text={stepText(s)} />
                   </span>
                 </li>
               ))}
