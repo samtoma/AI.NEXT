@@ -22,7 +22,7 @@ ENV NODE_ENV=production \
     CLAUDE_CONFIG_DIR=/repo/.claude \
     HOME=/home/node \
     PORT=3000 \
-    AINEXT_THINKING_BUDGET=6000
+    AINEXT_THINKING_BUDGET=1024
 # the app spawns `claude -p …` for every AI turn — it must be on PATH
 RUN npm i -g @anthropic-ai/claude-code \
  && mkdir -p /repo/.claude /home/node \

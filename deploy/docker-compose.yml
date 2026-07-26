@@ -32,7 +32,9 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://ainext:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}@db:5432/ainext_poc
-      AINEXT_THINKING_BUDGET: "6000"
+      # Runtime thinking budget. 1024 = minimal deliberation, snappy (default).
+      # Set to "0" (or "off") for maximum speed; raise it to restore more.
+      AINEXT_THINKING_BUDGET: "1024"
       NODE_ENV: production
       # No API key: the bundled `claude` CLI runs on your Claude SUBSCRIPTION.
       # You log in ONCE (see DEPLOY.md); creds live in the claude_cfg volume and

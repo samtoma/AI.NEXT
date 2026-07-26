@@ -179,6 +179,20 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
         }
       };
 
+      // Runtime thinking budget. The hard reasoning happened at EXTRACTION time
+      // (grounded, human-reviewed claims/solutions); at runtime the tutor mostly
+      // paraphrases a claim, picks the next beat, and reacts — so a big budget is
+      // pure latency. Default 1024 (the extended-thinking floor: minimal
+      // deliberation, still on, snappy). AINEXT_THINKING_BUDGET=0 (or "off") turns
+      // thinking OFF entirely for maximum speed; a higher number restores more.
+      const rawBudget = (process.env.AINEXT_THINKING_BUDGET ?? "1024")
+        .trim()
+        .toLowerCase();
+      const thinkEnv =
+        rawBudget === "0" || rawBudget === "off"
+          ? {}
+          : { MAX_THINKING_TOKENS: rawBudget };
+
       const child = spawn(
         "claude",
         [
@@ -201,12 +215,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           env: {
             ...process.env,
             PATH: `${process.env.PATH ?? ""}:${process.env.HOME ?? ""}/.local/bin`,
-            // Samuel (2026-07-18): PoC quality over cost — thinking re-enabled,
-            // but BOUNDED: unbounded adaptive thinking measured 30–60s dead-air
-            // stalls mid-lesson. 6k budget keeps deliberation on hard explanation
-            // turns while capping the stall. Tune via AINEXT_THINKING_BUDGET;
-            // revisit at the runtime ADR (CLI→API swap).
-            MAX_THINKING_TOKENS: process.env.AINEXT_THINKING_BUDGET ?? "6000",
+            ...thinkEnv,
           },
           stdio: ["pipe", "pipe", "pipe"],
         }
