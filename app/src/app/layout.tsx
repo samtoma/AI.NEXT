@@ -4,6 +4,7 @@ import Link from "next/link";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 import { NavLinks } from "@/components/NavLinks";
+import { Logo } from "@/components/Logo";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -40,7 +41,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <header className="relative z-20 border-b border-line bg-card/70 backdrop-blur-sm">
           <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6">
-            <Link href="/" className="flex items-baseline gap-2.5">
+            <Link href="/" className="flex items-center gap-2.5">
+              <Logo className="h-8 w-8 shrink-0" />
               <span className="font-display text-lg font-semibold tracking-tight text-ink">
                 AI<span className="text-accent">.</span>Next
               </span>
