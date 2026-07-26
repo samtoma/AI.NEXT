@@ -104,16 +104,14 @@ jobs:
           docker compose logs --tail=120 app
           exit 1
 
-      - name: Trim images & cap build cache (dangling only — never -a, never other stacks)
+      - name: Trim dangling images (untagged rebuild leftovers only — talent-safe)
         if: always()
         run: |
-          # Removes only UNTAGGED leftover images (the previous ainext-app build).
-          # Tagged/running images — talent, mailu, postgres, etc. — are untouched.
+          # Removes ONLY untagged (<none>) leftover images from our rebuilds, so the
+          # box keeps a single tagged ainext-app. Tagged/running images (talent, mailu,
+          # postgres, ...) are untouched. We deliberately do NOT prune the BuildKit
+          # build cache here: it is shared across all stacks on this box, and BuildKit's
+          # own GC keeps it bounded. Never `-a` / `system prune`.
           docker image prune -f
-          # Keep the box lean: cap BuildKit cache. Fallbacks guard flag differences.
-          docker builder prune -f --max-used-space=2GB \
-            || docker builder prune -f \
-            || true
-          echo "Post-deploy image state:"
+          echo "Post-deploy ainext images:"
           docker images --format '  {{.Repository}}:{{.Tag}}  {{.Size}}' | grep -i ainext || true
-          docker system df
