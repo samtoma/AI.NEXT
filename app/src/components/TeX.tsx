@@ -1,60 +1,35 @@
 "use client";
 
-import { useMemo } from "react";
-import katex from "katex";
+import dynamic from "next/dynamic";
 
 /**
- * Renders a string containing inline $...$ LaTeX segments (the format used by
- * question stems and canonical solution steps in the spine).
+ * `<TeX>` — the only entry point for maths rendering.
+ *
+ * This file is deliberately a thin lazy wrapper. KaTeX (library + stylesheet)
+ * is roughly 75 KB gzipped, and it used to be loaded on every route because the
+ * stylesheet sat in the root layout and the library sat in each route's client
+ * bundle. Most of the product renders no maths at all: the Social Studies
+ * lessons, the Arabic reading surface («شرح الدرس»), the subject home and the
+ * check-in. They were all paying for it.
+ *
+ * Splitting it here rather than at the ~6 call sites means no caller can
+ * accidentally reintroduce the eager path — importing `TeX` is always the light
+ * import, and `TeXRenderer` is only reachable through this boundary.
+ *
+ * Loading behaviour, verified against a production build on this Next version
+ * (16.2.10) rather than assumed:
+ *  - Server-rendered maths (e.g. /pipeline's reviewed question, the practice
+ *    plan) still renders in the HTML, and Next emits the KaTeX stylesheet as a
+ *    `rel="stylesheet" data-precedence="dynamic"` link in <head>, ahead of the
+ *    maths markup — so it is render-blocking and cannot flash unstyled.
+ *  - Client-mounted maths (the LO panel, the question modal, chat messages)
+ *    waits one chunk fetch, and React holds the subtree until both the chunk
+ *    and its stylesheet are ready. Measured on /spine: stylesheet at t+13 ms,
+ *    first `.katex` node at t+71 ms, zero frames with maths but no stylesheet.
+ *
+ * The trade is a one-time deferral of the first client-mounted equation per
+ * session, against ~75 KB removed from every maths-free route.
  */
-export function TeX({
-  text,
-  className,
-}: {
-  text: string;
-  className?: string;
-}) {
-  const html = useMemo(() => renderMixed(text), [text]);
-  return (
-    <span
-      className={className}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
-}
-
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function renderMixed(text: string): string {
-  // Defensive: never crash on a missing/non-string field (e.g. a social
-  // claim-step has no text_md). Render nothing rather than throw.
-  if (typeof text !== "string" || text.length === 0) return "";
-  // split on $...$ (non-greedy, no escaped-dollar handling needed for this corpus)
-  const parts = text.split(/(\$[^$]+\$)/g);
-  return parts
-    .map((part) => {
-      if (part.startsWith("$") && part.endsWith("$") && part.length > 2) {
-        try {
-          return katex.renderToString(part.slice(1, -1), {
-            throwOnError: false,
-            output: "html",
-          });
-        } catch {
-          return escapeHtml(part);
-        }
-      }
-      // minimal markdown: **bold** and *emphasis*. Emphasis requires the
-      // asterisks to hug non-space text (common markdown rule), so
-      // multiplication like "3 * 4" stays literal.
-      return escapeHtml(part)
-        .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-        .replace(/\*([^\s*](?:[^*]*[^\s*])?)\*/g, "<em>$1</em>");
-    })
-    .join("");
-}
+export const TeX = dynamic(() =>
+  import("./TeXRenderer").then((m) => m.TeXRenderer),
+);

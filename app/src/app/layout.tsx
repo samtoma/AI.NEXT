@@ -6,7 +6,6 @@ import {
   Spline_Sans_Mono,
 } from "next/font/google";
 import Link from "next/link";
-import "katex/dist/katex.min.css";
 import "./globals.css";
 import { NavLinks } from "@/components/NavLinks";
 import { Logo } from "@/components/Logo";
