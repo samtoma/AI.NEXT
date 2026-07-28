@@ -123,6 +123,7 @@ def sacred_gate(paths: list[Path], bundles: list[SeedBundle], approve_all: bool)
         by_id = {tp.id: tp for tp in b.text_passages}
         sacred = [tp for tp in b.text_passages if tp.is_sacred]
         stale = [tp for tp in b.text_passages if tp.approval_stale]
+        flagged = [tp for tp in b.text_passages if tp.verification_flagged]
         n_sacred_q = n_unapproved_q = 0
         for q in b.questions:
             src = by_id.get(q.passage_ref or "")
@@ -133,6 +134,18 @@ def sacred_gate(paths: list[Path], bundles: list[SeedBundle], approve_all: bool)
                 held.add(q.id)          # nobody signed the text it rests on
                 n_unapproved_q += 1
 
+        # A flagged cross-check is a real disagreement between published
+        # editions, waiting for a human. It never blocks the run — the rest of
+        # the bundle loads and the flagged passage simply stays out of 'live'.
+        if flagged:
+            print(f"  {p.name}: {len(flagged)} passage(s) FLAGGED by verification — "
+                  "held for a human, load continues")
+            for tp in flagged:
+                reason = tp.verification.flag_reason if tp.verification else "?"
+                disagreeing = [s.name for s in (tp.verification.sources if tp.verification else [])
+                               if not s.agrees]
+                print(f"      {tp.id} ({tp.attribution_ar}): {reason}"
+                      + (f" [disagreeing: {', '.join(disagreeing)}]" if disagreeing else ""))
         if stale:
             print("!" * 72)
             print(f"!! {p.name}: {len(stale)} sealed passage(s) CHANGED since approval — "
@@ -157,7 +170,8 @@ def sacred_gate(paths: list[Path], bundles: list[SeedBundle], approve_all: bool)
             + "\n".join(refusals)
             + "\n\nQuran- and Hadith-derived content is never bulk-approved. It reaches a "
               "student only after two named human sign-offs:\n"
-              "  1. verbatim verification against the printed page and a trusted مصحف\n"
+              "  1. verbatim verification — the printed page beside the transcript and the "
+              "independent authorities it was cross-checked against\n"
               "  2. pedagogical/boundary review of the شرح, the questions and the class\n"
               "Re-run without --approve-all (everything else still loads; sacred rows land as "
               "'review'), or split the sacred passages into their own bundle.")
@@ -209,6 +223,52 @@ def resolve_source_docs(
                 f"{p.name}: no source_document/source_file and no earlier bundle to inherit from")
         resolved.append(current)
     return resolved
+
+
+# --all load order. NOT alphabetical: a bundle with neither `source_document`
+# nor `source_file` INHERITS the previous bundle's document (see
+# resolve_source_docs), so the document-declaring bundle of each book must come
+# first. Alphabetically `geo-unit1.json` sorts first and inherits — which made
+# `--all` die with "no source_document/source_file and no earlier bundle to
+# inherit from" even once non-bundle files were filtered out.
+# Order within each book also follows the documented cross-reference chain
+# (unit1 -> ... -> geo-unit2b); external_node_refs resolve against the whole
+# batch, but the source-document chain is strictly positional.
+BUNDLE_ORDER = [
+    # math — unit1 declares the ministry maths document; the rest inherit it
+    "unit1.json", "unit2.json", "unit3.json", "unit4.json", "unit5.json",
+    "geo-unit1.json", "t2-unit12.json", "t2-unit3.json",
+    "geo-unit2a.json", "geo-unit2b.json",
+    # social — skeleton declares the social document, social-t1 reuses it by
+    # source_file. social-t1 supersedes the skeleton's two lessons on load.
+    "social-skeleton.json", "social-t1.json",
+]
+
+
+def all_bundle_paths() -> list[Path]:
+    """seed/*.json that are actually SeedBundles, in dependency order.
+
+    seed/ also holds non-bundle artefacts (social-skeleton-traps.json is a QA
+    containment set: `_meta` + `traps`). Globbing them fed a non-bundle to
+    Pydantic and killed `--all` before it reached the DB. Mirrors the filter in
+    selfcheck_arabic.check_shipped_bundles.
+    """
+    seed = HERE / "seed"
+    found = sorted(seed.glob("*.json"))
+    bundles = [p for p in found if '"extraction_run"' in p.read_text()]
+    skipped = [p.name for p in found if p not in bundles]
+    if skipped:
+        print(f"--all: skipped {len(skipped)} non-bundle file(s): {', '.join(skipped)}")
+
+    known = {p.name: p for p in bundles}
+    ordered = [known.pop(n) for n in BUNDLE_ORDER if n in known]
+    # anything new in seed/ that nobody listed: load it last, but say so loudly
+    # rather than dropping it silently (the failure mode this whole fix is about)
+    for name in sorted(known):
+        print(f"--all: WARNING {name} is not in BUNDLE_ORDER — appending last; "
+              "add it to BUNDLE_ORDER if it declares or inherits a source document")
+        ordered.append(known[name])
+    return ordered
 
 
 def course_subtree(cur, course_id: str) -> set[str]:
@@ -465,7 +525,7 @@ if __name__ == "__main__":
         else:
             paths.append(Path(a))
     if "--all" in flags:
-        paths = sorted((HERE / "seed").glob("*.json"))
+        paths = all_bundle_paths()
     if not paths:
         paths = [HERE / "seed" / "unit1.json"]
     if "--validate-only" in flags:
