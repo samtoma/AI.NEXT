@@ -120,6 +120,9 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0001 | Architecture follows the data-spine thesis (PRD §8 discarded) | ✅ Accepted 2026-07-17 |
 | ADR-0002 | AI runtime = Python service; app layer = Next.js/React; PoC content = ministry Prep-3 Math (English) | ✅ Accepted 2026-07-17 |
 | ADR-0003 | Graph store: Postgres system of record + demo layer as P0 | ✅ Accepted 2026-07-17 |
+| ADR-0004 | Social Studies vertical (2nd subject on the spine) | ✅ Accepted 2026-07-20 |
+| ADR-0005 | Agentic extraction pipeline + coverage oracle | ✅ Accepted 2026-07-21 |
+| ADR-0006 | Arabic Language vertical — new contract: vendored Quran corpus, Noto Naskh font, 5 assessable LOs/lesson, scope = text+grammar+إملاء | ✅ Accepted 2026-07-28 |
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student · <EGP 40/student/month AI cost
