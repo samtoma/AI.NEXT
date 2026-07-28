@@ -1,7 +1,7 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-07-21
+> Last updated: 2026-07-26
 
 ## Phase
 **PoC built (v0, 2026-07-17).** Working end-to-end slice of the spine: ministry book (Prep-3 Math EN, Unit 1) → content-addressed source + typed extraction (Pydantic, DAG-validated) → Postgres curriculum graph (11 LOs, 29 live questions, provenance on every fact) → adaptive student loop (Elo mastery, temporal rows) → **Evidence Walk demo** (investor-grade, ADR-0003 P0). Run: `brew services start postgresql@17`, then `npm run dev` in `app/` → http://localhost:3000 (/, /spine, /student). Reseed: `uv run load_seed.py seed/unit1.json --approve-all --demo-student` in `services/extraction/`.
@@ -20,6 +20,29 @@ All 178 pages of the ministry PDF (Term-1 + Term-2 books) are in the spine: **10
 
 ## Tutor Experience v2 — SHIPPED (2026-07-18, spec: docs/specs/tutor-experience-v2.md)
 All three waves verified: **A** (7 correctness bugs), **B1** (beat protocol + paced reveal, grounding slices + prompt caching — spine $0.28→$0.014/turn, lesson EGP 32-46→6-7 — latency theater, language lock, softened failures, de-instrumented student surface w/ triple-tap debug), **B2** (persistent whiteboard السبورة with figure/question focus + filmstrip, controlled-step figures across all 9 primitives — draw once slowly, tap-advance, no infinite loops — focus mode + labeled Arabic stepper, doors-first check-in with Term-disambiguated picker, sessionStorage lesson resume). Repo: https://github.com/samtoma/AI.NEXT (commit at each verified milestone).
+
+## 🚀 DEPLOYED — live for the team at ainext.reletix.com (2026-07-26)
+The PoC is no longer localhost-only. It runs on Samuel's **Oracle OCI box as a co-tenant** of the
+production `talent.reletix.com` stack, and is shared with the co-founders by email invite.
+- **Where:** isolated Docker stack at `/opt/reletix/AI.NEXT` (beside `talent/`, `talent-preprod/`).
+  App binds **`127.0.0.1:3100` only**; Postgres is not published to the host. `down -v` removes it clean.
+- **Exposure:** the box's **existing token-managed cloudflared container** (`network_mode: host`) serves
+  one added public hostname → `http://localhost:3100`. **Ingress is managed in the Cloudflare Zero Trust
+  dashboard, NOT a local config.yml** — `cloudflared tunnel route dns` / `systemctl reload cloudflared`
+  do not apply. Locked behind **Cloudflare Access** (Allow → Include → Emails; one-time-PIN login).
+  Verified: `https://ainext.reletix.com` 302s to `reletix.cloudflareaccess.com/.../login` — never public.
+- **AI runtime:** the bundled `claude` CLI runs on Samuel's **Claude subscription** (one-time OAuth login,
+  persisted in the `claude_cfg` volume — survives every redeploy; only `down -v` wipes it). **No API key**,
+  no per-token bill. (Supersedes the older "swap to Anthropic API when deployed" note below.)
+- **CI/CD:** one gated `.github/workflows/ci-cd.yml` — `build` (ubuntu-latest: tsc + next build) →
+  `deploy` with **`needs: build`**, so a broken build never reaches the box; deploy runs on the
+  self-hosted runner `ainext-oci-1`, main-only, build-on-box (ARM). Push to `main` = deploy.
+  `POSTGRES_PASSWORD` lives only in `/opt/reletix/AI.NEXT/deploy/.env` (untracked; survives `reset --hard`).
+- **Shared-box safety rails:** never `docker system prune` / `image prune -a` / `builder prune` (they hit
+  the *shared* daemon); the pipeline only prunes untagged rebuild leftovers. Never touch talent stacks.
+- Runbooks: `deploy/DEPLOY.md` (bootstrap + Cloudflare steps) and `deploy/CICD.md`.
+- **Perf:** runtime thinking budget cut 6000 → **1024** (`AINEXT_THINKING_BUDGET`; `0`/`off` disables) —
+  the hard reasoning already happened at extraction time, so this is latency, not quality.
 
 ## FULL SOCIAL BOOK — Phase B SHIPPED, reviewed & loaded (2026-07-21)
 The entire Term-1 Social Studies book (14 lessons, 4 units, geography+history) is extracted at the **rich** contract, independently reviewed, and live. Spec: `docs/specs/rich-content-fullbook.md`.
