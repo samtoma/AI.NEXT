@@ -95,9 +95,26 @@ Applied in order:
 1. **Unicode NFC.** This is load-bearing for two reasons:
    - *Diacritic ordering is solved deterministically.* Arabic marks carry distinct canonical combining classes (fathatan 27, dammatan 28, kasratan 29, fatha 30, damma 31, kasra 32, shadda 33, sukun 34, superscript alef 35), so canonical ordering sorts them into one order. شدة-then-فتحة and فتحة-then-شدة become the same codepoint sequence **without losing either mark**. Comparison is order-insensitive; content is not.
    - *Hamza carriers unify.* ا+U+0654 → أ, ا+U+0655 → إ, ا+U+0653 → آ, و+U+0654 → ؤ, ي+U+0654 → ئ. Two spellings of the same grapheme compare equal. NFC does **not** collapse أ/إ/آ/ا into each other — that distinction is preserved, as it must be.
-2. **Strip tatweel U+0640** (T6). Justification artifact, no phonetic value.
+2. **Strip tatweel U+0640 ONLY when it is bare** (T6). **AMENDED 2026-07-28 — the original blanket rule
+   was wrong and would have corrupted scripture.** It was written from the book's *prose* («باب اللــوق»,
+   printed p.13), where tatweel is pure justification. But in Uthmani Quranic text tatweel is routinely a
+   **diacritic carrier**: measured on the real lesson passage (سورة الفرقان ٦٣–٧٠), **11 of 11 tatweels
+   carry a combining mark** — ten hold the dagger alef U+0670 (ٱلرَّحْمَـٰنِ، يُضَـٰعَفْ، سَلَـٰمًا …) and one holds
+   hamza U+0654 (سَيِّـَٔاتِهِمْ); **zero were bare**. Stripping them would have altered the text and then
+   sealed the altered bytes under a valid-looking `text_sha256` — a corruption a human comparing against a
+   page crop would very likely wave through.
+   **The deterministic rule:** *tatweel followed by a combining mark is a carrier → **preserve** (it is
+   text); bare tatweel is justification → strip.* Verified on real data: 11/11 carriers preserved,
+   «اللــوق» still normalised. Normalizer bumped to `ar-norm-v2`; this was free because nothing had been
+   sealed yet — which is precisely why Wave 0 exists.
 3. **Strip / reject invisibles:** strip U+200B, U+FEFF, U+00A0→U+0020, U+200E, U+200F, U+061C. **Reject** (hard fail, not strip) U+200C, U+200D — they should never appear in book text and their presence signals a mangled source.
-4. **Reject Arabic presentation forms** U+FB50–U+FDFF and U+FE70–U+FEFF — **except** the allowlist `U+FD3E ﴿` and `U+FD3F ﴾`, which are the legitimate Quran-quote brackets. A presentation-form codepoint elsewhere means the model copied from a broken PDF text layer. Do **not** use blanket NFKC: it would destroy the ornate brackets and other meaningful distinctions.
+4. **Reject Arabic presentation forms** U+FB50–U+FDFF and U+FE70–U+FEFF — **except** the allowlist
+   `U+FD3E ﴿`, `U+FD3F ﴾` (the legitimate Quran-quote brackets) and **`U+FDFA ﷺ`** (added 2026-07-28:
+   the book prints this honorific in قاسم أمين's prose, PDF p.26). The rule's purpose is to catch
+   *positional letter variants* copied from a broken PDF text layer, which break search and comparison.
+   ﴿﴾ and ﷺ are **semantic ligatures, not positional variants**, and storing them as printed is faithful
+   to the book — the alternative (spelling out صلى الله عليه وسلم) would silently change the printed text,
+   which the sacred lane forbids. A presentation-form codepoint elsewhere means the model copied from a broken PDF text layer. Do **not** use blanket NFKC: it would destroy the ornate brackets and other meaningful distinctions.
 5. **Reject non-Egyptian-Arabic codepoints:** U+06A9 (Farsi keheh), U+06CC (Farsi yeh), U+06BE, U+06C1, U+06F0–U+06F9 (Extended Arabic-Indic digits). Models occasionally emit these instead of ك / ي / ٠-٩. Silent, invisible at a glance, and a guaranteed defect.
 6. **Preserve exactly, no exceptions:** all of U+064B–U+0656, U+0670 (dagger alef), U+0671 (ٱ), the Quranic mark range U+06D6–U+06ED (pause marks, ۝, small high seen/meem/rounded zero, sajdah), Arabic-Indic digits U+0660–U+0669 **as printed** (the book uses ٦٣، ١٩٥٧م، ١٧٥٥٠ — converting to ASCII digits is a fidelity defect; the *renderer* may localize, the *store* may not), ء/أ/إ/آ/ا distinctions, ة/ه, ى/ي (T5), all Arabic punctuation ، ؛ ؟.
 7. **Whitespace:** collapse runs of space/tab to a single U+0020; trim ends. Line structure is **never** carried in the string — it is structural (§1.4): poetry stores hemistichs, Quran stores per-ayah, prose stores paragraphs.
