@@ -9,6 +9,7 @@ from typing import Literal, Optional
 from pydantic import BaseModel, Field, model_validator
 
 from arabic_text import (
+    COMPARE_VERIFY_VERSION,
     SEALED_SENSITIVITY_CLASSES,
     NORMALIZER_VERSION,
     scan_sacred_markers,
@@ -116,12 +117,24 @@ SensitivityClass = Literal["quran", "hadith", "religious_reference",
 
 # The fidelity tier is a discriminator, not a label: it selects the capture lane
 # and the runtime policy (contract §2.1).
-#   sacred   قرآن/حديث   corpus only        model may NEVER emit the text
-#   literary شعر          K-way consensus    may quote, character-exact
-#   prose    نثر/إملاء     K-way consensus    may quote or paraphrase in شرح
+#   sacred   قرآن/حديث   authority cross-check   model may NEVER emit the text
+#   literary شعر          K-way consensus         may quote, character-exact
+#   prose    نثر/إملاء     K-way consensus         may quote or paraphrase in شرح
 Fidelity = Literal["sacred", "literary", "prose"]
 PassageKind = Literal["quran", "hadith", "poetry", "prose", "dictation"]
-CaptureLane = Literal["corpus", "double_blind"]
+
+# `authority_verified` (sacred): the passage is transcribed from the book page
+# as TEXT, and the citation it reports is then fetched RAW — curl, no model in
+# the loop — from two or more independent published authorities. The three
+# strings are diffed under COMPARE-VERIFY. All agree -> seal. Any disagreement
+# -> FLAG for a human; never silently pick a source, never hard-block the run.
+# (Samuel, 2026-07-29, superseding ADR-0006 decision #2: the Quran is immutable
+# and widely published, so verification is cheap and reliable, and it avoids the
+# corpus-licensing question entirely.)
+#
+# `double_blind` (everything else): K=3 decorrelated transcriptions, because no
+# authority exists for "what THIS ministry book printed".
+CaptureLane = Literal["authority_verified", "double_blind"]
 
 _AR_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")
 
@@ -145,12 +158,12 @@ def require_store_form(value: str, where: str) -> str:
 
 
 class QuranRef(BaseModel):
-    """The ONLY thing an extraction agent may emit for Quranic text (ADR-0006 §2).
+    """The citation the vision model reports ALONGSIDE its transcript.
 
-    The text is never transcribed: it is materialised from a pinned, checksummed
-    حفص corpus, so character-exactness is a property of a file we can diff and
-    license rather than of a model's vision. Two models must agree on these
-    integers; a mismatch goes to a human.
+    It is reported independently of the text, and it is what the cross-check
+    fetches: `?chapter_number=<surah>` then slice `ayah_from..ayah_to`. Getting
+    the citation wrong and the characters right still produces the wrong
+    passage, so the integers are verified in their own right.
     """
     surah: int = Field(ge=1, le=114)
     ayah_from: int = Field(ge=1)
@@ -165,12 +178,74 @@ class QuranRef(BaseModel):
         return self
 
     @property
-    def corpus_ref(self) -> str:
+    def citation_ref(self) -> str:
         return f"quran:{self.surah}:{self.ayah_from}-{self.ayah_to}"
 
     @property
     def ayah_count(self) -> int:
         return self.ayah_to - self.ayah_from + 1
+
+
+class AuthoritySource(BaseModel):
+    """One independent published edition consulted for the cross-check.
+
+    `endpoint` is fetched RAW — no model in the loop — so a hallucinated verse
+    cannot enter through the verifier. Recorded per passage because "which
+    editions agreed" is the provenance that makes the seal auditable later.
+    """
+    name: str                            # "api.quran.com/v4 · quran/verses/uthmani"
+    endpoint: str
+    fetched_at: Optional[str] = None
+    agrees: bool
+    # Populated only when agrees is False: unit index -> what differed. Free
+    # text, for a human reading the flag — never parsed.
+    differences: list[str] = []
+
+    @model_validator(mode="after")
+    def disagreement_is_explained(self) -> "AuthoritySource":
+        if not self.agrees and not self.differences:
+            raise ValueError(
+                f"{self.name}: disagreement recorded with no differences listed — a human "
+                "resolving this flag needs to see WHAT differed")
+        return self
+
+
+class TextVerification(BaseModel):
+    """How this passage's characters were established, and by whom.
+
+    Sacred lane (`authority_crosscheck`): the book transcript is diffed against
+    two or more independent authorities under COMPARE-VERIFY, which drops the
+    tajweed/pause annotation block (publishers legitimately differ there) and
+    keeps every letter, harakah, dagger alef and hamza mark.
+
+    A `flagged` verdict is NOT an error and never blocks the run — it is the
+    correct outcome of a real disagreement. It keeps the passage out of `live`
+    until a human decides.
+    """
+    method: Literal["authority_crosscheck", "k_way_transcription"]
+    compare_form: str = COMPARE_VERIFY_VERSION
+    verdict: Literal["agree", "flagged"]
+    sources: list[AuthoritySource] = []
+    transcript_agrees: Optional[bool] = None   # book page vs the authorities
+    flag_reason: Optional[str] = None
+
+    @model_validator(mode="after")
+    def verdict_matches_the_evidence(self) -> "TextVerification":
+        if self.method == "authority_crosscheck":
+            if len(self.sources) < 2:
+                raise ValueError(
+                    "authority_crosscheck needs >= 2 INDEPENDENT authorities: one source "
+                    "agreeing with itself is not a cross-check")
+            if len({s.name for s in self.sources}) != len(self.sources):
+                raise ValueError("the same authority listed twice is not two authorities")
+        all_agree = all(s.agrees for s in self.sources) and self.transcript_agrees is not False
+        if self.verdict == "agree" and not all_agree:
+            raise ValueError(
+                "verdict 'agree' with a disagreeing source or transcript — on any verification "
+                "failure the passage is FLAGGED for a human, never silently accepted")
+        if self.verdict == "flagged" and not self.flag_reason:
+            raise ValueError("a flagged verdict must say what a human is being asked to look at")
+        return self
 
 
 class TextUnit(BaseModel):
@@ -213,12 +288,13 @@ class TextPassage(BaseModel):
     title_ar: str
     attribution_ar: str                          # "سورة الفرقان (٦٣ – ٧٠)"
     quran_ref: Optional[QuranRef] = None
-    corpus_ref: Optional[str] = None             # "quran:25:63-70"
+    citation_ref: Optional[str] = None           # "quran:25:63-70"
     units: list[TextUnit] = Field(min_length=1)
     text_sha256: str
     normalizer_version: str = NORMALIZER_VERSION
     capture_lane: CaptureLane
-    transcribers: list[str] = []                 # K model ids (lane B, K=3)
+    transcribers: list[str] = []                 # model ids that produced the text
+    verification: Optional[TextVerification] = None   # how the characters were established
     approved_by: Optional[str] = None            # human sign-off on the hash
     approved_at: Optional[str] = None
     approved_sha256: Optional[str] = None        # the bytes that were approved
@@ -237,6 +313,11 @@ class TextPassage(BaseModel):
     @property
     def approval_valid(self) -> bool:
         return bool(self.approved_by) and self.approved_sha256 == self.text_sha256
+
+    @property
+    def verification_flagged(self) -> bool:
+        """A real disagreement is waiting for a human. Not an error, not a block."""
+        return self.verification is not None and self.verification.verdict == "flagged"
 
     @property
     def approval_stale(self) -> bool:
@@ -281,14 +362,23 @@ class TextPassage(BaseModel):
                 f"{self.id}: kind '{self.kind}' must carry sensitivity_class '{self.kind}', "
                 f"not '{self.sensitivity_class}'")
         if self.fidelity == "sacred":
-            if self.capture_lane != "corpus":
+            if self.capture_lane != "authority_verified":
                 raise ValueError(
-                    f"{self.id}: sacred text is NEVER transcribed — capture_lane must be "
-                    "'corpus' (a pinned checksummed corpus), not model vision")
-            if not self.corpus_ref:
+                    f"{self.id}: sacred text is sealed by cross-check against independent "
+                    "published authorities — capture_lane must be 'authority_verified'")
+            if not self.citation_ref:
                 raise ValueError(
-                    f"{self.id}: sacred passage without a corpus citation. The agent's job is "
-                    "to identify WHICH passage, never to transcribe it")
+                    f"{self.id}: sacred passage without a citation. The citation is what the "
+                    "cross-check fetches; without it the characters cannot be verified at all")
+            if self.verification is None:
+                raise ValueError(
+                    f"{self.id}: sacred passage with no verification record. A transcript that "
+                    "was never diffed against an authority is exactly the defect this lane "
+                    "exists to prevent")
+            if self.verification.method != "authority_crosscheck":
+                raise ValueError(
+                    f"{self.id}: sacred text is verified by authority_crosscheck, not "
+                    f"'{self.verification.method}'")
         elif self.capture_lane != "double_blind":
             raise ValueError(
                 f"{self.id}: non-sacred text is sealed by K-way decorrelated transcription — "
@@ -303,11 +393,11 @@ class TextPassage(BaseModel):
             if self.quran_ref is None:
                 raise ValueError(
                     f"{self.id}: a Quran passage must carry quran_ref "
-                    "(surah, ayah_from, ayah_to) — the only thing an agent may emit")
-            if self.corpus_ref != self.quran_ref.corpus_ref:
+                    "(surah, ayah_from, ayah_to) — the citation the cross-check fetches")
+            if self.citation_ref != self.quran_ref.citation_ref:
                 raise ValueError(
-                    f"{self.id}: corpus_ref '{self.corpus_ref}' != citation "
-                    f"'{self.quran_ref.corpus_ref}'")
+                    f"{self.id}: citation_ref '{self.citation_ref}' != citation "
+                    f"'{self.quran_ref.citation_ref}'")
             if len(self.units) != self.quran_ref.ayah_count:
                 raise ValueError(
                     f"{self.id}: {len(self.units)} units for {self.quran_ref.ayah_count} آيات "

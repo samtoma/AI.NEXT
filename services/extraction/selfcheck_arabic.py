@@ -16,10 +16,10 @@ already has, with no new dependency. Exits non-zero on the first failing group.
 
 FIXTURE NOTE — read before editing. The sacred fixture below deliberately
 contains NO scripture. Its unit text is a plain Arabic sentence saying "this is
-where the corpus text goes". That is not squeamishness: the schema cannot tell
+where the verified text goes". That is not squeamishness: the schema cannot tell
 scripture from a placeholder, and it is not supposed to — character-exactness is
-a property of the pinned corpus and the human sign-off, not of this file. Never
-type a verse into a test fixture.
+a property of the authority cross-check and the human sign-off, not of this
+file. Never type a verse into a test fixture.
 """
 from __future__ import annotations
 
@@ -27,7 +27,14 @@ import json
 import sys
 from pathlib import Path
 
-from arabic_text import ArabicTextError, compare_loose, seal_text, sha256_text, store_form
+from arabic_text import (
+    compare_loose,
+    compare_verify,
+    scan_sacred_markers,
+    seal_text,
+    sha256_text,
+    store_form,
+)
 from schemas import SeedBundle
 from variant_engine import VariantRefused, assert_variable
 import load_seed
@@ -45,7 +52,7 @@ def rejects(label: str, fn, expect: str = "") -> None:
     """Assert fn() raises, and that the message says what a human needs to do."""
     try:
         fn()
-    except Exception as e:                      # noqa: BLE001 — any loud failure counts
+    except (Exception, SystemExit) as e:        # SystemExit is the loader's refusal
         msg = str(e)
         if expect and expect not in msg:
             FAILED.append(f"{label} — raised, but message lacks {expect!r}: {msg[:160]}")
@@ -67,6 +74,11 @@ NEW_FIELDS = {
 
 def check_shipped_bundles() -> None:
     for p in sorted((HERE / "seed").glob("*.json")):
+        # seed/ also holds non-bundle artefacts (social-skeleton-traps.json is a
+        # QA containment set: `_meta` + `traps`, and never was a SeedBundle).
+        if '"extraction_run"' not in p.read_text():
+            print(f"  skip  A/{p.name} — not a seed bundle")
+            continue
         try:
             b = SeedBundle.model_validate_json(p.read_text())
         except Exception as e:                  # noqa: BLE001
@@ -96,6 +108,30 @@ def check_normal_forms() -> None:
        compare_loose("هَوْنًا") == "هونا" and compare_loose("فى") == compare_loose("في"))
     ok("B/LOOSE is NOT STORE (they can never be confused)",
        compare_loose("هَوْنًا") != store_form("هَوْنًا"))
+
+    # --- COMPARE-VERIFY: the boundary Samuel's cross-check measured.
+    # Synthetic strings, not scripture. U+06ED (SMALL LOW MEEM) is an iqlab
+    # aid that publishers differ on; U+0670 (dagger alef) is a LETTER.
+    edition_a, edition_b = "مِنۭ بَعْدِ", "مِن بَعْدِ"
+    ok("B/VERIFY ignores the tajweed annotation block (U+06ED)",
+       compare_verify(edition_a) == compare_verify(edition_b))
+    ok("B/…but STORE keeps it — the annotation is never dropped from the seal",
+       store_form(edition_a) != store_form(edition_b))
+    ok("B/VERIFY keeps the dagger alef U+0670 (a letter, not annotation)",
+       compare_verify("هَذَا") != compare_verify("هَٰذَا"))
+    ok("B/VERIFY keeps harakat — «مِن» is not «مَن»",
+       compare_verify("مِن") != compare_verify("مَن"))
+    ok("B/LOOSE would have masked both — which is why it is not the verifier",
+       compare_loose("هَذَا") == compare_loose("هَٰذَا")
+       and compare_loose("مِن") == compare_loose("مَن"))
+    # --- the presentation-form block holds two different things, and rule 4
+    # only ever meant to catch one of them (decided 2026-07-29).
+    ok("B/STORE keeps ﷺ U+FDFA — a semantic ligature the book prints",
+       store_form("قال ﷺ لأصحابه") == "قال ﷺ لأصحابه")
+    ok("B/…and ﷺ still escalates the sacred detector (storable ≠ unclassified)",
+       any("ﷺ" in h for h in scan_sacred_markers("قال ﷺ لأصحابه")))
+    rejects("B/STORE still rejects a POSITIONAL variant (ﻲ U+FEF2)",
+            lambda: store_form("ﻲ"), "U+FEF2")
     rejects("B/STORE rejects presentation forms", lambda: store_form("ﻻ"), "presentation form")
     rejects("B/STORE rejects Farsi yeh", lambda: store_form("کتاب"), "U+06A9")
     rejects("B/STORE rejects extended Arabic-Indic digits", lambda: store_form("۱۲"), "U+06F1")
@@ -107,10 +143,22 @@ def check_normal_forms() -> None:
 # =============================================================================
 SACRED_UNITS = [
     # Placeholder, not scripture — see the module docstring.
-    "هنا يوضع النص المنقول من المصحف المرجعي المثبت",
-    "وهنا يوضع النص التالي من المصحف المرجعي المثبت",
+    "هنا يوضع النص المحقق من المصادر المعتمدة",
+    "وهنا يوضع النص التالي المحقق من المصادر المعتمدة",
 ]
 POEM_UNITS = [("أيهذا الشاكي وما بك داء", "كيف تغدو إذا غدوت عليلا")]
+
+CROSSCHECK = {
+    "method": "authority_crosscheck", "verdict": "agree", "transcript_agrees": True,
+    "sources": [
+        {"name": "api.quran.com/v4 · quran/verses/uthmani",
+         "endpoint": "https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number=25",
+         "agrees": True},
+        {"name": "api.alquran.cloud/v1 · quran-uthmani",
+         "endpoint": "https://api.alquran.cloud/v1/surah/25/quran-uthmani",
+         "agrees": True},
+    ],
+}
 
 
 def sacred_passage(**over) -> dict:
@@ -119,11 +167,12 @@ def sacred_passage(**over) -> dict:
         "sensitivity_class": "quran", "title_ar": "عباد الرحمن",
         "attribution_ar": "سورة الفرقان (٦٣ – ٦٤)",
         "quran_ref": {"surah": 25, "ayah_from": 63, "ayah_to": 64},
-        "corpus_ref": "quran:25:63-64",
+        "citation_ref": "quran:25:63-64",
         "units": [{"n": i + 1, "printed_n": n, "text_ar": t}
                   for i, (n, t) in enumerate(zip(["٦٣", "٦٤"], SACRED_UNITS))],
         "text_sha256": sha256_text(seal_text(SACRED_UNITS)),
-        "capture_lane": "corpus", "source_page": 8,
+        "capture_lane": "authority_verified", "verification": CROSSCHECK,
+        "transcribers": ["vision-model-a"], "source_page": 8,
     }
     return d | over
 
@@ -220,15 +269,61 @@ def check_the_seal() -> None:
 
     rejects("C/sacred passage without a citation is rejected",
             lambda: SeedBundle.model_validate(bundle(text_passages=[
-                sacred_passage(quran_ref=None, corpus_ref=None), poem_passage()])),
-            "quran_ref")
-    rejects("C/sacred passage may not be transcribed",
+                sacred_passage(quran_ref=None, citation_ref=None), poem_passage()])),
+            "without a citation")
+    rejects("C/a Quran passage without its (surah, ayah) record is rejected",
+            lambda: SeedBundle.model_validate(bundle(text_passages=[
+                sacred_passage(quran_ref=None), poem_passage()])),
+            "must carry quran_ref")
+    rejects("C/sacred passage must go through the authority lane",
             lambda: SeedBundle.model_validate(bundle(text_passages=[
                 sacred_passage(capture_lane="double_blind"), poem_passage()])),
-            "NEVER transcribed")
-    rejects("C/citation and unit count must agree",
+            "authority_verified")
+    rejects("C/sacred passage with no verification record is rejected",
             lambda: SeedBundle.model_validate(bundle(text_passages=[
-                sacred_passage(quran_ref={"surah": 25, "ayah_from": 63, "ayah_to": 70}),
+                sacred_passage(verification=None), poem_passage()])),
+            "never diffed against an authority")
+    rejects("C/one authority is not a cross-check",
+            lambda: SeedBundle.model_validate(bundle(text_passages=[
+                sacred_passage(verification=CROSSCHECK | {
+                    "sources": CROSSCHECK["sources"][:1]}), poem_passage()])),
+            ">= 2 INDEPENDENT authorities")
+    rejects("C/the same authority twice is not two authorities",
+            lambda: SeedBundle.model_validate(bundle(text_passages=[
+                sacred_passage(verification=CROSSCHECK | {
+                    "sources": [CROSSCHECK["sources"][0], CROSSCHECK["sources"][0]]}),
+                poem_passage()])),
+            "listed twice")
+    rejects("C/'agree' over a disagreeing source is rejected",
+            lambda: SeedBundle.model_validate(bundle(text_passages=[
+                sacred_passage(verification=CROSSCHECK | {"sources": [
+                    CROSSCHECK["sources"][0],
+                    CROSSCHECK["sources"][1] | {"agrees": False,
+                                                "differences": ["unit 2 pos 14"]}]}),
+                poem_passage()])),
+            "never silently accepted")
+
+    # A real disagreement is a FLAG, not an error and not a blocked run.
+    flagged = sacred_passage(verification={
+        "method": "authority_crosscheck", "verdict": "flagged",
+        "flag_reason": "المصدران يختلفان في موضع واحد — يحتاج مراجعة بشرية",
+        "transcript_agrees": True,
+        "sources": [CROSSCHECK["sources"][0],
+                    CROSSCHECK["sources"][1] | {"agrees": False,
+                                                "differences": ["unit 2 pos 14"]}]})
+    fb = SeedBundle.model_validate(bundle(text_passages=[flagged, poem_passage()]))
+    ok("C/a flagged cross-check is representable and does not block",
+       fb.text_passages[0].verification_flagged and not fb.text_passages[0].approval_valid)
+    rejects("C/a flag must say what the human is looking at",
+            lambda: SeedBundle.model_validate(bundle(text_passages=[
+                sacred_passage(verification={
+                    "method": "authority_crosscheck", "verdict": "flagged",
+                    "sources": CROSSCHECK["sources"]}), poem_passage()])),
+            "what a human is being asked")
+    rejects("C/citation and unit count must agree (a dropped verse)",
+            lambda: SeedBundle.model_validate(bundle(text_passages=[
+                sacred_passage(quran_ref={"surah": 25, "ayah_from": 63, "ayah_to": 70},
+                               citation_ref="quran:25:63-70"),
                 poem_passage()])),
             "missing or duplicated")
     # T6: «باب اللــوق» is printed with a justification kashida. store_form()
@@ -254,6 +349,24 @@ def check_the_seal() -> None:
                              approved_sha256=sha256_text(
                                  seal_text(["أيهذا الشاكي وما بك داء"])))])),
             "صدر")
+    # The قاسم أمين case (sensitive-content §0, printed p.25): an honorific
+    # ligature inside another author's prose. Placeholder text, no hadith typed.
+    honorific = ["هنا يوضع النص النثري المحقق الذي يرد فيه ﷺ داخل كلام المؤلف"]
+    prose = {
+        "id": "t:ara2-1:001", "lesson": "ara2-1", "kind": "prose", "fidelity": "prose",
+        "sensitivity_class": "religious_reference", "title_ar": "رحمة ومحبة",
+        "attribution_ar": "قاسم أمين",
+        "units": [{"n": 1, "text_ar": honorific[0]}],
+        "text_sha256": sha256_text(seal_text(honorific)),
+        "capture_lane": "double_blind", "transcribers": ["m1", "m2", "m3"],
+        "source_page": 25,
+    }
+    pb = SeedBundle.model_validate(bundle(
+        text_passages=[sacred_passage(), poem_passage(), prose]))
+    ok("C/a prose passage carrying ﷺ seals unchanged (the قاسم أمين case)",
+       pb.text_passages[2].units[0].text_ar == honorific[0]
+       and "ﷺ" in pb.text_passages[2].store_text)
+
     rejects("C/an إملاء table that lost a row is rejected",
             lambda: SeedBundle.model_validate(bundle(spelling_rules=[{
                 "id": "sp:hamza-mid-waw", "label_ar": "x", "lesson": "ara1-1",
@@ -360,12 +473,70 @@ def check_guards() -> None:
            True) == set())
 
 
+# =============================================================================
+# G. The real cross-verified passage (read-only; never modified by this script)
+# =============================================================================
+def check_real_reference_passage() -> None:
+    """Run the contract against the actual Wave-1 passage.
+
+    `verify/ref-quran-25-63-70.json` is the output of the validated cross-check
+    lane (سورة الفرقان ٦٣–٧٠, two independent authorities agreeing 8/8). It is
+    the only real scripture in the repo and this script only ever READS it.
+
+    This group caught a live defect: NORMALIZER_VERSION v1 stripped all tatweel
+    per verification §1.3 rule 2, and this passage carries 11 tatweels that are
+    all diacritic carriers — v1 would have silently modified scripture and then
+    sealed the modified bytes.
+    """
+    ref = HERE / "verify" / "ref-quran-25-63-70.json"
+    if not ref.exists():
+        print("  skip  G/ — no verified reference passage in verify/")
+        return
+    verses = json.loads(ref.read_text())
+    ok("G/reference passage has all 8 آيات", len(verses) == 8, str(len(verses)))
+
+    import unicodedata
+    texts = [v["text"] for v in verses]
+    ok("G/STORE modifies the authority text by NOTHING except NFC",
+       all(store_form(t) == unicodedata.normalize("NFC", t) for t in texts))
+    ok("G/STORE is idempotent on it (so the seal cannot move later)",
+       all(store_form(store_form(t)) == store_form(t) for t in texts))
+    ok("G/every tatweel in it is a diacritic carrier and survives STORE",
+       sum(store_form(t).count("ـ") for t in texts) == 11,
+       f"{sum(store_form(t).count(chr(0x640)) for t in texts)} of 11 kept")
+    with_ann = next(t for t in texts if any(0x06D6 <= ord(c) <= 0x06ED for c in t))
+    without = "".join(c for c in with_ann if not 0x06D6 <= ord(c) <= 0x06ED)
+    ok("G/STORE keeps the tajweed annotation block", store_form(with_ann) != store_form(without))
+    ok("G/VERIFY absorbs it — the 6-of-8 false mismatch does not recur",
+       compare_verify(with_ann) == compare_verify(without))
+
+    # The whole point: the real passage validates against the real contract.
+    units = [store_form(t) for t in texts]
+    ar_digits = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
+    passage = sacred_passage(
+        attribution_ar="سورة الفرقان (٦٣ – ٧٠)",
+        quran_ref={"surah": 25, "ayah_from": 63, "ayah_to": 70},
+        citation_ref="quran:25:63-70",
+        units=[{"n": i + 1, "printed_n": str(63 + i).translate(ar_digits), "text_ar": t}
+               for i, t in enumerate(units)],
+        text_sha256=sha256_text(seal_text(units)))
+    try:
+        b = SeedBundle.model_validate(bundle(text_passages=[passage, poem_passage()]))
+        ok("G/the real سورة الفرقان ٦٣–٧٠ passage validates end-to-end", True)
+        ok("G/…and the loader holds it out of live regardless of flags",
+           load_seed.sacred_gate([Path("ref.json")], [b], False) == set()
+           and b.text_passages[0].is_sacred and not b.text_passages[0].approval_valid)
+    except Exception as e:                      # noqa: BLE001
+        ok("G/the real سورة الفرقان ٦٣–٧٠ passage validates end-to-end", False, str(e)[:200])
+
+
 def main() -> int:
     check_shipped_bundles()
     check_normal_forms()
     check_the_seal()
     check_typed_answers()
     check_bundle_integrity()
+    check_real_reference_passage()
     check_guards()
     for line in PASSED:
         print(f"  ok    {line}")

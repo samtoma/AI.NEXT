@@ -4,18 +4,33 @@ ADR-0006 (Arabic Language vertical). Frozen specification:
   docs/specs/arabic-verification.md      §1.3 (two normal forms), §1.4 (seal artifact)
   docs/specs/arabic-sensitive-content.md §1  (escalate-only detector), §4 (containment)
 
-TWO NORMAL FORMS. They are never interchangeable and never combined:
+THREE NORMAL FORMS. They are never interchangeable and never combined:
 
-    store_form()     STORE  — persisted, checksummed, approved, displayed.
-                              Semantic-preserving: it NEVER drops a harakah.
-    compare_loose()  LOOSE  — routes transcription disagreements and grades a
-                              student's typed answer. NEVER stored, NEVER
-                              displayed, NEVER used to accept a passage.
+    store_form()      STORE   — persisted, checksummed, approved, displayed.
+                                Semantic-preserving: it NEVER drops a harakah.
+    compare_verify()  VERIFY  — agreement checking between PUBLISHED editions of
+                                the same text. Drops ONLY the tajweed/pause
+                                annotation block, which legitimately differs
+                                between publishers. Keeps every letter, every
+                                harakah, the dagger alef and the hamza marks.
+    compare_loose()   LOOSE   — routes transcription disagreements and grades a
+                                student's typed answer. NEVER stored, NEVER
+                                displayed, NEVER used to accept a passage.
 
-Confusing the two is the exact defect this module exists to prevent: folding
-ى→ي in STORE is a fidelity defect (this book prints both spellings — see
-verification T5), while NOT folding it when grading a student's typing is a
-false failure. Hence two functions, two names, two docstrings, one module.
+Confusing them is the exact defect this module exists to prevent:
+
+  * folding ى→ي in STORE is a fidelity defect (this book prints both spellings —
+    verification T5), while NOT folding it when grading a student's typing is a
+    false failure;
+  * using LOOSE to compare two editions of a verse would fold أ/ا, ى/ي and every
+    harakah — it would declare two genuinely different texts identical, which is
+    the one thing an authority cross-check exists to catch;
+  * comparing two editions byte-for-byte reports correct scripture as corrupt.
+    Measured on سورة الفرقان ٦٣–٧٠: a raw compare flagged 6 of 8 verses, and
+    every single difference was U+06ED (SMALL LOW MEEM, an iqlab aid) present in
+    one edition and not the other. Under compare_verify(): 8/8 agreement.
+
+Hence three functions, three names, three docstrings, one module.
 
 NORMALIZER_VERSION is part of every seal. Bumping it changes every checksum and
 therefore revokes every human approval (verification §5.4): sealed passages
@@ -31,7 +46,28 @@ import unicodedata
 
 # Frozen. Changing this string invalidates every text_sha256 and every human
 # approval bound to one. That is intended, not a bug (verification §5.4).
-NORMALIZER_VERSION = "ar-norm-v1"
+#
+# v2 (2026-07-29) — TATWEEL IS NOT ALWAYS DECORATION. verification §1.3 rule 2
+# said "strip U+0640, justification artifact, no phonetic value", written from
+# the book's prose («باب اللــوق», T6). Measured against the cross-verified
+# سورة الفرقان ٦٣–٧٠ reference (services/extraction/verify/), that rule silently
+# modified scripture: the passage carries 11 tatweels and EVERY ONE of them is a
+# diacritic carrier — in يُضَـٰعَفْ the tatweel exists to hold the dagger alef
+# between ض and ع. Stripping them contradicts "store the text exactly as the
+# authority publishes it, letters/diacritics unmodified".
+#
+# The two cases separate deterministically, and the real data confirms it:
+#   tatweel FOLLOWED BY A COMBINING MARK -> a carrier. It is text. Preserved.
+#   bare tatweel                         -> justification. Stripped (T6).
+# On the verified passage: 11/11 carriers preserved. On «اللــوق»: 0 carriers,
+# all stripped. Bumping to v2 is free right now because nothing has been sealed
+# yet — which is exactly why this had to be caught in Wave 0.
+NORMALIZER_VERSION = "ar-norm-v2"
+
+# Versions the COMPARE-VERIFY rule set, which is recorded on every cross-check
+# verdict: "these two editions agreed UNDER THIS DEFINITION of agreement".
+# Widening it later without bumping this would silently re-interpret old verdicts.
+COMPARE_VERIFY_VERSION = "ar-verify-v1"
 
 
 class ArabicTextError(ValueError):
@@ -61,18 +97,26 @@ _INVISIBLE: dict[int, int | None] = {
 # presence means the source was mangled somewhere upstream.
 _REJECT_JOINERS = {0x200C: "ZWNJ", 0x200D: "ZWJ"}
 
-# Arabic Presentation Forms A/B are what a broken PDF text layer emits.
-# Allowlist is exactly the two ornate Quran-quote brackets, which are real
-# content in this book. Blanket NFKC is NOT used: it would destroy them.
+# Arabic Presentation Forms A/B are what a broken PDF text layer emits — but the
+# block mixes two very different things, and verification §1.3 rule 4 only ever
+# meant to catch one of them:
 #
-# NOTE — flagged for the human gate, deliberately failing loud until decided:
-# the book also prints ﷺ (U+FDFA) inside قاسم أمين's prose (sensitive-content
-# §0, printed p.25). U+FDFA is a presentation form and is REJECTED here per
-# verification §1.3 rule 4. Wave 1 must get a human decision (extend this
-# allowlist, or store the spelled-out honorific) BEFORE that passage is sealed.
-# Guessing it now would be exactly the silent-decision failure mode ADR-0006
-# was written against.
-_PRESENTATION_ALLOWED = {0xFD3E, 0xFD3F}  # ﴿ ﴾
+#   POSITIONAL VARIANTS (ﻲ ﻻ ﺽ …) — the same letter re-encoded by its shape in
+#     the word. Meaningless outside typesetting, and they break search,
+#     comparison and every normal form. REJECTED.
+#   SEMANTIC LIGATURES (﴿ ﴾ ﷺ) — characters carrying their own meaning that the
+#     book prints deliberately. They are content. ALLOWED.
+#
+# Decided 2026-07-29, recorded in verification §1.3 rule 4: ﷺ U+FDFA is stored
+# exactly as the book prints it in قاسم أمين's prose (sensitive-content §0,
+# printed p.25). Spelling it out as صلى الله عليه وسلم would silently change
+# printed text, which the sacred lane forbids outright.
+#
+# Blanket NFKC is NOT used: it would expand all three into letter sequences.
+#
+# Same class by the same rationale, not yet encountered in this book — add on
+# sight rather than pre-deciding: ﷻ U+FDFB, ﷽ U+FDFD, ﷲ U+FDF2.
+_PRESENTATION_ALLOWED = {0xFD3E, 0xFD3F, 0xFDFA}  # ﴿ ﴾ ﷺ
 
 # Models occasionally emit these instead of ك / ي / ٠-٩. Invisible at a glance,
 # guaranteed defect (verification §1.3 rule 5).
@@ -87,19 +131,21 @@ _NON_EGYPTIAN: dict[int, str] = {
 def store_form(s: str) -> str:
     """STORE normal form: what we persist, checksum, approve and display.
 
-    Order (verification §1.3): NFC -> strip invisibles -> reject joiners ->
-    strip tatweel -> reject presentation forms (except ﴿﴾) -> reject
-    non-Egyptian codepoints -> collapse whitespace runs -> trim.
+    Order (verification §1.3, amended v2): NFC -> strip invisibles -> reject
+    joiners -> strip BARE tatweel -> reject presentation forms (except ﴿﴾) ->
+    reject non-Egyptian codepoints -> collapse whitespace runs -> trim.
 
     PRESERVED, no exceptions: every harakah (U+064B-U+0656), dagger alef
     (U+0670), ٱ (U+0671), the Quranic mark range (U+06D6-U+06ED), Arabic-Indic
-    digits ٠-٩ as printed, and every ء/أ/إ/آ/ا · ة/ه · ى/ي distinction.
+    digits ٠-٩ as printed, every ء/أ/إ/آ/ا · ة/ه · ى/ي distinction, and any
+    tatweel that carries a combining mark (see NORMALIZER_VERSION v2).
 
     Raises ArabicTextError on a rejected codepoint — a rejection is a finding,
     never something to silently repair.
     """
     out: list[str] = []
-    for i, ch in enumerate(unicodedata.normalize("NFC", s)):
+    text = unicodedata.normalize("NFC", s)
+    for i, ch in enumerate(text):
         cp = ord(ch)
         if cp in _REJECT_JOINERS:
             raise ArabicTextError(
@@ -110,6 +156,10 @@ def store_form(s: str) -> str:
                 out.append(chr(repl))
             continue
         if cp == TATWEEL:
+            # A tatweel holding a diacritic is a carrier — text, not decoration.
+            nxt = text[i + 1] if i + 1 < len(text) else ""
+            if nxt and unicodedata.combining(nxt):
+                out.append(ch)
             continue
         if (0xFB50 <= cp <= 0xFDFF or 0xFE70 <= cp <= 0xFEFF) and cp not in _PRESENTATION_ALLOWED:
             raise ArabicTextError(
@@ -125,6 +175,55 @@ def store_form(s: str) -> str:
                 "use ٠-٩ U+0660-U+0669 as the book prints them")
         out.append(ch)
     return " ".join("".join(out).split())
+
+
+# --- COMPARE-VERIFY (edition agreement — never stored, never displayed) ------
+#
+# The Quranic annotation block U+06D6-U+06ED is tajweed and pause apparatus
+# (small high seen, pause marks ۖ ۗ ۚ, end-of-ayah ۝, sajdah ۩, small low meem
+# ۭ). Publishers legitimately differ on it: it is a reading AID printed over the
+# text, not the text. Everything else in that neighbourhood IS text and is kept:
+#
+#   U+0670 dagger alef        — a LETTER (the alef of هَٰذَا). Dropping it would
+#                               make two different words compare equal.
+#   U+0653-U+0655 maddah,     — hamza placement. Text, not annotation.
+#     hamza above/below
+#   U+0671 alef wasla ٱ       — text.
+#   U+064B-U+0652 harakat     — text; the whole point of Uthmani orthography.
+#
+# Getting this boundary wrong in either direction is a real defect: too wide and
+# a corrupted verse passes as agreeing; too narrow and correct scripture is
+# reported as corrupt (which is what a byte-compare does).
+
+QURANIC_ANNOTATION_RANGE = (0x06D6, 0x06ED)
+
+_VERIFY_DROP = (
+    {cp: None for cp in range(QURANIC_ANNOTATION_RANGE[0], QURANIC_ANNOTATION_RANGE[1] + 1)}
+    | {TATWEEL: None}
+)
+
+
+def compare_verify(s: str) -> str:
+    """COMPARE-VERIFY form: is this the same published text?
+
+    The ONLY legitimate use is agreement checking between independent published
+    editions of a fixed text (ADR-0006 sacred lane: the book transcript vs two
+    online authorities). NEVER stored, NEVER displayed, NEVER checksummed —
+    what we persist is the STORE form of what the authority publishes.
+
+    Keeps every letter, every harakah, the dagger alef and the hamza marks.
+    Drops the tajweed/pause annotation block and ALL tatweel — including the
+    diacritic carriers that STORE preserves, because whether a publisher uses a
+    carrier is typography, not text. That divergence from STORE is deliberate:
+    this form answers "same text?", not "same bytes?".
+    """
+    t = unicodedata.normalize("NFC", s).translate(_VERIFY_DROP)
+    return " ".join(t.split())
+
+
+def editions_agree(a: str, b: str) -> bool:
+    """True when two published editions carry the same text (VERIFY form)."""
+    return compare_verify(a) == compare_verify(b)
 
 
 # --- COMPARE-LOOSE (a router and a comparator — never an acceptance test) ----
