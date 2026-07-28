@@ -100,7 +100,7 @@ export function MapScene({ spec, animOn }: VizProps) {
       role="img"
       aria-label={`خريطة ${base}`}
       className="block w-full"
-      style={{ fontFamily: "var(--font-spline), system-ui, sans-serif" }}
+      style={{ fontFamily: "var(--stack-sans)" }}
     >
       {/* base art (static ink layer, drawn once per asset) */}
       <g dangerouslySetInnerHTML={{ __html: map.inner }} />

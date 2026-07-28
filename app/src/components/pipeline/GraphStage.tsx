@@ -79,7 +79,7 @@ export function GraphStage({
                   textAnchor="middle"
                   fontSize="8.5"
                   fill="var(--ink-faint)"
-                  fontFamily="var(--font-spline-mono)"
+                  fontFamily="var(--stack-mono)"
                 >
                   {lo.id.replace("lo:u", "")}
                 </text>

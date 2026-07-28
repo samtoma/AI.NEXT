@@ -137,7 +137,7 @@ export function LocateOnMap({
             className={`mx-auto mt-2.5 block w-full max-w-[360px] rounded-md border border-line-soft bg-card-warm ${
               done ? "cursor-default" : "cursor-pointer"
             }`}
-            style={{ fontFamily: "var(--font-spline), system-ui, sans-serif" }}
+            style={{ fontFamily: "var(--stack-sans)" }}
           >
             <g dangerouslySetInnerHTML={{ __html: map.inner }} />
 

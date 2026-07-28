@@ -33,8 +33,8 @@ export const ACCENT_DEEP = "var(--accent-deep)";
 export const GOLD = "var(--gold)";
 export const RUST = "var(--rust)";
 export const CARD = "var(--card)";
-export const MONO = "var(--font-spline-mono)";
-export const DISPLAY = "var(--font-fraunces)";
+export const MONO = "var(--stack-mono)";
+export const DISPLAY = "var(--stack-display)";
 
 /** Categorical series colors, in Ledger order. */
 export const SERIES = [ACCENT, GOLD, RUST, INK_SOFT, ACCENT_DEEP, "#7c6a9c"];

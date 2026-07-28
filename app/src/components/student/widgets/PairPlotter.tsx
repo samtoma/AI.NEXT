@@ -111,7 +111,7 @@ export function PairPlotter({
           <line x1={px(0)} y1={py(-R)} x2={px(0)} y2={py(R)} stroke="var(--ink-soft)" strokeWidth="1.4" />
           {/* tick labels */}
           {ticks.filter((t) => t !== 0).map((t) => (
-            <g key={`l${t}`} fontSize="6.5" fill="var(--ink-faint)" fontFamily="var(--font-spline-mono)">
+            <g key={`l${t}`} fontSize="6.5" fill="var(--ink-faint)" fontFamily="var(--stack-mono)">
               <text x={px(t)} y={py(0) + 8.5} textAnchor="middle">{t}</text>
               <text x={px(0) - 4} y={py(t) + 2} textAnchor="end">{t}</text>
             </g>
@@ -163,7 +163,7 @@ export function PairPlotter({
                 x={px(picked![0]) + 7} y={py(picked![1]) - 5}
                 fontSize="8" fontWeight="600"
                 fill={correct ? "var(--accent-deep)" : "var(--rust)"}
-                fontFamily="var(--font-spline-mono)"
+                fontFamily="var(--stack-mono)"
               >
                 ({picked![0]},{picked![1]})
               </text>

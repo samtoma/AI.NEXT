@@ -35,7 +35,7 @@ export function LessonContentView({ content }: { content: LessonContent }) {
     <main
       dir="rtl"
       className="mx-auto max-w-2xl px-5 pb-20 pt-8 md:px-6"
-      style={{ fontFamily: "var(--font-spline), system-ui, sans-serif" }}
+      style={{ fontFamily: "var(--stack-sans)" }}
     >
       {/* title */}
       <header className="anim-rise">
