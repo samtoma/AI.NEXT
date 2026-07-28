@@ -52,11 +52,28 @@ asset rather than model output.** Four parameters pinned:
    most-drilled skill: a full section in every lesson), delivered through five widgets:
    `extract_spans` → `hamza_seat` → `style_purpose` → `irab_builder` → extended `term_match`.
    **Deferred:** خط (handwriting), تلاوة ASR, تعبير grading.
-2. **Quran lane — vendor, never transcribe.** Extraction agents emit only `(surah, ayah_from, ayah_to)`
-   (two models must agree on the integers); the text is materialised from a **pinned, checksummed حفص
-   corpus**, so exactness is a property of a file we can diff and license. **The runtime emits span
-   tokens, never scripture**, with an output-containment check that fails closed. Licensing and
-   رواية-match against the printed مصحف to be confirmed before Wave 1.
+2. **Quran lane — transcribe, then cross-verify against two independent online authorities.**
+   *(Samuel, 2026-07-28, superseding the original "vendor a corpus" decision — the Quran is immutable and
+   widely published, so verification is easy and reliable, and this avoids the licensing question
+   entirely. Stored as **text, never an image**.)* The lane is:
+   1. A vision model **transcribes** the passage from the book page **and** independently reports its
+      citation `(surah, ayah_from, ayah_to)`.
+   2. That range is fetched **raw (curl, no model in the loop)** from **two independent authorities**
+      and the two are diffed against each other.
+   3. The book transcript is diffed against the canonical text. Comparison runs in **COMPARE form**:
+      strip tatweel and the Quranic **annotation block U+06D6–U+06ED** (tajweed/pause aids, which
+      legitimately differ by publisher) while **keeping U+0670 dagger-alef and the hamza marks, which are
+      text**.
+   4. All three agree → store the **canonical Uthmani, NFC, unmodified**, sealed with `text_sha256`.
+   5. **Any disagreement → FLAG for human review.** Never silently pick a source, never block the rest of
+      the run.
+   **The runtime still emits span tokens, never scripture**, with an output-containment check that fails
+   closed.
+   **Validated on the real passage before adoption:** سورة الفرقان ٦٣–٧٠ (the عباد الرحمن lesson) —
+   two sources agreed **8/8** on the text. The raw diff initially showed 6/8 "failures" that turned out to
+   be **U+06ED (small low meem, an iqlab tajweed mark)** present in one edition only. That is precisely
+   why the annotation block must be excluded from comparison but preserved in what we store — and why a
+   naive byte-compare would have flagged the correct text as corrupt.
 3. **Arabic webfont** — **Noto Naskh Arabic globally**, plus **Amiri Quran lazy-loaded only on Quran
    passages**. This also repairs the shipped Social Studies vertical. Page weight to be measured against
    the < 1.5 MB budget.

@@ -24,6 +24,11 @@ rows dedupe on sha256. Every row is stamped with ITS bundle's source sha.
 Question status: verified=true -> live (reviewed_by='ai dual-check (pending Samuel)'),
 else review. WITHOUT --course, re-running truncates and reloads ALL content tables
 (legacy single-course semantics — a loud warning fires if >1 course is in the DB).
+
+SACRED-CONTENT GATE (ADR-0006): --approve-all HARD-REFUSES any bundle carrying
+quran/hadith content, and sacred rows load as 'review' whatever the flags say.
+A passage's approval is bound to its text_sha256, so one changed harakah demotes
+it and everything built on it. See sacred_gate() below.
 """
 from __future__ import annotations
 
@@ -33,7 +38,8 @@ import random
 import sys
 from pathlib import Path
 
-from schemas import ClaimStep, SeedBundle, SourceDocument
+from arabic_text import SEALED_SENSITIVITY_CLASSES
+from schemas import AR_ANSWER_BY_TYPE, ClaimStep, SeedBundle, SourceDocument
 
 HERE = Path(__file__).resolve().parent
 
@@ -80,10 +86,94 @@ def validate_all(paths: list[Path]) -> list[SeedBundle]:
     for p in paths:
         b = SeedBundle.model_validate_json(p.read_text())
         n_ver = sum(q.verified for q in b.questions)
+        extra = ""
+        if b.text_passages:  # Arabic vertical (ADR-0006)
+            n_sacred = sum(tp.is_sacred for tp in b.text_passages)
+            extra = (f", {len(b.text_passages)} sealed passages "
+                     f"({n_sacred} sacred, {sum(tp.approval_valid for tp in b.text_passages)} "
+                     f"approved)")
         print(f"  {p.name}: {len(b.nodes)} nodes, {len(b.edges)} edges, "
-              f"{len(b.questions)} questions ({n_ver} verified), {len(b.visuals)} visuals — OK")
+              f"{len(b.questions)} questions ({n_ver} verified), {len(b.visuals)} visuals"
+              f"{extra} — OK")
         bundles.append(b)
     return bundles
+
+
+def sacred_gate(paths: list[Path], bundles: list[SeedBundle], approve_all: bool) -> set[str]:
+    """The promotion gate for sacred and sealed content (ADR-0006).
+
+    Returns the ids of questions that are held at status='review' no matter what
+    the flags say. Three rules, none of which has an override:
+
+    1. `--approve-all` HARD-REFUSES a bundle carrying quran/hadith content.
+       `--approve-all` is how the math PoC loaded 29 questions; one habitual
+       command must not be able to promote unreviewed scripture to a student
+       (sensitive-content S2). It keeps working for everything else.
+    2. Sacred rows load as 'review' even with verified=true. Promotion needs two
+       NAMED human signatures, which is an ops process this loader cannot
+       observe — so it cannot be the thing that grants them.
+    3. CHECKSUM BINDING: a human approves an exact byte sequence, not "this
+       passage". If text_sha256 no longer equals approved_sha256, the approval
+       is void and everything built on that passage is demoted — no flag, no
+       exception (verification §5.1).
+    """
+    held: set[str] = set()
+    refusals: list[str] = []
+    for p, b in zip(paths, bundles):
+        by_id = {tp.id: tp for tp in b.text_passages}
+        sacred = [tp for tp in b.text_passages if tp.is_sacred]
+        stale = [tp for tp in b.text_passages if tp.approval_stale]
+        n_sacred_q = n_unapproved_q = 0
+        for q in b.questions:
+            src = by_id.get(q.passage_ref or "")
+            if q.sensitivity_class in SEALED_SENSITIVITY_CLASSES or (src and src.is_sacred):
+                held.add(q.id)
+                n_sacred_q += 1
+            elif src is not None and not src.approval_valid:
+                held.add(q.id)          # nobody signed the text it rests on
+                n_unapproved_q += 1
+
+        if stale:
+            print("!" * 72)
+            print(f"!! {p.name}: {len(stale)} sealed passage(s) CHANGED since approval — "
+                  "auto-demoted")
+            for tp in stale:
+                print(f"!!   {tp.id}: approved {tp.approved_sha256[:12]}… by "
+                      f"{tp.approved_by or '?'}, now {tp.text_sha256[:12]}…")
+            print("!! A human approved bytes that no longer exist. Re-approve, do not override.")
+            print("!" * 72)
+        if approve_all and (sacred or n_sacred_q):
+            refusals.append(
+                f"  {p.name}: {len(sacred)} sacred passage(s)"
+                + (f" [{', '.join(tp.id for tp in sacred[:4])}]" if sacred else "")
+                + f", {n_sacred_q} question(s) derived from them")
+        if n_sacred_q or n_unapproved_q:
+            print(f"  {p.name}: sacred gate holds {n_sacred_q} question(s) at review"
+                  + (f" (+{n_unapproved_q} on unapproved passages)" if n_unapproved_q else ""))
+
+    if refusals:
+        raise SystemExit(
+            "REFUSING --approve-all: this batch contains sacred content.\n"
+            + "\n".join(refusals)
+            + "\n\nQuran- and Hadith-derived content is never bulk-approved. It reaches a "
+              "student only after two named human sign-offs:\n"
+              "  1. verbatim verification against the printed page and a trusted مصحف\n"
+              "  2. pedagogical/boundary review of the شرح, the questions and the class\n"
+              "Re-run without --approve-all (everything else still loads; sacred rows land as "
+              "'review'), or split the sacred passages into their own bundle.")
+    return held
+
+
+def blocked_arabic_answers(bundles: list[SeedBundle]) -> list[str]:
+    """Typed Arabic answers cannot be written to questions.correct_answer (text).
+
+    Flattening an IrabAnswer to its surface string would load cleanly and then
+    fail every student who phrased the formula differently, because the slot
+    grader does not exist yet. Refuse loudly instead: the typed column and the
+    scripted slot grader land together in Wave 1. --validate-only is unaffected,
+    so extraction agents can still validate Arabic bundles today.
+    """
+    return [q.id for b in bundles for q in b.questions if q.type in AR_ANSWER_BY_TYPE]
 
 
 def resolve_source_docs(
@@ -178,6 +268,15 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
          course: str | None = None) -> None:
     import psycopg
     bundles = validate_all(paths)
+    held = sacred_gate(paths, bundles, approve_all)   # may exit non-zero (ADR-0006)
+    if pending := blocked_arabic_answers(bundles):
+        raise SystemExit(
+            f"{len(pending)} question(s) carry a typed Arabic answer "
+            f"({', '.join(pending[:4])}{' …' if len(pending) > 4 else ''}).\n"
+            "questions.correct_answer is a text column and the scripted slot grader does not "
+            "exist yet — storing the surface string would load fine and then mark correct "
+            "students wrong. The typed column + grader land together in Wave 1.\n"
+            "Use --validate-only until then.")
     repo_root = HERE.parents[1]
 
     with psycopg.connect("dbname=ainext_poc") as conn, conn.cursor() as cur:
@@ -272,8 +371,10 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
             for e in b.edges:
                 deferred_edges.append((e.src, e.dst, e.type, b.syllabus_version, run_id))
             for q in b.questions:
-                live = approve_all or q.verified
-                reviewer = ("samuel (poc bulk)" if approve_all
+                # `held` is the sacred gate: no flag promotes what it holds.
+                live = (approve_all or q.verified) and q.id not in held
+                reviewer = (None if q.id in held
+                            else "samuel (poc bulk)" if approve_all
                             else "ai dual-check (pending Samuel)" if q.verified else None)
                 cur.execute(
                     """INSERT INTO questions
@@ -368,7 +469,10 @@ if __name__ == "__main__":
     if not paths:
         paths = [HERE / "seed" / "unit1.json"]
     if "--validate-only" in flags:
-        validate_all(paths)  # deliberately DB-free: no collision/external-ref DB checks
+        bundles = validate_all(paths)  # deliberately DB-free: no collision/external-ref DB checks
+        # Run the gate here too: `--validate-only --approve-all` must not report
+        # a clean bill of health for a load that would be refused.
+        sacred_gate(paths, bundles, "--approve-all" in flags)
         print("validation passed")
     else:
         if course and "--demo-student" in flags:
