@@ -250,6 +250,15 @@ export interface Anim {
   grow(delay: number, axis?: "x" | "y", dur?: number): CSSProperties;
   /** gentle infinite emphasis pulse */
   pulse(delay: number): CSSProperties;
+  /**
+   * The raw reveal gate behind the helpers above: "final" (already played),
+   * "hidden" (not yet), or the rendered delay in seconds.
+   *
+   * For elements whose reveal is NOT an opacity change — the Arabic kinds tint
+   * a `<mark>` by growing its background, because fading a highlight would fade
+   * the text with it, and the text of a سورة or a بيت must never flicker.
+   */
+  gate(delay: number): "final" | "hidden" | number;
 }
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
@@ -259,7 +268,15 @@ const HIDDEN: CSSProperties = { opacity: 0 };
 export function makeAnim(on: boolean, ctrl?: VizCtrl): Anim {
   if (!on) {
     const none = () => ({});
-    return { on, pop: none, fade: none, draw: none, grow: none, pulse: none };
+    return {
+      on,
+      pop: none,
+      fade: none,
+      draw: none,
+      grow: none,
+      pulse: none,
+      gate: () => "final" as const,
+    };
   }
   const from = ctrl?.animateFromSec ?? 0;
   const until = ctrl?.revealSec ?? Infinity;
@@ -269,6 +286,7 @@ export function makeAnim(on: boolean, ctrl?: VizCtrl): Anim {
     d < from ? "final" : d > until ? "hidden" : (d - from) * stretch;
   return {
     on,
+    gate: at,
     pop: (d) => {
       const g = at(d);
       if (g === "final") return {};

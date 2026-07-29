@@ -9,6 +9,9 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
+    // node's built-in test runner (npm test) strips types and resolves ESM, so
+    // `import … from "./irab.ts"` must typecheck as written. Safe under noEmit.
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",

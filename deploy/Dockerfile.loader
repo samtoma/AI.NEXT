@@ -1,0 +1,27 @@
+# AI.Next content loader — the seed loader (services/extraction/load_seed.py) in a
+# throwaway container that can reach the stack's Postgres.
+#
+# DEPENDENCIES ONLY. The loader code and the seed bundles arrive as a READ-ONLY
+# bind mount of the repo checkout, so refreshing content never rebuilds this
+# image, and the image can never hold a stale copy of a bundle.
+#
+# Versions pinned to services/extraction/uv.lock so the box loads exactly what
+# was tested locally. Both wheels publish linux/arm64 manylinux builds, so this
+# needs no compiler on the (ARM) box. If a future pin ever lacks an arm64 wheel,
+# pip will try to compile and fail HERE — at build time, before anything touches
+# the database. The fix is then `apt-get install -y libpq5` + `psycopg[c]`, or
+# add build-essential; it is never to skip the loader.
+# syntax=docker/dockerfile:1
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+RUN pip install --no-cache-dir \
+      "pydantic==2.13.4" \
+      "psycopg[binary]==3.3.4"
+
+# The mount is read-only and nothing here writes to disk; run unprivileged.
+USER nobody
+WORKDIR /repo/services/extraction
+ENTRYPOINT ["python", "load_seed.py"]

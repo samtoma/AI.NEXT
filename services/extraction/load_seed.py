@@ -15,6 +15,16 @@ Flags:
                    topics) and load the given bundles additively. Other courses'
                    content is untouched. Student attempts/mastery referencing the
                    deleted content are deleted with a printed warning (PoC path).
+  --all            every SeedBundle in seed/, in dependency order. Combined with
+                   --course, only that course's bundles (see bundles_for_course) —
+                   which is the one-argument way to refresh a whole course.
+  --dry-run        do the entire load against the real database inside a
+                   transaction, print the before/after delta, then ROLL BACK.
+                   The honest preview: same checks, same gate, no writes.
+
+Database: connection comes from $AINEXT_DB_DSN, else $DATABASE_URL, else the local
+`dbname=ainext_poc`. The resolved target (user@host/db, never the password) is printed
+before anything is written — read it before you answer "yes".
 
 Source documents: each bundle defines its own `source_document`, names one via
 `source_file` (file_path of a doc defined earlier in the batch or already in the
@@ -34,6 +44,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import random
 import sys
 from pathlib import Path
@@ -44,6 +55,26 @@ from schemas import AR_ANSWER_BY_TYPE, ClaimStep, SeedBundle, SourceDocument
 HERE = Path(__file__).resolve().parent
 
 STUDENT_DATA_TABLES = ("attempts", "mastery", "understanding_checks", "explanation_log")
+
+DEFAULT_DSN = "dbname=ainext_poc"
+
+
+def db_dsn() -> str:
+    """Where we write. Local dev needs no env; deployed runs set AINEXT_DB_DSN."""
+    return os.environ.get("AINEXT_DB_DSN") or os.environ.get("DATABASE_URL") or DEFAULT_DSN
+
+
+def describe_dsn(dsn: str) -> str:
+    """Human-readable target WITHOUT the password (this string goes in CI logs)."""
+    try:
+        from psycopg.conninfo import conninfo_to_dict
+        d = conninfo_to_dict(dsn)
+    except Exception:
+        return "(unparseable dsn)"
+    host = d.get("host") or "local socket"
+    port = f":{d['port']}" if d.get("port") else ""
+    user = f"{d['user']}@" if d.get("user") else ""
+    return f"{user}{host}{port}/{d.get('dbname', '?')}"
 
 
 def canonical_solution_json(solution: list) -> str:
@@ -72,11 +103,25 @@ def sha256_of(path: Path) -> str:
     return h.hexdigest()
 
 
-def doc_sha(doc: SourceDocument, repo_root: Path) -> str:
-    """Content-address the source file; deterministic per-doc fallback if absent."""
+def doc_sha(doc: SourceDocument, repo_root: Path,
+            known_by_path: dict[str, str] | None = None) -> str:
+    """Content-address the source file; deterministic per-doc fallback if absent.
+
+    PROVENANCE CONTINUITY: the ministry PDFs are gitignored (85 MB+), so on a
+    deployed box the file is simply not there — and minting the `unavailable:`
+    fallback would stamp freshly loaded content with a sha that disagrees with
+    the sha the same book already has in that database, i.e. a second passport
+    for one document. When the DB already knows a sha256 for this exact
+    file_path, that sha IS the document's identity; reuse it.
+    """
     f = repo_root / doc.file_path if doc.file_path else None
     if f is not None and f.exists():
         return sha256_of(f)
+    if known_by_path and doc.file_path and doc.file_path in known_by_path:
+        sha = known_by_path[doc.file_path]
+        print(f"  {doc.file_path}: source file not present here — reusing the sha256 this "
+              f"database already records for it ({sha[:12]}…)")
+        return sha
     basis = f"{doc.title}|{doc.file_path or ''}"
     return "unavailable:" + hashlib.sha256(basis.encode()).hexdigest()[:32]
 
@@ -193,26 +238,35 @@ def blocked_arabic_answers(bundles: list[SeedBundle]) -> list[str]:
 def resolve_source_docs(
     paths: list[Path], bundles: list[SeedBundle],
     repo_root: Path, db_docs_by_path: dict[str, str],
+    reuse_db_rows: bool = True,
 ) -> list[tuple[str, SourceDocument | None]]:
-    """Per bundle: (source sha, doc-to-insert or None if it already exists in DB)."""
+    """Per bundle: (source sha, doc-to-insert or None if it already exists in DB).
+
+    `db_docs_by_path` maps file_path -> sha256 of documents already in the DB. It
+    serves two purposes: resolving a bundle's `source_file` against a document
+    nobody in this batch declares (scoped loads only — `reuse_db_rows`), and
+    keeping a document's sha stable where the source file itself is absent
+    (see doc_sha). A full-truncate load must NOT skip the insert on the strength
+    of a DB row it is about to wipe, hence the flag.
+    """
     resolved: list[tuple[str, SourceDocument | None]] = []
     batch_by_path: dict[str, tuple[str, SourceDocument]] = {}
     # Legacy compatibility: bundles BEFORE the first declaring bundle inherit the
     # batch's first declared document (old loader stamped everything with it).
     current: tuple[str, SourceDocument | None] | None = next(
-        ((doc_sha(b.source_document, repo_root), b.source_document)
+        ((doc_sha(b.source_document, repo_root, db_docs_by_path), b.source_document)
          for b in bundles if b.source_document), None)
     for p, b in zip(paths, bundles):
         if b.source_document:
             d = b.source_document
-            sha = doc_sha(d, repo_root)
+            sha = doc_sha(d, repo_root, db_docs_by_path)
             if d.file_path:
                 batch_by_path[d.file_path] = (sha, d)
             current = (sha, d)
         elif b.source_file:
             if b.source_file in batch_by_path:
                 current = batch_by_path[b.source_file]
-            elif b.source_file in db_docs_by_path:
+            elif reuse_db_rows and b.source_file in db_docs_by_path:
                 current = (db_docs_by_path[b.source_file], None)
             else:
                 raise SystemExit(
@@ -245,6 +299,18 @@ BUNDLE_ORDER = [
 ]
 
 
+# Bundles that a later bundle REPLACES. Supersession is invisible to the loader
+# otherwise: `social-t1.json` redefines all 15 of the skeleton's nodes (so nodes
+# dedupe), but its 762 questions carry different ids from the skeleton's 44
+# hand-authored ones, so loading both ADDS the superseded questions back instead
+# of replacing them. The deployed database holds 762 social questions, i.e.
+# social-t1 alone — this map is what lets a course refresh reproduce that.
+# Keep the file for history; put its replacement here.
+SUPERSEDED_BY = {
+    "social-skeleton.json": "social-t1.json",
+}
+
+
 def all_bundle_paths() -> list[Path]:
     """seed/*.json that are actually SeedBundles, in dependency order.
 
@@ -271,6 +337,71 @@ def all_bundle_paths() -> list[Path]:
     return ordered
 
 
+def warn_superseded(paths: list[Path]) -> None:
+    """Unscoped `--all` keeps its legacy meaning: every file in seed/. Say what that costs."""
+    names = {p.name for p in paths}
+    for old, new in SUPERSEDED_BY.items():
+        if old in names and new in names:
+            print(f"--all: WARNING loading {old} AND its replacement {new}. Their question ids "
+                  f"differ, so the superseded ones are ADDED, not replaced. "
+                  f"`--all --course <id>` excludes superseded bundles; unscoped `--all` "
+                  f"keeps its legacy 'every file in seed/' meaning.")
+
+
+def bundles_for_course(course_id: str, paths: list[Path] | None = None) -> list[Path]:
+    """The bundles that build `course_id`, in dependency order.
+
+    A course refresh must load EVERY bundle of that course: `--course` first
+    deletes the course subtree, so a bundle left off the command line is content
+    deleted and not put back. Nobody should have to remember that
+    `course:prep3-math-en` means ten files in a particular order at midnight —
+    so derive it from the bundles themselves rather than from a hand-kept list.
+
+    Membership is structural: walk `part_of` DOWN from the course across the
+    union of all bundles (a module declares `module:u3 part_of course:...`),
+    add what those nodes `teaches`, then keep every bundle that defines at
+    least one node in the resulting subtree.
+    """
+    paths = paths if paths is not None else all_bundle_paths()
+    defines: dict[Path, set[str]] = {}
+    children: dict[str, set[str]] = {}      # parent -> part_of children
+    teaches: dict[str, set[str]] = {}       # teacher -> taught LOs
+    for p in paths:
+        d = json.loads(p.read_text())
+        defines[p] = {n["id"] for n in d.get("nodes", [])}
+        for e in d.get("edges", []):
+            if e["type"] == "part_of":
+                children.setdefault(e["dst"], set()).add(e["src"])
+            elif e["type"] == "teaches":
+                teaches.setdefault(e["src"], set()).add(e["dst"])
+
+    subtree, frontier = {course_id}, [course_id]
+    while frontier:
+        nxt = []
+        for nid in frontier:
+            for child in children.get(nid, set()) | teaches.get(nid, set()):
+                if child not in subtree:
+                    subtree.add(child)
+                    nxt.append(child)
+        frontier = nxt
+
+    selected = [p for p in paths if defines[p] & subtree]
+    names = {p.name for p in selected}
+    for old, new in SUPERSEDED_BY.items():
+        if old in names and new in names:
+            selected = [p for p in selected if p.name != old]
+            print(f"  {old}: superseded by {new} — excluded (its questions were replaced, "
+                  f"not merged; see SUPERSEDED_BY)")
+    if not selected:
+        raise SystemExit(
+            f"--all --course {course_id}: no bundle in seed/ defines any node under that "
+            f"course. Check the id (courses seen: "
+            f"{', '.join(sorted({n for s in defines.values() for n in s if n.startswith('course:')})) or 'none'}).")
+    print(f"--all --course {course_id}: {len(selected)} of {len(paths)} bundle(s) belong to "
+          f"this course — {', '.join(p.name for p in selected)}")
+    return selected
+
+
 def course_subtree(cur, course_id: str) -> set[str]:
     """Course node + part_of descendants + LOs they teach + course-exclusive topics."""
     cur.execute(
@@ -292,7 +423,68 @@ def course_subtree(cur, course_id: str) -> set[str]:
     return subtree
 
 
-def delete_course_subtree(cur, course_id: str, subtree: set[str]) -> None:
+def course_ancestors(cur, course_id: str) -> set[str]:
+    """The course's `part_of` ancestors (program roots) — shared, not owned.
+
+    `unit1.json` declares `program:bakaloreya-track` as well as its course, and
+    the social bundles hang off the same program. The root therefore sits OUTSIDE
+    the course subtree while legitimately appearing in the course's own bundles;
+    without this, every scoped math refresh dies on the id-collision guard.
+    Re-declaring it is harmless: node inserts are ON CONFLICT DO NOTHING, so the
+    existing row (and its provenance) is left exactly as it was.
+    """
+    cur.execute(
+        """WITH RECURSIVE up(id) AS (
+               SELECT %s::text
+               UNION
+               SELECT e.dst_id FROM graph_edges e JOIN up u ON e.src_id = u.id
+                WHERE e.edge_type = 'part_of'
+           ) SELECT id FROM up WHERE id <> %s""", (course_id, course_id))
+    return {r[0] for r in cur.fetchall()}
+
+
+# Columns carried across a scoped reload when a cross-subject bridge is detached
+# and re-attached. Deliberately includes the temporal columns: a bridge that
+# survives a reload must keep the day it was drawn, not claim to be new.
+BRIDGE_COLS = ("src_id", "dst_id", "edge_type", "syllabus_version", "valid_from",
+               "valid_to", "system_from", "system_to", "extraction_run_id", "rationale")
+
+
+def restore_bridges(cur, saved: list[tuple]) -> None:
+    """Re-attach the cross-subject bridges detached by delete_course_subtree.
+
+    Call AFTER every node of the batch is in. A bridge whose endpoint the new
+    bundles no longer define cannot be re-attached — say so loudly instead of
+    letting it disappear quietly; `db/bridges.sql` is the place to re-curate it.
+    """
+    if not saved:
+        return
+    endpoints = {e for row in saved for e in (row[0], row[1])}
+    cur.execute("SELECT id FROM graph_nodes WHERE id = ANY(%s)", (list(endpoints),))
+    present = {r[0] for r in cur.fetchall()}
+    cur.execute("SELECT src_id, dst_id FROM graph_edges WHERE edge_type='relates_to'")
+    already = {(s, d) for s, d in cur.fetchall()}
+    kept = 0
+    for row in saved:
+        src, dst = row[0], row[1]
+        if src not in present or dst not in present:
+            missing = [e for e in (src, dst) if e not in present]
+            print(f"  WARNING: cross-subject bridge {src} ↔ {dst} NOT restored — "
+                  f"{', '.join(missing)} no longer exists in the reloaded content. "
+                  f"Re-curate it in db/bridges.sql if it should survive.")
+            continue
+        if (src, dst) in already:
+            continue
+        cur.execute(
+            f"INSERT INTO graph_edges ({','.join(BRIDGE_COLS)}) "
+            f"VALUES ({','.join(['%s'] * len(BRIDGE_COLS))})", row)
+        kept += 1
+    if kept:
+        print(f"  re-attached {kept} cross-subject bridge(s) with their original "
+              f"rationale and valid-from date")
+
+
+def delete_course_subtree(cur, course_id: str, subtree: set[str]) -> list[tuple]:
     ids = list(subtree)
     cur.execute("SELECT id FROM questions WHERE lo_id = ANY(%s)", (ids,))
     qids = [r[0] for r in cur.fetchall()] or ["__none__"]
@@ -309,23 +501,63 @@ def delete_course_subtree(cur, course_id: str, subtree: set[str]) -> None:
     d("visuals", "DELETE FROM visuals WHERE lo_id = ANY(%s) OR question_id = ANY(%s)",
       (ids, qids))
     d("questions", "DELETE FROM questions WHERE id = ANY(%s)", (qids,))
-    # Preserve cross-subject 'relates_to' bridges: a bridge has one endpoint in
-    # another course, so a scoped reload must not delete it (see db/bridges.sql).
-    d("edges", "DELETE FROM graph_edges WHERE (src_id = ANY(%s) OR dst_id = ANY(%s)) "
-      "AND edge_type <> 'relates_to'", (ids, ids))
+
+    # Cross-subject 'relates_to' bridges (db/bridges.sql) have one endpoint in
+    # ANOTHER course, so they must survive a scoped reload — but keeping the ROW
+    # while deleting the node it points at is impossible: graph_edges FKs both
+    # endpoints, so the node DELETE below simply failed (this is the bug that made
+    # every social reload need a manual drop → load → re-apply bridges.sql).
+    # Detach them, remember them verbatim, and re-attach after the reload.
+    cur.execute(
+        f"SELECT {','.join(BRIDGE_COLS)} FROM graph_edges WHERE edge_type='relates_to' "
+        "AND (src_id = ANY(%s) OR dst_id = ANY(%s))", (ids, ids))
+    saved_bridges = cur.fetchall()
+
+    d("edges", "DELETE FROM graph_edges WHERE src_id = ANY(%s) OR dst_id = ANY(%s)", (ids, ids))
     d("nodes", "DELETE FROM graph_nodes WHERE id = ANY(%s)", (ids,))
 
     print(f"--course {course_id}: replaced subtree of {counts['nodes']} nodes, "
-          f"{counts['edges']} edges, {counts['questions']} questions, {counts['visuals']} visuals")
+          f"{counts['edges']} edges, {counts['questions']} questions, {counts['visuals']} visuals"
+          + (f" (detached {len(saved_bridges)} cross-subject bridge(s) for re-attachment)"
+             if saved_bridges else ""))
     student_rows = {t: counts[t] for t in STUDENT_DATA_TABLES if counts.get(t)}
     if student_rows:
         detail = ", ".join(f"{n} {t}" for t, n in student_rows.items())
         print(f"  WARNING: deleted student data referencing removed content: {detail}")
         print("  (PoC-only destructive path — v2 must archive, not delete)")
+    return saved_bridges
+
+
+SNAPSHOT_SQL = """
+SELECT (SELECT count(*) FROM graph_nodes),
+       (SELECT count(*) FROM graph_edges),
+       (SELECT count(*) FROM graph_edges WHERE edge_type='relates_to'),
+       (SELECT count(*) FROM questions),
+       (SELECT count(*) FROM questions WHERE status='live'),
+       (SELECT count(*) FROM questions WHERE status='review'),
+       (SELECT count(*) FROM visuals),
+       (SELECT count(*) FROM source_documents)
+"""
+SNAPSHOT_LABELS = ("nodes", "edges", "bridges", "questions", "LIVE questions",
+                   "review questions", "visuals", "source documents")
+
+
+def print_delta(before: tuple, after: tuple) -> None:
+    """What this load actually changed — the line a human reads before saying yes."""
+    print("\nwhat changed:")
+    for label, b, a in zip(SNAPSHOT_LABELS, before, after):
+        mark = "" if a == b else f"   {a - b:+d}"
+        print(f"  {label:<18} {b:>6} -> {a:>6}{mark}")
+    if after[4] < before[4]:
+        print(f"\n  !! {before[4] - after[4]} question(s) LEFT the live set. Questions go live only "
+              f"when the bundle marks them verified;\n     anything promoted in the past by "
+              f"--approve-all lands back in 'review' here. That is the gate working —\n"
+              f"     but it IS a visible content change. Restore the pre-load backup if it was "
+              f"not what you wanted.")
 
 
 def load(paths: list[Path], approve_all: bool, demo_student: bool,
-         course: str | None = None) -> None:
+         course: str | None = None, dry_run: bool = False) -> None:
     import psycopg
     bundles = validate_all(paths)
     held = sacred_gate(paths, bundles, approve_all)   # may exit non-zero (ADR-0006)
@@ -339,14 +571,21 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
             "Use --validate-only until then.")
     repo_root = HERE.parents[1]
 
-    with psycopg.connect("dbname=ainext_poc") as conn, conn.cursor() as cur:
-        # --- resolve source documents (against DB docs only in scoped mode:
-        #     full-truncate mode wipes source_documents, so DB docs can't be reused)
-        db_docs_by_path: dict[str, str] = {}
-        if course:
-            cur.execute("SELECT file_path, sha256 FROM source_documents")
-            db_docs_by_path = {fp: sha for fp, sha in cur.fetchall() if fp}
-        resolved = resolve_source_docs(paths, bundles, repo_root, db_docs_by_path)
+    dsn = db_dsn()
+    print(f"target database: {describe_dsn(dsn)}"
+          + ("" if dsn == DEFAULT_DSN else "   [from environment]")
+          + ("   *** DRY RUN — the transaction will be rolled back ***" if dry_run else ""))
+    with psycopg.connect(dsn) as conn, conn.cursor() as cur:
+        cur.execute(SNAPSHOT_SQL)
+        before = cur.fetchone()
+        # --- resolve source documents. Known shas are read for BOTH modes (they keep
+        #     a document's identity stable where its file is absent — see doc_sha),
+        #     but only a scoped load may skip an insert on the strength of a DB row:
+        #     full-truncate mode is about to wipe source_documents.
+        cur.execute("SELECT file_path, sha256 FROM source_documents")
+        db_docs_by_path = {fp: sha for fp, sha in cur.fetchall() if fp}
+        resolved = resolve_source_docs(paths, bundles, repo_root, db_docs_by_path,
+                                       reuse_db_rows=bool(course))
 
         # --- pre-flight checks + scope preparation (all before any write)
         if course:
@@ -356,12 +595,18 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
             batch_ids = {n.id for b in bundles for n in b.nodes}
             if course not in batch_ids and course not in subtree:
                 raise SystemExit(f"--course {course}: node not defined in bundles nor in DB")
-            # id-namespace hygiene: a bundle may not redefine another course's nodes
-            collisions = sorted(batch_ids & (db_ids - subtree))
+            # id-namespace hygiene: a bundle may not redefine another course's nodes.
+            # Shared ancestors (the program root every course hangs off) are exempt —
+            # see course_ancestors.
+            shared = course_ancestors(cur, course) if course in db_ids else set()
+            collisions = sorted(batch_ids & (db_ids - subtree - shared))
             if collisions:
                 raise SystemExit(
                     f"node id collision with content OUTSIDE course {course}: "
                     f"{', '.join(collisions[:10])}{' ...' if len(collisions) > 10 else ''}")
+            if redeclared := sorted(batch_ids & shared):
+                print(f"  shared ancestor(s) re-declared by these bundles: "
+                      f"{', '.join(redeclared)} — kept as-is (ON CONFLICT DO NOTHING)")
             survivors = db_ids - subtree  # live DB nodes external refs may resolve against
         else:
             cur.execute("SELECT id FROM graph_nodes WHERE kind='course'")
@@ -386,9 +631,10 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                                  f"{', '.join(missing)}")
 
         # --- writes (single transaction: any failure rolls everything back)
+        saved_bridges: list[tuple] = []
         if course:
             if subtree:
-                delete_course_subtree(cur, course, subtree)
+                saved_bridges = delete_course_subtree(cur, course, subtree)
         else:
             cur.execute("TRUNCATE understanding_checks, ai_interactions, explanation_log, "
                         "attempts, mastery, sessions, students, visuals, questions, "
@@ -466,11 +712,28 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                    (src_id, dst_id, edge_type, syllabus_version, extraction_run_id)
                    VALUES (%s,%s,%s,%s,%s)""", row)
 
+        restore_bridges(cur, saved_bridges)   # every node of the batch is in by now
+
         if demo_student:
             seed_demo_student(cur)
+
+        cur.execute(SNAPSHOT_SQL)
+        print_delta(before, cur.fetchone())
+        if dry_run:
+            conn.rollback()
+            print("\nDRY RUN: transaction rolled back — the database is untouched.\n"
+                  "Everything above (validation, the sacred gate, collision checks, the "
+                  "live/review split) ran for real against real data.")
+            return
         conn.commit()
     scope = f" [scoped to {course}]" if course else ""
     print(f"loaded {len(bundles)} bundles{scope}: {total_q} questions ({total_v} live)")
+    # The review gate, stated out loud on every load: whatever did not clear
+    # verification is in the database but unreachable by a student.
+    held_back = total_q - total_v
+    print(f"review gate: {held_back} question(s) landed as status='review' — not served to "
+          f"any student until a human promotes them"
+          + ("" if not approve_all else "   [--approve-all was used: PoC bulk approval]"))
 
 
 def seed_demo_student(cur) -> None:
@@ -525,7 +788,15 @@ if __name__ == "__main__":
         else:
             paths.append(Path(a))
     if "--all" in flags:
+        if paths:
+            raise SystemExit("--all takes no bundle paths (it IS the path list)")
         paths = all_bundle_paths()
+        if course:
+            # "refresh this whole course" — the only safe meaning of --all when a
+            # scope is set, since --course deletes the subtree before loading.
+            paths = bundles_for_course(course, paths)
+        else:
+            warn_superseded(paths)
     if not paths:
         paths = [HERE / "seed" / "unit1.json"]
     if "--validate-only" in flags:
@@ -538,4 +809,5 @@ if __name__ == "__main__":
         if course and "--demo-student" in flags:
             raise SystemExit("--demo-student is for full reloads only (it seeds mastery on "
                              "every LO in the DB); do not combine with --course")
-        load(paths, "--approve-all" in flags, "--demo-student" in flags, course)
+        load(paths, "--approve-all" in flags, "--demo-student" in flags, course,
+             dry_run="--dry-run" in flags)

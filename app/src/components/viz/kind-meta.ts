@@ -20,6 +20,15 @@ const META: Record<string, KindMeta> = {
   map_scene: { glyph: "⌖", chip: "border-accent/35 bg-accent-wash text-accent-deep" },
   timeline: { glyph: "⧖", chip: "border-gold/40 bg-gold-wash text-gold" },
   flow_chain: { glyph: "⇶", chip: "border-rust/35 bg-rust-wash text-rust" },
+  // VIZ_SPEC v3 — Arabic language (ADR-0006). The third territory reads
+  // aubergine, the way math reads viridian and social reads sepia.
+  text_passage: { glyph: "¶", chip: "border-arabic-line bg-arabic-wash text-arabic" },
+  gloss_table: { glyph: "☰", chip: "border-arabic-line bg-arabic-wash text-arabic" },
+  rule_tree: { glyph: "⋔", chip: "border-accent/35 bg-accent-wash text-accent-deep" },
+  verse_layout: { glyph: "❈", chip: "border-gold/40 bg-gold-wash text-gold" },
+  harakat_reveal: { glyph: "⁘", chip: "border-arabic-line bg-arabic-wash text-arabic" },
+  case_table: { glyph: "▦", chip: "border-rust/35 bg-rust-wash text-rust" },
+  irab_tree: { glyph: "⑂", chip: "border-accent/35 bg-accent-wash text-accent-deep" },
 };
 
 export function kindMeta(kind: string): KindMeta {

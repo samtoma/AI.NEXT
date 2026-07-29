@@ -1,0 +1,8 @@
+# Build context for Dockerfile.loader is THIS directory (deploy/). Keep the
+# secret and the 300 KB seed dump out of the daemon upload — the loader image is
+# dependencies only.
+.env
+.env.*
+db/
+backups/
+*.md

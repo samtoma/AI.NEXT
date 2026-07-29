@@ -6,9 +6,10 @@
  *
  * One renderer library, hundreds of data specs: producers (extraction
  * agents, the lesson AI) emit {kind, spec} rows; this registry maps them to
- * the twelve primitives (nine math + three social-studies, VIZ_SPEC v2).
- * A bad or unknown spec NEVER crashes the surface — it degrades to a quiet
- * "spec error" chip.
+ * the nineteen primitives (nine math + three social-studies, VIZ_SPEC v2 +
+ * seven Arabic, VIZ_SPEC v3). A bad or unknown spec NEVER crashes the surface
+ * — it degrades to a quiet "spec error" chip. `irab_tree` uses that path
+ * deliberately: it refuses to render an uncited إعراب (see IrabTree.tsx).
  */
 
 import {
@@ -27,17 +28,24 @@ import {
   usePrefersReducedMotion,
 } from "./core";
 import { ArrowMap } from "./ArrowMap";
+import { CaseTable } from "./CaseTable";
 import { CoordinatePlot } from "./CoordinatePlot";
 import { FlowChain } from "./FlowChain";
 import { FunctionGraph } from "./FunctionGraph";
 import { GeoScene } from "./GeoScene";
+import { GlossTable } from "./GlossTable";
+import { HarakatReveal } from "./HarakatReveal";
+import { IrabTree } from "./IrabTree";
 import { MapScene } from "./MapScene";
 import { NumberLine } from "./NumberLine";
 import { ProductGrid } from "./ProductGrid";
 import { RatioBars } from "./RatioBars";
+import { RuleTree } from "./RuleTree";
 import { StatChart } from "./StatChart";
+import { TextPassage } from "./TextPassage";
 import { Timeline } from "./Timeline";
 import { TrigTriangle } from "./TrigTriangle";
+import { VerseLayout } from "./VerseLayout";
 
 export const VIZ_KINDS = [
   "coordinate_plot",
@@ -53,6 +61,15 @@ export const VIZ_KINDS = [
   "map_scene",
   "timeline",
   "flow_chain",
+  // VIZ_SPEC v3 — Arabic language (ADR-0006). text_passage is this vertical's
+  // map_scene: an annotated passage IS the figure.
+  "text_passage",
+  "gloss_table",
+  "rule_tree",
+  "verse_layout",
+  "harakat_reveal",
+  "case_table",
+  "irab_tree",
 ] as const;
 
 export type VizKind = (typeof VIZ_KINDS)[number];
@@ -73,6 +90,13 @@ const REGISTRY: Record<
   map_scene: MapScene,
   timeline: Timeline,
   flow_chain: FlowChain,
+  text_passage: TextPassage,
+  gloss_table: GlossTable,
+  rule_tree: RuleTree,
+  verse_layout: VerseLayout,
+  harakat_reveal: HarakatReveal,
+  case_table: CaseTable,
+  irab_tree: IrabTree,
 };
 
 export function Visual({

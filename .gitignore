@@ -20,6 +20,12 @@ __pycache__/
 .env.*
 !.env.example
 
+# Database backups taken on the box by deploy/refresh-content.sh.
+# They contain student rows (minors' data in the pilot) — they stay on the box,
+# 0600, and never enter git. The checkout at /opt/reletix/AI.NEXT is this repo,
+# so this line is what keeps a stray `git add -A` there honest.
+/backups/
+
 # OS / editor
 .DS_Store
 *.log
