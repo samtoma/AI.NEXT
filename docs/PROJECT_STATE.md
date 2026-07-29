@@ -1,7 +1,57 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-07-26
+> Last updated: 2026-07-29
+
+## 🔧 HANDOFF — Arabic vertical debugging (2026-07-29, Samuel is spawning a fresh agent for this)
+**Goal: make Arabic (اللغة العربية) work end-to-end** — extraction → load → visible in the app.
+State was parked cleanly at Samuel's request; nothing here is broken, but nothing Arabic is loaded yet.
+
+**Done & committed on `main`** (all pushed; pushing `main` auto-deploys to ainext.reletix.com):
+- ADR-0006 (+ Samuel's supersession: Quran is **transcribed then cross-verified**, never vendored,
+  never an image; any verification failure = FLAG, not block). Six design specs in `docs/specs/arabic-*.md`.
+- Wave-0 contract: `services/extraction/{schemas,arabic_text,selfcheck_arabic}.py` — `IrabAnswer` typed
+  slots, STORE/COMPARE-VERIFY/COMPARE-LOOSE normal forms (tatweel is carrier-aware: 11/11 in the real
+  passage carry diacritics), sacred gates (`--approve-all` hard-refuses sacred; variant engine refuses
+  sealed passages; approval binds to `text_sha256`). **`selfcheck_arabic.py` must stay 100/100.**
+- The conveyor: `services/extraction/runbook/arabic-lesson.workflow.js` (all 20 lessons, term-qualified
+  ids, TWO page-offset regimes T1=PDF−1 / T2=PDF−61 — do not "simplify" into one rule).
+- App layer: `app/src/lib/irab.ts` grader (39/39 via `npm test`), 7 v3 renderers, 5 widgets. The
+  `irab_tree`/`irab_builder` grounding gates (must cite a printed `rule_ref`) are load-bearing.
+- Arabic fonts (Noto Naskh global, Amiri Quran lazy), KaTeX lazy, content-refresh pipeline
+  (`Actions → Content refresh`, never `down -v` — it wipes the Claude login).
+
+**Reference lesson extracted — coverage RED (correctly).** Run id `wf_dcb2de86-cfb`; full output saved
+at `services/extraction/runbook/ar-t1u1l1.reference-run.local.json` (untracked; contains the FLAGGED
+imlā'ī transcript — never load it as-is). Three conveyor bugs to fix, then resume cheaply with
+`Workflow({scriptPath: runbook/arabic-lesson.workflow.js, resumeFromRunId: "wf_dcb2de86-cfb", args:{only:["ar-t1u1l1"]}})`:
+1. **Quran transcript came back imlā'ī** (0×ٱ vs 18 in the authority; بسملة wrongly prepended) — but the
+   reported citation `25:63-70` was CORRECT. Fix per the amended ADR-0006 §2: use the citation to fetch
+   from the two authorities (endpoints in the ADR; sealed reference at
+   `services/extraction/verify/ref-quran-25-63-70.json`, seal `27fe013d…`), compare in COMPARE-VERIFY
+   form (strip U+06D6–U+06ED annotation, keep dagger-alef/hamza marks), store canonical Uthmani NFC.
+2. TEXT schema asks per-verse structure only for **poetry** → Quran arrived as one blob
+   (`count_verses` MISSING, 0 vs 8 آيات). Extend verses to sacred texts.
+3. SEGMENT schema misses the printed «القضايا المتضمنة» box (p.8, 3 items) — add it. Also `thin`:
+   rhetoric captured only أمر of the objective's أمر/نهي/استفهام.
+
+**What verified well (keep these bars):** blind إعراب re-derivation 4/4 agree · provenance 21/21 ·
+vocab 7/7 · مواطن الجمال 5/5 · rule_lines 16/16 · إملاء 9/9 · OUT_OF_SCOPE fired for تلاوة/خط (6/8
+objectives assessable — Samuel: the app must SAY these aren't scored, not hide them).
+
+**Missing pieces before Arabic is visible anywhere:**
+- **No Arabic assembler yet** — `assemble_fullbook.py` is social-specific. An Arabic bundle builder
+  (workflow output → `SeedBundle` with `text_passages` → `seed/arabic-t1.json` + `seed/content/`) must
+  be written. Loader already validates/holds sacred at `review`.
+- **The app cannot represent a third subject** — `subjectOfCourse()` is binary; Arabic would silently
+  become MATHS (English prompts, maths widgets). Plan approved: `docs/specs/multi-subject-app.md`
+  (registry `lib/subjects.ts`, migration 007 `courses.subject`, Waves A–D + demo-student switching,
+  switcher behind triple-tap). **Waves A+D were mid-flight when stopped** — their partial work
+  (36 files, `tsc` CLEAN) is parked on branch **`wip/multi-subject-app`** (local, unpushed). Wave A was
+  mid prompt-diff verification (regression bar: maths+social prompts byte-identical); Wave D was mid
+  browser verification of the cold-start student. Finish or restart them from the spec — don't discard.
+- Pending design decision for Wave 2: span-level vs passage-level sealing (hadith inside قاسم أمين's
+  prose, T1-U2-L1).
 
 ## Phase
 **PoC built (v0, 2026-07-17).** Working end-to-end slice of the spine: ministry book (Prep-3 Math EN, Unit 1) → content-addressed source + typed extraction (Pydantic, DAG-validated) → Postgres curriculum graph (11 LOs, 29 live questions, provenance on every fact) → adaptive student loop (Elo mastery, temporal rows) → **Evidence Walk demo** (investor-grade, ADR-0003 P0). Run: `brew services start postgresql@17`, then `npm run dev` in `app/` → http://localhost:3000 (/, /spine, /student). Reseed: `uv run load_seed.py seed/unit1.json --approve-all --demo-student` in `services/extraction/`.

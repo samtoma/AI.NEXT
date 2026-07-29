@@ -17,6 +17,7 @@ import type {
   SpineQuestion,
   UnderstandingCheck,
 } from "@/lib/types";
+import { isRtlSubject } from "@/lib/subjects";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
 import { PairPlotter } from "@/components/student/widgets/PairPlotter";
@@ -92,9 +93,9 @@ const MODE_COPY: Record<
 type Phase = "session" | "rating" | "report" | "error";
 
 /**
- * Arabic-first surface copy for social-ar lessons (ADR-0004 Wave 1). Math
- * lessons keep MODE_COPY untouched — every RTL/Arabic branch in this file
- * gates on lesson.subject so the math surface stays pixel-identical.
+ * Arabic-first surface copy for RTL subjects (ADR-0004 Wave 1). Maths keeps
+ * MODE_COPY untouched — every RTL/Arabic branch in this file gates on the
+ * subject's registered direction, so the LTR surface stays pixel-identical.
  */
 const AR_MODE_COPY: Record<
   LessonMode,
@@ -357,10 +358,11 @@ export function LessonSession({
 
   const copy = MODE_COPY[mode];
   const first = lesson.studentName.split(" ")[0];
-  // subject-conditional RTL flip (social-ar only): dir on the app frame flips
-  // the grid (board lands on the LEFT so the reading eye starts at the text),
-  // the stepper and the chips; logical CSS below keeps math LTR unchanged.
-  const rtl = lesson.subject === "social-ar";
+  // subject-conditional RTL flip: dir on the app frame flips the grid (board
+  // lands on the LEFT so the reading eye starts at the text), the stepper and
+  // the chips; logical CSS below keeps LTR subjects unchanged. The flip now
+  // follows the subject's registered direction rather than a social-ar test.
+  const rtl = isRtlSubject(lesson.subject);
   const arCopy = AR_MODE_COPY[mode];
 
   /* ---------------- finish → honest rating ---------------- */

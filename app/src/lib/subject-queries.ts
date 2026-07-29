@@ -1,4 +1,11 @@
 import { pool } from "./db";
+import { DEFAULT_STUDENT_ID } from "./demo-student";
+import {
+  compareSpineSubjects,
+  displayLabelOfSpineKey,
+  spineSubjectOf,
+  spineSubjectOfCourse,
+} from "./subjects";
 import type { LessonBridge, SpineSubject, SubjectSummary, Verdict } from "./types";
 
 /**
@@ -10,23 +17,17 @@ import type { LessonBridge, SpineSubject, SubjectSummary, Verdict } from "./type
  *     lesson's LOs, so the tutor can surface ONE grounded cross-subject hint
  *     at the natural moment (§5).
  *
- * Both degrade gracefully while Track A's schema lands in parallel: subject is
- * derived from the LO's course (the `node_subject` view's own rule), and the
- * bridge query is skipped until the `graph_edges.rationale` column exists.
+ * Subject comes from the LO's course via the registry's EXACT lookup
+ * (lib/subjects.ts). It used to be `courseId.endsWith("-social-ar") ? "social"
+ * : "math"` with an `lo:soc*` id-prefix fallback — two guesses that made every
+ * unrecognized course, and every LO whose id did not start with `lo:soc`, come
+ * out as maths. An LO whose course is not in the registry is now UNFILED
+ * (`null`) and simply does not roll up into any subject.
  */
 
-const STUDENT_ID = 1;
-
-const COURSE_LABEL: Record<SpineSubject, string> = {
-  math: "Mathematics",
-  social: "الدراسات الاجتماعية",
-};
-
-/** SpineSubject from a course id (the node_subject rule), id-prefix fallback. */
-function subjectOf(courseId: string | null | undefined, loId: string): SpineSubject {
-  if (courseId) return courseId.endsWith("-social-ar") ? "social" : "math";
-  return loId.startsWith("lo:soc") ? "social" : "math";
-}
+/** Callers pass the request's resolved demo student; this is only the
+ *  fallback for a call with no student in scope (see lib/student-context.ts). */
+const STUDENT_ID = DEFAULT_STUDENT_ID;
 
 /** "lo:soc1-2-1" → lesson slug "soc1-2" (LO-id minus the trailing part). */
 function slugOfLo(loId: string): string {
@@ -70,7 +71,10 @@ export async function getSubjectSummaries(
       [studentId]
     ),
     pool.query(
-      `SELECT lo_id, score, verdict, mode, created_at
+      // `subject` is written by /api/understanding on every insert and was
+      // backfilled by migration 006 — read it instead of guessing the subject
+      // back out of the LO id.
+      `SELECT lo_id, score, verdict, mode, created_at, subject
        FROM understanding_checks
        WHERE student_id = $1
        ORDER BY created_at DESC`,
@@ -91,13 +95,17 @@ export async function getSubjectSummaries(
   const bySubject = new Map<SpineSubject, Acc>();
 
   for (const r of losRes.rows) {
-    const subject = subjectOf(r.course_id, r.id);
+    // Unfiled LO (course not in the registry): it belongs to no subject, so it
+    // rolls up into none. It is NOT quietly added to maths' average.
+    const subject = spineSubjectOfCourse(r.course_id);
+    if (!subject) continue;
     let acc = bySubject.get(subject);
     if (!acc) {
       acc = {
         subject,
         courseId: r.course_id ?? null,
-        courseLabel: (r.course_label as string) ?? COURSE_LABEL[subject],
+        courseLabel:
+          (r.course_label as string) ?? displayLabelOfSpineKey(subject),
         scoreSum: 0,
         scoreN: 0,
         weakest: null,
@@ -123,8 +131,10 @@ export async function getSubjectSummaries(
     SubjectSummary["lastCheck"]
   >();
   for (const c of checksRes.rows) {
-    const subject = subjectOf(null, c.lo_id as string);
-    if (lastCheck.has(subject)) continue;
+    // A check with no (or an unrecognized) subject tag is skipped rather than
+    // attributed to a subject it may not belong to.
+    const subject = spineSubjectOf(c.subject);
+    if (!subject || lastCheck.has(subject)) continue;
     lastCheck.set(subject, {
       score: Number(c.score),
       verdict: c.verdict as Verdict,
@@ -133,9 +143,9 @@ export async function getSubjectSummaries(
     });
   }
 
-  const ORDER: SpineSubject[] = ["math", "social"];
+  // registry order — the same order the graph territories and the home use
   return [...bySubject.values()]
-    .sort((a, b) => ORDER.indexOf(a.subject) - ORDER.indexOf(b.subject))
+    .sort((a, b) => compareSpineSubjects(a.subject, b.subject))
     .map((a) => ({
       subject: a.subject,
       courseId: a.courseId,
@@ -158,6 +168,12 @@ export async function getSubjectSummaries(
  * subject) + the human-approved one-line rationale, so the tutor can cite the
  * connection instead of fabricating one. Empty until Track A's `rationale`
  * column + edges land — never throws.
+ *
+ * The far endpoint's subject is read from the `node_subject` view (migration
+ * 007: derived from `graph_nodes.subject` on the course), not guessed from its
+ * LO id. The old `lo:soc*` prefix test named every non-social endpoint
+ * «الرياضيات» in the tutor's own prompt — a mislabel the model would repeat
+ * verbatim to the student.
  */
 export async function getLessonBridges(loIds: string[]): Promise<LessonBridge[]> {
   if (loIds.length === 0) return [];
@@ -165,10 +181,13 @@ export async function getLessonBridges(loIds: string[]): Promise<LessonBridge[]>
     if (!(await columnExists("graph_edges", "rationale"))) return [];
     const res = await pool.query(
       `SELECT e.src_id, e.dst_id, e.rationale,
-              ns.label AS src_label, nd.label AS dst_label
+              ns.label AS src_label, nd.label AS dst_label,
+              ss.subject AS src_subject, ds.subject AS dst_subject
        FROM graph_edges e
        JOIN graph_nodes ns ON ns.id = e.src_id
        JOIN graph_nodes nd ON nd.id = e.dst_id
+       LEFT JOIN node_subject ss ON ss.node_id = e.src_id
+       LEFT JOIN node_subject ds ON ds.node_id = e.dst_id
        WHERE e.edge_type = 'relates_to' AND e.system_to IS NULL
          AND (e.src_id = ANY($1) OR e.dst_id = ANY($1))`,
       [loIds]
@@ -182,6 +201,12 @@ export async function getLessonBridges(loIds: string[]): Promise<LessonBridge[]>
       const otherLo = srcHere ? r.dst_id : r.src_id;
       const thisLabel = srcHere ? r.src_label : r.dst_label;
       const otherLabel = srcHere ? r.dst_label : r.src_label;
+      // the far endpoint's real subject; an unfiled endpoint yields no bridge
+      // rather than a bridge labelled with the wrong subject
+      const otherSubject = spineSubjectOf(
+        srcHere ? r.dst_subject : r.src_subject
+      );
+      if (!otherSubject) continue;
       const key = `${thisLo}|${otherLo}`;
       if (seen.has(key)) continue;
       seen.add(key);
@@ -190,7 +215,7 @@ export async function getLessonBridges(loIds: string[]): Promise<LessonBridge[]>
         thisLabel: (thisLabel as string) ?? thisLo,
         otherLo,
         otherLabel: (otherLabel as string) ?? otherLo,
-        otherSubject: subjectOf(null, otherLo),
+        otherSubject,
         rationale: (r.rationale as string) ?? "",
       });
     }

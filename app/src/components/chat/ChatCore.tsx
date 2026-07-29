@@ -12,8 +12,10 @@ import type {
   AttemptResult,
   ChatMsg,
   SpineQuestion,
+  SpineSubject,
   TurnMeta,
 } from "@/lib/types";
+import { labelArOfSpineKey } from "@/lib/subjects";
 import {
   directiveEndAt,
   extractCites,
@@ -98,7 +100,7 @@ export interface ChatCoreProps {
   /** fired when a fully revealed assistant message carries {{finish_lesson}} */
   onFinishDirective?: () => void;
   /** the "open" button of a {{switch_subject:…}} handoff card was tapped */
-  onSwitchSubject?: (subject: "math" | "social") => void;
+  onSwitchSubject?: (subject: SpineSubject) => void;
   /** fired when the server turn cap is reached */
   onCapped?: () => void;
   /** transcript mirror for the parent (rating pass) */
@@ -560,7 +562,7 @@ export function ChatCore({
 
   const handleAttempt = useCallback(
     (r: AttemptResult, q: SpineQuestion) => {
-      const note = `${r.isCorrect ? "✓" : "✗"} Omar answered ${q.id} ${
+      const note = `${r.isCorrect ? "✓" : "✗"} the student answered ${q.id} ${
         r.isCorrect ? "correctly" : "incorrectly"
       }${r.isCorrect ? "" : ` (correct answer: ${r.correctAnswer})`} — mastery ${Math.round(r.oldScore * 100)}% → ${Math.round(
         r.newScore * 100
@@ -996,11 +998,11 @@ function SubjectHandoffCard({
   subject,
   onOpen,
 }: {
-  subject: "math" | "social";
+  subject: SpineSubject;
   onOpen?: () => void;
 }) {
   const [dismissed, setDismissed] = useState(false);
-  const label = subject === "social" ? "الدراسات الاجتماعية" : "الرياضيات";
+  const label = labelArOfSpineKey(subject);
   if (dismissed) {
     return (
       <p className="my-1 text-[11px] text-ink-faint" dir="auto">

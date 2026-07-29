@@ -6,27 +6,11 @@ import type {
   SpineData,
   SpineLo,
   SpineQuestion,
-  SpineSubject,
   Tier,
 } from "./types";
 
-const STUDENT_ID = 1;
-
-/* ------------------------------------------------------------------ */
-/* Subject dimension (Wave 1.5)                                        */
-/* ------------------------------------------------------------------ */
-
-/** Fallback subject derivation until the `node_subject` view lands: the
- *  `lo:soc*` id convention marks social; everything else is math. */
-function subjectFromId(id: string): SpineSubject {
-  return id.startsWith("lo:soc") ? "social" : "math";
-}
-
-function normalizeSubject(raw: unknown, id: string): SpineSubject {
-  return raw === "social" || raw === "math"
-    ? (raw as SpineSubject)
-    : subjectFromId(id);
-}
+import { DEFAULT_STUDENT_ID } from "./demo-student";
+import { spineSubjectOf } from "./subjects";
 
 /** True if a relation/view exists (avoids querying a table the data agent
  *  hasn't created yet — the multi-subject contract lands in parallel). */
@@ -48,21 +32,27 @@ async function columnExists(table: string, column: string): Promise<boolean> {
 /* Home                                                                */
 /* ------------------------------------------------------------------ */
 
-export async function getHomeStats() {
+export async function getHomeStats(studentId: number = DEFAULT_STUDENT_ID) {
   const [counts, doc, student] = await Promise.all([
-    pool.query(`
+    // attempts + AI turns are the STUDENT's ledger (the card reads "by <name>"),
+    // everything else is corpus-wide. With more than one demo student a global
+    // count would attribute Omar's history to a student who has none.
+    pool.query(
+      `
       SELECT
         (SELECT count(*) FROM graph_nodes WHERE kind = 'learning_objective') AS los,
         (SELECT count(*) FROM questions WHERE status = 'live')               AS questions,
-        (SELECT count(*) FROM attempts)                                      AS attempts,
+        (SELECT count(*) FROM attempts WHERE student_id = $1)                AS attempts,
         (SELECT count(*) FROM graph_edges WHERE edge_type = 'prerequisite_of'
            AND system_to IS NULL)                                            AS prereqs,
-        (SELECT count(*) FROM ai_interactions)                               AS ai_turns
-    `),
+        (SELECT count(*) FROM ai_interactions WHERE student_id = $1)         AS ai_turns
+    `,
+      [studentId]
+    ),
     pool.query(
       `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
     ),
-    pool.query(`SELECT display_name FROM students WHERE id = $1`, [STUDENT_ID]),
+    pool.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
   ]);
   const c = counts.rows[0];
   return {
@@ -107,7 +97,9 @@ function computeLayers(
   return layer;
 }
 
-export async function getSpineData(): Promise<SpineData> {
+export async function getSpineData(
+  studentId: number = DEFAULT_STUDENT_ID
+): Promise<SpineData> {
   // The multi-subject contract (node_subject view, relates_to edges +
   // rationale column) is built in parallel — detect what's live and degrade
   // gracefully (id-prefix subject fallback; no bridges) until it lands.
@@ -156,7 +148,7 @@ export async function getSpineData(): Promise<SpineData> {
         WHERE student_id = $1
         ORDER BY lo_id, system_from
       `,
-        [STUDENT_ID]
+        [studentId]
       ),
       pool.query(`
         SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.choices,
@@ -172,8 +164,11 @@ export async function getSpineData(): Promise<SpineData> {
       pool.query(
         `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
       ),
-      pool.query(`SELECT count(*) AS attempts FROM attempts`),
-      pool.query(`SELECT display_name FROM students WHERE id = $1`, [STUDENT_ID]),
+      // this student's attempts (the toolbar chip sits next to HIS avg mastery)
+      pool.query(`SELECT count(*) AS attempts FROM attempts WHERE student_id = $1`, [
+        studentId,
+      ]),
+      pool.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
       bridgesPromise,
     ]);
 
@@ -219,7 +214,12 @@ export async function getSpineData(): Promise<SpineData> {
     prereqIds: prereqsOf.get(r.id) ?? [],
     baseline: baseline.get(r.id) ?? 0,
     current: current.get(r.id) ?? 0,
-    subject: normalizeSubject(r.subject, r.id),
+    // `node_subject.subject` validated against the registry. Anything it does
+    // not recognise — including migration 006's legacy 'other' — is `null`
+    // (UNFILED, its own neutral band), never folded into maths. The old code
+    // fell back to `id.startsWith("lo:soc") ? "social" : "math"`, which made
+    // every unrecognised objective a maths objective on the graph.
+    subject: spineSubjectOf(r.subject),
   }));
 
   // Cross-subject bridges: keep only edges whose endpoints are both real LOs
@@ -321,7 +321,9 @@ function pickQuestion(
   return pool_[0];
 }
 
-export async function getStudentPlan(): Promise<{
+export async function getStudentPlan(
+  studentId: number = DEFAULT_STUDENT_ID
+): Promise<{
   items: PlanItem[];
   studentName: string;
   mastery: { loId: string; label: string; score: number }[];
@@ -337,7 +339,7 @@ export async function getStudentPlan(): Promise<{
     `),
     pool.query(
       `SELECT lo_id, score FROM mastery WHERE student_id = $1 AND system_to IS NULL`,
-      [STUDENT_ID]
+      [studentId]
     ),
     pool.query(
       `
@@ -348,9 +350,9 @@ export async function getStudentPlan(): Promise<{
       FROM questions q
       WHERE q.status = 'live'
     `,
-      [STUDENT_ID]
+      [studentId]
     ),
-    pool.query(`SELECT display_name FROM students WHERE id = $1`, [STUDENT_ID]),
+    pool.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
   ]);
 
   const labels = new Map<string, string>(

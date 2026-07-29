@@ -2,6 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { SpineBridge, SpineLo, SpineSubject } from "@/lib/types";
+import {
+  SPINE_SUBJECT_KEYS,
+  compareSpineSubjects,
+  spineSubjectDef,
+} from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
 
 export type AsOf = "baseline" | "today";
@@ -16,29 +21,35 @@ const BAND_LABEL_H = 34; // vertical room for a territory's label strip
 const BAND_GAP = 58; // vertical gap between territories
 const ROW_SPREAD = NODE_H + 34; // vertical spacing of stacked nodes in a column
 
-/** Fixed territory order + Arabic labels + accent world (Wave 1.5). */
-const SUBJECTS: {
-  key: SpineSubject;
-  label: string;
-  accent: string;
-  wash: string;
-  line: string;
-}[] = [
-  {
-    key: "math",
-    label: "الرياضيات",
-    accent: "var(--subject-math)",
-    wash: "var(--subject-math-wash)",
-    line: "var(--subject-math-line)",
-  },
-  {
-    key: "social",
-    label: "الدراسات الاجتماعية",
-    accent: "var(--subject-social)",
-    wash: "var(--subject-social-wash)",
-    line: "var(--subject-social-line)",
-  },
-];
+/**
+ * Territory order, labels and accents come from the subject registry — this
+ * file used to carry its own two-entry copy of them (Wave 1.5). `null` is a
+ * real band: LOs whose course is not in the registry are UNFILED and get their
+ * own neutral territory instead of being drawn inside maths'.
+ */
+type BandKey = SpineSubject | null;
+
+const UNFILED_BAND = {
+  label: "غير مصنّف · unfiled",
+  accent: "var(--ink-faint)",
+  wash: "transparent",
+  line: "var(--line)",
+};
+
+function bandMetaOf(key: BandKey) {
+  const def = spineSubjectDef(key);
+  return def
+    ? {
+        label: def.labelAr,
+        accent: def.accent.color,
+        wash: def.accent.wash,
+        line: def.accent.line,
+      }
+    : UNFILED_BAND;
+}
+
+/** Registry order, with the unfiled band last. */
+const BAND_ORDER: BandKey[] = [...SPINE_SUBJECT_KEYS, null];
 
 interface Placed {
   lo: SpineLo;
@@ -48,7 +59,7 @@ interface Placed {
 }
 
 interface Band {
-  subject: SpineSubject;
+  subject: BandKey;
   yTop: number;
   yBottom: number;
 }
@@ -95,14 +106,14 @@ function computeLayout(los: SpineLo[], width: number) {
   const canvasW = Math.max(width, 2 * PAD + nodeW * nLayers + gap * (nLayers - 1));
   const xOf = (layer: number) => PAD + layer * (nodeW + gap);
 
-  const present = SUBJECTS.filter((s) => los.some((l) => l.subject === s.key));
+  const present = BAND_ORDER.filter((key) => los.some((l) => l.subject === key));
 
   const placed: Placed[] = [];
   const bands: Band[] = [];
   let cursor = PAD + ARC_HEADROOM;
 
-  for (const s of present) {
-    const group = los.filter((l) => l.subject === s.key);
+  for (const key of present) {
+    const group = los.filter((l) => l.subject === key);
     const { placed: local, bandH } = layoutBand(group, nLayers, xOf);
     const bodyTop = cursor + BAND_LABEL_H;
     for (const p of local) {
@@ -110,7 +121,7 @@ function computeLayout(los: SpineLo[], width: number) {
       p.y += bodyTop;
       placed.push(p);
     }
-    bands.push({ subject: s.key, yTop: cursor, yBottom: bodyTop + bandH });
+    bands.push({ subject: key, yTop: cursor, yBottom: bodyTop + bandH });
     cursor = bodyTop + bandH + BAND_GAP;
   }
 
@@ -180,7 +191,7 @@ export function GraphCanvas({
   );
 
   const scoreOf = (lo: SpineLo) => (asOf === "today" ? lo.current : lo.baseline);
-  const bandMeta = (s: SpineSubject) => SUBJECTS.find((x) => x.key === s)!;
+  const bandMeta = bandMetaOf;
 
   return (
     <div ref={ref} className="thin-scroll overflow-x-auto">
@@ -191,7 +202,7 @@ export function GraphCanvas({
             const meta = bandMeta(b.subject);
             return (
               <div
-                key={b.subject}
+                key={String(b.subject)}
                 className="absolute rounded-xl"
                 style={{
                   left: 4,
@@ -356,7 +367,7 @@ export function GraphCanvas({
             const meta = bandMeta(b.subject);
             return (
               <div
-                key={`label-${b.subject}`}
+                key={`label-${String(b.subject)}`}
                 dir="rtl"
                 className="absolute inline-flex items-center gap-1.5 rounded-full border bg-card/85 px-2.5 py-1 backdrop-blur-sm"
                 style={{
@@ -436,7 +447,7 @@ export function GraphCanvas({
                 </div>
                 <p
                   className="mt-1 line-clamp-3 flex-1 text-[11px] font-medium leading-[1.3] text-ink"
-                  dir={lo.subject === "social" ? "rtl" : undefined}
+                  dir={spineSubjectDef(lo.subject)?.dir === "rtl" ? "rtl" : undefined}
                 >
                   {lo.label}
                 </p>
@@ -463,8 +474,12 @@ export function GraphCanvas({
             const b = visibleBridges[activeBridge];
             const a = posById.get(b.src)!;
             const z = posById.get(b.dst)!;
-            const mathEnd = a.lo.subject === "math" ? a.lo : z.lo;
-            const socEnd = a.lo.subject === "social" ? a.lo : z.lo;
+            // the two endpoints in registry order (was: "the math one" and
+            // "the social one" — a pairing only two subjects could satisfy)
+            const [firstEnd, secondEnd] = [a.lo, z.lo].sort((p, q) =>
+              compareSpineSubjects(p.subject, q.subject)
+            );
+            const secondDef = spineSubjectDef(secondEnd.subject);
             const midx = (a.x + z.x) / 2 + nodeW / 2;
             const midy = (a.cy + z.cy) / 2;
             const cardW = 300;
@@ -507,24 +522,30 @@ export function GraphCanvas({
                     <div className="flex flex-wrap items-center gap-1.5 text-[12px]">
                       <button
                         onClick={() => {
-                          onSelect(mathEnd.id);
+                          onSelect(firstEnd.id);
                           setActiveBridge(null);
                         }}
                         className="rounded-md border border-line-soft px-2 py-1 text-left font-medium text-ink transition-colors hover:border-accent/50 hover:bg-accent-wash"
                       >
-                        {mathEnd.label}
+                        {firstEnd.label}
                       </button>
                       <span className="font-mono text-ink-faint">↔</span>
                       <button
-                        dir="rtl"
+                        dir={secondDef?.dir === "rtl" ? "rtl" : undefined}
                         onClick={() => {
-                          onSelect(socEnd.id);
+                          onSelect(secondEnd.id);
                           setActiveBridge(null);
                         }}
-                        className="rounded-md border border-line-soft px-2 py-1 text-right font-medium text-ink transition-colors hover:bg-[var(--subject-social-wash)]"
-                        style={{ borderColor: "var(--subject-social-line)" }}
+                        className="rounded-md border border-line-soft px-2 py-1 text-right font-medium text-ink transition-colors hover:bg-[var(--bridge-far-wash)]"
+                        style={
+                          {
+                            borderColor: secondDef?.accent.line,
+                            // hover wash = the far subject's own accent
+                            "--bridge-far-wash": secondDef?.accent.wash,
+                          } as React.CSSProperties
+                        }
                       >
-                        {socEnd.label}
+                        {secondEnd.label}
                       </button>
                     </div>
                     <p

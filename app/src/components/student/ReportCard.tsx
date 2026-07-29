@@ -52,7 +52,8 @@ const pt = (deg: number) => {
 };
 const ARC = `M ${pt(210)} A ${RAD} ${RAD} 0 1 1 ${pt(-30)}`;
 
-/** Arabic verdict stamps for the RTL (social-ar) report. */
+/** Arabic verdict stamps for the RTL report (the caller passes `rtl` from
+ *  the lesson subject's registered direction — see LessonSession). */
 const AR_STAMP: Record<Verdict, string> = {
   got_it: "فاهمها ✓",
   nearly: "قرّبت خالص",
@@ -70,7 +71,7 @@ export function ReportCard({
   mode: LessonMode;
   costUsd: number;
   studentName: string;
-  /** social-ar lessons: RTL layout + Arabic-first labels (math unchanged) */
+  /** RTL subjects: RTL layout + Arabic-first labels (LTR unchanged) */
   rtl?: boolean;
 }) {
   const v = VERDICT_META[check.verdict];

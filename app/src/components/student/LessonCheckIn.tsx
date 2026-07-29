@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { LessonData, LessonInfo } from "@/lib/types";
+import { isRtlSubject, subjectDef } from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
 
 /**
@@ -26,9 +27,10 @@ export function LessonCheckIn({
   hasContent?: boolean;
 }) {
   const first = lesson.studentName.split(" ")[0];
-  // social-ar lessons render the assigned-lesson card + doors RTL Arabic-first
-  // (ADR-0004 Wave 1); math check-in stays pixel-identical.
-  const social = lesson.subject === "social-ar";
+  // RTL subjects render the assigned-lesson card + doors Arabic-first
+  // (ADR-0004 Wave 1); the LTR (maths) check-in stays pixel-identical. The
+  // test is the subject's own direction from the registry, not "is it social".
+  const social = isRtlSubject(lesson.subject);
   const ar = (s: string | number) =>
     String(s).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[+d]);
   const pages = lesson.los
@@ -285,12 +287,14 @@ export function LessonCheckIn({
               key={m.id}
               className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5"
             >
-              {m.subject === "social-ar" ? (
+              {isRtlSubject(m.subject) ? (
+                // the module's OWN subject names itself here — this row used to
+                // be hardcoded «دراسات اجتماعية» for every non-maths module
                 <span
                   dir="rtl"
                   className="w-full text-[10.5px] font-semibold text-ink-faint sm:w-56 sm:shrink-0"
                 >
-                  دراسات اجتماعية · {m.label}
+                  {subjectDef(m.subject!).labelArShort} · {m.label}
                 </span>
               ) : (
                 <span className="w-full font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint sm:w-56 sm:shrink-0">
@@ -303,7 +307,7 @@ export function LessonCheckIn({
                 {m.lessons.map((l) => {
                   const selected = l.slug === lesson.slug;
                   const geo = isGeoModule(m.id);
-                  const soc = m.subject === "social-ar";
+                  const soc = isRtlSubject(m.subject);
                   return (
                     <Link
                       key={l.slug}
@@ -311,7 +315,7 @@ export function LessonCheckIn({
                       scroll={false}
                       prefetch={false}
                       dir={soc ? "rtl" : undefined}
-                      title={`${geo ? "Geometry · " : soc ? "دراسات اجتماعية · " : ""}${l.ref} — ${l.title}`}
+                      title={`${geo ? "Geometry · " : soc ? `${subjectDef(m.subject!).labelArShort} · ` : ""}${l.ref} — ${l.title}`}
                       aria-current={selected ? "true" : undefined}
                       className={`rounded-full border px-2.5 py-1 ${soc ? "" : "font-mono "}text-[10px] leading-none transition-all duration-150 ${
                         selected

@@ -18,12 +18,16 @@
  * never sees half-typed protocol syntax.
  */
 
+import { SPINE_SUBJECT_KEYS } from "./subjects";
+import type { SpineSubject } from "./subjects";
+
 export type CiteKind = "lo" | "q" | "page" | "term";
 
 export interface Cite {
   kind: CiteKind;
   /** full id: "lo:u1-4-3", "q:u1-4-3:002", "22" for pages, or the flagged
-   *  Arabic term itself for "term" ([[term?:المصطلح]] — social-ar contract) */
+   *  Arabic term itself for "term" ([[term?:المصطلح]] — Arabic-script
+   *  subjects' contract) */
   id: string;
 }
 
@@ -37,7 +41,7 @@ export type Block =
   | { t: "widget"; name: string; props: Record<string, unknown> }
   | { t: "beat" }
   | { t: "check_in" }
-  | { t: "switch_subject"; subject: "math" | "social" }
+  | { t: "switch_subject"; subject: SpineSubject }
   | { t: "finish" };
 
 const CITE_RE = /\[\[(lo|q|page|term\?):([^\]\n]{1,80})\]\]/g;
@@ -66,7 +70,12 @@ interface Action {
 
 const SIMPLE_RE = /^\{\{(show_question|highlight):([^}\n]{1,160})\}\}/;
 const WIDGET_HEAD_RE = /^\{\{widget:([a-z_]{1,40}):/;
-const SWITCH_RE = /^\{\{switch_subject:(math|social)\}\}/;
+/** Built from the subject registry, so a handoff to a subject the product
+ *  actually has is parsed instead of being rendered as raw protocol text.
+ *  (What the tutor is TOLD it may emit is a separate, per-prompt decision.) */
+const SWITCH_RE = new RegExp(
+  `^\\{\\{switch_subject:(${SPINE_SUBJECT_KEYS.join("|")})\\}\\}`
+);
 const FINISH = "{{finish_lesson}}";
 const BEAT = "{{beat}}";
 const CHECK_IN = "{{check_in}}";
@@ -124,7 +133,7 @@ function parseActionAt(s: string, i: number): Action | null {
     return {
       start: i,
       end: i + sw[0].length,
-      block: { t: "switch_subject", subject: sw[1] as "math" | "social" },
+      block: { t: "switch_subject", subject: sw[1] as SpineSubject },
     };
   }
   const w = WIDGET_HEAD_RE.exec(head);

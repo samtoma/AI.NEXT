@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { pool } from "./db";
+import { DEFAULT_STUDENT_ID } from "./demo-student";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
 import { getLessonBridges } from "./subject-queries";
@@ -10,6 +11,12 @@ import {
   socialFigureDirectivesDoc,
   visualsCatalogLines,
 } from "./viz-prompt";
+import {
+  labelArOfSpineKey,
+  requireSubjectOfCourse,
+  subjectDef,
+  subjectOfCourse,
+} from "./subjects";
 import type {
   ClaimStep,
   LessonBridge,
@@ -22,11 +29,6 @@ import type {
   Subject,
   Tier,
 } from "./types";
-
-const BRIDGE_SUBJECT_LABEL: Record<LessonBridge["otherSubject"], string> = {
-  math: "الرياضيات",
-  social: "الدراسات الاجتماعية",
-};
 
 /**
  * Adaptive lesson modes — "How did today's lesson go?"
@@ -45,7 +47,9 @@ const BRIDGE_SUBJECT_LABEL: Record<LessonBridge["otherSubject"], string> = {
  * scratch beyond that scope.
  */
 
-const STUDENT_ID = 1;
+/** Fallback only — callers pass the request's resolved demo student
+ *  (lib/student-context.ts); a demo affordance, never auth. */
+const STUDENT_ID = DEFAULT_STUDENT_ID;
 
 export const DEFAULT_LESSON_SLUG = "u1-1";
 
@@ -59,13 +63,16 @@ function slugOfLo(loId: string): string {
 /**
  * Subject detection (ADR-0004 Wave 0): the lesson's module sits `part_of` a
  * course node; the course id keys the language contract + grounding rules.
- *   course:prep3-math-en   → "math-en"
- *   course:prep3-social-ar → "social-ar"
- * Unknown/missing course → "math-en" (the original single-subject behavior).
+ *
+ * The lookup itself now lives in the subject registry (lib/subjects.ts) and is
+ * EXACT. It used to be `courseId?.endsWith("-social-ar") ? … : "math-en"`,
+ * which silently taught every unrecognized course — Arabic included — as
+ * maths, in English, with maths widgets. Unknown course → `null` here, and
+ * `requireSubjectOfCourse` throws at the call sites that cannot proceed
+ * without a subject.
+ *
+ * @see lib/subjects.ts — `subjectOfCourse` / `requireSubjectOfCourse`
  */
-export function subjectOfCourse(courseId: string | null | undefined): Subject {
-  return courseId?.endsWith("-social-ar") ? "social-ar" : "math-en";
-}
 
 /** Short display titles per lesson slug; fallback = first LO label. */
 const LESSON_TITLES: Record<string, string> = {
@@ -119,13 +126,15 @@ const LO_MODULE_SELECT = `
 const MODULE_ORDER = `CASE WHEN m.id LIKE 'module:geo%' THEN 1 ELSE 0 END,
          m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`;
 
-export async function getLessonCatalog(): Promise<LessonInfo[]> {
+export async function getLessonCatalog(
+  studentId: number = STUDENT_ID
+): Promise<LessonInfo[]> {
   const [losRes, masteryRes] = await Promise.all([
     pool.query(`${LO_MODULE_SELECT} ORDER BY ${MODULE_ORDER}`),
     pool.query(
       `SELECT lo_id, score FROM mastery
        WHERE student_id = $1 AND system_to IS NULL`,
-      [STUDENT_ID]
+      [studentId]
     ),
   ]);
   const mastery = new Map<string, number>(
@@ -167,7 +176,8 @@ export async function getLessonCatalog(): Promise<LessonInfo[]> {
 /* ------------------------------------------------------------------ */
 
 export async function getLessonData(
-  slug: string = DEFAULT_LESSON_SLUG
+  slug: string = DEFAULT_LESSON_SLUG,
+  studentId: number = STUDENT_ID
 ): Promise<LessonData> {
   const safeSlug = sanitizeLessonSlug(slug);
   const loPattern = `lo:${safeSlug}-%`;
@@ -177,10 +187,11 @@ export async function getLessonData(
       `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id`,
       [loPattern]
     ),
-    pool.query(`SELECT display_name FROM students WHERE id = $1`, [STUDENT_ID]),
+    pool.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
   ]);
   if (losRes.rows.length === 0 && safeSlug !== DEFAULT_LESSON_SLUG) {
-    return getLessonData(DEFAULT_LESSON_SLUG); // unknown slug → default lesson
+    // unknown slug → default lesson (same student)
+    return getLessonData(DEFAULT_LESSON_SLUG, studentId);
   }
 
   const loIds: string[] = losRes.rows.map((r) => r.id);
@@ -189,7 +200,7 @@ export async function getLessonData(
     pool.query(
       `SELECT lo_id, score FROM mastery
        WHERE student_id = $1 AND lo_id = ANY($2) AND system_to IS NULL`,
-      [STUDENT_ID, loIds]
+      [studentId, loIds]
     ),
     pool.query(
       `SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
@@ -233,7 +244,14 @@ export async function getLessonData(
   }));
 
   const first = losRes.rows[0];
-  const subject = subjectOfCourse(first?.course_id);
+  // A lesson IS its subject: the contract, the grounding rules and the widget
+  // catalogue all hang off it. An unregistered course therefore cannot be
+  // taught at all — it throws here instead of quietly becoming a maths lesson.
+  const subject = requireSubjectOfCourse(
+    first?.course_id,
+    `lesson "${safeSlug}"`
+  );
+  const kit = lessonPromptKit(subject);
 
   // Distinct base maps referenced by the stored map_scene figures (≤2, in
   // first-appearance order) — keys the gazetteer injection for social lessons.
@@ -251,10 +269,11 @@ export async function getLessonData(
     }
   }
 
-  // Social lessons name their actual source book (كتاب الوزارة) in the data
-  // block; math stays null so its prompts remain byte-identical.
+  // Subjects that name their actual source book (كتاب الوزارة) in the data
+  // block resolve its title here; the others stay null (math's prompts name
+  // the book generically, so leaving this null keeps them byte-identical).
   let docTitle: string | null = null;
-  if (subject === "social-ar" && first?.course_id) {
+  if (kit.namesSourceBook && first?.course_id) {
     const docRes = await pool.query(
       `SELECT d.title FROM graph_nodes c
        JOIN source_documents d ON d.sha256 = c.source_sha256
@@ -326,13 +345,9 @@ function fmtSteps(steps: SolutionStep[]): string {
 }
 
 export function lessonDataBlock(data: LessonData): string {
-  const social = data.subject === "social-ar";
-  const solutionLabel = social
-    ? "MODEL ANSWER WITH EVIDENCE (الإجابة النموذجية — v"
-    : "CANONICAL SOLUTION (v";
-  const bankNote = social
-    ? "each with its human-reviewed model answer — الإجابة النموذجية بالأدلة — the ONLY permitted factual path"
-    : "each with its human-reviewed canonical solution — the ONLY permitted mathematical paths";
+  const kit = lessonPromptKit(data.subject);
+  const solutionLabel = kit.solutionLabel;
+  const bankNote = kit.bankNote;
   const loLines = data.los
     .map(
       (l) =>
@@ -350,13 +365,10 @@ export function lessonDataBlock(data: LessonData): string {
     .join("\n");
 
   const vizLines = visualsCatalogLines(data.visuals);
-  const bookName =
-    social && data.docTitle
-      ? `كتاب الوزارة «${data.docTitle}»`
-      : "Egyptian ministry textbook";
+  const bookName = kit.bookName(data.docTitle);
 
   return `LESSON DATA — your ONLY source of truth (school ${data.lessonRef}: ${data.title} — ${data.moduleLabel}, ${bookName})
-Student: ${data.studentName} (id 1), grade 10.
+Student: ${data.studentName}, grade 10.
 
 LEARNING OBJECTIVES of this lesson, in teaching order:
 ${loLines}
@@ -437,7 +449,7 @@ function bridgeBlock(bridges: LessonBridge[]): string {
   const lines = bridges
     .map(
       (b) =>
-        `- this "${b.thisLabel}" ↔ ${BRIDGE_SUBJECT_LABEL[b.otherSubject]} «${b.otherLabel}»: ${b.rationale}`
+        `- this "${b.thisLabel}" ↔ ${labelArOfSpineKey(b.otherSubject)} «${b.otherLabel}»: ${b.rationale}`
     )
     .join("\n");
   return `
@@ -462,13 +474,36 @@ The hint is light and optional — e.g. «فكرة الإحداثيات دي ش�
  */
 const CROSS_SUBJECT_RULE = `CROSS-SUBJECT AWARENESS (subjects stay separate; offer a clean handoff): if the student asks about a DIFFERENT school subject — e.g. a history or geography question during a math lesson, or a math question during a social-studies lesson (NOT merely another lesson inside THIS subject) — do NOT answer it from memory or from this lesson's data. Give ONE short warm acknowledgment in your own voice, then emit {{switch_subject:<subject>}} alone on its own line, where <subject> is exactly "math" or "social". This offers a handoff to that subject; it is NOT one of the interactive directives above and does not count as this message's single directive.`;
 
+/** Real ids from the lesson in scope, injected into a subject's directive
+ *  documentation so every example the model reads is one it can actually use. */
+interface ProtocolExamples {
+  lo: string;
+  q: string;
+  page: number;
+  viz: string;
+}
+
+/** Dispatches to the subject's own protocol — the directive catalogue, the
+ *  citation rules and the FORMAT line are all per-subject (registry §widgets). */
 function sharedProtocol(data: LessonData, rhythm: string): string {
-  const exLo = data.los[0]?.id.replace(/^lo:/, "") ?? "u1-1-1";
-  const exQ = data.questions[0]?.id.replace(/^q:/, "") ?? "u1-1-1:001";
-  const exPage = data.los[0]?.sourcePage ?? 8;
-  if (data.subject === "social-ar") {
-    const exViz = data.visuals[0]?.id ?? "v:soc1-1:001";
-    return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Flag any needed term missing from the LESSON DATA with [[term?:المصطلح]] right after it — never guess a definition silently.
+  const kit = lessonPromptKit(data.subject);
+  return kit.protocol(
+    rhythm,
+    {
+      lo: data.los[0]?.id.replace(/^lo:/, "") ?? "u1-1-1",
+      q: data.questions[0]?.id.replace(/^q:/, "") ?? "u1-1-1:001",
+      page: data.los[0]?.sourcePage ?? 8,
+      viz: data.visuals[0]?.id ?? kit.fallbackVizId,
+    },
+    data
+  );
+}
+
+/** SOCIAL STUDIES — Arabic citations + the map / timeline / chain / term-match
+ *  catalogue (ADR-0004 Wave 1). */
+function socialProtocol(rhythm: string, ex: ProtocolExamples): string {
+  const { lo: exLo, q: exQ, page: exPage, viz: exViz } = ex;
+  return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Flag any needed term missing from the LESSON DATA with [[term?:المصطلح]] right after it — never guess a definition silently.
 
 MESSAGE RHYTHM:
 ${rhythm}
@@ -487,8 +522,16 @@ Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt
 ${CROSS_SUBJECT_RULE}
 
 FORMAT: plain short Arabic paragraphs. No headings, no numbered lesson plans, no walls of text.`;
-  }
-  const exViz = data.visuals[0]?.id ?? "v:geo1-1:001";
+}
+
+/** MATHEMATICS — LaTeX citations + the pair_plotter / product_builder / figure
+ *  catalogue. This is the original single-subject protocol, byte for byte. */
+function mathProtocol(
+  rhythm: string,
+  ex: ProtocolExamples,
+  data: LessonData
+): string {
+  const { lo: exLo, q: exQ, page: exPage, viz: exViz } = ex;
   const vizGuidance = isGeoLesson(data)
     ? `This is a GEOMETRY lesson: lean on figures — open almost every teaching beat with a stored geo_scene from the FIGURE LIBRARY ({{widget:viz_ref:…}}), or compose one, so he SEES every definition and theorem drawn out. pair_plotter/product_builder rarely fit here.`
     : `Use pair_plotter/product_builder for doing, and viz figures for seeing — pick the stored library figure when one fits the beat.`;
@@ -513,67 +556,167 @@ FORMAT: plain short paragraphs, inline math in $...$ (LaTeX). No headings, no nu
 }
 
 /**
- * Language contracts, keyed by subject (ADR-0004 Wave 0) — one voice per
- * subject, no per-session lottery. "math-en" is the original contract,
- * byte-for-byte. "social-ar" is Arabic-first per
- * docs/specs/social-studies-ai-pipeline.md §2.1.
+ * The LANGUAGE & VOICE contract lives on the subject's registry entry
+ * (lib/subjects.ts) — one voice per subject, no per-session lottery
+ * (ADR-0004 Wave 0). A subject whose contract has not been authored yet has
+ * no voice to borrow, so this throws instead of silently teaching it in
+ * another subject's language.
  */
-const LANGUAGE_CONTRACTS: Record<Subject, string> = {
-  "math-en": `LANGUAGE & VOICE (fixed contract — identical in every session):
-- Base language is ENGLISH: every explanation, definition, instruction and all math is written in English.
-- Flavor: sprinkle SHORT Egyptian Arabic coaching interjections (يلا بينا، برافو، ماشي؟، حلو كده، ولا يهمك) — a few words at a time, never a full Arabic sentence.
-- Placement: an Arabic interjection goes at the END of a sentence or on its own — never as the first word of a sentence or paragraph (it flips the whole line right-to-left and scrambles any math in it). Transliteration ("wala yehimmak", "yalla") is always safe anywhere.
-- Never switch the base language of a message to Arabic, even if the student writes to you in Arabic — keep exactly this English-base mix, every message, every session.
-- Warm private tutor: encouraging, playful, never condescending, never lecturing.`,
-
-  "social-ar": `LANGUAGE & VOICE (fixed contract — identical in every session):
-- Base language is ARABIC: every explanation, definition and instruction is written in Modern Standard Arabic with a warm Egyptian flavor — the register of a good Egyptian teacher: صياغة فصيحة مبسّطة، من غير تقعُّر ومن غير عامية كاملة. Exam answers are graded in الفصحى, so the teaching voice stays فصحى; the Egyptian warmth lives in the interjections and the sentence rhythm.
-- Coaching interjections in Egyptian Arabic are welcome anywhere (يلا بينا، برافو عليك، حلو كده، ولا يهمك، كده تمام) — they are part of the voice.
-- المصطلحات قانون: استخدم مصطلحات كتاب الوزارة حرفيًا كما وردت في بيانات الدرس (مثل: الموقع الفلكي، الدول الجُزرية، الأقاليم المناخية، حوض النهر) — ممنوع الترجمة أو الترادف: لا تكتب «الموقع النجمي» بدل «الموقع الفلكي»، ولا «التضاريس الأرضية» بدل «التضاريس». وعند تعريف مصطلح، استخدم تعريف الكتاب كما ورد في بيانات الدرس مع الاستشهاد بالصفحة [[page:N]].
-- إن احتجت مصطلحًا غير موجود في بيانات الدرس فضع بعده فورًا العلامة [[term?:المصطلح]] ليُراجعه فريقنا — التخمين الصامت مخالفة؛ العلامة هي الطريق الصحيح.
-- الأرقام داخل الشرح بالأرقام الهندية (مثل ٤٤٫٢ مليون كم²) كما وردت في الكتاب. Latin digits and Latin ids appear ONLY inside protocol markers ([[page:3]], [[lo:…]], [[q:…]]) and inside {{…}} directives and their JSON payloads — never in the Arabic prose itself.
-- Protocol markers keep their EXACT ASCII form; every {{beat}} and every {{…}} directive stands alone on its own line — never appended to the end of an Arabic sentence. مثال: اكتب الشرح بالعربية، ثم في سطر مستقل تمامًا {{beat}}.
-- Never switch the base language to English, even if the student writes in English — keep this Arabic base, every message, every session.
-- Warm private tutor: encouraging, playful, never condescending, never lecturing — مدرس خصوصي شاطر وقلبه على طلابه.`,
-};
+function languageContract(subject: Subject): string {
+  const contract = subjectDef(subject).languageContract;
+  if (contract == null) {
+    throw new Error(
+      `No LANGUAGE & VOICE contract for subject "${subject}" — author it on ` +
+        `its entry in lib/subjects.ts before teaching it.`
+    );
+  }
+  return contract;
+}
 
 /**
- * Subject-keyed HARD GROUNDING RULES for the learn prompt. "math-en" is the
- * original two-rule text, byte-for-byte. "social-ar" adds the book-wins rule,
- * the outside-book acknowledge→decline→redirect script, the sensitive-content
- * hard rule (ADR-0004 §5) and the model-answer-only clause
- * (docs/specs/social-studies-ai-pipeline.md §3.2).
+ * HARD GROUNDING RULES for the learn prompt, per subject. Social studies adds
+ * the book-wins rule, the outside-book acknowledge→decline→redirect script,
+ * the sensitive-content hard rule (ADR-0004 §5) and the model-answer-only
+ * clause (docs/specs/social-studies-ai-pipeline.md §3.2).
  */
-function groundingRules(data: LessonData): string {
-  if (data.subject === "social-ar") {
-    return `HARD GROUNDING RULES (non-negotiable):
+function socialGroundingRules(data: LessonData): string {
+  return `HARD GROUNDING RULES (non-negotiable):
 1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Never drift into other lessons, terms or grades.
 2. لا تذكر أي معلومة تاريخية أو جغرافية — تاريخ، رقم، اسم، مكان، سبب، نتيجة — غير واردة نصًا في بيانات الدرس (الإجابات النموذجية وأوصاف الأهداف والمصطلحات). معلوماتك العامة عن التاريخ والجغرافيا لا وجود لها في هذه الجلسة: كتاب الوزارة وحده هو الحقيقة. THE BOOK'S STATEMENT WINS even when you believe the world disagrees: حتى لو كنت تعتقد أن الرقم أو الرواية في الكتاب غير دقيقة، فكلام الكتاب هو الإجابة الصحيحة في الامتحان — الامتحان يصحَّح من الكتاب، والاستشهاد بالصفحة [[page:N]] واجب.
 3. الإجابة النموذجية هي المسار الوحيد المسموح به للحقائق: when walking through any question, follow its HUMAN-REVIEWED model answer (الإجابة النموذجية) claim-steps exactly — a different pedagogical angle is allowed, different or additional FACTS are not, and never change a final answer. Every claim-bearing beat carries its [[page:N]]. If you cannot phrase a re-explanation without contradicting a model-answer fact, give the claim-steps verbatim instead.
 4. OUTSIDE THE BOOK — acknowledge → decline → redirect, in that exact order, always: إذا سأل عن معلومة غير واردة في بيانات الدرس، رحِّب بالسؤال، ثم وضِّح أننا نذاكر من كتاب الوزارة فقط لأنه أساس الامتحان، ثم وجِّهه لأقرب معلومة واردة فعلًا مع الاستشهاد. النمط: «سؤال حلو — بس ده مش في كتاب الوزارة بتاعنا، وإحنا بنذاكر من الكتاب بس عشان ده اللي جاي في الامتحان. اللي الكتاب بيقوله عن الموضوع ده هو: … [[page:N]]». NEVER answer first and disclaim after — the ungrounded answer must never be produced at all. And never claim «لا أعرف» — the honest framing is «إحنا بنذاكر من الكتاب».
 5. SENSITIVE CONTENT (hard rule): historical and political material is explained strictly as the book presents it — no commentary of your own, no modern political parallels, no evaluative judgments beyond the book's own framing. عرض الكتاب كما هو: بلا رأي شخصي، وبلا إسقاط على الحاضر، وبلا حكم قيمي زائد على صياغة الكتاب نفسه.`;
-  }
+}
+
+/** MATHEMATICS grounding rules — the original two-rule text, byte for byte. */
+function mathGroundingRules(data: LessonData): string {
   return `HARD GROUNDING RULES:
 1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Every mathematical claim must be derivable from the LO descriptions and the canonical solutions provided. Never invent other methods, notations, or topics.
 2. When walking through any exercise, follow its HUMAN-REVIEWED CANONICAL SOLUTION steps exactly — never change a final answer.`;
 }
 
-/** Extra review-mode rule bullets for social-ar (math-en gets none — byte-identical). */
-function reviewSubjectRules(data: LessonData): string {
-  if (data.subject !== "social-ar") return "";
-  return `
+/** Extra review-mode rule bullets for social studies (maths gets none — its
+ *  review prompt stays byte-identical to the single-subject original). */
+const SOCIAL_REVIEW_RULES = `
 - كلام الكتاب هو الصواب دائمًا: corrective lines come ONLY from that question's model answer (الإجابة النموذجية), cited [[page:N]] — never from your general knowledge. The book's statement wins even when you believe the world disagrees.
 - Off-book question from him: acknowledge → decline → redirect to the nearest in-book claim with [[page:N]] — never answer-then-disclaim. Historical/political material: strictly the book's own framing — no commentary, no modern parallels, no evaluative judgments.`;
+
+/* ------------------------------------------------------------------ */
+/* The per-subject prompt kit                                          */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Everything the lesson prompts need to know about a subject that is NOT a
+ * plain fact on its registry entry: the rule text, the directive catalogue and
+ * the content-pipeline capabilities. One kit per subject — the prompt builders
+ * below contain no `subject === "…"` tests at all.
+ */
+interface LessonPromptKit {
+  /** LESSON DATA: what this subject's reviewed answer path is called */
+  solutionLabel: string;
+  /** LESSON DATA: how the question bank is introduced */
+  bankNote: string;
+  /** LESSON DATA header: how the source book is named */
+  bookName: (docTitle: string | null) => string;
+  /** resolve the course's real book title (source_documents) for the header */
+  namesSourceBook: boolean;
+  /** append the base-map gazetteer to the data block (map-based figures) */
+  usesGazetteer: boolean;
+  /** learn mode injects the reviewed teaching script (content bundles exist) */
+  usesTeachingScript: boolean;
+  /** figure id used in directive examples when the lesson has no stored one */
+  fallbackVizId: string;
+  groundingRules: (data: LessonData) => string;
+  /** extra review-mode rule bullets ("" when the subject adds none) */
+  reviewSubjectRules: string;
+  protocol: (
+    rhythm: string,
+    ex: ProtocolExamples,
+    data: LessonData
+  ) => string;
+  /** learn mode: the extra "teach from the script" paragraph ("" if none) */
+  learnRichNote: (data: LessonData) => string;
+  /** review mode: the example opener line */
+  reviewOpenerEg: string;
+  /** review mode: the single widget/visual moment */
+  reviewWidgetMoment: (data: LessonData) => string;
+}
+
+/**
+ * Keyed by the registry-derived `Subject` union, so adding a subject to
+ * lib/subjects.ts makes THIS table fail to compile until someone decides what
+ * that subject's tutor sounds like. `null` = deliberately not authored yet.
+ */
+const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
+  "math-en": {
+    solutionLabel: "CANONICAL SOLUTION (v",
+    bankNote:
+      "each with its human-reviewed canonical solution — the ONLY permitted mathematical paths",
+    bookName: () => "Egyptian ministry textbook",
+    namesSourceBook: false,
+    usesGazetteer: false,
+    usesTeachingScript: false,
+    fallbackVizId: "v:geo1-1:001",
+    groundingRules: mathGroundingRules,
+    reviewSubjectRules: "",
+    protocol: mathProtocol,
+    learnRichNote: () => "",
+    reviewOpenerEg: `"فهمت كله؟ حلو — let's lock it in. 3 minutes ⏱"`,
+    reviewWidgetMoment: (data) =>
+      isGeoLesson(data)
+        ? `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask him ONE quick question about what it shows — he answers in chat.`
+        : `ONE widget moment: {{widget:product_builder:{"X":[1,2],"Y":[4,5],"prompt":"Last one - build X x Y yourself"}}} (or a pair_plotter / stored figure if it fits this lesson better).`,
+  },
+
+  "social-ar": {
+    solutionLabel: "MODEL ANSWER WITH EVIDENCE (الإجابة النموذجية — v",
+    bankNote:
+      "each with its human-reviewed model answer — الإجابة النموذجية بالأدلة — the ONLY permitted factual path",
+    bookName: (docTitle) =>
+      docTitle ? `كتاب الوزارة «${docTitle}»` : "Egyptian ministry textbook",
+    namesSourceBook: true,
+    usesGazetteer: true,
+    usesTeachingScript: true,
+    fallbackVizId: "v:soc1-1:001",
+    groundingRules: socialGroundingRules,
+    reviewSubjectRules: SOCIAL_REVIEW_RULES,
+    protocol: socialProtocol,
+    learnRichNote: (data) =>
+      `\n\nYOUR SCRIPT: teach FROM the TEACHING SCRIPT in the LESSON DATA below — it is your reviewed narrative for THIS exact lesson. Turn each objective's passage into a short chain of beats (اشرح فكرة صغيرة → افحص بسؤال/تفاعل → كيّف حسب رده), never a wall and never read verbatim. Weave «الأخطاء الشائعة» in as gentle trap-checks that surface his misunderstanding, then correct it. Open by greeting ${data.studentName.split(" ")[0]} by name and naming today's lesson in one warm line.`,
+    reviewOpenerEg: `"فهمت كله؟ حلو — يلا نثبّته في ٣ دقايق ⏱"`,
+    reviewWidgetMoment: () =>
+      `ONE widget moment: {{widget:term_match:{"prompt":"آخر واحدة — وصّل المصطلح بمعناه","pairs":[…2–3 pairs, terms and definitions VERBATIM from the LESSON DATA…]}}} (or a locate_on_map / stored map figure if it fits this lesson better — gazetteer names only).`,
+  },
+
+  // Wave B (ADR-0006): Arabic is REPRESENTABLE — the registry knows its course,
+  // labels, direction and widgets — but it is not TEACHABLE until its contract
+  // is authored. Until then an Arabic lesson throws. That is the whole point:
+  // the old binary fallback would have taught it in English, under the maths
+  // grounding rules, with pair_plotter, and nobody would have noticed.
+  "arabic-ar": null,
+};
+
+/** The subject's prompt kit, or a loud failure. Never another subject's. */
+function lessonPromptKit(subject: Subject): LessonPromptKit {
+  const kit = LESSON_PROMPTS[subject];
+  if (!kit) {
+    throw new Error(
+      `Subject "${subject}" has no lesson prompt contract yet — add one to ` +
+        `LESSON_PROMPTS in lib/lesson.ts. Refusing to teach it as another subject.`
+    );
+  }
+  return kit;
 }
 
 export function learnPrompt(data: LessonData): string {
+  const kit = lessonPromptKit(data.subject);
   const arc = data.los
     .map((l, i) => `${l.id} "${l.label}" (${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`)
     .join(" → ");
-  const tapWidgets =
-    data.subject === "social-ar"
-      ? "figure / locate_on_map / term_match"
-      : "figure / pair_plotter / product_builder";
+  // the subject's tap-only widgets (registry) — what a stuck student gets next
+  const tapWidgets = ["figure", ...subjectDef(data.subject).tapWidgets].join(
+    " / "
+  );
   const rhythm = `- Every message is 2–4 beats, separated by {{beat}} alone on its own line ({{beat}} renders as a natural writing pause, never as text).
 - One beat = at most 2 short sentences (≤25 words total), OR one figure directive, OR one interactive directive.
 - The LAST beat of a message carries its single interactive directive (widget or check question), with nothing after it — make him DO something in almost every message.
@@ -581,15 +724,12 @@ export function learnPrompt(data: LessonData): string {
 - After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
 - Never repeat a widget, figure or question he already saw.
 - Closing message: one-line recap beat of the big ideas, then {{finish_lesson}}.`;
-  const richNote =
-    data.subject === "social-ar"
-      ? `\n\nYOUR SCRIPT: teach FROM the TEACHING SCRIPT in the LESSON DATA below — it is your reviewed narrative for THIS exact lesson. Turn each objective's passage into a short chain of beats (اشرح فكرة صغيرة → افحص بسؤال/تفاعل → كيّف حسب رده), never a wall and never read verbatim. Weave «الأخطاء الشائعة» in as gentle trap-checks that surface his misunderstanding, then correct it. Open by greeting ${data.studentName.split(" ")[0]} by name and naming today's lesson in one warm line.`
-      : "";
+  const richNote = kit.learnRichNote(data);
   return `You are ${data.studentName}'s personal AI tutor at AI.Next. He is an Egyptian grade-10 student who just came home from school. Today's lesson was ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — and he understood NOTHING. Your job: teach him the whole lesson from zero so it finally clicks, one short message of small beats at a time — as if you are writing to him and drawing for him.${richNote}
 
-${groundingRules(data)}
+${kit.groundingRules(data)}
 
-${LANGUAGE_CONTRACTS[data.subject]}
+${languageContract(data.subject)}
 
 LESSON ARC: greet him in one line and start immediately → ${arc} → closing recap message, then {{finish_lesson}}.
 If he says he wants to stop, or a [live event] says he tapped Finish, give one warm closing line then {{finish_lesson}}.
@@ -598,22 +738,16 @@ ${sharedProtocol(data, rhythm)}`;
 }
 
 export function reviewPrompt(data: LessonData): string {
-  const social = data.subject === "social-ar";
+  const kit = lessonPromptKit(data.subject);
   const picks = data.los.slice(0, 3);
-  const openerEg = social
-    ? `"فهمت كله؟ حلو — يلا نثبّته في ٣ دقايق ⏱"`
-    : `"فهمت كله؟ حلو — let's lock it in. 3 minutes ⏱"`;
+  const openerEg = kit.reviewOpenerEg;
   const checkList = picks
     .map(
       (l, i) =>
         `${i + 1}. ${i === 0 ? `One warm opener line (e.g. ${openerEg}) + immediately` : "One-line reaction (max 12 words) +"} {{show_question:...}} with a ${i === 0 ? "basic" : "basic or standard"}-tier question from ${l.id}.`
     )
     .join("\n");
-  const widgetMoment = social
-    ? `ONE widget moment: {{widget:term_match:{"prompt":"آخر واحدة — وصّل المصطلح بمعناه","pairs":[…2–3 pairs, terms and definitions VERBATIM from the LESSON DATA…]}}} (or a locate_on_map / stored map figure if it fits this lesson better — gazetteer names only).`
-    : isGeoLesson(data)
-      ? `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask him ONE quick question about what it shows — he answers in chat.`
-      : `ONE widget moment: {{widget:product_builder:{"X":[1,2],"Y":[4,5],"prompt":"Last one - build X x Y yourself"}}} (or a pair_plotter / stored figure if it fits this lesson better).`;
+  const widgetMoment = kit.reviewWidgetMoment(data);
   return `You are ${data.studentName}'s AI tutor at AI.Next. He is an Egyptian grade-10 student who came home saying he understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
 
 HARD BUDGET: at most 5 messages total, then the session ends. Follow this script exactly:
@@ -624,9 +758,9 @@ ${picks.length + 2}. One-line warm wrap (e.g. "تمام يا بطل — confirme
 RULES:
 - Never more than ONE short line of prose per message. No explanations unless he got it wrong — then ONE crisp corrective line taken from that question's canonical solution, and still move on.
 - Question ids strictly from the QUESTION BANK, each used once, spread across the lesson's LOs.
-- If a [live event] says he tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${reviewSubjectRules(data)}
+- If a [live event] says he tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${kit.reviewSubjectRules}
 
-${LANGUAGE_CONTRACTS[data.subject]}
+${languageContract(data.subject)}
 
 ${sharedProtocol(
     data,
@@ -670,14 +804,16 @@ ${subs}${terms}${misc}`;
 export async function buildLessonContext(
   mode: LessonMode,
   chatSession: string,
-  lessonSlug?: string
+  lessonSlug?: string,
+  /** the request's resolved demo student (lib/student-context.ts) */
+  studentId: number = STUDENT_ID
 ): Promise<AskContext> {
-  const data = await getLessonData(sanitizeLessonSlug(lessonSlug));
-  // Social lessons append the gazetteer name lists of their referenced base
-  // maps (≤2) — math data blocks stay byte-identical (mapBases only ever
-  // gates in for social bundles' map_scene visuals).
+  const data = await getLessonData(sanitizeLessonSlug(lessonSlug), studentId);
+  const kit = lessonPromptKit(data.subject);
+  // Map-based subjects append the gazetteer name lists of their referenced
+  // base maps (≤2) so the model can only name places the hit-tester resolves.
   const gazetteer =
-    data.subject === "social-ar" && data.mapBases.length > 0
+    kit.usesGazetteer && data.mapBases.length > 0
       ? await gazetteerBlock(data.mapBases)
       : "";
   // Curated cross-subject bridges touching this lesson's LOs (§5). Fetched for
@@ -685,9 +821,10 @@ export async function buildLessonContext(
   // exist, so lessons without a bridge keep byte-identical data blocks.
   const bridges = bridgeBlock(await getLessonBridges(data.los.map((l) => l.id)));
   // The rich teaching script grounds the AI-LED lesson (learn mode) only —
-  // review stays a fast 3-minute lock-in, and math has no content file.
+  // review stays a fast 3-minute lock-in, and not every subject's pipeline
+  // emits content bundles (maths has none, so its data block is unchanged).
   const content =
-    mode === "learn" && data.subject === "social-ar"
+    mode === "learn" && kit.usesTeachingScript
       ? await getLessonContent(data.slug)
       : null;
   const teaching = content ? teachingScriptBlock(content) : "";

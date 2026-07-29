@@ -6,14 +6,17 @@ import type { Cite } from "@/lib/chat-parse";
 import { ChatCore } from "./ChatCore";
 import type { CiteInfo } from "./CitationChip";
 import { renderVizWidget } from "@/components/viz/render-viz-widget";
+import { shortName } from "@/lib/demo-student";
 
 const USD_TO_EGP = 48;
 
-const SUGGESTIONS = [
-  "What should Omar work on next, and why?",
-  "Why is he weak at quadratic functions?",
-  "Quiz him on his weakest topic",
-  "What did his baseline look like?",
+/** Starter prompts, named for whoever the demo is currently showing — the
+ *  dock must not keep asking about Omar after the student switcher moves on. */
+const suggestionsFor = (name: string) => [
+  `What should ${name} work on next, and why?`,
+  "Why is this topic still weak?",
+  "Quiz the weakest topic",
+  "What did the baseline look like?",
 ];
 
 /**
@@ -27,12 +30,15 @@ export function AskSpineDock({
   onCite,
   onCiteClick,
   onAttemptResult,
+  studentName = "the student",
 }: {
   lookupQuestion: (qid: string) => SpineQuestion | undefined;
   resolveCite: (c: Cite) => CiteInfo | null;
   onCite: (c: Cite) => void;
   onCiteClick: (c: Cite) => void;
   onAttemptResult: (r: AttemptResult, q: SpineQuestion) => void;
+  /** the resolved demo student's display name (follows the switcher) */
+  studentName?: string;
 }) {
   const [open, setOpen] = useState(true);
   const [totalUsd, setTotalUsd] = useState(0);
@@ -106,8 +112,8 @@ export function AskSpineDock({
 
       <ChatCore
         surface="spine_chat"
-        suggestions={SUGGESTIONS}
-        placeholder="Ask about Omar, the graph, the syllabus…"
+        suggestions={suggestionsFor(shortName(studentName))}
+        placeholder={`Ask about ${shortName(studentName)}, the graph, the syllabus…`}
         emptyState={
           <div className="anim-fade px-2 py-6 text-center">
             <p className="font-display text-[15px] font-medium text-ink">

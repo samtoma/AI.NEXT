@@ -35,7 +35,8 @@ export function CitationChip({
     q: "border-ink/40 bg-card text-ink-soft hover:bg-ink hover:text-paper",
     page: "border-gold/60 bg-gold-wash text-gold hover:bg-gold hover:text-paper",
     // [[term?:…]] — a term missing from the lesson data, flagged for review
-    // (social-ar contract). Subtle ochre, review-flag semantics, no action.
+    // (the ministry-terminology rule in the Arabic-script subjects' language
+    // contracts). Subtle ochre, review-flag semantics, no action.
     term: "cursor-default border-gold/50 bg-gold-wash/70 text-gold",
   };
   const label =

@@ -3,6 +3,7 @@ import { pool } from "@/lib/db";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
 import { buildLessonContext } from "@/lib/lesson";
 import { snapshotContext } from "@/lib/session-cache";
+import { resolveStudentId } from "@/lib/student-context";
 
 /**
  * POST /api/ask — "Ask the Spine" grounded chat, streamed as SSE.
@@ -16,7 +17,6 @@ import { snapshotContext } from "@/lib/session-cache";
 
 export const dynamic = "force-dynamic";
 
-const STUDENT_ID = 1;
 const MODEL = "claude-sonnet-5";
 const TIMEOUT_MS = 90_000;
 
@@ -113,12 +113,20 @@ export async function POST(req: Request) {
     );
   }
 
+  // Which demo student's mastery grounds this turn — a cookie, validated
+  // against the students table, defaulting to Omar. DEMO AFFORDANCE, NOT
+  // AUTH: auth is a PRD §3 non-goal for the MVP (see lib/demo-student.ts).
+  const studentId = await resolveStudentId();
+
   // Grounding is snapshotted per chat session: byte-stable across turns so
   // the (system prompt + data block) prefix stays prompt-cache-hot, and the
   // mastery numbers the model reasons over never shift mid-conversation.
+  // The student is part of the key — switching demo students must never
+  // re-serve the previous student's mastery.
   const snapshotKey = [
     surface,
     chatSession,
+    studentId,
     body.lesson ?? "",
     body.questionId ?? "",
     body.wrongAnswer ?? "",
@@ -128,9 +136,16 @@ export async function POST(req: Request) {
       ? buildLessonContext(
           surface === "lesson_learn" ? "learn" : "review",
           chatSession,
-          body.lesson
+          body.lesson,
+          studentId
         )
-      : buildAskContext(surface, chatSession, body.questionId, body.wrongAnswer)
+      : buildAskContext(
+          surface,
+          chatSession,
+          body.questionId,
+          body.wrongAnswer,
+          studentId
+        )
   );
 
   const transcript = messages
@@ -322,7 +337,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
              VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
              RETURNING id`,
             [
-              STUDENT_ID,
+              studentId,
               surface,
               priorTurns + 1,
               lastUser.text,

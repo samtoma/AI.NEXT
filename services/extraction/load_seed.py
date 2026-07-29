@@ -9,7 +9,13 @@ Usage:
 Flags:
   --validate-only  schema-validate only, no DB access at all (for extraction agents)
   --approve-all    force ALL questions live (PoC bulk; logged as such)
-  --demo-student   seed the demo student with mastery history (full reloads only)
+  --demo-student   seed the demo cast (Omar mid-journey + a cold-start student
+                   with zero history + a strong student); full reloads only
+  --seed-demo-students
+                   top up the SAME demo cast on a database that already has
+                   content: no truncate, no bundles, curriculum untouched.
+                   Idempotent (matches on display_name) — the way to add the
+                   cast without a destructive reload. Takes no other flags.
   --course <id>    scoped load: delete ONLY that course's subtree (modules/LOs/
                    questions/visuals via part_of+teaches walk, plus course-exclusive
                    topics) and load the given bundles additively. Other courses'
@@ -736,11 +742,54 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
           + ("" if not approve_all else "   [--approve-all was used: PoC bulk approval]"))
 
 
+"""The demo cast — the three students that make the WHOLE journey demonstrable.
+
+Order matters: Omar is inserted first, so on a full reload (which TRUNCATEs
+... RESTART IDENTITY) he is always the lowest id and therefore the app's
+default student. Names are matched on display_name, so seeding is idempotent:
+`--seed-demo-students` tops up whoever is missing without touching curriculum.
+"""
+OMAR = "Omar (demo)"
+COLD_START = "نور (جديدة)"
+STRONG = "يوسف (متفوّق)"
+
+
+def find_student(cur, display_name: str):
+    cur.execute("SELECT id FROM students WHERE display_name = %s", (display_name,))
+    row = cur.fetchone()
+    return row[0] if row else None
+
+
+def all_los(cur) -> list[str]:
+    cur.execute("SELECT id FROM graph_nodes WHERE kind='learning_objective' ORDER BY id")
+    return [r[0] for r in cur.fetchall()]
+
+
 def seed_demo_student(cur) -> None:
+    """Seed every missing member of the demo cast (idempotent, by display_name).
+
+      1. Omar (demo)  — mid-journey: baseline + current mastery on every LO,
+                        a few hundred attempts. UNCHANGED (rng seed 42).
+      2. نور (جديدة)   — THE COLD START: a real student row with NO mastery,
+                        NO attempts, NO understanding checks. The grey graph at
+                        0%, "no attempts yet", diagnostic-as-first-action demo.
+                        Deliberately nothing but the row — that IS the fixture.
+      3. يوسف (متفوّق) — a confident learner: high current mastery over a lower
+                        baseline (so the as-of toggle shows real growth).
+    """
+    seed_omar(cur)
+    seed_cold_start_student(cur)
+    seed_strong_student(cur)
+
+
+def seed_omar(cur) -> None:
     """Demo student with baseline + current mastery on every LO (weaker on later units)."""
+    if (existing := find_student(cur, OMAR)) is not None:
+        print(f"demo student '{OMAR}' already present (id={existing}) — left untouched")
+        return
     rng = random.Random(42)
-    cur.execute("INSERT INTO students (display_name, grade) VALUES ('Omar (demo)','prep-3') "
-                "RETURNING id")
+    cur.execute("INSERT INTO students (display_name, grade) VALUES (%s,'prep-3') "
+                "RETURNING id", (OMAR,))
     sid = cur.fetchone()[0]
     cur.execute("SELECT id, order_in_parent FROM graph_nodes WHERE kind='learning_objective' "
                 "ORDER BY id")
@@ -773,6 +822,85 @@ def seed_demo_student(cur) -> None:
     print(f"demo student seeded (id={sid})")
 
 
+def seed_cold_start_student(cur) -> None:
+    """The cold start: a student row and NOTHING else.
+
+    No mastery, no attempts, no checks — on purpose. Every "day one" claim the
+    product makes (grey graph, empty ledger, the diagnostic as the obvious
+    first action) is only demonstrable against a student who genuinely has no
+    history. Anything seeded here would quietly destroy that fixture.
+    """
+    if (existing := find_student(cur, COLD_START)) is not None:
+        print(f"demo student '{COLD_START}' already present (id={existing}) — left untouched")
+        return
+    cur.execute("INSERT INTO students (display_name, grade) VALUES (%s,'prep-3') "
+                "RETURNING id", (COLD_START,))
+    sid = cur.fetchone()[0]
+    print(f"cold-start demo student seeded (id={sid}) — 0 mastery, 0 attempts, 0 checks")
+
+
+def seed_strong_student(cur) -> None:
+    """A confident learner: high current mastery over a middling baseline."""
+    if (existing := find_student(cur, STRONG)) is not None:
+        print(f"demo student '{STRONG}' already present (id={existing}) — left untouched")
+        return
+    rng = random.Random(7)   # its own stream: Omar's numbers must not shift
+    cur.execute("INSERT INTO students (display_name, grade) VALUES (%s,'prep-3') "
+                "RETURNING id", (STRONG,))
+    sid = cur.fetchone()[0]
+    for lo in all_los(cur):
+        base = min(0.9, 0.55 + rng.uniform(-0.08, 0.08))
+        curr = min(0.96, base + 0.25 + rng.uniform(-0.05, 0.05))
+        cur.execute(
+            """INSERT INTO mastery (student_id, lo_id, score, system_from, system_to)
+               VALUES (%s,%s,%s, now() - interval '14 days', now() - interval '1 day')""",
+            (sid, lo, round(base, 2)))
+        cur.execute(
+            """INSERT INTO mastery (student_id, lo_id, score, system_from)
+               VALUES (%s,%s,%s, now() - interval '1 day')""",
+            (sid, lo, round(curr, 2)))
+    cur.execute("SELECT q.id, q.lo_id, q.correct_answer FROM questions q WHERE q.status='live'")
+    for qid, lo, ans in cur.fetchall():
+        cur.execute("SELECT score FROM mastery WHERE student_id=%s AND lo_id=%s "
+                    "AND system_to IS NULL", (sid, lo))
+        row = cur.fetchone()
+        if row is None:
+            continue          # question on an LO seeded after this student's mastery
+        p = float(row[0])
+        for day in (9, 5, 2):
+            if rng.random() < 0.3:
+                ok = rng.random() < p
+                cur.execute(
+                    """INSERT INTO attempts (student_id, question_id, given_answer,
+                       is_correct, time_ms, attempted_at)
+                       VALUES (%s,%s,%s,%s,%s, now() - make_interval(days => %s))""",
+                    (sid, qid, ans if ok else "?", ok, rng.randint(9000, 60000), day))
+    print(f"strong demo student seeded (id={sid})")
+
+
+def seed_demo_students_only() -> None:
+    """`--seed-demo-students`: top up the demo cast in place.
+
+    Curriculum is NOT touched — no truncate, no bundle load. This is how the
+    cast reaches a database that already holds content (and real attempt
+    history) without the destructive full reload that `--demo-student` implies.
+    """
+    import psycopg
+    dsn = db_dsn()
+    print(f"target database: {describe_dsn(dsn)}"
+          + ("" if dsn == DEFAULT_DSN else "   [from environment]"))
+    with psycopg.connect(dsn) as conn, conn.cursor() as cur:
+        seed_demo_student(cur)
+        cur.execute("SELECT s.id, s.display_name, "
+                    "  (SELECT count(*) FROM attempts a WHERE a.student_id = s.id), "
+                    "  (SELECT count(*) FROM mastery m WHERE m.student_id = s.id) "
+                    "FROM students s ORDER BY s.id")
+        print("\ndemo cast:")
+        for sid, name, attempts, mastery in cur.fetchall():
+            print(f"  id={sid:<3} {name:<16} attempts={attempts:<6} mastery_rows={mastery}")
+        conn.commit()
+
+
 if __name__ == "__main__":
     args = iter(sys.argv[1:])
     flags: set[str] = set()
@@ -787,6 +915,13 @@ if __name__ == "__main__":
             flags.add(a)
         else:
             paths.append(Path(a))
+    if "--seed-demo-students" in flags:
+        # Additive, curriculum-free path: the demo cast on an existing DB.
+        if paths or course or flags - {"--seed-demo-students"}:
+            raise SystemExit("--seed-demo-students takes no bundles and no other flags "
+                             "(it only tops up the demo students; curriculum is untouched)")
+        seed_demo_students_only()
+        raise SystemExit(0)
     if "--all" in flags:
         if paths:
             raise SystemExit("--all takes no bundle paths (it IS the path list)")
