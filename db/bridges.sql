@@ -1,6 +1,9 @@
 -- Wave 1.5: curated cross-subject bridges (relates_to edges).
 -- Idempotent: wipes and re-inserts all relates_to edges. Re-apply after any
--- full reload (TRUNCATE path) — scoped --course reloads preserve relates_to.
+-- full reload (TRUNCATE path). A scoped `--course` reload no longer needs it:
+-- the loader detaches these edges before deleting the subtree and re-attaches
+-- them verbatim afterwards (load_seed.py: restore_bridges), warning if an
+-- endpoint no longer exists in the reloaded content.
 --
 -- Honesty note: only GENUINE connections between CURRENTLY-LOADED objectives.
 -- With Term-1 skeleton lessons (world relief + French campaign) loaded, the two

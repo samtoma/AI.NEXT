@@ -16,7 +16,9 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
     volumes:
       - ainext_pg:/var/lib/postgresql/data
-      # seeded on FIRST boot only (empty volume): full math + social book
+      # FIRST BOOT ONLY (empty volume): full math + social book. Postgres ignores
+      # this file forever after. Refreshing content on a live stack is
+      # ./refresh-content.sh — never `down -v` (that also wipes the Claude login).
       - ./db/ainext_poc.sql.gz:/docker-entrypoint-initdb.d/10-seed.sql.gz:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ainext -d ainext_poc"]
@@ -51,6 +53,33 @@ services:
       # Change 3100 if that port is already taken on the box.
       - "127.0.0.1:3100:3000"
     mem_limit: 2g
+
+  # ---- content refresh (NOT part of the running stack) ----
+  # `profiles:` keeps this out of `docker compose up -d` entirely: a code deploy
+  # can never start it, and it can never touch data by accident. It exists only
+  # for `docker compose run --rm loader ...`, which is what refresh-content.sh
+  # does. See DEPLOY.md -> "Refreshing content".
+  loader:
+    profiles: ["tools"]
+    build:
+      context: .                  # deps only — code comes from the mount below
+      dockerfile: Dockerfile.loader
+    image: ainext-loader          # stable tag: a rebuild leaves ONE dangling image
+    environment:
+      # Keyword DSN + PGPASSWORD: no URL-encoding traps if the password ever
+      # contains @ : / # ?. The password is never on a command line.
+      AINEXT_DB_DSN: "host=db port=5432 dbname=ainext_poc user=ainext"
+      PGPASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
+    volumes:
+      # The repo checkout, READ-ONLY: loader code + seed bundles from one commit,
+      # so a content change never needs an image rebuild. AINEXT_CONTENT_DIR is
+      # an escape hatch (load bundles from another checkout without moving the
+      # deployed one); normally unset — the checkout this file lives in.
+      - ${AINEXT_CONTENT_DIR:-..}:/repo:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 512m
 
 volumes:
   ainext_pg:

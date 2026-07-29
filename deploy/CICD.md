@@ -1,4 +1,25 @@
-# CI/CD — one gated GitHub Actions pipeline → OCI
+# CI/CD — two GitHub Actions workflows → OCI
+
+| Workflow | Trigger | Touches |
+|---|---|---|
+| **`ci-cd.yml`** — build + deploy | automatic, push to `main` | **code only** (image + containers) |
+| **`refresh-content.yml`** — content refresh | **manual** (`workflow_dispatch`) | **data only** (the live Postgres) |
+
+They share the concurrency group `deploy-oci`, so a deploy and a content refresh can never run
+against the box at the same time.
+
+## Why code and data are separate pipelines
+The DB seeds from `deploy/db/ainext_poc.sql.gz` on **first boot only**. Making a deploy reload it
+would mean `down -v` — which also destroys the `claude_cfg` volume holding the one-time Claude
+subscription login (browser OAuth; not redoable from CI). So deploys never touch data, and data
+changes are a deliberate, backed-up, manually-triggered act.
+
+**Three independent guards keep a code deploy away from the database:**
+1. `refresh-content.yml` has **no `push:` trigger** — `workflow_dispatch` only.
+2. The `loader` service in `docker-compose.yml` sits behind `profiles: ["tools"]`, so
+   `docker compose up -d` (what deploy runs) can never start it.
+3. `refresh-content.sh` builds the loader's arguments itself and validates the course id against
+   `^course:[a-z0-9-]+$`, so no workflow input can smuggle in `--approve-all` or a shell fragment.
 
 **`.github/workflows/ci-cd.yml`** is a single workflow with two jobs:
 
@@ -48,10 +69,35 @@ There is **no API key** — `claude` runs on your subscription (one-time login, 
 
 ## After that
 Every push to `main` touching `app/**`, `services/extraction/seed/content/**`, `deploy/**`, or the
-workflow redeploys automatically. `ainext_pg` (DB) and `claude_cfg` (login) persist; the seed runs
-only on first boot. To reload content: `docker compose down -v` on the box, then re-run.
+workflow redeploys automatically. `ainext_pg` (DB) and `claude_cfg` (login) persist; the seed dump
+runs only on first boot. **New curriculum does not ship this way** — see below.
 
 > **Doc-only commit?** Put `[skip ci]` in the message to skip a needless build+deploy.
+
+## Content refresh — `refresh-content.yml`
+**Actions → "Content refresh (manual)" → Run workflow** (on `main`). Full procedure, ordering rules
+and rollback: `DEPLOY.md` → **"Refreshing content"**. In short:
+
+| Input | Meaning |
+|---|---|
+| `mode` | `preview` (default — runs the whole load in a transaction and rolls back) · `course` · `full-reseed` · `status` |
+| `course` | course node id, e.g. `course:prep3-social-ar` |
+| `confirm` | `course`: retype the course id · `full-reseed`: type `FULL-RESEED` · otherwise empty |
+
+The job runs on the same self-hosted `oci` runner, syncs `/opt/reletix/AI.NEXT` to the dispatched
+commit exactly as the deploy job does (so bundles, loader and script all come from one commit —
+source only; the running image is not rebuilt), then runs `deploy/refresh-content.sh`. Every
+mutating mode takes a `pg_dump --clean --if-exists` backup **first**; the run summary shows the
+before/after counts and the one-line rollback command.
+
+Committing a new seed bundle (`services/extraction/seed/*.json`) deliberately triggers **nothing** —
+it becomes live only when you run this workflow. Lesson prose (`seed/content/**`) is the exception:
+it is baked into the image, so it ships with a normal deploy, which must happen **first**.
+
+> The loader image (`ainext-loader`, deps only ~150 MB, built on the box) follows the same stable-tag
+> rule as the app: rebuilds leave one dangling image, cleaned by the next deploy's
+> `docker image prune -f`. Loader **code** is bind-mounted read-only from the checkout, so a content
+> change never rebuilds it.
 
 ## Image hygiene (shared box)
 Build-on-box uses a **stable tag** (`ainext-app`), so each real rebuild leaves exactly one dangling

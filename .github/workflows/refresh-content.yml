@@ -1,0 +1,156 @@
+name: Content refresh (manual)
+
+# Getting newly extracted curriculum onto the live site — WITHOUT `down -v`
+# (which would destroy the claude_cfg volume holding the one-time Claude login).
+#
+# MANUAL ONLY. There is no `push:` trigger here, and the compose service that
+# does the loading sits behind a `tools` profile, so `docker compose up -d` in
+# the deploy pipeline can never start it. A normal code deploy cannot touch data.
+#
+# Every mutating run takes a pg_dump backup first and prints the one-line
+# rollback. Runbook: deploy/DEPLOY.md -> "Refreshing content".
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "preview = rehearse and roll back (safe). course = replace one course. full-reseed = restore the committed dump."
+        type: choice
+        required: true
+        default: preview
+        options: [preview, course, full-reseed, status]
+      course:
+        description: "Course node id — for preview and course modes"
+        type: string
+        required: false
+        default: "course:prep3-social-ar"
+      confirm:
+        description: "Guard. course mode: retype the course id. full-reseed: type FULL-RESEED. preview/status: leave empty."
+        type: string
+        required: false
+        default: ""
+
+# Same concurrency group as the deploy job in ci-cd.yml: a content refresh and a
+# code deploy can never run against the box at the same time.
+concurrency:
+  group: deploy-oci
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: [self-hosted, oci]
+    env:
+      APP_DIR: /opt/reletix/AI.NEXT
+      # Inputs are passed as environment variables, never interpolated into a
+      # shell script body — a workflow input is untrusted text.
+      MODE: ${{ inputs.mode }}
+      COURSE: ${{ inputs.course }}
+      CONFIRM: ${{ inputs.confirm }}
+      REF: ${{ github.ref_name }}
+
+    steps:
+      - name: Check the confirmation phrase (before the box is touched at all)
+        run: |
+          set -euo pipefail
+          case "$MODE" in
+            status|preview) ;;
+            course)
+              if [ "$CONFIRM" != "$COURSE" ]; then
+                echo "::error::To replace the content of '$COURSE', retype it in the confirm box."
+                exit 1
+              fi ;;
+            full-reseed)
+              if [ "$CONFIRM" != "FULL-RESEED" ]; then
+                echo "::error::full-reseed replaces the WHOLE database (student attempts and mastery included). Type FULL-RESEED in the confirm box to proceed."
+                exit 1
+              fi ;;
+            *) echo "::error::unknown mode '$MODE'"; exit 1 ;;
+          esac
+          # Exact match, anchored: a course id and nothing else. (refresh-content.sh
+          # applies the same rule again, and passes the value as a single argv
+          # element — but an input this wrong should fail before the box is touched.)
+          if [ "$MODE" = preview ] || [ "$MODE" = course ]; then
+            if ! [[ "$COURSE" =~ ^course:[a-z0-9-]+$ ]]; then
+              echo "::error::'$COURSE' is not a course node id (e.g. course:prep3-social-ar)"
+              exit 1
+            fi
+          fi
+          echo "mode=$MODE course=$COURSE ref=$REF"
+          if [ "$REF" != "main" ]; then
+            echo "::warning::Dispatched from '$REF', not main. The box checkout will be moved to that ref (source only — the running image is unchanged). Prefer main."
+          fi
+
+      - name: Sync the checkout on the box (identical to the deploy job; preserves deploy/.env)
+        run: |
+          set -euo pipefail
+          REPO_URL="https://github.com/${{ github.repository }}.git"
+          mkdir -p "$APP_DIR"
+          cd "$APP_DIR"
+          if [ ! -d .git ]; then
+            echo "::error::$APP_DIR is not a checkout yet — run the CI/CD deploy first."
+            exit 1
+          fi
+          git remote set-url origin "$REPO_URL"
+          git fetch --prune origin "+refs/heads/$REF:refs/remotes/origin/$REF"
+          git checkout -f -B "$REF" "origin/$REF"
+          git reset --hard "origin/$REF"
+          echo "Content + scripts come from commit: $(git rev-parse --short HEAD) on $REF"
+
+      - name: Refresh
+        id: run
+        run: |
+          set -uo pipefail
+          cd "$APP_DIR/deploy" || exit 1
+          case "$MODE" in
+            status)      set -- status ;;
+            preview)     set -- preview "$COURSE" ;;
+            course)      set -- course  "$COURSE" ;;
+            full-reseed) set -- full-reseed ;;
+          esac
+          # `bash …`: immune to a lost exec bit. tee: the summary step reads the log.
+          bash ./refresh-content.sh "$@" 2>&1 | tee "$RUNNER_TEMP/refresh.log"
+          status=${PIPESTATUS[0]}
+          echo "refresh-content.sh exited $status"
+          exit "$status"
+
+      - name: Run summary (what changed, and how to undo it)
+        if: always()
+        run: |
+          set +e -u
+          LOG="$RUNNER_TEMP/refresh.log"
+          {
+            echo "### Content refresh — \`$MODE\`"
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| mode | \`$MODE\` |"
+            if [ "$MODE" = preview ] || [ "$MODE" = course ]; then echo "| course | \`$COURSE\` |"; fi
+            echo "| ref | \`$REF\` |"
+            echo "| result | ${{ steps.run.outcome == 'success' && 'OK' || 'FAILED' }} |"
+            echo ""
+            if [ -f "$LOG" ] && grep -q 'roll back with:' "$LOG"; then
+              echo "**Roll back on the box with:**"
+              echo ""
+              echo '```'
+              echo "cd $APP_DIR/deploy"
+              grep 'roll back with:' "$LOG" | tail -1 | sed 's|.*roll back with: *||'
+              echo '```'
+              echo ""
+            fi
+            echo "<details><summary>Last 60 log lines</summary>"
+            echo ""
+            echo '```'
+            [ -f "$LOG" ] && tail -60 "$LOG" || echo "(no log — the run stopped before the script started)"
+            echo '```'
+            echo ""
+            echo "</details>"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Stack + database state after the run
+        if: always()
+        run: |
+          set +e -u
+          cd "$APP_DIR/deploy" || exit 0
+          bash ./refresh-content.sh status || true
+          curl -sSf -o /dev/null -w 'app on :3100 -> HTTP %{http_code}\n' http://127.0.0.1:3100/ || \
+            echo "::warning::the app did not answer on :3100"

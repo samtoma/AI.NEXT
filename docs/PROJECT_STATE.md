@@ -40,7 +40,30 @@ production `talent.reletix.com` stack, and is shared with the co-founders by ema
   `POSTGRES_PASSWORD` lives only in `/opt/reletix/AI.NEXT/deploy/.env` (untracked; survives `reset --hard`).
 - **Shared-box safety rails:** never `docker system prune` / `image prune -a` / `builder prune` (they hit
   the *shared* daemon); the pipeline only prunes untagged rebuild leftovers. Never touch talent stacks.
-- Runbooks: `deploy/DEPLOY.md` (bootstrap + Cloudflare steps) and `deploy/CICD.md`.
+- Runbooks: `deploy/DEPLOY.md` (bootstrap + Cloudflare steps + content refresh) and `deploy/CICD.md`.
+
+### Content refresh path — SHIPPED (2026-07-29)
+New curriculum can now reach the live site **without `down -v`** (which would destroy the Claude
+login). Code and data are separate pipelines: `ci-cd.yml` ships code, the new manual
+`refresh-content.yml` ships data; they share one concurrency group so they never overlap.
+- **Actions → "Content refresh (manual)"**: `preview` (default — runs the whole load in a
+  transaction against the real DB, prints a before/after table, rolls back) → `course` (backs up
+  with `pg_dump --clean --if-exists`, then replaces one course's subtree in one transaction, site
+  up) → `full-reseed` (restores `deploy/db/ainext_poc.sql.gz` whole) → `restore` (rollback).
+  Driver: `deploy/refresh-content.sh`; loader runs in a `profiles: ["tools"]` container so
+  `up -d` can never start it. **`--approve-all` is unreachable from this path.**
+- **Loader fixes it forced:** scoped reload of a bridged course FK-failed (PROJECT_STATE task #6) —
+  now bridges are detached and re-attached verbatim; `--all --course <id>` picks a course's bundles
+  (and load order) automatically, excluding superseded ones (`social-skeleton` vs `social-t1`);
+  shared program root no longer trips the collision guard (math scoped reload was impossible);
+  source-doc sha256 is reused from the DB where the gitignored PDF is absent, so provenance stays
+  continuous on the box; `--dry-run`; DSN from `$AINEXT_DB_DSN`.
+- **Known content consequence:** a math refresh demotes Unit-1's 29 `--approve-all` questions to
+  `review` (933 → 904 live). The gate working as designed — but it makes the admin review tool
+  (Next #3) the blocker for refreshing math.
+- Backups land in `/opt/reletix/AI.NEXT/backups/` (0600, gitignored — they contain student rows).
+  `deploy/make-seed-dump.sh` regenerates the first-boot dump and **refuses to run if the source DB
+  holds a non-demo student** (pilot data is minors').
 - **Perf:** runtime thinking budget cut 6000 → **1024** (`AINEXT_THINKING_BUDGET`; `0`/`off` disables) —
   the hard reasoning already happened at extraction time, so this is latency, not quality.
 
