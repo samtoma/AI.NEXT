@@ -5,6 +5,12 @@ import { LocateOnMap } from "@/components/student/widgets/LocateOnMap";
 import { TermMatch } from "@/components/student/widgets/TermMatch";
 import { TimelineBuilder } from "@/components/student/widgets/TimelineBuilder";
 import { ChainBuilder } from "@/components/student/widgets/ChainBuilder";
+// Arabic vertical (ADR-0006)
+import { ExtractSpans } from "@/components/student/widgets/ExtractSpans";
+import { HamzaSeat } from "@/components/student/widgets/HamzaSeat";
+import { StylePurpose } from "@/components/student/widgets/StylePurpose";
+import { IrabBuilder } from "@/components/student/widgets/IrabBuilder";
+import type { IrabAnswer, NounType } from "@/lib/irab";
 
 /**
  * «شرح الدرس» — the readable lesson surface for the rich content the
@@ -298,6 +304,112 @@ function renderInteractive(it: LessonInteractive): React.ReactNode[] {
         prompt={prompt || "ركّب السلسلة بالترتيب"}
         cards={cards}
         correctChain={correctChain}
+        onResult={NOOP}
+      />,
+    ];
+  }
+
+  /* ---- Arabic vertical (ADR-0006) ---- */
+
+  if (kind === "extract_spans") {
+    const text = asString(spec.text ?? spec.passage);
+    const targets = asStringArray(spec.targets);
+    if (!text || targets.length === 0) return [];
+    return [
+      <ExtractSpans
+        key="ex"
+        prompt={prompt || "دوس على الكلمات المطلوبة"}
+        text={text}
+        category={asString(spec.category) || "نحو"}
+        targets={targets}
+        distractorHint={asString(spec.distractorHint) || undefined}
+        onResult={NOOP}
+      />,
+    ];
+  }
+
+  if (kind === "hamza_seat") {
+    const items = asArray(spec.items)
+      .map((raw) => {
+        if (!raw || typeof raw !== "object") return null;
+        const it = raw as Record<string, unknown>;
+        const word = asString(it.word);
+        const answer = asString(it.answer);
+        if (!word || !answer) return null;
+        return {
+          word,
+          answer,
+          seats: asStringArray(it.seats),
+          rule: asString(it.rule) || undefined,
+          page: typeof it.page === "number" ? it.page : undefined,
+        };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null);
+    if (items.length === 0) return [];
+    return [
+      <HamzaSeat
+        key="hz"
+        prompt={prompt || "الهمزة دي بتتكتب إزاي؟"}
+        items={items}
+        onResult={NOOP}
+      />,
+    ];
+  }
+
+  if (kind === "style_purpose") {
+    const ans = (spec.answer ?? {}) as Record<string, unknown>;
+    const text = asString(spec.text);
+    const span = asString(spec.span);
+    const style = asString(ans.style);
+    const purpose = asString(ans.purpose);
+    const styles = asStringArray(spec.styles);
+    const purposes = asStringArray(spec.purposes);
+    if (!text || !span || !style || !purpose || styles.length < 2 || purposes.length < 2)
+      return [];
+    return [
+      <StylePurpose
+        key="sp"
+        prompt={prompt || "الأسلوب ده إيه، وغرضه إيه؟"}
+        text={text}
+        span={span}
+        styles={styles}
+        purposes={purposes}
+        answer={{ style, purpose }}
+        onResult={NOOP}
+      />,
+    ];
+  }
+
+  if (kind === "irab_builder") {
+    const ans = (spec.answer ?? {}) as Record<string, unknown>;
+    const ref = (spec.rule_ref ?? {}) as Record<string, unknown>;
+    const sentence = asString(spec.sentence);
+    const target = asString(spec.target);
+    const roles = asStringArray(spec.roles);
+    const marks = asStringArray(spec.marks);
+    if (
+      !sentence ||
+      !target ||
+      roles.length < 2 ||
+      marks.length < 2 ||
+      !asString(ans.word_ar) ||
+      !asString(ans.role_ar)
+    )
+      return [];
+    return [
+      <IrabBuilder
+        key="ib"
+        prompt={prompt || "أعرب الكلمة اللي تحتها خط"}
+        sentence={sentence}
+        target={target}
+        roles={roles}
+        marks={marks}
+        answer={ans as unknown as IrabAnswer}
+        rule_ref={{
+          quote: asString(ref.quote) || undefined,
+          page: typeof ref.page === "number" ? ref.page : undefined,
+        }}
+        nounType={(asString(spec.nounType) || undefined) as NounType | undefined}
         onResult={NOOP}
       />,
     ];

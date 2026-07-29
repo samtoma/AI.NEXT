@@ -23,13 +23,22 @@ export type InteractiveKind =
   | "locate_on_map"
   | "term_match"
   | "timeline_builder"
-  | "chain_builder";
+  | "chain_builder"
+  // Arabic vertical (ADR-0006)
+  | "extract_spans"
+  | "hamza_seat"
+  | "style_purpose"
+  | "irab_builder";
 
 const INTERACTIVE_KINDS: readonly InteractiveKind[] = [
   "locate_on_map",
   "term_match",
   "timeline_builder",
   "chain_builder",
+  "extract_spans",
+  "hamza_seat",
+  "style_purpose",
+  "irab_builder",
 ];
 
 export interface LessonSubtopic {

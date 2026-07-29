@@ -25,6 +25,12 @@ import { LocateOnMap } from "@/components/student/widgets/LocateOnMap";
 import { TimelineBuilder } from "@/components/student/widgets/TimelineBuilder";
 import { ChainBuilder } from "@/components/student/widgets/ChainBuilder";
 import { TermMatch } from "@/components/student/widgets/TermMatch";
+// Arabic vertical (ADR-0006)
+import { ExtractSpans } from "@/components/student/widgets/ExtractSpans";
+import { HamzaSeat } from "@/components/student/widgets/HamzaSeat";
+import { StylePurpose } from "@/components/student/widgets/StylePurpose";
+import { IrabBuilder } from "@/components/student/widgets/IrabBuilder";
+import type { IrabAnswer, NounType } from "@/lib/irab";
 import { renderVizWidget } from "@/components/viz/render-viz-widget";
 import { ReportCard } from "@/components/student/ReportCard";
 import {
@@ -126,6 +132,20 @@ interface SavedSession {
 
 const storeKey = (mode: LessonMode, slug: string) =>
   `ainext-lesson:${mode}:${slug}`;
+
+/* Defensive readers for `{{widget:…}}` payloads. The directives are authored by
+   a model, so every field is untrusted: a malformed payload must render nothing
+   rather than throw inside the chat stream. */
+const strProp = (v: unknown): string => (typeof v === "string" ? v.trim() : "");
+const arrProp = (v: unknown): unknown[] => (Array.isArray(v) ? v : []);
+const objProp = (v: unknown): Record<string, unknown> =>
+  v !== null && typeof v === "object" && !Array.isArray(v)
+    ? (v as Record<string, unknown>)
+    : {};
+const strArrProp = (v: unknown): string[] =>
+  arrProp(v)
+    .map((x) => (typeof x === "string" ? x.trim() : ""))
+    .filter(Boolean);
 
 const makeSid = () =>
   typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -588,6 +608,107 @@ export function LessonSession({
               />
             );
           }
+        }
+      }
+      // ---- Arabic widgets (ADR-0006). Same contract again: deterministic
+      // client grading, one note into the [live event] flow, bad payloads
+      // render nothing. `irab_builder` adds a content gate of its own — it
+      // refuses an answer key that cites no printed rule (see the widget).
+      if (name === "extract_spans") {
+        const text = strProp(props.text);
+        const targets = strArrProp(props.targets);
+        if (text && targets.length > 0) {
+          return (
+            <ExtractSpans
+              prompt={strProp(props.prompt) || "دوس على الكلمات المطلوبة"}
+              text={text}
+              category={strProp(props.category) || "نحو"}
+              targets={targets}
+              distractorHint={strProp(props.distractorHint) || undefined}
+              onResult={emitNote}
+            />
+          );
+        }
+      }
+      if (name === "hamza_seat") {
+        const items = arrProp(props.items)
+          .map((raw) => {
+            const it = objProp(raw);
+            const word = strProp(it.word);
+            const answer = strProp(it.answer);
+            if (!word || !answer) return null;
+            return {
+              word,
+              answer,
+              seats: strArrProp(it.seats),
+              rule: strProp(it.rule) || undefined,
+              page: typeof it.page === "number" ? it.page : undefined,
+            };
+          })
+          .filter((x): x is NonNullable<typeof x> => x !== null);
+        if (items.length > 0) {
+          return (
+            <HamzaSeat
+              prompt={strProp(props.prompt) || "الهمزة دي بتتكتب إزاي؟"}
+              items={items}
+              onResult={emitNote}
+            />
+          );
+        }
+      }
+      if (name === "style_purpose") {
+        const ans = objProp(props.answer);
+        const text = strProp(props.text);
+        const span = strProp(props.span);
+        const style = strProp(ans.style);
+        const purpose = strProp(ans.purpose);
+        const styles = strArrProp(props.styles);
+        const purposes = strArrProp(props.purposes);
+        if (text && span && style && purpose && styles.length >= 2 && purposes.length >= 2) {
+          return (
+            <StylePurpose
+              prompt={strProp(props.prompt) || "الأسلوب ده إيه، وغرضه إيه؟"}
+              text={text}
+              span={span}
+              styles={styles}
+              purposes={purposes}
+              answer={{ style, purpose }}
+              onResult={emitNote}
+            />
+          );
+        }
+      }
+      if (name === "irab_builder") {
+        const ans = objProp(props.answer);
+        const sentence = strProp(props.sentence);
+        const target = strProp(props.target);
+        const roles = strArrProp(props.roles);
+        const marks = strArrProp(props.marks);
+        const ref = objProp(props.rule_ref);
+        if (
+          sentence &&
+          target &&
+          roles.length >= 2 &&
+          marks.length >= 2 &&
+          strProp(ans.word_ar) &&
+          strProp(ans.role_ar)
+        ) {
+          return (
+            <IrabBuilder
+              prompt={strProp(props.prompt) || "أعرب الكلمة اللي تحتها خط"}
+              sentence={sentence}
+              target={target}
+              roles={roles}
+              marks={marks}
+              answer={ans as unknown as IrabAnswer}
+              rule_ref={{
+                quote: strProp(ref.quote) || undefined,
+                page: typeof ref.page === "number" ? ref.page : undefined,
+              }}
+              nounType={(strProp(props.nounType) || undefined) as NounType | undefined}
+              onResult={emitNote}
+            />
+          );
         }
       }
       return null;

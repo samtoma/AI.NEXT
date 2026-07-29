@@ -64,6 +64,23 @@
     "Avenir Next", "Segoe UI", sans-serif;
   --stack-display: "Fraunces", "Noto Naskh Arabic", "Fraunces Fallback";
   --stack-mono: "Spline Sans Mono", "Noto Naskh Arabic", "Spline Sans Mono Fallback";
+
+  /* ---------- Arabic type scale (ADR-0006; arabic-viz-widgets.md §3.2) ------
+     Vowelled Arabic stacks marks ABOVE and BELOW the baseline, so the Latin
+     line-height scale clips or collides them. Naskh also needs ~+1–2px over
+     Latin at the same optical size. These are the only numbers any Arabic
+     surface should reach for. */
+  --ar-size-body: 17px; /* never below 15px for vowelled prose */
+  --ar-size-verse: 18px; /* poetry carries more تشكيل per line */
+  --ar-size-min: 14px; /* absolute floor — unvowelled UI only */
+  --ar-line-vowelled: 2; /* fully vowelled: Quran, poetry, dictation */
+  --ar-line-plain: 1.65; /* unvowelled labels, chips, tables */
+  --ar-line-tappable: 2.4; /* buys the 44px tap target inside running text */
+
+  /* third subject territory — math viridian, social sepia, arabic aubergine */
+  --subject-arabic: #6b4c86;
+  --subject-arabic-wash: rgba(107, 76, 134, 0.07);
+  --subject-arabic-line: rgba(107, 76, 134, 0.3);
 }
 
 @theme inline {
@@ -83,6 +100,9 @@
   --color-gold-wash: var(--gold-wash);
   --color-rust: var(--rust);
   --color-rust-wash: var(--rust-wash);
+  --color-arabic: var(--subject-arabic);
+  --color-arabic-wash: var(--subject-arabic-wash);
+  --color-arabic-line: var(--subject-arabic-line);
   --font-display: var(--stack-display);
   --font-sans: var(--stack-sans);
   --font-mono: var(--stack-mono);
@@ -97,6 +117,10 @@ body {
   color: var(--ink);
   font-family: var(--stack-sans);
   font-feature-settings: "ss01";
+  /* Faux-bold smears تشكيل, and a synthesised oblique breaks the naskh join.
+     Every family in the stacks ships real weights, so nothing legitimate is
+     lost by forbidding synthesis outright (arabic-viz-widgets.md §3.1). */
+  font-synthesis: none;
   /* fine ruled-paper grid + warm vignette */
   background-image:
     radial-gradient(ellipse 90% 60% at 50% -10%, rgba(253, 251, 243, 0.9), transparent 60%),
@@ -135,6 +159,58 @@ body::before {
    until some component imports the font module. */
 .font-quran {
   font-family: var(--font-quran, "Amiri Quran"), "Noto Naskh Arabic", serif;
+}
+
+/* ---------- Arabic running text (ADR-0006; arabic-viz-widgets.md §3.3) ------
+   Four classes cover every Arabic block in the product. They exist so no
+   component has to remember the traps:
+
+     · text-align: start  — NEVER justify. Without kashida support, justified
+       Arabic opens canyon-sized word gaps; the book justifies typographically
+       (elongation), which we cannot do safely.
+     · no auto-hyphenation, no word-break — both mangle Arabic.
+     · font-feature-settings: normal — "ss01" is a Spline Sans stylistic set
+       inherited from <body>; a different family's ss01 must not reach naskh.
+     · line-height from the vowelled/plain scale, so marks never clip. */
+
+.ar-block {
+  text-align: start;
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: break-word;
+  font-feature-settings: normal;
+  letter-spacing: normal;
+}
+
+.ar-vowelled {
+  font-size: var(--ar-size-body);
+  line-height: var(--ar-line-vowelled);
+}
+
+.ar-verse {
+  font-size: var(--ar-size-verse);
+  line-height: var(--ar-line-vowelled);
+}
+
+.ar-plain {
+  line-height: var(--ar-line-plain);
+}
+
+/* Running text whose words are tap targets: the extra leading is what buys a
+   ≥44px target inside a passage without spacing the text into unreadability
+   (arabic-viz-widgets.md §2.1). */
+.ar-tappable {
+  line-height: var(--ar-line-tappable);
+}
+
+/* The mono label voice (`font-mono text-[9px] uppercase tracking-[0.16em]`) is
+   applied to chips that already carry Arabic — «✳ تفاعلي · المصطلحات». Letter
+   spacing visually breaks the cursive join and text-transform is meaningless in
+   Arabic, so any label containing Arabic gets this reset. !important because it
+   has to beat a Tailwind utility of equal specificity. */
+.ar-label {
+  letter-spacing: normal !important;
+  text-transform: none !important;
 }
 
 /* ---------- shared primitives ---------- */
@@ -347,6 +423,18 @@ body::before {
 @keyframes viz-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
+}
+/* Arabic annotation sweep (VIZ_SPEC v3): a highlighter growing from the RIGHT
+   across the span. Deliberately NOT an opacity fade — the tint must appear
+   without the text under it ever flickering, and the element keeps its text run
+   intact so the cursive shaping and mark positions never move. */
+@keyframes viz-mark-in {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
 }
 /* count-ticker numeral: visible only during its window */
 @keyframes viz-tick {
