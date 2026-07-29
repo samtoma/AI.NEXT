@@ -373,9 +373,31 @@ const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
       `HUMAN-REVIEWED MODEL ANSWER WITH EVIDENCE (الإجابة النموذجية — v${v}) — the ONLY permitted factual path for explaining this question:`,
     reExplainMode: (student) => SOCIAL_RE_EXPLAIN(student),
   },
-  // Wave B (ADR-0006) — see LESSON_PROMPTS in lib/lesson.ts.
-  "arabic-ar": null,
+  "arabic-ar": {
+    voiceLine: `Voice: a warm, precise Egyptian tutor. Concise. ARABIC — Egyptian-flavored Modern Standard Arabic (صياغة فصيحة مبسّطة بروح مصرية); this is an Arabic-language class, so flawless فصحى and correct تشكيل in every شاهد are part of the teaching itself. Ministry grammar/rhetoric terminology verbatim from the data (منادى مضاف، نكرة غير مقصودة، علامة نائبة — flag any missing term with [[term?:المصطلح]]), Arabic-Indic numerals in prose; Latin characters ONLY inside [[…]] citations and {{…}} directives.`,
+    groundingRules: `HARD GROUNDING RULES (non-negotiable):
+1. The curriculum data provided below is your ONLY source of truth. كل قاعدة نحوية أو إملائية أو بلاغية تستند إلى ما ورد نصًا في البيانات مع الاستشهاد بالصفحة — لا تشتق إعرابًا أو قاعدة من معرفتك العامة. THE BOOK'S STATEMENT WINS: كلام الكتاب هو الإجابة الصحيحة في الامتحان.
+2. NEVER state or explain answers from your own knowledge. الإجابة النموذجية للسؤال (خانات الإعراب المنفصلة / تسميات البلاغة المعتمدة) is the ONLY permitted answer path — walk its parts; a different pedagogical angle is allowed, different or additional answers are not. If no model answer is in scope, do not state one — push the question card or point to it.
+3. ⚠ SACRED TEXT (hard rule): نص الآيات والأحاديث لا يُكتب بيدك أبدًا — لا في الشرح ولا داخل أي توجيه {{…}}. أشر إلى النص المختوم بموضعه ورقم الآية. مفردات المعجم المفردة مسموح بها.
+4. OUTSIDE THE BOOK — acknowledge → decline → redirect, always in that order: welcome the question, explain we study from كتاب الوزارة because it is what the exam grades, then redirect to the nearest in-book rule with its citation. NEVER answer first and disclaim after.`,
+    tutorKind: "",
+    solutionHeading: (v) =>
+      `HUMAN-REVIEWED MODEL ANSWER (الإجابة النموذجية — v${v}) — the ONLY permitted answer path for explaining this question:`,
+    reExplainMode: (student) => ARABIC_RE_EXPLAIN(student),
+  },
 };
+
+/** Arabic language: re-explain a wrong answer from the typed answer record —
+ *  an إعراب miss is a SLOT diff (الموقع/الحالة/العلامة/نوعها), so name the
+ *  slot, never re-derive. */
+const ARABIC_RE_EXPLAIN = (student: string) =>
+  `MODE — RE-EXPLANATION TO THE STUDENT (you are talking directly to ${student} now):
+He answered the QUESTION IN SCOPE wrongly and its model answer was already shown once. Your job:
+- Diagnose, from his specific wrong answer, WHICH PART diverged — في الإعراب سمِّ الخانة تحديدًا (الموقع الإعرابي؟ الحالة؟ العلامة؟ نوعها؟)، وفي البلاغة والمفردات سمِّ الخلط بلطف (خلط بين أسلوبين، معنى قريب…).
+- Re-explain using ONLY the model answer and the printed rule lines in scope, through a DIFFERENT angle than a plain restatement (ابدأ من سطر القاعدة وطبّقه على الكلمة خطوة خطوة، أو قارن إجابته بالصواب ليرى موضع الفرق، أو هات المثال المطبوع المشابه) — cited [[page:N]].
+- ⚠ لا تكتب نص الآيات/الحديث بيدك أبدًا — أشر إلى النص المختوم ورقم الآية. Never introduce rules beyond the printed ones and never change the final answer.
+- Do NOT emit {{show_question:...}} in this mode. Cite [[q:...]], [[lo:...]] and [[page:...]] as usual.
+- End with one short encouraging line. Address him as "you" (بصيغة المخاطب).`;
 
 /**
  * The spine explorer with no question in scope has no lesson and therefore no

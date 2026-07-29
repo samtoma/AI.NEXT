@@ -310,6 +310,7 @@ export async function getLessonData(
     mapBases,
     docTitle,
     studentName: (studentRes.rows[0]?.display_name as string) ?? "Omar",
+    studentId,
   };
 }
 
@@ -368,7 +369,7 @@ export function lessonDataBlock(data: LessonData): string {
   const bookName = kit.bookName(data.docTitle);
 
   return `LESSON DATA — your ONLY source of truth (school ${data.lessonRef}: ${data.title} — ${data.moduleLabel}, ${bookName})
-Student: ${data.studentName}, grade 10.
+Student: ${data.studentName} (id ${data.studentId}), grade 10.
 
 LEARNING OBJECTIVES of this lesson, in teaching order:
 ${loLines}
@@ -524,6 +525,32 @@ ${CROSS_SUBJECT_RULE}
 FORMAT: plain short Arabic paragraphs. No headings, no numbered lesson plans, no walls of text.`;
 }
 
+/** ARABIC LANGUAGE — text-anchored widgets (ADR-0006): the passage is the
+ *  figure. إعراب grades client-side from typed slots; the widget payloads are
+ *  therefore grounded in the printed rule lines, never derived. */
+function arabicProtocol(rhythm: string, ex: ProtocolExamples): string {
+  const { lo: exLo, q: exQ, page: exPage } = ex;
+  return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Flag any needed term missing from the LESSON DATA with [[term?:المصطلح]] right after it — never guess a definition silently.
+
+MESSAGE RHYTHM:
+${rhythm}
+
+INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive per message, always as its LAST beat — {{beat}} itself is a pause marker, not an interactive directive):
+- {{show_question:q:${exQ}}} — pushes that live question card (ids from the QUESTION BANK only; each id at most once per session).
+- {{widget:extract_spans:{"prompt":"دوس على كل منادى في الأمثلة","text":"يا شبابَ الوطنِ اعملوا. يا راغبين في الخير أقبلوا.","category":"نحو","targets":["شبابَ","راغبين"]}}} — «استخرج» as a tap. "text" MUST be non-sacred material quoted verbatim from the LESSON DATA (أمثلة القاعدة، قطعة الإملاء) — NEVER the آيات; "targets" are exact words from that text.
+- {{widget:hamza_seat:{"prompt":"اختر الحرف الصحيح لكل همزة","items":[{"word":"فُ_َاد","answer":"ؤ","rule":"مفتوحة وما قبلها مضموم","page":${exPage}}]}}} — الهمزة المتوسطة, 2–4 items; "rule" is the printed case row VERBATIM from the LESSON DATA.
+- {{widget:style_purpose:{"prompt":"حدد الأسلوب وغرضه","text":"…من بيانات الدرس…","span":"اصْرِفْ عَنَّا","styles":["أمر","نداء","استفهام"],"purposes":["الدعاء","التنبيه"],"answer":{"style":"أمر","purpose":"الدعاء"}}}} — «أسلوب … وغرضه …»; the answer pair comes VERBATIM from مواطن الجمال in the LESSON DATA.
+- {{widget:irab_builder:{"prompt":"أعرب الكلمة","sentence":"يا طالبَ العلمِ اجتهدْ","target":"طالبَ","roles":["منادى مضاف","مضاف إليه","فاعل"],"marks":["الفتحة","الكسرة","الياء"],"answer":{"word_ar":"طالبَ","role_ar":"منادى مضاف","state":"منصوب","sign":"الفتحة","sign_kind":"ظاهرة"},"rule_ref":{"page":${exPage},"quote":"…سطر القاعدة المطبوع حرفيًا…"}}}} — slot-built إعراب. ⚠ GROUNDING GATE: "rule_ref.quote" MUST be a rule line printed in the LESSON DATA (with its page) — an إعراب the book cannot license is not askable. Sentence and answer come from the question bank or the printed examples, never invented.
+- {{widget:term_match:{"prompt":"وصّل الكلمة بمعناها","pairs":[{"term":"هَوْنًا","definition":"بسكينة ووقار"}],"decoyDefs":["تعريف قريب للتشتيت"]}}} — معاني المفردات matching, 2–4 pairs VERBATIM from the LESSON DATA.
+- {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
+⚠ SACRED TEXT (hard rule, no exceptions): الآيات والأحاديث تُعرض للطالب من الحافظة المختومة (بطاقة النص في واجهة الدرس) — you never type, quote, complete or embed Quran/Hadith text in prose or in ANY widget payload. Point to the sealed card instead («تأمل الآية ٦٣ في البطاقة»). Vocabulary words (single words like هَوْنًا) from the glossary are allowed in term_match.
+Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
+
+${CROSS_SUBJECT_RULE}
+
+FORMAT: plain short Arabic paragraphs. No headings, no numbered lesson plans, no walls of text.`;
+}
+
 /** MATHEMATICS — LaTeX citations + the pair_plotter / product_builder / figure
  *  catalogue. This is the original single-subject protocol, byte for byte. */
 function mathProtocol(
@@ -588,6 +615,19 @@ function socialGroundingRules(data: LessonData): string {
 5. SENSITIVE CONTENT (hard rule): historical and political material is explained strictly as the book presents it — no commentary of your own, no modern political parallels, no evaluative judgments beyond the book's own framing. عرض الكتاب كما هو: بلا رأي شخصي، وبلا إسقاط على الحاضر، وبلا حكم قيمي زائد على صياغة الكتاب نفسه.`;
 }
 
+/** ARABIC grounding rules (ADR-0006). Differs from social deliberately:
+ *  the sacred-containment rule is added, and ADR-0004 §5's "no evaluative
+ *  judgment" rule is NOT copied — this syllabus asks for the student's own
+ *  رأي in marked places (ADR-0006 "must change before extraction" list). */
+function arabicGroundingRules(data: LessonData): string {
+  return `HARD GROUNDING RULES (non-negotiable):
+1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Never drift into other lessons, terms or grades.
+2. اللغة تُدرَّس من الكتاب وحده: كل قاعدة نحوية أو إملائية تستند إلى سطر قاعدة مطبوع في بيانات الدرس مع [[page:N]]، وكل إعراب يتبع النموذج المعتمد للسؤال (الخانات المنفصلة: الموقع/الحالة/العلامة/نوعها) — لا تشتق إعرابًا من معرفتك العامة، ولا تتجاوز ما دُرِّس: النحو تراكمي، وما لم يطبعه هذا الدرس أو دروسه السابقة لا وجود له في الجلسة.
+3. ⚠ SACRED TEXT — الحكم القاطع: نص الآيات والأحاديث يُعرض من الحافظة المختومة فقط (بطاقة النص). لا تكتب نص القرآن أو الحديث بنفسك أبدًا — لا في الشرح، ولا داخل أي {{…}} — ولا "تصحّحه" ولا تكمله من ذاكرتك. أشر إلى البطاقة ورقم الآية. مفردات المعجم المفردة (هَوْنًا، غَرَامًا) مسموح بها في الشرح.
+4. OUTSIDE THE BOOK — acknowledge → decline → redirect, in that exact order: إذا سأل عن قاعدة أو نص غير وارد في بيانات الدرس، رحِّب بالسؤال، ثم وضِّح أننا نذاكر من كتاب الوزارة لأنه أساس الامتحان، ثم وجِّهه لأقرب قاعدة أو شاهد وارد فعلًا مع [[page:N]]. NEVER answer first and disclaim after.
+5. رأي الطالب: حيث يطلب الكتاب رأيًا شخصيًا أو قيمًا مستفادة، رحِّب برأي الطالب وناقشه بدفء — الرأي له، والحقائق اللغوية والبلاغية للكتاب. قوِّم لغة رأيه بلطف إن أخطأ في صياغتها.`;
+}
+
 /** MATHEMATICS grounding rules — the original two-rule text, byte for byte. */
 function mathGroundingRules(data: LessonData): string {
   return `HARD GROUNDING RULES:
@@ -600,6 +640,13 @@ function mathGroundingRules(data: LessonData): string {
 const SOCIAL_REVIEW_RULES = `
 - كلام الكتاب هو الصواب دائمًا: corrective lines come ONLY from that question's model answer (الإجابة النموذجية), cited [[page:N]] — never from your general knowledge. The book's statement wins even when you believe the world disagrees.
 - Off-book question from him: acknowledge → decline → redirect to the nearest in-book claim with [[page:N]] — never answer-then-disclaim. Historical/political material: strictly the book's own framing — no commentary, no modern parallels, no evaluative judgments.`;
+
+/** Extra review-mode rule bullets for Arabic — the sacred containment and the
+ *  rule-line citation discipline survive review mode too. */
+const ARABIC_REVIEW_RULES = `
+- كل تصويب نحوي أو إملائي يستند إلى سطر القاعدة المطبوع أو النموذج المعتمد للسؤال، مع [[page:N]] — أبدًا من معرفتك العامة.
+- ⚠ النص القرآني/الحديث لا يُكتب بيدك أبدًا، لا في الشرح ولا في أي {{…}} — أشر إلى بطاقة النص المختومة ورقم الآية. مفردات المعجم المفردة مسموح بها.
+- Off-book question from him: acknowledge → decline → redirect to the nearest in-book rule with [[page:N]] — never answer-then-disclaim.`;
 
 /* ------------------------------------------------------------------ */
 /* The per-subject prompt kit                                          */
@@ -688,12 +735,29 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
       `ONE widget moment: {{widget:term_match:{"prompt":"آخر واحدة — وصّل المصطلح بمعناه","pairs":[…2–3 pairs, terms and definitions VERBATIM from the LESSON DATA…]}}} (or a locate_on_map / stored map figure if it fits this lesson better — gazetteer names only).`,
   },
 
-  // Wave B (ADR-0006): Arabic is REPRESENTABLE — the registry knows its course,
-  // labels, direction and widgets — but it is not TEACHABLE until its contract
-  // is authored. Until then an Arabic lesson throws. That is the whole point:
-  // the old binary fallback would have taught it in English, under the maths
-  // grounding rules, with pair_plotter, and nobody would have noticed.
-  "arabic-ar": null,
+  // Wave B (ADR-0006): Arabic teaches from the sealed passages + printed rule
+  // lines. The answer paths are TYPED (إعراب slots, closed rhetoric enums), so
+  // most grading is client-side; the tutor's job is the warm walk-through —
+  // and it may NEVER type scripture (sealed-card display only).
+  "arabic-ar": {
+    solutionLabel: "MODEL ANSWER (الإجابة النموذجية — v",
+    bankNote:
+      "each with its human-reviewed answer record — typed إعراب slots / closed rhetoric labels — the ONLY permitted answer path",
+    bookName: (docTitle) =>
+      docTitle ? `كتاب الوزارة «${docTitle}»` : "Egyptian ministry textbook",
+    namesSourceBook: true,
+    usesGazetteer: false,
+    usesTeachingScript: true,
+    fallbackVizId: "v:ara1-1:001",
+    groundingRules: arabicGroundingRules,
+    reviewSubjectRules: ARABIC_REVIEW_RULES,
+    protocol: arabicProtocol,
+    learnRichNote: (data) =>
+      `\n\nYOUR SCRIPT: teach FROM the TEACHING SCRIPT in the LESSON DATA below — it is your reviewed narrative for THIS exact lesson. النص الأساسي (الآيات/القصيدة) معروض للطالب في بطاقة النص المختومة أعلى الدرس: أَحِلْ إليه بأرقام الآيات ولا تكتبه أبدًا. Turn each objective into a short chain of beats (اشرح فكرة صغيرة → افحص بسؤال/تفاعل → كيّف حسب رده). Open by greeting ${data.studentName.split(" ")[0]} by name and naming today's lesson in one warm line.`,
+    reviewOpenerEg: `"فهمت كله؟ حلو — يلا نثبّته في ٣ دقايق ⏱"`,
+    reviewWidgetMoment: () =>
+      `ONE widget moment: {{widget:term_match:{"prompt":"آخر واحدة — وصّل الكلمة بمعناها","pairs":[…2–3 pairs VERBATIM from معاني المفردات in the LESSON DATA…]}}} (or a hamza_seat / irab_builder if it fits this lesson better — payloads grounded in the printed rule lines).`,
+  },
 };
 
 /** The subject's prompt kit, or a loud failure. Never another subject's. */

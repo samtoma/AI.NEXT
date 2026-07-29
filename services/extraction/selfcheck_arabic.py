@@ -88,7 +88,17 @@ def check_shipped_bundles() -> None:
         leaked = (NEW_FIELDS & set(dump)) | {
             k for q in dump.get("questions", []) for k in NEW_FIELDS & set(q)}
         ok(f"A/{p.name} validates ({len(b.questions)} questions)", True)
-        ok(f"A/{p.name} carries no Arabic fields", not leaked, ", ".join(sorted(leaked)))
+        # The no-Arabic-fields purity guard applies to the OTHER verticals: an
+        # actual Arabic bundle (ADR-0006, course:prep3-arabic-ar) legitimately
+        # carries them — for it, assert the opposite: the sealed passages that
+        # make it an Arabic bundle are actually present.
+        is_arabic = any(n.kind == "course" and n.id == "course:prep3-arabic-ar"
+                        for n in b.nodes)
+        if is_arabic:
+            ok(f"A/{p.name} is the Arabic vertical and carries sealed passages",
+               bool(b.text_passages))
+        else:
+            ok(f"A/{p.name} carries no Arabic fields", not leaked, ", ".join(sorted(leaked)))
         # Round-trip stability: dump -> validate -> dump is a fixed point.
         again = SeedBundle.model_validate(b.model_dump(mode="json")).model_dump(
             mode="json", exclude_defaults=True)

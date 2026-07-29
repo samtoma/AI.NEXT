@@ -244,6 +244,9 @@ export interface LessonData {
    *  كتاب الوزارة in the data block); null for math (byte-identical prompts) */
   docTitle: string | null;
   studentName: string;
+  /** the resolved demo student the mastery numbers belong to — rendered into
+   *  the data block so a switched student is never mislabeled as id 1 */
+  studentId: number;
 }
 
 /**

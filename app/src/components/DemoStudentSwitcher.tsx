@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import {
   DEMO_STUDENT_COOKIE,
@@ -54,6 +61,14 @@ export function DemoStudentSwitcher({
   }, []);
   const onTap = useTripleTap(toggle);
 
+  // The corner hot-zone and the panel render through a PORTAL to <body>: the
+  // page sections (anim-rise) and the z-10 footer each create stacking
+  // contexts, so a fixed z-40 span nested inside a section paints UNDER the
+  // footer — elementFromPoint returns the footer and the taps never arrive.
+  // Portaling escapes every ancestor context. (Found in Wave D verification.)
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   const choose = useCallback(
     (id: number) => {
       // Deliberately client-writable: this is a demo switch, not a session.
@@ -68,7 +83,7 @@ export function DemoStudentSwitcher({
 
   return (
     <span ref={wrapRef} className="relative inline-block" dir="ltr">
-      {children ? (
+      {children && (
         <span
           onClick={onTap}
           className="cursor-default select-none"
@@ -76,17 +91,23 @@ export function DemoStudentSwitcher({
         >
           {children}
         </span>
-      ) : (
-        // bottom-RIGHT on purpose: Next's dev-tools badge owns the bottom-left
-        <span
-          onClick={onTap}
-          aria-hidden
-          className="fixed bottom-0 right-0 z-40 h-11 w-11 cursor-default select-none"
-        />
       )}
+      {mounted &&
+        !children &&
+        createPortal(
+          // bottom-RIGHT on purpose: Next's dev-tools badge owns the bottom-left
+          <span
+            onClick={onTap}
+            aria-hidden
+            className="fixed bottom-0 right-0 z-[59] h-11 w-11 cursor-default select-none"
+          />,
+          document.body
+        )}
 
-      {open && (
-        <>
+      {mounted &&
+        open &&
+        createPortal(
+        <span dir="ltr">
           {/* click-away */}
           <span
             className="fixed inset-0 z-[60]"
@@ -149,7 +170,8 @@ export function DemoStudentSwitcher({
               demo affordance — a cookie, validated server-side. Not a login.
             </p>
           </div>
-        </>
+        </span>,
+        document.body
       )}
     </span>
   );

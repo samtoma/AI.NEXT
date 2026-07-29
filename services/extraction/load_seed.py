@@ -56,7 +56,7 @@ import sys
 from pathlib import Path
 
 from arabic_text import SEALED_SENSITIVITY_CLASSES
-from schemas import AR_ANSWER_BY_TYPE, ClaimStep, SeedBundle, SourceDocument
+from schemas import ClaimStep, SeedBundle, SourceDocument
 
 HERE = Path(__file__).resolve().parent
 
@@ -229,16 +229,32 @@ def sacred_gate(paths: list[Path], bundles: list[SeedBundle], approve_all: bool)
     return held
 
 
-def blocked_arabic_answers(bundles: list[SeedBundle]) -> list[str]:
-    """Typed Arabic answers cannot be written to questions.correct_answer (text).
+# graph_nodes.subject on course rows (migration 007): the app's subject
+# registry (app/src/lib/subjects.ts) is the authority on this mapping; the
+# loader is the one writer for NEW courses ("carry their subject from the
+# loader, not from a parser" — 007 §2). A course absent from this map loads
+# with subject NULL and renders as UNFILED, never as maths.
+COURSE_SUBJECTS = {
+    "course:prep3-math-en": "math",
+    "course:prep3-social-ar": "social",
+    "course:prep3-arabic-ar": "arabic",
+}
 
-    Flattening an IrabAnswer to its surface string would load cleanly and then
-    fail every student who phrased the formula differently, because the slot
-    grader does not exist yet. Refuse loudly instead: the typed column and the
-    scripted slot grader land together in Wave 1. --validate-only is unaffected,
-    so extraction agents can still validate Arabic bundles today.
+
+def correct_answer_text(q) -> str:
+    """questions.correct_answer stays a text column; typed Arabic answers are
+    stored in it as tagged JSON, never flattened to a surface string.
+
+    (The original loader REFUSED typed answers because "the slot grader does
+    not exist yet" — it now does: app/src/lib/irab.ts grades IrabAnswer slots,
+    39/39. The runtime parses this JSON by question_type; a surface-string
+    flattening would have failed every student who phrased the formula
+    differently, which is why it was never an option.)
     """
-    return [q.id for b in bundles for q in b.questions if q.type in AR_ANSWER_BY_TYPE]
+    if isinstance(q.answer, str):
+        return q.answer
+    return json.dumps({"type": q.type} | q.answer.model_dump(exclude_none=True),
+                      ensure_ascii=False)
 
 
 def resolve_source_docs(
@@ -567,14 +583,6 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
     import psycopg
     bundles = validate_all(paths)
     held = sacred_gate(paths, bundles, approve_all)   # may exit non-zero (ADR-0006)
-    if pending := blocked_arabic_answers(bundles):
-        raise SystemExit(
-            f"{len(pending)} question(s) carry a typed Arabic answer "
-            f"({', '.join(pending[:4])}{' …' if len(pending) > 4 else ''}).\n"
-            "questions.correct_answer is a text column and the scripted slot grader does not "
-            "exist yet — storing the surface string would load fine and then mark correct "
-            "students wrong. The typed column + grader land together in Wave 1.\n"
-            "Use --validate-only until then.")
     repo_root = HERE.parents[1]
 
     dsn = db_dsn()
@@ -675,11 +683,12 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                 cur.execute(
                     """INSERT INTO graph_nodes
                        (id, kind, label, description, syllabus_ref, order_in_parent,
-                        source_sha256, source_page, extraction_run_id)
-                       VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                        source_sha256, source_page, extraction_run_id, subject)
+                       VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                        ON CONFLICT (id) DO NOTHING""",
                     (n.id, n.kind, n.label, n.description, n.syllabus_ref,
-                     n.order_in_parent, sha, n.source_page, run_id))
+                     n.order_in_parent, sha, n.source_page, run_id,
+                     COURSE_SUBJECTS.get(n.id) if n.kind == "course" else None))
             for e in b.edges:
                 deferred_edges.append((e.src, e.dst, e.type, b.syllabus_version, run_id))
             for q in b.questions:
@@ -697,7 +706,7 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                                CASE WHEN %s THEN now() END)""",
                     (q.id, q.lo, q.tier, q.type, q.stem,
                      json.dumps([c.model_dump() for c in q.choices]) if q.choices else None,
-                     q.answer,
+                     correct_answer_text(q),
                      canonical_solution_json(q.solution),
                      "live" if live else "review", sha, q.source_page, q.source_note,
                      run_id, reviewer, live))

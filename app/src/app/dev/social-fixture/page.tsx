@@ -73,6 +73,7 @@ const FIXTURE: LessonData = {
   mapBases: ["egypt"],
   docTitle: "الدراسات الاجتماعية — الصف الثالث الإعدادي",
   studentName: "Omar Hassan",
+  studentId: 1,
 };
 
 const A = (text: string): ChatMsg => ({ role: "assistant", text });

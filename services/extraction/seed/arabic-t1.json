@@ -1,0 +1,961 @@
+{
+ "source_document": {
+  "title": "اللغة العربية — لغتي حياتي، الصف الثالث الإعدادي",
+  "publisher": "وزارة التربية والتعليم والتعليم الفني — جمهورية مصر العربية",
+  "language": "ar",
+  "grade": "prep-3",
+  "subject": "arabic language",
+  "file_path": "docs/Source/Arabic_Prp3_Tr1_2.pdf"
+ },
+ "extraction_run": {
+  "extractor": "arabic-lesson workflow (ADR-0006 conveyor) + assemble_arabic",
+  "extractor_version": "conveyor-1",
+  "schema_version": "ara-1"
+ },
+ "syllabus_version": "2025-2026",
+ "nodes": [
+  {
+   "id": "course:prep3-arabic-ar",
+   "kind": "course",
+   "label": "اللغة العربية — الصف الثالث الإعدادي",
+   "order_in_parent": 3
+  },
+  {
+   "id": "module:ara-u1",
+   "kind": "module",
+   "label": "الوحدة الأولى — اللغة العربية",
+   "order_in_parent": 1
+  },
+  {
+   "id": "lo:ara1-1-1",
+   "kind": "learning_objective",
+   "label": "فهم النص والاستماع",
+   "description": "يجيب عن أسئلة تطرح عليه. · يقدّر عباد الرحمن.",
+   "syllabus_ref": "ara1-1 · عِبادُ الرَّحمنِ",
+   "source_page": 8,
+   "order_in_parent": 1
+  },
+  {
+   "id": "lo:ara1-1-2",
+   "kind": "learning_objective",
+   "label": "معاني المفردات",
+   "description": "يحدّد مرادف كلماتٍ استمع إليها.",
+   "syllabus_ref": "ara1-1 · عِبادُ الرَّحمنِ",
+   "source_page": 8,
+   "order_in_parent": 2
+  },
+  {
+   "id": "lo:ara1-1-3",
+   "kind": "learning_objective",
+   "label": "مواطن الجمال",
+   "description": "يحدّد أغراض الأمر و النهي والاستفهام.",
+   "syllabus_ref": "ara1-1 · عِبادُ الرَّحمنِ",
+   "source_page": 8,
+   "order_in_parent": 3
+  },
+  {
+   "id": "lo:ara1-1-4",
+   "kind": "learning_objective",
+   "label": "المنادى: المضاف – الشبيه بالمضاف – النكرة غير المقصودة",
+   "description": "يتعرف المنادى وأنواعه.",
+   "syllabus_ref": "ara1-1 · عِبادُ الرَّحمنِ",
+   "source_page": 8,
+   "order_in_parent": 4
+  },
+  {
+   "id": "lo:ara1-1-5",
+   "kind": "learning_objective",
+   "label": "الإملاء",
+   "description": "يتعرف مواطن كتابة الهمزة المتوسطة.",
+   "syllabus_ref": "ara1-1 · عِبادُ الرَّحمنِ",
+   "source_page": 8,
+   "order_in_parent": 5
+  }
+ ],
+ "edges": [
+  {
+   "src": "module:ara-u1",
+   "dst": "course:prep3-arabic-ar",
+   "type": "part_of"
+  },
+  {
+   "src": "module:ara-u1",
+   "dst": "lo:ara1-1-1",
+   "type": "teaches"
+  },
+  {
+   "src": "module:ara-u1",
+   "dst": "lo:ara1-1-2",
+   "type": "teaches"
+  },
+  {
+   "src": "module:ara-u1",
+   "dst": "lo:ara1-1-3",
+   "type": "teaches"
+  },
+  {
+   "src": "module:ara-u1",
+   "dst": "lo:ara1-1-4",
+   "type": "teaches"
+  },
+  {
+   "src": "module:ara-u1",
+   "dst": "lo:ara1-1-5",
+   "type": "teaches"
+  }
+ ],
+ "questions": [
+  {
+   "id": "q:ara1-1:q01",
+   "lo": "lo:ara1-1-1",
+   "tier": "basic",
+   "stem": "هاتِ مرادف كلمة «هَوْنًا» كما وردت في قوله تعالى: «يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًا».",
+   "source_page": 9,
+   "source_note": "conveyor ar-t1u1l1 · grounded in هونًا → بسكينة ووقار (المادة اللغوية)",
+   "type": "lexical",
+   "answer": {
+    "field": "معنى",
+    "accept": [
+     "بسكينة ووقار",
+     "بسكينة ووقار"
+    ],
+    "authored": false
+   },
+   "solution": [
+    "معنى: بسكينة ووقار"
+   ],
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q02",
+   "lo": "lo:ara1-1-1",
+   "tier": "basic",
+   "stem": "ما معنى كلمة «غَرامًا» في قوله تعالى: «إِنَّ عَذَابَهَا كَانَ غَرَامًا»؟",
+   "source_page": 9,
+   "source_note": "conveyor ar-t1u1l1 · grounded in غرامًا → لازمًا (المادة اللغوية)",
+   "type": "mcq",
+   "choices": [
+    {
+     "key": "أ",
+     "text": "لازمًا"
+    },
+    {
+     "key": "ب",
+     "text": "عابرًا"
+    },
+    {
+     "key": "ج",
+     "text": "قليلًا"
+    },
+    {
+     "key": "د",
+     "text": "محتملًا"
+    }
+   ],
+   "answer": "أ",
+   "solution": [
+    "لازمًا"
+   ],
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q03",
+   "lo": "lo:ara1-1-2",
+   "tier": "basic",
+   "stem": "استخرج من الآيات الكريمة دعاءَ عبادِ الرحمن الذي يطلبون فيه النجاة من عذاب جهنم.",
+   "source_page": 8,
+   "source_note": "conveyor ar-t1u1l1 · grounded in وَٱلَّذِينَ يَقُولُونَ رَبَّنَا ٱصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ (الآية ٦٥)",
+   "type": "extract",
+   "answer": {
+    "primary": {
+     "passage_ref": "t:ara1-1:001",
+     "unit_n": 3,
+     "start": 23,
+     "end": 64,
+     "expected_ar": "رَبَّنَا ٱصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ"
+    }
+   },
+   "solution": [
+    "الموضع: رَبَّنَا ٱصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ"
+   ],
+   "sensitivity_class": "quran",
+   "passage_ref": "t:ara1-1:001"
+  },
+  {
+   "id": "q:ara1-1:q04",
+   "lo": "lo:ara1-1-5",
+   "tier": "standard",
+   "stem": "بمَ وعدَ اللهُ تعالى مَن تابَ وآمنَ وعملَ عملًا صالحًا من عبادِ الرحمن، كما في قوله تعالى: «فَأُو۟لَـٰٓئِكَ يُبَدِّلُ ٱللَّهُ سَيِّـَٔاتِهِمْ حَسَنَـٰتٍ»؟",
+   "source_page": 8,
+   "source_note": "conveyor ar-t1u1l1 · grounded in فَأُو۟لَـٰٓئِكَ يُبَدِّلُ ٱللَّهُ سَيِّـَٔاتِهِمْ حَسَنَـٰتٍ ۗ وَكَانَ ٱللَّهُ غَفُورًا رَّحِيمًا (الآية ٧٠)",
+   "type": "short",
+   "answer": "وعدهم اللهُ بأن يُبدِّلَ سيئاتِهم حسناتٍ، وأنّ اللهَ غفورٌ رحيمٌ.",
+   "solution": [
+    "وعدهم اللهُ بأن يُبدِّلَ سيئاتِهم حسناتٍ، وأنّ اللهَ غفورٌ رحيمٌ."
+   ],
+   "sensitivity_class": "quran",
+   "passage_ref": "t:ara1-1:001"
+  },
+  {
+   "id": "q:ara1-1:q05",
+   "lo": "lo:ara1-1-5",
+   "tier": "advanced",
+   "stem": "اشرح بأسلوبك المعنى الذي تفهمه من قوله تعالى: «إِلَّا مَن تَابَ وَءَامَنَ وَعَمِلَ عَمَلًا صَـٰلِحًا فَأُو۟لَـٰٓئِكَ يُبَدِّلُ ٱللَّهُ سَيِّـَٔاتِهِمْ حَسَنَـٰتٍ».",
+   "source_page": 8,
+   "source_note": "conveyor ar-t1u1l1 · grounded in إِلَّا مَن تَابَ وَءَامَنَ وَعَمِلَ عَمَلًا صَـٰلِحًا فَأُو۟لَـٰٓئِكَ يُبَدِّلُ ٱللَّهُ سَيِّـَٔاتِهِمْ حَسَنَـٰتٍ ۗ وَكَانَ ٱللَّهُ غَفُورًا رَّحِيمًا (الآية ٧٠)",
+   "type": "short",
+   "answer": "تدل الآية على سعة رحمة الله تعالى وعفوه؛ فمن أذنب من هؤلاء العصاة ثم رجع إلى الله تائبًا صادقًا مؤمنًا به، وعمل عملًا صالحًا يدل على صدق توبته، فإن الله يتفضل عليه فيمحو سيئاته السابقة ويجعل مكانها حسنات، وفي هذا رجاء عظيم يفتح باب الأمل أمام كل مذنب تائب.",
+   "solution": [
+    "تدل الآية على سعة رحمة الله تعالى وعفوه؛ فمن أذنب من هؤلاء العصاة ثم رجع إلى الله تائبًا صادقًا مؤمنًا به، وعمل عملًا صالحًا يدل على صدق توبته، فإن الله يتفضل عليه فيمحو سيئاته السابقة ويجعل مكانها حسنات، وفي هذا رجاء عظيم يفتح باب الأمل أمام كل مذنب تائب."
+   ],
+   "sensitivity_class": "quran",
+   "passage_ref": "t:ara1-1:001"
+  },
+  {
+   "id": "q:ara1-1:q06",
+   "lo": "lo:ara1-1-4",
+   "tier": "basic",
+   "stem": "في قوله تعالى: «رَبَّنَا ٱصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ» — وضِّح نوع أسلوب «اصرف»، وبيِّن الغرض البلاغي منه.",
+   "source_page": 9,
+   "source_note": "conveyor ar-t1u1l1 · grounded in اصرف → أمر، يفيد الدعاء (المادة اللغوية)",
+   "type": "rhetoric",
+   "answer": {
+    "type": "أمر",
+    "purpose": "الدعاء",
+    "effect_ar": "يفيد الدعاء."
+   },
+   "solution": [
+    "أسلوب أمر؛ يفيد الدعاء."
+   ],
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q07",
+   "lo": "lo:ara1-1-4",
+   "tier": "standard",
+   "stem": "في الألفاظ: «يُسْرِفُوا۟ - يَقْتُرُوا۟ - سَيِّـَٔاتِهِمْ - حَسَنَـٰتٍ» — سمِّ نوعَ الأسلوب البلاغي الجامع بين هذه الألفاظ، واذكر أثره.",
+   "source_page": 9,
+   "source_note": "conveyor ar-t1u1l1 · grounded in يسرفوا - يقتروا - سيئات وحسنات → تضاد (المادة اللغوية)",
+   "type": "rhetoric",
+   "answer": {
+    "type": "تضاد",
+    "effect_ar": "يبرز المعنى ويوضحه ويؤكده."
+   },
+   "solution": [
+    "تضاد؛ يبرز المعنى ويوضحه ويؤكده."
+   ],
+   "sensitivity_class": "quran",
+   "passage_ref": "t:ara1-1:001"
+  },
+  {
+   "id": "q:ara1-1:q08",
+   "lo": "lo:ara1-1-4",
+   "tier": "advanced",
+   "stem": "في قوله تعالى: «إِنَّ عَذَابَهَا كَانَ غَرَامًا» — وضِّح نوع هذا الأسلوب، وبيِّن غرضه.",
+   "source_page": 9,
+   "source_note": "conveyor ar-t1u1l1 · grounded in إنّ عذابَها كان غرامًا → أسلوب مؤكد (إنّ)، تعليل لما قبله (المادة اللغوية)",
+   "type": "rhetoric",
+   "answer": {
+    "type": "أسلوب مؤكد",
+    "effect_ar": "وهو تعليل لما قبله."
+   },
+   "solution": [
+    "أسلوب مؤكَّد ب(إنّ)؛ وهو تعليل لما قبله."
+   ],
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q09",
+   "lo": "lo:ara1-1-4",
+   "tier": "standard",
+   "stem": "استخرج من الآيات الكريمة تعبيرًا جميلًا يدلّ على تواضع عباد الرحمن الدائم.",
+   "source_page": 9,
+   "source_note": "conveyor ar-t1u1l1 · grounded in يَمْشُونَ عَلَى الْأَرْضِ هَوْنًا → تعبير جميل، يدل على تواضعهم الدائم (المادة اللغوية)",
+   "type": "extract",
+   "answer": {
+    "primary": {
+     "passage_ref": "t:ara1-1:001",
+     "unit_n": 1,
+     "start": 34,
+     "end": 67,
+     "expected_ar": "يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًا"
+    }
+   },
+   "solution": [
+    "الموضع: يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًا"
+   ],
+   "sensitivity_class": "quran",
+   "passage_ref": "t:ara1-1:001"
+  },
+  {
+   "id": "q:ara1-1:q10",
+   "lo": "lo:ara1-1-5",
+   "tier": "basic",
+   "stem": "أعرب ما تحته خط في العبارة الآتية: «يا طالبَ العلم». (المطلوب إعرابه: طالبَ)",
+   "source_page": 11,
+   "source_note": "conveyor ar-t1u1l1 · grounded in R6, R7, R8",
+   "type": "irab",
+   "answer": {
+    "word_ar": "طالبَ",
+    "role_ar": "منادى مضاف",
+    "state": "منصوب",
+    "sign": "الفتحة",
+    "sign_kind": "ظاهرة",
+    "rule_ref": "gc:ara1-1:r8",
+    "surface_ar": "منادى مضاف منصوب وعلامة نصبه الفتحة الظاهرة لأنه مفرد",
+    "reason_ar": "لأنه مفرد"
+   },
+   "solution": [
+    "القاعدة: الفتحة مع المفرد مثل: يا طالبَ العلم.",
+    "الإجابة: منادى مضاف منصوب وعلامة نصبه الفتحة الظاهرة لأنه مفرد"
+   ],
+   "verified": true,
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q11",
+   "lo": "lo:ara1-1-5",
+   "tier": "standard",
+   "stem": "أعرب ما تحته خط في العبارة الآتية: «يا طالباتِ المجد». (المطلوب إعرابه: طالباتِ)",
+   "source_page": 11,
+   "source_note": "conveyor ar-t1u1l1 · grounded in R6, R7, R10",
+   "type": "irab",
+   "answer": {
+    "word_ar": "طالباتِ",
+    "role_ar": "منادى مضاف",
+    "state": "منصوب",
+    "sign": "الكسرة",
+    "sign_kind": "نائبة عن الفتحة",
+    "rule_ref": "gc:ara1-1:r10",
+    "surface_ar": "منادى مضاف منصوب وعلامة نصبه الكسرة نائبة عن الفتحة لأنه جمع مؤنث سالم",
+    "reason_ar": "لأنه جمع مؤنث سالم"
+   },
+   "solution": [
+    "القاعدة: والكسرة مع جمع المؤنث السالم مثل: يا طالباتِ المجد.",
+    "الإجابة: منادى مضاف منصوب وعلامة نصبه الكسرة نائبة عن الفتحة لأنه جمع مؤنث سالم"
+   ],
+   "verified": true,
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q12",
+   "lo": "lo:ara1-1-5",
+   "tier": "standard",
+   "stem": "أعرب ما تحته خط في العبارة الآتية: «يا راغبين في نهضةِ مصرَ هيّا إلى العلم». (المطلوب إعرابه: راغبين)",
+   "source_page": 12,
+   "source_note": "conveyor ar-t1u1l1 · grounded in R12, R14, R17",
+   "type": "irab",
+   "answer": {
+    "word_ar": "راغبين",
+    "role_ar": "منادى شبيه بالمضاف",
+    "state": "منصوب",
+    "sign": "الياء",
+    "sign_kind": "نائبة عن الفتحة",
+    "rule_ref": "gc:ara1-1:r12",
+    "surface_ar": "منادى شبيه بالمضاف منصوب وعلامة نصبه الياء نائبة عن الفتحة لأنه ملحق بجمع المذكر السالم، مع بقاء النون لأنه ليس مضافًا حقيقيًا",
+    "reason_ar": "لأنه ملحق بجمع المذكر السالم، مع بقاء النون لأنه ليس مضافًا حقيقيًا"
+   },
+   "solution": [
+    "القاعدة: ومع جمع المذكر السالم مثل: يا طالبي العلم.",
+    "الإجابة: منادى شبيه بالمضاف منصوب وعلامة نصبه الياء نائبة عن الفتحة لأنه ملحق بجمع المذكر السالم، مع بقاء النون لأنه ليس مضافًا حقيقيًا"
+   ],
+   "verified": true,
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q13",
+   "lo": "lo:ara1-1-5",
+   "tier": "advanced",
+   "stem": "أعرب ما تحته خط في العبارة الآتية: «يا رجلًا احرِصْ على التقدم». (المطلوب إعرابه: رجلًا)",
+   "source_page": 12,
+   "source_note": "conveyor ar-t1u1l1 · grounded in R15, R16, R17",
+   "type": "irab",
+   "answer": {
+    "word_ar": "رجلًا",
+    "role_ar": "منادى نكرة غير مقصودة",
+    "state": "منصوب",
+    "sign": "الفتحة",
+    "sign_kind": "ظاهرة",
+    "rule_ref": "gc:ara1-1:r15",
+    "surface_ar": "منادى نكرة غير مقصودة منصوب وعلامة نصبه الفتحة الظاهرة لأنه مفرد نكرة",
+    "reason_ar": "لأنه مفرد نكرة"
+   },
+   "solution": [
+    "القاعدة: ثالثاً: النكرة غير المقصودة: يا طلابًا، بادِروا إلى تحصيل العلم- يا رجلًا احرِصْ على التقدم- يا عاملًا العملُ واجبٌ.",
+    "الإجابة: منادى نكرة غير مقصودة منصوب وعلامة نصبه الفتحة الظاهرة لأنه مفرد نكرة"
+   ],
+   "verified": true,
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q14",
+   "lo": "lo:ara1-1-5",
+   "tier": "standard",
+   "stem": "أيُّ أدوات النداء الآتية تُستخدَم لنداء البعيد الذي يحتاج إلى رفع الصوت ومدِّه؟",
+   "source_page": 11,
+   "source_note": "conveyor ar-t1u1l1 · grounded in R4",
+   "type": "mcq",
+   "choices": [
+    {
+     "key": "أ",
+     "text": "يا"
+    },
+    {
+     "key": "ب",
+     "text": "أيْ، الهمزة"
+    },
+    {
+     "key": "ج",
+     "text": "أيا، هيا"
+    },
+    {
+     "key": "د",
+     "text": "لا شيء مما سبق"
+    }
+   ],
+   "answer": "ج",
+   "solution": [
+    "أيا، هيا"
+   ],
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q15",
+   "lo": "lo:ara1-1-5",
+   "tier": "basic",
+   "stem": "اضبط الهمزة المتوسطة في كلمة «سُؤَال»، مبيِّنًا الحرف الذي تُرسَم عليه وسبب ذلك.",
+   "source_page": 12,
+   "source_note": "conveyor ar-t1u1l1 · grounded in مفتوحة وما قبلها مضموم (تُرسم على واو): فُؤاد، سُؤال، يُؤدُّون",
+   "type": "short",
+   "answer": "تُرسَم على الواو؛ لأنها همزة مفتوحة وما قبلها مضموم.",
+   "solution": [
+    "تُرسَم على الواو؛ لأنها همزة مفتوحة وما قبلها مضموم."
+   ],
+   "sensitivity_class": "secular"
+  },
+  {
+   "id": "q:ara1-1:q16",
+   "lo": "lo:ara1-1-5",
+   "tier": "advanced",
+   "stem": "وردت الكلمة الآتية مرسومة رسمًا غير صحيح في سياق النص الإملائي: «امتلات». صوِّبْ رسمها الصحيح كما جاء في النص، مع بيان السبب.",
+   "source_page": 13,
+   "source_note": "conveyor ar-t1u1l1 · grounded in مفتوحة وقبلها فتح (تُرسم على الألف): بدأت، يتأثرون، امتلأت — وبِسُرْعَةٍ امْتَلأَتِ المِنْطَقَةُ (النص الإملائي)",
+   "type": "spelling_fix",
+   "answer": {
+    "corrected_ar": "امْتَلأَتِ",
+    "case_id": "sc:ara1-1:7"
+   },
+   "solution": [
+    "الصواب: «امْتَلأَتِ»؛ لأن الهمزة مفتوحة وما قبلها مفتوح، فتُرسَم على الألف."
+   ],
+   "sensitivity_class": "secular"
+  }
+ ],
+ "visuals": [],
+ "text_passages": [
+  {
+   "id": "t:ara1-1:001",
+   "lesson": "ara1-1",
+   "kind": "quran",
+   "fidelity": "sacred",
+   "sensitivity_class": "quran",
+   "title_ar": "عِبادُ الرَّحمنِ",
+   "attribution_ar": "سورة الفرقان ٦٣–٧٠",
+   "quran_ref": {
+    "surah": 25,
+    "ayah_from": 63,
+    "ayah_to": 70
+   },
+   "citation_ref": "quran:25:63-70",
+   "units": [
+    {
+     "n": 1,
+     "printed_n": "٦٣",
+     "text_ar": "وَعِبَادُ ٱلرَّحْمَـٰنِ ٱلَّذِينَ يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًا وَإِذَا خَاطَبَهُمُ ٱلْجَـٰهِلُونَ قَالُوا۟ سَلَـٰمًا"
+    },
+    {
+     "n": 2,
+     "printed_n": "٦٤",
+     "text_ar": "وَٱلَّذِينَ يَبِيتُونَ لِرَبِّهِمْ سُجَّدًا وَقِيَـٰمًا"
+    },
+    {
+     "n": 3,
+     "printed_n": "٦٥",
+     "text_ar": "وَٱلَّذِينَ يَقُولُونَ رَبَّنَا ٱصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ ۖ إِنَّ عَذَابَهَا كَانَ غَرَامًا"
+    },
+    {
+     "n": 4,
+     "printed_n": "٦٦",
+     "text_ar": "إِنَّهَا سَآءَتْ مُسْتَقَرًّا وَمُقَامًا"
+    },
+    {
+     "n": 5,
+     "printed_n": "٦٧",
+     "text_ar": "وَٱلَّذِينَ إِذَآ أَنفَقُوا۟ لَمْ يُسْرِفُوا۟ وَلَمْ يَقْتُرُوا۟ وَكَانَ بَيْنَ ذَٰلِكَ قَوَامًا"
+    },
+    {
+     "n": 6,
+     "printed_n": "٦٨",
+     "text_ar": "وَٱلَّذِينَ لَا يَدْعُونَ مَعَ ٱللَّهِ إِلَـٰهًا ءَاخَرَ وَلَا يَقْتُلُونَ ٱلنَّفْسَ ٱلَّتِى حَرَّمَ ٱللَّهُ إِلَّا بِٱلْحَقِّ وَلَا يَزْنُونَ ۚ وَمَن يَفْعَلْ ذَٰلِكَ يَلْقَ أَثَامًا"
+    },
+    {
+     "n": 7,
+     "printed_n": "٦٩",
+     "text_ar": "يُضَـٰعَفْ لَهُ ٱلْعَذَابُ يَوْمَ ٱلْقِيَـٰمَةِ وَيَخْلُدْ فِيهِۦ مُهَانًا"
+    },
+    {
+     "n": 8,
+     "printed_n": "٧٠",
+     "text_ar": "إِلَّا مَن تَابَ وَءَامَنَ وَعَمِلَ عَمَلًا صَـٰلِحًا فَأُو۟لَـٰٓئِكَ يُبَدِّلُ ٱللَّهُ سَيِّـَٔاتِهِمْ حَسَنَـٰتٍ ۗ وَكَانَ ٱللَّهُ غَفُورًا رَّحِيمًا"
+    }
+   ],
+   "text_sha256": "27fe013dd7d381064def235cc24525ca2b9c99a1098e530de002dd23d04ab1c3",
+   "capture_lane": "authority_verified",
+   "transcribers": [
+    "arabic-lesson.workflow:text (sonnet)"
+   ],
+   "verification": {
+    "method": "authority_crosscheck",
+    "verdict": "agree",
+    "sources": [
+     {
+      "name": "api.quran.com/v4 · quran/verses/uthmani",
+      "endpoint": "https://api.quran.com/api/v4/quran/verses/uthmani?chapter_number=25",
+      "fetched_at": "2026-07-29T18:41:40+00:00",
+      "agrees": true,
+      "differences": []
+     },
+     {
+      "name": "api.alquran.cloud/v1 · quran-uthmani",
+      "endpoint": "https://api.alquran.cloud/v1/surah/25/quran-uthmani",
+      "fetched_at": "2026-07-29T18:41:40+00:00",
+      "agrees": true,
+      "differences": []
+     }
+    ],
+    "transcript_agrees": true,
+    "flag_reason": null
+   },
+   "source_page": 8
+  },
+  {
+   "id": "t:ara1-1:002",
+   "lesson": "ara1-1",
+   "kind": "dictation",
+   "fidelity": "prose",
+   "sensitivity_class": "secular",
+   "title_ar": "بابُ اللُّوق",
+   "attribution_ar": "قطعة إملائية",
+   "units": [
+    {
+     "n": 1,
+     "text_ar": "مِنْطَقَةُ بابِ اللُّوق في قَلْبِ القاهرة. كانتْ عِبارةً عَنْ أرْضٍ تَمْلَؤُها مِياهُ النَّيلِ، ثُمَّ بَدَأَتْ هذه المِياهُ تَنْحَسِرُ، وظَهَرَتْ مُنْشَآتٌ سَكَنِيَّةٌ فيها، وبِسُرْعَةٍ امْتَلأَتِ المِنْطَقَةُ، وأَصْبَحَتْ مَأْهولَةً بِالسُّكّانِ الذين يَتَأَثَّرونَ بِهذا المكانِ الجميلِ، لِيُحَقِّقوا آمالَهُم."
+    }
+   ],
+   "text_sha256": "f0af6c5ae204b7ffd77b987dee51e1b11f7fd4d2d0332e631e3362b83192b559",
+   "capture_lane": "double_blind",
+   "transcribers": [
+    "arabic-lesson.workflow:text (sonnet, K=1 — contract debt)"
+   ],
+   "source_page": 13
+  }
+ ],
+ "vocab_items": [
+  {
+   "lesson": "ara1-1",
+   "word_ar": "هونًا",
+   "gloss_ar": "بسكينة ووقار",
+   "authored": false,
+   "passage_ref": "t:ara1-1:001",
+   "source_page": 8
+  },
+  {
+   "lesson": "ara1-1",
+   "word_ar": "اصرف",
+   "gloss_ar": "ابعد",
+   "authored": false,
+   "passage_ref": "t:ara1-1:001",
+   "source_page": 8
+  },
+  {
+   "lesson": "ara1-1",
+   "word_ar": "غرامًا",
+   "gloss_ar": "لازمًا",
+   "authored": false,
+   "passage_ref": "t:ara1-1:001",
+   "source_page": 8
+  },
+  {
+   "lesson": "ara1-1",
+   "word_ar": "قوامًا",
+   "gloss_ar": "وسطًا",
+   "authored": false,
+   "passage_ref": "t:ara1-1:001",
+   "source_page": 8
+  },
+  {
+   "lesson": "ara1-1",
+   "word_ar": "مُقامًا",
+   "gloss_ar": "موضع الاستقرار والإقامة",
+   "authored": false,
+   "passage_ref": "t:ara1-1:001",
+   "source_page": 8
+  },
+  {
+   "lesson": "ara1-1",
+   "word_ar": "لم يقتروا",
+   "gloss_ar": "لم يضيقوا",
+   "authored": false,
+   "passage_ref": "t:ara1-1:001",
+   "source_page": 8
+  },
+  {
+   "lesson": "ara1-1",
+   "word_ar": "أثامًا",
+   "gloss_ar": "جزاء الإثم (العقاب)",
+   "authored": false,
+   "passage_ref": "t:ara1-1:001",
+   "source_page": 8
+  }
+ ],
+ "rhetoric_notes": [
+  {
+   "id": "rh:ara1-1:1",
+   "lesson": "ara1-1",
+   "passage_ref": "t:ara1-1:001",
+   "expression_ar": "يَمْشُونَ عَلَى ٱلْأَرْضِ هَوْنًا",
+   "type": "تعبير يوحي",
+   "effect_ar": "يدلّ على تواضعهم الدائم",
+   "verbatim_from_book": true,
+   "source_page": 9,
+   "unit_n": 1
+  },
+  {
+   "id": "rh:ara1-1:2",
+   "lesson": "ara1-1",
+   "passage_ref": "t:ara1-1:001",
+   "expression_ar": "ٱصْرِفْ",
+   "type": "أمر",
+   "effect_ar": "يفيد الدعاء",
+   "verbatim_from_book": true,
+   "source_page": 9,
+   "unit_n": 3,
+   "purpose": "الدعاء"
+  },
+  {
+   "id": "rh:ara1-1:3",
+   "lesson": "ara1-1",
+   "passage_ref": "t:ara1-1:001",
+   "expression_ar": "يُسرفوا - يقتروا - سيئات وحسنات",
+   "type": "تضاد",
+   "effect_ar": "يبرز المعنى ويوضحه ويؤكده",
+   "verbatim_from_book": true,
+   "source_page": 9
+  },
+  {
+   "id": "rh:ara1-1:4",
+   "lesson": "ara1-1",
+   "passage_ref": "t:ara1-1:001",
+   "expression_ar": "يمشون، يبيتون، يقولون",
+   "type": "أفعال مضارعة",
+   "effect_ar": "تفيد الاستمرار والتجدد",
+   "verbatim_from_book": true,
+   "source_page": 9,
+   "purpose": "الاستمرار والتجدد"
+  },
+  {
+   "id": "rh:ara1-1:5",
+   "lesson": "ara1-1",
+   "passage_ref": "t:ara1-1:001",
+   "expression_ar": "إِنَّ عَذَابَهَا كَانَ غَرَامًا",
+   "type": "أسلوب مؤكد",
+   "effect_ar": "تعليل لما قبله",
+   "verbatim_from_book": true,
+   "source_page": 9,
+   "unit_n": 3
+  },
+  {
+   "id": "rh:ara1-1:6",
+   "lesson": "ara1-1",
+   "passage_ref": "t:ara1-1:001",
+   "expression_ar": "ما صفاتُ عبادِ الرَّحمنِ؟",
+   "type": "استفهام",
+   "effect_ar": "يدفع إلى التفكير في صفات عباد الرحمن واستحضارها",
+   "verbatim_from_book": true,
+   "source_page": 8
+  },
+  {
+   "id": "rh:ara1-1:7",
+   "lesson": "ara1-1",
+   "passage_ref": "t:ara1-1:001",
+   "expression_ar": "كيف يمكننا اكتسابُ صفاتِ عبادِ الرَّحمنِ؟",
+   "type": "استفهام",
+   "effect_ar": "يحثّ على البحث عن وسيلة اكتساب هذه الصفات",
+   "verbatim_from_book": true,
+   "source_page": 8
+  }
+ ],
+ "grammar_rules": [
+  {
+   "id": "gr:ara1-1",
+   "label_ar": "المنادى: المضاف – الشبيه بالمضاف – النكرة غير المقصودة",
+   "unit": "module:ara-u1",
+   "taught_in": [
+    "ara1-1"
+   ],
+   "clauses": [
+    {
+     "id": "gc:ara1-1:r1",
+     "text_ar": "بتأمّلِ الكلماتِ التي تحتها خطٌّ بالقطعة تجد أنها منادى، وتسبقها أداة نداء (يا).",
+     "kind": "definition",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r2",
+     "text_ar": "وهناك أدواتٌ أخرى للنداء لم ترد بالقطعة: (أيْ، الهمزة، أيا)، وتُستَعمَلُ هذه الأدواتُ على النحو التالي:",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r3",
+     "text_ar": "(أَيْ، الهمزة) لنداءِ القريب: فإذا كان المنادى قريبًا بحيث لا يحتاج إلى رفع الصوت ومدّه؛ فإننا نستخدم (أيْ، الهمزة)؛ فنقول: أي عادلُ، أعادلُ.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r4",
+     "text_ar": "أما إذا كان المنادَى بعيدًا بحيث يحتاجُ إلى رفعِ الصوتِ، ومدِّه، فإننا نستخدمُ (أيا، هيا) فنقول: أيا عادلُ، هيا عادلُ.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r5",
+     "text_ar": "أما (يا) فإنها تُستخدمُ لنداء القريب والبعيد على السَّواء.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r6",
+     "text_ar": "أولاً: المنادى المضاف: مثل: (يا شبابَ الوطن) شبابَ: منادى مضاف، والوطنَ: مضاف إليه.",
+     "kind": "type",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r7",
+     "text_ar": "يُنصَبُ المنادى المُضافُ بالفتحة، أو ما ينوبُ عنها، على النحو التالي:",
+     "kind": "sign",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r8",
+     "text_ar": "الفتحة مع المفرد مثل: يا طالبَ العلم.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r9",
+     "text_ar": "ومع جمع التكسير مثل: يا طلابَ العلم.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r10",
+     "text_ar": "والكسرة مع جمع المؤنث السالم مثل: يا طالباتِ المجد.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r11",
+     "text_ar": "والياء مع المثنى مثل: يا طالبَي العلم.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r12",
+     "text_ar": "ومع جمع المذكر السالم مثل: يا طالبي العلم.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r13",
+     "text_ar": "والألف مع الأسماء الخمسة مثل: يا ذا أنفِقِ المالَ على الفقراء.",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 11
+    },
+    {
+     "id": "gc:ara1-1:r14",
+     "text_ar": "ثانياً: المنادى الشبيه بالمضاف: مثال: يا راغبين في نهضةِ مصرَ هيّا إلى العلم. راغبين: منادى شبيه بالمضاف؛ لأنه جاء بعده ما يُحدّد معناه وهو الجارُّ والمجرورُ في المثال.",
+     "kind": "type",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 12
+    },
+    {
+     "id": "gc:ara1-1:r15",
+     "text_ar": "ثالثاً: النكرة غير المقصودة: يا طلابًا، بادِروا إلى تحصيل العلم- يا رجلًا احرِصْ على التقدم- يا عاملًا العملُ واجبٌ.",
+     "kind": "type",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 12
+    },
+    {
+     "id": "gc:ara1-1:r16",
+     "text_ar": "بتأمّل الأمثلة نجدُ أن المنادَى (نكرةٌ) في المثال الأول موجَّهٌ إلى عمومِ الطلابِ، وليس طلابًا معيّنين، كذلك (رجلًا) ولذلك (عاملًا) ولذلك يُسمّى المنادى هنا (نكرةً غير مَقصودَةً).",
+     "kind": "note",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 12
+    },
+    {
+     "id": "gc:ara1-1:r17",
+     "text_ar": "الإعرابُ: يُنصَبُ المنادَى في هذه الأنواعِ الثلاثةِ بالفتحةِ أو ما ينوبُ عنها كما في الدرس السابق.",
+     "kind": "sign",
+     "first_taught_lesson": "ara1-1",
+     "source_page": 12
+    }
+   ],
+   "types_tree": {
+    "types": [
+     {
+      "name": "المنادى المضاف",
+      "sign": "منصوب بالفتحة أو ما ينوب عنها (الكسرة مع جمع المؤنث السالم، الياء مع المثنى وجمع المذكر السالم، الألف مع الأسماء الخمسة)",
+      "example": "يا شبابَ الوطن"
+     },
+     {
+      "name": "المنادى الشبيه بالمضاف",
+      "sign": "منصوب بالفتحة أو ما ينوب عنها",
+      "example": "يا راغبين في نهضةِ مصر"
+     },
+     {
+      "name": "النكرة غير المقصودة",
+      "sign": "منصوب بالفتحة أو ما ينوب عنها",
+      "example": "يا رجلًا احرِصْ على التقدم"
+     }
+    ]
+   }
+  }
+ ],
+ "spelling_rules": [
+  {
+   "id": "sp:ara1-1-hamza",
+   "label_ar": "رسم الهمزة المتوسطة (على الواو والألف)",
+   "lesson": "ara1-1",
+   "cases": [
+    {
+     "id": "sc:ara1-1:1",
+     "condition_ar": "ساكنة وما قبلها مضموم (تُرسم على واو)",
+     "written_as_ar": "على واو",
+     "examples_ar": [
+      "يُؤْذي",
+      "رُؤْية",
+      "مُؤْتمر"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:2",
+     "condition_ar": "مفتوحة وما قبلها مضموم (تُرسم على واو)",
+     "written_as_ar": "على واو",
+     "examples_ar": [
+      "فُؤاد",
+      "سُؤال",
+      "يُؤدُّون"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:3",
+     "condition_ar": "مضمومة وما قبلها حرف مد (تُرسم على واو)",
+     "written_as_ar": "على واو",
+     "examples_ar": [
+      "تفاؤل",
+      "جزاؤه"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:4",
+     "condition_ar": "مضمومة وما قبلها حرف صحيح ساكن (تُرسم على واو)",
+     "written_as_ar": "على واو",
+     "examples_ar": [
+      "يرؤف",
+      "يلؤم"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:5",
+     "condition_ar": "مضمومة وما قبلها مضموم (تُرسم على واو)",
+     "written_as_ar": "على واو",
+     "examples_ar": [
+      "تباطؤ",
+      "تجرؤ"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:6",
+     "condition_ar": "مضمومة وما قبلها مفتوح (تُرسم على واو)",
+     "written_as_ar": "على واو",
+     "examples_ar": [
+      "هؤلاء",
+      "يؤم",
+      "خطوه",
+      "يقرؤه"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:7",
+     "condition_ar": "مفتوحة وقبلها فتح (تُرسم على الألف)",
+     "written_as_ar": "—",
+     "examples_ar": [
+      "بدأت",
+      "يتأثرون",
+      "امتلأت"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:8",
+     "condition_ar": "مفتوحة وقبلها ساكن (تُرسم على الألف)",
+     "written_as_ar": "—",
+     "examples_ar": [
+      "نشأة"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:9",
+     "condition_ar": "ساكنة وقبلها فتح (تُرسم على الألف)",
+     "written_as_ar": "—",
+     "examples_ar": [
+      "مأرب"
+     ],
+     "source_page": 13
+    },
+    {
+     "id": "sc:ara1-1:10",
+     "condition_ar": "مفتوحة وما قبلها مفتوح، وجاء بعدها ألف مد أو ألف اثنين (تُرسم ألفًا ويُمدّ عليها)",
+     "written_as_ar": "—",
+     "examples_ar": [
+      "مآرب",
+      "مآثر"
+     ],
+     "source_page": 13
+    }
+   ],
+   "printed_case_count": 10
+  }
+ ]
+}

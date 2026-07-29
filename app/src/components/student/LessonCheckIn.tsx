@@ -120,7 +120,9 @@ export function LessonCheckIn({
                 </span>
               )}
               {social && (
-                <span className="ms-0 me-2 text-[15px] text-gold">دراسات</span>
+                <span className="ms-0 me-2 text-[15px] text-gold">
+                  {subjectDef(lesson.subject).labelArShort}
+                </span>
               )}
               {lesson.lessonRef} — {lesson.title}
             </p>
@@ -132,7 +134,7 @@ export function LessonCheckIn({
               }
             >
               {social
-                ? "دراسات اجتماعية · "
+                ? `${subjectDef(lesson.subject).labelAr} · `
                 : selectedIsGeo
                   ? "Term 2 · "
                   : "Term 1 · "}
