@@ -318,6 +318,9 @@ BUNDLE_ORDER = [
     # social — skeleton declares the social document, social-t1 reuses it by
     # source_file. social-t1 supersedes the skeleton's two lessons on load.
     "social-skeleton.json", "social-t1.json",
+    # arabic (ADR-0006) — t1 declares the Arabic document + course node,
+    # t2 reuses them (source_file + external course ref), so order matters.
+    "arabic-t1.json", "arabic-t2.json",
 ]
 
 

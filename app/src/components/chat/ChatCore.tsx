@@ -78,6 +78,9 @@ export interface ChatCoreProps {
     props: Record<string, unknown>,
     emitNote: (note: string) => void
   ) => React.ReactNode;
+  /** render a {{show_passage:…}} directive: the surface resolves the SEALED
+   *  passage bytes by id (ADR-0006 — the model only ever carries the id) */
+  renderPassage?: (id: string) => React.ReactNode;
   /** auto-send a hidden "Continue." turn after each widget/question result */
   autoContinue?: boolean;
   /**
@@ -148,6 +151,7 @@ export function ChatCore({
   onAttemptResult,
   onTotalChange,
   renderWidget,
+  renderPassage,
   autoContinue,
   interceptWidget,
   onDirective,
@@ -258,6 +262,12 @@ export function ChatCore({
             if (!citedKeys.current.has(key)) {
               citedKeys.current.add(key);
               onDirective("question", { qid: b.qid });
+            }
+          } else if (b.t === "passage_ref") {
+            const key = `dir|${n++}`;
+            if (!citedKeys.current.has(key)) {
+              citedKeys.current.add(key);
+              onDirective("passage", { id: b.id });
             }
           }
         }
@@ -669,6 +679,7 @@ export function ChatCore({
             onCiteClick={onCiteClick}
             onAttempt={handleAttempt}
             renderWidget={renderWidget}
+            renderPassage={renderPassage}
             onWidgetNote={handleWidgetNote}
             onCheckIn={handleCheckIn}
             onOpenQuestion={handleOpenQuestion}
@@ -749,6 +760,7 @@ const MessageRow = memo(function MessageRow({
   onAttempt,
   onOpenQuestion,
   renderWidget,
+  renderPassage,
   onWidgetNote,
   onCheckIn,
   interceptWidget,
@@ -767,6 +779,7 @@ const MessageRow = memo(function MessageRow({
   onAttempt: (r: AttemptResult, q: SpineQuestion) => void;
   onOpenQuestion?: (qid: string) => void;
   renderWidget?: ChatCoreProps["renderWidget"];
+  renderPassage?: ChatCoreProps["renderPassage"];
   onWidgetNote?: (note: string) => void;
   onCheckIn?: (choice: string) => void;
   interceptWidget?: ChatCoreProps["interceptWidget"];
@@ -942,6 +955,26 @@ const MessageRow = memo(function MessageRow({
                 }
               />
             );
+          }
+          if (b.t === "passage_ref") {
+            // sealed text: resolved by the SURFACE from verified data — if it
+            // is board-intercepted the transcript keeps a re-pin chip, exactly
+            // like figures. The id is all the model ever emitted.
+            if (interceptWidget?.("passage", { id: b.id })) {
+              const id = b.id;
+              return (
+                <BoardChip
+                  key={i}
+                  flavor="figure"
+                  onOpen={
+                    onDirective ? () => onDirective("passage", { id }) : undefined
+                  }
+                />
+              );
+            }
+            return renderPassage ? (
+              <div key={i}>{renderPassage(b.id)}</div>
+            ) : null;
           }
           return (
             <p

@@ -1,7 +1,13 @@
 import { spawn } from "node:child_process";
 import { pool } from "@/lib/db";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
-import { buildLessonContext } from "@/lib/lesson";
+import { buildLessonContext, sanitizeLessonSlug } from "@/lib/lesson";
+import { getLessonContent } from "@/lib/lesson-content";
+import {
+  makeSacredGuard,
+  SACRED_HOLDBACK_CHARS,
+  type SacredGuard,
+} from "@/lib/sacred-guard";
 import { snapshotContext } from "@/lib/session-cache";
 import { resolveStudentId } from "@/lib/student-context";
 
@@ -148,6 +154,23 @@ export async function POST(req: Request) {
         )
   );
 
+  // Sacred output containment (ADR-0006 §2, fails closed): on lesson surfaces
+  // whose lesson carries sealed sacred passages, the model's stream is scanned
+  // against them and the turn is aborted on any ≥4-word quote-run — see
+  // lib/sacred-guard.ts. Emission runs behind a holdback window so the quoted
+  // words never reach the client.
+  let sacredGuard: SacredGuard | null = null;
+  if (surface === "lesson_learn" || surface === "lesson_review") {
+    const content = await getLessonContent(sanitizeLessonSlug(body.lesson));
+    const sealed = (content?.passages ?? [])
+      .filter((p) => p.sacred)
+      .map((p) => ({
+        id: p.id,
+        text: p.units.map((u) => u.text_ar).join("\n"),
+      }));
+    sacredGuard = makeSacredGuard(sealed);
+  }
+
   const transcript = messages
     .map((m) =>
       m.role === "user"
@@ -242,6 +265,8 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
       req.signal.addEventListener("abort", () => child.kill("SIGKILL"));
 
       let fullText = "";
+      let emittedLen = 0; // holdback frontier (sacred guard active only)
+      let redacted = false;
       let result: {
         total_cost_usd?: number;
         usage?: {
@@ -281,8 +306,63 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
             j.event.delta?.type === "text_delta" &&
             typeof j.event.delta.text === "string"
           ) {
+            if (redacted) continue;
             fullText += j.event.delta.text;
-            send({ type: "delta", t: j.event.delta.text });
+            if (sacredGuard) {
+              // fails closed: abort the turn the moment a sealed quote-run
+              // appears — the holdback below guarantees it was never emitted
+              if (sacredGuard.violates(fullText)) {
+                redacted = true;
+                clearTimeout(timeout);
+                child.kill("SIGKILL");
+                console.error(
+                  `ask: SACRED CONTAINMENT tripped on ${surface} — turn redacted ` +
+                    `(lesson ${body.lesson ?? "?"}, ${fullText.length} chars suppressed)`
+                );
+                send({
+                  type: "delta",
+                  t:
+                    `${fullText.slice(0, emittedLen)}`.length === 0
+                      ? ""
+                      : "\n\n",
+                });
+                send({
+                  type: "delta",
+                  t:
+                    "النص الكريم لا يُكتب هنا — تجده كاملًا وموثَّقًا في البطاقة على السبورة، فتأمله هناك وقل لي ما لاحظت 🙏\n" +
+                    `{{show_passage:${sacredGuard.firstPassageId}}}`,
+                });
+                send({
+                  type: "done",
+                  meta: {
+                    costUsd: 0,
+                    inputTokens: 0,
+                    outputTokens: 0,
+                    cacheReadTokens: 0,
+                    cacheCreationTokens: 0,
+                    latencyMs: Date.now() - started,
+                    model: MODEL,
+                    interactionId: null,
+                    turnIndex: priorTurns + 1,
+                    capped: cap != null && priorTurns + 1 >= cap,
+                    redacted: true,
+                  },
+                });
+                finish();
+                continue;
+              }
+              // emit only what is safely OUTSIDE the holdback window
+              const safeLen = Math.max(
+                emittedLen,
+                fullText.length - SACRED_HOLDBACK_CHARS
+              );
+              if (safeLen > emittedLen) {
+                send({ type: "delta", t: fullText.slice(emittedLen, safeLen) });
+                emittedLen = safeLen;
+              }
+            } else {
+              send({ type: "delta", t: j.event.delta.text });
+            }
           } else if (j.type === "result") {
             result = j as typeof result;
           }
@@ -305,6 +385,35 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
 
       child.on("close", async (code) => {
         clearTimeout(timeout);
+        if (redacted) {
+          // audit trail for the religious-content owner: the suppressed turn
+          // is recorded server-side; the student saw only the redirect line.
+          try {
+            await pool.query(
+              `INSERT INTO ai_interactions
+                 (student_id, surface, turn_index, user_message,
+                  assistant_message, grounding, citations, model,
+                  input_tokens, output_tokens, cache_read_tokens,
+                  cache_creation_tokens, cost_usd, latency_ms)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9)`,
+              [
+                studentId,
+                surface,
+                priorTurns + 1,
+                lastUser.text,
+                "[REDACTED — sacred containment tripped; sealed quote-run suppressed]",
+                JSON.stringify(ctx.grounding),
+                JSON.stringify([]),
+                MODEL,
+                Date.now() - started,
+              ]
+            );
+          } catch (e) {
+            console.error("ask: failed to log redacted interaction:", e);
+          }
+          finish();
+          return;
+        }
         if (result == null || result.is_error || !fullText) {
           console.error(
             `ask: claude CLI failed (code ${code}) — ${stderrTail.slice(-400)}`
@@ -356,6 +465,13 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           interactionId = ins.rows[0].id;
         } catch (e) {
           console.error("ask: failed to log ai_interaction:", e);
+        }
+
+        // guard-mode emission runs behind the holdback window — release the
+        // clean tail before closing the turn
+        if (sacredGuard && fullText.length > emittedLen) {
+          send({ type: "delta", t: fullText.slice(emittedLen) });
+          emittedLen = fullText.length;
         }
 
         send({

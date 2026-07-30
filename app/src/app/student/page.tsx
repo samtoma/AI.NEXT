@@ -63,7 +63,17 @@ export default async function StudentPage({
 
   if (mode === "learn" || mode === "review") {
     const lesson = await getLessonData(lessonSlug, studentId);
-    return <LessonSession mode={mode} lesson={lesson} />;
+    // sealed passages (Arabic vertical): server-resolved from verified seed
+    // data and pinned onto السبورة — the tutor teaches ON the text and must
+    // never reference a card the student cannot see
+    const content = await getLessonContent(lesson.slug);
+    return (
+      <LessonSession
+        mode={mode}
+        lesson={lesson}
+        passages={content?.passages ?? []}
+      />
+    );
   }
 
   // «شرح الدرس» — the readable rich-content surface (exposition, glossary,

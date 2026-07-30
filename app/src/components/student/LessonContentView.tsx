@@ -1,11 +1,7 @@
 "use client";
 
-import type {
-  LessonContent,
-  LessonInteractive,
-  LessonPassage,
-} from "@/lib/lesson-content";
-import { QuranPassage } from "@/components/QuranPassage";
+import type { LessonContent, LessonInteractive } from "@/lib/lesson-content";
+import { SealedPassageCard } from "@/components/student/SealedPassageCard";
 import { LocateOnMap } from "@/components/student/widgets/LocateOnMap";
 import { TermMatch } from "@/components/student/widgets/TermMatch";
 import { TimelineBuilder } from "@/components/student/widgets/TimelineBuilder";
@@ -80,7 +76,7 @@ export function LessonContentView({ content }: { content: LessonContent }) {
       {passages.length > 0 && (
         <section className="anim-rise mt-6" style={{ animationDelay: "70ms" }}>
           {passages.map((p) => (
-            <PassageCard key={p.id} passage={p} />
+            <SealedPassageCard key={p.id} passage={p} />
           ))}
         </section>
       )}
@@ -239,53 +235,6 @@ export function LessonContentView({ content }: { content: LessonContent }) {
 }
 
 /* ------------------------------------------------------------------ */
-
-/** A sealed passage (ADR-0006). Quran gets the Amiri Quran face (lazy-loaded
- *  by this import path only) and per-آية rows with their printed numbers;
- *  everything else reads in the global Naskh. */
-function PassageCard({ passage }: { passage: LessonPassage }) {
-  const sacred = passage.sacred;
-  const body = (
-    <div className="space-y-2">
-      {passage.units.map((u) => (
-        <p
-          key={u.n}
-          className={
-            sacred
-              ? "text-[19px] leading-[2.3] text-ink"
-              : "text-[15px] leading-loose text-ink"
-          }
-        >
-          {u.text_ar}
-          {u.printed_n && (
-            <span className="mx-1.5 text-[13px] text-gold">﴿{u.printed_n}﴾</span>
-          )}
-        </p>
-      ))}
-    </div>
-  );
-  return (
-    <article
-      className={`ledger-card px-5 py-4 ${sacred ? "border-gold/45 bg-gold-wash/40" : ""} mt-3 first:mt-0`}
-    >
-      <div className="mb-2 flex items-baseline justify-between gap-3">
-        <h2 className="font-display text-[16px] font-medium text-ink">
-          {passage.title_ar}
-        </h2>
-        {passage.attribution_ar && (
-          <span className="text-[11px] text-ink-faint">{passage.attribution_ar}</span>
-        )}
-      </div>
-      {sacred ? <QuranPassage>{body}</QuranPassage> : body}
-      {sacred && (
-        <p className="mt-2 text-[10px] text-ink-faint">
-          نصٌّ موثَّق: تمت مطابقته آليًا مع مصدرين مستقلين للمصحف
-          {passage.verification_verdict === "agree" ? " · مطابق" : " · قيد المراجعة"}
-        </p>
-      )}
-    </article>
-  );
-}
 
 function SectionRule({ ar, note }: { ar: string; note?: string }) {
   return (

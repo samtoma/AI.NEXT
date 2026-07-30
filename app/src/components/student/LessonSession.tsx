@@ -43,6 +43,8 @@ import {
 } from "@/components/student/WhiteboardPanel";
 import { makeRecognition, sttSupported, ttsSupported } from "@/lib/voice";
 import { speakRemote, stopSpeaking, unlockAudio } from "@/lib/tts-client";
+import type { LessonPassage } from "@/lib/lesson-content";
+import { SealedPassageCard } from "@/components/student/SealedPassageCard";
 
 /**
  * The adaptive lesson surface — same engine, two temperaments.
@@ -161,9 +163,15 @@ type Boot =
 export function LessonSession({
   mode,
   lesson,
+  passages = [],
 }: {
   mode: LessonMode;
   lesson: LessonData;
+  /** SEALED text passages of this lesson (Arabic vertical, ADR-0006) — the
+   *  bytes come from verified seed data, server-side. They are pinned onto
+   *  السبورة from message one: Samuel's field finding was a tutor saying
+   *  «افتح بطاقة النص» on a surface that displayed no text at all. */
+  passages?: LessonPassage[];
 }) {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("session");
@@ -264,6 +272,38 @@ export function LessonSession({
     }
     setBoot({ state: "ready", seed: null });
   }, [mode, lesson.slug]);
+
+  /* ---------------- sealed passages on the board ---------------- */
+
+  // The lesson's sealed text is pinned onto السبورة the moment the session
+  // opens (fresh OR restored) — the tutor teaches ON it and refers to it by
+  // آية number; it must never be off-screen while it is being taught.
+  const passageById = useRef(new Map(passages.map((p) => [p.id, p])));
+  passageById.current = new Map(passages.map((p) => [p.id, p]));
+  useEffect(() => {
+    if (boot.state !== "ready" || !boardOn || passages.length === 0) return;
+    const items: BoardItem[] = passages.map((p) => ({
+      key: `passage:${p.id}`,
+      type: "passage",
+      id: p.id,
+    }));
+    setBoard((prev) => [
+      ...items.filter((it) => !prev.some((b) => b.key === it.key)),
+      ...prev,
+    ]);
+    // fresh session: open ON the text (a restored one keeps its saved focus)
+    if (!boot.seed) {
+      setFocusKey((k) => k ?? items[0].key);
+      lastFigKey.current ??= items[0].key;
+    }
+    // deliberately once per boot state — passages are static lesson data
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boot.state, boardOn]);
+
+  const lookupPassage = useCallback(
+    (id: string) => passageById.current.get(id),
+    []
+  );
 
   const sessionId =
     boot.state === "ready" ? (boot.seed?.sid ?? freshSid.current) : undefined;
@@ -1001,6 +1041,7 @@ export function LessonSession({
                 pinNonce={pinNonce}
                 parked={parkedKeys.current}
                 lookupQuestion={lookupQuestion}
+                lookupPassage={lookupPassage}
                 onAttempt={boardAttempt}
                 debug={debug}
                 vizMeta={vizMeta}
@@ -1064,6 +1105,10 @@ export function LessonSession({
               resolveCite={resolveCite}
               onCite={onCite}
               renderWidget={renderWidget}
+              renderPassage={(id) => {
+                const p = lookupPassage(id);
+                return p ? <SealedPassageCard passage={p} compact /> : null;
+              }}
               interceptWidget={boardOn ? interceptWidget : undefined}
               onDirective={boardOn ? onDirective : undefined}
               handleRef={coreHandle}

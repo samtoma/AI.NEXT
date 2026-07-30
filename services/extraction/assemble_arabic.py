@@ -45,6 +45,7 @@ from pathlib import Path
 from arabic_text import (
     compare_loose,
     compare_verify,
+    longest_shared_word_run,
     seal_text,
     sha256_text,
     scan_sacred_markers,
@@ -186,19 +187,94 @@ def crosscheck_quran(citation: str, transcript_units: list[str]) -> tuple[list[s
     return canonical, verification
 
 
+def hadith_flag_verification() -> dict:
+    """The hadith lane, honestly: no machine-checkable authority endpoint is
+    configured (sunnah.com needs an API key; ADR-0006 validated only the Quran
+    lane), so EVERY hadith passage is FLAGGED for the human religious-content
+    owner — never silently accepted, never blocking the run. The transcript is
+    displayed nowhere until a human seals it (the loader holds sacred at
+    review regardless)."""
+    return {
+        "method": "authority_crosscheck",
+        "verdict": "flagged",
+        "sources": [
+            {"name": "sunnah.com (not fetched)", "endpoint": "https://sunnah.com",
+             "agrees": False,
+             "differences": ["no machine-checkable hadith authority configured — "
+                             "human verification required"]},
+            {"name": "dorar.net (not fetched)", "endpoint": "https://dorar.net",
+             "agrees": False,
+             "differences": ["no machine-checkable hadith authority configured — "
+                             "human verification required"]},
+        ],
+        "transcript_agrees": False,
+        "flag_reason": "hadith text has no configured online authority — the book "
+                       "transcript is held for the named religious-content owner "
+                       "to verify against a printed مصدر (ADR-0006: FLAG, not block)",
+    }
+
+
 # --- lesson id mapping -------------------------------------------------------
 # Workflow ids are term-qualified (ar-t1u1l1). App slugs must match
 # lesson.ts SLUG_RE (<alnum≤12>-<digits>), so units number CONTINUOUSLY across
 # terms: T1 U1–3 → ara1..ara3, T2 U1–3 → ara4..ara6. No collisions, no regex
 # violation, and lo:ara<unit>-<lesson>-<n> keeps the soc-style convention.
-def slug_of(workflow_id: str) -> tuple[str, int, int]:
-    """'ar-t1u1l1' → ('ara1-1', unit_no, lesson_no)."""
+def slug_of(workflow_id: str) -> tuple[str, int, int, int]:
+    """'ar-t1u1l1' → ('ara1-1', unit_no, lesson_no, term)."""
     m = re.fullmatch(r"ar-t(\d)u(\d)l(\d)", workflow_id)
     if not m:
         raise SystemExit(f"unrecognized workflow lesson id {workflow_id!r}")
     term, unit, lesson = int(m[1]), int(m[2]), int(m[3])
     unit_no = (term - 1) * 3 + unit
-    return f"ara{unit_no}-{lesson}", unit_no, lesson
+    return f"ara{unit_no}-{lesson}", unit_no, lesson, term
+
+
+# --- the relationship graph (the reason this subject NEEDS a spine) ----------
+# Grammar in this book is taught in INSTALLMENTS (contract §4.5): a lesson's
+# grammar LO is incomprehensible without the previous installment. These
+# series come from the book's own lesson titles («(تابع) أنواع البدل»,
+# «مراجعة اسمي الزمان والمكان») — printed structure, not editorial invention.
+# Each consecutive pair yields lo:<prev>-4 --prerequisite_of--> lo:<next>-4.
+GRAMMAR_SERIES: list[list[str]] = [
+    ["ar-t1u1l1", "ar-t1u1l2", "ar-t1u1l3"],              # المنادى (3 installments)
+    ["ar-t1u2l1", "ar-t1u2l2", "ar-t1u2l3"],              # البدل (تابع ×2)
+    ["ar-t1u2l4", "ar-t1u3l1", "ar-t1u3l2"],              # المدح والذم → نعم/بئس → حبذا
+    ["ar-t2u1l1", "ar-t2u1l2", "ar-t2u1l3"],              # اسم الفاعل (3 installments)
+    ["ar-t2u1l3", "ar-t2u2l1"],                            # اسم الفاعل → صيغ المبالغة (محوَّلة عنه)
+    ["ar-t2u2l3", "ar-t2u3l1"],                            # اسما الزمان والمكان → مراجعتهما
+    ["ar-t2u3l3", "ar-t2u3l4"],                            # أسلوب التفضيل → صوغه
+]
+# الإملاء builds cumulatively through each term (the همزة متوسطة seats are
+# drilled seat-by-seat lesson after lesson). Chained per TERM in book order;
+# the review pass judges every edge and can veto.
+SPELLING_CHAIN_PER_TERM = True
+
+
+def relationship_edges(present_ids: list[str]) -> list[dict]:
+    """Cross-lesson prerequisite edges among the lessons actually extracted."""
+    edges: list[dict] = []
+    seen: set[tuple[str, str]] = set()
+
+    def add(src_wf: str, dst_wf: str, axis: int) -> None:
+        if src_wf not in present_ids or dst_wf not in present_ids:
+            return
+        src = f"lo:{slug_of(src_wf)[0]}-{axis}"
+        dst = f"lo:{slug_of(dst_wf)[0]}-{axis}"
+        if (src, dst) in seen:
+            return
+        seen.add((src, dst))
+        edges.append({"src": src, "dst": dst, "type": "prerequisite_of"})
+
+    for series in GRAMMAR_SERIES:
+        for prev, nxt in zip(series, series[1:]):
+            add(prev, nxt, 4)
+    if SPELLING_CHAIN_PER_TERM:
+        for term in (1, 2):
+            term_lessons = [i for i in present_ids if slug_of(i)[3] == term]
+            term_lessons.sort(key=lambda i: (slug_of(i)[1], slug_of(i)[2]))
+            for prev, nxt in zip(term_lessons, term_lessons[1:]):
+                add(prev, nxt, 5)
+    return edges
 
 
 # --- the five assessable axes (ADR-0006 §4: 5 spine LOs per lesson) ----------
@@ -325,7 +401,7 @@ def rederive_agrees(q: dict, verdicts: dict[str, dict]) -> bool:
 def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
     """One conveyor lesson → (bundle fragment, content-file dict)."""
     meta = lesson["lesson"]
-    slug, unit_no, _ = slug_of(meta["id"])
+    slug, unit_no, _, term = slug_of(meta["id"])
     module_id = f"module:ara-u{unit_no}"
     seg, text, art = lesson["segment"], lesson["text"], lesson["artefacts"]
     qs = lesson["questions"]["questions"]
@@ -339,7 +415,7 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
         pid = f"t:{slug}:{i:03d}"
         kind = p["kind"]
         page = int(p["printed_page"])
-        if kind in ("quran", "hadith"):
+        if kind == "quran":
             transcript = [u["text"] for u in (p.get("units") or [])]
             canonical, verification = crosscheck_quran(p["citation"], transcript)
             m = re.fullmatch(r"(\d+):(\d+)-(\d+)", p["citation"].strip())
@@ -366,6 +442,28 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
             else:
                 report.append(f"SEALED {pid}: authorities agree 2/2, transcript agrees, "
                               f"{len(units)} آيات")
+        elif kind == "hadith":
+            # transcript from the page, held FLAGGED for the human owner —
+            # no machine authority exists for hadith (see hadith_flag_verification)
+            src_units = [u["text"] for u in (p.get("units") or [])] or \
+                        [s.strip() for s in re.split(r"\n+", p["text"]) if s.strip()]
+            units = [{"n": j + 1, "text_ar": store_form(t)}
+                     for j, t in enumerate(src_units)]
+            passages.append({
+                "id": pid, "lesson": slug, "kind": "hadith", "fidelity": "sacred",
+                "sensitivity_class": "hadith",
+                "title_ar": store_form(meta["title"]),
+                "attribution_ar": store_form(p.get("attribution") or meta["src"]),
+                "citation_ref": f"hadith:{store_form(p.get('citation') or p.get('attribution') or meta['src'])}",
+                "units": units,
+                "text_sha256": sha256_text(seal_text([u["text_ar"] for u in units])),
+                "capture_lane": "authority_verified",
+                "transcribers": ["arabic-lesson.workflow:text (sonnet, transcript-only)"],
+                "verification": hadith_flag_verification(),
+                "source_page": page,
+            })
+            sacred_ids.add(pid)
+            report.append(f"FLAG {pid}: hadith transcript held for the religious-content owner")
         else:
             # non-sacred: the book transcript IS the text (K=1 debt noted above)
             if p.get("verses"):
@@ -517,10 +615,27 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
             "source_note": f"conveyor {meta['id']}"
                            + (f" · grounded in {q['grounded_in']}" if q.get("grounded_in") else ""),
         }
-        # sacred inheritance is computed, never guessed: a stem that quotes the
-        # آيات (detector) or extracts from the sacred passage is quran-class.
-        sacred_stem = bool(scan_sacred_markers(stem)) and main_pid in sacred_ids
-        sensitivity = "quran" if sacred_stem else "secular"
+        # sacred inheritance is COMPUTED, never guessed — two detectors, either
+        # escalates: the marker scan (قوله تعالى، ﴿﴾ …) AND a ≥4-word quote run
+        # against every sealed sacred passage in this lesson (verification
+        # §1.6). The plural «الآيات» escapes the phrase list, which is exactly
+        # how four quoting stems initially slipped through as 'secular' —
+        # caught by audit_arabic.py's containment sweep.
+        def quotes_sacred(s: str) -> str | None:
+            for spid in sacred_ids:
+                if longest_shared_word_run(s, "\n".join(passage_units[spid]))[0] >= 4:
+                    return spid
+            return None
+
+        quoted_pid = quotes_sacred(stem) or quotes_sacred(str(q.get("answer") or ""))
+        sacred_stem = bool(quoted_pid) or (
+            bool(scan_sacred_markers(stem)) and main_pid in sacred_ids)
+        sensitivity = ("quran" if sacred_stem and
+                       next(pp for pp in passages
+                            if pp["id"] == (quoted_pid or main_pid))["kind"] == "quran"
+                       else "hadith" if sacred_stem else "secular")
+        if sacred_stem:
+            base["passage_ref"] = quoted_pid or main_pid
         wf_type = q["type"]
         try:
             if wf_type == "irab":
@@ -650,7 +765,10 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
             qq["passage_ref"] = main_pid
 
     # ---------------- nodes / edges ----------------
-    unit_label = f"الوحدة {['الأولى','الثانية','الثالثة','الرابعة','الخامسة','السادسة'][unit_no-1]}"
+    # unit numbering restarts per term in the book — label it the book's way
+    unit_in_term = unit_no - (3 if term == 2 else 0)
+    unit_label = (f"الوحدة {['الأولى','الثانية','الثالثة'][unit_in_term-1]}"
+                  f" — الفصل {'الثاني' if term == 2 else 'الأول'}")
     nodes = [
         {"id": module_id, "kind": "module", "label": f"{unit_label} — اللغة العربية",
          "order_in_parent": unit_no},
@@ -702,63 +820,116 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
     return fragment, content
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("run_output", type=Path)
-    ap.add_argument("--out", type=Path, default=HERE / "seed" / "arabic-t1.json")
-    args = ap.parse_args()
+SOURCE_DOCUMENT = {
+    "title": "اللغة العربية — لغتي حياتي، الصف الثالث الإعدادي",
+    "publisher": "وزارة التربية والتعليم والتعليم الفني — جمهورية مصر العربية",
+    "language": "ar", "grade": "prep-3", "subject": "arabic language",
+    "file_path": "docs/Source/Arabic_Prp3_Tr1_2.pdf",
+}
 
-    run = json.loads(args.run_output.read_text())
-    report: list[str] = []
+EXTRACTION_RUN = {
+    "extractor": "arabic-lesson workflow (ADR-0006 conveyor) + assemble_arabic",
+    "extractor_version": "conveyor-2 (full book)", "schema_version": "ara-1",
+}
 
-    bundle: dict = {
-        "source_document": {
-            "title": "اللغة العربية — لغتي حياتي، الصف الثالث الإعدادي",
-            "publisher": "وزارة التربية والتعليم والتعليم الفني — جمهورية مصر العربية",
-            "language": "ar", "grade": "prep-3", "subject": "arabic language",
-            "file_path": "docs/Source/Arabic_Prp3_Tr1_2.pdf",
-        },
-        "extraction_run": {
-            "extractor": "arabic-lesson workflow (ADR-0006 conveyor) + assemble_arabic",
-            "extractor_version": "conveyor-1", "schema_version": "ara-1",
-        },
+
+def empty_bundle(term: int) -> dict:
+    b: dict = {
+        "extraction_run": dict(EXTRACTION_RUN),
         "syllabus_version": "2025-2026",
-        "nodes": [{"id": "course:prep3-arabic-ar", "kind": "course",
-                   "label": "اللغة العربية — الصف الثالث الإعدادي",
-                   "order_in_parent": 3}],
-        "edges": [], "questions": [], "visuals": [],
+        "nodes": [], "edges": [], "questions": [], "visuals": [],
         "text_passages": [], "vocab_items": [], "rhetoric_notes": [],
         "grammar_rules": [], "spelling_rules": [],
     }
+    if term == 1:
+        # T1 declares the document and the course; T2 reuses both
+        b["source_document"] = dict(SOURCE_DOCUMENT)
+        b["nodes"].append({"id": "course:prep3-arabic-ar", "kind": "course",
+                           "label": "اللغة العربية — الصف الثالث الإعدادي",
+                           "order_in_parent": 3})
+    else:
+        b["source_file"] = SOURCE_DOCUMENT["file_path"]
+        b["external_node_refs"] = ["course:prep3-arabic-ar"]
+    return b
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("run_outputs", type=Path, nargs="+",
+                    help="one or more conveyor outputs; lessons are merged (later "
+                         "files override earlier ones on the same lesson id)")
+    ap.add_argument("--out-t1", type=Path, default=HERE / "seed" / "arabic-t1.json")
+    ap.add_argument("--out-t2", type=Path, default=HERE / "seed" / "arabic-t2.json")
+    args = ap.parse_args()
+
+    lessons_by_id: dict[str, dict] = {}
+    for p in args.run_outputs:
+        run = json.loads(p.read_text())
+        for lesson in run.get("lessons", []):
+            lessons_by_id[lesson["lesson"]["id"]] = lesson
+        if run.get("failed"):
+            print(f"⚠ {p.name}: conveyor reported failed lessons: {run['failed']}")
+
+    # book order: term, then unit, then lesson
+    ordered = sorted(lessons_by_id.values(),
+                     key=lambda l: slug_of(l["lesson"]["id"])[1:])
+    report: list[str] = []
+    bundles = {1: empty_bundle(1), 2: empty_bundle(2)}
 
     content_dir = HERE / "seed" / "content"
-    for lesson in run["lessons"]:
+    for lesson in ordered:
+        term = slug_of(lesson["lesson"]["id"])[3]
         frag, content = assemble_lesson(lesson, report)
+        b = bundles[term]
         for key in ("nodes", "edges", "questions", "text_passages", "vocab_items",
                     "rhetoric_notes", "grammar_rules", "spelling_rules"):
-            bundle[key].extend(frag[key])
+            b[key].extend(frag[key])
         cpath = content_dir / f"{content['lessonId']}.json"
         cpath.write_text(json.dumps(content, ensure_ascii=False, indent=1))
-        report.append(f"content → {cpath.relative_to(HERE)}")
 
-    validated = SeedBundle.model_validate(bundle)  # loud, before anything is written
-    args.out.write_text(json.dumps(bundle, ensure_ascii=False, indent=1))
+    # the relationship graph — cross-lesson prerequisite edges, per term
+    present = [l["lesson"]["id"] for l in ordered]
+    rel = relationship_edges(present)
+    for e in rel:
+        term = 1 if e["src"].startswith(("lo:ara1", "lo:ara2", "lo:ara3")) else 2
+        bundles[term]["edges"].append(e)
+    report.append(f"relationship graph: {len(rel)} prerequisite edge(s) "
+                  f"(grammar series + الإملاء per-term chains)")
 
-    n_sacred = sum(tp.is_sacred for tp in validated.text_passages)
-    n_flagged = sum(tp.verification_flagged for tp in validated.text_passages)
-    try:
-        shown = args.out.relative_to(HERE)
-    except ValueError:
-        shown = args.out
-    print(f"\nbundle → {shown}")
-    print(f"  {len(validated.nodes)} nodes · {len(validated.questions)} questions · "
-          f"{len(validated.text_passages)} passages ({n_sacred} sacred, {n_flagged} flagged) · "
-          f"{len(validated.vocab_items)} vocab · {len(validated.rhetoric_notes)} rhetoric · "
-          f"{sum(len(g.clauses) for g in validated.grammar_rules)} rule clauses · "
-          f"{sum(len(s.cases) for s in validated.spelling_rules)} إملاء cases")
+    # dedupe module nodes (a unit spans several lessons)
+    for b in bundles.values():
+        seen_nodes: set[str] = set()
+        b["nodes"] = [n for n in b["nodes"]
+                      if not (n["id"] in seen_nodes or seen_nodes.add(n["id"]))]
+        seen_edges: set[tuple] = set()
+        b["edges"] = [e for e in b["edges"]
+                      if not ((t := (e["src"], e["dst"], e["type"])) in seen_edges
+                              or seen_edges.add(t))]
+
+    outs = {1: args.out_t1, 2: args.out_t2}
+    for term, out_path in outs.items():
+        b = bundles[term]
+        if not b["text_passages"] and not b["questions"]:
+            print(f"(term {term}: no lessons in input — bundle not written)")
+            continue
+        validated = SeedBundle.model_validate(b)
+        out_path.write_text(json.dumps(b, ensure_ascii=False, indent=1))
+        n_sacred = sum(tp.is_sacred for tp in validated.text_passages)
+        n_flagged = sum(tp.verification_flagged for tp in validated.text_passages)
+        verified = sum(q.verified for q in validated.questions)
+        try:
+            shown = out_path.relative_to(HERE)
+        except ValueError:
+            shown = out_path
+        print(f"\nbundle → {shown}")
+        print(f"  {len(validated.nodes)} nodes · "
+              f"{sum(1 for e in validated.edges if e.type == 'prerequisite_of')} prereq edges · "
+              f"{len(validated.questions)} questions ({verified} verified) · "
+              f"{len(validated.text_passages)} passages ({n_sacred} sacred, {n_flagged} flagged) · "
+              f"{len(validated.vocab_items)} vocab · {len(validated.rhetoric_notes)} rhetoric · "
+              f"{sum(len(g.clauses) for g in validated.grammar_rules)} rule clauses · "
+              f"{sum(len(s.cases) for s in validated.spelling_rules)} إملاء cases")
     print("\n".join(f"  {line}" for line in report))
-    verified = sum(q.verified for q in validated.questions)
-    print(f"  verified questions (blind re-derivation agreed): {verified}/{len(validated.questions)}")
 
 
 if __name__ == "__main__":

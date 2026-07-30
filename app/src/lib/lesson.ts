@@ -542,8 +542,9 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
 - {{widget:style_purpose:{"prompt":"حدد الأسلوب وغرضه","text":"…من بيانات الدرس…","span":"اصْرِفْ عَنَّا","styles":["أمر","نداء","استفهام"],"purposes":["الدعاء","التنبيه"],"answer":{"style":"أمر","purpose":"الدعاء"}}}} — «أسلوب … وغرضه …»; the answer pair comes VERBATIM from مواطن الجمال in the LESSON DATA.
 - {{widget:irab_builder:{"prompt":"أعرب الكلمة","sentence":"يا طالبَ العلمِ اجتهدْ","target":"طالبَ","roles":["منادى مضاف","مضاف إليه","فاعل"],"marks":["الفتحة","الكسرة","الياء"],"answer":{"word_ar":"طالبَ","role_ar":"منادى مضاف","state":"منصوب","sign":"الفتحة","sign_kind":"ظاهرة"},"rule_ref":{"page":${exPage},"quote":"…سطر القاعدة المطبوع حرفيًا…"}}}} — slot-built إعراب. ⚠ GROUNDING GATE: "rule_ref.quote" MUST be a rule line printed in the LESSON DATA (with its page) — an إعراب the book cannot license is not askable. Sentence and answer come from the question bank or the printed examples, never invented.
 - {{widget:term_match:{"prompt":"وصّل الكلمة بمعناها","pairs":[{"term":"هَوْنًا","definition":"بسكينة ووقار"}],"decoyDefs":["تعريف قريب للتشتيت"]}}} — معاني المفردات matching, 2–4 pairs VERBATIM from the LESSON DATA.
+- {{show_passage:t:ara1-1:001}} — re-focuses a SEALED text passage on السبورة (ids from the SEALED TEXT PASSAGES block). The passages are already pinned there from the first message — use this when you move the lesson back to the text («خلينا نرجع للآيات»), then reference آيات by number.
 - {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
-⚠ SACRED TEXT (hard rule, no exceptions): الآيات والأحاديث تُعرض للطالب من الحافظة المختومة (بطاقة النص في واجهة الدرس) — you never type, quote, complete or embed Quran/Hadith text in prose or in ANY widget payload. Point to the sealed card instead («تأمل الآية ٦٣ في البطاقة»). Vocabulary words (single words like هَوْنًا) from the glossary are allowed in term_match.
+⚠ SACRED TEXT (hard rule, no exceptions): الآيات والأحاديث معروضة للطالب على السبورة من الحافظة الموثقة — you never type, quote, complete or embed Quran/Hadith text in prose or in ANY widget payload. Reference it by آية number + {{show_passage:…}} («تأمل الآية ٦٣ على السبورة»). Vocabulary words (single words like هَوْنًا) from the glossary are allowed in term_match. أي رد يتضمن ٣ كلمات متتالية فأكثر من النص المختوم يُلغى آليًا قبل وصوله للطالب.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
 ${CROSS_SUBJECT_RULE}
@@ -623,7 +624,7 @@ function arabicGroundingRules(data: LessonData): string {
   return `HARD GROUNDING RULES (non-negotiable):
 1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Never drift into other lessons, terms or grades.
 2. اللغة تُدرَّس من الكتاب وحده: كل قاعدة نحوية أو إملائية تستند إلى سطر قاعدة مطبوع في بيانات الدرس مع [[page:N]]، وكل إعراب يتبع النموذج المعتمد للسؤال (الخانات المنفصلة: الموقع/الحالة/العلامة/نوعها) — لا تشتق إعرابًا من معرفتك العامة، ولا تتجاوز ما دُرِّس: النحو تراكمي، وما لم يطبعه هذا الدرس أو دروسه السابقة لا وجود له في الجلسة.
-3. ⚠ SACRED TEXT — الحكم القاطع: نص الآيات والأحاديث يُعرض من الحافظة المختومة فقط (بطاقة النص). لا تكتب نص القرآن أو الحديث بنفسك أبدًا — لا في الشرح، ولا داخل أي {{…}} — ولا "تصحّحه" ولا تكمله من ذاكرتك. أشر إلى البطاقة ورقم الآية. مفردات المعجم المفردة (هَوْنًا، غَرَامًا) مسموح بها في الشرح.
+3. ⚠ SACRED TEXT — الحكم القاطع: نص الآيات والأحاديث معروض للطالب على السبورة من الحافظة الموثقة، ويمكنك إعادة تركيزه بـ {{show_passage:…}}. لا تكتب نص القرآن أو الحديث بنفسك أبدًا — لا في الشرح، ولا داخل أي {{…}} — ولا "تصحّحه" ولا تكمله من ذاكرتك؛ أشر إليه برقم الآية. أي رد يتضمن ٣ كلمات متتالية فأكثر من النص المختوم يُلغى آليًا. مفردات المعجم المفردة (هَوْنًا، غَرَامًا) مسموح بها في الشرح.
 4. OUTSIDE THE BOOK — acknowledge → decline → redirect, in that exact order: إذا سأل عن قاعدة أو نص غير وارد في بيانات الدرس، رحِّب بالسؤال، ثم وضِّح أننا نذاكر من كتاب الوزارة لأنه أساس الامتحان، ثم وجِّهه لأقرب قاعدة أو شاهد وارد فعلًا مع [[page:N]]. NEVER answer first and disclaim after.
 5. رأي الطالب: حيث يطلب الكتاب رأيًا شخصيًا أو قيمًا مستفادة، رحِّب برأي الطالب وناقشه بدفء — الرأي له، والحقائق اللغوية والبلاغية للكتاب. قوِّم لغة رأيه بلطف إن أخطأ في صياغتها.`;
 }
@@ -753,7 +754,7 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     reviewSubjectRules: ARABIC_REVIEW_RULES,
     protocol: arabicProtocol,
     learnRichNote: (data) =>
-      `\n\nYOUR SCRIPT: teach FROM the TEACHING SCRIPT in the LESSON DATA below — it is your reviewed narrative for THIS exact lesson. النص الأساسي (الآيات/القصيدة) معروض للطالب في بطاقة النص المختومة أعلى الدرس: أَحِلْ إليه بأرقام الآيات ولا تكتبه أبدًا. Turn each objective into a short chain of beats (اشرح فكرة صغيرة → افحص بسؤال/تفاعل → كيّف حسب رده). Open by greeting ${data.studentName.split(" ")[0]} by name and naming today's lesson in one warm line.`,
+      `\n\nYOUR SCRIPT: teach FROM the TEACHING SCRIPT in the LESSON DATA below — it is your reviewed narrative for THIS exact lesson. النص الأساسي (الآيات/القصيدة) معروض للطالب على السبورة الآن من الحافظة الموثقة: علِّم منه بالإحالة إلى أرقام الآيات/الأبيات و{{show_passage:…}} ولا تكتبه أبدًا. Turn each objective into a short chain of beats (اشرح فكرة صغيرة → افحص بسؤال/تفاعل → كيّف حسب رده). Open by greeting ${data.studentName.split(" ")[0]} by name and naming today's lesson in one warm line.`,
     reviewOpenerEg: `"فهمت كله؟ حلو — يلا نثبّته في ٣ دقايق ⏱"`,
     reviewWidgetMoment: () =>
       `ONE widget moment: {{widget:term_match:{"prompt":"آخر واحدة — وصّل الكلمة بمعناها","pairs":[…2–3 pairs VERBATIM from معاني المفردات in the LESSON DATA…]}}} (or a hamza_seat / irab_builder if it fits this lesson better — payloads grounded in the printed rule lines).`,
@@ -840,6 +841,33 @@ ${sharedProtocol(
  * stubs. Misconceptions become check-traps. Social-only; math has no content
  * files, so its data block stays byte-identical.
  */
+/** Sealed passages of the lesson (ADR-0006). The SURFACE displays them on
+ *  السبورة from verified data; this block tells the tutor what is on screen
+ *  and how to re-focus it ({{show_passage:<id>}}). In learn mode the text is
+ *  included READ-ONLY so the tutor can actually discuss specific آيات/أبيات —
+ *  the server-side containment guard (lib/sacred-guard.ts) aborts any turn
+ *  that re-emits ≥4 consecutive words of it. */
+function sealedPassagesBlock(
+  passages: NonNullable<LessonContent["passages"]>,
+  withText: boolean
+): string {
+  const rows = passages.map((p) => {
+    const head = `- ${p.id} «${p.title_ar}» (${p.kind}${
+      p.citation_ref ? `، ${p.citation_ref}` : ""
+    }، ${p.units.length} ${p.kind === "quran" ? "آيات" : "وحدات"}) — أعد تركيزها بـ {{show_passage:${p.id}}}`;
+    if (!withText) return head;
+    const body = p.units
+      .map((u) => `  ${u.printed_n ? `﴿${u.printed_n}﴾ ` : `(${u.n}) `}${u.text_ar}`)
+      .join("\n");
+    return `${head}\n${body}`;
+  });
+  return `
+
+SEALED TEXT PASSAGES — معروضة للطالب على السبورة الآن، من الحافظة الموثقة (هي "بطاقة النص"):
+${rows.join("\n")}
+${withText ? "⚠ النص أعلاه للاطّلاع فقط كي تناقشه بدقة — يُمنَع منعًا باتًا نسخ أي مقطع منه (٣ كلمات متتالية فأكثر) إلى ردودك. أشِر إليه بأرقام الآيات/الأبيات و{{show_passage:…}}؛ أي تجاوز يُلغي الرد آليًا." : "أشِر إليها بالأرقام و{{show_passage:…}} — لا تكتب نصوصها أبدًا."}`;
+}
+
 function teachingScriptBlock(c: LessonContent): string {
   const subs = c.subtopics
     .filter((s) => s.exposition)
@@ -887,14 +915,21 @@ export async function buildLessonContext(
   // The rich teaching script grounds the AI-LED lesson (learn mode) only —
   // review stays a fast 3-minute lock-in, and not every subject's pipeline
   // emits content bundles (maths has none, so its data block is unchanged).
-  const content =
-    mode === "learn" && kit.usesTeachingScript
-      ? await getLessonContent(data.slug)
-      : null;
-  const teaching = content ? teachingScriptBlock(content) : "";
+  const content = kit.usesTeachingScript
+    ? await getLessonContent(data.slug)
+    : null;
+  const teaching =
+    mode === "learn" && content ? teachingScriptBlock(content) : "";
+  // Sealed passages (Arabic vertical): pinned on السبورة by the surface; the
+  // tutor gets the ids (and, in learn mode, the read-only text) so it teaches
+  // ON the card instead of referencing text the student cannot see.
+  const passagesBlock = content?.passages?.length
+    ? sealedPassagesBlock(content.passages, mode === "learn")
+    : "";
   return {
     systemPrompt: mode === "learn" ? learnPrompt(data) : reviewPrompt(data),
-    dataBlock: lessonDataBlock(data) + gazetteer + bridges + teaching,
+    dataBlock:
+      lessonDataBlock(data) + gazetteer + bridges + passagesBlock + teaching,
     grounding: {
       lo_ids: data.los.map((l) => l.id),
       question_ids: data.questions.map((q) => q.id),

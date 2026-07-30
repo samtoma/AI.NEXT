@@ -42,7 +42,11 @@ export type Block =
   | { t: "beat" }
   | { t: "check_in" }
   | { t: "switch_subject"; subject: SpineSubject }
-  | { t: "finish" };
+  | { t: "finish" }
+  /** {{show_passage:t:ara1-1:001}} — the tutor brings a SEALED text passage
+   *  into focus BY ID. The app resolves the bytes from the verified store;
+   *  the model never carries the text (ADR-0006 runtime containment). */
+  | { t: "passage_ref"; id: string };
 
 const CITE_RE = /\[\[(lo|q|page|term\?):([^\]\n]{1,80})\]\]/g;
 
@@ -68,7 +72,7 @@ interface Action {
   block: Block | null;
 }
 
-const SIMPLE_RE = /^\{\{(show_question|highlight):([^}\n]{1,160})\}\}/;
+const SIMPLE_RE = /^\{\{(show_question|highlight|show_passage):([^}\n]{1,160})\}\}/;
 const WIDGET_HEAD_RE = /^\{\{widget:([a-z_]{1,40}):/;
 /** Built from the subject registry, so a handoff to a subject the product
  *  actually has is parsed instead of being rendered as raw protocol text.
@@ -113,10 +117,12 @@ function parseActionAt(s: string, i: number): Action | null {
     const block: Block =
       m[1] === "show_question"
         ? { t: "question", qid: m[2].trim() }
-        : {
-            t: "highlight",
-            ids: m[2].split(",").map((x) => x.trim()).filter(Boolean),
-          };
+        : m[1] === "show_passage"
+          ? { t: "passage_ref", id: m[2].trim() }
+          : {
+              t: "highlight",
+              ids: m[2].split(",").map((x) => x.trim()).filter(Boolean),
+            };
     return { start: i, end: i + m[0].length, block };
   }
   if (head.startsWith(FINISH)) {
@@ -197,6 +203,7 @@ function scanActions(s: string): Action[] {
 
 const DIRECTIVE_KEYWORDS = [
   "show_question:",
+  "show_passage:",
   "highlight:",
   "widget:",
   "finish_lesson}}",

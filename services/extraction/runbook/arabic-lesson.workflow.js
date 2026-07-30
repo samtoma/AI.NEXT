@@ -156,8 +156,11 @@ const SACRED = `⚠ نصٌّ مقدّس (${'قرآن/حديث'}): انقله ح�
 - املأ units: صفًّا لكل آية — n تسلسلي، printed_n رقم الآية المطبوع بالأرقام الهندية (مثل "٦٣")، text نص الآية حرفيًا. لا تدمج الآيات في كتلة واحدة.
 - سيتم التحقّق من النص آليًا بمقارنته بمصدرين مستقلّين — لا تصحّح ولا تُجمّل ولا تُكمل من ذاكرتك، وإن تعذّرت قراءة حرفٍ فاذكر ذلك بدل التخمين.`
 
-const out = []
-for (const l of RUN) {
+// Lessons are INDEPENDENT — they run concurrently through the pipeline (the
+// substrate caps live agents); the 7 stages inside one lesson stay strictly
+// sequential because each feeds the next. A lesson whose chain dies resolves
+// to null and is reported, never silently dropped.
+const runLesson = async (l) => {
   const seg = await agent(`أنت مخطّط الدرس. اقرأ الدرس كاملًا واستخرج بنيته.
 ${head(l)}
 ${LAW}
@@ -260,8 +263,13 @@ ${head(l)}
 verdict=GREEN فقط إذا لم يبقَ أي بند thin أو MISSING. أخرج COVERAGE.`,
     { label: `coverage:${l.id}`, phase: 'Coverage', model: 'sonnet', schema: COVERAGE })
 
-  out.push({ lesson: l, segment: seg, text, artefacts: art, questions: qs, interactives: inter,
-             rederive, prov, counts, coverage })
+  return { lesson: l, segment: seg, text, artefacts: art, questions: qs, interactives: inter,
+           rederive, prov, counts, coverage }
 }
 
-return { lessons: out }
+const results = await pipeline(RUN, (l) => runLesson(l))
+const out = results.filter(Boolean)
+const failed = RUN.filter((_, i) => !results[i]).map((l) => l.id)
+if (failed.length) log(`⚠ ${failed.length} lesson(s) died mid-chain and are NOT in the output: ${failed.join(', ')}`)
+
+return { lessons: out, failed }
