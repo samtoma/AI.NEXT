@@ -51,7 +51,7 @@ from arabic_text import (
     scan_sacred_markers,
     store_form,
 )
-from schemas import SeedBundle
+from schemas import Question, SeedBundle
 
 HERE = Path(__file__).parent
 
@@ -294,14 +294,20 @@ def rhetoric_enum(raw_type: str, raw_effect: str) -> tuple[str | None, str | Non
     """Map the conveyor's free-text نوع/غرض onto the closed enums (contract
     §4.6). Unmappable → (None, None): the note is dropped to the report, never
     force-fitted."""
-    types = ["تشبيه", "استعارة", "كناية", "تضاد", "أسلوب مؤكد", "نداء", "استفهام",
-             "أمر", "نهي", "تعبير يوحي", "أفعال مضارعة", "إطناب", "إيجاز", "حسن تعليل"]
+    types = ["أسلوب مؤكد", "تعبير يوحي", "أفعال مضارعة", "حسن تعليل",
+             "أسلوب مدح", "أسلوب ذم", "أسلوب شرط", "أسلوب استثناء", "أسلوب تفضيل",
+             "تشبيه", "استعارة", "كناية", "تضاد", "نداء", "استفهام",
+             "أمر", "نهي", "إطناب", "إيجاز", "طباق", "جناس", "تصوير", "تنكير"]
     purposes = ["التنبيه", "الاستنكار", "النصح والإرشاد", "الدعاء", "التعجب", "التقرير",
                 "التمني", "التحذير", "الاستمرار والتجدد", "التوكيد", "التعليل"]
     loose = compare_loose(raw_type)
     t = next((x for x in types if compare_loose(x) in loose), None)
     if t is None and "جميل" in raw_type:  # «تعبير جميل يدل على…» = تعبير يوحي
         t = "تعبير يوحي"
+    if t is None and ("توكيد" in raw_type or "مؤكد" in raw_type):
+        t = "أسلوب مؤكد"                  # «أسلوب توكيد» = the same printed label
+    if t is None and ("تعبير" in raw_type or "لفظ موح" in compare_loose(raw_type)):
+        t = "تعبير يوحي"                  # «تعبير دال/موحٍ/توضيحي» family
     effect_loose = compare_loose(raw_effect or "")
     p = next((x for x in purposes if compare_loose(x) in effect_loose), None)
     return t, p
@@ -348,18 +354,37 @@ def map_irab(q: dict, clause_ids: dict[str, str]) -> dict | None:
     kind = next((k for k in SIGN_KINDS if raw_kind.startswith(k) or k in raw_kind), "ظاهرة")
     # «نائبة عن الفتحة؛ لأنه جمع مؤنث سالم» → kind + the لأنّ… reason
     reason = None
-    if m := re.search(r"لأن.*$", raw_kind):
+    blob = f"{raw_kind} {a.get('rule_ref') or ''} {q.get('stem') or ''}"
+    if m := re.search(r"لأن[^.،;]*", raw_kind):
         reason = store_form(m.group(0))
     first_ref = re.split(r"[،,\s]+", (a.get("rule_ref") or "").strip())[0]
     rule_ref = clause_ids.get(first_ref)
     if sign is None or rule_ref is None:
         return None
-    noun = STATE_NOUN.get(state, "إعرابه")
-    kind_phrase = {"ظاهرة": "الظاهرة", "مقدرة": "المقدرة"}.get(kind, kind)
-    surface = store_form(f"{role} {state} وعلامة {noun} {sign} {kind_phrase}"
-                         + (f" {reason}" if reason else ""))
     out = {"word_ar": word, "role_ar": role, "state": state, "sign": sign,
-           "sign_kind": kind, "rule_ref": rule_ref, "surface_ar": surface}
+           "rule_ref": rule_ref}
+    if state == "مبني":
+        # a مبني word carries a محل, never a علامة kind (schema invariant).
+        # المنادى المبني (علم/نكرة مقصودة) is always في محل نصب; otherwise
+        # take the محل the extractor spelled out — or refuse to guess.
+        pos = None
+        if m := re.search(r"في محل (رفع|نصب|جر|جزم)", blob):
+            pos = f"في محل {m.group(1)}"
+        elif "منادى" in role:
+            pos = "في محل نصب"
+        if pos is None:
+            return None
+        out["position"] = pos
+        out["sign_kind"] = "—"
+        surface = store_form(f"{role} مبني على {sign} {pos}"
+                             + (f" {reason}" if reason else ""))
+    else:
+        noun = STATE_NOUN.get(state, "إعرابه")
+        kind_phrase = {"ظاهرة": "الظاهرة", "مقدرة": "المقدرة"}.get(kind, kind)
+        out["sign_kind"] = kind
+        surface = store_form(f"{role} {state} وعلامة {noun} {sign} {kind_phrase}"
+                             + (f" {reason}" if reason else ""))
+    out["surface_ar"] = surface
     if reason:
         out["reason_ar"] = reason
     return out
@@ -466,11 +491,23 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
             report.append(f"FLAG {pid}: hadith transcript held for the religious-content owner")
         else:
             # non-sacred: the book transcript IS the text (K=1 debt noted above)
+            if kind == "story":
+                kind = "prose"  # PassageKind has no 'story'; the narrative reads as prose
             if p.get("verses"):
                 units = [{"n": v["n"], "printed_n": str(v["n"]).translate(ARABIC_INDIC),
                           "text_ar": store_form(f"{v['sadr']} {v['ajuz']}"),
                           "sadr_ar": store_form(v["sadr"]), "ajuz_ar": store_form(v["ajuz"])}
                          for v in p["verses"]]
+            elif kind == "poetry":
+                # a poem the conveyor did not split into hemistichs: a بيت
+                # stored without صدر/عجز is a schema violation, and inventing
+                # the split is inventing content — store as prose + report.
+                kind = "prose"
+                report.append(f"DEMOTE {pid}: poetry arrived without hemistich "
+                              "structure — stored as prose, human queue")
+                paras = [s.strip() for s in re.split(r"\n+", p["text"]) if s.strip()]
+                units = [{"n": j + 1, "text_ar": store_form(t)}
+                         for j, t in enumerate(paras)]
             else:
                 paras = [s.strip() for s in re.split(r"\n+", p["text"]) if s.strip()]
                 # the printed title line becomes the card title, not unit 1
@@ -628,14 +665,23 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
             return None
 
         quoted_pid = quotes_sacred(stem) or quotes_sacred(str(q.get("answer") or ""))
-        sacred_stem = bool(quoted_pid) or (
-            bool(scan_sacred_markers(stem)) and main_pid in sacred_ids)
-        sensitivity = ("quran" if sacred_stem and
-                       next(pp for pp in passages
-                            if pp["id"] == (quoted_pid or main_pid))["kind"] == "quran"
-                       else "hadith" if sacred_stem else "secular")
-        if sacred_stem:
+        markers = scan_sacred_markers(stem)
+        # scripture is SCATTERED (ADR-0006): a Quranic شاهد turns up inside
+        # prose lessons with no sealed passage to bind to — the markers alone
+        # escalate, and the sacred gate holds the question for a human.
+        sacred_stem = bool(quoted_pid) or bool(markers)
+        hadith_markers = ("ﷺ", "رسول الله", "رواه", "حديث", "الصلاة والسلام")
+        if quoted_pid or (markers and main_pid in sacred_ids):
+            bound = next((pp for pp in passages
+                          if pp["id"] == (quoted_pid or main_pid)), None)
+            sensitivity = bound["kind"] if bound and bound["kind"] in ("quran", "hadith") \
+                else "quran"
             base["passage_ref"] = quoted_pid or main_pid
+        elif markers:
+            sensitivity = ("hadith" if any(h in " ".join(markers) or h in stem
+                                           for h in hadith_markers) else "quran")
+        else:
+            sensitivity = "secular"
         wf_type = q["type"]
         try:
             if wf_type == "irab":
@@ -757,6 +803,14 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
                     "sensitivity_class": sensitivity})
         except Exception as e:
             report.append(f"DROP {qid}: {e}")
+            continue
+        # per-question shape validation NOW, so one malformed answer record
+        # drops to the report instead of failing the whole bundle later
+        try:
+            Question.model_validate(questions[-1])
+        except Exception as e:
+            questions.pop()
+            report.append(f"DROP {qid}: answer record invalid — {str(e)[:160]}")
 
     # every question about a sacred passage carries the passage_ref so the
     # loader's derived-sealing check sees the binding

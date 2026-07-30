@@ -458,6 +458,13 @@ class VocabItem(BaseModel):
 RhetoricType = Literal[
     "تشبيه", "استعارة", "كناية", "تضاد", "أسلوب مؤكد", "نداء", "استفهام",
     "أمر", "نهي", "تعبير يوحي", "أفعال مضارعة", "إطناب", "إيجاز", "حسن تعليل",
+    # Full-book extension (2026-07-30): labels the book itself prints in
+    # مواطن الجمال across T1U2–T2U3 — surfaced by the assembler's drop report
+    # (~20 printed notes had no admissible label). Same guardrail as before:
+    # these are the book's own wording, not invented terminology. Pending
+    # Samuel's confirmation as the enum's human owner.
+    "طباق", "جناس", "تصوير", "أسلوب مدح", "أسلوب ذم", "أسلوب شرط",
+    "أسلوب استثناء", "تنكير", "أسلوب تفضيل",
 ]
 RhetoricPurpose = Literal[
     "التنبيه", "الاستنكار", "النصح والإرشاد", "الدعاء", "التعجب", "التقرير",

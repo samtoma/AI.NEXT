@@ -93,7 +93,8 @@ def check_shipped_bundles() -> None:
         # carries them — for it, assert the opposite: the sealed passages that
         # make it an Arabic bundle are actually present.
         is_arabic = any(n.kind == "course" and n.id == "course:prep3-arabic-ar"
-                        for n in b.nodes)
+                        for n in b.nodes) or \
+            "course:prep3-arabic-ar" in b.external_node_refs
         if is_arabic:
             ok(f"A/{p.name} is the Arabic vertical and carries sealed passages",
                bool(b.text_passages))
