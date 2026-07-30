@@ -105,8 +105,13 @@ you if you got the order wrong.
 | Input | Meaning |
 |---|---|
 | `mode` | `preview` (default, writes nothing) · `course` · `full-reseed` · `status` |
-| `course` | e.g. `course:prep3-social-ar`, `course:prep3-math-en` |
+| `course` | e.g. `course:prep3-social-ar`, `course:prep3-math-en`, `course:prep3-arabic-ar` |
 | `confirm` | `course` mode: retype the course id. `full-reseed`: type `FULL-RESEED`. Otherwise empty. |
+
+`preview` and `course` first apply the **idempotent schema migrations** the content depends on
+(`IDEMPOTENT_MIGRATIONS` in `refresh-content.sh` — currently 007 `graph_nodes.subject` + 008
+Arabic question types). They are BEGIN…COMMIT and safe to re-run; a migration failure aborts
+before anything loads. Earlier migrations (001–006) live in the seed dump and are never re-applied.
 
 1. **Run `preview` first.** It performs the entire load against the real database inside a
    transaction — same validation, same sacred gate, same live/review split — then **rolls back**.

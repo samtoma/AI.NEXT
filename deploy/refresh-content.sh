@@ -75,6 +75,23 @@ preflight() {
     || die "Postgres is up but not answering — check: (cd $HERE && docker compose logs --tail=50 db)"
 }
 
+# Schema migrations that content loads DEPEND on, applied idempotently before
+# any load (each file is BEGIN…COMMIT and safe to re-run — see their headers).
+# Only migrations written to be re-runnable belong in this list; the earlier
+# ones (001–006) shipped inside the seed dump and are NOT idempotent.
+IDEMPOTENT_MIGRATIONS="007-course-subject-column.sql 008-arabic-question-types.sql"
+
+apply_migrations() {
+  local root m
+  root="$(cd "$HERE/.." && pwd)"
+  for m in $IDEMPOTENT_MIGRATIONS; do
+    [ -f "$root/db/migrations/$m" ] || die "missing migration db/migrations/$m"
+    info "applying migration $m (idempotent)"
+    psql_in -q -U ainext -d ainext_poc < "$root/db/migrations/$m" \
+      || die "migration $m failed — nothing was loaded"
+  done
+}
+
 counts() {
   dbq "SELECT 'nodes='||(SELECT count(*) FROM graph_nodes)
             ||' questions='||(SELECT count(*) FROM questions)
@@ -225,7 +242,8 @@ case "$MODE" in
     # sacred gate, same live/review split — and zero writes.
     [ $# -ge 1 ] || usage
     preflight
-    say "PREVIEW — the database will not be modified"
+    say "PREVIEW — the database will not be modified (migrations, if any, DO apply)"
+    apply_migrations
     info "before: $(counts)"
     content_drift_check
     run_loader "$1" dry
@@ -236,6 +254,7 @@ case "$MODE" in
     [ $# -ge 1 ] || usage
     preflight
     say "Scoped refresh of $1"
+    apply_migrations
     info "before: $(counts)"
     content_drift_check
     backup "course-$(printf '%s' "$1" | tr -c 'a-z0-9' '-')"
