@@ -241,13 +241,23 @@ GRAMMAR_SERIES: list[list[str]] = [
     ["ar-t1u2l4", "ar-t1u3l1", "ar-t1u3l2"],              # المدح والذم → نعم/بئس → حبذا
     ["ar-t2u1l1", "ar-t2u1l2", "ar-t2u1l3"],              # اسم الفاعل (3 installments)
     ["ar-t2u1l3", "ar-t2u2l1"],                            # اسم الفاعل → صيغ المبالغة (محوَّلة عنه)
+    # the derivational-morphology family, completed per the pedagogical
+    # review (arabic-book-review, 2026-07-30): مبالغة → اسم مفعول → زمان
+    # ومكان → مراجعتهما → اسم الآلة
+    ["ar-t2u2l1", "ar-t2u2l2"],                            # صيغ المبالغة → اسم المفعول
+    ["ar-t2u2l2", "ar-t2u2l3"],                            # اسم المفعول → اسما الزمان والمكان
     ["ar-t2u2l3", "ar-t2u3l1"],                            # اسما الزمان والمكان → مراجعتهما
+    ["ar-t2u3l1", "ar-t2u3l2"],                            # المراجعة → اسم الآلة
     ["ar-t2u3l3", "ar-t2u3l4"],                            # أسلوب التفضيل → صوغه
 ]
-# الإملاء builds cumulatively through each term (the همزة متوسطة seats are
-# drilled seat-by-seat lesson after lesson). Chained per TERM in book order;
-# the review pass judges every edge and can veto.
-SPELLING_CHAIN_PER_TERM = True
+# الإملاء: the ONLY chained lessons are the همزة متوسطة seat sequence of
+# T1U1, which genuinely builds seat-by-seat (واو → سطر). The former
+# per-term book-order chains were VETOED by the pedagogical review
+# (2026-07-30): 14 of them linked lessons with no recorded spelling
+# dependency — order is not dependency.
+SPELLING_SERIES: list[list[str]] = [
+    ["ar-t1u1l1", "ar-t1u1l2", "ar-t1u1l3"],
+]
 
 
 def relationship_edges(present_ids: list[str]) -> list[dict]:
@@ -268,12 +278,9 @@ def relationship_edges(present_ids: list[str]) -> list[dict]:
     for series in GRAMMAR_SERIES:
         for prev, nxt in zip(series, series[1:]):
             add(prev, nxt, 4)
-    if SPELLING_CHAIN_PER_TERM:
-        for term in (1, 2):
-            term_lessons = [i for i in present_ids if slug_of(i)[3] == term]
-            term_lessons.sort(key=lambda i: (slug_of(i)[1], slug_of(i)[2]))
-            for prev, nxt in zip(term_lessons, term_lessons[1:]):
-                add(prev, nxt, 5)
+    for series in SPELLING_SERIES:
+        for prev, nxt in zip(series, series[1:]):
+            add(prev, nxt, 5)
     return edges
 
 
@@ -423,6 +430,20 @@ def rederive_agrees(q: dict, verdicts: dict[str, dict]) -> bool:
             and _base_sign(v.get("sign", "")) == _base_sign(a.get("sign", "")))
 
 
+def _normalize_spec_rule_refs(spec, clause_ids: dict[str, str]):
+    """Interactive specs arrive with conveyor-local rule ids (R8); everything
+    else in the system cites canonical clause ids (gc:<slug>:r8) — the review
+    caught the mismatch breaking the grammar_rules join. Rewritten in place,
+    recursively; unknown refs are left as-is for the human queue."""
+    if isinstance(spec, dict):
+        return {k: (clause_ids.get(v, v) if k == "rule_ref" and isinstance(v, str)
+                    else _normalize_spec_rule_refs(v, clause_ids))
+                for k, v in spec.items()}
+    if isinstance(spec, list):
+        return [_normalize_spec_rule_refs(v, clause_ids) for v in spec]
+    return spec
+
+
 def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
     """One conveyor lesson → (bundle fragment, content-file dict)."""
     meta = lesson["lesson"]
@@ -542,6 +563,23 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
 
     main_pid = passages[0]["id"] if passages else None
 
+    # ---------------- section-anchored page attribution ----------------
+    # The conveyor does not (yet) stamp a page on every vocab row / إملاء
+    # case; defaulting them to the passage page misattributed 8-10 rows per
+    # lesson by a full page (full-book review, 2026-07-30). The segmenter DOES
+    # record every printed section's page — anchor to the matching section.
+    def section_page(*needles: str, fallback: int) -> int:
+        for s in seg.get("sections") or []:
+            title = s.get("title") or ""
+            if any(n in title for n in needles):
+                return int(s["printed_page"])
+        return fallback
+
+    vocab_page = section_page("اسأل", "ناقش", "تذوق", "معاني",
+                              fallback=passages[0]["source_page"] if passages else 0)
+    spelling_page = section_page("إملاء", "الكتابة",
+                                 fallback=passages[-1]["source_page"] if passages else 0)
+
     # ---------------- grammar rule ----------------
     gslug = f"munada" if "منادى" in art["grammar"]["topic"] else f"gr{unit_no}"
     topic_slug = re.sub(r"[^a-z0-9]+", "-", f"{slug}")
@@ -576,7 +614,7 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
             cases.append({"id": f"sc:{topic_slug}:{j}", "condition_ar": cond,
                           "written_as_ar": written,
                           "examples_ar": [store_form(x) for x in c.get("examples", [])],
-                          "source_page": passages[-1]["source_page"] if passages else 0})
+                          "source_page": spelling_page})
         spelling_rules.append({
             "id": sp_id, "label_ar": store_form((art.get("spelling") or {}).get("topic")
                                                 or "الإملاء"),
@@ -595,7 +633,7 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
             "antonym_ar": store_form(v["antonym"]) if v.get("antonym") else None,
             "authored": bool(v.get("authored")) or bool(v.get("antonym")),
             "passage_ref": main_pid,
-            "source_page": passages[0]["source_page"] if passages else 0,
+            "source_page": vocab_page,
         }.items() if val is not None})
 
     # ---------------- rhetoric ----------------
@@ -850,7 +888,8 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
         "enrichment": [], "misconceptions": [],
         "interactives": [
             {"lo": f"lo:{slug}-{ {'extract_spans':3,'style_purpose':3,'irab_builder':4,'hamza_seat':5,'term_match':2}.get(i['kind'], 1) }",
-             "kind": i["kind"], "prompt_ar": i["prompt_ar"], "spec": i["spec"]}
+             "kind": i["kind"], "prompt_ar": i["prompt_ar"],
+             "spec": _normalize_spec_rule_refs(i["spec"], clause_ids)}
             for i in lesson["interactives"]["interactives"]
         ],
         "passages": [

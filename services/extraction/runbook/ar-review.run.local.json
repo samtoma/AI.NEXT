@@ -1,0 +1,1201 @@
+{
+ "audits": [
+  {
+   "slug": "ara1-1",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "unsupported_by_page",
+     "item_id": "arabic-t1.json → spelling_rules:sp:ara1-1-hamza (sc:ara1-1:1 حتى sc:ara1-1:8)",
+     "claim": "ثمانية من عشر حالات همزة متوسطة (sc:ara1-1:1 إلى sc:ara1-1:8، وتشمل جدول الهمزة على الواو بكامله: يُؤْذي/رُؤْية/مُؤْتمر، فُؤاد/سُؤال/يُؤدُّون، تفاؤل/جزاؤه، يرؤف/يلؤم، تباطؤ/تجرؤ، هؤلاء/يؤم/خطوه/يقرؤه — بالإضافة إلى حالتَي الألف: بدأت/يتأثرون/امتلأت، ونشأة) مُسنَدة كلها إلى source_page:13، بينما هذا الجدول والقاعدتان مطبوعتان فعليًّا في صفحة 12 من الكتاب (آخر الدرس: «تُرسَمُ الهمزةُ المتوسطةُ على الواو إذا كانت» ثم «تَذَكَّرْ أنّ ... تُرسَمُ على الألف إذا كانت: مفتوحة وقبلها فتح / مفتوحة وقبلها ساكن»). فقط الحالتان sc:ara1-1:9 (مأرب) و sc:ara1-1:10 (مآرب/مآثر) هما فعلًا في صفحة 13. أي أن 8 من 10 سجلات إسناد صفحة خاطئة بشكل منهجي (فارق صفحة كاملة)، وهذا يضلل أي مراجع يحاول التحقق من مصدر القاعدة — بما في ذلك السؤال q:ara1-1:q16 الذي يستشهد بـ case_id: sc:ara1-1:7 وهو مبني على قاعدة صفحتها الحقيقية 12 لا 13.",
+     "evidence": "صفحة 12 (آخر سطورها): جدول «تُرسَمُ الهمزةُ المتوسطةُ على الواو إذا كانت» بأعمدته الستة، يليه «تَذَكَّرْ أنّ (الهمزة المتوسطة) تُرسَمُ على الألف إذا كانت: - مفتوحةً وقبلها فتح مثل (بَدَأَتْ - يَتَأَثَّرُونَ - امْتَلَأَتْ). - مفتوحةً وقبلها ساكن مثل (نَشْأَة).» صفحة 13 تبدأ بـ «ساكنةً وقبلها فتح: (مَأرَب)» ثم الملحوظة عن (مآرب - مآثر) فقط."
+    },
+    {
+     "severity": "medium",
+     "kind": "wrong_answer",
+     "item_id": "q:ara1-1:q12",
+     "claim": "تعليل إعراب «راغبين» في «يا راغبين في نهضةِ مصرَ» يقول: «منادى شبيه بالمضاف منصوب وعلامة نصبه الياء نائبة عن الفتحة لأنه ملحق بجمع المذكر السالم». لكن «راغبين» ليست من الملحقات بجمع المذكر السالم (كـ: أهلون، عالمون، سنون، بنون، أولو، ذوو)، بل هي جمع مذكر سالم حقيقي/قياسي لأنها اسم فاعل (صفة لمذكر عاقل خالية من التاء والتركيب) من الفعل الثلاثي «رغب» فتستوفي شروط الجمع القياسي كاملة. القاعدة المستشهد بها gc:ara1-1:r12 نفسها لا تذكر كلمة «ملحق» إطلاقًا، بل تقول فقط «ومع جمع المذكر السالم مثل: يا طالبي العلم» — فكلمة «ملحق» مُقحَمة وغير مدعومة لا بالقاعدة ولا بالتصنيف الصرفي الصحيح للكلمة. علامة النصب (الياء) نفسها صحيحة، لكن التعليل الذي سيحفظه الطالب خاطئ.",
+     "evidence": "صفحة 11: «...ومع جمع المذكر السالم مثل: يا طالبي العلم» (gc:ara1-1:r12) — لا ذكر لـ«ملحق» هنا. صفحة 12 مثال الكتاب نفسه: «راغبين: منادى شبيه بالمضاف؛ لأنه جاء بعده ما يُحدّد معناه وهو الجارّ والمجرور» — الكتاب يعلّل التصنيف بالإضافة الشبيهة لا بكون الكلمة ملحقة."
+    },
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "arabic-t1.json → vocab_items (البنود السبعة كلها الخاصة بـ ara1-1: هونًا، اصرف، غرامًا، قوامًا، مُقامًا، لم يقتروا، أثامًا)",
+     "claim": "كل بنود vocab_items لدرس ara1-1 مُسنَدة إلى source_page:8، بينما جدول «معاني المفردات» الذي تُستقى منه هذه المعاني مطبوع فعليًّا في صفحة 9 (صفحة 8 لا تحتوي أي جدول مفردات، بل فقط عنوان الدرس ونص الآيات وصندوقي أهداف الدرس والقضايا المتضمنة). والدليل الداخلي على الخطأ: الأسئلة المشتقة من نفس هذه المفردات (q:ara1-1:q01 و q:ara1-1:q02) تُسنِد نفسها بشكل صحيح إلى source_page:9، مما يكشف تناقضًا داخل نفس الملف.",
+     "evidence": "صفحة 8: عنوان «عِبادُ الرَّحمنِ» + نص الآيات + «أهداف الدرس» + «القضايا المتضمنة» فقط، بلا جدول مفردات. صفحة 9: جدول «معاني المفردات» يحوي بالضبط نفس السبع كلمات ومعانيها (هونًا: بسكينة ووقار؛ اصرف: ابعد؛ غرامًا: لازمًا؛ قوامًا: وسطًا؛ مُقامًا: موضع الاستقرار والإقامة؛ لم يقتروا: لم يضيقوا؛ أثامًا: جزاء الإثم)."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "rh:ara1-1:4 (لا يقابله أي سؤال في arabic-t1.json)",
+     "claim": "الملاحظة البلاغية rh:ara1-1:4 («يمشون، يبيتون، يقولون: أفعال مضارعة تفيد الاستمرار والتجدد») مُستخرَجة بشكل صحيح ومُسندة لصفحة 9، وهي مطابقة تمامًا لتدريب مباشر في الكتاب نفسه (صفحة 10، السؤال ٣-أ: «ما دلالةُ الأفعالِ المضارعةِ في الآياتِ؟»). ومع ذلك لا يوجد أي سؤال في حزمة الأسئلة (q01–q16) يختبر هذه النقطة، بينما كل الملاحظات البلاغية الشقيقة الأخرى (rh:2 اصرف، rh:3 التضاد، rh:5 إنّ) حصلت كل منها على سؤال مطابق (q06، q07، q08 على الترتيب). هذا يمثل ثغرة تغطية لتدريب فعلي مطبوع في الكتاب.",
+     "evidence": "صفحة 9، بند مواطن الجمال الرابع: «(يَمْشُونَ، يَبيتون، يَقولون): أفعالٌ مضارعةٌ تفيدُ الاستمرارَ والتجدُّد.» وصفحة 10: «٣- اتلُ الآياتِ تلاوةً صامتةً، ثم ناقش ما يلي: أ- ما دلالةُ الأفعالِ المضارعةِ في الآياتِ؟»"
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "تدريب صفحة 13 — «أجِبْ: لماذا رُسِمَت الهمزةُ بهذه الصورةِ في الكلماتِ الآتية: (رَأْس - رَأْب - مَأْثور - سَأَل - رَأْفَت)؟»",
+     "claim": "الكتاب يتضمن تدريبًا صريحًا (أجب) لخمس كلمات همزة متوسطة على الألف/ساكنة (رأس، رأب، مأثور، سأل، رأفت) لم يُمثَّل بأي سؤال أو عنصر تفاعلي في content/ara1-1.json ولا في arabic-t1.json. عناصر hamza_seat في ملف المحتوى (يُؤْذي، سُؤال، هؤلاء، بدأت، نشأة) وسؤال الإملاء q15/q16 لا تغطي أيًّا من هذه الكلمات الخمس أو حالة «ساكنة وقبلها فتح» التي تمثّلها كلمة «رأس/رأب/رأفت» تحديدًا.",
+     "evidence": "صفحة 13: «أجِبْ: لماذا رُسِمَت الهمزةُ بهذه الصورةِ في الكلماتِ الآتيةِ: (رَأْس - رَأْب - مَأْثور - سَأَل - رَأْفَت)؟» — لا وجود لهذه الكلمات الخمس في أي بند من بنود content/ara1-1.json أو arabic-t1.json."
+    },
+    {
+     "severity": "low",
+     "kind": "other",
+     "item_id": "content/ara1-1.json → interactives[lo:ara1-1-4].spec.answer.rule_ref",
+     "claim": "عنصر irab_builder التفاعلي (الكلمة المستهدفة: شبابَ) يستشهد بـ rule_ref: \"R8\" بينما كل استشهادات القواعد الأخرى في النظام (بما فيها q:ara1-1:q10 لنفس الحالة تقريبًا) تستخدم الصيغة القانونية \"gc:ara1-1:r8\". محتوى القاعدة نفسه (الفتحة مع المفرد) صحيح وينطبق على «شبابَ»، لكن صيغة المعرّف غير متطابقة مع بقية النظام مما قد يكسر الربط الآلي بجدول grammar_rules.",
+     "evidence": "content/ara1-1.json، spec.answer.rule_ref = \"R8\"، مقارنة بـ arabic-t1.json حيث كل rule_ref مكتوبة بصيغة \"gc:ara1-1:rN\" (مثل q:ara1-1:q10: \"rule_ref\": \"gc:ara1-1:r8\")."
+    }
+   ]
+  },
+  {
+   "slug": "ara1-2",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "ara1-2:page16:ex3-b",
+     "claim": "The lesson's own stated objective \"يميزَ بين الحقيقة والرأي فيما يستمع إليه\" (distinguish fact from opinion) — printed in the أهداف الدرس box on page 14 — and its matching exercise on page 16, item (ب): \"(إنَّ شَرَّ الجُناةِ في الأرضِ نفسٌ تتوقَّى قبلَ الرَّحيلِ الرحيلا). هل هذا البيت يُعبِّر عن (حقيقة أم رأي) ولماذا؟\", have zero representation anywhere in the extracted output — no question in arabic-t1.json, no rhetoric_note, no interactive touches this skill or this line as fact-vs-opinion.",
+     "evidence": "Printed page 14 objectives list includes \"يميزَ بين الحقيقة والرأي فيما يستمع إليه\" as a named lesson goal; printed page 16 exercise ٣(ب) explicitly asks students to judge whether the verse is حقيقة or رأي. Neither the exposition, key_terms, rhetoric_notes (rh:ara1-2:1-5), nor questions q:ara1-2:q01-q16 address this stated objective/exercise at all."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "ara1-2:page16:ex3-d",
+     "claim": "Exercise ٣(د) on page 16 asks for the singular of «الجُناة» (مفرد الثانية = الجاني) and the antonym of «الرحيل» (مضاد الثالثة) in addition to the meaning of «داء». Only the meaning of «داء» (q:ara1-2:q01) was extracted; the مفرد/مضاد sub-parts are absent from vocab_items and from all 16 questions.",
+     "evidence": "Printed page 16: «داءٌ - الجُناةُ - الرحيلُ» هاتِ معنى الأولى، ومفرد الثانية، ومضادَّ الثالثة في جملٍ من عندك. vocab_items in arabic-t1.json only lists داء، عليلا، تتوقى، إكليلا — no entry for singular of الجناة or antonym of الرحيل, and no question tests them."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "ara1-2:page16:ex3-e",
+     "claim": "Exercise ٣(هـ) on page 16 explicitly asks students to identify the beauty (الجمال) of «هو عبءٌ على الحياة» — unit 4 of the poem. None of the five extracted rhetoric_notes (rh:ara1-2:1 through rh:ara1-2:5, covering units 1,1,2,3,6) touch unit 4 at all, and no question does either — this couplet has no rhetorical/aesthetic annotation despite the textbook flagging it as a beauty point to analyze.",
+     "evidence": "Printed page 16: «هو عِبْءٌ على الحياة» ما الجمالُ الذي تراه في هذا التعبير؟ — referring to poem unit 4 (\"هُوَ عِبْءٌ عَلَى الحَيَاةِ ثَقِيل مَنْ يَظُنُّ الحَيَاةَ عِبْئًا ثَقِيلَا\"). rhetoric_notes in arabic-t1.json only cover unit_n 1,1,2,3,6 — unit 4 is skipped entirely."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q:ara1-2:q01",
+     "claim": "Questions q:ara1-2:q01 through q:ara1-2:q05 (5 items) all cite source_page: 15, but their grounding content is actually printed on page 14, not 15: q01/q02 are grounded in the vocab table entry for «داء» (vocab_items records this same fact at source_page:14), and q03/q04/q05 quote poem units 1, 3 and 7, which are the poem itself, printed on page 14. Page 15 contains only «شرح الأبيات» and «مواطن الجمال في الأبيات» — no vocab table and no poem text.",
+     "evidence": "Printed page 14 = the قصيدة \"كُنْ جَمِيلًا\" plus the «معاني المفردات» vocabulary table (داء، عليلا، تتوقى، إكليلا). Printed page 15 = «شرح الأبيات» + «مواطن الجمال في الأبيات» + «اسأل وناقش». vocab_items entries for the same words correctly list source_page:14, contradicting the questions' source_page:15."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "sc:ara1-2:1",
+     "claim": "All five spelling_rules cases (sc:ara1-2:1 through sc:ara1-2:5, under sp:ara1-2-hamza) cite source_page: 14, but the «كتابة الهمزة المتوسطة على السطر» rule they encode is printed on page 18, not 14. Page 14 contains only the poem and the vocabulary table, no spelling/hamza content whatsoever.",
+     "evidence": "Printed page 18 header: «٥ الكتابة: أ- الإملاء: كتابة الهمزة المتوسطة على السطر» with the exact rule bullets and worked examples (براءة، توءمان، تبوَّءك، جزءان، جاءوا) matching sc:ara1-2:1-5 verbatim. The related questions q:ara1-2:q15 and q:ara1-2:q16, grounded in the same material, correctly cite source_page:18 — contradicting the spelling_rules records' source_page:14."
+    }
+   ]
+  },
+  {
+   "slug": "ara1-3",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "vocab_items:ara1-3 (منار، طوائف، العتاد، يرتادها)",
+     "claim": "كل مفردات ara1-3 الأربع في arabic-t1.json (منار، طوائف، العتاد، يرتادها) مُسندة إلى passage_ref: \"t:ara1-3:001\" وsource_page: 19، لكن أيًّا من الكلمات الأربع لا يرد إطلاقًا في نص الكنيسة المعلقة (الفقرة 001، صفحة 19).",
+     "evidence": "الكلمات الأربع كلها واردة حرفيًّا في نص قلعة قايتباي (الفقرة 002، صفحة 20 المطبوعة): «مكانَ مَنارِ الإسْكَندَرِيَّةِ»، «فَجَعَلوا بِها طَوائِفَ مِنَ الجُندِ»، «وشَحَنَها بِالسِلاحِ والعَتادِ»، «يَرتادُها السائِحونَ». الصحيح: passage_ref=\"t:ara1-3:002\"، source_page=20."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q:ara1-3:q15",
+     "claim": "السؤال عن كلمة (نوتردام) مُسند إلى source_page: 20، لكن نص (نوتردام) لا يظهر على صفحة 20 المطبوعة (وهي مخصصة كليًّا لنص قلعة قايتباي).",
+     "evidence": "صندوق «اقرأ واستمع: نوتردام» يظهر فعليًّا على الصفحة المطبوعة 23 (PDF ص24)، وهو المكان الوحيد الذي يرد فيه هذا المحتوى في نطاق الدرس."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q:ara1-3:q13",
+     "claim": "سؤال الهمزة المتطرفة مُسند إلى source_page: 22، لكن باب (الكتابة: أ- الإملاء) الذي يحوي هذه القاعدة والأمثلة يقع على الصفحة المطبوعة 23، لا 22.",
+     "evidence": "الصفحة 22 المطبوعة تحوي فقط باب النحو (تابع المنادى: ثالثاً نداء ما فيه ال). قاعدة الهمزة المتطرفة وأمثلتها (قرَأ - شاطئ - لؤلؤ - عبْء) تظهر تحت عنوان «الكتابة» في الصفحة 23 (PDF ص24)، وهو ما يطابقه spelling_rules في arabic-t1.json (source_page: 23 لكل الحالات sc:ara1-3:1..5) — أي أن مصدر السؤال نفسه (arabic-t1.json) متناقض داخليًّا مع رقم الصفحة المذكور في هذا السؤال بعينه."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q:ara1-3:q06",
+     "claim": "سؤال شرح قول لقمان الحكيم مُسند إلى source_page: 19، لكن صندوق «قرأت لك» الذي يحوي هذا القول يقع فعليًّا على الصفحة المطبوعة 21، وليس ضمن نص صفحة 19 (الكنيسة المعلقة).",
+     "evidence": "القول («القلوب مزارع...») يظهر في صندوق منفصل بعنوان «قرأت لك» على الصفحة المطبوعة 21 (PDF ص22)، بجانب قسم «اسأل وناقش»، لا في نص صفحة 19."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "rhetoric_notes: rh:ara1-3:3 و rh:ara1-3:4",
+     "claim": "ملاحظتا البلاغة الخاصتان بعبارتَي «أهمّ القلاع» و«يرتادها السائحون» (المأخوذتين من نص قلعة قايتباي، صفحة 20) مُسندتان بحقل passage_ref إلى \"t:ara1-3:001\" وهو معرّف فقرة الكنيسة المعلقة (صفحة 19)، لا فقرة قلعة قايتباي.",
+     "evidence": "التعبيران «ولأنَّ القلعةَ تُعَدُّ مِنْ أهمِّ القلاعِ...» و«وتُعَدُّ القلعةُ مِنْ أهمِّ المناطقِ الأثريَّةِ...يَرتادُها السَّائحونَ» واردان حرفيًّا فقط في نص قلعة قايتباي (وحدة الفقرة 002)، ولا يردان في نص الكنيسة المعلقة (الفقرة 001). حقل source_page لهما صحيح (20) لكن passage_ref خطأ."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "content/ara1-3.json interactives[1] (extract_spans، lo:ara1-3-3)",
+     "claim": "تفاعلية استخراج «الأفعال المبنية للمجهول» تشير إلى passage_id: \"ar-t1u1l1\"، وهو معرّف لا يطابق أيًّا من فقرات هذا الدرس (معرّفات الفقرات الفعلية هي t:ara1-3:001 حتى 004)، فالمرجع غير قابل للتحقق/الحل.",
+     "evidence": "مصفوفة passages في نفس الملف تستخدم فقط المعرّفات t:ara1-3:001, 002, 003, 004. \"ar-t1u1l1\" لا يظهر في هذه القائمة إطلاقًا. إذا كان القصد شمول نص قلعة قايتباي (الفقرة 002) أيضًا، فإن قائمة targets تفوت أفعالًا مبنية للمجهول إضافية فيه مثل «بُنِيَ» (في: وَقَد بُنِيَ البُرجُ بِالحَجَرِ الجِيرِيِّ) و«تُعَدُّ» (وردت مرتين: ولأنَّ القلعةَ تُعَدُّ... / وتُعَدُّ القلعةُ...)."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "page:21-22 (اسأل وناقش، البند هـ)",
+     "claim": "سؤالان تعليميان جوهريان من نشاط «اسأل وناقش» غير ممثَّلين إطلاقًا في vocab_items أو questions: (١) «ماذا تعني كلمة (حِصْن) في الموضوع؟» (صفحة 21)، و(٢) البند هـ: «(حصْن - الروايات - القديم) هاتِ جَمعَ الأولى ومفرد الثانية ومضادّ الثالثة في جملٍ من عندك» (صفحة 22) — وهو تمرين جمع/مفرد/ضد مشابه تمامًا لنمط الأسئلة اللغوية الموجودة فعلًا (q09، q10) لكنه غائب.",
+     "evidence": "كلمة «حِصْن» ترد في نص الكنيسة المعلقة (لِلحِصنِ الرُّومانِيِّ / حِصن بابليون) وهي مطلوبة صراحةً في قسم «اسأل وناقش» بصفحة 21 والبند (هـ) بصفحة 22 في الكتاب المطبوع، لكنها غير موجودة في جدول key_terms أو vocab_items أو في أي سؤال مستخرَج لهذا الدرس."
+    },
+    {
+     "severity": "low",
+     "kind": "missing_content",
+     "item_id": "content/ara1-3.json misconceptions",
+     "claim": "مصفوفة misconceptions فارغة رغم أن نص exposition نفسه يذكر صراحةً مغالطة شائعة لدى الطلاب في هذا الدرس ولم تُبنَ منها فقرة misconception مهيكلة.",
+     "evidence": "نص subtopics[0].exposition يقول حرفيًّا: «وهذه نقطة يقع فيها كثير من الطلاب فيظنون أن الاسم المعرَّف نفسه هو المنادى» — وهي مغالطة نحوية محددة (الخلط بين أيّ والاسم المعرّف بـ(ال) كمنادى حقيقي) صالحة تمامًا لتكون بندًا في misconceptions، لكن الحقل تُرك فارغًا ([])."
+    }
+   ]
+  },
+  {
+   "slug": "ara2-1",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "missing_content",
+     "item_id": "gr:ara2-1 (grammar_rules.types_tree) / printed p.28",
+     "claim": "الدرس عنوانه \"البدل وأنواعه\" لكن types_tree في قاعدة gr:ara2-1 يحتوي نوعًا واحدًا فقط (بدل مطابق) رغم أن نفس فقرة الأمثلة المطبوعة في الصفحة تعرض صراحة ثلاثة أنواع من البدل، ونفس المخرجات (content/ara2-1.json وquestion q14) تستخدم مصطلحي \"بدل بعض من كل\" و\"بدل اشتمال\" كخيارات دون أن يكونا معرَّفين أو مُدرَّسين في أي مكان.",
+     "evidence": "الصفحة ٢٨ تعرض الفقرة: «قال الوالدُ جمالٌ لابنه عادل: أراك قرأتَ الكتابَ نِصْفَهُ، فهل أعجبكَ؟ نعم أعجبني الكتابُ أفكارُهُ وأسلوبُه» ثم تشرح صراحة: «(نصفه) في المثال الثاني، الكتاب مبدل منه ونصفه بدل منه، وفي المثال الثالث (أفكاره) بدل و(الكتاب) بدل منه» ويظهر ذلك في جدول الاستنتاج (نصفُه/الكتابُ، أفكاره/الكتابُ) — أي أن الكتاب يُدرِّس بدل بعض من كل وبدل اشتمال صراحةً بجانب بدل مطابق. لكن gr:ara2-1.types_tree.types يحوي عنصرًا واحدًا فقط (بدل مطابق)، وسؤال q:ara2-1:q14 يعرض \"بدل بعض من كل\" و\"بدل اشتمال\" كمشتتات (choices) دون أي تعريف أو قاعدة تدعمهما في المحتوى المستخرَج."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "arabic-t1.json vocab_items (تهذيب، النافع، مدافعة) — ara2-1",
+     "claim": "ثلاث من مفردات ara2-1 الخمس في vocab_items تحمل source_page=25 رغم أنها مطبوعة فعليًا في صفحة 26، وهذا يخالف حتى ما ورد في نفس الحزمة لأسئلة أخرى على نفس الكلمات.",
+     "evidence": "الكلمات «تهذيب» و«النافع» و«مدافعة» ترد في الفقرة الثانية من النص (اتقوا الله في الضعيفين...، ولا شيء أدخل في باب التقوى من تهذيب العقل... معرفة النافع، ومدافعة الرذائل) المطبوعة بالكامل في الصفحة ٢٦ (المطبوعة)، وليس ٢٥. والدليل على أن هذا خطأ حقيقي وليس اصطلاحًا: نفس الحزمة تسند q:ara2-1:q07 (تهذيب) وq:ara2-1:q13 (النافع) إلى source_page=26 بشكل صحيح، بينما vocab_items لنفس الكلمتين + مدافعة يسجّل 25."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "page 27 §3 — أسئلة الفهم القرائي",
+     "claim": "مجموعة أسئلة الفهم الأربعة المطبوعة تحت \"٣ اقرأ النص قراءة صامتة، ثم ناقش ما يلي\" (أ-د) غير ممثَّلة إطلاقًا في بنك الأسئلة المستخرج لـara2-1، رغم أنها من نفس نوع أسئلة الفهم القصيرة المستخرجة أصلاً (q15, q16).",
+     "evidence": "النص المطبوع صفحة ٢٧: «أ- ما طبيعةُ عصرنا الحالي، كما أشار الكاتبُ؟ ب- في النصِّ قضيةٌ اجتماعيةٌ، وضّحها، وبيّن رأيَك. جـ- كيف نجح الكاتبُ في الإقناع بأهميّةِ حُسنِ معاملةِ المرأة؟ د- المرأةُ الحرةُ المتعلمةُ أقدرُ على فَهم ما ينفعُها.» — لا يوجد أي سؤال بهذه الصياغة (أو مرادفة دقيقة لها) بين أسئلة q:ara2-1:q01 إلى q16."
+    },
+    {
+     "severity": "medium",
+     "kind": "other",
+     "item_id": "content/ara2-1.json → interactives[3] (irab_builder).spec.answer.rule_ref",
+     "claim": "حقل rule_ref في تفاعلية irab_builder يحمل قيمة نصية حرة \"R1، R2، R3\" لا تُطابق نظام معرّفات قواعد النحو المستخدم في بقية الحزمة (gc:ara2-1:r1/r2/r3)، فلا يمكن حلّها (resolve) للتحقق من الإسناد كما تُستخدم في q01/q02/q03.",
+     "evidence": "أسئلة الإعراب في arabic-t1.json (q:ara2-1:q01, q02, q03) تستخدم \"rule_ref\": \"gc:ara2-1:r3\" وهو معرّف صالح موجود في grammar_rules.clauses، بينما نفس نوع الحقل في content/ara2-1.json لتفاعلية جمالٌ يحمل \"R1، R2، R3\" كنص عربي عادي، وهو تنسيق مختلف وغير قابل للمطابقة الآلية مع gc:ara2-1:r1 / r2 / r3."
+    },
+    {
+     "severity": "low",
+     "kind": "bad_mapping",
+     "item_id": "q:ara2-1:q15",
+     "claim": "السؤال مسند إلى source_page=25 فقط رغم أن جزءًا جوهريًا من الإجابة (الاستشهاد بالحديث الشريف عن الضعيفين، وفكرة \"تعليمها\") مصدره الفقرة الثانية المطبوعة في صفحة 26 لا صفحة 25.",
+     "evidence": "إجابة السؤال: «...وقد أمر الحديث الشريف بالرفق بالضعيفين: المرأة واليتيم» — هذا الحديث يرد فقط في الفقرة الثانية (صفحة 26 المطبوعة)، ومفهوم \"تعليمها\" الوارد في نص السؤال ذاته مصدره أيضًا الفقرة الثانية (٬إعدادها بالتعليم والتربية٬) لا الفقرة الأولى (صفحة 25) التي يستشهد بها source_note (\"grounded in النص: الفقرة الأولى\")."
+    }
+   ]
+  },
+  {
+   "slug": "ara2-2",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "q:ara2-2:q04,q05,q06,q07,q08,q09,q10,q11,q12 (lo tags)",
+     "claim": "Learning-objective tags in the question bank are systematically shifted by one slot for two of the five LOs, so no question in the bank is actually tagged to the lesson's grammar objective. The vocabulary/lexical questions q04–q07 (مرادف نبوغها/أذهلت/أولى-تسخّر/أصرّت) all carry \"lo\": \"lo:ara2-2-4\", and the rhetoric/\"مواطن الجمال\" questions q08–q12 all carry \"lo\": \"lo:ara2-2-2\".",
+     "evidence": "The lesson's own LO nodes (bundle b['nodes']) define lo:ara2-2-2 = \"معاني المفردات\" (\"يستنتج معنى كلمة جديدة من خلال السياق\"), lo:ara2-2-3 = \"مواطن الجمال\", and lo:ara2-2-4 = \"أنواع البدل\" (\"يتعرف البدل وأنواعه\"). q04 (\"ما مرادف كلمة نبوغها\") is unambiguously a vocab question yet is tagged lo:ara2-2-4 (grammar), and q08 (\"وضّح نوع الأسلوب... مبيّنًا الغرض منه\") is unambiguously a rhetoric question yet is tagged lo:ara2-2-2 (vocab). Net effect: zero questions in the bank are tagged to lo:ara2-2-4, the lesson's actual grammar LO — any per-objective remediation or mastery reporting for this lesson would be built on the wrong item pools."
+    },
+    {
+     "severity": "high",
+     "kind": "missing_content",
+     "item_id": "lo:ara2-2-4 / gc:ara2-2:r3,r4",
+     "claim": "The lesson's headline new grammar content — بدل بعض من كل (مثال: نصفه) and بدل اشتمال (مثال: أسلوبه) — has no graded practice item anywhere in the extraction (neither in the question bank nor in the content file's interactives). The single irab_builder exercise present only drills بدل مطابق (بدل كل من كل), which the lesson's own tamheed says was already taught in the *previous* lesson.",
+     "evidence": "Content file tamheed/exposition state explicitly: \"نتعرف اليوم على النوعين الآخرين من أنواعه الثلاثة: بدل بعض من كل، وبدل اشتمال\" and grammar_rules gc:ara2-2:r3/r4 (source_page 31) give the نصفه/أسلوبه examples for exactly these two new types. Yet the only irab_builder interactive in ara2-2.json tests the word «موسى» as بدل مطابق (rule_ref R1 = بدل كل من كل), and the question bank (arabic-t1.json) contains no item at all for either new type. The two concepts this lesson exists to teach are entirely unassessed."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "vocab_items:أذهلت,تسخّر,عقد; rh:ara2-2:3; rh:ara2-2:4; q:ara2-2:q06",
+     "claim": "Several records mis-attribute page-30 content to page 29 / passage t:ara2-2:001. vocab_items entries for \"أذهلت\", \"تسخّر\", and \"عقد\" all list source_page:29 and passage_ref:\"t:ara2-2:001\", but all three words occur only on printed page 30, inside passage t:ara2-2:002. Similarly, rhetoric_notes rh:ara2-2:3 and rh:ara2-2:4 correctly give source_page:30 but wrongly carry passage_ref:\"t:ara2-2:001\" (their expressions are only in t:ara2-2:002). Question q06 also cites source_page:29 for a pair of words even though one of them (\"تُسَخَّر\") is only on page 30.",
+     "evidence": "Printed page 30 text: \"...وأذْهَلَت العالَم كُلَّه بنتائج أبحاثها...وكانَت تَأملُ أن تُسَخَّر عُلومَها لخَيْر البَشَريَّة...فَدَعَت إلى عَقْد مُؤتمر دَوْلِيّ...\" — this is passage t:ara2-2:002 unit 1, not t:ara2-2:001 (which ends on page 29 with \"...وَعادَت بَعْدَ انْتِهاء مُدَّةِ البَعْثَةِ إلى مِصْرَ\"). The question bank itself gets it right elsewhere (q05 and q10 and q15 correctly cite source_page:30 for these very same words/expressions), confirming the vocab_items/rhetoric_notes/q06 page-29 attributions are wrong, not a stylistic choice."
+    },
+    {
+     "severity": "low",
+     "kind": "text_infidelity",
+     "item_id": "q:ara2-2:q06",
+     "claim": "q06's accepted answers all spell the gloss for «تُسَخَّر» as \"تذلل وتهيأ\", but the canonical vocab table (and content file key_terms) spell it \"تذلل وتهيئ\" — the accept-list never includes the textbook's own spelling.",
+     "evidence": "Printed page-30 vocab table row: \"تذلل وتهيئ | تسخّر\"; content/ara2-2.json key_terms: {\"term_ar\":\"تسخّر\",\"definition_ar\":\"تذلل وتهيئ\"}. q06 answer.accept lists only \"...تُسَخَّر: تذلل وتهيأ\", \"...تسخر = تذلل وتهيأ\" (ئ→أ ending changed in every variant), so a student who answers with the book's exact wording would not match any accept string verbatim."
+    }
+   ]
+  },
+  {
+   "slug": "ara2-3",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "ara2-3:interactives[extract_spans]",
+     "claim": "التفاعلية من نوع extract_spans (الهدف lo:ara2-3-3، مطالبة استخراج زوجَي التضاد) تشير إلى spec.passage_id = \"t:ar-poem-alilm-waljahl:001\"، وهذا المعرّف غير موجود إطلاقًا في مصفوفة passages بالملف — المقطع الوحيد المعرَّف هناك معرّفه \"t:ara2-3:001\". أي محرك تشغيل يحاول تحميل نص المقطع لهذه التفاعلية عبر passage_id لن يجد تطابقًا، فتفشل التفاعلية في الظهور/العمل رغم أن الكلمات المستهدَفة (يرفعها/يخفض/منطق/صم) صحيحة فعلاً ضمن نص t:ara2-3:001.",
+     "evidence": "services/extraction/seed/content/ara2-3.json → interactives[1].spec.passage_id=\"t:ar-poem-alilm-waljahl:001\" مقابل passages[0].id=\"t:ara2-3:001\" (السطر 88 مقابل السطر 156 من الملف)."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q:ara2-3:q4 / q:ara2-3:q5 / q:ara2-3:q6 / q:ara2-3:q7",
+     "claim": "أربعة أسئلة تقتبس نص الأبيات حرفيًّا (q4: البيت٢، q5: الأبيات٦-٨، q6: نص البيت٤ في متن السؤال، q7: نص البيت٣ في متن السؤال) لكنها موسومة بـ source_page: 33. النص الحرفي للأبيات مطبوع حصرًا في صفحة الكتاب 32 (حيث القصيدة الكاملة)؛ صفحة 33 تحوي فقط جدول معاني المفردات وشرح الأبيات (نثرًا لا اقتباسًا) ومواطن الجمال (اقتباسات جزئية محدودة لا تشمل هذه الأشطر بنصها الكامل). بند الإسناد إلى الصفحة غير دقيق لهذه البنود الأربعة تحديدًا.",
+     "evidence": "صفحة الكتاب 32 (PDF ص33): القصيدة كاملة (الأبيات ١-٩) بما فيها \"وَالعِلْمُ مالُ المُعْدَمينَ...\"، \"مِنْ راكِبٍ مَتْنَ الرِّياحِ...\"، \"وَالعِلْمُ يَرْفَعُها أَجَلَّ مَقامِ...\"، \"وَأَخُو الجَهالَةِ فِي الحَياةِ...\". صفحة الكتاب 33 (PDF ص34): جدول معاني المفردات + شرح الأبيات نثرًا + مواطن الجمال (تقتبس فقط شذرات محدودة مثل \"الجهل يخفض - العلم يرفع\" و\"أخو الجهالة كأنه ساع\"، وليس الأشطر كاملة كما وردت في متن الأسئلة)."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "ara2-3:interactives[irab_builder]",
+     "claim": "التفاعلية irab_builder (نفس مثال q:ara2-3:q3: أعجَبَتْني الفتاةُ خُلُقُها) تضع answer.rule_ref = \"R1\"، بينما المعرّف القانوني للقاعدة في مصدر الحزمة (arabic-t1.json → grammar_rules) هو \"gc:ara2-3:r1\"، وهو نفسه rule_ref المستخدَم في سؤالي q2 وq3. عدم تطابق الصيغتين (\"R1\" مقابل \"gc:ara2-3:r1\") يكسر أي ربط آلي بين إجابة التفاعلية ونص القاعدة الكامل عند العرض للطالب أو عند التصحيح المرجعي.",
+     "evidence": "content/ara2-3.json → interactives[3].spec.answer.rule_ref=\"R1\" (سطر ~149) مقابل arabic-t1.json → grammar_rules[0].clauses[0].id=\"gc:ara2-3:r1\" ونفس القيمة في questions q2/q3.answer.rule_ref."
+    },
+    {
+     "severity": "low",
+     "kind": "other",
+     "item_id": "ara2-3:interactives[irab_builder].spec.answer.sign_kind",
+     "claim": "نفس التفاعلية تصف علامة الرفع بأنها \"علامة أصلية\"، بينما سؤال q:ara2-3:q3 لنفس المثال بالضبط (خُلُقُها) يصفها بـ \"ظاهرة\" (وسطح الإجابة: \"...وعلامة رفعه الضمة الظاهرة\"). \"أصلية\" و\"ظاهرة\" محوران تصنيفيان مختلفان في الإعراب (أصلية/فرعية مقابل ظاهرة/مقدَّرة) وليسا مترادفين، فاستخدامهما لوصف نفس الحالة يُنتج مصطلحًا غير متسق قد يظهر للطالب بصياغتين متعارضتين لنفس السؤال.",
+     "evidence": "content/ara2-3.json → interactives[3].spec.answer.sign_kind=\"علامة أصلية\" مقابل arabic-t1.json → q:ara2-3:q3.answer.sign_kind=\"ظاهرة\" وsurface_ar=\"بدل اشتمال مرفوع وعلامة رفعه الضمة الظاهرة\"."
+    }
+   ],
+   "verdict": "ISSUES"
+  },
+  {
+   "slug": "ara2-4",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "ara2-4:content:interactive:extract_spans (lo:ara2-4-3)",
+     "claim": "تفاعلية استخراج الاستعارة والكناية تشير إلى passage_id خاطئ من درس آخر (t:ara1-5:001) بدلاً من مقطع الدرس الحالي (t:ara2-4:001)، مما يكسر ربط النص المصدري وقت التشغيل.",
+     "evidence": "في seed/content/ara2-4.json، التفاعلية kind=extract_spans (prompt: \"استخرِج من النصِّ عبارتين تصوِّرانِ فقدَ برايل بصرَه...\") تحمل spec.passage_id = \"t:ara1-5:001\"، بينما جميع مقاطع الدرس المعرَّفة في نفس الملف تحمل معرِّف t:ara2-4:001/002/003. الأهداف (فخبا النور منهما / خفيف الروح حاد الذكاء) موجودة فعلاً في t:ara2-4:001 لا في ara1-5."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "page:39 (المادة 81 من دستور 2014)",
+     "claim": "نص دستوري كامل عن حقوق ذوي الإعاقة، مطبوع في قسم مخصص بصفحة 39 ومرتبط مباشرة بقضية \"حقوق الإنسان\" المعلنة في الدرس، غائب تمامًا عن passages وkey_terms والأسئلة.",
+     "evidence": "صفحة 39 (PDF ص40): \"اقرأ وتناقش مع زملائك المادة 81 من دستور 2014: تلتزم الدولة بضمان حقوق الأشخاص ذوي الإعاقة... إعمالاً لمبادئ المساواة والعدالة وتكافؤ الفرص.\" — لا وجود لهذا النص في ara2-4.json (passages) ولا في arabic-t1.json لهذا الدرس، رغم أن qadaya في ara2-4.json تذكر صراحة \"حقوق الإنسان\"."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "page:40 (تقديم المخصوص وحذفه)",
+     "claim": "موضوع نحوي فرعي كامل (تقديم المخصوص على فعل المدح/الذم، وحذف المخصوص وتقديره من السياق) بأمثلته الأربعة وشرحه في \"الإيضاح\" غائب كليًا عن grammar_rules والتفاعليات والأسئلة، رغم أن تمهيد الدرس نفسه يشير إليه.",
+     "evidence": "صفحة 40: \"لاحظ الأمثلة التالية: ١- الأمين نعم الصاحب. ٢- الخائن بئس الرجل. ٣- الأم ترعى أولادها فنعم العمل. ٤- العاق يهمل والديه فبئست الصفة.\" + \"الإيضاح: ١- تأمل المثالين (١،٢)... تجده أنه تقدم على فعل المدح والذم. ٢- تأمل المثالين (٣-٤)... تجده أنه محذوف ويمكن فهمه من السياق.\" grammar_rules (gr:ara2-4) يضم فقط r1-r9 التي تغطي الحالة الأساسية (مخصوص مؤخر ظاهر) دون أي إشارة لهذا الفرع، رغم أن تمهيد ara2-4.json يذكره حرفيًا: \"قد يتقدَّم أحيانًا على الفعل، وقد يُحذَف فيُقدَّر من سياق الكلام\"."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "vocab_items(ara2-4) + q07,q08,q09",
+     "claim": "جدول \"معاني المفردات\" الخمسة (السروج، يلهو، تُكَلَّل، فَرْط، أفنى) مُسند إلى source_page=36 في جميع vocab_items والأسئلة q07/q08/q09، لكنه مطبوع فعليًا في صفحة 38.",
+     "evidence": "جدول \"معاني المفردات\" يظهر في الصفحة المطبوعة 38 (بعد نهاية الفقرة الثالثة \"وحُقَّ لَهُ أنْ يُوصَفَ بواهِبِ النُّورِ للمكفوفينَ\")، وليس في صفحة 36 التي تحتوي فقط بداية القصة والصورة التوضيحية."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q02, q03, q04",
+     "claim": "الأسئلة q02 وq03 وq04 مُسندة إلى source_page=36، لكن نصوصها المُستشهَد بها مطبوعة في صفحة 37.",
+     "evidence": "q02 يستشهد بـ\"ضخامة الحروف المستعملة فيها كانت تحول دون الانتفاع بها\"، وq03 بـ\"فاستعان بفكرة أحد الضباط في استخدام نقط وعلامات\"، وq04 بـ\"على أن يقوم بإحداث ثقوب في الورق المقوى\" — وهذه جميعها تقع في أول فقرة من الصفحة المطبوعة 37، بعد استمرار الفقرة من صفحة 36."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q05, q06",
+     "claim": "q05 وq06 موسومتان صراحة كـ\"رقم صفحة تقديري يُرجى تأكيده\" وقد ثبت أن التقدير خاطئ في كلتيهما: القصيدة (q05) مطبوعة في صفحة 40 وليس 37، ومقولة ديكنز (q06) مطبوعة في صفحة 38 وليس 37.",
+     "evidence": "source_note لكلا السؤالين يقول حرفيًا: \"رقم الصفحة المطبوعة الدقيق... غير وارد في المادة المزوَّدة؛ استُخدم رقم تقديري، يُرجى تأكيده قبل الاستخدام\" مع source_page=37 للاثنين. القصيدة \"اعذر أخاك على ذنوبه...\" تظهر فعليًا في قسم \"لغتنا الجميلة\" بأسفل صفحة 40. مقولة تشارلز ديكنز تظهر في صندوق \"قرأت في كتاب\" بصفحة 38."
+    },
+    {
+     "severity": "medium",
+     "kind": "text_infidelity",
+     "item_id": "rh:ara2-4:6",
+     "claim": "بند بلاغي في rhetoric_notes معلَّم verbatim_from_book=true لكنه يحتوي عبارة مُقحَمة (\"بدا فيه\") غير موجودة في النص المطبوع.",
+     "evidence": "rh:ara2-4:6.expression_ar = \"وأُقيمَ لَه ... تمثالٌ بدا فيه بعَينَيْنِ تفيضان شَفَقَةً ورَحمةً\". النص المطبوع الفعلي (صفحة 38): \"وأُقيمَ لَه في القريةِ التي فَقَدَ فيها بَصَرَه تمثالٌ بعينينِ تفيضانِ شفقةً ورحمةً\" — بلا عبارة \"بدا فيه\" إطلاقًا."
+    }
+   ]
+  },
+  {
+   "slug": "ara3-1",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "missing_content",
+     "item_id": "page-44 ex.3(ج) / gr:ara3-1 vocab",
+     "claim": "A required test-point from the book's own comprehension exercise is entirely absent from the question bank: page 44, exercise 3(ج) reads '(الكواكب - الجنة - وافر) هات مفرد الأولى، وجمع الثانية، وضد الثالثة في جملة من تعبيرك' — i.e. three linked sub-tasks: مفرد(الكواكب), جمع(الجنة), ضد(وافر). The extraction captured q:ara3-1:q03 (مفرد الكواكب=كوكب) and q:ara3-1:q02 (ضد وافر=قليل), but no question anywhere in arabic-t1.json tests جمع(الجنة) (expected: جنّات/جنان). Grepping the full question bank for 'جنة/جنّ' turns up nothing except an unrelated short-answer question (q07) that merely quotes the hadith phrase 'طريقًا إلى الجنة'.",
+     "evidence": "Printed page 44, section 3(ج): '(الكواكب - الجنة - وافر) هات مفرد الأولى، وجمع الثانية، وضد الثالثة في جملة من تعبيرك.' Only 2 of the 3 sub-tasks are represented (q03, q02); جمع الجنة is missing."
+    },
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "spelling_rules: sp:ara3-1-hamza (sc:ara3-1:1, sc:ara3-1:2, sc:ara3-1:3)",
+     "claim": "All three spelling-rule cases (زيادة الألف بعد واو الجماعة in الفعل الماضي / الأمر / المضارع المجزوم) are attributed to source_page 42, but page 42 is the lesson's opening page (title, hadith box, أهداف الدرس panel, القضايا المتضمنة panel) and contains no spelling content at all. The actual 'الكتابة: أ- الإملاء: (الحروف التي تُكتب ولا تُنطق)' tree diagram with these three exact cases is printed on page 46.",
+     "evidence": "Page 46 (labeled ٤٦) carries the tree diagram: 'الألف — تُزادُ الألفُ بَعدَ واوِ الجَماعةِ في: ١-الفعل الماضي (شَرِبوا، صاموا، كتبوا) ٢-الفعل الأمر (اشربوا، صوموا، اكتبوا) ٣-الفعل المضارع الذي حذفت منه النون (لن يشربوا، لم يكتبوا)'. Page 42 has none of this."
+    },
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "content/ara3-1.json key_terms[\"الكواكب\", \"الجنّة\"]",
+     "claim": "key_terms includes 'الكواكب: النجوم' and 'الجنّة: دار النعيم في الآخرة' presented alongside the five genuinely book-sourced glosses, but neither term appears in the printed 'معاني المفردات' table on page 43, which contains exactly five entries: سَلَك، يبتغي، سائر، أخذ به، وافر. These two definitions are the extraction team's own invented glosses (the book instead asks for مفرد/جمع forms of these two words in ex. 3ج on page 44, not their meanings), and nothing in the JSON distinguishes them from the printed-table entries.",
+     "evidence": "Printed 'معاني المفردات' table, page 43, has only 5 rows (سَلَك، يبتغي، سائر، أخذ به، وافر). 'الكواكب' and 'الجنّة' do not appear there; they appear only in the unrelated exercise 3(ج) on page 44 asking for مفرد/جمع, not meaning."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "q:ara3-1:q14 (source_page 47)",
+     "claim": "q14 is tagged source_page:47 and grounded in the spelling rule, but the actual printed drill exercise on page 47 ('تدريب: استخرج مما يأتي الكلمات التي يأتي بها حرف يُكتب ولا يُنطق مع ذكر السبب: خَرَجَوا - أقاموا - اجتَهَدوا - اطلُبوا - لَنْ يَستطيعوا') is a different, specific word list that is not represented by any question in the bank. q14 instead substitutes an invented sentence ('لم يشربوا الدواء...') not found on page 47 or anywhere else in the source pages, so the real page-47 drill content is effectively missing from the extraction.",
+     "evidence": "Page 47 'تدريب' box: 'استخرج ممّا يأتي الكلماتِ التي يأتي بها حرفٌ يُكتَبُ ولا يُنطَقُ مع ذكرِ السبب: (خَرَجَوا - أقاموا - اجتَهَدوا - اطلُبوا - لَنْ يَستطيعوا).' None of these five words appear in q14 or elsewhere in arabic-t1.json."
+    },
+    {
+     "severity": "low",
+     "kind": "bad_mapping",
+     "item_id": "content/ara3-1.json interactives[irab_builder].spec.answer.rule_ref vs q:ara3-1:q10.rule_ref",
+     "claim": "The same canonical grammar clause is referenced with two different ID formats across files: content/ara3-1.json's irab_builder interactive uses bare 'R2', while arabic-t1.json's q:ara3-1:q10 (same sentence/target, same underlying rule) uses the namespaced 'gc:ara3-1:r2'. If downstream tooling keys strictly on the 'gc:' namespaced form to verify grounding, the interactive's bare-'R2' reference would fail to resolve.",
+     "evidence": "content/ara3-1.json interactives[3].spec.answer.rule_ref = \"R2\"; services/extraction/seed/arabic-t1.json q:ara3-1:q10.answer.rule_ref = \"gc:ara3-1:r2\" — same clause, inconsistent ID scheme."
+    }
+   ]
+  },
+  {
+   "slug": "ara3-2",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "unsupported_by_page",
+     "item_id": "q:ara3-2:q12 (+ duplicate interactive lo:ara3-2-3/style_purpose)",
+     "claim": "السؤال يسمّي الأسلوب البلاغي في جملة «منذ نصف قرن... منصبًا على مجرد الذهاب...» بأنه «أسلوب تضاد»، ويستشهد الـsource_note بـ«رمز الأسلوب ص48 من المادة البلاغية». لا توجد على الإطلاق أي «مادة بلاغية» في صفحات الدرس (48-51) تُسمّي هذا التركيب «تضاد» — صفحة 48 هي متن المقال السردي فقط، والمادة البلاغية الوحيدة في الدرس هي «لغويات وتراكيب: حبَّذا، لا حبَّذا» في صفحة 51 (مدح/ذم)، ولا ذكر لمصطلح «تضاد» في أي مكان مطبوع. هذا تصنيف بلاغي مُختلَق غير مُستمَد من الكتاب، مع استشهاد مصدر زائف.",
+     "evidence": "صفحة 51 المطبوعة تحتوي فقط على: «الإيضاح: بتأمل المثالين نجد أنّ: المثال الأول: للمدح. والثاني: للذمّ» — لا يوجد قسم أو عنوان باسم «المادة البلاغية» في صفحة 48 ولا أي تصنيف باسم «تضاد» في كامل الصفحات 48-51."
+    },
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "q:ara3-2:q15",
+     "claim": "الإعراب المطلوب لكلمة «إهمالُ» هو «مبتدأ مؤخر (مخصوص بالذم)»، لكن rule_ref المستشهَد به هو gc:ara3-2:r3 وهو لا يُجيز هذا الإعراب إطلاقًا؛ نصّ r3 هو «ويَسبِقُ فعلَ الذمِّ حرفُ النَّفي لا عند الذمّ» — وهذا يفسّر فقط سبب وجود «لا»، ولا يذكر شيئًا عن إعراب المخصوص. القاعدة الفعلية التي تُجيز «مبتدأ مؤخر» هي gc:ara3-2:r4 («المخصوصُ: يعربُ مبتدأً مؤخَّرًا خبرُه الجملةُ الفعليّةُ...»)، وهي نفس القاعدة المُستشهَد بها بشكل صحيح في السؤال المطابق q14 لكلمة «التَّعاونُ». التناقض بين q14 (صحيح: r4) وq15 (خطأ: r3) لنفس نمط السؤال يؤكد أن الاستشهاد في q15 خطأ.",
+     "evidence": "grammar_rules في arabic-t1.json: gc:ara3-2:r3 = «ويَسبِقُ فعلَ الذمِّ حرفُ النَّفي لا عند الذمّ» (لا علاقة له بالإعراب)؛ gc:ara3-2:r4 = «المخصوصُ: يعربُ مبتدأً مؤخَّرًا خبرُه الجملةُ الفعليّةُ المكوَّنةُ قبله من (حبّ + ذا) أَوْ (لا حبذا) عند الذمّ» (وهذا هو المُبرِّر الفعلي للإعراب المطلوب)."
+    },
+    {
+     "severity": "medium",
+     "kind": "text_infidelity",
+     "item_id": "ara3-2.tamheed",
+     "claim": "التمهيد يقول: «...عبر تجربة علمية أجراها باحثون في مركز جونسون الفضائي بزراعة نبات البطاطا داخل حجرة محكمة»، فيَدمج بين واقعتين منفصلتين في النص: تجربة الحجرة المحكمة (الفقرة 2) التي استخدمت فيها فعليًا «مَزْرَعَةَ قَمْحٍ صَغيرَةٍ»، واختيار نبات البطاطا (الفقرة 3) الذي جرى في «خَزّاناتٍ مُغْلَقَةٍ» منفصلة عن الحجرة، دون ما يفيد أن التجربة نفسها كانت بالبطاطا.",
+     "evidence": "النص المطبوع ص48: «...بِوَضْعِ أحَدِ خُبَراءِ الكيمياء في حُجْرَةٍ مُحكَمَةٍ... وقَدِ احْتَوَتْ على مَزْرَعَةِ قَمْحٍ صَغيرَةٍ...» ثم في ص49: «وَقَدْ وَقَعَ اختيارُ العُلَماءِ على نَباتِ البَطاطا، مَعَ وَضْعِهِ في خَزّاناتٍ مُغْلَقَةٍ...» — واقعتان مختلفتان، لا واحدة."
+    },
+    {
+     "severity": "medium",
+     "kind": "other",
+     "item_id": "ara3-2.interactives[hamza_seat].items[الهائلة]",
+     "claim": "تعليل مقعد الهمزة في «الهائلة» يقول: «توسّطتِ الهمزةُ بين ألفٍ وياءٍ وهي مكسورةٌ...» — وهذا وصف غير صحيح لحروف الكلمة؛ فحروف «الهائلة» هي ه-ا-ئ-ل-ة، أي إن الهمزة تقع بين ألفٍ ولامٍ، وليس بين ألفٍ وياءٍ كما في «الفضائي» و«الكيميائي».",
+     "evidence": "كلمة «الهائلة» ص48 المطبوعة: الحرف التالي للهمزة هو اللام (هائل)، لا الياء؛ بخلاف «الفَضائِيِّ» و«الكيميائيُّ» حيث تلي الهمزةَ فعلًا ياءُ النسبة."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "ara3-2 · صفحة 51 (الإملاء)",
+     "claim": "قاعدة إملائية مطبوعة كاملة غير ممثَّلة في المخرجات: تحت عنوان «الواو» يذكر الكتاب حالتين — (1) زيادة الواو في «عمرو» مرفوعة أو مجرورة، وهي مُمثَّلة في q16 — و(2) «وكذلك تُكتَبُ ولا تُنطَقُ في (أولئك، أولو، أولات)» وهي غائبة تمامًا من q16 ومن أي بند آخر في الحزمة.",
+     "evidence": "النص المطبوع ص51: «• الواو: - تُزادُ في كلمة (عمرو) مرفوعة أو مجرورة. - وكذلك تُكتَبُ ولا تُنطَقُ في (أولئك، أولو، أولات).» — الشطر الثاني غير موجود في q16 ولا في أي جزء من ara3-2.json."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "ara3-2 · passage n5 (صفحة 49)",
+     "claim": "الفقرة الخامسة من النص عن دور الهندسة الوراثية في حل مشكلات الزراعة الفضائية المستقبلية غير ممثَّلة بأي سؤال فهم، رغم أن الكتاب نفسه يوجّه سؤال قراءة صامتة مباشرًا عنها (ص50، بند ز)، والوحيد المستخرج منها هو مفردة «فاعل» المعزولة عن سياقها.",
+     "evidence": "صفحة 50 المطبوعة، قسم «اقرأ الموضوع قراءة صامتة»، البند ز: «اذكر بعض نتائج استخدام الهندسة الوراثية في الزراعة» — لا يقابله أي سؤال قصير/مقالي في الحزمة يغطي مضمون الفقرة الخامسة (تقنيات الهندسة الوراثية ودورها الفاعل في حل المشاكل المتوقعة)."
+    },
+    {
+     "severity": "low",
+     "kind": "missing_content",
+     "item_id": "ara3-2.enrichment",
+     "claim": "حقل enrichment فارغ ([])، رغم وجود موادّ إثرائية مطبوعة فعليًا في الصفحات: صندوق «قرأت لك» (مقولة فولتير عن الفشل، ص50) وصندوق «اقرأ واستمتع - من أروع ما قيل» (مقولة عن الاكتشافات والانتباه، ص51).",
+     "evidence": "صفحة 50: «قرأت لك: «لا يوجد في الحياة رجلٌ فاشلٌ، ولكن يوجد رجلٌ بدأ من القاع وبقي فيه» فولتير» — صفحة 51: «اقرأ واستمتع - من أروع ما قيل: «إذا كنتَ قد قمتَ بإنجاز بعض الاكتشافات القيّمة...» فولتير» — كلاهما غائب من enrichment."
+    }
+   ]
+  },
+  {
+   "slug": "ara3-3",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "q:ara3-3:q03–q16 (13 of 16 questions)",
+     "claim": "The lo: tag on almost every question is shifted one slot relative to the lesson's own LO taxonomy (nodes lo:ara3-3-1..5), so questions are attributed to the wrong learning objective and lo:ara3-3-5 (الإملاء) ends up with zero real questions.",
+     "evidence": "Nodes: lo:ara3-3-1=فهم النص، lo:ara3-3-2=معاني المفردات، lo:ara3-3-3=مواطن الجمال، lo:ara3-3-4=الممنوع من الصرف، lo:ara3-3-5=الإملاء. But q03/q04/q05 (pure lexical: مرادف أخلقته / مفرد اللباب / معنى اقتضابا) are tagged lo:ara3-3-3 (rhetoric) instead of lo:ara3-3-2 (vocab). q06/q07/q08 (rhetoric/imagery analysis) are tagged lo:ara3-3-4 (grammar) instead of lo:ara3-3-3 (rhetoric). q12–q16 (all diptote-grammar irab/mcq: مفاتيح, المساجد, كنائس, يزيد, هند) are tagged lo:ara3-3-5 (الإملاء) instead of lo:ara3-3-4 (grammar). q09–q11 (comprehension/vocalization of the 'لغتنا الجميلة' passage) are tagged lo:ara3-3-2 (vocab) though none of the three is a vocab-meaning question. Net effect: the actual spelling LO (lo:ara3-3-5, which has its own spelling_rules content sp:ara3-3-hamza on page 61) has no genuine question at all — its slot was taken over by misplaced grammar questions. This breaks per-LO mastery tracking."
+    },
+    {
+     "severity": "high",
+     "kind": "unsupported_by_page",
+     "item_id": "q:ara3-3:q09, q:ara3-3:q10, q:ara3-3:q11",
+     "claim": "These three questions cite source_page: 54, but the 'لغتنا الجميلة' passage they are grounded in ('القراءة أهم ممارسات الوجود الإنساني...') is printed on page 61, not page 54.",
+     "evidence": "Printed page 54 contains only: فكر وناقش / اسأل وناقش (discussion prompts about the الكتاب poem) and a 'قرأت لك' sidebar quoting a different poem ('النهر الخالد' by محمود حسن إسماعيل) — nothing about القراءة أهم ممارسات. That exact paragraph appears verbatim in the 'اقرأ واستمع – لغتنا الجميلة' box at the bottom of printed page 61, matching t:ara3-3:002 in the content file exactly."
+    },
+    {
+     "severity": "medium",
+     "kind": "other",
+     "item_id": "lo:ara3-3-5",
+     "claim": "The learning-objective node's description states the rule backwards: 'يتعرف على الكلمات التي بها حروف تكتب ولا تنطق' (letters that are WRITTEN but not PRONOUNCED) — the actual rule taught on page 61, and correctly captured in spelling_rules (sp:ara3-3-hamza, label_ar), is the opposite: 'حروفٌ تُنطقُ ولا تُكتب' (letters PRONOUNCED but not WRITTEN, e.g. the elided alif in هذا/ذلك/هؤلاء).",
+     "evidence": "Printed page 61 heading: 'الإملاء: أ- حروف تنطق ولا تكتب' followed by أسماء الإشارة (هذا-هذه-ذلك...), ألف (لكن-السموات-الله-إله), وألف ما الاستفهامية إذا سبقت بحرف جر (مم-لم-عم...). The node description inverts this rule's direction."
+    },
+    {
+     "severity": "medium",
+     "kind": "text_infidelity",
+     "item_id": "vocab: أخلقته/الاقتضاض (key_terms + vocab_items), q:ara3-3:q05",
+     "claim": "The glossary term extracted as 'الاقتضاض' (root ق-ض-ض) does not match the poem's actual word 'اقْتِضَابَا' (root ق-ض-ب, verse 5), and the given meaning ('قطع الحديث' = cutting off speech) belongs unambiguously to the ق-ض-ب root (اقتضاب = to cut short/speak concisely), not to ق-ض-ض (اقتضاض, unrelated to speech).",
+     "evidence": "content.json passages unit n=5: 'أَوْ يَجِدْ مَلَلًا يَطْوِي الأَحَادِيثَ اقْتِضَابَا' (spelled with ب). The vocab table entry (page 53) and key_terms/vocab_items both spell the glossed term 'الاقتضاض' (with ض), inconsistent with the word it is supposed to gloss. Needs re-check against a clean scan; if the book itself prints 'الاقتضاض' this is a book-level inconsistency worth flagging, if not it is a transcription slip that should be corrected to 'الاقتضاب'."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "printed page 60 — ثانيًا: الممنوع من الصرف من الصفات",
+     "claim": "The entire named grammar subsection on page 60 (الصفة على وزن فَعْلان/فَعلى، أفعَل فَعلاء للألوان، صيغة أفعل التفضيل، والأعداد ١-١٠ على وزن فُعال أو مَفعَل) is fully described in grammar_rules (clauses gc:ara3-3:r26–r30) but has zero questions or interactives testing it anywhere in the extracted set.",
+     "evidence": "grammar_rules clauses r26-r30 (source_page 60) describe جوعان/جوعى، أحمر/حمراء، أفضل/أكرم، أُحاد/مثنى etc., but scanning all 16 questions (q01-q16) and all 5 interactives in ara3-3.json content, none references R26-R30 or tests صفة ممنوعة من الصرف — every other grammar subsection (صيغة منتهى الجموع، ألف التأنيث، الأعلام الستة) has at least one graded item, this one has none."
+    },
+    {
+     "severity": "medium",
+     "kind": "wrong_answer",
+     "item_id": "q:ara3-3:q15",
+     "claim": "The irab answer marks 'يزيد' (in 'الطالبُ يزيدُ يجب أن يزيد ثقافته بالقراءة') as مجرور بالفتحة, but in that sentence 'يزيد' (the proper name) functions as بدل/عطف بيان of 'الطالب' — a مبتدأ مرفوع with the definite article, which blocks إضافة, and no preposition precedes 'يزيد' — so it should be مرفوع, not مجرور.",
+     "evidence": "Sentence 4 on page 58: 'الطالب يزيد يجب أن يزيد ثقافته بالقراءة.' The book's generalizing note gc:ara3-3:r24 ('تجد أنها مجرورة وعلامة جرها الفتحة...') fits examples 1-3 (بورسعيد preceded by 'في', عثمان and عمرو preceded by 'ل') but there is no governing preposition or mudaf-ilayh position before 'يزيد' in example 4, so a مجرور reading is not grammatically supportable there; needs expert re-verification against the answer key."
+    },
+    {
+     "severity": "low",
+     "kind": "unsupported_by_page",
+     "item_id": "vocab_items (بدل الكتب, أخلقته, الاقتضاض/ب, اللباب, يبغيك)",
+     "claim": "All five vocab_items cite source_page: 52, but the معاني المفردات glossary table itself is printed on page 53 (page 52 contains only the poem text).",
+     "evidence": "Printed page 52 = poem + مناقشة box only; the معاني المفردات table with these five glosses appears at the top of printed page 53. Convention is ambiguous (word-occurs-in-poem vs. gloss-is-printed-here) but inconsistent with how the same-lesson rhetoric_notes/term_match items cite page 53 for their glossary/explanation content."
+    },
+    {
+     "severity": "low",
+     "kind": "bad_mapping",
+     "item_id": "content.json interactive: term_match (lo:ara3-3-2)",
+     "claim": "The term_match interactive teaches grammar terminology (صيغة منتهى الجموع، العلم الأعجمي، العلم المركب تركيبًا مزجيًا، الصفة على وزن أفعل فعلاء) but is tagged lo:ara3-3-2 (معاني المفردات / vocab meanings) instead of lo:ara3-3-4 (الممنوع من الصرف / grammar).",
+     "evidence": "Compare to the lesson's LO node labels; the four term/definition pairs in this interactive are grammar-rule vocabulary (rule_ref R2/R5, R15/R16, R20, R27), not lexical glosses from the poem."
+    },
+    {
+     "severity": "low",
+     "kind": "unsupported_by_page",
+     "item_id": "content.json interactive: irab_builder (target_word الأحاديث)",
+     "claim": "This interactive cites printed_page: 59, but the target word ('الأحاديث') is from the poem (page 52/53) and the general rule it applies (R1/R5/R6, صيغة منتهى الجموع) is taught on pages 55-56 — page 59 covers a different subsection (الأعلام المركبة تركيبًا مزجيًا وتوابعها).",
+     "evidence": "gc:ara3-3:r1, r5 have source_page 55 and r6 has source_page 56; nothing about 'الأحاديث' or its case as مفعول به is discussed on page 59, which is about بورسعيد/عثمان/عمر/يزيد."
+    }
+   ],
+   "verdict": "ISSUES"
+  },
+  {
+   "slug": "ara4-1",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "vocab_items[lesson=ara4-1] (تبتئس، تخاطبني، يخزيه، التنور، مرساها)",
+     "claim": "جدول المفردات الخمسة في seed/arabic-t2.json (vocab_items) يُسنِد كل خمسة عناصره إلى source_page:6، لكن جدول «معاني المفردات» مطبوع فعليًا على صفحة 7، لا صفحة 6. صفحة 6 تحتوي فقط على العنوان وأسئلة المناقشة الافتتاحية ونص الآيات؛ لا يوجد بها أي جدول مفردات.",
+     "evidence": "صورة صفحة الكتاب المطبوعة رقم 7 (أعلى الصفحة) تعرض جدول «معاني المفردات» بنفس الأزواج الخمسة بالضبط. كذلك أسئلة lexical في نفس الحزمة (q:ara4-1:q07, q:ara4-1:q08) المرتبطة بنفس المفردات تُسند source_page:7 بشكل صحيح، وrhetoric_notes لنفس الدرس تُسند source_page:7 أيضًا — ما يؤكد أن قيمة 6 في vocab_items خطأ إسناد."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "content ara4-1 → interactives[1] (extract_spans / category=\"التصوير والتضاد\")",
+     "claim": "تدريب استخراج «التصوير والتضاد» يضع العبارة «فَسَوْفَ تَعْلَمُونَ مَن يَأْتِيهِ عَذَابٌ يُخْزِيهِ» ضمن أهداف صحيحة تحت تصنيف تصوير/تضاد، بينما الكتاب نفسه يصنّفها في صندوق «مواطن الجمال» (صفحة 7) بأنها «تعبير» فقط دالٌّ على شدة العذاب — وليست تصويرًا ولا تضادًا. هذا يناقض أيضًا تدريب style_purpose في نفس ملف المحتوى الذي صنّف العبارة ذاتها بـ«تعبير» بشكل صحيح.",
+     "evidence": "نص صندوق «مواطن الجمال في الآيات» صفحة 7: «فَسَوْفَ تَعْلَمُونَ مَنْ يَأْتِيهِ عَذَابٌ يُخْزِيهِ: تعبير يدل على شدة العذاب» — لا ذكر لتصوير أو تضاد لهذه العبارة تحديدًا، خلافًا للعبارتين الأخريين في نفس التدريب (تضاد، وتعبير جميل) اللتين تطابقان الكتاب."
+    },
+    {
+     "severity": "medium",
+     "kind": "text_infidelity",
+     "item_id": "rh:ara4-1:3 و rh:ara4-1:5 (rhetoric_notes)",
+     "claim": "حقل \"type\" في هذين السجلين هو \"تعبير يوحي\" وهي صياغة غير موجودة في الكتاب إطلاقًا، رغم أن كلا السجلين يحملان العلم \"verbatim_from_book\": true. الكتاب يصنّف العبارة الأولى (فَسَوْفَ تَعْلَمُونَ...) بـ«تعبير» فقط، والثانية (وَهِيَ تَجْرِي بِهِمْ...) بـ«تعبير جميل».",
+     "evidence": "صندوق «مواطن الجمال في الآيات» صفحة 7 يكتب حرفيًا: «...تعبير يدل على شدة العذاب» و«...تعبير جميل، يوضح مدى ارتفاع الموج» — لا وجود لكلمة «يوحي» في أي منهما. تدريب style_purpose في content/ara4-1.json يطابق الكتاب بدقة (type: \"تعبير\" و\"تعبير جميل\")، ما يكشف التناقض الداخلي بين المصدرين لنفس الدرس."
+    },
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "q:ara4-1:q15، q:ara4-1:q16",
+     "claim": "السؤالان يُسندان المحتوى (أمثلة همزة الوصل/القطع: الاتحاد قوة، اعتمد على نفسك، إن الله يأمر بالعدل والإحسان) إلى source_page:10، لكن هذا المحتوى مطبوع فعليًا في أسفل صفحة 9 (قسم ٥- الكتابة/الإملاء)، وليس هناك صفحة 10 ضمن نطاق الدرس المذكور (صفحات 6-9).",
+     "evidence": "صورة صفحة الكتاب المطبوعة رقم 9: قسم «٥) الكتابة: - الإملاء» يعرض نفس الأمثلة الأربعة حرفيًا ونفس شرح همزة الوصل/القطع الوارد في source_note للسؤالين، ورقم الصفحة المطبوع أسفل الصورة هو ٩."
+    },
+    {
+     "severity": "low",
+     "kind": "missing_content",
+     "item_id": "ara4-1: صفحات 8-9 (تدريب اسم الفاعل)",
+     "claim": "الهدف lo:ara4-1-4 (اسم الفاعل) لا يملك أي تفاعل (interactive) في المخرجات رغم أن الكتاب يخصص له فقرة تطبيقية كاملة (فقرة «حديقة البستاني» لاستخراج اسم الفاعل) وجدول أمثلة (حامدًا/شاكرًا/باحثة مع الوزن والفعل والنوع). المخرجات تكتفي بسؤال تعريف نظري واحد (q:ara4-1:q12) دون أي تدريب تطبيقي على استخراج/تصنيف اسم الفاعل، بخلاف هدف الأساليب البلاغية (lo:ara4-1-3) المُمثَّل بثلاثة تفاعلات وثلاثة أسئلة.",
+     "evidence": "صورتا صفحتي 8 و9: قسم «التراكيب اللغوية - اسم الفاعل» يضم فقرة تطبيقية طويلة وجدولاً بثلاثة أمثلة (حامدًا/شاكرًا/باحثة) بأعمدة الوزن والفعل والنوع؛ لا يقابله في content/ara4-1.json أو arabic-t2.json أي interactive من نوع term_match/extract_spans/غيره لهذا الهدف."
+    }
+   ]
+  },
+  {
+   "slug": "ara4-2",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "text_infidelity",
+     "item_id": "t:ara4-2:003(unit2) / interactives[0].spec.targets[1] / q:ara4-2:q11",
+     "claim": "الجملة المقتبسة «إنَّ تَفَكُّرَ الإنسانِ ساعَةً خَيرٌ مِن قِيامِ لَيلَة» المكرَّرة في نص المقطع، وفي هدف تمرين استخراج أسلوب التوكيد بـ(إنّ)، وفي نص سؤال q11، محرَّفة عن المطبوع: حُذف ضمير الهاء العائد على الإنسان وتغيّرت بنية الجملة من ظرفية منصوبة إلى إضافة.",
+     "evidence": "المطبوع في صفحة الكتاب رقم 10 (PDF ص71) يقول حرفيًا: «قِيلَ: إِنَّ تَفَكَّرَ الإِنْسَانِ سَاعَةً خَيْرٌ مِنْ قِيَامِهِ لَيْلَةً» (بضمير الهاء + تنوين فتح على «ليلةً» كظرف زمان منصوب)، بينما ملف المحتوى وهدف التمرين وسؤال q11 يكرّرون جميعًا «مِن قِيامِ لَيلَة/لَيلَةٍ» بلا ضمير الهاء، أي جملة مختلفة لفظًا وبنية عن المطبوع."
+    },
+    {
+     "severity": "high",
+     "kind": "unsupported_by_page",
+     "item_id": "vocab_items[لجميع الكلمات الثمانية: تنجز/التفكر/يتخطى/محصنا/إماح/تنحرف/تسبح/خلد] + q:ara4-2:q13",
+     "claim": "جميع بنود vocab_items الثمانية للدرس ara4-2 في arabic-t2.json تحمل source_page=10، وكذلك سؤال q13 (عن كلمة «محصنا»)، بينما جدول «معاني المفردات» الذي استُخرجت منه هذه المعاني كله مطبوع في الصفحة 11 لا 10.",
+     "evidence": "تحقّقت من رقم الصفحة المطبوع (شارة الصفحة الدائرية) على صورة PDF ص72 فوجدته «١١»، وفيها جدول «معاني المفردات» بأكمله (تنجز-تنهي، التفكر-التدبر، يتخطى-يتعدى، محصنا-محتميا، إماح-توضيح، تنحرف-تغير في اتجاهها، تسبح-تطبر، خلد-جعل ذكره ناقيًا). كذلك ست من الكلمات الثماني (يتخطى، تنحرف، تسبح، خلد) ترد فعليًا في نص الصفحة 11 لا 10، وكلمتا «محصنا» و«إماح» لا تظهران في متن أي مقطع مستخرَج على الإطلاق (لا في صفحة 10 ولا 11)، فلا مسوّغ لعزوهما لصفحة 10."
+    },
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "q:ara4-2:q11",
+     "claim": "source_note لسؤال q11 يعزو الاقتباس البلاغي «إنّ تفكر الإنسان ساعة خير من قيام ليلة» إلى (ص11)، لكنه مطبوع فعليًا في الصفحة 10 (ضمن نفس فقرة سؤال q07).",
+     "evidence": "الجملة تظهر في صورة PDF ص71 (المؤكَّد أنها الصفحة المطبوعة 10 عبر شارة الصفحة) ضمن الفقرة: «...حَيثُ التَّفكُّرُ والتَّأَمُّلُ والمُراجَعَةُ والمُحاسَبَةُ، وَقَدْ قِيلَ: إِنَّ تَفَكَّرَ...»، لا في صفحة 11."
+    },
+    {
+     "severity": "medium",
+     "kind": "wrong_answer",
+     "item_id": "q:ara4-2:q12",
+     "claim": "الإجابة المرجعية «أميرُ الشُّعَراءِ أحمَد شوقي» (بضمة على أمير) لا تطابق الحركة الإعرابية الصحيحة كما وردت في السياق المطبوع، وهي فتحة لأنها اسم (لعلّ) منصوب.",
+     "evidence": "نص الكتاب صفحة 10: «وَلَعَلَّ أَميرَ الشُّعَراءِ أَحْمَد شَوقي كانَ مِن طَليعَةِ الشُّعَراءِ...» — أميرَ منصوبة بالفتحة لا مرفوعة بالضمة؛ تقديم إجابة نموذجية مشكولة بحركة تخالف حركة السياق قد يُعلِّم الطالب إعرابًا خاطئًا رغم أن السؤال عن الإملاء لا الإعراب."
+    },
+    {
+     "severity": "medium",
+     "kind": "text_infidelity",
+     "item_id": "t:ara4-2:006 / q:ara4-2:q15",
+     "claim": "اسم مخترع الإنترنت وردَ في مقطع المحتوى وفي إجابة q15 بصيغة «تيم بيرنرلي» (بلا زاي)، بينما الاسم مطبوع في الكتاب «تيم بيرنرزلي» (بزاي).",
+     "evidence": "نص الصفحة 14 (PDF ص75) بعد التكبير: «اخترع «تيم بيرنرزلي» شبكة المعلومات الدولية الإنترنت في عام 1991م» — بالزاي. أما passages[t:ara4-2:006] وإجابة q15 فكلاهما «تيم بيرنرلي» بلا زاي. والمفارقة أن حقل tamheed في نفس الملف كتبها بشكل صحيح «بيرنرزلي»، ما يؤكد أن الخطأ في نص المقطع تحديدًا لا في القراءة."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "pages 13-14 (تمارين 5، 6، 7)",
+     "claim": "تمارين جوهرية مطبوعة في الدرس — تمرين 5 (الكتابة: قواعد تنظيم الكتابة + كتابة ستة أسطر عن «مصر غنية بأبنائها ونيلها وتربتها»)، تمرين 6 (التعبير: تحدث عن فوائد استغلال وقت الفراغ)، وتمرين 7 (تكوين جماعة «المخترعات الصغيرة») — غير ممثَّلة إطلاقًا في المخرجات، لا كأسئلة/تفاعليات ولا كبنود out_of_scope، خلافًا لمهارتي الإلقاء والخط اللتين وُثِّق استبعادهما صراحة بسبب.",
+     "evidence": "صفحة 13 (PDF ص74) تعرض القسمين 5.أ و5.ب والقسم 6-التعبير، وصفحة 14 (PDF ص75) تعرض القسم 7 (كوّن أنت وزملاءك جماعة...)، ولا يوجد أي أثر لها في content/ara4-2.json (لا في interactives ولا key_terms) ولا في أسئلة arabic-t2.json لهذا الدرس، ولا في مصفوفة out_of_scope التي اقتصرت على 'يلقى النص إلقاءً معبرًا' و'يكتب نموذجًا بخطي النسخ والرقعة' فقط."
+    },
+    {
+     "severity": "low",
+     "kind": "text_infidelity",
+     "item_id": "interactives[0].spec.targets[0]",
+     "claim": "نص الهدف الأول لتمرين استخراج التوكيد بـ(إنّ) «إِنَّ الْحَيَاةَ دَقَائِقُ وَثَوَانِ» يستخدم ضمة عادية على «دَقَائِقُ» بدل تنوين الضم «دَقائِقٌ» الموجود فعليًا في نص المقطع passages[t:ara4-2:002]، ما قد يسبب عدم تطابق حرفي إذا اعتمد التصحيح على مطابقة نصية دقيقة.",
+     "evidence": "passages[t:ara4-2:002].units[0].text_ar يحوي: '...إنَّ الحَياةَ دَقائِقٌ وَثَوانِ' (تنوين ضم)، بينما target المطابق في interactives[0] هو 'إِنَّ الْحَيَاةَ دَقَائِقُ وَثَوَانِ' (ضمة بلا تنوين) — نفس الكلمات لكن تشكيل مختلف عن السلسلة الأصل المخزَّنة."
+    }
+   ]
+  },
+  {
+   "slug": "ara4-3",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "missing_content",
+     "item_id": "q:ara4-3:q03,q04,q05,q06,q09,q10,q11,q14,q15",
+     "claim": "9 من أصل 13 سؤالًا لدرس ara4-3 (كل أسئلة type=\"short\" في الدرس) لها answer:\"\" و solution:[\"\"] فارغة تمامًا — أي لا يوجد حل معياري (canonical solution) يمكن تأسيس شرح الذكاء الاصطناعي عليه عند خطأ الطالب، وهو ما يخالف مباشرة قاعدة المشروع 'LLM explanations must be grounded in canonical solutions, never solved from scratch' (CLAUDE.md). الأخطر أن نص الإجابة الصحيحة لخمسة من هذه الأسئلة (q09, q10, q11, q14, q15) موجود فعليًا وحرفيًا في نفس ملف arabic-t2.json ضمن rhetoric_notes وgrammar_rules ولم يُنسخ إلى حقل answer/solution الخاص بالسؤال.",
+     "evidence": "q09 يسأل عن أسلوب 'لا تحسبنّ العلم ينفع وحده' وغرضه؛ الإجابة موجودة حرفيًا في rh:ara4-3:5 وفي الكتاب ص16 (مواطن الجمال، البند 5): 'أسلوب نهي، غرضه النصح والإرشاد'. q10 عن الصورة في 'محصنًا بالعلم'؛ الإجابة في rh:ara4-3:3 والكتاب ص16 البند 3. q11 عن 'يتوّج ربّه بخلاق'؛ الإجابة في rh:ara4-3:6 والكتاب ص16 البند 6. q14 عن حكم اسم الفاعل؛ الإجابة هي نص gc:ara4-3:r4 (= 'لاحظ' ص18). q15 عن صياغة اسم الفاعل؛ الإجابة هي نص gc:ara4-3:r1+r2 (= 'يصاغ...' + 'مثل: أكرم-يكرم-مكرم' ص18). أما q03/q04/q05/q06 فتحتاج تأليف حل لم يحدث إطلاقًا (مثال: إجابة q04 الصحيحة من النص نفسه هي 'مُقَسِّم' من 'قسّم' و'المُشتاق' من 'اشتاق')، وبقيت فارغة أيضًا. بالمقارنة، أسئلة short لدروس أخرى في نفس الملف (مثل ara4-1) لها حقول answer/solution ممتلئة، ما يؤكد أن هذا خلل خاص بـara4-3 لا نمط عام متعمّد."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "p.17-item-2و",
+     "claim": "تدريب مطبوع كامل على ص17 (البند ٢.و) غائب تمامًا عن بنك الأسئلة والتفاعليات: 'المروءة - الشمائل - خليقة: هات معنى الأولى، ومفرد الثانية، وجمع الثالثة، ثم استخدمها في جمل من عندك.' لا يوجد أي سؤال يفحص معنى (المروءة) أو مفرد (الشمائل) أو جمع (خليقة).",
+     "evidence": "الصورة الممسوحة لصفحة 17 (البند ٢.و تحت 'اسأل وناقش') تطلب صراحة: معنى المروءة، مفرد الشمائل، جمع خليقة، ثم استخدامها في جمل. لا وجود لهذا في ara4-3.json (key_terms/interactives) ولا في q:ara4-3:* بأكملها — والكلمة 'المروءة' نفسها غير مذكورة إطلاقًا في جدول 'معاني المفردات' (7 كلمات فقط: الخلال، أوبة، الشمائل، محصنًا، الإملاق، مطية، ربّه) ولا في أي سؤال."
+    },
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "ara4-3.interactives[hamza_seat] / lo:ara4-3-5",
+     "claim": "التفاعلية hamza_seat (كلمات: المروءة، الشمائل، شمائل) لا تحمل حقل source_page، ولا يوجد في صفحات الدرس المطبوعة (15-18) أي فقرة تعليمية أو أمثلة توضح قاعدة كتابة الهمزة المتوسطة — الهدف 'يتعرف سبب كتابة الهمزة في مواقعها المختلفة' مذكور فقط كعنوان مجرّد ضمن 'أهداف الدرس' في ص15 دون أي محتوى تدريسي أو تمرين مطبوع في هذا الدرس بعينه (الصفحة الأخيرة ص18 تنتهي بقسم 'التعبير' ثم إحالة لموقع الوزارة لمزيد من التدريبات).",
+     "evidence": "مراجعة الصفحات 15-18 كاملة: لا قسم 'إملاء' ولا شرح لقاعدة الهمزة المتوسطة يظهر في أي منها؛ كل التفاعليات/المفردات/القواعد الأخرى في الملف تحمل source_page محددًا (15، 16، 18) بينما hamza_seat فريدة في افتقارها لأي إسناد صفحة، رغم أن المحتوى اللغوي فيها (سطر/ياء) صحيح لغويًا بحد ذاته لمن يعرف القاعدة العامة من خارج هذا الدرس تحديدًا."
+    },
+    {
+     "severity": "low",
+     "kind": "missing_content",
+     "item_id": "p.17-item-2أ / p.18-item-5",
+     "claim": "تدريبان مطبوعان إضافيان غير ممثَّلين: (1) الشق الثاني من البند ٢.أ ص17 — إكمال الفراغ 'خليقة نكرة اسم يفيد ...' (دلالة النكرة نحويًا)، (2) بند 'التعبير' ص18 (تحدث: عن أثر الأخلاق الحميدة في الفرد والمجتمع) لم يُدرج لا في التفاعليات ولا في out_of_scope رغم أنه مهارة تعبير/إنشاء شبيهة بمهارتي الإلقاء والخط المستبعدتين صراحة.",
+     "evidence": "نص ص17 (البند 2.أ) وص18 (البند 5 'التعبير') كما يظهران في الصور الممسوحة؛ لا أثر لهما في ara4-3.json (interactives) ولا في q:ara4-3:* ولا في out_of_scope."
+    }
+   ]
+  },
+  {
+   "slug": "ara5-1",
+   "findings": [
+    {
+     "item_id": "content/ara5-1.json#passages/t:ara5-1:003 (word 'حَذِرًا') → q:ara5-1:q14",
+     "severity": "high",
+     "kind": "text_infidelity",
+     "claim": "The extracted passage t:ara5-1:003 transcribes a word in the 'أمثلة من القطعة' paragraph as 'حَذِرًا' (fatha–kasra, matching the mubalagha wazn فَعِل that the lesson is teaching), but the printed textbook (p.23, pdf page 84) actually shows 'حَذَرًا' (fatha–fatha throughout — ح and ذ both carry fatha, no kasra anywhere). I verified this by rendering the source PDF at 400dpi and zooming directly on the word: both diacritics are clearly slanted marks ABOVE the letters (fatha), not below (kasra). 'حَذَرًا' is the ordinary masdar/noun 'caution', not an instance of صيغة المبالغة. This corrupts the fidelity of the passage text and directly undermines q:ara5-1:q14, which asks students to إعراب 'حَذِرًا' as if it were a textbook example of the lesson's target grammatical pattern (rule_ref gc:ara5-1:r5) — a pattern the printed word, as actually diacritized, does not instantiate."
+    },
+    {
+     "item_id": "arabic-t2.json#grammar_rules/gr:ara5-1/gc:ara5-1:r1",
+     "severity": "medium",
+     "kind": "text_infidelity",
+     "claim": "Rule clause gc:ara5-1:r1 drops the connecting particle ف from the printed 'الإيضاح' box (p.24), turning correct Arabic into a run-on non-sequitur.",
+     "evidence": "Printed text (p.24) reads: '...تدُلُّ على مَنْ فَعَلَ الفعلَ كاسمِ الفاعل، لكنها تزيدُ فتدُلُّ على مَنْ فَعَلَ الفعلَ بكثرة وشدة' (تزيد + ف + تدل — 'it exceeds, so it indicates...'). The extracted clause text reads '...لكنها تزيد تدُلُّ على مَنْ فَعَل الفعلَ بكثرة وشدة' — missing the ف, leaving two bare verbs adjacent with no connector, which is not what is printed and reads as ungrammatical Arabic."
+    },
+    {
+     "item_id": "q:ara5-1:q05, q:ara5-1:q12, q:ara5-1:q13, q:ara5-1:q14, q:ara5-1:q15",
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "claim": "Five questions cite source_page: 24, but the paragraph and table they are actually drawn from ('صيغ المبالغة' paragraph beginning 'كانَ يَحْتَلُّ مَنزلَةً رفيعةً...' and the 'أمثلة من القطعة' table) are printed on page 23 (pdf page 84), not page 24.",
+     "evidence": "Printed page 23 (footer '٢٣') carries the paragraph and the فعله/وزنها/صيغة المبالغة table containing خبيرًا، بصيرًا، حذرًا، حمّادًا، شكورًا، معطاءَ. Printed page 24 (footer '٢٤') contains only the 'الإيضاح' rule box (R1–R5) and the follow-on activities (٥،٦،٧) — none of the paragraph text these five questions test. Only q:ara5-1:q06 and q:ara5-1:q01, which genuinely test the R3/R4 rule text, are correctly attributed to page 24."
+    },
+    {
+     "item_id": "q:ara5-1:q07, q:ara5-1:q08, q:ara5-1:q09, q:ara5-1:q16, and vocab_items (ara5-1: إتقانك / تطرق / الكسلان)",
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "claim": "Four questions cite source_page: 22, and three vocab_items cite source_page: 20, but the words/sentences they draw on are actually printed on pages 20–21, and page 22 contains no running lesson text at all (only the 'شرح النص' / 'مواطن الجمال' analysis boxes and the أسأل وناقش discussion prompts).",
+     "evidence": "'منحك' (q07) and the sentence 'واحرص على أن يكون اختيارك لعملك...' (q16) are printed on page 20 (pdf 81). 'تطرق'/'الكسلان' (in 'حَذَارِ أن تظنَّ... تطرقُ بابَ الكسلانِ') and 'النيّات' (q08, in 'الأعمال بالنّيّات') and 'عواصف' (q09, in 'ريشة تتقاذفها عواصف الحياة') and the vocab-table entries for إتقانك/تطرق/الكسلان are all printed on page 21 (pdf 82, the 'معاني المفردات' table and surrounding paragraph) — none of these are on page 22, yet vocab_items list إتقانك/تطرق/الكسلان at source_page 20 (should be 21), and the four questions list source_page 22 (should be 20 or 21)."
+    },
+    {
+     "item_id": "textbook p.23 exercise item '٣.ب' vs. content/ara5-1.json passage t:ara5-1:001",
+     "severity": "medium",
+     "kind": "missing_content",
+     "claim": "The printed textbook's own comprehension exercise on page 23 quotes a phrase attributed to 'قول الكاتب' — «تستقبل مع شروق كل شمس تغييرًا جديدًا» — that does not appear anywhere in the extracted lesson passage t:ara5-1:001 (checked all 7 units) nor anywhere else in the full printed letter (pages 20–21).",
+     "evidence": "I re-read pages 20 and 21 (pdf 81–82) in full at high resolution; the phrase is absent from the printed body of the letter as reproduced in this textbook. Since the extracted passage is presented as the complete lesson text, either the passage is missing a sentence the book's own exercises rely on, or this is a pre-existing inconsistency in the source textbook that a human reviewer should be made aware of — currently no extracted item could ground an answer to this exercise in the extracted passage text."
+    },
+    {
+     "item_id": "q:ara5-1:q09",
+     "severity": "low",
+     "kind": "text_infidelity",
+     "claim": "The stem 'هات من النص مفرد كلمة (عواصف)' implies the singular form should be retrievable from the text, but 'عاصفة' never occurs in the passage — only the plural 'عواصف' does. The morphological answer given (عاصفة) is correct, but is derived, not textually present, despite the 'من النص' framing.",
+     "evidence": "Passage t:ara5-1:001 contains 'ريشةً تتقاذفُها عواصف الحياة ورياح الصُّدَف' — only the plural form appears; the singular 'عاصفة' is not anywhere in the lesson's passages."
+    }
+   ],
+   "verdict": "ISSUES"
+  },
+  {
+   "slug": "ara5-2",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "text_infidelity",
+     "item_id": "t:ara5-2:001 unit 3 (content/ara5-2.json)",
+     "claim": "البيت الثالث محرّف: الصدر والعجز مقلوبان وكلمة \"في\" ساقطة، مع التصاق \"فهبوا\"/\"خطب\" بالشطر الخطأ.",
+     "evidence": "المطبوع (ص25/PDF86): صدر «هُنَاكَ المَجْدُ يَدْعُوكُمْ، فَهُبُّوا» / عجز «وَلَيْسَ يَرُوعُكُمْ فِي المَجْدِ خَطْبُ». الملف: «وَلَيْسَ يَرُوعُكُمْ، فَهُبُّوا هُنَاكَ المَجْدُ يَدْعُوكُمْ، خَطْبُ»."
+    },
+    {
+     "severity": "high",
+     "kind": "text_infidelity",
+     "item_id": "t:ara5-2:001 unit 5 (content/ara5-2.json)",
+     "claim": "البيت الخامس محرّف: كلمتا القافية \"مجيد\"/\"بعيد\" متبادلتان بين الشطرين، وعبارة \"يجدُّ بنا\" استُبدلت بعبارة مختلقة \"لنا جدٌّ\".",
+     "evidence": "المطبوع: صدر «لَنَا ذِكْرٌ، مَعَ الماضِي، مَجِيدُ» / عجز «لَنَا أَمَلٌ، يَجِدُّ بِنَا، بَعِيدُ». الملف: «لَنَا ذِكْرٌ، مَعَ الماضِي، بَعِيدُ لَنَا أَمَلٌ، لَنَا جَدٌّ مَجِيدُ»."
+    },
+    {
+     "severity": "high",
+     "kind": "text_infidelity",
+     "item_id": "t:ara5-2:001 unit 8 (content/ara5-2.json)",
+     "claim": "البيت الثامن محرّف: الظرفان \"عامًا فعاما\" و\"عرضًا وطولا\" متبادلان بين الفعلين \"يطوف\" و\"يبسط\".",
+     "evidence": "المطبوع: صدر «يَطُوفُ بِمَائِهِ عَرْضًا وَطُولاَ» / عجز «وَيَبْسُطُ فَيْضَهُ عَامًا فَعَامَا». الملف: «يَطُوفُ بِمَائِهِ عَامًا فَعَامَا وَيَبْسُطُ فَيْضَهُ عَرْضًا وَطُولَا»."
+    },
+    {
+     "severity": "medium",
+     "kind": "text_infidelity",
+     "item_id": "t:ara5-2:001 unit 9 (content/ara5-2.json)",
+     "claim": "البيت التاسع: ترتيب الصدر والعجز معكوس (الكلمات سليمة لكن الترتيب مقلوب).",
+     "evidence": "المطبوع: صدر «بِسَاطُكَ سُنْدُسٌ، وَتُرَاكَ تِبْرُ» ثم عجز «وَجُوكَ مُشْرِقٌ، وَشَذَاكَ عِطْرُ». الملف: «وَجُوكَ مُشْرِقٌ، وَشَذَاكَ عِطْرُ بِسَاطُكَ سُنْدُسٌ، وَتُرَاكَ تِبْرُ» (معكوس)."
+    },
+    {
+     "severity": "high",
+     "kind": "wrong_answer",
+     "item_id": "q:ara5-2:q06",
+     "claim": "مفتاح الإجابة يصنّف \"فَيَا وَادِيَ الكِنَانَةِ\" بأنه \"تشبيه\"، وهذا يخالف كتاب المدرسة ويناقض تفاعلًا آخر في نفس الملف.",
+     "evidence": "مواطن الجمال ص26: «ياوادي الكنانة: يصور وادي النيل بإنسان عزيز، فيطمئنه بأنه خالد وباقٍ على مدى الزمن» (تصوير/استعارة، لا تشبيه). وتفاعل style_purpose لنفس العبارة في content/ara5-2.json يصنّفها بشكل صحيح \"أسلوب إنشائي - نداء\"، بينما answer.type في q06 تقول \"تشبيه\"."
+    },
+    {
+     "severity": "high",
+     "kind": "wrong_answer",
+     "item_id": "interactive hamza_seat item (content/ara5-2.json, lo:ara5-2-5) — كلمة بِمَائِهِ",
+     "claim": "مفتاح الإجابة يزعم أن مقعد الهمزة \"سطر\" بسبب أنها \"متوسطة مفتوحة\"، لكن الهمزة في السياق المجرور مكسورة، والقاعدة الصحيحة (كسر > سكون) تقتضي كتابتها على ياء، وهو ما يطابق تهجئة الكلمة الفعلية في نفس الملف.",
+     "evidence": "نص المقطع نفسه (unit 8) يهجّي الكلمة بحرف ئ (يَاء) لا بهمزة على السطر: \"يَطُوفُ بِمَائِهِ\" (U+0626 ئ). القاعدة الإملائية: حين تكون الهمزة مكسورة وما قبلها ساكن، تُكتب على ياء لا على السطر، فمفتاح الإجابة \"سطر\" يناقض تهجئة الكلمة الموجودة أصلًا في الملف."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "vocab_items لدرس ara5-2 (الزمام، هبوا، الحمام، سدنا، هام، سندس، شذاك) في seed/arabic-t2.json",
+     "claim": "جميع عناصر مفردات الدرس السبعة مسندة إلى source_page: 25، لكن جدول \"معاني المفردات\" الذي يحوي هذه التعريفات مطبوع في صفحة 26 وليس 25.",
+     "evidence": "صفحة 25 (PDF86) تحتوي فقط على عنوان القصيدة والأبيات و\"ناقش\"، بلا أي جدول تعريفات. جدول \"معاني المفردات\" الفعلي مطبوع في صفحة 26 (PDF87) كما يظهر في الصورة. علمًا أن الأسئلة q03/q04 في نفس الحزمة تستشهد بنفس المفردات على source_page: 26 بشكل صحيح، مما يكشف التضارب."
+    },
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "q:ara5-2:q01",
+     "claim": "الـ source_note يزعم أن استخراج \"دَعَتْ مِصْرُ، فَلَبَّيْنَا كِرَامَا\" مبني على \"أسلوب التكرار\"، وهذا غير مدعوم بالكتاب ولا بالنص.",
+     "evidence": "مواطن الجمال ص26 تنص على أن العبارة تدل على \"سرعة استجابة الشباب\" بسبب \"الفاء\" لا التكرار: «دعت مصر – فلبينا كراما: دعت – فلبينا: الفاء تدل على سرعة استجابة الشباب لنداء أمنا العزيزة مصر». ولا يتكرر \"دعت مصر\" أو \"فلبينا\" في أي موضع آخر من القصيدة (10 أبيات) ليصح وصفه بـ\"أسلوب التكرار\"."
+    }
+   ]
+  },
+  {
+   "slug": "ara5-3",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "missing_content",
+     "item_id": "t:ara5-3:001/t:ara5-3:002 (passages)",
+     "claim": "استُقطعت من نص المقاطع الجملةُ الرابطة «وأما النخلةُ السامقةُ فمن عناصرِ الأرضِ» التي تقع في آخر سطرين من صفحة 31 المطبوعة، فينتهي passage t:ara5-3:001/unit2 في ara5-3.json عند «...لا فعلَ لها ولا تفاعلَ.» ثم يبدأ passage t:ara5-3:002/unit1 مباشرة بكلمة «طعامُها...» معلَّقةً بلا فاعل ظاهر في النص المستخرَج (لأن المرجع «النخلة» سقط). وهذا يجعل المفردة «السامقة» — المدرجة في key_terms وفي vocab_items (arabic-t2.json، source_page:31) بمعنى «المرتفعة» — غير واردة إطلاقًا في أي نص مقطع مستخرَج فعليًّا، فهي بند مفردات بلا سند نصي داخل المخرجات. كما يُضعف هذا السقوط سلامة تصنيف q:ara5-3:q08 كـ«تضاد/مقابلة» لأن طرفَي المقابلة (جماد الأبراج البشرية مقابل حياة النخلة الفاعلة) لا يظهران معًا في النص المعروض على الطالب.",
+     "evidence": "صفحة 31 المطبوعة (آخر سطرين): '...لولا أن هذه الأبراج البشرية مصمتة الصخر لافعل لها ولا تفاعل، وأما النخلة السامقة فمن عناصر الأرض'. صفحة 32 المطبوعة تبدأ مباشرة بـ'طعامُها، ومنْ غيثِ السماءِ سُقياها، تحملُ في جوفِها سرَّ الحياةِ؛ لتطرحَه كلَّ عامٍ عراجينَ...'. أما ara5-3.json فيُنهي unit2 من passage 001 عند 'لا فعلَ لها ولا تفاعلَ.' ويبدأ unit1 من passage 002 مباشرة بـ'طعامُها، ومنْ غيثِ السماءِ سُقياها...' دون الجملة الرابطة، فتغيب كلمة 'السامقة' من كل النصوص المخزَّنة رغم وجودها في key_terms وفي vocab_items."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "vocab_items:عراجين (arabic-t2.json)",
+     "claim": "سجل المفردات لكلمة «عراجين» في arabic-t2.json يُسنِدها إلى source_page:31، لكن الكلمة لا ترد إطلاقًا في نص صفحة 31 المطبوعة؛ هي واردة فعليًّا في صفحة 32 فقط. والدليل على الخطأ داخلي: السؤال q:ara5-3:q05 المستخرَج من نفس الحزمة، والمستشهِد بنفس الكلمة، يُسنِدها بشكل صحيح إلى source_page:32 — أي تضارب في إسناد الصفحة لنفس العنصر المعجمي بين ملف vocab_items وملف الأسئلة.",
+     "evidence": "صفحة 32 المطبوعة: '...تحملُ في جوفِها سرَّ الحياةِ؛ لتطرحَه كلَّ عامٍ عراجينَ مثقلةً بثمارِها حمراءَ أو صفراءَ...'. لا وجود للفظ 'عراجين' في نص صفحة 31. سجل vocab_items: {\"lesson\":\"ara5-3\",\"word_ar\":\"عراجين\",...,\"source_page\":31} بينما q:ara5-3:q05 (\"source_page\": 32) يستشهد بنفس الكلمة من الصفحة الصحيحة."
+    }
+   ]
+  },
+  {
+   "slug": "ara6-1",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "wrong_answer",
+     "item_id": "q:ara6-1:q11",
+     "claim": "مفتاح إجابة السؤال (نوع الأسلوب) خاطئ ومتناقض داخليًا: حقل answer.type = \"أمر\" لعبارة «رُفِعَتِ الْأَقْلَامُ، وَجَفَّتِ الصُّحُفُ»، بينما هذه جملة فعلية ماضية مبنية للمجهول (أسلوب خبري)، وليست أسلوب أمر بأي حال. وهذا يناقض حتى نص الحل المرافق لنفس السؤال الذي يقول \"أسلوب خبري يحمل معنى التوكيد\"، ويناقض أيضًا ملف المحتوى نفسه (interactives، style_purpose) الذي صنّف هذه العبارة \"أسلوب بلاغي\" اتساقًا مع الكتاب.",
+     "evidence": "الصفحة ٤٠ (مواطن الجمال) تصنّف «رُفِعَتِ الْأَقْلَامُ، وَجَفَّتِ الصُّحُفُ» بأنها \"أسلوب بلاغي: الغرض منه التأكيد على أن الضر والنفع منه بيد الله\" — لا يوجد أي إشارة لأسلوب أمر. الجملة نحويًا فعل ماضٍ مبني للمجهول (خبر)، فحقل answer.type=\"أمر\" في q:ara6-1:q11 خاطئ ولو اعتمده مصحّح آلي على حرفيته سيرسب طالبًا أجاب بشكل صحيح (خبري/بلاغي)."
+    },
+    {
+     "severity": "high",
+     "kind": "wrong_answer",
+     "item_id": "q:ara6-1:q03",
+     "claim": "الإعراب الوارد لكلمة \"المَسْعى\" خاطئ نحويًا: يذكر أن علامة الجر \"الألف الظاهرة\"، بينما \"المسعى\" اسم مقصور (منتهٍ بألف لازمة)، وعلامة جره الصحيحة هي الكسرة المقدَّرة على الألف منع من ظهورها التعذر، وليست \"الألف\" ولا \"ظاهرة\". هذا خطأ في قاعدة أساسية من قواعد الإعراب (الاسم المقصور)، وقد تم بالفعل رصد هذا البند كـ\"verified\": false في بيانات السؤال نفسها، أي أن بوابة المراجعة البشرية لم تُثبّت هذا المفتاح أصلًا لكنه لا يزال في حزمة الأسئلة القابلة للنشر.",
+     "evidence": "\"المسعى\" مشتقة من \"سعى\" (معتل الآخر بالألف) حسب القاعدة gc:ara6-1:r6 نفسها المستشهد بها في هذا السؤال، وكل اسم مقصور يُعرب بحركات مقدّرة في حالات الرفع والنصب والجر، فلا يصح وصف الألف بأنها \"علامة ظاهرة\". answer.sign=\"الألف\" وanswer.sign_kind=\"ظاهرة\" في q:ara6-1:q03 يخالفان هذه القاعدة النحوية المعروفة."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "vocab_items:ara6-1 (تجاهك / سألت / رفعت الأقلام / جفت الصحف)",
+     "claim": "جدول المفردات الأربعة الخاص بدرس ara6-1 في arabic-t2.json كله مُسند إلى source_page=39، لكن جدول \"أضف إلى قاموسك\" مطبوع فعليًا في صفحة ٤٠ من الكتاب (الصفحة ٣٩ تحتوي فقط على النص المطبوع للحديث والعنوان، بلا جدول مفردات).",
+     "evidence": "الصفحة المطبوعة ٤٠ (PDF 101) تحمل عنوان \"أضف إلى قاموسك:\" وتحته جدول معاني المفردات (تجاهك=معك، سألت=طلبت المعونة والعطاء، رفعت الأقلام=توقفت عن الكتابة، جفت الصحف=انتهى أمر التسجيل فيها). لافتًا للانتباه أن أسئلة اللغويات المستخرجة من نفس المفردات (q:ara6-1:q08 وq:ara6-1:q09) أسندت بشكل صحيح source_page=40، ما يؤكد أن سجلات vocab_items هي الخاطئة تحديدًا."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "page 43 (اقرأ واستمتع: السمك الطيار)",
+     "claim": "نص القراءة الإثرائية \"اقرأ واستمتع: السمك الطيار\" المطبوع كاملًا في صفحة ٤٣ من الدرس غير ممثَّل إطلاقًا في ملف المحتوى (لا يوجد كـpassage) ولا في أي سؤال، ولم يُدرَج ضمن out_of_scope مع تبرير كما حدث مع بندي الإلقاء والخط.",
+     "evidence": "صفحة ٤٣ تحتوي فقرة كاملة عن سمك الطيار (نوعه، طريقة طيرانه، عدد أنواعه \"خمسين نوعًا\"، طوله \"خمسة وعشرين سنتيمترًا\") منسوبة إلى \"الموسوعة العلمية\"، وهي محتوى تعليمي جوهري (فهم مقروء) لا أثر له في content/ara6-1.json ولا في أسئلة arabic-t2.json الخاصة بـara6-1."
+    },
+    {
+     "severity": "low",
+     "kind": "missing_content",
+     "item_id": "page 41, سؤال 3-د",
+     "claim": "سؤال المناقشة المطبوع \"لماذا جاءت لفظة (كلمات) نكرة في الحديث، وما المقصود بها؟\" (نقطة بلاغية/نحوية عن التنكير) غير ممثَّل بأي تفاعلية أو سؤال في الحزمة المستخرجة.",
+     "evidence": "صفحة ٤١، ضمن \"٣) اقرأ النص قراءة صامتة، ثم ناقش ما يلي\"، البند (د) يطرح هذا السؤال تحديدًا ولا يقابله أي بند LO أو تفاعلية أو سؤال في ara6-1.json أو arabic-t2.json."
+    },
+    {
+     "severity": "low",
+     "kind": "text_infidelity",
+     "item_id": "content/ara6-1.json subtopics[0].exposition",
+     "claim": "نص \"exposition\" في ملف المحتوى نص مطوَّل ومُعاد صياغته بالكامل، يختلف جوهريًا في الصياغة عن فقرة \"شرح الحديث الشريف\" المطبوعة في صفحة ٤٠، ويضيف تفاصيل تفسيرية غير واردة حرفيًا في المطبوع (مثل \"وهو رديفُه على الدابة\"، \"طمأنينةٌ عظيمةٌ للقلب\"، \"تحريرٌ له من التعلّق بالأسبابِ دون مسبِّبها\").",
+     "evidence": "صفحة ٤٠ \"شرح الحديث الشريف\" المطبوع فقرة قصيرة ومباشرة (موقف تربوي بين النبي وابن عباس، أدب التوكل، البعد عن ذل السؤال). نص exposition في content.json أطول بكثير ويحمل صياغة وتأملات لم ترد في الأصل المطبوع، وإن لم تكن مخالفة عقديًا فهي غير مطابقة نصيًا لمصدرها المذكور."
+    }
+   ]
+  },
+  {
+   "slug": "ara6-2",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "missing_content",
+     "item_id": "q:ara6-2:q06 / q:ara6-2:q07 / q:ara6-2:q15",
+     "claim": "ثلاثة أسئلة (short) في هذا الدرس بلا إجابة معيارية على الإطلاق: answer=\"\" و solution=[\"\"]، رغم أن النص يدعم إجابة واضحة لكل منها. هذا يخالف مبدأ 'التأصيل بالحل المعياري' (لا حل من الصفر) المذكور في تعليمات المشروع، ولا يتسق مع بقية بنك الأسئلة (مثلاً أسئلة short في ara4-1 كلها لها إجابات معياريّة كاملة).",
+     "evidence": "q06 (ص44): 'اشرح بأسلوبك الحيلة التي اتفقت عليها المطوّقة وصواحبها للتخلص من الشبكة' — النص يقول: 'ولكن نتعاون جميعًا، ونطير كطائر واحد فننجو بعضنا ببعض، فجمعن أنفسهن ووثبن وثبة واحدة فقلعن الشبكة'. q07 (ص45): سبب طلب المطوقة أن يبدأ الفأر بغيرها — النص يقول صراحة: 'إني أخاف إن أنت بدأت بقطع عقدي وتمل وتكسل عن قطع ما بقي... ترخصت إن أدرك الفتور أن أبقى حبيسة في الشبكة'. q15: شرح رمز شق حبة القمح — نص عبارة الشافعي موجود حرفيًا في الملف نفسه. رغم توفر النص الداعم، حقل answer/solution فارغ تمامًا في الأسئلة الثلاثة."
+    },
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "vocab: الورطة / الفتور / تتلجلج (ara6-2.json key_terms + arabic-t2.json vocab_items) و q:ara6-2:q09",
+     "claim": "جدول 'أضف إلى قاموسك' المطبوع في صفحة 45 يحتوي 7 أزواج، من بينها: (تتلجلج ← ترتبك في حبال الشبكة والمراد تتحرك)، (الورطة ← الهلكة وكل أمر يصعب النجاة منه)، (الفتور ← التقصير في العمل). لكن المخرجات أسقطت كلمة 'تتلجلج' تمامًا من جدول المفردات، ونسبت معناها الصحيح خطأً لكلمة 'الورطة'، ثم نسبت معنى 'الورطة' الصحيح خطأً لكلمة 'الفتور'. هذا يجعل إجابة q09 المعيارية خاطئة: تذكر أن 'الفتور: الهلكة وكل أمر يصعب النجاة منه' بينما معناها الصحيح في الكتاب هو 'التقصير في العمل'.",
+     "evidence": "الجدول المطبوع صفحة 45 (الصورة الثانية): يربط 'تتلجلج' بـ'ترتبك في حبال الشبكة والمراد تتحرك'، و'الورطة' بـ'الهلكة وكل أمر يصعب النجاة منه'، و'الفتور' بـ'التقصير في العمل'. أما ملف المحتوى فيربط 'الورطة' بـ'ترتبك في حبال الشبكة والمراد تتحرك' (معنى تتلجلج الصحيح) ويربط 'الفتور' بـ'الهلكة وكل أمر يصعب النجاة منه' (معنى الورطة الصحيح)، ولا وجود لكلمة 'تتلجلج' كبند مفردات مستقل رغم ورودها في جدول الكتاب وفي متن القصة نفسها."
+    },
+    {
+     "severity": "medium",
+     "kind": "unsupported_by_page",
+     "item_id": "q:ara6-2:q13",
+     "claim": "سؤال الإملاء (تصويب الخطأ الإملائي) منسوب إلى صفحة 44 ومرتبط بـ lo:ara6-2-5 ('الإملاء')، لكن لا يوجد في كامل صفحات الدرس (44-48) أي نص إملاء أو تدريب إملائي مطبوع يستند إليه هذا السؤال — الصفحات تحتوي فقط على القصة، جدول المفردات، أسئلة النقاش، وباب اسم الآلة.",
+     "evidence": "مراجعة كاملة للصفحات المطبوعة 44-48: صفحة 44 نص القصة + نقاش، 45 تكملة القصة + جدول مفردات، 46 أسئلة نقاش + قراءة صامتة + جدول اسم الآلة، 47 تابع اسم الآلة، 48 نشاط كتابة (حوار مع مسؤول) + قصيدة. لا يظهر أي نشاط إملاء مطبوع في أي من هذه الصفحات، ما يشير إلى أن الجملة التدريبية للسؤال مؤلَّفة وليست مستخرجة من نص مطبوع في نطاق الدرس المحدد."
+    },
+    {
+     "severity": "medium",
+     "kind": "other",
+     "item_id": "vocab_items: الفتور (source_page) / rh:ara6-2:5",
+     "claim": "خطآن في إسناد رقم الصفحة: (1) بند المفردات 'الفتور' يحمل source_page=44 رغم أن الكلمة لا ترد إطلاقًا إلا في صفحة 45 ('وَإِنْ أَدْرَكَ الْفُتُورَ أَنْ أَبْقَى حَبِيسَةً فِي الشَّبَكَةِ')، وجدول المفردات ذاته مطبوع في صفحة 45 لا 44. (2) ملاحظة البلاغة rh:ara6-2:5 تنسب عبارة 'لَقَدْ كَرَّرْتِ الْقَوْلَ عَلَيَّ' إلى source_page=45، لكنها فعليًا آخر سطر مطبوع في صفحة 44 (قبل فاصل الصفحة مباشرة).",
+     "evidence": "صفحة 44 تنتهي بـ: '...فلما أكثرت عليه القول قال لها: لقد كررت القول علي كأنه ليس لك حاجة في نفسك ولا علي' — وصفحة 45 تبدأ بـ: 'شفقةً لها ولا ترعين لها حقًا...'. كلمة 'الفتور' نفسها ترد فقط ضمن نص صفحة 45: 'وإن أدرك الفتور أن أبقى حبيسة في الشبكة'."
+    },
+    {
+     "severity": "medium",
+     "kind": "text_infidelity",
+     "item_id": "rh:ara6-2:1 و rh:ara6-2:4",
+     "claim": "اقتباسان في rhetoric_notes موسومان verbatim_from_book:true لكنهما لا يطابقان النص المطبوع/نص الفقرة حرفيًا. rh:ara6-2:1 يكتب 'ونطير كطائرٍ واحدٍ فينجو بعضنا ببعض' بينما الصواب 'فَنَنْجُو' (بصيغة المتكلمين الجمع) لا 'فينجو'. rh:ara6-2:4 يكتب 'وتمل أن تكسل' بينما الصواب 'وَتَمَلَّ وَتَكْسَلَ' (فعلان معطوفان بالواو).",
+     "evidence": "النص المطبوع صفحة 44: '...ونطير كطائر واحد فننجو بعضنا ببعض...'. النص المطبوع صفحة 45: '...إني أخاف إن أنت بدأت بقطع عقدي وتمل وتكسل عن قطع ما بقي...'. وملف المحتوى نفسه (ara6-2.json passages) ينقل هاتين العبارتين بشكل صحيح، ما يؤكد أن الخطأ محصور في ملف rhetoric_notes ببنك الأسئلة."
+    },
+    {
+     "severity": "low",
+     "kind": "other",
+     "item_id": "lo:ara6-2-4",
+     "claim": "عقدة الهدف lo:ara6-2-4 تحمل label='اسم الآلة' لكن description='يراجع قواعد اسم الزمان والمكان'، وهو موضوع مختلف تمامًا لم يُدرَّس في هذا الدرس (لا يوجد له أي أثر في محتوى الصفحات 44-48). يبدو أن هذا منقول حرفيًا من قائمة 'أهداف الدرس' المطبوعة في هامش صفحة 44، وقد يكون خطأ في الكتاب نفسه أُخذ دون تصحيح أو توضيح.",
+     "evidence": "هامش صفحة 44 'أهدف الدرس' يتضمن سطرًا نصه 'يراجع قواعد اسم الزمان والمكان' ضمن قائمة أهداف، بينما باب اللغويات الفعلي في صفحتي 46-47 كله عن اسم الآلة فقط، ولا ذكر لاسم الزمان والمكان في أي مكان بالدرس."
+    }
+   ]
+  },
+  {
+   "slug": "ara6-3",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "text_infidelity",
+     "item_id": "rh:ara6-3:2 / q:ara6-3:q07",
+     "claim": "استشهاد بعبارة لا وجود لها في الكتاب على أنها نقل حرفي (verbatim_from_book: true)، وسؤال مشتق منها كرر النص الخاطئ نفسه في متنه.",
+     "evidence": "البيت المطبوع صفحة الكتاب ٤٩ (وتكراره في صندوق «مواطن الجمال في الأبيات» صفحة ٥٠) نصّه: «وَمَنْ يَظْلِمِ الأَوْطانَ أَوْ يَنْسَ حَقَّها تَجُنُّهُ فُنُونُ الحادِثاتِ بِأَظْلَمِ» — الفعل «تَجُنُّهُ» (من الجنون، فعل مضارع + ضمير مفعول به + فاعل مرفوع «فُنُونُ»). لكن rhetoric_notes سجّل rh:ara6-3:2 العبارة كـ«تَجَنُّبُ فُنُونَ الحَادِثَاتِ» (كلمة مختلفة تمامًا: تجنّب=تفادي، وفنون منصوبة لا مرفوعة) وهذا غير موجود في الصفحتين ٤٩ أو ٥٠ إطلاقًا؛ وقد انتقل هذا النص المُصحَّف حرفيًا إلى متن السؤال q:ara6-3:q07: «ما دلالة استخدام الشاعر لكلمة «فنون» في تعبير «تَجَنُّبُ فُنُونَ الحَادِثَاتِ»؟». ملاحظة: نص الفقرة (passages/t:ara6-3:001 وحدة 5) في ملف المحتوى نفسه صحيح ومطابق للمطبوع «تَجُنُّهُ فُنُونُ الحادِثاتِ» — الخطأ محصور في rhetoric_notes والسؤال المشتق منه، وليس في نص المقطع."
+    },
+    {
+     "severity": "medium",
+     "kind": "missing_content",
+     "item_id": "book pages 49/51 — بيت 3 وبيت 5 (مضمون لا بلاغة)",
+     "claim": "سؤالان تفسيريان جوهريان مطبوعان في صفحة 51 عن مضمون بيتي 3 و5 (لا عن الصنعة البلاغية) لا يقابلهما أي سؤال قصير (short) في حزمة الأسئلة، على خلاف نظيريهما لبيتي 6 و7 اللذين استُخرج لهما q14 وq15.",
+     "evidence": "صفحة ٥١، تمرين ٣ «اقرأ النص قراءة صامتة ثم ناقش ما يلي»، البند (د): «ما جزاء المسيء إلى الوطن؟» — يستهدف مضمون بيت 5 (تَجُنُّهُ فُنُونُ الحادِثاتِ بِأَظْلَمِ)، ولم يُستخرج له أي سؤال short مماثل لـq14/q15؛ الموجود فقط q:ara6-3:q07 وهو عن الجرس البلاغي لكلمة «فنون» لا عن «جزاء» الظالم. وفي نفس الصفحة، تمرين ٢-أ «ناقش زملاءك ومعلمك في معنى: يكن حيوانا فوقه كل أعجم» يستهدف مضمون بيت 3، ولا يوجد له أي سؤال (لا short ولا غيره) في الحزمة بينما بيتا 6 و7 المتماثلان في البنية غُطّيا (q14, q15)."
+    }
+   ]
+  },
+  {
+   "slug": "ara6-4",
+   "verdict": "ISSUES",
+   "findings": [
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "q:ara6-4:q13,q14,q15,q16,q11 / lo:ara6-4-4,lo:ara6-4-5",
+     "claim": "The learning-objective tags for the grammar cluster are swapped/scrambled, so per-LO mastery tracking is broken for this lesson. nodes define lo:ara6-4-4 = \"صوغ أسلوب التفضيل\" (comparative-noun formation) and lo:ara6-4-5 = \"الإملاء\" (spelling). But q13, q14, q15, q16 — all squarely about صياغة/إعراب اسم التفضيل — are tagged lo:ara6-4-5 (spelling), not lo:ara6-4-4. Meanwhile q11, a short-answer question asking students to explain the meaning of the ibn-Mas'ud saying, is tagged lo:ara6-4-4 (the preference-noun grammar LO) though it has nothing to do with that grammar point. The only content genuinely tied to lo:ara6-4-5 (the hamza_seat spelling interactive) sits in content.json, not in the graded question bank at all.",
+     "evidence": "services/extraction/seed/arabic-t2.json nodes: {id:\"lo:ara6-4-4\",label:\"صوغ أسلوب التفضيل\"}, {id:\"lo:ara6-4-5\",label:\"الإملاء\"}. Questions: q13 (\"اذكر الشروط الواجب توافرها في الفعل حتى يُصاغ منه اسمُ التفضيل\") lo=lo:ara6-4-5; q14 (mcq on which فعل يصاغ منه تفضيل) lo=lo:ara6-4-5; q15/q16 (إعراب تمييز بعد اسم تفضيل) lo=lo:ara6-4-5; q11 (شرح حكمة ابن مسعود) lo=lo:ara6-4-4."
+    },
+    {
+     "severity": "high",
+     "kind": "bad_mapping",
+     "item_id": "q:ara6-4:q03,q04,q05,q06 / lo:ara6-4-1,lo:ara6-4-2",
+     "claim": "Symmetric to the grammar/spelling swap above: lo:ara6-4-1 is defined as \"فهم النص والاستماع\" (reading/listening comprehension) and lo:ara6-4-2 as \"معاني المفردات\" (vocabulary meaning). q03–q06 are pure lexical items (مرادف هائلة، مرادف المتاحة، مفرد الخامات، ضد وفرة) yet are tagged lo:ara6-4-1 (comprehension), while q01/q02 — text-retrieval/comprehension tasks (extract the word for \"huge achievements\"; extract three traditional products) — are tagged lo:ara6-4-2 (vocabulary). The two LOs' question sets are effectively swapped.",
+     "evidence": "nodes: lo:ara6-4-1 label \"فهم النص والاستماع\"; lo:ara6-4-2 label \"معاني المفردات\". q03/q04/q05/q06 (type lexical: مرادف/مفرد/ضد) all carry lo=lo:ara6-4-1; q01 (type extract) and q02 (type short, extract 3 products) carry lo=lo:ara6-4-2."
+    },
+    {
+     "severity": "high",
+     "kind": "missing_content",
+     "item_id": "printed page 57 — section جـ (اقرأ الموضوع قراءة جهرية معبرة ثم أجب عما يلي)",
+     "claim": "Page 57 of the printed book contains six explicit reading-comprehension questions (أ. ما المقصود بالمشروعات الصغيرة؟ ب. ما علاقة الصناعات التقليدية بالمشروعات الصغيرة؟ جـ. ما خصائص المشروع الصغير؟ د. لماذا تعد المشروعات الصغيرة مهمة؟ هـ. لماذا يجب تشجيع المشروعات الصغيرة؟ و. لكل من المدرسة والمجتمع دورهما في تشجيع المشروعات الصغيرة. اشرح ذلك.) that directly test core stated objectives — \"يستنتج خصائص المشروع الصغير\", \"يقدر أهمية المشروعات الصغيرة\", \"يصنف المشروعات الصغيرة\" (all listed verbatim in lo:ara6-4-1's description). None of these six questions, nor any equivalent testing characteristics/importance/classification of small projects, appears anywhere in the 16 extracted questions for ara6-4 — the question bank covers only vocabulary, two rhetoric spots, the hadith, and the تفضيل grammar rule, entirely skipping the lesson's main comprehension block.",
+     "evidence": "Printed page 57 (PDF p.118): heading \"جـ. اقرأ الموضوع قراءة جهرية معبرة ثم أجب عما يلي:\" followed by 6 lettered sub-questions on definition, relation to traditional industries, characteristics, importance, and role of school/society. No q:ara6-4:* item addresses any of these; lo:ara6-4-1's description explicitly lists \"يستنتج خصائص المشروع الصغير\" and \"يقدر أهمية المشروعات الصغيرة\" as objectives, yet zero questions test them."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q:ara6-4:q11, q:ara6-4:q12",
+     "claim": "source_page is given as 58 for both questions about the ibn-Mas'ud saying, but the saying is printed on page 57 (in the \"قرأت لك\" box), not page 58. Page 58 contains the التعبير/تحدث section and an unrelated \"لغتنا الجميلة\" reading on children's rights — no hadith/quote box appears there. Notably, content.json's own citation_ref for this passage already says \"ص٥٧\", contradicting the questions file's source_page:58.",
+     "evidence": "Printed page 57 (PDF p.118) bottom-left box \"قرأت لك\": \"من لم يجلس في الصغر حيث يكره لم يجلس في الكبر حيث يحب — عبد الله بن مسعود\". content.json passage t:ara6-4:002 citation_ref = \"...قرأت لك، ص٥٧\". Questions q11/q12 both set source_page: 58."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q:ara6-4:q02",
+     "claim": "source_page is given as 55, but the tested content — the list of traditional-craft products (الزخرفة، النقش، المعادن، الفخار، المفروشات...) from paragraph 2 — is printed on page 54. Only the paragraph's final two words (\"أجنبية: أوربية وعربية\") spill onto page 55; none of the acceptable answer items sits there.",
+     "evidence": "Printed page 54 (PDF p.115) bottom paragraph: \"...الذي يتمثّل في إنتاج العديد من المنتجات المتميزة في الزخرفة والنقش والمعادن والفخار والمفروشات القطنية والصوفية والجلود، والمصنوعات الخشبية والصدفية والرخام، ومواد البناء، والملابس التقليدية والصناعات التطريزية الحريرية وغيرها...\" — all on p.54. q02 sets source_page: 55."
+    },
+    {
+     "severity": "medium",
+     "kind": "bad_mapping",
+     "item_id": "q:ara6-4:q07",
+     "claim": "source_page is given as 56, but the target sentence containing \"امتزاجيه\" (paragraph 3) is printed on page 55. Page 56 contains only the vocabulary glossary table (أضف إلى قاموسك) and the \"فكر وناقش\" bullets — not this sentence.",
+     "evidence": "Printed page 55 (PDF p.116): \"...لما يؤديه من وظائفَ اقتصادية واجتماعية وثقافية وامتزاجيه بمختلف مظاهر الحياة والعمران...\". q07 sets source_page: 56."
+    },
+    {
+     "severity": "low",
+     "kind": "bad_mapping",
+     "item_id": "vocab_items: امتزاجه, تسهم (lesson ara6-4)",
+     "claim": "All 8 vocab_items for ara6-4 are uniformly tagged source_page: 54, but \"امتزاجه\" occurs in paragraph 3 (page 55) and \"تسهم\" occurs in paragraph 4 (page 55), not in the page-54 text.",
+     "evidence": "Paragraph 3 (containing امتزاجيه/امتزاجه) and paragraph 4 (containing تسهم, twice) are both printed on page 55 of the book, per the passage units themselves (unit 3, unit 4), yet vocab_items lists source_page:54 for both entries, same as the page-54-only words (هائلة, المتاحة, خلاّقة, وفرة)."
+    },
+    {
+     "severity": "low",
+     "kind": "text_infidelity",
+     "item_id": "q:ara6-4:q09, q:ara6-4:q10 (and rh:ara6-4:3, rh:ara6-4:4)",
+     "claim": "Both questions frame the interrogative sentences as \"قول الكاتب\" (the article writer's own words), but \"هل تتمنى أن تكون موظفًا أم صاحب مشروع خاص؟ ولماذا؟\" and \"كيف يمكن التغلب على مشكلة البطالة؟\" are not part of the essay body — they are the textbook's pre-reading \"ناقش\" discussion prompts printed above the passage, addressed to the student in second person, not statements made by the article's author within the text.",
+     "evidence": "Printed page 54 (PDF p.115), section headed \"ناقش:\" (before \"استمع ثم تحدث\" and the article itself): \"• هل تتمنى أن تكون موظفًا أم صاحب مشروع خاص؟ ولماذا؟ • كيف يمكن التغلب على مشكلة البطالة؟\" — these sit outside and above the \"تُؤدّى المشروعاتُ الصغيرةُ...\" passage body."
+    },
+    {
+     "severity": "low",
+     "kind": "other",
+     "item_id": "t:ara6-4:002 (passage metadata: kind/sacred/sensitivity_class)",
+     "claim": "The saying is attributed in the book to the companion عبد الله بن مسعود under a \"قرأت لك\" box (a general wise-saying feature), not presented as a Prophetic hadith, yet the passage is tagged kind:\"hadith\", sacred:true, and q11/q12 carry sensitivity_class:\"hadith\" — over-classifying a companion's أثر/quote as a حديث نبوي. (Already internally verification_verdict:\"flagged\", so partially self-flagged, but the mislabeling persists in the live metadata used by q11/q12.)",
+     "evidence": "Printed page 57 box titled \"قرأت لك\" (not \"حديث شريف\"): \"من لم يجلس في الصغر حيث يكره لم يجلس في الكبر حيث يحب\" — عبد الله بن مسعود (a صحابي, not the Prophet)."
+    }
+   ]
+  }
+ ],
+ "failed_audits": [],
+ "graph": {
+  "edges": [
+   {
+    "src": "lo:ara1-1-4",
+    "dst": "lo:ara1-2-4",
+    "valid": true,
+    "reason": "سلسلة نحو تراكمية: أنواع المنادى (المضاف/الشبيه بالمضاف/النكرة غير المقصودة) تمهّد مباشرة لنوع المنادى المبني (العلم والنكرة المقصودة) — نفس الباب النحوي، تدرّج منطقي في تصنيف المنادى."
+   },
+   {
+    "src": "lo:ara1-2-4",
+    "dst": "lo:ara1-3-4",
+    "valid": true,
+    "reason": "استمرار نفس باب المنادى: بعد أنواعه المعربة والمبنية يأتي النوع الثالث (نداء ما فيه أل) — تتابع تراكمي أصيل، ليس مجرد ترتيب كتاب."
+   },
+   {
+    "src": "lo:ara2-1-4",
+    "dst": "lo:ara2-2-4",
+    "valid": true,
+    "reason": "البدل وأنواعه (مقدمة عامة) يسبق منطقيًا التفصيل في أنواع البدل — علاقة مقدمة/تفصيل حقيقية."
+   },
+   {
+    "src": "lo:ara2-2-4",
+    "dst": "lo:ara2-3-4",
+    "valid": true,
+    "reason": "عنوان الدرس نفسه '(تابع) بدل البعض من كل وبدل الاشتمال' يشير صراحة إلى أنه استكمال مباشر لدرس أنواع البدل السابق."
+   },
+   {
+    "src": "lo:ara2-4-4",
+    "dst": "lo:ara3-1-4",
+    "valid": true,
+    "reason": "أسلوب المدح والذم هو الإطار العام، وفاعل نعم وبئس هو صلب أفعال المدح والذم نفسها — نفس الأسرة الموضوعية، تفصيل مباشر وليس قفزة موضوعية."
+   },
+   {
+    "src": "lo:ara3-1-4",
+    "dst": "lo:ara3-2-4",
+    "valid": true,
+    "reason": "حبَّذا ولا حبَّذا فعلان استثنائيان إضافيان في أسلوب المدح والذم، امتداد مباشر لفاعل نعم وبئس ضمن نفس الباب."
+   },
+   {
+    "src": "lo:ara1-1-5",
+    "dst": "lo:ara1-2-5",
+    "valid": true,
+    "reason": "كلاهما عن الهمزة المتوسطة (على الواو/الألف ثم على السطر) — نفس قاعدة الإملاء، تدرّج حقيقي في حالاتها الفرعية."
+   },
+   {
+    "src": "lo:ara1-2-5",
+    "dst": "lo:ara1-3-5",
+    "valid": true,
+    "reason": "انتقال من الهمزة المتوسطة إلى الهمزة المتطرفة داخل نفس وحدة 'رسم الهمزة' — لا يزال تتابعًا محتوى حقيقيًا وإن كان أضعف قليلاً من الرابط السابق."
+   },
+   {
+    "src": "lo:ara1-3-5",
+    "dst": "lo:ara2-1-5",
+    "valid": false,
+    "reason": "لا توجد قاعدة إملائية مميّزة مرتبطة بالدرس ٢-١ في spelling_rules؛ الحافة تبدو استمرارًا افتراضيًا لترتيب الكتاب لا اعتمادًا محتوى فعليًا على همزة درس ١-٣."
+   },
+   {
+    "src": "lo:ara2-1-5",
+    "dst": "lo:ara2-2-5",
+    "valid": false,
+    "reason": "لا توجد قاعدة إملاء جديدة موثّقة لأي من الطرفين؛ سلسلة افتراضية بترتيب الدروس فقط."
+   },
+   {
+    "src": "lo:ara2-2-5",
+    "dst": "lo:ara2-3-5",
+    "valid": false,
+    "reason": "نفس الملاحظة: لا محتوى إملائي مميّز في أي من الدرسين يبرر علاقة اشتراط سابق/لاحق."
+   },
+   {
+    "src": "lo:ara2-3-5",
+    "dst": "lo:ara2-4-5",
+    "valid": false,
+    "reason": "لا محتوى إملائي مسجَّل يدعم الرابط؛ يبدو ناتجًا عن التسلسل الافتراضي في الاستخراج."
+   },
+   {
+    "src": "lo:ara2-4-5",
+    "dst": "lo:ara3-1-5",
+    "valid": false,
+    "reason": "وإن كان درس ٣-١ يحمل قاعدة حقيقية (الحروف التي تُكتب ولا تُنطق)، فإن هذه القاعدة لا تعتمد على أي مهارة إملائية من درس ٢-٤ (الذي لا قاعدة مميزة له) — الرابط أثر ترتيب لا اشتراط تربوي."
+   },
+   {
+    "src": "lo:ara3-1-5",
+    "dst": "lo:ara3-2-5",
+    "valid": true,
+    "reason": "نفس القاعدة بالضبط ('الحروف التي تُكتب ولا تُنطق') تتكرر وتتعمق — تتابع محتوى حقيقي، تصنيف العنوان يؤكد الاستمرارية."
+   },
+   {
+    "src": "lo:ara3-2-5",
+    "dst": "lo:ara3-3-5",
+    "valid": true,
+    "reason": "حروف تُنطق ولا تُكتب هي القاعدة المقابلة/التكميلية لحروف تُكتب ولا تُنطق — وحدة واحدة (حروف الزيادة والحذف الصوتي)، رابط أصيل."
+   },
+   {
+    "src": "lo:ara4-1-4",
+    "dst": "lo:ara4-2-4",
+    "valid": true,
+    "reason": "اسم الفاعل من الفعل الثلاثي الصحيح ثم من الثلاثي المعتل — نفس الباب الصرفي (اسم الفاعل)، تدرّج حقيقي حسب نوع الفعل."
+   },
+   {
+    "src": "lo:ara4-2-4",
+    "dst": "lo:ara4-3-4",
+    "valid": true,
+    "reason": "استكمال نفس الباب لاسم الفاعل من الفعل غير الثلاثي بعد الثلاثي الصحيح والمعتل — تسلسل صرفي منطقي كامل."
+   },
+   {
+    "src": "lo:ara4-3-4",
+    "dst": "lo:ara5-1-4",
+    "valid": true,
+    "reason": "صيغ المبالغة مُشتقة أصلاً من اسم الفاعل (نفس الوزن الصرفي بمعالجة مبالغة)، فمعرفة اسم الفاعل شرط منطقي لفهم صيغ المبالغة — أسرة المشتقات مستمرة."
+   },
+   {
+    "src": "lo:ara5-3-4",
+    "dst": "lo:ara6-1-4",
+    "valid": true,
+    "reason": "مراجعة اسمى الزمان والمكان تعتمد حرفيًا على الدرس الذي قدّمهما — علاقة مراجعة/تقديم مباشرة لا لبس فيها."
+   },
+   {
+    "src": "lo:ara6-3-4",
+    "dst": "lo:ara6-4-4",
+    "valid": true,
+    "reason": "عنوان الدرس '(صوغ) أسلوب التفضيل' استكمال صريح ومباشر لدرس أسلوب التفضيل ذاته."
+   },
+   {
+    "src": "lo:ara4-1-5",
+    "dst": "lo:ara4-2-5",
+    "valid": false,
+    "reason": "درس ٤-١ يحمل قاعدة حقيقية (همزة القطع وألف الوصل) لكن لا توجد قاعدة إملائية مسجَّلة لدرس ٤-٢؛ لا دليل على اعتماد محتوى فعلي، يبدو تسلسلًا افتراضيًا."
+   },
+   {
+    "src": "lo:ara4-2-5",
+    "dst": "lo:ara4-3-5",
+    "valid": false,
+    "reason": "كلا الطرفين بلا قاعدة إملاء موثقة — سلسلة شكلية بترتيب الدروس."
+   },
+   {
+    "src": "lo:ara4-3-5",
+    "dst": "lo:ara5-1-5",
+    "valid": false,
+    "reason": "لا محتوى إملائي مميّز لأي من الطرفين."
+   },
+   {
+    "src": "lo:ara5-1-5",
+    "dst": "lo:ara5-2-5",
+    "valid": false,
+    "reason": "لا محتوى إملائي مميّز لأي من الطرفين."
+   },
+   {
+    "src": "lo:ara5-2-5",
+    "dst": "lo:ara5-3-5",
+    "valid": false,
+    "reason": "لا محتوى إملائي مميّز لأي من الطرفين."
+   },
+   {
+    "src": "lo:ara5-3-5",
+    "dst": "lo:ara6-1-5",
+    "valid": false,
+    "reason": "درس ٦-١ يحمل قاعدة حقيقية لكنها عن علامات الترقيم (الشرطتان والقوسان) — موضوع مختلف تمامًا عن أي مهارة إملائية سابقة، ولا يوجد اعتماد محتوى حقيقي من درس ٥-٣ (بلا قاعدة) إليه."
+   },
+   {
+    "src": "lo:ara6-1-5",
+    "dst": "lo:ara6-2-5",
+    "valid": false,
+    "reason": "لا محتوى إملائي مميّز لأي من الطرفين."
+   },
+   {
+    "src": "lo:ara6-2-5",
+    "dst": "lo:ara6-3-5",
+    "valid": false,
+    "reason": "لا محتوى إملائي مميّز لأي من الطرفين."
+   },
+   {
+    "src": "lo:ara6-3-5",
+    "dst": "lo:ara6-4-5",
+    "valid": false,
+    "reason": "لا محتوى إملائي مميّز لأي من الطرفين — سلسلة الإملاء بالكامل في الفصل الدراسي الثاني (٩ حواف) قائمة على ترتيب الدروس فقط، مع جزيرتين فقط من محتوى حقيقي (٤-١ و٦-١) غير مترابطتين موضوعيًا؛ توصية: إعادة النظر في هذه السلسلة كاملة أو تفكيكها إلى عقد غير مرتبطة حتى تُستخرج قواعد إملاء فعلية لكل درس."
+   }
+  ],
+  "proposed": [
+   {
+    "src": "lo:ara5-1-4",
+    "dst": "lo:ara5-2-4",
+    "kind": "prerequisite_within_arabic",
+    "rationale": "فجوة في سلسلة أسرة المشتقات الصرفية: صيغ المبالغة (٥-١) واسم المفعول (٥-٢) كلاهما مبني على نفس جذر اسم الفاعل المدروس في ٤-١..٤-٣، والحزمة وصلت ٤-٣→٥-١ لكنها قطعت الرابط بعدها رغم استمرار نفس الباب الصرفي."
+   },
+   {
+    "src": "lo:ara5-2-4",
+    "dst": "lo:ara5-3-4",
+    "kind": "prerequisite_within_arabic",
+    "rationale": "استمرار مباشر لنفس الفجوة: اسم المفعول (٥-٢) يسبق منطقيًا اسمي الزمان والمكان (٥-٣) في نفس وحدة 'المشتقات'، والرابط التالي (٥-٣→٦-١) موجود بالفعل مما يؤكد أن هذه حلقة ناقصة في المنتصف لا نهاية موضوع."
+   },
+   {
+    "src": "lo:ara6-1-4",
+    "dst": "lo:ara6-2-4",
+    "kind": "prerequisite_within_arabic",
+    "rationale": "مراجعة اسمي الزمان والمكان (٦-١) تمهّد لاسم الآلة (٦-٢) — آخر حلقة في أسرة المشتقات الصرفية (اسم فاعل → صيغ مبالغة → اسم مفعول → زمان/مكان → آلة)؛ الحزمة ربطت ٦-٣→٦-٤ بنفس منطق الاستمرار لكنها فاتها هذا الرابط المكافئ قبله."
+   },
+   {
+    "src": "lo:ara1-1-2",
+    "dst": "lo:ara1-1-1",
+    "kind": "prerequisite_within_arabic",
+    "rationale": "لا توجد أي حافة prerequisite داخل نفس الدرس بين الأهداف الخمسة عبر كل الحزمتين (٢٠ درسًا). عمليًا، فهم معاني المفردات (الهدف ٢) شرط عملي لفهم النص (الهدف ١) قبل تناول مواطن الجمال أو النحو. مثال تمثيلي فقط — يوصى بتعميم النمط 2→1 على الدروس العشرين جميعًا وليس الاقتصار عليه هنا."
+   },
+   {
+    "src": "lo:ara1-1-1",
+    "dst": "lo:ara1-1-3",
+    "kind": "prerequisite_within_arabic",
+    "rationale": "تحديد مواطن الجمال (الهدف ٣) يفترض فهمًا عامًا سابقًا لمعنى النص (الهدف ١) — نفس التوصية بالتعميم عبر كل الدروس، وليست خاصة بهذا الدرس فقط."
+   },
+   {
+    "src": "lo:ara2-2-1",
+    "dst": "module:soc-t1-u4",
+    "kind": "cross_subject_bridge",
+    "rationale": "مرشّح جسر فقط، لا يُحمَّل بلا مراجعة بشرية: سيرة سميرة موسى (مواليد ١٩١٧) تقع في حقبة الاحتلال البريطاني، وربط قصتها بين العلم والنهضة الوطنية يوفر سياقًا طبيعيًا للتقاطع مع وحدة الدراسات الاجتماعية 'مصر والزحف الاستعماري ومحاولات التحرر الوطني'."
+   },
+   {
+    "src": "lo:ara5-2-1",
+    "dst": "module:soc-t1-u4",
+    "kind": "cross_subject_bridge",
+    "rationale": "مرشّح جسر فقط: قصيدة 'وادي الكنانة' نداء وطني صريح للنهوض والوحدة أمام التحديات، يتقاطع مباشرة مع محتوى وحدة التاريخ عن مصر والاستعمار ومحاولات التحرر — يحتاج تأكيدًا بشريًا لملاءمة التوقيت الزمني قبل اعتماده."
+   },
+   {
+    "src": "lo:ara6-3-1",
+    "dst": "module:soc-t1-u3",
+    "kind": "cross_subject_bridge",
+    "rationale": "مرشّح جسر فقط: موضوع 'حب الوطن' يصلح للربط بوحدتي التاريخ عن مصر (الحكم العثماني ثم الزحف الاستعماري)، بحيث يُثري النص الأدبي بخلفية تاريخية زمنية حقيقية — الاختيار بين الوحدتين يحتاج قرار محتوى بشري."
+   },
+   {
+    "src": "lo:ara6-4-1",
+    "dst": "module:u2",
+    "kind": "cross_subject_bridge",
+    "rationale": "مرشّح جسر فقط: نص 'المشروعات الصغيرة' يناقش الإنتاج والتصدير والتكلفة، سياق واقعي مباشر لتطبيق دروس الرياضيات في وحدة 'النسبة والتناسب والتناسب الطردي والعكسي' (حساب نسب الربح/التكلفة والإنتاج) — يحتاج تنسيقًا بين معلمي المادتين قبل الاعتماد."
+   }
+  ]
+ },
+ "gaps": [
+  {
+   "what": "أهداف الوحدة (unit-opener objectives page, 11–14 outcomes) is 100% uncovered — every one of the 6 unit-opener pages falls in the single-page gap immediately before that unit's first lesson, and no node in arabic-t1.json/arabic-t2.json has a source_page matching any of them. Confirmed for all 6 units (checked every one, not sampled).",
+   "where": "طبعة الفصل الأول: صفحات مطبوعة ٧، ٢٤، ٤١ (= pdf 8, 25, 42). طبعة الفصل الثاني: صفحات مطبوعة ٥، ١٩، ٣٨ (= pdf 66, 80, 99).",
+   "severity": "high",
+   "suggestion": "أضِف نوع عقدة جديد (unit_objective أو ملحق على عقدة module) يلتقط أهداف الوحدة الـ١١-١٤ لكل وحدة، ووسّع جدول مدى الصفحات بحيث يضم صفحة الافتتاحية ضمن نطاق الدرس الأول التالي لها (أو كنطاق مستقل)، حتى لا يتجاهلها الـcoverage oracle بصمت في الجولة القادمة."
+  },
+  {
+   "what": "حقل enrichment (يغطي اقرأ واستمتع / قرأت لك) مُثبَّت فارغًا (`\"enrichment\": [], \"misconceptions\": []`) في الكود نفسه — ليس خطأ استخراج لكل درس بل جذع غير موصول في المُجمِّع (assembler)؛ كل الدروس العشرين (٠/٢٠) بلا محتوى إثرائي رغم أن الوثيقة العقدية (extraction contract) تُدرجه صراحة ضمن النطاق.",
+   "where": "services/extraction/assemble_arabic.py:850 (السطر البرمجي)؛ كل ملفات seed/content/ara*.json (٢٠/٢٠)؛ أمثلة من الكتاب: مطبوع ٢١، ٢٣ (ara1-3)، ٣٧، ٤٠ (ara2-4)، ٤٤ (ara3-1)، ٥٨ (ara6-4).",
+   "severity": "high",
+   "suggestion": "وصل استخراج صندوقي «اقرأ واستمتع» و«قرأت لك» فعليًا في الـconveyor بدل القيمة الفارغة الثابتة، وأضف قاعدة تدقيق آلية (audit_arabic.py) تفشل إذا وُجد صندوق قراءة إثرائية في مصدر الصفحة بينما enrichment فارغ في الناتج."
+  },
+  {
+   "what": "حقل misconceptions مُثبَّت فارغًا بنفس السطر البرمجي — لا يوجد أي محتوى «مفاهيم خاطئة شائعة» في أي من الدروس العشرين، وهو عنصر مهم لحلقة «شرح كل خطأ خطوة بخطوة» في PRD.",
+   "where": "services/extraction/assemble_arabic.py:850؛ كل ملفات seed/content/ara*.json (٢٠/٢٠).",
+   "severity": "medium",
+   "suggestion": "تأكيد مع سامويل: هل هذا استبعاد MVP مقصود (ويُوثَّق كـADR) أم فجوة تحتاج جولة استخراج تالية؛ إن كان مقصودًا فوثّقه صراحة بدل تركه صامتًا في الكود."
+  },
+  {
+   "what": "نمط ملخص التدقيق (٢٠/٢٠ دروس بها ISSUES، بلا درس نظيف واحد، من ٢ إلى ٩ ملاحظات، بمتوسط ≈٥.٨٥) يشي بعيب على مستوى خط الإنتاج لا بأخطاء متفرقة لكل درس — توافق مباشر مع اكتشاف حقلي enrichment/misconceptions الثابتين فارغين أعلاه، واللذين سيولّدان ملاحظة تدقيق في كل درس تقريبًا يحوي صندوق قراءة إثرائية.",
+   "where": "ملخص التدقيق المُعطى: ara1-1..ara6-4، جميعها ISSUES؛ حالتا الشذوذ ara5-3 (٢) وara6-3 (٢) الأقل من البقية (٤-٩).",
+   "severity": "medium",
+   "suggestion": "صنّف ملاحظات التدقيق العشرين حسب الفئة (لا العدد فقط) لمعرفة أي نسبة تُفسَّر بسبب جذري واحد (enrichment/misconceptions الفارغين)؛ إن كانت الغالبية، فإصلاح المُجمِّع مرة واحدة يحل معظم الملاحظات دفعة واحدة بدل لمس ٢٠ درسًا يدويًا. راجع أيضًا لماذا ara5-3 وara6-3 أقل ملاحظات — درسان أقصر أم نمط فشل مختلف؟"
+  },
+  {
+   "what": "مقدّمات الكتاب (غلافان، المقدمة، فهرس كل فصل) وخاتمته (رقم الإيداع، المواصفات الفنية، غلاف خلفي) خارج أي نطاق درس — وهذا سليم ومتوقَّع، لا فقدان صفحات حقيقي هنا؛ التحقق الحسابي (٨+٥٤+٢+١+١+٥٣+٣ = ١٢٢) يؤكد عدم وجود صفحات أخرى ضائعة خارج الفجوات الست المذكورة أعلاه.",
+   "where": "pdf 1-7، pdf 63-65، pdf 120-122.",
+   "severity": "low",
+   "suggestion": "لا حاجة لعمل — يُوثَّق فقط كي لا يُعاد الإبلاغ عنه كفجوة في جولة تدقيق قادمة."
+  },
+  {
+   "what": "رمز QR «لمزيد من التدريبات يرجى الدخول على الموقع الإلكتروني للوزارة» يتكرر في نهاية معظم الدروس، ويشير لموقع خارجي غير قابل للاستخراج من الـPDF نفسه.",
+   "where": "متكرر في آخر صفحة لمعظم الدروس (مثال: مطبوع ٤٠، ٥٨، ٦١ بالفصل الأول، ونظيرها بالفصل الثاني).",
+   "severity": "low",
+   "suggestion": "لا إجراء استخراجي مطلوب؛ يمكن فقط تدوين وجود تدريبات إلكترونية تكميلية في البيانات الوصفية للدرس لأغراض المنتج فقط."
+  }
+ ]
+}

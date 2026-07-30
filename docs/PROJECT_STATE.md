@@ -3,6 +3,34 @@
 > Living document. Read at session start; update when progress or decisions land.
 > Last updated: 2026-07-29
 
+## 📗 ARABIC FULL BOOK — extracted, related, reviewed (2026-07-30, `wip/multi-subject-app`, UNPUSHED)
+**All 20 lessons of both terms are in the spine with a reviewed relationship graph.** 152-agent
+parallel conveyor run (0 errors) → `assemble_arabic.py` → `seed/arabic-t1/t2.json`: 100 LOs,
+296 questions (10 live via blind re-derivation, 286 held at review), 46 sealed passages, 116
+vocab, 106 rhetoric, 157 rule clauses. **Relationship graph: 16 prerequisite edges** — the
+grammar installment series the book prints (المنادى ×3، البدل ×3، المدح والذم→نعم وبئس→حبذا،
+اسم الفاعل ×3→صيغ المبالغة→اسم المفعول→الزمان والمكان→مراجعتهما→اسم الآلة، التفضيل→صوغه) +
+the T1U1 همزة seat chain; a 22-agent review VETOED 14 book-order إملاء edges and proposed the
+morphology completions (adopted) + 4 cross-subject bridge candidates (in the report, NOT loaded —
+Samuel curates bridges).
+
+**Samuel's sealed-text concern — fixed and guaranteed:** sealed passages now pin onto السبورة
+from the lesson's first message (`SealedPassageCard`, id-only `{{show_passage:…}}` directive), and
+runtime containment FAILS CLOSED: `lib/sacred-guard.ts` scans the output stream (LOOSE 4-word
+shingles, 96-char holdback) and kills any turn that quotes sealed text before it reaches the
+student, logging a redacted audit row. Verified live: tutor teaches from the on-board آيات by
+paraphrase + number, never quoting.
+
+**Review findings register: `services/extraction/runbook/ar-review-report.md`** — 115 findings
+(30 high). Fixed same-day: systematic page misattribution (section-anchored now), interactive
+rule_ref ids, the edge vetoes. Remaining for humans/re-runs: 7 wrong answer-explanations (all at
+review status), ~30 uncovered printed drills, re-run list (worst: ara2-3 آيات العلم — grammar+
+إملاء sections lost), unit-opener objective pages, enrichment/misconceptions never extracted.
+RhetoricType grew 9 book-printed labels (طباق، جناس، تصوير، مدح/ذم، شرط، استثناء، تنكير، تفضيل)
+— **pending Samuel's sign-off as enum owner**. Sacred ledger: سفينة نوح transcript ≠ authorities
+on آية ٣٦ (flagged, canonical stored) + 3 hadith passages flagged (no machine authority — named
+religious-content owner). selfcheck 106/106 · containment sweep CLEAN · 48/48 app tests.
+
 ## ✅ ARABIC END-TO-END — working locally (2026-07-29, on branch `wip/multi-subject-app`, UNPUSHED)
 **اللغة العربية is a third first-class subject: extraction → authority-verified seal → assembly →
 load → visible + teachable in the app.** Verified in the browser: third filter chip + aubergine
