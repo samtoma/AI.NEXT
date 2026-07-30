@@ -85,7 +85,10 @@ export default async function StudentPage({
   }
 
   // No subject chosen yet → the per-subject home (never a blended score).
-  if (!subject) {
+  // A ?lesson= link IS a choice though: the picker's chips land here, and
+  // bouncing them to the home silently discarded the selection (field
+  // report, 2026-07-30: "picking another lesson brings me back").
+  if (!subject && !lessonSlug) {
     const summaries = await getSubjectSummaries(studentId);
     // Only show the home when more than one subject is loaded; otherwise the
     // single-subject check-in is the natural landing (math-only stays as-is).

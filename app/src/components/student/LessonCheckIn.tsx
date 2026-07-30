@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { LessonData, LessonInfo } from "@/lib/types";
-import { isRtlSubject, subjectDef } from "@/lib/subjects";
+import { isRtlSubject, spineKeyOf, subjectDef } from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
 
 /**
@@ -62,7 +62,10 @@ export function LessonCheckIn({
   }
 
   const isGeoModule = (id: string) => id.startsWith("module:geo");
-  const q = (slug: string) => `/student?lesson=${encodeURIComponent(slug)}`;
+  // Each chip carries ITS OWN lesson's subject, so the check-in it lands on
+  // filters the picker to the right course and the URL stays shareable.
+  const q = (slug: string, subject?: LessonInfo["subject"]) =>
+    `/student?${subject ? `subject=${spineKeyOf(subject)}&` : ""}lesson=${encodeURIComponent(slug)}`;
   const selectedIsGeo = lesson.slug.startsWith("geo");
 
   return (
@@ -313,7 +316,7 @@ export function LessonCheckIn({
                   return (
                     <Link
                       key={l.slug}
-                      href={q(l.slug)}
+                      href={q(l.slug, m.subject)}
                       scroll={false}
                       prefetch={false}
                       dir={soc ? "rtl" : undefined}
