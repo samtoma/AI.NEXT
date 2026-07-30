@@ -105,7 +105,9 @@ def crosscheck_quran(citation: str, transcript_units: list[str]) -> tuple[list[s
     """
     m = re.fullmatch(r"(\d+):(\d+)-(\d+)", citation.strip())
     if not m:
-        raise SystemExit(f"unparseable Quran citation {citation!r}")
+        # caller contract: the citation is pre-parsed in assemble_lesson and an
+        # unparseable one DROPS the passage to the report before reaching here
+        raise ValueError(f"unparseable Quran citation {citation!r}")
     surah, a_from, a_to = int(m[1]), int(m[2]), int(m[3])
     n = a_to - a_from + 1
 
@@ -123,12 +125,25 @@ def crosscheck_quran(citation: str, transcript_units: list[str]) -> tuple[list[s
     b_units = fetched[names[1]]
     ref_units = local_reference(surah, a_from, a_to)
 
-    # canonical basis: quran.com, else alquran.cloud, else the sealed reference
+    # canonical basis: quran.com, else alquran.cloud, else the sealed
+    # reference, else — with everything unreachable — the BOOK TRANSCRIPT,
+    # flagged. A dead network degrades to "held for a human", never to a
+    # dead assembly run (ADR-0006 §2: FLAG, not block).
     basis = a_units or b_units or ref_units
     if basis is None:
-        raise SystemExit(
-            f"quran {citation}: no authority reachable and no sealed local reference — "
-            "cannot establish canonical text at all")
+        canonical = [store_form(t) for t in transcript_units]
+        return canonical, {
+            "method": "authority_crosscheck", "verdict": "flagged",
+            "sources": [
+                {"name": name, "endpoint": AUTHORITIES[name].format(surah=surah),
+                 "agrees": False,
+                 "differences": [errors.get(name, "not fetched")]}
+                for name in AUTHORITIES],
+            "transcript_agrees": False,
+            "flag_reason": "no authority reachable and no sealed local reference — "
+                           "book transcript held; re-run the cross-check before "
+                           "any human approval",
+        }
     canonical = [store_form(u) for u in basis]
 
     flag_reasons: list[str] = []
@@ -353,8 +368,13 @@ def map_irab(q: dict, clause_ids: dict[str, str]) -> dict | None:
     a = q.get("irab_answer") or {}
     word = store_form(q.get("target_word") or "")
     role = store_form(a.get("role") or "")
-    state = (a.get("state") or "").strip()
-    if not word or not role or state not in IRAB_STATES:
+    # tolerate feminine agreement and descriptive suffixes the conveyor emits
+    # («مرفوعة», «مبنية», «منصوب بالفتحة») — same substring policy _base_sign
+    # already applies to the sign field (release review, 2026-07-30)
+    raw_state = (a.get("state") or "").strip()
+    state = next((s for s in ("منصوب", "مرفوع", "مجرور", "مجزوم", "مبني")
+                  if s in raw_state), None)
+    if not word or not role or state is None:
         return None
     sign = _base_sign((a.get("sign") or "").strip())
     raw_kind = (a.get("sign_kind") or "ظاهرة").strip()
@@ -462,10 +482,21 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
         kind = p["kind"]
         page = int(p["printed_page"])
         if kind == "quran":
+            # citation pre-parse + empty-canonical guard: a defect here DROPS
+            # this one passage to the report — never the assembly run
+            # (release review, 2026-07-30: SystemExit killed the whole book)
+            mcit = re.fullmatch(r"(\d+):(\d+)-(\d+)", (p.get("citation") or "").strip())
+            if not mcit:
+                report.append(f"DROP {pid}: quran citation unparseable "
+                              f"({p.get('citation')!r}) — re-run this lesson's text stage")
+                continue
             transcript = [u["text"] for u in (p.get("units") or [])]
             canonical, verification = crosscheck_quran(p["citation"], transcript)
-            m = re.fullmatch(r"(\d+):(\d+)-(\d+)", p["citation"].strip())
-            surah, a_from, a_to = int(m[1]), int(m[2]), int(m[3])
+            if not canonical:
+                report.append(f"DROP {pid}: no authority reachable AND no usable "
+                              "transcript — nothing to hold for review")
+                continue
+            surah, a_from, a_to = int(mcit[1]), int(mcit[2]), int(mcit[3])
             units = [{"n": j + 1, "printed_n": str(a_from + j).translate(ARABIC_INDIC),
                       "text_ar": t} for j, t in enumerate(canonical)]
             passages.append({
@@ -581,7 +612,9 @@ def assemble_lesson(lesson: dict, report: list[str]) -> tuple[dict, dict]:
                                  fallback=passages[-1]["source_page"] if passages else 0)
 
     # ---------------- grammar rule ----------------
-    gslug = f"munada" if "منادى" in art["grammar"]["topic"] else f"gr{unit_no}"
+    # clause ids stay LESSON-scoped (gc:<slug>:rN — stable citation targets for
+    # this lesson's questions); the per-TOPIC GrammarRule objects are merged
+    # across installments in main() (merge_topic_installments)
     topic_slug = re.sub(r"[^a-z0-9]+", "-", f"{slug}")
     rule_id = f"gr:{topic_slug}"
     clause_ids: dict[str, str] = {}
@@ -926,6 +959,52 @@ EXTRACTION_RUN = {
 }
 
 
+# A grammar TOPIC taught in installments is ONE GrammarRule spanning its
+# lessons (schema: «المنادى runs ara1-1 → ara1-3, scope is cumulative») — the
+# per-lesson assembly emits one object per lesson, and this table merges them.
+# Distinct from GRAMMAR_SERIES: cross-topic links (اسم الفاعل → صيغ المبالغة)
+# are prerequisite EDGES between different rules, not one rule.
+TOPIC_INSTALLMENTS: list[tuple[str, list[str]]] = [
+    ("munada", ["ar-t1u1l1", "ar-t1u1l2", "ar-t1u1l3"]),
+    ("badal", ["ar-t1u2l1", "ar-t1u2l2", "ar-t1u2l3"]),
+    ("madh-dhamm", ["ar-t1u2l4", "ar-t1u3l1", "ar-t1u3l2"]),
+    ("ism-fail", ["ar-t2u1l1", "ar-t2u1l2", "ar-t2u1l3"]),
+    ("zaman-makan", ["ar-t2u2l3", "ar-t2u3l1"]),
+    ("tafdil", ["ar-t2u3l3", "ar-t2u3l4"]),
+]
+
+
+def merge_topic_installments(rules: list[dict]) -> list[dict]:
+    """Merge per-lesson GrammarRule fragments of one topic into ONE cumulative
+    rule (id gr:<topic>), keeping every clause id (they are lesson-scoped and
+    cited by questions). Rules outside any installment table stay as-is."""
+    slug_to_topic = {slug_of(wf)[0]: name
+                     for name, wfs in TOPIC_INSTALLMENTS for wf in wfs}
+    by_topic: dict[str, list[dict]] = {}
+    out: list[dict] = []
+    for r in rules:
+        lesson = r["taught_in"][0]
+        topic = slug_to_topic.get(lesson)
+        if topic is None:
+            out.append(r)
+        else:
+            by_topic.setdefault(topic, []).append(r)
+    for topic, parts in by_topic.items():
+        parts.sort(key=lambda r: r["taught_in"][0])
+        merged = {
+            "id": f"gr:{topic}",
+            "label_ar": parts[0]["label_ar"],
+            "unit": parts[0]["unit"],
+            "taught_in": [r["taught_in"][0] for r in parts],
+            "clauses": [c for r in parts for c in r["clauses"]],
+            "types_tree": {"installments": [
+                {"lesson": r["taught_in"][0], "label_ar": r["label_ar"],
+                 **(r.get("types_tree") or {})} for r in parts]},
+        }
+        out.append(merged)
+    return out
+
+
 def empty_bundle(term: int) -> dict:
     b: dict = {
         "extraction_run": dict(EXTRACTION_RUN),
@@ -988,6 +1067,11 @@ def main() -> None:
         bundles[term]["edges"].append(e)
     report.append(f"relationship graph: {len(rel)} prerequisite edge(s) "
                   f"(grammar series + الإملاء per-term chains)")
+
+    # one cumulative GrammarRule per installment topic (schema invariant —
+    # release review, 2026-07-30)
+    for b in bundles.values():
+        b["grammar_rules"] = merge_topic_installments(b["grammar_rules"])
 
     # dedupe module nodes (a unit spans several lessons)
     for b in bundles.values():

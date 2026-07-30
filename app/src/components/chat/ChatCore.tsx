@@ -198,8 +198,19 @@ export function ChatCore({
   const scheduleContinueRef = useRef<() => void>(() => {});
   // cancel hook for the active paced reveal (unmount safety)
   const revealCancelRef = useRef<() => void>(() => {});
-  // sticky auto-scroll: cleared when the user scrolls away from the bottom
-  const stuckToBottom = useRef(true);
+  // sticky auto-scroll: cleared when the user scrolls away from the bottom.
+  // A surface with `leading` content (the sealed passage cards) starts a FRESH
+  // session unstuck and scrolled to the top, so the student actually sees the
+  // text before the tutor's messages pull the view down — auto-scroll used to
+  // hide the passage immediately, reproducing the very bug the cards fix
+  // (release review, 2026-07-30). Restored sessions keep bottom-stick.
+  const startAtTop = !!leading && !initialMessages?.length;
+  const stuckToBottom = useRef(!startAtTop);
+  useEffect(() => {
+    if (startAtTop && scrollRef.current) scrollRef.current.scrollTop = 0;
+    // deliberately once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     onMessagesChange?.(messages);
@@ -285,6 +296,9 @@ export function ChatCore({
     async (raw: string, opts?: { hidden?: boolean }) => {
       const text = raw.trim();
       if (!text || streaming || streamingRef.current || capped) return;
+      // a VISIBLE user action re-engages bottom-stick — after reading the
+      // leading passage, the student expects to see the reply they asked for
+      if (!opts?.hidden) stuckToBottom.current = true;
       setInput("");
       setStreaming(true);
       streamingRef.current = true;

@@ -133,8 +133,12 @@ interface SavedSession {
   at: number;
 }
 
-const storeKey = (mode: LessonMode, slug: string) =>
-  `ainext-lesson:${mode}:${slug}`;
+// Scoped by STUDENT as well as mode+lesson: without the id, switching the
+// demo student and opening the same lesson resumed the previous student's
+// transcript (and inherited their server-side turn count) — found by the
+// release review, 2026-07-30.
+const storeKey = (mode: LessonMode, slug: string, studentId: number) =>
+  `ainext-lesson:${mode}:${slug}:s${studentId}`;
 
 /* Defensive readers for `{{widget:…}}` payloads. The directives are authored by
    a model, so every field is untrusted: a malformed payload must render nothing
@@ -238,7 +242,7 @@ export function LessonSession({
   useEffect(() => {
     let saved: SavedSession | null = null;
     try {
-      const raw = sessionStorage.getItem(storeKey(mode, lesson.slug));
+      const raw = sessionStorage.getItem(storeKey(mode, lesson.slug, lesson.studentId));
       if (raw) {
         const j = JSON.parse(raw) as SavedSession;
         if (
@@ -271,7 +275,7 @@ export function LessonSession({
 
   const startFresh = useCallback(() => {
     try {
-      sessionStorage.removeItem(storeKey(mode, lesson.slug));
+      sessionStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
     } catch {
       /* noop */
     }
@@ -345,7 +349,7 @@ export function LessonSession({
         at: Date.now(),
       };
       sessionStorage.setItem(
-        storeKey(mode, lesson.slug),
+        storeKey(mode, lesson.slug, lesson.studentId),
         JSON.stringify(saved)
       );
     } catch {
@@ -438,7 +442,7 @@ export function LessonSession({
       };
       // the session is complete — a finished lesson never offers a resume
       try {
-        sessionStorage.removeItem(storeKey(mode, lesson.slug));
+        sessionStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
       } catch {
         /* noop */
       }
@@ -1112,7 +1116,15 @@ export function LessonSession({
               renderWidget={renderWidget}
               renderPassage={(id) => {
                 const p = lookupPassage(id);
-                return p ? <SealedPassageCard passage={p} compact /> : null;
+                return p ? (
+                  <SealedPassageCard passage={p} compact />
+                ) : (
+                  // an unresolvable id must fail VISIBLY, not vanish — the
+                  // tutor believes it just showed the student a text
+                  <p dir="rtl" className="py-2 text-center text-[12px] text-rust">
+                    النص ده مش متاح في بيانات الدرس
+                  </p>
+                );
               }}
               leading={
                 passages.length > 0 ? (

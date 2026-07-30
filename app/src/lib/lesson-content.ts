@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 
 /**
@@ -261,6 +261,42 @@ const CONTENT_DIR = path.join(
 // lessonIds are pipeline slugs like "soc1-1" / "geo1-2" (plus "_sample" for
 // the dev harness). Whitelist the charset so the id can never escape the dir.
 const ID_RE = /^[a-z0-9_-]{1,40}$/;
+
+/**
+ * EVERY sealed sacred passage across all content bundles, cached for the
+ * process lifetime (content files are immutable per deploy).
+ *
+ * This feeds the runtime containment guard on ALL chat surfaces: the release
+ * review (2026-07-30) found the guard wired only to the lesson surfaces,
+ * leaving student_chat — the re-explanation flow that serves Arabic questions
+ * — able to stream unscanned output. Sacred text must never be emitted on ANY
+ * surface, so the backstop scans against the whole sealed corpus (a handful
+ * of passages; the shingle set is tiny).
+ */
+let sacredCache: { id: string; text: string }[] | null = null;
+
+export async function getAllSacredPassages(): Promise<
+  { id: string; text: string }[]
+> {
+  if (sacredCache) return sacredCache;
+  const out: { id: string; text: string }[] = [];
+  let names: string[] = [];
+  try {
+    names = (await readdir(CONTENT_DIR)).filter((n) => n.endsWith(".json"));
+  } catch {
+    /* no content dir — nothing sacred to guard */
+  }
+  for (const name of names) {
+    const content = await getLessonContent(name.replace(/\.json$/, ""));
+    for (const p of content?.passages ?? []) {
+      if (p.sacred) {
+        out.push({ id: p.id, text: p.units.map((u) => u.text_ar).join("\n") });
+      }
+    }
+  }
+  sacredCache = out;
+  return out;
+}
 
 /**
  * Read the rich content bundle for a lesson, or null if none exists yet.

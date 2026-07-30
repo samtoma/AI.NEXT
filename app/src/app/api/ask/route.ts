@@ -1,8 +1,8 @@
 import { spawn } from "node:child_process";
 import { pool } from "@/lib/db";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
-import { buildLessonContext, sanitizeLessonSlug } from "@/lib/lesson";
-import { getLessonContent } from "@/lib/lesson-content";
+import { buildLessonContext } from "@/lib/lesson";
+import { getAllSacredPassages } from "@/lib/lesson-content";
 import {
   makeSacredGuard,
   SACRED_HOLDBACK_CHARS,
@@ -103,11 +103,19 @@ export async function POST(req: Request) {
     );
   }
 
+  // Which demo student's mastery grounds this turn — a cookie, validated
+  // against the students table, defaulting to Omar. DEMO AFFORDANCE, NOT
+  // AUTH: auth is a PRD §3 non-goal for the MVP (see lib/demo-student.ts).
+  // Resolved BEFORE the turn-cap check: the cap is scoped per student, so a
+  // switched demo student never inherits another student's turn count
+  // (release review, 2026-07-30).
+  const studentId = await resolveStudentId();
+
   // server-side turn count for this chat session (drives the per-surface caps)
   const turnsRes = await pool.query(
     `SELECT count(*) AS n FROM ai_interactions
-     WHERE surface = $1 AND grounding->>'chat_session' = $2`,
-    [surface, chatSession]
+     WHERE surface = $1 AND grounding->>'chat_session' = $2 AND student_id = $3`,
+    [surface, chatSession, studentId]
   );
   const priorTurns = Number(turnsRes.rows[0].n);
   const cap = TURN_CAPS[surface];
@@ -118,11 +126,6 @@ export async function POST(req: Request) {
       { headers: { "Content-Type": "text/event-stream" } }
     );
   }
-
-  // Which demo student's mastery grounds this turn — a cookie, validated
-  // against the students table, defaulting to Omar. DEMO AFFORDANCE, NOT
-  // AUTH: auth is a PRD §3 non-goal for the MVP (see lib/demo-student.ts).
-  const studentId = await resolveStudentId();
 
   // Grounding is snapshotted per chat session: byte-stable across turns so
   // the (system prompt + data block) prefix stays prompt-cache-hot, and the
@@ -154,22 +157,19 @@ export async function POST(req: Request) {
         )
   );
 
-  // Sacred output containment (ADR-0006 §2, fails closed): on lesson surfaces
-  // whose lesson carries sealed sacred passages, the model's stream is scanned
-  // against them and the turn is aborted on any ≥4-word quote-run — see
-  // lib/sacred-guard.ts. Emission runs behind a holdback window so the quoted
-  // words never reach the client.
-  let sacredGuard: SacredGuard | null = null;
-  if (surface === "lesson_learn" || surface === "lesson_review") {
-    const content = await getLessonContent(sanitizeLessonSlug(body.lesson));
-    const sealed = (content?.passages ?? [])
-      .filter((p) => p.sacred)
-      .map((p) => ({
-        id: p.id,
-        text: p.units.map((u) => u.text_ar).join("\n"),
-      }));
-    sacredGuard = makeSacredGuard(sealed);
-  }
+  // Sacred output containment (ADR-0006 §2, fails closed): the model's stream
+  // is scanned against EVERY sealed sacred passage in the product — on every
+  // surface — and the turn is aborted on any ≥4-word quote-run before the
+  // words reach the client (lib/sacred-guard.ts holdback window). Originally
+  // wired only to the lesson surfaces; the release review (2026-07-30) showed
+  // student_chat re-explains Arabic questions with no backstop, so the guard
+  // is now the whole sealed corpus, everywhere. Null only when no sacred
+  // content exists at all (e.g. a box before the Arabic refresh).
+  const sacredGuard: SacredGuard | null = makeSacredGuard(
+    await getAllSacredPassages()
+  );
+  const lessonSurface =
+    surface === "lesson_learn" || surface === "lesson_review";
 
   const transcript = messages
     .map((m) =>
@@ -329,8 +329,10 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                 send({
                   type: "delta",
                   t:
-                    "النص الكريم لا يُكتب هنا — تجده كاملًا وموثَّقًا في بطاقة النص داخل المحادثة، فتأمله هناك وقل لي ما لاحظت 🙏\n" +
-                    `{{show_passage:${sacredGuard.firstPassageId}}}`,
+                    lessonSurface
+                      ? "النص الكريم لا يُكتب هنا — تجده كاملًا وموثَّقًا في بطاقة النص داخل المحادثة، فتأمله هناك وقل لي ما لاحظت 🙏\n" +
+                        `{{show_passage:${sacredGuard.firstPassageId}}}`
+                      : "النص الكريم لا يُكتب هنا — نرجع له في المصحف أو في بطاقة النص الموثقة داخل الدرس، وأنا أشرح المعنى من كتاب الوزارة 🙏",
                 });
                 send({
                   type: "done",
