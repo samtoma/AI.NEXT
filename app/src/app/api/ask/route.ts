@@ -329,7 +329,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                 send({
                   type: "delta",
                   t:
-                    "النص الكريم لا يُكتب هنا — تجده كاملًا وموثَّقًا في البطاقة على السبورة، فتأمله هناك وقل لي ما لاحظت 🙏\n" +
+                    "النص الكريم لا يُكتب هنا — تجده كاملًا وموثَّقًا في بطاقة النص داخل المحادثة، فتأمله هناك وقل لي ما لاحظت 🙏\n" +
                     `{{show_passage:${sacredGuard.firstPassageId}}}`,
                 });
                 send({

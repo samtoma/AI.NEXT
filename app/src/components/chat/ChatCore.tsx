@@ -81,6 +81,10 @@ export interface ChatCoreProps {
   /** render a {{show_passage:…}} directive: the surface resolves the SEALED
    *  passage bytes by id (ADR-0006 — the model only ever carries the id) */
   renderPassage?: (id: string) => React.ReactNode;
+  /** rendered INSIDE the scroll flow, above the first message — the lesson
+   *  surfaces pin the sealed passage(s) here so the exchange opens on the
+   *  text itself (Samuel: everything drawn inside the same exchange) */
+  leading?: React.ReactNode;
   /** auto-send a hidden "Continue." turn after each widget/question result */
   autoContinue?: boolean;
   /**
@@ -152,6 +156,7 @@ export function ChatCore({
   onTotalChange,
   renderWidget,
   renderPassage,
+  leading,
   autoContinue,
   interceptWidget,
   onDirective,
@@ -665,6 +670,7 @@ export function ChatCore({
         }}
         className="thin-scroll min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4"
       >
+        {leading}
         {messages.length === 0 && !streaming && emptyState}
 
         {messages.map((m, i) => (

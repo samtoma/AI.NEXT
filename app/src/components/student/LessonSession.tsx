@@ -215,7 +215,12 @@ export function LessonSession({
 
   /* ---------------- whiteboard ("السبورة") ---------------- */
 
-  const boardOn = mode === "learn";
+  // Samuel's call (2026-07-30): السبورة is merged INTO the exchange — one
+  // wide chat where figures, questions and the sealed passage render inline
+  // in the flow. The board plumbing below stays dormant (boardOn=false)
+  // rather than deleted, so the split view can be resurrected by flipping
+  // this if a future usability pass wants it back.
+  const boardOn = false;
   const [board, setBoard] = useState<BoardItem[]>([]);
   const [focusKey, setFocusKey] = useState<string | null>(null);
   const [pinNonce, setPinNonce] = useState(0);
@@ -925,7 +930,7 @@ export function LessonSession({
   return (
     <main
       dir={rtl ? "rtl" : undefined}
-      className="mx-auto flex h-dvh min-h-[540px] w-full max-w-6xl flex-col px-4 pb-3 pt-4 md:px-6"
+      className="mx-auto flex h-dvh min-h-[540px] w-full max-w-4xl flex-col px-4 pb-3 pt-4 md:px-6"
     >
       {/* header */}
       <section className="anim-rise shrink-0">
@@ -1023,7 +1028,7 @@ export function LessonSession({
           onFresh={startFresh}
         />
       ) : boot.state === "ready" ? (
-        <div className="anim-rise mt-3 flex min-h-0 flex-1 flex-col gap-3 md:grid md:grid-cols-[58fr_42fr] md:grid-rows-1">
+        <div className="anim-rise mt-3 flex min-h-0 flex-1 flex-col gap-3">
           {/* the whiteboard — OUTSIDE the chat scroll container.
               mobile: collapsible top sheet ≤40dvh; desktop: in-flow right
               column pinned by the h-dvh app frame (never position:fixed —
@@ -1109,6 +1114,18 @@ export function LessonSession({
                 const p = lookupPassage(id);
                 return p ? <SealedPassageCard passage={p} compact /> : null;
               }}
+              leading={
+                passages.length > 0 ? (
+                  <div dir="rtl" className="space-y-2">
+                    {passages.map((p) => (
+                      <SealedPassageCard key={p.id} passage={p} compact />
+                    ))}
+                    <p className="pb-1 text-center text-[10.5px] text-ink-faint">
+                      النص من الحافظة الموثقة · هنذاكر عليه مع بعض ⬇
+                    </p>
+                  </div>
+                ) : undefined
+              }
               interceptWidget={boardOn ? interceptWidget : undefined}
               onDirective={boardOn ? onDirective : undefined}
               handleRef={coreHandle}
