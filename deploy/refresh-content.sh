@@ -284,6 +284,33 @@ case "$MODE" in
     info "roll back with:  $0 restore $LAST_BACKUP"
     ;;
 
+  promote-poc)
+    # ============================ PoC ONLY ============================
+    # Samuel's explicit call (2026-07-30): during the PoC phase every
+    # extracted question is servable — he bulk-approves as the product's
+    # review authority, exactly like the maths PoC's --approve-all. The
+    # promotion is RECORDED (reviewed_by), backed up first, and reversible.
+    # The pre-pilot admin review tool replaces this before real students.
+    # The loader's sacred-bundle --approve-all refusal and the runtime
+    # sacred-containment guard are deliberately untouched.
+    preflight
+    say "PoC promotion — every 'review' question goes live, attributed to Samuel"
+    info "before: $(counts)"
+    backup promote-poc
+    n=$(dbq "WITH p AS (
+               UPDATE questions
+                  SET status='live',
+                      reviewed_by='samuel (poc bulk promote)',
+                      reviewed_at=now()
+                WHERE status='review'
+               RETURNING 1)
+             SELECT count(*) FROM p")
+    info "promoted: $n question(s)"
+    info "after:  $(counts)"
+    say "Done"
+    info "roll back with:  $0 restore $LAST_BACKUP"
+    ;;
+
   restore)
     [ $# -ge 1 ] || usage
     preflight

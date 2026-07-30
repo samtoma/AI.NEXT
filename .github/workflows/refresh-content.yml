@@ -18,7 +18,7 @@ on:
         type: choice
         required: true
         default: preview
-        options: [preview, course, full-reseed, status]
+        options: [preview, course, full-reseed, status, promote-poc]
       course:
         description: "Course node id — for preview and course modes"
         type: string
@@ -64,6 +64,11 @@ jobs:
                 echo "::error::full-reseed replaces the WHOLE database (student attempts and mastery included). Type FULL-RESEED in the confirm box to proceed."
                 exit 1
               fi ;;
+            promote-poc)
+              if [ "$CONFIRM" != "PROMOTE-POC" ]; then
+                echo "::error::promote-poc marks EVERY review question live, attributed to Samuel (PoC bulk). Type PROMOTE-POC in the confirm box to proceed."
+                exit 1
+              fi ;;
             *) echo "::error::unknown mode '$MODE'"; exit 1 ;;
           esac
           # Exact match, anchored: a course id and nothing else. (refresh-content.sh
@@ -106,6 +111,7 @@ jobs:
             preview)     set -- preview "$COURSE" ;;
             course)      set -- course  "$COURSE" ;;
             full-reseed) set -- full-reseed ;;
+            promote-poc) set -- promote-poc ;;
           esac
           # `bash …`: immune to a lost exec bit. tee: the summary step reads the log.
           bash ./refresh-content.sh "$@" 2>&1 | tee "$RUNNER_TEMP/refresh.log"
