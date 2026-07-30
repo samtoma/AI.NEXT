@@ -3,6 +3,16 @@
 > Living document. Read at session start; update when progress or decisions land.
 > Last updated: 2026-07-29
 
+## 🚢 MERGED TO MAIN (2026-07-30) — one-exchange lesson UI + release review
+السبورة is merged INTO the exchange (Samuel's call): sealed passage cards open the chat, figures/
+questions/{{show_passage}} render inline, one wide column; fresh sessions open scrolled to the
+TEXT. A 16-agent release review (5 dimensions, adversarial verify) confirmed 9 findings — all
+fixed pre-merge, incl. two blockers: per-student scoping of session persistence + turn caps, and
+the sacred guard extended to EVERY chat surface over the whole sealed corpus. Content refresh now
+applies migrations 007+008 idempotently before loading; `--all --course course:prep3-arabic-ar`
+resolves both bundles. To ship data to the live site: Actions → Content refresh → preview, then
+course mode with course:prep3-arabic-ar.
+
 ## 📗 ARABIC FULL BOOK — extracted, related, reviewed (2026-07-30, `wip/multi-subject-app`, UNPUSHED)
 **All 20 lessons of both terms are in the spine with a reviewed relationship graph.** 152-agent
 parallel conveyor run (0 errors) → `assemble_arabic.py` → `seed/arabic-t1/t2.json`: 100 LOs,
