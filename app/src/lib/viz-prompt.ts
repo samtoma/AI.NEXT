@@ -3,6 +3,11 @@
  * used by both the spine-chat grounding (ask.ts) and the lesson surfaces
  * (lesson.ts). One source of truth for the two figure directives and the
  * 9-kind spec cheat sheet (contract: services/extraction/VIZ_SPEC.md).
+ *
+ * WHICH doc a lesson gets is decided by the subject's prompt kit
+ * (LESSON_PROMPTS in lib/lesson.ts), keyed off the subject registry — never by
+ * a `subject === "social-ar"` test at the call site. A new subject brings its
+ * own `…FigureDirectivesDoc` here and names it in its kit.
  */
 
 export interface VizCatalogItem {
@@ -46,10 +51,10 @@ const SOCIAL_SPEC_CHEATSHEET = `SPEC CHEAT SHEET (the 3 social-studies kinds —
 · flow_chain {"nodes":[{"label":"فرض الضرائب الفادحة","role":"سبب","step":1},{"label":"ثورة القاهرة الأولى","role":"حدث","step":2},{"label":"إعدام عدد من الثوار","role":"نتيجة","step":3}],"animate":"sequence"} — سبب → حدث → نتيجة boxes, RTL flow; use it for every «بم تفسر».`;
 
 /**
- * The two figure directives for the social-ar subject (ADR-0004 Wave 1):
- * same {{widget:viz_ref}}/{{widget:viz}} protocol, but the cheat sheet
- * documents the three VIZ_SPEC v2 social kinds instead of the nine math ones.
- * Math surfaces keep figureDirectivesDoc byte-identical.
+ * The two figure directives for SOCIAL STUDIES (ADR-0004 Wave 1): same
+ * {{widget:viz_ref}}/{{widget:viz}} protocol, but the cheat sheet documents
+ * the three VIZ_SPEC v2 social kinds instead of the nine math ones. Maths
+ * keeps figureDirectivesDoc byte-identical.
  */
 export function socialFigureDirectivesDoc(exampleRefId: string): string {
   return `FIGURES — show, don't only tell (اشرح بالرسم):

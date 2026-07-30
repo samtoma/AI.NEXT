@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { getHomeStats } from "@/lib/queries";
+import { resolveStudentId } from "@/lib/student-context";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const stats = await getHomeStats();
+  // the demo student selected by the (validated) cookie — see the switcher on
+  // /spine and /student; a demo affordance, never auth (PRD §3).
+  const stats = await getHomeStats(await resolveStudentId());
 
   return (
     <main className="mx-auto max-w-[1400px] px-6">

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { pool } from "@/lib/db";
+import { resolveStudentId } from "@/lib/student-context";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 
-const STUDENT_ID = 1;
 const K = 0.15;
 const clamp = (v: number, lo: number, hi: number) =>
   Math.min(hi, Math.max(lo, v));
@@ -35,6 +35,11 @@ export async function POST(req: Request) {
     );
   }
 
+  // Which demo student this attempt belongs to — a cookie, validated against
+  // the students table, defaulting to Omar. DEMO AFFORDANCE, NOT AUTH:
+  // auth is a PRD §3 non-goal for the MVP (see lib/demo-student.ts).
+  const studentId = await resolveStudentId();
+
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
@@ -59,7 +64,7 @@ export async function POST(req: Request) {
       `INSERT INTO attempts (student_id, question_id, given_answer, is_correct, time_ms, attempted_at)
        VALUES ($1, $2, $3, $4, $5, now())
        RETURNING id`,
-      [STUDENT_ID, questionId, givenAnswer, isCorrect, Math.round(timeMs ?? 0)]
+      [studentId, questionId, givenAnswer, isCorrect, Math.round(timeMs ?? 0)]
     );
     const attemptId = attemptRes.rows[0].id;
 
@@ -68,7 +73,7 @@ export async function POST(req: Request) {
       `SELECT id, score FROM mastery
        WHERE student_id = $1 AND lo_id = $2 AND system_to IS NULL
        FOR UPDATE`,
-      [STUDENT_ID, q.lo_id]
+      [studentId, q.lo_id]
     );
     const oldScore = mRes.rowCount ? Number(mRes.rows[0].score) : 0.3;
     const outcome = isCorrect ? 1 : 0;
@@ -83,7 +88,7 @@ export async function POST(req: Request) {
     await client.query(
       `INSERT INTO mastery (student_id, lo_id, score, system_from, system_to)
        VALUES ($1, $2, $3, now(), NULL)`,
-      [STUDENT_ID, q.lo_id, newScore]
+      [studentId, q.lo_id, newScore]
     );
 
     // 3. wrong answer → log the canonical-grounded explanation

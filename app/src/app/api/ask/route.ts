@@ -2,7 +2,14 @@ import { spawn } from "node:child_process";
 import { pool } from "@/lib/db";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
 import { buildLessonContext } from "@/lib/lesson";
+import { getAllSacredPassages } from "@/lib/lesson-content";
+import {
+  makeSacredGuard,
+  SACRED_HOLDBACK_CHARS,
+  type SacredGuard,
+} from "@/lib/sacred-guard";
 import { snapshotContext } from "@/lib/session-cache";
+import { resolveStudentId } from "@/lib/student-context";
 
 /**
  * POST /api/ask — "Ask the Spine" grounded chat, streamed as SSE.
@@ -16,7 +23,6 @@ import { snapshotContext } from "@/lib/session-cache";
 
 export const dynamic = "force-dynamic";
 
-const STUDENT_ID = 1;
 const MODEL = "claude-sonnet-5";
 const TIMEOUT_MS = 90_000;
 
@@ -97,11 +103,19 @@ export async function POST(req: Request) {
     );
   }
 
+  // Which demo student's mastery grounds this turn — a cookie, validated
+  // against the students table, defaulting to Omar. DEMO AFFORDANCE, NOT
+  // AUTH: auth is a PRD §3 non-goal for the MVP (see lib/demo-student.ts).
+  // Resolved BEFORE the turn-cap check: the cap is scoped per student, so a
+  // switched demo student never inherits another student's turn count
+  // (release review, 2026-07-30).
+  const studentId = await resolveStudentId();
+
   // server-side turn count for this chat session (drives the per-surface caps)
   const turnsRes = await pool.query(
     `SELECT count(*) AS n FROM ai_interactions
-     WHERE surface = $1 AND grounding->>'chat_session' = $2`,
-    [surface, chatSession]
+     WHERE surface = $1 AND grounding->>'chat_session' = $2 AND student_id = $3`,
+    [surface, chatSession, studentId]
   );
   const priorTurns = Number(turnsRes.rows[0].n);
   const cap = TURN_CAPS[surface];
@@ -116,9 +130,12 @@ export async function POST(req: Request) {
   // Grounding is snapshotted per chat session: byte-stable across turns so
   // the (system prompt + data block) prefix stays prompt-cache-hot, and the
   // mastery numbers the model reasons over never shift mid-conversation.
+  // The student is part of the key — switching demo students must never
+  // re-serve the previous student's mastery.
   const snapshotKey = [
     surface,
     chatSession,
+    studentId,
     body.lesson ?? "",
     body.questionId ?? "",
     body.wrongAnswer ?? "",
@@ -128,10 +145,31 @@ export async function POST(req: Request) {
       ? buildLessonContext(
           surface === "lesson_learn" ? "learn" : "review",
           chatSession,
-          body.lesson
+          body.lesson,
+          studentId
         )
-      : buildAskContext(surface, chatSession, body.questionId, body.wrongAnswer)
+      : buildAskContext(
+          surface,
+          chatSession,
+          body.questionId,
+          body.wrongAnswer,
+          studentId
+        )
   );
+
+  // Sacred output containment (ADR-0006 §2, fails closed): the model's stream
+  // is scanned against EVERY sealed sacred passage in the product — on every
+  // surface — and the turn is aborted on any ≥4-word quote-run before the
+  // words reach the client (lib/sacred-guard.ts holdback window). Originally
+  // wired only to the lesson surfaces; the release review (2026-07-30) showed
+  // student_chat re-explains Arabic questions with no backstop, so the guard
+  // is now the whole sealed corpus, everywhere. Null only when no sacred
+  // content exists at all (e.g. a box before the Arabic refresh).
+  const sacredGuard: SacredGuard | null = makeSacredGuard(
+    await getAllSacredPassages()
+  );
+  const lessonSurface =
+    surface === "lesson_learn" || surface === "lesson_review";
 
   const transcript = messages
     .map((m) =>
@@ -227,6 +265,8 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
       req.signal.addEventListener("abort", () => child.kill("SIGKILL"));
 
       let fullText = "";
+      let emittedLen = 0; // holdback frontier (sacred guard active only)
+      let redacted = false;
       let result: {
         total_cost_usd?: number;
         usage?: {
@@ -266,8 +306,65 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
             j.event.delta?.type === "text_delta" &&
             typeof j.event.delta.text === "string"
           ) {
+            if (redacted) continue;
             fullText += j.event.delta.text;
-            send({ type: "delta", t: j.event.delta.text });
+            if (sacredGuard) {
+              // fails closed: abort the turn the moment a sealed quote-run
+              // appears — the holdback below guarantees it was never emitted
+              if (sacredGuard.violates(fullText)) {
+                redacted = true;
+                clearTimeout(timeout);
+                child.kill("SIGKILL");
+                console.error(
+                  `ask: SACRED CONTAINMENT tripped on ${surface} — turn redacted ` +
+                    `(lesson ${body.lesson ?? "?"}, ${fullText.length} chars suppressed)`
+                );
+                send({
+                  type: "delta",
+                  t:
+                    `${fullText.slice(0, emittedLen)}`.length === 0
+                      ? ""
+                      : "\n\n",
+                });
+                send({
+                  type: "delta",
+                  t:
+                    lessonSurface
+                      ? "النص الكريم لا يُكتب هنا — تجده كاملًا وموثَّقًا في بطاقة النص داخل المحادثة، فتأمله هناك وقل لي ما لاحظت 🙏\n" +
+                        `{{show_passage:${sacredGuard.firstPassageId}}}`
+                      : "النص الكريم لا يُكتب هنا — نرجع له في المصحف أو في بطاقة النص الموثقة داخل الدرس، وأنا أشرح المعنى من كتاب الوزارة 🙏",
+                });
+                send({
+                  type: "done",
+                  meta: {
+                    costUsd: 0,
+                    inputTokens: 0,
+                    outputTokens: 0,
+                    cacheReadTokens: 0,
+                    cacheCreationTokens: 0,
+                    latencyMs: Date.now() - started,
+                    model: MODEL,
+                    interactionId: null,
+                    turnIndex: priorTurns + 1,
+                    capped: cap != null && priorTurns + 1 >= cap,
+                    redacted: true,
+                  },
+                });
+                finish();
+                continue;
+              }
+              // emit only what is safely OUTSIDE the holdback window
+              const safeLen = Math.max(
+                emittedLen,
+                fullText.length - SACRED_HOLDBACK_CHARS
+              );
+              if (safeLen > emittedLen) {
+                send({ type: "delta", t: fullText.slice(emittedLen, safeLen) });
+                emittedLen = safeLen;
+              }
+            } else {
+              send({ type: "delta", t: j.event.delta.text });
+            }
           } else if (j.type === "result") {
             result = j as typeof result;
           }
@@ -290,6 +387,35 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
 
       child.on("close", async (code) => {
         clearTimeout(timeout);
+        if (redacted) {
+          // audit trail for the religious-content owner: the suppressed turn
+          // is recorded server-side; the student saw only the redirect line.
+          try {
+            await pool.query(
+              `INSERT INTO ai_interactions
+                 (student_id, surface, turn_index, user_message,
+                  assistant_message, grounding, citations, model,
+                  input_tokens, output_tokens, cache_read_tokens,
+                  cache_creation_tokens, cost_usd, latency_ms)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9)`,
+              [
+                studentId,
+                surface,
+                priorTurns + 1,
+                lastUser.text,
+                "[REDACTED — sacred containment tripped; sealed quote-run suppressed]",
+                JSON.stringify(ctx.grounding),
+                JSON.stringify([]),
+                MODEL,
+                Date.now() - started,
+              ]
+            );
+          } catch (e) {
+            console.error("ask: failed to log redacted interaction:", e);
+          }
+          finish();
+          return;
+        }
         if (result == null || result.is_error || !fullText) {
           console.error(
             `ask: claude CLI failed (code ${code}) — ${stderrTail.slice(-400)}`
@@ -322,7 +448,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
              VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
              RETURNING id`,
             [
-              STUDENT_ID,
+              studentId,
               surface,
               priorTurns + 1,
               lastUser.text,
@@ -341,6 +467,13 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           interactionId = ins.rows[0].id;
         } catch (e) {
           console.error("ask: failed to log ai_interaction:", e);
+        }
+
+        // guard-mode emission runs behind the holdback window — release the
+        // clean tail before closing the turn
+        if (sacredGuard && fullText.length > emittedLen) {
+          send({ type: "delta", t: fullText.slice(emittedLen) });
+          emittedLen = fullText.length;
         }
 
         send({

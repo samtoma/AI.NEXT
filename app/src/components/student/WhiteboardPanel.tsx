@@ -26,6 +26,8 @@ import type {
   LessonViz,
   SpineQuestion,
 } from "@/lib/types";
+import type { LessonPassage } from "@/lib/lesson-content";
+import { SealedPassageCard } from "@/components/student/SealedPassageCard";
 import { Visual } from "@/components/viz/Visual";
 import { VizPlaybackContext } from "@/components/viz/core";
 import { vizStepCount } from "@/components/viz/steps";
@@ -42,7 +44,10 @@ export type BoardItem =
       caption?: string;
     }
   | { key: string; type: "viz_ref"; id: string }
-  | { key: string; type: "question"; qid: string };
+  | { key: string; type: "question"; qid: string }
+  /** a SEALED text passage (ADR-0006) — resolved by id from verified lesson
+   *  data, never from a model payload. The Arabic lessons teach ON this. */
+  | { key: string; type: "passage"; id: string };
 
 /** Stable board key for an incoming directive (dedupes repeated viz_ref). */
 export function boardKeyOf(
@@ -54,6 +59,9 @@ export function boardKeyOf(
   }
   if (name === "question" && typeof props.qid === "string") {
     return `q:${props.qid}`;
+  }
+  if (name === "passage" && typeof props.id === "string") {
+    return `passage:${props.id}`;
   }
   if (name === "viz" && typeof props.kind === "string") {
     // identical composed payloads dedupe to the same key
@@ -75,6 +83,7 @@ export function boardItemOf(
   if (name === "viz_ref") return { key, type: "viz_ref", id: String(props.id) };
   if (name === "question")
     return { key, type: "question", qid: String(props.qid) };
+  if (name === "passage") return { key, type: "passage", id: String(props.id) };
   const spec = props.spec;
   if (spec === null || typeof spec !== "object" || Array.isArray(spec))
     return null;
@@ -141,6 +150,7 @@ export function WhiteboardPanel({
   pinNonce,
   parked,
   lookupQuestion,
+  lookupPassage,
   onAttempt,
   debug,
   vizMeta,
@@ -155,6 +165,9 @@ export function WhiteboardPanel({
   /** keys restored from a saved session — start on their final frame */
   parked: ReadonlySet<string>;
   lookupQuestion: (qid: string) => SpineQuestion | undefined;
+  /** sealed passages of THIS lesson, by id (Arabic vertical; undefined
+   *  elsewhere — a passage item then renders a calm not-available note) */
+  lookupPassage?: (id: string) => LessonPassage | undefined;
   onAttempt: (r: AttemptResult, q: SpineQuestion) => void;
   debug: boolean;
   /** lesson figure library metadata (captions/pages without a fetch) */
@@ -323,6 +336,20 @@ export function WhiteboardPanel({
                 </p>
               ))}
 
+            {/* sealed text passage (ADR-0006): bytes from verified lesson
+                data, resolved by id — the Arabic lessons teach ON this card */}
+            {focused.type === "passage" &&
+              (() => {
+                const p = lookupPassage?.(focused.id);
+                return p ? (
+                  <SealedPassageCard passage={p} compact />
+                ) : (
+                  <p dir="rtl" className="py-6 text-center text-[12px] text-rust">
+                    النص ده مش متاح في بيانات الدرس
+                  </p>
+                );
+              })()}
+
             {focused.type !== "question" && fig === "loading" && (
               <div className="flex items-center gap-2 py-8 justify-center">
                 <span className="inline-flex gap-[3px]" aria-hidden>
@@ -436,8 +463,9 @@ function FilmThumb({
   onFocus: (key: string) => void;
 }) {
   const label =
-    item.type === "question" ? "سؤال" : "رسمة";
-  const fig = item.type !== "question" ? resolve(item) : null;
+    item.type === "question" ? "سؤال" : item.type === "passage" ? "النص" : "رسمة";
+  const fig =
+    item.type !== "question" && item.type !== "passage" ? resolve(item) : null;
   const ready = fig !== null && fig !== "loading" && fig !== "missing";
   return (
     <button

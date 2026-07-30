@@ -17,6 +17,7 @@ import type {
   SpineQuestion,
   UnderstandingCheck,
 } from "@/lib/types";
+import { isRtlSubject } from "@/lib/subjects";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
 import { PairPlotter } from "@/components/student/widgets/PairPlotter";
@@ -42,6 +43,8 @@ import {
 } from "@/components/student/WhiteboardPanel";
 import { makeRecognition, sttSupported, ttsSupported } from "@/lib/voice";
 import { speakRemote, stopSpeaking, unlockAudio } from "@/lib/tts-client";
+import type { LessonPassage } from "@/lib/lesson-content";
+import { SealedPassageCard } from "@/components/student/SealedPassageCard";
 
 /**
  * The adaptive lesson surface — same engine, two temperaments.
@@ -92,9 +95,9 @@ const MODE_COPY: Record<
 type Phase = "session" | "rating" | "report" | "error";
 
 /**
- * Arabic-first surface copy for social-ar lessons (ADR-0004 Wave 1). Math
- * lessons keep MODE_COPY untouched — every RTL/Arabic branch in this file
- * gates on lesson.subject so the math surface stays pixel-identical.
+ * Arabic-first surface copy for RTL subjects (ADR-0004 Wave 1). Maths keeps
+ * MODE_COPY untouched — every RTL/Arabic branch in this file gates on the
+ * subject's registered direction, so the LTR surface stays pixel-identical.
  */
 const AR_MODE_COPY: Record<
   LessonMode,
@@ -130,8 +133,12 @@ interface SavedSession {
   at: number;
 }
 
-const storeKey = (mode: LessonMode, slug: string) =>
-  `ainext-lesson:${mode}:${slug}`;
+// Scoped by STUDENT as well as mode+lesson: without the id, switching the
+// demo student and opening the same lesson resumed the previous student's
+// transcript (and inherited their server-side turn count) — found by the
+// release review, 2026-07-30.
+const storeKey = (mode: LessonMode, slug: string, studentId: number) =>
+  `ainext-lesson:${mode}:${slug}:s${studentId}`;
 
 /* Defensive readers for `{{widget:…}}` payloads. The directives are authored by
    a model, so every field is untrusted: a malformed payload must render nothing
@@ -160,9 +167,15 @@ type Boot =
 export function LessonSession({
   mode,
   lesson,
+  passages = [],
 }: {
   mode: LessonMode;
   lesson: LessonData;
+  /** SEALED text passages of this lesson (Arabic vertical, ADR-0006) — the
+   *  bytes come from verified seed data, server-side. They are pinned onto
+   *  السبورة from message one: Samuel's field finding was a tutor saying
+   *  «افتح بطاقة النص» on a surface that displayed no text at all. */
+  passages?: LessonPassage[];
 }) {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("session");
@@ -206,7 +219,12 @@ export function LessonSession({
 
   /* ---------------- whiteboard ("السبورة") ---------------- */
 
-  const boardOn = mode === "learn";
+  // Samuel's call (2026-07-30): السبورة is merged INTO the exchange — one
+  // wide chat where figures, questions and the sealed passage render inline
+  // in the flow. The board plumbing below stays dormant (boardOn=false)
+  // rather than deleted, so the split view can be resurrected by flipping
+  // this if a future usability pass wants it back.
+  const boardOn = false;
   const [board, setBoard] = useState<BoardItem[]>([]);
   const [focusKey, setFocusKey] = useState<string | null>(null);
   const [pinNonce, setPinNonce] = useState(0);
@@ -224,7 +242,7 @@ export function LessonSession({
   useEffect(() => {
     let saved: SavedSession | null = null;
     try {
-      const raw = sessionStorage.getItem(storeKey(mode, lesson.slug));
+      const raw = sessionStorage.getItem(storeKey(mode, lesson.slug, lesson.studentId));
       if (raw) {
         const j = JSON.parse(raw) as SavedSession;
         if (
@@ -257,12 +275,44 @@ export function LessonSession({
 
   const startFresh = useCallback(() => {
     try {
-      sessionStorage.removeItem(storeKey(mode, lesson.slug));
+      sessionStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
     } catch {
       /* noop */
     }
     setBoot({ state: "ready", seed: null });
   }, [mode, lesson.slug]);
+
+  /* ---------------- sealed passages on the board ---------------- */
+
+  // The lesson's sealed text is pinned onto السبورة the moment the session
+  // opens (fresh OR restored) — the tutor teaches ON it and refers to it by
+  // آية number; it must never be off-screen while it is being taught.
+  const passageById = useRef(new Map(passages.map((p) => [p.id, p])));
+  passageById.current = new Map(passages.map((p) => [p.id, p]));
+  useEffect(() => {
+    if (boot.state !== "ready" || !boardOn || passages.length === 0) return;
+    const items: BoardItem[] = passages.map((p) => ({
+      key: `passage:${p.id}`,
+      type: "passage",
+      id: p.id,
+    }));
+    setBoard((prev) => [
+      ...items.filter((it) => !prev.some((b) => b.key === it.key)),
+      ...prev,
+    ]);
+    // fresh session: open ON the text (a restored one keeps its saved focus)
+    if (!boot.seed) {
+      setFocusKey((k) => k ?? items[0].key);
+      lastFigKey.current ??= items[0].key;
+    }
+    // deliberately once per boot state — passages are static lesson data
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boot.state, boardOn]);
+
+  const lookupPassage = useCallback(
+    (id: string) => passageById.current.get(id),
+    []
+  );
 
   const sessionId =
     boot.state === "ready" ? (boot.seed?.sid ?? freshSid.current) : undefined;
@@ -299,7 +349,7 @@ export function LessonSession({
         at: Date.now(),
       };
       sessionStorage.setItem(
-        storeKey(mode, lesson.slug),
+        storeKey(mode, lesson.slug, lesson.studentId),
         JSON.stringify(saved)
       );
     } catch {
@@ -357,10 +407,11 @@ export function LessonSession({
 
   const copy = MODE_COPY[mode];
   const first = lesson.studentName.split(" ")[0];
-  // subject-conditional RTL flip (social-ar only): dir on the app frame flips
-  // the grid (board lands on the LEFT so the reading eye starts at the text),
-  // the stepper and the chips; logical CSS below keeps math LTR unchanged.
-  const rtl = lesson.subject === "social-ar";
+  // subject-conditional RTL flip: dir on the app frame flips the grid (board
+  // lands on the LEFT so the reading eye starts at the text), the stepper and
+  // the chips; logical CSS below keeps LTR subjects unchanged. The flip now
+  // follows the subject's registered direction rather than a social-ar test.
+  const rtl = isRtlSubject(lesson.subject);
   const arCopy = AR_MODE_COPY[mode];
 
   /* ---------------- finish → honest rating ---------------- */
@@ -391,7 +442,7 @@ export function LessonSession({
       };
       // the session is complete — a finished lesson never offers a resume
       try {
-        sessionStorage.removeItem(storeKey(mode, lesson.slug));
+        sessionStorage.removeItem(storeKey(mode, lesson.slug, lesson.studentId));
       } catch {
         /* noop */
       }
@@ -883,7 +934,7 @@ export function LessonSession({
   return (
     <main
       dir={rtl ? "rtl" : undefined}
-      className="mx-auto flex h-dvh min-h-[540px] w-full max-w-6xl flex-col px-4 pb-3 pt-4 md:px-6"
+      className="mx-auto flex h-dvh min-h-[540px] w-full max-w-4xl flex-col px-4 pb-3 pt-4 md:px-6"
     >
       {/* header */}
       <section className="anim-rise shrink-0">
@@ -981,7 +1032,7 @@ export function LessonSession({
           onFresh={startFresh}
         />
       ) : boot.state === "ready" ? (
-        <div className="anim-rise mt-3 flex min-h-0 flex-1 flex-col gap-3 md:grid md:grid-cols-[58fr_42fr] md:grid-rows-1">
+        <div className="anim-rise mt-3 flex min-h-0 flex-1 flex-col gap-3">
           {/* the whiteboard — OUTSIDE the chat scroll container.
               mobile: collapsible top sheet ≤40dvh; desktop: in-flow right
               column pinned by the h-dvh app frame (never position:fixed —
@@ -999,6 +1050,7 @@ export function LessonSession({
                 pinNonce={pinNonce}
                 parked={parkedKeys.current}
                 lookupQuestion={lookupQuestion}
+                lookupPassage={lookupPassage}
                 onAttempt={boardAttempt}
                 debug={debug}
                 vizMeta={vizMeta}
@@ -1062,6 +1114,30 @@ export function LessonSession({
               resolveCite={resolveCite}
               onCite={onCite}
               renderWidget={renderWidget}
+              renderPassage={(id) => {
+                const p = lookupPassage(id);
+                return p ? (
+                  <SealedPassageCard passage={p} compact />
+                ) : (
+                  // an unresolvable id must fail VISIBLY, not vanish — the
+                  // tutor believes it just showed the student a text
+                  <p dir="rtl" className="py-2 text-center text-[12px] text-rust">
+                    النص ده مش متاح في بيانات الدرس
+                  </p>
+                );
+              }}
+              leading={
+                passages.length > 0 ? (
+                  <div dir="rtl" className="space-y-2">
+                    {passages.map((p) => (
+                      <SealedPassageCard key={p.id} passage={p} compact />
+                    ))}
+                    <p className="pb-1 text-center text-[10.5px] text-ink-faint">
+                      النص من الحافظة الموثقة · هنذاكر عليه مع بعض ⬇
+                    </p>
+                  </div>
+                ) : undefined
+              }
               interceptWidget={boardOn ? interceptWidget : undefined}
               onDirective={boardOn ? onDirective : undefined}
               handleRef={coreHandle}

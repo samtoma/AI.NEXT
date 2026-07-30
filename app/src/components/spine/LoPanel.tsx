@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import type { SpineBridge, SpineLo, SpineQuestion, Tier } from "@/lib/types";
+import { spineSubjectDef } from "@/lib/subjects";
 import type { VisualRow } from "@/lib/visuals";
 import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
 import { TeX } from "@/components/TeX";
@@ -18,10 +19,12 @@ export const tierStyle: Record<Tier, string> = {
   advanced: "bg-rust-wash text-rust border-rust/30",
 };
 
-const SUBJECT_CHIP: Record<string, { label: string; cls: string }> = {
-  math: { label: "الرياضيات", cls: "border-accent/40 text-accent-deep bg-accent-wash" },
-  social: { label: "الدراسات الاجتماعية", cls: "border-gold/45 text-gold bg-gold-wash" },
-};
+/** The subject chip's label + tokens come from the registry entry, so an LO
+ *  whose course is unfiled shows NO chip rather than another subject's. */
+function subjectChipOf(subject: SpineLo["subject"]) {
+  const def = spineSubjectDef(subject);
+  return def ? { label: def.labelAr, cls: def.accent.chip } : null;
+}
 
 export function LoPanel({
   lo,
@@ -45,7 +48,7 @@ export function LoPanel({
 }) {
   const delta = lo.current - lo.baseline;
   const byId = new Map(allLos.map((l) => [l.id, l]));
-  const subjectChip = SUBJECT_CHIP[lo.subject];
+  const subjectChip = subjectChipOf(lo.subject);
   // resolve each bridge's far endpoint (the LO in the OTHER subject)
   const connections = bridges
     .map((b) => {

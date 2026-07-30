@@ -1,15 +1,23 @@
 import Link from "next/link";
 import type { SubjectSummary } from "@/lib/types";
+import { spineSubjectDef } from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
+import { arabicGreetingName, shortName } from "@/lib/demo-student";
 
 /**
  * The student's home (Wave 1.5, multi-subject spine §4): one card PER SUBJECT,
  * each with its own accent, mastery, and weakest topic. Mastery is rolled up
  * ONLY within a subject — the product NEVER shows a single blended score.
  */
-const ACCENT: Record<string, { wash: string; border: string; rtl: boolean }> = {
-  math: { wash: "bg-accent-wash", border: "border-accent/35", rtl: false },
-  social: { wash: "bg-gold-wash", border: "border-gold/40", rtl: true },
+/** Card tokens + direction come from the subject's registry entry, so a new
+ *  subject arrives styled instead of inheriting maths' card by default. */
+const cardOf = (subject: SubjectSummary["subject"]) => {
+  const def = spineSubjectDef(subject);
+  return {
+    wash: def?.accent.cardWash ?? "",
+    border: def?.accent.cardBorder ?? "border-line",
+    rtl: def?.dir === "rtl",
+  };
 };
 
 const VERDICT_LABEL: Record<string, string> = {
@@ -18,13 +26,23 @@ const VERDICT_LABEL: Record<string, string> = {
   needs_work: "محتاج شغل",
 };
 
-export function SubjectHome({ summaries }: { summaries: SubjectSummary[] }) {
+export function SubjectHome({
+  summaries,
+  studentName = "Omar (demo)",
+}: {
+  summaries: SubjectSummary[];
+  /** the resolved demo student's row name — the greeting must never keep
+   *  saying "عمر" after the demo switches to another student */
+  studentName?: string;
+}) {
+  const first = shortName(studentName); // same convention as LessonCheckIn
+  const ar = arabicGreetingName(studentName); // null when the row name is Latin
   return (
     <main className="mx-auto max-w-4xl px-6 pb-16">
       <section className="anim-rise pt-10">
-        <p className="rule-label mb-4">After school · Omar</p>
+        <p className="rule-label mb-4">After school · {first}</p>
         <h1 className="font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
-          أهلاً يا عمر — تحب تذاكر إيه النهاردة؟
+          {ar ? `أهلاً يا ${ar} — ` : "أهلاً — "}تحب تذاكر إيه النهاردة؟
         </h1>
         <p className="mt-2.5 text-[15px] text-ink-soft">
           كل مادة لوحدها — تقدمك ودرجاتك محسوبة لكل مادة على حدة.
@@ -36,7 +54,7 @@ export function SubjectHome({ summaries }: { summaries: SubjectSummary[] }) {
         style={{ animationDelay: "110ms" }}
       >
         {summaries.map((s) => {
-          const a = ACCENT[s.subject] ?? ACCENT.math;
+          const a = cardOf(s.subject);
           return (
             <Link
               key={s.subject}

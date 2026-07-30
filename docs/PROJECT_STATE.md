@@ -1,7 +1,99 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-07-26
+> Last updated: 2026-07-29
+
+## 🚢 MERGED TO MAIN (2026-07-30) — one-exchange lesson UI + release review
+السبورة is merged INTO the exchange (Samuel's call): sealed passage cards open the chat, figures/
+questions/{{show_passage}} render inline, one wide column; fresh sessions open scrolled to the
+TEXT. A 16-agent release review (5 dimensions, adversarial verify) confirmed 9 findings — all
+fixed pre-merge, incl. two blockers: per-student scoping of session persistence + turn caps, and
+the sacred guard extended to EVERY chat surface over the whole sealed corpus. Content refresh now
+applies migrations 007+008 idempotently before loading; `--all --course course:prep3-arabic-ar`
+resolves both bundles. To ship data to the live site: Actions → Content refresh → preview, then
+course mode with course:prep3-arabic-ar.
+
+## 📗 ARABIC FULL BOOK — extracted, related, reviewed (2026-07-30, `wip/multi-subject-app`, UNPUSHED)
+**All 20 lessons of both terms are in the spine with a reviewed relationship graph.** 152-agent
+parallel conveyor run (0 errors) → `assemble_arabic.py` → `seed/arabic-t1/t2.json`: 100 LOs,
+296 questions (10 live via blind re-derivation, 286 held at review), 46 sealed passages, 116
+vocab, 106 rhetoric, 157 rule clauses. **Relationship graph: 16 prerequisite edges** — the
+grammar installment series the book prints (المنادى ×3، البدل ×3، المدح والذم→نعم وبئس→حبذا،
+اسم الفاعل ×3→صيغ المبالغة→اسم المفعول→الزمان والمكان→مراجعتهما→اسم الآلة، التفضيل→صوغه) +
+the T1U1 همزة seat chain; a 22-agent review VETOED 14 book-order إملاء edges and proposed the
+morphology completions (adopted) + 4 cross-subject bridge candidates (in the report, NOT loaded —
+Samuel curates bridges).
+
+**Samuel's sealed-text concern — fixed and guaranteed:** sealed passages now pin onto السبورة
+from the lesson's first message (`SealedPassageCard`, id-only `{{show_passage:…}}` directive), and
+runtime containment FAILS CLOSED: `lib/sacred-guard.ts` scans the output stream (LOOSE 4-word
+shingles, 96-char holdback) and kills any turn that quotes sealed text before it reaches the
+student, logging a redacted audit row. Verified live: tutor teaches from the on-board آيات by
+paraphrase + number, never quoting.
+
+**Review findings register: `services/extraction/runbook/ar-review-report.md`** — 115 findings
+(30 high). Fixed same-day: systematic page misattribution (section-anchored now), interactive
+rule_ref ids, the edge vetoes. Remaining for humans/re-runs: 7 wrong answer-explanations (all at
+review status), ~30 uncovered printed drills, re-run list (worst: ara2-3 آيات العلم — grammar+
+إملاء sections lost), unit-opener objective pages, enrichment/misconceptions never extracted.
+RhetoricType grew 9 book-printed labels (طباق، جناس، تصوير، مدح/ذم، شرط، استثناء، تنكير، تفضيل)
+— **pending Samuel's sign-off as enum owner**. Sacred ledger: سفينة نوح transcript ≠ authorities
+on آية ٣٦ (flagged, canonical stored) + 3 hadith passages flagged (no machine authority — named
+religious-content owner). selfcheck 106/106 · containment sweep CLEAN · 48/48 app tests.
+
+## ✅ ARABIC END-TO-END — working locally (2026-07-29, on branch `wip/multi-subject-app`, UNPUSHED)
+**اللغة العربية is a third first-class subject: extraction → authority-verified seal → assembly →
+load → visible + teachable in the app.** Verified in the browser: third filter chip + aubergine
+territory on /spine (5 LOs), third subject card on /student, RTL lesson session with a live AI turn
+that **referred to the sealed آية card by number instead of typing scripture** (containment held).
+NOT deployed — pushing `main` deploys; see "to reach the live site" below.
+
+**The three conveyor bugs — fixed, re-run GREEN on the sacred lane** (same run id `wf_dcb2de86-cfb`
+resumed; output `runbook/ar-t1u1l1.run2.local.json`, untracked):
+1. Quran lane per amended ADR-0006 §2 lives in **`assemble_arabic.py`**: the reported citation is
+   fetched RAW (urllib, no model) from api.quran.com + api.alquran.cloud, diffed in COMPARE-VERIFY,
+   canonical Uthmani NFC stored — seal reproduces the reference `27fe013d…` byte-for-byte. Both
+   authorities agreed 2/2 AND the (now-Uthmani) transcript agreed → sealed unflagged. Any
+   disagreement/fetch failure = FLAG record, load continues, passage held for a human.
+2. TEXT schema: sacred passages arrive as per-ayah `units` (8/8 with ٱ preserved) + hardened SACRED
+   prompt (رسم عثماني، no بسملة unless printed, no memory-typing).
+3. SEGMENT captures «القضايا المتضمنة» (3/3) + rhetoric covers the objective's استفهام (7 notes,
+   provenance 24/24). Blind إعراب re-derivation 4/4 agree → those 4 load live (social's bar).
+   Coverage verdict stays RED on: oracle wants finer per-section counters, «اقرأ واستمتع» (نجيب
+   محفوظ bio, p.13) not captured, and 2 استفهام shawahid from p.8 questions vs the printed 5-item
+   مواطن box — conveyor iteration items for the 20-lesson rollout, none block this lesson.
+
+**New pipeline pieces:** `assemble_arabic.py` (workflow output → validated SeedBundle
+`seed/arabic-t1.json` + read-surface `seed/content/ara1-1.json`; rhetoric mapped onto the closed
+enums; re-typed شواهد repaired INTO the sealed text via LOOSE-locate; extract answers become
+SpanRefs or demote honestly to short). Loader: stamps `graph_nodes.subject` on courses, serializes
+typed Arabic answers as tagged JSON into `correct_answer` (grader = `app/src/lib/irab.ts`), sacred
+gate unchanged. Migration **008** widens the question-type CHECK. `selfcheck_arabic.py` **103/103**.
+
+**Waves A+B+D of multi-subject-app — done** (Wave C copy fixes remain):
+- **A (registry):** 16 files on `lib/subjects.ts`; regression proof = `app/scripts/capture-prompts.mts`
+  renders every surface (49 lessons × learn+review × system/data/grounding + 6 ask surfaces) —
+  **byte-identical main vs branch** against one DB (re-proven after Wave B). The one drift found
+  (`(id 1)` hardcoded in the data block) became `(id ${studentId})`.
+- **B (Arabic teachable):** ARABIC_AR_CONTRACT (registry), Arabic lesson-prompt kit + ask kit
+  (grounding rules incl. the sacred hard rule; رأي invited per ADR-0006 — ADR-0004 §5 deliberately
+  NOT copied), widget directives for the 5 Arabic widgets (irab_builder rule_ref gate in the prompt),
+  read surface renders sealed passages (Amiri Quran lazy via QuranPassage, per-ayah ﴿٦٣﴾…) + the
+  «مهارات لا نقيسها بأمانة» disclosure (خط/تعبير/تلاوة) + قضايا chips.
+- **D (demo students):** switcher verified in browser both variants (bug found+fixed: corner hot-zone
+  painted UNDER the z-10 footer — now portaled to <body>). Cold-start نور tells the 0% story on
+  /student + /spine; Omar/يوسف switch back clean; cookie validated server-side. 48/48 `npm test`.
+
+**To reach the live site (Samuel's call):** merge `wip/multi-subject-app` → `main` (deploys code),
+apply migrations 007+008 on the box DB, then `Actions → Content refresh` with `seed/arabic-t1.json`
+(never `--approve-all` — the loader hard-refuses sacred bundles anyway; never `down -v`).
+
+**Open before students see Arabic:** Wave C subject-blind copy (footer/"Extracted from" still say
+Mathematics); Arabic-teacher human gate for the 12 review questions + named religious-content owner
+sign-off on the sealed passage; conveyor K=1 (contract says K=2/3 for non-scripture) + the coverage
+items above before the 20-lesson rollout; span-level vs passage-level sealing decision (hadith inside
+قاسم أمين's prose, T1-U2-L1); `/api/attempts` doesn't parse typed-answer JSON yet (safe — all typed
+questions are review; the widgets grade client-side).
 
 ## Phase
 **PoC built (v0, 2026-07-17).** Working end-to-end slice of the spine: ministry book (Prep-3 Math EN, Unit 1) → content-addressed source + typed extraction (Pydantic, DAG-validated) → Postgres curriculum graph (11 LOs, 29 live questions, provenance on every fact) → adaptive student loop (Elo mastery, temporal rows) → **Evidence Walk demo** (investor-grade, ADR-0003 P0). Run: `brew services start postgresql@17`, then `npm run dev` in `app/` → http://localhost:3000 (/, /spine, /student). Reseed: `uv run load_seed.py seed/unit1.json --approve-all --demo-student` in `services/extraction/`.

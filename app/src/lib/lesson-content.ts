@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 
 /**
@@ -72,6 +72,39 @@ export interface LessonInteractive {
   spec: Record<string, unknown>;
 }
 
+/** One آية / بيت / فقرة of a sealed passage (Arabic vertical, ADR-0006). */
+export interface LessonPassageUnit {
+  n: number;
+  /** printed آية number, Arabic-Indic ("٦٣") — absent for prose paragraphs */
+  printed_n?: string;
+  text_ar: string;
+}
+
+/**
+ * A SEALED text passage for display (ADR-0006): the text was verified and
+ * checksummed by the pipeline — the app renders it verbatim and the tutor
+ * refers to it by آية number; nothing at runtime ever re-types it.
+ */
+export interface LessonPassage {
+  id: string;
+  kind: string; // quran | hadith | poetry | prose | dictation
+  title_ar: string;
+  attribution_ar?: string;
+  citation_ref?: string;
+  sacred: boolean;
+  /** authority cross-check result: "agree" | "flagged" (sacred only) */
+  verification_verdict?: string;
+  units: LessonPassageUnit[];
+}
+
+/** A printed objective we deliberately do not score (خط/تعبير/تلاوة) —
+ *  ADR-0006 §4: disclosed in visible copy, never silently hidden. */
+export interface LessonOutOfScope {
+  text: string;
+  skill?: string;
+  reason: string;
+}
+
 export interface LessonContent {
   lessonId: string;
   title: string;
@@ -81,6 +114,11 @@ export interface LessonContent {
   enrichment: LessonEnrichment[];
   misconceptions: LessonMisconception[];
   interactives: LessonInteractive[];
+  /** Arabic vertical (ADR-0006); empty for math/social bundles */
+  passages: LessonPassage[];
+  out_of_scope: LessonOutOfScope[];
+  /** the printed «القضايا المتضمنة» box */
+  qadaya: string[];
 }
 
 /* ------------------------------------------------------------------ */
@@ -147,6 +185,44 @@ function normInteractives(raw: unknown): LessonInteractive[] {
   return out;
 }
 
+function normPassages(raw: unknown): LessonPassage[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter(isObj)
+    .map((p) => ({
+      id: str(p.id),
+      kind: str(p.kind) || "prose",
+      title_ar: str(p.title_ar),
+      ...(str(p.attribution_ar) ? { attribution_ar: str(p.attribution_ar) } : {}),
+      ...(str(p.citation_ref) ? { citation_ref: str(p.citation_ref) } : {}),
+      sacred: p.sacred === true,
+      ...(str(p.verification_verdict)
+        ? { verification_verdict: str(p.verification_verdict) }
+        : {}),
+      units: (Array.isArray(p.units) ? p.units : [])
+        .filter(isObj)
+        .map((u, i) => ({
+          n: typeof u.n === "number" ? u.n : i + 1,
+          ...(str(u.printed_n) ? { printed_n: str(u.printed_n) } : {}),
+          text_ar: str(u.text_ar),
+        }))
+        .filter((u) => u.text_ar),
+    }))
+    .filter((p) => p.id && p.units.length > 0);
+}
+
+function normOutOfScope(raw: unknown): LessonOutOfScope[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter(isObj)
+    .map((o) => ({
+      text: str(o.text),
+      ...(str(o.skill) ? { skill: str(o.skill) } : {}),
+      reason: str(o.reason),
+    }))
+    .filter((o) => o.text && o.reason);
+}
+
 function normalize(lessonId: string, raw: unknown): LessonContent | null {
   if (!isObj(raw)) return null;
   return {
@@ -158,6 +234,11 @@ function normalize(lessonId: string, raw: unknown): LessonContent | null {
     enrichment: normEnrichment(raw.enrichment),
     misconceptions: normMisconceptions(raw.misconceptions),
     interactives: normInteractives(raw.interactives),
+    passages: normPassages(raw.passages),
+    out_of_scope: normOutOfScope(raw.out_of_scope),
+    qadaya: Array.isArray(raw.qadaya)
+      ? raw.qadaya.map(str).filter(Boolean)
+      : [],
   };
 }
 
@@ -180,6 +261,42 @@ const CONTENT_DIR = path.join(
 // lessonIds are pipeline slugs like "soc1-1" / "geo1-2" (plus "_sample" for
 // the dev harness). Whitelist the charset so the id can never escape the dir.
 const ID_RE = /^[a-z0-9_-]{1,40}$/;
+
+/**
+ * EVERY sealed sacred passage across all content bundles, cached for the
+ * process lifetime (content files are immutable per deploy).
+ *
+ * This feeds the runtime containment guard on ALL chat surfaces: the release
+ * review (2026-07-30) found the guard wired only to the lesson surfaces,
+ * leaving student_chat — the re-explanation flow that serves Arabic questions
+ * — able to stream unscanned output. Sacred text must never be emitted on ANY
+ * surface, so the backstop scans against the whole sealed corpus (a handful
+ * of passages; the shingle set is tiny).
+ */
+let sacredCache: { id: string; text: string }[] | null = null;
+
+export async function getAllSacredPassages(): Promise<
+  { id: string; text: string }[]
+> {
+  if (sacredCache) return sacredCache;
+  const out: { id: string; text: string }[] = [];
+  let names: string[] = [];
+  try {
+    names = (await readdir(CONTENT_DIR)).filter((n) => n.endsWith(".json"));
+  } catch {
+    /* no content dir — nothing sacred to guard */
+  }
+  for (const name of names) {
+    const content = await getLessonContent(name.replace(/\.json$/, ""));
+    for (const p of content?.passages ?? []) {
+      if (p.sacred) {
+        out.push({ id: p.id, text: p.units.map((u) => u.text_ar).join("\n") });
+      }
+    }
+  }
+  sacredCache = out;
+  return out;
+}
 
 /**
  * Read the rich content bundle for a lesson, or null if none exists yet.

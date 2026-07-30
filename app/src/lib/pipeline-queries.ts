@@ -1,6 +1,5 @@
 import { pool } from "./db";
-
-const STUDENT_ID = 1;
+import { DEFAULT_STUDENT_ID } from "./demo-student";
 
 /* ------------------------------------------------------------------ */
 /* Types                                                               */
@@ -108,7 +107,9 @@ function computeLayers(
 /* Query                                                               */
 /* ------------------------------------------------------------------ */
 
-export async function getPipelineData(): Promise<PipelineData> {
+export async function getPipelineData(
+  studentId: number = DEFAULT_STUDENT_ID
+): Promise<PipelineData> {
   const [
     docRes,
     runRes,
@@ -156,7 +157,7 @@ export async function getPipelineData(): Promise<PipelineData> {
     pool.query(
       `SELECT lo_id, score FROM mastery
        WHERE student_id = $1 AND system_to IS NULL`,
-      [STUDENT_ID]
+      [studentId]
     ),
     pool.query(`
       SELECT

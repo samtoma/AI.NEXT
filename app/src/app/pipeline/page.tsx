@@ -1,4 +1,5 @@
 import { getPipelineData } from "@/lib/pipeline-queries";
+import { resolveStudentId } from "@/lib/student-context";
 import { SourceStage } from "@/components/pipeline/SourceStage";
 import { SchemaStage } from "@/components/pipeline/SchemaStage";
 import { ReviewStage } from "@/components/pipeline/ReviewStage";
@@ -208,7 +209,9 @@ function Stage({
 }
 
 export default async function PipelinePage() {
-  const data = await getPipelineData();
+  // the cookie-selected demo student (validated; defaults to Omar) — the
+  // grounding-slice panel quotes HIS mastery numbers
+  const data = await getPipelineData(await resolveStudentId());
   const {
     doc,
     run,

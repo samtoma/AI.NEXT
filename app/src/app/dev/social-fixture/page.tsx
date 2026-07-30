@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { LessonSession } from "@/components/student/LessonSession";
 import type { ChatMsg, LessonData } from "@/lib/types";
+import { SUBJECTS } from "@/lib/subjects";
 
 /**
  * DEV HARNESS (Wave 1 Track B) — renders the social-ar lesson surface from a
@@ -21,7 +22,7 @@ const FIXTURE: LessonData = {
   lessonRef: "الدرس ١",
   title: "الحملة الفرنسية على مصر",
   moduleLabel: "الوحدة الأولى — مصر والحملة الفرنسية",
-  courseId: "course:prep3-social-ar",
+  courseId: SUBJECTS["social-ar"].courseId,
   subject: "social-ar",
   los: [
     {
@@ -72,6 +73,7 @@ const FIXTURE: LessonData = {
   mapBases: ["egypt"],
   docTitle: "الدراسات الاجتماعية — الصف الثالث الإعدادي",
   studentName: "Omar Hassan",
+  studentId: 1,
 };
 
 const A = (text: string): ChatMsg => ({ role: "assistant", text });

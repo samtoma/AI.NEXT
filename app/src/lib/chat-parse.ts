@@ -18,12 +18,16 @@
  * never sees half-typed protocol syntax.
  */
 
+import { SPINE_SUBJECT_KEYS } from "./subjects";
+import type { SpineSubject } from "./subjects";
+
 export type CiteKind = "lo" | "q" | "page" | "term";
 
 export interface Cite {
   kind: CiteKind;
   /** full id: "lo:u1-4-3", "q:u1-4-3:002", "22" for pages, or the flagged
-   *  Arabic term itself for "term" ([[term?:المصطلح]] — social-ar contract) */
+   *  Arabic term itself for "term" ([[term?:المصطلح]] — Arabic-script
+   *  subjects' contract) */
   id: string;
 }
 
@@ -37,8 +41,12 @@ export type Block =
   | { t: "widget"; name: string; props: Record<string, unknown> }
   | { t: "beat" }
   | { t: "check_in" }
-  | { t: "switch_subject"; subject: "math" | "social" }
-  | { t: "finish" };
+  | { t: "switch_subject"; subject: SpineSubject }
+  | { t: "finish" }
+  /** {{show_passage:t:ara1-1:001}} — the tutor brings a SEALED text passage
+   *  into focus BY ID. The app resolves the bytes from the verified store;
+   *  the model never carries the text (ADR-0006 runtime containment). */
+  | { t: "passage_ref"; id: string };
 
 const CITE_RE = /\[\[(lo|q|page|term\?):([^\]\n]{1,80})\]\]/g;
 
@@ -64,9 +72,14 @@ interface Action {
   block: Block | null;
 }
 
-const SIMPLE_RE = /^\{\{(show_question|highlight):([^}\n]{1,160})\}\}/;
+const SIMPLE_RE = /^\{\{(show_question|highlight|show_passage):([^}\n]{1,160})\}\}/;
 const WIDGET_HEAD_RE = /^\{\{widget:([a-z_]{1,40}):/;
-const SWITCH_RE = /^\{\{switch_subject:(math|social)\}\}/;
+/** Built from the subject registry, so a handoff to a subject the product
+ *  actually has is parsed instead of being rendered as raw protocol text.
+ *  (What the tutor is TOLD it may emit is a separate, per-prompt decision.) */
+const SWITCH_RE = new RegExp(
+  `^\\{\\{switch_subject:(${SPINE_SUBJECT_KEYS.join("|")})\\}\\}`
+);
 const FINISH = "{{finish_lesson}}";
 const BEAT = "{{beat}}";
 const CHECK_IN = "{{check_in}}";
@@ -104,10 +117,12 @@ function parseActionAt(s: string, i: number): Action | null {
     const block: Block =
       m[1] === "show_question"
         ? { t: "question", qid: m[2].trim() }
-        : {
-            t: "highlight",
-            ids: m[2].split(",").map((x) => x.trim()).filter(Boolean),
-          };
+        : m[1] === "show_passage"
+          ? { t: "passage_ref", id: m[2].trim() }
+          : {
+              t: "highlight",
+              ids: m[2].split(",").map((x) => x.trim()).filter(Boolean),
+            };
     return { start: i, end: i + m[0].length, block };
   }
   if (head.startsWith(FINISH)) {
@@ -124,7 +139,7 @@ function parseActionAt(s: string, i: number): Action | null {
     return {
       start: i,
       end: i + sw[0].length,
-      block: { t: "switch_subject", subject: sw[1] as "math" | "social" },
+      block: { t: "switch_subject", subject: sw[1] as SpineSubject },
     };
   }
   const w = WIDGET_HEAD_RE.exec(head);
@@ -188,6 +203,7 @@ function scanActions(s: string): Action[] {
 
 const DIRECTIVE_KEYWORDS = [
   "show_question:",
+  "show_passage:",
   "highlight:",
   "widget:",
   "finish_lesson}}",

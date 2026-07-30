@@ -9,12 +9,15 @@ import type {
   SpineSubject,
 } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
+import { SPINE_SUBJECT_KEYS, displayLabelOfSpineKey } from "@/lib/subjects";
 import { GraphCanvas, type AsOf } from "./GraphCanvas";
 import { LoPanel } from "./LoPanel";
 import { QuestionModal } from "./QuestionModal";
 import { AskSpineDock } from "@/components/chat/AskSpineDock";
 import type { CiteInfo } from "@/components/chat/CitationChip";
 import { pct } from "@/lib/mastery";
+import { DemoStudentSwitcher } from "@/components/DemoStudentSwitcher";
+import { DEFAULT_STUDENT_ID, type DemoStudent } from "@/lib/demo-student";
 
 const fmtDate = (iso: string) =>
   iso
@@ -24,7 +27,17 @@ const fmtDate = (iso: string) =>
       })
     : "—";
 
-export function SpineExplorer({ data }: { data: SpineData }) {
+export function SpineExplorer({
+  data,
+  demoStudents = [],
+  demoStudentId = DEFAULT_STUDENT_ID,
+}: {
+  data: SpineData;
+  /** the seeded demo cast + which one is on screen — the switcher behind the
+   *  triple-tap on the student chip. A demo affordance, never auth. */
+  demoStudents?: DemoStudent[];
+  demoStudentId?: number;
+}) {
   const router = useRouter();
   const [asOf, setAsOf] = useState<AsOf>("today");
   const [subjectFilter, setSubjectFilter] = useState<"all" | SpineSubject>("all");
@@ -57,11 +70,12 @@ export function SpineExplorer({ data }: { data: SpineData }) {
     [data.los]
   );
 
-  // Subjects present in the loaded graph (the filter only appears when >1).
+  // Subjects present in the loaded graph, in registry order (the filter only
+  // appears when >1). Unfiled LOs contribute no filter chip — they are only
+  // ever visible under "All subjects".
   const subjectsPresent = useMemo(() => {
-    const s = new Set<SpineSubject>();
-    for (const l of data.los) s.add(l.subject);
-    return [...s];
+    const present = new Set(data.los.map((l) => l.subject));
+    return SPINE_SUBJECT_KEYS.filter((k) => present.has(k));
   }, [data.los]);
 
   // The graph shows one territory (filtered) or all (territories side by side).
@@ -84,11 +98,6 @@ export function SpineExplorer({ data }: { data: SpineData }) {
       ),
     [data.bridges, visibleLoIds]
   );
-
-  const SUBJECT_LABEL: Record<SpineSubject, string> = {
-    math: "Mathematics",
-    social: "الدراسات الاجتماعية",
-  };
 
   const pulseLo = useCallback((loIds: string[]) => {
     if (loIds.length === 0) return;
@@ -230,7 +239,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
                       : "text-ink-soft hover:text-ink"
                   }`}
                 >
-                  {key === "all" ? "All subjects" : SUBJECT_LABEL[key]}
+                  {key === "all" ? "All subjects" : displayLabelOfSpineKey(key)}
                 </button>
               ))}
             </div>
@@ -276,15 +285,21 @@ export function SpineExplorer({ data }: { data: SpineData }) {
             />
             <span className="font-mono text-[10px] text-ink-faint">1</span>
           </div>
-          <span className="chip">
-            {data.studentName} · avg{" "}
-            <strong
-              className="font-semibold text-ink transition-all duration-500"
-              key={asOf}
-            >
-              {pct(avg(asOf === "today" ? "current" : "baseline"))}
-            </strong>
-          </span>
+          {/* triple-tap this chip = the hidden demo student switcher */}
+          <DemoStudentSwitcher
+            students={demoStudents}
+            currentId={demoStudentId}
+          >
+            <span className="chip">
+              {data.studentName} · avg{" "}
+              <strong
+                className="font-semibold text-ink transition-all duration-500"
+                key={asOf}
+              >
+                {pct(avg(asOf === "today" ? "current" : "baseline"))}
+              </strong>
+            </span>
+          </DemoStudentSwitcher>
         </div>
       </section>
 
@@ -355,6 +370,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         onCite={handleCite}
         onCiteClick={handleCiteClick}
         onAttemptResult={handleChatAttempt}
+        studentName={data.studentName}
       />
     </main>
   );

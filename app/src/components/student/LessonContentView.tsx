@@ -1,6 +1,7 @@
 "use client";
 
 import type { LessonContent, LessonInteractive } from "@/lib/lesson-content";
+import { SealedPassageCard } from "@/components/student/SealedPassageCard";
 import { LocateOnMap } from "@/components/student/widgets/LocateOnMap";
 import { TermMatch } from "@/components/student/widgets/TermMatch";
 import { TimelineBuilder } from "@/components/student/widgets/TimelineBuilder";
@@ -35,6 +36,9 @@ export function LessonContentView({ content }: { content: LessonContent }) {
     enrichment,
     misconceptions,
     interactives,
+    passages,
+    out_of_scope,
+    qadaya,
   } = content;
 
   return (
@@ -52,6 +56,30 @@ export function LessonContentView({ content }: { content: LessonContent }) {
           {title}
         </h1>
       </header>
+
+      {/* القضايا المتضمنة — the printed issues box (Arabic vertical) */}
+      {qadaya.length > 0 && (
+        <div className="anim-rise mt-4 flex flex-wrap gap-2" style={{ animationDelay: "60ms" }}>
+          {qadaya.map((q) => (
+            <span
+              key={q}
+              className="rounded-full border border-line-soft bg-paper px-3 py-1 text-[11.5px] text-ink-soft"
+            >
+              {q}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* النص — the sealed passages (Arabic vertical, ADR-0006): rendered
+          verbatim from the verified store; the tutor only ever points here */}
+      {passages.length > 0 && (
+        <section className="anim-rise mt-6" style={{ animationDelay: "70ms" }}>
+          {passages.map((p) => (
+            <SealedPassageCard key={p.id} passage={p} />
+          ))}
+        </section>
+      )}
 
       {/* tamheed — the opening hook */}
       {tamheed && (
@@ -177,6 +205,23 @@ export function LessonContentView({ content }: { content: LessonContent }) {
           <div className="mt-4 space-y-3">
             {interactives.map((it, i) => (
               <InteractiveBeat key={i} interactive={it} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ما لا نقيسه — ADR-0006 §4: خط/تعبير/تلاوة are printed objectives we
+          deliberately do not score. Disclosed here in visible copy — never
+          hidden, never left at 0% forever. */}
+      {out_of_scope.length > 0 && (
+        <section className="anim-rise mt-8" style={{ animationDelay: "340ms" }}>
+          <SectionRule ar="مهارات في الكتاب لا نقيسها هنا" note="بأمانة" />
+          <div className="mt-4 rounded-xl border border-line-soft bg-paper px-5 py-4">
+            {out_of_scope.map((o) => (
+              <p key={o.text} className="py-1 text-[13.5px] leading-relaxed text-ink-soft">
+                <span className="font-medium text-ink">{o.text}</span>
+                <span className="text-ink-faint"> — {o.reason}</span>
+              </p>
             ))}
           </div>
         </section>

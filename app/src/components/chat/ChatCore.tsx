@@ -12,8 +12,10 @@ import type {
   AttemptResult,
   ChatMsg,
   SpineQuestion,
+  SpineSubject,
   TurnMeta,
 } from "@/lib/types";
+import { labelArOfSpineKey } from "@/lib/subjects";
 import {
   directiveEndAt,
   extractCites,
@@ -76,6 +78,13 @@ export interface ChatCoreProps {
     props: Record<string, unknown>,
     emitNote: (note: string) => void
   ) => React.ReactNode;
+  /** render a {{show_passage:…}} directive: the surface resolves the SEALED
+   *  passage bytes by id (ADR-0006 — the model only ever carries the id) */
+  renderPassage?: (id: string) => React.ReactNode;
+  /** rendered INSIDE the scroll flow, above the first message — the lesson
+   *  surfaces pin the sealed passage(s) here so the exchange opens on the
+   *  text itself (Samuel: everything drawn inside the same exchange) */
+  leading?: React.ReactNode;
   /** auto-send a hidden "Continue." turn after each widget/question result */
   autoContinue?: boolean;
   /**
@@ -98,7 +107,7 @@ export interface ChatCoreProps {
   /** fired when a fully revealed assistant message carries {{finish_lesson}} */
   onFinishDirective?: () => void;
   /** the "open" button of a {{switch_subject:…}} handoff card was tapped */
-  onSwitchSubject?: (subject: "math" | "social") => void;
+  onSwitchSubject?: (subject: SpineSubject) => void;
   /** fired when the server turn cap is reached */
   onCapped?: () => void;
   /** transcript mirror for the parent (rating pass) */
@@ -146,6 +155,8 @@ export function ChatCore({
   onAttemptResult,
   onTotalChange,
   renderWidget,
+  renderPassage,
+  leading,
   autoContinue,
   interceptWidget,
   onDirective,
@@ -187,8 +198,19 @@ export function ChatCore({
   const scheduleContinueRef = useRef<() => void>(() => {});
   // cancel hook for the active paced reveal (unmount safety)
   const revealCancelRef = useRef<() => void>(() => {});
-  // sticky auto-scroll: cleared when the user scrolls away from the bottom
-  const stuckToBottom = useRef(true);
+  // sticky auto-scroll: cleared when the user scrolls away from the bottom.
+  // A surface with `leading` content (the sealed passage cards) starts a FRESH
+  // session unstuck and scrolled to the top, so the student actually sees the
+  // text before the tutor's messages pull the view down — auto-scroll used to
+  // hide the passage immediately, reproducing the very bug the cards fix
+  // (release review, 2026-07-30). Restored sessions keep bottom-stick.
+  const startAtTop = !!leading && !initialMessages?.length;
+  const stuckToBottom = useRef(!startAtTop);
+  useEffect(() => {
+    if (startAtTop && scrollRef.current) scrollRef.current.scrollTop = 0;
+    // deliberately once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     onMessagesChange?.(messages);
@@ -257,6 +279,12 @@ export function ChatCore({
               citedKeys.current.add(key);
               onDirective("question", { qid: b.qid });
             }
+          } else if (b.t === "passage_ref") {
+            const key = `dir|${n++}`;
+            if (!citedKeys.current.has(key)) {
+              citedKeys.current.add(key);
+              onDirective("passage", { id: b.id });
+            }
           }
         }
       }
@@ -268,6 +296,9 @@ export function ChatCore({
     async (raw: string, opts?: { hidden?: boolean }) => {
       const text = raw.trim();
       if (!text || streaming || streamingRef.current || capped) return;
+      // a VISIBLE user action re-engages bottom-stick — after reading the
+      // leading passage, the student expects to see the reply they asked for
+      if (!opts?.hidden) stuckToBottom.current = true;
       setInput("");
       setStreaming(true);
       streamingRef.current = true;
@@ -560,7 +591,7 @@ export function ChatCore({
 
   const handleAttempt = useCallback(
     (r: AttemptResult, q: SpineQuestion) => {
-      const note = `${r.isCorrect ? "✓" : "✗"} Omar answered ${q.id} ${
+      const note = `${r.isCorrect ? "✓" : "✗"} the student answered ${q.id} ${
         r.isCorrect ? "correctly" : "incorrectly"
       }${r.isCorrect ? "" : ` (correct answer: ${r.correctAnswer})`} — mastery ${Math.round(r.oldScore * 100)}% → ${Math.round(
         r.newScore * 100
@@ -653,6 +684,7 @@ export function ChatCore({
         }}
         className="thin-scroll min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4"
       >
+        {leading}
         {messages.length === 0 && !streaming && emptyState}
 
         {messages.map((m, i) => (
@@ -667,6 +699,7 @@ export function ChatCore({
             onCiteClick={onCiteClick}
             onAttempt={handleAttempt}
             renderWidget={renderWidget}
+            renderPassage={renderPassage}
             onWidgetNote={handleWidgetNote}
             onCheckIn={handleCheckIn}
             onOpenQuestion={handleOpenQuestion}
@@ -747,6 +780,7 @@ const MessageRow = memo(function MessageRow({
   onAttempt,
   onOpenQuestion,
   renderWidget,
+  renderPassage,
   onWidgetNote,
   onCheckIn,
   interceptWidget,
@@ -765,6 +799,7 @@ const MessageRow = memo(function MessageRow({
   onAttempt: (r: AttemptResult, q: SpineQuestion) => void;
   onOpenQuestion?: (qid: string) => void;
   renderWidget?: ChatCoreProps["renderWidget"];
+  renderPassage?: ChatCoreProps["renderPassage"];
   onWidgetNote?: (note: string) => void;
   onCheckIn?: (choice: string) => void;
   interceptWidget?: ChatCoreProps["interceptWidget"];
@@ -941,6 +976,26 @@ const MessageRow = memo(function MessageRow({
               />
             );
           }
+          if (b.t === "passage_ref") {
+            // sealed text: resolved by the SURFACE from verified data — if it
+            // is board-intercepted the transcript keeps a re-pin chip, exactly
+            // like figures. The id is all the model ever emitted.
+            if (interceptWidget?.("passage", { id: b.id })) {
+              const id = b.id;
+              return (
+                <BoardChip
+                  key={i}
+                  flavor="figure"
+                  onOpen={
+                    onDirective ? () => onDirective("passage", { id }) : undefined
+                  }
+                />
+              );
+            }
+            return renderPassage ? (
+              <div key={i}>{renderPassage(b.id)}</div>
+            ) : null;
+          }
           return (
             <p
               key={i}
@@ -996,11 +1051,11 @@ function SubjectHandoffCard({
   subject,
   onOpen,
 }: {
-  subject: "math" | "social";
+  subject: SpineSubject;
   onOpen?: () => void;
 }) {
   const [dismissed, setDismissed] = useState(false);
-  const label = subject === "social" ? "الدراسات الاجتماعية" : "الرياضيات";
+  const label = labelArOfSpineKey(subject);
   if (dismissed) {
     return (
       <p className="my-1 text-[11px] text-ink-faint" dir="auto">

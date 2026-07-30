@@ -6,6 +6,8 @@ import {
   lessonAnchorLo,
   sanitizeLessonSlug,
 } from "@/lib/lesson";
+import { spineKeyOf } from "@/lib/subjects";
+import { resolveStudentId } from "@/lib/student-context";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
 
 /**
@@ -19,7 +21,6 @@ import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-const STUDENT_ID = 1;
 const MODEL = "claude-sonnet-5";
 const TIMEOUT_MS = 90_000;
 
@@ -176,7 +177,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "empty transcript" }, { status: 400 });
   }
 
-  const data = await getLessonData(sanitizeLessonSlug(body.lesson));
+  // Which demo student this comprehension check belongs to — a cookie,
+  // validated against the students table, defaulting to Omar. DEMO
+  // AFFORDANCE, NOT AUTH: auth is a PRD §3 non-goal for the MVP
+  // (see lib/demo-student.ts).
+  const studentId = await resolveStudentId();
+
+  const data = await getLessonData(sanitizeLessonSlug(body.lesson), studentId);
   const loLines = data.los
     .map((l) => `- ${l.id} "${l.label}": ${l.description ?? ""}`)
     .join("\n");
@@ -246,7 +253,7 @@ ${transcriptText}`;
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
        RETURNING id`,
       [
-        STUDENT_ID,
+        studentId,
         lessonAnchorLo(data),
         mode,
         rating.score,
@@ -255,7 +262,9 @@ ${transcriptText}`;
         JSON.stringify(rating.gaps),
         rating.next_step,
         turns,
-        data.subject === "social-ar" ? "social" : "math",
+        // the subject key stored on the rating row: an EXACT registry
+        // mapping, not a two-armed guess that filed everything else as maths
+        spineKeyOf(data.subject),
       ]
     );
     const id = Number(ins.rows[0].id);
@@ -269,7 +278,7 @@ ${transcriptText}`;
             cost_usd, latency_ms)
          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
         [
-          STUDENT_ID,
+          studentId,
           "understanding_check",
           1,
           `[rate ${mode} session — ${transcript.length} transcript lines]`,

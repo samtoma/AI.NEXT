@@ -1,22 +1,22 @@
 export type Tier = "basic" | "standard" | "advanced";
 
 /**
- * Spine-graph subject dimension (Wave 1.5 multi-subject spine).
- * Sourced from the `node_subject` DB view (course join); falls back to the
- * `lo:soc*` id-prefix convention when the view isn't present yet. Distinct from
- * the lesson-prompt `Subject` above ("math-en"/"social-ar") — this is the
- * graph-territory key: math and social are separate territories, bridged by
- * exception. See docs/specs/multi-subject-spine.md §2.
+ * The two subject dimensions are DERIVED from the subject registry
+ * (lib/subjects.ts) — they are no longer hand-written unions here, so a new
+ * subject cannot exist in the product without existing in the type system:
+ *
+ *   Subject      — the prompt-contract id ("math-en" | "social-ar" | …).
+ *                  Selects the language contract and grounding hard rules.
+ *   SpineSubject — the graph-territory / DB key ("math" | "social" | …).
+ *                  Subjects are separate territories, bridged by exception
+ *                  (docs/specs/multi-subject-spine.md §2).
+ *
+ * Resolve either one ONLY through the registry's exact lookups. A course id
+ * that matches no entry is `null` — never maths (docs/specs/multi-subject-app.md §1.1).
  */
-export type SpineSubject = "math" | "social";
+export type { Subject, SpineSubject } from "./subjects";
 
-/**
- * Subject key, derived from the lesson's course node in the graph
- * (ADR-0004 Wave 0): course:prep3-math-en → "math-en",
- * course:prep3-social-ar → "social-ar". Selects the language contract and
- * grounding hard rules injected into every tutor prompt.
- */
-export type Subject = "math-en" | "social-ar";
+import type { Subject, SpineSubject } from "./subjects";
 
 export interface Choice {
   key: string;
@@ -99,8 +99,13 @@ export interface SpineLo {
   prereqIds: string[];
   baseline: number;
   current: number;
-  /** graph-territory key (math | social) — Wave 1.5 */
-  subject: SpineSubject;
+  /**
+   * Graph-territory key, resolved through the registry from this LO's course.
+   * `null` = the course is not in the registry (or the LO has no course at
+   * all): the objective is UNFILED and renders in its own neutral band. It is
+   * never silently folded into maths.
+   */
+  subject: SpineSubject | null;
 }
 
 /**
@@ -213,7 +218,8 @@ export interface LessonInfo {
   moduleId: string;
   moduleLabel: string;
   courseId: string | null; // "course:prep3-math-en" — module's part_of course
-  subject: Subject;
+  /** registry lookup of `courseId`; `null` = course not in the registry */
+  subject: Subject | null;
   los: LessonLo[];
 }
 
@@ -223,7 +229,10 @@ export interface LessonData {
   title: string; // "Cartesian product"
   moduleLabel: string; // "Unit 1 — Relations and Functions"
   courseId: string | null; // "course:prep3-math-en"
-  subject: Subject; // selects language contract + grounding rules
+  /** selects language contract + grounding rules. Non-null by construction:
+   *  a lesson whose course is not in the registry cannot be taught, so
+   *  getLessonData throws rather than falling back to another subject. */
+  subject: Subject;
   los: LessonLo[];
   questions: SpineQuestion[];
   visuals: LessonViz[];
@@ -235,6 +244,9 @@ export interface LessonData {
    *  كتاب الوزارة in the data block); null for math (byte-identical prompts) */
   docTitle: string | null;
   studentName: string;
+  /** the resolved demo student the mastery numbers belong to — rendered into
+   *  the data block so a switched student is never mislabeled as id 1 */
+  studentId: number;
 }
 
 /**

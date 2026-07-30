@@ -63,6 +63,10 @@ const SEGMENT = S({ required: ['objectives', 'sections'], properties: {
     // mark them so they become OUT_OF_SCOPE rather than silent 0%-forever LOs.
     assessable: { type: 'boolean' }, skill: { type: 'string', enum: ['reading','listening','speaking','grammar','spelling','rhetoric','vocabulary','handwriting','composition','recitation'] } } })),
   sections: arr(S({ required: ['key', 'title', 'printed_page'], properties: { key: str, title: str, printed_page: int } })),
+  // Printed «القضايا المتضمنة» box (bug fix, 2026-07-29): the lesson opener lists
+  // the issues/values the text carries (e.g. 3 items on p.8 of ar-t1u1l1). They are
+  // printed content — dropping them is a coverage gap, not a simplification.
+  qadaya: arr(S({ required: ['text', 'printed_page'], properties: { text: str, printed_page: int } })),
   tamheed: str,
 } })
 
@@ -74,6 +78,13 @@ const TEXT = S({ required: ['passages'], properties: { passages: arr(S({
     citation: str,                   // sacred only: e.g. "25:63-70" — the integers matter
     attribution: str,                // poet/author as printed
     verses: arr(S({ required: ['n','sadr','ajuz'], properties: { n: int, sadr: str, ajuz: str } })), // poetry only
+    // Sacred only (bug fix, 2026-07-29): one row per آية/sentence — the Quran must
+    // arrive STRUCTURED, never as one blob, so the authority cross-check can diff
+    // verse-by-verse and TextPassage.units can carry printed آية numbers.
+    units: arr(S({ required: ['n','printed_n','text'], properties: {
+      n: int,                        // 1-based within the passage
+      printed_n: str,                // آية number AS PRINTED, Arabic-Indic: "٦٣"
+      text: str } })),               // that آية verbatim, full تشكيل
   } })) } })
 
 const ARTEFACTS = S({ required: ['vocab', 'rhetoric', 'grammar', 'exposition'], properties: {
@@ -133,16 +144,30 @@ const LAW = `القوانين (عقد اللغة العربية — ADR-0006):
 - المصطلحات بلفظ الكتاب حرفيًا.
 - النحو تراكمي: يجوز الاستناد إلى قواعد الدروس السابقة في نفس السلسلة (المنادى/البدل/اسم الفاعل تُدرَّس على أقساط)، ولا يجوز تجاوز ما لم يُدرَّس بعد.`
 
-const SACRED = `⚠ نصٌّ مقدّس (${'قرآن/حديث'}): انقله حرفيًا كما هو مطبوع بالرسم العثماني بكل التشكيل، **وأيضًا** اذكر الاستشهاد الرقمي في الحقل citation (مثل "25:63-70" للسورة والآيات). سيتم التحقّق من النص آليًا بمقارنته بمصدرين مستقلّين — لا تصحّح ولا تُجمّل ولا تُكمل من ذاكرتك، وإن تعذّرت قراءة حرفٍ فاذكر ذلك بدل التخمين.`
+// Bug fix (2026-07-29): the first run came back imlā'ī — 0×ٱ against 18 in the
+// authority text, plus a بسملة that is NOT printed inside the passage. The
+// transcript is EVIDENCE for the cross-check, never the stored text (the
+// assembler fetches the citation raw from two authorities and stores the
+// canonical Uthmani — ADR-0006 §2) — but a memory-typed imlā'ī transcript
+// still costs us the transcript_agrees leg, so the prompt now names the trap.
+const SACRED = `⚠ نصٌّ مقدّس (${'قرآن/حديث'}): انقله حرفيًا كما هو مطبوع **بالرسم العثماني** بكل التشكيل، **وأيضًا** اذكر الاستشهاد الرقمي في الحقل citation (مثل "25:63-70" للسورة والآيات).
+- الرسم العثماني ليس الرسم الإملائي: انسخ ألف الوصل ٱ كما تراها مطبوعة (لا تكتب ا أو أ مكانها)، وانسخ الألف الخنجرية ـٰ وعلامات الوقف الصغيرة كما هي.
+- انقل ما هو مطبوع داخل حدود المقطع فقط: **لا تُضِف البسملة** إن لم تكن مطبوعة في أول المقطع نفسه.
+- املأ units: صفًّا لكل آية — n تسلسلي، printed_n رقم الآية المطبوع بالأرقام الهندية (مثل "٦٣")، text نص الآية حرفيًا. لا تدمج الآيات في كتلة واحدة.
+- سيتم التحقّق من النص آليًا بمقارنته بمصدرين مستقلّين — لا تصحّح ولا تُجمّل ولا تُكمل من ذاكرتك، وإن تعذّرت قراءة حرفٍ فاذكر ذلك بدل التخمين.`
 
-const out = []
-for (const l of RUN) {
+// Lessons are INDEPENDENT — they run concurrently through the pipeline (the
+// substrate caps live agents); the 7 stages inside one lesson stay strictly
+// sequential because each feeds the next. A lesson whose chain dies resolves
+// to null and is reported, never silently dropped.
+const runLesson = async (l) => {
   const seg = await agent(`أنت مخطّط الدرس. اقرأ الدرس كاملًا واستخرج بنيته.
 ${head(l)}
 ${LAW}
 أخرج SEGMENT:
 - objectives: أهداف الدرس حرفيًا من صندوق «أهداف الدرس»، ولكل هدف: skill، و assessable=false لأهداف الخط (handwriting) والتعبير (composition) والتلاوة (recitation) لأننا لا نقيسها، و true لغيرها.
 - sections: أقسام الدرس بالترتيب المطبوع (استمع/اسأل وناقش/اقرأ صامتة/لغويات وتراكيب/الكتابة…) مع رقم الصفحة المطبوعة. انتبه: ترقيم الأقسام غير ثابت بين الدروس؛ اعتمد على العناوين لا الأرقام.
+- qadaya: بنود صندوق «القضايا المتضمنة» حرفيًا كما هي مطبوعة في افتتاحية الدرس (إن وُجد الصندوق) مع رقم صفحته — لا تُسقطه ولا تلخّصه.
 - tamheed: فقرة تمهيد تعليمية من روح الدرس.`,
     { label: `segment:${l.id}`, phase: 'Segment', model: 'sonnet', schema: SEGMENT })
 
@@ -162,7 +187,7 @@ ${LAW}
 أخرج ARTEFACTS:
 - exposition: شرح تعليمي غني (٤–٧ جمل) بصوت معلم دافئ — لا سرد للنص.
 - vocab: جدول «معاني المفردات» كما هو مطبوع (word/meaning) وأضف plural/singular/antonym فقط إن كانت مطبوعة؛ وإن ألّفتها للحاجة الامتحانية فضع authored=true.
-- rhetoric: «مواطن الجمال» — لكل بند: expression (الشاهد حرفيًا من النص) + type (نوعه: تشبيه/تضاد/أسلوب مؤكد/نداء للتنبيه…) + effect (غرضه/أثره) + الصفحة.
+- rhetoric: «مواطن الجمال» — لكل بند: expression (الشاهد حرفيًا من النص) + type (نوعه: تشبيه/تضاد/أسلوب مؤكد/نداء للتنبيه…) + effect (غرضه/أثره) + الصفحة. ⚠ استوعب كل الأساليب التي تذكرها أهداف الدرس: إن ذكر هدفٌ «أمر ونهي واستفهام» فيجب أن يظهر شاهد مطبوع لكل نوع منها (لا تكتفِ بالأمر وحده) — وإن لم يطبع الكتاب شاهدًا لنوعٍ ما فلا تخترعه.
 - grammar: موضوع «لغويات وتراكيب» — topic، و continuation=true إن كان العنوان «تابع…»، و rule_lines: أسطر القاعدة المطبوعة حرفيًا ولكلٍّ id مثل R1/R2 (هذه الأسطر هي المرجع الوحيد المسموح لأي إعراب لاحق)، و types: أنواعه وعلامة إعراب كلٍّ منها.
 - spelling: قسم الإملاء إن وُجد (الحالات وأمثلتها المطبوعة).`,
     { label: `artefacts:${l.id}`, phase: 'Artefacts', model: 'sonnet', schema: ARTEFACTS })
@@ -214,6 +239,10 @@ ${head(l)}
   const counts = {
     passages: (text.passages || []).length,
     verses: (text.passages || []).reduce((n, p) => n + ((p.verses || []).length), 0),
+    // Sacred structure (bug fix): آيات arrive as per-verse units, counted here so
+    // the oracle can assert them against the citation range (e.g. 25:63-70 = 8).
+    sacred_units: (text.passages || []).reduce((n, p) => n + ((p.units || []).length), 0),
+    qadaya: (seg.qadaya || []).length,
     vocab: (art.vocab || []).length,
     rhetoric: (art.rhetoric || []).length,
     rule_lines: (art.grammar?.rule_lines || []).length,
@@ -226,15 +255,21 @@ ${head(l)}
   const coverage = await agent(`مدقّق التغطية لدرس ${l.title}.
 أهداف الدرس المطبوعة: ${JSON.stringify(seg.objectives, null, 1)}
 أقسام الدرس المطبوعة: ${JSON.stringify(seg.sections, null, 1)}
+القضايا المتضمنة المستخرجة: ${JSON.stringify(seg.qadaya || [], null, 1)}
 ما أُنتج فعلًا (أعداد محسوبة برمجيًا، لا رأي): ${JSON.stringify(counts, null, 1)}
 عيّنات: مفردات=${JSON.stringify((art.vocab || []).map((v) => v.word).slice(0, 40))} · مواطن جمال=${JSON.stringify((art.rhetoric || []).map((r) => r.expression).slice(0, 30))} · قواعد=${JSON.stringify((art.grammar?.rule_lines || []).map((r) => r.id))}
-تحقّق بندًا بندًا مقابل ما هو مطبوع في الصفحات ${l.printed}: هل كل خلية في جدول المفردات مُستخرَجة؟ كل بند من مواطن الجمال؟ كل سطر قاعدة؟ كل حالة إملائية؟ كل بيت شعري؟
+تحقّق بندًا بندًا مقابل ما هو مطبوع في الصفحات ${l.printed}: هل كل خلية في جدول المفردات مُستخرَجة؟ كل بند من مواطن الجمال (بكل أنواع الأساليب التي تذكرها الأهداف: أمر/نهي/استفهام…)؟ كل سطر قاعدة؟ كل حالة إملائية؟ كل بيت شعري؟ ${isSacred(l) ? 'كل آية صفًّا مستقلًا في units (قارن sacred_units بمدى الاستشهاد)؟' : ''} كل بند من صندوق «القضايا المتضمنة» إن كان مطبوعًا؟
 لكل بند status: covered / thin / MISSING / **OUT_OF_SCOPE** — واستخدم OUT_OF_SCOPE (مع reason) للأهداف المطبوعة التي لا نقيسها أصلًا (الخط، التعبير، التلاوة) بدل إسقاطها بصمت.
 verdict=GREEN فقط إذا لم يبقَ أي بند thin أو MISSING. أخرج COVERAGE.`,
     { label: `coverage:${l.id}`, phase: 'Coverage', model: 'sonnet', schema: COVERAGE })
 
-  out.push({ lesson: l, segment: seg, text, artefacts: art, questions: qs, interactives: inter,
-             rederive, prov, counts, coverage })
+  return { lesson: l, segment: seg, text, artefacts: art, questions: qs, interactives: inter,
+           rederive, prov, counts, coverage }
 }
 
-return { lessons: out }
+const results = await pipeline(RUN, (l) => runLesson(l))
+const out = results.filter(Boolean)
+const failed = RUN.filter((_, i) => !results[i]).map((l) => l.id)
+if (failed.length) log(`⚠ ${failed.length} lesson(s) died mid-chain and are NOT in the output: ${failed.join(', ')}`)
+
+return { lessons: out, failed }
