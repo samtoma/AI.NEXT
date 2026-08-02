@@ -35,27 +35,44 @@ export function DemoStudentSwitcher({
   students,
   currentId,
   children,
+  visible = false,
 }: {
   students: DemoStudent[];
   currentId: number;
   /** wrapped element = the (invisible) trigger; omit for a corner hot-zone */
   children?: ReactNode;
+  /** PoC (Samuel, 2026-07-30): render a VISIBLE profile dropdown — single
+   *  click, normal button showing the current student — instead of the
+   *  hidden triple-tap affordance. The hidden variants stay for the lesson
+   *  surfaces; this one fronts the student home as a "who's studying?" pick. */
+  visible?: boolean;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [creating, setCreating] = useState(false);
   const wrapRef = useRef<HTMLSpanElement>(null);
   // The panel is position:FIXED, anchored to the trigger's measured rect.
   // An absolutely-positioned panel would be painted under later siblings —
   // the page sections each create their own stacking context (anim-rise), so
   // "z-50 inside an earlier section" still loses to the graph card.
-  const [pos, setPos] = useState<{ top: number; right: number } | null>(null);
+  const [pos, setPos] = useState<{
+    top: number;
+    left?: number;
+    right?: number;
+  } | null>(null);
   const toggle = useCallback(() => {
     const r = wrapRef.current?.getBoundingClientRect();
     if (r) {
-      setPos({
-        top: r.bottom + 8,
-        right: Math.max(12, window.innerWidth - r.right),
-      });
+      const vw = window.innerWidth;
+      // anchor to whichever side keeps the 19rem panel on-screen — the
+      // visible trigger sits at the RTL start (left edge), where a
+      // right-anchored panel clips off the viewport
+      setPos(
+        r.left < vw / 2
+          ? { top: r.bottom + 8, left: Math.max(12, r.left) }
+          : { top: r.bottom + 8, right: Math.max(12, vw - r.right) }
+      );
     }
     setOpen((o) => !o);
   }, []);
@@ -81,19 +98,40 @@ export function DemoStudentSwitcher({
     [router]
   );
 
+  const current = students.find((s) => s.id === currentId);
+
   return (
     <span ref={wrapRef} className="relative inline-block" dir="ltr">
-      {children && (
-        <span
-          onClick={onTap}
-          className="cursor-default select-none"
-          title="" /* no hint: students must not discover this */
+      {visible ? (
+        // PoC profile dropdown: one click, clearly labeled (not the hidden
+        // founders' gesture) — "who's studying today?"
+        <button
+          onClick={toggle}
+          dir="rtl"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          className="flex items-center gap-2 rounded-full border border-line bg-card px-3.5 py-1.5 text-[13px] font-medium text-ink shadow-sm transition-all duration-150 hover:-translate-y-px hover:border-accent/50"
         >
-          {children}
-        </span>
+          <span aria-hidden>👤</span>
+          {current?.displayName ?? "الطالب"}
+          <span className="text-[10px] text-ink-faint" aria-hidden>
+            ▾
+          </span>
+        </button>
+      ) : (
+        children && (
+          <span
+            onClick={onTap}
+            className="cursor-default select-none"
+            title="" /* no hint: students must not discover this */
+          >
+            {children}
+          </span>
+        )
       )}
       {mounted &&
         !children &&
+        !visible &&
         createPortal(
           // bottom-RIGHT on purpose: Next's dev-tools badge owns the bottom-left
           <span
@@ -114,9 +152,13 @@ export function DemoStudentSwitcher({
             onClick={() => setOpen(false)}
           />
           <div
-            style={children && pos ? { top: pos.top, right: pos.right } : undefined}
+            style={
+              (children || visible) && pos
+                ? { top: pos.top, left: pos.left, right: pos.right }
+                : undefined
+            }
             className={`ledger-card fixed z-[61] w-[19rem] p-3 text-left shadow-xl ${
-              children ? "" : "bottom-12 right-3"
+              children || visible ? "" : "bottom-12 right-3"
             }`}
           >
             <p className="rule-label mb-2">Demo student · not auth</p>
@@ -166,6 +208,47 @@ export function DemoStudentSwitcher({
                 </li>
               )}
             </ul>
+
+            {/* PoC: create a fresh demo student in place (POST /api/demo-students) */}
+            <form
+              dir="rtl"
+              className="mt-2 flex items-center gap-1.5 border-t border-line-soft px-1 pt-2.5"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const name = newName.trim();
+                if (name.length < 2 || creating) return;
+                setCreating(true);
+                try {
+                  const res = await fetch("/api/demo-students", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name }),
+                  });
+                  if (res.ok) {
+                    const j = (await res.json()) as { id: number };
+                    setNewName("");
+                    choose(j.id); // switch to the newborn + refresh the roster
+                  }
+                } finally {
+                  setCreating(false);
+                }
+              }}
+            >
+              <input
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder="طالب جديد — الاسم"
+                maxLength={40}
+                className="min-w-0 flex-1 rounded-lg border border-line bg-paper px-2.5 py-1.5 text-[13px] text-ink outline-none focus:border-accent/60"
+              />
+              <button
+                type="submit"
+                disabled={creating || newName.trim().length < 2}
+                className="rounded-lg bg-ink px-3 py-1.5 text-[12px] font-semibold text-paper transition-colors disabled:opacity-40"
+              >
+                {creating ? "…" : "أضف +"}
+              </button>
+            </form>
             <p className="mt-2 px-2.5 font-mono text-[10px] leading-relaxed text-ink-faint">
               demo affordance — a cookie, validated server-side. Not a login.
             </p>

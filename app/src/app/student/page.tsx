@@ -94,7 +94,22 @@ export default async function StudentPage({
     // single-subject check-in is the natural landing (math-only stays as-is).
     if (summaries.length > 1)
       return withSwitcher(
-        <SubjectHome summaries={summaries} studentName={studentName} />
+        <>
+          {/* PoC (Samuel, 2026-07-30): a VISIBLE "who's studying?" dropdown
+              on the home — pick a profile or create a new demo student.
+              The hidden triple-tap variants stay on the other surfaces. */}
+          <div
+            dir="rtl"
+            className="mx-auto flex max-w-5xl items-center justify-end px-6 pt-5"
+          >
+            <DemoStudentSwitcher
+              students={students}
+              currentId={studentId}
+              visible
+            />
+          </div>
+          <SubjectHome summaries={summaries} studentName={studentName} />
+        </>
       );
   }
 
