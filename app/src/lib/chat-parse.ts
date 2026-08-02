@@ -45,8 +45,12 @@ export type Block =
   | { t: "finish" }
   /** {{show_passage:t:ara1-1:001}} — the tutor brings a SEALED text passage
    *  into focus BY ID. The app resolves the bytes from the verified store;
-   *  the model never carries the text (ADR-0006 runtime containment). */
-  | { t: "passage_ref"; id: string };
+   *  the model never carries the text (ADR-0006 runtime containment).
+   *  JSON form {{show_passage:{"id":…,"quote":…}}} highlights a span inside
+   *  the pinned card: `quote` = verbatim words of a NON-sacred passage
+   *  (matched loosely, diacritics-insensitive), `unit` = آية/unit number —
+   *  the only permitted pointer INTO sacred text (never its words). */
+  | { t: "passage_ref"; id: string; quote?: string; unit?: number };
 
 const CITE_RE = /\[\[(lo|q|page|term\?):([^\]\n]{1,80})\]\]/g;
 
@@ -109,9 +113,42 @@ function scanJson(s: string, start: number): { text: string; end: number } | nul
   return null; // incomplete (still streaming) or overlong
 }
 
+const PASSAGE_JSON_HEAD = "{{show_passage:{";
+
 /** Parse one complete directive at position `i` (must point at "{{"). */
 function parseActionAt(s: string, i: number): Action | null {
   const head = s.slice(i, i + 220);
+  // JSON form FIRST: SIMPLE_RE would otherwise cut its payload at the first
+  // "}" and swallow the braces as a garbage id.
+  if (head.startsWith(PASSAGE_JSON_HEAD)) {
+    const payload = scanJson(s, i + PASSAGE_JSON_HEAD.length - 1);
+    if (!payload) return null; // still streaming the payload
+    let end = payload.end;
+    for (let k = 0; k < 2 && s[end] === "}"; k++) end++; // tolerant braces
+    let block: Block | null = null;
+    try {
+      const p = JSON.parse(payload.text) as {
+        id?: unknown;
+        quote?: unknown;
+        unit?: unknown;
+      };
+      if (typeof p.id === "string" && p.id.trim()) {
+        block = {
+          t: "passage_ref",
+          id: p.id.trim(),
+          ...(typeof p.quote === "string" && p.quote.trim()
+            ? { quote: p.quote.trim() }
+            : {}),
+          ...(typeof p.unit === "number" && Number.isInteger(p.unit)
+            ? { unit: p.unit }
+            : {}),
+        };
+      }
+    } catch {
+      /* malformed payload — consume silently */
+    }
+    return { start: i, end, block };
+  }
   const m = SIMPLE_RE.exec(head);
   if (m) {
     const block: Block =

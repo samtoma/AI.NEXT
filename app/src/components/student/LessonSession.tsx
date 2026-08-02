@@ -44,7 +44,10 @@ import {
 import { makeRecognition, sttSupported, ttsSupported } from "@/lib/voice";
 import { speakRemote, stopSpeaking, unlockAudio } from "@/lib/tts-client";
 import type { LessonPassage } from "@/lib/lesson-content";
-import { SealedPassageCard } from "@/components/student/SealedPassageCard";
+import {
+  SealedPassageCard,
+  type PassageHighlight,
+} from "@/components/student/SealedPassageCard";
 
 /**
  * The adaptive lesson surface — same engine, two temperaments.
@@ -125,24 +128,51 @@ const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تا
  * report 2026-08-02: re-printing the full essay mid-chat buried the
  * conversation under a duplicate wall of text. Tapping the chip scrolls the
  * pinned card back into view and flashes it.
+ *
+ * With a span pointer (quote words for prose / آية number for sacred) the chip
+ * also HIGHLIGHTS that span inside the pinned card — Samuel's follow-up call:
+ * pointing at a whole paragraph is useless, the highlighted line is the key.
+ * The highlight is applied on mount (as the directive streams in), so it is
+ * already visible when the student scrolls up.
  */
-function PassageRefChip({ passage }: { passage: LessonPassage }) {
+function PassageRefChip({
+  passage,
+  span,
+  onSpan,
+}: {
+  passage: LessonPassage;
+  span?: { quote?: string; unit?: number };
+  onSpan: (id: string, span: PassageHighlight | null) => void;
+}) {
+  const hasSpan = !!(span?.quote || span?.unit != null);
+  useEffect(() => {
+    if (hasSpan) onSpan(passage.id, span ?? null);
+    // apply once per chip appearance — span/id are stable for a parsed block
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div dir="rtl" className="py-1">
       <button
         onClick={() => {
-          const el = document.getElementById(`sealed-${passage.id}`);
+          const el =
+            document.getElementById(`sealed-${passage.id}-mark`) ??
+            document.getElementById(`sealed-${passage.id}`);
           if (!el) return;
           el.scrollIntoView({ behavior: "smooth", block: "center" });
-          el.classList.add("ring-2", "ring-gold", "rounded-xl");
+          const card = document.getElementById(`sealed-${passage.id}`);
+          card?.classList.add("ring-2", "ring-gold", "rounded-xl");
           window.setTimeout(
-            () => el.classList.remove("ring-2", "ring-gold", "rounded-xl"),
+            () => card?.classList.remove("ring-2", "ring-gold", "rounded-xl"),
             2200
           );
         }}
         className="rounded-full border border-gold/50 bg-gold-wash px-3.5 py-1.5 text-[12px] font-medium text-ink-soft shadow-sm transition-all duration-150 hover:-translate-y-px hover:border-gold"
       >
-        📜 بطاقة النص فوق — «{passage.title_ar}» ⬆
+        {hasSpan
+          ? span?.unit != null
+            ? `📜 ${passage.kind === "quran" ? "الآية" : "الجزء"} ${arDigits(span.unit)} — معلّم عليها ليك في بطاقة النص فوق ⬆`
+            : "📜 معلّم ليك على الجزء ده في بطاقة النص فوق ⬆"
+          : `📜 بطاقة النص فوق — «${passage.title_ar}» ⬆`}
       </button>
     </div>
   );
@@ -340,6 +370,31 @@ export function LessonSession({
 
   const lookupPassage = useCallback(
     (id: string) => passageById.current.get(id),
+    []
+  );
+
+  // The span the tutor is currently pointing at, per pinned passage — set by
+  // the latest {{show_passage:{…,"quote"/"unit"}}} chip, rendered as a <mark>
+  // inside the pinned card (a NEW pointer replaces the previous one: one
+  // "current focus" per passage, like a finger moving along the page).
+  const [passageSpans, setPassageSpans] = useState<
+    Record<string, PassageHighlight>
+  >({});
+  const onPassageSpan = useCallback(
+    (id: string, span: PassageHighlight | null) => {
+      setPassageSpans((prev) => {
+        if (span == null) {
+          if (!(id in prev)) return prev;
+          const rest = { ...prev };
+          delete rest[id];
+          return rest;
+        }
+        const cur = prev[id];
+        if (cur && cur.quote === span.quote && cur.unit === span.unit)
+          return prev;
+        return { ...prev, [id]: span };
+      });
+    },
     []
   );
 
@@ -1143,10 +1198,14 @@ export function LessonSession({
               resolveCite={resolveCite}
               onCite={onCite}
               renderWidget={renderWidget}
-              renderPassage={(id) => {
+              renderPassage={(id, span) => {
                 const p = lookupPassage(id);
                 return p ? (
-                  <PassageRefChip passage={p} />
+                  <PassageRefChip
+                    passage={p}
+                    span={span}
+                    onSpan={onPassageSpan}
+                  />
                 ) : (
                   // an unresolvable id must fail VISIBLY, not vanish — the
                   // tutor believes it just showed the student a text
@@ -1160,7 +1219,12 @@ export function LessonSession({
                   <div dir="rtl" className="space-y-2">
                     {passages.map((p) => (
                       <div key={p.id} id={`sealed-${p.id}`}>
-                        <SealedPassageCard passage={p} compact />
+                        <SealedPassageCard
+                          passage={p}
+                          compact
+                          highlight={passageSpans[p.id]}
+                          markId={`sealed-${p.id}-mark`}
+                        />
                       </div>
                     ))}
                     <p className="pb-1 text-center text-[10.5px] text-ink-faint">

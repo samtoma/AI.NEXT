@@ -542,7 +542,7 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
 - {{widget:style_purpose:{"prompt":"حدد الأسلوب وغرضه","text":"…من بيانات الدرس…","span":"اصْرِفْ عَنَّا","styles":["أمر","نداء","استفهام"],"purposes":["الدعاء","التنبيه"],"answer":{"style":"أمر","purpose":"الدعاء"}}}} — «أسلوب … وغرضه …»; the answer pair comes VERBATIM from مواطن الجمال in the LESSON DATA.
 - {{widget:irab_builder:{"prompt":"أعرب الكلمة","sentence":"يا طالبَ العلمِ اجتهدْ","target":"طالبَ","roles":["منادى مضاف","مضاف إليه","فاعل"],"marks":["الفتحة","الكسرة","الياء"],"answer":{"word_ar":"طالبَ","role_ar":"منادى مضاف","state":"منصوب","sign":"الفتحة","sign_kind":"ظاهرة"},"rule_ref":{"page":${exPage},"quote":"…سطر القاعدة المطبوع حرفيًا…"}}}} — slot-built إعراب. ⚠ GROUNDING GATE: "rule_ref.quote" MUST be a rule line printed in the LESSON DATA (with its page) — an إعراب the book cannot license is not askable. Sentence and answer come from the question bank or the printed examples, never invented.
 - {{widget:term_match:{"prompt":"وصّل الكلمة بمعناها","pairs":[{"term":"هَوْنًا","definition":"بسكينة ووقار"}],"decoyDefs":["تعريف قريب للتشتيت"]}}} — معاني المفردات matching, 2–4 pairs VERBATIM from the LESSON DATA.
-- {{show_passage:t:ara1-1:001}} — drops a small chip that scrolls the ALREADY-PINNED passage card back into view (ids from the SEALED TEXT PASSAGES block). It never re-prints the text, it is a POINTER, and it does NOT count as this message's interactive directive — a show_passage chip alone is not an ask. Use it at most when the discussion has drifted away from the text; in the SAME message name the exact spot («الآية ٣»، «الجملة الأخيرة في الفقرة») and still END the message with a real ask. Never in two consecutive messages.
+- {{show_passage:{"id":"t:ara1-1:001","quote":"…كلمات متتالية منسوخة حرفيًا من النص…"}}} — HIGHLIGHTS that exact span inside the ALREADY-PINNED passage card (ids from the SEALED TEXT PASSAGES block) and drops a small pointer chip. This is THE way to point at the text: never point at a whole paragraph — highlight the 3–12 consecutive words you are about to discuss (النثر والشعر فقط: quote is copied verbatim from a NON-sacred passage؛ التشكيل مش لازم — المطابقة تتجاهله). For a SACRED passage (قرآن/حديث) the quote field is FORBIDDEN — you never type its words — use {"id":"t:ara1-1:002","unit":3} instead to highlight آية ٣ by NUMBER. Bare {{show_passage:t:ara1-1:001}} (no span) just scrolls back to the card — use it only for a general «ارجع للنص». All forms are POINTERS: none of them re-prints the text, none counts as this message's interactive directive, and a pointer alone is never an ask — talk about the highlighted words in the SAME message and still END it with a real ask. Never point in two consecutive messages.
 - {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
 ⚠ SACRED TEXT (hard rule, no exceptions): الآيات والأحاديث معروضة للطالب في بطاقة النص أول المحادثة من الحافظة الموثقة — you never type, quote, complete or embed Quran/Hadith text in prose or in ANY widget payload. Reference it by آية number + {{show_passage:…}} («تأمل الآية ٦٣ في بطاقة النص فوق»). Vocabulary words (single words like هَوْنًا) from the glossary are allowed in term_match. أي رد يتضمن ٣ كلمات متتالية فأكثر من النص المختوم يُلغى آليًا قبل وصوله للطالب.
 ⚠ NEVER END A MESSAGE WITHOUT AN ASK: your last beat is always something the student ACTS on — a question in chat, a choice, or an interactive directive (widget / show_question). Ending on a statement, a summary, or a show_passage chip strands him with nothing to do; if you pointed at the text, the question about that exact spot goes in the SAME message.
@@ -854,9 +854,12 @@ function sealedPassagesBlock(
   withText: boolean
 ): string {
   const rows = passages.map((p) => {
+    const pointerEg = p.sacred
+      ? `ظلِّل آية بـ {{show_passage:{"id":"${p.id}","unit":N}}}`
+      : `ظلِّل مقطعًا بـ {{show_passage:{"id":"${p.id}","quote":"…كلماته حرفيًا…"}}}`;
     const head = `- ${p.id} «${p.title_ar}» (${p.kind}${
       p.citation_ref ? `، ${p.citation_ref}` : ""
-    }، ${p.units.length} ${p.kind === "quran" ? "آيات" : "وحدات"}) — أعد تركيزها بـ {{show_passage:${p.id}}}`;
+    }، ${p.units.length} ${p.kind === "quran" ? "آيات" : "وحدات"}) — ${pointerEg}`;
     if (!withText) return head;
     const body = p.units
       .map((u) => `  ${u.printed_n ? `﴿${u.printed_n}﴾ ` : `(${u.n}) `}${u.text_ar}`)
@@ -867,7 +870,7 @@ function sealedPassagesBlock(
 
 SEALED TEXT PASSAGES — معروضة للطالب في أول المحادثة، من الحافظة الموثقة (هي "بطاقة النص"):
 ${rows.join("\n")}
-${withText ? "⚠ النص أعلاه للاطّلاع فقط كي تناقشه بدقة — يُمنَع منعًا باتًا نسخ أي مقطع منه (٣ كلمات متتالية فأكثر) إلى ردودك. أشِر إليه بأرقام الآيات/الأبيات و{{show_passage:…}}؛ أي تجاوز يُلغي الرد آليًا." : "أشِر إليها بالأرقام و{{show_passage:…}} — لا تكتب نصوصها أبدًا."}`;
+${withText ? '⚠ النص أعلاه للاطّلاع فقط كي تناقشه بدقة — يُمنَع منعًا باتًا نسخ أي مقطع منه (٣ كلمات متتالية فأكثر) إلى ردودك. الاستثناء الوحيد: حقل "quote" داخل {{show_passage:…}} لنصٍّ غير مقدس — انسخ فيه المقطع حرفيًا فيتظلَّل للطالب داخل البطاقة (لا يظهر ككلامك). النص المقدس لا استثناء له إطلاقًا: أشِر إليه برقم الآية ("unit") فقط؛ أي تجاوز يُلغي الرد آليًا.' : "أشِر إليها بالأرقام و{{show_passage:…}} — لا تكتب نصوصها أبدًا."}`;
 }
 
 function teachingScriptBlock(c: LessonContent): string {
