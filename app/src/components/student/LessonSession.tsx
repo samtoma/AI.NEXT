@@ -119,6 +119,35 @@ const AR_MODE_COPY: Record<
 
 const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تانية", "فهمت — كمّل ✓"];
 
+/**
+ * {{show_passage:…}} renders as a REFOCUS CHIP, not a second copy of the text.
+ * The passage cards already open the exchange (the `leading` slot) — field
+ * report 2026-08-02: re-printing the full essay mid-chat buried the
+ * conversation under a duplicate wall of text. Tapping the chip scrolls the
+ * pinned card back into view and flashes it.
+ */
+function PassageRefChip({ passage }: { passage: LessonPassage }) {
+  return (
+    <div dir="rtl" className="py-1">
+      <button
+        onClick={() => {
+          const el = document.getElementById(`sealed-${passage.id}`);
+          if (!el) return;
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.classList.add("ring-2", "ring-gold", "rounded-xl");
+          window.setTimeout(
+            () => el.classList.remove("ring-2", "ring-gold", "rounded-xl"),
+            2200
+          );
+        }}
+        className="rounded-full border border-gold/50 bg-gold-wash px-3.5 py-1.5 text-[12px] font-medium text-ink-soft shadow-sm transition-all duration-150 hover:-translate-y-px hover:border-gold"
+      >
+        📜 بطاقة النص فوق — «{passage.title_ar}» ⬆
+      </button>
+    </div>
+  );
+}
+
 /* ---------------- session persistence (sessionStorage) ---------------- */
 
 const SAVE_VERSION = 1;
@@ -1117,7 +1146,7 @@ export function LessonSession({
               renderPassage={(id) => {
                 const p = lookupPassage(id);
                 return p ? (
-                  <SealedPassageCard passage={p} compact />
+                  <PassageRefChip passage={p} />
                 ) : (
                   // an unresolvable id must fail VISIBLY, not vanish — the
                   // tutor believes it just showed the student a text
@@ -1130,7 +1159,9 @@ export function LessonSession({
                 passages.length > 0 ? (
                   <div dir="rtl" className="space-y-2">
                     {passages.map((p) => (
-                      <SealedPassageCard key={p.id} passage={p} compact />
+                      <div key={p.id} id={`sealed-${p.id}`}>
+                        <SealedPassageCard passage={p} compact />
+                      </div>
                     ))}
                     <p className="pb-1 text-center text-[10.5px] text-ink-faint">
                       النص من الحافظة الموثقة · هنذاكر عليه مع بعض ⬇
