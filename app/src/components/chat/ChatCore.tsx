@@ -83,7 +83,7 @@ export interface ChatCoreProps {
    *  an optional span pointer: quote words for prose, unit number for sacred) */
   renderPassage?: (
     id: string,
-    span?: { quote?: string; unit?: number }
+    span?: { quote?: string; unit?: number; view?: "line" | "context" }
   ) => React.ReactNode;
   /** rendered INSIDE the scroll flow, above the first message — the lesson
    *  surfaces pin the sealed passage(s) here so the exchange opens on the
@@ -998,7 +998,11 @@ const MessageRow = memo(function MessageRow({
             }
             return renderPassage ? (
               <div key={i}>
-                {renderPassage(b.id, { quote: b.quote, unit: b.unit })}
+                {renderPassage(b.id, {
+                  quote: b.quote,
+                  unit: b.unit,
+                  view: b.view,
+                })}
               </div>
             ) : null;
           }

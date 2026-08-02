@@ -46,6 +46,10 @@ import { speakRemote, stopSpeaking, unlockAudio } from "@/lib/tts-client";
 import type { LessonPassage } from "@/lib/lesson-content";
 import {
   SealedPassageCard,
+  PassageExcerptCard,
+  extractExcerpt,
+  jumpToPinnedPassage,
+  type PassageExcerpt,
   type PassageHighlight,
 } from "@/components/student/SealedPassageCard";
 
@@ -153,19 +157,7 @@ function PassageRefChip({
   return (
     <div dir="rtl" className="py-1">
       <button
-        onClick={() => {
-          const el =
-            document.getElementById(`sealed-${passage.id}-mark`) ??
-            document.getElementById(`sealed-${passage.id}`);
-          if (!el) return;
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
-          const card = document.getElementById(`sealed-${passage.id}`);
-          card?.classList.add("ring-2", "ring-gold", "rounded-xl");
-          window.setTimeout(
-            () => card?.classList.remove("ring-2", "ring-gold", "rounded-xl"),
-            2200
-          );
-        }}
+        onClick={() => jumpToPinnedPassage(passage.id)}
         className="rounded-full border border-gold/50 bg-gold-wash px-3.5 py-1.5 text-[12px] font-medium text-ink-soft shadow-sm transition-all duration-150 hover:-translate-y-px hover:border-gold"
       >
         {hasSpan
@@ -176,6 +168,27 @@ function PassageRefChip({
       </button>
     </div>
   );
+}
+
+/** "view":"line" — the inline excerpt card, which ALSO puts the highlight on
+ *  the pinned full card so «شوف السياق كامل» lands on the marked words. */
+function PassageExcerptInline({
+  passage,
+  excerpt,
+  span,
+  onSpan,
+}: {
+  passage: LessonPassage;
+  excerpt: PassageExcerpt;
+  span: PassageHighlight;
+  onSpan: (id: string, span: PassageHighlight | null) => void;
+}) {
+  useEffect(() => {
+    onSpan(passage.id, span);
+    // apply once per card appearance — span/id are stable for a parsed block
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return <PassageExcerptCard passage={passage} excerpt={excerpt} />;
 }
 
 /* ---------------- session persistence (sessionStorage) ---------------- */
@@ -1200,18 +1213,38 @@ export function LessonSession({
               renderWidget={renderWidget}
               renderPassage={(id, span) => {
                 const p = lookupPassage(id);
-                return p ? (
+                if (!p)
+                  return (
+                    // an unresolvable id must fail VISIBLY, not vanish — the
+                    // tutor believes it just showed the student a text
+                    <p
+                      dir="rtl"
+                      className="py-2 text-center text-[12px] text-rust"
+                    >
+                      النص ده مش متاح في بيانات الدرس
+                    </p>
+                  );
+                // "line" (default when a span is given): inline excerpt card
+                // with ONLY the marked words — store bytes; no match ⇒ chip.
+                const hasSpan = !!(span?.quote || span?.unit != null);
+                if (hasSpan && span?.view !== "context") {
+                  const ex = extractExcerpt(p, span!);
+                  if (ex)
+                    return (
+                      <PassageExcerptInline
+                        passage={p}
+                        excerpt={ex}
+                        span={span!}
+                        onSpan={onPassageSpan}
+                      />
+                    );
+                }
+                return (
                   <PassageRefChip
                     passage={p}
                     span={span}
                     onSpan={onPassageSpan}
                   />
-                ) : (
-                  // an unresolvable id must fail VISIBLY, not vanish — the
-                  // tutor believes it just showed the student a text
-                  <p dir="rtl" className="py-2 text-center text-[12px] text-rust">
-                    النص ده مش متاح في بيانات الدرس
-                  </p>
                 );
               }}
               leading={

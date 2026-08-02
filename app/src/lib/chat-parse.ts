@@ -49,8 +49,20 @@ export type Block =
    *  JSON form {{show_passage:{"id":…,"quote":…}}} highlights a span inside
    *  the pinned card: `quote` = verbatim words of a NON-sacred passage
    *  (matched loosely, diacritics-insensitive), `unit` = آية/unit number —
-   *  the only permitted pointer INTO sacred text (never its words). */
-  | { t: "passage_ref"; id: string; quote?: string; unit?: number };
+   *  the only permitted pointer INTO sacred text (never its words).
+   *  `view` picks the presentation (Samuel, 2026-08-02: context-dependent):
+   *  "line" (default with a span) = a small inline excerpt card carrying the
+   *  marked span ALONE — resolved from the verified store, so the card is
+   *  empty-safe: an unmatched quote falls back to a pointer chip, never
+   *  model-typed text; "context" = pointer chip + highlight in the pinned
+   *  full card, for when the surroundings matter. */
+  | {
+      t: "passage_ref";
+      id: string;
+      quote?: string;
+      unit?: number;
+      view?: "line" | "context";
+    };
 
 const CITE_RE = /\[\[(lo|q|page|term\?):([^\]\n]{1,80})\]\]/g;
 
@@ -131,8 +143,18 @@ function parseActionAt(s: string, i: number): Action | null {
         id?: unknown;
         quote?: unknown;
         unit?: unknown;
+        view?: unknown;
       };
       if (typeof p.id === "string" && p.id.trim()) {
+        // tolerate the model's synonyms for the two presentations
+        const view =
+          typeof p.view === "string"
+            ? /^(line|excerpt|inline|small)$/.test(p.view.trim())
+              ? ("line" as const)
+              : /^(context|full|card|pin)$/.test(p.view.trim())
+                ? ("context" as const)
+                : undefined
+            : undefined;
         block = {
           t: "passage_ref",
           id: p.id.trim(),
@@ -142,6 +164,7 @@ function parseActionAt(s: string, i: number): Action | null {
           ...(typeof p.unit === "number" && Number.isInteger(p.unit)
             ? { unit: p.unit }
             : {}),
+          ...(view ? { view } : {}),
         };
       }
     } catch {

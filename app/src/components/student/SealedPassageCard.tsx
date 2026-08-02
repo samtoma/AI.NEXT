@@ -103,14 +103,12 @@ function findQuoteRun(
   return null;
 }
 
-/** Unit text with the quote-run wrapped in <mark>; null when it doesn't
- *  match this unit (the caller then tries the next unit). */
-function markedUnit(
+/** Locate the quote-run inside one unit's text: token array (separators
+ *  kept for a faithful re-join) + the matched token range. */
+function matchRun(
   text: string,
-  quote: string,
-  markId: string | undefined,
-  markCls: string
-): ReactNode | null {
+  quote: string
+): { tokens: string[]; from: number; to: number } | null {
   const tokens = text.split(/(\s+)/); // keep separators for faithful re-join
   const wordIdx: number[] = [];
   const words: string[] = [];
@@ -122,16 +120,128 @@ function markedUnit(
   });
   const run = findQuoteRun(words, quote);
   if (!run) return null;
-  const from = wordIdx[run.start];
-  const to = wordIdx[run.end];
+  return { tokens, from: wordIdx[run.start], to: wordIdx[run.end] };
+}
+
+/** Unit text with the quote-run wrapped in <mark>; null when it doesn't
+ *  match this unit (the caller then tries the next unit). */
+function markedUnit(
+  text: string,
+  quote: string,
+  markId: string | undefined,
+  markCls: string
+): ReactNode | null {
+  const run = matchRun(text, quote);
+  if (!run) return null;
   return (
     <>
-      {tokens.slice(0, from).join("")}
+      {run.tokens.slice(0, run.from).join("")}
       <mark id={markId} className={markCls}>
-        {tokens.slice(from, to + 1).join("")}
+        {run.tokens.slice(run.from, run.to + 1).join("")}
       </mark>
-      {tokens.slice(to + 1).join("")}
+      {run.tokens.slice(run.to + 1).join("")}
     </>
+  );
+}
+
+/** The excerpt a span resolves to — ALWAYS the verified store's own bytes
+ *  (the matched sealed tokens / the numbered آية), never the model's text.
+ *  null ⇒ nothing legitimately matches, and the caller must fall back to a
+ *  pointer chip rather than render anything model-carried. */
+export interface PassageExcerpt {
+  text: string;
+  printedN?: string;
+  unitN: number;
+}
+
+export function extractExcerpt(
+  passage: LessonPassage,
+  span: PassageHighlight
+): PassageExcerpt | null {
+  if (span.unit != null) {
+    const u = passage.units.find((x) => unitMatches(x, span.unit!));
+    return u ? { text: u.text_ar, printedN: u.printed_n, unitN: u.n } : null;
+  }
+  if (span.quote && !passage.sacred) {
+    for (const u of passage.units) {
+      const run = matchRun(u.text_ar, span.quote);
+      if (run)
+        return {
+          text: run.tokens.slice(run.from, run.to + 1).join(""),
+          unitN: u.n,
+        };
+    }
+  }
+  return null;
+}
+
+/** Scroll the PINNED full card (rendered in the exchange's `leading` slot by
+ *  LessonSession under `sealed-<id>` / `sealed-<id>-mark`) back into view. */
+export function jumpToPinnedPassage(passageId: string) {
+  const el =
+    document.getElementById(`sealed-${passageId}-mark`) ??
+    document.getElementById(`sealed-${passageId}`);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  const card = document.getElementById(`sealed-${passageId}`);
+  card?.classList.add("ring-2", "ring-gold", "rounded-xl");
+  window.setTimeout(
+    () => card?.classList.remove("ring-2", "ring-gold", "rounded-xl"),
+    2200
+  );
+}
+
+/**
+ * The small INLINE excerpt card ({{show_passage:…,"view":"line"}}): only the
+ * span the tutor is teaching, right inside the exchange — Samuel's call
+ * (2026-08-02): when the situation wants one line, show that one line; when
+ * it wants the whole section, point at the pinned card instead. The text is
+ * the store's bytes (see extractExcerpt); the footer jumps to full context.
+ */
+export function PassageExcerptCard({
+  passage,
+  excerpt,
+}: {
+  passage: LessonPassage;
+  excerpt: PassageExcerpt;
+}) {
+  const sacred = passage.sacred;
+  const body = (
+    <p
+      className={
+        sacred
+          ? "text-[17px] leading-[2.2] text-ink"
+          : "text-[15px] leading-loose text-ink"
+      }
+    >
+      {sacred ? excerpt.text : <>«{excerpt.text}»</>}
+      {excerpt.printedN && (
+        <span className="mx-1.5 text-[13px] text-gold">﴿{excerpt.printedN}﴾</span>
+      )}
+    </p>
+  );
+  return (
+    <article
+      dir="rtl"
+      className={`ledger-card my-1 px-4 py-3 ${
+        sacred ? "border-gold/45 bg-gold-wash/40" : "border-gold/30"
+      }`}
+    >
+      {sacred ? <QuranPassage>{body}</QuranPassage> : body}
+      <div className="mt-1.5 flex items-baseline justify-between gap-3">
+        <span className="text-[10.5px] text-ink-faint">
+          {passage.citation_ref ?? passage.title_ar}
+          {passage.attribution_ar ? ` · ${passage.attribution_ar}` : ""} · من
+          الحافظة الموثقة
+        </span>
+        <button
+          onClick={() => jumpToPinnedPassage(passage.id)}
+          className="shrink-0 text-[10.5px] font-medium text-ink-soft underline decoration-line underline-offset-2 transition-colors hover:text-ink"
+        >
+          شوف السياق كامل ⬆
+        </button>
+      </div>
+    </article>
   );
 }
 
