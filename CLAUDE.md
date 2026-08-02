@@ -33,6 +33,12 @@ Cross-cutting: `security-privacy-officer`, `tech-writer`
 Skills (in `.claude/skills/`): `project-status` (read/update project state), `adr` (record an architecture decision), `write-spec` (feature spec from PRD scope).
 
 ## Conventions
-- Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`.
-- Product code will live in `app/` once scaffolded (not yet created — component selections pending, ADR-0002: graph store, extraction runtime, app layer).
+- Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`. **Documentation map: `docs/README.md`.**
+- Product code: the Next.js app in `app/`, the extraction pipeline in `services/extraction/`, deploy stack in `deploy/` (see ADR-0002/0003/0005).
+- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (v1.0.0), baseline as-built spec set in `specs/000-baseline/`; new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
 - All student- and parent-facing copy is Arabic; internal docs and code are English.
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->
