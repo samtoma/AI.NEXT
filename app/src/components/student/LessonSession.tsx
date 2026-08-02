@@ -44,7 +44,14 @@ import {
 import { makeRecognition, sttSupported, ttsSupported } from "@/lib/voice";
 import { speakRemote, stopSpeaking, unlockAudio } from "@/lib/tts-client";
 import type { LessonPassage } from "@/lib/lesson-content";
-import { SealedPassageCard } from "@/components/student/SealedPassageCard";
+import {
+  SealedPassageCard,
+  PassageExcerptCard,
+  extractExcerpt,
+  jumpToPinnedPassage,
+  type PassageExcerpt,
+  type PassageHighlight,
+} from "@/components/student/SealedPassageCard";
 
 /**
  * The adaptive lesson surface — same engine, two temperaments.
@@ -118,6 +125,71 @@ const AR_MODE_COPY: Record<
 };
 
 const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تانية", "فهمت — كمّل ✓"];
+
+/**
+ * {{show_passage:…}} renders as a REFOCUS CHIP, not a second copy of the text.
+ * The passage cards already open the exchange (the `leading` slot) — field
+ * report 2026-08-02: re-printing the full essay mid-chat buried the
+ * conversation under a duplicate wall of text. Tapping the chip scrolls the
+ * pinned card back into view and flashes it.
+ *
+ * With a span pointer (quote words for prose / آية number for sacred) the chip
+ * also HIGHLIGHTS that span inside the pinned card — Samuel's follow-up call:
+ * pointing at a whole paragraph is useless, the highlighted line is the key.
+ * The highlight is applied on mount (as the directive streams in), so it is
+ * already visible when the student scrolls up.
+ */
+function PassageRefChip({
+  passage,
+  span,
+  onSpan,
+}: {
+  passage: LessonPassage;
+  span?: { quote?: string; unit?: number };
+  onSpan: (id: string, span: PassageHighlight | null) => void;
+}) {
+  const hasSpan = !!(span?.quote || span?.unit != null);
+  useEffect(() => {
+    if (hasSpan) onSpan(passage.id, span ?? null);
+    // apply once per chip appearance — span/id are stable for a parsed block
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <div dir="rtl" className="py-1">
+      <button
+        onClick={() => jumpToPinnedPassage(passage.id)}
+        className="rounded-full border border-gold/50 bg-gold-wash px-3.5 py-1.5 text-[12px] font-medium text-ink-soft shadow-sm transition-all duration-150 hover:-translate-y-px hover:border-gold"
+      >
+        {hasSpan
+          ? span?.unit != null
+            ? `📜 ${passage.kind === "quran" ? "الآية" : "الجزء"} ${arDigits(span.unit)} — معلّم عليها ليك في بطاقة النص فوق ⬆`
+            : "📜 معلّم ليك على الجزء ده في بطاقة النص فوق ⬆"
+          : `📜 بطاقة النص فوق — «${passage.title_ar}» ⬆`}
+      </button>
+    </div>
+  );
+}
+
+/** "view":"line" — the inline excerpt card, which ALSO puts the highlight on
+ *  the pinned full card so «شوف السياق كامل» lands on the marked words. */
+function PassageExcerptInline({
+  passage,
+  excerpt,
+  span,
+  onSpan,
+}: {
+  passage: LessonPassage;
+  excerpt: PassageExcerpt;
+  span: PassageHighlight;
+  onSpan: (id: string, span: PassageHighlight | null) => void;
+}) {
+  useEffect(() => {
+    onSpan(passage.id, span);
+    // apply once per card appearance — span/id are stable for a parsed block
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return <PassageExcerptCard passage={passage} excerpt={excerpt} />;
+}
 
 /* ---------------- session persistence (sessionStorage) ---------------- */
 
@@ -311,6 +383,31 @@ export function LessonSession({
 
   const lookupPassage = useCallback(
     (id: string) => passageById.current.get(id),
+    []
+  );
+
+  // The span the tutor is currently pointing at, per pinned passage — set by
+  // the latest {{show_passage:{…,"quote"/"unit"}}} chip, rendered as a <mark>
+  // inside the pinned card (a NEW pointer replaces the previous one: one
+  // "current focus" per passage, like a finger moving along the page).
+  const [passageSpans, setPassageSpans] = useState<
+    Record<string, PassageHighlight>
+  >({});
+  const onPassageSpan = useCallback(
+    (id: string, span: PassageHighlight | null) => {
+      setPassageSpans((prev) => {
+        if (span == null) {
+          if (!(id in prev)) return prev;
+          const rest = { ...prev };
+          delete rest[id];
+          return rest;
+        }
+        const cur = prev[id];
+        if (cur && cur.quote === span.quote && cur.unit === span.unit)
+          return prev;
+        return { ...prev, [id]: span };
+      });
+    },
     []
   );
 
@@ -1114,23 +1211,54 @@ export function LessonSession({
               resolveCite={resolveCite}
               onCite={onCite}
               renderWidget={renderWidget}
-              renderPassage={(id) => {
+              renderPassage={(id, span) => {
                 const p = lookupPassage(id);
-                return p ? (
-                  <SealedPassageCard passage={p} compact />
-                ) : (
-                  // an unresolvable id must fail VISIBLY, not vanish — the
-                  // tutor believes it just showed the student a text
-                  <p dir="rtl" className="py-2 text-center text-[12px] text-rust">
-                    النص ده مش متاح في بيانات الدرس
-                  </p>
+                if (!p)
+                  return (
+                    // an unresolvable id must fail VISIBLY, not vanish — the
+                    // tutor believes it just showed the student a text
+                    <p
+                      dir="rtl"
+                      className="py-2 text-center text-[12px] text-rust"
+                    >
+                      النص ده مش متاح في بيانات الدرس
+                    </p>
+                  );
+                // "line" (default when a span is given): inline excerpt card
+                // with ONLY the marked words — store bytes; no match ⇒ chip.
+                const hasSpan = !!(span?.quote || span?.unit != null);
+                if (hasSpan && span?.view !== "context") {
+                  const ex = extractExcerpt(p, span!);
+                  if (ex)
+                    return (
+                      <PassageExcerptInline
+                        passage={p}
+                        excerpt={ex}
+                        span={span!}
+                        onSpan={onPassageSpan}
+                      />
+                    );
+                }
+                return (
+                  <PassageRefChip
+                    passage={p}
+                    span={span}
+                    onSpan={onPassageSpan}
+                  />
                 );
               }}
               leading={
                 passages.length > 0 ? (
                   <div dir="rtl" className="space-y-2">
                     {passages.map((p) => (
-                      <SealedPassageCard key={p.id} passage={p} compact />
+                      <div key={p.id} id={`sealed-${p.id}`}>
+                        <SealedPassageCard
+                          passage={p}
+                          compact
+                          highlight={passageSpans[p.id]}
+                          markId={`sealed-${p.id}-mark`}
+                        />
+                      </div>
                     ))}
                     <p className="pb-1 text-center text-[10.5px] text-ink-faint">
                       النص من الحافظة الموثقة · هنذاكر عليه مع بعض ⬇

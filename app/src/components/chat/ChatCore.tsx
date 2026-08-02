@@ -79,8 +79,12 @@ export interface ChatCoreProps {
     emitNote: (note: string) => void
   ) => React.ReactNode;
   /** render a {{show_passage:…}} directive: the surface resolves the SEALED
-   *  passage bytes by id (ADR-0006 — the model only ever carries the id) */
-  renderPassage?: (id: string) => React.ReactNode;
+   *  passage bytes by id (ADR-0006 — the model only ever carries the id, plus
+   *  an optional span pointer: quote words for prose, unit number for sacred) */
+  renderPassage?: (
+    id: string,
+    span?: { quote?: string; unit?: number; view?: "line" | "context" }
+  ) => React.ReactNode;
   /** rendered INSIDE the scroll flow, above the first message — the lesson
    *  surfaces pin the sealed passage(s) here so the exchange opens on the
    *  text itself (Samuel: everything drawn inside the same exchange) */
@@ -993,7 +997,13 @@ const MessageRow = memo(function MessageRow({
               );
             }
             return renderPassage ? (
-              <div key={i}>{renderPassage(b.id)}</div>
+              <div key={i}>
+                {renderPassage(b.id, {
+                  quote: b.quote,
+                  unit: b.unit,
+                  view: b.view,
+                })}
+              </div>
             ) : null;
           }
           return (

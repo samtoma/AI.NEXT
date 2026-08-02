@@ -542,9 +542,14 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
 - {{widget:style_purpose:{"prompt":"حدد الأسلوب وغرضه","text":"…من بيانات الدرس…","span":"اصْرِفْ عَنَّا","styles":["أمر","نداء","استفهام"],"purposes":["الدعاء","التنبيه"],"answer":{"style":"أمر","purpose":"الدعاء"}}}} — «أسلوب … وغرضه …»; the answer pair comes VERBATIM from مواطن الجمال in the LESSON DATA.
 - {{widget:irab_builder:{"prompt":"أعرب الكلمة","sentence":"يا طالبَ العلمِ اجتهدْ","target":"طالبَ","roles":["منادى مضاف","مضاف إليه","فاعل"],"marks":["الفتحة","الكسرة","الياء"],"answer":{"word_ar":"طالبَ","role_ar":"منادى مضاف","state":"منصوب","sign":"الفتحة","sign_kind":"ظاهرة"},"rule_ref":{"page":${exPage},"quote":"…سطر القاعدة المطبوع حرفيًا…"}}}} — slot-built إعراب. ⚠ GROUNDING GATE: "rule_ref.quote" MUST be a rule line printed in the LESSON DATA (with its page) — an إعراب the book cannot license is not askable. Sentence and answer come from the question bank or the printed examples, never invented.
 - {{widget:term_match:{"prompt":"وصّل الكلمة بمعناها","pairs":[{"term":"هَوْنًا","definition":"بسكينة ووقار"}],"decoyDefs":["تعريف قريب للتشتيت"]}}} — معاني المفردات matching, 2–4 pairs VERBATIM from the LESSON DATA.
-- {{show_passage:t:ara1-1:001}} — re-shows a SEALED text passage card inline in the exchange (ids from the SEALED TEXT PASSAGES block). The passages already open the exchange as its first cards — use this when you move the lesson back to the text («خلينا نرجع للآيات»), then reference آيات by number.
+- {{show_passage:{"id":"t:ara1-1:001","quote":"…كلمات متتالية منسوخة حرفيًا من النص…","view":"line"}}} — points at the text. NEVER point at a whole paragraph: give the 3–12 consecutive words you are about to discuss (النثر والشعر فقط: quote is copied verbatim from a NON-sacred passage؛ التشكيل مش لازم — المطابقة تتجاهله). For a SACRED passage (قرآن/حديث) the quote field is FORBIDDEN — you never type its words — use {"id":"t:ara1-1:002","unit":3,"view":"line"} to point at آية ٣ by NUMBER. "view" picks the presentation — choose it by what THIS beat needs:
+  · "view":"line" (the default): a small card appears inline in the exchange carrying ONLY the marked span (rendered by the app from the verified store — your quote is only a locator, it is never shown as your words). Use when the line itself is the subject: close reading, معنى كلمة، جمال تعبير، إعراب جملة.
+  · "view":"context": no inline card — the span is highlighted up in the PINNED full passage card and a small chip points there. Use when the surroundings matter: موقع الجملة في الفقرة، ترتيب الأفكار، ربط أول النص بآخره.
+  Bare {{show_passage:t:ara1-1:001}} (no span) just scrolls back to the full card — use it only for a general «ارجع للنص». All forms are POINTERS: none counts as this message's interactive directive, and a pointer alone is never an ask — talk about the marked words in the SAME message and still END it with a real ask. Never point in two consecutive messages.
 - {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
 ⚠ SACRED TEXT (hard rule, no exceptions): الآيات والأحاديث معروضة للطالب في بطاقة النص أول المحادثة من الحافظة الموثقة — you never type, quote, complete or embed Quran/Hadith text in prose or in ANY widget payload. Reference it by آية number + {{show_passage:…}} («تأمل الآية ٦٣ في بطاقة النص فوق»). Vocabulary words (single words like هَوْنًا) from the glossary are allowed in term_match. أي رد يتضمن ٣ كلمات متتالية فأكثر من النص المختوم يُلغى آليًا قبل وصوله للطالب.
+⚠ NEVER END A MESSAGE WITHOUT AN ASK: your last beat is always something the student ACTS on — a question in chat, a choice, or an interactive directive (widget / show_question). Ending on a statement, a summary, or a show_passage chip strands him with nothing to do; if you pointed at the text, the question about that exact spot goes in the SAME message.
+This is an ARABIC lesson: the text IS the figure — anchor every beat to ONE specific آية/بيت/جملة by number, ask about one span at a time (معناها، جمالها، إعرابها), and vary the asks across chat questions, extract_spans, style_purpose, irab_builder and term_match instead of repeating open «ما رأيك» questions.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
 ${CROSS_SUBJECT_RULE}
@@ -852,9 +857,12 @@ function sealedPassagesBlock(
   withText: boolean
 ): string {
   const rows = passages.map((p) => {
+    const pointerEg = p.sacred
+      ? `ظلِّل آية بـ {{show_passage:{"id":"${p.id}","unit":N}}}`
+      : `ظلِّل مقطعًا بـ {{show_passage:{"id":"${p.id}","quote":"…كلماته حرفيًا…"}}}`;
     const head = `- ${p.id} «${p.title_ar}» (${p.kind}${
       p.citation_ref ? `، ${p.citation_ref}` : ""
-    }، ${p.units.length} ${p.kind === "quran" ? "آيات" : "وحدات"}) — أعد تركيزها بـ {{show_passage:${p.id}}}`;
+    }، ${p.units.length} ${p.kind === "quran" ? "آيات" : "وحدات"}) — ${pointerEg}`;
     if (!withText) return head;
     const body = p.units
       .map((u) => `  ${u.printed_n ? `﴿${u.printed_n}﴾ ` : `(${u.n}) `}${u.text_ar}`)
@@ -865,7 +873,7 @@ function sealedPassagesBlock(
 
 SEALED TEXT PASSAGES — معروضة للطالب في أول المحادثة، من الحافظة الموثقة (هي "بطاقة النص"):
 ${rows.join("\n")}
-${withText ? "⚠ النص أعلاه للاطّلاع فقط كي تناقشه بدقة — يُمنَع منعًا باتًا نسخ أي مقطع منه (٣ كلمات متتالية فأكثر) إلى ردودك. أشِر إليه بأرقام الآيات/الأبيات و{{show_passage:…}}؛ أي تجاوز يُلغي الرد آليًا." : "أشِر إليها بالأرقام و{{show_passage:…}} — لا تكتب نصوصها أبدًا."}`;
+${withText ? '⚠ النص أعلاه للاطّلاع فقط كي تناقشه بدقة — يُمنَع منعًا باتًا نسخ أي مقطع منه (٣ كلمات متتالية فأكثر) إلى ردودك. الاستثناء الوحيد: حقل "quote" داخل {{show_passage:…}} لنصٍّ غير مقدس — انسخ فيه المقطع حرفيًا فيتظلَّل للطالب داخل البطاقة (لا يظهر ككلامك). النص المقدس لا استثناء له إطلاقًا: أشِر إليه برقم الآية ("unit") فقط؛ أي تجاوز يُلغي الرد آليًا.' : "أشِر إليها بالأرقام و{{show_passage:…}} — لا تكتب نصوصها أبدًا."}`;
 }
 
 function teachingScriptBlock(c: LessonContent): string {
