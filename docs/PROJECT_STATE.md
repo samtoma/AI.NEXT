@@ -1,7 +1,27 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-07-29
+> Last updated: 2026-08-02
+
+## 📚 SPEC KIT ADOPTED — constitution + full A→Z baseline docs (2026-08-02, `wip/hardening-4`)
+GitHub Spec Kit (`specify` CLI, offline scaffold) is now the requirements framework.
+**Constitution v1.0.0** ratified at `.specify/memory/constitution.md` — ten principles codified
+from CLAUDE.md/PRD/ADR-0001..0006 (authority, grounding, review gate, sacred containment,
+Arabic/low-end first, cost, minors' data, non-goals, registry discipline, operational safety).
+**Baseline as-built spec set** in `specs/000-baseline/`: spec.md (6 user stories, FR-001..062,
+entities, success criteria), plan.md (architecture by ADR, flows, topology), data-model.md
+(full schema + pydantic contracts + content shapes), contracts/ (api.md, chat-protocol.md),
+quickstart.md. **Documentation map** at `docs/README.md` (the A→Z index). CLAUDE.md conventions
+updated (stale "app/ not yet created" line fixed; Spec Kit flow documented). New features now
+flow `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
+
+## 🎯 DEPLOYED (2026-08-02, PR #4 → main `d6db088`) — pointed teaching in Arabic lessons
+Three field-report fixes live: (1) show_passage no longer re-prints the passage and every tutor
+message must end on an ask (no more dead-ends); (2) span highlighting — quote (loose-matched)
+for prose, آية number for sacred — marks the exact words in the pinned card; (3) context-
+dependent views: "line" = inline excerpt card carrying ONLY the marked span (store bytes,
+never model text), "context" = pinned-card highlight + chip. Capture harness: 0 non-Arabic
+prompt diffs. Branches cleaned; fresh branch `wip/hardening-4`.
 
 ## 🚢 MERGED TO MAIN (2026-07-30) — one-exchange lesson UI + release review
 السبورة is merged INTO the exchange (Samuel's call): sealed passage cards open the chat, figures/
