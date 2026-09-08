@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { pool } from "./db";
+import { retrieve, retrievalBlock } from "./retrieval";
 import { DEFAULT_STUDENT_ID } from "./demo-student";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
@@ -934,10 +935,25 @@ export async function buildLessonContext(
   const passagesBlock = content?.passages?.length
     ? sealedPassagesBlock(content.passages, mode === "learn")
     : "";
+  // The retrieval layer (FR-303): the student-model half of grounding, composed
+  // in ONE place instead of assembled per surface. It renders to "" when there
+  // is nothing retrieved, so a student with no profile and no library entries
+  // produces a byte-identical prompt to the pre-retrieval build — any diff the
+  // capture harness reports is then real retrieved content, not scaffolding.
+  const retrieved = await retrieve(
+    studentId,
+    data.los.map((l) => l.id)
+  );
+
   return {
     systemPrompt: mode === "learn" ? learnPrompt(data) : reviewPrompt(data),
     dataBlock:
-      lessonDataBlock(data) + gazetteer + bridges + passagesBlock + teaching,
+      lessonDataBlock(data) +
+      gazetteer +
+      bridges +
+      passagesBlock +
+      teaching +
+      retrievalBlock(retrieved),
     grounding: {
       lo_ids: data.los.map((l) => l.id),
       question_ids: data.questions.map((q) => q.id),

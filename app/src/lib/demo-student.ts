@@ -28,6 +28,8 @@ export interface DemoStudent {
   id: number;
   displayName: string;
   grade: string;
+  /** PRD A3 signal — may be empty; an empty profile is a colder start, not a bug */
+  interests: string[];
   /** live counters, so the switcher can say WHY you'd pick this student */
   attempts: number;
   masteryRows: number;

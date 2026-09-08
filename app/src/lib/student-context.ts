@@ -32,7 +32,7 @@ export async function listDemoStudents(): Promise<DemoStudent[]> {
     // (Dividing by the student's own mastery rows would flatter a student who
     // has only ever touched three topics — and would disagree with /spine.)
     const res = await pool.query(
-      `SELECT s.id, s.display_name, s.grade,
+      `SELECT s.id, s.display_name, s.grade, s.interests,
               (SELECT count(*) FROM attempts a WHERE a.student_id = s.id)     AS attempts,
               (SELECT count(*) FROM mastery m
                 WHERE m.student_id = s.id AND m.system_to IS NULL)            AS mastery_rows,
@@ -47,6 +47,7 @@ export async function listDemoStudents(): Promise<DemoStudent[]> {
       id: Number(r.id),
       displayName: r.display_name as string,
       grade: r.grade as string,
+      interests: (r.interests as string[] | null) ?? [],
       attempts: Number(r.attempts),
       masteryRows: Number(r.mastery_rows),
       avgMastery: Number(r.avg_mastery),
@@ -96,4 +97,50 @@ export async function resolveStudentContext(): Promise<{
       students.find((s) => s.id === studentId)?.displayName ?? "Demo student",
     students,
   };
+}
+
+/**
+ * The full profile the retrieval layer needs (FR-302). Separate from
+ * `listDemoStudents` because that one runs three correlated subqueries per row
+ * to power the picker's counters, and a tutor turn needs none of them.
+ *
+ * Returns null rather than throwing: a tutor turn must degrade to a colder,
+ * un-personalised lesson rather than fail, and FR-203 already requires the
+ * tutor to skip interest-anchored framing when it has no signal.
+ */
+export type StudentProfile = {
+  id: number;
+  displayName: string;
+  grade: string;
+  interests: string[];
+  interestDetail: Record<string, unknown> | null;
+  languagePref: string;
+  curriculumSystem: string;
+};
+
+export async function getStudentProfile(
+  studentId: number
+): Promise<StudentProfile | null> {
+  try {
+    const res = await pool.query(
+      `SELECT id, display_name, grade, interests, interest_detail,
+              language_pref, curriculum_system
+         FROM students WHERE id = $1`,
+      [studentId]
+    );
+    if (res.rowCount === 0) return null;
+    const r = res.rows[0];
+    return {
+      id: Number(r.id),
+      displayName: r.display_name as string,
+      grade: r.grade as string,
+      interests: (r.interests as string[] | null) ?? [],
+      interestDetail: (r.interest_detail as Record<string, unknown> | null) ?? null,
+      languagePref: (r.language_pref as string) ?? "en",
+      curriculumSystem: (r.curriculum_system as string) ?? "eg-national-en",
+    };
+  } catch (err) {
+    console.error("getStudentProfile failed:", err);
+    return null;
+  }
 }

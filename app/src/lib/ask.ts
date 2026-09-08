@@ -1,4 +1,5 @@
 import { pool } from "./db";
+import { retrieve, retrievalBlock } from "./retrieval";
 import { getAllVisuals } from "./visuals";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
@@ -312,9 +313,14 @@ ${focusBlock}`;
     ...(wrongAnswer ? { wrong_answer: wrongAnswer } : {}),
   };
 
+  // Retrieval layer (FR-303) — the student-model half of grounding. Renders to
+  // "" when nothing is retrieved, so prompts stay byte-identical for a student
+  // with no profile and no library entries.
+  const retrieved = await retrieve(studentId, grounding.lo_ids);
+
   return {
     systemPrompt: systemPromptFor(surface, student, subject),
-    dataBlock,
+    dataBlock: dataBlock + retrievalBlock(retrieved),
     grounding,
   };
 }

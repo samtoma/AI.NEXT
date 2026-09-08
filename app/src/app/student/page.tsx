@@ -98,10 +98,10 @@ export default async function StudentPage({
           {/* PoC (Samuel, 2026-07-30): a VISIBLE "who's studying?" dropdown
               on the home — pick a profile or create a new demo student.
               The hidden triple-tap variants stay on the other surfaces. */}
-          <div
-            dir="rtl"
-            className="mx-auto flex max-w-5xl items-center justify-end px-6 pt-5"
-          >
+          {/* English LTR shell (constitution v2.0.0 Principle V): the picker sits
+              at the inline END. Direction is NOT forced at page level — <html> has
+              no dir attribute — so the Arabic verticals stay reintroducible. */}
+          <div className="mx-auto flex max-w-5xl items-center justify-end px-6 pt-5">
             <DemoStudentSwitcher
               students={students}
               currentId={studentId}

@@ -75,6 +75,7 @@ export async function emit({
 
 /** Event names a client is allowed to send through /api/analytics. */
 const CLIENT_EMITTABLE: ReadonlySet<string> = new Set<AnalyticsEvent>([
+  "student_selected",
   "lesson_step_viewed",
   "dashboard_viewed",
   "parent_view_opened",

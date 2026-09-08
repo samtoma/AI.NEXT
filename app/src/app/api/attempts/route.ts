@@ -3,6 +3,7 @@ import { pool } from "@/lib/db";
 import { resolveStudentId } from "@/lib/student-context";
 import { bktUpdate, DEFAULT_PARAMS, type BktParams } from "@/lib/bkt";
 import { emit } from "@/lib/analytics";
+import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 
 function grade(
@@ -58,11 +59,25 @@ export async function POST(req: Request) {
     const isCorrect = grade(q.question_type, q.correct_answer, givenAnswer);
 
     // 1. record the attempt
+    // `diagnosis_type` records HOW the outcome was determined. `confidence` is
+    // deliberately left NULL: grading is deterministic, but no misconception
+    // classifier exists yet, and FR-307 requires that uncertainty be recorded
+    // honestly rather than dressed up as a number we did not compute.
     const attemptRes = await client.query(
-      `INSERT INTO attempts (student_id, question_id, given_answer, is_correct, time_ms, attempted_at)
-       VALUES ($1, $2, $3, $4, $5, now())
+      `INSERT INTO attempts
+         (student_id, question_id, given_answer, is_correct, time_ms, attempted_at,
+          diagnosis_type, stance_used, confidence)
+       VALUES ($1, $2, $3, $4, $5, now(), $6, $7, NULL)
        RETURNING id`,
-      [studentId, questionId, givenAnswer, isCorrect, Math.round(timeMs ?? 0)]
+      [
+        studentId,
+        questionId,
+        givenAnswer,
+        isCorrect,
+        Math.round(timeMs ?? 0),
+        isCorrect ? "correct" : "deterministic_grade_incorrect",
+        isCorrect ? "confirm" : "re_explain",
+      ]
     );
     const attemptId = attemptRes.rows[0].id;
 
@@ -145,6 +160,35 @@ export async function POST(req: Request) {
 
     // Fire-and-forget, and deliberately AFTER commit: an analytics failure must
     // never roll back a student's graded attempt.
+    // A wrong answer is where the PRD's teaching bet lives: serve an authored
+    // refutation, or say plainly that none exists and fall back to the canonical
+    // solution (FR-305, PRD §8). What we must never do is improvise one and
+    // present it as settled — so the absence is logged, not papered over.
+    if (!isCorrect) {
+      const entries = await getLibraryEntries([q.lo_id], {
+        entryTypes: ["refutation", "contrasting_case"],
+      });
+      if (entries.length === 0) {
+        void flagAuthoringGap(studentId, null);
+      } else {
+        const chosen = entries[0];
+        void emit({
+          event: "explanation_delivered",
+          studentId,
+          properties: {
+            lo_id: chosen.loId,
+            entry_id: chosen.id,
+            entry_type: chosen.entryType,
+            misconception_id: chosen.misconceptionId,
+            // travels all the way to analytics so we can always answer "how much
+            // UNREVIEWED teaching did students actually see" (SC-011), not just
+            // how much exists in the table.
+            reviewed: chosen.reviewed,
+          },
+        });
+      }
+    }
+
     void emit({
       event: "retrieval_attempt_submitted",
       studentId,

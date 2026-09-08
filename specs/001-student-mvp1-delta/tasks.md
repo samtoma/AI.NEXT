@@ -81,13 +81,13 @@ lesson shaped by what they entered.
 **Independent Test**: from a clean browser, create a student and reach the first streamed tutor
 message in under a minute.
 
-- [ ] T021 [US1] Extend `app/src/lib/student-context.ts` to resolve and expose the new profile fields (interests, interest detail, language preference, curriculum system) alongside the existing server-side validation
-- [ ] T022 [US1] Extend the create-student flow in `app/src/app/api/demo-students/` to capture grade (7-12, required) and interests (five PRD categories + free-text Other, skippable) — FR-103, FR-104
-- [ ] T023 [US1] Add the Sports/Music optional follow-up detail capture, stored as `interest_detail` JSON, so FR-203 has a real signal and is never tempted to invent one
-- [ ] T024 [US1] Update the student picker UI in `app/src/components/student/` — visible dropdown plus "create new user", never a login form, English copy
-- [ ] T025 [US1] Flip the app shell to English LTR via the existing `app/src/lib/subjects.ts` direction seam; assert no page-level direction is hard-coded and the Arabic/Social contracts remain loadable (Principle V, FR-208)
-- [ ] T026 [US1] Persist and restore the last selected student and lesson position across visits (FR-105)
-- [ ] T027 [P] [US1] Emit `student_created`, `student_selected`, `session_started`, `session_ended` through `lib/analytics.ts`
+- [X] T021 [US1] Extend `app/src/lib/student-context.ts` to resolve and expose the new profile fields (interests, interest detail, language preference, curriculum system) alongside the existing server-side validation
+- [X] T022 [US1] Extend the create-student flow in `app/src/app/api/demo-students/` to capture grade (7-12, required) and interests (five PRD categories + free-text Other, skippable) — FR-103, FR-104
+- [X] T023 [US1] Add the Sports/Music optional follow-up detail capture, stored as `interest_detail` JSON, so FR-203 has a real signal and is never tempted to invent one
+- [X] T024 [US1] Update the student picker UI in `app/src/components/student/` — visible dropdown plus "create new user", never a login form, English copy
+- [X] T025 [US1] Flip the app shell to English LTR via the existing `app/src/lib/subjects.ts` direction seam; assert no page-level direction is hard-coded and the Arabic/Social contracts remain loadable (Principle V, FR-208)
+- [X] T026 [US1] Persist and restore the last selected student and lesson position across visits (FR-105)
+- [X] T027 [P] [US1] Emit `student_created`, `student_selected`, `session_started`, `session_ended` through `lib/analytics.ts`
 
 **Checkpoint**: US1 independently demonstrable on the new environment.
 
@@ -104,13 +104,13 @@ is a stored entry, mastery is a probability that moves with evidence, and the ne
 - [X] T029 [US2] Write `app/src/lib/bkt.test.mts` covering all six contract invariants, including **invariant 3**: 20 correct then 1 incorrect must fall strictly below the run's peak — an unclamped BKT saturates and becomes unrevisable, which would make the new model worse than the Elo one it replaces in exactly the dimension being measured
 - [X] T030 [US2] Replace the inline Elo update in `app/src/app/api/attempts/route.ts` with `bktUpdate`, keeping the existing transaction, `FOR UPDATE` row lock and bitemporal row-closing untouched
 - [X] T031 [US2] Persist the `evidence` JSON (attempt id, question id, observation, prior, posterior, after-transit, misconception id, confidence) on each new mastery row — FR-301's inspectable trail
-- [ ] T032 [US2] Record `diagnosis_type`, `misconception_id`, `stance_used` and `confidence` on the attempt row, leaving `confidence` nullable so low certainty is recorded honestly rather than coerced (FR-307)
-- [ ] T033 [US2] Create `app/src/lib/retrieval.ts` — the single grounding composition seam returning mastery on nearest skills, profile attributes, candidate misconception and its library entry, and the graph slice (FR-303)
-- [ ] T034 [US2] Refactor `app/src/lib/ask.ts` and `app/src/lib/lesson.ts` to compose grounding **only** through `retrieval.ts`, removing the per-surface assembly
-- [ ] T035 [US2] Create `app/src/lib/explanations.ts` — library lookup by `(lo_id, misconception_id, entry_type)`, returning stored entries only; never generates at request time
-- [ ] T036 [US2] Implement the authoring-gap path: no library entry for a detected misconception ⇒ serve the standard correct explanation and raise a `misconception_gap` flag (FR-305, PRD §8)
-- [ ] T037 [US2] Run `app/scripts/capture-prompts.mts` after the retrieval refactor and review every diff deliberately — this environment's prompts are *expected* to change; the harness is here to prove nothing changed that we did not intend (Principle IX)
-- [ ] T038 [P] [US2] Emit `explanation_delivered` (with `lo_id`, `entry_type`, `misconception_id`, `reviewed`) and `retrieval_attempt_started` / `retrieval_attempt_submitted`
+- [X] T032 [US2] Record `diagnosis_type`, `misconception_id`, `stance_used` and `confidence` on the attempt row, leaving `confidence` nullable so low certainty is recorded honestly rather than coerced (FR-307)
+- [X] T033 [US2] Create `app/src/lib/retrieval.ts` — the single grounding composition seam returning mastery on nearest skills, profile attributes, candidate misconception and its library entry, and the graph slice (FR-303)
+- [X] T034 [US2] Refactor `app/src/lib/ask.ts` and `app/src/lib/lesson.ts` to compose grounding **only** through `retrieval.ts`, removing the per-surface assembly
+- [X] T035 [US2] Create `app/src/lib/explanations.ts` — library lookup by `(lo_id, misconception_id, entry_type)`, returning stored entries only; never generates at request time
+- [X] T036 [US2] Implement the authoring-gap path: no library entry for a detected misconception ⇒ serve the standard correct explanation and raise a `misconception_gap` flag (FR-305, PRD §8)
+- [ ] T037 [US2] Run `app/scripts/capture-prompts.mts` after the retrieval refactor and review every diff deliberately — this environment's prompts are *expected* to change; the harness is here to prove nothing changed that we did not intend (Principle IX) **[BLOCKED — needs a live Postgres]** the harness renders every surface against a database; verified instead by inspecting the diff, which touches only ledger inserts and appends a retrieval block that renders to "" when nothing is retrieved.
+- [X] T038 [P] [US2] Emit `explanation_delivered` (with `lo_id`, `entry_type`, `misconception_id`, `reviewed`) and `retrieval_attempt_started` / `retrieval_attempt_submitted`
 
 **Checkpoint**: the variable under test is live. The comparison can begin producing signal.
 

@@ -14,6 +14,13 @@ import {
   DEMO_STUDENT_COOKIE_MAX_AGE,
   type DemoStudent,
 } from "@/lib/demo-student";
+import {
+  INTEREST_CATEGORIES,
+  DETAIL_CATEGORIES,
+  GRADES,
+  gradeLabel,
+  type InterestId,
+} from "@/lib/profile";
 import { useTripleTap } from "@/lib/use-triple-tap";
 
 /**
@@ -50,6 +57,9 @@ export function DemoStudentSwitcher({
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [newName, setNewName] = useState("");
+  const [newGrade, setNewGrade] = useState<string>("9");
+  const [newInterests, setNewInterests] = useState<InterestId[]>([]);
+  const [detailWhich, setDetailWhich] = useState<Record<string, string>>({});
   const [creating, setCreating] = useState(false);
   const wrapRef = useRef<HTMLSpanElement>(null);
   // The panel is position:FIXED, anchored to the trigger's measured rect.
@@ -88,10 +98,20 @@ export function DemoStudentSwitcher({
 
   const choose = useCallback(
     (id: number) => {
-      // Deliberately client-writable: this is a demo switch, not a session.
+      // Deliberately client-writable: this is a picker, not a session.
+      // The 30-day max-age is what satisfies "remembered across visits"
+      // (FR-105) — no login to re-enter, the last pick simply persists.
       document.cookie =
         `${DEMO_STUDENT_COOKIE}=${id}; path=/; ` +
         `max-age=${DEMO_STUDENT_COOKIE_MAX_AGE}; samesite=lax`;
+      // Fire-and-forget: the cookie is already written, so a failed event must
+      // not stop the student getting into their lesson.
+      void fetch("/api/analytics", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ event: "student_selected" }),
+        keepalive: true,
+      }).catch(() => {});
       setOpen(false);
       router.refresh(); // re-render the server components with the new student
     },
@@ -107,7 +127,6 @@ export function DemoStudentSwitcher({
         // founders' gesture) — "who's studying today?"
         <button
           onClick={toggle}
-          dir="rtl"
           aria-haspopup="listbox"
           aria-expanded={open}
           className="flex items-center gap-2 rounded-full border border-line bg-card px-3.5 py-1.5 text-[13px] font-medium text-ink shadow-sm transition-all duration-150 hover:-translate-y-px hover:border-accent/50"
@@ -161,7 +180,7 @@ export function DemoStudentSwitcher({
               children || visible ? "" : "bottom-12 right-3"
             }`}
           >
-            <p className="rule-label mb-2">Demo student · not auth</p>
+            <p className="rule-label mb-2">Who is studying? · picker, not a login</p>
             <ul className="space-y-1">
               {students.map((s) => {
                 const active = s.id === currentId;
@@ -192,6 +211,8 @@ export function DemoStudentSwitcher({
                           active ? "text-paper/70" : "text-ink-faint"
                         }`}
                       >
+                        {gradeLabel(s.grade)}
+                        {" · "}
                         {s.attempts === 0 && s.masteryRows === 0
                           ? "cold start · 0 attempts · no mastery yet"
                           : `${s.attempts} attempts · avg ${Math.round(
@@ -204,53 +225,143 @@ export function DemoStudentSwitcher({
               })}
               {students.length === 0 && (
                 <li className="px-2.5 py-2 font-mono text-[11px] text-ink-faint">
-                  no students seeded
+                  no students yet — create one below
                 </li>
               )}
             </ul>
 
-            {/* PoC: create a fresh demo student in place (POST /api/demo-students) */}
+            {/*
+              Create a student: name + grade are required (FR-103), interests are
+              optional and must never block (FR-104). Deliberately one short
+              form, per Samuel's "as easy as possible" (decisions.md Q5) — no
+              password, no verification, no multi-step wizard.
+            */}
             <form
-              dir="rtl"
-              className="mt-2 flex items-center gap-1.5 border-t border-line-soft px-1 pt-2.5"
+              className="mt-2 space-y-2 border-t border-line-soft px-1 pt-2.5"
               onSubmit={async (e) => {
                 e.preventDefault();
                 const name = newName.trim();
                 if (name.length < 2 || creating) return;
                 setCreating(true);
                 try {
+                  // Only send detail for categories that were actually picked —
+                  // the server drops the rest anyway, and an analogy anchored to
+                  // an unselected interest would be exactly the invention FR-203
+                  // forbids.
+                  const interestDetail: Record<string, { which: string[] }> = {};
+                  for (const cat of DETAIL_CATEGORIES) {
+                    const raw = (detailWhich[cat] ?? "").trim();
+                    if (newInterests.includes(cat) && raw) {
+                      interestDetail[cat] = {
+                        which: raw.split(",").map((w) => w.trim()).filter(Boolean),
+                      };
+                    }
+                  }
                   const res = await fetch("/api/demo-students", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name }),
+                    body: JSON.stringify({
+                      name,
+                      grade: newGrade,
+                      interests: newInterests,
+                      interestDetail,
+                    }),
                   });
                   if (res.ok) {
                     const j = (await res.json()) as { id: number };
                     setNewName("");
-                    choose(j.id); // switch to the newborn + refresh the roster
+                    setNewInterests([]);
+                    setDetailWhich({});
+                    choose(j.id); // switch to the new student + refresh the roster
                   }
                 } finally {
                   setCreating(false);
                 }
               }}
             >
-              <input
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-                placeholder="طالب جديد — الاسم"
-                maxLength={40}
-                className="min-w-0 flex-1 rounded-lg border border-line bg-paper px-2.5 py-1.5 text-[13px] text-ink outline-none focus:border-accent/60"
-              />
+              <p className="rule-label">Create new user</p>
+
+              <div className="flex items-center gap-1.5">
+                <input
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  placeholder="Name"
+                  maxLength={40}
+                  aria-label="Student name"
+                  className="min-w-0 flex-1 rounded-lg border border-line bg-paper px-2.5 py-1.5 text-[13px] text-ink outline-none focus:border-accent/60"
+                />
+                <select
+                  value={newGrade}
+                  onChange={(e) => setNewGrade(e.target.value)}
+                  aria-label="Grade"
+                  className="rounded-lg border border-line bg-paper px-2 py-1.5 text-[13px] text-ink outline-none focus:border-accent/60"
+                >
+                  {GRADES.map((g) => (
+                    <option key={g} value={g}>
+                      Grade {g}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-wrap gap-1">
+                {INTEREST_CATEGORIES.map((c) => {
+                  const on = newInterests.includes(c.id);
+                  return (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() =>
+                        setNewInterests((prev) =>
+                          prev.includes(c.id)
+                            ? prev.filter((x) => x !== c.id)
+                            : [...prev, c.id]
+                        )
+                      }
+                      aria-pressed={on}
+                      className={`rounded-full border px-2 py-0.5 text-[11px] transition-colors ${
+                        on
+                          ? "border-accent/50 bg-accent-wash text-accent-deep"
+                          : "border-line text-ink-faint hover:text-ink"
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* PRD A3: one follow-up for Sports and Music only — a category
+                  label alone is not something an analogy can be anchored to. */}
+              {DETAIL_CATEGORIES.filter((c) => newInterests.includes(c)).map((c) => (
+                <input
+                  key={c}
+                  value={detailWhich[c] ?? ""}
+                  onChange={(e) =>
+                    setDetailWhich((prev) => ({ ...prev, [c]: e.target.value }))
+                  }
+                  placeholder={
+                    c === "sports" ? "Which sport(s)?" : "Which instrument / kind?"
+                  }
+                  maxLength={60}
+                  aria-label={`${c} detail`}
+                  className="w-full rounded-lg border border-line bg-paper px-2.5 py-1.5 text-[12px] text-ink outline-none focus:border-accent/60"
+                />
+              ))}
+
               <button
                 type="submit"
                 disabled={creating || newName.trim().length < 2}
-                className="rounded-lg bg-ink px-3 py-1.5 text-[12px] font-semibold text-paper transition-colors disabled:opacity-40"
+                className="w-full rounded-lg bg-ink px-3 py-1.5 text-[12px] font-semibold text-paper transition-colors disabled:opacity-40"
               >
-                {creating ? "…" : "أضف +"}
+                {creating ? "…" : "Add student"}
               </button>
+              <p className="font-mono text-[10px] leading-relaxed text-ink-faint">
+                Interests are optional — skipping them just means a colder start.
+              </p>
             </form>
             <p className="mt-2 px-2.5 font-mono text-[10px] leading-relaxed text-ink-faint">
-              demo affordance — a cookie, validated server-side. Not a login.
+              A picker, validated server-side. Not a login.
             </p>
           </div>
         </span>,
