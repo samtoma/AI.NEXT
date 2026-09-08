@@ -35,10 +35,12 @@ Skills (in `.claude/skills/`): `project-status` (read/update project state), `ad
 ## Conventions
 - Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`. **Documentation map: `docs/README.md`.**
 - Product code: the Next.js app in `app/`, the extraction pipeline in `services/extraction/`, deploy stack in `deploy/` (see ADR-0002/0003/0005).
-- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (v1.0.0), baseline as-built spec set in `specs/000-baseline/`; new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
-- All student- and parent-facing copy is Arabic; internal docs and code are English.
+- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v2.0.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/001-student-mvp1-delta/`; new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
+- Student- and parent-facing copy is **English** for MVP 1.0 (constitution v2.0.0 Principle V); the Arabic verticals stay in the tree and reintroducible. Internal docs and code are English.
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
+shell commands, and other important information, read the current plan:
+**`specs/001-student-mvp1-delta/plan.md`** — Student MVP 1.0 comparison build
+(spec, decisions, research, data-model and contracts sit beside it in the same directory).
 <!-- SPECKIT END -->
