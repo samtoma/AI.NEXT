@@ -1,7 +1,43 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-08-02
+> Last updated: 2026-09-08
+
+## 🔀 NEW PRD — delta spec written, awaiting Samuel's governance call (2026-09-08, `claude/tamer-shared-drive-access-ddpypu`)
+A **new product authority exists**: `PRD: AI Tutor — Student MVP` v0.4 (Tamer Deif, Drive
+`1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`, created 2026-09-01, revised 09-03). It is **not an
+increment on the PoC** — student-owned accounts (not parent), English-first (not Arabic), iPad +
+desktop (not low-end Android/3G), BKT mastery (not Elo), Math-only, plus trial/payments, parent
+dashboard, uploads+OCR, safety escalation and an analytics taxonomy.
+
+**Delta spec set: `specs/001-student-mvp1-delta/`** — `spec.md` (8 prioritised user stories,
+FR-C01..C05 carried + FR-101..906 new, success criteria, governance impact, open decisions),
+`delta-matrix.md` (the as-built vs to-be diff, KEEP/EXTEND/REPLACE/NEW/DROP per requirement, plus the
+comparison-environment topology and build-effort read), `checklists/requirements.md` (validation
+passed, 2 documented exceptions).
+
+**The apple-to-apple constant (Samuel's directive):** content is held at the *same* book already
+digested — Prep-3 Mathematics EN, 2025-2026 ministry edition — **verified exactly: 10 modules, 90
+LOs, 112 `prerequisite_of` edges, 450 questions, 212 visuals**. Only the experience varies. A second
+isolated stack (own volume/port/Cloudflare hostname) runs beside `ainext.reletix.com` so both are
+comparable live. Happy accident: the digested book is already English-medium and prep-3 sits inside
+the PRD's 7-12 band, and PRD §2 leaves national English-medium open pending content sourcing — so the
+constant is *within* the PRD's stated flexibility, and it discharges the PRD's largest pre-launch
+dependency (§3 content pipeline) with content that already exists and is reviewed.
+
+**⚠️ BLOCKED ON SAMUEL — 4 constitution conflicts.** The new PRD reverses ratified principles **V**
+(Arabic/low-end first), **VII** (parent owns account), **VIII** (parent dashboard / ML infra /
+chat-tutor were binding non-goals) and leaves **VI** (EGP 40 ceiling) unaddressed. Principles II, III
+and IX are *reinforced*. Recommendation in the spec: amend constitution to **v2.0.0** rather than
+build against principles we knowingly violate; the alternative is a time-boxed ADR exemption
+(precedent: `promote-poc`). **`/speckit-plan` should not run until this lands** — the resolution
+changes which requirements are legal to build. Two other open decisions: parent access model (own
+login vs linked code — the PRD's own open question) and whether the Elo→BKT swap belongs inside the
+experiment or should be held constant.
+
+**Critical path outside engineering:** FR-304's human-reviewed explanation/refutation library
+(worked example / faded / contrasting case / refutation) needs a mathematics SME. No sequencing
+removes it.
 
 ## 📚 SPEC KIT ADOPTED — constitution + full A→Z baseline docs (2026-08-02, `wip/hardening-4`)
 GitHub Spec Kit (`specify` CLI, offline scaffold) is now the requirements framework.
