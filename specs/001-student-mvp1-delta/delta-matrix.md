@@ -5,6 +5,11 @@
 **Target**: `PRD: AI Tutor — Student MVP` v0.4 (Tamer Deif, 2026-09-03)
 **Date**: 2026-09-08
 
+> **Scope narrowed 2026-09-08.** Samuel answered a twelve-question scope pass (`decisions.md`); the
+> constitution was amended to v2.0.0 and the decision recorded in ADR-0007. This matrix still shows the
+> **full** PRD-vs-baseline difference, which is what makes it useful as a reference — see
+> "§7 What the decisions cut" at the end for what is actually being built first.
+
 Disposition codes:
 
 | Code | Meaning |
@@ -217,3 +222,38 @@ billing end to end, analytics taxonomy, second environment.
 - **The four constitution conflicts** — recorded in `spec.md` under Governance Impact, for Samuel.
 - **Implementation** — no architecture, schema or technology choices are made here. That is
   `/speckit-plan`, and per Constitution Principle I it needs Samuel's decisions first.
+
+---
+
+## 7. What the decisions cut
+
+Applying `decisions.md` to the matrix above, the first build is:
+
+**Built now**
+- Teaching mechanics: BKT replacing Elo, retrieval layer, misconception/refutation library
+- Ask-anything, guided, never handing over graded answers
+- Uploads + OCR
+- Student dashboard (per-topic)
+- Parent view + threshold alerts
+- English LTR chrome, direction kept switchable
+- Second environment behind Cloudflare Access, with content parity enforced
+- Conversion-metric instrumentation on **both** environments
+
+**Not built (deferred, not deleted)**
+- Epic A signup, verification, session handling → replaced by a student picker with "create new user"
+- Epic G trial, card payments, plans page, parent payment link
+- F2 account-sharing deterrence (no accounts to share)
+- Exam prep (D2) and mid-year placement (C2) — dependent on mastery data existing first
+
+**Changed in kind rather than deferred**
+- The explanation library ships **pipeline-generated and unreviewed**, flagged and attributed, bounded
+  by Cloudflare Access. The review gate stays enforced for questions and canonical solutions.
+- Parent access rides the same picker as students, with the accepted limitation that any pilot parent
+  can see any pilot student's data.
+
+**The three risks that survive this narrowing** — unchanged from §5 above except that the first is now
+larger, because the human gate that would have caught it has been suspended:
+
+1. Unreviewed generated teaching content reaching real students, inside the very metric being measured.
+2. The comparison cannot attribute a result to any single change (accepted deliberately, Q4).
+3. Safety escalation still implies a human on the other end of the channel, and that owner is unnamed.

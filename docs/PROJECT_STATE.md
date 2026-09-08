@@ -3,41 +3,47 @@
 > Living document. Read at session start; update when progress or decisions land.
 > Last updated: 2026-09-08
 
-## 🔀 NEW PRD — delta spec written, awaiting Samuel's governance call (2026-09-08, `claude/tamer-shared-drive-access-ddpypu`)
-A **new product authority exists**: `PRD: AI Tutor — Student MVP` v0.4 (Tamer Deif, Drive
-`1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`, created 2026-09-01, revised 09-03). It is **not an
-increment on the PoC** — student-owned accounts (not parent), English-first (not Arabic), iPad +
-desktop (not low-end Android/3G), BKT mastery (not Elo), Math-only, plus trial/payments, parent
-dashboard, uploads+OCR, safety escalation and an analytics taxonomy.
+## 🔀 NEW PRD ADOPTED — scope locked, constitution v2.0.0, ready to build (2026-09-08, `claude/tamer-shared-drive-access-ddpypu`)
+**`PRD: AI Tutor — Student MVP` v0.4** (Tamer Deif, Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`)
+is now the product authority. It is **not an increment** on the PoC — student-owned, English-first,
+iPad/desktop, BKT instead of Elo, Math-only, plus uploads, dashboards and a parent view.
 
-**Delta spec set: `specs/001-student-mvp1-delta/`** — `spec.md` (8 prioritised user stories,
-FR-C01..C05 carried + FR-101..906 new, success criteria, governance impact, open decisions),
-`delta-matrix.md` (the as-built vs to-be diff, KEEP/EXTEND/REPLACE/NEW/DROP per requirement, plus the
-comparison-environment topology and build-effort read), `checklists/requirements.md` (validation
-passed, 2 documented exceptions).
+**Samuel's decision (ADR-0007): build it as a side-by-side comparison on the same book.** Twelve scope
+questions answered verbatim in `specs/001-student-mvp1-delta/decisions.md`. Headlines:
+- **Purpose:** a comparison experiment, not a replacement. `ainext.reletix.com` stays frozen and alive.
+- **Hypothesis:** does it teach better? Judged on the PRD §12 metric (comprehension → completed
+  retrieval attempt), with **real pilot students**, both environments instrumented, never pooled.
+- **Constant:** the same Prep-3 Math EN book — verified **10 modules, 90 LOs, 112 `prerequisite_of`
+  edges, 450 questions, 212 visuals**. Parity enforced by an automated check that fails on drift.
+- **Variable:** the whole PRD experience (accepted: a result can't be attributed to one change).
+- **No auth** — a student dropdown + dead-simple "create new user" (grade + interests captured there).
+  Bonus: identity is now held *constant* across both sides, which makes the comparison cleaner.
+- **In:** uploads+OCR, student dashboard, parent view+alerts. **Out:** trial & payments (Epic G).
+- **English LTR chrome, direction kept switchable** — math was already taught in English; Arabic and
+  Social Studies stay reintroducible.
+- **Refutation library ships pipeline-generated and UNREVIEWED** (no reviewer exists yet), bounded by
+  **Cloudflare Access** with an invited 10–20 family cohort, every entry attributed + `reviewed:false`.
+- Parent reaches the read-only view through the same picker (accepted: any pilot parent sees any pilot
+  student — must not survive into a public build).
+- **Timeline: ASAP**, continuous, using the agent team.
 
-**The apple-to-apple constant (Samuel's directive):** content is held at the *same* book already
-digested — Prep-3 Mathematics EN, 2025-2026 ministry edition — **verified exactly: 10 modules, 90
-LOs, 112 `prerequisite_of` edges, 450 questions, 212 visuals**. Only the experience varies. A second
-isolated stack (own volume/port/Cloudflare hostname) runs beside `ainext.reletix.com` so both are
-comparable live. Happy accident: the digested book is already English-medium and prep-3 sits inside
-the PRD's 7-12 band, and PRD §2 leaves national English-medium open pending content sourcing — so the
-constant is *within* the PRD's stated flexibility, and it discharges the PRD's largest pre-launch
-dependency (§3 content pipeline) with content that already exists and is reviewed.
+**⚖️ Constitution amended v1.0.0 → v2.0.0** (Samuel: *"go for it and update the principles"*):
+III Review Gate **suspended** for generated explanation content in the comparison env only (reversible,
+attributed, Access-bounded); V becomes *Bilingual by Construction, English-First*; VI's EGP 40 ceiling
+detached pending PRD §10 pricing (instrumentation + turn caps still binding); VII student-owned;
+VIII non-goals replaced with PRD §14; **XI Comparison Integrity added** (parity, env attribution,
+frozen baseline, no cross-env student data). I, II, IV, IX, X unchanged.
 
-**⚠️ BLOCKED ON SAMUEL — 4 constitution conflicts.** The new PRD reverses ratified principles **V**
-(Arabic/low-end first), **VII** (parent owns account), **VIII** (parent dashboard / ML infra /
-chat-tutor were binding non-goals) and leaves **VI** (EGP 40 ceiling) unaddressed. Principles II, III
-and IX are *reinforced*. Recommendation in the spec: amend constitution to **v2.0.0** rather than
-build against principles we knowingly violate; the alternative is a time-boxed ADR exemption
-(precedent: `promote-poc`). **`/speckit-plan` should not run until this lands** — the resolution
-changes which requirements are legal to build. Two other open decisions: parent access model (own
-login vs linked code — the PRD's own open question) and whether the Elo→BKT swap belongs inside the
-experiment or should be held constant.
+**Artifacts:** `specs/001-student-mvp1-delta/` — `spec.md` (re-cut against the decisions),
+`delta-matrix.md` (full diff + §7 what the decisions cut), `decisions.md`, `checklists/requirements.md`;
+`docs/decisions/0007-student-mvp1-comparison-build.md`; `.specify/memory/constitution.md` v2.0.0.
 
-**Critical path outside engineering:** FR-304's human-reviewed explanation/refutation library
-(worked example / faded / contrasting case / refutation) needs a mathematics SME. No sequencing
-removes it.
+**Top risks carried knowingly:** (1) unreviewed generated teaching reaching real students, *inside the
+metric being measured*; (2) the "frozen" baseline still needs metric instrumentation — that change must
+be provably behaviour-neutral or it stops being a baseline; (3) safety escalation implies a human on
+the channel and **that owner is still unnamed**.
+
+**Next:** `/speckit-plan` — now unblocked, since the governance question is resolved.
 
 ## 📚 SPEC KIT ADOPTED — constitution + full A→Z baseline docs (2026-08-02, `wip/hardening-4`)
 GitHub Spec Kit (`specify` CLI, offline scaffold) is now the requirements framework.

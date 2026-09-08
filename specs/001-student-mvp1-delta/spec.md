@@ -9,16 +9,18 @@
 > `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk` (created 2026-09-01, revised 2026-09-03).
 > **Baseline being differenced against**: `specs/000-baseline/spec.md` (as-built at main `f0cb192`,
 > live at `ainext.reletix.com`).
-> **Engineering authority**: `.specify/memory/constitution.md` v1.0.0 + ADR-0001..0006 — **note that
-> this delta conflicts with four ratified principles; see "Governance Impact" below. Per Principle I
-> those conflicts are Samuel's to resolve, not this spec's.**
+> **Engineering authority**: `.specify/memory/constitution.md` **v2.0.0** + ADR-0001..**0007**.
+> **Scope decisions**: `decisions.md` in this directory — twelve answers from Samuel (2026-09-08),
+> which this spec has been re-cut against. Requirements dropped or changed by those answers are marked
+> **[DEFERRED]** or **[REVISED]** rather than deleted, so the diff against the PRD stays legible.
 
 ## Why this feature exists
 
 The new PRD is not an increment on the PoC — it is a different product wearing the same name. It
 moves the buyer from the parent to the student, the language from Arabic-first to English-first, the
 device from low-end Android on 3G to iPad and desktop, the mastery model from Elo to Bayesian
-Knowledge Tracing, and it re-opens four things the current constitution lists as binding non-goals.
+Knowledge Tracing, and it re-opened four principles of constitution v1.0.0 — since resolved by
+amending it to v2.0.0 (ADR-0007).
 
 Rebuilding blind would leave us unable to answer the only question that matters: **is the new
 experience actually better at teaching?** So this build holds the one variable that would otherwise
@@ -52,40 +54,38 @@ pipeline — with content that already exists, reviewed, with provenance.
 
 ## User Scenarios & Testing *(mandatory)*
 
-### User Story 1 — Sign up, get set up, and reach a first taught skill (Priority: P1)
+### User Story 1 — Pick who I am (or create me) and reach a taught skill (Priority: P1) **[REVISED]**
 
-A student finds the product, creates an account with an email address or phone number, verifies it,
-picks their grade, optionally picks a few interests, and lands in a mathematics lesson that is
-already adapted to them. No demo picker, no shared login, no team member handing them a profile.
+A pilot student opens the site, picks themselves from a dropdown, and is in. If they are new, one
+short "create new user" step takes a name, a grade and a few interests, and drops them straight into
+a mathematics lesson already shaped by those answers. No password, no verification code, no waiting.
 
-**Why this priority**: this is the activation spine. Every other story is unreachable without it, and
-it is the single largest gap between the PoC (a cookie labelled explicitly "NOT auth") and a product
-a stranger can sign up for. PRD Epics A1–A4, B1.
+**Why this priority**: it is the way in, so nothing else is reachable without it. Samuel's decision
+(decisions.md Q5) replaced the PRD's Epic A signup with the simplest possible picker — which also
+holds identity constant across both environments and so makes the comparison cleaner, not weaker.
 
-**Independent Test**: from a clean browser, complete signup through verification to the first
-streamed tutor message, with no operator intervention. Delivers a usable single-student product even
-if nothing else in this spec ships.
+**Independent Test**: from a clean browser, create a new student and reach the first streamed tutor
+message in under a minute, with no operator intervention beyond the Access invite.
 
 **Acceptance Scenarios**:
 
-1. **Given** a visitor with no account, **When** they sign up with an email address or a phone
-   number, **Then** an unverified account is created and the product is unusable until the emailed
-   link or SMS code is confirmed.
-2. **Given** a verified new account, **When** onboarding runs, **Then** grade (7-12) is captured as
-   a required step and interests as a skippable one, and skipping interests still produces a fully
-   usable account.
-3. **Given** onboarding is complete, **When** the student reaches their first lesson, **Then** the
-   subject is mathematics without a picker (single-subject launch) and the opening content reflects
-   the captured grade.
-4. **Given** a returning student, **When** they revisit on the same device, **Then** they are still
-   logged in and resume where they left off rather than re-entering credentials.
+1. **Given** the site behind Cloudflare Access, **When** a visitor arrives, **Then** they see a
+   dropdown of existing pilot students plus a visible "create new user" action — never a login form.
+2. **Given** "create new user", **When** it is completed, **Then** it captures name, grade (7-12) and
+   interests, and the student is immediately usable; interests may be skipped without blocking.
+3. **Given** a selected student, **When** they reach their first lesson, **Then** the subject is
+   mathematics without a subject picker, and content reflects the captured grade.
+4. **Given** a returning visitor, **When** they revisit, **Then** their last selected student is
+   remembered and their position restored, without re-entering anything.
+5. **Given** any request, **When** the selected student is resolved, **Then** it is validated
+   server-side, and the picker is never presented to a user as a login.
 
 ---
 
 ### User Story 2 — Learn a skill, with the tutor adapting to what I actually know (Priority: P2)
 
 A student works through a unit one step at a time. When they get something wrong, the tutor does not
-solve it fresh — it diagnoses the misconception and teaches from a human-reviewed library entry for
+solve it fresh — it diagnoses the misconception and teaches from a stored library entry written for
 that specific misconception. Their per-skill mastery updates as probabilistic evidence, and the next
 thing they are shown is chosen from that estimate and the prerequisite graph.
 
@@ -94,16 +94,18 @@ where the new build most differs from the baseline: Elo point-scores become Baye
 probabilities, and ad-hoc grounding slices become an explicit retrieval layer.
 
 **Independent Test**: run one student through a unit containing a deliberately seeded misconception;
-verify the refutation served is a reviewed library entry, that mastery is expressed as a probability
-that moves with evidence, and that the next item selected changes as a result.
+verify the refutation served is a stored library entry (never improvised at request time), that
+mastery is expressed as a probability that moves with evidence, and that the next item selected
+changes as a result.
 
 **Acceptance Scenarios**:
 
 1. **Given** a student attempt, **When** it is graded, **Then** mastery for the tagged skill updates
    as a probability in [0,1] carrying the evidence that moved it, not an opaque score.
 2. **Given** a wrong answer matching a known misconception, **When** the tutor responds, **Then** it
-   serves the reviewed library entry for that misconception and never improvises a novel refutation.
-3. **Given** no reviewed library entry exists for the detected misconception, **When** the tutor
+   serves the stored library entry for that misconception and never improvises a novel refutation at
+   request time.
+3. **Given** no library entry exists for the detected misconception, **When** the tutor
    responds, **Then** it gives the standard correct explanation and raises an authoring-gap flag —
    it does not invent a refutation and present it as settled.
 4. **Given** the model's confidence in a skill tag is low, **When** the attempt is logged, **Then**
@@ -111,7 +113,7 @@ that moves with evidence, and that the next item selected changes as a result.
    certainty.
 5. **Given** any tutor turn, **When** it is composed, **Then** the retrieval layer supplied the
    student's mastery on the nearest skills, their grade, their language preference and the relevant
-   reviewed content — and the model saw no ungrounded material.
+   stored library content — and the model saw no ungrounded material.
 
 ---
 
@@ -187,7 +189,11 @@ threshold alert, and verify they cannot read lesson transcripts.
 
 ---
 
-### User Story 6 — Trial, payment, and plan management (Priority: P6)
+### User Story 6 — Trial, payment, and plan management (Priority: P6) **[DEFERRED]**
+
+> **Deferred by decisions.md Q7.** Payments test commerce, not teaching, and would pull in the PRD §9
+> legal review that blocks a paid cohort. Retained here in full so the scope is re-openable without
+> re-deriving it.
 
 A student uses the product free for 14 days. Before the trial ends they are reminded once. Because
 the parent usually holds the card, the student can send a payment link by WhatsApp or email instead
@@ -289,8 +295,12 @@ Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-
 - **FR-C01**: Grounded teaching (`B/FR-002`, `B/FR-003`, `B/FR-004`) MUST hold unchanged: every
   explanation traces to reviewed material, claims carry citation receipts, out-of-scope questions are
   declined rather than answered.
-- **FR-C02**: The human review gate (`B/FR-062`) MUST hold: no unreviewed question or explanation
-  reaches a student.
+- **FR-C02** *(revised — constitution v2.0.0 Principle III)*: The review gate machinery MUST remain
+  in place and enforced by default for question banks and canonical solutions. It is **suspended for
+  pipeline-generated explanation and refutation content in this environment only** (decisions.md Q8):
+  such content ships without human review, MUST be stored attributed and flagged unreviewed, MUST
+  never be served by `ainext.reletix.com`, and the suspension MUST be lifted before any audience wider
+  than the invited pilot cohort.
 - **FR-C03**: Deterministic server-side grading with transactional mastery updates (`B/FR-020`) MUST
   hold; only the mastery *model* changes (FR-301), not the determinism of grading.
 - **FR-C04**: Per-call AI cost, token, latency and student logging (`B/FR-050`) MUST hold and MUST
@@ -298,21 +308,22 @@ Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-
 - **FR-C05**: Operational safety (`B/FR-060`, `B/FR-061`) MUST hold for both environments: code
   deploys cannot mutate data, content mutations take a backup and print a rollback.
 
-### Accounts & onboarding (PRD Epic A)
+### Identity & onboarding **[REVISED — replaces PRD Epic A]**
 
-- **FR-101**: The system MUST let a student create an account with either an email address or a phone
-  number, one credential set per account, with no shared family or classroom login.
-- **FR-102**: The system MUST require verification (emailed confirmation or SMS code) before the
-  account is usable.
-- **FR-103**: The system MUST capture grade (7-12) as a required onboarding step and seed the student
-  model with it.
-- **FR-104**: The system MUST offer interest capture across five categories plus free-text "Other",
-  with an optional follow-up detail for Sports and Music, and MUST allow the whole step to be skipped
-  without blocking account completion.
-- **FR-105**: The system MUST keep a returning student logged in across visits without re-entering
-  credentials, and MUST restore their position (FR-204).
-- **FR-106**: Student identity MUST be a real authenticated account. The baseline's demo-student
-  cookie (`B/FR-040`, `B/FR-041`) MUST NOT be the identity mechanism in this build.
+- **FR-101** *(revised)*: Student identity MUST be a picker: a dropdown of existing students plus an
+  in-place "create new user" action. No password, no email or SMS verification, no session
+  credentials. The baseline's picker pattern (`B/FR-041`) is reused deliberately, so identity is
+  identical on both sides of the comparison.
+- **FR-102** *(revised)*: The selected student MUST be validated server-side on every request, and
+  every query, session key, turn cap and spend meter MUST scope to the resolved student
+  (`B/FR-040`). The picker MUST never be presented to a user as a login.
+- **FR-103**: "Create new user" MUST capture grade (7-12) and seed the student model with it.
+- **FR-104**: "Create new user" MUST offer interest capture across five categories plus free-text
+  "Other", with an optional follow-up detail for Sports and Music, skippable without blocking.
+- **FR-105**: The last selected student MUST be remembered across visits, restoring their position
+  (FR-204) without re-entry.
+- **FR-106** *(deferred)*: PRD A1/A2/A4 self-signup with email or phone and verification is
+  **[DEFERRED]** — reachable only through the Cloudflare Access invite list (FR-907).
 
 ### Learning core (PRD Epic B)
 
@@ -329,8 +340,11 @@ Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-
 - **FR-206**: Uploaded material MUST be used only for the academic task; incidental personal detail
   MUST NOT be retained or commented on.
 - **FR-207**: Tutor tone MUST adapt to grade level and to how engaged the student currently appears.
-- **FR-208**: The interface MUST render English left-to-right as the primary delivery language for
-  this build, without a forced page-level direction that would block Arabic being reintroduced later.
+- **FR-208** *(revised)*: The interface MUST render English left-to-right by default. Direction and
+  language MUST remain switchable at the layout level — no page-level direction may be hard-coded and
+  no Arabic-capable surface may be removed to achieve the English default, so the Arabic and Social
+  Studies verticals stay reintroducible (constitution v2.0.0 Principle V). Mathematics instruction is
+  already delivered in English today; this requirement covers chrome, navigation and copy.
 
 ### Student model & retrieval (PRD Epic C, §4)
 
@@ -340,13 +354,15 @@ Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-
 - **FR-302**: The student model MUST hold, at minimum: per-skill mastery, grade, language preference,
   curriculum system, interests and interest detail.
 - **FR-303**: A retrieval layer MUST assemble, before any model call: the student's mastery on the
-  nearest relevant skills, their profile attributes, and the reviewed content for the likely
+  nearest relevant skills, their profile attributes, and the stored library content for the likely
   misconception. The model MUST NOT receive ungrounded material.
-- **FR-304**: A human-reviewed explanation library MUST exist as first-class content, typed as worked
-  example, faded variant, contrasting case or refutation, each carrying reviewer attribution and
-  review timestamp.
-- **FR-305**: Where no reviewed refutation exists for a detected misconception, the system MUST serve
-  the standard correct explanation and raise an authoring-gap flag.
+- **FR-304** *(revised — decisions.md Q8)*: An explanation library MUST exist as first-class content,
+  typed as worked example, faded variant, contrasting case or refutation. Entries are
+  **pipeline-generated and ship without human review at this stage**; each MUST carry generation
+  attribution, a `reviewed: false` flag, and a review slot that a human can later fill. Entries MUST
+  be authored ahead of time and retrieved — never improvised inside a student's turn.
+- **FR-305**: Where no library entry exists for a detected misconception, the system MUST serve the
+  standard correct explanation and raise an authoring-gap flag.
 - **FR-306**: A student joining mid-year MUST be placed by assessment rather than assumed to start
   from zero.
 - **FR-307**: Every attempt MUST record the diagnosis type, misconception identifier where known, the
@@ -361,8 +377,11 @@ Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-
 
 ### Parent (PRD Epic E)
 
-- **FR-501**: A linked parent MUST get read-only access to the same performance data as FR-401, and
-  MUST NOT have access to lesson or chat transcripts.
+- **FR-501** *(revised)*: A parent MUST reach a read-only view of the same performance data as
+  FR-401 through the same student picker used by students (decisions.md Q11), and MUST NOT have access
+  to lesson or chat transcripts. **Accepted limitation**: any pilot parent can therefore see any pilot
+  student's data. This is acceptable only at invited-cohort scale behind Access and MUST NOT survive
+  into any public build.
 - **FR-502**: Threshold alerts (prolonged inactivity, sustained struggle on a topic) MUST be
   delivered to the linked parent in supportive, non-punitive wording.
 
@@ -374,11 +393,13 @@ Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-
   analytics.
 - **FR-603**: A student's conversations and personal data MUST NOT be exposed to other students, and
   data shared with a parent MUST be limited to FR-501's scope.
-- **FR-604**: The system MUST apply a technical deterrent against account sharing by flagging or
-  limiting simultaneous sessions from markedly different devices or locations, documented as a
-  deterrent rather than a guarantee.
+- **FR-604** *(deferred)*: PRD F2 account-sharing deterrence is **[DEFERRED]** — there are no
+  accounts to share in this build, and the audience is an invited list behind Access.
 
-### Billing (PRD Epic G, §10)
+### Billing (PRD Epic G, §10) **[DEFERRED — decisions.md Q7]**
+
+> None of FR-701..707 is built for the comparison. Kept for re-opening.
+
 
 - **FR-701**: The system MUST provide a 14-day free trial, after which continued use requires payment.
 - **FR-702**: The system MUST accept card payment via a hosted, tokenised provider checkout such that
@@ -417,6 +438,12 @@ Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-
   comparison is mathematics-only on both sides.
 - **FR-906**: Provisioning the new environment MUST NOT remove volumes on the shared box, and MUST
   leave the existing environment's one-time AI runtime login intact.
+- **FR-907**: The new environment MUST sit behind Cloudflare Access with an explicitly invited
+  audience (decisions.md Q9). This containment is what makes FR-C02's review-gate suspension
+  acceptable; unreviewed content MUST never be reachable by an uninvited person.
+- **FR-908**: The baseline environment MUST be instrumented to emit the same conversion metric
+  (SC-005), and that change MUST be provably behaviour-neutral — metric-only, no teaching change —
+  or the baseline stops being a baseline (constitution v2.0.0 Principle XI).
 
 ### Key Entities
 
@@ -430,7 +457,8 @@ question, visual, attempt) carry over as-is.
 - **MasteryEstimate** *(replaces baseline Mastery)*: per student per skill, a probability with the
   evidence trail that moved it. Baseline held an Elo-style point score.
 - **ExplanationLibraryEntry** *(new)*: per skill, typed worked example / faded / contrasting case /
-  refutation, with reviewer attribution and review timestamp.
+  refutation, with generation attribution, a `reviewed` flag (false at this stage) and an unfilled
+  reviewer slot.
 - **Misconception** *(new)*: the diagnosable error a refutation answers, referenced from attempts.
 - **Upload** *(new)*: student file, type, parse result, the skill it was linked to.
 - **ParentLink** *(new)*: parent contact, access type, the student it grants read-only visibility of.
@@ -469,29 +497,27 @@ question, visual, attempt) carry over as-is.
   including via upload.
 - **SC-010**: Every crisis flag raised in testing reaches the human channel within the same session,
   and none are found sitting in the routine analytics queue.
-- **SC-011**: No unreviewed question or explanation is servable to a student in either environment.
+- **SC-011** *(revised)*: No unreviewed **question or canonical solution** is servable in either
+  environment. Generated explanation-library content is exempt in the comparison environment only
+  (FR-C02), MUST be flagged `reviewed: false` in storage, and MUST be countable — we can state at any
+  time exactly how much unreviewed content is live and to whom.
 
-## Governance Impact — conflicts requiring Samuel's decision
+## Governance Impact — RESOLVED
 
-Per Constitution Principle I these are recorded, not resolved, here. **This spec does not amend the
-constitution and must not be read as doing so.** Four ratified principles conflict with the new PRD:
+Samuel's decision (decisions.md Q10): *"I want to proceed with this new PRD so go for it and update
+the principles."* The constitution was therefore **amended to v2.0.0** rather than exempted, and the
+decision is recorded in **ADR-0007**.
 
-| Principle | Ratified v1.0.0 | New PRD v0.4 | Nature of conflict |
-|---|---|---|---|
-| **V — Arabic-First, Low-End-First** | Arabic RTL throughout; low-end Android on 3G; first load < 1.5 MB | English-first; iPad Safari + desktop; Android tablets explicitly not optimised; good wifi assumed | Direct reversal |
-| **VII — Minors' Data Minimalism** | Parent owns the account; auth is a non-goal | Student owns the account and signs up themselves; parent is a linked secondary view | Direct reversal |
-| **VIII — MVP Non-Goals Are Binding** | No ML infrastructure, no parent dashboard, no free-form chat-tutor surface | BKT mastery (C1), parent dashboard (E1), ask-anything (B3) all in scope | Three non-goals re-opened |
-| **VI — Cost Discipline** | < EGP 40 per student per month | No ceiling stated; uploads and OCR add unbudgeted per-student cost | Ceiling unaddressed |
+| Principle | Resolution in v2.0.0 |
+|---|---|
+| **III** Review Gate | Standard retained; suspended for pipeline-generated explanation content in this environment only, attributed, flagged, reversible |
+| **V** Arabic-First, Low-End-First | Became *Bilingual by Construction, English-First for MVP 1.0* — English LTR default, direction never hard-coded, iPad + desktop targets |
+| **VI** Cost Discipline | Numeric EGP 40 ceiling detached (it derived from a withdrawn parent price band); instrumentation and turn caps remain binding; the number returns with PRD §10 pricing |
+| **VII** Minors' Data Minimalism | Student-owned per the PRD; minimalism retained; "a picker is not auth" made explicit |
+| **VIII** MVP Non-Goals | List replaced with PRD §14; parent dashboard, mastery modelling and ask-anything are no longer non-goals; payments out for this build |
+| **XI** Comparison Integrity | **New principle** — content parity, environment attribution, a genuinely frozen baseline, no student data across environments |
 
-Principles II (grounded teaching), III (review gate) and IX (registry discipline) are **reinforced**
-by the new PRD, not weakened — its refutation-library and retrieval-first requirements are stricter
-versions of what we already enforce. Principle IV (sacred containment) does not arise in a
-mathematics-only build but remains in force for the baseline environment.
-
-**Recommendation**: amend the constitution to v2.0.0 (MAJOR — principles redefined) as part of
-accepting this delta, rather than shipping against principles the build knowingly violates. The
-alternative — a time-boxed, attributed exemption recorded in an ADR, as was done for `promote-poc` —
-is available and is Samuel's call.
+Unchanged: I, II, IV (dormant here, never weakened), IX, X (extended to two co-tenant environments).
 
 ## Assumptions
 
@@ -519,16 +545,10 @@ is available and is Samuel's call.
 
 ## Open Decisions
 
-Recorded for Samuel; each has a working default so the spec is complete without them.
+All twelve questions are answered in `decisions.md`. Nothing blocks planning.
 
-1. **Constitution amendment vs. exemption** (see Governance Impact). *Default assumed*: amendment to
-   v2.0.0 accompanying this delta.
-2. **Parent access model** — the PRD's own open question in E1: does a parent get their own login, or
-   view through a link/code tied to the student's account? This changes the Account and ParentLink
-   entities. *Default assumed*: link/code tied to the student account, as the lighter build consistent
-   with "kept lightweight".
-3. **Whether the mastery model is part of the experiment or a constant** — FR-301 swaps Elo for BKT
-   because the PRD calls for it, but that makes the learning algorithm and the interface change
-   together, so a comparison cannot attribute a difference to either alone. *Default assumed*: follow
-   the PRD (BKT), and accept that the comparison measures the whole experience rather than isolating
-   the algorithm.
+What remains open is deliberately outside this build: the PRD §10 price point (a business decision,
+and the trigger for restoring Principle VI's numeric ceiling), the PRD §9 legal review of minors'
+data, terms and parental consent (blocks a paid cohort, not this comparison), and whether the
+constitution's Principle III suspension is lifted or the direction is abandoned — which the
+comparison itself is meant to inform.
