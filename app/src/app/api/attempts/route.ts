@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 import { resolveStudentId } from "@/lib/student-context";
+import { bktUpdate, DEFAULT_PARAMS, type BktParams } from "@/lib/bkt";
+import { emit } from "@/lib/analytics";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
-
-const K = 0.15;
-const clamp = (v: number, lo: number, hi: number) =>
-  Math.min(hi, Math.max(lo, v));
 
 function grade(
   questionType: string,
@@ -68,27 +66,64 @@ export async function POST(req: Request) {
     );
     const attemptId = attemptRes.rows[0].id;
 
-    // 2. temporal mastery update: close the current row, open a new one
+    // 2. temporal mastery update: close the current row, open a new one.
+    //
+    // The update rule is BKT (lib/bkt.ts, ADR-0007) — it replaced the Elo-style
+    // exponential moving average that lived here. The bitemporal pattern, the
+    // FOR UPDATE lock and the transaction are unchanged: only the number's
+    // meaning and the rule producing it changed. `score` is now P(L).
     const mRes = await client.query(
-      `SELECT id, score FROM mastery
+      `SELECT id, score, p_init, p_transit, p_guess, p_slip FROM mastery
        WHERE student_id = $1 AND lo_id = $2 AND system_to IS NULL
        FOR UPDATE`,
       [studentId, q.lo_id]
     );
-    const oldScore = mRes.rowCount ? Number(mRes.rows[0].score) : 0.3;
-    const outcome = isCorrect ? 1 : 0;
-    const newScore = clamp(oldScore + K * (outcome - oldScore), 0.02, 0.98);
 
-    if (mRes.rowCount) {
+    const row = mRes.rowCount ? mRes.rows[0] : null;
+    const params: BktParams = row
+      ? {
+          pInit: Number(row.p_init),
+          pTransit: Number(row.p_transit),
+          pGuess: Number(row.p_guess),
+          pSlip: Number(row.p_slip),
+        }
+      : DEFAULT_PARAMS;
+
+    const oldScore = row ? Number(row.score) : params.pInit;
+    const evidence = bktUpdate(oldScore, isCorrect ? "correct" : "incorrect", params);
+    const newScore = evidence.afterTransit;
+
+    if (row) {
       await client.query(
         `UPDATE mastery SET system_to = now() WHERE id = $1`,
-        [mRes.rows[0].id]
+        [row.id]
       );
     }
+    // The evidence trail travels with the row it produced, so "why is this
+    // student's mastery here?" is answerable without reconstructing it from
+    // attempt history (FR-301).
     await client.query(
-      `INSERT INTO mastery (student_id, lo_id, score, system_from, system_to)
-       VALUES ($1, $2, $3, now(), NULL)`,
-      [studentId, q.lo_id, newScore]
+      `INSERT INTO mastery
+         (student_id, lo_id, score, system_from, system_to,
+          p_init, p_transit, p_guess, p_slip, evidence)
+       VALUES ($1, $2, $3, now(), NULL, $4, $5, $6, $7, $8)`,
+      [
+        studentId,
+        q.lo_id,
+        newScore,
+        params.pInit,
+        params.pTransit,
+        params.pGuess,
+        params.pSlip,
+        JSON.stringify({
+          attempt_id: attemptId,
+          question_id: questionId,
+          observation: evidence.observation,
+          prior: evidence.prior,
+          posterior: evidence.posterior,
+          after_transit: evidence.afterTransit,
+        }),
+      ]
     );
 
     // 3. wrong answer → log the canonical-grounded explanation
@@ -107,6 +142,21 @@ export async function POST(req: Request) {
     }
 
     await client.query("COMMIT");
+
+    // Fire-and-forget, and deliberately AFTER commit: an analytics failure must
+    // never roll back a student's graded attempt.
+    void emit({
+      event: "retrieval_attempt_submitted",
+      studentId,
+      properties: {
+        skill_id: q.lo_id,
+        question_id: questionId,
+        correct: isCorrect,
+        prior: evidence.prior,
+        posterior: evidence.posterior,
+        mastery: newScore,
+      },
+    });
 
     const result: AttemptResult = {
       isCorrect,

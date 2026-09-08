@@ -43,16 +43,33 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: "1"
 
-  # ---- Stage 2: deploy on the OCI box — ONLY if build passed, ONLY on main ----
+  # ---- Stage 2: deploy on the OCI box — ONLY if build passed, ONLY on a deploy branch ----
+  #
+  # TWO environments share this one job (ADR-0007), mapped by branch:
+  #   main → the FROZEN baseline   /opt/reletix/AI.NEXT       project ainext       :3100
+  #   mvp1 → the comparison build  /opt/reletix/AI.NEXT-mvp1  project ainext-mvp1  :3101
+  #
+  # One job rather than two workflows on purpose: the shared-box safety rails
+  # (dangling-only pruning, never `system prune`, health gate before traffic) are
+  # enforced in exactly one place. A second copy would drift, and the copy that
+  # drifts is the one that eventually prunes production's images.
+  #
+  # The `concurrency` group is deliberately shared, so the two environments never
+  # deploy onto the box simultaneously.
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: >-
+      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/mvp1')
+      && github.event_name != 'pull_request'
     runs-on: [self-hosted, oci]
     concurrency:
       group: deploy-oci
       cancel-in-progress: false
     env:
-      APP_DIR: /opt/reletix/AI.NEXT
+      APP_DIR: ${{ github.ref_name == 'mvp1' && '/opt/reletix/AI.NEXT-mvp1' || '/opt/reletix/AI.NEXT' }}
+      COMPOSE_PROJECT: ${{ github.ref_name == 'mvp1' && 'ainext-mvp1' || 'ainext' }}
+      COMPOSE_FILE_NAME: ${{ github.ref_name == 'mvp1' && 'docker-compose.mvp1.yml' || 'docker-compose.yml' }}
+      APP_PORT: ${{ github.ref_name == 'mvp1' && '3101' || '3100' }}
     steps:
       - name: Sync code into persistent app dir (git init/fetch — preserves deploy/.env)
         run: |
@@ -84,24 +101,26 @@ jobs:
           grep -Eq '^POSTGRES_PASSWORD=.+' "$ENV_FILE" || { echo "::error::POSTGRES_PASSWORD not set in $ENV_FILE"; exit 1; }
           echo "secret present in $ENV_FILE"
 
-      - name: Build & start (isolated `ainext` stack)
-        working-directory: /opt/reletix/AI.NEXT/deploy
+      - name: Build & start (isolated stack — project named explicitly)
         run: |
           set -euo pipefail
-          docker compose up -d --build --remove-orphans
-          docker compose ps
+          cd "$APP_DIR/deploy"
+          # -p is not optional here: with two stacks on one box, an unqualified
+          # compose command is how you restart the wrong environment.
+          docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" up -d --build --remove-orphans
+          docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" ps
 
-      - name: Health check (127.0.0.1:3100)
-        working-directory: /opt/reletix/AI.NEXT/deploy
+      - name: Health check (127.0.0.1:$APP_PORT)
         run: |
+          cd "$APP_DIR/deploy"
           for i in $(seq 1 40); do
-            if curl -sSf http://127.0.0.1:3100/ >/dev/null; then
-              echo "app healthy on :3100"; exit 0
+            if curl -sSf "http://127.0.0.1:$APP_PORT/" >/dev/null; then
+              echo "app healthy on :$APP_PORT ($COMPOSE_PROJECT)"; exit 0
             fi
             sleep 3
           done
-          echo "::error::app did not become healthy"
-          docker compose logs --tail=120 app
+          echo "::error::$COMPOSE_PROJECT did not become healthy on :$APP_PORT"
+          docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" logs --tail=120 app
           exit 1
 
       - name: Trim dangling images (untagged rebuild leftovers only — talent-safe)

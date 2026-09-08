@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
 import { NextResponse } from "next/server";
 import { pool } from "@/lib/db";
+import { ENVIRONMENT } from "@/lib/env";
 import {
   getLessonData,
   lessonAnchorLo,
@@ -275,8 +276,8 @@ ${transcriptText}`;
         `INSERT INTO ai_interactions
            (student_id, surface, turn_index, user_message, assistant_message,
             grounding, citations, model, input_tokens, output_tokens,
-            cost_usd, latency_ms)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
+            cost_usd, latency_ms, environment, surface_kind)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding')`,
         [
           studentId,
           "understanding_check",
@@ -296,6 +297,7 @@ ${transcriptText}`;
           totalOut,
           totalCost,
           totalMs,
+          ENVIRONMENT,
         ]
       );
     } catch (e) {

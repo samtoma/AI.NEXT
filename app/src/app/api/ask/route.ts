@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { pool } from "@/lib/db";
+import { ENVIRONMENT } from "@/lib/env";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
 import { buildLessonContext } from "@/lib/lesson";
 import { getAllSacredPassages } from "@/lib/lesson-content";
@@ -396,8 +397,9 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                  (student_id, surface, turn_index, user_message,
                   assistant_message, grounding, citations, model,
                   input_tokens, output_tokens, cache_read_tokens,
-                  cache_creation_tokens, cost_usd, latency_ms)
-               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9)`,
+                  cache_creation_tokens, cost_usd, latency_ms,
+                  environment, surface_kind)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9,$10,'chat')`,
               [
                 studentId,
                 surface,
@@ -408,6 +410,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                 JSON.stringify([]),
                 MODEL,
                 Date.now() - started,
+                ENVIRONMENT,
               ]
             );
           } catch (e) {
@@ -444,8 +447,9 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
             `INSERT INTO ai_interactions
                (student_id, surface, turn_index, user_message, assistant_message,
                 grounding, citations, model, input_tokens, output_tokens,
-                cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+                cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
+                environment, surface_kind)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'chat')
              RETURNING id`,
             [
               studentId,
@@ -462,6 +466,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
               cacheCreationTokens,
               costUsd,
               latencyMs,
+              ENVIRONMENT,
             ]
           );
           interactionId = ins.rows[0].id;

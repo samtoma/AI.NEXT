@@ -28,11 +28,11 @@ until two URLs exist. Each phase states its story and its spec priority.
 **Purpose**: branch, deploy scaffolding and the one thing that must be checked before touching a
 shared production box.
 
-- [ ] T001 Create long-lived branch `mvp1` from `origin/main` and push it, per plan.md A1
-- [ ] T002 Create `deploy/docker-compose.mvp1.yml` — compose project `ainext-mvp1`, app on `127.0.0.1:3101`, own `ainext-mvp1_pg` and `ainext-mvp1_claude_cfg` volumes, loader kept behind `profiles: ["tools"]`
-- [ ] T003 [P] Write `deploy/DEPLOY-MVP1.md` — bootstrap, the dashboard-managed Cloudflare hostname steps, and the shared-box rails (never `down -v`, never `system prune`)
-- [ ] T004 [P] Extend `.github/workflows/ci-cd.yml` with a branch→environment matrix (`main`→`/opt/reletix/AI.NEXT`:3100:`ainext`, `mvp1`→`/opt/reletix/AI.NEXT-mvp1`:3101:`ainext-mvp1`), keeping the single `concurrency: deploy-oci` group
-- [ ] T005 Measure box headroom before any second stack lands (`free -h`, `df -h /var/lib/docker`) and record the reading in `specs/001-student-mvp1-delta/research.md` R5 — a second stack asks ~3 GB and production `talent` is co-tenant
+- [ ] T001 Create long-lived branch `mvp1` from `origin/main` and push it, per plan.md A1 **[BLOCKED — needs permission]** this session is pinned to its designated branch; creating and pushing `mvp1` is a push to a different branch, which needs Samuel's explicit go-ahead.
+- [X] T002 Create `deploy/docker-compose.mvp1.yml` — compose project `ainext-mvp1`, app on `127.0.0.1:3101`, own `ainext-mvp1_pg` and `ainext-mvp1_claude_cfg` volumes, loader kept behind `profiles: ["tools"]`
+- [X] T003 [P] Write `deploy/DEPLOY-MVP1.md` — bootstrap, the dashboard-managed Cloudflare hostname steps, and the shared-box rails (never `down -v`, never `system prune`)
+- [X] T004 [P] Extend `.github/workflows/ci-cd.yml` with a branch→environment matrix (`main`→`/opt/reletix/AI.NEXT`:3100:`ainext`, `mvp1`→`/opt/reletix/AI.NEXT-mvp1`:3101:`ainext-mvp1`), keeping the single `concurrency: deploy-oci` group
+- [ ] T005 Measure box headroom before any second stack lands (`free -h`, `df -h /var/lib/docker`) and record the reading in `specs/001-student-mvp1-delta/research.md` R5 — a second stack asks ~3 GB and production `talent` is co-tenant **[BLOCKED — needs box access]** cannot be measured from the build container.
 
 **Checkpoint**: branch and deploy definitions exist; box capacity is known, not assumed.
 
@@ -42,13 +42,13 @@ shared production box.
 
 **⚠️ CRITICAL**: no user story work begins until this phase completes.
 
-- [ ] T006 Write `db/migrations/009-mvp1-bkt-library-analytics.sql` implementing the whole delta in `data-model.md`: `mastery` BKT columns + `evidence`, `misconceptions`, `explanation_library`, `students` profile columns, `attempts` diagnosis columns, `analytics_events`, `safety_flags`, `uploads`, `ai_interactions.environment` + `surface_kind`
-- [ ] T007 Add the `entry_type='refutation' ⇒ misconception_id IS NOT NULL` constraint and the `p_guess + p_slip < 1` check to migration 009 — a refutation with nothing to refute, and a degenerate BKT parameter set, are both bugs the schema can refuse
-- [ ] T008 [P] Create `app/src/lib/env.ts` resolving `AINEXT_ENVIRONMENT` (`baseline` | `mvp1`) from configuration only, never inferred from host or request — a misconfigured stack must produce obviously-wrong data rather than quietly pooled data (FR-901)
-- [ ] T009 [P] Create `app/src/lib/analytics.ts` — typed emitter for the `contracts/analytics.md` taxonomy, stamping `environment`, `student_id` and `occurred_at` server-side
-- [ ] T010 [P] Create `app/src/app/api/analytics/route.ts` as the client event sink; reject any client-supplied `environment` field outright
-- [ ] T011 [P] Create `services/extraction/parity_check.py` computing the FR-904 fingerprint (source sha256, module/LO/prerequisite/question/visual counts, sorted LO-id digest) and **comparing `status='live'` counts separately from totals** — research.md R3: a scoped refresh demotes bulk-promoted questions, so totals can match while servable sets differ
-- [ ] T012 Extend `app/src/lib/db.ts` write paths for `ai_interactions` to record `environment` and `surface_kind` on every AI call (Principle VI)
+- [X] T006 Write `db/migrations/009-mvp1-bkt-library-analytics.sql` implementing the whole delta in `data-model.md`: `mastery` BKT columns + `evidence`, `misconceptions`, `explanation_library`, `students` profile columns, `attempts` diagnosis columns, `analytics_events`, `safety_flags`, `uploads`, `ai_interactions.environment` + `surface_kind`
+- [X] T007 Add the `entry_type='refutation' ⇒ misconception_id IS NOT NULL` constraint and the `p_guess + p_slip < 1` check to migration 009 — a refutation with nothing to refute, and a degenerate BKT parameter set, are both bugs the schema can refuse
+- [X] T008 [P] Create `app/src/lib/env.ts` resolving `AINEXT_ENVIRONMENT` (`baseline` | `mvp1`) from configuration only, never inferred from host or request — a misconfigured stack must produce obviously-wrong data rather than quietly pooled data (FR-901)
+- [X] T009 [P] Create `app/src/lib/analytics.ts` — typed emitter for the `contracts/analytics.md` taxonomy, stamping `environment`, `student_id` and `occurred_at` server-side
+- [X] T010 [P] Create `app/src/app/api/analytics/route.ts` as the client event sink; reject any client-supplied `environment` field outright
+- [X] T011 [P] Create `services/extraction/parity_check.py` computing the FR-904 fingerprint (source sha256, module/LO/prerequisite/question/visual counts, sorted LO-id digest) and **comparing `status='live'` counts separately from totals** — research.md R3: a scoped refresh demotes bulk-promoted questions, so totals can match while servable sets differ
+- [X] T012 Extend `app/src/lib/db.ts` write paths for `ai_interactions` to record `environment` and `surface_kind` on every AI call (Principle VI)
 
 **Checkpoint**: schema, environment identity, measurement and the parity guard all exist.
 
@@ -100,10 +100,10 @@ message in under a minute.
 **Independent Test**: run a student through a unit with a seeded misconception; the served refutation
 is a stored entry, mastery is a probability that moves with evidence, and the next item changes.
 
-- [ ] T028 [US2] Create `app/src/lib/bkt.ts` implementing `contracts/bkt.md` — pure `bktUpdate(prior, observation, params)`, posterior-then-transit, clamped `[0.02, 0.98]`, `DEFAULT_PARAMS` 0.30/0.10/0.20/0.10
-- [ ] T029 [US2] Write `app/src/lib/bkt.test.mts` covering all six contract invariants, including **invariant 3**: 20 correct then 1 incorrect must fall strictly below the run's peak — an unclamped BKT saturates and becomes unrevisable, which would make the new model worse than the Elo one it replaces in exactly the dimension being measured
-- [ ] T030 [US2] Replace the inline Elo update in `app/src/app/api/attempts/route.ts` with `bktUpdate`, keeping the existing transaction, `FOR UPDATE` row lock and bitemporal row-closing untouched
-- [ ] T031 [US2] Persist the `evidence` JSON (attempt id, question id, observation, prior, posterior, after-transit, misconception id, confidence) on each new mastery row — FR-301's inspectable trail
+- [X] T028 [US2] Create `app/src/lib/bkt.ts` implementing `contracts/bkt.md` — pure `bktUpdate(prior, observation, params)`, posterior-then-transit, clamped `[0.02, 0.98]`, `DEFAULT_PARAMS` 0.30/0.10/0.20/0.10
+- [X] T029 [US2] Write `app/src/lib/bkt.test.mts` covering all six contract invariants, including **invariant 3**: 20 correct then 1 incorrect must fall strictly below the run's peak — an unclamped BKT saturates and becomes unrevisable, which would make the new model worse than the Elo one it replaces in exactly the dimension being measured
+- [X] T030 [US2] Replace the inline Elo update in `app/src/app/api/attempts/route.ts` with `bktUpdate`, keeping the existing transaction, `FOR UPDATE` row lock and bitemporal row-closing untouched
+- [X] T031 [US2] Persist the `evidence` JSON (attempt id, question id, observation, prior, posterior, after-transit, misconception id, confidence) on each new mastery row — FR-301's inspectable trail
 - [ ] T032 [US2] Record `diagnosis_type`, `misconception_id`, `stance_used` and `confidence` on the attempt row, leaving `confidence` nullable so low certainty is recorded honestly rather than coerced (FR-307)
 - [ ] T033 [US2] Create `app/src/lib/retrieval.ts` — the single grounding composition seam returning mastery on nearest skills, profile attributes, candidate misconception and its library entry, and the graph slice (FR-303)
 - [ ] T034 [US2] Refactor `app/src/lib/ask.ts` and `app/src/lib/lesson.ts` to compose grounding **only** through `retrieval.ts`, removing the per-surface assembly
