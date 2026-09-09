@@ -67,8 +67,8 @@ async function nearestSkillMastery(
        neighbourhood AS (
          SELECT lo_id FROM focus
          UNION
-         SELECT e.src FROM graph_edges e
-           JOIN focus f ON f.lo_id = e.dst
+         SELECT e.src_id FROM graph_edges e
+           JOIN focus f ON f.lo_id = e.dst_id
           WHERE e.edge_type = 'prerequisite_of'
        )
        SELECT n.id AS lo_id, n.label,

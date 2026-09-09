@@ -47,7 +47,11 @@ EXPECTED = {
     "visuals": 212,
 }
 
-COURSE_SUBJECT = "mathematics"
+# The value stamped on the COURSE node by the loader, and the key used in the
+# app's subject registry — "math", not "mathematics". Learned the hard way:
+# filtering on the wrong string silently returns zero rows rather than erroring,
+# which reads as "the environment is empty" instead of "the query is wrong".
+COURSE_SUBJECT = "math"
 
 
 @dataclass
@@ -79,41 +83,70 @@ def fingerprint(dsn: str) -> Fingerprint:
             row = cur.fetchone()
             return row[0] if row and row[0] is not None else default
 
+        # source_documents is keyed by sha256 — there is no id column.
         source_sha = scalar(
-            "SELECT sha256 FROM source_documents ORDER BY id LIMIT 1", None
+            "SELECT sha256 FROM source_documents ORDER BY ingested_at, sha256 LIMIT 1",
+            None,
         )
 
-        modules = scalar(
-            f"SELECT count(*) FROM graph_nodes "
-            f"WHERE kind = 'module' AND subject = '{COURSE_SUBJECT}'"
+        # `subject` is stamped on the COURSE node only. The node_subject view
+        # resolves it for learning objectives by walking the 'teaches' edge back
+        # to their course; everything else (modules, questions, visuals, edges)
+        # is scoped by deriving from that LO set, not by a subject column it
+        # does not have.
+        LOS = (
+            "SELECT node_id FROM node_subject WHERE subject = %(subject)s"
         )
-        los = scalar(
-            f"SELECT count(*) FROM graph_nodes "
-            f"WHERE kind = 'learning_objective' AND subject = '{COURSE_SUBJECT}'"
-        )
-        edges = scalar(
-            "SELECT count(*) FROM graph_edges e "
-            "JOIN graph_nodes n ON n.id = e.src "
-            f"WHERE e.edge_type = 'prerequisite_of' AND n.subject = '{COURSE_SUBJECT}'"
-        )
-        q_total = scalar(
-            "SELECT count(*) FROM questions q JOIN graph_nodes n ON n.id = q.lo_id "
-            f"WHERE n.subject = '{COURSE_SUBJECT}'"
-        )
-        q_live = scalar(
-            "SELECT count(*) FROM questions q JOIN graph_nodes n ON n.id = q.lo_id "
-            f"WHERE n.subject = '{COURSE_SUBJECT}' AND q.status = 'live'"
-        )
-        visuals = scalar(
-            "SELECT count(*) FROM visuals v JOIN graph_nodes n ON n.id = v.lo_id "
-            f"WHERE n.subject = '{COURSE_SUBJECT}'"
-        )
+        params = {"subject": COURSE_SUBJECT}
+
+        cur.execute(f"SELECT count(*) FROM ({LOS}) t", params)
+        los = cur.fetchone()[0]
 
         cur.execute(
-            f"SELECT id FROM graph_nodes "
-            f"WHERE kind = 'learning_objective' AND subject = '{COURSE_SUBJECT}' "
-            f"ORDER BY id"
+            f"""SELECT count(*) FROM graph_nodes n
+                 WHERE n.kind = 'module'
+                   AND EXISTS (SELECT 1 FROM graph_edges e
+                                WHERE e.dst_id = n.id AND e.edge_type = 'part_of'
+                                  AND e.src_id IN (SELECT course_id FROM node_subject
+                                                    WHERE subject = %(subject)s))""",
+            params,
         )
+        modules = cur.fetchone()[0]
+        if modules == 0:
+            # Older bundles orient part_of the other way; count both rather than
+            # silently reporting zero modules.
+            cur.execute(
+                f"""SELECT count(*) FROM graph_nodes n
+                     WHERE n.kind = 'module'
+                       AND EXISTS (SELECT 1 FROM graph_edges e
+                                    WHERE e.src_id = n.id AND e.edge_type = 'part_of'
+                                      AND e.dst_id IN (SELECT course_id FROM node_subject
+                                                        WHERE subject = %(subject)s))""",
+                params,
+            )
+            modules = cur.fetchone()[0]
+
+        cur.execute(
+            f"""SELECT count(*) FROM graph_edges e
+                 WHERE e.edge_type = 'prerequisite_of'
+                   AND e.src_id IN ({LOS})""",
+            params,
+        )
+        edges = cur.fetchone()[0]
+
+        cur.execute(f"SELECT count(*) FROM questions WHERE lo_id IN ({LOS})", params)
+        q_total = cur.fetchone()[0]
+
+        cur.execute(
+            f"SELECT count(*) FROM questions WHERE status = 'live' AND lo_id IN ({LOS})",
+            params,
+        )
+        q_live = cur.fetchone()[0]
+
+        cur.execute(f"SELECT count(*) FROM visuals WHERE lo_id IN ({LOS})", params)
+        visuals = cur.fetchone()[0]
+
+        cur.execute(f"SELECT node_id FROM ({LOS}) t ORDER BY node_id", params)
         ids = "\n".join(r[0] for r in cur.fetchall())
         digest = hashlib.sha256(ids.encode("utf-8")).hexdigest()[:16]
 
