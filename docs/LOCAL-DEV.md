@@ -3,7 +3,25 @@
 Everything except the Cloudflare ingress runs on a laptop. This is how the work
 so far was actually verified — it is not a hypothetical setup.
 
-## The short version
+## Two ways in
+
+**Docker — nothing needed on your machine but Docker.** No Node, no Python, no
+Postgres. The `claude` CLI is inside the image and runs on your own subscription;
+you log it in once and it persists.
+
+```bash
+./scripts/local-docker.sh          # build, start, load content
+./scripts/local-docker.sh --login  # one-time: log the CLI into your Claude account
+```
+
+> **Test status, stated plainly:** the compose file and script are written and
+> schema-validated, and the first-boot migration mechanism was exercised against
+> a real Postgres — but the stack has **not been run end to end**, because the
+> container this was built in cannot reach Docker Hub (image pulls are blocked by
+> its network policy). If it trips on your machine, send me the output.
+
+**Native — fully tested end to end**, including from a clean database with and
+without `uv` present.
 
 ```bash
 ./scripts/local-dev.sh

@@ -1,0 +1,87 @@
+# AI.Next MVP 1.0 — LOCAL stack, for driving the build by hand.
+#
+#   ./scripts/local-docker.sh
+#
+# Nothing needed on the host but Docker: no Node, no Python, no Postgres.
+# The `claude` CLI lives inside the app image and runs on YOUR Claude
+# subscription — you log in once (the script tells you how) and the credentials
+# persist in a named volume across restarts and rebuilds.
+#
+# This is deliberately SEPARATE from docker-compose.yml (the box) and
+# docker-compose.mvp1.yml (the comparison environment). It binds to a different
+# port, uses its own volumes, and can never reach either of them.
+name: ainext-local
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ainext_mvp1
+      POSTGRES_USER: ainext
+      # Local only, never exposed beyond the host loopback.
+      POSTGRES_PASSWORD: localdev
+    volumes:
+      - local_pg:/var/lib/postgresql/data
+      # schema + every migration, applied in filename order on FIRST BOOT only.
+      # Postgres runs *.sql here alphabetically, so 00-schema sorts ahead of the
+      # numbered migrations without renaming anything in db/.
+      - ../db/schema.sql:/docker-entrypoint-initdb.d/00-schema.sql:ro
+      - ../db/migrations:/docker-entrypoint-initdb.d/migrations:ro
+      - ./local-initdb.sh:/docker-entrypoint-initdb.d/01-migrations.sh:ro
+    ports:
+      # exposed so you can psql from the host if you want to poke at the data
+      - "127.0.0.1:55433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ainext -d ainext_mvp1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://ainext:localdev@db:5432/ainext_mvp1
+      # Tags every analytics row and cost record. Unset would default to
+      # 'baseline' and file local experiments under the frozen environment.
+      AINEXT_ENVIRONMENT: mvp1
+      AINEXT_THINKING_BUDGET: "1024"
+      NODE_ENV: production
+      CLAUDE_CONFIG_DIR: /repo/.claude
+    volumes:
+      # YOUR Claude login, persisted across restarts and rebuilds.
+      # Removed only by `docker compose down -v`.
+      - local_claude:/repo/.claude
+      # uploads survive restarts so a parsed worksheet is still there tomorrow
+      - local_uploads:/tmp/ainext-uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  # One-shot content load. `profiles:` keeps it out of `up -d` — the script
+  # invokes it explicitly, exactly as the box's loader works, so a restart can
+  # never silently re-load content underneath you.
+  loader:
+    profiles: ["tools"]
+    build:
+      context: .
+      dockerfile: Dockerfile.loader
+    image: ainext-local-loader
+    environment:
+      AINEXT_DB_DSN: "host=db port=5432 dbname=ainext_mvp1 user=ainext"
+      PGPASSWORD: localdev
+    volumes:
+      - ..:/repo:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  local_pg:
+  local_claude:
+  local_uploads:
