@@ -829,6 +829,67 @@ class KeyTerm(BaseModel):
     lesson: str
 
 
+# =============================================================================
+# Explanation / refutation library — ADR-0007 (Student MVP 1.0 comparison build)
+#
+# The PRD's central teaching bet: when a student gets something wrong, the tutor
+# serves content AUTHORED AHEAD OF TIME for that specific misconception, rather
+# than re-deriving an explanation in the moment.
+#
+# ⚠️  Constitution v2.0.0 Principle III is SUSPENDED for these rows, in the
+# comparison environment only (decisions.md Q8): no reviewer exists at this
+# stage, so they ship pipeline-generated and unreviewed. Two consequences are
+# baked into the schema rather than left to convention:
+#   * `generated_by` is REQUIRED — every row can name what produced it;
+#   * there is no `reviewed` field here at all. The loader forces reviewed=false
+#     on insert, so a bundle cannot assert that its own content was reviewed.
+#     Review is something a human does later, in the database, never something
+#     generated content can claim about itself.
+#
+# Additive and defaulted, like the Arabic vertical before it: math, social and
+# Arabic bundles validate and dump byte-identically.
+# =============================================================================
+
+
+class Misconception(BaseModel):
+    """A diagnosable wrong turn a student takes on one learning objective."""
+
+    id: str = Field(pattern=r"^misc:[a-z0-9\-]+:[a-z0-9\-]+$")
+    lo: str
+    label: str = Field(min_length=1)
+    description: str = Field(min_length=1)
+    # How it shows up in an answer. Optional because some misconceptions are
+    # only visible in working, not in a final answer — and a guessed signal is
+    # worse than none, since it drives a wrong diagnosis.
+    signal: Optional[str] = None
+    generated_by: str = Field(min_length=1)
+
+
+class ExplanationEntry(BaseModel):
+    """One authored teaching move for a learning objective."""
+
+    id: str = Field(min_length=1)
+    lo: str
+    entry_type: Literal["worked_example", "faded", "contrasting_case", "refutation"]
+    # Typed steps, same shape discipline as canonical_solution.
+    content: list[ClaimStep] | list[dict] = Field(min_length=1)
+    misconception: Optional[str] = None
+    source_page: Optional[int] = None
+    generated_by: str = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def refutation_needs_target(self) -> "ExplanationEntry":
+        # A refutation with nothing to refute is a bug, not a row. The DB
+        # enforces this too (migration 009); catching it here means the
+        # pipeline fails at assembly rather than at load, with the bundle in
+        # hand to fix.
+        if self.entry_type == "refutation" and not self.misconception:
+            raise ValueError(
+                f"explanation {self.id}: entry_type='refutation' requires a misconception"
+            )
+        return self
+
+
 class SeedBundle(BaseModel):
     # Source-document resolution (per bundle, in batch order):
     #   1. source_document set  -> this bundle defines (and uses) that document
@@ -856,6 +917,9 @@ class SeedBundle(BaseModel):
     # legitimately cites a clause sealed by an earlier bundle (contract §4.5).
     external_rule_refs: list[str] = []
     external_passage_refs: list[str] = []
+    # --- Explanation library (ADR-0007); empty for every pre-MVP1.0 bundle.
+    misconceptions: list[Misconception] = []
+    explanation_entries: list[ExplanationEntry] = []
 
     @model_validator(mode="after")
     def referential_integrity(self) -> "SeedBundle":
@@ -869,6 +933,20 @@ class SeedBundle(BaseModel):
         for q in self.questions:
             if q.lo not in lo_ids:
                 raise ValueError(f"question {q.id}: unknown LO {q.lo}")
+        # Library rows attach to LOs, which for a refutation bundle live in an
+        # earlier bundle — so external_node_refs counts, exactly as it does for
+        # edges above.
+        misc_ids = {m.id for m in self.misconceptions}
+        for m in self.misconceptions:
+            if m.lo not in ids:
+                raise ValueError(f"misconception {m.id}: unknown LO {m.lo}")
+        for x in self.explanation_entries:
+            if x.lo not in ids:
+                raise ValueError(f"explanation {x.id}: unknown LO {x.lo}")
+            if x.misconception and x.misconception not in misc_ids:
+                raise ValueError(
+                    f"explanation {x.id}: unknown misconception {x.misconception}"
+                )
         qids = {q.id for q in self.questions}
         for v in self.visuals:
             if v.lo not in lo_ids:

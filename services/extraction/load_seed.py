@@ -672,6 +672,7 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
             inserted_shas.add(sha)
 
         total_q = total_v = 0
+        total_m = total_x = 0   # misconceptions, explanation-library entries
         deferred_edges: list[tuple] = []  # edges may cross bundles; insert after all nodes
         for b, (sha, _) in zip(bundles, resolved):
             run = b.extraction_run
@@ -724,6 +725,38 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                     (v.id, v.lo, v.question, v.kind, json.dumps(v.spec),
                      v.caption, v.source_page, run_id))
 
+            # ---- explanation library (ADR-0007) ----------------------------
+            # Constitution v2.0.0 Principle III is suspended for these rows in
+            # the comparison environment only: they are pipeline-generated and
+            # ship WITHOUT human review.
+            #
+            # `reviewed` is hard-coded FALSE here and is not readable from the
+            # bundle at all. That is the point: generated content must not be
+            # able to assert that it was reviewed. Review is a human act
+            # performed later against the database, and until it happens
+            #     SELECT count(*) FROM explanation_library WHERE NOT reviewed
+            # is an honest answer to "how much unreviewed teaching is live".
+            for m in b.misconceptions:
+                cur.execute(
+                    """INSERT INTO misconceptions
+                       (id, lo_id, label, description, signal, generated_by)
+                       VALUES (%s,%s,%s,%s,%s,%s)""",
+                    (m.id, m.lo, m.label, m.description, m.signal, m.generated_by))
+                total_m += 1
+            for x in b.explanation_entries:
+                content = [
+                    c if isinstance(c, dict) else c.model_dump(exclude_none=True)
+                    for c in x.content
+                ]
+                cur.execute(
+                    """INSERT INTO explanation_library
+                       (id, lo_id, misconception_id, entry_type, content,
+                        source_page, generated_by, reviewed)
+                       VALUES (%s,%s,%s,%s,%s,%s,%s,FALSE)""",
+                    (x.id, x.lo, x.misconception, x.entry_type,
+                     json.dumps(content), x.source_page, x.generated_by))
+                total_x += 1
+
         for row in deferred_edges:
             cur.execute(
                 """INSERT INTO graph_edges
@@ -746,6 +779,12 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
         conn.commit()
     scope = f" [scoped to {course}]" if course else ""
     print(f"loaded {len(bundles)} bundles{scope}: {total_q} questions ({total_v} live)")
+    if total_m or total_x:
+        # Say it out loud on every load. The suspension of the review gate is a
+        # standing exception, not a default, and a silent load is how a standing
+        # exception quietly becomes the norm.
+        print(f"  explanation library: {total_m} misconceptions, {total_x} entries "
+              f"— ALL stored reviewed=false (ADR-0007, constitution III suspended)")
     # The review gate, stated out loud on every load: whatever did not clear
     # verification is in the database but unreachable by a student.
     held_back = total_q - total_v

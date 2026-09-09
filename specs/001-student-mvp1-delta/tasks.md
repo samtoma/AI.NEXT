@@ -121,11 +121,11 @@ is a stored entry, mastery is a probability that moves with evidence, and the ne
 **Purpose**: make US2's misconception path real. Per decisions.md Q8 this content ships **without**
 human review, flagged and attributed.
 
-- [ ] T039 Create `services/extraction/runbook/refutation.workflow.js` reusing the ADR-0005 conveyor — per LO: enumerate likely misconceptions, author worked example / faded / contrasting case / refutation, verify each against the existing canonical solution, assemble
-- [ ] T040 Create `services/extraction/assemble_refutations.py` producing a validated bundle of `misconceptions` + `explanation_library` rows with page provenance carried through (Principle II)
-- [ ] T041 Extend `services/extraction/load_seed.py` to load the new bundle type, forcing `reviewed=false` and a generator attribution string on every row — the loader must make it impossible to insert generated content that claims to be reviewed
-- [ ] T042 Generate and load the library for the pilot's units on the `mvp1` environment only; confirm the baseline database is untouched
-- [ ] T043 Verify `SELECT count(*) FROM explanation_library WHERE NOT reviewed` returns the expected count and is reportable on demand — this number is what makes the Principle III suspension honest and reversible (SC-011)
+- [X] T039 Create `services/extraction/runbook/refutation.workflow.js` reusing the ADR-0005 conveyor — per LO: enumerate likely misconceptions, author worked example / faded / contrasting case / refutation, verify each against the existing canonical solution, assemble
+- [X] T040 Create `services/extraction/assemble_refutations.py` producing a validated bundle of `misconceptions` + `explanation_library` rows with page provenance carried through (Principle II)
+- [X] T041 Extend `services/extraction/load_seed.py` to load the new bundle type, forcing `reviewed=false` and a generator attribution string on every row — the loader must make it impossible to insert generated content that claims to be reviewed
+- [ ] T042 Generate and load the library for the pilot's units on the `mvp1` environment only; confirm the baseline database is untouched **[BLOCKED — needs the box]** generation needs the Claude runtime and loading needs the mvp1 database; the pipeline is complete and dry-run verified from manifest through assembler.
+- [ ] T043 Verify `SELECT count(*) FROM explanation_library WHERE NOT reviewed` returns the expected count and is reportable on demand — this number is what makes the Principle III suspension honest and reversible (SC-011) **[BLOCKED — needs the box]** the query is ready and the loader forces `reviewed=false`; the count can only be taken against a loaded database.
 
 **Checkpoint**: the tutor teaches misconception-specific content, and we can state exactly how much of it is unreviewed.
 
