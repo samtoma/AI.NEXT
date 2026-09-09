@@ -50,7 +50,9 @@ export async function buildAskContext(
   questionId?: string,
   wrongAnswer?: string,
   /** the request's resolved demo student (lib/student-context.ts) */
-  studentId: number = DEFAULT_STUDENT_ID
+  studentId: number = DEFAULT_STUDENT_ID,
+  /** a just-uploaded worksheet/photo to ground this turn on (PRD B10) */
+  uploadId?: number
 ): Promise<AskContext> {
   const [losRes, edgesRes, masteryRes, qRes, docRes, studentRes, modulesRes, allVisuals] =
     await Promise.all([
@@ -316,7 +318,7 @@ ${focusBlock}`;
   // Retrieval layer (FR-303) — the student-model half of grounding. Renders to
   // "" when nothing is retrieved, so prompts stay byte-identical for a student
   // with no profile and no library entries.
-  const retrieved = await retrieve(studentId, grounding.lo_ids);
+  const retrieved = await retrieve(studentId, grounding.lo_ids, { uploadId });
 
   return {
     systemPrompt: systemPromptFor(surface, student, subject),

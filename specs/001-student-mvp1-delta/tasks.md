@@ -138,14 +138,14 @@ answer.
 
 **Independent Test**: upload a photographed worksheet, ask for the answer, get guided teaching.
 
-- [ ] T044 [US3] Create `app/src/app/api/uploads/route.ts` — multipart intake (JPEG/PNG/PDF, ≤10 MB), storage on the uploads volume, `202` with `uploadId`
-- [ ] T045 [US3] Create `app/src/lib/uploads.ts` parsing uploads through the on-box Claude CLI runtime (research.md R2), writing `parse_status` and `parsed_text`
-- [ ] T046 [US3] Distinguish `unreadable` from `failed` end to end, with different user-facing copy — unreadable asks the student to retype or reshoot, failed offers a retry; never silently guess at an unreadable upload (FR-205, PRD §8)
-- [ ] T047 [US3] Meter upload parsing as its own `surface_kind` in `ai_interactions` and enforce a per-student daily cap (10) — image tokens are materially more expensive and must not hide inside a blended per-student figure (Principle VI)
-- [ ] T048 [US3] Feed parsed upload content into `retrieval.ts` so explanations are grounded in the student's own material (FR-205)
-- [ ] T049 [US3] Apply the guide-don't-answer guardrail to uploaded material identical to typed questions — uploading must not be a way around it (FR-202, SC-009)
-- [ ] T050 [US3] Implement FR-206: use uploaded material for the academic task only; do not retain or comment on incidental personal detail
-- [ ] T051 [P] [US3] Emit `question_asked` (with `mode` and `guardrail_triggered`) and `upload_submitted`
+- [X] T044 [US3] Create `app/src/app/api/uploads/route.ts` — multipart intake (JPEG/PNG/PDF, ≤10 MB), storage on the uploads volume, `202` with `uploadId`
+- [X] T045 [US3] Create `app/src/lib/uploads.ts` parsing uploads through the on-box Claude CLI runtime (research.md R2), writing `parse_status` and `parsed_text`
+- [X] T046 [US3] Distinguish `unreadable` from `failed` end to end, with different user-facing copy — unreadable asks the student to retype or reshoot, failed offers a retry; never silently guess at an unreadable upload (FR-205, PRD §8)
+- [X] T047 [US3] Meter upload parsing as its own `surface_kind` in `ai_interactions` and enforce a per-student daily cap (10) — image tokens are materially more expensive and must not hide inside a blended per-student figure (Principle VI)
+- [X] T048 [US3] Feed parsed upload content into `retrieval.ts` so explanations are grounded in the student's own material (FR-205)
+- [X] T049 [US3] Apply the guide-don't-answer guardrail to uploaded material identical to typed questions — uploading must not be a way around it (FR-202, SC-009) *(prompt-level; enforced in the retrieval block. Verified present in the composed prompt — that the model obeys it needs a full lesson turn.)*
+- [X] T050 [US3] Implement FR-206: use uploaded material for the academic task only; do not retain or comment on incidental personal detail *(prompt-level, enforced at transcription time so incidental detail is never written down.)*
+- [X] T051 [P] [US3] Emit `question_asked` (with `mode` and `guardrail_triggered`) and `upload_submitted`
 
 ---
 
