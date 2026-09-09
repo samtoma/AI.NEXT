@@ -13,8 +13,12 @@ Companion to `DEPLOY.md` (the baseline) and `CICD.md`. First-time bootstrap is i
 | Compose file | `deploy/docker-compose.yml` | `deploy/docker-compose.mvp1.yml` |
 | Database | `ainext_poc` (vol `ainext_pg`) | `ainext_mvp1` (vol `ainext-mvp1_ainext_mvp1_pg`) |
 | App port | `127.0.0.1:3100` | `127.0.0.1:3101` |
-| Hostname | ainext.reletix.com | mvp1.ainext.reletix.com |
+| Hostname | ainext.reletix.com | ainext-mvp1.reletix.com |
 | `AINEXT_ENVIRONMENT` | `baseline` (default) | `mvp1` |
+
+> **Hostnames stay one label deep.** Universal SSL covers `*.reletix.com`, and a wildcard matches
+> exactly one label — `ainext-mvp1.reletix.com` is covered, `mvp1.ainext.reletix.com` is not. Any
+> future environment on this zone follows the same rule.
 
 Both sit behind the **same** Cloudflare Access application, so pilot families are
 granted and revoked in one place. That revocability is what bounds the risk of

@@ -75,7 +75,7 @@ frozen. So environment identity is carried by branch:
 | Compose project | `ainext` | `ainext-mvp1` |
 | App port (localhost) | `127.0.0.1:3100` | `127.0.0.1:3101` |
 | Volumes | `ainext_pg`, `claude_cfg` | `ainext-mvp1_pg`, `ainext-mvp1_claude_cfg` |
-| Hostname | `ainext.reletix.com` | *proposed* `mvp1.ainext.reletix.com` |
+| Hostname | `ainext.reletix.com` | *proposed* `ainext-mvp1.reletix.com` |
 | Access policy | existing email allow-list | same policy, pilot emails added |
 
 Compose's `name:` key namespaces volumes automatically, so the two databases cannot collide. The
@@ -253,4 +253,4 @@ scope. No new violations were introduced by the design.
 |---|---|---|
 | Named human recipient for crisis escalation (research.md R4) | Real students on the environment — the P5 gate | **A person's name from Samuel** |
 | Box memory headroom for a second stack (R5) | P0 rollout | A reading from the box |
-| Hostname preference (R6) | P0 ingress step | Samuel, or accept `mvp1.ainext.reletix.com` |
+| Hostname preference (R6) | P0 ingress step | Samuel, or accept `ainext-mvp1.reletix.com` |

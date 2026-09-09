@@ -136,9 +136,18 @@ baseline's limits — that would change the frozen environment's behaviour under
 
 ## R6. Cloudflare hostname and Access policy
 
-**Decision**: propose `mvp1.ainext.reletix.com`, added as a second public hostname in the
-**Cloudflare Zero Trust dashboard** pointing at `http://localhost:3101`, reusing the existing Access
-application policy with the pilot emails added.
+**Decision**: `ainext-mvp1.reletix.com` — a **single-label sibling** of the baseline, added as a
+second public hostname in the **Cloudflare Zero Trust dashboard** pointing at `http://localhost:3101`,
+reusing the existing Access application policy with the pilot emails added.
+
+**Constraint that decides the shape of the name (Samuel, 2026-09-09).** It must NOT be a nested
+subdomain. Cloudflare's Universal SSL issues a certificate covering `reletix.com` and `*.reletix.com`
+only — wildcards match exactly one label, so `*.reletix.com` covers `ainext-mvp1.reletix.com` but
+**not** `mvp1.ainext.reletix.com`. A nested name needs Advanced Certificate Manager (paid) or a
+dedicated certificate, and until one exists every browser hitting it gets a TLS error before Access
+is ever reached — which would look like a broken environment rather than a missing certificate, and
+would burn an afternoon on the wrong diagnosis. This applies to any future environment on this zone:
+**one label under `reletix.com`, always.**
 
 **Rationale**: DEPLOY.md records that ingress for this box is dashboard-managed, not a local
 `config.yml`, so `cloudflared tunnel route dns` and `systemctl reload cloudflared` do not apply — a
@@ -150,7 +159,8 @@ which matters because revocability is what bounds the R‑Q8 unreviewed-content 
 Access policy would be shared, and the two environments must not share client state); a separate
 tunnel (rejected — unnecessary, and more moving parts on a shared box).
 
-**Open for Samuel**: the hostname itself is a naming preference, not a technical constraint.
+**Settled**: the single-label shape is a technical constraint (above), not a preference. The word
+chosen inside that shape — `ainext-mvp1` — remains Samuel's to change.
 
 ---
 

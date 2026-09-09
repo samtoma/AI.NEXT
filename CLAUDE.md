@@ -7,7 +7,7 @@ AI.Next is a 3-founder edtech startup (founders: Samuel = CTO + solution archite
 
 | | Baseline — **frozen** | Comparison — **active development** |
 |---|---|---|
-| Branch / URL | `main` → ainext.reletix.com | `mvp1` → mvp1.ainext.reletix.com |
+| Branch / URL | `main` → ainext.reletix.com | `mvp1` → ainext-mvp1.reletix.com |
 | Product | Parent-sold, Arabic RTL, 3 subjects, Elo mastery | Student-facing, English LTR, Math only, BKT mastery |
 | Authority | PRD v1.0 (below) | **PRD: AI Tutor — Student MVP v0.4** (Tamer Deif, Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`) |
 

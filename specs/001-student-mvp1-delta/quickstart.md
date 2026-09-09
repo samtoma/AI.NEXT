@@ -62,15 +62,20 @@ docker compose -p ainext-mvp1 -f deploy/docker-compose.mvp1.yml exec app claude
 Ingress on this box is dashboard-managed. `cloudflared tunnel route dns` and
 `systemctl reload cloudflared` **do not apply** and will waste your afternoon.
 
+**The hostname must stay a single label under `reletix.com`.** Universal SSL covers
+`*.reletix.com`, and a wildcard matches exactly one label — so `ainext-mvp1.reletix.com` is covered
+and `mvp1.ainext.reletix.com` is not. A nested name fails TLS in the browser before Access is
+reached, which reads as a broken environment rather than a missing certificate.
+
 1. Zero Trust → Networks → Tunnels → the existing tunnel → Public Hostnames → **Add**
-2. Hostname `mvp1.ainext.reletix.com` → Service `http://localhost:3101`
+2. Hostname `ainext-mvp1.reletix.com` → Service `http://localhost:3101`
 3. Access → Applications → the existing AI.Next app → add the new hostname to it, so one policy
    covers both environments and pilot families are added and revoked in one place.
 
 Verify it never serves publicly:
 
 ```bash
-curl -sI https://mvp1.ainext.reletix.com | head -1     # expect a 302 to cloudflareaccess.com
+curl -sI https://ainext-mvp1.reletix.com | head -1     # expect a 302 to cloudflareaccess.com
 ```
 
 ## 5. Load content and prove parity
@@ -117,7 +122,7 @@ waive the check.
 
 ```bash
 curl -sI https://ainext.reletix.com      | head -1
-curl -sI https://mvp1.ainext.reletix.com | head -1
+curl -sI https://ainext-mvp1.reletix.com | head -1
 docker compose -p ainext      ps      # baseline untouched, same uptime as before
 docker compose -p ainext-mvp1 ps
 ```

@@ -63,11 +63,11 @@ shared production box.
 - [ ] T013 [US7] Bootstrap `/opt/reletix/AI.NEXT-mvp1` on the box from branch `mvp1`, with its own `deploy/.env` and a **different** `POSTGRES_PASSWORD` than the baseline
 - [ ] T014 [US7] Bring the stack up with `docker compose -p ainext-mvp1 -f deploy/docker-compose.mvp1.yml up -d --build` and confirm health on `127.0.0.1:3101`
 - [ ] T015 [US7] Complete the one-time Claude CLI OAuth login inside the new stack's `app` container — the new `claude_cfg` volume does not inherit the baseline's login
-- [ ] T016 [US7] Add public hostname `mvp1.ainext.reletix.com` → `http://localhost:3101` in the **Cloudflare Zero Trust dashboard** (not a local `config.yml`) and attach it to the existing Access application so pilot families are granted and revoked in one place (FR-907)
+- [ ] T016 [US7] Add public hostname `ainext-mvp1.reletix.com` → `http://localhost:3101` in the **Cloudflare Zero Trust dashboard** (not a local `config.yml`) and attach it to the existing Access application so pilot families are granted and revoked in one place (FR-907)
 - [ ] T017 [US7] Load the identical math bundles into the new database via the loader container (`--all --course course:prep3-math-en`)
 - [ ] T018 [US7] Run `parity_check.py` against both databases and confirm GREEN including live counts — 10 modules / 90 LOs / 112 prerequisite edges / 450 questions / 212 visuals
 - [ ] T019 [US7] Verify the baseline stack was never restarted, redeployed or mutated during the whole procedure (`docker compose -p ainext ps` uptime unbroken) — FR-903
-- [ ] T020 [US7] Confirm `curl -sI https://mvp1.ainext.reletix.com` returns a 302 to Cloudflare Access and the environment is never publicly reachable
+- [ ] T020 [US7] Confirm `curl -sI https://ainext-mvp1.reletix.com` returns a 302 to Cloudflare Access and the environment is never publicly reachable
 
 **Checkpoint**: the comparison is now physically possible. Everything after this is the experience.
 
