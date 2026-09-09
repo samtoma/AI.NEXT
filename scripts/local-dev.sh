@@ -33,8 +33,49 @@ die()  { printf '\n\033[31m✗ %s\033[0m\n' "$*" >&2; exit 1; }
 
 PSQL="psql -h $HOST -p $PORT -U $USER"
 
+# --------------------------------------------------------------- 0. preflight
+say "0/7  Prerequisites"
+
+command -v node >/dev/null || die "node not found. Install Node 20+ (macOS: brew install node)"
+NODE_MAJOR=$(node -p "process.versions.node.split('.')[0]")
+[ "$NODE_MAJOR" -ge 20 ] || die "Node $NODE_MAJOR found; Next 16 needs Node 20+ (macOS: brew install node)"
+ok "node $(node -v)"
+command -v npm >/dev/null || die "npm not found"
+
+# The extraction pipeline needs pydantic + psycopg. `uv` reads them straight from
+# services/extraction/pyproject.toml and manages its own environment, so it is
+# the path of least friction; a venv is the fallback when uv is absent.
+PYRUN=""
+if command -v uv >/dev/null; then
+  PYRUN="uv run"
+  ok "uv $(uv --version 2>/dev/null | awk '{print $2}') — Python deps handled automatically"
+else
+  VENV="$ROOT/services/extraction/.venv"
+  if [ ! -x "$VENV/bin/python" ]; then
+    warn "uv not found — creating a virtualenv instead (install uv to skip this: brew install uv)"
+    python3 -m venv "$VENV" || die "could not create a virtualenv; install uv (brew install uv)"
+    "$VENV/bin/pip" install --quiet --upgrade pip
+    "$VENV/bin/pip" install --quiet "pydantic>=2.7" "psycopg[binary]>=3.2" \
+      || die "could not install pydantic/psycopg into $VENV"
+    ok "created $VENV with pydantic + psycopg"
+  else
+    ok "using existing virtualenv $VENV"
+  fi
+  PYRUN="$VENV/bin/python"
+fi
+
+# The `claude` CLI is only needed for lesson and chat turns — it runs on YOUR
+# Claude subscription, no API key. Everything else works without it, so this is
+# a warning rather than a failure.
+if command -v claude >/dev/null; then
+  ok "claude CLI on PATH — lesson/chat turns and upload parsing will use your account"
+else
+  warn "claude CLI not found — practice, grading, mastery and the dashboard all work;"
+  echo "     lesson/chat turns and upload OCR will not. Install Claude Code and run \`claude\` once to log in."
+fi
+
 # ---------------------------------------------------------------- 1. postgres
-say "1/6  PostgreSQL"
+say "1/7  PostgreSQL"
 command -v psql >/dev/null || die "psql not found. macOS: brew install postgresql@17 && brew services start postgresql@17"
 if ! $PSQL -d postgres -tc 'select 1' >/dev/null 2>&1; then
   warn "cannot connect to $HOST:$PORT as $USER"
@@ -56,7 +97,7 @@ else
 fi
 
 # --------------------------------------------------------------- 2. migrations
-say "2/6  Schema and migrations"
+say "2/7  Schema and migrations"
 DBQ="$PSQL -d $DB -v ON_ERROR_STOP=1 -q"
 if $PSQL -d $DB -tAc "select to_regclass('public.graph_nodes')" | grep -q graph_nodes; then
   ok "schema already applied"
@@ -69,15 +110,14 @@ for m in "$ROOT"/db/migrations/*.sql; do
 done
 
 # ------------------------------------------------------------------ 3. content
-say "3/6  Curriculum content"
+say "3/7  Curriculum content"
 LOADED=$($PSQL -d $DB -tAc "select count(*) from questions" 2>/dev/null || echo 0)
 if [ "$LOADED" -ge 450 ]; then
   ok "$LOADED questions already loaded"
 else
-  command -v uv >/dev/null && RUN="uv run" || RUN="python3"
   ( cd "$ROOT/services/extraction" \
     && AINEXT_DB_DSN="host=$HOST port=$PORT dbname=$DB user=$USER" \
-       $RUN load_seed.py --all --course course:prep3-math-en ) \
+       $PYRUN load_seed.py --all --course course:prep3-math-en ) \
     || die "content load failed"
   ok "loaded"
 fi
@@ -90,13 +130,15 @@ PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions set status='live', rev
 [ "$PROMOTED" -gt 0 ] && ok "promoted $PROMOTED question(s) to live" || ok "all questions live"
 
 # ------------------------------------------------------------------- 4. parity
-say "4/6  Content parity"
+say "4/7  Content parity"
+# Same runner as the loader: bare python3 would not have psycopg and the check
+# would fail for a reason that has nothing to do with parity.
 ( cd "$ROOT/services/extraction" \
-  && python3 parity_check.py --candidate "host=$HOST port=$PORT dbname=$DB user=$USER" \
+  && $PYRUN parity_check.py --candidate "host=$HOST port=$PORT dbname=$DB user=$USER" \
      | sed 's/^/  /' ) || warn "parity RED — see above"
 
 # ---------------------------------------------------------------------- 5. app
-say "5/6  App configuration"
+say "5/7  App configuration"
 ENVF="$ROOT/app/.env.local"
 if [ -f "$ENVF" ] && grep -q AINEXT_ENVIRONMENT "$ENVF"; then
   ok ".env.local already configured"
@@ -113,7 +155,7 @@ if [ -d "$ROOT/app/node_modules" ]; then ok "dependencies present"
 else ( cd "$ROOT/app" && npm install ) >/dev/null && ok "npm install"; fi
 
 # -------------------------------------------------------------------- 6. serve
-say "6/6  Ready"
+say "6/7  Ready"
 STUDENTS=$($PSQL -d $DB -tAc "select count(*) from students")
 cat <<INFO
   database   $DB on $HOST:$PORT
