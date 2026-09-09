@@ -1,8 +1,24 @@
 # Running the comparison build locally
 
-Everything except the Cloudflare ingress and the Claude runtime runs on a laptop.
-This is how the Phase 1–6 work was actually verified — it is not a hypothetical
-setup.
+Everything except the Cloudflare ingress runs on a laptop. This is how the work
+so far was actually verified — it is not a hypothetical setup.
+
+## The short version
+
+```bash
+./scripts/local-dev.sh
+```
+
+Creates the database, applies the schema and all nine migrations, loads the 450
+questions, promotes them, runs the parity check, writes `app/.env.local` and
+starts the dev server on http://localhost:3000. Safe to re-run — every step
+skips work already done. `--reset` starts from an empty database, `--no-serve`
+prepares without starting the server.
+
+If it cannot reach Postgres it tells you the exact command for your platform.
+
+The rest of this document is what that script does, step by step, for when you
+need to do part of it by hand.
 
 ## 1. Postgres
 
