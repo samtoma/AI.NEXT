@@ -217,6 +217,30 @@ research.md R4. Until then the environment carries founders only.
 
 ---
 
+## Phase 13: Design system — the Nour visual language **[ADDED 2026-09-10]**
+
+Executed out of band, after the design handoff landed (Drive folder
+`1eAJeMHy5m3D-FhS8RAv2KMg5F6eO0QOM`). It is recorded here rather than left as untracked work
+because it changed shipped behaviour that no requirement covered: the Phase 8 dashboard used a
+burnt-sienna mastery ramp, and the design system forbids red outright. Traceability now runs
+through **FR-1001…FR-1010** (spec.md §Design system) and
+[traceability.md §8](./traceability.md).
+
+- [X] T074 Add the Nour token layer to `app/src/app/globals.css` under `[data-ds="nour"]`, set from `IS_MVP1` in `app/src/app/layout.tsx` — redefine the EXISTING semantic tokens rather than adding a parallel set, so no component forks per environment and the frozen baseline renders unchanged (FR-1001)
+- [X] T075 Replace the mastery ramp in `app/src/lib/mastery.ts` with the five discrete token steps and a `started` flag — a cold-start 0.30 prior and a practised 0.30 are the same number and must not look the same (FR-1002, FR-1004)
+- [X] T076 Rename the mastery bands to the token names (`attempted`, not `weak`) and render a legend on `/dashboard`, so identity is never carried by colour alone (FR-1003, FR-1009)
+- [X] T077 Load Baloo Bhaijaan 2 + Cairo + IBM Plex Mono via `next/font`, both Arabic subsets included, and force Arabic out of the mono stack in `globals.css` (FR-1007)
+- [X] T078 Flip the check-in and Today's Plan headlines to English-first with Arabic at equal size and weight, spacing from flex rather than inline margins (FR-1006, FR-208)
+- [X] T079 Add `/dashboard` to the shell navigation — it was built in Phase 8 with no way into it, which is the same as not having been built (FR-401)
+- [X] T080 Publish the six-artboard design canvas and commit its source to `docs/design/nour/`, recording the master-vs-Play choice as Samuel's to confirm (constitution Principle I)
+
+**Not done, and deliberately so**: `.anim-mastered` (FR-1010) is defined and unspent — the one
+signature spring is reserved for a proficient → mastered transition, which needs live band movement
+to fire. Spending it anywhere else is what makes it stop meaning anything.
+
+
+---
+
 ## Dependencies
 
 ```
@@ -232,6 +256,8 @@ Phase 1 Setup
                  └─> Phase 10 US8 Measurement .. needs flows to instrument
                         └─> Phase 11 Safety ⛔ HARD GATE → real students
                                └─> Phase 12 Polish
+
+Phase 13 Design system ....... independent of the gate; applied to Phases 4-8 surfaces
 ```
 
 **US6 (trial, payment, plans) has no tasks** — deferred by decisions.md Q7.

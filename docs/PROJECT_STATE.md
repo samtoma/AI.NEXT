@@ -1,7 +1,47 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-08
+> Last updated: 2026-09-10
+
+## 🏗️ BUILD IN FLIGHT — Student MVP 1.0, 49/80 tasks, nothing on the box yet (2026-09-10, `claude/tamer-shared-drive-access-ddpypu`)
+
+**Read [`specs/001-student-mvp1-delta/traceability.md`](../specs/001-student-mvp1-delta/traceability.md) first** —
+it maps all 61 functional requirements to the code that implements them and the evidence that
+proves it, and it is deliberately harsher than `tasks.md`: a requirement whose code exists but has
+never been executed does not count as done there.
+
+**Two environments, one book.** Baseline `main` → `ainext.reletix.com` stays frozen. Comparison
+`mvp1` → **`ainext-mvp1.reletix.com`** — note the single label: Cloudflare Universal SSL wildcards
+match exactly one, so a nested `mvp1.ainext.…` fails TLS before Access is ever reached
+(research.md R6).
+
+**Done and exercised against real data (VERIFIED):**
+- **BKT mastery** replaces Elo — pure `lib/bkt.ts`, bitemporal evidence trail, all six contract
+  invariants tested. Live walk: 0.3000 → 0.1458 → 0.4909 → 0.8314 → 0.9612, saturating at 0.9800
+  and still dropping to 0.8737 on one wrong answer.
+- **Retrieval seam** (`lib/retrieval.ts`) — the single grounding composition point.
+- **Environment attribution** on every event, ledger row and cost record, from configuration only.
+- **Content-parity gate** (`parity_check.py`) — proven to catch its target failure: a fresh scoped
+  load reports 450 total but only **421 live**, which a totals-only check would have called parity.
+- **Per-topic dashboard** with no blended aggregate computed anywhere.
+- **Identity as a picker**, grade + interests captured, validated server-side.
+- **The Nour design system**, applied as one token block under `[data-ds="nour"]`.
+
+**Written but never met the box (BUILT):** the `ainext-mvp1` compose stack, the explanation/
+refutation pipeline, upload parsing through the on-box Claude CLI, the CI branch→environment matrix.
+
+**Runs locally today**: `./scripts/local-dev.sh` — Postgres, migrations, the full math bundle and
+the app. See `docs/LOCAL-DEV.md`.
+
+**Blocked on Samuel, in priority order:**
+1. **T067 — name the crisis-escalation recipient.** Phase 11 safety is a hard gate before any real
+   student, and an unmonitored channel produces a record that looks like a safeguard and is not one.
+2. **FR-306** (mid-year placement) and **FR-402** (exam preparation) read as in-scope and are
+   unbuilt — build or defer explicitly.
+3. **SC-007** is not buildable as written; **SC-004** still references "verified signups", which
+   decisions.md Q5 replaced with the picker.
+4. **T001** — create and push the long-lived `mvp1` branch.
+5. Design: **master** variant shipped rather than **Play**; reversible as a token swap.
 
 ## 🔀 NEW PRD ADOPTED — scope locked, constitution v2.0.0, ready to build (2026-09-08, `claude/tamer-shared-drive-access-ddpypu`)
 **`PRD: AI Tutor — Student MVP` v0.4** (Tamer Deif, Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`)

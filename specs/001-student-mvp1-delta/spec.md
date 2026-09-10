@@ -287,8 +287,12 @@ with its properties, tagged with which environment produced it.
 
 Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-3xx** student model,
 **FR-4xx** progress, **FR-5xx** parent, **FR-6xx** safety, **FR-7xx** billing, **FR-8xx** analytics,
-**FR-9xx** comparison environment. Baseline requirements referenced as `B/FR-0xx` are from
-`specs/000-baseline/spec.md`.
+**FR-9xx** comparison environment, **FR-10xx** design system. Baseline requirements referenced as
+`B/FR-0xx` are from `specs/000-baseline/spec.md`.
+
+Implementation status for every requirement below — what code exists and what actually proves it
+works — is tracked in [traceability.md](./traceability.md), which is deliberately harsher than this
+document: a requirement whose code exists but has never been executed does not count as done there.
 
 ### Carried over unchanged (the constant)
 
@@ -444,6 +448,42 @@ Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-
 - **FR-908**: The baseline environment MUST be instrumented to emit the same conversion metric
   (SC-005), and that change MUST be provably behaviour-neutral — metric-only, no teaching change —
   or the baseline stops being a baseline (constitution v2.0.0 Principle XI).
+
+### Design system & visual language **[ADDED 2026-09-10]**
+
+The *Nour Design System v0.2* handoff (Drive `1eAJeMHy5m3D-FhS8RAv2KMg5F6eO0QOM`) is the visual
+authority for this environment. These requirements exist because it was possible to ship a
+behaviour that violated a stated product rule — the Phase 8 dashboard's burnt-sienna mastery ramp —
+with nothing in the requirement set able to catch it. They are written as product constraints, not
+as styling preferences: each one names a student-visible behaviour with a reason behind it.
+
+- **FR-1001**: The comparison environment MUST apply the Nour design system. The frozen baseline
+  MUST remain visually unchanged, so the visual language is never a confounding variable in the
+  comparison (Principle XI).
+- **FR-1002**: **No red and no coral may appear in the product palette.** A wrong answer MUST grey
+  out and invite a retry rather than being marked in a warning colour. The persona's stated fear is
+  looking stupid, and a red screen is what that fear looks like.
+- **FR-1003**: Mastery MUST be presented as named bands alongside the value, never by colour alone,
+  so the scale survives greyscale, colour-vision deficiency and a screen reader.
+- **FR-1004**: An objective or topic with **no attempt evidence** MUST NOT be rendered in a lit
+  mastery band. A cold-start prior and a practised score of the same value must be visually
+  distinguishable.
+- **FR-1005**: Text MUST never be rendered in a light colour on the amber action fill, and a screen
+  MUST carry at most one dominant accent.
+- **FR-1006**: Where both scripts appear together, Arabic and English MUST render at equal size and
+  weight, each carrying its own direction. Spacing between them MUST come from layout, never from
+  direction-relative margins.
+- **FR-1007**: Arabic MUST never be set in the monospace stack and MUST never be letter-spaced.
+- **FR-1008**: Equations MUST render left-to-right inline regardless of page direction.
+- **FR-1009**: The product MUST NOT contain leaderboards, class ranking, peer comparison, streak
+  shaming, or "you're behind" framing on any surface.
+- **FR-1010**: The single signature motion MUST be reserved for a proficient → mastered transition,
+  and MUST respect `prefers-reduced-motion`.
+
+**Open decision (Samuel's, per Principle I)**: the handoff ships two variants — *master* (15–18)
+and *Play* (10–16) — and forbids mixing them in one build. Prep-3 is 14–15 and sits inside both.
+**Master is implemented**, on the reasoning that the comparison already varies BKT against Elo and a
+second visual variable is a confound. Reversal is a token swap.
 
 ### Key Entities
 

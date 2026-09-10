@@ -1,0 +1,182 @@
+# Traceability — Student MVP 1.0 comparison build
+
+**Status date**: 2026-09-10 · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
+**Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
+constitution [v2.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
+
+This document answers one question per row: **for this requirement, what code exists, and what
+actually proves it works?** It is the bridge between the spec's 51 functional requirements and the
+73-task breakdown, and it is deliberately harsher than either — a requirement whose code exists but
+has never been executed is not "done" here.
+
+## Status vocabulary
+
+| Status | Means |
+|---|---|
+| **VERIFIED** | Code exists **and** was executed in this environment — against a loaded database, a passing test, or a rendered page. |
+| **BUILT** | Code exists and typechecks, but the thing that would prove it needs the box, the Claude runtime, or a browser session nobody has run. |
+| **PARTIAL** | Some of the requirement is real; the rest is named in the Gap column. |
+| **OPEN** | Not started. |
+| **BLOCKED** | Cannot proceed here — the blocker is named. |
+| **DEFERRED** | Out of scope by an explicit decision, with the decision cited. |
+
+**Counting rule**: a requirement is counted once, at its weakest part. FR-207 is PARTIAL, not
+"BUILT with a note", because half of it does not exist.
+
+---
+
+## 1. Carried over unchanged — the constant
+
+These are the baseline guarantees the rebuild is forbidden to drop. They are restated as
+requirements precisely so that "we rebuilt it and grounding quietly went away" cannot happen
+without a checklist row going red.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-C01 | Grounded teaching — never solved from scratch | **BUILT** | `app/src/lib/retrieval.ts`, `lib/ask.ts`, `lib/lesson.ts` (T033–T034) | Prompt-capture harness (T037) needs a live DB; verified by deliberate diff review instead — the refactor touches ledger inserts and appends a retrieval block that renders to `""` when nothing is retrieved |
+| FR-C02 | Review-gate machinery intact; suspension is a **flag**, not a deletion | **VERIFIED** | `db/migrations/009` `explanation_library.reviewed BOOLEAN DEFAULT FALSE`; `load_seed.py` forces `false` | Constraint fired against a real database; `SELECT count(*) … WHERE NOT reviewed` is the reversibility receipt (T043, needs the box to have a number) |
+| FR-C03 | Deterministic server-side grading, transactional mastery | **VERIFIED** | `app/src/app/api/attempts/route.ts` — `FOR UPDATE`, row-closing bitemporal write | 56 unit tests pass; live BKT walk 0.3000 → 0.1458 → 0.4909 → 0.8314 → 0.9612 |
+| FR-C04 | Per-call AI cost/token/latency/student logging, environment-stamped | **BUILT** | `app/src/lib/db.ts` write paths; `ai_interactions.environment` + `surface_kind` (T012) | Schema verified; per-surface rows accumulate only under real traffic |
+| FR-C05 | Operational safety for both environments | **BUILT** | `deploy/DEPLOY-MVP1.md` rails (never `down -v`, never `system prune`), compose project isolation | Cannot be proven without the box (T019) |
+
+---
+
+## 2. Identity & onboarding — FR-1xx
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-101 | Identity is a **picker, never a login** | **VERIFIED** | `components/DemoStudentSwitcher.tsx` (visible variant), `app/student/page.tsx` (T024) | Rendered and screenshotted; no password field exists anywhere in the tree |
+| FR-102 | Selected student validated **server-side** every request | **VERIFIED** | `lib/student-context.ts` → `resolveStudentContext()` (T021) | Cookie value is validated against the `students` table; an unknown id falls back rather than trusting the client |
+| FR-103 | Capture grade 7–12, seed the student model with it | **VERIFIED** | `api/demo-students/route.ts`, `lib/profile.ts` `GRADES` (T022) | Both seeded students carry a grade (9, 10) in the live database |
+| FR-104 | Interest capture, five categories + Sports/Music detail | **VERIFIED** | `lib/profile.ts` `INTEREST_CATEGORIES`/`DETAIL_CATEGORIES`; `students.interests`, `interest_detail` JSONB (T023) | Live row: `{sports,music}` with `{"music":{"which":["guitar"]},"sports":{"which":["football"]}}` |
+| FR-105 | Remember the last student and lesson position across visits | **BUILT** | Cookie persistence + `?lesson=` position (T026) | Needs a multi-visit browser session to prove |
+| FR-106 | Self-signup with email/phone verification | **DEFERRED** | — | decisions.md Q5 — the picker replaces it for the PoC |
+
+---
+
+## 3. Learning core — FR-2xx
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-201 | Walk the curriculum one unit at a time, prerequisite-sequenced | **VERIFIED** | `lib/queries.ts` plan assembly over `graph_edges.edge_type='prerequisite_of'` | Today's Plan renders five real questions: three weakest-with-prerequisites-met, one spaced review, one stretch |
+| FR-202 | Ask anything at any point; guided teaching, never the answer handed over | **BUILT** | `api/ask/route.ts`, `lib/ask.ts` | The guardrail path exists and is prompt-level; proving it needs the Claude runtime |
+| FR-203 | Interests frame explanations **only where a real analogy exists** | **BUILT** | `lib/retrieval.ts` profile attributes | Deliberately conditional; needs live turns to observe |
+| FR-204 | Return a stopped student to where they left off | **BUILT** | T026, shared with FR-105 | Same gap |
+| FR-205 | Accept JPEG/PNG/PDF uploads from anywhere in the lesson | **VERIFIED** | `api/uploads/route.ts` (≤10 MB, `202` + poll), `lib/uploads.ts` | Intake, storage and status transitions exercised locally; **parse** needs the on-box Claude CLI |
+| FR-206 | Uploaded material used for the academic task only | **BUILT** | Prompt constraint (T050) | Prompt-level; needs live turns |
+| FR-207 | Tone adapts to **grade level** and to **how engaged the student appears** | **PARTIAL** | Grade reaches the prompt via `retrieval.ts:143`; **no engagement signal exists** | Gap: nothing measures engagement — no idle/latency/retry signal is collected or passed |
+| FR-208 | English LTR by default; direction never hard-coded | **VERIFIED** | `app/layout.tsx` (no `dir` on `<html>`), `globals.css` logical properties, `lib/subjects.ts` direction seam (T025, T074) | `<html>` carries no `dir`; the check-in, plan and dashboard lead in English with Arabic at equal size and weight |
+
+---
+
+## 4. Student model & retrieval — FR-3xx · **the hypothesis under test**
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-301 | Mastery as a **probability** with an inspectable evidence trail | **VERIFIED** | `lib/bkt.ts` (pure), `mastery.evidence` JSONB, `contracts/bkt.md` | 8 tests over all six contract invariants; live walk saturates at exactly 0.9800 after 15 correct and still drops to 0.8737 on one wrong — invariant 3 (revisability) holds |
+| FR-302 | Model holds mastery, grade, language preference, interests | **VERIFIED** | `db/migrations/009` `students` columns | Live rows carry all four |
+| FR-303 | A retrieval layer assembles grounding **before** any model call | **VERIFIED** | `lib/retrieval.ts` — the single composition seam | Nearest-skills CTE executed against the real graph; a column-name bug (`src`/`dst` vs `src_id`/`dst_id`) that would have failed **every tutor turn** was found only by running it |
+| FR-304 | Explanation library as first-class content, `reviewed=false` in this environment only | **BUILT** | `migrations/009`, `services/extraction/runbook/refutation.workflow.js`, `assemble_refutations.py`, `load_seed.py` | Pipeline dry-run verified end to end from manifest to assembler; **generation and load need the box** (T042) |
+| FR-305 | No library entry ⇒ serve the standard correct explanation and raise an authoring gap | **BUILT** | `lib/explanations.ts` (T035–T036) | Lookup path typechecks; needs library rows to exercise |
+| FR-306 | A student joining mid-year is **placed by assessment**, not assumed to start at zero | **OPEN** ⚠️ | — | **No placement flow exists.** Not deferred in the spec, so it currently reads as in-scope and unbuilt — see §9 |
+| FR-307 | Every attempt records diagnosis type, misconception, stance, confidence | **VERIFIED** | `api/attempts/route.ts`, `attempts` diagnosis columns (T032) | Columns exist and are written; `confidence` deliberately nullable |
+
+---
+
+## 5. Progress & assessment — FR-4xx
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-401 | Break performance down **by topic**, never a single blended number | **VERIFIED** | `lib/dashboard.ts` (computes no aggregate at all), `app/dashboard/page.tsx`, `api/dashboard/route.ts` | Rendered against live BKT data; the module exposes no overall figure, so a caller cannot render one by accident |
+| FR-402 | Exam preparation — high-yield topics and question patterns | **OPEN** ⚠️ | — | Not built, not deferred — see §9 |
+
+---
+
+## 6. Parent, safety, billing, analytics — FR-5xx…FR-8xx
+
+| FR | Requirement | Status | Implementation | Proof / blocker |
+|---|---|---|---|---|
+| FR-501 | Read-only parent view of the same data | **OPEN** | — | Phase 9 (T055–T058) |
+| FR-502 | Supportive, non-punitive threshold alerts | **OPEN** | — | Phase 9 |
+| FR-601 | Never encourage or normalise self-harm; respond safely | **OPEN** | — | Phase 11 — **hard gate before any real student** |
+| FR-602 | Crisis flags reach a human **immediately**, off the analytics path | **BLOCKED** ⛔ | — | **T067 — Samuel must name the recipient.** An unmonitored channel produces a record that looks like a safeguard and is not one |
+| FR-603 | No student's data exposed to another | **PARTIAL** | Cloudflare Access boundary; picker is not access-scoped per family | Documented honestly as a pilot limitation; the parent view (FR-501) must carry a visible notice |
+| FR-604 | Account-sharing deterrence | **DEFERRED** | — | No accounts to share |
+| FR-701…707 | Trial, payment, plans | **DEFERRED** | — | decisions.md Q7 — payments out of this build |
+| FR-801 | Emit the PRD §13 event taxonomy | **PARTIAL** | `lib/analytics.ts`, `api/analytics/route.ts`; emitters for `student_created`, `student_selected`, `session_started`/`_ended`, `explanation_delivered`, `retrieval_attempt_started`/`_submitted`, `question_asked`, `upload_submitted`, `dashboard_viewed` | Gap: `parent_view_opened` (T058) and the safety events (Phase 11) |
+| FR-802 | Safety-flag events carry the flag type and nothing else | **BUILT** | `safety_flags` table — no transcript, no excerpt column exists | Schema enforces it structurally; emission is Phase 11 |
+
+---
+
+## 7. Comparison environment — FR-9xx · **the reason this branch exists**
+
+| FR | Requirement | Status | Implementation | Proof / blocker |
+|---|---|---|---|---|
+| FR-901 | Every event, ledger row and cost record identifies its environment | **VERIFIED** | `lib/env.ts` (config only — never inferred from the request host), `lib/db.ts`, `lib/analytics.ts` | A misconfigured stack fails loudly rather than producing quietly-plausible pooled data |
+| FR-902 | A separate isolated stack — own volumes, own port, own password | **BUILT** | `deploy/docker-compose.mvp1.yml` — project `ainext-mvp1`, `127.0.0.1:3101`, own `pg` and `claude_cfg` volumes | T013–T014 need the box |
+| FR-903 | Both reachable at once; the baseline is never restarted or mutated | **BUILT** | Compose project separation; DEPLOY-MVP1 procedure | T019 verifies uptime unbroken — needs the box |
+| FR-904 | Same bundles both sides; an automated check proves content parity | **VERIFIED** | `services/extraction/parity_check.py` | Proven to catch its target failure: a fresh scoped load gives 450 total but only **421 live** (Unit 1's 29 demoted) — a totals-only check would have called that parity. A `source_documents` bug that returned **zero rows instead of erroring** was found the same way |
+| FR-905 | No Arabic or Social Studies content in this environment | **VERIFIED** | `COURSE_SUBJECT="math"`, `node_subject` view scoping | Loader and parity check are both course-scoped |
+| FR-906 | Provisioning removes no volumes on the shared box | **BUILT** | DEPLOY-MVP1 rails | Procedural; verified by following it (T013) |
+| FR-907 | Behind Cloudflare Access, explicitly invited list | **BLOCKED** | Hostname `ainext-mvp1.reletix.com` fixed at **one label** (research.md R6) | T016 — needs the Cloudflare Zero Trust dashboard |
+| FR-908 | The baseline emits the same conversion metric, with **no teaching change** | **OPEN** | — | T059 — a deliberately narrow PR to `main`; T060 requires **zero** prompt diffs |
+
+---
+
+## 8. Design system & visual language — FR-10xx **[NEW]**
+
+Added 2026-09-10. The design revamp was executed against the *Nour Design System v0.2* handoff
+(Drive `1eAJeMHy5m3D-FhS8RAv2KMg5F6eO0QOM`) with no corresponding requirements in the spec, which
+made a shipped behaviour untraceable: the burnt-sienna mastery ramp violated a stated product rule
+and nothing in the requirement set could have caught it. These rows close that gap.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-1001 | The comparison build MUST apply the Nour design system; the frozen baseline MUST be visually unchanged | **VERIFIED** | `globals.css` `[data-ds="nour"]`, set from `IS_MVP1` in `layout.tsx` | One token block, no component forks; with the attribute absent every surface renders as before |
+| FR-1002 | **No red and no coral** may appear in the product palette. A wrong answer greys out and invites a retry | **VERIFIED** | `lib/mastery.ts` five-step ramp; `--rust` remapped to the neutral inactive treatment | Rendered dashboard contains no `#b8472a`/`#cf9227`; the ramp is `#EFEEF6 → #F0A22F → #D9A75A → #8FB98A → #2F9E8F` |
+| FR-1003 | Mastery MUST be shown as named bands, never colour alone | **VERIFIED** | `MASTERY_LEGEND`, per-row `pct` + band name, `role="img"` labels | Every row states the percentage and the band; the legend names all five steps |
+| FR-1004 | An objective with **no evidence** MUST NOT be shown in a lit band | **VERIFIED** | `masteryColor(score, alpha, started)` | A cold-start 0.30 prior and a practised 0.30 no longer look identical; unopened lessons render grey, not amber |
+| FR-1005 | Never white text on amber; one dominant accent per screen | **VERIFIED** | `--nour-on-action: #141833`; `--accent` mapped to indigo, not amber | 31 `bg-accent`+`text-paper` call sites keep a legal pairing |
+| FR-1006 | Bilingual pairs MUST render at **equal size and weight**, each carrying its own direction | **VERIFIED** | Flex gaps (not inline margins) in `LessonCheckIn`, `StudentLoop` | Fixed a real defect: `margin-inline-start` on a `dir="rtl"` span resolves to its **right** edge, so the scripts rendered flush — `I'm lostمش فاهم حاجة` |
+| FR-1007 | Arabic MUST never be set in the mono stack or letter-spaced | **VERIFIED** | `globals.css` `[lang="ar"]`/`[dir="rtl"]` override | IBM Plex Mono carries no Arabic script; the override forces Cairo |
+| FR-1008 | Equations render LTR inline in any page direction | **VERIFIED** | `.katex { direction: ltr }` under the Nour scope; `dir="ltr"` on maths spans | Constitution v2.0.0 Principle V |
+| FR-1009 | No leaderboards, ranking, peer comparison, or "you're behind" framing | **VERIFIED** | Band names are factual (`attempted`, not `weak`); no ranking surface exists | The dashboard states "nothing here is a score, and nobody else sees it" |
+| FR-1010 | The signature spring is reserved for proficient → mastered | **BUILT** | `.anim-mastered` (420 ms, `--spring-pop`), respects `prefers-reduced-motion` | Defined and unspent — needs a live band transition to observe |
+
+**Open design decision (Samuel's call, constitution Principle I):** the **master** variant ships
+rather than **Play**. Prep-3 is 14–15, inside both bands, and the handoff forbids mixing them. The
+comparison environment already varies BKT against Elo; a second visual variable is a confound.
+Reversing it is a token swap plus the sticker border/shadow rules — see `docs/design/nour/README.md`.
+
+---
+
+## 9. What is unresolved, and who owns it
+
+| # | Item | Owner | Why it matters |
+|---|---|---|---|
+| 1 | **T067 — name the crisis-escalation recipient** | **Samuel** | Phase 11 is a hard gate before any real student. Everything else in safety is buildable the moment this lands |
+| 2 | **FR-306** (mid-year placement) reads as in-scope and is unbuilt | **Samuel** | Either build it or defer it explicitly — an in-scope requirement nobody is building is worse than a deferred one |
+| 3 | **FR-402** (exam preparation) same | **Samuel** | Same |
+| 4 | **SC-007** is not buildable as written | **Samuel** | Named in `/speckit-analyze`; the metric has no data source |
+| 5 | **SC-004** still references "verified signups" | **Samuel** | Signups were replaced by the picker (decisions.md Q5); the criterion is stale |
+| 6 | **T001** — create and push the `mvp1` branch | **Samuel** | This session is pinned to its designated branch; pushing `mvp1` needs an explicit go-ahead |
+| 7 | Master vs Play design variant | **Samuel** | Implemented as master; cheap to reverse |
+| 8 | Box-dependent work: T005, T013–T020, T042–T043, T070 | Engineering, once box access exists | Everything is written and dry-run verified; none of it has met the real environment |
+
+---
+
+## 10. Counts
+
+| | Count |
+|---|---|
+| Functional requirements (incl. FR-10xx) | **61** |
+| VERIFIED | 26 |
+| BUILT (awaiting the box, the runtime, or a browser session) | 15 |
+| PARTIAL | 3 |
+| OPEN | 6 |
+| BLOCKED | 2 |
+| DEFERRED by explicit decision | 9 |
+| Tasks complete / total | **49 / 80** |
+
+The honest headline: **the teaching core, the environment attribution, the content-parity gate and
+the whole design language are done and were exercised against real data. Nothing has met the box.**
