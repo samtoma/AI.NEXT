@@ -88,6 +88,14 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
   phase, what's done, what's next, open questions, known debt.
 - Findings register from the full-book review:
   `services/extraction/runbook/ar-review-report.md`.
+- [`specs/001-student-mvp1-delta/traceability.md`](../specs/001-student-mvp1-delta/traceability.md)
+  — every functional requirement mapped to the code that implements it and the evidence that
+  proves it. Deliberately harsher than `tasks.md`: code that exists but has never been executed
+  counts as *built*, not *verified*.
+- [`docs/reviews/`](reviews/) — dated build reviews written to be presented. Snapshots, never
+  edited after the fact; the two documents above are the ones that stay current.
+- [`docs/design/nour/`](design/nour/) — source artboards for the Nour design canvas, and the
+  record of the master-vs-Play variant choice.
 
 ## 7. Source material
 
