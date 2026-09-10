@@ -238,6 +238,31 @@ through **FR-1001…FR-1010** (spec.md §Design system) and
 signature spring is reserved for a proficient → mastered transition, which needs live band movement
 to fire. Spending it anywhere else is what makes it stop meaning anything.
 
+---
+
+## Phase 14: The generated question bank **[ADDED 2026-09-10 — ADR-0008]**
+
+Authorised by Samuel on 2026-09-10 after the tier-coverage measurement: BKT reaches `advanced`
+after two correct answers where Elo needed six, and 5 of 90 objectives have no advanced item
+while 52 have exactly one. Traceability: **FR-1101…FR-1109**, constitution **v2.1.0**.
+
+- [X] T081 Measure tier coverage across the live bank and record the gap that justifies the decision (5 objectives with no advanced item, 52 with exactly one, 140/192/118 by tier)
+- [X] T082 Amend constitution Principle III to cover generated questions, with the 10% sample and the parent-question link as attached conditions; write `docs/decisions/0008-generated-question-bank.md`
+- [X] T083 Redefine the content constant in `services/extraction/parity_check.py` — fingerprint the **book** (`source IN ('seed','authored')`), count generated items separately, and fail hard when any generated row appears in the baseline (FR-1102, FR-1103)
+- [X] T084 Create `services/extraction/load_generated_questions.py` — structural validation, forced `source='variant'` + `reviewed_by=NULL`, an `AINEXT_ENVIRONMENT != mvp1` refusal, `review`-by-default with explicit `--promote`, and a seeded sample written to a review queue (FR-1101, FR-1104, FR-1105, FR-1106)
+- [X] T085 Author and load the first sample bundle — 12 items across the seven thinnest objectives, distractors carrying `misconception_id` (FR-1107); verified live: objectives with no advanced item **5 → 0**, parity still GREEN with the book constant at 450
+- [ ] T086 **Samuel reviews the 10% sample** and returns a verdict per item; record accepted/rejected on the rows and decide the retire-the-family policy for a rejected item (ADR-0008 §Open)
+- [ ] T087 Generate the full coverage pass — every objective carries at least one live item per tier (FR-1109); currently 4 objectives still have no basic item
+- [ ] T088 Build the generation workflow properly in `services/extraction/runbook/` alongside the refutation conveyor, so bundles are reproducible rather than hand-authored
+- [ ] T089 Fold the generated-question loader into `load_seed.py` bundle dispatch, or document deliberately why it stays a separate entry point
+- [ ] T090 Emit an event when `pickQuestion` cannot honour the target tier, so "how often did we serve below the student's level?" is answerable from data instead of inferred
+- [ ] T091 Surface the live-unreviewed count on an operator surface, not only in the parity output (FR-1108)
+
+**Standing caveat**: question supply is now a variable in the comparison — the baseline
+exhausts its advanced tier and the comparison build does not. Every reported result must say
+so. See ADR-0008 §Consequences.
+
+
 
 ---
 
@@ -258,6 +283,7 @@ Phase 1 Setup
                                └─> Phase 12 Polish
 
 Phase 13 Design system ....... independent of the gate; applied to Phases 4-8 surfaces
+Phase 14 Question bank ....... needs BKT (Phase 5) to have exposed the coverage gap
 ```
 
 **US6 (trial, payment, plans) has no tasks** — deferred by decisions.md Q7.

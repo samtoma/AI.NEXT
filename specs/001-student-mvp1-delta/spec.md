@@ -287,7 +287,7 @@ with its properties, tagged with which environment produced it.
 
 Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-3xx** student model,
 **FR-4xx** progress, **FR-5xx** parent, **FR-6xx** safety, **FR-7xx** billing, **FR-8xx** analytics,
-**FR-9xx** comparison environment, **FR-10xx** design system. Baseline requirements referenced as
+**FR-9xx** comparison environment, **FR-10xx** design system, **FR-11xx** generated question bank. Baseline requirements referenced as
 `B/FR-0xx` are from `specs/000-baseline/spec.md`.
 
 Implementation status for every requirement below — what code exists and what actually proves it
@@ -435,9 +435,13 @@ document: a requirement whose code exists but has never been executed does not c
   control.
 - **FR-903**: Both environments MUST be reachable simultaneously; standing up or refreshing the new
   one MUST NOT interrupt, modify or redeploy the existing one.
-- **FR-904**: Both environments MUST be loadable from the same content bundles, and an automated
-  parity check MUST verify identical source document, module count, learning-objective count,
-  prerequisite-edge count, question count and visual count, failing loudly on drift.
+- **FR-904** *(amended 2026-09-10, ADR-0008)*: Both environments MUST be loadable from the same
+  content bundles, and an automated check MUST prove the **book** content is identical on both
+  sides — 10 modules, 90 objectives, 112 prerequisite edges, 450 questions, 212 visuals —
+  comparing live counts separately from totals. The check MUST treat generated questions
+  (`source='variant'`) as an environment-scoped extension: counted and disclosed, never
+  compared, and a hard failure if found in the baseline (FR-1102, FR-1103).
+
 - **FR-905**: The new environment MUST NOT serve Arabic Language or Social Studies content; the
   comparison is mathematics-only on both sides.
 - **FR-906**: Provisioning the new environment MUST NOT remove volumes on the shared box, and MUST
@@ -484,6 +488,43 @@ as styling preferences: each one names a student-visible behaviour with a reason
 and *Play* (10–16) — and forbids mixing them in one build. Prep-3 is 14–15 and sits inside both.
 **Master is implemented**, on the reasoning that the comparison already varies BKT against Elo and a
 second visual variable is a confound. Reversal is a token swap.
+
+### Generated question bank **[ADDED 2026-09-10 — ADR-0008]**
+
+Samuel authorised generating questions and shipping them unreviewed in the comparison
+environment, reviewing a 10% sample himself. The driver is measured, not anticipated: BKT
+reaches the `advanced` tier after two correct answers where Elo needed six, and 5 of 90
+objectives have no advanced question at all while 52 have exactly one.
+
+- **FR-1101**: The comparison environment MUST be able to serve questions that were generated
+  rather than extracted from the textbook. Every such item MUST be stored with
+  `source='variant'`, `reviewed_by IS NULL`, and a `parent_question_id` naming the reviewed
+  book question it derives from.
+- **FR-1102**: Generated questions MUST NOT reach the baseline environment. The parity check
+  MUST fail loudly if any appear there — this is a governance breach, not a content
+  difference, and MUST be reported as such.
+- **FR-1103**: The content constant MUST be redefined as the **book** rather than the bank:
+  parity compares only questions whose source is `seed` or `authored`. Generated items are
+  counted and disclosed on every check, never compared for equality.
+- **FR-1104**: Loading a generated bundle and making it visible to students MUST be two
+  separate acts. Items land in `review`; promotion to `live` MUST be explicit.
+- **FR-1105**: A reproducible random sample of at least 10% of each generated bundle MUST be
+  written to a review queue at load time, recording the sampling seed, so the sample's size
+  and membership are auditable rather than asserted.
+- **FR-1106**: Structural validation MUST reject, before load: an unknown tier, an MCQ whose
+  correct answer is not among its own choices, duplicate choice text, an empty canonical
+  solution, and a distractor naming a misconception belonging to a different objective. It
+  MUST NOT be presented as a check on mathematical correctness — that is what the human
+  sample is for.
+- **FR-1107**: Generated MCQ distractors SHOULD carry a `misconception_id`, so a wrong answer
+  selects the matching refutation entry from the explanation library directly rather than
+  through a classifier that does not exist.
+- **FR-1108**: The count of live, unreviewed generated questions MUST be reportable on demand
+  and MUST be disclosed alongside any parity result, so "how much ungated mathematics did
+  students see?" is always answerable from data.
+- **FR-1109**: Coverage is the first generation target: every objective SHOULD carry at least
+  one live item per tier. Volume beyond that SHOULD follow measured exhaustion rather than a
+  fixed quota.
 
 ### Key Entities
 

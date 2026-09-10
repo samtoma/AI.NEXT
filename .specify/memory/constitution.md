@@ -1,6 +1,14 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 2.0.0 (MAJOR — four principles redefined, one added)
+- Version change: 2.0.0 → 2.1.0 (MINOR — Principle III's standing exception
+  widened to generated questions, with a sampling obligation attached; no
+  principle redefined or removed)
+- Previous: 1.0.0 → 2.0.0 (MAJOR — four principles redefined, one added)
+- Amended by: Samuel (CTO, solution architect), 2026-09-10 — "I am ok to add
+  unreviewed content by math, I will review 10% of the questions you generate"
+  (ADR-0008). The tier coverage that prompted it: 5 of 90 objectives had no
+  advanced question at all and 52 had exactly one, while BKT reaches the
+  advanced tier three times faster than the Elo model it replaced.
 - Ratified by: Samuel (CTO, solution architect), 2026-09-08, on adopting
   `PRD: AI Tutor — Student MVP` v0.4 (Tamer Deif) as the product authority
 - Modified principles:
@@ -76,8 +84,33 @@ This exception is bounded and MUST remain so:
 - it is reversible: promoting the environment to any wider audience requires
   reinstating the gate first.
 
-Question banks and canonical solutions are NOT covered by this exception —
-only generated explanation/refutation library content.
+**Extended, authorized by Samuel 2026-09-10 (ADR-0008):** the exception now
+also covers **pipeline-generated questions and their canonical solutions**, on
+the same bounded terms, plus two additional ones that the larger blast radius
+requires:
+
+- **A 10% human sample, drawn reproducibly.** Samuel reviews a random sample of
+  every generated bundle rather than the whole bank. The sample is drawn by the
+  loader from a recorded seed and written to a review queue, so its size and
+  membership are auditable rather than asserted.
+- **Every generated item names the reviewed item it derives from**
+  (`parent_question_id`), so a defect found in the sample can be traced to the
+  family it came from and that family retired as a unit.
+
+The bounding conditions above hold unchanged and are load-bearing here: the
+comparison environment only, behind Access, attributed, flagged unreviewed,
+reversible. The loader enforces the first of those in code and refuses to run
+against any environment that is not `mvp1`.
+
+**What this exception costs, stated plainly so it is never mistaken for free.**
+An unreviewed explanation is wrong *about* a question a human approved; an
+unreviewed question can be wrong *in itself* — a broken stem, an answer key
+that disagrees with its own solution, a distractor that is also correct. A
+student who trusts the product then practises an error and is marked wrong for
+being right. The 10% sample reduces that risk; it does not remove it. Nothing
+in this exception permits generated content on `ainext.reletix.com`, and
+promoting the comparison environment to any wider audience still requires
+reinstating the full gate first.
 
 ### IV. Sacred Text Containment (NON-NEGOTIABLE)
 Quran and Hadith text reaches a student surface ONLY from the sealed,
@@ -216,4 +249,4 @@ PATCH = clarification), and obtain Samuel's approval. Exceptions MUST be
 time-boxed or condition-boxed, attributed, reversible, and recorded here or in
 an ADR — Principle III's suspension is the current example.
 
-**Version**: 2.0.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-08
+**Version**: 2.1.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-10

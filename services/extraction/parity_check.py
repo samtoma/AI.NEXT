@@ -54,6 +54,15 @@ EXPECTED = {
 COURSE_SUBJECT = "math"
 
 
+# Fields that describe the GENERATED bank rather than the book. They are
+# reported but never compared, because after ADR-0008 the comparison
+# environment is expected to carry questions the baseline does not have. The
+# constant is the book; the generated bank is an environment-scoped extension.
+GENERATED_FIELDS = frozenset(
+    {"generated_total", "generated_live", "generated_unreviewed"}
+)
+
+
 @dataclass
 class Fingerprint:
     source_sha256: str | None
@@ -64,10 +73,16 @@ class Fingerprint:
     questions_live: int
     visuals: int
     lo_digest: str
+    # book-extension counts (source='variant'), mvp1 only
+    generated_total: int = 0
+    generated_live: int = 0
+    generated_unreviewed: int = 0
 
     def diff(self, other: "Fingerprint") -> list[str]:
         out = []
         for k, mine in asdict(self).items():
+            if k in GENERATED_FIELDS:
+                continue
             theirs = getattr(other, k)
             if mine != theirs:
                 out.append(f"{k}: {mine!r} != {theirs!r}")
@@ -134,14 +149,35 @@ def fingerprint(dsn: str) -> Fingerprint:
         )
         edges = cur.fetchone()[0]
 
-        cur.execute(f"SELECT count(*) FROM questions WHERE lo_id IN ({LOS})", params)
+        # THE CONSTANT IS THE BOOK, NOT THE BANK (ADR-0008). Only questions that
+        # came out of the ministry textbook — source 'seed' or 'authored' — are
+        # counted into the fingerprint that both environments must match.
+        # Generated items (source='variant') are counted separately below and
+        # are never part of the equality check, because the comparison build is
+        # now expected to carry questions the frozen baseline does not.
+        BOOK = "source IN ('seed', 'authored')"
+        cur.execute(
+            f"SELECT count(*) FROM questions WHERE {BOOK} AND lo_id IN ({LOS})",
+            params,
+        )
         q_total = cur.fetchone()[0]
 
         cur.execute(
-            f"SELECT count(*) FROM questions WHERE status = 'live' AND lo_id IN ({LOS})",
+            f"""SELECT count(*) FROM questions
+                 WHERE {BOOK} AND status = 'live' AND lo_id IN ({LOS})""",
             params,
         )
         q_live = cur.fetchone()[0]
+
+        cur.execute(
+            f"""SELECT count(*),
+                       count(*) FILTER (WHERE status = 'live'),
+                       count(*) FILTER (WHERE status = 'live' AND reviewed_by IS NULL)
+                  FROM questions
+                 WHERE source = 'variant' AND lo_id IN ({LOS})""",
+            params,
+        )
+        g_total, g_live, g_unreviewed = cur.fetchone()
 
         cur.execute(f"SELECT count(*) FROM visuals WHERE lo_id IN ({LOS})", params)
         visuals = cur.fetchone()[0]
@@ -159,6 +195,9 @@ def fingerprint(dsn: str) -> Fingerprint:
         questions_live=q_live,
         visuals=visuals,
         lo_digest=digest,
+        generated_total=g_total,
+        generated_live=g_live,
+        generated_unreviewed=g_unreviewed,
     )
 
 
@@ -169,7 +208,9 @@ def render(name: str, fp: Fingerprint) -> str:
         f"    modules         {fp.modules}\n"
         f"    learning objs   {fp.learning_objectives}\n"
         f"    prerequisites   {fp.prerequisite_edges}\n"
-        f"    questions       {fp.questions_total}  (live: {fp.questions_live})\n"
+        f"    book questions  {fp.questions_total}  (live: {fp.questions_live})\n"
+        f"    generated       {fp.generated_total}  (live: {fp.generated_live}, "
+        f"unreviewed: {fp.generated_unreviewed})\n"
         f"    visuals         {fp.visuals}\n"
         f"    LO id digest    {fp.lo_digest}\n"
     )
@@ -188,6 +229,24 @@ def check_expected(fp: Fingerprint) -> list[str]:
             f"back to 'review'; promote them or the environments serve different sets"
         )
     return problems
+
+
+def check_baseline_clean(fp: Fingerprint) -> list[str]:
+    """The generated bank must never reach the frozen baseline.
+
+    Constitution III bounds the review-gate suspension to the comparison
+    environment. A generated row on `ainext.reletix.com` is not a parity
+    problem — it is a governance breach, and it is louder than a count
+    mismatch because it means unreviewed mathematics reached an audience
+    that never consented to see any.
+    """
+    if fp.generated_total:
+        return [
+            f"BASELINE CARRIES {fp.generated_total} GENERATED QUESTION(S). "
+            f"The review-gate suspension (constitution III, ADR-0008) applies "
+            f"to the comparison environment ONLY. Remove them before anything else."
+        ]
+    return []
 
 
 def main() -> int:
@@ -220,6 +279,7 @@ def main() -> int:
             return 2
         print(render("baseline", base))
         problems += [f"baseline vs candidate — {d}" for d in cand.diff(base)]
+        problems += check_baseline_clean(base)
     else:
         print("  (no --baseline given; comparing against the expected constants)\n")
 
@@ -236,6 +296,16 @@ def main() -> int:
         return 1
 
     print("PARITY: GREEN")
+    if cand.generated_live:
+        # Not a warning about correctness — a standing disclosure. Whoever reads
+        # a green check should also read how much of what students saw was never
+        # gated by a human (SC-011).
+        print(
+            f"  note: {cand.generated_live} generated question(s) live in the "
+            f"comparison environment, {cand.generated_unreviewed} of them unreviewed. "
+            f"The book constant matched exactly; the generated bank is an "
+            f"environment-scoped extension and is not part of it."
+        )
     return 0
 
 

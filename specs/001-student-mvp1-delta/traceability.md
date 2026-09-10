@@ -1,6 +1,6 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-10 · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
+**Status date**: 2026-09-10 (rev. 2) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v2.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
 
@@ -150,6 +150,27 @@ Reversing it is a token swap plus the sticker border/shadow rules — see `docs/
 
 ---
 
+## 8b. Generated question bank — FR-11xx **[NEW]**
+
+Added 2026-09-10 (ADR-0008, constitution v2.1.0). The driver was measured, not anticipated:
+BKT reaches the `advanced` tier three times faster than Elo, and the bank behind that tier is
+thin — 5 of 90 objectives had no advanced item, 52 had exactly one.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-1101 | Generated items stored `source='variant'`, `reviewed_by IS NULL`, with a parent link | **VERIFIED** | `services/extraction/load_generated_questions.py` — all three forced by the loader, not taken from the bundle | 12 items loaded live against the local database and read back with the expected provenance |
+| FR-1102 | Generated questions never reach the baseline; the check fails loudly if they do | **VERIFIED** | `parity_check.py` `check_baseline_clean()`; loader refuses any `AINEXT_ENVIRONMENT != mvp1` | The refusal was exercised: running with `AINEXT_ENVIRONMENT=baseline` stopped before writing anything |
+| FR-1103 | The constant is the **book**, not the bank | **VERIFIED** | `parity_check.py` fingerprints `source IN ('seed','authored')`; generated fields excluded from `diff()` | Parity stayed GREEN at 450 book questions with 12 generated items live beside them |
+| FR-1104 | Loading and exposing are two separate acts | **VERIFIED** | Loader defaults to `status='review'`; `--promote` required for `live` | Both paths run |
+| FR-1105 | A reproducible ≥10% sample written to a review queue | **VERIFIED** | `--sample`/`--seed` write `*.review-queue.json` with the seed recorded | 1 of 12 selected under seed 42; re-running the same seed reselects the same item |
+| FR-1106 | Structural validation before load, not presented as a correctness check | **VERIFIED** | `validate()` — tier, answer-in-choices, duplicate choice text, empty solution, cross-objective misconception | Bundle passes; the docstring states plainly what it cannot catch |
+| FR-1107 | Distractors carry a `misconception_id` | **VERIFIED** | Sample bundle: 12 misconceptions, each distractor mapped | Closes the loop to the Phase 6 library without a classifier |
+| FR-1108 | Live-unreviewed count reportable and disclosed with every parity result | **PARTIAL** | Disclosed on every `parity_check.py` run | Gap: not surfaced on any operator screen (T091) |
+| FR-1109 | Coverage first — one live item per tier per objective | **PARTIAL** | First bundle closed the advanced gap | Objectives with no advanced item **5 → 0**; **4 still have no basic item** (T087) |
+
+**Blocked on Samuel**: T086 — review the 10% sample and return a verdict per item, and decide
+what happens to a family when one of its members is rejected (ADR-0008 §Open).
+
 ## 9. What is unresolved, and who owns it
 
 | # | Item | Owner | Why it matters |
@@ -161,6 +182,8 @@ Reversing it is a token swap plus the sticker border/shadow rules — see `docs/
 | 5 | **SC-004** still references "verified signups" | **Samuel** | Signups were replaced by the picker (decisions.md Q5); the criterion is stale |
 | 6 | **T001** — create and push the `mvp1` branch | **Samuel** | This session is pinned to its designated branch; pushing `mvp1` needs an explicit go-ahead |
 | 7 | Master vs Play design variant | **Samuel** | Implemented as master; cheap to reverse |
+| 7b | **Review the 10% question sample** (T086) | **Samuel** | The condition his own authorisation attached to the generated bank. Unreviewed mathematics is already live locally |
+| 7c | Question supply is now a **variable**, not a constant | **Samuel** | The baseline exhausts its advanced tier and the comparison build does not. Every reported result has to say so |
 | 8 | Box-dependent work: T005, T013–T020, T042–T043, T070 | Engineering, once box access exists | Everything is written and dry-run verified; none of it has met the real environment |
 
 ---
@@ -169,14 +192,14 @@ Reversing it is a token swap plus the sticker border/shadow rules — see `docs/
 
 | | Count |
 |---|---|
-| Functional requirements (incl. FR-10xx) | **61** |
-| VERIFIED | 26 |
+| Functional requirements (incl. FR-10xx, FR-11xx) | **70** |
+| VERIFIED | 33 |
 | BUILT (awaiting the box, the runtime, or a browser session) | 15 |
-| PARTIAL | 3 |
+| PARTIAL | 5 |
 | OPEN | 6 |
 | BLOCKED | 2 |
 | DEFERRED by explicit decision | 9 |
-| Tasks complete / total | **49 / 80** |
+| Tasks complete / total | **54 / 91** |
 
 The honest headline: **the teaching core, the environment attribution, the content-parity gate and
 the whole design language are done and were exercised against real data. Nothing has met the box.**
