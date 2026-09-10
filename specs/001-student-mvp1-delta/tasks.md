@@ -158,9 +158,9 @@ answer.
 > Exam prep (D2) and mid-year placement (C2) are **deferred** — not ticked in decisions.md Q7 and
 > dependent on real mastery data existing first.
 
-- [ ] T052 [US4] Create `app/src/app/api/dashboard/route.ts` returning per-module mastery, attempt counts and weakest LO, with no blended aggregate field (FR-401)
-- [ ] T053 [US4] Create `app/src/app/dashboard/page.tsx` rendering per-topic breakdown from BKT probabilities, reusing `lib/mastery.ts` colouring
-- [ ] T054 [P] [US4] Emit `dashboard_viewed`
+- [X] T052 [US4] Create `app/src/app/api/dashboard/route.ts` returning per-module mastery, attempt counts and weakest LO, with no blended aggregate field (FR-401)
+- [X] T053 [US4] Create `app/src/app/dashboard/page.tsx` rendering per-topic breakdown from BKT probabilities, reusing `lib/mastery.ts` colouring
+- [X] T054 [P] [US4] Emit `dashboard_viewed`
 
 ---
 
