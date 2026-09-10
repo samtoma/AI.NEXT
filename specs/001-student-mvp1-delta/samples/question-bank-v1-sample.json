@@ -5,22 +5,80 @@
   "course_id": "course:prep3-math-en",
   "reviewed": false,
   "note": "SAMPLE FOR HUMAN REVIEW. Twelve items covering the seven objectives with the thinnest tier coverage in the live bank. Every item is grounded in the objective's own book description and page; none introduces content the book does not teach. Distractors are diagnostic: each wrong choice names the misconception it encodes, which is what lets a wrong answer select the right refutation entry from the explanation library without a separate classifier.",
-
   "misconceptions": [
-    { "id": "mc:cartesian-commutes", "lo_id": "lo:u1-1-3", "label": "X x Y and Y x X are the same", "description": "Treats the Cartesian product as commutative, so the shape of the diagram is assumed unchanged when the factors are swapped." },
-    { "id": "mc:points-vs-columns", "lo_id": "lo:u1-1-3", "label": "Total points read as a count of columns", "description": "Reads the total number of points in a net diagram as the number of columns, ignoring that each column holds n(Y) points." },
-    { "id": "mc:product-is-sum", "lo_id": "lo:u1-1-3", "label": "n(X x Y) computed as n(X) + n(Y)", "description": "Adds the cardinalities instead of multiplying them." },
-    { "id": "mc:quadrant-sign-order", "lo_id": "lo:u1-1-4", "label": "Quadrant chosen from the first coordinate alone", "description": "Names the quadrant from the sign of x without checking the sign of y." },
-    { "id": "mc:axis-points-counted", "lo_id": "lo:u1-1-4", "label": "Points on an axis counted inside a quadrant", "description": "Counts a point with a zero coordinate as belonging to a quadrant; the axes belong to no quadrant." },
-    { "id": "mc:relation-subset-of-x", "lo_id": "lo:u1-2-2", "label": "A relation on X is a subset of X", "description": "Takes a relation to be a set of elements rather than a set of ordered pairs." },
-    { "id": "mc:divides-reversed", "lo_id": "lo:u1-2-2", "label": "a divides b read as b divides a", "description": "Reverses the direction of the divisibility relation, which is not symmetric." },
-    { "id": "mc:intercept-is-slope", "lo_id": "lo:u1-4-2", "label": "Intercept and slope exchanged", "description": "Reads b as the slope and a as the y-intercept in f(x) = ax + b." },
-    { "id": "mc:constant-means-zero", "lo_id": "lo:u1-4-2", "label": "Constant function means the function is zero", "description": "Takes 'constant' to mean the output is 0 rather than a fixed non-varying value." },
-    { "id": "mc:discriminant-sign", "lo_id": "lo:t2u1-2-1", "label": "No real roots reported as roots existing", "description": "Concludes a solution set exists in R when the curve does not meet the x-axis, rather than the empty set." },
-    { "id": "mc:touch-means-two-roots", "lo_id": "lo:t2u1-2-1", "label": "A touching curve read as two distinct roots", "description": "Treats a curve that touches the x-axis at one point as having two different roots." },
-    { "id": "mc:range-is-codomain", "lo_id": "lo:u1-3-2", "label": "Range and codomain treated as the same set", "description": "Assumes every element of the codomain is an image; the range is a subset of the codomain and may be proper." }
+    {
+      "id": "mc:cartesian-commutes",
+      "lo_id": "lo:u1-1-3",
+      "label": "X × Y and Y × X are the same",
+      "description": "Treats the Cartesian product as commutative, so the shape of the diagram is assumed unchanged when the factors are swapped."
+    },
+    {
+      "id": "mc:points-vs-columns",
+      "lo_id": "lo:u1-1-3",
+      "label": "Total points read as a count of columns",
+      "description": "Reads the total number of points in a net diagram as the number of columns, ignoring that each column holds n(Y) points."
+    },
+    {
+      "id": "mc:product-is-sum",
+      "lo_id": "lo:u1-1-3",
+      "label": "n(X × Y) computed as n(X) + n(Y)",
+      "description": "Adds the cardinalities instead of multiplying them."
+    },
+    {
+      "id": "mc:quadrant-sign-order",
+      "lo_id": "lo:u1-1-4",
+      "label": "Quadrant chosen from the first coordinate alone",
+      "description": "Names the quadrant from the sign of × without checking the sign of y."
+    },
+    {
+      "id": "mc:axis-points-counted",
+      "lo_id": "lo:u1-1-4",
+      "label": "Points on an axis counted inside a quadrant",
+      "description": "Counts a point with a zero coordinate as belonging to a quadrant; the axes belong to no quadrant."
+    },
+    {
+      "id": "mc:relation-subset-of-x",
+      "lo_id": "lo:u1-2-2",
+      "label": "A relation on X is a subset of X",
+      "description": "Takes a relation to be a set of elements rather than a set of ordered pairs."
+    },
+    {
+      "id": "mc:divides-reversed",
+      "lo_id": "lo:u1-2-2",
+      "label": "a divides b read as b divides a",
+      "description": "Reverses the direction of the divisibility relation, which is not symmetric."
+    },
+    {
+      "id": "mc:intercept-is-slope",
+      "lo_id": "lo:u1-4-2",
+      "label": "Intercept and slope exchanged",
+      "description": "Reads b as the slope and a as the y-intercept in f(x) = ax + b."
+    },
+    {
+      "id": "mc:constant-means-zero",
+      "lo_id": "lo:u1-4-2",
+      "label": "Constant function means the function is zero",
+      "description": "Takes 'constant' to mean the output is 0 rather than a fixed non-varying value."
+    },
+    {
+      "id": "mc:discriminant-sign",
+      "lo_id": "lo:t2u1-2-1",
+      "label": "No real roots reported as roots existing",
+      "description": "Concludes a solution set exists in R when the curve does not meet the x-axis, rather than the empty set."
+    },
+    {
+      "id": "mc:touch-means-two-roots",
+      "lo_id": "lo:t2u1-2-1",
+      "label": "A touching curve read as two distinct roots",
+      "description": "Treats a curve that touches the x-axis at one point as having two different roots."
+    },
+    {
+      "id": "mc:range-is-codomain",
+      "lo_id": "lo:u1-3-2",
+      "label": "Range and codomain treated as the same set",
+      "description": "Assumes every element of the codomain is an image; the range is a subset of the codomain and may be proper."
+    }
   ],
-
   "questions": [
     {
       "id": "q:u1-1-3:g001",
@@ -33,16 +91,40 @@
       "source_note": "Generated. Extends the net-diagram representation on p.10 to the non-commutativity of the product.",
       "stem": "The Cartesian (net) diagram of $X \\times Y$ has $15$ points arranged in $5$ columns, one column for each element of $X$. If the diagram of $Y \\times X$ is drawn instead, how many columns does it have?",
       "choices": [
-        { "key": "A", "text": "$3$" },
-        { "key": "B", "text": "$5$", "misconception_id": "mc:cartesian-commutes" },
-        { "key": "C", "text": "$15$", "misconception_id": "mc:points-vs-columns" },
-        { "key": "D", "text": "$8$", "misconception_id": "mc:product-is-sum" }
+        {
+          "key": "A",
+          "text": "$3$"
+        },
+        {
+          "key": "B",
+          "text": "$5$",
+          "misconception_id": "mc:cartesian-commutes"
+        },
+        {
+          "key": "C",
+          "text": "$15$",
+          "misconception_id": "mc:points-vs-columns"
+        },
+        {
+          "key": "D",
+          "text": "$8$",
+          "misconception_id": "mc:product-is-sum"
+        }
       ],
       "correct_answer": "A",
       "canonical_solution": [
-        { "step": 1, "text_md": "One column per element of $X$ and $5$ columns, so $n(X) = 5$." },
-        { "step": 2, "text_md": "The net has $n(X) \\times n(Y) = 15$ points, so $n(Y) = 15 \\div 5 = 3$." },
-        { "step": 3, "text_md": "In the diagram of $Y \\times X$ the columns count the elements of the **first** set, which is now $Y$. So there are $3$ columns." }
+        {
+          "step": 1,
+          "text_md": "One column per element of $X$ and $5$ columns, so $n(X) = 5$."
+        },
+        {
+          "step": 2,
+          "text_md": "The net has $n(X) \\times n(Y) = 15$ points, so $n(Y) = 15 \\div 5 = 3$."
+        },
+        {
+          "step": 3,
+          "text_md": "In the diagram of $Y \\times X$ the columns count the elements of the **first** set, which is now $Y$. So there are $3$ columns."
+        }
       ]
     },
     {
@@ -57,8 +139,14 @@
       "stem": "The arrow diagram of $X \\times Y$ has $12$ arrows. If $n(Y) = 4$, find $n(X)$.",
       "correct_answer": "3",
       "canonical_solution": [
-        { "step": 1, "text_md": "Each arrow is one ordered pair, so the number of arrows is $n(X) \\times n(Y)$." },
-        { "step": 2, "text_md": "$n(X) \\times 4 = 12$, so $n(X) = 3$." }
+        {
+          "step": 1,
+          "text_md": "Each arrow is one ordered pair, so the number of arrows is $n(X) \\times n(Y)$."
+        },
+        {
+          "step": 2,
+          "text_md": "$n(X) \\times 4 = 12$, so $n(X) = 3$."
+        }
       ]
     },
     {
@@ -72,16 +160,39 @@
       "source_note": "Generated. Combines the axis condition with quadrant identification, both taught on p.11.",
       "stem": "The point $(x - 3,\\ x + 2)$ lies on the $y$-axis. In which quadrant does the point $(x,\\ -x)$ lie?",
       "choices": [
-        { "key": "A", "text": "The first quadrant", "misconception_id": "mc:quadrant-sign-order" },
-        { "key": "B", "text": "The second quadrant", "misconception_id": "mc:quadrant-sign-order" },
-        { "key": "C", "text": "The third quadrant" },
-        { "key": "D", "text": "The fourth quadrant" }
+        {
+          "key": "A",
+          "text": "The first quadrant",
+          "misconception_id": "mc:quadrant-sign-order"
+        },
+        {
+          "key": "B",
+          "text": "The second quadrant",
+          "misconception_id": "mc:quadrant-sign-order"
+        },
+        {
+          "key": "C",
+          "text": "The third quadrant"
+        },
+        {
+          "key": "D",
+          "text": "The fourth quadrant"
+        }
       ],
       "correct_answer": "D",
       "canonical_solution": [
-        { "step": 1, "text_md": "A point lies on the $y$-axis when its $x$-coordinate is zero, so $x - 3 = 0$ and $x = 3$." },
-        { "step": 2, "text_md": "Then $(x,\\ -x) = (3,\\ -3)$." },
-        { "step": 3, "text_md": "The first coordinate is positive and the second is negative, which is the fourth quadrant." }
+        {
+          "step": 1,
+          "text_md": "A point lies on the $y$-axis when its $x$-coordinate is zero, so $x - 3 = 0$ and $x = 3$."
+        },
+        {
+          "step": 2,
+          "text_md": "Then $(x,\\ -x) = (3,\\ -3)$."
+        },
+        {
+          "step": 3,
+          "text_md": "The first coordinate is positive and the second is negative, which is the fourth quadrant."
+        }
       ]
     },
     {
@@ -96,9 +207,18 @@
       "stem": "Let $A = \\{x : x \\in \\mathbb{Z},\\ -2 < x \\le 1\\}$. How many elements of $A \\times A$ lie in the third quadrant?",
       "correct_answer": "1",
       "canonical_solution": [
-        { "step": 1, "text_md": "The integers strictly greater than $-2$ and at most $1$ are $A = \\{-1,\\ 0,\\ 1\\}$." },
-        { "step": 2, "text_md": "A point is in the third quadrant when **both** coordinates are negative. The only negative element of $A$ is $-1$." },
-        { "step": 3, "text_md": "So the only such pair is $(-1,\\ -1)$, and the answer is $1$. Pairs containing $0$ lie on an axis, and the axes belong to no quadrant." }
+        {
+          "step": 1,
+          "text_md": "The integers strictly greater than $-2$ and at most $1$ are $A = \\{-1,\\ 0,\\ 1\\}$."
+        },
+        {
+          "step": 2,
+          "text_md": "A point is in the third quadrant when **both** coordinates are negative. The only negative element of $A$ is $-1$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the only such pair is $(-1,\\ -1)$, and the answer is $1$. Pairs containing $0$ lie on an axis, and the axes belong to no quadrant."
+        }
       ]
     },
     {
@@ -112,15 +232,36 @@
       "source_note": "Generated. States the definition on p.14 directly; this objective had no basic item at all.",
       "stem": "A relation $R$ defined on a set $X$ is a subset of…",
       "choices": [
-        { "key": "A", "text": "$X \\times X$" },
-        { "key": "B", "text": "$X$", "misconception_id": "mc:relation-subset-of-x" },
-        { "key": "C", "text": "$X \\cup X$", "misconception_id": "mc:relation-subset-of-x" },
-        { "key": "D", "text": "any set containing $X$", "misconception_id": "mc:relation-subset-of-x" }
+        {
+          "key": "A",
+          "text": "$X \\times X$"
+        },
+        {
+          "key": "B",
+          "text": "$X$",
+          "misconception_id": "mc:relation-subset-of-x"
+        },
+        {
+          "key": "C",
+          "text": "$X \\cup X$",
+          "misconception_id": "mc:relation-subset-of-x"
+        },
+        {
+          "key": "D",
+          "text": "any set containing $X$",
+          "misconception_id": "mc:relation-subset-of-x"
+        }
       ],
       "correct_answer": "A",
       "canonical_solution": [
-        { "step": 1, "text_md": "A relation **on** a set $X$ relates elements of $X$ to elements of $X$ itself." },
-        { "step": 2, "text_md": "Its elements are therefore ordered pairs from $X \\times X$, so $R \\subseteq X \\times X$." }
+        {
+          "step": 1,
+          "text_md": "A relation **on** a set $X$ relates elements of $X$ to elements of $X$ itself."
+        },
+        {
+          "step": 2,
+          "text_md": "Its elements are therefore ordered pairs from $X \\times X$, so $R \\subseteq X \\times X$."
+        }
       ]
     },
     {
@@ -135,10 +276,22 @@
       "stem": "Let $X = \\{1,\\ 2,\\ 3\\}$ and let $R$ be the relation on $X$ where $a\\,R\\,b$ means \"$a$ divides $b$\". How many ordered pairs does $R$ contain?",
       "correct_answer": "5",
       "canonical_solution": [
-        { "step": 1, "text_md": "Test every pair of $X \\times X$ against the rule \"$a$ divides $b$\"." },
-        { "step": 2, "text_md": "$1$ divides $1,\\ 2$ and $3$: that is $(1,1),\\ (1,2),\\ (1,3)$." },
-        { "step": 3, "text_md": "$2$ divides only $2$: that is $(2,2)$. $3$ divides only $3$: that is $(3,3)$. Note $2$ does **not** divide $3$." },
-        { "step": 4, "text_md": "$R = \\{(1,1),\\ (1,2),\\ (1,3),\\ (2,2),\\ (3,3)\\}$, so $n(R) = 5$." }
+        {
+          "step": 1,
+          "text_md": "Test every pair of $X \\times X$ against the rule \"$a$ divides $b$\"."
+        },
+        {
+          "step": 2,
+          "text_md": "$1$ divides $1,\\ 2$ and $3$: that is $(1,1),\\ (1,2),\\ (1,3)$."
+        },
+        {
+          "step": 3,
+          "text_md": "$2$ divides only $2$: that is $(2,2)$. $3$ divides only $3$: that is $(3,3)$. Note $2$ does **not** divide $3$."
+        },
+        {
+          "step": 4,
+          "text_md": "$R = \\{(1,1),\\ (1,2),\\ (1,3),\\ (2,2),\\ (3,3)\\}$, so $n(R) = 5$."
+        }
       ]
     },
     {
@@ -152,15 +305,36 @@
       "source_note": "Generated. Names the three sets defined on p.17; this objective had no basic item.",
       "stem": "For a function $f : X \\to Y$, the set $X$ is called the…",
       "choices": [
-        { "key": "A", "text": "domain" },
-        { "key": "B", "text": "codomain", "misconception_id": "mc:range-is-codomain" },
-        { "key": "C", "text": "range", "misconception_id": "mc:range-is-codomain" },
-        { "key": "D", "text": "image", "misconception_id": "mc:range-is-codomain" }
+        {
+          "key": "A",
+          "text": "domain"
+        },
+        {
+          "key": "B",
+          "text": "codomain",
+          "misconception_id": "mc:range-is-codomain"
+        },
+        {
+          "key": "C",
+          "text": "range",
+          "misconception_id": "mc:range-is-codomain"
+        },
+        {
+          "key": "D",
+          "text": "image",
+          "misconception_id": "mc:range-is-codomain"
+        }
       ],
       "correct_answer": "A",
       "canonical_solution": [
-        { "step": 1, "text_md": "In $f : X \\to Y$ the arrow starts at $X$: every element of $X$ has an image." },
-        { "step": 2, "text_md": "$X$ is the **domain**, $Y$ is the **codomain**, and the set of images actually reached is the **range**, which is a subset of $Y$." }
+        {
+          "step": 1,
+          "text_md": "In $f : X \\to Y$ the arrow starts at $X$: every element of $X$ has an image."
+        },
+        {
+          "step": 2,
+          "text_md": "$X$ is the **domain**, $Y$ is the **codomain**, and the set of images actually reached is the **range**, which is a subset of $Y$."
+        }
       ]
     },
     {
@@ -175,9 +349,18 @@
       "stem": "The graph of the linear function $f(x) = ax + b$ passes through the points $(0,\\ -4)$ and $(2,\\ 0)$. Find the value of $a + b$.",
       "correct_answer": "-2",
       "canonical_solution": [
-        { "step": 1, "text_md": "Substituting $(0,\\ -4)$: $f(0) = b = -4$." },
-        { "step": 2, "text_md": "Substituting $(2,\\ 0)$: $2a + b = 0$, so $2a - 4 = 0$ and $a = 2$." },
-        { "step": 3, "text_md": "Therefore $a + b = 2 + (-4) = -2$." }
+        {
+          "step": 1,
+          "text_md": "Substituting $(0,\\ -4)$: $f(0) = b = -4$."
+        },
+        {
+          "step": 2,
+          "text_md": "Substituting $(2,\\ 0)$: $2a + b = 0$, so $2a - 4 = 0$ and $a = 2$."
+        },
+        {
+          "step": 3,
+          "text_md": "Therefore $a + b = 2 + (-4) = -2$."
+        }
       ]
     },
     {
@@ -191,16 +374,40 @@
       "source_note": "Generated. Uses the constant-function special case taught on p.20 as a condition rather than a fact to recall.",
       "stem": "If $f(x) = (m - 3)x + 5$ is a constant function, then $m =$ ?",
       "choices": [
-        { "key": "A", "text": "$3$" },
-        { "key": "B", "text": "$-3$", "misconception_id": "mc:intercept-is-slope" },
-        { "key": "C", "text": "$5$", "misconception_id": "mc:intercept-is-slope" },
-        { "key": "D", "text": "$0$", "misconception_id": "mc:constant-means-zero" }
+        {
+          "key": "A",
+          "text": "$3$"
+        },
+        {
+          "key": "B",
+          "text": "$-3$",
+          "misconception_id": "mc:intercept-is-slope"
+        },
+        {
+          "key": "C",
+          "text": "$5$",
+          "misconception_id": "mc:intercept-is-slope"
+        },
+        {
+          "key": "D",
+          "text": "$0$",
+          "misconception_id": "mc:constant-means-zero"
+        }
       ],
       "correct_answer": "A",
       "canonical_solution": [
-        { "step": 1, "text_md": "A constant function does not vary with $x$, so the coefficient of $x$ must be zero." },
-        { "step": 2, "text_md": "$m - 3 = 0$, so $m = 3$." },
-        { "step": 3, "text_md": "The function is then $f(x) = 5$, a horizontal line — constant does **not** mean zero." }
+        {
+          "step": 1,
+          "text_md": "A constant function does not vary with $x$, so the coefficient of $x$ must be zero."
+        },
+        {
+          "step": 2,
+          "text_md": "$m - 3 = 0$, so $m = 3$."
+        },
+        {
+          "step": 3,
+          "text_md": "The function is then $f(x) = 5$, a horizontal line — constant does **not** mean zero."
+        }
       ]
     },
     {
@@ -214,15 +421,33 @@
       "source_note": "Generated. Names the curve introduced on p.22; this objective had no basic item.",
       "stem": "The graph of the quadratic function $f(x) = ax^2 + bx + c$, where $a \\neq 0$, is called a…",
       "choices": [
-        { "key": "A", "text": "parabola" },
-        { "key": "B", "text": "straight line" },
-        { "key": "C", "text": "circle" },
-        { "key": "D", "text": "hyperbola" }
+        {
+          "key": "A",
+          "text": "parabola"
+        },
+        {
+          "key": "B",
+          "text": "straight line"
+        },
+        {
+          "key": "C",
+          "text": "circle"
+        },
+        {
+          "key": "D",
+          "text": "hyperbola"
+        }
       ],
       "correct_answer": "A",
       "canonical_solution": [
-        { "step": 1, "text_md": "A second-degree function in $x$ has a curved graph called a **parabola**." },
-        { "step": 2, "text_md": "It opens upwards when $a > 0$ and downwards when $a < 0$." }
+        {
+          "step": 1,
+          "text_md": "A second-degree function in $x$ has a curved graph called a **parabola**."
+        },
+        {
+          "step": 2,
+          "text_md": "It opens upwards when $a > 0$ and downwards when $a < 0$."
+        }
       ]
     },
     {
@@ -237,9 +462,18 @@
       "stem": "The curve of $f(x) = x^2 - 6x + k$ touches the $x$-axis at exactly one point. Find the value of $k$.",
       "correct_answer": "9",
       "canonical_solution": [
-        { "step": 1, "text_md": "Touching the $x$-axis at exactly one point means $x^2 - 6x + k = 0$ has one repeated root." },
-        { "step": 2, "text_md": "That happens when the discriminant is zero: $b^2 - 4ac = (-6)^2 - 4(1)(k) = 36 - 4k = 0$." },
-        { "step": 3, "text_md": "So $k = 9$, and the curve touches the axis at $x = 3$." }
+        {
+          "step": 1,
+          "text_md": "Touching the $x$-axis at exactly one point means $x^2 - 6x + k = 0$ has one repeated root."
+        },
+        {
+          "step": 2,
+          "text_md": "That happens when the discriminant is zero: $b^2 - 4ac = (-6)^2 - 4(1)(k) = 36 - 4k = 0$."
+        },
+        {
+          "step": 3,
+          "text_md": "So $k = 9$, and the curve touches the axis at $x = 3$."
+        }
       ]
     },
     {
@@ -253,16 +487,40 @@
       "source_note": "Generated (Term 2). Covers the no-intersection case, which the live bank states but never asks about.",
       "stem": "The curve of $f(x) = x^2 + 2x + 5$ does not meet the $x$-axis. In $\\mathbb{R}$, the solution set of the equation $x^2 + 2x + 5 = 0$ is…",
       "choices": [
-        { "key": "A", "text": "$\\varnothing$" },
-        { "key": "B", "text": "$\\{-1\\}$", "misconception_id": "mc:touch-means-two-roots" },
-        { "key": "C", "text": "$\\{1,\\ 5\\}$", "misconception_id": "mc:discriminant-sign" },
-        { "key": "D", "text": "$\\mathbb{R}$", "misconception_id": "mc:discriminant-sign" }
+        {
+          "key": "A",
+          "text": "$\\varnothing$"
+        },
+        {
+          "key": "B",
+          "text": "$\\{-1\\}$",
+          "misconception_id": "mc:touch-means-two-roots"
+        },
+        {
+          "key": "C",
+          "text": "$\\{1,\\ 5\\}$",
+          "misconception_id": "mc:discriminant-sign"
+        },
+        {
+          "key": "D",
+          "text": "$\\mathbb{R}$",
+          "misconception_id": "mc:discriminant-sign"
+        }
       ],
       "correct_answer": "A",
       "canonical_solution": [
-        { "step": 1, "text_md": "The real roots of the equation are exactly the $x$-coordinates where the curve meets the $x$-axis." },
-        { "step": 2, "text_md": "The curve does not meet the axis, so there are no real roots. Checking: $b^2 - 4ac = 4 - 20 = -16 < 0$." },
-        { "step": 3, "text_md": "The solution set in $\\mathbb{R}$ is therefore $\\varnothing$." }
+        {
+          "step": 1,
+          "text_md": "The real roots of the equation are exactly the $x$-coordinates where the curve meets the $x$-axis."
+        },
+        {
+          "step": 2,
+          "text_md": "The curve does not meet the axis, so there are no real roots. Checking: $b^2 - 4ac = 4 - 20 = -16 < 0$."
+        },
+        {
+          "step": 3,
+          "text_md": "The solution set in $\\mathbb{R}$ is therefore $\\varnothing$."
+        }
       ]
     }
   ]

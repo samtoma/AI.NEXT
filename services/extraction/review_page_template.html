@@ -1,0 +1,210 @@
+<title>Question Bank Review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700;800&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground:#f7f6fb; --surface:#ffffff; --sunk:#efeef6; --contrast:#1e2450;
+    --on-contrast:#f2f1f7; --on-contrast-dim:#b3b0c9;
+    --ink:#2b2a38; --ink-soft:#5d5b6e; --ink-faint:#6e6c7e;
+    --rule:#e6e4f0; --rule-strong:#d6d3e6;
+    --amber:#f0a22f; --amber-deep:#a3610a; --on-amber:#141833;
+    --teal:#2f9e8f; --teal-deep:#1f6f64; --teal-wash:rgba(47,158,143,.12);
+    --violet:#6e4fa8;
+    --font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+    --font-body:"Cairo",system-ui,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#14182f; --surface:#1c2242; --sunk:#232a4e; --contrast:#0f1329;
+      --on-contrast:#eeedf6; --on-contrast-dim:#9d9ab8;
+      --ink:#eceaf5; --ink-soft:#b0adc6; --ink-faint:#9895b0;
+      --rule:#2e3560; --rule-strong:#3a4275;
+      --amber:#f3ae4a; --amber-deep:#f3ae4a;
+      --teal:#46b6a6; --teal-deep:#46b6a6; --teal-wash:rgba(70,182,166,.16);
+      --violet:#9b7bd4;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#14182f; --surface:#1c2242; --sunk:#232a4e; --contrast:#0f1329;
+    --on-contrast:#eeedf6; --on-contrast-dim:#9d9ab8;
+    --ink:#eceaf5; --ink-soft:#b0adc6; --ink-faint:#9895b0;
+    --rule:#2e3560; --rule-strong:#3a4275;
+    --amber:#f3ae4a; --amber-deep:#f3ae4a;
+    --teal:#46b6a6; --teal-deep:#46b6a6; --teal-wash:rgba(70,182,166,.16);
+    --violet:#9b7bd4;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink);
+         font-family:var(--font-body); line-height:1.7; -webkit-font-smoothing:antialiased; }
+  .shell { max-width:880px; margin:0 auto; padding-inline:24px; }
+  h1,h2 { font-family:var(--font-display); font-weight:800; margin:0; line-height:1.2; text-wrap:balance; }
+  p { margin:0; }
+  code { font-family:var(--font-mono); font-size:.86em; }
+
+  header.top { background:var(--contrast); color:var(--on-contrast); padding-block:36px 30px; }
+  header.top h1 { font-size:clamp(28px,4.4vw,42px); margin-bottom:10px; }
+  header.top p { color:var(--on-contrast-dim); max-width:60ch; }
+  .meta { display:flex; flex-wrap:wrap; gap:6px 24px; margin-top:22px; padding-top:16px;
+          border-top:1px solid rgba(242,241,247,.18);
+          font-family:var(--font-mono); font-size:12px; color:var(--on-contrast-dim); }
+  .meta b { color:var(--on-contrast); font-weight:500; }
+
+  .brief { padding-block:28px; border-bottom:1px solid var(--rule); }
+  .brief h2 { font-size:20px; margin-bottom:8px; }
+  .brief p + p { margin-top:10px; }
+  .brief .warn { border-inline-start:4px solid var(--amber); background:var(--surface);
+                 border-radius:12px; padding:16px 18px; margin-top:14px; color:var(--ink-soft); font-size:15px; }
+
+  .q { background:var(--surface); border:1px solid var(--rule); border-radius:16px;
+       padding:20px 22px; margin-block:16px; }
+  .q header { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:12px; }
+  .q .n { font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); }
+  .tier { font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+          padding:3px 9px; border-radius:999px; }
+  .t-basic { background:var(--sunk); color:var(--ink-soft); }
+  .t-standard { background:rgba(240,162,47,.18); color:var(--amber-deep); }
+  .t-advanced { background:var(--teal-wash); color:var(--teal-deep); }
+  .qid, .lo { font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); }
+  .lo { margin-inline-start:auto; }
+  .sampled { font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+             background:var(--violet); color:#fff; padding:3px 9px; border-radius:999px; }
+
+  .stem { font-size:18px; margin-bottom:14px; }
+  .m { font-family:var(--font-mono); font-size:.95em; white-space:nowrap; }
+
+  ul.choices { list-style:none; margin:0; padding:0; display:grid; gap:7px; }
+  ul.choices li { display:flex; flex-wrap:wrap; align-items:baseline; gap:10px;
+                  padding:9px 12px; border-radius:10px; background:var(--sunk); }
+  ul.choices li.ok { background:var(--teal-wash); outline:1px solid var(--teal); }
+  .key { font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); min-width:14px; }
+  .ctext { flex:1 1 auto; min-width:0; }
+  .mcnote { font-size:12.5px; color:var(--ink-soft); font-style:italic; flex-basis:100%; padding-inline-start:24px; }
+  .mcnote.dim { color:var(--ink-faint); }
+  .numeric { padding:9px 12px; border-radius:10px; background:var(--teal-wash);
+             outline:1px solid var(--teal); font-size:15px; }
+
+  details { margin-top:14px; border-top:1px solid var(--rule); padding-top:12px; }
+  summary { cursor:pointer; font-size:14px; color:var(--ink-soft); }
+  summary:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(240,162,47,.32); border-radius:6px; }
+  ol.steps { margin:10px 0 0; padding-inline-start:22px; display:grid; gap:7px; font-size:15px; }
+  .derives { margin-top:12px; font-size:12.5px; color:var(--ink-faint); }
+
+  .verdict { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:16px;
+             padding-top:14px; border-top:1px solid var(--rule); }
+  .verdict button { font-family:var(--font-body); font-size:14px; font-weight:600;
+                    min-height:44px; padding-inline:16px; border-radius:10px; cursor:pointer;
+                    border:1px solid var(--rule-strong); background:var(--surface); color:var(--ink); }
+  .verdict button:hover { border-color:var(--amber); }
+  .verdict button:focus-visible { outline:none; box-shadow:0 0 0 4px rgba(240,162,47,.32); }
+  .verdict button[aria-pressed="true"] { background:var(--amber); border-color:var(--amber); color:var(--on-amber); }
+  .verdict .state { font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); margin-inline-start:auto; }
+
+  footer.bottom { background:var(--contrast); color:var(--on-contrast); padding-block:30px 36px; margin-top:32px; }
+  footer.bottom h2 { font-size:19px; margin-bottom:8px; }
+  footer.bottom p { color:var(--on-contrast-dim); max-width:62ch; }
+  footer.bottom p + p { margin-top:10px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+</style>
+
+<header class="top">
+  <div class="shell">
+    <h1>Twelve questions, none of them checked</h1>
+    <p>
+      The first generated bundle for the comparison environment. Every item below is
+      machine-authored mathematics that no human has verified. You asked to review 10%; all
+      twelve are here, and the sampled one is marked.
+    </p>
+    <div class="meta">
+      <span><b>{{TOTAL}}</b> questions</span>
+      <span>{{TIERS}}</span>
+      <span><b>{{SAMPLED}}</b> in the sample</span>
+      <span>bundle <b>{{BUNDLE}}</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+  <section class="brief">
+    <h2>What to look for</h2>
+    <p>
+      Structural validation already passed: every tier is one the selector can ask for, every
+      multiple-choice key appears among its own options, no two options share text, and every
+      item has a worked solution. None of that is a check on the mathematics.
+    </p>
+    <p>
+      The defects worth your time are the ones a machine cannot see. An answer key that
+      disagrees with its own worked solution. A distractor that is also correct. A stem that
+      is ambiguous rather than wrong. A step that reaches the right answer by faulty reasoning
+      — which matters more here than usual, because the worked solution is exactly what the
+      tutor teaches from when a student misses the question.
+    </p>
+    <div class="warn">
+      Each distractor claims to encode a named misconception. That claim is load-bearing: it is
+      what lets a wrong answer pull the matching refutation from the explanation library
+      without a classifier. If a distractor does not really represent the error it names, the
+      student gets an explanation for a mistake they did not make.
+    </div>
+  </section>
+
+  {{CARDS}}
+</main>
+
+<footer class="bottom">
+  <div class="shell">
+    <h2>What happens to your verdicts</h2>
+    <p>
+      Accept, Reject and Needs a fix are saved as you click. A rejection carries further than
+      the single item: each generated question names the reviewed book question it was derived
+      from, so a defect can be traced to its family and that family retired together rather
+      than the whole bank being distrusted.
+    </p>
+    <p>
+      What to do about a rejected family is not settled yet — it is the open question in
+      ADR-0008, and the first rejection is what should settle it.
+    </p>
+  </div>
+</footer>
+
+<script>
+  (async () => {
+    const buttons = [...document.querySelectorAll('.verdict button')];
+    const local = {};
+    let db = null;
+    try { db = await window.claude?.use?.('db'); } catch (_) { db = null; }
+
+    const paint = (qid, verdict, note) => {
+      document.querySelectorAll(`.verdict[data-qid="${CSS.escape(qid)}"]`).forEach((box) => {
+        box.querySelectorAll('button').forEach((b) =>
+          b.setAttribute('aria-pressed', String(b.dataset.v === verdict)));
+        const state = box.querySelector('.state');
+        if (state) state.textContent = note ?? (verdict ? 'saved' : '');
+      });
+    };
+
+    if (db) {
+      try {
+        const rows = await db.collection('reviews/question-bank-v1/verdicts').get();
+        (rows ?? []).forEach((r) => { local[r.id] = r.verdict; paint(r.id, r.verdict); });
+      } catch (_) { /* an empty or unreadable store is a first visit, not an error */ }
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const box = btn.closest('.verdict');
+        const qid = box.dataset.qid;
+        const verdict = btn.dataset.v;
+        local[qid] = verdict;
+        paint(qid, verdict, db ? 'saving…' : 'not saved — this view cannot store verdicts');
+        if (!db) return;
+        try {
+          await db.doc(`reviews/question-bank-v1/verdicts/${qid}`)
+                  .set({ verdict, at: new Date().toISOString() });
+          paint(qid, verdict, 'saved');
+        } catch (_) {
+          paint(qid, verdict, 'could not save');
+        }
+      });
+    });
+  })();
+</script>
