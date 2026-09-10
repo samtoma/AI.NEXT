@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700;800&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    /* Nour — Master Design System v0.2. Tokens verbatim from tokens.css. */
+    :root{
+      --color-bg-page:#F7F6FB; --color-bg-surface:#FFFFFF; --color-bg-contrast:#1E2450;
+      --color-border-subtle:#E6E4F0; --color-state-inactive:#EFEEF6;
+      --color-text-primary:#2B2A38; --color-text-secondary:#5D5B6E;
+      --color-text-on-accent:#141833; --color-text-inverse:#F2F1F7;
+      --color-action-primary:#F0A22F; --color-action-hover:#D98C1F;
+      --color-state-progress:#2F9E8F; --color-state-celebrate:#6E4FA8;
+      --on-state-progress:#241F3D; --on-state-celebrate:#FFFFFF;
+      --mastery-0:#EFEEF6; --mastery-1:#F0A22F; --mastery-2:#D9A75A;
+      --mastery-3:#8FB98A; --mastery-4:#2F9E8F;
+      --font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+      --font-body:"Cairo",system-ui,sans-serif;
+      --font-mono:"IBM Plex Mono",monospace;
+      --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-pill:999px;
+      --shadow-sm:0 2px 8px rgba(30,36,80,.08); --shadow-lg:0 12px 32px rgba(30,36,80,.16);
+      --ease-quiet:cubic-bezier(.2,.6,.2,1); --dur-quiet:180ms;
+      --spring-pop:cubic-bezier(.34,1.56,.64,1); --dur-pop:420ms;
+      --focus-ring:0 0 0 4px rgba(240,162,47,.32);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--color-bg-page);color:var(--color-text-primary);
+         font-family:var(--font-body);line-height:1.7;-webkit-font-smoothing:antialiased}
+    button{font-family:var(--font-body);cursor:pointer;border:none;background:none;color:inherit;text-align:start}
+    button:focus-visible,[tabindex]:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+    .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+    /* Arabic never in mono, never letter-spaced — CLAUDE.md recurring-bug rule */
+    .ar{font-family:var(--font-body);letter-spacing:normal;line-height:1.85}
+    /* the ONE signature spring, reserved for proficient -> mastered */
+    @keyframes pop{0%{transform:scale(.86)}55%{transform:scale(1.08)}100%{transform:scale(1)}}
+    .pop{animation:pop var(--dur-pop) var(--spring-pop)}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+  </style>
+</helmet>
+
+<div style="width:1194px;height:834px;display:flex;flex-direction:column;background:var(--color-bg-page);overflow:hidden">
+
+  <!-- header ------------------------------------------------------------- -->
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 20px;background:var(--color-bg-surface);border-bottom:1px solid var(--color-border-subtle);flex-shrink:0">
+    <svg viewBox="0 0 64 64" width="30" height="30" role="img" aria-label="Nour">
+      <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+      <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#1E2450"></path>
+    </svg>
+    <span style="font-family:var(--font-display);font-weight:700;font-size:1.25rem;line-height:1">Nour</span>
+    <span style="width:1px;height:20px;background:var(--color-border-subtle);margin-inline:4px"></span>
+    <span style="font-size:.95rem;font-weight:600">Where you stand</span>
+    <span style="flex-grow:1"></span>
+    <span class="mono" style="font-size:.78rem;color:var(--color-text-secondary)">Prep 3 · Mathematics</span>
+    <div style="width:34px;height:34px;border-radius:var(--radius-pill);background:var(--color-state-inactive);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600">N</div>
+  </div>
+
+  <div style="display:flex;flex-grow:1;min-height:0">
+
+    <!-- ---- map pane (58%) ---- -->
+    <div style="width:58%;display:flex;flex-direction:column;min-height:0;border-inline-end:1px solid var(--color-border-subtle);padding:18px 20px 0">
+
+      <!-- NO overall percentage anywhere. Per topic only — one number that
+           averages ten topics tells her nothing she can act on. -->
+      <p style="margin:0 0 2px;font-family:var(--font-display);font-weight:700;font-size:1.45rem">Ten topics, one at a time</p>
+      <p style="margin:0 0 14px;font-size:.95rem;color:var(--color-text-secondary)">Started topics come first. Nothing here is a score.</p>
+
+      <div style="flex-grow:1;overflow:hidden;display:flex;flex-direction:column;gap:7px;min-height:0">
+        <sc-for list="{{ topics }}" as="t" hint-placeholder-count="7">
+          <button onClick="{{ t.pick }}" aria-pressed="{{ t.selected }}"
+                  style="display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:9px 14px;border-radius:var(--radius-md);border:1px solid {{t.border}};background:{{t.bg}};transition:background var(--dur-quiet) var(--ease-quiet)">
+            <span style="width:10px;height:10px;border-radius:50%;background:{{t.dot}};flex-shrink:0"></span>
+            <span style="flex-grow:1;min-width:0">
+              <span style="display:block;font-size:.98rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.title }}</span>
+              <span class="mono" style="display:block;font-size:.72rem;color:var(--color-text-secondary)">{{ t.meta }}</span>
+            </span>
+            <!-- the ramp IS the reading. No red anywhere: unstarted is simply grey. -->
+            <span style="width:132px;height:9px;border-radius:var(--radius-pill);background:var(--mastery-0);flex-shrink:0;overflow:hidden">
+              <span style="display:block;height:100%;width:{{t.pct}};background:{{t.dot}};border-radius:var(--radius-pill)"></span>
+            </span>
+            <span class="mono" style="width:34px;text-align:end;font-size:.8rem;color:var(--color-text-secondary);flex-shrink:0">{{ t.pct }}</span>
+          </button>
+        </sc-for>
+      </div>
+
+      <!-- legend: identity is never colour-alone, every step is named -->
+      <div style="flex-shrink:0;display:flex;align-items:center;gap:14px;padding:12px 2px 14px;flex-wrap:wrap">
+        <sc-for list="{{ legend }}" as="l" hint-placeholder-count="5">
+          <span style="display:flex;align-items:center;gap:6px">
+            <span style="width:11px;height:11px;border-radius:3px;background:{{l.c}};border:1px solid rgba(30,36,80,.10)"></span>
+            <span style="font-size:.8rem;color:var(--color-text-secondary)">{{ l.label }}</span>
+          </span>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- ---- detail pane (42%) ---- -->
+    <div style="width:42%;display:flex;flex-direction:column;min-height:0;padding:18px 20px 0">
+      <span class="mono" style="font-size:.74rem;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em">{{ selTitle }}</span>
+
+      <div style="margin-top:10px;background:var(--color-bg-surface);border:1px solid var(--color-border-subtle);border-radius:var(--radius-lg);padding:18px 20px">
+        <!-- "practising", not "weakest", when only one objective has evidence —
+             and never a 0% weakest on a topic with real attempts. -->
+        <p style="margin:0 0 4px;font-size:.85rem;color:var(--color-text-secondary)">{{ selLabel }}</p>
+        <p style="margin:0 0 12px;font-size:1.1rem;font-weight:600;line-height:1.45">{{ selObjective }}</p>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="flex-grow:1;height:9px;border-radius:var(--radius-pill);background:var(--mastery-0);overflow:hidden">
+            <span style="display:block;height:100%;width:{{ selPct }};background:{{ selColor }};border-radius:var(--radius-pill)"></span>
+          </span>
+          <span class="mono" style="font-size:.85rem;color:var(--color-text-secondary)">{{ selPct }}</span>
+        </div>
+        <p class="mono" style="margin:10px 0 0;font-size:.74rem;color:var(--color-text-secondary)">{{ selEvidence }}</p>
+      </div>
+
+      <!-- evidence trail: BKT is inspectable, never a black box -->
+      <p class="mono" style="margin:18px 0 8px;font-size:.74rem;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em">What changed it</p>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        <sc-for list="{{ trail }}" as="e" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:10px;background:var(--color-bg-surface);border:1px solid var(--color-border-subtle);border-radius:var(--radius-md);padding:9px 12px">
+            <span style="width:8px;height:8px;border-radius:50%;background:{{e.dot}};flex-shrink:0"></span>
+            <span style="flex-grow:1;font-size:.88rem">{{ e.what }}</span>
+            <span class="mono" style="font-size:.78rem;color:var(--color-text-secondary)">{{ e.delta }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <span style="flex-grow:1"></span>
+
+      <!-- ONE primary action per screen -->
+      <div style="flex-shrink:0;padding:16px 0 20px">
+        <button style="width:100%;min-height:52px;border-radius:var(--radius-md);background:var(--color-action-primary);color:var(--color-text-on-accent);font-size:1.05rem;font-weight:700;box-shadow:var(--shadow-sm);text-align:center">{{ ctaLabel }}</button>
+        <p style="margin:10px 0 0;text-align:center;font-size:.85rem;color:var(--color-text-secondary)">Or ask Nour anything about this topic.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"ctaLabel":{"editor":"text","default":"Practise ordered pairs","section":"Copy"}}'>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    // Real Prep-3 Mathematics modules and LO counts from the extracted book.
+    this.topics = [
+      { title:'Unit 1 — Relations and Functions', los:11, done:8, p:0.62,
+        label:'Practising', objective:'Ordered pairs and their equality', ev:'12 attempts · last 2 days ago',
+        trail:[['Solved (x−4,7)=(9,y+2) unaided','+0.09'],['Slipped on the first component','−0.14'],['Named the equality rule','+0.07'],['Cold start','0.30']] },
+      { title:'Unit 2 — Ratio, Proportion, Direct and Inverse Variation', los:8, done:5, p:0.41,
+        label:'Weakest here', objective:'Properties of proportion', ev:'9 attempts · last 4 days ago',
+        trail:[['Cross-multiplied in the wrong order','−0.11'],['Correct on two in a row','+0.13'],['Cold start','0.30']] },
+      { title:'Unit 3 — Statistics', los:8, done:2, p:0.24,
+        label:'Weakest here', objective:'Resources of collecting data', ev:'4 attempts · last 9 days ago',
+        trail:[['Confused sample with population','−0.12'],['Cold start','0.30']] },
+      { title:'Unit 4 — Trigonometry', los:7, done:6, p:0.78,
+        label:'Strongest here', objective:'Circular measure: degrees, minutes, seconds', ev:'15 attempts · last 1 day ago',
+        trail:[['Converted 47°18′ without a prompt','+0.08'],['Four correct in a row','+0.21'],['Cold start','0.30']] },
+      { title:'Unit 5 — Coordinate Geometry', los:9, done:3, p:0.33,
+        label:'Practising', objective:'The distance between two points', ev:'6 attempts · last 6 days ago',
+        trail:[['Dropped the square root','−0.15'],['Recovered on the retry','+0.10'],['Cold start','0.30']] },
+      { title:'Unit 4 — The Circle (Geometry)', los:9, done:0, p:0,
+        label:'Not opened yet', objective:'Basic definitions: circle, centre, radius, chord, diameter', ev:'no attempts yet',
+        trail:[['Nothing recorded yet','—']] },
+      { title:'Unit 5 — Angles and Arcs in the Circle', los:18, done:0, p:0,
+        label:'Not opened yet', objective:'Central angle and the measure of arcs', ev:'no attempts yet',
+        trail:[['Nothing recorded yet','—']] },
+    ];
+    this.state = { sel: 0 };
+  }
+  // The five-step ramp, verbatim from tokens.css. There is deliberately no red
+  // and no coral in this palette — a wrong answer greys out and invites a retry.
+  ramp(p, started){
+    if (!started) return '#EFEEF6';
+    if (p < 0.35) return '#F0A22F';
+    if (p < 0.55) return '#D9A75A';
+    if (p < 0.75) return '#8FB98A';
+    return '#2F9E8F';
+  }
+  renderVals(){
+    const sel = this.state.sel;
+    // Started topics sort above untouched ones, then by lowest mastery. Without
+    // the started/not-started split, five never-opened 0% topics bury a real 24%.
+    const order = this.topics
+      .map((t, i) => ({ t, i }))
+      .sort((a, b) => (a.t.done === 0) - (b.t.done === 0) || a.t.p - b.t.p);
+    const topics = order.map(({ t, i }) => {
+      const started = t.done > 0;
+      const c = this.ramp(t.p, started);
+      return {
+        title: t.title,
+        meta: started ? `${t.done} of ${t.los} objectives with evidence` : `${t.los} objectives · not opened`,
+        pct: started ? Math.round(t.p * 100) + '%' : '—',
+        dot: c,
+        bg: i === sel ? '#FFFFFF' : 'transparent',
+        border: i === sel ? '#F0A22F' : '#E6E4F0',
+        selected: i === sel,
+        pick: () => this.setState({ sel: i }),
+      };
+    });
+    const s = this.topics[sel];
+    const started = s.done > 0;
+    return {
+      topics,
+      legend: [
+        { c:'#EFEEF6', label:'Not started' }, { c:'#F0A22F', label:'Attempted' },
+        { c:'#D9A75A', label:'Familiar' },   { c:'#8FB98A', label:'Proficient' },
+        { c:'#2F9E8F', label:'Mastered' },
+      ],
+      selTitle: s.title,
+      selLabel: s.label,
+      selObjective: s.objective,
+      selPct: started ? Math.round(s.p * 100) + '%' : '—',
+      selColor: this.ramp(s.p, started),
+      selEvidence: s.ev,
+      trail: s.trail.map(([what, delta]) => ({
+        what, delta,
+        dot: delta.startsWith('−') ? '#EFEEF6' : delta.startsWith('+') ? '#2F9E8F' : '#D9D7E4',
+      })),
+      ctaLabel: started ? `Practise ${s.objective.toLowerCase()}` : `Start ${s.title.split('—')[1].trim().toLowerCase()}`,
+    };
+  }
+}
+</script>
+</body>
+</html>

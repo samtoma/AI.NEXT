@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700;800&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    /* Nour PLAY — Variant A (ages 10–16). Tokens verbatim from the Play
+       tokens.css; anything absent falls back to master v0.2. */
+    :root{
+      --play-bg-page:#FFF6E6; --play-bg-surface:#FFFFFF; --play-bg-warm:#FFE9BD;
+      --play-ink:#241F3D; --play-ink-soft:#6B6489;
+      --play-text-dim:#4A4266; --play-text-muted:#5A5570; --play-text-label:#615B7D;
+      --play-text-eyebrow:#655B80; --play-text-link:#136386;
+      --play-action:#F0A22F; --play-on-action:#241F3D;
+      --play-mastery:#2F9E8F; --play-on-mastery:#241F3D;
+      --play-celebrate:#7B4FC9; --play-on-celebrate:#FFFFFF;
+      --play-sky:#7FD1F0; --play-on-sky-dim:#134B63;
+      --play-leaf:#B6E88F; --play-on-leaf:#1F3D12; --play-on-leaf-dim:#3A5B26;
+      --play-berry:#FFA8C5; --play-on-berry-dim:#6E2440;
+      --play-text-amber:#A34F0A; --play-text-amber-warm:#8A4208;
+      --play-inactive-fill:#F6F5FA; --play-inactive-border:#9C95B8;
+      --play-stroke:3px; --play-stroke-sm:2.5px;
+      --play-shadow:4px 4px 0 var(--play-ink);
+      --play-shadow-sm:3px 3px 0 var(--play-ink);
+      --play-shadow-lg:6px 6px 0 var(--play-ink);
+      --play-press-offset:4px;
+      --play-radius-sm:14px; --play-radius:20px; --play-radius-lg:28px; --play-radius-pill:999px;
+      --play-target-min:52px;
+      --play-font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+      --play-font-ui:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+      --play-font-read:"Cairo",system-ui,sans-serif;
+      --play-font-mono:"IBM Plex Mono",monospace;
+      --play-press:90ms cubic-bezier(.2,.7,.3,1);
+      --play-pop:380ms cubic-bezier(.34,1.6,.64,1);
+    }
+    *{box-sizing:border-box}
+    /* Baloo runs the WHOLE UI here — the deliberate break from master. */
+    body{margin:0;background:var(--play-bg-page);color:var(--play-ink);
+         font-family:var(--play-font-ui);font-weight:700;line-height:1.75;-webkit-font-smoothing:antialiased}
+    button{font-family:var(--play-font-ui);font-weight:700;cursor:pointer;color:inherit;text-align:start;background:none;border:none}
+    /* Cairo ONLY for passages over three lines. */
+    .read{font-family:var(--play-font-read);font-weight:400;line-height:1.75}
+    .mono{font-family:var(--play-font-mono);font-weight:500;font-variant-numeric:tabular-nums}
+    /* Mono carries no Arabic script and no Arabic-Indic digits — Arabic never
+       goes in a mono element, and is never letter-spaced. */
+    .ar{font-family:var(--play-font-read);letter-spacing:normal;line-height:1.9}
+    .ar-ui{font-family:var(--play-font-ui);letter-spacing:normal;line-height:1.9}
+    /* If it doesn't move, it isn't a control. */
+    .pressable{box-shadow:var(--play-shadow);transition:transform var(--play-press),box-shadow var(--play-press)}
+    .pressable:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--play-ink)}
+    .pressable-sm{box-shadow:var(--play-shadow-sm);transition:transform var(--play-press),box-shadow var(--play-press)}
+    .pressable-sm:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--play-ink)}
+    @media (hover:hover) and (pointer:fine){
+      .pressable:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--play-ink)}
+    }
+    @keyframes play-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @keyframes play-pop{0%{transform:scale(.7)}55%{transform:scale(1.14)}100%{transform:scale(1)}}
+    @keyframes play-nudge{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+    .bob{animation:play-bob 3.2s ease-in-out infinite}
+    .pop{animation:play-pop var(--play-pop)}
+    .nudge{animation:play-nudge 420ms ease-in-out}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+  </style>
+</helmet>
+
+<div style="width:1194px;height:834px;display:flex;flex-direction:column;background:var(--play-bg-page);overflow:hidden">
+
+  <!-- header — Honey band, sticker rule ---------------------------------- -->
+  <div style="display:flex;align-items:center;gap:12px;padding:14px 22px;background:var(--play-bg-warm);border-bottom:var(--play-stroke) solid var(--play-ink);flex-shrink:0">
+    <svg viewBox="0 0 64 64" width="34" height="34" role="img" aria-label="Nour">
+      <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+      <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#241F3D"></path>
+    </svg>
+    <span style="font-family:var(--play-font-display);font-weight:800;font-size:1.5rem;line-height:1">Nour</span>
+    <!-- playmate colour codes the SUBJECT — never decoration -->
+    <span style="display:flex;align-items:center;gap:7px;background:var(--play-sky);color:var(--play-on-sky-dim);border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-pill);padding:5px 13px;font-size:.85rem">Maths · Relations</span>
+    <span style="flex-grow:1"></span>
+    <span class="mono" style="font-size:.72rem;color:var(--play-text-label);background:var(--play-bg-surface);border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-pill);padding:5px 12px">STEP 3 / 11</span>
+    <div style="width:44px;height:44px;border-radius:var(--play-radius-pill);background:var(--play-berry);color:var(--play-on-berry-dim);border:var(--play-stroke) solid var(--play-ink);display:flex;align-items:center;justify-content:center;font-size:1rem">N</div>
+  </div>
+
+  <div style="display:flex;flex-grow:1;min-height:0">
+
+    <!-- ---- her material stays visible, always ---- -->
+    <div style="width:58%;display:flex;flex-direction:column;min-height:0;padding:20px 20px 20px 22px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-shrink:0">
+        <span class="mono" style="font-size:.72rem;color:var(--play-text-eyebrow)">YOUR WORKSHEET</span>
+        <span style="flex-grow:1"></span>
+        <button class="pressable-sm" style="min-height:44px;padding:9px 15px;font-size:.9rem;background:var(--play-bg-surface);border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm)">Swap page</button>
+      </div>
+      <div style="flex-grow:1;min-height:0;background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius-lg);box-shadow:var(--play-shadow-lg);padding:26px 30px;overflow:hidden">
+        <p class="mono" style="margin:0 0 6px;font-size:.72rem;color:var(--play-text-label)">worksheet.pdf · p.14</p>
+        <h2 style="font-family:var(--play-font-display);font-weight:800;font-size:1.5rem;margin:0 0 18px">Ordered pairs</h2>
+        <div style="background:var(--play-bg-warm);border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius);padding:18px 22px;margin-bottom:18px">
+          <p style="margin:0 0 6px;font-size:.85rem;color:var(--play-text-amber-warm)">QUESTION 2</p>
+          <!-- maths ALWAYS dir=ltr, in any page direction -->
+          <p dir="ltr" style="margin:0;font-size:1.35rem">If (x − 4, 7) = (9, y + 2), find the value of x × y.</p>
+        </div>
+        <!-- over three lines, so Cairo, not Baloo -->
+        <p class="read" style="margin:0 0 14px;font-size:1rem;color:var(--play-text-dim)">Two ordered pairs are equal when their first components are equal and their second components are equal. That gives you two little equations instead of one big one, and each of them is easy on its own.</p>
+        <div dir="ltr" class="mono" style="font-size:1rem;color:var(--play-ink);background:var(--play-bg-page);border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm);padding:13px 17px">(a, b) = (c, d) &lt;=&gt; a = c and b = d</div>
+      </div>
+    </div>
+
+    <!-- ---- Nour panel ---- -->
+    <div style="width:42%;display:flex;flex-direction:column;min-height:0;padding:20px 22px 0 8px">
+      <div style="flex-grow:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:14px">
+
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <svg class="bob" viewBox="0 0 64 64" width="34" height="34" style="flex-shrink:0" role="img" aria-label="Nour">
+            <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+            <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#241F3D"></path>
+          </svg>
+          <div style="background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius);box-shadow:var(--play-shadow-sm);padding:14px 16px">
+            <!-- equal size AND weight in both scripts -->
+            <p style="margin:0 0 8px;font-size:1.05rem">You got <span dir="ltr" class="mono">y = 5</span> from the second components. That bit is right.</p>
+            <p class="ar-ui" dir="rtl" style="margin:0;font-size:1.05rem">ظبطت الجزء التاني صح. تعالى نبص على الأول.</p>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end">
+          <div style="max-width:82%;background:var(--play-bg-warm);border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius);padding:12px 16px">
+            <p dir="ltr" style="margin:0;font-size:1.05rem">I got x = 13 so x × y = 65?</p>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <svg viewBox="0 0 64 64" width="34" height="34" style="flex-shrink:0" aria-hidden="true">
+            <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+            <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#241F3D"></path>
+          </svg>
+          <div style="background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius);box-shadow:var(--play-shadow-sm);padding:14px 16px;min-width:0">
+            <!-- wrong = grey fill + a nudge. Never red, ever. -->
+            <p style="margin:0 0 10px;font-size:1.05rem">Nearly! One slip in the <span style="background:var(--play-inactive-fill);border:var(--play-stroke-sm) solid var(--play-inactive-border);border-radius:8px;padding:1px 7px">first</span> component. Look again at <span dir="ltr" class="mono">x − 4 = 9</span>.</p>
+
+            <sc-if value="{{ showDots }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:6px;padding:2px 0 8px" aria-label="Nour is thinking">
+                <span class="bob" style="width:9px;height:9px;border-radius:50%;background:var(--play-action)"></span>
+                <span class="bob" style="width:9px;height:9px;border-radius:50%;background:var(--play-action);animation-delay:.2s"></span>
+                <span class="bob" style="width:9px;height:9px;border-radius:50%;background:var(--play-action);animation-delay:.4s"></span>
+              </div>
+            </sc-if>
+
+            <!-- the same four rungs as master. "Show me the answer" is never
+                 withheld to drive engagement. -->
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:4px">
+              <sc-for list="{{ rungs }}" as="rung" hint-placeholder-count="4">
+                <button class="pressable-sm" onClick="{{ rung.pick }}"
+                        style="min-height:52px;padding:12px 16px;font-size:1.05rem;border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius);background:{{rung.bg}};color:{{rung.fg}}">{{ rung.label }}</button>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+              <div class="pop" style="margin-top:12px;padding:13px 15px;background:var(--play-leaf);border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm)">
+                <p dir="ltr" class="mono" style="margin:0 0 5px;font-size:.95rem;color:var(--play-on-leaf)">x − 4 = 9  ->  x = 13</p>
+                <p class="read" style="margin:0;font-size:.95rem;color:var(--play-on-leaf-dim)">{{ revealBody }}</p>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+
+      <!-- camera / photos / files are PRIMARY on every surface, never in a + menu -->
+      <div style="flex-shrink:0;padding:16px 0 20px">
+        <div style="background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius);box-shadow:var(--play-shadow);padding:9px 10px;display:flex;align-items:center;gap:7px">
+          <button aria-label="Camera" style="width:52px;height:52px;border-radius:var(--play-radius-sm);display:flex;align-items:center;justify-content:center;background:var(--play-bg-warm);border:var(--play-stroke-sm) solid var(--play-ink)">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#241F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2L8 5h8l1.5 2h2A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.4"/></svg>
+          </button>
+          <button aria-label="Photos" style="width:52px;height:52px;border-radius:var(--play-radius-sm);display:flex;align-items:center;justify-content:center;border:var(--play-stroke-sm) solid var(--play-ink)">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#241F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M4 17l5-4.5 4 3.2 3-2.4 4 3.7"/></svg>
+          </button>
+          <button aria-label="Files" style="width:52px;height:52px;border-radius:var(--play-radius-sm);display:flex;align-items:center;justify-content:center;border:var(--play-stroke-sm) solid var(--play-ink)">
+            <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#241F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+          </button>
+          <span style="flex-grow:1;font-size:1.05rem;color:var(--play-text-muted);padding-inline-start:6px">Ask me about this step…</span>
+          <button aria-label="Send" style="width:52px;height:52px;border-radius:var(--play-radius-sm);background:var(--play-action);color:var(--play-on-action);border:var(--play-stroke) solid var(--play-ink);display:flex;align-items:center;justify-content:center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#241F3D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h14M13 6.5l5.5 5.5L13 17.5"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"revealBody":{"editor":"text","default":"Then y = 5, so x × y = 65. Want to try the next one on your own?","section":"Copy"}}'>
+class Component extends DCLogic {
+  constructor(p){ super(p); this.state = { rung: 0, revealed: false, showDots: false }; }
+  renderVals(){
+    const labels = ['Give me a nudge', 'Where did I slip?', 'Walk me through it', 'Show me the answer'];
+    const cur = this.state.rung;
+    const rungs = labels.map((label, i) => ({
+      label,
+      // ONE amber primary per screen: only the rung she is on carries it.
+      bg: i === cur ? '#F0A22F' : '#FFFFFF',
+      fg: i === cur ? '#241F3D' : '#241F3D',
+      pick: () => {
+        this.setState({ rung: i, showDots: true, revealed: false });
+        setTimeout(() => this.setState({ showDots: false, revealed: i === 3 }), 700);
+      },
+    }));
+    return {
+      rungs,
+      revealed: this.state.revealed,
+      showDots: this.state.showDots,
+      revealBody: this.props.revealBody ?? 'Then y = 5, so x × y = 65. Want to try the next one on your own?',
+    };
+  }
+}
+</script>
+</body>
+</html>

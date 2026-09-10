@@ -72,12 +72,29 @@ export function LessonCheckIn({
     <main className="mx-auto max-w-3xl px-6 pb-16">
       <section className="anim-rise pb-6 pt-10">
         <p className="rule-label mb-4">After school · {first}</p>
-        <h1 className="font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
-          <span dir="rtl" className="text-accent-deep">
-            إزاي كان درس النهاردة؟
-          </span>
-          <span className="mx-3 text-ink-faint">/</span>
-          How did today&apos;s lesson go?
+        {/* Bilingual parity, not a translation footnote: both scripts at the
+            same size and the same weight, each carrying its own dir. What the
+            direction of the SHELL decides is only which one leads — English
+            for MVP 1.0 (decisions.md Q6), Arabic on the RTL verticals — and
+            that is a default, not a hard-coded direction. */}
+        <h1 className="flex flex-wrap items-baseline gap-x-3 font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
+          {social ? (
+            <>
+              <span dir="rtl" className="text-accent-deep">
+                إزاي كان درس النهاردة؟
+              </span>
+              <span className="text-ink-faint">/</span>
+              <span>How did today&apos;s lesson go?</span>
+            </>
+          ) : (
+            <>
+              <span>How did today&apos;s lesson go?</span>
+              <span className="text-ink-faint">/</span>
+              <span dir="rtl" className="text-accent-deep">
+                إزاي كان درس النهاردة؟
+              </span>
+            </>
+          )}
         </h1>
       </section>
 
@@ -147,9 +164,15 @@ export function LessonCheckIn({
           <div className="space-y-1">
             {lesson.los.map((l) => (
               <div key={l.id} className="flex items-center gap-2">
+                {/* A learning objective at 0 has no evidence behind it, so it
+                    takes the not-started step. Handing it the lowest LIT step
+                    paints a whole untouched lesson amber, which reads as "you
+                    are doing badly at four things you have never seen". */}
                 <span
                   className="h-2 w-2 shrink-0 rounded-full"
-                  style={{ backgroundColor: masteryColor(l.mastery) }}
+                  style={{
+                    backgroundColor: masteryColor(l.mastery, 1, l.mastery > 0),
+                  }}
                 />
                 <span className="text-[12px] text-ink-soft">{l.label}</span>
                 <span className="font-mono text-[9.5px] text-ink-faint">
@@ -161,26 +184,45 @@ export function LessonCheckIn({
         </div>
       </section>
 
-      {/* the two doors */}
+      {/* The two doors.
+
+          "I didn't get it" is the one that must feel easiest to walk through,
+          so it carries the single dominant accent on this screen and the
+          revision door is the quieter of the pair. It used to be rust — a
+          red-family warning drawn around admitting you are lost, which is
+          exactly the framing the design system forbids, and exactly the
+          framing that makes a student pick the door that flatters her
+          instead of the one she needs. */}
       <section className="mt-5 grid gap-4 sm:grid-cols-2">
         <Link
           href={`/student?mode=learn&lesson=${encodeURIComponent(lesson.slug)}`}
           prefetch={false}
-          className="anim-rise group relative overflow-hidden rounded-xl border border-rust/35 bg-card px-6 pb-5 pt-6 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_12px_32px_-18px_rgba(168,68,42,0.35)] transition-all duration-200 hover:-translate-y-1 hover:border-rust/60 hover:shadow-[0_22px_44px_-20px_rgba(168,68,42,0.5)]"
+          className="anim-rise group relative overflow-hidden rounded-xl border border-line bg-card px-6 pb-5 pt-6 shadow-[0_2px_8px_rgba(30,36,80,0.08)] transition-all duration-200 hover:-translate-y-1 hover:border-[var(--nour-action)] hover:shadow-[0_12px_32px_rgba(30,36,80,0.16)]"
           style={{ animationDelay: "180ms" }}
         >
           <div
             className="pointer-events-none absolute inset-0 opacity-70"
             style={{
               background:
-                "radial-gradient(ellipse 110% 90% at 85% -10%, var(--rust-wash), transparent 60%)",
+                "radial-gradient(ellipse 110% 90% at 85% -10%, var(--gold-wash), transparent 60%)",
             }}
           />
-          <p
-            dir="rtl"
-            className="relative font-display text-[26px] font-medium leading-tight text-rust"
-          >
-            مش فاهم حاجة
+          {/* The gap has to come from the LAYOUT, not from a margin on the
+              Arabic span: margin-inline-start on a dir="rtl" element resolves
+              to its RIGHT edge, so the two scripts render flush against each
+              other ("I'm lostمش فاهم حاجة"). A flex row with a gap is
+              direction-agnostic, which is the whole point. */}
+          <p className="relative flex flex-wrap items-baseline gap-x-3 font-display text-[26px] font-medium leading-tight text-ink">
+            {social ? (
+              <span dir="rtl">مش فاهم حاجة</span>
+            ) : (
+              <>
+                <span>I&apos;m lost</span>
+                <span dir="rtl" className="text-ink-soft">
+                  مش فاهم حاجة
+                </span>
+              </>
+            )}
           </p>
           {social ? (
             <>
@@ -190,7 +232,14 @@ export function LessonCheckIn({
               <p dir="rtl" className="relative mt-3 text-[10.5px] text-ink-faint">
                 درس تفاعلي · خرايط ورسومات · تقرير فهم بأمانة
               </p>
-              <span dir="rtl" className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-rust px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:-translate-x-1">
+              <span
+                dir="rtl"
+                className="relative mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl px-4 text-[13px] font-semibold transition-transform duration-200 group-hover:-translate-x-1"
+                style={{
+                  background: "var(--nour-action)",
+                  color: "var(--nour-on-action)",
+                }}
+              >
                 علّمني ←
               </span>
             </>
@@ -202,7 +251,14 @@ export function LessonCheckIn({
               <p className="relative mt-3 font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
                 interactive lesson · figures · voice · honest score
               </p>
-              <span className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-rust px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:translate-x-1">
+              {/* never white text on amber — the pairing token is ink, not paper */}
+              <span
+                className="relative mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl px-4 text-[13px] font-semibold transition-transform duration-200 group-hover:translate-x-1"
+                style={{
+                  background: "var(--nour-action)",
+                  color: "var(--nour-on-action)",
+                }}
+              >
                 Teach me →
               </span>
             </>
@@ -222,11 +278,17 @@ export function LessonCheckIn({
                 "radial-gradient(ellipse 110% 90% at 85% -10%, var(--accent-wash), transparent 60%)",
             }}
           />
-          <p
-            dir="rtl"
-            className="relative font-display text-[26px] font-medium leading-tight text-accent-deep"
-          >
-            فهمت كله ✓
+          <p className="relative flex flex-wrap items-baseline gap-x-3 font-display text-[26px] font-medium leading-tight text-ink">
+            {social ? (
+              <span dir="rtl">فهمت كله ✓</span>
+            ) : (
+              <>
+                <span>I got it</span>
+                <span dir="rtl" className="text-ink-soft">
+                  فهمت كله
+                </span>
+              </>
+            )}
           </p>
           {social ? (
             <>
@@ -236,7 +298,7 @@ export function LessonCheckIn({
               <p dir="rtl" className="relative mt-3 text-[10.5px] text-ink-faint">
                 ٣ أسئلة سريعة · تحدي واحد · وخلصنا
               </p>
-              <span dir="rtl" className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent-deep px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:-translate-x-1">
+              <span dir="rtl" className="relative mt-4 inline-flex items-center gap-1.5 min-h-[44px] rounded-xl bg-accent-deep px-4 text-[13px] font-semibold text-paper transition-transform duration-200 group-hover:-translate-x-1">
                 ثبّته ←
               </span>
             </>
@@ -248,7 +310,7 @@ export function LessonCheckIn({
               <p className="relative mt-3 font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
                 3 quick checks · 1 challenge · ≤ 5 AI turns
               </p>
-              <span className="relative mt-4 inline-flex items-center gap-1.5 rounded-full bg-accent-deep px-4 py-1.5 text-[12px] font-semibold text-paper transition-transform duration-200 group-hover:translate-x-1">
+              <span className="relative mt-4 inline-flex items-center gap-1.5 min-h-[44px] rounded-xl bg-accent-deep px-4 text-[13px] font-semibold text-paper transition-transform duration-200 group-hover:translate-x-1">
                 Lock it in →
               </span>
             </>

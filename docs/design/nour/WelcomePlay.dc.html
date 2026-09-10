@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700;800&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    /* Nour PLAY — Variant A (ages 10–16). Tokens verbatim from the Play
+       tokens.css; anything absent falls back to master v0.2. */
+    :root{
+      --play-bg-page:#FFF6E6; --play-bg-surface:#FFFFFF; --play-bg-warm:#FFE9BD;
+      --play-ink:#241F3D; --play-ink-soft:#6B6489;
+      --play-text-dim:#4A4266; --play-text-muted:#5A5570; --play-text-label:#615B7D;
+      --play-text-eyebrow:#655B80; --play-text-link:#136386;
+      --play-action:#F0A22F; --play-on-action:#241F3D;
+      --play-mastery:#2F9E8F; --play-on-mastery:#241F3D;
+      --play-celebrate:#7B4FC9; --play-on-celebrate:#FFFFFF;
+      --play-sky:#7FD1F0; --play-on-sky-dim:#134B63;
+      --play-leaf:#B6E88F; --play-on-leaf:#1F3D12; --play-on-leaf-dim:#3A5B26;
+      --play-berry:#FFA8C5; --play-on-berry-dim:#6E2440;
+      --play-text-amber:#A34F0A; --play-text-amber-warm:#8A4208;
+      --play-inactive-fill:#F6F5FA; --play-inactive-border:#9C95B8;
+      --play-stroke:3px; --play-stroke-sm:2.5px;
+      --play-shadow:4px 4px 0 var(--play-ink);
+      --play-shadow-sm:3px 3px 0 var(--play-ink);
+      --play-shadow-lg:6px 6px 0 var(--play-ink);
+      --play-press-offset:4px;
+      --play-radius-sm:14px; --play-radius:20px; --play-radius-lg:28px; --play-radius-pill:999px;
+      --play-target-min:52px;
+      --play-font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+      --play-font-ui:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+      --play-font-read:"Cairo",system-ui,sans-serif;
+      --play-font-mono:"IBM Plex Mono",monospace;
+      --play-press:90ms cubic-bezier(.2,.7,.3,1);
+      --play-pop:380ms cubic-bezier(.34,1.6,.64,1);
+    }
+    *{box-sizing:border-box}
+    /* Baloo runs the WHOLE UI here — the deliberate break from master. */
+    body{margin:0;background:var(--play-bg-page);color:var(--play-ink);
+         font-family:var(--play-font-ui);font-weight:700;line-height:1.75;-webkit-font-smoothing:antialiased}
+    button{font-family:var(--play-font-ui);font-weight:700;cursor:pointer;color:inherit;text-align:start;background:none;border:none}
+    /* Cairo ONLY for passages over three lines. */
+    .read{font-family:var(--play-font-read);font-weight:400;line-height:1.75}
+    .mono{font-family:var(--play-font-mono);font-weight:500;font-variant-numeric:tabular-nums}
+    /* Mono carries no Arabic script and no Arabic-Indic digits — Arabic never
+       goes in a mono element, and is never letter-spaced. */
+    .ar{font-family:var(--play-font-read);letter-spacing:normal;line-height:1.9}
+    .ar-ui{font-family:var(--play-font-ui);letter-spacing:normal;line-height:1.9}
+    /* If it doesn't move, it isn't a control. */
+    .pressable{box-shadow:var(--play-shadow);transition:transform var(--play-press),box-shadow var(--play-press)}
+    .pressable:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--play-ink)}
+    .pressable-sm{box-shadow:var(--play-shadow-sm);transition:transform var(--play-press),box-shadow var(--play-press)}
+    .pressable-sm:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--play-ink)}
+    @media (hover:hover) and (pointer:fine){
+      .pressable:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--play-ink)}
+    }
+    @keyframes play-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @keyframes play-pop{0%{transform:scale(.7)}55%{transform:scale(1.14)}100%{transform:scale(1)}}
+    @keyframes play-nudge{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+    .bob{animation:play-bob 3.2s ease-in-out infinite}
+    .pop{animation:play-pop var(--play-pop)}
+    .nudge{animation:play-nudge 420ms ease-in-out}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+  </style>
+</helmet>
+
+<div style="width:1194px;height:834px;display:flex;background:var(--play-bg-page);overflow:hidden">
+
+  <!-- ---- left: the friend ---- -->
+  <div style="width:44%;background:var(--play-bg-warm);border-inline-end:var(--play-stroke) solid var(--play-ink);padding:52px 46px;display:flex;flex-direction:column;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:12px">
+      <svg viewBox="0 0 64 64" width="40" height="40" role="img" aria-label="Nour">
+        <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+        <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#241F3D"></path>
+      </svg>
+      <span style="font-family:var(--play-font-display);font-weight:800;font-size:1.6rem;line-height:1">Nour</span>
+    </div>
+
+    <span style="flex-grow:1"></span>
+
+    <svg class="bob" viewBox="0 0 64 64" width="112" height="112" style="margin-bottom:22px" aria-hidden="true">
+      <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+      <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#241F3D"></path>
+    </svg>
+
+    <!-- display size, both scripts equal weight -->
+    <h1 style="font-family:var(--play-font-display);font-weight:800;font-size:2.4rem;line-height:1.25;margin:0 0 12px">Bring your own worksheet.</h1>
+    <p class="ar-ui" dir="rtl" style="font-family:var(--play-font-display);font-weight:800;font-size:2.4rem;line-height:1.35;margin:0 0 20px">ذاكري باللي معاكي.</p>
+    <p class="read" style="margin:0;font-size:1rem;color:var(--play-text-dim);max-width:34ch">Take a photo of the page you're stuck on. Nour works from your book, not from a script.</p>
+
+    <span style="flex-grow:1"></span>
+    <span class="mono" style="font-size:.72rem;color:var(--play-text-label)">PREP 3 · MATHS · TERM 1 &amp; 2</span>
+  </div>
+
+  <!-- ---- right: a picker. Never a login. ---- -->
+  <div style="flex-grow:1;display:flex;flex-direction:column;padding:52px 48px 0;min-width:0">
+    <p style="margin:0 0 4px;font-family:var(--play-font-display);font-weight:800;font-size:1.5rem">Who's studying?</p>
+    <p class="read" style="margin:0 0 20px;font-size:1rem;color:var(--play-text-dim)">Tap your name. No password, nothing to remember.</p>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ people }}" as="p" hint-placeholder-count="3">
+        <button class="pressable" onClick="{{ p.pick }}" aria-pressed="{{ p.selected }}"
+                style="display:flex;align-items:center;gap:14px;min-height:68px;padding:12px 16px;border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius);background:{{p.bg}}">
+          <span style="width:48px;height:48px;border-radius:var(--play-radius-pill);background:{{p.chip}};color:{{p.chipFg}};border:var(--play-stroke) solid var(--play-ink);display:flex;align-items:center;justify-content:center;font-family:var(--play-font-display);font-weight:800;font-size:1.2rem;flex-shrink:0">{{ p.initial }}</span>
+          <span style="flex-grow:1;min-width:0">
+            <span style="display:block;font-size:1.1rem">{{ p.name }}</span>
+            <span class="mono" style="display:block;font-size:.72rem;color:var(--play-text-label)">{{ p.meta }}</span>
+          </span>
+          <sc-if value="{{ p.selected }}">
+            <span class="pop" style="width:32px;height:32px;border-radius:var(--play-radius-pill);background:var(--play-leaf);border:var(--play-stroke-sm) solid var(--play-ink);display:flex;align-items:center;justify-content:center">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1F3D12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="selected"><path d="M4.5 12.5l5 5 10-11"/></svg>
+            </span>
+          </sc-if>
+        </button>
+      </sc-for>
+
+      <button class="pressable-sm" onClick="{{ toggleNew }}"
+              style="display:flex;align-items:center;gap:14px;min-height:68px;padding:12px 16px;border:var(--play-stroke) dashed var(--play-ink);border-radius:var(--play-radius);background:transparent">
+        <span style="width:48px;height:48px;border-radius:var(--play-radius-pill);background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#241F3D" stroke-width="2.6" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"/></svg>
+        </span>
+        <span style="font-size:1.1rem;color:var(--play-text-dim)">Someone new</span>
+      </button>
+    </div>
+
+    <sc-if value="{{ showNew }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:14px;background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius-lg);box-shadow:var(--play-shadow);padding:18px 20px">
+        <label style="display:block;font-size:.85rem;color:var(--play-text-muted);margin-bottom:7px">FIRST NAME</label>
+        <div style="min-height:52px;border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm);padding:13px 14px;background:var(--play-bg-page);font-size:1.05rem;color:var(--play-text-muted)">{{ newName }}</div>
+        <p class="read" style="margin:13px 0 9px;font-size:.95rem;color:var(--play-text-dim)">What are you into? Skip it if you like — it only changes the examples Nour uses.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:9px">
+          <sc-for list="{{ interests }}" as="i" hint-placeholder-count="5">
+            <button class="pressable-sm" onClick="{{ i.pick }}" aria-pressed="{{ i.on }}"
+                    style="min-height:52px;padding:12px 17px;border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-pill);background:{{i.bg}};color:{{i.fg}};font-size:1rem">{{ i.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <span style="flex-grow:1"></span>
+
+    <div style="flex-shrink:0;padding-bottom:26px">
+      <button class="pressable" style="width:100%;min-height:60px;border:var(--play-stroke) solid var(--play-ink);border-radius:var(--play-radius);background:var(--play-action);color:var(--play-on-action);font-size:1.2rem;text-align:center">{{ ctaLabel }}</button>
+      <p class="read" style="margin:13px 0 0;text-align:center;font-size:.9rem;color:var(--play-text-dim)">We keep a first name, a grade, and the topics you practise. Nothing else.</p>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"newName":{"editor":"text","default":"Type a name…","section":"Copy"}}'>
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    // Playmate fills carry an identity here, with the -dim foreground token
+    // each one is paired with. Never picked by eye.
+    this.people = [
+      { name:'Nour Hassan',  meta:'PREP 3 · 2 DAYS AGO', chip:'#7FD1F0', chipFg:'#134B63' },
+      { name:'Malak Fathy',  meta:'PREP 3 · 6 DAYS AGO', chip:'#B6E88F', chipFg:'#3A5B26' },
+      { name:'Youssef Adel', meta:'PREP 3 · TODAY',      chip:'#FFA8C5', chipFg:'#6E2440' },
+    ];
+    this.labels = ['Football','Drawing','Games','Cooking','Astronomy'];
+    this.state = { sel: 0, showNew: false, likes: [] };
+  }
+  renderVals(){
+    const { sel, showNew } = this.state;
+    return {
+      people: this.people.map((p, i) => ({
+        name: p.name, meta: p.meta, chip: p.chip, chipFg: p.chipFg, initial: p.name[0],
+        selected: !showNew && i === sel,
+        bg: !showNew && i === sel ? '#FFE9BD' : '#FFFFFF',
+        pick: () => this.setState({ sel: i, showNew: false }),
+      })),
+      toggleNew: () => this.setState({ showNew: !this.state.showNew }),
+      showNew,
+      newName: this.props.newName ?? 'Type a name…',
+      interests: this.labels.map(label => {
+        const on = this.state.likes.includes(label);
+        return {
+          label, on,
+          bg: on ? '#F0A22F' : '#FFFFFF',
+          fg: '#241F3D',
+          pick: () => this.setState({
+            likes: on ? this.state.likes.filter(x => x !== label) : [...this.state.likes, label],
+          }),
+        };
+      }),
+      ctaLabel: showNew ? 'Start studying' : `Let's go, ${this.people[sel].name.split(' ')[0]}`,
+    };
+  }
+}
+</script>
+</body>
+</html>

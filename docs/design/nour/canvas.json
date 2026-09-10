@@ -1,0 +1,26 @@
+{
+  "artboards": [
+    { "file": "Welcome.dc.html",     "title": "Master · Who's studying",  "x": 0,    "y": 0,    "w": 1194, "h": 834, "is_interactive": true },
+    { "file": "Main.dc.html",        "title": "Master · Lesson",          "x": 1314, "y": 0,    "w": 1194, "h": 834, "is_interactive": true },
+    { "file": "Progress.dc.html",    "title": "Master · Where you stand", "x": 2628, "y": 0,    "w": 1194, "h": 834, "is_interactive": true },
+
+    { "file": "WelcomePlay.dc.html", "title": "Play · Who's studying",    "x": 0,    "y": 1014, "w": 1194, "h": 834, "is_interactive": true },
+    { "file": "LessonPlay.dc.html",  "title": "Play · Lesson",            "x": 1314, "y": 1014, "w": 1194, "h": 834, "is_interactive": true },
+    { "file": "ProgressPlay.dc.html","title": "Play · Where you stand",   "x": 2628, "y": 1014, "w": 1194, "h": 834, "is_interactive": true }
+  ],
+  "annotations": [
+    { "id": "row-master", "x": 0, "y": -190, "w": 460,
+      "text": "MASTER — Nour v0.2, ages 15–18. Paper ground, hairline borders, soft shadows, Baloo for headlines only. Same three screens as the row below, same content, same behaviour." },
+    { "id": "row-play", "x": 0, "y": 824, "w": 460,
+      "text": "PLAY — Variant A, ages 10–16. Cream ground, 3px ink outline + hard 4px offset shadow, Baloo runs the whole UI, 52px targets. Layers on master; anything absent falls back." },
+    { "id": "note-frame", "x": 1314, "y": -190, "w": 460,
+      "text": "All six frames are iPad landscape 1194×834 — the canonical device. Two pane: her material 58%, tutor 42%. Her material never leaves the screen while she is talking to Nour." },
+    { "id": "note-clickable", "x": 2628, "y": -190, "w": 460,
+      "text": "Clickable, not stills. Lesson: tap the hint ladder — nudge → where did I slip → walk me through → show me the answer, which is never withheld. Progress: tap any topic. Welcome: pick a name, or add someone new." },
+    { "id": "note-red", "x": 2628, "y": 824, "w": 460,
+      "text": "The mastery ramp is #EFEEF6 → #F0A22F → #D9A75A → #8FB98A → #2F9E8F. There is no red and no coral anywhere in either variant: a wrong answer greys out and invites a retry. The dashboard shipped in Phase 8 uses a burnt-sienna ramp and has to change." },
+    { "id": "note-parity", "x": 1314, "y": 824, "w": 460,
+      "text": "Bilingual parity is structural: Arabic and English at equal size and weight, direction on the element, logical properties only, equations always dir=ltr. English-first is a default, not a one-way door." }
+  ],
+  "launch": { "view": "canvas" }
+}

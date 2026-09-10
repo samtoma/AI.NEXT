@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700&family=Cairo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <style>
+    /* Nour — Master Design System v0.2. Tokens verbatim from tokens.css. */
+    :root{
+      --color-bg-page:#F7F6FB; --color-bg-surface:#FFFFFF; --color-bg-contrast:#1E2450;
+      --color-border-subtle:#E6E4F0; --color-state-inactive:#EFEEF6;
+      --color-text-primary:#2B2A38; --color-text-secondary:#5D5B6E;
+      --color-text-on-accent:#141833; --color-text-inverse:#F2F1F7;
+      --color-action-primary:#F0A22F; --color-action-hover:#D98C1F;
+      --color-state-progress:#2F9E8F; --color-state-celebrate:#6E4FA8;
+      --on-state-progress:#241F3D;
+      --mastery-0:#EFEEF6; --mastery-1:#F0A22F; --mastery-2:#D9A75A;
+      --mastery-3:#8FB98A; --mastery-4:#2F9E8F;
+      --font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+      --font-body:"Cairo",system-ui,sans-serif;
+      --font-mono:"IBM Plex Mono",monospace;
+      --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-pill:999px;
+      --shadow-sm:0 2px 8px rgba(30,36,80,.08);
+      --ease-quiet:cubic-bezier(.2,.6,.2,1); --dur-quiet:180ms;
+      --focus-ring:0 0 0 4px rgba(240,162,47,.32);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--color-bg-page);color:var(--color-text-primary);
+         font-family:var(--font-body);line-height:1.7;-webkit-font-smoothing:antialiased}
+    a{color:var(--color-action-hover)} a:hover{color:var(--color-action-primary)}
+    button{font-family:var(--font-body);cursor:pointer;border:none;background:none}
+    button:focus-visible,[tabindex]:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+    .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+    /* Arabic never in mono, never letter-spaced — CLAUDE.md recurring-bug rule */
+    .ar{font-family:var(--font-body);letter-spacing:normal;line-height:1.85}
+    @keyframes dot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+    .d1{animation:dot 1.2s infinite} .d2{animation:dot 1.2s .18s infinite} .d3{animation:dot 1.2s .36s infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:1ms!important}}
+  </style>
+</helmet>
+
+<div style="width:1194px;height:834px;display:flex;flex-direction:column;background:var(--color-bg-page);overflow:hidden">
+
+  <!-- header ------------------------------------------------------------ -->
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 20px;background:var(--color-bg-surface);border-bottom:1px solid var(--color-border-subtle);flex-shrink:0">
+    <svg viewBox="0 0 64 64" width="30" height="30" role="img" aria-label="Nour">
+      <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+      <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#1E2450"></path>
+    </svg>
+    <span style="font-family:var(--font-display);font-weight:700;font-size:1.25rem;line-height:1">Nour</span>
+    <span style="width:1px;height:20px;background:var(--color-border-subtle);margin-inline:4px"></span>
+    <span style="font-size:.9rem;color:var(--color-text-secondary)">Relations and Functions</span>
+    <span class="mono" style="font-size:.78rem;color:var(--color-text-secondary);background:var(--color-state-inactive);padding:3px 8px;border-radius:var(--radius-pill)">Unit 1 · 3 of 11</span>
+    <span style="flex-grow:1"></span>
+    <!-- exam weight, not textbook order — 30% priority -->
+    <span class="mono" style="font-size:.78rem;color:var(--color-text-secondary)">exam in 24 days</span>
+    <div style="width:34px;height:34px;border-radius:var(--radius-pill);background:var(--color-state-inactive);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600">N</div>
+  </div>
+
+  <!-- two-pane: material 58% / tutor 42% — CANONICAL --------------------- -->
+  <div style="display:flex;flex-grow:1;min-height:0">
+
+    <!-- ---- material pane (58%) ---- -->
+    <div style="width:58%;display:flex;flex-direction:column;min-height:0;border-inline-end:1px solid var(--color-border-subtle)">
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 20px;flex-shrink:0">
+        <span class="mono" style="font-size:.78rem;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em">Her material</span>
+        <span style="flex-grow:1"></span>
+        <button style="font-size:.85rem;color:var(--color-text-secondary);padding:6px 10px;border-radius:var(--radius-sm)">Replace</button>
+      </div>
+      <div style="flex-grow:1;overflow:hidden;padding:0 20px 20px;min-height:0">
+        <div style="height:100%;background:var(--color-bg-surface);border:1px solid var(--color-border-subtle);border-radius:var(--radius-lg);padding:28px 32px;overflow:hidden">
+          <p class="mono" style="margin:0 0 4px;font-size:.78rem;color:var(--color-text-secondary)">worksheet.pdf · p.14</p>
+          <h2 style="font-family:var(--font-display);font-weight:700;font-size:1.6rem;margin:0 0 20px">Ordered pairs</h2>
+          <div style="background:var(--color-state-inactive);border-radius:var(--radius-md);padding:20px 24px;margin-bottom:20px">
+            <p style="margin:0 0 6px;font-size:.9rem;color:var(--color-text-secondary)">Question 2</p>
+            <!-- maths ALWAYS dir=ltr, never mirrors -->
+            <p dir="ltr" style="margin:0;font-size:1.25rem">If (x − 4, 7) = (9, y + 2), find the value of x × y.</p>
+          </div>
+          <p style="margin:0 0 10px;color:var(--color-text-secondary);font-size:1rem">Two ordered pairs are equal when their first components are equal and their second components are equal.</p>
+          <div dir="ltr" style="font-family:var(--font-mono);font-size:1rem;color:var(--color-text-secondary);background:var(--color-bg-page);border-radius:var(--radius-sm);padding:14px 18px">(a, b) = (c, d) ⟺ a = c and b = d</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- tutor pane (42%) ---- -->
+    <div style="width:42%;display:flex;flex-direction:column;min-height:0;background:var(--color-bg-page)">
+      <div style="flex-grow:1;overflow:hidden;padding:16px 20px 0;display:flex;flex-direction:column;gap:14px;min-height:0">
+
+        <!-- Nour turn — bilingual pair, equal size and weight (true parity) -->
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <svg viewBox="0 0 64 64" width="28" height="28" style="flex-shrink:0;margin-top:2px" role="img" aria-label="Nour">
+            <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+            <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#1E2450"></path>
+          </svg>
+          <div style="background:var(--color-bg-surface);border:1px solid var(--color-border-subtle);border-radius:var(--radius-lg);padding:14px 16px">
+            <p style="margin:0 0 8px;font-size:1rem">You set the second components equal and got <span dir="ltr" class="mono">y = 5</span>. That part is right.</p>
+            <p class="ar" dir="rtl" style="margin:0;font-size:1rem">ظبطت الجزء التاني صح. تعالى نبص على الأول.</p>
+          </div>
+        </div>
+
+        <!-- student turn -->
+        <div style="display:flex;justify-content:flex-end">
+          <div style="max-width:80%;background:var(--color-state-inactive);border-radius:var(--radius-lg);padding:12px 16px">
+            <p dir="ltr" style="margin:0;font-size:1rem">I got x = 13 so x × y = 65?</p>
+          </div>
+        </div>
+
+        <!-- correction: names the step, never the bare word "wrong"; no red -->
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <svg viewBox="0 0 64 64" width="28" height="28" style="flex-shrink:0;margin-top:2px" aria-hidden="true">
+            <path d="M37.5 8 C42 8 45 12 45 17.5 C45 23 42 26.5 37.5 26.5 C33 26.5 30 23 30 17.5 C30 12 33 8 37.5 8 Z" fill="#F0A22F" transform="rotate(-13 37.5 17.5)"></path>
+            <path d="M19 55.5 C18 45 21 35.5 28 32.5 C34 30.3 41 31 45 34.5 C49 38 50 44.5 49 50 Z" fill="#1E2450"></path>
+          </svg>
+          <div style="background:var(--color-bg-surface);border:1px solid var(--color-border-subtle);border-radius:var(--radius-lg);padding:14px 16px">
+            <p style="margin:0 0 10px;font-size:1rem">Close — one small slip in the first component. Look again at <span dir="ltr" class="mono">x − 4 = 9</span>.</p>
+            <sc-if value="{{ showDots }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:5px;padding:2px 0 6px" aria-label="Nour is thinking">
+                <span class="d1" style="width:7px;height:7px;border-radius:50%;background:var(--color-action-primary)"></span>
+                <span class="d2" style="width:7px;height:7px;border-radius:50%;background:var(--color-action-primary)"></span>
+                <span class="d3" style="width:7px;height:7px;border-radius:50%;background:var(--color-action-primary)"></span>
+              </div>
+            </sc-if>
+            <!-- HINT LADDER: one tap per rung; "show me the answer" ALWAYS reachable -->
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+              <sc-for list="{{ rungs }}" as="rung" hint-placeholder-count="3">
+                <button onClick="{{ rung.pick }}" style="font-size:.9rem;font-weight:500;padding:9px 14px;min-height:44px;border-radius:var(--radius-md);border:1px solid {{rung.border}};background:{{rung.bg}};color:{{rung.fg}}">{{ rung.label }}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ revealed }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:12px;padding:12px 14px;background:var(--color-bg-page);border-radius:var(--radius-md)">
+                <p dir="ltr" class="mono" style="margin:0 0 4px;font-size:.9rem">x − 4 = 9  →  x = 13</p>
+                <p style="margin:0;font-size:.9rem;color:var(--color-text-secondary)">{{ revealBody }}</p>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+
+      <!-- ask bar: camera / photos / files are PRIMARY, never behind a + -->
+      <div style="flex-shrink:0;padding:14px 20px 18px">
+        <div style="background:var(--color-bg-surface);border:1px solid var(--color-border-subtle);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:10px 12px;display:flex;align-items:center;gap:8px">
+          <button aria-label="Camera" style="width:44px;height:44px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5D5B6E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2L8 5h8l1.5 2h2A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.4"/></svg>
+          </button>
+          <button aria-label="Photos" style="width:44px;height:44px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5D5B6E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.2"/><circle cx="8.5" cy="10" r="1.6"/><path d="M4 17l5-4.5 4 3.2 3-2.4 4 3.7"/></svg>
+          </button>
+          <button aria-label="Files" style="width:44px;height:44px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5D5B6E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+          </button>
+          <span style="flex-grow:1;font-size:1rem;color:var(--color-text-secondary);padding-inline-start:4px">Ask about this step…</span>
+          <button aria-label="Voice" style="width:44px;height:44px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5D5B6E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>
+          </button>
+          <button aria-label="Send" style="width:44px;height:44px;border-radius:var(--radius-md);background:var(--color-action-primary);display:flex;align-items:center;justify-content:center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141833" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h14M13 6.5l5.5 5.5L13 17.5"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"revealBody":{"editor":"text","default":"Then y = 5, so x × y = 65. Try the next one yourself.","section":"Copy"}}'>
+class Component extends DCLogic {
+  constructor(p){ super(p); this.state = { rung: 0, revealed: false, showDots: false }; }
+  renderVals(){
+    const labels = ['Give me a nudge', 'Where did I slip?', 'Walk me through it', 'Show me the answer'];
+    const cur = this.state.rung;
+    const rungs = labels.map((label, i) => ({
+      label,
+      // Only the reached rung carries the accent: ONE dominant accent per screen.
+      bg:     i === cur ? '#F0A22F' : '#FFFFFF',
+      fg:     i === cur ? '#141833' : '#2B2A38',
+      border: i === cur ? '#F0A22F' : '#E6E4F0',
+      pick: () => {
+        this.setState({ rung: i, showDots: true, revealed: false });
+        setTimeout(() => this.setState({ showDots: false, revealed: i === 3 }), 700);
+      },
+    }));
+    return {
+      rungs,
+      revealed: this.state.revealed,
+      showDots: this.state.showDots,
+      revealBody: this.props.revealBody ?? 'Then y = 5, so x × y = 65. Try the next one yourself.',
+    };
+  }
+}
+</script>
+</body>
+</html>

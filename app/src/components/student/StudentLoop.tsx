@@ -127,10 +127,14 @@ export function StudentLoop({
       <section className="anim-rise pb-6 pt-9">
         <p className="rule-label mb-4">Student Loop · {studentName}</p>
         <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h1 className="font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
+          {/* English leads on the LTR shell (decisions.md Q6); the Arabic sits
+              beside it at the same size and weight, not beneath it at half.
+              The gap is flex, not a margin: margin-inline-start on a dir="rtl"
+              span resolves to its right edge and the two scripts render flush. */}
+          <h1 className="flex flex-wrap items-baseline gap-x-3 font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
+            <span>Today&apos;s Plan</span>
+            <span className="text-ink-faint">/</span>
             <span dir="rtl" className="text-accent-deep">خطة اليوم</span>
-            <span className="mx-3 text-ink-faint">/</span>
-            Today&apos;s Plan
           </h1>
           {phase !== "plan" && phase !== "summary" && (
             <div className="flex items-center gap-1.5">
@@ -194,9 +198,12 @@ export function StudentLoop({
                     {meta.why} · mastery {pct(p.loScore)} · {p.tier} tier
                   </p>
                 </div>
+                {/* 0 means no evidence, not a bad result: the not-started step. */}
                 <span
                   className="h-2.5 w-2.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: masteryColor(p.loScore) }}
+                  style={{
+                    backgroundColor: masteryColor(p.loScore, 1, p.loScore > 0),
+                  }}
                 />
               </div>
             );
@@ -465,7 +472,7 @@ export function StudentLoop({
                     </div>
                     <span
                       className={`w-20 text-right font-mono text-[12px] font-semibold ${
-                        delta >= 0 ? "text-accent-deep" : "text-rust"
+                        delta >= 0 ? "text-accent-deep" : "text-ink-soft"
                       }`}
                     >
                       {delta >= 0 ? "▲" : "▼"} {Math.abs(Math.round(delta * 100))} pts

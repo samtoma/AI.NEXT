@@ -478,3 +478,176 @@ body[data-focus="lesson"] > footer {
 .anim-mic {
   animation: mic-pulse 1.4s ease-out infinite;
 }
+
+/* ===========================================================================
+   NOUR SKIN — the MVP 1.0 comparison build's visual language
+   ---------------------------------------------------------------------------
+   Applied by <html data-ds="nour">, which layout.tsx sets when
+   AINEXT_ENVIRONMENT=mvp1. Everything below REDEFINES the existing semantic
+   tokens rather than introducing a parallel set, so every surface in the
+   product picks up the Nour palette without being touched one component at a
+   time — and the frozen baseline (data-ds absent) renders exactly as before.
+
+   Values are verbatim from the Nour master handoff tokens.css v0.2. Two rules
+   from that system are load-bearing and are enforced here rather than left to
+   each component:
+
+     · THERE IS NO RED AND NO CORAL IN THIS PALETTE. A wrong answer greys out
+       and invites a retry — the persona's stated fear is looking stupid, and a
+       red page is what that fear looks like. --rust, which the product used for
+       wrong/rejected states, is therefore remapped to the neutral inactive
+       treatment rather than to another warm hue.
+     · NEVER WHITE TEXT ON AMBER. 31 call sites pair `bg-accent` with
+       `text-paper`, so --accent maps to Nour's indigo contrast surface, not to
+       the amber action colour. Amber is applied deliberately, one dominant
+       accent per screen, never by a blanket mapping.
+   ======================================================================== */
+
+[data-ds="nour"] {
+  --paper: #f7f6fb; /* bg-page */
+  --paper-deep: #efeef6; /* state-inactive */
+  --card: #ffffff; /* bg-surface */
+  --card-warm: #fbfafe;
+  --ink: #2b2a38; /* text-primary */
+  --ink-soft: #5d5b6e; /* text-secondary */
+  --ink-faint: #6e6c7e; /* derived: 5.2:1 on bg-page — the handoff has no
+                           faint token and the product's old one fails AA */
+  --line: #e6e4f0; /* border-subtle */
+  --line-soft: rgba(30, 36, 80, 0.07);
+
+  /* indigo contrast surface — carries --color-text-inverse safely */
+  --accent: #1e2450;
+  --accent-deep: #141833;
+  --accent-wash: rgba(30, 36, 80, 0.06);
+
+  /* the action colour. --gold is used as TEXT in places, so it takes the
+     hover step (#D98C1F, darker); fills that need the true amber reach for
+     --nour-action below. */
+  --gold: #d98c1f;
+  --gold-wash: rgba(240, 162, 47, 0.16);
+
+  /* wrong / rejected — grey, never red */
+  --rust: #5d5b6e;
+  --rust-wash: rgba(239, 238, 246, 0.9);
+
+  /* the five-step mastery ramp, exactly as tokens.css names it */
+  --mastery-0: #efeef6;
+  --mastery-1: #f0a22f;
+  --mastery-2: #d9a75a;
+  --mastery-3: #8fb98a;
+  --mastery-4: #2f9e8f;
+  --m-low: var(--mastery-1);
+  --m-mid: var(--mastery-2);
+  --m-high: var(--mastery-4);
+
+  /* Nour-specific additions with no counterpart in the ledger palette */
+  --nour-action: #f0a22f;
+  --nour-action-hover: #d98c1f;
+  --nour-on-action: #141833; /* never white on amber */
+  --nour-progress: #2f9e8f;
+  --nour-on-progress: #241f3d;
+  --nour-celebrate: #6e4fa8;
+  --nour-on-celebrate: #ffffff;
+  --nour-focus-ring: 0 0 0 4px rgba(240, 162, 47, 0.32);
+  --nour-touch-min: 44px;
+
+  /* subject territories: the comparison build is Mathematics only, but the
+     Arabic and Social verticals stay in the tree (Principle V), so they are
+     re-pointed at the Nour palette rather than left on the ledger hues. */
+  --subject-math: #1e2450;
+  --subject-math-wash: rgba(30, 36, 80, 0.05);
+  --subject-math-line: rgba(30, 36, 80, 0.24);
+  --subject-social: #6e4fa8;
+  --subject-social-wash: rgba(110, 79, 168, 0.06);
+  --subject-social-line: rgba(110, 79, 168, 0.3);
+  --subject-arabic: #2f9e8f;
+  --subject-arabic-wash: rgba(47, 158, 143, 0.07);
+  --subject-arabic-line: rgba(47, 158, 143, 0.3);
+  --bridge-gold: #f0a22f;
+
+  /* Baloo carries the display role, Cairo the body — both cover Latin AND
+     Arabic in one family, which is what makes true bilingual parity (equal
+     size, equal weight, same face) structural here rather than aspirational.
+     Noto Naskh stays last as a safety net. */
+  --stack-sans: "Cairo", "Noto Naskh Arabic", "Cairo Fallback", "Segoe UI",
+    sans-serif;
+  --stack-display: "Baloo Bhaijaan 2", "Cairo", "Noto Naskh Arabic",
+    "Baloo Bhaijaan 2 Fallback", sans-serif;
+  --stack-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", ui-monospace,
+    monospace;
+
+  --ar-line-plain: 1.85; /* handoff: leading-arabic */
+}
+
+/* The ledger's ruled-paper grid, warm vignette and grain belong to the frozen
+   baseline's identity. Nour's ground is flat and quiet — the material she
+   uploads is the thing with texture on the page, not the page. */
+[data-ds="nour"] body {
+  font-feature-settings: normal;
+  line-height: 1.7; /* leading-latin */
+  background-image: none;
+}
+
+[data-ds="nour"] body::before {
+  content: none;
+}
+
+[data-ds="nour"] ::selection {
+  background: rgba(240, 162, 47, 0.28);
+}
+
+/* One focus treatment, everywhere, amber — it is the only ring in the system. */
+[data-ds="nour"] :focus-visible {
+  outline: none;
+  box-shadow: var(--nour-focus-ring);
+}
+
+[data-ds="nour"] .ledger-card {
+  border-radius: 16px; /* radius-lg */
+  box-shadow: 0 2px 8px rgba(30, 36, 80, 0.08); /* shadow-sm */
+}
+
+[data-ds="nour"] .rule-label {
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+/* Arabic is never set in mono and never letter-spaced: IBM Plex Mono carries
+   no Arabic script, so a mono label containing Arabic silently falls through
+   to a system face at the wrong size. This is the handoff's single
+   most-repeated bug note. */
+[data-ds="nour"] [lang="ar"],
+[data-ds="nour"] [dir="rtl"] {
+  font-family: var(--stack-sans);
+  letter-spacing: normal;
+}
+
+/* Equations render LTR inline in any page direction (constitution v2.0.0). */
+[data-ds="nour"] .katex {
+  direction: ltr;
+  text-align: left;
+}
+
+/* The ONE signature spring in the system, reserved for proficient → mastered.
+   Spending it anywhere else is what makes it stop meaning anything. */
+@keyframes nour-pop {
+  0% {
+    transform: scale(0.86);
+  }
+  55% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+[data-ds="nour"] .anim-mastered {
+  animation: nour-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ds="nour"] .anim-mastered {
+    animation: none;
+  }
+}
