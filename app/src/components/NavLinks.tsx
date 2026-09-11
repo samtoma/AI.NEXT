@@ -21,6 +21,7 @@ const MVP1_LINKS = [
   { href: "/student", label: "Study" },
   { href: "/dashboard", label: "Where you stand" },
   { href: "/spine", label: "Evidence Walk" },
+  { href: "/admin/content", label: "Content" },
   { href: "/pipeline", label: "Pipeline" },
 ];
 

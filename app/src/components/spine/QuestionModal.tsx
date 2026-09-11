@@ -5,6 +5,8 @@ import type { SpineData, SpineLo, SpineQuestion } from "@/lib/types";
 import { stepText } from "@/lib/types";
 import { TeX } from "@/components/TeX";
 import { tierStyle } from "./LoPanel";
+import { questionProvenance } from "@/lib/provenance";
+import { ProvenanceBadge } from "@/components/ProvenanceBadge";
 
 const fmtDateTime = (iso: string | null) =>
   iso
@@ -35,6 +37,7 @@ export function QuestionModal({
 }) {
   const [revealed, setRevealed] = useState(1);
   const total = q.solution.length;
+  const prov = questionProvenance(q.provenance);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -69,6 +72,9 @@ export function QuestionModal({
             <span className="chip border-accent/30 bg-accent-wash px-1.5! py-px! text-[9px]! text-accent-deep">
               status · {q.status}
             </span>
+            {/* Same chip as the list this modal was opened from, so provenance
+                does not disappear the moment you look closer at an item. */}
+            <ProvenanceBadge question={q.provenance} />
             <span className="font-mono text-[10px] text-ink-faint">
               {lo?.syllabusRef} · {q.loId}
             </span>
@@ -181,8 +187,16 @@ export function QuestionModal({
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
                   Provenance record
                 </p>
-                <span className="stamp-seal anim-stamp">
-                  Reviewed ✓
+                {/* This stamp used to read "Reviewed ✓" unconditionally. That
+                    was true when every question came out of the reviewed book
+                    extraction, and became a lie the moment generated items
+                    landed beside them (ADR-0008): the passport would have
+                    asserted a human check that never happened, on the one
+                    screen built to make provenance believable. */}
+                <span
+                  className={`stamp-seal anim-stamp ${prov.humanChecked ? "" : "stamp-seal--gold"}`}
+                >
+                  {prov.humanChecked ? "Reviewed ✓" : "Not reviewed"}
                 </span>
               </div>
 
@@ -224,9 +238,13 @@ export function QuestionModal({
                   k="extracted"
                   v={fmtDateTime(q.provenance.extractionFinishedAt)}
                 />
-                <Field k="reviewed by" v={q.provenance.reviewedBy ?? "—"} />
+                <Field k="origin" v={prov.label} />
+                {q.provenance.parentQuestionId && (
+                  <Field k="derived from" v={q.provenance.parentQuestionId} />
+                )}
+                <Field k="reviewed by" v={q.provenance.reviewedBy ?? "— nobody"} />
                 <Field k="reviewed at" v={fmtDateTime(q.provenance.reviewedAt)} />
-                <Field k="origin" v={q.provenance.source} />
+                <Field k="source value" v={q.provenance.source} />
                 <Field k="sha-256" v={shortSha(q.provenance.sourceSha256)} />
               </div>
             </div>

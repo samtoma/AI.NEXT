@@ -522,6 +522,12 @@ objectives have no advanced question at all while 52 have exactly one.
 - **FR-1108**: The count of live, unreviewed generated questions MUST be reportable on demand
   and MUST be disclosed alongside any parity result, so "how much ungated mathematics did
   students see?" is always answerable from data.
+- **FR-1110** *(added 2026-09-10)*: Every question MUST carry a visible provenance tag on
+  operator surfaces, distinguishing three states: **from the book**, **generated and checked
+  by a named human**, and **generated and unchecked**. The distinguishing fact is whether a
+  human has read the item, not whether a machine wrote it. The tag MUST NOT rely on colour
+  alone, MUST be derived in one place so surfaces cannot disagree, and MUST appear both per
+  item and as a count. No surface may assert a human review that did not happen.
 - **FR-1109**: Coverage is the first generation target: every objective SHOULD carry at least
   one live item per tier. Volume beyond that SHOULD follow measured exhaustion rather than a
   fixed quota.

@@ -256,7 +256,10 @@ while 52 have exactly one. Traceability: **FR-1101…FR-1109**, constitution **v
 - [ ] T088 Build the generation workflow properly in `services/extraction/runbook/` alongside the refutation conveyor, so bundles are reproducible rather than hand-authored
 - [ ] T089 Fold the generated-question loader into `load_seed.py` bundle dispatch, or document deliberately why it stays a separate entry point
 - [ ] T090 Emit an event when `pickQuestion` cannot honour the target tier, so "how often did we serve below the student's level?" is answerable from data instead of inferred
-- [ ] T091 Surface the live-unreviewed count on an operator surface, not only in the parity output (FR-1108)
+- [X] T091 Surface the live-unreviewed count on an operator surface, not only in the parity output (FR-1108) — `/admin/content`, reachable from the shell nav
+- [X] T092 Create `app/src/lib/provenance.ts` as the single derivation of the three provenance states, plus `ProvenanceBadge`; carry `parent_question_id` through to the spine (FR-1110)
+- [X] T093 Fix the `/spine` provenance passport, which stamped **"Reviewed ✓" unconditionally** — true while every question came from the reviewed extraction, a lie the moment generated items landed beside them, on the one screen built to make provenance believable
+- [ ] T094 Decide whether the student-facing surface should disclose that a question is generated — currently it does not, and that is a product decision rather than an oversight (see ADR-0008 §Open)
 
 **Standing caveat**: question supply is now a variable in the comparison — the baseline
 exhausts its advanced tier and the comparison build does not. Every reported result must say

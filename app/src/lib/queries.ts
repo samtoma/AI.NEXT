@@ -153,8 +153,8 @@ export async function getSpineData(
       pool.query(`
         SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.choices,
                q.correct_answer, q.canonical_solution, q.solution_version, q.status,
-               q.source, q.source_sha256, q.source_page, q.source_note,
-               q.reviewed_by, q.reviewed_at,
+               q.source, q.parent_question_id, q.source_sha256, q.source_page,
+               q.source_note, q.reviewed_by, q.reviewed_at,
                er.extractor, er.extractor_version, er.finished_at AS extraction_finished_at
         FROM questions q
         LEFT JOIN extraction_runs er ON er.id = q.extraction_run_id
@@ -246,6 +246,7 @@ export async function getSpineData(
     status: r.status,
     provenance: {
       source: r.source,
+      parentQuestionId: r.parent_question_id ?? null,
       sourceSha256: r.source_sha256,
       sourcePage: r.source_page,
       sourceNote: r.source_note,

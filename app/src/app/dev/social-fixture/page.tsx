@@ -58,6 +58,7 @@ const FIXTURE: LessonData = {
       status: "live",
       provenance: {
         source: "fixture",
+        parentQuestionId: null,
         sourceSha256: "fixture",
         sourcePage: 12,
         sourceNote: null,

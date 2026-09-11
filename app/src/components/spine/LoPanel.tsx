@@ -7,6 +7,7 @@ import { spineSubjectDef } from "@/lib/subjects";
 import type { VisualRow } from "@/lib/visuals";
 import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
 import { TeX } from "@/components/TeX";
+import { ProvenanceBadge } from "@/components/ProvenanceBadge";
 import { Visual } from "@/components/viz/Visual";
 import { kindMeta } from "@/components/viz/kind-meta";
 import type { AsOf } from "./GraphCanvas";
@@ -236,6 +237,11 @@ export function LoPanel({
                             {q.id}
                           </span>
                           <span className="flex items-center gap-1.5">
+                            {/* Whether a human has read this item is worth a
+                                chip in the dense list, not only in the modal:
+                                an operator scanning a unit should not have to
+                                open twelve questions to find the unchecked one. */}
+                            <ProvenanceBadge question={q.provenance} />
                             <span className="chip border-accent/30 bg-accent-wash px-1.5! py-px! text-[9px]! text-accent-deep">
                               {q.status}
                             </span>

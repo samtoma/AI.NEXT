@@ -206,7 +206,7 @@ export async function getLessonData(
     pool.query(
       `SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
               canonical_solution, solution_version, status,
-              source, source_sha256, source_page, source_note,
+              source, parent_question_id, source_sha256, source_page, source_note,
               reviewed_by, reviewed_at
        FROM questions
        WHERE status = 'live' AND lo_id = ANY($1)
@@ -233,6 +233,7 @@ export async function getLessonData(
     status: r.status,
     provenance: {
       source: r.source,
+      parentQuestionId: r.parent_question_id ?? null,
       sourceSha256: r.source_sha256,
       sourcePage: r.source_page,
       sourceNote: r.source_note,

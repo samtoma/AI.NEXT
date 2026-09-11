@@ -64,6 +64,8 @@ export function stepText(s: { text_md?: string; claim_ar?: string }): string {
 
 export interface Provenance {
   source: string;
+  /** the reviewed book question a generated item was derived from (ADR-0008) */
+  parentQuestionId: string | null;
   sourceSha256: string;
   sourcePage: number | null;
   sourceNote: string | null;

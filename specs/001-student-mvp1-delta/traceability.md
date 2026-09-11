@@ -1,6 +1,6 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-10 (rev. 2) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
+**Status date**: 2026-09-11 (rev. 3) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v2.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
 
@@ -165,7 +165,8 @@ thin — 5 of 90 objectives had no advanced item, 52 had exactly one.
 | FR-1105 | A reproducible ≥10% sample written to a review queue | **VERIFIED** | `--sample`/`--seed` write `*.review-queue.json` with the seed recorded | 1 of 12 selected under seed 42; re-running the same seed reselects the same item |
 | FR-1106 | Structural validation before load, not presented as a correctness check | **VERIFIED** | `validate()` — tier, answer-in-choices, duplicate choice text, empty solution, cross-objective misconception | Bundle passes; the docstring states plainly what it cannot catch |
 | FR-1107 | Distractors carry a `misconception_id` | **VERIFIED** | Sample bundle: 12 misconceptions, each distractor mapped | Closes the loop to the Phase 6 library without a classifier |
-| FR-1108 | Live-unreviewed count reportable and disclosed with every parity result | **PARTIAL** | Disclosed on every `parity_check.py` run | Gap: not surfaced on any operator screen (T091) |
+| FR-1108 | Live-unreviewed count reportable and disclosed with every parity result | **VERIFIED** | Disclosed on every `parity_check.py` run **and** on `/admin/content` | Page renders live: 450 book · 12 generated unchecked · 0 checked · 0 awaiting promotion |
+| FR-1110 | A visible provenance tag on every question, on operator surfaces | **VERIFIED** | `lib/provenance.ts` (single derivation), `ProvenanceBadge`, `/admin/content`, `/spine` LO panel and passport | Badges render on both surfaces; the passport's unconditional "Reviewed ✓" stamp — which would have asserted a human check that never happened — now follows the row |
 | FR-1109 | Coverage first — one live item per tier per objective | **PARTIAL** | First bundle closed the advanced gap | Objectives with no advanced item **5 → 0**; **4 still have no basic item** (T087) |
 
 **Blocked on Samuel**: T086 — review the 10% sample and return a verdict per item, and decide
@@ -192,14 +193,14 @@ what happens to a family when one of its members is rejected (ADR-0008 §Open).
 
 | | Count |
 |---|---|
-| Functional requirements (incl. FR-10xx, FR-11xx) | **70** |
-| VERIFIED | 33 |
+| Functional requirements (incl. FR-10xx, FR-11xx) | **71** |
+| VERIFIED | 35 |
 | BUILT (awaiting the box, the runtime, or a browser session) | 15 |
-| PARTIAL | 5 |
+| PARTIAL | 4 |
 | OPEN | 6 |
 | BLOCKED | 2 |
 | DEFERRED by explicit decision | 9 |
-| Tasks complete / total | **54 / 91** |
+| Tasks complete / total | **57 / 94** |
 
 The honest headline: **the teaching core, the environment attribution, the content-parity gate and
 the whole design language are done and were exercised against real data. Nothing has met the box.**
