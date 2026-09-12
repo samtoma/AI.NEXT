@@ -134,8 +134,23 @@ export const SUBJECTS = {
       chip: "border-accent/40 text-accent-deep bg-accent-wash",
     },
     book: "Mathematics — Student's Book, Preparatory Year Three, First Term",
-    widgets: ["pair_plotter", "product_builder", "viz_ref", "viz"],
-    tapWidgets: ["pair_plotter", "product_builder"],
+    widgets: [
+      // tap
+      "pair_plotter", "product_builder", "sample_space", "number_line_marker",
+      // drag / construct
+      "line_drawer", "circle_builder", "angle_setter", "triangle_ratio",
+      "bar_builder", "ratio_balance",
+      // freehand
+      "curve_sketcher",
+      // figures
+      "viz_ref", "viz",
+    ],
+    // Offered after "I don't get it". The bar is EFFORT, not difficulty: a
+    // student who has just said they are lost should meet something they can
+    // answer with one finger and no construction, so the drag and freehand
+    // widgets are deliberately absent from this list even where the
+    // mathematics behind them is easier.
+    tapWidgets: ["pair_plotter", "product_builder", "sample_space", "number_line_marker"],
     languageContract: MATH_EN_CONTRACT,
   },
 

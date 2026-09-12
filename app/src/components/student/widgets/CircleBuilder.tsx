@@ -87,6 +87,16 @@ function clipToPlane(a: Pt, b: Pt): [Pt, Pt] | null {
   ];
 }
 
+/** One defining property, lit or unlit. The glyph carries the state as well
+ *  as the colour, so it survives a greyscale render. */
+function Prop({ on, children }: { on: boolean; children: ReactNode }) {
+  return (
+    <span className={on ? "text-accent-deep" : "text-ink-faint"}>
+      {on ? "●" : "○"} {children}
+    </span>
+  );
+}
+
 export function CircleBuilder({
   prompt,
   element,
@@ -242,12 +252,6 @@ export function CircleBuilder({
       for (let y = -RAD; y <= RAD; y++) if (onCircle({ x, y })) out.push({ x, y });
     return out;
   }, []);
-
-  const Prop = ({ on, children }: { on: boolean; children: ReactNode }) => (
-    <span className={on ? "text-accent-deep" : "text-ink-faint"}>
-      {on ? "●" : "○"} {children}
-    </span>
-  );
 
   return (
     <WidgetShell

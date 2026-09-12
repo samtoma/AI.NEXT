@@ -20,8 +20,7 @@ import type {
 import { isRtlSubject } from "@/lib/subjects";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
-import { PairPlotter } from "@/components/student/widgets/PairPlotter";
-import { ProductBuilder } from "@/components/student/widgets/ProductBuilder";
+import { renderMathWidget } from "@/components/student/widgets/render-math-widget";
 import { LocateOnMap } from "@/components/student/widgets/LocateOnMap";
 import { TimelineBuilder } from "@/components/student/widgets/TimelineBuilder";
 import { ChainBuilder } from "@/components/student/widgets/ChainBuilder";
@@ -610,48 +609,17 @@ export function LessonSession({
       props: Record<string, unknown>,
       emitNote: (note: string) => void
     ) => {
-      if (name === "pair_plotter") {
-        const target = props.target;
-        if (
-          Array.isArray(target) &&
-          target.length === 2 &&
-          target.every((v) => Number.isInteger(v) && Math.abs(v as number) <= 5)
-        ) {
-          return (
-            <PairPlotter
-              prompt={String(props.prompt ?? "Plot the point")}
-              target={[target[0] as number, target[1] as number]}
-              onResult={emitNote}
-            />
-          );
-        }
-      }
+      // ---- MATHEMATICS widgets. All eleven are validated and constructed in
+      // render-math-widget.tsx; a payload that cannot be trusted renders
+      // nothing rather than a widget with a nonsense answer key.
+      const math = renderMathWidget(name, props, emitNote);
+      if (math) return math;
       // {{widget:viz:{…}}} composed figure / {{widget:viz_ref:v:…}} stored
       // figure — shared with the spine dock; degrades bad payloads to chips.
       // (In learn mode these are intercepted onto the board and never reach
       // this renderer.)
       const viz = renderVizWidget(name, props);
       if (viz) return viz;
-      if (name === "product_builder") {
-        const X = props.X;
-        const Y = props.Y;
-        if (
-          Array.isArray(X) &&
-          Array.isArray(Y) &&
-          X.length > 0 &&
-          Y.length > 0 &&
-          [...X, ...Y].every((v) => typeof v === "number")
-        ) {
-          return (
-            <ProductBuilder
-              X={X as number[]}
-              Y={Y as number[]}
-              prompt={String(props.prompt ?? "Tap all the pairs of X×Y")}
-              onResult={emitNote}
-            />
-          );
-        }
-      }
       // ---- social-studies widgets (ADR-0004 Wave 1) — same contract as
       // pair_plotter: deterministic client grading, one onResult note into
       // the [live event] + auto-continue flow. Bad payloads render nothing.

@@ -67,6 +67,23 @@ export function svgPoint(
   return { x: local.x, y: local.y };
 }
 
+/**
+ * The style every draggable surface needs, and why each property is there.
+ *
+ * `touchAction: none` stops a finger panning the page instead of moving the
+ * handle. `userSelect: none` stops a drag across the figure from selecting
+ * text — and that one is not cosmetic: once the browser starts a native
+ * selection or drag gesture it fires `pointercancel` and the drag DIES
+ * mid-gesture, which is how a handle ends up stuck a third of the way to
+ * where the student pulled it. The matching `preventDefault()` on pointerdown
+ * is the other half of the same fix.
+ */
+const SURFACE_STYLE = {
+  touchAction: "none",
+  userSelect: "none",
+  WebkitUserSelect: "none",
+} as const;
+
 export interface DragSurfaceOptions {
   svgRef: RefObject<SVGSVGElement | null>;
   /** SVG user-space → the widget's own coordinates (usually plane.ix/iy). */
@@ -89,11 +106,28 @@ export interface DragSurfaceOptions {
  */
 export function useDragSurface(opts: DragSurfaceOptions) {
   const { svgRef, toValue, snap, onMove, onCommit, disabled } = opts;
+  // `dragging` drives the visual affordance and so lives in state; the
+  // HANDLERS gate on a ref instead.
+  //
+  // Gating a pointermove on React state is a race that loses real input: the
+  // moves arriving between `setDragging(true)` and the commit that reattaches
+  // the handler all read the stale `false` and are dropped. A mouse drag
+  // usually survives it because the moves are spread over time. A finger does
+  // not — the first events after a touchstart arrive within a millisecond or
+  // two of each other — so on the iPad this is the target device for, the
+  // beginning of every drag would go missing. The ref is written
+  // synchronously inside the pointerdown handler, so there is no window.
   const [dragging, setDragging] = useState(false);
-  // Read through refs inside handlers so a re-render mid-drag cannot leave the
-  // pointer talking to a stale closure.
+  const isDown = useRef(false);
+  // Read through a ref inside the handlers so a re-render mid-drag cannot
+  // leave the pointer talking to a stale closure. The ref is synced in an
+  // effect rather than during render: a write during render is a side effect
+  // in a phase React may repeat or abandon, and the handlers cannot fire
+  // before the first commit anyway — there is no DOM to press on yet.
   const live = useRef({ toValue, snap, onMove, onCommit, disabled });
-  live.current = { toValue, snap, onMove, onCommit, disabled };
+  useEffect(() => {
+    live.current = { toValue, snap, onMove, onCommit, disabled };
+  });
 
   const resolve = useCallback(
     (ev: { clientX: number; clientY: number }): Pt | null => {
@@ -110,7 +144,10 @@ export function useDragSurface(opts: DragSurfaceOptions) {
       if (live.current.disabled) return;
       const v = resolve(e);
       if (!v) return;
+      // Claim the gesture before the browser can start a selection with it.
+      e.preventDefault();
       e.currentTarget.setPointerCapture?.(e.pointerId);
+      isDown.current = true;
       setDragging(true);
       live.current.onMove(v);
     },
@@ -119,22 +156,23 @@ export function useDragSurface(opts: DragSurfaceOptions) {
 
   const onPointerMove = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      if (!dragging || live.current.disabled) return;
+      if (!isDown.current || live.current.disabled) return;
       const v = resolve(e);
       if (v) live.current.onMove(v);
     },
-    [dragging, resolve]
+    [resolve]
   );
 
   const end = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      if (!dragging) return;
+      if (!isDown.current) return;
+      isDown.current = false;
       setDragging(false);
       e.currentTarget.releasePointerCapture?.(e.pointerId);
       const v = resolve(e);
       if (v) live.current.onCommit?.(v);
     },
-    [dragging, resolve]
+    [resolve]
   );
 
   return {
@@ -144,8 +182,7 @@ export function useDragSurface(opts: DragSurfaceOptions) {
       onPointerMove,
       onPointerUp: end,
       onPointerCancel: end,
-      // Without this a finger pans the page and the handle never moves.
-      style: { touchAction: "none" as const },
+      style: SURFACE_STYLE,
     },
   };
 }
@@ -169,9 +206,14 @@ export function useStroke(opts: {
   const { svgRef, toValue, minGap = 3, onDone, disabled } = opts;
   const [stroke, setStroke] = useState<Pt[]>([]);
   const [drawing, setDrawing] = useState(false);
+  /** Same reason as useDragSurface: a state-gated pointermove drops the start
+   *  of every stroke, which on a sketch is the part that sets the shape. */
+  const isDown = useRef(false);
   const lastRaw = useRef<Pt | null>(null);
   const live = useRef({ toValue, onDone, disabled, minGap });
-  live.current = { toValue, onDone, disabled, minGap };
+  useEffect(() => {
+    live.current = { toValue, onDone, disabled, minGap };
+  });
 
   const push = useCallback(
     (e: { clientX: number; clientY: number }) => {
@@ -191,8 +233,10 @@ export function useStroke(opts: {
   const onPointerDown = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
       if (live.current.disabled) return;
+      e.preventDefault();
       e.currentTarget.setPointerCapture?.(e.pointerId);
       lastRaw.current = null;
+      isDown.current = true;
       setStroke([]);
       setDrawing(true);
       push(e);
@@ -202,15 +246,16 @@ export function useStroke(opts: {
 
   const onPointerMove = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      if (!drawing || live.current.disabled) return;
+      if (!isDown.current || live.current.disabled) return;
       push(e);
     },
-    [drawing, push]
+    [push]
   );
 
   const end = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
-      if (!drawing) return;
+      if (!isDown.current) return;
+      isDown.current = false;
       setDrawing(false);
       e.currentTarget.releasePointerCapture?.(e.pointerId);
       setStroke((s) => {
@@ -220,10 +265,11 @@ export function useStroke(opts: {
         return s;
       });
     },
-    [drawing]
+    []
   );
 
   const reset = useCallback(() => {
+    isDown.current = false;
     lastRaw.current = null;
     setStroke([]);
   }, []);
@@ -237,7 +283,7 @@ export function useStroke(opts: {
       onPointerMove,
       onPointerUp: end,
       onPointerCancel: end,
-      style: { touchAction: "none" as const },
+      style: SURFACE_STYLE,
     },
   };
 }

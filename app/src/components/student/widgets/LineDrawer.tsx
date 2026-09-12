@@ -25,6 +25,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { makePlane, PlaneFrame } from "../../viz/plane";
 import { Handle, WidgetShell, type Verdict } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
+import { lineText, numText } from "./format";
 
 const R = 5;
 const W = 280;
@@ -57,19 +58,16 @@ function clipToPlane(a: Pt, b: Pt): [Pt, Pt] | null {
 }
 
 function equationOf(a: Pt, b: Pt): { m: number | null; b: number | null; text: string } {
-  if (a.x === b.x) return { m: null, b: null, text: `x = ${a.x}` };
+  if (a.x === b.x) return { m: null, b: null, text: lineText(null, 0, a.x) };
   const m = tidy((b.y - a.y) / (b.x - a.x));
   const c = tidy(a.y - m * a.x);
-  const mPart = m === 1 ? "x" : m === -1 ? "−x" : m === 0 ? "" : `${fmt(m)}x`;
-  if (m === 0) return { m, b: c, text: `y = ${fmt(c)}` };
-  const cPart = c === 0 ? "" : c > 0 ? ` + ${fmt(c)}` : ` − ${fmt(Math.abs(c))}`;
-  return { m, b: c, text: `y = ${mPart}${cPart}` };
+  return { m, b: c, text: lineText(m, c) };
 }
 
-const fmt = (v: number) => {
-  const r = tidy(v, 2);
-  return Number.isInteger(r) ? String(r) : String(r).replace("-", "−");
-};
+/** Slopes here are ratios of whole lattice steps, so they are ALWAYS exact
+ *  fractions — never a rounded decimal in a readout a student is reading the
+ *  gradient off. */
+const fmt = (v: number) => numText(v);
 
 const same = (u: number, v: number) => Math.abs(u - v) < 1e-6;
 

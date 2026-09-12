@@ -7,6 +7,7 @@ import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
 import { getLessonBridges } from "./subject-queries";
 import { getVisualsForLos } from "./visuals";
+import { mathWidgetDocs } from "./widget-docs";
 import {
   figureDirectivesDoc,
   socialFigureDirectivesDoc,
@@ -567,9 +568,13 @@ function mathProtocol(
   data: LessonData
 ): string {
   const { lo: exLo, q: exQ, page: exPage, viz: exViz } = ex;
+  // Geometry no longer has to choose between seeing and doing: circle_builder
+  // and angle_setter put a construction in the student's hands, so the old
+  // "widgets rarely fit here" advice would now be leaving the best tools in
+  // the unit unused.
   const vizGuidance = isGeoLesson(data)
-    ? `This is a GEOMETRY lesson: lean on figures — open almost every teaching beat with a stored geo_scene from the FIGURE LIBRARY ({{widget:viz_ref:…}}), or compose one, so he SEES every definition and theorem drawn out. pair_plotter/product_builder rarely fit here.`
-    : `Use pair_plotter/product_builder for doing, and viz figures for seeing — pick the stored library figure when one fits the beat.`;
+    ? `This is a GEOMETRY lesson: lean on figures — open most teaching beats with a stored geo_scene from the FIGURE LIBRARY ({{widget:viz_ref:…}}), or compose one, so he SEES every definition and theorem drawn out. Then hand the construction over: the circle/angle widgets below let him build the thing the figure just showed, which is where a definition actually sticks.`
+    : `Figures are for SEEING and widgets are for DOING — show the stored library figure when one fits the beat, then give him the matching widget so he does it himself.`;
 
   return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Never inside $...$ math.
 
@@ -578,8 +583,8 @@ ${rhythm}
 
 INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive per message, always as its LAST beat — {{beat}} itself is a pause marker, not an interactive directive):
 - {{show_question:q:${exQ}}} — pushes that live question card (ids from the QUESTION BANK only; each id at most once per session).
-- {{widget:pair_plotter:{"prompt":"Plot the point (3,2)","target":[3,2]}}} — interactive coordinate grid (-5..5); the student taps a point. Target coordinates must be integers in -5..5. Payload must be flat JSON exactly in this shape.
-- {{widget:product_builder:{"X":[1,2],"Y":[3,4,5],"prompt":"Tap all the pairs of X x Y"}}} — the student taps candidate ordered pairs to build X×Y (decoys added automatically). Use small sets: 2–3 elements each, numbers only. Payload must be flat JSON exactly in this shape (plain ASCII inside the JSON).
+${mathWidgetDocs(data.slug)}
+  Every widget payload is FLAT JSON in exactly the shape shown, plain ASCII inside the JSON. Each one grades itself on the student's device and reports back — never state the answer in the same message you emit a widget in, and never emit one whose numbers you have not checked are reachable: a widget with an impossible target does not render at all, and the beat is simply lost.
 - ${figureDirectivesDoc(exViz)}
   A figure counts as the ONE directive of its message. ${vizGuidance}
 - {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
