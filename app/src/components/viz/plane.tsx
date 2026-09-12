@@ -20,6 +20,12 @@ export interface Plane {
   y1: number;
   sx: (x: number) => number;
   sy: (y: number) => number;
+  /** Inverse of sx/sy — SVG user-space back to plane coordinates. Needed by
+   *  the interactive widgets (student/widgets/drag.ts): a pointer arrives in
+   *  screen space, and the only correct way back to "which x did they mean"
+   *  is through the same frame the figure was drawn with. */
+  ix: (px: number) => number;
+  iy: (py: number) => number;
   ticksX: number[];
   ticksY: number[];
 }
@@ -35,6 +41,8 @@ export function makePlane(
   const [y0, y1] = yr;
   const sx = (x: number) => pad + ((x - x0) / (x1 - x0)) * (W - 2 * pad);
   const sy = (y: number) => H - pad - ((y - y0) / (y1 - y0)) * (H - 2 * pad);
+  const ix = (p: number) => x0 + ((p - pad) / (W - 2 * pad)) * (x1 - x0);
+  const iy = (p: number) => y0 + ((H - pad - p) / (H - 2 * pad)) * (y1 - y0);
   const ticks = (a: number, b: number) => {
     const step = niceStep(b - a);
     const out: number[] = [];
@@ -42,7 +50,8 @@ export function makePlane(
       out.push(Math.round(t * 1e6) / 1e6);
     return out;
   };
-  return { W, H, x0, x1, y0, y1, sx, sy, ticksX: ticks(x0, x1), ticksY: ticks(y0, y1) };
+  return { W, H, x0, x1, y0, y1, sx, sy, ix, iy,
+           ticksX: ticks(x0, x1), ticksY: ticks(y0, y1) };
 }
 
 /** Static layer: fine grid, ink axes with arrowheads, mono tick labels. */
