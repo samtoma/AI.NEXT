@@ -859,6 +859,210 @@ mc("mc:t2u1-2-1:touch-means-two-roots", "lo:t2u1-2-1",
 # ===========================================================================
 
 
+# ===========================================================================
+# CONSTRUCTION ERRORS — what a widget reveals and a multiple choice cannot
+# (ADR-0009)
+# ===========================================================================
+#
+# These entries exist because the interactive widgets became questions. Every
+# one of them names an error that is only visible when a student BUILDS
+# something: you cannot tell from four lettered options whether a student
+# thinks a diameter is just a long chord, but you can tell instantly from
+# where they put the two ends.
+#
+# That is the argument for the whole decision. A wrong option can be a guess —
+# one in four, and the student learns nothing from being told they guessed
+# wrong. A wrong construction almost never is. When someone drags both ends of
+# a segment onto the circle and calls it a radius, they have shown you their
+# definition, and the refutation can answer the definition instead of the
+# answer.
+#
+# `kind="conceptual"` throughout: none of these came from a printed distractor,
+# and none were invented by the question generator. They came from asking, for
+# each widget, "what is the wrong thing a student could build here, and what
+# would it mean?"
+
+mc("mc:geo1-1-1:radius-not-from-centre", "lo:geo1-1-1",
+   "A radius drawn between two points on the circle",
+   "Builds a segment with both ends on the circle and calls it a radius — the "
+   "word is attached to 'a line in the circle' rather than to the centre.",
+   "Both endpoints satisfy the circle; neither is the centre.",
+   ["Look at what you drew: both ends landed on the circle, and that is a real thing — it is a chord.",
+    "A radius is the one segment that always starts at the centre $M$ and stops at the circle. Its whole job is to carry the circle's fixed distance.",
+    "That is why every radius of a circle has the same length, and chords do not: a chord can be short or long, but a radius cannot.",
+    "Next time, ask where the segment STARTS. Centre to circle is a radius; circle to circle is a chord."],
+   kind="conceptual"),
+
+mc("mc:geo1-1-1:radius-any-length", "lo:geo1-1-1",
+   "A radius that stops short of the circle",
+   "Starts correctly at the centre but ends anywhere, as though a radius were a "
+   "direction rather than a fixed length.",
+   "One end is the centre; the other is strictly inside the circle.",
+   ["You started in the right place — the centre — which is the part most people get wrong.",
+    "But a radius has to REACH the circle. It is not any segment leaving the centre; it is the fixed distance from the centre to the circle.",
+    "That fixed distance is what makes it a circle in the first place: every point on the circle is exactly $r$ from $M$.",
+    "So a radius always has two jobs: start at $M$, and end ON the circle."],
+   kind="conceptual"),
+
+mc("mc:geo1-1-2:diameter-is-any-long-chord", "lo:geo1-1-2",
+   "A diameter taken as any long chord",
+   "Knows a diameter is long and knows it is a chord, but has not attached the "
+   "condition that it must pass through the centre.",
+   "Both ends on the circle, and the segment misses $M$.",
+   ["What you drew IS a chord — both ends are on the circle, so you have the harder half right.",
+    "A diameter is the chord that passes through the centre $M$. Not the longest-looking one: the one through the centre.",
+    "Those turn out to be the same thing, and that is the theorem — the diameter is the longest chord precisely BECAUSE it goes through the centre.",
+    "Drag one end and watch: the chord grows as it swings towards $M$, and it is longest exactly when it crosses it."],
+   kind="conceptual"),
+
+mc("mc:geo1-1-2:chord-endpoints-off-circle", "lo:geo1-1-2",
+   "A chord drawn without both ends on the circle",
+   "Treats a chord as any line 'across' the circle, including one that stops "
+   "inside it or runs past it.",
+   "At least one endpoint is not on the circle.",
+   ["The direction you drew is fine — a chord does cut across the circle.",
+    "What a chord needs is both ENDS on the circle itself. A segment that stops inside, or runs out past the edge, is not one.",
+    "It matters because every chord result in this unit — equal chords, distance from the centre, the diameter being longest — is about the two points where it meets the circle.",
+    "Put both ends on the circle first, then worry about where it sits."],
+   kind="conceptual"),
+
+mc("mc:geo1-2-2:tangent-cuts-circle", "lo:geo1-2-2",
+   "A tangent drawn cutting the circle at two points",
+   "Reads 'tangent' as any line touching or crossing the circle, missing that it "
+   "meets it exactly once.",
+   "The distance from the centre to the line is less than $r$, so the line is a secant.",
+   ["Your line does meet the circle, so you are close — but it meets it TWICE.",
+    "A line that cuts a circle at two points is a secant. A tangent touches at exactly one point and then leaves.",
+    "The test is a distance: measure from the centre $M$ to the line. Less than $r$ and it cuts twice; equal to $r$ and it touches once; more than $r$ and it misses.",
+    "So a tangent is the line whose distance from the centre is exactly the radius."],
+   kind="conceptual"),
+
+mc("mc:geo1-2-2:tangent-need-not-touch", "lo:geo1-2-2",
+   "A tangent drawn missing the circle altogether",
+   "Reads 'tangent' as a line running alongside the circle without meeting it.",
+   "The distance from the centre to the line is greater than $r$.",
+   ["Running alongside the circle is the right instinct — a tangent does lie against it.",
+    "But it has to TOUCH. Your line stays clear of the circle, so it meets it nowhere at all.",
+    "Bring it in until the distance from the centre $M$ equals the radius exactly. That single point of contact is what makes it a tangent.",
+    "One number decides it: distance from the centre, compared with $r$."],
+   kind="conceptual"),
+
+mc("mc:u3-2-1:mean-built-as-median", "lo:u3-2-1",
+   "The middle value offered where the average was asked for",
+   "Builds or picks a set whose MIDDLE value is the target, having read 'mean' as "
+   "'the one in the middle'.",
+   "The set's median equals the target while its mean does not.",
+   ["Your middle value is exactly right — so you found the median, and that is a real statistic.",
+    "The mean is a different idea: it is the total shared out equally. Add every value, divide by how many there are.",
+    "They come apart the moment the data is lopsided. In $1, 2, 6, 9, 10$ the median is $6$ but the mean is $5.6$ — one small value drags the average down and leaves the middle untouched.",
+    "A quick check for the mean: for $n$ values to average $m$, the TOTAL has to be $m \\times n$. Add yours up and see."],
+   kind="conceptual"),
+
+mc("mc:u3-2-1:median-built-as-mean", "lo:u3-2-1",
+   "The average offered where the middle value was asked for",
+   "Builds a set with the target mean when the median was asked for.",
+   "The set's mean equals the target while its median does not.",
+   ["The arithmetic is right — you built a set that averages to the target.",
+    "The median is not an average, though. Put the values in ORDER and take the one in the middle.",
+    "That ordering step is the whole difference. The mean feels every value; the median only cares about position, which is why one huge value moves the mean and leaves the median where it was.",
+    "With an even count there is no single middle, so the median is the mean of the two middle values."],
+   kind="conceptual"),
+
+mc("mc:u3-2-1:mode-assumed-to-exist", "lo:u3-2-1",
+   "A mode assumed to exist in every set",
+   "Offers some value as 'the mode' for a set where nothing repeats, or where "
+   "several values tie.",
+   "No value repeats, or two or more tie for the highest frequency.",
+   ["Looking for the most frequent value is exactly the right move.",
+    "But a set does not have to have one. If every value appears once, there is no mode at all — 'none' is the correct answer, not a failure to find it.",
+    "And if two values tie for the most frequent, the set has TWO modes. Both get reported.",
+    "So the mode is the only one of the three averages that can be missing or doubled. That is worth remembering when a question seems to have no answer."],
+   kind="conceptual"),
+
+mc("mc:u2-3-2:inverse-solved-as-direct", "lo:u2-3-2",
+   "An inverse relationship solved by matching ratios",
+   "Applies the direct-variation move — set the two quotients equal and cross-"
+   "multiply — to a situation where one quantity falls as the other rises.",
+   "The answer equals $\\frac{bc}{a}$ where $\\frac{ab}{c}$ was required.",
+   ["Cross-multiplying is a good, reliable move — it is just the wrong one here.",
+    "In DIRECT variation the two quotients match: more of one, proportionally more of the other.",
+    "In INVERSE variation the two PRODUCTS match: $6$ workers $\\times 10$ days $= 60$, so $4$ workers need $60 \\div 4 = 15$ days.",
+    "Before reaching for either, ask the sentence out loud: if one goes up and the other goes DOWN, it is the product that stays fixed."],
+   kind="conceptual"),
+
+mc("mc:u2-3-1:direct-solved-as-inverse", "lo:u2-3-1",
+   "A direct relationship solved by matching products",
+   "Applies the inverse rule to a straightforwardly proportional situation.",
+   "The answer equals $\\frac{ab}{c}$ where $\\frac{bc}{a}$ was required.",
+   ["You have the inverse rule solid, which is the one most people forget.",
+    "This relationship goes the other way though: as one quantity grows, so does the other.",
+    "When both rise together the two RATIOS stay equal — $3 : 4 = 9 : 12$, because $3 \\div 4$ and $9 \\div 12$ are the same number.",
+    "One question sorts it every time: when this goes up, does that go up or down?"],
+   kind="conceptual"),
+
+mc("mc:u1-3-1:fails-vertical-line-test", "lo:u1-3-1",
+   "A graph drawn with two outputs for one input",
+   "Sketches a curve that doubles back, treating any drawn line as the graph of a "
+   "function.",
+   "At some $x$ the drawn curve carries two different $y$ values.",
+   ["That is a perfectly good curve — it is just not the graph of a function.",
+    "A function gives each input EXACTLY ONE output. Your sketch doubles back, so there is an $x$ with two different $y$ values, and the rule cannot say which one it means.",
+    "That is what the vertical line test checks: slide a vertical line across, and if it ever crosses your curve twice, the relation is not a function.",
+    "It is the same condition from the start of the year, seen from the side: a relation is a function when no input is used twice."],
+   kind="conceptual"),
+
+mc("mc:u1-4-3:parabola-opens-wrong-way", "lo:u1-4-3",
+   "The sign of $a$ not read as the direction the parabola opens",
+   "Sketches $y = ax^2 + bx + c$ curving the opposite way, having treated the "
+   "sign of $a$ as affecting only position.",
+   "The drawn curve's turning point is a minimum where the true one is a maximum, or the reverse.",
+   ["The shape is right — that is a parabola, and it turns where a parabola should.",
+    "It opens the wrong way, and the sign of $a$ is the whole story: $a > 0$ opens upwards, $a < 0$ opens downwards.",
+    "The reason is worth one line: for large $|x|$ the $ax^2$ term drowns out the rest, and $x^2$ is always positive — so the tail follows the sign of $a$.",
+    "Read the sign of $a$ before drawing anything, and you have the direction for free."],
+   kind="conceptual"),
+
+# Slope inverted is ALREADY in this catalogue at lo:u5-3-1 — the question
+# generator found it first. One error, one entry (ADR-0008): the line_drawer
+# predicate `slope-inverted` maps to that existing id rather than getting a
+# construction-flavoured twin. A second entry would split its refutation and
+# its evidence, and the split stays invisible until someone wonders why a
+# common mistake has half the attempts it should.
+
+mc("mc:u5-3-1:slope-sign-flipped", "lo:u5-3-1",
+   "The sign of the slope lost",
+   "Gets the steepness right but the direction wrong, usually by subtracting the "
+   "coordinates in opposite orders top and bottom.",
+   "The drawn line's gradient is the negative of the required one.",
+   ["The size of your slope is right, so the arithmetic is fine — it is the direction that slipped.",
+    "Subtract in the SAME order top and bottom: $\\frac{y_2 - y_1}{x_2 - x_1}$. Reversing one of them and not the other flips the sign.",
+    "Then check it against the picture: a line going up to the right has a positive slope, and down to the right is negative.",
+    "The picture is the fastest check you have. Glance at the line and ask which way it leans before you trust the number."],
+   kind="conceptual"),
+
+mc("mc:t2u3-1-1:compound-outcome-counted-once", "lo:t2u3-1-1",
+   "A compound outcome counted once instead of by its ways",
+   "Counts 'a total of 7' as one outcome rather than the six ordered pairs that "
+   "produce it.",
+   "$n(E)$ is far smaller than the number of cells in the sample space that satisfy the event.",
+   ["You identified the right event — the totals you picked really do make $7$.",
+    "But $n(E)$ counts OUTCOMES, not values. A total of $7$ happens six different ways: $(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)$.",
+    "$(1,6)$ and $(6,1)$ are genuinely different outcomes — the first die and the second die did different things — so both are counted.",
+    "That is what the grid is for. Every cell is one outcome, so count cells, and $P = \\frac{6}{36} = \\frac{1}{6}$."],
+   kind="conceptual"),
+
+mc("mc:t2u2-2-1:excluded-values-incomplete", "lo:t2u2-2-1",
+   "Only one zero of the denominator excluded",
+   "Finds one value that breaks the fraction and stops, missing that every factor "
+   "of the denominator contributes one.",
+   "The marked set is a strict subset of the denominator's zeroes.",
+   ["The value you found genuinely does break the fraction — that part is correct.",
+    "Every FACTOR of the denominator contributes a forbidden value though, not just the first one.",
+    "For $\\frac{1}{(x + 2)(x - 3)}$ the denominator is zero when $x = -2$ AND when $x = 3$, so both are excluded.",
+    "So the method is: set the whole denominator to zero, solve it completely, and exclude every root you get. The domain is everything else."],
+   kind="conceptual"),
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", type=Path, required=True)

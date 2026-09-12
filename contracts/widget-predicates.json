@@ -1,0 +1,123 @@
+{
+  "$comment": [
+    "THE PREDICATE VOCABULARY — one source of truth, read by three layers.",
+    "",
+    "ADR-0009 makes a widget a question whose diagnostic predicates are its",
+    "distractors. A predicate is the name of a structural thing that can be true",
+    "about a student's construction: 'both ends are on the circle', 'the slope is",
+    "inverted', 'the stroke doubles back'. The widget computes which one fired;",
+    "the stored question maps it to a misconception_id; the server serves that",
+    "misconception's refutation.",
+    "",
+    "That only works if all three layers agree on the spelling, so this file is",
+    "the authority and nobody hardcodes the list:",
+    "  app/src/lib/widget-predicates.ts   generated from here, checked in CI",
+    "  services/extraction/widget_spec.py reads this file directly",
+    "  the DB stores predicates inside questions.choices, validated on load",
+    "",
+    "'ok' is reserved in every kind: it is the predicate that means correct, and",
+    "it is what questions.correct_answer holds for a widget row.",
+    "",
+    "Adding a predicate is additive and safe. RENAMING one silently breaks the",
+    "mapping on every stored question that used it, so rename by adding the new",
+    "spelling, migrating the rows, then removing the old one."
+  ],
+  "version": 1,
+  "reserved": ["ok"],
+  "kinds": {
+    "pair_plotter": {
+      "predicates": {
+        "swapped-coordinates": "Plotted (y, x) — the pair read in the wrong order",
+        "wrong-quadrant": "Right distances, wrong signs — the point is in the wrong quadrant",
+        "off-target": "Neither coordinate matches, with no recognisable pattern"
+      }
+    },
+    "product_builder": {
+      "predicates": {
+        "reversed-pairs": "Built Y×X — the pairs are the right numbers in the wrong order",
+        "missing-pairs": "An incomplete product: some pairs of X×Y were not selected",
+        "extra-pairs": "Selected pairs that are not in X×Y at all"
+      }
+    },
+    "line_drawer": {
+      "predicates": {
+        "slope-inverted": "Slope taken as run over rise instead of rise over run",
+        "slope-sign-flipped": "Right gradient, wrong sign — the line leans the other way",
+        "intercept-wrong": "Correct slope, wrong intercept — a line parallel to the answer",
+        "vertical-line": "A vertical line, which has no slope and cannot be written y = mx + c",
+        "points-swapped": "The named points plotted with x and y exchanged",
+        "off-target": "Neither the slope nor the intercept matches"
+      }
+    },
+    "circle_builder": {
+      "predicates": {
+        "ends-not-on-circle": "One or both endpoints are not on the circle",
+        "chord-not-through-centre": "A chord was drawn where a diameter was asked for — it misses the centre",
+        "radius-drawn-as-chord": "Both ends on the circle where a radius was asked for; a radius starts at the centre",
+        "radius-short": "Starts at the centre but does not reach the circle",
+        "is-secant": "The line cuts the circle twice — a secant, not a tangent",
+        "is-external": "The line misses the circle completely",
+        "off-target": "The construction does not satisfy the element asked for"
+      }
+    },
+    "angle_setter": {
+      "predicates": {
+        "arc-given-as-angle": "Gave the arc where the inscribed angle was asked for — the angle is half the arc",
+        "angle-given-as-arc": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
+        "other-arc": "Set the arc on the far side; C faces the arc across from it",
+        "off-target": "The angle is not the one asked for, with no recognisable pattern"
+      }
+    },
+    "triangle_ratio": {
+      "predicates": {
+        "ratio-inverted": "The right pair of sides, the wrong way up",
+        "used-sine": "Built the sine where another ratio was asked for",
+        "used-cosine": "Built the cosine where another ratio was asked for",
+        "used-tangent": "Built the tangent where another ratio was asked for",
+        "off-target": "The ratio does not match and is not a recognised substitution"
+      }
+    },
+    "bar_builder": {
+      "predicates": {
+        "median-for-mean": "Built a set whose MEDIAN is the target — the mean is the total shared equally",
+        "mean-for-median": "Built a set whose MEAN is the target — the median is the middle value in order",
+        "no-mode": "No value repeats, so the set has no mode at all",
+        "multi-modal": "Two or more values tie at the top, so the set has more than one mode",
+        "total-wrong": "For this mean across n values the total must be mean x n, and it is not",
+        "off-target": "The statistic does not match the target"
+      }
+    },
+    "number_line_marker": {
+      "predicates": {
+        "missed-values": "Part of the answer set was not marked",
+        "extra-values": "Marked values that the answer set does not contain",
+        "endpoint-inclusion-wrong": "Right endpoints, wrong circles — hollow excludes (< >), filled includes (<= >=)",
+        "interval-wrong": "The interval does not run between the right endpoints"
+      }
+    },
+    "ratio_balance": {
+      "predicates": {
+        "inverse-solved-as-direct": "Matched the quotients where the products should match",
+        "direct-solved-as-inverse": "Matched the products where the quotients should match",
+        "off-target": "The fourth term does not balance the relationship"
+      }
+    },
+    "sample_space": {
+      "predicates": {
+        "missed-outcomes": "Some outcomes in the event were not selected",
+        "extra-outcomes": "Selected outcomes that do not satisfy the event",
+        "counted-once": "Counted a compound outcome once where the grid shows several ways to make it"
+      }
+    },
+    "curve_sketcher": {
+      "predicates": {
+        "fails-vertical-line-test": "The stroke doubles back: one x carries two y values, so it is not a function",
+        "opens-wrong-way": "The parabola opens the opposite way — the sign of a",
+        "slope-sign-flipped": "The line rises where it should fall, or the reverse",
+        "vertically-displaced": "Right shape, sitting consistently above or below the true curve",
+        "partial-coverage": "The sketch covers only part of the visible domain",
+        "off-target": "The sketch does not follow the curve"
+      }
+    }
+  }
+}
