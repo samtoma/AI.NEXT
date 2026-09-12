@@ -1,6 +1,6 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-12 (rev. 5) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
+**Status date**: 2026-09-12 (rev. 6) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v2.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
 
@@ -200,7 +200,7 @@ generated distractors. The gap is named: 201 book MCQs are still undiagnosable (
 | 5 | **SC-004** still references "verified signups" | **Samuel** | Signups were replaced by the picker (decisions.md Q5); the criterion is stale |
 | 6 | **T001** — create and push the `mvp1` branch | **Samuel** | This session is pinned to its designated branch; pushing `mvp1` needs an explicit go-ahead |
 | 7 | Master vs Play design variant | **Samuel** | Implemented as master; cheap to reverse |
-| 7b | **Review the 10% question sample** (T086) | **Samuel** | The condition his own authorisation attached to the generated bank. Unreviewed mathematics is already live locally |
+| 7b | ~~Review the 10% question sample~~ — **done 2026-09-12**, 52 of 53 accepted. A second round of 5 covers the families the first draw missed (T111) | Samuel | The condition his own authorisation attached to the generated bank |
 | 7d | **Who performs the 10% review** (T107) | **Samuel** | The constitution's suspension is conditioned on a *human* gate. A model reviewing model-generated maths reproduces the failure mode it is meant to catch — and on the standard-deviation item it produced a false rejection |
 | 7c | Question supply is now a **variable**, not a constant | **Samuel** | The baseline exhausts its advanced tier and the comparison build does not. Every reported result has to say so — and the gap is now **993 vs 450**, not 462 vs 450 |
 | 8 | Box-dependent work: T005, T013–T020, T042–T043, T070 | Engineering, once box access exists | Everything is written and dry-run verified; none of it has met the real environment |
@@ -218,7 +218,7 @@ generated distractors. The gap is named: 201 book MCQs are still undiagnosable (
 | OPEN | 6 |
 | BLOCKED | 2 |
 | DEFERRED by explicit decision | 9 |
-| Tasks complete / total | **66 / 107** |
+| Tasks complete / total | **71 / 112** |
 
 The honest headline: **the teaching core, the environment attribution, the content-parity gate and
 the whole design language are done and were exercised against real data. Nothing has met the box.**

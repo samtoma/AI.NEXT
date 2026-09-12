@@ -50,7 +50,7 @@ export default async function ContentAdminPage() {
         </div>
       )}
 
-      <section className="mb-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="mb-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         <Tile
           n={view.live.book}
           k="From the book"
@@ -64,8 +64,14 @@ export default async function ContentAdminPage() {
         />
         <Tile
           n={view.live.generatedChecked}
-          k="Generated · checked"
-          note="Accepted by a named human"
+          k="Generated · read"
+          note="A human read this item"
+          tone="confirmed"
+        />
+        <Tile
+          n={view.live.generatedFamilyChecked}
+          k="Generated · family"
+          note="A sibling was read and accepted"
           tone="confirmed"
         />
         <Tile

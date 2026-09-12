@@ -251,7 +251,6 @@ while 52 have exactly one. Traceability: **FR-1101…FR-1109**, constitution **v
 - [X] T083 Redefine the content constant in `services/extraction/parity_check.py` — fingerprint the **book** (`source IN ('seed','authored')`), count generated items separately, and fail hard when any generated row appears in the baseline (FR-1102, FR-1103)
 - [X] T084 Create `services/extraction/load_generated_questions.py` — structural validation, forced `source='variant'` + `reviewed_by=NULL`, an `AINEXT_ENVIRONMENT != mvp1` refusal, `review`-by-default with explicit `--promote`, and a seeded sample written to a review queue (FR-1101, FR-1104, FR-1105, FR-1106)
 - [X] T085 Author and load the first sample bundle — 12 items across the seven thinnest objectives, distractors carrying `misconception_id` (FR-1107); verified live: objectives with no advanced item **5 → 0**, parity still GREEN with the book constant at 450
-- [ ] T086 **Samuel reviews the 10% sample** and returns a verdict per item; record accepted/rejected on the rows and decide the retire-the-family policy for a rejected item (ADR-0008 §Open)
 - [ ] T087 Generate the full coverage pass — every objective carries at least one live item per tier (FR-1109); currently 4 objectives still have no basic item
 - [ ] T088 Build the generation workflow properly in `services/extraction/runbook/` alongside the refutation conveyor, so bundles are reproducible rather than hand-authored
 - [ ] T089 Fold the generated-question loader into `load_seed.py` bundle dispatch, or document deliberately why it stays a separate entry point
@@ -272,6 +271,12 @@ while 52 have exactly one. Traceability: **FR-1101…FR-1109**, constitution **v
 - [X] T101 Author `services/extraction/build_misconceptions.py` — the catalogue, written against each objective's own definition and the book's own distractors (FR-1111, FR-1114)
 - [X] T102 Create `services/extraction/load_misconceptions.py` — upserts misconceptions, writes a refutation per entry, stamps book distractors by exact choice text, and folds generator-invented ids in as aliases (FR-1112, FR-1115)
 - [X] T103 Diagnose from the chosen distractor in `api/attempts/route.ts`: record `misconception_id` and `confidence=1` on the attempt, and serve the refutation of **that** error (FR-1113)
+- [X] T086 **Samuel reviewed the 10% sample (2026-09-12): 52 of 53 items, every one accepted.** Verdicts recorded in `samples/question-bank-v2.verdicts.json` and applied — 52 read directly, 413 siblings validated through their families
+- [X] T108 Create `services/extraction/apply_review_verdicts.py` — accept stamps the item and its family with DISTINCT reviewer strings, reject retires the whole family, "needs a fix" pulls only the named item
+- [X] T109 Add the **family-validated** provenance state. Collapsing it into "checked by a human" would have put that claim on 413 items nobody opened
+- [X] T110 Fix the sampler: draw **one item per family** before spreading the remainder. The first round drew 53 items uniformly and reached only 30 of 35 families, leaving 66 items with no path to review — under a family model a uniform draw is the wrong instrument
+- [ ] T111 Second review round: 5 items, one from each family the first draw missed (`question-bank-v2.review-queue-topup.json`, published to the review artifact)
+- [ ] T112 Ratify or replace the retire-the-family rule in ADR-0008 — it is implemented as the proposal and has never fired, because nothing was rejected
 - [ ] T104 Extend the catalogue to the remaining 53 objectives — 37 of 90 are covered, and 201 of 250 book MCQs are still undiagnosable
 - [ ] T105 Have the generator emit catalogue ids directly instead of inventing its own and relying on the alias pass
 - [ ] T106 Include the objective's own definition on each review card, so a reviewer judges an item against the syllabus rather than against mathematics in general (the standard-deviation review, 2026-09-12)

@@ -205,14 +205,38 @@ def main() -> int:
     print(f"  loaded {loaded} questions as status={status}, source='variant', reviewed_by=NULL")
 
     if args.sample > 0:
+        # STRATIFIED BY FAMILY, not uniform across items.
+        #
+        # The first round drew 53 items uniformly and covered only 30 of 35
+        # families: some families were sampled three times and five were never
+        # sampled at all, leaving 66 items with no path to review. Under the
+        # template model a uniform draw is the wrong instrument — validation
+        # travels along families, so the sample has to reach every family
+        # exactly the way a stratified sample reaches every stratum.
+        #
+        # One item per family first, then the remainder spread at random to
+        # reach the requested percentage.
         rng = random.Random(args.seed)
-        n = max(1, round(len(questions) * args.sample / 100))
-        picked = rng.sample([q["id"] for q in questions], n)
+        by_family: dict[str, list[str]] = {}
+        for q in questions:
+            note = q.get("source_note") or ""
+            fam = (note.split("template family ", 1)[1].rstrip(". ")
+                   if "template family " in note else f"(no family) {q['id']}")
+            by_family.setdefault(fam, []).append(q["id"])
+
+        picked = {rng.choice(ids) for ids in by_family.values()}
+        target = max(len(picked), round(len(questions) * args.sample / 100))
+        rest = [q["id"] for q in questions if q["id"] not in picked]
+        rng.shuffle(rest)
+        picked.update(rest[: max(0, target - len(picked))])
+
         out = args.bundle.with_suffix(".review-queue.json")
         out.write_text(json.dumps(
             {"bundle": args.bundle.name, "sample_percent": args.sample,
-             "seed": args.seed, "question_ids": sorted(picked)}, indent=2) + "\n")
-        print(f"  review queue: {n} of {len(questions)} items ({args.sample}%) -> {out.name}")
+             "seed": args.seed, "families": len(by_family),
+             "question_ids": sorted(picked)}, indent=2) + "\n")
+        print(f"  review queue: {len(picked)} of {len(questions)} items "
+              f"covering all {len(by_family)} families -> {out.name}")
 
     return 0
 
