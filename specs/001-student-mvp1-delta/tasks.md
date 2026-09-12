@@ -259,7 +259,13 @@ while 52 have exactly one. Traceability: **FR-1101…FR-1109**, constitution **v
 - [X] T091 Surface the live-unreviewed count on an operator surface, not only in the parity output (FR-1108) — `/admin/content`, reachable from the shell nav
 - [X] T092 Create `app/src/lib/provenance.ts` as the single derivation of the three provenance states, plus `ProvenanceBadge`; carry `parent_question_id` through to the spine (FR-1110)
 - [X] T093 Fix the `/spine` provenance passport, which stamped **"Reviewed ✓" unconditionally** — true while every question came from the reviewed extraction, a lie the moment generated items landed beside them, on the one screen built to make provenance believable
-- [ ] T094 Decide whether the student-facing surface should disclose that a question is generated — currently it does not, and that is a product decision rather than an oversight (see ADR-0008 §Open)
+- [X] T094 **DECIDED (Samuel, 2026-09-12): keep it hidden from students for the pilot.** Telling her a question is machine-written would change how she answers it, and that change lands inside the metric being measured. Provenance stays fully visible on operator surfaces. Revisit before any audience wider than the invited cohort — promoting the environment already requires reinstating the review gate (constitution III), and disclosure should be settled in the same act
+- [X] T095 Remove the EGP 40 ceiling from the product surface (Samuel, 2026-09-12: *"I don't want a ceiling to be applied yet"*) — the meter now shows spend with "no ceiling set · pricing pending"; constitution v2.0.0 Principle VI had already detached the figure with the parent price band it came from
+- [X] T096 Build `services/extraction/generate_questions.py` — template families whose answer keys are COMPUTED from the sampled parameters, so a 10% sample validates a family rather than a single item (FR-1109)
+- [X] T097 Generate and load bundle v2: 531 items across 35 families and 33 objectives; live bank **450 → 993**, objectives with no advanced item **5 → 0**, with no standard item **0**, parity still GREEN on the book constant
+- [ ] T098 Extend the generator to the remaining **54 book-only objectives** — mostly circle-geometry theorems and data-collection concepts, which are proof- and definition-shaped rather than parameterisable, so they need a different template form than "sample numbers, compute the answer"
+- [ ] T099 Close the last four objectives with no basic item — all "applications" objectives (word problems), the hardest to template without producing nonsense
+- [ ] T100 Re-run the exhaustion measurement after a week of real sessions and let it set the next generation target, rather than a round number (ADR-0008 §Open)
 
 **Standing caveat**: question supply is now a variable in the comparison — the baseline
 exhausts its advanced tier and the comparison build does not. Every reported result must say

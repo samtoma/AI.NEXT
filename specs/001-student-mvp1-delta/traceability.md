@@ -1,6 +1,6 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-11 (rev. 3) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
+**Status date**: 2026-09-12 (rev. 4) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v2.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
 
@@ -167,7 +167,7 @@ thin — 5 of 90 objectives had no advanced item, 52 had exactly one.
 | FR-1107 | Distractors carry a `misconception_id` | **VERIFIED** | Sample bundle: 12 misconceptions, each distractor mapped | Closes the loop to the Phase 6 library without a classifier |
 | FR-1108 | Live-unreviewed count reportable and disclosed with every parity result | **VERIFIED** | Disclosed on every `parity_check.py` run **and** on `/admin/content` | Page renders live: 450 book · 12 generated unchecked · 0 checked · 0 awaiting promotion |
 | FR-1110 | A visible provenance tag on every question, on operator surfaces | **VERIFIED** | `lib/provenance.ts` (single derivation), `ProvenanceBadge`, `/admin/content`, `/spine` LO panel and passport | Badges render on both surfaces; the passport's unconditional "Reviewed ✓" stamp — which would have asserted a human check that never happened — now follows the row |
-| FR-1109 | Coverage first — one live item per tier per objective | **PARTIAL** | First bundle closed the advanced gap | Objectives with no advanced item **5 → 0**; **4 still have no basic item** (T087) |
+| FR-1109 | Coverage first — one live item per tier per objective | **PARTIAL** | `generate_questions.py` — 35 template families, answers computed rather than asserted | Live bank **450 → 993**. Objectives with no advanced item **5 → 0**, with no standard item **0**, with no basic item **4** (all "applications" word problems, T099). Depth is uneven by design: 36 objectives now average 19.8 items, 54 remain book-only at 5.2 (T098) |
 
 **Blocked on Samuel**: T086 — review the 10% sample and return a verdict per item, and decide
 what happens to a family when one of its members is rejected (ADR-0008 §Open).
@@ -184,7 +184,7 @@ what happens to a family when one of its members is rejected (ADR-0008 §Open).
 | 6 | **T001** — create and push the `mvp1` branch | **Samuel** | This session is pinned to its designated branch; pushing `mvp1` needs an explicit go-ahead |
 | 7 | Master vs Play design variant | **Samuel** | Implemented as master; cheap to reverse |
 | 7b | **Review the 10% question sample** (T086) | **Samuel** | The condition his own authorisation attached to the generated bank. Unreviewed mathematics is already live locally |
-| 7c | Question supply is now a **variable**, not a constant | **Samuel** | The baseline exhausts its advanced tier and the comparison build does not. Every reported result has to say so |
+| 7c | Question supply is now a **variable**, not a constant | **Samuel** | The baseline exhausts its advanced tier and the comparison build does not. Every reported result has to say so — and the gap is now **993 vs 450**, not 462 vs 450 |
 | 8 | Box-dependent work: T005, T013–T020, T042–T043, T070 | Engineering, once box access exists | Everything is written and dry-run verified; none of it has met the real environment |
 
 ---
@@ -200,7 +200,7 @@ what happens to a family when one of its members is rejected (ADR-0008 §Open).
 | OPEN | 6 |
 | BLOCKED | 2 |
 | DEFERRED by explicit decision | 9 |
-| Tasks complete / total | **57 / 94** |
+| Tasks complete / total | **63 / 100** |
 
 The honest headline: **the teaching core, the environment attribution, the content-parity gate and
 the whole design language are done and were exercised against real data. Nothing has met the box.**

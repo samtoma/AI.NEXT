@@ -112,3 +112,20 @@ the bounding condition that has held since ADR-0007 — unreviewed content never
 - **What happens when the sample finds a defect.** The retire-the-family rule above is the
   proposal, not yet a ratified policy. It needs a decision the first time a review rejects
   something.
+
+## Resolved since
+
+- **Student-facing disclosure (2026-09-12).** Samuel: keep it hidden for the pilot. Telling a
+  student that a question is machine-written would change how she answers it, and that change
+  lands inside the metric being measured. Provenance stays fully visible on operator surfaces
+  (`/admin/content`, `/spine`). This is explicitly a pilot-scoped decision: promoting the
+  environment to any wider audience already requires reinstating the review gate, and disclosure
+  should be settled in the same act rather than inherited by default.
+- **Generation moved from hand-authoring to template families (2026-09-12).** The first bundle was
+  twelve hand-written items. That does not scale to the volume the coverage gap needs, and more
+  importantly it does not scale the *review*: a 10% sample of freely authored items leaves every
+  unread item an independent risk. Template families change what the sample means — every item in
+  a family shares one structure and differs only in sampled numbers, and the answer key is computed
+  by the same code that writes the stem, so the key cannot disagree with the question. Reading one
+  instance validates the family. The residual risk moves from "this item is wrong" to "this family
+  is uniformly wrong", which is rarer, more visible in a sample, and retirable in one act.

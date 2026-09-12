@@ -342,4 +342,8 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0006 | Arabic Language vertical — new contract: vendored Quran corpus, Noto Naskh font, 5 assessable LOs/lesson, scope = text+grammar+إملاء | ✅ Accepted 2026-07-28 |
 
 ## Key metrics to watch (once live)
-50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student · <EGP 40/student/month AI cost
+50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·
+per-student AI spend **measured, no ceiling set** — the EGP 40 figure came from a parent price band
+the new PRD withdrew, and constitution v2.0.0 Principle VI detached it pending PRD §10 pricing
+(Samuel, 2026-09-12: *"I don't want a ceiling to be applied yet, we will make it in the future"*).
+Instrumentation and per-surface turn caps remain mandatory.

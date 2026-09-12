@@ -21,8 +21,17 @@ const suggestionsFor = (name: string) => [
 
 /**
  * "Ask the Spine" — collapsible glass-box chat dock on the Evidence Walk.
- * The header carries the live cost meter: instrumentation-as-feature
- * (PRD hard requirement: < EGP 40/student/month, measured from day one).
+ *
+ * The header carries the live cost meter: instrumentation-as-feature. It shows
+ * SPEND, and deliberately no ceiling.
+ *
+ * It used to print "ceiling: EGP 40/student/month". That figure came from a
+ * parent price band the new PRD withdrew, and constitution v2.0.0 Principle VI
+ * detached it: per-student spend instrumentation and per-surface turn caps stay
+ * mandatory, but **no numeric ceiling binds until PRD §10 sets a price**.
+ * Displaying one anyway is worse than displaying nothing — it invites the room
+ * to reason about headroom against a number nobody has agreed to, and it would
+ * read to a reviewer as a limit the product enforces when nothing enforces it.
  */
 export function AskSpineDock({
   lookupQuestion,
@@ -104,8 +113,8 @@ export function AskSpineDock({
             ≈ EGP {(totalUsd * USD_TO_EGP).toFixed(2)}
             <span className="text-ink-faint"> · {turns} turns</span>
           </span>
-          <span className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-gold">
-            ceiling: EGP 40/student/month
+          <span className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-ink-faint">
+            no ceiling set · pricing pending
           </span>
         </div>
       </div>

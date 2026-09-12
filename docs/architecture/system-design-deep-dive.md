@@ -136,7 +136,7 @@ understanding_checks(... student_id, lo_id, mode, score, verdict,
                       strengths JSONB, gaps JSONB, next_step, turns)
 ```
 
-- **`ai_interactions` logs every chat turn** with its cost, tokens (including prompt-cache hits/writes), the exact `grounding` slice it was given, and the `citations` it emitted. This is the AI-cost instrumentation the PRD demands "from day one" — and it makes the EGP 40/student/month ceiling observable per turn.
+- **`ai_interactions` logs every chat turn** with its cost, tokens (including prompt-cache hits/writes), the exact `grounding` slice it was given, and the `citations` it emitted. This is the AI-cost instrumentation the PRD demands "from day one" — and it makes per-student spend observable per turn. (No numeric ceiling binds: constitution v2.0.0 Principle VI detached the EGP 40 figure with the parent price band it came from, and none replaces it until PRD §10 sets a price.)
 - `grounded_ok=false` on an explanation records the safety fallback firing (LLM output contradicted the canonical answer → we showed the canonical solution verbatim).
 
 ---
