@@ -25,6 +25,11 @@ import re
 import sys
 from pathlib import Path
 
+# Structural commands handled by rewriting rather than substitution, because a
+# fraction is a shape and not a character. \frac{a}{b} becomes a/b with the
+# parts bracketed when they are compound, which is how a person reads one aloud
+# and is unambiguous in a review context. Typesetting it properly would mean
+# KaTeX, whose stylesheet no CSP-allowed host serves.
 SYMBOLS = {
     r"\times": "\u00d7",
     r"\div": "\u00f7",
@@ -41,6 +46,15 @@ SYMBOLS = {
     r"\emptyset": "\u2205",
     r"\cdot": "\u00b7",
     r"\pm": "\u00b1",
+    r"\circ": "\u00b0",
+    r"\angle": "\u2220",
+    r"\approx": "\u2248",
+    r"\pi": "\u03c0",
+    r"\sin": "sin\u2009",
+    r"\cos": "cos\u2009",
+    r"\tan": "tan\u2009",
+    r"\left": "",
+    r"\right": "",
 }
 BLACKBOARD = {"Z": "\u2124", "R": "\u211d", "N": "\u2115", "Q": "\u211a"}
 SUPERSCRIPT = {"0": "\u2070", "1": "\u00b9", "2": "\u00b2", "3": "\u00b3",
@@ -48,8 +62,52 @@ SUPERSCRIPT = {"0": "\u2070", "1": "\u00b9", "2": "\u00b2", "3": "\u00b3",
                "8": "\u2078", "9": "\u2079", "n": "\u207f"}
 
 
+def _brace(src: str, start: int) -> tuple[str, int]:
+    """Read a balanced {...} group beginning at `start`; return its body and end."""
+    assert src[start] == "{"
+    depth, i = 0, start
+    while i < len(src):
+        if src[i] == "{":
+            depth += 1
+        elif src[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return src[start + 1:i], i + 1
+        i += 1
+    raise ValueError(f"unbalanced braces in {src!r}")
+
+
+def _wrap(part: str) -> str:
+    """Bracket a fraction part unless it is already a single atom."""
+    part = part.strip()
+    simple = re.fullmatch(r"-?[0-9A-Za-z\u00b0\u221a().]+", part)
+    return part if simple else f"({part})"
+
+
+def _expand_structural(tex: str) -> str:
+    r"""Rewrite \frac and \sqrt, innermost first, until none remain."""
+    for _ in range(12):
+        m = re.search(r"\\(frac|sqrt)\{", tex)
+        if not m:
+            return tex
+        cmd = m.group(1)
+        first, after = _brace(tex, m.end() - 1)
+        first = _expand_structural(first)
+        if cmd == "sqrt":
+            replacement = f"\u221a{_wrap(first)}"
+            tex = tex[:m.start()] + replacement + tex[after:]
+            continue
+        if after >= len(tex) or tex[after] != "{":
+            raise ValueError(f"\\frac with one argument in {tex!r}")
+        second, after2 = _brace(tex, after)
+        second = _expand_structural(second)
+        tex = tex[:m.start()] + f"{_wrap(first)}/{_wrap(second)}" + tex[after2:]
+    raise ValueError(f"nested too deeply: {tex!r}")
+
+
 def to_unicode(tex: str) -> str:
     out = re.sub(r"\\mathbb\{([A-Z])\}", lambda m: BLACKBOARD.get(m.group(1), m.group(1)), tex)
+    out = _expand_structural(out)
     for cmd in sorted(SYMBOLS, key=len, reverse=True):
         out = out.replace(cmd, SYMBOLS[cmd])
     out = re.sub(r"\^\{([0-9n]+)\}", lambda m: "".join(SUPERSCRIPT[c] for c in m.group(1)), out)
@@ -155,10 +213,19 @@ def main() -> int:
     ap.add_argument("bundle", type=Path)
     ap.add_argument("--queue", type=Path, help="the *.review-queue.json written at load time")
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--sampled-only", action="store_true",
+                    help="render only the drawn sample. Reading one item validates its family, "
+                         "so the sample IS the review surface; the full bundle stays in the repo.")
     args = ap.parse_args()
 
     bundle = json.loads(args.bundle.read_text())
     queue = json.loads(args.queue.read_text()) if args.queue and args.queue.exists() else None
+    if args.sampled_only:
+        if not queue:
+            print("ERROR: --sampled-only needs --queue", file=sys.stderr)
+            return 2
+        picked = set(queue["question_ids"])
+        bundle = dict(bundle, questions=[q for q in bundle["questions"] if q["id"] in picked])
     try:
         page = build(bundle, queue)
     except ValueError as exc:

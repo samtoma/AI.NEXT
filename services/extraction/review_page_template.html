@@ -109,11 +109,12 @@
 
 <header class="top">
   <div class="shell">
-    <h1>Twelve questions, none of them checked</h1>
+    <h1>The sample, none of it checked</h1>
     <p>
-      The first generated bundle for the comparison environment. Every item below is
-      machine-authored mathematics that no human has verified. You asked to review 10%; all
-      twelve are here, and the sampled one is marked.
+      Machine-authored mathematics for the comparison environment that no human has read. These
+      are the items the 10% draw selected, and they are the whole review: each one comes from a
+      template family whose members differ only in their numbers, so reading one validates the
+      family behind it.
     </p>
     <div class="meta">
       <span><b>{{TOTAL}}</b> questions</span>
@@ -129,15 +130,18 @@
     <h2>What to look for</h2>
     <p>
       Structural validation already passed: every tier is one the selector can ask for, every
-      multiple-choice key appears among its own options, no two options share text, and every
-      item has a worked solution. None of that is a check on the mathematics.
+      multiple-choice key appears among its own options, no two options share text or the same
+      VALUE in different clothes, answer keys are spread evenly across A–D, and every item has a
+      worked solution. The arithmetic cannot be wrong either — each answer is computed by the same
+      code that writes the stem. None of that is a check on the mathematics as mathematics.
     </p>
     <p>
-      The defects worth your time are the ones a machine cannot see. An answer key that
-      disagrees with its own worked solution. A distractor that is also correct. A stem that
-      is ambiguous rather than wrong. A step that reaches the right answer by faulty reasoning
-      — which matters more here than usual, because the worked solution is exactly what the
-      tutor teaches from when a student misses the question.
+      The defects worth your time are the ones a machine cannot see, and at this scale they are
+      family-shaped rather than item-shaped: a template that asks an unfair question, a stem that
+      is ambiguous rather than wrong, a step that reaches the right answer by faulty reasoning,
+      a distractor that does not really represent the mistake it names. A family found wrong is
+      wrong in every one of its members — which is why one rejection here is worth far more than
+      one rejection in a pile of hand-written items.
     </p>
     <div class="warn">
       Each distractor claims to encode a named misconception. That claim is load-bearing: it is
@@ -154,10 +158,10 @@
   <div class="shell">
     <h2>What happens to your verdicts</h2>
     <p>
-      Accept, Reject and Needs a fix are saved as you click. A rejection carries further than
-      the single item: each generated question names the reviewed book question it was derived
-      from, so a defect can be traced to its family and that family retired together rather
-      than the whole bank being distrusted.
+      Accept, Reject and Needs a fix are saved as you click. A rejection carries much further than
+      the single item: each question names both its template family and the reviewed book question
+      it derives from, so a defect is traced to the family and that family retired together — its
+      other members pulled with it — rather than the whole bank being distrusted.
     </p>
     <p>
       What to do about a rejected family is not settled yet — it is the open question in
