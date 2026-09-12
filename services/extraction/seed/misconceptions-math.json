@@ -1,0 +1,2366 @@
+{
+  "catalogue": "prep3-math-misconceptions-v1",
+  "generated_at": "2026-09-12",
+  "generator": "authored against the book's own objectives and distractors — services/extraction/build_misconceptions.py",
+  "course_id": "course:prep3-math-en",
+  "reviewed": false,
+  "misconceptions": [
+    {
+      "id": "mc:u1-1-1:multiplied-not-added",
+      "lo_id": "lo:u1-1-1",
+      "label": "Components multiplied when the question asks for their sum",
+      "description": "Finds a and b correctly from the equal pairs, then combines them with the wrong operation.",
+      "signal": "The answer equals a x b where a + b was asked, or the reverse.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You read the pair correctly — that is the hard part, and you did it."
+        },
+        {
+          "step": 2,
+          "text_md": "From $(a, 5) = (3, b)$ the like components match: $a = 3$ and $b = 5$."
+        },
+        {
+          "step": 3,
+          "text_md": "The question then asks for $a + b$, which is $8$. The answer $15$ is $a \\times b$."
+        },
+        {
+          "step": 4,
+          "text_md": "Worth a habit: once you have the two values, read the last line of the question again before you combine them."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-1:001",
+          "choice_text": "15"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-1-1:components-subtracted",
+      "lo_id": "lo:u1-1-1",
+      "label": "Components subtracted instead of added",
+      "description": "Reaches the right pair of values but subtracts them.",
+      "signal": "The answer equals the difference of the two components.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your values are right: $a = 3$ and $b = 5$."
+        },
+        {
+          "step": 2,
+          "text_md": "The question asks for $a + b = 8$; $2$ is $b - a$."
+        },
+        {
+          "step": 3,
+          "text_md": "The equality of ordered pairs gives you the two numbers. What you do with them afterwards is whatever the question asks for."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-1:001",
+          "choice_text": "2"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-1-1:digits-joined",
+      "lo_id": "lo:u1-1-1",
+      "label": "Values written side by side instead of combined",
+      "description": "Writes the two components as digits of one number rather than performing the operation.",
+      "signal": "The answer is the two component values concatenated.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found $a = 3$ and $b = 5$ correctly."
+        },
+        {
+          "step": 2,
+          "text_md": "Writing them next to each other gives $35$, which is a new number, not a sum."
+        },
+        {
+          "step": 3,
+          "text_md": "$a + b$ means add: $3 + 5 = 8$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-1:001",
+          "choice_text": "35"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-1-1:pair-order-ignored",
+      "lo_id": "lo:u1-1-1",
+      "label": "Order of the pair ignored",
+      "description": "Reports (b, a) where (a, b) was asked; treats an ordered pair as an unordered set.",
+      "signal": "The answer is the correct pair with its components swapped.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both of your numbers are right — the issue is which one goes first."
+        },
+        {
+          "step": 2,
+          "text_md": "An ordered pair is *ordered*: $(0, 2)$ and $(2, 0)$ name different points and are not equal unless the two components happen to be the same."
+        },
+        {
+          "step": 3,
+          "text_md": "Match first-with-first and second-with-second, and keep them in that order when you write the answer."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-1:003",
+          "choice_text": "$(2, 4)$"
+        }
+      ],
+      "aliases": [
+        "mc:pair-components-swapped"
+      ]
+    },
+    {
+      "id": "mc:u1-1-2:product-commutes",
+      "lo_id": "lo:u1-1-2",
+      "label": "X × Y treated as the same as Y × X",
+      "description": "Assumes the Cartesian product is commutative, so the pairs come out reversed.",
+      "signal": "Every pair in the answer is a pair of the correct answer with its components swapped.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You built every pair the product contains — the pairing is right."
+        },
+        {
+          "step": 2,
+          "text_md": "But in $X \\times Y$ the FIRST component always comes from $X$. With $X = \\{1, 2\\}$ and $Y = \\{5\\}$ that gives $\\{(1,5), (2,5)\\}$."
+        },
+        {
+          "step": 3,
+          "text_md": "$Y \\times X$ would give $\\{(5,1), (5,2)\\}$ — the same elements, a different set."
+        },
+        {
+          "step": 4,
+          "text_md": "Read the product left to right: first set supplies the first component."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-2:001",
+          "choice_text": "$\\{(5,1), (5,2)\\}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-1-2:product-is-union",
+      "lo_id": "lo:u1-1-2",
+      "label": "Cartesian product confused with the union",
+      "description": "Lists the elements of both sets instead of forming ordered pairs.",
+      "signal": "The answer is a set of single elements rather than a set of pairs.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The elements you listed are the right ones to be working with."
+        },
+        {
+          "step": 2,
+          "text_md": "But $X \\times Y$ is a set of ORDERED PAIRS, not a set of elements: each pair takes one element from $X$ and one from $Y$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\{1, 2, 5\\}$ is $X \\cup Y$. The product is $\\{(1,5), (2,5)\\}$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-2:001",
+          "choice_text": "$\\{1, 2, 5\\}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-1-3:arrow-starts-at-y",
+      "lo_id": "lo:u1-1-3",
+      "label": "Arrows drawn from the second set",
+      "description": "Starts each arrow in an arrow diagram from an element of Y rather than of X.",
+      "signal": "The diagram or the reasoning reverses the direction of every arrow.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You know the diagram joins one set to the other — that is the idea."
+        },
+        {
+          "step": 2,
+          "text_md": "In the arrow diagram of $X \\times Y$ every arrow STARTS at an element of $X$, the first projection, and ends at an element of $Y$."
+        },
+        {
+          "step": 3,
+          "text_md": "The direction carries the order of the pair; reversing it draws $Y \\times X$ instead."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-3:001",
+          "choice_text": "an element of $Y$ (the second projection)"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-1-4:quadrant-from-x-alone",
+      "lo_id": "lo:u1-1-4",
+      "label": "Quadrant chosen from one coordinate",
+      "description": "Names the quadrant from the sign of x without checking y, or the reverse.",
+      "signal": "The named quadrant matches one coordinate's sign and contradicts the other.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are reading signs, which is exactly the right instinct."
+        },
+        {
+          "step": 2,
+          "text_md": "A quadrant needs BOTH signs: $(-2, 5)$ is negative then positive, which is the second quadrant."
+        },
+        {
+          "step": 3,
+          "text_md": "In order: $(+,+)$ first, $(-,+)$ second, $(-,-)$ third, $(+,-)$ fourth."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-4:001",
+          "choice_text": "first quadrant"
+        },
+        {
+          "question_id": "q:u1-1-4:001",
+          "choice_text": "third quadrant"
+        }
+      ],
+      "aliases": [
+        "mc:quadrant-from-x-only",
+        "mc:quadrant-sign-order"
+      ]
+    },
+    {
+      "id": "mc:u1-1-4:axis-point-given-a-quadrant",
+      "lo_id": "lo:u1-1-4",
+      "label": "A point on an axis placed in a quadrant",
+      "description": "Assigns a point with a zero coordinate to a quadrant; the axes belong to none.",
+      "signal": "A point containing 0 is reported as being in a quadrant.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The sign you did read is right."
+        },
+        {
+          "step": 2,
+          "text_md": "But $(0, -3)$ has a zero first coordinate, so it sits ON the $y$-axis rather than inside any quadrant."
+        },
+        {
+          "step": 3,
+          "text_md": "The axes divide the plane into the four quadrants and belong to none of them — a zero anywhere in the pair puts the point on an axis."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-1-4:002",
+          "choice_text": "in the third quadrant"
+        },
+        {
+          "question_id": "q:u1-1-4:002",
+          "choice_text": "in the fourth quadrant"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-2-1:relation-subset-of-one-set",
+      "lo_id": "lo:u1-2-1",
+      "label": "A relation taken to be a subset of one of the sets",
+      "description": "Treats a relation as a set of elements rather than a set of ordered pairs.",
+      "signal": "The answer names X or Y where X x Y is required.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "A relation does involve both sets — that part is right."
+        },
+        {
+          "step": 2,
+          "text_md": "But its members are ORDERED PAIRS, so a relation from $X$ to $Y$ is a subset of $X \\times Y$."
+        },
+        {
+          "step": 3,
+          "text_md": "$X$ alone holds single elements, and a pair cannot be an element of it."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-2-1:001",
+          "choice_text": "$X$"
+        },
+        {
+          "question_id": "q:u1-2-1:001",
+          "choice_text": "$Y$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-2-1:rule-applied-backwards",
+      "lo_id": "lo:u1-2-1",
+      "label": "The rule of the relation applied in reverse",
+      "description": "Reads a R b as b R a, producing every pair the wrong way round.",
+      "signal": "Each pair in the answer is a correct pair reversed.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You applied the rule to every element, which is the method."
+        },
+        {
+          "step": 2,
+          "text_md": "The rule $b = 2a$ takes $a$ from $X$ first: $a = 1$ gives $b = 2$, so the pair is $(1, 2)$."
+        },
+        {
+          "step": 3,
+          "text_md": "Writing $(2, 1)$ answers a different question — the relation 'is half of' rather than 'is double of'."
+        },
+        {
+          "step": 4,
+          "text_md": "Say the rule aloud in the order the pair is written and it stays straight."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-2-1:002",
+          "choice_text": "$\\{(2,1), (4,2)\\}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-2-2:self-pairs-dropped",
+      "lo_id": "lo:u1-2-2",
+      "label": "Pairs of an element with itself left out",
+      "description": "Omits (x, x) from a relation on a set, assuming a relation must join two different elements.",
+      "signal": "The answer is the correct relation minus its self-paired members.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Every pair you listed genuinely satisfies the rule."
+        },
+        {
+          "step": 2,
+          "text_md": "One is missing: with $a + b = 0$ and $a = b = 0$, the pair $(0, 0)$ satisfies it too."
+        },
+        {
+          "step": 3,
+          "text_md": "A relation on a set may pair an element with itself — nothing in the definition forbids it."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-2-2:001",
+          "choice_text": "$\\{(-1,1), (1,-1)\\}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-3-1:function-condition-on-y",
+      "lo_id": "lo:u1-3-1",
+      "label": "The function condition applied to the second set",
+      "description": "Requires each element of Y to appear once, instead of each element of X appearing exactly once as a first projection.",
+      "signal": "The stated condition is about images rather than about the domain.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right shape of condition — 'exactly once' is the key phrase."
+        },
+        {
+          "step": 2,
+          "text_md": "It applies to the FIRST set: every element of $X$ must appear exactly once as a first projection."
+        },
+        {
+          "step": 3,
+          "text_md": "Elements of $Y$ may repeat, or not appear at all — that is why the range can be a proper subset of the codomain."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-3-1:001",
+          "choice_text": "each element of $Y$ appears exactly once as a second projection"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-3-1:domain-element-repeated",
+      "lo_id": "lo:u1-3-1",
+      "label": "An element of the domain given two images",
+      "description": "Accepts a relation as a function although one first projection appears twice.",
+      "signal": "The chosen relation contains two pairs sharing a first component.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Every pair there is legal on its own."
+        },
+        {
+          "step": 2,
+          "text_md": "But $1$ appears as a first projection twice, in $(1,2)$ and $(1,3)$, so $1$ has two images."
+        },
+        {
+          "step": 3,
+          "text_md": "A function gives each input exactly one output — one repeat is enough to disqualify it."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-3-1:002",
+          "choice_text": "$\\{(1,2), (1,3), (2,1), (3,2)\\}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-3-1:domain-element-missing",
+      "lo_id": "lo:u1-3-1",
+      "label": "An element of the domain left without an image",
+      "description": "Accepts a relation as a function although some element of X never appears.",
+      "signal": "The chosen relation has fewer pairs than n(X).",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "No element is doubled here, which is half the condition."
+        },
+        {
+          "step": 2,
+          "text_md": "The other half is that EVERY element of $X$ must appear. With $X = \\{1,2,3\\}$ and only $(1,2), (2,3)$, the element $3$ has no image."
+        },
+        {
+          "step": 3,
+          "text_md": "Count the pairs against $n(X)$: for a function on $X$ they must match."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-3-1:002",
+          "choice_text": "$\\{(1,2), (2,3)\\}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-3-2:range-is-codomain",
+      "lo_id": "lo:u1-3-2",
+      "label": "Range and codomain treated as the same set",
+      "description": "Reports the whole codomain as the range; the range is the set of images actually reached.",
+      "signal": "The answer is Y rather than the set of second components of f.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have found the right set to be looking at — $Y$ is where the images live."
+        },
+        {
+          "step": 2,
+          "text_md": "The RANGE is only the part of $Y$ that is actually reached: the second components of the pairs, $\\{3, 5, 7\\}$."
+        },
+        {
+          "step": 3,
+          "text_md": "$2$ belongs to the codomain but is nobody's image, so it is not in the range."
+        },
+        {
+          "step": 4,
+          "text_md": "Range $\\subseteq$ codomain, and the two are equal only when every element of $Y$ gets used."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-3-2:001",
+          "choice_text": "$\\{2, 3, 5, 7\\}$"
+        },
+        {
+          "question_id": "q:u1-3-2:002",
+          "choice_text": "The codomain must equal $\\{4, 6, 8\\}$"
+        }
+      ],
+      "aliases": [
+        "mc:range-is-codomain"
+      ]
+    },
+    {
+      "id": "mc:u1-3-2:range-is-domain",
+      "lo_id": "lo:u1-3-2",
+      "label": "Range confused with the domain",
+      "description": "Gives the set of inputs where the set of images was asked.",
+      "signal": "The answer is X rather than the images.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That set is the domain — the inputs."
+        },
+        {
+          "step": 2,
+          "text_md": "The range is what comes OUT: the second component of each pair, $\\{3, 5, 7\\}$."
+        },
+        {
+          "step": 3,
+          "text_md": "Domain in, range out; the arrow diagram runs left to right."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-3-2:001",
+          "choice_text": "$\\{-1, 2, 3\\}$"
+        },
+        {
+          "question_id": "q:u1-3-2:002",
+          "choice_text": "The domain is $\\{4, 6, 8\\}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-4-1:negative-or-fractional-power",
+      "lo_id": "lo:u1-4-1",
+      "label": "An expression with a negative or fractional power called a polynomial",
+      "description": "Accepts 1/x or √x inside a polynomial function.",
+      "signal": "The chosen function contains a variable in a denominator or under a root.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Most of that expression IS polynomial — the $x^3$ and the constant are fine."
+        },
+        {
+          "step": 2,
+          "text_md": "A polynomial function allows only whole-number powers of $x$, so $\\frac{1}{x}$ (which is $x^{-1}$) and $\\sqrt{x}$ (which is $x^{1/2}$) both disqualify it."
+        },
+        {
+          "step": 3,
+          "text_md": "Check every term: any $x$ in a denominator or under a root means it is not a polynomial."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-4-1:001",
+          "choice_text": "$f(x) = x^3 + \\frac{1}{x} + 7$"
+        },
+        {
+          "question_id": "q:u1-4-1:001",
+          "choice_text": "$f(x) = x^2 + \\sqrt{x} + 8$"
+        },
+        {
+          "question_id": "q:u1-4-1:001",
+          "choice_text": "$f(x) = \\frac{2}{x^2}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-4-1:degree-read-before-expanding",
+      "lo_id": "lo:u1-4-1",
+      "label": "Degree read off without expanding",
+      "description": "Takes the highest power visible in the unexpanded form instead of multiplying out first.",
+      "signal": "The reported degree is the largest exponent appearing in the brackets.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are looking for the highest power, which is the right definition."
+        },
+        {
+          "step": 2,
+          "text_md": "It has to be the highest power AFTER multiplying out: $x(x - 2x^2) = x^2 - 2x^3$, so the degree is $3$."
+        },
+        {
+          "step": 3,
+          "text_md": "Expand first, then read the degree."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-4-1:004",
+          "choice_text": "2"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-4-2:line-through-0-a",
+      "lo_id": "lo:u1-4-2",
+      "label": "f(x) = ax assumed to cut the y-axis at a",
+      "description": "Confuses the coefficient with an intercept, so the line is thought to pass through (0, a).",
+      "signal": "The named fixed point is (0, a) or (a, 0) rather than the origin.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that the line has a fixed point regardless of $a$."
+        },
+        {
+          "step": 2,
+          "text_md": "Substitute $x = 0$: $f(0) = a \\times 0 = 0$, so the line passes through $(0,0)$, the origin."
+        },
+        {
+          "step": 3,
+          "text_md": "In $f(x) = ax + b$ the intercept is $b$; here $b = 0$, which is exactly what puts the line through the origin."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-4-2:001",
+          "choice_text": "the point $(0, a)$"
+        },
+        {
+          "question_id": "q:u1-4-2:001",
+          "choice_text": "the point $(a, 0)$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-4-2:point-coordinates-swapped",
+      "lo_id": "lo:u1-4-2",
+      "label": "Point tested with its coordinates the wrong way round",
+      "description": "Substitutes the y-value for x when checking whether a point lies on a line.",
+      "signal": "The rejected/accepted point is the correct one reversed.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your substitution method is right — that is how you test a point."
+        },
+        {
+          "step": 2,
+          "text_md": "Substitute the FIRST coordinate for $x$: for $(2, 1)$, $f(2) = 2(2) - 3 = 1$, which matches the second coordinate. It lies on the line."
+        },
+        {
+          "step": 3,
+          "text_md": "Testing $(3, 2)$ the same way gives $f(3) = 3$, not $2$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-4-2:002",
+          "choice_text": "$(3, 2)$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-4-2:constant-line-vertical",
+      "lo_id": "lo:u1-4-2",
+      "label": "Constant function drawn as a vertical line",
+      "description": "Takes f(x) = c to be parallel to the y-axis rather than the x-axis.",
+      "signal": "The answer names the y-axis where the x-axis is correct.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You know the graph is a line parallel to an axis — that is the right picture."
+        },
+        {
+          "step": 2,
+          "text_md": "$f(x) = 5$ means the output is $5$ for EVERY input, so the height never changes: a horizontal line, parallel to the $x$-axis."
+        },
+        {
+          "step": 3,
+          "text_md": "A vertical line would give one input many outputs, which cannot be a function at all."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-4-2:003",
+          "choice_text": "parallel to the y-axis"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-4-3:max-min-confused",
+      "lo_id": "lo:u1-4-3",
+      "label": "Maximum and minimum exchanged",
+      "description": "Reads the sign of a the wrong way: a < 0 opens downward and gives a maximum.",
+      "signal": "The answer names a minimum where the curve opens downward, or the reverse.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your value is right — the issue is what to call it."
+        },
+        {
+          "step": 2,
+          "text_md": "In $f(x) = -x^2 + 4x - 1$ the coefficient of $x^2$ is negative, so the parabola opens DOWNWARD and the vertex is the highest point: a maximum."
+        },
+        {
+          "step": 3,
+          "text_md": "$a > 0$ opens upward and gives a minimum; $a < 0$ opens downward and gives a maximum."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-4-3:003",
+          "choice_text": "minimum value equal to 3"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u1-4-3:vertex-y-read-as-c",
+      "lo_id": "lo:u1-4-3",
+      "label": "Constant term read as the extreme value",
+      "description": "Reports c as the maximum or minimum instead of evaluating f at the vertex.",
+      "signal": "The stated extreme value equals the constant term.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "$-1$ is in the function, so it is a reasonable thing to reach for."
+        },
+        {
+          "step": 2,
+          "text_md": "But $c$ is the value at $x = 0$, not at the vertex. The vertex is at $x = -\\frac{b}{2a} = 2$, and $f(2) = -4 + 8 - 1 = 3$."
+        },
+        {
+          "step": 3,
+          "text_md": "Find the vertex's $x$ first, then substitute to get the extreme value."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u1-4-3:003",
+          "choice_text": "maximum value equal to $-1$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-1-1:antecedent-consequent-swapped",
+      "lo_id": "lo:u2-1-1",
+      "label": "Antecedent and consequent exchanged",
+      "description": "Names the second term of a ratio as the antecedent.",
+      "signal": "The answer is the consequent, or the ratio written in reverse order.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have identified a term of the ratio correctly."
+        },
+        {
+          "step": 2,
+          "text_md": "In $4 : 9$ the FIRST term, $4$, is the antecedent and the second, $9$, is the consequent."
+        },
+        {
+          "step": 3,
+          "text_md": "The order matters: $4 : 9$ and $9 : 4$ are different ratios."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-1-1:001",
+          "choice_text": "9"
+        },
+        {
+          "question_id": "q:u2-1-1:002",
+          "choice_text": "$4 : 3$"
+        },
+        {
+          "question_id": "q:u2-1-1:003",
+          "choice_text": "$5 : 3$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-1-1:ratio-terms-added",
+      "lo_id": "lo:u2-1-1",
+      "label": "Terms of a ratio added together",
+      "description": "Combines the two terms into their sum rather than keeping the comparison.",
+      "signal": "The answer is a single number equal to the sum of the terms.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both numbers are the right ones."
+        },
+        {
+          "step": 2,
+          "text_md": "A ratio COMPARES two quantities; it is not a single total. $4 : 9$ stays as a pair."
+        },
+        {
+          "step": 3,
+          "text_md": "$13$ would be the total number of parts, which is a different (and sometimes useful) quantity."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-1-1:001",
+          "choice_text": "13"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-1-1:ratio-left-unreduced",
+      "lo_id": "lo:u2-1-1",
+      "label": "Ratio not reduced to simplest form",
+      "description": "Gives the raw ratio where the simplest form is asked.",
+      "signal": "The answer is a correct but unreduced equivalent.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The comparison you wrote is correct — it is the same ratio."
+        },
+        {
+          "step": 2,
+          "text_md": "Simplest form means dividing both terms by their highest common factor: $6 : 8$ has HCF $2$, giving $3 : 4$."
+        },
+        {
+          "step": 3,
+          "text_md": "Check afterwards that the two terms share no factor other than $1$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-1-1:002",
+          "choice_text": "$6 : 8$"
+        }
+      ],
+      "aliases": [
+        "mc:ratio-not-reduced"
+      ]
+    },
+    {
+      "id": "mc:u2-1-1:equal-ratio-by-difference",
+      "lo_id": "lo:u2-1-1",
+      "label": "Equivalent ratios found by adding rather than multiplying",
+      "description": "Looks for a constant difference between terms instead of a constant multiplier.",
+      "signal": "The chosen ratio keeps the gap between the terms, not their quotient.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You spotted a pattern — but it is the wrong one for ratios."
+        },
+        {
+          "step": 2,
+          "text_md": "Equivalent ratios come from MULTIPLYING both terms by the same number: $3 : 5$ times $4$ gives $12 : 20$."
+        },
+        {
+          "step": 3,
+          "text_md": "$5 : 7$ keeps the difference of $2$, which does not preserve the ratio: $\\frac{3}{5} \\neq \\frac{5}{7}$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-1-1:003",
+          "choice_text": "$5 : 7$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-1-1:one-term-squared",
+      "lo_id": "lo:u2-1-1",
+      "label": "Only one term multiplied",
+      "description": "Scales the terms of a ratio by different factors.",
+      "signal": "One term is scaled and the other is not, or each by a different amount.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Multiplying to find an equivalent ratio is the right move."
+        },
+        {
+          "step": 2,
+          "text_md": "Both terms must be multiplied by the SAME number. $9 : 25$ comes from $3 \\times 3$ and $5 \\times 5$ — different factors, so a different ratio."
+        },
+        {
+          "step": 3,
+          "text_md": "$3 : 5$ times $4$ gives $12 : 20$; check by simplifying back."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-1-1:003",
+          "choice_text": "$9 : 25$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-1-1:ratio-fixes-the-values",
+      "lo_id": "lo:u2-1-1",
+      "label": "A ratio read as fixing the actual values",
+      "description": "Takes a/b = 2/7 to mean a = 2 and b = 7 exactly, rather than a = 2m, b = 7m.",
+      "signal": "The answer asserts specific values, or a specific sum, from a ratio alone.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Those values do satisfy the ratio — they are one possible pair."
+        },
+        {
+          "step": 2,
+          "text_md": "But a ratio fixes only the RELATIONSHIP: $a = 2m$ and $b = 7m$ for some $m \\neq 0$. $a = 4, b = 14$ works just as well."
+        },
+        {
+          "step": 3,
+          "text_md": "That is also why $a + b = 9$ is not certain: the sum is $9m$, which depends on $m$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-1-1:004",
+          "choice_text": "$a = 2$ and $b = 7$"
+        },
+        {
+          "question_id": "q:u2-1-1:004",
+          "choice_text": "$a + b = 9$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-1-2:adding-preserves-ratio",
+      "lo_id": "lo:u2-1-2",
+      "label": "Adding the same number to both terms assumed to preserve the ratio",
+      "description": "Carries the rule for multiplication over to addition.",
+      "signal": "The student asserts the ratio is unchanged after adding to both terms.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The rule you are thinking of is real — but it is about multiplying."
+        },
+        {
+          "step": 2,
+          "text_md": "Multiplying both terms by the same nonzero number leaves a ratio unchanged. ADDING does not: $3 : 5$ becomes $4 : 6 = 2 : 3$, which is different."
+        },
+        {
+          "step": 3,
+          "text_md": "Test it with the numbers whenever you are unsure — one example settles it."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-1-2:001",
+          "choice_text": "never changes"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-2-1:proportion-is-a-sum-or-product",
+      "lo_id": "lo:u2-2-1",
+      "label": "Proportion defined as a sum or product of ratios",
+      "description": "Treats a proportion as an operation between ratios rather than an equality of them.",
+      "signal": "The definition chosen involves adding or multiplying two ratios.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You know a proportion involves two ratios."
+        },
+        {
+          "step": 2,
+          "text_md": "It is their EQUALITY: $\\frac{a}{b} = \\frac{c}{d}$. Nothing is added or multiplied — the statement is that the two comparisons are the same."
+        },
+        {
+          "step": 3,
+          "text_md": "That equality is what lets you cross-multiply."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-2-1:001",
+          "choice_text": "the sum of two ratios"
+        },
+        {
+          "question_id": "q:u2-2-1:001",
+          "choice_text": "the product of two ratios"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-2-1:means-extremes-swapped",
+      "lo_id": "lo:u2-2-1",
+      "label": "Means and extremes exchanged",
+      "description": "Names b and c as the extremes of a/b = c/d.",
+      "signal": "The answer gives the middle pair where the outer pair is asked.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right pair of terms in mind, just the other pair."
+        },
+        {
+          "step": 2,
+          "text_md": "Written as $a : b = c : d$, the EXTREMES are the outer terms $a$ and $d$; the means are the inner terms $b$ and $c$."
+        },
+        {
+          "step": 3,
+          "text_md": "The rule 'product of the extremes = product of the means' is exactly $ad = bc$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-2-1:002",
+          "choice_text": "$b$ and $c$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u2-2-2:cross-multiplication-reversed",
+      "lo_id": "lo:u2-2-2",
+      "label": "Cross-multiplication paired incorrectly",
+      "description": "Multiplies numerator by numerator and denominator by denominator, or top-to-bottom on the same side.",
+      "signal": "The stated product is ab = cd or ac = bd rather than ad = bc.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Cross-multiplying is the right tool here."
+        },
+        {
+          "step": 2,
+          "text_md": "It pairs each numerator with the OTHER fraction's denominator: $\\frac{a}{b} = \\frac{c}{d}$ gives $a \\times d = b \\times c$."
+        },
+        {
+          "step": 3,
+          "text_md": "Draw the two diagonals of the equality and multiply along each one — they cross, which is where the name comes from."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u2-2-2:001",
+          "choice_text": "$ab = cd$"
+        },
+        {
+          "question_id": "q:u2-2-2:001",
+          "choice_text": "$ac = bd$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-1-1:secondary-called-primary",
+      "lo_id": "lo:u3-1-1",
+      "label": "Ready-made data called a primary resource",
+      "description": "Classifies data taken from published records as field data because the student gathered it themselves.",
+      "signal": "A record, website or publication is described as a primary resource.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Collecting the data yourself does feel like field work — that is the honest confusion here."
+        },
+        {
+          "step": 2,
+          "text_md": "What decides it is where the data ORIGINATED. Figures already compiled by someone else are SECONDARY, however you obtained them."
+        },
+        {
+          "step": 3,
+          "text_md": "Primary means you generated the observations: a questionnaire you distributed, an interview you conducted, a count you made."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-1-1:002",
+          "choice_text": "primary (field)"
+        },
+        {
+          "question_id": "q:u3-1-1:005",
+          "choice_text": "Hany, who copied population figures from a newspaper report"
+        },
+        {
+          "question_id": "q:u3-1-1:005",
+          "choice_text": "Omar, who downloaded last year's exam statistics from the ministry website"
+        },
+        {
+          "question_id": "q:u3-1-1:005",
+          "choice_text": "Sara, who used tables published by a statistics agency"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-1-1:primary-assumed-cheap",
+      "lo_id": "lo:u3-1-1",
+      "label": "Primary resources assumed to be the quick and cheap option",
+      "description": "Reverses the trade-off: field data is accurate but costly; secondary data is cheap but second-hand.",
+      "signal": "The answer attributes low cost or speed to primary collection.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "There is a real trade-off here, and you are reaching for it."
+        },
+        {
+          "step": 2,
+          "text_md": "It runs the other way: PRIMARY resources are the accurate ones and cost the most time, effort and money. SECONDARY resources save all three but you did not control how they were gathered."
+        },
+        {
+          "step": 3,
+          "text_md": "Accuracy costs; convenience costs accuracy."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-1-1:004",
+          "choice_text": "low cost; give inaccurate outcomes"
+        },
+        {
+          "question_id": "q:u3-1-1:003",
+          "choice_text": "They are the most accurate of all resources"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-1-2:sample-assumed-more-accurate",
+      "lo_id": "lo:u3-1-2",
+      "label": "A sample assumed to be more accurate than a census",
+      "description": "Justifies sampling by accuracy rather than by cost, size or destructive testing.",
+      "signal": "The reason given for sampling is that it is more accurate.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Sampling is the right method in that situation — the reason is what slipped."
+        },
+        {
+          "step": 2,
+          "text_md": "A census covers every value, so it is the MORE accurate method. We sample when a census is impossible or self-defeating: the society is gigantic, or the test destroys what it measures."
+        },
+        {
+          "step": 3,
+          "text_md": "Testing every lamp until it burns out would leave nothing to sell."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-1-2:003",
+          "choice_text": "Because samples always give more accurate outcomes than a census"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-2-1:zero-dispersion-means-zero-values",
+      "lo_id": "lo:u3-2-1",
+      "label": "Zero dispersion read as zero values",
+      "description": "Takes 'dispersion = 0' to mean the values or the mean are zero, rather than that the values are identical.",
+      "signal": "The answer claims a value, mean or count of zero.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Zero is doing something specific here, and it is worth being exact about what."
+        },
+        {
+          "step": 2,
+          "text_md": "Dispersion measures how far apart the values are. Zero dispersion means they are ALL EQUAL — not that they are zero."
+        },
+        {
+          "step": 3,
+          "text_md": "$7, 7, 7, 7$ has dispersion zero and a mean of $7$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-2-1:002",
+          "choice_text": "the set has no values"
+        },
+        {
+          "question_id": "q:u3-2-1:002",
+          "choice_text": "the greatest value is zero"
+        },
+        {
+          "question_id": "q:u3-2-1:002",
+          "choice_text": "the mean is zero"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-2-1:range-thought-to-use-all-values",
+      "lo_id": "lo:u3-2-1",
+      "label": "The range assumed to reflect every value",
+      "description": "Misses that the range depends only on the two extremes, which is precisely its weakness.",
+      "signal": "The stated weakness of the range involves the mean, the count or the middle value.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that the range has a weakness — this is the one."
+        },
+        {
+          "step": 2,
+          "text_md": "It uses ONLY the greatest and smallest values. Everything in between could move anywhere without changing it."
+        },
+        {
+          "step": 3,
+          "text_md": "That is why the standard deviation exists: it is affected by every value in the set."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-2-1:004",
+          "choice_text": "the mean of the values"
+        },
+        {
+          "question_id": "q:u3-2-1:004",
+          "choice_text": "the number of the values"
+        },
+        {
+          "question_id": "q:u3-2-1:004",
+          "choice_text": "the middle value of the set"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-2-2:variance-not-rooted",
+      "lo_id": "lo:u3-2-2",
+      "label": "Square root never taken",
+      "description": "Stops at the variance and reports it as the standard deviation.",
+      "signal": "The answer is the square of the correct standard deviation.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Every step up to there was right — you found the average of the squared deviations correctly."
+        },
+        {
+          "step": 2,
+          "text_md": "That average is the VARIANCE. The standard deviation is its positive square root."
+        },
+        {
+          "step": 3,
+          "text_md": "For $3, 5, 5, 7$: mean $5$, squared deviations $4, 0, 0, 4$, average $2$, so $\\sigma = \\sqrt{2}$."
+        },
+        {
+          "step": 4,
+          "text_md": "One last step, every time: take the root."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-2-2:004",
+          "choice_text": "$2$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-2-2:deviations-not-averaged",
+      "lo_id": "lo:u3-2-2",
+      "label": "Squared deviations summed but not averaged",
+      "description": "Divides by nothing before taking the root, so the sum is used in place of its mean.",
+      "signal": "The answer is √(Σd²) rather than √(Σd²/n).",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your deviations and their squares are right."
+        },
+        {
+          "step": 2,
+          "text_md": "They have to be AVERAGED before the root: divide the sum by $n$, the number of values."
+        },
+        {
+          "step": 3,
+          "text_md": "Sum $= 8$, $n = 4$, so the average is $2$ and $\\sigma = \\sqrt{2}$ — not $\\sqrt{8}$."
+        },
+        {
+          "step": 4,
+          "text_md": "The formula carries the division inside the root: $\\sigma = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n}}$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-2-2:004",
+          "choice_text": "$\\sqrt{8}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-2-2:sigma-as-range-or-mean",
+      "lo_id": "lo:u3-2-2",
+      "label": "Standard deviation confused with the range or the mean",
+      "description": "Defines σ as a spread already named, or as the average of the values themselves.",
+      "signal": "The definition chosen is the range, or the mean, rather than the root of the mean squared deviation.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Those are all real statistics — they just answer different questions."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\sigma$ is the positive square root of the AVERAGE OF THE SQUARES OF THE DEVIATIONS from the mean."
+        },
+        {
+          "step": 3,
+          "text_md": "The mean says where the values sit; the range and $\\sigma$ say how spread out they are, and $\\sigma$ uses every value while the range uses two."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-2-2:001",
+          "choice_text": "the difference between the greatest and smallest values"
+        },
+        {
+          "question_id": "q:u3-2-2:001",
+          "choice_text": "the mean of the values"
+        },
+        {
+          "question_id": "q:u3-2-2:001",
+          "choice_text": "the sum of the values divided by their range"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-2-2:divisor-n-minus-one",
+      "lo_id": "lo:u3-2-2",
+      "label": "Dividing by n − 1 instead of n",
+      "description": "Uses the sample standard deviation formula, which this curriculum does not define. Usually arrives from outside the book — a tutor, an older sibling, a calculator mode, or an AI assistant.",
+      "signal": "The answer is larger than the expected one by the factor √(n/(n−1)); for five values, 2.24 where 2.00 is expected.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Good question, and you have not made a mistake in the arithmetic — you have met a second formula that exists in statistics."
+        },
+        {
+          "step": 2,
+          "text_md": "Your book defines the standard deviation of a SET OF VALUES as $\\sigma = \\sqrt{\\frac{\\sum (x - \\bar{x})^2}{n}}$ — divide by $n$, the number of values. That is the one to use here, and the one your exam will mark."
+        },
+        {
+          "step": 3,
+          "text_md": "The version with $n - 1$ belongs to a different situation: when the values are a SAMPLE and you want to estimate the spread of a much larger group you did not measure. Dividing by $n - 1$ makes that estimate slightly larger, because a small sample tends to look tighter than the group it came from."
+        },
+        {
+          "step": 4,
+          "text_md": "Your syllabus does not cover that case, so: divide by $n$. If a calculator or a website gives you a different number, check whether it used the sample setting."
+        }
+      ],
+      "maps": [],
+      "aliases": []
+    },
+    {
+      "id": "mc:u3-2-3:x-read-as-frequency",
+      "lo_id": "lo:u3-2-3",
+      "label": "Frequency substituted for the value",
+      "description": "Puts k where x belongs in the frequency-distribution formula.",
+      "signal": "Deviations are computed from the frequencies rather than from the values.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using the right formula — the letters are what got crossed."
+        },
+        {
+          "step": 2,
+          "text_md": "$x$ is the VALUE (for classes, the centre of the set); $k$ is how many times it occurs."
+        },
+        {
+          "step": 3,
+          "text_md": "The deviation $(x - \\bar{x})$ measures how far a value sits from the mean; a frequency has no distance from the mean."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u3-2-3:001",
+          "choice_text": "the frequency of the set"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u4-1-1:degree-split-decimally",
+      "lo_id": "lo:u4-1-1",
+      "label": "Degree divided into 100 parts",
+      "description": "Applies decimal place-value to degrees and minutes, so 0.25° is read as 25'.",
+      "signal": "The minutes in the answer are the decimal digits of the degrees.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Decimals usually do work that way — angles are the exception."
+        },
+        {
+          "step": 2,
+          "text_md": "A degree is divided into $60$ minutes, and a minute into $60$ seconds. So $0.25^\\circ = 0.25 \\times 60 = 15'$, giving $20^\\circ\\ 15'$."
+        },
+        {
+          "step": 3,
+          "text_md": "Multiply the decimal part by $60$; never copy the digits across."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u4-1-1:001",
+          "choice_text": "100 minutes"
+        },
+        {
+          "question_id": "q:u4-1-1:004",
+          "choice_text": "$20^\\circ\\ 25'$"
+        },
+        {
+          "question_id": "q:u4-1-1:006",
+          "choice_text": "$28^\\circ\\ 51'$"
+        },
+        {
+          "question_id": "q:u4-1-1:006",
+          "choice_text": "$28^\\circ\\ 5'\\ 1''$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u4-1-1:minute-second-confused",
+      "lo_id": "lo:u4-1-1",
+      "label": "Minutes and seconds confused",
+      "description": "Names 60 seconds as the subdivision of a degree, or leaves a decimal inside the minutes.",
+      "signal": "The unit named for the first subdivision of a degree is the second.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The number $60$ is right — it is the unit that slipped."
+        },
+        {
+          "step": 2,
+          "text_md": "A degree splits into $60$ MINUTES; each minute then splits into $60$ SECONDS."
+        },
+        {
+          "step": 3,
+          "text_md": "So a leftover decimal in the minutes is converted again: $0.6' = 0.6 \\times 60 = 36''$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u4-1-1:001",
+          "choice_text": "60 seconds"
+        },
+        {
+          "question_id": "q:u4-1-1:004",
+          "choice_text": "$20^\\circ\\ 2.5'$"
+        },
+        {
+          "question_id": "q:u4-1-1:006",
+          "choice_text": "$28^\\circ\\ 30'\\ 6''$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u4-1-2:opposite-adjacent-swapped",
+      "lo_id": "lo:u4-1-2",
+      "label": "Opposite and adjacent sides exchanged",
+      "description": "Takes the side next to the angle where the side facing it is required, swapping sine with cosine or inverting the tangent.",
+      "signal": "The answer is the ratio of the other acute angle, or the reciprocal.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You picked the right two sides — the question is which is which."
+        },
+        {
+          "step": 2,
+          "text_md": "'Opposite' means the side FACING the angle, across the triangle from it; 'adjacent' is the side touching it that is not the hypotenuse."
+        },
+        {
+          "step": 3,
+          "text_md": "Mark the angle you are working from first, then label the three sides relative to THAT angle. They change when you switch angles."
+        },
+        {
+          "step": 4,
+          "text_md": "$\\sin = \\frac{\\text{opposite}}{\\text{hypotenuse}}$, $\\cos = \\frac{\\text{adjacent}}{\\text{hypotenuse}}$, $\\tan = \\frac{\\text{opposite}}{\\text{adjacent}}$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u4-1-2:001",
+          "choice_text": "$\\frac{BC}{AC}$"
+        },
+        {
+          "question_id": "q:u4-1-2:002",
+          "choice_text": "adjacent ÷ opposite"
+        },
+        {
+          "question_id": "q:u4-1-2:003",
+          "choice_text": "$\\frac{3}{5}$"
+        },
+        {
+          "question_id": "q:u4-1-2:004",
+          "choice_text": "$\\frac{4}{3}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u4-1-2:ratio-inverted",
+      "lo_id": "lo:u4-1-2",
+      "label": "Ratio written upside down",
+      "description": "Divides the hypotenuse by a leg instead of the leg by the hypotenuse.",
+      "signal": "The answer is greater than 1 for a sine or cosine, which is impossible.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The two sides are correct — they are the wrong way up."
+        },
+        {
+          "step": 2,
+          "text_md": "$\\sin$ and $\\cos$ put the HYPOTENUSE on the bottom, so both are always less than $1$ in a right-angled triangle."
+        },
+        {
+          "step": 3,
+          "text_md": "An answer above $1$ for a sine or cosine is a signal to flip the fraction and check."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u4-1-2:001",
+          "choice_text": "$\\frac{AC}{AB}$"
+        },
+        {
+          "question_id": "q:u4-1-2:003",
+          "choice_text": "$\\frac{5}{4}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u4-1-2:tan-uses-hypotenuse",
+      "lo_id": "lo:u4-1-2",
+      "label": "Hypotenuse used in the tangent",
+      "description": "Builds tan from a leg and the hypotenuse rather than from the two legs.",
+      "signal": "The tangent is reported as a sine or cosine value.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are choosing between the three sides, which is the right process."
+        },
+        {
+          "step": 2,
+          "text_md": "The tangent is the only ratio that does NOT use the hypotenuse: opposite over adjacent, the two legs."
+        },
+        {
+          "step": 3,
+          "text_md": "If the hypotenuse appears in your fraction, you have written a sine or a cosine."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u4-1-2:002",
+          "choice_text": "opposite ÷ hypotenuse"
+        },
+        {
+          "question_id": "q:u4-1-2:002",
+          "choice_text": "adjacent ÷ hypotenuse"
+        },
+        {
+          "question_id": "q:u4-1-2:004",
+          "choice_text": "$\\frac{3}{5}$"
+        },
+        {
+          "question_id": "q:u4-1-2:004",
+          "choice_text": "$\\frac{4}{5}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u5-1-1:coordinates-added",
+      "lo_id": "lo:u5-1-1",
+      "label": "Coordinates added instead of subtracted",
+      "description": "Uses x1 + x2 where x2 − x1 is required, so the distance comes out as a sum.",
+      "signal": "The answer is the sum of the coordinates rather than their difference.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are combining the coordinates, which is the right idea."
+        },
+        {
+          "step": 2,
+          "text_md": "Distance measures a DIFFERENCE: $AB = |x_2 - x_1|$ along the $x$-axis, so $|6 - 2| = 4$."
+        },
+        {
+          "step": 3,
+          "text_md": "$8$ is $6 + 2$. Adding gives you a bigger number that no longer describes a gap."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u5-1-1:001",
+          "choice_text": "8"
+        }
+      ],
+      "aliases": [
+        "mc:distance-coords-added"
+      ]
+    },
+    {
+      "id": "mc:u5-1-1:one-coordinate-used",
+      "lo_id": "lo:u5-1-1",
+      "label": "Distance read from one point only",
+      "description": "Reports one point's coordinate as the distance instead of the separation between both.",
+      "signal": "The answer equals one of the given coordinates.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That number is in the question, which is why it is tempting."
+        },
+        {
+          "step": 2,
+          "text_md": "A distance always involves BOTH points: $|6 - 2| = 4$, not $6$ or $2$ on their own."
+        },
+        {
+          "step": 3,
+          "text_md": "Ask what the number is measuring FROM as well as to."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u5-1-1:001",
+          "choice_text": "2"
+        },
+        {
+          "question_id": "q:u5-1-1:001",
+          "choice_text": "6"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u5-1-1:root-not-taken",
+      "lo_id": "lo:u5-1-1",
+      "label": "Square root never taken in the distance rule",
+      "description": "Stops at the sum of the squares.",
+      "signal": "The answer is the square of the correct distance.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your squares are right: $6^2 + 8^2 = 36 + 64 = 100$."
+        },
+        {
+          "step": 2,
+          "text_md": "That $100$ is the square of the distance. The rule ends with a root: $\\sqrt{100} = 10$."
+        },
+        {
+          "step": 3,
+          "text_md": "$AB = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ — the root is part of the formula, not an optional tidy-up."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u5-1-1:004",
+          "choice_text": "100"
+        }
+      ],
+      "aliases": [
+        "mc:distance-root-dropped"
+      ]
+    },
+    {
+      "id": "mc:u5-1-1:legs-added-before-squaring",
+      "lo_id": "lo:u5-1-1",
+      "label": "Differences added before squaring",
+      "description": "Computes (dx + dy) rather than √(dx² + dy²).",
+      "signal": "The answer equals the sum of the two coordinate differences.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both differences are right — it is how they combine that changes."
+        },
+        {
+          "step": 2,
+          "text_md": "They cannot simply be added: the two directions are perpendicular, so Pythagoras applies. $\\sqrt{6^2 + 8^2} = 10$, not $6 + 8 = 14$."
+        },
+        {
+          "step": 3,
+          "text_md": "Square, add, then root — in that order."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u5-1-1:004",
+          "choice_text": "14"
+        },
+        {
+          "question_id": "q:u5-1-1:004",
+          "choice_text": "$\\sqrt{14}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u5-2-1:midpoint-from-difference",
+      "lo_id": "lo:u5-2-1",
+      "label": "Midpoint built from differences or sums without halving",
+      "description": "Subtracts or adds the coordinates instead of averaging them.",
+      "signal": "The answer is the sum of the coordinates, or their difference halved.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are working with both points, which is right."
+        },
+        {
+          "step": 2,
+          "text_md": "The midpoint AVERAGES: $M = \\left(\\frac{x_1 + x_2}{2},\\ \\frac{y_1 + y_2}{2}\\right)$, so $\\left(\\frac{2+4}{2},\\ \\frac{6+0}{2}\\right) = (3, 3)$."
+        },
+        {
+          "step": 3,
+          "text_md": "$(6, 6)$ is the sum with the halving forgotten. A midpoint must land BETWEEN the two points — check that it does."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u5-2-1:001",
+          "choice_text": "$(6, 6)$"
+        }
+      ],
+      "aliases": [
+        "mc:midpoint-uses-difference"
+      ]
+    },
+    {
+      "id": "mc:u5-1-2:right-angle-at-wrong-vertex",
+      "lo_id": "lo:u5-1-2",
+      "label": "Right angle placed at the wrong vertex",
+      "description": "Identifies that the triangle is right-angled but names a vertex other than the one where the two shorter sides meet.",
+      "signal": "The named vertex is not the one opposite the longest side.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You correctly spotted that it IS right-angled."
+        },
+        {
+          "step": 2,
+          "text_md": "The right angle sits at the vertex OPPOSITE the longest side — where the two shorter sides meet."
+        },
+        {
+          "step": 3,
+          "text_md": "Compute all three lengths, find the largest, and the right angle is at the vertex not touching it."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u5-1-2:001",
+          "choice_text": "$A$"
+        },
+        {
+          "question_id": "q:u5-1-2:001",
+          "choice_text": "$C$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u5-1-2:collinear-read-as-triangle",
+      "lo_id": "lo:u5-1-2",
+      "label": "Three collinear points treated as a triangle",
+      "description": "Misses that AB + BC = AC means the points lie on one line and enclose no area.",
+      "signal": "The answer describes a triangle although the three distances satisfy AB + BC = AC.",
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your three lengths are right, and you are reading them against each other, which is the method."
+        },
+        {
+          "step": 2,
+          "text_md": "When the two shorter distances ADD EXACTLY to the longest, the points cannot form a triangle — the 'path' $A \\to B \\to C$ is as short as going straight, so $B$ lies on $\\overline{AC}$."
+        },
+        {
+          "step": 3,
+          "text_md": "They are collinear. A genuine triangle needs $AB + BC > AC$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:u5-1-2:005",
+          "choice_text": "vertices of a right triangle"
+        },
+        {
+          "question_id": "q:u5-1-2:005",
+          "choice_text": "vertices of an isosceles triangle"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:u5-3-1:slope-inverted",
+      "lo_id": "lo:u5-3-1",
+      "label": "Run divided by rise",
+      "description": "Computes Δx/Δy instead of Δy/Δx.",
+      "signal": "The answer is the reciprocal of the correct slope.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both differences are right — the fraction is upside down."
+        },
+        {
+          "step": 2,
+          "text_md": "Slope is RISE over RUN: $m = \\frac{y_2 - y_1}{x_2 - x_1}$."
+        },
+        {
+          "step": 3,
+          "text_md": "A memory hook: slope answers 'how much does it climb for each step sideways', so the climb is on top."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:slope-inverted"
+      ]
+    },
+    {
+      "id": "mc:u5-3-3:perpendicular-sign-only",
+      "lo_id": "lo:u5-3-3",
+      "label": "Sign flipped without taking the reciprocal",
+      "description": "Uses −m for a perpendicular slope instead of −1/m.",
+      "signal": "The answer is the negative of the original slope.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Changing the sign is half of the rule, and you got that half."
+        },
+        {
+          "step": 2,
+          "text_md": "Perpendicular slopes multiply to $-1$, so the other slope is $\\frac{-1}{m}$ — flip the fraction AND change the sign."
+        },
+        {
+          "step": 3,
+          "text_md": "Check by multiplying: if the product is not $-1$, the lines are not perpendicular."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:perpendicular-not-reciprocal"
+      ]
+    },
+    {
+      "id": "mc:t2u1-2-2:discriminant-sign",
+      "lo_id": "lo:t2u1-2-2",
+      "label": "Sign of the discriminant misread",
+      "description": "Reports real roots when b² − 4ac < 0, or no roots when it is positive.",
+      "signal": "The stated number of roots contradicts the sign of the discriminant.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Computing the discriminant is exactly the right first move."
+        },
+        {
+          "step": 2,
+          "text_md": "Its SIGN decides: positive gives two different real roots, zero gives one repeated root, negative gives none in $\\mathbb{R}$."
+        },
+        {
+          "step": 3,
+          "text_md": "A negative discriminant means the curve never meets the $x$-axis, so the solution set is $\\varnothing$."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:discriminant-misread",
+        "mc:discriminant-sign"
+      ]
+    },
+    {
+      "id": "mc:t2u2-2-1:domain-from-numerator",
+      "lo_id": "lo:t2u2-2-1",
+      "label": "Domain excluded using the numerator",
+      "description": "Solves the numerator equal to zero when finding which values are excluded.",
+      "signal": "The excluded value is the zero of the numerator instead of the denominator.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are looking for where something equals zero, which is right."
+        },
+        {
+          "step": 2,
+          "text_md": "It is the DENOMINATOR that matters: division by zero is what is undefined."
+        },
+        {
+          "step": 3,
+          "text_md": "A zero numerator is perfectly fine — it just makes the whole fraction zero."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:domain-from-numerator"
+      ]
+    },
+    {
+      "id": "mc:t2u3-1-1:probability-denominator",
+      "lo_id": "lo:t2u3-1-1",
+      "label": "Divided by the wrong total",
+      "description": "Puts n(S) on top, or divides by the outcomes NOT in A.",
+      "signal": "The answer is greater than 1, or uses n(S) − n(A) as the denominator.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your two counts are right."
+        },
+        {
+          "step": 2,
+          "text_md": "$P(A) = \\frac{n(A)}{n(S)}$ — favourable outcomes over ALL outcomes, including the favourable ones."
+        },
+        {
+          "step": 3,
+          "text_md": "A probability can never exceed $1$; if yours does, the fraction is inverted."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:probability-denominator"
+      ]
+    },
+    {
+      "id": "mc:t2u3-1-3:union-double-counts",
+      "lo_id": "lo:t2u3-1-3",
+      "label": "Overlap counted twice in a union",
+      "description": "Adds P(A) and P(B) without subtracting P(A ∩ B).",
+      "signal": "The answer exceeds the correct union probability by exactly P(A ∩ B).",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Adding the two is the right starting point."
+        },
+        {
+          "step": 2,
+          "text_md": "Outcomes in BOTH events get counted once in each, so they are counted twice. Subtract the overlap: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$."
+        },
+        {
+          "step": 3,
+          "text_md": "When the events are mutually exclusive the overlap is empty and the subtraction changes nothing — which is why the simple sum sometimes appears to work."
+        }
+      ],
+      "maps": [],
+      "aliases": []
+    },
+    {
+      "id": "mc:t2u3-2-1:complement-not-from-one",
+      "lo_id": "lo:t2u3-2-1",
+      "label": "Complement not subtracted from 1",
+      "description": "Reports P(A) itself, or inverts it, instead of 1 − P(A).",
+      "signal": "The answer and P(A) do not sum to 1.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right probability in hand."
+        },
+        {
+          "step": 2,
+          "text_md": "An event and its complement cover everything that can happen, so they sum to $1$: $P(A^c) = 1 - P(A)$."
+        },
+        {
+          "step": 3,
+          "text_md": "Quick check: add your two probabilities. If they do not make $1$, one of them is not the complement."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:complement-not-one-minus"
+      ]
+    },
+    {
+      "id": "mc:geo1-2-1:point-position-reversed",
+      "lo_id": "lo:geo1-2-1",
+      "label": "Inside and outside reversed",
+      "description": "Compares the distance from the centre with the radius the wrong way round.",
+      "signal": "A point with MA > r is called inside, or the reverse.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Comparing $MA$ with $r$ is exactly the right test."
+        },
+        {
+          "step": 2,
+          "text_md": "Further from the centre than the radius means OUTSIDE: $MA > r$ is outside, $MA < r$ is inside, $MA = r$ is on the circle."
+        },
+        {
+          "step": 3,
+          "text_md": "Picture the radius as the wall: past it is outside."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:point-position-reversed"
+      ]
+    },
+    {
+      "id": "mc:geo2-2-2:inscribed-angle-doubled",
+      "lo_id": "lo:geo2-2-2",
+      "label": "Inscribed angle doubled instead of halved",
+      "description": "Takes the inscribed angle to equal its arc, or twice it, rather than half.",
+      "signal": "The answer equals the arc measure or twice it.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You have the right pair — the angle and its arc are linked."
+        },
+        {
+          "step": 2,
+          "text_md": "The INSCRIBED angle is HALF the arc it subtends; the CENTRAL angle on the same arc is the whole of it."
+        },
+        {
+          "step": 3,
+          "text_md": "So a $100^\\circ$ arc gives a $50^\\circ$ inscribed angle and a $100^\\circ$ central angle."
+        },
+        {
+          "step": 4,
+          "text_md": "Ask first where the vertex sits: on the circle (inscribed, half) or at the centre (central, whole)."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:inscribed-doubled"
+      ]
+    },
+    {
+      "id": "mc:geo2-5-1:cyclic-angles-equal",
+      "lo_id": "lo:geo2-5-1",
+      "label": "Opposite angles of a cyclic quadrilateral taken as equal",
+      "description": "Applies the parallelogram property to a cyclic quadrilateral.",
+      "signal": "The answer repeats the given angle instead of its supplement.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are using a real property of quadrilaterals — it belongs to parallelograms."
+        },
+        {
+          "step": 2,
+          "text_md": "In a CYCLIC quadrilateral the opposite angles are SUPPLEMENTARY: they add to $180^\\circ$."
+        },
+        {
+          "step": 3,
+          "text_md": "So $m(\\angle A) = 100^\\circ$ gives $m(\\angle C) = 80^\\circ$."
+        },
+        {
+          "step": 4,
+          "text_md": "Equal opposite angles would only happen when both are $90^\\circ$."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:cyclic-angles-equal"
+      ]
+    },
+    {
+      "id": "mc:u1-1-1:transposition-sign",
+      "lo_id": "lo:u1-1-1",
+      "label": "Sign lost when moving a term across the equals sign",
+      "description": "Solves x − 4 = 9 as x = 9 − 4, or y + 2 = 7 as y = 7 + 2.",
+      "signal": "The answer differs from the correct one by twice the transposed term.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Transposing is the right move — the sign is what flips."
+        },
+        {
+          "step": 2,
+          "text_md": "Whatever is SUBTRACTED on one side is ADDED on the other: $x - 4 = 9$ gives $x = 9 + 4 = 13$."
+        },
+        {
+          "step": 3,
+          "text_md": "And the reverse: $y + 2 = 7$ gives $y = 7 - 2 = 5$."
+        },
+        {
+          "step": 4,
+          "text_md": "Check by substituting back into the original equation — it costs five seconds and catches every sign slip."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:transposition-sign"
+      ]
+    },
+    {
+      "id": "mc:u4-1-3:opposite-adjacent-swapped",
+      "lo_id": "lo:u4-1-3",
+      "label": "Opposite and adjacent exchanged when computing a ratio",
+      "description": "Labels the sides relative to the wrong acute angle, or swaps opposite with adjacent.",
+      "signal": "The answer is the ratio of the other acute angle, or the reciprocal.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You chose the right two sides — which is which is the question."
+        },
+        {
+          "step": 2,
+          "text_md": "Label the sides relative to the angle you are ASKED about: 'opposite' faces it across the triangle, 'adjacent' touches it and is not the hypotenuse."
+        },
+        {
+          "step": 3,
+          "text_md": "Both labels swap when you move to the other acute angle, which is why $\\sin A = \\cos C$ in a right-angled triangle."
+        },
+        {
+          "step": 4,
+          "text_md": "Mark the angle first, then label, then choose the ratio."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:sin-cos-swapped"
+      ]
+    },
+    {
+      "id": "mc:u3-2-1:range-is-mean",
+      "lo_id": "lo:u3-2-1",
+      "label": "Range confused with the mean",
+      "description": "Averages the values instead of subtracting the smallest from the largest.",
+      "signal": "The answer is the mean of the set.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The mean is a real and useful number — it just answers a different question."
+        },
+        {
+          "step": 2,
+          "text_md": "The mean says where the values SIT; the range says how far apart they are."
+        },
+        {
+          "step": 3,
+          "text_md": "Range $=$ greatest $-$ smallest. Nothing is divided."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:range-is-mean"
+      ]
+    },
+    {
+      "id": "mc:u1-2-2:relation-subset-of-x",
+      "lo_id": "lo:u1-2-2",
+      "label": "A relation on X taken to be a subset of X",
+      "description": "Treats a relation on a set as a set of elements rather than of ordered pairs.",
+      "signal": "The answer names X, or a set of single elements.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "A relation on $X$ does live entirely inside $X$'s world — that instinct is right."
+        },
+        {
+          "step": 2,
+          "text_md": "Its members are ORDERED PAIRS of elements of $X$, so $R \\subseteq X \\times X$."
+        },
+        {
+          "step": 3,
+          "text_md": "$X$ itself holds single elements, and a pair is not one of them."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:relation-subset-of-x"
+      ]
+    },
+    {
+      "id": "mc:u1-4-2:intercept-is-slope",
+      "lo_id": "lo:u1-4-2",
+      "label": "Slope and y-intercept exchanged",
+      "description": "Reads b as the slope and a as the intercept in f(x) = ax + b.",
+      "signal": "The two values appear in each other's roles.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Both numbers are the right ones to be using."
+        },
+        {
+          "step": 2,
+          "text_md": "In $f(x) = ax + b$ the number ATTACHED TO $x$ is the slope; the loose number is the $y$-intercept."
+        },
+        {
+          "step": 3,
+          "text_md": "Substituting $x = 0$ settles it: $f(0) = b$, so $b$ is where the line crosses the $y$-axis."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:intercept-is-slope"
+      ]
+    },
+    {
+      "id": "mc:u1-4-2:constant-means-zero",
+      "lo_id": "lo:u1-4-2",
+      "label": "Constant function taken to mean the function is zero",
+      "description": "Reads 'constant' as 'equal to zero' rather than 'unchanging'.",
+      "signal": "The answer sets the whole function, rather than the coefficient of x, to zero.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are right that something has to be zero — it is the coefficient of $x$, not the function."
+        },
+        {
+          "step": 2,
+          "text_md": "Constant means the output never CHANGES, whatever $x$ is. $f(x) = 5$ is constant and never zero."
+        },
+        {
+          "step": 3,
+          "text_md": "So in $f(x) = (m-3)x + 5$ the condition is $m - 3 = 0$, which leaves $f(x) = 5$."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:constant-means-zero"
+      ]
+    },
+    {
+      "id": "mc:u1-1-3:product-commutes",
+      "lo_id": "lo:u1-1-3",
+      "label": "Diagram of X × Y assumed to serve for Y × X",
+      "description": "Treats the Cartesian product as commutative, so the shape of the diagram is assumed unchanged when the factors swap.",
+      "signal": "The answer for Y x X repeats the count or shape belonging to X x Y.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The two diagrams do contain the same number of points — that much is true."
+        },
+        {
+          "step": 2,
+          "text_md": "But their SHAPE differs: in $X \\times Y$ the columns count the elements of $X$; in $Y \\times X$ they count the elements of $Y$."
+        },
+        {
+          "step": 3,
+          "text_md": "The product is not commutative: $X \\times Y$ and $Y \\times X$ are different sets of pairs unless $X = Y$."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:cartesian-commutes"
+      ]
+    },
+    {
+      "id": "mc:u1-1-3:points-vs-columns",
+      "lo_id": "lo:u1-1-3",
+      "label": "Total points read as the number of columns",
+      "description": "Reports the whole point count of a net diagram where a column count is asked.",
+      "signal": "The answer equals n(X) x n(Y) rather than one of the factors.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "That number is genuinely in the diagram — it is the total of the points."
+        },
+        {
+          "step": 2,
+          "text_md": "Each COLUMN holds $n(Y)$ points, so the number of columns is the total divided by the height."
+        },
+        {
+          "step": 3,
+          "text_md": "$15$ points in columns of $3$ gives $5$ columns."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:points-vs-columns"
+      ]
+    },
+    {
+      "id": "mc:u1-1-3:product-is-sum",
+      "lo_id": "lo:u1-1-3",
+      "label": "Cardinalities added instead of multiplied",
+      "description": "Computes n(X) + n(Y) where n(X) x n(Y) is required.",
+      "signal": "The answer is the sum of the two set sizes.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are combining the two sizes, which is the right shape of answer."
+        },
+        {
+          "step": 2,
+          "text_md": "Every element of $X$ pairs with EVERY element of $Y$, so the count multiplies: $n(X \\times Y) = n(X) \\times n(Y)$."
+        },
+        {
+          "step": 3,
+          "text_md": "Adding would count each element once instead of pairing them."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:product-is-sum"
+      ]
+    },
+    {
+      "id": "mc:t2u1-2-1:touch-means-two-roots",
+      "lo_id": "lo:t2u1-2-1",
+      "label": "A touching curve read as having two distinct roots",
+      "description": "Treats a curve that meets the x-axis at one point as having two different solutions.",
+      "signal": "The solution set given has two elements where the curve only touches.",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You are reading roots off the graph, which is exactly what this method is."
+        },
+        {
+          "step": 2,
+          "text_md": "Count the points where the curve MEETS the axis: touching at one point means one repeated root, so the solution set has a single element."
+        },
+        {
+          "step": 3,
+          "text_md": "Two distinct roots need the curve to cross the axis twice — and that is the case where the discriminant is positive rather than zero."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:touch-means-two-roots"
+      ]
+    }
+  ]
+}

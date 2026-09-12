@@ -267,6 +267,16 @@ while 52 have exactly one. Traceability: **FR-1101…FR-1109**, constitution **v
 - [ ] T099 Close the last four objectives with no basic item — all "applications" objectives (word problems), the hardest to template without producing nonsense
 - [ ] T100 Re-run the exhaustion measurement after a week of real sessions and let it set the next generation target, rather than a round number (ADR-0008 §Open)
 
+### Misconceptions — making a wrong answer mean something (FR-1111…FR-1115)
+
+- [X] T101 Author `services/extraction/build_misconceptions.py` — the catalogue, written against each objective's own definition and the book's own distractors (FR-1111, FR-1114)
+- [X] T102 Create `services/extraction/load_misconceptions.py` — upserts misconceptions, writes a refutation per entry, stamps book distractors by exact choice text, and folds generator-invented ids in as aliases (FR-1112, FR-1115)
+- [X] T103 Diagnose from the chosen distractor in `api/attempts/route.ts`: record `misconception_id` and `confidence=1` on the attempt, and serve the refutation of **that** error (FR-1113)
+- [ ] T104 Extend the catalogue to the remaining 53 objectives — 37 of 90 are covered, and 201 of 250 book MCQs are still undiagnosable
+- [ ] T105 Have the generator emit catalogue ids directly instead of inventing its own and relying on the alias pass
+- [ ] T106 Include the objective's own definition on each review card, so a reviewer judges an item against the syllabus rather than against mathematics in general (the standard-deviation review, 2026-09-12)
+- [ ] T107 Decide who performs the 10% review. An AI first pass is useful; the constitution's suspension is conditioned on a **human** gate, and a model reviewing model-generated maths reproduces the failure mode it is meant to catch
+
 **Standing caveat**: question supply is now a variable in the comparison — the baseline
 exhausts its advanced tier and the comparison build does not. Every reported result must say
 so. See ADR-0008 §Consequences.

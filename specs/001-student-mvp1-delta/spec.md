@@ -519,6 +519,27 @@ objectives have no advanced question at all while 52 have exactly one.
 - **FR-1107**: Generated MCQ distractors SHOULD carry a `misconception_id`, so a wrong answer
   selects the matching refutation entry from the explanation library directly rather than
   through a classifier that does not exist.
+- **FR-1111** *(added 2026-09-12)*: A misconception catalogue MUST exist covering both the
+  generated bank and the **textbook** questions, authored against each objective's own
+  definition rather than against mathematics in general. The book's distractors were written
+  deliberately and are evidence of the errors the curriculum expects; naming them makes
+  existing questions diagnostic without changing a single one.
+- **FR-1112**: Every misconception a distractor points at MUST have a servable refutation.
+  A named misconception with nothing to teach is a label: the diagnosis lands and the tutor
+  still has nothing grounded to say.
+- **FR-1113**: On a wrong multiple-choice answer the system MUST diagnose from the option
+  chosen — the distractor IS the diagnosis, requiring no classifier — record the
+  `misconception_id` on the attempt, and serve the refutation of **that** error rather than
+  whichever entry the objective happens to have first. Serving a refutation of a mistake the
+  student did not make is worse than serving the plain solution.
+- **FR-1114**: The catalogue MUST also carry **conceptual** entries for confusions a student
+  voices but no distractor encodes — a question brought from a tutor, a sibling, a calculator
+  mode or another AI. These MUST answer within the syllabus rather than correcting the student
+  with a convention their textbook does not teach.
+- **FR-1115**: One error MUST have one entry. Where the question generator invented an id for
+  an error the catalogue also names, the generator's id MUST be folded in as an alias — two
+  ids for one misconception split its refutation and its evidence, and the split is invisible
+  until somebody wonders why a common mistake has half the attempts it should.
 - **FR-1108**: The count of live, unreviewed generated questions MUST be reportable on demand
   and MUST be disclosed alongside any parity result, so "how much ungated mathematics did
   students see?" is always answerable from data.

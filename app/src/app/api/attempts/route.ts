@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     await client.query("BEGIN");
 
     const qRes = await client.query(
-      `SELECT q.id, q.lo_id, q.question_type, q.correct_answer,
+      `SELECT q.id, q.lo_id, q.question_type, q.correct_answer, q.choices,
               q.canonical_solution, q.solution_version, n.label AS lo_label
        FROM questions q
        JOIN graph_nodes n ON n.id = q.lo_id
@@ -58,16 +58,33 @@ export async function POST(req: Request) {
     const q = qRes.rows[0];
     const isCorrect = grade(q.question_type, q.correct_answer, givenAnswer);
 
+    // THE DIAGNOSIS. On a multiple-choice question the distractors are not
+    // filler — somebody chose each one to encode a specific error, and the
+    // misconception catalogue names which. So the option the student picked IS
+    // the diagnosis, with no classifier in between and no guesswork.
+    //
+    // That is why `confidence` is 1 here and null everywhere else: we are not
+    // inferring what she was thinking, we are reading a label attached to the
+    // thing she clicked. A numeric answer gets no diagnosis at all rather than
+    // an invented one.
+    const chosenOption: { text?: string; misconception_id?: string } | null =
+      !isCorrect && q.question_type === "mcq" && Array.isArray(q.choices)
+        ? (q.choices.find(
+            (c: { key?: string }) => c.key === givenAnswer.trim().toUpperCase()
+          ) ?? null)
+        : null;
+    const misconceptionId: string | null = chosenOption?.misconception_id ?? null;
+
     // 1. record the attempt
     // `diagnosis_type` records HOW the outcome was determined. `confidence` is
-    // deliberately left NULL: grading is deterministic, but no misconception
-    // classifier exists yet, and FR-307 requires that uncertainty be recorded
-    // honestly rather than dressed up as a number we did not compute.
+    // deliberately left NULL unless a distractor named the error outright —
+    // FR-307 requires uncertainty be recorded honestly rather than dressed up
+    // as a number we did not compute.
     const attemptRes = await client.query(
       `INSERT INTO attempts
          (student_id, question_id, given_answer, is_correct, time_ms, attempted_at,
-          diagnosis_type, stance_used, confidence)
-       VALUES ($1, $2, $3, $4, $5, now(), $6, $7, NULL)
+          diagnosis_type, misconception_id, stance_used, confidence)
+       VALUES ($1, $2, $3, $4, $5, now(), $6, $7, $8, $9)
        RETURNING id`,
       [
         studentId,
@@ -75,8 +92,14 @@ export async function POST(req: Request) {
         givenAnswer,
         isCorrect,
         Math.round(timeMs ?? 0),
-        isCorrect ? "correct" : "deterministic_grade_incorrect",
+        isCorrect
+          ? "correct"
+          : misconceptionId
+            ? "distractor_diagnosed"
+            : "deterministic_grade_incorrect",
+        misconceptionId,
         isCorrect ? "confirm" : "re_explain",
+        misconceptionId ? 1 : null,
       ]
     );
     const attemptId = attemptRes.rows[0].id;
@@ -165,11 +188,20 @@ export async function POST(req: Request) {
     // solution (FR-305, PRD §8). What we must never do is improvise one and
     // present it as settled — so the absence is logged, not papered over.
     if (!isCorrect) {
-      const entries = await getLibraryEntries([q.lo_id], {
-        entryTypes: ["refutation", "contrasting_case"],
-      });
+      // Ask for THE refutation of the error she actually made, not whichever
+      // entry this objective happens to have first. Serving a refutation of a
+      // mistake the student did not make is worse than serving the plain
+      // solution: it corrects something she never thought.
+      const entries = misconceptionId
+        ? await getLibraryEntries([q.lo_id], {
+            misconceptionId,
+            entryTypes: ["refutation", "contrasting_case"],
+          })
+        : await getLibraryEntries([q.lo_id], {
+            entryTypes: ["refutation", "contrasting_case"],
+          });
       if (entries.length === 0) {
-        void flagAuthoringGap(studentId, null);
+        void flagAuthoringGap(studentId, misconceptionId);
       } else {
         const chosen = entries[0];
         void emit({

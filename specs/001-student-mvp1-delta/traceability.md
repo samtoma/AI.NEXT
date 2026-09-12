@@ -1,6 +1,6 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-12 (rev. 4) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
+**Status date**: 2026-09-12 (rev. 5) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v2.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
 
@@ -172,6 +172,23 @@ thin — 5 of 90 objectives had no advanced item, 52 had exactly one.
 **Blocked on Samuel**: T086 — review the 10% sample and return a verdict per item, and decide
 what happens to a family when one of its members is rejected (ADR-0008 §Open).
 
+## 8c. Misconceptions — FR-1111…FR-1115 **[NEW]**
+
+Added 2026-09-12, prompted by a review of a generated standard-deviation item that asked why
+the divisor is n and not n−1. The item was right for this curriculum; the tutor had nothing
+grounded to say about the question.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-1111 | A catalogue covering generated **and** textbook questions, authored against each objective's own definition | **PARTIAL** | `build_misconceptions.py` — 78 misconceptions, authored from the LO descriptions and the book's own distractors | 37 of 90 objectives covered; 53 remain (T104) |
+| FR-1112 | Every misconception a distractor points at has a servable refutation | **VERIFIED** | `load_misconceptions.py` writes one refutation per entry | **0** distractors point at nothing; `explanation_library` went from 0 rows to 76 |
+| FR-1113 | Diagnose from the chosen distractor; serve *that* refutation | **VERIFIED** | `api/attempts/route.ts` | Live: answering `q:u1-1-1:001` with B recorded `diagnosis_type=distractor_diagnosed`, `misconception_id=mc:u1-1-1:multiplied-not-added`, `confidence=1`, and served `expl:mc:u1-1-1:multiplied-not-added` |
+| FR-1114 | Conceptual entries for confusions no distractor encodes | **VERIFIED** | 2 entries, including `mc:u3-2-2:divisor-n-minus-one` | Answers within the syllabus — names the book's σ with n, explains where n−1 belongs, and tells the student to check the calculator's setting |
+| FR-1115 | One error, one entry; generator ids folded in as aliases | **VERIFIED** | Alias pass in the loader | 18 generator ids re-pointed and removed; the questions carrying them were rewritten in place |
+
+**Coverage today**: 94 book distractors across 49 of 250 book MCQs (was **zero**), and 471
+generated distractors. The gap is named: 201 book MCQs are still undiagnosable (T104).
+
 ## 9. What is unresolved, and who owns it
 
 | # | Item | Owner | Why it matters |
@@ -184,6 +201,7 @@ what happens to a family when one of its members is rejected (ADR-0008 §Open).
 | 6 | **T001** — create and push the `mvp1` branch | **Samuel** | This session is pinned to its designated branch; pushing `mvp1` needs an explicit go-ahead |
 | 7 | Master vs Play design variant | **Samuel** | Implemented as master; cheap to reverse |
 | 7b | **Review the 10% question sample** (T086) | **Samuel** | The condition his own authorisation attached to the generated bank. Unreviewed mathematics is already live locally |
+| 7d | **Who performs the 10% review** (T107) | **Samuel** | The constitution's suspension is conditioned on a *human* gate. A model reviewing model-generated maths reproduces the failure mode it is meant to catch — and on the standard-deviation item it produced a false rejection |
 | 7c | Question supply is now a **variable**, not a constant | **Samuel** | The baseline exhausts its advanced tier and the comparison build does not. Every reported result has to say so — and the gap is now **993 vs 450**, not 462 vs 450 |
 | 8 | Box-dependent work: T005, T013–T020, T042–T043, T070 | Engineering, once box access exists | Everything is written and dry-run verified; none of it has met the real environment |
 
@@ -193,14 +211,14 @@ what happens to a family when one of its members is rejected (ADR-0008 §Open).
 
 | | Count |
 |---|---|
-| Functional requirements (incl. FR-10xx, FR-11xx) | **71** |
-| VERIFIED | 35 |
+| Functional requirements (incl. FR-10xx, FR-11xx) | **76** |
+| VERIFIED | 39 |
 | BUILT (awaiting the box, the runtime, or a browser session) | 15 |
-| PARTIAL | 4 |
+| PARTIAL | 5 |
 | OPEN | 6 |
 | BLOCKED | 2 |
 | DEFERRED by explicit decision | 9 |
-| Tasks complete / total | **63 / 100** |
+| Tasks complete / total | **66 / 107** |
 
 The honest headline: **the teaching core, the environment attribution, the content-parity gate and
 the whole design language are done and were exercised against real data. Nothing has met the box.**
