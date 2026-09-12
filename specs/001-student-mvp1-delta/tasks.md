@@ -286,6 +286,59 @@ while 52 have exactly one. Traceability: **FR-1101…FR-1109**, constitution **v
 exhausts its advanced tier and the comparison build does not. Every reported result must say
 so. See ADR-0008 §Consequences.
 
+## Phase 15: Interactive practice widgets **[ADDED 2026-09-12 — Samuel's request]**
+
+*"Can we generate more widgets as well with more option to draw and better capability?"*
+
+The starting position, measured rather than assumed: **two** interactive widgets, both
+tap-only, serving **2 of 10** modules. Geometry — 72 of the book's 212 figures, the largest
+category by a distance — had none. The only student gesture anywhere in the product was a
+single click.
+
+- [X] T113 Build the shared interaction primitive (`widgets/drag.ts`): pointer capture,
+  `getScreenCTM().inverse()` mapping, `touch-action: none`, caller-supplied snapping, freehand
+  stroke capture with distance thinning, arrow-key nudging. Solving drawing once rather than
+  nine times badly is the whole "better capability" ask
+- [X] T114 Extract `WidgetShell` + `Handle` — the chrome the two existing widgets had each
+  copied and already drifted apart on. Enforces the no-red rule and keeps a verdict from ever
+  being colour alone; the handle is a focus stop announcing its own value, behind a
+  finger-sized hit target
+- [X] T115 Nine widgets, one per uncovered module: `line_drawer`, `circle_builder`,
+  `angle_setter`, `triangle_ratio`, `bar_builder`, `number_line_marker`, `ratio_balance`,
+  `sample_space`, `curve_sketcher`. All ten modules now covered (FR-1201)
+- [X] T116 Validated dispatch (`lib/widget-payloads.ts` + `render-math-widget.tsx`). Rejects
+  rather than repairs, and rejects the well-typed-but-unreachable; no React, so the guard is
+  tested directly (FR-1207, FR-1208)
+- [X] T117 Document widgets to the tutor **per unit** rather than per subject
+  (`lib/widget-docs.ts`). Eleven schemas in every prompt is a cost and a menu (FR-1209)
+- [X] T118 `/dev/math-widgets` — every widget with the payload that produced it, plus the
+  five payloads that must refuse to render. The review surface the human gate needs, since
+  "drag it and see whether the mathematics holds" is not a code review
+- [ ] T119 **Spend a tutor turn.** No Claude turn has ever chosen a widget. The documentation
+  is written and tested; whether a model reaches for the right one at a real teaching beat is
+  unmeasured, and it decides whether any of this reaches a student
+- [ ] T120 Run the widgets on a **real iPad**. Touch and keyboard are both verified only under
+  synthetic pointer events in desktop Chromium — which is exactly the setting that hid the two
+  pointer bugs until the widgets were actually driven
+- [ ] T121 Decide whether widget outcomes should move mastery (FR-1211). They deliberately do
+  not, to keep the comparison clean — but a student can construct every chord in the unit and
+  the mastery number will not notice. **Samuel's call**
+
+**What the browser found that the code review did not.** Both pointer bugs below were invisible
+to typechecking, linting and reading, and both would have hurt students more than they hurt the
+test:
+
+1. `pointermove` gated on React state dropped every move dispatched before the re-render
+   committed. A mouse drag mostly survives it; a finger does not, because the first events
+   after a touchstart arrive about a millisecond apart. On the iPad this targets, the start of
+   every drag would have gone missing.
+2. `pointerdown` never called `preventDefault`, so the browser began a native selection gesture
+   and fired `pointercancel` **mid-drag** — a handle stopping a third of the way to where it
+   was pulled, with no error raised anywhere.
+
+The lesson is cheap to state and was expensive to learn: an interaction primitive is not
+verified until something drags it.
+
 
 
 ---
@@ -349,4 +402,7 @@ parity check — the proof that the whole comparison premise holds.
 | 10 Measurement | 4 | US8 |
 | 11 Safety gate | 6 | — |
 | 12 Polish | 5 | — |
-| **Total** | **73** | |
+| 13 Design (Nour) | 12 | — |
+| 14 Generated bank | 12 | — |
+| 15 Widgets | 9 | — |
+| **Total** | **121** | |

@@ -1,12 +1,62 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-10
+> Last updated: 2026-09-12
+
+## ✏️ WIDGETS — every module is now something a student can DRAW on (2026-09-12, `claude/tamer-shared-drive-access-ddpypu`)
+
+Samuel asked for "more widgets… with more option to draw and better capability". The measured
+starting position: **two** interactive widgets, both tap-only, serving **2 of 10** modules.
+Geometry — 72 of the book's 212 figures, the largest category — had none. The only student
+gesture anywhere in the product was a single click.
+
+Now **eleven** widgets across **10 of 10** modules, six of them drag-to-construct and one
+freehand. Built on one shared interaction primitive (`widgets/drag.ts`) rather than nine
+hand-rolled pointer handlers, which is where the "better capability" actually lives.
+
+- `line_drawer` · `circle_builder` · `angle_setter` · `triangle_ratio` · `bar_builder`
+  `number_line_marker` · `ratio_balance` · `sample_space` · `curve_sketcher`
+- They grade the **property**, not a stored position: any of the 66 chords is a chord, any two
+  points on the line are the line, any similar triangle has the same tangent — and the widget
+  says so. A wrong answer returns a **diagnosis** ("that is the median, not the mean"), not a
+  score.
+- Payload validation is a React-free module with 18 tests. It **rejects rather than repairs**,
+  including well-typed but unreachable targets — an angle off the snap grid, sin θ = 1, a fourth
+  term of 40/3. A widget that cannot be answered correctly marks a correct answer wrong.
+- The tutor is documented **per unit**, not per subject: eleven schemas in every prompt is both
+  a cost and a menu.
+- **`/dev/math-widgets`** renders all fifteen cases with the payload that produced each, plus
+  five payloads that must refuse to render. That is the review surface — "drag it and see
+  whether the mathematics holds" is not a code review.
+
+**Two pointer bugs that reading the code would never have caught**, both found by driving the
+widgets in a real browser and both worse for students than for the test: `pointermove` gated on
+React state dropped every move dispatched before the re-render committed (fatal on a
+touchscreen, where the first events arrive a millisecond apart — the iPad is the device target),
+and a missing `preventDefault` let the browser start a native selection and fire `pointercancel`
+**mid-drag**, stranding a handle a third of the way to where it was pulled with no error
+anywhere. Both confirmed fixed in Chromium.
+
+**Verified end to end in a browser**, not just typechecked: a line dragged to `y = 2x − 1`, a
+chord onto (−3,4)–(4,−3), an inscribed angle set to 35° with the 2:1 relationship holding, six
+tapped cells giving P = 6/36 = 1/6, and a freehand parabola at 0.04 mean error. 89 tests pass.
+
+**Open, and Samuel's to decide:**
+- **T119** — no tutor turn has ever *chosen* a widget. The prompt documentation is written and
+  tested; which widget a model reaches for at a real teaching beat is unmeasured, and it decides
+  whether any of this reaches a student.
+- **T120** — never run on a real iPad. Touch is verified only under synthetic pointer events,
+  which is exactly the setting that hid both bugs above.
+- **T121** — widget outcomes deliberately do **not** move mastery (FR-1211), to keep the
+  comparison clean. A student can construct every chord in the unit and the number will not
+  notice. Worth an explicit decision rather than an inherited default.
+
+---
 
 ## 🏗️ BUILD IN FLIGHT — Student MVP 1.0, 49/80 tasks, nothing on the box yet (2026-09-10, `claude/tamer-shared-drive-access-ddpypu`)
 
 **Read [`specs/001-student-mvp1-delta/traceability.md`](../specs/001-student-mvp1-delta/traceability.md) first** —
-it maps all 61 functional requirements to the code that implements them and the evidence that
+it maps all 82 functional requirements to the code that implements them and the evidence that
 proves it, and it is deliberately harsher than `tasks.md`: a requirement whose code exists but has
 never been executed does not count as done there.
 

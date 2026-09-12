@@ -553,6 +553,55 @@ objectives have no advanced question at all while 52 have exactly one.
   one live item per tier. Volume beyond that SHOULD follow measured exhaustion rather than a
   fixed quota.
 
+### Interactive practice widgets *(added 2026-09-12, Samuel's request)*
+
+The question bank answers "what can we ask him?". These answer "what can he DO?" — and until
+now the answer across the whole product was: tap one point on a grid. Two widgets served two of
+the ten modules, and geometry, which contributes 72 of the book's 212 figures, had none at all.
+A student could watch a circle theorem animate and could not construct a single thing.
+
+- **FR-1201**: Every module of the Prep-3 Mathematics book MUST have at least one interactive
+  widget the tutor can offer. Coverage is per module, not per objective: a module with no
+  widget is a module where the tutor can only talk.
+- **FR-1202**: Widgets MUST support **continuous input** — dragging, constructing and freehand
+  drawing — and not only discrete taps. A single tap can express a choice; it cannot express a
+  line, an angle, a distribution or a curve, and those are what this syllabus is made of.
+- **FR-1203**: Pointer handling MUST work under touch, mouse and pen, MUST survive the pointer
+  leaving the figure mid-gesture, and MUST NOT lose input at the start of a gesture. The device
+  target is iPad Safari (constitution, device target); a drag whose first events are dropped is
+  a drag that feels broken to exactly the students this is for.
+- **FR-1204**: Every widget MUST be operable without a pointer. Each handle MUST be a focus
+  stop that announces its current value, and MUST be movable by keyboard to any position a
+  pointer could reach.
+- **FR-1205**: Widgets MUST grade the **mathematical property asked for**, not one stored
+  correct arrangement. Where a question has many correct answers — any chord, any two points
+  on a line, any similar triangle — all of them MUST be accepted. Grading a position where the
+  syllabus defines a property teaches the student to guess the author.
+- **FR-1206**: A wrong answer MUST return a **diagnosis**, not a score. The note the widget
+  sends the tutor MUST name the error where the error is nameable — an inverted slope, a mean
+  read as a median, an inverse relationship solved as a direct one, a chord offered as a
+  diameter — so the next teaching beat can address the actual mistake.
+- **FR-1207**: Widget payloads arrive from a language model mid-stream and MUST be validated
+  before rendering. Validation MUST **reject rather than repair**, and MUST reject a target
+  that is well-typed but unreachable on the instrument (an angle off the snap grid, a fourth
+  term that is not a whole pan position, sin θ = 1). A widget that cannot be answered correctly
+  marks a correct answer wrong, which is worse for the student than a missing widget.
+- **FR-1208**: The validation layer MUST be testable without rendering a component, and MUST
+  be covered by tests that include the payload shapes a model actually gets wrong.
+- **FR-1209**: The tutor MUST be told about the widgets belonging to the **lesson's own unit**
+  and no others. The full catalogue in every prompt is both a cost and a menu; the failure it
+  produces — a circle-construction widget inside a statistics lesson — reads to a student as
+  the tutor losing the thread.
+- **FR-1210**: Numeric readouts MUST use the notation the syllabus is marked in: a lattice
+  slope reads `3/4`, never `0.75`. The live readout under a figure is what the student watches
+  while they drag, and in the wrong notation it quietly teaches something the exam will not
+  accept.
+- **FR-1211**: Widget outcomes are **teaching signals, not assessment**. They inform the
+  tutor's next beat and MUST NOT write to `attempts` or move a BKT mastery estimate: mastery in
+  the comparison environment moves on graded question attempts only, and letting an ungraded
+  widget move it would put an uncontrolled variable inside the measurement the whole
+  environment exists to make. Revisit only with an explicit decision.
+
 ### Key Entities
 
 New or materially changed relative to the baseline; unchanged baseline entities (curriculum graph,

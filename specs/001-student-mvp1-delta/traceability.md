@@ -1,12 +1,12 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-12 (rev. 6) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
+**Status date**: 2026-09-12 (rev. 7) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v2.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
 
 This document answers one question per row: **for this requirement, what code exists, and what
-actually proves it works?** It is the bridge between the spec's 51 functional requirements and the
-73-task breakdown, and it is deliberately harsher than either — a requirement whose code exists but
+actually proves it works?** It is the bridge between the spec's functional requirements and the
+task breakdown, and it is deliberately harsher than either — a requirement whose code exists but
 has never been executed is not "done" here.
 
 ## Status vocabulary
@@ -189,6 +189,35 @@ grounded to say about the question.
 **Coverage today**: 94 book distractors across 49 of 250 book MCQs (was **zero**), and 471
 generated distractors. The gap is named: 201 book MCQs are still undiagnosable (T104).
 
+## 8b. Interactive practice widgets (FR-12xx)
+
+Every row here was exercised in a real Chromium session against the built app — dragged, drawn,
+tapped and graded — not typechecked and assumed. `/dev/math-widgets` is the surface that was
+driven.
+
+| Req | What it demands | Status | Where | What proves it |
+|---|---|---|---|---|
+| FR-1201 | Every module has at least one widget | **VERIFIED** | `lib/widget-docs.ts` | 10 of 10 modules mapped, up from 2. A test asserts the mapping covers every unit **and** that every built widget is documented to at least one of them — the quiet failure is a widget that works and is never offered |
+| FR-1202 | Continuous input, not only taps | **VERIFIED** | 9 new widgets | 6 drag-to-construct, 1 freehand, 2 tap. Dragged in-browser: a line to `y = 2x − 1`, a chord onto (−3,4)–(4,−3), an inscribed angle to 35° |
+| FR-1203 | Touch/mouse/pen; survives leaving the figure; no lost start | **VERIFIED** | `widgets/drag.ts` | Pointer capture + `getScreenCTM().inverse()` + `touch-action:none`. **Two bugs found by driving it and fixed**: moves gated on React state were dropped before the re-render committed (fatal on a touchscreen, where the first events arrive ~1 ms apart), and a missing `preventDefault` let the browser start a native selection and fire `pointercancel` mid-drag. Both confirmed fixed in Chromium — the cancel is gone and handles now reach their target |
+| FR-1204 | Operable without a pointer | **BUILT** | `WidgetShell.Handle`, `useKeyNudge` | Each handle is a `role="slider"` focus stop announcing its value; arrows move by one snap step, Shift by five, Enter commits. Verified in the DOM (`aria-valuetext` reads back after every drag); **not yet driven by keyboard alone or with a screen reader** |
+| FR-1205 | Grade the property, not a stored position | **VERIFIED** | each widget's `check()` | `circle_builder` accepts any of the 66 chords; `line_drawer` in equation mode accepts any two points on the line; `triangle_ratio` accepted 6–8–10 for sin θ = 3/5 and said so: *"Any similar triangle gives the same ratio"* |
+| FR-1206 | A diagnosis, not a score | **VERIFIED** | the `onResult` notes | Fired live: *"that is the MEDIAN… the mean is the total shared out equally"*; *"inverse means the product stays the same: 6 × 10 = 60, but 4 × 7 = 28"*; *"your stroke doubles back… it is not the graph of a function at all"* |
+| FR-1207 | Reject rather than repair; reject the unreachable | **VERIFIED** | `lib/widget-payloads.ts` | 5 unreachable-but-well-typed payloads render nothing, shown as a panel on the fixture: string coordinates, a 37° angle off the 5° snap, a fourth term of 40/3, sin θ = 1, a quadratic with a = 0 |
+| FR-1208 | Validation testable without rendering | **VERIFIED** | `widget-payloads.test.mts` | 18 tests, no React. Covers type confusion, wrong-length arrays, non-finite numbers, enum escapes, reachability, and that a payload is never mutated |
+| FR-1209 | Tell the tutor about its own unit only | **VERIFIED** | `lib/widget-docs.ts`, `lib/lesson.ts` | ≤4 widgets per unit, asserted by test. A further test parses every documented example directive back out and runs it through the validator — a documented example the validator rejects would train the model to emit payloads that silently render nothing |
+| FR-1210 | Syllabus notation in the readouts | **VERIFIED** | `widgets/format.ts` | Caught by looking at the rendered page: `line_drawer` was printing `y = 0.75x + 0.25`. Now `y = 3/4x + 1/4`, with 7 tests covering `1x`, `+ 0`, `+ −3`, negative denominators and the vertical-line case |
+| FR-1211 | Teaching signal, not assessment | **VERIFIED** | dispatch path | Widget results reach the tutor as a `[live event]` note and nothing else; no widget touches `api/attempts` or the BKT update. Deliberate — an ungraded widget moving mastery would put an uncontrolled variable inside the comparison |
+
+**What this does not yet cover.** No widget has been used by a real student, or on a real iPad
+(FR-1204's keyboard path and the touch path are both verified only in a desktop Chromium with
+synthetic pointer events). And the tutor has never *chosen* one: the prompt documentation is in
+place and tested, but no Claude turn has been spent to see which widget a model actually reaches
+for at a real teaching beat. That is T119, and it is the one that decides whether this work
+lands.
+
+---
+
 ## 9. What is unresolved, and who owns it
 
 | # | Item | Owner | Why it matters |
@@ -204,6 +233,8 @@ generated distractors. The gap is named: 201 book MCQs are still undiagnosable (
 | 7d | **Who performs the 10% review** (T107) | **Samuel** | The constitution's suspension is conditioned on a *human* gate. A model reviewing model-generated maths reproduces the failure mode it is meant to catch — and on the standard-deviation item it produced a false rejection |
 | 7c | Question supply is now a **variable**, not a constant | **Samuel** | The baseline exhausts its advanced tier and the comparison build does not. Every reported result has to say so — and the gap is now **993 vs 450**, not 462 vs 450 |
 | 8 | Box-dependent work: T005, T013–T020, T042–T043, T070 | Engineering, once box access exists | Everything is written and dry-run verified; none of it has met the real environment |
+| 9 | **No tutor turn has ever chosen a widget** (T119) | Engineering | Eleven widgets are built, validated and documented per unit. Whether a model reaches for the right one at a real teaching beat is unmeasured, and it is the thing that decides whether any of this reaches a student |
+| 10 | **Widget outcomes do not move mastery** (FR-1211) | **Samuel** | Deliberate, to keep the comparison clean. But it means a student can construct every chord in the unit and the mastery number will not notice. Worth an explicit decision rather than an inherited default |
 
 ---
 
@@ -211,14 +242,19 @@ generated distractors. The gap is named: 201 book MCQs are still undiagnosable (
 
 | | Count |
 |---|---|
-| Functional requirements (incl. FR-10xx, FR-11xx) | **76** |
-| VERIFIED | 39 |
-| BUILT (awaiting the box, the runtime, or a browser session) | 15 |
+| Functional requirements (incl. FR-10xx, FR-11xx, FR-12xx) | **82** |
+| VERIFIED | 49 |
+| BUILT (awaiting the box, the runtime, or a browser session) | 16 |
 | PARTIAL | 5 |
 | OPEN | 6 |
 | BLOCKED | 2 |
 | DEFERRED by explicit decision | 9 |
-| Tasks complete / total | **71 / 112** |
+| Tasks complete / total | **74 / 121** |
+
+Both totals are now **counted from the documents** rather than carried forward — 82 is every
+`**FR-nnn**` definition in spec.md, 121 every task id in tasks.md. The previous revision said 76
+requirements and 112 tasks; the requirement figure was already 5 high before this phase added
+11, which is what a hand-maintained count does over six revisions.
 
 The honest headline: **the teaching core, the environment attribution, the content-parity gate and
 the whole design language are done and were exercised against real data. Nothing has met the box.**
