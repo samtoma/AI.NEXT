@@ -37,7 +37,7 @@ without a checklist row going red.
 | FR-C02 | Review-gate machinery intact; suspension is a **flag**, not a deletion | **VERIFIED** | `db/migrations/009` `explanation_library.reviewed BOOLEAN DEFAULT FALSE`; `load_seed.py` forces `false` | Constraint fired against a real database; `SELECT count(*) … WHERE NOT reviewed` is the reversibility receipt (T043, needs the box to have a number) |
 | FR-C03 | Deterministic server-side grading, transactional mastery | **VERIFIED** | `app/src/app/api/attempts/route.ts` — `FOR UPDATE`, row-closing bitemporal write | 56 unit tests pass; live BKT walk 0.3000 → 0.1458 → 0.4909 → 0.8314 → 0.9612 |
 | FR-C04 | Per-call AI cost/token/latency/student logging, environment-stamped | **BUILT** | `app/src/lib/db.ts` write paths; `ai_interactions.environment` + `surface_kind` (T012) | Schema verified; per-surface rows accumulate only under real traffic |
-| FR-C05 | Operational safety for both environments | **BUILT** | `deploy/DEPLOY-MVP1.md` rails (never `down -v`, never `system prune`), compose project isolation | Cannot be proven without the box (T019) |
+| Operational safety for every solution's stack | Operational safety for both environments | **BUILT** | `deploy/DEPLOY-MVP1.md` rails (never `down -v`, never `system prune`), compose project isolation | Cannot be proven without the box (T019) |
 
 ---
 
@@ -110,16 +110,28 @@ without a checklist row going red.
 
 ## 7. Comparison environment — FR-9xx · **the reason this branch exists**
 
+> **Re-cut 2026-09-13 by [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md).** Each
+> solution is now its own long-lived branch (`family-tutor`, `PDR1-0`); neither is an environment of
+> the other. Requirements that asserted *two stacks live at once on one box* are amended below.
+> Environment tagging and unpooled metrics (Principle XI) are unchanged — what is withdrawn is the
+> requirement that both products run simultaneously before anything can be measured.
+>
+> **Further narrowed the same day by the [ADR-0010 Clarification](../../docs/decisions/0010-one-branch-per-solution.md#clarification--samuel-2026-09-13-same-day-after-the-first-pass).**
+> Samuel: *"I will not rely on the system to compare, the 2 systems can be completely different."*
+> Cross-solution content parity and the frozen-baseline obligation are **withdrawn**; `FR-908` is
+> **dropped**. What survives is data hygiene (attribution, no pooling, no student data crossing) and
+> a per-solution content-drift check. Constitution Principle XI was redefined accordingly — **v3.0.0**.
+
 | FR | Requirement | Status | Implementation | Proof / blocker |
 |---|---|---|---|---|
 | FR-901 | Every event, ledger row and cost record identifies its environment | **VERIFIED** | `lib/env.ts` (config only — never inferred from the request host), `lib/db.ts`, `lib/analytics.ts` | A misconfigured stack fails loudly rather than producing quietly-plausible pooled data |
 | FR-902 | A separate isolated stack — own volumes, own port, own password | **BUILT** | `deploy/docker-compose.mvp1.yml` — project `ainext-mvp1`, `127.0.0.1:3101`, own `pg` and `claude_cfg` volumes | T013–T014 need the box |
-| FR-903 | Both reachable at once; the baseline is never restarted or mutated | **BUILT** | Compose project separation; DEPLOY-MVP1 procedure | T019 verifies uptime unbroken — needs the box |
-| FR-904 | Same bundles both sides; an automated check proves content parity | **VERIFIED** | `services/extraction/parity_check.py` | Proven to catch its target failure: a fresh scoped load gives 450 total but only **421 live** (Unit 1's 29 demoted) — a totals-only check would have called that parity. A `source_documents` bug that returned **zero rows instead of erroring** was found the same way |
+| FR-903 | ~~Both reachable at once~~ → **deploying one solution never touches another** (ADR-0010); the baseline is never restarted or mutated | **BUILT** | Compose project separation; DEPLOY-MVP1 procedure | T019 verifies uptime unbroken — needs the box |
+| ~~Same bundles both sides~~ → **per-solution drift guard only** (ADR-0010 Clarification): a solution MUST NOT silently drift from the set it is supposed to serve. Cross-solution parity is **withdrawn** — solutions may serve entirely different curricula | ~~Same bundles both sides~~ → **the same book constant on every solution branch**, proven per deployment (ADR-0010); an automated check proves content parity | **VERIFIED** | `services/extraction/parity_check.py` | Proven to catch its target failure: a fresh scoped load gives 450 total but only **421 live** (Unit 1's 29 demoted) — a totals-only check would have called that parity. A `source_documents` bug that returned **zero rows instead of erroring** was found the same way |
 | FR-905 | No Arabic or Social Studies content in this environment | **VERIFIED** | `COURSE_SUBJECT="math"`, `node_subject` view scoping | Loader and parity check are both course-scoped |
 | FR-906 | Provisioning removes no volumes on the shared box | **BUILT** | DEPLOY-MVP1 rails | Procedural; verified by following it (T013) |
 | FR-907 | Behind Cloudflare Access, explicitly invited list | **BLOCKED** | Hostname `ainext-mvp1.reletix.com` fixed at **one label** (research.md R6) | T016 — needs the Cloudflare Zero Trust dashboard |
-| FR-908 | The baseline emits the same conversion metric, with **no teaching change** | **OPEN** | — | T059 — a deliberately narrow PR to `main`; T060 requires **zero** prompt diffs |
+| FR-908 | ~~The baseline emits the same conversion metric, with no teaching change~~ | **DROPPED** | — | **Dropped 2026-09-13 (ADR-0010 Clarification).** Required a PR to `main`, which Samuel ruled out (*"don't touch the main now"*), and it existed only to make a controlled comparison valid — an obligation now released. `T059`/`T060` dropped with it. |
 
 ---
 

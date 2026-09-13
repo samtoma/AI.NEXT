@@ -25,11 +25,14 @@ amending it to v2.0.0 (ADR-0007).
 Rebuilding blind would leave us unable to answer the only question that matters: **is the new
 experience actually better at teaching?** So this build holds the one variable that would otherwise
 contaminate the comparison — **the curriculum content** — completely constant, and changes only the
-experience around it. Same book, same year, same 450 questions. Two URLs. One honest comparison.
+experience around it. Same book, same year, same 450 questions. One honest comparison.
+*(2026-09-13, ADR-0010: this originally read "Two URLs" — each solution is now its own long-lived
+branch and they need not run simultaneously.)*
 
 ## Scope Constant — the content that must NOT change
 
-The comparison is only valid if both environments teach identical material. The constant is the
+The comparison is only valid if every solution teaches identical material (ADR-0010: parity is
+asserted per solution against the held constant, not between two live databases). The constant is the
 mathematics book already digested on `main`:
 
 | Property | Value (verified from `services/extraction/seed/*.json`) |
@@ -218,27 +221,41 @@ a successful and a failed payment.
 
 ---
 
-### User Story 7 — Two environments, one book, an honest comparison (Priority: P7)
+### User Story 7 — Two solutions, one book, an honest comparison (Priority: P7)
 
-Samuel (and the founders) can open the existing experience and the new one side by side, on two
-URLs, both teaching the identical mathematics book, and form a judgement about which teaches better.
+> **Re-cut 2026-09-13 by [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md).** This
+> story was "Two environments, one book": both products open at once on two URLs. Each solution is
+> now its own long-lived branch and deploys on its own schedule. **Scenario 3 — simultaneous
+> side-by-side reachability — is withdrawn**, and is tracked as `T138` to re-specify as its own
+> piece of work or formally drop. It is not silently deleted; giving it up is the real cost of
+> ADR-0010.
+
+Samuel (and the founders) can judge the two solutions against each other on the strength of the
+identical mathematics book each one teaches, with content parity proven on each and metrics never
+pooled between them.
 
 **Why this priority**: this is the reason the whole feature is scoped this way. Without it the
 rebuild is just a rewrite; with it, it is an experiment. It is P7 only because it is verifiable the
 moment Story 2 is real.
 
-**Independent Test**: load both URLs; run the same lesson on each; confirm both serve the same
-content set and that a parity check passes.
+**Independent Test**: run the same lesson on a solution; confirm it serves the agreed content set
+and that a parity check passes against the held constant; confirm no other solution was touched.
 
 **Acceptance Scenarios**:
 
-1. **Given** both environments running, **When** the parity check runs, **Then** it confirms
-   identical source document, module, learning-objective, prerequisite-edge, question and visual
-   counts, and fails loudly on any drift.
-2. **Given** the new environment, **When** it is deployed or refreshed, **Then** the existing
-   environment's database, content and one-time AI runtime login are provably untouched.
-3. **Given** a comparison session, **When** an observer moves between the two URLs, **Then** both
-   are reachable at the same time behind the same access control, neither replacing the other.
+1. **Given** a deployed solution, **When** the parity check runs, **Then** it confirms the expected
+   source document, module, learning-objective, prerequisite-edge, question and visual counts, and
+   fails loudly on any drift.
+2. **Given** a solution being deployed or refreshed, **When** the procedure runs, **Then** every
+   other solution's database, content and one-time AI runtime login are provably untouched.
+3. ~~**Given** a comparison session, **When** an observer moves between the two URLs, **Then** both
+   are reachable at the same time behind the same access control, neither replacing the other.~~
+   **WITHDRAWN by ADR-0010** — see `T138`.
+   *(2026-09-13 Clarification: the comparison is now observational, made from live usage. Scenarios
+   1 and 2 below are per-solution obligations, not comparison instruments; there is no longer any
+   acceptance scenario asserting a relationship between the two solutions.)*
+4. **Given** reported results from either solution, **When** any metric is produced, **Then** it
+   names the environment that produced it and is never pooled across solutions.
 
 ---
 
@@ -284,6 +301,16 @@ with its properties, tagged with which environment produced it.
   and explained to the student.
 
 ## Requirements *(mandatory)*
+
+> **Terminology, after [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md) (2026-09-13).**
+> "The comparison environment" throughout this document means **the non-production deployment of the
+> `PDR1-0` solution** — the place where unreviewed generated content is permitted, behind Cloudflare
+> Access, with an invited audience. It does *not* mean "a second environment of one product": each
+> solution is now its own long-lived branch (`family-tutor`, `PDR1-0`) and neither is an environment
+> of the other. Every requirement below that scopes a permission to "the comparison environment"
+> still holds, read that way. What is withdrawn is only the requirement that two products run
+> simultaneously on one box — see User Story 7 scenario 3 and `T138`.
+
 
 Numbering marks provenance: **FR-1xx** accounts, **FR-2xx** learning core, **FR-3xx** student model,
 **FR-4xx** progress, **FR-5xx** parent, **FR-6xx** safety, **FR-7xx** billing, **FR-8xx** analytics,
@@ -433,11 +460,17 @@ document: a requirement whose code exists but has never been executed does not c
 - **FR-902**: The new environment MUST run as a separate isolated stack alongside the existing one:
   its own database volume, its own internal port, its own public hostname, behind the same access
   control.
-- **FR-903**: Both environments MUST be reachable simultaneously; standing up or refreshing the new
-  one MUST NOT interrupt, modify or redeploy the existing one.
-- **FR-904** *(amended 2026-09-10, ADR-0008)*: Both environments MUST be loadable from the same
-  content bundles, and an automated check MUST prove the **book** content is identical on both
-  sides — 10 modules, 90 objectives, 112 prerequisite edges, 450 questions, 212 visuals —
+- **FR-903** *(amended 2026-09-13, ADR-0010)*: ~~Both environments MUST be reachable
+  simultaneously~~ — **withdrawn**; simultaneous reachability is no longer required (see `T138`).
+  What remains binding: standing up or refreshing one solution MUST NOT interrupt, modify or
+  redeploy any other.
+- **FR-904** *(amended 2026-09-10 ADR-0008; re-cut twice 2026-09-13 by ADR-0010 and its
+  Clarification)*: ~~Every solution MUST be loadable from the same content bundles~~ —
+  **cross-solution parity is withdrawn**; solutions may serve entirely different curricula. What
+  remains binding is a **per-solution drift guard**: a solution MUST NOT silently drift from the
+  content set it is supposed to serve, and an automated check MUST fail loudly when it does. For
+  `PDR1-0` that set is still the Prep-3 book — 10 modules, 90 objectives, 112 prerequisite edges,
+  450 questions, 212 visuals —
   comparing live counts separately from totals. The check MUST treat generated questions
   (`source='variant'`) as an environment-scoped extension: counted and disclosed, never
   compared, and a hard failure if found in the baseline (FR-1102, FR-1103).
@@ -449,9 +482,10 @@ document: a requirement whose code exists but has never been executed does not c
 - **FR-907**: The new environment MUST sit behind Cloudflare Access with an explicitly invited
   audience (decisions.md Q9). This containment is what makes FR-C02's review-gate suspension
   acceptable; unreviewed content MUST never be reachable by an uninvited person.
-- **FR-908**: The baseline environment MUST be instrumented to emit the same conversion metric
-  (SC-005), and that change MUST be provably behaviour-neutral — metric-only, no teaching change —
-  or the baseline stops being a baseline (constitution v2.0.0 Principle XI).
+- **FR-908** — ~~The baseline environment MUST be instrumented to emit the same conversion metric
+  (SC-005), provably behaviour-neutral~~ — **DROPPED 2026-09-13 (ADR-0010 Clarification).** It
+  required a PR to `main`, which Samuel has ruled out, and it existed to make a controlled
+  comparison valid — an obligation now released. `T059`/`T060` are dropped with it.
 
 ### Design system & visual language **[ADDED 2026-09-10]**
 
@@ -667,9 +701,10 @@ question, visual, attempt) carry over as-is.
 
 ### The comparison itself
 
-- **SC-001**: Both environments serve provably identical curriculum content — same source document
-  and same counts of modules, learning objectives, prerequisite edges, questions and visuals — with
-  the check automated and re-runnable on demand.
+- **SC-001** *(re-cut twice 2026-09-13, ADR-0010 and its Clarification)*: ~~Every solution serves
+  provably identical curriculum content~~ — **withdrawn as a cross-solution criterion.** Restated:
+  each solution provably serves the content set it is supposed to serve — same source document and
+  same expected counts — with the check automated and re-runnable on demand.
 - **SC-002**: A reviewer can move between the two experiences on the same lesson within one sitting,
   with no data, session or content bleed between them.
 - **SC-003**: Every metric below can be reported per environment, never pooled.

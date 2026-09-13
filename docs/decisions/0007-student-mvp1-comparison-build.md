@@ -6,6 +6,11 @@
   `specs/001-student-mvp1-delta/decisions.md`
 - **Supersedes on product scope:** `PRD-ai-tutor-mvp.md` v1.0 (the parent-sold Arabic MVP)
 - **Amends:** constitution v1.0.0 → **v2.0.0**
+- **⚠️ Amended 2026-09-13 by [ADR-0010](./0010-one-branch-per-solution.md):** its *delivery model* —
+  two stacks co-tenant on one box, two hostnames, parity between two live databases, and the
+  simultaneous side-by-side demo — is **withdrawn**. Each solution is now its own long-lived branch
+  (`family-tutor`, `PDR1-0`). **All product-scope decisions in this ADR still stand.** Read this
+  document for what to build; read ADR-0010 for how it ships.
 
 ## Context
 

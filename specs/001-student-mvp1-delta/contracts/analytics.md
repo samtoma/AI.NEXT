@@ -1,7 +1,7 @@
 # Contract: Analytics Events (PRD §13)
 
 **Module**: `app/src/lib/analytics.ts` · **Table**: `analytics_events`
-**Emitted by**: both environments (FR-901, FR-908)
+**Emitted by**: every solution (FR-901, FR-908) — per ADR-0010 each is its own branch; events stay environment-tagged and are never pooled
 
 Every row carries `environment` (`baseline` | `mvp1`), stamped server-side from configuration.
 **Metrics are never reported pooled across environments** (Principle XI).

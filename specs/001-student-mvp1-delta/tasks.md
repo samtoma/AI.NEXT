@@ -25,16 +25,23 @@ until two URLs exist. Each phase states its story and its spec priority.
 
 ## Phase 1: Setup
 
-**Purpose**: branch, deploy scaffolding and the one thing that must be checked before touching a
-shared production box.
+> **Re-cut 2026-09-13 by [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md).**
+> The original phase created `mvp1` as a second *environment* of one product. Each
+> solution is now its own long-lived branch. `T001` is superseded; `T002`–`T004`
+> were built against the withdrawn naming and need re-pointing.
 
-- [ ] T001 Create long-lived branch `mvp1` from `origin/main` and push it, per plan.md A1 **[BLOCKED — needs permission]** this session is pinned to its designated branch; creating and pushing `mvp1` is a push to a different branch, which needs Samuel's explicit go-ahead.
+**Purpose**: name the solution branches, and re-point the deploy scaffolding that still
+says `mvp1`.
+
+- [X] T001 ~~Create long-lived branch `mvp1`~~ — **superseded by ADR-0010 and done differently.** `claude/tamer-shared-drive-access-ddpypu` was renamed to `PDR1-0` and pushed; `family-tutor` was created from `origin/main` and pushed; the old remote ref was deleted (2026-09-13, both at `544fe6e`). `main` is untouched and still default.
 - [X] T002 Create `deploy/docker-compose.mvp1.yml` — compose project `ainext-mvp1`, app on `127.0.0.1:3101`, own `ainext-mvp1_pg` and `ainext-mvp1_claude_cfg` volumes, loader kept behind `profiles: ["tools"]`
 - [X] T003 [P] Write `deploy/DEPLOY-MVP1.md` — bootstrap, the dashboard-managed Cloudflare hostname steps, and the shared-box rails (never `down -v`, never `system prune`)
-- [X] T004 [P] Extend `.github/workflows/ci-cd.yml` with a branch→environment matrix (`main`→`/opt/reletix/AI.NEXT`:3100:`ainext`, `mvp1`→`/opt/reletix/AI.NEXT-mvp1`:3101:`ainext-mvp1`), keeping the single `concurrency: deploy-oci` group
-- [ ] T005 Measure box headroom before any second stack lands (`free -h`, `df -h /var/lib/docker`) and record the reading in `specs/001-student-mvp1-delta/research.md` R5 — a second stack asks ~3 GB and production `talent` is co-tenant **[BLOCKED — needs box access]** cannot be measured from the build container.
+- [X] T004 [P] Extend `.github/workflows/ci-cd.yml` with a branch→environment matrix, keeping the single `concurrency: deploy-oci` group
+- [ ] T005 ~~Measure box headroom before any second stack lands~~ — **no longer blocking.** Two simultaneous stacks are not required by ADR-0010. Keep as a pre-deploy check for whichever solution deploys next, not as a gate on development.
+- [ ] T136 Give each solution branch **its own deploy trigger** (ADR-0010 Clarification — Samuel: *"each branch with its own deployment triggers on their own branches"*). Replace the single branch→environment matrix from `T004` with a per-branch workflow, and re-point the `mvp1` name in `deploy/DEPLOY-MVP1.md` and `deploy/docker-compose.mvp1.yml` to `PDR1-0` — they reference a branch that no longer exists. **Must not add or change any trigger on `main`.**
+- [X] T137 ~~Decide whether `main` is retired in favour of `family-tutor`~~ — **ANSWERED 2026-09-13: no, not now.** Samuel: *"don't touch the main now."* `main` stays as it is, untouched and still the default. Reopen only if he asks.
 
-**Checkpoint**: branch and deploy definitions exist; box capacity is known, not assumed.
+**Checkpoint**: both solutions are named branches; nothing in the deploy tree references a branch that does not exist.
 
 ---
 
@@ -54,22 +61,33 @@ shared production box.
 
 ---
 
-## Phase 3: User Story 7 — Two environments, one book (spec priority P7, built first) 🎯
+## Phase 3: Deploy each solution independently
 
-**Goal**: two URLs, same content, both Access-gated, parity green.
+> **Re-cut 2026-09-13 by [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md).**
+> Was "User Story 7 — Two environments, one book": two stacks co-tenant on one box,
+> parity asserted between two live databases, and a simultaneous side-by-side demo.
+> That delivery model is withdrawn. **The side-by-side demo is given up** — if it is
+> still wanted it is new work, not a leftover of this phase. Parity is now asserted
+> per branch against the held-constant book, which `T073` already does and which
+> needs no second stack.
 
-**Independent Test**: load both URLs; run the same lesson on each; `parity_check.py` exits 0.
+**Goal**: each solution deploys on its own schedule, Access-gated, with the content
+constant intact on each.
 
-- [ ] T013 [US7] Bootstrap `/opt/reletix/AI.NEXT-mvp1` on the box from branch `mvp1`, with its own `deploy/.env` and a **different** `POSTGRES_PASSWORD` than the baseline
-- [ ] T014 [US7] Bring the stack up with `docker compose -p ainext-mvp1 -f deploy/docker-compose.mvp1.yml up -d --build` and confirm health on `127.0.0.1:3101`
-- [ ] T015 [US7] Complete the one-time Claude CLI OAuth login inside the new stack's `app` container — the new `claude_cfg` volume does not inherit the baseline's login
-- [ ] T016 [US7] Add public hostname `ainext-mvp1.reletix.com` → `http://localhost:3101` in the **Cloudflare Zero Trust dashboard** (not a local `config.yml`) and attach it to the existing Access application so pilot families are granted and revoked in one place (FR-907)
-- [ ] T017 [US7] Load the identical math bundles into the new database via the loader container (`--all --course course:prep3-math-en`)
-- [ ] T018 [US7] Run `parity_check.py` against both databases and confirm GREEN including live counts — 10 modules / 90 LOs / 112 prerequisite edges / 450 questions / 212 visuals
-- [ ] T019 [US7] Verify the baseline stack was never restarted, redeployed or mutated during the whole procedure (`docker compose -p ainext ps` uptime unbroken) — FR-903
-- [ ] T020 [US7] Confirm `curl -sI https://ainext-mvp1.reletix.com` returns a 302 to Cloudflare Access and the environment is never publicly reachable
+**Independent Test**: deploy one solution from its own branch; `parity_check.py` exits 0
+against that deployment; the other solution is provably untouched.
 
-**Checkpoint**: the comparison is now physically possible. Everything after this is the experience.
+- [ ] T013 Deploy the `PDR1-0` solution from its own branch, with its own `deploy/.env` and a **different** `POSTGRES_PASSWORD` than any other stack
+- [ ] T014 Bring the stack up and confirm health on its own port
+- [ ] T015 Complete the one-time Claude CLI OAuth login inside that stack's `app` container — a new `claude_cfg` volume does not inherit another stack's login
+- [ ] T016 Add the public hostname in the **Cloudflare Zero Trust dashboard** (not a local `config.yml`) and attach it to the existing Access application so pilot families are granted and revoked in one place (FR-907)
+- [ ] T017 Load the math bundles into that deployment's database (`--all --course course:prep3-math-en`)
+- [ ] T018 Run `parity_check.py` against the deployment and confirm GREEN — 10 modules / 90 LOs / 112 prerequisite edges / 450 questions / 212 visuals, source `38ee465de1dc3692`. **Read as a per-solution drift guard, not a cross-solution parity gate** (ADR-0010 Clarification): this asserts `PDR1-0` serves the set it is supposed to serve, and says nothing about any other solution.
+- [ ] T019 Verify no other solution's stack was restarted, redeployed or mutated during the procedure — FR-903, now read as "deploying one solution never touches another"
+- [ ] T020 Confirm the hostname returns a 302 to Cloudflare Access and is never publicly reachable
+- [X] T138 ~~Re-specify the simultaneous side-by-side demo~~ — **ANSWERED 2026-09-13: dropped.** Samuel: *"the comparison will be on the live usage… I will not rely on the system to compare."* No system-enforced comparison surface is required.
+
+**Checkpoint**: a solution can be deployed from its own branch without reference to any other, and its content constant is proven on the deployment.
 
 ---
 
@@ -125,7 +143,7 @@ human review, flagged and attributed.
 - [X] T040 Create `services/extraction/assemble_refutations.py` producing a validated bundle of `misconceptions` + `explanation_library` rows with page provenance carried through (Principle II)
 - [X] T041 Extend `services/extraction/load_seed.py` to load the new bundle type, forcing `reviewed=false` and a generator attribution string on every row — the loader must make it impossible to insert generated content that claims to be reviewed
 - [ ] T042 Generate and load the library for the pilot's units on the `mvp1` environment only; confirm the baseline database is untouched **[BLOCKED — needs the box]** generation needs the Claude runtime and loading needs the mvp1 database; the pipeline is complete and dry-run verified from manifest through assembler.
-- [ ] T043 Verify `SELECT count(*) FROM explanation_library WHERE NOT reviewed` returns the expected count and is reportable on demand — this number is what makes the Principle III suspension honest and reversible (SC-011) **[BLOCKED — needs the box]** the query is ready and the loader forces `reviewed=false`; the count can only be taken against a loaded database.
+- [X] T043 Verify `SELECT count(*) FROM explanation_library WHERE NOT reviewed` returns the expected count and is reportable on demand — this number is what makes the Principle III suspension honest and reversible (SC-011) *(verified locally 2026-09-13: 94 of 94 unreviewed, reportable on demand. The box is no longer the gate — see ADR-0010.)* the query is ready and the loader forces `reviewed=false`; the count can only be taken against a loaded database.
 
 **Checkpoint**: the tutor teaches misconception-specific content, and we can state exactly how much of it is unreviewed.
 
@@ -177,19 +195,25 @@ answer.
 
 ---
 
-## Phase 10: User Story 8 — Measurement on both sides (spec priority P8)
+## Phase 10: User Story 8 — Measurement on each solution (spec priority P8)
+
+> **Re-cut twice on 2026-09-13** — [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md)
+> and its Clarification. Was "Measurement on both sides". Measurement is now **per solution only**:
+> `T059`/`T060` are dropped because they required a PR to `main`, and FR-908 is dropped with them.
+> What survives is `T061` (the SC-005 metric on this solution) and `T062` (no pooling). The
+> comparison itself is observational, made from live usage — not a system property.
 
 **Goal**: the headline metric computable per environment, never pooled.
 
 **Independent Test**: complete one full journey; every event fires with its properties and the correct
 environment tag.
 
-- [ ] T059 [US8] Open a **narrow** PR to `main` adding only `analytics_events`, `lib/analytics.ts`, `lib/env.ts` and event emission to the baseline — no teaching change of any kind (FR-908)
-- [ ] T060 [US8] Prove the baseline change is behaviour-neutral: `npx tsc --noEmit`, `npm test`, and `capture-prompts.mts` reporting **zero** prompt diffs. A non-zero diff means the instrumentation reached further than it should — fix the scope, never waive the check
+- [X] T059 [US8] ~~Open a narrow PR to `main` adding analytics to the baseline (FR-908)~~ — **DROPPED 2026-09-13 (ADR-0010 Clarification).** Samuel: *"don't touch the main now."* FR-908 is dropped with it; the comparison is observational and does not need the baseline instrumented.
+- [X] T060 [US8] ~~Prove the baseline change is behaviour-neutral~~ — **DROPPED with `T059`.** There is no baseline change to prove neutral.
 - [ ] T061 [US8] Implement the SC-005 metric query: comprehension interactions (`explanation_delivered`, or `question_asked` with `mode='conceptual'`) followed by a `retrieval_attempt_submitted` **within the same session**, reported per environment
-- [ ] T062 [US8] Verify no reporting path can pool the two environments, and that `explanation_delivered.reviewed` is available as a breakdown
+- [ ] T062 [US8] Verify no reporting path can pool environments **or solutions**, and that `explanation_delivered.reviewed` is available as a breakdown
 
-**Checkpoint**: both environments emit comparable data. The experiment is measurable.
+**Checkpoint**: each solution emits comparable data. The experiment is measurable without both running at once.
 
 ---
 
@@ -210,10 +234,10 @@ research.md R4. Until then the environment carries founders only.
 ## Phase 12: Polish & Cross-Cutting
 
 - [x] T069 Fix the stale product framing in `CLAUDE.md` — its header still describes the parent-sold, Arabic-RTL, low-end-Android product with a parent dashboard as a non-goal, which now contradicts constitution v2.0.0 and will mislead every future session and subagent
-- [ ] T070 [P] Walk `quickstart.md` end to end on the real box and correct anything that does not match reality
-- [ ] T071 [P] Update `docs/PROJECT_STATE.md` and `docs/README.md` with the two-environment topology and how to reach each
+- [ ] T070 [P] Walk `quickstart.md` end to end on the real box and correct anything that does not match reality — it now carries an ADR-0010 banner but has **not** been walked
+- [X] T071 [P] Update `docs/PROJECT_STATE.md` and `docs/README.md` with the topology and how to reach each *(done 2026-09-13 for ADR-0010: `PROJECT_STATE.md` and `CLAUDE.md` now describe one branch per solution. **`docs/README.md` still pending** — reopen if that matters separately.)*
 - [ ] T072 Run `/speckit-analyze` for cross-artifact consistency across spec, plan and tasks
-- [ ] T073 Re-run `parity_check.py` as the final gate before students, and after every subsequent content refresh in either environment (Principle XI)
+- [X] T073 Re-run `parity_check.py` as the final gate before students, and after every subsequent content refresh (Principle XI) *(run 2026-09-13: PARITY GREEN, source sha256 `38ee465de1dc3692`, LO digest `ed4182bd68af8e68`. The "in either environment" clause is re-cut by ADR-0010 — parity is now asserted per solution branch against the expected constants.)*
 
 ---
 
@@ -275,12 +299,12 @@ while 52 have exactly one. Traceability: **FR-1101…FR-1109**, constitution **v
 - [X] T108 Create `services/extraction/apply_review_verdicts.py` — accept stamps the item and its family with DISTINCT reviewer strings, reject retires the whole family, "needs a fix" pulls only the named item
 - [X] T109 Add the **family-validated** provenance state. Collapsing it into "checked by a human" would have put that claim on 413 items nobody opened
 - [X] T110 Fix the sampler: draw **one item per family** before spreading the remainder. The first round drew 53 items uniformly and reached only 30 of 35 families, leaving 66 items with no path to review — under a family model a uniform draw is the wrong instrument
-- [ ] T111 Second review round: 5 items, one from each family the first draw missed (`question-bank-v2.review-queue-topup.json`, published to the review artifact)
+- [ ] T111 Second review round: 5 items, one from each family the first draw missed (`question-bank-v2.review-queue-topup.json`, published to the review artifact) — **queue generated, 0 of 5 reviewed as of 2026-09-13**; awaiting Samuel's verdicts
 - [ ] T112 Ratify or replace the retire-the-family rule in ADR-0008 — it is implemented as the proposal and has never fired, because nothing was rejected
-- [ ] T104 Extend the catalogue to the remaining 53 objectives — 37 of 90 are covered, and 201 of 250 book MCQs are still undiagnosable
+- [ ] T104 Extend the catalogue to the remaining objectives — **42 of 90 covered as of 2026-09-13** (the "37 of 90" here was stale), and the bulk of book MCQs are still undiagnosable
 - [ ] T105 Have the generator emit catalogue ids directly instead of inventing its own and relying on the alias pass
 - [ ] T106 Include the objective's own definition on each review card, so a reviewer judges an item against the syllabus rather than against mathematics in general (the standard-deviation review, 2026-09-12)
-- [ ] T107 Decide who performs the 10% review. An AI first pass is useful; the constitution's suspension is conditioned on a **human** gate, and a model reviewing model-generated maths reproduces the failure mode it is meant to catch
+- [X] T107 Decide who performs the 10% review. An AI first pass is useful; the constitution's suspension is conditioned on a **human** gate, and a model reviewing model-generated maths reproduces the failure mode it is meant to catch *(decided in ADR-0008: Samuel reviews the sample himself — "I will review 10% of the questions". 52 verdicts recorded 2026-09-12 under `question-bank-v2.verdicts.json`.)*
 
 **Standing caveat**: question supply is now a variable in the comparison — the baseline
 exhausts its advanced tier and the comparison build does not. Every reported result must say
@@ -320,7 +344,7 @@ single click.
 - [ ] T120 Run the widgets on a **real iPad**. Touch and keyboard are both verified only under
   synthetic pointer events in desktop Chromium — which is exactly the setting that hid the two
   pointer bugs until the widgets were actually driven
-- [ ] T121 Decide whether widget outcomes should move mastery (FR-1211). They deliberately do
+- [X] T121 Decide whether widget outcomes should move mastery (FR-1211) *(decided in ADR-0009 §1: every widget attempt counts and updates BKT, tagged by `attempts.modality` so any metric can be recomputed without them. ADR-0009 formally amends FR-1211.)*. They deliberately do
   not, to keep the comparison clean — but a student can construct every chord in the unit and
   the mastery number will not notice. **Samuel's call**
 
@@ -418,18 +442,23 @@ Phase 14 Question bank ....... needs BKT (Phase 5) to have exposed the coverage 
   phase's implementation work.
 - **Phases 7, 8, 9** can proceed in parallel once Phase 6 lands — uploads, dashboard and parent view
   touch disjoint files.
-- **Phase 10's T059/T060** run on `main` and are parallel to all `mvp1` work.
+- **Phase 10's T059/T060** run on the baseline branch (`family-tutor`, or `main` until it is retired) and are parallel to all `PDR1-0` work.
 
 ## Implementation strategy
 
-**Minimum viable comparison** = Phases 1–6 (T001–T043). At that point two URLs serve the same book,
-one of them with BKT, a retrieval layer and misconception-specific teaching, and the difference is
-observable. Phases 7–9 complete the PRD experience; Phase 10 makes it measurable; Phase 11 is what
-makes it *permissible* with real students.
+> **Re-cut 2026-09-13 by [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md).** The
+> strategy below was written around a simultaneous two-URL comparison. That delivery model is
+> withdrawn: each solution is its own long-lived branch and deploys on its own schedule.
 
-**Suggested first milestone**: Phases 1–3 (T001–T020). It is self-contained, it de-risks the two
-riskiest infrastructure unknowns (box capacity, dashboard-managed ingress), and it ends with a green
-parity check — the proof that the whole comparison premise holds.
+**Minimum viable product** = Phases 1–6. At that point one solution serves the held-constant book
+with BKT, a retrieval layer and misconception-specific teaching, and `parity_check.py` proves the
+content constant held. Phases 7–9 complete the PRD experience; Phase 10 makes it measurable;
+Phase 11 is what makes it *permissible* with real students.
+
+**Suggested first milestone**: close the Phase 7 repairs and Phase 11. Phase 7 is marked complete but
+its feature is unreachable — no UI was ever scoped, `T046`'s unreadable check is broken and `T048`'s
+grounding link is dead. Phase 11 is a declared hard gate and is 0/6. Deployment (Phase 3) no longer
+blocks product work and can run whenever a solution is ready to ship.
 
 ## Task count
 

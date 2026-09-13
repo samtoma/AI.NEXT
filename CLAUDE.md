@@ -3,15 +3,19 @@
 ## What this project is
 AI.Next is a 3-founder edtech startup (founders: Samuel = CTO + solution architect, plus Sales and Product founders). This repo is the workspace for an AI tutor for Egyptian secondary students, built on a curriculum graph extracted from ministry textbooks.
 
-**As of 2026-09-08 the repo runs a two-environment comparison (ADR-0007).** Read `specs/001-student-mvp1-delta/decisions.md` before making product assumptions — this is the single most common source of stale context in this repo.
+**As of 2026-09-13 the repo holds two solutions, one long-lived branch each (ADR-0010).** Neither is an environment of the other. Read `specs/001-student-mvp1-delta/decisions.md` and `docs/decisions/0010-one-branch-per-solution.md` before making product assumptions — this is the single most common source of stale context in this repo.
 
-| | Baseline — **frozen** | Comparison — **active development** |
+| | `family-tutor` — **frozen baseline** | `PDR1-0` — **active development** |
 |---|---|---|
-| Branch / URL | `main` → ainext.reletix.com | `mvp1` → ainext-mvp1.reletix.com |
 | Product | Parent-sold, Arabic RTL, 3 subjects, Elo mastery | Student-facing, English LTR, Math only, BKT mastery |
 | Authority | PRD v1.0 (below) | **PRD: AI Tutor — Student MVP v0.4** (Tamer Deif, Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`) |
+| Deploys to | ainext.reletix.com — **still served from `main` until T137 repoints it** | not yet deployed (Phase 3) |
 
-Both serve the **identical** Prep-3 Mathematics book (10 modules, 90 LOs, 112 prerequisite edges, 450 questions, 212 visuals) — content is the held-constant variable, and `parity_check.py` fails loudly on drift. The baseline receives **no** teaching-behaviour changes while the comparison runs.
+`main` remains the default branch and the one CI currently deploys; `family-tutor` was branched from it and is identical. Retiring `main` is a production change and is deliberately not done — see ADR-0010 Open.
+
+Both solutions serve the **identical** Prep-3 Mathematics book (10 modules, 90 LOs, 112 prerequisite edges, 450 questions, 212 visuals) — content is the held-constant variable, and `parity_check.py` fails loudly on drift, now asserted per branch rather than between two live databases. The baseline receives **no** teaching-behaviour changes.
+
+⚠️ **Work in flight**: `docs/WIP-branch-per-solution.md` is the resume doc for the branch-per-solution refactor. Read it before touching phases 1, 3, 10 or 12.
 
 - Superseded PRD (still the authority for the frozen baseline): `AI.Next - Google Folder 17 Jul 2026/AI Tutor/PRD/PRD-ai-tutor-mvp.md`
 - **Design authority (ADR-0001):** `agentic-data-thesis.html` — the Agent-Native Data Spine thesis. The solution architecture derives from it (Ch. 15 curriculum graphs, Ch. 16 bitemporal, Ch. 19 reference architectures + MVP-cut discipline). Derived architecture: `docs/architecture/spine-derived-architecture.md`.

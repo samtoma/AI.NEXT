@@ -1,5 +1,12 @@
 # Implementation Plan: Student MVP 1.0 — Comparison Build
 
+> **⚠️ Re-cut 2026-09-13 by [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md).**
+> Each solution is now its own long-lived branch — `family-tutor` (frozen baseline) and `PDR1-0`
+> (active) — and neither is an environment of the other. Where this document says branch `mvp1`,
+> read `PDR1-0`. The compose project, port and volume separation below is still correct; what is
+> withdrawn is the requirement that two products run **simultaneously** on one box, and with it the
+> side-by-side demo (tracked as `T138`). Deployment no longer blocks product work.
+
 **Feature**: `001-student-mvp1-delta` | **Date**: 2026-09-08 | **Spec**: [spec.md](./spec.md)
 **Decisions**: [decisions.md](./decisions.md) · **ADR**: [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
 **Constitution**: v2.0.0
@@ -189,8 +196,8 @@ deploy/
   ci-cd.yml                      # CHANGED: branch → environment matrix
 ```
 
-**Structure Decision**: no new project or workspace. The comparison environment is the *same*
-codebase on a different branch with a different compose project — which is what makes content parity
+**Structure Decision**: no new project or workspace. Each solution is the *same*
+codebase on its own long-lived branch with its own compose project (ADR-0010) — which is what makes content parity
 and code reuse cheap, and what lets a winning change be merged back rather than ported.
 
 ## Phasing
@@ -199,10 +206,10 @@ Ordered so the comparison becomes possible as early as possible.
 
 | Phase | Delivers | Why here |
 |---|---|---|
-| **P0** Environment | Second stack live, empty, Access-gated, parity check green against a content load | Nothing can be compared until two URLs exist |
+| **P0** Environment | A solution's stack live, Access-gated, parity check green against a content load | ~~Nothing can be compared until two URLs exist~~ — **no longer a gate** (ADR-0010): deployment is per solution and does not block product work |
 | **P1** Teaching core | BKT + retrieval seam + English shell | The hypothesis under test |
 | **P2** Content | Refutation library generated and loaded | Makes P1's misconception path real |
-| **P3** Measurement | Analytics both sides; baseline instrumentation PR to `main` | Comparison starts producing data |
+| **P3** Measurement | Analytics on each solution; baseline instrumentation PR to the baseline branch | Comparison starts producing data |
 | **P4** Experience | Uploads + OCR, dashboard, parent view | PRD experience completed |
 | **P5** Safety | Crisis detection + escalation channel | **Gate: must land before real students** |
 

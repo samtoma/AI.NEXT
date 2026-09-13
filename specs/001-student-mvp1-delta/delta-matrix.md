@@ -156,9 +156,9 @@ explanation/refutation library — is the one that genuinely needs a subject-mat
 | Baseline | New PRD | Disposition |
 |---|---|---|
 | `FR-060` PR → main → self-hosted runner → build on box → health check | Unchanged | **KEEP** |
-| `FR-061` content refresh with typed confirmation, backup, rollback, drift detection | Unchanged, now needed for two stacks | **EXTEND** |
+| `FR-061` content refresh with typed confirmation, backup, rollback, drift detection | Unchanged, now needed per solution stack | **EXTEND** |
 | `FR-062` `--approve-all` refuses sacred bundles; review-status gate | Reinforced by PRD §3.1(4) | **KEEP** |
-| Single stack, port 3100, one hostname | Two stacks side by side, own volumes/ports/hostnames | **EXTEND** |
+| Single stack, port 3100, one hostname | One stack per solution, own volumes/ports/hostnames, deployed independently (ADR-0010 — ~~side by side~~) | **EXTEND** |
 
 ---
 

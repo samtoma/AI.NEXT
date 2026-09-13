@@ -1,5 +1,12 @@
 # Phase 0 Research — Student MVP 1.0 Comparison Build
 
+> **⚠️ Re-cut 2026-09-13 by [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md).**
+> Each solution is now its own long-lived branch — `family-tutor` (frozen baseline) and `PDR1-0`
+> (active) — and neither is an environment of the other. Where this document says branch `mvp1`,
+> read `PDR1-0`. The compose project, port and volume separation below is still correct; what is
+> withdrawn is the requirement that two products run **simultaneously** on one box, and with it the
+> side-by-side demo (tracked as `T138`). Deployment no longer blocks product work.
+
 **Feature**: `001-student-mvp1-delta` | **Date**: 2026-09-08
 **Purpose**: resolve the technical unknowns in `plan.md` before design. Each item states a decision,
 why, and what else was weighed. Per Constitution Principle I these are **proposals** — Samuel decides.
@@ -113,7 +120,7 @@ the real work).
 
 ---
 
-## R5. Box capacity for two stacks
+## R5. Box capacity for two stacks *(no longer a gate — ADR-0010)*
 
 **Decision**: before P0 completes, measure the box's free memory and disk and re-check the compose
 limits, rather than assuming the second stack fits.
@@ -164,7 +171,7 @@ chosen inside that shape — `ainext-mvp1` — remains Samuel's to change.
 
 ---
 
-## R7. Deploying two environments from one workflow
+## R7. Deploying each solution from one workflow *(was: two environments — ADR-0010)*
 
 **Decision**: extend `ci-cd.yml` with a branch→environment mapping rather than duplicating the
 workflow: `main` → `/opt/reletix/AI.NEXT` (project `ainext`, port 3100);

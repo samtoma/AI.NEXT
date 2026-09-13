@@ -1,6 +1,21 @@
 <!--
 Sync Impact Report
-- Version change: 2.0.0 → 2.1.0 (MINOR — Principle III's standing exception
+- Version change: 2.2.0 → 3.0.0 (MAJOR — Principle XI "Comparison Integrity"
+  REDEFINED and materially narrowed. Cross-solution content parity and the
+  frozen-baseline obligation are withdrawn as engineering constraints; what
+  remains is data hygiene (attribution, no pooling, no student-data crossing)
+  and a per-solution content-drift check. Samuel, 2026-09-13: "I will not rely
+  on the system to compare, the 2 systems can be completely different" — the
+  comparison is observational, on live usage. ADR-0010 Clarification.)
+- Previous: 2.1.0 → 2.2.0 (MINOR — Principle XI restated for one branch
+  per solution, ADR-0010; the constraint is unchanged in substance, but it no
+  longer presumes two environments live simultaneously on one box. Principle
+  III's containment boundary renamed from "the comparison environment" to the
+  non-production solution deployment. No principle removed or weakened.)
+- Amended by: Samuel (CTO, solution architect), 2026-09-13 — "no more 2 env.
+  into the same branch, I want to keep one branch per solution, just both of
+  them will be kept, and long live" (ADR-0010).
+- Previous: 2.0.0 → 2.1.0 (MINOR — Principle III's standing exception
   widened to generated questions, with a sampling obligation attached; no
   principle redefined or removed)
 - Previous: 1.0.0 → 2.0.0 (MAJOR — four principles redefined, one added)
@@ -76,7 +91,8 @@ enforced by default.
 comparison environment only, pipeline-generated explanation and refutation
 content ships without human review, because no reviewer exists at this stage.
 This exception is bounded and MUST remain so:
-- it applies ONLY to the comparison environment, never to `ainext.reletix.com`;
+- it applies ONLY to a non-production solution deployment, never to the
+  production baseline at `ainext.reletix.com`;
 - that environment stays behind Cloudflare Access with an explicitly invited
   audience, so unreviewed content never reaches an uninvited person;
 - every generated entry MUST be stored attributed and flagged unreviewed, so
@@ -186,26 +202,36 @@ Database content mutations happen only through the manual `refresh-content`
 workflow with typed confirmation phrases; every mutating run takes a pg_dump
 backup first and prints its one-line rollback. On the box: never
 `docker compose down -v` (it destroys the volume holding the one-time Claude
-login). A normal code deploy can never touch data. With two environments
-co-tenant on one box, every operation MUST name its target environment
+login). A normal code deploy can never touch data. Whenever more than one
+stack shares a box, every operation MUST name its target environment
 explicitly, and an operation against one MUST NOT restart, redeploy or mutate
-the other.
+the other. Deploying one solution never touches another (ADR-0010).
 
-### XI. Comparison Integrity
-While a comparison is running, its validity is a first-class engineering
-constraint:
-- **Content parity.** Both environments serve the identical curriculum set —
-  same source document, same counts of modules, learning objectives,
-  prerequisite edges, questions and visuals — verified by an automated check
-  that fails loudly on drift.
+### XI. Solution Integrity
+*(Redefined 2026-09-13 by the ADR-0010 Clarification — v2.2.0 → v3.0.0. This
+principle was "Comparison Integrity" and made the validity of a controlled
+comparison a first-class engineering constraint. Samuel has released that:
+each solution deploys from its own branch on its own trigger, the two may
+diverge completely, and the comparison is an observational judgement made from
+live usage rather than a property the system enforces. What follows is what
+survives — none of it is about comparing.)*
+
+- **Content integrity, per solution.** A solution MUST NOT silently drift from
+  the content set it is supposed to be serving. An automated check verifies the
+  expected source document and counts and fails loudly. This is a drift guard
+  within one solution, **not** a parity gate between solutions: two solutions
+  may legitimately serve entirely different curricula.
 - **Environment attribution.** Every analytics event, ledger row and cost
   record identifies which environment produced it. Metrics are never pooled
-  across environments.
-- **A frozen baseline stays frozen.** The environment being compared against
-  receives no teaching-behaviour changes for the duration. The one permitted
-  change is metric instrumentation, which MUST be provably behaviour-neutral.
-- **Student data does not cross environments.** Each owns its own students and
+  across environments or across solutions. This is data hygiene and survives
+  the withdrawal above: a number mixing two products means nothing.
+- **Student data does not cross solutions.** Each owns its own students and
   mastery history.
+- **Withdrawn:** cross-solution content parity, and the obligation that a
+  baseline stay frozen for an experiment's duration. A baseline is frozen when
+  nobody is working on it — that is a scheduling fact, not a constraint. Any
+  later claim that one solution teaches better than another is an opinion
+  formed from live usage, not a measured result.
 
 ## Additional Constraints
 
@@ -213,7 +239,9 @@ constraint:
   curriculum graph (`graph_nodes` / `graph_edges` / `questions`), Python
   extraction pipeline (`services/extraction/`) orchestrated with Claude
   Workflows, OCI single-box deploy behind Cloudflare Access with a self-hosted
-  GitHub runner — now hosting two isolated stacks side by side.
+  GitHub runner. Each solution deploys from its own long-lived branch on its
+  own schedule (ADR-0010); where stacks share a box they stay isolated by
+  compose project, port and volume.
 - Curriculum truth is the Egyptian ministry book, ingested by the sealed
   extraction pipeline with a coverage oracle; the graph carries prerequisite
   edges and human-curated cross-subject bridges only.
@@ -249,4 +277,4 @@ PATCH = clarification), and obtain Samuel's approval. Exceptions MUST be
 time-boxed or condition-boxed, attributed, reversible, and recorded here or in
 an ADR — Principle III's suspension is the current example.
 
-**Version**: 2.1.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-10
+**Version**: 3.0.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-13

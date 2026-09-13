@@ -2,7 +2,7 @@
 
 **Feature**: `001-student-mvp1-delta` | **Date**: 2026-09-08
 **Migration**: `db/migrations/009-mvp1-bkt-library-analytics.sql`
-**Applies to**: the comparison environment's database only, except where marked **[both]**
+**Applies to**: the `PDR1-0` solution's database only, except where marked **[both]** (ADR-0010: "the comparison environment" means this solution's non-production deployment, not a second environment of one product)
 
 Baseline schema is `db/schema.sql` + migrations 002–008. This documents only the delta.
 

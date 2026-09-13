@@ -3,6 +3,64 @@
 > Living document. Read at session start; update when progress or decisions land.
 > Last updated: 2026-09-13
 
+## 🌿 ONE BRANCH PER SOLUTION — ADR-0010 (2026-09-13)
+
+Samuel's call: **no more two environments inside one branch.** The baseline and the Student MVP are
+two *solutions*, not two deployment slots of one product. Each gets its own long-lived branch, kept
+in parallel indefinitely.
+
+| Branch | Solution | State |
+|---|---|---|
+| `main` | shared trunk, still the default and still what CI deploys | untouched |
+| `family-tutor` | Founding Families — parent-sold, Arabic RTL, 3 subjects, Elo | frozen baseline, branched from `main` |
+| `PDR1-0` | Student MVP — student-facing, English LTR, math only, BKT | active development |
+
+`PDR1-0` is the rename of `claude/tamer-shared-drive-access-ddpypu`, whose name was an artefact of
+how the session was created. The old remote ref was deleted; both were at `544fe6e`.
+
+**What this withdraws:** ADR-0007's *delivery model* — two stacks co-tenant on one box, two
+hostnames, parity asserted between two live databases, and a simultaneous side-by-side demo.
+**The side-by-side demo is given up**; if it is still wanted it is new work (T138). Product scope
+from ADR-0007 is untouched. Parity is now asserted per branch against the held-constant book.
+
+Phases 1 and 3 were re-cut against this; the implementation strategy section was rewritten. New
+tasks: **T136** (re-point `mvp1` in CI/deploy — it names a branch that no longer exists), **T137**
+(retire `main`? production change, blocked on Samuel), **T138** (re-specify or drop the side-by-side
+demo). Resume doc: `docs/WIP-branch-per-solution.md`.
+
+**Clarified later the same day (ADR-0010 Clarification).** Samuel: *"each branch with its own
+deployment triggers on their own branches… the comparison will be on the live usage… I will not rely
+on the system to compare, the 2 systems can be completely different… don't touch the main now."*
+This goes further than the branch split:
+
+- **Cross-solution content parity is withdrawn.** The book is no longer a held-constant variable
+  *between* solutions; they may diverge completely. `FR-904` and `SC-001` re-cut to a per-solution
+  drift guard; `parity_check.py` is kept in that narrower role (it has caught two real defects).
+- **`FR-908` dropped**, with `T059`/`T060` — they required a PR to `main`.
+- **`main` is not to be touched.** `T137` (retire `main`) answered: **no, not now**.
+- **`T138` (side-by-side demo) answered: dropped.** No system-enforced comparison surface.
+- **`T136` reframed**: give each branch its own deploy trigger instead of one branch→environment
+  matrix. Must not add or change any trigger on `main`.
+- **Constitution → v3.0.0 (MAJOR).** Principle XI "Comparison Integrity" redefined as **"Solution
+  Integrity"**: attribution, no pooling, no student data crossing, and a per-solution drift check.
+  The frozen-baseline obligation is withdrawn — a baseline is frozen because nobody is working on
+  it, not because an experiment depends on it.
+
+Named honestly in the ADR: with parity released, any later claim that one solution teaches better
+than the other is an opinion formed from live usage, **not a measured result**.
+
+**Task ledger reconciled the same day** — work had been done and never ticked. `T043`, `T073`,
+`T107`, `T121` closed with evidence; `T104` and `T111` had stale numbers corrected. Counts now
+**94 done / 44 open / 138**.
+
+⚠️ **Phase 7 is marked complete and is not.** No task in it ever built a UI, `T046`'s unreadable
+check is broken (anchored regex stores model commentary as a transcription), and `T048`'s grounding
+link is dead (`uploadId` never passed by the only caller). ⚠️ **Phase 11 (safety) is 0/6 and is a
+declared hard gate** — no real student until it closes; `T067` needs Samuel to name the escalation
+recipient.
+
+---
+
 ## 🔗 WIDGETS ARE QUESTIONS — ADR-0009 (2026-09-13, `claude/tamer-shared-drive-access-ddpypu`)
 
 Samuel asked whether the new widgets bind to the generated question bank, the misconception

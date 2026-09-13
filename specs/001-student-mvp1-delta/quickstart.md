@@ -1,5 +1,12 @@
 # Quickstart — Standing Up the Comparison Environment
 
+> **⚠️ Re-cut 2026-09-13 by [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md).**
+> Each solution is its own long-lived branch — `family-tutor` (frozen baseline), `PDR1-0` (active).
+> Where this document says branch `mvp1`, read `PDR1-0`; where it assumes **both** stacks must be up
+> at once, that is withdrawn — deploy one solution at a time, on its own schedule. Compose project,
+> port and volume isolation below is unchanged and still required wherever stacks share a box.
+> For running the app on a laptop, `docs/LOCAL-DEV.md` is the tested path.
+
 **Feature**: `001-student-mvp1-delta` | **Date**: 2026-09-08
 
 The goal of P0: two URLs, same content, both Access-gated, parity check green. Everything else builds
