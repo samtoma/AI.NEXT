@@ -108,3 +108,29 @@ export function renderMathWidget(
       return <CurveSketcher prompt={w.prompt} fn={w.fn} coefs={w.coefs} onResult={onOutcome} />;
   }
 }
+
+/**
+ * The same dispatch as a COMPONENT.
+ *
+ * `renderMathWidget` is a function that returns an element, which is fine
+ * inside another renderer's switch but not fine called straight from a
+ * component body — React (and the lint rule that guards it) treats a function
+ * creating elements during render as a component created during render, and
+ * such a thing loses its state on every parent re-render. A widget losing its
+ * state mid-drag is exactly the bug this would cause.
+ *
+ * So surfaces that render ONE widget from a payload use this instead.
+ */
+export function MathWidget({
+  name,
+  payload,
+  onOutcome,
+  fallback = null,
+}: {
+  name: string;
+  payload: Record<string, unknown>;
+  onOutcome: (outcome: WidgetOutcome) => void;
+  fallback?: ReactNode;
+}) {
+  return <>{renderMathWidget(name, payload, onOutcome) ?? fallback}</>;
+}

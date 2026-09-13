@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { mcqChoices } from "@/lib/types";
 import type { SpineData, SpineLo, SpineQuestion } from "@/lib/types";
 import { stepText } from "@/lib/types";
 import { TeX } from "@/components/TeX";
@@ -99,7 +100,7 @@ export function QuestionModal({
           {/* choices */}
           {q.questionType === "mcq" && q.choices && (
             <div className="grid gap-2 sm:grid-cols-2">
-              {q.choices.map((c) => {
+              {mcqChoices(q)!.map((c) => {
                 const correct = c.key === q.correctAnswer;
                 return (
                   <div

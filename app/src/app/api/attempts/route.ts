@@ -235,6 +235,24 @@ export async function POST(req: Request) {
     // refutation, or say plainly that none exists and fall back to the canonical
     // solution (FR-305, PRD §8). What we must never do is improvise one and
     // present it as settled — so the absence is logged, not papered over.
+    // The refutation the student is ABOUT to be shown, carried back in the
+    // response rather than only into analytics.
+    //
+    // Before ADR-0009 this lookup happened, logged, and then the caller got the
+    // question's canonical solution anyway — so the entry written for the exact
+    // error a student made reached a dashboard and never reached the student.
+    // That was survivable while the tutor stream was the only surface, because
+    // the model reads the library itself. It stops being survivable when a
+    // construction is answered on its own card, which is what a widget question
+    // is.
+    let served: {
+      misconceptionId: string | null;
+      entryId: string;
+      entryType: string;
+      reviewed: boolean;
+      steps: { step: number; text_md: string }[];
+    } | null = null;
+
     if (!isCorrect) {
       // Ask for THE refutation of the error she actually made, not whichever
       // entry this objective happens to have first. Serving a refutation of a
@@ -252,6 +270,17 @@ export async function POST(req: Request) {
         void flagAuthoringGap(studentId, misconceptionId);
       } else {
         const chosen = entries[0];
+        const content = chosen.content as
+          | { steps?: { step: number; text_md: string }[] }
+          | { step: number; text_md: string }[]
+          | null;
+        served = {
+          misconceptionId: chosen.misconceptionId,
+          entryId: chosen.id,
+          entryType: chosen.entryType,
+          reviewed: chosen.reviewed,
+          steps: Array.isArray(content) ? content : (content?.steps ?? []),
+        };
         void emit({
           event: "explanation_delivered",
           studentId,
@@ -290,6 +319,14 @@ export async function POST(req: Request) {
       loLabel: q.lo_label,
       oldScore,
       newScore,
+      // Additive: existing callers ignore these. `diagnosis` is null when the
+      // error was not one the question names — which is the honest answer, not
+      // a gap to fill with the nearest entry.
+      modality: isWidget ? "widget" : "question",
+      diagnosis: misconceptionId
+        ? { misconceptionId, via: isWidget ? predicate! : givenAnswer }
+        : null,
+      refutation: served,
     };
     return NextResponse.json(result);
   } catch (err) {

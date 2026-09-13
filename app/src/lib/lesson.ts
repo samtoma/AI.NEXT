@@ -7,6 +7,8 @@ import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
 import { getLessonBridges } from "./subject-queries";
 import { getVisualsForLos } from "./visuals";
+import { mcqChoices } from "./types";
+import type { WidgetQuestionSpec } from "./types";
 import { mathWidgetDocs } from "./widget-docs";
 import {
   figureDirectivesDoc,
@@ -361,9 +363,15 @@ export function lessonDataBlock(data: LessonData): string {
 
   const qLines = data.questions
     .map((q) => {
-      const choices = q.choices
-        ? q.choices.map((c) => `(${c.key}) ${c.text}`).join(" ")
-        : "(numeric)";
+      // A widget question's `choices` is a construction spec, not options, so
+      // the catalogue line names the construction the tutor would be pushing
+      // rather than printing nothing (ADR-0009).
+      const opts = mcqChoices(q);
+      const choices = opts
+        ? opts.map((c) => `(${c.key}) ${c.text}`).join(" ")
+        : q.questionType === "widget" && q.choices
+          ? `(construction: ${(q.choices as WidgetQuestionSpec).kind})`
+          : "(numeric)";
       return `- ${q.id} | ${q.loId} | ${q.tier} | ${q.questionType} | p.${q.provenance.sourcePage ?? "—"}\n  Stem: ${q.stem}\n  Choices: ${choices}\n  Correct: ${q.correctAnswer}\n  ${solutionLabel}${q.solutionVersion}, human-reviewed): ${fmtSteps(q.solution)}`;
     })
     .join("\n");

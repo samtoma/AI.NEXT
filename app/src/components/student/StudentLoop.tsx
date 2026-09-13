@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
+import { mcqChoices } from "@/lib/types";
 import Link from "next/link";
 import type { AttemptResult, PlanItem, PlanReason } from "@/lib/types";
 import { stepText } from "@/lib/types";
@@ -250,7 +251,7 @@ export function StudentLoop({
                   <div className="mt-6">
                     {item.questionType === "mcq" && item.choices ? (
                       <div className="grid gap-2.5 sm:grid-cols-2">
-                        {item.choices.map((c) => (
+                        {mcqChoices(item)!.map((c) => (
                           <button
                             key={c.key}
                             onClick={() => setChoice(c.key)}

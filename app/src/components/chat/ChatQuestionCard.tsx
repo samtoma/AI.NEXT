@@ -1,7 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { AttemptResult, SpineQuestion } from "@/lib/types";
+import { mcqChoices } from "@/lib/types";
+import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
+import { MathWidget } from "@/components/student/widgets/render-math-widget";
+import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
 import { pct } from "@/lib/mastery";
 import { tierStyle } from "@/components/spine/LoPanel";
@@ -31,8 +34,19 @@ export function ChatQuestionCard({
   const [answerShown, setAnswerShown] = useState(false);
   const shownAt = useRef(Date.now());
 
-  const submit = async () => {
-    const given = q.questionType === "mcq" ? choice : numeric.trim();
+  // `choices` carries the lettered options for an MCQ and the stored
+  // construction for a widget; narrow once rather than at each use.
+  const widgetSpec =
+    q.questionType === "widget" && q.choices && !Array.isArray(q.choices)
+      ? (q.choices as WidgetQuestionSpec)
+      : null;
+
+  const submit = async (widget?: WidgetOutcome) => {
+    const given = widget
+      ? widget.given
+      : q.questionType === "mcq"
+        ? choice
+        : numeric.trim();
     if (!given || busy || result) return;
     setBusy(true);
     setError(null);
@@ -44,6 +58,12 @@ export function ChatQuestionCard({
           questionId: q.id,
           givenAnswer: given,
           timeMs: Date.now() - shownAt.current,
+          // A widget reports WHAT it built; the server decides whether that is
+          // right and what it means. The predicate never carries a verdict
+          // (ADR-0009) — `correct` on the outcome is for the widget's own
+          // local feedback, and the server re-derives it from the stored
+          // question's own correct_answer.
+          ...(widget ? { predicate: widget.predicate } : {}),
         }),
       });
       if (!res.ok) throw new Error(`API ${res.status}`);
@@ -84,9 +104,25 @@ export function ChatQuestionCard({
 
         {!result && (
           <div className="mt-3">
-            {q.questionType === "mcq" && q.choices ? (
+            {q.questionType === "widget" ? (
+              // A WIDGET IS A QUESTION (ADR-0009), so it arrives through the
+              // same `{{show_question:…}}` directive and the same selector as
+              // everything else — no parallel push path, no second registry.
+              // The stored spec lives in `choices`; the construction the
+              // student makes IS the answer, so there is no submit button.
+              <MathWidget
+                name={widgetSpec?.kind ?? ""}
+                payload={{ ...(widgetSpec?.spec ?? {}), prompt: q.stem }}
+                onOutcome={(outcome) => void submit(outcome)}
+                fallback={
+                  <p className="rounded-md border border-gold/50 bg-gold-wash px-3 py-2 text-[12.5px] text-gold">
+                    This construction could not be set up. Ask for another question.
+                  </p>
+                }
+              />
+            ) : q.questionType === "mcq" && q.choices ? (
               <div className="grid gap-1.5">
-                {q.choices.map((c) => (
+                {mcqChoices(q)!.map((c) => (
                   <button
                     key={c.key}
                     onClick={() => setChoice(c.key)}
@@ -123,7 +159,7 @@ export function ChatQuestionCard({
             )}
             <div className="mt-2.5 flex items-center gap-3">
               <button
-                onClick={submit}
+                onClick={() => void submit()}
                 disabled={
                   busy || (q.questionType === "mcq" ? !choice : !numeric.trim())
                 }
@@ -158,7 +194,13 @@ export function ChatQuestionCard({
                     ? "Correct ✓"
                     : "صح عليك ✓"
                   : debug
-                    ? `Not quite — answer: ${result.correctAnswer}`
+                    ? // A widget's `correct_answer` is the reserved predicate
+                      // "ok" — machinery, not an answer. Printing it tells the
+                      // student nothing and looks broken; the construction they
+                      // were asked for is already in the stem.
+                      q.questionType === "widget"
+                      ? "Not yet"
+                      : `Not quite — answer: ${result.correctAnswer}`
                     : "مش مظبوطة — تعالى نشوفها مع بعض"}
               </span>
               {debug && (
@@ -178,7 +220,7 @@ export function ChatQuestionCard({
             </div>
             {/* student mode: the correct letter stays withheld until the
                 explanation lands — a quiet affordance reveals it on demand */}
-            {!debug && !result.isCorrect && (
+            {!debug && !result.isCorrect && q.questionType !== "widget" && (
               <p dir="rtl" className="mt-1.5 text-[12px] text-ink-soft">
                 {answerShown ? (
                   <>
@@ -193,6 +235,31 @@ export function ChatQuestionCard({
                   </button>
                 )}
               </p>
+            )}
+            {/* THE REFUTATION — the entry authored for the error this student
+                actually made, not the question's generic solution. Before
+                ADR-0009 this was looked up, logged to analytics and then
+                dropped, so the text written for the mistake reached a
+                dashboard and never reached the student. */}
+            {result.refutation && !result.isCorrect && (
+              <div className="mt-2 rounded-md border border-accent/35 bg-accent-wash px-3 py-2.5">
+                <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-accent-deep">
+                  why that happened
+                </p>
+                <ol className="mt-1.5 grid gap-1.5">
+                  {result.refutation.steps.map((st) => (
+                    <li key={st.step} className="text-[13px] leading-relaxed text-ink">
+                      {st.text_md}
+                    </li>
+                  ))}
+                </ol>
+                {debug && (
+                  <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
+                    {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
+                    {result.refutation.reviewed ? "" : " · unreviewed"}
+                  </p>
+                )}
+              </div>
             )}
             {debug && !result.isCorrect && onOpenQuestion && (
               <button

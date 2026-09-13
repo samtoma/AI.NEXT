@@ -76,13 +76,37 @@ export interface Provenance {
   extractionFinishedAt: string | null;
 }
 
+/** The `choices` payload of a `question_type = 'widget'` row. The predicate
+ *  vocabulary is contracts/widget-predicates.json; the loader validates against
+ *  it, so a diagnostic here always names a predicate its kind can emit. */
+export interface WidgetQuestionSpec {
+  kind: string;
+  spec: Record<string, unknown>;
+  diagnostics: { predicate: string; misconception_id: string }[];
+}
+
+/** The lettered options, or null when this question has none (numeric) or
+ *  carries a construction instead (widget). Every site that renders options
+ *  goes through this rather than asserting the array — the union exists
+ *  precisely so the compiler asks. */
+export function mcqChoices(q: {
+  choices: Choice[] | WidgetQuestionSpec | null;
+}): Choice[] | null {
+  return Array.isArray(q.choices) ? q.choices : null;
+}
+
 export interface SpineQuestion {
   id: string;
   loId: string;
   tier: Tier;
-  questionType: "mcq" | "numeric";
+  questionType: "mcq" | "numeric" | "widget";
   stem: string;
-  choices: Choice[] | null;
+  /** MCQ: the lettered options, each optionally naming a misconception.
+   *  WIDGET: the stored construction — `{kind, spec, diagnostics}`, where the
+   *  diagnostics are that widget's distractors: a predicate mapped to the
+   *  misconception it reveals (ADR-0009). One column, two shapes, because a
+   *  widget IS a question and its wrong answers are enumerated the same way. */
+  choices: Choice[] | WidgetQuestionSpec | null;
   correctAnswer: string;
   solution: SolutionStep[];
   solutionVersion: number;
@@ -149,9 +173,14 @@ export interface PlanItem {
   loLabel: string;
   loScore: number;
   tier: Tier;
-  questionType: "mcq" | "numeric";
+  questionType: "mcq" | "numeric" | "widget";
   stem: string;
-  choices: Choice[] | null;
+  /** MCQ: the lettered options, each optionally naming a misconception.
+   *  WIDGET: the stored construction — `{kind, spec, diagnostics}`, where the
+   *  diagnostics are that widget's distractors: a predicate mapped to the
+   *  misconception it reveals (ADR-0009). One column, two shapes, because a
+   *  widget IS a question and its wrong answers are enumerated the same way. */
+  choices: Choice[] | WidgetQuestionSpec | null;
   reason: PlanReason;
   sourcePage: number | null;
 }
@@ -286,6 +315,23 @@ export interface AttemptResult {
   loLabel: string;
   oldScore: number;
   newScore: number;
+  /** Which instrument produced this attempt (ADR-0009). Every comparison
+   *  metric can be sliced by it, so widget evidence is never silently pooled
+   *  with question evidence. */
+  modality?: "question" | "widget";
+  /** The named error, when the question itself named it: a chosen distractor
+   *  for multiple choice, a construction predicate for a widget. Null means we
+   *  do not know why the answer was wrong, which is a real answer. */
+  diagnosis?: { misconceptionId: string; via: string } | null;
+  /** The library entry actually served for that error — the thing the student
+   *  should read next. Null when none is authored yet (the gap is logged). */
+  refutation?: {
+    misconceptionId: string | null;
+    entryId: string;
+    entryType: string;
+    reviewed: boolean;
+    steps: { step: number; text_md: string }[];
+  } | null;
 }
 
 /* ---- Per-subject roll-up (Wave 1.5 — subject home; never blended) ---- */
