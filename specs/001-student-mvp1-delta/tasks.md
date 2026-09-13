@@ -488,3 +488,11 @@ blocks product work and can run whenever a solution is ready to ship.
 | 15 Widgets | 9 | — |
 | 16 Widgets as questions | 14 | — |
 | **Total** | **135** | |
+
+## Phase 17: Closing the partial requirements **[ADDED 2026-09-13 — Samuel's request]**
+
+**Goal**: no requirement sits at PARTIAL because half of it was never built.
+
+- [X] T141 **FR-207 — the engagement half.** `app/src/lib/engagement.ts`: a pure classifier over the last 12 attempts (correctness, `time_ms`, `attempted_at`) producing a *stance* for the tutor, wired into `retrieval.ts` beside grade. Precedence `returning → rushing → struggling → labouring → steady`; fails quiet below 4 observations and on any query error so the prompt stays byte-identical when there is nothing to say. Per PRD §8 it is never shown to the student and the block says so. 21 tests; 123 pass; verified against the live database.
+- [ ] T142 **FR-1109 — the 4 objectives with no live basic item**: `lo:t2u1-1-4`, `lo:t2u1-3-1`, `lo:t2u1-3-2`, `lo:u4-2-4`. All four are *applications* (word-problem) objectives, which `T099` already flagged as the hardest to template without producing nonsense — so these need authoring, not the template generator.
+- [ ] T143 **FR-1111 — extend the misconception catalogue** from 42 of 90 objectives to all 90. `build_misconceptions.py` is a 1,120-line hand-authored catalogue (no LLM): each entry carries a label, signal, book-distractor mappings and a multi-step refutation in a deliberate voice, grounded in that objective's own description. Closing this means authoring ~100+ entries at that standard. **The largest content job in the backlog — size it before starting.**

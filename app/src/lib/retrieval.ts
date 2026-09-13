@@ -28,6 +28,13 @@ import {
   type Misconception,
 } from "@/lib/explanations";
 import { getParsedUpload } from "@/lib/uploads";
+import {
+  classify,
+  engagementBlock,
+  observationsFrom,
+  WINDOW as ENGAGEMENT_WINDOW,
+  type EngagementSignal,
+} from "@/lib/engagement";
 
 /** How many nearby skills carry their mastery into the prompt. */
 const NEAREST_SKILLS = 5;
@@ -46,7 +53,39 @@ export type RetrievalBundle = {
   libraryEntries: LibraryEntry[];
   /** transcription of the student's own uploaded material, when one is in scope */
   uploadText: string | null;
+  /** how engaged they appear, read from recent attempts (FR-207); null = say nothing */
+  engagement: EngagementSignal | null;
 };
+
+/**
+ * How engaged the student appears, read from their recent attempts (FR-207).
+ *
+ * The query lives here rather than in `engagement.ts` because that module
+ * deliberately imports nothing — the classifier and the row mapping are pure so
+ * they can be tested without a database, the same shape `bkt.ts` uses.
+ *
+ * Returns null rather than throwing: engagement is an enhancement, and a tutor
+ * turn that fails because a stance could not be computed is strictly worse than
+ * one taught without it.
+ */
+async function getEngagementSignal(
+  studentId: number
+): Promise<EngagementSignal | null> {
+  try {
+    const res = await pool.query(
+      `SELECT is_correct, time_ms, attempted_at
+         FROM attempts
+        WHERE student_id = $1
+        ORDER BY attempted_at DESC
+        LIMIT ${ENGAGEMENT_WINDOW}`,
+      [studentId]
+    );
+    const observations = observationsFrom(res.rows);
+    return observations ? { state: classify(observations), observations } : null;
+  } catch {
+    return null;
+  }
+}
 
 /**
  * Mastery on the focus skills plus their immediate prerequisites — "the three
@@ -104,7 +143,7 @@ export async function retrieve(
   focusLoIds: readonly string[],
   opts: { misconceptionId?: string; uploadId?: number } = {}
 ): Promise<RetrievalBundle> {
-  const [profile, nearestSkills, misconceptions, libraryEntries, upload] =
+  const [profile, nearestSkills, misconceptions, libraryEntries, upload, engagement] =
     await Promise.all([
       getStudentProfile(studentId),
       nearestSkillMastery(studentId, focusLoIds),
@@ -113,6 +152,7 @@ export async function retrieve(
       opts.uploadId
         ? getParsedUpload(opts.uploadId, studentId)
         : Promise.resolve(null),
+      getEngagementSignal(studentId),
     ]);
   return {
     profile,
@@ -123,6 +163,7 @@ export async function retrieve(
     // NOT reach the prompt: the tutor would then teach against a transcription
     // we already know is wrong or absent.
     uploadText: upload && upload.status === "parsed" ? upload.text : null,
+    engagement,
   };
 }
 
@@ -153,6 +194,13 @@ export function retrievalBlock(b: RetrievalBundle): string {
         `invented interest; teach plainly instead.`
     );
   }
+
+  // FR-207's second half. Sits next to grade because they are one instruction
+  // — pitch for this grade, at this moment — and renders "" when there is no
+  // signal, so a student with nothing observed produces the prompt they did
+  // before this existed.
+  const eng = engagementBlock(b.engagement);
+  if (eng) parts.push(eng);
 
   if (b.nearestSkills.length) {
     const rows = b.nearestSkills
