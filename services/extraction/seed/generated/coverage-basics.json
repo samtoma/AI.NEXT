@@ -1,0 +1,102 @@
+{
+  "generator": "authored by hand for T142 / FR-1109 — NOT template-generated. The four objectives below are all 'applications' (word-problem) objectives, which T099 already recorded as the hardest to template without producing nonsense. Each item is the simplest honest form of its objective's own description, so 'basic' means the entry point to the skill rather than a diluted version of a harder item. Unreviewed: no human has checked this mathematics.",
+  "questions": [
+    {
+      "id": "q:t2u1-1-4:c001-sumdif",
+      "lo_id": "lo:t2u1-1-4",
+      "tier": "basic",
+      "question_type": "numeric",
+      "stem": "The sum of two numbers is $15$ and their difference is $3$. Find the larger number.",
+      "correct_answer": "9",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Name the two numbers. Let the larger be $x$ and the smaller be $y$. The two sentences in the question become two equations: $x + y = 15$ and $x - y = 3$."
+        },
+        {
+          "step": 2,
+          "text_md": "Add the equations. The $y$ terms cancel because one is $+y$ and the other is $-y$, leaving $2x = 18$."
+        },
+        {
+          "step": 3,
+          "text_md": "So $x = 9$, and then $y = 15 - 9 = 6$. Check both sentences: $9 + 6 = 15$ and $9 - 6 = 3$."
+        }
+      ],
+      "status": "live",
+      "source_note": "Authored for coverage (FR-1109): this objective had no live basic item. Sum-and-difference is the simplest of the three application types the objective names."
+    },
+    {
+      "id": "q:t2u1-3-1:c001-substi",
+      "lo_id": "lo:t2u1-3-1",
+      "tier": "basic",
+      "question_type": "numeric",
+      "stem": "Solve the system $y = x + 1$ and $x^{2} + y = 7$. Find the positive value of $x$.",
+      "correct_answer": "2",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The first-degree equation is already solved for $y$, so it is the one to substitute from — that is the whole method for this kind of system."
+        },
+        {
+          "step": 2,
+          "text_md": "Replace $y$ in the second equation: $x^{2} + (x + 1) = 7$, which rearranges to $x^{2} + x - 6 = 0$."
+        },
+        {
+          "step": 3,
+          "text_md": "Factorise: $(x + 3)(x - 2) = 0$, so $x = -3$ or $x = 2$. The question asks for the positive value, so $x = 2$ — and then $y = 3$, which checks: $4 + 3 = 7$."
+        }
+      ],
+      "status": "live",
+      "source_note": "Authored for coverage (FR-1109): this objective had no live basic item. Chosen so the linear equation is already in the form $y = \\ldots$, isolating the substitution step itself."
+    },
+    {
+      "id": "q:t2u1-3-2:c001-sumpro",
+      "lo_id": "lo:t2u1-3-2",
+      "tier": "basic",
+      "question_type": "numeric",
+      "stem": "Two numbers have a sum of $7$ and a product of $12$. Find the larger number.",
+      "correct_answer": "4",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Name them $x$ and $y$. The question gives one first-degree equation and one second-degree equation: $x + y = 7$ and $xy = 12$."
+        },
+        {
+          "step": 2,
+          "text_md": "Substitute from the first-degree one, as always with a mixed system: $y = 7 - x$, so $x(7 - x) = 12$."
+        },
+        {
+          "step": 3,
+          "text_md": "That is $x^{2} - 7x + 12 = 0$, so $(x - 3)(x - 4) = 0$. The two numbers are $3$ and $4$, and the larger is $4$. Check: $3 + 4 = 7$ and $3 \\times 4 = 12$."
+        }
+      ],
+      "status": "live",
+      "source_note": "Authored for coverage (FR-1109): this objective had no live basic item. Sum-and-product is one of the two application shapes the objective's own description names."
+    },
+    {
+      "id": "q:u4-2-4:c001-equilat",
+      "lo_id": "lo:u4-2-4",
+      "tier": "basic",
+      "question_type": "numeric",
+      "stem": "An equilateral triangle has side length $10$ cm. A perpendicular is dropped from one vertex to the opposite side. Find the length of that perpendicular in cm, correct to two decimal places.",
+      "correct_answer": "8.66",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Drop the perpendicular — that is the move this objective is about. It splits the equilateral triangle into two right-angled triangles, and every angle of an equilateral triangle is $60^{\\circ}$."
+        },
+        {
+          "step": 2,
+          "text_md": "In one of those right-angled triangles the hypotenuse is the full side, $10$ cm, and the perpendicular is the side opposite the $60^{\\circ}$ angle. So $h = 10 \\sin 60^{\\circ}$."
+        },
+        {
+          "step": 3,
+          "text_md": "$\\sin 60^{\\circ} = \\dfrac{\\sqrt{3}}{2}$, so $h = 5\\sqrt{3} \\approx 8.66$ cm."
+        }
+      ],
+      "status": "live",
+      "source_note": "Authored for coverage (FR-1109): this objective had no live basic item. Uses the equilateral case the objective's description names, so the perpendicular-then-ratio move is the only thing being tested."
+    }
+  ],
+  "misconceptions": []
+}
