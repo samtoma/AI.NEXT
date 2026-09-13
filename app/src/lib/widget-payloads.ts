@@ -264,3 +264,20 @@ export function parseMathWidget(
       return null;
   }
 }
+
+/**
+ * The objective an INLINE widget is teaching, as the tutor named it.
+ *
+ * A widget the model composes mid-stream has to be attributable to something
+ * or it cannot become a question (ADR-0009 §3), and the lesson usually covers
+ * several objectives — so guessing "the first one" would file evidence against
+ * the wrong skill and move the wrong mastery estimate. The tutor knows which
+ * objective the beat is about; it says so, or the widget stays a teaching aid
+ * and moves nothing.
+ *
+ * Returning null is therefore a normal outcome, not an error.
+ */
+export function inlineWidgetLo(props: Record<string, unknown>): string | null {
+  const lo = props.lo;
+  return typeof lo === "string" && /^lo:[a-z0-9-]{1,60}$/i.test(lo) ? lo : null;
+}

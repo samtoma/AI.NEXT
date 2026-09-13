@@ -339,6 +339,51 @@ test:
 The lesson is cheap to state and was expensive to learn: an interaction primitive is not
 verified until something drags it.
 
+## Phase 16: Widgets as questions **[ADDED 2026-09-13 — ADR-0009]**
+
+Samuel asked whether the widgets bind to the generated questions, the misconceptions and the
+lessons. They did not, on all three. `attempts.question_id` is NOT NULL and references
+`questions`, so a widget outcome could never be recorded, diagnosed, counted or made to move
+mastery unless the widget IS a row there. Asked for the best rather than the cheapest fix, the
+answer was to unify the two supply chains.
+
+- [X] T124 ADR-0009 — a widget is a question. Samuel's two decisions: all widget attempts move
+  BKT tagged by modality; stored preferred with inline still allowed
+- [X] T125 `contracts/widget-predicates.json` — 51 predicates over 11 kinds, one authority read
+  by the TS module, `widget_spec.py` and the loader. A predicate misspelled in any one layer
+  resolves to no misconception and the student gets silence, with nothing raised anywhere
+- [X] T126 Migration 010 — `question_type='widget'`, `attempts.modality`,
+  `questions.materialised_from` with a CHECK that a materialised row can never be born live
+- [X] T127 16 new misconceptions for errors only a CONSTRUCTION reveals. You cannot write a
+  multiple-choice item that catches "thinks a diameter is any long chord"; you can see it
+  instantly from where the two ends go
+- [X] T128 `generate_widget_questions.py` — 48 questions, 13 objectives, 20 families, 75
+  predicate→misconception mappings, through the same validate → load → sample pipeline as the
+  543 generated MCQ/numeric items
+- [X] T129 The prerequisite rule, checked against the curriculum graph rather than asserted: a
+  diagnostic may name a misconception on this objective or any transitive prerequisite of it
+- [X] T130 All 11 widgets report a structured outcome; `api/attempts` grades server-side,
+  diagnoses from the stored predicate map, and tags the row
+- [X] T131 Stored widget questions render in the ordinary question card via the ordinary
+  `{{show_question:…}}` directive — no parallel push path
+- [X] T132 The refutation is returned and rendered. It was being looked up, logged and then
+  discarded in favour of the generic solution
+- [X] T133 Inline materialisation — answering a composed widget writes it as `status='review'`
+- [ ] T122 **Render widget questions in the review page.** 20 are queued covering all 20
+  families and `render_review_page.py` handles multiple-choice and numeric only. Until it can
+  show a construction, every widget question a student sees is unreviewed
+- [ ] T123 Extend widget generation beyond the 13 objectives it reaches today
+- [ ] T134 Map the remaining predicates to misconceptions, or record deliberately that they have
+  none. `off-target` correctly resolves to nothing; several named ones have no entry yet
+- [ ] T135 Report every comparison metric sliced by `modality`. It is the second declared
+  variable after question supply, and a pooled number now hides which instrument produced it
+
+**What the graph caught that review would not.** The prerequisite check rejected two content
+errors while generating: a chord misconception authored on the diameter-theorem objective instead
+of the definitions one, and a linear-functions sketch reaching for a coordinate-geometry
+misconception taught three units later. Both would have produced a widget that diagnoses
+confidently and then explains something the student was never taught.
+
 
 
 ---
@@ -405,4 +450,5 @@ parity check — the proof that the whole comparison premise holds.
 | 13 Design (Nour) | 12 | — |
 | 14 Generated bank | 12 | — |
 | 15 Widgets | 9 | — |
-| **Total** | **121** | |
+| 16 Widgets as questions | 14 | — |
+| **Total** | **135** | |

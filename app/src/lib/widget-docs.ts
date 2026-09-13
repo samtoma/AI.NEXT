@@ -114,11 +114,26 @@ export function unitOf(slug: string): string {
  */
 export function mathWidgetDocs(slug: string): string {
   const names = BY_UNIT[unitOf(slug)] ?? ["pair_plotter", "product_builder"];
-  return names
+  const lines = names
     .map((n) => DOCS[n])
     .filter((d): d is WidgetDoc => !!d)
-    .map((d) => `- ${d.line}`)
-    .join("\n");
+    .map((d) => `- ${d.line}`);
+  lines.push(
+    `- EVERY widget payload above may carry "lo":"lo:…" naming the objective ` +
+      `the beat is teaching, and it SHOULD. A widget you compose is recorded ` +
+      `as a real attempt against that objective and moves his mastery ` +
+      `estimate; without it the widget still teaches but nothing is recorded, ` +
+      `because evidence filed against a guessed skill is worse than evidence ` +
+      `not filed. Use an objective id from the LESSON DATA.`
+  );
+  lines.push(
+    `- PREFER A STORED CONSTRUCTION. The QUESTION BANK below contains widget ` +
+      `questions — their line reads "(construction: <kind>)". Push one with ` +
+      `{{show_question:q:…}} exactly as you would any other question: they are ` +
+      `bound to an objective, carry a worked solution, and name the specific ` +
+      `mistakes they can diagnose. Compose one inline only when nothing stored fits.`
+  );
+  return lines.join("\n");
 }
 
 /** The widget names this lesson is told about — for tests and the dev fixture. */

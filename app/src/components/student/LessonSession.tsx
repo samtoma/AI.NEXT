@@ -21,6 +21,8 @@ import { isRtlSubject } from "@/lib/subjects";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
 import { renderMathWidget } from "@/components/student/widgets/render-math-widget";
+import { inlineWidgetLo } from "@/lib/widget-payloads";
+import { hashOf } from "@/components/student/widgets/util";
 import { LocateOnMap } from "@/components/student/widgets/LocateOnMap";
 import { TimelineBuilder } from "@/components/student/widgets/TimelineBuilder";
 import { ChainBuilder } from "@/components/student/widgets/ChainBuilder";
@@ -617,6 +619,33 @@ export function LessonSession({
         // Both come from one outcome so they can never disagree about what the
         // student did (ADR-0009).
         emitNote(outcome.detail);
+
+        // An inline widget the tutor composed has no row behind it, so it
+        // materialises on first answer and the attempt is recorded against it.
+        // Without an objective there is nothing to attribute the evidence to,
+        // and filing it against a guessed skill is worse than not filing it —
+        // so no `lo`, no record, and the widget stays a teaching aid.
+        const lo = inlineWidgetLo(props);
+        if (!lo) return;
+        const { lo: _lo, prompt, ...spec } = props;
+        void fetch("/api/attempts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            questionId: `qw:inline:${name}-${hashOf(JSON.stringify(props))}`,
+            givenAnswer: outcome.given,
+            predicate: outcome.predicate,
+            inlineWidget: {
+              kind: name,
+              spec,
+              loId: lo,
+              stem: typeof prompt === "string" ? prompt : name,
+            },
+          }),
+        }).catch(() => {
+          // A recording failure must never break the lesson. The student has
+          // already seen their feedback; this is bookkeeping.
+        });
       });
       if (math) return math;
       // {{widget:viz:{…}}} composed figure / {{widget:viz_ref:v:…}} stored

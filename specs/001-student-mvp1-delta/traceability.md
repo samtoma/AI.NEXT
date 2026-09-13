@@ -1,6 +1,6 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-12 (rev. 7) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
+**Status date**: 2026-09-13 (rev. 8) · **Branch**: `claude/tamer-shared-drive-access-ddpypu` (destined for `mvp1`)
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v2.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md)
 
@@ -218,6 +218,42 @@ lands.
 
 ---
 
+## 8c. Widgets as questions (FR-12xx, ADR-0009)
+
+Every row was exercised against the real database and, where it touches a surface, in a real
+browser session against the built app.
+
+| Req | What it demands | Status | Where | What proves it |
+|---|---|---|---|---|
+| FR-1212 | A widget is representable as a question | **VERIFIED** | migration 010, `generate_widget_questions.py` | 48 widget questions live in `questions` across 13 objectives and 20 families. They inherit everything: the selector has no `question_type` filter, `/admin/content` lists them with provenance unchanged, and the book constant (450 `authored`) is untouched, so parity is safe by construction |
+| FR-1213 | Predicates as distractors, one shared contract | **VERIFIED** | `contracts/widget-predicates.json` | 51 predicates over 11 kinds, read by the TS module, `widget_spec.py` and the loader. A test fails on drift; a second reads the widget sources and checks every predicate literal they can emit. That one **found a real defect**: `number_line_marker` initialised to `off-target`, which was not in its vocabulary |
+| FR-1214 | Client reports structure, server decides meaning | **VERIFIED** | `api/attempts/route.ts` | Grading is `predicate === q.correct_answer` server-side; the outcome's own `correct` flag is used only for local feedback. A widget attempt with no predicate is rejected 400 |
+| FR-1215 | Prerequisite rule, checked against the graph | **VERIFIED** | `generate_widget_questions.py` | Recursive closure over `prerequisite_of`. **Caught two content errors I had written**: `chord-endpoints-off-circle` authored on the diameter-theorem objective instead of the definitions one, and a linear-functions sketch reaching for a coordinate-geometry misconception taught later. Neither was visible by reading the code |
+| FR-1216 | Widget attempts move mastery, tagged by modality | **VERIFIED** | migration 010, `api/attempts` | Live: a wrong construction on `q:geo1-1-2:w001` moved BKT 0.98 → 0.8737 and wrote `modality='widget'`, `diagnosis_type='construction_diagnosed'`. `SELECT modality, count(*) FROM attempts GROUP BY 1` is the audit |
+| FR-1217 | Stored preferred; inline materialises, never live | **VERIFIED** | `api/attempts`, migration 010 CHECK | An inline widget answered through the API wrote `qw:inline:demo-001` as `status='review'`, `reviewed_by=NULL`, `materialised_from=2`. `UPDATE … SET status='live'` on it is **refused by the database**, not merely by the code — the guarantee is a constraint, not a convention |
+| FR-1218 | The refutation reaches the student | **VERIFIED** | `api/attempts`, `ChatQuestionCard` | It was already looked up and logged to analytics, then discarded in favour of the generic solution — the text written for the mistake reached a dashboard and never the child. Now returned and rendered under "why that happened", with `unreviewed` shown |
+| FR-1219 | No internal vocabulary reaches students | **VERIFIED** | `ChatQuestionCard` | Caught in the browser: the card printed *"Not quite — answer: ok"*. Now "Not yet", and the reveal-the-answer affordance is suppressed for widgets |
+
+**Where the tutor still is not.** The prompt now documents stored constructions and the `"lo"`
+attribution field, and the question catalogue renders widget rows as `(construction: <kind>)` — but
+**no Claude turn has yet pushed a stored widget or composed an attributed inline one.** The inline
+materialisation path is verified at the API with a hand-built request, not through a real lesson
+turn. That remains T119, and it is still the task that decides whether any of this reaches a
+student.
+
+**Coverage, stated plainly.** 13 of 90 objectives carry a widget question, and not every predicate
+resolves to a misconception — `off-target` deliberately resolves to none, and several named ones
+have no catalogue entry yet. An unmapped predicate serves no refutation, which is the honest
+behaviour, not a silent failure.
+
+**The review gate does not yet reach widgets.** The loader put 20 of the 48 into the human review
+queue, covering all 20 families, but `render_review_page.py` renders multiple-choice and numeric
+items only. Until it renders a construction, those 20 cannot be reviewed — so every widget question
+a student sees is unreviewed generated content, bounded to the comparison environment exactly as
+ADR-0008 bounds the rest. That is T122.
+
+---
+
 ## 9. What is unresolved, and who owns it
 
 | # | Item | Owner | Why it matters |
@@ -233,8 +269,10 @@ lands.
 | 7d | **Who performs the 10% review** (T107) | **Samuel** | The constitution's suspension is conditioned on a *human* gate. A model reviewing model-generated maths reproduces the failure mode it is meant to catch — and on the standard-deviation item it produced a false rejection |
 | 7c | Question supply is now a **variable**, not a constant | **Samuel** | The baseline exhausts its advanced tier and the comparison build does not. Every reported result has to say so — and the gap is now **993 vs 450**, not 462 vs 450 |
 | 8 | Box-dependent work: T005, T013–T020, T042–T043, T070 | Engineering, once box access exists | Everything is written and dry-run verified; none of it has met the real environment |
-| 9 | **No tutor turn has ever chosen a widget** (T119) | Engineering | Eleven widgets are built, validated and documented per unit. Whether a model reaches for the right one at a real teaching beat is unmeasured, and it is the thing that decides whether any of this reaches a student |
-| 10 | **Widget outcomes do not move mastery** (FR-1211) | **Samuel** | Deliberate, to keep the comparison clean. But it means a student can construct every chord in the unit and the mastery number will not notice. Worth an explicit decision rather than an inherited default |
+| 9 | **No tutor turn has ever chosen a widget** (T119) | Engineering | Eleven widgets, 48 stored widget questions, prompt documentation written and tested. Whether a model pushes the right stored construction at a real teaching beat is still unmeasured, and it is the thing that decides whether any of this reaches a student |
+| 10 | ~~Widget outcomes do not move mastery~~ — **decided 2026-09-12**, ADR-0009: they do, tagged by modality. FR-1211 is superseded by FR-1216 | Samuel | Modality is now the comparison's second declared variable after question supply. Every reported result must say whether widget evidence is included |
+| 11 | **Widget questions cannot be reviewed yet** (T122) | Engineering | 20 are queued and `render_review_page.py` cannot render a construction. Until it can, every widget a student sees is unreviewed — bounded to the comparison environment, but unreviewed |
+| 12 | **13 of 90 objectives carry a widget question** | Engineering | Coverage was never the goal of the first bundle; the pipeline was. Extending it is now template work (T123) |
 
 ---
 
@@ -242,17 +280,17 @@ lands.
 
 | | Count |
 |---|---|
-| Functional requirements (incl. FR-10xx, FR-11xx, FR-12xx) | **82** |
-| VERIFIED | 49 |
+| Functional requirements (incl. FR-10xx, FR-11xx, FR-12xx) | **90** |
+| VERIFIED | 57 |
 | BUILT (awaiting the box, the runtime, or a browser session) | 16 |
 | PARTIAL | 5 |
 | OPEN | 6 |
 | BLOCKED | 2 |
 | DEFERRED by explicit decision | 9 |
-| Tasks complete / total | **74 / 121** |
+| Tasks complete / total | **84 / 135** |
 
 Both totals are now **counted from the documents** rather than carried forward — 82 is every
-`**FR-nnn**` definition in spec.md, 121 every task id in tasks.md. The previous revision said 76
+`**FR-nnn**` definition in spec.md, 135 every task id in tasks.md. An earlier revision said 76
 requirements and 112 tasks; the requirement figure was already 5 high before this phase added
 11, which is what a hand-maintained count does over six revisions.
 

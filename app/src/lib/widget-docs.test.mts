@@ -51,9 +51,25 @@ test("the unit is the slug up to the first dash", () => {
   assert.equal(unitOf("t2u1-3"), "t2u1");
 });
 
+test("the block always tells the tutor to attribute and to prefer stored", () => {
+  // Both are load-bearing. Without the objective an inline widget records
+  // nothing (ADR-0009 §3); without the preference the tutor improvises over a
+  // reviewed bank that already covers the beat.
+  for (const u of UNITS) {
+    const doc = mathWidgetDocs(`${u}-1`);
+    assert.match(doc, /"lo":"lo:…"/, `unit ${u}: no objective-attribution guidance`);
+    assert.match(doc, /show_question/, `unit ${u}: stored constructions never mentioned`);
+  }
+});
+
 test("each documented line names its own widget and is one line", () => {
   for (const u of UNITS) {
-    const lines = mathWidgetDocs(`${u}-1`).split("\n").filter((l) => l.startsWith("- "));
+    // Only the DIRECTIVE lines are per-widget; the block also carries general
+    // guidance (name the objective, prefer a stored construction) that belongs
+    // to no single widget.
+    const lines = mathWidgetDocs(`${u}-1`)
+      .split("\n")
+      .filter((l) => l.startsWith("- ") && l.includes("{{widget:"));
     const names = mathWidgetsFor(`${u}-1`);
     assert.equal(lines.length, names.length, `unit ${u}: a widget lost its doc line`);
     for (const n of names) {

@@ -602,6 +602,45 @@ A student could watch a circle theorem animate and could not construct a single 
   widget move it would put an uncontrolled variable inside the measurement the whole
   environment exists to make. Revisit only with an explicit decision.
 
+### Widgets as questions *(added 2026-09-13, ADR-0009)*
+
+The widgets were built, and then the obvious question was asked: do they bind to the generated
+question bank, the misconception catalogue, and the lessons? They did not, on all three, and the
+reason was structural — `attempts.question_id` is NOT NULL and references `questions`, so a widget
+outcome could never be recorded, diagnosed, counted or made to move mastery unless the widget is a
+row in that table. ADR-0009 makes it one.
+
+- **FR-1212**: An interactive widget MUST be representable as a question
+  (`question_type = 'widget'`), carrying an `lo_id`, a tier, a stem, a canonical solution and its
+  enumerated wrong answers, so that it inherits selection, provenance, review, parity and
+  attempt-recording without any of them being rebuilt.
+- **FR-1213**: A widget's wrong answers MUST be enumerated as **predicates** — named structural
+  facts about the construction — and each MUST be mappable to a `misconception_id`, exactly as a
+  multiple-choice distractor is. The predicate vocabulary MUST be a single contract shared by the
+  app, the extraction pipeline and the stored rows; a predicate spelled differently in any one
+  layer resolves to no misconception and the student receives silence, with nothing raised.
+- **FR-1214**: The client MUST report structure and the server MUST decide meaning. A widget
+  reports which predicate fired; grading is performed server-side against the question's own
+  `correct_answer`, and the predicate MUST NOT be trusted as a verdict.
+- **FR-1215**: A widget question's diagnostic MAY name a misconception belonging to its own
+  objective **or to any transitive prerequisite of it**, verified against the curriculum graph.
+  A student sketching a quadratic who doubles back is missing the function concept from three
+  lessons earlier, and the graph is what licenses saying so. A misconception from an objective the
+  student has not reached MUST be rejected.
+- **FR-1216**: Widget attempts MUST move the mastery estimate, and MUST be tagged with a
+  **modality** so that every reported metric can be recomputed with and without widget evidence.
+  Modality is the comparison's second declared variable, alongside question supply.
+- **FR-1217**: The tutor MUST prefer a stored, reviewed widget question and MAY compose one inline
+  when none fits. An inline widget that a student answers MUST be **materialised** into
+  `questions` as `source='variant'`, `status='review'`, `reviewed_by=NULL` — never live. Nothing
+  may move a reported number without leaving a reviewable artefact behind. An inline widget with
+  no objective named MUST record nothing rather than attribute evidence to a guessed skill.
+- **FR-1218**: Where a misconception is diagnosed, the **refutation authored for that error MUST
+  reach the student**, not only the analytics pipeline, and MUST be distinguishable from the
+  question's generic canonical solution. Its `reviewed` state MUST travel with it.
+- **FR-1219**: Internal vocabulary MUST NOT surface to students. A widget's `correct_answer` is
+  the reserved predicate `ok`; no student-facing copy may display it as an answer.
+
 ### Key Entities
 
 New or materially changed relative to the baseline; unchanged baseline entities (curriculum graph,

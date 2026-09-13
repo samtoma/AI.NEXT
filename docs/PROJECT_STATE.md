@@ -1,7 +1,53 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-12
+> Last updated: 2026-09-13
+
+## 🔗 WIDGETS ARE QUESTIONS — ADR-0009 (2026-09-13, `claude/tamer-shared-drive-access-ddpypu`)
+
+Samuel asked whether the new widgets bind to the generated question bank, the misconception
+catalogue and the lessons. **They did not, on all three** — and the reason was structural, not an
+oversight: `attempts.question_id` is NOT NULL and references `questions`, so a widget outcome could
+never be recorded, diagnosed, counted or made to move mastery unless the widget is a row there.
+Asked for the best fix rather than the cheapest, the answer was to unify the two content supply
+chains.
+
+**A widget is now a question.** `question_type='widget'`, with the construction and its diagnostics
+in `choices` — the same column that already carries `misconception_id` per option for multiple
+choice. The generalisation that makes it exact: *an MCQ's distractors are its enumerated wrong
+answers; a widget's PREDICATES are the same thing over a continuous answer space.* The client
+reports structure, the server decides meaning, and the pedagogy becomes reviewable data instead of
+code.
+
+- **48 stored widget questions**, 13 objectives, 20 families, 75 predicate→misconception mappings,
+  through the same generate → validate → load → sample pipeline as the 543 generated items.
+- **16 new misconceptions** for errors only a construction reveals. You cannot write a
+  multiple-choice item that catches "thinks a diameter is any long chord"; you can see it instantly
+  from where the two ends go. A wrong option can be a guess — a wrong construction rarely is.
+- **The refutation now reaches the student.** It was already looked up and logged to analytics, then
+  discarded in favour of the question's generic solution — so the text written for the exact
+  mistake reached a dashboard and never the child who made it.
+- **Samuel's decisions** (ADR-0009): widget attempts *do* move BKT, tagged by `modality` so every
+  metric can be recomputed without them; stored widgets are preferred and inline composition stays.
+  Those collide, so an inline widget **materialises** into a reviewable row on first answer — and
+  the database refuses to let a materialised row go live, by CHECK constraint rather than by
+  convention.
+
+**What the curriculum graph caught that code review would not.** Diagnostics may name a
+misconception on the question's objective *or any transitive prerequisite*, verified against the
+graph. That check rejected two content errors mid-generation: a chord misconception authored on the
+diameter-theorem objective instead of the definitions one, and a linear-functions sketch reaching
+for a coordinate-geometry misconception taught three units later. Both would have diagnosed
+confidently and explained something the student was never taught.
+
+**Open, and honest:** no tutor turn has yet pushed a stored widget (T119); 20 widget questions are
+queued for review and the review page cannot render a construction yet, so every widget a student
+sees is unreviewed (T122); 13 of 90 objectives are covered (T123); and every comparison metric now
+needs slicing by modality (T135).
+
+102 tests pass. Live bank: 1041 questions (491 mcq, 502 numeric, 48 widget) · 94 misconceptions.
+
+---
 
 ## ✏️ WIDGETS — every module is now something a student can DRAW on (2026-09-12, `claude/tamer-shared-drive-access-ddpypu`)
 

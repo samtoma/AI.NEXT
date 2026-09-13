@@ -28,13 +28,17 @@ export async function POST(req: Request) {
      *  satisfied. Graded here against the question's own `correct_answer`,
      *  never trusted as a verdict (ADR-0009). */
     predicate?: string;
+    /** An inline widget the TUTOR composed mid-stream, with no row behind it.
+     *  Answering one materialises it (ADR-0009 §3) so that nothing can move a
+     *  reported number without leaving a reviewable artefact. */
+    inlineWidget?: { kind: string; spec: Record<string, unknown>; loId: string; stem: string };
   };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "invalid JSON body" }, { status: 400 });
   }
-  const { questionId, givenAnswer, timeMs, predicate } = body;
+  const { questionId, givenAnswer, timeMs, predicate, inlineWidget } = body;
   if (!questionId || typeof givenAnswer !== "string") {
     return NextResponse.json(
       { error: "questionId and givenAnswer are required" },
@@ -51,12 +55,49 @@ export async function POST(req: Request) {
   try {
     await client.query("BEGIN");
 
+    // MATERIALISE AN INLINE WIDGET (ADR-0009 §3).
+    //
+    // Samuel's two decisions collide here: all widget attempts move mastery,
+    // and the tutor may still compose a widget inline when the bank has
+    // nothing that fits. But `attempts.question_id` is NOT NULL and references
+    // `questions`, so an improvised widget has nothing to attach to.
+    //
+    // Resolved in the direction that loses nothing: answering one WRITES it,
+    // as source='variant', status='review', reviewed_by=NULL. So the tutor's
+    // improvisation becomes content — countable under FR-1108, provenance-
+    // tagged under FR-1110, queued for the same human gate as everything else.
+    // It is never written live: materialising is not promotion, and the
+    // selector must not serve one student's improvised construction to the
+    // next student before a human has read it (enforced by a CHECK in
+    // migration 010, not only by this code).
+    //
+    // Before this, an improvised widget simply evaporated after the beat.
+    if (inlineWidget && typeof questionId === "string" && questionId.startsWith("qw:inline:")) {
+      await client.query(
+        `INSERT INTO questions
+           (id, lo_id, tier, question_type, stem, choices, correct_answer,
+            canonical_solution, solution_version, status, source, source_note,
+            materialised_from, reviewed_by, reviewed_at)
+         VALUES ($1,$2,'standard','widget',$3,$4,'ok','[]'::jsonb,1,'review','variant',$5,$6,NULL,NULL)
+         ON CONFLICT (id) DO NOTHING`,
+        [
+          questionId,
+          inlineWidget.loId,
+          inlineWidget.stem,
+          JSON.stringify({ kind: inlineWidget.kind, spec: inlineWidget.spec, diagnostics: [] }),
+          `Composed inline by the tutor and materialised on first attempt (ADR-0009 §3). Kind ${inlineWidget.kind}.`,
+          studentId,
+        ]
+      );
+    }
+
     const qRes = await client.query(
       `SELECT q.id, q.lo_id, q.question_type, q.correct_answer, q.choices,
               q.canonical_solution, q.solution_version, n.label AS lo_label
        FROM questions q
        JOIN graph_nodes n ON n.id = q.lo_id
-       WHERE q.id = $1 AND q.status = 'live'`,
+       WHERE q.id = $1
+         AND (q.status = 'live' OR q.materialised_from IS NOT NULL)`,
       [questionId]
     );
     if (qRes.rowCount === 0) {
