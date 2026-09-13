@@ -20,13 +20,21 @@ function grade(
 }
 
 export async function POST(req: Request) {
-  let body: { questionId?: string; givenAnswer?: string; timeMs?: number };
+  let body: {
+    questionId?: string;
+    givenAnswer?: string;
+    timeMs?: number;
+    /** Widget attempts only: the structural predicate the construction
+     *  satisfied. Graded here against the question's own `correct_answer`,
+     *  never trusted as a verdict (ADR-0009). */
+    predicate?: string;
+  };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "invalid JSON body" }, { status: 400 });
   }
-  const { questionId, givenAnswer, timeMs } = body;
+  const { questionId, givenAnswer, timeMs, predicate } = body;
   if (!questionId || typeof givenAnswer !== "string") {
     return NextResponse.json(
       { error: "questionId and givenAnswer are required" },
@@ -56,7 +64,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "unknown question" }, { status: 404 });
     }
     const q = qRes.rows[0];
-    const isCorrect = grade(q.question_type, q.correct_answer, givenAnswer);
+
+    // A WIDGET IS A QUESTION (ADR-0009), and its wrong answers are PREDICATES
+    // rather than lettered options. The client reports which structural thing
+    // happened — "both ends on the circle", "the stroke doubles back" — and the
+    // stored question maps that to a misconception. Grading stays here on the
+    // server: `correct_answer` holds the reserved predicate "ok", so a client
+    // claiming success has to claim it in the same vocabulary everything else
+    // is checked against.
+    const isWidget = q.question_type === "widget";
+    if (isWidget && typeof predicate !== "string") {
+      await client.query("ROLLBACK");
+      return NextResponse.json(
+        { error: "a widget attempt must report a predicate" },
+        { status: 400 }
+      );
+    }
+    const isCorrect = isWidget
+      ? predicate === q.correct_answer
+      : grade(q.question_type, q.correct_answer, givenAnswer);
 
     // THE DIAGNOSIS. On a multiple-choice question the distractors are not
     // filler — somebody chose each one to encode a specific error, and the
@@ -73,7 +99,20 @@ export async function POST(req: Request) {
             (c: { key?: string }) => c.key === givenAnswer.trim().toUpperCase()
           ) ?? null)
         : null;
-    const misconceptionId: string | null = chosenOption?.misconception_id ?? null;
+
+    // The widget equivalent: look the predicate up in the question's own
+    // diagnostics. An unmapped predicate (`off-target`, and anything the
+    // author chose not to name) yields null, which is honest — the student was
+    // wrong and we do not claim to know why.
+    const widgetDiagnostic: { misconception_id?: string } | null =
+      isWidget && !isCorrect && q.choices && Array.isArray(q.choices.diagnostics)
+        ? (q.choices.diagnostics.find(
+            (d: { predicate?: string }) => d.predicate === predicate
+          ) ?? null)
+        : null;
+
+    const misconceptionId: string | null =
+      chosenOption?.misconception_id ?? widgetDiagnostic?.misconception_id ?? null;
 
     // 1. record the attempt
     // `diagnosis_type` records HOW the outcome was determined. `confidence` is
@@ -83,8 +122,8 @@ export async function POST(req: Request) {
     const attemptRes = await client.query(
       `INSERT INTO attempts
          (student_id, question_id, given_answer, is_correct, time_ms, attempted_at,
-          diagnosis_type, misconception_id, stance_used, confidence)
-       VALUES ($1, $2, $3, $4, $5, now(), $6, $7, $8, $9)
+          diagnosis_type, misconception_id, stance_used, confidence, modality)
+       VALUES ($1, $2, $3, $4, $5, now(), $6, $7, $8, $9, $10)
        RETURNING id`,
       [
         studentId,
@@ -95,11 +134,20 @@ export async function POST(req: Request) {
         isCorrect
           ? "correct"
           : misconceptionId
-            ? "distractor_diagnosed"
+            ? isWidget
+              ? "construction_diagnosed"
+              : "distractor_diagnosed"
             : "deterministic_grade_incorrect",
         misconceptionId,
         isCorrect ? "confirm" : "re_explain",
+        // Confidence 1 for both: neither is inferred. A distractor carries a
+        // label the student clicked; a predicate is a geometric fact about
+        // what they built. Reading a label is not guessing.
         misconceptionId ? 1 : null,
+        // Samuel's decision (ADR-0009 §1): widget attempts DO move mastery,
+        // and this column is what keeps that auditable — every comparison
+        // metric can be recomputed with and without them.
+        isWidget ? "widget" : "question",
       ]
     );
     const attemptId = attemptRes.rows[0].id;

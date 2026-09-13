@@ -26,6 +26,7 @@ import { makePlane, PlaneFrame } from "../../viz/plane";
 import { Handle, WidgetShell, type Verdict } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { lineText, numText } from "./format";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const R = 5;
 const W = 280;
@@ -84,7 +85,7 @@ export function LineDrawer({
   m?: number;
   b?: number;
   through?: [[number, number], [number, number]];
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const p = useMemo(() => makePlane([-R, R], [-R, R], W, H, 20), []);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -162,6 +163,7 @@ export function LineDrawer({
     if (fired.current) return;
     let ok = false;
     let diagnosis = "";
+    let pred = "off-target";
 
     if (mode === "points" && through) {
       const [t0, t1] = through;
@@ -173,6 +175,7 @@ export function LineDrawer({
         const swapped =
           (pts[0].x === t0[1] && pts[0].y === t0[0]) ||
           (pts[1].x === t1[1] && pts[1].y === t1[0]);
+        pred = swapped ? "points-swapped" : "off-target";
         diagnosis = swapped
           ? " — the coordinates are the right numbers in the wrong order (x first, then y)"
           : "";
@@ -181,6 +184,7 @@ export function LineDrawer({
       // Graded on the LINE, so any two points on it are accepted.
       if (eq.m === null) {
         ok = false;
+        pred = "vertical-line";
         diagnosis = " — that is a vertical line, which has no slope and cannot be written y = mx + c";
       } else {
         const tm = targetM ?? 0;
@@ -188,10 +192,13 @@ export function LineDrawer({
         ok = same(eq.m, tm) && same(eq.b ?? 0, tb);
         if (!ok) {
           if (same(eq.m, tm)) {
+            pred = "intercept-wrong";
             diagnosis = ` — the slope is right, but the line sits at c = ${fmt(eq.b ?? 0)} instead of ${fmt(tb)}; it is parallel to the one asked for`;
           } else if (tm !== 0 && same(eq.m, -tm)) {
+            pred = "slope-sign-flipped";
             diagnosis = ` — the slope has the right size and the wrong SIGN (${fmt(eq.m)} instead of ${fmt(tm)}); the line leans the other way`;
           } else if (tm !== 0 && eq.m !== 0 && same(eq.m, 1 / tm)) {
+            pred = "slope-inverted";
             diagnosis = ` — the slope is upside down: run over rise (${fmt(eq.m)}) instead of rise over run (${fmt(tm)})`;
           }
         }
@@ -209,11 +216,14 @@ export function LineDrawer({
         ? `(${through[0][0]},${through[0][1]}) and (${through[1][0]},${through[1][1]})`
         : equationOf({ x: 0, y: targetB ?? 0 }, { x: 1, y: (targetM ?? 0) + (targetB ?? 0) }).text;
     setNote(ok ? `That is ${drew}.` : `You drew ${drew}; the target is ${want}.`);
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      predicate: ok ? OK : pred,
+      given: drew,
+      detail: ok
         ? `✓ Omar drew ${drew} correctly on the line drawer (target ${want})`
-        : `✗ Omar drew ${drew} on the line drawer instead of ${want}${diagnosis}`
-    );
+        : `✗ Omar drew ${drew} on the line drawer instead of ${want}${diagnosis}`,
+    });
   }, [mode, through, pts, eq, targetM, targetB, onResult]);
 
   const nudge = useKeyNudge({

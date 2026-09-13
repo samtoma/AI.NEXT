@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 /**
  * {{widget:pair_plotter:{"prompt":"Plot the point (3,2)","target":[3,2]}}}
@@ -34,7 +35,7 @@ export function PairPlotter({
 }: {
   prompt: string;
   target: [number, number];
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const [picked, setPicked] = useState<[number, number] | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -53,15 +54,29 @@ export function PairPlotter({
     setPicked([x, y]);
     const ok = x === target[0] && y === target[1];
     const q = quadrant(target[0], target[1]);
-    onResult(
-      ok
+    const swapped = x === target[1] && y === target[0];
+    // Right distances, wrong signs is a different error from a plain miss: the
+    // student found the point and reflected it.
+    const mirrored =
+      !swapped &&
+      Math.abs(x) === Math.abs(target[0]) &&
+      Math.abs(y) === Math.abs(target[1]);
+    onResult({
+      correct: ok,
+      predicate: ok
+        ? OK
+        : swapped
+        ? "swapped-coordinates"
+        : mirrored
+        ? "wrong-quadrant"
+        : "off-target",
+      given: `(${x},${y})`,
+      detail: ok
         ? `✓ Omar plotted (${target[0]},${target[1]}) correctly on the grid — ${q.en}`
         : `✗ Omar plotted (${x},${y}) instead of (${target[0]},${target[1]}) on the pair plotter${
-            x === target[1] && y === target[0]
-              ? " — he swapped the coordinates (order confusion)"
-              : ""
-          }`
-    );
+            swapped ? " — he swapped the coordinates (order confusion)" : ""
+          }`,
+    });
   };
 
   const ticks = Array.from({ length: R * 2 + 1 }, (_, i) => i - R);

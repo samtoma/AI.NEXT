@@ -28,6 +28,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { makePlane } from "../../viz/plane";
 import { Handle, WidgetShell, type Verdict } from "./WidgetShell";
 import { tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const RAD = 5;
 const LIM = 6.4;
@@ -51,7 +52,7 @@ export function AngleSetter({
   prompt: string;
   ask: "central" | "inscribed";
   target: number;
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const p = useMemo(() => makePlane([-LIM, LIM], [-LIM, LIM], W, H, 18), []);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -140,14 +141,18 @@ export function AngleSetter({
     setVerdict(ok ? "correct" : "wrong");
     const label = ask === "central" ? "arc AB / central angle" : "inscribed angle ∠ACB";
     let why = "";
+    let pred = "off-target";
     if (!ok) {
       if (ask === "inscribed" && Math.abs(geom.facing - target) < 1e-6) {
+        pred = "arc-given-as-angle";
         why =
           " — that is the value of the ARC, not the inscribed angle; the inscribed angle is HALF the arc it faces";
       } else if (ask === "central" && Math.abs(geom.inscribed - target) < 1e-6) {
+        pred = "angle-given-as-arc";
         why =
           " — that is the inscribed angle; the central angle / arc is DOUBLE it";
       } else if (Math.abs(360 - reading - target) < 1e-6) {
+        pred = "other-arc";
         why = " — that is the other arc; C faces the one across from it";
       }
     }
@@ -156,11 +161,14 @@ export function AngleSetter({
         ? `${label} = ${reading}°, and ∠ACB = ${geom.inscribed}° is exactly half the arc ${geom.facing}°.`
         : `You set ${label} to ${reading}°; the target is ${target}°${why}`
     );
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      predicate: ok ? OK : pred,
+      given: `${label} = ${reading}°`,
+      detail: ok
         ? `✓ Omar set the ${label} to ${target}° on the angle setter (arc ${geom.facing}°, inscribed ${geom.inscribed}° — the 2:1 relationship held)`
-        : `✗ Omar set the ${label} to ${reading}° instead of ${target}° on the angle setter${why}`
-    );
+        : `✗ Omar set the ${label} to ${reading}° instead of ${target}° on the angle setter${why}`,
+    });
   }, [ask, reading, target, geom, onResult]);
 
   const nudge = useKeyNudge({

@@ -31,6 +31,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { makePlane, PlaneFrame } from "../../viz/plane";
 import { WidgetShell, type Verdict } from "./WidgetShell";
 import { tidy, useStroke, type Pt } from "./drag";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const LIM = 5;
 const W = 290;
@@ -78,7 +79,7 @@ export function CurveSketcher({
   prompt: string;
   fn: CurveFn;
   coefs: number[];
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const p = useMemo(() => makePlane([-LIM, LIM], [-LIM, LIM], W, H, 18), []);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -143,14 +144,17 @@ export function CurveSketcher({
     let v: Verdict;
     let msg: string;
     let streamNote: string;
+    let pred: string = OK;
     const want = describe(fn, coefs);
 
     if (vltFails > SAMPLES * 0.06) {
       v = "wrong";
+      pred = "fails-vertical-line-test";
       msg = `Your stroke doubles back — at some x values it gives two different y values, so it is not the graph of a function at all. Draw left to right without going back.`;
       streamNote = `✗ Omar's sketch failed the vertical line test (${vltFails} sample columns carried two y values) — worth revisiting what makes a relation a function`;
     } else if (cover < MIN_COVER) {
       v = "partial";
+      pred = "partial-coverage";
       msg = `That covers only about ${Math.round(cover * 100)}% of the visible curve — carry the sketch across the whole grid.`;
       streamNote = `~ Omar sketched only ${Math.round(cover * 100)}% of the domain; the shape so far is ${tidy(mean, 2)} away from ${want}`;
     } else if (worst <= TOL) {
@@ -159,6 +163,7 @@ export function CurveSketcher({
       streamNote = `✓ Omar sketched ${want} freehand — mean error ${tidy(mean, 2)}, worst ${tidy(worst, 2)}, within the ${TOL} tolerance`;
     } else if (mean <= TOL) {
       v = "partial";
+      pred = Math.abs(bias) > TOL * 0.6 ? "vertically-displaced" : "off-target";
       const where = Math.abs(bias) > TOL * 0.6
         ? ` The whole sketch sits about ${tidy(Math.abs(bias), 1)} ${bias > 0 ? "high" : "low"}.`
         : " Most of it is right; one part drifts off.";
@@ -166,6 +171,7 @@ export function CurveSketcher({
       streamNote = `~ Omar sketched the right shape (${want}) but drifted: mean ${tidy(mean, 2)}, worst ${tidy(worst, 2)}${Math.abs(bias) > TOL * 0.6 ? `, biased ${bias > 0 ? "high" : "low"} by ${tidy(Math.abs(bias), 2)}` : ""}`;
     } else {
       v = "wrong";
+      pred = "off-target";
       // Name the structural error rather than the distance.
       let why = "";
       if (fn === "quadratic") {
@@ -173,11 +179,13 @@ export function CurveSketcher({
         const ends = (stroke[0].y + stroke[stroke.length - 1].y) / 2;
         const opensUp = mid.y < ends;
         if (opensUp !== coefs[0] > 0)
+          (pred = "opens-wrong-way"),
           why = ` Your parabola opens ${opensUp ? "upwards" : "downwards"}; this one opens ${coefs[0] > 0 ? "upwards" : "downwards"}, because a is ${coefs[0] > 0 ? "positive" : "negative"}.`;
       } else {
         const rise = stroke[stroke.length - 1].y - stroke[0].y;
         const run = stroke[stroke.length - 1].x - stroke[0].x;
         if (run !== 0 && rise / run > 0 !== coefs[0] > 0)
+          (pred = "slope-sign-flipped"),
           why = ` Your line ${rise / run > 0 ? "rises" : "falls"}; with a slope of ${tidy(coefs[0], 2)} it should ${coefs[0] > 0 ? "rise" : "fall"}.`;
       }
       msg = `Not yet — the target is ${want}.${why}`;
@@ -186,7 +194,12 @@ export function CurveSketcher({
 
     setVerdict(v);
     setNote(msg);
-    onResult(streamNote);
+    onResult({
+      correct: v === "correct",
+      predicate: v === "correct" ? OK : pred,
+      given: `freehand sketch, mean error ${tidy(mean, 2)}`,
+      detail: streamNote,
+    });
   }, [stroke, fn, coefs, onResult]);
 
   const path = (pts: Pt[]) =>

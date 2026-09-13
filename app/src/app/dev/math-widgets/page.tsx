@@ -135,7 +135,9 @@ const REJECTS: { name: string; props: Record<string, unknown>; why: string }[] =
 ];
 
 export default function MathWidgetsFixture() {
-  const [notes, setNotes] = useState<{ at: string; note: string }[]>([]);
+  const [notes, setNotes] = useState<
+    { at: string; note: string; predicate: string; correct: boolean }[]
+  >([]);
 
   return (
     <main className="min-h-screen bg-paper px-4 py-8 text-ink" data-ds="nour">
@@ -173,8 +175,13 @@ export default function MathWidgetsFixture() {
               </div>
               <p className="mb-2 text-[12.5px] italic leading-snug text-ink-soft">{c.teaches}</p>
 
-              {renderMathWidget(c.name, c.props, (note) =>
-                setNotes((n) => [{ at: c.name, note }, ...n].slice(0, 24))
+              {renderMathWidget(c.name, c.props, (o) =>
+                setNotes((n) =>
+                  [
+                    { at: c.name, note: o.detail, predicate: o.predicate, correct: o.correct },
+                    ...n,
+                  ].slice(0, 24)
+                )
               ) ?? (
                 <p className="rounded-md border border-gold/50 bg-gold-wash px-3 py-2 text-[12.5px] text-gold">
                   This payload did not validate — nothing rendered.
@@ -225,8 +232,9 @@ export default function MathWidgetsFixture() {
             What the tutor receives
           </h2>
           <p className="mt-1 text-[13px] text-ink-soft">
-            Finish a widget above and its note lands here — these strings are the tutor&apos;s
-            whole view of what the student just did.
+            Finish a widget above and its outcome lands here. The coloured word is the
+            PREDICATE — the structural fact the server maps to a misconception and answers
+            with a refutation. The sentence after it is what the tutor reads.
           </p>
           {notes.length === 0 ? (
             <p className="mt-3 font-mono text-[11.5px] text-ink-faint">
@@ -236,7 +244,11 @@ export default function MathWidgetsFixture() {
             <ul className="mt-3 grid gap-1.5">
               {notes.map((n, i) => (
                 <li key={i} className="rounded-md bg-paper-deep px-3 py-2 font-mono text-[11.5px] leading-relaxed text-ink">
-                  <span className="text-ink-faint">[{n.at}]</span> {n.note}
+                  <span className="text-ink-faint">[{n.at}]</span>{" "}
+                  <span className={n.correct ? "text-accent-deep" : "text-gold"}>
+                    {n.predicate}
+                  </span>{" "}
+                  {n.note}
                 </li>
               ))}
             </ul>

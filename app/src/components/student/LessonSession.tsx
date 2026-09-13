@@ -612,7 +612,12 @@ export function LessonSession({
       // ---- MATHEMATICS widgets. All eleven are validated and constructed in
       // render-math-widget.tsx; a payload that cannot be trusted renders
       // nothing rather than a widget with a nonsense answer key.
-      const math = renderMathWidget(name, props, emitNote);
+      const math = renderMathWidget(name, props, (outcome) => {
+        // The tutor stream reads prose; the attempt record reads the predicate.
+        // Both come from one outcome so they can never disagree about what the
+        // student did (ADR-0009).
+        emitNote(outcome.detail);
+      });
       if (math) return math;
       // {{widget:viz:{…}}} composed figure / {{widget:viz_ref:v:…}} stored
       // figure — shared with the spine dock; degrades bad payloads to chips.

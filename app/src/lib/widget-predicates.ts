@@ -19,7 +19,7 @@
  */
 
 /** The predicate a widget returns when the construction is right. */
-export const OK: "ok" = "ok";
+export const OK = "ok" as const;
 
 export const WIDGET_PREDICATES = {
   pair_plotter: {
@@ -75,6 +75,7 @@ export const WIDGET_PREDICATES = {
     "extra-values": "Marked values that the answer set does not contain",
     "endpoint-inclusion-wrong": "Right endpoints, wrong circles — hollow excludes (< >), filled includes (<= >=)",
     "interval-wrong": "The interval does not run between the right endpoints",
+    "off-target": "Wrong in a way none of the named errors describes",
   },
   ratio_balance: {
     "inverse-solved-as-direct": "Matched the quotients where the products should match",

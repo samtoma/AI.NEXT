@@ -24,6 +24,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { WidgetShell, type Verdict } from "./WidgetShell";
 import { clamp, useDragSurface, type Pt } from "./drag";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const W = 300;
 const PAD = 26;
@@ -87,7 +88,7 @@ export function SampleSpace({
   rows?: number;
   cols?: number;
   rule: SpaceRule;
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const R = clamp(Math.round(rows), 2, 8);
   const C = clamp(Math.round(cols), 2, 8);
@@ -154,6 +155,16 @@ export function SampleSpace({
 
     const g = gcd(truth.size, total) || 1;
     const answer = `${truth.size}/${total}${g > 1 ? ` = ${truth.size / g}/${total / g}` : ""}`;
+    // Selecting far too few outcomes for a compound event is the counted-once
+    // error specifically — "a total of 7" read as one outcome rather than six.
+    // A couple missed is just a couple missed.
+    const pred = ok
+      ? OK
+      : missing.length >= Math.max(2, truth.size / 2)
+      ? "counted-once"
+      : missing.length
+      ? "missed-outcomes"
+      : "extra-outcomes";
     const bits: string[] = [];
     if (missing.length) bits.push(`${missing.length} outcome${missing.length > 1 ? "s" : ""} missed`);
     if (extra.length) bits.push(`${extra.length} outcome${extra.length > 1 ? "s" : ""} that do not satisfy it`);
@@ -164,11 +175,14 @@ export function SampleSpace({
         ? `n(E) = ${truth.size}, n(S) = ${total}, so P = ${answer}.`
         : `You chose ${picked.size} of the ${total} outcomes${why}. The event has ${truth.size}, so P = ${answer}.`
     );
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      predicate: pred,
+      given: `${picked.size} of ${total} outcomes`,
+      detail: ok
         ? `✓ Omar selected all ${truth.size} outcomes where ${ruleText(rule)} out of ${total}, giving P = ${answer}`
-        : `✗ Omar selected ${picked.size} outcomes for "${ruleText(rule)}"${why}; n(E) is ${truth.size}, P = ${answer}`
-    );
+        : `✗ Omar selected ${picked.size} outcomes for "${ruleText(rule)}"${why}; n(E) is ${truth.size}, P = ${answer}`,
+    });
   }, [truth, picked, total, rule, onResult]);
 
   const ink = verdict === "correct" ? "var(--accent)" : "var(--gold)";

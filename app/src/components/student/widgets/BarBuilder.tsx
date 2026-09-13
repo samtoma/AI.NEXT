@@ -26,6 +26,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { WidgetShell, type Verdict } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, type Pt } from "./drag";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const MAXV = 10;
 const W = 300;
@@ -84,7 +85,7 @@ export function BarBuilder({
   target: number;
   n?: number;
   labels?: string[];
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const count = clamp(Math.round(n), 3, 8);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -136,17 +137,23 @@ export function BarBuilder({
     setVerdict(ok ? "correct" : "wrong");
 
     let why = "";
+    let pred = "off-target";
     if (!ok) {
       if (ask === "mode" && s.mode === null)
-        why = " — no value repeats, so this set has no mode at all";
+        (pred = "no-mode"),
+          (why = " — no value repeats, so this set has no mode at all");
       else if (ask === "mode" && Array.isArray(s.mode))
-        why = ` — two values tie at the top (${s.mode.join(" and ")}), so the set has two modes`;
+        (pred = "multi-modal"),
+          (why = ` — two values tie at the top (${s.mode.join(" and ")}), so the set has two modes`);
       else if (ask === "mean" && Math.abs(s.median - target) < 1e-9)
-        why = " — that is the MEDIAN, the middle value; the mean is the total shared out equally";
+        (pred = "median-for-mean"),
+          (why = " — that is the MEDIAN, the middle value; the mean is the total shared out equally");
       else if (ask === "median" && Math.abs(s.mean - target) < 1e-9)
-        why = " — that is the MEAN; the median is the middle value once they are in order";
+        (pred = "mean-for-median"),
+          (why = " — that is the MEAN; the median is the middle value once they are in order");
       else if (ask === "mean")
-        why = ` — for a mean of ${target} across ${count} values the total must be ${target * count}, and yours is ${s.sum}`;
+        (pred = "total-wrong"),
+          (why = ` — for a mean of ${target} across ${count} values the total must be ${target * count}, and yours is ${s.sum}`);
     }
 
     const set = vals.join(", ");
@@ -155,11 +162,14 @@ export function BarBuilder({
         ? `${set} — mean ${s.mean}, median ${s.median}, mode ${fmtMode(s.mode)}, range ${s.range}.`
         : `Your set is ${set}, giving ${ask} ${Number.isFinite(reading) ? reading : fmtMode(s.mode)}; the target is ${target}${why}`
     );
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      predicate: ok ? OK : pred,
+      given: `[${set}]`,
+      detail: ok
         ? `✓ Omar built the set [${set}] with ${ask} = ${target} on the bar builder (mean ${s.mean}, median ${s.median}, mode ${fmtMode(s.mode)}, range ${s.range}, population SD ${s.sd})`
-        : `✗ Omar built [${set}], whose ${ask} is ${Number.isFinite(reading) ? reading : fmtMode(s.mode)}, not ${target}${why}`
-    );
+        : `✗ Omar built [${set}], whose ${ask} is ${Number.isFinite(reading) ? reading : fmtMode(s.mode)}, not ${target}${why}`,
+    });
   }, [ask, reading, target, s, vals, count, onResult]);
 
   const ink = verdict === "correct" ? "var(--accent)" : "var(--gold)";

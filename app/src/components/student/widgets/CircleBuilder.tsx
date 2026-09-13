@@ -30,6 +30,7 @@ import type { ReactNode } from "react";
 import { makePlane, PlaneFrame } from "../../viz/plane";
 import { Handle, WidgetShell, type Verdict } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const RAD = 5;
 const LIM = 7;
@@ -104,7 +105,7 @@ export function CircleBuilder({
 }: {
   prompt: string;
   element: CircleElement;
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const p = useMemo(() => makePlane([-LIM, LIM], [-LIM, LIM], W, H, 18), []);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -183,22 +184,36 @@ export function CircleBuilder({
     if (fired.current) return;
     let ok = false;
     let why = "";
+    // The predicate is the structural fact; `why` is how we say it to a
+    // fourteen-year-old. The server maps the predicate to a misconception and
+    // serves its refutation, so the two must be set together or the diagnosis
+    // reaches the student in prose and nowhere else (ADR-0009).
+    let pred = "off-target";
 
     if (element === "radius") {
       ok = props.oneCentre;
       if (!ok) {
-        why = props.endsOn
-          ? " — both ends are on the circle, so that is a chord; a radius runs from the CENTRE to the circle"
-          : atCentre(a) || atCentre(b)
-          ? " — one end is at the centre, but the other has not reached the circle"
-          : " — neither end is at the centre; a radius must start there";
+        if (props.endsOn) {
+          pred = "radius-drawn-as-chord";
+          why = " — both ends are on the circle, so that is a chord; a radius runs from the CENTRE to the circle";
+        } else if (atCentre(a) || atCentre(b)) {
+          pred = "radius-short";
+          why = " — one end is at the centre, but the other has not reached the circle";
+        } else {
+          pred = "off-target";
+          why = " — neither end is at the centre; a radius must start there";
+        }
       }
     } else if (element === "chord") {
       ok = props.endsOn;
-      why = ok ? "" : " — a chord joins two points that are both ON the circle";
+      if (!ok) {
+        pred = "ends-not-on-circle";
+        why = " — a chord joins two points that are both ON the circle";
+      }
     } else if (element === "diameter") {
       ok = props.endsOn && props.centre;
       if (!ok) {
+        pred = props.endsOn ? "chord-not-through-centre" : "ends-not-on-circle";
         why = props.endsOn
           ? " — both ends are on the circle, so it is a chord, but it misses the centre; a diameter is the chord that passes THROUGH the centre"
           : " — a diameter has both ends on the circle and passes through the centre";
@@ -206,6 +221,7 @@ export function CircleBuilder({
     } else {
       ok = props.tangent;
       if (!ok) {
+        pred = props.secant ? "is-secant" : "is-external";
         why = props.secant
           ? ` — that line is ${props.dist} from the centre, less than the radius ${RAD}, so it cuts the circle at two points; that is a secant, not a tangent`
           : ` — that line is ${props.dist} from the centre, more than the radius ${RAD}, so it misses the circle completely; a tangent touches at exactly one point (distance = ${RAD})`;
@@ -220,11 +236,14 @@ export function CircleBuilder({
         ? `${drew} is ${WANTED[element]}.`
         : `${drew} is not ${WANTED[element]}${why.replace(/^ — /, " — ")}`
     );
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      predicate: ok ? OK : pred,
+      given: drew,
+      detail: ok
         ? `✓ Omar constructed ${WANTED[element]} ${drew} on the circle builder (radius ${RAD}, centre M)`
-        : `✗ Omar drew ${drew} when asked for ${WANTED[element]}${why}`
-    );
+        : `✗ Omar drew ${drew} when asked for ${WANTED[element]}${why}`,
+    });
   }, [element, props, a, b, onResult]);
 
   const nudge = useKeyNudge({

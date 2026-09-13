@@ -23,6 +23,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { Handle, WidgetShell, type Verdict } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { ratioText } from "./format";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const MAX = 12;
 const W = 300;
@@ -48,7 +49,7 @@ export function TriangleRatio({
   prompt: string;
   ask: "sin" | "cos" | "tan";
   target: number;
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
   // Not a triple, so nothing starts solved.
@@ -102,16 +103,22 @@ export function TriangleRatio({
         : tidy(reading, 3).toString();
 
     let why = "";
+    let pred = "off-target";
     if (!ok) {
       // The classic three, named rather than merely marked wrong.
-      if (Math.abs(g.sin - target) < 5e-4 && ask !== "sin")
+      if (Math.abs(g.sin - target) < 5e-4 && ask !== "sin") {
+        pred = "used-sine";
         why = ` — ${shown} is your ${ask}; the value you have built is the SINE (opposite over hypotenuse)`;
-      else if (Math.abs(g.cos - target) < 5e-4 && ask !== "cos")
+      } else if (Math.abs(g.cos - target) < 5e-4 && ask !== "cos") {
+        pred = "used-cosine";
         why = ` — the value you have built is the COSINE (adjacent over hypotenuse), not the ${ask}`;
-      else if (Math.abs(g.tan - target) < 5e-4 && ask !== "tan")
+      } else if (Math.abs(g.tan - target) < 5e-4 && ask !== "tan") {
+        pred = "used-tangent";
         why = ` — the value you have built is the TANGENT (opposite over adjacent), not the ${ask}`;
-      else if (Math.abs(1 / reading - target) < 5e-4)
+      } else if (Math.abs(1 / reading - target) < 5e-4) {
+        pred = "ratio-inverted";
         why = " — the ratio is the right pair of sides the wrong way up";
+      }
     }
 
     const scaled = g.adj % 3 === 0 && g.opp % 3 === 0 ? " (a scaled-up triple — same ratio)" : "";
@@ -120,11 +127,14 @@ export function TriangleRatio({
         ? `${LABEL[ask]} = ${shown} with legs ${g.opp} and ${g.adj}${scaled}. Any similar triangle gives the same ratio.`
         : `Your triangle gives ${ask} θ = ${shown}; the target is ${tidy(target, 3)}${why}`
     );
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      predicate: ok ? OK : pred,
+      given: `opp ${g.opp}, adj ${g.adj} → ${ask} θ = ${shown}`,
+      detail: ok
         ? `✓ Omar built a right triangle with ${ask} θ = ${shown} (opp ${g.opp}, adj ${g.adj}, hyp ${g.hyp}, θ ≈ ${g.theta}°) on the triangle ratio widget`
-        : `✗ Omar built opp ${g.opp}, adj ${g.adj} giving ${ask} θ = ${shown}, not ${tidy(target, 3)}${why}`
-    );
+        : `✗ Omar built opp ${g.opp}, adj ${g.adj} giving ${ask} θ = ${shown}, not ${tidy(target, 3)}${why}`,
+    });
   }, [ask, reading, target, g, onResult]);
 
   const nudge = useKeyNudge({

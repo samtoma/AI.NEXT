@@ -22,6 +22,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Handle, WidgetShell, type Verdict } from "./WidgetShell";
 import { clamp, useDragSurface, useKeyNudge, type Pt } from "./drag";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const W = 300;
 const H = 96;
@@ -47,7 +48,7 @@ export function NumberLineMarker({
   to?: number;
   openFrom?: boolean;
   openTo?: boolean;
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const [lo, hi] = range;
   const svgRef = useRef<SVGSVGElement>(null);
@@ -108,6 +109,7 @@ export function NumberLineMarker({
     if (fired.current) return;
     let ok = false;
     let why = "";
+    let pred = "off-target";
 
     if (mode === "points") {
       const want = [...(targets ?? [])].sort((a, b) => a - b);
@@ -117,6 +119,9 @@ export function NumberLineMarker({
         const missing = want.filter((v) => !got.includes(v));
         const extra = got.filter((v) => !want.includes(v));
         const bits: string[] = [];
+        // Missing values are the diagnosable error — a half-solved denominator.
+        // Extra ones are noise on top, so a set with both reports the omission.
+        pred = missing.length ? "missed-values" : "extra-values";
         if (missing.length) bits.push(`missed ${missing.join(" and ")}`);
         if (extra.length) bits.push(`marked ${extra.join(" and ")}, which ${extra.length > 1 ? "are" : "is"} allowed`);
         why = bits.length ? ` — ${bits.join("; ")}` : "";
@@ -128,10 +133,14 @@ export function NumberLineMarker({
         open.a === !!openFrom &&
         open.b === !!openTo;
       if (!ok) {
-        if (span.a === from && span.b === to)
+        if (span.a === from && span.b === to) {
+          pred = "endpoint-inclusion-wrong";
           why =
             " — the endpoints are right but the circles are not: a hollow circle excludes the value (< or >), a filled one includes it (≤ or ≥)";
-        else why = ` — the interval should run from ${from} to ${to}`;
+        } else {
+          pred = "interval-wrong";
+          why = ` — the interval should run from ${from} to ${to}`;
+        }
       }
     }
 
@@ -148,11 +157,14 @@ export function NumberLineMarker({
         ? `{${(targets ?? []).join(", ")}}`
         : `${openFrom ? "(" : "["}${from}, ${to}${openTo ? ")" : "]"}`;
     setNote(ok ? `${drew} is right.` : `You marked ${drew}; the answer is ${want}${why}`);
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      predicate: ok ? OK : pred,
+      given: drew,
+      detail: ok
         ? `✓ Omar marked ${drew} correctly on the number line`
-        : `✗ Omar marked ${drew} on the number line instead of ${want}${why}`
-    );
+        : `✗ Omar marked ${drew} on the number line instead of ${want}${why}`,
+    });
   }, [mode, marks, targets, span, open, from, to, openFrom, openTo, onResult]);
 
   const nudge = useKeyNudge({

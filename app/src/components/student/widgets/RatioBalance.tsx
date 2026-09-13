@@ -24,6 +24,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { WidgetShell, type Verdict } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 const W = 300;
 const H = 220;
@@ -75,7 +76,7 @@ export function RatioBalance({
   a: number;
   b: number;
   c: number;
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [d, setD] = useState(() => (mode === "direct" ? 2 : 3));
@@ -127,8 +128,10 @@ export function RatioBalance({
 
     const other = mode === "direct" ? (a * b) / c : (b * c) / a;
     let why = "";
+    let pred = "off-target";
     if (!ok) {
       if (Math.abs(d - other) < 1e-9) {
+        pred = mode === "direct" ? "direct-solved-as-inverse" : "inverse-solved-as-direct";
         why =
           mode === "direct"
             ? " — that is the answer to the INVERSE relationship; here the two quotients must match, not the two products"
@@ -148,11 +151,14 @@ export function RatioBalance({
           : `${a} × ${b} = ${c} × ${tidy(answer, 4)} = ${a * b} — the product is constant.`
         : `You set it to ${d}; the answer is ${tidy(answer, 4)}${why}`
     );
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      predicate: ok ? OK : pred,
+      given: String(d),
+      detail: ok
         ? `✓ Omar balanced the ${mode} relationship: ${a},${b},${c} → ${tidy(answer, 4)} on the ratio balance`
-        : `✗ Omar set the fourth term to ${d} instead of ${tidy(answer, 4)} in the ${mode} relationship ${a},${b},${c}${why}`
-    );
+        : `✗ Omar set the fourth term to ${d} instead of ${tidy(answer, 4)} in the ${mode} relationship ${a},${b},${c}${why}`,
+    });
   }, [d, answer, mode, a, b, c, onResult]);
 
   const nudge = useKeyNudge({

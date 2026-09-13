@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
 /**
  * {{widget:product_builder:{"X":[1,2],"Y":[3,4,5],"prompt":"Tap all pairs of X×Y"}}}
@@ -30,7 +31,7 @@ export function ProductBuilder({
   X: number[];
   Y: number[];
   prompt: string;
-  onResult: (note: string) => void;
+  onResult: (outcome: WidgetOutcome) => void;
 }) {
   const { candidates, correctSet, setX, setY } = useMemo(() => {
     const xs = [...new Set(X)].slice(0, 4);
@@ -79,8 +80,18 @@ export function ProductBuilder({
     const missed = [...correctSet].filter((k) => !selected.has(k));
     const ok = wrongPicks.length === 0 && missed.length === 0;
     const setStr = `{${setX.join(",")}}×{${setY.join(",")}}`;
-    onResult(
-      ok
+    onResult({
+      correct: ok,
+      // Picking pairs that are not in X×Y almost always means (y, x) — the
+      // decoys this widget adds are the reversed pairs, so a wrong pick is
+      // evidence of order confusion rather than of random tapping.
+      predicate: ok
+        ? OK
+        : wrongPicks.length
+        ? "reversed-pairs"
+        : "missing-pairs",
+      given: `${n - missed.length} of ${n} pairs`,
+      detail: ok
         ? `✓ Omar built X×Y correctly: all ${n} pairs of ${setStr} (n(X)×n(Y)=${setX.length}×${setY.length}=${n})`
         : `✗ Omar's X×Y for ${setStr} had mistakes — ${
             wrongPicks.length
@@ -88,8 +99,8 @@ export function ProductBuilder({
               : ""
           }${wrongPicks.length && missed.length ? "; " : ""}${
             missed.length ? `missed ${missed.join(", ")}` : ""
-          }`
-    );
+          }`,
+    });
   };
 
   const chipState = (k: string): "idle" | "on" | "hit" | "wrong" | "missed" => {
