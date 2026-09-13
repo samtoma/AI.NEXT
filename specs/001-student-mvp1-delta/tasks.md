@@ -39,7 +39,7 @@ says `mvp1`.
 - [X] T004 [P] Extend `.github/workflows/ci-cd.yml` with a branch→environment matrix, keeping the single `concurrency: deploy-oci` group
 - [ ] T005 ~~Measure box headroom before any second stack lands~~ — **no longer blocking.** Two simultaneous stacks are not required by ADR-0010. Keep as a pre-deploy check for whichever solution deploys next, not as a gate on development.
 - [X] T136 Give each solution branch **its own deploy trigger** (ADR-0010 Clarification) — **done 2026-09-13.** `ci-cd.yml` on this branch now deploys `PDR1-0` and nothing else: the branch→environment matrix and all four ternaries are gone, `if:` is `refs/heads/PDR1-0`, and no `main` trigger exists here. `deploy/DEPLOY-MVP1.md` and `deploy/CICD.md` re-cut. **Deliberately NOT renamed:** the directory, compose project, volume, database and `AINEXT_ENVIRONMENT` all keep `mvp1` — they name the *environment and its stack*, not the branch, and `mvp1` is already stamped on every analytics/ledger/cost row in that database (the loader refuses any other value). **Two live consequences, see T139 and T140.**
-- [ ] T139 ⚠️ **A push to `PDR1-0` touching `app/**`, `deploy/**` or the workflow now ATTEMPTS a deploy and will FAIL** until Phase 3 bootstraps the box — `/opt/reletix/AI.NEXT-mvp1` and its `deploy/.env` do not exist yet, so the job stops at "Verify in-folder secret" with a clear error. Before this change those pushes never reached the deploy job. Either run T013–T016 to bootstrap, or accept a red deploy on the Actions tab until then. **Samuel's call.**
+- [X] T139 ~~A push to `PDR1-0` now attempts a deploy and will fail until the box is bootstrapped~~ — **resolved 2026-09-13 by locking deploy to manual dispatch.** Samuel: *"deployment on infra might come after we finalise and test locally."* The deploy job now requires `github.event_name == 'workflow_dispatch'`, so **a push never deploys** and nothing in this repository can reach the OCI box. The per-branch structure from T136 is intact. **To re-arm when the box is ready:** change `== 'workflow_dispatch'` back to `!= 'pull_request'` in `.github/workflows/ci-cd.yml` — that one edit is the whole difference. `build` still runs on every push and PR.
 - [ ] T140 The **baseline branch's own copy** of `ci-cd.yml` still carries the old matrix (`if: main || mvp1`, plus the four ternaries). It is harmless today because the `mvp1` branch no longer exists, so it only ever fires for `main` — but it must get the same per-branch treatment when the baseline moves to `family-tutor`. **Cannot be done from here: it requires touching `main`, which Samuel has ruled out.**
 - [X] T137 ~~Decide whether `main` is retired in favour of `family-tutor`~~ — **ANSWERED 2026-09-13: no, not now.** Samuel: *"don't touch the main now."* `main` stays as it is, untouched and still the default. Reopen only if he asks.
 
@@ -72,6 +72,11 @@ says `mvp1`.
 > still wanted it is new work, not a leftover of this phase. Parity is now asserted
 > per branch against the held-constant book, which `T073` already does and which
 > needs no second stack.
+
+> **⏸️ DEFERRED by Samuel, 2026-09-13:** *"deployment on infra might come after we finalise and
+> test locally."* This whole phase is parked until local work is finished and tested. Deploy is
+> locked to manual dispatch (`T139`) so nothing reaches the box in the meantime. `docs/LOCAL-DEV.md`
+> is the supported way to run and verify the product until this phase is un-parked.
 
 **Goal**: each solution deploys on its own schedule, Access-gated, with the content
 constant intact on each.

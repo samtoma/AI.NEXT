@@ -123,6 +123,19 @@ From the 2026-09-13 verification pass — these are real and unfixed:
 5. **Task count**: 84 done / 135 total. `T069` is ticked with a lowercase `x`,
    which naive `grep "^- \[X\]"` counts miss.
 
+## Infra is parked (2026-09-13)
+
+Samuel: *"deployment on infra might come after we finalise and test locally."*
+
+- **Phase 3 (deployment) is deferred in full.** Nothing is to be done on the OCI box.
+- **Deploy is locked to manual dispatch** — the deploy job requires
+  `github.event_name == 'workflow_dispatch'`, so a push never deploys and nothing
+  in this repository can reach the box. `build` still runs on every push and PR.
+- **To re-arm when the box is ready**: in `.github/workflows/ci-cd.yml`, change
+  `== 'workflow_dispatch'` back to `!= 'pull_request'`. That single edit is the
+  whole difference. The per-branch structure from `T136` is already in place.
+- Until then `docs/LOCAL-DEV.md` is the supported way to run and verify.
+
 ## How to resume
 
 ```bash

@@ -59,7 +59,13 @@ $C up -d --build            # redeploy (CI does this on push to PDR1-0)
 $C down                     # stop — WITHOUT -v, ever
 ```
 
-Deploys are automatic: pushing `PDR1-0` runs **this branch's own copy** of `ci-cd.yml`, which
+> **⏸️ Deploy is currently MANUAL-ONLY (2026-09-13, `T139`).** Samuel has parked infra work until
+> the product is finalised and tested locally, so **a push does not deploy**. Run it by hand from
+> Actions → CI/CD → Run workflow, on this branch. To re-arm automatic deploys, change
+> `== 'workflow_dispatch'` back to `!= 'pull_request'` in the deploy job. Until then, use
+> `docs/LOCAL-DEV.md` to run and verify the product.
+
+When armed, deploys are automatic: pushing `PDR1-0` runs **this branch's own copy** of `ci-cd.yml`, which
 targets this environment's directory, project, compose file and port directly — no branch mapping.
 The baseline deploys from its own branch using the copy of the workflow that lives there.
 

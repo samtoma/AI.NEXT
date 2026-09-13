@@ -33,7 +33,7 @@ changes are a deliberate, backed-up, manually-triggered act.
 
 - **`build`** (GitHub-hosted; every branch + PR touching `app/**`): `npm ci` → `tsc --noEmit`
   → `next build`. A fast breakage gate.
-- **`deploy`** (`needs: build`, `if: github.ref == 'refs/heads/PDR1-0'` *on this branch*): runs **on the OCI box**
+- **`deploy`** (`needs: build`; on this branch `if: github.ref == 'refs/heads/PDR1-0' && github.event_name == 'workflow_dispatch'` — **MANUAL ONLY, a push does not deploy**, see `T139`): runs **on the OCI box**
   via the self-hosted runner. Because deploy `needs: build`, a broken build never reaches the box.
   Feature branches / PRs get the build check only.
 

@@ -1,7 +1,8 @@
 name: CI/CD
 
 # ONE gated pipeline, for ONE solution:
-#   build (GitHub-hosted, every branch/PR) → deploy (self-hosted OCI, PDR1-0 only).
+#   build (GitHub-hosted, every branch/PR) → deploy (self-hosted OCI, PDR1-0 only,
+#   and currently MANUAL-ONLY — a push does not deploy. See the deploy job.)
 # This file is the `PDR1-0` branch's copy. Each solution branch carries its own
 # (ADR-0010). Editing this one can never change what another branch deploys.
 # Deploy has `needs: build`, so a broken build never reaches the box.
@@ -74,11 +75,22 @@ jobs:
   # `concurrency` stays on the SHARED `deploy-oci` group on purpose. The group name is
   # repo-scoped, so it still serialises across branches and workflow files — two
   # solutions sharing one box must never deploy onto it simultaneously.
+  # 🔒 DEPLOY IS OPT-IN — Samuel, 2026-09-13: "deployment on infra might come after
+  # we finalise and test locally." A push NEVER deploys. The job runs only when you
+  # trigger it by hand (Actions → CI/CD → Run workflow, on this branch).
+  #
+  # This is one condition, not a dismantling: the per-branch structure below is
+  # intact. To arm it when the box is ready, change `== 'workflow_dispatch'` back to
+  # `!= 'pull_request'` — that single edit is the whole difference (T139).
+  #
+  # Until then nothing in this repository can reach the OCI box. Note that the first
+  # step of this job creates /opt/reletix/AI.NEXT-mvp1 and clones into it BEFORE the
+  # secret check fails, so an accidental run is not inert — hence the lock.
   deploy:
     needs: build
     if: >-
       github.ref == 'refs/heads/PDR1-0'
-      && github.event_name != 'pull_request'
+      && github.event_name == 'workflow_dispatch'
     runs-on: [self-hosted, oci]
     concurrency:
       group: deploy-oci
