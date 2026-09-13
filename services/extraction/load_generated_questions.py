@@ -35,6 +35,8 @@ import random
 import sys
 from pathlib import Path
 
+import widget_spec
+
 REQUIRED_QUESTION_KEYS = {
     "id",
     "lo_id",
@@ -45,7 +47,7 @@ REQUIRED_QUESTION_KEYS = {
     "canonical_solution",
 }
 VALID_TIERS = {"basic", "standard", "advanced"}
-VALID_TYPES = {"mcq", "numeric"}
+VALID_TYPES = {"mcq", "numeric", "widget"}
 
 
 def validate(bundle: dict) -> list[str]:
@@ -76,7 +78,14 @@ def validate(bundle: dict) -> list[str]:
             problems.append(f"{qid}: question_type {q['question_type']!r} unsupported")
         if not q["canonical_solution"]:
             problems.append(f"{qid}: canonical_solution is empty — a wrong answer would have nothing to teach from")
-        if q["question_type"] == "mcq":
+        if q["question_type"] == "widget":
+            # A widget's wrong answers are PREDICATES rather than options
+            # (ADR-0009), so its structural checks live with the contract that
+            # defines them. The checks that need the curriculum graph — does
+            # this misconception exist, is it on this objective or one of its
+            # prerequisites — ran in the generator, which has a database.
+            problems += widget_spec.validate_widget(q, known_misconceptions=None)
+        elif q["question_type"] == "mcq":
             choices = q.get("choices") or []
             keys = [c.get("key") for c in choices]
             if len(choices) < 3:

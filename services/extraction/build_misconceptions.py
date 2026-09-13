@@ -915,7 +915,7 @@ mc("mc:geo1-1-2:diameter-is-any-long-chord", "lo:geo1-1-2",
     "Drag one end and watch: the chord grows as it swings towards $M$, and it is longest exactly when it crosses it."],
    kind="conceptual"),
 
-mc("mc:geo1-1-2:chord-endpoints-off-circle", "lo:geo1-1-2",
+mc("mc:geo1-1-1:chord-endpoints-off-circle", "lo:geo1-1-1",
    "A chord drawn without both ends on the circle",
    "Treats a chord as any line 'across' the circle, including one that stops "
    "inside it or runs past it.",
@@ -1028,6 +1028,17 @@ mc("mc:u1-4-3:parabola-opens-wrong-way", "lo:u1-4-3",
 # construction-flavoured twin. A second entry would split its refutation and
 # its evidence, and the split stays invisible until someone wonders why a
 # common mistake has half the attempts it should.
+
+mc("mc:u1-4-2:gradient-sign-misread", "lo:u1-4-2",
+   "The sign of the gradient not read as the line's direction",
+   "Sketches $y = mx + c$ leaning the wrong way, treating the sign of $m$ as "
+   "affecting only where the line sits rather than which way it goes.",
+   "The drawn line rises where it should fall, or the reverse.",
+   ["Your line is straight and it crosses the axis in the right place — the shape and the intercept are both right.",
+    "The sign of $m$ says which way it goes: $m > 0$ rises to the right, $m < 0$ falls.",
+    "So $y = -x + 2$ starts at $2$ on the $y$-axis and goes DOWN one for every step right.",
+    "Read the sign of $m$ before drawing, and the direction is settled before you start."],
+   kind="conceptual"),
 
 mc("mc:u5-3-1:slope-sign-flipped", "lo:u5-3-1",
    "The sign of the slope lost",
