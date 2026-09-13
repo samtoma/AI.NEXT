@@ -1074,6 +1074,75 @@ mc("mc:t2u2-2-1:excluded-values-incomplete", "lo:t2u2-2-1",
    kind="conceptual"),
 
 
+# ===========================================================================
+# TERM 2 UNIT 3 — Probability
+# Added 2026-09-13 for T143 / FR-1111. Every entry below is mined from this
+# objective's OWN book distractors, which are unusually well chosen here: the
+# wrong options separate "read the symbol wrongly" from "read it right and
+# counted wrongly", and those need different teaching.
+# ===========================================================================
+
+mc("mc:t2u3-1-2:intersection-read-as-union", "lo:t2u3-1-2",
+   "A and B read as 'at least one of them' instead of 'both'",
+   "Treats the intersection as the union: takes any outcome in either event rather than only the shared ones.",
+   "Chooses 'at least one of the two events', or computes a probability matching the union.",
+   ["You have the right idea that two events are being combined — that is what the question is about.",
+    "$A \\cap B$ is the event that BOTH happen at the same time. 'At least one of them' is $A \\cup B$, the union.",
+    "The symbols are worth separating once: $\\cap$ is the overlap in the Venn diagram — the part inside both circles — and $\\cup$ is everything inside either circle.",
+    "A phrase to keep: $\\cap$ means AND, $\\cup$ means OR."],
+   [("q:t2u3-1-2:001", "the occurrence of at least one of the two events")])
+
+mc("mc:t2u3-1-2:intersection-as-a-only", "lo:t2u3-1-2",
+   "A and B read as 'A happens and B does not'",
+   "Reads the intersection as one event occurring in place of the other rather than alongside it.",
+   "Chooses 'the occurrence of A only'.",
+   ["You are right that $A \\cap B$ is stricter than 'either one' — it does narrow things down.",
+    "But it narrows to outcomes where A and B happen TOGETHER, not to A by itself.",
+    "'A only' is the part of A outside B, which is a different region of the Venn diagram and has its own notation.",
+    "Check yourself with one outcome: if it is in both lists, it belongs to $A \\cap B$."],
+   [("q:t2u3-1-2:001", "the occurrence of A only")])
+
+mc("mc:t2u3-1-2:exclusive-confused-with-exhaustive", "lo:t2u3-1-2",
+   "Mutually exclusive confused with covering the whole sample space",
+   "Defines mutually exclusive by the union filling S rather than by the intersection being empty.",
+   "Chooses $A \\cup B = S$ as the definition of mutually exclusive.",
+   ["You are reaching for a condition on how A and B sit inside S, which is the right kind of answer.",
+    "Mutually exclusive means they cannot happen together: $A \\cap B = \\phi$, so $P(A \\cap B) = 0$.",
+    "$A \\cup B = S$ says something else — that between them they cover every outcome. Two events can do that and still overlap.",
+    "Rolling a die: 'greater than 2' and 'less than 5' cover everything between them, yet 3 and 4 are in both. Covering is not the same as excluding."],
+   [("q:t2u3-1-2:002", "$A \\cup B = S$")])
+
+mc("mc:t2u3-1-2:assumed-mutually-exclusive", "lo:t2u3-1-2",
+   "Answers zero because the two events sound unrelated",
+   "Concludes the intersection is empty from the wording of the two events, without listing outcomes to check for a shared one.",
+   "Answers $0$ when a shared outcome does exist.",
+   ["Answering $0$ is exactly right when nothing can be in both — so the instinct to check for that is a good one.",
+    "The check has to be done on the outcomes, though, not on how the two events sound.",
+    "Cards 1 to 10, A even and B prime: 2 is even AND prime, so $A \\cap B = \\{2\\}$ and $P = \\frac{1}{10}$, not $0$.",
+    "Make it a habit: write out both lists and look for a number in both. Only an empty overlap earns a $0$."],
+   [("q:t2u3-1-2:003", "$0$"), ("q:t2u3-1-2:006", "$0$")])
+
+mc("mc:t2u3-1-2:union-counted-by-adding", "lo:t2u3-1-2",
+   "Counts 'together' by adding the two event sizes",
+   "Adds n(A) and n(B) instead of counting the outcomes common to both.",
+   "The numerator equals n(A) + n(B).",
+   ["You counted both events correctly — that part is done.",
+    "Adding them answers a different question. For 'A and B together' you want only the outcomes appearing in BOTH lists.",
+    "Cards 1 to 12, A divisible by 3 is $\\{3, 6, 9, 12\\}$ and B divisible by 4 is $\\{4, 8, 12\\}$. Only $12$ is in both, so $n(A \\cap B) = 1$ and $P = \\frac{1}{12}$.",
+    "Adding the sizes is a move for the union, and even there it double-counts the overlap."],
+   [("q:t2u3-1-2:006", "$\\frac{7}{12}$")])
+
+mc("mc:t2u3-1-2:gave-single-event-probability", "lo:t2u3-1-2",
+   "Reports the probability of one event instead of the intersection",
+   "Computes P(A) correctly and stops, without intersecting with B.",
+   "The answer equals P(A) or P(B) rather than P(A n B).",
+   ["Your value for the single event is right, so the counting is not the problem.",
+    "The question asks for A and B TOGETHER, which needs the outcomes shared by both.",
+    "A die, A even and B odd: no number is both, so $A \\cap B = \\phi$ and $P(A \\cap B) = 0$ — even though $P(A) = \\frac{1}{2}$.",
+    "Before answering, read the last line again and ask which event it names: A, B, or both at once."],
+   [("q:t2u3-1-2:005", "$\\frac{1}{2}$")])
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", type=Path, required=True)
