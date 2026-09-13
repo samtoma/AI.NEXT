@@ -1,7 +1,9 @@
 name: CI/CD
 
-# ONE gated pipeline:
-#   build (GitHub-hosted, every branch/PR) → deploy (self-hosted OCI, main only).
+# ONE gated pipeline, for ONE solution:
+#   build (GitHub-hosted, every branch/PR) → deploy (self-hosted OCI, PDR1-0 only).
+# This file is the `PDR1-0` branch's copy. Each solution branch carries its own
+# (ADR-0010). Editing this one can never change what another branch deploys.
 # Deploy has `needs: build`, so a broken build never reaches the box.
 #
 # Image hygiene (shared prod box — talent.reletix.com lives here too):
@@ -43,33 +45,49 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: "1"
 
-  # ---- Stage 2: deploy on the OCI box — ONLY if build passed, ONLY on a deploy branch ----
+  # ---- Stage 2: deploy on the OCI box — ONLY if build passed, ONLY from THIS branch ----
   #
-  # TWO environments share this one job (ADR-0007), mapped by branch:
-  #   main → the FROZEN baseline   /opt/reletix/AI.NEXT       project ainext       :3100
-  #   mvp1 → the comparison build  /opt/reletix/AI.NEXT-mvp1  project ainext-mvp1  :3101
+  # ONE BRANCH PER SOLUTION (ADR-0010 + its Clarification, T136).
+  # Samuel: "each branch with its own deployment triggers on their own branches."
   #
-  # One job rather than two workflows on purpose: the shared-box safety rails
-  # (dangling-only pruning, never `system prune`, health gate before traffic) are
-  # enforced in exactly one place. A second copy would drift, and the copy that
-  # drifts is the one that eventually prunes production's images.
+  # This copy of the workflow lives on `PDR1-0` and deploys the PDR1-0 solution and
+  # nothing else. The branch→environment matrix it replaced is gone: there are no
+  # ternaries here, because this file has exactly one target.
   #
-  # The `concurrency` group is deliberately shared, so the two environments never
-  # deploy onto the box simultaneously.
+  #   PDR1-0  →  /opt/reletix/AI.NEXT-mvp1  project ainext-mvp1  :3101
+  #
+  # Why the paths still say `mvp1`: those name the ENVIRONMENT and its stack, not the
+  # branch. `AINEXT_ENVIRONMENT=mvp1` is written into every analytics row, ledger row
+  # and cost record already in that database, and the content loader refuses to run
+  # against anything else. Renaming the stack would orphan its volume and invalidate
+  # the environment tag on existing data for no gain. Branch names changed; the
+  # environment did not (ADR-0010: environment naming describes where a build runs).
+  #
+  # The baseline deploys from ITS OWN branch, using the copy of this workflow on that
+  # branch. This file cannot deploy it and must never be given a `main` trigger.
+  #
+  # ⚠️ ACCEPTED COST of splitting: the shared-box safety rails below (dangling-only
+  # pruning, never `system prune`, health gate before traffic) now exist in more than
+  # one copy, and the copy that drifts is the one that eventually prunes production's
+  # images. If you change a rail here, change it on every solution branch.
+  #
+  # `concurrency` stays on the SHARED `deploy-oci` group on purpose. The group name is
+  # repo-scoped, so it still serialises across branches and workflow files — two
+  # solutions sharing one box must never deploy onto it simultaneously.
   deploy:
     needs: build
     if: >-
-      (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/mvp1')
+      github.ref == 'refs/heads/PDR1-0'
       && github.event_name != 'pull_request'
     runs-on: [self-hosted, oci]
     concurrency:
       group: deploy-oci
       cancel-in-progress: false
     env:
-      APP_DIR: ${{ github.ref_name == 'mvp1' && '/opt/reletix/AI.NEXT-mvp1' || '/opt/reletix/AI.NEXT' }}
-      COMPOSE_PROJECT: ${{ github.ref_name == 'mvp1' && 'ainext-mvp1' || 'ainext' }}
-      COMPOSE_FILE_NAME: ${{ github.ref_name == 'mvp1' && 'docker-compose.mvp1.yml' || 'docker-compose.yml' }}
-      APP_PORT: ${{ github.ref_name == 'mvp1' && '3101' || '3100' }}
+      APP_DIR: /opt/reletix/AI.NEXT-mvp1
+      COMPOSE_PROJECT: ainext-mvp1
+      COMPOSE_FILE_NAME: docker-compose.mvp1.yml
+      APP_PORT: "3101"
     steps:
       - name: Sync code into persistent app dir (git init/fetch — preserves deploy/.env)
         run: |

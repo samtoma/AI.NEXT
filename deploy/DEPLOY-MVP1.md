@@ -1,13 +1,21 @@
-# Deploying the MVP 1.0 comparison environment
+# Deploying the MVP 1.0 environment (the `PDR1-0` solution)
+
+> **Re-cut 2026-09-13 (T136, [ADR-0010](../docs/decisions/0010-one-branch-per-solution.md)).**
+> The deploy branch is **`PDR1-0`**, not `mvp1` — that branch never existed. Each solution branch
+> carries its own copy of `ci-cd.yml` and deploys only itself; there is no branch→environment
+> matrix any more. The directory, compose project, volume, database and `AINEXT_ENVIRONMENT` tag
+> below deliberately keep the name `mvp1`: they name the **environment and its stack**, not the
+> branch, and `mvp1` is already written into every analytics row, ledger row and cost record in
+> that database — the content loader refuses to run against any other value.
 
 Companion to `DEPLOY.md` (the baseline) and `CICD.md`. First-time bootstrap is in
 `specs/001-student-mvp1-delta/quickstart.md`; this file is the ongoing runbook.
 
-## The two environments
+## The two solutions
 
-| | Baseline — **frozen** | Comparison |
+| | Baseline — **frozen** | `PDR1-0` |
 |---|---|---|
-| Branch | `main` | `mvp1` |
+| Branch | `main` (untouched — see ADR-0010) | `PDR1-0` |
 | Checkout | `/opt/reletix/AI.NEXT` | `/opt/reletix/AI.NEXT-mvp1` |
 | Compose project | `ainext` | `ainext-mvp1` |
 | Compose file | `deploy/docker-compose.yml` | `deploy/docker-compose.mvp1.yml` |
@@ -47,16 +55,26 @@ C="docker compose -p ainext-mvp1 -f docker-compose.mvp1.yml"
 
 $C ps                       # status
 $C logs --tail=120 app      # app logs
-$C up -d --build            # redeploy (CI does this on push to mvp1)
+$C up -d --build            # redeploy (CI does this on push to PDR1-0)
 $C down                     # stop — WITHOUT -v, ever
 ```
 
-Deploys are automatic: pushing `mvp1` runs the shared `ci-cd.yml`, which maps the
-branch to this environment's directory, project, compose file and port.
+Deploys are automatic: pushing `PDR1-0` runs **this branch's own copy** of `ci-cd.yml`, which
+targets this environment's directory, project, compose file and port directly — no branch mapping.
+The baseline deploys from its own branch using the copy of the workflow that lives there.
+
+⚠️ The shared-box safety rails (dangling-only pruning, never `system prune`, health gate before
+traffic) now exist in one copy per solution branch. **If you change a rail, change it on every
+solution branch** — the copy that drifts is the one that eventually prunes production's images.
+The `concurrency: deploy-oci` group is shared across branches on purpose, so two solutions never
+deploy onto the box at the same time.
 
 ## Content refresh and parity
 
-Content must stay identical to the baseline or the comparison means nothing.
+Content no longer has to match the baseline — cross-solution parity was withdrawn
+(ADR-0010 Clarification; the two solutions may diverge completely). What `parity_check.py` still
+enforces is a **per-solution drift guard**: this environment must not silently drift from the
+content set it is supposed to serve.
 
 ```bash
 # load the same bundles the baseline serves

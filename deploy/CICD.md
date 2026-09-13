@@ -2,7 +2,7 @@
 
 | Workflow | Trigger | Touches |
 |---|---|---|
-| **`ci-cd.yml`** — build + deploy | automatic, push to `main` | **code only** (image + containers) |
+| **`ci-cd.yml`** — build + deploy | automatic, push to **this branch** (see note) | **code only** (image + containers) |
 | **`refresh-content.yml`** — content refresh | **manual** (`workflow_dispatch`) | **data only** (the live Postgres) |
 
 They share the concurrency group `deploy-oci`, so a deploy and a content refresh can never run
@@ -23,9 +23,17 @@ changes are a deliberate, backed-up, manually-triggered act.
 
 **`.github/workflows/ci-cd.yml`** is a single workflow with two jobs:
 
+> **Note (2026-09-13, T136 / [ADR-0010](../docs/decisions/0010-one-branch-per-solution.md)):** one
+> branch per solution, and **each solution branch carries its own copy of `ci-cd.yml` and deploys
+> only itself.** This copy lives on `PDR1-0`. The baseline deploys from its own branch using the
+> copy of the workflow that lives there; nothing here can change that. The shared-box safety rails
+> therefore exist in one copy per branch — **change a rail on every solution branch, or the copy
+> that drifts is the one that prunes production's images.** `concurrency: deploy-oci` is shared
+> across branches on purpose, so two solutions never deploy onto the box at once.
+
 - **`build`** (GitHub-hosted; every branch + PR touching `app/**`): `npm ci` → `tsc --noEmit`
   → `next build`. A fast breakage gate.
-- **`deploy`** (`needs: build`, `if: github.ref == 'refs/heads/main'`): runs **on the OCI box**
+- **`deploy`** (`needs: build`, `if: github.ref == 'refs/heads/PDR1-0'` *on this branch*): runs **on the OCI box**
   via the self-hosted runner. Because deploy `needs: build`, a broken build never reaches the box.
   Feature branches / PRs get the build check only.
 
