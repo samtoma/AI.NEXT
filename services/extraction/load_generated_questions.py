@@ -50,7 +50,11 @@ VALID_TIERS = {"basic", "standard", "advanced"}
 VALID_TYPES = {"mcq", "numeric", "widget"}
 
 
-def validate(bundle: dict) -> list[str]:
+def validate(
+    bundle: dict,
+    known_misconceptions: dict[str, str] | None = None,
+    restoring: bool = False,
+) -> tuple[list[str], list[str]]:
     """Structural validation. Correctness of the mathematics is the reviewer's job.
 
     What this can catch is the class of defect that makes an item unservable or
@@ -60,8 +64,21 @@ def validate(bundle: dict) -> list[str]:
     is the entire reason a human sample exists.
     """
     problems: list[str] = []
+    # On a RESTORE some findings are reports, not refusals. The bundle is a
+    # record of content that was already generated, reviewed and served; a
+    # cross-objective misconception reference in it is a real inconsistency
+    # worth fixing at the source, but refusing to reload it would make the
+    # committed artifact unrestorable — which is worse, because then the only
+    # copy of what students actually saw is one database.
+    notes: list[str] = []
     seen: set[str] = set()
-    lo_of_misconception = {m["id"]: m.get("lo_id") for m in bundle.get("misconceptions", [])}
+    # A freshly generated bundle declares the misconceptions it invented. A
+    # RESTORE declares none — the catalogue is already loaded — so the caller
+    # passes the database's view instead. Validating a restore against an empty
+    # list would reject every distractor that names a real, loaded entry.
+    lo_of_misconception = known_misconceptions if known_misconceptions is not None else {
+        m["id"]: m.get("lo_id") for m in bundle.get("misconceptions", [])
+    }
 
     for q in bundle.get("questions", []):
         qid = q.get("id", "<no id>")
@@ -102,13 +119,14 @@ def validate(bundle: dict) -> list[str]:
                 if mc and mc not in lo_of_misconception:
                     problems.append(f"{qid}: choice {c.get('key')} names unknown misconception {mc!r}")
                 elif mc and lo_of_misconception[mc] not in (None, q["lo_id"]):
-                    problems.append(
+                    msg = (
                         f"{qid}: choice {c.get('key')} names misconception {mc!r} belonging to "
                         f"{lo_of_misconception[mc]}, not to this question's {q['lo_id']}"
                     )
+                    (notes if restoring else problems).append(msg)
         elif q.get("choices"):
             problems.append(f"{qid}: numeric question carries choices")
-    return problems
+    return problems, notes
 
 
 def main() -> int:
@@ -122,16 +140,53 @@ def main() -> int:
                     help="percent of loaded items to write to the human review queue (default 10)")
     ap.add_argument("--seed", type=int, default=None,
                     help="RNG seed for a reproducible sample")
+    ap.add_argument("--restore", action="store_true",
+                    help="the bundle is an EXPORT of state that was already loaded and "
+                         "reviewed (export_generated_content.py), so honour its review "
+                         "stamps instead of forcing reviewed_by=NULL. Never use this on "
+                         "a freshly generated bundle: provenance is not something a "
+                         "generator gets to assert about itself")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
     bundle = json.loads(args.bundle.read_text())
-    problems = validate(bundle)
+
+    known = None
+    if args.restore and args.dsn:
+        import psycopg as _pg
+
+        with _pg.connect(args.dsn) as _c, _c.cursor() as _cur:
+            _cur.execute("SELECT id, lo_id FROM misconceptions")
+            known = dict(_cur.fetchall())
+        if not known:
+            print(
+                "REFUSING: --restore with an empty misconception catalogue. Load the "
+                "misconceptions bundle FIRST, or every distractor that names a real "
+                "entry is reported as unknown.",
+                file=sys.stderr,
+            )
+            return 2
+
+    problems, notes = validate(bundle, known, restoring=args.restore)
     if problems:
         print("BUNDLE REJECTED\n", file=sys.stderr)
         for p in problems:
             print(f"  x {p}", file=sys.stderr)
         return 1
+
+    if notes:
+        # Printed every time, never suppressed: a restore that quietly tolerated
+        # these would let the inconsistency live forever in the artifact.
+        print(
+            f"\n{len(notes)} cross-objective misconception reference(s) restored as-is "
+            f"— fix at the source, not here:",
+            file=sys.stderr,
+        )
+        for n in notes[:10]:
+            print(f"  ! {n}", file=sys.stderr)
+        if len(notes) > 10:
+            print(f"  ! … and {len(notes) - 10} more", file=sys.stderr)
+        print("", file=sys.stderr)
 
     questions = bundle["questions"]
     misconceptions = bundle.get("misconceptions", [])
@@ -190,22 +245,31 @@ def main() -> int:
                      (id, lo_id, tier, question_type, stem, choices, correct_answer,
                       canonical_solution, solution_version, status, source,
                       parent_question_id, source_page, source_note, reviewed_by, reviewed_at)
-                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,1,%s,'variant',%s,%s,%s,NULL,NULL)
+                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,1,%s,'variant',%s,%s,%s,%s,%s)
                    ON CONFLICT (id) DO UPDATE
                      SET stem = EXCLUDED.stem,
                          choices = EXCLUDED.choices,
                          correct_answer = EXCLUDED.correct_answer,
                          canonical_solution = EXCLUDED.canonical_solution,
-                         status = EXCLUDED.status""",
+                         status = EXCLUDED.status,
+                         reviewed_by = EXCLUDED.reviewed_by,
+                         reviewed_at = EXCLUDED.reviewed_at""",
                 (
                     q["id"], q["lo_id"], q["tier"], q["question_type"], q["stem"],
                     json.dumps(q.get("choices")) if q.get("choices") else None,
                     str(q["correct_answer"]),
                     json.dumps(q["canonical_solution"]),
-                    status,
+                    # A restore replays the status each row actually had; a fresh
+                    # load applies one status to the whole bundle.
+                    (q.get("status") or status) if args.restore else status,
                     q.get("parent_question_id"),
                     q.get("source_page"),
                     q.get("source_note"),
+                    # RESTORE honours the stamps an export carries; a normal load
+                    # forces them NULL, because the point of this loader is that a
+                    # generator never asserts its own provenance (ADR-0008).
+                    q.get("reviewed_by") if args.restore else None,
+                    q.get("reviewed_at") if args.restore else None,
                 ),
             )
             loaded += 1

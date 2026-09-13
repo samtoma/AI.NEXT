@@ -59,6 +59,7 @@ def main() -> int:
     import psycopg
 
     with psycopg.connect(args.dsn) as conn, conn.cursor() as cur:
+        skipped_refutations: list[str] = []
         env = (os.environ.get("AINEXT_ENVIRONMENT") or "").strip().lower()
         if env != "mvp1" and not args.dry_run:
             print(
@@ -88,6 +89,17 @@ def main() -> int:
                 )
                 # The refutation. reviewed stays false: this is exactly the
                 # content the standing exception covers.
+                #
+                # An entry with NO steps is never written. A misconception can
+                # legitimately arrive without one — an alias folded in from the
+                # generator keeps its row but carries no refutation of its own —
+                # and writing an empty entry for it would be worse than writing
+                # none: the diagnosis would resolve, the lookup would succeed,
+                # and the student would be served a blank explanation for a
+                # mistake they really made.
+                if not m.get("refutation"):
+                    skipped_refutations.append(m["id"])
+                    continue
                 cur.execute(
                     """INSERT INTO explanation_library
                          (id, lo_id, misconception_id, entry_type, content, generated_by, reviewed)
@@ -156,6 +168,9 @@ def main() -> int:
     print(f"{args.catalogue.name}: {len(entries)} misconceptions")
     print(f"  {verb} {stamped} book distractor(s)")
     print(f"  generator aliases found in the database: {alias_rows}")
+    if skipped_refutations:
+        print(f"  {len(skipped_refutations)} misconception(s) carry no refutation and got no entry: "
+              f"{', '.join(skipped_refutations[:4])}")
     if unmatched:
         print(f"  {len(unmatched)} mapping(s) matched nothing:", file=sys.stderr)
         for u in unmatched:

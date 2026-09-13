@@ -27,11 +27,17 @@ without `uv` present.
 ./scripts/local-dev.sh
 ```
 
-Creates the database, applies the schema and all nine migrations, loads the 450
-questions, promotes them, runs the parity check, writes `app/.env.local` and
-starts the dev server on http://localhost:3000. Safe to re-run — every step
-skips work already done. `--reset` starts from an empty database, `--no-serve`
-prepares without starting the server.
+Creates the database, applies the schema and all nine migrations, loads the
+**1041-question bank** (450 from the book, 543 generated, 48 widget
+constructions), restores the 96-entry misconception catalogue with its
+refutations, creates a synthetic demo student, runs the parity check, writes
+`app/.env.local` and starts the dev server on http://localhost:3000. Safe to
+re-run — every step skips work already done. `--reset` starts from an empty
+database, `--no-serve` prepares without starting the server.
+
+**Verified from empty on 2026-09-13**: a database dropped and rebuilt by this
+script is byte-identical to the one this work was developed against, down to the
+MD5 digest of every live question id.
 
 If it cannot reach Postgres it tells you the exact command for your platform.
 
@@ -61,6 +67,9 @@ Migration **009** is the MVP 1.0 delta (BKT columns, misconceptions,
 explanation_library, analytics_events, safety_flags, uploads). It is idempotent —
 re-running it is safe and is worth doing once to confirm that.
 
+Migration **010** is ADR-0009 (widget questions, `attempts.modality`,
+`questions.materialised_from`). Like the rest it is idempotent.
+
 ```bash
 export PG="-h 127.0.0.1 -p 55432 -U ainext -d ainext_mvp1"
 psql $PG -f db/schema.sql
@@ -69,15 +78,74 @@ for m in db/migrations/*.sql; do psql $PG -v ON_ERROR_STOP=1 -f "$m"; done
 
 ## 3. Load the maths content
 
+Two layers, and the ORDER MATTERS.
+
+**The book** — 450 questions, 90 objectives, 212 visuals. This is the constant
+the whole comparison rests on, and `parity_check.py` fails loudly if it drifts.
+
 ```bash
 cd services/extraction
-export AINEXT_DB_DSN="host=127.0.0.1 port=55432 dbname=ainext_mvp1 user=ainext"
-uv run load_seed.py --all --course course:prep3-math-en
+AINEXT_DB_DSN="host=127.0.0.1 port=55432 dbname=ainext_mvp1 user=ainext" \
+  uv run load_seed.py --all --course course:prep3-math-en
 ```
 
-Expect **450 questions, 421 live, 29 at review**. That 29 is Unit 1's
-bulk-promoted set being demoted by a scoped load — the behaviour PROJECT_STATE
-records, and the reason the parity check compares live counts separately.
+A scoped load leaves 29 of Unit 1's questions at `status='review'`. Promote
+**only book questions** — stamping the generated ones would assert a human
+review that never happened (FR-1110), and would try to promote a materialised
+inline widget, which the database refuses by CHECK:
+
+```bash
+psql $PG -c "update questions set status='live', reviewed_by='local-dev', reviewed_at=now()
+             where status<>'live' and source in ('seed','authored')"
+```
+
+**The generated content** — the misconception catalogue, the 543-question
+generated bank (ADR-0008) and the 48 widget questions (ADR-0009). These live in
+`services/extraction/seed/generated/` and are EXPORTS of state that was already
+generated, reviewed and served, so they replay with `--restore`, which honours
+the review stamp each row carries. A plain load would force every row to
+unreviewed and silently discard the 465-item human sample.
+
+The catalogue goes first, or every distractor naming a real entry is reported as
+unknown — the loader refuses rather than guess.
+
+```bash
+AINEXT_ENVIRONMENT=mvp1 uv run load_misconceptions.py seed/generated/misconceptions.json --dsn "$GEN_DSN"
+AINEXT_ENVIRONMENT=mvp1 uv run load_generated_questions.py seed/generated/generated-questions.json --dsn "$GEN_DSN" --restore --sample 0
+AINEXT_ENVIRONMENT=mvp1 uv run load_generated_questions.py seed/generated/widget-questions.json     --dsn "$GEN_DSN" --restore --sample 0
+```
+
+`AINEXT_ENVIRONMENT=mvp1` is not decoration: the loader refuses to run against
+anything else, because unreviewed generated content is bounded to the comparison
+environment (constitution III, ADR-0008).
+
+### Regenerating those bundles
+
+The bundles are exported from a database rather than re-derived, because the
+generators are deterministic *given their flags* and one run used a raised
+`--per-family`. Guessing it wrong produces a different bank — the ids drift and
+the committed review verdicts stop applying to anything. After a content
+milestone:
+
+```bash
+AINEXT_DB_DSN=... uv run export_generated_content.py    # writes seed/generated/
+```
+
+## 4. A student
+
+**Without one the first answer 500s.** `attempts.student_id` is a foreign key and
+the demo-identity resolver falls back to whichever student exists — on a new
+database none does, and the app returns a bare "internal error". The script
+creates one; by hand:
+
+```bash
+psql $PG -c "insert into students (display_name, grade, interests, language_pref, curriculum_system)
+             values ('Omar (demo)', '9', '{football,space}', 'en', 'eg-national-en')"
+```
+
+The `(demo)` suffix is load-bearing: `make-seed-dump.sh` refuses to ship a
+database holding any student without it, which is what keeps real pilot
+children out of git.
 
 ## 4. Prove parity
 

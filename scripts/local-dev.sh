@@ -124,10 +124,68 @@ fi
 
 # A scoped load demotes Unit 1's bulk-promoted questions back to 'review'.
 # Locally that is just noise, so promote them and let the parity check pass.
-# -tAc + `wc -l` over-counts by one on psql's trailing newline; ask the server
-# for the row count instead of counting lines.
-PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions set status='live', reviewed_by='local-dev', reviewed_at=now() where status<>'live' returning 1) select count(*) from p")
-[ "$PROMOTED" -gt 0 ] && ok "promoted $PROMOTED question(s) to live" || ok "all questions live"
+#
+# SCOPED TO THE BOOK, and the scope is load-bearing twice over. Promoting
+# everything would stamp generated and widget questions `reviewed_by='local-dev'`
+# — a surface asserting a human review that never happened, which FR-1110
+# forbids outright. It would also try to promote a materialised inline widget,
+# which the database refuses by CHECK (ADR-0009 §3). Generated content arrives
+# below carrying the status and review stamp it actually has.
+PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions set status='live', reviewed_by='local-dev', reviewed_at=now() where status<>'live' and source in ('seed','authored') returning 1) select count(*) from p")
+[ "$PROMOTED" -gt 0 ] && ok "promoted $PROMOTED book question(s) to live" || ok "all book questions live"
+
+# ----------------------------------------------------- 3b. generated content
+# The misconception catalogue, the generated question bank and the widget bank
+# (ADR-0008, ADR-0009). These are EXPORTS of the state that was generated,
+# reviewed and served — not fresh generations — so they replay with --restore,
+# which honours the review stamps each row carries. A plain load would force
+# them all to unreviewed and quietly discard the human sample.
+#
+# Order matters: the catalogue first, or every distractor that names a real
+# entry is reported as unknown (the loader refuses rather than guess).
+GEN_DSN="host=$HOST port=$PORT dbname=$DB user=$USER"
+MC_COUNT=$($PSQL -d $DB -tAc "select count(*) from misconceptions" 2>/dev/null || echo 0)
+if [ "$MC_COUNT" -ge 90 ]; then
+  ok "$MC_COUNT misconceptions already loaded"
+else
+  ( cd "$ROOT/services/extraction" \
+    && AINEXT_ENVIRONMENT=mvp1 $PYRUN load_misconceptions.py seed/generated/misconceptions.json --dsn "$GEN_DSN" ) \
+    || die "misconception load failed"
+fi
+
+GEN_COUNT=$($PSQL -d $DB -tAc "select count(*) from questions where source='variant'" 2>/dev/null || echo 0)
+if [ "$GEN_COUNT" -ge 590 ]; then
+  ok "$GEN_COUNT generated question(s) already loaded"
+else
+  for bundle in generated-questions.json widget-questions.json; do
+    ( cd "$ROOT/services/extraction" \
+      && AINEXT_ENVIRONMENT=mvp1 $PYRUN load_generated_questions.py "seed/generated/$bundle" \
+           --dsn "$GEN_DSN" --restore --sample 0 ) \
+      || die "$bundle restore failed"
+  done
+fi
+TOTAL=$($PSQL -d $DB -tAc "select count(*) from questions where status='live'")
+UNREVIEWED=$($PSQL -d $DB -tAc "select count(*) from questions where status='live' and source='variant' and reviewed_by is null")
+ok "$TOTAL live questions, $UNREVIEWED of them generated and unreviewed"
+
+# ------------------------------------------------------- 3c. a demo student
+# WITHOUT THIS THE FIRST ANSWER 500s. `attempts.student_id` is a foreign key,
+# and the demo-identity resolver falls back to whichever student exists — but
+# on a brand-new database none does, so the insert violates the constraint and
+# the app returns a bare "internal error" that says nothing about the cause.
+# It cost a while to diagnose once; it should never cost anyone that again.
+#
+# The "(demo)" suffix is load-bearing: make-seed-dump.sh refuses to ship a
+# database holding any student whose name lacks it, which is what keeps real
+# pilot children — minors — out of git.
+STUDENTS=$($PSQL -d $DB -tAc "select count(*) from students")
+if [ "$STUDENTS" -eq 0 ]; then
+  $PSQL -d $DB -qc "insert into students (display_name, grade, interests, language_pref, curriculum_system)
+                    values ('Omar (demo)', '9', '{football,space}', 'en', 'eg-national-en')"
+  ok "created the synthetic demo student"
+else
+  ok "$STUDENTS student(s) already present"
+fi
 
 # ------------------------------------------------------------------- 4. parity
 say "4/7  Content parity"

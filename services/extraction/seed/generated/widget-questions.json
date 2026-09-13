@@ -1,0 +1,2350 @@
+{
+  "generator": "exported from the live comparison database — services/extraction/export_generated_content.py",
+  "questions": [
+    {
+      "id": "q:geo1-1-1:w001",
+      "lo_id": "lo:geo1-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Circle $M$ has radius $5$. Construct a **radius** of the circle.",
+      "choices": {
+        "kind": "circle_builder",
+        "spec": {
+          "element": "radius"
+        },
+        "diagnostics": [
+          {
+            "predicate": "radius-drawn-as-chord",
+            "misconception_id": "mc:geo1-1-1:radius-not-from-centre"
+          },
+          {
+            "predicate": "radius-short",
+            "misconception_id": "mc:geo1-1-1:radius-any-length"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A radius joins the centre to the circle."
+        },
+        {
+          "step": 2,
+          "text_md": "Put one end at the centre $M = (0, 0)$."
+        },
+        {
+          "step": 3,
+          "text_md": "Put the other on the circle — any of the twelve lattice points at distance $5$ will do, for example $(3, 4)$ or $(-5, 0)$."
+        },
+        {
+          "step": 4,
+          "text_md": "Every radius of this circle has the same length, $5$. That fixed distance is what makes it a circle."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family circle-radius.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo1-1-1:w002",
+      "lo_id": "lo:geo1-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Circle $M$ has radius $5$. Construct a **chord** of the circle.",
+      "choices": {
+        "kind": "circle_builder",
+        "spec": {
+          "element": "chord"
+        },
+        "diagnostics": [
+          {
+            "predicate": "ends-not-on-circle",
+            "misconception_id": "mc:geo1-1-1:chord-endpoints-off-circle"
+          },
+          {
+            "predicate": "radius-drawn-as-chord",
+            "misconception_id": "mc:geo1-1-1:radius-not-from-centre"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A chord joins two points that are both on the circle."
+        },
+        {
+          "step": 2,
+          "text_md": "Put both ends on the circle — $(-3, 4)$ and $(4, -3)$, for example."
+        },
+        {
+          "step": 3,
+          "text_md": "It does not matter where: any two points on the circle give a chord."
+        },
+        {
+          "step": 4,
+          "text_md": "Note what is NOT required — a chord need not pass through the centre. The one that does is the diameter."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family circle-chord.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo1-1-2:w001",
+      "lo_id": "lo:geo1-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Circle $M$ has radius $5$. Construct a **diameter**.",
+      "choices": {
+        "kind": "circle_builder",
+        "spec": {
+          "element": "diameter"
+        },
+        "diagnostics": [
+          {
+            "predicate": "chord-not-through-centre",
+            "misconception_id": "mc:geo1-1-2:diameter-is-any-long-chord"
+          },
+          {
+            "predicate": "ends-not-on-circle",
+            "misconception_id": "mc:geo1-1-1:chord-endpoints-off-circle"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A diameter is the chord that passes through the centre."
+        },
+        {
+          "step": 2,
+          "text_md": "So it needs both: two ends on the circle, AND the segment through $M$."
+        },
+        {
+          "step": 3,
+          "text_md": "Take a point on the circle and its opposite — $(3, 4)$ and $(-3, -4)$."
+        },
+        {
+          "step": 4,
+          "text_md": "Its length is $2r = 10$, and no other chord is longer. That is the theorem of this lesson, and it holds BECAUSE the diameter passes through the centre."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family circle-diameter.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo1-2-2:w001",
+      "lo_id": "lo:geo1-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Circle $M$ has radius $5$. Draw a **tangent** to the circle.",
+      "choices": {
+        "kind": "circle_builder",
+        "spec": {
+          "element": "tangent"
+        },
+        "diagnostics": [
+          {
+            "predicate": "is-secant",
+            "misconception_id": "mc:geo1-2-2:tangent-cuts-circle"
+          },
+          {
+            "predicate": "is-external",
+            "misconception_id": "mc:geo1-2-2:tangent-need-not-touch"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "A tangent meets the circle at exactly one point."
+        },
+        {
+          "step": 2,
+          "text_md": "The test is a distance: measure from the centre $M$ to the line."
+        },
+        {
+          "step": 3,
+          "text_md": "Less than $5$ and the line cuts the circle twice (a secant); more than $5$ and it misses entirely."
+        },
+        {
+          "step": 4,
+          "text_md": "Exactly $5$ and it touches once. The vertical line $x = 5$ works, and so does the line through $(3, 4)$ and $(7, 1)$."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family circle-tangent.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w001",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $30°$.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "inscribed",
+          "target": 30
+        },
+        "diagnostics": [
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "An inscribed angle is half the arc it faces."
+        },
+        {
+          "step": 2,
+          "text_md": "So for $\\angle ACB = 30°$ the arc $AB$ that $C$ looks across at must measure $60°$."
+        },
+        {
+          "step": 3,
+          "text_md": "Drag $B$ until the arc reads that, and the angle follows."
+        },
+        {
+          "step": 4,
+          "text_md": "Then drag $C$ anywhere else on the same arc and watch: the angle does not move. Every inscribed angle on that arc is the same."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family inscribed-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w002",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $35°$.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "inscribed",
+          "target": 35
+        },
+        "diagnostics": [
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "An inscribed angle is half the arc it faces."
+        },
+        {
+          "step": 2,
+          "text_md": "So for $\\angle ACB = 35°$ the arc $AB$ that $C$ looks across at must measure $70°$."
+        },
+        {
+          "step": 3,
+          "text_md": "Drag $B$ until the arc reads that, and the angle follows."
+        },
+        {
+          "step": 4,
+          "text_md": "Then drag $C$ anywhere else on the same arc and watch: the angle does not move. Every inscribed angle on that arc is the same."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family inscribed-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w003",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $45°$.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "inscribed",
+          "target": 45
+        },
+        "diagnostics": [
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "An inscribed angle is half the arc it faces."
+        },
+        {
+          "step": 2,
+          "text_md": "So for $\\angle ACB = 45°$ the arc $AB$ that $C$ looks across at must measure $90°$."
+        },
+        {
+          "step": 3,
+          "text_md": "Drag $B$ until the arc reads that, and the angle follows."
+        },
+        {
+          "step": 4,
+          "text_md": "Then drag $C$ anywhere else on the same arc and watch: the angle does not move. Every inscribed angle on that arc is the same."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family inscribed-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w004",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $55°$.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "inscribed",
+          "target": 55
+        },
+        "diagnostics": [
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "An inscribed angle is half the arc it faces."
+        },
+        {
+          "step": 2,
+          "text_md": "So for $\\angle ACB = 55°$ the arc $AB$ that $C$ looks across at must measure $110°$."
+        },
+        {
+          "step": 3,
+          "text_md": "Drag $B$ until the arc reads that, and the angle follows."
+        },
+        {
+          "step": 4,
+          "text_md": "Then drag $C$ anywhere else on the same arc and watch: the angle does not move. Every inscribed angle on that arc is the same."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family inscribed-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w005",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$, $B$ and $C$ lie on circle $M$. Set the inscribed angle $\\angle ACB$ to $70°$.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "inscribed",
+          "target": 70
+        },
+        "diagnostics": [
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "An inscribed angle is half the arc it faces."
+        },
+        {
+          "step": 2,
+          "text_md": "So for $\\angle ACB = 70°$ the arc $AB$ that $C$ looks across at must measure $140°$."
+        },
+        {
+          "step": 3,
+          "text_md": "Drag $B$ until the arc reads that, and the angle follows."
+        },
+        {
+          "step": 4,
+          "text_md": "Then drag $C$ anywhere else on the same arc and watch: the angle does not move. Every inscribed angle on that arc is the same."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family inscribed-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w006",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$ and $B$ lie on circle $M$. Set the arc $AB$ facing $C$ to $60°$, and read the inscribed angle.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "central",
+          "target": 60
+        },
+        "diagnostics": [
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Drag $B$ until the arc $AB$ that $C$ faces measures $60°$."
+        },
+        {
+          "step": 2,
+          "text_md": "The central angle $\\angle AMB$ is the same $60°$ — a central angle equals its arc."
+        },
+        {
+          "step": 3,
+          "text_md": "The inscribed angle $\\angle ACB$ then reads $30°$, exactly half."
+        },
+        {
+          "step": 4,
+          "text_md": "That 2:1 relationship is the theorem, and it holds for every position of $C$ on that arc."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family central-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w007",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$ and $B$ lie on circle $M$. Set the arc $AB$ facing $C$ to $90°$, and read the inscribed angle.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "central",
+          "target": 90
+        },
+        "diagnostics": [
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Drag $B$ until the arc $AB$ that $C$ faces measures $90°$."
+        },
+        {
+          "step": 2,
+          "text_md": "The central angle $\\angle AMB$ is the same $90°$ — a central angle equals its arc."
+        },
+        {
+          "step": 3,
+          "text_md": "The inscribed angle $\\angle ACB$ then reads $45°$, exactly half."
+        },
+        {
+          "step": 4,
+          "text_md": "That 2:1 relationship is the theorem, and it holds for every position of $C$ on that arc."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family central-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w008",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$ and $B$ lie on circle $M$. Set the arc $AB$ facing $C$ to $120°$, and read the inscribed angle.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "central",
+          "target": 120
+        },
+        "diagnostics": [
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Drag $B$ until the arc $AB$ that $C$ faces measures $120°$."
+        },
+        {
+          "step": 2,
+          "text_md": "The central angle $\\angle AMB$ is the same $120°$ — a central angle equals its arc."
+        },
+        {
+          "step": 3,
+          "text_md": "The inscribed angle $\\angle ACB$ then reads $60°$, exactly half."
+        },
+        {
+          "step": 4,
+          "text_md": "That 2:1 relationship is the theorem, and it holds for every position of $C$ on that arc."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family central-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:geo2-2-2:w009",
+      "lo_id": "lo:geo2-2-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$A$ and $B$ lie on circle $M$. Set the arc $AB$ facing $C$ to $140°$, and read the inscribed angle.",
+      "choices": {
+        "kind": "angle_setter",
+        "spec": {
+          "ask": "central",
+          "target": 140
+        },
+        "diagnostics": [
+          {
+            "predicate": "angle-given-as-arc",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          },
+          {
+            "predicate": "arc-given-as-angle",
+            "misconception_id": "mc:geo2-2-2:inscribed-angle-doubled"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Drag $B$ until the arc $AB$ that $C$ faces measures $140°$."
+        },
+        {
+          "step": 2,
+          "text_md": "The central angle $\\angle AMB$ is the same $140°$ — a central angle equals its arc."
+        },
+        {
+          "step": 3,
+          "text_md": "The inscribed angle $\\angle ACB$ then reads $70°$, exactly half."
+        },
+        {
+          "step": 4,
+          "text_md": "That 2:1 relationship is the theorem, and it holds for every position of $C$ on that arc."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family central-angle.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:t2u2-2-1:w001",
+      "lo_id": "lo:t2u2-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Mark every value $x$ cannot take in $\\frac{1}{(x -2)(x +3)}$.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -2,
+            3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "missed-values",
+            "misconception_id": "mc:t2u2-2-1:excluded-values-incomplete"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The fraction breaks wherever the denominator is zero."
+        },
+        {
+          "step": 2,
+          "text_md": "Set the whole denominator to zero and solve it completely — every factor gives one root."
+        },
+        {
+          "step": 3,
+          "text_md": "Here that is $x = 2$ and $x = -3$."
+        },
+        {
+          "step": 4,
+          "text_md": "Both are excluded. The domain is every real number except those two."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family domain-excluded.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:t2u2-2-1:w002",
+      "lo_id": "lo:t2u2-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Mark every value $x$ cannot take in $\\frac{1}{(x +1)(x -4)}$.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -4,
+            1
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "missed-values",
+            "misconception_id": "mc:t2u2-2-1:excluded-values-incomplete"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The fraction breaks wherever the denominator is zero."
+        },
+        {
+          "step": 2,
+          "text_md": "Set the whole denominator to zero and solve it completely — every factor gives one root."
+        },
+        {
+          "step": 3,
+          "text_md": "Here that is $x = -1$ and $x = 4$."
+        },
+        {
+          "step": 4,
+          "text_md": "Both are excluded. The domain is every real number except those two."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family domain-excluded.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:t2u2-2-1:w003",
+      "lo_id": "lo:t2u2-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Mark every value $x$ cannot take in $\\frac{1}{(x -5)(x +2)}$.",
+      "choices": {
+        "kind": "number_line_marker",
+        "spec": {
+          "mode": "points",
+          "range": [
+            -6,
+            6
+          ],
+          "targets": [
+            -5,
+            2
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "missed-values",
+            "misconception_id": "mc:t2u2-2-1:excluded-values-incomplete"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The fraction breaks wherever the denominator is zero."
+        },
+        {
+          "step": 2,
+          "text_md": "Set the whole denominator to zero and solve it completely — every factor gives one root."
+        },
+        {
+          "step": 3,
+          "text_md": "Here that is $x = 5$ and $x = -2$."
+        },
+        {
+          "step": 4,
+          "text_md": "Both are excluded. The domain is every real number except those two."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family domain-excluded.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:t2u3-1-1:w001",
+      "lo_id": "lo:t2u3-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Two dice are thrown. Select every outcome whose total is $7$, then read $P$.",
+      "choices": {
+        "kind": "sample_space",
+        "spec": {
+          "cols": 6,
+          "rows": 6,
+          "rule": {
+            "op": "eq",
+            "kind": "sum",
+            "value": 7
+          }
+        },
+        "diagnostics": [
+          {
+            "predicate": "counted-once",
+            "misconception_id": "mc:t2u3-1-1:compound-outcome-counted-once"
+          },
+          {
+            "predicate": "missed-outcomes",
+            "misconception_id": "mc:t2u3-1-1:compound-outcome-counted-once"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sample space is the whole $6 \\times 6$ grid: $n(S) = 36$ outcomes."
+        },
+        {
+          "step": 2,
+          "text_md": "A total of $7$ happens $6$ different ways, and order matters — the first die and the second did different things."
+        },
+        {
+          "step": 3,
+          "text_md": "So $n(E) = 6$ and $P = \\frac{6}{36}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Count CELLS, not values. That is the trap: 'a total of 7' is one value and six outcomes."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family probability-sum.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:t2u3-1-1:w002",
+      "lo_id": "lo:t2u3-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Two dice are thrown. Select every outcome whose total is $5$, then read $P$.",
+      "choices": {
+        "kind": "sample_space",
+        "spec": {
+          "cols": 6,
+          "rows": 6,
+          "rule": {
+            "op": "eq",
+            "kind": "sum",
+            "value": 5
+          }
+        },
+        "diagnostics": [
+          {
+            "predicate": "counted-once",
+            "misconception_id": "mc:t2u3-1-1:compound-outcome-counted-once"
+          },
+          {
+            "predicate": "missed-outcomes",
+            "misconception_id": "mc:t2u3-1-1:compound-outcome-counted-once"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sample space is the whole $6 \\times 6$ grid: $n(S) = 36$ outcomes."
+        },
+        {
+          "step": 2,
+          "text_md": "A total of $5$ happens $4$ different ways, and order matters — the first die and the second did different things."
+        },
+        {
+          "step": 3,
+          "text_md": "So $n(E) = 4$ and $P = \\frac{4}{36}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Count CELLS, not values. That is the trap: 'a total of 7' is one value and six outcomes."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family probability-sum.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:t2u3-1-1:w003",
+      "lo_id": "lo:t2u3-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Two dice are thrown. Select every outcome whose total is $9$, then read $P$.",
+      "choices": {
+        "kind": "sample_space",
+        "spec": {
+          "cols": 6,
+          "rows": 6,
+          "rule": {
+            "op": "eq",
+            "kind": "sum",
+            "value": 9
+          }
+        },
+        "diagnostics": [
+          {
+            "predicate": "counted-once",
+            "misconception_id": "mc:t2u3-1-1:compound-outcome-counted-once"
+          },
+          {
+            "predicate": "missed-outcomes",
+            "misconception_id": "mc:t2u3-1-1:compound-outcome-counted-once"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The sample space is the whole $6 \\times 6$ grid: $n(S) = 36$ outcomes."
+        },
+        {
+          "step": 2,
+          "text_md": "A total of $9$ happens $4$ different ways, and order matters — the first die and the second did different things."
+        },
+        {
+          "step": 3,
+          "text_md": "So $n(E) = 4$ and $P = \\frac{4}{36}$."
+        },
+        {
+          "step": 4,
+          "text_md": "Count CELLS, not values. That is the trap: 'a total of 7' is one value and six outcomes."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family probability-sum.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u1-4-2:w001",
+      "lo_id": "lo:u1-4-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch $y = 2x + -1$ freehand.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "linear",
+          "coefs": [
+            2,
+            -1
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:u1-4-2:gradient-sign-misread"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The gradient is $2$, so the line rises as you go right."
+        },
+        {
+          "step": 2,
+          "text_md": "It crosses the $y$-axis at $-1$."
+        },
+        {
+          "step": 3,
+          "text_md": "Those two facts fix the line completely — start at the intercept and follow the gradient."
+        },
+        {
+          "step": 4,
+          "text_md": "One stroke, left to right."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family sketch-linear.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u1-4-2:w002",
+      "lo_id": "lo:u1-4-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch $y = -1x + 2$ freehand.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "linear",
+          "coefs": [
+            -1,
+            2
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:u1-4-2:gradient-sign-misread"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The gradient is $-1$, so the line falls as you go right."
+        },
+        {
+          "step": 2,
+          "text_md": "It crosses the $y$-axis at $2$."
+        },
+        {
+          "step": 3,
+          "text_md": "Those two facts fix the line completely — start at the intercept and follow the gradient."
+        },
+        {
+          "step": 4,
+          "text_md": "One stroke, left to right."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family sketch-linear.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u1-4-2:w003",
+      "lo_id": "lo:u1-4-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Sketch $y = 1x + 0$ freehand.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "linear",
+          "coefs": [
+            1,
+            0
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:u1-4-2:gradient-sign-misread"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The gradient is $1$, so the line rises as you go right."
+        },
+        {
+          "step": 2,
+          "text_md": "It crosses the $y$-axis at $0$."
+        },
+        {
+          "step": 3,
+          "text_md": "Those two facts fix the line completely — start at the intercept and follow the gradient."
+        },
+        {
+          "step": 4,
+          "text_md": "One stroke, left to right."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family sketch-linear.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u1-4-3:w001",
+      "lo_id": "lo:u1-4-3",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch $y = 1x^2 + 0x + -4$ freehand.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "quadratic",
+          "coefs": [
+            1,
+            0,
+            -4
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "opens-wrong-way",
+            "misconception_id": "mc:u1-4-3:parabola-opens-wrong-way"
+          },
+          {
+            "predicate": "fails-vertical-line-test",
+            "misconception_id": "mc:u1-3-1:fails-vertical-line-test"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read the sign of $a$ first: it decides the direction. Here the curve opens upwards, turning at $(0, -4)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Find the turning point, then a point or two either side."
+        },
+        {
+          "step": 3,
+          "text_md": "Draw left to right in one stroke without going back."
+        },
+        {
+          "step": 4,
+          "text_md": "If the stroke doubles back, the sketch gives one $x$ two $y$ values — and that is not the graph of a function at all."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family sketch-quadratic.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u1-4-3:w002",
+      "lo_id": "lo:u1-4-3",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch $y = -1x^2 + 0x + 3$ freehand.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "quadratic",
+          "coefs": [
+            -1,
+            0,
+            3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "opens-wrong-way",
+            "misconception_id": "mc:u1-4-3:parabola-opens-wrong-way"
+          },
+          {
+            "predicate": "fails-vertical-line-test",
+            "misconception_id": "mc:u1-3-1:fails-vertical-line-test"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read the sign of $a$ first: it decides the direction. Here the curve opens downwards, turning at $(0, 3)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Find the turning point, then a point or two either side."
+        },
+        {
+          "step": 3,
+          "text_md": "Draw left to right in one stroke without going back."
+        },
+        {
+          "step": 4,
+          "text_md": "If the stroke doubles back, the sketch gives one $x$ two $y$ values — and that is not the graph of a function at all."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family sketch-quadratic.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u1-4-3:w003",
+      "lo_id": "lo:u1-4-3",
+      "tier": "advanced",
+      "question_type": "widget",
+      "stem": "Sketch $y = 1x^2 + -2x + -3$ freehand.",
+      "choices": {
+        "kind": "curve_sketcher",
+        "spec": {
+          "fn": "quadratic",
+          "coefs": [
+            1,
+            -2,
+            -3
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "opens-wrong-way",
+            "misconception_id": "mc:u1-4-3:parabola-opens-wrong-way"
+          },
+          {
+            "predicate": "fails-vertical-line-test",
+            "misconception_id": "mc:u1-3-1:fails-vertical-line-test"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Read the sign of $a$ first: it decides the direction. Here the curve opens upwards, turning at $(1, -4)$."
+        },
+        {
+          "step": 2,
+          "text_md": "Find the turning point, then a point or two either side."
+        },
+        {
+          "step": 3,
+          "text_md": "Draw left to right in one stroke without going back."
+        },
+        {
+          "step": 4,
+          "text_md": "If the stroke doubles back, the sketch gives one $x$ two $y$ values — and that is not the graph of a function at all."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family sketch-quadratic.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u2-3-1:w001",
+      "lo_id": "lo:u2-3-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "$3 : 4 = 9 : ?$ — balance the beam.",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "a": 3,
+          "b": 4,
+          "c": 9,
+          "mode": "direct"
+        },
+        "diagnostics": [
+          {
+            "predicate": "direct-solved-as-inverse",
+            "misconception_id": "mc:u2-3-1:direct-solved-as-inverse"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Both quantities rise together, so this is DIRECT variation and the two ratios must be equal."
+        },
+        {
+          "step": 2,
+          "text_md": "$3 \\div 4$ and $9 \\div ?$ have to give the same number."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes the fourth term $12$."
+        },
+        {
+          "step": 4,
+          "text_md": "The beam is level when the quotients match — watch it as you drag."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family variation-direct.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u2-3-1:w002",
+      "lo_id": "lo:u2-3-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "$2 : 5 = 6 : ?$ — balance the beam.",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "a": 2,
+          "b": 5,
+          "c": 6,
+          "mode": "direct"
+        },
+        "diagnostics": [
+          {
+            "predicate": "direct-solved-as-inverse",
+            "misconception_id": "mc:u2-3-1:direct-solved-as-inverse"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Both quantities rise together, so this is DIRECT variation and the two ratios must be equal."
+        },
+        {
+          "step": 2,
+          "text_md": "$2 \\div 5$ and $6 \\div ?$ have to give the same number."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes the fourth term $15$."
+        },
+        {
+          "step": 4,
+          "text_md": "The beam is level when the quotients match — watch it as you drag."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family variation-direct.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u2-3-1:w003",
+      "lo_id": "lo:u2-3-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "$4 : 3 = 8 : ?$ — balance the beam.",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "a": 4,
+          "b": 3,
+          "c": 8,
+          "mode": "direct"
+        },
+        "diagnostics": [
+          {
+            "predicate": "direct-solved-as-inverse",
+            "misconception_id": "mc:u2-3-1:direct-solved-as-inverse"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Both quantities rise together, so this is DIRECT variation and the two ratios must be equal."
+        },
+        {
+          "step": 2,
+          "text_md": "$4 \\div 3$ and $8 \\div ?$ have to give the same number."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes the fourth term $6$."
+        },
+        {
+          "step": 4,
+          "text_md": "The beam is level when the quotients match — watch it as you drag."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family variation-direct.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u2-3-2:w001",
+      "lo_id": "lo:u2-3-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$6$ workers finish a job in $10$ days. How long do $4$ workers take?",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "a": 6,
+          "b": 10,
+          "c": 4,
+          "mode": "inverse"
+        },
+        "diagnostics": [
+          {
+            "predicate": "inverse-solved-as-direct",
+            "misconception_id": "mc:u2-3-2:inverse-solved-as-direct"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Fewer workers means more days, so the quantities move in opposite directions — INVERSE variation."
+        },
+        {
+          "step": 2,
+          "text_md": "What stays fixed is the PRODUCT: $6 \\times 10 = 60$ worker-days of work."
+        },
+        {
+          "step": 3,
+          "text_md": "So $4$ workers need $60 \\div 4 = 15$ days."
+        },
+        {
+          "step": 4,
+          "text_md": "Cross-multiplying the ratios would be the direct rule, and it gives the wrong answer here. Ask first which way the second quantity moves."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family variation-inverse.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u2-3-2:w002",
+      "lo_id": "lo:u2-3-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$8$ workers finish a job in $6$ days. How long do $4$ workers take?",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "a": 8,
+          "b": 6,
+          "c": 4,
+          "mode": "inverse"
+        },
+        "diagnostics": [
+          {
+            "predicate": "inverse-solved-as-direct",
+            "misconception_id": "mc:u2-3-2:inverse-solved-as-direct"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Fewer workers means more days, so the quantities move in opposite directions — INVERSE variation."
+        },
+        {
+          "step": 2,
+          "text_md": "What stays fixed is the PRODUCT: $8 \\times 6 = 48$ worker-days of work."
+        },
+        {
+          "step": 3,
+          "text_md": "So $4$ workers need $48 \\div 4 = 12$ days."
+        },
+        {
+          "step": 4,
+          "text_md": "Cross-multiplying the ratios would be the direct rule, and it gives the wrong answer here. Ask first which way the second quantity moves."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family variation-inverse.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u2-3-2:w003",
+      "lo_id": "lo:u2-3-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "$12$ workers finish a job in $5$ days. How long do $10$ workers take?",
+      "choices": {
+        "kind": "ratio_balance",
+        "spec": {
+          "a": 12,
+          "b": 5,
+          "c": 10,
+          "mode": "inverse"
+        },
+        "diagnostics": [
+          {
+            "predicate": "inverse-solved-as-direct",
+            "misconception_id": "mc:u2-3-2:inverse-solved-as-direct"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Fewer workers means more days, so the quantities move in opposite directions — INVERSE variation."
+        },
+        {
+          "step": 2,
+          "text_md": "What stays fixed is the PRODUCT: $12 \\times 5 = 60$ worker-days of work."
+        },
+        {
+          "step": 3,
+          "text_md": "So $10$ workers need $60 \\div 10 = 6$ days."
+        },
+        {
+          "step": 4,
+          "text_md": "Cross-multiplying the ratios would be the direct rule, and it gives the wrong answer here. Ask first which way the second quantity moves."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family variation-inverse.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u3-2-1:w001",
+      "lo_id": "lo:u3-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a set of five values whose **mean** is $6$.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "n": 5,
+          "ask": "mean",
+          "target": 6
+        },
+        "diagnostics": [
+          {
+            "predicate": "median-for-mean",
+            "misconception_id": "mc:u3-2-1:mean-built-as-median"
+          },
+          {
+            "predicate": "total-wrong",
+            "misconception_id": "mc:u3-2-1:mean-built-as-median"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The mean is the total shared out equally, so for five values averaging $6$ the total must be $30$."
+        },
+        {
+          "step": 2,
+          "text_md": "Any five values adding to $30$ will do — they do not have to be close together."
+        },
+        {
+          "step": 3,
+          "text_md": "Watch the median as you drag. It moves independently, which is the point: the mean feels every value, the median only position."
+        },
+        {
+          "step": 4,
+          "text_md": "Notice too that many different sets answer this question. The mean pins down the total and nothing else."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family stat-mean.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u3-2-1:w002",
+      "lo_id": "lo:u3-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a set of five values whose **mean** is $5$.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "n": 5,
+          "ask": "mean",
+          "target": 5
+        },
+        "diagnostics": [
+          {
+            "predicate": "median-for-mean",
+            "misconception_id": "mc:u3-2-1:mean-built-as-median"
+          },
+          {
+            "predicate": "total-wrong",
+            "misconception_id": "mc:u3-2-1:mean-built-as-median"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The mean is the total shared out equally, so for five values averaging $5$ the total must be $25$."
+        },
+        {
+          "step": 2,
+          "text_md": "Any five values adding to $25$ will do — they do not have to be close together."
+        },
+        {
+          "step": 3,
+          "text_md": "Watch the median as you drag. It moves independently, which is the point: the mean feels every value, the median only position."
+        },
+        {
+          "step": 4,
+          "text_md": "Notice too that many different sets answer this question. The mean pins down the total and nothing else."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family stat-mean.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u3-2-1:w003",
+      "lo_id": "lo:u3-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a set of five values whose **mean** is $7$.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "n": 5,
+          "ask": "mean",
+          "target": 7
+        },
+        "diagnostics": [
+          {
+            "predicate": "median-for-mean",
+            "misconception_id": "mc:u3-2-1:mean-built-as-median"
+          },
+          {
+            "predicate": "total-wrong",
+            "misconception_id": "mc:u3-2-1:mean-built-as-median"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The mean is the total shared out equally, so for five values averaging $7$ the total must be $35$."
+        },
+        {
+          "step": 2,
+          "text_md": "Any five values adding to $35$ will do — they do not have to be close together."
+        },
+        {
+          "step": 3,
+          "text_md": "Watch the median as you drag. It moves independently, which is the point: the mean feels every value, the median only position."
+        },
+        {
+          "step": 4,
+          "text_md": "Notice too that many different sets answer this question. The mean pins down the total and nothing else."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family stat-mean.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u3-2-1:w004",
+      "lo_id": "lo:u3-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a set of five values whose **median** is $6$.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "n": 5,
+          "ask": "median",
+          "target": 6
+        },
+        "diagnostics": [
+          {
+            "predicate": "mean-for-median",
+            "misconception_id": "mc:u3-2-1:median-built-as-mean"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Put the five values in order; the median is the one in the middle — the third."
+        },
+        {
+          "step": 2,
+          "text_md": "So the third value must be $6$, and the other four can be anything either side of it."
+        },
+        {
+          "step": 3,
+          "text_md": "The total is irrelevant here, which is the whole difference from the mean."
+        },
+        {
+          "step": 4,
+          "text_md": "Drag the largest value far higher and watch the median stay put while the mean climbs."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family stat-median.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u3-2-1:w005",
+      "lo_id": "lo:u3-2-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a set of five values whose **median** is $4$.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "n": 5,
+          "ask": "median",
+          "target": 4
+        },
+        "diagnostics": [
+          {
+            "predicate": "mean-for-median",
+            "misconception_id": "mc:u3-2-1:median-built-as-mean"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Put the five values in order; the median is the one in the middle — the third."
+        },
+        {
+          "step": 2,
+          "text_md": "So the third value must be $4$, and the other four can be anything either side of it."
+        },
+        {
+          "step": 3,
+          "text_md": "The total is irrelevant here, which is the whole difference from the mean."
+        },
+        {
+          "step": 4,
+          "text_md": "Drag the largest value far higher and watch the median stay put while the mean climbs."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family stat-median.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u3-2-1:w006",
+      "lo_id": "lo:u3-2-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Build a set of five values whose **mode** is $4$.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "n": 5,
+          "ask": "mode",
+          "target": 4
+        },
+        "diagnostics": [
+          {
+            "predicate": "no-mode",
+            "misconception_id": "mc:u3-2-1:mode-assumed-to-exist"
+          },
+          {
+            "predicate": "multi-modal",
+            "misconception_id": "mc:u3-2-1:mode-assumed-to-exist"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The mode is the value that appears most often."
+        },
+        {
+          "step": 2,
+          "text_md": "So at least two of your five values must be $4$, and no other value may appear as often."
+        },
+        {
+          "step": 3,
+          "text_md": "If nothing repeats, the set has NO mode — that is a real answer, not a failure to find one."
+        },
+        {
+          "step": 4,
+          "text_md": "And if two values tie for most frequent, the set has two modes. The mode is the only average that can be missing or doubled."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family stat-mode.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u3-2-1:w007",
+      "lo_id": "lo:u3-2-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Build a set of five values whose **range** is $7$.",
+      "choices": {
+        "kind": "bar_builder",
+        "spec": {
+          "n": 5,
+          "ask": "range",
+          "target": 7
+        },
+        "diagnostics": [
+          {
+            "predicate": "off-target",
+            "misconception_id": "mc:u3-2-1:range-thought-to-use-all-values"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The range is the largest value minus the smallest."
+        },
+        {
+          "step": 2,
+          "text_md": "So set your highest and lowest seven apart — $2$ and $9$, say — and the three in between can be anything within that."
+        },
+        {
+          "step": 3,
+          "text_md": "Only two of the five values matter to the range. That is its weakness as a measure of spread."
+        },
+        {
+          "step": 4,
+          "text_md": "Compare the standard deviation shown underneath: change a middle value and the range does not flinch, but the deviation does."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family stat-range.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u4-1-2:w001",
+      "lo_id": "lo:u4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a right triangle in which $\\sin \\theta = 0.6$.",
+      "choices": {
+        "kind": "triangle_ratio",
+        "spec": {
+          "ask": "sin",
+          "target": 0.6
+        },
+        "diagnostics": [
+          {
+            "predicate": "ratio-inverted",
+            "misconception_id": "mc:u4-1-2:ratio-inverted"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$\\sin \\theta$ compares two particular sides — name them before you drag anything."
+        },
+        {
+          "step": 2,
+          "text_md": "Legs of 3 and 4 give a hypotenuse you can read off exactly."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes $\\sin \\theta = 0.6$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now double both legs. The triangle is twice the size and the ratio has not moved — that is why these ratios depend only on the angle."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family trig-sin.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u4-1-2:w002",
+      "lo_id": "lo:u4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a right triangle in which $\\cos \\theta = 0.8$.",
+      "choices": {
+        "kind": "triangle_ratio",
+        "spec": {
+          "ask": "cos",
+          "target": 0.8
+        },
+        "diagnostics": [
+          {
+            "predicate": "ratio-inverted",
+            "misconception_id": "mc:u4-1-2:ratio-inverted"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$\\cos \\theta$ compares two particular sides — name them before you drag anything."
+        },
+        {
+          "step": 2,
+          "text_md": "Legs of 3 and 4 give a hypotenuse you can read off exactly."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes $\\cos \\theta = 0.8$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now double both legs. The triangle is twice the size and the ratio has not moved — that is why these ratios depend only on the angle."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family trig-cos.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u4-1-2:w003",
+      "lo_id": "lo:u4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a right triangle in which $\\tan \\theta = 0.75$.",
+      "choices": {
+        "kind": "triangle_ratio",
+        "spec": {
+          "ask": "tan",
+          "target": 0.75
+        },
+        "diagnostics": [
+          {
+            "predicate": "ratio-inverted",
+            "misconception_id": "mc:u4-1-2:ratio-inverted"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$\\tan \\theta$ compares two particular sides — name them before you drag anything."
+        },
+        {
+          "step": 2,
+          "text_md": "Legs of 3 and 4 give a hypotenuse you can read off exactly."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes $\\tan \\theta = 0.75$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now double both legs. The triangle is twice the size and the ratio has not moved — that is why these ratios depend only on the angle."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family trig-tan.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u4-1-2:w004",
+      "lo_id": "lo:u4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a right triangle in which $\\sin \\theta = 0.8$.",
+      "choices": {
+        "kind": "triangle_ratio",
+        "spec": {
+          "ask": "sin",
+          "target": 0.8
+        },
+        "diagnostics": [
+          {
+            "predicate": "ratio-inverted",
+            "misconception_id": "mc:u4-1-2:ratio-inverted"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$\\sin \\theta$ compares two particular sides — name them before you drag anything."
+        },
+        {
+          "step": 2,
+          "text_md": "Legs of 4 and 3 give a hypotenuse you can read off exactly."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes $\\sin \\theta = 0.8$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now double both legs. The triangle is twice the size and the ratio has not moved — that is why these ratios depend only on the angle."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family trig-sin.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u4-1-2:w005",
+      "lo_id": "lo:u4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a right triangle in which $\\tan \\theta = 2.4$.",
+      "choices": {
+        "kind": "triangle_ratio",
+        "spec": {
+          "ask": "tan",
+          "target": 2.4
+        },
+        "diagnostics": [
+          {
+            "predicate": "ratio-inverted",
+            "misconception_id": "mc:u4-1-2:ratio-inverted"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$\\tan \\theta$ compares two particular sides — name them before you drag anything."
+        },
+        {
+          "step": 2,
+          "text_md": "Legs of 12 and 5 give a hypotenuse you can read off exactly."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes $\\tan \\theta = 2.4$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now double both legs. The triangle is twice the size and the ratio has not moved — that is why these ratios depend only on the angle."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family trig-tan.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u4-1-2:w006",
+      "lo_id": "lo:u4-1-2",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Build a right triangle in which $\\cos \\theta = 0.6$.",
+      "choices": {
+        "kind": "triangle_ratio",
+        "spec": {
+          "ask": "cos",
+          "target": 0.6
+        },
+        "diagnostics": [
+          {
+            "predicate": "ratio-inverted",
+            "misconception_id": "mc:u4-1-2:ratio-inverted"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "$\\cos \\theta$ compares two particular sides — name them before you drag anything."
+        },
+        {
+          "step": 2,
+          "text_md": "Legs of 4 and 3 give a hypotenuse you can read off exactly."
+        },
+        {
+          "step": 3,
+          "text_md": "That makes $\\cos \\theta = 0.6$."
+        },
+        {
+          "step": 4,
+          "text_md": "Now double both legs. The triangle is twice the size and the ratio has not moved — that is why these ratios depend only on the angle."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family trig-cos.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u5-3-1:w001",
+      "lo_id": "lo:u5-3-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Draw the line $y = 2x + -1$.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "b": -1,
+          "m": 2,
+          "mode": "equation"
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-inverted",
+            "misconception_id": "mc:u5-3-1:slope-inverted"
+          },
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:u5-3-1:slope-sign-flipped"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The gradient is $2$: for each step right, the line climbs $2$."
+        },
+        {
+          "step": 2,
+          "text_md": "It meets the $y$-axis at $(0, -1)$ — start there."
+        },
+        {
+          "step": 3,
+          "text_md": "One step right lands you at $(1, 1)$. Put the handles on those two."
+        },
+        {
+          "step": 4,
+          "text_md": "Any two points on the line are correct: the line is the answer, not a particular pair of points."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family line-equation.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u5-3-1:w002",
+      "lo_id": "lo:u5-3-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Draw the line $y = -1x + 3$.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "b": 3,
+          "m": -1,
+          "mode": "equation"
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-inverted",
+            "misconception_id": "mc:u5-3-1:slope-inverted"
+          },
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:u5-3-1:slope-sign-flipped"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The gradient is $-1$: for each step right, the line climbs $-1$."
+        },
+        {
+          "step": 2,
+          "text_md": "It meets the $y$-axis at $(0, 3)$ — start there."
+        },
+        {
+          "step": 3,
+          "text_md": "One step right lands you at $(1, 2)$. Put the handles on those two."
+        },
+        {
+          "step": 4,
+          "text_md": "Any two points on the line are correct: the line is the answer, not a particular pair of points."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family line-equation.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u5-3-1:w003",
+      "lo_id": "lo:u5-3-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Draw the line $y = 1x + 0$.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "b": 0,
+          "m": 1,
+          "mode": "equation"
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-inverted",
+            "misconception_id": "mc:u5-3-1:slope-inverted"
+          },
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:u5-3-1:slope-sign-flipped"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The gradient is $1$: for each step right, the line climbs $1$."
+        },
+        {
+          "step": 2,
+          "text_md": "It meets the $y$-axis at $(0, 0)$ — start there."
+        },
+        {
+          "step": 3,
+          "text_md": "One step right lands you at $(1, 1)$. Put the handles on those two."
+        },
+        {
+          "step": 4,
+          "text_md": "Any two points on the line are correct: the line is the answer, not a particular pair of points."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family line-equation.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    },
+    {
+      "id": "q:u5-3-1:w004",
+      "lo_id": "lo:u5-3-1",
+      "tier": "standard",
+      "question_type": "widget",
+      "stem": "Draw the line $y = -2x + 2$.",
+      "choices": {
+        "kind": "line_drawer",
+        "spec": {
+          "b": 2,
+          "m": -2,
+          "mode": "equation"
+        },
+        "diagnostics": [
+          {
+            "predicate": "slope-inverted",
+            "misconception_id": "mc:u5-3-1:slope-inverted"
+          },
+          {
+            "predicate": "slope-sign-flipped",
+            "misconception_id": "mc:u5-3-1:slope-sign-flipped"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "The gradient is $-2$: for each step right, the line climbs $-2$."
+        },
+        {
+          "step": 2,
+          "text_md": "It meets the $y$-axis at $(0, 2)$ — start there."
+        },
+        {
+          "step": 3,
+          "text_md": "One step right lands you at $(1, 0)$. Put the handles on those two."
+        },
+        {
+          "step": 4,
+          "text_md": "Any two points on the line are correct: the line is the answer, not a particular pair of points."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": null,
+      "source_page": null,
+      "source_note": "Generated from template family line-equation.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    }
+  ],
+  "misconceptions": []
+}
