@@ -13,7 +13,7 @@ AI.Next is a 3-founder edtech startup (founders: Samuel = CTO + solution archite
 
 `main` remains the default branch and the one CI currently deploys; `family-tutor` was branched from it and is identical. Retiring `main` is a production change and is deliberately not done — see ADR-0010 Open.
 
-Both solutions serve the **identical** Prep-3 Mathematics book (10 modules, 90 LOs, 112 prerequisite edges, 450 questions, 212 visuals) — content is the held-constant variable, and `parity_check.py` fails loudly on drift, now asserted per branch rather than between two live databases. The baseline receives **no** teaching-behaviour changes.
+Both solutions today serve the same Prep-3 Mathematics book (10 modules, 90 LOs, 112 prerequisite edges, 450 questions, 212 visuals), and `parity_check.py` fails loudly if a solution drifts from the set it is meant to serve. **This is a per-solution drift guard, not a cross-solution contract:** the ADR-0010 Clarification withdrew content parity between solutions, so `PDR1-0` and `family-tutor` may diverge completely — different content, curriculum or subjects — without that being a defect.
 
 ⚠️ **Work in flight**: `docs/WIP-branch-per-solution.md` is the resume doc for the branch-per-solution refactor. Read it before touching phases 1, 3, 10 or 12.
 
@@ -29,12 +29,12 @@ Both solutions serve the **identical** Prep-3 Mathematics book (10 modules, 90 L
 4. Respect the MVP non-goals in the **new** PRD §14: no teacher tooling, no voice/video, no gamification, no native app, no non-card payments, Arabic and Social Studies deferred. Payments are out of this build too. Note what is **no longer** a non-goal: parent dashboard, mastery modelling, ask-anything.
 
 ## Non-negotiable product constraints
-Constitution **v2.0.0** is authoritative; these summarise it.
+Constitution **v3.0.0** is authoritative; these summarise it.
 - **Bilingual by construction.** English LTR is the MVP 1.0 default; direction must never be hard-coded, and no Arabic-capable surface may be removed to achieve it. Equations render LTR inline in any direction. (The frozen baseline stays Arabic RTL.)
 - **Device target:** iPad Safari (last 2 majors) + modern desktop. The low-end Android/3G target and the 1.5 MB gate are withdrawn for MVP 1.0 — 1.5 MB is now a guideline.
 - **Cost:** no numeric ceiling binds until PRD §10 sets a price (the EGP 40 figure came from a withdrawn parent price band). Per-student spend instrumentation and per-surface turn caps remain mandatory; upload/OCR cost is metered separately.
 - **Minors' data:** minimum only — name, grade, interests. In the comparison build identity is a **picker, not auth**; it is validated server-side and must never be presented as a login.
-- **Comparison integrity:** content parity enforced, every event and ledger row tagged by environment, metrics never pooled, baseline frozen.
+- **Solution integrity** (constitution v3.0.0 Principle XI, re-cut by ADR-0010): a solution must not silently drift from the content set it is meant to serve (`parity_check.py`, a per-solution drift guard); every event and ledger row is tagged by environment and metrics are never pooled across environments or solutions; student data never crosses solutions. **Withdrawn:** cross-solution content parity and the frozen-baseline obligation — the two solutions may diverge completely, and the comparison is an observational judgement from live usage, not a system property.
 
 ## Where we stand
 Always read `docs/PROJECT_STATE.md` at the start of a session — it is the living status document (current phase, what's done, what's next, open questions). Update it when meaningful progress is made or decisions land. ADRs live in `docs/decisions/`.
@@ -49,8 +49,8 @@ Skills (in `.claude/skills/`): `project-status` (read/update project state), `ad
 ## Conventions
 - Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`. **Documentation map: `docs/README.md`.**
 - Product code: the Next.js app in `app/`, the extraction pipeline in `services/extraction/`, deploy stack in `deploy/` (see ADR-0002/0003/0005).
-- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v2.0.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/001-student-mvp1-delta/`; new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
-- Student- and parent-facing copy is **English** for MVP 1.0 (constitution v2.0.0 Principle V); the Arabic verticals stay in the tree and reintroducible. Internal docs and code are English.
+- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v3.0.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/001-student-mvp1-delta/`; new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
+- Student- and parent-facing copy is **English** for MVP 1.0 (constitution v3.0.0 Principle V); the Arabic verticals stay in the tree and reintroducible. Internal docs and code are English.
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,

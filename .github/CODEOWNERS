@@ -1,0 +1,29 @@
+# Who must review what.
+#
+# ⚠️ SETUP NEEDED: replace @tamer-handle and @kamil-handle with their real GitHub
+# usernames, then this file starts enforcing reviews. Until then only @samtoma's
+# rules bind.
+#
+# CODEOWNERS applies to the branch the PR targets, so this file must exist on
+# every long-lived solution branch to have effect there.
+
+# Default — the architect sees everything until the team splits further.
+*                                   @samtoma
+
+# Architecture and governance are Samuel's call (CLAUDE.md authority rule 1).
+/docs/decisions/                    @samtoma
+/.specify/memory/constitution.md    @samtoma
+/CLAUDE.md                          @samtoma
+/.github/                           @samtoma
+
+# Product scope — what and why. Tamer owns the PRD; requirements changes need him.
+/specs/                             @samtoma @tamer-handle
+
+# Teaching content and the review gate. Nothing unreviewed should reach a student
+# without a named human having looked — this is the file that names them.
+/services/extraction/build_misconceptions.py   @samtoma @tamer-handle
+/services/extraction/seed/                     @samtoma @tamer-handle
+
+# Deployment touches a shared production box. Two pairs of eyes.
+/deploy/                            @samtoma
+/.github/workflows/                 @samtoma
