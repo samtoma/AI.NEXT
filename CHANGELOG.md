@@ -8,7 +8,11 @@ scheme is described in [docs/VERSIONING.md](docs/VERSIONING.md). Entries are
 written for someone who does not know the codebase, and every line that closes a
 requirement names it.
 
-## [Unreleased]
+## [PDR1-0-v0.2.0] — 2026-09-16
+
+The first version of the Student MVP solution that can be pointed at. Everything
+below was in flight without a version number, which made "which build did you see
+that on?" unanswerable — the question every piece of feedback has to start with.
 
 ### Added
 - **The tutor can see how engaged a student is** (`FR-207`). Reads the last 12
