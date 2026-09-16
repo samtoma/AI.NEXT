@@ -127,7 +127,7 @@ export function ChatQuestionCard({
                     key={c.key}
                     onClick={() => setChoice(c.key)}
                     disabled={busy}
-                    className={`flex items-center gap-2.5 rounded-md border px-3 py-2 text-left text-[12.5px] transition-all duration-150 ${
+                    className={`flex items-center gap-2.5 rounded-md border px-3 py-2 text-left text-[12.5px] transition-all duration-150 play-pressable sticker-shadow-sm ${
                       choice === c.key
                         ? "border-ink bg-ink/5 shadow-[0_0_0_1px_var(--ink)]"
                         : "border-line bg-card hover:border-ink/40"
@@ -163,7 +163,7 @@ export function ChatQuestionCard({
                 disabled={
                   busy || (q.questionType === "mcq" ? !choice : !numeric.trim())
                 }
-                className="rounded-full bg-accent-deep px-4 py-1.5 text-[11.5px] font-semibold text-paper transition-all duration-150 enabled:hover:-translate-y-px disabled:opacity-35"
+                className="rounded-full bg-accent-deep px-4 py-1.5 text-[11.5px] font-semibold text-paper transition-all duration-150 enabled:hover:-translate-y-px disabled:opacity-35 play-pressable sticker-shadow-sm"
               >
                 {busy ? "Checking…" : "Submit answer"}
               </button>
@@ -186,7 +186,7 @@ export function ChatQuestionCard({
               <span
                 dir="auto"
                 className={`font-display text-[14px] font-medium ${
-                  result.isCorrect ? "text-accent-deep" : "text-rust"
+                  result.isCorrect ? "text-accent-deep" : "text-rust anim-nudge"
                 }`}
               >
                 {result.isCorrect
@@ -246,7 +246,7 @@ export function ChatQuestionCard({
                 <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-accent-deep">
                   why that happened
                 </p>
-                <ol className="mt-1.5 grid gap-1.5">
+                <ol className="mt-1.5 grid gap-1.5 font-read">
                   {result.refutation.steps.map((st) => (
                     <li key={st.step} className="text-[13px] leading-relaxed text-ink">
                       {st.text_md}

@@ -60,7 +60,7 @@ export function SubjectHome({
               key={s.subject}
               href={`/student?subject=${s.subject}`}
               dir={a.rtl ? "rtl" : "ltr"}
-              className={`ledger-card group block rounded-2xl border ${a.border} ${a.wash} p-5 transition-transform hover:-translate-y-0.5`}
+              className={`ledger-card play-pressable group block rounded-2xl border ${a.border} ${a.wash} p-5 transition-transform hover:-translate-y-0.5`}
             >
               <div className="flex items-start justify-between gap-3">
                 <h2 className="font-display text-xl font-medium text-ink">

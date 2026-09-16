@@ -1014,7 +1014,7 @@ export function LessonSession({
               </p>
               <button
                 onClick={() => finish()}
-                className="mt-5 rounded-full bg-ink px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep"
+                className="mt-5 rounded-full bg-ink px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow-sm"
               >
                 {rtl ? "جرّب التقييم تاني ←" : "Retry rating →"}
               </button>
@@ -1063,7 +1063,7 @@ export function LessonSession({
                 aria-pressed={voiceOn}
                 aria-label={voiceOn ? "Turn voice off" : "Turn voice on"}
                 title={voiceOn ? "Voice on — tutor speaks" : "Voice off"}
-                className={`flex h-8 items-center gap-1.5 rounded-full border px-3 font-mono text-[10px] uppercase tracking-[0.1em] transition-all duration-150 ${
+                className={`flex h-8 items-center gap-1.5 rounded-full border px-3 font-mono text-[10px] uppercase tracking-[0.1em] transition-all duration-150 play-pressable sticker-shadow-sm ${
                   voiceOn
                     ? "border-accent bg-accent text-paper"
                     : "border-line bg-card text-ink-soft hover:border-accent/50 hover:text-accent-deep"
@@ -1090,7 +1090,7 @@ export function LessonSession({
 
             <button
               onClick={() => requestFinish(0)}
-              className="h-8 rounded-full bg-ink px-4 text-[12px] font-semibold text-paper transition-all duration-150 hover:-translate-y-px hover:bg-accent-deep"
+              className="h-8 rounded-full bg-ink px-4 text-[12px] font-semibold text-paper transition-all duration-150 hover:-translate-y-px hover:bg-accent-deep play-pressable sticker-shadow-sm"
             >
               {rtl ? `${arCopy.finish} ←` : `${copy.finish} →`}
             </button>
@@ -1341,14 +1341,14 @@ function ResumePrompt({
           <button
             dir="rtl"
             onClick={onResume}
-            className="rounded-full bg-accent-deep px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent"
+            className="rounded-full bg-accent-deep px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent play-pressable sticker-shadow-sm"
           >
             كمل من حيث وقفت ✓
           </button>
           <button
             dir="rtl"
             onClick={onFresh}
-            className="rounded-full border border-line bg-card px-6 py-2.5 text-[13px] font-medium text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent-deep"
+            className="rounded-full border border-line bg-card px-6 py-2.5 text-[13px] font-medium text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent-deep play-pressable sticker-shadow-sm"
           >
             لا — ابدأ من الأول
           </button>
@@ -1410,7 +1410,7 @@ function MicButton({ setInput }: { setInput: (v: string) => void }) {
       onClick={toggle}
       aria-label={listening ? "Stop listening" : "Speak your answer"}
       title={listening ? "Listening… tap to stop" : "Speak your answer"}
-      className={`flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full border transition-all duration-150 ${
+      className={`flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full border transition-all duration-150 play-pressable sticker-shadow-sm ${
         listening
           ? "anim-mic border-rust bg-rust text-paper"
           : "border-line bg-card text-ink-soft hover:border-accent/50 hover:text-accent-deep"

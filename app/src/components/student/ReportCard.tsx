@@ -145,7 +145,7 @@ export function ReportCard({
               </text>
             </svg>
             <span
-              className={`${v.stampCls} anim-stamp absolute -end-2 top-2 sm:-end-8`}
+              className={`${v.stampCls} anim-stamp absolute -end-2 top-2 sm:-end-8 ${check.verdict === "got_it" ? "anim-ring-pulse" : ""}`}
             >
               {rtl ? AR_STAMP[check.verdict] : v.stamp}
             </span>
@@ -219,7 +219,7 @@ export function ReportCard({
             <p className="relative font-mono text-[8.5px] uppercase tracking-[0.2em] text-gold">
               {rtl ? "الخطوة الجاية · بكرة" : "Next step · بكرة"}
             </p>
-            <p className="relative mt-1 text-[13.5px] leading-relaxed text-ink">
+            <p className="relative mt-1 text-[13.5px] leading-relaxed text-ink font-read">
               {check.nextStep}
             </p>
           </div>
@@ -233,13 +233,13 @@ export function ReportCard({
       <div className="anim-rise mt-4 flex flex-wrap gap-3" style={{ animationDelay: "650ms" }}>
         <Link
           href="/spine"
-          className="flex-1 rounded-xl bg-ink px-6 py-3.5 text-center font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep"
+          className="flex-1 rounded-xl bg-ink px-6 py-3.5 text-center font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow"
         >
           {rtl ? "شوفها على الشبكة ←" : "See it on the graph →"}
         </Link>
         <Link
           href="/student"
-          className="rounded-xl border border-line bg-card px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5"
+          className="rounded-xl border border-line bg-card px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
         >
           {rtl ? "خلصنا النهاردة" : "Done for today"}
         </Link>

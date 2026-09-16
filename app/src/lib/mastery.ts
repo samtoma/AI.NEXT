@@ -1,5 +1,5 @@
 /**
- * The mastery ramp for the MVP 1.0 comparison build (Nour design system v0.2).
+ * The mastery ramp for the MVP 1.0 comparison build (Noor design system v0.2).
  *
  * FIVE DISCRETE STEPS, not a continuous gradient, because that is what the
  * handoff's tokens actually are — `--mastery-0-not-started` through
@@ -10,7 +10,7 @@
  *
  * THE RAMP CARRIES NO RED. This replaced a burnt-sienna → ochre → viridian
  * scale, and the change is a product requirement rather than a taste call: the
- * Nour system forbids red and coral outright — "wrong answers grey out and
+ * Noor system forbids red and coral outright — "wrong answers grey out and
  * invite a retry" — because the persona's stated fear is looking stupid, and a
  * red progress bar is what that fear looks like on a screen. Not-started is
  * therefore the neutral inactive fill, and the lowest LIT step is amber: a

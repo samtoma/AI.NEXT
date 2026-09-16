@@ -1,0 +1,121 @@
+/* ===========================================================================
+   Nour PLAY — Variant A · ages 10–16
+   Layers on the Nour master system v0.2. Where a value is absent here,
+   fall back to the master system.
+   =========================================================================== */
+
+:root {
+  /* ---- ground & ink ---------------------------------------------------- */
+  --play-bg-page:      #FFF6E6;  /* Cream — warmer and more saturated than Paper */
+  --play-bg-surface:   #FFFFFF;
+  --play-bg-warm:      #FFE9BD;  /* Honey — headers, banners, the friendly band */
+  --play-ink:          #241F3D;  /* Deep Ink — body text AND EVERY OUTLINE */
+  --play-ink-soft:     #6B6489;  /* supporting copy on Cream/white */
+
+  /* Accessible text greys. Do not use --play-ink-soft below 0.9rem on white. */
+  --play-text-dim:     #4A4266;  /* 8.9:1 — secondary body copy */
+  --play-text-muted:   #5A5570;  /* 6.9:1 — labels, option letters, nav inactive */
+  --play-text-label:   #615B7D;  /* 6.0:1 — mono eyebrows in cards */
+  --play-text-eyebrow: #655B80;  /* 5.6:1 — section eyebrows on Cream */
+  --play-text-link:    #136386;  /* 6.2:1 — tertiary actions, token codes */
+
+  /* ---- brand core, unchanged from master ------------------------------- */
+  --play-action:       #F0A22F;  /* Nour Glow */
+  --play-on-action:    #241F3D;  /* never white on amber */
+  --play-mastery:      #2F9E8F;  /* Grow Teal */
+  --play-on-mastery:   #241F3D;  /* 4.79:1 — white on teal is 3.28:1 and fails */
+  --play-celebrate:    #7B4FC9;  /* Party Violet — brighter than master, carries full-bleed */
+  --play-on-celebrate: #FFFFFF;
+  --play-on-celebrate-dim: #F0E9FB;
+
+  /* ---- playmates — SUBJECT / QUEST CODING ONLY, never decoration ------- */
+  --play-sky:          #7FD1F0;  --play-on-sky:   #0F3D51;
+  --play-leaf:         #B6E88F;  --play-on-leaf:  #1F3D12;
+  --play-berry:        #FFA8C5;  --play-on-berry: #7A2447;
+
+  /* Deeper variants for small text on a playmate fill */
+  --play-on-sky-dim:   #134B63;
+  --play-on-leaf-dim:  #3A5B26;
+  --play-on-berry-dim: #6E2440;
+
+  /* Amber-family text on Cream / Honey */
+  --play-text-amber:      #A34F0A;  /* 5.4:1 on Cream */
+  --play-text-amber-warm: #8A4208;  /* on Honey */
+  --play-text-on-amber-s: #5E3806;  /* small mono label ON an amber fill */
+
+  /* Inactive / wrong-answer */
+  --play-inactive-fill:   #F6F5FA;
+  --play-inactive-border: #9C95B8;
+  --play-disabled-border: #B4AECB;
+  --play-disabled-text:   #8A83A6;  /* permitted ONLY on a [disabled] control */
+
+  /* ---- THE STICKER SYSTEM — the one structural idea -------------------- */
+  /* ABSOLUTE VALUES. Never scale with the viewport. */
+  --play-stroke:       3px;      /* 2.5px on anything under 40px tall */
+  --play-stroke-sm:    2.5px;
+  --play-shadow:       4px 4px 0 var(--play-ink);   /* hard offset, NO BLUR */
+  --play-shadow-sm:    3px 3px 0 var(--play-ink);
+  --play-shadow-lg:    6px 6px 0 var(--play-ink);
+  --play-shadow-xl:    7px 7px 0 var(--play-ink);   /* device frames only */
+  --play-press-offset: 4px;      /* travel on press; shadow collapses to 0 */
+
+  --play-radius-sm:    14px;     /* chips, inputs */
+  --play-radius:       20px;     /* buttons, small cards */
+  --play-radius-lg:    28px;     /* big cards, sheets */
+  --play-radius-pill:  999px;    /* tags, quest bars */
+
+  --play-target-min:   52px;     /* NOT 44 — and it holds on desktop too */
+
+  /* ---- type ------------------------------------------------------------ */
+  --play-font-display: "Baloo Bhaijaan 2", "Baloo 2", system-ui, sans-serif;
+  --play-font-ui:      "Baloo Bhaijaan 2", "Baloo 2", system-ui, sans-serif;
+  --play-font-read:    "Cairo", system-ui, sans-serif;   /* passages > 3 lines */
+  --play-font-mono:    "IBM Plex Mono", monospace;       /* LATIN + WESTERN DIGITS ONLY */
+
+  --play-text-display: 2.4rem;   /* Baloo 800 */
+  --play-text-title:   1.5rem;   /* Baloo 800 */
+  --play-text-ui:      1.15rem;  /* Baloo 700 — the workhorse */
+  --play-text-label:   0.85rem;  /* Baloo 700 / Cairo 700 */
+  --play-text-read:    1rem;     /* Cairo 400 */
+  --play-text-data:    0.72rem;  /* Mono 500 */
+
+  --play-leading-latin:  1.75;
+  --play-leading-arabic: 1.9;
+
+  /* ---- motion — reactive, never ambient ------------------------------- */
+  --play-press: 90ms cubic-bezier(.2,.7,.3,1);
+  --play-pop:   380ms cubic-bezier(.34,1.6,.64,1);
+  --play-nudge: 420ms ease-in-out;
+  --play-fill:  1.4s cubic-bezier(.2,.7,.3,1);
+  --play-bob:   3.2s ease-in-out;    /* the ONLY permitted infinite loop */
+}
+
+/* ---- the seven animations ---------------------------------------------- */
+@keyframes play-bob    { 0%,100% { transform: translateY(0) }  50% { transform: translateY(-7px) } }
+@keyframes play-wiggle { 0%,100% { transform: rotate(0) }      25% { transform: rotate(-6deg) } 75% { transform: rotate(6deg) } }
+@keyframes play-pop    { 0% { transform: scale(.7) } 55% { transform: scale(1.14) } 100% { transform: scale(1) } }
+@keyframes play-squash { 0%,100% { transform: scale(1,1) } 40% { transform: scale(1.12,.86) } 70% { transform: scale(.95,1.06) } }
+@keyframes play-nudge  { 0%,100% { transform: translateX(0) } 20% { transform: translateX(-5px) } 40% { transform: translateX(5px) } 60% { transform: translateX(-3px) } 80% { transform: translateX(3px) } }
+@keyframes play-fill   { from { width: 8% } to { width: var(--play-fill-to, 72%) } }
+@keyframes play-ring   { 0% { transform: scale(.8); opacity: .55 } 100% { transform: scale(1.9); opacity: 0 } }
+@keyframes play-rise   { 0% { transform: translateY(6px) scale(.6); opacity: 0 } 40% { opacity: 1 } 100% { transform: translateY(-22px) scale(1); opacity: 0 } }
+
+/* ---- the press: the highest-value interaction in the kit ---------------- */
+.play-pressable {
+  box-shadow: var(--play-shadow);
+  transition: transform var(--play-press), box-shadow var(--play-press);
+}
+.play-pressable:active {
+  transform: translate(var(--play-press-offset), var(--play-press-offset));
+  box-shadow: 0 0 0 var(--play-ink);
+}
+
+/* Hover is a WEB-ONLY affordance — an unconditional hover leaves a sticky
+   state on iPad that reads as a broken button. */
+@media (hover: hover) and (pointer: fine) {
+  .play-pressable:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--play-ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition-duration: 1ms !important; }
+}

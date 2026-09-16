@@ -480,55 +480,60 @@ body[data-focus="lesson"] > footer {
 }
 
 /* ===========================================================================
-   NOUR SKIN — the MVP 1.0 comparison build's visual language
+   NOOR SKIN — v0.3, the "Play" variant (ages 10–16)
    ---------------------------------------------------------------------------
-   Applied by <html data-ds="nour">, which layout.tsx sets when
+   Applied by <html data-ds="noor">, which layout.tsx sets when
    AINEXT_ENVIRONMENT=mvp1. Everything below REDEFINES the existing semantic
    tokens rather than introducing a parallel set, so every surface in the
-   product picks up the Nour palette without being touched one component at a
-   time — and the frozen baseline (data-ds absent) renders exactly as before.
+   product picks up the Noor Play palette without being touched one component
+   at a time — and the frozen baseline (data-ds absent) renders exactly as
+   before.
 
-   Values are verbatim from the Nour master handoff tokens.css v0.2. Two rules
-   from that system are load-bearing and are enforced here rather than left to
-   each component:
+   This REPLACES the v0.2 "Master" skin (restrained, ages 15–18) with Play: a
+   louder, more physical, character-led interface — thick ink outlines, hard
+   offset shadows, bigger radii, 52px targets, Baloo running the whole UI.
+   Handoff: docs/design/handoffs/noor-play/ (design_handoff_nour_play v1.0a).
+   Superseded decision record: docs/design/noor/README.md.
 
-     · THERE IS NO RED AND NO CORAL IN THIS PALETTE. A wrong answer greys out
-       and invites a retry — the persona's stated fear is looking stupid, and a
-       red page is what that fear looks like. --rust, which the product used for
-       wrong/rejected states, is therefore remapped to the neutral inactive
-       treatment rather than to another warm hue.
-     · NEVER WHITE TEXT ON AMBER. 31 call sites pair `bg-accent` with
-       `text-paper`, so --accent maps to Nour's indigo contrast surface, not to
-       the amber action colour. Amber is applied deliberately, one dominant
-       accent per screen, never by a blanket mapping.
+   Two rules from that system are load-bearing and are enforced here rather
+   than left to each component:
+
+     · THERE IS NO RED IN THIS PALETTE, AT ALL. A wrong answer greys out,
+       nudges, and invites a retry — the persona's stated fear is looking
+       stupid, and a red page is what that fear looks like. --rust, which the
+       product used for wrong/rejected states, is remapped to a neutral grey.
+     · NEVER WHITE TEXT ON AMBER OR ON TEAL. 31 call sites pair `bg-accent`
+       with `text-paper`, so --accent stays a dark ink surface rather than
+       amber or teal — amber is applied deliberately, ONE dominant accent per
+       screen, never by a blanket mapping.
    ======================================================================== */
 
-[data-ds="nour"] {
-  --paper: #f7f6fb; /* bg-page */
-  --paper-deep: #efeef6; /* state-inactive */
+[data-ds="noor"] {
+  --paper: #fff6e6; /* bg-page — Cream */
+  --paper-deep: #f6f5fa; /* inactive fill */
   --card: #ffffff; /* bg-surface */
-  --card-warm: #fbfafe;
-  --ink: #2b2a38; /* text-primary */
-  --ink-soft: #5d5b6e; /* text-secondary */
-  --ink-faint: #6e6c7e; /* derived: 5.2:1 on bg-page — the handoff has no
-                           faint token and the product's old one fails AA */
-  --line: #e6e4f0; /* border-subtle */
-  --line-soft: rgba(30, 36, 80, 0.07);
+  --card-warm: #ffe9bd; /* Honey — headers, banners, the friendly band */
+  --ink: #241f3d; /* Deep Ink — text-primary AND every outline/shadow */
+  --ink-soft: #6b6489; /* supporting copy, 0.9rem+ */
+  --ink-faint: #655b80; /* section eyebrows on Cream — 5.6:1 */
+  --line: #241f3d; /* the sticker outline is solid ink, not a tint */
+  --line-soft: #ede9f5; /* rail/panel dividers only — never a card edge */
 
-  /* indigo contrast surface — carries --color-text-inverse safely */
-  --accent: #1e2450;
-  --accent-deep: #141833;
-  --accent-wash: rgba(30, 36, 80, 0.06);
+  /* dark ink CTA surface — carries --color-text-inverse safely. Play has no
+     second "action" colour, so the 31 bg-accent+text-paper sites (primary
+     buttons, hover states) stay on ink rather than moving to amber or teal. */
+  --accent: #241f3d;
+  --accent-deep: #17131f;
+  --accent-wash: rgba(36, 31, 61, 0.06);
 
-  /* the action colour. --gold is used as TEXT in places, so it takes the
-     hover step (#D98C1F, darker); fills that need the true amber reach for
-     --nour-action below. */
-  --gold: #d98c1f;
+  /* --gold is the accessible AMBER-AS-TEXT tone (5.4:1 on Cream) — fills that
+     need the true amber reach use --noor-action below, never --gold. */
+  --gold: #a34f0a;
   --gold-wash: rgba(240, 162, 47, 0.16);
 
   /* wrong / rejected — grey, never red */
-  --rust: #5d5b6e;
-  --rust-wash: rgba(239, 238, 246, 0.9);
+  --rust: #5a5570;
+  --rust-wash: rgba(158, 149, 184, 0.14);
 
   /* the five-step mastery ramp, exactly as tokens.css names it */
   --mastery-0: #efeef6;
@@ -540,114 +545,372 @@ body[data-focus="lesson"] > footer {
   --m-mid: var(--mastery-2);
   --m-high: var(--mastery-4);
 
-  /* Nour-specific additions with no counterpart in the ledger palette */
-  --nour-action: #f0a22f;
-  --nour-action-hover: #d98c1f;
-  --nour-on-action: #141833; /* never white on amber */
-  --nour-progress: #2f9e8f;
-  --nour-on-progress: #241f3d;
-  --nour-celebrate: #6e4fa8;
-  --nour-on-celebrate: #ffffff;
-  --nour-focus-ring: 0 0 0 4px rgba(240, 162, 47, 0.32);
-  --nour-touch-min: 44px;
+  --noor-action: #f0a22f;
+  --noor-action-hover: #d98c1f;
+  --noor-on-action: #241f3d; /* never white on amber */
+  --noor-progress: #2f9e8f;
+  --noor-on-progress: #241f3d; /* 4.79:1 — white on teal is 3.28:1 and fails */
+  --noor-celebrate: #7b4fc9; /* Party Violet — brighter than v0.2, carries full-bleed */
+  --noor-on-celebrate: #ffffff;
+  --noor-on-celebrate-dim: #f0e9fb;
+  --noor-focus-ring: 0 0 0 4px rgba(240, 162, 47, 0.32);
+  --noor-touch-min: 52px; /* not 44 — fast, imprecise taps, holds on desktop too */
+
+  /* playmates — SUBJECT and QUEST coding only, never decoration */
+  --play-sky: #7fd1f0;
+  --play-on-sky: #0f3d51;
+  --play-on-sky-dim: #134b63;
+  --play-leaf: #b6e88f;
+  --play-on-leaf: #1f3d12;
+  --play-on-leaf-dim: #3a5b26;
+  --play-berry: #ffa8c5;
+  --play-on-berry: #7a2447;
+  --play-on-berry-dim: #6e2440;
+
+  /* amber-family text at other weights; --gold above covers the default */
+  --play-text-amber-warm: #8a4208; /* amber text on Honey */
+  --play-text-on-amber-s: #5e3806; /* small mono label ON an amber fill */
+  --play-text-link: #136386; /* tertiary actions, token codes */
+
+  /* inactive / wrong-answer / disabled */
+  --play-inactive-fill: #f6f5fa;
+  --play-inactive-border: #9c95b8;
+  --play-disabled-border: #b4aecb;
+  --play-disabled-text: #8a83a6; /* permitted ONLY on a [disabled] control */
+
+  /* ---- THE STICKER SYSTEM — the one structural idea -------------------- */
+  /* ABSOLUTE VALUES. Never scale with the viewport (handoff CLAUDE.md). */
+  --play-stroke: 3px; /* 2.5px on anything under 40px tall */
+  --play-stroke-sm: 2.5px;
+  --play-shadow-sm: 3px 3px 0 var(--ink);
+  --play-shadow: 4px 4px 0 var(--ink);
+  --play-shadow-lg: 6px 6px 0 var(--ink);
+  --play-shadow-xl: 7px 7px 0 var(--ink); /* device frames only */
+  --play-press-offset: 4px;
+  --play-radius-sm: 14px; /* chips, inputs */
+  --play-radius: 20px; /* buttons, small cards */
+  --play-radius-lg: 28px; /* big cards, sheets */
+  --play-radius-pill: 999px;
 
   /* subject territories: the comparison build is Mathematics only, but the
      Arabic and Social verticals stay in the tree (Principle V), so they are
-     re-pointed at the Nour palette rather than left on the ledger hues. */
-  --subject-math: #1e2450;
-  --subject-math-wash: rgba(30, 36, 80, 0.05);
-  --subject-math-line: rgba(30, 36, 80, 0.24);
-  --subject-social: #6e4fa8;
-  --subject-social-wash: rgba(110, 79, 168, 0.06);
-  --subject-social-line: rgba(110, 79, 168, 0.3);
+     re-pointed at the Play palette rather than left on the ledger hues. */
+  --subject-math: #241f3d;
+  --subject-math-wash: rgba(36, 31, 61, 0.05);
+  --subject-math-line: rgba(36, 31, 61, 0.24);
+  --subject-social: #7b4fc9;
+  --subject-social-wash: rgba(123, 79, 201, 0.06);
+  --subject-social-line: rgba(123, 79, 201, 0.3);
   --subject-arabic: #2f9e8f;
   --subject-arabic-wash: rgba(47, 158, 143, 0.07);
   --subject-arabic-line: rgba(47, 158, 143, 0.3);
   --bridge-gold: #f0a22f;
 
-  /* Baloo carries the display role, Cairo the body — both cover Latin AND
-     Arabic in one family, which is what makes true bilingual parity (equal
-     size, equal weight, same face) structural here rather than aspirational.
-     Noto Naskh stays last as a safety net. */
-  --stack-sans: "Cairo", "Noto Naskh Arabic", "Cairo Fallback", "Segoe UI",
-    sans-serif;
+  /* Baloo runs the WHOLE UI now — buttons, labels, numbers, headlines — not
+     headline-only as in v0.2. Cairo drops to a dedicated "reading" stack
+     (--stack-read below) for passages over three lines; it stays in the sans
+     fallback chain too so a glyph Baloo lacks still lands on Cairo, not on a
+     system font. Noto Naskh stays last as the safety net either way. */
+  --stack-sans: "Baloo Bhaijaan 2", "Cairo", "Noto Naskh Arabic",
+    "Baloo Bhaijaan 2 Fallback", sans-serif;
   --stack-display: "Baloo Bhaijaan 2", "Cairo", "Noto Naskh Arabic",
     "Baloo Bhaijaan 2 Fallback", sans-serif;
+  --stack-read: "Cairo", "Noto Naskh Arabic", "Cairo Fallback", sans-serif;
   --stack-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", ui-monospace,
     monospace;
 
-  --ar-line-plain: 1.85; /* handoff: leading-arabic */
+  --ar-line-plain: 1.9; /* handoff: leading-arabic (Latin leading is 1.75, set on body) */
 }
 
 /* The ledger's ruled-paper grid, warm vignette and grain belong to the frozen
-   baseline's identity. Nour's ground is flat and quiet — the material she
-   uploads is the thing with texture on the page, not the page. */
-[data-ds="nour"] body {
+   baseline's identity. Play's ground is flat and quiet too — Cream, no
+   texture — just warmer and more saturated than v0.2's Paper. */
+[data-ds="noor"] body {
   font-feature-settings: normal;
-  line-height: 1.7; /* leading-latin */
+  line-height: 1.75; /* leading-latin */
   background-image: none;
 }
 
-[data-ds="nour"] body::before {
+[data-ds="noor"] body::before {
   content: none;
 }
 
-[data-ds="nour"] ::selection {
+[data-ds="noor"] ::selection {
   background: rgba(240, 162, 47, 0.28);
 }
 
 /* One focus treatment, everywhere, amber — it is the only ring in the system. */
-[data-ds="nour"] :focus-visible {
+[data-ds="noor"] :focus-visible {
   outline: none;
-  box-shadow: var(--nour-focus-ring);
+  box-shadow: var(--noor-focus-ring);
 }
 
-[data-ds="nour"] .ledger-card {
-  border-radius: 16px; /* radius-lg */
-  box-shadow: 0 2px 8px rgba(30, 36, 80, 0.08); /* shadow-sm */
+/* Passages over three lines read Cairo, not Baloo — rounded type is friendly
+   for six words and tiring for sixty (handoff CLAUDE.md §TYPE). Apply this to
+   any lesson explanation, chat message body, or reading passage. */
+.font-read,
+[data-ds="noor"] .font-read {
+  font-family: var(--stack-read, var(--stack-sans));
 }
 
-[data-ds="nour"] .rule-label {
+/* Hard offset sticker shadows, for wiring onto a specific button/card/bubble
+   without touching its existing (baseline) classes. No `!important` needed:
+   these are plain classes with no Tailwind counterpart, so there's nothing to
+   out-specificity — just add the class alongside whatever is already there. */
+[data-ds="noor"] .sticker-shadow-sm {
+  box-shadow: var(--play-shadow-sm);
+}
+[data-ds="noor"] .sticker-shadow {
+  box-shadow: var(--play-shadow);
+}
+[data-ds="noor"] .sticker-shadow-lg {
+  box-shadow: var(--play-shadow-lg);
+}
+[data-ds="noor"] .sticker-shadow-xl {
+  box-shadow: var(--play-shadow-xl);
+}
+
+[data-ds="noor"] .ledger-card {
+  border-width: var(--play-stroke);
+  border-radius: var(--play-radius-lg);
+  box-shadow: var(--play-shadow-lg);
+}
+
+[data-ds="noor"] .rule-label {
   letter-spacing: 0.06em;
   color: var(--ink-soft);
+}
+
+[data-ds="noor"] .chip {
+  border-width: var(--play-stroke-sm);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Chat bubbles (handoff: Chat bubbles). Nour speaks on white with a resting
+   shadow; the student's own turn sits on the sky playmate fill, never ink —
+   ChatCore is a shared component (renders under the frozen baseline too), so
+   these OVERRIDE the existing bg-card-warm/bg-ink/text-paper utilities via
+   ordinary two-class specificity, the same trick `.chip`/`.ledger-card` use
+   above; the baseline classes are never edited, only outranked here. */
+[data-ds="noor"] .noor-bubble-tutor {
+  background: var(--card);
+  border-color: var(--ink);
+  box-shadow: var(--play-shadow-sm);
+}
+[data-ds="noor"] .noor-bubble-student {
+  background: var(--play-sky);
+  color: var(--play-on-sky);
+  border: var(--play-stroke-sm) solid var(--ink);
+  box-shadow: var(--play-shadow-sm);
+}
+
+/* Disabled reads as "not ready yet", not "broken": the outline goes dashed
+   and the shadow disappears rather than just dimming (handoff, Buttons). */
+[data-ds="noor"] button:disabled,
+[data-ds="noor"] [disabled] {
+  box-shadow: none !important;
+  border-style: dashed;
+  border-color: var(--play-disabled-border);
+  color: var(--play-disabled-text);
+  cursor: not-allowed;
+}
+
+/* Blanket sticker pass for the standard Tailwind scale: every card, button,
+   input and badge already styled with a plain `rounded-*` / `border` utility
+   (rather than an arbitrary bracket value) picks up the sticker outline and
+   radii with no component touched. Directional border utilities (border-t/
+   -b/-s/-e) are deliberately left alone — those are the thin rail/panel
+   dividers (--line-soft, 2px in the handoff), not sticker outlines. */
+[data-ds="noor"] .rounded,
+[data-ds="noor"] .rounded-sm,
+[data-ds="noor"] .rounded-md {
+  border-radius: var(--play-radius-sm);
+}
+[data-ds="noor"] .rounded-lg,
+[data-ds="noor"] .rounded-xl {
+  border-radius: var(--play-radius);
+}
+[data-ds="noor"] .rounded-2xl,
+[data-ds="noor"] .rounded-3xl {
+  border-radius: var(--play-radius-lg);
+}
+[data-ds="noor"] .border,
+[data-ds="noor"] .border-2 {
+  border-width: var(--play-stroke);
+}
+
+/* The press: the highest-value interaction in the kit. Wire this class onto
+   any control that carries a resting shadow (`.chip`, `.ledger-card`, or a
+   sticker button) — "if it doesn't move, it isn't a control." */
+[data-ds="noor"] .play-pressable {
+  transition: transform 90ms cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 90ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+[data-ds="noor"] .play-pressable:active {
+  transform: translate(var(--play-press-offset), var(--play-press-offset));
+  box-shadow: 0 0 0 var(--ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-ds="noor"] .play-pressable:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 var(--ink);
+  }
 }
 
 /* Arabic is never set in mono and never letter-spaced: IBM Plex Mono carries
    no Arabic script, so a mono label containing Arabic silently falls through
    to a system face at the wrong size. This is the handoff's single
    most-repeated bug note. */
-[data-ds="nour"] [lang="ar"],
-[data-ds="nour"] [dir="rtl"] {
+[data-ds="noor"] [lang="ar"],
+[data-ds="noor"] [dir="rtl"] {
   font-family: var(--stack-sans);
   letter-spacing: normal;
 }
 
 /* Equations render LTR inline in any page direction (constitution v2.0.0). */
-[data-ds="nour"] .katex {
+[data-ds="noor"] .katex {
   direction: ltr;
   text-align: left;
 }
 
-/* The ONE signature spring in the system, reserved for proficient → mastered.
-   Spending it anywhere else is what makes it stop meaning anything. */
-@keyframes nour-pop {
+/* ---------- the seven Play animations (handoff CLAUDE.md §MOTION) --------
+   Every one is a response to something the student did — ambient animation
+   on a study screen is noise. `bob` is the one permitted infinite loop. */
+@keyframes play-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+@keyframes play-wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-6deg);
+  }
+  75% {
+    transform: rotate(6deg);
+  }
+}
+@keyframes play-pop {
   0% {
-    transform: scale(0.86);
+    transform: scale(0.7);
   }
   55% {
-    transform: scale(1.08);
+    transform: scale(1.14);
   }
   100% {
     transform: scale(1);
   }
 }
+@keyframes play-squash {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  40% {
+    transform: scale(1.12, 0.86);
+  }
+  70% {
+    transform: scale(0.95, 1.06);
+  }
+}
+@keyframes play-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+@keyframes play-fill {
+  from {
+    width: 8%;
+  }
+  to {
+    width: var(--play-fill-to, 72%);
+  }
+}
+@keyframes play-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+@keyframes play-rise {
+  0% {
+    transform: translateY(6px) scale(0.6);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-22px) scale(1);
+    opacity: 0;
+  }
+}
 
-[data-ds="nour"] .anim-mastered {
-  animation: nour-pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+[data-ds="noor"] .anim-bob {
+  animation: play-bob 3.2s ease-in-out infinite;
+}
+[data-ds="noor"] .anim-wiggle {
+  animation: play-wiggle 0.9s ease-in-out infinite;
+}
+[data-ds="noor"] .anim-nudge {
+  animation: play-nudge 420ms ease-in-out;
+}
+[data-ds="noor"] .anim-fill-bar {
+  animation: play-fill 1.4s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+[data-ds="noor"] .anim-ring-pulse {
+  animation: play-ring 1.6s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+[data-ds="noor"] .anim-particle-rise {
+  animation: play-rise 2.4s ease-in-out infinite;
+}
+
+/* `.anim-pop` already marks every "reveal with a pop" spot in the product
+   (AskSpineDock, ChatCore, StudentLoop, VizRefCard, …) — Play just gives it a
+   punchier spring, matching the handoff's `pop` exactly, for free. */
+[data-ds="noor"] .anim-pop {
+  animation: play-pop 380ms cubic-bezier(0.34, 1.6, 0.64, 1) both;
+}
+
+/* Mastery: ring + squash, once per skill, ever. */
+[data-ds="noor"] .anim-mastered {
+  animation: play-squash 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-ds="nour"] .anim-mastered {
+  [data-ds="noor"] .anim-mastered,
+  [data-ds="noor"] .anim-bob,
+  [data-ds="noor"] .anim-wiggle,
+  [data-ds="noor"] .anim-nudge,
+  [data-ds="noor"] .anim-fill-bar,
+  [data-ds="noor"] .anim-ring-pulse,
+  [data-ds="noor"] .anim-particle-rise,
+  [data-ds="noor"] .play-pressable {
     animation: none;
+    transition: none;
   }
 }

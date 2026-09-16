@@ -212,7 +212,7 @@ export function StudentLoop({
           <div className="anim-rise pt-3" style={{ animationDelay: "520ms" }}>
             <button
               onClick={begin}
-              className="w-full rounded-xl bg-ink py-3.5 font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep hover:shadow-[0_16px_32px_-16px_rgba(13,74,66,0.6)]"
+              className="w-full rounded-xl bg-ink py-3.5 font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep hover:shadow-[0_16px_32px_-16px_rgba(13,74,66,0.6)] play-pressable sticker-shadow"
             >
               Start the session →
             </button>
@@ -255,7 +255,7 @@ export function StudentLoop({
                           <button
                             key={c.key}
                             onClick={() => setChoice(c.key)}
-                            className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-left text-[15px] transition-all duration-150 ${
+                            className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-left text-[15px] transition-all duration-150 play-pressable sticker-shadow-sm ${
                               choice === c.key
                                 ? "border-ink bg-ink/5 shadow-[0_0_0_1px_var(--ink)]"
                                 : "border-line bg-card hover:-translate-y-px hover:border-ink/40"
@@ -294,7 +294,7 @@ export function StudentLoop({
                           busy ||
                           (item.questionType === "mcq" ? !choice : !numeric.trim())
                         }
-                        className="rounded-full bg-ink px-7 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 enabled:hover:-translate-y-0.5 enabled:hover:bg-accent-deep disabled:opacity-35"
+                        className="rounded-full bg-ink px-7 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 enabled:hover:-translate-y-0.5 enabled:hover:bg-accent-deep disabled:opacity-35 play-pressable sticker-shadow-sm"
                       >
                         {busy ? "Checking…" : "Submit answer"}
                       </button>
@@ -318,7 +318,7 @@ export function StudentLoop({
                     </div>
                     <button
                       onClick={advance}
-                      className="mt-4 rounded-full bg-accent-deep px-6 py-2 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5"
+                      className="mt-4 rounded-full bg-accent-deep px-6 py-2 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
                     >
                       {idx + 1 >= plan.length ? "Finish session →" : "Next question →"}
                     </button>
@@ -329,7 +329,7 @@ export function StudentLoop({
                 {phase === "explain" && lastResult && (
                   <div className="anim-pop mt-6 rounded-xl border border-rust/35 bg-rust-wash/60 px-5 py-4">
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                      <p className="font-display text-lg font-medium text-ink">
+                      <p className="font-display text-lg font-medium text-ink anim-nudge">
                         Not quite — let&apos;s look at it step by step.
                       </p>
                       <span className="chip border-accent/40 bg-accent-wash text-accent-deep">
@@ -346,7 +346,7 @@ export function StudentLoop({
                           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink font-mono text-[11px] font-semibold text-paper">
                             {s.step}
                           </span>
-                          <span className="tex-block pt-0.5 text-[14px] leading-relaxed text-ink">
+                          <span className="tex-block pt-0.5 text-[14px] leading-relaxed text-ink font-read">
                             <TeX text={stepText(s)} />
                           </span>
                         </li>
@@ -363,14 +363,14 @@ export function StudentLoop({
                         {!askOpen && (
                           <button
                             onClick={() => setAskOpen(true)}
-                            className="rounded-full border border-accent/50 bg-accent-wash px-5 py-2 text-[13px] font-semibold text-accent-deep transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent hover:text-paper"
+                            className="rounded-full border border-accent/50 bg-accent-wash px-5 py-2 text-[13px] font-semibold text-accent-deep transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent hover:text-paper play-pressable sticker-shadow-sm"
                           >
                             Still confused? Ask the tutor ✦
                           </button>
                         )}
                         <button
                           onClick={advance}
-                          className="rounded-full bg-ink px-6 py-2 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep"
+                          className="rounded-full bg-ink px-6 py-2 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow-sm"
                         >
                           Got it {idx + 1 >= plan.length ? "— finish →" : "→"}
                         </button>
@@ -487,13 +487,13 @@ export function StudentLoop({
           <div className="anim-rise flex flex-wrap gap-3" style={{ animationDelay: "250ms" }}>
             <Link
               href="/spine"
-              className="flex-1 rounded-xl bg-ink px-6 py-3.5 text-center font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep"
+              className="flex-1 rounded-xl bg-ink px-6 py-3.5 text-center font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow"
             >
               See it on the graph →
             </Link>
             <button
               onClick={() => window.location.reload()}
-              className="rounded-xl border border-line bg-card px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5"
+              className="rounded-xl border border-line bg-card px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
             >
               New plan
             </button>

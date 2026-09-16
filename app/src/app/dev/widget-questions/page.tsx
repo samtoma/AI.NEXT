@@ -60,7 +60,7 @@ export default async function WidgetQuestionsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-paper px-4 py-8 text-ink" data-ds="nour">
+    <main className="min-h-screen bg-paper px-4 py-8 text-ink" data-ds="noor">
       <div className="mx-auto max-w-[1100px]">
         <header className="mb-7 border-b border-line pb-5">
           <h1 className="font-display text-[26px] font-bold">Widget questions</h1>

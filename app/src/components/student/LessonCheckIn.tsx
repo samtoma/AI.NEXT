@@ -197,7 +197,7 @@ export function LessonCheckIn({
         <Link
           href={`/student?mode=learn&lesson=${encodeURIComponent(lesson.slug)}`}
           prefetch={false}
-          className="anim-rise group relative overflow-hidden rounded-xl border border-line bg-card px-6 pb-5 pt-6 shadow-[0_2px_8px_rgba(30,36,80,0.08)] transition-all duration-200 hover:-translate-y-1 hover:border-[var(--nour-action)] hover:shadow-[0_12px_32px_rgba(30,36,80,0.16)]"
+          className="anim-rise group relative overflow-hidden rounded-xl border border-line bg-card px-6 pb-5 pt-6 shadow-[0_2px_8px_rgba(30,36,80,0.08)] transition-all duration-200 hover:-translate-y-1 hover:border-[var(--noor-action)] hover:shadow-[0_12px_32px_rgba(30,36,80,0.16)] play-pressable sticker-shadow"
           style={{ animationDelay: "180ms" }}
         >
           <div
@@ -236,8 +236,8 @@ export function LessonCheckIn({
                 dir="rtl"
                 className="relative mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl px-4 text-[13px] font-semibold transition-transform duration-200 group-hover:-translate-x-1"
                 style={{
-                  background: "var(--nour-action)",
-                  color: "var(--nour-on-action)",
+                  background: "var(--noor-action)",
+                  color: "var(--noor-on-action)",
                 }}
               >
                 علّمني ←
@@ -255,8 +255,8 @@ export function LessonCheckIn({
               <span
                 className="relative mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl px-4 text-[13px] font-semibold transition-transform duration-200 group-hover:translate-x-1"
                 style={{
-                  background: "var(--nour-action)",
-                  color: "var(--nour-on-action)",
+                  background: "var(--noor-action)",
+                  color: "var(--noor-on-action)",
                 }}
               >
                 Teach me →
@@ -268,7 +268,7 @@ export function LessonCheckIn({
         <Link
           href={`/student?mode=review&lesson=${encodeURIComponent(lesson.slug)}`}
           prefetch={false}
-          className="anim-rise group relative overflow-hidden rounded-xl border border-accent/40 bg-card px-6 pb-5 pt-6 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_12px_32px_-18px_rgba(13,74,66,0.4)] transition-all duration-200 hover:-translate-y-1 hover:border-accent/70 hover:shadow-[0_22px_44px_-20px_rgba(13,74,66,0.55)]"
+          className="anim-rise group relative overflow-hidden rounded-xl border border-accent/40 bg-card px-6 pb-5 pt-6 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_12px_32px_-18px_rgba(13,74,66,0.4)] transition-all duration-200 hover:-translate-y-1 hover:border-accent/70 hover:shadow-[0_22px_44px_-20px_rgba(13,74,66,0.55)] play-pressable sticker-shadow"
           style={{ animationDelay: "260ms" }}
         >
           <div
@@ -328,7 +328,7 @@ export function LessonCheckIn({
         className="anim-rise group mt-5"
         style={{ animationDelay: "340ms" }}
       >
-        <summary className="ledger-card flex cursor-pointer list-none items-center justify-between px-5 py-3 [&::-webkit-details-marker]:hidden">
+        <summary className="ledger-card play-pressable flex cursor-pointer list-none items-center justify-between px-5 py-3 [&::-webkit-details-marker]:hidden">
           <span className="flex items-baseline gap-2.5">
             <span
               dir="rtl"
@@ -384,7 +384,7 @@ export function LessonCheckIn({
                       dir={soc ? "rtl" : undefined}
                       title={`${geo ? "Geometry · " : soc ? `${subjectDef(m.subject!).labelArShort} · ` : ""}${l.ref} — ${l.title}`}
                       aria-current={selected ? "true" : undefined}
-                      className={`rounded-full border px-2.5 py-1 ${soc ? "" : "font-mono "}text-[10px] leading-none transition-all duration-150 ${
+                      className={`rounded-full border px-2.5 py-1 play-pressable sticker-shadow-sm ${soc ? "" : "font-mono "}text-[10px] leading-none transition-all duration-150 ${
                         selected
                           ? "border-accent bg-accent text-paper shadow-sm"
                           : "border-line bg-card text-ink-soft hover:-translate-y-px hover:border-accent/50 hover:text-accent-deep"
