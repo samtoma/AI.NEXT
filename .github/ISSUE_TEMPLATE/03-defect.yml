@@ -1,0 +1,40 @@
+name: Defect
+description: Something is broken, wrong, or unsafe.
+title: "[bug] "
+labels: ["defect"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should have happened
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ./scripts/local-dev.sh
+        2. open /dev/widget-questions
+        3. drag both ends of the first construction onto the circle
+    validations: { required: true }
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - Teaches something WRONG (a false statement reached a student)
+        - Safety — crisis handling, minors' data, academic integrity
+        - Breaks the comparison (parity, environment tagging, pooled metrics)
+        - Functional — it does not work
+        - Cosmetic
+    validations: { required: true }
+  - type: input
+    id: requirement
+    attributes:
+      label: Requirement it violates, if you know one
+      placeholder: "FR-1207, SC-011 — leave blank if unsure"

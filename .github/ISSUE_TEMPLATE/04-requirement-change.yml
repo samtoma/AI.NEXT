@@ -1,0 +1,34 @@
+name: Requirement change
+description: A requirement is wrong, stale, or missing. Goes to Samuel.
+title: "[req] "
+labels: ["requirement", "needs-decision"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when the SPEC is the problem — not the code. Two live examples:
+        SC-004 still measures "verified signups" after signups were replaced by
+        the identity picker, and SC-011 forbids serving unreviewed questions
+        that ADR-0008 now explicitly permits.
+  - type: input
+    id: which
+    attributes:
+      label: Which requirement
+      placeholder: "FR-306, SC-004, or 'none — one is missing'"
+    validations: { required: true }
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is wrong with it
+      options:
+        - Stale — a later decision contradicts it
+        - Unmeasurable as written
+        - Missing — we are building something no requirement covers
+        - Wrong — we should not build this
+        - Should be deferred to a later version
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What it should say instead
+    validations: { required: true }

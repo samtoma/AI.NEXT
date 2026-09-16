@@ -15,6 +15,10 @@ const contract = JSON.parse(
 );
 
 /**
+ * @covers FR-1213
+ *
+ * One predicate vocabulary shared by the app, the pipeline and the stored rows.
+ *
  * The drift guard. Three layers have to agree on the spelling of every
  * predicate — this module, `services/extraction/widget_spec.py`, and the rows
  * in `questions.choices`. A predicate misspelled in any one of them maps to no

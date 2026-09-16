@@ -1,0 +1,48 @@
+name: Product feedback
+description: Something about the experience — what a student, parent or teacher would feel. No code needed.
+title: "[product] "
+labels: ["feedback", "product"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For anything about **what the product does or should do**. You do not
+        need to know how it is built, and a half-formed observation is welcome —
+        the triage step turns it into something precise, not you.
+  - type: textarea
+    id: observation
+    attributes:
+      label: What did you see, and what did you expect instead?
+      placeholder: |
+        I opened a lesson on the circle and the tutor explained the chord
+        theorem before it had shown me a circle. A student would be lost.
+    validations: { required: true }
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where
+      options:
+        - Student — lesson / tutor chat
+        - Student — practice questions
+        - Student — widgets / constructions
+        - Parent dashboard
+        - Admin / content surfaces
+        - Curriculum content itself (a question, an explanation, a figure)
+        - Somewhere else / not sure
+    validations: { required: true }
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How much does it matter?
+      description: Your honest read. Triage may disagree, and that is fine.
+      options:
+        - Blocks the pilot — a student would give up or be taught something wrong
+        - Hurts the pilot — noticeably worse, but survivable
+        - Worth fixing after the pilot
+        - Idea for a later version
+    validations: { required: true }
+  - type: input
+    id: evidence
+    attributes:
+      label: Anything that would help us reproduce it
+      placeholder: "Question id, lesson, screenshot, or the student you were using"

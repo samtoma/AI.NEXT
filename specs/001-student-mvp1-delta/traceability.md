@@ -308,3 +308,32 @@ requirements and 112 tasks; the requirement figure was already 5 high before thi
 
 The honest headline: **the teaching core, the environment attribution, the content-parity gate and
 the whole design language are done and were exercised against real data. Nothing has met the box.**
+
+---
+
+## 9. Success criteria — SC-001…SC-011 · **the measures the pilot is judged on**
+
+> **Traced for the first time on 2026-09-16.** These eleven had never appeared in this matrix at
+> any revision, which meant the measures the pilot is judged on were the only requirements nobody
+> was tracking. Two of them have had their premise removed by decisions taken since they were
+> written, and are recorded as BLOCKED on a product call rather than quietly rewritten to match
+> what we happen to have built — that rewrite is Tamer's to make, not engineering's.
+
+| SC | Criterion | Status | Implementation | Proof / gap |
+|---|---|---|---|---|
+| SC-001 | Each solution provably serves the content set it is supposed to serve *(re-cut by ADR-0010 — no longer cross-solution)* | **VERIFIED** | `services/extraction/parity_check.py` | Run 2026-09-13 and again after the FR-1109 load: PARITY GREEN, source `38ee465de1dc3692`, 450/450 book questions. Re-runnable on demand. |
+| SC-002 | A reviewer can move between the two experiences on one lesson in a sitting, with no data, session or content bleed | **DROPPED** | — | **Withdrawn by the ADR-0010 Clarification.** This was the side-by-side comparison; Samuel: *"the comparison will be on the live usage… I will not rely on the system to compare."* `T138` closed as dropped. Id retained, never reused. |
+| SC-003 | Every metric reportable per environment, never pooled | **PARTIAL** | `lib/env.ts`, `lib/analytics.ts`, `analytics_events.environment` | Attribution is real and verified — every row written this session carried `environment='mvp1'`, never `baseline`. Gap: no reporting layer exists to pool or not pool (`T061`, `T062`). Survives ADR-0010 as data hygiene (constitution v3.0.0 Principle XI). |
+| SC-004 | ≥70% of **verified signups** complete onboarding and start a lesson within 24h | **BLOCKED** | — | **Premise is stale.** There are no verified signups: identity is a picker, not auth (decisions.md Q5, `FR-106` DEFERRED). The criterion cannot be measured as written. Needs Tamer to restate it against the identity model this build actually has. |
+| SC-005 | Comprehension-to-retrieval conversion rate, measurable from day one | **OPEN** | — | `T061` not built. The PRD calls this the single metric testing whether the core bet works, and nothing computes it. Its "headline comparison metric between the two builds" clause is withdrawn by ADR-0010; the measure itself survives per solution and is the one to build. |
+| SC-006 | D7 and D30 retention reported per environment | **OPEN** | — | Event taxonomy exists (`FR-801`, PARTIAL); no retention query. |
+| SC-007 | Trial-to-paid conversion, time-to-upgrade, post-trial churn measurable end to end | **DEFERRED** | — | Payments are out of this build (decisions.md Q7); `FR-701…707` deferred with it. Nothing to measure until billing returns. |
+| SC-008 | Zero ungrounded explanations; claim-bearing statements carry resolvable citations | **PARTIAL** | `lib/retrieval.ts`, `lib/ask.ts`, `explanation_library` | Grounding is built and the retrieval block renders `""` when nothing is retrieved, so an ungrounded turn is structurally hard. Gap: no release-review sampling has been run, so "zero" is unmeasured rather than demonstrated. |
+| SC-009 | Zero direct answers served to graded work, **including via upload** | **PARTIAL** | Prompt guardrail (`FR-202`, `T049`) | The typed-question half is built and prompt-level. **The upload half cannot hold at all**: uploads are unreachable (`FR-205`) and the grounding link is dead, so no uploaded material reaches a turn to be guarded. Closing `FR-205` is a precondition for this criterion. |
+| SC-010 | Every crisis flag reaches the human channel in the same session, none left in the analytics queue | **OPEN** | — | Phase 11 is 0/6. `T067` needs Samuel to name the recipient. **This is the hard gate before any real student.** |
+| SC-011 | No unreviewed question or canonical solution is servable; generated explanations exempt, flagged and countable | **BLOCKED** | `explanation_library.reviewed`, `questions.reviewed_by` | **Contradicted by a later decision.** ADR-0008 explicitly permits unreviewed *questions* live in this environment, and 130 are. The "exempt, flagged, countable" half is VERIFIED — 100 of 100 refutations flagged unreviewed and countable in one query. The prohibition half is no longer the policy. Needs Tamer to restate it against ADR-0008. |
+
+**Two criteria are BLOCKED on a product call, not on engineering.** `SC-004` measures signups that no
+longer exist and `SC-011` forbids what ADR-0008 now permits. Both were written before the decisions
+that broke them. Rewriting a success criterion to match what got built is how a pilot passes its own
+exam, so they stay visibly broken until Tamer restates them.

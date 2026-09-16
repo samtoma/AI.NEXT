@@ -1,3 +1,8 @@
+/**
+ * @covers FR-105
+ *
+ * Resolving which student a request belongs to, and remembering the last one.
+ */
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 

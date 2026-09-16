@@ -4,6 +4,11 @@ import { mathWidgetDocs, mathWidgetsFor, unitOf, WIDGET_UNITS } from "./widget-d
 import { MATH_WIDGETS, parseMathWidget } from "./widget-payloads.ts";
 
 /**
+ * @covers FR-1201, FR-1209
+ *
+ * Every module reachable by a widget, and each lesson told about its own
+ * unit's widgets rather than all eleven.
+ *
  * The tutor can only reach for a widget it has been told about, so this
  * mapping is the difference between a built widget and a used one. The gap
  * these tests guard is the quiet one: a widget that exists, renders, validates

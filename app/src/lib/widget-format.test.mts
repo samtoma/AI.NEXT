@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import { lineText, numText, ratioText } from "../components/student/widgets/format.ts";
 
 /**
+ * @covers FR-1210
+ *
+ * Readouts in the notation the syllabus is marked in — 3/4, never 0.75.
+ *
  * The readout under a figure is the teaching surface of these widgets — it is
  * what the student watches while they drag. Written in the wrong notation it
  * quietly teaches something the exam will not accept.

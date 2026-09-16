@@ -5,6 +5,11 @@ import { fileURLToPath } from "node:url";
 import { WIDGET_PREDICATES, OK, predicatesFor } from "./widget-predicates.ts";
 
 /**
+ * @covers FR-1213
+ *
+ * The other half of the same contract: no widget emits a predicate the
+ * vocabulary does not declare. A lint for a failure that is invisible at runtime.
+ *
  * THE DRIFT THE RUNTIME WOULD NEVER RAISE ON.
  *
  * A widget that emits `"is-tangent"` when the contract says `"is-secant"` is

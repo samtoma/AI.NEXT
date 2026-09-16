@@ -1,25 +1,67 @@
-# AI.Next Tutor PoC — Documentation Map (A → Z)
+# AI.Next — where everything lives
 
-Start here. Every document in this project, what it governs, and where it lives.
-Last regenerated: 2026-08-02 (main `d6db088`, Spec Kit baseline).
+Start here. This repository is the single reference for what we are building,
+why, what is proven, and what is next. If a decision is not written down here,
+it is not decided.
 
-## 0. The three authorities
+Regenerated 2026-09-15. The counts in this file are produced by
+`./scripts/traceability.py`, which fails CI when they drift — an earlier
+hand-maintained version of this map spent six weeks naming a superseded PRD and
+a constitution two major versions out of date.
+
+## Start here, by what you need
+
+| You want to… | Read |
+|---|---|
+| Know where the project stands today | [`PROJECT_STATE.md`](PROJECT_STATE.md) — living status, updated as work lands |
+| Know what we promised to build | [`specs/001-student-mvp1-delta/spec.md`](../specs/001-student-mvp1-delta/spec.md) — 90 functional requirements + 6 success criteria |
+| Know what is actually **proven** | [`specs/001-student-mvp1-delta/traceability.md`](../specs/001-student-mvp1-delta/traceability.md) — every requirement, its status, and the evidence |
+| Know **why** something is built that way | [`decisions/`](decisions/) — ADR-0001…0009 |
+| Give feedback or report a problem | [`FEEDBACK.md`](FEEDBACK.md) |
+| See what is coming next | [`ROADMAP.md`](ROADMAP.md) |
+| Run it on your machine | [`LOCAL-DEV.md`](LOCAL-DEV.md) |
+| Hand the work to a new session | [`NEXT-SESSION.md`](NEXT-SESSION.md) |
+
+## 0. The authorities, in order
+
+Conflicts resolve top-down. Samuel's explicit decision beats everything;
+brainstorm material in the Google folder is context and never an authority.
 
 | Question | Authority | Where |
 |---|---|---|
-| WHAT we build & why (product scope) | PRD | `AI.Next - Google Folder 17 Jul 2026/AI Tutor/PRD/PRD-ai-tutor-mvp.md` |
-| HOW we build (engineering principles) | Constitution v1.0.0 | [`.specify/memory/constitution.md`](../.specify/memory/constitution.md) |
-| Design philosophy (data spine) | Thesis (ADR-0001) | [`agentic-data-thesis.html`](../agentic-data-thesis.html) |
+| WHAT we build & why (product scope) | **PRD: AI Tutor — Student MVP v0.4** (Tamer Deif) | Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk` |
+| HOW we build (engineering principles) | **Constitution v3.0.0** | [`.specify/memory/constitution.md`](../.specify/memory/constitution.md) |
+| Design philosophy (data spine) | Thesis, adopted by ADR-0001 | [`agentic-data-thesis.html`](../agentic-data-thesis.html) |
+| Which product is under change | **ADR-0010** — one branch per solution *(amends ADR-0007's delivery model; its product scope stands)* | [`decisions/0007-student-mvp1-comparison-build.md`](decisions/0007-student-mvp1-comparison-build.md) |
 
-Conflicts resolve: Samuel's explicit decision > constitution/ADRs (engineering) >
-PRD (product scope). Brainstorm materials in the Google folder are context only.
+The **superseded** PRD v1.0 (parent-sold, Arabic-RTL, three subjects) still
+governs the frozen baseline on `family-tutor`, and nothing else:
+`AI.Next - Google Folder 17 Jul 2026/AI Tutor/PRD/PRD-ai-tutor-mvp.md`.
+
+## Two products, one repository
+
+| | Baseline — **frozen** | Comparison — **active** |
+|---|---|---|
+| Branch | `main` | `mvp1` |
+| Spec | [`specs/000-baseline/`](../specs/000-baseline/) (31 requirements, shipped) | [`specs/001-student-mvp1-delta/`](../specs/001-student-mvp1-delta/) (96, in flight) |
+| Mastery | Elo | Bayesian Knowledge Tracing |
+| Receives changes | **no teaching-behaviour changes** | yes |
+
+Both serve the identical Prep-3 Mathematics book. `parity_check.py` fails
+loudly on drift — that is SC-001, and it is the premise the whole comparison
+rests on.
 
 ## 1. Requirements & specification (Spec Kit)
 
 The Spec Kit baseline set — the full as-built requirements of the shipped product:
 
-- [`specs/000-baseline/spec.md`](../specs/000-baseline/spec.md) — user stories,
-  functional requirements (FR-001…FR-062), key entities, success criteria.
+- [`specs/000-baseline/spec.md`](../specs/000-baseline/spec.md) — the as-built
+  requirements of the shipped baseline (31). Frozen; reported by the
+  traceability tool but never gated, because it is history rather than work.
+- [`specs/001-student-mvp1-delta/`](../specs/001-student-mvp1-delta/) — **the
+  active feature**: `spec.md` (what), `plan.md` (how), `tasks.md` (135 tasks),
+  `traceability.md` (what is proven), `decisions.md` (open questions Samuel has
+  answered).
 - [`specs/000-baseline/plan.md`](../specs/000-baseline/plan.md) — as-built
   architecture, constitution check, runtime/content flows, deployment topology.
 - [`specs/000-baseline/data-model.md`](../specs/000-baseline/data-model.md) —

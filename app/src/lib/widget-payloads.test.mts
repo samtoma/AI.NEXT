@@ -3,6 +3,11 @@ import assert from "node:assert/strict";
 import { parseMathWidget, MATH_WIDGETS, type MathWidget } from "./widget-payloads.ts";
 
 /**
+ * @covers FR-1207, FR-1208
+ *
+ * Reject rather than repair, including targets that are well-typed but
+ * unreachable — and prove it without rendering a component.
+ *
  * Every one of these payloads is the sort of thing a language model produces
  * mid-stream. The contract under test is narrow and absolute: a payload either
  * validates into something the student can actually answer, or it returns null

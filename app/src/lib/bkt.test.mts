@@ -9,6 +9,11 @@ import {
 } from "./bkt.ts";
 
 /**
+ * @covers FR-301, FR-307
+ *
+ * The six BKT contract invariants (contracts/bkt.md). FR-301 is the mastery
+ * probability itself; FR-307 is the evidence trail every update must leave.
+ *
  * The six invariants from contracts/bkt.md. Each one exists because getting it
  * wrong would be invisible in normal use and would corrupt the comparison.
  */

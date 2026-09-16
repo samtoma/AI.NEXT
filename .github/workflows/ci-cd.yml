@@ -46,6 +46,39 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: "1"
 
+      # The suite existed for weeks and CI never ran it — including through two
+      # edits to this very file. A test suite nobody runs is documentation in a
+      # worse format, so this is the gate that gives the other 122 any meaning.
+      - name: Tests
+        run: npm test
+
+  # ---- The repository is the reference for requirements, so it has to be true.
+  #      Fails when a requirement in the active spec has no row, or a row names a
+  #      requirement no spec defines. This catches the decay a hand-maintained
+  #      matrix cannot catch in review — it was added after exactly that decay
+  #      deleted two rows (FR-904, FR-C05) and nobody noticed for three days.
+  #
+  #      The frozen baseline spec is reported but never gated: failing CI over
+  #      shipped history teaches people to reach for --no-verify.
+  traceability:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Requirements traceability
+        run: ./scripts/traceability.py --check
+      - name: Fail if the generated counts are stale
+        run: |
+          ./scripts/traceability.py --write >/dev/null
+          if ! git diff --quiet -- specs/; then
+            echo "::error::The generated counts block is out of date."
+            echo "Run ./scripts/traceability.py --write and commit the result."
+            git --no-pager diff -- specs/
+            exit 1
+          fi
+
   # ---- Stage 2: deploy on the OCI box — ONLY if build passed, ONLY from THIS branch ----
   #
   # ONE BRANCH PER SOLUTION (ADR-0010 + its Clarification, T136).

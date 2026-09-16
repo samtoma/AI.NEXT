@@ -1,0 +1,36 @@
+name: Market / customer feedback
+description: What a parent, student or school actually said — pricing, positioning, objections.
+title: "[market] "
+labels: ["feedback", "market"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Evidence from outside the building. This is the input the product has
+        least of, so raw and unpolished is better than summarised and tidy.
+  - type: textarea
+    id: said
+    attributes:
+      label: What did they say?
+      description: Their words where you have them, not the conclusion you drew.
+      placeholder: |
+        "I already pay 800 EGP a month for a private tutor who comes to the
+        house. Why would I pay for something my son uses alone?"
+    validations: { required: true }
+  - type: input
+    id: who
+    attributes:
+      label: Who, roughly
+      description: No names. Parent of a Prep-3 boy in Nasr City, head of a language school — that level.
+    validations: { required: true }
+  - type: dropdown
+    id: about
+    attributes:
+      label: Mainly about
+      options: [Price or willingness to pay, What it does / is it worth it, Trust and safety, Competition, Distribution — how they would find us, Something else]
+    validations: { required: true }
+  - type: textarea
+    id: implication
+    attributes:
+      label: What you think it means for the product (optional)
+      description: Kept separate from what they said on purpose — so the evidence survives even if the interpretation turns out wrong.

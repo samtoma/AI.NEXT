@@ -20,9 +20,19 @@ requirement names it.
 - **Misconceptions for intersection and mutually exclusive events**, six entries
   mined from the book's own distractors (`FR-1111`, still partial: 43 of 90
   objectives covered).
-- Repository governance: issue templates tied to requirement ids, a pull-request
-  template enforcing the requirement→task→proof thread, `CODEOWNERS`, this
-  changelog and `docs/VERSIONING.md`.
+- **A computed traceability matrix.** `scripts/traceability.py` derives the
+  requirement state instead of trusting a hand-edited document: a requirement
+  exists because a spec defines it, is traced because a row names it, is covered
+  because a test declares it (`@covers FR-nnn`). `--check` fails CI when those
+  three disagree.
+- **CI actually runs the tests.** 123 of them, which had never run in CI —
+  including through two edits to the workflow.
+- **The eleven success criteria are traced for the first time.** They are the
+  measures the pilot is judged on and had never appeared in the matrix.
+- Repository governance: four issue templates tied to requirement ids, a
+  pull-request template enforcing the requirement→task→proof thread,
+  `CODEOWNERS`, `docs/FEEDBACK.md`, `docs/ROADMAP.md`, `docs/VERSIONING.md` and
+  this changelog.
 
 ### Changed
 - **One branch per solution** (ADR-0010). `PDR1-0` and `family-tutor` are separate
@@ -35,6 +45,12 @@ requirement names it.
 - Cross-solution content parity, the frozen-baseline obligation, and `FR-908`.
   The comparison is now an observational judgement from live usage.
 - The simultaneous side-by-side demo — the original promise of ADR-0007.
+
+### Fixed
+- `FR-904` and `FR-C05` had been deleted from the matrix by a bad edit that
+  overwrote the id column with prose. The matrix silently read 87 rows instead of
+  89 for three days, and 87 was published as the requirement count. Restored, and
+  the CI gate now catches this class of decay.
 
 ### Known broken
 - **Uploads do not work end to end** (`FR-205`, marked VERIFIED and it should not

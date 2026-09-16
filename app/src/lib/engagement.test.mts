@@ -1,3 +1,8 @@
+/**
+ * Engagement signal — the half of FR-207 that did not exist.
+ *
+ * @covers FR-207
+ */
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
