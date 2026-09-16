@@ -11,6 +11,7 @@ this file says how they relate.
 | **Requirements** | Stable ids, amended in place | `specs/*/spec.md` + `traceability.md` | An FR id is permanent. Changing its meaning is an *amendment* stamped with the date and the ADR that caused it. Dropping one marks it DROPPED with a reason — ids are never reused. |
 | **Solution release** | SemVer, per branch | `app/package.json` + `CHANGELOG.md` | MAJOR = a student-visible contract breaks · MINOR = a requirement moves to VERIFIED · PATCH = fixes with no requirement change. Each solution branch versions independently — they are separate products (ADR-0010). |
 | **Content** | Digest, not a number | `parity_check.py` | The book set is identified by `source sha256` and its counts. A drift is a failure, not a version bump. |
+| **Content bundles** | The database is the source of truth | `export_generated_content.py` → `seed/generated/` | Bundles are *exports* of state that was generated and reviewed, so **the review stamps travel with them**. This is why `--restore` exists and why it is forbidden on a freshly generated bundle: provenance is not something a generator gets to assert about itself. |
 
 ## Why requirements are not SemVer
 
@@ -41,3 +42,29 @@ someone ran it, and be willing to demote.
    under the new version with the date, and tag: `PDR1-0-v0.2.0`.
 4. Tags are per solution and prefixed with the branch, because the two solutions
    version independently and a bare `v0.2.0` would be ambiguous.
+
+## Branches
+
+One branch per solution, both long-lived, neither an environment of the other
+([ADR-0010](decisions/0010-one-branch-per-solution.md)).
+
+| Branch | Solution | Rule |
+|---|---|---|
+| `main` | shared trunk | Default branch, still what CI deploys to `ainext.reletix.com`. **Not to be touched** — retiring it is a production change and has not been approved. |
+| `family-tutor` | Founding Families — parent-sold, Arabic RTL, three subjects, Elo | Frozen, because nobody is working on it. Not frozen by an experiment's requirement — that obligation was withdrawn. |
+| `PDR1-0` | Student MVP — student-facing, English, maths only, BKT | Active. Carries its own deploy trigger; deploy is manual-only while infrastructure is parked (`T139`). |
+| `claude/*` | none | Working branches from agent sessions. Squash-merge into a solution branch and **delete**, or they accumulate and a second agent will commit to one you thought was gone. |
+
+Each solution branch carries its own copy of `ci-cd.yml`, so editing one can never
+change what another deploys. The cost is that the shared-box safety rails exist in
+one copy per branch: **change a rail on every solution branch**, or the copy that
+drifts is the one that prunes production's images.
+
+## What is not versioned yet, and should be
+
+- **The database schema.** Migrations are sequential (`001`…`010`) but nothing ties
+  a schema state to a release tag, so "which migration is this deployment on" is
+  answered by looking, not by reading.
+- **The prompt kit.** Teaching behaviour changes when a prompt changes, and a
+  prompt change is invisible in a diff of requirement statuses. The capture
+  harness (`capture-prompts.mts`) can prove byte-identity but nothing versions it.
