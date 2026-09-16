@@ -46,8 +46,11 @@ Cross-cutting: `security-privacy-officer`, `tech-writer`
 
 Skills (in `.claude/skills/`): `project-status` (read/update project state), `adr` (record an architecture decision), `write-spec` (feature spec from PRD scope).
 
+**For the founders — no code knowledge needed:** `feedback` (file feedback on a version) and `requirement` (propose a new requirement or change one, targeted at a version). Both refuse to proceed until the version is established, because feedback with no version cannot be reproduced and a requirement with no target cannot be scheduled. Neither writes to the spec — triage does that (`docs/FEEDBACK.md`).
+
 ## Conventions
 - Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`. **Documentation map: `docs/README.md`.**
+- Branching: `docs/BRANCHING.md` — one branch per solution; feedback and requirement *proposals* never get a branch, accepted requirements get `req/<id>-<slug>`. Versioning: `docs/VERSIONING.md`. Current release: **`PDR1-0-v0.2.0`**.
 - Product code: the Next.js app in `app/`, the extraction pipeline in `services/extraction/`, deploy stack in `deploy/` (see ADR-0002/0003/0005).
 - Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v3.0.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/001-student-mvp1-delta/`; new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
 - Student- and parent-facing copy is **English** for MVP 1.0 (constitution v3.0.0 Principle V); the Arabic verticals stay in the tree and reintroducible. Internal docs and code are English.

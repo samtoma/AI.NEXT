@@ -38,6 +38,24 @@ The **superseded** PRD v1.0 (parent-sold, Arabic-RTL, three subjects) still
 governs the frozen baseline on `family-tutor`, and nothing else:
 `AI.Next - Google Folder 17 Jul 2026/AI Tutor/PRD/PRD-ai-tutor-mvp.md`.
 
+
+## Giving feedback or proposing a requirement
+
+You do not need to read code, run anything, or know what an FR is.
+
+| You want to | Use | It asks you |
+|---|---|---|
+| Report something you saw | the `feedback` skill, or [New issue](https://github.com/samtoma/AI.NEXT/issues/new/choose) | **Which version** you saw it on |
+| Say the product *should* do something | the `requirement` skill | **Which version** it should land in |
+
+Both refuse to file until the version is settled — feedback with no version cannot
+be reproduced, and a requirement with no target cannot be scheduled. Neither
+changes the spec: triage does, and every issue leaves triage with exactly one
+outcome written on it ([FEEDBACK.md](FEEDBACK.md)).
+
+Current release: **`PDR1-0-v0.2.0`**. Next: milestone `PDR1-0-v0.3.0`.
+Branching rules: [BRANCHING.md](BRANCHING.md). Versioning: [VERSIONING.md](VERSIONING.md).
+
 ## Two products, one repository
 
 | | Baseline — **frozen** | Comparison — **active** |
