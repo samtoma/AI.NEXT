@@ -670,6 +670,18 @@ body[data-focus="lesson"] > footer {
   box-shadow: var(--play-shadow-xl);
 }
 
+/* /student check-in anatomy's own press spec (docs/design/handoffs/noor-play
+   check-in brief) — gentler than .play-pressable by design: 2px of travel,
+   the shadow only shrinks (5px -> 3px) rather than collapsing to 0, 80ms. */
+[data-ds="noor"] .checkin-press {
+  box-shadow: 5px 5px 0 var(--ink);
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+[data-ds="noor"] .checkin-press:active {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
 [data-ds="noor"] .ledger-card {
   border-width: var(--play-stroke);
   border-radius: var(--play-radius-lg);
@@ -909,7 +921,8 @@ body[data-focus="lesson"] > footer {
   [data-ds="noor"] .anim-fill-bar,
   [data-ds="noor"] .anim-ring-pulse,
   [data-ds="noor"] .anim-particle-rise,
-  [data-ds="noor"] .play-pressable {
+  [data-ds="noor"] .play-pressable,
+  [data-ds="noor"] .checkin-press {
     animation: none;
     transition: none;
   }
