@@ -40,9 +40,17 @@ export interface ChatCoreHandle {
   widgetNote(note: string): void;
 }
 
+/**
+ * A suggestion chip is either plain text — sent as a normal chat turn — or an
+ * action chip whose `onSelect` fires directly (e.g. the lesson's inline
+ * "Finish lesson" chip, which must act exactly like the header button and
+ * never round-trip through the model).
+ */
+export type ChatSuggestion = string | { label: string; onSelect: () => void };
+
 export interface ChatCoreProps {
   surface: "spine_chat" | "student_chat" | "lesson_learn" | "lesson_review";
-  suggestions?: string[];
+  suggestions?: ChatSuggestion[];
   questionId?: string;
   wrongAnswer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
@@ -774,16 +782,19 @@ export function ChatCore({
       {/* suggestion chips — stay clickable after every stream */}
       {suggestions.length > 0 && !capped && (
         <div className="flex flex-wrap gap-1.5 border-t border-line-soft px-4 pb-1.5 pt-2.5">
-          {suggestions.map((s) => (
-            <button
-              key={s}
-              onClick={() => send(s)}
-              disabled={streaming}
-              className="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-1 text-start text-[11px] font-medium leading-snug text-accent-deep transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent enabled:hover:text-paper disabled:opacity-40 play-pressable sticker-shadow-sm"
-            >
-              {s}
-            </button>
-          ))}
+          {suggestions.map((s) => {
+            const label = typeof s === "string" ? s : s.label;
+            return (
+              <button
+                key={label}
+                onClick={() => (typeof s === "string" ? send(s) : s.onSelect())}
+                disabled={streaming}
+                className="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-1 text-start text-[11px] font-medium leading-snug text-accent-deep transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent enabled:hover:text-paper disabled:opacity-40 play-pressable sticker-shadow-sm"
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
       )}
 

@@ -540,7 +540,7 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
 - {{widget:term_match:{"prompt":"وصّل المصطلح بمعناه","pairs":[{"term":"الموقع الفلكي","definition":"موقع المكان بالنسبة لدوائر العرض وخطوط الطول"}],"decoyDefs":["تعريف قريب للتشتيت"]}}} — «ضع المصطلح» matching, 2–4 pairs; terms and definitions VERBATIM from the LESSON DATA (المصطلحات قانون); "decoyDefs" optional.
 - ${socialFigureDirectivesDoc(exViz)}
   A figure counts as the ONE directive of its message. This is a SOCIAL-STUDIES lesson: اشرح بالرسم — a map_scene for every place, a timeline for every sequence of events, a flow_chain for every «بم تفسر» — pick the stored library figure when one fits the beat.
-- {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
+- {{finish_lesson}} — arms his Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
 ${CROSS_SUBJECT_RULE}
@@ -569,7 +569,7 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
   · "view":"line" (the default): a small card appears inline in the exchange carrying ONLY the marked span (rendered by the app from the verified store — your quote is only a locator, it is never shown as your words). Use when the line itself is the subject: close reading, معنى كلمة، جمال تعبير، إعراب جملة.
   · "view":"context": no inline card — the span is highlighted up in the PINNED full passage card and a small chip points there. Use when the surroundings matter: موقع الجملة في الفقرة، ترتيب الأفكار، ربط أول النص بآخره.
   Bare {{show_passage:t:ara1-1:001}} (no span) just scrolls back to the full card — use it only for a general «ارجع للنص». All forms are POINTERS: none counts as this message's interactive directive, and a pointer alone is never an ask — talk about the marked words in the SAME message and still END it with a real ask. Never point in two consecutive messages.
-- {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
+- {{finish_lesson}} — arms his Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 ⚠ SACRED TEXT (hard rule, no exceptions): الآيات والأحاديث معروضة للطالب في بطاقة النص أول المحادثة من الحافظة الموثقة — you never type, quote, complete or embed Quran/Hadith text in prose or in ANY widget payload. Reference it by آية number + {{show_passage:…}} («تأمل الآية ٦٣ في بطاقة النص فوق»). Vocabulary words (single words like هَوْنًا) from the glossary are allowed in term_match. أي رد يتضمن ٣ كلمات متتالية فأكثر من النص المختوم يُلغى آليًا قبل وصوله للطالب.
 ⚠ NEVER END A MESSAGE WITHOUT AN ASK: your last beat is always something the student ACTS on — a question in chat, a choice, or an interactive directive (widget / show_question). Ending on a statement, a summary, or a show_passage chip strands him with nothing to do; if you pointed at the text, the question about that exact spot goes in the SAME message.
 This is an ARABIC lesson: the text IS the figure — anchor every beat to ONE specific آية/بيت/جملة by number, ask about one span at a time (معناها، جمالها، إعرابها), and vary the asks across chat questions, extract_spans, style_purpose, irab_builder and term_match instead of repeating open «ما رأيك» questions.
@@ -607,7 +607,7 @@ ${mathWidgetDocs(data.slug)}
   Every widget payload is FLAT JSON in exactly the shape shown, plain ASCII inside the JSON. Each one grades itself on the student's device and reports back — never state the answer in the same message you emit a widget in, and never emit one whose numbers you have not checked are reachable: a widget with an impossible target does not render at all, and the beat is simply lost.
 - ${figureDirectivesDoc(exViz)}
   A figure counts as the ONE directive of its message. ${vizGuidance}
-- {{finish_lesson}} — ends the session and triggers the comprehension report. Emit it alone on the final line of your LAST message only.
+- {{finish_lesson}} — arms his Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
 ${CROSS_SUBJECT_RULE}
@@ -821,7 +821,7 @@ export function learnPrompt(data: LessonData): string {
 - From the SECOND message on: open with one warm beat reacting to his latest [live event]. If he got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking him toward the correct answer, in the same upbeat tone — never open with the correct letter.
 - After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
 - Never repeat a widget, figure or question he already saw.
-- Closing message: one-line recap beat of the big ideas, then {{finish_lesson}}.`;
+- Closing message: one-line recap beat of the big ideas, then a line telling him plainly this is the end of today's lesson and he can finish whenever he's ready, then {{finish_lesson}}. {{finish_lesson}} only arms his Finish button — it doesn't end the session, so if he keeps chatting after it, keep answering normally.`;
   const richNote = kit.learnRichNote(data);
   const firstName = data.studentName.split(" ")[0];
   const { premise, job } = learnOpeningFrame(
@@ -857,15 +857,16 @@ export function reviewPrompt(data: LessonData): string {
   const gradeAdj = lowerGrade(data.grade).replace(" ", "-");
   return `You are ${data.studentName}'s AI tutor at AI.Next. He is an Egyptian ${gradeAdj} student who came home saying he understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
 
-HARD BUDGET: at most 5 messages total, then the session ends. Follow this script exactly:
+HARD BUDGET: at most 5 messages total, then his Finish button lights up (the session itself doesn't auto-end). Follow this script exactly:
 ${checkList}
 ${picks.length + 1}. One-line reaction + ${widgetMoment}
-${picks.length + 2}. One-line warm wrap (e.g. "تمام يا بطل — confirmed.") + {{finish_lesson}}.
+${picks.length + 2}. One-line warm wrap that also tells him the revision is done and he can finish whenever he's ready (e.g. "تمام يا بطل — كده خلصنا، دوس إنهاء لو جاهز.") + {{finish_lesson}}.
 
 RULES:
 - Never more than ONE short line of prose per message. No explanations unless he got it wrong — then ONE crisp corrective line taken from that question's canonical solution, and still move on.
 - Question ids strictly from the QUESTION BANK, each used once, spread across the lesson's LOs.
 - If a [live event] says he tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${kit.reviewSubjectRules}
+- {{finish_lesson}} only arms his Finish button — it doesn't end the session, so if he keeps chatting after it, keep answering normally.
 
 ${languageContract(data.subject)}
 

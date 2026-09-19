@@ -270,6 +270,10 @@ export function LessonSession({
 }) {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("session");
+  // the tutor's closing recap (or a hit turn cap) marks the lesson as OVER,
+  // but that is not the student's decision to leave the transcript — it only
+  // arms the header's Finish button; requestFinish still only fires on tap.
+  const [readyToFinish, setReadyToFinish] = useState(false);
   const [check, setCheck] = useState<UnderstandingCheck | null>(null);
   const [ratingCost, setRatingCost] = useState(0);
   const [totalUsd, setTotalUsd] = useState(0);
@@ -576,16 +580,30 @@ export function LessonSession({
     }
   }, [mode, lesson.slug]);
 
-  const requestFinish = useCallback(
-    (delayMs = 0) => {
-      if (finishing.current || finishTimer.current) return;
-      finishTimer.current = setTimeout(() => {
-        finishTimer.current = null;
-        finish();
-      }, delayMs);
-    },
-    [finish]
+  // student-initiated only (the header Finish button) — the timer is just a
+  // double-tap guard now that nothing calls this automatically.
+  const requestFinish = useCallback(() => {
+    if (finishing.current || finishTimer.current) return;
+    finishTimer.current = setTimeout(() => {
+      finishTimer.current = null;
+      finish();
+    }, 0);
+  }, [finish]);
+
+  // once the lesson is over, an action chip rides alongside the transcript's
+  // own suggestions — tapping it calls requestFinish DIRECTLY (no chat round
+  // trip), same as the header button, right where the closing recap left off.
+  const finishSuggestion = useMemo(
+    () => ({
+      label: rtl ? `${arCopy.finish} ✓` : `${copy.finish} ✓`,
+      onSelect: requestFinish,
+    }),
+    [rtl, arCopy.finish, copy.finish, requestFinish]
   );
+  const chatSuggestions = useMemo(() => {
+    const base = mode === "learn" ? (rtl ? AR_SUGGESTIONS : EN_SUGGESTIONS) : [];
+    return readyToFinish ? [...base, finishSuggestion] : base;
+  }, [mode, rtl, readyToFinish, finishSuggestion]);
 
   /* ---------------- board wiring ---------------- */
 
@@ -943,9 +961,9 @@ export function LessonSession({
       setTotalUsd(usd);
       setTurns(t);
       turnsRef.current = t;
-      if (mode === "review" && t >= REVIEW_TURN_CAP) requestFinish(2500);
+      if (mode === "review" && t >= REVIEW_TURN_CAP) setReadyToFinish(true);
     },
-    [mode, requestFinish]
+    [mode]
   );
 
   const onMessagesChange = useCallback(
@@ -1109,8 +1127,12 @@ export function LessonSession({
             )}
 
             <button
-              onClick={() => requestFinish(0)}
-              className="h-8 rounded-full bg-ink px-4 text-[12px] font-semibold text-paper transition-all duration-150 hover:-translate-y-px hover:bg-accent-deep play-pressable sticker-shadow-sm"
+              onClick={requestFinish}
+              className={`h-8 rounded-full px-4 text-[12px] font-semibold text-paper transition-all duration-150 hover:-translate-y-px play-pressable sticker-shadow-sm ${
+                readyToFinish
+                  ? "anim-nudge bg-accent hover:bg-accent-deep"
+                  : "bg-ink hover:bg-accent-deep"
+              }`}
             >
               {rtl ? `${arCopy.finish} ←` : `${copy.finish} →`}
             </button>
@@ -1146,9 +1168,13 @@ export function LessonSession({
             </span>
           </span>
           <span dir={rtl ? "rtl" : "ltr"} className="text-[11px] text-ink-faint">
-            {rtl
-              ? `${arDigits(lesson.los.length)} خطوات وبعدها تقرير فهمك 📋`
-              : `${lesson.los.length} steps, then your understanding report 📋`}
+            {readyToFinish
+              ? rtl
+                ? `خلصنا — دوس "${arCopy.finish}" لما تكون جاهز تشوف تقريرك 📋`
+                : `That's a wrap — tap "${copy.finish}" whenever you're ready for your report 📋`
+              : rtl
+                ? `${arDigits(lesson.los.length)} خطوات وبعدها تقرير فهمك 📋`
+                : `${lesson.los.length} steps, then your understanding report 📋`}
           </span>
         </div>
       </section>
@@ -1237,13 +1263,7 @@ export function LessonSession({
                     ? "Answer or ask anything…"
                     : "Answer here…"
               }
-              suggestions={
-                mode === "learn"
-                  ? rtl
-                    ? AR_SUGGESTIONS
-                    : EN_SUGGESTIONS
-                  : []
-              }
+              suggestions={chatSuggestions}
               lookupQuestion={lookupQuestion}
               resolveCite={resolveCite}
               onCite={onCite}
@@ -1307,8 +1327,8 @@ export function LessonSession({
               onDirective={boardOn ? onDirective : undefined}
               handleRef={coreHandle}
               onAssistantDone={onAssistantDone}
-              onFinishDirective={() => requestFinish(2200)}
-              onCapped={() => requestFinish(2200)}
+              onFinishDirective={() => setReadyToFinish(true)}
+              onCapped={() => setReadyToFinish(true)}
               onTotalChange={onTotalChange}
               onMessagesChange={onMessagesChange}
               onSwitchSubject={(subj) => router.push(`/student?subject=${subj}`)}
