@@ -278,6 +278,10 @@ export interface LessonData {
   /** the resolved demo student the mastery numbers belong to — rendered into
    *  the data block so a switched student is never mislabeled as id 1 */
   studentId: number;
+  /** the student's own grade (lib/profile.ts GRADES, or the legacy "prep-3"
+   *  form) — never a fixed literal, so a grade-7 or grade-12 student is never
+   *  narrated as "grade 10" in the prompt. */
+  grade: string;
 }
 
 /**

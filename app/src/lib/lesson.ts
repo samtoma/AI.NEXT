@@ -3,6 +3,8 @@ import path from "node:path";
 import { pool } from "./db";
 import { retrieve, retrievalBlock } from "./retrieval";
 import { DEFAULT_STUDENT_ID } from "./demo-student";
+import { deriveMasteryStage, learnOpeningFrame } from "./checkin";
+import { gradeLabel } from "./profile";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
 import { getLessonBridges } from "./subject-queries";
@@ -191,7 +193,9 @@ export async function getLessonData(
       `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id`,
       [loPattern]
     ),
-    pool.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
+    pool.query(`SELECT display_name, grade FROM students WHERE id = $1`, [
+      studentId,
+    ]),
   ]);
   if (losRes.rows.length === 0 && safeSlug !== DEFAULT_LESSON_SLUG) {
     // unknown slug → default lesson (same student)
@@ -316,6 +320,7 @@ export async function getLessonData(
     docTitle,
     studentName: (studentRes.rows[0]?.display_name as string) ?? "Omar",
     studentId,
+    grade: (studentRes.rows[0]?.grade as string) ?? "10",
   };
 }
 
@@ -336,6 +341,13 @@ const isGeoLesson = (data: LessonData) => data.slug.startsWith("geo");
  * evidence_page, …} — see docs/specs/social-extraction-contract.md) render the
  * Arabic claim with its per-claim evidence page so the model can cite it.
  */
+/** gradeLabel() lower-cased for embedding mid-sentence — "grade 10" /
+ *  "grade 9 (prep-3)" — so prompts narrate the student's ACTUAL grade
+ *  (lib/profile.ts) instead of a fixed literal. */
+function lowerGrade(grade: string): string {
+  return gradeLabel(grade).replace(/^Grade/, "grade");
+}
+
 function fmtSteps(steps: SolutionStep[]): string {
   return steps
     .map((s) => {
@@ -380,7 +392,7 @@ export function lessonDataBlock(data: LessonData): string {
   const bookName = kit.bookName(data.docTitle);
 
   return `LESSON DATA — your ONLY source of truth (school ${data.lessonRef}: ${data.title} — ${data.moduleLabel}, ${bookName})
-Student: ${data.studentName} (id ${data.studentId}), grade 10.
+Student: ${data.studentName} (id ${data.studentId}), ${lowerGrade(data.grade)}.
 
 LEARNING OBJECTIVES of this lesson, in teaching order:
 ${loLines}
@@ -805,12 +817,21 @@ export function learnPrompt(data: LessonData): string {
   const rhythm = `- Every message is 2–4 beats, separated by {{beat}} alone on its own line ({{beat}} renders as a natural writing pause, never as text).
 - One beat = at most 2 short sentences (≤25 words total), OR one figure directive, OR one interactive directive.
 - The LAST beat of a message carries its single interactive directive (widget or check question), with nothing after it — make him DO something in almost every message.
-- Open with one warm beat reacting to his latest [live event]. If he got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking him toward the correct answer — never open with the correct letter.
+- The very FIRST message of the lesson has no [live event] yet — there is nothing to react to. Open with upbeat energy for the topic itself (see your opening instructions above), not a reaction to anything.
+- From the SECOND message on: open with one warm beat reacting to his latest [live event]. If he got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking him toward the correct answer, in the same upbeat tone — never open with the correct letter.
 - After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
 - Never repeat a widget, figure or question he already saw.
 - Closing message: one-line recap beat of the big ideas, then {{finish_lesson}}.`;
   const richNote = kit.learnRichNote(data);
-  return `You are ${data.studentName}'s personal AI tutor at AI.Next. He is an Egyptian grade-10 student who just came home from school. Today's lesson was ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — and he understood NOTHING. Your job: teach him the whole lesson from zero so it finally clicks, one short message of small beats at a time — as if you are writing to him and drawing for him.${richNote}
+  const firstName = data.studentName.split(" ")[0];
+  const { premise, job } = learnOpeningFrame(
+    deriveMasteryStage(data.los),
+    firstName
+  );
+  const gradeAdj = lowerGrade(data.grade).replace(" ", "-");
+  return `You are ${data.studentName}'s personal AI tutor at AI.Next. He is an Egyptian ${gradeAdj} student who just came home from school. Today's lesson is ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — ${premise}. Your job: ${job}, one short message of small beats at a time — as if you are writing to him and drawing for him.
+
+TONE: upbeat, playful and curious throughout, whatever the stage — like exploring something interesting together, never clinical.${richNote}
 
 ${kit.groundingRules(data)}
 
@@ -833,7 +854,8 @@ export function reviewPrompt(data: LessonData): string {
     )
     .join("\n");
   const widgetMoment = kit.reviewWidgetMoment(data);
-  return `You are ${data.studentName}'s AI tutor at AI.Next. He is an Egyptian grade-10 student who came home saying he understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
+  const gradeAdj = lowerGrade(data.grade).replace(" ", "-");
+  return `You are ${data.studentName}'s AI tutor at AI.Next. He is an Egyptian ${gradeAdj} student who came home saying he understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
 
 HARD BUDGET: at most 5 messages total, then the session ends. Follow this script exactly:
 ${checkList}

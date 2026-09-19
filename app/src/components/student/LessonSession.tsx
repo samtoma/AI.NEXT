@@ -18,6 +18,7 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
+import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
 import { renderMathWidget } from "@/components/student/widgets/render-math-widget";
@@ -80,7 +81,6 @@ const MODE_COPY: Record<
     label: string;
     chip: string;
     finish: string;
-    autoStart: string;
     opening: string;
   }
 > = {
@@ -88,19 +88,34 @@ const MODE_COPY: Record<
     label: "Teach me",
     chip: "learn mode · AI-led lesson",
     finish: "Finish lesson",
-    autoStart:
-      "Start now. I just came home from school and I understood NOTHING from today's lesson. Teach me from zero, from the very first idea.",
     opening: "Let's go 💪 setting up today's lesson… ✏️",
   },
   review: {
     label: "Quick revision",
     chip: "review mode · 3 minutes",
     finish: "End now",
-    autoStart:
-      "I understood today's lesson at school completely. Start the quick lock-it-in revision now — first check question please.",
     opening: "One sec — setting up the quick revision questions… ⏱",
   },
 };
+
+/**
+ * The HIDDEN first "student" message that kicks off a session (`autoStart`/
+ * `autoStartHidden` below — the model reads it, the transcript never shows
+ * it). Learn mode's used to hardcode "I understood NOTHING... teach me from
+ * zero" for every session, including a lesson never attempted — the exact
+ * apologetic-tone bug `learnOpeningFrame` (lib/checkin.ts) already fixed on
+ * the tutor's OWN system prompt kept resurfacing because the model was also
+ * reacting to this fabricated self-report, independent of that prompt.
+ * `learnAutoStartLine` carries the same mastery-stage bands so the two can
+ * never drift apart again. Review's line stays a fixed, student-declared
+ * claim ("I understood it completely") — that one is never assumed by the
+ * system, only ever chosen by the student tapping "Quiz me on it".
+ */
+function autoStartFor(mode: LessonMode, stage: 0 | 1 | 2 | 3 | 4): string {
+  return mode === "learn"
+    ? learnAutoStartLine(stage)
+    : "I understood today's lesson at school completely. Start the quick lock-it-in revision now — first check question please.";
+}
 
 type Phase = "session" | "rating" | "report" | "error";
 
@@ -507,6 +522,11 @@ export function LessonSession({
   );
 
   const copy = MODE_COPY[mode];
+  const masteryStage = useMemo(
+    () => deriveMasteryStage(lesson.los),
+    [lesson.los]
+  );
+  const autoStart = autoStartFor(mode, masteryStage);
   const first = lesson.studentName.split(" ")[0];
   // subject-conditional RTL flip: dir on the app frame flips the grid (board
   // lands on the LEFT so the reading eye starts at the text), the stepper and
@@ -1204,7 +1224,7 @@ export function LessonSession({
               lessonSlug={lesson.slug}
               sessionId={sessionId}
               initialMessages={boot.seed?.messages}
-              autoStart={copy.autoStart}
+              autoStart={autoStart}
               autoStartHidden
               autoContinue
               debug={debug}
