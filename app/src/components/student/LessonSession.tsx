@@ -69,6 +69,11 @@ import {
 
 const REVIEW_TURN_CAP = 5;
 
+// Voice UI pulled per founder feedback 016 — backend (lib/voice.ts,
+// lib/tts-client.ts, api/tts/route.ts) stays wired and dormant; flip this
+// back on to restore the toggle button and mic input with no other changes.
+const VOICE_UI_ENABLED = false;
+
 const MODE_COPY: Record<
   LessonMode,
   {
@@ -1052,7 +1057,7 @@ export function LessonSession({
           </div>
 
           <div className="flex items-center gap-2">
-            {ttsOK && (
+            {VOICE_UI_ENABLED && ttsOK && (
               <button
                 onClick={toggleVoice}
                 aria-pressed={voiceOn}
@@ -1288,7 +1293,7 @@ export function LessonSession({
               onMessagesChange={onMessagesChange}
               onSwitchSubject={(subj) => router.push(`/student?subject=${subj}`)}
               inputAccessory={
-                sttOK
+                VOICE_UI_ENABLED && sttOK
                   ? (api) => <MicButton setInput={api.setInput} />
                   : undefined
               }
