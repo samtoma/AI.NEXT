@@ -944,7 +944,12 @@ const MessageRow = memo(function MessageRow({
           if (b.t === "beat") return null; // pacing marker — renders as time
           if (b.t === "check_in") {
             return (
-              <CheckInCard key={i} onPick={onCheckIn} disabled={!!m.streaming} />
+              <CheckInCard
+                key={i}
+                onPick={onCheckIn}
+                disabled={!!m.streaming}
+                arabicUi={arabicUi}
+              />
             );
           }
           if (b.t === "widget") {
@@ -1186,13 +1191,15 @@ function BoardChip({
   );
 }
 
-/** {{check_in}} — "لسه معايا؟" two-big-buttons card. */
+/** {{check_in}} — two-big-buttons card. */
 function CheckInCard({
   onPick,
   disabled,
+  arabicUi,
 }: {
   onPick?: (choice: string) => void;
   disabled: boolean;
+  arabicUi: boolean;
 }) {
   const [picked, setPicked] = useState<"no" | "yes" | null>(null);
   const choose = (which: "no" | "yes", text: string) => {
@@ -1200,15 +1207,19 @@ function CheckInCard({
     setPicked(which);
     onPick?.(text);
   };
+  const dir = arabicUi ? "rtl" : "ltr";
+  const noSignal = arabicUi
+    ? "لسه مش فاهم — اشرحها بطريقة تانية"
+    : "Not yet — explain it another way";
   return (
     <div className="anim-pop my-2 rounded-lg border border-accent/40 bg-accent-wash/60 px-3.5 py-3">
-      <p dir="rtl" className="mb-2.5 text-center font-display text-[16px] font-medium text-ink">
-        لسه معايا؟
+      <p dir={dir} className="mb-2.5 text-center font-display text-[16px] font-medium text-ink">
+        {arabicUi ? "لسه معايا؟" : "Still with me?"}
       </p>
       <div className="grid grid-cols-2 gap-2">
         <button
-          dir="rtl"
-          onClick={() => choose("no", "لسه مش فاهم — say it another way")}
+          dir={dir}
+          onClick={() => choose("no", noSignal)}
           disabled={disabled || picked != null}
           className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 play-pressable sticker-shadow-sm ${
             picked === "no"
@@ -1216,10 +1227,10 @@ function CheckInCard({
               : "border-rust/40 bg-card text-rust enabled:hover:-translate-y-px enabled:hover:border-rust disabled:opacity-50"
           }`}
         >
-          لسه مش فاهم 🤔
+          {arabicUi ? "لسه مش فاهم 🤔" : "Not yet 🤔"}
         </button>
         <button
-          dir="rtl"
+          dir={dir}
           onClick={() => choose("yes", GOT_IT_SENTINEL)}
           disabled={disabled || picked != null}
           className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 play-pressable sticker-shadow-sm ${
@@ -1228,7 +1239,7 @@ function CheckInCard({
               : "border-accent/40 bg-card text-accent-deep enabled:hover:-translate-y-px enabled:hover:border-accent disabled:opacity-50"
           }`}
         >
-          كمل ✓
+          {arabicUi ? "كمل ✓" : GOT_IT_SENTINEL}
         </button>
       </div>
     </div>
