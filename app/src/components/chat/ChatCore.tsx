@@ -147,6 +147,11 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+// Sent by the check-in card's affirmative button and the matching lesson
+// suggestion chip — the one literal string both call sites use as their
+// "the student says they're done" signal (see CheckInCard, LessonSession).
+const GOT_IT_SENTINEL = "Got it — next ✓";
+
 export function ChatCore({
   surface,
   suggestions = [],
@@ -205,6 +210,25 @@ export function ChatCore({
   // live mirror so notes appended just before an auto-continue are included
   const messagesRef = useRef<ChatMsg[]>(messages);
   messagesRef.current = messages;
+  // Which pushed question (if any) has no matching "the student answered…"
+  // event note yet — read straight off the transcript so this holds
+  // regardless of whether the host surface wires up onDirective/interceptWidget.
+  // Guards the "Got it" affordance below from skipping a real attempt (FR-1214).
+  const openQuestionId = useMemo(() => {
+    let open: string | null = null;
+    for (const m of messages) {
+      if (m.role === "assistant" && m.text) {
+        for (const b of parseMessage(m.text, true)) {
+          if (b.t === "question") open = b.qid;
+        }
+      } else if (m.kind === "event" && open && m.text.includes(open)) {
+        open = null;
+      }
+    }
+    return open;
+  }, [messages]);
+  const openQuestionIdRef = useRef<string | null>(null);
+  openQuestionIdRef.current = openQuestionId;
   const continueTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // live streaming flag (state is stale inside timers) + queued auto-continue
   const streamingRef = useRef(false);
@@ -310,6 +334,22 @@ export function ChatCore({
     async (raw: string, opts?: { hidden?: boolean }) => {
       const text = raw.trim();
       if (!text || streaming || streamingRef.current || capped) return;
+      // The "Got it — next ✓" check-in affordance is an acknowledgement, not
+      // an attempt — it must never let the lesson move past a question that
+      // was never answered (FR-1214: the client can't decide it was solved).
+      // Caught here, before anything reaches the model, so it costs nothing.
+      if (text === GOT_IT_SENTINEL && openQuestionIdRef.current) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "note",
+            kind: "say",
+            localOnly: true,
+            text: "Give it a try first or tell me if you need help.",
+          },
+        ]);
+        return;
+      }
       // a VISIBLE user action re-engages bottom-stick — after reading the
       // leading passage, the student expects to see the reply they asked for
       if (!opts?.hidden) stuckToBottom.current = true;
@@ -1180,7 +1220,7 @@ function CheckInCard({
         </button>
         <button
           dir="rtl"
-          onClick={() => choose("yes", "Got it — next ✓")}
+          onClick={() => choose("yes", GOT_IT_SENTINEL)}
           disabled={disabled || picked != null}
           className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 play-pressable sticker-shadow-sm ${
             picked === "yes"
