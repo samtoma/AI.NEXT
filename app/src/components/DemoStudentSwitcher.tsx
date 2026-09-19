@@ -132,7 +132,7 @@ export function DemoStudentSwitcher({
           className="flex items-center gap-2 rounded-full border border-line bg-card px-3.5 py-1.5 text-[13px] font-medium text-ink shadow-sm transition-all duration-150 hover:-translate-y-px hover:border-accent/50"
         >
           <span aria-hidden>👤</span>
-          {current?.displayName ?? "الطالب"}
+          {current?.displayName ?? "Student"}
           <span className="text-[10px] text-ink-faint" aria-hidden>
             ▾
           </span>

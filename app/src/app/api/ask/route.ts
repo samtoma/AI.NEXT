@@ -43,7 +43,7 @@ const CAP_MESSAGES: Partial<Record<Surface, string>> = {
   lesson_learn:
     "That's a full lesson's worth of work for one evening — let's stop here and see how far you've come. Tap Finish for your report.",
   lesson_review:
-    "That's our whole 3 minutes — تمام. Let's see your score.",
+    "That's our whole 3 minutes — done. Let's see your score.",
 };
 
 interface InMsg {

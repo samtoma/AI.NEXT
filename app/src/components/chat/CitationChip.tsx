@@ -19,12 +19,15 @@ export function CitationChip({
   resolve,
   onActivate,
   friendly = false,
+  arabic = false,
 }: {
   cite: Cite;
   resolve?: (c: Cite) => CiteInfo | null;
   onActivate?: (c: Cite) => void;
-  /** student mode: human labels ("من الكتاب ص40") instead of raw db ids */
+  /** student mode: human labels ("book p.40") instead of raw db ids */
   friendly?: boolean;
+  /** RTL/Arabic-script subject — friendly labels render in Arabic, not English */
+  arabic?: boolean;
 }) {
   const [hover, setHover] = useState(false);
   const [pinned, setPinned] = useState(false);
@@ -42,13 +45,19 @@ export function CitationChip({
   const label =
     cite.kind === "term"
       ? friendly
-        ? "مصطلح؟"
+        ? arabic
+          ? "مصطلح؟"
+          : "term?"
         : `term? ${cite.id}`
       : friendly
         ? cite.kind === "page"
-          ? `من الكتاب ص${cite.id}`
+          ? arabic
+            ? `من الكتاب ص${cite.id}`
+            : `book p.${cite.id}`
           : cite.kind === "q"
-            ? "تمرين من الكتاب"
+            ? arabic
+              ? "تمرين من الكتاب"
+              : "exercise from the book"
             : (resolve?.(cite)?.title ?? cite.id)
         : cite.kind === "page"
           ? `p.${cite.id}`

@@ -17,12 +17,15 @@ import { tierStyle } from "@/components/spine/LoPanel";
 export function ChatQuestionCard({
   question: q,
   debug = true,
+  lang = "en",
   onResult,
   onOpenQuestion,
 }: {
   question: SpineQuestion;
   /** false = student mode: no db ids, soft failure state, no mastery deltas */
   debug?: boolean;
+  /** RTL/Arabic-script subject — student-mode strings render in Arabic, not English */
+  lang?: "en" | "ar";
   onResult: (result: AttemptResult, q: SpineQuestion) => void;
   onOpenQuestion?: (qid: string) => void;
 }) {
@@ -192,7 +195,9 @@ export function ChatQuestionCard({
                 {result.isCorrect
                   ? debug
                     ? "Correct ✓"
-                    : "صح عليك ✓"
+                    : lang === "ar"
+                      ? "صح عليك ✓"
+                      : "Correct ✓"
                   : debug
                     ? // A widget's `correct_answer` is the reserved predicate
                       // "ok" — machinery, not an answer. Printing it tells the
@@ -201,7 +206,9 @@ export function ChatQuestionCard({
                       q.questionType === "widget"
                       ? "Not yet"
                       : `Not quite — answer: ${result.correctAnswer}`
-                    : "مش مظبوطة — تعالى نشوفها مع بعض"}
+                    : lang === "ar"
+                      ? "مش مظبوطة — تعالى نشوفها مع بعض"
+                      : "Not quite — let's look at it together"}
               </span>
               {debug && (
                 <span className="font-mono text-[10px] text-ink-soft">
@@ -221,17 +228,26 @@ export function ChatQuestionCard({
             {/* student mode: the correct letter stays withheld until the
                 explanation lands — a quiet affordance reveals it on demand */}
             {!debug && !result.isCorrect && q.questionType !== "widget" && (
-              <p dir="rtl" className="mt-1.5 text-[12px] text-ink-soft">
+              <p
+                dir={lang === "ar" ? "rtl" : "ltr"}
+                className="mt-1.5 text-[12px] text-ink-soft"
+              >
                 {answerShown ? (
-                  <>
-                    الإجابة الصح: <strong>{result.correctAnswer}</strong>
-                  </>
+                  lang === "ar" ? (
+                    <>
+                      الإجابة الصح: <strong>{result.correctAnswer}</strong>
+                    </>
+                  ) : (
+                    <>
+                      Correct answer: <strong>{result.correctAnswer}</strong>
+                    </>
+                  )
                 ) : (
                   <button
                     onClick={() => setAnswerShown(true)}
                     className="underline decoration-dotted underline-offset-2 hover:text-accent-deep"
                   >
-                    شوف الإجابة الصح
+                    {lang === "ar" ? "شوف الإجابة الصح" : "Show the answer"}
                   </button>
                 )}
               </p>

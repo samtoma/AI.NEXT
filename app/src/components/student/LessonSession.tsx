@@ -73,7 +73,6 @@ const MODE_COPY: Record<
   LessonMode,
   {
     label: string;
-    ar: string;
     chip: string;
     finish: string;
     autoStart: string;
@@ -82,21 +81,19 @@ const MODE_COPY: Record<
 > = {
   learn: {
     label: "Teach me",
-    ar: "الدرس من الأول",
     chip: "learn mode · AI-led lesson",
     finish: "Finish lesson",
     autoStart:
       "Start now. I just came home from school and I understood NOTHING from today's lesson. Teach me from zero, from the very first idea.",
-    opening: "يلا بينا 💪 بجهّز درس النهاردة… ✏️",
+    opening: "Let's go 💪 setting up today's lesson… ✏️",
   },
   review: {
     label: "Quick revision",
-    ar: "مراجعة سريعة",
     chip: "review mode · 3 minutes",
     finish: "End now",
     autoStart:
       "I understood today's lesson at school completely. Start the quick lock-it-in revision now — first check question please.",
-    opening: "ثواني — بجهّز أسئلة المراجعة السريعة… ⏱",
+    opening: "One sec — setting up the quick revision questions… ⏱",
   },
 };
 
@@ -126,6 +123,7 @@ const AR_MODE_COPY: Record<
 };
 
 const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تانية", "فهمت — كمّل ✓"];
+const EN_SUGGESTIONS = ["I don't get it — say it another way", "Got it — next ✓"];
 
 /**
  * {{show_passage:…}} renders as a REFOCUS CHIP, not a second copy of the text.
@@ -884,7 +882,7 @@ export function LessonSession({
         // [[term?:…]] — a term outside the lesson data, flagged for review
         return {
           title: c.id,
-          sub: "مصطلح غير موجود في بيانات الدرس — للمراجعة",
+          sub: "Term not in the lesson data — flagged for review",
         };
       }
       const lo = loById.get(c.id);
@@ -1050,9 +1048,6 @@ export function LessonSession({
             </p>
             <h1 className="font-display text-xl font-medium tracking-tight text-ink md:text-2xl">
               {lesson.lessonRef} — {lesson.title}
-              <span dir="rtl" className="ms-3 text-[16px] text-accent-deep">
-                {copy.ar}
-              </span>
             </h1>
           </div>
 
@@ -1112,21 +1107,30 @@ export function LessonSession({
               />
             ))}
           </span>
-          <span dir="rtl" className="text-[12.5px] font-semibold text-ink">
-            {arDigits(stepNow)} من {arDigits(lesson.los.length)} ·{" "}
+          <span
+            dir={rtl ? "rtl" : "ltr"}
+            className="text-[12.5px] font-semibold text-ink"
+          >
+            {rtl
+              ? `${arDigits(stepNow)} من ${arDigits(lesson.los.length)}`
+              : `${stepNow} of ${lesson.los.length}`}{" "}
+            ·{" "}
             {/* social LO labels are Arabic — keep them in the RTL flow */}
             <span dir={rtl ? undefined : "ltr"} className="font-normal text-ink-soft">
               {currentLo?.label}
             </span>
           </span>
-          <span dir="rtl" className="text-[11px] text-ink-faint">
-            {arDigits(lesson.los.length)} خطوات وبعدها تقرير فهمك 📋
+          <span dir={rtl ? "rtl" : "ltr"} className="text-[11px] text-ink-faint">
+            {rtl
+              ? `${arDigits(lesson.los.length)} خطوات وبعدها تقرير فهمك 📋`
+              : `${lesson.los.length} steps, then your understanding report 📋`}
           </span>
         </div>
       </section>
 
       {boot.state === "prompt" ? (
         <ResumePrompt
+          rtl={rtl}
           onResume={() => resumeSaved(boot.saved)}
           onFresh={startFresh}
         />
@@ -1152,6 +1156,7 @@ export function LessonSession({
                 lookupPassage={lookupPassage}
                 onAttempt={boardAttempt}
                 debug={debug}
+                arabicUi={rtl}
                 vizMeta={vizMeta}
                 collapsed={!sheetOpen}
                 onToggleCollapsed={() => setSheetOpen((o) => !o)}
@@ -1178,9 +1183,13 @@ export function LessonSession({
                     : ""}
                   ${totalUsd.toFixed(3)} session spend
                 </span>
-              ) : (
+              ) : rtl ? (
                 <span dir="rtl" className="text-[10.5px] text-ink-faint">
                   {mode === "review" ? "٣ دقايق وخلصنا ⏱" : "خطوة خطوة مع بعض ✏️"}
+                </span>
+              ) : (
+                <span className="text-[10.5px] text-ink-faint">
+                  {mode === "review" ? "3 minutes and done ⏱" : "step by step, together ✏️"}
                 </span>
               )}
             </div>
@@ -1194,6 +1203,7 @@ export function LessonSession({
               autoStartHidden
               autoContinue
               debug={debug}
+              arabicUi={rtl}
               openingLine={copy.opening}
               placeholder={
                 rtl
@@ -1206,7 +1216,7 @@ export function LessonSession({
                 mode === "learn"
                   ? rtl
                     ? AR_SUGGESTIONS
-                    : ["لسه مش فاهم — say it another way", "Got it — next ✓"]
+                    : EN_SUGGESTIONS
                   : []
               }
               lookupQuestion={lookupQuestion}
@@ -1319,38 +1329,45 @@ export function LessonSession({
 
 /** A saved session exists for this lesson — resume or start over. */
 function ResumePrompt({
+  rtl,
   onResume,
   onFresh,
 }: {
+  rtl: boolean;
   onResume: () => void;
   onFresh: () => void;
 }) {
   return (
     <div className="flex min-h-0 flex-1 items-start justify-center">
       <section className="ledger-card anim-pop mt-10 w-full max-w-md px-8 py-8 text-center">
-        <p dir="rtl" className="font-display text-2xl font-medium text-ink">
-          استكمل الدرس؟
+        <p
+          dir={rtl ? "rtl" : "ltr"}
+          className="font-display text-2xl font-medium text-ink"
+        >
+          {rtl ? "استكمل الدرس؟" : "Continue the lesson?"}
         </p>
         <p
-          dir="rtl"
+          dir={rtl ? "rtl" : "ltr"}
           className="mt-2 text-[13.5px] leading-relaxed text-ink-soft"
         >
-          كان معاك درس شغّال هنا قبل كده — تحب تكمّل من حيث وقفت؟
+          {rtl
+            ? "كان معاك درس شغّال هنا قبل كده — تحب تكمّل من حيث وقفت؟"
+            : "You had a lesson running here before — pick up where you left off?"}
         </p>
         <div className="mt-5 grid gap-2">
           <button
-            dir="rtl"
+            dir={rtl ? "rtl" : "ltr"}
             onClick={onResume}
             className="rounded-full bg-accent-deep px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent play-pressable sticker-shadow-sm"
           >
-            كمل من حيث وقفت ✓
+            {rtl ? "كمل من حيث وقفت ✓" : "Continue where I left off ✓"}
           </button>
           <button
-            dir="rtl"
+            dir={rtl ? "rtl" : "ltr"}
             onClick={onFresh}
             className="rounded-full border border-line bg-card px-6 py-2.5 text-[13px] font-medium text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent-deep play-pressable sticker-shadow-sm"
           >
-            لا — ابدأ من الأول
+            {rtl ? "لا — ابدأ من الأول" : "No — start from the beginning"}
           </button>
         </div>
       </section>

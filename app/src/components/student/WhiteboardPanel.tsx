@@ -153,6 +153,7 @@ export function WhiteboardPanel({
   lookupPassage,
   onAttempt,
   debug,
+  arabicUi = false,
   vizMeta,
   collapsed,
   onToggleCollapsed,
@@ -170,6 +171,8 @@ export function WhiteboardPanel({
   lookupPassage?: (id: string) => LessonPassage | undefined;
   onAttempt: (r: AttemptResult, q: SpineQuestion) => void;
   debug: boolean;
+  /** RTL/Arabic-script subject — forwarded to the question card's strings */
+  arabicUi?: boolean;
   /** lesson figure library metadata (captions/pages without a fetch) */
   vizMeta: ReadonlyMap<string, LessonViz>;
   /** mobile top-sheet collapse (ignored on desktop via CSS) */
@@ -328,6 +331,7 @@ export function WhiteboardPanel({
                 <ChatQuestionCard
                   question={focusedQ}
                   debug={debug}
+                  lang={arabicUi ? "ar" : "en"}
                   onResult={onAttempt}
                 />
               ) : (

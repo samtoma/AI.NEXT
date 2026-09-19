@@ -63,6 +63,15 @@ export interface ChatCoreProps {
    * friendly citation chips, [live event] rows hidden.
    */
   debug?: boolean;
+  /**
+   * True only for the RTL/Arabic-script subjects (`isRtlSubject`/
+   * `isRtlSpineSubject` in `lib/subjects.ts`). Independent of `debug` — this
+   * is the language axis, not the instrumentation axis. Default false keeps
+   * every hardcoded student-facing string here in English, which is the
+   * MVP 1.0 default; a caller passes true only when it knows its subject is
+   * one of the RTL verticals.
+   */
+  arabicUi?: boolean;
   /** scripted local line shown instantly while the first AI turn streams */
   openingLine?: string;
   lookupQuestion?: (qid: string) => SpineQuestion | undefined;
@@ -151,6 +160,7 @@ export function ChatCore({
   placeholder = "Ask the spine…",
   emptyState,
   debug = true,
+  arabicUi = false,
   openingLine,
   lookupQuestion,
   resolveCite,
@@ -611,8 +621,12 @@ export function ChatCore({
                 kind: "say",
                 localOnly: true,
                 text: r.isCorrect
-                  ? "برافو ✓ — شايف إجابتك…"
-                  : "ولا يهمك — بص هنا…",
+                  ? arabicUi
+                    ? "برافو ✓ — شايف إجابتك…"
+                    : "Nice ✓ — check your answer…"
+                  : arabicUi
+                    ? "ولا يهمك — بص هنا…"
+                    : "No worries — look here…",
               } satisfies ChatMsg,
             ]
           : []),
@@ -635,7 +649,9 @@ export function ChatCore({
                 role: "note",
                 kind: "say",
                 localOnly: true,
-                text: "✓ شايف إجابتك… ثانية واحدة",
+                text: arabicUi
+                  ? "✓ شايف إجابتك… ثانية واحدة"
+                  : "✓ check your answer… one second",
               } satisfies ChatMsg,
             ]
           : []),
@@ -696,6 +712,7 @@ export function ChatCore({
             key={i}
             msg={m}
             debug={debug}
+            arabicUi={arabicUi}
             writing={lessonSurface}
             dim={paced && streaming && m.role === "assistant" && !m.streaming}
             lookupQuestion={lookupQuestion}
@@ -776,6 +793,7 @@ export function ChatCore({
 const MessageRow = memo(function MessageRow({
   msg: m,
   debug,
+  arabicUi,
   writing,
   dim,
   lookupQuestion,
@@ -793,6 +811,8 @@ const MessageRow = memo(function MessageRow({
 }: {
   msg: ChatMsg;
   debug: boolean;
+  /** RTL/Arabic-script subject — forwarded to question-card/citation strings */
+  arabicUi: boolean;
   /** lesson surfaces: "بيكتب…" writing shimmer instead of the graph label */
   writing: boolean;
   /** another message is currently revealing — de-emphasize this one */
@@ -875,7 +895,7 @@ const MessageRow = memo(function MessageRow({
         style={{ textAlign: "start" }}
       >
         {m.streaming && visibleText.length === 0 && (
-          <Thinking writing={writing} />
+          <Thinking writing={writing} arabicUi={arabicUi} />
         )}
 
         {blocks.map((b, i) => {
@@ -931,6 +951,7 @@ const MessageRow = memo(function MessageRow({
                 key={i}
                 question={q}
                 debug={debug}
+                lang={arabicUi ? "ar" : "en"}
                 onResult={onAttempt}
                 onOpenQuestion={onOpenQuestion}
               />
@@ -958,6 +979,7 @@ const MessageRow = memo(function MessageRow({
                             key={s}
                             cite={seg}
                             friendly={!debug}
+                            arabic={arabicUi}
                             resolve={resolveCite}
                             onActivate={onCiteClick}
                           />
@@ -1021,6 +1043,7 @@ const MessageRow = memo(function MessageRow({
                     key={s}
                     cite={seg}
                     friendly={!debug}
+                    arabic={arabicUi}
                     resolve={resolveCite}
                     onActivate={onCiteClick}
                   />
@@ -1172,13 +1195,25 @@ function CheckInCard({
   );
 }
 
-function Thinking({ writing }: { writing: boolean }) {
+function Thinking({
+  writing,
+  arabicUi,
+}: {
+  writing: boolean;
+  arabicUi: boolean;
+}) {
   return (
     <span className="inline-flex items-center gap-1.5 py-0.5">
       {writing ? (
-        <span dir="rtl" className="text-[12.5px] italic text-ink-faint">
-          بيكتب…
-        </span>
+        arabicUi ? (
+          <span dir="rtl" className="text-[12.5px] italic text-ink-faint">
+            بيكتب…
+          </span>
+        ) : (
+          <span className="text-[12.5px] italic text-ink-faint">
+            writing…
+          </span>
+        )
       ) : (
         <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
           walking the graph
