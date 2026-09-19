@@ -395,7 +395,7 @@ export function StudentLoop({
                             wrongAnswer={lastGiven}
                             autoStart={`I answered "${lastGiven}" and it was wrong. Can you explain where I went wrong — in a different way than the steps above?`}
                             suggestions={[
-                              "لسه مش فاهم — try it yet another way",
+                              "I still don't get it — try it yet another way",
                             ]}
                             placeholder="Ask about this question…"
                             resolveCite={(c: Cite) =>

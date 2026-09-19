@@ -156,14 +156,9 @@ export function ReportCard({
               {v.arabic}
             </p>
           ) : (
-            <>
-              <p className="mt-1 text-center font-display text-[22px] font-medium leading-snug text-ink">
-                {v.headline}
-              </p>
-              <p dir="rtl" className="mt-1 text-center text-[14px] text-ink-soft">
-                {v.arabic}
-              </p>
-            </>
+            <p className="mt-1 text-center font-display text-[22px] font-medium leading-snug text-ink">
+              {v.headline}
+            </p>
           )}
 
           {/* strengths / gaps */}
@@ -217,7 +212,7 @@ export function ReportCard({
           {/* next step */}
           <div className="passport anim-rise mt-6 px-4 py-3" style={{ animationDelay: "550ms" }}>
             <p className="relative font-mono text-[8.5px] uppercase tracking-[0.2em] text-gold">
-              {rtl ? "الخطوة الجاية · بكرة" : "Next step · بكرة"}
+              {rtl ? "الخطوة الجاية · بكرة" : "Next step · tomorrow"}
             </p>
             <p className="relative mt-1 text-[13.5px] leading-relaxed text-ink font-read">
               {check.nextStep}
