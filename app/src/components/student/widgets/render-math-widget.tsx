@@ -40,10 +40,14 @@ export function renderMathWidget(
   props: Record<string, unknown>,
   // Widgets report a STRUCTURED outcome now, not prose (ADR-0009): a predicate
   // the server maps to a misconception, plus the words for the tutor stream.
-  onOutcome: (outcome: WidgetOutcome) => void
+  onOutcome: (outcome: WidgetOutcome) => void,
+  opts: { hostShowsPrompt?: boolean } = {}
 ): ReactNode | null {
-  const w = parseMathWidget(name, props);
-  if (!w) return null;
+  const parsed = parseMathWidget(name, props);
+  if (!parsed) return null;
+  // Blanked AFTER validation, never before: validation is what supplies the
+  // generic default, so suppressing any earlier cannot work.
+  const w = opts.hostShowsPrompt ? { ...parsed, prompt: "" } : parsed;
 
   switch (w.name) {
     case "pair_plotter":
@@ -126,11 +130,24 @@ export function MathWidget({
   payload,
   onOutcome,
   fallback = null,
+  hostShowsPrompt = false,
 }: {
   name: string;
   payload: Record<string, unknown>;
   onOutcome: (outcome: WidgetOutcome) => void;
   fallback?: ReactNode;
+  /**
+   * The surface around the widget has ALREADY shown the question, so the
+   * widget must not repeat it.
+   *
+   * This cannot be expressed by passing an empty prompt: validation treats a
+   * blank string as "absent" and substitutes the kind's generic default, so
+   * `prompt: ""` yields "Construct a radius" — a shortened duplicate of the
+   * stem rather than the raw one. Silence has to be asked for explicitly,
+   * because "" already means something else in that layer.
+   */
+  hostShowsPrompt?: boolean;
 }) {
-  return <>{renderMathWidget(name, payload, onOutcome) ?? fallback}</>;
+  const node = renderMathWidget(name, payload, onOutcome, { hostShowsPrompt });
+  return <>{node ?? fallback}</>;
 }
