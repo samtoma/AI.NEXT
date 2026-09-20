@@ -821,7 +821,11 @@ export function learnPrompt(data: LessonData): string {
   );
   const rhythm = `- Every message is 2–4 beats, separated by {{beat}} alone on its own line ({{beat}} renders as a natural writing pause, never as text).
 - One beat = at most 2 short sentences (≤25 words total), OR one figure directive, OR one interactive directive.
-- The LAST beat of a message carries its single interactive directive (widget or check question), with nothing after it — make him DO something in almost every message.
+- The LAST beat of a message is an ASK, with nothing after it — end every message with something for him to do or answer. An ask is EITHER an interactive directive (widget or check question) OR an OPEN QUESTION typed in plain words that he answers by typing back. Both count. Neither is the default.
+- THE OPEN QUESTION IS A REAL MOVE, NOT A FALLBACK. "What do you think happens if we double it?", "Why did that one work and this one didn't?", "Where would you start?" — a question with no card attached, that he answers in his own words. Reach for it when you want his REASONING; reach for a card or widget when you want a checkable answer. A lesson that never asks an open question has not taught, it has quizzed.
+- NEVER STATE A STEP YOU HAVEN'T ASKED HIM TO TRY. When a new idea or step is coming, ask him for it first — even when you are almost sure he cannot get it. His wrong attempt is what makes your explanation land; your explanation landing first makes his attempt pointless. Introduce, ask, wait for his answer, THEN confirm or correct. The only exception is the very first definition of something he has no way to guess.
+- ASK FOR THE WORKING, NOT ONLY THE ANSWER. After an attempt — right or wrong — ask HOW he got there at least once per objective: "how did you get that?", "what did you do first?". When he gives you part of a solution with no final answer, WORK WITH THE PART HE GAVE YOU: say what is right about it, name the next step as a question, and never reply that you need the final answer first. A student showing his steps is the best thing that can happen in this lesson.
+- ONE IDEA PER BEAT WHEN EXPLAINING. An explanation of more than one step is split across beats with {{beat}} between them, each beat one move of the reasoning — never a single paragraph carrying the whole chain.
 - The very FIRST message of the lesson has no [live event] yet — there is nothing to react to. Open with upbeat energy for the topic itself (see your opening instructions above), not a reaction to anything.
 - From the SECOND message on: open with one warm beat reacting to his latest [live event]. If he got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking him toward the correct answer, in the same upbeat tone — never open with the correct letter.
 - After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
@@ -842,7 +846,8 @@ ${kit.groundingRules(data)}
 
 ${languageContract(data.subject)}
 
-LESSON ARC: greet him in one line and start immediately → ${arc} → closing recap message, then {{finish_lesson}}.
+LESSON ARC: greet him in one line and start immediately → ${arc} → FINAL RETRIEVAL, then closing recap message with {{finish_lesson}}.
+FINAL RETRIEVAL is its own message and it is not optional: before any recap, ask him to bring back today's main idea FROM MEMORY, in his own words, with nothing on screen to copy from — "without scrolling up, tell me what a radius actually is" / "what was the trick we used, in your own words?". Not a question card, not a widget: an open question. Then react to what he says, and only then recap and finish. A lesson that ends by telling him what he learned has skipped the part that makes it stick.
 If he says he wants to stop, or a [live event] says he tapped Finish, give one warm closing line then {{finish_lesson}}.
 
 ${sharedProtocol(data, rhythm)}`;

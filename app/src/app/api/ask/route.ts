@@ -33,7 +33,16 @@ type Surface = AskSurface | "lesson_learn" | "lesson_review";
 const TURN_CAPS: Record<Surface, number | null> = {
   spine_chat: null,
   student_chat: 2, // PRD §6.3: max 2 AI turns per question
-  lesson_learn: 14, // generous ceiling for a full taught lesson
+  // Raised 14 -> 18 for the Socratic arc (#33, #34, #35). Asking the student
+  // to try a step before it is explained, asking how he got there, and ending
+  // on a from-memory retrieval all cost TURNS — that is what they are. At 14
+  // a full lesson reached the cap before the final retrieval could happen, so
+  // the fix for #34 would have been silently skipped on exactly the lessons
+  // that ran long. A cap that truncates the ending is worse than no ending
+  // rule at all. Cost implication is real and deliberate: ~29% more turns on
+  // the most expensive surface, for the teaching behaviour the pilot exists
+  // to test (SC-005).
+  lesson_learn: 18,
   lesson_review: 5, // the non-annoying path: hard ≤ 5 turns
 };
 
