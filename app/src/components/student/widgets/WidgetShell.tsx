@@ -72,7 +72,11 @@ export function WidgetShell({
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="text-[13px] font-medium leading-relaxed text-ink">{prompt}</p>
+        {/* Empty when the host has already shown the question — an empty
+            paragraph would leave a phantom gap above the figure. */}
+        {prompt && (
+          <p className="text-[13px] font-medium leading-relaxed text-ink">{prompt}</p>
+        )}
 
         <div className="mt-2.5">{children}</div>
 

@@ -115,7 +115,14 @@ export function ChatQuestionCard({
               // student makes IS the answer, so there is no submit button.
               <MathWidget
                 name={widgetSpec?.kind ?? ""}
-                payload={{ ...(widgetSpec?.spec ?? {}), prompt: q.stem }}
+                // NO PROMPT. The card has already rendered the stem above,
+                // with its maths typeset and its markdown resolved. Passing
+                // `q.stem` in here printed it a SECOND time as a raw string —
+                // "Circle $M$ has radius $5$. Construct a **radius**" — sitting
+                // under a correctly typeset copy of itself. The widget keeps
+                // its own prompt for standalone use; the dev fixture passes one.
+                payload={widgetSpec?.spec ?? {}}
+                hostShowsPrompt
                 onOutcome={(outcome) => void submit(outcome)}
                 fallback={
                   <p className="rounded-md border border-gold/50 bg-gold-wash px-3 py-2 text-[12.5px] text-gold">
@@ -160,7 +167,14 @@ export function ChatQuestionCard({
                 className="w-full rounded-md border border-line bg-card px-3 py-2 font-mono text-[13px] text-ink outline-none placeholder:text-ink-faint focus:border-accent"
               />
             )}
-            <div className="mt-2.5 flex items-center gap-3">
+            {/* A widget question has nothing to submit: the construction IS
+                the answer and posts itself the moment the student commits to
+                it. This button sat here permanently disabled, which reads as a
+                broken page rather than as "not applicable". */}
+            <div
+              className="mt-2.5 flex items-center gap-3"
+              hidden={q.questionType === "widget"}
+            >
               <button
                 onClick={() => void submit()}
                 disabled={
