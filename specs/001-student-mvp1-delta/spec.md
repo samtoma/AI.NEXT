@@ -377,6 +377,35 @@ document: a requirement whose code exists but has never been executed does not c
   Studies verticals stay reintroducible (constitution v2.0.0 Principle V). Mathematics instruction is
   already delivered in English today; this requirement covers chrome, navigation and copy.
 
+#### How the tutor teaches **[ADDED 2026-09-20 — feedback #23, #24, #33, #34, #35]**
+
+> These were written after the fact. The behaviour shipped in `PDR1-0-v0.4.0` and the spec
+> said nothing about it, so for one release our teaching method existed only as a prompt
+> string. They are stated as obligations on the **product**, not as the wording of any
+> prompt, because a prompt is an implementation of these and will be rewritten many times.
+>
+> All five bear on **SC-005**, the comprehension-to-retrieval conversion the PRD calls the
+> single test of whether the core bet works. None of them can currently be shown to hold —
+> see the note under that criterion.
+
+- **FR-209**: The tutor MUST ask the student to attempt a step before stating it. The order is
+  introduce → ask → wait for an answer → confirm or correct, and it MUST hold even when the
+  student is unlikely to get it, because an attempt is what makes the correction land. The one
+  permitted exception is the first statement of a definition the student has no basis to guess.
+- **FR-210**: An **open question**, answered by the student in their own words, MUST be a
+  first-class way for the tutor to end a message in **every** subject — equal in standing to a
+  graded question card or an interactive widget, never a fallback behind them. A subject whose
+  teaching protocol offers only card-shaped asks does not satisfy this.
+- **FR-211**: The tutor MUST ask how the student reached an answer at least once per objective,
+  and MUST act on a partial solution — naming what is right and asking for the next step —
+  rather than requiring a final answer before responding. Grading MUST NOT penalise a student
+  for showing working (FR-C03).
+- **FR-212**: A taught lesson MUST end on **retrieval**: the student recalling the lesson's main
+  idea from memory, in their own words, with nothing on screen to copy from, **before** any
+  recap. A lesson that ends by telling the student what they learned does not satisfy this.
+- **FR-213**: An explanation covering more than one step MUST be delivered as separate steps,
+  one idea at a time, never as a single block carrying the whole chain of reasoning.
+
 ### Student model & retrieval (PRD Epic C, §4)
 
 - **FR-301**: Per-skill mastery MUST be represented as a probability updated from attempt evidence
@@ -426,6 +455,18 @@ document: a requirement whose code exists but has never been executed does not c
   data shared with a parent MUST be limited to FR-501's scope.
 - **FR-604** *(deferred)*: PRD F2 account-sharing deterrence is **[DEFERRED]** — there are no
   accounts to share in this build, and the audience is an invited list behind Access.
+- **FR-605** **[ADDED 2026-09-20 — feedback #10, #11, #12]**: The student-facing build MUST NOT
+  carry the operator surfaces — the extraction pipeline, the content review queue, the visual
+  gallery and the developer harnesses. Absent from navigation is not sufficient: those routes
+  MUST NOT resolve in that build, so a guessed or shared URL reaches nothing. This is a
+  **build-scope** obligation and MUST NOT be presented, described or relied upon as
+  authorisation; it cannot distinguish one person from another.
+- **FR-606** **[ADDED 2026-09-20 — feedback #7]**: Reaching an operator surface MUST require
+  per-person authorisation, with roles distinguishing at minimum **content review** from
+  **evidence access**, so each is granted deliberately rather than inherited from knowing a URL.
+  Because the content-review role controls the human gate that ADR-0007's unreviewed-content
+  exception depends on (constitution III, FR-C02), it is a safety control and not an
+  administrative convenience. **Blocked on FR-106** — roles need accounts to attach to.
 
 ### Billing (PRD Epic G, §10) **[DEFERRED — decisions.md Q7]**
 

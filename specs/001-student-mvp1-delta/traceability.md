@@ -1,6 +1,6 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-20 (rev. 10, `PDR1-0-v0.4.0`) · **Branch**: `PDR1-0`
+**Status date**: 2026-09-20 (rev. 11, `PDR1-0-v0.4.0`) · **Branch**: `PDR1-0`
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v3.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md) ·
 [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md) · [ADR-0011](../../docs/decisions/0011-noor-play-design-system.md)
@@ -12,13 +12,20 @@ constitution [v3.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../..
 > This is the counting rule working as written: *treat VERIFIED as a claim that someone ran
 > it, and be willing to demote.*
 >
-> **rev. 10 is the fix pass, and it carries two admissions.** Ten of the 27 open feedback
-> issues are closed with code. But two pieces of that work have **no requirement covering
-> them at all** — access gating (`#10`/`#11`/`#12`) and the Socratic teaching protocol
-> (`#33`/`#34`/`#35`) are both shipped and both unrepresented in `spec.md`, so neither can
-> appear as a row here without becoming an orphan the CI gate rejects. They are named in
-> §9 instead. Code that no requirement claims is exactly the drift this document exists to
-> catch, and it is now catching ours.
+> **rev. 10 was the fix pass, and it admitted that two pieces of shipped work had no
+> requirement at all.** **rev. 11 closes that** — Samuel approved writing them, so access
+> gating is now **FR-605**/**FR-606** and the teaching protocol is **FR-209**…**FR-213**,
+> seven rows below.
+>
+> Two things about how they were written are worth keeping. They are stated as obligations
+> on the *product*, never as the wording of a prompt — a prompt is an implementation and
+> will be rewritten many times. And the **unmet** half of access control became its own
+> requirement (**FR-606**, BLOCKED) rather than a caveat inside the met one, because a gap
+> is easy to lose inside a satisfied requirement and hard to lose beside one.
+>
+> Five of the seven are **BUILT, not VERIFIED**, and that is not a formality: FR-209…213 are
+> model behaviour, and nothing in this build can judge model behaviour. See §9 item 8 —
+> that gap now blocks five requirements, not an abstraction.
 
 This document answers one question per row: **for this requirement, what code exists, and what
 actually proves it works?** It is the bridge between the spec's functional requirements and the
@@ -82,6 +89,11 @@ without a checklist row going red.
 | FR-206 | Uploaded material used for the academic task only | **BUILT** | Prompt constraint (T050) | Prompt-level; needs live turns |
 | FR-207 | Tone adapts to **grade level** and to **how engaged the student appears** | **VERIFIED** | Grade via `retrieval.ts` profile block; **engagement via `lib/engagement.ts`** — pure classifier + row mapping, query in `retrieval.ts`, rendered into the prompt beside grade | **Closed 2026-09-13.** 21 tests (123 total, all pass) + exercised against the live database: 6 real attempts classified `struggling`, stance rendered, label withheld. Precedence is `returning` → `rushing` → `struggling` → `labouring` → `steady`, so a student back after an absence is never read as failing. Fails quiet below 4 observations and on any query error, so the prompt stays byte-identical when there is nothing to say. Per PRD §8 the block is a stance for the tutor and forbids repeating it to the student. |
 | FR-208 | English LTR by default; direction never hard-coded | **VERIFIED** | `app/layout.tsx` (no `dir` on `<html>`), `globals.css` logical properties, `lib/subjects.ts` direction seam (T025, T074); `arabicUi` prop threaded through `ChatCore`/`ChatQuestionCard` (`73c30a8`, `edee361`, `2578277`) | **Amended 2026-09-20 — the earlier VERIFIED was true of the three pages someone had looked at and false everywhere else.** Prototype 1.1 found Arabic rendering unconditionally to English-subject students in ~13 places across `ChatCore`, `ChatQuestionCard`, `CitationChip`, `LessonSession`, `ReportCard`, `StudentLoop`, `GraphCanvas`, `LoPanel`, `DemoStudentSwitcher`, `api/ask` and `CheckInCard`. Root cause was structural, not cosmetic: `debug` and mode flags were standing in for a language check, so instrumentation state decided which language a child read. The language axis is now its own prop, defaulting to English. Feedback [#20](https://github.com/samtoma/AI.NEXT/issues/20), [#41](https://github.com/samtoma/AI.NEXT/issues/41) |
+| FR-209 | Elicit before explaining — introduce, ask, wait, then confirm | **BUILT** | `lib/lesson.ts` shared learn rhythm (`775b6d8`) | Feedback [#33](https://github.com/samtoma/AI.NEXT/issues/33). Written into the protocol for all three subjects, with the one permitted exception (a first definition the student cannot guess) stated in the rule itself. **Cannot be promoted without a live lesson** — this is model behaviour, and the failure mode to watch for is over-correction: a tutor that interrogates a tired student. See §9 item 8. |
+| FR-210 | An open question is a first-class ask in every subject | **BUILT** | `lib/lesson.ts` shared learn rhythm (`775b6d8`) | Feedback [#34](https://github.com/samtoma/AI.NEXT/issues/34). **The defect this records is worth keeping.** Every interactive directive the protocol offered — `{{show_question}}`, widgets, figures — produces a CARD, so a model told to make the student act had only card-shaped tools and produced a quiz. Worse: the instruction naming a chat question as a valid ask **already existed in `arabicProtocol` and in neither `mathProtocol` nor `socialProtocol`** — written once, reaching one subject of three. The fix went into the shared rhythm precisely so it cannot happen again per-subject. |
+| FR-211 | Ask for the working; act on a partial answer | **BUILT** | `lib/lesson.ts` shared learn rhythm (`775b6d8`); grading half in `lib/arithmetic.ts` (`7ac26e4`) | Feedback [#35](https://github.com/samtoma/AI.NEXT/issues/35), [#24](https://github.com/samtoma/AI.NEXT/issues/24). Both halves had to move together: asking a student to show working while `grade()` marked `3x6` wrong for an answer of 18 would have been worse than not asking. Gap named in FR-C03 — the grader handles arithmetic only, so multi-step and algebraic working still cannot be scored and there is no partial credit. |
+| FR-212 | A taught lesson ends on retrieval, before any recap | **BUILT** | `lib/lesson.ts` LESSON ARC (`775b6d8`); turn cap 14→18 in `api/ask/route.ts` | Feedback [#34](https://github.com/samtoma/AI.NEXT/issues/34). The arc previously read `→ closing recap message`, so **not ending on retrieval was the specification**, not a drift from it. The cap had to move with it: at 14 a full lesson reached the limit before the retrieval could happen, so this requirement would have been silently unmet on exactly the lessons that ran long. ~29% more turns on the most expensive surface, deliberately. |
+| FR-213 | Multi-step explanations delivered as steps | **BUILT** | `lib/lesson.ts` shared learn rhythm (`775b6d8`) | Feedback [#23](https://github.com/samtoma/AI.NEXT/issues/23). The machinery pre-dated the rule — the rhythm has always allowed 2–4 beats separated by `{{beat}}` — but nothing said an *explanation specifically* had to be split, so the beat rule read as a length limit. **This is the cheapest of the five to check**: count the `{{beat}}` pauses in a multi-step explanation. If they are still absent, the problem is the model ignoring an instruction rather than a missing one, and the fix is a worked example rather than another rule. |
 
 ---
 
@@ -118,6 +130,8 @@ without a checklist row going red.
 | FR-602 | Crisis flags reach a human **immediately**, off the analytics path | **BLOCKED** ⛔ | — | **T067 — Samuel must name the recipient.** An unmonitored channel produces a record that looks like a safeguard and is not one |
 | FR-603 | No student's data exposed to another | **PARTIAL** | Cloudflare Access boundary; picker is not access-scoped per family | Documented honestly as a pilot limitation; the parent view (FR-501) must carry a visible notice |
 | FR-604 | Account-sharing deterrence | **DEFERRED** | — | No accounts to share |
+| FR-605 | The student build does not carry the operator surfaces | **VERIFIED** | `lib/env.ts` `INTERNAL_SURFACES`; layouts at `app/admin/` and `app/dev/`; guards in `/pipeline`, `/gallery`; `NavLinks`; `app/page.tsx` (`b4cca13`) | Feedback [#10](https://github.com/samtoma/AI.NEXT/issues/10), [#11](https://github.com/samtoma/AI.NEXT/issues/11), [#12](https://github.com/samtoma/AI.NEXT/issues/12). The nav read `Study · Where you stand · Evidence Walk · Content · Pipeline` to a fourteen-year-old. **Verified by serving the built app on both settings**: flag off → 404 on all seven routes; flag on, *same build* → reached. The first implementation was wrong and looked right — two dev harnesses are prerendered, so the layout gate ran at build time and 404'd even with the override on; the dev layout is `force-dynamic` now. `/spine` is deliberately not gated (the lesson report sends students there; feedback #15 asks for more of it). |
+| FR-606 | Per-person authorisation for operator surfaces, with roles | **BLOCKED** | — | Feedback [#7](https://github.com/samtoma/AI.NEXT/issues/7). Blocked on **FR-106** (DEFERRED): roles need accounts to attach to. Recorded as its own requirement rather than folded into FR-605 **because FR-605 must never be read as satisfying it** — a build-time switch cannot tell one person from another, and the gap is easier to lose inside a satisfied requirement than beside one. Carries a safety weight beyond admin convenience: the content-review role controls the human gate ADR-0007's unreviewed-content exception depends on. |
 | FR-701…707 | Trial, payment, plans | **DEFERRED** | — | decisions.md Q7 — payments out of this build |
 | FR-801 | Emit the PRD §13 event taxonomy | **PARTIAL** | `lib/analytics.ts`, `api/analytics/route.ts`; emitters for `student_created`, `student_selected`, `session_started`/`_ended`, `explanation_delivered`, `retrieval_attempt_started`/`_submitted`, `question_asked`, `upload_submitted`, `dashboard_viewed` | Gap: `parent_view_opened` (T058) and the safety events (Phase 11) |
 | FR-802 | Safety-flag events carry the flag type and nothing else | **BUILT** | `safety_flags` table — no transcript, no excerpt column exists | Schema enforces it structurally; emission is Phase 11 |
@@ -293,9 +307,9 @@ ADR-0008 bounds the rest. That is T122.
 | 5 | **SC-004** still references "verified signups" | **Samuel** | Signups were replaced by the picker (decisions.md Q5); the criterion is stale |
 | 6 | **T001** — create and push the `mvp1` branch | **Samuel** | This session is pinned to its designated branch; pushing `mvp1` needs an explicit go-ahead |
 | 7 | ~~Master vs Play design variant~~ — **settled 2026-09-20**, Play, recorded as [ADR-0011](../../docs/decisions/0011-noor-play-design-system.md) | Samuel | The reason Master was picked (avoid a second variable in a controlled comparison) stopped holding when ADR-0010 withdrew parity |
-| 8 | **Access gating has no requirement** | **Samuel** | `/pipeline`, `/gallery`, `/admin/*`, `/dev/*` now 404 on the student build (`b4cca13`, feedback #10/#11/#12) and **no FR covers it**, so it cannot have a row here. It is also not a permission system — that needs FR-106 un-deferred. File one requirement for the bundle, not four |
-| 9 | **The Socratic protocol has no requirement either** | **Samuel** | `775b6d8` rewrote how the tutor teaches — ask before explaining, ask for the working, end on retrieval — against `SC-005` (OPEN, "the core bet") and no FR. The nearest thing to a spec for our teaching method is now a prompt string |
-| 10 | **Nothing in the build can judge teaching behaviour** | **Samuel** | The Socratic change, the Arabic/English mixing in #20, and #22's question-drift are all only assessable by a human reading a transcript. An LLM-judge eval harness was asked for on row 015 and does not exist. Without it, every teaching change ships unverifiable |
+| 8 | ~~Access gating has no requirement~~ — **resolved 2026-09-20**, Samuel approved. Written as **FR-605** (VERIFIED) and **FR-606** (BLOCKED on FR-106) | Samuel | Split deliberately: FR-605 is what shipped, FR-606 is what is still missing, and FR-605 must never be read as satisfying FR-606 |
+| 9 | ~~The Socratic protocol has no requirement either~~ — **resolved 2026-09-20**, Samuel approved. Written as **FR-209**…**FR-213**, all BUILT | Samuel | Stated as obligations on the product, never as prompt wording — a prompt is an implementation of these and will be rewritten many times |
+| 10 | **Nothing in the build can judge teaching behaviour** — now **blocking five named requirements** | **Samuel** | FR-209…FR-213 are all BUILT and none can be promoted, because promotion needs evidence this build cannot produce. Same for `SC-005`, the core bet. Scoped as a solution and queued in [`ROADMAP.md`](../../docs/ROADMAP.md) 2026-09-20 |
 | 11 | **The tutor prompts assume the student is male** | **Samuel** | 23 masculine pronouns in `lib/lesson.ts` alone, more in `lib/ask.ts` and `lib/checkin.ts`, and a masculine Arabic vocative offered to the model as an example. `students` has no gender column. Not on any feedback row — found in review |
 | 7b | ~~Review the 10% question sample~~ — **done 2026-09-12**, 52 of 53 accepted. A second round of 5 covers the families the first draw missed (T111) | Samuel | The condition his own authorisation attached to the generated bank |
 | 7d | **Who performs the 10% review** (T107) | **Samuel** | The constitution's suspension is conditioned on a *human* gate. A model reviewing model-generated maths reproduces the failure mode it is meant to catch — and on the standard-deviation item it produced a false rejection |
@@ -315,19 +329,19 @@ ADR-0008 bounds the rest. That is T122.
 
 | | Count |
 |---|---|
-| Functional requirements | **90** |
+| Functional requirements | **97** |
 | Success criteria | **6** |
-| Traced (every one needs a row) | **96 / 96** |
-| — verified | 57 |
-| — built | 13 |
+| Traced (every one needs a row) | **103 / 103** |
+| — verified | 58 |
+| — built | 18 |
 | — partial | 5 |
 | — open | 7 |
-| — blocked | 3 |
+| — blocked | 4 |
 | — deferred | 10 |
 | Requirements a test declares | **10** |
 | Tasks complete / total | **99 / 143** |
 
-**Of 57 requirements marked VERIFIED, 9 have an automated test declaring them.** The remaining 48 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 58 requirements marked VERIFIED, 9 have an automated test declaring them.** The remaining 49 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 
