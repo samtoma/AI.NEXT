@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { redirect } from "next/navigation";
 import { getStudentPlan } from "@/lib/queries";
 import { getLessonCatalog, getLessonData } from "@/lib/lesson";
 import { getLessonContent } from "@/lib/lesson-content";
@@ -12,7 +12,7 @@ import {
   estimateMinutes,
   buildRecommendationReason,
 } from "@/lib/checkin";
-import { DemoStudentSwitcher } from "@/components/DemoStudentSwitcher";
+import { OutstandingScreen } from "@/components/auth/OutstandingScreen";
 import { StudentLoop } from "@/components/student/StudentLoop";
 import { LessonCheckIn } from "@/components/student/LessonCheckIn";
 import { LessonSession } from "@/components/student/LessonSession";
@@ -22,7 +22,7 @@ import { SubjectHome } from "@/components/student/SubjectHome";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Student — Noor Tutor PoC",
+  title: "Study — Noor",
 };
 
 /**
@@ -31,6 +31,22 @@ export const metadata = {
  *   ?mode=review   → quick 3-minute lock-it-in (he understood everything)
  *   ?mode=practice → the original Today's Plan loop
  *   (no mode)      → the check-in choice screen
+ *
+ * **Two gates, in this order.** Anonymous is sent to `/signin` carrying where
+ * it was going, so the student lands back here rather than on a home page
+ * wondering what she clicked. Unverified renders the outstanding screen
+ * instead of the lesson: verification gates learning, not signing in
+ * (FR-2004), and this is the surface where "learning" starts.
+ *
+ * The gate is here and not only in `proxy.ts`. The proxy redirects on cookie
+ * *presence*, which is not authorisation and does not pretend to be — delete
+ * that file and this page still refuses. Every `?mode=` branch below is
+ * downstream of both checks, so no branch can be reached by a URL that skips
+ * the check-in.
+ *
+ * The demo-student switcher that used to ride along on these surfaces is gone
+ * with the cast it switched between: the student comes from the session now,
+ * never from a client-writable cookie.
  */
 export default async function StudentPage({
   searchParams,
@@ -46,26 +62,16 @@ export default async function StudentPage({
   const lessonSlug = Array.isArray(sp.lesson) ? sp.lesson[0] : sp.lesson;
   const subject = Array.isArray(sp.subject) ? sp.subject[0] : sp.subject;
 
-  // Whose journey are we showing? Cookie-selected, validated against the
-  // students table, default = Omar. A DEMO AFFORDANCE, NOT AUTH — auth is a
-  // PRD §3 non-goal for the MVP (see lib/demo-student.ts).
-  const { studentId, studentName, students } = await resolveStudentContext();
-
-  /** The hidden switcher rides along on the browsable surfaces (triple-tap the
-   *  bottom-right corner). Deliberately NOT inside a running lesson: that
-   *  surface is immersive and already owns the triple-tap gesture. */
-  const withSwitcher = (node: ReactNode) => (
-    <>
-      {node}
-      <DemoStudentSwitcher students={students} currentId={studentId} />
-    </>
-  );
+  const me = await resolveStudentContext();
+  if (!me) redirect("/signin?next=/student");
+  if (!me.emailVerified) {
+    return <OutstandingScreen studentName={me.studentName} />;
+  }
+  const { studentId, studentName } = me;
 
   if (mode === "practice") {
     const plan = await getStudentPlan(studentId);
-    return withSwitcher(
-      <StudentLoop plan={plan.items} studentName={plan.studentName} />
-    );
+    return <StudentLoop plan={plan.items} studentName={plan.studentName} />;
   }
 
   if (mode === "learn" || mode === "review") {
@@ -88,7 +94,7 @@ export default async function StudentPage({
   // check-in when the lesson has no content bundle yet.
   if (mode === "read") {
     const content = await getLessonContent(lessonSlug ?? "");
-    if (content) return withSwitcher(<LessonContentView content={content} />);
+    if (content) return <LessonContentView content={content} />;
   }
 
   // No subject chosen yet → the per-subject home (never a blended score).
@@ -100,24 +106,7 @@ export default async function StudentPage({
     // Only show the home when more than one subject is loaded; otherwise the
     // single-subject check-in is the natural landing (math-only stays as-is).
     if (summaries.length > 1)
-      return withSwitcher(
-        <>
-          {/* PoC (Samuel, 2026-07-30): a VISIBLE "who's studying?" dropdown
-              on the home — pick a profile or create a new demo student.
-              The hidden triple-tap variants stay on the other surfaces. */}
-          {/* English LTR shell (constitution v2.0.0 Principle V): the picker sits
-              at the inline END. Direction is NOT forced at page level — <html> has
-              no dir attribute — so the Arabic verticals stay reintroducible. */}
-          <div className="mx-auto flex max-w-5xl items-center justify-end px-6 pt-5">
-            <DemoStudentSwitcher
-              students={students}
-              currentId={studentId}
-              visible
-            />
-          </div>
-          <SubjectHome summaries={summaries} studentName={studentName} />
-        </>
-      );
+      return <SubjectHome summaries={summaries} studentName={studentName} />;
   }
 
   // A subject is chosen (or only one exists) → its lessons in the check-in.
@@ -149,7 +138,7 @@ export default async function StudentPage({
     buildRecommendationReason(masteryStage, weakestSubskill, recommendation)
   );
 
-  return withSwitcher(
+  return (
     <LessonCheckIn
       lesson={lesson}
       lessons={lessons}

@@ -1,4 +1,4 @@
-import { pool } from "@/lib/db";
+import { withMaint } from "@/lib/db";
 import { tallyProvenance, type ProvenanceTally } from "@/lib/provenance";
 
 /**
@@ -9,6 +9,14 @@ import { tallyProvenance, type ProvenanceTally } from "@/lib/provenance";
  * how much ungated mathematics students can actually be served. A bundle
  * sitting in `review` is a decision not yet taken; a row in `live` is one
  * already taken.
+ *
+ * P2: move to the operator connection. This is an OPERATOR read — it counts
+ * every student's attempts per question, which `ainext_app` cannot see and must
+ * not — so until the console has its own principal (`DATABASE_URL_OPERATOR`,
+ * plan A5) it runs under `withMaint`, which bypasses every policy. That is a
+ * deliberate, temporary hole with a name on it: the surface is reachable only
+ * behind `AINEXT_INTERNAL_SURFACES` and Cloudflare Access, and P2 replaces this
+ * one call with an authorised operator read that records who looked.
  */
 
 export type AdminQuestionRow = {
@@ -40,8 +48,10 @@ export type ContentAdminView = {
 };
 
 export async function getContentAdminView(): Promise<ContentAdminView> {
-  const res = await pool.query(
-    `SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.status, q.source,
+  // P2: move to the operator connection.
+  const res = await withMaint((db) =>
+    db.query(
+      `SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.status, q.source,
             q.reviewed_by, q.reviewed_at, q.parent_question_id, q.source_page,
             lo.label AS lo_label,
             mod.label AS module_label,
@@ -59,6 +69,7 @@ export async function getContentAdminView(): Promise<ContentAdminView> {
       ORDER BY (q.source = 'variant') DESC,
                (q.reviewed_by IS NULL) DESC,
                q.lo_id, q.tier, q.id`
+    )
   );
 
   const rows: AdminQuestionRow[] = res.rows.map((r) => ({

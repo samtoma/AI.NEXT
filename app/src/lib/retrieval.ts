@@ -17,10 +17,17 @@
  * student's profile should teach a colder lesson, not fail — and FR-203 already
  * requires the tutor to skip interest-anchored framing when it has no signal,
  * so "no signal" is a supported state, not an error.
+ *
+ * P1 adds a client parameter that runs the whole bundle inside the CALLER's
+ * unit of work. That is not a micro-optimisation: `retrieve` makes four
+ * student-scoped reads, and four separate units would be four transactions and
+ * four connections for one tutor turn. It also removes a subtler failure — the
+ * "degrade rather than throw" rule above means a read that RLS silently
+ * emptied would be indistinguishable from a student with no history. Sharing
+ * the caller's principal is what keeps the two apart.
  */
 
-import { pool } from "@/lib/db";
-import { getStudentProfile, type StudentProfile } from "@/lib/student-context";
+import { scoped, getStudentProfile, type Db, type StudentProfile } from "@/lib/student-context";
 import {
   getLibraryEntries,
   getMisconceptions,
@@ -70,10 +77,11 @@ export type RetrievalBundle = {
  * one taught without it.
  */
 async function getEngagementSignal(
+  db: Db,
   studentId: number
 ): Promise<EngagementSignal | null> {
   try {
-    const res = await pool.query(
+    const res = await db.query(
       `SELECT is_correct, time_ms, attempted_at
          FROM attempts
         WHERE student_id = $1
@@ -98,12 +106,13 @@ async function getEngagementSignal(
  * thing.
  */
 async function nearestSkillMastery(
+  db: Db,
   studentId: number,
   focusLoIds: readonly string[]
 ): Promise<SkillMastery[]> {
   if (focusLoIds.length === 0) return [];
   try {
-    const res = await pool.query(
+    const res = await db.query(
       `WITH focus AS (
          SELECT unnest($2::text[]) AS lo_id
        ),
@@ -140,21 +149,41 @@ async function nearestSkillMastery(
  * turn. Nothing ungrounded enters here: every field is read from the store.
  */
 export async function retrieve(
-  studentId: number,
+  studentId: number | null,
   focusLoIds: readonly string[],
-  opts: { misconceptionId?: string; uploadId?: number } = {}
+  opts: { misconceptionId?: string; uploadId?: number; client?: Db } = {}
 ): Promise<RetrievalBundle> {
-  const [profile, nearestSkills, misconceptions, libraryEntries, upload, engagement] =
-    await Promise.all([
-      getStudentProfile(studentId),
-      nearestSkillMastery(studentId, focusLoIds),
-      getMisconceptions(focusLoIds),
-      getLibraryEntries(focusLoIds, { misconceptionId: opts.misconceptionId }),
-      opts.uploadId
-        ? getParsedUpload(opts.uploadId, studentId)
-        : Promise.resolve(null),
-      getEngagementSignal(studentId),
-    ]);
+  // No student in scope (the prompt-capture harness, an anonymous surface):
+  // the curriculum half still retrieves, the student half is empty. That is
+  // the same state FR-203 already calls "no signal", not an error.
+  const [misconceptions, libraryEntries] = await Promise.all([
+    getMisconceptions(focusLoIds),
+    getLibraryEntries(focusLoIds, { misconceptionId: opts.misconceptionId }),
+  ]);
+  if (studentId == null) {
+    return {
+      profile: null,
+      nearestSkills: [],
+      misconceptions,
+      libraryEntries,
+      uploadText: null,
+      engagement: null,
+    };
+  }
+
+  const [profile, nearestSkills, upload, engagement] = await scoped(
+    studentId,
+    opts.client,
+    (db) =>
+      Promise.all([
+        getStudentProfile(studentId, db),
+        nearestSkillMastery(db, studentId, focusLoIds),
+        opts.uploadId
+          ? getParsedUpload(opts.uploadId, studentId, db)
+          : Promise.resolve(null),
+        getEngagementSignal(db, studentId),
+      ])
+  );
   return {
     profile,
     nearestSkills,

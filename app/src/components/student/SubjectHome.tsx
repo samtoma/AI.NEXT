@@ -2,7 +2,19 @@ import Link from "next/link";
 import type { SubjectSummary } from "@/lib/types";
 import { spineSubjectDef } from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
-import { arabicGreetingName, shortName } from "@/lib/demo-student";
+
+/** "Omar Hassan" → "Omar" — the convention LessonCheckIn uses too. */
+const shortName = (displayName: string) => displayName.split(" ")[0] || displayName;
+
+/**
+ * The name to drop INSIDE Arabic copy («أهلاً يا نور»), or null when the row
+ * name is not Arabic — «أهلاً يا Omar» reads as a bug, so a Latin name is
+ * omitted and the sentence greets without it.
+ */
+const arabicGreetingName = (displayName: string): string | null => {
+  const first = shortName(displayName);
+  return /^[\u0600-\u06FF\u0750-\u077F]+$/.test(first) ? first : null;
+};
 
 /**
  * The student's home (Wave 1.5, multi-subject spine §4): one card PER SUBJECT,

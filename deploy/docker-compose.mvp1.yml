@@ -43,7 +43,50 @@ services:
       dockerfile: deploy/Dockerfile
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://ainext:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}@db:5432/ainext_mvp1
+      # THE APP CONNECTS AS `ainext_app`, NOT AS THE POSTGRES SUPERUSER (ADR-0012).
+      # Superusers bypass every row-level-security policy unconditionally, so
+      # this one line is what decides whether migration 017 protects anything or
+      # is decoration. `ainext_app` is created by 017 with NO password; set one
+      # once, after the first boot:
+      #
+      #   docker compose -p ainext-mvp1 -f deploy/docker-compose.mvp1.yml exec db \
+      #     psql -U ainext -d ainext_mvp1 \
+      #     -c "ALTER ROLE ainext_app PASSWORD '…'" \
+      #     -c "ALTER ROLE ainext_operator PASSWORD '…'" \
+      #     -c "ALTER ROLE ainext_maint PASSWORD '…'"
+      #
+      # then put the same three values in deploy/.env (see .env.example).
+      DATABASE_URL: postgres://ainext_app:${AINEXT_APP_PASSWORD:?set AINEXT_APP_PASSWORD in deploy/.env}@db:5432/ainext_mvp1
+      # The console's connection (P2 — ADR-0014). Cross-student reads by grant;
+      # it does not bypass RLS either.
+      DATABASE_URL_OPERATOR: postgres://ainext_operator:${AINEXT_OPERATOR_PASSWORD:?set AINEXT_OPERATOR_PASSWORD in deploy/.env}@db:5432/ainext_mvp1
+      # DATABASE_URL_MAINT is deliberately ABSENT here. `ainext_maint` has
+      # BYPASSRLS, and handing the running app a credential that sees every
+      # student's rows gives back exactly what this design removed. The loader
+      # service below has it; one-off scripts (the operator bootstrap) run with
+      # it passed on the command line:
+      #   docker compose … run --rm -e DATABASE_URL=postgres://ainext_maint:…@db:5432/ainext_mvp1 \
+      #     app node --import ./scripts/ts-resolver.mjs scripts/bootstrap-operator.mts
+      #
+      # Identity (ADR-0013). AINEXT_AUTH_SECRET signs the access token: at least
+      # 32 bytes, `openssl rand -hex 32`, and rotating it signs everyone out.
+      AINEXT_AUTH_SECRET: ${AINEXT_AUTH_SECRET:?set AINEXT_AUTH_SECRET in deploy/.env}
+      # Absolute origin for the links in verification and reset mail. NEVER
+      # derived from the request host: a Host header is client-controlled.
+      AINEXT_PUBLIC_URL: ${AINEXT_PUBLIC_URL:-https://ainext-mvp1.reletix.com}
+      # `console` prints links to the log; `smtp` sends them through Mailu.
+      AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-console}
+      AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-}
+      AINEXT_MAIL_FROM: ${AINEXT_MAIL_FROM:-}
+      # All three or none — a partial Google configuration throws at startup
+      # rather than failing at the callback, after the student has already
+      # handed Google their credentials.
+      AINEXT_GOOGLE_CLIENT_ID: ${AINEXT_GOOGLE_CLIENT_ID:-}
+      AINEXT_GOOGLE_CLIENT_SECRET: ${AINEXT_GOOGLE_CLIENT_SECRET:-}
+      AINEXT_GOOGLE_REDIRECT_URI: ${AINEXT_GOOGLE_REDIRECT_URI:-}
+      # The first operator (ADR-0014): seeded with all four roles and NO
+      # password, which arrives through the ordinary reset flow.
+      AINEXT_BOOTSTRAP_OPERATOR_EMAIL: ${AINEXT_BOOTSTRAP_OPERATOR_EMAIL:-}
       # Runtime thinking budget. 1024 = minimal deliberation, snappy (default).
       # Set to "0" (or "off") for maximum speed; raise it to restore more.
       AINEXT_THINKING_BUDGET: "1024"
@@ -83,8 +126,12 @@ services:
     environment:
       # Keyword DSN + PGPASSWORD: no URL-encoding traps if the password ever
       # contains @ : / # ?. The password is never on a command line.
-      AINEXT_DB_DSN: "host=db port=5432 dbname=ainext_mvp1 user=ainext"
-      PGPASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
+      #
+      # The loader runs as `ainext_maint`, which has BYPASSRLS. It must: it
+      # writes the whole curriculum and parity_check.py counts every row. This
+      # is the one service that gets that credential (ADR-0012).
+      AINEXT_DB_DSN: "host=db port=5432 dbname=ainext_mvp1 user=ainext_maint"
+      PGPASSWORD: ${AINEXT_MAINT_PASSWORD:?set AINEXT_MAINT_PASSWORD in deploy/.env}
     volumes:
       # The repo checkout, READ-ONLY: loader code + seed bundles from one commit,
       # so a content change never needs an image rebuild. AINEXT_CONTENT_DIR is

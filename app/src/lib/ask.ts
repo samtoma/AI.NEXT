@@ -1,9 +1,9 @@
-import { pool } from "./db";
+import type { PoolClient } from "pg";
 import { retrieve, retrievalBlock } from "./retrieval";
+import { scoped, type Db } from "./student-context";
 import { getAllVisuals } from "./visuals";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
-import { DEFAULT_STUDENT_ID } from "./demo-student";
 import { masteryLabel } from "./mastery";
 import type { Subject } from "./types";
 
@@ -14,6 +14,13 @@ import type { Subject } from "./types";
  * mastery, the prerequisite edge list, the question catalog, and (when a
  * question is in scope) its human-reviewed canonical solution. The model is
  * never allowed to solve from scratch — it explains *via* the canonical steps.
+ *
+ * The mastery half is the student's, so the assembly runs under their principal
+ * — inside `/api/ask`'s pre-turn unit of work when it has one, in its own
+ * otherwise. `studentId` may be null (the prompt-capture harness), which reads
+ * the curriculum and no mastery rather than borrowing somebody's.
+ *
+ * NOTHING in this file's prompt text changed.
  */
 
 export type AskSurface = "spine_chat" | "student_chat";
@@ -67,40 +74,62 @@ export async function buildAskContext(
   chatSession: string,
   questionId?: string,
   wrongAnswer?: string,
-  /** the request's resolved demo student (lib/student-context.ts) */
-  studentId: number = DEFAULT_STUDENT_ID,
+  /** the request's signed-in student (lib/student-context.ts) */
+  studentId: number | null = null,
   /** a just-uploaded worksheet/photo to ground this turn on (PRD B10) */
-  uploadId?: number
+  uploadId?: number,
+  /** the caller's unit of work, when it has one open (`/api/ask`) */
+  client?: PoolClient
+): Promise<AskContext> {
+  return scoped(studentId, client, (db) =>
+    askContextOn(db, surface, chatSession, questionId, wrongAnswer, studentId, uploadId)
+  );
+}
+
+async function askContextOn(
+  db: Db,
+  surface: AskSurface,
+  chatSession: string,
+  questionId: string | undefined,
+  wrongAnswer: string | undefined,
+  studentId: number | null,
+  uploadId: number | undefined
 ): Promise<AskContext> {
   const [losRes, edgesRes, masteryRes, qRes, docRes, studentRes, modulesRes, allVisuals] =
     await Promise.all([
-      pool.query(`
+      db.query(`
         SELECT id, label, description, syllabus_ref, source_page
         FROM graph_nodes WHERE kind = 'learning_objective'
         ORDER BY order_in_parent
       `),
-      pool.query(`
+      db.query(`
         SELECT src_id, dst_id FROM graph_edges
         WHERE edge_type = 'prerequisite_of' AND system_to IS NULL
       `),
-      pool.query(
-        `SELECT lo_id, score, system_from, system_to FROM mastery
-         WHERE student_id = $1 ORDER BY lo_id, system_from`,
-        [studentId]
-      ),
-      pool.query(`
+      studentId == null
+        ? Promise.resolve({
+            rows: [] as { lo_id: string; score: string; system_to: Date | null }[],
+          })
+        : db.query(
+            `SELECT lo_id, score, system_from, system_to FROM mastery
+             WHERE student_id = $1 ORDER BY lo_id, system_from`,
+            [studentId]
+          ),
+      db.query(`
         SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
                canonical_solution, solution_version, source_page, source_sha256
         FROM questions WHERE status = 'live' ORDER BY lo_id, tier, id
       `),
-      pool.query(
+      db.query(
         `SELECT sha256, title, publisher, edition, grade, subject
          FROM source_documents ORDER BY ingested_at, sha256`
       ),
-      pool.query(`SELECT display_name FROM students WHERE id = $1`, [
-        studentId,
-      ]),
-      pool.query(`
+      studentId == null
+        ? Promise.resolve({ rows: [] as { display_name: string }[] })
+        : db.query(`SELECT display_name FROM students WHERE id = $1`, [
+            studentId,
+          ]),
+      db.query(`
         SELECT id, label FROM graph_nodes WHERE kind = 'module'
         ORDER BY CASE WHEN id LIKE 'module:geo%' THEN 1 ELSE 0 END,
                  order_in_parent, id
@@ -147,7 +176,7 @@ export async function buildAskContext(
   // wrong subject's rules is exactly the failure this refactor removes.
   let subject: Subject | null = null;
   if (focusQRow) {
-    const courseRes = await pool.query(
+    const courseRes = await db.query(
       `SELECT c.id FROM graph_edges t
        JOIN graph_edges p
          ON p.src_id = t.src_id AND p.edge_type = 'part_of' AND p.system_to IS NULL
@@ -336,7 +365,10 @@ ${focusBlock}`;
   // Retrieval layer (FR-303) — the student-model half of grounding. Renders to
   // "" when nothing is retrieved, so prompts stay byte-identical for a student
   // with no profile and no library entries.
-  const retrieved = await retrieve(studentId, grounding.lo_ids, { uploadId });
+  const retrieved = await retrieve(studentId, grounding.lo_ids, {
+    uploadId,
+    client: db,
+  });
 
   return {
     systemPrompt: systemPromptFor(surface, student, subject),

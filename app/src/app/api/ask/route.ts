@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
-import { pool } from "@/lib/db";
+import { withPrincipal } from "@/lib/db";
+import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { ENVIRONMENT } from "@/lib/env";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
 import { buildLessonContext } from "@/lib/lesson";
@@ -11,7 +12,6 @@ import {
 } from "@/lib/sacred-guard";
 import { snapshotContext } from "@/lib/session-cache";
 import { currentSessionOrNull } from "@/lib/sessions";
-import { resolveStudentId } from "@/lib/student-context";
 
 /**
  * POST /api/ask — "Ask the Spine" grounded chat, streamed as SSE.
@@ -21,6 +21,18 @@ import { resolveStudentId } from "@/lib/student-context";
  * the curriculum data + transcript on stdin, parse the JSONL stream, and
  * re-emit text deltas as SSE. The final "result" line carries cost/usage,
  * which we log to ai_interactions (cost ceiling is a PRD hard requirement).
+ *
+ * TWO UNITS OF WORK, and the gap between them is the point (research R7).
+ *
+ *   unit 1  the turn count, the session, the grounding assembly — everything
+ *           the turn needs to exist. Then the connection is RELEASED.
+ *   …       the model streams for tens of seconds, holding nothing.
+ *   unit 2  the ledger row, once there is something to record.
+ *
+ * A single unit spanning the model call would be correct and would also be the
+ * fastest way to exhaust a pool of twenty: eighteen concurrent lesson turns and
+ * the nineteenth student's sign-in waits on somebody else's tutor finishing a
+ * sentence. Nothing in this file may hold a client across `spawn`.
  */
 
 export const dynamic = "force-dynamic";
@@ -114,68 +126,101 @@ export async function POST(req: Request) {
     );
   }
 
-  // Which demo student's mastery grounds this turn — a cookie, validated
-  // against the students table, defaulting to Omar. DEMO AFFORDANCE, NOT
-  // AUTH: auth is a PRD §3 non-goal for the MVP (see lib/demo-student.ts).
-  // Resolved BEFORE the turn-cap check: the cap is scoped per student, so a
-  // switched demo student never inherits another student's turn count
-  // (release review, 2026-07-30).
-  const studentId = await resolveStudentId();
-
-  // server-side turn count for this chat session (drives the per-surface caps)
-  const turnsRes = await pool.query(
-    `SELECT count(*) AS n FROM ai_interactions
-     WHERE surface = $1 AND grounding->>'chat_session' = $2 AND student_id = $3`,
-    [surface, chatSession, studentId]
-  );
-  const priorTurns = Number(turnsRes.rows[0].n);
-  const cap = TURN_CAPS[surface];
-
-  if (cap != null && priorTurns >= cap) {
-    return new Response(
-      sse({ type: "cap", text: CAP_MESSAGES[surface] ?? "Session limit reached." }),
-      { headers: { "Content-Type": "text/event-stream" } }
-    );
+  // Whose mastery grounds this turn. From the verified access token, never
+  // from the request (FR-2102). Resolved BEFORE the turn-cap check, because the
+  // cap is scoped per student and no student may inherit another's turn count.
+  let me;
+  try {
+    me = await requireStudent();
+  } catch (err) {
+    if (err instanceof AuthError) return err.toResponse();
+    throw err;
   }
+  // FR-2004: a tutor turn is learning, and learning waits for a confirmed
+  // address. It is also the most expensive thing an unverified signup could do.
+  if (!me.emailVerified) {
+    return Response.json({ error: "email_unverified" }, { status: 403 });
+  }
+  const studentId = me.studentId;
 
-  // The learning session this turn belongs to (ADR-0015). Opened AFTER the cap
-  // check, because a turn the cap refused is not a sitting. All four ask
-  // surfaces are session kinds by the same name, so the surface IS the kind;
-  // `chatSession` rides along as the transitional correlation key.
-  const sessionId = await currentSessionOrNull(studentId, surface, {
-    surface,
-    clientKey: chatSession,
-  });
+  // ---------------------------------------------------------------------
+  // UNIT ONE — everything the turn needs before the model is spawned.
+  // ---------------------------------------------------------------------
+  let priorTurns: number;
+  let sessionId: number | null;
+  let ctx: Awaited<ReturnType<typeof buildAskContext>>;
+  const cap = TURN_CAPS[surface];
+  try {
+    const pre = await withPrincipal(studentId, async (client) => {
+      // server-side turn count for this chat session (drives the per-surface caps)
+      const turnsRes = await client.query(
+        `SELECT count(*) AS n FROM ai_interactions
+         WHERE surface = $1 AND grounding->>'chat_session' = $2 AND student_id = $3`,
+        [surface, chatSession, studentId]
+      );
+      const turns = Number(turnsRes.rows[0].n);
+      if (cap != null && turns >= cap) return { turns, capped: true as const };
 
-  // Grounding is snapshotted per chat session: byte-stable across turns so
-  // the (system prompt + data block) prefix stays prompt-cache-hot, and the
-  // mastery numbers the model reasons over never shift mid-conversation.
-  // The student is part of the key — switching demo students must never
-  // re-serve the previous student's mastery.
-  const snapshotKey = [
-    surface,
-    chatSession,
-    studentId,
-    body.lesson ?? "",
-    body.questionId ?? "",
-    body.wrongAnswer ?? "",
-  ].join("|");
-  const ctx = await snapshotContext(snapshotKey, () =>
-    surface === "lesson_learn" || surface === "lesson_review"
-      ? buildLessonContext(
-          surface === "lesson_learn" ? "learn" : "review",
-          chatSession,
-          body.lesson,
-          studentId
-        )
-      : buildAskContext(
-          surface,
-          chatSession,
-          body.questionId,
-          body.wrongAnswer,
-          studentId
-        )
-  );
+      // The learning session this turn belongs to (ADR-0015). Opened AFTER the
+      // cap check, because a turn the cap refused is not a sitting. All four
+      // ask surfaces are session kinds by the same name, so the surface IS the
+      // kind; `chatSession` rides along as the transitional correlation key.
+      const session = await currentSessionOrNull(
+        studentId,
+        surface,
+        { surface, clientKey: chatSession },
+        client
+      );
+
+      // Grounding is snapshotted per chat session: byte-stable across turns so
+      // the (system prompt + data block) prefix stays prompt-cache-hot, and the
+      // mastery numbers the model reasons over never shift mid-conversation.
+      // The student is part of the key — no student's snapshot is ever re-served
+      // to another.
+      const snapshotKey = [
+        surface,
+        chatSession,
+        studentId,
+        body.lesson ?? "",
+        body.questionId ?? "",
+        body.wrongAnswer ?? "",
+      ].join("|");
+      const built = await snapshotContext(snapshotKey, () =>
+        surface === "lesson_learn" || surface === "lesson_review"
+          ? buildLessonContext(
+              surface === "lesson_learn" ? "learn" : "review",
+              chatSession,
+              body.lesson,
+              studentId,
+              client
+            )
+          : buildAskContext(
+              surface,
+              chatSession,
+              body.questionId,
+              body.wrongAnswer,
+              studentId,
+              undefined,
+              client
+            )
+      );
+      return { turns, capped: false as const, sessionId: session, ctx: built };
+    });
+
+    if (pre.capped) {
+      return new Response(
+        sse({ type: "cap", text: CAP_MESSAGES[surface] ?? "Session limit reached." }),
+        { headers: { "Content-Type": "text/event-stream" } }
+      );
+    }
+    priorTurns = pre.turns;
+    sessionId = pre.sessionId;
+    ctx = pre.ctx;
+  } catch (err) {
+    console.error("ask: pre-turn reads failed:", err);
+    return Response.json({ error: "internal error" }, { status: 500 });
+  }
+  // The unit of work is closed. Everything below runs with no connection held.
 
   // Sacred output containment (ADR-0006 §2, fails closed): the model's stream
   // is scanned against EVERY sealed sacred passage in the product — on every
@@ -411,7 +456,10 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           // audit trail for the religious-content owner: the suppressed turn
           // is recorded server-side; the student saw only the redirect line.
           try {
-            await pool.query(
+            // UNIT TWO (redaction branch) — a fresh unit, long after unit one
+            // was released.
+            await withPrincipal(studentId, (client) =>
+              client.query(
               `INSERT INTO ai_interactions
                  (student_id, surface, turn_index, user_message,
                   assistant_message, grounding, citations, model,
@@ -432,6 +480,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                 ENVIRONMENT,
                 sessionId,
               ]
+              )
             );
           } catch (e) {
             console.error("ask: failed to log redacted interaction:", e);
@@ -463,7 +512,9 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
 
         let interactionId: number | null = null;
         try {
-          const ins = await pool.query(
+          // UNIT TWO — the ledger row, now that there is something to record.
+          const ins = await withPrincipal(studentId, (client) =>
+            client.query(
             `INSERT INTO ai_interactions
                (student_id, surface, turn_index, user_message, assistant_message,
                 grounding, citations, model, input_tokens, output_tokens,
@@ -489,6 +540,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
               ENVIRONMENT,
               sessionId,
             ]
+            )
           );
           interactionId = ins.rows[0].id;
         } catch (e) {

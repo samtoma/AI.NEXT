@@ -1,5 +1,7 @@
+import type { PoolClient } from "pg";
+
 import { pool } from "./db";
-import { DEFAULT_STUDENT_ID } from "./demo-student";
+import { scoped, type Db } from "./student-context";
 import {
   compareSpineSubjects,
   displayLabelOfSpineKey,
@@ -25,10 +27,6 @@ import type { LessonBridge, SpineSubject, SubjectSummary, Verdict } from "./type
  * (`null`) and simply does not roll up into any subject.
  */
 
-/** Callers pass the request's resolved demo student; this is only the
- *  fallback for a call with no student in scope (see lib/student-context.ts). */
-const STUDENT_ID = DEFAULT_STUDENT_ID;
-
 /** "lo:soc1-2-1" → lesson slug "soc1-2" (LO-id minus the trailing part). */
 function slugOfLo(loId: string): string {
   return loId.replace(/^lo:/, "").replace(/-[0-9]+$/, "");
@@ -48,10 +46,18 @@ async function columnExists(table: string, column: string): Promise<boolean> {
 /* ------------------------------------------------------------------ */
 
 export async function getSubjectSummaries(
-  studentId: number = STUDENT_ID
+  studentId: number,
+  c?: PoolClient
+): Promise<SubjectSummary[]> {
+  return scoped(studentId, c, (db) => subjectSummariesOn(db, studentId));
+}
+
+async function subjectSummariesOn(
+  db: Db,
+  studentId: number
 ): Promise<SubjectSummary[]> {
   const [losRes, checksRes] = await Promise.all([
-    pool.query(
+    db.query(
       `SELECT lo.id, lo.label, lo.order_in_parent,
               m.id AS module_id, m.order_in_parent AS module_order,
               c.id AS course_id, c.label AS course_label,
@@ -70,7 +76,7 @@ export async function getSubjectSummaries(
                 m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`,
       [studentId]
     ),
-    pool.query(
+    db.query(
       // `subject` is written by /api/understanding on every insert and was
       // backfilled by migration 006 — read it instead of guessing the subject
       // back out of the LO id.

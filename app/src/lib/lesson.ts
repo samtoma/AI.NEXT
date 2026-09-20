@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { pool } from "./db";
+import type { PoolClient } from "pg";
 import { retrieve, retrievalBlock } from "./retrieval";
-import { DEFAULT_STUDENT_ID } from "./demo-student";
+import { scoped, type Db } from "./student-context";
 import { deriveMasteryStage, learnOpeningFrame } from "./checkin";
 import { masteryLabel } from "./mastery";
 import { gradeLabel } from "./profile";
@@ -54,9 +54,21 @@ import type {
  * scratch beyond that scope.
  */
 
-/** Fallback only — callers pass the request's resolved demo student
- *  (lib/student-context.ts); a demo affordance, never auth. */
-const STUDENT_ID = DEFAULT_STUDENT_ID;
+/**
+ * `studentId` is now the SIGNED-IN student (lib/student-context.ts) and there is
+ * no default one. It stays optional, and `null` is a supported value, for the
+ * one caller that legitimately has nobody: `scripts/capture-prompts.mts`, which
+ * renders every prompt surface to disk for the byte-identity diff. A null
+ * student reads the curriculum and no mastery — which is what "no signal"
+ * already meant — rather than borrowing somebody's.
+ *
+ * Every student-scoped read below (`mastery`, `students`) runs inside a unit of
+ * work under that student. The curriculum reads beside them need no principal,
+ * and share the unit only because splitting them would buy nothing.
+ *
+ * NOTHING in this file's prompt text changed. The edits are the connection a
+ * query runs on and the type of one parameter.
+ */
 
 export const DEFAULT_LESSON_SLUG = "u1-1";
 
@@ -134,16 +146,21 @@ const MODULE_ORDER = `CASE WHEN m.id LIKE 'module:geo%' THEN 1 ELSE 0 END,
          m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`;
 
 export async function getLessonCatalog(
-  studentId: number = STUDENT_ID
+  studentId: number | null = null,
+  c?: PoolClient
 ): Promise<LessonInfo[]> {
-  const [losRes, masteryRes] = await Promise.all([
-    pool.query(`${LO_MODULE_SELECT} ORDER BY ${MODULE_ORDER}`),
-    pool.query(
-      `SELECT lo_id, score FROM mastery
-       WHERE student_id = $1 AND system_to IS NULL`,
-      [studentId]
-    ),
-  ]);
+  const [losRes, masteryRes] = await scoped(studentId, c, (db) =>
+    Promise.all([
+      db.query(`${LO_MODULE_SELECT} ORDER BY ${MODULE_ORDER}`),
+      studentId == null
+        ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
+        : db.query(
+            `SELECT lo_id, score FROM mastery
+             WHERE student_id = $1 AND system_to IS NULL`,
+            [studentId]
+          ),
+    ])
+  );
   const mastery = new Map<string, number>(
     masteryRes.rows.map((r) => [r.lo_id, Number(r.score)])
   );
@@ -184,34 +201,47 @@ export async function getLessonCatalog(
 
 export async function getLessonData(
   slug: string = DEFAULT_LESSON_SLUG,
-  studentId: number = STUDENT_ID
+  studentId: number | null = null,
+  c?: PoolClient
+): Promise<LessonData> {
+  return scoped(studentId, c, (db) => lessonDataOn(db, slug, studentId));
+}
+
+async function lessonDataOn(
+  db: Db,
+  slug: string,
+  studentId: number | null
 ): Promise<LessonData> {
   const safeSlug = sanitizeLessonSlug(slug);
   const loPattern = `lo:${safeSlug}-%`;
 
   const [losRes, studentRes] = await Promise.all([
-    pool.query(
+    db.query(
       `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id`,
       [loPattern]
     ),
-    pool.query(`SELECT display_name, grade FROM students WHERE id = $1`, [
-      studentId,
-    ]),
+    studentId == null
+      ? Promise.resolve({ rows: [] as { display_name: string; grade: string }[] })
+      : db.query(`SELECT display_name, grade FROM students WHERE id = $1`, [
+          studentId,
+        ]),
   ]);
   if (losRes.rows.length === 0 && safeSlug !== DEFAULT_LESSON_SLUG) {
-    // unknown slug → default lesson (same student)
-    return getLessonData(DEFAULT_LESSON_SLUG, studentId);
+    // unknown slug → default lesson (same student, same unit of work)
+    return lessonDataOn(db, DEFAULT_LESSON_SLUG, studentId);
   }
 
   const loIds: string[] = losRes.rows.map((r) => r.id);
 
   const [masteryRes, qRes, visuals] = await Promise.all([
-    pool.query(
-      `SELECT lo_id, score FROM mastery
-       WHERE student_id = $1 AND lo_id = ANY($2) AND system_to IS NULL`,
-      [studentId, loIds]
-    ),
-    pool.query(
+    studentId == null
+      ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
+      : db.query(
+          `SELECT lo_id, score FROM mastery
+           WHERE student_id = $1 AND lo_id = ANY($2) AND system_to IS NULL`,
+          [studentId, loIds]
+        ),
+    db.query(
       `SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
               canonical_solution, solution_version, status,
               source, parent_question_id, source_sha256, source_page, source_note,
@@ -284,7 +314,7 @@ export async function getLessonData(
   // the book generically, so leaving this null keeps them byte-identical).
   let docTitle: string | null = null;
   if (kit.namesSourceBook && first?.course_id) {
-    const docRes = await pool.query(
+    const docRes = await db.query(
       `SELECT d.title FROM graph_nodes c
        JOIN source_documents d ON d.sha256 = c.source_sha256
        WHERE c.id = $1`,
@@ -320,7 +350,10 @@ export async function getLessonData(
     mapBases,
     docTitle,
     studentName: (studentRes.rows[0]?.display_name as string) ?? "Omar",
-    studentId,
+    // `LessonData.studentId` is a plain number because it is interpolated into
+    // the data block. No student in scope (the capture harness) renders 0 —
+    // "nobody", which is what it is — rather than a borrowed id.
+    studentId: studentId ?? 0,
     grade: (studentRes.rows[0]?.grade as string) ?? "10",
   };
 }
@@ -954,10 +987,16 @@ export async function buildLessonContext(
   mode: LessonMode,
   chatSession: string,
   lessonSlug?: string,
-  /** the request's resolved demo student (lib/student-context.ts) */
-  studentId: number = STUDENT_ID
+  /** the request's signed-in student (lib/student-context.ts) */
+  studentId: number | null = null,
+  /** the caller's unit of work, when it has one open (`/api/ask`) */
+  client?: PoolClient
 ): Promise<AskContext> {
-  const data = await getLessonData(sanitizeLessonSlug(lessonSlug), studentId);
+  const data = await getLessonData(
+    sanitizeLessonSlug(lessonSlug),
+    studentId,
+    client
+  );
   const kit = lessonPromptKit(data.subject);
   // Map-based subjects append the gazetteer name lists of their referenced
   // base maps (≤2) so the model can only name places the hit-tester resolves.
@@ -990,7 +1029,8 @@ export async function buildLessonContext(
   // capture harness reports is then real retrieved content, not scaffolding.
   const retrieved = await retrieve(
     studentId,
-    data.los.map((l) => l.id)
+    data.los.map((l) => l.id),
+    { client }
   );
 
   return {

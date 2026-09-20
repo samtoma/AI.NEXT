@@ -11,14 +11,26 @@
  *
  * Emission is fire-and-forget: analytics must never fail a student's lesson.
  * A dropped event costs us a data point; a thrown event costs a turn.
+ *
+ * **The INSERT is policed** (migration 017, Addendum A.1): `ainext_app` may
+ * write a row only when `student_id` equals the principal or is NULL. So a row
+ * with a student id has to be written inside `withPrincipal(studentId, …)`, and
+ * an anonymous row has to be written with no principal at all. Getting that
+ * backwards does not throw anywhere a caller would notice — `emit` swallows its
+ * own failures by design — it just quietly stops recording the funnel the pilot
+ * verdict is computed from. Hence the branch below rather than a shared path.
  */
 
-import { pool } from "@/lib/db";
+import { pool, withPrincipal } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
 
 /** The PRD §13 taxonomy, narrowed to what this build actually has. */
 export type AnalyticsEvent =
-  // identity (Epic A signup is deferred — decisions.md Q5 — so these replace it)
+  // identity — signup is no longer deferred (ADR-0013); these two are emitted
+  // by the auth routes, and `student_selected` is what the retired picker left
+  // behind rather than something any surface still produces.
+  | "account_created"
+  | "email_verified"
   | "student_created"
   | "student_selected"
   // these two now have a durable row behind them (lib/sessions.ts, ADR-0015)
@@ -66,12 +78,27 @@ export async function emit({
   sessionRef = null,
   properties = {},
 }: EmitArgs): Promise<void> {
+  const sql = `INSERT INTO analytics_events
+                 (environment, event, student_id, session_id, session_ref, properties)
+               VALUES ($1, $2, $3, $4, $5, $6)`;
+  const values = [
+    ENVIRONMENT,
+    event,
+    studentId,
+    sessionId,
+    sessionRef,
+    JSON.stringify(properties),
+  ];
   try {
-    await pool.query(
-      `INSERT INTO analytics_events (environment, event, student_id, session_id, session_ref, properties)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
-      [ENVIRONMENT, event, studentId, sessionId, sessionRef, JSON.stringify(properties)]
-    );
+    // A DETACHED write: `emit` is called with `void` from paths that have
+    // already answered the student, and often after their unit of work has
+    // closed. It therefore opens its own — it never borrows a caller's client,
+    // because an analytics row must not be able to roll back an attempt.
+    if (studentId == null) {
+      await pool.query(sql, values);
+    } else {
+      await withPrincipal(studentId, (c) => c.query(sql, values));
+    }
   } catch (err) {
     // Analytics is observability, not behaviour. Log and move on.
     console.error(`[analytics] failed to emit ${event}:`, err);

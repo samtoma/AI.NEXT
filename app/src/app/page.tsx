@@ -1,14 +1,30 @@
 import Link from "next/link";
 import { getHomeStats } from "@/lib/queries";
-import { resolveStudentId } from "@/lib/student-context";
+import { resolveStudentContext } from "@/lib/student-context";
 import { INTERNAL_SURFACES } from "@/lib/env";
+import { NoorMark } from "@/components/NoorMark";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * `/` — the front door, and the only page that answers for both states.
+ *
+ * It is **not** redirected to `/signin`. Sign-in and signup have to be
+ * reachable from somewhere, and a product whose root bounces a first-time
+ * visitor to a form gives them nothing to decide with. So: signed out gets a
+ * welcome with the two doors, signed in gets the ledger it always had.
+ *
+ * The stats are not fetched at all when nobody is signed in. Every counter on
+ * this page except the corpus totals is *a* student's ledger — attempts, AI
+ * turns, the name under them — and with RLS in place an unprincipled read
+ * returns zeros, which would render as a real page full of honest-looking
+ * noughts. Not asking is clearer than asking and disbelieving the answer.
+ */
 export default async function Home() {
-  // the demo student selected by the (validated) cookie — see the switcher on
-  // /spine and /student; a demo affordance, never auth (PRD §3).
-  const stats = await getHomeStats(await resolveStudentId());
+  const me = await resolveStudentContext();
+  if (!me) return <SignedOutLanding />;
+
+  const stats = await getHomeStats(me.studentId);
 
   return (
     <main className="mx-auto max-w-[1400px] px-6">
@@ -173,6 +189,54 @@ export default async function Home() {
         </Link>
         )}
       </section>
+    </main>
+  );
+}
+
+/**
+ * What a signed-out visitor sees: what this is, and the two doors.
+ *
+ * One dominant action — "Start with Noor" — and a quieter way back in for
+ * somebody who already has an account. No stats, no graph, no pipeline: none
+ * of it means anything to a fourteen-year-old who has not signed up, and the
+ * numbers on the signed-in page belong to a student who is not here yet.
+ */
+function SignedOutLanding() {
+  return (
+    <main className="mx-auto flex w-full max-w-[36rem] flex-col items-center px-6 py-14 text-center min-[900px]:py-20">
+      <span className="mb-6 flex h-[88px] w-[88px] items-center justify-center rounded-full border-[3px] border-ink bg-card sticker-shadow">
+        <NoorMark className="h-14 w-14" />
+      </span>
+
+      <h1 className="font-display text-[2rem] font-extrabold leading-tight text-ink min-[900px]:text-[2.4rem]">
+        Stuck on maths? Noor sits with you.
+      </h1>
+      <p className="mt-4 max-w-[34ch] font-read text-[1.05rem] leading-relaxed text-ink-soft">
+        One lesson at a time, from your own syllabus — and a nudge instead of a
+        red cross when you get it wrong.
+      </p>
+
+      <Link
+        href="/signup"
+        className="play-pressable mt-9 flex w-full min-h-[56px] items-center justify-center rounded-[20px] border-[3px] border-ink px-6 font-display text-[1.15rem] font-bold sticker-shadow"
+        style={{
+          background: "var(--noor-action, #f0a22f)",
+          color: "var(--noor-on-action, #241f3d)",
+        }}
+      >
+        Start with Noor
+      </Link>
+
+      <p className="mt-6 text-[1rem] text-ink-soft">
+        Already have an account?{" "}
+        <Link
+          href="/signin"
+          className="font-display font-bold underline underline-offset-4"
+          style={{ color: "var(--play-text-link, #136386)" }}
+        >
+          Sign in
+        </Link>
+      </p>
     </main>
   );
 }

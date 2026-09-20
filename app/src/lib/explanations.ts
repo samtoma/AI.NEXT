@@ -14,7 +14,7 @@
  * see", not merely "how much exists".
  */
 
-import { pool } from "@/lib/db";
+import { pool, withPrincipal } from "@/lib/db";
 
 export type EntryType =
   | "worked_example"
@@ -115,15 +115,27 @@ export async function getLibraryEntries(
  *
  * This is the honest alternative to the failure mode the PRD names: inventing a
  * novel refutation and presenting it as settled.
+ *
+ * Two shapes here are forced by migration 017 rather than chosen:
+ *
+ *  - it opens its OWN unit of work. The caller (`/api/attempts`) fires this
+ *    with `void` after its transaction has committed, so there is no client to
+ *    borrow — and borrowing one would let a flag roll back a graded attempt.
+ *  - **no `RETURNING`.** `ainext_app` has INSERT and no SELECT on
+ *    `safety_flags`: a student writes a flag about themselves and can never
+ *    read one back. `RETURNING` needs SELECT, so asking for the id would turn
+ *    every gap into a logged failure.
  */
 export async function flagAuthoringGap(
   studentId: number,
   misconceptionId: string | null
 ): Promise<void> {
   try {
-    await pool.query(
-      `INSERT INTO safety_flags (student_id, flag_type) VALUES ($1, 'misconception_gap')`,
-      [studentId]
+    await withPrincipal(studentId, (c) =>
+      c.query(
+        `INSERT INTO safety_flags (student_id, flag_type) VALUES ($1, 'misconception_gap')`,
+        [studentId]
+      )
     );
     console.warn(
       `[library] authoring gap: no refutation for ${misconceptionId ?? "an undiagnosed error"}`

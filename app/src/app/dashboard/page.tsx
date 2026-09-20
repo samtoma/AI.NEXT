@@ -7,8 +7,8 @@ import {
   masteryLabel,
   pct,
 } from "@/lib/mastery";
-import { DemoStudentSwitcher } from "@/components/DemoStudentSwitcher";
 import { DashboardViewed } from "@/components/DashboardViewed";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -35,9 +35,17 @@ export const metadata = { title: "Where you stand — Noor" };
  * and no coral in this palette, because the persona's stated fear is looking
  * stupid. Every row still states the percentage AND the band name, and the
  * ramp is spelled out in a legend, so colour is never the only signal.
+ *
+ * Signed out → `/signin`, carrying where it was going. **Unverified is not
+ * gated here**: FR-2004 gates learning, and this page starts nothing, spends
+ * no AI turn and writes no attempt — it reports what the student has already
+ * done. An unconfirmed account simply finds it empty, which is the truth, and
+ * the shell's banner is already saying what is outstanding.
  */
 export default async function DashboardPage() {
-  const { studentId, studentName, students } = await resolveStudentContext();
+  const me = await resolveStudentContext();
+  if (!me) redirect("/signin?next=/dashboard");
+  const { studentId, studentName } = me;
   const topics = await getTopicBreakdown(studentId);
   const practised = topics.filter((t) => t.attempts > 0);
 
@@ -56,7 +64,6 @@ export default async function DashboardPage() {
             top. Nothing here is a score, and nobody else sees it.
           </p>
         </div>
-        <DemoStudentSwitcher students={students} currentId={studentId} visible />
       </header>
 
       {practised.length === 0 && (

@@ -1,4 +1,4 @@
-import { pool } from "@/lib/db";
+import { withMaint } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
 
 /**
@@ -24,6 +24,15 @@ import { ENVIRONMENT } from "@/lib/env";
  *     (constitution Principle VI).
  *   - PER STUDENT answers "what does one child cost for a month", which is
  *     the only figure a price can be built on.
+ *
+ * P2: move to the operator connection. Every query here is CROSS-STUDENT by
+ * construction — "what does one child cost" is a table with every child in it —
+ * so `ainext_app` would return an empty report rather than refuse, which is the
+ * worst possible failure for a cost page. Until the console has its own
+ * principal (`DATABASE_URL_OPERATOR`, plan A5) it runs under `withMaint`, which
+ * bypasses every policy. Named here so it is a decision with an owner, not a
+ * leftover: `/admin/cost` is reachable only behind `AINEXT_INTERNAL_SURFACES`
+ * and Cloudflare Access, and P2 replaces this with an authorised operator read.
  *
  * Every query is scoped to THIS environment. Principle XI forbids pooling
  * metrics across environments, and a cost figure that silently blends the
@@ -80,13 +89,15 @@ export async function getCostView(windowDays = 30): Promise<CostView> {
   const scopeAliased = `a.environment = $1 AND a.created_at >= now() - ($2 || ' days')::interval`;
   const args = [ENVIRONMENT, String(windowDays)];
 
-  const [totals, bySurface, byKind, perStudent] = await Promise.all([
-    pool.query(
+  // P2: move to the operator connection.
+  const [totals, bySurface, byKind, perStudent] = await withMaint((db) =>
+    Promise.all([
+    db.query(
       `SELECT count(*) AS turns, sum(cost_usd) AS cost
          FROM ai_interactions WHERE ${scope}`,
       args
     ),
-    pool.query(
+    db.query(
       `SELECT surface,
               count(*)                        AS turns,
               coalesce(sum(cost_usd), 0)      AS cost,
@@ -99,7 +110,7 @@ export async function getCostView(windowDays = 30): Promise<CostView> {
         GROUP BY surface ORDER BY cost DESC`,
       args
     ),
-    pool.query(
+    db.query(
       // A row written before migration 009 has no kind. It is reported as
       // "unattributed" rather than folded into 'chat', because quietly
       // attributing a cost to a function that may not have spent it is the
@@ -110,7 +121,7 @@ export async function getCostView(windowDays = 30): Promise<CostView> {
         GROUP BY 1 ORDER BY cost DESC`,
       args
     ),
-    pool.query(
+    db.query(
       `SELECT a.student_id,
               s.display_name,
               count(*) AS turns,
@@ -124,7 +135,8 @@ export async function getCostView(windowDays = 30): Promise<CostView> {
         ORDER BY cost DESC`,
       args
     ),
-  ]);
+    ])
+  );
 
   const totalTurns = num(totals.rows[0]?.turns);
 

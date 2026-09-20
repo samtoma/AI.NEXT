@@ -26,11 +26,22 @@
  * P1 (ADR-0012) replaces the default `pool` path with `withPrincipal`, so every
  * session row is created under the student it belongs to and under no other.
  * The `client` parameter is the seam that makes that a substitution rather than
- * a rewrite: callers already inside a transaction pass their client today.
+ * a rewrite: callers already inside a transaction pass their client today, and
+ * callers who are not get a unit of work of their own from `scoped`.
+ *
+ * `closeSession` gained a `studentId` for the same reason. It used to need only
+ * the session id, because `UPDATE sessions WHERE id = $1` was enough to find
+ * the row. Under the policy it is not: with no principal set that UPDATE
+ * matches nothing, `rowCount` is 0, and the function's own idempotence rule —
+ * "closing a closed session is a no-op, not an error" — would swallow it. Every
+ * sitting would then end up swept as `inactivity`, and FR-2302's "did she
+ * finish, or walk away" would have one answer for both. A silent wrong answer,
+ * from a change three files away; hence the extra argument.
  */
 
-import type { Pool, PoolClient } from "pg";
-import { pool } from "@/lib/db";
+import type { PoolClient } from "pg";
+import { withMaint } from "@/lib/db";
+import { scoped, type Db } from "@/lib/student-context";
 import { ENVIRONMENT } from "@/lib/env";
 import { emit } from "@/lib/analytics";
 import {
@@ -44,8 +55,6 @@ import {
 } from "@/lib/session-rules";
 
 export * from "@/lib/session-rules";
-
-type Db = Pool | PoolClient;
 
 export type SessionOpts = {
   /** as `ai_interactions.surface` — 'lesson_learn' | 'student_chat' | … */
@@ -116,52 +125,73 @@ export async function currentSession(
   opts: SessionOpts = {},
   client?: PoolClient
 ): Promise<{ sessionId: number; opened: boolean }> {
-  const db: Db = client ?? pool;
-  const plan = planForRequest(
-    await selectOpen(db, studentId),
-    kind,
-    new Date(),
-    opts.adoptOpen === true
-  );
-
-  if (plan.action === "reuse") {
-    await db.query(
-      `UPDATE sessions
-          SET last_seen_at = now(),
-              surface = coalesce(surface, $2),
-              lo_id   = coalesce(lo_id, $3)
-        WHERE id = $1 AND closed_at IS NULL`,
-      [plan.sessionId, opts.surface ?? null, opts.loId ?? null]
+  const outcome = await scoped(studentId, client, async (db) => {
+    const plan = planForRequest(
+      await selectOpen(db, studentId),
+      kind,
+      new Date(),
+      opts.adoptOpen === true
     );
-    return { sessionId: plan.sessionId, opened: false };
-  }
 
-  // The lazy half of the sweep: this student's stale session closes on their
-  // next interaction. `sweepIdleSessions` is the nightly half, for the students
-  // who do not come back.
-  if (plan.action === "close-then-open")
-    await closeSession(plan.sessionId, plan.reason, client);
+    if (plan.action === "reuse") {
+      await db.query(
+        `UPDATE sessions
+            SET last_seen_at = now(),
+                surface = coalesce(surface, $2),
+                lo_id   = coalesce(lo_id, $3)
+          WHERE id = $1 AND closed_at IS NULL`,
+        [plan.sessionId, opts.surface ?? null, opts.loId ?? null]
+      );
+      return { sessionId: plan.sessionId, opened: false };
+    }
 
-  let sessionId: number;
-  try {
-    sessionId = await insertSession(db, studentId, kind, opts);
-  } catch (err) {
-    // Lost the race for the one-open-session index (23505). Whoever won wrote a
-    // session for this student; adopt it rather than insisting on our own.
-    if ((err as { code?: string }).code !== "23505") throw err;
-    const open = await selectOpen(db, studentId);
-    if (!open) throw err;
-    return { sessionId: open.id, opened: false };
-  }
+    // The lazy half of the sweep: this student's stale session closes on their
+    // next interaction. `sweepIdleSessions` is the nightly half, for the
+    // students who do not come back. It runs on THIS unit's client so the close
+    // and the open are one transaction under one principal.
+    if (plan.action === "close-then-open")
+      await closeSessionOn(db, plan.sessionId, plan.reason);
 
-  void emit({
-    event: "session_started",
-    studentId,
-    sessionId: opts.clientKey ?? null,
-    sessionRef: sessionId,
-    properties: { session_id: sessionId, kind, surface: opts.surface ?? null },
+    // SAVEPOINT, because the insert below is EXPECTED to fail sometimes and the
+    // recovery is a further query. Losing the one-open-session race used to be
+    // survivable by simply asking again — on the bare pool a failed statement
+    // costs nothing. Inside a transaction it aborts the whole thing, and every
+    // later query on the client answers "current transaction is aborted"
+    // instead. Now that the default path IS a transaction, the retry needs a
+    // point to roll back to or it would turn the normal two-tabs case into a
+    // 500.
+    await db.query("SAVEPOINT session_insert");
+    try {
+      const sessionId = await insertSession(db, studentId, kind, opts);
+      await db.query("RELEASE SAVEPOINT session_insert");
+      return { sessionId, opened: true };
+    } catch (err) {
+      await db.query("ROLLBACK TO SAVEPOINT session_insert");
+      // Lost the race for the one-open-session index (23505). Whoever won wrote
+      // a session for this student; adopt it rather than insisting on our own.
+      if ((err as { code?: string }).code !== "23505") throw err;
+      const open = await selectOpen(db, studentId);
+      if (!open) throw err;
+      return { sessionId: open.id, opened: false };
+    }
   });
-  return { sessionId, opened: true };
+
+  // Outside the unit on purpose: `emit` opens its own, and an analytics row
+  // must not be able to roll back the session it is reporting.
+  if (outcome.opened) {
+    void emit({
+      event: "session_started",
+      studentId,
+      sessionId: opts.clientKey ?? null,
+      sessionRef: outcome.sessionId,
+      properties: {
+        session_id: outcome.sessionId,
+        kind,
+        surface: opts.surface ?? null,
+      },
+    });
+  }
+  return outcome;
 }
 
 /**
@@ -185,13 +215,24 @@ export async function currentSessionOrNull(
   }
 }
 
-/** Close explicitly. Idempotent: closing a closed session is a no-op, not an error. */
+/**
+ * Close explicitly. Idempotent: closing a closed session is a no-op, not an
+ * error — see the header for why that rule made `studentId` mandatory.
+ */
 export async function closeSession(
+  studentId: number,
   sessionId: number,
   reason: CloseReason,
   client?: PoolClient
 ): Promise<void> {
-  const db: Db = client ?? pool;
+  await scoped(studentId, client, (db) => closeSessionOn(db, sessionId, reason));
+}
+
+async function closeSessionOn(
+  db: Db,
+  sessionId: number,
+  reason: CloseReason
+): Promise<void> {
   // An inactivity close is stamped at `last_seen_at`, not at now(): the sitting
   // ended when the student stopped, not when we noticed. Otherwise every swept
   // session reports a duration padded by however long the sweep took to run.
@@ -216,14 +257,25 @@ export async function closeSession(
   });
 }
 
-/** Close every session idle longer than the window. Called lazily and nightly. */
+/**
+ * Close every session idle longer than the window. The nightly half of the
+ * sweep, for the students who do not come back.
+ *
+ * It is the one function here that is deliberately CROSS-STUDENT — that is what
+ * a sweep is — so it runs under `withMaint`, not under a principal. On the
+ * application connection it would match zero rows and report success, which is
+ * the worst of both: no sessions closed, no error, and every abandoned sitting
+ * left open forever. A scheduled job, never a request path.
+ */
 export async function sweepIdleSessions(now: Date = new Date()): Promise<number> {
-  const res = await pool.query(
-    `UPDATE sessions
-        SET closed_at = greatest(last_seen_at, opened_at), close_reason = 'inactivity'
-      WHERE closed_at IS NULL AND last_seen_at <= $1
-      RETURNING id, student_id, kind, opened_at, closed_at`,
-    [idleCutoff(now)]
+  const res = await withMaint((c) =>
+    c.query(
+      `UPDATE sessions
+          SET closed_at = greatest(last_seen_at, opened_at), close_reason = 'inactivity'
+        WHERE closed_at IS NULL AND last_seen_at <= $1
+        RETURNING id, student_id, kind, opened_at, closed_at`,
+      [idleCutoff(now)]
+    )
   );
   for (const r of res.rows) {
     const closed = closedRow(r);

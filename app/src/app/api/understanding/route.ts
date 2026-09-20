@@ -1,6 +1,8 @@
 import { spawn } from "node:child_process";
 import { NextResponse } from "next/server";
-import { pool } from "@/lib/db";
+import { withPrincipal } from "@/lib/db";
+import { AuthError, requireStudent } from "@/lib/auth/principal";
+import { mapRlsError } from "@/lib/rls-errors";
 import { ENVIRONMENT } from "@/lib/env";
 import {
   getLessonData,
@@ -9,7 +11,6 @@ import {
 } from "@/lib/lesson";
 import { deriveMasteryStage, learnOpeningFrame } from "@/lib/checkin";
 import { spineKeyOf } from "@/lib/subjects";
-import { resolveStudentId } from "@/lib/student-context";
 import { closeSession, currentSessionOrNull } from "@/lib/sessions";
 import { gradeLabel } from "@/lib/profile";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
@@ -21,6 +22,10 @@ import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
  * to the LLM asking for STRICT JSON {score, verdict, strengths, gaps,
  * next_step}; parses (one retry on invalid output), inserts the row into
  * understanding_checks, and logs cost to ai_interactions.
+ *
+ * Two units of work with the model between them (research R7). Up to two CLI
+ * calls of ninety seconds each sit in the gap, and a connection held across
+ * that is three minutes of a pool of twenty spent on one rating.
  */
 
 export const dynamic = "force-dynamic";
@@ -181,23 +186,62 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "empty transcript" }, { status: 400 });
   }
 
-  // Which demo student this comprehension check belongs to — a cookie,
-  // validated against the students table, defaulting to Omar. DEMO
-  // AFFORDANCE, NOT AUTH: auth is a PRD §3 non-goal for the MVP
-  // (see lib/demo-student.ts).
-  const studentId = await resolveStudentId();
+  let me;
+  try {
+    me = await requireStudent();
+  } catch (err) {
+    if (err instanceof AuthError) {
+      return NextResponse.json({ error: err.code }, { status: err.status });
+    }
+    throw err;
+  }
+  // FR-2004: rating a lesson writes a mastery-adjacent record about a named
+  // child. That is learning, and it waits for a confirmed address.
+  if (!me.emailVerified) {
+    return NextResponse.json({ error: "email_unverified" }, { status: 403 });
+  }
 
-  const data = await getLessonData(sanitizeLessonSlug(body.lesson), studentId);
-
-  // The lesson's own session (ADR-0015). The client does not send `chatSession`
+  // UNIT ONE — the lesson slice and the sitting, before any model call.
+  //
+  // The lesson's own session (ADR-0015): the client does not send `chatSession`
   // here at all — which is exactly why the check could never be tied to the
-  // lesson that produced it — so the session is found server-side by kind:
+  // lesson that produced it — so the session is found server-side by kind, and
   // this is the same sitting /api/ask has been writing turns into.
-  const sessionId = await currentSessionOrNull(
-    studentId,
-    mode === "review" ? "lesson_review" : "lesson_learn",
-    { surface: "understanding_check", loId: lessonAnchorLo(data), clientKey: chatSession || undefined }
-  );
+  const studentId = me.studentId;
+  let data: Awaited<ReturnType<typeof getLessonData>>;
+  let sessionId: number | null;
+  try {
+    ({ data, sessionId } = await withPrincipal(studentId, async (client) => {
+      const d = await getLessonData(
+        sanitizeLessonSlug(body.lesson),
+        studentId,
+        client
+      );
+      return {
+        data: d,
+        sessionId: await currentSessionOrNull(
+          studentId,
+          mode === "review" ? "lesson_review" : "lesson_learn",
+          {
+            surface: "understanding_check",
+            loId: lessonAnchorLo(d),
+            clientKey: chatSession || undefined,
+          },
+          client
+        ),
+      };
+    }));
+  } catch (err) {
+    const denied = await mapRlsError(err, {
+      req,
+      actorAccountId: me.accountId,
+      targetStudentId: studentId,
+      resource: "api/understanding",
+    });
+    if (denied) return denied;
+    console.error("understanding: pre-rating reads failed:", err);
+    return NextResponse.json({ error: "internal error" }, { status: 500 });
+  }
 
   const loLines = data.los
     .map((l) => `- ${l.id} "${l.label}": ${l.description ?? ""}`)
@@ -270,71 +314,93 @@ ${transcriptText}`;
       );
     }
 
-    const ins = await pool.query(
-      `INSERT INTO understanding_checks
-         (student_id, lo_id, session_id, mode, score, verdict, strengths, gaps,
-          next_step, turns, subject)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
-       RETURNING id`,
-      [
-        studentId,
-        lessonAnchorLo(data),
-        sessionId,
-        mode,
-        rating.score,
-        rating.verdict,
-        JSON.stringify(rating.strengths),
-        JSON.stringify(rating.gaps),
-        rating.next_step,
-        turns,
-        // the subject key stored on the rating row: an EXACT registry
-        // mapping, not a two-armed guess that filed everything else as maths
-        spineKeyOf(data.subject),
-      ]
-    );
-    const id = Number(ins.rows[0].id);
-
-    // cost instrumentation — every LLM call is logged (PRD hard requirement)
-    try {
-      await pool.query(
-        `INSERT INTO ai_interactions
-           (student_id, surface, turn_index, user_message, assistant_message,
-            grounding, citations, model, input_tokens, output_tokens,
-            cost_usd, latency_ms, environment, surface_kind, session_id)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding',$14)`,
+    // UNIT TWO — the rating and its cost row, after the model has answered and
+    // with no connection held while it did.
+    const id = await withPrincipal(studentId, async (client) => {
+      const ins = await client.query(
+        `INSERT INTO understanding_checks
+           (student_id, lo_id, session_id, mode, score, verdict, strengths, gaps,
+            next_step, turns, subject)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+         RETURNING id`,
         [
           studentId,
-          "understanding_check",
-          1,
-          `[rate ${mode} session — ${transcript.length} transcript lines]`,
-          rawOut.slice(0, 4000),
-          JSON.stringify({
-            chat_session: chatSession,
-            mode,
-            lesson: data.slug,
-            lo_ids: data.los.map((l) => l.id),
-            check_id: id,
-          }),
-          JSON.stringify([]),
-          MODEL,
-          totalIn,
-          totalOut,
-          totalCost,
-          totalMs,
-          ENVIRONMENT,
+          lessonAnchorLo(data),
           sessionId,
+          mode,
+          rating.score,
+          rating.verdict,
+          JSON.stringify(rating.strengths),
+          JSON.stringify(rating.gaps),
+          rating.next_step,
+          turns,
+          // the subject key stored on the rating row: an EXACT registry
+          // mapping, not a two-armed guess that filed everything else as maths
+          spineKeyOf(data.subject),
         ]
       );
-    } catch (e) {
-      console.error("understanding: failed to log ai_interaction:", e);
-    }
+      const checkId = Number(ins.rows[0].id);
+
+      // Cost instrumentation — every LLM call is logged (PRD hard requirement).
+      // Behind a SAVEPOINT because the rule this code already stated is that
+      // instrumentation is observability, not behaviour: it used to be a
+      // separate statement in its own try/catch, and inside one transaction a
+      // bare failure here would roll back the rating the student is waiting to
+      // read. The savepoint keeps the old degradation with the new atomicity.
+      await client.query("SAVEPOINT cost_row");
+      try {
+        await client.query(
+          `INSERT INTO ai_interactions
+             (student_id, surface, turn_index, user_message, assistant_message,
+              grounding, citations, model, input_tokens, output_tokens,
+              cost_usd, latency_ms, environment, surface_kind, session_id)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding',$14)`,
+          [
+            studentId,
+            "understanding_check",
+            1,
+            `[rate ${mode} session — ${transcript.length} transcript lines]`,
+            rawOut.slice(0, 4000),
+            JSON.stringify({
+              chat_session: chatSession,
+              mode,
+              lesson: data.slug,
+              lo_ids: data.los.map((l) => l.id),
+              check_id: checkId,
+            }),
+            JSON.stringify([]),
+            MODEL,
+            totalIn,
+            totalOut,
+            totalCost,
+            totalMs,
+            ENVIRONMENT,
+            sessionId,
+          ]
+        );
+        await client.query("RELEASE SAVEPOINT cost_row");
+      } catch (e) {
+        await client.query("ROLLBACK TO SAVEPOINT cost_row");
+        console.error("understanding: failed to log ai_interaction:", e);
+      }
+      return checkId;
+    });
 
     // The rating IS the end of the lesson — the client discards its resume key
     // on the same response (LessonSession.tsx:568). Closing here is the only
     // place `completed` is ever written; without it every sitting would end up
     // swept as `inactivity`, and FR-2302's "did she finish, or walk away"
     // would have one answer for both.
-    if (sessionId !== null) await closeSession(sessionId, "completed");
+    //
+    // Its own unit, deliberately: a failure to close must not undo the rating
+    // the student is waiting to read.
+    if (sessionId !== null) {
+      try {
+        await closeSession(studentId, sessionId, "completed");
+      } catch (e) {
+        console.error("understanding: failed to close the session:", e);
+      }
+    }
 
     const check: UnderstandingCheck = {
       id,
@@ -348,6 +414,13 @@ ${transcriptText}`;
     };
     return NextResponse.json({ check, costUsd: totalCost });
   } catch (err) {
+    const denied = await mapRlsError(err, {
+      req,
+      actorAccountId: me.accountId,
+      targetStudentId: studentId,
+      resource: "api/understanding",
+    });
+    if (denied) return denied;
     console.error("understanding POST failed:", err);
     return NextResponse.json(
       { error: "rating backend unavailable" },

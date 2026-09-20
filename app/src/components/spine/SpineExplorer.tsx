@@ -16,8 +16,6 @@ import { QuestionModal } from "./QuestionModal";
 import { AskSpineDock } from "@/components/chat/AskSpineDock";
 import type { CiteInfo } from "@/components/chat/CitationChip";
 import { pct } from "@/lib/mastery";
-import { DemoStudentSwitcher } from "@/components/DemoStudentSwitcher";
-import { DEFAULT_STUDENT_ID, type DemoStudent } from "@/lib/demo-student";
 
 const fmtDate = (iso: string) =>
   iso
@@ -27,17 +25,7 @@ const fmtDate = (iso: string) =>
       })
     : "—";
 
-export function SpineExplorer({
-  data,
-  demoStudents = [],
-  demoStudentId = DEFAULT_STUDENT_ID,
-}: {
-  data: SpineData;
-  /** the seeded demo cast + which one is on screen — the switcher behind the
-   *  triple-tap on the student chip. A demo affordance, never auth. */
-  demoStudents?: DemoStudent[];
-  demoStudentId?: number;
-}) {
+export function SpineExplorer({ data }: { data: SpineData }) {
   const router = useRouter();
   const [asOf, setAsOf] = useState<AsOf>("today");
   const [subjectFilter, setSubjectFilter] = useState<"all" | SpineSubject>("all");
@@ -285,21 +273,18 @@ export function SpineExplorer({
             />
             <span className="font-mono text-[10px] text-ink-faint">1</span>
           </div>
-          {/* triple-tap this chip = the hidden demo student switcher */}
-          <DemoStudentSwitcher
-            students={demoStudents}
-            currentId={demoStudentId}
-          >
-            <span className="chip">
-              {data.studentName} · avg{" "}
-              <strong
-                className="font-semibold text-ink transition-all duration-500"
-                key={asOf}
-              >
-                {pct(avg(asOf === "today" ? "current" : "baseline"))}
-              </strong>
-            </span>
-          </DemoStudentSwitcher>
+          {/* Whose graph this is. It used to be a triple-tap door onto the
+              demo-student switcher; the cast is retired and the student now
+              comes from the session, so the chip is just a label again. */}
+          <span className="chip">
+            {data.studentName} · avg{" "}
+            <strong
+              className="font-semibold text-ink transition-all duration-500"
+              key={asOf}
+            >
+              {pct(avg(asOf === "today" ? "current" : "baseline"))}
+            </strong>
+          </span>
         </div>
       </section>
 

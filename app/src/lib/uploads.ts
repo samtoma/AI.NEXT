@@ -15,7 +15,7 @@ import { spawn } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
-import { pool } from "@/lib/db";
+import { scoped, type Db } from "@/lib/student-context";
 import { ENVIRONMENT } from "@/lib/env";
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10 MB
@@ -41,11 +41,16 @@ function uploadRoot(): string {
 }
 
 /** Uploads used today, for the per-student cap (FR-047). */
-export async function uploadsToday(studentId: number): Promise<number> {
-  const res = await pool.query(
-    `SELECT count(*) AS n FROM uploads
-      WHERE student_id = $1 AND created_at > now() - interval '1 day'`,
-    [studentId]
+export async function uploadsToday(
+  studentId: number,
+  c?: Db
+): Promise<number> {
+  const res = await scoped(studentId, c, (db) =>
+    db.query(
+      `SELECT count(*) AS n FROM uploads
+        WHERE student_id = $1 AND created_at > now() - interval '1 day'`,
+      [studentId]
+    )
   );
   return Number(res.rows[0].n);
 }
@@ -57,17 +62,20 @@ export async function storeUpload(
    *  string kept beside it for the transition — the two must never be joined. */
   sessionRef: number | null,
   fileType: AcceptedType,
-  bytes: Buffer
+  bytes: Buffer,
+  c?: Db
 ): Promise<number> {
   const dir = path.join(uploadRoot(), String(studentId));
   await mkdir(dir, { recursive: true });
   const file = path.join(dir, `${randomUUID()}${ACCEPTED[fileType]}`);
   await writeFile(file, bytes);
 
-  const res = await pool.query(
-    `INSERT INTO uploads (student_id, session_id, session_ref, file_type, storage_path, parse_status)
-     VALUES ($1, $2, $3, $4, $5, 'pending') RETURNING id`,
-    [studentId, sessionId, sessionRef, fileType, file]
+  const res = await scoped(studentId, c, (db) =>
+    db.query(
+      `INSERT INTO uploads (student_id, session_id, session_ref, file_type, storage_path, parse_status)
+       VALUES ($1, $2, $3, $4, $5, 'pending') RETURNING id`,
+      [studentId, sessionId, sessionRef, fileType, file]
+    )
   );
   return Number(res.rows[0].id);
 }
@@ -173,18 +181,23 @@ function runParse(filePath: string): Promise<ParseOutcome> {
  */
 export async function parseUpload(
   uploadId: number,
+  /** Whose upload this is. Passed in, never re-derived — the row is only
+   *  readable under this principal in the first place (FR-2105). */
+  studentId: number,
   /** Passed in, never re-derived: this runs AFTER the response, and by then the
    *  student's open session may have been superseded or swept. The ledger row
    *  belongs to the session that took the photo (ADR-0015, FR-2309). */
   sessionRef: number | null = null
 ): Promise<ParseStatus> {
-  const res = await pool.query(
-    `SELECT student_id, storage_path FROM uploads WHERE id = $1`,
-    [uploadId]
+  // Unit one: find the file. Short, and closed before the model is spawned.
+  const res = await scoped(studentId, undefined, (db) =>
+    db.query(`SELECT storage_path FROM uploads WHERE id = $1`, [uploadId])
   );
   if (res.rowCount === 0) return "failed";
-  const { student_id: studentId, storage_path: filePath } = res.rows[0];
+  const filePath = res.rows[0].storage_path as string;
 
+  // …the model call happens with NO connection held. Ninety seconds of a
+  // borrowed client is nearly five per cent of the pool, for one photograph.
   const started = Date.now();
   let outcome: ParseOutcome;
   try {
@@ -194,29 +207,35 @@ export async function parseUpload(
     outcome = { status: "failed", text: null };
   }
 
-  await pool.query(
-    `UPDATE uploads SET parse_status = $2, parsed_text = $3 WHERE id = $1`,
-    [uploadId, outcome.status, outcome.text]
+  // Unit two: the outcome the student is waiting on.
+  await scoped(studentId, undefined, (db) =>
+    db.query(
+      `UPDATE uploads SET parse_status = $2, parsed_text = $3 WHERE id = $1`,
+      [uploadId, outcome.status, outcome.text]
+    )
   );
 
   // Metered as its own surface_kind so image-token cost never hides inside the
-  // teaching figure (Principle VI, research.md R2).
+  // teaching figure (Principle VI, research.md R2). Its own unit, so a failed
+  // cost row cannot undo the parse status above.
   try {
-    await pool.query(
+    await scoped(studentId, undefined, (db) =>
+      db.query(
       `INSERT INTO ai_interactions
          (student_id, surface, turn_index, user_message, assistant_message,
           grounding, citations, model, input_tokens, output_tokens,
           cost_usd, latency_ms, environment, surface_kind, session_id)
        VALUES ($1,'upload_parse',1,$2,$3,'{}','[]',$4,0,0,0,$5,$6,'upload_parse',$7)`,
-      [
-        studentId,
-        `[upload ${uploadId}]`,
-        outcome.text?.slice(0, 4000) ?? `[${outcome.status}]`,
-        MODEL,
-        Date.now() - started,
-        ENVIRONMENT,
-        sessionRef,
-      ]
+        [
+          studentId,
+          `[upload ${uploadId}]`,
+          outcome.text?.slice(0, 4000) ?? `[${outcome.status}]`,
+          MODEL,
+          Date.now() - started,
+          ENVIRONMENT,
+          sessionRef,
+        ]
+      )
     );
   } catch (e) {
     console.error("[uploads] failed to log parse cost:", e);
@@ -228,11 +247,18 @@ export async function parseUpload(
 /** Parsed text for a given upload, for the retrieval layer to ground on. */
 export async function getParsedUpload(
   uploadId: number,
-  studentId: number
+  studentId: number,
+  c?: Db
 ): Promise<{ status: ParseStatus; text: string | null } | null> {
-  const res = await pool.query(
-    `SELECT parse_status, parsed_text FROM uploads WHERE id = $1 AND student_id = $2`,
-    [uploadId, studentId]
+  // `student_id = $2` is now belt and braces: the policy already narrows this
+  // to the principal, and a row belonging to anybody else is simply invisible.
+  // Invisible is exactly the answer the route wants — it returns 404 for "not
+  // yours" and for "no such id" alike, and cannot tell the caller which.
+  const res = await scoped(studentId, c, (db) =>
+    db.query(
+      `SELECT parse_status, parsed_text FROM uploads WHERE id = $1 AND student_id = $2`,
+      [uploadId, studentId]
+    )
   );
   if (res.rowCount === 0) return null;
   return {

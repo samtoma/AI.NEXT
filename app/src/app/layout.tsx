@@ -12,7 +12,9 @@ import Link from "next/link";
 import "./globals.css";
 import { NavLinks } from "@/components/NavLinks";
 import { NoorMark } from "@/components/NoorMark";
+import { VerificationBanner } from "@/components/auth/VerificationBanner";
 import { IS_MVP1, INTERNAL_SURFACES } from "@/lib/env";
+import { resolveStudentContext } from "@/lib/student-context";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -102,6 +104,11 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
   adjustFontFallback: false,
 });
 
+// The root layout is async and reads cookies (via `currentPrincipal()`), so no
+// segment under it can be prerendered — `/_not-found` otherwise is, throwing at
+// build time and baking a permanently signed-out shell onto every 404.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = IS_MVP1
   ? {
       title: "Noor — study with what you already have",
@@ -114,11 +121,31 @@ export const metadata: Metadata = IS_MVP1
         "Curriculum-grounded adaptive tutor built on an agent-native data spine.",
     };
 
-export default function RootLayout({
+/**
+ * The shell knows who is here — and the two consequences of that.
+ *
+ * `resolveStudentContext()` is the single seam for "which student is this
+ * request", so the shell asks it rather than reading a cookie or holding its
+ * own copy of the rule. Anonymous is `null`, which is an answer, not an error:
+ * the nav drops the student links and offers the two doors that work.
+ *
+ * The layout is now async and principal-dependent, so **every route renders
+ * dynamically**. That is not a regression to mourn — a shell that says "signed
+ * in as Omar" is the last thing that should ever come off a static cache, and
+ * the student surfaces were already `force-dynamic`.
+ *
+ * The verification banner lives here, above `children`, so it is on every
+ * screen for as long as it is true (FR-2004). Verification gates learning, not
+ * signing in: the banner is what carries that state everywhere the student
+ * goes instead of a modal she has to dismiss on the one screen that blocks.
+ */
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const student = await resolveStudentContext();
+
   // data-ds is the whole switch: globals.css redefines every semantic token
   // under [data-ds="noor"], so the comparison build reskins without a single
   // component being forked, and the frozen baseline (attribute absent) renders
@@ -146,9 +173,15 @@ export default function RootLayout({
                 {IS_MVP1 ? "Prep 3 · Mathematics" : "Tutor PoC · Data Spine"}
               </span>
             </Link>
-            <NavLinks mvp1={IS_MVP1} internal={INTERNAL_SURFACES} />
+            <NavLinks
+              mvp1={IS_MVP1}
+              internal={INTERNAL_SURFACES}
+              signedIn={student !== null}
+              studentName={student?.studentName ?? null}
+            />
           </div>
         </header>
+        {student !== null && !student.emailVerified && <VerificationBanner />}
         <div className="relative z-10 flex-1">{children}</div>
         <footer className="relative z-10 border-t border-line-soft">
           <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">

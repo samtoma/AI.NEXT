@@ -6,7 +6,6 @@ import { SourceStage } from "@/components/pipeline/SourceStage";
 import { SchemaStage } from "@/components/pipeline/SchemaStage";
 import { ReviewStage } from "@/components/pipeline/ReviewStage";
 import { GraphStage } from "@/components/pipeline/GraphStage";
-import { ContextStage } from "@/components/pipeline/ContextStage";
 
 export const dynamic = "force-dynamic";
 
@@ -229,7 +228,6 @@ export default async function PipelinePage() {
     syllabusVersion,
     questionStats,
     reviewQuestion,
-    aiTurn,
   } = data;
 
   return (
@@ -473,22 +471,12 @@ export default async function PipelinePage() {
           />
         </Stage>
 
-        {aiTurn && (
-          <Stage
-            no="05"
-            name="Context assembly · the payoff"
-            headline={
-              <>
-                How the tutor reads the whole book in{" "}
-                {aiTurn.inputTokens.toLocaleString("en-US")} tokens.
-              </>
-            }
-            caption="Context is assembled per student, per session: mastery state selects the neighborhood; the graph selects the pages. Hundreds of pages, milliseconds, receipts."
-            delay={480}
-          >
-            <ContextStage turn={aiTurn} los={los} />
-          </Stage>
-        )}
+        {/* Stage 05 ("Context assembly") is deliberately absent — FR-2104. It
+            rendered the most recent tutor turn written by ANY student: their
+            prompt slice, their tokens, their cost, to whoever opened this page.
+            Fine with one demo student, one student's conversation shown to
+            another with accounts. The read is gone from lib/pipeline-queries.ts
+            too, not merely unrendered. */}
       </div>
 
       {/* scaling strip */}

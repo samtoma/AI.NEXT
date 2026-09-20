@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 import { getSpineData } from "@/lib/queries";
 import { resolveStudentContext } from "@/lib/student-context";
 import { SpineExplorer } from "@/components/spine/SpineExplorer";
@@ -8,17 +10,22 @@ export const metadata = {
   title: "The Evidence Walk — Noor Tutor PoC",
 };
 
+/**
+ * /spine — the curriculum graph, coloured by the signed-in student's mastery.
+ *
+ * Signed out → `/signin`: the colours on this graph are one student's record,
+ * and there is no anonymous version of it to show.
+ *
+ * **Unverified is deliberately NOT gated.** FR-2004 gates learning, and this
+ * is content: a map of what the syllabus contains and what she has met so far.
+ * Nothing here starts a lesson, spends an AI turn or writes an attempt. A
+ * student who is waiting on an email should be able to look around the thing
+ * she just signed up for.
+ */
 export default async function SpinePage() {
-  // Which demo student's mastery colours the graph. Cookie-selected and
-  // validated against the students table; falls back to the default student.
-  // A demo affordance, NOT auth (auth is a PRD §3 non-goal for the MVP).
-  const { studentId, students } = await resolveStudentContext();
-  const data = await getSpineData(studentId);
-  return (
-    <SpineExplorer
-      data={data}
-      demoStudents={students}
-      demoStudentId={studentId}
-    />
-  );
+  const me = await resolveStudentContext();
+  if (!me) redirect("/signin?next=/spine");
+
+  const data = await getSpineData(me.studentId);
+  return <SpineExplorer data={data} />;
 }
