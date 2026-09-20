@@ -116,25 +116,45 @@ function PlayCheckIn({
               {/* the mastery ramp — 4 segments, filled left to right from the
                   shared 5-stage ramp. Segment 0 lit is amber, never grey;
                   grey is only ever "not yet". Never a number, percent or
-                  grade anywhere near it. */}
+                  grade anywhere near it (feedback #42).
+
+                  FR-1003 is what shapes the rest of this block. Dropping the
+                  percentage is fine; dropping every non-colour signal is not,
+                  and the first cut of this card did both. Measured, lit
+                  against unlit ran 1.84:1 to 2.84:1 — all under the 3:1 floor
+                  for graphical objects — and adjacent lit bands are 1.02:1
+                  apart, so in greyscale or with low vision you cannot count
+                  which segments are lit. The aria-label covered the screen
+                  reader and nothing covered the other two channels the
+                  requirement names.
+
+                  So the ramp carries the value three ways now, not one: the
+                  ink outline makes lit-vs-unlit a fill-vs-empty difference
+                  that survives greyscale, the band name states it in words,
+                  and the aria-label keeps the screen-reader path. */}
               <div
                 role="img"
-                aria-label={`Progress: ${masteryStage} of 4 steps`}
+                aria-label={`Progress: ${MASTERY_LEGEND[masteryStage].band}, ${masteryStage} of 4 steps`}
                 className="mt-4 flex gap-1.5"
               >
                 {[0, 1, 2, 3].map((i) => (
                   <span
                     key={i}
-                    className="h-2.5 flex-1 rounded-full"
+                    className="h-2.5 flex-1 rounded-full border-[1.5px] border-ink"
                     style={{
                       background:
                         i < masteryStage
                           ? MASTERY_LEGEND[i + 1].hex
-                          : MASTERY_LEGEND[0].hex,
+                          : "transparent",
                     }}
                   />
                 ))}
               </div>
+              {/* The named band — the non-colour signal FR-1003 requires,
+                  and the one number-free way to say where she is. */}
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-soft">
+                {MASTERY_LEGEND[masteryStage].band}
+              </p>
 
               {/* the one gap — the single named sub-skill, or nothing at all */}
               {weakestSubskill && (
