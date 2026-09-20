@@ -62,14 +62,104 @@ Everything here is required before a real student sees this.
 
 1. **Safety (Phase 11)** — unblocked the moment T067 lands. FR-601, FR-602.
 2. **Parent surface** — FR-501, FR-502 are OPEN and are in the PRD's scope.
-3. **Measurement** — SC-003, SC-005, SC-006 have their instrumentation and no
-   report that consumes it. `SC-005` is the one that matters: the PRD calls the
-   comprehension-to-retrieval conversion rate the single test of whether the core
-   bet works, and nothing computes it. Per ADR-0010 this is now a per-solution
-   measure, not a cross-build comparison (T135 — slice by `modality` too, now
-   that widgets move mastery).
-4. **Close the review loop on widgets** — T122. Twenty widget questions are
+3. **The teaching evaluation harness** — see the section below. It moved up the
+   list on 2026-09-20 because it now blocks five named requirements
+   (`FR-209`…`FR-213`) rather than an abstraction, and because `SC-005` turns
+   out to be **mis-instrumented**, not merely unbuilt.
+4. **Measurement** — SC-003, SC-006 have their instrumentation and no report
+   that consumes it. Per ADR-0010 these are per-solution measures, not
+   cross-build comparisons (T135 — slice by `modality` too, now that widgets
+   move mastery).
+5. **Close the review loop on widgets** — T122. Twenty widget questions are
    queued for review and the review page cannot render a construction.
+
+### The teaching evaluation harness **[ADDED 2026-09-20]**
+
+**The problem, stated plainly.** Change a function and `npm test` says pass or
+fail. Change *how the tutor teaches* and nothing says anything at all. The only
+way to know whether the tutor now asks before it explains is for a person to
+read a lesson transcript and form an opinion. That does not scale, does not
+repeat, and does not run in CI — so a regression in teaching quality is
+invisible until somebody happens to notice it in a demo.
+
+That is not hypothetical any more. `PDR1-0-v0.4.0` shipped **FR-209**…**FR-213**,
+five requirements describing how the tutor teaches, and **all five are BUILT and
+none can be promoted to VERIFIED**, because promotion needs evidence this build
+cannot produce. The same gap is why feedback [#20](https://github.com/samtoma/AI.NEXT/issues/20)
+(language mixing) and [#22](https://github.com/samtoma/AI.NEXT/issues/22)
+(question drift) stay open after a fix landed for each.
+
+**A finding that changes the shape of this work.** `SC-005` — the
+comprehension-to-retrieval conversion the PRD calls the single test of the core
+bet — is not merely unmeasured. It is **mis-instrumented**, and computing it from
+today's events would produce a plausible wrong number:
+
+| Event | Fires | Should mean |
+|---|---|---|
+| `explanation_delivered` | only when a **refutation** is served — a wrong answer matching a known misconception | every explanation the tutor gives |
+| `retrieval_attempt_submitted` | on **every** graded attempt | the retrieval that follows an explanation |
+
+The ratio of those two, as they fire today, is *all attempts over refutations
+only*. It is not a conversion rate and nothing should be decided from it.
+
+**Why FR-212 makes this solvable.** `SC-005` needs two identifiable moments: the
+tutor explained, and the student retrieved. The second never existed as a
+distinct thing — retrieval was any graded answer. FR-212 now **requires** a
+lesson to end on a retrieval from memory, which creates exactly that moment. Emit
+it, fix `explanation_delivered` to fire on every explanation, and the conversion
+becomes computable for the first time.
+
+#### Four layers, cheapest first
+
+**1. Structural checks — no model, no cost, runs in CI.** More of FR-209…213 is
+machine-checkable from a transcript than it first appears, because the protocol
+already marks its own structure:
+
+| Requirement | Structural check |
+|---|---|
+| FR-213 explain in steps | count `{{beat}}` markers inside a multi-step explanation |
+| FR-210 open question is used | a message ending in a question with no interactive directive |
+| FR-212 ends on retrieval | the last message before `{{finish_lesson}}` is an ask, not a recap |
+| FR-211 asks for the working | at least one "how did you get there" ask per objective |
+
+This is an ordinary test suite over recorded transcripts. It catches regressions
+for free and it is where to start.
+
+**2. Lesson fixtures — the recordings the checks run against.** A harness that
+drives a scripted student (fixed profile, fixed lesson, scripted answers) end to
+end against the real tutor and stores the transcript. Deterministic inputs mean
+two runs are comparable. Six to ten fixtures covers the cases that matter: a
+never-attempted lesson, a partly-mastered one, a wrong answer with a known
+misconception, a partial answer with no final result, and a "still confused"
+signal.
+
+**3. LLM-as-judge — only for what structure cannot see.** FR-209's *did it elicit
+before explaining* and FR-211's *did it work with the partial answer* need
+judgement. Rubric-scored, structured output, one call per transcript.
+
+> **The trap, and this repository has already been caught by it once.** A model
+> grading model output reproduces the failure mode it is meant to catch — that is
+> exactly why `T107` insists a **human** performs the 10% content review, after a
+> model review produced a false rejection on a standard-deviation item. So the
+> judge must itself be validated: a held-out set of human-labelled transcripts,
+> and a measured agreement rate. **An unvalidated judge is not evidence, it is a
+> second opinion from the same kind of thing that wrote the lesson.**
+
+**4. Fix SC-005's instrumentation** — emit the FR-212 retrieval moment as its own
+event, and make `explanation_delivered` fire on every explanation rather than
+only on refutations. Separate from layers 1–3 and independently useful: it is
+what turns the core bet from an opinion into a number.
+
+#### What it unblocks
+
+Five requirements (FR-209…FR-213) become promotable. `SC-005` becomes computable.
+Feedback #20 and #22 become closeable. And every future change to teaching
+behaviour — which is the product — stops shipping unverifiable.
+
+**Sequencing.** Layers 1 and 2 are engineering and need no decision. Layer 3
+needs a decision on who labels the human-graded set, which is the same question
+as `T107` and probably the same person. Layer 4 is small and can go first if a
+number is wanted sooner than a guarantee.
 
 ### Two requirements that are stale, not unbuilt
 

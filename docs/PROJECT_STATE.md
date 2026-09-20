@@ -29,13 +29,20 @@ Ten fixed in this pass, on top of the seven in v0.3.0. The three worth knowing:
 
 **Three things this pass admits, and they matter more than the fixes:**
 
-1. **Access gating and the Socratic protocol have no requirement.** Both shipped, neither
-   in `spec.md`, so neither can carry a traceability row without being an orphan CI
-   rejects. §9 of the matrix, Samuel to own. Do not invent FRs to cover them.
-2. **Nothing in the build can judge teaching behaviour.** The Socratic change, #20's
-   language mixing and #22's drift are assessable only by a human reading a transcript.
-   The LLM-judge harness asked for on feedback row 015 does not exist, so **every teaching
-   change ships unverifiable.**
+1. ~~Access gating and the Socratic protocol have no requirement.~~ **Resolved
+   2026-09-20, Samuel approved.** Written as `FR-605`/`FR-606` and `FR-209`…`FR-213`
+   (matrix rev. 11). The unmet half of access control became its own requirement
+   (`FR-606`, BLOCKED on `FR-106`) rather than a caveat inside the met one.
+2. **Nothing in the build can judge teaching behaviour** — now **blocking five named
+   requirements**, not an abstraction. `FR-209`…`FR-213` are all BUILT and none can be
+   promoted. Scoped as a four-layer **teaching evaluation harness** and queued in
+   [`ROADMAP.md`](ROADMAP.md).
+   **It surfaced something worse on the way:** `SC-005` — the core bet — is
+   *mis-instrumented*, not merely unbuilt. `explanation_delivered` fires only on
+   refutations while `retrieval_attempt_submitted` fires on every attempt, so their ratio
+   today is *all attempts over refutations only*. A plausible wrong number. `FR-212` is
+   what makes it fixable: requiring a lesson to end on a from-memory retrieval creates
+   the second moment the metric always needed and never had.
 3. **The tutor prompts assume the student is male** — 23 masculine pronouns in
    `lib/lesson.ts` alone, no gender column in `students`. On nobody's list.
 
