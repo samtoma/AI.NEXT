@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+import { INTERNAL_SURFACES } from "@/lib/env";
 import { getGalleryData } from "@/lib/visuals";
 import { Visual } from "@/components/viz/Visual";
 import { kindMeta } from "@/components/viz/kind-meta";
@@ -14,6 +16,11 @@ export const metadata = {
  * that the producer→consumer contract (VIZ_SPEC.md) holds.
  */
 export default async function GalleryPage() {
+  // Internal surface — not part of the build a student is handed (#10, #11,
+  // #12). A build-time switch, never a permission check: roles need accounts
+  // (#7, #8, FR-106).
+  if (!INTERNAL_SURFACES) notFound();
+
   const data = await getGalleryData();
 
   return (

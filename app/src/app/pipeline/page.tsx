@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+import { INTERNAL_SURFACES } from "@/lib/env";
 import { getPipelineData } from "@/lib/pipeline-queries";
 import { resolveStudentId } from "@/lib/student-context";
 import { SourceStage } from "@/components/pipeline/SourceStage";
@@ -209,6 +211,11 @@ function Stage({
 }
 
 export default async function PipelinePage() {
+  // Internal surface — not part of the build a student is handed (#10, #11,
+  // #12). A build-time switch, never a permission check: roles need accounts
+  // (#7, #8, FR-106).
+  if (!INTERNAL_SURFACES) notFound();
+
   // the cookie-selected demo student (validated; defaults to Omar) — the
   // grounding-slice panel quotes HIS mastery numbers
   const data = await getPipelineData(await resolveStudentId());

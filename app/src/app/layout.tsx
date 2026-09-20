@@ -13,7 +13,7 @@ import "./globals.css";
 import { NavLinks } from "@/components/NavLinks";
 import { Logo } from "@/components/Logo";
 import { NoorMark } from "@/components/NoorMark";
-import { IS_MVP1 } from "@/lib/env";
+import { IS_MVP1, INTERNAL_SURFACES } from "@/lib/env";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -159,7 +159,7 @@ export default function RootLayout({
                 </>
               )}
             </Link>
-            <NavLinks mvp1={IS_MVP1} />
+            <NavLinks mvp1={IS_MVP1} internal={INTERNAL_SURFACES} />
           </div>
         </header>
         <div className="relative z-10 flex-1">{children}</div>

@@ -31,3 +31,37 @@ export const ENVIRONMENT: Environment = resolve();
 
 /** True on the comparison build. Use for env-gated behaviour, never for data attribution. */
 export const IS_MVP1 = ENVIRONMENT === "mvp1";
+
+/**
+ * Whether the INTERNAL surfaces are reachable: `/pipeline`, `/admin/*`,
+ * `/gallery` and `/dev/*`.
+ *
+ * Feedback #10, #11 and #12: a student opening the comparison build was given
+ * "Pipeline", "Content" and "Evidence Walk" in the same navigation bar as
+ * "Study". Those are an extraction pipeline, a content review queue and a
+ * graph explorer — tools for us, listed to a fourteen-year-old.
+ *
+ * This is NOT a permission system and must not be mistaken for one. Roles need
+ * accounts (#7, #8, FR-106, DEFERRED), and until those exist the honest thing
+ * is a build-time switch rather than a login-shaped thing that checks nothing.
+ * What it does guarantee is that the build a student is handed does not carry
+ * the routes at all — they 404, rather than being merely unlinked and one
+ * guessed URL away.
+ *
+ * Default: ON everywhere EXCEPT the comparison build, where it is off unless
+ * explicitly enabled. That keeps the existing demo stacks exactly as they are
+ * and makes the student-facing build the one that has to opt in — the safe
+ * direction for a flag whose failure mode is showing a child the admin tools.
+ *
+ * `/spine` is deliberately NOT gated here: the lesson report sends students to
+ * it ("See it on the graph →") and #15 asks for more of it, not less. What #12
+ * actually reported is the *tab*, and the tab is gone.
+ */
+function resolveInternalSurfaces(): boolean {
+  const raw = (process.env.AINEXT_INTERNAL_SURFACES ?? "").trim().toLowerCase();
+  if (raw === "on" || raw === "true" || raw === "1") return true;
+  if (raw === "off" || raw === "false" || raw === "0") return false;
+  return !IS_MVP1;
+}
+
+export const INTERNAL_SURFACES: boolean = resolveInternalSurfaces();

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getHomeStats } from "@/lib/queries";
 import { resolveStudentId } from "@/lib/student-context";
+import { INTERNAL_SURFACES } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
@@ -138,6 +139,12 @@ export default async function Home() {
           </p>
         </Link>
 
+        {/* The making-of card is for us and for investors, not for a student.
+            On the comparison build this page is the first thing a student sees,
+            and it was offering her a walk through the extraction pipeline
+            (#10). Gated with the route itself, so the card can never outlive
+            the page it points at. */}
+        {INTERNAL_SURFACES && (
         <Link
           href="/pipeline"
           className="ledger-card anim-rise group relative overflow-hidden p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-24px_rgba(169,126,34,0.45)] md:col-span-2"
@@ -164,6 +171,7 @@ export default async function Home() {
             </p>
           </div>
         </Link>
+        )}
       </section>
     </main>
   );
