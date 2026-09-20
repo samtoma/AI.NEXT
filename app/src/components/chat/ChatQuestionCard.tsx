@@ -320,7 +320,7 @@ export function ChatQuestionCard({
                 <ol className="mt-1.5 grid gap-1.5 font-read">
                   {result.refutation.steps.map((st) => (
                     <li key={st.step} className="text-[1rem] text-ink">
-                      {st.text_md}
+                      <TeX text={st.text_md} />
                     </li>
                   ))}
                 </ol>
