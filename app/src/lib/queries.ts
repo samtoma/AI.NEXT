@@ -186,13 +186,16 @@ export async function getSpineData(
   let currentDate = "";
   for (const row of masteryRes.rows) {
     const lo = row.lo_id as string;
+    const systemFrom = new Date(row.system_from).toISOString();
     if (!baseline.has(lo)) {
       baseline.set(lo, Number(row.score));
-      baselineDate = new Date(row.system_from).toISOString();
+      // earliest diagnostic row across all LOs, not just the last one seen
+      if (!baselineDate || systemFrom < baselineDate) baselineDate = systemFrom;
     }
     if (row.system_to === null) {
       current.set(lo, Number(row.score));
-      currentDate = new Date(row.system_from).toISOString();
+      // most recent open row across all LOs — the true "as of now"
+      if (!currentDate || systemFrom > currentDate) currentDate = systemFrom;
     }
   }
 
