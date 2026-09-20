@@ -18,7 +18,7 @@ not `refs/tags/*` (403), so `PDR1-0-v0.3.0` exists locally only and Samuel has t
 create it. One command, from a clone with push rights:
 
 ```
-git fetch origin PDR1-0 && git tag -a PDR1-0-v0.3.0 be22992 \
+git fetch origin PDR1-0 && git tag -a PDR1-0-v0.3.0 origin/PDR1-0 \
   -m "PDR1-0-v0.3.0 — Prototype 1.1 feedback, and the Noor Play design system" \
   && git push origin PDR1-0-v0.3.0
 ```
