@@ -21,13 +21,30 @@ Regenerate the inputs with `./scripts/traceability.py`.
 
 | | |
 |---|---|
-| Requirements in the active spec | 96 (85 FR + 11 SC), all traced |
-| Verified | 58 — of which **9 have a test**; the other 49 rest on a session someone ran once |
+| Requirements in the active spec | 96 (**90 FR + 6 SC**), all traced |
+| Verified | 57 — of which **9 have a test**; the other 48 rest on a session someone ran once |
 | Blocked | 3 — and none of the three is blocked on engineering |
 | Tasks | 99 of 143 complete |
 | Nothing has met the box | No solution has been deployed; infrastructure is parked by decision (`T139`) |
 
 **The critical path is three items, and two of them are not code.**
+
+> **Updated 2026-09-20, after `PDR1-0-v0.3.0` and `v0.4.0`.** Tamer's Prototype 1.1
+> review — 37 issues — is answered: 17 closed with code, 20 open with a written
+> answer. Nothing below changed as a result, because none of the three hard gates
+> is a defect. Four things the fix pass added to the picture:
+>
+> - **The core bet is now addressed in code and unproven in behaviour.** `SC-005`
+>   was OPEN with nothing built; the Socratic protocol (`775b6d8`) is now built and
+>   cannot be judged, because item 3 below — the measurement gap — is also what
+>   would tell us whether it worked. Those two items are now one item.
+> - **Two shipped features have no requirement** (access gating, the Socratic
+>   protocol). §9 of the traceability matrix, Samuel to own.
+> - **The tutor prompts assume every student is male.** No gender column exists.
+>   Not on any list before this; it belongs on the v1.0 path, not after it.
+> - **A fourth stale requirement**, joining the two named at the foot of this
+>   section: `FR-1010`'s signature animation was BUILT-and-unspent for a reason
+>   nobody had noticed — nothing in the product rendered a band change at all.
 
 ## v1.0 — the pilot build *(now → late September)*
 
