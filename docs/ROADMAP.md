@@ -161,6 +161,47 @@ needs a decision on who labels the human-graded set, which is the same question
 as `T107` and probably the same person. Layer 4 is small and can go first if a
 number is wanted sooner than a guarantee.
 
+### Samuel's direction, 2026-09-20 — the next workstream **[RECORDED, NOT SPECCED]**
+
+Taken from his own words at the end of the `v0.4.0` session. **Recorded here so the
+next session starts from it rather than rediscovering it.** None of it is specced,
+none of it is started, and the full requirements are his to give.
+
+**1. An admin dashboard, as its own release.** Everything that is not the education
+itself — the extraction pipeline, the evidence walk, content review, the gallery —
+moves behind a real admin surface rather than being merely absent from the student
+build. `FR-605` (shipped in `v0.4.0`) removed those routes from the student build;
+this is the other half — giving them somewhere deliberate to live, with its own
+version.
+
+**2. Real signup and sign-in, with per-student isolation enforced in the backend.**
+His words: *"each student will have his own separate env. now fully, and well from
+the backend."* This is materially larger than un-deferring `FR-106`, and it is the
+part to be careful about:
+
+> **This reads as a multi-tenancy decision, and it needs an ADR before code.** Today
+> every student shares one database and isolation is a `WHERE student_id = $1`
+> clause. "His own separate environment, fully, from the backend" could mean row-level
+> isolation enforced by the database rather than by queries, a schema or database per
+> student, or something between. Those have very different costs, migration stories
+> and per-student running costs, and the choice cannot be inferred from the sentence.
+> **Samuel is bringing the full requirements** — the ADR goes with them, not before.
+
+**3. Landing page, admin roles, and lesson resume ride with it.** `#6`, `#7`, `#8`,
+`#9` and `#25` are all downstream of the same identity work and were already blocked
+on it. They stop being blocked when this lands.
+
+**Two decisions that are settled and should not be relitigated:**
+
+- **BKT stays exactly as it is.** The mastery model, its parameters and its update
+  rule are untouched until Samuel says otherwise. The `v0.4.0` display fix stands; the
+  band moving two steps on two answers is a **known and accepted** property, not an
+  open defect ([#17](https://github.com/samtoma/AI.NEXT/issues/17), closed).
+- **The graph explorer stays a student surface.** `/spine` is not going behind the
+  admin gate, and the lesson report keeps sending students to it. This unblocks
+  [#15](https://github.com/samtoma/AI.NEXT/issues/15), which was waiting on exactly
+  this question.
+
 ### Two requirements that are stale, not unbuilt
 
 Both need Tamer, and both are cheap to fix and expensive to leave:

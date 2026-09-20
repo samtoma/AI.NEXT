@@ -3,6 +3,37 @@
 > Living document. Read at session start; update when progress or decisions land.
 > Last updated: 2026-09-20 (`PDR1-0-v0.4.0`)
 
+## ➡️ NEXT WORKSTREAM — accounts, and an admin dashboard (Samuel, 2026-09-20)
+
+**Read this first if you are a new session.** Samuel's direction at the end of the
+`v0.4.0` session, recorded verbatim in intent. **Nothing below is specced or started.**
+Full detail: [`ROADMAP.md`](ROADMAP.md) § *Samuel's direction*.
+
+1. **An admin dashboard, as its own release.** Everything that is not the education
+   itself — pipeline, evidence walk, content review, gallery — gets a deliberate home.
+   `FR-605` removed them from the student build in v0.4.0; this is the other half.
+2. **Real signup and sign-in, with per-student isolation enforced in the backend** —
+   his words: *"each student will have his own separate env. now fully, and well from
+   the backend."* **He is bringing the full requirements.**
+   ⚠️ **This is a multi-tenancy decision and needs an ADR before any code.** Today
+   isolation is a `WHERE student_id = $1` clause on one shared database. "His own
+   separate environment, fully, from the backend" could mean database-enforced
+   row-level isolation, a schema per student, or a database per student — very
+   different costs and migrations, and not inferable from the sentence. **Do not
+   pick one.** The ADR goes with his requirements, not ahead of them.
+3. **Landing page, admin roles, lesson resume** (#6, #7, #8, #9, #25) ride with the
+   identity work they were already blocked on.
+
+**Two decisions settled — do not relitigate:**
+- **BKT stays exactly as it is** until Samuel says otherwise. The v0.4.0 display fix
+  stands; the band moving two steps on two answers is **known and accepted**, not an
+  open defect. [#17](https://github.com/samtoma/AI.NEXT/issues/17) closed.
+- **The graph explorer stays a student surface.** `/spine` is not going behind the
+  admin gate. This unblocks [#15](https://github.com/samtoma/AI.NEXT/issues/15).
+
+**Samuel is testing the product now and will come back with findings.** Expect new
+feedback against `PDR1-0-v0.4.0`.
+
 ## 🐞 FEEDBACK CLOSED OUT — `PDR1-0-v0.4.0` (2026-09-20, `PDR1-0`)
 
 Full detail: [`CHANGELOG.md`](../CHANGELOG.md) and
