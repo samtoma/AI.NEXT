@@ -35,9 +35,10 @@ Prep-3 is 14–15, which sits inside both bands, and the handoff is explicit
 that they must not be mixed in one build. Master was the original pick
 because the comparison environment's variable under test is BKT-vs-Elo
 teaching behaviour, and a sticker-heavy visual language is a second variable
-— **this call was overturned in favour of Play**; record the reasoning in an
-ADR if it wasn't already (constitution Principle I still applies going
-forward — reversing this again is Samuel's call, same as the original pick).
+— **this call was overturned in favour of Play**, and the reasoning is now
+recorded in [ADR-0011](../../decisions/0011-noor-play-design-system.md),
+accepted 2026-09-20 (constitution Principle I still applies going forward —
+reversing this again is Samuel's call, same as the original pick).
 
 Coverage as shipped: the token/colour/typography/motion layer and the
 blanket radius+border+shadow rules apply everywhere under `[data-ds="noor"]`
