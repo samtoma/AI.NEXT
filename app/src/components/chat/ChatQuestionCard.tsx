@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { mcqChoices } from "@/lib/types";
+import { mcqChoices, stepText } from "@/lib/types";
 import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
 import type { WidgetOutcome } from "@/lib/widget-predicates";
@@ -294,6 +294,33 @@ export function ChatQuestionCard({
                   <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
                     {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
                     {result.refutation.reviewed ? "" : " · unreviewed"}
+                  </p>
+                )}
+              </div>
+            )}
+            {/* THE FALLBACK (FR-305) — no misconception was diagnosed (a
+                numeric answer, or an MCQ distractor with no misconception
+                label), so there is nothing to refute. Serving the canonical
+                solution here, honestly labelled as the correct method rather
+                than a diagnosis of her specific error, replaced silently
+                guessing at one of the LO's OTHER misconceptions — which used
+                to repeat the same borrowed explanation across unrelated
+                questions on the same objective. */}
+            {!result.refutation && !result.isCorrect && result.solution.length > 0 && (
+              <div className="mt-2 rounded-md border border-line bg-card px-3 py-2.5">
+                <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-soft">
+                  here&apos;s how to solve it
+                </p>
+                <ol className="mt-1.5 grid gap-1.5 font-read">
+                  {result.solution.map((st) => (
+                    <li key={st.step} className="text-[13px] leading-relaxed text-ink">
+                      <TeX text={stepText(st)} />
+                    </li>
+                  ))}
+                </ol>
+                {debug && (
+                  <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
+                    no misconception diagnosed · canonical solution
                   </p>
                 )}
               </div>

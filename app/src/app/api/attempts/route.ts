@@ -311,15 +311,17 @@ export async function POST(req: Request) {
       // Ask for THE refutation of the error she actually made, not whichever
       // entry this objective happens to have first. Serving a refutation of a
       // mistake the student did not make is worse than serving the plain
-      // solution: it corrects something she never thought.
+      // solution: it corrects something she never thought — so an undiagnosed
+      // error (a numeric answer, or an MCQ distractor with no misconception
+      // label) skips the library entirely and falls back to the canonical
+      // solution client-side (FR-305), rather than guessing at one of the
+      // LO's OTHER misconceptions.
       const entries = misconceptionId
         ? await getLibraryEntries([q.lo_id], {
             misconceptionId,
             entryTypes: ["refutation", "contrasting_case"],
           })
-        : await getLibraryEntries([q.lo_id], {
-            entryTypes: ["refutation", "contrasting_case"],
-          });
+        : [];
       if (entries.length === 0) {
         void flagAuthoringGap(studentId, misconceptionId);
       } else {
