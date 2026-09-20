@@ -5,13 +5,23 @@
 
 ## 🏷️ RELEASE PREPARED — `PDR1-0-v0.3.0` (2026-09-20, `PDR1-0`)
 
-Three branches merged into `PDR1-0` and tagged: `wip/q3-q4-explore` (the Noor
+Three branches merged into `PDR1-0`: `wip/q3-q4-explore` (the Noor
 Play skin plus ten Prototype 1.1 fixes), `claude/noor-play-design-system`
 (absorbed, no net change — `wip/q3-q4-explore` was cut from it and carries a
 later draft of the same triage doc) and `claude/widget-render-fixes`.
 
 **Prepared, not deployed.** Deploy is manual-only while infrastructure is parked
 (`T139`). Tagging does not put this in front of anyone.
+
+**The tag is not on the remote yet.** Agent sessions can push `refs/heads/*` but
+not `refs/tags/*` (403), so `PDR1-0-v0.3.0` exists locally only and Samuel has to
+create it. One command, from a clone with push rights:
+
+```
+git fetch origin PDR1-0 && git tag -a PDR1-0-v0.3.0 be22992 \
+  -m "PDR1-0-v0.3.0 — Prototype 1.1 feedback, and the Noor Play design system" \
+  && git push origin PDR1-0-v0.3.0
+```
 
 Full detail in [`CHANGELOG.md`](../CHANGELOG.md) and
 [`docs/releases/PDR1-0-v0.3.0.html`](releases/PDR1-0-v0.3.0.html) — the
