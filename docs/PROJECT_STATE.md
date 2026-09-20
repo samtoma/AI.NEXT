@@ -5,6 +5,10 @@
 
 ## 🐞 FEEDBACK CLOSED OUT — `PDR1-0-v0.4.0` (2026-09-20, `PDR1-0`)
 
+Full detail: [`CHANGELOG.md`](../CHANGELOG.md) and
+[`docs/releases/PDR1-0-v0.4.0.html`](releases/PDR1-0-v0.4.0.html) — the change-by-change
+explainer for the founders.
+
 All 37 of Tamer's Prototype 1.1 issues are now answered: **17 closed with code, 20 open
 with a written answer.** Every closure cites the commit that fixed it; every open one says
 what is true today and what it is waiting on. GitHub Issues is the record — not this file.

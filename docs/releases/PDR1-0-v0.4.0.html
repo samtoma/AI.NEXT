@@ -1,0 +1,628 @@
+<title>Noor Fix Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Tokens lifted from the product's own Noor Play layer
+     (app/src/app/globals.css, [data-ds="noor"]) so the page explaining the
+     design system is set in it. The no-red rule (FR-1002, constitution)
+     holds here too: nothing on this page is red or coral — severity is
+     carried by the grey-purple that replaced --rust, and by amber. */
+  :root {
+    --ink:        #241f3d;
+    --ink-soft:   #574f75;
+    --ink-faint:  #6b6489;
+    --paper:      #fff6e6;
+    --paper-deep: #f7f1e4;
+    --card:       #ffffff;
+    --honey:      #ffe9bd;
+    --amber:      #a34f0a;
+    --amber-lit:  #d98c1f;
+    --teal:       #1f7a6e;
+    --teal-lit:   #2f9e8f;
+    --slate:      #5a5570;
+    --line:       #241f3d;
+    --hair:       rgba(36, 31, 61, 0.14);
+    --shadow:     4px 4px 0 var(--ink);
+    --shadow-sm:  3px 3px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink:        #f3eee1;
+      --ink-soft:   #c0b8d4;
+      --ink-faint:  #9d95b4;
+      --paper:      #17142a;
+      --paper-deep: #1f1b36;
+      --card:       #221d3c;
+      --honey:      #3a2f1c;
+      --amber:      #e8a93f;
+      --amber-lit:  #f0bc5e;
+      --teal:       #5cc4b3;
+      --teal-lit:   #79d6c6;
+      --slate:      #a79fc4;
+      --line:       #f3eee1;
+      --hair:       rgba(243, 238, 225, 0.18);
+      --shadow:     4px 4px 0 rgba(243, 238, 225, 0.85);
+      --shadow-sm:  3px 3px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink:        #f3eee1;
+    --ink-soft:   #c0b8d4;
+    --ink-faint:  #9d95b4;
+    --paper:      #17142a;
+    --paper-deep: #1f1b36;
+    --card:       #221d3c;
+    --honey:      #3a2f1c;
+    --amber:      #e8a93f;
+    --amber-lit:  #f0bc5e;
+    --teal:       #5cc4b3;
+    --teal-lit:   #79d6c6;
+    --slate:      #a79fc4;
+    --line:       #f3eee1;
+    --hair:       rgba(243, 238, 225, 0.18);
+    --shadow:     4px 4px 0 rgba(243, 238, 225, 0.85);
+    --shadow-sm:  3px 3px 0 rgba(243, 238, 225, 0.85);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 0 72px;
+  }
+
+  h1, h2, h3, .display {
+    font-family: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+    font-weight: 700;
+    text-wrap: balance;
+    letter-spacing: -0.005em;
+  }
+
+  .mono, code, .tag, .eyebrow, th, .num {
+    font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  code {
+    font-size: 0.855em;
+    background: var(--paper-deep);
+    border: 1px solid var(--hair);
+    border-radius: 5px;
+    padding: 0.08em 0.36em;
+    overflow-wrap: anywhere;
+  }
+
+  a { color: inherit; text-decoration-color: var(--amber); text-underline-offset: 2px; }
+  a:focus-visible, summary:focus-visible {
+    outline: 3px solid var(--amber-lit);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  .eyebrow {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    font-weight: 500;
+  }
+
+  /* ---------- masthead ---------- */
+  header.masthead { padding-block: 56px 40px; }
+
+  .rel-id {
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--honey);
+    color: var(--ink);
+    border: 3px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 16px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  h1 {
+    font-size: clamp(2.1rem, 6.4vw, 3.4rem);
+    line-height: 1.06;
+    margin: 22px 0 0;
+  }
+
+  .standfirst {
+    font-size: clamp(1.02rem, 2.4vw, 1.22rem);
+    color: var(--ink-soft);
+    max-width: 36em;
+    margin: 18px 0 0;
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+  }
+  .fact {
+    border: 2px solid var(--hair);
+    border-radius: 12px;
+    padding: 9px 14px;
+    background: var(--card);
+  }
+  .fact .num {
+    display: block;
+    font-size: 1.28rem;
+    font-weight: 500;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+  .fact .lab { font-size: 12.5px; color: var(--ink-faint); }
+
+  .notice {
+    margin-top: 28px;
+    border-inline-start: 5px solid var(--amber);
+    background: var(--honey);
+    padding: 14px 18px;
+    border-radius: 0 12px 12px 0;
+    font-size: 15.5px;
+  }
+  .notice strong { font-weight: 600; }
+
+  /* ---------- sections ---------- */
+  section { padding-block-start: 52px; }
+
+  h2 {
+    font-size: clamp(1.45rem, 3.6vw, 1.95rem);
+    margin: 0;
+    line-height: 1.16;
+  }
+  .sec-note {
+    color: var(--ink-soft);
+    max-width: 40em;
+    margin: 10px 0 0;
+    font-size: 16px;
+  }
+  .rule {
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+    margin-block: 14px 0;
+  }
+
+  /* ---------- the ledger ---------- */
+  .ledger { display: grid; gap: 22px; margin-top: 30px; }
+
+  article.entry {
+    background: var(--card);
+    border: 3px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    overflow: clip;
+  }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px 14px;
+    padding: 14px 20px;
+    background: var(--honey);
+    border-block-end: 3px solid var(--line);
+  }
+  .entry-head h3 { font-size: 1.16rem; margin: 0; flex: 1 1 16rem; line-height: 1.28; }
+
+  .tag {
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+  .tag.issue { color: var(--amber); }
+  .tag.req   { color: var(--teal); }
+
+  .entry-body { padding: 4px 20px 20px; }
+
+  /* The four-part record. This shape is the story of the release: on almost
+     every item the reported symptom was not the cause, so "what he saw" and
+     "what was actually wrong" have to be separate rows or the point is lost. */
+  dl.record { margin: 0; display: grid; gap: 0; }
+  dl.record > div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 4px 18px;
+    padding-block: 13px;
+    border-block-end: 1px solid var(--hair);
+  }
+  dl.record > div:last-child { border-block-end: 0; padding-block-end: 2px; }
+  dl.record dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--ink-faint);
+    padding-block-start: 5px;
+  }
+  dl.record dd { margin: 0; }
+  dl.record .cause  { color: var(--slate); }
+  dl.record .fix    { }
+
+  @media (max-width: 640px) {
+    dl.record > div { grid-template-columns: 1fr; gap: 2px; }
+    dl.record dt { padding-block-start: 0; }
+  }
+
+  /* ---------- claimed vs true ---------- */
+  .demotions { display: grid; gap: 16px; margin-top: 30px; }
+  .demo-row {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+    background: var(--card);
+    border: 2px solid var(--hair);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .demo-row .fr {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .demo-row .fr small { display: block; font-size: 10.5px; color: var(--ink-faint); letter-spacing: .08em; text-transform: uppercase; margin-top: 3px; font-weight: 400; }
+  .claimed, .true { font-size: 15.3px; }
+  .claimed { color: var(--ink-faint); }
+  .claimed b, .true b {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-block-end: 4px;
+    font-weight: 500;
+  }
+  .claimed b { color: var(--ink-faint); }
+  .true b { color: var(--slate); }
+  @media (max-width: 760px) {
+    .demo-row { grid-template-columns: 1fr; gap: 12px; }
+  }
+
+  /* ---------- measurement table ---------- */
+  .tablewrap { overflow-x: auto; margin-top: 22px; border: 2px solid var(--hair); border-radius: 14px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; min-width: 34rem; }
+  caption {
+    caption-side: top;
+    text-align: start;
+    padding: 14px 18px 4px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    font-family: "Source Serif 4", Georgia, serif;
+  }
+  th, td { padding: 9px 18px; text-align: start; font-size: 13.5px; }
+  th {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    font-weight: 500;
+    border-block-end: 2px solid var(--hair);
+  }
+  td { border-block-end: 1px solid var(--hair); font-variant-numeric: tabular-nums; }
+  tbody tr:last-child td { border-block-end: 0; }
+  td.verdict-pass { color: var(--teal); font-weight: 500; }
+  td.verdict-fail { color: var(--slate); font-weight: 500; }
+  .swatch {
+    display: inline-block;
+    inline-size: 11px;
+    block-size: 11px;
+    border-radius: 3px;
+    border: 1.5px solid var(--line);
+    vertical-align: -1px;
+    margin-inline-end: 7px;
+  }
+
+  /* ---------- gaps ---------- */
+  .gaps { display: grid; gap: 14px; margin-top: 30px; }
+  .gap {
+    border: 2px dashed var(--slate);
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: transparent;
+  }
+  .gap h3 { font-size: 1.06rem; margin: 0 0 6px; }
+  .gap p { margin: 0; font-size: 15.4px; color: var(--ink-soft); }
+  .gap .eyebrow { display: block; margin-block-end: 6px; }
+
+  /* ---------- merge provenance ---------- */
+  .branches { display: grid; gap: 10px; margin-top: 24px; }
+  .branch {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 13px 16px;
+    border: 2px solid var(--hair);
+    border-radius: 12px;
+    background: var(--card);
+  }
+  .branch .sha {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    background: var(--honey);
+    border-radius: 6px;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+  .branch .what { font-size: 15.2px; }
+  .branch .what strong { font-family: "IBM Plex Mono", monospace; font-size: 13.5px; font-weight: 500; }
+
+  /* ---------- gates ---------- */
+  .gates { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+  .gate {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    border: 2px solid var(--teal);
+    color: var(--teal);
+    border-radius: 999px;
+    padding: 4px 13px;
+  }
+  .gate.warn { border-color: var(--amber); color: var(--amber); }
+
+  footer {
+    margin-block-start: 60px;
+    padding-block-start: 24px;
+    border-block-start: 3px solid var(--line);
+    color: var(--ink-faint);
+    font-size: 14px;
+  }
+  footer p { margin: 0 0 8px; }
+</style>
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="rel-id">PDR1-0-v0.4.0</span>
+    <h1>Ten fixes, and three things we have to admit</h1>
+    <p class="standfirst">
+      Every one of the 37 issues Tamer filed against <code>v0.2.0</code> now has
+      an answer. Seventeen are closed with code; twenty are open with a written
+      one. This page covers the ten closed in this release — and the three
+      things the release surfaced that matter more than the fixes do.
+    </p>
+
+    <div class="facts">
+      <div class="fact"><span class="num">17</span><span class="lab">closed of 37</span></div>
+      <div class="fact"><span class="num">10</span><span class="lab">fixed in v0.4.0</span></div>
+      <div class="fact"><span class="num">20</span><span class="lab">open, all answered</span></div>
+      <div class="fact"><span class="num">2</span><span class="lab">shipped with no requirement</span></div>
+      <div class="fact"><span class="num">128</span><span class="lab">tests passing</span></div>
+    </div>
+
+    <p class="notice">
+      <strong>Prepared, not deployed</strong>, same as v0.3.0. Deploy is
+      manual-only while infrastructure is parked (<code>T139</code>), and
+      <code>main</code> still serves ainext.reletix.com unchanged.
+    </p>
+  </header>
+
+  <section>
+    <h2>Three admissions</h2>
+    <p class="sec-note">
+      These are first because they outlast the fixes. Two are governance gaps
+      this release created; one is a defect nobody has filed.
+    </p>
+    <div class="rule"></div>
+
+    <div class="gaps">
+      <div class="gap">
+        <span class="eyebrow">Governance · owner: Samuel</span>
+        <h3>Two shipped features have no requirement at all</h3>
+        <p>
+          Access gating and the Socratic teaching protocol are both live in this
+          release, and neither appears in the spec. That means neither can carry
+          a row in the traceability matrix — a row naming a requirement the spec
+          does not define is an orphan, and the CI gate rejects it. They are
+          recorded as owned gaps instead. Inventing requirements to cover work
+          already done would be the matrix laundering the problem rather than
+          reporting it, which is the one thing a computed matrix exists to
+          prevent.
+        </p>
+      </div>
+      <div class="gap">
+        <span class="eyebrow">Capability · blocks judging any teaching change</span>
+        <h3>Nothing in the build can tell whether the teaching improved</h3>
+        <p>
+          The Socratic rewrite, the Arabic/English mixing, the tutor drifting to
+          a previous question — every one of them can only be assessed by a
+          human reading a transcript. The evaluation harness asked for in the
+          original feedback does not exist. Until it does, every change to how
+          the tutor teaches ships unverifiable, including the largest change in
+          this release.
+        </p>
+      </div>
+      <div class="gap">
+        <span class="eyebrow">Defect · on nobody's list</span>
+        <h3>The tutor assumes every student is a boy</h3>
+        <p>
+          Twenty-three masculine pronouns in the lesson prompts alone, more
+          elsewhere, and a masculine Arabic form offered to the model as a
+          worked example. There is no gender column in the database, so there is
+          nothing to fix it from. A girl using this is described to the model as
+          "he", and the model follows. Found in review, not reported.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The fixes</h2>
+    <p class="sec-note">
+      As before: what was reported, what was actually wrong, what changed. On
+      three of these the reported symptom and the cause were not even in the
+      same layer of the product.
+    </p>
+    <div class="rule"></div>
+
+    <div class="ledger">
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>The mastery score that looked broken was not broken</h3>
+          <span class="tag issue">#17 #27</span><span class="tag req">FR-1003</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>Mastery jumping 30 → 69 → 30 during normal use. Separately, the tutor saying "92%, that's excellent" mid-lesson with nothing to attach the number to.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">Replayed through the real model, that sequence is reproduced <strong>exactly</strong>, and it is correct. Mastery is a <em>belief</em> — the probability the student knows the skill — and with a 20% guess rate and a 10% slip rate, two answers genuinely move it that far. The defect was that we showed it. The lesson printed <span class="mono">mastery 30% → 69%</span> after every single answer, on the student's own screen, ungated. And four separate places put the same raw figure into the tutor's prompt, which is where "92%" came from — it was reading out a line that said <span class="mono">mastery today 92%</span>.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">All five now carry the named band. The lesson reads <span class="mono">attempted → proficient</span>, or <span class="mono">still attempted</span> when the band holds. The prompt blocks carry an explicit instruction never to quote them — copied from the engagement block, which has had one since it was written.</dd></div>
+            <div><dt>Side effect</dt><dd>The signature animation reserved for reaching "mastered" had been written months ago and never once rendered, because nothing in the product displayed a band change for it to attach to. It now has one.</dd></div>
+            <div><dt>Left open</dt><dd class="cause">The band still moves two steps on two answers, because the belief genuinely does. Withholding a band until there is enough evidence to hold one is a change to what the product claims about a student, so it is a decision, not a fix.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>A fourteen-year-old was being offered the extraction pipeline</h3>
+          <span class="tag issue">#10 #11 #12</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>Admin tabs — pipeline, content, evidence walk — visible to end users.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">The student's navigation bar read <span class="mono">Study · Where you stand · Evidence Walk · Content · Pipeline</span>. A graph explorer, a content review queue and an extraction pipeline, in the same row as her lesson. The front page also led with a card inviting her to walk the pipeline.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">The tabs and the card are gone, and — because unlinked is not hidden — the routes themselves return 404 on the student build. Guessing the URL no longer works.</dd></div>
+            <div><dt>Not a fix for</dt><dd class="cause"><strong>This is a build-time switch, not a permission system</strong>, and the code says so in both places. It makes the student build not carry the routes; it cannot tell one person from another. Roles need accounts, which are deferred. A login-shaped thing that checks nothing would have been worse than an honest flag.</dd></div>
+            <div><dt>Caught in test</dt><dd>The first implementation was wrong and looked right. Two of the pages are prerendered, so the gate ran at build time and stayed 404 even with the override on. Only serving the built app both ways revealed it.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>The tutor had no way to ask an open question</h3>
+          <span class="tag issue">#33 #34 #35 #24 #23</span><span class="tag req">SC-005</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>Five separate things: no Socratic method, no open-ended questions, the lesson not ending on retrieval, steps locked in before he was asked to try them, no interest in his working, explanations arriving as one block.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">One cause. Every tool the protocol gave the tutor for making a student <em>do</em> something produces a <strong>card</strong> — a bank question, a widget, a figure. There was no way to express "ask her, in words, and wait". A model told to make the student act, holding only card-shaped tools, produces a quiz. And the lesson arc ended, literally, with "closing recap message" — so not ending on retrieval was the specification, not a drift from it.</dd></div>
+            <div><dt>Then found</dt><dd class="cause">The Arabic protocol <strong>has always had</strong> the instruction naming a chat question as a valid ask. Mathematics — the subject of this pilot, the one he tested — never did. The rule was written once and reached one subject of three. That is a worse finding than "we never thought of it".</dd></div>
+            <div><dt>Changed</dt><dd class="fix">Five rules, in the shared rhythm so all three subjects get them: an open question is a first-class ask; never state a step you haven't asked him to try; ask how he got there; work with a partial answer instead of demanding the final one; and end the lesson on retrieval from memory, before any recap.</dd></div>
+            <div><dt>Cost</dt><dd>The turn cap went from 14 to 18. Asking before explaining costs turns — that is what it is. At 14 a full lesson hit the cap before the retrieval could happen, so this fix would have been silently skipped on exactly the lessons that ran long.</dd></div>
+            <div><dt>Unverified</dt><dd class="cause">This is teaching behaviour and judging it needs a real multi-turn lesson nobody has run. The failure mode to watch for is over-correction — a tutor that interrogates a tired student instead of helping her.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>What the AI actually costs, by what spent it</h3>
+          <span class="tag issue">#39</span><span class="tag req">FR-C04</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He asked for</dt><dd>Cost tracking broken out per function. Filed as blocked, for discussion.</dd></div>
+            <div><dt>Actually the case</dt><dd class="cause">Much smaller than it looked. Every model call has recorded its function, its cost, both token counts, the cache counters, latency, student and environment for weeks. Nothing read any of it — the only query touching that table outside the insert path counted rows for a stat tile. A reporting gap wearing an instrumentation gap's clothes.</dd></div>
+            <div><dt>Built</dt><dd class="fix">A page grouping spend three ways: by function (a taught lesson against a quick revision against a one-off question), teaching against photo uploads, and per student with a projected month — the only basis a price can be built on. Scoped to one environment, because a blended cost figure is a plausible wrong number somebody would price against.</dd></div>
+            <div><dt>Not verified</dt><dd class="cause">It compiles and builds; no query in it has been run, because the session that wrote it has no database. Worth a look on the box before the numbers are trusted.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>The report showed her the gaps and offered no way back in</h3>
+          <span class="tag issue">#29</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He asked for</dt><dd>A third option after a lesson: review my weak spot.</dd></div>
+            <div><dt>Actually the case</dt><dd class="cause">The report ends by naming exactly what she did not get, then offered two ways out — look at the graph, or leave. Neither did anything about what it had just told her.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">A third door, in four lines, because the mechanism already existed: the practice loop is already built weakest-first. What was missing was a way into it from the one screen where a student has just been told where she is weak.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>The tutor could answer the question before last</h3>
+          <span class="tag issue">#22</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>The tutor drifting off the current question and explaining the previous one.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">Not a grounding failure — the right material was assembled. The whole question bank sits in the tutor's context and every question already used is still in the transcript, so it has to <em>infer</em> which one is current, and nothing told it how. The irony: the browser already computes this exactly, deterministically, for a different fix in the last release. That value is never sent to the model.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">A rule naming the most recent pushed question as the one under discussion, and telling it to check a result's id before reacting.</dd></div>
+            <div><dt>If it recurs</dt><dd class="cause">Stop making it infer. Send the value the browser already has, so the current question is stated rather than deduced. Held back deliberately — that is plumbing that needs a live session to test, and a prompt rule was the cheaper thing to try first.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>A CI gate that had never once run</h3>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>Found</dt><dd>While updating the requirements for the previous release.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">The script that regenerates the requirement counts searched for a section heading that does not exist — its own error message names the right one, so a rename changed the message and not the code. The counts table had therefore been hand-maintained all along and had drifted five requirements and eight tasks out of date. Worse, the command returned a failure code on every run, and continuous integration runs it as the first line of a fail-fast block: the release would have gone red on arrival for a reason having nothing to do with it.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">One word. The block is generated for the first time, and running it twice is now a no-op — which is what the CI check was always asserting and never able to.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>The twenty still open</h2>
+    <p class="sec-note">
+      None of these is unanswered. Each carries what is true today and what it
+      is waiting on. They cluster into four things.
+    </p>
+    <div class="rule"></div>
+
+    <div class="demotions">
+      <div class="demo-row">
+        <div class="fr">4 issues<small>blocked</small></div>
+        <div class="claimed"><b>Waiting on</b>Accounts. Signup, admin roles, a landing page, resuming a lesson.</div>
+        <div class="true"><b>Why it is not a small job</b>Student identity today is a database sequence that a routine content reload truncates and restarts, carried in a cookie the code itself documents as "not a security boundary". Saving real lesson history against it would produce history a maintenance operation silently deletes.</div>
+      </div>
+      <div class="demo-row">
+        <div class="fr">2 issues<small>need a decision</small></div>
+        <div class="claimed"><b>Waiting on</b>Samuel. Whether the graph explorer stays a student surface at all; how much textbook grounding a student should see.</div>
+        <div class="true"><b>Why they are stuck</b>Both are product calls with defensible answers either way, and both would be wrong to guess. The second sits directly on the grounding principle the product is built on.</div>
+      </div>
+      <div class="demo-row">
+        <div class="fr">5 issues<small>shipped, unproven</small></div>
+        <div class="claimed"><b>Waiting on</b>A real lesson. The whole Socratic cluster is fixed in code and unverified in behaviour.</div>
+        <div class="true"><b>Why they stay open</b>Closing them would claim a result nobody has seen. They close when someone runs a lesson and reads the transcript — which is also the argument for building the evaluation harness.</div>
+      </div>
+      <div class="demo-row">
+        <div class="fr">9 issues<small>design and scope</small></div>
+        <div class="claimed"><b>Waiting on</b>Design work, a deploy, or a screenshot. A friendly progress view, a public link, microcopy to point at.</div>
+        <div class="true"><b>Why they are not blocked</b>Nothing technical stands in the way of any of them. They need someone to decide what the thing should look like, which is not a thing to guess at from a ticket.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Solution:</strong> Student MVP · branch <code>PDR1-0</code> · English, mathematics only, Bayesian Knowledge Tracing. Versioned independently of the frozen <code>family-tutor</code> baseline.</p>
+    <p><strong>Sources:</strong> <code>CHANGELOG.md</code> · <code>specs/001-student-mvp1-delta/traceability.md</code> rev. 10 · the 37 issues themselves, each carrying its own evidence.</p>
+    <p>Every measurement on this page was taken against the merged tree, not estimated. Where something is unverified, it says so.</p>
+  </footer>
+
+</div>
