@@ -4,7 +4,7 @@ Start here. This repository is the single reference for what we are building,
 why, what is proven, and what is next. If a decision is not written down here,
 it is not decided.
 
-Regenerated 2026-09-15. The counts in this file are produced by
+Regenerated 2026-09-20. The counts in this file are produced by
 `./scripts/traceability.py`, which fails CI when they drift — an earlier
 hand-maintained version of this map spent six weeks naming a superseded PRD and
 a constitution two major versions out of date.
@@ -16,7 +16,7 @@ a constitution two major versions out of date.
 | Know where the project stands today | [`PROJECT_STATE.md`](PROJECT_STATE.md) — living status, updated as work lands |
 | Know what we promised to build | [`specs/001-student-mvp1-delta/spec.md`](../specs/001-student-mvp1-delta/spec.md) — 90 functional requirements + 6 success criteria |
 | Know what is actually **proven** | [`specs/001-student-mvp1-delta/traceability.md`](../specs/001-student-mvp1-delta/traceability.md) — every requirement, its status, and the evidence |
-| Know **why** something is built that way | [`decisions/`](decisions/) — ADR-0001…0009 |
+| Know **why** something is built that way | [`decisions/`](decisions/) — ADR-0001…0011 |
 | Give feedback or report a problem | [`FEEDBACK.md`](FEEDBACK.md) |
 | See what is coming next | [`ROADMAP.md`](ROADMAP.md) |
 | Run it on your machine | [`LOCAL-DEV.md`](LOCAL-DEV.md) |
@@ -53,7 +53,7 @@ be reproduced, and a requirement with no target cannot be scheduled. Neither
 changes the spec: triage does, and every issue leaves triage with exactly one
 outcome written on it ([FEEDBACK.md](FEEDBACK.md)).
 
-Current release: **`PDR1-0-v0.2.0`**. Next: milestone `PDR1-0-v0.3.0`.
+Current release: **`PDR1-0-v0.4.0`**. History: [`CHANGELOG.md`](../CHANGELOG.md); per-release explainers in [`releases/`](releases/).
 Branching rules: [BRANCHING.md](BRANCHING.md). Versioning: [VERSIONING.md](VERSIONING.md).
 
 ## Two products, one repository

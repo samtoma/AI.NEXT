@@ -17,6 +17,10 @@ Both solutions today serve the same Prep-3 Mathematics book (10 modules, 90 LOs,
 
 ⚠️ **Work in flight**: `docs/WIP-branch-per-solution.md` is the resume doc for the branch-per-solution refactor. Read it before touching phases 1, 3, 10 or 12.
 
+📋 **Feedback is the live work queue.** GitHub Issues carries Tamer's Prototype 1.1 review — 37 issues filed against `PDR1-0-v0.2.0`, 17 closed as of v0.4.0. Every closure cites the commit that fixed it and every open one carries a written answer, so the issue is the record, not this file. Start from the open list before picking up anything else.
+
+⚠️ **Two shipped features have no requirement**: access gating and the Socratic teaching protocol. Both are named in §9 of `specs/001-student-mvp1-delta/traceability.md` with Samuel as owner. Do not invent FRs to cover them — that is the matrix laundering drift instead of reporting it.
+
 - Superseded PRD (still the authority for the frozen baseline): `AI.Next - Google Folder 17 Jul 2026/AI Tutor/PRD/PRD-ai-tutor-mvp.md`
 - **Design authority (ADR-0001):** `agentic-data-thesis.html` — the Agent-Native Data Spine thesis. The solution architecture derives from it (Ch. 15 curriculum graphs, Ch. 16 bitemporal, Ch. 19 reference architectures + MVP-cut discipline). Derived architecture: `docs/architecture/spine-derived-architecture.md`.
 - Brainstorm materials: `AI.Next - Google Folder 17 Jul 2026/` — **context only, never a source of tech/design decisions**
@@ -50,7 +54,7 @@ Skills (in `.claude/skills/`): `project-status` (read/update project state), `ad
 
 ## Conventions
 - Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`. **Documentation map: `docs/README.md`.**
-- Branching: `docs/BRANCHING.md` — one branch per solution; feedback and requirement *proposals* never get a branch, accepted requirements get `req/<id>-<slug>`. Versioning: `docs/VERSIONING.md`. Current release: **`PDR1-0-v0.2.0`**.
+- Branching: `docs/BRANCHING.md` — one branch per solution; feedback and requirement *proposals* never get a branch, accepted requirements get `req/<id>-<slug>`. Versioning: `docs/VERSIONING.md`. Current release: **`PDR1-0-v0.4.0`** — history in `CHANGELOG.md`, per-release explainers in `docs/releases/`.
 - Product code: the Next.js app in `app/`, the extraction pipeline in `services/extraction/`, deploy stack in `deploy/` (see ADR-0002/0003/0005).
 - Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v3.0.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/001-student-mvp1-delta/`; new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
 - Student- and parent-facing copy is **English** for MVP 1.0 (constitution v3.0.0 Principle V); the Arabic verticals stay in the tree and reintroducible. Internal docs and code are English.

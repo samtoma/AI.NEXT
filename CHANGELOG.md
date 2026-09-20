@@ -8,6 +8,97 @@ scheme is described in [docs/VERSIONING.md](docs/VERSIONING.md). Entries are
 written for someone who does not know the codebase, and every line that closes a
 requirement names it.
 
+## [PDR1-0-v0.4.0] — 2026-09-20
+
+The fix pass. Ten of the 27 issues still open after v0.3.0 are closed with code;
+the other fifteen carry a written answer. Two pieces of this release have **no
+requirement covering them** — see *Governance* below.
+
+**Prepared, not deployed**, same as v0.3.0.
+
+### Fixed
+
+- **The lesson showed a student her mastery as a percentage after every answer**
+  ([#17](https://github.com/samtoma/AI.NEXT/issues/17)). Replayed through the
+  real model, the reported `30 → 69 → 30` is reproduced **exactly** and is
+  correct: with a 20% guess rate and a 10% slip rate, two answers genuinely move
+  the belief that far. The defect was rendering it. `MasteryDelta` printed
+  `mastery 30% → 69%` on `/student`, ungated, after every attempt. It now reads
+  `attempted → proficient`, or `still attempted` when the band holds.
+- **The tutor was being handed the same numbers, and read them out**
+  ([#27](https://github.com/samtoma/AI.NEXT/issues/27)). Four places put raw
+  P(L) percentages into the prompt — `mastery today 92%` in the objective lines
+  is the literal source of "92%, that's excellent". All four now pass the named
+  band, with an explicit do-not-quote instruction copied from the engagement
+  block, which has had one since `FR-207`.
+- **The student build no longer carries the internal tools**
+  ([#10](https://github.com/samtoma/AI.NEXT/issues/10),
+  [#11](https://github.com/samtoma/AI.NEXT/issues/11),
+  [#12](https://github.com/samtoma/AI.NEXT/issues/12)). "Evidence Walk",
+  "Content" and "Pipeline" sat beside "Study" in a fourteen-year-old's
+  navigation. The tabs are gone and `/pipeline`, `/gallery`, `/admin/*` and
+  `/dev/*` return 404, so guessing the URL doesn't work either. `/spine` stays
+  reachable — the lesson report sends students there on purpose.
+- **The tutor explained the question before asking it**
+  ([#33](https://github.com/samtoma/AI.NEXT/issues/33),
+  [#34](https://github.com/samtoma/AI.NEXT/issues/34),
+  [#35](https://github.com/samtoma/AI.NEXT/issues/35),
+  [#24](https://github.com/samtoma/AI.NEXT/issues/24),
+  [#23](https://github.com/samtoma/AI.NEXT/issues/23)). Five reports, one cause:
+  every tool the protocol gave the tutor for making a student *do* something
+  produced a **card**. There was no way to express an open question — in the
+  maths and social protocols. The Arabic one has had that instruction all
+  along; it was written once and reached one of three subjects.
+- **The lesson report had no door back into the work**
+  ([#29](https://github.com/samtoma/AI.NEXT/issues/29)). It ends by showing a
+  student her gaps and offered two ways out, neither of which addressed them.
+  A third goes to the plan loop, which is already built weakest-first.
+- **The tutor could drift back to a question the student had moved past**
+  ([#22](https://github.com/samtoma/AI.NEXT/issues/22)) — the whole question
+  bank is in its context and nothing said which one was current.
+
+### Added
+
+- **`/admin/cost` — what the AI spends, by the function that spent it**
+  ([#39](https://github.com/samtoma/AI.NEXT/issues/39)). The instrumentation was
+  never missing; nothing read it. Grouped by function, by teaching-versus-upload,
+  and per student with a projected month — the only basis a price can be built
+  on. Scoped to one environment, because a blended cost figure is a plausible
+  wrong number someone would price against.
+
+### Changed
+
+- **The `lesson_learn` turn cap, 14 → 18.** Asking before explaining and ending
+  on retrieval cost turns. At 14 a full lesson hit the cap *before* the
+  retrieval, so the fix for #34 would have been skipped on exactly the lessons
+  that ran long. ~29% more turns on the most expensive surface, deliberately.
+- **The lesson ends on retrieval**, as its own message, from memory, before any
+  recap. The arc previously read `→ closing recap message`.
+
+### Governance
+
+- **Two shipped things have no requirement.** Access gating and the Socratic
+  protocol are both live and neither appears in `spec.md`, so neither can carry
+  a traceability row without becoming an orphan CI rejects. Named in §9 of the
+  matrix with Samuel as owner rather than papered over with invented FRs.
+- **Nothing in the build can judge teaching behaviour.** The Socratic change,
+  the Arabic/English mixing in #20 and #22's drift are all assessable only by a
+  human reading a transcript. The LLM-judge harness asked for on feedback row
+  015 still does not exist, so every teaching change ships unverifiable.
+- **The tutor prompts assume the student is male** — 23 masculine pronouns in
+  `lib/lesson.ts` alone, and no gender column in `students`. Found in review,
+  on nobody's list.
+
+### Known gaps
+
+Fifteen issues remain open with a written answer rather than a fix. The
+accounts bundle ([#8](https://github.com/samtoma/AI.NEXT/issues/8)) blocks four
+of them, and two more wait on a decision from Samuel:
+[#15](https://github.com/samtoma/AI.NEXT/issues/15) (whether `/spine` stays a
+student surface at all) and
+[#36](https://github.com/samtoma/AI.NEXT/issues/36) (how much grounding a
+student should see).
+
 ## [PDR1-0-v0.3.0] — 2026-09-20
 
 The first release shaped by someone using the product rather than building it.

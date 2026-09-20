@@ -38,10 +38,30 @@ someone ran it, and be willing to demote.
 1. Requirements move to VERIFIED in `traceability.md`, each with its proof.
 2. `CHANGELOG.md` gets an entry under `## [Unreleased]`, written for a reader who
    does not know the codebase.
-3. Bump `app/package.json` on that solution branch, move the Unreleased entries
-   under the new version with the date, and tag: `PDR1-0-v0.2.0`.
+3. Bump `app/package.json` **and `package-lock.json`** on that solution branch,
+   move the Unreleased entries under the new version with the date, and tag:
+   `PDR1-0-v0.4.0`.
 4. Tags are per solution and prefixed with the branch, because the two solutions
-   version independently and a bare `v0.2.0` would be ambiguous.
+   version independently and a bare `v0.4.0` would be ambiguous.
+5. Write the release explainer into `docs/releases/<tag>.html` — the
+   change-by-change page for the founders, who do not read diffs. The
+   changelog says *what* changed; the explainer says what was reported, what
+   was actually wrong, and what proves the fix.
+
+### Step 3 usually needs a human
+
+Agent sessions in the cloud execution environment can push commits to an
+existing branch but get **HTTP 403 on any ref create or delete**. They cannot
+create the tag. An agent that has done steps 1, 2 and the bump should say so and
+hand over the exact command rather than reporting a release it could not finish:
+
+```
+git fetch origin PDR1-0 && git tag -a PDR1-0-vX.Y.Z origin/PDR1-0 \
+  -m "<one-line summary>" && git push origin PDR1-0-vX.Y.Z
+```
+
+Tag `origin/PDR1-0`, never a pinned SHA — the commit that records the pinned SHA
+moves the head past it, so the instruction is stale before it is read.
 
 ## Branches
 

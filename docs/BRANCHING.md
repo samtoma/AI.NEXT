@@ -99,6 +99,38 @@ same day.** A branch that still exists is a branch something will commit to. If 
 agent session is long-running, point it at the solution branch by name and confirm
 that name is still current before it starts.
 
+### The v0.3.0 absorption, and one deliberate exception to the squash rule
+
+On 2026-09-20 three branches were merged into `PDR1-0`: `wip/q3-q4-explore`
+(the Noor Play skin plus ten Prototype 1.1 fixes), `claude/noor-play-design-system`
+(absorbed with no net change — `wip/q3-q4-explore` was cut from it and carried a
+later draft of the same triage document) and `claude/widget-render-fixes`.
+
+They were **merged, not squashed**, against the rule above. The reason is
+specific and does not generalise: the closing comment on each of GitHub issues
+#16, #19, #21, #26, #31, #40, #41 and #42 cites an individual commit SHA as its
+fix evidence. Squashing would have made all eight unreachable from `PDR1-0` and
+broken the trail from the issue to the change that closed it. **Squash by
+default; merge when something outside the repository points at a commit inside
+the branch.**
+
+### Deleting a branch may need a human
+
+Agent sessions running in the cloud execution environment can push commits to an
+existing branch but get **HTTP 403 on any ref create or delete** — no tags, no
+branch deletion. So an agent can absorb a branch and cannot finish the job.
+
+Whoever is cleaning up after a merge like the one above runs:
+
+```
+git push origin --delete wip/q3-q4-explore \
+                         claude/noor-play-design-system \
+                         claude/widget-render-fixes
+```
+
+All three are ancestors of `PDR1-0`, so nothing is lost. If they are still on the
+remote, that is why.
+
 ## What is deliberately not here
 
 - **No `develop` branch.** Two solutions that release independently do not share

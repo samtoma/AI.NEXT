@@ -17,10 +17,9 @@ Read CLAUDE.md, then docs/PROJECT_STATE.md, then docs/LOCAL-DEV.md.
 
 I want the Student MVP 1.0 comparison build running on this machine.
 
-1. Sync first. I have been working on the branch
-   claude/tamer-shared-drive-access-ddpypu — fetch and check it out, and tell me
-   what changed since my local copy (git log --oneline). Do not merge anything
-   into main.
+1. Sync first. The active branch is PDR1-0 — fetch and check it out, and tell
+   me what changed since my local copy (git log --oneline). Do not merge
+   anything into main.
 
 2. Then bring the stack up:
 

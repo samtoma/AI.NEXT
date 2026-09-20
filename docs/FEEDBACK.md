@@ -45,6 +45,22 @@ issue:
 | Deferred to a later version | `roadmap` | Moves to [`ROADMAP.md`](ROADMAP.md) under a named version. **Not closed** — deferred is a decision, and it stays visible. |
 | Declined | `declined` | Closed **with the reason written down**. A declined idea with a recorded reason stops being re-raised every six weeks. |
 | Needs a decision | `needs-decision` | Blocked on Samuel. If it sits here more than two weeks it is really `declined` and should say so. |
+| Fixed on the spot | `defect` | Small, obvious, no design question: fix it, close the issue **with the commit that did it and the evidence**, and name the requirement it was violating. |
+
+**The trap in row 6, learned 2026-09-20.** "Fix it and close it" is the fastest
+route and the one that quietly produces untracked code. Twice in the v0.4.0 pass
+a fix landed for something **no requirement covered at all** — the access gating
+(#10/#11/#12) and the Socratic teaching protocol (#33/#34/#35). Both shipped;
+neither can appear in the traceability matrix, because a row naming a
+requirement the spec does not define is an orphan and `--check` rejects it.
+
+So the rule is: **before closing an issue with a fix, name the requirement it
+violated.** If you cannot, the fix is new scope wearing a defect's clothes, and
+it takes the `accepted` route — a requirement first, then the code. If it has
+already shipped, it goes in §9 of the matrix as an owned gap. **Never invent an
+FR to cover work already done**: that is the matrix laundering drift instead of
+reporting it, and the whole point of a computed matrix is that it cannot be
+talked round.
 
 ### 3. Promote — the only way a requirement is born
 

@@ -1,7 +1,44 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-20
+> Last updated: 2026-09-20 (`PDR1-0-v0.4.0`)
+
+## 🐞 FEEDBACK CLOSED OUT — `PDR1-0-v0.4.0` (2026-09-20, `PDR1-0`)
+
+All 37 of Tamer's Prototype 1.1 issues are now answered: **17 closed with code, 20 open
+with a written answer.** Every closure cites the commit that fixed it; every open one says
+what is true today and what it is waiting on. GitHub Issues is the record — not this file.
+
+Ten fixed in this pass, on top of the seven in v0.3.0. The three worth knowing:
+
+- **#17 / #27 were one cause.** The lesson printed `mastery 30% → 69%` after every answer,
+  and four places fed the same raw P(L) into the tutor's prompt, which is where
+  "92%, that's excellent" came from. Replayed against the real model, the reported swing
+  is *exactly correct BKT* — the defect was showing it. Everything now carries the named
+  band. See `CHANGELOG.md`.
+- **#10 / #11 / #12 — the student build no longer carries the internal tools.** Tabs gone,
+  routes 404. A **build-time switch, not a permission system**; roles still need `FR-106`.
+- **#33/#34/#35/#24/#23 — the Socratic cluster.** One cause: every tool the protocol gave
+  the tutor for making a student *do* something produced a **card**. No way to express an
+  open question — in maths and social. *The Arabic protocol has had that instruction all
+  along.* It was written once and reached one of three subjects.
+
+**Three things this pass admits, and they matter more than the fixes:**
+
+1. **Access gating and the Socratic protocol have no requirement.** Both shipped, neither
+   in `spec.md`, so neither can carry a traceability row without being an orphan CI
+   rejects. §9 of the matrix, Samuel to own. Do not invent FRs to cover them.
+2. **Nothing in the build can judge teaching behaviour.** The Socratic change, #20's
+   language mixing and #22's drift are assessable only by a human reading a transcript.
+   The LLM-judge harness asked for on feedback row 015 does not exist, so **every teaching
+   change ships unverifiable.**
+3. **The tutor prompts assume the student is male** — 23 masculine pronouns in
+   `lib/lesson.ts` alone, no gender column in `students`. On nobody's list.
+
+**Waiting on a decision from Samuel** (both block work that is otherwise ready):
+[#15](https://github.com/samtoma/AI.NEXT/issues/15) — does `/spine` stay a student surface
+at all? · [#36](https://github.com/samtoma/AI.NEXT/issues/36) — how much grounding should
+a student see?
 
 ## 🏷️ RELEASE PREPARED — `PDR1-0-v0.3.0` (2026-09-20, `PDR1-0`)
 
