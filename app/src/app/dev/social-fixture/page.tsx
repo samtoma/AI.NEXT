@@ -75,6 +75,7 @@ const FIXTURE: LessonData = {
   docTitle: "الدراسات الاجتماعية — الصف الثالث الإعدادي",
   studentName: "Omar Hassan",
   studentId: 1,
+  grade: "9",
 };
 
 const A = (text: string): ChatMsg => ({ role: "assistant", text });

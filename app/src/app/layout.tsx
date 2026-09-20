@@ -12,7 +12,7 @@ import Link from "next/link";
 import "./globals.css";
 import { NavLinks } from "@/components/NavLinks";
 import { Logo } from "@/components/Logo";
-import { NourMark } from "@/components/NourMark";
+import { NoorMark } from "@/components/NoorMark";
 import { IS_MVP1 } from "@/lib/env";
 
 const fraunces = Fraunces({
@@ -31,7 +31,7 @@ const splineMono = Spline_Sans_Mono({
   subsets: ["latin"],
 });
 
-/* ---------------- the Nour families (MVP 1.0 comparison build) -------------
+/* ---------------- the Noor families (MVP 1.0 comparison build) -------------
    Baloo Bhaijaan 2 and Cairo each ship Latin AND Arabic in one family, which
    is precisely why the handoff picked them: bilingual parity — same face, same
    size, same weight in both scripts — becomes a property of the type stack
@@ -105,7 +105,7 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
 
 export const metadata: Metadata = IS_MVP1
   ? {
-      title: "Nour — study with what you already have",
+      title: "Noor — study with what you already have",
       description:
         "A tutor that works from your own book and worksheet, one step at a time.",
     }
@@ -121,7 +121,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   // data-ds is the whole switch: globals.css redefines every semantic token
-  // under [data-ds="nour"], so the comparison build reskins without a single
+  // under [data-ds="noor"], so the comparison build reskins without a single
   // component being forked, and the frozen baseline (attribute absent) renders
   // byte-identically to before.
   //
@@ -130,7 +130,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-ds={IS_MVP1 ? "nour" : undefined}
+      data-ds={IS_MVP1 ? "noor" : undefined}
       className={`${fraunces.variable} ${splineSans.variable} ${splineMono.variable} ${notoNaskhArabic.variable} ${baloo.variable} ${cairo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
@@ -139,9 +139,9 @@ export default function RootLayout({
             <Link href="/" className="flex items-center gap-2.5">
               {IS_MVP1 ? (
                 <>
-                  <NourMark className="h-8 w-8 shrink-0" />
+                  <NoorMark className="h-8 w-8 shrink-0" />
                   <span className="font-display text-lg font-bold tracking-tight text-ink">
-                    Nour
+                    Noor
                   </span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
                     Prep 3 · Mathematics
@@ -167,7 +167,7 @@ export default function RootLayout({
           <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
             <span>
               {IS_MVP1
-                ? "Nour · Student MVP 1.0 — comparison environment"
+                ? "Noor · Student MVP 1.0 — comparison environment"
                 : "AI.Next · Agent-Native Data Spine — investor preview"}
             </span>
             {/* course-level, not lesson-level: any selected lesson/unit shows

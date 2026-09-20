@@ -102,7 +102,7 @@ psql $PG -c "update questions set status='live', reviewed_by='local-dev', review
 **The generated content** — the misconception catalogue, the 543-question
 generated bank (ADR-0008) and the 48 widget questions (ADR-0009). These live in
 `services/extraction/seed/generated/` and are EXPORTS of state that was already
-generated, reviewed and served, so they replay with `--restore`, which honours
+generated, reviewed and served, so they replay with `--restore`, which honoors
 the review stamp each row carries. A plain load would force every row to
 unreviewed and silently discard the 465-item human sample.
 

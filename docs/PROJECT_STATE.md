@@ -1,7 +1,31 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-13
+> Last updated: 2026-09-16
+
+## 🎨 DESIGN SYSTEM — Master overturned in favour of Play (2026-09-16, `PDR1-0`)
+
+Blocked item #5 below (design: master shipped rather than Play) is resolved: the `[data-ds="noor"]`
+skin is now **Play** (ages 10–16 — sticker chrome, Baloo-everywhere typography, 52px targets, 7 named
+animations), replacing Master (ages 15–18, restrained). Full replace, not a new switchable variant —
+the age-band switching rule was never defined, and Prep-3 (14–15) sits inside both bands anyway.
+
+Handoff bundle: `docs/design/handoffs/noor-play/` (`design_handoff_nour_play` v1.0a — CLAUDE.md,
+tokens.css, tokens.json, reference/). Decision record: `docs/design/noor/README.md`.
+
+**Shipped this pass:**
+- Full token/colour/typography/motion layer in `app/src/app/globals.css` under `[data-ds="noor"]`:
+  the sticker system (3px ink outlines, hard offset shadows, 14/20/28/999 radii, `.play-pressable`),
+  the seven named animations, and blanket radius/border-width safety nets so any plain
+  `rounded-*`/`border` utility picks up the new look with no component touched.
+- Component-level sweep, additive-only, over `components/student/*` and `components/chat/*` (press,
+  shadow and animation classes wired onto real buttons, cards and chat bubbles).
+
+**Explicitly out of scope this pass:** internal tooling under `/admin`, `/pipeline`, `/spine`,
+`/dev`, `/gallery`; the per-widget SVG verdict-ink colours in `components/student/widgets/*`.
+
+**Open:** no ADR exists yet for this reversal — it needs Samuel's explicit confirmation before it's
+locked in as one, same as the original Master pick was his call.
 
 ## 🌿 ONE BRANCH PER SOLUTION — ADR-0010 (2026-09-13)
 
@@ -196,6 +220,7 @@ the app. See `docs/LOCAL-DEV.md`.
    decisions.md Q5 replaced with the picker.
 4. **T001** — create and push the long-lived `mvp1` branch.
 5. Design: **master** variant shipped rather than **Play**; reversible as a token swap.
+   Resolved 2026-09-16 — switched to Play, see the entry at the top of this document.
 
 ## 🔀 NEW PRD ADOPTED — scope locked, constitution v2.0.0, ready to build (2026-09-08, `claude/tamer-shared-drive-access-ddpypu`)
 **`PRD: AI Tutor — Student MVP` v0.4** (Tamer Deif, Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`)

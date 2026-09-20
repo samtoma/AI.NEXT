@@ -57,7 +57,7 @@ export function AskSpineDock({
     return (
       <button
         onClick={() => setOpen(true)}
-        className="anim-pop fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full border border-accent/40 bg-ink py-2.5 pl-4 pr-5 text-paper shadow-[0_18px_40px_-16px_rgba(13,74,66,0.7)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep"
+        className="anim-pop fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full border border-accent/40 bg-ink py-2.5 pl-4 pr-5 text-paper shadow-[0_18px_40px_-16px_rgba(13,74,66,0.7)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow"
       >
         <SpineGlyph />
         <span className="font-display text-[15px] font-medium">
@@ -93,7 +93,7 @@ export function AskSpineDock({
           <button
             onClick={() => setOpen(false)}
             aria-label="Collapse chat"
-            className="rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink"
+            className="rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink play-pressable"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
@@ -128,7 +128,7 @@ export function AskSpineDock({
             <p className="font-display text-[15px] font-medium text-ink">
               Chat with the curriculum itself.
             </p>
-            <p className="mx-auto mt-2 max-w-[300px] text-[12px] leading-relaxed text-ink-soft">
+            <p className="mx-auto mt-2 max-w-[300px] text-[12px] leading-relaxed text-ink-soft font-read">
               Answers are grounded in the knowledge graph on the left — watch
               the objectives it cites{" "}
               <span className="font-semibold text-accent-deep">

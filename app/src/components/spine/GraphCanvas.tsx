@@ -30,7 +30,7 @@ const ROW_SPREAD = NODE_H + 34; // vertical spacing of stacked nodes in a column
 type BandKey = SpineSubject | null;
 
 const UNFILED_BAND = {
-  label: "غير مصنّف · unfiled",
+  label: "unfiled",
   accent: "var(--ink-faint)",
   wash: "transparent",
   line: "var(--line)",
@@ -511,11 +511,10 @@ export function GraphCanvas({
                   >
                     <span aria-hidden>🔗</span>
                     <span
-                      dir="rtl"
                       className="font-display text-[12px] font-semibold"
                       style={{ color: "var(--gold)" }}
                     >
-                      صلة بين مادتين
+                      Cross-subject link
                     </span>
                   </div>
                   <div className="px-3 py-2.5">

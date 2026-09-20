@@ -12,7 +12,7 @@ import { DashboardViewed } from "@/components/DashboardViewed";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Where you stand — Nour" };
+export const metadata = { title: "Where you stand — Noor" };
 
 /**
  * /dashboard — per-topic performance (PRD D1, FR-401).
@@ -30,7 +30,7 @@ export const metadata = { title: "Where you stand — Nour" };
  * strong on three units and lost on a fourth is not "68%" — that number hides
  * the only thing worth acting on. `lib/dashboard.ts` does not even compute one.
  *
- * Colour: the Nour five-step mastery ramp (lib/mastery.ts). It replaced a
+ * Colour: the Noor five-step mastery ramp (lib/mastery.ts). It replaced a
  * burnt-sienna scale that the design system forbids outright — there is no red
  * and no coral in this palette, because the persona's stated fear is looking
  * stupid. Every row still states the percentage AND the band name, and the
@@ -69,8 +69,8 @@ export default async function DashboardPage() {
             href="/student"
             className="mt-3 inline-flex min-h-[44px] items-center rounded-xl px-4 text-[14px] font-semibold"
             style={{
-              background: "var(--nour-action)",
-              color: "var(--nour-on-action)",
+              background: "var(--noor-action)",
+              color: "var(--noor-on-action)",
             }}
           >
             Start practising

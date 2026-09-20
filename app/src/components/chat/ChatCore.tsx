@@ -40,9 +40,17 @@ export interface ChatCoreHandle {
   widgetNote(note: string): void;
 }
 
+/**
+ * A suggestion chip is either plain text — sent as a normal chat turn — or an
+ * action chip whose `onSelect` fires directly (e.g. the lesson's inline
+ * "Finish lesson" chip, which must act exactly like the header button and
+ * never round-trip through the model).
+ */
+export type ChatSuggestion = string | { label: string; onSelect: () => void };
+
 export interface ChatCoreProps {
   surface: "spine_chat" | "student_chat" | "lesson_learn" | "lesson_review";
-  suggestions?: string[];
+  suggestions?: ChatSuggestion[];
   questionId?: string;
   wrongAnswer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
@@ -63,6 +71,15 @@ export interface ChatCoreProps {
    * friendly citation chips, [live event] rows hidden.
    */
   debug?: boolean;
+  /**
+   * True only for the RTL/Arabic-script subjects (`isRtlSubject`/
+   * `isRtlSpineSubject` in `lib/subjects.ts`). Independent of `debug` — this
+   * is the language axis, not the instrumentation axis. Default false keeps
+   * every hardcoded student-facing string here in English, which is the
+   * MVP 1.0 default; a caller passes true only when it knows its subject is
+   * one of the RTL verticals.
+   */
+  arabicUi?: boolean;
   /** scripted local line shown instantly while the first AI turn streams */
   openingLine?: string;
   lookupQuestion?: (qid: string) => SpineQuestion | undefined;
@@ -138,6 +155,11 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
+// Sent by the check-in card's affirmative button and the matching lesson
+// suggestion chip — the one literal string both call sites use as their
+// "the student says they're done" signal (see CheckInCard, LessonSession).
+const GOT_IT_SENTINEL = "Got it — next ✓";
+
 export function ChatCore({
   surface,
   suggestions = [],
@@ -151,6 +173,7 @@ export function ChatCore({
   placeholder = "Ask the spine…",
   emptyState,
   debug = true,
+  arabicUi = false,
   openingLine,
   lookupQuestion,
   resolveCite,
@@ -195,6 +218,25 @@ export function ChatCore({
   // live mirror so notes appended just before an auto-continue are included
   const messagesRef = useRef<ChatMsg[]>(messages);
   messagesRef.current = messages;
+  // Which pushed question (if any) has no matching "the student answered…"
+  // event note yet — read straight off the transcript so this holds
+  // regardless of whether the host surface wires up onDirective/interceptWidget.
+  // Guards the "Got it" affordance below from skipping a real attempt (FR-1214).
+  const openQuestionId = useMemo(() => {
+    let open: string | null = null;
+    for (const m of messages) {
+      if (m.role === "assistant" && m.text) {
+        for (const b of parseMessage(m.text, true)) {
+          if (b.t === "question") open = b.qid;
+        }
+      } else if (m.kind === "event" && open && m.text.includes(open)) {
+        open = null;
+      }
+    }
+    return open;
+  }, [messages]);
+  const openQuestionIdRef = useRef<string | null>(null);
+  openQuestionIdRef.current = openQuestionId;
   const continueTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // live streaming flag (state is stale inside timers) + queued auto-continue
   const streamingRef = useRef(false);
@@ -300,6 +342,22 @@ export function ChatCore({
     async (raw: string, opts?: { hidden?: boolean }) => {
       const text = raw.trim();
       if (!text || streaming || streamingRef.current || capped) return;
+      // The "Got it — next ✓" check-in affordance is an acknowledgement, not
+      // an attempt — it must never let the lesson move past a question that
+      // was never answered (FR-1214: the client can't decide it was solved).
+      // Caught here, before anything reaches the model, so it costs nothing.
+      if (text === GOT_IT_SENTINEL && openQuestionIdRef.current) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "note",
+            kind: "say",
+            localOnly: true,
+            text: "Give it a try first or tell me if you need help.",
+          },
+        ]);
+        return;
+      }
       // a VISIBLE user action re-engages bottom-stick — after reading the
       // leading passage, the student expects to see the reply they asked for
       if (!opts?.hidden) stuckToBottom.current = true;
@@ -611,8 +669,12 @@ export function ChatCore({
                 kind: "say",
                 localOnly: true,
                 text: r.isCorrect
-                  ? "برافو ✓ — شايف إجابتك…"
-                  : "ولا يهمك — بص هنا…",
+                  ? arabicUi
+                    ? "برافو ✓ — شايف إجابتك…"
+                    : "Nice ✓ — check your answer…"
+                  : arabicUi
+                    ? "ولا يهمك — بص هنا…"
+                    : "No worries — look here…",
               } satisfies ChatMsg,
             ]
           : []),
@@ -635,7 +697,9 @@ export function ChatCore({
                 role: "note",
                 kind: "say",
                 localOnly: true,
-                text: "✓ شايف إجابتك… ثانية واحدة",
+                text: arabicUi
+                  ? "✓ شايف إجابتك… ثانية واحدة"
+                  : "✓ check your answer… one second",
               } satisfies ChatMsg,
             ]
           : []),
@@ -696,6 +760,7 @@ export function ChatCore({
             key={i}
             msg={m}
             debug={debug}
+            arabicUi={arabicUi}
             writing={lessonSurface}
             dim={paced && streaming && m.role === "assistant" && !m.streaming}
             lookupQuestion={lookupQuestion}
@@ -717,16 +782,19 @@ export function ChatCore({
       {/* suggestion chips — stay clickable after every stream */}
       {suggestions.length > 0 && !capped && (
         <div className="flex flex-wrap gap-1.5 border-t border-line-soft px-4 pb-1.5 pt-2.5">
-          {suggestions.map((s) => (
-            <button
-              key={s}
-              onClick={() => send(s)}
-              disabled={streaming}
-              className="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-1 text-start text-[11px] font-medium leading-snug text-accent-deep transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent enabled:hover:text-paper disabled:opacity-40"
-            >
-              {s}
-            </button>
-          ))}
+          {suggestions.map((s) => {
+            const label = typeof s === "string" ? s : s.label;
+            return (
+              <button
+                key={label}
+                onClick={() => (typeof s === "string" ? send(s) : s.onSelect())}
+                disabled={streaming}
+                className="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-1 text-start text-[11px] font-medium leading-snug text-accent-deep transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent enabled:hover:text-paper disabled:opacity-40 play-pressable sticker-shadow-sm"
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -743,14 +811,14 @@ export function ChatCore({
           onKeyDown={(e) => e.key === "Enter" && send(input)}
           placeholder={capped ? "AI turn limit reached for this question" : placeholder}
           disabled={streaming || capped}
-          className="min-w-0 flex-1 rounded-full border border-line bg-card px-4 py-2 text-[13px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-accent"
+          className="min-w-0 flex-1 rounded-full border border-line bg-card px-4 py-2 text-[13px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-accent sticker-shadow-sm"
         />
         {inputAccessory?.({ setInput })}
         <button
           onClick={() => send(input)}
           disabled={streaming || capped || !input.trim()}
           aria-label="Send"
-          className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-ink text-paper transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent-deep disabled:opacity-30"
+          className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-ink text-paper transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent-deep disabled:opacity-30 play-pressable sticker-shadow-sm"
         >
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
             <path
@@ -776,6 +844,7 @@ export function ChatCore({
 const MessageRow = memo(function MessageRow({
   msg: m,
   debug,
+  arabicUi,
   writing,
   dim,
   lookupQuestion,
@@ -793,6 +862,8 @@ const MessageRow = memo(function MessageRow({
 }: {
   msg: ChatMsg;
   debug: boolean;
+  /** RTL/Arabic-script subject — forwarded to question-card/citation strings */
+  arabicUi: boolean;
   /** lesson surfaces: "بيكتب…" writing shimmer instead of the graph label */
   writing: boolean;
   /** another message is currently revealing — de-emphasize this one */
@@ -822,7 +893,7 @@ const MessageRow = memo(function MessageRow({
       <div className="anim-pop flex justify-end">
         <div
           dir="auto"
-          className="max-w-[85%] rounded-xl rounded-ee-sm bg-ink px-3.5 py-2 text-[13px] leading-relaxed text-paper shadow-sm"
+          className="max-w-[85%] rounded-xl rounded-ee-sm bg-ink px-3.5 py-2 text-[13px] leading-relaxed text-paper shadow-sm noor-bubble-student"
           style={{ textAlign: "start" }}
         >
           {m.text}
@@ -838,7 +909,7 @@ const MessageRow = memo(function MessageRow({
         <div className="anim-pop flex justify-start" style={dimStyle}>
           <div
             dir="auto"
-            className="max-w-[85%] rounded-xl rounded-es-sm border border-line-soft bg-card-warm px-3.5 py-2 text-[13px] leading-relaxed text-ink-soft shadow-sm"
+            className="max-w-[85%] rounded-xl rounded-es-sm border border-line-soft bg-card-warm px-3.5 py-2 text-[13px] leading-relaxed text-ink-soft shadow-sm noor-bubble-tutor"
             style={{ textAlign: "start" }}
           >
             {m.text}
@@ -867,15 +938,15 @@ const MessageRow = memo(function MessageRow({
     <div className="anim-pop flex justify-start" style={dimStyle}>
       <div
         dir="auto"
-        className={`max-w-[94%] rounded-xl rounded-es-sm border px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-sm ${
+        className={`max-w-[94%] rounded-xl rounded-es-sm border px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-sm font-read ${
           m.error
             ? "border-rust/40 bg-rust-wash/50"
-            : "border-line-soft bg-card-warm"
+            : "border-line-soft bg-card-warm noor-bubble-tutor"
         }`}
         style={{ textAlign: "start" }}
       >
         {m.streaming && visibleText.length === 0 && (
-          <Thinking writing={writing} />
+          <Thinking writing={writing} arabicUi={arabicUi} />
         )}
 
         {blocks.map((b, i) => {
@@ -884,7 +955,12 @@ const MessageRow = memo(function MessageRow({
           if (b.t === "beat") return null; // pacing marker — renders as time
           if (b.t === "check_in") {
             return (
-              <CheckInCard key={i} onPick={onCheckIn} disabled={!!m.streaming} />
+              <CheckInCard
+                key={i}
+                onPick={onCheckIn}
+                disabled={!!m.streaming}
+                arabicUi={arabicUi}
+              />
             );
           }
           if (b.t === "widget") {
@@ -931,6 +1007,7 @@ const MessageRow = memo(function MessageRow({
                 key={i}
                 question={q}
                 debug={debug}
+                lang={arabicUi ? "ar" : "en"}
                 onResult={onAttempt}
                 onOpenQuestion={onOpenQuestion}
               />
@@ -958,6 +1035,7 @@ const MessageRow = memo(function MessageRow({
                             key={s}
                             cite={seg}
                             friendly={!debug}
+                            arabic={arabicUi}
                             resolve={resolveCite}
                             onActivate={onCiteClick}
                           />
@@ -1021,6 +1099,7 @@ const MessageRow = memo(function MessageRow({
                     key={s}
                     cite={seg}
                     friendly={!debug}
+                    arabic={arabicUi}
                     resolve={resolveCite}
                     onActivate={onCiteClick}
                   />
@@ -1083,13 +1162,13 @@ function SubjectHandoffCard({
         <button
           onClick={onOpen}
           disabled={!onOpen}
-          className="rounded-full bg-ink px-3.5 py-1.5 text-[12.5px] font-medium text-paper transition-opacity hover:opacity-90 disabled:opacity-40"
+          className="rounded-full bg-ink px-3.5 py-1.5 text-[12.5px] font-medium text-paper transition-opacity hover:opacity-90 disabled:opacity-40 play-pressable sticker-shadow-sm"
         >
           افتح {label} ←
         </button>
         <button
           onClick={() => setDismissed(true)}
-          className="rounded-full border border-line px-3.5 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:text-ink"
+          className="rounded-full border border-line px-3.5 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:text-ink play-pressable sticker-shadow-sm"
         >
           نكمل
         </button>
@@ -1113,7 +1192,7 @@ function BoardChip({
     <button
       dir="rtl"
       onClick={onOpen}
-      className="anim-pop my-1.5 inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent-wash px-3 py-1.5 text-[12px] font-semibold text-accent-deep transition-all duration-150 hover:-translate-y-px hover:bg-accent hover:text-paper"
+      className="anim-pop my-1.5 inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent-wash px-3 py-1.5 text-[12px] font-semibold text-accent-deep transition-all duration-150 hover:-translate-y-px hover:bg-accent hover:text-paper play-pressable sticker-shadow-sm"
     >
       <span aria-hidden className="text-[11px]">
         {flavor === "figure" ? "✎" : "⚡"}
@@ -1123,13 +1202,15 @@ function BoardChip({
   );
 }
 
-/** {{check_in}} — "لسه معايا؟" two-big-buttons card. */
+/** {{check_in}} — two-big-buttons card. */
 function CheckInCard({
   onPick,
   disabled,
+  arabicUi,
 }: {
   onPick?: (choice: string) => void;
   disabled: boolean;
+  arabicUi: boolean;
 }) {
   const [picked, setPicked] = useState<"no" | "yes" | null>(null);
   const choose = (which: "no" | "yes", text: string) => {
@@ -1137,48 +1218,64 @@ function CheckInCard({
     setPicked(which);
     onPick?.(text);
   };
+  const dir = arabicUi ? "rtl" : "ltr";
+  const noSignal = arabicUi
+    ? "لسه مش فاهم — اشرحها بطريقة تانية"
+    : "Not yet — explain it another way";
   return (
     <div className="anim-pop my-2 rounded-lg border border-accent/40 bg-accent-wash/60 px-3.5 py-3">
-      <p dir="rtl" className="mb-2.5 text-center font-display text-[16px] font-medium text-ink">
-        لسه معايا؟
+      <p dir={dir} className="mb-2.5 text-center font-display text-[16px] font-medium text-ink">
+        {arabicUi ? "لسه معايا؟" : "Still with me?"}
       </p>
       <div className="grid grid-cols-2 gap-2">
         <button
-          dir="rtl"
-          onClick={() => choose("no", "لسه مش فاهم — say it another way")}
+          dir={dir}
+          onClick={() => choose("no", noSignal)}
           disabled={disabled || picked != null}
-          className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 ${
+          className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 play-pressable sticker-shadow-sm ${
             picked === "no"
               ? "border-rust bg-rust text-paper"
               : "border-rust/40 bg-card text-rust enabled:hover:-translate-y-px enabled:hover:border-rust disabled:opacity-50"
           }`}
         >
-          لسه مش فاهم 🤔
+          {arabicUi ? "لسه مش فاهم 🤔" : "Not yet 🤔"}
         </button>
         <button
-          dir="rtl"
-          onClick={() => choose("yes", "Got it — next ✓")}
+          dir={dir}
+          onClick={() => choose("yes", GOT_IT_SENTINEL)}
           disabled={disabled || picked != null}
-          className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 ${
+          className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 play-pressable sticker-shadow-sm ${
             picked === "yes"
               ? "border-accent bg-accent text-paper"
               : "border-accent/40 bg-card text-accent-deep enabled:hover:-translate-y-px enabled:hover:border-accent disabled:opacity-50"
           }`}
         >
-          كمل ✓
+          {arabicUi ? "كمل ✓" : GOT_IT_SENTINEL}
         </button>
       </div>
     </div>
   );
 }
 
-function Thinking({ writing }: { writing: boolean }) {
+function Thinking({
+  writing,
+  arabicUi,
+}: {
+  writing: boolean;
+  arabicUi: boolean;
+}) {
   return (
     <span className="inline-flex items-center gap-1.5 py-0.5">
       {writing ? (
-        <span dir="rtl" className="text-[12.5px] italic text-ink-faint">
-          بيكتب…
-        </span>
+        arabicUi ? (
+          <span dir="rtl" className="text-[12.5px] italic text-ink-faint">
+            بيكتب…
+          </span>
+        ) : (
+          <span className="text-[12.5px] italic text-ink-faint">
+            writing…
+          </span>
+        )
       ) : (
         <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
           walking the graph

@@ -7,8 +7,10 @@ import {
   lessonAnchorLo,
   sanitizeLessonSlug,
 } from "@/lib/lesson";
+import { deriveMasteryStage, learnOpeningFrame } from "@/lib/checkin";
 import { spineKeyOf } from "@/lib/subjects";
 import { resolveStudentId } from "@/lib/student-context";
+import { gradeLabel } from "@/lib/profile";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
 
 /**
@@ -201,8 +203,16 @@ export async function POST(req: Request) {
     )
     .join("\n");
 
-  const basePrompt = `Session: ${mode === "learn" ? `AI-taught lesson (the student said he understood NOTHING at school and was taught from zero)` : `quick revision (the student said he understood everything at school)`}.
-Student: ${data.studentName}, grade 10. Lesson: ${data.lessonRef} — ${data.title} (${data.moduleLabel}).
+  // Same mastery-stage premise the learn-mode tutor prompt opens with
+  // (lib/lesson.ts `learnOpeningFrame`) — the grader must not judge the
+  // session against a "he understood NOTHING" starting point when the real
+  // one might be "first time seeing this" or "already handles it well".
+  const sessionDesc =
+    mode === "learn"
+      ? `AI-taught lesson (${learnOpeningFrame(deriveMasteryStage(data.los), data.studentName.split(" ")[0]).premise})`
+      : `quick revision (the student said he understood everything at school)`;
+  const basePrompt = `Session: ${sessionDesc}.
+Student: ${data.studentName}, ${gradeLabel(data.grade).toLowerCase()}. Lesson: ${data.lessonRef} — ${data.title} (${data.moduleLabel}).
 Learning objectives covered:
 ${loLines}
 

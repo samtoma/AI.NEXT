@@ -5,6 +5,13 @@ import { getLessonContent } from "@/lib/lesson-content";
 import { getSubjectSummaries } from "@/lib/subject-queries";
 import { courseIdOfSpineKey } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
+import {
+  deriveMasteryStage,
+  deriveRecommendation,
+  deriveWeakestSubskill,
+  estimateMinutes,
+  buildRecommendationReason,
+} from "@/lib/checkin";
 import { DemoStudentSwitcher } from "@/components/DemoStudentSwitcher";
 import { StudentLoop } from "@/components/student/StudentLoop";
 import { LessonCheckIn } from "@/components/student/LessonCheckIn";
@@ -128,7 +135,31 @@ export default async function StudentPage({
   const lesson = await getLessonData(effectiveSlug, studentId);
   // Offer the readable «شرح الدرس» door only when this lesson has a bundle.
   const hasContent = (await getLessonContent(lesson.slug)) !== null;
+
+  // Check-in card derivation (Noor Play brief). recommendationReason is
+  // logged here and stops here — it must never become a prop, so a client
+  // component can never render it (docs/design/handoffs/noor-play).
+  const masteryStage = deriveMasteryStage(lesson.los);
+  const weakestSubskill = deriveWeakestSubskill(lesson.los);
+  const recommendation = deriveRecommendation(masteryStage);
+  const estimates = estimateMinutes(lesson.los, lesson.questions.length);
+  console.info(
+    "[checkin] %s: %s",
+    lesson.slug,
+    buildRecommendationReason(masteryStage, weakestSubskill, recommendation)
+  );
+
   return withSwitcher(
-    <LessonCheckIn lesson={lesson} lessons={lessons} hasContent={hasContent} />
+    <LessonCheckIn
+      lesson={lesson}
+      lessons={lessons}
+      hasContent={hasContent}
+      masteryStage={masteryStage}
+      weakestSubskill={weakestSubskill?.label ?? null}
+      recommendation={recommendation}
+      estimates={estimates}
+      completedToday={false /* no real "attempted today" signal yet — never inferred from time of day */}
+      trial={null /* no trial/subscription model in this MVP — chip stays hidden */}
+    />
   );
 }

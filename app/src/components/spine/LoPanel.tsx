@@ -102,7 +102,7 @@ export function LoPanel({
 
         {connections.length > 0 && (
           <div>
-            <p className="rule-label mb-2.5">🔗 صلات بمواد أخرى · cross-subject connections</p>
+            <p className="rule-label mb-2.5">🔗 cross-subject connections</p>
             <div className="space-y-2">
               {connections.map((c) => (
                 <button

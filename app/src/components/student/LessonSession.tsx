@@ -18,6 +18,7 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
+import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
 import { renderMathWidget } from "@/components/student/widgets/render-math-widget";
@@ -69,36 +70,52 @@ import {
 
 const REVIEW_TURN_CAP = 5;
 
+// Voice UI pulled per founder feedback 016 — backend (lib/voice.ts,
+// lib/tts-client.ts, api/tts/route.ts) stays wired and dormant; flip this
+// back on to restore the toggle button and mic input with no other changes.
+const VOICE_UI_ENABLED = false;
+
 const MODE_COPY: Record<
   LessonMode,
   {
     label: string;
-    ar: string;
     chip: string;
     finish: string;
-    autoStart: string;
     opening: string;
   }
 > = {
   learn: {
     label: "Teach me",
-    ar: "الدرس من الأول",
     chip: "learn mode · AI-led lesson",
     finish: "Finish lesson",
-    autoStart:
-      "Start now. I just came home from school and I understood NOTHING from today's lesson. Teach me from zero, from the very first idea.",
-    opening: "يلا بينا 💪 بجهّز درس النهاردة… ✏️",
+    opening: "Let's go 💪 setting up today's lesson… ✏️",
   },
   review: {
     label: "Quick revision",
-    ar: "مراجعة سريعة",
     chip: "review mode · 3 minutes",
     finish: "End now",
-    autoStart:
-      "I understood today's lesson at school completely. Start the quick lock-it-in revision now — first check question please.",
-    opening: "ثواني — بجهّز أسئلة المراجعة السريعة… ⏱",
+    opening: "One sec — setting up the quick revision questions… ⏱",
   },
 };
+
+/**
+ * The HIDDEN first "student" message that kicks off a session (`autoStart`/
+ * `autoStartHidden` below — the model reads it, the transcript never shows
+ * it). Learn mode's used to hardcode "I understood NOTHING... teach me from
+ * zero" for every session, including a lesson never attempted — the exact
+ * apologetic-tone bug `learnOpeningFrame` (lib/checkin.ts) already fixed on
+ * the tutor's OWN system prompt kept resurfacing because the model was also
+ * reacting to this fabricated self-report, independent of that prompt.
+ * `learnAutoStartLine` carries the same mastery-stage bands so the two can
+ * never drift apart again. Review's line stays a fixed, student-declared
+ * claim ("I understood it completely") — that one is never assumed by the
+ * system, only ever chosen by the student tapping "Quiz me on it".
+ */
+function autoStartFor(mode: LessonMode, stage: 0 | 1 | 2 | 3 | 4): string {
+  return mode === "learn"
+    ? learnAutoStartLine(stage)
+    : "I understood today's lesson at school completely. Start the quick lock-it-in revision now — first check question please.";
+}
 
 type Phase = "session" | "rating" | "report" | "error";
 
@@ -126,6 +143,7 @@ const AR_MODE_COPY: Record<
 };
 
 const AR_SUGGESTIONS = ["لسه مش فاهم — اشرحها بطريقة تانية", "فهمت — كمّل ✓"];
+const EN_SUGGESTIONS = ["I don't get it — say it another way", "Got it — next ✓"];
 
 /**
  * {{show_passage:…}} renders as a REFOCUS CHIP, not a second copy of the text.
@@ -252,6 +270,10 @@ export function LessonSession({
 }) {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("session");
+  // the tutor's closing recap (or a hit turn cap) marks the lesson as OVER,
+  // but that is not the student's decision to leave the transcript — it only
+  // arms the header's Finish button; requestFinish still only fires on tap.
+  const [readyToFinish, setReadyToFinish] = useState(false);
   const [check, setCheck] = useState<UnderstandingCheck | null>(null);
   const [ratingCost, setRatingCost] = useState(0);
   const [totalUsd, setTotalUsd] = useState(0);
@@ -504,6 +526,11 @@ export function LessonSession({
   );
 
   const copy = MODE_COPY[mode];
+  const masteryStage = useMemo(
+    () => deriveMasteryStage(lesson.los),
+    [lesson.los]
+  );
+  const autoStart = autoStartFor(mode, masteryStage);
   const first = lesson.studentName.split(" ")[0];
   // subject-conditional RTL flip: dir on the app frame flips the grid (board
   // lands on the LEFT so the reading eye starts at the text), the stepper and
@@ -553,16 +580,30 @@ export function LessonSession({
     }
   }, [mode, lesson.slug]);
 
-  const requestFinish = useCallback(
-    (delayMs = 0) => {
-      if (finishing.current || finishTimer.current) return;
-      finishTimer.current = setTimeout(() => {
-        finishTimer.current = null;
-        finish();
-      }, delayMs);
-    },
-    [finish]
+  // student-initiated only (the header Finish button) — the timer is just a
+  // double-tap guard now that nothing calls this automatically.
+  const requestFinish = useCallback(() => {
+    if (finishing.current || finishTimer.current) return;
+    finishTimer.current = setTimeout(() => {
+      finishTimer.current = null;
+      finish();
+    }, 0);
+  }, [finish]);
+
+  // once the lesson is over, an action chip rides alongside the transcript's
+  // own suggestions — tapping it calls requestFinish DIRECTLY (no chat round
+  // trip), same as the header button, right where the closing recap left off.
+  const finishSuggestion = useMemo(
+    () => ({
+      label: rtl ? `${arCopy.finish} ✓` : `${copy.finish} ✓`,
+      onSelect: requestFinish,
+    }),
+    [rtl, arCopy.finish, copy.finish, requestFinish]
   );
+  const chatSuggestions = useMemo(() => {
+    const base = mode === "learn" ? (rtl ? AR_SUGGESTIONS : EN_SUGGESTIONS) : [];
+    return readyToFinish ? [...base, finishSuggestion] : base;
+  }, [mode, rtl, readyToFinish, finishSuggestion]);
 
   /* ---------------- board wiring ---------------- */
 
@@ -884,7 +925,7 @@ export function LessonSession({
         // [[term?:…]] — a term outside the lesson data, flagged for review
         return {
           title: c.id,
-          sub: "مصطلح غير موجود في بيانات الدرس — للمراجعة",
+          sub: "Term not in the lesson data — flagged for review",
         };
       }
       const lo = loById.get(c.id);
@@ -920,9 +961,9 @@ export function LessonSession({
       setTotalUsd(usd);
       setTurns(t);
       turnsRef.current = t;
-      if (mode === "review" && t >= REVIEW_TURN_CAP) requestFinish(2500);
+      if (mode === "review" && t >= REVIEW_TURN_CAP) setReadyToFinish(true);
     },
-    [mode, requestFinish]
+    [mode]
   );
 
   const onMessagesChange = useCallback(
@@ -1014,7 +1055,7 @@ export function LessonSession({
               </p>
               <button
                 onClick={() => finish()}
-                className="mt-5 rounded-full bg-ink px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep"
+                className="mt-5 rounded-full bg-ink px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow-sm"
               >
                 {rtl ? "جرّب التقييم تاني ←" : "Retry rating →"}
               </button>
@@ -1050,20 +1091,17 @@ export function LessonSession({
             </p>
             <h1 className="font-display text-xl font-medium tracking-tight text-ink md:text-2xl">
               {lesson.lessonRef} — {lesson.title}
-              <span dir="rtl" className="ms-3 text-[16px] text-accent-deep">
-                {copy.ar}
-              </span>
             </h1>
           </div>
 
           <div className="flex items-center gap-2">
-            {ttsOK && (
+            {VOICE_UI_ENABLED && ttsOK && (
               <button
                 onClick={toggleVoice}
                 aria-pressed={voiceOn}
                 aria-label={voiceOn ? "Turn voice off" : "Turn voice on"}
                 title={voiceOn ? "Voice on — tutor speaks" : "Voice off"}
-                className={`flex h-8 items-center gap-1.5 rounded-full border px-3 font-mono text-[10px] uppercase tracking-[0.1em] transition-all duration-150 ${
+                className={`flex h-8 items-center gap-1.5 rounded-full border px-3 font-mono text-[10px] uppercase tracking-[0.1em] transition-all duration-150 play-pressable sticker-shadow-sm ${
                   voiceOn
                     ? "border-accent bg-accent text-paper"
                     : "border-line bg-card text-ink-soft hover:border-accent/50 hover:text-accent-deep"
@@ -1089,8 +1127,12 @@ export function LessonSession({
             )}
 
             <button
-              onClick={() => requestFinish(0)}
-              className="h-8 rounded-full bg-ink px-4 text-[12px] font-semibold text-paper transition-all duration-150 hover:-translate-y-px hover:bg-accent-deep"
+              onClick={requestFinish}
+              className={`h-8 rounded-full px-4 text-[12px] font-semibold text-paper transition-all duration-150 hover:-translate-y-px play-pressable sticker-shadow-sm ${
+                readyToFinish
+                  ? "anim-nudge bg-accent hover:bg-accent-deep"
+                  : "bg-ink hover:bg-accent-deep"
+              }`}
             >
               {rtl ? `${arCopy.finish} ←` : `${copy.finish} →`}
             </button>
@@ -1112,21 +1154,34 @@ export function LessonSession({
               />
             ))}
           </span>
-          <span dir="rtl" className="text-[12.5px] font-semibold text-ink">
-            {arDigits(stepNow)} من {arDigits(lesson.los.length)} ·{" "}
+          <span
+            dir={rtl ? "rtl" : "ltr"}
+            className="text-[12.5px] font-semibold text-ink"
+          >
+            {rtl
+              ? `${arDigits(stepNow)} من ${arDigits(lesson.los.length)}`
+              : `${stepNow} of ${lesson.los.length}`}{" "}
+            ·{" "}
             {/* social LO labels are Arabic — keep them in the RTL flow */}
             <span dir={rtl ? undefined : "ltr"} className="font-normal text-ink-soft">
               {currentLo?.label}
             </span>
           </span>
-          <span dir="rtl" className="text-[11px] text-ink-faint">
-            {arDigits(lesson.los.length)} خطوات وبعدها تقرير فهمك 📋
+          <span dir={rtl ? "rtl" : "ltr"} className="text-[11px] text-ink-faint">
+            {readyToFinish
+              ? rtl
+                ? `خلصنا — دوس "${arCopy.finish}" لما تكون جاهز تشوف تقريرك 📋`
+                : `That's a wrap — tap "${copy.finish}" whenever you're ready for your report 📋`
+              : rtl
+                ? `${arDigits(lesson.los.length)} خطوات وبعدها تقرير فهمك 📋`
+                : `${lesson.los.length} steps, then your understanding report 📋`}
           </span>
         </div>
       </section>
 
       {boot.state === "prompt" ? (
         <ResumePrompt
+          rtl={rtl}
           onResume={() => resumeSaved(boot.saved)}
           onFresh={startFresh}
         />
@@ -1152,6 +1207,7 @@ export function LessonSession({
                 lookupPassage={lookupPassage}
                 onAttempt={boardAttempt}
                 debug={debug}
+                arabicUi={rtl}
                 vizMeta={vizMeta}
                 collapsed={!sheetOpen}
                 onToggleCollapsed={() => setSheetOpen((o) => !o)}
@@ -1178,9 +1234,13 @@ export function LessonSession({
                     : ""}
                   ${totalUsd.toFixed(3)} session spend
                 </span>
-              ) : (
+              ) : rtl ? (
                 <span dir="rtl" className="text-[10.5px] text-ink-faint">
                   {mode === "review" ? "٣ دقايق وخلصنا ⏱" : "خطوة خطوة مع بعض ✏️"}
+                </span>
+              ) : (
+                <span className="text-[10.5px] text-ink-faint">
+                  {mode === "review" ? "3 minutes and done ⏱" : "step by step, together ✏️"}
                 </span>
               )}
             </div>
@@ -1190,10 +1250,11 @@ export function LessonSession({
               lessonSlug={lesson.slug}
               sessionId={sessionId}
               initialMessages={boot.seed?.messages}
-              autoStart={copy.autoStart}
+              autoStart={autoStart}
               autoStartHidden
               autoContinue
               debug={debug}
+              arabicUi={rtl}
               openingLine={copy.opening}
               placeholder={
                 rtl
@@ -1202,13 +1263,7 @@ export function LessonSession({
                     ? "Answer or ask anything…"
                     : "Answer here…"
               }
-              suggestions={
-                mode === "learn"
-                  ? rtl
-                    ? AR_SUGGESTIONS
-                    : ["لسه مش فاهم — say it another way", "Got it — next ✓"]
-                  : []
-              }
+              suggestions={chatSuggestions}
               lookupQuestion={lookupQuestion}
               resolveCite={resolveCite}
               onCite={onCite}
@@ -1272,13 +1327,13 @@ export function LessonSession({
               onDirective={boardOn ? onDirective : undefined}
               handleRef={coreHandle}
               onAssistantDone={onAssistantDone}
-              onFinishDirective={() => requestFinish(2200)}
-              onCapped={() => requestFinish(2200)}
+              onFinishDirective={() => setReadyToFinish(true)}
+              onCapped={() => setReadyToFinish(true)}
               onTotalChange={onTotalChange}
               onMessagesChange={onMessagesChange}
               onSwitchSubject={(subj) => router.push(`/student?subject=${subj}`)}
               inputAccessory={
-                sttOK
+                VOICE_UI_ENABLED && sttOK
                   ? (api) => <MicButton setInput={api.setInput} />
                   : undefined
               }
@@ -1319,38 +1374,45 @@ export function LessonSession({
 
 /** A saved session exists for this lesson — resume or start over. */
 function ResumePrompt({
+  rtl,
   onResume,
   onFresh,
 }: {
+  rtl: boolean;
   onResume: () => void;
   onFresh: () => void;
 }) {
   return (
     <div className="flex min-h-0 flex-1 items-start justify-center">
       <section className="ledger-card anim-pop mt-10 w-full max-w-md px-8 py-8 text-center">
-        <p dir="rtl" className="font-display text-2xl font-medium text-ink">
-          استكمل الدرس؟
+        <p
+          dir={rtl ? "rtl" : "ltr"}
+          className="font-display text-2xl font-medium text-ink"
+        >
+          {rtl ? "استكمل الدرس؟" : "Continue the lesson?"}
         </p>
         <p
-          dir="rtl"
+          dir={rtl ? "rtl" : "ltr"}
           className="mt-2 text-[13.5px] leading-relaxed text-ink-soft"
         >
-          كان معاك درس شغّال هنا قبل كده — تحب تكمّل من حيث وقفت؟
+          {rtl
+            ? "كان معاك درس شغّال هنا قبل كده — تحب تكمّل من حيث وقفت؟"
+            : "You had a lesson running here before — pick up where you left off?"}
         </p>
         <div className="mt-5 grid gap-2">
           <button
-            dir="rtl"
+            dir={rtl ? "rtl" : "ltr"}
             onClick={onResume}
-            className="rounded-full bg-accent-deep px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent"
+            className="rounded-full bg-accent-deep px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent play-pressable sticker-shadow-sm"
           >
-            كمل من حيث وقفت ✓
+            {rtl ? "كمل من حيث وقفت ✓" : "Continue where I left off ✓"}
           </button>
           <button
-            dir="rtl"
+            dir={rtl ? "rtl" : "ltr"}
             onClick={onFresh}
-            className="rounded-full border border-line bg-card px-6 py-2.5 text-[13px] font-medium text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent-deep"
+            className="rounded-full border border-line bg-card px-6 py-2.5 text-[13px] font-medium text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent-deep play-pressable sticker-shadow-sm"
           >
-            لا — ابدأ من الأول
+            {rtl ? "لا — ابدأ من الأول" : "No — start from the beginning"}
           </button>
         </div>
       </section>
@@ -1410,7 +1472,7 @@ function MicButton({ setInput }: { setInput: (v: string) => void }) {
       onClick={toggle}
       aria-label={listening ? "Stop listening" : "Speak your answer"}
       title={listening ? "Listening… tap to stop" : "Speak your answer"}
-      className={`flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full border transition-all duration-150 ${
+      className={`flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full border transition-all duration-150 play-pressable sticker-shadow-sm ${
         listening
           ? "anim-mic border-rust bg-rust text-paper"
           : "border-line bg-card text-ink-soft hover:border-accent/50 hover:text-accent-deep"

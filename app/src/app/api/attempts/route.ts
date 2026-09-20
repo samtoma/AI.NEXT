@@ -5,6 +5,7 @@ import { bktUpdate, DEFAULT_PARAMS, type BktParams } from "@/lib/bkt";
 import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
+import { evaluateArithmeticExpression } from "@/lib/arithmetic";
 
 function grade(
   questionType: string,
@@ -13,8 +14,20 @@ function grade(
 ): boolean {
   if (questionType === "numeric") {
     const a = parseFloat(correct);
-    const b = parseFloat(given);
-    if (!Number.isNaN(a) && !Number.isNaN(b)) return Math.abs(a - b) < 1e-6;
+    if (!Number.isNaN(a)) {
+      const trimmedGiven = given.trim();
+      // The common case: a clean numeric literal, no working shown.
+      if (/^[+-]?\d+(\.\d+)?$/.test(trimmedGiven)) {
+        return Math.abs(a - parseFloat(trimmedGiven)) < 1e-6;
+      }
+      // The student typed the steps that lead to the answer ("3x4" for 12)
+      // instead of the final value. Evaluate deterministically — no model
+      // call — before falling back to treating it as text.
+      const evaluated = evaluateArithmeticExpression(trimmedGiven);
+      if (evaluated !== null) return Math.abs(a - evaluated) < 1e-6;
+      const b = parseFloat(trimmedGiven);
+      if (!Number.isNaN(b)) return Math.abs(a - b) < 1e-6;
+    }
   }
   return correct.trim().toLowerCase() === given.trim().toLowerCase();
 }

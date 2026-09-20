@@ -55,7 +55,7 @@ export type ProvenanceVerdict = {
   /** one sentence an operator can act on */
   detail: string;
   /**
-   * Nour tokens. Amber marks "look at this", never alarm — there is no red in
+   * Noor tokens. Amber marks "look at this", never alarm — there is no red in
    * this palette, and an unreviewed question is a known, authorised state
    * rather than a fault.
    */

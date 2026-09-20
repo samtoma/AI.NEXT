@@ -1,5 +1,5 @@
 /**
- * The Nour friend mark (design handoff: reference/nour-friend.svg).
+ * The Noor friend mark (design handoff: reference/noor-friend.svg).
  *
  * An amber head rotated -13° over an indigo body. Three rules from the handoff
  * are not negotiable and are enforced by this component existing at all rather
@@ -13,7 +13,7 @@
  * grounds it is allowed to sit on: ink on light, paper on the indigo contrast
  * surface. That is a legibility swap, not a recolour.
  */
-export function NourMark({
+export function NoorMark({
   className = "h-8 w-8",
   onDark = false,
 }: {
@@ -25,7 +25,7 @@ export function NourMark({
       viewBox="0 0 64 64"
       className={className}
       role="img"
-      aria-label="Nour"
+      aria-label="Noor"
       focusable="false"
     >
       <path

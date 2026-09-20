@@ -23,5 +23,5 @@ build step reads this directory.
 - Self-contained: no build step, no local assets. The only external requests are the Google Fonts
   stylesheet and its font files, so the page degrades to its fallback stacks offline rather than
   breaking.
-- Palette and type come from the Nour design system, so a review of a design decision is rendered
+- Palette and type come from the Noor design system, so a review of a design decision is rendered
   in the language it is deciding about.

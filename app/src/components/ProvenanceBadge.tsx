@@ -26,7 +26,7 @@ export function ProvenanceBadge({
     v.tone === "attention"
       ? { bg: "var(--gold-wash)", fg: "var(--gold)", br: "var(--gold)" }
       : v.tone === "confirmed"
-        ? { bg: "rgb(47 158 143 / 0.14)", fg: "var(--nour-progress, #2F9E8F)", br: "var(--nour-progress, #2F9E8F)" }
+        ? { bg: "rgb(47 158 143 / 0.14)", fg: "var(--noor-progress, #2F9E8F)", br: "var(--noor-progress, #2F9E8F)" }
         : { bg: "var(--accent-wash)", fg: "var(--ink-soft)", br: "var(--line)" };
 
   return (

@@ -17,12 +17,15 @@ import { tierStyle } from "@/components/spine/LoPanel";
 export function ChatQuestionCard({
   question: q,
   debug = true,
+  lang = "en",
   onResult,
   onOpenQuestion,
 }: {
   question: SpineQuestion;
   /** false = student mode: no db ids, soft failure state, no mastery deltas */
   debug?: boolean;
+  /** RTL/Arabic-script subject — student-mode strings render in Arabic, not English */
+  lang?: "en" | "ar";
   onResult: (result: AttemptResult, q: SpineQuestion) => void;
   onOpenQuestion?: (qid: string) => void;
 }) {
@@ -127,7 +130,7 @@ export function ChatQuestionCard({
                     key={c.key}
                     onClick={() => setChoice(c.key)}
                     disabled={busy}
-                    className={`flex items-center gap-2.5 rounded-md border px-3 py-2 text-left text-[12.5px] transition-all duration-150 ${
+                    className={`flex items-center gap-2.5 rounded-md border px-3 py-2 text-left text-[12.5px] transition-all duration-150 play-pressable sticker-shadow-sm ${
                       choice === c.key
                         ? "border-ink bg-ink/5 shadow-[0_0_0_1px_var(--ink)]"
                         : "border-line bg-card hover:border-ink/40"
@@ -163,7 +166,7 @@ export function ChatQuestionCard({
                 disabled={
                   busy || (q.questionType === "mcq" ? !choice : !numeric.trim())
                 }
-                className="rounded-full bg-accent-deep px-4 py-1.5 text-[11.5px] font-semibold text-paper transition-all duration-150 enabled:hover:-translate-y-px disabled:opacity-35"
+                className="rounded-full bg-accent-deep px-4 py-1.5 text-[11.5px] font-semibold text-paper transition-all duration-150 enabled:hover:-translate-y-px disabled:opacity-35 play-pressable sticker-shadow-sm"
               >
                 {busy ? "Checking…" : "Submit answer"}
               </button>
@@ -186,13 +189,15 @@ export function ChatQuestionCard({
               <span
                 dir="auto"
                 className={`font-display text-[14px] font-medium ${
-                  result.isCorrect ? "text-accent-deep" : "text-rust"
+                  result.isCorrect ? "text-accent-deep" : "text-rust anim-nudge"
                 }`}
               >
                 {result.isCorrect
                   ? debug
                     ? "Correct ✓"
-                    : "صح عليك ✓"
+                    : lang === "ar"
+                      ? "صح عليك ✓"
+                      : "Correct ✓"
                   : debug
                     ? // A widget's `correct_answer` is the reserved predicate
                       // "ok" — machinery, not an answer. Printing it tells the
@@ -201,7 +206,9 @@ export function ChatQuestionCard({
                       q.questionType === "widget"
                       ? "Not yet"
                       : `Not quite — answer: ${result.correctAnswer}`
-                    : "مش مظبوطة — تعالى نشوفها مع بعض"}
+                    : lang === "ar"
+                      ? "مش مظبوطة — تعالى نشوفها مع بعض"
+                      : "Not quite — let's look at it together"}
               </span>
               {debug && (
                 <span className="font-mono text-[10px] text-ink-soft">
@@ -221,17 +228,26 @@ export function ChatQuestionCard({
             {/* student mode: the correct letter stays withheld until the
                 explanation lands — a quiet affordance reveals it on demand */}
             {!debug && !result.isCorrect && q.questionType !== "widget" && (
-              <p dir="rtl" className="mt-1.5 text-[12px] text-ink-soft">
+              <p
+                dir={lang === "ar" ? "rtl" : "ltr"}
+                className="mt-1.5 text-[12px] text-ink-soft"
+              >
                 {answerShown ? (
-                  <>
-                    الإجابة الصح: <strong>{result.correctAnswer}</strong>
-                  </>
+                  lang === "ar" ? (
+                    <>
+                      الإجابة الصح: <strong>{result.correctAnswer}</strong>
+                    </>
+                  ) : (
+                    <>
+                      Correct answer: <strong>{result.correctAnswer}</strong>
+                    </>
+                  )
                 ) : (
                   <button
                     onClick={() => setAnswerShown(true)}
                     className="underline decoration-dotted underline-offset-2 hover:text-accent-deep"
                   >
-                    شوف الإجابة الصح
+                    {lang === "ar" ? "شوف الإجابة الصح" : "Show the answer"}
                   </button>
                 )}
               </p>
@@ -246,7 +262,7 @@ export function ChatQuestionCard({
                 <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-accent-deep">
                   why that happened
                 </p>
-                <ol className="mt-1.5 grid gap-1.5">
+                <ol className="mt-1.5 grid gap-1.5 font-read">
                   {result.refutation.steps.map((st) => (
                     <li key={st.step} className="text-[13px] leading-relaxed text-ink">
                       {st.text_md}

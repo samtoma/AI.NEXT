@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&amp;family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&amp;family=Cairo:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFF6E6; color: #241F3D; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #A34F0A; text-decoration: none; border-bottom: 2px solid rgba(196,97,12,.3); }
+  a:hover { color: #136386; border-bottom-color: rgba(29,143,191,.5); }
+  @keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-7px) } }
+  @keyframes wiggle { 0%,100% { transform: rotate(0) } 25% { transform: rotate(-6deg) } 75% { transform: rotate(6deg) } }
+  @keyframes pop { 0% { transform: scale(.7) } 55% { transform: scale(1.14) } 100% { transform: scale(1) } }
+  @keyframes squash { 0%,100% { transform: scale(1,1) } 40% { transform: scale(1.12,.86) } 70% { transform: scale(.95,1.06) } }
+  @keyframes nudge { 0%,100% { transform: translateX(0) } 20% { transform: translateX(-5px) } 40% { transform: translateX(5px) } 60% { transform: translateX(-3px) } 80% { transform: translateX(3px) } }
+  @keyframes rise { 0% { transform: translateY(6px) scale(.6); opacity: 0 } 40% { opacity: 1 } 100% { transform: translateY(-22px) scale(1); opacity: 0 } }
+  @keyframes fill { 0% { width: 8% } 100% { width: 72% } }
+  @keyframes ring { 0% { transform: scale(.8); opacity: .55 } 100% { transform: scale(1.9); opacity: 0 } }
+  @keyframes dots { 0%,60%,100% { opacity: .25; transform: translateY(0) } 30% { opacity: 1; transform: translateY(-4px) } }
+  @keyframes drift { 0%,100% { transform: translateY(0) rotate(-4deg) } 50% { transform: translateY(-10px) rotate(4deg) } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: 1ms !important } }
+</style>
+</helmet>
+
+<div style="font-family:'Cairo',system-ui,sans-serif;font-size:1rem;line-height:1.7;color:#241F3D;padding-bottom:96px;overflow-x:hidden">
+
+  <header style="background:#FFE9BD;border-bottom:4px solid #241F3D;position:relative;overflow:hidden">
+    <div style="position:absolute;top:60px;left:-40px;width:180px;height:180px;border-radius:50%;background:#7FD1F0;opacity:.5;animation:drift 9s ease-in-out infinite"></div>
+    <div style="position:absolute;bottom:-50px;right:-30px;width:220px;height:220px;border-radius:50%;background:#B6E88F;opacity:.5;animation:drift 11s ease-in-out infinite reverse"></div>
+    <div style="max-width:1080px;margin:0 auto;padding:64px 24px 60px;position:relative;display:flex;flex-direction:column;gap:36px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:56px;height:56px;border:3px solid #241F3D;border-radius:50%;background:#FFFFFF;display:flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 #241F3D;animation:bob 3.2s ease-in-out infinite">
+          <img src="nour-friend.svg" alt="" style="width:34px;height:34px;object-fit:contain;display:block">
+        </div>
+        <div style="font:800 1.75rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Nour</div>
+        <div dir="rtl" style="font:800 1.75rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#A34F0A">نور</div>
+        <div style="margin-inline-start:8px;padding:7px 14px;border:2.5px solid #241F3D;border-radius:999px;background:#FFFFFF;font:700 0.85rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;box-shadow:3px 3px 0 #241F3D">PLAY</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:18px;max-width:840px">
+        <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#8A5A17">Variant A · design system · ages 10–16</div>
+        <h1 style="margin:0;font:800 4rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;text-wrap:balance">Learning that<br>bounces back</h1>
+        <p dir="rtl" style="margin:0;font:700 2.4rem/1.3 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#A34F0A">تعلّم بيرد عليك</p>
+        <p style="margin:0;font-size:1.15rem;line-height:1.7;color:#4A4266;max-width:60ch">A louder, softer, more physical Nour for younger students. Everything here is tactile: thick outlines you could cut out with scissors, buttons that press down, and a companion who reacts to what you do. Same brand, different volume.</p>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <div style="padding:14px 20px;border:3px solid #241F3D;border-radius:18px;background:#FFFFFF;box-shadow:4px 4px 0 #241F3D;display:flex;flex-direction:column;gap:2px">
+          <div style="font:500 0.72rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#615B7D">SHAPE</div>
+          <div style="font:700 1.05rem/1.2 'Baloo 2',system-ui,sans-serif">Sticker &amp; outline</div>
+        </div>
+        <div style="padding:14px 20px;border:3px solid #241F3D;border-radius:18px;background:#7FD1F0;box-shadow:4px 4px 0 #241F3D;display:flex;flex-direction:column;gap:2px">
+          <div style="font:500 0.72rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#134B63">TYPE</div>
+          <div style="font:700 1.05rem/1.2 'Baloo 2',system-ui,sans-serif;color:#0F3D51">Baloo everywhere</div>
+        </div>
+        <div style="padding:14px 20px;border:3px solid #241F3D;border-radius:18px;background:#B6E88F;box-shadow:4px 4px 0 #241F3D;display:flex;flex-direction:column;gap:2px">
+          <div style="font:500 0.72rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#3A5B26">MOTION</div>
+          <div style="font:700 1.05rem/1.2 'Baloo 2',system-ui,sans-serif;color:#2E4A1D">Reactive, not idle</div>
+        </div>
+        <div style="padding:14px 20px;border:3px solid #241F3D;border-radius:18px;background:#241F3D;box-shadow:4px 4px 0 #A34F0A;display:flex;flex-direction:column;gap:2px">
+          <div style="font:500 0.72rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#A9A2C9">STILL TRUE</div>
+          <div style="font:700 1.05rem/1.2 'Baloo 2',system-ui,sans-serif;color:#FFE9BD">No red, no ranking</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav style="position:sticky;top:0;z-index:20;background:#FFF6E6;border-bottom:3px solid #241F3D">
+    <div style="max-width:1080px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;gap:8px;font:600 0.9rem/1 'Baloo 2',system-ui,sans-serif">
+      <a href="#why" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Why</a>
+      <a href="#color" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Color</a>
+      <a href="#type" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Type</a>
+      <a href="#shape" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Shape</a>
+      <a href="#motion" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Motion</a>
+      <a href="#character" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Character</a>
+      <a href="#components" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Components</a>
+      <a href="#screens" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Screens</a>
+      <a href="#surfaces" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#241F3D;background:#FFFFFF;border-bottom-width:2.5px" style-hover="background:#FFE9BD">Phone</a>
+      <a href="#brief" style="padding:9px 14px;border:2.5px solid #241F3D;border-radius:999px;color:#FFE9BD;background:#241F3D;border-bottom-width:2.5px" style-hover="background:#3A3358">Agent brief</a>
+    </div>
+  </nav>
+
+  <section id="why" style="max-width:1080px;margin:0 auto;padding:72px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:32px;max-width:70ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Why this variant exists</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">A more playful variant</h2>
+      <p style="margin:0;color:#4A4266">This variant covers <strong>ages 10–16</strong>, where feedback needs to be immediate and physical, and where a companion that visibly reacts is the difference between a session finished and a session abandoned.</p>
+    </div>
+
+    <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;box-shadow:6px 6px 0 #241F3D;overflow:hidden;margin-bottom:16px">
+      <div style="padding:20px 24px;background:#FFE9BD;border-bottom:3px solid #241F3D">
+        <div style="font:700 1.3rem/1.3 'Baloo 2',system-ui,sans-serif;color:#241F3D">Where it deliberately departs from the master brand</div>
+        <p style="margin:6px 0 0;font-size:0.9rem;color:#6B5A2E">Stated openly, because a variant that pretends to obey everything ends up obeying nothing.</p>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:0.92rem;min-width:700px">
+          <thead>
+            <tr style="text-align:left;background:#FBF9F4">
+              <th style="padding:13px 22px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#615B7D;border-bottom:2px solid #241F3D">Master rule</th>
+              <th style="padding:13px 22px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#615B7D;border-bottom:2px solid #241F3D">Play variant</th>
+              <th style="padding:13px 22px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#615B7D;border-bottom:2px solid #241F3D">Because</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ departures }}" as="d" hint-placeholder-count="6">
+              <tr>
+                <td style="padding:15px 22px;border-bottom:1px solid #EDE9F5;color:#615B7D">{{ d.master }}</td>
+                <td style="padding:15px 22px;border-bottom:1px solid #EDE9F5;font-weight:700;color:#241F3D">{{ d.play }}</td>
+                <td style="padding:15px 22px;border-bottom:1px solid #EDE9F5;color:#4A4266">{{ d.why }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="border:3px solid #241F3D;border-radius:24px;background:#241F3D;padding:26px;display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between;box-shadow:6px 6px 0 #A34F0A">
+      <div style="max-width:56ch;display:flex;flex-direction:column;gap:8px">
+        <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#FFC262">WHAT DOES NOT BEND</div>
+        <p style="margin:0;font:700 1.4rem/1.4 'Baloo 2',system-ui,sans-serif;color:#FFFFFF">Playful in the details, never in the substance. No red for wrong. No leaderboards. No comparison to other students. Help is never withheld to drive engagement.</p>
+        <p style="margin:0;font-size:0.92rem;color:#B7B0D4">Louder does not mean manipulative. Every reward here marks something the student actually learned — never time spent, never a login.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-end">
+        <div style="width:56px;height:88px;border:3px solid #FFE9BD;border-radius:14px;background:#F0A22F"></div>
+        <div style="width:56px;height:60px;border:3px solid #FFE9BD;border-radius:14px;background:#7FD1F0"></div>
+        <div style="width:56px;height:38px;border:3px solid #FFE9BD;border-radius:14px;background:#B6E88F"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="color" style="max-width:1080px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:70ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Color</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Brand core, plus three playmates</h2>
+      <p style="margin:0;color:#4A4266">Amber and indigo carry over unchanged — this is still Nour. What's new is a warmer ground (<strong>Cream</strong> instead of Paper), a near-black ink that doubles as the outline color, and three saturated companions used to tell <em>subjects and quest types</em> apart. Violet still means celebration; teal still means mastery.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:28px">
+      <sc-for list="{{ palette }}" as="c" hint-placeholder-count="9">
+        <div style="border:3px solid #241F3D;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:4px 4px 0 #241F3D">
+          <div style="height:88px;background:{{ c.hex }};border-bottom:3px solid #241F3D;display:flex;align-items:flex-end;padding:10px 12px">
+            <span style="font:500 0.72rem/1 'IBM Plex Mono',monospace;color:{{ c.on }}">{{ c.hex }}</span>
+          </div>
+          <div style="padding:14px;display:flex;flex-direction:column;gap:5px">
+            <div style="font:700 1.05rem/1.2 'Baloo 2',system-ui,sans-serif;color:#241F3D">{{ c.name }}</div>
+            <code style="font:400 0.72rem/1.4 'IBM Plex Mono',monospace;color:#136386;word-break:break-all">{{ c.token }}</code>
+            <p style="margin:0;font-size:0.85rem;color:#6B6489">{{ c.job }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ showCode }}" hint-placeholder-val="{{ true }}">
+      <div style="border:3px solid #241F3D;border-radius:20px;overflow:hidden;box-shadow:6px 6px 0 #241F3D">
+        <div style="padding:12px 20px;background:#241F3D;font:500 0.78rem/1.6 'IBM Plex Mono',monospace;color:#FFC262">play-tokens.css</div>
+        <pre style="margin:0;padding:22px;overflow-x:auto;background:#1A1630;font:400 0.82rem/1.85 'IBM Plex Mono',monospace;color:#E5E1F5">:root {
+  /* ground &amp; ink */
+  --play-bg-page:      #FFF6E6;  /* Cream */
+  --play-bg-surface:   #FFFFFF;
+  --play-bg-warm:      #FFE9BD;  /* Honey — headers, banners */
+  --play-ink:          #241F3D;  /* Deep Ink — text AND every outline */
+  --play-ink-soft:     #6B6489;
+
+  /* brand core, unchanged */
+  --play-action:       #F0A22F;  /* Nour Glow */
+  --play-on-action:    #241F3D;
+  --play-mastery:      #2F9E8F;  /* Grow Teal */
+  --play-celebrate:    #7B4FC9;  /* Party Violet */
+
+  /* playmates — subject &amp; quest coding only */
+  --play-sky:          #7FD1F0;
+  --play-leaf:         #B6E88F;
+  --play-berry:        #FFA8C5;
+
+  /* the sticker system */
+  --play-stroke:       3px;                 /* 2.5px under 40px tall */
+  --play-shadow:       4px 4px 0 var(--play-ink);
+  --play-shadow-lg:    6px 6px 0 var(--play-ink);
+  --play-radius-sm:    14px;
+  --play-radius:       20px;
+  --play-radius-lg:    28px;
+
+  /* motion */
+  --play-press:        90ms cubic-bezier(.2,.7,.3,1);
+  --play-pop:          380ms cubic-bezier(.34,1.6,.64,1);
+  --play-bob:          3.2s ease-in-out;
+}</pre>
+      </div>
+    </sc-if>
+  </section>
+
+  <section id="type" style="max-width:1080px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:70ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Type</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Baloo gets promoted</h2>
+      <p style="margin:0;color:#4A4266">The master system restricts Baloo to headlines. Here it runs the whole interface — headlines, buttons, labels, numbers — at weights 700–800. Its roundness is the point at this age. Cairo stays for anything longer than three lines, where Baloo genuinely does get tiring to read.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:24px">
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:26px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:14px">
+        <div style="font:800 2.4rem/1.05 'Baloo 2',system-ui,sans-serif;color:#241F3D">Nice one!</div>
+        <div dir="rtl" style="font:800 2.4rem/1.3 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">جبتها!</div>
+        <p style="margin:0;font-size:0.88rem;color:#6B6489"><strong>Display 800</strong> — celebrations, screen titles, big numbers. Never below 1.3rem, never in a paragraph.</p>
+      </div>
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:26px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:14px">
+        <div style="font:700 1.3rem/1.3 'Baloo 2',system-ui,sans-serif;color:#241F3D">Pick the right one</div>
+        <div dir="rtl" style="font:700 1.3rem/1.5 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">اختار الإجابة الصح</div>
+        <p style="margin:0;font-size:0.88rem;color:#6B6489"><strong>UI 700</strong> — buttons, options, labels, tabs, chips. This is the workhorse and the biggest visible break from the master system.</p>
+      </div>
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:26px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:14px">
+        <p style="margin:0;font:400 1rem/1.75 'Cairo',sans-serif;color:#241F3D">When there's a real paragraph to read — a worked explanation, a story problem — we switch to Cairo. Rounded type is friendly for six words and tiring for sixty.</p>
+        <p dir="rtl" style="margin:0;font:400 1rem/1.9 'Cairo',sans-serif;color:#241F3D">ولما يكون في فقرة كاملة للقراءة، نرجع لخط Cairo. الخط المدوّر لطيف في ست كلمات، ومتعب في ستين.</p>
+        <p style="margin:0;font-size:0.88rem;color:#6B6489"><strong>Reading — Cairo 400</strong> — anything over three lines.</p>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;border:3px solid #241F3D;border-radius:20px;background:#FFFFFF;box-shadow:5px 5px 0 #241F3D">
+      <table style="width:100%;border-collapse:collapse;font-size:0.9rem;min-width:640px">
+        <thead>
+          <tr style="text-align:left;background:#FFE9BD">
+            <th style="padding:13px 20px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5A2E;border-bottom:2px solid #241F3D">Step</th>
+            <th style="padding:13px 20px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5A2E;border-bottom:2px solid #241F3D">Size</th>
+            <th style="padding:13px 20px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5A2E;border-bottom:2px solid #241F3D">Face</th>
+            <th style="padding:13px 20px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5A2E;border-bottom:2px solid #241F3D">Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="6">
+            <tr>
+              <td style="padding:12px 20px;border-bottom:1px solid #EDE9F5;font:500 0.82rem/1.4 'IBM Plex Mono',monospace;color:#A34F0A;white-space:nowrap">{{ t.step }}</td>
+              <td style="padding:12px 20px;border-bottom:1px solid #EDE9F5;font:400 0.82rem/1.4 'IBM Plex Mono',monospace;color:#241F3D;white-space:nowrap">{{ t.size }}</td>
+              <td style="padding:12px 20px;border-bottom:1px solid #EDE9F5;color:#241F3D;white-space:nowrap">{{ t.face }}</td>
+              <td style="padding:12px 20px;border-bottom:1px solid #EDE9F5;color:#6B6489">{{ t.use }}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="shape" style="max-width:1080px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:70ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Shape &amp; depth</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Everything is a sticker</h2>
+      <p style="margin:0;color:#4A4266">One structural idea replaces the master system's hairline borders and soft shadows: a <strong>3px ink outline plus a hard offset shadow</strong>, no blur. It makes every element feel like a physical object you could peel off the screen — and it gives buttons somewhere to travel when pressed.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:16px">
+        <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#615B7D">THE PRESS</div>
+        <div style="display:flex;gap:14px;align-items:center">
+          <div style="padding:14px 20px;border:3px solid #241F3D;border-radius:16px;background:#F0A22F;font:700 1rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;box-shadow:4px 4px 0 #241F3D">Rest</div>
+          <div style="padding:14px 20px;border:3px solid #241F3D;border-radius:16px;background:#F0A22F;font:700 1rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;box-shadow:0 0 0 #241F3D;transform:translate(4px,4px)">Pressed</div>
+        </div>
+        <p style="margin:0;font-size:0.88rem;color:#6B6489">On press the element moves <code style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem">+4px, +4px</code> and its shadow collapses to zero, in 90ms. That single interaction does more for perceived responsiveness than any loading state.</p>
+      </div>
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:16px">
+        <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#615B7D">RADII &amp; STROKE</div>
+        <div style="display:flex;gap:10px;align-items:flex-end">
+          <div style="width:52px;height:52px;border:2.5px solid #241F3D;border-radius:14px;background:#FFE9BD"></div>
+          <div style="width:52px;height:52px;border:3px solid #241F3D;border-radius:20px;background:#7FD1F0"></div>
+          <div style="width:52px;height:52px;border:3px solid #241F3D;border-radius:28px;background:#B6E88F"></div>
+          <div style="width:76px;height:44px;border:3px solid #241F3D;border-radius:999px;background:#FFA8C5"></div>
+        </div>
+        <p style="margin:0;font-size:0.88rem;color:#6B6489">14 chips and inputs · 20 buttons and small cards · 28 big cards and sheets · pill for tags and the energy bar. Stroke drops to 2.5px on anything under 40px tall so it doesn't swallow the shape.</p>
+      </div>
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:16px">
+        <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#615B7D">SPACING</div>
+        <div style="display:flex;gap:8px;align-items:flex-end">
+          <div style="width:8px;height:8px;background:#F0A22F;border-radius:2px"></div>
+          <div style="width:16px;height:16px;background:#F0A22F;border-radius:3px"></div>
+          <div style="width:24px;height:24px;background:#F0A22F;border-radius:4px"></div>
+          <div style="width:32px;height:32px;background:#F0A22F;border-radius:5px"></div>
+          <div style="width:48px;height:48px;background:#F0A22F;border-radius:6px"></div>
+        </div>
+        <p style="margin:0;font-size:0.88rem;color:#6B6489">Same 8px rhythm as the master system — but tap targets go up to <strong>52px</strong> minimum, because ten-year-olds tap fast and imprecisely, often on a shared or cracked screen.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="motion" style="max-width:1080px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:70ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Motion</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Reactive, not restless</h2>
+      <p style="margin:0;color:#4A4266">The master system allows one spring. This variant has a vocabulary of seven — but every one of them is a <strong>response to something the student did</strong>. Nothing loops forever except the companion's breathing. Ambient animation on a study screen is noise, and it is the fastest way to make a page feel cheap.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px">
+      <sc-for list="{{ motions }}" as="m" hint-placeholder-count="7">
+        <div style="border:3px solid #241F3D;border-radius:20px;background:#FFFFFF;padding:20px;box-shadow:4px 4px 0 #241F3D;display:flex;flex-direction:column;gap:12px">
+          <div style="height:66px;display:flex;align-items:center;justify-content:center">{{ m.demo }}</div>
+          <div style="font:700 1.05rem/1.2 'Baloo 2',system-ui,sans-serif;color:#241F3D">{{ m.name }}</div>
+          <code style="font:400 0.74rem/1.5 'IBM Plex Mono',monospace;color:#136386">{{ m.spec }}</code>
+          <p style="margin:0;font-size:0.85rem;color:#6B6489">{{ m.use }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="border:3px solid #241F3D;border-radius:20px;background:#FFA8C5;padding:22px 24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between">
+      <p style="margin:0;font:700 1.15rem/1.4 'Baloo 2',system-ui,sans-serif;color:#241F3D;max-width:62ch">Hard limit: one animation may play at a time, and no single response animation runs longer than 600ms. If two things want to move, the feedback wins and the decoration waits.</p>
+      <div style="font:500 0.75rem/1.6 'IBM Plex Mono',monospace;color:#7A2447;text-align:right">prefers-reduced-motion<br>disables all seven</div>
+    </div>
+  </section>
+
+  <section id="character" style="max-width:1080px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:70ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Character</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Nour has four moods, and no face</h2>
+      <p style="margin:0;color:#4A4266">The friend mark becomes a present companion. Crucially the artwork never changes — no swapped expressions, no drawn eyebrows. Mood is carried entirely by <strong>motion, tilt, and the ring behind it</strong>, which means one asset covers every state and the character can never look like it's laughing at you.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-bottom:16px">
+      <sc-for list="{{ moods }}" as="m" hint-placeholder-count="4">
+        <div style="border:3px solid #241F3D;border-radius:24px;background:{{ m.bg }};padding:24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center">
+          <div style="height:96px;display:flex;align-items:center;justify-content:center">{{ m.demo }}</div>
+          <div style="font:700 1.2rem/1.2 'Baloo 2',system-ui,sans-serif;color:{{ m.on }}">{{ m.name }}</div>
+          <code style="font:400 0.74rem/1.5 'IBM Plex Mono',monospace;color:{{ m.onDim }}">{{ m.spec }}</code>
+          <p style="margin:0;font-size:0.86rem;color:{{ m.onDim }}">{{ m.when }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin:0;font-size:0.9rem;color:#6B6489;max-width:78ch">Sizes: 28px inline beside a chat bubble · 44px in a header · 96px on celebration and empty states. Below 28px drop to the mark alone with no ring — the figure stops being legible.</p>
+  </section>
+
+  <section id="components" style="max-width:1080px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:70ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Components</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">The kit</h2>
+      <p style="margin:0;color:#4A4266">Every control is identical on web, iPad and phone — only the layout around it changes. Minimum tap target 52px everywhere, including desktop with a mouse. Every interactive element has the press state from §Shape: if it doesn't move, it isn't a control.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:16px">
+
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:16px">
+        <div style="font:700 1.2rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Buttons</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button style="appearance:none;border:3px solid #241F3D;background:#F0A22F;color:#241F3D;font:700 1.15rem/1 'Baloo 2',system-ui,sans-serif;padding:17px 24px;border-radius:20px;min-height:56px;cursor:pointer;box-shadow:4px 4px 0 #241F3D;transition:transform 90ms cubic-bezier(.2,.7,.3,1),box-shadow 90ms" style-active="transform:translate(4px,4px);box-shadow:0 0 0 #241F3D">Let's go!</button>
+          <button style="appearance:none;border:3px solid #241F3D;background:#FFFFFF;color:#241F3D;font:700 1.05rem/1 'Baloo 2',system-ui,sans-serif;padding:15px 24px;border-radius:20px;min-height:52px;cursor:pointer;box-shadow:4px 4px 0 #241F3D;transition:transform 90ms cubic-bezier(.2,.7,.3,1),box-shadow 90ms" style-active="transform:translate(4px,4px);box-shadow:0 0 0 #241F3D">Maybe later</button>
+          <button disabled="disabled" style="appearance:none;border:3px dashed #B4AECB;background:#FBFAFE;color:#8A83A6;font:700 1.05rem/1 'Baloo 2',system-ui,sans-serif;padding:15px 24px;border-radius:20px;min-height:52px;cursor:not-allowed">Check (pick one first)</button>
+        </div>
+        <p style="margin:0;font-size:0.85rem;color:#6B6489">Primary is always amber and always alone on the screen. Disabled loses its shadow and its outline goes dashed — it reads as "not ready yet" rather than "broken".</p>
+      </div>
+
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:16px">
+        <div style="font:700 1.2rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Answer options</div>
+        <div style="display:flex;flex-direction:column;gap:10px" dir="rtl">
+          <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:16px;padding:15px 18px;font:700 1.05rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D;min-height:52px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D"><span>س = ٥</span><span style="font:700 0.85rem/1 'Cairo',sans-serif;color:#5A5570">أ</span></div>
+          <div style="border:2.5px solid #241F3D;background:#FFE9BD;border-radius:16px;padding:15px 18px;font:700 1.05rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D;min-height:52px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D"><span>س = ٦</span><span style="font:700 0.85rem/1 'Cairo',sans-serif;color:#8A4208">اخترتها</span></div>
+          <div style="border:2.5px solid #241F3D;background:#B6E88F;border-radius:16px;padding:15px 18px;font:700 1.05rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#1F3D12;min-height:52px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D;animation:pop 380ms cubic-bezier(.34,1.6,.64,1)"><span>س = ٦</span><span style="font-size:1.1rem">✓</span></div>
+          <div style="border:2.5px solid #9C95B8;background:#F6F5FA;border-radius:16px;padding:15px 18px;font:700 1.05rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#5A5570;min-height:52px;display:flex;align-items:center;justify-content:space-between;animation:nudge 420ms ease-in-out"><span>س = ٤</span><span style="font:700 0.8rem/1 'Cairo',sans-serif;color:#5A5570">مش دي — جرّب تاني</span></div>
+        </div>
+        <p style="margin:0;font-size:0.85rem;color:#6B6489">Right answer <strong>pops</strong> and turns leaf-green. Wrong answer <strong>nudges</strong> side to side and greys out — it never turns red and it never takes the shadow away from the other options. The student can always pick again immediately.</p>
+      </div>
+
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:16px">
+        <div style="font:700 1.2rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Chat &amp; thinking</div>
+        <div style="display:flex;flex-direction:column;gap:12px" dir="rtl">
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="width:34px;height:34px;flex:0 0 34px;border:2.5px solid #241F3D;border-radius:50%;background:#FFF;display:flex;align-items:center;justify-content:center;animation:bob 3.2s ease-in-out infinite">
+              <img src="nour-friend.svg" alt="" style="width:22px;height:22px;object-fit:contain;display:block">
+            </div>
+            <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:18px 6px 18px 18px;padding:14px 16px;font:400 0.98rem/1.85 'Cairo',sans-serif;color:#241F3D;box-shadow:3px 3px 0 #241F3D;max-width:86%">قريب أوي! بصّ تاني في إشارة الطرح 👀</div>
+          </div>
+          <div style="display:flex;justify-content:flex-end">
+            <div style="border:2.5px solid #241F3D;background:#7FD1F0;border-radius:18px 18px 6px 18px;padding:14px 16px;font:400 0.98rem/1.85 'Cairo',sans-serif;color:#0F3D51;box-shadow:3px 3px 0 #241F3D;max-width:82%">آه صح!</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="width:34px;height:34px;flex:0 0 34px;border:2.5px solid #241F3D;border-radius:50%;background:#FFF;display:flex;align-items:center;justify-content:center">
+              <img src="nour-friend.svg" alt="" style="width:22px;height:22px;object-fit:contain;display:block;animation:wiggle 900ms ease-in-out infinite">
+            </div>
+            <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:18px 6px 18px 18px;padding:16px;display:flex;gap:6px;box-shadow:3px 3px 0 #241F3D">
+              <span style="width:9px;height:9px;border-radius:50%;background:#F0A22F;display:inline-block;animation:dots 1.3s infinite"></span>
+              <span style="width:9px;height:9px;border-radius:50%;background:#F0A22F;display:inline-block;animation:dots 1.3s .18s infinite"></span>
+              <span style="width:9px;height:9px;border-radius:50%;background:#F0A22F;display:inline-block;animation:dots 1.3s .36s infinite"></span>
+            </div>
+          </div>
+        </div>
+        <p style="margin:0;font-size:0.85rem;color:#6B6489">Nour's bubble is white with a notch toward the avatar; the student's is sky blue. While thinking, the character wiggles — so the wait reads as "he's working on it", not "the app froze".</p>
+      </div>
+
+      <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;padding:24px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:16px">
+        <div style="font:700 1.2rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Progress: quests, not streaks</div>
+        <div dir="rtl" style="border:2.5px solid #241F3D;border-radius:20px;padding:18px;background:#FFF6E6;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+            <span style="font:700 1.15rem/1.3 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">مهمة النهاردة</span>
+            <span style="padding:6px 12px;border:2.5px solid #241F3D;border-radius:999px;background:#B6E88F;font:700 0.8rem/1 'Cairo',sans-serif;color:#1F3D12">٣ من ٤</span>
+          </div>
+          <div style="height:20px;border:2.5px solid #241F3D;border-radius:999px;background:#FFF;overflow:hidden;padding:2px">
+            <div style="height:100%;border-radius:999px;background:#F0A22F;animation:fill 1.4s cubic-bezier(.2,.7,.3,1) forwards"></div>
+          </div>
+          <p style="margin:0;font:400 0.92rem/1.75 'Cairo',sans-serif;color:#4A4266">فاضل سؤال واحد وتخلّص المهمة.</p>
+        </div>
+        <p style="margin:0;font-size:0.85rem;color:#6B6489">A quest is a small set of questions on <strong>one skill</strong>, finishable in one sitting. Deliberately not a streak: nothing here punishes a missed day, and progress is never lost — which is the master brand's no‑shame rule kept intact under a louder skin.</p>
+      </div>
+    </div>
+
+    <div style="border:3px solid #241F3D;border-radius:28px;background:#7B4FC9;padding:30px;box-shadow:6px 6px 0 #241F3D;display:flex;flex-wrap:wrap;gap:26px;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:20px">
+        <div style="position:relative;width:96px;height:96px;flex:0 0 96px;display:flex;align-items:center;justify-content:center">
+          <div style="position:absolute;inset:0;border:3px solid #FFE9BD;border-radius:50%;animation:ring 1.6s ease-out infinite"></div>
+          <div style="width:82px;height:82px;border:3px solid #241F3D;border-radius:50%;background:#FFE9BD;display:flex;align-items:center;justify-content:center;animation:squash 1.2s ease-in-out infinite">
+            <img src="nour-friend.svg" alt="" style="width:52px;height:52px;object-fit:contain;display:block">
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font:800 2.05rem/1.1 'Baloo 2',system-ui,sans-serif;color:#FFFFFF">Skill unlocked!</div>
+          <div dir="rtl" style="font:800 1.5rem/1.3 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#FFE9BD">فتحت مهارة جديدة!</div>
+          <div style="font:400 0.92rem/1.6 'Cairo',sans-serif;color:#F0E9FB">المعادلات الخطية · مُتمكّن</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;font:500 0.78rem/1.7 'IBM Plex Mono',monospace;color:#E3D8F7;max-width:34ch">
+        <div style="color:#FFFFFF;letter-spacing:.1em">CELEBRATION · ONCE PER MASTERY</div>
+        Violet ground, ring pulse, squash. Fires only when a skill genuinely reaches mastered — never for logging in, never for time spent, never twice for the same skill.
+      </div>
+    </div>
+  </section>
+
+
+  <section id="screens" style="max-width:1080px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:72ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Screens &amp; breakpoints</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Built for the big screen first</h2>
+      <p style="margin:0;color:#4A4266">This variant is primarily a <strong>web and iPad</strong> product. A ten‑to‑sixteen‑year‑old studies on a shared laptop at the kitchen table or an iPad on the sofa — the phone is where they check something quickly, not where a session happens. So the two‑ and three‑pane layouts below are canonical, and the phone in §Phone is the collapse of them.</p>
+      <p style="margin:0;color:#4A4266">The sticker kit has one property that makes this easy and one trap. Easy: outlined objects hold their identity at any size, so nothing needs re‑drawing. The trap: <strong>the sticker must not scale with the viewport</strong>. A 3px stroke and a 4px shadow are absolute values — grow them on a 27″ monitor and the interface stops looking like paper cut‑outs and starts looking like a cartoon.</p>
+    </div>
+
+    <div style="overflow-x:auto;border:3px solid #241F3D;border-radius:20px;background:#FFFFFF;box-shadow:5px 5px 0 #241F3D;margin-bottom:16px">
+      <table style="width:100%;border-collapse:collapse;font-size:0.9rem;min-width:820px">
+        <thead>
+          <tr style="text-align:left;background:#FFE9BD">
+            <th style="padding:13px 20px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5A2E;border-bottom:2px solid #241F3D">Class</th>
+            <th style="padding:13px 20px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5A2E;border-bottom:2px solid #241F3D">Width</th>
+            <th style="padding:13px 20px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5A2E;border-bottom:2px solid #241F3D">Structure</th>
+            <th style="padding:13px 20px;font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#6B5A2E;border-bottom:2px solid #241F3D">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{ breakpoints }}" as="b" hint-placeholder-count="5">
+            <tr>
+              <td style="padding:13px 20px;border-bottom:1px solid #EDE9F5;font-weight:700;color:{{ b.tone }};white-space:nowrap">{{ b.cls }}</td>
+              <td style="padding:13px 20px;border-bottom:1px solid #EDE9F5;font:400 0.82rem/1.4 'IBM Plex Mono',monospace;color:#241F3D;white-space:nowrap">{{ b.w }}</td>
+              <td style="padding:13px 20px;border-bottom:1px solid #EDE9F5;color:#241F3D">{{ b.structure }}</td>
+              <td style="padding:13px 20px;border-bottom:1px solid #EDE9F5;color:#6B6489">{{ b.note }}</td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:40px">
+      <sc-for list="{{ scaleRules }}" as="r" hint-placeholder-count="6">
+        <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;box-shadow:5px 5px 0 #241F3D;padding:22px;display:flex;flex-direction:column;gap:12px">
+          <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#136386">{{ r.tag }}</div>
+          <div style="font:700 1.1rem/1.3 'Baloo 2',system-ui,sans-serif;color:#241F3D">{{ r.title }}</div>
+          <p style="margin:0;font-size:0.9rem;color:#4A4266">{{ r.body }}</p>
+          <div style="margin-top:auto;padding-top:10px;border-top:2px dashed #EDE9F5;font:500 0.75rem/1 'IBM Plex Mono',monospace;line-height:1.6;color:#8A2A18">DON'T · {{ r.dont }}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <h3 style="margin:0 0 6px;font:800 1.5rem/1.2 'Baloo 2',system-ui,sans-serif;color:#241F3D">Web · three pane at 1360</h3>
+    <p style="margin:0 0 20px;color:#4A4266;max-width:72ch">English LTR. The extra width buys a persistent companion — Nour never has to be summoned — and a visible quest map, so the student always knows how much is left. It does not buy bigger buttons.</p>
+    <figure style="margin:0 0 40px;display:flex;flex-direction:column;gap:14px">
+      <div style="overflow-x:auto;padding-bottom:8px">
+        <div dir="ltr" style="width:1360px;height:800px;background:#FFF6E6;border:3px solid #241F3D;border-radius:20px;overflow:hidden;display:flex;box-shadow:7px 7px 0 #241F3D">
+
+          <div style="width:88px;flex:0 0 88px;border-right:3px solid #241F3D;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:14px">
+            <div style="width:52px;height:52px;border:3px solid #241F3D;border-radius:50%;background:#FFF;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #241F3D;animation:bob 3.2s ease-in-out infinite">
+              <img src="nour-friend.svg" alt="" style="width:32px;height:32px;object-fit:contain;display:block" />
+            </div>
+            <div style="width:56px;height:2px;background:#EDE9F5"></div>
+            <div style="width:56px;height:56px;border:3px solid #241F3D;border-radius:18px;background:#F0A22F;box-shadow:3px 3px 0 #241F3D;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+              <span style="width:22px;height:22px;border:2.5px solid #241F3D;border-radius:7px;background:#FFF"></span>
+              <span style="font:700 0.6rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Home</span>
+            </div>
+            <div style="width:56px;height:56px;border:2.5px solid #B4AECB;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+              <span style="width:22px;height:22px;border:2.5px solid #9C95B8;border-radius:7px"></span>
+              <span style="font:700 0.6rem/1 'Baloo 2',system-ui,sans-serif;color:#5A5570">Skills</span>
+            </div>
+            <div style="width:56px;height:56px;border:2.5px solid #B4AECB;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+              <span style="width:22px;height:22px;border:2.5px solid #9C95B8;border-radius:7px"></span>
+              <span style="font:700 0.6rem/1 'Baloo 2',system-ui,sans-serif;color:#5A5570">Me</span>
+            </div>
+            <div style="margin-top:auto;font:500 0.75rem/1 'IBM Plex Mono',monospace;color:#5A5570;writing-mode:vertical-rl;letter-spacing:.1em">RAIL 88px</div>
+          </div>
+
+          <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+            <div style="padding:18px 28px;border-bottom:3px solid #241F3D;background:#FFE9BD;display:flex;align-items:center;gap:18px">
+              <div style="font:800 1.5rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Linear equations</div>
+              <div style="padding:7px 13px;border:2.5px solid #241F3D;border-radius:999px;background:#FFFFFF;font:700 0.78rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;box-shadow:2px 2px 0 #241F3D">Quest 3 of 4</div>
+              <div style="flex:1;max-width:280px;height:18px;border:2.5px solid #241F3D;border-radius:999px;background:#FFF;padding:2px">
+                <div style="width:72%;height:100%;border-radius:999px;background:#F0A22F"></div>
+              </div>
+              <div style="flex:1"></div>
+              <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;color:#6B5A2E">5 MIN LEFT</div>
+            </div>
+
+            <div style="flex:1;padding:28px;display:flex;flex-direction:column;gap:22px;min-height:0;max-width:820px">
+              <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;box-shadow:5px 5px 0 #241F3D;padding:34px 30px;text-align:center;display:flex;flex-direction:column;gap:16px">
+                <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#5A5570">SOLVE FOR X</div>
+                <div style="font:800 3rem/1.05 'IBM Plex Mono',monospace;color:#241F3D;white-space:nowrap">3x + 5 = 23</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:16px;padding:16px 20px;font:700 1.15rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;min-height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D"><span>x = 4</span><span style="font:700 0.8rem/1 'Baloo 2',system-ui,sans-serif;color:#5A5570">A</span></div>
+                <div style="border:2.5px solid #241F3D;background:#B6E88F;border-radius:16px;padding:16px 20px;font:700 1.15rem/1 'Baloo 2',system-ui,sans-serif;color:#1F3D12;min-height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D;animation:pop 380ms cubic-bezier(.34,1.6,.64,1)"><span>x = 6</span><span style="font-size:1.15rem">✓</span></div>
+                <div style="border:2.5px solid #9C95B8;background:#F6F5FA;border-radius:16px;padding:16px 20px;font:700 1.15rem/1 'Baloo 2',system-ui,sans-serif;color:#5A5570;min-height:56px;display:flex;align-items:center;justify-content:space-between"><span>x = 8</span><span style="font:700 0.78rem/1 'Baloo 2',system-ui,sans-serif;color:#5A5570">Not this one</span></div>
+                <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:16px;padding:16px 20px;font:700 1.15rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;min-height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D"><span>x = 9</span><span style="font:700 0.8rem/1 'Baloo 2',system-ui,sans-serif;color:#5A5570">D</span></div>
+              </div>
+              <div style="display:flex;gap:14px;align-items:center">
+                <button style="appearance:none;border:3px solid #241F3D;background:#F0A22F;color:#241F3D;font:700 1.15rem/1 'Baloo 2',system-ui,sans-serif;padding:17px 30px;border-radius:20px;min-height:56px;box-shadow:4px 4px 0 #241F3D;cursor:pointer;display:flex;align-items:center;gap:12px">Next<span style="font:500 0.75rem/1 'IBM Plex Mono',monospace;opacity:.65">↵</span></button>
+                <button style="appearance:none;border:none;background:none;color:#136386;font:700 0.98rem/1 'Baloo 2',system-ui,sans-serif;min-height:52px;cursor:pointer">I don't get it — explain</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="width:340px;flex:0 0 340px;border-left:3px solid #241F3D;background:#FFFFFF;display:flex;flex-direction:column;min-height:0">
+            <div style="padding:18px 20px;border-bottom:3px solid #241F3D;display:flex;align-items:center;gap:12px">
+              <div style="width:44px;height:44px;flex:0 0 44px;border:2.5px solid #241F3D;border-radius:50%;background:#FFF;display:flex;align-items:center;justify-content:center;animation:bob 3.2s ease-in-out infinite">
+                <img src="nour-friend.svg" alt="" style="width:28px;height:28px;object-fit:contain;display:block" />
+              </div>
+              <div style="flex:1">
+                <div style="font:700 1.05rem/1.2 'Baloo 2',system-ui,sans-serif;color:#241F3D">Nour</div>
+                <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;color:#5A5570">ALWAYS HERE</div>
+              </div>
+            </div>
+            <div style="flex:1;padding:20px;display:flex;flex-direction:column;gap:12px;min-height:0">
+              <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:6px 18px 18px 18px;padding:13px 15px;font:400 0.95rem/1.7 'Cairo',sans-serif;color:#241F3D;box-shadow:3px 3px 0 #241F3D">Nice — you took the 5 off both sides first. That's the bit most people skip.</div>
+              <div style="display:flex;justify-content:flex-end">
+                <div style="border:2.5px solid #241F3D;background:#7FD1F0;border-radius:18px 18px 18px 6px;padding:13px 15px;font:400 0.95rem/1.7 'Cairo',sans-serif;color:#0F3D51;box-shadow:3px 3px 0 #241F3D;max-width:84%">so I divide by 3?</div>
+              </div>
+              <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:6px 18px 18px 18px;padding:13px 15px;font:400 0.95rem/1.7 'Cairo',sans-serif;color:#241F3D;box-shadow:3px 3px 0 #241F3D">Exactly. Try it and tell me what you get.</div>
+              <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <span style="border:2.5px solid #241F3D;background:#FFF;border-radius:999px;padding:10px 14px;font:700 0.82rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;box-shadow:2px 2px 0 #241F3D">Another example</span>
+                  <span style="border:2.5px solid #241F3D;background:#FFF;border-radius:999px;padding:10px 14px;font:700 0.82rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D;box-shadow:2px 2px 0 #241F3D">Show me</span>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;border:2.5px solid #241F3D;border-radius:999px;background:#FFF6E6;padding:6px 6px 6px 16px;box-shadow:3px 3px 0 #241F3D">
+                  <span style="flex:1;font:400 0.92rem/1 'Cairo',sans-serif;color:#5A5570">Ask Nour…</span>
+                  <div style="width:44px;height:44px;border:2.5px solid #241F3D;border-radius:50%;background:#F0A22F;display:flex;align-items:center;justify-content:center;font-weight:700;color:#241F3D">↑</div>
+                </div>
+              </div>
+            </div>
+            <div style="padding:14px 20px;border-top:3px solid #241F3D;background:#FFF6E6;font:500 0.75rem/1 'IBM Plex Mono',monospace;line-height:1.7;color:#5A5570">PANEL 340px · never collapses above 1280</div>
+          </div>
+        </div>
+      </div>
+      <figcaption style="font:500 0.85rem/1.6 'IBM Plex Mono',monospace;color:#6B6489"><strong style="color:#241F3D">Web · 1360×800</strong><br />Accent: amber on the one Next button and the active rail item — the progress bar borrows it because it sits in the Honey band, not the workspace. The question card is capped at 820px; the leftover width becomes empty Cream, deliberately. Keyboard is real here: <code style="font-family:'IBM Plex Mono',monospace">↵</code> is printed on the primary.</figcaption>
+    </figure>
+
+    <h3 style="margin:0 0 6px;font:800 1.5rem/1.2 'Baloo 2',system-ui,sans-serif;color:#241F3D">iPad · two pane at 1024, landscape</h3>
+    <p style="margin:0 0 20px;color:#4A4266;max-width:72ch">Arabic RTL — the rail moves to the right, the companion panel to the left, and the chat notches mirror with them. At this width the quest map is dropped rather than squeezed: the header progress bar carries that information instead.</p>
+    <figure style="margin:0 0 40px;display:flex;flex-direction:column;gap:14px">
+      <div style="overflow-x:auto;padding-bottom:8px">
+        <div dir="rtl" style="width:1024px;height:768px;background:#FFF6E6;border:3px solid #241F3D;border-radius:20px;overflow:hidden;display:flex;box-shadow:7px 7px 0 #241F3D">
+
+          <div style="width:80px;flex:0 0 80px;border-left:3px solid #241F3D;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:12px">
+            <div style="width:48px;height:48px;border:3px solid #241F3D;border-radius:50%;background:#FFF;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #241F3D;animation:bob 3.2s ease-in-out infinite">
+              <img src="nour-friend.svg" alt="" style="width:30px;height:30px;object-fit:contain;display:block" />
+            </div>
+            <div style="width:52px;height:2px;background:#EDE9F5"></div>
+            <div style="width:52px;height:52px;border:3px solid #241F3D;border-radius:16px;background:#F0A22F;box-shadow:3px 3px 0 #241F3D;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+              <span style="width:20px;height:20px;border:2.5px solid #241F3D;border-radius:6px;background:#FFF"></span>
+              <span style="font:700 0.58rem/1 'Cairo',sans-serif;color:#241F3D">الرئيسية</span>
+            </div>
+            <div style="width:52px;height:52px;border:2.5px solid #B4AECB;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+              <span style="width:20px;height:20px;border:2.5px solid #9C95B8;border-radius:6px"></span>
+              <span style="font:700 0.58rem/1 'Cairo',sans-serif;color:#5A5570">مهاراتي</span>
+            </div>
+            <div style="margin-top:auto;font:500 0.75rem/1 'IBM Plex Mono',monospace;color:#5A5570;writing-mode:vertical-rl;letter-spacing:.1em">RAIL 80px</div>
+          </div>
+
+          <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+            <div style="padding:16px 24px;border-bottom:3px solid #241F3D;background:#FFE9BD;display:flex;align-items:center;gap:14px">
+              <div style="font:800 1.4rem/1.1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">المعادلات الخطية</div>
+              <div style="flex:1;max-width:220px;height:18px;border:2.5px solid #241F3D;border-radius:999px;background:#FFF;padding:2px">
+                <div style="width:72%;height:100%;border-radius:999px;background:#F0A22F"></div>
+              </div>
+              <div style="font:700 0.85rem/1 'Cairo',sans-serif;color:#5E3806">٣ من ٤</div>
+              <div style="flex:1"></div>
+              <div style="font:600 0.8rem/1 'Cairo',sans-serif;color:#6B5A2E">٥ دقايق</div>
+            </div>
+            <div style="flex:1;padding:24px;display:flex;flex-direction:column;gap:18px;min-height:0">
+              <div style="border:3px solid #241F3D;border-radius:24px;background:#FFFFFF;box-shadow:5px 5px 0 #241F3D;padding:28px 24px;text-align:center;display:flex;flex-direction:column;gap:14px">
+                <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#5A5570"><span style="font-family:'Cairo',sans-serif;letter-spacing:normal">أوجد قيمة س</span></div>
+                <div dir="ltr" style="font:800 2.6rem/1.05 'IBM Plex Mono',monospace;color:#241F3D;white-space:nowrap">3x + 5 = 23</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:16px;padding:16px 18px;font:700 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D;min-height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D"><span>س = ٤</span><span style="font:700 0.8rem/1 'Cairo',sans-serif;color:#5A5570">أ</span></div>
+                <div style="border:2.5px solid #241F3D;background:#B6E88F;border-radius:16px;padding:16px 18px;font:700 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#1F3D12;min-height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D;animation:pop 380ms cubic-bezier(.34,1.6,.64,1)"><span>س = ٦</span><span style="font-size:1.15rem">✓</span></div>
+                <div style="border:2.5px solid #9C95B8;background:#F6F5FA;border-radius:16px;padding:16px 18px;font:700 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#5A5570;min-height:56px;display:flex;align-items:center;justify-content:space-between"><span>س = ٨</span><span style="font:700 0.78rem/1 'Cairo',sans-serif;color:#5A5570">مش دي</span></div>
+                <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:16px;padding:16px 18px;font:700 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D;min-height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D"><span>س = ٩</span><span style="font:700 0.8rem/1 'Cairo',sans-serif;color:#5A5570">د</span></div>
+              </div>
+              <div style="margin-top:auto;display:flex;gap:14px;align-items:center">
+                <button style="appearance:none;border:3px solid #241F3D;background:#F0A22F;color:#241F3D;font:800 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;padding:16px 30px;border-radius:20px;min-height:56px;box-shadow:4px 4px 0 #241F3D;cursor:pointer">كمّل</button>
+                <button style="appearance:none;border:none;background:none;color:#136386;font:700 0.95rem/1 'Cairo',sans-serif;min-height:52px;cursor:pointer">مش فاهم — وضّحلي</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="width:300px;flex:0 0 300px;border-right:3px solid #241F3D;background:#FFFFFF;display:flex;flex-direction:column;min-height:0">
+            <div style="padding:16px 18px;border-bottom:3px solid #241F3D;display:flex;align-items:center;gap:10px">
+              <div style="width:40px;height:40px;flex:0 0 40px;border:2.5px solid #241F3D;border-radius:50%;background:#FFF;display:flex;align-items:center;justify-content:center;animation:bob 3.2s ease-in-out infinite">
+                <img src="nour-friend.svg" alt="" style="width:26px;height:26px;object-fit:contain;display:block" />
+              </div>
+              <div style="font:700 1rem/1.2 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">نور</div>
+            </div>
+            <div style="flex:1;padding:18px;display:flex;flex-direction:column;gap:11px;min-height:0">
+              <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:18px 6px 18px 18px;padding:12px 14px;font:400 0.92rem/1.75 'Cairo',sans-serif;color:#241F3D;box-shadow:3px 3px 0 #241F3D">حلو! شيلت الـ ٥ من الطرفين الأول — دي الخطوة اللي بيفوتها معظم الناس.</div>
+              <div style="display:flex;justify-content:flex-end">
+                <div style="border:2.5px solid #241F3D;background:#7FD1F0;border-radius:18px 18px 6px 18px;padding:12px 14px;font:400 0.92rem/1.75 'Cairo',sans-serif;color:#0F3D51;box-shadow:3px 3px 0 #241F3D;max-width:84%">أقسم على ٣؟</div>
+              </div>
+              <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:18px 6px 18px 18px;padding:12px 14px;font:400 0.92rem/1.75 'Cairo',sans-serif;color:#241F3D;box-shadow:3px 3px 0 #241F3D">بالظبط. جرّب وقوللي طلع بكام.</div>
+              <div style="margin-top:auto;display:flex;gap:8px;align-items:center;border:2.5px solid #241F3D;border-radius:999px;background:#FFF6E6;padding:6px 16px 6px 6px;box-shadow:3px 3px 0 #241F3D">
+                <div style="width:44px;height:44px;border:2.5px solid #241F3D;border-radius:50%;background:#F0A22F;display:flex;align-items:center;justify-content:center;font-weight:700;color:#241F3D">↑</div>
+                <span style="flex:1;font:400 0.9rem/1 'Cairo',sans-serif;color:#5A5570">اسأل نور…</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption style="font:500 0.85rem/1.6 'IBM Plex Mono',monospace;color:#6B6489"><strong style="color:#241F3D">iPad · 1024×768 landscape (RTL)</strong><br />Identical component sizes to the web layout — only the pane widths changed. The rail sits on the right, the companion on the left, and the bubble notches follow. In Split View below 700pt this collapses straight to the phone layout in §Phone; there is no in‑between.</figcaption>
+    </figure>
+
+    <div style="border:3px solid #241F3D;border-radius:24px;background:#FFE9BD;padding:26px;box-shadow:6px 6px 0 #241F3D;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start">
+      <div style="max-width:60ch;display:flex;flex-direction:column;gap:10px">
+        <div style="font:500 0.75rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#6B5A2E">THE ORDER OF WORK</div>
+        <p style="margin:0;font:700 1.25rem/1.45 'Baloo 2',system-ui,sans-serif;color:#241F3D">Design the 1360 web layout first, mirror it to iPad by changing only pane widths, then collapse to phone last. Never the reverse.</p>
+        <p style="margin:0;font-size:0.92rem;color:#4A4266">Phone‑first here produces a companion that hides in a tab and a quest map that never existed — two things this variant depends on. Going the other direction, the collapse is mechanical and nothing is lost.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-end">
+        <div style="width:96px;height:66px;border:3px solid #241F3D;border-radius:12px;background:#FFF;box-shadow:3px 3px 0 #241F3D;display:flex;align-items:center;justify-content:center;font:700 0.7rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D">WEB</div>
+        <div style="width:72px;height:56px;border:3px solid #241F3D;border-radius:12px;background:#FFF;box-shadow:3px 3px 0 #241F3D;display:flex;align-items:center;justify-content:center;font:700 0.7rem/1 'Baloo 2',system-ui,sans-serif;color:#241F3D">iPAD</div>
+        <div style="width:34px;height:60px;border:2.5px solid #241F3D;border-radius:10px;background:#FFF;box-shadow:3px 3px 0 #241F3D;display:flex;align-items:center;justify-content:center;font:700 0.58rem/1 'Baloo 2',system-ui,sans-serif;color:#5A5570">PH</div>
+      </div>
+    </div>
+  </section>
+  <section id="surfaces" style="max-width:1080px;margin:0 auto;padding:64px 24px 24px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;max-width:70ch">
+      <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#655B80">Phone surfaces</div>
+      <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#241F3D">Phone — the compact case</h2>
+      <p style="margin:0;color:#4A4266">360dp, and the <em>last</em> layout to design rather than the first. One accent, one primary action, one idea each. Everything here is a collapse of the web and iPad structures in §Screens: the rail becomes bottom nav, the companion panel becomes an inline avatar, and the workspace becomes the whole screen.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:32px">
+
+      <figure style="margin:0;display:flex;flex-direction:column;gap:14px;width:340px">
+        <div dir="rtl" style="width:340px;height:690px;background:#FFF6E6;border:3px solid #241F3D;border-radius:32px;overflow:hidden;display:flex;flex-direction:column;box-shadow:7px 7px 0 #241F3D">
+          <div style="padding:14px 20px 0;display:flex;justify-content:space-between;font:500 0.72rem/1 'IBM Plex Mono',monospace;color:#8A83A6"><span>9:41</span><span>▮▮▮</span></div>
+          <div style="padding:20px;display:flex;flex-direction:column;gap:12px;flex:1">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:52px;height:52px;flex:0 0 52px;border:3px solid #241F3D;border-radius:50%;background:#FFF;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #241F3D;animation:bob 3.2s ease-in-out infinite">
+                <img src="nour-friend.svg" alt="" style="width:32px;height:32px;object-fit:contain;display:block">
+              </div>
+              <div style="flex:1">
+                <div style="font:400 0.85rem/1.3 'Cairo',sans-serif;color:#6B6489">إزيك يا</div>
+                <div style="font:800 1.5rem/1.2 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">يوسف</div>
+              </div>
+              <div style="padding:8px 14px;border:2.5px solid #241F3D;border-radius:999px;background:#B6E88F;font:700 0.82rem/1 'Cairo',sans-serif;color:#1F3D12;box-shadow:3px 3px 0 #241F3D">٤ مهارات</div>
+            </div>
+
+            <div style="border:3px solid #241F3D;border-radius:24px;background:#F0A22F;padding:18px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:11px">
+              <div style="font:500 0.72rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#5E3806"><span style="font-family:'Cairo',sans-serif;letter-spacing:normal">مهمة النهاردة</span></div>
+              <div style="font:800 1.5rem/1.25 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">المعادلات الخطية</div>
+              <div style="height:18px;border:2.5px solid #241F3D;border-radius:999px;background:#FFF;padding:2px">
+                <div style="width:72%;height:100%;border-radius:999px;background:#7B4FC9"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;font:700 0.85rem/1 'Cairo',sans-serif;color:#241F3D"><span>٣ من ٤ خلصوا</span><span>٥ دقايق</span></div>
+              <button style="appearance:none;border:3px solid #241F3D;background:#FFF;color:#241F3D;font:800 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;padding:15px;border-radius:18px;min-height:56px;box-shadow:4px 4px 0 #241F3D;cursor:pointer">كمّل المهمة</button>
+            </div>
+
+            <div style="font:700 1.05rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">اختار مادة</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div style="border:3px solid #241F3D;border-radius:20px;background:#7FD1F0;padding:14px;box-shadow:4px 4px 0 #241F3D;display:flex;flex-direction:column;gap:6px;min-height:78px">
+                <div style="width:28px;height:28px;border:2.5px solid #241F3D;border-radius:8px;background:#FFF"></div>
+                <div style="font:700 1.05rem/1.2 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#0F3D51">رياضيات</div>
+                <div style="font:400 0.78rem/1 'Cairo',sans-serif;color:#134B63">٦ مهارات</div>
+              </div>
+              <div style="border:3px solid #241F3D;border-radius:20px;background:#B6E88F;padding:14px;box-shadow:4px 4px 0 #241F3D;display:flex;flex-direction:column;gap:6px;min-height:78px">
+                <div style="width:28px;height:28px;border:2.5px solid #241F3D;border-radius:8px;background:#FFF"></div>
+                <div style="font:700 1.05rem/1.2 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#1F3D12">علوم</div>
+                <div style="font:400 0.78rem/1 'Cairo',sans-serif;color:#3A5B26">٤ مهارات</div>
+              </div>
+              <div style="border:3px solid #241F3D;border-radius:20px;background:#FFA8C5;padding:14px;box-shadow:4px 4px 0 #241F3D;display:flex;flex-direction:column;gap:6px;min-height:78px">
+                <div style="width:28px;height:28px;border:2.5px solid #241F3D;border-radius:8px;background:#FFF"></div>
+                <div style="font:700 1.05rem/1.2 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#7A2447">عربي</div>
+                <div style="font:400 0.78rem/1 'Cairo',sans-serif;color:#6E2440">٥ مهارات</div>
+              </div>
+              <div style="border:3px solid #241F3D;border-radius:20px;background:#FFF;padding:14px;box-shadow:4px 4px 0 #241F3D;display:flex;flex-direction:column;gap:6px;min-height:78px">
+                <div style="width:28px;height:28px;border:2.5px solid #241F3D;border-radius:8px;background:#FFE9BD"></div>
+                <div style="font:700 1.05rem/1.2 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">كل المواد</div>
+                <div style="font:400 0.78rem/1 'Cairo',sans-serif;color:#6B6489">شوف الكل</div>
+              </div>
+            </div>
+          </div>
+          <div style="border-top:3px solid #241F3D;background:#FFF;display:flex;padding:8px 4px">
+            <div style="flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:26px;height:26px;border:2.5px solid #241F3D;border-radius:8px;background:#F0A22F"></span><span style="font:700 0.72rem/1 'Cairo',sans-serif;color:#241F3D">الرئيسية</span></div>
+            <div style="flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:26px;height:26px;border:2.5px solid #B4AECB;border-radius:8px"></span><span style="font:700 0.72rem/1 'Cairo',sans-serif;color:#5A5570">نور</span></div>
+            <div style="flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="width:26px;height:26px;border:2.5px solid #B4AECB;border-radius:8px"></span><span style="font:700 0.72rem/1 'Cairo',sans-serif;color:#5A5570">مهاراتي</span></div>
+          </div>
+        </div>
+        <figcaption style="font:500 0.85rem/1.6 'IBM Plex Mono',monospace;color:#6B6489"><strong style="color:#241F3D">01 · Home</strong><br>Accent: amber, on the one quest card. Subject tiles use the playmates for recognition, not decoration — a ten‑year‑old finds "the blue one" faster than a word.</figcaption>
+      </figure>
+
+      <figure style="margin:0;display:flex;flex-direction:column;gap:14px;width:340px">
+        <div dir="rtl" style="width:340px;height:690px;background:#FFF6E6;border:3px solid #241F3D;border-radius:32px;overflow:hidden;display:flex;flex-direction:column;box-shadow:7px 7px 0 #241F3D">
+          <div style="padding:14px 20px 0;display:flex;justify-content:space-between;font:500 0.72rem/1 'IBM Plex Mono',monospace;color:#8A83A6"><span>9:41</span><span>▮▮▮</span></div>
+          <div style="padding:16px 20px;display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:40px;border:2.5px solid #241F3D;border-radius:12px;background:#FFF;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 #241F3D;font-size:1.1rem;color:#241F3D">→</div>
+            <div style="flex:1;height:18px;border:2.5px solid #241F3D;border-radius:999px;background:#FFF;padding:2px">
+              <div style="width:37%;height:100%;border-radius:999px;background:#F0A22F"></div>
+            </div>
+            <div style="font:700 0.9rem/1 'IBM Plex Mono',monospace;color:#241F3D">3/8</div>
+          </div>
+          <div style="padding:8px 20px 20px;display:flex;flex-direction:column;gap:14px;flex:1">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:44px;height:44px;flex:0 0 44px;border:2.5px solid #241F3D;border-radius:50%;background:#FFF;display:flex;align-items:center;justify-content:center;animation:bob 3.2s ease-in-out infinite">
+                <img src="nour-friend.svg" alt="" style="width:28px;height:28px;object-fit:contain;display:block">
+              </div>
+              <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:18px 6px 18px 18px;padding:12px 14px;font:400 0.92rem/1.7 'Cairo',sans-serif;color:#241F3D;box-shadow:3px 3px 0 #241F3D">جرّب دي — انت عارفها!</div>
+            </div>
+            <div style="border:3px solid #241F3D;border-radius:24px;background:#FFF;padding:20px 18px;box-shadow:5px 5px 0 #241F3D;text-align:center">
+              <div style="font:500 0.72rem/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#5A5570;margin-bottom:12px"><span style="font-family:'Cairo',sans-serif;letter-spacing:normal">أوجد قيمة س</span></div>
+              <div dir="ltr" style="font:800 1.9rem/1.1 'IBM Plex Mono',monospace;color:#241F3D;white-space:nowrap">3x + 5 = 23</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="border:2.5px solid #241F3D;background:#FFF;border-radius:16px;padding:16px 18px;font:700 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D;min-height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D"><span>س = ٤</span><span style="font:700 0.8rem/1 'Cairo',sans-serif;color:#5A5570">أ</span></div>
+              <div style="border:2.5px solid #241F3D;background:#B6E88F;border-radius:16px;padding:16px 18px;font:700 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#1F3D12;min-height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:3px 3px 0 #241F3D;animation:pop 380ms cubic-bezier(.34,1.6,.64,1)"><span>س = ٦</span><span style="font-size:1.15rem">✓</span></div>
+              <div style="border:2.5px solid #9C95B8;background:#F6F5FA;border-radius:16px;padding:16px 18px;font:700 1.15rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#5A5570;min-height:56px;display:flex;align-items:center;justify-content:space-between"><span>س = ٨</span><span style="font:700 0.78rem/1 'Cairo',sans-serif;color:#5A5570">مش دي</span></div>
+            </div>
+            <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+              <button style="appearance:none;border:3px solid #241F3D;background:#F0A22F;color:#241F3D;font:800 1.2rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;padding:16px;border-radius:20px;min-height:56px;box-shadow:4px 4px 0 #241F3D;cursor:pointer">كمّل</button>
+              <button style="appearance:none;background:none;border:none;color:#136386;font:700 0.95rem/1 'Cairo',sans-serif;min-height:52px;cursor:pointer">مش فاهم — وضّحلي</button>
+            </div>
+          </div>
+        </div>
+        <figcaption style="font:500 0.85rem/1.6 'IBM Plex Mono',monospace;color:#6B6489"><strong style="color:#241F3D">02 · Question</strong><br>Correct pops green, wrong nudges and greys. Nour stays on screen with one short line of encouragement — and <span style="font-family:'Cairo',sans-serif;letter-spacing:normal">"وضّحلي"</span> is always the last thing on the page, never hidden.</figcaption>
+      </figure>
+
+      <figure style="margin:0;display:flex;flex-direction:column;gap:14px;width:340px">
+        <div dir="rtl" style="width:340px;height:690px;background:#7B4FC9;border:3px solid #241F3D;border-radius:32px;overflow:hidden;display:flex;flex-direction:column;box-shadow:7px 7px 0 #241F3D;position:relative">
+          <div style="position:absolute;top:120px;right:40px;width:14px;height:14px;border-radius:50%;background:#FFE9BD;animation:rise 2.2s ease-out infinite"></div>
+          <div style="position:absolute;top:150px;left:56px;width:10px;height:10px;border-radius:50%;background:#7FD1F0;animation:rise 2.6s .4s ease-out infinite"></div>
+          <div style="position:absolute;top:180px;right:96px;width:12px;height:12px;border-radius:50%;background:#B6E88F;animation:rise 2.4s .8s ease-out infinite"></div>
+          <div style="padding:14px 20px 0;display:flex;justify-content:space-between;font:500 0.72rem/1 'IBM Plex Mono',monospace;color:#D9CCF3"><span>9:41</span><span>▮▮▮</span></div>
+          <div style="padding:28px 24px;display:flex;flex-direction:column;gap:22px;flex:1;align-items:center;text-align:center;position:relative">
+            <div style="margin-top:36px;position:relative;width:132px;height:132px;display:flex;align-items:center;justify-content:center">
+              <div style="position:absolute;inset:0;border:3px solid #FFE9BD;border-radius:50%;animation:ring 1.6s ease-out infinite"></div>
+              <div style="width:112px;height:112px;border:3px solid #241F3D;border-radius:50%;background:#FFE9BD;display:flex;align-items:center;justify-content:center;box-shadow:5px 5px 0 #241F3D;animation:squash 1.2s ease-in-out infinite">
+                <img src="nour-friend.svg" alt="" style="width:72px;height:72px;object-fit:contain;display:block">
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="font:800 2.4rem/1.15 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#FFFFFF">جبتها!</div>
+              <div style="font:400 1rem/1.8 'Cairo',sans-serif;color:#F0E9FB">أتقنت المعادلات الخطية. خلصت المهمة كلها من أول مرة.</div>
+            </div>
+            <div style="width:100%;border:3px solid #241F3D;border-radius:24px;background:#FFF;padding:20px;box-shadow:5px 5px 0 #241F3D;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font:700 1.05rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;color:#241F3D">المعادلات الخطية</span>
+                <span style="padding:5px 11px;border:2.5px solid #241F3D;border-radius:999px;background:#2F9E8F;font:700 0.75rem/1 'Cairo',sans-serif;color:#241F3D">مُتمكّن</span>
+              </div>
+              <div style="display:flex;gap:5px">
+                <div style="flex:1;height:14px;border:2px solid #241F3D;border-radius:999px;background:#F0A22F"></div>
+                <div style="flex:1;height:14px;border:2px solid #241F3D;border-radius:999px;background:#D9A75A"></div>
+                <div style="flex:1;height:14px;border:2px solid #241F3D;border-radius:999px;background:#8FB98A"></div>
+                <div style="flex:1;height:14px;border:2px solid #241F3D;border-radius:999px;background:#54A896"></div>
+                <div style="flex:1;height:14px;border:2px solid #241F3D;border-radius:999px;background:#2F9E8F"></div>
+              </div>
+            </div>
+            <div style="margin-top:auto;width:100%;display:flex;flex-direction:column;gap:10px">
+              <button style="appearance:none;border:3px solid #241F3D;background:#F0A22F;color:#241F3D;font:800 1.2rem/1 'Baloo Bhaijaan 2',system-ui,sans-serif;padding:16px;border-radius:20px;min-height:56px;box-shadow:4px 4px 0 #241F3D;cursor:pointer">مهمة جديدة</button>
+              <button style="appearance:none;background:none;border:none;color:#FFE9BD;font:700 0.95rem/1 'Cairo',sans-serif;min-height:52px;cursor:pointer">كفاية النهاردة</button>
+            </div>
+          </div>
+        </div>
+        <figcaption style="font:500 0.85rem/1.6 'IBM Plex Mono',monospace;color:#6B6489"><strong style="color:#241F3D">03 · Celebration</strong><br>The one full‑violet surface in the system, and the only place particles are allowed. Note the second button: stopping is offered as warmly as continuing — the celebration is not a hook.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="brief" style="background:#241F3D;margin-top:64px;padding:64px 0;border-top:4px solid #241F3D">
+    <div style="max-width:1080px;margin:0 auto;padding:0 24px;display:flex;flex-direction:column;gap:26px">
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:70ch">
+        <div style="font:500 0.8rem/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:#FFC262">Agent brief</div>
+        <h2 style="margin:0;font:800 2.4rem/1.1 'Baloo 2',system-ui,sans-serif;color:#FFFFFF">Paste this for the Play variant</h2>
+        <p style="margin:0;color:#B7B0D4">Use <em>instead of</em> the master brief when the target age is 10–16. Everything not mentioned here falls back to the master system.</p>
+      </div>
+      <div style="border:3px solid #FFC262;border-radius:24px;overflow:hidden">
+        <div style="padding:12px 20px;background:#1A1630;font:500 0.78rem/1.6 'IBM Plex Mono',monospace;color:#FFC262">nour-play-rules.md</div>
+        <pre style="margin:0;padding:24px;overflow-x:auto;background:#12102A;font:400 0.82rem/1.9 'IBM Plex Mono',monospace;color:#E5E1F5">You are generating UI for Nour PLAY — the 10-16 variant of Nour, an AI
+learning companion for students in Egypt and the Middle East.
+
+THE ONE STRUCTURAL IDEA
+- Everything is a sticker: 3px solid #241F3D outline + hard offset shadow
+  (4px 4px 0 #241F3D, no blur). 2.5px stroke under 40px tall.
+- On press: translate(4px,4px) and shadow to 0, in 90ms. If it doesn't
+  move, it isn't a control.
+- Radius 14 chips/inputs · 20 buttons/small cards · 28 big cards · 999 pills.
+
+COLOR
+- Ground #FFF6E6 (Cream). Surface #FFFFFF. Warm bands #FFE9BD (Honey).
+- Ink #241F3D — body text AND every outline. Soft ink #6B6489.
+- Action amber #F0A22F, text on it #241F3D. Mastery teal #2F9E8F.
+- Celebrate violet #7B4FC9. Playmates sky #7FD1F0, leaf #B6E88F,
+  berry #FFA8C5 — for SUBJECT/QUEST coding only, never decoration.
+- Correct = leaf green. Wrong = grey + nudge. NEVER red, ever.
+
+TYPE
+- Baloo 2 / Baloo Bhaijaan 2 runs the WHOLE UI at 700-800: headlines,
+  buttons, labels, numbers. This is the deliberate break from master.
+- Cairo 400 only for passages over three lines.
+- Arabic and English at equal size and weight. Arabic line-height 1.85+.
+
+MOTION — reactive, never ambient
+- press 90ms · pop 380ms spring (correct answer, reward)
+- nudge 420ms (wrong answer) · wiggle (Nour thinking) · bob 3.2s loop
+  (Nour idle — the ONLY infinite loop) · fill 1.4s (progress) · ring+squash
+  (celebration only)
+- ONE animation at a time. Nothing over 600ms. Honour prefers-reduced-motion.
+
+THE CHARACTER
+- The friend mark is a present companion in a circular outlined badge.
+- FOUR MOODS carried by motion only — idle/bob, thinking/wiggle,
+  encouraging/tilt, celebrating/squash+ring. NEVER redraw the artwork,
+  never add facial expressions. It must never look like it's laughing at you.
+- 28px inline · 44px header · 96px celebration. Under 28px, mark only.
+
+TARGETS &amp; LAYOUT
+- Minimum tap target 52px (not 44) — fast, imprecise taps on shared phones,
+  and KEEP 52px on desktop with a mouse. Density is never bought from targets.
+- 8px spacing rhythm. One idea per screen. ONE amber primary per screen.
+
+DEVICES — web and iPad are canonical, phone is the collapse
+- Web 1280pt+: THREE PANE — 88px icon rail / workspace / 340px Nour panel.
+  The companion panel never collapses above 1280.
+- iPad landscape 1024-1194pt: TWO PANE — 80px rail / workspace / 300px Nour.
+  Same component sizes as web; only pane widths change.
+- iPad portrait 744-1023pt: rail + workspace, Nour docks to a bottom sheet.
+- Phone / Split View under 700pt: single column, bottom nav, inline avatar.
+  No intermediate layout between iPad portrait and phone.
+- Design 1360 FIRST, mirror to iPad, collapse to phone LAST.
+
+SCALING THE STICKER — the one thing that breaks on big screens
+- Stroke, shadow offset and radius are ABSOLUTE. 3px stroke and 4px shadow
+  at every viewport. Never scale them with the screen.
+- Type does not grow either: workspace body stays 1rem, options stay 1.15rem.
+  Extra width buys MORE PANES and MORE EMPTY CREAM, never bigger controls.
+- Cap the workspace at 820px and text at 64ch. Cap card grids at 2 columns.
+- Answer options go 1 column on phone, 2 on iPad and web. Never 3+.
+- Hover styles only under @media (hover: hover) and (pointer: fine).
+- RTL mirrors the rail, the panel side, and the chat bubble notches.
+
+PROGRESS = QUESTS, NOT STREAKS
+- A quest is a few questions on ONE skill, finishable in one sitting,
+  labelled with its length in minutes.
+- Reward only real learning: a skill reaching mastered. Never logins,
+  never time spent, never the same skill twice.
+- A missed day costs nothing and progress is never taken away.
+
+FORBIDDEN
+- Red for wrong answers. Leaderboards, class ranking, peer comparison.
+- Streaks with loss, countdown pressure, "you'll lose your progress".
+- Ambient looping animation on a study screen. Two animations at once.
+- Facial expressions on the mark. Sparkle/star AI iconography.
+- Withholding an explanation to drive engagement.</pre>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center;padding-top:12px;border-top:2px solid #3A3358;font:500 0.85rem/1.7 'IBM Plex Mono',monospace;color:#A9A2C9">
+        <span>Nour Play · variant A · ages 10–16 · layers on the master system v0.2</span>
+        <span>“Nour” is a placeholder pending naming &amp; trademark check</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180},&quot;showCode&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Document&quot;,&quot;label&quot;:&quot;Show code snippets&quot;}}">
+class Component extends DCLogic {
+  ring(size, bg, mark, anim, extra) {
+    return React.createElement("div", { style: { position: "relative", width: size, height: size, display: "flex", alignItems: "center", justifyContent: "center" } },
+      extra ? React.createElement("div", { style: { position: "absolute", inset: 0, border: "3px solid #241F3D", borderRadius: "50%", animation: "ring 1.6s ease-out infinite" } }) : null,
+      React.createElement("div", { style: { width: size - 14, height: size - 14, border: "3px solid #241F3D", borderRadius: "50%", background: bg, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "4px 4px 0 #241F3D", animation: anim } },
+        React.createElement("img", { src: "nour-friend.svg", alt: "", style: { width: mark, height: mark, objectFit: "contain", display: "block" } })
+      )
+    );
+  }
+
+  swatch(bg, anim, label) {
+    return React.createElement("div", { style: { width: 52, height: 52, border: "3px solid #241F3D", borderRadius: 16, background: bg, boxShadow: "4px 4px 0 #241F3D", animation: anim, display: "flex", alignItems: "center", justifyContent: "center", font: "700 1rem/1 'Baloo 2', system-ui, sans-serif", color: "#241F3D" } }, label || "");
+  }
+
+  renderVals() {
+    return {
+      showCode: this.props.showCode ?? true,
+
+      departures: [
+        { master: "Baloo for headlines only", play: "Baloo runs the entire UI", why: "Rounded type reads as friendly rather than institutional, and at this age the interface itself has to look approachable — not just the headline." },
+        { master: "1px hairline borders, soft shadows", play: "3px ink outline + hard offset shadow", why: "Objects need to look physically pressable. It also gives every control an unmistakable pressed state without a colour change." },
+        { master: "Radius 8/12/16", play: "Radius 14/20/28", why: "Chunkier shapes read as toys rather than forms, and larger radii pair with the heavier stroke without looking cramped." },
+        { master: "Touch target 44px", play: "Touch target 52px", why: "Younger students tap faster and less precisely, frequently on a shared or damaged device." },
+        { master: "One signature spring, everything else quiet", play: "Seven named response animations", why: "Immediate physical feedback is what keeps a twelve-year-old in the session — but every animation must answer an action, never idle." },
+        { master: "Paper #F7F6FB ground", play: "Cream #FFF6E6 ground", why: "A warmer, more saturated ground holds the heavier outlines without the page looking clinical." }
+      ],
+
+      palette: [
+        { name: "Cream", hex: "#FFF6E6", on: "#241F3D", token: "play.bg.page", job: "The ground. Warmer and more saturated than the master Paper." },
+        { name: "Honey", hex: "#FFE9BD", on: "#6B5A2E", token: "play.bg.warm", job: "Headers, banners, celebration badges. The friendly band." },
+        { name: "Deep Ink", hex: "#241F3D", on: "#FFE9BD", token: "play.ink", job: "Body text and — the important part — every single outline and shadow." },
+        { name: "Nour Glow", hex: "#F0A22F", on: "#241F3D", token: "play.action", job: "Unchanged from master. The one primary action per screen." },
+        { name: "Grow Teal", hex: "#2F9E8F", on: "#241F3D", token: "play.mastery", job: "Unchanged. Mastery badges and the final stage of the skill ramp." },
+        { name: "Party Violet", hex: "#7B4FC9", on: "#FFFFFF", token: "play.celebrate", job: "Celebration only. Brighter than the master violet to carry a full-bleed screen." },
+        { name: "Sky", hex: "#7FD1F0", on: "#0F3D51", token: "play.sky", job: "Playmate. Subject coding, student chat bubbles." },
+        { name: "Leaf", hex: "#B6E88F", on: "#1F3D12", token: "play.leaf", job: "Playmate. Correct answers and subject coding. Replaces green-as-validation." },
+        { name: "Berry", hex: "#FFA8C5", on: "#7A2447", token: "play.berry", job: "Playmate. Subject coding and highlight bands. Never a warning." }
+      ],
+
+      breakpoints: [
+        { cls: "Web · canonical", w: "1280pt +", tone: "#241F3D", structure: "Three pane — 88px icon rail / workspace / 340px Nour panel", note: "Design this one first. The companion panel never collapses at this width." },
+        { cls: "iPad landscape", w: "1024–1194pt", tone: "#241F3D", structure: "Two pane — 80px rail / workspace / 300px Nour panel", note: "Same component sizes as web; only the pane widths change. The quest map drops out." },
+        { cls: "iPad portrait", w: "744–1023pt", tone: "#4A4266", structure: "Rail + workspace; Nour docks to a bottom sheet", note: "A 300px panel here would squeeze the workspace below a usable width, so the companion becomes a sheet instead." },
+        { cls: "Phone", w: "360–430pt", tone: "#615B7D", structure: "Single column, bottom nav, inline avatar", note: "The collapse, documented in §Phone. Quest map becomes the header bar." },
+        { cls: "Split View", w: "≤ 700pt effective", tone: "#615B7D", structure: "Phone layout, wholesale", note: "No intermediate layout exists between iPad portrait and phone — test this explicitly." }
+      ],
+
+      scaleRules: [
+        { tag: "THE STICKER", title: "Stroke and shadow never scale", body: "3px outline, 4px shadow offset, 14/20/28 radii — absolute at every viewport. The sticker illusion depends on those values reading as a physical cut edge; proportional scaling turns paper into cartoon.", dont: "stroke: 0.3vw, or radius that grows with the card" },
+        { tag: "TYPE", title: "Width buys panes, not point size", body: "Workspace body stays 1rem and answer options stay 1.15rem from 360pt to 1920pt. A wider screen earns another pane or more empty Cream — never larger controls. The only thing that grows is the equation card, which is a focal display, not UI.", dont: "scaling the type ramp up per breakpoint" },
+        { tag: "TARGETS", title: "52px holds on desktop too", body: "The 52px minimum was set for imprecise taps, but it stays on web with a mouse. This age group uses trackpads badly, and a chunky target is part of the variant's character rather than an accessibility tax.", dont: "shrinking to 32px because there's a cursor" },
+        { tag: "MEASURE", title: "Cap everything", body: "Workspace 820px, reading text 64ch, card grids 2 columns maximum, answer options 1 column on phone and 2 above. A four-across row of options at 1600pt reads as a form, and the student loses the sense of choosing between a few things.", dont: "letting grids fill to auto-fit at any width" },
+        { tag: "HOVER", title: "Hover is a web-only affordance", body: "The press state is the universal feedback. Hover lift is additive and must sit behind @media (hover: hover) and (pointer: fine) — otherwise iPad taps trigger a sticky hover that reads as a broken button.", dont: "hover styles applied unconditionally" },
+        { tag: "RTL", title: "Panes mirror, notches follow", body: "In Arabic the rail moves to the right and the companion panel to the left, and every chat bubble notch flips with them. Use logical properties throughout — border-inline-start, not border-left — so one stylesheet serves both.", dont: "hardcoding border-left on the rail" }
+      ],
+
+      typeScale: [
+        { step: "Display", size: "2.4rem", face: "Baloo 800", use: "Celebrations, screen titles, the big equation" },
+        { step: "Title", size: "1.5rem", face: "Baloo 800", use: "Card titles, quest names, student name" },
+        { step: "UI", size: "1.15rem", face: "Baloo 700", use: "Buttons, answer options — the workhorse" },
+        { step: "Label", size: "0.85rem", face: "Baloo 700 / Cairo 700", use: "Chips, nav labels, badges, counters" },
+        { step: "Reading", size: "1rem", face: "Cairo 400", use: "Any passage over three lines" },
+        { step: "Data", size: "0.72rem", face: "IBM Plex Mono 500", use: "Step counters, timers, Latin-only labels" }
+      ],
+
+      motions: [
+        { name: "press", spec: "90ms · translate 4px, shadow → 0", use: "Every control, on tap. The single highest-value animation in the kit.", demo: this.swatch("#F0A22F", "none", "↓") },
+        { name: "pop", spec: "380ms · spring(.34,1.6,.64,1)", use: "A correct answer, a reward appearing, a badge landing.", demo: this.swatch("#B6E88F", "pop 1.6s ease-in-out infinite", "✓") },
+        { name: "nudge", spec: "420ms · shake ±5px", use: "A wrong answer. Never paired with a colour change to red.", demo: this.swatch("#F6F5FA", "nudge 1.8s ease-in-out infinite", "✕") },
+        { name: "wiggle", spec: "900ms loop · rotate ±6°", use: "Nour thinking. Runs only while a response is pending.", demo: this.swatch("#7FD1F0", "wiggle 1.4s ease-in-out infinite") },
+        { name: "bob", spec: "3.2s loop · translateY 7px", use: "Nour idle. The only animation permitted to loop indefinitely.", demo: this.swatch("#FFE9BD", "bob 3.2s ease-in-out infinite") },
+        { name: "fill", spec: "1.4s · width ease-out", use: "A quest bar advancing. Animates once, on arrival at the screen.", demo: React.createElement("div", { style: { width: 120, height: 20, border: "3px solid #241F3D", borderRadius: 999, background: "#FFF", padding: 2, boxShadow: "3px 3px 0 #241F3D" } }, React.createElement("div", { style: { height: "100%", borderRadius: 999, background: "#F0A22F", animation: "fill 2.8s ease-in-out infinite alternate" } })) },
+        { name: "ring + squash", spec: "1.6s ring · 1.2s squash", use: "Mastery celebration only. Never for anything a student didn't earn.", demo: this.ring(66, "#7B4FC9", 30, "squash 1.2s ease-in-out infinite", true) }
+      ],
+
+      moods: [
+        { name: "Idle", spec: "bob 3.2s infinite", bg: "#FFFFFF", on: "#241F3D", onDim: "#4A4266", when: "Waiting for the student. Slow enough to read as breathing, not as a demand for attention.", demo: this.ring(84, "#FFE9BD", 44, "bob 3.2s ease-in-out infinite", false) },
+        { name: "Thinking", spec: "wiggle 900ms infinite", bg: "#7FD1F0", on: "#0F3D51", onDim: "#12455C", when: "A response is generating. Replaces the spinner entirely — the wait becomes someone working.", demo: this.ring(84, "#FFFFFF", 44, "wiggle 1.2s ease-in-out infinite", false) },
+        { name: "Encouraging", spec: "pop 380ms, once", bg: "#FFE9BD", on: "#241F3D", onDim: "#4A4266", when: "After a wrong answer, alongside a hint. Appears once, then settles back to idle.", demo: this.ring(84, "#FFFFFF", 44, "pop 1.8s ease-in-out infinite", false) },
+        { name: "Celebrating", spec: "squash + ring pulse", bg: "#7B4FC9", on: "#FFFFFF", onDim: "#F0E9FB", when: "A skill reaches mastered. The only state that gets particles and a full-colour ground.", demo: this.ring(84, "#FFE9BD", 44, "squash 1.2s ease-in-out infinite", true) }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
