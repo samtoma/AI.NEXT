@@ -171,23 +171,30 @@ export function ChatQuestionCard({
                 the answer and posts itself the moment the student commits to
                 it. This button sat here permanently disabled, which reads as a
                 broken page rather than as "not applicable". */}
-            <div
-              className="mt-2.5 flex items-center gap-3"
-              hidden={q.questionType === "widget"}
-            >
-              <button
-                onClick={() => void submit()}
-                disabled={
-                  busy || (q.questionType === "mcq" ? !choice : !numeric.trim())
-                }
-                className="rounded-full bg-accent-deep px-4 py-1.5 text-[11.5px] font-semibold text-paper transition-all duration-150 enabled:hover:-translate-y-px disabled:opacity-35 play-pressable sticker-shadow-sm"
-              >
-                {busy ? "Checking…" : "Submit answer"}
-              </button>
-              {error && (
-                <span className="text-[11px] text-rust">{error}</span>
-              )}
-            </div>
+            {q.questionType !== "widget" && (
+              <div className="mt-2.5 flex items-center gap-3">
+                <button
+                  onClick={() => void submit()}
+                  disabled={
+                    busy || (q.questionType === "mcq" ? !choice : !numeric.trim())
+                  }
+                  className="rounded-full bg-accent-deep px-4 py-1.5 text-[11.5px] font-semibold text-paper transition-all duration-150 enabled:hover:-translate-y-px disabled:opacity-35 play-pressable sticker-shadow-sm"
+                >
+                  {busy ? "Checking…" : "Submit answer"}
+                </button>
+              </div>
+            )}
+            {/* Outside the button row, because a widget posts itself: hiding
+                the row for widgets took the only error surface with it, so a
+                failed widget attempt reported nothing at all and the student
+                was left looking at a construction that had silently not
+                counted. Every question type can fail the same way, so the
+                message belongs to the card, not to the button. */}
+            {error && (
+              <p className="mt-2.5 text-[11px] text-rust" role="alert">
+                {error}
+              </p>
+            )}
           </div>
         )}
 
