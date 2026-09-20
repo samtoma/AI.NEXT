@@ -275,7 +275,7 @@ def main() -> int:
         text = MATRIX.read_text()
         start = text.find("<!-- GENERATED: scripts/traceability.py")
         if start == -1:
-            marker = "## 15. Counts"
+            marker = "## 10. Counts"
             start = text.find(marker)
             if start == -1:
                 print("\n  ! no '## 10. Counts' section to write into", file=sys.stderr)
