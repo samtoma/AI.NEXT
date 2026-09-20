@@ -28,6 +28,7 @@ import {
   type Misconception,
 } from "@/lib/explanations";
 import { getParsedUpload } from "@/lib/uploads";
+import { masteryLabel } from "@/lib/mastery";
 import {
   classify,
   engagementBlock,
@@ -203,14 +204,19 @@ export function retrievalBlock(b: RetrievalBundle): string {
   if (eng) parts.push(eng);
 
   if (b.nearestSkills.length) {
+    // Bands, not percentages. What the model needs from this block is the
+    // ORDER — which skill is weakest — and it gets that from the sort. The
+    // number added nothing it could use and everything it could repeat: a
+    // raw P(L) handed to a model is a number it will read aloud, and it did
+    // ("92%, that's excellent", #27). Same reasoning as the engagement block
+    // above, which has forbidden quoting since FR-207.
     const rows = b.nearestSkills
-      .map(
-        (s) =>
-          `- ${s.loId} | "${s.label}" | mastery ${Math.round(s.mastery * 100)}%`
-      )
+      .map((s) => `- ${s.loId} | "${s.label}" | ${masteryLabel(s.mastery)}`)
       .join("\n");
     parts.push(
-      `NEAREST SKILLS BY MASTERY (weakest first — P(L) from Bayesian Knowledge Tracing):\n${rows}`
+      `NEAREST SKILLS, WEAKEST FIRST (a stance for you, not a topic — never ` +
+        `read these bands back to the student and never turn them into a ` +
+        `score, percentage or grade):\n${rows}`
     );
   }
 

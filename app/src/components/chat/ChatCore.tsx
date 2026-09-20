@@ -16,6 +16,7 @@ import type {
   TurnMeta,
 } from "@/lib/types";
 import { labelArOfSpineKey } from "@/lib/subjects";
+import { masteryLabel } from "@/lib/mastery";
 import {
   directiveEndAt,
   extractCites,
@@ -653,11 +654,22 @@ export function ChatCore({
 
   const handleAttempt = useCallback(
     (r: AttemptResult, q: SpineQuestion) => {
+      // The band, not the number. This note goes into the model's context on
+      // every single answer, and "mastery 30% → 69%" is where a student ends
+      // up being TOLD their P(L) swung 39 points in one question (#17) — which
+      // is correct Bayesian behaviour and unreadable as a score. The band
+      // moves when the teaching should change, which is the only thing the
+      // model needs from it; when it does not move, the note says so rather
+      // than inviting commentary on a number that did.
+      const bandBefore = masteryLabel(r.oldScore);
+      const bandAfter = masteryLabel(r.newScore);
+      const bandNote =
+        bandBefore === bandAfter
+          ? `still ${bandAfter}`
+          : `${bandBefore} → ${bandAfter}`;
       const note = `${r.isCorrect ? "✓" : "✗"} the student answered ${q.id} ${
         r.isCorrect ? "correctly" : "incorrectly"
-      }${r.isCorrect ? "" : ` (correct answer: ${r.correctAnswer})`} — mastery ${Math.round(r.oldScore * 100)}% → ${Math.round(
-        r.newScore * 100
-      )}%`;
+      }${r.isCorrect ? "" : ` (correct answer: ${r.correctAnswer})`} — ${bandNote} (for you only: never say the band, a score or a percentage to the student)`;
       setMessages((prev) => [
         ...prev,
         { role: "note", kind: "event", text: note },

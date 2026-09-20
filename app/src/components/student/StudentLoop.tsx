@@ -8,7 +8,7 @@ import { stepText } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
 import { TeX } from "@/components/TeX";
 import { ChatCore } from "@/components/chat/ChatCore";
-import { masteryColor, pct } from "@/lib/mastery";
+import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
 
 const REASON_META: Record<
   PlanReason,
@@ -196,7 +196,8 @@ export function StudentLoop({
                     </span>
                   </div>
                   <p className="mt-0.5 font-mono text-[10.5px] text-ink-faint">
-                    {meta.why} · mastery {pct(p.loScore)} · {p.tier} tier
+                    {/* band, not percentage — same reason as MasteryDelta below */}
+                    {meta.why} · {masteryLabel(p.loScore, p.loScore > 0)} · {p.tier} tier
                   </p>
                 </div>
                 {/* 0 means no evidence, not a bad result: the not-started step. */}
@@ -504,19 +505,48 @@ export function StudentLoop({
   );
 }
 
+/**
+ * What changed, in bands — never in percentages.
+ *
+ * This component is the literal source of feedback #17: it printed
+ * "mastery 30% → 69%" after every answer, so a student watching two answers
+ * in a row saw a gauge swing 39 points and then back. Nothing was wrong with
+ * the model — 0.30 → correct → 0.69 → incorrect → 0.30 is exactly right for
+ * BKT with P(G)=0.20 and P(S)=0.10, and that is the problem: P(L) is a BELIEF
+ * about a student, and a belief held after two observations is not a score
+ * anyone should be shown to the nearest point.
+ *
+ * So the same decision the check-in card already made (#42, FR-1003) applies
+ * here: the named band, never the number. The band moves when the teaching
+ * should change, which is the only movement that means anything to a student,
+ * and a band that has not moved says so plainly instead of implying nothing
+ * happened.
+ */
 function MasteryDelta({ result }: { result: AttemptResult }) {
-  const delta = result.newScore - result.oldScore;
+  const before = masteryLabel(result.oldScore);
+  const after = masteryLabel(result.newScore);
+  const moved = before !== after;
+  // FR-1010: the signature spring is reserved for exactly this transition,
+  // and had never once been spent because nothing rendered a band change.
+  const isMastered = moved && after === "mastered";
+
   return (
-    <span className="inline-flex items-center gap-2 font-mono text-[11px] text-ink-soft">
-      mastery {pct(result.oldScore)}
-      <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden>
-        <path d="M0 4h12m0 0L9 1m3 3L9 7" stroke="currentColor" strokeWidth="1.2" />
-      </svg>
-      <strong
-        className={`font-semibold ${delta >= 0 ? "text-accent-deep" : "text-rust"}`}
-      >
-        {pct(result.newScore)}
-      </strong>
+    <span
+      className={`inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-soft ${
+        isMastered ? "anim-mastered" : ""
+      }`}
+    >
+      {moved ? (
+        <>
+          <span>{before}</span>
+          <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
+            <path d="M0 4h12m0 0L9 1m3 3L9 7" stroke="currentColor" strokeWidth="1.2" />
+          </svg>
+          <strong className="font-semibold text-ink">{after}</strong>
+        </>
+      ) : (
+        <span>still {after}</span>
+      )}
     </span>
   );
 }

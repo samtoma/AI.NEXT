@@ -4,6 +4,7 @@ import { getAllVisuals } from "./visuals";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
 import { DEFAULT_STUDENT_ID } from "./demo-student";
+import { masteryLabel } from "./mastery";
 import type { Subject } from "./types";
 
 /**
@@ -34,7 +35,24 @@ export interface AskContext {
   grounding: Grounding;
 }
 
-const pctStr = (v: number) => `${Math.round(v * 100)}%`;
+/**
+ * Mastery reaches the model as a NAMED BAND, never as a percentage.
+ *
+ * `pctStr` used to live here and rendered P(L) straight into the prompt as
+ * "mastery today 92%". A number in the context is a number the model will
+ * say out loud, and it did — "92%, that's excellent" mid-lesson, with no
+ * referent the student could use (#27). Two independent reasons it should
+ * never have been a number:
+ *
+ *   - P(L) is a BELIEF, not a score. 30 -> 69 -> 30 across two answers is
+ *     correct Bayesian behaviour and reads as a broken gauge (#17).
+ *   - the interface deliberately stopped showing the number (#42, FR-1003).
+ *     A tutor that keeps saying it undoes that decision in conversation.
+ *
+ * The band is what the ordering already encodes, so nothing the model can
+ * act on is lost.
+ */
+const bandStr = (v: number) => masteryLabel(v);
 
 /**
  * How many LOs get the FULL treatment (description + question stems +
@@ -176,7 +194,7 @@ export async function buildAskContext(
 
   const loLines = losRes.rows
     .map((l) => {
-      const head = `- ${l.id} | "${l.label}" | ref ${l.syllabus_ref ?? "—"} | book p.${l.source_page ?? "—"} | mastery today ${pctStr(current.get(l.id) ?? 0)} | at baseline diagnostic ${pctStr(baseline.get(l.id) ?? 0)}`;
+      const head = `- ${l.id} | "${l.label}" | ref ${l.syllabus_ref ?? "—"} | book p.${l.source_page ?? "—"} | now ${bandStr(current.get(l.id) ?? 0)} | at baseline ${bandStr(baseline.get(l.id) ?? 0)}`;
       return focusLos.has(l.id) && l.description
         ? `${head}\n  ${l.description}`
         : head;

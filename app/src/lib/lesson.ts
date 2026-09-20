@@ -4,6 +4,7 @@ import { pool } from "./db";
 import { retrieve, retrievalBlock } from "./retrieval";
 import { DEFAULT_STUDENT_ID } from "./demo-student";
 import { deriveMasteryStage, learnOpeningFrame } from "./checkin";
+import { masteryLabel } from "./mastery";
 import { gradeLabel } from "./profile";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
@@ -366,10 +367,14 @@ export function lessonDataBlock(data: LessonData): string {
   const kit = lessonPromptKit(data.subject);
   const solutionLabel = kit.solutionLabel;
   const bankNote = kit.bankNote;
+  // Band, not percentage — see the note in `retrieval.ts`. "mastery today
+  // 92%" in this block is the literal source of the model saying "92%,
+  // that's excellent" mid-lesson (#27): it was handed a number and nothing
+  // told it the number was not for the student.
   const loLines = data.los
     .map(
       (l) =>
-        `- ${l.id} | "${l.label}" | book p.${l.sourcePage ?? "—"} | mastery today ${Math.round(l.mastery * 100)}%\n  ${l.description ?? ""}`
+        `- ${l.id} | "${l.label}" | book p.${l.sourcePage ?? "—"} | ${masteryLabel(l.mastery)}\n  ${l.description ?? ""}`
     )
     .join("\n");
 
