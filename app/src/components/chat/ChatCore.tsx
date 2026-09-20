@@ -682,7 +682,7 @@ export function ChatCore({
       onAttemptResult?.(r, q);
       scheduleContinue();
     },
-    [onAttemptResult, scheduleContinue, lessonSurface]
+    [onAttemptResult, scheduleContinue, lessonSurface, arabicUi]
   );
 
   /** Widget cards report their outcome here → visible note + next AI beat. */
@@ -706,7 +706,7 @@ export function ChatCore({
       ]);
       scheduleContinue();
     },
-    [scheduleContinue, lessonSurface]
+    [scheduleContinue, lessonSurface, arabicUi]
   );
 
   // {{check_in}} buttons send the matching suggestion HIDDEN — the card
