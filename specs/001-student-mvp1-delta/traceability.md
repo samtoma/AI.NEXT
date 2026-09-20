@@ -1,6 +1,6 @@
 # Traceability — Student MVP 1.0 comparison build
 
-**Status date**: 2026-09-20 (rev. 9, `PDR1-0-v0.3.0`) · **Branch**: `PDR1-0`
+**Status date**: 2026-09-20 (rev. 10, `PDR1-0-v0.4.0`) · **Branch**: `PDR1-0`
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
 constitution [v3.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md) ·
 [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md) · [ADR-0011](../../docs/decisions/0011-noor-play-design-system.md)
@@ -11,6 +11,14 @@ constitution [v3.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../..
 > fix, because a matrix that only records successes cannot be used to judge the next claim.
 > This is the counting rule working as written: *treat VERIFIED as a claim that someone ran
 > it, and be willing to demote.*
+>
+> **rev. 10 is the fix pass, and it carries two admissions.** Ten of the 27 open feedback
+> issues are closed with code. But two pieces of that work have **no requirement covering
+> them at all** — access gating (`#10`/`#11`/`#12`) and the Socratic teaching protocol
+> (`#33`/`#34`/`#35`) are both shipped and both unrepresented in `spec.md`, so neither can
+> appear as a row here without becoming an orphan the CI gate rejects. They are named in
+> §9 instead. Code that no requirement claims is exactly the drift this document exists to
+> catch, and it is now catching ours.
 
 This document answers one question per row: **for this requirement, what code exists, and what
 actually proves it works?** It is the bridge between the spec's functional requirements and the
@@ -44,7 +52,7 @@ without a checklist row going red.
 | FR-C01 | Grounded teaching — never solved from scratch | **BUILT** | `app/src/lib/retrieval.ts`, `lib/ask.ts`, `lib/lesson.ts` (T033–T034) | Prompt-capture harness (T037) needs a live DB; verified by deliberate diff review instead — the refactor touches ledger inserts and appends a retrieval block that renders to `""` when nothing is retrieved |
 | FR-C02 | Review-gate machinery intact; suspension is a **flag**, not a deletion | **VERIFIED** | `db/migrations/009` `explanation_library.reviewed BOOLEAN DEFAULT FALSE`; `load_seed.py` forces `false` | Constraint fired against a real database; `SELECT count(*) … WHERE NOT reviewed` is the reversibility receipt (T043, needs the box to have a number) |
 | FR-C03 | Deterministic server-side grading, transactional mastery | **VERIFIED** | `app/src/app/api/attempts/route.ts` — `FOR UPDATE`, row-closing bitemporal write; `lib/arithmetic.ts` expression evaluator (`7ac26e4`) | 56 unit tests pass; live BKT walk 0.3000 → 0.1458 → 0.4909 → 0.8314 → 0.9612. **Extended 2026-09-20:** `grade()` used `parseFloat`, which silently reads only the leading digits, so a student who typed the working — "3x6" for a `correct_answer` of 18 — was compared as **3** and marked wrong. Now: exact literal → expression evaluation → the old lenient parse → string equality. The evaluator is a hand-written recursive-descent parser over a whitelisted character set, **not** `eval`/`Function`, and adds no model call to the grading path. 5 new unit tests; checked live against `q:u1-1-2:g002-cardin` — "3x6" correct, "3x5" wrong *and* diagnosed as `mc:u1-1-2:product-commutes`, "18" still correct. Gap: arithmetic only — algebraic finals (`x=5` vs `5`) are not covered. Feedback [#40](https://github.com/samtoma/AI.NEXT/issues/40) |
-| FR-C04 | Per-call AI cost/token/latency/student logging, environment-stamped | **BUILT** | `app/src/lib/db.ts` write paths; `ai_interactions.environment` + `surface_kind` (T012) | Schema verified; per-surface rows accumulate only under real traffic |
+| FR-C04 | Per-call AI cost/token/latency/student logging, environment-stamped | **BUILT** | `app/src/lib/db.ts` write paths; `ai_interactions.environment` + `surface_kind` (T012); **`lib/cost-queries.ts` + `/admin/cost`** (rev. 10) | Schema verified; per-surface rows accumulate only under real traffic. **Extended 2026-09-20:** the logging was never the gap — every model call has carried surface, kind, cost, both token counts, cache counters, latency, student and environment since migration 009. Nothing *read* it: the only query touching the table outside the insert path counted rows for a stat tile, so feedback [#39](https://github.com/samtoma/AI.NEXT/issues/39) ("no cost tracking by function") was a reporting gap wearing an instrumentation gap's clothes. `/admin/cost` now groups by function, by teaching-vs-upload kind, and per student with a projected month. Still BUILT not VERIFIED: no query here has been run, because there is no database in the session that wrote it. |
 | FR-C05 | Operational safety for every solution's stack | **BUILT** | `deploy/DEPLOY-MVP1.md` rails (never `down -v`, never `system prune`), compose project isolation | Cannot be proven without the box (T019) |
 
 ---
@@ -161,7 +169,7 @@ and nothing in the requirement set could have caught it. These rows close that g
 | FR-1007 | Arabic MUST never be set in the mono stack or letter-spaced | **VERIFIED** | `globals.css` `[lang="ar"]`/`[dir="rtl"]` override | IBM Plex Mono carries no Arabic script; the override forces Cairo |
 | FR-1008 | Equations render LTR inline in any page direction | **VERIFIED** | `.katex { direction: ltr }` under the Nour scope; `dir="ltr"` on maths spans | Constitution v2.0.0 Principle V |
 | FR-1009 | No leaderboards, ranking, peer comparison, or "you're behind" framing | **VERIFIED** | Band names are factual (`attempted`, not `weak`); no ranking surface exists; `lib/checkin.ts` `learnOpeningFrame`/`learnAutoStartLine` replace the fixed premise (`91c2282`) | **Demoted and re-verified 2026-09-20.** The UI half was true; the tutor half was the opposite of true and nobody had read it. `lib/lesson.ts`'s `learnPrompt` told the model on **every** learn session that the student "understood NOTHING", including a lesson never attempted, and `LessonSession`'s hidden auto-start message said "I understood NOTHING… teach me from zero" as if the student had typed it. Either alone reproduced the apologetic opener Prototype 1.1 reported ("let's rebuild it from the very first brick"). Both now key off the same 0–4 mastery banding the ramp uses, so a first-time lesson opens as something new rather than as a failure. Verified live against the dev DB at all three reachable stages. Feedback [#30](https://github.com/samtoma/AI.NEXT/issues/30) |
-| FR-1010 | The signature spring is reserved for proficient → mastered | **BUILT** | `.anim-mastered` (420 ms, `--spring-pop`), respects `prefers-reduced-motion` | Defined and unspent — needs a live band transition to observe |
+| FR-1010 | The signature spring is reserved for proficient → mastered | **BUILT** | `.anim-mastered` (420 ms, `--spring-pop`), respects `prefers-reduced-motion`; applied in `StudentLoop`'s `MasteryDelta` (rev. 10) | **Still BUILT, for a better reason.** It was unspent because *nothing in the product rendered a band change at all* — the lesson showed `mastery 30% → 69%`, a number, so there was no transition for a transition animation to attach to. Replacing that with band movement (`attempted → proficient`) gave it its trigger, and the class is now applied on arrival at `mastered`. Promoting it to VERIFIED still needs someone to watch a real student cross that boundary, which no session has produced. |
 
 **Open design decision (Samuel's call, constitution Principle I):** the **master** variant ships
 rather than **Play**. Prep-3 is 14–15, inside both bands, and the handoff forbids mixing them. The
@@ -284,7 +292,11 @@ ADR-0008 bounds the rest. That is T122.
 | 4 | **SC-007** is not buildable as written | **Samuel** | Named in `/speckit-analyze`; the metric has no data source |
 | 5 | **SC-004** still references "verified signups" | **Samuel** | Signups were replaced by the picker (decisions.md Q5); the criterion is stale |
 | 6 | **T001** — create and push the `mvp1` branch | **Samuel** | This session is pinned to its designated branch; pushing `mvp1` needs an explicit go-ahead |
-| 7 | Master vs Play design variant | **Samuel** | Implemented as master; cheap to reverse |
+| 7 | ~~Master vs Play design variant~~ — **settled 2026-09-20**, Play, recorded as [ADR-0011](../../docs/decisions/0011-noor-play-design-system.md) | Samuel | The reason Master was picked (avoid a second variable in a controlled comparison) stopped holding when ADR-0010 withdrew parity |
+| 8 | **Access gating has no requirement** | **Samuel** | `/pipeline`, `/gallery`, `/admin/*`, `/dev/*` now 404 on the student build (`b4cca13`, feedback #10/#11/#12) and **no FR covers it**, so it cannot have a row here. It is also not a permission system — that needs FR-106 un-deferred. File one requirement for the bundle, not four |
+| 9 | **The Socratic protocol has no requirement either** | **Samuel** | `775b6d8` rewrote how the tutor teaches — ask before explaining, ask for the working, end on retrieval — against `SC-005` (OPEN, "the core bet") and no FR. The nearest thing to a spec for our teaching method is now a prompt string |
+| 10 | **Nothing in the build can judge teaching behaviour** | **Samuel** | The Socratic change, the Arabic/English mixing in #20, and #22's question-drift are all only assessable by a human reading a transcript. An LLM-judge eval harness was asked for on row 015 and does not exist. Without it, every teaching change ships unverifiable |
+| 11 | **The tutor prompts assume the student is male** | **Samuel** | 23 masculine pronouns in `lib/lesson.ts` alone, more in `lib/ask.ts` and `lib/checkin.ts`, and a masculine Arabic vocative offered to the model as an example. `students` has no gender column. Not on any feedback row — found in review |
 | 7b | ~~Review the 10% question sample~~ — **done 2026-09-12**, 52 of 53 accepted. A second round of 5 covers the families the first draw missed (T111) | Samuel | The condition his own authorisation attached to the generated bank |
 | 7d | **Who performs the 10% review** (T107) | **Samuel** | The constitution's suspension is conditioned on a *human* gate. A model reviewing model-generated maths reproduces the failure mode it is meant to catch — and on the standard-deviation item it produced a false rejection |
 | 7c | Question supply is now a **variable**, not a constant | **Samuel** | The baseline exhausts its advanced tier and the comparison build does not. Every reported result has to say so — and the gap is now **993 vs 450**, not 462 vs 450 |
