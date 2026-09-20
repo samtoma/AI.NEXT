@@ -495,14 +495,26 @@ behaviour that violated a stated product rule — the Phase 8 dashboard's burnt-
 with nothing in the requirement set able to catch it. They are written as product constraints, not
 as styling preferences: each one names a student-visible behaviour with a reason behind it.
 
-- **FR-1001**: The comparison environment MUST apply the Nour design system. The frozen baseline
+- **FR-1001**: The comparison environment MUST apply the Noor design system. The frozen baseline
   MUST remain visually unchanged, so the visual language is never a confounding variable in the
   comparison (Principle XI).
+  *Amended 2026-09-20 (ADR-0011):* the system this names is **Noor Play**, not the Master variant
+  that shipped first. The renaming of `nour` → `noor` throughout is the same amendment. The second
+  sentence is retained as written but no longer carries the weight it did — ADR-0010's Clarification
+  withdrew cross-solution parity, so the baseline staying unchanged is now a consequence of nobody
+  working on it rather than an obligation this requirement imposes.
 - **FR-1002**: **No red and no coral may appear in the product palette.** A wrong answer MUST grey
   out and invite a retry rather than being marked in a warning colour. The persona's stated fear is
   looking stupid, and a red screen is what that fear looks like.
 - **FR-1003**: Mastery MUST be presented as named bands alongside the value, never by colour alone,
   so the scale survives greyscale, colour-vision deficiency and a screen reader.
+  *Clarified 2026-09-20 — meaning unchanged.* This requires a **named band**; it does not require a
+  percentage. A surface may show the band and no number (the student check-in card does), or the
+  band and a number (the dashboard does). What it may never do is drop every non-colour signal and
+  rely on hue, which is what removing the percentage from the check-in card accidentally did. The
+  three channels in the sentence are a test to run, not a figure of speech: a surface passes only if
+  the value is still readable in greyscale, under colour-vision deficiency, **and** to a screen
+  reader. An `aria-label` alone covers one of the three.
 - **FR-1004**: An objective or topic with **no attempt evidence** MUST NOT be rendered in a lit
   mastery band. A cold-start prior and a practised score of the same value must be visually
   distinguishable.
