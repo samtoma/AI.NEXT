@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { resolveStudentId } from "@/lib/student-context";
 import { emit } from "@/lib/analytics";
+import { currentSessionOrNull } from "@/lib/sessions";
 import {
   isAccepted,
   storeUpload,
@@ -60,18 +61,30 @@ export async function POST(req: Request) {
   }
 
   const sessionId = typeof form.get("sessionId") === "string" ? String(form.get("sessionId")) : null;
+
+  // The learning session this upload belongs to (ADR-0015). A photo taken
+  // mid-lesson joins that lesson's sitting (`adoptOpen`); `student_chat` is
+  // only the fallback for a photo with no sitting around it — the student is
+  // asking about a worksheet, which is what that kind means.
+  const sessionRef = await currentSessionOrNull(studentId, "student_chat", {
+    surface: "upload_intake",
+    clientKey: sessionId ?? undefined,
+    adoptOpen: true,
+  });
+
   const bytes = Buffer.from(await file.arrayBuffer());
-  const uploadId = await storeUpload(studentId, sessionId, file.type, bytes);
+  const uploadId = await storeUpload(studentId, sessionId, sessionRef, file.type, bytes);
 
   void emit({
     event: "upload_submitted",
     studentId,
     sessionId,
+    sessionRef,
     properties: { file_type: file.type, size_bytes: file.size },
   });
 
   // Fire-and-forget. The client polls GET /api/uploads/:id for the outcome.
-  void parseUpload(uploadId);
+  void parseUpload(uploadId, sessionRef);
 
   return NextResponse.json({ uploadId, parseStatus: "pending" }, { status: 202 });
 }

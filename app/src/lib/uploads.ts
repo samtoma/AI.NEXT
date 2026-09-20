@@ -53,6 +53,9 @@ export async function uploadsToday(studentId: number): Promise<number> {
 export async function storeUpload(
   studentId: number,
   sessionId: string | null,
+  /** The learning session (ADR-0015). `sessionId` above is the legacy client
+   *  string kept beside it for the transition — the two must never be joined. */
+  sessionRef: number | null,
   fileType: AcceptedType,
   bytes: Buffer
 ): Promise<number> {
@@ -62,9 +65,9 @@ export async function storeUpload(
   await writeFile(file, bytes);
 
   const res = await pool.query(
-    `INSERT INTO uploads (student_id, session_id, file_type, storage_path, parse_status)
-     VALUES ($1, $2, $3, $4, 'pending') RETURNING id`,
-    [studentId, sessionId, fileType, file]
+    `INSERT INTO uploads (student_id, session_id, session_ref, file_type, storage_path, parse_status)
+     VALUES ($1, $2, $3, $4, $5, 'pending') RETURNING id`,
+    [studentId, sessionId, sessionRef, fileType, file]
   );
   return Number(res.rows[0].id);
 }
@@ -168,7 +171,13 @@ function runParse(filePath: string): Promise<ParseOutcome> {
  * state the student is told about (FR-205), not an error that takes down the
  * lesson around it.
  */
-export async function parseUpload(uploadId: number): Promise<ParseStatus> {
+export async function parseUpload(
+  uploadId: number,
+  /** Passed in, never re-derived: this runs AFTER the response, and by then the
+   *  student's open session may have been superseded or swept. The ledger row
+   *  belongs to the session that took the photo (ADR-0015, FR-2309). */
+  sessionRef: number | null = null
+): Promise<ParseStatus> {
   const res = await pool.query(
     `SELECT student_id, storage_path FROM uploads WHERE id = $1`,
     [uploadId]
@@ -197,8 +206,8 @@ export async function parseUpload(uploadId: number): Promise<ParseStatus> {
       `INSERT INTO ai_interactions
          (student_id, surface, turn_index, user_message, assistant_message,
           grounding, citations, model, input_tokens, output_tokens,
-          cost_usd, latency_ms, environment, surface_kind)
-       VALUES ($1,'upload_parse',1,$2,$3,'{}','[]',$4,0,0,0,$5,$6,'upload_parse')`,
+          cost_usd, latency_ms, environment, surface_kind, session_id)
+       VALUES ($1,'upload_parse',1,$2,$3,'{}','[]',$4,0,0,0,$5,$6,'upload_parse',$7)`,
       [
         studentId,
         `[upload ${uploadId}]`,
@@ -206,6 +215,7 @@ export async function parseUpload(uploadId: number): Promise<ParseStatus> {
         MODEL,
         Date.now() - started,
         ENVIRONMENT,
+        sessionRef,
       ]
     );
   } catch (e) {

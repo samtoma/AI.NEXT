@@ -10,6 +10,7 @@ import {
 import { deriveMasteryStage, learnOpeningFrame } from "@/lib/checkin";
 import { spineKeyOf } from "@/lib/subjects";
 import { resolveStudentId } from "@/lib/student-context";
+import { closeSession, currentSessionOrNull } from "@/lib/sessions";
 import { gradeLabel } from "@/lib/profile";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
 
@@ -187,6 +188,17 @@ export async function POST(req: Request) {
   const studentId = await resolveStudentId();
 
   const data = await getLessonData(sanitizeLessonSlug(body.lesson), studentId);
+
+  // The lesson's own session (ADR-0015). The client does not send `chatSession`
+  // here at all — which is exactly why the check could never be tied to the
+  // lesson that produced it — so the session is found server-side by kind:
+  // this is the same sitting /api/ask has been writing turns into.
+  const sessionId = await currentSessionOrNull(
+    studentId,
+    mode === "review" ? "lesson_review" : "lesson_learn",
+    { surface: "understanding_check", loId: lessonAnchorLo(data), clientKey: chatSession || undefined }
+  );
+
   const loLines = data.los
     .map((l) => `- ${l.id} "${l.label}": ${l.description ?? ""}`)
     .join("\n");
@@ -260,12 +272,14 @@ ${transcriptText}`;
 
     const ins = await pool.query(
       `INSERT INTO understanding_checks
-         (student_id, lo_id, mode, score, verdict, strengths, gaps, next_step, turns, subject)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+         (student_id, lo_id, session_id, mode, score, verdict, strengths, gaps,
+          next_step, turns, subject)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
        RETURNING id`,
       [
         studentId,
         lessonAnchorLo(data),
+        sessionId,
         mode,
         rating.score,
         rating.verdict,
@@ -286,8 +300,8 @@ ${transcriptText}`;
         `INSERT INTO ai_interactions
            (student_id, surface, turn_index, user_message, assistant_message,
             grounding, citations, model, input_tokens, output_tokens,
-            cost_usd, latency_ms, environment, surface_kind)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding')`,
+            cost_usd, latency_ms, environment, surface_kind, session_id)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding',$14)`,
         [
           studentId,
           "understanding_check",
@@ -308,11 +322,19 @@ ${transcriptText}`;
           totalCost,
           totalMs,
           ENVIRONMENT,
+          sessionId,
         ]
       );
     } catch (e) {
       console.error("understanding: failed to log ai_interaction:", e);
     }
+
+    // The rating IS the end of the lesson — the client discards its resume key
+    // on the same response (LessonSession.tsx:568). Closing here is the only
+    // place `completed` is ever written; without it every sitting would end up
+    // swept as `inactivity`, and FR-2302's "did she finish, or walk away"
+    // would have one answer for both.
+    if (sessionId !== null) await closeSession(sessionId, "completed");
 
     const check: UnderstandingCheck = {
       id,

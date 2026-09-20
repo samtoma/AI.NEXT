@@ -4,6 +4,7 @@ import { resolveStudentId } from "@/lib/student-context";
 import { bktUpdate, DEFAULT_PARAMS, type BktParams } from "@/lib/bkt";
 import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
+import { currentSessionOrNull } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { evaluateArithmeticExpression } from "@/lib/arithmetic";
 
@@ -168,6 +169,19 @@ export async function POST(req: Request) {
     const misconceptionId: string | null =
       chosenOption?.misconception_id ?? widgetDiagnostic?.misconception_id ?? null;
 
+    // The learning session this attempt belongs to (ADR-0015). The client sends
+    // nothing new: an answer submitted inside a lesson joins the lesson's open
+    // session (`adoptOpen`), and only an answer with no sitting around it opens
+    // a `practice` one. It runs on the transaction's client, so an attempt that
+    // rolls back takes its session with it rather than leaving a phantom — and
+    // so P1's `withPrincipal` scopes both to the same student.
+    const sessionId = await currentSessionOrNull(
+      studentId,
+      "practice",
+      { surface: "attempt", loId: q.lo_id, adoptOpen: true },
+      client
+    );
+
     // 1. record the attempt
     // `diagnosis_type` records HOW the outcome was determined. `confidence` is
     // deliberately left NULL unless a distractor named the error outright —
@@ -175,13 +189,14 @@ export async function POST(req: Request) {
     // as a number we did not compute.
     const attemptRes = await client.query(
       `INSERT INTO attempts
-         (student_id, question_id, given_answer, is_correct, time_ms, attempted_at,
-          diagnosis_type, misconception_id, stance_used, confidence, modality)
-       VALUES ($1, $2, $3, $4, $5, now(), $6, $7, $8, $9, $10)
+         (student_id, question_id, session_id, given_answer, is_correct, time_ms,
+          attempted_at, diagnosis_type, misconception_id, stance_used, confidence, modality)
+       VALUES ($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11)
        RETURNING id`,
       [
         studentId,
         questionId,
+        sessionId,
         givenAnswer,
         isCorrect,
         Math.round(timeMs ?? 0),

@@ -21,6 +21,7 @@ export type AnalyticsEvent =
   // identity (Epic A signup is deferred — decisions.md Q5 — so these replace it)
   | "student_created"
   | "student_selected"
+  // these two now have a durable row behind them (lib/sessions.ts, ADR-0015)
   | "session_started"
   | "session_ended"
   // learning
@@ -44,7 +45,10 @@ export type AnalyticsProperties = Record<string, unknown>;
 export type EmitArgs = {
   event: AnalyticsEvent;
   studentId?: number | null;
+  /** The LEGACY client string (TEXT). Never joined to `sessions.id` — ADR-0015. */
   sessionId?: string | null;
+  /** The learning session this event belongs to, or null when it belongs to none (FR-2309). */
+  sessionRef?: number | null;
   properties?: AnalyticsProperties;
 };
 
@@ -59,13 +63,14 @@ export async function emit({
   event,
   studentId = null,
   sessionId = null,
+  sessionRef = null,
   properties = {},
 }: EmitArgs): Promise<void> {
   try {
     await pool.query(
-      `INSERT INTO analytics_events (environment, event, student_id, session_id, properties)
-       VALUES ($1, $2, $3, $4, $5)`,
-      [ENVIRONMENT, event, studentId, sessionId, JSON.stringify(properties)]
+      `INSERT INTO analytics_events (environment, event, student_id, session_id, session_ref, properties)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [ENVIRONMENT, event, studentId, sessionId, sessionRef, JSON.stringify(properties)]
     );
   } catch (err) {
     // Analytics is observability, not behaviour. Log and move on.

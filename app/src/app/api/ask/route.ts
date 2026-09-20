@@ -10,6 +10,7 @@ import {
   type SacredGuard,
 } from "@/lib/sacred-guard";
 import { snapshotContext } from "@/lib/session-cache";
+import { currentSessionOrNull } from "@/lib/sessions";
 import { resolveStudentId } from "@/lib/student-context";
 
 /**
@@ -136,6 +137,15 @@ export async function POST(req: Request) {
       { headers: { "Content-Type": "text/event-stream" } }
     );
   }
+
+  // The learning session this turn belongs to (ADR-0015). Opened AFTER the cap
+  // check, because a turn the cap refused is not a sitting. All four ask
+  // surfaces are session kinds by the same name, so the surface IS the kind;
+  // `chatSession` rides along as the transitional correlation key.
+  const sessionId = await currentSessionOrNull(studentId, surface, {
+    surface,
+    clientKey: chatSession,
+  });
 
   // Grounding is snapshotted per chat session: byte-stable across turns so
   // the (system prompt + data block) prefix stays prompt-cache-hot, and the
@@ -407,8 +417,8 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                   assistant_message, grounding, citations, model,
                   input_tokens, output_tokens, cache_read_tokens,
                   cache_creation_tokens, cost_usd, latency_ms,
-                  environment, surface_kind)
-               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9,$10,'chat')`,
+                  environment, surface_kind, session_id)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9,$10,'chat',$11)`,
               [
                 studentId,
                 surface,
@@ -420,6 +430,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                 MODEL,
                 Date.now() - started,
                 ENVIRONMENT,
+                sessionId,
               ]
             );
           } catch (e) {
@@ -457,8 +468,8 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                (student_id, surface, turn_index, user_message, assistant_message,
                 grounding, citations, model, input_tokens, output_tokens,
                 cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
-                environment, surface_kind)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'chat')
+                environment, surface_kind, session_id)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'chat',$16)
              RETURNING id`,
             [
               studentId,
@@ -476,6 +487,7 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
               costUsd,
               latencyMs,
               ENVIRONMENT,
+              sessionId,
             ]
           );
           interactionId = ins.rows[0].id;
