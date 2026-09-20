@@ -1,0 +1,762 @@
+<title>Noor Release Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Tokens lifted from the product's own Noor Play layer
+     (app/src/app/globals.css, [data-ds="noor"]) so the page explaining the
+     design system is set in it. The no-red rule (FR-1002, constitution)
+     holds here too: nothing on this page is red or coral — severity is
+     carried by the grey-purple that replaced --rust, and by amber. */
+  :root {
+    --ink:        #241f3d;
+    --ink-soft:   #574f75;
+    --ink-faint:  #6b6489;
+    --paper:      #fff6e6;
+    --paper-deep: #f7f1e4;
+    --card:       #ffffff;
+    --honey:      #ffe9bd;
+    --amber:      #a34f0a;
+    --amber-lit:  #d98c1f;
+    --teal:       #1f7a6e;
+    --teal-lit:   #2f9e8f;
+    --slate:      #5a5570;
+    --line:       #241f3d;
+    --hair:       rgba(36, 31, 61, 0.14);
+    --shadow:     4px 4px 0 var(--ink);
+    --shadow-sm:  3px 3px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink:        #f3eee1;
+      --ink-soft:   #c0b8d4;
+      --ink-faint:  #9d95b4;
+      --paper:      #17142a;
+      --paper-deep: #1f1b36;
+      --card:       #221d3c;
+      --honey:      #3a2f1c;
+      --amber:      #e8a93f;
+      --amber-lit:  #f0bc5e;
+      --teal:       #5cc4b3;
+      --teal-lit:   #79d6c6;
+      --slate:      #a79fc4;
+      --line:       #f3eee1;
+      --hair:       rgba(243, 238, 225, 0.18);
+      --shadow:     4px 4px 0 rgba(243, 238, 225, 0.85);
+      --shadow-sm:  3px 3px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink:        #f3eee1;
+    --ink-soft:   #c0b8d4;
+    --ink-faint:  #9d95b4;
+    --paper:      #17142a;
+    --paper-deep: #1f1b36;
+    --card:       #221d3c;
+    --honey:      #3a2f1c;
+    --amber:      #e8a93f;
+    --amber-lit:  #f0bc5e;
+    --teal:       #5cc4b3;
+    --teal-lit:   #79d6c6;
+    --slate:      #a79fc4;
+    --line:       #f3eee1;
+    --hair:       rgba(243, 238, 225, 0.18);
+    --shadow:     4px 4px 0 rgba(243, 238, 225, 0.85);
+    --shadow-sm:  3px 3px 0 rgba(243, 238, 225, 0.85);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 0 72px;
+  }
+
+  h1, h2, h3, .display {
+    font-family: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+    font-weight: 700;
+    text-wrap: balance;
+    letter-spacing: -0.005em;
+  }
+
+  .mono, code, .tag, .eyebrow, th, .num {
+    font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  code {
+    font-size: 0.855em;
+    background: var(--paper-deep);
+    border: 1px solid var(--hair);
+    border-radius: 5px;
+    padding: 0.08em 0.36em;
+    overflow-wrap: anywhere;
+  }
+
+  a { color: inherit; text-decoration-color: var(--amber); text-underline-offset: 2px; }
+  a:focus-visible, summary:focus-visible {
+    outline: 3px solid var(--amber-lit);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  .eyebrow {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    font-weight: 500;
+  }
+
+  /* ---------- masthead ---------- */
+  header.masthead { padding-block: 56px 40px; }
+
+  .rel-id {
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--honey);
+    color: var(--ink);
+    border: 3px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 16px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  h1 {
+    font-size: clamp(2.1rem, 6.4vw, 3.4rem);
+    line-height: 1.06;
+    margin: 22px 0 0;
+  }
+
+  .standfirst {
+    font-size: clamp(1.02rem, 2.4vw, 1.22rem);
+    color: var(--ink-soft);
+    max-width: 36em;
+    margin: 18px 0 0;
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+  }
+  .fact {
+    border: 2px solid var(--hair);
+    border-radius: 12px;
+    padding: 9px 14px;
+    background: var(--card);
+  }
+  .fact .num {
+    display: block;
+    font-size: 1.28rem;
+    font-weight: 500;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+  .fact .lab { font-size: 12.5px; color: var(--ink-faint); }
+
+  .notice {
+    margin-top: 28px;
+    border-inline-start: 5px solid var(--amber);
+    background: var(--honey);
+    padding: 14px 18px;
+    border-radius: 0 12px 12px 0;
+    font-size: 15.5px;
+  }
+  .notice strong { font-weight: 600; }
+
+  /* ---------- sections ---------- */
+  section { padding-block-start: 52px; }
+
+  h2 {
+    font-size: clamp(1.45rem, 3.6vw, 1.95rem);
+    margin: 0;
+    line-height: 1.16;
+  }
+  .sec-note {
+    color: var(--ink-soft);
+    max-width: 40em;
+    margin: 10px 0 0;
+    font-size: 16px;
+  }
+  .rule {
+    height: 3px;
+    background: var(--line);
+    border-radius: 2px;
+    margin-block: 14px 0;
+  }
+
+  /* ---------- the ledger ---------- */
+  .ledger { display: grid; gap: 22px; margin-top: 30px; }
+
+  article.entry {
+    background: var(--card);
+    border: 3px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    overflow: clip;
+  }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px 14px;
+    padding: 14px 20px;
+    background: var(--honey);
+    border-block-end: 3px solid var(--line);
+  }
+  .entry-head h3 { font-size: 1.16rem; margin: 0; flex: 1 1 16rem; line-height: 1.28; }
+
+  .tag {
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+    padding: 2px 9px;
+    white-space: nowrap;
+  }
+  .tag.issue { color: var(--amber); }
+  .tag.req   { color: var(--teal); }
+
+  .entry-body { padding: 4px 20px 20px; }
+
+  /* The four-part record. This shape is the story of the release: on almost
+     every item the reported symptom was not the cause, so "what he saw" and
+     "what was actually wrong" have to be separate rows or the point is lost. */
+  dl.record { margin: 0; display: grid; gap: 0; }
+  dl.record > div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 4px 18px;
+    padding-block: 13px;
+    border-block-end: 1px solid var(--hair);
+  }
+  dl.record > div:last-child { border-block-end: 0; padding-block-end: 2px; }
+  dl.record dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--ink-faint);
+    padding-block-start: 5px;
+  }
+  dl.record dd { margin: 0; }
+  dl.record .cause  { color: var(--slate); }
+  dl.record .fix    { }
+
+  @media (max-width: 640px) {
+    dl.record > div { grid-template-columns: 1fr; gap: 2px; }
+    dl.record dt { padding-block-start: 0; }
+  }
+
+  /* ---------- claimed vs true ---------- */
+  .demotions { display: grid; gap: 16px; margin-top: 30px; }
+  .demo-row {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+    background: var(--card);
+    border: 2px solid var(--hair);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .demo-row .fr {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .demo-row .fr small { display: block; font-size: 10.5px; color: var(--ink-faint); letter-spacing: .08em; text-transform: uppercase; margin-top: 3px; font-weight: 400; }
+  .claimed, .true { font-size: 15.3px; }
+  .claimed { color: var(--ink-faint); }
+  .claimed b, .true b {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-block-end: 4px;
+    font-weight: 500;
+  }
+  .claimed b { color: var(--ink-faint); }
+  .true b { color: var(--slate); }
+  @media (max-width: 760px) {
+    .demo-row { grid-template-columns: 1fr; gap: 12px; }
+  }
+
+  /* ---------- measurement table ---------- */
+  .tablewrap { overflow-x: auto; margin-top: 22px; border: 2px solid var(--hair); border-radius: 14px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; min-width: 34rem; }
+  caption {
+    caption-side: top;
+    text-align: start;
+    padding: 14px 18px 4px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    font-family: "Source Serif 4", Georgia, serif;
+  }
+  th, td { padding: 9px 18px; text-align: start; font-size: 13.5px; }
+  th {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    font-weight: 500;
+    border-block-end: 2px solid var(--hair);
+  }
+  td { border-block-end: 1px solid var(--hair); font-variant-numeric: tabular-nums; }
+  tbody tr:last-child td { border-block-end: 0; }
+  td.verdict-pass { color: var(--teal); font-weight: 500; }
+  td.verdict-fail { color: var(--slate); font-weight: 500; }
+  .swatch {
+    display: inline-block;
+    inline-size: 11px;
+    block-size: 11px;
+    border-radius: 3px;
+    border: 1.5px solid var(--line);
+    vertical-align: -1px;
+    margin-inline-end: 7px;
+  }
+
+  /* ---------- gaps ---------- */
+  .gaps { display: grid; gap: 14px; margin-top: 30px; }
+  .gap {
+    border: 2px dashed var(--slate);
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: transparent;
+  }
+  .gap h3 { font-size: 1.06rem; margin: 0 0 6px; }
+  .gap p { margin: 0; font-size: 15.4px; color: var(--ink-soft); }
+  .gap .eyebrow { display: block; margin-block-end: 6px; }
+
+  /* ---------- merge provenance ---------- */
+  .branches { display: grid; gap: 10px; margin-top: 24px; }
+  .branch {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 13px 16px;
+    border: 2px solid var(--hair);
+    border-radius: 12px;
+    background: var(--card);
+  }
+  .branch .sha {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    background: var(--honey);
+    border-radius: 6px;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+  .branch .what { font-size: 15.2px; }
+  .branch .what strong { font-family: "IBM Plex Mono", monospace; font-size: 13.5px; font-weight: 500; }
+
+  /* ---------- gates ---------- */
+  .gates { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+  .gate {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    border: 2px solid var(--teal);
+    color: var(--teal);
+    border-radius: 999px;
+    padding: 4px 13px;
+  }
+  .gate.warn { border-color: var(--amber); color: var(--amber); }
+
+  footer {
+    margin-block-start: 60px;
+    padding-block-start: 24px;
+    border-block-start: 3px solid var(--line);
+    color: var(--ink-faint);
+    font-size: 14px;
+  }
+  footer p { margin: 0 0 8px; }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <span class="rel-id">PDR1-0-v0.3.0</span>
+    <h1>Ten fixes, and four requirements that were lying</h1>
+    <p class="standfirst">
+      The first Student MVP release shaped by someone using the product instead of
+      building it. Tamer ran <code>v0.2.0</code> as a student would, filed 37 issues,
+      and four requirements marked <span class="mono">VERIFIED</span> failed in front
+      of him. This is every change in the release: what he saw, what was actually
+      wrong, and what changed.
+    </p>
+
+    <div class="facts">
+      <div class="fact"><span class="num">10</span><span class="lab">issues closed</span></div>
+      <div class="fact"><span class="num">4</span><span class="lab">false VERIFIED claims</span></div>
+      <div class="fact"><span class="num">27</span><span class="lab">still open</span></div>
+      <div class="fact"><span class="num">128</span><span class="lab">tests passing</span></div>
+      <div class="fact"><span class="num">3</span><span class="lab">branches merged</span></div>
+    </div>
+
+    <p class="notice">
+      <strong>Prepared, not deployed.</strong> Deploy is manual-only while
+      infrastructure is parked (<code>T139</code>). Tagging this version does not put
+      it in front of any student — <code>main</code> still serves
+      ainext.reletix.com, unchanged.
+    </p>
+  </header>
+
+  <section>
+    <h2>What actually landed</h2>
+    <p class="sec-note">
+      Three branches, merged one after the other rather than squashed. Every closing
+      comment on issues #16, #19, #21, #26, #31, #40, #41 and #42 cites an individual
+      commit as its fix evidence; squashing would have made all eight unreachable and
+      broken the trail from the issue to the change that closed it.
+    </p>
+    <div class="rule"></div>
+
+    <div class="branches">
+      <div class="branch">
+        <span class="sha">58c6f7b</span>
+        <span class="what"><strong>wip/q3-q4-explore</strong> — the Noor Play skin and
+        ten Prototype 1.1 fixes. 24 commits, the substance of the release.</span>
+      </div>
+      <div class="branch">
+        <span class="sha">f744043</span>
+        <span class="what"><strong>claude/noor-play-design-system</strong> — absorbed,
+        no net change. <code>wip/q3-q4-explore</code> was cut from it and carries a
+        later draft of the same triage document. Recorded anyway so the branch reads
+        as absorbed rather than abandoned, and nobody re-merges it looking for the
+        design system.</span>
+      </div>
+      <div class="branch">
+        <span class="sha">0c54314</span>
+        <span class="what"><strong>claude/widget-render-fixes</strong> — the duplicated
+        widget stem and the dead Submit button.</span>
+      </div>
+    </div>
+
+    <div class="gates">
+      <span class="gate">tsc --noEmit · 0 errors</span>
+      <span class="gate">128 / 128 tests</span>
+      <span class="gate">next build · green</span>
+      <span class="gate">traceability --check · OK</span>
+      <span class="gate warn">eslint · 30 errors (29 pre-existing)</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>The defects</h2>
+    <p class="sec-note">
+      On almost every one of these, the symptom that was reported and the thing that
+      was actually broken were in different files. That gap is why each entry below
+      separates them.
+    </p>
+    <div class="rule"></div>
+
+    <div class="ledger">
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>A correct answer was marked wrong for showing the working</h3>
+          <span class="tag issue">#40</span><span class="tag req">FR-C03</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>Typing <code>3x6</code> for a question whose answer is 18 was graded wrong.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">Grading used <code>parseFloat</code>, which silently reads only the leading digits and discards the rest. <code>3x6</code> was compared to 18 as the number <strong>3</strong>. The same flaw ran the other way too: for an answer of 3, typing <code>3x6</code> was graded <em>correct</em>.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">Grading now tries, in order: an exact numeric literal, then evaluating the expression, then the old lenient parse, then string equality. The evaluator is a hand-written recursive-descent parser over a whitelisted character set — deliberately not <code>eval</code> or <code>Function</code>, since this parses text a student typed — and it adds no model call to the grading path.</dd></div>
+            <div><dt>Proof</dt><dd>5 new unit tests. Checked live against <code>q:u1-1-2:g002-cardin</code>: <code>3x6</code> correct, <code>3x5</code> wrong <em>and</em> still diagnosed as the <span class="mono">product-commutes</span> misconception, <code>18</code> unchanged.</dd></div>
+            <div><dt>Not fixed</dt><dd class="cause">Arithmetic only. An algebraic final answer — <code>x=5</code> where <code>5</code> is expected — is still marked wrong.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>“Got it” skipped a question that was never answered</h3>
+          <span class="tag issue">#31</span><span class="tag req">FR-1214</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>Tapping “Got it” without attempting the question moved the lesson on, as if it had been answered correctly.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">Not a grading bypass — the server was never fooled. That acknowledgement never reaches grading at all; it is sent as an ordinary chat turn. Nothing stopped the <em>model</em> from reading it as licence to move past a question it had never seen an answer to.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">The chat now works out from the transcript itself which pushed question still has no matching “the student answered…” event. If “Got it” fires while one is open, it is caught in the browser — before any network call — and the student is told to try it first. Deterministic, not a prompt instruction, and it costs nothing.</dd></div>
+            <div><dt>Note</dt><dd>A student who submits a real wrong answer and <em>then</em> taps “Got it” was never the bug — that already went through grading correctly, and still does.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>The last explanation was taken away before it could be read</h3>
+          <span class="tag issue">#28</span><span class="tag req">FR-1218</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>On the final question of a lesson, the report appeared instead of the explanation.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">The explanation <em>did</em> render — and was then replaced. Three separate auto-advance timers (the tutor's own closing directive, a hit turn cap, and review mode reaching its turn count) each jumped to the report on a fixed 2.2–2.5 second delay, with no student action in between. “The refutation reaches the student” had been marked verified on the strength of it rendering at all.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">All three timers removed. They now only <em>arm</em> the header's “Finish lesson” button and a matching in-chat chip. The report is reachable exclusively by a tap, and the tutor's own closing line was rewritten to say the lesson is over rather than to end it.</dd></div>
+            <div><dt>Not proven</dt><dd class="cause">Confirmed by reading the diff — all three call sites now only set state — not by driving a full multi-turn lesson to its closing recap. That needs a live session nobody has run.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Every lesson opened by telling the student they understood nothing</h3>
+          <span class="tag issue">#30</span><span class="tag req">FR-1009</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>Starting a new lesson felt discouraging — the tutor opened apologetically, “let's rebuild it from the very first brick”.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">Two independent copies of the same false premise, and either alone reproduced it. The tutor's system prompt asserted on <em>every</em> learn session that the student “understood NOTHING”, including a lesson never attempted — and hardcoded their grade as “10” regardless of the real record. Separately, a hidden message was sent to the model as if the student had typed it: “I understood NOTHING… teach me from zero.”</dd></div>
+            <div><dt>Changed</dt><dd class="fix">Both replaced with copy keyed to the same five-stage mastery banding the progress ramp already uses, so a first-time lesson opens as something new to explore rather than as a failure to repair. The grade now comes from the student's actual row.</dd></div>
+            <div><dt>Proof</dt><dd>Checked live against the development database at all three reachable stages — never attempted, attempted, mastered — for both the system prompt and the hidden message.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Arabic was rendering to English-subject students in about thirteen places</h3>
+          <span class="tag issue">#20 #41</span><span class="tag req">FR-208</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>Teaching copy mixing Arabic and English, on a build whose whole point is that it is the English one.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">Structural, not cosmetic. <code>debug</code> and mode flags were standing in for a language check across the chat, lesson, report and practice components — so <em>instrumentation state was deciding which language a child read</em>. One component the first sweep missed rendered a hardcoded Arabic button with no English form at all, and an unconditional right-to-left direction, on the English maths surface.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">Language is now its own prop, independent of the instrumentation axis, defaulting to English. Threaded through every affected component.</dd></div>
+            <div><dt>Not fixed</dt><dd class="cause">This constrains the app's own hardcoded strings. It does nothing about what the <em>model</em> generates in free text, and the evaluation harness that would check that does not exist yet.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>“brafo”, “brofa” and friends</h3>
+          <span class="tag issue">#26</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>Encouragement copy with misspelt variations of “bravo”.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">There was no typo to find. The English maths language contract instructed the model to sprinkle transliterated Egyptian-Arabic interjections — برافو, يلا بينا — into its replies. The model's own inconsistent transliteration of برافو is exactly where “brafo” and “brofa” came from. Searching for a misspelt string would never have found it.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">The instruction is removed from the English maths contract. The Arabic subject contracts keep theirs untouched — there the interjections are the voice, and no Arabic-capable surface may be removed to ship English first.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>The tutor talked about the student instead of to them</h3>
+          <span class="tag issue">#16 #19</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He saw</dt><dd>The tutor referring to the student in the third person, and a check-in button reading “I'm lost”.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">The system prompt framed the conversation <em>about</em> the student rather than <em>to</em> them. Separately, the “teach me from scratch” button read literally “I'm lost”, with the Arabic gloss “مش فاهم حاجة” displayed beside it even in English mode.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">The prompt addresses the student directly. The button reads “Walk me through it”, with no Arabic gloss on the English surface.</dd></div>
+            <div><dt>Not proven</dt><dd class="cause">The first-person fix was verified live on <code>/spine</code>. The same fix at the <code>/student</code> lesson call site is the same change in a different place, and was not independently re-checked.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>A widget question printed its own question twice</h3>
+          <span class="tag req">ADR-0009</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>Seen in review</dt><dd>A stored construction question showed its stem typeset by the card, and again directly underneath as raw LaTeX — “Circle $M$ has radius $5$…” — beneath a Submit button that could never enable.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">The card passed its own stem into the widget as the widget's prompt. And a widget has nothing to submit: the construction <em>is</em> the answer and posts itself, so the Submit button sat permanently disabled, which reads as a broken page rather than as “not applicable”.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">The card tells the widget it has already shown the question. This could not be done by passing an empty prompt: validation treats a blank string as absent and substitutes a generic default, so <code>prompt: ""</code> produced “Construct a radius” — a shortened duplicate instead of silence. Silence had to be asked for explicitly, and applied <em>after</em> validation.</dd></div>
+            <div><dt>Then found</dt><dd class="cause">Hiding the button row took the card's only error surface with it — the failure message lived inside it. A widget attempt that failed to post reported <strong>nothing at all</strong>, leaving a construction that looked accepted and had not been recorded. The message now belongs to the card, not to the button.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Mastery on the check-in was carried by colour alone</h3>
+          <span class="tag issue">#42</span><span class="tag req">FR-1003</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He asked for</dt><dd>The raw percentage off the study page — a number like “30%” is discouraging and, turn to turn, confusing.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">The percentage came off, and every other non-colour signal came off with it, leaving four coloured segments and a screen-reader label. Of the three channels the requirement exists to protect — greyscale, colour-vision deficiency, screen reader — only the last was covered. The measurements are below.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">Each segment takes a 3px ink outline, which makes lit-versus-unlit a <em>fill-versus-empty</em> difference rather than a difference in hue, and the band name renders underneath in words. The screen-reader label now names the band too, not just the step count.</dd></div>
+            <div><dt>Resolved</dt><dd>The triage note framed this as “amend the requirement or revert the code”. Neither was needed: what the feedback objected to is the <em>number</em>, and the requirement asks for a <em>named band</em>. Both hold at once. No percentage returns anywhere on the card.</dd></div>
+          </dl>
+
+          <div class="tablewrap">
+            <table>
+              <caption>Measured before the fix. 3:1 is the WCAG floor for a graphical object carrying information.</caption>
+              <thead>
+                <tr><th scope="col">Segment</th><th scope="col">Against unlit</th><th scope="col">Verdict</th><th scope="col">After the outline</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><span class="swatch" style="background:#F0A22F"></span>attempted</td><td>1.84:1</td><td class="verdict-fail">fail</td><td class="verdict-pass">7.41:1</td></tr>
+                <tr><td><span class="swatch" style="background:#D9A75A"></span>familiar</td><td>1.89:1</td><td class="verdict-fail">fail</td><td class="verdict-pass">7.19:1</td></tr>
+                <tr><td><span class="swatch" style="background:#8FB98A"></span>proficient</td><td>1.92:1</td><td class="verdict-fail">fail</td><td class="verdict-pass">7.08:1</td></tr>
+                <tr><td><span class="swatch" style="background:#2F9E8F"></span>mastered</td><td>2.84:1</td><td class="verdict-fail">fail</td><td class="verdict-pass">4.79:1</td></tr>
+                <tr><td><span class="swatch" style="background:#EFEEF6"></span>unlit</td><td>—</td><td>—</td><td class="verdict-pass">15.69:1</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Voice is pulled from the lesson</h3>
+          <span class="tag issue">#21</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>He asked for</dt><dd>Voice removed for now.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">The toggle and the microphone are gone from the lesson interface, behind a single flag. The backend — speech synthesis, the provider abstraction, the disk cache — stays wired and dormant rather than deleted, so bringing it back is a one-line flip and not a rebuild.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <article class="entry">
+        <div class="entry-head">
+          <h3>The traceability counts had never once been generated</h3>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>Found</dt><dd>While updating the requirements for this release.</dd></div>
+            <div><dt>Actually wrong</dt><dd class="cause">The script that regenerates the requirement counts searched for a section heading that does not exist in the document — its own error message names the correct one, so a rename had changed the message and not the literal. Two consequences, both live: the counts table had been hand-maintained all along and had drifted (it claimed 90 requirements and 84 of 135 tasks; the artifacts say 96 traced and 99 of 143), and the command returned a failure code on every run. Continuous integration runs it as the first line of a fail-fast block, so the traceability job would have gone red the moment this release was pushed — for a reason having nothing to do with the release.</dd></div>
+            <div><dt>Changed</dt><dd class="fix">One-word fix to the heading it looks for; the block is now generated for the first time. Running it twice is a no-op, which is what the integration check is actually asserting.</dd></div>
+          </dl>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Four requirements that said VERIFIED and were not</h2>
+    <p class="sec-note">
+      The matrix defines <span class="mono">VERIFIED</span> as “someone ran it”, and
+      its own counting rule says to be willing to demote. This is the first time that
+      rule has been exercised. In every case the claim was true of the surface
+      somebody had looked at, and false somewhere nobody had.
+    </p>
+    <div class="rule"></div>
+
+    <div class="demotions">
+      <div class="demo-row">
+        <div class="fr">FR-208<small>English default</small></div>
+        <div class="claimed"><b>Was claimed</b>The check-in, plan and dashboard lead in English.</div>
+        <div class="true"><b>Was true</b>Those three pages did. Thirteen other places rendered Arabic unconditionally, because an instrumentation flag was standing in for a language check.</div>
+      </div>
+      <div class="demo-row">
+        <div class="fr">FR-1009<small>No “you're behind”</small></div>
+        <div class="claimed"><b>Was claimed</b>Band names are factual; no ranking surface exists.</div>
+        <div class="true"><b>Was true</b>Of the interface, yes. The tutor's own prompt told the model every single session that the student understood nothing.</div>
+      </div>
+      <div class="demo-row">
+        <div class="fr">FR-1214<small>Server decides meaning</small></div>
+        <div class="claimed"><b>Was claimed</b>Grading is server-side; the client's own correctness flag is used only for local feedback.</div>
+        <div class="true"><b>Was true</b>Exactly that, and it was not the vulnerable part. The model was reading an unstructured acknowledgement as an answer, which the requirement never addressed.</div>
+      </div>
+      <div class="demo-row">
+        <div class="fr">FR-1218<small>Refutation reaches the student</small></div>
+        <div class="claimed"><b>Was claimed</b>Returned and rendered under “why that happened”.</div>
+        <div class="true"><b>Was true</b>It rendered, then three timers replaced it with the report 2.2 seconds later. “Reaches the student” has to mean stays on screen.</div>
+      </div>
+      <div class="demo-row">
+        <div class="fr">FR-C03<small>Deterministic grading</small></div>
+        <div class="claimed"><b>Was claimed</b>56 unit tests; a live mastery walk end to end.</div>
+        <div class="true"><b>Was true</b>All of it, and the grader still read <code>3x6</code> as 3. The tests tested what the author thought a student would type.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Noor Play replaces Master</h2>
+    <p class="sec-note">
+      The design reversal shipped on 16 September with the note “no ADR yet for this
+      reversal — pending Samuel's confirmation”, and had been sitting unconfirmed
+      since. Authorising this release is that confirmation, so it is now
+      <a href="../decisions/0011-noor-play-design-system.md">ADR-0011</a>.
+    </p>
+    <div class="rule"></div>
+
+    <div class="ledger">
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Why the original reason stopped holding</h3>
+          <span class="tag issue">#38 #37</span><span class="tag req">ADR-0011</span>
+        </div>
+        <div class="entry-body">
+          <dl class="record">
+            <div><dt>Original call</dt><dd>Master, the restrained 15–18 variant. The reason was specific: the variable under test in this environment is the mastery model, and a sticker-heavy visual language would be a <em>second</em> variable sitting on top of it.</dd></div>
+            <div><dt>What changed</dt><dd class="fix">That is an argument about a controlled experiment, and ADR-0010 dissolved the experiment — cross-solution parity was withdrawn, and the comparison became an observational judgement from live usage. There is no longer a control to confound. Meanwhile the PRD's own owner asked for the children's variant, and Prep-3 students are 14–15, inside <em>both</em> published age bands, so the band boundary decides nothing and someone has to.</dd></div>
+            <div><dt>Implemented</dt><dd class="fix">A token, colour, typography and motion layer scoped to the comparison build. Blanket radius and border rules mean any plain utility class picks up the sticker treatment with no component touched, which is what kept the change additive — the component pass adds press, shadow and animation classes to real controls and removes nothing. The product is called <strong>Noor</strong> throughout.</dd></div>
+            <div><dt>Checked</dt><dd>The no-red rule holds: the grey-purple that replaced the warning colour is <code>#5a5570</code>, and the only warm hues in the palette are ambers. No Arabic-capable surface was removed. The frozen baseline is untouched.</dd></div>
+            <div><dt>Cost accepted</dt><dd class="cause">Nobody will be able to attribute a difference in outcomes to the mastery model alone. Paid knowingly — a design the audience rejects produces no usage to observe.</dd></div>
+            <div><dt>Out of scope</dt><dd class="cause">The internal surfaces never got the pass and were never meant to. One measured consequence of the token swap: a divider colour is now invisible against the warm card fill (1.00:1), surviving only on internal pages. Against the widget grids it is 1.19:1, against 1.18:1 before — unchanged, so not a regression this introduced.</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>What this release does not fix</h2>
+    <p class="sec-note">
+      Ten issues closing reads like progress. Twenty-seven are still open, and one of
+      them is the core bet.
+    </p>
+    <div class="rule"></div>
+
+    <div class="gaps">
+      <div class="gap">
+        <span class="eyebrow">Seven issues · the largest item in the feedback</span>
+        <h3>The tutor explains where it should elicit</h3>
+        <p>No Socratic method, no open-ended questions, doesn't end on retrieval; commits to an idea without asking the student to try first; never asks for intermediate steps; can't follow working without a final answer; explanations not chunked; locked to the book's single approach; drifts back to the previous question. Seven reports, one cause. This is the success criterion the whole build exists to test, and nothing in this release touches it.</p>
+      </div>
+      <div class="gap">
+        <span class="eyebrow">Three issues · unmitigated</span>
+        <h3>The internal surfaces have no gate at all</h3>
+        <p>The pipeline, content, evidence-walk, admin and developer pages have no environment check and no authentication, and the front page links to two of them. Access control in front of the deployment is the only thing holding them, and that is not a permission model.</p>
+      </div>
+      <div class="gap">
+        <span class="eyebrow">Not on anyone's list</span>
+        <h3>The tutor assumes every student is male</h3>
+        <p>Twenty-three masculine pronouns in the lesson prompts alone, more elsewhere, and a masculine Arabic form offered to the model as a worked example. There is no gender column in the database. A girl using this is described to the model as “he”, and the model will follow.</p>
+      </div>
+      <div class="gap">
+        <span class="eyebrow">Blocked, not deferred</span>
+        <h3>Resuming a lesson needs accounts first</h3>
+        <p>Student identity today is a per-environment database sequence that a routine content reload truncates and restarts, bound to a cookie the code itself documents as “not an identity claim and not a security boundary”. Hanging real lesson history off it would mean history that a maintenance operation silently deletes. The same precondition blocks per-student analytics.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Solution:</strong> Student MVP · branch <code>PDR1-0</code> · English, mathematics only, Bayesian Knowledge Tracing. Versioned independently of the frozen <code>family-tutor</code> baseline.</p>
+    <p><strong>Sources:</strong> <code>CHANGELOG.md</code> · <code>specs/001-student-mvp1-delta/traceability.md</code> rev. 9 · <code>docs/decisions/0011-noor-play-design-system.md</code> · <code>docs/reviews/2026-09-19-prototype-1.1-feedback-triage.md</code></p>
+    <p>Every measurement on this page was taken against the merged tree, not estimated.</p>
+  </footer>
+
+</div>
