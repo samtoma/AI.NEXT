@@ -232,6 +232,21 @@ export function ReportCard({
         >
           {rtl ? "شوفها على الشبكة ←" : "See it on the graph →"}
         </Link>
+        {/* The third door (#29). Two options after a lesson meant a student
+            who had just been shown her gaps could look at the graph or leave
+            — nothing led to doing something about them.
+
+            No new selection logic was needed: `mode=practice` is the plan
+            loop, and the plan is already built weakest-first (three of its
+            five items are the weakest objectives whose prerequisites are
+            met). What was missing was a door into it from the one screen
+            where a student has just been told what her weak spots are. */}
+        <Link
+          href="/student?mode=practice"
+          className="rounded-xl border-[3px] border-line bg-card-warm px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
+        >
+          {rtl ? "ذاكر نقطة ضعفي" : "Practise my weak spots"}
+        </Link>
         <Link
           href="/student"
           className="rounded-xl border border-line bg-card px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
