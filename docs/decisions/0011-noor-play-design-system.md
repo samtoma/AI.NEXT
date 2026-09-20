@@ -1,6 +1,8 @@
 # ADR-0011 — Noor Play replaces Master as the Student MVP design system
 
 **Status**: Accepted — Samuel, 2026-09-20, by authorising the `PDR1-0-v0.3.0` release
+**Superseded in part**: 2026-09-20 by **constitution v3.1.0, Principle XII** — the "out of scope" carve-out for the internal surfaces is withdrawn; the design system now binds every surface this repository builds. Everything else here stands. The Consequences paragraph that states the carve-out is left as written, per `docs/VERSIONING.md`: an accepted ADR records what was decided at the time and is not rewritten.
+**Amended by**: [ADR-0017](./0017-two-variants-keyed-to-grade.md) (2026-09-20) — the decision below that "Master is replaced, not retained as an alternative" is reversed. Both variants now ship and the product selects one per render from the student's grade (Preparatory → Play, Secondary → Master), with a stored student override that survives sign-out. This ADR rejected a variant switch for one stated reason — the selection rule was undefined — and Samuel has since defined it; everything else here, including the choice of Play for Prep-3, stands unchanged.
 **Amends**: [ADR-0007](./0007-student-mvp1-comparison-build.md) — the Master pick recorded under its design section
 **Affects**: `FR-1001` · `app/src/app/globals.css` (`[data-ds="noor"]`) · `docs/design/noor/` · `docs/design/handoffs/noor-play/` · every `nour` identifier in the tree
 

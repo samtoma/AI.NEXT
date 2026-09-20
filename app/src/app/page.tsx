@@ -26,7 +26,7 @@ export default async function Home() {
             .
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
-            AI.Next is a curriculum-grounded adaptive tutor built on an{" "}
+            Noor is a curriculum-grounded adaptive tutor built on an{" "}
             <strong className="font-semibold text-ink">
               agent-native data spine
             </strong>{" "}

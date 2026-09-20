@@ -5,7 +5,7 @@ import { SpineExplorer } from "@/components/spine/SpineExplorer";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "The Evidence Walk — AI.Next Tutor PoC",
+  title: "The Evidence Walk — Noor Tutor PoC",
 };
 
 export default async function SpinePage() {

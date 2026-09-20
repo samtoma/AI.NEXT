@@ -1,7 +1,7 @@
 # ADR-0012 — Per-student isolation is enforced by the database
 
 **Status**: Accepted — Samuel, 2026-09-20, in the identity & admin-console brainstorm — *"row level security indeed, same as reletix"*
-**Affects**: `app/src/lib/db.ts` · `app/src/lib/pipeline-queries.ts` · `app/src/lib/uploads.ts` · `deploy/docker-compose.mvp1.yml` and `deploy/docker-compose.local.yml` (the `DATABASE_URL` repoint) · `scripts/local-dev.sh` · every migration from `011` onward · `FR-2101…FR-2199` · constitution v3.1.0 Principles VII and XI
+**Affects**: `app/src/lib/db.ts` · `app/src/lib/pipeline-queries.ts` · `app/src/lib/uploads.ts` · `deploy/docker-compose.mvp1.yml` and `deploy/docker-compose.local.yml` (the `DATABASE_URL` repoint) · `scripts/local-dev.sh` · every migration from `011` onward · `FR-2101…FR-2199` · constitution v3.1.1 Principles VII and XI
 **Depends on**: [ADR-0013](./0013-student-accounts-and-sign-in.md) — there is no principal to set until accounts exist
 
 ## Context
@@ -45,7 +45,7 @@ has already been shown to be vulnerable to, by moving the guarantee into Postgre
 
 Constraints that shaped the choice: roughly 50 pilot families and ~200 students
 at the target scale, one OCI box, one Postgres 17 instance, a content set that
-`scripts/parity_check.py` must keep checking, and constitution v3.1.0 Principle
+`scripts/parity_check.py` must keep checking, and constitution v3.1.1 Principle
 XI's requirement that every row say which environment produced it.
 
 ## Options considered
@@ -135,7 +135,7 @@ indistinguishable. The write path still needs hand-written code to turn a blocke
 write into a 403 and a `cross_student_access_denied` event, not a database error.
 
 **`environment` stays mandatory and separate.** RLS answers *whose row is this*;
-`environment` answers *which build produced it* (constitution v3.1.0 Principle
+`environment` answers *which build produced it* (constitution v3.1.1 Principle
 XI). Two questions, two mechanisms, neither standing in for the other.
 
 ## Consequences

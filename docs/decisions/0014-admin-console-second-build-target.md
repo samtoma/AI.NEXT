@@ -2,7 +2,7 @@
 
 **Status**: Accepted — Samuel, 2026-09-20, in the identity & admin-console brainstorm (decisions D3, D4)
 **Amends**: nothing
-**Affects**: `FR-605` and `FR-606` in `specs/001-student-mvp1-delta/spec.md` · `app/src/lib/env.ts` · `app/src/app/admin/layout.tsx` and `app/src/app/dev/layout.tsx` · `scripts/local-dev.sh` · `deploy/docker-compose.mvp1.yml` · `.github/workflows/ci-cd.yml` · `FR-2201…FR-2299` · constitution v3.1.0 Principles III, X and XII
+**Affects**: `FR-605` and `FR-606` in `specs/001-student-mvp1-delta/spec.md` · `app/src/lib/env.ts` · `app/src/app/admin/layout.tsx` and `app/src/app/dev/layout.tsx` · `scripts/local-dev.sh` · `deploy/docker-compose.mvp1.yml` · `.github/workflows/ci-cd.yml` · `FR-2201…FR-2299` · constitution v3.1.1 Principles III, X and XII
 **Depends on**: [ADR-0013](./0013-student-accounts-and-sign-in.md) — a role has to attach to an account
 
 ## Context
@@ -44,7 +44,7 @@ that shipped six days ago. Rejected.
 
 **(b) A separate repository or a separate application.** Cleanest separation on
 paper. It duplicates the authentication path, the database access layer and the
-design system — which constitution v3.1.0 Principle XII now binds on the
+design system — which constitution v3.1.1 Principle XII now binds on the
 internal surfaces too — and guarantees drift between two copies of the same
 session logic. Talent's
 architecture document describing a `require_role` its code does not have (R1 §3)
@@ -73,7 +73,7 @@ an environment flag and no role check at all.
 knowing a URL:
 
 - **`content-review`** — the human gate that ADR-0007's unreviewed-content
-  exception and constitution v3.1.0 Principle III depend on. **This is a safety
+  exception and constitution v3.1.1 Principle III depend on. **This is a safety
   control, not an administrative convenience**: whoever holds it decides what
   unreviewed, pipeline-generated content reaches a child. Named as such so it is
   never swept into a general "admin" grant along with the right to read a log.
@@ -100,7 +100,7 @@ and analytics views.
 lesson report sends students to it, and feedback #15 asked for more of it, not
 less.
 
-**The console's interface is bound by the design system.** Constitution v3.1.0
+**The console's interface is bound by the design system.** Constitution v3.1.1
 Principle XII makes the published Noor Play system the visual authority for
 **every surface we build, the internal tools included** — the carve-out ADR-0011
 held for `/admin`, `/pipeline`, `/spine`, `/dev` and `/gallery` is withdrawn. So
@@ -117,7 +117,7 @@ is that the second surface costs one command, not a second checkout and not a
 second database.
 
 **OCI, later**: a second compose service and a second hostname beside the
-existing `127.0.0.1:3101`, never touching another solution (v3.1.0 X, ADR-0010).
+existing `127.0.0.1:3101`, never touching another solution (v3.1.1 X, ADR-0010).
 
 ## Consequences
 

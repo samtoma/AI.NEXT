@@ -2,7 +2,7 @@
 
 **Status date**: 2026-09-20 (rev. 11, `PDR1-0-v0.4.0`) · **Branch**: `PDR1-0`
 **Authority**: [spec.md](./spec.md) · [tasks.md](./tasks.md) · [decisions.md](./decisions.md) ·
-constitution [v3.0.0](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md) ·
+constitution [v3.1.1](../../.specify/memory/constitution.md) · [ADR-0007](../../docs/decisions/0007-student-mvp1-comparison-build.md) ·
 [ADR-0010](../../docs/decisions/0010-one-branch-per-solution.md) · [ADR-0011](../../docs/decisions/0011-noor-play-design-system.md)
 
 > **rev. 9 demoted four rows that said VERIFIED and were not.** Prototype 1.1 was the first
@@ -172,9 +172,15 @@ Added 2026-09-10. The design revamp was executed against the *Nour Design System
 made a shipped behaviour untraceable: the burnt-sienna mastery ramp violated a stated product rule
 and nothing in the requirement set could have caught it. These rows close that gap.
 
+**Authority moved 2026-09-20.** The visual authority is now the published **Noor Play design
+system**, <https://claude.ai/artifact/SXTAsvPUCjU4ZMp5oZtM6J>, binding on every surface this
+repository builds under **constitution v3.1.0 Principle XII**. The Drive handoff above named the
+*Master* variant, which ADR-0011 replaced. `docs/design/handoffs/noor-play/` is the published
+system's source material and is superseded wherever they differ.
+
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-1001 | The comparison build MUST apply the Nour design system; the frozen baseline MUST be visually unchanged | **VERIFIED** | `globals.css` `[data-ds="nour"]`, set from `IS_MVP1` in `layout.tsx` | One token block, no component forks; with the attribute absent every surface renders as before |
+| FR-1001 | **Every surface this repository builds** MUST apply the Noor Play design system; the frozen `family-tutor` baseline is not bound | **PARTIAL** | `globals.css` `[data-ds="noor"]`, set from `IS_MVP1` in `layout.tsx` | **Status changed 2026-09-20 from VERIFIED, because the requirement widened, not because the code regressed.** What holds: one token block, no component forks, and with the attribute absent every surface renders as the Ledger baseline. What does not: Principle XII withdrew ADR-0011's carve-out, so `/admin`, `/pipeline`, `/spine`, `/dev` and `/gallery` are now in scope and have never had the Play pass — they render on the baseline tokens by omission. Neither did the per-widget SVG verdict inks. Verified again when those surfaces carry the system. |
 | FR-1002 | **No red and no coral** may appear in the product palette. A wrong answer greys out and invites a retry | **VERIFIED** | `lib/mastery.ts` five-step ramp; `--rust` remapped to the neutral inactive treatment | Rendered dashboard contains no `#b8472a`/`#cf9227`; the ramp is `#EFEEF6 → #F0A22F → #D9A75A → #8FB98A → #2F9E8F` |
 | FR-1003 | Mastery MUST be shown as named bands, never colour alone | **VERIFIED** | `/dashboard`: `MASTERY_LEGEND`, per-row `pct` + band name, `role="img"`. `PlayCheckIn` (`LessonCheckIn.tsx`): outlined ramp + band name + `role="img"`, no percentage | **Amended 2026-09-20.** The dashboard proof still holds. The Noor Play check-in card was a *second* mastery surface and did not: feedback [#42](https://github.com/samtoma/AI.NEXT/issues/42) asked for the percentage off the study page, and the first cut removed every non-colour signal with it. Measured, lit-vs-unlit ran 1.84:1–2.84:1 against a 3:1 floor and adjacent lit bands sit 1.02:1 apart, so two of the three channels this requirement names — greyscale and colour vision — failed; only the screen reader was covered. Fixed without reinstating the number: a 1.5px ink outline makes lit-vs-unlit fill-vs-empty (15.69:1 unlit, ≥4.79:1 against every lit fill), the band name renders as text at 5.51:1, and the `aria-label` names the band. **The requirement is unchanged — it never mandated a percentage, only a named band alongside whatever value is shown.** |
 | FR-1004 | An objective with **no evidence** MUST NOT be shown in a lit band | **VERIFIED** | `masteryColor(score, alpha, started)` | A cold-start 0.30 prior and a practised 0.30 no longer look identical; unopened lessons render grey, not amber |
@@ -184,11 +190,12 @@ and nothing in the requirement set could have caught it. These rows close that g
 | FR-1008 | Equations render LTR inline in any page direction | **VERIFIED** | `.katex { direction: ltr }` under the Nour scope; `dir="ltr"` on maths spans | Constitution v2.0.0 Principle V |
 | FR-1009 | No leaderboards, ranking, peer comparison, or "you're behind" framing | **VERIFIED** | Band names are factual (`attempted`, not `weak`); no ranking surface exists; `lib/checkin.ts` `learnOpeningFrame`/`learnAutoStartLine` replace the fixed premise (`91c2282`) | **Demoted and re-verified 2026-09-20.** The UI half was true; the tutor half was the opposite of true and nobody had read it. `lib/lesson.ts`'s `learnPrompt` told the model on **every** learn session that the student "understood NOTHING", including a lesson never attempted, and `LessonSession`'s hidden auto-start message said "I understood NOTHING… teach me from zero" as if the student had typed it. Either alone reproduced the apologetic opener Prototype 1.1 reported ("let's rebuild it from the very first brick"). Both now key off the same 0–4 mastery banding the ramp uses, so a first-time lesson opens as something new rather than as a failure. Verified live against the dev DB at all three reachable stages. Feedback [#30](https://github.com/samtoma/AI.NEXT/issues/30) |
 | FR-1010 | The signature spring is reserved for proficient → mastered | **BUILT** | `.anim-mastered` (420 ms, `--spring-pop`), respects `prefers-reduced-motion`; applied in `StudentLoop`'s `MasteryDelta` (rev. 10) | **Still BUILT, for a better reason.** It was unspent because *nothing in the product rendered a band change at all* — the lesson showed `mastery 30% → 69%`, a number, so there was no transition for a transition animation to attach to. Replacing that with band movement (`attempted → proficient`) gave it its trigger, and the class is now applied on arrival at `mastered`. Promoting it to VERIFIED still needs someone to watch a real student cross that boundary, which no session has produced. |
+| FR-1011 | Exactly **one design-system variant per page render**, selected before first paint by grade (Preparatory → Play, Secondary → Master) unless the student stored an override, which survives sign-out; no surface hard-codes a variant | **OPEN** | — | **Added 2026-09-20 ([ADR-0017](../../docs/decisions/0017-two-variants-keyed-to-grade.md)); no code exists.** Gap: `globals.css` carries **only the Play skin** (`[data-ds="noor"]`), and Master is not a named sibling — it is whatever renders when the attribute is absent, which is the Ledger baseline rather than a published Master variant. There is no grade read, no stored override, no server-side resolution before first paint, and no second `[data-ds]` block. Verified when a Preparatory and a Secondary account each render their own variant on first paint and an override survives sign-out. |
 
-**Open design decision (Samuel's call, constitution Principle I):** the **master** variant ships
-rather than **Play**. Prep-3 is 14–15, inside both bands, and the handoff forbids mixing them. The
-comparison environment already varies BKT against Elo; a second visual variable is a confound.
-Reversing it is a token swap plus the sticker border/shadow rules — see `docs/design/nour/README.md`.
+**Variant selection is decided, not open.** Both variants ship, keyed to the student's grade with a
+stored override — [ADR-0017](../../docs/decisions/0017-two-variants-keyed-to-grade.md), amending
+[ADR-0011](../../docs/decisions/0011-noor-play-design-system.md); the obligation is **FR-1011**
+above. Background: `docs/design/noor/README.md`.
 
 ---
 

@@ -10,7 +10,7 @@
 Identity on `PDR1-0` is a picker. FR-101 says so in as many words — a dropdown
 plus an in-place "create new user", no password, no verification, no session
 credentials — and FR-102 forbids ever presenting it as a login, which
-constitution v3.1.0 Principle VII also requires. That was the right call for
+constitution v3.1.1 Principle VII also requires. That was the right call for
 Q5's question ("how do pilot students get in?") when the answer had to be
 *today*.
 
@@ -22,7 +22,7 @@ It has since become the blocker under three separate requirements:
 - **FR-606** (per-person operator roles) is BLOCKED, explicitly on FR-106 —
   roles need accounts to attach to.
 
-Three requirements, one missing thing. The new PRD and constitution v3.1.0
+Three requirements, one missing thing. The new PRD and constitution v3.1.1
 Principle VII already settle who owns the account: the student, with the parent
 as a linked view rather than the account holder.
 
@@ -30,7 +30,7 @@ as a linked view rather than the account holder.
 
 **Ownership — parent-owned account with child profiles.** Matches how the
 product is sold and who pays for it, and is the shape most Egyptian families
-would expect. Rejected on two grounds: the PRD and constitution v3.1.0 VII both
+would expect. Rejected on two grounds: the PRD and constitution v3.1.1 VII both
 place ownership with the student, and multi-child parent accounts are a binding
 MVP non-goal (VIII) — a profile-per-child model is that non-goal wearing a
 different name.
@@ -69,7 +69,7 @@ the table mastery is written to.
   state.
 - **One account ↔ one student in this release.**
 - A `guardians` link is **modelled and migrated, not built** — no parent login,
-  no parent view, no invitation flow (constitution v3.1.0 VIII holds; `FR-2901…`
+  no parent view, no invitation flow (constitution v3.1.1 VIII holds; `FR-2901…`
   records it as architecture-only).
 
 **Sign-in mirrors Talent's flows**, which R1 read end to end: signup, email
@@ -123,7 +123,7 @@ VII's minimalism, so an amendment is *drafted as a proposal* in
 `specs/002-identity-and-admin-console/constitution-amendment-proposal.md` for
 Samuel to approve. This ADR does not amend the constitution.
 
-**Cloudflare Access stays in front of the pilot** (constitution v3.1.0 III,
+**Cloudflare Access stays in front of the pilot** (constitution v3.1.1 III,
 FR-907) in addition to accounts. An account is not a substitute for the invite list this
 release; it is a second layer behind it.
 

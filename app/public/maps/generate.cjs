@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Base-map asset generator — AI.Next Social Studies Wave 0.
+ * Base-map asset generator — Noor Social Studies Wave 0.
  *
  * Authors each base map as lat/lon point chains (coasts smoothed with
  * Catmull-Rom, political borders straight), projects them per-map

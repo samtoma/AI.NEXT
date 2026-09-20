@@ -2,7 +2,7 @@
 
 **Feature**: `002-identity-and-admin-console` | **Date**: 2026-09-20
 **Purpose**: resolve every technical unknown in [plan.md](./plan.md) before design. Each item states
-a decision, why, and what else was weighed. Per constitution v3.1.0 Principle I these are
+a decision, why, and what else was weighed. Per constitution v3.1.1 Principle I these are
 **proposals** — Samuel decides.
 
 Three studies already landed and are **cited, not repeated**. Where one of them already decided

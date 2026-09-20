@@ -11,7 +11,6 @@ import {
 import Link from "next/link";
 import "./globals.css";
 import { NavLinks } from "@/components/NavLinks";
-import { Logo } from "@/components/Logo";
 import { NoorMark } from "@/components/NoorMark";
 import { IS_MVP1, INTERNAL_SURFACES } from "@/lib/env";
 
@@ -110,7 +109,7 @@ export const metadata: Metadata = IS_MVP1
         "A tutor that works from your own book and worksheet, one step at a time.",
     }
   : {
-      title: "AI.Next — AI Tutor PoC",
+      title: "Noor — AI Tutor PoC",
       description:
         "Curriculum-grounded adaptive tutor built on an agent-native data spine.",
     };
@@ -137,27 +136,15 @@ export default function RootLayout({
         <header className="relative z-20 border-b border-line bg-card/70 backdrop-blur-sm">
           <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6">
             <Link href="/" className="flex items-center gap-2.5">
-              {IS_MVP1 ? (
-                <>
-                  <NoorMark className="h-8 w-8 shrink-0" />
-                  <span className="font-display text-lg font-bold tracking-tight text-ink">
-                    Noor
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
-                    Prep 3 · Mathematics
-                  </span>
-                </>
-              ) : (
-                <>
-                  <Logo className="h-8 w-8 shrink-0" />
-                  <span className="font-display text-lg font-semibold tracking-tight text-ink">
-                    AI<span className="text-accent">.</span>Next
-                  </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
-                    Tutor PoC · Data Spine
-                  </span>
-                </>
-              )}
+              {/* Noor is the product on every surface. Only the strapline
+                  distinguishes the environments — the mark and the name never do. */}
+              <NoorMark className="h-8 w-8 shrink-0" />
+              <span className="font-display text-lg font-bold tracking-tight text-ink">
+                Noor
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
+                {IS_MVP1 ? "Prep 3 · Mathematics" : "Tutor PoC · Data Spine"}
+              </span>
             </Link>
             <NavLinks mvp1={IS_MVP1} internal={INTERNAL_SURFACES} />
           </div>
@@ -168,7 +155,7 @@ export default function RootLayout({
             <span>
               {IS_MVP1
                 ? "Noor · Student MVP 1.0 — comparison environment"
-                : "AI.Next · Agent-Native Data Spine — investor preview"}
+                : "Noor · Agent-Native Data Spine — investor preview"}
             </span>
             {/* course-level, not lesson-level: any selected lesson/unit shows
                 its own module label on the surface itself */}

@@ -9,7 +9,10 @@
 > `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk` (created 2026-09-01, revised 2026-09-03).
 > **Baseline being differenced against**: `specs/000-baseline/spec.md` (as-built at main `f0cb192`,
 > live at `ainext.reletix.com`).
-> **Engineering authority**: `.specify/memory/constitution.md` **v2.0.0** + ADR-0001..**0007**.
+> **Engineering authority**: `.specify/memory/constitution.md` **v3.1.1** + ADR-0001…**0017**.
+> *(Corrected 2026-09-20 — this line still read "v2.0.0 + ADR-0001..0007", the state at drafting.
+> The constitution has moved five times since and ADR-0008…0017 have landed, several of which amend
+> requirements in this spec.)*
 > **Scope decisions**: `decisions.md` in this directory — twelve answers from Samuel (2026-09-08),
 > which this spec has been re-cut against. Requirements dropped or changed by those answers are marked
 > **[DEFERRED]** or **[REVISED]** rather than deleted, so the diff against the PRD stays legible.
@@ -553,20 +556,36 @@ document: a requirement whose code exists but has never been executed does not c
 
 ### Design system & visual language **[ADDED 2026-09-10]**
 
-The *Nour Design System v0.2* handoff (Drive `1eAJeMHy5m3D-FhS8RAv2KMg5F6eO0QOM`) is the visual
-authority for this environment. These requirements exist because it was possible to ship a
+The **Noor Play design system**, published at
+<https://claude.ai/artifact/SXTAsvPUCjU4ZMp5oZtM6J>, is the visual authority. It carries the
+resolved tokens (two themes on one semantic set — Play and the Ledger baseline), the type scale,
+the motion specification and a guideline per component, and it is the system
+**constitution v3.1.0 Principle XII binds every surface we build to**.
+
+*Superseded pointer, kept for the record:* this section previously named the *Nour Design System
+v0.2* handoff (Drive `1eAJeMHy5m3D-FhS8RAv2KMg5F6eO0QOM`) as the authority "for this environment".
+That handoff is the **Master** variant, replaced by Play in ADR-0011, and the per-environment
+scoping is withdrawn by Principle XII. `docs/design/handoffs/noor-play/` remains the published
+system's source material and is superseded wherever the two differ.
+
+These requirements exist because it was possible to ship a
 behaviour that violated a stated product rule — the Phase 8 dashboard's burnt-sienna mastery ramp —
 with nothing in the requirement set able to catch it. They are written as product constraints, not
 as styling preferences: each one names a student-visible behaviour with a reason behind it.
 
-- **FR-1001**: The comparison environment MUST apply the Noor design system. The frozen baseline
-  MUST remain visually unchanged, so the visual language is never a confounding variable in the
-  comparison (Principle XI).
+- **FR-1001**: **Every surface this repository builds MUST apply the Noor Play design system** —
+  the student product and the internal tools (`/admin`, `/pipeline`, `/spine`, `/dev`, `/gallery`)
+  alike. Values come from the published token set; no component hardcodes a colour, stroke width,
+  radius or shadow. The frozen `family-tutor` baseline is **not** bound: it keeps the Ledger
+  identity, which is the second theme of the same system.
+  *Amended 2026-09-20 (constitution v3.1.0, Principle XII):* this requirement was scoped to "the
+  comparison environment", and ADR-0011 held the internal surfaces out of scope. Both scopings are
+  withdrawn — Samuel's direction is that the system is respected everywhere we build. What is
+  **unchanged**: the baseline carries no obligation to stay visually frozen (ADR-0010's
+  Clarification withdrew cross-solution parity), so it is frozen because nobody is working on it,
+  not because this requirement freezes it.
   *Amended 2026-09-20 (ADR-0011):* the system this names is **Noor Play**, not the Master variant
-  that shipped first. The renaming of `nour` → `noor` throughout is the same amendment. The second
-  sentence is retained as written but no longer carries the weight it did — ADR-0010's Clarification
-  withdrew cross-solution parity, so the baseline staying unchanged is now a consequence of nobody
-  working on it rather than an obligation this requirement imposes.
+  that shipped first. The renaming of `nour` → `noor` throughout is the same amendment.
 - **FR-1002**: **No red and no coral may appear in the product palette.** A wrong answer MUST grey
   out and invite a retry rather than being marked in a warning colour. The persona's stated fear is
   looking stupid, and a red screen is what that fear looks like.
@@ -593,11 +612,16 @@ as styling preferences: each one names a student-visible behaviour with a reason
   shaming, or "you're behind" framing on any surface.
 - **FR-1010**: The single signature motion MUST be reserved for a proficient → mastered transition,
   and MUST respect `prefers-reduced-motion`.
+- **FR-1011** **[ADDED 2026-09-20 — ADR-0017]**: The product MUST render exactly one design-system
+  variant per page render, selected before first paint by the student's grade (Preparatory → Play,
+  Secondary → Master) unless the student has stored an override, which MUST survive sign-out; no
+  surface may hard-code a variant.
 
-**Open decision (Samuel's, per Principle I)**: the handoff ships two variants — *master* (15–18)
-and *Play* (10–16) — and forbids mixing them in one build. Prep-3 is 14–15 and sits inside both.
-**Master is implemented**, on the reasoning that the comparison already varies BKT against Elo and a
-second visual variable is a confound. Reversal is a token swap.
+**Variant selection — decided, not open.** Both variants ship. Which one applies is keyed to the
+student's grade, with a stored student override, per
+[ADR-0017](../../docs/decisions/0017-two-variants-keyed-to-grade.md) (amending
+[ADR-0011](../../docs/decisions/0011-noor-play-design-system.md)) and constitution v3.1.1
+Principle XII. The obligation is **FR-1011** above.
 
 ### Generated question bank **[ADDED 2026-09-10 — ADR-0008]**
 

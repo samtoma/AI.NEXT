@@ -7,7 +7,7 @@ import { kindMeta } from "@/components/viz/kind-meta";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "The Plate Gallery — AI.Next Tutor PoC",
+  title: "The Plate Gallery — Noor Tutor PoC",
 };
 
 /**

@@ -24,21 +24,34 @@ geo1=9, geo2=18, t2u1=8, t2u2=7, t2u3=5 — 90 objectives across 10 modules).
 
 ## Which variant ships
 
-**Play**, as of 2026-09-16 — replacing Master. Implemented in
-`app/src/app/globals.css` under `[data-ds="noor"]`: the sticker system (3px
-ink outlines, hard offset shadows, 14/20/28/999 radii, `.play-pressable`),
-Baloo running the whole UI, 52px targets, and the seven named animations.
-Handoff bundle: `docs/design/handoffs/noor-play/` (`design_handoff_nour_play`
-v1.0a — CLAUDE.md, tokens.css, tokens.json, reference/).
+**Both — one per render, chosen by the student's grade.** Decided by Samuel on
+2026-09-20 and recorded in
+[ADR-0017](../../decisions/0017-two-variants-keyed-to-grade.md), which amends
+[ADR-0011](../../decisions/0011-noor-play-design-system.md)'s "Master is
+replaced, not retained". Constitution **v3.1.1 Principle XII** carries the rule;
+the requirement is **FR-1011** in `specs/001-student-mvp1-delta/spec.md`.
 
-Prep-3 is 14–15, which sits inside both bands, and the handoff is explicit
-that they must not be mixed in one build. Master was the original pick
-because the comparison environment's variable under test is BKT-vs-Elo
-teaching behaviour, and a sticker-heavy visual language is a second variable
-— **this call was overturned in favour of Play**, and the reasoning is now
-recorded in [ADR-0011](../../decisions/0011-noor-play-design-system.md),
-accepted 2026-09-20 (constitution Principle I still applies going forward —
-reversing this again is Samuel's call, same as the original pick).
+- **Preparatory → Play. Secondary → Master.** The boundary is the
+  Preparatory/Secondary line, so Prep-3 — 14–15, and inside *both* published age
+  bands — lands on Play. Grade rather than age, because grade is already
+  collected (constitution Principle VII) and the age bands overlap.
+- **A student override in settings wins**, is stored against the student, and
+  **survives sign-out**.
+- **Exactly one variant per page render, resolved before first paint**, and no
+  surface hard-codes a variant. This keeps the handoff's own rule — the two are
+  never mixed in one build — intact.
+- **Default when the grade is unknown: Play.**
+- **Both variants must meet the same accessibility pairings.** Master is a
+  shipping skin now, not a historical one.
+
+**What exists today is Play only.** `app/src/app/globals.css` implements it
+under `[data-ds="noor"]`: the sticker system (3px ink outlines, hard offset
+shadows, 14/20/28/999 radii, `.play-pressable`), Baloo running the whole UI,
+52px targets, and the seven named animations. Handoff bundle:
+`docs/design/handoffs/noor-play/` (`design_handoff_nour_play` v1.0a —
+CLAUDE.md, tokens.css, tokens.json, reference/). Master is not a named sibling
+in the stylesheet, and its component anatomy is not published — so **no
+Secondary cohort should be onboarded until it is**. FR-1011 is OPEN.
 
 Coverage as shipped: the token/colour/typography/motion layer and the
 blanket radius+border+shadow rules apply everywhere under `[data-ds="noor"]`
@@ -49,6 +62,12 @@ core student screens (home/quest, lesson/question, chat panel, celebration —
 (`/admin`, `/pipeline`, `/spine`, `/dev`) and the per-widget SVG verdict-ink
 colours (`components/student/widgets/*`) were left as-is — out of the
 handoff's stated scope (the ages 10–16 student session), not overlooked.
+
+**Corrected 2026-09-20:** that last sentence described the scope as it stood
+when the pass was made. Constitution v3.1.1 **Principle XII** withdrew the
+carve-out, so those surfaces and the widget verdict inks are **in scope and
+non-compliant by omission**, not out of scope. `FR-1001` is PARTIAL for exactly
+that reason.
 
 ## To edit the canvas
 

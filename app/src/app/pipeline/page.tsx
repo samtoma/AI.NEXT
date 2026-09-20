@@ -11,7 +11,7 @@ import { ContextStage } from "@/components/pipeline/ContextStage";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "The Extraction Engine — AI.Next Tutor PoC",
+  title: "The Extraction Engine — Noor Tutor PoC",
   description:
     "The agentic pipeline that turns a ministry textbook into an adaptive, coverage-audited, human-reviewed AI tutor — a book in, a taught curriculum out.",
 };

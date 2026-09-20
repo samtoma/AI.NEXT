@@ -109,7 +109,7 @@ This is the control that makes ADR-0014's highest-privilege role grantable at
 all.
 
 **5. Retention: full fidelity, now.** Samuel, D7 — his decision and his
-responsibility, taken against constitution v3.1.0 Principle VII's minimalism
+responsibility, taken against constitution v3.1.1 Principle VII's minimalism
 rather than in ignorance of it. It is bounded by a named condition, not a good
 intention: **a retention policy MUST exist before any audience wider than the
 invited pilot cohort. Owner: Samuel. When: the pilot-exit decision.**

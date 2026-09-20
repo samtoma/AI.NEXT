@@ -81,8 +81,8 @@ iteration required.
   reader why the current arrangement is a convention rather than a guarantee. No requirement depends
   on it.
 - **This spec depends on an unapproved governance change.** FR-2306, FR-2307, FR-2308 and
-  FR-2601…FR-2606 state obligations that constitution v3.1.0 Principle VII does not currently
-  sanction. `constitution-amendment-proposal.md` proposes the expansion (v3.1.0 → v3.2.0) and is
+  FR-2601…FR-2606 state obligations that constitution v3.1.1 Principle VII does not currently
+  sanction. `constitution-amendment-proposal.md` proposes the expansion (v3.1.1 → v3.2.0) and is
   **awaiting Samuel's approval**. `/speckit-plan` can proceed — the plan does not depend on the
   amendment — but **implementation of gender capture, operator transcript access and full-fidelity
   retention should not start until it lands**, because the resolution changes which requirements are

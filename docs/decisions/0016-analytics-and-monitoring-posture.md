@@ -1,7 +1,7 @@
 # ADR-0016 — Analytics and monitoring: three layers, one system of record
 
 **Status**: Accepted — Samuel, 2026-09-20, in the identity & admin-console brainstorm: *"GA in the product as well, anonymously fine for me"*
-**Affects**: `app/src/lib/analytics.ts` · `app/src/app/layout.tsx` · `app/src/lib/cost-queries.ts` · `app/src/app/api/ask/route.ts` · `FR-2401…FR-2407` and `FR-2501…FR-2509` · constitution v3.1.0 Principles VI, VII and XI
+**Affects**: `app/src/lib/analytics.ts` · `app/src/app/layout.tsx` · `app/src/lib/cost-queries.ts` · `app/src/app/api/ask/route.ts` · `FR-2401…FR-2407` and `FR-2501…FR-2509` · constitution v3.1.1 Principles VI, VII and XI
 **Depends on**: [ADR-0014](./0014-admin-console-second-build-target.md) (the console is the presentation layer) · [ADR-0015](./0015-interaction-timeline-and-replay.md) (replay, operator-read audit)
 
 ## Context
@@ -13,7 +13,7 @@ GA is in and that it is anonymous. What was left open is **how**, and that
 matters more than it sounds: "anonymously" is either a configuration written
 down in code or an intention nobody can check.
 
-The constraints are already in force. Constitution v3.1.0 Principle VI requires
+The constraints are already in force. Constitution v3.1.1 Principle VI requires
 per-student spend instrumented from day one and binds no numeric ceiling until
 PRD §10 sets a price. Principle VII limits what may be collected about a minor
 at all. Principle XI requires environment attribution and forbids pooling

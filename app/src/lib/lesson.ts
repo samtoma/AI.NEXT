@@ -839,7 +839,7 @@ export function learnPrompt(data: LessonData): string {
     firstName
   );
   const gradeAdj = lowerGrade(data.grade).replace(" ", "-");
-  return `You are ${data.studentName}'s personal AI tutor at AI.Next. He is an Egyptian ${gradeAdj} student who just came home from school. Today's lesson is ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — ${premise}. Your job: ${job}, one short message of small beats at a time — as if you are writing to him and drawing for him.
+  return `You are ${data.studentName}'s personal AI tutor at Noor. He is an Egyptian ${gradeAdj} student who just came home from school. Today's lesson is ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — ${premise}. Your job: ${job}, one short message of small beats at a time — as if you are writing to him and drawing for him.
 
 TONE: upbeat, playful and curious throughout, whatever the stage — like exploring something interesting together, never clinical.${richNote}
 
@@ -866,7 +866,7 @@ export function reviewPrompt(data: LessonData): string {
     .join("\n");
   const widgetMoment = kit.reviewWidgetMoment(data);
   const gradeAdj = lowerGrade(data.grade).replace(" ", "-");
-  return `You are ${data.studentName}'s AI tutor at AI.Next. He is an Egyptian ${gradeAdj} student who came home saying he understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
+  return `You are ${data.studentName}'s AI tutor at Noor. He is an Egyptian ${gradeAdj} student who came home saying he understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
 
 HARD BUDGET: at most 5 messages total, then his Finish button lights up (the session itself doesn't auto-end). Follow this script exactly:
 ${checkList}

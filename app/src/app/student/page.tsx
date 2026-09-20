@@ -22,7 +22,7 @@ import { SubjectHome } from "@/components/student/SubjectHome";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Student — AI.Next Tutor PoC",
+  title: "Student — Noor Tutor PoC",
 };
 
 /**

@@ -28,15 +28,20 @@ Samuel's decisions into governance because they change what Principle VII permit
 ## A note on the base version
 
 This proposal was originally drafted to target **v3.0.0 → v3.1.0**. That was correct at the time,
-but `.specify/memory/constitution.md` has since advanced to **v3.1.0**
-the same day, via a sibling, unrelated amendment: **Principle XII "Design System Authority"**
-(Noor Play becomes the visual authority for every surface), recorded in the file's own Sync Impact
-Report and in `docs/PROJECT_STATE.md` ("DESIGN SYSTEM PUBLISHED, AND MADE BINDING — constitution
-v3.1.0 (2026-09-20)"). That amendment is unrelated to identity, gender, or operator access, and this
-proposal does not touch Principle XII or its text.
+but `.specify/memory/constitution.md` has since advanced **twice on the same day**, both times via
+sibling amendments unrelated to identity, gender or operator access:
 
-Because that version number is already spent, this proposal targets **v3.1.0 → v3.2.0** instead — a
-correction made directly here, not a silent change on my part.
+- **v3.0.0 → v3.1.0** — **Principle XII "Design System Authority"** added (the published Noor Play
+  system becomes the visual authority for every surface we build), recorded in the file's own Sync
+  Impact Report and in `docs/PROJECT_STATE.md`.
+- **v3.1.0 → v3.1.1** — a PATCH clarifying Principle XII for **[ADR-0017](../../docs/decisions/0017-two-variants-keyed-to-grade.md)**:
+  both design-system variants ship and the one that applies is keyed to the student's grade, and
+  static brand assets satisfy "tokens, never literals" by matching the token values.
+
+Neither touches Principle VII, and this proposal touches neither Principle XII nor its text.
+
+Because both of those version numbers are already spent, this proposal targets **v3.1.1 → v3.2.0**
+instead — a correction made directly here, not a silent change on my part.
 
 ---
 
@@ -46,7 +51,7 @@ correction made directly here, not a silent change on my part.
 approval)*
 
 ```
-- Version change: 3.1.0 → 3.2.0 (MINOR — Principle VII "Minors' Data
+- Version change: 3.1.1 → 3.2.0 (MINOR — Principle VII "Minors' Data
   Minimalism" materially expanded. Gender added as a collected datum, used
   for address and voice only. Operator access to a student's full
   interaction record established as a named, logged privilege. No-signup-
@@ -57,10 +62,13 @@ approval)*
   full-fidelity retention, responsibility his), D10 (collect gender to fix
   the tutor's assumed-male voice) for the 002 Identity & Admin Console
   workstream.
+- Previous: 3.1.0 → 3.1.1 (PATCH — Principle XII clarified for variant
+  selection (ADR-0017) and for static brand assets, unrelated to this
+  amendment.)
 - Previous: 3.0.0 → 3.1.0 (MINOR — Principle XII "Design System Authority"
   ADDED, unrelated to this amendment. See "A note on the base version" in
   the 002 constitution-amendment-proposal.md for why this proposal is
-  3.1.0 → 3.2.0 and not 3.0.0 → 3.1.0.)
+  3.1.1 → 3.2.0 and not 3.0.0 → 3.1.0.)
 - Modified principles:
   - VII Minors' Data Minimalism → collected data gains gender (address/voice
     only, never content gating, never third-party analytics); a named
@@ -106,7 +114,7 @@ approval)*
 
 ## Proposed text of Principle VII
 
-### Current text (v3.1.0, unchanged since v2.0.0)
+### Current text (v3.1.1, unchanged since v2.0.0)
 
 > ### VII. Minors' Data Minimalism
 > Collect the minimum: name, grade, and the interest signals the tutor actually
@@ -191,7 +199,7 @@ reversible rather than open-ended — the same shape Principle III's suspension 
 1. Edit `.specify/memory/constitution.md`:
    - Prepend the block under "Proposed Sync Impact Report" above to the top of the header comment,
      with "Version change" / "Amended by" as written there (drop the word "Proposed").
-   - Change the existing top entry's label from the live entry to a "Previous: 3.0.0 → 3.1.0 (…)"
+   - Change the existing top entry's label from the live entry to a "Previous: 3.1.0 → 3.1.1 (…)"
      line, exactly as the file already chains every prior amendment.
    - Replace the body of `### VII. Minors' Data Minimalism` with the proposed text above, with the
      bold markers removed (they exist only to show the diff in this proposal).
@@ -199,7 +207,7 @@ reversible rather than open-ended — the same shape Principle III's suspension 
      `**Version**: 3.2.0 | **Ratified**: 2026-08-02 | **Last Amended**: <approval date>`.
 2. Commit message suggestion:
    `docs(constitution): amend Principle VII for gender, operator transcript access, and deferred
-   disclosure (v3.1.0 → v3.2.0)` — body citing D1, D7, D10 and `specs/002-identity-and-admin-console/`.
+   disclosure (v3.1.1 → v3.2.0)` — body citing D1, D7, D10 and `specs/002-identity-and-admin-console/`.
 3. Spec files that should then cite v3.2.0 (not v3.1.0) once this lands: `specs/002-identity-and-
    admin-console/spec.md`, `decisions.md` and `traceability.md` (all three currently drafted against
    this proposal, not yet the applied text), and `docs/PROJECT_STATE.md`'s constitution-version line.

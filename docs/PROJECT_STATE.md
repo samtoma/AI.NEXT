@@ -1,7 +1,7 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-20 (`PDR1-0-v0.4.0`)
+> Last updated: 2026-09-20 (`PDR1-0-v0.4.0`; constitution v3.1.1)
 
 ## ➡️ NEXT WORKSTREAM — accounts, and an admin dashboard (Samuel, 2026-09-20)
 
@@ -12,7 +12,7 @@ Full detail: [`ROADMAP.md`](ROADMAP.md) § *Samuel's direction*.
 **SPECCED 2026-09-20** on `req/identity-and-admin-console` →
 [`specs/002-identity-and-admin-console/`](../specs/002-identity-and-admin-console/): spec (70 FRs,
 14 SCs), plan, research, data-model, contracts, quickstart, traceability green;
-**ADR-0012…ADR-0016**; a constitution Principle VII amendment **proposed** (v3.1.0 → v3.2.0) and
+**ADR-0012…ADR-0016**; a constitution Principle VII amendment **proposed** (v3.1.1 → v3.2.0) and
 **awaiting Samuel**. **Not started: no code exists.** The first implementation slice is **Phase 0 —
 learning sessions become real**: `sessions` is dead schema today (never written), and the identifier
 the product passes around is a string the browser invented, so the tie between a tutor turn and the
@@ -45,6 +45,55 @@ lesson it belonged to is lost at write time, every day, and no later migration r
 
 **Samuel is testing the product now and will come back with findings.** Expect new
 feedback against `PDR1-0-v0.4.0`.
+
+## 🎨 DESIGN SYSTEM PUBLISHED, AND MADE BINDING — constitution v3.1.0 (2026-09-20)
+
+The design system is now a **published artifact** rather than a Drive handoff:
+<https://claude.ai/artifact/SXTAsvPUCjU4ZMp5oZtM6J> (private — needs sharing from the
+page's Share menu before Tamer or anyone else can open it).
+
+Extracted from `app/src/app/globals.css`, `docs/design/handoffs/noor-play/` and ADR-0011.
+Two colour themes on one semantic token set, mirroring how the code actually works —
+**play** (`[data-ds="noor"]`, active) and **ledger** (the frozen baseline). 62 colour
+tokens, 16 type styles, 13 components with live previews and guidelines, the three marks
+as assets, and four prose sections (motion, bilingual/RTL, layout, the Ledger baseline).
+
+**Constitution → v3.1.0 (MINOR).** New **Principle XII — Design System Authority**: the
+published system is the visual authority and **binds every surface we build**, student
+product and internal tools alike. Values come from tokens; no literal colour, stroke,
+radius or shadow in a component; every coloured background uses its paired `on-`
+foreground; a deliberate departure is an ADR, not a local override.
+
+- **Scope widened on Samuel's direction.** ADR-0011 held `/admin`, `/pipeline`, `/spine`,
+  `/dev` and `/gallery` out of scope; that carve-out is **withdrawn**. ADR-0011 is marked
+  superseded in part; everything else in it stands.
+- **Not bound:** the frozen `family-tutor` baseline. It keeps the Ledger identity — the
+  same system's second theme. Re-skinning a deployed product is a production change with
+  its own release.
+- **FR-1001 moved VERIFIED → PARTIAL.** Not a regression: the requirement widened and the
+  internal surfaces have never had the Play pass, so they are non-compliant by omission.
+  Recorded rather than laundered. Bringing those surfaces onto the system is open work.
+
+**Two contrast errors found in the handoff while extracting, and fixed in the repo:** amber
+on ink read 8.1:1 (it is 7.41:1) and violet read 7.4:1 for both foregrounds (white is
+5.52:1, the dim `#F0E9FB` is 4.67:1). Every pair still clears AA. A re-sync of the handoff
+bundle would restore the wrong figures — there is a note in the table saying so.
+
+**That finding is now decided.** `--play-inactive-border` was `#9c95b8` — **2.84:1** on
+white, under the 3:1 floor for a border that carries meaning. It is **specified in the
+handoff** as the wrong-answer option border (`docs/design/handoffs/noor-play/README.md:326`)
+but is **not consumed by any component**: `globals.css:577` defines it and nothing reads it,
+so the description above was of the spec rather than of the build. **Darkened 2026-09-20 on
+Samuel's decision** (context in ADR-0017) to the nearest violet on the same hue that clears
+the floor — **`#9890b5`, 3.00:1 on white** — in `globals.css`, `tokens.css`, `tokens.json`
+and the handoff contrast table.
+
+**Two variants, not one — ADR-0017 (2026-09-20).** ADR-0011's "Master is replaced, not
+retained" is reversed: both variants ship and the product picks one per render from the
+student's grade (Preparatory → Play, Secondary → Master), with a stored override that
+survives sign-out. **Constitution → v3.1.1 (PATCH)** carries the rule in Principle XII, which
+also now states that static brand marks satisfy "tokens, never literals" by matching the token
+values. The obligation is **FR-1011** (OPEN — no code; `globals.css` has the Play skin only).
 
 ## 🐞 FEEDBACK CLOSED OUT — `PDR1-0-v0.4.0` (2026-09-20, `PDR1-0`)
 
@@ -155,6 +204,8 @@ Blocked item #5 below (design: master shipped rather than Play) is resolved: the
 skin is now **Play** (ages 10–16 — sticker chrome, Baloo-everywhere typography, 52px targets, 7 named
 animations), replacing Master (ages 15–18, restrained). Full replace, not a new switchable variant —
 the age-band switching rule was never defined, and Prep-3 (14–15) sits inside both bands anyway.
+*(Superseded 2026-09-20 by [ADR-0017](decisions/0017-two-variants-keyed-to-grade.md): Samuel defined the
+rule — both variants stay, selected at runtime by grade. Kept here as the journal entry it was.)*
 
 Handoff bundle: `docs/design/handoffs/noor-play/` (`design_handoff_nour_play` v1.0a — CLAUDE.md,
 tokens.css, tokens.json, reference/). Decision record: `docs/design/noor/README.md`.
@@ -665,14 +716,17 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0004 | Social Studies vertical (2nd subject on the spine) | ✅ Accepted 2026-07-20 |
 | ADR-0005 | Agentic extraction pipeline + coverage oracle | ✅ Accepted 2026-07-21 |
 | ADR-0006 | Arabic Language vertical — new contract: vendored Quran corpus, Noto Naskh font, 5 assessable LOs/lesson, scope = text+grammar+إملاء | ✅ Accepted 2026-07-28 |
+| ADR-0007 | Two distinct decisions share this number: PRD supersession — "Student MVP" (International) replaces "Founding Families" (Bakaloreya) (`0007-prd-supersession-student-mvp.md`); and Student MVP 1.0 built as a side-by-side comparison on the same book (`0007-student-mvp1-comparison-build.md`) | ✅ Accepted 2026-09-02 / 2026-09-08 |
+| ADR-0008 | Generate the question bank, review a 10% sample | ✅ Accepted 2026-09-10 |
+| ADR-0009 | An interactive widget is a question | ✅ Accepted 2026-09-12 |
+| ADR-0010 | One branch per solution, both long-lived | ✅ Accepted 2026-09-13 |
+| ADR-0011 | Noor Play replaces Master as the Student MVP design system | ✅ Accepted 2026-09-20 · amended by ADR-0017 |
 | ADR-0012 | Per-student isolation is enforced by the database — Postgres RLS, forced, principal on the connection, a non-superuser app role | ✅ Accepted 2026-09-20 |
 | ADR-0013 | Student-owned accounts, parent-linkable, with Reletix-pattern sign-in; phone+OTP designed not built; gender collected | ✅ Accepted 2026-09-20 |
 | ADR-0014 | The admin console is a second build target of one codebase — own hostname, Cloudflare Access *and* four per-person roles | ✅ Accepted 2026-09-20 |
 | ADR-0015 | One interaction timeline per student per session, replayed by reconstruction; every operator read audited | ✅ Accepted 2026-09-20 |
 | ADR-0016 | Analytics and monitoring: three layers, one system of record — first-party events, anonymous GA4 as audience layer, console as presentation | ✅ Accepted 2026-09-20 |
-
-*(ADR-0007…ADR-0011 are accepted and live in `docs/decisions/`; this table has never carried rows for
-them. The full index is [`docs/README.md`](README.md) § 2.)*
+| ADR-0017 | Two design-system variants ship — Play and Master, one per render, keyed to the student's grade with a stored override; amends ADR-0011's "Master is replaced" | ✅ Accepted 2026-09-20 |
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·

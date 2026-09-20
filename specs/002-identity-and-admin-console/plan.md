@@ -8,7 +8,7 @@
 [0015](../../docs/decisions/0015-interaction-timeline-and-replay.md) timeline & replay ·
 [0016](../../docs/decisions/0016-analytics-and-monitoring-posture.md) analytics & monitoring posture
 (landed 2026-09-20 while this plan was being written; A8 is cut against it)
-**Constitution**: **v3.1.0** — Principle XII (Design System Authority) binds the console's UI from its
+**Constitution**: **v3.1.1** — Principle XII (Design System Authority) binds the console's UI from its
 first screen. A **v3.2.0** amendment to Principle VII is drafted in
 [constitution-amendment-proposal.md](./constitution-amendment-proposal.md) and is **awaiting Samuel**;
 nothing in this plan presumes it has landed.
@@ -70,7 +70,7 @@ produces a system that looks protected and is not.
 **Constraints**: both surfaces share one database (D3) · the app must **not** connect as a superuser or as the table owner (see A3) · no new datastore, no Redis, no SIEM, no LRS (research A1/A3/A5) · every new table carries `environment` (XI) · console UI from published tokens (XII)
 **Scale/Scope**: ~50 pilot families, ~200 students, one subject, 90 objectives; 8 migrations (`011`…`018`); ~25 new route handlers and views
 
-## Constitution Check (v3.1.0)
+## Constitution Check (v3.1.1)
 
 *GATE: evaluated before Phase 0 and re-checked after Phase 1 design.*
 
@@ -497,7 +497,7 @@ specs/002-identity-and-admin-console/
 ├── research.md                          # Phase 0 — R1…R14
 ├── data-model.md                        # Phase 1 — entities, RLS matrix, migration mapping
 ├── quickstart.md                        # Phase 1 — how Samuel tests it today and tomorrow
-├── constitution-amendment-proposal.md   # Principle VII, v3.1.0 → v3.2.0, awaiting approval
+├── constitution-amendment-proposal.md   # Principle VII, v3.1.1 → v3.2.0, awaiting approval
 ├── traceability.md                      # the matrix (written beside this plan, not by it)
 ├── contracts/
 │   ├── auth.md            # every auth endpoint, cookies, statuses, events

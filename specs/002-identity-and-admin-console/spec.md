@@ -13,7 +13,7 @@ analytics.
 > `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`. This feature changes no product scope; it supplies
 > the identity layer PRD Epic A always assumed and the operator tooling the PRD never covered.
 > **Feature being extended**: `specs/001-student-mvp1-delta/spec.md`, shipped as `PDR1-0-v0.4.0`.
-> **Engineering authority**: `.specify/memory/constitution.md` **v3.1.0** + ADR-0001..0011, plus
+> **Engineering authority**: `.specify/memory/constitution.md` **v3.1.1** + ADR-0001..0011, plus
 > **ADR-0012** (Per-student isolation is enforced by the database), **ADR-0013** (Student-owned
 > accounts, parent-linkable, with Reletix-pattern sign-in), **ADR-0014** (The admin console is a
 > second build target of one codebase), **ADR-0015** (One interaction timeline per student per
@@ -23,7 +23,7 @@ analytics.
 > which this spec is cut against. Requirements in 001 that this supersedes are stamped in place there
 > rather than deleted, so the chain stays legible.
 > **Governance**: `constitution-amendment-proposal.md` here proposes that Principle VII be materially
-> expanded (v3.1.0 → v3.2.0). It is **awaiting Samuel's approval**; nothing in it binds until he
+> expanded (v3.1.1 → v3.2.0). It is **awaiting Samuel's approval**; nothing in it binds until he
 > approves it in the constitution itself.
 
 ## Why this feature exists
@@ -646,7 +646,7 @@ Plain language; no field names. `data-model.md` owns the mapping.
 
 ## Governance Impact
 
-**Constitution v3.1.0** is the engineering authority for this spec. Two principles bear directly:
+**Constitution v3.1.1** is the engineering authority for this spec. Two principles bear directly:
 
 - **Principle XII (Design System Authority)** applies as written and needs no amendment — it already
   binds every surface this repository builds, internal tools included, so the console is bound from
@@ -654,7 +654,7 @@ Plain language; no field names. `data-model.md` owns the mapping.
 - **Principle VII (Minors' Data Minimalism)** does **not** cover three things this feature does:
   collecting gender, an operator reading a student's transcript, and retaining the interaction record
   at full fidelity with no disclosure at signup. An amendment expanding VII is drafted in
-  **`constitution-amendment-proposal.md`** here, targeting **v3.1.0 → v3.2.0** (MINOR — materially
+  **`constitution-amendment-proposal.md`** here, targeting **v3.1.1 → v3.2.0** (MINOR — materially
   expanded; nothing redefined or removed), status **awaiting Samuel's approval**. Nothing here
   presumes it has landed: FR-2306, FR-2307, FR-2308 and FR-2601…FR-2606 state the obligations the
   amendment would sanction, and the amendment is the record that makes them legal to build.

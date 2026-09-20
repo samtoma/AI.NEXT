@@ -191,7 +191,7 @@ export async function POST(req: Request) {
     .map((l) => `- ${l.id} "${l.label}": ${l.description ?? ""}`)
     .join("\n");
 
-  const systemPrompt = `You are the honest comprehension grader of AI.Next, an adaptive math tutor. You rate how well the student actually understood a lesson, based ONLY on the session transcript. You output STRICT JSON and nothing else — no markdown fences, no prose.`;
+  const systemPrompt = `You are the honest comprehension grader of Noor, an adaptive math tutor. You rate how well the student actually understood a lesson, based ONLY on the session transcript. You output STRICT JSON and nothing else — no markdown fences, no prose.`;
 
   const transcriptText = transcript
     .map((m) =>

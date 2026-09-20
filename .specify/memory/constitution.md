@@ -1,6 +1,30 @@
 <!--
 Sync Impact Report
-- Version change: 2.2.0 → 3.0.0 (MAJOR — Principle XI "Comparison Integrity"
+- Version change: 3.1.0 → 3.1.1 (PATCH — clarification. Principle XII gains
+  two clauses and no new obligation. First: the published system has two
+  variants, and which one applies is a product rule keyed to the student's
+  grade (ADR-0017), never a choice made per surface. Second: brand marks and
+  static assets cannot read a CSS variable, so they satisfy "tokens, never
+  literals" by matching the published token values and being checked against
+  them, rather than by avoiding literals. Nothing is added, redefined or
+  removed — both clauses say how XII already applies.)
+- Amended by: Samuel (CTO, solution architect), 2026-09-20 — on finalising the
+  design-system governance and deciding that both variants ship, selected at
+  runtime and keyed to grade, with a stored student override (ADR-0017). No
+  code changes in this amendment.
+- Previous: 3.0.0 → 3.1.0 (MINOR — Principle XII "Design System
+  Authority" ADDED. The published Noor Play design system becomes the visual
+  authority for every surface we build, student-facing and internal alike.
+  This supersedes ADR-0011's carve-out, which held the internal surfaces
+  (/admin, /pipeline, /spine, /dev, /gallery) out of scope. No existing
+  principle is redefined or removed. Samuel, 2026-09-20: the design system is
+  "to be respected everywhere".)
+- Amended by: Samuel (CTO, solution architect), 2026-09-20 — on publishing the
+  design system as a Claude artifact and directing that the requirements
+  reference it. The frozen `family-tutor` baseline is explicitly NOT bound:
+  it keeps its Ledger identity, and re-skinning a deployed product is a
+  production change with its own release.
+- Previous: 2.2.0 → 3.0.0 (MAJOR — Principle XI "Comparison Integrity"
   REDEFINED and materially narrowed. Cross-solution content parity and the
   frozen-baseline obligation are withdrawn as engineering constraints; what
   remains is data hygiene (attribution, no pooling, no student-data crossing)
@@ -40,12 +64,19 @@ Sync Impact Report
   - VIII MVP Non-Goals → non-goal list replaced with the new PRD §14 list; the
     parent dashboard, mastery modelling and ask-anything are no longer non-goals
 - Added sections:
-  - XI Comparison Integrity (new principle — content parity, environment tagging,
-    a genuinely frozen baseline)
+  - XII Design System Authority (new principle at 3.1.0 — the published Noor Play
+    system is the visual authority and binds every surface this repository builds,
+    internal tools included; clarified at 3.1.1 for variant selection and for
+    static assets that cannot read a token)
+  - XI Comparison Integrity (new principle at 2.0.0 — content parity, environment
+    tagging, a genuinely frozen baseline; redefined and narrowed at 3.0.0 as
+    Solution Integrity)
 - Unchanged: I Architecture Authority, II Grounded Teaching Only, IV Sacred Text
   Containment, IX Registry-Driven Subjects, X Operational Safety (extended to two
   environments)
-- Templates requiring updates:
+- Templates requiring updates (re-stated for XII at 3.1.0 and its 3.1.1
+  clarification — the gate is generic and names no principle, so it carries the
+  new principle without an edit):
   - ✅ .specify/templates/plan-template.md — generic Constitution Check gate remains
     compatible
   - ✅ .specify/templates/spec-template.md — compatible as-is
@@ -54,6 +85,13 @@ Sync Impact Report
   - Principle III's suspension is reversible and MUST be revisited before any
     audience wider than the invited pilot cohort
   - Principle VI's numeric ceiling MUST be restored once the PRD §10 price point lands
+  - (3.1.1) Master's component anatomy — type scale, targets, motion, component
+    guidelines — is not published; only its colour theme exists. It MUST be
+    published before any Secondary cohort is onboarded, or the grade rule routes
+    real students to a half-specified variant
+  - (3.1.1) The handoff's accessibility pairing table covers Play only. A Master
+    column MUST exist before Master renders to a student, because XII holds both
+    variants to the same pairings
 -->
 
 # AI.Next Tutor Constitution
@@ -233,6 +271,54 @@ survives — none of it is about comparing.)*
   later claim that one solution teaches better than another is an opinion
   formed from live usage, not a measured result.
 
+### XII. Design System Authority
+
+*(Added 2026-09-20. The visual language was previously pinned to a Drive
+handoff scoped to one environment, which is how a burnt-sienna mastery ramp
+shipped against a palette that forbids red. It is now a published system with
+resolved tokens, paired foregrounds and per-component guidelines.)*
+
+- **One authority, and it is the published system.** The Noor Play design
+  system at `https://claude.ai/artifact/SXTAsvPUCjU4ZMp5oZtM6J` is the visual
+  authority. `docs/design/handoffs/noor-play/` is its source material and is
+  superseded wherever the two differ.
+- **It binds every surface we build** — the student product and the internal
+  tools (`/admin`, `/pipeline`, `/spine`, `/dev`, `/gallery`) alike. ADR-0011
+  held the internal surfaces out of scope; that carve-out is withdrawn. An
+  internal tool may lag, but it may not diverge on purpose.
+- **Not bound:** the frozen `family-tutor` baseline. It keeps the Ledger
+  identity, which is the second theme of the same system. Re-skinning a
+  deployed product is a production change and needs its own release.
+- **Which variant applies is a product rule, not a per-surface choice.**
+  *(Clarified 2026-09-20, v3.1.1, ADR-0017.)* The published system has two
+  variants — **Play** (10–16) and **Master** (15–18). The product resolves
+  exactly one of them per page render, before first paint, from the student's
+  **grade**: Preparatory → Play, Secondary → Master, defaulting to Play when the
+  grade is unknown. A student may override it in settings; that override is
+  stored against the student and survives sign-out. **No surface may hard-code a
+  variant**, and the two are never mixed in one render. **Every surface must
+  render correctly in whichever variant is selected**, and **both variants MUST
+  meet the same accessibility pairings** — a pairing that fails in one variant is
+  a defect in the system, not a difference between skins.
+- **Tokens, never literals.** No hardcoded colour, stroke width, radius or
+  shadow in a component. If a value is needed that no token carries, the token
+  set gains it — the component does not.
+- **Brand marks and static assets are the one exception, and they are checked
+  rather than exempted.** *(Clarified 2026-09-20, v3.1.1.)* An SVG icon, a logo
+  file or a mark component (`app/src/app/icon.svg`, `app/public/logo.svg`,
+  `app/src/components/NoorMark.tsx`) cannot read a CSS variable — a favicon is
+  fetched outside the document, and a brand mark must render identically wherever
+  it is pasted. Their literal colours are therefore permitted, on one condition:
+  each literal **MUST equal the published token value it stands for**, and is
+  verified against it rather than picked. A mark whose hex has drifted from the
+  token is a defect exactly as a hardcoded component colour is.
+- **Every coloured background uses its paired foreground token.** Picking a
+  foreground by eye is how the contrast defects got in. A background token
+  without a matching `on-` token is a defect in the token set.
+- **A deliberate departure is an ADR, not a local override.** Where a
+  component and the system disagree, the system wins until Samuel says
+  otherwise in writing.
+
 ## Additional Constraints
 
 - Stack (ADR-0002..0005): Next.js App Router app (`app/`), PostgreSQL
@@ -277,4 +363,4 @@ PATCH = clarification), and obtain Samuel's approval. Exceptions MUST be
 time-boxed or condition-boxed, attributed, reversible, and recorded here or in
 an ADR — Principle III's suspension is the current example.
 
-**Version**: 3.0.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-13
+**Version**: 3.1.1 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-20
