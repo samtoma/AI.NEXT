@@ -1,7 +1,35 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-16
+> Last updated: 2026-09-20
+
+## 🏷️ RELEASE PREPARED — `PDR1-0-v0.3.0` (2026-09-20, `PDR1-0`)
+
+Three branches merged into `PDR1-0` and tagged: `wip/q3-q4-explore` (the Noor
+Play skin plus ten Prototype 1.1 fixes), `claude/noor-play-design-system`
+(absorbed, no net change — `wip/q3-q4-explore` was cut from it and carries a
+later draft of the same triage doc) and `claude/widget-render-fixes`.
+
+**Prepared, not deployed.** Deploy is manual-only while infrastructure is parked
+(`T139`). Tagging does not put this in front of anyone.
+
+Full detail in [`CHANGELOG.md`](../CHANGELOG.md) and
+[`docs/releases/PDR1-0-v0.3.0.html`](releases/PDR1-0-v0.3.0.html) — the
+change-by-change explainer, what was implemented and why.
+
+**What this release is really about:** the first time anyone drove the build as
+a student rather than as its author, and four requirements marked VERIFIED
+failed in front of him (FR-208, FR-1009, FR-1214, FR-1218 — plus FR-C03 reading
+"3x6" as 3). Matrix rev. 9 records what he saw beside each fix.
+
+**Still open and named, so nobody has to rediscover it:**
+- The **Socratic cluster** (7 issues, `SC-005`) is untouched — the tutor
+  explains where it should elicit. Largest item in the feedback.
+- `/pipeline`, `/gallery`, `/spine`, `/admin`, `/dev` are **ungated** — no
+  environment check, no auth, and the front page links to two of them.
+- The tutor prompts **assume the student is male**; there is no gender column.
+- Durable resume and per-user analytics are **blocked on accounts** (`FR-106`),
+  not deferred.
 
 ## 🎨 DESIGN SYSTEM — Master overturned in favour of Play (2026-09-16, `PDR1-0`)
 
@@ -24,8 +52,8 @@ tokens.css, tokens.json, reference/). Decision record: `docs/design/noor/README.
 **Explicitly out of scope this pass:** internal tooling under `/admin`, `/pipeline`, `/spine`,
 `/dev`, `/gallery`; the per-widget SVG verdict-ink colours in `components/student/widgets/*`.
 
-**Open:** no ADR exists yet for this reversal — it needs Samuel's explicit confirmation before it's
-locked in as one, same as the original Master pick was his call.
+**Resolved 2026-09-20:** recorded as [ADR-0011](decisions/0011-noor-play-design-system.md),
+accepted by Samuel authorising the `PDR1-0-v0.3.0` release.
 
 ## 🌿 ONE BRANCH PER SOLUTION — ADR-0010 (2026-09-13)
 
