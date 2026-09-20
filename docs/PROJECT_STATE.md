@@ -54,14 +54,31 @@ later draft of the same triage doc) and `claude/widget-render-fixes`.
 **Prepared, not deployed.** Deploy is manual-only while infrastructure is parked
 (`T139`). Tagging does not put this in front of anyone.
 
-**The tag is not on the remote yet.** Agent sessions can push `refs/heads/*` but
-not `refs/tags/*` (403), so `PDR1-0-v0.3.0` exists locally only and Samuel has to
-create it. One command, from a clone with push rights:
+**Neither tag is on the remote.** Agent sessions can push `refs/heads/*` but get
+403 on `refs/tags/*`, so `PDR1-0-v0.3.0` and `PDR1-0-v0.4.0` exist only in this
+session's clone and Samuel has to create them. Both, from a clone with push
+rights — note that **v0.3.0 points at a commit in the history, not at the head**:
 
 ```
-git fetch origin PDR1-0 && git tag -a PDR1-0-v0.3.0 origin/PDR1-0 \
-  -m "PDR1-0-v0.3.0 — Prototype 1.1 feedback, and the Noor Play design system" \
-  && git push origin PDR1-0-v0.3.0
+git fetch origin PDR1-0
+
+git tag -a PDR1-0-v0.3.0 23df66e \
+  -m "PDR1-0-v0.3.0 — Prototype 1.1 feedback, and the Noor Play design system"
+
+git tag -a PDR1-0-v0.4.0 origin/PDR1-0 \
+  -m "PDR1-0-v0.4.0 — the fix pass"
+
+git push origin PDR1-0-v0.3.0 PDR1-0-v0.4.0
+```
+
+The same 403 blocks branch deletion, so the three branches absorbed into
+`PDR1-0` are still on the remote. They are all ancestors of it, so nothing is
+lost by removing them:
+
+```
+git push origin --delete wip/q3-q4-explore \
+                         claude/noor-play-design-system \
+                         claude/widget-render-fixes
 ```
 
 Full detail in [`CHANGELOG.md`](../CHANGELOG.md) and
