@@ -56,12 +56,13 @@ Skills (in `.claude/skills/`): `project-status` (read/update project state), `ad
 - Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`. **Documentation map: `docs/README.md`.**
 - Branching: `docs/BRANCHING.md` — one branch per solution; feedback and requirement *proposals* never get a branch, accepted requirements get `req/<id>-<slug>`. Versioning: `docs/VERSIONING.md`. Current release: **`PDR1-0-v0.4.0`** — history in `CHANGELOG.md`, per-release explainers in `docs/releases/`.
 - Product code: the Next.js app in `app/`, the extraction pipeline in `services/extraction/`, deploy stack in `deploy/` (see ADR-0002/0003/0005).
-- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v3.0.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/001-student-mvp1-delta/`; new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
+- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v3.0.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/002-identity-and-admin-console/` (001 is the shipped Student MVP delta); new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
 - Student- and parent-facing copy is **English** for MVP 1.0 (constitution v3.0.0 Principle V); the Arabic verticals stay in the tree and reintroducible. Internal docs and code are English.
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan:
-**`specs/001-student-mvp1-delta/plan.md`** — Student MVP 1.0 comparison build
-(spec, decisions, research, data-model and contracts sit beside it in the same directory).
+**`specs/002-identity-and-admin-console/plan.md`** — Identity & Admin Console
+(spec, decisions, research, data-model, contracts and quickstart sit beside it in the same directory).
+`specs/001-student-mvp1-delta/plan.md` remains the reference for the **shipped** build (`PDR1-0-v0.4.0`).
 <!-- SPECKIT END -->

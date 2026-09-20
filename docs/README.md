@@ -16,7 +16,7 @@ a constitution two major versions out of date.
 | Know where the project stands today | [`PROJECT_STATE.md`](PROJECT_STATE.md) — living status, updated as work lands |
 | Know what we promised to build | [`specs/001-student-mvp1-delta/spec.md`](../specs/001-student-mvp1-delta/spec.md) — 90 functional requirements + 6 success criteria |
 | Know what is actually **proven** | [`specs/001-student-mvp1-delta/traceability.md`](../specs/001-student-mvp1-delta/traceability.md) — every requirement, its status, and the evidence |
-| Know **why** something is built that way | [`decisions/`](decisions/) — ADR-0001…0011 |
+| Know **why** something is built that way | [`decisions/`](decisions/) — ADR-0001…0016 |
 | Give feedback or report a problem | [`FEEDBACK.md`](FEEDBACK.md) |
 | See what is coming next | [`ROADMAP.md`](ROADMAP.md) |
 | Run it on your machine | [`LOCAL-DEV.md`](LOCAL-DEV.md) |
@@ -77,9 +77,15 @@ The Spec Kit baseline set — the full as-built requirements of the shipped prod
   requirements of the shipped baseline (31). Frozen; reported by the
   traceability tool but never gated, because it is history rather than work.
 - [`specs/001-student-mvp1-delta/`](../specs/001-student-mvp1-delta/) — **the
-  active feature**: `spec.md` (what), `plan.md` (how), `tasks.md` (135 tasks),
-  `traceability.md` (what is proven), `decisions.md` (open questions Samuel has
-  answered).
+  shipped feature** (`PDR1-0-v0.4.0`): `spec.md` (what), `plan.md` (how),
+  `tasks.md` (135 tasks), `traceability.md` (what is proven), `decisions.md`
+  (open questions Samuel has answered).
+- [`specs/002-identity-and-admin-console/`](../specs/002-identity-and-admin-console/) —
+  **the active feature** (specced 2026-09-20, no code yet): `spec.md` (70 FRs,
+  14 SCs), `plan.md`, `research.md` + `research/`, `data-model.md`,
+  `contracts/`, `quickstart.md`, `traceability.md`, `decisions.md` (Samuel's
+  D1–D11), and `constitution-amendment-proposal.md` — Principle VII, v3.1.0 →
+  v3.2.0, **awaiting his approval**.
 - [`specs/000-baseline/plan.md`](../specs/000-baseline/plan.md) — as-built
   architecture, constitution check, runtime/content flows, deployment topology.
 - [`specs/000-baseline/data-model.md`](../specs/000-baseline/data-model.md) —
@@ -104,6 +110,11 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
 | [0004](decisions/0004-social-studies-vertical.md) | Social Studies vertical (Wave-0: voice, grounding, sensitive content) |
 | [0005](decisions/0005-extraction-pipeline.md) | The extraction line: agentic, coverage-audited book ingest |
 | [0006](decisions/0006-arabic-language-vertical.md) | Arabic vertical: sealed texts, typed answers, containment |
+| [0012](decisions/0012-per-student-isolation-rls.md) | Per-student isolation is enforced by the database (Postgres row-level security) |
+| [0013](decisions/0013-student-accounts-and-sign-in.md) | Student-owned accounts, parent-linkable, with Reletix-pattern sign-in |
+| [0014](decisions/0014-admin-console-second-build-target.md) | The admin console is a second build target of one codebase |
+| [0015](decisions/0015-interaction-timeline-and-replay.md) | One interaction timeline per student per session, replayed by reconstruction |
+| [0016](decisions/0016-analytics-and-monitoring-posture.md) | Analytics and monitoring: three layers, one system of record |
 
 ## 3. Architecture (`docs/architecture/`)
 

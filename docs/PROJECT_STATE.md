@@ -6,8 +6,17 @@
 ## ➡️ NEXT WORKSTREAM — accounts, and an admin dashboard (Samuel, 2026-09-20)
 
 **Read this first if you are a new session.** Samuel's direction at the end of the
-`v0.4.0` session, recorded verbatim in intent. **Nothing below is specced or started.**
+`v0.4.0` session, recorded verbatim in intent.
 Full detail: [`ROADMAP.md`](ROADMAP.md) § *Samuel's direction*.
+
+**SPECCED 2026-09-20** on `req/identity-and-admin-console` →
+[`specs/002-identity-and-admin-console/`](../specs/002-identity-and-admin-console/): spec (70 FRs,
+14 SCs), plan, research, data-model, contracts, quickstart, traceability green;
+**ADR-0012…ADR-0016**; a constitution Principle VII amendment **proposed** (v3.1.0 → v3.2.0) and
+**awaiting Samuel**. **Not started: no code exists.** The first implementation slice is **Phase 0 —
+learning sessions become real**: `sessions` is dead schema today (never written), and the identifier
+the product passes around is a string the browser invented, so the tie between a tutor turn and the
+lesson it belonged to is lost at write time, every day, and no later migration recovers it.
 
 1. **An admin dashboard, as its own release.** Everything that is not the education
    itself — pipeline, evidence walk, content review, gallery — gets a deliberate home.
@@ -15,12 +24,15 @@ Full detail: [`ROADMAP.md`](ROADMAP.md) § *Samuel's direction*.
 2. **Real signup and sign-in, with per-student isolation enforced in the backend** —
    his words: *"each student will have his own separate env. now fully, and well from
    the backend."* **He is bringing the full requirements.**
-   ⚠️ **This is a multi-tenancy decision and needs an ADR before any code.** Today
-   isolation is a `WHERE student_id = $1` clause on one shared database. "His own
-   separate environment, fully, from the backend" could mean database-enforced
-   row-level isolation, a schema per student, or a database per student — very
-   different costs and migrations, and not inferable from the sentence. **Do not
-   pick one.** The ADR goes with his requirements, not ahead of them.
+   ⚠️ ~~**This is a multi-tenancy decision and needs an ADR before any code.**~~
+   **Resolved 2026-09-20 — Samuel chose database-enforced row-level security**
+   (*"row level security indeed, same as reletix"*), recorded as
+   [ADR-0012](decisions/0012-per-student-isolation-rls.md): policies on every
+   student-scoped table, the principal set on the connection, a forgotten filter
+   returning nothing. Schema-per-student is kept as the migration path, not built.
+   One correction is on the record there: TalentReletix does **not** use Postgres
+   RLS — it filters in application queries — so this is stronger than the reference
+   Samuel named, not a copy of it.
 3. **Landing page, admin roles, lesson resume** (#6, #7, #8, #9, #25) ride with the
    identity work they were already blocked on.
 
@@ -653,6 +665,14 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0004 | Social Studies vertical (2nd subject on the spine) | ✅ Accepted 2026-07-20 |
 | ADR-0005 | Agentic extraction pipeline + coverage oracle | ✅ Accepted 2026-07-21 |
 | ADR-0006 | Arabic Language vertical — new contract: vendored Quran corpus, Noto Naskh font, 5 assessable LOs/lesson, scope = text+grammar+إملاء | ✅ Accepted 2026-07-28 |
+| ADR-0012 | Per-student isolation is enforced by the database — Postgres RLS, forced, principal on the connection, a non-superuser app role | ✅ Accepted 2026-09-20 |
+| ADR-0013 | Student-owned accounts, parent-linkable, with Reletix-pattern sign-in; phone+OTP designed not built; gender collected | ✅ Accepted 2026-09-20 |
+| ADR-0014 | The admin console is a second build target of one codebase — own hostname, Cloudflare Access *and* four per-person roles | ✅ Accepted 2026-09-20 |
+| ADR-0015 | One interaction timeline per student per session, replayed by reconstruction; every operator read audited | ✅ Accepted 2026-09-20 |
+| ADR-0016 | Analytics and monitoring: three layers, one system of record — first-party events, anonymous GA4 as audience layer, console as presentation | ✅ Accepted 2026-09-20 |
+
+*(ADR-0007…ADR-0011 are accepted and live in `docs/decisions/`; this table has never carried rows for
+them. The full index is [`docs/README.md`](README.md) § 2.)*
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·

@@ -161,11 +161,18 @@ needs a decision on who labels the human-graded set, which is the same question
 as `T107` and probably the same person. Layer 4 is small and can go first if a
 number is wanted sooner than a guarantee.
 
-### Samuel's direction, 2026-09-20 — the next workstream **[RECORDED, NOT SPECCED]**
+### Samuel's direction, 2026-09-20 — the next workstream **[SPECCED 2026-09-20 → `specs/002-identity-and-admin-console/`]**
 
 Taken from his own words at the end of the `v0.4.0` session. **Recorded here so the
 next session starts from it rather than rediscovering it.** None of it is specced,
 none of it is started, and the full requirements are his to give.
+
+**Now specced, and still not started.** `specs/002-identity-and-admin-console/plan.md` sequences it
+in seven phases — P0 sessions become real (first, because it is the only gap losing data now), P1
+accounts + row-level isolation + roles-in-data, P2 the console build target, P3 student 360 and
+replay, P4 cost, P5 monitoring and analytics, P6 tutor voice and gender — and its **Open for Samuel**
+list cites the spec's thirteen Open Decisions, of which item 6, the **Egypt PDPL guardian-consent
+flag**, is a legal constraint on D7 routed to him rather than a decision anyone took here.
 
 **1. An admin dashboard, as its own release.** Everything that is not the education
 itself — the extraction pipeline, the evidence walk, content review, the gallery —

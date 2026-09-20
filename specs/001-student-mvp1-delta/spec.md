@@ -352,9 +352,15 @@ document: a requirement whose code exists but has never been executed does not c
 - **FR-104**: "Create new user" MUST offer interest capture across five categories plus free-text
   "Other", with an optional follow-up detail for Sports and Music, skippable without blocking.
 - **FR-105**: The last selected student MUST be remembered across visits, restoring their position
-  (FR-204) without re-entry.
-- **FR-106** *(deferred)*: PRD A1/A2/A4 self-signup with email or phone and verification is
-  **[DEFERRED]** — reachable only through the Cloudflare Access invite list (FR-907).
+  (FR-204) without re-entry. *(2026-09-20: under 002 FR-2001 "the last selected student" becomes "the
+  signed-in student"; the obligation — return without re-entry — is unchanged.)*
+- **FR-106** *[REVISED 2026-09-20 — superseded by 002 FR-2001…FR-2011]*: ~~PRD A1/A2/A4 self-signup
+  with email or phone and verification is **[DEFERRED]** — reachable only through the Cloudflare
+  Access invite list (FR-907).~~ **The deferral is lifted.** ADR-0013 replaces the picker with
+  student-owned accounts: email and password, Google sign-in, email confirmation, sessions a student
+  can list and revoke. Phone and one-time code remain deferred (002 FR-2903). Cloudflare Access
+  (FR-907) stays in front of the pilot **in addition to** accounts, not instead of them (002
+  FR-2208). This unblocks FR-606.
 
 ### Learning core (PRD Epic B)
 
@@ -437,11 +443,15 @@ document: a requirement whose code exists but has never been executed does not c
 
 ### Parent (PRD Epic E)
 
-- **FR-501** *(revised)*: A parent MUST reach a read-only view of the same performance data as
-  FR-401 through the same student picker used by students (decisions.md Q11), and MUST NOT have access
-  to lesson or chat transcripts. **Accepted limitation**: any pilot parent can therefore see any pilot
-  student's data. This is acceptable only at invited-cohort scale behind Access and MUST NOT survive
-  into any public build.
+- **FR-501** *[REVISED 2026-09-20 — superseded by 002 FR-2901, FR-2902]*: ~~A parent MUST reach a
+  read-only view of the same performance data as FR-401 through the same student picker used by
+  students (decisions.md Q11), and MUST NOT have access to lesson or chat transcripts. **Accepted
+  limitation**: any pilot parent can therefore see any pilot student's data. This is acceptable only
+  at invited-cohort scale behind Access and MUST NOT survive into any public build.~~ The mechanism
+  is withdrawn with the picker itself (ADR-0013), and with it the accepted limitation — under 002
+  FR-2101 no account can see another student's data at all. **The parent view is deferred**: 002
+  FR-2901 models the student-to-parent link and builds nothing, 002 FR-2902 carries the
+  performance-data-only, never-transcripts rule forward to whenever it ships.
 - **FR-502**: Threshold alerts (prolonged inactivity, sustained struggle on a topic) MUST be
   delivered to the linked parent in supportive, non-punitive wording.
 
@@ -452,9 +462,16 @@ document: a requirement whose code exists but has never been executed does not c
 - **FR-602**: Crisis flags MUST reach a human channel immediately, on a path separate from routine
   analytics.
 - **FR-603**: A student's conversations and personal data MUST NOT be exposed to other students, and
-  data shared with a parent MUST be limited to FR-501's scope.
-- **FR-604** *(deferred)*: PRD F2 account-sharing deterrence is **[DEFERRED]** — there are no
-  accounts to share in this build, and the audience is an invited list behind Access.
+  data shared with a parent MUST be limited to FR-501's scope. *(2026-09-20: unchanged in substance.
+  002 FR-2101…FR-2103 move the enforcement beneath the application so a forgotten filter returns
+  nothing, and 002 FR-2306 adds that an operator's read of a student's record is itself recorded.
+  The parent clause now reads against 002 FR-2902, FR-501 having been superseded.)*
+- **FR-604** *[REVISED 2026-09-20 — superseded by 002 FR-2009]*: ~~PRD F2 account-sharing deterrence
+  is **[DEFERRED]** — there are no accounts to share in this build, and the audience is an invited
+  list behind Access.~~ The stated reason no longer holds: 002 creates accounts. What ships is the
+  deterrent's minimum honest form — a student can see every place their account is signed in, with
+  device and last-used time, and end one or all of them (002 FR-2009). Detecting shared use remains
+  out of scope, and was always acknowledged as a deterrent rather than a guarantee.
 - **FR-605** **[ADDED 2026-09-20 — feedback #10, #11, #12]**: The student-facing build MUST NOT
   carry the operator surfaces — the extraction pipeline, the content review queue, the visual
   gallery and the developer harnesses. Absent from navigation is not sufficient: those routes
@@ -466,7 +483,13 @@ document: a requirement whose code exists but has never been executed does not c
   **evidence access**, so each is granted deliberately rather than inherited from knowing a URL.
   Because the content-review role controls the human gate that ADR-0007's unreviewed-content
   exception depends on (constitution III, FR-C02), it is a safety control and not an
-  administrative convenience. **Blocked on FR-106** — roles need accounts to attach to.
+  administrative convenience. ~~**Blocked on FR-106** — roles need accounts to attach to.~~
+  *[REVISED 2026-09-20 — superseded by 002 FR-2202, FR-2203, FR-2204]*: **unblocked.** FR-106's
+  deferral is lifted, so roles now have accounts to attach to. 002 FR-2203 names four roles rather
+  than the two minimum asked for here — `content-review`, `evidence-access`, `student-data`,
+  `cost-billing` — 002 FR-2202 requires a signed-in operator account for every operator surface, 002
+  FR-2106 requires one server-side authorisation point they all pass through, and 002 FR-2204 carries
+  forward, unchanged, that content-review is a safety control and not an administrative convenience.
 
 ### Billing (PRD Epic G, §10) **[DEFERRED — decisions.md Q7]**
 
