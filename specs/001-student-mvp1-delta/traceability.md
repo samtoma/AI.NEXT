@@ -336,19 +336,19 @@ ADR-0008 bounds the rest. That is T122.
 
 | | Count |
 |---|---|
-| Functional requirements | **97** |
+| Functional requirements | **98** |
 | Success criteria | **6** |
-| Traced (every one needs a row) | **103 / 103** |
-| — verified | 58 |
+| Traced (every one needs a row) | **104 / 104** |
+| — verified | 57 |
 | — built | 18 |
-| — partial | 5 |
+| — partial | 6 |
 | — open | 7 |
-| — blocked | 4 |
-| — deferred | 10 |
-| Requirements a test declares | **10** |
+| — blocked | 3 |
+| — deferred | 12 |
+| Requirements a test declares | **9** |
 | Tasks complete / total | **99 / 143** |
 
-**Of 58 requirements marked VERIFIED, 9 have an automated test declaring them.** The remaining 49 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 57 requirements marked VERIFIED, 9 have an automated test declaring them.** The remaining 48 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 
