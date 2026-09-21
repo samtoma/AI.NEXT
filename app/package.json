@@ -9,9 +9,12 @@
     "start": "next start",
     "start:admin": "AINEXT_SURFACE=admin next start",
     "lint": "eslint",
-    "test": "node --test \"src/lib/irab.test.mts\" \"src/components/viz/arabic.test.mts\" \"src/lib/bkt.test.mts\" \"src/lib/engagement.test.mts\" \"src/lib/widget-payloads.test.mts\" \"src/lib/widget-docs.test.mts\" \"src/lib/widget-format.test.mts\" \"src/lib/widget-predicates.test.mts\" \"src/lib/widget-emission.test.mts\" \"src/lib/arithmetic.test.mts\" \"src/lib/sessions.test.mts\" \"src/lib/db.test.mts\" \"src/lib/student-context.test.mts\" \"src/lib/auth/password.test.mts\" \"src/lib/auth/tokens.test.mts\" \"src/lib/auth/cookie-names.test.mts\" \"src/lib/auth/cookies.test.mts\" \"src/lib/auth/throttle.test.mts\" \"src/lib/auth/session.test.mts\" \"src/lib/auth/authorize.test.mts\" \"src/lib/auth/events.test.mts\" \"src/lib/console-routes.test.mts\" \"src/lib/auth/matrix.test.mts\" \"src/lib/timeline-rules.test.mts\" \"src/lib/replay-guard.test.mts\" \"src/lib/proxy-rules.test.mts\"",
+    "test": "node --test \"src/lib/irab.test.mts\" \"src/components/viz/arabic.test.mts\" \"src/lib/bkt.test.mts\" \"src/lib/engagement.test.mts\" \"src/lib/widget-payloads.test.mts\" \"src/lib/widget-docs.test.mts\" \"src/lib/widget-format.test.mts\" \"src/lib/widget-predicates.test.mts\" \"src/lib/widget-emission.test.mts\" \"src/lib/arithmetic.test.mts\" \"src/lib/sessions.test.mts\" \"src/lib/db.test.mts\" \"src/lib/student-context.test.mts\" \"src/lib/auth/password.test.mts\" \"src/lib/auth/tokens.test.mts\" \"src/lib/auth/cookie-names.test.mts\" \"src/lib/auth/cookies.test.mts\" \"src/lib/auth/throttle.test.mts\" \"src/lib/auth/session.test.mts\" \"src/lib/auth/authorize.test.mts\" \"src/lib/auth/events.test.mts\" \"src/lib/console-routes.test.mts\" \"src/lib/auth/matrix.test.mts\" \"src/lib/timeline-rules.test.mts\" \"src/lib/replay-guard.test.mts\" \"src/lib/proxy-rules.test.mts\" \"src/lib/pricing.test.mts\" \"src/lib/cost-model.test.mts\" \"src/lib/subscription-gate.test.mts\" \"scripts/load-env.test.mts\"",
     "check:surface": "node scripts/check-surface-manifest.mts student",
-    "check:surface:admin": "node scripts/check-surface-manifest.mts admin"
+    "check:surface:admin": "node scripts/check-surface-manifest.mts admin",
+    "rollup:cost": "node --import ./scripts/load-env.mjs --import ./scripts/ts-resolver.mjs scripts/rollup-cost-daily.mts",
+    "bootstrap:operator": "node --import ./scripts/load-env.mjs --import ./scripts/ts-resolver.mjs scripts/bootstrap-operator.mts",
+    "seed:local-account": "node --import ./scripts/load-env.mjs --import ./scripts/ts-resolver.mjs scripts/seed-local-account.mts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.2.1",

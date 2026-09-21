@@ -62,6 +62,26 @@ const FORBIDDEN_IMPORTS = [
 /** Any endpoint at all, as a string literal. A replay calls none. */
 const API_URL = /["'`]\/api\//;
 
+/** Anything that could turn a string into a request. */
+const CAN_CALL = /\bfetch\s*\(|sendBeacon|XMLHttpRequest|new\s+Request\s*\(|EventSource/;
+
+/**
+ * The ONE module that may name an endpoint without being able to call one.
+ *
+ * `lib/console-routes.ts` is the console's route TABLE — the single list the
+ * nav, the per-page guard, the manifest proof and the role matrix all read.
+ * Since P4 it carries the console's own API endpoints beside its pages
+ * (`/api/console/students/[id]/subscription`), because an endpoint nobody
+ * enumerated is the door FR-2107 is about; and the replay page imports the
+ * table to look up its own authorisation. So the literal is in the graph.
+ *
+ * The exemption is not "this file is fine". It is checked below: the file may
+ * name addresses only while it holds nothing that could issue a request. A
+ * `fetch` added to the route table fails this test exactly as it would
+ * anywhere else in the closure.
+ */
+const DECLARES_ONLY = new Set(["lib/console-routes.ts"]);
+
 /**
  * Comments out, code in.
  *
@@ -173,13 +193,32 @@ test("no module reachable from the replay names an API endpoint at all", () => {
   // question card submits an answer. An import-only guard would miss it.
   const offences: string[] = [];
   for (const [file, source] of GRAPH) {
-    if (API_URL.test(stripComments(source))) offences.push(rel(file));
+    const code = stripComments(source);
+    if (!API_URL.test(code)) continue;
+    if (DECLARES_ONLY.has(rel(file)) && !CAN_CALL.test(code)) continue;
+    offences.push(rel(file));
   }
   assert.deepEqual(
     offences,
     [],
     "a module in the replay's graph names an endpoint; the replay calls none"
   );
+});
+
+test("the one module allowed to name an endpoint still cannot issue a request", () => {
+  // The exemption above is conditional, and this is the condition stated on its
+  // own so it cannot quietly become unconditional. A route table that grew a
+  // `fetch` would be a module in the replay's graph that can call an endpoint,
+  // which is the thing the guard exists to forbid.
+  for (const name of DECLARES_ONLY) {
+    const entry = [...GRAPH].find(([f]) => rel(f) === name);
+    assert.ok(entry, `${name} is exempted but is not in the replay's graph — delete the exemption`);
+    assert.equal(
+      CAN_CALL.test(stripComments(entry![1])),
+      false,
+      `${name} may name addresses only for as long as it cannot call one`
+    );
+  }
 });
 
 test("the replay page itself writes exactly one thing, and it is the audit row", () => {

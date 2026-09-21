@@ -12,7 +12,16 @@
  * Idempotent: re-running rebinds and re-verifies rather than creating a second
  * account. Prints the credentials, loudly, because they are meant to be typed.
  *
- *   node --import ./scripts/ts-resolver.mjs scripts/seed-local-account.mts
+ *   npm run seed:local-account
+ *
+ * which is:
+ *
+ *   node --import ./scripts/load-env.mjs --import ./scripts/ts-resolver.mjs scripts/seed-local-account.mts
+ *
+ * The `load-env.mjs` preload fills in `DATABASE_URL_MAINT`,
+ * `AINEXT_ENVIRONMENT` and `AINEXT_PUBLIC_URL` from `app/.env.local` for a
+ * plain `node` run (only `next dev`/`next build` load that file on their
+ * own) — without overriding anything already exported.
  */
 
 import { withMaint } from "../src/lib/db.ts";

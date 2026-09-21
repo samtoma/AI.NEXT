@@ -34,6 +34,17 @@ export type ConsoleRoute = {
   path: string;
   /** Source file, relative to `app/src/app/`, so the table is checkable by eye. */
   file: string;
+  /**
+   * A page an operator opens, or an endpoint the console POSTs to.
+   *
+   * Both are console addresses and both must be absent from the student build,
+   * so both belong in this table — the manifest proof and the role matrix ask
+   * the same question of each. What differs is only the file shape
+   * (`page.console.tsx` against `route.console.ts`) and that an endpoint is
+   * never in the nav. Defaults to `page`, so every row written before
+   * endpoints existed still means what it meant.
+   */
+  kind?: "page" | "route";
   /** Any ONE of these admits. Empty = any operator (the shell's own pages). */
   roles: readonly OperatorRole[];
   /** What the nav calls it, or null for a route reached from another page. */
@@ -96,6 +107,22 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     path: "/students/[id]/sessions/[sid]/replay",
     file: "(console)/students/[id]/sessions/[sid]/replay/page.console.tsx",
     roles: ["student-data"],
+    nav: null,
+  },
+  {
+    // The console's first WRITE endpoint (FR-2404, FR-2405). `cost-billing`
+    // alone, exactly as the page that offers it — the role that may read a
+    // commercial figure is the role that may change a commercial status, and
+    // `student-data` may do neither.
+    //
+    // It is listed here although no nav links to it, because this table is
+    // what `check-surface-manifest.mts` and `matrix.test.mts` enumerate from:
+    // a console address nobody decided the authorisation for should be a red
+    // build, and an endpoint is an address.
+    path: "/api/console/students/[id]/subscription",
+    file: "api/console/students/[id]/subscription/route.console.ts",
+    kind: "route",
+    roles: ["cost-billing"],
     nav: null,
   },
   {

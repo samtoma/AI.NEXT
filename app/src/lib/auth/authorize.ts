@@ -154,6 +154,11 @@ export const CROSS_STUDENT_READS: ReadonlyArray<{
   { name: "student_360", role: "student-data", owner: "Samuel" },
   { name: "session_timeline", role: "student-data", owner: "Samuel" },
   { name: "cost_totals", role: "cost-billing", owner: "Samuel" },
+  // data-model §14: the enumerated cross-student reads are the operator "S all"
+  // rows PLUS `cost_daily`. It is listed separately from `cost_totals` because
+  // it is a different table with its own grant (migration 021) — the rollup the
+  // per-student time series is drawn from, which `ainext_app` cannot read at all.
+  { name: "cost_daily", role: "cost-billing", owner: "Samuel" },
   { name: "security_events", role: "student-data", owner: "Samuel" },
 ] as const;
 

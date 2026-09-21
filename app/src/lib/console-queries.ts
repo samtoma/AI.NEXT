@@ -159,6 +159,11 @@ export type StudentProfileCard = {
   accountStatus: string | null;
   emailVerified: boolean | null;
   subscriptionStatus: string;
+  /** The operator's own note, if one was left. Never a payment reference (FR-2404). */
+  subscriptionNote: string | null;
+  subscriptionUpdatedAt: string | null;
+  /** The operator who last changed it, by name (FR-2405). */
+  subscriptionUpdatedBy: string | null;
   createdAt: string;
   lastSeenAt: string | null;
 };
@@ -316,6 +321,12 @@ export async function getStudent360(
       `SELECT st.id, st.display_name, st.grade, st.gender, st.interests,
               st.language_pref, st.curriculum_system, st.status AS student_status,
               st.subscription_status, st.created_at, st.account_id,
+              -- FR-2405: the status is never shown without who last changed it
+              -- and when. An operator id resolves to a name here rather than on
+              -- the page, so a status with an author cannot render as a status
+              -- with nobody's.
+              st.subscription_note, st.subscription_updated_at,
+              op.display_name AS subscription_updated_by,
               a.status AS account_status,
               (a.email_verified_at IS NOT NULL) AS email_verified,
               GREATEST(
@@ -325,6 +336,7 @@ export async function getStudent360(
               ) AS last_seen_at
          FROM students st
          LEFT JOIN accounts a ON a.id = st.account_id
+         LEFT JOIN operators op ON op.id = st.subscription_updated_by
         WHERE st.id = $1 AND st.environment = $2`,
       [studentId, ENVIRONMENT]
     );
@@ -523,6 +535,11 @@ export async function getStudent360(
         accountStatus: (p.account_status as string | null) ?? null,
         emailVerified: p.email_verified == null ? null : Boolean(p.email_verified),
         subscriptionStatus: String(p.subscription_status ?? "none"),
+        subscriptionNote: (p.subscription_note as string | null) ?? null,
+        subscriptionUpdatedAt: p.subscription_updated_at
+          ? new Date(p.subscription_updated_at as string).toISOString()
+          : null,
+        subscriptionUpdatedBy: (p.subscription_updated_by as string | null) ?? null,
         createdAt: new Date(p.created_at as string).toISOString(),
         lastSeenAt: p.last_seen_at ? new Date(p.last_seen_at as string).toISOString() : null,
       },

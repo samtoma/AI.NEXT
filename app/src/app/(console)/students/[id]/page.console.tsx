@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AuditPanel } from "@/components/console/AuditPanel";
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { Sparkline } from "@/components/console/Sparkline";
+import { SubscriptionEditor } from "@/components/console/SubscriptionEditor";
 import {
   Chip,
   Cost,
@@ -43,9 +44,16 @@ import { humanDuration } from "@/lib/timeline-rules";
  * flag is triaged — the immediate human channel stays the path that matters,
  * and a queue somebody checks on Monday would quietly replace it.
  *
- * P4 owns the per-student cost SERIES and the subscription control. The
- * subscription status is readable here because it is a fact about the student;
- * changing it is `cost-billing`'s and is not offered on this page.
+ * **The commercial status is read by everyone who reaches this page and changed
+ * by almost nobody.** It is a fact about the student, so `student-data` sees it
+ * with who last set it and when; changing it needs `cost-billing` (FR-2405), so
+ * the editor renders only for an operator holding both roles. An operator
+ * holding `cost-billing` alone never reaches this page at all — FR-2406 keeps
+ * the whole record away from the commercial role — which is why the control
+ * lives here rather than the status living on the cost page's table.
+ *
+ * P4 owns the per-student cost SERIES; it is on `/cost`, where the reconciliation
+ * that makes it trustworthy is. What is here is this student's running total.
  */
 export const dynamic = "force-dynamic";
 
@@ -83,6 +91,7 @@ export default async function ConsoleStudentPage({
 
   const s = data.profile;
   const t = data.timeOnTask;
+  const canEditSubscription = access.roles.includes("cost-billing");
   const attemptsTotal = data.accuracy.reduce((n, a) => n + a.attempts, 0);
   const correctTotal = data.accuracy.reduce((n, a) => n + a.correct, 0);
 
@@ -120,14 +129,36 @@ export default async function ConsoleStudentPage({
             k="Email confirmed"
             v={s.accountStatus === null ? "—" : s.emailVerified ? "yes" : "not yet"}
           />
-          <Fact k="Subscription" v={`${s.subscriptionStatus} (read-only here)`} />
+          <Fact
+            k="Commercial status"
+            v={
+              s.subscriptionUpdatedAt
+                ? `${s.subscriptionStatus} · set ${stamp(s.subscriptionUpdatedAt)} by ${s.subscriptionUpdatedBy ?? "an operator no longer on record"}`
+                : `${s.subscriptionStatus} · never changed`
+            }
+          />
+          {s.subscriptionNote && <Fact k="Note on the arrangement" v={s.subscriptionNote} />}
           <Fact k="Record created" v={stamp(s.createdAt)} />
           <Fact k="Last seen" v={s.lastSeenAt ? stamp(s.lastSeenAt) : "never"} />
         </dl>
         <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
-          Subscription status is shown because it is a fact about this student; changing it belongs
-          to the cost and billing surface and lands in the next phase. It gates nothing either way.
+          Commercial status is shown because it is a fact about this student, and{" "}
+          <strong>it gates nothing</strong>: no student surface reads it, the student is never shown
+          a plan, and it records no payment. Changing it needs the cost and billing role.
         </p>
+        {/* FR-2405: the editor appears only for an operator who also holds
+            `cost-billing`. Hiding it is not the authorisation — the endpoint
+            refuses any other role (FR-2107) — it is what stops the shell
+            offering a control that would be refused. An operator holding only
+            `student-data` sees the facts above and no control; one holding only
+            `cost-billing` never reaches this page at all. */}
+        {canEditSubscription && (
+          <SubscriptionEditor
+            studentId={s.id}
+            current={s.subscriptionStatus}
+            note={s.subscriptionNote}
+          />
+        )}
       </Panel>
 
       {/* ------------------------------------------------------- time on task */}
@@ -456,9 +487,10 @@ export default async function ConsoleStudentPage({
           />
         </div>
         <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
-          The cost over time, by surface and reconciled against the period total, is the cost and
-          billing surface&apos;s and lands in the next phase. What is here is the running total for
-          this student.
+          The running total for this student, imputed at list price. The cost{" "}
+          <strong>over time</strong>, split between teaching and photo/OCR and reconciled against
+          the period total, is on the cost and billing surface — which is where the reconciliation
+          that makes those figures trustworthy is computed.
         </p>
       </Panel>
 

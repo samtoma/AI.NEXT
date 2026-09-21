@@ -22,6 +22,14 @@
  *
  * Both directions are checked, because only checking the negative one would
  * pass on a build that shipped no console at all.
+ *
+ * **Endpoints are routes too.** `CONSOLE_ROUTES` carries the console's API
+ * handlers (`kind: "route"`, files named `route.console.ts`) beside its pages,
+ * and this file needs no special case for them: the manifest lists a handler
+ * as `"/api/…/route": "/api/…"` exactly as it lists a page, and the expected
+ * source path below derives the same way for both. A console endpoint that
+ * resolved in the student build would be the same FR-2201 failure as a console
+ * page doing so, and is caught by the same assertion.
  */
 
 import { readFileSync } from "node:fs";

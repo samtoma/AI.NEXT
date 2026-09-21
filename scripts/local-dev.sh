@@ -302,8 +302,10 @@ say "6/8  Accounts, the first operator, and the demo cast"
 # the bootstrap has no grant on `operators` at all — and a seed that had to be
 # reachable from the application role would mean loosening a policy to make a
 # convenience work.
+# Anything after the label is passed through to the script itself (the cost
+# rollup takes --all on a first setup).
 run_app_script() {
-  local f="$1" label="$2"
+  local f="$1" label="$2"; shift 2
   if [ ! -f "$ROOT/app/scripts/$f" ]; then
     warn "app/scripts/$f not present yet — skipping $label"
     return 1
@@ -312,7 +314,7 @@ run_app_script() {
     && DATABASE_URL="$MAINT_DSN" DATABASE_URL_MAINT="$MAINT_DSN" \
        AINEXT_ENVIRONMENT=mvp1 AINEXT_PUBLIC_URL="$PUBLIC_URL" \
        AINEXT_BOOTSTRAP_OPERATOR_EMAIL="$BOOTSTRAP_EMAIL" \
-       node --import ./scripts/ts-resolver.mjs "scripts/$f" 2>&1 | sed 's/^/     /' ) \
+       node --import ./scripts/ts-resolver.mjs "scripts/$f" "$@" 2>&1 | sed 's/^/     /' ) \
     || { warn "$label failed — see above"; return 1; }
   ok "$label"
 }
@@ -352,6 +354,25 @@ if [ "$SEEDED" = 0 ]; then
   echo "     unreachable from the student surface. Re-run this script once"
   echo "     app/scripts/seed-local-account.mts lands — it is idempotent."
 fi
+
+# ------------------------------------------------------- 6b. the cost rollup
+# `cost_daily` is the per-student cost series the console draws (plan A7). It
+# holds CLOSED days only — today is always answered by a live query — so this
+# run is what gives a fresh laptop a populated table instead of a flat chart
+# and a "rollup behind" banner.
+#
+# ON A BOX THIS IS A NIGHTLY CRON JOB, a little after midnight UTC:
+#
+#   cd /opt/reletix/AI.NEXT/app && npm run rollup:cost
+#
+# There is no scheduler in this repo, deliberately — one job does not earn one,
+# and the console degrades honestly without it: the totals come from the ledger
+# and stay right, and the page says how far behind the daily lines are.
+#
+# `--all` here and not in the cron job: a laptop restored from a seed dump has
+# history older than the seven days a bare run covers, and setup happens once.
+say "6b/8  Cost rollup"
+run_app_script rollup-cost-daily.mts "cost_daily refreshed for closed days" --all || true
 
 # -------------------------------------------------------------------- 7. serve
 say "7/8  Ready"

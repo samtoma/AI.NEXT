@@ -15,7 +15,17 @@
  * have no grant to `ainext_app` at all — a student principal cannot even see
  * that operators exist (data-model §14).
  *
- *   node --import ./scripts/ts-resolver.mjs scripts/bootstrap-operator.mts
+ *   npm run bootstrap:operator
+ *
+ * which is:
+ *
+ *   node --import ./scripts/load-env.mjs --import ./scripts/ts-resolver.mjs scripts/bootstrap-operator.mts
+ *
+ * The `load-env.mjs` preload is what lets a plain `node` run see
+ * `DATABASE_URL_MAINT` and `AINEXT_BOOTSTRAP_OPERATOR_EMAIL` from
+ * `app/.env.local` — only `next dev`/`next build` load that file on their
+ * own. It never overrides a variable already exported (`local-dev.sh`'s
+ * `run_app_script` sets these inline and still wins).
  */
 
 import { withMaint } from "../src/lib/db.ts";

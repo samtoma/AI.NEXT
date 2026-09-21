@@ -23,7 +23,9 @@ import {
 
 /** What `check-surface-manifest.mts` derives, re-derived here without a build. */
 function urlForFile(file: string): string {
-  const withoutPage = file.replace(/\/page\.console\.tsx$/, "");
+  const withoutPage = file
+    .replace(/\/page\.console\.tsx$/, "")
+    .replace(/\/route\.console\.ts$/, "");
   const segments = withoutPage
     .split("/")
     .filter((s) => s !== "" && !(s.startsWith("(") && s.endsWith(")")));
@@ -35,8 +37,24 @@ test("every path is listed once", () => {
   assert.deepEqual(paths.length, new Set(paths).size, "a duplicate path is two rows disagreeing");
 });
 
-test("every console file is a .console.tsx under the (console) group", () => {
+test("every console file carries a .console suffix, which is what excludes it", () => {
+  // The SUFFIX is the mechanism (next.config.ts `pageExtensions`), not the
+  // route group: `(console)/` keeps the pages under one layout, and an API
+  // endpoint has no layout to be under, so it lives at its own address in
+  // `api/console/` and is excluded by exactly the same filename rule.
   for (const r of CONSOLE_ROUTES) {
+    if ((r.kind ?? "page") === "route") {
+      assert.ok(
+        r.file.startsWith("api/console/"),
+        `${r.path}: a console endpoint belongs under api/console/, so its address says whose it is`
+      );
+      assert.ok(
+        r.file.endsWith("/route.console.ts"),
+        `${r.path}: ${r.file} is not a route.console.ts, so pageExtensions would not exclude it`
+      );
+      assert.equal(r.nav, null, `${r.path}: an endpoint is not a page and cannot be in the nav`);
+      continue;
+    }
     assert.ok(
       r.file.startsWith("(console)/"),
       `${r.path}: ${r.file} is outside the (console) group, so the student build would compile it`
@@ -44,6 +62,18 @@ test("every console file is a .console.tsx under the (console) group", () => {
     assert.ok(
       r.file.endsWith("/page.console.tsx"),
       `${r.path}: ${r.file} is not a page.console.tsx, so pageExtensions would not exclude it`
+    );
+  }
+});
+
+test("a console endpoint is guarded by a role, never by being unlisted", () => {
+  // FR-2107: hiding a control is not authorisation. An endpoint reachable by
+  // any signed-in operator would be exactly that mistake, so the table refuses
+  // an empty role list on one.
+  for (const r of CONSOLE_ROUTES.filter((x) => (x.kind ?? "page") === "route")) {
+    assert.ok(
+      r.roles.length > 0,
+      `${r.path}: a write endpoint open to every operator is a door nobody decided`
     );
   }
 });

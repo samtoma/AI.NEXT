@@ -13,6 +13,16 @@ import { deriveMasteryStage, learnOpeningFrame } from "@/lib/checkin";
 import { spineKeyOf } from "@/lib/subjects";
 import { closeSession, currentSessionOrNull } from "@/lib/sessions";
 import { gradeLabel } from "@/lib/profile";
+import {
+  ZERO_TOKENS,
+  addTokens,
+  costFor,
+  tokensFromUsage,
+  totalInputTokens,
+  type CliUsage,
+  type Outcome,
+  type TokenCounts,
+} from "@/lib/pricing";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
 
 /**
@@ -38,20 +48,39 @@ interface InMsg {
   text: string;
 }
 
-interface CliResult {
-  text: string;
-  costUsd: number;
-  inputTokens: number;
-  outputTokens: number;
-  latencyMs: number;
-}
+/**
+ * One call's outcome, and it always resolves.
+ *
+ * It used to reject on a CLI failure, which threw past the ledger write and
+ * left no row — so a rating attempt that burned a full lesson transcript of
+ * input tokens and then died was recorded as costing nothing (research A4.2).
+ * A failed call is a cost line with its outcome, so the failure comes back as
+ * a value carrying whatever usage was reported.
+ */
+type CliResult =
+  | {
+      ok: true;
+      text: string;
+      /** The CLI's own total, or null if it did not report one. */
+      cliCostUsd: number | null;
+      tokens: TokenCounts;
+      latencyMs: number;
+    }
+  | {
+      ok: false;
+      outcome: Extract<Outcome, "error" | "timeout">;
+      tokens: TokenCounts;
+      latencyMs: number;
+      detail: string;
+    };
 
 function runClaudeJson(
   systemPrompt: string,
   userPrompt: string
 ): Promise<CliResult> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const started = Date.now();
+    let timedOut = false;
     const child = spawn(
       "claude",
       [
@@ -76,7 +105,10 @@ function runClaudeJson(
         stdio: ["pipe", "pipe", "pipe"],
       }
     );
-    const timeout = setTimeout(() => child.kill("SIGKILL"), TIMEOUT_MS);
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      child.kill("SIGKILL");
+    }, TIMEOUT_MS);
     let out = "";
     let errTail = "";
     child.stdout.on("data", (c: Buffer) => (out += c.toString("utf8")));
@@ -87,41 +119,49 @@ function runClaudeJson(
     child.stdin.on("error", () => {});
     child.stdin.write(userPrompt);
     child.stdin.end();
+    const failed = (tokens: TokenCounts, detail: string): CliResult => ({
+      ok: false,
+      outcome: timedOut ? "timeout" : "error",
+      tokens,
+      latencyMs: Date.now() - started,
+      detail,
+    });
     child.on("error", (e) => {
       clearTimeout(timeout);
-      reject(e);
+      // The process never started: nothing was spent and there is nothing to
+      // price. ZERO_TOKENS here means "none were used", not "none were counted"
+      // — the caller writes no row for it.
+      resolve(failed(ZERO_TOKENS, String(e)));
     });
     child.on("close", () => {
       clearTimeout(timeout);
+      let j: {
+        result?: string;
+        is_error?: boolean;
+        total_cost_usd?: number;
+        duration_ms?: number;
+        usage?: CliUsage;
+      } | null = null;
       try {
-        const j = JSON.parse(out) as {
-          result?: string;
-          is_error?: boolean;
-          total_cost_usd?: number;
-          duration_ms?: number;
-          usage?: {
-            input_tokens?: number;
-            cache_creation_input_tokens?: number;
-            cache_read_input_tokens?: number;
-            output_tokens?: number;
-          };
-        };
-        if (j.is_error || typeof j.result !== "string")
-          throw new Error("cli error");
-        const u = j.usage ?? {};
-        resolve({
-          text: j.result,
-          costUsd: j.total_cost_usd ?? 0,
-          inputTokens:
-            (u.input_tokens ?? 0) +
-            (u.cache_creation_input_tokens ?? 0) +
-            (u.cache_read_input_tokens ?? 0),
-          outputTokens: u.output_tokens ?? 0,
-          latencyMs: j.duration_ms ?? Date.now() - started,
-        });
+        j = JSON.parse(out);
       } catch {
-        reject(new Error(`claude CLI failed — ${errTail.slice(-300)}`));
+        // No parseable envelope at all — killed mid-write, or the CLI printed
+        // something that is not its own JSON. Nothing countable came back.
+        return resolve(failed(ZERO_TOKENS, errTail.slice(-300)));
       }
+      // An `is_error` envelope still reports its usage, and those tokens were
+      // spent: they are carried out rather than discarded with the failure.
+      const tokens = tokensFromUsage(j?.usage);
+      if (!j || j.is_error || typeof j.result !== "string") {
+        return resolve(failed(tokens, errTail.slice(-300) || "cli reported is_error"));
+      }
+      resolve({
+        ok: true,
+        text: j.result,
+        cliCostUsd: typeof j.total_cost_usd === "number" ? j.total_cost_usd : null,
+        tokens,
+        latencyMs: j.duration_ms ?? Date.now() - started,
+      });
     });
   });
 }
@@ -286,12 +326,15 @@ TRANSCRIPT:
 ${transcriptText}`;
 
   try {
-    let totalCost = 0;
-    let totalIn = 0;
-    let totalOut = 0;
+    /** The CLI's own totals, summed over the attempts that reported one. */
+    let cliCost: number | null = null;
+    let tokens: TokenCounts = ZERO_TOKENS;
     let totalMs = 0;
     let rating: RatingJson | null = null;
     let rawOut = "";
+    /** Set when an attempt failed outright, for the ledger row's outcome. */
+    let failure: { outcome: Extract<Outcome, "error" | "timeout">; detail: string } | null =
+      null;
 
     for (let attempt = 0; attempt < 2 && !rating; attempt++) {
       const prompt =
@@ -299,15 +342,69 @@ ${transcriptText}`;
           ? basePrompt
           : `${basePrompt}\n\nYour previous output was INVALID:\n${rawOut.slice(0, 500)}\nReturn ONLY the strict JSON object this time. No other text.`;
       const r = await runClaudeJson(systemPrompt, prompt);
-      totalCost += r.costUsd;
-      totalIn += r.inputTokens;
-      totalOut += r.outputTokens;
+      // Both branches spent tokens, so both branches accumulate them.
+      tokens = addTokens(tokens, r.tokens);
       totalMs += r.latencyMs;
+      if (!r.ok) {
+        failure = { outcome: r.outcome, detail: r.detail };
+        break;
+      }
+      failure = null;
+      if (r.cliCostUsd !== null) cliCost = (cliCost ?? 0) + r.cliCostUsd;
       rawOut = r.text;
       rating = parseRating(r.text);
     }
 
     if (!rating) {
+      // THE RATING FAILED, AND IT WAS NOT FREE. A full lesson transcript went
+      // into the model on each attempt; writing no row is how the most
+      // expensive failure in the product looks like nothing happened
+      // (research A4.2). No `understanding_checks` row is written — there is no
+      // rating — so this one is its own unit rather than a savepoint inside one.
+      if (totalInputTokens(tokens) + tokens.outputTokens > 0) {
+        const { costUsd, priceBasis } = costFor(MODEL, tokens, cliCost);
+        try {
+          await withPrincipal(studentId, (client) =>
+            client.query(
+              `INSERT INTO ai_interactions
+                 (student_id, surface, turn_index, user_message, assistant_message,
+                  grounding, citations, model, input_tokens, output_tokens,
+                  cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
+                  environment, surface_kind, session_id, renderer_version,
+                  outcome, price_basis, priced_at)
+               VALUES ($1,'understanding_check',1,$2,$3,$4,'[]',$5,$6,$7,$8,$9,$10,$11,$12,
+                       'understanding',$13,$14,$15,$16,now())`,
+              [
+                studentId,
+                `[rate ${mode} session — ${transcript.length} transcript lines]`,
+                failure
+                  ? `[no rating — the grading model ${failure.outcome === "timeout" ? "timed out" : "failed"}]`
+                  : "[no rating — the grading model returned invalid JSON twice]",
+                JSON.stringify({
+                  chat_session: chatSession,
+                  mode,
+                  lesson: data.slug,
+                  lo_ids: data.los.map((l) => l.id),
+                }),
+                MODEL,
+                tokens.inputTokens,
+                tokens.outputTokens,
+                tokens.cacheReadTokens,
+                tokens.cacheCreationTokens,
+                costUsd,
+                totalMs,
+                ENVIRONMENT,
+                sessionId,
+                RELEASE_TAG,
+                failure?.outcome ?? "error",
+                priceBasis,
+              ]
+            )
+          );
+        } catch (e) {
+          console.error("understanding: failed to log a failed rating:", e);
+        }
+      }
       return NextResponse.json(
         { error: "rating model returned invalid JSON twice" },
         { status: 502 }
@@ -349,13 +446,16 @@ ${transcriptText}`;
       // read. The savepoint keeps the old degradation with the new atomicity.
       await client.query("SAVEPOINT cost_row");
       try {
+        const { costUsd, priceBasis } = costFor(MODEL, tokens, cliCost);
         await client.query(
           `INSERT INTO ai_interactions
              (student_id, surface, turn_index, user_message, assistant_message,
               grounding, citations, model, input_tokens, output_tokens,
-              cost_usd, latency_ms, environment, surface_kind, session_id,
-              renderer_version)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding',$14,$15)`,
+              cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
+              environment, surface_kind, session_id, renderer_version,
+              outcome, price_basis, priced_at)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'understanding',
+                   $16,$17,'ok',$18,now())`,
           [
             studentId,
             "understanding_check",
@@ -371,9 +471,14 @@ ${transcriptText}`;
             }),
             JSON.stringify([]),
             MODEL,
-            totalIn,
-            totalOut,
-            totalCost,
+            // UNCACHED input, and the two cache counters beside it — this
+            // route summed all three into `input_tokens` and wrote no cache
+            // columns at all, so a rating's cache hits were invisible (A0.2).
+            tokens.inputTokens,
+            tokens.outputTokens,
+            tokens.cacheReadTokens,
+            tokens.cacheCreationTokens,
+            costUsd,
             totalMs,
             ENVIRONMENT,
             sessionId,
@@ -381,6 +486,7 @@ ${transcriptText}`;
             // the console replays the verdict through the student's own
             // ReportCard, so it has to know which one drew it.
             RELEASE_TAG,
+            priceBasis,
           ]
         );
         await client.query("RELEASE SAVEPOINT cost_row");
@@ -417,7 +523,12 @@ ${transcriptText}`;
       nextStep: rating.next_step,
       turns,
     };
-    return NextResponse.json({ check, costUsd: totalCost });
+    // The same figure the ledger row carries, arrived at the same way — an
+    // imputation at list price, never money that left an account.
+    return NextResponse.json({
+      check,
+      costUsd: costFor(MODEL, tokens, cliCost).costUsd ?? 0,
+    });
   } catch (err) {
     const denied = await mapRlsError(err, {
       req,

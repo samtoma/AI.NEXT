@@ -17,6 +17,15 @@ import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { scoped, type Db } from "@/lib/student-context";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
+import {
+  ZERO_TOKENS,
+  costFor,
+  tokensFromUsage,
+  totalInputTokens,
+  type CliUsage,
+  type Outcome,
+  type TokenCounts,
+} from "@/lib/pricing";
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10 MB
 export const DAILY_UPLOAD_CAP = 10;               // per student, per day
@@ -104,7 +113,16 @@ Rules:
 - If NOTHING is readable, or you cannot open the file at all, reply with exactly: UNREADABLE
 - Reply with the transcription only — no preamble, no commentary, no JSON.`;
 
-type ParseOutcome = { status: ParseStatus; text: string | null };
+type ParseOutcome = {
+  status: ParseStatus;
+  text: string | null;
+  /** What the parse spent. The ledger row used to hard-code zeros here. */
+  tokens: TokenCounts;
+  /** The CLI's own total, or null when it reported none. */
+  cliCostUsd: number | null;
+  /** `ai_interactions.outcome` for the row this parse writes. */
+  outcome: Outcome;
+};
 
 function runParse(filePath: string): Promise<ParseOutcome> {
   return new Promise((resolve) => {
@@ -116,10 +134,21 @@ function runParse(filePath: string): Promise<ParseOutcome> {
     // back, the parse is recorded as SUCCESSFUL, and a meaningless string flows
     // into the tutor's grounding as if it were the student's worksheet. Found
     // exactly that way in local testing.
+    // `--output-format json` is a COST fix, not a plumbing preference.
+    //
+    // In plain `-p` mode the CLI prints the transcription and nothing else, so
+    // this path had no usage line to read and wrote literal zeros into the
+    // ledger — which made `surface_kind='upload_parse'`, the row that exists
+    // precisely so image tokens cannot hide inside a teaching figure
+    // (Principle VI, FR-2402), report $0.00 for every photograph ever sent.
+    // The JSON envelope is the same one `/api/understanding` already reads;
+    // the transcription comes out of `result` and every downstream check below
+    // is applied to THAT string, exactly as it was to stdout before.
     const child = spawn(
       "claude",
       [
         "-p",
+        "--output-format", "json",
         "--model", MODEL,
         "--allowedTools", "Read",
         "--max-turns", "2",
@@ -137,25 +166,62 @@ function runParse(filePath: string): Promise<ParseOutcome> {
 
     let out = "";
     let err = "";
-    const timeout = setTimeout(() => child.kill("SIGKILL"), PARSE_TIMEOUT_MS);
+    let timedOut = false;
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      child.kill("SIGKILL");
+    }, PARSE_TIMEOUT_MS);
 
     child.stdout.on("data", (d) => (out += d.toString()));
     child.stderr.on("data", (d) => (err += d.toString()));
+
+    /** A parse that produced no transcription, carrying whatever it spent. */
+    const failed = (tokens: TokenCounts, cliCostUsd: number | null): ParseOutcome => ({
+      status: "failed",
+      text: null,
+      tokens,
+      cliCostUsd,
+      outcome: timedOut ? "timeout" : "error",
+    });
+
     child.on("error", () => {
       clearTimeout(timeout);
-      resolve({ status: "failed", text: null });
+      // The process never started: nothing spent, nothing to record.
+      resolve(failed(ZERO_TOKENS, null));
     });
     child.on("close", (code) => {
       clearTimeout(timeout);
-      const text = out.trim();
-      if (code !== 0 || !text) {
-        console.error(`[uploads] parse failed (code ${code}): ${err.slice(-300)}`);
-        return resolve({ status: "failed", text: null });
+      let j: {
+        result?: string;
+        is_error?: boolean;
+        total_cost_usd?: number;
+        usage?: CliUsage;
+      } | null = null;
+      try {
+        j = JSON.parse(out.trim());
+      } catch {
+        j = null;
       }
+      const tokens = tokensFromUsage(j?.usage);
+      const cliCostUsd = typeof j?.total_cost_usd === "number" ? j.total_cost_usd : null;
+
+      if (code !== 0 || !j || j.is_error || typeof j.result !== "string") {
+        console.error(`[uploads] parse failed (code ${code}): ${err.slice(-300)}`);
+        return resolve(failed(tokens, cliCostUsd));
+      }
+      const text = j.result.trim();
+      if (!text) {
+        return resolve(failed(tokens, cliCostUsd));
+      }
+      // Everything below reads the model's own answer, exactly as it read
+      // stdout before the envelope existed. A parse that reached this point
+      // SPENT tokens whatever it concluded, so each branch carries them.
+      const spent = { tokens, cliCostUsd, outcome: "ok" as const };
+
       // The model's own admission is the signal — we do not infer unreadability
       // from a short response, because a short answer to a short problem is fine.
       if (/^UNREADABLE\b/i.test(text)) {
-        return resolve({ status: "unreadable", text: null });
+        return resolve({ status: "unreadable", text: null, ...spent });
       }
       // Defence in depth for the failure above: if the reply is JSON, or
       // mentions the storage path, the model did not transcribe anything — it
@@ -164,9 +230,9 @@ function runParse(filePath: string): Promise<ParseOutcome> {
       // the tutor would teach against a problem the student never wrote.
       if (/^[[{]/.test(text) || text.includes(filePath)) {
         console.error(`[uploads] parse returned metadata, not a transcription: ${text.slice(0, 200)}`);
-        return resolve({ status: "unreadable", text: null });
+        return resolve({ status: "unreadable", text: null, ...spent });
       }
-      resolve({ status: "parsed", text });
+      resolve({ status: "parsed", text, ...spent });
     });
 
     child.stdin.write(`${PARSE_PROMPT}\n\nFile to read: ${filePath}\n`);
@@ -204,7 +270,13 @@ export async function parseUpload(
     outcome = await runParse(filePath);
   } catch (e) {
     console.error("[uploads] parse threw:", e);
-    outcome = { status: "failed", text: null };
+    outcome = {
+      status: "failed",
+      text: null,
+      tokens: ZERO_TOKENS,
+      cliCostUsd: null,
+      outcome: "error",
+    };
   }
 
   // Unit two: the outcome the student is waiting on.
@@ -218,32 +290,50 @@ export async function parseUpload(
   // Metered as its own surface_kind so image-token cost never hides inside the
   // teaching figure (Principle VI, research.md R2). Its own unit, so a failed
   // cost row cannot undo the parse status above.
-  try {
-    await scoped(studentId, undefined, (db) =>
-      db.query(
-      `INSERT INTO ai_interactions
-         (student_id, surface, turn_index, user_message, assistant_message,
-          grounding, citations, model, input_tokens, output_tokens,
-          cost_usd, latency_ms, environment, surface_kind, session_id,
-          renderer_version)
-       VALUES ($1,'upload_parse',1,$2,$3,'{}','[]',$4,0,0,0,$5,$6,'upload_parse',$7,$8)`,
-        [
-          studentId,
-          `[upload ${uploadId}]`,
-          outcome.text?.slice(0, 4000) ?? `[${outcome.status}]`,
-          MODEL,
-          Date.now() - started,
-          ENVIRONMENT,
-          sessionRef,
-          // Which build parsed the photo (ADR-0015 §3). The parse result is
-          // what the student was then taught from, so the timeline shows the
-          // version beside it like any other turn.
-          RELEASE_TAG,
-        ]
-      )
-    );
-  } catch (e) {
-    console.error("[uploads] failed to log parse cost:", e);
+  //
+  // **The counters are real now.** This INSERT wrote `0,0,0` for input tokens,
+  // output tokens and cost on every photograph the product has ever parsed —
+  // so the one figure FR-2402 exists to keep visible was structurally zero,
+  // and "is OCR eating us" had a reassuring answer that meant nothing. A parse
+  // that never started still writes no row: there is no cost line to draw.
+  if (totalInputTokens(outcome.tokens) + outcome.tokens.outputTokens > 0) {
+    const { costUsd, priceBasis } = costFor(MODEL, outcome.tokens, outcome.cliCostUsd);
+    try {
+      await scoped(studentId, undefined, (db) =>
+        db.query(
+        `INSERT INTO ai_interactions
+           (student_id, surface, turn_index, user_message, assistant_message,
+            grounding, citations, model, input_tokens, output_tokens,
+            cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
+            environment, surface_kind, session_id, renderer_version,
+            outcome, price_basis, priced_at)
+         VALUES ($1,'upload_parse',1,$2,$3,'{}','[]',$4,$5,$6,$7,$8,$9,$10,$11,
+                 'upload_parse',$12,$13,$14,$15,now())`,
+          [
+            studentId,
+            `[upload ${uploadId}]`,
+            outcome.text?.slice(0, 4000) ?? `[${outcome.status}]`,
+            MODEL,
+            outcome.tokens.inputTokens,
+            outcome.tokens.outputTokens,
+            outcome.tokens.cacheReadTokens,
+            outcome.tokens.cacheCreationTokens,
+            costUsd,
+            Date.now() - started,
+            ENVIRONMENT,
+            sessionRef,
+            // Which build parsed the photo (ADR-0015 §3). The parse result is
+            // what the student was then taught from, so the timeline shows the
+            // version beside it like any other turn.
+            RELEASE_TAG,
+            outcome.outcome,
+            priceBasis,
+          ]
+        )
+      );
+    } catch (e) {
+      console.error("[uploads] failed to log parse cost:", e);
+    }
   }
 
   return outcome.status;

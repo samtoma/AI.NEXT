@@ -58,6 +58,11 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/profile": ["content-review", "evidence-access", "student-data", "cost-billing"],
   "/content": ["content-review"],
   "/cost": ["cost-billing"],
+  // contracts/authorization.md, "Subscription / payment status — read and
+  // change": `cost-billing` only. The console's first write endpoint, and the
+  // only row in this matrix that is an endpoint rather than a page — the
+  // question is the same one, so it is asked the same way.
+  "/api/console/students/[id]/subscription": ["cost-billing"],
   "/pipeline": ["evidence-access"],
   "/gallery": ["evidence-access"],
   "/dev/lesson-content": ["evidence-access"],
@@ -121,6 +126,28 @@ test("cost-billing reaches the student list and nothing that holds a student's r
   );
   assert.equal(routeAdmits(consoleRoute("/pipeline")!, ["cost-billing"]), false);
   assert.equal(routeAdmits(consoleRoute("/content")!, ["cost-billing"]), false);
+});
+
+test("changing a student's commercial status is cost-billing's alone (FR-2405)", () => {
+  // The other direction of the same boundary: `student-data` opens the record
+  // and may not price it; `cost-billing` prices it and may not open it. The
+  // 360 page shows the status to `student-data` as a fact and offers the
+  // editor only to an operator who also holds `cost-billing`.
+  const route = consoleRoute("/api/console/students/[id]/subscription")!;
+  assert.equal(routeAdmits(route, ["cost-billing"]), true);
+  assert.equal(routeAdmits(route, ["student-data"]), false);
+  assert.equal(routeAdmits(route, ["content-review"]), false);
+  assert.equal(routeAdmits(route, ["evidence-access"]), false);
+  assert.equal(routeAdmits(route, []), false, "a role list of none must not admit an endpoint");
+
+  // And through the seam the handler actually calls.
+  const billing = { kind: "operator" as const, operatorId: 1, roles: ["cost-billing" as const] };
+  const data = { kind: "operator" as const, operatorId: 2, roles: ["student-data" as const] };
+  assert.equal(checkRequirement(billing, { role: "cost-billing" }).ok, true);
+  const refused = checkRequirement(data, { role: "cost-billing" });
+  assert.equal(refused.ok, false);
+  assert.equal(refused.ok === false && refused.status, 403);
+  assert.equal(refused.ok === false && refused.reason, "missing_role:cost-billing");
 });
 
 test("a student principal is refused every console route, and recorded as denied", () => {
