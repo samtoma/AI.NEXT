@@ -41,42 +41,89 @@ export function renderMathWidget(
   // Widgets report a STRUCTURED outcome now, not prose (ADR-0009): a predicate
   // the server maps to a misconception, plus the words for the tutor stream.
   onOutcome: (outcome: WidgetOutcome) => void,
-  opts: { hostShowsPrompt?: boolean } = {}
+  opts: {
+    hostShowsPrompt?: boolean;
+    /**
+     * The signed-in student's display name, narrated into the [live event]
+     * line every widget builds for the tutor stream (FR-2602). The retired
+     * "Omar" demo persona (ADR-0010, plan A10) is gone, so a caller with no
+     * real student (dev fixtures, admin replay) gets a name-free "the
+     * student" rather than that literal — never a fresh guess per widget.
+     */
+    studentName?: string;
+    /**
+     * The lower-case third-person pronoun for the ONE widget (pair_plotter)
+     * that narrates a pronoun, already resolved from `lib/address.ts`
+     * (FR-2605). Falls back to singular "they" — never the masculine.
+     */
+    pronoun?: string;
+  } = {}
 ): ReactNode | null {
   const parsed = parseMathWidget(name, props);
   if (!parsed) return null;
   // Blanked AFTER validation, never before: validation is what supplies the
   // generic default, so suppressing any earlier cannot work.
   const w = opts.hostShowsPrompt ? { ...parsed, prompt: "" } : parsed;
+  const studentName = opts.studentName;
+  const pronoun = opts.pronoun;
 
   switch (w.name) {
     case "pair_plotter":
-      return <PairPlotter prompt={w.prompt} target={w.target} onResult={onOutcome} />;
+      return (
+        <PairPlotter
+          prompt={w.prompt} target={w.target}
+          studentName={studentName} pronoun={pronoun} onResult={onOutcome}
+        />
+      );
 
     case "product_builder":
-      return <ProductBuilder prompt={w.prompt} X={w.X} Y={w.Y} onResult={onOutcome} />;
+      return (
+        <ProductBuilder
+          prompt={w.prompt} X={w.X} Y={w.Y} studentName={studentName} onResult={onOutcome}
+        />
+      );
 
     case "line_drawer":
       return w.mode === "points" ? (
-        <LineDrawer prompt={w.prompt} mode="points" through={w.through} onResult={onOutcome} />
+        <LineDrawer
+          prompt={w.prompt} mode="points" through={w.through}
+          studentName={studentName} onResult={onOutcome}
+        />
       ) : (
-        <LineDrawer prompt={w.prompt} mode="equation" m={w.m} b={w.b} onResult={onOutcome} />
+        <LineDrawer
+          prompt={w.prompt} mode="equation" m={w.m} b={w.b}
+          studentName={studentName} onResult={onOutcome}
+        />
       );
 
     case "circle_builder":
-      return <CircleBuilder prompt={w.prompt} element={w.element} onResult={onOutcome} />;
+      return (
+        <CircleBuilder
+          prompt={w.prompt} element={w.element} studentName={studentName} onResult={onOutcome}
+        />
+      );
 
     case "angle_setter":
-      return <AngleSetter prompt={w.prompt} ask={w.ask} target={w.target} onResult={onOutcome} />;
+      return (
+        <AngleSetter
+          prompt={w.prompt} ask={w.ask} target={w.target}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
 
     case "triangle_ratio":
-      return <TriangleRatio prompt={w.prompt} ask={w.ask} target={w.target} onResult={onOutcome} />;
+      return (
+        <TriangleRatio
+          prompt={w.prompt} ask={w.ask} target={w.target}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
 
     case "bar_builder":
       return (
         <BarBuilder
           prompt={w.prompt} ask={w.ask} target={w.target} n={w.n}
-          labels={w.labels} onResult={onOutcome}
+          labels={w.labels} studentName={studentName} onResult={onOutcome}
         />
       );
 
@@ -84,32 +131,39 @@ export function renderMathWidget(
       return w.mode === "points" ? (
         <NumberLineMarker
           prompt={w.prompt} mode="points" range={w.range}
-          targets={w.targets} onResult={onOutcome}
+          targets={w.targets} studentName={studentName} onResult={onOutcome}
         />
       ) : (
         <NumberLineMarker
           prompt={w.prompt} mode="interval" range={w.range}
           from={w.from} to={w.to} openFrom={w.openFrom} openTo={w.openTo}
-          onResult={onOutcome}
+          studentName={studentName} onResult={onOutcome}
         />
       );
 
     case "ratio_balance":
       return (
         <RatioBalance
-          prompt={w.prompt} mode={w.mode} a={w.a} b={w.b} c={w.c} onResult={onOutcome}
+          prompt={w.prompt} mode={w.mode} a={w.a} b={w.b} c={w.c}
+          studentName={studentName} onResult={onOutcome}
         />
       );
 
     case "sample_space":
       return (
         <SampleSpace
-          prompt={w.prompt} rows={w.rows} cols={w.cols} rule={w.rule} onResult={onOutcome}
+          prompt={w.prompt} rows={w.rows} cols={w.cols} rule={w.rule}
+          studentName={studentName} onResult={onOutcome}
         />
       );
 
     case "curve_sketcher":
-      return <CurveSketcher prompt={w.prompt} fn={w.fn} coefs={w.coefs} onResult={onOutcome} />;
+      return (
+        <CurveSketcher
+          prompt={w.prompt} fn={w.fn} coefs={w.coefs}
+          studentName={studentName} onResult={onOutcome}
+        />
+      );
   }
 }
 
@@ -132,11 +186,17 @@ export function MathWidget({
   fallback = null,
   hostShowsPrompt = false,
   readOnly = false,
+  studentName,
+  pronoun,
 }: {
   name: string;
   payload: Record<string, unknown>;
   onOutcome: (outcome: WidgetOutcome) => void;
   fallback?: ReactNode;
+  /** See `renderMathWidget`'s `opts.studentName` — same FR-2602 seam. */
+  studentName?: string;
+  /** See `renderMathWidget`'s `opts.pronoun` — same FR-2605 seam. */
+  pronoun?: string;
   /**
    * **Additive, and for the console's replay only** (ADR-0015 §3, FR-2305).
    *
@@ -173,7 +233,7 @@ export function MathWidget({
     // Swallowed rather than forwarded: a widget that somehow reported an
     // outcome from a replay must not reach a handler that could record one.
     readOnly ? NO_OUTCOME : onOutcome,
-    { hostShowsPrompt }
+    { hostShowsPrompt, studentName, pronoun }
   );
   const body = node ?? fallback;
   if (!readOnly) return <>{body}</>;

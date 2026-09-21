@@ -1,3 +1,4 @@
+import { sequential } from "./db";
 import { scoped, type Db } from "./student-context";
 
 /**
@@ -144,24 +145,25 @@ async function pipelineDataOn(
     masteryRes,
     qStatsRes,
     reviewQRes,
-  ] = await Promise.all([
-    db.query(`
+    // One client per unit of work, so one query at a time (pg@9).
+  ] = await sequential([
+    () => db.query(`
       SELECT sha256, title, publisher, edition, language, grade, subject,
              file_path, ingested_at
       FROM source_documents LIMIT 1
     `),
-    db.query(`
+    () => db.query(`
       SELECT extractor, extractor_version, schema_version, finished_at
       FROM extraction_runs ORDER BY id DESC LIMIT 1
     `),
-    db.query(`
+    () => db.query(`
       SELECT kind, count(*)::int AS count FROM graph_nodes
       GROUP BY kind
       ORDER BY CASE kind
         WHEN 'program' THEN 0 WHEN 'course' THEN 1 WHEN 'module' THEN 2
         WHEN 'learning_objective' THEN 3 ELSE 4 END
     `),
-    db.query(`
+    () => db.query(`
       SELECT edge_type AS type, count(*)::int AS count, min(syllabus_version) AS sv
       FROM graph_edges WHERE system_to IS NULL
       GROUP BY edge_type
@@ -169,25 +171,26 @@ async function pipelineDataOn(
         WHEN 'part_of' THEN 0 WHEN 'about' THEN 1
         WHEN 'teaches' THEN 2 ELSE 3 END
     `),
-    db.query(`
+    () => db.query(`
       SELECT id, label, source_page FROM graph_nodes
       WHERE kind = 'learning_objective' ORDER BY order_in_parent
     `),
-    db.query(`
+    () => db.query(`
       SELECT src_id, dst_id FROM graph_edges
       WHERE edge_type = 'prerequisite_of' AND system_to IS NULL
     `),
     // The viewer's own mastery, or nothing at all when nobody is signed in —
     // the overlay is a personal detail on a corpus page, not part of the
     // explainer.
-    studentId == null
-      ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
-      : db.query(
-          `SELECT lo_id, score FROM mastery
+    () =>
+      studentId == null
+        ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
+        : db.query(
+            `SELECT lo_id, score FROM mastery
            WHERE student_id = $1 AND system_to IS NULL`,
-          [studentId]
-        ),
-    db.query(`
+            [studentId]
+          ),
+    () => db.query(`
       SELECT
         count(*) FILTER (WHERE status = 'live')::int          AS live,
         count(*) FILTER (WHERE reviewed_by IS NOT NULL)::int  AS reviewed
@@ -195,7 +198,7 @@ async function pipelineDataOn(
     `),
     // the exemplar plate: prefer the function-definition question (book p.16,
     // the same page shown in the Source scans); fall back to any live row
-    db.query(`
+    () => db.query(`
       SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.choices,
              q.correct_answer, q.canonical_solution, q.source_page,
              q.source_note, q.reviewed_by, q.reviewed_at, q.status,
@@ -206,7 +209,7 @@ async function pipelineDataOn(
       ORDER BY (q.id = 'q:u1-3-1:001') DESC, q.id
       LIMIT 1
     `),
-  ]);
+  ] as const);
 
   const d = docRes.rows[0];
   const doc: PipelineDoc = {

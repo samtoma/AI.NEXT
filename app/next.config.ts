@@ -51,12 +51,26 @@ function surface(): Surface {
 
 const SURFACE = surface();
 
+/**
+ * Dev-only: origins allowed to load `_next/*` assets and HMR from a host that
+ * is not localhost. Next 16 refuses cross-origin dev requests unless listed,
+ * which silently breaks a page opened over the tailnet (iPad testing — the
+ * device target) or the LAN. Production ignores this key. The list is read
+ * from `AINEXT_DEV_ORIGINS` (comma-separated hostnames, wildcards allowed) so
+ * a laptop's tailnet name never has to be committed.
+ */
+function devOrigins(): string[] {
+  const raw = (process.env.AINEXT_DEV_ORIGINS ?? "").trim();
+  return raw ? raw.split(",").map((s) => s.trim()).filter(Boolean) : [];
+}
+
 const nextConfig: NextConfig = {
   pageExtensions:
     SURFACE === "admin"
       ? ["console.tsx", "console.ts", "tsx", "ts"]
       : ["student.tsx", "tsx", "ts"],
   distDir: SURFACE === "admin" ? ".next-admin" : ".next",
+  allowedDevOrigins: devOrigins(),
 };
 
 export default nextConfig;

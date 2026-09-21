@@ -44,6 +44,7 @@ import type { Pool, PoolClient } from "pg";
 
 import { pool, withPrincipal } from "@/lib/db";
 import { currentPrincipal } from "@/lib/auth/principal";
+import type { Gender } from "@/lib/address";
 
 /** Either connection shape a query in this codebase can run on. */
 export type Db = Pool | PoolClient;
@@ -77,14 +78,16 @@ export type StudentContext = {
   studentId: number;
   studentName: string;
   emailVerified: boolean;
-  gender: "female" | "male" | "unspecified" | null;
+  gender: Gender;
 };
 
 const GENDERS = ["female", "male", "unspecified"] as const;
 
-function asGender(raw: unknown): StudentContext["gender"] {
+/** A stored value, or `null` for anything else — including a row that predates
+ *  the column. `null` is not "masculine"; see lib/address.ts. */
+export function asGender(raw: unknown): Gender {
   return (GENDERS as readonly string[]).includes(String(raw))
-    ? (raw as StudentContext["gender"])
+    ? (raw as Gender)
     : null;
 }
 
@@ -145,6 +148,19 @@ export type StudentProfile = {
   interestDetail: Record<string, unknown> | null;
   languagePref: string;
   curriculumSystem: string;
+  /**
+   * How the tutor addresses them (FR-2602). It rides on the profile — not on a
+   * fourth query, and not on a cache — because `getStudentProfile` is read once
+   * per turn, which is exactly what FR-2606 asks for: a student who changes it
+   * is addressed correctly by the tutor's next turn, with no sign-out and no
+   * new session. `null` and `'unspecified'` mean the same thing downstream
+   * (`lib/address.ts`): a form correct for either, never the masculine.
+   *
+   * It is address and voice ONLY. Nothing in retrieval, mastery, selection or
+   * difficulty may read it (FR-2603) and it must never reach an event, a log
+   * line or an error message (FR-2604).
+   */
+  gender: Gender;
 };
 
 export async function getStudentProfile(
@@ -155,7 +171,7 @@ export async function getStudentProfile(
     return await scoped(studentId, c, async (db) => {
       const res = await db.query(
         `SELECT id, display_name, grade, interests, interest_detail,
-                language_pref, curriculum_system
+                language_pref, curriculum_system, gender
            FROM students WHERE id = $1`,
         [studentId]
       );
@@ -169,6 +185,7 @@ export async function getStudentProfile(
         interestDetail: (r.interest_detail as Record<string, unknown> | null) ?? null,
         languagePref: (r.language_pref as string) ?? "en",
         curriculumSystem: (r.curriculum_system as string) ?? "eg-national-en",
+        gender: asGender(r.gender),
       };
     });
   } catch (err) {

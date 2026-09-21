@@ -69,6 +69,7 @@ export function RatioBalance({
   a,
   b,
   c,
+  studentName,
   onResult,
 }: {
   prompt: string;
@@ -76,8 +77,14 @@ export function RatioBalance({
   a: number;
   b: number;
   c: number;
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const svgRef = useRef<SVGSVGElement>(null);
   const [d, setD] = useState(() => (mode === "direct" ? 2 : 3));
   const [verdict, setVerdict] = useState<Verdict>(null);
@@ -156,10 +163,10 @@ export function RatioBalance({
       predicate: ok ? OK : pred,
       given: String(d),
       detail: ok
-        ? `✓ Omar balanced the ${mode} relationship: ${a},${b},${c} → ${tidy(answer, 4)} on the ratio balance`
-        : `✗ Omar set the fourth term to ${d} instead of ${tidy(answer, 4)} in the ${mode} relationship ${a},${b},${c}${why}`,
+        ? `✓ ${who} balanced the ${mode} relationship: ${a},${b},${c} → ${tidy(answer, 4)} on the ratio balance`
+        : `✗ ${who} set the fourth term to ${d} instead of ${tidy(answer, 4)} in the ${mode} relationship ${a},${b},${c}${why}`,
     });
-  }, [d, answer, mode, a, b, c, onResult]);
+  }, [d, answer, mode, a, b, c, onResult, who]);
 
   const nudge = useKeyNudge({
     step: 1,

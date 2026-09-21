@@ -16,6 +16,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { scoped, type Db } from "@/lib/student-context";
+import { buildUploadParsePrompt } from "@/lib/upload-prompt";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import {
   ZERO_TOKENS,
@@ -88,30 +89,6 @@ export async function storeUpload(
   );
   return Number(res.rows[0].id);
 }
-
-/**
- * The parse instruction.
- *
- * Two rules in here are requirements, not style:
- *
- *  - FR-206: transcribe only what the academic task needs. A student's kitchen
- *    table, a sibling in frame, an address on an envelope — none of that is ours
- *    to retain or remark on, and the cheapest place to enforce that is before
- *    the text is ever written down.
- *  - FR-205 / PRD §8: say plainly when something cannot be read. A confident
- *    transcription of an unreadable digit is worse than an admission, because
- *    the tutor will then teach against a problem the student never wrote.
- */
-const PARSE_PROMPT = `Read the file at the path given below and transcribe the mathematics in it.
-
-Rules:
-- Transcribe ONLY the academic content: the problem, the working, the answer.
-- Do NOT describe or transcribe anything incidental — people, faces, rooms,
-  names, addresses, phone numbers, or anything else not part of the maths.
-- If part of it is genuinely unreadable, say so explicitly and transcribe the
-  rest. Never guess at an unreadable digit, symbol or step.
-- If NOTHING is readable, or you cannot open the file at all, reply with exactly: UNREADABLE
-- Reply with the transcription only — no preamble, no commentary, no JSON.`;
 
 type ParseOutcome = {
   status: ParseStatus;
@@ -235,7 +212,7 @@ function runParse(filePath: string): Promise<ParseOutcome> {
       resolve({ status: "parsed", text, ...spent });
     });
 
-    child.stdin.write(`${PARSE_PROMPT}\n\nFile to read: ${filePath}\n`);
+    child.stdin.write(buildUploadParsePrompt(filePath));
     child.stdin.end();
   });
 }

@@ -10,7 +10,8 @@ import {
   SACRED_HOLDBACK_CHARS,
   type SacredGuard,
 } from "@/lib/sacred-guard";
-import { snapshotContext } from "@/lib/session-cache";
+import { snapshotContext, snapshotKey } from "@/lib/session-cache";
+import { getStudentProfile } from "@/lib/student-context";
 import { currentSessionOrNull } from "@/lib/sessions";
 import {
   ZERO_TOKENS,
@@ -218,15 +219,24 @@ export async function POST(req: Request) {
       // mastery numbers the model reasons over never shift mid-conversation.
       // The student is part of the key — no student's snapshot is ever re-served
       // to another.
-      const snapshotKey = [
+      //
+      // FR-2606: the student's register is part of the key, and the profile is
+      // read HERE, this turn, inside the unit of work that is already open —
+      // never cached across turns. A student who fixes their gender mid-lesson
+      // therefore misses the snapshot once and is addressed correctly on the
+      // very next turn, without signing out or starting a new session. See the
+      // decision recorded in `lib/session-cache.ts`.
+      const me = await getStudentProfile(studentId, client);
+      const key = snapshotKey({
         surface,
         chatSession,
         studentId,
-        body.lesson ?? "",
-        body.questionId ?? "",
-        body.wrongAnswer ?? "",
-      ].join("|");
-      const built = await snapshotContext(snapshotKey, () =>
+        lesson: body.lesson,
+        questionId: body.questionId,
+        wrongAnswer: body.wrongAnswer,
+        gender: me?.gender ?? null,
+      });
+      const built = await snapshotContext(key, () =>
         surface === "lesson_learn" || surface === "lesson_review"
           ? buildLessonContext(
               surface === "lesson_learn" ? "learn" : "review",

@@ -28,6 +28,8 @@
  */
 
 import { scoped, getStudentProfile, type Db, type StudentProfile } from "@/lib/student-context";
+import { addressBlock } from "@/lib/address";
+import { sequential } from "@/lib/db";
 import {
   getLibraryEntries,
   getMisconceptions,
@@ -171,18 +173,22 @@ export async function retrieve(
     };
   }
 
+  // `sequential`, not `Promise.all`: these four share ONE client when the
+  // caller passes its unit of work, and pg@9 removed the implicit queue that
+  // made the parallel-looking version work (lib/db.ts).
   const [profile, nearestSkills, upload, engagement] = await scoped(
     studentId,
     opts.client,
     (db) =>
-      Promise.all([
-        getStudentProfile(studentId, db),
-        nearestSkillMastery(db, studentId, focusLoIds),
-        opts.uploadId
-          ? getParsedUpload(opts.uploadId, studentId, db)
-          : Promise.resolve(null),
-        getEngagementSignal(db, studentId),
-      ])
+      sequential([
+        () => getStudentProfile(studentId, db),
+        () => nearestSkillMastery(db, studentId, focusLoIds),
+        () =>
+          opts.uploadId
+            ? getParsedUpload(opts.uploadId, studentId, db)
+            : Promise.resolve(null),
+        () => getEngagementSignal(db, studentId),
+      ] as const)
   );
   return {
     profile,
@@ -200,14 +206,30 @@ export async function retrieve(
 /**
  * Render the bundle as a prompt block.
  *
- * Returns "" when there is nothing to say. That matters more than it looks: an
- * empty string keeps the assembled prompt byte-identical to what it was before
- * this layer existed, so a student with no profile and no library produces the
- * exact same prompt as the baseline. The capture harness can then attribute any
- * diff to real retrieved content rather than to added scaffolding.
+ * Everything below the address block renders "" when there is nothing to say.
+ * That matters more than it looks: an empty string keeps the assembled prompt
+ * byte-identical to what it was before this layer existed, so a student with no
+ * profile and no library produces the same prompt as the baseline. The capture
+ * harness can then attribute any diff to real retrieved content rather than to
+ * added scaffolding.
+ *
+ * **The address block is the one unconditional part** (P6, FR-2602/FR-2605). It
+ * is the instruction that stops the model guessing a gender, and the case most
+ * at risk of guessing the masculine is exactly the case with no profile to key
+ * off: a picker-era student, an anonymous surface, the capture harness.
+ * Rendering it only when a profile exists would drop the instruction precisely
+ * where it is needed, so with no profile it states the either-correct register
+ * about "the student" instead of saying nothing.
+ *
+ * This is the ONE place the tutor's voice is decided. `ask.ts` and `lesson.ts`
+ * used to run their own narrow `SELECT display_name` beside this bundle; both
+ * now read the profile, so a change to the register lands on every surface at
+ * once rather than on the two that remembered to look.
  */
 export function retrievalBlock(b: RetrievalBundle): string {
-  const parts: string[] = [];
+  const parts: string[] = [
+    addressBlock(b.profile?.gender ?? null, b.profile?.displayName),
+  ];
 
   if (b.profile) {
     const p = b.profile;
@@ -292,5 +314,6 @@ export function retrievalBlock(b: RetrievalBundle): string {
     );
   }
 
-  return parts.length ? `\n\n${parts.join("\n\n")}` : "";
+  // Never empty any more — the address block is always the first part.
+  return `\n\n${parts.join("\n\n")}`;
 }

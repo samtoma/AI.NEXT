@@ -101,12 +101,19 @@ function Prop({ on, children }: { on: boolean; children: ReactNode }) {
 export function CircleBuilder({
   prompt,
   element,
+  studentName,
   onResult,
 }: {
   prompt: string;
   element: CircleElement;
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const p = useMemo(() => makePlane([-LIM, LIM], [-LIM, LIM], W, H, 18), []);
   const svgRef = useRef<SVGSVGElement>(null);
   const [pts, setPts] = useState<[Pt, Pt]>([
@@ -241,10 +248,10 @@ export function CircleBuilder({
       predicate: ok ? OK : pred,
       given: drew,
       detail: ok
-        ? `✓ Omar constructed ${WANTED[element]} ${drew} on the circle builder (radius ${RAD}, centre M)`
-        : `✗ Omar drew ${drew} when asked for ${WANTED[element]}${why}`,
+        ? `✓ ${who} constructed ${WANTED[element]} ${drew} on the circle builder (radius ${RAD}, centre M)`
+        : `✗ ${who} drew ${drew} when asked for ${WANTED[element]}${why}`,
     });
-  }, [element, props, a, b, onResult]);
+  }, [element, props, a, b, onResult, who]);
 
   const nudge = useKeyNudge({
     step: 1,

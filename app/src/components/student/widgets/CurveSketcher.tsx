@@ -74,13 +74,20 @@ export function CurveSketcher({
   prompt,
   fn,
   coefs,
+  studentName,
   onResult,
 }: {
   prompt: string;
   fn: CurveFn;
   coefs: number[];
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const p = useMemo(() => makePlane([-LIM, LIM], [-LIM, LIM], W, H, 18), []);
   const svgRef = useRef<SVGSVGElement>(null);
   const [verdict, setVerdict] = useState<Verdict>(null);
@@ -151,16 +158,16 @@ export function CurveSketcher({
       v = "wrong";
       pred = "fails-vertical-line-test";
       msg = `Your stroke doubles back — at some x values it gives two different y values, so it is not the graph of a function at all. Draw left to right without going back.`;
-      streamNote = `✗ Omar's sketch failed the vertical line test (${vltFails} sample columns carried two y values) — worth revisiting what makes a relation a function`;
+      streamNote = `✗ ${who}'s sketch failed the vertical line test (${vltFails} sample columns carried two y values) — worth revisiting what makes a relation a function`;
     } else if (cover < MIN_COVER) {
       v = "partial";
       pred = "partial-coverage";
       msg = `That covers only about ${Math.round(cover * 100)}% of the visible curve — carry the sketch across the whole grid.`;
-      streamNote = `~ Omar sketched only ${Math.round(cover * 100)}% of the domain; the shape so far is ${tidy(mean, 2)} away from ${want}`;
+      streamNote = `~ ${who} sketched only ${Math.round(cover * 100)}% of the domain; the shape so far is ${tidy(mean, 2)} away from ${want}`;
     } else if (worst <= TOL) {
       v = "correct";
       msg = `That is ${want}. Average distance from the true curve: ${tidy(mean, 2)}.`;
-      streamNote = `✓ Omar sketched ${want} freehand — mean error ${tidy(mean, 2)}, worst ${tidy(worst, 2)}, within the ${TOL} tolerance`;
+      streamNote = `✓ ${who} sketched ${want} freehand — mean error ${tidy(mean, 2)}, worst ${tidy(worst, 2)}, within the ${TOL} tolerance`;
     } else if (mean <= TOL) {
       v = "partial";
       pred = Math.abs(bias) > TOL * 0.6 ? "vertically-displaced" : "off-target";
@@ -168,7 +175,7 @@ export function CurveSketcher({
         ? ` The whole sketch sits about ${tidy(Math.abs(bias), 1)} ${bias > 0 ? "high" : "low"}.`
         : " Most of it is right; one part drifts off.";
       msg = `The shape is right — ${want}.${where}`;
-      streamNote = `~ Omar sketched the right shape (${want}) but drifted: mean ${tidy(mean, 2)}, worst ${tidy(worst, 2)}${Math.abs(bias) > TOL * 0.6 ? `, biased ${bias > 0 ? "high" : "low"} by ${tidy(Math.abs(bias), 2)}` : ""}`;
+      streamNote = `~ ${who} sketched the right shape (${want}) but drifted: mean ${tidy(mean, 2)}, worst ${tidy(worst, 2)}${Math.abs(bias) > TOL * 0.6 ? `, biased ${bias > 0 ? "high" : "low"} by ${tidy(Math.abs(bias), 2)}` : ""}`;
     } else {
       v = "wrong";
       pred = "off-target";
@@ -189,7 +196,7 @@ export function CurveSketcher({
           why = ` Your line ${rise / run > 0 ? "rises" : "falls"}; with a slope of ${tidy(coefs[0], 2)} it should ${coefs[0] > 0 ? "rise" : "fall"}.`;
       }
       msg = `Not yet — the target is ${want}.${why}`;
-      streamNote = `✗ Omar's freehand sketch was ${tidy(mean, 2)} off on average (worst ${tidy(worst, 2)}) against ${want}.${why}`;
+      streamNote = `✗ ${who}'s freehand sketch was ${tidy(mean, 2)} off on average (worst ${tidy(worst, 2)}) against ${want}.${why}`;
     }
 
     setVerdict(v);
@@ -200,7 +207,7 @@ export function CurveSketcher({
       given: `freehand sketch, mean error ${tidy(mean, 2)}`,
       detail: streamNote,
     });
-  }, [stroke, fn, coefs, onResult]);
+  }, [stroke, fn, coefs, onResult, who]);
 
   const path = (pts: Pt[]) =>
     pts.length < 2

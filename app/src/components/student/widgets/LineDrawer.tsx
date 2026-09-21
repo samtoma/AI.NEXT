@@ -78,6 +78,7 @@ export function LineDrawer({
   m: targetM,
   b: targetB,
   through,
+  studentName,
   onResult,
 }: {
   prompt: string;
@@ -85,8 +86,14 @@ export function LineDrawer({
   m?: number;
   b?: number;
   through?: [[number, number], [number, number]];
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const p = useMemo(() => makePlane([-R, R], [-R, R], W, H, 20), []);
   const svgRef = useRef<SVGSVGElement>(null);
   // Opening position is deliberately NOT on the answer and not symmetric:
@@ -221,10 +228,10 @@ export function LineDrawer({
       predicate: ok ? OK : pred,
       given: drew,
       detail: ok
-        ? `✓ Omar drew ${drew} correctly on the line drawer (target ${want})`
-        : `✗ Omar drew ${drew} on the line drawer instead of ${want}${diagnosis}`,
+        ? `✓ ${who} drew ${drew} correctly on the line drawer (target ${want})`
+        : `✗ ${who} drew ${drew} on the line drawer instead of ${want}${diagnosis}`,
     });
-  }, [mode, through, pts, eq, targetM, targetB, onResult]);
+  }, [mode, through, pts, eq, targetM, targetB, onResult, who]);
 
   const nudge = useKeyNudge({
     step: 1,

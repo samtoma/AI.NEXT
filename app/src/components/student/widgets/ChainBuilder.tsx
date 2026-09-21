@@ -28,13 +28,20 @@ export function ChainBuilder({
   prompt,
   cards,
   correctChain,
+  studentName,
   onResult,
 }: {
   prompt: string;
   cards: Card[];
   correctChain?: number[];
+  /** The signed-in student's display name, narrated into the note below in
+   *  place of the retired "Omar" demo persona (FR-2602, ADR-0010 plan A10).
+   *  Falls back to a name-free "the student" — never a guess — when a caller
+   *  (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (note: string) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const chain = useMemo(() => {
     const c = (correctChain ?? cards.map((_, i) => i)).filter(
       (i) => Number.isInteger(i) && i >= 0 && i < cards.length
@@ -63,8 +70,8 @@ export function ChainBuilder({
         const shape = chain.map((i) => cards[i]?.role ?? "؟").join("→");
         fire(
           missteps === 0
-            ? `✓ Omar built the ${shape} chain correctly on the first try`
-            : `✓ Omar completed the ${shape} chain after ${missteps} wrong pick${missteps > 1 ? "s" : ""} (self-corrected)`
+            ? `✓ ${who} built the ${shape} chain correctly on the first try`
+            : `✓ ${who} completed the ${shape} chain after ${missteps} wrong pick${missteps > 1 ? "s" : ""} (self-corrected)`
         );
       }
     } else {

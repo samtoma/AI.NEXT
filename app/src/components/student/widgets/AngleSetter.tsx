@@ -47,13 +47,20 @@ export function AngleSetter({
   prompt,
   ask,
   target,
+  studentName,
   onResult,
 }: {
   prompt: string;
   ask: "central" | "inscribed";
   target: number;
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const p = useMemo(() => makePlane([-LIM, LIM], [-LIM, LIM], W, H, 18), []);
   const svgRef = useRef<SVGSVGElement>(null);
   // A parked left, B and C placed so nothing starts on the answer.
@@ -166,10 +173,10 @@ export function AngleSetter({
       predicate: ok ? OK : pred,
       given: `${label} = ${reading}°`,
       detail: ok
-        ? `✓ Omar set the ${label} to ${target}° on the angle setter (arc ${geom.facing}°, inscribed ${geom.inscribed}° — the 2:1 relationship held)`
-        : `✗ Omar set the ${label} to ${reading}° instead of ${target}° on the angle setter${why}`,
+        ? `✓ ${who} set the ${label} to ${target}° on the angle setter (arc ${geom.facing}°, inscribed ${geom.inscribed}° — the 2:1 relationship held)`
+        : `✗ ${who} set the ${label} to ${reading}° instead of ${target}° on the angle setter${why}`,
     });
-  }, [ask, reading, target, geom, onResult]);
+  }, [ask, reading, target, geom, onResult, who]);
 
   const nudge = useKeyNudge({
     step: SNAP,

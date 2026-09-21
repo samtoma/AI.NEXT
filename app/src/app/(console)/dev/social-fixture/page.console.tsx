@@ -76,6 +76,8 @@ const FIXTURE: LessonData = {
   studentName: "Omar Hassan",
   studentId: 1,
   grade: "9",
+  // a fixture, not a person — the either-correct register (FR-2605)
+  gender: null,
 };
 
 const A = (text: string): ChatMsg => ({ role: "assistant", text });

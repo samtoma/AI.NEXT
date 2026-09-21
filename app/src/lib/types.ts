@@ -17,6 +17,7 @@ export type Tier = "basic" | "standard" | "advanced";
 export type { Subject, SpineSubject } from "./subjects";
 
 import type { Subject, SpineSubject } from "./subjects";
+import type { Gender } from "./address";
 
 export interface Choice {
   key: string;
@@ -282,6 +283,10 @@ export interface LessonData {
    *  form) — never a fixed literal, so a grade-7 or grade-12 student is never
    *  narrated as "grade 10" in the prompt. */
   grade: string;
+  /** the register the tutor addresses them in (FR-2602) — read from the one
+   *  profile query per turn, so a change lands on the next turn (FR-2606).
+   *  `null` is "not recorded", which is NOT the masculine: see lib/address.ts. */
+  gender: Gender;
 }
 
 /**

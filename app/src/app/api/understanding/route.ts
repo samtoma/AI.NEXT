@@ -9,10 +9,13 @@ import {
   lessonAnchorLo,
   sanitizeLessonSlug,
 } from "@/lib/lesson";
-import { deriveMasteryStage, learnOpeningFrame } from "@/lib/checkin";
+import {
+  UNDERSTANDING_SYSTEM_PROMPT,
+  buildUnderstandingPrompt,
+  understandingRetryPrompt,
+} from "@/lib/understanding-prompt";
 import { spineKeyOf } from "@/lib/subjects";
 import { closeSession, currentSessionOrNull } from "@/lib/sessions";
-import { gradeLabel } from "@/lib/profile";
 import {
   ZERO_TOKENS,
   addTokens,
@@ -283,47 +286,24 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "internal error" }, { status: 500 });
   }
 
-  const loLines = data.los
-    .map((l) => `- ${l.id} "${l.label}": ${l.description ?? ""}`)
-    .join("\n");
-
-  const systemPrompt = `You are the honest comprehension grader of Noor, an adaptive math tutor. You rate how well the student actually understood a lesson, based ONLY on the session transcript. You output STRICT JSON and nothing else — no markdown fences, no prose.`;
-
-  const transcriptText = transcript
-    .map((m) =>
-      m.role === "user"
-        ? `Student: ${m.text}`
-        : m.role === "assistant"
-          ? `Tutor: ${m.text}`
-          : `[live event] ${m.text}`
-    )
-    .join("\n");
-
-  // Same mastery-stage premise the learn-mode tutor prompt opens with
-  // (lib/lesson.ts `learnOpeningFrame`) — the grader must not judge the
-  // session against a "he understood NOTHING" starting point when the real
-  // one might be "first time seeing this" or "already handles it well".
-  const sessionDesc =
-    mode === "learn"
-      ? `AI-taught lesson (${learnOpeningFrame(deriveMasteryStage(data.los), data.studentName.split(" ")[0]).premise})`
-      : `quick revision (the student said he understood everything at school)`;
-  const basePrompt = `Session: ${sessionDesc}.
-Student: ${data.studentName}, ${gradeLabel(data.grade).toLowerCase()}. Lesson: ${data.lessonRef} — ${data.title} (${data.moduleLabel}).
-Learning objectives covered:
-${loLines}
-
-GRADING RULES:
-- Weigh ACTUAL performance — the "[live event]" lines (question attempts ✓/✗, widget results) — far above self-report or politeness.
-- Be honest but fair: in learn mode, visible progress across the session counts in his favor; early mistakes that were later corrected are progress, not failure.
-- verdict bands: got_it = score >= 80, nearly = 55–79, needs_work < 55.
-- strengths and gaps: 1–4 short concrete phrases each, referencing the actual content of THIS lesson (its objectives, figures, and exercises as they appeared in the transcript). gaps may be empty ([]) if there truly are none.
-- next_step: ONE actionable, encouraging sentence for tomorrow. Never punitive.
-
-Return STRICT JSON exactly in this shape:
-{"score": <integer 0-100>, "verdict": "got_it" | "nearly" | "needs_work", "strengths": ["...", ...], "gaps": ["...", ...], "next_step": "..."}
-
-TRANSCRIPT:
-${transcriptText}`;
+  // The grading prompt is built in `lib/understanding-prompt.ts` — a pure
+  // builder, so `scripts/capture-prompts.mts` can render it and constitution IX
+  // has a surface to diff. It used to be four interpolations in the middle of
+  // this handler, which is why it was one of the two prompts no gate covered.
+  const systemPrompt = UNDERSTANDING_SYSTEM_PROMPT;
+  const basePrompt = buildUnderstandingPrompt({
+    mode,
+    los: data.los,
+    studentName: data.studentName,
+    grade: data.grade,
+    lessonRef: data.lessonRef,
+    title: data.title,
+    moduleLabel: data.moduleLabel,
+    transcript,
+    // FR-2602: the same register the tutor used this session, read from the
+    // same one profile query (`getLessonData`) rather than a second one.
+    gender: data.gender,
+  });
 
   try {
     /** The CLI's own totals, summed over the attempts that reported one. */
@@ -340,7 +320,7 @@ ${transcriptText}`;
       const prompt =
         attempt === 0
           ? basePrompt
-          : `${basePrompt}\n\nYour previous output was INVALID:\n${rawOut.slice(0, 500)}\nReturn ONLY the strict JSON object this time. No other text.`;
+          : understandingRetryPrompt(basePrompt, rawOut);
       const r = await runClaudeJson(systemPrompt, prompt);
       // Both branches spent tokens, so both branches accumulate them.
       tokens = addTokens(tokens, r.tokens);

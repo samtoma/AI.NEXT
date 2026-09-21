@@ -1,6 +1,6 @@
 import type { PoolClient } from "pg";
 
-import { pool } from "./db";
+import { pool, sequential } from "./db";
 import { scoped, type Db } from "./student-context";
 import {
   compareSpineSubjects,
@@ -56,8 +56,9 @@ async function subjectSummariesOn(
   db: Db,
   studentId: number
 ): Promise<SubjectSummary[]> {
-  const [losRes, checksRes] = await Promise.all([
-    db.query(
+  // One client, so one query at a time (pg@9; lib/db.ts `sequential`).
+  const [losRes, checksRes] = await sequential([
+    () => db.query(
       `SELECT lo.id, lo.label, lo.order_in_parent,
               m.id AS module_id, m.order_in_parent AS module_order,
               c.id AS course_id, c.label AS course_label,
@@ -76,7 +77,7 @@ async function subjectSummariesOn(
                 m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`,
       [studentId]
     ),
-    db.query(
+    () => db.query(
       // `subject` is written by /api/understanding on every insert and was
       // backfilled by migration 006 — read it instead of guessing the subject
       // back out of the LO id.
@@ -86,7 +87,7 @@ async function subjectSummariesOn(
        ORDER BY created_at DESC`,
       [studentId]
     ),
-  ]);
+  ] as const);
 
   interface Acc {
     subject: SpineSubject;

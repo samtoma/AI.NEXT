@@ -223,7 +223,7 @@ was actually hard.
 | — open | 75 |
 | — blocked | 2 |
 | — deferred | 4 |
-| Requirements a test declares | **30** |
+| Requirements a test declares | **38** |
 | Tasks complete / total | **0 / 0** |
 
 **Of 0 requirements marked VERIFIED, 0 have an automated test declaring them.** The remaining 0 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.

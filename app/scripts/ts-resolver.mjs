@@ -15,16 +15,54 @@
  * than parsed out of `tsconfig.json`: a resolver hook that had to read and
  * interpret a JSON config before the first import would be a second, subtler
  * place for the alias to be wrong.
+ *
+ * **It also substitutes `next/headers` — but only for the capture harness.**
+ * `lib/auth/principal.ts` imports `cookies` from `next/headers` at the top
+ * level, so importing `lib/lesson.ts` from plain `node` died on a framework
+ * module with no request behind it. That single unresolvable import is why
+ * every constitution IX gate up to P5 reported "fails identically at HEAD": the
+ * harness could not run at all, on either side of the comparison, so there was
+ * never a diff to read. `scripts/stubs/next-headers.mjs` answers with an empty
+ * cookie jar — the anonymous principal the harness already asks for by passing
+ * `studentId = null`.
+ *
+ * The substitution is gated on the ENTRYPOINT, not on the resolver being
+ * loaded. A script that talks to real data (`rollup-cost-daily`,
+ * `bootstrap-operator`, `alerts-sweep`, `seed-local-account`) must never be
+ * handed a fake auth primitive just because it shares this hook, and a stub
+ * that silently applies to the next script somebody writes is a trap. Adding an
+ * entrypoint is one line below, deliberately.
  */
 import { registerHooks } from "node:module";
 import { existsSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
 
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+
 /** `app/src/`, the target of tsconfig's `"@/*": ["./src/*"]`. */
-const SRC = pathToFileURL(
-  path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src") + path.sep
-).href;
+const SRC = pathToFileURL(path.join(HERE, "..", "src") + path.sep).href;
+
+/**
+ * Bare specifiers replaced by a local stub, and the entrypoints allowed to see
+ * them. Keyed by specifier → { stub, entrypoints }, matched on the basename of
+ * `process.argv[1]` so the gate reads the same whether the script was invoked
+ * by relative or absolute path.
+ */
+const STUBS = {
+  "next/headers": {
+    stub: pathToFileURL(path.join(HERE, "stubs", "next-headers.mjs")).href,
+    entrypoints: [
+      "capture-prompts.mts",
+      // renders the same prompt builders for each address register, and
+      // reaches `lib/lesson.ts` -> `auth/principal.ts` to do it (P6)
+      "prompt-address.test.mts",
+    ],
+  },
+};
+
+/** The basename of the script node was asked to run ("" when there is none). */
+const ENTRYPOINT = path.basename(process.argv[1] ?? "");
 
 const SUFFIXES = [".ts", ".tsx", ".mts", "/index.ts"];
 
@@ -37,8 +75,20 @@ function firstExisting(baseHref) {
   return null;
 }
 
+/** The stub URL for `specifier`, when this entrypoint is allowed one. */
+export function stubFor(specifier, entrypoint = ENTRYPOINT) {
+  const rule = STUBS[specifier];
+  return rule && rule.entrypoints.includes(entrypoint) ? rule.stub : null;
+}
+
 registerHooks({
   resolve(specifier, context, nextResolve) {
+    // Framework modules with no request behind them, for the entrypoints that
+    // declared they have none. Checked first: `next/headers` DOES resolve as a
+    // package on disk, so leaving it to the catch below would never fire.
+    const stub = stubFor(specifier);
+    if (stub) return nextResolve(stub, context);
+
     // The alias is handled BEFORE nextResolve rather than in its catch: node
     // treats `@/lib/mail` as a bare package specifier and the error it throws
     // names a package that does not exist, which is a confusing thing to

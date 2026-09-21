@@ -2,7 +2,9 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { PoolClient } from "pg";
 import { retrieve, retrievalBlock } from "./retrieval";
-import { scoped, type Db } from "./student-context";
+import { getStudentProfile, scoped, type Db } from "./student-context";
+import { addressForms, type AddressForms } from "./address";
+import { sequential } from "./db";
 import { deriveMasteryStage, learnOpeningFrame } from "./checkin";
 import { masteryLabel } from "./mastery";
 import { gradeLabel } from "./profile";
@@ -150,16 +152,17 @@ export async function getLessonCatalog(
   c?: PoolClient
 ): Promise<LessonInfo[]> {
   const [losRes, masteryRes] = await scoped(studentId, c, (db) =>
-    Promise.all([
-      db.query(`${LO_MODULE_SELECT} ORDER BY ${MODULE_ORDER}`),
-      studentId == null
-        ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
-        : db.query(
-            `SELECT lo_id, score FROM mastery
+    sequential([
+      () => db.query(`${LO_MODULE_SELECT} ORDER BY ${MODULE_ORDER}`),
+      () =>
+        studentId == null
+          ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
+          : db.query(
+              `SELECT lo_id, score FROM mastery
              WHERE student_id = $1 AND system_to IS NULL`,
-            [studentId]
-          ),
-    ])
+              [studentId]
+            ),
+    ] as const)
   );
   const mastery = new Map<string, number>(
     masteryRes.rows.map((r) => [r.lo_id, Number(r.score)])
@@ -215,17 +218,18 @@ async function lessonDataOn(
   const safeSlug = sanitizeLessonSlug(slug);
   const loPattern = `lo:${safeSlug}-%`;
 
-  const [losRes, studentRes] = await Promise.all([
-    db.query(
-      `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id`,
-      [loPattern]
-    ),
-    studentId == null
-      ? Promise.resolve({ rows: [] as { display_name: string; grade: string }[] })
-      : db.query(`SELECT display_name, grade FROM students WHERE id = $1`, [
-          studentId,
-        ]),
-  ]);
+  // ONE student read, and it is the profile (plan A9, "the address seam").
+  // This used to be its own `SELECT display_name, grade` beside the identical
+  // read `retrieve()` was already doing for the same turn — two reads, and only
+  // one of them could ever learn how to address the student.
+  const [losRes, profile] = await sequential([
+    () =>
+      db.query(
+        `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id`,
+        [loPattern]
+      ),
+    () => (studentId == null ? Promise.resolve(null) : getStudentProfile(studentId, db)),
+  ] as const);
   if (losRes.rows.length === 0 && safeSlug !== DEFAULT_LESSON_SLUG) {
     // unknown slug → default lesson (same student, same unit of work)
     return lessonDataOn(db, DEFAULT_LESSON_SLUG, studentId);
@@ -233,26 +237,28 @@ async function lessonDataOn(
 
   const loIds: string[] = losRes.rows.map((r) => r.id);
 
-  const [masteryRes, qRes, visuals] = await Promise.all([
-    studentId == null
-      ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
-      : db.query(
-          `SELECT lo_id, score FROM mastery
+  const [masteryRes, qRes, visuals] = await sequential([
+    () =>
+      studentId == null
+        ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
+        : db.query(
+            `SELECT lo_id, score FROM mastery
            WHERE student_id = $1 AND lo_id = ANY($2) AND system_to IS NULL`,
-          [studentId, loIds]
-        ),
-    db.query(
-      `SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
+            [studentId, loIds]
+          ),
+    () =>
+      db.query(
+        `SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
               canonical_solution, solution_version, status,
               source, parent_question_id, source_sha256, source_page, source_note,
               reviewed_by, reviewed_at
        FROM questions
        WHERE status = 'live' AND lo_id = ANY($1)
        ORDER BY lo_id, tier, id`,
-      [loIds]
-    ),
-    getVisualsForLos(loIds),
-  ]);
+        [loIds]
+      ),
+    () => getVisualsForLos(loIds),
+  ] as const);
 
   const mastery = new Map<string, number>(
     masteryRes.rows.map((r) => [r.lo_id, Number(r.score)])
@@ -349,12 +355,15 @@ async function lessonDataOn(
     })),
     mapBases,
     docTitle,
-    studentName: (studentRes.rows[0]?.display_name as string) ?? "Omar",
+    studentName: profile?.displayName ?? "Omar",
     // `LessonData.studentId` is a plain number because it is interpolated into
     // the data block. No student in scope (the capture harness) renders 0 —
     // "nobody", which is what it is — rather than a borrowed id.
     studentId: studentId ?? 0,
-    grade: (studentRes.rows[0]?.grade as string) ?? "10",
+    grade: profile?.grade ?? "10",
+    // Address and voice only (FR-2603). Nothing below reads it except the
+    // prompt templates; `null` means "not recorded", never "masculine".
+    gender: profile?.gender ?? null,
   };
 }
 
@@ -563,8 +572,13 @@ function sharedProtocol(data: LessonData, rhythm: string): string {
 
 /** SOCIAL STUDIES — Arabic citations + the map / timeline / chain / term-match
  *  catalogue (ADR-0004 Wave 1). */
-function socialProtocol(rhythm: string, ex: ProtocolExamples): string {
+function socialProtocol(
+  rhythm: string,
+  ex: ProtocolExamples,
+  data: LessonData
+): string {
   const { lo: exLo, q: exQ, page: exPage, viz: exViz } = ex;
+  const a = addressForms(data.gender, data.studentName);
   return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Flag any needed term missing from the LESSON DATA with [[term?:المصطلح]] right after it — never guess a definition silently.
 
 MESSAGE RHYTHM:
@@ -578,7 +592,7 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
 - {{widget:term_match:{"prompt":"وصّل المصطلح بمعناه","pairs":[{"term":"الموقع الفلكي","definition":"موقع المكان بالنسبة لدوائر العرض وخطوط الطول"}],"decoyDefs":["تعريف قريب للتشتيت"]}}} — «ضع المصطلح» matching, 2–4 pairs; terms and definitions VERBATIM from the LESSON DATA (المصطلحات قانون); "decoyDefs" optional.
 - ${socialFigureDirectivesDoc(exViz)}
   A figure counts as the ONE directive of its message. This is a SOCIAL-STUDIES lesson: اشرح بالرسم — a map_scene for every place, a timeline for every sequence of events, a flow_chain for every «بم تفسر» — pick the stored library figure when one fits the beat.
-- {{finish_lesson}} — arms his Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
+- {{finish_lesson}} — arms ${a.their} Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
 ${CROSS_SUBJECT_RULE}
@@ -589,8 +603,13 @@ FORMAT: plain short Arabic paragraphs. No headings, no numbered lesson plans, no
 /** ARABIC LANGUAGE — text-anchored widgets (ADR-0006): the passage is the
  *  figure. إعراب grades client-side from typed slots; the widget payloads are
  *  therefore grounded in the printed rule lines, never derived. */
-function arabicProtocol(rhythm: string, ex: ProtocolExamples): string {
+function arabicProtocol(
+  rhythm: string,
+  ex: ProtocolExamples,
+  data: LessonData
+): string {
   const { lo: exLo, q: exQ, page: exPage } = ex;
+  const a = addressForms(data.gender, data.studentName);
   return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Flag any needed term missing from the LESSON DATA with [[term?:المصطلح]] right after it — never guess a definition silently.
 
 MESSAGE RHYTHM:
@@ -607,9 +626,9 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
   · "view":"line" (the default): a small card appears inline in the exchange carrying ONLY the marked span (rendered by the app from the verified store — your quote is only a locator, it is never shown as your words). Use when the line itself is the subject: close reading, معنى كلمة، جمال تعبير، إعراب جملة.
   · "view":"context": no inline card — the span is highlighted up in the PINNED full passage card and a small chip points there. Use when the surroundings matter: موقع الجملة في الفقرة، ترتيب الأفكار، ربط أول النص بآخره.
   Bare {{show_passage:t:ara1-1:001}} (no span) just scrolls back to the full card — use it only for a general «ارجع للنص». All forms are POINTERS: none counts as this message's interactive directive, and a pointer alone is never an ask — talk about the marked words in the SAME message and still END it with a real ask. Never point in two consecutive messages.
-- {{finish_lesson}} — arms his Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
+- {{finish_lesson}} — arms ${a.their} Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 ⚠ SACRED TEXT (hard rule, no exceptions): الآيات والأحاديث معروضة للطالب في بطاقة النص أول المحادثة من الحافظة الموثقة — you never type, quote, complete or embed Quran/Hadith text in prose or in ANY widget payload. Reference it by آية number + {{show_passage:…}} («تأمل الآية ٦٣ في بطاقة النص فوق»). Vocabulary words (single words like هَوْنًا) from the glossary are allowed in term_match. أي رد يتضمن ٣ كلمات متتالية فأكثر من النص المختوم يُلغى آليًا قبل وصوله للطالب.
-⚠ NEVER END A MESSAGE WITHOUT AN ASK: your last beat is always something the student ACTS on — a question in chat, a choice, or an interactive directive (widget / show_question). Ending on a statement, a summary, or a show_passage chip strands him with nothing to do; if you pointed at the text, the question about that exact spot goes in the SAME message.
+⚠ NEVER END A MESSAGE WITHOUT AN ASK: your last beat is always something the student ACTS on — a question in chat, a choice, or an interactive directive (widget / show_question). Ending on a statement, a summary, or a show_passage chip strands ${a.them} with nothing to do; if you pointed at the text, the question about that exact spot goes in the SAME message.
 This is an ARABIC lesson: the text IS the figure — anchor every beat to ONE specific آية/بيت/جملة by number, ask about one span at a time (معناها، جمالها، إعرابها), and vary the asks across chat questions, extract_spans, style_purpose, irab_builder and term_match instead of repeating open «ما رأيك» questions.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
@@ -626,13 +645,14 @@ function mathProtocol(
   data: LessonData
 ): string {
   const { lo: exLo, q: exQ, page: exPage, viz: exViz } = ex;
+  const a = addressForms(data.gender, data.studentName);
   // Geometry no longer has to choose between seeing and doing: circle_builder
   // and angle_setter put a construction in the student's hands, so the old
   // "widgets rarely fit here" advice would now be leaving the best tools in
   // the unit unused.
   const vizGuidance = isGeoLesson(data)
-    ? `This is a GEOMETRY lesson: lean on figures — open most teaching beats with a stored geo_scene from the FIGURE LIBRARY ({{widget:viz_ref:…}}), or compose one, so he SEES every definition and theorem drawn out. Then hand the construction over: the circle/angle widgets below let him build the thing the figure just showed, which is where a definition actually sticks.`
-    : `Figures are for SEEING and widgets are for DOING — show the stored library figure when one fits the beat, then give him the matching widget so he does it himself.`;
+    ? `This is a GEOMETRY lesson: lean on figures — open most teaching beats with a stored geo_scene from the FIGURE LIBRARY ({{widget:viz_ref:…}}), or compose one, so ${a.they} SEE${a.S} every definition and theorem drawn out. Then hand the construction over: the circle/angle widgets below let ${a.them} build the thing the figure just showed, which is where a definition actually sticks.`
+    : `Figures are for SEEING and widgets are for DOING — show the stored library figure when one fits the beat, then give ${a.them} the matching widget so ${a.they} ${a.does} it ${a.themself}.`;
 
   return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Never inside $...$ math.
 
@@ -641,11 +661,11 @@ ${rhythm}
 
 INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive per message, always as its LAST beat — {{beat}} itself is a pause marker, not an interactive directive):
 - {{show_question:q:${exQ}}} — pushes that live question card (ids from the QUESTION BANK only; each id at most once per session).
-${mathWidgetDocs(data.slug)}
+${mathWidgetDocs(data.slug, a)}
   Every widget payload is FLAT JSON in exactly the shape shown, plain ASCII inside the JSON. Each one grades itself on the student's device and reports back — never state the answer in the same message you emit a widget in, and never emit one whose numbers you have not checked are reachable: a widget with an impossible target does not render at all, and the beat is simply lost.
 - ${figureDirectivesDoc(exViz)}
   A figure counts as the ONE directive of its message. ${vizGuidance}
-- {{finish_lesson}} — arms his Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
+- {{finish_lesson}} — arms ${a.their} Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
 ${CROSS_SUBJECT_RULE}
@@ -708,16 +728,16 @@ function mathGroundingRules(data: LessonData): string {
 
 /** Extra review-mode rule bullets for social studies (maths gets none — its
  *  review prompt stays byte-identical to the single-subject original). */
-const SOCIAL_REVIEW_RULES = `
+const SOCIAL_REVIEW_RULES = (a: AddressForms) => `
 - كلام الكتاب هو الصواب دائمًا: corrective lines come ONLY from that question's model answer (الإجابة النموذجية), cited [[page:N]] — never from your general knowledge. The book's statement wins even when you believe the world disagrees.
-- Off-book question from him: acknowledge → decline → redirect to the nearest in-book claim with [[page:N]] — never answer-then-disclaim. Historical/political material: strictly the book's own framing — no commentary, no modern parallels, no evaluative judgments.`;
+- Off-book question from ${a.them}: acknowledge → decline → redirect to the nearest in-book claim with [[page:N]] — never answer-then-disclaim. Historical/political material: strictly the book's own framing — no commentary, no modern parallels, no evaluative judgments.`;
 
 /** Extra review-mode rule bullets for Arabic — the sacred containment and the
  *  rule-line citation discipline survive review mode too. */
-const ARABIC_REVIEW_RULES = `
+const ARABIC_REVIEW_RULES = (a: AddressForms) => `
 - كل تصويب نحوي أو إملائي يستند إلى سطر القاعدة المطبوع أو النموذج المعتمد للسؤال، مع [[page:N]] — أبدًا من معرفتك العامة.
 - ⚠ النص القرآني/الحديث لا يُكتب بيدك أبدًا، لا في الشرح ولا في أي {{…}} — أشر إلى بطاقة النص المختومة ورقم الآية. مفردات المعجم المفردة مسموح بها.
-- Off-book question from him: acknowledge → decline → redirect to the nearest in-book rule with [[page:N]] — never answer-then-disclaim.`;
+- Off-book question from ${a.them}: acknowledge → decline → redirect to the nearest in-book rule with [[page:N]] — never answer-then-disclaim.`;
 
 /* ------------------------------------------------------------------ */
 /* The per-subject prompt kit                                          */
@@ -746,7 +766,7 @@ interface LessonPromptKit {
   fallbackVizId: string;
   groundingRules: (data: LessonData) => string;
   /** extra review-mode rule bullets ("" when the subject adds none) */
-  reviewSubjectRules: string;
+  reviewSubjectRules: (a: AddressForms) => string;
   protocol: (
     rhythm: string,
     ex: ProtocolExamples,
@@ -776,14 +796,16 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     usesTeachingScript: false,
     fallbackVizId: "v:geo1-1:001",
     groundingRules: mathGroundingRules,
-    reviewSubjectRules: "",
+    reviewSubjectRules: () => "",
     protocol: mathProtocol,
     learnRichNote: () => "",
     reviewOpenerEg: `"فهمت كله؟ حلو — let's lock it in. 3 minutes ⏱"`,
-    reviewWidgetMoment: (data) =>
-      isGeoLesson(data)
-        ? `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask him ONE quick question about what it shows — he answers in chat.`
-        : `ONE widget moment: {{widget:product_builder:{"X":[1,2],"Y":[4,5],"prompt":"Last one - build X x Y yourself"}}} (or a pair_plotter / stored figure if it fits this lesson better).`,
+    reviewWidgetMoment: (data) => {
+      const a = addressForms(data.gender, data.studentName);
+      return isGeoLesson(data)
+        ? `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask ${a.them} ONE quick question about what it shows — ${a.they} answer${a.s} in chat.`
+        : `ONE widget moment: {{widget:product_builder:{"X":[1,2],"Y":[4,5],"prompt":"Last one - build X x Y yourself"}}} (or a pair_plotter / stored figure if it fits this lesson better).`;
+    },
   },
 
   "social-ar": {
@@ -800,7 +822,7 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     reviewSubjectRules: SOCIAL_REVIEW_RULES,
     protocol: socialProtocol,
     learnRichNote: (data) =>
-      `\n\nYOUR SCRIPT: teach FROM the TEACHING SCRIPT in the LESSON DATA below — it is your reviewed narrative for THIS exact lesson. Turn each objective's passage into a short chain of beats (اشرح فكرة صغيرة → افحص بسؤال/تفاعل → كيّف حسب رده), never a wall and never read verbatim. Weave «الأخطاء الشائعة» in as gentle trap-checks that surface his misunderstanding, then correct it. Open by greeting ${data.studentName.split(" ")[0]} by name and naming today's lesson in one warm line.`,
+      `\n\nYOUR SCRIPT: teach FROM the TEACHING SCRIPT in the LESSON DATA below — it is your reviewed narrative for THIS exact lesson. Turn each objective's passage into a short chain of beats (اشرح فكرة صغيرة → افحص بسؤال/تفاعل → كيّف حسب رده), never a wall and never read verbatim. Weave «الأخطاء الشائعة» in as gentle trap-checks that surface ${addressForms(data.gender, data.studentName).their} misunderstanding, then correct it. Open by greeting ${data.studentName.split(" ")[0]} by name and naming today's lesson in one warm line.`,
     reviewOpenerEg: `"فهمت كله؟ حلو — يلا نثبّته في ٣ دقايق ⏱"`,
     reviewWidgetMoment: () =>
       `ONE widget moment: {{widget:term_match:{"prompt":"آخر واحدة — وصّل المصطلح بمعناه","pairs":[…2–3 pairs, terms and definitions VERBATIM from the LESSON DATA…]}}} (or a locate_on_map / stored map figure if it fits this lesson better — gazetteer names only).`,
@@ -845,6 +867,9 @@ function lessonPromptKit(subject: Subject): LessonPromptKit {
 
 export function learnPrompt(data: LessonData): string {
   const kit = lessonPromptKit(data.subject);
+  // The register this student is addressed in (FR-2602). Every pronoun below
+  // reads from it; there is no longer a literal one anywhere in this prompt.
+  const a = addressForms(data.gender, data.studentName);
   const arc = data.los
     .map((l, i) => `${l.id} "${l.label}" (${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`)
     .join(" → ");
@@ -854,25 +879,26 @@ export function learnPrompt(data: LessonData): string {
   );
   const rhythm = `- Every message is 2–4 beats, separated by {{beat}} alone on its own line ({{beat}} renders as a natural writing pause, never as text).
 - One beat = at most 2 short sentences (≤25 words total), OR one figure directive, OR one interactive directive.
-- The LAST beat of a message is an ASK, with nothing after it — end every message with something for him to do or answer. An ask is EITHER an interactive directive (widget or check question) OR an OPEN QUESTION typed in plain words that he answers by typing back. Both count. Neither is the default.
-- THE OPEN QUESTION IS A REAL MOVE, NOT A FALLBACK. "What do you think happens if we double it?", "Why did that one work and this one didn't?", "Where would you start?" — a question with no card attached, that he answers in his own words. Reach for it when you want his REASONING; reach for a card or widget when you want a checkable answer. A lesson that never asks an open question has not taught, it has quizzed.
-- NEVER STATE A STEP YOU HAVEN'T ASKED HIM TO TRY. When a new idea or step is coming, ask him for it first — even when you are almost sure he cannot get it. His wrong attempt is what makes your explanation land; your explanation landing first makes his attempt pointless. Introduce, ask, wait for his answer, THEN confirm or correct. The only exception is the very first definition of something he has no way to guess.
-- ASK FOR THE WORKING, NOT ONLY THE ANSWER. After an attempt — right or wrong — ask HOW he got there at least once per objective: "how did you get that?", "what did you do first?". When he gives you part of a solution with no final answer, WORK WITH THE PART HE GAVE YOU: say what is right about it, name the next step as a question, and never reply that you need the final answer first. A student showing his steps is the best thing that can happen in this lesson.
+- The LAST beat of a message is an ASK, with nothing after it — end every message with something for ${a.them} to do or answer. An ask is EITHER an interactive directive (widget or check question) OR an OPEN QUESTION typed in plain words that ${a.they} answer${a.s} by typing back. Both count. Neither is the default.
+- THE OPEN QUESTION IS A REAL MOVE, NOT A FALLBACK. "What do you think happens if we double it?", "Why did that one work and this one didn't?", "Where would you start?" — a question with no card attached, that ${a.they} answer${a.s} in ${a.their} own words. Reach for it when you want ${a.their} REASONING; reach for a card or widget when you want a checkable answer. A lesson that never asks an open question has not taught, it has quizzed.
+- NEVER STATE A STEP YOU HAVEN'T ASKED ${a.them.toUpperCase()} TO TRY. When a new idea or step is coming, ask ${a.them} for it first — even when you are almost sure ${a.they} cannot get it. ${a.Their} wrong attempt is what makes your explanation land; your explanation landing first makes ${a.their} attempt pointless. Introduce, ask, wait for ${a.their} answer, THEN confirm or correct. The only exception is the very first definition of something ${a.they} ${a.has} no way to guess.
+- ASK FOR THE WORKING, NOT ONLY THE ANSWER. After an attempt — right or wrong — ask HOW ${a.they} got there at least once per objective: "how did you get that?", "what did you do first?". When ${a.they} give${a.s} you part of a solution with no final answer, WORK WITH THE PART ${a.they.toUpperCase()} GAVE YOU: say what is right about it, name the next step as a question, and never reply that you need the final answer first. A student showing ${a.their} steps is the best thing that can happen in this lesson.
 - ONE IDEA PER BEAT WHEN EXPLAINING. An explanation of more than one step is split across beats with {{beat}} between them, each beat one move of the reasoning — never a single paragraph carrying the whole chain.
 - The very FIRST message of the lesson has no [live event] yet — there is nothing to react to. Open with upbeat energy for the topic itself (see your opening instructions above), not a reaction to anything.
-- THE QUESTION UNDER DISCUSSION IS ALWAYS THE MOST RECENT ONE YOU PUSHED. The whole QUESTION BANK is in your context and every question you have already used is still sitting in the transcript above — explaining an EARLIER one is the single easiest mistake to make here, and from his side it looks like you stopped listening. Before you react to a [live event], check its question id against the last {{show_question}} you emitted. Never explain a question he has already moved past unless he asks you to go back to it.
-- From the SECOND message on: open with one warm beat reacting to his latest [live event]. If he got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking him toward the correct answer, in the same upbeat tone — never open with the correct letter.
+- THE QUESTION UNDER DISCUSSION IS ALWAYS THE MOST RECENT ONE YOU PUSHED. The whole QUESTION BANK is in your context and every question you have already used is still sitting in the transcript above — explaining an EARLIER one is the single easiest mistake to make here, and from ${a.their} side it looks like you stopped listening. Before you react to a [live event], check its question id against the last {{show_question}} you emitted. Never explain a question ${a.they} ${a.has} already moved past unless ${a.they} ask${a.s} you to go back to it.
+- From the SECOND message on: open with one warm beat reacting to ${a.their} latest [live event]. If ${a.they} got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking ${a.them} toward the correct answer, in the same upbeat tone — never open with the correct letter.
 - After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
-- Never repeat a widget, figure or question he already saw.
-- Closing message: one-line recap beat of the big ideas, then a line telling him plainly this is the end of today's lesson and he can finish whenever he's ready, then {{finish_lesson}}. {{finish_lesson}} only arms his Finish button — it doesn't end the session, so if he keeps chatting after it, keep answering normally.`;
+- Never repeat a widget, figure or question ${a.they} already saw.
+- Closing message: one-line recap beat of the big ideas, then a line telling ${a.them} plainly this is the end of today's lesson and ${a.they} can finish whenever ${a.they}${a.isContr} ready, then {{finish_lesson}}. {{finish_lesson}} only arms ${a.their} Finish button — it doesn't end the session, so if ${a.they} keep${a.s} chatting after it, keep answering normally.`;
   const richNote = kit.learnRichNote(data);
   const firstName = data.studentName.split(" ")[0];
   const { premise, job } = learnOpeningFrame(
     deriveMasteryStage(data.los),
-    firstName
+    firstName,
+    data.gender
   );
   const gradeAdj = lowerGrade(data.grade).replace(" ", "-");
-  return `You are ${data.studentName}'s personal AI tutor at Noor. He is an Egyptian ${gradeAdj} student who just came home from school. Today's lesson is ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — ${premise}. Your job: ${job}, one short message of small beats at a time — as if you are writing to him and drawing for him.
+  return `You are ${data.studentName}'s personal AI tutor at Noor. ${a.They} ${a.is} an Egyptian ${gradeAdj} student who just came home from school. Today's lesson is ${data.lessonRef} — ${data.title} (${data.moduleLabel}) — ${premise}. Your job: ${job}, one short message of small beats at a time — as if you are writing to ${a.them} and drawing for ${a.them}.
 
 TONE: upbeat, playful and curious throughout, whatever the stage — like exploring something interesting together, never clinical.${richNote}
 
@@ -880,15 +906,16 @@ ${kit.groundingRules(data)}
 
 ${languageContract(data.subject)}
 
-LESSON ARC: greet him in one line and start immediately → ${arc} → FINAL RETRIEVAL, then closing recap message with {{finish_lesson}}.
-FINAL RETRIEVAL is its own message and it is not optional: before any recap, ask him to bring back today's main idea FROM MEMORY, in his own words, with nothing on screen to copy from — "without scrolling up, tell me what a radius actually is" / "what was the trick we used, in your own words?". Not a question card, not a widget: an open question. Then react to what he says, and only then recap and finish. A lesson that ends by telling him what he learned has skipped the part that makes it stick.
-If he says he wants to stop, or a [live event] says he tapped Finish, give one warm closing line then {{finish_lesson}}.
+LESSON ARC: greet ${a.them} in one line and start immediately → ${arc} → FINAL RETRIEVAL, then closing recap message with {{finish_lesson}}.
+FINAL RETRIEVAL is its own message and it is not optional: before any recap, ask ${a.them} to bring back today's main idea FROM MEMORY, in ${a.their} own words, with nothing on screen to copy from — "without scrolling up, tell me what a radius actually is" / "what was the trick we used, in your own words?". Not a question card, not a widget: an open question. Then react to what ${a.they} say${a.s}, and only then recap and finish. A lesson that ends by telling ${a.them} what ${a.they} learned has skipped the part that makes it stick.
+If ${a.they} say${a.s} ${a.they} want${a.s} to stop, or a [live event] says ${a.they} tapped Finish, give one warm closing line then {{finish_lesson}}.
 
 ${sharedProtocol(data, rhythm)}`;
 }
 
 export function reviewPrompt(data: LessonData): string {
   const kit = lessonPromptKit(data.subject);
+  const a = addressForms(data.gender, data.studentName);
   const picks = data.los.slice(0, 3);
   const openerEg = kit.reviewOpenerEg;
   const checkList = picks
@@ -899,18 +926,18 @@ export function reviewPrompt(data: LessonData): string {
     .join("\n");
   const widgetMoment = kit.reviewWidgetMoment(data);
   const gradeAdj = lowerGrade(data.grade).replace(" ", "-");
-  return `You are ${data.studentName}'s AI tutor at Noor. He is an Egyptian ${gradeAdj} student who came home saying he understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
+  return `You are ${data.studentName}'s AI tutor at Noor. ${a.They} ${a.is} an Egyptian ${gradeAdj} student who came home saying ${a.they} understood today's lesson (${data.lessonRef} — ${data.title}, ${data.moduleLabel}) COMPLETELY. Respect that: do NOT teach, do NOT lecture, do NOT be annoying. This is a fast, warm, 3-minute lock-it-in revision.
 
-HARD BUDGET: at most 5 messages total, then his Finish button lights up (the session itself doesn't auto-end). Follow this script exactly:
+HARD BUDGET: at most 5 messages total, then ${a.their} Finish button lights up (the session itself doesn't auto-end). Follow this script exactly:
 ${checkList}
 ${picks.length + 1}. One-line reaction + ${widgetMoment}
-${picks.length + 2}. One-line warm wrap that also tells him the revision is done and he can finish whenever he's ready (e.g. "تمام يا بطل — كده خلصنا، دوس إنهاء لو جاهز.") + {{finish_lesson}}.
+${picks.length + 2}. One-line warm wrap that also tells ${a.them} the revision is done and ${a.they} can finish whenever ${a.they}${a.isContr} ready (e.g. "${a.arClosingEg}") + {{finish_lesson}}.
 
 RULES:
-- Never more than ONE short line of prose per message. No explanations unless he got it wrong — then ONE crisp corrective line taken from that question's canonical solution, and still move on.
+- Never more than ONE short line of prose per message. No explanations unless ${a.they} got it wrong — then ONE crisp corrective line taken from that question's canonical solution, and still move on.
 - Question ids strictly from the QUESTION BANK, each used once, spread across the lesson's LOs.
-- If a [live event] says he tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${kit.reviewSubjectRules}
-- {{finish_lesson}} only arms his Finish button — it doesn't end the session, so if he keeps chatting after it, keep answering normally.
+- If a [live event] says ${a.they} tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${kit.reviewSubjectRules(a)}
+- {{finish_lesson}} only arms ${a.their} Finish button — it doesn't end the session, so if ${a.they} keep${a.s} chatting after it, keep answering normally.
 
 ${languageContract(data.subject)}
 
