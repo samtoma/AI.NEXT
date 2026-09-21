@@ -8,6 +8,142 @@ scheme is described in [docs/VERSIONING.md](docs/VERSIONING.md). Entries are
 written for someone who does not know the codebase, and every line that closes a
 requirement names it.
 
+## [Unreleased]
+
+Feature 002 — identity, per-student isolation and the admin console — built in seven
+phases on `feat/002-identity-and-admin-console`. **Not merged, not tagged, not
+deployed.** `app/package.json` is deliberately not bumped: the release is Samuel's
+(VERSIONING.md step 3).
+
+Until this ships, "which student is using the product" was answered by a dropdown.
+That is the thing that changes.
+
+### Added
+
+- **Real accounts, and the end of the picker.** A student signs up with an email
+  address and a password, confirms the address, and signs in. Before this there was
+  a menu of demo students and anyone could pick any of them; there was no such thing
+  as *your* data. Sign-up asks for name, grade, and optionally how the tutor should
+  address her and what she is interested in. Sessions are two cookies no page script
+  can read, the short one expiring in fifteen minutes and the long one rotating on
+  every use — and if an old one is ever replayed, every session on that account is
+  ended, because a replayed credential means somebody has a copy. Five wrong
+  passwords lock the account for fifteen minutes. Reset works by email and says the
+  same thing whether or not the address exists. `FR-2001`…`FR-2012`, `FR-2014`.
+- **Per-student isolation enforced by the database, not by remembering to filter.**
+  Twenty tables now carry row-level security policies, and the application connects
+  as a role that cannot bypass them. A query that forgets to say which student it is
+  about returns **nothing** rather than everything — which is the opposite of the
+  usual failure, and the point. Asking for another student's record answers "not
+  found", byte for byte identical to asking for a record that was never there.
+  `FR-2101`…`FR-2109`.
+- **An admin console, as a separate build of the same codebase.** The pipeline, the
+  content review queue, the gallery and the dev harnesses no longer live in the
+  student's app at all — they are compiled into a second build that runs on its own
+  port. Four roles decide who sees what: content review, evidence access, student
+  data, cost and billing. An operator holding only one of them is refused the rest,
+  and the refusal is recorded. `FR-2201`…`FR-2211`.
+- **A real record of what a learning session was.** The `sessions` table had existed
+  for months and had never held a single row, so a tutor turn could only be tied to
+  the lesson it belonged to by guessing from timestamps. Sessions now open, close on
+  completion or after thirty minutes of silence, and every turn, answer, check and
+  upload is attached to one. `FR-2301`, `FR-2302`, `FR-2309`.
+- **Student 360, one timeline, and a replay.** An operator can open a student's
+  record and see the whole of it in one place — mastery over time, attempts, time on
+  task, help-seeking, misconceptions, cost — and then open any past session as a
+  single ordered story: what the tutor said, what she answered, which widgets she
+  used, when the mastery moved. A replay renders it in the student's own screens,
+  made read-only, labelled "Reconstructed from stored records" and stamped with the
+  version that drew it, so a replay that no longer matches what she actually saw can
+  be recognised rather than believed. `FR-2303`…`FR-2305`.
+- **Every operator read of a student's record is logged**, with who and when, shown
+  to the next operator who opens that record. Operators can add to that log and
+  cannot remove from it. `FR-2306`.
+- **Cost per student, over time, honestly labelled.** AI spend and photo/OCR spend
+  are reported as two figures and never blended; per-student figures reconcile
+  against the period total and say so on the page; every number says "imputed at
+  list price" because that is what it is. `FR-2401`…`FR-2403`, `FR-2407`.
+- **Subscription status per student — a record, never a gate.** Only the cost and
+  billing role can set it, every change records who and when, and a test scans the
+  student-facing screens to prove nothing there reads it. No student is ever shown a
+  door that is locked. `FR-2404`…`FR-2406`.
+- **A security view, and alerts.** Sign-ins and failures over time, accounts locked
+  right now and why, top source addresses, live sessions, refusals by operator, and
+  a cross-student-access counter whose acceptable value is zero. A sweep evaluates
+  four alert rules plus a fifth that only ever reports. `FR-2502`.
+- **Cohort overviews and a dictionary.** How a subject and grade are doing by
+  school-year week, an objective-by-week heatmap that shows "never reached"
+  differently from "reached and failing", and a definitions page every query cites by
+  name — so two people reading the same number mean the same thing by it.
+  `FR-2507`.
+- **The tutor addresses each student correctly.** She says how she would like to be
+  spoken to at sign-up, or declines; the tutor's language follows on the next turn,
+  with no sign-out. `FR-2601`…`FR-2603`, `FR-2606`.
+
+### Fixed
+
+- **The tutor assumed every student was a boy.** Not as a default that could be
+  changed — there was no setting. Close to a hundred masculine forms across the
+  lesson, chat, check-in, widget-documentation and grader prompts (63 in the lesson
+  prompt alone, and three files nobody had counted), and the text that read as
+  "neutral" was simply the
+  masculine register, served to girls. All of it now comes from one place, with a
+  form that is correct for either when she has not said. `FR-2605`.
+- **All fourteen interactive widgets told the tutor the student was called "Omar"** —
+  the name of a retired demo student — whichever student was actually using them, and
+  one of them used a masculine pronoun.
+- **Every photo/OCR row in the cost ledger had been written as zero**, so the upload
+  figure we report separately was structurally zero and always had been. It reads the
+  parser's real usage now.
+- **Turns killed by the content guard also cost nothing, on paper.** They cost real
+  money; the guard just stops the process before the cost is written down. They are
+  priced at list price now and marked redacted, and a failed or redacted turn no
+  longer eats into a student's turn allowance.
+- **The input-token count included the cache counters**, which over-stated it
+  everywhere it appeared.
+- **A finished session could be recorded as having ended before it began**, when the
+  inactivity timeout stamped it with the last time it was seen.
+- **The tool that proves a prompt did not change had been broken**, so every change
+  for weeks could only report that it "fails the same way it did before". It works
+  again, and now covers two prompts it had never been able to reach.
+
+### Security
+
+- **The application had been connecting to the database as a superuser**, in both
+  places it runs. A superuser ignores row-level security completely, so the whole
+  isolation scheme would have been decoration. It now connects as an ordinary role
+  that the policies actually apply to, and the proof is run as that role — run as a
+  superuser it passes for the wrong reason.
+- **The console accepted a student's credential**, because browsers share cookies
+  across ports on localhost. Each surface now has its own cookie names, and a token
+  from the wrong surface is refused, recorded, and left untouched rather than
+  destroyed.
+- **Two places leaked other students' data and are gone**: an endpoint that returned
+  every student's name, grade and interests to anyone who asked, and a panel on the
+  pipeline page that displayed the most recent tutor conversation written by *any*
+  student.
+- **Operator passwords are never written into a configuration file.** The first
+  operator is created without one and obtains it through the ordinary reset flow,
+  and reset links are built from a configured address rather than from whatever host
+  the request claimed to be for.
+
+### Known gaps
+
+- **Nothing here is deployed.** The console has no hostname and no Cloudflare Access
+  policy yet.
+- **Google sign-in is built and switched off**, and **no email has ever actually been
+  sent** — both wait on credentials. Locally, every link is written to a folder.
+- **Analytics is built and inert**: with no measurement id configured, no script
+  loads on any screen.
+- **A student cannot yet edit her own profile, or see where she is signed in** — the
+  endpoints exist, the screens do not.
+- **There is no way to delete an account**, and the retention decision that would say
+  what "delete" means has not been made.
+- **The Arabic prompts still carry masculine forms outside direct address.** Out of
+  scope for a maths-only build, and named so it is not forgotten.
+- Full status, row by row, with what proves each one:
+  `specs/002-identity-and-admin-console/traceability.md`.
+
 ## [PDR1-0-v0.4.0] — 2026-09-20
 
 The fix pass. Ten of the 27 issues still open after v0.3.0 are closed with code;

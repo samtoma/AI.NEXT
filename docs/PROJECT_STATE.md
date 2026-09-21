@@ -1,22 +1,137 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-20 (`PDR1-0-v0.4.0`; constitution v3.1.1)
+> Last updated: 2026-09-21 (`feat/002-identity-and-admin-console` at `1ea3e4b`; released
+> `PDR1-0-v0.4.0`; constitution v3.1.1)
 
-## ➡️ NEXT WORKSTREAM — accounts, and an admin dashboard (Samuel, 2026-09-20)
+## 🏗️ IMPLEMENTED — identity, isolation and the console (2026-09-21, `feat/002-identity-and-admin-console`)
 
-**Read this first if you are a new session.** Samuel's direction at the end of the
-`v0.4.0` session, recorded verbatim in intent.
+**Read this first if you are a new session.** Feature 002 is **built, not merged and not deployed**.
+Seven phase commits on one branch, each closed by a live smoke script. The record is the commit
+messages (`git log --format='%h %s%n%n%b' origin/PDR1-0..HEAD`) and
+[`specs/002-identity-and-admin-console/traceability.md`](../specs/002-identity-and-admin-console/traceability.md)
+rev. 2 — **62 VERIFIED, 2 BUILT, 13 PARTIAL, 2 OPEN, 1 BLOCKED, 4 DEFERRED of 84**.
+
+| Phase | What shipped | Commit |
+|---|---|---|
+| **P0** | Learning sessions become real — `sessions` had never held a row; lifecycle wired into four routes, legacy strings backfilled, at most one open session per student as a database invariant | `3747989` |
+| **P1** | Accounts, sign-in and isolation enforced by the database — migrations 012–017, fourteen auth endpoints, Argon2id, both tokens HttpOnly, RLS FORCEd on twenty tables, the picker deleted | `66d934c` |
+| **P2** | The console as a second build target — `AINEXT_SURFACE`, its own `distDir`, operator sign-in, four roles, the four operator surfaces re-homed and deleted from the student tree | `65d180c` |
+| **P3** | Student 360, session list, one-order timeline, reconstructed replay, audited operator reads — plus `renderer_version` stamped at write time so a stale replay is recognisable | `b9e53cb` |
+| **P4** | Cost honestly labelled — ledger outcomes and price basis, per-student series, the rollup, subscription status as a record that gates nothing | `0ab095a` |
+| **P5** | Monitoring and analytics — the security view, four alert rules plus a shadow rule, GA4 as an audience layer only, cohort overviews and a metric dictionary | `f90daee` |
+| **P6** | The tutor's voice — the capture harness repaired, one address seam, the masculine default removed | `1ea3e4b` |
+
+Two commits between phases are not features and are worth knowing about: `2774a79` replaced every
+same-client `Promise.all` with a sequential helper (pg@9 removes the implicit queue), and `bdc4f00`
+refreshed the generated traceability counts, which had failed CI on every push since P1.
+
+**The proof, all of it run by hand against live servers:** red-team isolation **45/45**, console
+smoke **53/53**, P3 **45/45**, P4 **54/54**, P5 **68/68**, P6 green with three live turns and zero
+masculine leaks. `npm test` is **423 passing** on HEAD. None of the smoke scripts runs in CI — they
+need a database, and CI has none.
+
+### What the work found that nobody had planned for
+
+Six defects, none of them on any list before the phase that hit them:
+
+1. **The application connected to Postgres as a superuser**, and a superuser bypasses row-level
+   security unconditionally. Every policy we were about to write would have been inert. `ainext_app`
+   is now a non-superuser, non-owner role, and the isolation proof runs *as it*.
+2. **The console accepted a student's refresh token**, because localhost cookies are shared across
+   ports. Refresh, logout and revocation are surface-bound now, and the console has its own cookie
+   names.
+3. **Operators could not obtain a password at all.** ADR-0014's bootstrap said to seed one; nothing
+   could write it without putting a credential in a config file. Migration 019 lets an operator use
+   the ordinary reset flow instead.
+4. **Every OCR row in the cost ledger had been written as zeros**, so the upload figure FR-2402 asks
+   us to keep separate was structurally zero. It reads the parser's own output now.
+5. **The sacred-guard redaction path also wrote zeros** — the guard kills the CLI before its cost
+   line — so redacted turns under-reported. Real streamed tokens, repriced at list price.
+6. **The prompt byte-identity harness had been broken at HEAD**, which is why every earlier gate
+   could only report "fails identically at HEAD". It runs as documented again, and now covers the two
+   prompts it had never reached.
+
+And one thing the voice work found that is worse than a defect: **all fourteen widgets narrated
+every student's result to the model as "Omar"** — the retired demo student — and the pre-P6 prompt
+text was not neutral. It was the masculine register, served to girls.
+
+### What is **not** done
+
+- **Nothing is deployed.** The console has no hostname, no tunnel ingress and no Cloudflare Access
+  policy (FR-2208 is OPEN). `ainext.reletix.com` still serves the frozen baseline from `main`.
+- **Google sign-in has never run** (FR-2006, the one BUILT row) and **SMTP has never sent a message**
+  (FR-2004) — both need credentials only Samuel can provide.
+- **GA4 is unconfigured**, so the analytics posture is asserted by unit tests and by the fact that
+  nothing renders.
+- **No parent view** (FR-2901/2902, deferred by D1) and **no phone+OTP** (FR-2903, deferred by D9).
+- **No student can edit her own profile** (FR-2013) **or see where she is signed in** (FR-2009) —
+  both are endpoints and data model with no surface on top.
+- **No account-deletion path**, and the schema would refuse one: `students_account_id_fkey` has no
+  `ON DELETE` action (FR-2310, downstream of the retention decision).
+- **The isolation proof is not in CI** (SC-102's "CI-blocking" half).
+- **Two follow-ups**: S23 shipped in P6; **S24** — masculine forms outside the vocative in the
+  Arabic and social prompts — is open and keeps FR-2602 PARTIAL.
+- **The constitution Principle VII amendment is still a proposal.** Gender is now collected and
+  operator transcript access is now a logged privilege; the governance that sanctions both has not
+  landed (**S9**).
+
+### Setup that needs Samuel — the hand-off
+
+Also kept as [`specs/002-identity-and-admin-console/SETUP.md`](../specs/002-identity-and-admin-console/SETUP.md),
+beside the matrix that cites its S-numbers. **Every row has a working local stand-in**, so none of it
+blocks testing on a laptop; what it blocks is the box.
+
+| # | Needed for | What Samuel provides | Local stand-in until then |
+|---|---|---|---|
+| S1 | Google sign-in (FR-2006) | A Google Cloud OAuth 2.0 **Web** client: client id + secret; authorised redirect URIs `http://localhost:3000/api/auth/google/callback` and the future console/student hostnames. Env: `AINEXT_GOOGLE_CLIENT_ID/SECRET/REDIRECT_URI` | Button renders disabled: "Google sign-in not configured" |
+| S2 | Verification + reset mail (FR-2004, FR-2010) | Mailu SMTP on the box: `AINEXT_SMTP_URL` (e.g. `smtps://noreply%40<domain>:<pw>@mail.<host>:465`), `AINEXT_MAIL_FROM`; SPF/DKIM/DMARC already on the sending domain (research R4) | `AINEXT_MAIL_TRANSPORT=console` — links printed to the dev-server log and written to `app/.local-mail/` |
+| S3 | Access-token signing | `AINEXT_AUTH_SECRET` (≥32 random bytes) on the box; rotating it signs everyone out | Generated once by `local-dev.sh` into `app/.env.local` |
+| S4 | Database roles on the box | Real passwords for `ainext_app`, `ainext_operator`, `ainext_maint` in the box `.env`; `DATABASE_URL` repointed to `ainext_app` (ADR-0012 — without this RLS is inert) | Dev passwords = role names, written by `local-dev.sh` |
+| S5 | First operator (ADR-0014) | Confirm `AINEXT_BOOTSTRAP_OPERATOR_EMAIL` = his email; run the reset flow once to set a password | `samuel.s.toma@gmail.com` seeded locally, no password; reset link appears in `.local-mail/` |
+| S6 | Console hostname (P2, OCI) | DNS + Cloudflare tunnel ingress for the console hostname; Cloudflare Access policy for it (FR-2208) | Console on `http://localhost:3002` |
+| S7 | GA4 (P5) | A GA4 property + measurement id `AINEXT_GA_MEASUREMENT_ID`; confirm the cookieless-on-student-surfaces posture (Open Decision 7) | Wrapper loads nothing when unset |
+| S8 | Design artifact | Update the published Noor Play artifact: `--play-inactive-border` → `#9890B5` | Repo tokens already updated |
+| S9 | Governance | Approve the Principle VII amendment (v3.1.1 → v3.2.0) — constitution edit on approval | Proposal file in `specs/002-…/` |
+| S10 | Legal | Egyptian data-protection opinion on guardian consent for under-15s (PDPL grace ends 2026-11-01) | Consent fields modelled, unenforced |
+| S11 | CODEOWNERS | Replace `@tamer-handle` → `@tdeif` (and Kamil's) on every long-lived branch; request Tamer on PR #43 | — |
+| S12 | ADR numbering | Decide how to resolve the two files both numbered ADR-0007 | — |
+| S13 | Google OAuth library | `arctic@3.7.0` (research R3's pick) is marked deprecated on npm as of 2026-09; it works and the API matches. Decide: keep, or switch to R3's named zero-dependency fallback before the box deploy | Works locally when S1 is configured |
+| S14 | Contract tidy (docs) | `contracts/auth.md` emits `failed_signup` on a 409; `contracts/analytics.md`'s closed vocabulary lacks it. Fold one way (code keeps it in a separate `ENDPOINT_EVENT_NAMES` set, flagged) | — |
+| S15 | Google first sign-in grade | Google supplies no grade; the code defaults new Google accounts to grade 9 (Prep-3) and lets the student fix it (FR-2013). Confirm, or require grade before account creation (changes the callback contract) | Default 9 |
+| S16 | Residual unprincipled read (security review) | Sign-in needs to resolve account → student before a principal exists, so `ainext_app` can read name/grade/interests of any *accounted* student with no principal set (no email, no credential). Tightening path named in migration 017's header (`SECURITY DEFINER` resolver owned by `ainext_maint`). Ask the security-privacy-officer agent to review before the box deploy | Bounded, documented |
+| S17 | Security review (content tables) | `questions` carries no RLS by design (curriculum is not student data), but `/api/attempts` accepts a question with `materialised_from IS NOT NULL` — a widget the tutor improvised for one student can be answered by another. Content-only (no answers or mastery leak). Decide: scope materialised questions to their student, or accept | Accepted for the pilot |
+| S18 | Security review (console refusal) | FR-2205: a student credential presented to the console is refused on address existence (the console's DB role deliberately cannot read `password_hash`), so on the console 403-vs-401 reveals that an address has a student account. Bounded by Cloudflare Access + operator-only audience. Accept, or make both answers 401 on the console | Accepted for the pilot |
+| S19 | Console 403 pages | A refused console page renders a refusal body with HTTP 200 (React Server Components cannot set a status without Next's `experimental.authInterrupts`); API refusals are real 403/401. Decide whether to enable the experimental flag later | As built |
+| S20 | `gh` token scope | Pushing commits that touch `.github/workflows/*` over HTTPS is refused: the `gh` OAuth token lacks the `workflow` scope. Run `gh auth refresh -h github.com -s workflow` once (browser step). Meanwhile pushes go over SSH (`git@github.com:samtoma/AI.NEXT.git`), which works | SSH push used |
+| S21 | Shared IP throttle (by design) | `auth_throttle`'s IP bucket (20 failures / 15 min) is shared by the student and console processes on one box (research R5). Heavy sign-in testing from one IP can 429 a legitimate operator sign-in until the window rolls. Know it when testing from the office; the smoke scripts reset the bucket themselves | — |
+| S22 | GA measurement id | `AINEXT_GA_MEASUREMENT_ID` (a GA4 property per solution — never pooled). Four of the eleven allow-listed events have client triggers today; the rest are server-only and listed in `lib/ga.ts` | Unset → no script renders |
+| S23 | ~~Follow-up (voice, client-side)~~ **done in P6** | All 14 widgets and PairPlotter now receive the student's name and register (`widget-address.test.mts` guards it) | — |
+| S24 | Follow-up (Arabic prompts) | Masculine forms survive outside the vocative in the Arabic/social prompts (`كيّف حسب رده`, `وجِّهه`, `إذا سأل`). Out of the maths-only scope; do it when the Arabic vertical is next touched, under the harness | Address block instructs the register |
+| T1 | Tailnet testing (done, local) | Student `http://macbook-pro.tail9c994e.ts.net:3000` (or `100.76.188.23:3000`), console `…:3002`. Dev servers bind all interfaces; `AINEXT_DEV_ORIGINS` in `app/.env.local` lists the hosts Next may serve dev assets to (`next.config.ts` `allowedDevOrigins`); `AINEXT_PUBLIC_URL`/`AINEXT_CONSOLE_URL` now carry the tailnet name so mailed links open from the iPad. HTTP only (tailnet HTTPS certs are not enabled on this tailnet — `tailscale serve` would need them); cookies are `Secure` only in production, so sign-in works over plain HTTP here | — |
+
+**To try it**:
+[`specs/002-identity-and-admin-console/quickstart.md`](../specs/002-identity-and-admin-console/quickstart.md)
+— one command, both surfaces, three local identities, and what each check proves.
+
+**Decisions log: nothing new.** No ADR was written on this branch; ADR-0012…ADR-0016 were already
+accepted on 2026-09-20 and the implementation follows them. Everything that looks like a new decision
+is a row in the setup table above, which is to say it is still Samuel's.
+
+## ➡️ THE DIRECTION THIS CAME FROM — accounts, and an admin dashboard (Samuel, 2026-09-20)
+
+Samuel's direction at the end of the `v0.4.0` session, recorded verbatim in intent, and now built.
 Full detail: [`ROADMAP.md`](ROADMAP.md) § *Samuel's direction*.
 
 **SPECCED 2026-09-20** on `req/identity-and-admin-console` →
 [`specs/002-identity-and-admin-console/`](../specs/002-identity-and-admin-console/): spec (70 FRs,
 14 SCs), plan, research, data-model, contracts, quickstart, traceability green;
 **ADR-0012…ADR-0016**; a constitution Principle VII amendment **proposed** (v3.1.1 → v3.2.0) and
-**awaiting Samuel**. **Not started: no code exists.** The first implementation slice is **Phase 0 —
-learning sessions become real**: `sessions` is dead schema today (never written), and the identifier
-the product passes around is a string the browser invented, so the tie between a tutor turn and the
-lesson it belonged to is lost at write time, every day, and no later migration recovers it.
+still **awaiting Samuel**. **IMPLEMENTED 2026-09-21** in seven phases on
+`feat/002-identity-and-admin-console` — see the section above. The first slice was **Phase 0 —
+learning sessions become real**, chosen first because `sessions` was dead schema that had never held
+a row and the tie between a tutor turn and its lesson was being lost at write time, every day, with
+no later migration able to recover it. It is no longer dead schema.
 
 1. **An admin dashboard, as its own release.** Everything that is not the education
    itself — pipeline, evidence walk, content review, gallery — gets a deliberate home.
@@ -35,6 +150,9 @@ lesson it belonged to is lost at write time, every day, and no later migration r
    Samuel named, not a copy of it.
 3. **Landing page, admin roles, lesson resume** (#6, #7, #8, #9, #25) ride with the
    identity work they were already blocked on.
+   **As of 2026-09-21: admin roles shipped** (four of them, per person, one
+   authorisation seam — 002 FR-2202/2203). The landing page and lesson resume are
+   **unblocked, not built** — they were waiting on accounts and accounts now exist.
 
 **Two decisions settled — do not relitigate:**
 - **BKT stays exactly as it is** until Samuel says otherwise. The v0.4.0 display fix

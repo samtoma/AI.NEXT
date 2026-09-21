@@ -1,6 +1,6 @@
 # Traceability — Identity & Admin Console
 
-**Status date**: 2026-09-20 (rev. 1) · **Branch**: `req/identity-and-admin-console`
+**Status date**: 2026-09-21 (rev. 2) · **Branch**: `feat/002-identity-and-admin-console`
 **Authority**: [spec.md](./spec.md) · [decisions.md](./decisions.md) ·
 constitution [v3.1.1](../../.specify/memory/constitution.md) ·
 [ADR-0012](../../docs/decisions/0012-per-student-isolation-rls.md) (per-student isolation, database-enforced) ·
@@ -10,22 +10,20 @@ constitution [v3.1.1](../../.specify/memory/constitution.md) ·
 [ADR-0016](../../docs/decisions/0016-analytics-and-monitoring-posture.md) (analytics and monitoring
 posture) — all five accepted 2026-09-20
 
-> **This is the pre-implementation matrix.** Spec and traceability come before code on this
-> workstream (D11); per `docs/BRANCHING.md`, the `req/` branch merges before any `feat/` branch
-> starts, and no code lands here except the `scripts/traceability.py` registration that makes this
-> file checkable. So every row below is **OPEN**, **DEFERRED** or **BLOCKED** by construction —
-> there is no VERIFIED, BUILT or PARTIAL claim in this document that is not a named, deliberate
-> exception, because claiming progress nobody has made is exactly the drift this tool exists to
-> catch. The one exception is real and stated where it appears: three cost rows are **PARTIAL**
-> because an existing file (`lib/cost-queries.ts`, shipped in `PDR1-0-v0.4.0`) already does part of
-> this feature's work, for a different requirement, before this one was written. This document
-> exists so the first `feat/` branch has rows to move — a place to write VERIFIED against, not a
-> record of what already happened.
+> **Rev. 2 (2026-09-21) — the implementation matrix.** Rev. 1 was written before any code and said
+> so: every row was OPEN by construction. Phases P0–P6 have since landed on
+> `feat/002-identity-and-admin-console` (`3747989` … `1ea3e4b`), each closed by a live smoke script,
+> and this revision moves the rows. **Nothing was promoted for existing:** the counting rule below
+> was applied row by row, and where the only evidence is that a file compiles, the row says BUILT.
+> Six rows are deliberately less finished than the phase commits might suggest — FR-2004 (mail),
+> FR-2006 (Google), FR-2009 (no student session list), FR-2013 (no profile editor), FR-2306
+> (the audit's immutability is a grant nobody has tried to break), FR-2310 (no deletion path, and
+> the schema would refuse one) — and SC-102's "CI-blocking" half is unmet because the isolation
+> proof does not run in CI. Those six are the point of this document.
 
 This document answers one question per row: **for this requirement, what code exists, and what
 actually proves it works?** Deliberately harsher than the spec — a requirement whose code exists but
-has never been executed is not "done" here. Today the honest answer for almost every row is "none
-yet," and the row says so plainly rather than being omitted.
+has never been executed is not "done" here.
 
 ## Status vocabulary
 
@@ -33,7 +31,7 @@ yet," and the row says so plainly rather than being omitted.
 |---|---|
 | **VERIFIED** | Code exists **and** was executed in this environment — against a loaded database, a passing test, or a rendered page. |
 | **BUILT** | Code exists and typechecks, but the thing that would prove it needs the box, the Claude runtime, or a browser session nobody has run. |
-| **PARTIAL** | Some of the requirement is real; the rest is named in the Gap column. |
+| **PARTIAL** | Some of the requirement is real; the rest is named in the Proof column. |
 | **OPEN** | Not started. |
 | **BLOCKED** | Cannot proceed here — the blocker is named. |
 | **DEFERRED** | Out of scope by an explicit decision, with the decision cited. |
@@ -42,26 +40,44 @@ yet," and the row says so plainly rather than being omitted.
 missing one piece is PARTIAL, not "BUILT with a note" — because the missing piece is the part that
 was actually hard.
 
+## The evidence these rows cite
+
+| Evidence | What it is | Result |
+|---|---|---|
+| `scripts/red-team-isolation.sh` | P1. Two real accounts, a cookie jar each, curl + psql as `ainext_app` against a live server and database | **45/45** |
+| `scripts/console-smoke.sh` | P2. Both build targets, four roles, operator sign-in, refusals | **53/53** |
+| `scripts/console-p3-smoke.sh` | P3. One real tutor turn, then the 360, the session list, the timeline, the replay and the audit counts | **45/45** |
+| `scripts/console-p4-smoke.sh` | P4. One real turn and one real upload, then the ledger, the rollup, the cost page and subscription status | **54/54** |
+| `scripts/console-p5-smoke.sh` | P5. The security view, the alert sweep, the GA posture and the overviews | **68/68** |
+| `scripts/voice-p6-smoke.sh` | P6. Three live turns — female, male, unspecified — plus the prompt capture and the source grep | green, zero masculine leaks |
+| `app/scripts/rls-proof.sql` | The policies queried directly as `ainext_app`, with and without a principal | run in P1 |
+| `app/scripts/check-surface-manifest.mts` | The route manifest of each build, read from the build artefact | 17 student / 14 admin, **in CI** |
+| `npm test` | 41 suites under `node --test`; a file declares what it proves with `@covers` | **423 passing** on `1ea3e4b` |
+
+Smoke scripts run by hand against the running dev servers. **None of them runs in CI** — `ci-cd.yml`
+runs `tsc`, both builds, both surface manifests, `npm test` and this matrix's gate, none of which
+needs a database. That is why several rows below distinguish "proved once" from "protected".
+
 ---
 
 ## 1. Accounts & sign-in — FR-2001…
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-2001 | One account per student; no way to become someone else | **OPEN** | — | — |
-| FR-2002 | Signup captures email, password, name, grade, gender; interests optional | **OPEN** | — | — |
-| FR-2003 | Password stored irreversibly; never in a log, event, or URL | **OPEN** | — | — |
-| FR-2004 | Email confirmation required before learning; expiring link, resend offered | **OPEN** | — | — |
-| FR-2005 | Email/password sign-in; failure never reveals which part was wrong | **OPEN** | — | — |
-| FR-2006 | Google sign-in; one email resolves to one account, either way | **OPEN** | — | — |
-| FR-2007 | Session credentials unreadable by page scripts, absent from any URL | **OPEN** | — | — |
-| FR-2008 | Short-lived access credential; rotating, revocable, reuse-detecting refresh credential | **OPEN** | — | — |
-| FR-2009 | Student sees and can end every active sign-in, per device | **OPEN** | — | — |
-| FR-2010 | Self-service password reset; single-use, expiring, answer identical either way | **OPEN** | — | — |
-| FR-2011 | Failed sign-ins throttle, then lock for a documented period | **OPEN** | — | — |
-| FR-2012 | Student can sign out immediately, without waiting for expiry | **OPEN** | — | — |
-| FR-2013 | Student can edit name, grade, gender, interests after signup | **OPEN** | — | — |
-| FR-2014 | Picker-era demo students are claimed or retired; history retained | **OPEN** | — | — |
+| FR-2001 | One account per student; no way to become someone else | **VERIFIED** | `api/auth/signup/route.ts`, `lib/auth/principal.ts`, `students.account_id` UNIQUE (migration 013) | Red-team `FR-2001` ×2 (signup A and B → 201 with two HttpOnly cookies). The picker is gone: `lib/demo-student.ts`, `DemoStudentSwitcher` and `/api/demo-students` are deleted, and console-smoke `FR-2104` shows the roster endpoint 404s. |
+| FR-2002 | Signup captures email, password, name, grade, gender; interests optional | **VERIFIED** | `components/auth/SignupForm.tsx`, `api/auth/signup/route.ts`, migration 015 | P6 smoke `FR-2601`: two accounts signed up through the real route, `students.gender` reads `female` and `male` afterwards. Gender and interests are both optional in the same payload; an empty gender is stored as NULL, not as a default. |
+| FR-2003 | Password stored irreversibly; never in a log, event, or URL | **VERIFIED** | `lib/auth/password.ts` (Argon2id; the only file that touches password material) | `password.test.mts` and `events.test.mts` (`@covers FR-2003`), the latter asserting across every branch in the file that no event row ever carried password material. |
+| FR-2004 | Email confirmation required before learning; expiring link, resend offered | **PARTIAL** | `lib/auth/verify.ts`, `lib/mail.ts`, `api/auth/{verify,resend-verification}`, `components/auth/{VerificationBanner,ResendVerification}.tsx` | Red-team `FR-2004` ×5 live: unverified `/api/ask` → 403 `email_unverified`, the link redeems, `emailVerified` flips. **Gap: only the console transport has ever run.** `AINEXT_MAIL_TRANSPORT=console` writes the link to `app/.local-mail/`; the SMTP path (`AINEXT_SMTP_URL`, `AINEXT_MAIL_FROM`) has never sent a message — setup **S2**. |
+| FR-2005 | Email/password sign-in; failure never reveals which part was wrong | **VERIFIED** | `api/auth/login/route.ts`, `components/auth/Controls.tsx` (`messageFor` — the only place a code becomes English) | `throttle.test.mts` (`@covers FR-2005`); `events.test.mts` [2] asserts a wrong password and an address with no account take the same branch and emit the same event. Red-team exercises both live. |
+| FR-2006 | Google sign-in; one email resolves to one account, either way | **BUILT** | `lib/auth/google.ts` (arctic + jose), `api/auth/google/login`, `api/auth/google/callback`, `components/auth/GoogleButton.tsx` | **Never executed.** No OAuth client exists, so the button renders disabled and the callback has never been reached — setup **S1**. Two further unconfirmed choices ride on it: the grade default of 9 for a new Google account (**S15**) and whether `arctic@3.7.0`, deprecated on npm since 2026-09, is kept (**S13**). |
+| FR-2007 | Session credentials unreadable by page scripts, absent from any URL | **VERIFIED** | `lib/auth/cookies.ts`, `lib/auth/cookie-names.ts`, `lib/auth/tokens.ts` | `cookies.test.mts` and `tokens.test.mts` (`@covers FR-2007`); red-team asserts two HttpOnly `Set-Cookie` headers on every signup and sign-in, and no token appears in any redirect. |
+| FR-2008 | Short-lived access credential; rotating, revocable, reuse-detecting refresh credential | **VERIFIED** | `lib/auth/session.ts`, `lib/auth/tokens.ts`, `api/auth/refresh/route.ts` | Red-team `FR-2008` ×4 live: refresh rotates, replaying the old token → 401, **every** session for that account is then revoked, and `suspicious_activity` + `session_revoked` rows appear. `session.test.mts`, `tokens.test.mts`. |
+| FR-2009 | Student sees and can end every active sign-in, per device | **PARTIAL** | `api/auth/sessions/route.ts`, `api/auth/sessions/[id]/route.ts`, `lib/auth/session.ts`; operator UI in `components/console/OperatorSessions.tsx` | Red-team `FR-2009` ×3 live: the list returns two sessions, deleting another account's session answers 404 (not 403), deleting one's own returns 204. **Gap: no student-facing surface.** The operator console has a session list; the student's only control is the sign-out in `components/NavLinks.tsx`. A student cannot today *see* where she is signed in. |
+| FR-2010 | Self-service password reset; single-use, expiring, answer identical either way | **VERIFIED** | `lib/auth/reset.ts`, `api/auth/{forgot-password,reset-password}`, migration 019 (the operator arm) | Red-team `FR-2010` ×5 live (old password refused after reset, new accepted, events written). Console-smoke `FR-2010` ×2, including a request with a spoofed `Host: evil.test` still returning 202 and mailing the configured origin — the link is built from `AINEXT_CONSOLE_URL`, never the request. |
+| FR-2011 | Failed sign-ins throttle, then lock for a documented period | **VERIFIED** | `lib/auth/throttle.ts` (5 failures / 15 min, Postgres-backed), migration 013's `auth_throttle` | Red-team `FR-2011` ×2 live (the fifth wrong password → 423 with `until`; `failed_login` ×4+ and `account_locked` ×1 recorded). P5 smoke locks a throwaway account and finds it in the console's "Accounts locked right now" tile. `throttle.test.mts`. |
+| FR-2012 | Student can sign out immediately, without waiting for expiry | **VERIFIED** | `api/auth/logout/route.ts`, `api/auth/logout-all/route.ts`, `components/NavLinks.tsx` | Red-team `FR-2012` ×2 live: logout → 204, then `/api/auth/me` → 401 on the same jar. `session.test.mts`. |
+| FR-2013 | Student can edit name, grade, gender, interests after signup | **PARTIAL** | Data model only: migration 015; `lib/session-cache.ts` keys the prompt snapshot on the register so a change lands next turn | **Gap: there is no editor.** No student surface writes these columns — `(student)/` holds `page`, `student`, `dashboard` and `spine`, and `/api/auth/me` is GET-only. The *effect* half is verified (P6 `FR-2606`, `session-cache.test.mts`), but the only way to change a value today is psql or a new signup. FR-2606 is therefore VERIFIED while this row is not. |
+| FR-2014 | Picker-era demo students are claimed or retired; history retained | **VERIFIED** | Migration 013 (`students.status`), `scripts/local-dev.sh` (seed first, retire second), `(console)/page.console.tsx` | Red-team `FR-2101`: as `ainext_app` with no principal, the students visible equal the *accounted* rows and every `legacy` row is invisible — retirement is enforced by RLS, not by a filter. Console-smoke `FR-2211`: the console still lists `Omar (demo)`. Nothing is deleted. |
 
 ---
 
@@ -69,15 +85,15 @@ was actually hard.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-2101 | Unscoped student-data access returns and changes nothing; fails closed | **OPEN** | — | — |
-| FR-2102 | Every request establishes its acting student before touching data | **OPEN** | — | — |
-| FR-2103 | Cross-student read answers not-found; write refused and logged | **OPEN** | — | — |
-| FR-2104 | Close the two named cross-student exposures, covered by failing tests | **OPEN** | — | — |
-| FR-2105 | Detached background work keeps the same student scope as its request | **OPEN** | — | — |
-| FR-2106 | One server-side authorisation point serves every operator surface | **OPEN** | — | — |
-| FR-2107 | Hiding a control is never authorisation, and never claimed as such | **OPEN** | — | — |
-| FR-2108 | Cross-student reads are a named, role-gated, enumerated exception list | **OPEN** | — | — |
-| FR-2109 | Every new record carries environment; no pooling, no cross-solution data | **OPEN** | — | — |
+| FR-2101 | Unscoped student-data access returns and changes nothing; fails closed | **VERIFIED** | Migration 017 (`ainext_app` non-superuser, ENABLE + FORCE RLS and one policy set on 20 tables), `lib/db.ts` `withPrincipal`, `scripts/local-dev.sh` repointing `DATABASE_URL` | Red-team `SC-102` + `FR-2101` ×3 as `ainext_app`: no principal → `count(*) FROM attempts` = **0**; a principal → exactly that student's rows; a probe of a table with no grant → permission denied. `app/scripts/rls-proof.sql`. `db.test.mts` (`@covers FR-2101`). The superuser connection that made all of this inert is gone. |
+| FR-2102 | Every request establishes its acting student before touching data | **VERIFIED** | `lib/student-context.ts`, `lib/auth/principal.ts`, `lib/db.ts` | Red-team `FR-2102` ×2 live: an attempt posted by A is owned by A; an analytics event that *claims Omar's student id in its body* is written under A, not Omar. `db.test.mts`. |
+| FR-2103 | Cross-student read answers not-found; write refused and logged | **PARTIAL** | `lib/rls-errors.ts` (42501 + the RLS message → 403 + `cross_student_access_denied`; anything else → 500), `lib/student-context.ts` | Read half **verified**: red-team `FR-2103` — `/api/uploads/1` and `/api/uploads/99999` as B both answer 404 with byte-identical bodies. Write half **verified at the database**: the same script's `INSERT attempts(student_id=B)` as principal A raises 42501. **Gap: the route-level branch has never fired.** No HTTP route accepts a foreign student id, so the 403-plus-event path exists, is unit-tested (`student-context.test.mts`) and has no live trigger — which is also why FR-2501's `cross_student_access_denied` is unobserved. |
+| FR-2104 | Close the two named cross-student exposures, covered by failing tests | **VERIFIED** | `/api/demo-students` deleted; the `/pipeline` latest-turn read and its Stage 05 panel removed from `lib/pipeline-queries.ts` | Red-team `FR-2104` ×2, console-smoke `FR-2104` ×2 (including "`/pipeline` HTML has no Stage 05 / ContextStage"), P3 `FR-2104` (`:3000/pipeline` → 404). Both exposures are absent from the student build's route manifest, not merely hidden. |
+| FR-2105 | Detached background work keeps the same student scope as its request | **VERIFIED** | `lib/db.ts` (`withPrincipal` around the detached `parseUpload`), `lib/uploads.ts` | `db.test.mts` (`@covers FR-2105`). P4 smoke: a real upload's detached parse wrote an `upload_parse` ledger row with non-zero tokens under that student's scope — work that runs after the response still carries the principal. |
+| FR-2106 | One server-side authorisation point serves every operator surface | **VERIFIED** | `lib/auth/authorize.ts` — the single seam; `(console)/layout.console.tsx` calls it before rendering anything | `authorize.test.mts` and `matrix.test.mts` (`@covers FR-2106`). Console-smoke and P3/P4/P5 exercise it live on every console page, for two operators with different role sets. |
+| FR-2107 | Hiding a control is never authorisation, and never claimed as such | **VERIFIED** | `lib/auth/authorize.ts`, `lib/console-routes.ts`, `components/console/*` nav derived from roles | `authorize.test.mts`, `matrix.test.mts`, `console-routes.test.mts` (`@covers FR-2107`). P5 `FR-2107`: the cost-only nav omits Security **and** the page itself refuses when fetched directly. Red-team `FR-2107`: anonymous requests to operator paths redirect rather than render. |
+| FR-2108 | Cross-student reads are a named, role-gated, enumerated exception list | **VERIFIED** | `lib/auth/authorize.ts` → `CROSS_STUDENT_READS` (`:148`) and `crossStudentReadAllowed` (`:166`) | `authorize.test.mts` (`@covers FR-2108`): a read not on the list fails closed; each entry names its role. The console's cross-student pages (student list, cost, overviews) go through it. |
+| FR-2109 | Every new record carries environment; no pooling, no cross-solution data | **VERIFIED** | Migration 012 (the eight student-scoped tables that lacked it), then `environment TEXT NOT NULL` **with no default** on every table migrations 013–022 create; every console query binds it | The constraint is the proof: an insert that forgot `environment` would fail, and P1–P5 wrote accounts, sessions, operators, role grants, operator reads, auth events, ledger rows, rollups and alert claims without one failing. Read side: `console-queries.ts`, `cost-queries.ts`, `security-queries.ts`, `overview-queries.ts` and `timeline.ts` all filter on it, and each rendered live. |
 
 ---
 
@@ -85,17 +101,17 @@ was actually hard.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-2201 | Console addresses do not resolve at all in the student build | **OPEN** | — | — |
-| FR-2202 | Reaching any operator surface needs a signed-in, role-holding account | **OPEN** | — | — |
-| FR-2203 | Four roles — content-review, evidence-access, student-data, cost-billing — granted per person | **OPEN** | — | — |
-| FR-2204 | content-review is a named safety control; its use is recorded | **OPEN** | — | — |
-| FR-2205 | A student account can never hold a role or reach the console | **OPEN** | — | — |
-| FR-2206 | `/spine` stays a student surface, never moves behind the console | **OPEN** | — | — |
-| FR-2207 | Operator sign-in is recorded separately from student sign-in, with roles | **OPEN** | — | — |
-| FR-2208 | Console stays behind Cloudflare Access in addition to operator accounts | **OPEN** | — | — |
-| FR-2209 | Console is bound by the published design system, like every surface | **OPEN** | — | — |
-| FR-2210 | Both surfaces run locally from one command; first account is repeatable | **OPEN** | — | — |
-| FR-2211 | Every console figure carries its unit, period, and named identifiers | **OPEN** | — | — |
+| FR-2201 | Console addresses do not resolve at all in the student build | **VERIFIED** | `lib/env.ts` (`AINEXT_SURFACE`), `next.config.ts` (`console.tsx`/`console.ts` page extensions, `.next-admin` distDir), `(student)`/`(console)` route groups, `proxy.ts` + `lib/proxy-rules.ts` | `npm run check:surface` / `check:surface:admin` read the built route manifest — 17 assertions student, 14 admin — and **both run in CI**. Console-smoke `FR-2201` ×4 and P3 `FR-2201` ×2 live, including `:3002/student` → 404 (not a redirect). `console-routes.test.mts`, `proxy-rules.test.mts`. |
+| FR-2202 | Reaching any operator surface needs a signed-in, role-holding account | **VERIFIED** | `(console)/layout.console.tsx` (authorize before render), `lib/console-auth.ts` | Console-smoke `FR-2202` ×3, P3 `FR-2202`, P4 `FR-2406`: a cost-only operator gets a refusal body with no student data on every view outside its role. `matrix.test.mts` (`@covers FR-2202`). |
+| FR-2203 | Four roles — content-review, evidence-access, student-data, cost-billing — granted per person | **VERIFIED** | Migration 014 (`operators`, `operator_roles`, one row per grant), `lib/auth/authorize.ts` | Console-smoke `FR-2203`: the cost-only operator holds exactly one role row. `authorize.test.mts`, `matrix.test.mts` (`@covers FR-2203`). The four-role operator's sign-in response and its `operator_login` event both carry all four. |
+| FR-2204 | content-review is a named safety control; its use is recorded | **VERIFIED** | `(console)/content/page.console.tsx` behind the `content-review` role; the review stamp (`questions.reviewed_by`, `reviewed_at`) is 001's shipped behaviour, unchanged here | Console-smoke `FR-2202`: the content view renders for the four-role operator and refuses the cost-only one, writing `permission_denied`. The stamp itself was verified under 001 and this feature moved the surface without touching it. |
+| FR-2205 | A student account can never hold a role or reach the console | **VERIFIED** | Migration 013's exclusive arc on `auth_sessions`, `lib/auth/cookie-names.ts` (the console's own `ainext_cat`/`ainext_crt`), `lib/proxy-rules.ts` | Console-smoke `FR-2205` ×4 live: Omar's credentials on the console → 403 with `reason=student_credential_on_console`, and the same credentials on the student build → 200. P3 `FR-2205`: Omar's *refresh token* presented to `:3002` → 401 `cross_surface_refresh`, the token left intact. `cookie-names.test.mts`, `matrix.test.mts`, `proxy-rules.test.mts`. See **S18** for the bounded 403-vs-401 disclosure this creates on the console. |
+| FR-2206 | `/spine` stays a student surface, never moves behind the console | **VERIFIED** | `(student)/spine/page.tsx` | Console-smoke: `/spine` answers 200 on the student build beside `/student` and `/dashboard`; `check-surface-manifest.mts` asserts it on the student manifest, in CI. |
+| FR-2207 | Operator sign-in is recorded separately from student sign-in, with roles | **VERIFIED** | `api/auth/login/route.ts` (the operator arm), `lib/auth/events.ts` | Console-smoke `FR-2207` ×3: the `operator_login` row's reason carries all four roles. P3 and P4 re-exercise it for both operators. `events.test.mts` [12]. |
+| FR-2208 | Console stays behind Cloudflare Access in addition to operator accounts | **OPEN** | — | Nothing is deployed. The console has no hostname, no tunnel ingress and no Access policy — setup **S6**. Cloudflare Access today fronts `ainext.reletix.com`, which serves the frozen baseline from `main`. This row closes on the box, not here. |
+| FR-2209 | Console is bound by the published design system, like every surface | **BUILT** | `(console)/layout.console.tsx`, `components/console/ui.tsx` (tokens only, every coloured background with its paired `on-` foreground) | Every console page rendered in P2–P5, so it is not broken — but **nothing checks conformance**. There is no token lint, and nobody has compared the console against the published Noor system. Promoting this row needs a design review, not another smoke run. |
+| FR-2210 | Both surfaces run locally from one command; first account is repeatable | **VERIFIED** | `scripts/local-dev.sh --both`, `app/scripts/bootstrap-operator.mts` (`npm run bootstrap:operator`, idempotent, sets no password), `app/scripts/seed-local-account.mts` (refuses outside localhost) | Both dev servers have run from `--both` throughout P2–P6 against one database. The bootstrap is idempotent by construction and re-runs on every `local-dev.sh`. The first operator gets a password through the ordinary reset flow (migration 019), because ADR-0014's bootstrap password was otherwise not implementable. |
+| FR-2211 | Every console figure carries its unit, period, and named identifiers | **VERIFIED** | `components/console/ui.tsx`, `(console)/**`, `lib/console-queries.ts` | Console-smoke `FR-2211` ×3, P3 `FR-2211` ×3 ("Time on task" as two numbers, "imputed at list price", ids beside names), P4 `FR-2211` ×3 (period switch, every figure labelled). P5's operator-read audit lists a read **by name**, not by id. |
 
 ---
 
@@ -103,16 +119,16 @@ was actually hard.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-2301 | Every interaction belongs to a real, durable learning-session record | **OPEN** | — | — |
-| FR-2302 | A session opens on start, closes on completion or inactivity | **OPEN** | — | — |
-| FR-2303 | One ordered per-student, per-session timeline merges every interaction type | **OPEN** | — | — |
-| FR-2304 | Read-only replay renders what the student saw, labelled reconstructed | **OPEN** | — | — |
-| FR-2305 | A replay writes nothing at all to the student's record | **OPEN** | — | — |
-| FR-2306 | Every operator read is logged; the log is unremovable by them | **OPEN** | — | — |
-| FR-2307 | A retention decision (what's kept, how long, what's purged) is owed | **BLOCKED** | — | **Samuel** — the retention period is undecided (spec.md Open Decision 2). Full-fidelity storage itself is buildable now; the decision that bounds it is not, and it is owed before any audience wider than the invited pilot and the current operator roster. |
-| FR-2308 | No disclosure copy added; reverts on Samuel's text or wider audience | **OPEN** | — | — |
-| FR-2309 | An unattributable interaction is recorded as belonging to no session | **OPEN** | — | — |
-| FR-2310 | Deleting an account removes the account and its record together | **OPEN** | — | — |
+| FR-2301 | Every interaction belongs to a real, durable learning-session record | **VERIFIED** | Migration 011 (`sessions` gains kind, surface, lifecycle, `client_key`, `lo_id`; FKs on `ai_interactions`, `attempts`, `understanding_checks`; `session_ref` on `uploads` and `analytics_events`), `lib/sessions.ts` wired into `/api/{ask,attempts,understanding,uploads}` | P3 `FR-2301` ×10 live from one real tutor turn: a new `ai_interactions` row exists, its `session_id` is not null, and the attempt's `session_id` is not null. `sessions.test.mts` (`@covers FR-2301`). Before P0 this table had never held a row. |
+| FR-2302 | A session opens on start, closes on completion or inactivity | **VERIFIED** | `lib/sessions.ts` (`currentSession`, `closeSession`, `sweepIdleSessions`), `lib/session-rules.ts`, the partial unique index that makes "at most one open session per student" a database invariant | `sessions.test.mts` (`@covers FR-2302`): supersession on a kind change, one-way idempotent close, the race guarded by the index, and the clamp for an inactivity close whose `last_seen_at` predates `opened_at` — a defect the P0 smoke run found. The 30-minute window is documented, not discovered. |
+| FR-2303 | One ordered per-student, per-session timeline merges every interaction type | **VERIFIED** | `lib/timeline.ts` (a read model, not a table), `lib/timeline-rules.ts` | P3 `FR-2303` live: in the rendered timeline, the tutor turn precedes the answer which precedes the mastery movement. `timeline-rules.test.mts` (`@covers FR-2303`) covers the merge, the stable tie-break and the 60-second gap items. |
+| FR-2304 | Read-only replay renders what the student saw, labelled reconstructed | **VERIFIED** | `(console)/students/[id]/sessions/[sid]/replay`, the read-only renderers extracted from `ChatCore`/`MathWidget`/`ReportCard`, migration 020's `renderer_version` | P3 `FR-2304` ×3 live: the page says "Reconstructed from stored records", renders the exact assistant-message fragment read out of `ai_interactions`, and shows the renderer version stamped at write time — so a replay that no longer matches what the student saw can be recognised rather than believed. |
+| FR-2305 | A replay writes nothing at all to the student's record | **VERIFIED** | The read-only renderer wrappers; `replay-guard.test.mts` asserts the replay imports nothing from a write path | P3 `FR-2305` ×5 live, by counting: attempts, `ai_interactions`, mastery and `analytics_events` are all exactly where they were before the replay, and the HTML contains no link or form referencing `/api/{ask,attempts,understanding,uploads}`. |
+| FR-2306 | Every operator read is logged; the log is unremovable by them | **PARTIAL** | Migration 014's `operator_reads`; the 360, the timeline and the replay each write one row; migration 017 grants `ainext_operator` **SELECT and INSERT only** (`:215`) | Logging **verified**: console-smoke `FR-2306`, P3 `FR-2306` ×4 with an exact total (+3 for three opens; the session *list* writes none), P5 showing the audit by operator and student name. **Gap: the immutability half is a grant nobody has attacked.** No script has attempted a DELETE or UPDATE on `operator_reads` as `ainext_operator`, so "unremovable by them" rests on reading migration 017 rather than on being refused. |
+| FR-2307 | A retention decision (what's kept, how long, what's purged) is owed | **BLOCKED** | — | **Samuel** — the retention period is undecided (spec.md Open Decision 2). Unchanged by the implementation: full-fidelity storage is now real, which makes the decision more owed, not less. It is owed before any audience wider than the invited pilot and the current operator roster. |
+| FR-2308 | No disclosure copy added; reverts on Samuel's text or wider audience | **VERIFIED** | `(auth)/{signup,signin,verify,forgot-password,reset-password}`, `components/auth/*` | The five auth screens were rendered and driven live in P1 and P6 and carry no consent or disclosure copy. The gender field states its purpose ("Only used to get your words right when Noor writes to you") and claims nothing else. The exception stays bounded by §9b item 3. |
+| FR-2309 | An unattributable interaction is recorded as belonging to no session | **VERIFIED** | Migration 011's backfill (each distinct legacy string → one session; an interaction with no string stays NULL), `lib/session-rules.ts` | `sessions.test.mts` and `timeline-rules.test.mts` (`@covers FR-2309`): a NULL session is rendered as unattributed, never attached to the nearest one. The backfill was verified idempotent across three runs (P0). |
+| FR-2310 | Deleting an account removes the account and its record together | **OPEN** | — | **No deletion path exists** on any surface or route, and the schema would refuse one: `students_account_id_fkey` (migration 013:179-180) carries no `ON DELETE` action, so deleting an account with a student attached raises a foreign-key violation. The token and session tables cascade; the student and its history do not. Downstream of **FR-2307** — the working default cannot be built before the retention decision names what "removed" means. |
 
 ---
 
@@ -120,13 +136,13 @@ was actually hard.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-2401 | Per-student cost shown over time, not one window total | **PARTIAL** | `lib/cost-queries.ts`, `/admin/cost` (001, shipped `PDR1-0-v0.4.0`) | Only a 30-day single-window total exists today — no per-student **time series**, which is what this requirement actually asks for. |
-| FR-2402 | AI spend and upload/OCR spend reported as separate figures | **PARTIAL** | `lib/cost-queries.ts` already groups by `surface_kind` (teaching vs upload) | The grouping exists, but two ledger defects (`research/analytics-state-of-the-art.md` §A0) sit underneath it: `ai_interactions.input_tokens` is written as input + cache_creation + cache_read (`api/ask/route.ts:446-447`), so the split over-counts; the sacred-guard redaction path writes literal zero cost/tokens (`:411`), so it under-reports on redacted turns. The two figures render but cannot be trusted apart. |
-| FR-2403 | Overall period cost shown; per-student figures reconcile with it | **PARTIAL** | `lib/cost-queries.ts`, `/admin/cost` | Totals render today, but the same two ledger defects mean reconciliation is **unverifiable**, not merely unverified — fixing them is a precondition for this row, not a follow-on. |
-| FR-2404 | Subscription/payment status per student; a record, never a gate | **OPEN** | — | No status field exists on `students` at all — this is new work, not a reporting gap. |
-| FR-2405 | Changing status requires cost-billing role; every change is recorded | **OPEN** | — | — |
-| FR-2406 | cost-billing role never grants access to any student content | **OPEN** | — | — |
-| FR-2407 | Cost figures carry environment; never pooled across environments/solutions | **OPEN** | — | — |
+| FR-2401 | Per-student cost shown over time, not one window total | **VERIFIED** | Migration 021 (`outcome`, `price_basis`, `priced_at`, `cost_daily`), `lib/cost-model.ts`, `lib/pricing.ts`, `lib/cost-queries.ts`, `(console)/cost`, `app/scripts/rollup-cost-daily.mts` (`npm run rollup:cost`) | P4 `FR-2401` ×18 live from one real turn and one real upload: the ledger row carries outcome, basis and a priced timestamp; the SSE-reported input tokens match the ledger; the page renders per-student sparklines; the rollup exits 0 twice with identical row counts and sums, and deliberately leaves today open. `cost-model.test.mts`, `pricing.test.mts`. |
+| FR-2402 | AI spend and upload/OCR spend reported as separate figures | **VERIFIED** | `lib/cost-model.ts`, `lib/cost-queries.ts`, the parse path in `lib/uploads.ts` | P4 `FR-2402` live: Teaching and Photo render as separate columns, never blended. The two ledger defects that made the split untrustworthy in rev. 1 are fixed — `input_tokens` no longer includes the cache counters, and the OCR rows that were written as literal zeros now read the parser's own JSON output, so the upload figure is no longer structurally zero. `pricing.test.mts`, `cost-model.test.mts`. |
+| FR-2403 | Overall period cost shown; per-student figures reconcile with it | **VERIFIED** | `lib/cost-model.ts` (reconciliation), `(console)/cost` | P4 `FR-2403` ×2 live: the page shows the reconciliation line marked reconciled and does not say "does not reconcile". `cost-model.test.mts` (`@covers SC-109`). The third write-path defect closed here: the sacred-guard redaction path used to write zeros and now records real streamed tokens repriced at list price, `outcome='redacted'`. |
+| FR-2404 | Subscription/payment status per student; a record, never a gate | **VERIFIED** | Migration 015's `subscription_*` columns, `api/console/students/[id]/subscription/route.console.ts` | P4 `FR-2404` ×2 live: no student page or `/api/dashboard` response contains the words "trial" or "subscription". `subscription-gate.test.mts` scans the student surfaces to prove nothing reads the field. The route is absent from the student build (P4 `FR-2201`: 404). |
+| FR-2405 | Changing status requires cost-billing role; every change is recorded | **VERIFIED** | The same route, gated on `cost-billing`; `subscription_updated_by` / `subscription_updated_at` | P4 `FR-2405` ×6 live: the cost-only operator sets `trial`, the row records that operator's id and the time, the four-role operator sets `active`, and a bogus status is refused 4xx. |
+| FR-2406 | cost-billing role never grants access to any student content | **VERIFIED** | `lib/auth/authorize.ts`, the cost-billing projection in `lib/console-queries.ts` (no content column) | Console-smoke `FR-2406` (no Gender or Verified heading on the student list for cost-billing), P4 `FR-2406` ×2 (no `/sessions/` link anywhere on `/cost`; the 360 refuses with nothing leaked). `matrix.test.mts` (`@covers FR-2406`). |
+| FR-2407 | Cost figures carry environment; never pooled across environments/solutions | **VERIFIED** | `lib/cost-queries.ts` and `lib/cost-model.ts` bind `environment` on every query; migration 021's tables carry it NOT NULL | P4 rendered `/cost` and every period variant live against a single-environment database, and the rollup writes `cost_daily` rows tagged the same way. Same constraint argument as FR-2109. |
 
 ---
 
@@ -134,15 +150,15 @@ was actually hard.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-2501 | All 13 named security/sign-in events are actually emitted and tested | **OPEN** | — | — |
-| FR-2502 | Security view shows sign-ins, failures, lockouts, denials within one minute | **OPEN** | — | — |
-| FR-2503 | First-party event stream stays the sole record; every event tagged | **OPEN** | — | — |
-| FR-2504 | Anonymous analytics may run alongside it, carrying no identifying data | **OPEN** | — | — |
-| FR-2505 | Product never degrades when anonymous analytics is blocked or fails | **OPEN** | — | — |
-| FR-2506 | No minor's-data datum ever reaches a third-party analytics tool | **OPEN** | — | — |
-| FR-2507 | Console offers overviews per student, per subject, per school year | **OPEN** | — | — |
-| FR-2508 | Safety flags still reach a human immediately, off the analytics path | **OPEN** | — | — |
-| FR-2509 | Every new record and event carries its environment (constitution XI) | **OPEN** | — | — |
+| FR-2501 | All 13 named security/sign-in events are actually emitted and tested | **VERIFIED** | `lib/auth/events.ts` (`REQUIRED_EVENT_NAMES` — the thirteen, plus five additional), migration 016's `auth_events` | `events.test.mts`: thirteen numbered tests drive the real branches, and a final test asserts **every one of the thirteen was emitted by a branch in that file**. Live observation is thinner, and the difference is worth stating: P1 observed **8 of 13** and pre-classified the rest; P2 added `operator_login` and `permission_denied`, P3 added `admin_transcript_viewed`. `cross_student_access_denied` has **only ever been seen from a row inserted synthetically as `ainext_maint`** in P5's alert test — its one producer has no HTTP trigger (see FR-2103). `lockout_cleared` has **never been observed live at all**; it needs a 15-minute window to expire and rests on `events.test.mts` [4] and `throttle.test.mts`. One deviation is flagged rather than smuggled: `failed_signup` is emitted by the signup route and is not in `contracts/analytics.md`'s closed vocabulary — setup **S14**. |
+| FR-2502 | Security view shows sign-ins, failures, lockouts, denials within one minute | **VERIFIED** | `(console)/security/page.console.tsx` (force-dynamic), `lib/security-queries.ts`, `lib/alerts.ts` + `npm run alerts:sweep`, migration 022's `alerts_sent` | P5 `FR-2502` ×11 live: all six tiles present, the recent-events table, the operator-read audit by name, the locked-account tile listing a probe account **while it was actually locked**, the zero-threshold note on `cross_student_access_denied`, and the alert sweep firing once and then saying "already sent". The shadow impossible-travel rule is hard-coded to log, never to mail. |
+| FR-2503 | First-party event stream stays the sole record; every event tagged | **VERIFIED** | `lib/analytics.ts`, `auth_events`, `operator_reads`; `lib/ga.ts` is an audience layer that no view reads from | Every figure in the console comes from Postgres: the security, cost, timeline and overview modules all query first-party tables and all filter on `environment`, and each rendered live in P3–P5. P5 confirms the product reports the same numbers with GA absent, because GA is absent. |
+| FR-2504 | Anonymous analytics may run alongside it, carrying no identifying data | **PARTIAL** | `lib/ga.ts` — the single module that touches `gtag`; a closed eleven-event, five-property allow-list, everything else dropped with a warning; `components/GaScript.tsx` renders nothing when the id is unset | `ga.test.mts` and `ga-console-guard.test.mts` (`@covers FR-2504`) call `gaBootstrap()` with a real id and assert the id-set snippet text, including consent pushed **before** config. **Gap: that is a unit-level assertion of HTML.** P5 verified live only that *nothing* renders, because `AINEXT_GA_MEASUREMENT_ID` is unset — setup **S7/S22**. No property has ever received an event. |
+| FR-2505 | Product never degrades when anonymous analytics is blocked or fails | **VERIFIED** | `components/GaScript.tsx` (server component, nothing awaits it), `lib/ga.ts` | P5 `FR-2505` ×5, and more convincingly: every smoke in P0–P6 drove complete student and console journeys with no GA script present at all. The unset-id guard is asserted by source in `ga-console-guard.test.mts`. |
+| FR-2506 | No minor's-data datum ever reaches a third-party analytics tool | **PARTIAL** | `lib/ga.ts` (allow-list plus consent resolved from the principal — a signed-in student is cookieless everywhere, stricter than the contract); the loader lives in a server component so its URL never ships to the console | P5 `FR-2506` ×2 live: the console never loads GA on any page. `ga.test.mts` (`@covers FR-2506`) asserts the authenticated student surface denies `analytics_storage`, and `gender-scope.test.mts` and `ga.test.mts` (`@covers FR-2604`) keep gender out of the payload. **Gap: same as FR-2504** — true today because nothing is sent at all; the allow-list that would make it true *with* a stream is asserted at unit level only. |
+| FR-2507 | Console offers overviews per student, per subject, per school year | **VERIFIED** | `(console)/overview` and `/overview/definitions`, `lib/overview-queries.ts`, `lib/overview-rules.ts` | P5 `FR-2507` ×11 live for both operators: the cohort key (subject · grade · syllabus version), school-year weeks anchored to the third Saturday of September, the activation funnel, weekly actives, the 90-objective heatmap distinguishing "never reached" from "reached and failing", and a definitions page carrying all eight terms with the mastered floor printed as 0.75 — the same floor the student dashboard paints, not a new number. `overview-rules.test.mts`. |
+| FR-2508 | Safety flags still reach a human immediately, off the analytics path | **PARTIAL** | `(console)/students/[id]/page.console.tsx` and `lib/console-queries.ts:275,477` — the console shows flag **type and time only**, and deliberately does not select `dispatched` | Console half verified: the 360 rendered in P3 with the flag panel carrying nothing else. **Gap: the human channel still has no human.** 001's FR-601/FR-602 remain blocked on `T067` — no escalation recipient has been named — so "reaches a human immediately" is unmet for a reason this feature did not create and cannot close. See `docs/ROADMAP.md`, the three hard gates. |
+| FR-2509 | Every new record and event carries its environment (constitution XI) | **VERIFIED** | `environment TEXT NOT NULL` with no default on `accounts`, `auth_sessions`, `verification_tokens`, `password_resets`, `auth_throttle`, `auth_events`, `operators`, `operator_roles`, `operator_reads`, `cost_daily` and `alerts_sent` | Same constraint argument as FR-2109, exercised across five smoke runs: every one of those tables was written live and no insert failed, which is only possible if every writer supplies the value. |
 
 ---
 
@@ -150,12 +166,12 @@ was actually hard.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-2601 | Gender captured at signup; the product states what it is for | **OPEN** | — | — |
-| FR-2602 | Tutor addresses the student correctly for gender, every surface, both languages | **OPEN** | — | — |
-| FR-2603 | Gender affects address and voice only, never content or difficulty | **OPEN** | — | — |
-| FR-2604 | Gender never sent to analytics, never in an event, log, or error | **OPEN** | — | — |
-| FR-2605 | Unknown-gender students get a form correct for either, never masculine | **BLOCKED** | — | **Samuel** — the gender enumeration is undecided (spec.md Open Decision 1). The plan has designed the fallback rather than left it open: `research.md` R12 recommends `female \| male \| unspecified` and specifies the neutral register in English and Arabic, and plan A9 puts it in the shared address block. What is blocked is the confirmation of the option set — including whether declining is one of the options, which is the value this requirement's behaviour keys off. |
-| FR-2606 | A gender change takes effect next turn, no sign-out needed | **OPEN** | — | — |
+| FR-2601 | Gender captured at signup; the product states what it is for | **VERIFIED** | Migration 015 (`students.gender`, the enumeration bounded by its purpose in the column comment), `components/auth/SignupForm.tsx` → `GenderChoice` | P6 `FR-2601` ×7 live: two signups with gender, both verified, `students.gender` reading `female`, `male` and NULL for Omar. The field states its purpose on the page — "Only used to get your words right when Noor writes to you. Skip it if you'd rather." — and the three options are *She*, *He*, *I'd rather not say*. |
+| FR-2602 | Tutor addresses the student correctly for gender, every surface, both languages | **PARTIAL** | `lib/address.ts`, `retrievalBlock()`'s address block, one profile read feeding `lesson.ts` and `ask.ts`, `lib/session-cache.ts` keyed on the register; all 14 widgets and `PairPlotter` now receive the student's name and register | English **verified**: P6's three live turns show zero `he/him/his` in the female and unspecified replies; `/student` renders with none outside `<script>`; all 234 captured prompt files carry the address block; the source grep finds zero masculine pronouns in `lesson.ts`, `ask.ts`, `checkin.ts` and `widget-docs.ts` outside `lib/address.ts`. The client-side defect is closed — every widget used to narrate results as "Omar", the retired demo student, and `widget-address.test.mts` now guards it (**S23**, shipped in P6). **Gap, and it is not S23: Arabic.** Masculine forms survive *outside the vocative* in the Arabic and social prompts (`كيّف حسب رده`, `وجِّهه`, `إذا سأل`) — setup **S24**. "Both languages" is therefore not met. |
+| FR-2603 | Gender affects address and voice only, never content or difficulty | **VERIFIED** | `lib/address.ts` is the only consumer; selection, difficulty and mastery never see it | `gender-scope.test.mts` — grep-backed assertions that gender reaches no selection, difficulty, mastery, event, analytics or log path. `prompt-address.test.mts` and `address.test.mts` cover the three registers. |
+| FR-2604 | Gender never sent to analytics, never in an event, log, or error | **VERIFIED** | `lib/ga.ts`'s five-property allow-list; `lib/auth/events.ts` carries no profile fields | `ga.test.mts` (`@covers FR-2604`) and `gender-scope.test.mts`. P5's live checks confirm no analytics payload leaves any surface at all today. |
+| FR-2605 | Unknown-gender students get a form correct for either, never masculine | **VERIFIED** | `lib/address.ts` — the null/unspecified register: name-only vocative, agreement-free phrasing, never the masculine | P6 `FR-2605` live: the harness's no-student-in-scope default renders the either-register, and Omar's reply (gender NULL) contains zero `he/him/his` and zero `يا بطل/يا بطلة`. `widget-address.test.mts` (`@covers FR-2605`), `address.test.mts`. **Read this with §9b item 1:** the enumeration shipped as `female \| male \| unspecified` on research R12's recommendation, and Samuel has not confirmed Open Decision 1. A different answer changes migration 015's CHECK constraint and this row. The masculine register reproduces the pre-P6 bytes exactly, asserted as a test — the old text was not neutral, it was one of three, served to girls. |
+| FR-2606 | A gender change takes effect next turn, no sign-out needed | **VERIFIED** | `lib/session-cache.ts` — `snapshotKey()` includes the register (`f\|m\|n`), never the stored value; one profile read decides the voice | P6 `FR-2606` ×3 live: the key includes the register and is not bypassed, `session-cache.test.mts`'s register-change-is-a-key-change suite passes, and a write to Omar's gender lands and is reverted with no sign-out and no turn in between. Note the asymmetry with FR-2013: the change takes effect, but no student surface can make it. |
 
 ---
 
@@ -163,10 +179,10 @@ was actually hard.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-2901 | A student account is linkable to one parent; data model only | **DEFERRED** | — | Decision **D1** (decisions.md) — the parent view is not built this release; only the link slot in the data model. |
+| FR-2901 | A student account is linkable to one parent; data model only | **DEFERRED** | Migration 015's unwritten `guardian_*` fields | Decision **D1** (decisions.md) — the parent view is not built this release; only the link slot in the data model, which exists and is never written. Unchanged by P0–P6. |
 | FR-2902 | Parent view not built; when built, performance data only, no transcripts | **DEFERRED** | — | Decision **D1** — withdrawn with the picker itself; carries 001's FR-501 scope forward to whenever it ships. |
-| FR-2903 | Phone+OTP designed to fit the same session model; not built | **DEFERRED** | — | Decision **D9** — designed into the architecture now, implemented later. |
-| FR-2904 | Payment not built; later work attaches to FR-2404's status field | **DEFERRED** | — | Decision **D5** — no payment system this release; 001's FR-701…707 stay deferred with it. |
+| FR-2903 | Phone+OTP designed to fit the same session model; not built | **DEFERRED** | — | Decision **D9** — the session model built in P1 (`auth_sessions`, one model for students and operators, exclusive arc) is the one a phone+OTP factor would attach to. Designed into the architecture, not implemented. |
+| FR-2904 | Payment not built; later work attaches to FR-2404's status field | **DEFERRED** | — | Decision **D5** — no payment system this release; 001's FR-701…707 stay deferred with it. FR-2404's status field now exists for it to attach to, and is explicitly a record rather than a gate. |
 
 ---
 
@@ -174,36 +190,42 @@ was actually hard.
 
 | SC | Criterion | Status | Implementation | Proof |
 |---|---|---|---|---|
-| SC-101 | New student to first tutor message under 5 minutes, no intervention | **OPEN** | — | — |
-| SC-102 | 100% of student-scoped reads covered by a CI-blocking automated check | **OPEN** | — | — |
-| SC-103 | Zero cross-student rows reachable in a full red-team route pass | **OPEN** | — | — |
-| SC-104 | Cross-student read indistinguishable from not-found in 100% of sampled attempts | **OPEN** | — | — |
-| SC-105 | Every sign-in attempt visible in the security view within 60 seconds | **OPEN** | — | — |
-| SC-106 | All 13 named events pass a test asserting they were emitted | **OPEN** | — | — |
-| SC-107 | 100% of sessions after cutover reconstructable end to end | **OPEN** | — | — |
-| SC-108 | 100% of operator reads have a matching read record, sampled | **OPEN** | — | — |
-| SC-109 | Cost to date available for every student; reconciles with the total | **OPEN** | — | — |
-| SC-110 | An operator reaches exactly their role's surfaces, refused everywhere else | **OPEN** | — | — |
-| SC-111 | Both surfaces run locally from one command in under 10 minutes | **OPEN** | — | — |
-| SC-112 | Tutor uses correct gender address in 100% of sampled turns | **OPEN** | — | — |
-| SC-113 | Zero identifiers or personal data in the anonymous analytics stream | **OPEN** | — | — |
-| SC-114 | Full student journey completes unchanged with anonymous analytics blocked | **OPEN** | — | — |
+| SC-101 | New student to first tutor message under 5 minutes, no intervention | **PARTIAL** | The signup → verify → lesson path, end to end | The path was walked live in P1 and again in P6, and it works. **Nobody has timed it**, and locally it is not unattended: with no SMTP the verification link has to be read out of `app/.local-mail/` (**S2**). This closes when mail is configured and someone runs it with a stopwatch. |
+| SC-102 | 100% of student-scoped reads covered by a CI-blocking automated check | **PARTIAL** | Migration 017 — ENABLE + FORCE row-level security and one policy set on twenty tables, which is coverage by construction rather than by enumeration | Red-team `SC-102` ×2 and `app/scripts/rls-proof.sql` prove it as `ainext_app`, with and without a principal. **Gap: the "CI-blocking" half is unmet.** `ci-cd.yml` runs `tsc`, both builds, both surface manifests, `npm test` and this matrix's gate — none of which needs a database, and none of which is the isolation proof. The proof runs when a human runs it. |
+| SC-103 | Zero cross-student rows reachable in a full red-team route pass | **VERIFIED** | The whole isolation seam | `scripts/red-team-isolation.sh` — **45/45** against a clean rebuild, two accounts, every student route, zero cross-student rows reachable. Re-run as a regression in P2 (44/44 at that point) and again clean in P5. |
+| SC-104 | Cross-student read indistinguishable from not-found in 100% of sampled attempts | **VERIFIED** | `lib/rls-errors.ts`, the RLS read policies | Red-team `FR-2103`: `/api/uploads/1` and `/api/uploads/99999` as the same foreign student return the same status **and byte-identical bodies**. Console-smoke `SC-104` re-runs the whole red-team pass and gates on its exit code. |
+| SC-105 | Every sign-in attempt visible in the security view within 60 seconds | **VERIFIED** | `(console)/security` with `force-dynamic`, `lib/security-queries.ts` | P5 `FR-2502`: the security page is fetched within 60 seconds of a full red-team run and shows that run's attempts — the elapsed time is printed in the check line. |
+| SC-106 | All 13 named events pass a test asserting they were emitted | **VERIFIED** | `lib/auth/events.ts`, `events.test.mts` | `events.test.mts` asserts the vocabulary is exactly thirteen required plus five additional, drives each branch, and closes with a test that every one of the thirteen was emitted by a branch in that file. Runs in CI under `npm test`. P5 `SC-106` ×2 confirms two of them live in the console. Read with FR-2501 for what has and has not been seen in a live system. |
+| SC-107 | 100% of sessions after cutover reconstructable end to end | **PARTIAL** | Migration 011 + `lib/timeline.ts` + the replay | One post-cutover session was reconstructed end to end live in P3, from a real turn, and matched the stored record exactly. **Gap: "100%" has not been sampled.** No audit has counted post-cutover sessions against reconstructable ones; the orphan query in `quickstart.md` is the tool for it and has not been run as an audit. |
+| SC-108 | 100% of operator reads have a matching read record, sampled | **VERIFIED** | `operator_reads`, written by the 360, the timeline and the replay | P3 counts exactly: three opens, `+3` rows, and the session **list** writes none — so the count is not an accident of writing a row on every request. P5 shows the audit naming operator and student. |
+| SC-109 | Cost to date available for every student; reconciles with the total | **VERIFIED** | `lib/cost-model.ts`, `(console)/cost` | `cost-model.test.mts` (`@covers SC-109`) plus P4 `FR-2403` ×2 live: the page prints the reconciliation line marked reconciled, per-student totals against the period total, after a real turn and a real upload. |
+| SC-110 | An operator reaches exactly their role's surfaces, refused everywhere else | **VERIFIED** | `lib/auth/authorize.ts`, `matrix.test.mts` | `matrix.test.mts` is the role × surface matrix as a test. Live: console-smoke `SC-110` plus the cost-only operator refused on every view outside its role in P2, P3, P4 and P5, each refusal writing `permission_denied`. |
+| SC-111 | Both surfaces run locally from one command in under 10 minutes | **VERIFIED** | `scripts/local-dev.sh --both` | One command brings up student `:3000` and console `:3002` against one database, and has done so for every phase since P2; `.claude/launch.json` gains `tutor-console`. The ten-minute figure has not been stopwatched on a cold machine — a first run also creates the database, applies twenty-two migrations and loads the curriculum. |
+| SC-112 | Tutor uses correct gender address in 100% of sampled turns | **VERIFIED** | `lib/address.ts` and the address block | P6 `SC-112` ×3 — three real `student_chat` turns, one per register, read back out of `ai_interactions`: zero `he/him/his` and zero `يا بطل/يا بطلة` in the female and unspecified replies. The sample is three turns; it is small, and it is real. |
+| SC-113 | Zero identifiers or personal data in the anonymous analytics stream | **PARTIAL** | `lib/ga.ts`'s closed allow-list and consent defaults | True today for a reason that is not evidence: **there is no stream.** `AINEXT_GA_MEASUREMENT_ID` is unset, so P5's six live checks confirm no `gtag` on any student or console surface. The allow-list that would keep it true with a stream is asserted at unit level only (`ga.test.mts`, `ga-console-guard.test.mts`). Closes when **S7/S22** land and the same checks run against a configured property. |
+| SC-114 | Full student journey completes unchanged with anonymous analytics blocked | **VERIFIED** | `components/GaScript.tsx`, `lib/ga.ts` | Every smoke run in P0–P6 completed a full journey — signup, verify, lesson, tutor turn, attempt, upload, dashboard — with no analytics script present at all. This criterion has been met continuously rather than tested once. |
 
 ---
 
 ## 9b. What is unresolved, and who owns it
 
+Items 8 and 9 of rev. 1 are **closed** and struck below rather than deleted, so the record shows what
+the implementation actually fixed. Everything else is unchanged: all of it is Samuel's, and none of
+it was closed by writing code.
+
 | # | Item | Owner | Why it matters |
 |---|---|---|---|
-| 1 | **The gender enumeration, and whether it can be skipped** (spec.md Open Decision 1) | **Samuel** | Blocks **FR-2605** outright, and shapes what FR-2002/FR-2601 actually capture. Also what the constitution VII amendment sanctions. |
-| 2 | **The retention period for full-fidelity interaction records** (Open Decision 2) | **Samuel** | Blocks **FR-2307**. Owed before this data is opened to any audience wider than the invited pilot and the current operator roster — the constitution amendment carries the same follow-up. |
-| 3 | **The disclosure text, its owner, and its date** (Open Decision 3) | **Samuel** | Bounds **FR-2308**'s exception. D7 stands as his decision; the exception reverts when he sets the text, or before a wider audience, whichever comes first. Neither exists yet. |
-| 4 | **Who owns the anonymous-analytics measurement plan** — which questions it answers, which coarse properties it may carry (Open Decision 4) | **Undecided — explicitly "a product decision, not an engineering one,"** in Samuel's own words (decisions.md D8) | Informs ADR-0016 and shapes **FR-2504**, **FR-2507**. R2's posture (three layers, one system of record) is accepted; who curates the measurement plan going forward is not. |
-| 5 | **Whether the first operator seeding uses Samuel's own email address** (Open Decision 5) | **Samuel** | ADR-0014's stated default says it does. Recorded because it is a production-credential decision he may want to make differently, not because the ADR itself is in doubt. Touches **FR-2210**. |
-| 6 | **Constitution Principle VII amendment (v3.1.1 → v3.2.0) is drafted, not accepted** — `constitution-amendment-proposal.md` | **Samuel** | Nothing here presumes it has landed. **FR-2306, FR-2307, FR-2308** and **FR-2601…FR-2606** state obligations the amendment would sanction; until he approves it in the constitution itself, building them is ahead of its own governance. |
-| 7 | **Egypt PDPL guardian-consent requirement collides with D7** — Decree 816/2025 treats a minor's data as sensitive in every case and requires written guardian consent for under-15s; grace period ends 2026-11-01, weeks after target launch (R2; spec.md **Open Decision 6**; plan A11) | **Not a decision — routed to Samuel** | D7 (no disclosure at signup) stands as his call; the conflict is recorded in the spec's Open Decisions (6) and in the constitution-amendment proposal's follow-ups. R2's recommendation: ship consent fields and hooks now (same pattern as FR-2404's status field) and obtain an Egyptian legal opinion before the pilot takes money. Bears on **FR-2307**, **FR-2308**, **FR-2901**. |
-| 8 | **Two cost-ledger defects already live in production** (R2; `research/analytics-state-of-the-art.md` §A0): `ai_interactions.input_tokens` is written as input + cache_creation + cache_read (`api/ask/route.ts:446-447`), over-counting; the sacred-guard redaction path writes literal zero cost/tokens (`:411`), under-reporting on redacted turns | **Engineering** (ai-engineer / backend-engineer, scoped under FR-2401…FR-2403) | Named in the **FR-2401…FR-2403** rows above as the reason those rows are PARTIAL and not further along. Fixing both is a precondition for FR-2402/FR-2403 reaching VERIFIED, not a follow-on task. |
-| 9 | **The application connects to Postgres as a superuser in both places it runs** — `POSTGRES_USER: ainext` in `deploy/docker-compose.mvp1.yml` and `$(whoami)` in `scripts/local-dev.sh` — and a superuser bypasses row-level security unconditionally (plan.md A3, research R6.3, ADR-0012) | **Engineering** (backend-engineer / devops-engineer, scoped under FR-2101…FR-2102) | Not a decision anyone owes — an engineering precondition that decides whether **FR-2101** is real. A non-superuser `ainext_app` role, `FORCE ROW LEVEL SECURITY`, and `DATABASE_URL` repointed in both compose files and in the `.env.local` the local script writes are load-bearing together; shipping the policies without the repoint produces a system that looks protected and refuses nothing. The isolation test (**SC-102**, **SC-103**) must therefore run **as `ainext_app`** — run as a superuser it passes for the wrong reason. |
+| 1 | **The gender enumeration, and whether it can be skipped** (spec.md Open Decision 1) | **Samuel** | Still open, and now **shipped ahead of him**: P6 built research R12's recommendation — `female \| male \| unspecified`, with "I'd rather not say" as a first-class option — into migration 015's CHECK constraint and into `lib/address.ts`'s three registers. FR-2605 is VERIFIED against *that* enumeration. A different answer is a migration and a prompt change, not a preference. |
+| 2 | **The retention period for full-fidelity interaction records** (Open Decision 2) | **Samuel** | Blocks **FR-2307**, and now blocks **FR-2310** with it — "deleting an account removes its record" cannot be built before the decision says what is kept. More owed than in rev. 1, because the records now exist: sessions, timelines and replayable turns. |
+| 3 | **The disclosure text, its owner, and its date** (Open Decision 3) | **Samuel** | Bounds **FR-2308**'s exception. D7 stands as his decision; the exception reverts when he sets the text, or before a wider audience, whichever comes first. Neither exists yet, and the signup screens now shipped carry no disclosure copy — which is the decision working as intended, not an oversight. |
+| 4 | **Who owns the anonymous-analytics measurement plan** (Open Decision 4) | **Undecided — explicitly "a product decision, not an engineering one,"** in Samuel's own words (decisions.md D8) | Shapes **FR-2504** and **FR-2507**. The engineering is done and inert: eleven allow-listed events of which four have a client trigger, the rest server-only and named in `lib/ga.ts`. Nothing can be measured until a property exists (**S7/S22**) and someone owns the plan. |
+| 5 | **Whether the first operator seeding uses Samuel's own email address** (Open Decision 5) | **Samuel** | ADR-0014's default says it does, and `AINEXT_BOOTSTRAP_OPERATOR_EMAIL` is seeded locally with `samuel.s.toma@gmail.com`. Setup **S5** asks him to confirm it for the box. Touches **FR-2210**. |
+| 6 | **Constitution Principle VII amendment (v3.1.1 → v3.2.0) is drafted, not accepted** — `constitution-amendment-proposal.md` | **Samuel** | **This is now the sharpest item in the table.** Rev. 1 said building FR-2306/2307/2308 and FR-2601…2606 would be ahead of their governance. They are built. Gender is collected, operator transcript access is a logged privilege, and the amendment that would sanction both is still a proposal — setup **S9**. |
+| 7 | **Egypt PDPL guardian-consent requirement collides with D7** — Decree 816/2025 requires written guardian consent for under-15s; the grace period ends **2026-11-01** | **Not a decision — routed to Samuel** | Weeks after target launch. Consent fields are modelled and unenforced (migration 015's `guardian_*`), which is R2's recommended posture; the legal opinion is setup **S10** and is owed before the pilot takes money. Bears on **FR-2307**, **FR-2308**, **FR-2901**. |
+| 8 | ~~Two cost-ledger defects already live in production~~ **CLOSED in P4** (`0ab095a`) | Engineering | `input_tokens` no longer includes the cache counters, and the sacred-guard redaction path records real streamed tokens repriced at list price instead of zeros. A **third** defect was found on the way and fixed with them: every OCR row had been written as zeros, so FR-2402's upload figure was structurally zero. FR-2401…FR-2403 are VERIFIED. |
+| 9 | ~~The application connects to Postgres as a superuser in both places it runs~~ **CLOSED in P1** (`66d934c`) | Engineering | Migration 017 creates `ainext_app` (not a superuser, not the owner), `ainext_operator` and `ainext_maint`; `local-dev.sh` repoints `DATABASE_URL`. The isolation proof runs **as `ainext_app`**, which is the only way it proves anything. **The box still needs real passwords for the three roles and `DATABASE_URL` repointed there — setup S4. Until that happens, RLS on the box is inert.** |
+| 10 | **Six honest gaps in the implementation, named rather than rounded up** | Engineering, and two are Samuel's | New in rev. 2, and the reason to read this matrix rather than the phase commits: no student session list (**FR-2009**), no profile editor (**FR-2013**), the operator audit's immutability never attacked (**FR-2306**), no account-deletion path and a schema that would refuse one (**FR-2310**), the isolation proof outside CI (**SC-102**), and Arabic masculine forms outside the vocative (**FR-2602**, setup **S24**). |
+| 11 | **Google sign-in and SMTP have never run** | **Samuel** (credentials), then Engineering | **FR-2006** is the only BUILT-and-never-executed row in the matrix, and **FR-2004** is PARTIAL for the same reason. Both need setup Samuel owns (**S1**, **S2**) before either can be promoted, and **S15** — the grade a Google account defaults to — is a contract question, not a configuration one. |
 
 ---
 
@@ -217,16 +239,16 @@ was actually hard.
 | Functional requirements | **70** |
 | Success criteria | **14** |
 | Traced (every one needs a row) | **84 / 84** |
-| — verified | 0 |
-| — built | 0 |
-| — partial | 3 |
-| — open | 75 |
-| — blocked | 2 |
+| — verified | 62 |
+| — built | 2 |
+| — partial | 13 |
+| — open | 2 |
+| — blocked | 1 |
 | — deferred | 4 |
 | Requirements a test declares | **38** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 0 requirements marked VERIFIED, 0 have an automated test declaring them.** The remaining 0 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 62 requirements marked VERIFIED, 33 have an automated test declaring them.** The remaining 29 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 

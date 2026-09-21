@@ -1,129 +1,89 @@
 # Quickstart — Identity & Admin Console
 
-**Feature**: `002-identity-and-admin-console` | **Date**: 2026-09-20
-**For**: Samuel, on a laptop, today and tomorrow. Nothing here touches the OCI box, the baseline, or
-any deployed thing. Deploying the console is a later release (D3).
+**Feature**: `002-identity-and-admin-console` | **Updated**: 2026-09-21 (P0–P6 implemented)
+**For**: Samuel, on a laptop. Nothing here touches the OCI box, the baseline, or any deployed thing.
+Deploying the console is a later release (D3).
 
 Run everything from the repository root. Each block is one command, copy-pasteable as it stands.
+Every command below was executed on `feat/002-identity-and-admin-console`; what each one *proves* is
+recorded against a requirement in [`traceability.md`](./traceability.md).
 
 ---
 
-## Today, on `PDR1-0-v0.4.0` — nothing from 002 is built yet
-
-This section works **right now**, before a line of this feature exists. It is here so the two
-exposures FR-2104 closes are things you have seen rather than things you were told about.
-
-### 1. Start the student surface
+## Start it
 
 ```bash
-./scripts/local-dev.sh
+./scripts/local-dev.sh --both
 ```
 
-Idempotent: it creates `ainext_mvp1` if missing, applies the schema and every migration, loads the
-curriculum, restores generated content with its review stamps, seeds `'Omar (demo)'` if there are no
-students, runs the parity check, writes `app/.env.local`, and serves on **:3000**. You will see
-`10 / 90 / 112 / 450 / 212`, `PARITY: GREEN`, then the dev server at
-`http://localhost:3000/student`.
+Student on **:3000**, console on **:3002**, one database, one command (FR-2210, SC-111). `--admin`
+serves the console alone; no flag serves the student alone.
 
-### 2. Turn the internal surfaces on, on the same port
+Idempotent: it creates `ainext_mvp1` if missing, applies the schema and all twenty-two migrations,
+loads the curriculum, restores generated content with its review stamps, seeds `'Omar (demo)'` if
+there are no students, runs the parity check, writes `app/.env.local`, seeds the first operator and
+the local student account, and serves. You will see `10 / 90 / 112 / 450 / 212`, `PARITY: GREEN`,
+then both dev servers.
 
-```bash
-printf '\nAINEXT_INTERNAL_SURFACES=on\n' >> app/.env.local
-```
+**The application connects as `ainext_app`** — a role that is not a superuser and not the table
+owner — so row-level security actually applies. The script repoints `DATABASE_URL` for you. It also
+writes `DATABASE_URL_OPERATOR` (the console's connection) and `DATABASE_URL_MAINT` (BYPASSRLS,
+scripts only, never the app).
 
-Restart the dev server (Ctrl-C, then `./scripts/local-dev.sh` again). `/admin/content`,
-`/admin/cost`, `/pipeline`, `/gallery` and `/dev/*` now resolve. **This is a build-time switch, not a
-permission system** — `app/src/lib/env.ts` says so in as many words. There is no person behind it.
+### Who you can sign in as
 
-### 3. See the first exposure — `/pipeline` shows a student's actual turn
+| Where | Email | Password | What it is |
+|---|---|---|---|
+| Student, `:3000` | `omar@local.test` | `omar-local-test` | The seeded account bound to `'Omar (demo)'`, pre-verified. `app/scripts/seed-local-account.mts` refuses to run anywhere but localhost. |
+| Console, `:3002` | `samuel.s.toma@gmail.com` | `ConsoleLocal!2026` | The bootstrap operator, all four roles. Local only — this password exists on this laptop and nowhere else. |
+| Console, `:3002` | `cost-only@local.test` | `CostOnly!2026` | One role, `cost-billing`. The one to sign in as when you want to see a refusal. |
 
-Have a short tutor conversation at `/student`, then:
+The operator is seeded with **no password** (`npm --prefix app run bootstrap:operator`, idempotent —
+running it twice grants nothing new). The passwords above were set through the ordinary reset flow
+at `http://localhost:3002/forgot-password`; do the same for any operator you add.
 
-```bash
-open http://localhost:3000/pipeline
-```
+### From the iPad, over the tailnet
 
-Scroll to the live-interaction panel: it is showing **the most recent tutor turn written by any
-student, with its grounding** — `app/src/lib/pipeline-queries.ts:183-184`, a `SELECT … FROM
-ai_interactions ORDER BY created_at DESC LIMIT 1` with no student predicate. Switch students, talk
-again, reload: it follows whoever spoke last. That is a conversation, not a counter, and FR-2104
-names it.
+The dev servers bind all interfaces. Next 16 refuses cross-origin dev requests unless the host is
+listed, so `app/.env.local` carries `AINEXT_DEV_ORIGINS` (comma-separated, wildcards allowed) and
+`next.config.ts` feeds it to `allowedDevOrigins`. `AINEXT_PUBLIC_URL` and `AINEXT_CONSOLE_URL` carry
+the tailnet name too, so a verification or reset link opens from the device that asked for it.
 
-### 4. See the second — the roster endpoint
-
-```bash
-curl -s http://localhost:3000/api/demo-students | head -c 800
-```
-
-Every student's id, display name, grade, interests and progress counters, to any caller. It is the
-picker's contract working exactly as designed, and it is the seam accounts replace.
-
-### Evidence to collect
-
-- A screenshot of `/pipeline` showing a turn from a student you were not signed in as.
-- The `curl` output above, saved.
-- `psql -d ainext_mvp1 -c "select count(*) from sessions;"` → **0**. The table has never held a row.
+Student `http://macbook-pro.tail9c994e.ts.net:3000`, console `…:3002`. **HTTP only** — this tailnet
+has no HTTPS certificates. Cookies are `Secure` only in production, so sign-in works over plain HTTP
+here and would not on the box.
 
 ---
 
-## After Phase 0 — learning sessions are real
-
-### Check that new interactions belong to a session
-
-Do a lesson, a chat, an understanding check and an upload, then:
-
-```bash
-psql -d ainext_mvp1 -c "select id, kind, opened_at, closed_at, close_reason from sessions order by id desc limit 10;"
-```
-
-Then the one that matters:
-
-```bash
-psql -d ainext_mvp1 -c "select count(*) as orphans from ai_interactions where session_id is null and created_at > now() - interval '1 hour';"
-```
-
-**Expected: 0.** An interaction written after cutover with no session is the P0 gate failing.
-
-### Check that a session closes by inactivity, and says so
-
-Leave a lesson open past the window (30 minutes, or run the sweep by hand), then:
-
-```bash
-psql -d ainext_mvp1 -c "select id, kind, close_reason, closed_at - opened_at as duration from sessions where closed_at is not null order by id desc limit 5;"
-```
-
-One you finished reads `completed`; one the timeout closed reads `inactivity` (FR-2302).
-
-### Evidence to collect
-
-- The orphan count, zero, after a full journey; one `completed` and one `inactivity` row side by side.
-- A `capture-prompts` run diffed against the pre-phase capture → **no diffs**. Session plumbing must
-  not change a single prompt.
-
----
-
-## After Phase 1 — accounts and database-enforced isolation
-
-### Sign up, verify, sign in
+## Sign up, verify, sign in
 
 ```bash
 open http://localhost:3000/signup
 ```
 
-Email, password, name, grade, gender. You are signed in immediately but **unverified**, and the
-lesson is refused with a plain message and a resend button. There is no mail server locally: the
-verification link is printed to the dev-server console as
-`http://localhost:3000/api/auth/verify?token=…` (or in the optional catcher at
-`http://localhost:8025`). Paste it, then sign in, reach a lesson, and confirm no surface names or
-lists another student.
+Email, password, name, grade, and two optional fields: how Noor should talk to you, and what you are
+interested in. You are signed in immediately but **unverified**, and a lesson is refused with a plain
+message and a resend button — verification gates *learning*, not signing in, so you can still look at
+`/spine`.
 
-### Prove RLS — the part worth doing carefully
+There is no mail server on a laptop. `AINEXT_MAIL_TRANSPORT=console` prints the verification link to
+the dev-server log and writes it under `app/.local-mail/`:
+
+```bash
+ls -t app/.local-mail | head -3
+```
+
+Open the newest file, paste the link, and you are verified.
+
+---
+
+## Prove the isolation — the part worth doing carefully
 
 **Connect as the application role, not as yourself.** Your own account is a Postgres superuser, and
 superusers bypass row-level security unconditionally, so a proof run as `$(whoami)` proves nothing.
 
 ```bash
-psql "postgres://ainext_app@127.0.0.1:5432/ainext_mvp1"
+psql "postgres://ainext_app:ainext_app@127.0.0.1:5432/ainext_mvp1"
 ```
 
 Inside that session, three queries — a principal, a different principal, and none:
@@ -141,85 +101,72 @@ BEGIN; SELECT count(*) FROM attempts; ROLLBACK;
 ```
 
 **Expected**: student 1's count, student 2's count, and **0**. The third is the whole decision — a
-query with no student scope returns nothing, never everything (FR-2101). Repeat it against
+query with no student scope returns nothing, never everything (FR-2101). Repeat against
 `ai_interactions`, `uploads`, `understanding_checks` and `mastery`; the answer must be 0 every time.
+The scripted version of the same proof is `app/scripts/rls-proof.sql`.
 
-### Confirm the two exposures are gone
+Then the adversarial pass — two accounts, a cookie jar each, every student route:
 
 ```bash
-curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/api/demo-students
+./scripts/red-team-isolation.sh http://localhost:3000
 ```
 
-**Expected: 404.** The roster is not in the student build at all.
+**45 checks, all PASS.** It is idempotent and cleans up after itself. One caveat that is not a
+defect: it deliberately burns five failed sign-ins into the shared IP throttle bucket (20 per 15
+minutes). Three back-to-back runs from one IP exhaust it and the fourth run starts seeing 429s —
+that is the throttle working. Wait for the window, or clear the bucket as the maintenance role:
 
-### Evidence to collect
+```bash
+psql "postgres://ainext_maint:ainext_maint@127.0.0.1:5432/ainext_mvp1" \
+  -c "DELETE FROM auth_throttle WHERE scope = 'ip';"
+```
 
-- The three `psql` results, including the zero; the 404 from the roster endpoint; `/pipeline` no
-  longer showing any student's turn.
-- `select event, count(*) from auth_events group by 1;` — after a signup, a verify, a good sign-in, a
-  bad one and five bad ones in a row, every named event you exercised appears.
-- `npm --prefix app test` — the isolation suite and the event-emission suite both green.
+The two old exposures are gone, and not merely hidden:
+
+```bash
+curl -s -o /dev/null -w 'roster -> %{http_code}\n' http://localhost:3000/api/demo-students
+curl -s -o /dev/null -w 'pipeline -> %{http_code}\n' http://localhost:3000/pipeline
+```
+
+**Expected: 404, 404.** Neither route is in the student build's manifest.
 
 ---
 
-## After Phase 2 — the console on its own port
+## The console
 
-### Start both surfaces
+Sign in at `http://localhost:3002/` as the four-role operator. The landing page is the student list;
+`cost-billing` alone sees a projection of it with no content column.
 
-```bash
-./scripts/local-dev.sh --both
-```
-
-Student on **:3000**, console on **:3002**, one database, one command (FR-2210, SC-111). To run only
-the console:
-
-```bash
-AINEXT_SURFACE=admin PORT=3002 npm --prefix app run dev
-```
-
-### Get the first operator account
-
-The first operator is seeded from a configured email and holds all four roles (ADR-0014):
-
-```bash
-printf '\nAINEXT_BOOTSTRAP_OPERATOR_EMAIL=you@example.com\n' >> app/.env.local
-```
-
-Then, idempotently — running it twice grants nothing new:
-
-```bash
-npm --prefix app run bootstrap-operator
-```
-
-It creates the operator and its four role grants and **sets no password**, so no credential is ever
-written into a config file. Get one through the ordinary reset flow at
-`http://localhost:3002/forgot-password`; the link is printed to the console server's log, exactly
-like the verification link.
+| Path | What it is |
+|---|---|
+| `/students/1` | Student 360 — profile, BKT trajectory, attempts and accuracy, time on task as two numbers never blended, sessions, help-seeking, misconceptions, imputed cost, subscription (read-only unless you hold `cost-billing`), safety flags as type and time only, sign-in history, and the audit panel of who opened this record |
+| `/students/1/sessions` | The session list. Metadata only, and it writes **no** audit row |
+| `/students/1/sessions/<id>` | The one-order timeline: tutor turns, attempts, widget outcomes, understanding checks, uploads, mastery movements and explanations, merged, with gaps over 60 s shown as items |
+| `/students/1/sessions/<id>/replay` | The reconstructed replay, in the student's own renderers made read-only, labelled "Reconstructed from stored records" with occurred-at, model and renderer version per turn |
+| `/security` | Sign-ins, failures, lockouts, denials, top source IPs, active sessions, and the operator-read audit — force-dynamic, so an attempt shows within seconds |
+| `/cost` | AI spend and upload/OCR spend as separate figures, per-student sparklines, the reconciliation line, an outcome breakdown. Every figure says "imputed at list price" |
+| `/overview`, `/overview/definitions` | Cohort overviews on school-year weeks, the 90-objective heatmap, and the metric dictionary the queries cite by name |
+| `/content`, `/pipeline`, `/gallery`, `/dev/*` | The four operator surfaces re-homed from the student build |
 
 ### Check what 404s where
 
 ```bash
-curl -s -o /dev/null -w 'student build /console -> %{http_code}\n' http://localhost:3000/console
-```
-
-**Expected: 404** — the route is not in that build at all, not merely hidden (FR-2201).
-
-```bash
+curl -s -o /dev/null -w 'student build /students -> %{http_code}\n' http://localhost:3000/students
 curl -s -o /dev/null -w 'console build /student -> %{http_code}\n' http://localhost:3002/student
 ```
 
-```bash
-curl -s -o /dev/null -w 'console, signed out -> %{http_code}\n' http://localhost:3002/console/students
-```
+**Expected: 404 and 404** — each build is missing the other's routes entirely, not hiding them. The
+same guarantee is asserted from the build artefact, and that assertion runs in CI:
 
-**Expected: 404** then **401** — the console build does not serve the student's pages either, and no
-console data renders before a role is established.
+```bash
+npm --prefix app run check:surface
+npm --prefix app run check:surface:admin
+```
 
 ### Prove a role is a boundary, and that the audit cannot be erased
 
-Create a second operator holding only `content-review`, sign in as them, and try the student list, a
-transcript and the cost view — each must refuse. Then open a student's timeline as yourself. Both
-leave a record:
+Sign in as `cost-only@local.test` and try `/security`, `/students/1` and a transcript. Each refuses
+and renders none of the page. Then open a student's 360 as yourself. Both leave a record:
 
 ```bash
 psql -d ainext_mvp1 -c "select occurred_at, event, reason from auth_events where event = 'permission_denied' order by occurred_at desc limit 10;"
@@ -229,15 +176,113 @@ psql -d ainext_mvp1 -c "select occurred_at, event, reason from auth_events where
 psql -d ainext_mvp1 -c "select occurred_at, operator_id, student_id, surface from operator_reads order by occurred_at desc limit 5;"
 ```
 
-One `operator_reads` row per transcript open, naming who opened whose record. The session **list**
-writes none — only opening a transcript does.
+One `operator_reads` row per 360, timeline and replay open, naming who opened whose record. The
+session **list** writes none. `ainext_operator` holds `SELECT` and `INSERT` on that table and nothing
+else, so an operator cannot remove their own row — worth confirming for yourself:
 
-### Evidence to collect
+```bash
+psql "postgres://ainext_operator:ainext_operator@127.0.0.1:5432/ainext_mvp1" \
+  -c "DELETE FROM operator_reads WHERE id = (SELECT max(id) FROM operator_reads);"
+```
 
-- The three status codes above (404, 404, 401), and the `permission_denied` rows for the single-role
-  operator, one per refused surface.
-- The `operator_reads` rows, and a failed `DELETE` against that table as `ainext_operator`.
-- A screenshot of the console's first screen, for the design-system pass (FR-2209).
+**Expected: permission denied.** (This is the one check in this document that no smoke script runs —
+FR-2306 is PARTIAL in the matrix because of it.)
+
+---
+
+## Sessions, cost and alerts
+
+Every interaction now belongs to a real session row. After a lesson, a chat, an understanding check
+and an upload:
+
+```bash
+psql -d ainext_mvp1 -c "select id, kind, opened_at, closed_at, close_reason from sessions order by id desc limit 10;"
+```
+
+Then the one that matters:
+
+```bash
+psql -d ainext_mvp1 -c "select count(*) as orphans from ai_interactions where session_id is null and created_at > now() - interval '1 hour';"
+```
+
+**Expected: 0.** An interaction written after cutover with no session is the P0 guarantee failing.
+(Pre-cutover rows are deliberately NULL rather than attached to the nearest session — FR-2309.)
+
+Roll yesterday's cost into `cost_daily`. Idempotent, and it deliberately leaves today open:
+
+```bash
+npm --prefix app run rollup:cost
+```
+
+Evaluate the security alert rules. Each rule fires once per window; with `AINEXT_ALERT_EMAIL` unset
+nothing is mailed and everything is logged:
+
+```bash
+npm --prefix app run alerts:sweep -- --dry
+```
+
+---
+
+## The prompts, and the tutor's voice
+
+The prompt byte-identity harness runs as documented and covers 234 files:
+
+```bash
+npm --prefix app run capture:prompts
+```
+
+Capture before a change, capture after, diff the two directories. Anything that is not a prompt
+change must produce **no diffs** — that is constitution IX, and it is how P6 proved that changing the
+address register changed nothing else.
+
+The tutor addresses a student by the register she chose, and a change takes effect on the next turn
+with no sign-out (FR-2606). To watch it happen:
+
+```bash
+psql -d ainext_mvp1 -c "update students set gender = 'female' where id = 1;"
+```
+
+Ask Noor something at `/student`. Then set it back to NULL and ask again — the reply changes register
+without a sign-out, because the prompt-snapshot cache keys on `f|m|n` rather than on the stored value.
+
+---
+
+## The smoke scripts
+
+Six scripts, one per phase, each printing `PASS|FAIL <FR> <what>` and exiting non-zero on any FAIL.
+They speak HTTP to servers that are already running and never start, build or kill one.
+
+```bash
+./scripts/red-team-isolation.sh http://localhost:3000     # P1 — 45 checks
+./scripts/console-smoke.sh                                # P2 — 53 checks
+./scripts/console-p3-smoke.sh                             # P3 — 45 checks, spends one real turn
+./scripts/console-p4-smoke.sh                             # P4 — 54 checks, one real turn + one upload
+./scripts/console-p5-smoke.sh                             # P5 — 68 checks
+./scripts/voice-p6-smoke.sh                               # P6 — deterministic checks only
+```
+
+P6's three live turns are **off by default**, because a smoke test that gets re-run casually must not
+quietly spend model money every time (roughly $0.70 for the three):
+
+```bash
+AINEXT_SMOKE_LIVE_TURNS=1 ./scripts/voice-p6-smoke.sh
+```
+
+All six are idempotent: each deletes its own throwaway accounts and everything hanging off them at
+both start and end. None of them touches Omar's history.
+
+---
+
+## What is not configured locally
+
+Three things are built and inert. Each has a stand-in, and each is a row in
+[`SETUP.md`](./SETUP.md) that only Samuel can close.
+
+| Not configured | Env vars | What you see instead | Setup |
+|---|---|---|---|
+| **Google sign-in** | `AINEXT_GOOGLE_CLIENT_ID`, `AINEXT_GOOGLE_CLIENT_SECRET`, `AINEXT_GOOGLE_REDIRECT_URI` | The button renders disabled: "Google sign-in not configured". The callback has never been reached — FR-2006 is the one BUILT row in the matrix | **S1** (and **S13**, **S15**) |
+| **SMTP** | `AINEXT_SMTP_URL`, `AINEXT_MAIL_FROM` | `AINEXT_MAIL_TRANSPORT=console`: every link goes to the dev-server log and `app/.local-mail/`. Nothing has ever been sent to a real address | **S2** |
+| **GA4** | `AINEXT_GA_MEASUREMENT_ID` | No script renders on any surface, student or console. The allow-list and the consent defaults are asserted by unit tests only | **S7**, **S22** |
 
 ---
 
@@ -246,6 +291,9 @@ writes none — only opening a transcript does.
 | Symptom | Almost certainly |
 |---|---|
 | The RLS proof returns rows with no principal set | You are connected as a superuser or the table owner. Reconnect as `ainext_app`. |
+| Sign-in suddenly 429s | The shared IP throttle (20 failures / 15 min) — heavy testing from one address. Wait for the window or clear `auth_throttle` as `ainext_maint`. |
 | A new test never seems to run | `app/package.json`'s `test` script is a hardcoded list, not a glob. Append the file by hand. |
 | A migration seems skipped | Migrations apply by alphabetical glob; the prefix must be three digits — `011`, not `11`. |
-| Both surfaces fight over a port | The console is `:3002`. `AINEXT_SURFACE=admin` without `PORT` tries `:3000`. |
+| Both surfaces fight over a port | The console is `:3002`. `AINEXT_SURFACE=admin` without `PORT` tries `:3000`. The dev-server lock is per `distDir`, which is why two can coexist at all. |
+| A page opened over the tailnet loads no styles | The host is not in `AINEXT_DEV_ORIGINS`. Add it and restart. |
+| A console refusal answers HTTP 200 | As built — React Server Components cannot set a status without Next's `experimental.authInterrupts`. The body is a refusal and renders none of the page; API refusals are real 401/403 (**S19**). |
