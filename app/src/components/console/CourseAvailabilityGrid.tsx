@@ -36,14 +36,21 @@ import type { CourseCatalogRow } from "@/lib/catalog-queries";
  * Social Studies and Arabic have zero objectives in this database today.
  * Flipping either of them live for a grade would publish an empty course to a
  * real student with nothing on screen to say so — so a "Live" click on a cell
- * with zero objectives OR zero questions stops at a native `confirm()` that
- * names the exact numbers before anything is written. It does not block the
- * click: Samuel may well want an empty course live for his own testing, and
- * the whole design of this feature is "full flexibility now" — it only
- * refuses to let that happen *silently*. A styled modal would be the more
- * "designed" answer, but a native confirm is synchronous, cannot be dismissed
- * by a stray click the way a modal's backdrop can, and needs nothing beyond
- * what the browser already gives an operator's tool.
+ * with zero objectives OR zero questions asks first, naming the exact numbers,
+ * before anything is written. It does not block the click: Samuel may well
+ * want an empty course live for his own testing, and the whole design of this
+ * feature is "full flexibility now" — it only refuses to let that happen
+ * *silently*.
+ *
+ * **The question is asked IN THE PAGE, never with `window.confirm`.** It was
+ * a native confirm first, and that was a defect: embedded browsers (the one
+ * this console is previewed in), some kiosk and corporate policies, and any
+ * context that has suppressed dialogs make `confirm()` return `false`
+ * immediately and silently. The operator then clicks "Live", nothing happens,
+ * nothing is written and nothing is said — which is exactly how it was found.
+ * A control whose confirmation step can be disabled by the surrounding browser
+ * is a control that does not work, so the confirmation is ordinary in-flow
+ * markup: the cell turns into its own question, and the answer is a button.
  */
 export function CourseAvailabilityGrid({ rows }: { rows: CourseCatalogRow[] }) {
   // Group the flat (course × grade) list back into one row per course. Order
@@ -106,8 +113,26 @@ export function CourseAvailabilityGrid({ rows }: { rows: CourseCatalogRow[] }) {
 function GridCell({ row }: { row: CourseCatalogRow }) {
   const [busy, setBusy] = useState<CourseState | null>(null);
   const [error, setError] = useState<string | null>(null);
+  /** Set when a "Live" click on an empty course is waiting to be confirmed. */
+  const [asking, setAsking] = useState(false);
 
   const isEmpty = row.objectivesLoaded === 0 || row.questionsLoaded === 0;
+
+  /**
+   * The first half of the click. A "Live" on a course with nothing behind it
+   * turns the cell into its own question rather than calling a dialog the
+   * browser may have disabled; every other click writes straight away.
+   */
+  function request(next: CourseState) {
+    if (busy) return;
+    if (row.explicit && row.state === next) return;
+    if (next === "live" && isEmpty && !asking) {
+      setAsking(true);
+      setError(null);
+      return;
+    }
+    void setTo(next);
+  }
 
   async function setTo(next: CourseState) {
     if (busy) return;
@@ -115,15 +140,7 @@ function GridCell({ row }: { row: CourseCatalogRow }) {
     // but a stale render (two tabs open) should not fire a no-op write.
     if (row.explicit && row.state === next) return;
 
-    if (next === "live" && isEmpty) {
-      const proceed = window.confirm(
-        `${row.label} has ${row.objectivesLoaded} objective${row.objectivesLoaded === 1 ? "" : "s"} and ` +
-          `${row.questionsLoaded} question${row.questionsLoaded === 1 ? "" : "s"} loaded for ${row.gradeLabel}. ` +
-          `Making it live will show real students an empty course. Continue?`
-      );
-      if (!proceed) return;
-    }
-
+    setAsking(false);
     setBusy(next);
     setError(null);
     try {
@@ -163,24 +180,53 @@ function GridCell({ row }: { row: CourseCatalogRow }) {
             {stamp(row.updatedAt)}
           </span>
         )}
-        <div className="mt-0.5 flex gap-1">
-          <button
-            type="button"
-            onClick={() => void setTo("live")}
-            disabled={busy !== null || (row.explicit && row.state === "live")}
-            className="rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
-          >
-            {busy === "live" ? "…" : "Live"}
-          </button>
-          <button
-            type="button"
-            onClick={() => void setTo("hidden")}
-            disabled={busy !== null || (row.explicit && row.state === "hidden")}
-            className="rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
-          >
-            {busy === "hidden" ? "…" : "Hidden"}
-          </button>
-        </div>
+        {asking ? (
+          <div className="flex max-w-[9.5rem] flex-col items-start gap-1">
+            <p className="text-[10.5px] leading-snug text-ink">
+              {row.label} has {row.objectivesLoaded} objective
+              {row.objectivesLoaded === 1 ? "" : "s"} and {row.questionsLoaded} question
+              {row.questionsLoaded === 1 ? "" : "s"} for {row.gradeLabel}. Students would
+              see an empty course.
+            </p>
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={() => void setTo("live")}
+                disabled={busy !== null}
+                className="rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
+              >
+                {busy === "live" ? "…" : "Publish it empty"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setAsking(false)}
+                disabled={busy !== null}
+                className="rounded border border-dashed border-line-soft px-1.5 py-0.5 text-[10.5px] font-semibold text-ink-soft hover:bg-line-soft disabled:opacity-40"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-0.5 flex gap-1">
+            <button
+              type="button"
+              onClick={() => request("live")}
+              disabled={busy !== null || (row.explicit && row.state === "live")}
+              className="rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
+            >
+              {busy === "live" ? "…" : "Live"}
+            </button>
+            <button
+              type="button"
+              onClick={() => request("hidden")}
+              disabled={busy !== null || (row.explicit && row.state === "hidden")}
+              className="rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
+            >
+              {busy === "hidden" ? "…" : "Hidden"}
+            </button>
+          </div>
+        )}
         {error && <p className="max-w-[9rem] text-[10.5px] leading-snug text-ink">{error}</p>}
       </div>
     </td>
