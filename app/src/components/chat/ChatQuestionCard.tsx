@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { mcqChoices, stepText } from "@/lib/types";
 import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
@@ -8,6 +8,7 @@ import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
 import { pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
+import { submitAttempt } from "@/lib/attempts-client";
 import {
   BUTTON_PRIMARY,
   BUTTON_TERTIARY,
@@ -32,6 +33,10 @@ export function ChatQuestionCard({
   lang = "en",
   onResult,
   onOpenQuestion,
+  probing = false,
+  revealAnswer = false,
+  retryOfAttemptId,
+  externalResult,
 }: {
   question: SpineQuestion;
   /** false = student mode: no db ids, soft failure state, no mastery deltas */
@@ -40,6 +45,33 @@ export function ChatQuestionCard({
   lang?: "en" | "ar";
   onResult: (result: AttemptResult, q: SpineQuestion) => void;
   onOpenQuestion?: (qid: string) => void;
+  /**
+   * Socratic-probing prototype (`507bb31`; Route B + Option 1). true only when
+   * ChatCore's `probingActive(surface)` is — i.e. never while
+   * `SOCRATIC_PROBING_ENABLED` is false (lib/socratic-probing.ts). When true,
+   * a wrong answer no longer reveals its correct answer OR its
+   * refutation/solution here — the tutor's own next turn probes for it
+   * instead. false (the default, and every surface today) keeps the
+   * immediate-reveal behaviour unchanged.
+   */
+  probing?: boolean;
+  /**
+   * Overrides `probing`'s withholding for THIS result once the 2-attempt cap
+   * or an explicit {{reveal_answer}} has been reached — falls back to exactly
+   * the non-probing display, never a bare final value.
+   */
+  revealAnswer?: boolean;
+  /** Set when this card is the same-tier sibling question ChatCore is
+   *  serving to confirm a pending LO — sent so the server can tag
+   *  `stance_used = "probe"` and link the retry (migration 027). */
+  retryOfAttemptId?: number;
+  /**
+   * Socratic-probing prototype: an attempt graded from a chat-typed answer
+   * ({{answer_submitted:…}}) rather than this card's own Submit tap —
+   * ChatCore already POSTed it (lib/attempts-client.ts); this only makes the
+   * card's OWN display catch up. Matched by question id.
+   */
+  externalResult?: { questionId: string; result: AttemptResult };
 }) {
   const [choice, setChoice] = useState<string | null>(null);
   const [numeric, setNumeric] = useState("");
@@ -69,23 +101,19 @@ export function ChatQuestionCard({
     // Not the question, not the answer, not whether it was right (lib/ga.ts).
     track("retrieval_attempt_submitted", { surface: "chat_card" });
     try {
-      const res = await fetch("/api/attempts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          questionId: q.id,
-          givenAnswer: given,
-          timeMs: Date.now() - shownAt.current,
-          // A widget reports WHAT it built; the server decides whether that is
-          // right and what it means. The predicate never carries a verdict
-          // (ADR-0009) — `correct` on the outcome is for the widget's own
-          // local feedback, and the server re-derives it from the stored
-          // question's own correct_answer.
-          ...(widget ? { predicate: widget.predicate } : {}),
-        }),
+      // A widget reports WHAT it built; the server decides whether that is
+      // right and what it means. The predicate never carries a verdict
+      // (ADR-0009) — `correct` on the outcome is for the widget's own local
+      // feedback, and the server re-derives it from the stored question's
+      // own correct_answer. One client seam (lib/attempts-client.ts) so a
+      // tapped card and a chat-typed answer cannot drift into two pipelines.
+      const r = await submitAttempt({
+        questionId: q.id,
+        givenAnswer: given,
+        timeMs: Date.now() - shownAt.current,
+        ...(widget ? { predicate: widget.predicate } : {}),
+        ...(retryOfAttemptId != null ? { retryOfAttemptId } : {}),
       });
-      if (!res.ok) throw new Error(`API ${res.status}`);
-      const r: AttemptResult = await res.json();
       setResult(r);
       onResult(r, q);
     } catch (e) {
@@ -94,6 +122,17 @@ export function ChatQuestionCard({
       setBusy(false);
     }
   };
+
+  // Socratic-probing prototype: a chat-typed answer graded by ChatCore —
+  // sync this card's own display to match, exactly as if it had been tapped
+  // here. Guarded on `!result` so it only ever applies once. Never fires
+  // while the switch is off: nothing sets `externalResult` then.
+  useEffect(() => {
+    if (!result && externalResult && externalResult.questionId === q.id) {
+      setResult(externalResult.result);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [externalResult, q.id]);
 
   return (
     <div className={cx(STICKER_PANEL, "anim-pop my-2 overflow-hidden")}>
@@ -280,7 +319,13 @@ export function ChatQuestionCard({
             </div>
             {/* student mode: the correct letter stays withheld until the
                 explanation lands — a quiet affordance reveals it on demand */}
-            {!debug && !result.isCorrect && q.questionType !== "widget" && (
+            {/* SOCRATIC PROBING: also withheld outright while probing is still
+                active (revealAnswer false) — nothing on this card may hand
+                the answer over ahead of the tutor's guiding questions. */}
+            {!debug &&
+              !result.isCorrect &&
+              q.questionType !== "widget" &&
+              (!probing || revealAnswer) && (
               <p
                 dir={lang === "ar" ? "rtl" : "ltr"}
                 className="mt-1.5 text-[0.85rem]"
@@ -310,55 +355,83 @@ export function ChatQuestionCard({
                 ADR-0009 this was looked up, logged to analytics and then
                 dropped, so the text written for the mistake reached a
                 dashboard and never reached the student. */}
-            {result.refutation && !result.isCorrect && (
+            {/* SOCRATIC PROBING (Route B): the material below is withheld
+                from THIS card while probing — it rides into the tutor's next
+                turn as reference-only context (ChatCore's handleAttempt).
+                With the switch off `probing` is always false and this is
+                exactly main's reveal. */}
+            {probing && !revealAnswer && !result.isCorrect ? (
               <div
                 className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
               >
-                <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-accent-deep">
-                  why that happened
+                <p className="text-[1rem] text-ink-soft">
+                  Let&apos;s talk it through — keep chatting below ↓
                 </p>
-                <ol className="mt-1.5 grid gap-1.5 font-read">
-                  {result.refutation.steps.map((st) => (
-                    <li key={st.step} className="text-[1rem] text-ink">
-                      <TeX text={st.text_md} />
-                    </li>
-                  ))}
-                </ol>
                 {debug && (
-                  <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
-                    {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
+                  <p className="mt-1.5 font-mono text-[0.72rem] text-ink-faint">
+                    probing → {result.diagnosis?.misconceptionId ?? "no diagnosis"}
+                    {result.refutation
+                      ? ` · matched ${result.refutation.entryId}`
+                      : result.solution.length > 0
+                        ? " · falling back to canonical solution"
+                        : " · nothing to hand the tutor either"}
+                    {" — held for the tutor's turn, not rendered here"}
                   </p>
                 )}
               </div>
-            )}
-            {/* THE FALLBACK (FR-305) — no misconception was diagnosed (a
-                numeric answer, or an MCQ distractor with no misconception
-                label), so there is nothing to refute. Serving the canonical
-                solution here, honestly labelled as the correct method rather
-                than a diagnosis of her specific error, replaced silently
-                guessing at one of the LO's OTHER misconceptions — which used
-                to repeat the same borrowed explanation across unrelated
-                questions on the same objective. */}
-            {!result.refutation && !result.isCorrect && result.solution.length > 0 && (
-              <div
-                className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
-              >
-                <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-soft">
-                  here&apos;s how to solve it
-                </p>
-                <ol className="mt-1.5 grid gap-1.5 font-read">
-                  {result.solution.map((st) => (
-                    <li key={st.step} className="text-[1rem] text-ink">
-                      <TeX text={stepText(st)} />
-                    </li>
-                  ))}
-                </ol>
-                {debug && (
-                  <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
-                    no misconception diagnosed · canonical solution
-                  </p>
+            ) : (
+              <>
+                {result.refutation && !result.isCorrect && (
+                  <div
+                    className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
+                  >
+                    <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-accent-deep">
+                      why that happened
+                    </p>
+                    <ol className="mt-1.5 grid gap-1.5 font-read">
+                      {result.refutation.steps.map((st) => (
+                        <li key={st.step} className="text-[1rem] text-ink">
+                          <TeX text={st.text_md} />
+                        </li>
+                      ))}
+                    </ol>
+                    {debug && (
+                      <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
+                        {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
+                      </p>
+                    )}
+                  </div>
                 )}
-              </div>
+                {/* THE FALLBACK (FR-305) — no misconception was diagnosed (a
+                    numeric answer, or an MCQ distractor with no misconception
+                    label), so there is nothing to refute. Serving the canonical
+                    solution here, honestly labelled as the correct method rather
+                    than a diagnosis of her specific error, replaced silently
+                    guessing at one of the LO's OTHER misconceptions — which used
+                    to repeat the same borrowed explanation across unrelated
+                    questions on the same objective. */}
+                {!result.refutation && !result.isCorrect && result.solution.length > 0 && (
+                  <div
+                    className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
+                  >
+                    <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-soft">
+                      here&apos;s how to solve it
+                    </p>
+                    <ol className="mt-1.5 grid gap-1.5 font-read">
+                      {result.solution.map((st) => (
+                        <li key={st.step} className="text-[1rem] text-ink">
+                          <TeX text={stepText(st)} />
+                        </li>
+                      ))}
+                    </ol>
+                    {debug && (
+                      <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
+                        no misconception diagnosed · canonical solution
+                      </p>
+                    )}
+                  </div>
+                )}
+              </>
             )}
             {debug && !result.isCorrect && onOpenQuestion && (
               <button

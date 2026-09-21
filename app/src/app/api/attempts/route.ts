@@ -9,6 +9,7 @@ import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import { currentSessionOrNull } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { evaluateArithmeticExpression } from "@/lib/arithmetic";
+import { acceptedRetryOf } from "@/lib/socratic-probing";
 
 /**
  * A refusal decided INSIDE the unit of work.
@@ -68,13 +69,22 @@ export async function POST(req: Request) {
      *  Answering one materialises it (ADR-0009 §3) so that nothing can move a
      *  reported number without leaving a reviewable artefact. */
     inlineWidget?: { kind: string; spec: Record<string, unknown>; loId: string; stem: string };
+    /** Socratic-probing prototype (`507bb31`): set by the client when this
+     *  attempt is the same-tier sibling question served to confirm
+     *  understanding after a wrong answer put the LO into
+     *  confirmation-pending (ChatCore's `pendingConfirmation`). Links the
+     *  retry back to the attempt it is confirming — correct or not — so a
+     *  probe cycle is reconstructible from `attempts` alone (migration 027).
+     *  **Ignored while `SOCRATIC_PROBING_ENABLED` is false** — see
+     *  `lib/socratic-probing.ts`. */
+    retryOfAttemptId?: number;
   };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "invalid JSON body" }, { status: 400 });
   }
-  const { questionId, givenAnswer, timeMs, predicate, inlineWidget } = body;
+  const { questionId, givenAnswer, timeMs, predicate, inlineWidget, retryOfAttemptId } = body;
   if (!questionId || typeof givenAnswer !== "string") {
     return NextResponse.json(
       { error: "questionId and givenAnswer are required" },
@@ -244,6 +254,18 @@ export async function POST(req: Request) {
         client
       );
 
+      // Socratic-probing prototype (`507bb31`): the attempt this one confirms,
+      // if any. `acceptedRetryOf` answers null while the switch is off, so
+      // nothing below changes for any client until Samuel rules. When it is
+      // on, the id must name one of THIS student's attempts — read under her
+      // own principal, so another child's id is simply not found (ADR-0012)
+      // and is dropped rather than written as a cross-student edge.
+      let retryOf = acceptedRetryOf(retryOfAttemptId);
+      if (retryOf !== null) {
+        const own = await client.query(`SELECT 1 FROM attempts WHERE id = $1`, [retryOf]);
+        if (own.rowCount === 0) retryOf = null;
+      }
+
       // 1. record the attempt
       // `diagnosis_type` records HOW the outcome was determined. `confidence` is
       // deliberately left NULL unless a distractor named the error outright —
@@ -252,8 +274,13 @@ export async function POST(req: Request) {
       const attemptRes = await client.query(
         `INSERT INTO attempts
            (student_id, question_id, session_id, given_answer, is_correct, time_ms,
-            attempted_at, diagnosis_type, misconception_id, stance_used, confidence, modality)
-         VALUES ($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11)
+            attempted_at, diagnosis_type, misconception_id, stance_used, confidence, modality${
+              // The column is named only when a link exists, so with the
+              // switch off this statement is exactly main's and does not
+              // depend on migration 027 having run.
+              retryOf !== null ? ", retry_of_attempt_id" : ""
+            })
+         VALUES ($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11${retryOf !== null ? ", $12" : ""})
          RETURNING id`,
         [
           studentId,
@@ -270,7 +297,10 @@ export async function POST(req: Request) {
                 : "distractor_diagnosed"
               : "deterministic_grade_incorrect",
           misconceptionId,
-          isCorrect ? "confirm" : "re_explain",
+          // A confirmation-retry (Socratic probing) is tagged "probe"
+          // regardless of outcome — a distinct teaching stance, not a third
+          // verdict. Unreachable while the switch is off (retryOf is null).
+          retryOf !== null ? "probe" : isCorrect ? "confirm" : "re_explain",
           // Confidence 1 for both: neither is inferred. A distractor carries a
           // label the student clicked; a predicate is a geometric fact about
           // what they built. Reading a label is not guessing.
@@ -279,6 +309,7 @@ export async function POST(req: Request) {
           // and this column is what keeps that auditable — every comparison
           // metric can be recomputed with and without them.
           isWidget ? "widget" : "question",
+          ...(retryOf !== null ? [retryOf] : []),
         ]
       );
       const attemptId = attemptRes.rows[0].id;
@@ -362,6 +393,7 @@ export async function POST(req: Request) {
       // below used to run after the explicit COMMIT and still does — it just
       // does it outside the callback rather than after a statement.
       return {
+        attemptId: Number(attemptId),
         q,
         isWidget,
         isCorrect,
@@ -374,6 +406,7 @@ export async function POST(req: Request) {
     });
 
     const {
+      attemptId,
       q,
       isWidget,
       isCorrect,
@@ -469,6 +502,7 @@ export async function POST(req: Request) {
     });
 
     const result: AttemptResult = {
+      attemptId,
       isCorrect,
       correctAnswer: q.correct_answer,
       solution,

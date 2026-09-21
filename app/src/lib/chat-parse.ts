@@ -43,6 +43,19 @@ export type Block =
   | { t: "check_in" }
   | { t: "switch_subject"; subject: SpineSubject }
   | { t: "finish" }
+  /** Socratic-probing prototype (wip/socratic-probing-route-b): the tutor
+   *  recognized the student's last chat message as a genuine attempt at the
+   *  currently-open question and extracted a structured answer — routed
+   *  through the SAME grading pipeline a tapped card uses (ChatCore), never
+   *  graded from the tutor's own judgment. `given` is the MCQ choice key or
+   *  the numeric/expression text, exactly as it would come from the card. */
+  | { t: "answer_submitted"; given: string }
+  /** The tutor is honoring an explicit "just tell me" — only ever valid once
+   *  a genuine attempt already exists on the open question (lib/lesson.ts).
+   *  Bare marker; ChatCore reacts by forcing the same reveal state the
+   *  2-attempt cap would also produce, never by trusting the tutor's own
+   *  prose as the mechanism. */
+  | { t: "reveal_answer" }
   /** {{show_passage:t:ara1-1:001}} — the tutor brings a SEALED text passage
    *  into focus BY ID. The app resolves the bytes from the verified store;
    *  the model never carries the text (ADR-0006 runtime containment).
@@ -74,6 +87,20 @@ export function hasFinishDirective(text: string): boolean {
   return text.includes("{{finish_lesson}}");
 }
 
+/** True once the (complete, non-streaming) text carries {{reveal_answer}}. */
+export function hasRevealAnswerDirective(text: string): boolean {
+  return text.includes(REVEAL_ANSWER);
+}
+
+/** The extracted answer of a complete {{answer_submitted:<given>}}, or null
+ *  when the message carries none. */
+export function extractAnswerSubmitted(text: string): string | null {
+  for (const a of scanActions(text)) {
+    if (a.block?.t === "answer_submitted") return a.block.given;
+  }
+  return null;
+}
+
 const fullId = (kind: string, rest: string) =>
   kind === "page" || kind === "term?" ? rest.trim() : `${kind}:${rest.trim()}`;
 
@@ -88,7 +115,8 @@ interface Action {
   block: Block | null;
 }
 
-const SIMPLE_RE = /^\{\{(show_question|highlight|show_passage):([^}\n]{1,160})\}\}/;
+const SIMPLE_RE =
+  /^\{\{(show_question|highlight|show_passage|answer_submitted):([^}\n]{1,160})\}\}/;
 const WIDGET_HEAD_RE = /^\{\{widget:([a-z_]{1,40}):/;
 /** Built from the subject registry, so a handoff to a subject the product
  *  actually has is parsed instead of being rendered as raw protocol text.
@@ -99,6 +127,7 @@ const SWITCH_RE = new RegExp(
 const FINISH = "{{finish_lesson}}";
 const BEAT = "{{beat}}";
 const CHECK_IN = "{{check_in}}";
+const REVEAL_ANSWER = "{{reveal_answer}}";
 const MAX_PAYLOAD = 4000;
 
 /** Balanced-JSON scan from `start` (which must be "{"), string-aware. */
@@ -174,15 +203,19 @@ function parseActionAt(s: string, i: number): Action | null {
   }
   const m = SIMPLE_RE.exec(head);
   if (m) {
-    const block: Block =
+    const block: Block | null =
       m[1] === "show_question"
         ? { t: "question", qid: m[2].trim() }
         : m[1] === "show_passage"
           ? { t: "passage_ref", id: m[2].trim() }
-          : {
-              t: "highlight",
-              ids: m[2].split(",").map((x) => x.trim()).filter(Boolean),
-            };
+          : m[1] === "answer_submitted"
+            ? m[2].trim()
+              ? { t: "answer_submitted", given: m[2].trim() }
+              : null
+            : {
+                t: "highlight",
+                ids: m[2].split(",").map((x) => x.trim()).filter(Boolean),
+              };
     return { start: i, end: i + m[0].length, block };
   }
   if (head.startsWith(FINISH)) {
@@ -193,6 +226,13 @@ function parseActionAt(s: string, i: number): Action | null {
   }
   if (head.startsWith(CHECK_IN)) {
     return { start: i, end: i + CHECK_IN.length, block: { t: "check_in" } };
+  }
+  if (head.startsWith(REVEAL_ANSWER)) {
+    return {
+      start: i,
+      end: i + REVEAL_ANSWER.length,
+      block: { t: "reveal_answer" },
+    };
   }
   const sw = SWITCH_RE.exec(head);
   if (sw) {
@@ -270,6 +310,8 @@ const DIRECTIVE_KEYWORDS = [
   "beat}}",
   "check_in}}",
   "switch_subject:",
+  "answer_submitted:",
+  "reveal_answer}}",
 ];
 
 /** True when "{{" at `i` opens a directive that is not yet complete. */

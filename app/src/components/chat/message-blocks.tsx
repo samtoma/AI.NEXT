@@ -185,6 +185,10 @@ export function renderChatBlocks(blocks: Block[], o: BlockRenderOptions = {}): R
   const out: ReactNode[] = [];
   blocks.forEach((b, i) => {
     if (b.t === "highlight" || b.t === "finish" || b.t === "beat") return;
+    // Socratic-probing directives (`507bb31`): consumed once per completed
+    // message by ChatCore's send(), never rendered — a replay shows nothing
+    // where the student saw nothing.
+    if (b.t === "answer_submitted" || b.t === "reveal_answer") return;
 
     // Each of these asks "is there a slot" and NOT "did the slot return
     // something". A surface that owns a block type owns its empty answer too:
