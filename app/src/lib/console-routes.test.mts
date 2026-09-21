@@ -116,7 +116,10 @@ test("an empty roles list admits any operator, and a non-empty one is any-of", (
 });
 
 test("consoleRoute returns nothing for a path that is not in the table", () => {
-  assert.equal(consoleRoute("/security"), undefined);
+  // `/security` used to stand here as the invented example; it is a real route
+  // since P5, which is exactly the drift this assertion is about — so it is
+  // replaced rather than deleted, with a path nothing plans to build.
+  assert.equal(consoleRoute("/tickets"), undefined);
   assert.equal(consoleRoute("/students/1"), undefined, "the table holds the pattern, not an id");
 });
 

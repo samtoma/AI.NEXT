@@ -51,12 +51,29 @@ const STEPS: readonly Step[] = [
  * above the 0.30 cold-start prior deliberately: a learner who has answered
  * nothing must not appear one step up the ramp for free.
  */
+/**
+ * The floor of the top band: the BKT posterior at which an objective counts as
+ * **mastered**.
+ *
+ * Exported because the console's overviews need "how many objectives is this
+ * cohort at or above the mastery threshold on" (contracts/admin.md §8, research
+ * A3) and the answer must be the SAME number the student's own dashboard paints
+ * teal. A console that used 0.8 while the product used 0.75 would report a
+ * cohort falling short of a bar the product never showed them.
+ *
+ * It is 0.75, from the band boundaries above, and not the 0.80 that appears in
+ * some planning prose. `lib/bkt.ts` holds the model, not the bands — it has
+ * `MIN_SCORE`/`MAX_SCORE` clamps and no threshold — so the band scale is the
+ * only place this number has ever been defined, and it lives here.
+ */
+export const MASTERY_THRESHOLD = 0.75;
+
 function stepIndex(score: number, started: boolean): number {
   if (!started) return 0;
   const s = Math.max(0, Math.min(1, score));
   if (s < 0.35) return 1;
   if (s < 0.55) return 2;
-  if (s < 0.75) return 3;
+  if (s < MASTERY_THRESHOLD) return 3;
   return 4;
 }
 

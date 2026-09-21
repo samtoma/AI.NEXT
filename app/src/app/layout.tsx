@@ -10,6 +10,7 @@ import {
 } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import { GaScript } from "@/components/GaScript";
 import { NavLinks } from "@/components/NavLinks";
 import { NoorMark } from "@/components/NoorMark";
 import { VerificationBanner } from "@/components/auth/VerificationBanner";
@@ -171,6 +172,12 @@ export default async function RootLayout({
           children
         ) : (
           <>
+            {/* GA4, the audience layer (ADR-0016 §2). INSIDE this branch on
+                purpose: the console build takes the `children`-only path above
+                and therefore never renders a tag, never loads the vendor
+                script and never sets a consent signal. Renders nothing at all
+                when AINEXT_GA_MEASUREMENT_ID is unset. */}
+            <GaScript signedIn={student !== null} />
             <header className="relative z-20 border-b border-line bg-card/70 backdrop-blur-sm">
               <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6">
                 <Link href="/" className="flex items-center gap-2.5">

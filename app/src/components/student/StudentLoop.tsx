@@ -9,6 +9,7 @@ import type { Cite } from "@/lib/chat-parse";
 import { TeX } from "@/components/TeX";
 import { ChatCore } from "@/components/chat/ChatCore";
 import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
+import { track } from "@/lib/ga";
 
 const REASON_META: Record<
   PlanReason,
@@ -59,8 +60,13 @@ export function StudentLoop({
   const item = plan[idx];
   const lastResult = records[records.length - 1]?.result;
 
+  // The practice loop is the one surface where a question being PUT IN FRONT of
+  // a student is a distinct client moment, so it is the only place
+  // `retrieval_attempt_started` can honestly be sent (lib/ga.ts). No question
+  // id, no objective id — the practice surface and nothing more.
   const begin = () => {
     shownAt.current = Date.now();
+    track("retrieval_attempt_started", { surface: "practice" });
     setPhase("asking");
   };
 
@@ -73,6 +79,7 @@ export function StudentLoop({
     } else {
       setIdx((i) => i + 1);
       shownAt.current = Date.now();
+      track("retrieval_attempt_started", { surface: "practice" });
       setPhase("asking");
     }
   };
@@ -83,6 +90,7 @@ export function StudentLoop({
     setLastGiven(given);
     setBusy(true);
     setError(null);
+    track("retrieval_attempt_submitted", { surface: "practice" });
     try {
       const res = await fetch("/api/attempts", {
         method: "POST",

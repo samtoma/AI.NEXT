@@ -56,6 +56,10 @@ const CONSOLE_GUARDED_PATHS = [
   "/profile",
   "/content",
   "/cost",
+  // The monitoring surfaces (P5, ADR-0016). `/overview` covers
+  // `/overview/definitions` through `isPathOrDescendant`.
+  "/security",
+  "/overview",
   "/pipeline",
   "/gallery",
   "/dev",

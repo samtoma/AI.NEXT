@@ -16,6 +16,7 @@ import type {
   TurnMeta,
 } from "@/lib/types";
 import { labelArOfSpineKey } from "@/lib/subjects";
+import { track } from "@/lib/ga";
 import { masteryLabel } from "@/lib/mastery";
 import {
   directiveEndAt,
@@ -473,6 +474,12 @@ export function ChatCore({
       if (paced) revealTimer = setTimeout(tick, 60);
 
       let metaBuf: TurnMeta | null = null;
+
+      // GA4's audience layer sees that a question was asked and on which
+      // surface — never the question, never who asked it (lib/ga.ts). Fired
+      // before the request rather than after it, because "asked" is the
+      // student's action and a failed turn is still an asked question.
+      track("question_asked", { surface });
 
       try {
         const res = await fetch("/api/ask", {

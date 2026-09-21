@@ -18,6 +18,7 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
+import { track } from "@/lib/ga";
 import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
@@ -669,6 +670,13 @@ export function LessonSession({
         const lo = inlineWidgetLo(props);
         if (!lo) return;
         const { lo: _lo, prompt, ...spec } = props;
+        // GA4 sees "a widget attempt happened in a lesson" and no more — the
+        // objective id is deliberately excluded from the wrapper's property
+        // list (lib/ga.ts, research A1). A LITERAL rather than `lesson_${mode}`
+        // on purpose: reading the prop here would add a dependency to this
+        // memoised callback for one word of granularity that `sessions.kind`
+        // already carries in the first-party store.
+        track("retrieval_attempt_submitted", { surface: "lesson_widget" });
         void fetch("/api/attempts", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

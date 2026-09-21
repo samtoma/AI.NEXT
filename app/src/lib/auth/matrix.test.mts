@@ -63,6 +63,21 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   // only row in this matrix that is an endpoint rather than a page — the
   // question is the same one, so it is asked the same way.
   "/api/console/students/[id]/subscription": ["cost-billing"],
+  // contracts/admin.md §7 Security: `student-data`. The security record names
+  // accounts, students and the operators who read their transcripts, so it is
+  // the same role the Student 360 needs even though it holds no learning.
+  "/security": ["student-data"],
+  // §8 Overviews: "Roles: all four (they carry no individual content)". The
+  // metric dictionary is transcribed on its own line rather than covered by a
+  // prefix rule, for the reason this whole file exists — a rule cannot disagree
+  // with the table it is meant to check.
+  "/overview": ["content-review", "evidence-access", "student-data", "cost-billing"],
+  "/overview/definitions": [
+    "content-review",
+    "evidence-access",
+    "student-data",
+    "cost-billing",
+  ],
   "/pipeline": ["evidence-access"],
   "/gallery": ["evidence-access"],
   "/dev/lesson-content": ["evidence-access"],

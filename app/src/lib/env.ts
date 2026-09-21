@@ -308,3 +308,79 @@ export const GOOGLE_OAUTH: GoogleOAuthConfig | null = resolveGoogleOAuth();
  */
 export const BOOTSTRAP_OPERATOR_EMAIL: string | null =
   (process.env.AINEXT_BOOTSTRAP_OPERATOR_EMAIL ?? "").trim().toLowerCase() || null;
+
+/* ===========================================================================
+ * Monitoring and analytics (ADR-0016, plan A8, contracts/analytics.md).
+ *
+ * Both variables below are OPTIONAL and both follow the same shape as
+ * AINEXT_ENVIRONMENT above: unset is a supported state with an honest
+ * behaviour, and only a value that cannot be made sense of refuses to start.
+ * Neither is a secret, so both resolve at module load.
+ * ======================================================================== */
+
+/**
+ * The GA4 measurement id, e.g. `G-XXXXXXXXXX`.
+ *
+ * **Unset is the normal state on a laptop and in CI**: the student shell then
+ * renders no script tag at all, the vendor's global never exists, and
+ * `lib/ga.ts`'s `track()` no-ops. GA is an audience layer (ADR-0016 §2) — a build without one
+ * is a build with one fewer dashboard, not a build that is missing something.
+ *
+ * A MALFORMED value throws, because the failure it produces otherwise is
+ * silent: a script tag pointing at a measurement id that does not exist loads,
+ * costs the student a request, and reports nothing, forever. GA4 web ids are
+ * `G-` followed by an alphanumeric stream; the older `UA-` and the server-side
+ * `GT-`/`AW-`/`DC-` forms are refused by name rather than by omission, because
+ * pasting one of those is the likely mistake and "not a G- id" is a worse error
+ * message than "that is a Universal Analytics id". This build sends browser
+ * events only — no Measurement Protocol, ADR-0016 §2 — so it needs the
+ * `G-XXXXXXXXXX` form from the GA4 data stream and nothing else.
+ */
+function resolveGaMeasurementId(): string | null {
+  const raw = (process.env.AINEXT_GA_MEASUREMENT_ID ?? "").trim();
+  if (!raw) return null;
+  if (/^(UA|AW|DC|GT)-/i.test(raw)) {
+    throw new Error(
+      `AINEXT_GA_MEASUREMENT_ID="${raw}" is not a GA4 web measurement id. ` +
+        `This build sends browser events only (no Measurement Protocol, ADR-0016 §2), ` +
+        `so it needs the G-XXXXXXXXXX form from the GA4 data stream.`
+    );
+  }
+  if (!/^G-[A-Z0-9]{4,}$/i.test(raw)) {
+    throw new Error(
+      `AINEXT_GA_MEASUREMENT_ID="${raw}" does not look like G-XXXXXXXXXX. ` +
+        `Refusing to render a tag that would load and report nothing.`
+    );
+  }
+  return raw;
+}
+
+export const GA_MEASUREMENT_ID: string | null = resolveGaMeasurementId();
+
+/**
+ * Where the security sweep sends an alert (`app/scripts/alerts-sweep.mts`,
+ * contracts/admin.md §7, research A5).
+ *
+ * **Unset means the sweep LOGS instead of mailing** — it still evaluates every
+ * rule, still records that the rule fired in `alerts_sent`, and still prints
+ * the alert body. That is the honest degradation: an alert nobody addressed a
+ * mail to is not a reason to stop detecting, and a laptop has nowhere to send
+ * one. A malformed address throws, for the same reason a malformed measurement
+ * id does — mail to `samuel@` fails at 3am on the one night it mattered.
+ */
+function resolveAlertEmail(): string | null {
+  const raw = (process.env.AINEXT_ALERT_EMAIL ?? "").trim();
+  if (!raw) return null;
+  // Deliberately loose: one @, something either side, no whitespace. A stricter
+  // pattern would reject a valid address somebody actually uses, and the thing
+  // being caught here is a typo'd variable, not an RFC 5322 violation.
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw)) {
+    throw new Error(
+      `AINEXT_ALERT_EMAIL="${raw}" is not an email address. Leave it unset to have ` +
+        `the sweep log its alerts instead — that is a supported state.`
+    );
+  }
+  return raw;
+}
+
+export const ALERT_EMAIL: string | null = resolveAlertEmail();

@@ -50,6 +50,17 @@ export type ConsoleRoute = {
   /** What the nav calls it, or null for a route reached from another page. */
   nav: string | null;
   /**
+   * An optional heading the nav groups this link under.
+   *
+   * Added with the monitoring surfaces (P5): "Security" and "Overviews" are a
+   * different kind of thing from "Students" and "Cost" — they are about the
+   * system rather than about one person — and a flat row of eight links makes
+   * that invisible. Purely presentational: `navFor` returns the same rows in
+   * the same order whether or not a group is set, and grouping is never the
+   * authorisation (FR-2107).
+   */
+  navGroup?: string;
+  /**
    * This URL also exists in the STUDENT build, from a different file. True for
    * `/` alone: the student build serves the product's landing page there. The
    * manifest proof skips such paths on the student side and still requires them
@@ -142,6 +153,39 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     file: "(console)/cost/page.console.tsx",
     roles: ["cost-billing"],
     nav: "Cost",
+  },
+  // --- Monitor (contracts/admin.md §7, §8; ADR-0016) -----------------------
+  {
+    // `student-data`: the security record names accounts, students and the
+    // operators who read their transcripts. Same role as the Student 360, for
+    // the same reason — it is about identifiable people, even though it holds
+    // none of their learning.
+    path: "/security",
+    file: "(console)/security/page.console.tsx",
+    roles: ["student-data"],
+    nav: "Security",
+    navGroup: "Monitor",
+  },
+  {
+    // ALL FOUR roles. The overviews carry no individual content — every cell is
+    // a count, a share, a duration or a curriculum label — which is why a role
+    // that may not open one student's record may still read the cohort's. That
+    // is enforced in `lib/overview-queries.ts`, not by this row.
+    path: "/overview",
+    file: "(console)/overview/page.console.tsx",
+    roles: [],
+    nav: "Overviews",
+    navGroup: "Monitor",
+  },
+  {
+    // The metric dictionary. Listed separately rather than covered by a prefix
+    // rule, because `routeAdmits` is an exact-path lookup and a surface nobody
+    // enumerated is the door FR-2107 is about.
+    path: "/overview/definitions",
+    file: "(console)/overview/definitions/page.console.tsx",
+    roles: [],
+    nav: "Metric dictionary",
+    navGroup: "Monitor",
   },
   {
     path: "/pipeline",

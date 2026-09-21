@@ -52,7 +52,11 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
   }
 
   const card = await getOperatorCard(access.operatorId);
-  const links = navFor(access.roles).map((r) => ({ href: r.path, label: r.nav! }));
+  const links = navFor(access.roles).map((r) => ({
+    href: r.path,
+    label: r.nav!,
+    group: r.navGroup ?? null,
+  }));
 
   return (
     <div className="flex min-h-full flex-col">

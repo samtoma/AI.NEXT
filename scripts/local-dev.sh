@@ -374,6 +374,26 @@ fi
 say "6b/8  Cost rollup"
 run_app_script rollup-cost-daily.mts "cost_daily refreshed for closed days" --all || true
 
+# ------------------------------------------------------ 6c. the alert sweep
+# The five security alert rules (contracts/admin.md §7, ADR-0016 §6). Run once
+# here for the same reason the cost rollup is: a laptop that has never run the
+# sweep is a laptop where "the sweep runs" is an untested claim, and the first
+# place to find out is the box.
+#
+# ON A BOX THIS IS A CRON JOB, every five minutes:
+#
+#   0,5,10,...,55 * * * *  cd /opt/reletix/AI.NEXT/app && npm run alerts:sweep
+#
+# (the header of app/scripts/alerts-sweep.mts carries the full crontab line.)
+#
+# It does NOT gate SC-105: the console's Security view reads `auth_events` live
+# and un-cached, so an attempt is visible within a minute whether or not this
+# has ever run. What the sweep adds is the push half — and with
+# AINEXT_ALERT_EMAIL unset, as it is locally, it prints its alerts instead of
+# mailing them, which is the honest local behaviour rather than a silent no-op.
+say "6c/8  Security alert sweep"
+run_app_script alerts-sweep.mts "security alert rules evaluated (idempotent; logs locally)" || true
+
 # -------------------------------------------------------------------- 7. serve
 say "7/8  Ready"
 STUDENTS=$($PSQL -d $DB -tAc "select count(*) from students")
