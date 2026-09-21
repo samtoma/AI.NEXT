@@ -28,15 +28,18 @@ import {
   RETENTION_END_DAY,
   RETENTION_START_DAY,
   cite,
+  costTileState,
   definitionOf,
   heatCell,
   monthTwoRetention,
+  pickDefaultCohort,
   schoolWeekOf,
   schoolYearOf,
   schoolYearStart,
   weekKey,
   weekStart,
   weeksBetween,
+  type CohortActivity,
 } from "./overview-rules.ts";
 
 /* ------------------------------------------------------------ the anchor */
@@ -250,4 +253,121 @@ test("the mastered definition quotes the threshold the product actually paints",
 
 test("the week definition names the anchor in prose", () => {
   assert.ok(cite("week").text.includes(ANCHOR_DESCRIPTION));
+});
+
+/* ------------------------------------------------------ the default cohort */
+
+// A candidate with everything zeroed, so each test only has to override what
+// it is actually testing.
+const cohort = (over: Partial<CohortActivity>): CohortActivity => ({
+  subject: "math",
+  grade: "9",
+  syllabusVersion: "2025-2026",
+  studentsWithSession: 0,
+  attempts: 0,
+  contentLoaded: 0,
+  ...over,
+});
+
+test("no cohort exists at all — null, not a crash", () => {
+  assert.equal(pickDefaultCohort([]), null);
+});
+
+test("exactly one cohort — returned without inspecting its activity", () => {
+  // Even a cohort with zero of everything is still the only choice there is.
+  const only = cohort({ subject: "arabic", studentsWithSession: 0, attempts: 0, contentLoaded: 0 });
+  assert.equal(pickDefaultCohort([only]), only);
+});
+
+test("most students with a session wins outright", () => {
+  const quiet = cohort({ subject: "arabic", grade: "10", studentsWithSession: 2 });
+  const busy = cohort({ subject: "math", grade: "11", studentsWithSession: 40 });
+  assert.equal(pickDefaultCohort([quiet, busy]), busy);
+  // Order in the input must not matter — the accident this replaces was
+  // exactly "whichever the database happened to return first".
+  assert.equal(pickDefaultCohort([busy, quiet]), busy);
+});
+
+test("sessions carry no subject, so subjects sharing a grade tie on the first key — attempts decide", () => {
+  // The realistic shape today: three subjects, all grade 9, so
+  // studentsWithSession is identical across all three (sessions are
+  // grade-scoped, not subject-scoped) and attempts — which ARE
+  // subject-scoped — does the actual discriminating.
+  const arabic = cohort({ subject: "arabic", studentsWithSession: 12, attempts: 30 });
+  const math = cohort({ subject: "math", studentsWithSession: 12, attempts: 210 });
+  const social = cohort({ subject: "social", studentsWithSession: 12, attempts: 55 });
+  assert.equal(pickDefaultCohort([arabic, math, social]), math);
+});
+
+test("no activity anywhere — falls back to the subject with the most content loaded", () => {
+  // The brief's named case: every count that reflects real usage is zero, and
+  // the only defensible default left is "the subject with the most to show".
+  const thin = cohort({ subject: "social", contentLoaded: 5 });
+  const rich = cohort({ subject: "math", contentLoaded: 90 });
+  assert.equal(pickDefaultCohort([thin, rich]), rich);
+});
+
+test("a total tie is broken by subject name, not by array order", () => {
+  const a = cohort({ subject: "social" });
+  const b = cohort({ subject: "arabic" });
+  assert.equal(pickDefaultCohort([a, b])?.subject, "arabic");
+  assert.equal(pickDefaultCohort([b, a])?.subject, "arabic", "the tiebreak, not input order, must decide");
+});
+
+/* -------------------------------------------------------- the cost tile */
+
+test("closed-day spend for this cohort is the priced state, whatever today's live figure says", () => {
+  assert.equal(
+    costTileState({
+      cohortHasClosedSpend: true,
+      todayLiveUsd: 0,
+      environmentHasAnyClosedDay: true,
+    }),
+    "priced"
+  );
+  // A cohort can be priced from past closed days and also have live spend
+  // today — still priced; today is reported alongside, never instead.
+  assert.equal(
+    costTileState({
+      cohortHasClosedSpend: true,
+      todayLiveUsd: 4.2,
+      environmentHasAnyClosedDay: true,
+    }),
+    "priced"
+  );
+});
+
+test("no closed day for this cohort, but spend today — today-only (the brief's live example)", () => {
+  // Every one of BRIEF-OVERVIEW.md's 14 interactions happened today in UTC:
+  // no closed day exists yet anywhere, and this cohort has live spend today.
+  assert.equal(
+    costTileState({
+      cohortHasClosedSpend: false,
+      todayLiveUsd: 1.5723,
+      environmentHasAnyClosedDay: false,
+    }),
+    "today-only"
+  );
+});
+
+test("no closed day and nothing today, but the rollup has closed days elsewhere — cohort-quiet", () => {
+  assert.equal(
+    costTileState({
+      cohortHasClosedSpend: false,
+      todayLiveUsd: 0,
+      environmentHasAnyClosedDay: true,
+    }),
+    "cohort-quiet"
+  );
+});
+
+test("nothing anywhere — no-spend, the quietest state", () => {
+  assert.equal(
+    costTileState({
+      cohortHasClosedSpend: false,
+      todayLiveUsd: 0,
+      environmentHasAnyClosedDay: false,
+    }),
+    "no-spend"
+  );
 });

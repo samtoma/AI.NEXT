@@ -1,15 +1,20 @@
 import { sequential, withOperator } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
+import { UTC_DAY, TODAY_UTC } from "@/lib/cost-queries";
 import {
   MASTERY_THRESHOLD,
   cite,
+  costTileState,
   heatCell,
+  pickDefaultCohort,
   schoolWeekOf,
   schoolYearStart,
   weekKey,
   weeksBetween,
   weekStart,
   monthTwoRetention,
+  type CohortActivity,
+  type CostTileState,
   type HeatCell,
   type SchoolWeek,
 } from "@/lib/overview-rules";
@@ -111,6 +116,21 @@ export type CostPerActive = {
   perActiveUsd: number | null;
   /** `cost_daily` holds CLOSED days only; today is never in it. Said, not hidden. */
   throughDay: string | null;
+  /** Today's live total for THIS cohort, from `ai_interactions` directly —
+   *  never stored, recomputed on every load, same UTC boundary `cost-queries.ts`
+   *  uses for the cost page's own live-today half (`UTC_DAY`/`TODAY_UTC`,
+   *  imported rather than re-derived). Present even when `perActiveUsd` is not
+   *  null, so a reader can see today is never folded into it. */
+  todayLiveUsd: number;
+  todayLiveStudents: number;
+  /** Has ANY cohort on this environment ever had a closed day rolled up? Not
+   *  scoped to this cohort — see `costTileState` for why that distinction is
+   *  the whole point of asking. */
+  environmentHasAnyClosedDay: boolean;
+  /** Which of the panel's four states applies — computed once here, from the
+   *  three fields above, so the page renders a sentence instead of
+   *  re-deriving "is this actually empty" next to the figures. */
+  tileState: CostTileState;
 };
 
 export type HeatObjective = {
@@ -190,13 +210,84 @@ export async function getOverview(
       courseLabel: r.course_label,
     }));
 
-    const selected =
-      options.find(
-        (o) =>
-          (!requested.subject || o.subject === requested.subject) &&
-          (!requested.grade || o.grade === requested.grade) &&
-          (!requested.syllabusVersion || o.syllabusVersion === requested.syllabusVersion)
-      ) ?? options[0] ?? null;
+    // The activity signal `pickDefaultCohort` (lib/overview-rules.ts) ranks on
+    // — fetched whenever a cohort exists, because the fallback below is used
+    // both for a bare `/overview` visit AND for a URL that names a cohort that
+    // does not exist, and either way "options[0]" was the alphabetical
+    // accident this query replaces. Three small, well-understood queries
+    // rather than one query with three correlated subqueries: this file's own
+    // rule is `sequential`, never `Promise.all`, and a query nobody can read
+    // at a glance is a worse trade than three more round trips at this scale
+    // (a handful of cohorts, not a hot path). Run even with zero options —
+    // `pickDefaultCohort([])` is `null` regardless, and a conditional skip
+    // here would be a second place the "no cohort at all" case has to be
+    // remembered.
+    const [sessionByGradeRows, attemptsBySubjectGradeRows, objectivesBySubjectRows] =
+      await sequential([
+        // Sessions carry no subject column, so this can only ever
+        // discriminate between GRADES, not between subjects taught to the
+        // same grade — see the field's own comment in overview-rules.ts.
+        () =>
+          db.query<{ grade: string; students_with_session: string }>(
+            `SELECT st.grade, count(DISTINCT s.student_id) AS students_with_session
+               FROM students st
+               JOIN sessions s ON s.student_id = st.id AND s.environment = $1
+              WHERE st.environment = $1
+              GROUP BY st.grade`,
+            [ENVIRONMENT]
+          ),
+        () =>
+          db.query<{ subject: string; grade: string; attempts: string }>(
+            `SELECT ns.subject, st.grade, count(*) AS attempts
+               FROM attempts at
+               JOIN students st ON st.id = at.student_id
+               JOIN questions q ON q.id = at.question_id
+               JOIN node_subject ns ON ns.node_id = q.lo_id
+              WHERE at.environment = $1 AND st.environment = $1
+              GROUP BY ns.subject, st.grade`,
+            [ENVIRONMENT]
+          ),
+        () =>
+          db.query<{ subject: string; objectives: string }>(
+            `SELECT subject, count(*) AS objectives FROM node_subject GROUP BY subject`,
+            []
+          ),
+      ] as const);
+
+    const sessionsByGrade = new Map(
+      sessionByGradeRows.rows.map((r) => [r.grade, Number(r.students_with_session)])
+    );
+    const attemptsBySubjectGrade = new Map(
+      attemptsBySubjectGradeRows.rows.map((r) => [`${r.subject}|${r.grade}`, Number(r.attempts)])
+    );
+    const objectivesBySubject = new Map(
+      objectivesBySubjectRows.rows.map((r) => [r.subject, Number(r.objectives)])
+    );
+
+    const candidates: (CohortOption & CohortActivity)[] = options.map((o) => ({
+      ...o,
+      studentsWithSession: sessionsByGrade.get(o.grade) ?? 0,
+      attempts: attemptsBySubjectGrade.get(`${o.subject}|${o.grade}`) ?? 0,
+      contentLoaded: objectivesBySubject.get(o.subject) ?? 0,
+    }));
+
+    // A bare `/overview` names NO filter, so every field above is vacuously
+    // true for every option and a plain `.find()` would return the array's
+    // FIRST entry — `options`' own `ORDER BY subject` — which is the exact
+    // alphabetical accident this deliverable exists to remove (arabic sorts
+    // before math). So the smart pick is used whenever nothing was actually
+    // requested, not only when a request matches nothing.
+    const somethingRequested = Boolean(
+      requested.subject || requested.grade || requested.syllabusVersion
+    );
+    const selected = somethingRequested
+      ? (options.find(
+          (o) =>
+            (!requested.subject || o.subject === requested.subject) &&
+            (!requested.grade || o.grade === requested.grade) &&
+            (!requested.syllabusVersion || o.syllabusVersion === requested.syllabusVersion)
+        ) ?? pickDefaultCohort(candidates))
+      : pickDefaultCohort(candidates);
 
     if (!selected) {
       return emptyOverview(options, year, yearStart, now, weeks);
@@ -222,6 +313,8 @@ export async function getOverview(
       attemptRows,
       masteryRows,
       costRows,
+      liveTodayRows,
+      environmentRolledRows,
       objectiveRows,
       heatRows,
     ] = await sequential([
@@ -350,6 +443,39 @@ export async function getOverview(
           [ENVIRONMENT, key.grade, yearStart.toISOString()]
         ),
 
+      // ---- cost: today's live spend for THIS cohort, straight off
+      //      `ai_interactions` — the same UTC-day boundary `cost-queries.ts`
+      //      uses for its own live-today half (`UTC_DAY`/`TODAY_UTC`,
+      //      IMPORTED, not re-derived, so the two pages cannot draw that line
+      //      in two places and quietly disagree). Grade-scoped like `costRows`
+      //      above: cost has no subject column, so it has never been a
+      //      three-key figure the way mastery and attempts are.
+      () =>
+        db.query<{ live_usd: string | null; live_students: string }>(
+          `SELECT coalesce(sum(ai.cost_usd), 0) AS live_usd,
+                  count(DISTINCT ai.student_id) AS live_students
+             FROM ai_interactions ai
+             JOIN students st ON st.id = ai.student_id
+            WHERE ai.environment = $1 AND st.environment = $1 AND st.grade = $2
+              AND ${UTC_DAY} = ${TODAY_UTC}`,
+          [ENVIRONMENT, key.grade]
+        ),
+
+      // ---- cost: has the rollup EVER closed a day on this ENVIRONMENT, for
+      //      any cohort? Deliberately not grade-scoped, unlike every query
+      //      around it — `costRows.through_day` already answers "the most
+      //      recent closed day for THIS cohort" and can be null while other
+      //      grades have years of closed days. This is the other half:
+      //      without it, a cohort with genuinely nothing yet is
+      //      indistinguishable from a rollup that has never run at all, and
+      //      those need different sentences (`costTileState`,
+      //      overview-rules.ts).
+      () =>
+        db.query<{ through: string | null }>(
+          `SELECT max(cd.day)::text AS through FROM cost_daily cd WHERE cd.environment = $1`,
+          [ENVIRONMENT]
+        ),
+
       // ---- the heatmap's rows: this subject's objectives in SYLLABUS order
       //      (module ordinal, then the objective's own), not alphabetical and
       //      not by id.
@@ -446,6 +572,14 @@ export async function getOverview(
 
     const costTotal = Number(costRows.rows[0]?.total_usd ?? 0);
     const costStudents = Number(costRows.rows[0]?.students ?? 0);
+    const todayLiveUsd = Number(liveTodayRows.rows[0]?.live_usd ?? 0);
+    const todayLiveStudents = Number(liveTodayRows.rows[0]?.live_students ?? 0);
+    const environmentHasAnyClosedDay = environmentRolledRows.rows[0]?.through != null;
+    const tileState = costTileState({
+      cohortHasClosedSpend: costStudents > 0,
+      todayLiveUsd,
+      environmentHasAnyClosedDay,
+    });
 
     // Citation side-effect on purpose: every term a figure below claims to
     // implement is resolved here, so a definition deleted from the dictionary
@@ -499,6 +633,10 @@ export async function getOverview(
         throughDay: costRows.rows[0]?.through_day
           ? new Date(costRows.rows[0].through_day).toISOString().slice(0, 10)
           : null,
+        todayLiveUsd,
+        todayLiveStudents,
+        environmentHasAnyClosedDay,
+        tileState,
       },
       heatmap: {
         objectives,
@@ -536,7 +674,16 @@ function emptyOverview(
     sessionLength: { medianMinutes: null, p90Minutes: null, sessions: 0 },
     attempts: { attempts: 0, correct: 0, accuracy: null },
     mastery: { medianObjectives: null, studentsWithEvidence: 0, objectivesInSubject: 0 },
-    cost: { totalUsd: 0, activeStudents: 0, perActiveUsd: null, throughDay: null },
+    cost: {
+      totalUsd: 0,
+      activeStudents: 0,
+      perActiveUsd: null,
+      throughDay: null,
+      todayLiveUsd: 0,
+      todayLiveStudents: 0,
+      environmentHasAnyClosedDay: false,
+      tileState: "no-spend",
+    },
     heatmap: { objectives: [], weeks, weekKeys: weeks.map(weekKey), cells: [] },
     masteryThreshold: MASTERY_THRESHOLD,
   };

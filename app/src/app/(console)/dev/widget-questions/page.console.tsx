@@ -73,7 +73,12 @@ export default async function WidgetQuestionsPage() {
   );
 
   return (
-    <main className="min-h-screen bg-paper px-4 py-8 text-ink" data-ds="noor">
+    /* `data-ds="noor"` was here, and is gone for the reason set out at length
+       on `dev/math-widgets`: ADR-0017 allows exactly one variant per document,
+       and no surface may pin itself to one. An operator who wants these cards
+       in the student's skin chooses Play on `/profile`; the console then
+       renders in Play throughout, resolved before first paint. */
+    <main className="min-h-screen bg-paper px-4 py-8 text-ink">
       <div className="mx-auto max-w-[1100px]">
         <header className="mb-7 border-b border-line pb-5">
           <h1 className="font-display text-[26px] font-bold">Widget questions</h1>

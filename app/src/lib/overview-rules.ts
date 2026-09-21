@@ -358,3 +358,111 @@ export function heatCell(reached: number, mastered: number): HeatCell {
   }
   return { state: "reached", reached, mastered, share: mastered / reached };
 }
+
+/* ================================================ the default cohort pick */
+
+/**
+ * What a cohort brings to the "which one opens by default" decision, and
+ * nothing else — no student content, same as everything on this page.
+ */
+export type CohortActivity = {
+  subject: string;
+  grade: string;
+  syllabusVersion: string;
+  /** Students of this GRADE with any session. Sessions carry no subject
+   *  (`sessions` has no subject column — it is a grade-scoped table), so this
+   *  field cannot by itself tell two subjects taught to the same grade apart.
+   *  It is still first in the order below because it is the truest "is anyone
+   *  here at all" signal this schema can answer. */
+  studentsWithSession: number;
+  /** Attempts on THIS subject's objectives, by students of this grade — the
+   *  first signal in the ordering that actually is subject-specific
+   *  (`attempts` joins to `questions` → `node_subject`), which is what does
+   *  the real discriminating work whenever several subjects share a grade. */
+  attempts: number;
+  /** Objectives tagged to this subject (`node_subject`). The last-resort
+   *  tiebreak: how much of the curriculum is even loaded, used only when no
+   *  cohort has any recorded activity at all. */
+  contentLoaded: number;
+};
+
+/**
+ * Pick the cohort the overview opens on when the URL names none — replacing
+ * "whichever sorts first alphabetically", which is what shipped before this
+ * function existed and is how Samuel ended up reading Arabic's heatmap while
+ * believing it was the product's (BRIEF-OVERVIEW.md).
+ *
+ * The order is: most students of the grade with any session; then most
+ * attempts on the subject itself; then most content loaded for the subject,
+ * for the case where NOTHING has happened anywhere yet and the only honest
+ * default is "the subject with the most to show"; then the subject name, so
+ * that even a total tie is decided by something written down rather than by
+ * whatever order the database happened to return rows in.
+ *
+ * Pure and total: `null` only when `candidates` is empty (no cohort exists on
+ * this environment at all — `getOverview`'s "no course has a subject" page).
+ * A single candidate is returned without inspecting its activity, which is
+ * what makes the single-cohort case trivially correct rather than an
+ * accident of the sort order.
+ */
+export function pickDefaultCohort<T extends CohortActivity>(candidates: readonly T[]): T | null {
+  if (candidates.length === 0) return null;
+  if (candidates.length === 1) return candidates[0]!;
+
+  const ranked = [...candidates].sort((a, b) => {
+    if (b.studentsWithSession !== a.studentsWithSession) {
+      return b.studentsWithSession - a.studentsWithSession;
+    }
+    if (b.attempts !== a.attempts) return b.attempts - a.attempts;
+    if (b.contentLoaded !== a.contentLoaded) return b.contentLoaded - a.contentLoaded;
+    return a.subject.localeCompare(b.subject);
+  });
+  return ranked[0]!;
+}
+
+/* =================================================== the cost tile state */
+
+/**
+ * Which of the cost panel's four states applies (contracts/admin.md §8,
+ * BRIEF-OVERVIEW.md deliverable 4).
+ *
+ * `cost_daily` holds CLOSED days only (`lib/cost-queries.ts`), so a fresh
+ * cohort with real activity TODAY still reads as an empty tile — a correct
+ * fact rendered as if something were broken. The empty case is not one
+ * state, it is three, and they need different sentences:
+ *
+ *  - **"today-only"**: nothing has closed for this cohort, but spend exists
+ *    today. The actionable one — there is a real number, it just is not in
+ *    the series yet.
+ *  - **"cohort-quiet"**: the rollup has closed at least one day somewhere on
+ *    this environment (proof the pipeline runs), this cohort simply is not
+ *    in it, today or on any closed day. Different from the next state
+ *    because it rules out "the rollup has never worked".
+ *  - **"no-spend"**: nothing anywhere — no closed day for this cohort, none
+ *    for the environment, and no live spend today either. The quietest
+ *    state, and the one closest to what the bare "—" used to mean for every
+ *    reason at once.
+ *
+ * `"priced"` (a real `perActiveUsd`) is returned too so a caller can switch
+ * on one function's result instead of re-deriving "is this actually empty"
+ * beside it.
+ */
+export type CostTileState = "priced" | "today-only" | "cohort-quiet" | "no-spend";
+
+export function costTileState(input: {
+  /** true exactly when this cohort has a non-null `perActiveUsd` — i.e. at
+   *  least one closed day of spend exists for it. */
+  cohortHasClosedSpend: boolean;
+  /** Today's live total for this cohort, from `ai_interactions` (never
+   *  stored — always recomputed, same UTC boundary as the cost page). */
+  todayLiveUsd: number;
+  /** Has ANY cohort on this environment ever had a closed day rolled up?
+   *  Environment-wide on purpose — narrower than this cohort so it can prove
+   *  the rollup mechanism works even when this specific cohort has nothing. */
+  environmentHasAnyClosedDay: boolean;
+}): CostTileState {
+  if (input.cohortHasClosedSpend) return "priced";
+  if (input.todayLiveUsd > 0) return "today-only";
+  if (input.environmentHasAnyClosedDay) return "cohort-quiet";
+  return "no-spend";
+}

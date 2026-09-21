@@ -1,11 +1,12 @@
 /**
  * "Who has opened this student's record" (ADR-0015 §4, admin.md §7, FR-2306).
  *
- * The full audit view belongs to the Security surface and is a later phase's.
- * This panel exists now, at the bottom of every Student 360, because an audit
- * that nobody can see is an audit nobody checks — and the day the console can
- * open a child's transcript is the day that has to be true, not the day the
- * security page ships.
+ * The full, filterable audit view lives on the Security surface
+ * (`/security?student=<id>`, linked from the panel that wraps this one) —
+ * this is the always-visible top 25 for THIS student, unfiltered, at the
+ * bottom of every Student 360, because an audit that nobody can see is an
+ * audit nobody checks and that has to be true here, on the page that opens
+ * the record, not only on a surface an operator has to remember to visit.
  *
  * **Operators see their own reads.** That is the principle, not an oversight:
  * a log whose subject can be hidden from its own reader is a log with a

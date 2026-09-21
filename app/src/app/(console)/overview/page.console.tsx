@@ -4,7 +4,7 @@ import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { Empty, Figure, Panel, Td, Th } from "@/components/console/ui";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
-import { getOverview, type Overview } from "@/lib/overview-queries";
+import { getOverview, type CohortKey, type CohortOption, type Overview } from "@/lib/overview-queries";
 import { ANCHOR_DESCRIPTION, cite } from "@/lib/overview-rules";
 
 /**
@@ -200,7 +200,18 @@ function OverviewPage({ view }: { view: Overview }) {
         </div>
       </Panel>
 
-      <Panel title="Sessions, attempts and reach" note={cite("session").text}>
+      <Panel
+        title="Sessions, attempts and reach"
+        note={
+          <>
+            {cite("session").text} Session length is scoped to grade {k.grade} only — sessions
+            carry no subject. Attempts, accuracy and objectives mastered below it ARE scoped to{" "}
+            <strong>{k.subject}</strong> as well, which the two kinds of figure sitting side by
+            side in one panel would otherwise hide.
+          </>
+        }
+      >
+
         <div className="grid gap-5 sm:grid-cols-3 lg:grid-cols-5">
           <Figure
             label="Session length, median"
@@ -228,7 +239,12 @@ function OverviewPage({ view }: { view: Overview }) {
             hint={view.attempts.accuracy === null ? "No attempts yet — not 0%." : undefined}
           />
           <Figure
-            label="Objectives mastered, median"
+            // The one figure in this panel that is BOTH grade- and
+            // subject-scoped (attempts and accuracy above it are too, but this
+            // is the one the brief named): a screenshot of this figure alone
+            // must not need the H1 above it to say which subject it counts
+            // (BRIEF-OVERVIEW.md deliverable 1).
+            label={`Objectives mastered, median — ${k.subject}`}
             // A median over an even number of students is genuinely fractional;
             // rounding it to an integer would quietly invent a student who is
             // at that number. Shown as it is.
@@ -248,7 +264,13 @@ function OverviewPage({ view }: { view: Overview }) {
 
       <Panel
         title="Cost per active student"
-        note="From the daily cost rollup, which holds CLOSED days only — today is never in it."
+        note={
+          <>
+            From the daily cost rollup, which holds CLOSED days only — today is never in it. A
+            day enters the series once it has ended in UTC and{" "}
+            <code className="font-mono text-[12px]">npm run rollup:cost</code> has run for it.
+          </>
+        }
       >
         <div className="grid gap-5 sm:grid-cols-3">
           <Figure
@@ -271,9 +293,10 @@ function OverviewPage({ view }: { view: Overview }) {
             period="this school year"
           />
         </div>
+        <CostTileNote view={view} k={k} />
       </Panel>
 
-      <HeatmapPanel view={view} />
+      <HeatmapPanel view={view} k={k} />
 
       <Panel title="What is not on this page">
         <p className="max-w-[85ch] text-[13px] leading-relaxed text-ink-soft">
@@ -296,36 +319,151 @@ function OverviewPage({ view }: { view: Overview }) {
   );
 }
 
+/* -------------------------------------------------------- the cost tile */
+
+/**
+ * The sentence under the cost figures when `view.cost.tileState` is not
+ * `"priced"` (BRIEF-OVERVIEW.md deliverable 4).
+ *
+ * `cost_daily` holds CLOSED days only, so a cohort with real spend TODAY
+ * still shows "—" above — a true fact drawn as if the tile were broken. Three
+ * different reasons produce that same dash, so this switches on the STATE
+ * `costTileState` (`lib/overview-rules.ts`) computed rather than re-deriving
+ * it from the raw numbers here, and each branch says a different, actionable
+ * thing. The one rule that must never be violated by any branch: today's live
+ * figure is printed BESIDE the closed-day figures above, never folded into
+ * one of them — mixing a live number into a total labelled "closed days"
+ * would be the exact "two sources for one dollar figure" failure the brief
+ * warned this file off.
+ */
+function CostTileNote({ view, k }: { view: Overview; k: CohortKey }) {
+  const { cost } = view;
+  const cohort = `${k.subject} · grade ${k.grade}`;
+
+  if (cost.tileState === "priced") return null;
+
+  if (cost.tileState === "today-only") {
+    return (
+      <p className="mt-3 max-w-[80ch] text-[12px] leading-relaxed text-ink-soft">
+        <strong className="text-ink">{usd(cost.todayLiveUsd)}</strong> in live spend today (UTC)
+        across {int(cost.todayLiveStudents)} student{cost.todayLiveStudents === 1 ? "" : "s"} in{" "}
+        {cohort} — not counted in the figures above, because the rollup only stores a day once it
+        has closed and today never has. It joins the series once today ends in UTC and the rollup
+        runs.
+      </p>
+    );
+  }
+
+  if (cost.tileState === "cohort-quiet") {
+    return (
+      <p className="mt-3 max-w-[80ch] text-[12px] leading-relaxed text-ink-soft">
+        The rollup has closed days on this environment — the dash above is not a stuck pipeline —
+        but none of them carry any spend for {cohort}, and nothing was spent on it today either.
+        A true zero, not a missing figure.
+      </p>
+    );
+  }
+
+  return (
+    <p className="mt-3 max-w-[80ch] text-[12px] leading-relaxed text-ink-soft">
+      No spend recorded for {cohort} at all — not today, not on any closed day this school year.
+      The figures above will fill once a student in this cohort uses the tutor and a day closes.
+    </p>
+  );
+}
+
 /* ------------------------------------------------------------ the switch */
 
+/**
+ * Which cohort you are looking at, as a control rather than a row of links to
+ * notice (BRIEF-OVERVIEW.md deliverable 2).
+ *
+ * **Links, not a `<select>`** — same reasoning `security/page.console.tsx`'s
+ * `FilterLink` already states for this console: this page is a server
+ * component with no client JavaScript of its own, and a cohort that is a URL
+ * is a cohort an operator can bookmark or paste into a report, which is this
+ * console's established pattern (the brief asked to keep it, and a `<select>`
+ * that actually navigated would need an `onChange` handler this page does not
+ * have). What changes here is not the mechanism, only whether it READS as a
+ * control: grouped by subject — the axis an operator actually thinks in —
+ * with grade/syllabus broken out as its own row of links only for a subject
+ * that has more than one (none does in this book today, but the schema
+ * allows a syllabus revision to land mid-year), a visible label naming the
+ * current selection in words, and `aria-current` plus the same filled-pill
+ * styling `FilterLink` uses so the active choice does not depend on colour
+ * alone.
+ */
 function CohortSwitch({ view }: { view: Overview }) {
   if (view.options.length <= 1) return null;
+
+  const bySubject = new Map<string, CohortOption[]>();
+  for (const o of view.options) {
+    const list = bySubject.get(o.subject) ?? [];
+    list.push(o);
+    bySubject.set(o.subject, list);
+  }
+
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-1">
-      <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-faint">
-        cohort
-      </span>
-      {view.options.map((o) => {
-        const active =
-          view.selected?.subject === o.subject &&
-          view.selected?.grade === o.grade &&
-          view.selected?.syllabusVersion === o.syllabusVersion;
-        return (
-          <Link
-            key={`${o.subject}|${o.grade}|${o.syllabusVersion}`}
-            href={`/overview?subject=${encodeURIComponent(o.subject)}&grade=${encodeURIComponent(
-              o.grade
-            )}&syllabus=${encodeURIComponent(o.syllabusVersion)}`}
-            aria-current={active ? "true" : undefined}
-            className={`rounded px-2 py-0.5 text-[11.5px] font-medium ${
-              active ? "bg-ink text-paper" : "text-ink-soft hover:bg-line-soft hover:text-ink"
-            }`}
-          >
-            {o.subject} · grade {o.grade} · {o.syllabusVersion} ({int(o.students)})
-          </Link>
-        );
-      })}
-    </div>
+    <nav
+      aria-label="Choose a cohort"
+      className="mt-4 rounded-lg border border-line bg-card px-3.5 py-2.5"
+    >
+      <p className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+        Subject — showing {view.selected?.subject}, grade {view.selected?.grade}
+      </p>
+      <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+        {[...bySubject.entries()].map(([subject, opts]) => {
+          const subjectActive = view.selected?.subject === subject;
+          if (opts.length === 1) {
+            return <CohortLink key={subject} option={opts[0]!} active={subjectActive} label={subject} />;
+          }
+          // More than one (grade, syllabus) under this subject: the subject
+          // name is a caption, not a link, and each combination gets its own
+          // control beside it — an outer link here would be ambiguous about
+          // which of several courses it opens.
+          return (
+            <div
+              key={subject}
+              className="flex flex-wrap items-center gap-1 rounded border border-line-soft px-1 py-0.5"
+            >
+              <span className="px-1.5 text-[11.5px] font-medium text-ink-soft">{subject}</span>
+              {opts.map((o) => (
+                <CohortLink
+                  key={`${o.grade}|${o.syllabusVersion}`}
+                  option={o}
+                  active={subjectActive && view.selected?.grade === o.grade && view.selected?.syllabusVersion === o.syllabusVersion}
+                  label={`grade ${o.grade} · ${o.syllabusVersion}`}
+                />
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+
+function CohortLink({
+  option,
+  active,
+  label,
+}: {
+  option: CohortOption;
+  active: boolean;
+  label: string;
+}) {
+  return (
+    <Link
+      href={`/overview?subject=${encodeURIComponent(option.subject)}&grade=${encodeURIComponent(
+        option.grade
+      )}&syllabus=${encodeURIComponent(option.syllabusVersion)}`}
+      aria-current={active ? "true" : undefined}
+      className={`rounded px-2.5 py-1 text-[12px] font-medium ${
+        active ? "bg-ink text-paper" : "text-ink-soft hover:bg-line-soft hover:text-ink"
+      }`}
+    >
+      {label} <span className="text-[10.5px] font-normal opacity-80">({int(option.students)})</span>
+    </Link>
   );
 }
 
@@ -343,18 +481,22 @@ function CohortSwitch({ view }: { view: Overview }) {
  * threshold. Tokens only, and no rust: a cohort struggling with an objective is
  * fourteen-year-olds learning, not an alarm.
  */
-function HeatmapPanel({ view }: { view: Overview }) {
+function HeatmapPanel({ view, k }: { view: Overview; k: CohortKey }) {
   const { objectives, weekKeys, cells } = view.heatmap;
+  // Both branches name the subject IN THE TITLE, not only in the H1 above the
+  // panel — a screenshot of this panel by itself is how this got misread as
+  // the whole product's heatmap once already (BRIEF-OVERVIEW.md deliverable 1).
+  const title = `Objectives against time — ${k.subject}, grade ${k.grade}`;
   if (objectives.length === 0 || weekKeys.length === 0) {
     return (
-      <Panel title="Objectives against time">
+      <Panel title={title}>
         <Empty>No objectives in this subject yet, or the school year has not started.</Empty>
       </Panel>
     );
   }
   return (
     <Panel
-      title="Objectives against time"
+      title={title}
       note={
         <>
           Each cell is the share of students <em>who have reached that objective</em> sitting at or

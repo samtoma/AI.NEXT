@@ -1119,6 +1119,17 @@ export async function buildLessonContext(
   lessonSlug?: string,
   /** the request's signed-in student (lib/student-context.ts) */
   studentId: number | null = null,
+  /**
+   * A worksheet the student photographed mid-lesson, to ground this turn on
+   * (FR-205, PRD B10).
+   *
+   * The upload affordance lives in `ChatCore`'s composer, which is the composer
+   * these two surfaces render — so the lesson is where a photograph is most
+   * likely to be taken, and threading the id only into `buildAskContext` would
+   * have left the control visible and its grounding dead on exactly the surface
+   * that carries it. It reaches `retrieve()` below and nowhere else.
+   */
+  uploadId?: number,
   /** the caller's unit of work, when it has one open (`/api/ask`) */
   client?: PoolClient
 ): Promise<AskContext | null> {
@@ -1161,7 +1172,7 @@ export async function buildLessonContext(
   const retrieved = await retrieve(
     studentId,
     data.los.map((l) => l.id),
-    { client }
+    { uploadId, client }
   );
 
   return {

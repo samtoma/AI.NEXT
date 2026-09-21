@@ -14,6 +14,7 @@ import { GaScript } from "@/components/GaScript";
 import { NavLinks } from "@/components/NavLinks";
 import { NoorMark } from "@/components/NoorMark";
 import { VerificationBanner } from "@/components/auth/VerificationBanner";
+import { documentVariant } from "@/lib/design-variant-queries";
 import { IS_CONSOLE, IS_MVP1 } from "@/lib/env";
 import { resolveStudentContext } from "@/lib/student-context";
 
@@ -154,17 +155,36 @@ export default async function RootLayout({
   // the console and carries no principal read of its own.
   const student = IS_CONSOLE ? null : await resolveStudentContext();
 
-  // data-ds is the whole switch: globals.css redefines every semantic token
-  // under [data-ds="noor"], so the comparison build reskins without a single
-  // component being forked, and the frozen baseline (attribute absent) renders
+  // `data-ds` is the whole switch: globals.css redefines every semantic token
+  // under [data-ds="play"] (aliased as "noor") and names [data-ds="master"] as
+  // its sibling, so the comparison build reskins without a single component
+  // being forked, and the frozen baseline (attribute absent) renders
   // byte-identically to before.
+  //
+  // **THIS AWAIT IS THE REQUIREMENT, not an implementation detail** (ADR-0017,
+  // FR-1011). The variant is resolved HERE, server-side, in the same render
+  // that produces the document, because `<html>` is the only element that
+  // exists before any CSS applies to anything. Resolve it anywhere else — a
+  // client effect, a `useEffect`, a cookie read in the browser — and the page
+  // paints in one skin and repaints in the other, which the ADR calls a defect
+  // rather than a loading state. `documentVariant()` never throws and never
+  // answers `undefined` on the comparison build: a student's override, else
+  // her grade, else `play`; on the console an operator's own preference, else
+  // `master`, because an operator tool is not a children's surface.
+  //
+  // This is the ONLY place in `src/` that writes a variant name.
+  // `design-variant-scan.test.mts` is what keeps that sentence true — a
+  // component that pinned itself to one variant would be the mixed build the
+  // handoff forbids, arrived at one file at a time.
   //
   // No dir attribute here, deliberately. English LTR is MVP 1.0's default, not
   // a hard-coded direction — constitution v2.0.0 Principle V.
+  const variant = await documentVariant();
+
   return (
     <html
       lang="en"
-      data-ds={IS_MVP1 ? "noor" : undefined}
+      data-ds={variant}
       className={`${fraunces.variable} ${splineSans.variable} ${splineMono.variable} ${notoNaskhArabic.variable} ${baloo.variable} ${cairo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">

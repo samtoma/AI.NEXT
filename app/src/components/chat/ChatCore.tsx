@@ -29,6 +29,7 @@ import {
 import type { CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
 import { StudentBubble, TutorBubble, renderChatBlocks } from "./message-blocks";
+import { useUploadAttachment } from "./upload-attachment";
 
 /**
  * Imperative bridge for surfaces that host intercepted cards OUTSIDE the
@@ -208,8 +209,19 @@ export function ChatCore({
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [capped, setCapped] = useState(false);
-  const chatSession = useRef<string>(
-    sessionId ??
+  /**
+   * This chat's stable session id, computed once.
+   *
+   * A lazily-initialised state rather than a `useRef`, which is what it was:
+   * `useRef(crypto.randomUUID())` evaluates its argument on EVERY render and
+   * throws the result away, so the id was correct but a fresh UUID was minted
+   * on every keystroke — and the value had to be read back out of a ref during
+   * render to be used. The lazy initialiser runs once, which is what was always
+   * meant, and leaves a plain string that anything may read.
+   */
+  const [chatSession] = useState<string>(
+    () =>
+      sessionId ??
       (typeof crypto !== "undefined" && "randomUUID" in crypto
         ? crypto.randomUUID()
         : `s-${Date.now()}-${Math.random().toString(36).slice(2)}`)
@@ -217,6 +229,30 @@ export function ChatCore({
   const citedKeys = useRef(new Set<string>());
   const scrollRef = useRef<HTMLDivElement>(null);
   const autoSent = useRef(false);
+
+  /**
+   * The upload affordance (FR-205, PRD B10), in the one composer every student
+   * surface renders.
+   *
+   * ON FOR THE STUDENT SURFACES, derived rather than configured. `spine_chat`
+   * is the glass-box "Ask the Spine" dock on the Evidence Walk — an
+   * instrumentation surface for a room full of adults, not a place a student
+   * photographs homework — so it is the one surface without it. Deriving the
+   * rule from `surface`, which this component already has, means no host has to
+   * remember to pass a flag and no two hosts can disagree about it.
+   *
+   * The hook is called unconditionally, as hooks must be: with nothing picked
+   * it holds no state, opens no request and renders two buttons, and the `&&`
+   * below is what decides whether those buttons are placed.
+   */
+  const uploadsOn = surface !== "spine_chat";
+  const attachment = useUploadAttachment({
+    chatSession,
+    surface,
+    lang: arabicUi ? "ar" : "en",
+  });
+  /** The id the next turn carries — undefined on the surface without uploads. */
+  const attachedUploadId = uploadsOn ? attachment.uploadId : undefined;
   // live mirror so notes appended just before an auto-continue are included
   const messagesRef = useRef<ChatMsg[]>(messages);
   messagesRef.current = messages;
@@ -487,10 +523,17 @@ export function ChatCore({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             surface,
-            chatSession: chatSession.current,
+            chatSession,
             questionId,
             wrongAnswer,
             lesson: lessonSlug,
+            // The worksheet this turn is about, when there is one. It stays
+            // attached across turns on purpose: a student who photographs a
+            // page asks two or three questions about it, and making them
+            // re-send it for the second one would be a strange thing to do to
+            // somebody who is already stuck. The remove button on the strip is
+            // how it goes out of scope.
+            uploadId: attachedUploadId,
             messages: transcript
               .filter((m) => !m.localOnly)
               .map((m) => ({ role: m.role, text: m.text })),
@@ -619,6 +662,11 @@ export function ChatCore({
       questionId,
       wrongAnswer,
       lessonSlug,
+      // Recreating `send` when a parse settles is cheap and honest: this
+      // callback already depends on `streaming` and `capped`, so it was never
+      // stable across a turn, and mirroring the id through a ref to avoid a
+      // dependency would only have hidden that.
+      attachedUploadId,
       streaming,
       capped,
       emitNewCites,
@@ -817,12 +865,20 @@ export function ChatCore({
         </div>
       )}
 
+      {/* the attached upload, above the composer so a long sentence about an
+          unreadable photograph never squeezes the text input on a phone */}
+      {uploadsOn && attachment.banner}
+
       {/* input */}
       <div
         className={`flex items-center gap-2 px-4 pb-3.5 ${
           suggestions.length > 0 && !capped ? "pt-1.5" : "border-t border-line-soft pt-3"
         }`}
       >
+        {/* Deliberately NOT disabled while a parse runs, and deliberately not
+            gated on `capped` either: sending a photograph is not an AI turn and
+            costs no turn of the per-surface cap. */}
+        {uploadsOn && attachment.controls}
         <input
           type="text"
           value={input}

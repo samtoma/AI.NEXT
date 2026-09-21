@@ -207,6 +207,20 @@ function AccountMenu({ name }: { name: string }) {
             Signed in as{" "}
             <strong className="font-semibold text-ink">{name}</strong>
           </p>
+          {/* The account menu is the only door to `/settings`, and there is no
+              tab for it on purpose: settings are somewhere you go once, not a
+              destination competing with "Study" in a fourteen-year-old's nav
+              (#10/#11/#12 — the tabs that were removed for exactly that). A
+              plain link, not a client-side fetch: the page is a server
+              component and the setting on it changes the document element. */}
+          <Link
+            href="/settings"
+            role="menuitem"
+            onClick={() => setOpen(false)}
+            className="play-pressable mt-1 flex min-h-[52px] w-full items-center rounded-[14px] border-[3px] border-ink bg-card px-3 text-start font-display text-[1rem] font-bold text-ink"
+          >
+            Settings
+          </Link>
           <button
             type="button"
             role="menuitem"

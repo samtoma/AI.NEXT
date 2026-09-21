@@ -633,6 +633,14 @@ export default async function ConsoleStudentPage({
       <Panel
         title="Sign-in history"
         note={`The most recent ${data.signIns.length} security events for this student's account.`}
+        right={
+          <Link
+            href={`/security?signins=1&student=${s.id}`}
+            className="font-mono text-[11.5px] text-accent underline-offset-2 hover:underline"
+          >
+            Full sign-in story on Security →
+          </Link>
+        }
       >
         {data.signIns.length === 0 ? (
           <Empty>
@@ -676,6 +684,14 @@ export default async function ConsoleStudentPage({
       <Panel
         title="Who has opened this student's record"
         note="Operators see their own reads here too. An audit nobody can see is an audit nobody checks."
+        right={
+          <Link
+            href={`/security?student=${s.id}`}
+            className="font-mono text-[11.5px] text-accent underline-offset-2 hover:underline"
+          >
+            Full read history on Security →
+          </Link>
+        }
       >
         <AuditPanel rows={data.audit} limit={25} />
       </Panel>

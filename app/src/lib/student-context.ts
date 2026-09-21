@@ -45,6 +45,7 @@ import type { Pool, PoolClient } from "pg";
 import { pool, withPrincipal } from "@/lib/db";
 import { currentPrincipal } from "@/lib/auth/principal";
 import type { Gender } from "@/lib/address";
+import { asDesignVariant, type DesignVariant } from "@/lib/design-variant";
 
 /** Either connection shape a query in this codebase can run on. */
 export type Db = Pool | PoolClient;
@@ -79,6 +80,28 @@ export type StudentContext = {
   studentName: string;
   emailVerified: boolean;
   gender: Gender;
+  /**
+   * The two facts the root layout needs to decide which design-system variant
+   * this document wears (ADR-0017, FR-1011) — her grade, and her stored
+   * override of the rule that reads it.
+   *
+   * **They ride on this context rather than on a second query**, and that is a
+   * correctness decision as much as a cost one. The variant has to be resolved
+   * server-side, in the same render that produces the document, or the page
+   * renders in one skin and re-renders in the other — which ADR-0017 calls a
+   * defect rather than a loading state. The shell already reads this student's
+   * row once per render to put her name in the header; adding two columns to
+   * that SELECT costs nothing, while a separate read on the layout's critical
+   * path would be a second round trip in front of the first byte of every page
+   * on the surface.
+   *
+   * `designVariant` is the OVERRIDE, not the answer. `null` means "no
+   * preference stored, follow the grade rule", which is what almost every row
+   * holds; `lib/design-variant.ts` is the only place that turns the pair into
+   * an answer.
+   */
+  grade: string | null;
+  designVariant: DesignVariant | null;
 };
 
 const GENDERS = ["female", "male", "unspecified"] as const;
@@ -110,7 +133,8 @@ export const resolveStudentContext = cache(async function resolveStudentContext(
   try {
     const row = await withPrincipal(me.studentId, async (c) => {
       const res = await c.query(
-        `SELECT display_name, gender FROM students WHERE id = $1`,
+        `SELECT display_name, gender, grade, design_variant
+           FROM students WHERE id = $1`,
         [me.studentId]
       );
       return res.rows[0] ?? null;
@@ -121,6 +145,12 @@ export const resolveStudentContext = cache(async function resolveStudentContext(
       studentName: (row.display_name as string) ?? "",
       emailVerified: me.emailVerified,
       gender: asGender(row.gender),
+      grade: (row.grade as string | null) ?? null,
+      // A stored value or null — never a guess. A column holding something
+      // neither variant recognises would put an unmatched value in `data-ds`,
+      // and an unmatched value renders the frozen baseline's identity, which
+      // is the one appearance that is supposed to mean "nobody chose".
+      designVariant: asDesignVariant(row.design_variant),
     };
   } catch (err) {
     console.error("resolveStudentContext failed:", err);

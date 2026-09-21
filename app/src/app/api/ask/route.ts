@@ -11,6 +11,7 @@ import {
   type SacredGuard,
 } from "@/lib/sacred-guard";
 import { snapshotContext, snapshotKey } from "@/lib/session-cache";
+import { coerceUploadId } from "@/lib/upload-contract";
 import { getStudentProfile } from "@/lib/student-context";
 import { currentSessionOrNull } from "@/lib/sessions";
 import {
@@ -129,6 +130,8 @@ export async function POST(req: Request) {
     wrongAnswer?: string;
     /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
     lesson?: string;
+    /** a worksheet the student photographed, to ground this turn on (FR-205) */
+    uploadId?: unknown;
   };
   try {
     body = await req.json();
@@ -144,6 +147,24 @@ export async function POST(req: Request) {
       ? body.surface
       : "spine_chat";
   const chatSession = String(body.chatSession ?? "").slice(0, 64);
+  /**
+   * THE GROUNDING LINK for an uploaded worksheet (FR-205, PRD B10).
+   *
+   * A positive safe integer or nothing — `coerceUploadId` is the whole of the
+   * validation, and it is deliberately NOT an ownership check. The id travels
+   * down to `getParsedUpload(uploadId, studentId)`, which runs inside the
+   * student's own unit of work under a row-level-security policy on `uploads`
+   * that is enabled AND forced: an id belonging to another student produces no
+   * row there, not a row this layer would then have to filter. A second check
+   * here could only ever drift from the one that actually holds, and on the day
+   * they disagreed the weaker one would be the one people trusted, because it
+   * is the one they can see. The scoped read IS the check.
+   *
+   * A malformed id is dropped silently rather than refused: the turn is a
+   * student's question and it must still be answered, just without the
+   * worksheet in its grounding.
+   */
+  const uploadId = coerceUploadId(body.uploadId);
   const messages = (body.messages ?? []).slice(-24);
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   if (!chatSession || !lastUser) {
@@ -227,6 +248,14 @@ export async function POST(req: Request) {
       // very next turn, without signing out or starting a new session. See the
       // decision recorded in `lib/session-cache.ts`.
       const me = await getStudentProfile(studentId, client);
+      //
+      // The upload joins the key for the same reason the register does: it
+      // changes the model-visible payload. Without it the FIRST turn of a chat
+      // session would be cached for three hours and replayed verbatim over
+      // every later turn — so a student who photographs a worksheet after
+      // saying hello would get the pre-upload snapshot back, forever, and the
+      // transcription would never reach the tutor at all. Keying costs one
+      // rebuild on the turn the photograph arrives, and nothing after it.
       const key = snapshotKey({
         surface,
         chatSession,
@@ -234,6 +263,7 @@ export async function POST(req: Request) {
         lesson: body.lesson,
         questionId: body.questionId,
         wrongAnswer: body.wrongAnswer,
+        uploadId,
         gender: me?.gender ?? null,
       });
       const built = await snapshotContext(key, () =>
@@ -243,6 +273,7 @@ export async function POST(req: Request) {
               chatSession,
               body.lesson,
               studentId,
+              uploadId,
               client
             )
           : buildAskContext(
@@ -251,7 +282,7 @@ export async function POST(req: Request) {
               body.questionId,
               body.wrongAnswer,
               studentId,
-              undefined,
+              uploadId,
               client
             )
       );

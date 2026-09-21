@@ -60,6 +60,16 @@ export function snapshotKey(k: {
   lesson?: string;
   questionId?: string;
   wrongAnswer?: string;
+  /**
+   * The uploaded worksheet grounding this turn, when one does (FR-205).
+   *
+   * Part of the key for the same reason the register is: the transcription
+   * lands inside the replayed data block (`retrievalBlock`), so a snapshot
+   * built before the photograph arrived would be handed back for every turn
+   * after it and the tutor would never see the student's own page. Attaching
+   * one misses once, which is the rebuild that puts it in front of the model.
+   */
+  uploadId?: number;
   /** read this turn, from the one profile query (lib/student-context.ts) */
   gender: Gender;
 }): string {
@@ -70,6 +80,7 @@ export function snapshotKey(k: {
     k.lesson ?? "",
     k.questionId ?? "",
     k.wrongAnswer ?? "",
+    k.uploadId ?? "",
     addressForms(k.gender).key,
   ].join("|");
 }

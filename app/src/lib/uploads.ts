@@ -17,6 +17,7 @@ import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { scoped, type Db } from "@/lib/student-context";
 import { buildUploadParsePrompt } from "@/lib/upload-prompt";
+import { type AcceptedUploadType } from "@/lib/upload-contract";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import {
   ZERO_TOKENS,
@@ -28,23 +29,43 @@ import {
   type TokenCounts,
 } from "@/lib/pricing";
 
-export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10 MB
-export const DAILY_UPLOAD_CAP = 10;               // per student, per day
+/**
+ * The limits, the accepted types and the type guard now live in
+ * `lib/upload-contract.ts` and are re-exported from here unchanged.
+ *
+ * Not a tidy-up. This module can never be bundled for a browser — it spawns a
+ * child process and opens a database — so while the numbers lived here the
+ * composer had no way to read them, and refusing a doomed upload before it left
+ * a phone on 3G would have meant writing "10 MB" down a second time in a
+ * component. One definition, two importers, no drift. Every existing server
+ * call site (`api/uploads/route.ts`) imports these names from here exactly as
+ * it always did.
+ */
+export {
+  MAX_UPLOAD_BYTES,
+  DAILY_UPLOAD_CAP,
+  isAcceptedUploadType as isAccepted,
+} from "@/lib/upload-contract";
+
+/** The same union, under the name this module's callers already use. */
+export type AcceptedType = AcceptedUploadType;
+
 const PARSE_TIMEOUT_MS = 90_000;
 const MODEL = "claude-sonnet-5";
 
-export const ACCEPTED = {
+/**
+ * The on-disk extension for each accepted type — a storage concern, so it stays
+ * on the server side of the contract. Keyed by the shared union, so a fourth
+ * accepted type fails to compile here until somebody says what it is called on
+ * disk.
+ */
+export const ACCEPTED: Record<AcceptedType, string> = {
   "image/jpeg": ".jpg",
   "image/png": ".png",
   "application/pdf": ".pdf",
-} as const;
+};
 
-export type AcceptedType = keyof typeof ACCEPTED;
 export type ParseStatus = "pending" | "parsed" | "failed" | "unreadable";
-
-export function isAccepted(t: string): t is AcceptedType {
-  return t in ACCEPTED;
-}
 
 function uploadRoot(): string {
   return process.env.AINEXT_UPLOAD_DIR ?? path.join(process.env.TMPDIR ?? "/tmp", "ainext-uploads");

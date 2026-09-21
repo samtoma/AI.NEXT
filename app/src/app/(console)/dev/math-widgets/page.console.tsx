@@ -140,7 +140,21 @@ export default function MathWidgetsFixture() {
   >([]);
 
   return (
-    <main className="min-h-screen bg-paper px-4 py-8 text-ink" data-ds="noor">
+    /* This element used to carry `data-ds="noor"`, pinning the Play skin onto
+       one page of a console that was otherwise unskinned. ADR-0017 forbids it
+       now on both counts: exactly one variant per page RENDER, never mixed in
+       one document, and no surface may hard-code a variant — "a component that
+       pins itself to Play or to Master is the mixed build the handoff forbids,
+       arrived at one file at a time". `design-variant-scan.test.mts` is what
+       stops it coming back.
+
+       What it was FOR is still available and is now a setting rather than a
+       nested attribute: an operator who wants to see these widgets in the skin
+       a student sees picks Play on `/profile`, and the whole console — this
+       harness included — renders in it, resolved server-side before first
+       paint. That is strictly better than the old behaviour, which showed Play
+       chrome around Master chrome and told you nothing about either. */
+    <main className="min-h-screen bg-paper px-4 py-8 text-ink">
       <div className="mx-auto max-w-[1180px]">
         <header className="mb-7 border-b border-line pb-5">
           <h1 className="font-display text-[26px] font-bold">Mathematics widgets</h1>

@@ -1,10 +1,13 @@
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
+import { DesignVariantPicker } from "@/components/DesignVariantPicker";
 import { OperatorSessions } from "@/components/console/OperatorSessions";
 import { currentClaims } from "@/lib/auth/principal";
 import { listSessions, withAuthTx } from "@/lib/auth/session";
 import { consoleAccess } from "@/lib/console-auth";
 import { getOperatorCard } from "@/lib/console-queries";
 import { ALL_ROLES, consoleRoute } from "@/lib/console-routes";
+import { OPERATOR_DEFAULT_VARIANT } from "@/lib/design-variant";
+import { storedOperatorVariant } from "@/lib/design-variant-queries";
 
 /**
  * The operator's own account: who they are, what they hold, where they are
@@ -57,6 +60,14 @@ export default async function ConsoleProfilePage() {
     listSessions(db, { operatorId: access.operatorId }, claims?.sid ?? null)
   );
 
+  // This operator's own console skin (ADR-0017, FR-1011). Read here rather
+  // than taken from the root layout's resolution, because the control needs
+  // the STORED value — whether a preference exists at all — and the layout
+  // only knows the answer it produced. "Master, because that is the default"
+  // and "Master, because I chose it" are different states and the selector has
+  // to open on the right one.
+  const storedVariant = await storedOperatorVariant(access.operatorId);
+
   return (
     <main className="mx-auto w-full max-w-[900px] px-5 py-7">
       <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">My account</p>
@@ -98,6 +109,30 @@ export default async function ConsoleProfilePage() {
           Roles are granted and revoked by hand, and every grant and revocation is recorded. No
           role in this release grants roles.
         </p>
+      </section>
+
+      <section className="mt-7">
+        <h2 className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+          Appearance
+        </h2>
+        <p className="mb-2 mt-1 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-soft">
+          The design system has two variants, and the student product picks one
+          from each student&apos;s grade (Preparatory gets Play, Secondary gets
+          Master). The console has no grade to read, so it defaults to Master —
+          an operator tool is not a children&apos;s surface. This changes your
+          console only: it is not visible to any student and it changes nothing
+          about what any student sees.
+        </p>
+        <div className="rounded-lg border border-line bg-card px-4 py-3">
+          <DesignVariantPicker
+            endpoint="/api/console/profile/appearance"
+            stored={storedVariant}
+            ruleVariant={OPERATOR_DEFAULT_VARIANT}
+            followLabel="Console default — Master"
+            ruleReason="the console default"
+            compact
+          />
+        </div>
       </section>
 
       <section className="mt-7">

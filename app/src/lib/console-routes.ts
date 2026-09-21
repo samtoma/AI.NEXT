@@ -67,6 +67,34 @@ export type ConsoleRoute = {
    * on the console side (see the header of check-surface-manifest.mts).
    */
   sharedPath?: true;
+  /**
+   * **This endpoint's entire effect is the calling operator's own record**, and
+   * it can read or write nothing about a student, about content, or about
+   * another operator.
+   *
+   * It exists because `console-routes.test.mts` otherwise refuses an endpoint
+   * with an empty `roles` list — "a write endpoint open to every operator is a
+   * door nobody decided" — and that rule was written when every console
+   * endpoint wrote about a STUDENT (commercial status) or about CONTENT (course
+   * availability). For those it is exactly right. This is a third category the
+   * rule did not contemplate: a preference an operator sets about their own
+   * console, posted from a page all four roles may open.
+   *
+   * Requiring a role here would not make anything safer; it would make the
+   * feature wrong. An operator admitted to `/profile` would see a control that
+   * refuses them, which is FR-2107's complaint from the other side — a surface
+   * lying about its own state.
+   *
+   * **So the flag is not an exemption from deciding; it IS the decision**, and
+   * it is deliberately a field somebody has to write rather than a path the
+   * test quietly skips. What still holds: `authorize({})` refuses anonymous,
+   * `principal.ts` has already downgraded any student credential presented to
+   * this build (FR-2205), and the row the handler writes comes from the
+   * principal and never from the request body. Set this on an endpoint that
+   * can name another person, and that last sentence stops being true — which
+   * is what a reviewer should check when they see it.
+   */
+  selfOnly?: true;
 };
 
 export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
@@ -152,6 +180,29 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     file: "(console)/profile/page.console.tsx",
     roles: [],
     nav: "My account",
+  },
+  {
+    // The operator's own console skin (ADR-0017, FR-1011, migration 024).
+    // Posted from the Appearance section of `/profile`, and listed here for
+    // the reason every console endpoint is: this table is what the manifest
+    // proof and the role matrix enumerate from, and an endpoint is an address.
+    //
+    // **An empty `roles` list, exactly like the page it sits on.** Any
+    // signed-in operator may change the colours of their own console; there is
+    // no role for which that is a privilege, and inventing one would mean an
+    // operator could be admitted to `/profile` and refused the control on it.
+    // What stops it reaching anybody else's row is not a role — it is that the
+    // body carries no operator id and the handler writes `WHERE id = $1` from
+    // `authorize()` (see the route's own header, and migration 024's).
+    path: "/api/console/profile/appearance",
+    file: "api/console/profile/appearance/route.console.ts",
+    kind: "route",
+    roles: [],
+    nav: null,
+    // The whole effect is this operator's own `operators.design_variant`. See
+    // `selfOnly` on the type above for why an empty role list is the decision
+    // here rather than an omission.
+    selfOnly: true,
   },
   {
     // Migration 023, `lib/catalog.ts`. ⚠ NO REQUIREMENT COVERS THIS ROUTE —

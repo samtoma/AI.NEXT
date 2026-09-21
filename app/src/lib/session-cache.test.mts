@@ -48,6 +48,21 @@ test("the key carries the register, never the stored value", () => {
   }
 });
 
+test("an attached upload is a changed key (FR-205)", () => {
+  // The transcription of a photographed worksheet lands inside the data block
+  // this cache replays verbatim. Without the id in the key, a snapshot built
+  // before the photograph arrived would be served for the next three hours and
+  // the tutor would never see the student's own page — a grounding link that
+  // is wired end to end and still dead.
+  const none = snapshotKey({ ...BASE, gender: null });
+  const first = snapshotKey({ ...BASE, uploadId: 41, gender: null });
+  const second = snapshotKey({ ...BASE, uploadId: 42, gender: null });
+  assert.equal(new Set([none, first, second]).size, 3);
+  // …and re-asking about the SAME upload stays a hit, so the prefix that
+  // carries the transcription is built once and then stays cache-hot.
+  assert.equal(first, snapshotKey({ ...BASE, uploadId: 41, gender: null }));
+});
+
 test("students and sessions still never share a snapshot", () => {
   const a = snapshotKey({ ...BASE, gender: "female" });
   assert.notEqual(a, snapshotKey({ ...BASE, studentId: 8, gender: "female" }));

@@ -56,6 +56,18 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/students/[id]/sessions/[sid]": ["student-data"],
   "/students/[id]/sessions/[sid]/replay": ["student-data"],
   "/profile": ["content-review", "evidence-access", "student-data", "cost-billing"],
+  // ADR-0017 / FR-1011 — the operator's own console skin, posted from the
+  // Appearance section of `/profile`. Transcribed with all four roles for the
+  // same reason `/profile` carries all four: any signed-in operator may change
+  // the colours of their own console, and a role gate on it would admit an
+  // operator to the page and refuse them the control it offers. Nothing about
+  // a student is readable or writable through this address.
+  "/api/console/profile/appearance": [
+    "content-review",
+    "evidence-access",
+    "student-data",
+    "cost-billing",
+  ],
   // Migration 023, `lib/catalog.ts` — course availability. NO FR covers this
   // capability (see the page's own header); it is transcribed here anyway
   // because this file's whole argument is that a console route with no row

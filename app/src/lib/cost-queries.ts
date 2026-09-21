@@ -164,9 +164,19 @@ const num = (v: unknown): number => {
 const str = (v: unknown, fallback: string): string =>
   typeof v === "string" && v.length > 0 ? v : fallback;
 
-/** One UTC day — the same expression `rollup-cost-daily.mts` groups by. */
-const UTC_DAY = `(ai.created_at AT TIME ZONE 'UTC')::date`;
-const TODAY_UTC = `(now() AT TIME ZONE 'UTC')::date`;
+/**
+ * One UTC day — the same expression `rollup-cost-daily.mts` groups by.
+ *
+ * Exported (only these two) so `overview-queries.ts`'s cohort-scoped
+ * "live today" figure draws the same boundary this page's per-student series
+ * does, rather than a second copy of the expression that could drift from
+ * this one — which is exactly the "two sources for one dollar figure" failure
+ * mode this module's own header warns about. Nothing else here is exported:
+ * the query shapes stay this page's, the boundary is the only piece worth
+ * sharing.
+ */
+export const UTC_DAY = `(ai.created_at AT TIME ZONE 'UTC')::date`;
+export const TODAY_UTC = `(now() AT TIME ZONE 'UTC')::date`;
 
 /* ------------------------------------------------------------ the query */
 

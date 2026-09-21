@@ -70,10 +70,38 @@ test("a console endpoint is guarded by a role, never by being unlisted", () => {
   // FR-2107: hiding a control is not authorisation. An endpoint reachable by
   // any signed-in operator would be exactly that mistake, so the table refuses
   // an empty role list on one.
+  //
+  // The ONE permitted shape of an empty list is `selfOnly` — an endpoint whose
+  // entire effect is the calling operator's own record, posted from a page all
+  // four roles may open (ADR-0017's console preference is the first of these).
+  // It is not a hole: it is a field somebody had to write, it is asserted
+  // below to be an endpoint rather than a page, and the matrix test still
+  // enumerates the route with all four roles. What a reviewer checks when they
+  // see it is the claim itself — that the handler takes its subject from
+  // `authorize()` and never from the request body.
   for (const r of CONSOLE_ROUTES.filter((x) => (x.kind ?? "page") === "route")) {
     assert.ok(
-      r.roles.length > 0,
+      r.roles.length > 0 || r.selfOnly === true,
       `${r.path}: a write endpoint open to every operator is a door nobody decided`
+    );
+  }
+});
+
+test("`selfOnly` is only ever claimed by an endpoint, and only with no roles", () => {
+  // A page cannot be self-only — it renders a view, and which views an
+  // operator may see is the matrix's business. And an endpoint that claimed
+  // both a role and self-only would be saying two different things about who
+  // may call it, which is how a table starts disagreeing with itself.
+  for (const r of CONSOLE_ROUTES.filter((x) => x.selfOnly)) {
+    assert.equal(
+      r.kind,
+      "route",
+      `${r.path}: selfOnly is for endpoints; a page's audience is decided by its roles`
+    );
+    assert.equal(
+      r.roles.length,
+      0,
+      `${r.path}: selfOnly and a role list are two different answers to "who may call this"`
     );
   }
 });
