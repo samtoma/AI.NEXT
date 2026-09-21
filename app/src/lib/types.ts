@@ -312,6 +312,10 @@ export interface UnderstandingCheck {
 }
 
 export interface AttemptResult {
+  /** this attempt's own row id — carried back so a following attempt can
+   *  link to it via `retry_of_attempt_id` (Socratic-probing confirmation
+   *  retries; see api/attempts/route.ts). */
+  attemptId: number;
   isCorrect: boolean;
   correctAnswer: string;
   solution: SolutionStep[];

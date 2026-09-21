@@ -3,6 +3,33 @@
 > Living document. Read at session start; update when progress or decisions land.
 > Last updated: 2026-09-20
 
+## 🧭 SOCRATIC PROBING — prototype, unmerged, blocked on a Samuel ruling (2026-09-20, `wip/socratic-probing-route-b`)
+
+First move on the Socratic cluster named in the release below (`SC-005`,
+feedback rows 029/030). **Not a decision, not landed anywhere real** — a
+working prototype on its own branch (off `wip/q3-q4-explore`), built to make
+the open question concrete rather than resolve it. Full detail:
+[`docs/reviews/2026-09-19-prototype-1.1-feedback-triage.md`](reviews/2026-09-19-prototype-1.1-feedback-triage.md)'s
+2026-09-20 addendum.
+
+**What it does:** a wrong answer in the learn-mode lesson no longer
+auto-reveals its refutation/canonical solution — the tutor asks a guiding
+question first, grounded in the same reviewed material but never stating it
+outright, and the LO stays "confirmation-pending" (session-scoped, `mastery`
+untouched) until a fresh same-tier question on it is answered correctly.
+Verified live end to end (wrong attempt → two genuine guiding turns → correct
+same-tier retry, `stance_used='probe'` + `retry_of_attempt_id` linking the
+two in `attempts`, migration 011).
+
+**Why it isn't just a fix:** it breaks a previously-absolute rule — the
+model's live words have never before been the graded explanation, only
+narration around a deterministically-served reviewed entry. Constitution
+Principle II requires grounded explanations with receipts; ADR-0007/0008's
+exception is scoped to offline pipeline content flagged `reviewed=false`, not
+live per-turn generation. Needs a scope ruling from Samuel (a probing
+question isn't a claim → fine as-is) or a new ADR. Until then this stays a
+branch, not a fix rows 029/030 close on.
+
 ## 🏷️ RELEASE PREPARED — `PDR1-0-v0.3.0` (2026-09-20, `PDR1-0`)
 
 Three branches merged into `PDR1-0`: `wip/q3-q4-explore` (the Noor

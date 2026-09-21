@@ -15,15 +15,19 @@ import type {
   SpineSubject,
   TurnMeta,
 } from "@/lib/types";
+import { stepText } from "@/lib/types";
 import { labelArOfSpineKey } from "@/lib/subjects";
 import {
   directiveEndAt,
+  extractAnswerSubmitted,
   extractCites,
   extractHighlights,
+  hasRevealAnswerDirective,
   parseMessage,
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
+import { submitAttempt } from "@/lib/attempts-client";
 import { TeX } from "@/components/TeX";
 import { CitationChip, type CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
@@ -88,6 +92,28 @@ export interface ChatCoreProps {
   onCite?: (c: Cite) => void;
   onCiteClick?: (c: Cite) => void;
   onAttemptResult?: (r: AttemptResult, q: SpineQuestion) => void;
+  /**
+   * Socratic-probing prototype (wip/socratic-probing-route-b): fired whenever
+   * ChatCore's own confirmation-pending state changes (lesson_learn only —
+   * null on every other surface). A sibling surface that hosts its own
+   * question cards outside the transcript (the lesson whiteboard) mirrors
+   * this into its own state so ITS cards gate the same way; ChatCore stays
+   * the single source of truth since it already owns handleAttempt.
+   */
+  onPendingConfirmationChange?: (
+    pending: {
+      loId: string;
+      lastAttemptId: number;
+      wrongCount: number;
+      questionId: string;
+    } | null
+  ) => void;
+  /** Socratic-probing prototype: fired whenever ChatCore grades a chat-typed
+   *  answer itself (see onPendingConfirmationChange) — mirrored the same way
+   *  so a board-hosted card can sync its own display too. */
+  onExternalAttemptChange?: (
+    attempt: { questionId: string; result: AttemptResult } | null
+  ) => void;
   onTotalChange?: (totalUsd: number, turns: number) => void;
   /** render a {{widget:…}} directive as a live interactive card */
   renderWidget?: (
@@ -180,6 +206,8 @@ export function ChatCore({
   onCite,
   onCiteClick,
   onAttemptResult,
+  onPendingConfirmationChange,
+  onExternalAttemptChange,
   onTotalChange,
   renderWidget,
   renderPassage,
@@ -196,6 +224,16 @@ export function ChatCore({
   inputAccessory,
 }: ChatCoreProps) {
   const lessonSurface = surface === "lesson_learn" || surface === "lesson_review";
+  /**
+   * Socratic-probing prototype (wip/socratic-probing-route-b, Route B +
+   * Option 1). Scoped to lesson_learn only: review mode's whole design is a
+   * fast ≤5-message lock-in with immediate corrective lines (lib/lesson.ts
+   * reviewPrompt) — probing there would blow its turn budget and fight its
+   * own purpose, so this prototype leaves review mode's existing behavior
+   * untouched. Open question, not yet ruled on by Samuel: see this branch's
+   * brief for the Principle II grounding scope this raises.
+   */
+  const probingSurface = surface === "lesson_learn";
   const [messages, setMessages] = useState<ChatMsg[]>(() =>
     initialMessages && initialMessages.length > 0
       ? initialMessages
@@ -237,6 +275,49 @@ export function ChatCore({
   }, [messages]);
   const openQuestionIdRef = useRef<string | null>(null);
   openQuestionIdRef.current = openQuestionId;
+  // Socratic-probing prototype: which LO a wrong answer put into
+  // confirmation-pending, the attempt a fresh sibling attempt on that LO
+  // should link to via retry_of_attempt_id, how many wrong attempts this
+  // cycle has taken (`wrongCount`), and which question that last attempt was
+  // against (`questionId`). Session-scoped only (never persisted, never
+  // touches mastery) — set/cleared in handleAttempt below. Once `wrongCount`
+  // reaches 2, the card stops withholding (ChatQuestionCard's
+  // `revealAnswer`) — same threshold an explicit {{reveal_answer}} forces
+  // early (send()'s completion handler), never a separate, ungoverned path.
+  // `questionId` matters because `openQuestionIdRef` clears the moment the
+  // FIRST attempt on a card is graded (a matching event note now exists) —
+  // a SECOND chat-typed attempt in the same still-open probe cycle has
+  // nothing else to resolve {{answer_submitted:…}} against, since no new
+  // card was necessarily pushed in between.
+  const [pendingConfirmation, setPendingConfirmation] = useState<{
+    loId: string;
+    lastAttemptId: number;
+    wrongCount: number;
+    questionId: string;
+  } | null>(null);
+  const pendingConfirmationRef = useRef(pendingConfirmation);
+  pendingConfirmationRef.current = pendingConfirmation;
+  useEffect(() => {
+    onPendingConfirmationChange?.(pendingConfirmation);
+  }, [pendingConfirmation, onPendingConfirmationChange]);
+  // A chat-typed answer ({{answer_submitted:…}}) ChatCore graded itself —
+  // handed down so the open question's OWN card (wherever it's rendered)
+  // syncs its display instead of sitting there looking unanswered while the
+  // transcript already says otherwise.
+  const [externalAttempt, setExternalAttempt] = useState<{
+    questionId: string;
+    result: AttemptResult;
+  } | null>(null);
+  useEffect(() => {
+    onExternalAttemptChange?.(externalAttempt);
+  }, [externalAttempt, onExternalAttemptChange]);
+  // send() (declared above handleAttempt in this file) needs to call it for
+  // a chat-typed answer — a ref breaks the ordering/staleness problem a
+  // direct reference would have, same pattern as sendRef/scheduleContinueRef
+  // below. Populated right after handleAttempt's own declaration.
+  const handleAttemptRef = useRef<(r: AttemptResult, q: SpineQuestion) => void>(
+    () => {}
+  );
   const continueTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // live streaming flag (state is stale inside timers) + queued auto-continue
   const streamingRef = useRef(false);
@@ -354,6 +435,23 @@ export function ChatCore({
             kind: "say",
             localOnly: true,
             text: "Give it a try first or tell me if you need help.",
+          },
+        ]);
+        return;
+      }
+      // Socratic probing (Route B): a wrong answer left the LO
+      // confirmation-pending — the same FR-1214 shape as the guard above,
+      // but for "he hasn't SOLVED it yet" rather than "he hasn't tried it
+      // yet." Caught here for the same reason: before anything reaches the
+      // model, at no cost.
+      if (text === GOT_IT_SENTINEL && pendingConfirmationRef.current) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "note",
+            kind: "say",
+            localOnly: true,
+            text: "Let's make sure it clicked first — one more try on this before we move on.",
           },
         ]);
         return;
@@ -557,6 +655,66 @@ export function ChatCore({
           emitNewCites(acc);
           onAssistantDone?.(acc);
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
+          // SOCRATIC PROBING (Route B, wip/socratic-probing-route-b): the
+          // tutor recognized either a genuine chat-typed answer attempt or
+          // an explicit "just tell me" and tagged it with a directive —
+          // route BOTH through the exact grading/handleAttempt pipeline a
+          // tapped card already uses, rather than trusting the tutor's own
+          // prose as the mechanism. Scoped to probingSurface; a no-op
+          // everywhere else even if the model somehow emitted one.
+          if (probingSurface) {
+            const submittedGiven = extractAnswerSubmitted(acc);
+            const pendingNow = pendingConfirmationRef.current;
+            // openQuestionIdRef tracks "no matching answered-event note
+            // yet" — it clears the moment the FIRST attempt on a card is
+            // graded, even though the probe cycle stays open and the tutor
+            // may keep discussing that SAME question conversationally
+            // before ever pushing a fresh card. Fall back to the pending
+            // cycle's own question in that case, so a second chat-typed
+            // attempt still has something to resolve against.
+            const targetQuestionId =
+              openQuestionIdRef.current ?? pendingNow?.questionId ?? null;
+            if (submittedGiven != null && targetQuestionId) {
+              const openQ = lookupQuestion?.(targetQuestionId);
+              // Widgets grade from the construction itself (ADR-0009), never
+              // from typed text — ignored rather than trusted even though
+              // lib/lesson.ts also tells the tutor never to emit this for
+              // one (defense in depth against a misrecognized directive).
+              if (openQ && openQ.questionType !== "widget") {
+                try {
+                  const r = await submitAttempt({
+                    questionId: openQ.id,
+                    givenAnswer: submittedGiven,
+                    // ChatCore doesn't track a per-question shown-at
+                    // timestamp the way the card does — timeMs is storage
+                    // only here, never part of grading.
+                    timeMs: 0,
+                    ...(pendingNow?.loId === openQ.loId
+                      ? { retryOfAttemptId: pendingNow.lastAttemptId }
+                      : {}),
+                  });
+                  setExternalAttempt({ questionId: openQ.id, result: r });
+                  handleAttemptRef.current(r, openQ);
+                } catch (e) {
+                  console.error("chat-typed answer submission failed:", e);
+                }
+              }
+            } else if (hasRevealAnswerDirective(acc)) {
+              // Bail-out: force the same reveal the 2-attempt cap would
+              // produce — never a free pass around it (no skipped
+              // grounding, no unresolved LO). A no-op if nothing is
+              // actually pending yet — lib/lesson.ts tells the tutor never
+              // to emit this before a genuine attempt exists; this is the
+              // backstop, not the primary guard, since the client can't
+              // intercept the tutor's own free-generated text the way it
+              // intercepts the "Got it" button.
+              setPendingConfirmation((prev) =>
+                prev
+                  ? { ...prev, wrongCount: Math.max(prev.wrongCount, 2) }
+                  : prev
+              );
+            }
+          }
           if (metaBuf.capped) {
             setCapped(true);
             onCapped?.();
@@ -617,6 +775,8 @@ export function ChatCore({
       onAssistantDone,
       onFinishDirective,
       onCapped,
+      probingSurface,
+      lookupQuestion,
     ]
   );
 
@@ -653,11 +813,70 @@ export function ChatCore({
 
   const handleAttempt = useCallback(
     (r: AttemptResult, q: SpineQuestion) => {
-      const note = `${r.isCorrect ? "✓" : "✗"} the student answered ${q.id} ${
+      let note = `${r.isCorrect ? "✓" : "✗"} the student answered ${q.id} ${
         r.isCorrect ? "correctly" : "incorrectly"
       }${r.isCorrect ? "" : ` (correct answer: ${r.correctAnswer})`} — mastery ${Math.round(r.oldScore * 100)}% → ${Math.round(
         r.newScore * 100
       )}%`;
+
+      // SOCRATIC PROBING (Route B + Option 1, wip/socratic-probing-route-b —
+      // open grounding question not yet ruled on by Samuel, see that
+      // branch's brief). ChatQuestionCard no longer reveals its correct
+      // answer OR its refutation/solution on a wrong answer in this mode
+      // (`probing`/`revealAnswer` props); instead the reviewed material
+      // rides into the TUTOR's own next turn as reference-only context
+      // here, and the system prompt (lib/lesson.ts learnPrompt) is told to
+      // ask a guiding question before ever stating it — UNTIL the 2nd wrong
+      // attempt on the same LO, at which point withholding stops and the
+      // tutor explains plainly, in the material's own steps (never just the
+      // final value). Scoring is untouched: bktUpdate() already ran
+      // normally server-side before this client ever sees `r` — this note
+      // only changes what the tutor SAYS, never what mastery records.
+      const wasPending = pendingConfirmationRef.current;
+      // The count a wrong answer on this LO would reach — computed once and
+      // reused for both the note text and the state update below, so they
+      // can never disagree about which attempt this is.
+      const wrongCountAfter =
+        wasPending?.loId === q.loId ? wasPending.wrongCount + 1 : 1;
+      if (probingSurface) {
+        if (!r.isCorrect) {
+          const material = r.refutation
+            ? r.refutation.steps.map((st) => st.text_md).join(" ")
+            : r.solution.length > 0
+              ? r.solution.map((st) => `Step ${st.step}. ${stepText(st)}`).join(" ")
+              : null;
+          note +=
+            wrongCountAfter >= 2
+              ? `\nSOCRATIC PROBE — REVEALED — ${q.loId}: that's two attempts without landing it. The card is now showing him the correct answer and the reference material directly — stop withholding. Walk him through it PLAINLY, in the material's own steps, in order (never just the final value): ${
+                  material ??
+                  "no reviewed material matches this specific error — walk the LO's own definition through to the correct answer instead, still step by step."
+                } Once he seems ready, your next check on ${q.loId} must still be a fresh same-tier question before you can treat it as resolved.`
+              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote or assert it until he has engaged with at least one guiding question, or explicitly asks you to just tell him): ${
+                  material ??
+                  "no reviewed material matches this specific error — reason from the LO's own definition instead, still without stating the answer outright."
+                } Ask ONE short guiding question toward it now.`;
+        } else if (wasPending?.loId === q.loId) {
+          note += `\n✓ confirmation received for ${q.loId} — resolved, safe to move on.`;
+        }
+      }
+      setPendingConfirmation((prev) => {
+        if (!probingSurface) return prev;
+        if (r.isCorrect) return prev?.loId === q.loId ? null : prev;
+        // A wrong answer on the LO already pending extends the same cycle
+        // (link to the newest attempt, bump wrongCount); a wrong answer on a
+        // DIFFERENT LO while one is already pending leaves the earlier one
+        // authoritative — this prototype tracks one open probe at a time.
+        if (!prev || prev.loId === q.loId) {
+          return {
+            loId: q.loId,
+            lastAttemptId: r.attemptId,
+            wrongCount: wrongCountAfter,
+            questionId: q.id,
+          };
+        }
+        return prev;
+      });
+
       setMessages((prev) => [
         ...prev,
         { role: "note", kind: "event", text: note },
@@ -682,8 +901,9 @@ export function ChatCore({
       onAttemptResult?.(r, q);
       scheduleContinue();
     },
-    [onAttemptResult, scheduleContinue, lessonSurface, arabicUi]
+    [onAttemptResult, scheduleContinue, lessonSurface, arabicUi, probingSurface]
   );
+  handleAttemptRef.current = handleAttempt;
 
   /** Widget cards report their outcome here → visible note + next AI beat. */
   const handleWidgetNote = useCallback(
@@ -767,6 +987,11 @@ export function ChatCore({
             resolveCite={resolveCite}
             onCiteClick={onCiteClick}
             onAttempt={handleAttempt}
+            probing={probingSurface}
+            pendingLoId={pendingConfirmation?.loId ?? null}
+            pendingAttemptId={pendingConfirmation?.lastAttemptId ?? null}
+            pendingWrongCount={pendingConfirmation?.wrongCount ?? null}
+            externalAttempt={externalAttempt}
             renderWidget={renderWidget}
             renderPassage={renderPassage}
             onWidgetNote={handleWidgetNote}
@@ -851,6 +1076,11 @@ const MessageRow = memo(function MessageRow({
   resolveCite,
   onCiteClick,
   onAttempt,
+  probing,
+  pendingLoId,
+  pendingAttemptId,
+  pendingWrongCount,
+  externalAttempt,
   onOpenQuestion,
   renderWidget,
   renderPassage,
@@ -872,6 +1102,12 @@ const MessageRow = memo(function MessageRow({
   resolveCite?: (c: Cite) => CiteInfo | null;
   onCiteClick?: (c: Cite) => void;
   onAttempt: (r: AttemptResult, q: SpineQuestion) => void;
+  /** Socratic-probing prototype: forwarded to ChatQuestionCard (see there) */
+  probing: boolean;
+  pendingLoId: string | null;
+  pendingAttemptId: number | null;
+  pendingWrongCount: number | null;
+  externalAttempt: { questionId: string; result: AttemptResult } | null;
   onOpenQuestion?: (qid: string) => void;
   renderWidget?: ChatCoreProps["renderWidget"];
   renderPassage?: ChatCoreProps["renderPassage"];
@@ -953,6 +1189,12 @@ const MessageRow = memo(function MessageRow({
           if (b.t === "highlight") return null; // side-effect only
           if (b.t === "finish") return null; // handled by the surface
           if (b.t === "beat") return null; // pacing marker — renders as time
+          // Socratic-probing prototype: both handled once per completed
+          // message in send()'s completion handler (submit/force-reveal),
+          // never rendered inline — a mid-stream partial render would just
+          // show the raw directive text with nothing to act on yet.
+          if (b.t === "answer_submitted") return null;
+          if (b.t === "reveal_answer") return null;
           if (b.t === "check_in") {
             return (
               <CheckInCard
@@ -1010,6 +1252,16 @@ const MessageRow = memo(function MessageRow({
                 lang={arabicUi ? "ar" : "en"}
                 onResult={onAttempt}
                 onOpenQuestion={onOpenQuestion}
+                probing={probing}
+                revealAnswer={pendingLoId === q.loId && (pendingWrongCount ?? 0) >= 2}
+                retryOfAttemptId={
+                  pendingLoId === q.loId ? (pendingAttemptId ?? undefined) : undefined
+                }
+                externalResult={
+                  externalAttempt && externalAttempt.questionId === q.id
+                    ? externalAttempt
+                    : undefined
+                }
               />
             ) : (
               <p key={i} className="my-1 font-mono text-[10px] text-ink-faint">

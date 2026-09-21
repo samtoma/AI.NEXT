@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { mcqChoices, stepText } from "@/lib/types";
 import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
@@ -8,6 +8,7 @@ import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
 import { pct } from "@/lib/mastery";
 import { tierStyle } from "@/components/spine/LoPanel";
+import { submitAttempt } from "@/lib/attempts-client";
 
 /**
  * Live question card pushed into the chat by a {{show_question:…}} directive.
@@ -20,6 +21,10 @@ export function ChatQuestionCard({
   lang = "en",
   onResult,
   onOpenQuestion,
+  probing = false,
+  revealAnswer = false,
+  retryOfAttemptId,
+  externalResult,
 }: {
   question: SpineQuestion;
   /** false = student mode: no db ids, soft failure state, no mastery deltas */
@@ -28,6 +33,39 @@ export function ChatQuestionCard({
   lang?: "en" | "ar";
   onResult: (result: AttemptResult, q: SpineQuestion) => void;
   onOpenQuestion?: (qid: string) => void;
+  /**
+   * Socratic-probing prototype (wip/socratic-probing-route-b, Route B +
+   * Option 1 — see that branch's brief; open grounding question not yet
+   * ruled on by Samuel). true on the lesson_learn surface: a wrong answer no
+   * longer reveals its correct answer OR its refutation/solution here — the
+   * tutor's own next turn probes for it instead (lib/lesson.ts), grounded in
+   * the same material via a [live event] note it never shows verbatim
+   * (ChatCore's handleAttempt). false everywhere else keeps today's
+   * immediate-reveal behavior unchanged.
+   */
+  probing?: boolean;
+  /**
+   * Overrides `probing`'s withholding for THIS result once the 2-attempt cap
+   * or an explicit {{reveal_answer}} has been reached (ChatCore's
+   * `pendingConfirmation.wrongCount`) — falls back to exactly today's
+   * non-probing display (both the tap-to-reveal letter and the stepped
+   * refutation/solution panel), never a bare final value.
+   */
+  revealAnswer?: boolean;
+  /** Set when this card is the same-tier sibling question ChatCore is
+   *  serving to confirm a pending LO — sent back so the server can tag
+   *  `stance_used = "probe"` and link the retry (migration 011). */
+  retryOfAttemptId?: number;
+  /**
+   * Socratic-probing prototype: an attempt graded from a chat-typed answer
+   * ({{answer_submitted:…}}) rather than this card's own Submit tap —
+   * ChatCore already POSTed it (lib/attempts-client.ts) and routed it through
+   * the same handleAttempt a tap would; this only makes the card's OWN
+   * display catch up so it never disagrees with what the transcript says
+   * happened. Matched by question id — a card that isn't the open question
+   * ignores it.
+   */
+  externalResult?: { questionId: string; result: AttemptResult };
 }) {
   const [choice, setChoice] = useState<string | null>(null);
   const [numeric, setNumeric] = useState("");
@@ -54,23 +92,18 @@ export function ChatQuestionCard({
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch("/api/attempts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          questionId: q.id,
-          givenAnswer: given,
-          timeMs: Date.now() - shownAt.current,
-          // A widget reports WHAT it built; the server decides whether that is
-          // right and what it means. The predicate never carries a verdict
-          // (ADR-0009) — `correct` on the outcome is for the widget's own
-          // local feedback, and the server re-derives it from the stored
-          // question's own correct_answer.
-          ...(widget ? { predicate: widget.predicate } : {}),
-        }),
+      // A widget reports WHAT it built; the server decides whether that is
+      // right and what it means. The predicate never carries a verdict
+      // (ADR-0009) — `correct` on the outcome is for the widget's own local
+      // feedback, and the server re-derives it from the stored question's
+      // own correct_answer.
+      const r = await submitAttempt({
+        questionId: q.id,
+        givenAnswer: given,
+        timeMs: Date.now() - shownAt.current,
+        ...(widget ? { predicate: widget.predicate } : {}),
+        ...(retryOfAttemptId != null ? { retryOfAttemptId } : {}),
       });
-      if (!res.ok) throw new Error(`API ${res.status}`);
-      const r: AttemptResult = await res.json();
       setResult(r);
       onResult(r, q);
     } catch (e) {
@@ -79,6 +112,19 @@ export function ChatQuestionCard({
       setBusy(false);
     }
   };
+
+  // Socratic-probing prototype: a chat-typed answer graded by ChatCore
+  // (already POSTed and already run through handleAttempt) — sync this
+  // card's own display to match, exactly as if it had been tapped here.
+  // Guarded on `!result` so it only ever applies once, and ignores any
+  // externalResult that belongs to a different (already-answered or
+  // not-yet-open) question card.
+  useEffect(() => {
+    if (!result && externalResult && externalResult.questionId === q.id) {
+      setResult(externalResult.result);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [externalResult, q.id]);
 
   return (
     <div className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]">
@@ -247,8 +293,15 @@ export function ChatQuestionCard({
               )}
             </div>
             {/* student mode: the correct letter stays withheld until the
-                explanation lands — a quiet affordance reveals it on demand */}
-            {!debug && !result.isCorrect && q.questionType !== "widget" && (
+                explanation lands — a quiet affordance reveals it on demand.
+                SOCRATIC PROBING: also withheld outright while probing is
+                still active (revealAnswer false) — the whole point is that
+                nothing on this card can hand him the answer ahead of the
+                tutor's own guiding questions, not even on a tap. */}
+            {!debug &&
+              !result.isCorrect &&
+              q.questionType !== "widget" &&
+              (!probing || revealAnswer) && (
               <p
                 dir={lang === "ar" ? "rtl" : "ltr"}
                 className="mt-1.5 text-[12px] text-ink-soft"
@@ -278,52 +331,79 @@ export function ChatQuestionCard({
                 ADR-0009 this was looked up, logged to analytics and then
                 dropped, so the text written for the mistake reached a
                 dashboard and never reached the student. */}
-            {result.refutation && !result.isCorrect && (
-              <div className="mt-2 rounded-md border border-accent/35 bg-accent-wash px-3 py-2.5">
-                <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-accent-deep">
-                  why that happened
+            {/* SOCRATIC PROBING (Route B): the reviewed material below is
+                withheld from THIS card on purpose — it already rode into the
+                tutor's next turn as reference-only context (ChatCore's
+                handleAttempt), which is told to ask a guiding question before
+                ever stating it. Revealing it here too would defeat the
+                probe before the tutor's message even streams in. */}
+            {probing && !revealAnswer && !result.isCorrect ? (
+              <div className="mt-2 rounded-md border border-line-soft bg-card px-3 py-2.5">
+                <p className="text-[12.5px] leading-relaxed text-ink-soft">
+                  Let&apos;s talk it through — keep chatting below ↓
                 </p>
-                <ol className="mt-1.5 grid gap-1.5 font-read">
-                  {result.refutation.steps.map((st) => (
-                    <li key={st.step} className="text-[13px] leading-relaxed text-ink">
-                      <TeX text={st.text_md} />
-                    </li>
-                  ))}
-                </ol>
                 {debug && (
-                  <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
-                    {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
-                    {result.refutation.reviewed ? "" : " · unreviewed"}
+                  <p className="mt-1.5 font-mono text-[9.5px] text-ink-faint">
+                    probing → {result.diagnosis?.misconceptionId ?? "no diagnosis"}
+                    {result.refutation
+                      ? ` · matched ${result.refutation.entryId}${result.refutation.reviewed ? "" : " (unreviewed)"}`
+                      : result.solution.length > 0
+                        ? " · falling back to canonical solution"
+                        : " · nothing to hand the tutor either"}
+                    {" — held for the tutor's turn, not rendered here"}
                   </p>
                 )}
               </div>
-            )}
-            {/* THE FALLBACK (FR-305) — no misconception was diagnosed (a
-                numeric answer, or an MCQ distractor with no misconception
-                label), so there is nothing to refute. Serving the canonical
-                solution here, honestly labelled as the correct method rather
-                than a diagnosis of her specific error, replaced silently
-                guessing at one of the LO's OTHER misconceptions — which used
-                to repeat the same borrowed explanation across unrelated
-                questions on the same objective. */}
-            {!result.refutation && !result.isCorrect && result.solution.length > 0 && (
-              <div className="mt-2 rounded-md border border-line bg-card px-3 py-2.5">
-                <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-soft">
-                  here&apos;s how to solve it
-                </p>
-                <ol className="mt-1.5 grid gap-1.5 font-read">
-                  {result.solution.map((st) => (
-                    <li key={st.step} className="text-[13px] leading-relaxed text-ink">
-                      <TeX text={stepText(st)} />
-                    </li>
-                  ))}
-                </ol>
-                {debug && (
-                  <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
-                    no misconception diagnosed · canonical solution
-                  </p>
+            ) : (
+              <>
+                {result.refutation && !result.isCorrect && (
+                  <div className="mt-2 rounded-md border border-accent/35 bg-accent-wash px-3 py-2.5">
+                    <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-accent-deep">
+                      why that happened
+                    </p>
+                    <ol className="mt-1.5 grid gap-1.5 font-read">
+                      {result.refutation.steps.map((st) => (
+                        <li key={st.step} className="text-[13px] leading-relaxed text-ink">
+                          <TeX text={st.text_md} />
+                        </li>
+                      ))}
+                    </ol>
+                    {debug && (
+                      <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
+                        {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
+                        {result.refutation.reviewed ? "" : " · unreviewed"}
+                      </p>
+                    )}
+                  </div>
                 )}
-              </div>
+                {/* THE FALLBACK (FR-305) — no misconception was diagnosed (a
+                    numeric answer, or an MCQ distractor with no misconception
+                    label), so there is nothing to refute. Serving the canonical
+                    solution here, honestly labelled as the correct method rather
+                    than a diagnosis of her specific error, replaced silently
+                    guessing at one of the LO's OTHER misconceptions — which used
+                    to repeat the same borrowed explanation across unrelated
+                    questions on the same objective. */}
+                {!result.refutation && !result.isCorrect && result.solution.length > 0 && (
+                  <div className="mt-2 rounded-md border border-line bg-card px-3 py-2.5">
+                    <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-soft">
+                      here&apos;s how to solve it
+                    </p>
+                    <ol className="mt-1.5 grid gap-1.5 font-read">
+                      {result.solution.map((st) => (
+                        <li key={st.step} className="text-[13px] leading-relaxed text-ink">
+                          <TeX text={stepText(st)} />
+                        </li>
+                      ))}
+                    </ol>
+                    {debug && (
+                      <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
+                        no misconception diagnosed · canonical solution
+                      </p>
+                    )}
+                  </div>
+                )}
+              </>
             )}
             {debug && !result.isCorrect && onOpenQuestion && (
               <button

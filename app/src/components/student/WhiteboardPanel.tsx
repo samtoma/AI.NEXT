@@ -157,6 +157,11 @@ export function WhiteboardPanel({
   vizMeta,
   collapsed,
   onToggleCollapsed,
+  probing = false,
+  pendingLoId = null,
+  pendingAttemptId = null,
+  pendingWrongCount = null,
+  externalAttempt = null,
 }: {
   items: BoardItem[];
   focusKey: string | null;
@@ -178,6 +183,20 @@ export function WhiteboardPanel({
   /** mobile top-sheet collapse (ignored on desktop via CSS) */
   collapsed: boolean;
   onToggleCollapsed: () => void;
+  /** Socratic-probing prototype (wip/socratic-probing-route-b) — mirrors
+   *  ChatCore's own state (LessonSession wires it via
+   *  onPendingConfirmationChange) so a board-hosted question card gates its
+   *  reveal the same way an inline-transcript one does. */
+  probing?: boolean;
+  pendingLoId?: string | null;
+  pendingAttemptId?: number | null;
+  /** How many wrong attempts the pending cycle has taken — 2+ lifts the
+   *  withholding (ChatQuestionCard's `revealAnswer`), same threshold an
+   *  explicit {{reveal_answer}} forces early. */
+  pendingWrongCount?: number | null;
+  /** A chat-typed answer ChatCore graded itself, mirrored down so THIS
+   *  board-hosted card syncs its display too when it's the open question. */
+  externalAttempt?: { questionId: string; result: AttemptResult } | null;
 }) {
   const [refs, setRefs] = useState<Record<string, VisualDto | "missing">>({});
   const [steps, setSteps] = useState<Record<string, number>>({});
@@ -333,6 +352,20 @@ export function WhiteboardPanel({
                   debug={debug}
                   lang={arabicUi ? "ar" : "en"}
                   onResult={onAttempt}
+                  probing={probing}
+                  revealAnswer={
+                    pendingLoId === focusedQ.loId && (pendingWrongCount ?? 0) >= 2
+                  }
+                  retryOfAttemptId={
+                    pendingLoId === focusedQ.loId
+                      ? (pendingAttemptId ?? undefined)
+                      : undefined
+                  }
+                  externalResult={
+                    externalAttempt && externalAttempt.questionId === focusedQ.id
+                      ? externalAttempt
+                      : undefined
+                  }
                 />
               ) : (
                 <p className="font-mono text-[10px] text-ink-faint">

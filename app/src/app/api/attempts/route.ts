@@ -45,13 +45,20 @@ export async function POST(req: Request) {
      *  Answering one materialises it (ADR-0009 §3) so that nothing can move a
      *  reported number without leaving a reviewable artefact. */
     inlineWidget?: { kind: string; spec: Record<string, unknown>; loId: string; stem: string };
+    /** Socratic-probing prototype (wip/socratic-probing-route-b): set by the
+     *  client when this attempt is the same-tier sibling question served to
+     *  confirm understanding after a wrong answer put the LO into
+     *  confirmation-pending (ChatCore's `pendingConfirmation`). Links the
+     *  retry back to the attempt it is confirming — correct or not — so a
+     *  probe cycle is reconstructible from `attempts` alone (migration 011). */
+    retryOfAttemptId?: number;
   };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "invalid JSON body" }, { status: 400 });
   }
-  const { questionId, givenAnswer, timeMs, predicate, inlineWidget } = body;
+  const { questionId, givenAnswer, timeMs, predicate, inlineWidget, retryOfAttemptId } = body;
   if (!questionId || typeof givenAnswer !== "string") {
     return NextResponse.json(
       { error: "questionId and givenAnswer are required" },
@@ -176,8 +183,9 @@ export async function POST(req: Request) {
     const attemptRes = await client.query(
       `INSERT INTO attempts
          (student_id, question_id, given_answer, is_correct, time_ms, attempted_at,
-          diagnosis_type, misconception_id, stance_used, confidence, modality)
-       VALUES ($1, $2, $3, $4, $5, now(), $6, $7, $8, $9, $10)
+          diagnosis_type, misconception_id, stance_used, confidence, modality,
+          retry_of_attempt_id)
+       VALUES ($1, $2, $3, $4, $5, now(), $6, $7, $8, $9, $10, $11)
        RETURNING id`,
       [
         studentId,
@@ -193,7 +201,12 @@ export async function POST(req: Request) {
               : "distractor_diagnosed"
             : "deterministic_grade_incorrect",
         misconceptionId,
-        isCorrect ? "confirm" : "re_explain",
+        // A confirmation-retry (Socratic probing, wip/socratic-probing-route-b)
+        // is tagged "probe" regardless of outcome — it's a distinct teaching
+        // stance from "confirm"/"re_explain", not a third verdict on the
+        // answer, and it's what lets analytics find every probe-cycle attempt
+        // without joining through retry_of_attempt_id.
+        retryOfAttemptId != null ? "probe" : isCorrect ? "confirm" : "re_explain",
         // Confidence 1 for both: neither is inferred. A distractor carries a
         // label the student clicked; a predicate is a geometric fact about
         // what they built. Reading a label is not guessing.
@@ -202,6 +215,7 @@ export async function POST(req: Request) {
         // and this column is what keeps that auditable — every comparison
         // metric can be recomputed with and without them.
         isWidget ? "widget" : "question",
+        retryOfAttemptId ?? null,
       ]
     );
     const attemptId = attemptRes.rows[0].id;
@@ -368,6 +382,7 @@ export async function POST(req: Request) {
     });
 
     const result: AttemptResult = {
+      attemptId,
       isCorrect,
       correctAnswer: q.correct_answer,
       solution,
