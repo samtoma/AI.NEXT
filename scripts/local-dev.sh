@@ -134,15 +134,56 @@ ok "dev passwords set on the three database roles (local only)"
 
 # ------------------------------------------------------------------ 3. content
 say "3/8  Curriculum content"
-LOADED=$($PSQL -d $DB -tAc "select count(*) from questions" 2>/dev/null || echo 0)
-if [ "$LOADED" -ge 450 ]; then
-  ok "$LOADED questions already loaded"
-else
+#
+# ALL THREE BOOKS, not just the maths one.
+#
+# This step loaded `--course course:prep3-math-en` and nothing else from the
+# branch split until 2026-09-21. That was right while the product was
+# maths-only, and wrong the moment the console could decide which courses a
+# student sees: an operator cannot toggle a course the database has never
+# heard of, so Social Studies and Arabic showed as "0 objectives loaded" and
+# the whole catalogue looked like a product that had dropped two subjects.
+# Nothing had been dropped — the bundles, the ADRs and the loader's own
+# support for all three were in the tree the entire time. Only this line was
+# narrow.
+#
+# Loading a course is not the same as showing it. `course_availability`
+# decides who sees what (migration 023), and a freshly loaded course stays
+# hidden until somebody sets it live for a grade. So this is safe to widen:
+# it puts the content within reach of the console, and changes nothing about
+# what any student sees.
+#
+# WHY SOCIAL STUDIES TAKES TWO PASSES. `social-t1.json` names its source book
+# with `source_file` but does not define it; `social-skeleton.json` does, and
+# a scoped load excludes the skeleton because social-t1 supersedes it
+# (SUPERSEDED_BY in load_seed.py). Loading the skeleton first registers the
+# `source_documents` row, and the real bundle then replaces its 44 questions
+# with the 762 that supersede them while the book row survives — a course
+# subtree delete does not touch source documents. Arabic needs no such dance:
+# `arabic-t1.json` defines its own book.
+#
+# The review gate still governs what is servable. Arabic lands ~297 questions
+# at `review` because the sacred-content gate (ADR-0006) holds every Quran and
+# hadith passage for a human; those are NOT promoted below, and must not be.
+load_course() { # <course-id> [bundle…]
+  local course="$1"; shift
   ( cd "$ROOT/services/extraction" \
     && AINEXT_DB_DSN="host=$HOST port=$PORT dbname=$DB user=$USER" \
-       $PYRUN load_seed.py --all --course course:prep3-math-en ) \
-    || die "content load failed"
-  ok "loaded"
+       AINEXT_ENVIRONMENT="${AINEXT_ENVIRONMENT:-mvp1}" \
+       $PYRUN load_seed.py "${@:---all}" --course "$course" ) \
+    || die "content load failed for $course"
+}
+
+COURSES_LOADED=$($PSQL -d $DB -tAc \
+  "select count(*) from graph_nodes where kind='course'" 2>/dev/null || echo 0)
+if [ "$COURSES_LOADED" -ge 3 ]; then
+  ok "$COURSES_LOADED course(s) already loaded"
+else
+  load_course course:prep3-math-en
+  load_course course:prep3-arabic-ar
+  load_course course:prep3-social-ar seed/social-skeleton.json   # registers the book
+  load_course course:prep3-social-ar                             # …then supersedes it
+  ok "loaded mathematics, arabic and social studies"
 fi
 
 # A scoped load demotes Unit 1's bulk-promoted questions back to 'review'.
@@ -154,7 +195,19 @@ fi
 # forbids outright. It would also try to promote a materialised inline widget,
 # which the database refuses by CHECK (ADR-0009 §3). Generated content arrives
 # below carrying the status and review stamp it actually has.
-PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions set status='live', reviewed_by='local-dev', reviewed_at=now() where status<>'live' and source in ('seed','authored') returning 1) select count(*) from p")
+#
+# SCOPED TO MATHEMATICS TOO, since 2026-09-21. This statement predates the
+# other two books and used to see only maths, so `source in ('seed','authored')`
+# WAS "the maths book". The moment Arabic and Social Studies load it stops
+# being that: they land 576 questions at `review`, and 297 of the Arabic ones
+# are held by the SACRED-CONTENT GATE (ADR-0006) — every Quran passage and
+# every hadith whose book transcript no online authority could confirm, held
+# for the named religious-content owner to check against a printed مصدر.
+# Promoting those here would stamp `reviewed_by='local-dev'` on scripture no
+# human has read, assert a review that did not happen (FR-1110), and serve it
+# to a student. A local convenience must not be able to do that, so the
+# statement now names the course it was always about.
+PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions q set status='live', reviewed_by='local-dev', reviewed_at=now() where q.status<>'live' and q.source in ('seed','authored') and exists (select 1 from node_subject ns where ns.node_id = q.lo_id and ns.course_id = 'course:prep3-math-en') returning 1) select count(*) from p")
 [ "$PROMOTED" -gt 0 ] && ok "promoted $PROMOTED book question(s) to live" || ok "all book questions live"
 
 # ----------------------------------------------------- 3b. generated content
