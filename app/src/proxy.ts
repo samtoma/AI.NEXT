@@ -35,10 +35,7 @@
 
 import { NextResponse, type NextRequest } from "next/server";
 
-import { shouldGuard, type Surface } from "./lib/proxy-rules.ts";
-
-const ACCESS_COOKIE = "ainext_at";
-const REFRESH_COOKIE = "ainext_rt";
+import { cookieNames, shouldGuard, type Surface } from "./lib/proxy-rules.ts";
 
 /**
  * Which surface this build is. Read straight from `process.env` rather than
@@ -47,6 +44,16 @@ const REFRESH_COOKIE = "ainext_rt";
  * resolved once, at module load, exactly as `lib/env.ts` resolves it.
  */
 const SURFACE: Surface = process.env.AINEXT_SURFACE === "admin" ? "admin" : "student";
+
+/**
+ * F-P2b: the cookie NAME this build checks for is surface-bound too, from the
+ * same tiny pure module `cookies.ts` reads it from. On `localhost`, where both
+ * builds run on the same host at different ports, this is what stops a
+ * browser holding the student build's cookies from reading as "signed in"
+ * here on the console — `ainext_at` was never written by an operator
+ * sign-in, and this build only ever looks for `ainext_cat`/`ainext_crt`.
+ */
+const { access: ACCESS_COOKIE, refresh: REFRESH_COOKIE } = cookieNames(SURFACE);
 
 export function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname;

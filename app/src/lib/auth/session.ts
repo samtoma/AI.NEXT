@@ -156,6 +156,7 @@ export async function createAuthSession(
 export type RotateResult =
   | { kind: "rotated"; sessionId: number; ref: PrincipalRef; token: string; expiresAt: Date }
   | { kind: "reuse" }
+  | { kind: "wrong_surface"; ref: PrincipalRef }
   | { kind: "unknown" };
 
 /**
@@ -166,16 +167,34 @@ export type RotateResult =
  * reuse check, which is the correct answer for a token that has been exchanged.
  * `least(now + 7d, issued_at + 30d)` is written in SQL for the same atomicity
  * reason and mirrors `refreshExpiry` exactly.
+ *
+ * **`surface` (F-P2b, FR-2205)**: when given, the UPDATE itself is filtered to
+ * sessions of the matching kind — a student token presented on the console (or
+ * an operator token presented on the student build) simply does not match the
+ * WHERE clause, so it is **never rotated, never revoked, and never mutated at
+ * all**. That last part is the point: the other surface's session is a live,
+ * legitimate session, and answering "wrong surface" here must not cost the
+ * caller their sign-in on the surface it IS valid for. A second, read-only
+ * query then distinguishes "wrong surface" from "not live for any surface" so
+ * the caller gets `wrong_surface` (log and refuse, nothing touched) rather than
+ * falling into the reuse-detection branch below, which is answering a
+ * different question (a token that WAS live and got spent) and would revoke a
+ * session that was never presented anywhere improperly.
+ *
+ * Omitting `surface` keeps the pre-F-P2b behaviour (no kind constraint) —
+ * every existing caller and test that does not pass it is unaffected.
  */
 export async function rotateRefreshToken(
   db: Queryable,
   presented: string,
   meta: SessionMeta,
   record: AuthEventRecorder,
-  now: Date = new Date()
+  now: Date = new Date(),
+  surface?: AuthSurface
 ): Promise<RotateResult> {
   const presentedHash = hashToken(presented);
   const next = generateToken();
+  const kindFilter = surfaceKindFilter(surface);
   const rotated = await db.query(
     `UPDATE auth_sessions
         SET token_hash = $2,
@@ -185,7 +204,7 @@ export async function rotateRefreshToken(
                                issued_at + interval '30 days'),
             ip_address = coalesce($4::inet, ip_address),
             user_agent = coalesce($5, user_agent)
-      WHERE token_hash = $1 AND revoked_at IS NULL AND expires_at > $3
+      WHERE token_hash = $1 AND revoked_at IS NULL AND expires_at > $3${kindFilter}
       RETURNING id, account_id, operator_id, expires_at`,
     [presentedHash, hashToken(next), now, meta.ip ?? null, meta.userAgent ?? null]
   );
@@ -201,6 +220,34 @@ export async function rotateRefreshToken(
       token: next,
       expiresAt: new Date(row.expires_at as string),
     };
+  }
+
+  // The UPDATE matched no row. If a surface constraint is in play, that could
+  // mean "wrong surface" rather than "not live" — check, READ-ONLY, before
+  // concluding either way. This query has no kind filter: it is asking "does a
+  // live session exist for this token AT ALL", not "does one exist here".
+  if (surface) {
+    const foreign = await db.query(
+      `SELECT account_id, operator_id FROM auth_sessions
+        WHERE token_hash = $1 AND revoked_at IS NULL AND expires_at > $2
+        LIMIT 1`,
+      [presentedHash, now]
+    );
+    const f = foreign.rows[0];
+    if (f) {
+      const ref: PrincipalRef =
+        f.account_id != null ? { accountId: Number(f.account_id) } : { operatorId: Number(f.operator_id) };
+      await record({
+        event: "permission_denied",
+        outcome: "denied",
+        actor: refActor(ref),
+        subject: { kind: "surface" },
+        reason: "cross_surface_refresh",
+        ip: meta.ip ?? null,
+        userAgent: meta.userAgent ?? null,
+      });
+      return { kind: "wrong_surface", ref };
+    }
   }
 
   // Not a live token. Was it one we already exchanged? That is the theft signal.
@@ -234,17 +281,42 @@ function refActor(ref: PrincipalRef): { kind: "account" | "operator"; id: number
     : { kind: "operator", id: ref.operatorId };
 }
 
-/** Revoke exactly the session holding this refresh token. Safe to call blind. */
+/**
+ * `AND account_id IS NOT NULL` / `AND operator_id IS NOT NULL` — appended to a
+ * WHERE clause that already matches on `token_hash`, so a token of the wrong
+ * kind for `surface` fails to match at all rather than matching and then
+ * being filtered out after the fact. No `surface` means no filter, which is
+ * the pre-F-P2b behaviour every caller that predates the split still gets.
+ */
+function surfaceKindFilter(surface: AuthSurface | undefined): string {
+  if (surface === "student") return " AND account_id IS NOT NULL";
+  if (surface === "admin") return " AND operator_id IS NOT NULL";
+  return "";
+}
+
+/**
+ * Revoke exactly the session holding this refresh token. Safe to call blind.
+ *
+ * `surface`, when given, restricts revocation to a session of the matching
+ * kind (F-P2b) — the same reasoning as `rotateRefreshToken`'s: a refresh
+ * cookie that happens to belong to the OTHER surface's principal is a live
+ * session there, and logging out of this surface must not silently end it.
+ * Unlike rotation there is no "tell me which foreign session it was" branch
+ * here: logout already returns 204 unconditionally (see this route's header),
+ * so a token that matched nothing — because it was not live, or because it
+ * belonged to the other surface — is one indistinguishable outcome, not two.
+ */
 export async function revokeByToken(
   db: Queryable,
   presented: string,
   record: AuthEventRecorder,
   meta: { ip?: string | null; userAgent?: string | null } = {},
-  now: Date = new Date()
+  now: Date = new Date(),
+  surface?: AuthSurface
 ): Promise<number> {
   const res = await db.query(
     `UPDATE auth_sessions SET revoked_at = $2
-      WHERE token_hash = $1 AND revoked_at IS NULL
+      WHERE token_hash = $1 AND revoked_at IS NULL${surfaceKindFilter(surface)}
       RETURNING id, account_id, operator_id`,
     [hashToken(presented), now]
   );

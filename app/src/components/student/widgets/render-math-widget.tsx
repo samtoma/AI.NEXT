@@ -131,11 +131,30 @@ export function MathWidget({
   onOutcome,
   fallback = null,
   hostShowsPrompt = false,
+  readOnly = false,
 }: {
   name: string;
   payload: Record<string, unknown>;
   onOutcome: (outcome: WidgetOutcome) => void;
   fallback?: ReactNode;
+  /**
+   * **Additive, and for the console's replay only** (ADR-0015 §3, FR-2305).
+   *
+   * A replay shows the construction the student was given, with the student's
+   * own widget, and must not be answerable: an operator dragging a handle in a
+   * transcript would produce an outcome indistinguishable from the child's.
+   *
+   * It is enforced by a wrapper rather than by a prop threaded through eleven
+   * widgets. Every one of them owns its own pointer handling — drag, keyboard,
+   * click — and a `disabled` prop on each is eleven chances to miss one, with
+   * the miss only discoverable by an operator accidentally answering a
+   * question. `pointer-events: none` on the wrapper means no event reaches any
+   * of them, `inert` takes the subtree out of the keyboard order and the
+   * accessibility tree, and the outcome callback is swallowed as a third line
+   * of defence. Nothing about the student's path changes: the default is false
+   * and the wrapper does not exist unless it is asked for.
+   */
+  readOnly?: boolean;
   /**
    * The surface around the widget has ALREADY shown the question, so the
    * widget must not repeat it.
@@ -148,6 +167,26 @@ export function MathWidget({
    */
   hostShowsPrompt?: boolean;
 }) {
-  const node = renderMathWidget(name, payload, onOutcome, { hostShowsPrompt });
-  return <>{node ?? fallback}</>;
+  const node = renderMathWidget(
+    name,
+    payload,
+    // Swallowed rather than forwarded: a widget that somehow reported an
+    // outcome from a replay must not reach a handler that could record one.
+    readOnly ? NO_OUTCOME : onOutcome,
+    { hostShowsPrompt }
+  );
+  const body = node ?? fallback;
+  if (!readOnly) return <>{body}</>;
+  return (
+    <div
+      inert
+      aria-label="a read-only reconstruction of an interactive widget"
+      className="pointer-events-none select-none"
+    >
+      {body}
+    </div>
+  );
 }
+
+/** The read-only sink. Named so a stack trace says why nothing happened. */
+function NO_OUTCOME(): void {}

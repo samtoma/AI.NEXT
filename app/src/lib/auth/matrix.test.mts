@@ -48,6 +48,13 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   // carries the shell's permission rather than the list's.
   "/students": ["content-review", "evidence-access", "student-data", "cost-billing"],
   "/students/[id]": ["student-data"],
+  // The session list, the timeline and the replay (admin.md §3, §4, §5). Each
+  // is transcribed on its own line for the reason the whole file is
+  // hand-transcribed: "everything under /students is student-data" is a rule,
+  // and a rule cannot disagree with the table it is meant to check.
+  "/students/[id]/sessions": ["student-data"],
+  "/students/[id]/sessions/[sid]": ["student-data"],
+  "/students/[id]/sessions/[sid]/replay": ["student-data"],
   "/profile": ["content-review", "evidence-access", "student-data", "cost-billing"],
   "/content": ["content-review"],
   "/cost": ["cost-billing"],
@@ -100,6 +107,18 @@ test("cost-billing reaches the student list and nothing that holds a student's r
   // matrix that is a privacy rule rather than a tidiness one.
   assert.equal(routeAdmits(consoleRoute("/")!, ["cost-billing"]), true);
   assert.equal(routeAdmits(consoleRoute("/students/[id]")!, ["cost-billing"]), false);
+  // The transcript surfaces are the sharpest edge of FR-2406: `cost-billing`
+  // exists so somebody can answer "what does this cost" without ever reading a
+  // child's conversation, and a replay is the conversation itself.
+  assert.equal(routeAdmits(consoleRoute("/students/[id]/sessions")!, ["cost-billing"]), false);
+  assert.equal(
+    routeAdmits(consoleRoute("/students/[id]/sessions/[sid]")!, ["cost-billing"]),
+    false
+  );
+  assert.equal(
+    routeAdmits(consoleRoute("/students/[id]/sessions/[sid]/replay")!, ["cost-billing"]),
+    false
+  );
   assert.equal(routeAdmits(consoleRoute("/pipeline")!, ["cost-billing"]), false);
   assert.equal(routeAdmits(consoleRoute("/content")!, ["cost-billing"]), false);
 });

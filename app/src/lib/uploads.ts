@@ -16,7 +16,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { scoped, type Db } from "@/lib/student-context";
-import { ENVIRONMENT } from "@/lib/env";
+import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10 MB
 export const DAILY_UPLOAD_CAP = 10;               // per student, per day
@@ -224,8 +224,9 @@ export async function parseUpload(
       `INSERT INTO ai_interactions
          (student_id, surface, turn_index, user_message, assistant_message,
           grounding, citations, model, input_tokens, output_tokens,
-          cost_usd, latency_ms, environment, surface_kind, session_id)
-       VALUES ($1,'upload_parse',1,$2,$3,'{}','[]',$4,0,0,0,$5,$6,'upload_parse',$7)`,
+          cost_usd, latency_ms, environment, surface_kind, session_id,
+          renderer_version)
+       VALUES ($1,'upload_parse',1,$2,$3,'{}','[]',$4,0,0,0,$5,$6,'upload_parse',$7,$8)`,
         [
           studentId,
           `[upload ${uploadId}]`,
@@ -234,6 +235,10 @@ export async function parseUpload(
           Date.now() - started,
           ENVIRONMENT,
           sessionRef,
+          // Which build parsed the photo (ADR-0015 §3). The parse result is
+          // what the student was then taught from, so the timeline shows the
+          // version beside it like any other turn.
+          RELEASE_TAG,
         ]
       )
     );

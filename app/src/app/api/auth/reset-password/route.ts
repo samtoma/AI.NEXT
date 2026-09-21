@@ -17,9 +17,14 @@
  * operator a password without one ever sitting in configuration. The arm is
  * part of the SQL predicate, so a student token presented here matches no row
  * at all and cannot even be consumed, let alone honoured.
+ *
+ * The cookies cleared on the way out (F-P2b) must be THIS surface's — an
+ * operator reset on the console clearing `ainext_at`/`ainext_rt` would be a
+ * no-op that leaves `ainext_cat`/`ainext_crt` sitting there unrevoked.
  */
 
 import { applyCookies, clearedAuthCookies } from "@/lib/auth/cookies";
+import { SURFACE } from "@/lib/env";
 import { recordAuthEvent, requestMeta } from "@/lib/auth/events";
 import { checkPolicy } from "@/lib/auth/password";
 import { completeReset } from "@/lib/auth/reset";
@@ -47,12 +52,12 @@ export async function POST(req: Request) {
   if (!policy.ok) return Response.json({ error: policy.error, field: policy.field }, { status: 422 });
 
   try {
-    const kind = process.env.AINEXT_SURFACE === "admin" ? "operator" : "account";
+    const kind = SURFACE === "admin" ? "operator" : "account";
     const result = await withAuthTx((db) =>
       completeReset(db, token, body.password as string, kind, recordAuthEvent, meta)
     );
     if (!result.ok) return Response.json({ error: "invalid_token" }, { status: 400 });
-    return applyCookies(Response.json({ ok: true }), clearedAuthCookies());
+    return applyCookies(Response.json({ ok: true }), clearedAuthCookies(undefined, SURFACE));
   } catch (err) {
     console.error("[auth] reset-password failed:", err);
     return Response.json({ error: "server_error" }, { status: 500 });

@@ -73,6 +73,31 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     roles: ["student-data"],
     nav: null,
   },
+  // The three transcript surfaces (contracts/admin.md §3, §4, §5). All
+  // `student-data`, all reached from the 360 rather than from the nav, and all
+  // three are listed here separately rather than covered by a prefix rule:
+  // `routeAdmits` is a lookup by exact path, and a surface nobody enumerated
+  // is the door FR-2107 is about. Their audit behaviour DIFFERS — the list
+  // writes no `operator_reads` row and the other two do — which is a property
+  // of each page, not of this table.
+  {
+    path: "/students/[id]/sessions",
+    file: "(console)/students/[id]/sessions/page.console.tsx",
+    roles: ["student-data"],
+    nav: null,
+  },
+  {
+    path: "/students/[id]/sessions/[sid]",
+    file: "(console)/students/[id]/sessions/[sid]/page.console.tsx",
+    roles: ["student-data"],
+    nav: null,
+  },
+  {
+    path: "/students/[id]/sessions/[sid]/replay",
+    file: "(console)/students/[id]/sessions/[sid]/replay/page.console.tsx",
+    roles: ["student-data"],
+    nav: null,
+  },
   {
     path: "/profile",
     file: "(console)/profile/page.console.tsx",

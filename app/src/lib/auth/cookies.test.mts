@@ -21,6 +21,7 @@ import {
   applyCookies,
   cleared,
   clearedAuthCookies,
+  cookieNames,
   oauthStateCookie,
   readCookie,
   refreshCookie,
@@ -86,4 +87,35 @@ test("reading one cookie out of a raw header ignores prefixes and whitespace", (
   assert.equal(readCookie(header, "ainext_at"), "VALUE");
   assert.equal(readCookie(header, "ainext_rt"), null);
   assert.equal(readCookie(null, "ainext_at"), null);
+});
+
+// F-P2b: the console gets cookie names of its own, so a browser holding a
+// student's cookies from the other surface never presents anything the
+// console build recognises as its own session.
+test("cookies.ts re-exports the surface lookup, and ACCESS_COOKIE/REFRESH_COOKIE are the student names", () => {
+  assert.deepEqual(cookieNames("student"), { access: "ainext_at", refresh: "ainext_rt" });
+  assert.deepEqual(cookieNames("admin"), { access: "ainext_cat", refresh: "ainext_crt" });
+  assert.equal(ACCESS_COOKIE, "ainext_at");
+  assert.equal(REFRESH_COOKIE, "ainext_rt");
+});
+
+test("accessCookie and refreshCookie default to the student names but take the console's on request", () => {
+  const studentAt = serializeCookie(accessCookie("TOKEN", false));
+  assert.ok(studentAt.startsWith("ainext_at=TOKEN"));
+
+  const adminAt = serializeCookie(accessCookie("TOKEN", false, "admin"));
+  assert.ok(adminAt.startsWith("ainext_cat=TOKEN"), adminAt);
+
+  const studentRt = serializeCookie(refreshCookie("RT", EXPIRES, false));
+  assert.ok(studentRt.startsWith("ainext_rt=RT"));
+
+  const adminRt = serializeCookie(refreshCookie("RT", EXPIRES, false, "admin"));
+  assert.ok(adminRt.startsWith("ainext_crt=RT"), adminRt);
+  assert.ok(adminRt.includes("Path=/api/auth"), "the path does not change, only the name");
+});
+
+test("clearedAuthCookies clears the console's own names on the admin surface", () => {
+  const [at, rt] = clearedAuthCookies(false, "admin").map(serializeCookie);
+  assert.equal(at, "ainext_cat=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
+  assert.equal(rt, "ainext_crt=; Path=/api/auth; HttpOnly; SameSite=Lax; Max-Age=0");
 });

@@ -26,13 +26,26 @@
 import { cookies } from "next/headers";
 
 import { authPool, pool, type Principal } from "@/lib/db";
-import { ENVIRONMENT, IS_CONSOLE } from "@/lib/env";
+import { ENVIRONMENT, IS_CONSOLE, SURFACE } from "@/lib/env";
 
-import { ACCESS_COOKIE } from "./cookies.ts";
+import { cookieNames } from "./cookie-names.ts";
 import { verifyAccessToken, type AccessClaims } from "./tokens.ts";
 import type { OperatorRole } from "./session.ts";
 
 export type { Principal };
+
+/**
+ * F-P2b: THIS build's access-cookie name, not the student build's
+ * unconditionally. Before this fix `principal.ts` always read `ainext_at` —
+ * on the console that happened to be harmless only because `IS_CONSOLE`
+ * downgraded a student claim to anonymous below, but an operator signed in on
+ * the console was ALSO being read from the wrong cookie name once the two
+ * surfaces stopped sharing one. Reading `cookieNames(SURFACE)` directly
+ * (rather than importing it from `./cookies.ts`, which also carries the
+ * cookie-WRITING functions this module has no reason to depend on) keeps this
+ * file's import list exactly as narrow as the job needs.
+ */
+const ACCESS_COOKIE = cookieNames(SURFACE).access;
 
 /** The refusals this layer can produce, carrying the status the contract names. */
 export class AuthError extends Error {

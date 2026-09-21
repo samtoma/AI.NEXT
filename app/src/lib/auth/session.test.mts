@@ -124,6 +124,71 @@ test("an unknown token is simply unknown — no event, no revocation", async () 
   assert.equal(seen.length, 0);
 });
 
+// F-P2b / FR-2205 — the console silently rotating a student's refresh token.
+test("a live token rotates when the surface matches, filtered IN the UPDATE itself", async () => {
+  const db = fakeDb((sql) =>
+    sql.includes("SET token_hash")
+      ? [{ id: 5, account_id: 3, operator_id: null, expires_at: "2026-09-27T18:00:00.000Z" }]
+      : []
+  );
+  const { record } = recorder();
+  const result = await rotateRefreshToken(db, "presented-token", META, record, new Date(), "student");
+  assert.equal(result.kind, "rotated");
+  assert.ok(
+    db.calls[0]!.sql.includes("AND account_id IS NOT NULL"),
+    "the kind constraint is part of the WHERE clause, not a check after the fact"
+  );
+});
+
+test("a live token belonging to the OTHER surface is refused, and NOT touched", async () => {
+  const db = fakeDb((sql) => {
+    // The surface-filtered UPDATE matches nothing — this token is a student's,
+    // and the caller asked for "admin".
+    if (sql.includes("SET token_hash")) return [];
+    // The read-only probe that tells "wrong surface" apart from "not live":
+    // it IS live, just not for this surface.
+    if (sql.includes("SELECT account_id, operator_id FROM auth_sessions")) {
+      return [{ account_id: 3, operator_id: null }];
+    }
+    return [];
+  });
+  const { seen, record } = recorder();
+  const result = await rotateRefreshToken(db, "student-token", META, record, new Date(), "admin");
+
+  assert.equal(result.kind, "wrong_surface");
+  if (result.kind !== "wrong_surface") return;
+  assert.deepEqual(result.ref, { accountId: 3 });
+
+  assert.ok(
+    !db.calls.some((c) => c.sql.includes("SET revoked_at")),
+    "the foreign session is valid on its own surface and must not be revoked"
+  );
+  assert.ok(
+    !db.calls.some((c) => c.sql.includes("WHERE rotated_from")),
+    "this is not reuse detection's question — it must not run that branch " +
+      "(the rotate UPDATE itself always SETs rotated_from, so that substring " +
+      "alone would false-positive on call #1 — assert on the reuse SELECT's " +
+      "own WHERE clause instead)"
+  );
+
+  assert.equal(seen.length, 1, "exactly one event, not the reuse branch's four");
+  assert.equal(seen[0]!.event, "permission_denied");
+  assert.equal(seen[0]!.reason, "cross_surface_refresh");
+  assert.deepEqual(seen[0]!.actor, { kind: "account", id: 3 });
+});
+
+test("omitting surface keeps the pre-F-P2b behaviour — no kind constraint at all", async () => {
+  const db = fakeDb((sql) =>
+    sql.includes("SET token_hash")
+      ? [{ id: 5, account_id: 3, operator_id: null, expires_at: "2026-09-27T18:00:00.000Z" }]
+      : []
+  );
+  const { record } = recorder();
+  const result = await rotateRefreshToken(db, "presented-token", META, record);
+  assert.equal(result.kind, "rotated");
+  assert.ok(!db.calls[0]!.sql.includes("IS NOT NULL"));
+});
+
 test("logout revokes only the presented session", async () => {
   const db = fakeDb((sql) => (sql.includes("SET revoked_at") ? [{ id: 5, account_id: 3 }] : []));
   const { seen, record } = recorder();
@@ -131,6 +196,27 @@ test("logout revokes only the presented session", async () => {
   assert.equal(seen.length, 1);
   assert.equal(seen[0]!.event, "session_revoked");
   assert.equal(seen[0]!.reason, "logout");
+});
+
+// F-P2b — logging out of one surface must never end a live session on the other.
+test("logout does not revoke a session belonging to the other surface", async () => {
+  const db = fakeDb(() => []); // the surface-filtered UPDATE matches nothing
+  const { seen, record } = recorder();
+  const revoked = await revokeByToken(db, "rt", record, {}, new Date(), "admin");
+  assert.equal(revoked, 0);
+  assert.equal(seen.length, 0);
+  assert.ok(db.calls[0]!.sql.includes("AND operator_id IS NOT NULL"));
+});
+
+test("logout still revokes a same-surface session when a surface is given", async () => {
+  const db = fakeDb((sql) =>
+    sql.includes("SET revoked_at") ? [{ id: 5, account_id: 3, operator_id: null }] : []
+  );
+  const { seen, record } = recorder();
+  const revoked = await revokeByToken(db, "rt", record, {}, new Date(), "student");
+  assert.equal(revoked, 1);
+  assert.equal(seen.length, 1);
+  assert.ok(db.calls[0]!.sql.includes("AND account_id IS NOT NULL"));
 });
 
 // FR-2009 — 404, not 403, on somebody else's session.

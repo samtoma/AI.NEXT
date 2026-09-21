@@ -14,7 +14,7 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
-import { shouldGuard } from "./proxy-rules.ts";
+import { cookieNames, shouldGuard } from "./proxy-rules.ts";
 
 test("student surface: guards the two student trees", () => {
   assert.equal(shouldGuard("student", "/student"), true);
@@ -55,4 +55,13 @@ test("a path prefix does not falsely match a sibling with a longer name", () => 
   // vice versa — the two are different routes on different builds.
   assert.equal(shouldGuard("student", "/students"), false);
   assert.equal(shouldGuard("admin", "/student"), false);
+});
+
+// F-P2b — the guard's own cookie-presence check (proxy.ts) must look for the
+// console's cookie name on the admin surface, not the student build's, or a
+// browser holding only student cookies reads as "signed in" here too.
+test("the guard's cookie check uses the console cookie name on the admin surface", () => {
+  assert.deepEqual(cookieNames("admin"), { access: "ainext_cat", refresh: "ainext_crt" });
+  assert.deepEqual(cookieNames("student"), { access: "ainext_at", refresh: "ainext_rt" });
+  assert.notEqual(cookieNames("admin").access, cookieNames("student").access);
 });

@@ -23,9 +23,22 @@
  *
  * `shouldGuard` is pure — no `NextRequest`, no cookies, no I/O — so the
  * redirect decision can be unit-tested without a running server.
+ *
+ * **F-P2b**: `cookieNames` is re-exported from `./auth/cookie-names.ts` (which
+ * imports nothing, so re-exporting it costs this file nothing) purely so
+ * `proxy.ts` has ONE relative import for everything surface-shaped — the path
+ * guard AND the cookie names it checks for presence of — rather than two
+ * separate pure modules to keep in sync by eye. `Surface` below is the same
+ * two-value union `cookie-names.ts` exports; kept as its own local type
+ * (rather than imported) because it predates that module and nothing here
+ * depends on the two staying identical by construction, only by inspection —
+ * exactly like `console-routes.ts` and this file's own guarded-path lists,
+ * per this header's opening paragraph.
  */
 
 export type Surface = "student" | "admin";
+
+export { cookieNames } from "./auth/cookie-names.ts";
 
 /** The student build's guarded trees. Unaffected by this fix — see F-P2 notes. */
 const STUDENT_GUARDED_PATHS = ["/student", "/dashboard"] as const;

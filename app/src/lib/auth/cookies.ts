@@ -8,18 +8,36 @@
  * reach it — and no token is ever returned in a body, a URL, a redirect or a
  * page parameter either.
  *
- * `ainext_rt` is scoped to `Path=/api/auth`: the refresh token is sent to the
- * four endpoints that rotate or revoke it and to nothing else, so a lesson page
+ * The refresh cookie is scoped to `Path=/api/auth`: it is sent to the four
+ * endpoints that rotate or revoke it and to nothing else, so a lesson page
  * request does not carry the credential that can mint new sessions.
  *
- * This module imports nothing — not `next/server`, not the app. It builds
- * attribute objects and serialises them, which is what makes "the cookie is
- * HttpOnly and SameSite=Lax and scoped to /api/auth" a unit test rather than a
- * thing somebody reads off a screenshot of devtools.
+ * **F-P2b: the NAME is surface-bound too**, not just what it is scoped to.
+ * `ACCESS_COOKIE`/`REFRESH_COOKIE` below are the student build's names, kept
+ * as the default because student is the safe default everywhere else in this
+ * feature (env.ts's own `resolveSurface` gives the same reasoning). Anything
+ * that writes or reads a cookie for a principal that could be an OPERATOR —
+ * `login`, `refresh`, `logout`, `logout-all`, `reset-password` — must pass an
+ * explicit `surface` rather than rely on the default; `cookieNames(surface)`
+ * (re-exported from `./cookie-names.ts`) is how each of those gets the right
+ * pair. See that module's header for why the console build needs a name of
+ * its own rather than just a narrower scope.
+ *
+ * This module imports only that tiny pure lookup — not `next/server`, not the
+ * app, not `@/lib/env` (whose JSON import and path-aliased specifier plain
+ * `node --test` cannot resolve at all). It builds attribute objects and
+ * serialises them, which is what makes "the cookie is HttpOnly and
+ * SameSite=Lax and scoped to /api/auth" a unit test rather than a thing
+ * somebody reads off a screenshot of devtools.
  */
 
-export const ACCESS_COOKIE = "ainext_at";
-export const REFRESH_COOKIE = "ainext_rt";
+import { cookieNames, type CookieNames, type Surface } from "./cookie-names.ts";
+
+export { cookieNames };
+export type { CookieNames, Surface };
+
+export const ACCESS_COOKIE = cookieNames("student").access;
+export const REFRESH_COOKIE = cookieNames("student").refresh;
 /** Carries the signed OAuth state + PKCE verifier between /google/login and the callback. */
 export const OAUTH_STATE_COOKIE = "ainext_oauth";
 
@@ -47,9 +65,18 @@ export function secureCookies(nodeEnv: string | undefined = process.env.NODE_ENV
   return nodeEnv === "production";
 }
 
-export function accessCookie(token: string, secure = secureCookies()): CookieAttrs {
+/**
+ * `surface` picks the NAME (`cookieNames(surface).access`); everything else is
+ * identical either way. Defaults to `"student"` — the one call site that must
+ * never guess (`login`, which can issue either kind) passes it explicitly.
+ */
+export function accessCookie(
+  token: string,
+  secure = secureCookies(),
+  surface: Surface = "student"
+): CookieAttrs {
   return {
-    name: ACCESS_COOKIE,
+    name: cookieNames(surface).access,
     value: token,
     path: ACCESS_COOKIE_PATH,
     httpOnly: true,
@@ -62,10 +89,11 @@ export function accessCookie(token: string, secure = secureCookies()): CookieAtt
 export function refreshCookie(
   token: string,
   expiresAt: Date,
-  secure = secureCookies()
+  secure = secureCookies(),
+  surface: Surface = "student"
 ): CookieAttrs {
   return {
-    name: REFRESH_COOKIE,
+    name: cookieNames(surface).refresh,
     value: token,
     path: REFRESH_COOKIE_PATH,
     httpOnly: true,
@@ -96,10 +124,14 @@ export function cleared(name: string, path: string, secure = secureCookies()): C
   return { name, value: "", path, httpOnly: true, sameSite: "Lax", secure, maxAge: 0 };
 }
 
-export function clearedAuthCookies(secure = secureCookies()): CookieAttrs[] {
+export function clearedAuthCookies(
+  secure = secureCookies(),
+  surface: Surface = "student"
+): CookieAttrs[] {
+  const names = cookieNames(surface);
   return [
-    cleared(ACCESS_COOKIE, ACCESS_COOKIE_PATH, secure),
-    cleared(REFRESH_COOKIE, REFRESH_COOKIE_PATH, secure),
+    cleared(names.access, ACCESS_COOKIE_PATH, secure),
+    cleared(names.refresh, REFRESH_COOKIE_PATH, secure),
   ];
 }
 

@@ -131,7 +131,10 @@ export async function POST(req: Request) {
         emailVerified: result.emailVerified,
         ...(result.table === "operators" ? { roles: result.roles } : {}),
       }),
-      [accessCookie(token), refreshCookie(result.session.token, result.session.expiresAt)]
+      [
+        accessCookie(token, undefined, surface()),
+        refreshCookie(result.session.token, result.session.expiresAt, undefined, surface()),
+      ]
     );
   } catch (err) {
     console.error("[auth] login failed:", err);

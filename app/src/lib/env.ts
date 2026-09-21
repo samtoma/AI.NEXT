@@ -13,6 +13,14 @@
  * how a comparison silently stops meaning anything.
  */
 
+// A DEFAULT import with an explicit attribute, and both halves are load-bearing.
+// `lib/env.ts` is loaded two ways: through Next's bundler, and directly by
+// `app/scripts/bootstrap-operator.mts` under plain `node`. Node's ESM refuses a
+// JSON module without `with { type: "json" }`, and a JSON module in Node has a
+// default export and no named ones — so `import { version } from …` fails in
+// the script even though the bundler accepts it. This form works in both.
+import pkg from "../../package.json" with { type: "json" };
+
 export type Environment = "baseline" | "mvp1";
 
 const VALID: readonly Environment[] = ["baseline", "mvp1"] as const;
@@ -70,6 +78,36 @@ export const SURFACE: Surface = resolveSurface();
 
 /** True on the admin console build. The console's routes exist only here. */
 export const IS_CONSOLE = SURFACE === "admin";
+
+/* ===========================================================================
+ * Which build rendered this (ADR-0015 §3, data-model §12, FR-2304).
+ * ======================================================================== */
+
+/**
+ * The app's release tag, stamped onto every tutor turn as
+ * `ai_interactions.renderer_version` and shown beside every turn in the
+ * console's replay.
+ *
+ * **Why a replay needs it.** ADR-0015 rejected storing a rendered snapshot per
+ * turn and chose to re-render the stored payload with the student's own
+ * components. That is cheap and honest and has one failure mode: the components
+ * change, and the replay shows an operator something the student was never
+ * shown. Comparing the turn's stamp against this constant is what turns that
+ * silent drift into a visible mark — "differs from current renderer" — so a
+ * replay that no longer matches can be recognised rather than believed.
+ *
+ * It comes from `package.json`'s `version` rather than from an environment
+ * variable, because the version is what `docs/VERSIONING.md` already bumps at a
+ * release cut and a variable would be a second place to remember. `PDR1-0` is
+ * the solution prefix (ADR-0010); the two together are the release name the
+ * CHANGELOG uses, so an operator reading `PDR1-0-v0.4.0` on a turn can find
+ * that release's entry without a lookup table.
+ *
+ * Resolved at module load, not per call: it cannot change while a process runs,
+ * and a per-turn `require` of a JSON file on the ledger write path would be
+ * three syscalls to learn a constant.
+ */
+export const RELEASE_TAG: string = `PDR1-0-v${pkg.version}`;
 
 /**
  * Whether the INTERNAL surfaces are reachable: `/pipeline`, `/admin/*`,

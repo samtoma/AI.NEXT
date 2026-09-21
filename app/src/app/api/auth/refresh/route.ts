@@ -16,33 +16,43 @@
  *
  * Every failure clears BOTH cookies. A refresh cookie that does not work is a
  * cookie whose only remaining effect is to make the next request look signed in.
+ *
+ * **F-P2b, FR-2205**: `surface` (this build's — `SURFACE` from `@/lib/env`) is
+ * threaded through both the cookie NAME read/written and `rotateRefreshToken`
+ * itself. A token that belongs to the other surface's principal now fails the
+ * lookup entirely — `rotateRefreshToken` returns `wrong_surface` (logged as
+ * `permission_denied`/`cross_surface_refresh`) rather than `rotated`, and
+ * crucially never touched that session's row. It falls into the same
+ * `!== "rotated"` branch as every other refusal below and gets the same
+ * answer: 401, both of THIS surface's cookies cleared, nothing else.
  */
 
 import { cookies } from "next/headers";
 
 import {
   ACCESS_COOKIE_PATH,
-  REFRESH_COOKIE,
   REFRESH_COOKIE_PATH,
   accessCookie,
   applyCookies,
   cleared,
   clearedAuthCookies,
+  cookieNames,
   refreshCookie,
 } from "@/lib/auth/cookies";
-import { ACCESS_COOKIE } from "@/lib/auth/cookies";
 import { recordAuthEvent, requestMeta } from "@/lib/auth/events";
 import { rotateRefreshToken, withAuthTx } from "@/lib/auth/session";
 import { signAccessToken } from "@/lib/auth/tokens";
-import { ENVIRONMENT } from "@/lib/env";
+import { ENVIRONMENT, SURFACE } from "@/lib/env";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const { access: ACCESS_COOKIE, refresh: REFRESH_COOKIE } = cookieNames(SURFACE);
+
 function refused(): Response {
   return applyCookies(
     Response.json({ error: "invalid_credentials" }, { status: 401 }),
-    clearedAuthCookies()
+    clearedAuthCookies(undefined, SURFACE)
   );
 }
 
@@ -54,7 +64,14 @@ export async function POST(req: Request) {
 
   try {
     const result = await withAuthTx((db) =>
-      rotateRefreshToken(db, presented, { ...meta, environment: ENVIRONMENT }, recordAuthEvent)
+      rotateRefreshToken(
+        db,
+        presented,
+        { ...meta, environment: ENVIRONMENT },
+        recordAuthEvent,
+        undefined,
+        SURFACE
+      )
     );
     if (result.kind !== "rotated") return refused();
 
@@ -79,8 +96,8 @@ export async function POST(req: Request) {
     });
 
     return applyCookies(Response.json({ ok: true }), [
-      accessCookie(token),
-      refreshCookie(result.token, result.expiresAt),
+      accessCookie(token, undefined, SURFACE),
+      refreshCookie(result.token, result.expiresAt, undefined, SURFACE),
     ]);
   } catch (err) {
     console.error("[auth] refresh failed:", err);

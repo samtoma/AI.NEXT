@@ -1,7 +1,7 @@
 import { spawn } from "node:child_process";
 import { withPrincipal } from "@/lib/db";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
-import { ENVIRONMENT } from "@/lib/env";
+import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
 import { buildLessonContext } from "@/lib/lesson";
 import { getAllSacredPassages } from "@/lib/lesson-content";
@@ -465,8 +465,8 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                   assistant_message, grounding, citations, model,
                   input_tokens, output_tokens, cache_read_tokens,
                   cache_creation_tokens, cost_usd, latency_ms,
-                  environment, surface_kind, session_id)
-               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9,$10,'chat',$11)`,
+                  environment, surface_kind, session_id, renderer_version)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9,$10,'chat',$11,$12)`,
               [
                 studentId,
                 surface,
@@ -479,6 +479,11 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                 Date.now() - started,
                 ENVIRONMENT,
                 sessionId,
+                // Stamped on the REDACTED branch too (ADR-0015 §3): the
+                // suppressed turn is the one an operator is most likely to open
+                // in replay, and "which build decided to suppress this" is the
+                // first question they will have.
+                RELEASE_TAG,
               ]
               )
             );
@@ -519,8 +524,8 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                (student_id, surface, turn_index, user_message, assistant_message,
                 grounding, citations, model, input_tokens, output_tokens,
                 cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
-                environment, surface_kind, session_id)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'chat',$16)
+                environment, surface_kind, session_id, renderer_version)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'chat',$16,$17)
              RETURNING id`,
             [
               studentId,
@@ -539,6 +544,10 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
               latencyMs,
               ENVIRONMENT,
               sessionId,
+              // Which build rendered this turn for the student (ADR-0015 §3).
+              // The console's replay compares it against the running release
+              // and marks a turn the current renderer would draw differently.
+              RELEASE_TAG,
             ]
             )
           );

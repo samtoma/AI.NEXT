@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { withPrincipal } from "@/lib/db";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { mapRlsError } from "@/lib/rls-errors";
-import { ENVIRONMENT } from "@/lib/env";
+import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import {
   getLessonData,
   lessonAnchorLo,
@@ -353,8 +353,9 @@ ${transcriptText}`;
           `INSERT INTO ai_interactions
              (student_id, surface, turn_index, user_message, assistant_message,
               grounding, citations, model, input_tokens, output_tokens,
-              cost_usd, latency_ms, environment, surface_kind, session_id)
-           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding',$14)`,
+              cost_usd, latency_ms, environment, surface_kind, session_id,
+              renderer_version)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding',$14,$15)`,
           [
             studentId,
             "understanding_check",
@@ -376,6 +377,10 @@ ${transcriptText}`;
             totalMs,
             ENVIRONMENT,
             sessionId,
+            // The build that produced this check's report card (ADR-0015 §3) —
+            // the console replays the verdict through the student's own
+            // ReportCard, so it has to know which one drew it.
+            RELEASE_TAG,
           ]
         );
         await client.query("RELEASE SAVEPOINT cost_row");

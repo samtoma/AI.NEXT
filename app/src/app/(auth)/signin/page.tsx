@@ -25,11 +25,17 @@ export const metadata = { title: IS_CONSOLE ? "Console sign-in — Noor" : "Sign
  * Google availability is read here, from the server's own configuration, and
  * crosses to the client as a boolean. The client id stays on this side.
  *
- * **The copy is surface-aware and nothing else is** (ADR-0014). The same form
- * posts to the same `/api/auth/login`, which authenticates against `operators`
- * rather than `accounts` when `AINEXT_SURFACE=admin` and refuses a student
- * credential there with `permission_denied` (FR-2205). One endpoint, one code
- * path, two tables — the page only says which door this is.
+ * **The copy is surface-aware, and now so is the default destination**
+ * (ADR-0014; F-P2b). The same form posts to the same `/api/auth/login`, which
+ * authenticates against `operators` rather than `accounts` when
+ * `AINEXT_SURFACE=admin` and refuses a student credential there with
+ * `permission_denied` (FR-2205). One endpoint, one code path, two tables —
+ * but `?next=` is absent far more often than it is present (nobody's sign-in
+ * link normally carries one), and `safeNext`'s own fallback used to be
+ * `/student` unconditionally. On the console that fallback is a page this
+ * build 404s on: an operator whose silent refresh succeeds with no `?next=`
+ * was landing on a dead end instead of the student list. The fallback is
+ * surface-aware for exactly the same reason the copy already is.
  */
 export default async function SigninPage({
   searchParams,
@@ -37,7 +43,10 @@ export default async function SigninPage({
   searchParams: Promise<{ next?: string | string[] }>;
 }) {
   const sp = await searchParams;
-  const next = safeNext(Array.isArray(sp.next) ? sp.next[0] : sp.next);
+  const next = safeNext(
+    Array.isArray(sp.next) ? sp.next[0] : sp.next,
+    IS_CONSOLE ? "/" : "/student"
+  );
 
   const me = await currentPrincipal();
   if (me.kind === "student") redirect(next);

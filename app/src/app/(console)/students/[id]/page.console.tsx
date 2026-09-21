@@ -1,41 +1,58 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { AuditPanel } from "@/components/console/AuditPanel";
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
+import { Sparkline } from "@/components/console/Sparkline";
+import {
+  Chip,
+  Cost,
+  Empty,
+  Figure,
+  Panel,
+  Td,
+  Th,
+  share,
+  stamp,
+} from "@/components/console/ui";
 import { recordOperatorRead } from "@/lib/auth/events";
 import { consoleAccess } from "@/lib/console-auth";
-import { getStudentProfileCard } from "@/lib/console-queries";
+import { getStudent360 } from "@/lib/console-queries";
 import { consoleRoute } from "@/lib/console-routes";
 import { ENVIRONMENT } from "@/lib/env";
+import { humanDuration } from "@/lib/timeline-rules";
 
 /**
- * Student 360 — **P3 builds this page**. What is here in P2 is the profile
- * header, an honest label saying so, and the thing that must not wait: the
- * audit row.
+ * Student 360 (contracts/admin.md §2, FR-2211, FR-2306, FR-2508).
  *
- * **Opening this page writes an `operator_reads` row** (`surface='student_360'`)
- * and emits `admin_transcript_viewed`, in the same transaction as the read it
- * records (FR-2306, contracts/admin.md §2). That is the whole reason this page
- * exists in P2 at all rather than being a link to nothing: the audit has to
- * exist from the first day a student's record can be opened, not from the day
- * the page becomes worth opening. An audit that starts late has a gap nobody
- * can reconstruct, and the gap is exactly the period when the tooling was new
- * and being poked at.
+ * Everything known about one student on one page, and **one audit row**
+ * recording that somebody read it (`surface='student_360'`, written by
+ * `recordOperatorRead`, which also emits `admin_transcript_viewed`). The row
+ * goes in the same transaction as the eleven reads behind the page — see
+ * `getStudent360` — so a commit that served a child's record without recording
+ * who saw it is not a thing this page can do.
  *
- * `ainext_operator` holds SELECT and INSERT on `operator_reads` and no UPDATE
- * or DELETE (migration 017), so this row cannot be edited or removed by the
- * role that writes it.
+ * **Time on task is two numbers and they are never added.** Summed
+ * `attempts.time_ms` is time inside questions; session wall clock is how long
+ * the sittings lasted. Their difference is reading, thinking, being called for
+ * dinner. A single blended "time on task" would be neither figure, and it is
+ * the number a founder would quote to a parent.
  *
- * **No placeholder that looks done.** Mastery, sessions, the timeline, the
- * replay, the cost series and the subscription control are named as absent and
- * attributed to their phase rather than stubbed — a disabled control reads as
- * "broken", and an empty panel reads as "no data".
+ * **Safety flags carry type and time, and nothing else** (FR-2508). The table
+ * deliberately holds nothing else, and the console must not become somewhere a
+ * flag is triaged — the immediate human channel stays the path that matters,
+ * and a queue somebody checks on Monday would quietly replace it.
+ *
+ * P4 owns the per-student cost SERIES and the subscription control. The
+ * subscription status is readable here because it is a fact about the student;
+ * changing it is `cost-billing`'s and is not offered on this page.
  */
 export const dynamic = "force-dynamic";
 
 export const metadata = { title: "Student — Noor Console" };
 
 const PATH = "/students/[id]";
+const ALL_TIME = "all time, since the record was created";
 
 export default async function ConsoleStudentPage({
   params,
@@ -50,7 +67,7 @@ export default async function ConsoleStudentPage({
   const studentId = Number((await params).id);
   if (!Number.isInteger(studentId) || studentId <= 0) notFound();
 
-  const student = await getStudentProfileCard(access.operatorId, studentId, (db) =>
+  const data = await getStudent360(access.operatorId, studentId, (db) =>
     recordOperatorRead(db, {
       operatorId: access.operatorId,
       studentId,
@@ -62,61 +79,466 @@ export default async function ConsoleStudentPage({
   // A student who is not in this environment is not here. No audit row is
   // written for a record that was not read — the callback runs only after a row
   // comes back.
-  if (!student) notFound();
+  if (!data) notFound();
+
+  const s = data.profile;
+  const t = data.timeOnTask;
+  const attemptsTotal = data.accuracy.reduce((n, a) => n + a.attempts, 0);
+  const correctTotal = data.accuracy.reduce((n, a) => n + a.correct, 0);
 
   return (
-    <main className="mx-auto w-full max-w-[1000px] px-5 py-7">
+    <main className="mx-auto w-full max-w-[1100px] px-5 py-7">
       <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
         <Link href="/" className="underline-offset-2 hover:underline">
           Students
         </Link>{" "}
-        / #{student.id}
+        / #{s.id}
       </p>
-      <h1 className="mt-1 font-display text-[24px] font-bold text-ink">{student.displayName}</h1>
+      <h1 className="mt-1 font-display text-[24px] font-bold text-ink">
+        {s.displayName}{" "}
+        <span className="font-mono text-[14px] font-normal text-ink-faint">#{s.id}</span>
+      </h1>
       <p className="mt-1 text-[13px] text-ink-soft">
-        Student <span className="font-mono">#{student.id}</span> · {ENVIRONMENT} environment
+        Year group {s.grade} · {data.environment} environment · every figure below covers{" "}
+        <strong>{ALL_TIME}</strong> unless it says otherwise.
       </p>
 
-      <section className="mt-5 rounded-lg border border-line bg-card">
-        <h2 className="border-b border-line px-4 py-2.5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
-          Profile
-        </h2>
-        <dl className="grid gap-x-8 gap-y-3 px-4 py-4 text-[13px] sm:grid-cols-2 lg:grid-cols-3">
-          <Fact k="Year group" v={student.grade} />
-          <Fact k="Gender" v={student.gender ?? "not set"} />
-          <Fact k="Interests" v={student.interests.length ? student.interests.join(", ") : "none recorded"} />
-          <Fact k="Language preference" v={student.languagePref} />
-          <Fact k="Curriculum" v={student.curriculumSystem} />
+      {/* ------------------------------------------------------------ profile */}
+      <Panel title="Profile">
+        <dl className="grid gap-x-8 gap-y-3 text-[13px] sm:grid-cols-2 lg:grid-cols-3">
+          <Fact k="Year group" v={s.grade} />
+          <Fact k="Gender" v={s.gender ?? "not set"} />
+          <Fact k="Interests" v={s.interests.length ? s.interests.join(", ") : "none recorded"} />
+          <Fact k="Language preference" v={s.languagePref} />
+          <Fact k="Curriculum" v={s.curriculumSystem} />
           <Fact
             k="Record status"
-            v={student.studentStatus === "legacy" ? "retired (picker-era, no account)" : "active"}
+            v={s.studentStatus === "legacy" ? "retired (picker-era, no account)" : "active"}
           />
-          <Fact k="Account" v={student.accountStatus ?? "no account"} />
+          <Fact k="Account" v={s.accountStatus ?? "no account"} />
           <Fact
             k="Email confirmed"
-            v={student.accountStatus === null ? "—" : student.emailVerified ? "yes" : "not yet"}
+            v={s.accountStatus === null ? "—" : s.emailVerified ? "yes" : "not yet"}
           />
-          <Fact k="Subscription" v={student.subscriptionStatus} />
-          <Fact k="Record created" v={stamp(student.createdAt)} />
-          <Fact k="Last seen" v={student.lastSeenAt ? stamp(student.lastSeenAt) : "never"} />
+          <Fact k="Subscription" v={`${s.subscriptionStatus} (read-only here)`} />
+          <Fact k="Record created" v={stamp(s.createdAt)} />
+          <Fact k="Last seen" v={s.lastSeenAt ? stamp(s.lastSeenAt) : "never"} />
         </dl>
-      </section>
-
-      <section className="mt-5 rounded-lg border border-dashed border-line px-4 py-4">
-        <h2 className="font-display text-[16px] font-bold text-ink">Student 360 — coming in P3</h2>
-        <p className="mt-1.5 max-w-[72ch] text-[13px] leading-relaxed text-ink-soft">
-          Mastery by objective with its trajectory, attempts and accuracy, time on task as two
-          separate numbers, the session list, the interaction timeline and the reconstructed
-          replay, help-seeking, misconception frequency, sign-in history and safety flags all land
-          in the next phase. They are named here rather than stubbed: an empty panel reads as
-          &ldquo;no data&rdquo;, which is a different and wrong claim.
+        <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
+          Subscription status is shown because it is a fact about this student; changing it belongs
+          to the cost and billing surface and lands in the next phase. It gates nothing either way.
         </p>
-        <p className="mt-2 max-w-[72ch] text-[13px] leading-relaxed text-ink-soft">
-          The per-student cost series and the subscription control follow in P4.
-        </p>
-      </section>
+      </Panel>
 
-      <p className="mt-4 max-w-[72ch] text-[12.5px] leading-relaxed text-ink-faint">
+      {/* ------------------------------------------------------- time on task */}
+      <Panel
+        title="Time on task — two numbers"
+        note={
+          <>
+            These are <strong>never added together and never averaged into one figure</strong>. The
+            first is time spent inside questions; the second is how long the sittings lasted. The
+            difference between them is reading, thinking, and walking away from the screen.
+          </>
+        }
+      >
+        <div className="grid gap-6 sm:grid-cols-2">
+          <Figure
+            label="Inside questions"
+            value={humanDuration(t.attemptMs) ?? "0 s"}
+            unit="summed from each answer"
+            period={ALL_TIME}
+            hint={`${t.attemptsWithTime} of ${t.attemptsTotal} attempts recorded a duration; the rest contribute nothing rather than zero.`}
+          />
+          <Figure
+            label="Sittings, wall clock"
+            value={humanDuration(t.sessionWallClockMs) ?? "0 s"}
+            unit="opened to closed"
+            period={`${t.closedSessions} closed session${t.closedSessions === 1 ? "" : "s"}, ${ALL_TIME}`}
+            hint={
+              t.openSessions > 0
+                ? `${t.openSessions} session${t.openSessions === 1 ? " is" : "s are"} still open and contribute${t.openSessions === 1 ? "s" : ""} nothing to this total — a running sitting has no length yet.`
+                : "No session is currently open."
+            }
+          />
+        </div>
+      </Panel>
+
+      {/* ---------------------------------------------------------- sessions */}
+      <Panel
+        title="Sessions"
+        right={
+          <Link
+            href={`/students/${s.id}/sessions`}
+            className="text-[12.5px] text-accent underline-offset-2 hover:underline"
+          >
+            Open the session list →
+          </Link>
+        }
+      >
+        <Figure
+          label="Study sittings"
+          value={data.sessionCount}
+          unit={`sessions (${t.closedSessions} closed, ${t.openSessions} open)`}
+          period={ALL_TIME}
+          hint="The list is metadata only — when, how long, what kind, what it touched. Opening it is not a transcript read and is not recorded."
+        />
+      </Panel>
+
+      {/* ----------------------------------------------------------- mastery */}
+      <Panel
+        title="Mastery by objective"
+        note={
+          <>
+            Probability of mastery from 0 to 1, as the BKT model currently estimates it. Each
+            trajectory is every estimate the objective has ever had, plotted on a fixed 0–1 axis —
+            not auto-scaled, so two students&apos; lines mean the same thing. Most-revised
+            objectives first.
+          </>
+        }
+      >
+        {data.mastery.length === 0 ? (
+          <Empty>
+            No mastery estimate exists yet. That is an untouched model, not a score of zero.
+          </Empty>
+        ) : (
+          <div className="overflow-x-auto rounded border border-line">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th>Objective</Th>
+                  <Th>Trajectory, 0–1</Th>
+                  <Th right>First estimate</Th>
+                  <Th right>Current estimate</Th>
+                  <Th right>Revisions</Th>
+                  <Th right>Last moved</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.mastery.map((m) => (
+                  <tr key={m.loId} className="border-b border-line-soft last:border-0">
+                    <Td>
+                      {m.loLabel ?? "unlabelled objective"}{" "}
+                      <span className="font-mono text-[11px] text-ink-faint">{m.loId}</span>
+                    </Td>
+                    <Td>
+                      <Sparkline
+                        points={m.points}
+                        label={`${m.points.length} estimates, from ${m.first.toFixed(2)} to ${m.current.toFixed(2)}`}
+                      />
+                    </Td>
+                    <Td right mono>
+                      {m.first.toFixed(2)}
+                    </Td>
+                    <Td right mono>
+                      {m.current.toFixed(2)}
+                    </Td>
+                    <Td right mono>
+                      {m.points.length}
+                    </Td>
+                    <Td right mono>
+                      {stamp(m.lastMovedAt)}
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Panel>
+
+      {/* --------------------------------------------------------- accuracy */}
+      <Panel
+        title="Attempts and accuracy, per objective"
+        note={
+          <>
+            {attemptsTotal} attempt{attemptsTotal === 1 ? "" : "s"} in total,{" "}
+            {share(correctTotal, attemptsTotal)} correct, {ALL_TIME}. A widget answer counts as an
+            attempt: a construction is a question.
+          </>
+        }
+      >
+        {data.accuracy.length === 0 ? (
+          <Empty>No attempts recorded. Nothing has been answered yet.</Empty>
+        ) : (
+          <div className="overflow-x-auto rounded border border-line">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th>Objective</Th>
+                  <Th right>Attempts</Th>
+                  <Th right>Answered correctly</Th>
+                  <Th right>By construction</Th>
+                  <Th right>Time inside questions</Th>
+                  <Th right>Last attempt</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.accuracy.map((a, i) => (
+                  <tr key={a.loId ?? `none-${i}`} className="border-b border-line-soft last:border-0">
+                    <Td>
+                      {a.loId == null ? (
+                        <em className="text-ink-soft">
+                          question no longer in the bank — the attempt survives it
+                        </em>
+                      ) : (
+                        <>
+                          {a.loLabel ?? "unlabelled objective"}{" "}
+                          <span className="font-mono text-[11px] text-ink-faint">{a.loId}</span>
+                        </>
+                      )}
+                    </Td>
+                    <Td right mono>
+                      {a.attempts}
+                    </Td>
+                    <Td right mono>
+                      {share(a.correct, a.attempts)}
+                    </Td>
+                    <Td right mono>
+                      {a.widgetAttempts}
+                    </Td>
+                    <Td right mono>
+                      {humanDuration(a.timeMs) ?? "not recorded"}
+                    </Td>
+                    <Td right mono>
+                      {a.lastAttemptAt ? stamp(a.lastAttemptAt) : "—"}
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Panel>
+
+      {/* ----------------------------------------------------- help-seeking */}
+      <Panel
+        title="Help-seeking"
+        note="Tutor turns grouped by the objective the sitting was about, plus photos sent in for help."
+      >
+        <div className="grid gap-6 lg:grid-cols-[1fr_260px]">
+          {data.helpSeeking.byObjective.length === 0 ? (
+            <Empty>No tutor turns recorded against a session yet.</Empty>
+          ) : (
+            <ul className="space-y-1.5 text-[13px]">
+              {data.helpSeeking.byObjective.map((h, i) => (
+                <li key={h.loId ?? `none-${i}`} className="flex justify-between gap-4">
+                  <span>
+                    {h.loId == null ? (
+                      <em className="text-ink-soft">sittings with no objective (open chat)</em>
+                    ) : (
+                      <>
+                        {h.loLabel ?? "unlabelled objective"}{" "}
+                        <span className="font-mono text-[11px] text-ink-faint">{h.loId}</span>
+                      </>
+                    )}
+                  </span>
+                  <span className="font-mono text-[12px] text-ink-soft">
+                    {h.turns} turn{h.turns === 1 ? "" : "s"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="space-y-4">
+            <Figure
+              label="Photos sent"
+              value={data.helpSeeking.uploads}
+              unit={`uploads (${data.helpSeeking.uploadsParsed} readable)`}
+              period={ALL_TIME}
+            />
+            {data.helpSeeking.turnsWithNoSession > 0 && (
+              <Figure
+                label="Turns belonging to no session"
+                value={data.helpSeeking.turnsWithNoSession}
+                unit="tutor turns"
+                period={ALL_TIME}
+                hint="Recorded as belonging to no session rather than attached to the nearest one — a guess by timestamp would be a fabricated correlation."
+              />
+            )}
+          </div>
+        </div>
+      </Panel>
+
+      {/* -------------------------------------------------- misconceptions */}
+      <Panel
+        title="Misconceptions, by how often they were diagnosed"
+        note="Read from the attempts the tutor diagnosed, most frequent first."
+      >
+        {data.misconceptions.length === 0 ? (
+          <Empty>No misconception has been diagnosed for this student.</Empty>
+        ) : (
+          <ul className="space-y-1.5 text-[13px]">
+            {data.misconceptions.map((m) => (
+              <li key={m.id} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <span>
+                  {m.label ?? "unlabelled misconception"}{" "}
+                  <span className="font-mono text-[11px] text-ink-faint">{m.id}</span>
+                </span>
+                <span className="font-mono text-[12px] text-ink-soft">
+                  {m.count} time{m.count === 1 ? "" : "s"} · last {stamp(m.lastSeenAt)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Panel>
+
+      {/* ------------------------------------------------ understanding */}
+      <Panel
+        title="Understanding checks"
+        note="The tutor's own rating of a session, scored 0–100, most recent first."
+      >
+        {data.checks.length === 0 ? (
+          <Empty>No understanding check has been run for this student.</Empty>
+        ) : (
+          <div className="overflow-x-auto rounded border border-line">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th>When</Th>
+                  <Th>Objective</Th>
+                  <Th>Kind of session</Th>
+                  <Th right>Score, 0–100</Th>
+                  <Th>Verdict</Th>
+                  <Th>Session</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.checks.map((c) => (
+                  <tr key={c.id} className="border-b border-line-soft last:border-0">
+                    <Td mono>{stamp(c.createdAt)}</Td>
+                    <Td>
+                      {c.loLabel ?? "unlabelled objective"}{" "}
+                      <span className="font-mono text-[11px] text-ink-faint">{c.loId}</span>
+                    </Td>
+                    <Td>{c.mode}</Td>
+                    <Td right mono>
+                      {c.score}
+                    </Td>
+                    <Td>
+                      <Chip tone={c.verdict === "got_it" ? "good" : "attention"}>
+                        {c.verdict.replace(/_/g, " ")}
+                      </Chip>
+                    </Td>
+                    <Td>
+                      {c.sessionId == null ? (
+                        <span className="text-ink-faint">no session</span>
+                      ) : (
+                        <Link
+                          href={`/students/${s.id}/sessions/${c.sessionId}`}
+                          className="font-mono text-[12px] text-accent underline-offset-2 hover:underline"
+                        >
+                          #{c.sessionId}
+                        </Link>
+                      )}
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Panel>
+
+      {/* ---------------------------------------------------------- cost */}
+      <Panel title="Cost to date">
+        <div className="grid gap-6 sm:grid-cols-2">
+          <Cost usd={data.cost.usd} period={ALL_TIME} />
+          <Figure
+            label="Tutor turns"
+            value={data.cost.turns}
+            unit="recorded turns"
+            period={
+              data.cost.firstTurnAt && data.cost.lastTurnAt
+                ? `${stamp(data.cost.firstTurnAt)} to ${stamp(data.cost.lastTurnAt)}`
+                : ALL_TIME
+            }
+          />
+        </div>
+        <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
+          The cost over time, by surface and reconciled against the period total, is the cost and
+          billing surface&apos;s and lands in the next phase. What is here is the running total for
+          this student.
+        </p>
+      </Panel>
+
+      {/* -------------------------------------------------- safety flags */}
+      <Panel
+        title="Safety flags"
+        note="Type and time. Nothing else is stored and nothing else is shown."
+      >
+        {data.safetyFlags.length === 0 ? (
+          <Empty>No safety flag has been raised for this student.</Empty>
+        ) : (
+          <ul className="space-y-1.5 text-[13px]">
+            {data.safetyFlags.map((f, i) => (
+              <li key={i} className="flex flex-wrap items-baseline gap-x-3">
+                <Chip tone="attention">{f.flagType}</Chip>
+                <span className="font-mono text-[12px] text-ink-soft">{stamp(f.occurredAt)}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
+          A flag reaches a human channel immediately, on a path separate from this console. This
+          list is a record that it happened, not a queue: there is deliberately nothing here to
+          acknowledge, assign or close, because a queue somebody checks on Monday would quietly
+          replace the channel that matters.
+        </p>
+      </Panel>
+
+      {/* ----------------------------------------------------- sign-ins */}
+      <Panel
+        title="Sign-in history"
+        note={`The most recent ${data.signIns.length} security events for this student's account.`}
+      >
+        {data.signIns.length === 0 ? (
+          <Empty>
+            {s.accountStatus === null
+              ? "This record has no account, so there is nothing to sign in to and nothing to show."
+              : "No sign-in has been recorded for this account."}
+          </Empty>
+        ) : (
+          <div className="overflow-x-auto rounded border border-line">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th>What happened</Th>
+                  <Th>How it ended</Th>
+                  <Th>From</Th>
+                  <Th right>When</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.signIns.map((e, i) => (
+                  <tr key={i} className="border-b border-line-soft last:border-0">
+                    <Td>{e.event.replace(/_/g, " ")}</Td>
+                    <Td>
+                      <Chip tone={e.outcome === "success" ? "good" : "attention"}>
+                        {e.outcome ?? "not recorded"}
+                      </Chip>
+                    </Td>
+                    <Td mono>{e.ip ?? "address not recorded"}</Td>
+                    <Td right mono>
+                      {stamp(e.occurredAt)}
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Panel>
+
+      {/* -------------------------------------------------------- audit */}
+      <Panel
+        title="Who has opened this student's record"
+        note="Operators see their own reads here too. An audit nobody can see is an audit nobody checks."
+      >
+        <AuditPanel rows={data.audit} limit={25} />
+      </Panel>
+
+      <p className="mt-4 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
         Opening this page was recorded against your account in{" "}
         <code className="font-mono text-[12px]">operator_reads</code>, with the time and this
         student. The record cannot be edited or deleted from the console, including by you.
@@ -132,8 +554,4 @@ function Fact({ k, v }: { k: string; v: string }) {
       <dd className="mt-0.5 text-ink">{v}</dd>
     </div>
   );
-}
-
-function stamp(iso: string): string {
-  return new Date(iso).toISOString().slice(0, 16).replace("T", " ") + " UTC";
 }

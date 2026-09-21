@@ -25,9 +25,9 @@ import {
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
-import { TeX } from "@/components/TeX";
-import { CitationChip, type CiteInfo } from "./CitationChip";
+import type { CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
+import { StudentBubble, TutorBubble, renderChatBlocks } from "./message-blocks";
 
 /**
  * Imperative bridge for surfaces that host intercepted cards OUTSIDE the
@@ -901,17 +901,7 @@ const MessageRow = memo(function MessageRow({
   };
 
   if (m.role === "user") {
-    return (
-      <div className="anim-pop flex justify-end">
-        <div
-          dir="auto"
-          className="max-w-[85%] rounded-xl rounded-ee-sm bg-ink px-3.5 py-2 text-[13px] leading-relaxed text-paper shadow-sm noor-bubble-student"
-          style={{ textAlign: "start" }}
-        >
-          {m.text}
-        </div>
-      </div>
-    );
+    return <StudentBubble>{m.text}</StudentBubble>;
   }
 
   if (m.role === "note") {
@@ -947,120 +937,84 @@ const MessageRow = memo(function MessageRow({
   const blocks = parseMessage(visibleText, !!m.streaming);
 
   return (
-    <div className="anim-pop flex justify-start" style={dimStyle}>
-      <div
-        dir="auto"
-        className={`max-w-[94%] rounded-xl rounded-es-sm border px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-sm font-read ${
-          m.error
-            ? "border-rust/40 bg-rust-wash/50"
-            : "border-line-soft bg-card-warm noor-bubble-tutor"
-        }`}
-        style={{ textAlign: "start" }}
-      >
+    <TutorBubble error={!!m.error} style={dimStyle}>
         {m.streaming && visibleText.length === 0 && (
           <Thinking writing={writing} arabicUi={arabicUi} />
         )}
 
-        {blocks.map((b, i) => {
-          if (b.t === "highlight") return null; // side-effect only
-          if (b.t === "finish") return null; // handled by the surface
-          if (b.t === "beat") return null; // pacing marker — renders as time
-          if (b.t === "check_in") {
-            return (
+        {/* The blocks are rendered by components/chat/message-blocks.tsx —
+            the SAME function the console's replay calls, so a reconstruction
+            cannot drift from what the student saw (ADR-0015 §3). The five
+            interactive block types stay here as slots, because they are the
+            student surface's to own and a read-only replay must not be able to
+            import them. */}
+        {renderChatBlocks(blocks, {
+          debug,
+          arabicUi,
+          resolveCite,
+          onCiteClick,
+          slots: {
+            checkIn: (i) => (
               <CheckInCard
                 key={i}
                 onPick={onCheckIn}
                 disabled={!!m.streaming}
                 arabicUi={arabicUi}
               />
-            );
-          }
-          if (b.t === "widget") {
-            // whiteboard interception: the surface owns the card on its
-            // board — the transcript keeps a small re-pin chip in place
-            if (
-              (b.name === "viz" || b.name === "viz_ref") &&
-              interceptWidget?.(b.name, b.props)
-            ) {
-              const name = b.name;
-              const props = b.props;
-              return (
-                <BoardChip
+            ),
+            widget: (b, i) => {
+              // whiteboard interception: the surface owns the card on its
+              // board — the transcript keeps a small re-pin chip in place
+              if (
+                (b.name === "viz" || b.name === "viz_ref") &&
+                interceptWidget?.(b.name, b.props)
+              ) {
+                const name = b.name;
+                const props = b.props;
+                return (
+                  <BoardChip
+                    key={i}
+                    flavor="figure"
+                    onOpen={onDirective ? () => onDirective(name, props) : undefined}
+                  />
+                );
+              }
+              const card =
+                onWidgetNote && renderWidget
+                  ? renderWidget(b.name, b.props, onWidgetNote)
+                  : null;
+              return card ? <div key={i}>{card}</div> : null;
+            },
+            question: (b, i) => {
+              if (interceptWidget?.("question", { qid: b.qid })) {
+                const qid = b.qid;
+                return (
+                  <BoardChip
+                    key={i}
+                    flavor="question"
+                    onOpen={
+                      onDirective ? () => onDirective("question", { qid }) : undefined
+                    }
+                  />
+                );
+              }
+              const q = lookupQuestion?.(b.qid);
+              return q ? (
+                <ChatQuestionCard
                   key={i}
-                  flavor="figure"
-                  onOpen={onDirective ? () => onDirective(name, props) : undefined}
+                  question={q}
+                  debug={debug}
+                  lang={arabicUi ? "ar" : "en"}
+                  onResult={onAttempt}
+                  onOpenQuestion={onOpenQuestion}
                 />
+              ) : (
+                <p key={i} className="my-1 font-mono text-[10px] text-ink-faint">
+                  → {b.qid}
+                </p>
               );
-            }
-            const card =
-              onWidgetNote && renderWidget
-                ? renderWidget(b.name, b.props, onWidgetNote)
-                : null;
-            return card ? <div key={i}>{card}</div> : null;
-          }
-          if (b.t === "question") {
-            if (interceptWidget?.("question", { qid: b.qid })) {
-              const qid = b.qid;
-              return (
-                <BoardChip
-                  key={i}
-                  flavor="question"
-                  onOpen={
-                    onDirective
-                      ? () => onDirective("question", { qid })
-                      : undefined
-                  }
-                />
-              );
-            }
-            const q = lookupQuestion?.(b.qid);
-            return q ? (
-              <ChatQuestionCard
-                key={i}
-                question={q}
-                debug={debug}
-                lang={arabicUi ? "ar" : "en"}
-                onResult={onAttempt}
-                onOpenQuestion={onOpenQuestion}
-              />
-            ) : (
-              <p key={i} className="my-1 font-mono text-[10px] text-ink-faint">
-                → {b.qid}
-              </p>
-            );
-          }
-          if (b.t === "list") {
-            return (
-              <ul key={i} className="my-1.5 space-y-1 ps-1">
-                {b.items.map((item, k) => (
-                  <li key={k} className="flex gap-1.5" dir="auto">
-                    <span className="mt-[1px] shrink-0 text-accent">·</span>
-                    <span
-                      className="tex-block min-w-0"
-                      style={{ textAlign: "start" }}
-                    >
-                      {item.map((seg, s) =>
-                        seg.t === "text" ? (
-                          <TeX key={s} text={seg.v} />
-                        ) : (
-                          <CitationChip
-                            key={s}
-                            cite={seg}
-                            friendly={!debug}
-                            arabic={arabicUi}
-                            resolve={resolveCite}
-                            onActivate={onCiteClick}
-                          />
-                        )
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            );
-          }
-          if (b.t === "switch_subject") {
-            return (
+            },
+            switchSubject: (b, i) => (
               <SubjectHandoffCard
                 key={i}
                 subject={b.subject}
@@ -1068,57 +1022,34 @@ const MessageRow = memo(function MessageRow({
                   onSwitchSubject ? () => onSwitchSubject(b.subject) : undefined
                 }
               />
-            );
-          }
-          if (b.t === "passage_ref") {
-            // sealed text: resolved by the SURFACE from verified data — if it
-            // is board-intercepted the transcript keeps a re-pin chip, exactly
-            // like figures. The id is all the model ever emitted.
-            if (interceptWidget?.("passage", { id: b.id })) {
-              const id = b.id;
-              return (
-                <BoardChip
-                  key={i}
-                  flavor="figure"
-                  onOpen={
-                    onDirective ? () => onDirective("passage", { id }) : undefined
-                  }
-                />
-              );
-            }
-            return renderPassage ? (
-              <div key={i}>
-                {renderPassage(b.id, {
-                  quote: b.quote,
-                  unit: b.unit,
-                  view: b.view,
-                })}
-              </div>
-            ) : null;
-          }
-          return (
-            <p
-              key={i}
-              dir="auto"
-              className="tex-block my-1.5 first:mt-0 last:mb-0"
-              style={{ textAlign: "start" }}
-            >
-              {b.inlines.map((seg, s) =>
-                seg.t === "text" ? (
-                  <TeX key={s} text={seg.v} />
-                ) : (
-                  <CitationChip
-                    key={s}
-                    cite={seg}
-                    friendly={!debug}
-                    arabic={arabicUi}
-                    resolve={resolveCite}
-                    onActivate={onCiteClick}
+            ),
+            passageRef: (b, i) => {
+              // sealed text: resolved by the SURFACE from verified data — if it
+              // is board-intercepted the transcript keeps a re-pin chip, exactly
+              // like figures. The id is all the model ever emitted.
+              if (interceptWidget?.("passage", { id: b.id })) {
+                const id = b.id;
+                return (
+                  <BoardChip
+                    key={i}
+                    flavor="figure"
+                    onOpen={
+                      onDirective ? () => onDirective("passage", { id }) : undefined
+                    }
                   />
-                )
-              )}
-            </p>
-          );
+                );
+              }
+              return renderPassage ? (
+                <div key={i}>
+                  {renderPassage(b.id, {
+                    quote: b.quote,
+                    unit: b.unit,
+                    view: b.view,
+                  })}
+                </div>
+              ) : null;
+            },
+          },
         })}
 
         {m.streaming && visibleText.length > 0 && (
@@ -1138,8 +1069,7 @@ const MessageRow = memo(function MessageRow({
               ` · logged #${m.meta.interactionId}`}
           </p>
         )}
-      </div>
-    </div>
+    </TutorBubble>
   );
 });
 
