@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { AuditPanel } from "@/components/console/AuditPanel";
+import { CourseAccessEditor } from "@/components/console/CourseAccessEditor";
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { Sparkline } from "@/components/console/Sparkline";
 import { SubscriptionEditor } from "@/components/console/SubscriptionEditor";
@@ -17,6 +18,7 @@ import {
   stamp,
 } from "@/components/console/ui";
 import { recordOperatorRead } from "@/lib/auth/events";
+import { studentAccess } from "@/lib/catalog-queries";
 import { consoleAccess } from "@/lib/console-auth";
 import { getStudent360 } from "@/lib/console-queries";
 import { consoleRoute } from "@/lib/console-routes";
@@ -89,6 +91,14 @@ export default async function ConsoleStudentPage({
   // comes back.
   if (!data) notFound();
 
+  // Course availability (migration 023). No `onRead` here and none is missing:
+  // `studentAccess`'s own docblock is explicit that a caller sharing this
+  // page's render does not owe it a second `operator_reads` row — the one
+  // `getStudent360` just wrote above, for `surface: 'student_360'`, already
+  // covers "an operator opened this student's record". A second row would
+  // record the same read twice under two names for the same click.
+  const courseAccess = await studentAccess(access.operatorId, studentId);
+
   const s = data.profile;
   const t = data.timeOnTask;
   const canEditSubscription = access.roles.includes("cost-billing");
@@ -159,6 +169,106 @@ export default async function ConsoleStudentPage({
             note={s.subscriptionNote}
           />
         )}
+      </Panel>
+
+      {/* ------------------------------------------------------ course access */}
+      {/*
+        Migration 023, `lib/catalog.ts`. ⚠ NO REQUIREMENT COVERS THIS PANEL —
+        see the header of `(console)/courses/page.console.tsx`, which is where
+        the broad per-grade rule this student's own row is measured against
+        lives. This panel is deliberately the ONLY place course access is
+        editable per-student: `content-review`, which owns the grade rule on
+        `/courses`, cannot reach this page at all (it does not hold
+        `student-data`) and so cannot learn this student's name from this
+        feature — the same separation FR-2107/contracts/authorization.md draws
+        between content decisions and decisions about a named person
+        everywhere else in this console.
+      */}
+      <Panel
+        title="Course access"
+        note={
+          <>
+            What this student can actually see, course by course, and why. An{" "}
+            <strong>override wins over the grade rule in both directions</strong> — it is what
+            lets one test student see a subject the rest of their year does not, and what lets one
+            student be held back from a course their whole grade otherwise has.
+          </>
+        }
+      >
+        <div className="overflow-x-auto rounded border border-line">
+          <table className="w-full border-collapse text-[13px]">
+            <thead>
+              <tr className="border-b border-line text-ink-soft">
+                <Th>Course</Th>
+                <Th>Grade rule</Th>
+                <Th>Override</Th>
+                <Th>Effective</Th>
+                <Th right>Change</Th>
+              </tr>
+            </thead>
+            <tbody>
+              {courseAccess.map((row) => (
+                <tr key={row.courseId} className="border-b border-line-soft last:border-0">
+                  <Td>
+                    <span className="block font-semibold text-ink">{row.label}</span>
+                    <span dir={row.dir} className="block text-[12.5px] text-ink-soft">
+                      {row.labelAr}
+                    </span>
+                  </Td>
+                  <Td>
+                    <Chip tone={row.gradeState === "live" ? "good" : "neutral"}>
+                      {row.gradeState === "live" ? "live" : row.gradeExplicit ? "hidden" : "not set"}
+                    </Chip>
+                    <span className="ms-1.5 text-[11.5px] text-ink-faint">for {row.gradeLabel}</span>
+                  </Td>
+                  <Td>
+                    {row.override ? (
+                      <>
+                        <Chip tone={row.override === "live" ? "good" : "attention"}>
+                          forced {row.override}
+                        </Chip>
+                        {row.overrideAt && (
+                          <span className="mt-1 block font-mono text-[10.5px] text-ink-faint">
+                            {row.overrideBy ?? "an operator no longer on record"} ·{" "}
+                            {stamp(row.overrideAt)}
+                          </span>
+                        )}
+                        {row.overrideNote && (
+                          <span className="mt-0.5 block max-w-[22ch] text-[11.5px] text-ink-soft">
+                            {row.overrideNote}
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-ink-faint">inherits the grade rule</span>
+                    )}
+                  </Td>
+                  <Td>
+                    <Chip tone={row.effectiveState === "live" ? "good" : "neutral"}>
+                      {row.effectiveState}
+                    </Chip>
+                  </Td>
+                  <Td right>
+                    <CourseAccessEditor
+                      studentId={s.id}
+                      courseId={row.courseId}
+                      current={row.override}
+                      note={row.overrideNote}
+                    />
+                  </Td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
+          The grade rule column is the broad decision on{" "}
+          <Link href="/courses" className="underline">
+            the course availability grid
+          </Link>
+          . This student&rsquo;s grade is {s.grade}; a course with no grade rule recorded reads
+          &ldquo;not set&rdquo; and defaults to hidden, exactly as it does there.
+        </p>
       </Panel>
 
       {/* ------------------------------------------------------- time on task */}

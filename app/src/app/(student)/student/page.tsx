@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getStudentPlan } from "@/lib/queries";
 import { getLessonCatalog, getLessonData } from "@/lib/lesson";
 import { getLessonContent } from "@/lib/lesson-content";
@@ -47,6 +47,15 @@ export const metadata = {
  * The demo-student switcher that used to ride along on these surfaces is gone
  * with the cast it switched between: the student comes from the session now,
  * never from a client-writable cookie.
+ *
+ * **Three gates, then — the third is the course gate** (migration 023,
+ * `lib/catalog.ts`). It is NOT applied here. `getLessonData` returns `null` for
+ * a course this student may not see and `getLessonCatalog` omits its lessons,
+ * so this page's job is to turn a `null` into `notFound()` and nothing else.
+ * Filtering here as well would put a second copy of the rule on the surface
+ * most likely to grow a new `?mode=` branch — and a branch that forgot to
+ * filter would serve the course, whereas a branch that forgets to handle
+ * `null` fails to compile.
  */
 export default async function StudentPage({
   searchParams,
@@ -76,6 +85,9 @@ export default async function StudentPage({
 
   if (mode === "learn" || mode === "review") {
     const lesson = await getLessonData(lessonSlug, studentId);
+    // Hidden course, or no such lesson — one answer for both, so a guessed
+    // slug cannot be used to find out which courses exist but are off.
+    if (!lesson) notFound();
     // sealed passages (Arabic vertical): server-resolved from verified seed
     // data and pinned onto السبورة — the tutor teaches ON the text and must
     // never reference a card the student cannot see
@@ -122,6 +134,9 @@ export default async function StudentPage({
   // renders as math even though the picker is social.
   const effectiveSlug = lessonSlug ?? (courseId ? lessons[0]?.slug : undefined);
   const lesson = await getLessonData(effectiveSlug, studentId);
+  // `lessons` is already gated, so a null here means the ?lesson= in the URL
+  // named a course this student may not see (or nothing at all).
+  if (!lesson) notFound();
   // Offer the readable «شرح الدرس» door only when this lesson has a bundle.
   const hasContent = (await getLessonContent(lesson.slug)) !== null;
 

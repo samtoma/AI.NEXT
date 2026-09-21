@@ -42,6 +42,9 @@ test("admin surface: guards the console's own paths", () => {
   assert.equal(shouldGuard("admin", "/pipeline"), true);
   assert.equal(shouldGuard("admin", "/gallery"), true);
   assert.equal(shouldGuard("admin", "/dev/lesson-content"), true);
+  assert.equal(shouldGuard("admin", "/security"), true);
+  assert.equal(shouldGuard("admin", "/overview"), true);
+  assert.equal(shouldGuard("admin", "/overview/definitions"), true);
 });
 
 test("admin surface: does not guard student paths — they fall through to the 404", () => {

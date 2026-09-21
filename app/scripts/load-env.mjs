@@ -48,6 +48,32 @@ import { fileURLToPath } from "node:url";
  * @param {string} text
  * @returns {Record<string, string>}
  */
+/**
+ * Decode a double-quoted `.env` value body (without the surrounding quotes).
+ * Escapes are processed left-to-right so `\\n` is backslash + `n`, not
+ * backslash + newline — the order of global `.replace` calls cannot express
+ * that, which is why a sequential pass is used.
+ *
+ * @param {string} s
+ * @returns {string}
+ */
+function decodeDoubleQuoted(s) {
+  let out = "";
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === "\\" && i + 1 < s.length) {
+      const next = s[++i];
+      if (next === "n") out += "\n";
+      else if (next === "r") out += "\r";
+      else if (next === '"') out += '"';
+      else if (next === "\\") out += "\\";
+      else out += next;
+    } else {
+      out += s[i];
+    }
+  }
+  return out;
+}
+
 export function parseEnv(text) {
   /** @type {Record<string, string>} */
   const result = {};
@@ -67,12 +93,7 @@ export function parseEnv(text) {
     let value = body.slice(eq + 1).trim();
 
     if (value.length >= 2 && value.startsWith('"') && value.endsWith('"')) {
-      value = value
-        .slice(1, -1)
-        .replace(/\\n/g, "\n")
-        .replace(/\\r/g, "\r")
-        .replace(/\\"/g, '"')
-        .replace(/\\\\/g, "\\");
+      value = decodeDoubleQuoted(value.slice(1, -1));
     } else if (value.length >= 2 && value.startsWith("'") && value.endsWith("'")) {
       value = value.slice(1, -1);
     } else {

@@ -74,14 +74,26 @@ export function snapshotKey(k: {
   ].join("|");
 }
 
+/**
+ * `null` passes through UNCACHED, and that is the whole reason this signature
+ * admits it.
+ *
+ * A builder returns `null` when the course gate (migration 023,
+ * `lib/catalog.ts`) refuses the lesson. A refusal is a permission, not a
+ * payload: caching one would keep refusing for up to three hours after an
+ * operator switched the course on — a student watching a page that stays
+ * broken for reasons nobody can see. Caching is for expensive things that are
+ * true; a refusal is cheap and may stop being true at any moment.
+ */
 export async function snapshotContext(
   key: string,
-  build: () => Promise<AskContext>
-): Promise<AskContext> {
+  build: () => Promise<AskContext | null>
+): Promise<AskContext | null> {
   const now = Date.now();
   const hit = cache.get(key);
   if (hit && now - hit.at < TTL_MS) return hit.ctx;
   const ctx = await build();
+  if (!ctx) return null;
   cache.set(key, { at: now, ctx });
   if (cache.size > MAX_SESSIONS) {
     const byAge = [...cache.entries()].sort((a, b) => a[1].at - b[1].at);

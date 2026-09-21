@@ -113,6 +113,12 @@ export async function capture(
         "capture-session",
         info.slug
       );
+      // `null` is the course gate refusing (migration 023), and it cannot
+      // happen here: the harness renders with NO student, and a gate with
+      // nobody to refuse refuses nobody. The guard is for the compiler and for
+      // the day somebody gives this harness a student id — at which point the
+      // diff would silently lose whole lessons instead of failing.
+      if (!ctx) throw new Error(`no lesson context for ${info.slug}/${mode}`);
       await write(`lesson-${info.slug}-${mode}-system.txt`, ctx.systemPrompt);
       await write(`lesson-${info.slug}-${mode}-data.txt`, ctx.dataBlock);
       await write(
@@ -148,6 +154,10 @@ export async function capture(
   const graderLesson = await lesson.getLessonData(
     catalog[0]?.slug ?? lesson.DEFAULT_LESSON_SLUG
   );
+  // Same guard, same reason: no student in scope means no gate, so a null here
+  // is an empty spine rather than a refusal — and rendering the grader prompt
+  // from nothing would write a file that diffs clean while meaning nothing.
+  if (!graderLesson) throw new Error("no lesson data for the grader capture");
   await write(
     "understanding-system.txt",
     understanding.UNDERSTANDING_SYSTEM_PROMPT

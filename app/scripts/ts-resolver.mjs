@@ -57,6 +57,12 @@ const STUBS = {
       // renders the same prompt builders for each address register, and
       // reaches `lib/lesson.ts` -> `auth/principal.ts` to do it (P6)
       "prompt-address.test.mts",
+      // drives `getLessonCatalog` / `getLessonData` / `getSubjectSummaries`
+      // against a fake PoolClient to prove the course gate is wired in, and
+      // reaches the same `lib/lesson.ts` -> `auth/principal.ts` import. It
+      // resolves no principal of its own: the student id is a parameter, so
+      // the empty cookie jar is never consulted.
+      "catalog-gate.test.mts",
     ],
   },
 };

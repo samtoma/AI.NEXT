@@ -264,6 +264,18 @@ export async function POST(req: Request) {
         { headers: { "Content-Type": "text/event-stream" } }
       );
     }
+    if (!pre.ctx) {
+      // THE COURSE GATE (migration 023, lib/catalog.ts). `body.lesson` is a
+      // client-supplied slug: without this, a student who could not open a
+      // hidden lesson's page could still be taught it turn by turn, which is
+      // the same content arriving more slowly and more expensively.
+      //
+      // JSON rather than an SSE frame, and the same shape the unverified-email
+      // refusal above already uses — the client already handles a non-stream
+      // response from this endpoint. 404 rather than 403, so "not yours" and
+      // "no such lesson" stay one answer.
+      return Response.json({ error: "not_found" }, { status: 404 });
+    }
     priorTurns = pre.turns;
     deliveredTurns = pre.delivered;
     sessionId = pre.sessionId;

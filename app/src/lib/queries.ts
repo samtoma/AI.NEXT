@@ -1,4 +1,5 @@
 import { sequential } from "./db";
+import { visibleGraphFor } from "./catalog-queries";
 import { scoped, type Db } from "./student-context";
 import type {
   PlanItem,
@@ -213,6 +214,29 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
       bridgesThunk,
     ] as const);
 
+  // THE COURSE GATE (migration 023, lib/catalog.ts). `/spine` is the widest
+  // student-facing read in the product: every objective, and every live
+  // question WITH its correct answer and canonical solution. Ungated, it is a
+  // complete copy of a hidden course's content one click from the lesson
+  // report — which is why the filtering happens here, on the raw rows, before
+  // the layering and the roll-ups that everything below is built from.
+  //
+  // A prerequisite edge survives only when BOTH endpoints do: an arrow into a
+  // hidden course draws a node for it.
+  //
+  // The four result objects are local and a few lines old, so they are
+  // narrowed IN PLACE deliberately: every projection below reads `.rows`, and
+  // a filtered copy beside the original is a second thing to remember to use.
+  const gate = await visibleGraphFor(db, studentId);
+  losRes.rows = losRes.rows.filter((r) => gate.lo(r.id as string));
+  questionsRes.rows = questionsRes.rows.filter((r) => gate.lo(r.lo_id as string));
+  edgesRes.rows = edgesRes.rows.filter(
+    (r) => gate.lo(r.src_id as string) && gate.lo(r.dst_id as string)
+  );
+  bridgesRes.rows = bridgesRes.rows.filter(
+    (r) => gate.lo(r.src_id as string) && gate.lo(r.dst_id as string)
+  );
+
   const edges = edgesRes.rows.map((r) => ({
     src: r.src_id as string,
     dst: r.dst_id as string,
@@ -409,6 +433,21 @@ async function studentPlanOn(
       ),
     () => db.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
   ] as const);
+
+  // THE COURSE GATE (migration 023, lib/catalog.ts). The practice loop picks
+  // from every live question in the database; without this it would hand a
+  // student the stem and the options of a course nobody switched on for them.
+  // (`/api/attempts` would then refuse the answer, which is the worst of both:
+  // the content is shown and the lesson does not work.)
+  //
+  // Narrowed in place, for the reason `spineDataOn` gives: the selector below
+  // reads these rows in four places and a filtered copy is a fifth.
+  const gate = await visibleGraphFor(db, studentId);
+  losRes.rows = losRes.rows.filter((r) => gate.lo(r.id as string));
+  qRes.rows = qRes.rows.filter((r) => gate.lo(r.lo_id as string));
+  edgesRes.rows = edgesRes.rows.filter(
+    (r) => gate.lo(r.src_id as string) && gate.lo(r.dst_id as string)
+  );
 
   const labels = new Map<string, string>(
     losRes.rows.map((r) => [r.id, r.label])

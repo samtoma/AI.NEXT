@@ -3,6 +3,7 @@ import { retrieve, retrievalBlock } from "./retrieval";
 import { getStudentProfile, scoped, type Db } from "./student-context";
 import { addressForms, type AddressForms } from "./address";
 import { sequential } from "./db";
+import { visibleGraphFor } from "./catalog-queries";
 import { getAllVisuals } from "./visuals";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
@@ -105,8 +106,16 @@ async function askContextOn(
   // second, narrower read of the same row `retrieve()` reads below, and the
   // reason two files each had their own idea of who the student was. It is the
   // profile now: one read, and the one place the voice is decided (plan A9).
-  const [losRes, edgesRes, masteryRes, qRes, docRes, profile, modulesRes, allVisuals] =
-    await sequential([
+  const [
+    allLosRes,
+    allEdgesRes,
+    masteryRes,
+    allQRes,
+    docRes,
+    profile,
+    allModulesRes,
+    everyVisual,
+  ] = await sequential([
       () => db.query(`
         SELECT id, label, description, syllabus_ref, source_page
         FROM graph_nodes WHERE kind = 'learning_objective'
@@ -143,6 +152,37 @@ async function askContextOn(
       `),
       () => getAllVisuals(),
     ] as const);
+
+  /* ------------------------------------------------------------------ *
+   * THE COURSE GATE (migration 023, lib/catalog.ts)
+   *
+   * The eight reads above are deliberately WHOLE-SPINE — every LO, every live
+   * question, every module, every figure — because "Ask the Spine" reasons
+   * over the graph rather than over one lesson. That is also why this is the
+   * quietest way a hidden course could reach a student: no URL to guess and no
+   * lesson to open, just a subject that is switched off appearing in the data
+   * block of an ordinary chat turn, complete with the canonical solution of
+   * any question id the client names.
+   *
+   * So the eight results are narrowed HERE, once, before anything downstream
+   * reads them. Every line of prompt assembly below is unchanged and gated by
+   * construction — the alternative, a filter at each of the six places the
+   * rows are consumed, is six chances to add a seventh.
+   *
+   * `studentId === null` is the prompt-capture harness and is not gated, for
+   * the reason `courseGateFor` in lib/lesson.ts gives: there is nobody to hide
+   * a course from, and an empty harness would blind the constitution IX diff.
+   * ------------------------------------------------------------------ */
+  const gate = await visibleGraphFor(db, studentId);
+  const losRes = { rows: allLosRes.rows.filter((l) => gate.lo(l.id)) };
+  const qRes = { rows: allQRes.rows.filter((q) => gate.lo(q.lo_id)) };
+  // An edge is kept only when BOTH endpoints survive: a prerequisite arrow
+  // pointing into a hidden course names that course's objective in the prompt.
+  const edgesRes = {
+    rows: allEdgesRes.rows.filter((e) => gate.lo(e.src_id) && gate.lo(e.dst_id)),
+  };
+  const modulesRes = { rows: allModulesRes.rows.filter((m) => gate.module(m.id)) };
+  const allVisuals = everyVisual.filter((v) => gate.lo(v.loId));
 
   const docs = docRes.rows as {
     sha256: string;

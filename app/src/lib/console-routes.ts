@@ -137,10 +137,45 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     nav: null,
   },
   {
+    // Migration 023's per-student exception, posted from the Course access
+    // panel on the Student 360. `student-data`, NOT `content-review` — this
+    // one names a student, unlike `/api/console/courses` above, and
+    // `content-review` must not learn a student's name from this feature.
+    path: "/api/console/students/[id]/courses",
+    file: "api/console/students/[id]/courses/route.console.ts",
+    kind: "route",
+    roles: ["student-data"],
+    nav: null,
+  },
+  {
     path: "/profile",
     file: "(console)/profile/page.console.tsx",
     roles: [],
     nav: "My account",
+  },
+  {
+    // Migration 023, `lib/catalog.ts`. ⚠ NO REQUIREMENT COVERS THIS ROUTE —
+    // no FR has been invented for course availability and `traceability.md`
+    // was not touched (see the page's own header). `content-review` because
+    // this is the broad per-grade rule, a content decision rather than one
+    // about a named student — the same boundary FR-2204 already draws on
+    // `/content`. Placed immediately before `/content` so the two content
+    // decisions read next to each other in the nav.
+    path: "/courses",
+    file: "(console)/courses/page.console.tsx",
+    roles: ["content-review"],
+    nav: "Courses",
+  },
+  {
+    // The write endpoint behind `/courses`. Same role as the page it is
+    // posted from, for the reason every console write endpoint in this table
+    // is: an address that changes what a course shows a child needs the same
+    // authority as the page that offers the control.
+    path: "/api/console/courses",
+    file: "api/console/courses/route.console.ts",
+    kind: "route",
+    roles: ["content-review"],
+    nav: null,
   },
   {
     path: "/content",

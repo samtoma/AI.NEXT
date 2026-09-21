@@ -1,6 +1,7 @@
 import type { PoolClient } from "pg";
 
 import { pool, sequential } from "./db";
+import { visibleCoursesFor } from "./catalog-queries";
 import { scoped, type Db } from "./student-context";
 import {
   compareSpineSubjects,
@@ -56,6 +57,18 @@ async function subjectSummariesOn(
   db: Db,
   studentId: number
 ): Promise<SubjectSummary[]> {
+  // The course gate (migration 023). This is the student home — the surface
+  // that decides whether a subject exists at all as far as a child is
+  // concerned — so a hidden course must not appear here even as a zero. It is
+  // the same set `lib/lesson.ts` gates on; the two surfaces cannot disagree
+  // about which subjects are on.
+  //
+  // `studentId` is always a real student here (the one caller resolves it from
+  // the session), so there is no ungated path through this function.
+  const visible = await visibleCoursesFor(
+    studentId,
+    "release" in db ? (db as PoolClient) : undefined
+  );
   // One client, so one query at a time (pg@9; lib/db.ts `sequential`).
   const [losRes, checksRes] = await sequential([
     () => db.query(
@@ -102,6 +115,10 @@ async function subjectSummariesOn(
   const bySubject = new Map<SpineSubject, Acc>();
 
   for (const r of losRes.rows) {
+    // Gated before it is filed: a hidden course contributes no LO, so it
+    // produces no summary, no average and no "0%" card hinting that a subject
+    // is there and empty.
+    if (r.course_id == null || !visible.has(r.course_id)) continue;
     // Unfiled LO (course not in the registry): it belongs to no subject, so it
     // rolls up into none. It is NOT quietly added to maths' average.
     const subject = spineSubjectOfCourse(r.course_id);

@@ -3,6 +3,7 @@ import { withPrincipal } from "@/lib/db";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { mapRlsError } from "@/lib/rls-errors";
 import { bktUpdate, DEFAULT_PARAMS, type BktParams } from "@/lib/bkt";
+import { visibleCoursesFor } from "@/lib/catalog-queries";
 import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import { currentSessionOrNull } from "@/lib/sessions";
@@ -142,19 +143,46 @@ export async function POST(req: Request) {
         );
       }
 
+      // The course this question belongs to, walked the same way
+      // `lib/lesson.ts` walks it: LO ← module (`teaches`) → course (`part_of`).
+      // LEFT joins throughout, so a question whose LO hangs off nothing still
+      // returns its row — with a null course, which the gate below refuses.
       const qRes = await client.query(
         `SELECT q.id, q.lo_id, q.question_type, q.correct_answer, q.choices,
-                q.canonical_solution, q.solution_version, n.label AS lo_label
+                q.canonical_solution, q.solution_version, n.label AS lo_label,
+                c.id AS course_id
          FROM questions q
          JOIN graph_nodes n ON n.id = q.lo_id
+         LEFT JOIN graph_edges te
+           ON te.dst_id = q.lo_id AND te.edge_type = 'teaches' AND te.system_to IS NULL
+         LEFT JOIN graph_nodes m ON m.id = te.src_id AND m.kind = 'module'
+         LEFT JOIN graph_edges ce
+           ON ce.src_id = m.id AND ce.edge_type = 'part_of' AND ce.system_to IS NULL
+         LEFT JOIN graph_nodes c ON c.id = ce.dst_id AND c.kind = 'course'
          WHERE q.id = $1
-           AND (q.status = 'live' OR q.materialised_from IS NOT NULL)`,
+           AND (q.status = 'live' OR q.materialised_from IS NOT NULL)
+         LIMIT 1`,
         [questionId]
       );
       if (qRes.rowCount === 0) {
         throw new HttpError(404, { error: "not_found" });
       }
       const q = qRes.rows[0];
+
+      // THE COURSE GATE (migration 023, lib/catalog.ts), and this endpoint
+      // needs it as much as the page does. `questionId` comes from the request
+      // body, and the response to a wrong answer carries `correctAnswer` and
+      // the question's full canonical solution — so an ungated attempt is a
+      // way to read a hidden course's worked answers one question id at a
+      // time, while writing mastery for a course the student is not taking.
+      //
+      // Thrown, not returned, on purpose: `withPrincipal` COMMITs on a return,
+      // and a returned 404 here would leave behind the inline widget the block
+      // above may have just materialised (see `HttpError`).
+      const visible = await visibleCoursesFor(studentId, client);
+      if (!q.course_id || !visible.has(q.course_id)) {
+        throw new HttpError(404, { error: "not_found" });
+      }
 
       // A WIDGET IS A QUESTION (ADR-0009), and its wrong answers are PREDICATES
       // rather than lettered options. The client reports which structural thing

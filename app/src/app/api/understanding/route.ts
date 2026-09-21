@@ -251,15 +251,21 @@ export async function POST(req: Request) {
   // lesson that produced it — so the session is found server-side by kind, and
   // this is the same sitting /api/ask has been writing turns into.
   const studentId = me.studentId;
-  let data: Awaited<ReturnType<typeof getLessonData>>;
+  let data: NonNullable<Awaited<ReturnType<typeof getLessonData>>>;
   let sessionId: number | null;
   try {
-    ({ data, sessionId } = await withPrincipal(studentId, async (client) => {
+    const pre = await withPrincipal(studentId, async (client) => {
       const d = await getLessonData(
         sanitizeLessonSlug(body.lesson),
         studentId,
         client
       );
+      // The course gate (migration 023): `body.lesson` is a client-supplied
+      // slug and this endpoint would otherwise rate — and therefore read the
+      // objectives of — a lesson from a course this student may not have. A
+      // null slice is refused before the session is opened, so a refused
+      // rating leaves no sitting behind either.
+      if (!d) return null;
       return {
         data: d,
         sessionId: await currentSessionOrNull(
@@ -273,7 +279,12 @@ export async function POST(req: Request) {
           client
         ),
       };
-    }));
+    });
+    // Same answer for "no such lesson" and "not yours", for the reason
+    // `lib/lesson.ts` gives: two answers would let a client enumerate the
+    // courses that exist but are switched off for this student.
+    if (!pre) return NextResponse.json({ error: "not_found" }, { status: 404 });
+    ({ data, sessionId } = pre);
   } catch (err) {
     const denied = await mapRlsError(err, {
       req,

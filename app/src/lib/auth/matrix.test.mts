@@ -56,12 +56,25 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/students/[id]/sessions/[sid]": ["student-data"],
   "/students/[id]/sessions/[sid]/replay": ["student-data"],
   "/profile": ["content-review", "evidence-access", "student-data", "cost-billing"],
+  // Migration 023, `lib/catalog.ts` — course availability. NO FR covers this
+  // capability (see the page's own header); it is transcribed here anyway
+  // because this file's whole argument is that a console route with no row
+  // here fails the test, invented requirement or not. `/courses` is the
+  // broad per-grade rule: `content-review`, the same role that already
+  // decides whether unreviewed generated content reaches a child on
+  // `/content`. `.../[id]/courses` is the per-student exception and is
+  // `student-data` instead, on purpose — it names a student, and
+  // `content-review` must not learn one from this feature.
+  "/courses": ["content-review"],
+  "/api/console/courses": ["content-review"],
+  "/api/console/students/[id]/courses": ["student-data"],
   "/content": ["content-review"],
   "/cost": ["cost-billing"],
   // contracts/authorization.md, "Subscription / payment status — read and
-  // change": `cost-billing` only. The console's first write endpoint, and the
-  // only row in this matrix that is an endpoint rather than a page — the
-  // question is the same one, so it is asked the same way.
+  // change": `cost-billing` only. The console's first write endpoint — one of
+  // three rows in this matrix that are endpoints rather than pages, alongside
+  // the two course-availability routes above. An endpoint asks the same
+  // question a page does ("does this role admit"), so it gets the same row.
   "/api/console/students/[id]/subscription": ["cost-billing"],
   // contracts/admin.md §7 Security: `student-data`. The security record names
   // accounts, students and the operators who read their transcripts, so it is

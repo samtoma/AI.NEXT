@@ -268,6 +268,11 @@ env_add DATABASE_URL_OPERATOR "$OPERATOR_DSN" \
   "The console's connection (P2). Cross-student reads by grant, no bypass."
 env_add DATABASE_URL_MAINT "$MAINT_DSN" \
   "BYPASSRLS. Loaders, backfills, rollups and scripts only — never the app."
+env_add AINEXT_COURSE_GATING on \
+  "The per-(course, grade) availability gate (migration 023). ON here so local" \
+  "development exercises the real path; the code's own default when the" \
+  "variable is ABSENT is OFF, deliberately, so a stack that never set it cannot" \
+  "lock every student out of their own course. See app/src/lib/env.ts."
 
 # Generated ONCE and then left alone: regenerating it on every run would
 # invalidate every session you were in the middle of testing.

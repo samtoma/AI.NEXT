@@ -29,6 +29,11 @@ test("parseEnv: double quotes decode escapes, single quotes are literal", () => 
   assert.equal(parsed.SQ, "no \\n escape here");
 });
 
+test("parseEnv: a literal backslash-n stays backslash-n, not a newline", () => {
+  const parsed = parseEnv('LITERAL="path\\\\nto\\\\file"');
+  assert.equal(parsed.LITERAL, "path\\nto\\file");
+});
+
 test("parseEnv: an unquoted trailing comment is dropped, a quoted one is kept", () => {
   const parsed = parseEnv(["FOO=bar # trailing note", 'QUOTED="bar # not a comment"'].join("\n"));
   assert.equal(parsed.FOO, "bar");

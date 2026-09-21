@@ -11,6 +11,7 @@ import { gradeLabel } from "./profile";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
 import { getLessonBridges } from "./subject-queries";
+import { visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import type { WidgetQuestionSpec } from "./types";
@@ -147,12 +148,56 @@ const LO_MODULE_SELECT = `
 const MODULE_ORDER = `CASE WHEN m.id LIKE 'module:geo%' THEN 1 ELSE 0 END,
          m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`;
 
+/* ------------------------------------------------------------------ */
+/* The course gate (migration 023, lib/catalog.ts)                     */
+/* ------------------------------------------------------------------ */
+
+/**
+ * "May this student be shown content from this course?", as a predicate to
+ * apply to rows — one database answer per unit of work, not one per row.
+ *
+ * **It is a GATE, not a filter.** Every function in this file that can put a
+ * course in front of a student consults it, including the ones reached by a
+ * hand-typed `?lesson=` URL that never touched a catalogue. Hiding a card in
+ * the UI and refusing the data are different guarantees, and only the second
+ * one survives somebody guessing a slug.
+ *
+ * **A null student means NO GATE, and that is not a hole.** The only caller
+ * that legitimately has no student is `scripts/capture-prompts.mts`, which
+ * renders every prompt surface to disk for the constitution IX byte-diff and
+ * reads no student data at all; there is nobody to hide a course from, and
+ * gating it would empty the harness and break the gate that watches the
+ * prompts. Every route that serves a real child resolves its principal through
+ * `requireStudent()` before it gets here, so `null` never arrives from a
+ * request.
+ *
+ * **A course-less row is hidden**, like an unknown course id: an LO whose
+ * module hangs off no course cannot be checked against any rule, and explicit
+ * allow has exactly one answer for a thing it cannot verify.
+ *
+ * The `Db` may be a `Pool` rather than the caller's `PoolClient` (`scoped`
+ * admits both). Handing a bare pool to `visibleCoursesFor` would read
+ * `student_course_access` with NO principal set, which under migration 023's
+ * policy returns zero overrides — a silently WRONG answer rather than an
+ * error. So a pool is passed as "no client", and the gate opens its own
+ * principalled unit of work instead.
+ */
+async function courseGateFor(
+  db: Db,
+  studentId: number | null
+): Promise<(courseId: string | null | undefined) => boolean> {
+  if (studentId == null) return () => true;
+  const client = "release" in db ? (db as PoolClient) : undefined;
+  const visible = await visibleCoursesFor(studentId, client);
+  return (courseId) => courseId != null && visible.has(courseId);
+}
+
 export async function getLessonCatalog(
   studentId: number | null = null,
   c?: PoolClient
 ): Promise<LessonInfo[]> {
-  const [losRes, masteryRes] = await scoped(studentId, c, (db) =>
-    sequential([
+  const { losRes, masteryRes, visible } = await scoped(studentId, c, async (db) => {
+    const [losRes, masteryRes] = await sequential([
       () => db.query(`${LO_MODULE_SELECT} ORDER BY ${MODULE_ORDER}`),
       () =>
         studentId == null
@@ -162,8 +207,11 @@ export async function getLessonCatalog(
              WHERE student_id = $1 AND system_to IS NULL`,
               [studentId]
             ),
-    ] as const)
-  );
+    ] as const);
+    // One client, so this runs after the two above rather than beside them
+    // (pg@9; lib/db.ts `sequential`).
+    return { losRes, masteryRes, visible: await courseGateFor(db, studentId) };
+  });
   const mastery = new Map<string, number>(
     masteryRes.rows.map((r) => [r.lo_id, Number(r.score)])
   );
@@ -171,6 +219,10 @@ export async function getLessonCatalog(
   const bySlug = new Map<string, LessonInfo>();
   const out: LessonInfo[] = [];
   for (const r of losRes.rows) {
+    // The gate, applied to the ROW rather than to the finished list: a lesson
+    // from a hidden course is never constructed, so it cannot be returned by a
+    // branch somebody adds below.
+    if (!visible(r.course_id)) continue;
     const slug = slugOfLo(r.id);
     let info = bySlug.get(slug);
     if (!info) {
@@ -202,11 +254,39 @@ export async function getLessonCatalog(
 /* One lesson's full grounded slice                                    */
 /* ------------------------------------------------------------------ */
 
+/**
+ * One lesson's grounded slice, or **`null` when this student may not have it**.
+ *
+ * ---------------------------------------------------------------------------
+ * WHY `null` AND NOT A THROW — the refusal shape, decided once
+ * ---------------------------------------------------------------------------
+ * `?lesson=geo1-2` is a hand-typed URL. It reaches this function without
+ * passing a catalogue, so whatever this function does IS the gate; filtering
+ * the picker upstream would leave the slug working for anyone who guessed it.
+ *
+ * The refusal is a `null` rather than an exception because the three callers
+ * need three different refusals — a 404 page, a JSON 404, and an SSE stream
+ * that has to say something to a waiting client — and all three already wrap
+ * this call in a broad `catch` that reports 500 "internal error". A thrown
+ * refusal would therefore be delivered to the student as an outage: correct
+ * behaviour wearing the costume of a bug, on the one path where telling those
+ * apart matters. A `null` return type makes the compiler walk every caller and
+ * ask what it wants to say, which is the same argument `lib/subjects.ts` makes
+ * for deriving its unions from the registry.
+ *
+ * The page turns it into `notFound()`. A hidden course and a slug that never
+ * existed are ONE answer, deliberately: two answers would let a student
+ * enumerate which courses exist but are switched off for them, which is a
+ * smaller leak than the content and still a leak.
+ *
+ * With no student in scope (`studentId === null`, the prompt-capture harness)
+ * there is nobody to refuse and this behaves exactly as it always has.
+ */
 export async function getLessonData(
   slug: string = DEFAULT_LESSON_SLUG,
   studentId: number | null = null,
   c?: PoolClient
-): Promise<LessonData> {
+): Promise<LessonData | null> {
   return scoped(studentId, c, (db) => lessonDataOn(db, slug, studentId));
 }
 
@@ -214,7 +294,7 @@ async function lessonDataOn(
   db: Db,
   slug: string,
   studentId: number | null
-): Promise<LessonData> {
+): Promise<LessonData | null> {
   const safeSlug = sanitizeLessonSlug(slug);
   const loPattern = `lo:${safeSlug}-%`;
 
@@ -234,6 +314,21 @@ async function lessonDataOn(
     // unknown slug → default lesson (same student, same unit of work)
     return lessonDataOn(db, DEFAULT_LESSON_SLUG, studentId);
   }
+
+  // THE GATE, and it is deliberately the first thing after the lesson is
+  // identified — before the question bank, the figures and the student's
+  // mastery are read. Everything below this line is content, and content for a
+  // course this student may not see must not be fetched at all, let alone
+  // assembled and then discarded. (`getVisualsForLos` also runs on the bare
+  // pool rather than this client, so "fetch then filter" would reach outside
+  // the unit of work to do it.)
+  //
+  // An empty `losRes` lands here with `course_id` undefined and is refused for
+  // the same reason an unknown course is: there is nothing to check a rule
+  // against. That is a small improvement on the old behaviour, which carried
+  // on and threw `UnknownSubjectError` several reads later.
+  const visible = await courseGateFor(db, studentId);
+  if (!visible(losRes.rows[0]?.course_id)) return null;
 
   const loIds: string[] = losRes.rows.map((r) => r.id);
 
@@ -1009,7 +1104,15 @@ TEACHING SCRIPT — النص التعليمي المُراجَع لهذا الد
 ${subs}${terms}${misc}`;
 }
 
-/** AskContext for the lesson surfaces — same shape /api/ask already streams. */
+/**
+ * AskContext for the lesson surfaces — same shape /api/ask already streams,
+ * and **`null` when the lesson's course is not this student's to have**.
+ *
+ * The gate is inherited from `getLessonData` rather than restated here: a
+ * tutor turn is the most expensive way to serve a lesson, and it must refuse
+ * on exactly the same rule the page does. Two copies of that rule is how a
+ * course stops being reachable by URL and stays reachable by asking about it.
+ */
 export async function buildLessonContext(
   mode: LessonMode,
   chatSession: string,
@@ -1018,12 +1121,13 @@ export async function buildLessonContext(
   studentId: number | null = null,
   /** the caller's unit of work, when it has one open (`/api/ask`) */
   client?: PoolClient
-): Promise<AskContext> {
+): Promise<AskContext | null> {
   const data = await getLessonData(
     sanitizeLessonSlug(lessonSlug),
     studentId,
     client
   );
+  if (!data) return null;
   const kit = lessonPromptKit(data.subject);
   // Map-based subjects append the gazetteer name lists of their referenced
   // base maps (≤2) so the model can only name places the hit-tester resolves.

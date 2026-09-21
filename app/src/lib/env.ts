@@ -165,6 +165,63 @@ function resolveInternalSurfaces(): boolean {
 export const INTERNAL_SURFACES: boolean = resolveInternalSurfaces();
 
 /* ===========================================================================
+ * Course availability (migration 023, lib/catalog.ts) — the kill switch
+ * ======================================================================== */
+
+/**
+ * Whether the per-(course, grade) availability gate applies at all.
+ *
+ * ⚠ NO REQUIREMENT COVERS THE FEATURE THIS SWITCHES. See `lib/catalog.ts`.
+ *
+ * `on` — the gate applies: a student sees a course only when a rule (or a
+ * personal override) says `live`. `off`, or unset — `visibleCoursesFor`
+ * answers "everything", and every student surface behaves exactly as it did
+ * before migration 023 existed.
+ *
+ * ---------------------------------------------------------------------------
+ * THE ASYMMETRY IS THE POINT, AND IT IS THE OPPOSITE OF THE GATE'S OWN DEFAULT
+ * ---------------------------------------------------------------------------
+ * Inside the gate, a missing ROW means hidden: default-deny, because the thing
+ * being decided is whether a child sees unapproved content and nobody should
+ * have to remember to hide it.
+ *
+ * Here, a missing VARIABLE means the gate is OFF. That looks like the same
+ * decision made twice in opposite directions, and it is — because the two
+ * failures are not the same failure. A forgotten row hides one course that
+ * somebody was about to turn on anyway. A forgotten variable, if this defaulted
+ * to `on`, would be an allow-list nobody has populated yet: **every student on
+ * that stack locked out of the course they are paying to study**, on a Sunday
+ * evening, with no error message anywhere to explain it. For a tutoring product
+ * the safe failure is "too much visible", not "a child locked out of their own
+ * lesson" — the content behind the gate is the ministry curriculum, not
+ * anything a stranger uploaded.
+ *
+ * So the gate is opted INTO per stack. `scripts/local-dev.sh` writes `on` into
+ * the generated `.env.local`, so local development and every test run exercise
+ * the real path rather than the bypass.
+ *
+ * Unparseable values throw, like `AINEXT_ENVIRONMENT`: "the gate is in a state
+ * nobody chose" is not something to resolve by guessing.
+ *
+ * EXPORTED, unlike its neighbours, so `lib/catalog.test.mts` can prove both
+ * directions of a switch whose whole job is to be correct on the day somebody
+ * reaches for it. `COURSE_GATING` is resolved once at module load, which is the
+ * right thing for the application and untestable from inside one process.
+ */
+export function resolveCourseGating(): boolean {
+  const raw = (process.env.AINEXT_COURSE_GATING ?? "").trim().toLowerCase();
+  if (raw === "") return false;
+  if (raw === "on" || raw === "true" || raw === "1") return true;
+  if (raw === "off" || raw === "false" || raw === "0") return false;
+  throw new Error(
+    `AINEXT_COURSE_GATING="${raw}" is not one of on | off. Refusing to start ` +
+      `rather than guess whether a course gate is meant to be enforced.`
+  );
+}
+
+export const COURSE_GATING: boolean = resolveCourseGating();
+
+/* ===========================================================================
  * Identity (ADR-0013) — the variables sign-in, mail and Google need.
  *
  * Two different shapes below, and the difference is deliberate.
