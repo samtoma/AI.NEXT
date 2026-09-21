@@ -1,4 +1,4 @@
-import { withMaint } from "@/lib/db";
+import { withOperator } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
 
 /**
@@ -25,14 +25,13 @@ import { ENVIRONMENT } from "@/lib/env";
  *   - PER STUDENT answers "what does one child cost for a month", which is
  *     the only figure a price can be built on.
  *
- * P2: move to the operator connection. Every query here is CROSS-STUDENT by
- * construction — "what does one child cost" is a table with every child in it —
- * so `ainext_app` would return an empty report rather than refuse, which is the
- * worst possible failure for a cost page. Until the console has its own
- * principal (`DATABASE_URL_OPERATOR`, plan A5) it runs under `withMaint`, which
- * bypasses every policy. Named here so it is a decision with an owner, not a
- * leftover: `/admin/cost` is reachable only behind `AINEXT_INTERNAL_SURFACES`
- * and Cloudflare Access, and P2 replaces this with an authorised operator read.
+ * **P2 closed the temporary hole this carried.** Every query here is
+ * CROSS-STUDENT by construction — "what does one child cost" is a table with
+ * every child in it — so `ainext_app` would return an empty report rather than
+ * refuse, which is the worst possible failure for a cost page: a zero that
+ * looks like a fact. It used to reach for `withMaint` and its policy bypass;
+ * it now runs under `withOperator`, whose cross-student visibility is a grant
+ * in migration 017 with `cost-billing` in front of it.
  *
  * Every query is scoped to THIS environment. Principle XI forbids pooling
  * metrics across environments, and a cost figure that silently blends the
@@ -81,7 +80,7 @@ export type CostView = {
 
 const num = (v: unknown): number => Number(v ?? 0);
 
-export async function getCostView(windowDays = 30): Promise<CostView> {
+export async function getCostView(operatorId: number, windowDays = 30): Promise<CostView> {
   // Written out twice rather than rewritten with a regex: the per-student
   // query needs the table alias and a string substitution that has to get
   // both column names right is a silent breakage waiting for the next column.
@@ -89,8 +88,7 @@ export async function getCostView(windowDays = 30): Promise<CostView> {
   const scopeAliased = `a.environment = $1 AND a.created_at >= now() - ($2 || ' days')::interval`;
   const args = [ENVIRONMENT, String(windowDays)];
 
-  // P2: move to the operator connection.
-  const [totals, bySurface, byKind, perStudent] = await withMaint((db) =>
+  const [totals, bySurface, byKind, perStudent] = await withOperator(operatorId, (db) =>
     Promise.all([
     db.query(
       `SELECT count(*) AS turns, sum(cost_usd) AS cost

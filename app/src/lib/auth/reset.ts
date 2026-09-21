@@ -29,9 +29,32 @@ import { revokeAllForPrincipal } from "./session.ts";
 
 export type IssuedReset = { token: string; expiresAt: Date };
 
+/**
+ * Which table this reset belongs to.
+ *
+ * Both arms exist because ADR-0014 decides the seeded operator gets **no
+ * password** — `bootstrap-operator.mts` writes the row and sets `password_hash`
+ * NULL, so that no credential ever sits in a config file — and then says Samuel
+ * obtains one "through the ordinary reset flow". Until migration 019 that flow
+ * could not reach him: `password_resets.account_id` was NOT NULL with a foreign
+ * key to `accounts`, and operators are deliberately a separate table
+ * (data-model §7). The decision that keeps credentials out of configuration was
+ * the decision locking the first operator out of the console.
+ *
+ * The arms never cross. A console reset consumes only an `operator_id` row and
+ * a student reset only an `account_id` row, so a leaked token is useless on the
+ * other surface even before RLS refuses it.
+ */
+export type ResetPrincipal = "account" | "operator";
+
+function column(kind: ResetPrincipal): "account_id" | "operator_id" {
+  return kind === "account" ? "account_id" : "operator_id";
+}
+
 export async function issueResetToken(
   db: Queryable,
-  accountId: number,
+  kind: ResetPrincipal,
+  id: number,
   environment: string,
   record: AuthEventRecorder,
   meta: { ip?: string | null; userAgent?: string | null } = {},
@@ -39,27 +62,30 @@ export async function issueResetToken(
 ): Promise<IssuedReset> {
   const token = generateToken();
   const expiresAt = resetExpiry(now);
+  const col = column(kind);
   await db.query(
-    `UPDATE password_resets SET consumed_at = $2 WHERE account_id = $1 AND consumed_at IS NULL`,
-    [accountId, now]
+    `UPDATE password_resets SET consumed_at = $2 WHERE ${col} = $1 AND consumed_at IS NULL`,
+    [id, now]
   );
   await db.query(
-    `INSERT INTO password_resets (account_id, token_hash, expires_at, environment)
+    `INSERT INTO password_resets (${col}, token_hash, expires_at, environment)
      VALUES ($1, $2, $3, $4)`,
-    [accountId, hashToken(token), expiresAt, environment]
+    [id, hashToken(token), expiresAt, environment]
   );
   await record({
     event: "password_reset_requested",
     outcome: "success",
-    actor: { kind: "account", id: accountId },
-    subject: { kind: "account", id: accountId },
+    actor: { kind, id },
+    subject: { kind, id },
     ip: meta.ip ?? null,
     userAgent: meta.userAgent ?? null,
   });
   return { token, expiresAt };
 }
 
-export type ResetResult = { ok: true; accountId: number; revoked: number } | { ok: false };
+export type ResetResult =
+  | { ok: true; kind: ResetPrincipal; id: number; revoked: number }
+  | { ok: false };
 
 /**
  * Spend a reset link and set the new password.
@@ -73,31 +99,45 @@ export async function completeReset(
   db: Queryable,
   token: string,
   newPassword: string,
+  kind: ResetPrincipal,
   record: AuthEventRecorder,
   meta: { ip?: string | null; userAgent?: string | null } = {},
   now: Date = new Date()
 ): Promise<ResetResult> {
+  const col = column(kind);
+  // The arm is part of the predicate, not a check afterwards: a student token
+  // presented to the console (or the reverse) matches no row at all, so it
+  // cannot even be consumed, let alone honoured.
   const res = await db.query(
     `UPDATE password_resets SET consumed_at = $2
       WHERE token_hash = $1 AND consumed_at IS NULL AND expires_at > $2
-      RETURNING account_id`,
+        AND ${col} IS NOT NULL
+      RETURNING ${col} AS principal_id`,
     [hashToken(token), now]
   );
   const row = res.rows[0];
   if (!row) return { ok: false };
-  const accountId = Number(row.account_id);
+  const id = Number(row.principal_id);
+  const hash = await hashPassword(newPassword);
 
+  // `operators` has no `status` transition for lockout (data-model §7) — it
+  // carries `locked_until` only — so the two UPDATEs differ by exactly that.
   await db.query(
-    `UPDATE accounts
-        SET password_hash = $2, failed_attempts = 0, locked_until = NULL,
-            status = CASE WHEN status = 'locked' THEN 'active' ELSE status END
-      WHERE id = $1`,
-    [accountId, await hashPassword(newPassword)]
+    kind === "account"
+      ? `UPDATE accounts
+            SET password_hash = $2, failed_attempts = 0, locked_until = NULL,
+                status = CASE WHEN status = 'locked' THEN 'active' ELSE status END
+          WHERE id = $1`
+      : `UPDATE operators
+            SET password_hash = $2, failed_attempts = 0, locked_until = NULL,
+                email_verified_at = coalesce(email_verified_at, now())
+          WHERE id = $1`,
+    [id, hash]
   );
 
   const revoked = await revokeAllForPrincipal(
     db,
-    { accountId },
+    kind === "account" ? { accountId: id } : { operatorId: id },
     record,
     "password_reset",
     meta,
@@ -106,19 +146,19 @@ export async function completeReset(
   await record({
     event: "password_reset_completed",
     outcome: "success",
-    actor: { kind: "account", id: accountId },
-    subject: { kind: "account", id: accountId },
+    actor: { kind, id },
+    subject: { kind, id },
     ip: meta.ip ?? null,
     userAgent: meta.userAgent ?? null,
   });
   await record({
     event: "password_changed",
     outcome: "success",
-    actor: { kind: "account", id: accountId },
-    subject: { kind: "account", id: accountId },
+    actor: { kind, id },
+    subject: { kind, id },
     reason: "reset",
     ip: meta.ip ?? null,
     userAgent: meta.userAgent ?? null,
   });
-  return { ok: true, accountId, revoked };
+  return { ok: true, kind, id, revoked };
 }

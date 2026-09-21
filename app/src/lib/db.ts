@@ -32,6 +32,11 @@
  *     `student_id = NULL` is NULL rather than true, so a query with no
  *     principal returns zero rows instead of everybody's.
  *
+ * `withOperator` is the console's own connection — `ainext_operator`, a THIRD
+ * role, whose reads are cross-student by grant rather than by bypass. It is not
+ * an escape hatch: it reads exactly what migration 017 permits and nothing
+ * else.
+ *
  * `withMaint` is the escape hatch for loaders, backfills, rollups and the
  * bootstrap scripts, which must see every row. It connects as `ainext_maint`
  * (`BYPASSRLS`) and is **for scripts only** — an application path that reaches
@@ -63,7 +68,11 @@ export type Principal =
 /** Local default is the RESTRICTED role on purpose — see the header. */
 const DEFAULT_DSN = "postgres://ainext_app@127.0.0.1:5432/ainext_mvp1";
 
-const globalForPg = globalThis as unknown as { pgPool?: Pool; pgMaintPool?: Pool };
+const globalForPg = globalThis as unknown as {
+  pgPool?: Pool;
+  pgMaintPool?: Pool;
+  pgOperatorPool?: Pool;
+};
 
 export const pool =
   globalForPg.pgPool ??
@@ -127,6 +136,116 @@ export async function withPrincipal<T>(
   } finally {
     client.release();
   }
+}
+
+/* ===========================================================================
+ * The console's connection (ADR-0014, plan A4/A5, migration 017)
+ * ======================================================================== */
+
+/**
+ * The operator pool: `ainext_operator`, on `DATABASE_URL_OPERATOR`.
+ *
+ * A third role rather than a second use of `ainext_app`, because the console's
+ * reads are cross-student **by construction** — "what does one child cost" is a
+ * table with every child in it — and `ainext_app` under a student principal
+ * would return an empty report rather than refuse. An empty cost page is the
+ * worst of the three possible answers: it looks like a fact.
+ *
+ * It is NOT `BYPASSRLS`. `ainext_operator` reads what migration 017's policies
+ * and grants permit and nothing else: no `password_hash` (column-level SELECT
+ * on `accounts` is why it cannot, rather than why it does not), no UPDATE or
+ * DELETE on `operator_reads` (FR-2306 — the audit its subject cannot erase), no
+ * grant at all on `verification_tokens` or `password_resets`.
+ *
+ * Lazy, like `maintPool`, and it throws rather than falling back to
+ * `DATABASE_URL`: a console silently reading as `ainext_app` would show every
+ * view empty and every figure zero, which reads as "no activity" rather than as
+ * "misconfigured".
+ */
+export function operatorPool(): Pool {
+  if (globalForPg.pgOperatorPool) return globalForPg.pgOperatorPool;
+  const dsn = process.env.DATABASE_URL_OPERATOR;
+  if (!dsn) {
+    throw new Error(
+      "DATABASE_URL_OPERATOR is not set. The console reads as ainext_operator " +
+        "and must never silently fall back to the application role — under a " +
+        "student principal every cross-student read returns zero rows, so the " +
+        "console would render an empty, plausible, wrong report."
+    );
+  }
+  // Smaller than the app pool: the console has a handful of operators, and
+  // these connections come out of the same Postgres budget as the students'.
+  const p = new Pool({ connectionString: dsn, max: 8 });
+  globalForPg.pgOperatorPool = p;
+  return p;
+}
+
+/**
+ * Run one console read as the operator, with the operator recorded on the
+ * transaction.
+ *
+ * `app.operator_id` is set for the same reason `app.student_id` is: so the
+ * database knows who is asking without being told again by every query. **No
+ * policy in migration 017 reads it today** — the operator policies are
+ * `USING (true)`, because the role itself is the grant — and it is set anyway
+ * because the audit columns and any future per-operator policy have to be able
+ * to. Setting it costs one round trip inside a transaction we are opening
+ * regardless; adding it later would mean auditing every call site.
+ *
+ * Transaction-scoped (`set_config(..., true)`), never session-level, for
+ * exactly the reason `withPrincipal` is: a pooled connection outlives the
+ * request that borrowed it.
+ */
+export async function withOperator<T>(
+  operatorId: number,
+  fn: (c: PoolClient) => Promise<T>
+): Promise<T> {
+  if (!Number.isInteger(operatorId) || operatorId <= 0) {
+    throw new Error(`withOperator: ${operatorId} is not an operator id`);
+  }
+  const client = await operatorPool().connect();
+  try {
+    await client.query("BEGIN");
+    await client.query("SELECT set_config('app.operator_id', $1, true)", [String(operatorId)]);
+    const out = await fn(client);
+    await client.query("COMMIT");
+    return out;
+  } catch (err) {
+    try {
+      await client.query("ROLLBACK");
+    } catch {
+      // The transaction is already gone; the original error is the interesting one.
+    }
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Which connection the **authentication** path uses on this surface.
+ *
+ * This is not a nicety; without it the console cannot sign anybody in.
+ * Migration 017 gives `ainext_app` **no grant at all** on `operators` or
+ * `operator_roles`, deliberately and with a comment saying why: "a student
+ * principal cannot discover that operators exist". The console build runs the
+ * same `/api/auth/login` handler against those two tables, so on `admin` it has
+ * to ask as `ainext_operator` — which holds exactly the grants that path needs
+ * and no more: SELECT on `operators` and `operator_roles`, UPDATE on
+ * `operators` for the lockout bookkeeping, SELECT/INSERT/UPDATE on
+ * `auth_sessions` and `auth_throttle`, INSERT on `auth_events`.
+ *
+ * **The alternative was widening `ainext_app`, and it is the wrong one.** Every
+ * student-facing process would then be able to read the operator table, to buy
+ * a capability only the console needs. The narrow role already exists; this
+ * routes to it.
+ *
+ * `process.env` is read directly rather than through `lib/env.ts` because this
+ * module is the bottom of the dependency graph and `db.test.mts` loads it under
+ * `node --test`, which has no `@/` alias. The resolution matches `env.ts`'s.
+ */
+export function authPool(): Pool {
+  return process.env.AINEXT_SURFACE === "admin" ? operatorPool() : pool;
 }
 
 /**

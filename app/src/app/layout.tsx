@@ -13,7 +13,7 @@ import "./globals.css";
 import { NavLinks } from "@/components/NavLinks";
 import { NoorMark } from "@/components/NoorMark";
 import { VerificationBanner } from "@/components/auth/VerificationBanner";
-import { IS_MVP1, INTERNAL_SURFACES } from "@/lib/env";
+import { IS_CONSOLE, IS_MVP1 } from "@/lib/env";
 import { resolveStudentContext } from "@/lib/student-context";
 
 const fraunces = Fraunces({
@@ -144,7 +144,14 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const student = await resolveStudentContext();
+  // On the console build the shell belongs to `(console)/layout.console.tsx`:
+  // its own header, its own nav derived from the operator's roles, its own
+  // footer. Rendering the student chrome above it would put "Study", "Where you
+  // stand" and a student verification banner on top of an operator's screen —
+  // links to routes that 404 on this build, and a state that belongs to a
+  // principal this build refuses. So the root layout stops at the document on
+  // the console and carries no principal read of its own.
+  const student = IS_CONSOLE ? null : await resolveStudentContext();
 
   // data-ds is the whole switch: globals.css redefines every semantic token
   // under [data-ds="noor"], so the comparison build reskins without a single
@@ -160,41 +167,46 @@ export default async function RootLayout({
       className={`${fraunces.variable} ${splineSans.variable} ${splineMono.variable} ${notoNaskhArabic.variable} ${baloo.variable} ${cairo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <header className="relative z-20 border-b border-line bg-card/70 backdrop-blur-sm">
-          <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6">
-            <Link href="/" className="flex items-center gap-2.5">
-              {/* Noor is the product on every surface. Only the strapline
-                  distinguishes the environments — the mark and the name never do. */}
-              <NoorMark className="h-8 w-8 shrink-0" />
-              <span className="font-display text-lg font-bold tracking-tight text-ink">
-                Noor
-              </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
-                {IS_MVP1 ? "Prep 3 · Mathematics" : "Tutor PoC · Data Spine"}
-              </span>
-            </Link>
-            <NavLinks
-              mvp1={IS_MVP1}
-              internal={INTERNAL_SURFACES}
-              signedIn={student !== null}
-              studentName={student?.studentName ?? null}
-            />
-          </div>
-        </header>
-        {student !== null && !student.emailVerified && <VerificationBanner />}
-        <div className="relative z-10 flex-1">{children}</div>
-        <footer className="relative z-10 border-t border-line-soft">
-          <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-            <span>
-              {IS_MVP1
-                ? "Noor · Student MVP 1.0 — comparison environment"
-                : "Noor · Agent-Native Data Spine — investor preview"}
-            </span>
-            {/* course-level, not lesson-level: any selected lesson/unit shows
-                its own module label on the surface itself */}
-            <span>Prep-3 Mathematics · MOETE 2025–2026</span>
-          </div>
-        </footer>
+        {IS_CONSOLE ? (
+          children
+        ) : (
+          <>
+            <header className="relative z-20 border-b border-line bg-card/70 backdrop-blur-sm">
+              <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6">
+                <Link href="/" className="flex items-center gap-2.5">
+                  {/* Noor is the product on every surface. Only the strapline
+                      distinguishes the environments — the mark and the name never do. */}
+                  <NoorMark className="h-8 w-8 shrink-0" />
+                  <span className="font-display text-lg font-bold tracking-tight text-ink">
+                    Noor
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
+                    {IS_MVP1 ? "Prep 3 · Mathematics" : "Tutor PoC · Data Spine"}
+                  </span>
+                </Link>
+                <NavLinks
+                  mvp1={IS_MVP1}
+                  signedIn={student !== null}
+                  studentName={student?.studentName ?? null}
+                />
+              </div>
+            </header>
+            {student !== null && !student.emailVerified && <VerificationBanner />}
+            <div className="relative z-10 flex-1">{children}</div>
+            <footer className="relative z-10 border-t border-line-soft">
+              <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
+                <span>
+                  {IS_MVP1
+                    ? "Noor · Student MVP 1.0 — comparison environment"
+                    : "Noor · Agent-Native Data Spine — investor preview"}
+                </span>
+                {/* course-level, not lesson-level: any selected lesson/unit shows
+                    its own module label on the surface itself */}
+                <span>Prep-3 Mathematics · MOETE 2025–2026</span>
+              </div>
+            </footer>
+          </>
+        )}
       </body>
     </html>
   );

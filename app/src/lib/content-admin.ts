@@ -1,4 +1,4 @@
-import { withMaint } from "@/lib/db";
+import { withOperator } from "@/lib/db";
 import { tallyProvenance, type ProvenanceTally } from "@/lib/provenance";
 
 /**
@@ -10,13 +10,13 @@ import { tallyProvenance, type ProvenanceTally } from "@/lib/provenance";
  * sitting in `review` is a decision not yet taken; a row in `live` is one
  * already taken.
  *
- * P2: move to the operator connection. This is an OPERATOR read — it counts
- * every student's attempts per question, which `ainext_app` cannot see and must
- * not — so until the console has its own principal (`DATABASE_URL_OPERATOR`,
- * plan A5) it runs under `withMaint`, which bypasses every policy. That is a
- * deliberate, temporary hole with a name on it: the surface is reachable only
- * behind `AINEXT_INTERNAL_SURFACES` and Cloudflare Access, and P2 replaces this
- * one call with an authorised operator read that records who looked.
+ * **P2 closed the temporary hole this carried.** It used to run under
+ * `withMaint`, which bypasses every policy, because the console had no
+ * principal of its own. It now runs under `withOperator` — `ainext_operator`,
+ * whose cross-student visibility comes from migration 017's grants rather than
+ * from a bypass. The count of every student's attempts per question is a
+ * cross-student read by construction, and it is one `ainext_app` still cannot
+ * perform at all.
  */
 
 export type AdminQuestionRow = {
@@ -47,9 +47,8 @@ export type ContentAdminView = {
   pendingPromotion: number;
 };
 
-export async function getContentAdminView(): Promise<ContentAdminView> {
-  // P2: move to the operator connection.
-  const res = await withMaint((db) =>
+export async function getContentAdminView(operatorId: number): Promise<ContentAdminView> {
+  const res = await withOperator(operatorId, (db) =>
     db.query(
       `SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.status, q.source,
             q.reviewed_by, q.reviewed_at, q.parent_question_id, q.source_page,

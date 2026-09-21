@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getHomeStats } from "@/lib/queries";
 import { resolveStudentContext } from "@/lib/student-context";
-import { INTERNAL_SURFACES } from "@/lib/env";
 import { NoorMark } from "@/components/NoorMark";
 
 export const dynamic = "force-dynamic";
@@ -155,39 +154,13 @@ export default async function Home() {
           </p>
         </Link>
 
-        {/* The making-of card is for us and for investors, not for a student.
-            On the comparison build this page is the first thing a student sees,
-            and it was offering her a walk through the extraction pipeline
-            (#10). Gated with the route itself, so the card can never outlive
-            the page it points at. */}
-        {INTERNAL_SURFACES && (
-        <Link
-          href="/pipeline"
-          className="ledger-card anim-rise group relative overflow-hidden p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-24px_rgba(169,126,34,0.45)] md:col-span-2"
-          style={{ animationDelay: "440ms" }}
-        >
-          <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-gold">
-                03 · The making-of
-              </p>
-              <h3 className="mt-1.5 font-display text-2xl font-medium text-ink">
-                The Digestion
-              </h3>
-              <p className="mt-1.5 max-w-2xl text-[14px] leading-relaxed text-ink-soft">
-                How the ministry textbook became data an AI can digest — real
-                page scans, the schema-first extraction contract, the human
-                review gate, and the ~5k-token context the agent actually
-                reads.
-              </p>
-            </div>
-            <p className="inline-flex items-center gap-2 text-sm font-semibold text-gold">
-              Walk the pipeline
-              <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-            </p>
-          </div>
-        </Link>
-        )}
+        {/* The making-of card is GONE, with the route it pointed at.
+            `/pipeline` is a console surface now (ADR-0014) — a different build,
+            a different port, and `evidence-access` in front of it — so a card
+            here could only ever be a link to a 404. It was already wrong for
+            this audience (#10): the first thing a student sees should not be a
+            walk through an extraction pipeline. The walk still exists; it is
+            ours, on the console. */}
       </section>
     </main>
   );

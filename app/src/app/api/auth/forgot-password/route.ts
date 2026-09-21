@@ -12,19 +12,31 @@
  * password on an account that has none is the supported way to stop depending
  * on Google, and refusing here would be an enumeration oracle for "which
  * addresses use Google".
+ *
+ * **On the console build (`AINEXT_SURFACE=admin`) this resolves against
+ * `operators` instead.** That is not a convenience: ADR-0014 seeds the first
+ * operator with **no password** so that no credential sits in a config file,
+ * and this flow is the only way he gets one (migration 019 gave
+ * `password_resets` its operator arm). An operator with a NULL `password_hash`
+ * is therefore the NORMAL case here, not an error.
  */
 
 import { recordAuthEvent, requestMeta } from "@/lib/auth/events";
 import { withAuthTx } from "@/lib/auth/session";
 import { bumpThrottle, emailOverLimit, ipOverLimit } from "@/lib/auth/throttle";
 import { issueResetToken } from "@/lib/auth/reset";
-import { resetLink, resetMail, sendMail } from "@/lib/mail";
+import { consoleResetLink, resetLink, resetMail, sendMail } from "@/lib/mail";
 import { ENVIRONMENT } from "@/lib/env";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const ACCEPTED = { status: "accepted" } as const;
+
+/** P2 introduces AINEXT_SURFACE; until then every build is the student one. */
+function isConsole(): boolean {
+  return process.env.AINEXT_SURFACE === "admin";
+}
 
 export async function POST(req: Request) {
   const meta = requestMeta(req);
@@ -47,16 +59,27 @@ export async function POST(req: Request) {
       await bumpThrottle(db, "ip", meta.ip ?? "unknown");
 
       const res = await db.query(
-        `SELECT id FROM accounts WHERE lower(email) = lower($1) AND status <> 'disabled'`,
+        isConsole()
+          ? `SELECT id FROM operators WHERE lower(email) = lower($1) AND status <> 'disabled'`
+          : `SELECT id FROM accounts WHERE lower(email) = lower($1) AND status <> 'disabled'`,
         [email]
       );
       const row = res.rows[0];
       if (!row) return null;
-      const token = await issueResetToken(db, Number(row.id), ENVIRONMENT, recordAuthEvent, meta);
+      const token = await issueResetToken(
+        db,
+        isConsole() ? "operator" : "account",
+        Number(row.id),
+        ENVIRONMENT,
+        recordAuthEvent,
+        meta
+      );
       return token.token;
     });
 
-    if (issued) void sendMail(resetMail(email, resetLink(issued)));
+    if (issued) {
+      void sendMail(resetMail(email, isConsole() ? consoleResetLink(issued) : resetLink(issued)));
+    }
   } catch (err) {
     console.error("[auth] forgot-password failed:", err);
   }

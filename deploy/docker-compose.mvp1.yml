@@ -74,6 +74,10 @@ services:
       # Absolute origin for the links in verification and reset mail. NEVER
       # derived from the request host: a Host header is client-controlled.
       AINEXT_PUBLIC_URL: ${AINEXT_PUBLIC_URL:-https://ainext-mvp1.reletix.com}
+      # The console's own origin, for the links in OPERATOR mail. Same rule,
+      # sharper consequence: a reset link built from a client-supplied Host
+      # walks an operator's reset token to the attacker's server.
+      AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:-}
       # `console` prints links to the log; `smtp` sends them through Mailu.
       AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-console}
       AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-}

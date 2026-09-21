@@ -41,9 +41,19 @@ const REFRESH_CEILING_MS = 1500;
 export function SigninForm({
   next,
   googleAvailable,
+  signupAvailable = true,
 }: {
   next: string;
   googleAvailable: boolean;
+  /**
+   * False on the console build, where `/signup` is not a route at all (ADR-0014,
+   * contracts/auth.md "Operator authentication": operators are seeded or
+   * granted, never self-registered). Decided on the server and passed down as a
+   * boolean, exactly as `googleAvailable` is — a link to a 404 is worse than no
+   * link, and this one would also imply a door into the console that does not
+   * and must not exist.
+   */
+  signupAvailable?: boolean;
 }) {
   const [checking, setChecking] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -172,7 +182,7 @@ export function SigninForm({
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-x-4">
         <TertiaryLink href="/forgot-password">Forgot your password?</TertiaryLink>
-        <TertiaryLink href="/signup">Create an account</TertiaryLink>
+        {signupAvailable && <TertiaryLink href="/signup">Create an account</TertiaryLink>}
       </div>
     </>
   );

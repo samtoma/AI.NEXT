@@ -67,8 +67,12 @@ export type CreatedSession = { id: number; token: string; expiresAt: Date };
  * with no database, no DSN and no Next module aliasing.
  */
 export async function withAuthTx<T>(fn: (db: Queryable) => Promise<T>): Promise<T> {
-  const { pool } = await import("@/lib/db");
-  const client = await pool.connect();
+  // `authPool()` is the application connection on the student build and the
+  // OPERATOR connection on the console — because `ainext_app` has no grant at
+  // all on `operators` or `operator_roles` (migration 017, deliberately), and
+  // this is the transaction that reads them when the console signs somebody in.
+  const { authPool } = await import("@/lib/db");
+  const client = await authPool().connect();
   try {
     await client.query("BEGIN");
     const out = await fn(client as unknown as Queryable);
@@ -389,10 +393,20 @@ export type CredentialResult =
  *
  * **FR-2205 on the console**: an `accounts` credential presented to the admin
  * surface is refused with `permission_denied` rather than accepted as a
- * student. The student password is verified BEFORE that 403 is returned, so the
- * 403-vs-401 difference does not tell an unauthenticated prober which addresses
- * have accounts — it only tells someone who already holds the password that
- * this is the wrong door.
+ * student.
+ *
+ * **It is refused WITHOUT verifying the student's password, and that is
+ * migration 017's decision rather than a shortcut.** The console connects as
+ * `ainext_operator`, which holds column-level SELECT on `accounts` — id, email,
+ * status and the lockout bookkeeping — and deliberately NOT `password_hash`
+ * (FR-2003: "no console query selects password_hash. Column-level SELECT is why
+ * it cannot, rather than why it does not"). Verifying here would mean handing
+ * the console the one column it must never hold, to make a 403 slightly less
+ * informative than a 401 on a surface that is already behind Cloudflare Access
+ * and whose only visitors are invited operators. The cost is named rather than
+ * hidden: on the console, 403-vs-401 does tell a caller that an address has a
+ * student account. The dummy verification still runs, so the two branches cost
+ * the same time.
  */
 export async function authenticateCredential(
   db: Queryable,
@@ -409,14 +423,15 @@ export async function authenticateCredential(
   if (!row) {
     await dummyVerify();
     if (surface === "admin") {
-      // Might be a student trying the console door. Only a verified password
-      // earns the 403 — otherwise this is an ordinary failed sign-in.
-      const student = await loadPrincipalByEmail(db, "accounts", email);
-      if (student?.passwordHash && (await verifyPassword(student.passwordHash, password))) {
+      // Might be a student trying the console door. Existence only — the
+      // console's connection cannot read `password_hash` and must not be given
+      // a reason to (see this function's header).
+      const student = await studentAccountId(db, email);
+      if (student !== null) {
         await record({
           event: "permission_denied",
           outcome: "denied",
-          actor: { kind: "account", id: student.id },
+          actor: { kind: "account", id: student },
           subject: { kind: "surface", id: undefined },
           reason: "student_credential_on_console",
           ip: meta.ip ?? null,
@@ -524,6 +539,22 @@ export type PrincipalRow = {
   studentId: number | null;
   displayName: string;
 };
+
+/**
+ * Does an `accounts` row exist for this address? **Id and nothing else.**
+ *
+ * Used only by the console's wrong-surface branch, and written as its own
+ * query rather than reusing `loadPrincipalByEmail` because that one selects
+ * `password_hash` — a column `ainext_operator` has no grant on, by design.
+ */
+async function studentAccountId(db: Queryable, email: string): Promise<number | null> {
+  const res = await db.query(
+    `SELECT id FROM accounts WHERE lower(email) = lower($1) AND status <> 'disabled'`,
+    [email]
+  );
+  const r = res.rows[0];
+  return r ? Number(r.id) : null;
+}
 
 /** Case-insensitive by the same `lower(email)` index the database uniquely enforces. */
 export async function loadPrincipalByEmail(

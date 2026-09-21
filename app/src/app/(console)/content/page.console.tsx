@@ -2,12 +2,36 @@ import Link from "next/link";
 import { getContentAdminView } from "@/lib/content-admin";
 import { questionProvenance } from "@/lib/provenance";
 import { ProvenanceBadge } from "@/components/ProvenanceBadge";
+import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { TeX } from "@/components/TeX";
+import { consoleAccess } from "@/lib/console-auth";
+import { consoleRoute } from "@/lib/console-routes";
 import { IS_MVP1 } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Content provenance — admin" };
+export const metadata = { title: "Content review — Noor Console" };
+
+/**
+ * Re-homed from `/admin/content` (ADR-0014). The page body below is unchanged;
+ * what is new is the door in front of it.
+ *
+ * `content-review` is a **safety control**, not an administrative convenience
+ * (FR-2204, constitution III): whoever holds it decides what unreviewed,
+ * pipeline-generated content reaches a child. It used to be a build flag —
+ * `AINEXT_INTERNAL_SURFACES` — which could tell a build from a build but not
+ * one person from another. Now it is a role held by a named person, and
+ * exercising it is recorded.
+ */
+const PATH = "/content";
+
+export default async function ContentConsolePage() {
+  const access = await consoleAccess(PATH);
+  if (!access.ok) {
+    return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
+  }
+  return <ContentAdminPage operatorId={access.operatorId} />;
+}
 
 /**
  * /admin/content — where did every question come from, and has a human read it?
@@ -22,8 +46,8 @@ export const metadata = { title: "Content provenance — admin" };
  * Operator surface, not a student one. It shows stems and answers-adjacent
  * metadata and is reachable only from the internal nav.
  */
-export default async function ContentAdminPage() {
-  const view = await getContentAdminView();
+async function ContentAdminPage({ operatorId }: { operatorId: number }) {
+  const view = await getContentAdminView(operatorId);
 
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-8">

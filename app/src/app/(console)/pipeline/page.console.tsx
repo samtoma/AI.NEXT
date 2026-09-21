@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
-import { INTERNAL_SURFACES } from "@/lib/env";
-import { getPipelineData } from "@/lib/pipeline-queries";
-import { resolveStudentId } from "@/lib/student-context";
+import { getPipelineDataForOperator } from "@/lib/pipeline-queries";
+import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
+import { consoleAccess } from "@/lib/console-auth";
+import { consoleRoute } from "@/lib/console-routes";
 import { SourceStage } from "@/components/pipeline/SourceStage";
 import { SchemaStage } from "@/components/pipeline/SchemaStage";
 import { ReviewStage } from "@/components/pipeline/ReviewStage";
@@ -209,15 +209,35 @@ function Stage({
   );
 }
 
-export default async function PipelinePage() {
-  // Internal surface — not part of the build a student is handed (#10, #11,
-  // #12). A build-time switch, never a permission check: roles need accounts
-  // (#7, #8, FR-106).
-  if (!INTERNAL_SURFACES) notFound();
+/**
+ * Re-homed from the student build's `/pipeline` (ADR-0014). The body below is
+ * unchanged; what is in front of it and behind it is not.
+ *
+ * **In front**: `evidence-access`, a role held by a named person, replacing the
+ * `AINEXT_INTERNAL_SURFACES` build flag that ADR-0014 names as the cautionary
+ * example — it could tell one build from another and not one person from
+ * another, and this page is the one it was guarding when it mattered.
+ *
+ * **Behind**: no student principal at all. The mastery overlay on the mini-map
+ * used to be the viewer's own, read from a cookie-selected demo student; on the
+ * console there is no viewer with mastery, so the overlay is empty and every
+ * remaining read is corpus data. That is the right answer rather than a
+ * degraded one: reading extraction provenance needs no child's numbers on the
+ * page, which is the same argument that deleted the latest-turn panel
+ * (FR-2104).
+ */
+const PATH = "/pipeline";
 
-  // the cookie-selected demo student (validated; defaults to Omar) — the
-  // grounding-slice panel quotes HIS mastery numbers
-  const data = await getPipelineData(await resolveStudentId());
+export default async function PipelineConsolePage() {
+  const access = await consoleAccess(PATH);
+  if (!access.ok) {
+    return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
+  }
+  return <PipelinePage operatorId={access.operatorId} />;
+}
+
+async function PipelinePage({ operatorId }: { operatorId: number }) {
+  const data = await getPipelineDataForOperator(operatorId);
   const {
     doc,
     run,

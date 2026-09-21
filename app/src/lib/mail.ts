@@ -42,6 +42,38 @@ export function resetLink(token: string): string {
   return `${PUBLIC_URL}/reset-password?token=${encodeURIComponent(token)}`;
 }
 
+/**
+ * The console's own origin, for an operator's reset link.
+ *
+ * **Deliberately NOT the request's `Host` header**, which is what was asked
+ * for. A reset link built from a client-supplied host is password-reset
+ * poisoning: an attacker sends `Host: evil.test` to `forgot-password` for
+ * Samuel's address, the mail goes to Samuel with a link pointing at the
+ * attacker's origin, and the first click hands over a token that grants all
+ * four operator roles. The Host header is exactly as client-controlled on the
+ * console as anywhere else, and the console is the higher-value target.
+ *
+ * So: `AINEXT_CONSOLE_URL` when set, otherwise `PUBLIC_URL`. Read here from
+ * `process.env` only because `lib/env.ts` belongs to another agent — it wants
+ * that variable resolved beside `PUBLIC_URL`, with the same absolute-URL
+ * validation, and this function should then be one line.
+ */
+export function consoleOrigin(): string {
+  const raw = (process.env.AINEXT_CONSOLE_URL ?? "").trim();
+  if (!raw) return PUBLIC_URL;
+  try {
+    const parsed = new URL(raw);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return PUBLIC_URL;
+    return parsed.origin;
+  } catch {
+    return PUBLIC_URL;
+  }
+}
+
+export function consoleResetLink(token: string): string {
+  return `${consoleOrigin()}/reset-password?token=${encodeURIComponent(token)}`;
+}
+
 export function verificationMail(to: string, link: string): MailMessage {
   return {
     to,

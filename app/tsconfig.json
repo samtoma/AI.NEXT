@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,7 +26,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
@@ -31,7 +37,26 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    ".next-admin/types/**/*.ts",
+    ".next-admin/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  // `.next-admin` is the console build's distDir (ADR-0014). It is EXCLUDED and
+  // must stay excluded: Next generates `types/routes.d.ts` per build, and each
+  // copy declares the same GLOBAL `LayoutProps` / `PageProps` against its own
+  // surface's route union. Two surfaces' copies in one program is two
+  // definitions of one global that disagree — `tsc` then reports the console's
+  // `/dev` layout as not assignable to the student build's `"/"`, which is a
+  // real conflict wearing a confusing message.
+  //
+  // `next build` rewrites this file and re-adds `.next-admin/types` to
+  // `include` on every console build. `exclude` filters `include`, so it wins
+  // and the re-addition is inert. Do not "tidy" it away.
+  //
+  // The console's own types are still checked: `next build` type-checks the
+  // build it is making, and CI runs both builds (ADR-0014, ci-cd.yml).
+  "exclude": [
+    "node_modules",
+    ".next-admin"
+  ]
 }

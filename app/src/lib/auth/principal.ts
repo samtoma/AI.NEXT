@@ -25,8 +25,8 @@
 
 import { cookies } from "next/headers";
 
-import { pool, type Principal } from "@/lib/db";
-import { ENVIRONMENT } from "@/lib/env";
+import { authPool, pool, type Principal } from "@/lib/db";
+import { ENVIRONMENT, IS_CONSOLE } from "@/lib/env";
 
 import { ACCESS_COOKIE } from "./cookies.ts";
 import { verifyAccessToken, type AccessClaims } from "./tokens.ts";
@@ -62,10 +62,47 @@ export async function currentClaims(): Promise<AccessClaims | null> {
   return verifyAccessToken(token, ENVIRONMENT);
 }
 
+/**
+ * FR-2205 — a student principal does not exist on the console build.
+ *
+ * This is not belt-and-braces theatre; it closes a hole that is open on every
+ * laptop in the project. **Cookies do not distinguish ports.** A student who
+ * signs in on `localhost:3000` sets `ainext_at` for `localhost`, and the
+ * browser then sends that cookie to `localhost:3002` — the console — where it
+ * is a perfectly valid, correctly signed, unrevoked student session. Without
+ * this the console would resolve her as a student principal and every
+ * `authorize({ role })` would refuse her with `student_on_console`, which is
+ * the right answer arrived at one layer too late: `requireStudent` (and so
+ * `/api/ask`, `/api/attempts`, `/api/understanding`, `/api/uploads`) sits
+ * BELOW that seam and would have accepted her.
+ *
+ * So the downgrade happens here, where every one of those paths reads from:
+ * on the admin surface a student token resolves to `anonymous`, and the attempt
+ * is recorded as `permission_denied` rather than dropped. Anonymous — not an
+ * exception — because this layer's contract is "who is asking", and on this
+ * build the honest answer for a student credential is "nobody we serve".
+ *
+ * The event write is fire-and-forget by construction (`recordAuthEvent` never
+ * throws and never rejects), so a slow `auth_events` insert cannot become a
+ * slow page.
+ */
+async function refuseStudentOnConsole(claims: AccessClaims): Promise<Principal> {
+  const { recordAuthEvent } = await import("./events.ts");
+  await recordAuthEvent({
+    event: "permission_denied",
+    outcome: "denied",
+    actor: { kind: "account", id: claims.sub },
+    subject: { kind: "surface" },
+    reason: "student_principal_on_admin_surface",
+  });
+  return ANONYMOUS;
+}
+
 export async function currentPrincipal(): Promise<Principal> {
   try {
     const claims = await currentClaims();
     if (!claims) return ANONYMOUS;
+    if (claims.knd !== "operator" && IS_CONSOLE) return await refuseStudentOnConsole(claims);
     return claims.knd === "operator"
       ? await loadOperatorPrincipal(claims)
       : await loadStudentPrincipal(claims);
@@ -99,7 +136,8 @@ async function loadStudentPrincipal(claims: AccessClaims): Promise<Principal> {
 }
 
 async function loadOperatorPrincipal(claims: AccessClaims): Promise<Principal> {
-  const res = await pool.query(
+  // The operator connection: `ainext_app` cannot see `operators` at all.
+  const res = await authPool().query(
     `SELECT o.id,
             coalesce(array_agg(DISTINCT r.role) FILTER (WHERE r.role IS NOT NULL), '{}') AS roles
        FROM auth_sessions x
@@ -160,7 +198,7 @@ export async function principalProfile(me: Principal): Promise<PrincipalProfile 
     };
   }
   if (me.kind === "operator") {
-    const res = await pool.query(`SELECT display_name FROM operators WHERE id = $1`, [
+    const res = await authPool().query(`SELECT display_name FROM operators WHERE id = $1`, [
       me.operatorId,
     ]);
     const row = res.rows[0];

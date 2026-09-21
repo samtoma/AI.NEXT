@@ -110,6 +110,26 @@ export async function getPipelineData(
   return scoped(studentId, undefined, (db) => pipelineDataOn(db, studentId));
 }
 
+/**
+ * The same read, from the console, under `ainext_operator` (ADR-0014, P2).
+ *
+ * `studentId` is `null` and always will be: on the console there is no student
+ * principal, so the mastery overlay is empty and everything else on the page is
+ * corpus data — documents, runs, node and edge counts, one exemplar question.
+ * That is the point rather than a limitation. `evidence-access` reads content,
+ * not students, and this function is what makes that true of the query and not
+ * only of the role's description.
+ *
+ * It is a separate export rather than a parameter on `getPipelineData` because
+ * the two differ in the connection they open, not in the data they want, and a
+ * boolean that switches database roles is a boolean somebody eventually passes
+ * from a request.
+ */
+export async function getPipelineDataForOperator(operatorId: number): Promise<PipelineData> {
+  const { withOperator } = await import("./db");
+  return withOperator(operatorId, (db) => pipelineDataOn(db as unknown as Db, null));
+}
+
 async function pipelineDataOn(
   db: Db,
   studentId: number | null

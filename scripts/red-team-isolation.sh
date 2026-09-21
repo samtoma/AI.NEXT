@@ -4,6 +4,12 @@
 #
 #   ./scripts/red-team-isolation.sh [BASE_URL]     # default http://localhost:3014
 #
+# If BASE_URL already answers (checked with `curl -sf` on /signin — e.g. the
+# orchestrator's own :3000 dev server), this runs against it as-is and starts
+# nothing. Otherwise it builds and starts its own server on :3014 (`next dev`
+# refuses a second instance per project dir; `npm run build && npm run start`
+# is the documented fallback) and tears it down on exit.
+#
 # Exercises every checkable FR-21xx/FR-2501 guarantee against a LIVE server and
 # database: two signed-up accounts, a cookie jar per identity, curl + psql.
 # Prints one line per check:
@@ -51,8 +57,32 @@ psql_maint() { psql "$MAINT_DSN" -v ON_ERROR_STOP=1 -qtA "$@"; }
 psql_app()   { psql "$APP_DSN"   -v ON_ERROR_STOP=1 -qtA "$@"; }
 
 TMP=$(mktemp -d)
-trap 'rm -rf "$TMP"' EXIT
+SERVER_PID=""
+cleanup() {
+  rm -rf "$TMP"
+  [ -n "$SERVER_PID" ] && kill "$SERVER_PID" 2>/dev/null
+}
+trap cleanup EXIT
 BODY="$TMP/body"; HDRS="$TMP/hdrs"
+
+# Reuse a server that is already up (e.g. the orchestrator's :3000) rather than
+# always spinning up our own. Only fall back to build+start on 3014 when
+# nothing answers at BASE.
+if curl -sf -o /dev/null "$BASE/signin"; then
+  echo "=== red-team-isolation.sh — $BASE already answers, using it as-is ==="
+else
+  echo "=== red-team-isolation.sh — $BASE not reachable, building + starting our own on :3014 ==="
+  BASE="http://localhost:3014"
+  ( cd "$APP" && npm run build ) || { echo "build failed" >&2; exit 2; }
+  ( cd "$APP" && PORT=3014 NEXT_TELEMETRY_DISABLED=1 exec npm run start ) >"$TMP/server.log" 2>&1 &
+  SERVER_PID=$!
+  ready=0
+  for _ in $(seq 1 30); do
+    curl -sf -o /dev/null "$BASE/signin" && { ready=1; break; }
+    sleep 1
+  done
+  [ "$ready" = 1 ] || { echo "server on :3014 never became ready — see $TMP/server.log" >&2; cat "$TMP/server.log" >&2; exit 2; }
+fi
 
 JAR_A="$TMP/jar-a.txt"; JAR_A2="$TMP/jar-a2.txt"; JAR_A3="$TMP/jar-a3.txt"; JAR_B="$TMP/jar-b.txt"; JAR_OMAR="$TMP/jar-omar.txt"
 : > "$JAR_A"; : > "$JAR_A2"; : > "$JAR_A3"; : > "$JAR_B"; : > "$JAR_OMAR"
@@ -80,8 +110,7 @@ cookie_value() { # cookie_value JAR NAME
   awk -v n="$2" '$6==n{print $7}' "$1" | tail -1
 }
 
-echo "=== red-team-isolation.sh — target $BASE ==="
-echo "    (this is I2e's own server on :3014; the orchestrator's :3000 is untouched)"
+echo "    target: $BASE"
 
 # ------------------------------------------------------------- idempotent setup
 say_section() { printf '\n--- %s ---\n' "$*"; }
@@ -114,20 +143,21 @@ cleanup_account "qa-a@local.test"
 cleanup_account "qa-b@local.test"
 
 # =====================================================================
-# 1. FR-2104 — the picker is gone; /pipeline leaks no interaction content
+# 1. FR-2104 — the picker is gone; /pipeline is off the student build
 # =====================================================================
-say_section "1. demo-students gone, /pipeline leaks nothing"
+# Phase 2 re-homed /pipeline (and /admin/*, /gallery, /dev/*) onto the console
+# build (FR-2201), so on the student build it must now 404 like any other
+# route that does not exist there — not render 200 with content scrubbed out.
+# The "no cross-student transcript leaks on /pipeline" proof belongs to the
+# console build now and lives in scripts/console-smoke.sh, not here.
+say_section "1. demo-students and /pipeline both gone from the student build"
 
 code=$(req GET /api/demo-students -)
 check FR-2104 "GET /api/demo-students -> 404 (was: $code)" "$([ "$code" = 404 ] && echo 1 || echo 0)"
 
 code=$(req GET /pipeline -)
-pipe_ok=0
-if [ "$code" = 200 ]; then
-  if ! grep -qi 'grounding' "$BODY" && ! grep -qi 'ai_interactions' "$BODY"; then pipe_ok=1; fi
-fi
-check FR-2104 "GET /pipeline -> 200, no 'grounding'/'ai_interactions' text in HTML (status $code)" "$pipe_ok"
-note "ai_interactions held 0 rows at test time (fresh reset); corroborated by source: pipeline-queries.ts's own header says the latest-turn SELECT was deleted"
+check FR-2104 "GET /pipeline (student build) -> 404 (was: $code)" "$([ "$code" = 404 ] && echo 1 || echo 0)"
+note "cross-student transcript leak proof for /pipeline now lives in scripts/console-smoke.sh (console build, FR-2201)"
 
 # =====================================================================
 # 2. Anonymous: pages redirect, APIs 401

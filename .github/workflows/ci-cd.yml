@@ -41,10 +41,32 @@ jobs:
       - run: npm ci
       - name: Typecheck
         run: npx tsc --noEmit
-      - name: Build
+
+      # TWO BUILD TARGETS, ONE CODEBASE (ADR-0014). The student build and the
+      # admin console differ by `AINEXT_SURFACE`, which decides which files are
+      # routes (`pageExtensions`) and where the artefact lands (`distDir`), so
+      # they do not clobber each other and both can be checked in one job.
+      #
+      # Each build is followed by its route-manifest assertion, and that is the
+      # gate that matters: FR-2201 says the console's addresses MUST NOT resolve
+      # in the student build, and `check:surface` proves it from
+      # `app-path-routes-manifest.json` rather than from a runtime `notFound()`.
+      # It fails in both directions — a console route leaking into the student
+      # build, and a console route missing from the console build — so a green
+      # check cannot mean "shipped nothing".
+      - name: Build (student surface)
         run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: "1"
+      - name: Route manifest — no console routes in the student build (FR-2201)
+        run: npm run check:surface
+
+      - name: Build (admin console surface)
+        run: npm run build:admin
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+      - name: Route manifest — every console route present in the console build
+        run: npm run check:surface:admin
 
       # The suite existed for weeks and CI never ran it — including through two
       # edits to this very file. A test suite nobody runs is documentation in a

@@ -1,4 +1,6 @@
-import { pool } from "@/lib/db";
+import { withOperator } from "@/lib/db";
+import { consoleAccess } from "@/lib/console-auth";
+import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import type { SpineQuestion, Tier } from "@/lib/types";
 import { StoredWidgets } from "./client";
 
@@ -12,15 +14,26 @@ import { StoredWidgets } from "./client";
  */
 export const dynamic = "force-dynamic";
 
+/**
+ * Re-homed under the console (ADR-0014). `/dev/layout.console.tsx` holds the
+ * `evidence-access` gate for every harness here; this page repeats the call
+ * only to obtain the operator id its own read needs — the decision is the
+ * layout's and the seam's, not a second one.
+ */
 export default async function WidgetQuestionsPage() {
-  const res = await pool.query(
-    `SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.choices,
+  const access = await consoleAccess("/dev/widget-questions");
+  if (!access.ok) return <ConsoleRefusal status={access.status} roles={["evidence-access"]} />;
+
+  const res = await withOperator(access.operatorId, (db) =>
+    db.query(
+      `SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.choices,
             q.correct_answer, q.canonical_solution, q.solution_version, q.status,
             q.source, q.parent_question_id, q.source_sha256, q.source_page,
             q.source_note, q.reviewed_by, q.reviewed_at
        FROM questions q
       WHERE q.question_type = 'widget' AND q.status = 'live'
       ORDER BY q.lo_id, q.id`
+    )
   );
 
   const questions: SpineQuestion[] = res.rows.map((r) => ({

@@ -59,9 +59,14 @@ function recorder() {
   };
 }
 
-function fakeDb(rowsFor: (sql: string, values: readonly unknown[]) => Row[]): Queryable {
+function fakeDb(rowsFor: (sql: string, values: readonly unknown[]) => Row[]): Queryable & {
+  calls: { sql: string; values: readonly unknown[] }[];
+} {
+  const calls: { sql: string; values: readonly unknown[] }[] = [];
   return {
+    calls,
     query: async (sql: string, values: readonly unknown[] = []) => {
+      calls.push({ sql, values });
       const rows = rowsFor(sql, values);
       return { rows, rowCount: rows.length };
     },
@@ -244,11 +249,18 @@ test("[12] a console sign-in emits operator_login carrying the roles in effect",
 });
 
 // FR-2205 — a student credential at the console door.
+//
+// P2 changed the QUERY this branch runs and not the behaviour it asserts. The
+// console connects as `ainext_operator`, which holds column-level SELECT on
+// `accounts` and deliberately NOT `password_hash` (migration 017, FR-2003), so
+// the branch can no longer verify the student's password before refusing — it
+// asks whether the address exists, with `SELECT id FROM accounts`. The refusal,
+// the event and its reason are unchanged; the fake below matches the narrower
+// read the console is actually permitted.
 test("[10] a student credential on the console emits permission_denied", async () => {
-  const row = await accountRow("student-password-1");
   const db = fakeDb((sql) => {
     if (sql.includes("FROM operators o")) return []; // no such operator
-    if (sql.includes("FROM accounts a LEFT JOIN students")) return [row];
+    if (sql.includes("SELECT id FROM accounts")) return [{ id: 7 }];
     return [];
   });
   const r = recorder();
@@ -348,25 +360,79 @@ test("[7b] a signed-in resend needs no address, and reuses the same branch", asy
 test("[6] forgot-password emits password_reset_requested", async () => {
   const db = fakeDb(() => []);
   const r = recorder();
-  await issueResetToken(db, 42, "mvp1", r.record, META, NOW);
+  await issueResetToken(db, "account", 42, "mvp1", r.record, META, NOW);
   assert.deepEqual(r.names(), ["password_reset_requested"]);
 });
 
 test("[5] completing a reset revokes every session, then emits password_changed", async () => {
   const db = fakeDb((sql) => {
-    if (sql.includes("UPDATE password_resets")) return [{ account_id: 42 }];
+    if (sql.includes("UPDATE password_resets")) return [{ principal_id: 42 }];
     if (sql.includes("SET revoked_at")) return [{ id: 1 }, { id: 2 }];
     return [];
   });
   const r = recorder();
-  const out = await completeReset(db, "token", "a-new-password-9", r.record, META, NOW);
+  const out = await completeReset(db, "token", "a-new-password-9", "account", r.record, META, NOW);
   assert.equal(out.ok, true);
+  if (out.ok) assert.equal(out.kind, "account");
   assert.deepEqual(r.names(), [
     "session_revoked",
     "session_revoked",
     "password_reset_completed",
     "password_changed",
   ]);
+});
+
+/**
+ * ADR-0014's operator has NO password by design — `bootstrap-operator.mts`
+ * refuses to write one so that no credential sits in a config file — and this
+ * is the only flow that gives him one. Before migration 019 it could not:
+ * `password_resets.account_id` was NOT NULL with an FK to `accounts`.
+ */
+test("[5b/6b] a console reset writes operators, not accounts, and says operator", async () => {
+  const issued = fakeDb(() => []);
+  const a = recorder();
+  await issueResetToken(issued, "operator", 1, "mvp1", a.record, META, NOW);
+  assert.deepEqual(a.names(), ["password_reset_requested"]);
+  assert.equal(a.seen[0]!.actor?.kind, "operator");
+  assert.ok(
+    issued.calls.some((c) => c.sql.includes("INSERT INTO password_resets (operator_id")),
+    "the row carries the operator arm"
+  );
+
+  const done = fakeDb((sql) => {
+    if (sql.includes("UPDATE password_resets")) return [{ principal_id: 1 }];
+    if (sql.includes("SET revoked_at")) return [{ id: 8 }];
+    return [];
+  });
+  const b = recorder();
+  const out = await completeReset(done, "token", "an-operator-password-9", "operator", b.record, META, NOW);
+  assert.equal(out.ok, true);
+  if (out.ok) {
+    assert.equal(out.kind, "operator");
+    assert.equal(out.id, 1);
+  }
+  assert.deepEqual(b.names(), ["session_revoked", "password_reset_completed", "password_changed"]);
+  for (const e of b.seen) assert.equal(e.actor?.kind, "operator");
+  assert.ok(done.calls.some((c) => c.sql.includes("UPDATE operators")));
+  assert.equal(
+    done.calls.some((c) => c.sql.includes("UPDATE accounts")),
+    false,
+    "a console reset must never touch a student account"
+  );
+  // The arm is in the predicate, so a student token cannot even be consumed here.
+  assert.ok(done.calls[0]!.sql.includes("operator_id IS NOT NULL"));
+});
+
+test("[5c] the two arms cannot consume each other's tokens", async () => {
+  // The UPDATE's own predicate carries the arm, so a row of the other kind
+  // matches nothing and comes back as an unknown token.
+  const none = fakeDb(() => []);
+  const r = recorder();
+  assert.deepEqual(
+    await completeReset(none, "student-token", "a-new-password-9", "operator", r.record, META, NOW),
+    { ok: false }
+  );
+  assert.deepEqual(r.names(), [], "a token that matches nothing changes nothing");
 });
 
 // ---------------------------------------------------------------------------

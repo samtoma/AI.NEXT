@@ -37,6 +37,7 @@ APP_DSN="postgres://ainext_app:ainext_app@$HOST:$PORT/$DB"
 OPERATOR_DSN="postgres://ainext_operator:ainext_operator@$HOST:$PORT/$DB"
 MAINT_DSN="postgres://ainext_maint:ainext_maint@$HOST:$PORT/$DB"
 PUBLIC_URL=${AINEXT_PUBLIC_URL:-http://localhost:3000}
+CONSOLE_URL=${AINEXT_CONSOLE_URL:-http://localhost:3002}
 BOOTSTRAP_EMAIL=${AINEXT_BOOTSTRAP_OPERATOR_EMAIL:-samuel.s.toma@gmail.com}
 
 say()  { printf '\n\033[1m%s\033[0m\n' "$*"; }
@@ -281,6 +282,9 @@ env_add AINEXT_MAIL_TRANSPORT console \
   "No mail server on a laptop: verification and reset links are printed to the" \
   "dev-server log and written under app/.local-mail/."
 env_add AINEXT_PUBLIC_URL "$PUBLIC_URL" "Absolute origin for the links in that mail."
+env_add AINEXT_CONSOLE_URL "$CONSOLE_URL" \
+  "The console's own origin, for operator mail. Configured, never taken from the" \
+  "request: a reset link built from a client-supplied Host is reset poisoning."
 env_add AINEXT_BOOTSTRAP_OPERATOR_EMAIL "$BOOTSTRAP_EMAIL" \
   "The first operator (ADR-0014). Seeded with all four roles and NO password;" \
   "you get one through the ordinary reset flow."
@@ -361,6 +365,12 @@ cat <<INFO
   Try:
     open http://localhost:3000/signin       sign in (the seed script prints the credentials)
     open http://localhost:3000/spine        the curriculum graph
+    open http://localhost:3002/             the admin console (--admin or --both)
+
+  Prove the build split (ADR-0014, FR-2201) — the console's routes are not in
+  the student build at all, which is a fact about the artefact:
+    cd app && npm run build && npm run check:surface
+    cd app && npm run build:admin && npm run check:surface:admin
 
   Prove the isolation (ADR-0012) — as ainext_app, NOT as yourself:
     psql "$APP_DSN" -f app/scripts/rls-proof.sql
@@ -375,9 +385,19 @@ cat <<INFO
 INFO
 
 # The console is a second build target (ADR-0014, research R10): one database,
-# one command, two ports. AINEXT_SURFACE only bites once P2 lands the
-# pageExtensions/distDir split — until then --admin is an ordinary dev server
-# on :3002, which is harmless and keeps the flag honest from the start.
+# one command, two ports. Since P2, AINEXT_SURFACE bites — it selects the
+# pageExtensions that decide which files are routes, and the distDir the build
+# lands in (`.next` vs `.next-admin`).
+#
+# TWO `next dev` SERVERS AT ONCE: yes, and here is why, because R10 flagged it
+# as unverified. Next 16 takes a dev lock at **<distDir>/dev/lock**, not at the
+# project directory — measured, 2026-09-20: the console holds
+# `.next-admin/dev/lock` and the student build holds `.next/dev/lock`, both
+# carrying their own pid and port, and neither refuses the other. Because the
+# surfaces already need different distDirs so their BUILDS do not clobber each
+# other, the locks are different files for free. So `--both` is dev + dev, with
+# hot reload on both surfaces, and the `next build && next start` fallback R10
+# named for the console is not needed.
 serve_student() { NEXT_TELEMETRY_DISABLED=1 npm run dev; }
 serve_admin()   { AINEXT_SURFACE=admin PORT=3002 NEXT_TELEMETRY_DISABLED=1 npm run dev; }
 

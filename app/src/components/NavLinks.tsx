@@ -4,12 +4,16 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+/**
+ * The investor-preview nav. "Gallery" and "Pipeline" are no longer here
+ * because those routes are no longer in this build at all (ADR-0014): they are
+ * console surfaces now, reached on the console's own port and behind
+ * `evidence-access`. A link that 404s is worse than a link that is missing.
+ */
 const LINKS = [
   { href: "/", label: "Overview" },
   { href: "/spine", label: "Evidence Walk" },
   { href: "/student", label: "Student Loop" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/pipeline", label: "Pipeline" },
 ];
 
 /**
@@ -30,12 +34,16 @@ const MVP1_LINKS = [
   { href: "/dashboard", label: "Where you stand" },
 ];
 
-/** Appended only where the internal surfaces are switched on (lib/env.ts). */
-const INTERNAL_LINKS = [
-  { href: "/spine", label: "Evidence Walk" },
-  { href: "/admin/content", label: "Content" },
-  { href: "/pipeline", label: "Pipeline" },
-];
+/**
+ * The internal links are GONE from this build, not hidden in it (ADR-0014).
+ *
+ * "Evidence Walk", "Content" and "Pipeline" used to be appended here wherever
+ * `AINEXT_INTERNAL_SURFACES` was on. Two of those routes no longer exist in
+ * this build at all — they are `page.console.tsx` files that only the console
+ * build compiles — so a link to them would be a link to a 404. `/spine` stays a
+ * student surface (FR-2206) and is still reachable from the lesson report; what
+ * #12 reported was the tab, and the tab is still gone.
+ */
 
 /**
  * The shell's one row — and, since P1, the place the sign-in state is visible.
@@ -49,30 +57,19 @@ const INTERNAL_LINKS = [
  */
 export function NavLinks({
   mvp1 = false,
-  internal = true,
   signedIn = false,
   studentName = null,
 }: {
   mvp1?: boolean;
-  internal?: boolean;
   signedIn?: boolean;
   studentName?: string | null;
 }) {
   const pathname = usePathname();
 
-  const studentLinks = mvp1 ? MVP1_LINKS : LINKS;
-  const links = signedIn
-    ? mvp1 && internal
-      ? [...MVP1_LINKS, ...INTERNAL_LINKS]
-      : studentLinks
-    : // Signed out: nothing that needs a principal. The internal surfaces stay
-      // where they are switched on — they are ours and are gated by Cloudflare
-      // Access rather than by this nav — but `/spine` drops out with the
-      // student links, because it colours the graph by ONE student's mastery
-      // and now redirects a signed-out visitor straight back to `/signin`.
-      internal && mvp1
-      ? INTERNAL_LINKS.filter((l) => l.href !== "/spine")
-      : [];
+  // Signed out: nothing that needs a principal. `/spine` drops out with the
+  // student links, because it colours the graph by ONE student's mastery and
+  // redirects a signed-out visitor straight back to `/signin`.
+  const links = signedIn ? (mvp1 ? MVP1_LINKS : LINKS) : [];
 
   return (
     <nav className="flex items-center gap-1">

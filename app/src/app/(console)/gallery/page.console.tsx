@@ -1,5 +1,6 @@
-import { notFound } from "next/navigation";
-import { INTERNAL_SURFACES } from "@/lib/env";
+import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
+import { consoleAccess } from "@/lib/console-auth";
+import { consoleRoute } from "@/lib/console-routes";
 import { getGalleryData } from "@/lib/visuals";
 import { Visual } from "@/components/viz/Visual";
 import { kindMeta } from "@/components/viz/kind-meta";
@@ -7,20 +8,31 @@ import { kindMeta } from "@/components/viz/kind-meta";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "The Plate Gallery — Noor Tutor PoC",
+  title: "Gallery — Noor Console",
 };
 
 /**
  * /gallery — every visual in the spine, rendered live from its {kind, spec}
  * row. One renderer library, hundreds of data specs: this page is the proof
  * that the producer→consumer contract (VIZ_SPEC.md) holds.
+ *
+ * Re-homed from the student build (ADR-0014) and now behind `evidence-access`
+ * rather than a build flag. It reads `visuals` — corpus, not student data — on
+ * the ordinary connection: that table has no RLS and is granted to both roles,
+ * so there is nothing here for the operator connection to unlock and no reason
+ * to open a second pool to read it.
  */
-export default async function GalleryPage() {
-  // Internal surface — not part of the build a student is handed (#10, #11,
-  // #12). A build-time switch, never a permission check: roles need accounts
-  // (#7, #8, FR-106).
-  if (!INTERNAL_SURFACES) notFound();
+const PATH = "/gallery";
 
+export default async function GalleryConsolePage() {
+  const access = await consoleAccess(PATH);
+  if (!access.ok) {
+    return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
+  }
+  return <GalleryPage />;
+}
+
+async function GalleryPage() {
   const data = await getGalleryData();
 
   return (

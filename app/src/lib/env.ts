@@ -32,9 +32,60 @@ export const ENVIRONMENT: Environment = resolve();
 /** True on the comparison build. Use for env-gated behaviour, never for data attribution. */
 export const IS_MVP1 = ENVIRONMENT === "mvp1";
 
+/* ===========================================================================
+ * Which surface this build IS (ADR-0014, plan A4, research R9).
+ * ======================================================================== */
+
+export type Surface = "student" | "admin";
+
+const VALID_SURFACES: readonly Surface[] = ["student", "admin"] as const;
+
+/**
+ * `student` or `admin`, resolved exactly the way `ENVIRONMENT` is: from
+ * configuration only, defaulting to the safe value, throwing on a value it
+ * cannot make sense of.
+ *
+ * The default is `student` because that is the surface a child is handed: a
+ * typo in the variable must produce the build with LESS in it, never the one
+ * with the console in it. And an unrecognised value refuses to start rather
+ * than silently choosing — a stack that thinks it is the console while serving
+ * lessons is the failure this whole split exists to prevent.
+ *
+ * `next.config.ts` resolves the same variable independently, because a Next
+ * config is loaded before this module's graph exists. The two lists are
+ * identical and a mismatch would show up as a build whose routes disagree with
+ * its own runtime checks.
+ */
+function resolveSurface(): Surface {
+  const raw = (process.env.AINEXT_SURFACE ?? "").trim().toLowerCase();
+  if (!raw) return "student";
+  if ((VALID_SURFACES as readonly string[]).includes(raw)) return raw as Surface;
+  throw new Error(
+    `AINEXT_SURFACE="${raw}" is not one of ${VALID_SURFACES.join(" | ")}. ` +
+      `Refusing to start rather than serve a surface nobody asked for.`
+  );
+}
+
+export const SURFACE: Surface = resolveSurface();
+
+/** True on the admin console build. The console's routes exist only here. */
+export const IS_CONSOLE = SURFACE === "admin";
+
 /**
  * Whether the INTERNAL surfaces are reachable: `/pipeline`, `/admin/*`,
  * `/gallery` and `/dev/*`.
+ *
+ * **DEPRECATED, and honoured for one release only (ADR-0014 Consequences).**
+ * `AINEXT_SURFACE` has replaced it: those routes now live in the console build
+ * and are absent from the student build at build time, which is what FR-2201
+ * asked for and what this flag could only approximate. Nothing in the
+ * application reads `INTERNAL_SURFACES` any more — it is exported so a stack
+ * still setting the variable gets a warning rather than a silent no-op, and it
+ * is removed at the cut of the release after the console ships (owner Samuel).
+ *
+ * Two flags that both decide route scope is how a surface ends up enabled by
+ * one and disabled by the other, so the warning names the replacement rather
+ * than merely noting the deprecation.
  *
  * Feedback #10, #11 and #12: a student opening the comparison build was given
  * "Pipeline", "Content" and "Evidence Walk" in the same navigation bar as
@@ -59,6 +110,15 @@ export const IS_MVP1 = ENVIRONMENT === "mvp1";
  */
 function resolveInternalSurfaces(): boolean {
   const raw = (process.env.AINEXT_INTERNAL_SURFACES ?? "").trim().toLowerCase();
+  if (raw !== "") {
+    // One line, once, at module load — not per request, and not an exception:
+    // a deployment mid-migration must still start.
+    console.warn(
+      `[env] AINEXT_INTERNAL_SURFACES="${raw}" is DEPRECATED and ignored for route scope. ` +
+        `Use AINEXT_SURFACE=admin to build the console (ADR-0014); this variable is ` +
+        `removed at the cut of the release after the console ships.`
+    );
+  }
   if (raw === "on" || raw === "true" || raw === "1") return true;
   if (raw === "off" || raw === "false" || raw === "0") return false;
   return !IS_MVP1;
@@ -146,21 +206,30 @@ export const MAIL_FROM: string =
  * host: a Host header is client-controlled, and a verification link pointed at
  * an attacker's origin is a verification link that verifies for them.
  */
-function resolvePublicUrl(): string {
-  const raw = (process.env.AINEXT_PUBLIC_URL ?? "").trim() || "http://localhost:3000";
+function resolveOrigin(name: string, fallback: string): string {
+  const raw = (process.env[name] ?? "").trim() || fallback;
   let parsed: URL;
   try {
     parsed = new URL(raw);
   } catch {
-    throw new Error(`AINEXT_PUBLIC_URL="${raw}" is not an absolute URL.`);
+    throw new Error(`${name}="${raw}" is not an absolute URL.`);
   }
   if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-    throw new Error(`AINEXT_PUBLIC_URL="${raw}" must be http or https.`);
+    throw new Error(`${name}="${raw}" must be http or https.`);
   }
   return parsed.origin;
 }
 
-export const PUBLIC_URL: string = resolvePublicUrl();
+export const PUBLIC_URL: string = resolveOrigin("AINEXT_PUBLIC_URL", "http://localhost:3000");
+
+/**
+ * The console's own origin, for the links in operator mail — a password reset
+ * built from the request origin is reset poisoning: an attacker sets the Host
+ * header, the mail arrives from us, and the operator's reset token walks to
+ * their server. Falls back to PUBLIC_URL when unset, because one origin is the
+ * normal state until the console gets a hostname of its own (D3).
+ */
+export const CONSOLE_URL: string = resolveOrigin("AINEXT_CONSOLE_URL", PUBLIC_URL);
 
 export type GoogleOAuthConfig = {
   clientId: string;

@@ -1,8 +1,30 @@
+import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
+import { consoleAccess } from "@/lib/console-auth";
+import { consoleRoute } from "@/lib/console-routes";
 import { getCostView } from "@/lib/cost-queries";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "AI cost by function — admin" };
+export const metadata = { title: "Cost — Noor Console" };
+
+/**
+ * Re-homed from `/admin/cost` (ADR-0014). The page body below is unchanged; the
+ * door in front of it is new, and so is the connection behind it.
+ *
+ * `cost-billing` and nothing else. The role reads no student content by the
+ * queries it is permitted (FR-2406) — every figure on this page is a turn
+ * count, a token count or a dollar figure, and there is no message, transcript
+ * or preview anywhere in it.
+ */
+const PATH = "/cost";
+
+export default async function CostConsolePage() {
+  const access = await consoleAccess(PATH);
+  if (!access.ok) {
+    return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
+  }
+  return <CostPage operatorId={access.operatorId} />;
+}
 
 /**
  * /admin/cost — what the AI spent, and on what (feedback #39, FR-C04).
@@ -34,8 +56,8 @@ const KIND_LABEL: Record<string, string> = {
   unattributed: "Before cost attribution existed",
 };
 
-export default async function CostPage() {
-  const view = await getCostView(30);
+async function CostPage({ operatorId }: { operatorId: number }) {
+  const view = await getCostView(operatorId, 30);
 
   if (view.totalTurns === 0) {
     return (

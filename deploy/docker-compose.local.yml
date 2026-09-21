@@ -69,6 +69,9 @@ services:
       # nothing and can reach nothing.
       AINEXT_AUTH_SECRET: local-dev-only-signing-key-0123456789abcdef
       AINEXT_PUBLIC_URL: http://localhost:3000
+      # Operator mail links. Configured, never taken from the request Host —
+      # that is reset poisoning.
+      AINEXT_CONSOLE_URL: http://localhost:3002
       # No mail server here: verification and reset links go to the app log.
       AINEXT_MAIL_TRANSPORT: console
       AINEXT_THINKING_BUDGET: "1024"

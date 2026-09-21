@@ -3,11 +3,11 @@ import { redirect } from "next/navigation";
 import { SigninForm } from "@/components/auth/SigninForm";
 import { safeNext } from "@/components/auth/next-param";
 import { currentPrincipal } from "@/lib/auth/principal";
-import { GOOGLE_OAUTH } from "@/lib/env";
+import { GOOGLE_OAUTH, IS_CONSOLE } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Sign in — Noor" };
+export const metadata = { title: IS_CONSOLE ? "Console sign-in — Noor" : "Sign in — Noor" };
 
 /**
  * /signin — and, for most visitors who land here, not a sign-in at all.
@@ -24,6 +24,12 @@ export const metadata = { title: "Sign in — Noor" };
  *
  * Google availability is read here, from the server's own configuration, and
  * crosses to the client as a boolean. The client id stays on this side.
+ *
+ * **The copy is surface-aware and nothing else is** (ADR-0014). The same form
+ * posts to the same `/api/auth/login`, which authenticates against `operators`
+ * rather than `accounts` when `AINEXT_SURFACE=admin` and refuses a student
+ * credential there with `permission_denied` (FR-2205). One endpoint, one code
+ * path, two tables — the page only says which door this is.
  */
 export default async function SigninPage({
   searchParams,
@@ -35,16 +41,25 @@ export default async function SigninPage({
 
   const me = await currentPrincipal();
   if (me.kind === "student") redirect(next);
+  // On the console an operator who is already signed in is sent on for the
+  // same reason: the form would be a screen they do not need.
+  if (me.kind === "operator") redirect(next);
 
   return (
     <>
       <h1 className="mb-2 text-center font-display text-[1.9rem] font-extrabold text-ink">
-        Welcome back
+        {IS_CONSOLE ? "Console sign-in" : "Welcome back"}
       </h1>
       <p className="mb-7 text-center text-[1rem] text-ink-soft">
-        Pick up where you left off.
+        {IS_CONSOLE
+          ? "Operator accounts only. Student credentials are refused here."
+          : "Pick up where you left off."}
       </p>
-      <SigninForm next={next} googleAvailable={GOOGLE_OAUTH !== null} />
+      <SigninForm
+        next={next}
+        googleAvailable={GOOGLE_OAUTH !== null}
+        signupAvailable={!IS_CONSOLE}
+      />
     </>
   );
 }
