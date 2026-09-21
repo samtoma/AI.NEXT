@@ -138,6 +138,36 @@ export async function withPrincipal<T>(
   }
 }
 
+/**
+ * Run a fixed list of thunks one at a time, in order, and return their results
+ * as a tuple — the fix for pg@9 removing implicit query queuing on a single
+ * client.
+ *
+ * `Promise.all([client.query(a), client.query(b)])` reads as parallel but
+ * both queries share ONE socket; node-postgres has always queued them for you
+ * under the hood, and pg@9 removes that with "Calling client.query() when the
+ * client is already executing a query is deprecated and will be removed in
+ * pg@9.0." `sequential` makes the queuing explicit instead of implicit, and
+ * keeps the call site's shape — a fixed-order tuple of typed results — so
+ * `const [a, b] = await Promise.all([...])` becomes `const [a, b] = await
+ * sequential([...])` with nothing else at the call site changing.
+ *
+ * It only matters inside `withPrincipal`/`withOperator`/`withMaint`, where the
+ * callback's `PoolClient` is one connection shared by every query in the unit
+ * of work. A bare `pool.query(...)` needs none of this: the pool hands out a
+ * fresh connection per call, so those really do run in parallel and
+ * `Promise.all` over them stays correct and stays fast.
+ */
+export async function sequential<T extends readonly unknown[]>(
+  thunks: { [K in keyof T]: () => Promise<T[K]> }
+): Promise<T> {
+  const results: unknown[] = [];
+  for (const thunk of thunks as unknown as readonly (() => Promise<unknown>)[]) {
+    results.push(await thunk());
+  }
+  return results as unknown as T;
+}
+
 /* ===========================================================================
  * The console's connection (ADR-0014, plan A4/A5, migration 017)
  * ======================================================================== */

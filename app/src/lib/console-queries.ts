@@ -1,4 +1,4 @@
-import { withOperator } from "@/lib/db";
+import { sequential, withOperator } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
 import { sessionWallClockMs } from "@/lib/timeline-rules";
 
@@ -332,6 +332,11 @@ export async function getStudent360(
     if (!p) return null;
     const accountId = p.account_id == null ? null : Number(p.account_id);
 
+    // Eleven independent reads, one shared client: `Promise.all` here would
+    // fan them out concurrently on the SAME `PoolClient`, which pg tolerates
+    // today by queuing them and pg@9 refuses outright. `sequential` keeps the
+    // fixed-order, fixed-type tuple this destructure relies on and just runs
+    // them one at a time instead.
     const [
       masteryRes,
       accuracyRes,
@@ -344,20 +349,22 @@ export async function getStudent360(
       flagRes,
       signInRes,
       auditRes,
-    ] = await Promise.all([
+    ] = await sequential([
       // Mastery is BITEMPORAL, so the trajectory is already stored: every
       // revision of an estimate is its own row with its own `system_from`
       // (admin.md §2 — "free"). Nothing is recomputed and nothing is sampled.
-      db.query(
-        `SELECT m.lo_id, m.score, m.system_from, m.system_to, n.label AS lo_label
+      () =>
+        db.query(
+          `SELECT m.lo_id, m.score, m.system_from, m.system_to, n.label AS lo_label
            FROM mastery m
            LEFT JOIN graph_nodes n ON n.id = m.lo_id
           WHERE m.student_id = $1 AND m.environment = $2
           ORDER BY m.lo_id ASC, m.system_from ASC, m.id ASC`,
-        [studentId, ENVIRONMENT]
-      ),
-      db.query(
-        `SELECT q.lo_id, n.label AS lo_label,
+          [studentId, ENVIRONMENT]
+        ),
+      () =>
+        db.query(
+          `SELECT q.lo_id, n.label AS lo_label,
                 count(*)                                   AS attempts,
                 count(*) FILTER (WHERE a.is_correct)       AS correct,
                 count(*) FILTER (WHERE a.modality = 'widget') AS widget_attempts,
@@ -369,14 +376,15 @@ export async function getStudent360(
           WHERE a.student_id = $1 AND a.environment = $2
           GROUP BY q.lo_id, n.label
           ORDER BY attempts DESC, q.lo_id ASC`,
-        [studentId, ENVIRONMENT]
-      ),
+          [studentId, ENVIRONMENT]
+        ),
       // The two time numbers come back as two columns from two tables and are
       // never added together (admin.md §2). One is time inside questions, the
       // other is how long the sittings lasted; their difference is reading,
       // thinking and walking away, which is why blending them destroys both.
-      db.query(
-        `SELECT
+      () =>
+        db.query(
+          `SELECT
            (SELECT coalesce(sum(a.time_ms), 0) FROM attempts a
              WHERE a.student_id = $1 AND a.environment = $2)            AS attempt_ms,
            (SELECT count(*) FROM attempts a
@@ -396,20 +404,22 @@ export async function getStudent360(
                AND s.closed_at IS NULL)                                  AS open_sessions,
            (SELECT count(*) FROM sessions s
              WHERE s.student_id = $1 AND s.environment = $2)             AS sessions_total`,
-        [studentId, ENVIRONMENT]
-      ),
-      db.query(
-        `SELECT s.lo_id, n.label AS lo_label, count(ai.id) AS turns
+          [studentId, ENVIRONMENT]
+        ),
+      () =>
+        db.query(
+          `SELECT s.lo_id, n.label AS lo_label, count(ai.id) AS turns
            FROM ai_interactions ai
            JOIN sessions s         ON s.id = ai.session_id
            LEFT JOIN graph_nodes n ON n.id = s.lo_id
           WHERE ai.student_id = $1 AND ai.environment = $2
           GROUP BY s.lo_id, n.label
           ORDER BY turns DESC`,
-        [studentId, ENVIRONMENT]
-      ),
-      db.query(
-        `SELECT
+          [studentId, ENVIRONMENT]
+        ),
+      () =>
+        db.query(
+          `SELECT
            (SELECT count(*) FROM uploads u
              WHERE u.student_id = $1 AND u.environment = $2)             AS uploads,
            (SELECT count(*) FROM uploads u
@@ -419,10 +429,11 @@ export async function getStudent360(
            (SELECT count(*) FROM ai_interactions ai
              WHERE ai.student_id = $1 AND ai.environment = $2
                AND ai.session_id IS NULL)                                AS turns_no_session`,
-        [studentId, ENVIRONMENT]
-      ),
-      db.query(
-        `SELECT a.misconception_id, mc.label, count(*) AS n,
+          [studentId, ENVIRONMENT]
+        ),
+      () =>
+        db.query(
+          `SELECT a.misconception_id, mc.label, count(*) AS n,
                 max(a.attempted_at) AS last_seen_at
            FROM attempts a
            LEFT JOIN misconceptions mc ON mc.id = a.misconception_id
@@ -430,62 +441,67 @@ export async function getStudent360(
             AND a.misconception_id IS NOT NULL
           GROUP BY a.misconception_id, mc.label
           ORDER BY n DESC, last_seen_at DESC`,
-        [studentId, ENVIRONMENT]
-      ),
-      db.query(
-        `SELECT u.id, u.session_id, u.lo_id, u.mode, u.score, u.verdict,
+          [studentId, ENVIRONMENT]
+        ),
+      () =>
+        db.query(
+          `SELECT u.id, u.session_id, u.lo_id, u.mode, u.score, u.verdict,
                 u.created_at, n.label AS lo_label
            FROM understanding_checks u
            LEFT JOIN graph_nodes n ON n.id = u.lo_id
           WHERE u.student_id = $1 AND u.environment = $2
           ORDER BY u.created_at DESC
           LIMIT ${HISTORY_LIMIT}`,
-        [studentId, ENVIRONMENT]
-      ),
-      db.query(
-        `SELECT coalesce(sum(ai.cost_usd), 0) AS usd, count(*) AS turns,
+          [studentId, ENVIRONMENT]
+        ),
+      () =>
+        db.query(
+          `SELECT coalesce(sum(ai.cost_usd), 0) AS usd, count(*) AS turns,
                 min(ai.created_at) AS first_at, max(ai.created_at) AS last_at
            FROM ai_interactions ai
           WHERE ai.student_id = $1 AND ai.environment = $2`,
-        [studentId, ENVIRONMENT]
-      ),
+          [studentId, ENVIRONMENT]
+        ),
       // FR-2508: type and time. `dispatched` is deliberately NOT selected —
       // the console is not the human channel and must not become a place a
       // flag is triaged, or the separate immediate path quietly becomes a
       // queue somebody checks on Monday.
-      db.query(
-        `SELECT f.flag_type, f.created_at
+      () =>
+        db.query(
+          `SELECT f.flag_type, f.created_at
            FROM safety_flags f
           WHERE f.student_id = $1 AND f.environment = $2
           ORDER BY f.created_at DESC
           LIMIT ${HISTORY_LIMIT}`,
-        [studentId, ENVIRONMENT]
-      ),
-      accountId == null
-        ? Promise.resolve({ rows: [] as Record<string, unknown>[], rowCount: 0 })
-        : db.query(
-            `SELECT e.event, e.outcome, e.occurred_at, e.ip_address
+          [studentId, ENVIRONMENT]
+        ),
+      () =>
+        accountId == null
+          ? Promise.resolve({ rows: [] as Record<string, unknown>[], rowCount: 0 })
+          : db.query(
+              `SELECT e.event, e.outcome, e.occurred_at, e.ip_address
                FROM auth_events e
               WHERE e.environment = $2
                 AND e.actor_kind = 'account' AND e.actor_id = $1
               ORDER BY e.occurred_at DESC
               LIMIT ${HISTORY_LIMIT}`,
-            [accountId, ENVIRONMENT]
-          ),
+              [accountId, ENVIRONMENT]
+            ),
       // The audit panel: who has opened this student's record (admin.md §7 —
       // "an audit nobody can see is an audit nobody checks"). It shows the
       // reader their own reads too, which is the point.
-      db.query(
-        `SELECT r.surface, r.session_id, r.occurred_at, r.reason,
+      () =>
+        db.query(
+          `SELECT r.surface, r.session_id, r.occurred_at, r.reason,
                 o.display_name, o.email
            FROM operator_reads r
            LEFT JOIN operators o ON o.id = r.operator_id
           WHERE r.student_id = $1 AND r.environment = $2
           ORDER BY r.occurred_at DESC
           LIMIT ${HISTORY_LIMIT}`,
-        [studentId, ENVIRONMENT]
-      ),
-    ]);
+          [studentId, ENVIRONMENT]
+        ),
+    ] as const);
 
     // Written last and inside the same transaction as all of the above.
     await onRead(db);

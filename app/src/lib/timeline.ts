@@ -22,7 +22,11 @@
  * unreadable and would cast six different row shapes into one. At n ≤ 200
  * students and tens of rows per session the cost is noise; the cost of a merge
  * nobody can read is not. All seven run inside ONE `withOperator` transaction,
- * so they see one snapshot and the audit row commits with them or not at all.
+ * so they see one snapshot and the audit row commits with them or not at all —
+ * and, because they share that transaction's one `PoolClient`, they run
+ * `sequential`ly rather than via `Promise.all`: pg queues same-client queries
+ * for you today, but pg@9 turns that into a hard "client already executing a
+ * query" error, so this module stops relying on the queuing being implicit.
  *
  * **`outcome` is read without being required to exist.** data-model §12 adds
  * four columns to `ai_interactions`; migration 020 adds only
@@ -34,7 +38,7 @@
  * to one session.
  */
 
-import { withOperator } from "@/lib/db";
+import { sequential, withOperator } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
 import {
   buildTimeline,
@@ -125,13 +129,13 @@ export async function getSessionTimeline(
     // seconds ago belongs to the session the student is still in.
     const windowEnd = header.closedAt ?? new Date().toISOString();
 
-    const [turns, attempts, checks, uploads, masteryMoves] = await Promise.all([
-      loadTurns(db, studentId, sessionId),
-      loadAttempts(db, studentId, sessionId),
-      loadChecks(db, studentId, sessionId),
-      loadUploads(db, studentId, sessionId),
-      loadMastery(db, studentId, header.openedAt, windowEnd),
-    ]);
+    const [turns, attempts, checks, uploads, masteryMoves] = await sequential([
+      () => loadTurns(db, studentId, sessionId),
+      () => loadAttempts(db, studentId, sessionId),
+      () => loadChecks(db, studentId, sessionId),
+      () => loadUploads(db, studentId, sessionId),
+      () => loadMastery(db, studentId, header.openedAt, windowEnd),
+    ] as const);
 
     // explanation_log has no student_id and only a nullable attempt_id
     // (ADR-0015 Consequences), so the ONLY way in is the set of attempt ids

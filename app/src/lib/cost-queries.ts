@@ -1,4 +1,4 @@
-import { withOperator } from "@/lib/db";
+import { sequential, withOperator } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
 
 /**
@@ -88,15 +88,20 @@ export async function getCostView(operatorId: number, windowDays = 30): Promise<
   const scopeAliased = `a.environment = $1 AND a.created_at >= now() - ($2 || ' days')::interval`;
   const args = [ENVIRONMENT, String(windowDays)];
 
+  // Four independent reads on withOperator's one shared client: sequential,
+  // not Promise.all — see lib/db.ts's `sequential` for why (pg@9 removes the
+  // implicit queuing this used to lean on).
   const [totals, bySurface, byKind, perStudent] = await withOperator(operatorId, (db) =>
-    Promise.all([
-    db.query(
-      `SELECT count(*) AS turns, sum(cost_usd) AS cost
+    sequential([
+      () =>
+        db.query(
+          `SELECT count(*) AS turns, sum(cost_usd) AS cost
          FROM ai_interactions WHERE ${scope}`,
-      args
-    ),
-    db.query(
-      `SELECT surface,
+          args
+        ),
+      () =>
+        db.query(
+          `SELECT surface,
               count(*)                        AS turns,
               coalesce(sum(cost_usd), 0)      AS cost,
               coalesce(sum(input_tokens), 0)  AS input_tokens,
@@ -106,21 +111,23 @@ export async function getCostView(operatorId: number, windowDays = 30): Promise<
               coalesce(avg(latency_ms), 0)    AS avg_latency
          FROM ai_interactions WHERE ${scope}
         GROUP BY surface ORDER BY cost DESC`,
-      args
-    ),
-    db.query(
-      // A row written before migration 009 has no kind. It is reported as
-      // "unattributed" rather than folded into 'chat', because quietly
-      // attributing a cost to a function that may not have spent it is the
-      // exact failure this table exists to prevent.
-      `SELECT coalesce(surface_kind, 'unattributed') AS kind,
+          args
+        ),
+      () =>
+        db.query(
+          // A row written before migration 009 has no kind. It is reported as
+          // "unattributed" rather than folded into 'chat', because quietly
+          // attributing a cost to a function that may not have spent it is the
+          // exact failure this table exists to prevent.
+          `SELECT coalesce(surface_kind, 'unattributed') AS kind,
               count(*) AS turns, coalesce(sum(cost_usd), 0) AS cost
          FROM ai_interactions WHERE ${scope}
         GROUP BY 1 ORDER BY cost DESC`,
-      args
-    ),
-    db.query(
-      `SELECT a.student_id,
+          args
+        ),
+      () =>
+        db.query(
+          `SELECT a.student_id,
               s.display_name,
               count(*) AS turns,
               coalesce(sum(a.cost_usd), 0) AS cost,
@@ -131,9 +138,9 @@ export async function getCostView(operatorId: number, windowDays = 30): Promise<
         WHERE ${scopeAliased}
         GROUP BY a.student_id, s.display_name
         ORDER BY cost DESC`,
-      args
-    ),
-    ])
+          args
+        ),
+    ] as const)
   );
 
   const totalTurns = num(totals.rows[0]?.turns);

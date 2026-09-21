@@ -15,7 +15,7 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
-import { maintPool, pool, principalSetting } from "./db.ts";
+import { maintPool, pool, principalSetting, sequential } from "./db.ts";
 
 test("a student principal scopes to their own id", () => {
   assert.equal(
@@ -64,6 +64,71 @@ test("the pool is sized for units of work, not for one connection per query", ()
   // lessons while doing almost no database work.
   const options = (pool as unknown as { options?: { max?: number } }).options;
   assert.equal(options?.max, 20);
+});
+
+test("sequential runs thunks one after another, not concurrently", async () => {
+  // A fake shared client: `query` refuses to start a second call before the
+  // first one finishes, exactly like pg@9 will. If `sequential` ever issued
+  // the next thunk before awaiting the previous one, this would throw instead
+  // of returning three ordered rows.
+  let busy = false;
+  const order: number[] = [];
+  const fakeQuery = async (n: number): Promise<number> => {
+    if (busy) throw new Error("client.query() called while already executing a query");
+    busy = true;
+    try {
+      await new Promise((r) => setTimeout(r, 1));
+      order.push(n);
+      return n;
+    } finally {
+      busy = false;
+    }
+  };
+
+  const [a, b, c] = await sequential([
+    () => fakeQuery(1),
+    () => fakeQuery(2),
+    () => fakeQuery(3),
+  ] as const);
+
+  assert.deepEqual([a, b, c], [1, 2, 3]);
+  assert.deepEqual(order, [1, 2, 3]);
+});
+
+test("sequential preserves each thunk's own result type in a fixed-order tuple", async () => {
+  const [n, s, rows] = await sequential([
+    () => Promise.resolve(7),
+    () => Promise.resolve("seven"),
+    () => Promise.resolve([{ id: 7 }]),
+  ] as const);
+
+  assert.equal(n, 7);
+  assert.equal(s, "seven");
+  assert.deepEqual(rows, [{ id: 7 }]);
+});
+
+test("sequential stops at the first rejection rather than running the rest", async () => {
+  const ran: number[] = [];
+  await assert.rejects(
+    sequential([
+      () => {
+        ran.push(1);
+        return Promise.resolve(1);
+      },
+      () => {
+        ran.push(2);
+        return Promise.reject(new Error("boom"));
+      },
+      () => {
+        ran.push(3);
+        return Promise.resolve(3);
+      },
+    ] as const),
+    /boom/
+  );
+  // Same behaviour as `await`ing three statements in a row inside a
+  // transaction: the third never runs once the second throws.
+  assert.deepEqual(ran, [1, 2]);
 });
 
 test("withMaint refuses to fall back to the application role", () => {

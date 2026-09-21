@@ -1,3 +1,4 @@
+import { sequential } from "./db";
 import { scoped, type Db } from "./student-context";
 import type {
   PlanItem,
@@ -17,13 +18,19 @@ import { spineSubjectOf } from "./subjects";
  * `students`), and the second kind now returns NOTHING without a principal. So
  * each one runs as a single unit of work under the student it is about.
  *
- * One consequence worth naming rather than discovering: the `Promise.all`s
- * below no longer run in parallel. node-postgres queues statements on a single
- * client, so a unit of work serialises them. That is a few milliseconds against
- * this corpus and it buys one connection per render instead of eight — the
- * trade research R7's pool budget asks for. The `Promise.all` shape is kept
- * because it still expresses "these are independent", and because splitting it
- * would make the diff unreadable for no behavioural gain.
+ * One consequence worth naming rather than discovering: these reads never ran
+ * in parallel. node-postgres queues statements on a single client, so a unit
+ * of work serialises them regardless of how they're written — that is a few
+ * milliseconds against this corpus, and it buys one connection per render
+ * instead of eight, the trade research R7's pool budget asks for. This used
+ * to be written as `Promise.all` for exactly that reason: the shape still
+ * expressed "these are independent" even though the client ran them one at a
+ * time underneath. **It is `sequential([...])` now instead**, because pg@9
+ * removes the implicit queuing `Promise.all` was quietly relying on ("Calling
+ * client.query() when the client is already executing a query is
+ * deprecated"). The shape carries the same meaning as before — a fixed-order
+ * tuple of independent reads — just without a name that promises concurrency
+ * this module was never getting.
  *
  * There is no `DEFAULT_STUDENT_ID` any more: a caller with nobody signed in has
  * no business rendering a student's mastery, so `studentId` is required.
@@ -51,14 +58,15 @@ async function columnExists(db: Db, table: string, column: string): Promise<bool
 
 export async function getHomeStats(studentId: number) {
   return scoped(studentId, undefined, async (db) => {
-    const [counts, doc, student] = await Promise.all([
+    const [counts, doc, student] = await sequential([
       // attempts + AI turns are the STUDENT's ledger (the card reads "by
       // <name>"), everything else is corpus-wide. The `student_id = $1` clauses
       // are now belt and braces — the policy would narrow these to the
       // principal anyway — and they stay because a query that states its own
       // scope is a query a reader can check.
-      db.query(
-        `
+      () =>
+        db.query(
+          `
       SELECT
         (SELECT count(*) FROM graph_nodes WHERE kind = 'learning_objective') AS los,
         (SELECT count(*) FROM questions WHERE status = 'live')               AS questions,
@@ -67,13 +75,14 @@ export async function getHomeStats(studentId: number) {
            AND system_to IS NULL)                                            AS prereqs,
         (SELECT count(*) FROM ai_interactions WHERE student_id = $1)         AS ai_turns
     `,
-        [studentId]
-      ),
-      db.query(
-        `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
-      ),
-      db.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
-    ]);
+          [studentId]
+        ),
+      () =>
+        db.query(
+          `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
+        ),
+      () => db.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
+    ] as const);
     const c = counts.rows[0];
     return {
       los: Number(c.los),
@@ -126,10 +135,10 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
   // The multi-subject contract (node_subject view, relates_to edges +
   // rationale column) is built in parallel — detect what's live and degrade
   // gracefully (id-prefix subject fallback; no bridges) until it lands.
-  const [hasSubjectView, hasRationale] = await Promise.all([
-    relationExists(db, "node_subject"),
-    columnExists(db, "graph_edges", "rationale"),
-  ]);
+  const [hasSubjectView, hasRationale] = await sequential([
+    () => relationExists(db, "node_subject"),
+    () => columnExists(db, "graph_edges", "rationale"),
+  ] as const);
 
   const loQuery = hasSubjectView
     ? `
@@ -148,32 +157,39 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
       `;
 
   // relates_to bridges: only queryable once the rationale column exists.
-  const bridgesPromise = hasRationale
-    ? db.query(`
+  // A thunk, not an already-started query — `db` is one shared client, so this
+  // must wait its turn in the `sequential` list below rather than firing
+  // before `loQuery` and the rest have even been issued.
+  const bridgesThunk = () =>
+    hasRationale
+      ? db.query(`
         SELECT src_id, dst_id, rationale
         FROM graph_edges
         WHERE edge_type = 'relates_to' AND system_to IS NULL
       `)
-    : Promise.resolve({ rows: [] as { src_id: string; dst_id: string; rationale: string }[] });
+      : Promise.resolve({ rows: [] as { src_id: string; dst_id: string; rationale: string }[] });
 
   const [losRes, edgesRes, masteryRes, questionsRes, docRes, countsRes, studentRes, bridgesRes] =
-    await Promise.all([
-      db.query(loQuery),
-      db.query(`
+    await sequential([
+      () => db.query(loQuery),
+      () =>
+        db.query(`
         SELECT src_id, dst_id, syllabus_version
         FROM graph_edges
         WHERE edge_type = 'prerequisite_of' AND system_to IS NULL
       `),
-      db.query(
-        `
+      () =>
+        db.query(
+          `
         SELECT lo_id, score, system_from, system_to
         FROM mastery
         WHERE student_id = $1
         ORDER BY lo_id, system_from
       `,
-        [studentId]
-      ),
-      db.query(`
+          [studentId]
+        ),
+      () =>
+        db.query(`
         SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.choices,
                q.correct_answer, q.canonical_solution, q.solution_version, q.status,
                q.source, q.parent_question_id, q.source_sha256, q.source_page,
@@ -184,16 +200,18 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
         WHERE q.status = 'live'
         ORDER BY q.lo_id, q.tier, q.id
       `),
-      db.query(
-        `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
-      ),
+      () =>
+        db.query(
+          `SELECT title, publisher, edition, grade, subject FROM source_documents LIMIT 1`
+        ),
       // this student's attempts (the toolbar chip sits next to HIS avg mastery)
-      db.query(`SELECT count(*) AS attempts FROM attempts WHERE student_id = $1`, [
-        studentId,
-      ]),
-      db.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
-      bridgesPromise,
-    ]);
+      () =>
+        db.query(`SELECT count(*) AS attempts FROM attempts WHERE student_id = $1`, [
+          studentId,
+        ]),
+      () => db.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
+      bridgesThunk,
+    ] as const);
 
   const edges = edgesRes.rows.map((r) => ({
     src: r.src_id as string,
@@ -361,21 +379,25 @@ async function studentPlanOn(
   studentName: string;
   mastery: { loId: string; label: string; score: number }[];
 }> {
-  const [losRes, edgesRes, masteryRes, qRes, studentRes] = await Promise.all([
-    db.query(`
+  const [losRes, edgesRes, masteryRes, qRes, studentRes] = await sequential([
+    () =>
+      db.query(`
       SELECT id, label, order_in_parent FROM graph_nodes
       WHERE kind = 'learning_objective' ORDER BY order_in_parent
     `),
-    db.query(`
+    () =>
+      db.query(`
       SELECT src_id, dst_id FROM graph_edges
       WHERE edge_type = 'prerequisite_of' AND system_to IS NULL
     `),
-    db.query(
-      `SELECT lo_id, score FROM mastery WHERE student_id = $1 AND system_to IS NULL`,
-      [studentId]
-    ),
-    db.query(
-      `
+    () =>
+      db.query(
+        `SELECT lo_id, score FROM mastery WHERE student_id = $1 AND system_to IS NULL`,
+        [studentId]
+      ),
+    () =>
+      db.query(
+        `
       SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.choices, q.source_page,
              (SELECT count(*) FROM attempts a
                WHERE a.question_id = q.id AND a.student_id = $1
@@ -383,10 +405,10 @@ async function studentPlanOn(
       FROM questions q
       WHERE q.status = 'live'
     `,
-      [studentId]
-    ),
-    db.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
-  ]);
+        [studentId]
+      ),
+    () => db.query(`SELECT display_name FROM students WHERE id = $1`, [studentId]),
+  ] as const);
 
   const labels = new Map<string, string>(
     losRes.rows.map((r) => [r.id, r.label])
