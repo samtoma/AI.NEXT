@@ -19,11 +19,11 @@ import { scoped, type Db } from "@/lib/student-context";
 import { buildUploadParsePrompt } from "@/lib/upload-prompt";
 import { type AcceptedUploadType } from "@/lib/upload-contract";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
+import { CLAUDE_BIN, claudeEnv } from "@/lib/claude-cli";
 import {
   ZERO_TOKENS,
   costFor,
   tokensFromUsage,
-  totalInputTokens,
   type CliUsage,
   type Outcome,
   type TokenCounts,
@@ -143,7 +143,7 @@ function runParse(filePath: string): Promise<ParseOutcome> {
     // the transcription comes out of `result` and every downstream check below
     // is applied to THAT string, exactly as it was to stdout before.
     const child = spawn(
-      "claude",
+      CLAUDE_BIN,
       [
         "-p",
         "--output-format", "json",
@@ -153,11 +153,13 @@ function runParse(filePath: string): Promise<ParseOutcome> {
       ],
       {
         // cwd is the upload root, so a relative path cannot wander outside it.
+        // **The one deliberate departure from `claudeCwd()`**, and it is here
+        // rather than in `lib/claude-cli.ts` because it is a property of OCR
+        // and not of the CLI. The environment — which is what decides
+        // authentication — is the shared one, so the health probe still speaks
+        // for this call site.
         cwd: uploadRoot(),
-        env: {
-          ...process.env,
-          PATH: `${process.env.PATH ?? ""}:${process.env.HOME ?? ""}/.local/bin`,
-        },
+        env: claudeEnv(),
         stdio: ["pipe", "pipe", "pipe"],
       }
     );
@@ -184,7 +186,11 @@ function runParse(filePath: string): Promise<ParseOutcome> {
 
     child.on("error", () => {
       clearTimeout(timeout);
-      // The process never started: nothing spent, nothing to record.
+      // The process never started: nothing was spent, and there is still
+      // something to record — the ledger row is written with no cost and
+      // `price_basis = 'unpriced'`, because "the CLI would not start" is the
+      // shape of a lapsed sign-in and the console reads these rows as the
+      // passive half of the runtime health signal (FR-3006).
       resolve(failed(ZERO_TOKENS, null));
     });
     child.on("close", (code) => {
@@ -292,9 +298,18 @@ export async function parseUpload(
   // **The counters are real now.** This INSERT wrote `0,0,0` for input tokens,
   // output tokens and cost on every photograph the product has ever parsed —
   // so the one figure FR-2402 exists to keep visible was structurally zero,
-  // and "is OCR eating us" had a reassuring answer that meant nothing. A parse
-  // that never started still writes no row: there is no cost line to draw.
-  if (totalInputTokens(outcome.tokens) + outcome.tokens.outputTokens > 0) {
+  // and "is OCR eating us" had a reassuring answer that meant nothing.
+  //
+  // **And a parse that never started writes a row too** (FR-3006). The
+  // `> 0` gate that stood here said "there is no cost line to draw", which was
+  // true and was not the only thing this table is for: OCR is one of the three
+  // surfaces that spawn the Claude CLI, so its failures are part of the
+  // console's passive health signal — and a lapsed sign-in fails before a
+  // single token is counted, which is precisely the case the gate discarded.
+  // `costFor` returns `cost_usd = NULL` with `price_basis = 'unpriced'` for an
+  // uncounted parse, so the honesty of the cost figure is unchanged: an
+  // unpriced parse is reported as a count, never as a zero.
+  {
     const { costUsd, priceBasis } = costFor(MODEL, outcome.tokens, outcome.cliCostUsd);
     try {
       await scoped(studentId, undefined, (db) =>

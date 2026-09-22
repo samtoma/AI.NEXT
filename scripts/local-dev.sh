@@ -452,6 +452,28 @@ run_app_script rollup-cost-daily.mts "cost_daily refreshed for closed days" --al
 say "6c/8  Security alert sweep"
 run_app_script alerts-sweep.mts "security alert rules evaluated (idempotent; logs locally)" || true
 
+# ---------------------------------------------------------- 6d. runtime probe
+# "Can the tutor teach?", asked once, here, for the reason the sweep is here: a
+# laptop that has never run the probe is a laptop where "the probe runs" is an
+# untested claim — and the first place to find out otherwise would be the box,
+# which is exactly how a lapsed sign-in went unnoticed for seven weeks
+# (migration 026, FR-3001).
+#
+# ON A BOX THIS IS A CRON JOB, every FIFTEEN minutes — not five like the sweep:
+#
+#   0,15,30,45 * * * *  cd /opt/reletix/AI.NEXT/app && npm run probe:runtime
+#
+# (the header of app/scripts/probe-runtime.mts carries the full crontab line and
+# argues the cadence.) The difference is cost: this one makes a real model call
+# on Samuel's subscription every time it runs, where the sweep only reads rows.
+#
+# **This spends money, so it is the one step allowed to be skipped.** If the
+# local CLI is not signed in, or somebody is offline, it records a failure
+# rather than failing the setup — which is the correct behaviour and is also
+# exactly what the console is then supposed to show.
+say "6d/8  Runtime probe (one real model call)"
+run_app_script probe-runtime.mts "runtime health recorded (see /security in the console)" || true
+
 # -------------------------------------------------------------------- 7. serve
 say "7/8  Ready"
 STUDENTS=$($PSQL -d $DB -tAc "select count(*) from students")

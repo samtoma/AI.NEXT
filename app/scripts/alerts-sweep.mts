@@ -1,11 +1,11 @@
 /**
  * The security alert sweep (contracts/admin.md §7, research A5, ADR-0016 §6,
- * FR-2502).
+ * FR-2502, FR-3009).
  *
  * ---------------------------------------------------------------------------
  * FOR WHOEVER RUNS THIS
  * ---------------------------------------------------------------------------
- *   npm run alerts:sweep            # evaluate the five rules, deliver what fired
+ *   npm run alerts:sweep            # evaluate the six rules, deliver what fired
  *   npm run alerts:sweep -- --dry   # evaluate and print; claim nothing, mail nothing
  *
  * That `npm run` target is:
@@ -71,6 +71,7 @@ import {
   type Alert,
   type AlertEventRow,
 } from "../src/lib/alerts.ts";
+import type { ProbeRow } from "../src/lib/runtime-health.ts";
 
 /* -------------------------------------------------------------- arguments */
 
@@ -80,7 +81,7 @@ const has = (flag: string) => argv.includes(flag);
 if (has("--help") || has("-h")) {
   console.log(
     [
-      "alerts-sweep — evaluate the five security alert rules over auth_events",
+      "alerts-sweep — evaluate five rules over auth_events and one over runtime_health",
       "",
       "  --dry    evaluate and print; claim no alerts_sent row and send no mail",
       "",
@@ -141,12 +142,69 @@ const rows: AlertEventRow[] = await withMaint(async (db) => {
   }));
 });
 
+/* -------------------------------------------------- the runtime readings */
+
+/**
+ * The sixth rule's input: what the runtime probe
+ * (`app/scripts/probe-runtime.mts`) has stored lately.
+ *
+ * **This sweep does not spawn the CLI and must never start to.** It runs every
+ * five minutes; the probe runs every fifteen, because each probe run costs a
+ * real model call. The two schedules are separate on purpose — one is free and
+ * frequent, one is cheap and paced — and collapsing them would triple the
+ * probe's cost to make one file shorter.
+ *
+ * Forty rows is comfortably more than `PROBE_FAILURE_RUN` needs, so a run of
+ * failures can be counted back to its start even after a long outage, and it is
+ * one index scan. Environment-scoped like everything else here: a probe result
+ * from the other stack says nothing about this one (constitution XI, FR-2509).
+ *
+ * A missing table is treated as "no readings" rather than as a crash. A box
+ * running the pre-026 database with a post-026 application would otherwise
+ * lose the FIVE working rules to the sixth one's missing input, which is the
+ * wrong trade in every direction: the security mail matters more than the
+ * health mail, and an operator whose alerts went quiet during a migration would
+ * have no way to know.
+ */
+const probes: ProbeRow[] = await withMaint(async (db) => {
+  try {
+    const res = await db.query<{
+      probe: string;
+      ok: boolean;
+      code: string;
+      duration_ms: number | null;
+      checked_at: Date;
+    }>(
+      `SELECT probe, ok, code, duration_ms, checked_at
+         FROM runtime_health
+        WHERE environment = $1
+        ORDER BY checked_at DESC
+        LIMIT 40`,
+      [ENVIRONMENT]
+    );
+    return res.rows.map((r) => ({
+      probe: r.probe,
+      ok: r.ok,
+      code: r.code,
+      durationMs: r.duration_ms,
+      checkedAt: r.checked_at.toISOString(),
+    }));
+  } catch (e) {
+    console.warn(
+      `[alerts] runtime_health is unreadable (${(e as Error).message.slice(0, 80)}) — ` +
+        `the tutor-unreachable rule is skipped; the other five are unaffected`
+    );
+    return [];
+  }
+});
+
 /* --------------------------------------------------------------- evaluate */
 
-const alerts = evaluate(rows, nowMs);
+const alerts = evaluate(rows, nowMs, probes);
 
 console.log(
   `[alerts] ${ENVIRONMENT}: ${rows.length} event(s) since ${since}, ` +
+    `${probes.length} probe reading(s), ` +
     `${alerts.length} rule firing(s)${DRY ? " (dry run)" : ""}`
 );
 

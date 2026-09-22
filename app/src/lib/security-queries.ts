@@ -6,6 +6,18 @@ import {
   LOCK_THRESHOLD,
   OPERATOR_THRESHOLD,
 } from "@/lib/alerts";
+import {
+  CLI_SURFACE_KINDS,
+  PROBE_FAILURE_RUN,
+  PROBE_INTERVAL_MS,
+  STALE_AFTER_MS,
+  TURN_SAMPLE,
+  probeVerdict,
+  runtimeVerdict,
+  turnVerdict,
+  type HealthThresholds,
+  type RuntimeVerdict,
+} from "@/lib/runtime-health";
 
 /**
  * The security view's read model (contracts/admin.md §7, research A5, ADR-0016
@@ -16,7 +28,7 @@ import {
  * here is cached, materialised or rolled up: SC-105 says an attempt is visible
  * within sixty seconds, and the cheapest way to be sure of that is to have
  * nothing between the page and the table. At pilot volume the whole view is
- * thirteen index scans (see the query count note on `getSecurityView` below).
+ * fifteen index scans (see the query count note on `getSecurityView` below).
  *
  * ---------------------------------------------------------------------------
  * THE LIST BECOMES EXPLORABLE — FILTERS, AND WHY THEY ARE ALL QUERY PARAMETERS
@@ -315,6 +327,20 @@ export type SecurityView = {
   recent: RecentEvent[];
   audit: AuditRow[];
   alerts: AlertFiring[];
+  /**
+   * **Can the tutor teach right now** (FR-3007), from two signals that fail
+   * differently: the stored result of the scheduled probe, and what real turns
+   * on the CLI-spawning surfaces actually did.
+   *
+   * Nothing here spawns anything. The probe is a cron script
+   * (`app/scripts/probe-runtime.mts`); this page READS its last readings. A
+   * console page that called the CLI would bill a founder for curiosity and
+   * would hang on the one page an operator opens when things are wrong.
+   */
+  runtime: RuntimeVerdict;
+  /** The thresholds the runtime tile prints, read from `lib/runtime-health.ts`
+   *  so the copy and the arithmetic cannot drift apart. */
+  runtimeThresholds: HealthThresholds;
   /** Every distinct event name present in the last 30 days, for the "Kind" links —
    *  fixed to 30 days regardless of `filters.window`, so narrowing the window
    *  never makes a filter link disappear out from under the page it is on. */
@@ -352,7 +378,7 @@ export const AUDIT_LIMIT = 100;
 /* ------------------------------------------------------------------ query */
 
 /**
- * Thirteen queries, always — not "10, plus more per filter". Two resolve the
+ * Fifteen queries, always — not "10, plus more per filter". Two resolve the
  * "who" link lists (every student, every operator) *before* the batch below,
  * because the list's own query needs a student id turned into an account id
  * as a bind parameter, which only the students query can supply: a value
@@ -360,10 +386,17 @@ export const AUDIT_LIMIT = 100;
  * cannot come from a step later in the same `sequential` tuple. Everything
  * after that is the six tiles' six queries plus the explorable list, ITS
  * total-count twin (so paging never shows a total that disagrees with the
- * rows), the audit, the alerts and the "Kind" link list — eleven, in the
- * tuple's original order. Fixed rather than filter-dependent because a page
- * whose query count depends on what was clicked is a page whose worst case
- * nobody measured.
+ * rows), the audit, the alerts, the "Kind" link list and — added 2026-09-22 —
+ * **the two runtime-health signals**: the probe's stored readings and the
+ * outcomes of the last few turns on the CLI-spawning surfaces. Thirteen, in
+ * the tuple's original order. Fixed rather than filter-dependent because a
+ * page whose query count depends on what was clicked is a page whose worst
+ * case nobody measured.
+ *
+ * **Neither health query spawns anything.** The probe is a cron script and
+ * this reads what it left behind (migration 026). A page that called the CLI
+ * to find out would cost a model call per render and would hang on exactly the
+ * page an operator opens when they suspect something is wrong.
  */
 export async function getSecurityView(
   operatorId: number,
@@ -453,6 +486,8 @@ export async function getSecurityView(
       audit,
       alerts,
       names,
+      probes,
+      cliTurns,
     ] = await sequential([
       // 1. Failed vs successful, 24h and 7d. One pass, four counts — the two
       //    windows share a scan because the 7-day predicate contains the 1-day
@@ -715,6 +750,60 @@ export async function getSecurityView(
             ORDER BY event`,
           [ENVIRONMENT]
         ),
+
+      // THE ACTIVE HEALTH SIGNAL — the last readings the scheduled probe
+      // stored (migration 026). `ainext_operator` holds SELECT on this and
+      // nothing else; `ainext_app` holds nothing at all.
+      //
+      // More than one row, deliberately: the tile has to be able to say
+      // "failing since 09:10" rather than only "failing now", and that answer
+      // is the oldest failure in the current unbroken run. One more than the
+      // alert threshold would be enough to DECIDE, and a few more than that is
+      // what makes the answer readable — 40 rows is ten hours at the
+      // fifteen-minute cadence, which covers an evening and the night after it
+      // for the price of one index scan.
+      () =>
+        db.query<{
+          probe: string;
+          ok: boolean;
+          code: string;
+          duration_ms: number | null;
+          checked_at: Date;
+        }>(
+          `SELECT probe, ok, code, duration_ms, checked_at
+             FROM runtime_health
+            WHERE environment = $1
+            ORDER BY checked_at DESC
+            LIMIT 40`,
+          [ENVIRONMENT]
+        ),
+
+      // THE PASSIVE HEALTH SIGNAL — what real turns on the three CLI-spawning
+      // surfaces actually did. Observed rather than simulated, and therefore
+      // the stronger of the two signals when it has anything to say.
+      //
+      // **Three columns, and the omissions are the point.** No student id, no
+      // message, no cost, no session: this is the security surface and a
+      // child's learning has no business on it (this file's own header). What
+      // is needed to answer "is the tutor working" is an outcome, a surface
+      // and a time.
+      //
+      // A COUNT rather than a period (`LIMIT`, no `WHERE … >= now() - …`),
+      // because a period silently becomes "no evidence" on a quiet night and
+      // the tile would have to choose between saying nothing and saying
+      // something it does not know. The count always has something to say —
+      // as long as the page also prints WHEN those turns happened, which it
+      // does.
+      () =>
+        db.query<{ outcome: string; surface_kind: string | null; created_at: Date }>(
+          `SELECT outcome, surface_kind, created_at
+             FROM ai_interactions
+            WHERE environment = $1
+              AND surface_kind = ANY($2::text[])
+            ORDER BY created_at DESC
+            LIMIT ${TURN_SAMPLE}`,
+          [ENVIRONMENT, [...CLI_SURFACE_KINDS]]
+        ),
     ] as const);
 
     const c = counts.rows[0];
@@ -795,6 +884,39 @@ export async function getSecurityView(
         sentAt: r.sent_at.toISOString(),
       })),
       eventNames: names.rows.map((r) => r.event),
+      // The two health signals, folded by the pure module that owns the
+      // judgement. `Date.now()` is read ONCE for both, so a probe cannot be
+      // called stale against one clock and fresh against another inside the
+      // same render.
+      runtime: (() => {
+        const nowMs = Date.now();
+        return runtimeVerdict(
+          probeVerdict(
+            probes.rows.map((r) => ({
+              probe: r.probe,
+              ok: r.ok,
+              code: r.code,
+              checkedAt: r.checked_at.toISOString(),
+              durationMs: r.duration_ms,
+            })),
+            nowMs
+          ),
+          turnVerdict(
+            cliTurns.rows.map((r) => ({
+              outcome: r.outcome,
+              surfaceKind: r.surface_kind,
+              at: r.created_at.toISOString(),
+            })),
+            nowMs
+          )
+        );
+      })(),
+      runtimeThresholds: {
+        probeIntervalMs: PROBE_INTERVAL_MS,
+        staleAfterMs: STALE_AFTER_MS,
+        failureRun: PROBE_FAILURE_RUN,
+        turnSample: TURN_SAMPLE,
+      },
       studentOptions: studentsRes.rows.map((r) => ({
         id: Number(r.id),
         name: r.display_name,

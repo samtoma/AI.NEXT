@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025)
+**Last amended**: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -347,7 +347,9 @@ password sign-in.
 > marks what is designed for and not built, citing the decision that defers it. Numbering: **FR-20xx**
 > accounts and sign-in · **FR-21xx** isolation and authorisation · **FR-22xx** console and roles ·
 > **FR-23xx** timeline and replay · **FR-24xx** cost and status · **FR-25xx** monitoring and analytics
-> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred.
+> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred · **FR-30xx** runtime health.
+> (**FR-30xx** rather than continuing into 29xx: that block is "deferred by design" and has been
+> since rev. 1, so a live requirement inside it would be read as deferred by anybody scanning.)
 > `FR-1xx…FR-12xx` are from
 > `specs/001-student-mvp1-delta/spec.md`. Implementation status is tracked in `traceability.md` here,
 > deliberately harsher: code that exists but has never run is not done.
@@ -671,6 +673,68 @@ password sign-in.
   score and no safety flag may be derived from it. The product MUST instead make every note visible
   to a human by default, and MUST state plainly, on the surface where they are read, that nothing
   has read them first and that nothing will raise an alarm.
+
+### Runtime health — can the tutor teach? (FR-3001…) **[ADDED 2026-09-22]**
+
+> **These ten were written with their code, on the day the lapse was found.** No requirement
+> covered "the product must be able to tell an operator that the tutor cannot teach" before
+> 2026-09-22; **Samuel asking for it — "add the console check for lapsed sign-in" — is the
+> authorisation**, and these were written in the same pass as `db/migrations/026-runtime-health.sql`,
+> the probe and the console tile. Nothing here is back-dated, and nothing here preceded the code it
+> describes. The pattern is FR-2801…FR-2811's rather than FR-2701…FR-2711's.
+>
+> **What happened.** The tutor runs on Samuel's Claude **subscription** through the bundled `claude`
+> CLI. On the live box that sign-in silently expired, and it was found only because somebody ran the
+> CLI by hand — after the container had been up **seven weeks**. For some unknown part of that, the
+> product signed a student in, showed her lessons and her progress, and failed **every single tutor
+> turn**. Sign-in, the console, lesson browsing, mastery from stored attempts, analytics and the cost
+> ledger all kept working, which is exactly what made it invisible.
+>
+> Why they belong in this spec rather than in 001: the surface is the admin console this feature
+> defines, behind a role this feature defines, and the obligation is the same one FR-2501…FR-2509
+> already carry — the founders must be able to see that something is wrong without being told by a
+> customer. 001's FR-905 is **deliberately BLOCKED** and is Samuel's to resolve; nothing here
+> touches it.
+>
+> Implementation status is in `traceability.md` here, §7d.
+
+- **FR-3001**: The product MUST check, on a schedule and without waiting for a student, that the
+  tutor can actually answer. The check MUST run even when nobody is using the product, because the
+  failure it exists to catch is invisible to every other signal and a quiet night is exactly when
+  it is most likely to go unnoticed.
+- **FR-3002**: The check MUST exercise **the same path the product teaches through**, including the
+  way the product proves who it is. A check that reached the tutor differently would report on
+  something no student ever uses, and a green result from it would be worse than no result at all.
+- **FR-3003**: A failure MUST be recorded as a short, fixed word that distinguishes **at least**:
+  the tutor program being absent, the sign-in having lapsed, the call itself failing for a passing
+  reason, and no answer arriving in time. These MUST NOT be collapsed into one "it is broken",
+  because each one is a different person's job and a single word would send the wrong one.
+- **FR-3004**: What the tutor program says about its own failure MUST NOT be stored or written to a
+  record anybody can read. It can contain a file path, a machine's layout or part of a credential.
+  Only the short word above may be kept.
+- **FR-3005**: The check MUST NOT be able to hang. It MUST give up after a stated time, and giving
+  up MUST be recorded as a failure with its own word rather than as a check that did not happen.
+- **FR-3006**: A tutor turn that failed MUST leave a record **even when it failed before costing
+  anything**. A lapsed sign-in fails instantly and for free, so a record kept only when money was
+  spent is blind to precisely the fault this block exists for. The cost of such a turn MUST be
+  reported as *not known* rather than as zero.
+- **FR-3007**: The console MUST state, in one place, three things and MUST NOT collapse them:
+  **(a)** the last check's verdict **together with how old it is** — a check that has not run
+  recently MUST read as *unknown*, MUST NOT read as healthy, and MUST look different from both a
+  pass and a failure; **(b)** what real tutor turns have actually been doing, so a live failure
+  shows even when the check has not run; **(c)** in plain words, **what still works** while the
+  tutor cannot teach — because "the tutor is down" reads as "everything is down" and would cause
+  the wrong response.
+- **FR-3008**: Where the tutor cannot teach because the sign-in has lapsed, the console MUST say
+  plainly that only Samuel can restore it and MUST name the procedure. Where the cause is anything
+  else, it MUST NOT say that — a remedy that does not match the diagnosis costs an evening and
+  teaches the reader to distrust the next one.
+- **FR-3009**: A tutor that cannot teach MUST raise an alarm by the same means the other alerts use,
+  and MUST NOT raise one on a single failed check. The number of consecutive failures required MUST
+  be a stated, justified figure rather than an emergent one.
+- **FR-3010**: Reading the health of the tutor MUST NOT itself call the tutor. Opening the console
+  MUST never spend money or wait on the tutor program, because the page is opened precisely when
+  something is already wrong.
 
 ### Deferred by design — architecture only (FR-2901…)
 

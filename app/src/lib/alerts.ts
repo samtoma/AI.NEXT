@@ -1,6 +1,6 @@
 /**
- * The five security alert rules (contracts/admin.md §7, research A5, ADR-0016
- * §6, FR-2502).
+ * The alert rules — five over `auth_events`, and one over `runtime_health`
+ * (contracts/admin.md §7, research A5, ADR-0016 §6, FR-2502, FR-3009).
  *
  * **This module is pure.** No pool, no `withMaint`, no mail, no clock of its
  * own — every function below takes the rows and the "now" it is reasoning about
@@ -28,7 +28,37 @@
  * only exists when an application bug asked for something RLS refused, or when
  * somebody tried. Any occurrence mails immediately, and the running absence of
  * these mails is the standing proof that the policies work.
+ *
+ * ---------------------------------------------------------------------------
+ * THE SIXTH RULE READS A DIFFERENT TABLE, AND IS SHAPED DIFFERENTLY ON PURPOSE
+ * ---------------------------------------------------------------------------
+ * `tutor_unreachable` (added 2026-09-22) is the push half of the runtime health
+ * feature. Five rules count events that SHOULD be rare; this one counts a
+ * check that should be passing, which is the opposite arithmetic, and it takes
+ * `runtime_health` rows rather than `auth_events`.
+ *
+ * Rather than force it into `RULES`'s signature, it lives in `RUNTIME_RULES`
+ * and `evaluate` takes the probe rows as a second, optional argument. A
+ * pretend-uniform shape would have meant a rule function ignoring one of its
+ * two parameters, which is the kind of tidiness that is a lie about the
+ * design.
+ *
+ * **What it cannot do, stated here rather than discovered during an incident**:
+ * if the probe stops running altogether, no run of failures ever accumulates
+ * and this rule never fires. The push half is blind to its own absence. The
+ * pull half — the `unknown` state on the console's Security view — is the only
+ * one that can report the silence, which is why `unknown` is a visible state
+ * there rather than a mild `ok`.
  */
+
+import {
+  PROBE_FAILURE_RUN,
+  RUNTIME_ALERT_WINDOW_MS,
+  STILL_WORKING,
+  WHAT_STOPS,
+  probeVerdict,
+  type ProbeRow,
+} from "./runtime-health.ts";
 
 /* ------------------------------------------------------------------ inputs */
 
@@ -55,7 +85,8 @@ export type AlertRuleId =
   | "ip_failure_burst"
   | "operator_permission_denied"
   | "cross_student_access_denied"
-  | "impossible_travel_shadow";
+  | "impossible_travel_shadow"
+  | "tutor_unreachable";
 
 export type Alert = {
   rule: AlertRuleId;
@@ -69,6 +100,18 @@ export type Alert = {
   summary: string;
   /** The numbers the alert was built from, stored verbatim in `alerts_sent.detail`. */
   detail: Record<string, string | number>;
+  /**
+   * Prose for the reader of the mail. **Not stored**, and that is the point of
+   * it being a separate field from `detail`.
+   *
+   * `detail` becomes a JSONB row in `alerts_sent` that somebody queries months
+   * later; it holds counts, codes and timestamps. Guidance is "what this means
+   * and who fixes it", which belongs in the message a human opens at 9pm and
+   * would be noise in a column. Added with `tutor_unreachable`, whose whole
+   * problem is that the obvious reading of its subject line — "the tutor is
+   * down" — makes a reader think everything is down.
+   */
+  guidance?: readonly string[];
 };
 
 /* ------------------------------------------------------------- the windows */
@@ -319,7 +362,87 @@ export function shadowSuspicion(rows: readonly AlertEventRow[], nowMs: number): 
   ];
 }
 
-/** Every rule, in the order contracts/admin.md §7 lists the tiles. */
+/**
+ * Rule 6 — **the tutor cannot teach** (FR-3009).
+ *
+ * MAILS, and only after `PROBE_FAILURE_RUN` consecutive failing probes.
+ *
+ * THE THRESHOLD IS THE WHOLE DESIGN HERE, so it is argued where it is declared
+ * (`PROBE_FAILURE_RUN` in `lib/runtime-health.ts`) and restated in one line:
+ * **three in a row, which is 45 minutes at the fifteen-minute cadence.** It
+ * must not fire on a single failed probe — one `call_failed` at 3am is a rate
+ * limit, a DNS blip or a box under memory pressure, and a rule that mails
+ * about those is a rule whose mail gets filtered into a folder, which is
+ * research A5's warning applied to the one alert the product most needs
+ * anybody to read. Three consecutive failures spanning three quarters of an
+ * hour cannot be a blip. Going the other way, two hours would routinely let a
+ * whole evening's students be failed before anybody was told.
+ *
+ * **Staleness is deliberately NOT alerted on.** A probe that has stopped
+ * running produces no failing rows at all, so there is nothing here to count —
+ * and a rule that fired on "the newest row is old" would fire once on every
+ * box where the cron line was never added, including a developer's laptop,
+ * which is how an alert becomes noise before it has ever been true. The
+ * absence is reported by the console's `unknown` state instead, which is a
+ * pull rather than a push and is honest about which it is.
+ *
+ * **Keyed by the probe name** rather than by the failure code, so a run that
+ * changes character part-way through — `call_failed` for half an hour, then
+ * `not_signed_in` — is ONE outage and one mail, not two. The code is carried in
+ * the detail, where a reader needs it, rather than in the key, where it would
+ * fragment an incident.
+ *
+ * The per-environment scoping is the caller's: the sweep fetches this
+ * environment's rows only (constitution XI, FR-2509).
+ */
+export function tutorUnreachable(probes: readonly ProbeRow[], nowMs: number): Alert[] {
+  const verdict = probeVerdict(probes, nowMs);
+
+  // `state === "failing"` already means the newest reading is both a failure
+  // AND fresh: a stale failure is `unknown`, and mailing about a three-hour-old
+  // failure that may well have been fixed sends somebody to look at a box that
+  // is fine — which costs exactly as much trust as missing a real one.
+  if (verdict.state !== "failing") return [];
+  if (verdict.consecutiveFailures < PROBE_FAILURE_RUN) return [];
+
+  const since = verdict.failingSince ?? verdict.lastAt!;
+  return [
+    {
+      rule: "tutor_unreachable",
+      key: probes[0]?.probe ?? "claude_cli",
+      // Bucketed on the FAILURE'S own start, not on the sweep's clock, so
+      // every sweep during one outage computes the same window and the primary
+      // key refuses the second insert. A run that is still going an hour later
+      // crosses into the next bucket and mails again, which is the intended
+      // "this is still happening" reminder.
+      windowStart: windowStart(Date.parse(since), RUNTIME_ALERT_WINDOW_MS),
+      severity: "urgent",
+      delivery: "email",
+      summary: `the tutor cannot teach — ${verdict.consecutiveFailures} failed probes in a row (${verdict.code})`,
+      detail: {
+        probe: probes[0]?.probe ?? "claude_cli",
+        code: verdict.code ?? "unknown",
+        consecutive_failures: verdict.consecutiveFailures,
+        threshold: PROBE_FAILURE_RUN,
+        failing_since: since,
+        last_ok_at: verdict.lastOkAt ?? "never, in the readings kept",
+        // The two sentences that stop the wrong panic, carried into the mail
+        // itself rather than left on a page the reader has to open.
+      },
+      // NOT in `detail`, deliberately — see the field's own note. These three
+      // sentences are the difference between "the tutor is broken" and "the
+      // product is down", and those get very different responses at 9pm.
+      guidance: [
+        STILL_WORKING,
+        WHAT_STOPS,
+        "Only Samuel can restore the sign-in: it is interactive and needs a terminal, so no " +
+          "agent, pipeline or deploy step can perform it. The procedure is deploy/TAKEOVER.md §5.",
+      ],
+    },
+  ];
+}
+
+/** Every `auth_events` rule, in the order contracts/admin.md §7 lists the tiles. */
 export const RULES = [
   accountLockBursts,
   ipFailureBursts,
@@ -328,9 +451,26 @@ export const RULES = [
   shadowSuspicion,
 ] as const;
 
-/** Evaluate all five. Deterministic order, so a log diff is readable. */
-export function evaluate(rows: readonly AlertEventRow[], nowMs: number): Alert[] {
-  return RULES.flatMap((rule) => rule(rows, nowMs));
+/** The rules that read `runtime_health` instead. One, today. */
+export const RUNTIME_RULES = [tutorUnreachable] as const;
+
+/**
+ * Evaluate all six. Deterministic order, so a log diff is readable.
+ *
+ * `probes` defaults to empty so every existing caller and test keeps its
+ * meaning: no probe rows is "the active signal has nothing to say", which
+ * produces no alert — the correct answer, and the same one a box with no cron
+ * line gets.
+ */
+export function evaluate(
+  rows: readonly AlertEventRow[],
+  nowMs: number,
+  probes: readonly ProbeRow[] = []
+): Alert[] {
+  return [
+    ...RULES.flatMap((rule) => rule(rows, nowMs)),
+    ...RUNTIME_RULES.flatMap((rule) => rule(probes, nowMs)),
+  ];
 }
 
 /* ------------------------------------------------------------- the message */
@@ -353,9 +493,23 @@ export function alertMail(alert: Alert, environment: string): { subject: string;
       `Environment ${environment}`,
       `Window      ${alert.windowStart} (UTC)`,
       "",
-      // 16, because `auth_event_id` is 13 characters and a key that ran into
-      // its own value is the kind of thing somebody reads at 3am.
-      ...Object.entries(alert.detail).map(([k, v]) => `${k.padEnd(16)}${v}`),
+      // Widened from a fixed 16 to "the longest key plus two", because rule 6
+      // arrived with `consecutive_failures` (20 characters) and the fixed width
+      // ran the key straight into its own value — `consecutive_failures3` —
+      // which is exactly the kind of thing somebody misreads at 3am. Derived
+      // rather than bumped to 22, so the next rule with a longer key cannot
+      // reintroduce it.
+      ...(() => {
+        const width = Math.max(0, ...Object.keys(alert.detail).map((k) => k.length)) + 2;
+        return Object.entries(alert.detail).map(([k, v]) => `${k.padEnd(width)}${v}`);
+      })(),
+      // Wrapped at nothing in particular: the guidance is written as whole
+      // sentences and a mail client reflows them. What matters is that it comes
+      // AFTER the figures — a reader who already knows what the rule means
+      // should not have to scroll past an explanation to reach the numbers.
+      ...(alert.guidance && alert.guidance.length > 0
+        ? ["", ...alert.guidance.map((line) => line)]
+        : []),
       "",
       "This is one firing per window: the sweep will not repeat it for the same",
       "window. The console's Security view has the events behind it.",

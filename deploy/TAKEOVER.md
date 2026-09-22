@@ -418,6 +418,21 @@ services. So the login lives in a Docker volume, not in the image and not in the
 survives every `up -d --build`, and **one login covers both containers**. Only `docker compose
 down -v` destroys it — which is why "never `down -v`" is written in three places.
 
+**HOW YOU FIND OUT NOW — added 2026-09-22, after this went unnoticed for seven weeks.**
+Nothing in the product detected the lapse; it was found because somebody ran the command above by
+hand. Two things now watch for it, and both are described where they live rather than here:
+
+* **The console's Security view** carries an *AI tutor* tile (`/security`). It states the last
+  probe's verdict **and its age** — a probe that has not run recently reads `Unknown`, never
+  healthy — what real tutor turns have been doing, and, in plain words, what keeps working while
+  the tutor cannot teach. It reads a stored result; it never calls the CLI itself.
+* **A scheduled probe**, `app/scripts/probe-runtime.mts`, every fifteen minutes from cron (the
+  crontab line is in that script's own header). It asks the CLI the same question step 3 below
+  does, through the same code path the product uses to teach, and stores a short code — never the
+  CLI's own output. **Three failures in a row raises an email** (`tutor_unreachable`, one per hour).
+
+Set the cron line up when the stack moves, or the tile will honestly report that nobody is looking.
+
 **What is broken while it is lapsed** — and it is less than it feels like:
 
 * Broken: every tutor turn (`/api/ask`), understanding checks (`/api/understanding`), and upload

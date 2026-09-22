@@ -1,6 +1,6 @@
 # Traceability — Identity & Admin Console
 
-**Status date**: 2026-09-22 (rev. 4) · **Branch**: `main` (the single development branch since 2026-09-22)
+**Status date**: 2026-09-22 (rev. 5) · **Branch**: `main` (the single development branch since 2026-09-22)
 **Authority**: [spec.md](./spec.md) · [decisions.md](./decisions.md) ·
 constitution [v3.1.1](../../.specify/memory/constitution.md) ·
 [ADR-0012](../../docs/decisions/0012-per-student-isolation-rls.md) (per-student isolation, database-enforced) ·
@@ -64,6 +64,25 @@ posture) — all five accepted 2026-09-20 ·
 > is missing.
 >
 > Rev. 4 changed no status anywhere else in this document, and it did not touch 001's matrix or
+> FR-905.
+>
+> ---
+>
+> **Rev. 5 (2026-09-22) — ten requirements about the product being able to say it is broken.**
+> The tutor's Claude sign-in had silently expired on the live box and was found by hand after the
+> container had been up **seven weeks**; for an unknown part of that, `ainext.reletix.com` signed
+> students in, showed them their lessons and failed every tutor turn. Nothing detected it. Samuel:
+> *"add the console check for lapsed sign-in."* **FR-3001…FR-3010**, written in the same pass as
+> `db/migrations/026-runtime-health.sql`, `app/scripts/probe-runtime.mts` and the console tile, and
+> traced in **§7d**.
+>
+> **Read §7d's preamble before its statuses.** Five rows are VERIFIED and five are not, and the
+> split is not where it would usually be: both failure modes were reproduced **against the real
+> CLI** — a lapsed sign-in by pointing `CLAUDE_CONFIG_DIR` at an empty directory, a missing binary
+> by hiding it from `PATH` — and neither needed anybody to be logged out. What is missing is the
+> same half as rev. 4's: **no browser has rendered the tile**, and no cron line exists on any box.
+>
+> Rev. 5 changed no status anywhere else in this document, and it did not touch 001's matrix or
 > FR-905.
 
 This document answers one question per row: **for this requirement, what code exists, and what
@@ -286,6 +305,48 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ---
 
+## 7d. Runtime health — FR-3001…FR-3010 **[ADDED 2026-09-22]**
+
+> **Written with their code, on the day the lapse was found.** Samuel asking is the authorisation;
+> the spec block says so and nothing is back-dated.
+>
+> **The evidence here is unusually good in one direction and unusually thin in another.** Good:
+> both failure modes were driven through the **real `claude` CLI on this laptop**, which is more
+> than a unit test — `CLAUDE_CONFIG_DIR` pointed at an empty directory reproduces the box's exact
+> condition (the CLI runs and refuses for want of a credential) with the developer's own sign-in
+> untouched, and hiding the binary from `PATH` and `HOME` reproduces a bad image. The probe, the
+> classifier, the verdicts, the alert rule and the tile's copy were then driven **against the real
+> local database under real principals**, in all three states, by calling the shipped functions.
+>
+> Thin: **no browser has rendered the tile.** No dev server was running on `:3000` or `:3002` and
+> the brief forbade starting one, so what is proved about the console is the text an operator would
+> read and the markup's structure — not its appearance, its contrast or its behaviour at a phone
+> width. The tile's copy was deliberately moved OUT of the `.tsx` and into
+> `lib/runtime-health.ts` for exactly this reason: `node --test` has no JSX transform, so wording
+> left in the component could only ever have been checked by eye.
+>
+> And **nothing is scheduled anywhere**. The cron lines are documented in two script headers and in
+> `deploy/TAKEOVER.md` §5; no box runs either, because no box runs this build at all.
+>
+> `npx tsc --noEmit` is clean, both builds pass, both surface manifests pass, and **645 unit tests**
+> pass — 83 new, in `runtime-health.test.mts` (43), `claude-cli.test.mts` (18),
+> `claude-cli-seam.test.mts` (7) and 15 added to `alerts.test.mts`.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-3001 | A scheduled check that runs without waiting for a student | **PARTIAL** | `app/scripts/probe-runtime.mts` + `npm run probe:runtime`, following `alerts-sweep.mts` exactly (`load-env.mjs`, `ts-resolver.mjs`, `withMaint`, a documented crontab line in its own header); `db/migrations/026-runtime-health.sql` stores the readings; `scripts/local-dev.sh` step **6d** runs it once so a fresh laptop proves it runs at all | Live: run against the real CLI and the real database — `[probe] mvp1/claude_cli: PASS code=ok 3301ms`, one row written, the trim executed. Migration applied **twice**, rolled back **twice** and re-applied, each time with its `DO $verify$` block passing. **The missing half is the schedule**: no cron line exists on any box, and none can, because no box runs this build. Held at PARTIAL for that alone. |
+| FR-3002 | The check uses the same path, and the same proof of identity, as teaching | **VERIFIED** | `app/src/lib/claude-cli.ts` is the ONE builder of the binary name, the working directory and — the part that decides authentication — the environment. All four callers take them from it: `api/ask/route.ts`, `api/understanding/route.ts`, `lib/uploads.ts` and the probe. The three routes previously each built their own `PATH` string | `claude-cli-seam.test.mts` (7 tests) reads the source of every file in `app/` that spawns a child process, with comments stripped, and fails if any builds its own CLI `PATH` or spawns a literal `"claude"`. **Negative-controlled**: reinstating the old inline `env` object in `api/understanding/route.ts` failed two tests by name; reverting made them pass. It also enumerates the four spawners, so a fifth is a visible event. |
+| FR-3003 | Failures are distinguished, not collapsed | **VERIFIED** | Seven codes in `lib/claude-cli.ts`, each with a label and a **different** operator action: `ok`, `cli_missing`, `not_signed_in`, `call_failed`, `timed_out`, `bad_output`, `spawn_failed`. `classifyCliFailure` orders its checks so our own timeout beats a spawn error beats exit 127 beats the credential signatures | Live, through the real CLI, without logging anybody out: `CLAUDE_CONFIG_DIR=<empty dir>` → `FAIL code=not_signed_in 705ms`; `PATH`/`HOME` hidden → `FAIL code=cli_missing 2ms`. `claude-cli.test.mts` covers the box's exact message and seven neighbouring wordings, **plus the negative controls** — rate limits, DNS failures, `overloaded_error`, a bare `401` and a bare `sign in` must all stay `call_failed`, or the tile would send somebody to a terminal at 3am for a network blip. A test asserts no two failure codes share an action. |
+| FR-3004 | The CLI's own words are never stored | **VERIFIED** | Migration 026 has **no column that could hold them** — six columns, `code` among them, no `detail`, no `message`. `classifyCliFailure` reads stderr in memory and returns one of seven words. `api/understanding/route.ts`'s `CliResult` carried `detail: string` (300 bytes of raw stderr, read by nothing); it now carries a `CliCode` | Live, as each of the three roles against the real table, and structural: `claude-cli-seam.test.mts` asserts the probe's INSERT names exactly migration 026's five writable columns and that stderr does not reach the write path; `claude-cli.test.mts` feeds the classifier a string containing a path and a token-shaped fragment and asserts a closed-vocabulary word comes back. |
+| FR-3005 | It cannot hang; giving up is a recorded failure | **VERIFIED** | 30-second `SIGKILL` deadline in the probe (vs 90s in `/api/ask`, which is waiting for a whole explanation); `timedOut` is remembered rather than only acted on, and beats every other signal in the classifier — a killed child's exit code and output are artefacts of the kill | `claude-cli.test.mts`: a timeout carrying `failed to authenticate` in its text still classifies as `timed_out`, so a slow box is never reported as a credential problem. The `Reading` promise has no rejection path at all — every branch resolves, because a probe that threw would leave no row and a missing row is indistinguishable from one that was never scheduled. |
+| FR-3006 | A turn that failed before costing anything still leaves a record | **PARTIAL** | The gate `if (totalInputTokens(tokens) + tokens.outputTokens > 0)` is removed from all three write paths — `api/ask/route.ts`, `api/understanding/route.ts`, `lib/uploads.ts`. `costFor` already answered `cost_usd = NULL` / `price_basis = 'unpriced'` for an uncounted turn, and `cost-model.ts` already reported unpriced turns as a count, so no figure is faked to justify the row | **This was the find of the pass and it is not yet proved end to end.** A lapsed sign-in fails before `message_start` arrives, so no counter is ever known — and the old gate discarded exactly those rows. The passive signal was therefore structurally blind to the one fault it was built for: seven weeks of failing turns would have left **no rows at all**. The change typechecks, both builds pass and the reasoning is written at the three call sites; what has NOT happened is a real failing turn through a signed-out CLI writing a real `ai_interactions` row, because that needs a dev server. |
+| FR-3007 | Three things, never collapsed; stale is its own visible state | **PARTIAL** | `lib/runtime-health.ts` owns the verdicts and **every sentence**; `components/console/RuntimeHealthTile.tsx` owns structure and tokens and no words. Three treatments: solid card + `good` chip, **dashed border on the plain surface** + `neutral` chip (the grammar `/overview` already uses for "no data"), gold + `attention` chip. The word is always present, so the state survives greyscale | Live, against the real database, in all three states, by calling `getSecurityView` as a real operator: **healthy** — *"The probe answered 0 seconds ago… That is a statement about that moment and about no other."*; **unknown** — *"Nobody has looked for 3 hours 2 minutes… This is not a pass."*; **failing** — *"The tutor has been unable to answer for 35 minutes. 3 readings in a row…"*. 43 tests in `runtime-health.test.mts`, most asserting negatives. **No browser has rendered it**: contrast, layout and phone width are unproven. |
+| FR-3008 | The remedy matches the diagnosis | **VERIFIED** | `whoFixes()` in `lib/runtime-health.ts` has four answers: nobody (`ok`); *"Nothing here needs Samuel yet — this is an absence of evidence, not evidence of a fault"* (`unknown`); Samuel, the terminal, TAKEOVER §5 and the command (`not_signed_in`); and *"This is not a sign-in problem"* for every other failure | **The first draft got this wrong and the test is the record of it**: it printed the sign-in sentence under every non-`ok` state, including `unknown`, which would have sent somebody to the one person who cannot be reached about a dead cron line. Found by reading the live output, not by a test. Now asserted four ways, including that `unknown` does **not** contain "Only Samuel" and that the tile references TAKEOVER §5 rather than duplicating it. |
+| FR-3009 | An alarm, on the existing rails, never on one failed check | **PARTIAL** | `tutorUnreachable` in `lib/alerts.ts`, the sixth rule, on `alerts_sent`'s `(rule, key, window_start)` idempotence. **Three consecutive failures — 45 minutes**, argued at `PROBE_FAILURE_RUN`; one-hour window; keyed by probe name so a run that changes code part-way is one outage; bucketed on the outage's start, not the sweep's clock. Wired into `alerts-sweep.mts`, which fetches the readings and degrades to "no readings" if the table is absent rather than losing the other five rules | Live: three synthetic failing readings → `would fire tutor_unreachable key=claude_cli window=…`; the real sweep logged it once; **a second sweep claimed nothing** (`0 mailed, 0 logged, 1 already sent for their window`). 15 tests, including that one failure and two failures do not fire, that a success inside the run resets it, and that a stale run does not fire. **Never mailed**: `AINEXT_ALERT_EMAIL` is unset here and SMTP has never sent a message on this project at all (FR-2004, **S2**). |
+| FR-3010 | Reading the health never calls the tutor | **VERIFIED** | The console reads two stored signals — `runtime_health` (40 rows) and `ai_interactions` (50 rows, three columns: outcome, surface kind, time) — as two more queries in `getSecurityView`'s fixed `sequential` batch, now fifteen. Migration 026 grants the probe's table to `ainext_maint` (write) and `ainext_operator` (SELECT only) and **revokes everything from `ainext_app`** | Asserted in three places rather than trusted: migration 026's `DO $verify$` names all four `ainext_app` privileges individually; live, as each role — `ainext_app` refused SELECT *and* INSERT, `ainext_operator` refused INSERT, `ainext_maint` able to insert and trim; and `claude-cli-seam.test.mts` fails if anything under `src/app/` imports the probe. |
+
+---
+
 ## 8. Deferred by design — architecture only — FR-2901…
 
 | FR | Requirement | Status | Implementation | Proof |
@@ -351,19 +412,19 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **92** |
+| Functional requirements | **102** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **106 / 106** |
-| — verified | 72 |
+| Traced (every one needs a row) | **116 / 116** |
+| — verified | 78 |
 | — built | 3 |
-| — partial | 24 |
+| — partial | 28 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **43** |
+| Requirements a test declares | **50** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 72 requirements marked VERIFIED, 34 have an automated test declaring them.** The remaining 38 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 78 requirements marked VERIFIED, 37 have an automated test declaring them.** The remaining 41 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 

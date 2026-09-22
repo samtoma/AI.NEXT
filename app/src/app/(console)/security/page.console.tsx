@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
+import { RuntimeHealthTile } from "@/components/console/RuntimeHealthTile";
 import { Chip, Empty, Figure, Panel, Td, Th, stamp } from "@/components/console/ui";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
@@ -118,6 +119,7 @@ const RULE_LABEL: Record<string, string> = {
   operator_permission_denied: "An operator refused repeatedly",
   cross_student_access_denied: "Cross-student access denied",
   impossible_travel_shadow: "Suspicious activity (shadow)",
+  tutor_unreachable: "The tutor could not teach",
 };
 
 /* ----------------------------------------------------------------- page */
@@ -136,6 +138,11 @@ function SecurityPage({ view }: { view: SecurityView }) {
       </p>
 
       <CrossStudentBanner view={view} />
+
+      <RuntimeHealthTile
+        runtime={view.runtime}
+        thresholds={view.runtimeThresholds}
+      />
 
       <Panel
         title="Sign-ins"

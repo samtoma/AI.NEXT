@@ -3,6 +3,12 @@ import { withPrincipal } from "@/lib/db";
 import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
+import {
+  CLAUDE_BIN,
+  claudeCwd,
+  claudeEnv,
+  classifyCliFailure,
+} from "@/lib/claude-cli";
 import { buildLessonContext } from "@/lib/lesson";
 import { getAllSacredPassages } from "@/lib/lesson-content";
 import {
@@ -18,7 +24,6 @@ import {
   ZERO_TOKENS,
   costFor,
   tokensFromUsage,
-  totalInputTokens,
   type Outcome,
   type TokenCounts,
 } from "@/lib/pricing";
@@ -54,10 +59,17 @@ import {
  *             zeros — "a redacted turn cost real money and is recorded as
  *             free, on exactly the turns we most want to examine". It now
  *             writes the counters seen on the stream, repriced at list price.
- *   error /   the backend failed or timed out after burning input tokens. This
- *   timeout   used to write nothing at all, which is how a failing day looks
- *             cheap. A failure BEFORE any tokens are known still writes
- *             nothing — there is no cost line to draw.
+ *   error /   the backend failed or timed out. This used to write nothing at
+ *   timeout   all, which is how a failing day looks cheap. **Since 2026-09-22
+ *             it also writes when NO tokens are known** — the row carries
+ *             `cost_usd = NULL` and `price_basis = 'unpriced'` rather than a
+ *             fabricated zero, because a turn that never reached the model
+ *             genuinely cost nothing and is still a failed turn. That case is
+ *             exactly what a lapsed CLI sign-in looks like, and gating it away
+ *             made the console's health signal blind to the one fault it was
+ *             built to catch (FR-3006). The failure is also classified into a
+ *             short stable code (`lib/claude-cli.ts`) so the console's replay
+ *             says *which* backend failure it was.
  *
  * And `input_tokens` is now UNCACHED input only (`lib/pricing.ts`), with the
  * two cache counters beside it as they always were in their own columns.
@@ -386,13 +398,13 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
       const rawBudget = (process.env.AINEXT_THINKING_BUDGET ?? "1024")
         .trim()
         .toLowerCase();
-      const thinkEnv =
+      const thinkEnv: Record<string, string> =
         rawBudget === "0" || rawBudget === "off"
           ? {}
           : { MAX_THINKING_TOKENS: rawBudget };
 
       const child = spawn(
-        "claude",
+        CLAUDE_BIN,
         [
           "-p",
           "--output-format",
@@ -409,12 +421,15 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           "1",
         ],
         {
-          cwd: process.env.TMPDIR ?? "/tmp",
-          env: {
-            ...process.env,
-            PATH: `${process.env.PATH ?? ""}:${process.env.HOME ?? ""}/.local/bin`,
-            ...thinkEnv,
-          },
+          // The binary, the directory and the environment all come from
+          // `lib/claude-cli.ts`, which is the ONLY builder of them in this
+          // repository. Authentication is decided by what is in that
+          // environment, so the health probe
+          // (`app/scripts/probe-runtime.mts`) calling the same two functions
+          // is what makes its verdict a statement about THIS code path rather
+          // than about a program nothing serves students from.
+          cwd: claudeCwd(),
+          env: claudeEnv(thinkEnv),
           stdio: ["pipe", "pipe", "pipe"],
         }
       );
@@ -674,8 +689,17 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           return;
         }
         if (result == null || result.is_error || !fullText) {
+          // The CLI's own words, classified into one short stable code and
+          // then NOT carried any further: `cliCode` is a word from a closed
+          // vocabulary, and the raw text below goes only to this process's
+          // stderr as it always has.
+          const cliCode = classifyCliFailure({
+            timedOut,
+            exitCode: code,
+            text: `${stderrTail}\n${result?.result ?? ""}`,
+          });
           console.error(
-            `ask: claude CLI failed (code ${code}) — ${stderrTail.slice(-400)}`
+            `ask: claude CLI failed (code ${code}, ${cliCode}) — ${stderrTail.slice(-400)}`
           );
           // A FAILURE THAT BURNED TOKENS IS A COST LINE (research A4.2). The
           // turn produced nothing the student could use, and the input tokens
@@ -683,21 +707,41 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           // cheap. When the result line DID arrive but carried `is_error`, its
           // own totals are authoritative and are used.
           const tokens = result?.usage ? tokensFromUsage(result.usage) : partial;
-          if (totalInputTokens(tokens) + tokens.outputTokens > 0) {
-            await logTurn({
-              outcome: timedOut ? "timeout" : "error",
-              assistantMessage: timedOut
-                ? `[no answer — the model did not finish within ${TIMEOUT_MS / 1000}s]`
-                : `[no answer — the AI backend failed (exit ${code ?? "unknown"})]`,
-              tokens,
-              cliCostUsd: result?.total_cost_usd ?? null,
-              latencyMs: result?.duration_ms ?? Date.now() - started,
-              citations: [],
-            });
-          }
-          // …and a failure BEFORE any tokens are known writes nothing at all:
-          // there is no cost line to draw, and a row of zeros would be the
-          // defect this phase removed, reintroduced from the other side.
+          //
+          // **AND A FAILURE THAT BURNED NOTHING IS STILL A FAILED TURN**
+          // (FR-3006, the incident of 2026-09-22).
+          //
+          // This branch used to be gated on
+          // `totalInputTokens(tokens) + tokens.outputTokens > 0`, with a
+          // comment saying that a failure before any tokens are known writes
+          // nothing at all because there is no cost line to draw. As COST
+          // accounting that was right and it is still right — what it missed
+          // is that the ledger is also the product's only record of whether
+          // the tutor worked, and **the zero-token failure is precisely the
+          // shape of a lapsed sign-in**: the CLI exits immediately with
+          // "Failed to authenticate", no `message_start` ever arrives, so no
+          // counter is ever known. The console's passive signal was therefore
+          // structurally blind to the one fault it was built to catch. Seven
+          // weeks of failing turns would have left seven weeks of no rows.
+          //
+          // So the row is always written now, and the cost stays honest rather
+          // than being faked to justify it: `costFor` returns `cost_usd = NULL`
+          // with `price_basis = 'unpriced'` for a turn with no counters
+          // (`lib/pricing.ts`), the cost views already report unpriced turns as
+          // a COUNT rather than folding an unknown into a total, and
+          // `cost-model.ts`'s `unpricedTurns` field exists for exactly this.
+          // Nothing is recorded as free that was not free; a turn that never
+          // reached the model genuinely cost nothing.
+          await logTurn({
+            outcome: timedOut ? "timeout" : "error",
+            assistantMessage: timedOut
+              ? `[no answer — the model did not finish within ${TIMEOUT_MS / 1000}s]`
+              : `[no answer — the AI backend failed: ${cliCode}]`,
+            tokens,
+            cliCostUsd: result?.total_cost_usd ?? null,
+            latencyMs: result?.duration_ms ?? Date.now() - started,
+            citations: [],
+          });
           send({
             type: "error",
             message: "AI backend unavailable — please try again",

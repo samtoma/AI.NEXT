@@ -21,11 +21,17 @@ import {
   addTokens,
   costFor,
   tokensFromUsage,
-  totalInputTokens,
   type CliUsage,
   type Outcome,
   type TokenCounts,
 } from "@/lib/pricing";
+import {
+  CLAUDE_BIN,
+  claudeCwd,
+  claudeEnv,
+  classifyCliFailure,
+  type CliCode,
+} from "@/lib/claude-cli";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
 
 /**
@@ -74,7 +80,19 @@ type CliResult =
       outcome: Extract<Outcome, "error" | "timeout">;
       tokens: TokenCounts;
       latencyMs: number;
-      detail: string;
+      /**
+       * WHY it failed, as one of `lib/claude-cli.ts`'s seven stable words.
+       *
+       * This used to be `detail: string` holding the last 300 bytes of the
+       * CLI's stderr — which was then never read by anything, so it was a
+       * credential-adjacent string carried around a request handler for no
+       * benefit. CLI diagnostics can contain a filesystem path, a home
+       * directory or a fragment of whatever failed to authenticate; a closed
+       * vocabulary cannot. The word ends up in `assistant_message`, which an
+       * operator can read in the console's replay, so it had to be one that is
+       * safe to show.
+       */
+      code: CliCode;
     };
 
 function runClaudeJson(
@@ -85,7 +103,7 @@ function runClaudeJson(
     const started = Date.now();
     let timedOut = false;
     const child = spawn(
-      "claude",
+      CLAUDE_BIN,
       [
         "-p",
         "--output-format",
@@ -100,11 +118,11 @@ function runClaudeJson(
         "1",
       ],
       {
-        cwd: process.env.TMPDIR ?? "/tmp",
-        env: {
-          ...process.env,
-          PATH: `${process.env.PATH ?? ""}:${process.env.HOME ?? ""}/.local/bin`,
-        },
+        // One builder for all four call sites, `lib/claude-cli.ts` — see the
+        // note in `api/ask/route.ts`. The health probe uses the same two
+        // functions, which is what makes its verdict a claim about this path.
+        cwd: claudeCwd(),
+        env: claudeEnv(),
         stdio: ["pipe", "pipe", "pipe"],
       }
     );
@@ -122,19 +140,25 @@ function runClaudeJson(
     child.stdin.on("error", () => {});
     child.stdin.write(userPrompt);
     child.stdin.end();
-    const failed = (tokens: TokenCounts, detail: string): CliResult => ({
+    const failed = (tokens: TokenCounts, code: CliCode): CliResult => ({
       ok: false,
       outcome: timedOut ? "timeout" : "error",
       tokens,
       latencyMs: Date.now() - started,
-      detail,
+      code,
     });
-    child.on("error", (e) => {
+    child.on("error", (e: NodeJS.ErrnoException) => {
       clearTimeout(timeout);
       // The process never started: nothing was spent and there is nothing to
-      // price. ZERO_TOKENS here means "none were used", not "none were counted"
-      // — the caller writes no row for it.
-      resolve(failed(ZERO_TOKENS, String(e)));
+      // price. ZERO_TOKENS here means "none were used", not "none were
+      // counted" — and the caller writes the row ANYWAY, because a turn that
+      // cost nothing is still a turn that failed (FR-3006).
+      resolve(
+        failed(
+          ZERO_TOKENS,
+          classifyCliFailure({ spawnError: { code: e.code, message: e.message } })
+        )
+      );
     });
     child.on("close", () => {
       clearTimeout(timeout);
@@ -149,14 +173,26 @@ function runClaudeJson(
         j = JSON.parse(out);
       } catch {
         // No parseable envelope at all — killed mid-write, or the CLI printed
-        // something that is not its own JSON. Nothing countable came back.
-        return resolve(failed(ZERO_TOKENS, errTail.slice(-300)));
+        // something that is not its own JSON. Nothing countable came back, and
+        // the plain text it printed instead is exactly what the classifier
+        // wants to read: a lapsed sign-in fails here, before any JSON.
+        return resolve(
+          failed(
+            ZERO_TOKENS,
+            classifyCliFailure({ timedOut, text: `${errTail}\n${out}` })
+          )
+        );
       }
       // An `is_error` envelope still reports its usage, and those tokens were
       // spent: they are carried out rather than discarded with the failure.
       const tokens = tokensFromUsage(j?.usage);
       if (!j || j.is_error || typeof j.result !== "string") {
-        return resolve(failed(tokens, errTail.slice(-300) || "cli reported is_error"));
+        return resolve(
+          failed(
+            tokens,
+            classifyCliFailure({ timedOut, text: `${errTail}\n${j?.result ?? ""}` })
+          )
+        );
       }
       resolve({
         ok: true,
@@ -323,8 +359,9 @@ export async function POST(req: Request) {
     let totalMs = 0;
     let rating: RatingJson | null = null;
     let rawOut = "";
-    /** Set when an attempt failed outright, for the ledger row's outcome. */
-    let failure: { outcome: Extract<Outcome, "error" | "timeout">; detail: string } | null =
+    /** Set when an attempt failed outright, for the ledger row's outcome and
+     *  for the short code the console's replay shows beside it. */
+    let failure: { outcome: Extract<Outcome, "error" | "timeout">; code: CliCode } | null =
       null;
 
     for (let attempt = 0; attempt < 2 && !rating; attempt++) {
@@ -337,7 +374,7 @@ export async function POST(req: Request) {
       tokens = addTokens(tokens, r.tokens);
       totalMs += r.latencyMs;
       if (!r.ok) {
-        failure = { outcome: r.outcome, detail: r.detail };
+        failure = { outcome: r.outcome, code: r.code };
         break;
       }
       failure = null;
@@ -352,7 +389,16 @@ export async function POST(req: Request) {
       // expensive failure in the product looks like nothing happened
       // (research A4.2). No `understanding_checks` row is written — there is no
       // rating — so this one is its own unit rather than a savepoint inside one.
-      if (totalInputTokens(tokens) + tokens.outputTokens > 0) {
+      //
+      // **AND IT IS WRITTEN EVEN WHEN NOTHING WAS SPENT** (FR-3006). The
+      // `totalInputTokens(tokens) + tokens.outputTokens > 0` gate that used to
+      // stand here was right about cost and wrong about health: a lapsed CLI
+      // sign-in fails before a single token is counted, so the gate made the
+      // console's passive signal blind to exactly the fault it exists to
+      // catch. `costFor` answers `cost_usd = NULL` / `price_basis =
+      // 'unpriced'` for an uncounted turn, so nothing is recorded as free that
+      // was not — see `api/ask/route.ts`'s longer note on the same change.
+      {
         const { costUsd, priceBasis } = costFor(MODEL, tokens, cliCost);
         try {
           await withPrincipal(studentId, (client) =>
@@ -369,7 +415,7 @@ export async function POST(req: Request) {
                 studentId,
                 `[rate ${mode} session — ${transcript.length} transcript lines]`,
                 failure
-                  ? `[no rating — the grading model ${failure.outcome === "timeout" ? "timed out" : "failed"}]`
+                  ? `[no rating — the grading model ${failure.outcome === "timeout" ? "timed out" : "failed"}: ${failure.code}]`
                   : "[no rating — the grading model returned invalid JSON twice]",
                 JSON.stringify({
                   chat_session: chatSession,
