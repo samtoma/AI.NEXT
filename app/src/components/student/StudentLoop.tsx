@@ -8,6 +8,7 @@ import { stepText } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
 import { TeX } from "@/components/TeX";
 import { ChatCore } from "@/components/chat/ChatCore";
+import { FeedbackPrompt } from "@/components/student/FeedbackPrompt";
 import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
 
@@ -507,6 +508,22 @@ export function StudentLoop({
               New plan
             </button>
           </div>
+
+          {/* "The end of a session", the first of the three moments Samuel
+              named (FR-2801). It sits AFTER the two doors, deliberately: a
+              student who wants to leave has already passed everything she
+              needs before she meets the question, which is most of what
+              "non-intrusive" means in practice. It renders nothing at all
+              unless the server says to ask — see `FeedbackPrompt`.
+
+              No `rtl` prop: the practice plan is not a lesson and carries no
+              subject of its own — items can come from more than one course —
+              so there is no registered direction to read. It therefore takes
+              the product's default (constitution V: English LTR for MVP 1.0),
+              which is the same answer this whole screen already gives. When
+              the practice loop learns which subject it is in, this is one
+              prop. */}
+          <FeedbackPrompt moment="session_ended" />
         </section>
       )}
     </main>

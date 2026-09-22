@@ -46,6 +46,15 @@ import { humanDuration } from "@/lib/timeline-rules";
  * flag is triaged — the immediate human channel stays the path that matters,
  * and a queue somebody checks on Monday would quietly replace it.
  *
+ * **Her own words are the one thing on this page she wrote** (FR-2809,
+ * migration 025). Everything else here is derived — estimates, counts,
+ * durations, verdicts the tutor wrote about her — and the feedback panel is a
+ * sentence she typed about the product. Nothing scans, scores or classifies
+ * it, and no safety flag is ever raised from one; this page is the human path,
+ * which is why the panel sits directly beneath the flags and why nothing on it
+ * can edit or remove a note (`ainext_operator` holds SELECT on that table and
+ * nothing else).
+ *
  * **The commercial status is read by everyone who reaches this page and changed
  * by almost nobody.** It is a fact about the student, so `student-data` sees it
  * with who last set it and when; changing it needs `cost-billing` (FR-2405), so
@@ -626,6 +635,97 @@ export default async function ConsoleStudentPage({
           list is a record that it happened, not a queue: there is deliberately nothing here to
           acknowledge, assign or close, because a queue somebody checks on Monday would quietly
           replace the channel that matters.
+        </p>
+      </Panel>
+
+      {/* --------------------------------------------------- feedback */}
+      {/* Placed immediately after the safety flags, and the adjacency is the
+          point rather than an accident of ordering. Those two panels are the
+          only places on this page where something might need a person to DO
+          something, and they are deliberately different in kind: a flag is a
+          machine's guess that reached a human channel already, while a note is
+          a child's own sentence that has reached nobody until somebody reads
+          it here.
+
+          Everything above this line is derived — estimates, counts, durations,
+          verdicts the tutor wrote about her. This is the one panel on the
+          Student 360 carrying words SHE wrote. */}
+      <Panel
+        title="What this student told us"
+        note={
+          data.feedback.length === 0
+            ? "Nothing yet."
+            : `The most recent ${data.feedback.length} answer${
+                data.feedback.length === 1 ? "" : "s"
+              }, newest first. Notes are printed in full.`
+        }
+        right={
+          <Link
+            href={`/feedback?notes=all&student=${s.id}`}
+            className="font-mono text-[11.5px] text-accent underline-offset-2 hover:underline"
+          >
+            Everyone&rsquo;s feedback →
+          </Link>
+        }
+      >
+        {data.feedback.length === 0 ? (
+          <Empty>
+            This student has not been asked yet, or has not answered. She is asked at the end of
+            a lesson or a practice plan, at most once a fortnight, and never before her third
+            finished sitting.
+          </Empty>
+        ) : (
+          <ul className="space-y-3">
+            {data.feedback.map((f) => (
+              <li key={f.id} className="border-b border-line-soft pb-3 last:border-0 last:pb-0">
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <Chip
+                    tone={
+                      f.rating === "up" ? "good" : f.rating === "down" ? "attention" : "neutral"
+                    }
+                  >
+                    {f.rating === "up"
+                      ? "Thumbs up"
+                      : f.rating === "down"
+                        ? "Thumbs down"
+                        : "Closed without answering"}
+                  </Chip>
+                  <span className="font-mono text-[12px] text-ink-soft">
+                    {stamp(f.createdAt)}
+                  </span>
+                  <span className="text-[12.5px] text-ink-soft">
+                    {f.lessonSlug ? `after lesson ${f.lessonSlug}` : "after a practice plan"}
+                    {f.trigger === "long_session" ? " · a long sitting" : ""}
+                  </span>
+                  {f.sessionRef != null ? (
+                    <Link
+                      href={`/students/${s.id}/sessions/${f.sessionRef}`}
+                      className="text-[12.5px] text-accent underline-offset-2 hover:underline"
+                    >
+                      the session it followed →
+                    </Link>
+                  ) : null}
+                </div>
+                {f.note ? (
+                  // `dir="auto"` — the one place on this console where the
+                  // CONTENT decides direction. A child on an Arabic course
+                  // writes Arabic into this box, and rendering her sentence
+                  // left-to-right would put its punctuation in the wrong place.
+                  <p
+                    dir="auto"
+                    className="mt-1.5 whitespace-pre-wrap rounded border border-line bg-paper-deep px-3 py-2 text-[13.5px] leading-relaxed text-ink"
+                  >
+                    {f.note}
+                  </p>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        )}
+        <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
+          A note is free text written by a student about the product. Nothing scans, scores or
+          classifies it, and no safety flag is ever raised from one — deliberately (migration
+          025). Nothing in this console can edit or remove what she wrote.
         </p>
       </Panel>
 

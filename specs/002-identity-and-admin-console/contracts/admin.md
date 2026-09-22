@@ -4,7 +4,7 @@
 **Read models**: `app/src/lib/{timeline,cost-queries,security-queries,overview-queries}.ts`
 **ADRs**: [0014](../../../docs/decisions/0014-admin-console-second-build-target.md),
 [0015](../../../docs/decisions/0015-interaction-timeline-and-replay.md)
-**Enforces**: FR-2201…FR-2211, FR-2301…FR-2306, FR-2401…FR-2407, FR-2502, FR-2507
+**Enforces**: FR-2201…FR-2211, FR-2301…FR-2306, FR-2401…FR-2407, FR-2502, FR-2507, FR-2808…FR-2811
 
 Every view below passes through `authorize()` ([authorization.md](./authorization.md)) and reads
 through `ainext_operator`. No view computes a number from anything but the first-party stores
@@ -41,7 +41,8 @@ by `system_from`) · attempts and accuracy per objective · **time-on-task as tw
 `attempts.time_ms` and session wall-clock, never blended · sessions · help-seeking (questions per
 lesson, uploads) · misconception frequency · understanding-check outcomes · imputed cost to date ·
 subscription status · safety flags (**type and time only** — the table deliberately holds nothing
-else, FR-2508) · sign-in history · a link to the session list.
+else, FR-2508) · **her own feedback, in time order, notes printed in full** (FR-2809) ·
+sign-in history · a link to the session list.
 
 ### 3. Session list
 
@@ -144,10 +145,43 @@ exception depends on, now attached to a named person. `evidence-access` reaches 
 `/gallery` and `/dev/*`. **`/pipeline`'s cross-student read is deleted** in the same change that
 re-homes it: reading extraction provenance needs no student's tutor turn on the page (FR-2104).
 
+### 10. Feedback **[ADDED 2026-09-22]**
+
+**Role**: `student-data`, **not** the overviews' all-four — and the contrast is the point. §8 is
+permitted to every role *because* every cell in it is a count, a share, a duration or a curriculum
+label. This view's content is the opposite: a named child's own free text. `cost-billing` reads no
+student content (FR-2406) and `content-review` must not learn a student's name from a feature
+(FR-2707).
+
+**Nav group: Monitor**, beside Security and Overviews. Those three answer the same kind of question
+— "what is happening across the pilot, and is any of it wrong?" — rather than "tell me about this
+person" or "what may they see". Feedback is the only one carrying a human voice instead of a derived
+number, which is the argument for putting it next to them rather than off on its own.
+
+Up/down counts and their ratio over time, split by which of the three moments asked and by course ·
+**the notes themselves, newest first, printed in full and never truncated**, each naming the student
+and linking to the sitting it followed · the cadence rule in prose, so "why is there so little of
+it" has an answer that is not a guess.
+
+**It opens on the notes** (`notes=all` turns the counting view on, not the other way round), because
+this page is the human path for a child's free text and a path that is optional at 6 p.m. on a Friday
+is not a path. **Nothing classifies a note** — no keyword scan, no sentiment score, no `safety_flags`
+row derived from one (FR-2811, migration 025) — and **nothing alerts**: this is a pull, and the
+banner on the page says so rather than leaving an operator to assume otherwise.
+
+**No `operator_reads` row**, for §3's reason applied to a cross-student list: the audit's unit is one
+student's record, and a page showing forty would write forty rows and make the audit unreadable.
+`/security` already makes the same call while showing student names.
+
+**Nothing on it can change a note.** `ainext_operator` holds SELECT on `feedback` and nothing else
+(FR-2810); removing one is a `ainext_maint` act a human decided to take.
+
 ## What the console does not have
 
 No support ticketing, no bulk operations on students, no student impersonation, no "view as", no way
-to edit a transcript, no way to delete an `operator_reads` row. Each absence is deliberate: the first
-two are a later feature (spec Assumptions), the middle two would make an operator action
-indistinguishable from a student's (spec edge cases), and the last two would make the record editable
-by the people it records.
+to edit a transcript, no way to delete an `operator_reads` row, **no way to edit or delete a piece of
+student feedback** (FR-2810). Each absence is deliberate: the first two are a later feature (spec
+Assumptions), the middle two would make an operator action indistinguishable from a student's (spec
+edge cases), and the last three would make the record editable by the people it records — which is
+the same sentence read twice, once about an operator's own reads and once about a child's words
+about the product.

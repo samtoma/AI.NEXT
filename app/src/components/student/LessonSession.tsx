@@ -38,6 +38,7 @@ import { IrabBuilder } from "@/components/student/widgets/IrabBuilder";
 import type { IrabAnswer, NounType } from "@/lib/irab";
 import { renderVizWidget } from "@/components/viz/render-viz-widget";
 import { ReportCard } from "@/components/student/ReportCard";
+import { FeedbackPrompt } from "@/components/student/FeedbackPrompt";
 import {
   WhiteboardPanel,
   arDigits,
@@ -1030,6 +1031,20 @@ export function LessonSession({
           studentName={lesson.studentName}
           rtl={rtl}
         />
+        {/* "When we finish a lesson", the second of the three moments Samuel
+            named (FR-2801). Here and not inside `ReportCard`, for two
+            reasons: the console REPLAYS that component to reconstruct what a
+            student was shown (ADR-0015 §3, `readOnly`), and a live prompt
+            asking an operator how the lesson went would be nonsense; and this
+            has to sit after the card's three doors, which is a position
+            outside the card rather than inside it.
+
+            `rtl` is the same value the report card gets — the subject's
+            registered direction — so the question is asked in Arabic on the
+            two Arabic courses without either component knowing which way the
+            page runs. It renders nothing at all unless the server says to
+            ask, which is the usual answer. */}
+        <FeedbackPrompt moment="lesson_completed" rtl={rtl} />
       </main>
     );
   }

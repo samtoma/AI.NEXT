@@ -274,6 +274,40 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     navGroup: "Monitor",
   },
   {
+    // In-product feedback (FR-2808, migration 025).
+    //
+    // **`student-data`, NOT the overviews' all-four**, and the line is the one
+    // contracts/admin.md already draws. The overviews are permitted to every
+    // role because every cell in them is a count, a share, a duration or a
+    // curriculum label — nothing individual. This page's whole content is the
+    // opposite: a named child's own free text, which is exactly the category
+    // `student-data` exists for. `cost-billing` reads no student content
+    // (FR-2406), and `content-review` must not learn a student's name from a
+    // feature (FR-2707's argument, applied again).
+    //
+    // **Monitor is the right group.** It sits beside Security and Overviews
+    // because those three answer the same kind of question — "what is
+    // happening across the pilot, and is any of it wrong?" — rather than "tell
+    // me about this one person" (Students) or "what may they see" (Courses,
+    // Content review). Feedback is the only one of the three that carries a
+    // human voice rather than a derived number, and that is an argument for
+    // putting it next to them rather than off on its own: an operator who
+    // opens Overviews to find out whether the product is working should meet,
+    // one link away, the students saying whether it is.
+    //
+    // LAST in the group, after the metric dictionary, because the
+    // dictionary belongs to Overviews — it defines that page's words, and
+    // a link between the two would read as a third, unrelated surface
+    // wedged into a pair. Nav order is this table's order (`navFor`
+    // filters, it never sorts), so position here is the only place it is
+    // decided.
+    path: "/feedback",
+    file: "(console)/feedback/page.console.tsx",
+    roles: ["student-data"],
+    nav: "Feedback",
+    navGroup: "Monitor",
+  },
+  {
     path: "/pipeline",
     file: "(console)/pipeline/page.console.tsx",
     roles: ["evidence-access"],

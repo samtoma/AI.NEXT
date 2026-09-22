@@ -1,8 +1,53 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-22 (`feat/002-identity-and-admin-console` at `85fe3b8`; released
-> `PDR1-0-v0.4.0`; constitution v3.1.1)
+> Last updated: 2026-09-22 (`main`, working tree dirty — in-product feedback is written and
+> unstaged; released `PDR1-0-v0.5.0`; constitution v3.1.1)
+
+## 🗣️ ASKING THE STUDENT HOW WE DID — in-product feedback (2026-09-22, `main`, UNCOMMITTED)
+
+Samuel's ask: *"a feedback at end of session, thumbs up / down and a text to be added so we know how
+did we do… also might have something similar when we finish a lesson or after a long session… and
+the admin can see, find a good place to have the global view, but also view per student."*
+
+Written and **left unstaged on `main`** — nothing is committed. Requirements were written **with**
+the code this time rather than two days behind it: **FR-2801…FR-2811** in
+`specs/002-identity-and-admin-console/spec.md`, traced in its matrix **§7c**, `[ADDED 2026-09-22]`.
+
+| What | Where |
+|---|---|
+| The table, RLS forced, operator **SELECT only** | `db/migrations/025-feedback.sql` + its rollback |
+| The cadence, pure and tested | `app/src/lib/feedback-rules.ts` (+ 19 tests) |
+| The only module that touches the table | `app/src/lib/feedback-queries.ts` |
+| The student surface | `app/src/components/student/FeedbackPrompt.tsx`, mounted on the report card and the practice summary |
+| The console: global and per-student | `/feedback` (Monitor group, `student-data`) and a Student 360 panel |
+
+**The two things that matter more than the feature working.**
+
+1. **The note never reaches a model**, and that is a test rather than a comment.
+   `feedback-isolation.test.mts` greps twelve prompt-building modules *and walks the import graph
+   out of each of them*, so a reach that names nothing forbidden still fails. Negative-controlled
+   twice in the pass that wrote it.
+2. **Nothing classifies a child's words.** No keyword scan, no sentiment score, no `safety_flags`
+   row derived from a note — argued at length in migration 025's header. The human path is a
+   surface instead: `/feedback` opens on the notes, prints them in full, and says on the page that
+   nothing has read them first and nothing will email anybody. **That last part is the honest limit
+   and is Samuel's to accept or change** — it is a pull, not a push, and at a scale where that
+   stops being right the change is a mail on `alerts_sent`'s existing rails carrying no part of the
+   note.
+
+**The cadence, so it is findable without reading code**: at most once per **14 days**, never twice
+about the same sitting, not before a student's **3rd** finished sitting, and a sitting past **45
+minutes** is recorded as `long_session` — 45 because it is longer than the 30-minute idle window, so
+a sitting that reaches it contains no half-hour gap and she was genuinely there. Note cap **600
+characters**, refused with the limit named rather than truncated.
+
+**What is NOT proven**: no dev server was running and the brief forbade starting one, so **nothing
+has been rendered in a browser**. Every live check drove the shipped functions against the local
+database under real principals, plus `psql` as each of the three roles. Three of the eleven rows are
+VERIFIED (model isolation, the note cap, the operator's read-only grant); the other eight are
+PARTIAL or BUILT and each names its missing half. `./scripts/traceability.py --check` exits 0; both
+builds, both surface manifests, `tsc` and all 562 tests pass.
 
 ## 📋 THE RECORD MADE TRUE — requirements pass (2026-09-22)
 

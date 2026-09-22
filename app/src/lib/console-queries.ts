@@ -1,5 +1,6 @@
 import { sequential, withOperator } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
+import { studentFeedback, type FeedbackNote } from "@/lib/feedback-queries";
 import { sessionWallClockMs } from "@/lib/timeline-rules";
 
 /**
@@ -304,6 +305,17 @@ export type Student360 = {
   safetyFlags: SafetyFlag[];
   signIns: SignIn[];
   audit: OperatorReadRow[];
+  /**
+   * This student's own feedback, newest first (FR-2809, migration 025).
+   *
+   * It rides on the 360 rather than on a panel that fetches for itself,
+   * because the 360 is already one `withOperator` transaction and a second
+   * connection for one small read on a page this heavy would be a cost with
+   * no property behind it. The read itself lives in `lib/feedback-queries.ts`
+   * — the one module that touches the table — and is called with this unit of
+   * work's client.
+   */
+  feedback: FeedbackNote[];
   sessionCount: number;
   environment: string;
 };
@@ -515,6 +527,14 @@ export async function getStudent360(
         ),
     ] as const);
 
+    // Outside the `sequential` tuple rather than inside it, because it is not a
+    // query written here: `lib/feedback-queries.ts` owns every statement that
+    // touches `feedback`, and keeping that true is what lets
+    // `feedback-isolation.test.mts` make a claim about one file instead of a
+    // claim about the whole codebase. It still runs on THIS client, so it is
+    // one more statement in the same transaction.
+    const feedbackRows = await studentFeedback(db, studentId, HISTORY_LIMIT);
+
     // Written last and inside the same transaction as all of the above.
     await onRead(db);
 
@@ -613,6 +633,7 @@ export async function getStudent360(
         occurredAt: new Date(r.occurred_at as string).toISOString(),
         reason: (r.reason as string | null) ?? null,
       })),
+      feedback: feedbackRows,
       sessionCount: Number(t.sessions_total ?? 0),
       environment: ENVIRONMENT,
     };

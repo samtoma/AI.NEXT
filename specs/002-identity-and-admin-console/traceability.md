@@ -1,6 +1,6 @@
 # Traceability — Identity & Admin Console
 
-**Status date**: 2026-09-22 (rev. 3) · **Branch**: `feat/002-identity-and-admin-console`
+**Status date**: 2026-09-22 (rev. 4) · **Branch**: `main` (the single development branch since 2026-09-22)
 **Authority**: [spec.md](./spec.md) · [decisions.md](./decisions.md) ·
 constitution [v3.1.1](../../.specify/memory/constitution.md) ·
 [ADR-0012](../../docs/decisions/0012-per-student-isolation-rls.md) (per-student isolation, database-enforced) ·
@@ -46,6 +46,25 @@ posture) — all five accepted 2026-09-20 ·
 >
 > One caveat on all of rev. 3's live evidence: unlike P0–P6, **no smoke script exists for it**. It
 > was a hand-run browser and psql session, which is real and is not re-runnable by anybody else.
+>
+> ---
+>
+> **Rev. 4 (2026-09-22) — eleven more requirements, written WITH their code this time.** Samuel
+> asked for in-product feedback — a thumb, an optional note, and the console views to read them —
+> and **FR-2801…FR-2811** were written in the same pass as `db/migrations/025-feedback.sql` and the
+> surfaces, rather than two days behind them. They are traced in **§7c**.
+>
+> **Read §7c's own preamble before its statuses.** Rev. 3's caveat applies here in a sharper form:
+> there was no dev server running on either port during this pass and the brief forbade starting
+> one, so every live check was made by driving the *shipped functions* against the real local
+> database under real principals, plus `psql` as each of the three roles. **Nothing has been
+> rendered in a browser.** Three rows are VERIFIED — the model-isolation guard, the note cap and
+> the operator's read-only grant, all three of which are properties of code and of the database
+> rather than of a screen. The other eight are held at PARTIAL or BUILT, and each says which half
+> is missing.
+>
+> Rev. 4 changed no status anywhere else in this document, and it did not touch 001's matrix or
+> FR-905.
 
 This document answers one question per row: **for this requirement, what code exists, and what
 actually proves it works?** Deliberately harsher than the spec — a requirement whose code exists but
@@ -232,6 +251,41 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ---
 
+## 7c. In-product feedback — FR-2801…FR-2811 **[ADDED 2026-09-22]**
+
+> **Written with their code, on the day Samuel asked for the capability.** Unlike §7b's eleven —
+> which were written two days after the feature shipped — these were written in the same pass as
+> `db/migrations/025-feedback.sql` and the surfaces. Samuel asking is the authorisation; the spec
+> block says so and nothing is back-dated.
+>
+> **The honest shape of this section: no browser has seen any of it.** There was no dev server
+> running on `:3000` or `:3002` during this pass and the brief forbade starting one, so every live
+> check below was made by driving the **shipped functions** (`feedbackContext`, `recordFeedback`,
+> `dismissFeedback`, `getFeedbackOverview`, `getStudent360`) against the real local database under
+> real principals, plus `psql` as each of the three roles. That is genuine evidence about the
+> server, the policies and the grants, and it is **no evidence at all** about the student's screen
+> or the console's. Six of the eleven rows are held back for exactly that reason.
+>
+> Both builds pass, both surface manifests pass, `npx tsc --noEmit` is clean and all 562 unit tests
+> pass with `feedback-rules.test.mts` (19 tests over the cadence) and
+> `feedback-isolation.test.mts` (7) added to `npm test`.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-2801 | Ask at the end of a lesson, the end of a practice plan and after a long sitting; record which asked | **PARTIAL** | One mechanism, two mount points, three triggers. `components/student/FeedbackPrompt.tsx` mounted after `ReportCard`'s three doors (`LessonSession.tsx`, `phase === "report"`) and after the practice summary's two (`StudentLoop.tsx`, `phase === "summary"`); `triggerFor` in `lib/feedback-rules.ts` promotes either moment to `long_session` past 45 minutes; `feedback.trigger_kind` carries the answer | **The argument for two places and three triggers is written down** in `feedback-rules.ts`: the product has exactly two natural ends, and the only way to notice a long sitting *during* one is to interrupt a child mid-work, which FR-2803 forbids — so the long session is a reason, not a place. Live: `feedbackContext(omar, "lesson_completed")` returned `{ask: true, trigger: "lesson_completed", sessionRef: 18}` and the row was written. `triggerFor` is tested on both sides of the 45-minute boundary. **Gaps: the prompt has never been rendered in a browser**, and `long_session` has never been produced by a real sitting — only by unit tests. |
+| FR-2802 | What a student writes never reaches a model | **VERIFIED** | `lib/feedback-queries.ts` is the only module that touches the table; nothing in `retrieval.ts`, `ask.ts`, `lesson.ts`, `checkin.ts`, `understanding-prompt.ts`, `upload-prompt.ts`, `viz-prompt.ts`, `explanations.ts`, `session-cache.ts` or the three model routes imports it, names it, or has a field it could arrive in | `lib/feedback-isolation.test.mts`, in `npm test`, shaped after `plan-gate.test.mts`. It is stronger than those two in one respect: as well as the comment-stripped grep it walks the **import graph** out of each of the twelve prompt-building modules and fails if `lib/feedback-queries.ts` is reachable, which catches a reach that names nothing forbidden. **Negative-controlled twice in this pass**: a direct `import { studentFeedback }` added to `retrieval.ts` failed both the graph test and the grep; an indirect `import { getStudent360 }` — which names nothing on the forbidden list — failed the graph test alone, which is the case the extra machinery exists for. It also asserts `RetrievalBundle` has no `feedback`/`rating`/`note` field, and that exactly one module in `src/` holds SQL against the table. |
+| FR-2803 | It never blocks | **BUILT** | `FeedbackPrompt` renders a block in ordinary document flow, after every control the student needs; no modal, no overlay, no backdrop, no focus trap, no `autoFocus`, no `beforeunload`; it returns `null` until the server says to ask, which is the usual answer | Structural rather than asserted: there is nothing in the component that *could* block, and the file says so. **Gap, and it is the honest one: nobody has watched it.** No test asserts the absence of a modal — `design-variant-scan.test.mts` is exactly the pattern for a scan that would (it is how `window.confirm` is kept out on the console side, FR-2710's gap), and it was not written here. |
+| FR-2804 | One rating is a complete answer; the note is optional | **PARTIAL** | The thumb POSTs on press and the note box opens without waiting for the response; the note box is not focused when it appears; "Not now" is offered beside "Send"; `feedback.note` is nullable and `normaliseNote` turns whitespace into `null` | Live: `recordFeedback(omar, "lesson_completed", "up", null)` wrote a complete row with no note, and a second call carrying a rating and no note left the existing note intact (`coalesce(EXCLUDED.note, feedback.note)`) — the case that would otherwise destroy a child's words when she taps the thumb twice. `normaliseNote` is tested on empty, whitespace, non-string and padded input. **Gap: the two-step interaction has never been performed by a person**, so "the note box does not demand anything" is a claim about markup nobody has used. |
+| FR-2805 | Dismissal is remembered server-side and leaves her alone as long as an answer does | **PARTIAL** | `dismissFeedback` writes a row with `rating IS NULL` through `ON CONFLICT … DO NOTHING`; `mayAsk` reads `max(created_at)` over every row regardless of rating. **The component reads and writes no browser storage of any kind** | Live: calling `dismissFeedback` after an answer left the answer untouched — `DO NOTHING`, not `DO UPDATE`, which is the difference between recording "not now" and destroying a rating. `feedback-rules.test.mts` asserts a dismissal two days ago refuses with `asked_recently` exactly as an answer would, because the input deliberately does not distinguish them. ADR-0017's argument for server-side storage is carried over in the component's header and in migration 025's. **Gap: the "Not now" control has never been pressed**; the function it calls has. |
+| FR-2806 | The cadence is a written rule with stated numbers, implemented as a tested function, readable by an operator | **PARTIAL** | `lib/feedback-rules.ts` — pure, no imports at all, the `session-rules.ts` split. 14 days between asks, never twice per sitting, not before the 3rd finished sitting, 45 minutes is long. Every number argued where it is declared. The `/feedback` page prints all four in prose, reading the constants rather than repeating them | `feedback-rules.test.mts`: 19 tests, every boundary on **both** sides — 13 days 23:59:59.999 refuses and exactly 14 days asks; 2 finished sittings refuse and 3 ask; 44:59 is a lesson and 45:00 is a long session. It also asserts the refusal ORDER (nearest cause first) and that `MayAskInput` has no field for the rating she gave last time — asking the students who said "up" more often is a shape this cannot take. Live: after one answer, `feedbackContext` returned `already_answered`; a student with one unclosed sitting returned `too_new`. **Gap: the operator-readable half is a panel nobody has rendered.** |
+| FR-2807 | A stated maximum length; over it is refused with the limit named, never shortened | **VERIFIED** | 600 characters, declared once in `FEEDBACK_NOTE_MAX` and enforced three times: the textarea's `maxLength`, `normaliseNote` → the endpoint's `400 {error:"note_too_long", max, length}`, and migration 025's `feedback_note_length` CHECK | All three exercised. `normaliseNote` is tested at exactly 600 (accepted) and 601 (refused, naming the cap), and the cap is counted **after** trimming so trailing blank lines never cost a child her note. Live, as `ainext_app` under a principal: a 601-character note was refused by Postgres — `violates check constraint "feedback_note_length"`. The migration's own `DO $verify$` reads the constraint text and RAISEs if it stops saying 600. 600 was chosen against Arabic rather than English, and the test carries an ordinary Arabic remark to show the headroom. |
+| FR-2808 | One global view: ratios over time, by trigger and by subject, and the notes themselves, opening on the notes | **PARTIAL** | `/feedback`, `(console)/feedback/page.console.tsx`, role `student-data`, nav group **Monitor**; `getFeedbackOverview` in `lib/feedback-queries.ts` — seven fixed queries, tallies deliberately unfiltered so one student's four thumbs down never read as the cohort's verdict; `parseFeedbackFilters` defaults `notesOnly` to **true** | Live as `ainext_operator`: `getFeedbackOverview` returned the whole view model against the real database — totals, `byWeek` (ISO, Monday-anchored), `byTrigger`, `byCourse`, the rows with the student's name, and the filter labels. Registered in `lib/console-routes.ts` and hand-transcribed into `matrix.test.mts`; `npm run check:surface` confirms `/feedback` is **absent** from the student build and `check:surface:admin` confirms it is present in the console build. **Gap: the page has never been rendered** — no console was running on `:3002`, so the layout, the banner and the `ScrollList` are markup nobody has seen. |
+| FR-2809 | One student's own feedback on that student's record | **PARTIAL** | A panel on the Student 360, placed immediately after the safety flags; `studentFeedback` called with the 360's own `withOperator` client so the page stays one transaction | Live: `getStudent360(1, 1, …)` returned the panel's rows, including the note, through the shipped path. Each row links to the sitting it followed and to `/feedback?notes=all&student=<id>`. **Gap: the 360 has never been rendered with this panel on it.** |
+| FR-2810 | A student's words are not editable or removable by an operator | **VERIFIED** | Migration 025 grants `ainext_operator` **SELECT and nothing else**, and its policy is `FOR SELECT` rather than the `FOR ALL` every other operator policy uses — two independent refusals for the same act | Live, as `ainext_operator` against the real table: `UPDATE feedback SET note='edited'` → `ERROR: permission denied for table feedback`; `DELETE FROM feedback` → the same. The migration's `DO $verify$` RAISEs if the operator role ever acquires INSERT, UPDATE or DELETE, so the grant cannot widen unnoticed on a re-run. The cost is stated rather than hidden: removing a note is a `ainext_maint` job a human decided to do. |
+| FR-2811 | No automatic classification; every note visible to a human by default, and the surface says so | **PARTIAL** | **Nothing scans, scores or classifies a note anywhere in the codebase**, and no `safety_flags` row is derived from one. The human path is the surface: `/feedback` opens on the notes (`notesOnly` defaults true), prints every note in full with no truncation and no expander, and carries a banner saying nothing has read them first and nothing will email anybody. The Student 360 panel repeats the second half | `feedback-isolation.test.mts` asserts neither `lib/feedback-queries.ts` nor `api/feedback/route.ts` mentions `safety_flags`, so adding a classifier is a red build to be argued about rather than a quiet commit. The argument — a word list applied to teenagers produces false alarms in bulk and false comfort in the other direction, and `safety_flags` holds no excerpt (001 FR-802), so a flag from a note would alarm without informing — is written in migration 025's header, on the page and in the endpoint. **Gap, and it is the important one: the banner is unrendered, so the claim that an operator is told is a claim about markup.** **And the mechanism is a pull, not a push** — nothing alerts, nothing mails, and a note written on a Friday is read when somebody next opens the page. At pilot scale that is the accepted trade; it is named here so it is a decision rather than an assumption. |
+
+---
+
 ## 8. Deferred by design — architecture only — FR-2901…
 
 | FR | Requirement | Status | Implementation | Proof |
@@ -297,19 +351,19 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **81** |
+| Functional requirements | **92** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **95 / 95** |
-| — verified | 69 |
-| — built | 2 |
-| — partial | 17 |
+| Traced (every one needs a row) | **106 / 106** |
+| — verified | 72 |
+| — built | 3 |
+| — partial | 24 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **38** |
+| Requirements a test declares | **43** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 69 requirements marked VERIFIED, 33 have an automated test declaring them.** The remaining 36 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 72 requirements marked VERIFIED, 34 have an automated test declaring them.** The remaining 38 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 

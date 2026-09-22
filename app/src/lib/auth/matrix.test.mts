@@ -92,6 +92,12 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   // accounts, students and the operators who read their transcripts, so it is
   // the same role the Student 360 needs even though it holds no learning.
   "/security": ["student-data"],
+  // In-product feedback (FR-2808, migration 025). `student-data`, and the
+  // contrast with the two Overviews rows below is the point of transcribing it
+  // by hand: they are all four BECAUSE they carry no individual content, and
+  // this page is the opposite — a named child's own free text. The same
+  // sentence in contracts/admin.md decides both, in opposite directions.
+  "/feedback": ["student-data"],
   // §8 Overviews: "Roles: all four (they carry no individual content)". The
   // metric dictionary is transcribed on its own line rather than covered by a
   // prefix rule, for the reason this whole file exists — a rule cannot disagree

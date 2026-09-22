@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md))
+**Last amended**: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -347,7 +347,7 @@ password sign-in.
 > marks what is designed for and not built, citing the decision that defers it. Numbering: **FR-20xx**
 > accounts and sign-in · **FR-21xx** isolation and authorisation · **FR-22xx** console and roles ·
 > **FR-23xx** timeline and replay · **FR-24xx** cost and status · **FR-25xx** monitoring and analytics
-> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-29xx** deferred.
+> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred.
 > `FR-1xx…FR-12xx` are from
 > `specs/001-student-mvp1-delta/spec.md`. Implementation status is tracked in `traceability.md` here,
 > deliberately harsher: code that exists but has never run is not done.
@@ -616,6 +616,61 @@ password sign-in.
 - **FR-2711**: Whether a student may see a course MUST NOT depend on any commercial status. The
   subscription seam this feature leaves in the data model MUST stay unread by every gate, console
   view and student surface (FR-2404, FR-2904).
+
+### In-product feedback (FR-2801…) **[ADDED 2026-09-22]**
+
+> **These eleven were written with their code, on the day Samuel asked for the capability, and the
+> record has to say so.** No FR covered "ask the student how we did" before 2026-09-22; **Samuel
+> asking for it on 2026-09-22 is the authorisation**, and these were written in the same pass as
+> `db/migrations/025-feedback.sql`. Nothing here is back-dated, and nothing here preceded the code
+> it describes. The pattern is FR-2701…FR-2711's — see that block's own note — with one difference
+> worth stating: those eleven were written two days *after* their code shipped, and these were
+> written beside it.
+>
+> Why they belong in this spec rather than in 001: the operator half is two console views defined by
+> this feature, behind a role this feature defines, and the student half is written by a surface
+> that exists because this feature's identity layer does. 001's FR-905 is **deliberately BLOCKED**
+> and is Samuel's to resolve; nothing here touches it.
+>
+> Implementation status is in `traceability.md` here, §7c.
+
+- **FR-2801**: The product MUST ask a student, in their own words and not a survey's, how the
+  product is doing — offered at the end of a lesson, at the end of a practice plan, and after a
+  long sitting. Those three moments MAY be one mechanism, and the record MUST say which of the
+  three asked, so "did the long sittings feel worse?" is answerable.
+- **FR-2802**: What a student writes about the product MUST NOT reach a model. It MUST NOT appear
+  in any prompt, in any cached prompt prefix, in any snapshot, or in the data block handed to the
+  tutor. It is the student's opinion of us, not learning material, and the guarantee MUST be
+  enforced by a test rather than by a convention.
+- **FR-2803**: The prompt MUST NOT block. No modal, no overlay, no "answer this to continue". The
+  flow MUST behave identically whether it is answered, dismissed or ignored, and the prompt MUST
+  appear only where the student has already finished what she was doing.
+- **FR-2804**: A single rating MUST be a complete answer. A written note MUST be optional, offered
+  only after a rating, and MUST NOT be demanded, implied to be required, or required in order to
+  dismiss the prompt.
+- **FR-2805**: A student who dismisses the prompt MUST be remembered — server-side, against the
+  student, not in browser storage — and MUST be left alone for the same period as one who answered.
+  A dismissal MUST NOT overwrite an answer already given.
+- **FR-2806**: How often a student is asked MUST be a written rule with stated numbers, not an
+  emergent behaviour: at most once per stated period, never twice about the same sitting, and not
+  at all before the student has enough experience of the product to be judging it rather than one
+  lesson. The rule MUST be implemented as a tested function and MUST be readable by an operator
+  without reading code.
+- **FR-2807**: The written note MUST have a stated maximum length. Text beyond it MUST be refused
+  with the limit named, never silently shortened — a note cut mid-sentence would be stored as
+  something the student did not write.
+- **FR-2808**: An operator MUST be able to see the whole picture in one place: ratings and their
+  ratio over time, split by which moment asked and by subject, and the written notes themselves,
+  newest first, each one naming the student and linking to the sitting it followed. **The notes
+  MUST be what the view opens on**, not something reached through a filter.
+- **FR-2809**: An operator MUST be able to see one student's own feedback, in time order, on that
+  student's record.
+- **FR-2810**: A student's own words MUST NOT be editable or removable by an operator. Removing one
+  MUST require a deliberate act outside the console.
+- **FR-2811**: A written note MUST NOT be classified automatically. No keyword scan, no sentiment
+  score and no safety flag may be derived from it. The product MUST instead make every note visible
+  to a human by default, and MUST state plainly, on the surface where they are read, that nothing
+  has read them first and that nothing will raise an alarm.
 
 ### Deferred by design — architecture only (FR-2901…)
 
