@@ -186,7 +186,7 @@ services:
       # origin, where that route does not exist in that build, and the reset
       # would 404 with no explanation. A required variable turns that into a
       # question asked once, at deploy time.
-      AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Proposal awaiting Samuel - https://noor-console.reletix.com - see deploy/TAKEOVER.md}
+      AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Decided 2026-09-22 - https://admin-noor.reletix.com - see deploy/TAKEOVER.md}
       # `console` prints links to the log; `smtp` sends them through Mailu.
       AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-console}
       AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-}
@@ -350,7 +350,7 @@ services:
       # would add a rotation to forget without adding a boundary.
       AINEXT_AUTH_SECRET: ${AINEXT_AUTH_SECRET:?set AINEXT_AUTH_SECRET in deploy/.env}
       AINEXT_PUBLIC_URL: ${AINEXT_PUBLIC_URL:-https://noor.reletix.com}
-      AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Proposal awaiting Samuel - https://noor-console.reletix.com - see deploy/TAKEOVER.md}
+      AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Decided 2026-09-22 - https://admin-noor.reletix.com - see deploy/TAKEOVER.md}
       AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-console}
       AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-}
       AINEXT_MAIL_FROM: ${AINEXT_MAIL_FROM:-}

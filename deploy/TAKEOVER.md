@@ -147,16 +147,22 @@ were typos). It appears in exactly one place in the stack — the default of `AI
 `docker-compose.mvp1.yml` — and is overridable per stack from `deploy/.env`. No service body
 contains a hostname literal.
 
-### 2.2 The console hostname — **awaiting Samuel**
+### 2.2 The console hostname — **decided**
 
-Proposal: **noor-console.reletix.com**.
+**`admin-noor.reletix.com` (Samuel, 2026-09-22).** The student surface is
+`noor.reletix.com`; the console is its sibling, not its child.
 
-`console.noor.reletix.com` reads better and is **not certificate-covered**: Universal SSL covers
-`*.reletix.com`, a wildcard matches exactly one label, and a two-label name would need Advanced
-Certificate Manager — a paid add-on. A browser certificate error in front of the operator sign-in
-page is the wrong lesson to teach anybody about this product. `AINEXT_CONSOLE_URL` therefore has
-**no default**: the stack refuses to start until the name is decided, which is the right place for
-that question to be asked.
+Both are one label under `reletix.com`, which is what makes them work: Universal SSL covers
+`*.reletix.com`, a wildcard matches exactly **one** label, and a two-label name like
+`console.noor.reletix.com` would need Advanced Certificate Manager — a paid add-on. A browser
+certificate error in front of the operator sign-in page is the wrong lesson to teach anybody about
+this product, so the sibling shape is the cheap correct answer rather than a compromise.
+
+`AINEXT_CONSOLE_URL` keeps **no default in the compose file** even now that the name is known. The
+value is an origin the operator's reset links are built from, and a stack that silently starts with
+the wrong one sends password links to a host that has no such route. Refusing to start is the
+louder failure, and it is the one worth having. `deploy/.env.example` carries the decided value to
+copy.
 
 ### 2.3 Everything that moves when a hostname changes
 

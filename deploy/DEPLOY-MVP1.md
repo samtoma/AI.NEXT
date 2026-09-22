@@ -23,7 +23,7 @@ Companion to `DEPLOY.md` (the baseline) and `CICD.md`. First-time bootstrap is i
 | App port | `127.0.0.1:3100` | `127.0.0.1:3101` |
 | Console port | — (no console on the baseline) | `127.0.0.1:3102` |
 | Hostname | ainext.reletix.com | **noor.reletix.com** (settled 2026-09-22) |
-| Console hostname | — | **not yet decided** — proposal `noor-console.reletix.com`, see [`TAKEOVER.md`](./TAKEOVER.md) §2.2 |
+| Console hostname | — | **`admin-noor.reletix.com`** (Samuel, 2026-09-22), see [`TAKEOVER.md`](./TAKEOVER.md) §2.2 |
 | `AINEXT_ENVIRONMENT` | `baseline` (default) | `mvp1` |
 
 > **Taking the live deployment over — branches, hostname, database, the Claude CLI login and mail —
