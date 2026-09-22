@@ -188,8 +188,17 @@ services:
       # question asked once, at deploy time.
       AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Decided 2026-09-22 - https://admin-noor.reletix.com - see deploy/TAKEOVER.md}
       # `console` prints links to the log; `smtp` sends them through Mailu.
-      AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-console}
-      AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-}
+      # MAIL. `smtp` by default, not `console`: this service sits on the Mailu
+      # network (see the `networks:` block at the foot of this file) and the
+      # relay trusts that network, so sending needs no credential and there is
+      # nothing to misconfigure into silence. `console` — links printed to the
+      # container log — is now the deliberate fallback, not the default.
+      AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-smtp}
+      # No user, no password, no :587. `smtp` is Mailu's postfix on the shared
+      # network; `permit_mynetworks` is the authorisation. The mailbox
+      # admin@noor.reletix.com and its password still exist and are what READS
+      # mail sent to that address — they are not how this sends.
+      AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-smtp://smtp:25}
       AINEXT_MAIL_FROM: ${AINEXT_MAIL_FROM:-}
       # All three or none — a partial Google configuration throws at startup
       # rather than failing at the callback, after the student has already
@@ -294,6 +303,9 @@ services:
       # localhost ONLY — cloudflared fronts it. 3100 belongs to the baseline;
       # this stack takes 3101 for the student surface and 3102 for the console.
       - "127.0.0.1:3101:3000"
+    networks:
+      - default
+      - mailu
     mem_limit: 2g
 
   # ---- the admin console: a SECOND PROCESS OFF THE SAME IMAGE (ADR-0014) ----
@@ -351,8 +363,17 @@ services:
       AINEXT_AUTH_SECRET: ${AINEXT_AUTH_SECRET:?set AINEXT_AUTH_SECRET in deploy/.env}
       AINEXT_PUBLIC_URL: ${AINEXT_PUBLIC_URL:-https://noor.reletix.com}
       AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Decided 2026-09-22 - https://admin-noor.reletix.com - see deploy/TAKEOVER.md}
-      AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-console}
-      AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-}
+      # MAIL. `smtp` by default, not `console`: this service sits on the Mailu
+      # network (see the `networks:` block at the foot of this file) and the
+      # relay trusts that network, so sending needs no credential and there is
+      # nothing to misconfigure into silence. `console` — links printed to the
+      # container log — is now the deliberate fallback, not the default.
+      AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-smtp}
+      # No user, no password, no :587. `smtp` is Mailu's postfix on the shared
+      # network; `permit_mynetworks` is the authorisation. The mailbox
+      # admin@noor.reletix.com and its password still exist and are what READS
+      # mail sent to that address — they are not how this sends.
+      AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-smtp://smtp:25}
       AINEXT_MAIL_FROM: ${AINEXT_MAIL_FROM:-}
       AINEXT_BOOTSTRAP_OPERATOR_EMAIL: ${AINEXT_BOOTSTRAP_OPERATOR_EMAIL:-}
       # The console reads the same gate so that what an operator sees about
@@ -384,6 +405,9 @@ services:
       # tunnel can route the two hostnames independently — which is what lets
       # Access sit in front of one of them and not the other.
       - "127.0.0.1:3102:3000"
+    networks:
+      - default
+      - mailu
     mem_limit: 1g
 
   # ---- content refresh (NOT part of the running stack) ----
@@ -427,3 +451,37 @@ volumes:
   ainext_mvp1_pg:
   claude_cfg:
   ainext_mvp1_uploads:
+
+# ===========================================================================
+# NETWORKS — and the mail one is EXTERNAL and belongs to somebody else
+# ===========================================================================
+# `default` is this stack's own bridge, created and destroyed with the project.
+#
+# `mailu` is NOT ours. It is the pre-existing `mailu-network` (172.22.0.0/16)
+# that Mailu and the Talent stack already share, declared `external: true` so
+# compose JOINS it and never creates, modifies or removes it. `down` on this
+# project detaches our containers and leaves the network exactly as it found it.
+#
+# WHY WE JOIN IT AT ALL, and why there is no SMTP password anywhere in this file:
+# Mailu's postfix has `mynetworks = 127.0.0.1/32 172.22.0.0/16 172.16.0.0/12`
+# and `smtpd_relay_restrictions = permit_mynetworks, ...`. Membership of that
+# network IS the authorisation. That is how Talent has been sending for months —
+# its worker appears in the relay log as
+# `client=talent_reletix_celery.mailu-network[172.22.0.15]`, with no SASL at all.
+#
+# What we tried first and why it was wrong: authenticating as
+# `admin@noor.reletix.com` over :587. From the host that times out (the box
+# cannot reach its own public IP — hairpin), and from inside the network
+# `front:587` refuses the connection outright. Only `smtp:25` answers. The
+# mailbox and its password still exist and are what READS mail sent to that
+# address; they are simply not how the product SENDS.
+#
+# Outbound leaves via `relayhost = [smtp.resend.com]:587`, for every domain with
+# no per-sender exception — which is why `noor.reletix.com` must be verified in
+# Resend and why its SPF record must carry `include:_spf.resend.com`. Without
+# the include the relay accepts the message and the check fails at the far end.
+networks:
+  default:
+  mailu:
+    external: true
+    name: mailu-network

@@ -472,71 +472,47 @@ different commercial arrangement with different per-token costs, and the cost le
 
 ---
 
-## 6. Mail — the same pattern Talent uses, for `admin@noor.reletix.com`
+## 6. Mail — SETTLED 2026-09-22, and it needs no password
 
-> **Standing instruction, Samuel: the TalentReletix repository must never be cloned or downloaded.**
-> Nothing here came from it. This section is derived from this repository's own files
-> (`app/src/lib/mail.ts`, `lib/env.ts`, SETUP.md S2) plus what Mailu's own admin interface asks for.
-> Confirm the host names against the Mailu dashboard, not against another repo.
+**Superseded:** this section previously described SMTP AUTH as
+`admin@noor.reletix.com` on :587. That was wrong, and the reason is worth
+keeping so nobody re-derives it.
 
-The application side is three lines and no code change. `mail.ts` builds a nodemailer transport
-directly from `AINEXT_SMTP_URL` and sends `MAIL_FROM`; there is nothing else to configure.
+**What is true.** The app and console containers join the existing
+`mailu-network`. Mailu's postfix has
+`mynetworks = 127.0.0.1/32 172.22.0.0/16 172.16.0.0/12` and
+`smtpd_relay_restrictions = permit_mynetworks, …`, so **membership of that
+network IS the authorisation**. That is how Talent has sent for months — its
+worker appears in the relay log as
+`client=talent_reletix_celery.mailu-network[172.22.0.15]`, with no SASL at all.
+Compose therefore defaults to `AINEXT_MAIL_TRANSPORT=smtp` and
+`AINEXT_SMTP_URL=smtp://smtp:25`, and neither needs a secret.
 
-### 6.1 What changes in this repository
+**Measured, not assumed.** From inside the network: `smtp:25` answers with a
+full feature list; `front:587` is refused outright. From the host,
+`smtp.reletix.com:587` times out — the box cannot reach its own public IP.
 
-```
-# deploy/.env  — on the box, never committed
-AINEXT_MAIL_TRANSPORT=smtp
-AINEXT_MAIL_FROM=admin@noor.reletix.com
-AINEXT_SMTP_URL=smtps://admin%40noor.reletix.com:<url-encoded-password>@<mailu-host>:465
-```
+**Outbound leaves via Resend** (`relayhost = [smtp.resend.com]:587`, every
+domain, no per-sender exception). Two consequences that fail silently:
+`noor.reletix.com` must be verified in the Resend dashboard, or the relay
+accepts and Resend refuses; and SPF must carry `include:_spf.resend.com`,
+because the delivering machine is Resend's. The published record is
+`v=spf1 a:smtp.reletix.com include:_spf.resend.com ~all`.
 
-`AINEXT_SMTP_URL` is a **URL**. The `@` in the username must be `%40` and any of `@ : / # ? &` in
-the password must be percent-encoded, or the URL reparses into a different host and the failure
-reads like a firewall problem.
+**Done on the box (2026-09-22):** the domain added to Mailu, its DKIM key
+generated and its ownership corrected to `mailu:mailu` to match the other two,
+the mailbox `admin@noor.reletix.com` created with a generated password, and
+`change_pw_next_login` cleared — that flag drives the web UI, and leaving it on
+a service account is a surprise waiting for the day somebody needs it.
 
-### 6.2 What Samuel does in Mailu's admin interface (not code)
+**The mailbox and its password are not dead.** They are what READS mail sent to
+that address, and the fallback if anything ever sends from outside the box.
 
-1. **Add the domain** `noor.reletix.com` as a *new domain* in Mailu. It is a distinct mail domain
-   from the one Talent uses; adding it does not touch Talent's configuration.
-2. **Create the mailbox** `admin@noor.reletix.com` with a strong password. It must be a real
-   mailbox, not an alias to nowhere — the receiving side checks that the sender exists.
-3. **Generate the DKIM key** for that domain (the domain's detail page has the button). Mailu then
-   prints the exact DNS records it expects, including the selector. **Use the records Mailu prints**
-   in preference to the templates below, which are the shape and not the values.
+**Left to a human:** the four DNS records (MX `noor` → `smtp.reletix.com` prio
+10; SPF as above; `dkim._domainkey.noor`; `_dmarc.noor` with
+`p=quarantine; rua=mailto:admin@reletix.com`), all DNS-only rather than
+proxied, and `AINEXT_MAIL_FROM` as a repository secret.
 
-### 6.3 What Samuel does in Cloudflare DNS (zone `reletix.com`)
-
-All of these are **DNS-only (grey cloud)**. MX records cannot be proxied, and if the mail host's own
-`A` record is orange-clouded, SMTP never reaches it.
-
-| Type | Name | Value | Why |
-|---|---|---|---|
-| MX | `noor` | `<mailu-host>` priority 10 | Where replies and bounces go |
-| TXT | `noor` | `v=spf1 mx -all` | Says only our MX may send as this domain |
-| TXT | `dkim._domainkey.noor` | the public key Mailu generated | Signature the receiver verifies |
-| TXT | `_dmarc.noor` | `v=DMARC1; p=none; rua=mailto:admin@noor.reletix.com` | Start at `p=none`, read the reports for a week, then raise to `p=quarantine` |
-
-Start DMARC at `p=none`. Going straight to `quarantine` on a brand-new subdomain with no reputation
-is how a verification mail ends up in a parent's spam folder on launch night.
-
-### 6.4 Verify, in this order
-
-```bash
-# 1. the transport, from the container, without involving the product
-docker compose -p ainext-mvp1 -f docker-compose.mvp1.yml exec -T app \
-  node -e "require('nodemailer').createTransport(process.env.AINEXT_SMTP_URL).verify().then(console.log,console.error)"
-
-# 2. a real message to a Gmail address → open it → "Show original"
-#    SPF: PASS   DKIM: PASS   DMARC: PASS.  Anything else, stop and fix it here.
-
-# 3. the product path: sign up with a real address, confirm the link arrives and works
-```
-
-Outbound port 25 must be open from the box. Talent already sends mail from it, so this is almost
-certainly solved — but it is the classic OCI default-deny and worth confirming rather than assuming.
-
----
 
 ## 7. What must exist before the first real student signs in
 
