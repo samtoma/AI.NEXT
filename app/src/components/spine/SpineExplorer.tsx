@@ -9,50 +9,96 @@ import type {
   SpineSubject,
 } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
-import { SPINE_SUBJECT_KEYS, displayLabelOfSpineKey } from "@/lib/subjects";
 import { GraphCanvas, type AsOf } from "./GraphCanvas";
 import { LoPanel } from "./LoPanel";
 import { QuestionModal } from "./QuestionModal";
-import { AskSpineDock } from "@/components/chat/AskSpineDock";
+import { NoorPanel } from "./NoorPanel";
 import type { CiteInfo } from "@/components/chat/CitationChip";
-import { MASTERY_LEGEND, pct } from "@/lib/mastery";
-import {
-  HEADING,
-  MASTERY_SWATCH,
-  STICKER_CARD,
-  STROKE,
-  cx,
-} from "@/components/sticker";
+import { MASTERY_LEGEND, masteryStage, masteryPhrase } from "@/lib/mastery";
+import { SPINE_SUBJECT_KEYS, displayLabelOfSpineKey } from "@/lib/subjects";
+import { HONEY_BAND, STROKE_SM, cx } from "@/components/sticker";
 
-/** The as-of / subject toggles: one sticker pill holding its segments. */
+/** "mathematics" → "Mathematics". The subject, never a unit name. */
+const titleCase = (s: string) =>
+  s ? s.charAt(0).toLocaleUpperCase() + s.slice(1) : s;
+
+/** A pill holding its segments — the thin Play stroke, no shadow. */
 const SEGMENTED = cx(
-  STROKE,
-  "flex items-center gap-1 rounded-[var(--play-radius-pill)] bg-card p-1 sticker-shadow"
+  STROKE_SM,
+  "flex gap-1.5 rounded-[var(--play-radius-pill)] bg-card p-[3px]"
 );
-/** A segment keeps the 52px target; the chosen one is the ink surface with
- *  its inverse text, the pairing every ink control in the product uses. */
-const segment = (on: boolean) =>
+/** One segment. The chosen snapshot spends the screen's one amber (Tamer's
+ *  design); the subject picker's chosen segment is ink, so there is never a
+ *  second amber. Both hold the touch floor (main's Play fixes). */
+const segment = (on: boolean, tone: "amber" | "ink") =>
   cx(
-    "inline-flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-pill)] px-4",
-    "font-display text-[0.85rem] font-bold transition-colors duration-200",
-    on ? "bg-ink text-paper" : "text-ink-soft hover:text-ink"
+    "inline-flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-pill)] px-3.5",
+    "font-display text-[0.82rem] font-bold leading-none transition-colors duration-200",
+    on
+      ? tone === "amber"
+        ? "bg-[var(--noor-action)] text-[color:var(--noor-on-action)]"
+        : "bg-ink text-paper"
+      : "text-ink-soft hover:text-ink"
   );
 
-const fmtDate = (iso: string) =>
-  iso
-    ? new Date(iso).toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-      })
-    : "—";
-
+/**
+ * The skill map — "How you're doing", subject-wide.
+ *
+ * This screen used to be "The Evidence Walk": the same tree and the same
+ * chat, wrapped in an internal tool. What came off, and why (Noor Play skill
+ * map v1 build spec):
+ *
+ *  · the stat-chip row — 90 objectives, 1041 questions, 112 prerequisite
+ *    edges, 117 attempts. Graph metadata. A student needs their own place in
+ *    the graph, not its size.
+ *  · the as-of query string — "MASTERY FOR SYSTEM_TIME AS OF NOW()", a
+ *    literal temporal-table clause printed at a fifteen-year-old. The two
+ *    states it named are now two tabs in plain words.
+ *  · node ids leading every card, and a percentage badge on every node.
+ *  · the DAG footer ("graph_edges where edge_type='prerequisite_of'"), the
+ *    arrowheads, and the "→ = is prerequisite of" key.
+ *  · the live session-cost meter in the chat header (see NoorPanel).
+ *
+ * Scope widened with it: the tree covers the whole subject, so the title
+ * names the subject and nothing smaller. A unit-level view is a different
+ * screen.
+ *
+ * ON MAIN (trial merge): the demo-student switcher the branch kept is gone —
+ * main retired the demo cast and the student comes from her session. And
+ * because main serves up to three subjects behind the course gate (ADR-0018),
+ * the map shows ONE subject at a time, as this design intends, with a subject
+ * picker when more than one is visible to her. It never mixes subjects in one
+ * tree; the branch's version would have, the moment a second course went live.
+ */
 export function SpineExplorer({ data }: { data: SpineData }) {
   const router = useRouter();
   const [asOf, setAsOf] = useState<AsOf>("today");
-  const [subjectFilter, setSubjectFilter] = useState<"all" | SpineSubject>("all");
+  // Subjects present in what the gate let through, registry order.
+  const subjectsPresent = useMemo(() => {
+    const present = new Set(data.los.map((l) => l.subject));
+    return SPINE_SUBJECT_KEYS.filter((k) => present.has(k));
+  }, [data.los]);
+  const [subjectPick, setSubjectPick] = useState<SpineSubject | null>(null);
+  const subject: SpineSubject | null =
+    subjectPick && subjectsPresent.includes(subjectPick)
+      ? subjectPick
+      : (subjectsPresent[0] ?? null);
+  const visibleLos = useMemo(
+    () =>
+      subject === null || subjectsPresent.length <= 1
+        ? data.los
+        : data.los.filter((l) => l.subject === subject),
+    [data.los, subject, subjectsPresent.length]
+  );
   const [selectedLoId, setSelectedLoId] = useState<string | null>(null);
   const [openQuestion, setOpenQuestion] = useState<SpineQuestion | null>(null);
-  // AI-citation choreography: cited nodes glow; each cite fires a pulse ring
+  /* Where the student has dragged the topic panel. Held HERE, not in the
+     panel: LoPanel is keyed by topic id so it remounts on every click
+     through, and a position that lived inside it would snap back to the
+     dock each time — which is exactly the behaviour dragging is meant to
+     escape. */
+  const [panelOffset, setPanelOffset] = useState({ x: 0, y: 0 });
+  // Topics Noor references while she writes: the card rings once.
   const [citedIds, setCitedIds] = useState<Set<string>>(new Set());
   const [pulses, setPulses] = useState<Record<string, number>>({});
   const pulseNonce = useRef(0);
@@ -78,35 +124,44 @@ export function SpineExplorer({ data }: { data: SpineData }) {
     () => new Map(data.los.map((l) => [l.id, l])),
     [data.los]
   );
-
-  // Subjects present in the loaded graph, in registry order (the filter only
-  // appears when >1). Unfiled LOs contribute no filter chip — they are only
-  // ever visible under "All subjects".
-  const subjectsPresent = useMemo(() => {
-    const present = new Set(data.los.map((l) => l.subject));
-    return SPINE_SUBJECT_KEYS.filter((k) => present.has(k));
-  }, [data.los]);
-
-  // The graph shows one territory (filtered) or all (territories side by side).
-  const visibleLos = useMemo(
+  const questionCounts = useMemo(
     () =>
-      subjectFilter === "all"
-        ? data.los
-        : data.los.filter((l) => l.subject === subjectFilter),
-    [data.los, subjectFilter]
-  );
-  const visibleLoIds = useMemo(
-    () => new Set(visibleLos.map((l) => l.id)),
-    [visibleLos]
-  );
-  // A bridge only draws when BOTH its endpoints are on screen.
-  const visibleBridges = useMemo(
-    () =>
-      data.bridges.filter(
-        (b) => visibleLoIds.has(b.src) && visibleLoIds.has(b.dst)
+      new Map(
+        data.los.map((l) => [l.id, questionsByLo.get(l.id)?.length ?? 0])
       ),
-    [data.bridges, visibleLoIds]
+    [data.los, questionsByLo]
   );
+
+  /**
+   * How many topics sit on each step of the ramp, in the active snapshot.
+   *
+   * This replaced a single averaged stage, and the average was the wrong
+   * statistic. It divided by every topic in the subject, so 90 topics with 19
+   * touched came out at 0.12 and the header read "Just started" while five
+   * cards on the map read "Nailed it" — a COVERAGE number wearing a mastery
+   * label, and one that would sit on the lowest band for months however well
+   * she did. Averaging only the touched topics fixes the contradiction and
+   * introduces another: it would climb while most of the subject stayed
+   * untouched, and it still answers a question nobody asked with one word for
+   * ninety topics.
+   *
+   * A tally answers both at once and hides nothing — 71 not started IS the
+   * coverage fact, 5 nailed IS the mastery fact, and the two sit side by side
+   * without either one being averaged into the other.
+   *
+   * Not the stat-chip row the redesign cut. That row was the size of the
+   * GRAPH (90 objectives, 1041 questions, 112 edges); this is the student's
+   * own distribution across it, which is the one count she has any use for.
+   */
+  const tally = useMemo(() => {
+    const key = asOf === "today" ? "current" : "baseline";
+    const counts = [0, 0, 0, 0, 0];
+    for (const lo of visibleLos) {
+      const score = lo[key];
+      counts[masteryStage(score, score > 0)] += 1;
+    }
+    return counts;
+  }, [visibleLos, asOf]);
 
   const pulseLo = useCallback((loIds: string[]) => {
     if (loIds.length === 0) return;
@@ -122,7 +177,6 @@ export function SpineExplorer({ data }: { data: SpineData }) {
     });
   }, []);
 
-  /** cite → LO id(s) to light up on the DAG */
   const citeToLos = useCallback(
     (c: Cite): string[] => {
       if (c.kind === "lo") return losById.has(c.id) ? [c.id] : [];
@@ -149,221 +203,188 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         const q = questionsById.get(c.id);
         if (q) setOpenQuestion(q);
       }
-      // page chips pin their own mini source-reference card
     },
     [losById, questionsById, pulseLo]
   );
 
+  /**
+   * What a reference inside Noor's answer expands to on hover.
+   *
+   * Citations are allowed to appear INSIDE her answers; what they may not do
+   * is carry the engineering surface back in. So this used to read "mastery
+   * 69% today · 15% at baseline · book p.12" for a topic and "standard ·
+   * lo:u3-1 · p.40 · reviewed ✓" for a question — a percentage, an internal
+   * key and review vocabulary, one hover away from a screen that cut all
+   * three. The topic now names its stage in the same words its card uses,
+   * and a question names the page it came from.
+   */
   const resolveCite = useCallback(
     (c: Cite): CiteInfo | null => {
       if (c.kind === "lo") {
         const lo = losById.get(c.id);
-        return lo
-          ? {
-              title: lo.label,
-              sub: `mastery ${pct(lo.current)} today · ${pct(lo.baseline)} at baseline · book p.${lo.sourcePage ?? "—"}`,
-            }
-          : null;
+        if (!lo) return null;
+        const stage = masteryStage(lo.current, lo.current > 0);
+        const n = questionCounts.get(lo.id) ?? 0;
+        return {
+          title: lo.label,
+          sub: `${masteryPhrase(stage)} · ${n} questions${
+            lo.sourcePage ? ` · book p.${lo.sourcePage}` : ""
+          }`,
+        };
       }
       if (c.kind === "q") {
         const q = questionsById.get(c.id);
         return q
           ? {
-              title:
-                q.stem.length > 90 ? `${q.stem.slice(0, 90)}…` : q.stem,
-              sub: `${q.tier} · ${q.loId} · p.${q.provenance.sourcePage ?? "—"} · reviewed ✓`,
+              title: q.stem.length > 90 ? `${q.stem.slice(0, 90)}…` : q.stem,
+              sub: q.provenance.sourcePage
+                ? `From the book, p.${q.provenance.sourcePage}`
+                : "From the book",
             }
           : null;
       }
       return {
         title: data.doc.title,
-        sub: `${data.doc.publisher} · edition ${data.doc.edition} · page ${c.id}`,
+        sub: `${data.doc.publisher} · page ${c.id}`,
       };
     },
-    [losById, questionsById, data.doc]
+    [losById, questionsById, questionCounts, data.doc]
   );
 
   const handleChatAttempt = useCallback(
     (r: AttemptResult, _q: SpineQuestion) => {
       void _q;
       pulseLo([r.loId]);
-      router.refresh(); // re-query mastery → the graph ripples
+      router.refresh(); // re-query mastery → the fills move
     },
     [pulseLo, router]
   );
 
-  const avg = (key: "baseline" | "current") =>
-    visibleLos.reduce((s, l) => s + l[key], 0) / Math.max(1, visibleLos.length);
-
-  const pickSubject = (s: "all" | SpineSubject) => {
-    setSubjectFilter(s);
-    // drop a selection that's about to leave the view
-    setSelectedLoId((cur) =>
-      cur && s !== "all" && losById.get(cur)?.subject !== s ? null : cur
-    );
-  };
-
   return (
-    <main className="mx-auto max-w-[1400px] px-6 pb-12">
-      {/* header strip */}
-      <section className="anim-rise flex flex-wrap items-end justify-between gap-x-8 gap-y-4 pb-5 pt-9">
-        <div className="max-w-2xl">
-          <p className="rule-label mb-4">The Evidence Walk</p>
-          <h1 className={cx(HEADING, "text-3xl md:text-4xl")}>
-            The curriculum spine, with receipts.
-          </h1>
-          <p className="mt-2.5 text-[15px] leading-relaxed text-ink-soft">
-            Extracted from:{" "}
-            <strong className="font-semibold text-ink">{data.doc.title}</strong>{" "}
-            — {data.doc.publisher}. Click any objective, then any question, and
-            follow it back to the page it came from.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <span className="chip border-gold/50 text-gold">
-            syllabus {data.syllabusVersion}
-          </span>
-          <span className="chip">{data.counts.los} learning objectives</span>
-          <span className="chip">{data.counts.questions} live questions</span>
-          <span className="chip">{data.counts.edges} prerequisite edges</span>
-          <span className="chip">{data.counts.attempts} attempts logged</span>
-        </div>
-      </section>
-
-      {/* toolbar: as-of toggle + legend */}
-      <section
-        className="anim-rise mb-4 flex flex-wrap items-center justify-between gap-4"
-        style={{ animationDelay: "90ms" }}
+    /* Full-bleed, and deliberately not a card.
+     *
+     * The map was a 1400px sticker frame floating on the page: rounded, ink
+     * outlined, offset shadow — the same treatment as a button, wrapped
+     * around the one thing on the screen that is bigger than the screen.
+     * That box cost ~250px of width and ~170px of height to draw a border
+     * nobody needed, and it framed a 3500px-wide graph in a 630px window.
+     * The map is the page now. It runs edge to edge and takes every pixel
+     * the app chrome is not using; the sticker language stays where it
+     * belongs, on the things you press.
+     *
+     * The height is the viewport minus the shell's own header and footer.
+     * Those are fixed-height bars in `app/layout.tsx` (57 + 50.5 ≈ 108) and
+     * a couple of px of slack is invisible, where an undershoot would put a
+     * second scrollbar on the document. `dvh`, so an iPad's collapsing URL
+     * bar does not leave a strip of dead paper under the panel. */
+    <main
+      className="anim-rise flex flex-col"
+      style={{ height: "calc(100dvh - 108px)", minHeight: 560 }}
+    >
+      {/* header — the subject, the two snapshots, and where she stands */}
+      <header
+        className={cx(
+          HONEY_BAND,
+          "flex shrink-0 flex-wrap items-center gap-x-5 gap-y-3 px-6 py-4"
+        )}
       >
-        <div className="flex flex-wrap items-center gap-4">
-          {subjectsPresent.length > 1 && (
-            <div className={SEGMENTED}>
-              {(["all", ...subjectsPresent] as const).map((key) => (
-                <button
-                  key={key}
-                  onClick={() => pickSubject(key)}
-                  className={segment(subjectFilter === key)}
-                >
-                  {key === "all" ? "All subjects" : displayLabelOfSpineKey(key)}
-                </button>
-              ))}
-            </div>
-          )}
-          <div className={SEGMENTED}>
-            {(
-              [
-                ["baseline", `Baseline (diagnostic) · ${fmtDate(data.baselineDate)}`],
-                ["today", `Today · ${fmtDate(data.currentDate)}`],
-              ] as const
-            ).map(([key, label]) => (
+        <div>
+          <p className="font-display text-[0.78rem] font-bold leading-none text-ink-soft">
+            {subject ? displayLabelOfSpineKey(subject) : titleCase(data.doc.subject)}
+          </p>
+          <h1 className="mt-1 font-display text-[1.25rem] font-extrabold leading-[1.1] text-ink">
+            How you&apos;re doing
+          </h1>
+        </div>
+
+        {subjectsPresent.length > 1 && (
+          <div className={SEGMENTED} role="group" aria-label="Subject">
+            {subjectsPresent.map((key) => (
               <button
                 key={key}
-                onClick={() => setAsOf(key)}
-                className={segment(asOf === key)}
+                onClick={() => {
+                  setSubjectPick(key);
+                  // a topic from another subject is about to leave the view
+                  setSelectedLoId(null);
+                }}
+                aria-pressed={subject === key}
+                className={segment(subject === key, "ink")}
               >
-                {label}
+                {displayLabelOfSpineKey(key)}
               </button>
             ))}
           </div>
-          <span className="hidden font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint lg:inline">
-            as-of query · mastery for system_time as of{" "}
-            {asOf === "baseline" ? fmtDate(data.baselineDate) : "now()"}
-          </span>
+        )}
+
+        <div className={SEGMENTED}>
+          {(
+            [
+              ["baseline", "Where you started"],
+              ["today", "Today"],
+            ] as const
+          ).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => setAsOf(key)}
+              aria-pressed={asOf === key}
+              className={segment(asOf === key, "amber")}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
-        <div className="flex items-center gap-5">
-          {/* The same five-step ramp every other screen paints (lib/mastery):
-              not started → amber → teal, no red, each step named, because
-              colour is never the only carrier of a band. */}
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-              mastery
-            </span>
-            <ul
-              aria-label="Mastery bands"
-              className="flex flex-wrap items-center gap-x-3 gap-y-1.5"
-            >
-              {MASTERY_LEGEND.map((s) => (
-                <li
-                  key={s.band}
-                  className="inline-flex items-center gap-1.5 font-display text-[0.72rem] font-bold text-ink-soft"
-                >
-                  <span
-                    aria-hidden
-                    className={MASTERY_SWATCH}
-                    style={{ backgroundColor: s.color }}
-                  />
-                  {s.band}
-                </li>
-              ))}
-            </ul>
-          </div>
-          {/* Whose graph this is. It used to be a triple-tap door onto the
-              demo-student switcher; the cast is retired and the student now
-              comes from the session, so the chip is just a label again. */}
-          <span className="chip">
-            {data.studentName} · avg{" "}
-            <strong
-              className="font-semibold text-ink transition-all duration-500"
-              key={asOf}
-            >
-              {pct(avg(asOf === "today" ? "current" : "baseline"))}
-            </strong>
-          </span>
-        </div>
-      </section>
+        <StageTally counts={tally} />
+      </header>
 
-      {/* graph + panel */}
-      <section
-        className="anim-rise flex items-stretch gap-4"
-        style={{ animationDelay: "160ms" }}
-      >
-        <div className={cx(STICKER_CARD, "min-w-0 flex-1 overflow-hidden")}>
+      <div className="flex min-h-0 flex-1">
+        {/* the tree — subject-wide, so it scrolls in both axes.
+            `overflow-clip` is what stops a dragged topic panel from growing
+            the DOCUMENT: the panel is absolutely positioned in here, and
+            absolute overflow propagates up to the nearest scroll container,
+            which on a page with no scroll container is the document itself.
+            Drag the panel low enough and the whole app picks up a scrollbar
+            and the shell header scrolls away with it. */}
+        <div className="relative min-w-0 flex-1 overflow-clip">
           <GraphCanvas
             los={visibleLos}
             edges={data.edges}
-            bridges={visibleBridges}
-            showTerritories={subjectFilter === "all" && subjectsPresent.length > 1}
             asOf={asOf}
             selectedLoId={selectedLoId}
-            questionCounts={
-              new Map(
-                visibleLos.map((l) => [l.id, questionsByLo.get(l.id)?.length ?? 0])
-              )
-            }
+            questionCounts={questionCounts}
             onSelect={(id) =>
               setSelectedLoId((cur) => (cur === id ? null : id))
             }
             citedIds={citedIds}
             pulses={pulses}
           />
-          <div className="flex items-center justify-between border-t border-line-soft px-5 py-2.5">
-            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-              prerequisite DAG · layered by depth · graph_edges where
-              edge_type=&apos;prerequisite_of&apos; and system_to is null
-            </span>
-            <span className="font-mono text-[10px] text-ink-faint">
-              → arrow = &quot;is prerequisite of&quot;
-            </span>
-          </div>
+
+          {/* One topic, opened. It covers the tree it came from — never
+                Noor's panel, which stays docked at its own full height. */}
+          {selectedLo && (
+            <LoPanel
+              key={selectedLo.id}
+              lo={selectedLo}
+              allLos={data.los}
+              questions={questionsByLo.get(selectedLo.id) ?? []}
+              asOf={asOf}
+              offset={panelOffset}
+              onOffsetChange={setPanelOffset}
+              onClose={() => setSelectedLoId(null)}
+              onSelectLo={setSelectedLoId}
+              onOpenQuestion={setOpenQuestion}
+            />
+          )}
         </div>
 
-        {selectedLo && (
-          <LoPanel
-            key={selectedLo.id}
-            lo={selectedLo}
-            allLos={data.los}
-            questions={questionsByLo.get(selectedLo.id) ?? []}
-            bridges={data.bridges.filter(
-              (b) => b.src === selectedLo.id || b.dst === selectedLo.id
-            )}
-            asOf={asOf}
-            onClose={() => setSelectedLoId(null)}
-            onSelectLo={setSelectedLoId}
-            onOpenQuestion={setOpenQuestion}
-          />
-        )}
-      </section>
+        <NoorPanel
+          lookupQuestion={(qid) => questionsById.get(qid)}
+          resolveCite={resolveCite}
+          onCite={handleCite}
+          onCiteClick={handleCiteClick}
+          onAttemptResult={handleChatAttempt}
+        />
+      </div>
 
       {openQuestion && (
         <QuestionModal
@@ -373,15 +394,66 @@ export function SpineExplorer({ data }: { data: SpineData }) {
           onClose={() => setOpenQuestion(null)}
         />
       )}
-
-      <AskSpineDock
-        lookupQuestion={(qid) => questionsById.get(qid)}
-        resolveCite={resolveCite}
-        onCite={handleCite}
-        onCiteClick={handleCiteClick}
-        onAttemptResult={handleChatAttempt}
-        studentName={data.studentName}
-      />
     </main>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+/**
+ * The header's summary: how many topics sit on each step of the ramp.
+ *
+ * Five entries, always, including the ones reading zero. The set is fixed so
+ * that flipping between the two snapshots compares like with like — "0 Nailed
+ * it" at baseline against "5 Nailed it" today is the single strongest thing
+ * this screen can say, and it only lands if the row does not reshuffle
+ * underneath the tab. Hiding empty bands would also make the ramp look like
+ * it has a different number of steps depending on when you look.
+ *
+ * Colour is never the only carrier here either: every swatch is named in
+ * words beside it, so the row survives greyscale and CVD, and the swatches
+ * take the same ink outline the fill segments do so a lit band is a
+ * fill-vs-empty difference rather than only a hue one.
+ *
+ * Sized to stay on ONE header row beside the title and the tabs at 1024, the
+ * narrowest width this layout targets. The first cut missed that by 7px and
+ * wrapped, which turned a 70px header into a 120px one and took the
+ * difference straight out of the map — so the gaps, the type and the
+ * swatches here are all a notch tighter than they would otherwise be. It is
+ * still `flex-wrap` underneath: below 1024 it drops to its own line rather
+ * than crushing the tabs.
+ *
+ * "Your topics", not "Across Mathematics": the subject is already named two
+ * inches to the left, and saying it twice in one bar is the kind of chrome
+ * this redesign spent its budget removing.
+ */
+function StageTally({ counts }: { counts: number[] }) {
+  return (
+    <div className="ms-auto">
+      <p className="font-display text-[0.72rem] font-bold leading-none text-ink-soft">
+        Your topics
+      </p>
+      <ul className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+        {MASTERY_LEGEND.map((step, stage) => (
+          <li key={step.band} className="flex items-center gap-1">
+            <span
+              aria-hidden
+              className={cx(STROKE_SM, "size-3 shrink-0 rounded-[var(--play-radius-pill)]")}
+              style={{ background: step.color }}
+            />
+            {/* The numeral gets its own span for a future dir="ltr" wrap. */}
+            <span
+              dir="ltr"
+              className="font-display text-[0.8rem] font-extrabold leading-none text-ink"
+            >
+              {counts[stage]}
+            </span>
+            <span className="font-display text-[0.7rem] font-bold leading-none text-ink-soft">
+              {masteryPhrase(stage as 0 | 1 | 2 | 3 | 4)}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

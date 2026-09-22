@@ -138,6 +138,43 @@ export function masteryLabel(score: number, started = true): MasteryBand {
   return masteryStep(score, started).band;
 }
 
+/**
+ * The stage index (0-4) behind `masteryStep`, named.
+ *
+ * The 4-segment fill needs the ORDINAL, not the Step, and every caller was
+ * reconstructing it as `MASTERY_LEGEND.indexOf(masteryStep(s))` — one lookup
+ * too many, and one more place for the two to drift. Stage 0 is "not started"
+ * and lights NO segment; stages 1-4 light that many, each taking its colour
+ * from `STEPS[i + 1]`. That offset is the whole reason a "5-step ramp" and a
+ * "4-segment fill" are the same object: never render five segments, and never
+ * index the fill by the stage.
+ */
+export function masteryStage(score: number, started = true): 0 | 1 | 2 | 3 | 4 {
+  return stepIndex(score, started) as 0 | 1 | 2 | 3 | 4;
+}
+
+/**
+ * The student-facing phrase for a stage — the ONLY vocabulary the skill map
+ * is allowed to put next to a fill.
+ *
+ * Deliberately not `MasteryBand`. The band names ("attempted", "proficient")
+ * are the internal, legend-and-dashboard vocabulary: accurate, assessor's
+ * English, and read on a card as a verdict being handed down. These say the
+ * same five things in the voice the rest of the Play surfaces use, so the
+ * skill map never becomes the one screen that grades her. They carry no
+ * number and no letter by construction — there is nowhere in this array to
+ * put one.
+ */
+export const MASTERY_PHRASE: readonly string[] = [
+  "Not started",
+  "Just started",
+  "Getting there",
+  "Almost there",
+  "Nailed it",
+] as const;
+
+export const masteryPhrase = (stage: 0 | 1 | 2 | 3 | 4) => MASTERY_PHRASE[stage];
+
 /** The legend, in ramp order — render it wherever the ramp is shown. */
 export const MASTERY_LEGEND: readonly Step[] = STEPS;
 

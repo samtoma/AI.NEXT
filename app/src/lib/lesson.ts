@@ -15,6 +15,7 @@ import { visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import { learnWrongAnswerRules } from "./socratic-probing";
+import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
 import type { WidgetQuestionSpec } from "./types";
 import { mathWidgetDocs } from "./widget-docs";
 import {
@@ -74,14 +75,11 @@ import type {
  * query runs on and the type of one parameter.
  */
 
-export const DEFAULT_LESSON_SLUG = "u1-1";
-
-const SLUG_RE = /^[a-z0-9]{1,12}-[0-9]{1,3}$/;
-
-/** "lo:geo1-2-1" → lesson slug "geo1-2" (LO-id prefix minus the last part). */
-function slugOfLo(loId: string): string {
-  return loId.replace(/^lo:/, "").replace(/-[0-9]+$/, "");
-}
+// The slug rule itself lives in `lib/lesson-slug.ts` — a client-safe module,
+// because the skill map's topic panel needs the same mapping to build its
+// "Study" link and cannot import this file (it opens a pool). Re-exported
+// here so every existing importer keeps working unchanged (Tamer's `1fcf346`).
+export { DEFAULT_LESSON_SLUG, sanitizeLessonSlug } from "./lesson-slug";
 
 /**
  * Subject detection (ADR-0004 Wave 0): the lesson's module sits `part_of` a
@@ -119,11 +117,6 @@ const LESSON_TITLES: Record<string, string> = {
   "geo1-3": "The circumcircle",
   "geo1-4": "Chords and distance from the center",
 };
-
-export function sanitizeLessonSlug(raw: unknown): string {
-  const s = String(raw ?? "").trim();
-  return SLUG_RE.test(s) ? s : DEFAULT_LESSON_SLUG;
-}
 
 /* ------------------------------------------------------------------ */
 /* Catalog — every teachable lesson, grouped by module                 */

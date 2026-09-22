@@ -83,6 +83,16 @@ export type ChatSuggestion = string | { label: string; onSelect: () => void };
 export interface ChatCoreProps {
   surface: "spine_chat" | "student_chat" | "lesson_learn" | "lesson_review";
   suggestions?: ChatSuggestion[];
+  /**
+   * How the starter prompts sit above the composer (Tamer's skill map,
+   * `1fcf346`). "chips" (default) is the wrapping inline row every existing
+   * surface renders. "stacked" is the skill map's docked panel: a "Try asking"
+   * list, one suggestion per line, that reads as things you could say rather
+   * than as the screen's primary actions. Opt-in, so no other surface
+   * changes. (The branch's `sendTone` prop is not carried: main's send is
+   * already amber-with-ink on every surface.)
+   */
+  suggestionLayout?: "chips" | "stacked";
   questionId?: string;
   wrongAnswer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
@@ -215,6 +225,7 @@ const GOT_IT_SENTINEL = "Got it — next ✓";
 export function ChatCore({
   surface,
   suggestions = [],
+  suggestionLayout = "chips",
   questionId,
   wrongAnswer,
   lessonSlug,
@@ -1047,13 +1058,46 @@ export function ChatCore({
 
       {/* suggestion chips — stay clickable after every stream */}
       {suggestions.length > 0 && !capped && (
-        <div className="flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3">
+        <div
+          className={
+            suggestionLayout === "stacked"
+              ? "flex flex-col gap-0.5 px-4 pb-1 pt-2"
+              : "flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3"
+          }
+        >
+          {suggestionLayout === "stacked" && (
+            <p className="mb-1 px-1 font-display text-[0.72rem] font-bold leading-none text-ink-soft">
+              Try asking
+            </p>
+          )}
           {suggestions.map((s) => {
             const label = typeof s === "string" ? s : s.label;
+            const onSelect = () => (typeof s === "string" ? send(s) : s.onSelect());
+            if (suggestionLayout === "stacked") {
+              /* A suggestion, not a control-shaped primary: no outline, no
+                 shadow, no amber — the composer's send keeps the one amber.
+                 Still a real <button> holding the touch floor. */
+              return (
+                <button
+                  key={label}
+                  onClick={onSelect}
+                  disabled={streaming}
+                  className="group flex min-h-[var(--noor-touch-min)] w-full items-center gap-2 rounded-[var(--play-radius-sm)] px-1 text-start font-display text-[0.88rem] font-bold leading-[1.4] text-ink-soft transition-colors duration-150 enabled:hover:bg-card-warm enabled:hover:text-ink disabled:opacity-40"
+                >
+                  <span
+                    aria-hidden
+                    className="shrink-0 text-ink-faint transition-transform duration-150 group-enabled:group-hover:translate-x-0.5"
+                  >
+                    ›
+                  </span>
+                  <span className="min-w-0">{label}</span>
+                </button>
+              );
+            }
             return (
               <button
                 key={label}
-                onClick={() => (typeof s === "string" ? send(s) : s.onSelect())}
+                onClick={onSelect}
                 disabled={streaming}
                 className={cx(CHIP_CONTROL, "text-start")}
               >
