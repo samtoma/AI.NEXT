@@ -143,8 +143,21 @@ jobs:
   # secret check fails, so an accidental run is not inert — hence the lock.
   deploy:
     needs: build
+    # `main`, since 2026-09-22. `PDR1-0` carried the active line under ADR-0010's
+    # one-branch-per-solution rule; Samuel retired that branch and made `main`
+    # the single development branch, so the gate follows the code rather than
+    # keeping a name nobody pushes to.
+    #
+    # **Changed in a commit of its own, deliberately.** The fast-forward that
+    # moved `main` was pushed while this still read `PDR1-0`, so that push could
+    # not deploy anything — a branch move and a change to what deploys are two
+    # different decisions and must not arrive together. If they had, 119 commits
+    # would have landed on the box in the same breath as the branch rename.
+    #
+    # `workflow_dispatch` is unchanged and is the important half: no push, no
+    # merge and no tag deploys. A deploy is a person pressing a button.
     if: >-
-      github.ref == 'refs/heads/PDR1-0'
+      github.ref == 'refs/heads/main'
       && github.event_name == 'workflow_dispatch'
     runs-on: [self-hosted, oci]
     concurrency:

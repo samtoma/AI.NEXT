@@ -6,19 +6,39 @@ project should never create one.
 
 ## The long-lived branches
 
-One per solution, kept indefinitely, neither an environment of the other
-([ADR-0010](decisions/0010-one-branch-per-solution.md)).
+**Changed 2026-09-22 (Samuel). `main` is the single development branch.**
+ADR-0010's one-branch-per-solution rule stood while two solutions were both
+live; only one is now being worked on, and carrying the active line on a branch
+nobody deploys from was costing more than it bought.
 
-| Branch | Solution | Rule |
+| Branch | What it is | Rule |
 |---|---|---|
-| `main` | shared trunk | Default branch; still what CI deploys to `ainext.reletix.com`. **Not to be touched.** Retiring it is a production change and has not been approved (`T137`). |
-| `family-tutor` | Founding Families — parent-sold, Arabic RTL, three subjects, Elo | Frozen because nobody is working on it. |
-| `PDR1-0` | Student MVP — student-facing, English, maths only, BKT | Active. Carries its own `ci-cd.yml` and its own deploy trigger. |
+| `main` | **the product** — student-facing, English default, the identity/console/courses line | Default branch, and the only one anybody develops on. Carries the workflow and the deploy trigger. |
+| `family-tutor` | Founding Families — parent-sold, Arabic RTL, three subjects, Elo | **The frozen baseline, and the backup of the old `main`.** Byte-identical to what `main` held at `f0cb192` before the move. Keep indefinitely. Nobody works on it. |
+| ~~`PDR1-0`~~ | — | **Retired 2026-09-22.** `main` was a strict ancestor of it (0 ahead, 119 behind), so the move was a fast-forward: no merge, no force push, and all 119 commits are intact on `main` as the record. |
 
-Each solution branch carries its own copy of the workflow, so editing one can
-never change what another deploys. The cost: the shared-box safety rails exist in
-one copy per branch — **change a rail on every solution branch**, or the copy that
-drifts is the one that prunes production's images.
+### What the move actually did, and what it cost
+
+`main` was fast-forwarded to `PDR1-0`, and the deploy trigger was changed to
+`refs/heads/main` **in a separate commit afterwards**. That order is the whole
+safety argument: while the fast-forward was pushed, the gate still read
+`PDR1-0`, so a 119-commit branch move could not also be a deployment. A branch
+move and a change to what deploys are two decisions and must never arrive in
+one push.
+
+**The cost, stated rather than discovered later:** `family-tutor` carries its own
+copy of `ci-cd.yml` whose deploy gate reads `refs/heads/main`. That gate can now
+never match, because pushes to `family-tutor` carry its own ref and `main` runs
+the workflow `main` holds. **The frozen baseline therefore has no pipeline
+deploy path.** Its code and history are safe; redeploying it would mean editing
+that copy's gate or deploying it by hand. That is acceptable precisely because
+it is frozen — but it is a real consequence, not a detail.
+
+Each long-lived branch still carries its own copy of the workflow, so editing one
+can never change what another deploys. The cost is unchanged: the shared-box
+safety rails exist in one copy per branch — **change a rail on every branch that
+still deploys**, or the copy that drifts is the one that prunes production's
+images.
 
 ## What gets a branch
 
@@ -55,7 +75,7 @@ the test annotation use.
 ```
   issue          triage           req/ branch         feat/ branch        tag
   (anyone)   →   (Samuel)    →    spec + matrix   →   code + test    →    release
-  no branch      no branch        reviewed            reviewed            PDR1-0-vX.Y.Z
+  no branch      no branch        reviewed            reviewed            vX.Y.Z
 ```
 
 1. **Issue.** Feedback or proposal. No branch, no spec edit.
@@ -68,7 +88,8 @@ the test annotation use.
 4. **`feat/` branch.** Implementation, plus a test carrying `@covers FR-nnn` where
    one is possible. The PR template asks for requirement, task, ADR and proof.
 5. **Tag.** When requirements move to VERIFIED, the changelog names them and the
-   solution is tagged `PDR1-0-vX.Y.Z`. See [VERSIONING.md](VERSIONING.md).
+   product is tagged `vX.Y.Z` on `main` (bare, since v0.5.0 — see
+   [VERSIONING.md](VERSIONING.md); the older `PDR1-0-v*` tags keep their names).
 
 Steps 3 and 4 can be one branch for something small. They should not be one branch
 for anything contested, because the argument about *what we promised* is a

@@ -3,15 +3,17 @@
 ## What this project is
 AI.Next is a 3-founder edtech startup (founders: Samuel = CTO + solution architect, plus Sales and Product founders). This repo is the workspace for an AI tutor for Egyptian secondary students, built on a curriculum graph extracted from ministry textbooks.
 
-**As of 2026-09-13 the repo holds two solutions, one long-lived branch each (ADR-0010).** Neither is an environment of the other. Read `specs/001-student-mvp1-delta/decisions.md` and `docs/decisions/0010-one-branch-per-solution.md` before making product assumptions — this is the single most common source of stale context in this repo.
+**As of 2026-09-22 `main` is the single development branch** (ADR-0010 Amendment). `PDR1-0` is retired: `main` was a strict ancestor of it, so the move was a fast-forward and all 119 commits are intact — nothing was squashed. Read `specs/001-student-mvp1-delta/decisions.md` and `docs/decisions/0010-one-branch-per-solution.md` before making product assumptions — this is the single most common source of stale context in this repo.
 
-| | `family-tutor` — **frozen baseline** | `PDR1-0` — **active development** |
+| | `main` — **the product** | `family-tutor` — **frozen baseline + backup** |
 |---|---|---|
-| Product | Parent-sold, Arabic RTL, 3 subjects, Elo mastery | Student-facing, English LTR, Math only, BKT mastery |
-| Authority | PRD v1.0 (below) | **PRD: AI Tutor — Student MVP v0.4** (Tamer Deif, Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`) |
-| Deploys to | ainext.reletix.com — **still served from `main` until T137 repoints it** | not yet deployed (Phase 3) |
+| Product | Student-facing, English LTR default, Maths + Social Studies + Arabic, BKT mastery | Parent-sold, Arabic RTL, 3 subjects, Elo mastery |
+| Authority | **PRD: AI Tutor — Student MVP v0.4** (Tamer Deif, Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`) | PRD v1.0 (below) |
+| Deploys to | `noor.reletix.com` (student) + `admin-noor.reletix.com` (console) — **not yet deployed**; see `deploy/TAKEOVER.md` | ainext.reletix.com — **no pipeline path any more**, see the Amendment |
 
-`main` remains the default branch and the one CI currently deploys; `family-tutor` was branched from it and is identical. Retiring `main` is a production change and is deliberately not done — see ADR-0010 Open.
+`main` is the default branch, the only one anybody develops on, and the one the deploy trigger names. `family-tutor` holds what `main` contained before the move (`f0cb192`), byte-identical, and is the backup of the old baseline — keep it, never work on it.
+
+**Three subjects are loaded and live again** (2026-09-21): Maths, Social Studies and Arabic, all Prep 3. Which of them a student actually sees is decided per (course, grade) by the course gate (ADR-0018, migration 023) — loading a course is not the same as showing it. **`FR-905` is BLOCKED by this**, deliberately and with Samuel's knowledge: it forbids serving Arabic and Social Studies in this environment. Do not reword it to match the code.
 
 Both solutions today serve the same Prep-3 Mathematics book (10 modules, 90 LOs, 112 prerequisite edges, 450 questions, 212 visuals), and `parity_check.py` fails loudly if a solution drifts from the set it is meant to serve. **This is a per-solution drift guard, not a cross-solution contract:** the ADR-0010 Clarification withdrew content parity between solutions, so `PDR1-0` and `family-tutor` may diverge completely — different content, curriculum or subjects — without that being a defect.
 
@@ -56,7 +58,7 @@ Skills (in `.claude/skills/`): `project-status` (read/update project state), `ad
 
 ## Conventions
 - Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`. **Documentation map: `docs/README.md`.**
-- Branching: `docs/BRANCHING.md` — one branch per solution; feedback and requirement *proposals* never get a branch, accepted requirements get `req/<id>-<slug>`. Versioning: `docs/VERSIONING.md`. Current release: **`PDR1-0-v0.4.0`** — history in `CHANGELOG.md`, per-release explainers in `docs/releases/`.
+- Branching: `docs/BRANCHING.md` — **one branch, `main`** (ADR-0010 Amendment); feedback and requirement *proposals* never get a branch, accepted requirements get `req/<id>-<slug>`. Versioning: `docs/VERSIONING.md`. Current release: **`v0.5.0`** (tags are bare `vX.Y.Z` from v0.5.0; the older `PDR1-0-v*` tags keep their names) — history in `CHANGELOG.md`, per-release explainers in `docs/releases/`.
 - Product code: the Next.js app in `app/`, the extraction pipeline in `services/extraction/`, deploy stack in `deploy/` (see ADR-0002/0003/0005).
 - Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v3.1.1**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/002-identity-and-admin-console/` (001 is the shipped Student MVP delta); new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
 - Student- and parent-facing copy is **English** for MVP 1.0 (constitution v3.1.1 Principle V); the Arabic verticals stay in the tree and reintroducible. Internal docs and code are English.

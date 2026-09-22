@@ -153,3 +153,71 @@ they are two products that happen to share a history. **Any future claim that on
 than the other is an opinion formed from live usage, not a measured result**, because the variable
 that made it measurable has been released. That is a legitimate trade for delivery speed; it should
 just never be written up later as though it were an experiment.
+
+---
+
+## Amendment — Samuel, 2026-09-22: `main` is the single development branch
+
+**Status of this ADR: Superseded in part.** The *reasoning* below stands and is
+worth keeping. The *branch topology* it prescribes does not survive this
+amendment, and `docs/BRANCHING.md` is now the operative description.
+
+### What changed, and why the original rule stopped paying
+
+This ADR's rule — one long-lived branch per solution, neither an environment of
+the other — was correct while **two solutions were both being worked on**. That
+stopped being true. `family-tutor` has been frozen since it was branched;
+nobody has pushed to it, and nobody intends to. What remained was one active
+product carried on `PDR1-0`, a default branch `main` that nothing was developed
+on, and a deploy trigger pointing at the branch that was not the default. Every
+new contributor, every tool that assumes the default branch, and every link that
+resolves against it started from the wrong place.
+
+Samuel: *"I want really to squash the main. It is no longer used. We have
+already created a backup in a separate branch."* Verified before acting:
+`origin/family-tutor` sat on the **same commit** as `origin/main` (`f0cb192`)
+and was byte-identical, so the frozen product's history is fully preserved
+independently of `main`.
+
+### The new topology
+
+- **`main`** — the product, and the only branch anybody develops on. Carries the
+  workflow and the deploy trigger.
+- **`family-tutor`** — the frozen baseline, and the backup of the old `main`.
+  Kept indefinitely. Nobody works on it.
+- **`PDR1-0`** — retired. `main` was a strict ancestor of it (0 ahead, 119
+  behind), so the move was a **fast-forward**: no merge, no force push, and all
+  119 commits remain on `main` as the record. Nothing was squashed, despite the
+  word Samuel used — flattening a hundred commits would have destroyed exactly
+  the per-phase record `docs/PROJECT_STATE.md` relies on.
+
+### Two things this costs, named rather than discovered
+
+1. **The frozen baseline has no pipeline deploy path.** `family-tutor` carries
+   its own `ci-cd.yml` whose deploy gate reads `refs/heads/main` — a ref that
+   now runs `main`'s workflow, not that copy. Redeploying the baseline means
+   editing that copy's gate or doing it by hand. Acceptable *because* it is
+   frozen, but it is a real loss and not a detail.
+2. **ADR-0010's safety property is weakened by one.** "Each solution branch
+   carries its own workflow, so editing one can never change what another
+   deploys" still holds — but with one branch deploying, a rail changed in the
+   wrong copy is now less likely to be noticed, because there is no second live
+   copy to disagree with it.
+
+### What did NOT change
+
+**Constitution Principle XI stands untouched.** Environment attribution,
+unpooled metrics and "student data does not cross solutions" are data hygiene,
+not experiment design, and a branch topology has never been what enforced them —
+`ai_interactions.environment` and the RLS policies are. The Clarification above
+remains the record on why the two products are no longer a measurable
+comparison.
+
+### The order of operations, because it is the safety argument
+
+`main` was fast-forwarded **while the deploy gate still read `PDR1-0`**, so the
+push that moved 119 commits could not deploy anything. The gate was changed to
+`refs/heads/main` in a **separate commit afterwards**, and `workflow_dispatch`
+was left in place, so no push, merge or tag deploys — a deploy is still a person
+pressing a button. A branch move and a change to what deploys are two decisions
+and must not arrive in one push.
