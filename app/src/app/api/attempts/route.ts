@@ -6,6 +6,7 @@ import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { evaluateArithmeticExpression } from "@/lib/arithmetic";
+import { advanceIfMastered } from "@/lib/progression-db";
 
 function grade(
   questionType: string,
@@ -295,6 +296,19 @@ export async function POST(req: Request) {
       );
     }
 
+    // 4. advance the lesson pointer if this attempt just completed the lesson
+    // (ADR-0012). Inside the transaction deliberately: the mastery write and
+    // the advance it implies commit together or not at all, so a student can
+    // never end up mastered-but-not-advanced (or the reverse) because the
+    // request died between two writes.
+    //
+    // Only a CORRECT answer can cross the gate, so the catalogue read — which
+    // is not cheap — is skipped entirely on the common path.
+    let advancedTo: string | null = null;
+    if (isCorrect) {
+      advancedTo = await advanceIfMastered(client, studentId, q.lo_id);
+    }
+
     await client.query("COMMIT");
 
     // Fire-and-forget, and deliberately AFTER commit: an analytics failure must
@@ -394,6 +408,7 @@ export async function POST(req: Request) {
       // error was not one the question names — which is the honest answer, not
       // a gap to fill with the nearest entry.
       modality: isWidget ? "widget" : "question",
+      advancedTo,
       diagnosis: misconceptionId
         ? { misconceptionId, via: isWidget ? predicate! : givenAnswer }
         : null,

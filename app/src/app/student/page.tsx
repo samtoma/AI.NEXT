@@ -5,6 +5,8 @@ import { getLessonContent } from "@/lib/lesson-content";
 import { getSubjectSummaries } from "@/lib/subject-queries";
 import { courseIdOfSpineKey } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
+import { getCurrentLesson, isCourseComplete } from "@/lib/progression-db";
+import { previousCompletedSlug } from "@/lib/progression";
 import {
   deriveMasteryStage,
   deriveRecommendation,
@@ -131,10 +133,59 @@ export default async function StudentPage({
   // The assigned-lesson card must belong to the CHOSEN subject — otherwise it
   // falls back to the global default (a math lesson) and the whole check-in
   // renders as math even though the picker is social.
-  const effectiveSlug = lessonSlug ?? (courseId ? lessons[0]?.slug : undefined);
+  //
+  // ADR-0012: the assignment is the student's PERSISTED POINTER, not a
+  // constant. This used to be `lessons[0]?.slug` — the catalogue's first row —
+  // falling through to the hardcoded DEFAULT_LESSON_SLUG, which is why every
+  // student saw lesson 1-1 forever however much they had mastered.
+  //
+  // An explicit ?lesson= still wins, and that ordering is load-bearing: the
+  // picker's chips land here, and auto-advance overriding a deliberate
+  // selection is the 2026-07-30 field report ("picking another lesson brings
+  // me back") all over again.
+  //
+  // With no ?subject= and a single-course tree (the math-only case) the course
+  // is unambiguous, so the pointer still applies — deriving it here is what
+  // keeps the math-only default off the constant.
+  const courses = [...new Set(allLessons.map((l) => l.courseId).filter(Boolean))];
+  const pointerCourse = courseId ?? (courses.length === 1 ? courses[0]! : null);
+  const effectiveSlug =
+    lessonSlug ??
+    (pointerCourse
+      ? ((await getCurrentLesson(studentId, pointerCourse, allLessons)) ??
+        undefined)
+      : undefined);
   const lesson = await getLessonData(effectiveSlug, studentId);
   // Offer the readable «شرح الدرس» door only when this lesson has a bundle.
   const hasContent = (await getLessonContent(lesson.slug)) !== null;
+
+  // The lesson just finished, kept visible as a collapsed row above the card
+  // so a completed lesson does not simply vanish when the pointer moves on.
+  //
+  // Free: `allLessons` already carries this student's mastery on every
+  // objective (getLessonCatalog attaches it), so the whole thing is a walk
+  // over data the page has already fetched — no extra query.
+  //
+  // Suppressed when the student arrived via an explicit ?lesson=. That link is
+  // a deliberate choice of what to look at, and decorating it with "here is
+  // what you finished before this" would be answering a question nobody asked.
+  const justFinished =
+    !lessonSlug && pointerCourse
+      ? (() => {
+          const inCourse = allLessons.filter(
+            (l) => l.courseId === pointerCourse
+          );
+          const slug = previousCompletedSlug(inCourse, lesson.slug);
+          return slug ? (inCourse.find((l) => l.slug === slug) ?? null) : null;
+        })()
+      : null;
+
+  // ADR-0012 terminal state — mastered AND nothing left to advance to.
+  const courseComplete = await isCourseComplete(
+    studentId,
+    lesson.slug,
+    lesson.courseId
+  );
 
   // Check-in card derivation (Noor Play brief). recommendationReason is
   // logged here and stops here — it must never become a prop, so a client
@@ -159,6 +210,16 @@ export default async function StudentPage({
       recommendation={recommendation}
       estimates={estimates}
       completedToday={false /* no real "attempted today" signal yet — never inferred from time of day */}
+      courseComplete={courseComplete}
+      justFinished={
+        justFinished
+          ? {
+              slug: justFinished.slug,
+              ref: justFinished.ref,
+              title: justFinished.title,
+            }
+          : null
+      }
       trial={null /* no trial/subscription model in this MVP — chip stays hidden */}
     />
   );

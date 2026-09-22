@@ -327,6 +327,11 @@ export interface AttemptResult {
    *  metric can be sliced by it, so widget evidence is never silently pooled
    *  with question evidence. */
   modality?: "question" | "widget";
+  /** The lesson slug this attempt advanced the student TO (ADR-0012), or null
+   *  when the pointer did not move — the common case. Carried back so a caller
+   *  can tell that the lesson just completed, rather than having to re-derive
+   *  it from the mastery numbers and get a different answer. */
+  advancedTo?: string | null;
   /** The named error, when the question itself named it: a chosen distractor
    *  for multiple choice, a construction predicate for a widget. Null means we
    *  do not know why the answer was wrong, which is a real answer. */

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { SpineLo } from "@/lib/types";
 import { spineSubjectDef } from "@/lib/subjects";
 import { masteryStage, masteryPhrase } from "@/lib/mastery";
-import { MasteryFill } from "./MasteryFill";
+import { MasteryFill } from "@/components/MasteryFill";
 
 export type AsOf = "baseline" | "today";
 

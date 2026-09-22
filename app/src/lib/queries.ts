@@ -11,6 +11,7 @@ import type {
 
 import { DEFAULT_STUDENT_ID } from "./demo-student";
 import { spineSubjectOf } from "./subjects";
+import { PREREQ_GATE } from "./progression";
 
 /** True if a relation/view exists (avoids querying a table the data agent
  *  hasn't created yet — the multi-subject contract lands in parallel). */
@@ -286,7 +287,10 @@ export async function getSpineData(
 /* Student plan builder                                                */
 /* ------------------------------------------------------------------ */
 
-const PREREQ_GATE = 0.5;
+// PREREQ_GATE moved to lib/progression.ts (ADR-0012) so the plan builder and
+// the lesson-progression walk share one definition of "prerequisites met".
+// It lives there, not here, because that module is pure and this one opens a
+// connection pool — the import has to point this way round.
 const REVIEW_FLOOR = 0.72;
 
 function pickTierFor(score: number): Tier {

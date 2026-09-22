@@ -554,6 +554,15 @@ Web Speech API is inherently robotic (plays OS voices; weak for Arabic). Added a
 
 ## Demo v2 additions (2026-07-17 evening, for co-founder demo)
 - **/pipeline "The Digestion":** 5-stage visual story of book→spine — real scanned pages + sha256 passport, actual Pydantic schema contract, reviewed question with stamp, graph summary, and a real grounding slice from ai_interactions ("178 pages in 5,225 tokens" with live token/cost receipt).
+- **/student lesson progression (ADR-0012):** the check-in opens on a **persisted per-student,
+  per-course pointer** (`student_progress`, migration 012), not the old constant. The pointer
+  advances when **every** LO in the current lesson reaches 0.75, to the next lesson in catalogue
+  order whose prerequisites are met; it is monotonic (never walks back when mastery drops) and
+  parks on the course's last lesson, where the card shows a "whole course" banner above the doors.
+  The lesson just completed stays on screen as a **collapsed "✓ ... Revisit" row** above the card
+  (nearest earlier gate-passing lesson, derived — no stored history), because the gate can cross
+  before the student taps Finish. An explicit `?lesson=` still wins, and suppresses that row. Fixed in passing: `MODULE_ORDER` interleaved Term 1 and Term 2
+  (both number their first unit 1), so the catalogue ran t2u1-1 → u1-1 → t2u1-2 → u1-2 …
 - **/student adaptive check-in:** "How did today's lesson go?" → **Learn mode** (AI-led interactive lesson: teaching beats, pair_plotter + product_builder widgets, check questions, 14-turn cap) or **Review mode** (non-annoying: 3 quick checks + 1 widget, hard 5-turn cap) or quiet practice. Both end in an AI-graded **comprehension report card** (0–100 score dial, verdict stamp, strengths/gaps, next step → `understanding_checks` table, migration 003). **Voice:** browser TTS + mic (Web Speech API, feature-gated, no keys).
 - **Cost datapoints:** full learn session ≈ $0.17 (≈EGP 8) incl. rating; review ≈ $0.10; spine chat ≈ $0.045/turn. Caps bound worst case; per-mode budget lines needed for any student-facing version.
 
@@ -584,6 +593,7 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0004 | Social Studies vertical (2nd subject on the spine) | ✅ Accepted 2026-07-20 |
 | ADR-0005 | Agentic extraction pipeline + coverage oracle | ✅ Accepted 2026-07-21 |
 | ADR-0006 | Arabic Language vertical — new contract: vendored Quran corpus, Noto Naskh font, 5 assessable LOs/lesson, scope = text+grammar+إملاء | ✅ Accepted 2026-07-28 |
+| ADR-0012 | Mastery-gated lesson progression — persisted per-student-per-subject lesson pointer, advances when every LO ≥ 0.75; `/student` no longer opens on a constant | ✅ Accepted 2026-09-22 |
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·

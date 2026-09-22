@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import type { SpineLo, SpineQuestion, Tier } from "@/lib/types";
 import type { VisualRow } from "@/lib/visuals";
 import { masteryStage, masteryPhrase } from "@/lib/mastery";
-import { MasteryFill } from "./MasteryFill";
+import { MasteryFill } from "@/components/MasteryFill";
 import { TeX } from "@/components/TeX";
 import { Visual } from "@/components/viz/Visual";
 import { learnHrefForLo } from "@/lib/lesson-slug";
