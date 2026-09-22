@@ -276,7 +276,48 @@ baseline, the thing `family-tutor` describes and the reference the comparison is
 Do not `down -v` the `ainext` project, do not delete its volume, and take a dump before touching
 anything on that box (§3.3).
 
-### 3.3 Credentials — what can be reused and what cannot
+### 3.3a AMENDED 2026-09-22 — the secrets come from GitHub, and CI writes the file
+
+Samuel: *"no I want the deployment to be from the CI, why should I run the cmd myself"* — a fair
+challenge, and the answer is that the old shape's security argument does not survive contact with
+this box. **The runner is self-hosted on the same machine.** Anybody who can change the workflow can
+already run arbitrary code there, including reading an on-box `deploy/.env`. Keeping the values out
+of GitHub bought almost nothing while costing a manual SSH step, a second place to rotate, and a file
+with no backup story.
+
+So the deploy job now **writes `deploy/.env` from repository secrets on every run**. What that buys:
+rotation is one `gh secret set`, a rebuilt box needs no hand-editing, and nothing about a deployment
+depends on somebody remembering what they typed into a terminal in September.
+
+What protects them now that a workflow change can reach them: they are encrypted at rest, masked in
+logs, and cannot be read back through the API — only overwritten. The step never echoes a value and
+`set -x` appears nowhere in the job. The file is written 0600. And **every required secret is
+validated before the file is touched**, so a missing one fails the deploy and leaves the previous
+file intact rather than half-writing an env file at 2am.
+
+**Set once, from anywhere — these do not echo:**
+
+```bash
+R=samtoma/AI.NEXT
+gh secret set POSTGRES_PASSWORD        --repo $R
+gh secret set AINEXT_APP_PASSWORD      --repo $R
+gh secret set AINEXT_OPERATOR_PASSWORD --repo $R
+gh secret set AINEXT_MAINT_PASSWORD    --repo $R
+gh secret set AINEXT_AUTH_SECRET       --repo $R
+# optional, as they become real:
+gh secret set AINEXT_SMTP_URL --repo $R;  gh secret set AINEXT_MAIL_FROM --repo $R
+# a product decision, so a VARIABLE rather than a secret — readable without unmasking:
+gh variable set AINEXT_COURSE_GATING --body on --repo $R
+```
+
+Generate the four passwords and the signing key with `openssl rand -base64 48`. The hostnames are not
+secrets and the job writes them itself.
+
+**What is still yours and cannot be automated:** the Claude CLI login (§5 — interactive, a TTY),
+Mailu's mailbox and the DNS records (§6), and the Cloudflare Access application in front of the
+console (§2.2). Everything else is now a button in Actions.
+
+## 3.3 Credentials — what can be reused and what cannot
 
 | Value | Reuse from the box's existing `deploy/.env`? |
 |---|---|

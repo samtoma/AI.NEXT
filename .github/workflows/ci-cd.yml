@@ -175,7 +175,7 @@ jobs:
       # dashboard action and nothing here can prove it exists.
       CONSOLE_PORT: "3102"
     steps:
-      - name: Sync code into persistent app dir (git init/fetch — preserves deploy/.env)
+      - name: Sync code into persistent app dir (git init/fetch — keeps volumes, .env is rewritten next)
         run: |
           set -euo pipefail
           REPO_URL="https://github.com/${{ github.repository }}.git"
@@ -205,45 +205,102 @@ jobs:
       # It checks for PRESENCE only and never echoes a value. `set -x` is
       # deliberately not used anywhere in this job for the same reason: these
       # lines are the database passwords and the token signing key.
-      - name: Verify in-folder secrets (deploy/.env)
+      # ---------------------------------------------------------------------
+      # THE SECRETS COME FROM GITHUB, NOT FROM A FILE SOMEBODY MADE BY HAND.
+      # ---------------------------------------------------------------------
+      # This step used to REFUSE to deploy unless `deploy/.env` already existed
+      # on the box, created once over SSH. Samuel, 2026-09-22: "I want the
+      # deployment to be from the CI, why should I run the cmd myself." Fair —
+      # and the security argument for the old shape does not survive contact
+      # with this box:
+      #
+      #   the runner is SELF-HOSTED, on the same machine. Anybody who can change
+      #   this workflow can already execute arbitrary code there — including
+      #   `cat deploy/.env`. Keeping the values out of GitHub therefore bought
+      #   almost nothing, while costing a manual step, a second place to rotate
+      #   and a file nobody could audit.
+      #
+      # So GitHub is now the single source of truth and this job writes the file.
+      # What that DOES buy is worth stating: rotation is one place, a rebuilt box
+      # needs no hand-editing, and the values are no longer only in a directory
+      # whose backup story is "there isn't one".
+      #
+      # WHAT PROTECTS THEM, since they are now reachable from a workflow change:
+      #   * they are repository secrets — encrypted at rest, masked in logs, and
+      #     never readable back through the API, only overwritten;
+      #   * this step NEVER echoes a value. `set -x` appears nowhere in this job;
+      #   * the file is written under `umask 077`, so it is 0600 and owned by the
+      #     runner user;
+      #   * **every secret is validated BEFORE the file is touched.** A missing
+      #     one fails the deploy with the names of what is missing and leaves the
+      #     previous file exactly as it was. Half-writing an env file is how a
+      #     working deployment becomes a broken one at 2am.
+      #
+      # Set them once (values never appear here, and `gh` does not echo them):
+      #   gh secret set POSTGRES_PASSWORD      --repo samtoma/AI.NEXT
+      #   gh secret set AINEXT_APP_PASSWORD    --repo samtoma/AI.NEXT
+      #   gh secret set AINEXT_OPERATOR_PASSWORD --repo samtoma/AI.NEXT
+      #   gh secret set AINEXT_MAINT_PASSWORD  --repo samtoma/AI.NEXT
+      #   gh secret set AINEXT_AUTH_SECRET     --repo samtoma/AI.NEXT
+      # `AINEXT_CONSOLE_URL` is not a secret — it is a hostname — so it is a
+      # plain value here rather than one more thing to keep in two places.
+      - name: Write deploy/.env from repository secrets
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          AINEXT_APP_PASSWORD: ${{ secrets.AINEXT_APP_PASSWORD }}
+          AINEXT_OPERATOR_PASSWORD: ${{ secrets.AINEXT_OPERATOR_PASSWORD }}
+          AINEXT_MAINT_PASSWORD: ${{ secrets.AINEXT_MAINT_PASSWORD }}
+          AINEXT_AUTH_SECRET: ${{ secrets.AINEXT_AUTH_SECRET }}
+          AINEXT_SMTP_URL: ${{ secrets.AINEXT_SMTP_URL }}
+          AINEXT_MAIL_FROM: ${{ secrets.AINEXT_MAIL_FROM }}
+          AINEXT_GOOGLE_CLIENT_ID: ${{ secrets.AINEXT_GOOGLE_CLIENT_ID }}
+          AINEXT_GOOGLE_CLIENT_SECRET: ${{ secrets.AINEXT_GOOGLE_CLIENT_SECRET }}
+          AINEXT_GA_MEASUREMENT_ID: ${{ secrets.AINEXT_GA_MEASUREMENT_ID }}
+          AINEXT_ALERT_EMAIL: ${{ secrets.AINEXT_ALERT_EMAIL }}
+          AINEXT_BOOTSTRAP_OPERATOR_EMAIL: ${{ secrets.AINEXT_BOOTSTRAP_OPERATOR_EMAIL }}
+          AINEXT_COURSE_GATING: ${{ vars.AINEXT_COURSE_GATING }}
         run: |
           set -euo pipefail
-          ENV_FILE="$APP_DIR/deploy/.env"
-          if [ ! -f "$ENV_FILE" ]; then
-            echo "::error::$ENV_FILE missing. Create it once on the box from deploy/.env.example"
-            echo "::error::  umask 077; cp $APP_DIR/deploy/.env.example $ENV_FILE  # then edit it"
-            exit 1
-          fi
+          # Validate FIRST. Nothing is written until every required value is here.
           missing=""
-          for key in POSTGRES_PASSWORD \
-                     AINEXT_APP_PASSWORD AINEXT_OPERATOR_PASSWORD AINEXT_MAINT_PASSWORD \
-                     AINEXT_AUTH_SECRET AINEXT_CONSOLE_URL; do
-            grep -Eq "^${key}=.+" "$ENV_FILE" || missing="$missing $key"
+          for key in POSTGRES_PASSWORD AINEXT_APP_PASSWORD AINEXT_OPERATOR_PASSWORD \
+                     AINEXT_MAINT_PASSWORD AINEXT_AUTH_SECRET; do
+            eval "v=\${$key:-}"
+            [ -n "$v" ] || missing="$missing $key"
           done
           if [ -n "$missing" ]; then
-            echo "::error::not set in $ENV_FILE:$missing"
+            echo "::error::repository secret(s) not set:$missing"
+            echo "::error::set each once:  gh secret set <NAME> --repo ${{ github.repository }}"
             echo "::error::deploy/.env.example documents every one of them, and why."
             exit 1
           fi
-          echo "all required keys present in $ENV_FILE"
+          # The console origin is a hostname, not a secret (ADR/TAKEOVER §2.2).
+          CONSOLE_URL="https://admin-noor.reletix.com"
+          PUBLIC_URL="https://noor.reletix.com"
 
-      # WHICH BUILD IS THIS, stamped onto every tutor turn as
-      # `ai_interactions.renderer_version` (ADR-0015 §3). The console's replay
-      # marks a turn "differs from current renderer" by comparing that string, so
-      # a stamp that cannot tell two builds apart cannot detect renderer drift —
-      # which is the only reason the column exists.
-      #
-      # A tagged commit uses its tag, because that is the name CHANGELOG.md and
-      # docs/releases/ use and an operator reading it should be able to find the
-      # release without a lookup table. An untagged commit gets version+sha,
-      # which is deliberately NOT release-shaped: a deploy that is not a release
-      # should not be able to masquerade as one in the data.
-      #
-      # ⚠ This is exported and passed through compose, but `app/src/lib/env.ts`
-      # still derives RELEASE_TAG from package.json and does not read the
-      # environment. Until that one-line change lands the value is carried and
-      # unused. It is set here anyway so that the day it lands, this is already
-      # correct — and so the deploy log records which commit is serving.
+          ENV_FILE="$APP_DIR/deploy/.env"
+          umask 077
+          {
+            echo "# GENERATED BY CI on $(date -u +%FT%TZ) — do not hand-edit."
+            echo "# The source of truth is GitHub repository secrets; a hand edit"
+            echo "# here is overwritten by the next deploy. Rotate with \`gh secret set\`."
+            for key in POSTGRES_PASSWORD AINEXT_APP_PASSWORD AINEXT_OPERATOR_PASSWORD \
+                       AINEXT_MAINT_PASSWORD AINEXT_AUTH_SECRET AINEXT_SMTP_URL \
+                       AINEXT_MAIL_FROM AINEXT_GOOGLE_CLIENT_ID AINEXT_GOOGLE_CLIENT_SECRET \
+                       AINEXT_GA_MEASUREMENT_ID AINEXT_ALERT_EMAIL \
+                       AINEXT_BOOTSTRAP_OPERATOR_EMAIL AINEXT_COURSE_GATING; do
+              eval "v=\${$key:-}"
+              [ -n "$v" ] && printf '%s=%s\n' "$key" "$v"
+            done
+            printf 'AINEXT_PUBLIC_URL=%s\n'  "$PUBLIC_URL"
+            printf 'AINEXT_CONSOLE_URL=%s\n' "$CONSOLE_URL"
+            printf 'AINEXT_GOOGLE_REDIRECT_URI=%s/api/auth/google/callback\n' "$PUBLIC_URL"
+          } > "$ENV_FILE.tmp"
+          mv "$ENV_FILE.tmp" "$ENV_FILE"
+          chmod 600 "$ENV_FILE"
+          # Presence only, never a value.
+          echo "wrote $ENV_FILE with $(grep -c '^[A-Z]' "$ENV_FILE") key(s), mode $(stat -c %a "$ENV_FILE")"
+
       - name: Compute RELEASE_TAG from the deployed commit
         run: |
           set -euo pipefail
