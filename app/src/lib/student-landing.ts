@@ -106,8 +106,16 @@ export function decideLanding(input: {
   lessonSlug: string | undefined;
   /** this student's gated catalogue, in teaching order */
   lessons: readonly LandingLesson[];
+  /**
+   * The student's stored lesson pointer for the course in view (ADR-0020,
+   * mastery-gated progression), when the page could name one. Used only for
+   * the check-in's default lesson, and only when it is in HER gated list —
+   * otherwise the first lesson, exactly as before. Optional, so every caller
+   * that does not pass it gets the pre-progression answer unchanged.
+   */
+  pointer?: string | null;
 }): Landing {
-  const { courseId, lessonSlug, lessons } = input;
+  const { courseId, lessonSlug, lessons, pointer } = input;
 
   // The student's own catalogue, narrowed to the subject they named.
   const mine = courseId ? lessons.filter((l) => l.courseId === courseId) : lessons;
@@ -152,5 +160,8 @@ export function decideLanding(input: {
   //    One subject, or a subject the student named: the first lesson in
   //    teaching order, taken from HER list. This is the line the old bug was
   //    on, and the slug can no longer come from anywhere else.
-  return { screen: "check-in", slug: mine[0].slug };
+  //    With progression, "first" means her pointer when she has one in this
+  //    list — still a slug from HER list, never from anywhere else.
+  const pointed = pointer ? mine.find((l) => l.slug === pointer) : undefined;
+  return { screen: "check-in", slug: (pointed ?? mine[0]).slug };
 }

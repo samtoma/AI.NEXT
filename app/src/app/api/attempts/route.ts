@@ -10,6 +10,7 @@ import { currentSessionOrNull } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { evaluateArithmeticExpression } from "@/lib/arithmetic";
 import { acceptedRetryOf } from "@/lib/socratic-probing";
+import { advanceIfMastered } from "@/lib/progression-db";
 
 /**
  * A refusal decided INSIDE the unit of work.
@@ -389,10 +390,39 @@ export async function POST(req: Request) {
         );
       }
 
+      // 4. advance the lesson pointer if this attempt just completed the lesson
+      // (Tamer's mastery-gated progression, ADR-0020 on main). Inside the unit
+      // of work deliberately: the mastery write and the advance it implies
+      // commit together, so a student never ends up mastered-but-not-advanced
+      // because the request died between two writes. Same client, so the
+      // advance sees the mastery row written above and runs under the same
+      // student principal (ADR-0012).
+      //
+      // Only a CORRECT answer can cross the gate, so the catalogue read — which
+      // is not cheap — is skipped entirely on the common path.
+      //
+      // Under a SAVEPOINT (trial merge): a failure in the pointer — a bug, or a
+      // database that has not yet run migration 028 — rolls back the pointer
+      // alone and leaves the graded attempt exactly as main writes it. The
+      // pointer is a convenience; the attempt is the student's evidence.
+      let advancedTo: string | null = null;
+      if (isCorrect) {
+        await client.query("SAVEPOINT lesson_progress");
+        try {
+          advancedTo = await advanceIfMastered(client, studentId, q.lo_id);
+          await client.query("RELEASE SAVEPOINT lesson_progress");
+        } catch (err) {
+          await client.query("ROLLBACK TO SAVEPOINT lesson_progress");
+          console.error("lesson pointer advance failed (attempt kept):", err);
+          advancedTo = null;
+        }
+      }
+
       // The unit of work ends here: `withPrincipal` COMMITs on return. Everything
       // below used to run after the explicit COMMIT and still does — it just
       // does it outside the callback rather than after a statement.
       return {
+        advancedTo,
         attemptId: Number(attemptId),
         q,
         isWidget,
@@ -406,6 +436,7 @@ export async function POST(req: Request) {
     });
 
     const {
+      advancedTo,
       attemptId,
       q,
       isWidget,
@@ -514,6 +545,7 @@ export async function POST(req: Request) {
       // error was not one the question names — which is the honest answer, not
       // a gap to fill with the nearest entry.
       modality: isWidget ? "widget" : "question",
+      advancedTo,
       diagnosis: misconceptionId
         ? { misconceptionId, via: isWidget ? predicate! : givenAnswer }
         : null,

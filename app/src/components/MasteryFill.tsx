@@ -9,6 +9,13 @@ import { MASTERY_LEGEND, masteryPhrase } from "@/lib/mastery";
  * "just started" wear "familiar"'s colour, and rendering five segments makes
  * an untouched topic look one step ahead of itself.
  *
+ * Shared by the skill map's cards and the check-in card, deliberately: the
+ * check-in used to carry its own copy of this loop, and the design review
+ * caught that copy drawing FIVE segments coloured by stage index — so stage
+ * 0\u2019s not-started grey painted the first "filled" segment and the unfilled
+ * tail painted the same grey. Two greys, two meanings, and stage 3 of 4 read
+ * as half done. One component is how that stops recurring.
+ *
  * Every segment carries an ink outline, lit or not, so lit-vs-unlit survives
  * greyscale and low vision as a fill-vs-empty difference rather than a hue
  * one — the lit bands sit ~1.02:1 apart from each other, well under the 3:1
@@ -19,21 +26,25 @@ import { MASTERY_LEGEND, masteryPhrase } from "@/lib/mastery";
  */
 export function MasteryFill({
   stage,
-  // 10, not the build spec's 6: the segment outline is the Play thin stroke
-  // token (2.5px, constitution XII — no literal stroke), and at 6px two of
-  // those left 1px of fill. 10 keeps the fill legible inside the token.
+  // 10, not the build spec's 6: on main the segment outline is the Play thin
+  // stroke token (2.5px, constitution XII — no literal stroke width), and at
+  // 6px two of those left 1px of fill. The branch's `stroke` prop is gone for
+  // the same reason: the outline weight is the token, never a number.
   height = 10,
+  gap = 3,
   className = "",
 }: {
   stage: 0 | 1 | 2 | 3 | 4;
   height?: number;
+  gap?: number;
   className?: string;
 }) {
   return (
     <div
       role="img"
       aria-label={masteryPhrase(stage)}
-      className={`flex gap-[3px] ${className}`}
+      className={`flex ${className}`}
+      style={{ gap }}
     >
       {[0, 1, 2, 3].map((i) => (
         <span

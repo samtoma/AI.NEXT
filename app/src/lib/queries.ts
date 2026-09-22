@@ -12,6 +12,7 @@ import type {
 } from "./types";
 
 import { spineSubjectOf } from "./subjects";
+import { PREREQ_GATE } from "./progression";
 
 /**
  * Every function here mixes curriculum reads (no policies — the graph is not
@@ -351,7 +352,10 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
 /* Student plan builder                                                */
 /* ------------------------------------------------------------------ */
 
-const PREREQ_GATE = 0.5;
+// PREREQ_GATE moved to lib/progression.ts (ADR-0020) so the plan builder and
+// the lesson-progression walk share one definition of "prerequisites met".
+// It lives there, not here, because that module is pure and this one opens a
+// connection pool — the import has to point this way round.
 const REVIEW_FLOOR = 0.72;
 
 function pickTierFor(score: number): Tier {
