@@ -1,9 +1,12 @@
-import { pool } from "./db";
+import type { PoolClient } from "pg";
 import { retrieve, retrievalBlock } from "./retrieval";
+import { getStudentProfile, scoped, type Db } from "./student-context";
+import { addressForms, type AddressForms } from "./address";
+import { sequential } from "./db";
+import { visibleGraphFor } from "./catalog-queries";
 import { getAllVisuals } from "./visuals";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
-import { DEFAULT_STUDENT_ID } from "./demo-student";
 import { masteryLabel } from "./mastery";
 import type { Subject } from "./types";
 
@@ -14,6 +17,13 @@ import type { Subject } from "./types";
  * mastery, the prerequisite edge list, the question catalog, and (when a
  * question is in scope) its human-reviewed canonical solution. The model is
  * never allowed to solve from scratch — it explains *via* the canonical steps.
+ *
+ * The mastery half is the student's, so the assembly runs under their principal
+ * — inside `/api/ask`'s pre-turn unit of work when it has one, in its own
+ * otherwise. `studentId` may be null (the prompt-capture harness), which reads
+ * the curriculum and no mastery rather than borrowing somebody's.
+ *
+ * NOTHING in this file's prompt text changed.
  */
 
 export type AskSurface = "spine_chat" | "student_chat";
@@ -67,46 +77,112 @@ export async function buildAskContext(
   chatSession: string,
   questionId?: string,
   wrongAnswer?: string,
-  /** the request's resolved demo student (lib/student-context.ts) */
-  studentId: number = DEFAULT_STUDENT_ID,
+  /** the request's signed-in student (lib/student-context.ts) */
+  studentId: number | null = null,
   /** a just-uploaded worksheet/photo to ground this turn on (PRD B10) */
-  uploadId?: number
+  uploadId?: number,
+  /** the caller's unit of work, when it has one open (`/api/ask`) */
+  client?: PoolClient
 ): Promise<AskContext> {
-  const [losRes, edgesRes, masteryRes, qRes, docRes, studentRes, modulesRes, allVisuals] =
-    await Promise.all([
-      pool.query(`
+  return scoped(studentId, client, (db) =>
+    askContextOn(db, surface, chatSession, questionId, wrongAnswer, studentId, uploadId)
+  );
+}
+
+async function askContextOn(
+  db: Db,
+  surface: AskSurface,
+  chatSession: string,
+  questionId: string | undefined,
+  wrongAnswer: string | undefined,
+  studentId: number | null,
+  uploadId: number | undefined
+): Promise<AskContext> {
+  // `sequential`, not `Promise.all`: every query here runs on the SAME client
+  // when the caller passes its unit of work, and pg@9 removed the implicit
+  // queue that made the parallel-looking version work (lib/db.ts).
+  //
+  // The sixth entry used to be this file's own `SELECT display_name` — a
+  // second, narrower read of the same row `retrieve()` reads below, and the
+  // reason two files each had their own idea of who the student was. It is the
+  // profile now: one read, and the one place the voice is decided (plan A9).
+  const [
+    allLosRes,
+    allEdgesRes,
+    masteryRes,
+    allQRes,
+    docRes,
+    profile,
+    allModulesRes,
+    everyVisual,
+  ] = await sequential([
+      () => db.query(`
         SELECT id, label, description, syllabus_ref, source_page
         FROM graph_nodes WHERE kind = 'learning_objective'
         ORDER BY order_in_parent
       `),
-      pool.query(`
+      () => db.query(`
         SELECT src_id, dst_id FROM graph_edges
         WHERE edge_type = 'prerequisite_of' AND system_to IS NULL
       `),
-      pool.query(
-        `SELECT lo_id, score, system_from, system_to FROM mastery
-         WHERE student_id = $1 ORDER BY lo_id, system_from`,
-        [studentId]
-      ),
-      pool.query(`
+      () =>
+        studentId == null
+          ? Promise.resolve({
+              rows: [] as { lo_id: string; score: string; system_to: Date | null }[],
+            })
+          : db.query(
+              `SELECT lo_id, score, system_from, system_to FROM mastery
+             WHERE student_id = $1 ORDER BY lo_id, system_from`,
+              [studentId]
+            ),
+      () => db.query(`
         SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
                canonical_solution, solution_version, source_page, source_sha256
         FROM questions WHERE status = 'live' ORDER BY lo_id, tier, id
       `),
-      pool.query(
+      () => db.query(
         `SELECT sha256, title, publisher, edition, grade, subject
          FROM source_documents ORDER BY ingested_at, sha256`
       ),
-      pool.query(`SELECT display_name FROM students WHERE id = $1`, [
-        studentId,
-      ]),
-      pool.query(`
+      () => (studentId == null ? Promise.resolve(null) : getStudentProfile(studentId, db)),
+      () => db.query(`
         SELECT id, label FROM graph_nodes WHERE kind = 'module'
         ORDER BY CASE WHEN id LIKE 'module:geo%' THEN 1 ELSE 0 END,
                  order_in_parent, id
       `),
-      getAllVisuals(),
-    ]);
+      () => getAllVisuals(),
+    ] as const);
+
+  /* ------------------------------------------------------------------ *
+   * THE COURSE GATE (migration 023, lib/catalog.ts)
+   *
+   * The eight reads above are deliberately WHOLE-SPINE — every LO, every live
+   * question, every module, every figure — because "Ask the Spine" reasons
+   * over the graph rather than over one lesson. That is also why this is the
+   * quietest way a hidden course could reach a student: no URL to guess and no
+   * lesson to open, just a subject that is switched off appearing in the data
+   * block of an ordinary chat turn, complete with the canonical solution of
+   * any question id the client names.
+   *
+   * So the eight results are narrowed HERE, once, before anything downstream
+   * reads them. Every line of prompt assembly below is unchanged and gated by
+   * construction — the alternative, a filter at each of the six places the
+   * rows are consumed, is six chances to add a seventh.
+   *
+   * `studentId === null` is the prompt-capture harness and is not gated, for
+   * the reason `courseGateFor` in lib/lesson.ts gives: there is nobody to hide
+   * a course from, and an empty harness would blind the constitution IX diff.
+   * ------------------------------------------------------------------ */
+  const gate = await visibleGraphFor(db, studentId);
+  const losRes = { rows: allLosRes.rows.filter((l) => gate.lo(l.id)) };
+  const qRes = { rows: allQRes.rows.filter((q) => gate.lo(q.lo_id)) };
+  // An edge is kept only when BOTH endpoints survive: a prerequisite arrow
+  // pointing into a hidden course names that course's objective in the prompt.
+  const edgesRes = {
+    rows: allEdgesRes.rows.filter((e) => gate.lo(e.src_id) && gate.lo(e.dst_id)),
+  };
+  const modulesRes = { rows: allModulesRes.rows.filter((m) => gate.module(m.id)) };
+  const allVisuals = everyVisual.filter((v) => gate.lo(v.loId));
 
   const docs = docRes.rows as {
     sha256: string;
@@ -116,8 +192,9 @@ export async function buildAskContext(
     grade: string;
     subject: string;
   }[];
-  const student =
-    (studentRes.rows[0]?.display_name as string) ?? "the demo student";
+  const student = profile?.displayName ?? "the demo student";
+  // Address and voice only (FR-2603): nothing below branches teaching on it.
+  const a = addressForms(profile?.gender ?? null, student);
 
   // baseline = earliest row per LO, current = open row
   const baseline = new Map<string, number>();
@@ -147,7 +224,7 @@ export async function buildAskContext(
   // wrong subject's rules is exactly the failure this refactor removes.
   let subject: Subject | null = null;
   if (focusQRow) {
-    const courseRes = await pool.query(
+    const courseRes = await db.query(
       `SELECT c.id FROM graph_edges t
        JOIN graph_edges p
          ON p.src_id = t.src_id AND p.edge_type = 'part_of' AND p.system_to IS NULL
@@ -303,7 +380,7 @@ ${steps}
   const dataBlock = `CURRICULUM DATA — your only source of truth
 ${sourceLine}
 Ingested units: ${moduleLines}.
-Student: ${student} (id 1). Mastery is 0–100%; "baseline" is his placement diagnostic, "today" is a snapshot taken when this chat began.
+Student: ${student} (id 1). Mastery is 0–100%; "baseline" is ${a.their} placement diagnostic, "today" is a snapshot taken when this chat began.
 
 LEARNING OBJECTIVES (id | label | syllabus ref | book page | mastery; descriptions included for the current focus objectives):
 ${loLines}
@@ -336,10 +413,13 @@ ${focusBlock}`;
   // Retrieval layer (FR-303) — the student-model half of grounding. Renders to
   // "" when nothing is retrieved, so prompts stay byte-identical for a student
   // with no profile and no library entries.
-  const retrieved = await retrieve(studentId, grounding.lo_ids, { uploadId });
+  const retrieved = await retrieve(studentId, grounding.lo_ids, {
+    uploadId,
+    client: db,
+  });
 
   return {
-    systemPrompt: systemPromptFor(surface, student, subject),
+    systemPrompt: askSystemPrompt(surface, student, subject, a),
     dataBlock: dataBlock + retrievalBlock(retrieved),
     grounding,
   };
@@ -379,7 +459,7 @@ interface AskPromptKit {
   /** heading of the question-in-scope's reviewed answer path */
   solutionHeading: (solutionVersion: number) => string;
   /** student_chat: the re-explanation mode block appended to the base prompt */
-  reExplainMode: (student: string) => string;
+  reExplainMode: (student: string, a: AddressForms) => string;
 }
 
 const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
@@ -389,7 +469,7 @@ const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
     tutorKind: "math ",
     solutionHeading: (v) =>
       `HUMAN-REVIEWED CANONICAL SOLUTION (v${v}) — the ONLY permitted mathematical path for explaining this question:`,
-    reExplainMode: (student) => MATH_RE_EXPLAIN(student),
+    reExplainMode: (student, a) => MATH_RE_EXPLAIN(student, a),
   },
   "social-ar": {
     voiceLine: SOCIAL_VOICE_LINE,
@@ -397,7 +477,7 @@ const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
     tutorKind: "",
     solutionHeading: (v) =>
       `HUMAN-REVIEWED MODEL ANSWER WITH EVIDENCE (الإجابة النموذجية — v${v}) — the ONLY permitted factual path for explaining this question:`,
-    reExplainMode: (student) => SOCIAL_RE_EXPLAIN(student),
+    reExplainMode: (student, a) => SOCIAL_RE_EXPLAIN(student, a),
   },
   "arabic-ar": {
     voiceLine: `Voice: a warm, precise Egyptian tutor. Concise. ARABIC — Egyptian-flavored Modern Standard Arabic (صياغة فصيحة مبسّطة بروح مصرية); this is an Arabic-language class, so flawless فصحى and correct تشكيل in every شاهد are part of the teaching itself. Ministry grammar/rhetoric terminology verbatim from the data (منادى مضاف، نكرة غير مقصودة، علامة نائبة — flag any missing term with [[term?:المصطلح]]), Arabic-Indic numerals in prose; Latin characters ONLY inside [[…]] citations and {{…}} directives.`,
@@ -409,21 +489,21 @@ const ASK_PROMPTS: Record<Subject, AskPromptKit | null> = {
     tutorKind: "",
     solutionHeading: (v) =>
       `HUMAN-REVIEWED MODEL ANSWER (الإجابة النموذجية — v${v}) — the ONLY permitted answer path for explaining this question:`,
-    reExplainMode: (student) => ARABIC_RE_EXPLAIN(student),
+    reExplainMode: (student, a) => ARABIC_RE_EXPLAIN(student, a),
   },
 };
 
 /** Arabic language: re-explain a wrong answer from the typed answer record —
  *  an إعراب miss is a SLOT diff (الموقع/الحالة/العلامة/نوعها), so name the
  *  slot, never re-derive. */
-const ARABIC_RE_EXPLAIN = (student: string) =>
+const ARABIC_RE_EXPLAIN = (student: string, a: AddressForms) =>
   `MODE — RE-EXPLANATION TO THE STUDENT (you are talking directly to ${student} now):
-He answered the QUESTION IN SCOPE wrongly and its model answer was already shown once. Your job:
-- Diagnose, from his specific wrong answer, WHICH PART diverged — في الإعراب سمِّ الخانة تحديدًا (الموقع الإعرابي؟ الحالة؟ العلامة؟ نوعها؟)، وفي البلاغة والمفردات سمِّ الخلط بلطف (خلط بين أسلوبين، معنى قريب…).
+${a.They} answered the QUESTION IN SCOPE wrongly and its model answer was already shown once. Your job:
+- Diagnose, from ${a.their} specific wrong answer, WHICH PART diverged — في الإعراب سمِّ الخانة تحديدًا (الموقع الإعرابي؟ الحالة؟ العلامة؟ نوعها؟)، وفي البلاغة والمفردات سمِّ الخلط بلطف (خلط بين أسلوبين، معنى قريب…).
 - Re-explain using ONLY the model answer and the printed rule lines in scope, through a DIFFERENT angle than a plain restatement (ابدأ من سطر القاعدة وطبّقه على الكلمة خطوة خطوة، أو قارن إجابته بالصواب ليرى موضع الفرق، أو هات المثال المطبوع المشابه) — cited [[page:N]].
 - ⚠ لا تكتب نص الآيات/الحديث بيدك أبدًا — أشر إلى النص المختوم ورقم الآية. Never introduce rules beyond the printed ones and never change the final answer.
 - Do NOT emit {{show_question:...}} in this mode. Cite [[q:...]], [[lo:...]] and [[page:...]] as usual.
-- End with one short encouraging line. Address him as "you" (بصيغة المخاطب).`;
+- End with one short encouraging line. Address ${a.them} as "you" (${a.arAddressee}).`;
 
 /**
  * The spine explorer with no question in scope has no lesson and therefore no
@@ -445,10 +525,19 @@ function askPromptKit(subject: Subject | null): AskPromptKit {
   return kit;
 }
 
-function systemPromptFor(
+/**
+ * The ask surfaces' system prompt.
+ *
+ * Exported so `prompt-address.test.mts` can render it for each address
+ * register without a database — the capture harness can only ever show one
+ * register, and "a girl is addressed in the feminine" is not a claim that
+ * should rest on a manual check (P6, FR-2602).
+ */
+export function askSystemPrompt(
   surface: AskSurface,
   student: string,
-  subject: Subject | null
+  subject: Subject | null,
+  a: AddressForms
 ): string {
   const kit = askPromptKit(subject);
   const { voiceLine, groundingRules } = kit;
@@ -464,7 +553,7 @@ Embed inline receipt markers right after each substantive claim:
 Use them liberally — every claim about mastery, prerequisites, questions or pages gets one. Use ONLY ids that exist in the data. Never invent ids. Never put markers inside $...$ math.
 
 ACTIONS (interactive directives, each on its own line):
-- {{show_question:q:u1-4-1:002}} — pushes that live question card into the chat for ${student} to answer. AT MOST ONE per turn, and only at the natural moment (e.g. when quizzing). Pick the question deliberately (right LO, right tier for his mastery).
+- {{show_question:q:u1-4-1:002}} — pushes that live question card into the chat for ${student} to answer. AT MOST ONE per turn, and only at the natural moment (e.g. when quizzing). Pick the question deliberately (right LO, right tier for ${a.their} mastery).
 - {{highlight:lo:u1-2-1,lo:u1-3-1}} — pulses those nodes on the on-screen curriculum graph. Use when tracing a path or contrasting objectives.
 - ${figureDirectivesDoc("v:geo1-2:004")}
 
@@ -476,32 +565,32 @@ FORMAT:
   if (surface === "student_chat") {
     return `${base}
 
-${kit.reExplainMode(student)}`;
+${kit.reExplainMode(student, a)}`;
   }
 
   return `${base}
 
 MODE — SPINE EXPLORER (you are talking to an observer watching ${student}'s graph):
-Typical asks: what he should work on next and why (reason over mastery + prerequisite edges — weakest objective whose prerequisites are met; gate is 50%), why he is weak somewhere (look at its prerequisites' mastery), baseline vs today comparisons, or quizzing him (pick ONE question from his weakest LO at a fitting tier and push it with {{show_question:...}}).
+Typical asks: what ${a.they} should work on next and why (reason over mastery + prerequisite edges — weakest objective whose prerequisites are met; gate is 50%), why ${a.they} ${a.is} weak somewhere (look at its prerequisites' mastery), baseline vs today comparisons, or quizzing ${a.them} (pick ONE question from ${a.their} weakest LO at a fitting tier and push it with {{show_question:...}}).
 Ground every recommendation in numbers from the data and cite as you go — the audience literally watches cited nodes light up on the graph while you speak.`;
 }
 
 /** Social studies: re-explain a wrong answer from the model-answer claim-steps. */
-const SOCIAL_RE_EXPLAIN = (student: string) =>
+const SOCIAL_RE_EXPLAIN = (student: string, a: AddressForms) =>
   `MODE — RE-EXPLANATION TO THE STUDENT (you are talking directly to ${student} now):
-He answered the QUESTION IN SCOPE wrongly and the model-answer claim-steps were already shown to him once. Your job:
-- Diagnose, from his specific wrong answer, where his thinking most likely diverged — name the confusion gently (خلط بين مصطلحين، رقم متشابه، سبب في غير موضعه…).
-- Re-explain using ONLY the الإجابة النموذجية claim-steps, but through a DIFFERENT pedagogical angle than a plain restatement (start from the map or definition, contrast his answer with the book's claim to show the mismatch, or rebuild the enumeration item by item) — each claim cited [[page:N]].
+${a.They} answered the QUESTION IN SCOPE wrongly and the model-answer claim-steps were already shown to ${a.them} once. Your job:
+- Diagnose, from ${a.their} specific wrong answer, where ${a.their} thinking most likely diverged — name the confusion gently (خلط بين مصطلحين، رقم متشابه، سبب في غير موضعه…).
+- Re-explain using ONLY the الإجابة النموذجية claim-steps, but through a DIFFERENT pedagogical angle than a plain restatement (start from the map or definition, contrast ${a.their} answer with the book's claim to show the mismatch, or rebuild the enumeration item by item) — each claim cited [[page:N]].
 - Never introduce facts beyond the claim-steps and never change the final answer. If in doubt, quote the claim-step verbatim.
 - Do NOT emit {{show_question:...}} in this mode. Cite [[q:...]], [[lo:...]] and [[page:...]] as usual.
-- End with one short encouraging line. Address him as "you" (بصيغة المخاطب).`;
+- End with one short encouraging line. Address ${a.them} as "you" (${a.arAddressee}).`;
 
 /** Mathematics: re-explain a wrong answer from the canonical solution steps. */
-const MATH_RE_EXPLAIN = (student: string) =>
+const MATH_RE_EXPLAIN = (student: string, a: AddressForms) =>
   `MODE — RE-EXPLANATION TO THE STUDENT (you are talking directly to ${student} now):
-He answered the QUESTION IN SCOPE wrongly and the canonical steps were already shown to him once. Your job:
-- Diagnose, from his specific wrong answer, where his thinking most likely diverged — name the misconception gently.
-- Re-explain using ONLY the canonical solution steps, but through a DIFFERENT pedagogical angle than a plain restatement (work backwards from the answer, plug his answer in to show the contradiction, lean on the definition, or use the simplest possible parallel case from the same LO).
+${a.They} answered the QUESTION IN SCOPE wrongly and the canonical steps were already shown to ${a.them} once. Your job:
+- Diagnose, from ${a.their} specific wrong answer, where ${a.their} thinking most likely diverged — name the misconception gently.
+- Re-explain using ONLY the canonical solution steps, but through a DIFFERENT pedagogical angle than a plain restatement (work backwards from the answer, plug ${a.their} answer in to show the contradiction, lean on the definition, or use the simplest possible parallel case from the same LO).
 - Never introduce a different solution method and never change the final answer. If in doubt, quote the canonical step.
 - Do NOT emit {{show_question:...}} in this mode. Cite [[q:...]], [[lo:...]] and [[page:...]] as usual.
-- End with one short encouraging line. Address him as "you".`;
+- End with one short encouraging line. Address ${a.them} as "you".`;

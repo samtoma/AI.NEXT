@@ -17,10 +17,19 @@
  * student's profile should teach a colder lesson, not fail — and FR-203 already
  * requires the tutor to skip interest-anchored framing when it has no signal,
  * so "no signal" is a supported state, not an error.
+ *
+ * P1 adds a client parameter that runs the whole bundle inside the CALLER's
+ * unit of work. That is not a micro-optimisation: `retrieve` makes four
+ * student-scoped reads, and four separate units would be four transactions and
+ * four connections for one tutor turn. It also removes a subtler failure — the
+ * "degrade rather than throw" rule above means a read that RLS silently
+ * emptied would be indistinguishable from a student with no history. Sharing
+ * the caller's principal is what keeps the two apart.
  */
 
-import { pool } from "@/lib/db";
-import { getStudentProfile, type StudentProfile } from "@/lib/student-context";
+import { scoped, getStudentProfile, type Db, type StudentProfile } from "@/lib/student-context";
+import { addressBlock } from "@/lib/address";
+import { sequential } from "@/lib/db";
 import {
   getLibraryEntries,
   getMisconceptions,
@@ -70,10 +79,11 @@ export type RetrievalBundle = {
  * one taught without it.
  */
 async function getEngagementSignal(
+  db: Db,
   studentId: number
 ): Promise<EngagementSignal | null> {
   try {
-    const res = await pool.query(
+    const res = await db.query(
       `SELECT is_correct, time_ms, attempted_at
          FROM attempts
         WHERE student_id = $1
@@ -98,12 +108,13 @@ async function getEngagementSignal(
  * thing.
  */
 async function nearestSkillMastery(
+  db: Db,
   studentId: number,
   focusLoIds: readonly string[]
 ): Promise<SkillMastery[]> {
   if (focusLoIds.length === 0) return [];
   try {
-    const res = await pool.query(
+    const res = await db.query(
       `WITH focus AS (
          SELECT unnest($2::text[]) AS lo_id
        ),
@@ -140,21 +151,45 @@ async function nearestSkillMastery(
  * turn. Nothing ungrounded enters here: every field is read from the store.
  */
 export async function retrieve(
-  studentId: number,
+  studentId: number | null,
   focusLoIds: readonly string[],
-  opts: { misconceptionId?: string; uploadId?: number } = {}
+  opts: { misconceptionId?: string; uploadId?: number; client?: Db } = {}
 ): Promise<RetrievalBundle> {
-  const [profile, nearestSkills, misconceptions, libraryEntries, upload, engagement] =
-    await Promise.all([
-      getStudentProfile(studentId),
-      nearestSkillMastery(studentId, focusLoIds),
-      getMisconceptions(focusLoIds),
-      getLibraryEntries(focusLoIds, { misconceptionId: opts.misconceptionId }),
-      opts.uploadId
-        ? getParsedUpload(opts.uploadId, studentId)
-        : Promise.resolve(null),
-      getEngagementSignal(studentId),
-    ]);
+  // No student in scope (the prompt-capture harness, an anonymous surface):
+  // the curriculum half still retrieves, the student half is empty. That is
+  // the same state FR-203 already calls "no signal", not an error.
+  const [misconceptions, libraryEntries] = await Promise.all([
+    getMisconceptions(focusLoIds),
+    getLibraryEntries(focusLoIds, { misconceptionId: opts.misconceptionId }),
+  ]);
+  if (studentId == null) {
+    return {
+      profile: null,
+      nearestSkills: [],
+      misconceptions,
+      libraryEntries,
+      uploadText: null,
+      engagement: null,
+    };
+  }
+
+  // `sequential`, not `Promise.all`: these four share ONE client when the
+  // caller passes its unit of work, and pg@9 removed the implicit queue that
+  // made the parallel-looking version work (lib/db.ts).
+  const [profile, nearestSkills, upload, engagement] = await scoped(
+    studentId,
+    opts.client,
+    (db) =>
+      sequential([
+        () => getStudentProfile(studentId, db),
+        () => nearestSkillMastery(db, studentId, focusLoIds),
+        () =>
+          opts.uploadId
+            ? getParsedUpload(opts.uploadId, studentId, db)
+            : Promise.resolve(null),
+        () => getEngagementSignal(db, studentId),
+      ] as const)
+  );
   return {
     profile,
     nearestSkills,
@@ -171,14 +206,30 @@ export async function retrieve(
 /**
  * Render the bundle as a prompt block.
  *
- * Returns "" when there is nothing to say. That matters more than it looks: an
- * empty string keeps the assembled prompt byte-identical to what it was before
- * this layer existed, so a student with no profile and no library produces the
- * exact same prompt as the baseline. The capture harness can then attribute any
- * diff to real retrieved content rather than to added scaffolding.
+ * Everything below the address block renders "" when there is nothing to say.
+ * That matters more than it looks: an empty string keeps the assembled prompt
+ * byte-identical to what it was before this layer existed, so a student with no
+ * profile and no library produces the same prompt as the baseline. The capture
+ * harness can then attribute any diff to real retrieved content rather than to
+ * added scaffolding.
+ *
+ * **The address block is the one unconditional part** (P6, FR-2602/FR-2605). It
+ * is the instruction that stops the model guessing a gender, and the case most
+ * at risk of guessing the masculine is exactly the case with no profile to key
+ * off: a picker-era student, an anonymous surface, the capture harness.
+ * Rendering it only when a profile exists would drop the instruction precisely
+ * where it is needed, so with no profile it states the either-correct register
+ * about "the student" instead of saying nothing.
+ *
+ * This is the ONE place the tutor's voice is decided. `ask.ts` and `lesson.ts`
+ * used to run their own narrow `SELECT display_name` beside this bundle; both
+ * now read the profile, so a change to the register lands on every surface at
+ * once rather than on the two that remembered to look.
  */
 export function retrievalBlock(b: RetrievalBundle): string {
-  const parts: string[] = [];
+  const parts: string[] = [
+    addressBlock(b.profile?.gender ?? null, b.profile?.displayName),
+  ];
 
   if (b.profile) {
     const p = b.profile;
@@ -263,5 +314,6 @@ export function retrievalBlock(b: RetrievalBundle): string {
     );
   }
 
-  return parts.length ? `\n\n${parts.join("\n\n")}` : "";
+  // Never empty any more — the address block is always the first part.
+  return `\n\n${parts.join("\n\n")}`;
 }

@@ -44,10 +44,36 @@ services:
       dockerfile: deploy/Dockerfile
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://ainext:localdev@db:5432/ainext_mvp1
+      # `ainext_app`, NOT the superuser (ADR-0012): superusers bypass every RLS
+      # policy, so connecting as `ainext` here would leave migration 017 inert
+      # and every isolation check passing for the wrong reason.
+      #
+      # 017 creates the three roles with NO password (a migration that set one
+      # would put a credential in git), so after the FIRST boot of this stack:
+      #
+      #   docker compose -p ainext-local -f deploy/docker-compose.local.yml exec db \
+      #     psql -U ainext -d ainext_mvp1 \
+      #       -c "ALTER ROLE ainext_app      PASSWORD 'localdev'" \
+      #       -c "ALTER ROLE ainext_operator PASSWORD 'localdev'" \
+      #       -c "ALTER ROLE ainext_maint    PASSWORD 'localdev'"
+      #
+      # Local only, never exposed beyond the host loopback — same posture as
+      # POSTGRES_PASSWORD above. (scripts/local-dev.sh does this for you on the
+      # no-Docker path.)
+      DATABASE_URL: postgres://ainext_app:localdev@db:5432/ainext_mvp1
+      DATABASE_URL_OPERATOR: postgres://ainext_operator:localdev@db:5432/ainext_mvp1
       # Tags every analytics row and cost record. Unset would default to
       # 'baseline' and file local experiments under the frozen environment.
       AINEXT_ENVIRONMENT: mvp1
+      # Identity (ADR-0013). A throwaway local signing key: this stack holds
+      # nothing and can reach nothing.
+      AINEXT_AUTH_SECRET: local-dev-only-signing-key-0123456789abcdef
+      AINEXT_PUBLIC_URL: http://localhost:3000
+      # Operator mail links. Configured, never taken from the request Host —
+      # that is reset poisoning.
+      AINEXT_CONSOLE_URL: http://localhost:3002
+      # No mail server here: verification and reset links go to the app log.
+      AINEXT_MAIL_TRANSPORT: console
       AINEXT_THINKING_BUDGET: "1024"
       NODE_ENV: production
       CLAUDE_CONFIG_DIR: /repo/.claude
@@ -73,7 +99,9 @@ services:
       dockerfile: Dockerfile.loader
     image: ainext-local-loader
     environment:
-      AINEXT_DB_DSN: "host=db port=5432 dbname=ainext_mvp1 user=ainext"
+      # `ainext_maint` has BYPASSRLS, which the loader needs: it writes the whole
+      # curriculum and parity_check.py counts every row (ADR-0012).
+      AINEXT_DB_DSN: "host=db port=5432 dbname=ainext_mvp1 user=ainext_maint"
       PGPASSWORD: localdev
     volumes:
       - ..:/repo:ro

@@ -44,13 +44,20 @@ export function TriangleRatio({
   prompt,
   ask,
   target,
+  studentName,
   onResult,
 }: {
   prompt: string;
   ask: "sin" | "cos" | "tan";
   target: number;
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const svgRef = useRef<SVGSVGElement>(null);
   // Not a triple, so nothing starts solved.
   const [legs, setLegs] = useState({ adj: 5, opp: 2 });
@@ -132,10 +139,10 @@ export function TriangleRatio({
       predicate: ok ? OK : pred,
       given: `opp ${g.opp}, adj ${g.adj} → ${ask} θ = ${shown}`,
       detail: ok
-        ? `✓ Omar built a right triangle with ${ask} θ = ${shown} (opp ${g.opp}, adj ${g.adj}, hyp ${g.hyp}, θ ≈ ${g.theta}°) on the triangle ratio widget`
-        : `✗ Omar built opp ${g.opp}, adj ${g.adj} giving ${ask} θ = ${shown}, not ${tidy(target, 3)}${why}`,
+        ? `✓ ${who} built a right triangle with ${ask} θ = ${shown} (opp ${g.opp}, adj ${g.adj}, hyp ${g.hyp}, θ ≈ ${g.theta}°) on the triangle ratio widget`
+        : `✗ ${who} built opp ${g.opp}, adj ${g.adj} giving ${ask} θ = ${shown}, not ${tidy(target, 3)}${why}`,
     });
-  }, [ask, reading, target, g, onResult]);
+  }, [ask, reading, target, g, onResult, who]);
 
   const nudge = useKeyNudge({
     step: 1,

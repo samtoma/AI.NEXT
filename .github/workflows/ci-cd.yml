@@ -41,10 +41,32 @@ jobs:
       - run: npm ci
       - name: Typecheck
         run: npx tsc --noEmit
-      - name: Build
+
+      # TWO BUILD TARGETS, ONE CODEBASE (ADR-0014). The student build and the
+      # admin console differ by `AINEXT_SURFACE`, which decides which files are
+      # routes (`pageExtensions`) and where the artefact lands (`distDir`), so
+      # they do not clobber each other and both can be checked in one job.
+      #
+      # Each build is followed by its route-manifest assertion, and that is the
+      # gate that matters: FR-2201 says the console's addresses MUST NOT resolve
+      # in the student build, and `check:surface` proves it from
+      # `app-path-routes-manifest.json` rather than from a runtime `notFound()`.
+      # It fails in both directions — a console route leaking into the student
+      # build, and a console route missing from the console build — so a green
+      # check cannot mean "shipped nothing".
+      - name: Build (student surface)
         run: npm run build
         env:
           NEXT_TELEMETRY_DISABLED: "1"
+      - name: Route manifest — no console routes in the student build (FR-2201)
+        run: npm run check:surface
+
+      - name: Build (admin console surface)
+        run: npm run build:admin
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+      - name: Route manifest — every console route present in the console build
+        run: npm run check:surface:admin
 
       # The suite existed for weeks and CI never ran it — including through two
       # edits to this very file. A test suite nobody runs is documentation in a
@@ -133,6 +155,12 @@ jobs:
       COMPOSE_PROJECT: ainext-mvp1
       COMPOSE_FILE_NAME: docker-compose.mvp1.yml
       APP_PORT: "3101"
+      # The admin console is a SECOND PROCESS of the same image, on its own
+      # loopback port, so the tunnel can route it to its own hostname and put
+      # Cloudflare Access in front of that hostname and not the student one.
+      # See deploy/cloudflared-ingress.example.yml — the Access application is a
+      # dashboard action and nothing here can prove it exists.
+      CONSOLE_PORT: "3102"
     steps:
       - name: Sync code into persistent app dir (git init/fetch — preserves deploy/.env)
         run: |
@@ -147,23 +175,78 @@ jobs:
           else
             git remote set-url origin "$REPO_URL"
           fi
-          git fetch --prune origin "+refs/heads/$REF:refs/remotes/origin/$REF"
+          # `--tags` so the RELEASE_TAG step below can find a release tag on the
+          # deployed commit. Without it this checkout has branch refs only,
+          # `git describe` never matches, and every deploy — including a tagged
+          # release — would stamp its turns with the version+sha form.
+          git fetch --prune --tags origin "+refs/heads/$REF:refs/remotes/origin/$REF"
           git checkout -f -B "$REF" "origin/$REF"
           git reset --hard "origin/$REF"
           echo "Deploying commit: $(git rev-parse --short HEAD) on $REF"
 
-      - name: Verify in-folder secret (deploy/.env)
+      # Every `${VAR:?...}` in the compose file must have a value, or compose
+      # fails with an interpolation error that names ONE variable and stops —
+      # so a half-filled .env is discovered one round trip at a time, at
+      # midnight. This step names ALL the missing keys in a single failure.
+      #
+      # It checks for PRESENCE only and never echoes a value. `set -x` is
+      # deliberately not used anywhere in this job for the same reason: these
+      # lines are the database passwords and the token signing key.
+      - name: Verify in-folder secrets (deploy/.env)
         run: |
           set -euo pipefail
           ENV_FILE="$APP_DIR/deploy/.env"
           if [ ! -f "$ENV_FILE" ]; then
-            echo "::error::$ENV_FILE missing. Create it once on the box (self-contained, gitignored):"
-            echo "::error::  umask 077; printf 'POSTGRES_PASSWORD=%s\\n' 'STRONG_PW' > $ENV_FILE"
+            echo "::error::$ENV_FILE missing. Create it once on the box from deploy/.env.example"
+            echo "::error::  umask 077; cp $APP_DIR/deploy/.env.example $ENV_FILE  # then edit it"
             exit 1
           fi
-          grep -Eq '^POSTGRES_PASSWORD=.+' "$ENV_FILE" || { echo "::error::POSTGRES_PASSWORD not set in $ENV_FILE"; exit 1; }
-          echo "secret present in $ENV_FILE"
+          missing=""
+          for key in POSTGRES_PASSWORD \
+                     AINEXT_APP_PASSWORD AINEXT_OPERATOR_PASSWORD AINEXT_MAINT_PASSWORD \
+                     AINEXT_AUTH_SECRET AINEXT_CONSOLE_URL; do
+            grep -Eq "^${key}=.+" "$ENV_FILE" || missing="$missing $key"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::not set in $ENV_FILE:$missing"
+            echo "::error::deploy/.env.example documents every one of them, and why."
+            exit 1
+          fi
+          echo "all required keys present in $ENV_FILE"
 
+      # WHICH BUILD IS THIS, stamped onto every tutor turn as
+      # `ai_interactions.renderer_version` (ADR-0015 §3). The console's replay
+      # marks a turn "differs from current renderer" by comparing that string, so
+      # a stamp that cannot tell two builds apart cannot detect renderer drift —
+      # which is the only reason the column exists.
+      #
+      # A tagged commit uses its tag, because that is the name CHANGELOG.md and
+      # docs/releases/ use and an operator reading it should be able to find the
+      # release without a lookup table. An untagged commit gets version+sha,
+      # which is deliberately NOT release-shaped: a deploy that is not a release
+      # should not be able to masquerade as one in the data.
+      #
+      # ⚠ This is exported and passed through compose, but `app/src/lib/env.ts`
+      # still derives RELEASE_TAG from package.json and does not read the
+      # environment. Until that one-line change lands the value is carried and
+      # unused. It is set here anyway so that the day it lands, this is already
+      # correct — and so the deploy log records which commit is serving.
+      - name: Compute RELEASE_TAG from the deployed commit
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+          VERSION="$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' app/package.json | head -1)"
+          SHA="$(git rev-parse --short HEAD)"
+          TAG="$(git describe --tags --exact-match 2>/dev/null || true)"
+          RELEASE_TAG="${TAG:-PDR1-0-v${VERSION}+${SHA}}"
+          echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
+          echo "deploying $RELEASE_TAG"
+
+      # `up` runs the `migrate` one-shot FIRST, because `app`, `console` and the
+      # loader all declare `service_completed_successfully` on it. A migration
+      # failure therefore fails this step — the app is never started against a
+      # half-migrated database and never sees a request. See
+      # deploy/apply-migrations.sh for what it does and which role it uses.
       - name: Build & start (isolated stack — project named explicitly)
         run: |
           set -euo pipefail
@@ -173,7 +256,18 @@ jobs:
           docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" up -d --build --remove-orphans
           docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" ps
 
-      - name: Health check (127.0.0.1:$APP_PORT)
+      # ALWAYS, and immediately after `up`, whether it passed or failed. A
+      # one-shot container's output is the only record of which migrations ran
+      # and which check stopped the deploy, and it is gone the next time somebody
+      # types `up`. On success this is the boring log nobody reads; on failure it
+      # is the whole diagnosis, already in the run record.
+      - name: Migration log
+        if: always()
+        run: |
+          cd "$APP_DIR/deploy"
+          docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" logs --no-log-prefix migrate || true
+
+      - name: Health check — student surface (127.0.0.1:$APP_PORT)
         run: |
           cd "$APP_DIR/deploy"
           for i in $(seq 1 40); do
@@ -184,6 +278,25 @@ jobs:
           done
           echo "::error::$COMPOSE_PROJECT did not become healthy on :$APP_PORT"
           docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" logs --tail=120 app
+          exit 1
+
+      # The console is gated at the edge, not on the box, so from loopback it
+      # answers like any other page: `/` redirects an unauthenticated visitor to
+      # /signin. `curl -f` treats a 3xx as success, which is what we want — this
+      # asks "is the second process serving", not "is it protected". Nothing in
+      # CI can answer the second question; deploy/cloudflared-ingress.example.yml
+      # is the checklist for it.
+      - name: Health check — admin console (127.0.0.1:$CONSOLE_PORT)
+        run: |
+          cd "$APP_DIR/deploy"
+          for i in $(seq 1 40); do
+            if curl -sSf "http://127.0.0.1:$CONSOLE_PORT/" >/dev/null; then
+              echo "console healthy on :$CONSOLE_PORT ($COMPOSE_PROJECT)"; exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::$COMPOSE_PROJECT console did not become healthy on :$CONSOLE_PORT"
+          docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" logs --tail=120 console
           exit 1
 
       - name: Trim dangling images (untagged rebuild leftovers only — talent-safe)

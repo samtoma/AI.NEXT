@@ -2,7 +2,11 @@
 
 **Feature Branch**: `req/identity-and-admin-console`
 **Created**: 2026-09-20
-**Status**: Draft — requirements only, no implementation
+**Status**: Implemented, not merged and not deployed — phases P0–P6 landed on
+`feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
+implementation"; corrected 2026-09-22, when this spec also gained the course-availability
+requirements, which were written after their code and are stamped as such.)*
+**Last amended**: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md))
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -343,7 +347,8 @@ password sign-in.
 > marks what is designed for and not built, citing the decision that defers it. Numbering: **FR-20xx**
 > accounts and sign-in · **FR-21xx** isolation and authorisation · **FR-22xx** console and roles ·
 > **FR-23xx** timeline and replay · **FR-24xx** cost and status · **FR-25xx** monitoring and analytics
-> · **FR-26xx** tutor voice and gender · **FR-29xx** deferred. `FR-1xx…FR-12xx` are from
+> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-29xx** deferred.
+> `FR-1xx…FR-12xx` are from
 > `specs/001-student-mvp1-delta/spec.md`. Implementation status is tracked in `traceability.md` here,
 > deliberately harsher: code that exists but has never run is not done.
 
@@ -558,6 +563,60 @@ password sign-in.
 - **FR-2606**: A change to a student's gender MUST take effect in the tutor's next turn, without
   signing out or starting a new session.
 
+### Course availability (FR-2701…) **[ADDED 2026-09-22 — ADR-0018]**
+
+> **These eleven were written after their code, and the record has to say so.** The capability
+> shipped on 2026-09-21 in `c58cb02` and `c510cf7`; both commits state plainly that no FR covered
+> it and that inventing one unasked would be the laundering `CLAUDE.md` warns about. **Samuel
+> asked for the requirements to be written on 2026-09-22**, which is the authorisation, and this
+> is the date they were written. Nothing here is back-dated and nothing here preceded the code it
+> describes. The decision itself is [ADR-0018](../../docs/decisions/0018-course-availability.md),
+> accepted 2026-09-21.
+>
+> Why they belong in this spec: the decision is made in the admin console, by an operator holding a
+> role this feature defines, and the student-side gate is enforced by the same "fail closed" rule
+> FR-2101 establishes for student data. Implementation status is in `traceability.md` here, §11.
+
+- **FR-2701**: The console MUST list every course the product recognises, whether or not any
+  content has been loaded for it, and MUST state each course's real depth beside it — how many
+  objectives and how many questions — so an empty course cannot be mistaken for a stocked one.
+- **FR-2702**: An operator MUST be able to decide, per course and per school year, whether students
+  of that year may see that course.
+- **FR-2703**: An operator MUST be able to set an exception for one named student on one course.
+  The exception MUST win over the year's rule **in both directions**: it can show a course the year
+  cannot see, and hide one the year can.
+- **FR-2704**: A course MUST be visible to a student **only** when a rule says it is live for them.
+  The absence of any rule MUST mean hidden. No default, no inference from whether content has been
+  loaded, and no course reaching a student because a pipeline put a book in the database.
+- **FR-2705**: The refusal MUST be enforced where the data is read, not by what the interface
+  chooses to render. Every read that can return a course's material MUST apply it — the lesson
+  catalogue, the subject summaries, the lesson data itself, the curriculum graph explorer, the
+  practice plan and the data block handed to the tutor. Filtering a list MUST NOT be relied on or
+  described as the gate.
+- **FR-2706**: A direct request for a hidden course — a pasted address, an edited identifier, a
+  practice mode — MUST answer exactly as a request for a course that does not exist. The answer MUST
+  NOT allow a reader to tell a course that is switched off from one that was never there.
+- **FR-2707**: Deciding a year's rule and deciding one student's access MUST require **different
+  roles**: the year's rule belongs to `content-review`, because it is a decision about a subject;
+  one student's access belongs to `student-data`, because it names a person. The content role MUST
+  NOT learn a student's name through this feature (FR-2203, FR-2406).
+- **FR-2708**: Every change to a rule or an exception MUST record which operator made it and when,
+  and MUST let that operator say in their own words why, so the reason is readable months later by
+  somebody who was not there.
+- **FR-2709**: The whole gate MUST be suspendable by a single documented switch that leaves every
+  configured rule in place, so turning it back on is one change rather than a re-entry of every
+  decision. When that switch is absent the gate MUST NOT be in force: for a tutoring product the
+  safe failure is too much visible, never a student locked out of her own course by a variable
+  nobody set. Both defaults — a missing rule meaning hidden, a missing switch meaning ungated —
+  MUST be documented where they are implemented, because the asymmetry is deliberate and reads as a
+  bug when it is not written down.
+- **FR-2710**: Where the console asks an operator to confirm a consequential change, the question
+  MUST be part of the page. A confirmation the surrounding browser can suppress MUST NOT be relied
+  on: a suppressed dialogue answers "no" silently, and the control then fails without saying why.
+- **FR-2711**: Whether a student may see a course MUST NOT depend on any commercial status. The
+  subscription seam this feature leaves in the data model MUST stay unread by every gate, console
+  view and student surface (FR-2404, FR-2904).
+
 ### Deferred by design — architecture only (FR-2901…)
 
 > Designed for, not built. None may be implemented this release; the point of stating them is that
@@ -604,6 +663,12 @@ Plain language; no field names. `data-model.md` owns the mapping.
   attributable to a student, a session and a period, tagged by environment.
 - **Guardian link** *(new, deferred)*: one parent connected to one student, read-only, performance
   data only. Modelled this release; nothing creates one.
+- **Course availability rule** *(new, added 2026-09-22 — ADR-0018)*: one decision about one course
+  for one school year — live or hidden — with the operator who set it, when, and why in their own
+  words. Its absence is a decision too: no rule means hidden.
+- **Student course exception** *(new, added 2026-09-22 — ADR-0018)*: one decision about one course
+  for one named student, outranking the year's rule in both directions. A live permission rather
+  than a record of anything the student did, so clearing it removes it.
 
 ## Success Criteria *(mandatory)*
 

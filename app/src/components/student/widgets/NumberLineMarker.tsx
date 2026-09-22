@@ -38,6 +38,7 @@ export function NumberLineMarker({
   to,
   openFrom,
   openTo,
+  studentName,
   onResult,
 }: {
   prompt: string;
@@ -48,8 +49,14 @@ export function NumberLineMarker({
   to?: number;
   openFrom?: boolean;
   openTo?: boolean;
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const [lo, hi] = range;
   const svgRef = useRef<SVGSVGElement>(null);
   const sx = useCallback(
@@ -162,10 +169,10 @@ export function NumberLineMarker({
       predicate: ok ? OK : pred,
       given: drew,
       detail: ok
-        ? `✓ Omar marked ${drew} correctly on the number line`
-        : `✗ Omar marked ${drew} on the number line instead of ${want}${why}`,
+        ? `✓ ${who} marked ${drew} correctly on the number line`
+        : `✗ ${who} marked ${drew} on the number line instead of ${want}${why}`,
     });
-  }, [mode, marks, targets, span, open, from, to, openFrom, openTo, onResult]);
+  }, [mode, marks, targets, span, open, from, to, openFrom, openTo, onResult, who]);
 
   const nudge = useKeyNudge({
     step: 1,

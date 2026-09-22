@@ -14,6 +14,17 @@
       "runtimeArgs": ["run", "dev", "--", "-p", "3001"],
       "cwd": "app",
       "port": 3001
+    },
+    {
+      "name": "tutor-console",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "app",
+      "port": 3002,
+      "env": {
+        "AINEXT_SURFACE": "admin",
+        "PORT": "3002"
+      }
     }
   ]
 }

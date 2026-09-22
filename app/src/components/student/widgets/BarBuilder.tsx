@@ -78,6 +78,7 @@ export function BarBuilder({
   target,
   n = 5,
   labels,
+  studentName,
   onResult,
 }: {
   prompt: string;
@@ -85,8 +86,14 @@ export function BarBuilder({
   target: number;
   n?: number;
   labels?: string[];
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const count = clamp(Math.round(n), 3, 8);
   const svgRef = useRef<SVGSVGElement>(null);
   const [vals, setVals] = useState<number[]>(() =>
@@ -167,10 +174,10 @@ export function BarBuilder({
       predicate: ok ? OK : pred,
       given: `[${set}]`,
       detail: ok
-        ? `✓ Omar built the set [${set}] with ${ask} = ${target} on the bar builder (mean ${s.mean}, median ${s.median}, mode ${fmtMode(s.mode)}, range ${s.range}, population SD ${s.sd})`
-        : `✗ Omar built [${set}], whose ${ask} is ${Number.isFinite(reading) ? reading : fmtMode(s.mode)}, not ${target}${why}`,
+        ? `✓ ${who} built the set [${set}] with ${ask} = ${target} on the bar builder (mean ${s.mean}, median ${s.median}, mode ${fmtMode(s.mode)}, range ${s.range}, population SD ${s.sd})`
+        : `✗ ${who} built [${set}], whose ${ask} is ${Number.isFinite(reading) ? reading : fmtMode(s.mode)}, not ${target}${why}`,
     });
-  }, [ask, reading, target, s, vals, count, onResult]);
+  }, [ask, reading, target, s, vals, count, onResult, who]);
 
   const ink = verdict === "correct" ? "var(--accent)" : "var(--gold)";
   return (

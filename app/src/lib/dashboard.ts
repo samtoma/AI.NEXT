@@ -8,7 +8,9 @@
  * overall aggregate at all; a caller cannot render one by accident.
  */
 
-import { pool } from "@/lib/db";
+import type { PoolClient } from "pg";
+
+import { scoped } from "@/lib/student-context";
 
 export type TopicRow = {
   moduleId: string;
@@ -31,9 +33,13 @@ export type TopicRow = {
  * touched would flatter someone who has practised three of twelve, and would
  * make this page disagree with the graph beside it.
  */
-export async function getTopicBreakdown(studentId: number): Promise<TopicRow[]> {
-  const res = await pool.query(
-    `WITH module_lo AS (
+export async function getTopicBreakdown(
+  studentId: number,
+  c?: PoolClient
+): Promise<TopicRow[]> {
+  const res = await scoped(studentId, c, (db) =>
+    db.query(
+      `WITH module_lo AS (
        SELECT e.src_id AS module_id, e.dst_id AS lo_id
          FROM graph_edges e
         WHERE e.edge_type = 'teaches'
@@ -82,7 +88,8 @@ export async function getTopicBreakdown(studentId: number): Promise<TopicRow[]> 
       ORDER BY (coalesce(sum(r.attempts), 0) = 0),
                mastery ASC,
                mod.order_in_parent`,
-    [studentId]
+      [studentId]
+    )
   );
 
   return res.rows.map((r) => ({

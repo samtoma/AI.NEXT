@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
-import { pool } from "@/lib/db";
-import { ENVIRONMENT } from "@/lib/env";
+import { withPrincipal } from "@/lib/db";
+import { AuthError, requireStudent } from "@/lib/auth/principal";
+import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import { buildAskContext, type AskSurface } from "@/lib/ask";
 import { buildLessonContext } from "@/lib/lesson";
 import { getAllSacredPassages } from "@/lib/lesson-content";
@@ -9,8 +10,18 @@ import {
   SACRED_HOLDBACK_CHARS,
   type SacredGuard,
 } from "@/lib/sacred-guard";
-import { snapshotContext } from "@/lib/session-cache";
-import { resolveStudentId } from "@/lib/student-context";
+import { snapshotContext, snapshotKey } from "@/lib/session-cache";
+import { coerceUploadId } from "@/lib/upload-contract";
+import { getStudentProfile } from "@/lib/student-context";
+import { currentSessionOrNull } from "@/lib/sessions";
+import {
+  ZERO_TOKENS,
+  costFor,
+  tokensFromUsage,
+  totalInputTokens,
+  type Outcome,
+  type TokenCounts,
+} from "@/lib/pricing";
 
 /**
  * POST /api/ask — "Ask the Spine" grounded chat, streamed as SSE.
@@ -20,6 +31,36 @@ import { resolveStudentId } from "@/lib/student-context";
  * the curriculum data + transcript on stdin, parse the JSONL stream, and
  * re-emit text deltas as SSE. The final "result" line carries cost/usage,
  * which we log to ai_interactions (cost ceiling is a PRD hard requirement).
+ *
+ * TWO UNITS OF WORK, and the gap between them is the point (research R7).
+ *
+ *   unit 1  the turn count, the session, the grounding assembly — everything
+ *           the turn needs to exist. Then the connection is RELEASED.
+ *   …       the model streams for tens of seconds, holding nothing.
+ *   unit 2  the ledger row, once there is something to record.
+ *
+ * A single unit spanning the model call would be correct and would also be the
+ * fastest way to exhaust a pool of twenty: eighteen concurrent lesson turns and
+ * the nineteenth student's sign-in waits on somebody else's tutor finishing a
+ * sentence. Nothing in this file may hold a client across `spawn`.
+ *
+ * EVERY TURN THAT SPENDS TOKENS LEAVES A ROW (research A0.2/A0.3, plan A7).
+ * Three write paths, one `logTurn`, and the differences between them are in the
+ * `outcome` and the price basis rather than in three copies of an INSERT:
+ *
+ *   ok        the model answered. The CLI's own `total_cost_usd`.
+ *   redacted  the sacred guard tripped and the child was killed mid-stream, so
+ *             the CLI never reported a total. This used to write five literal
+ *             zeros — "a redacted turn cost real money and is recorded as
+ *             free, on exactly the turns we most want to examine". It now
+ *             writes the counters seen on the stream, repriced at list price.
+ *   error /   the backend failed or timed out after burning input tokens. This
+ *   timeout   used to write nothing at all, which is how a failing day looks
+ *             cheap. A failure BEFORE any tokens are known still writes
+ *             nothing — there is no cost line to draw.
+ *
+ * And `input_tokens` is now UNCACHED input only (`lib/pricing.ts`), with the
+ * two cache counters beside it as they always were in their own columns.
  */
 
 export const dynamic = "force-dynamic";
@@ -89,6 +130,8 @@ export async function POST(req: Request) {
     wrongAnswer?: string;
     /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
     lesson?: string;
+    /** a worksheet the student photographed, to ground this turn on (FR-205) */
+    uploadId?: unknown;
   };
   try {
     body = await req.json();
@@ -104,6 +147,24 @@ export async function POST(req: Request) {
       ? body.surface
       : "spine_chat";
   const chatSession = String(body.chatSession ?? "").slice(0, 64);
+  /**
+   * THE GROUNDING LINK for an uploaded worksheet (FR-205, PRD B10).
+   *
+   * A positive safe integer or nothing — `coerceUploadId` is the whole of the
+   * validation, and it is deliberately NOT an ownership check. The id travels
+   * down to `getParsedUpload(uploadId, studentId)`, which runs inside the
+   * student's own unit of work under a row-level-security policy on `uploads`
+   * that is enabled AND forced: an id belonging to another student produces no
+   * row there, not a row this layer would then have to filter. A second check
+   * here could only ever drift from the one that actually holds, and on the day
+   * they disagreed the weaker one would be the one people trusted, because it
+   * is the one they can see. The scoped read IS the check.
+   *
+   * A malformed id is dropped silently rather than refused: the turn is a
+   * student's question and it must still be answered, just without the
+   * worksheet in its grounding.
+   */
+  const uploadId = coerceUploadId(body.uploadId);
   const messages = (body.messages ?? []).slice(-24);
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   if (!chatSession || !lastUser) {
@@ -113,59 +174,148 @@ export async function POST(req: Request) {
     );
   }
 
-  // Which demo student's mastery grounds this turn — a cookie, validated
-  // against the students table, defaulting to Omar. DEMO AFFORDANCE, NOT
-  // AUTH: auth is a PRD §3 non-goal for the MVP (see lib/demo-student.ts).
-  // Resolved BEFORE the turn-cap check: the cap is scoped per student, so a
-  // switched demo student never inherits another student's turn count
-  // (release review, 2026-07-30).
-  const studentId = await resolveStudentId();
-
-  // server-side turn count for this chat session (drives the per-surface caps)
-  const turnsRes = await pool.query(
-    `SELECT count(*) AS n FROM ai_interactions
-     WHERE surface = $1 AND grounding->>'chat_session' = $2 AND student_id = $3`,
-    [surface, chatSession, studentId]
-  );
-  const priorTurns = Number(turnsRes.rows[0].n);
-  const cap = TURN_CAPS[surface];
-
-  if (cap != null && priorTurns >= cap) {
-    return new Response(
-      sse({ type: "cap", text: CAP_MESSAGES[surface] ?? "Session limit reached." }),
-      { headers: { "Content-Type": "text/event-stream" } }
-    );
+  // Whose mastery grounds this turn. From the verified access token, never
+  // from the request (FR-2102). Resolved BEFORE the turn-cap check, because the
+  // cap is scoped per student and no student may inherit another's turn count.
+  let me;
+  try {
+    me = await requireStudent();
+  } catch (err) {
+    if (err instanceof AuthError) return err.toResponse();
+    throw err;
   }
+  // FR-2004: a tutor turn is learning, and learning waits for a confirmed
+  // address. It is also the most expensive thing an unverified signup could do.
+  if (!me.emailVerified) {
+    return Response.json({ error: "email_unverified" }, { status: 403 });
+  }
+  const studentId = me.studentId;
 
-  // Grounding is snapshotted per chat session: byte-stable across turns so
-  // the (system prompt + data block) prefix stays prompt-cache-hot, and the
-  // mastery numbers the model reasons over never shift mid-conversation.
-  // The student is part of the key — switching demo students must never
-  // re-serve the previous student's mastery.
-  const snapshotKey = [
-    surface,
-    chatSession,
-    studentId,
-    body.lesson ?? "",
-    body.questionId ?? "",
-    body.wrongAnswer ?? "",
-  ].join("|");
-  const ctx = await snapshotContext(snapshotKey, () =>
-    surface === "lesson_learn" || surface === "lesson_review"
-      ? buildLessonContext(
-          surface === "lesson_learn" ? "learn" : "review",
-          chatSession,
-          body.lesson,
-          studentId
-        )
-      : buildAskContext(
-          surface,
-          chatSession,
-          body.questionId,
-          body.wrongAnswer,
-          studentId
-        )
-  );
+  // ---------------------------------------------------------------------
+  // UNIT ONE — everything the turn needs before the model is spawned.
+  // ---------------------------------------------------------------------
+  let priorTurns: number;
+  /** Turns the student actually received; what the cap counts. */
+  let deliveredTurns: number;
+  let sessionId: number | null;
+  let ctx: Awaited<ReturnType<typeof buildAskContext>>;
+  const cap = TURN_CAPS[surface];
+  try {
+    const pre = await withPrincipal(studentId, async (client) => {
+      // Server-side turn counts for this chat session. TWO of them, and the
+      // difference arrived with P4's honest ledger:
+      //
+      //   · `delivered` drives the per-surface CAP. The cap is a teaching rule
+      //     ("max 2 AI turns per question", PRD §6.3) — it counts explanations
+      //     the student actually received. A turn the backend dropped taught
+      //     nobody anything, and spending one of two chances on an outage is a
+      //     product defect, not cost discipline. Spend is REPORTED, not capped.
+      //   · `logged` drives `turn_index`, which stays monotonic across every
+      //     row in the session so a failed turn and the retry after it are two
+      //     places in the timeline rather than one.
+      const turnsRes = await client.query(
+        `SELECT count(*) AS logged,
+                count(*) FILTER (WHERE outcome = 'ok') AS delivered
+           FROM ai_interactions
+          WHERE surface = $1 AND grounding->>'chat_session' = $2 AND student_id = $3`,
+        [surface, chatSession, studentId]
+      );
+      const turns = Number(turnsRes.rows[0].logged);
+      const delivered = Number(turnsRes.rows[0].delivered);
+      if (cap != null && delivered >= cap) return { turns, delivered, capped: true as const };
+
+      // The learning session this turn belongs to (ADR-0015). Opened AFTER the
+      // cap check, because a turn the cap refused is not a sitting. All four
+      // ask surfaces are session kinds by the same name, so the surface IS the
+      // kind; `chatSession` rides along as the transitional correlation key.
+      const session = await currentSessionOrNull(
+        studentId,
+        surface,
+        { surface, clientKey: chatSession },
+        client
+      );
+
+      // Grounding is snapshotted per chat session: byte-stable across turns so
+      // the (system prompt + data block) prefix stays prompt-cache-hot, and the
+      // mastery numbers the model reasons over never shift mid-conversation.
+      // The student is part of the key — no student's snapshot is ever re-served
+      // to another.
+      //
+      // FR-2606: the student's register is part of the key, and the profile is
+      // read HERE, this turn, inside the unit of work that is already open —
+      // never cached across turns. A student who fixes their gender mid-lesson
+      // therefore misses the snapshot once and is addressed correctly on the
+      // very next turn, without signing out or starting a new session. See the
+      // decision recorded in `lib/session-cache.ts`.
+      const me = await getStudentProfile(studentId, client);
+      //
+      // The upload joins the key for the same reason the register does: it
+      // changes the model-visible payload. Without it the FIRST turn of a chat
+      // session would be cached for three hours and replayed verbatim over
+      // every later turn — so a student who photographs a worksheet after
+      // saying hello would get the pre-upload snapshot back, forever, and the
+      // transcription would never reach the tutor at all. Keying costs one
+      // rebuild on the turn the photograph arrives, and nothing after it.
+      const key = snapshotKey({
+        surface,
+        chatSession,
+        studentId,
+        lesson: body.lesson,
+        questionId: body.questionId,
+        wrongAnswer: body.wrongAnswer,
+        uploadId,
+        gender: me?.gender ?? null,
+      });
+      const built = await snapshotContext(key, () =>
+        surface === "lesson_learn" || surface === "lesson_review"
+          ? buildLessonContext(
+              surface === "lesson_learn" ? "learn" : "review",
+              chatSession,
+              body.lesson,
+              studentId,
+              uploadId,
+              client
+            )
+          : buildAskContext(
+              surface,
+              chatSession,
+              body.questionId,
+              body.wrongAnswer,
+              studentId,
+              uploadId,
+              client
+            )
+      );
+      return { turns, delivered, capped: false as const, sessionId: session, ctx: built };
+    });
+
+    if (pre.capped) {
+      return new Response(
+        sse({ type: "cap", text: CAP_MESSAGES[surface] ?? "Session limit reached." }),
+        { headers: { "Content-Type": "text/event-stream" } }
+      );
+    }
+    if (!pre.ctx) {
+      // THE COURSE GATE (migration 023, lib/catalog.ts). `body.lesson` is a
+      // client-supplied slug: without this, a student who could not open a
+      // hidden lesson's page could still be taught it turn by turn, which is
+      // the same content arriving more slowly and more expensively.
+      //
+      // JSON rather than an SSE frame, and the same shape the unverified-email
+      // refusal above already uses — the client already handles a non-stream
+      // response from this endpoint. 404 rather than 403, so "not yours" and
+      // "no such lesson" stay one answer.
+      return Response.json({ error: "not_found" }, { status: 404 });
+    }
+    priorTurns = pre.turns;
+    deliveredTurns = pre.delivered;
+    sessionId = pre.sessionId;
+    ctx = pre.ctx;
+  } catch (err) {
+    console.error("ask: pre-turn reads failed:", err);
+    return Response.json({ error: "internal error" }, { status: 500 });
+  }
+  // The unit of work is closed. Everything below runs with no connection held.
 
   // Sacred output containment (ADR-0006 §2, fails closed): the model's stream
   // is scanned against EVERY sealed sacred passage in the product — on every
@@ -269,7 +419,11 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
         }
       );
 
+      let timedOut = false;
       const timeout = setTimeout(() => {
+        // Remembered, not just acted on: a killed child and a crashed one close
+        // the same way, and the ledger row has to say which (research A4.2).
+        timedOut = true;
         child.kill("SIGKILL");
       }, TIMEOUT_MS);
       req.signal.addEventListener("abort", () => child.kill("SIGKILL"));
@@ -277,6 +431,18 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
       let fullText = "";
       let emittedLen = 0; // holdback frontier (sacred guard active only)
       let redacted = false;
+      /**
+       * The best usage the stream has reported SO FAR.
+       *
+       * The `result` line carries the authoritative figures, and on the two
+       * paths that abort a turn it never arrives. But `--include-partial-messages`
+       * re-emits the raw `message_start` (which carries the whole input side:
+       * uncached input and both cache counters) and `message_delta` (which
+       * carries output tokens as they accumulate). Reading them is what lets a
+       * redacted or failed turn be priced from something real instead of from
+       * zeros.
+       */
+      let partial: TokenCounts = ZERO_TOKENS;
       let result: {
         total_cost_usd?: number;
         usage?: {
@@ -303,12 +469,34 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
             event?: {
               type?: string;
               delta?: { type?: string; text?: string };
+              message?: { usage?: Record<string, number> };
+              usage?: Record<string, number>;
             };
           } & Record<string, unknown>;
           try {
             j = JSON.parse(line);
           } catch {
             continue;
+          }
+          // Usage as it arrives, before any verdict about the turn.
+          // `message_start` carries the input side complete; `message_delta`
+          // carries output tokens cumulatively. Each counter keeps the LARGEST
+          // value seen, because a later event that omits a field must not erase
+          // what an earlier one reported.
+          if (j.type === "stream_event") {
+            const u = j.event?.message?.usage ?? j.event?.usage;
+            if (u) {
+              const seen = tokensFromUsage(u);
+              partial = {
+                inputTokens: Math.max(partial.inputTokens, seen.inputTokens),
+                outputTokens: Math.max(partial.outputTokens, seen.outputTokens),
+                cacheReadTokens: Math.max(partial.cacheReadTokens, seen.cacheReadTokens),
+                cacheCreationTokens: Math.max(
+                  partial.cacheCreationTokens,
+                  seen.cacheCreationTokens
+                ),
+              };
+            }
           }
           if (
             j.type === "stream_event" &&
@@ -347,16 +535,20 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                 send({
                   type: "done",
                   meta: {
-                    costUsd: 0,
-                    inputTokens: 0,
-                    outputTokens: 0,
-                    cacheReadTokens: 0,
-                    cacheCreationTokens: 0,
+                    // The counters the stream reported before the child was
+                    // killed, repriced at list price — not the zeros this
+                    // branch used to claim (research A0.3). The client shows
+                    // what the turn cost; the row below records the same.
+                    costUsd: costFor(MODEL, partial, null).costUsd ?? 0,
+                    inputTokens: partial.inputTokens,
+                    outputTokens: partial.outputTokens,
+                    cacheReadTokens: partial.cacheReadTokens,
+                    cacheCreationTokens: partial.cacheCreationTokens,
                     latencyMs: Date.now() - started,
                     model: MODEL,
                     interactionId: null,
                     turnIndex: priorTurns + 1,
-                    capped: cap != null && priorTurns + 1 >= cap,
+                    capped: cap != null && deliveredTurns >= cap,
                     redacted: true,
                   },
                 });
@@ -395,36 +587,89 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
         finish();
       });
 
-      child.on("close", async (code) => {
-        clearTimeout(timeout);
-        if (redacted) {
-          // audit trail for the religious-content owner: the suppressed turn
-          // is recorded server-side; the student saw only the redirect line.
-          try {
-            await pool.query(
+      /**
+       * UNIT TWO — the one ledger write, shared by all three outcomes.
+       *
+       * A fresh unit of work, long after unit one was released. It never
+       * throws: instrumentation is observability, not behaviour, and a failed
+       * cost row must not turn a delivered answer into an error.
+       */
+      const logTurn = async (args: {
+        outcome: Outcome;
+        assistantMessage: string;
+        tokens: TokenCounts;
+        /** The CLI's own total when its result line arrived; null when it did not. */
+        cliCostUsd: number | null;
+        latencyMs: number;
+        citations: { kind: string; id: string }[];
+      }): Promise<number | null> => {
+        const { costUsd, priceBasis } = costFor(MODEL, args.tokens, args.cliCostUsd);
+        try {
+          const ins = await withPrincipal(studentId, (client) =>
+            client.query(
               `INSERT INTO ai_interactions
-                 (student_id, surface, turn_index, user_message,
-                  assistant_message, grounding, citations, model,
-                  input_tokens, output_tokens, cache_read_tokens,
-                  cache_creation_tokens, cost_usd, latency_ms,
-                  environment, surface_kind)
-               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0,0,0,0,0,$9,$10,'chat')`,
+                 (student_id, surface, turn_index, user_message, assistant_message,
+                  grounding, citations, model, input_tokens, output_tokens,
+                  cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
+                  environment, surface_kind, session_id, renderer_version,
+                  outcome, price_basis, priced_at)
+               VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'chat',$16,$17,
+                       $18,$19,now())
+               RETURNING id`,
               [
                 studentId,
                 surface,
                 priorTurns + 1,
                 lastUser.text,
-                "[REDACTED — sacred containment tripped; sealed quote-run suppressed]",
+                args.assistantMessage,
                 JSON.stringify(ctx.grounding),
-                JSON.stringify([]),
+                JSON.stringify(args.citations),
                 MODEL,
-                Date.now() - started,
+                // UNCACHED input only. The two cache counters are their own
+                // columns and are no longer also inside this one (A0.2).
+                args.tokens.inputTokens,
+                args.tokens.outputTokens,
+                args.tokens.cacheReadTokens,
+                args.tokens.cacheCreationTokens,
+                costUsd,
+                args.latencyMs,
                 ENVIRONMENT,
+                sessionId,
+                // Which build rendered this turn for the student (ADR-0015 §3).
+                // The console's replay compares it against the running release
+                // and marks a turn the current renderer would draw differently.
+                // Stamped on the REDACTED branch too: the suppressed turn is the
+                // one an operator is most likely to open, and "which build
+                // decided to suppress this" is their first question.
+                RELEASE_TAG,
+                args.outcome,
+                priceBasis,
               ]
-            );
-          } catch (e) {
-            console.error("ask: failed to log redacted interaction:", e);
-          }
+            )
+          );
+          return Number(ins.rows[0].id);
+        } catch (e) {
+          console.error(`ask: failed to log a '${args.outcome}' interaction:`, e);
+          return null;
+        }
+      };
+
+      child.on("close", async (code) => {
+        clearTimeout(timeout);
+        if (redacted) {
+          // Audit trail for the religious-content owner: the suppressed turn is
+          // recorded server-side; the student saw only the redirect line. The
+          // counters are the ones the stream reported before the kill, repriced
+          // at list price — a redacted turn spent real money (A0.3).
+          await logTurn({
+            outcome: "redacted",
+            assistantMessage:
+              "[REDACTED — sacred containment tripped; sealed quote-run suppressed]",
+            tokens: partial,
+            cliCostUsd: null,
+            latencyMs: Date.now() - started,
+            citations: [],
+          });
           finish();
           return;
         }
@@ -432,6 +677,27 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           console.error(
             `ask: claude CLI failed (code ${code}) — ${stderrTail.slice(-400)}`
           );
+          // A FAILURE THAT BURNED TOKENS IS A COST LINE (research A4.2). The
+          // turn produced nothing the student could use, and the input tokens
+          // were spent all the same; writing nothing is how a failing day looks
+          // cheap. When the result line DID arrive but carried `is_error`, its
+          // own totals are authoritative and are used.
+          const tokens = result?.usage ? tokensFromUsage(result.usage) : partial;
+          if (totalInputTokens(tokens) + tokens.outputTokens > 0) {
+            await logTurn({
+              outcome: timedOut ? "timeout" : "error",
+              assistantMessage: timedOut
+                ? `[no answer — the model did not finish within ${TIMEOUT_MS / 1000}s]`
+                : `[no answer — the AI backend failed (exit ${code ?? "unknown"})]`,
+              tokens,
+              cliCostUsd: result?.total_cost_usd ?? null,
+              latencyMs: result?.duration_ms ?? Date.now() - started,
+              citations: [],
+            });
+          }
+          // …and a failure BEFORE any tokens are known writes nothing at all:
+          // there is no cost line to draw, and a row of zeros would be the
+          // defect this phase removed, reintroduced from the other side.
           send({
             type: "error",
             message: "AI backend unavailable — please try again",
@@ -440,48 +706,19 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           return;
         }
 
-        const u = result.usage ?? {};
-        const cacheReadTokens = u.cache_read_input_tokens ?? 0;
-        const cacheCreationTokens = u.cache_creation_input_tokens ?? 0;
-        const inputTokens =
-          (u.input_tokens ?? 0) + cacheCreationTokens + cacheReadTokens;
-        const outputTokens = u.output_tokens ?? 0;
+        const tokens = tokensFromUsage(result.usage);
         const costUsd = result.total_cost_usd ?? 0;
         const latencyMs = result.duration_ms ?? Date.now() - started;
         const citations = extractCitations(fullText);
 
-        let interactionId: number | null = null;
-        try {
-          const ins = await pool.query(
-            `INSERT INTO ai_interactions
-               (student_id, surface, turn_index, user_message, assistant_message,
-                grounding, citations, model, input_tokens, output_tokens,
-                cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
-                environment, surface_kind)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'chat')
-             RETURNING id`,
-            [
-              studentId,
-              surface,
-              priorTurns + 1,
-              lastUser.text,
-              fullText,
-              JSON.stringify(ctx.grounding),
-              JSON.stringify(citations),
-              MODEL,
-              inputTokens,
-              outputTokens,
-              cacheReadTokens,
-              cacheCreationTokens,
-              costUsd,
-              latencyMs,
-              ENVIRONMENT,
-            ]
-          );
-          interactionId = ins.rows[0].id;
-        } catch (e) {
-          console.error("ask: failed to log ai_interaction:", e);
-        }
+        const interactionId = await logTurn({
+          outcome: "ok",
+          assistantMessage: fullText,
+          tokens,
+          cliCostUsd: result.total_cost_usd ?? null,
+          latencyMs,
+          citations,
+        });
 
         // guard-mode emission runs behind the holdback window — release the
         // clean tail before closing the turn
@@ -494,15 +731,17 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           type: "done",
           meta: {
             costUsd,
-            inputTokens,
-            outputTokens,
-            cacheReadTokens,
-            cacheCreationTokens,
+            inputTokens: tokens.inputTokens,
+            outputTokens: tokens.outputTokens,
+            cacheReadTokens: tokens.cacheReadTokens,
+            cacheCreationTokens: tokens.cacheCreationTokens,
             latencyMs,
             model: MODEL,
             interactionId,
             turnIndex: priorTurns + 1,
-            capped: cap != null && priorTurns + 1 >= cap,
+            // This turn was delivered, so it counts: the cap is reached when
+            // the answer just sent is the last one the surface allows.
+            capped: cap != null && deliveredTurns + 1 >= cap,
           },
         });
         finish();

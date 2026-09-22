@@ -18,6 +18,8 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
+import { addressForms } from "@/lib/address";
+import { track } from "@/lib/ga";
 import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore, type ChatCoreHandle } from "@/components/chat/ChatCore";
@@ -532,6 +534,12 @@ export function LessonSession({
   );
   const autoStart = autoStartFor(mode, masteryStage);
   const first = lesson.studentName.split(" ")[0];
+  // Narrated into every widget's [live event] line (FR-2602) in place of the
+  // retired "Omar" demo persona (ADR-0010, plan A10), plus the one pronoun
+  // pair_plotter carries (FR-2605) — resolved once here, from the same
+  // `lesson.gender` the tutor prompt already reads, rather than a fetch per
+  // widget or a second guess of the register.
+  const widgetPronoun = addressForms(lesson.gender, lesson.studentName).they;
   // subject-conditional RTL flip: dir on the app frame flips the grid (board
   // lands on the LEFT so the reading eye starts at the text), the stepper and
   // the chips; logical CSS below keeps LTR subjects unchanged. The flip now
@@ -655,39 +663,51 @@ export function LessonSession({
       // ---- MATHEMATICS widgets. All eleven are validated and constructed in
       // render-math-widget.tsx; a payload that cannot be trusted renders
       // nothing rather than a widget with a nonsense answer key.
-      const math = renderMathWidget(name, props, (outcome) => {
-        // The tutor stream reads prose; the attempt record reads the predicate.
-        // Both come from one outcome so they can never disagree about what the
-        // student did (ADR-0009).
-        emitNote(outcome.detail);
+      const math = renderMathWidget(
+        name,
+        props,
+        (outcome) => {
+          // The tutor stream reads prose; the attempt record reads the predicate.
+          // Both come from one outcome so they can never disagree about what the
+          // student did (ADR-0009).
+          emitNote(outcome.detail);
 
-        // An inline widget the tutor composed has no row behind it, so it
-        // materialises on first answer and the attempt is recorded against it.
-        // Without an objective there is nothing to attribute the evidence to,
-        // and filing it against a guessed skill is worse than not filing it —
-        // so no `lo`, no record, and the widget stays a teaching aid.
-        const lo = inlineWidgetLo(props);
-        if (!lo) return;
-        const { lo: _lo, prompt, ...spec } = props;
-        void fetch("/api/attempts", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            questionId: `qw:inline:${name}-${hashOf(JSON.stringify(props))}`,
-            givenAnswer: outcome.given,
-            predicate: outcome.predicate,
-            inlineWidget: {
-              kind: name,
-              spec,
-              loId: lo,
-              stem: typeof prompt === "string" ? prompt : name,
-            },
-          }),
-        }).catch(() => {
-          // A recording failure must never break the lesson. The student has
-          // already seen their feedback; this is bookkeeping.
-        });
-      });
+          // An inline widget the tutor composed has no row behind it, so it
+          // materialises on first answer and the attempt is recorded against it.
+          // Without an objective there is nothing to attribute the evidence to,
+          // and filing it against a guessed skill is worse than not filing it —
+          // so no `lo`, no record, and the widget stays a teaching aid.
+          const lo = inlineWidgetLo(props);
+          if (!lo) return;
+          const { lo: _lo, prompt, ...spec } = props;
+          // GA4 sees "a widget attempt happened in a lesson" and no more — the
+          // objective id is deliberately excluded from the wrapper's property
+          // list (lib/ga.ts, research A1). A LITERAL rather than `lesson_${mode}`
+          // on purpose: reading the prop here would add a dependency to this
+          // memoised callback for one word of granularity that `sessions.kind`
+          // already carries in the first-party store.
+          track("retrieval_attempt_submitted", { surface: "lesson_widget" });
+          void fetch("/api/attempts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              questionId: `qw:inline:${name}-${hashOf(JSON.stringify(props))}`,
+              givenAnswer: outcome.given,
+              predicate: outcome.predicate,
+              inlineWidget: {
+                kind: name,
+                spec,
+                loId: lo,
+                stem: typeof prompt === "string" ? prompt : name,
+              },
+            }),
+          }).catch(() => {
+            // A recording failure must never break the lesson. The student has
+            // already seen their feedback; this is bookkeeping.
+          });
+        },
+        { studentName: first, pronoun: widgetPronoun }
+      );
       if (math) return math;
       // {{widget:viz:{…}}} composed figure / {{widget:viz_ref:v:…}} stored
       // figure — shared with the spine dock; degrades bad payloads to chips.
@@ -718,6 +738,7 @@ export function LessonSession({
               prompt={String(props.prompt ?? "حدد المكان على الخريطة")}
               target={target}
               decoys={decoys}
+              studentName={first}
               onResult={emitNote}
             />
           );
@@ -739,6 +760,7 @@ export function LessonSession({
               prompt={String(props.prompt ?? "رتب الأحداث زي ما حصلت")}
               events={events as string[]}
               correctOrder={order}
+              studentName={first}
               onResult={emitNote}
             />
           );
@@ -766,6 +788,7 @@ export function LessonSession({
                 prompt={String(props.prompt ?? "ركّب السلسلة بالترتيب")}
                 cards={cards}
                 correctChain={chain}
+                studentName={first}
                 onResult={emitNote}
               />
             );
@@ -904,7 +927,7 @@ export function LessonSession({
       }
       return null;
     },
-    []
+    [first, widgetPronoun]
   );
 
   const resolveCite = useCallback(

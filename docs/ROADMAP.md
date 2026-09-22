@@ -40,8 +40,10 @@ Regenerate the inputs with `./scripts/traceability.py`.
 >   would tell us whether it worked. Those two items are now one item.
 > - **Two shipped features have no requirement** (access gating, the Socratic
 >   protocol). §9 of the traceability matrix, Samuel to own.
-> - **The tutor prompts assume every student is male.** No gender column exists.
->   Not on any list before this; it belongs on the v1.0 path, not after it.
+> - ~~**The tutor prompts assume every student is male.** No gender column exists.~~
+>   **Closed 2026-09-21** (002 P6, `1ea3e4b`): gender is collected at signup, one
+>   address seam serves every prompt, and the unspecified register is correct for
+>   either — never the masculine. Arabic forms outside the vocative remain (S24).
 > - **A fourth stale requirement**, joining the two named at the foot of this
 >   section: `FR-1010`'s signature animation was BUILT-and-unspent for a reason
 >   nobody had noticed — nothing in the product rendered a band change at all.
@@ -161,18 +163,26 @@ needs a decision on who labels the human-graded set, which is the same question
 as `T107` and probably the same person. Layer 4 is small and can go first if a
 number is wanted sooner than a guarantee.
 
-### Samuel's direction, 2026-09-20 — the next workstream **[SPECCED 2026-09-20 → `specs/002-identity-and-admin-console/`]**
+### Samuel's direction, 2026-09-20 — **[IMPLEMENTED 2026-09-21 — PR pending]**
 
 Taken from his own words at the end of the `v0.4.0` session. **Recorded here so the
-next session starts from it rather than rediscovering it.** None of it is specced,
-none of it is started, and the full requirements are his to give.
+next session starts from it rather than rediscovering it.** The paragraphs below are
+his direction as it was given, kept verbatim; the status line above them is current.
 
-**Now specced, and still not started.** `specs/002-identity-and-admin-console/plan.md` sequences it
-in seven phases — P0 sessions become real (first, because it is the only gap losing data now), P1
-accounts + row-level isolation + roles-in-data, P2 the console build target, P3 student 360 and
-replay, P4 cost, P5 monitoring and analytics, P6 tutor voice and gender — and its **Open for Samuel**
-list cites the spec's thirteen Open Decisions, of which item 6, the **Egypt PDPL guardian-consent
-flag**, is a legal constraint on D7 routed to him rather than a decision anyone took here.
+**Specced 2026-09-20, built 2026-09-21.** All seven phases of
+`specs/002-identity-and-admin-console/plan.md` are on `feat/002-identity-and-admin-console`
+(`3747989` … `1ea3e4b`), one commit each, each closed by a live smoke script: P0 sessions become
+real, P1 accounts + row-level isolation + roles-in-data, P2 the console build target, P3 student 360
+and replay, P4 cost, P5 monitoring and analytics, P6 tutor voice and gender. The matrix is
+**62 VERIFIED, 2 BUILT, 13 PARTIAL, 2 OPEN, 1 BLOCKED, 4 DEFERRED of 84**. What remains is not code:
+nothing is deployed (the console has no hostname, no Access policy), Google sign-in and SMTP have
+never run for want of credentials, GA4 is unconfigured, no student surface edits a profile or lists
+its own sessions, there is no account-deletion path, and the constitution Principle VII amendment
+that sanctions collecting gender and logging operator transcript access is **still a proposal**. The
+spec's thirteen Open Decisions are all still Samuel's, including item 6, the **Egypt PDPL
+guardian-consent flag** — a legal constraint on D7 routed to him rather than a decision anyone took
+here. Phase detail, the six defects the work found, and the setup hand-off:
+[`PROJECT_STATE.md`](PROJECT_STATE.md).
 
 **1. An admin dashboard, as its own release.** Everything that is not the education
 itself — the extraction pipeline, the evidence walk, content review, the gallery —

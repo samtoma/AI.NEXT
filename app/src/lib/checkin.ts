@@ -13,6 +13,7 @@
  * there rather than passing it down.
  */
 import { MASTERY_LEGEND, masteryStep } from "@/lib/mastery";
+import { addressForms, type Gender } from "@/lib/address";
 import type { LessonLo } from "@/lib/types";
 
 export type Recommendation = "reteach" | "refresh" | null;
@@ -86,9 +87,9 @@ export function buildRecommendationReason(
  * tutor's self-description (lib/lesson.ts `learnPrompt`), its hidden
  * session-starter (`learnAutoStartLine` below, LessonSession.tsx) and the
  * comprehension grader (api/understanding/route.ts) never contradict what
- * the student already sees on screen or what he's actually done before.
+ * the student already sees on screen or what they have actually done before.
  *
- * This replaces a single hardcoded "he understood NOTHING" premise that used
+ * This replaces a single hardcoded "understood NOTHING" premise that used
  * to fire for every learn-mode session alike — including a lesson never
  * attempted, where there was nothing to have failed to understand. The
  * mastery ramp's own product rule applies here too ("the persona's stated
@@ -107,28 +108,33 @@ export function buildRecommendationReason(
  */
 export function learnOpeningFrame(
   stage: 0 | 1 | 2 | 3 | 4,
-  firstName: string
+  firstName: string,
+  /** how this student is addressed (FR-2602). Omitted = the either-correct
+   *  register; FR-2605 forbids the masculine as a fallback, so there is no
+   *  branch here that produces it by default. */
+  gender: Gender = null
 ): { premise: string; job: string } {
+  const a = addressForms(gender, firstName);
   switch (stage) {
     case 0:
       return {
-        premise: "this is a brand-new topic for him — his very first look at it",
-        job: `open with genuine excitement for something new — energetic and curious, like handing him a new level to unlock (e.g. "${firstName}! New topic today — let's dive in 🚀") — then teach it fresh from the ground up`,
+        premise: `this is a brand-new topic for ${a.them} — ${a.their} very first look at it`,
+        job: `open with genuine excitement for something new — energetic and curious, like handing ${a.them} a new level to unlock (e.g. "${firstName}! New topic today — let's dive in 🚀") — then teach it fresh from the ground up`,
       };
     case 1:
       return {
-        premise: "he's had a first go at this one and it's still taking shape",
-        job: `keep the energy high and build confidently on what he already has, like leveling up rather than starting over (e.g. "${firstName}! Let's build on what you've got — round two 💪") — treat what he's done so far as real progress worth celebrating`,
+        premise: `${a.they}${a.hasContr} had a first go at this one and it's still taking shape`,
+        job: `keep the energy high and build confidently on what ${a.they} already ${a.has}, like leveling up rather than starting over (e.g. "${firstName}! Let's build on what you've got — round two 💪") — treat what ${a.they}${a.hasContr} done so far as real progress worth celebrating`,
       };
     case 2:
       return {
-        premise: "he's got a good feel for this and wants to go through it again",
+        premise: `${a.they}${a.hasContr} got a good feel for this and want${a.s} to go through it again`,
         job: "add depth and new connections, playful and curious throughout — not a repeat of the basics",
       };
     default:
       return {
-        premise: "he already handles this well and wants the full walk-through anyway",
-        job: "treat him like someone who already gets it — go deeper, add richer challenges, and keep the energy up rather than re-teaching the basics",
+        premise: `${a.they} already handle${a.s} this well and want${a.s} the full walk-through anyway`,
+        job: `treat ${a.them} like someone who already gets it — go deeper, add richer challenges, and keep the energy up rather than re-teaching the basics`,
       };
   }
 }

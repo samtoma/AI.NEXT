@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { AuthError, requireStudent } from "@/lib/auth/principal";
 import { cacheKey, readCache, writeCache } from "@/lib/tts/cache";
 import { getTtsConfig } from "@/lib/tts";
 import { sanitizeForNeuralSpeech } from "@/lib/tts/sanitize";
@@ -13,6 +14,11 @@ import { sanitizeForNeuralSpeech } from "@/lib/tts/sanitize";
  * - No key / provider=webspeech → 501 { fallback: "webspeech" } (never 500).
  * - Cache hit → mp3 from disk. Miss → provider, then write-through.
  * - Provider failure → structured error status, client falls back to Web Speech.
+ *
+ * A principal is required even though nothing here is student data. Synthesis
+ * costs money per character and the cache is on our disk; an open endpoint is a
+ * bill and a disk somebody else fills. It reads no policed table, so there is no
+ * unit of work — the refusal IS the whole authorization story.
  */
 
 export const dynamic = "force-dynamic";
@@ -33,6 +39,15 @@ function audioResponse(buf: Buffer, cache: "HIT" | "MISS"): NextResponse {
 }
 
 export async function POST(req: Request) {
+  try {
+    await requireStudent();
+  } catch (err) {
+    if (err instanceof AuthError) {
+      return NextResponse.json({ error: err.code }, { status: err.status });
+    }
+    throw err;
+  }
+
   let body: { text?: string; cacheKey?: string };
   try {
     body = await req.json();

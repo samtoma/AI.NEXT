@@ -26,13 +26,20 @@ export function ProductBuilder({
   X,
   Y,
   prompt,
+  studentName,
   onResult,
 }: {
   X: number[];
   Y: number[];
   prompt: string;
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const { candidates, correctSet, setX, setY } = useMemo(() => {
     const xs = [...new Set(X)].slice(0, 4);
     const ys = [...new Set(Y)].slice(0, 4);
@@ -92,8 +99,8 @@ export function ProductBuilder({
         : "missing-pairs",
       given: `${n - missed.length} of ${n} pairs`,
       detail: ok
-        ? `✓ Omar built X×Y correctly: all ${n} pairs of ${setStr} (n(X)×n(Y)=${setX.length}×${setY.length}=${n})`
-        : `✗ Omar's X×Y for ${setStr} had mistakes — ${
+        ? `✓ ${who} built X×Y correctly: all ${n} pairs of ${setStr} (n(X)×n(Y)=${setX.length}×${setY.length}=${n})`
+        : `✗ ${who}'s X×Y for ${setStr} had mistakes — ${
             wrongPicks.length
               ? `picked ${wrongPicks.join(", ")} which ${wrongPicks.length > 1 ? "are" : "is"} not in X×Y (reversed order?)`
               : ""

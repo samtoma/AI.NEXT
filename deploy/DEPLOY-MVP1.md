@@ -21,8 +21,14 @@ Companion to `DEPLOY.md` (the baseline) and `CICD.md`. First-time bootstrap is i
 | Compose file | `deploy/docker-compose.yml` | `deploy/docker-compose.mvp1.yml` |
 | Database | `ainext_poc` (vol `ainext_pg`) | `ainext_mvp1` (vol `ainext-mvp1_ainext_mvp1_pg`) |
 | App port | `127.0.0.1:3100` | `127.0.0.1:3101` |
-| Hostname | ainext.reletix.com | ainext-mvp1.reletix.com |
+| Console port | — (no console on the baseline) | `127.0.0.1:3102` |
+| Hostname | ainext.reletix.com | **noor.reletix.com** (settled 2026-09-22) |
+| Console hostname | — | **`admin-noor.reletix.com`** (Samuel, 2026-09-22), see [`TAKEOVER.md`](./TAKEOVER.md) §2.2 |
 | `AINEXT_ENVIRONMENT` | `baseline` (default) | `mvp1` |
+
+> **Taking the live deployment over — branches, hostname, database, the Claude CLI login and mail —
+> is its own study: [`TAKEOVER.md`](./TAKEOVER.md).** Read it before touching `main`, before adding a
+> public hostname, and before deciding whether to start the database fresh.
 
 > **Hostnames stay one label deep.** Universal SSL covers `*.reletix.com`, and a wildcard matches
 > exactly one label — `ainext-mvp1.reletix.com` is covered, `mvp1.ainext.reletix.com` is not. Any
@@ -54,10 +60,35 @@ cd /opt/reletix/AI.NEXT-mvp1/deploy
 C="docker compose -p ainext-mvp1 -f docker-compose.mvp1.yml"
 
 $C ps                       # status
-$C logs --tail=120 app      # app logs
+$C logs --tail=120 app      # student surface logs
+$C logs --tail=120 console  # admin console logs
+$C logs migrate             # WHICH MIGRATIONS RAN on the last `up`, and every check
 $C up -d --build            # redeploy (CI does this on push to PDR1-0)
 $C down                     # stop — WITHOUT -v, ever
 ```
+
+## Three services you did not have before
+
+`up` now brings up more than `db` + `app`, and the ordering is load-bearing.
+
+- **`migrate`** — a one-shot that applies `db/schema.sql` (only to an empty database) and every file
+  in `db/migrations/` (every time; they are idempotent by construction), then runs four post-flight
+  checks. `app`, `console` and the loader all declare `service_completed_successfully` on it, so a
+  migration failure means the app is **not started at all** rather than started against a
+  half-migrated database. It connects as the database owner, because no other role may create a
+  table in schema `public` — the argument is in [`apply-migrations.sh`](./apply-migrations.sh).
+  **If a deploy fails, read `$C logs migrate` first.** It says which file stopped it and what to do.
+- **`console`** — the admin console, the same image as `app` with `npm run start:admin`
+  (`AINEXT_SURFACE=admin`, artefact `.next-admin`). Same commit as the student surface by
+  construction. Bound to `127.0.0.1:3102`. **It must sit behind Cloudflare Access before it gets a
+  public hostname** — see [`cloudflared-ingress.example.yml`](./cloudflared-ingress.example.yml).
+- The **`loader`** now waits for `migrate` too, so a content refresh can no longer run against a
+  database that is behind on migrations.
+
+The very first `up` on a fresh database will **stop** with "no password set for: ainext_app,
+ainext_operator, ainext_maint" and print the three `ALTER ROLE` commands. That is expected: migration
+017 creates those roles without passwords on purpose, so that no credential is ever written into
+git. Set them, put the same values in `deploy/.env`, deploy again.
 
 > **⏸️ Deploy is currently MANUAL-ONLY (2026-09-13, `T139`).** Samuel has parked infra work until
 > the product is finalised and tested locally, so **a push does not deploy**. Run it by hand from

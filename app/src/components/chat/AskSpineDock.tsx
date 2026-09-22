@@ -6,7 +6,10 @@ import type { Cite } from "@/lib/chat-parse";
 import { ChatCore } from "./ChatCore";
 import type { CiteInfo } from "./CitationChip";
 import { renderVizWidget } from "@/components/viz/render-viz-widget";
-import { shortName } from "@/lib/demo-student";
+
+/** "Omar Hassan" → "Omar". Inlined when the demo cast (and the module this
+ *  lived in) was retired — the student's name now comes from her session. */
+const shortName = (displayName: string) => displayName.split(" ")[0] || displayName;
 
 const USD_TO_EGP = 48;
 

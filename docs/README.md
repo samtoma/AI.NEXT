@@ -82,11 +82,17 @@ The Spec Kit baseline set — the full as-built requirements of the shipped prod
   `tasks.md` (135 tasks), `traceability.md` (what is proven), `decisions.md`
   (open questions Samuel has answered).
 - [`specs/002-identity-and-admin-console/`](../specs/002-identity-and-admin-console/) —
-  **the active feature** (specced 2026-09-20, no code yet): `spec.md` (70 FRs,
+  **the active feature** (specced 2026-09-20, **implemented 2026-09-21** on
+  `feat/002-identity-and-admin-console`; not merged, not deployed): `spec.md` (70 FRs,
   14 SCs), `plan.md`, `research.md` + `research/`, `data-model.md`,
-  `contracts/`, `quickstart.md`, `traceability.md`, `decisions.md` (Samuel's
-  D1–D11), and `constitution-amendment-proposal.md` — Principle VII, v3.1.1 →
-  v3.2.0, **awaiting his approval**.
+  `contracts/`, [`quickstart.md`](../specs/002-identity-and-admin-console/quickstart.md)
+  (one command, both surfaces),
+  [`traceability.md`](../specs/002-identity-and-admin-console/traceability.md) (rev. 2 —
+  62 verified, 2 built, 13 partial, 2 open, 1 blocked, 4 deferred),
+  [`SETUP.md`](../specs/002-identity-and-admin-console/SETUP.md) — **the hand-off: what
+  only Samuel can provide**, `decisions.md` (Samuel's D1–D11), and
+  `constitution-amendment-proposal.md` — Principle VII, v3.1.1 → v3.2.0, **awaiting his
+  approval**, which the voice and audit work now assumes.
 - [`specs/000-baseline/plan.md`](../specs/000-baseline/plan.md) — as-built
   architecture, constitution check, runtime/content flows, deployment topology.
 - [`specs/000-baseline/data-model.md`](../specs/000-baseline/data-model.md) —

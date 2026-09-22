@@ -7,6 +7,7 @@ import { MathWidget } from "@/components/student/widgets/render-math-widget";
 import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
 import { pct } from "@/lib/mastery";
+import { track } from "@/lib/ga";
 import { tierStyle } from "@/components/spine/LoPanel";
 
 /**
@@ -53,6 +54,9 @@ export function ChatQuestionCard({
     if (!given || busy || result) return;
     setBusy(true);
     setError(null);
+    // The audience layer learns that an attempt was submitted in a chat card.
+    // Not the question, not the answer, not whether it was right (lib/ga.ts).
+    track("retrieval_attempt_submitted", { surface: "chat_card" });
     try {
       const res = await fetch("/api/attempts", {
         method: "POST",

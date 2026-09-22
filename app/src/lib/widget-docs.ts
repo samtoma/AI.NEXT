@@ -22,6 +22,8 @@
  * is one line here and nothing downstream breaks.
  */
 
+import { addressForms, type AddressForms } from "./address";
+
 /** One documented directive: the example line the model copies. */
 interface WidgetDoc {
   name: string;
@@ -112,7 +114,13 @@ export function unitOf(slug: string): string {
  * the least idea what fits, which is the worst moment to hand it eleven
  * options.
  */
-export function mathWidgetDocs(slug: string): string {
+export function mathWidgetDocs(
+  slug: string,
+  /** how this student is addressed (FR-2602). Defaults to the either-correct
+   *  register — never the masculine — so a caller that forgets it is neutral
+   *  rather than wrong about half the students. */
+  a: AddressForms = addressForms(null)
+): string {
   const names = BY_UNIT[unitOf(slug)] ?? ["pair_plotter", "product_builder"];
   const lines = names
     .map((n) => DOCS[n])
@@ -121,7 +129,7 @@ export function mathWidgetDocs(slug: string): string {
   lines.push(
     `- EVERY widget payload above may carry "lo":"lo:…" naming the objective ` +
       `the beat is teaching, and it SHOULD. A widget you compose is recorded ` +
-      `as a real attempt against that objective and moves his mastery ` +
+      `as a real attempt against that objective and moves ${a.their} mastery ` +
       `estimate; without it the widget still teaches but nothing is recorded, ` +
       `because evidence filed against a guessed skill is worse than evidence ` +
       `not filed. Use an objective id from the LESSON DATA.`
