@@ -10,11 +10,23 @@ requirement names it.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [v0.5.0] — 2026-09-22
+
+**The tag is bare from here.** Releases up to `PDR1-0-v0.4.0` carried the branch
+name as a prefix, because two solutions were live and versioned independently.
+`PDR1-0` was retired on 2026-09-22 when `main` became the single development
+branch, so the prefix now names something nobody can push to. **This release is
+the direct continuation of `PDR1-0-v0.4.0`** — the older tags keep their names
+and their commits; only the naming rule changed (`docs/VERSIONING.md`).
+
 Feature 002 — identity, per-student isolation and the admin console — built in seven
 phases on `feat/002-identity-and-admin-console`, plus an evening of work on 2026-09-21
-that added course availability, reachable uploads and the two skins. **Not merged, not
-tagged, not deployed.** `app/package.json` is deliberately not bumped: the release is
-Samuel's (VERSIONING.md step 3).
+that added course availability, reachable uploads and the two skins. Merged to `main`
+and tagged `v0.5.0` on 2026-09-22 (PRs #44 and #43). **Not deployed**: the deploy job
+is `workflow_dispatch` only and the box still needs its setup
+(`deploy/TAKEOVER.md`, `specs/002-identity-and-admin-console/SETUP.md`).
 
 Until this ships, "which student is using the product" was answered by a dropdown.
 That is the thing that changes.
