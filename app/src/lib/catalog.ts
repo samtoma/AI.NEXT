@@ -36,10 +36,14 @@
  *      course the extraction pipeline loaded overnight must not be on a child's
  *      screen before a person decided it should be.
  *
- * Nothing here reads a commercial status. `course_availability.requires_plan`
- * exists as a column and is always NULL; access is not gated on subscription
- * in this release (FR-2404), and `lib/subscription-gate.test.mts` scans the
- * student surfaces to keep it that way.
+ * Nothing here reads a commercial status, and nothing here CAN: look at the
+ * signature of `isCourseVisible` — grade, rules, overrides. There is no
+ * commercial input to pass it. `course_availability.requires_plan` exists as a
+ * column and is always NULL; access is not gated on subscription in this
+ * release (FR-2404). The console prints the column so an operator can see it is
+ * empty (`lib/catalog-queries.ts` `courseCatalog`), and `lib/plan-gate.test.mts`
+ * scans this module and the student surfaces to keep that the only reader —
+ * the same job `lib/subscription-gate.test.mts` does for `subscription_status`.
  */
 
 // Relative imports with an explicit `.ts`, like `lib/overview-rules.ts` — this

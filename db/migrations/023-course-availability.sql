@@ -44,10 +44,23 @@
 --
 -- `requires_plan` IS A SEAM, NOT A FEATURE. It exists so that the column does
 -- not have to be added under time pressure the day a price is set. It is
--- ALWAYS NULL in this build and **nothing reads it** — not the console, not
--- the student gate, not a query in this repository. Access is not gated on
--- commercial status in this release: FR-2404 forbids exactly that, and
--- `app/src/lib/subscription-gate.test.mts` scans the student surfaces for it.
+-- ALWAYS NULL in this build, and **nothing DECIDES anything from it** — not
+-- the student gate, not `lib/catalog.ts`, not a query that answers "may this
+-- student see this course". Access is not gated on commercial status in this
+-- release: FR-2404 forbids exactly that.
+--
+-- AMENDED 2026-09-22, because the original wording here said "nothing reads
+-- it — not the console", and that stopped being true the same week. The
+-- console now SELECTs the column once, in `courseCatalog`, to print it as a
+-- read-only field labelled as recorded but in force nowhere. Showing an
+-- operator what is stored is not the same act as letting it decide, and the
+-- distinction is worth keeping in words because it is easy to lose: what is
+-- forbidden is a commercial value reaching the visibility decision, not a
+-- human reading the value. `app/src/lib/plan-gate.test.mts` is what holds the
+-- line — it fails if the student gate's own `SELECT course_id, grade, state`
+-- grows a column, if the value escapes `courseCatalog`, or if any student
+-- surface so much as mentions it. `subscription-gate.test.mts` does the same
+-- job for `students.subscription_status`.
 --
 -- WHY `environment` IS ON BOTH TABLES. Constitution XI: no fact about one
 -- stack may leak into another, and "which courses are live" is a fact about a

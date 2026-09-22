@@ -65,6 +65,12 @@ export default async function CoursesConsolePage() {
           hidden — a subject the extraction pipeline loads overnight is not on a child&rsquo;s
           screen until a person here says so.
         </p>
+        <p className="mt-2 max-w-[74ch] text-[14px] text-ink-soft">
+          To make a whole subject available for every grade, or a whole grade available for every
+          subject, use the <strong>all live</strong> control beside that row or column. It writes
+          one rule per (course, grade), exactly as the individual cells do, and asks the same
+          question first if any of them would publish a course with nothing in it.
+        </p>
       </header>
 
       {/*
@@ -102,6 +108,29 @@ export default async function CoursesConsolePage() {
         </code>). A single student can be given an exception in either direction — shown a course
         their grade does not have, or held back from one it does — from that student&rsquo;s own
         page.
+      </p>
+
+      {/*
+        The Plan column, and the sentence that has to go with it.
+
+        `course_availability.requires_plan` is a SEAM: a column that exists so
+        it does not have to be added under time pressure the day PRD §10 sets a
+        price (ADR-0018, migration 023). It is NULL on every row, nothing
+        writes it, and nothing outside this page reads it — `plan-gate.test.mts`
+        fails if a student surface or the visibility rule ever does, which is
+        the same guard `subscription-gate.test.mts` puts on the other
+        commercial column (FR-2404).
+
+        It is shown here rather than hidden because an operator who cannot see
+        the column cannot know it is inert; but a column called "Plan" on a page
+        of access rules will be read as an access rule unless this says
+        otherwise, so it does.
+      */}
+      <p className="mt-2 max-w-[74ch] text-[12.5px] leading-relaxed text-ink-faint">
+        <strong>Plan</strong> shows <code className="font-mono text-[11.5px]">requires_plan</code>,
+        which is <strong>recorded only and in force nowhere</strong>. Nothing reads it: no student
+        is shown or refused a course because of what it says, and there is no payment system behind
+        it in this release. It is here so the column is visible before it ever means anything.
       </p>
     </main>
   );

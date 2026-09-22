@@ -63,6 +63,13 @@ const STUBS = {
       // resolves no principal of its own: the student id is a parameter, so
       // the empty cookie jar is never consulted.
       "catalog-gate.test.mts",
+      // drives the real `getLessonCatalog` against a fake PoolClient and feeds
+      // its output to `decideLanding`, so that "a student with no visible
+      // course lands on her home rather than a 404" is proved from the
+      // availability rows outwards. Same `lib/lesson.ts` ->
+      // `auth/principal.ts` import, same reason it needs no real principal:
+      // the student id is a parameter.
+      "student-landing.test.mts",
     ],
   },
 };

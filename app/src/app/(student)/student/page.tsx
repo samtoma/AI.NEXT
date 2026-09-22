@@ -3,6 +3,7 @@ import { getStudentPlan } from "@/lib/queries";
 import { getLessonCatalog, getLessonData } from "@/lib/lesson";
 import { getLessonContent } from "@/lib/lesson-content";
 import { getSubjectSummaries } from "@/lib/subject-queries";
+import { decideLanding } from "@/lib/student-landing";
 import { courseIdOfSpineKey } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
 import {
@@ -56,6 +57,13 @@ export const metadata = {
  * most likely to grow a new `?mode=` branch — and a branch that forgot to
  * filter would serve the course, whereas a branch that forgets to handle
  * `null` fails to compile.
+ *
+ * **Which screen the bare `/student` address shows is `lib/student-landing.ts`**
+ * and not this file. That module's header records the bug that moved it there:
+ * a page that chose its lesson from a module-level default rather than from the
+ * catalogue it had just fetched for this student, and therefore answered 404 to
+ * every student who may not see maths. The decision is now one pure function
+ * with a test per branch; what stays here is the I/O and the refusals.
  */
 export default async function StudentPage({
   searchParams,
@@ -109,33 +117,54 @@ export default async function StudentPage({
     if (content) return <LessonContentView content={content} />;
   }
 
-  // No subject chosen yet → the per-subject home (never a blended score).
-  // A ?lesson= link IS a choice though: the picker's chips land here, and
-  // bouncing them to the home silently discarded the selection (field
-  // report, 2026-07-30: "picking another lesson brings me back").
-  if (!subject && !lessonSlug) {
+  // ?subject → course by EXACT registry lookup: an unknown value yields no
+  // course, never silently the maths one.
+  const courseId = courseIdOfSpineKey(subject) ?? null;
+  const allLessons = await getLessonCatalog(studentId);
+
+  // **Which screen this is, decided in one place** (`lib/student-landing.ts`).
+  //
+  // The catalogue is now fetched BEFORE the decision rather than after it, and
+  // that ordering is the fix rather than a tidy-up. The page used to choose the
+  // home from `getSubjectSummaries`, then fall through to a lesson slug that
+  // — with no `?subject=` in the URL — it never actually set, leaving
+  // `getLessonData` to apply its own `DEFAULT_LESSON_SLUG` default of `"u1-1"`,
+  // a MATHS lesson. Every student who may not see maths was therefore asking
+  // the gate for maths on her own home page and getting `null`, and `null` is
+  // `notFound()`. A student with one subject 404'd on it; a student in a grade
+  // nobody has configured yet — the ordinary state of a new grade under
+  // explicit allow — 404'd on everything, immediately after signing in
+  // correctly. The slug can no longer come from anywhere but this student's own
+  // gated list.
+  //
+  // `getSubjectSummaries` is now read only when the home is actually rendered,
+  // so the other branches lost a query rather than gained one.
+  const landing = decideLanding({ subject, courseId, lessonSlug, lessons: allLessons });
+
+  if (landing.screen === "refused") notFound();
+
+  if (landing.screen === "subject-home") {
     const summaries = await getSubjectSummaries(studentId);
-    // Only show the home when more than one subject is loaded; otherwise the
-    // single-subject check-in is the natural landing (math-only stays as-is).
-    if (summaries.length > 1)
-      return <SubjectHome summaries={summaries} studentName={studentName} />;
+    return <SubjectHome summaries={summaries} studentName={studentName} />;
   }
 
-  // A subject is chosen (or only one exists) → its lessons in the check-in.
-  // ?subject → course by EXACT registry lookup: an unknown value yields no
-  // course (and therefore the whole catalogue), never silently the maths one.
-  const courseId = courseIdOfSpineKey(subject) ?? undefined;
-  const allLessons = await getLessonCatalog(studentId);
+  // Nothing is available to this student yet. The SAME component as the home,
+  // with an empty list: it is her home page, not an error, and rendering a 404
+  // there told her nothing, told us nothing distinguishable from a mistyped
+  // URL, and read as her fault.
+  if (landing.screen === "nothing-yet") {
+    return <SubjectHome summaries={[]} studentName={studentName} />;
+  }
+
+  // The lessons offered by the picker on the check-in: the chosen subject's,
+  // or the whole gated catalogue when no subject was named.
   const lessons = courseId
     ? allLessons.filter((l) => l.courseId === courseId)
     : allLessons;
-  // The assigned-lesson card must belong to the CHOSEN subject — otherwise it
-  // falls back to the global default (a math lesson) and the whole check-in
-  // renders as math even though the picker is social.
-  const effectiveSlug = lessonSlug ?? (courseId ? lessons[0]?.slug : undefined);
-  const lesson = await getLessonData(effectiveSlug, studentId);
-  // `lessons` is already gated, so a null here means the ?lesson= in the URL
-  // named a course this student may not see (or nothing at all).
+  const lesson = await getLessonData(landing.slug, studentId);
+  // `allLessons` is already gated, so a null here means the ?lesson= in the URL
+  // named a course this student may not see (or nothing at all). Unchanged, and
+  // deliberately indistinguishable from a slug that does not exist.
   if (!lesson) notFound();
   // Offer the readable «شرح الدرس» door only when this lesson has a bundle.
   const hasContent = (await getLessonContent(lesson.slug)) !== null;

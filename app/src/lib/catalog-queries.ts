@@ -273,6 +273,20 @@ export type CourseCatalogRow = {
    */
   explicit: boolean;
   note: string | null;
+  /**
+   * `course_availability.requires_plan` — **the subscription seam, shown and
+   * enforced nowhere** (migration 023, ADR-0018).
+   *
+   * Always `null` in this build: nothing writes it and nothing outside this
+   * console reads it. It is surfaced so an operator can SEE that the column
+   * exists and is empty, rather than discovering it in a schema dump the day a
+   * price is set — and `lib/plan-gate.test.mts` is what keeps "outside this
+   * console" true, in the same shape `subscription-gate.test.mts` keeps
+   * FR-2404 true for `subscription_status`. Reading a value in order to print
+   * it is not gating on it; the moment a student surface reads this column,
+   * that test fails.
+   */
+  requiresPlan: string | null;
   /** LOs under this course in the spine — 0 for a registry-only subject. */
   objectivesLoaded: number;
   /** `status = 'live'` questions under those LOs. Nothing else is servable. */
@@ -292,10 +306,19 @@ export type CourseCatalogRow = {
  * the spine has no notion of a grade, and pretending otherwise would put a
  * number on the screen that no query behind it could produce.
  *
- * `requires_plan` is deliberately NOT selected. It is a column reserved for a
- * subscription decision nobody has taken; reading it here is how it acquires a
- * first reader and then a second (FR-2404 — commercial status gates nothing in
- * this release).
+ * `requires_plan` IS selected here, and only here (Samuel, 2026-09-22).
+ *
+ * It used to be deliberately unselected, on the argument that reading it is how
+ * a column acquires a first reader and then a second. The argument was right
+ * about the second reader and wrong about the first: an inert column nobody can
+ * see is not safer than one an operator can see is empty — it is the same
+ * column, with the day it gets a meaning left to a schema dump. So the console
+ * reads it **to print it**, exactly as it reads `subscription_status` to print
+ * that (FR-2404/FR-2405), and the boundary that actually matters — no student
+ * surface, and no rule, may read it — is enforced by `lib/plan-gate.test.mts`
+ * rather than by nobody having selected it yet. `lib/catalog.ts` still takes
+ * grade, rules and overrides and nothing else; there is no commercial input to
+ * the decision's signature, which is the property FR-2711 names.
  */
 export async function courseCatalog(
   operatorId: number
@@ -305,6 +328,7 @@ export async function courseCatalog(
       () =>
         db.query(
           `SELECT ca.course_id, ca.grade, ca.state, ca.note, ca.updated_at,
+                  ca.requires_plan,
                   op.display_name AS updated_by
              FROM course_availability ca
              LEFT JOIN operators op ON op.id = ca.updated_by
@@ -362,6 +386,8 @@ export async function courseCatalog(
         state: row ? asState(row.state) : "hidden",
         explicit: row != null,
         note: (row?.note as string | null) ?? null,
+        // Printed by the console and read by nothing else — see the type.
+        requiresPlan: (row?.requires_plan as string | null) ?? null,
         objectivesLoaded: Number(d?.objectives ?? 0),
         questionsLoaded: Number(d?.questions ?? 0),
         updatedBy: (row?.updated_by as string | null) ?? null,
