@@ -27,6 +27,13 @@ type CheckInProps = {
    *  finished everything must still be able to reopen the last lesson, or
    *  "complete" becomes a dead end. */
   courseComplete: boolean;
+  /** Objective labels in THIS lesson with no attempt yet, empty when the
+   *  lesson is untouched (see lib/checkin.ts). Rendered because a lesson
+   *  completes only when every objective is mastered, while review mode can
+   *  only ever ask about the first three — so a student can do everything
+   *  right and still watch the card not move. Naming what has not come up
+   *  makes that rule visible instead of mysterious. */
+  untriedSubskills: string[];
   /** The lesson completed just before the current one, or null. Rendered as a
    *  quiet collapsed row ABOVE the card: the pointer moving on should not make
    *  the lesson the student just worked through disappear, and the gate can
@@ -86,6 +93,7 @@ function PlayCheckIn({
   estimates,
   completedToday,
   courseComplete,
+  untriedSubskills,
   justFinished,
   trial,
 }: CheckInProps) {
@@ -258,6 +266,41 @@ function PlayCheckIn({
               </p>
             )}
 
+            {/* What has not come up yet.
+
+                This exists to answer a question the card was otherwise
+                leaving unanswered. A lesson completes only when EVERY
+                objective reaches the mastered band, but review mode scripts
+                its questions from the first three objectives alone — so on a
+                four-objective lesson (u1-1 among them, the course opener) a
+                student can pick "Quiz me on it", get everything right, score
+                got_it on the report, and come back to the very same card.
+                Without this line there is nothing on screen to explain it.
+
+                Counted in words, not digits: no number, grade or percentage
+                is printed anywhere near the ramp. Phrased as "hasn't come up
+                yet" rather than anything the student failed to do — the part
+                that did not come up is the SESSION's doing, not theirs — and
+                it points at the door that actually covers it. */}
+            {untriedSubskills.length > 0 && (
+              <p className="font-read text-[0.95rem] leading-[1.7] text-ink-soft">
+                {untriedSubskills.length === 1 ? (
+                  <>
+                    <strong className="font-semibold text-ink">
+                      {untriedSubskills[0]}
+                    </strong>{" "}
+                    hasn&apos;t come up yet.
+                  </>
+                ) : (
+                  <>
+                    {untriedSubskills.length === 2 ? "Two parts" : "A few parts"}{" "}
+                    haven&apos;t come up yet.
+                  </>
+                )}{" "}
+                The walk-through goes through all of it.
+              </p>
+            )}
+
             {/* ADR-0012 terminal state: every lesson in the course is mastered
                 and the pointer has parked. A banner, never a replacement for
                 the doors — a student who has finished everything must still
@@ -265,7 +308,7 @@ function PlayCheckIn({
             {courseComplete && (
               <div className="rounded-[16px] bg-card-warm px-4 py-3.5">
                 <p className="font-display text-[1.05rem] font-bold text-ink">
-                  That&apos;s the whole course ð
+                  That&apos;s the whole course 🎉
                 </p>
                 <p className="font-read mt-1 text-[0.95rem] leading-[1.7] text-ink-soft">
                   You&apos;ve been through every topic here. Go over any of them

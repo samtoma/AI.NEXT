@@ -168,3 +168,35 @@ export function previousCompletedSlug(
   }
   return null;
 }
+
+/**
+ * The objectives keeping this lesson from passing the gate for want of any
+ * evidence at all — the ones that have never been attempted.
+ *
+ * It lives beside the gate rather than with the check-in card's other
+ * derivations because it answers a question about the gate: why has this
+ * lesson not completed? A lesson completes only when EVERY objective reaches
+ * `MASTERED_GATE`, but review mode scripts its questions from the first three
+ * objectives alone, so on a four-objective lesson (u1-1 among them, the course
+ * opener) a student can pick "Quiz me on it", answer everything correctly,
+ * score `got_it` on the report, and come back to the very same card. This is
+ * what lets the card say why instead of leaving them to infer it.
+ *
+ * `mastery === 0` means no mastery row exists, which is exactly "never
+ * attempted": every BKT update clamps to MIN_SCORE (0.02), so an objective
+ * answered even once — and answered wrongly every time — can never read as 0.
+ * A struggling student is therefore never told their worst objective "hasn't
+ * come up yet".
+ *
+ * RETURNS NOTHING FOR AN UNTOUCHED LESSON. Where nobody has started, every
+ * objective is untried and saying so is noise: the ramp already reads "not
+ * started" and the doors already say what to do. It is only ever worth saying
+ * once a lesson is part-done, which is the confusing case.
+ */
+export function untriedObjectives(
+  los: readonly { label: string; mastery: number }[]
+): string[] {
+  const started = los.some((l) => l.mastery > 0);
+  if (!started) return [];
+  return los.filter((l) => l.mastery === 0).map((l) => l.label);
+}
