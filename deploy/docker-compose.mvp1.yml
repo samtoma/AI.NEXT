@@ -1,11 +1,20 @@
 # AI.Next tutor — the MVP 1.0 COMPARISON environment (ADR-0007).
 #
-# Runs BESIDE the frozen baseline stack on the same box, serving the SAME
-# Prep-3 Mathematics content with the new PRD's experience. The compose project
+# Runs BESIDE the frozen baseline stack on the same box. The compose project
 # name namespaces the volumes, so the two databases cannot collide.
 #
-#   baseline    project `ainext`       127.0.0.1:3100   ainext.reletix.com
-#   comparison  project `ainext-mvp1`  127.0.0.1:3101   ainext-mvp1.reletix.com
+#   baseline    project `ainext`       127.0.0.1:3100   student surface, frozen
+#   comparison  project `ainext-mvp1`  127.0.0.1:3101   student surface (this file)
+#                                      127.0.0.1:3102   ADMIN CONSOLE (this file)
+#
+# HOSTNAMES — ONE VARIABLE EACH, NEVER A LITERAL IN A SERVICE BODY.
+# The student origin is settled (Samuel, 2026-09-22): **noor.reletix.com**, and
+# it is the default of `AINEXT_PUBLIC_URL` below — the one place it is written.
+# The CONSOLE origin is NOT settled, so `AINEXT_CONSOLE_URL` has no default and
+# the stack refuses to start until deploy/.env names it; the proposal, and the
+# Universal-SSL constraint that rules out `console.noor.reletix.com`, are in
+# `deploy/TAKEOVER.md` §"The console hostname". That file also lists everything
+# that must move together when a hostname changes — it is never just this line.
 #
 # ALWAYS name the project explicitly — an unqualified `docker compose` command in
 # the wrong directory is how you restart the frozen baseline by accident:
@@ -30,6 +39,11 @@ services:
       # bundles as the baseline, and then proved identical by parity_check.py.
       # Restoring a dump would make "same content" an assumption instead of a
       # verified fact — which is the one thing this comparison cannot afford.
+      #
+      # And NO schema/migration mount either — not as an oversight but because
+      # `/docker-entrypoint-initdb.d` only runs on an EMPTY data directory. The
+      # `migrate` service below is the mechanism; see its comment for why a
+      # first-boot mount is useless to a volume that already exists.
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ainext -d ainext_mvp1"]
       interval: 5s
@@ -37,10 +51,71 @@ services:
       retries: 30
     mem_limit: 1g
 
+  # ---- schema and migrations, before anything is allowed to serve ----------
+  #
+  # A ONE-SHOT SERVICE, NOT A STEP IN THE DEPLOY JOB. The choice matters and it
+  # went this way for one reason: `docker compose up -d --build` is a documented
+  # routine operation on this box (deploy/DEPLOY-MVP1.md), it is what a founder
+  # types by hand when CI is not the thing that is broken, and a migration step
+  # that lives only in `.github/workflows/ci-cd.yml` would not run then. The app
+  # would come up against a database missing the tables it reads, and the first
+  # sign of it would be a student's 500.
+  #
+  # Putting it here makes the ordering a property of the stack rather than of the
+  # pipeline: `app` and `console` declare `service_completed_successfully` on
+  # this service, so they are not merely started later — they are NOT STARTED AT
+  # ALL if a migration fails. `docker compose up` then exits non-zero and the
+  # deploy job fails on it, which is the loud failure the alternative lacks.
+  #
+  # The image is `postgres:17-alpine`, the same tag the `db` service already
+  # pulls. On a box shared with production that is not a detail: it means this
+  # service adds no image to the shared daemon and cannot drift to a different
+  # `psql` than the server it talks to.
+  #
+  # Cost, stated plainly: this runs on every `up`, including one that only meant
+  # to restart a container. Re-applying twenty-four idempotent migrations takes
+  # a couple of seconds, which is the price of never having to remember.
+  migrate:
+    image: postgres:17-alpine
+    restart: "no" # a one-shot that restarts is an infinite loop
+    environment:
+      # Connection by PG* variables, so no DSN is assembled and no password ever
+      # reaches a command line. THE OWNER, not `ainext_maint`: migration 017
+      # grants the three roles USAGE on schema `public` and never CREATE, is
+      # NOCREATEROLE for `ainext_maint`, and re-grants table privileges that only
+      # an owner may re-grant. apply-migrations.sh explains this at length.
+      # The running application still never sees this credential.
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: ainext
+      PGDATABASE: ainext_mvp1
+      PGPASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
+      # Read by the script's last check only: when the course gate is ON, an
+      # empty allow-list stops the deploy instead of locking every student out.
+      AINEXT_COURSE_GATING: ${AINEXT_COURSE_GATING:-off}
+      AINEXT_ENVIRONMENT: "mvp1"
+    volumes:
+      # READ-ONLY, and the whole `db/` tree rather than the two paths the script
+      # uses, so adding migration 025 needs no edit here. Read-only because a
+      # container whose job is to apply migrations has no business editing them.
+      - ../db:/db:ro
+      - ./apply-migrations.sh:/apply-migrations.sh:ro
+    entrypoint: ["/bin/sh", "/apply-migrations.sh"]
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 256m
+
   app:
     build:
-      context: ..                 # repo root — see Dockerfile note
+      context: .. # repo root — see Dockerfile note
       dockerfile: deploy/Dockerfile
+    # Named explicitly because the `console` service below reuses THIS tag: one
+    # build, one image, two processes, and therefore no way for the student
+    # surface and the console to be running different commits. It is the same
+    # name compose would have generated (project-service), so nothing about the
+    # deploy job's dangling-image pruning changes.
+    image: ainext-mvp1-app
     restart: unless-stopped
     environment:
       # THE APP CONNECTS AS `ainext_app`, NOT AS THE POSTGRES SUPERUSER (ADR-0012).
@@ -55,42 +130,139 @@ services:
       #     -c "ALTER ROLE ainext_operator PASSWORD '…'" \
       #     -c "ALTER ROLE ainext_maint PASSWORD '…'"
       #
-      # then put the same three values in deploy/.env (see .env.example).
+      # then put the same three values in deploy/.env (see .env.example). The
+      # `migrate` service refuses to finish while any of the three is unset, so
+      # this is a step you are told about rather than one you discover.
       DATABASE_URL: postgres://ainext_app:${AINEXT_APP_PASSWORD:?set AINEXT_APP_PASSWORD in deploy/.env}@db:5432/ainext_mvp1
       # The console's connection (P2 — ADR-0014). Cross-student reads by grant;
       # it does not bypass RLS either.
+      #
+      # STILL SET ON THE STUDENT SERVICE, and that is a compromise worth naming.
+      # The console is its own container now, so in principle the student process
+      # never needs the operator credential and handing it one gives back a
+      # little of what the split removed. It stays because `app/src/app/layout.tsx`
+      # — the ROOT layout, in both builds — imports `lib/design-variant-queries`,
+      # which imports `withOperator`. Today's reading of that module says the
+      # student path only ever uses `authPool()`, so removing this variable is
+      # PROBABLY safe; "probably" is not the standard for a change whose failure
+      # mode is every student page throwing. Remove it once a request-path trace
+      # on the box shows the student process never opens the operator pool.
       DATABASE_URL_OPERATOR: postgres://ainext_operator:${AINEXT_OPERATOR_PASSWORD:?set AINEXT_OPERATOR_PASSWORD in deploy/.env}@db:5432/ainext_mvp1
       # DATABASE_URL_MAINT is deliberately ABSENT here. `ainext_maint` has
       # BYPASSRLS, and handing the running app a credential that sees every
       # student's rows gives back exactly what this design removed. The loader
-      # service below has it; one-off scripts (the operator bootstrap) run with
-      # it passed on the command line:
+      # service below has it; one-off scripts (the operator bootstrap, the cost
+      # rollup, the alert sweep) run with it passed on the command line:
       #   docker compose … run --rm -e DATABASE_URL=postgres://ainext_maint:…@db:5432/ainext_mvp1 \
       #     app node --import ./scripts/ts-resolver.mjs scripts/bootstrap-operator.mts
       #
+      # WHICH SURFACE THIS PROCESS IS (ADR-0014). Stated rather than inherited:
+      # `lib/env.ts` defaults to `student` and the default is the safe one, but a
+      # production stack should not depend on a default to know what it is
+      # serving — and the `console` service below is only legible beside an
+      # explicit `student` here.
+      AINEXT_SURFACE: "student"
       # Identity (ADR-0013). AINEXT_AUTH_SECRET signs the access token: at least
       # 32 bytes, `openssl rand -hex 32`, and rotating it signs everyone out.
       AINEXT_AUTH_SECRET: ${AINEXT_AUTH_SECRET:?set AINEXT_AUTH_SECRET in deploy/.env}
       # Absolute origin for the links in verification and reset mail. NEVER
       # derived from the request host: a Host header is client-controlled.
-      AINEXT_PUBLIC_URL: ${AINEXT_PUBLIC_URL:-https://ainext-mvp1.reletix.com}
+      #
+      # The default is the settled student origin (Samuel, 2026-09-22). It was
+      # `ainext-mvp1.reletix.com` until then, which no longer names anything.
+      # A wrong origin here is not a cosmetic error: it is the address in the
+      # mail a fourteen-year-old clicks to verify her account. Override it in
+      # deploy/.env for any stack that is not the production one.
+      AINEXT_PUBLIC_URL: ${AINEXT_PUBLIC_URL:-https://noor.reletix.com}
       # The console's own origin, for the links in OPERATOR mail. Same rule,
       # sharper consequence: a reset link built from a client-supplied Host
       # walks an operator's reset token to the attacker's server.
-      AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:-}
+      #
+      # REQUIRED, WITH NO DEFAULT, because the console hostname is the one thing
+      # here Samuel has not decided yet. `lib/env.ts` falls back to
+      # AINEXT_PUBLIC_URL when this is unset, which was correct while one process
+      # served both surfaces and is wrong the moment the console is its own
+      # build: the fallback would mail an operator a reset link to the STUDENT
+      # origin, where that route does not exist in that build, and the reset
+      # would 404 with no explanation. A required variable turns that into a
+      # question asked once, at deploy time.
+      AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Proposal awaiting Samuel - https://noor-console.reletix.com - see deploy/TAKEOVER.md}
       # `console` prints links to the log; `smtp` sends them through Mailu.
       AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-console}
       AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-}
       AINEXT_MAIL_FROM: ${AINEXT_MAIL_FROM:-}
       # All three or none — a partial Google configuration throws at startup
       # rather than failing at the callback, after the student has already
-      # handed Google their credentials.
+      # handed Google their credentials. The redirect URI must be registered in
+      # the Google Cloud console against the hostname above; changing the
+      # hostname without changing it there breaks sign-in with Google's error
+      # page, not ours.
       AINEXT_GOOGLE_CLIENT_ID: ${AINEXT_GOOGLE_CLIENT_ID:-}
       AINEXT_GOOGLE_CLIENT_SECRET: ${AINEXT_GOOGLE_CLIENT_SECRET:-}
       AINEXT_GOOGLE_REDIRECT_URI: ${AINEXT_GOOGLE_REDIRECT_URI:-}
       # The first operator (ADR-0014): seeded with all four roles and NO
       # password, which arrives through the ordinary reset flow.
       AINEXT_BOOTSTRAP_OPERATOR_EMAIL: ${AINEXT_BOOTSTRAP_OPERATOR_EMAIL:-}
+      # ---- the course gate (migration 023, lib/catalog.ts) ------------------
+      # ⚠ SAMUEL'S DECISION, NOT DEFAULTED SILENTLY. `off` here preserves exactly
+      # today's behaviour, which is why it is the value written down; it is NOT a
+      # recommendation. The recommendation is `on`, and the argument is in
+      # deploy/TAKEOVER.md §"The course gate". In short:
+      #
+      #   off — every student sees every course that is loaded. Three courses are
+      #         loaded now (maths, Arabic, social studies) and two of them carry
+      #         questions that have not been through the human review gate, which
+      #         constitution Principle III still covers — ADR-0007 suspends review
+      #         for generated EXPLANATIONS only, never for questions.
+      #   on  — a student sees a course only where a `course_availability` row
+      #         says `live`. The failure `lib/env.ts` argues against — an empty
+      #         allow-list locking every child out with no error anywhere — is
+      #         caught by the `migrate` service before the app starts, which is
+      #         what makes `on` a safe thing to choose here specifically.
+      AINEXT_COURSE_GATING: ${AINEXT_COURSE_GATING:-off}
+      # ---- which build rendered a turn (ADR-0015 §3, FR-2304) ---------------
+      # ⚠ NOTHING READS THIS YET, and saying so is the point of writing it down.
+      # `lib/env.ts` derives RELEASE_TAG from app/package.json's version, so every
+      # turn on the box would be stamped `PDR1-0-v0.4.0` regardless of which
+      # commit is actually running — and the console's replay marks a turn as
+      # "differs from current renderer" by comparing exactly that string. A stamp
+      # that cannot distinguish two builds cannot detect renderer drift, which is
+      # the whole reason the column exists.
+      #
+      # The deploy job computes this from the deployed commit (the git tag when
+      # the commit carries one, otherwise version+short sha) and exports it, so
+      # the value is already correct here. Making it TRUE is a one-line change in
+      # `app/src/lib/env.ts`, out of scope for a deploy-side change:
+      #
+      #   export const RELEASE_TAG: string =
+      #     (process.env.RELEASE_TAG ?? "").trim() || `PDR1-0-v${pkg.version}`;
+      #
+      # Until that lands, treat `renderer_version` on box data as the release
+      # series and not as the build.
+      RELEASE_TAG: ${RELEASE_TAG:-}
+      # ---- analytics and alerting (ADR-0016) -------------------------------
+      # GA4 measurement id, `G-XXXXXXXXXX`. Unset renders no script tag at all,
+      # which is a supported state — GA is an audience layer, not instrumentation
+      # the product depends on. A malformed value refuses to start rather than
+      # loading a tag that reports into nothing forever.
+      #
+      # Note it is absent from the `console` service, deliberately: GA is never
+      # loaded on the console (contracts/analytics.md), and the surest way to
+      # keep that true is not to give that process the id.
+      AINEXT_GA_MEASUREMENT_ID: ${AINEXT_GA_MEASUREMENT_ID:-}
+      # Where the security sweep mails its alerts. Unset means the sweep still
+      # evaluates every rule and still records that a rule fired — it logs the
+      # body instead of mailing it. Set here rather than only on the sweep's
+      # command line because the sweep is run as `compose run --rm app …`, which
+      # inherits this service's environment.
+      AINEXT_ALERT_EMAIL: ${AINEXT_ALERT_EMAIL:-}
+      # ---- dev-server origins ----------------------------------------------
+      # Read ONLY by `next dev` (next.config.ts `allowedDevOrigins`); production
+      # ignores the key entirely. It is written here, empty, so that its absence
+      # from a production stack is visibly deliberate rather than an omission —
+      # and so nobody adds a hostname to it believing it grants access to
+      # anything. It does not: it is a development asset-serving allow-list.
+      AINEXT_DEV_ORIGINS: ""
       # Runtime thinking budget. 1024 = minimal deliberation, snappy (default).
       # Set to "0" (or "off") for maximum speed; raise it to restore more.
       AINEXT_THINKING_BUDGET: "1024"
@@ -107,14 +279,112 @@ services:
     volumes:
       # persists the `claude` login across redeploys (decoupled from the image)
       - claude_cfg:/repo/.claude
+      # uploads survive a restart, so a worksheet parsed this evening is still
+      # attached to its session tomorrow morning
+      - ainext_mvp1_uploads:/tmp/ainext-uploads
     depends_on:
       db:
         condition: service_healthy
+      migrate:
+        # NOT `service_started`. The app must not exist as a running process
+        # until every migration has applied cleanly; anything weaker is a race
+        # that resolves correctly on a fast box and wrongly on a slow one.
+        condition: service_completed_successfully
     ports:
       # localhost ONLY — cloudflared fronts it. 3100 belongs to the baseline;
-      # this stack takes 3101.
+      # this stack takes 3101 for the student surface and 3102 for the console.
       - "127.0.0.1:3101:3000"
     mem_limit: 2g
+
+  # ---- the admin console: a SECOND PROCESS OFF THE SAME IMAGE (ADR-0014) ----
+  #
+  # The console is a second BUILD TARGET of one codebase, not a second codebase:
+  # `AINEXT_SURFACE=admin` changes `pageExtensions` (which files are routes at
+  # all) and `distDir` (`.next-admin`). `deploy/Dockerfile` now produces both
+  # artefacts in one image, so this service is the same image as `app` with a
+  # different start command — which is what guarantees the two surfaces are the
+  # same commit. Two images built from two contexts could drift by a deploy.
+  #
+  # It declares the same `build:` and the same `image:` as `app` on purpose. The
+  # alternative — `image:` alone, relying on `app` having tagged it first — works
+  # today and fails on a fresh box in the one case where nobody is watching,
+  # because compose would try to PULL a tag that exists nowhere. The duplicate
+  # build is a cache hit and costs seconds.
+  #
+  # 🔒 WHAT MAKES THIS SAFE IS NOT IN THIS FILE. The console publishes to
+  # 127.0.0.1 only, so nothing reaches it without the tunnel — but the tunnel is
+  # configured in the Cloudflare Zero Trust DASHBOARD, and so is the Access
+  # policy that is FR-2208's actual requirement. Read
+  # `deploy/cloudflared-ingress.example.yml` before giving this a hostname. A
+  # console hostname without an Access application in front of it is an operator
+  # sign-in page on the public internet, and the console's own refusal behaviour
+  # was accepted for the pilot (SETUP.md S18) ON THE ASSUMPTION that Access is
+  # there.
+  console:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: ainext-mvp1-app
+    # Keeps the project prefix — the box also runs production for another
+    # product, and `docker logs ainext-mvp1-console` at 2 a.m. should not require
+    # remembering compose's numbering suffix.
+    container_name: ainext-mvp1-console
+    restart: unless-stopped
+    # `start:admin` sets AINEXT_SURFACE=admin for `next start`, which is what
+    # points it at `.next-admin`. The environment below sets the same variable
+    # for the application's own module graph; both are needed and they are read
+    # by different things (next.config.ts, then lib/env.ts).
+    command: ["npm", "run", "start:admin"]
+    environment:
+      AINEXT_SURFACE: "admin"
+      # Both pools, exactly as the single container had them. The console reads
+      # cross-student data as `ainext_operator` (by grant, not by BYPASSRLS), and
+      # still needs the app role for the shared auth tables — `auth_throttle`,
+      # `auth_events`, `password_resets` are granted to `ainext_app` in 017.
+      DATABASE_URL: postgres://ainext_app:${AINEXT_APP_PASSWORD:?set AINEXT_APP_PASSWORD in deploy/.env}@db:5432/ainext_mvp1
+      DATABASE_URL_OPERATOR: postgres://ainext_operator:${AINEXT_OPERATOR_PASSWORD:?set AINEXT_OPERATOR_PASSWORD in deploy/.env}@db:5432/ainext_mvp1
+      # The SAME signing secret as the student surface. Tokens are surface-bound
+      # in the code, not by key: the two surfaces use different cookie names and
+      # the claims carry the audience, which is what stopped a student's refresh
+      # token being accepted by the console (P1's second defect). Two secrets
+      # would add a rotation to forget without adding a boundary.
+      AINEXT_AUTH_SECRET: ${AINEXT_AUTH_SECRET:?set AINEXT_AUTH_SECRET in deploy/.env}
+      AINEXT_PUBLIC_URL: ${AINEXT_PUBLIC_URL:-https://noor.reletix.com}
+      AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Proposal awaiting Samuel - https://noor-console.reletix.com - see deploy/TAKEOVER.md}
+      AINEXT_MAIL_TRANSPORT: ${AINEXT_MAIL_TRANSPORT:-console}
+      AINEXT_SMTP_URL: ${AINEXT_SMTP_URL:-}
+      AINEXT_MAIL_FROM: ${AINEXT_MAIL_FROM:-}
+      AINEXT_BOOTSTRAP_OPERATOR_EMAIL: ${AINEXT_BOOTSTRAP_OPERATOR_EMAIL:-}
+      # The console reads the same gate so that what an operator sees about
+      # course availability matches what the student surface enforces.
+      AINEXT_COURSE_GATING: ${AINEXT_COURSE_GATING:-off}
+      RELEASE_TAG: ${RELEASE_TAG:-}
+      AINEXT_ALERT_EMAIL: ${AINEXT_ALERT_EMAIL:-}
+      # NO AINEXT_GA_MEASUREMENT_ID (see the app service), NO Google client — an
+      # operator signs in with a password, and the console is not an audience.
+      AINEXT_DEV_ORIGINS: ""
+      AINEXT_THINKING_BUDGET: "1024"
+      NODE_ENV: production
+      AINEXT_ENVIRONMENT: "mvp1"
+      CLAUDE_CONFIG_DIR: /repo/.claude
+    volumes:
+      # The console's dev surfaces render widgets, which spawn the CLI; it shares
+      # the one login rather than needing a second.
+      - claude_cfg:/repo/.claude
+      # Read-only: the console SHOWS an upload in a replay and must never be the
+      # thing that changes one.
+      - ainext_mvp1_uploads:/tmp/ainext-uploads:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    ports:
+      # localhost ONLY, and a different port from the student surface so the
+      # tunnel can route the two hostnames independently — which is what lets
+      # Access sit in front of one of them and not the other.
+      - "127.0.0.1:3102:3000"
+    mem_limit: 1g
 
   # ---- content refresh (NOT part of the running stack) ----
   # `profiles:` keeps this out of `docker compose up -d` entirely: a code deploy
@@ -124,9 +394,9 @@ services:
   loader:
     profiles: ["tools"]
     build:
-      context: .                  # deps only — code comes from the mount below
+      context: . # deps only — code comes from the mount below
       dockerfile: Dockerfile.loader
-    image: ainext-mvp1-loader          # stable tag: a rebuild leaves ONE dangling image
+    image: ainext-mvp1-loader # stable tag: a rebuild leaves ONE dangling image
     environment:
       # Keyword DSN + PGPASSWORD: no URL-encoding traps if the password ever
       # contains @ : / # ?. The password is never on a command line.
@@ -145,8 +415,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      migrate:
+        # A content load against a database that is behind on migrations writes
+        # into the wrong shape or fails halfway. `compose run --rm loader` brings
+        # its dependencies up, so this makes "migrations first" true for the
+        # refresh path too, not only for deploys.
+        condition: service_completed_successfully
     mem_limit: 512m
 
 volumes:
   ainext_mvp1_pg:
   claude_cfg:
+  ainext_mvp1_uploads:

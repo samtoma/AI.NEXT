@@ -1,8 +1,74 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-21 (`feat/002-identity-and-admin-console` at `1ea3e4b`; released
+> Last updated: 2026-09-22 (`feat/002-identity-and-admin-console` at `85fe3b8`; released
 > `PDR1-0-v0.4.0`; constitution v3.1.1)
+
+## 📋 THE RECORD MADE TRUE — requirements pass (2026-09-22)
+
+An evening of work on 2026-09-21 shipped four commits and, deliberately, **no requirements at
+all**: course availability went out with no FR, no matrix row and a header in every file it
+touched saying so, because inventing a requirement to cover shipped work is the drift `CLAUDE.md`
+warns about. **Samuel authorised writing them on 2026-09-22.** This pass is that, and nothing in
+it is back-dated.
+
+| What | Where |
+|---|---|
+| **11 new requirements**, each stamped `[ADDED 2026-09-22]` | `specs/002-identity-and-admin-console/spec.md` → **FR-2701…FR-2711**, traced in its matrix **§7b** |
+| **ADR-0018 — who may see which course** (Accepted, Samuel, 2026-09-21) | [`docs/decisions/0018-course-availability.md`](decisions/0018-course-availability.md) |
+| 001 matrix **rev. 12**, 002 matrix **rev. 3** | both `traceability.md` files |
+
+**Three status changes, and the reasoning matters more than the letters.**
+
+- **`FR-205` — the contradiction is settled.** The matrix had said VERIFIED ("accept uploads from
+  anywhere in the lesson") while `SC-009`, eleven rows later, said uploads were unreachable and the
+  grounding link was dead. **The second one was right**: FR-205 had been verified in 2026-09-10
+  against code that existed rather than a path a student could walk — no surface had a file input,
+  and `api/ask/route.ts` never read `uploadId`, so the grounding parameter was `undefined` on every
+  turn ever served. The row now carries that history rather than a silent flip. Both are closed by
+  `85fe3b8`, and **SC-009's upload guardrail fired for the first time** on 2026-09-21.
+- **`FR-1011` is PARTIAL, not VERIFIED.** The variant mechanism is finished and was driven live in
+  served HTML — grade → skin at byte 31, an override stored against the student that survives
+  sign-out, `"noor"` refused 400, a scan test that fails if any component pins a variant again. But
+  `[data-ds="master"]` sets a name and inherits the baseline tokens: **Master's anatomy is
+  unpublished**, and ADR-0017 forbids onboarding a Secondary cohort until it is.
+- **`FR-905` is BLOCKED, and left standing.** "No Arabic or Social Studies content in this
+  environment" is unmet — all three courses are loaded and live for grade 9 on Samuel's own
+  instruction. It is **not reworded to match what got built**. Reinstating it is one console action
+  per course and unloads nothing; reinstate or withdraw is his call (001 §9 item 13).
+
+**Counts after the pass** — 001: **56 VERIFIED · 17 BUILT · 8 PARTIAL · 6 OPEN · 4 BLOCKED ·
+12 DEFERRED** of 104 (plus FR-908 DROPPED). 002: **69 VERIFIED · 2 BUILT · 17 PARTIAL · 2 OPEN ·
+1 BLOCKED · 4 DEFERRED** of 95. `./scripts/traceability.py --check` exits 0.
+
+**Three things this pass found and did not fix**, because fixing them is code:
+
+1. **The 2026-09-21 evening has no smoke script.** Every phase P0–P6 closed with one anybody can
+   re-run; this work was proved by hand in a browser and psql. Real evidence, not re-runnable.
+2. **78 tests prove requirements and declare none of them** — `catalog`, `catalog-gate`,
+   `upload-link`, `upload-contract`, `design-variant`, `design-variant-scan`. Each says in its own
+   header that it carries no `@covers` because no requirement existed. Eleven do now.
+3. **The course gate's undo has never been run.** `AINEXT_COURSE_GATING=off` and
+   `scripts/course-gating.sh` are the reversibility Samuel was promised before he saw the feature,
+   and there is no record of either being exercised (FR-2709, PARTIAL).
+
+## 🌙 THE EVENING OF 2026-09-21 — four commits, and what each was for
+
+Landed on `feat/002-identity-and-admin-console` after P6. Full reasoning is in the commit messages,
+which are written to be read: `git log --format='%h %s%n%n%b' 1ea3e4b..HEAD`.
+
+| Commit | What |
+|---|---|
+| `c58cb02` | **Course availability.** Two levers — a rule per (course, grade), an exception per (student, course) that wins both ways — over a default of hidden. The refusal lives in the reads, not the interface; a hidden course answers the same 404 a non-existent one does. `content-review` sets a year's rule, `student-data` sets one student's access. Reversible three ways |
+| `c510cf7` | **The confirmation moved into the page.** "Live" on an empty course had asked with `window.confirm`, and Samuel's browser suppresses dialogs — `confirm()` returned `false` and the grid read it as "no", so the control failed silently. No native dialog remains anywhere in the product |
+| `62f780c` | **Arabic and Social Studies loaded** (84 and 100 objectives). They were never dropped; one line of `local-dev.sh` loaded maths only. The same commit narrowed the local promote step to maths, which stopped it stamping `reviewed_by='local-dev'` on **297 Quran and hadith passages** nobody had read — a false review assertion FR-1110 forbids |
+| `85fe3b8` | **Uploads a student can reach** (FR-205/206, SC-009), **two skins chosen before first paint** (FR-1011), the **security record made explorable** (filters, paging, a true total, sign-in history as a mode of the same list), the sessions panel made readable, and the overview's silent fall to Arabic fixed |
+
+**Three latent leaks were found and closed on the way** (002 §9b item 12), none reachable while one
+course was loaded and **all three live the moment a second one is**: `/api/attempts` graded any live
+question id and returned the correct answer with the full canonical solution; `/spine` shipped every
+question across all courses; `?mode=practice` served hidden stems. That is why course availability is
+a security feature rather than a preferences screen.
 
 ## 🏗️ IMPLEMENTED — identity, isolation and the console (2026-09-21, `feat/002-identity-and-admin-console`)
 
@@ -10,7 +76,9 @@
 Seven phase commits on one branch, each closed by a live smoke script. The record is the commit
 messages (`git log --format='%h %s%n%n%b' origin/PDR1-0..HEAD`) and
 [`specs/002-identity-and-admin-console/traceability.md`](../specs/002-identity-and-admin-console/traceability.md)
-rev. 2 — **62 VERIFIED, 2 BUILT, 13 PARTIAL, 2 OPEN, 1 BLOCKED, 4 DEFERRED of 84**.
+rev. 3 — **69 VERIFIED, 2 BUILT, 17 PARTIAL, 2 OPEN, 1 BLOCKED, 4 DEFERRED of 95**
+(rev. 2 read 62/2/13/2/1/4 of 84; the eleven course-availability requirements arrived on
+2026-09-22 and are marked as arriving after their code).
 
 | Phase | What shipped | Commit |
 |---|---|---|
@@ -114,9 +182,11 @@ blocks testing on a laptop; what it blocks is the box.
 [`specs/002-identity-and-admin-console/quickstart.md`](../specs/002-identity-and-admin-console/quickstart.md)
 — one command, both surfaces, three local identities, and what each check proves.
 
-**Decisions log: nothing new.** No ADR was written on this branch; ADR-0012…ADR-0016 were already
-accepted on 2026-09-20 and the implementation follows them. Everything that looks like a new decision
-is a row in the setup table above, which is to say it is still Samuel's.
+**Decisions log — one ADR, written after the fact and dated honestly.** Phases P0–P6 added none:
+ADR-0012…ADR-0016 were accepted on 2026-09-20 and the implementation follows them. **ADR-0018**
+(course availability) records Samuel's decision of **2026-09-21** and was written on **2026-09-22**,
+with the requirements it governs. Everything else that looks like a new decision is a row in the
+setup table above, which is to say it is still Samuel's.
 
 ## ➡️ THE DIRECTION THIS CAME FROM — accounts, and an admin dashboard (Samuel, 2026-09-20)
 
@@ -211,7 +281,12 @@ retained" is reversed: both variants ship and the product picks one per render f
 student's grade (Preparatory → Play, Secondary → Master), with a stored override that
 survives sign-out. **Constitution → v3.1.1 (PATCH)** carries the rule in Principle XII, which
 also now states that static brand marks satisfy "tokens, never literals" by matching the token
-values. The obligation is **FR-1011** (OPEN — no code; `globals.css` has the Play skin only).
+values. The obligation is **FR-1011** — **PARTIAL as of 2026-09-22**, not OPEN and not done:
+`globals.css` now names both skins, the variant is resolved server-side from grade and carried on
+`<html>` before first paint, and a student's override is stored against her account. What is still
+missing is Master itself — `[data-ds="master"]` sets a name and inherits the baseline tokens,
+because **Master's anatomy is unpublished**. ADR-0017's rule therefore still holds: **no Secondary
+cohort until it is.**
 
 ## 🐞 FEEDBACK CLOSED OUT — `PDR1-0-v0.4.0` (2026-09-20, `PDR1-0`)
 

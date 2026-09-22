@@ -544,6 +544,15 @@ document: a requirement whose code exists but has never been executed does not c
 
 - **FR-905**: The new environment MUST NOT serve Arabic Language or Social Studies content; the
   comparison is mathematics-only on both sides.
+  *[CONTRADICTED 2026-09-21, recorded 2026-09-22 — routed to Samuel, not rewritten]*: on Samuel's
+  direction to see the product as it will be sold, `scripts/local-dev.sh` now loads all three
+  courses and all three are set **live for grade 9** in the local `mvp1` database (`62f780c`) — a
+  Social Studies lesson opens and is taught. The requirement is therefore **unmet**, deliberately
+  and by his own instruction. It is left standing rather than reworded, because rewriting a
+  requirement to match what got built is the failure this spec set exists to prevent. What changed
+  underneath it is that **loading and serving are now two different acts** (ADR-0018): reinstating
+  FR-905 costs one console action per course and unloads nothing. Whether it is reinstated or
+  withdrawn is Samuel's call — traceability §9.
 - **FR-906**: Provisioning the new environment MUST NOT remove volumes on the shared box, and MUST
   leave the existing environment's one-time AI runtime login intact.
 - **FR-907**: The new environment MUST sit behind Cloudflare Access with an explicitly invited

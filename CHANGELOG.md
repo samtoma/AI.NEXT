@@ -11,9 +11,10 @@ requirement names it.
 ## [Unreleased]
 
 Feature 002 — identity, per-student isolation and the admin console — built in seven
-phases on `feat/002-identity-and-admin-console`. **Not merged, not tagged, not
-deployed.** `app/package.json` is deliberately not bumped: the release is Samuel's
-(VERSIONING.md step 3).
+phases on `feat/002-identity-and-admin-console`, plus an evening of work on 2026-09-21
+that added course availability, reachable uploads and the two skins. **Not merged, not
+tagged, not deployed.** `app/package.json` is deliberately not bumped: the release is
+Samuel's (VERSIONING.md step 3).
 
 Until this ships, "which student is using the product" was answered by a dropdown.
 That is the thing that changes.
@@ -79,6 +80,41 @@ That is the thing that changes.
 - **The tutor addresses each student correctly.** She says how she would like to be
   spoken to at sign-up, or declines; the tutor's language follows on the next turn,
   with no sign-out. `FR-2601`…`FR-2603`, `FR-2606`.
+- **Who may see which course, decided in the console.** All three subjects now appear on
+  a Courses page — the product as it will be sold — with a switch per subject per school
+  year deciding which of them actually reach a student, and an exception for one named
+  student that overrules the year in either direction. **A course is hidden until
+  somebody says otherwise**: no rule means no access, so a book loaded overnight cannot
+  be on a fourteen-year-old's screen before a person decided it should be. Deciding a
+  year's rule and deciding one student's access need different permissions, so the person
+  who manages subjects never learns a child's name through it. Every decision records who
+  made it, when, and why in their own words. `FR-2701`…`FR-2711`,
+  [ADR-0018](docs/decisions/0018-course-availability.md).
+- **A student can finally send a photograph of her homework.** The server has accepted
+  and read photographs for weeks; nothing in the product could send one, and the
+  connection between an uploaded worksheet and the tutor's next answer had never once
+  been made. Both halves are fixed: one attachment control in the message box that both
+  the lesson and the chat show, a camera on touch devices, and the photograph actually
+  reaching the tutor — who now quotes the equation off the page and declines to solve it,
+  which is the rule we always claimed and had never been in a position to apply.
+  `FR-205`, `FR-206`, and the upload half of `SC-009`.
+- **Two skins, chosen before the page paints.** Play for preparatory years, Master for
+  secondary, decided on the server from the student's school year and settled before the
+  first pixel — no flip half a second in. A student who prefers the other one says so in
+  settings and it follows her to any device, because it is stored with her account rather
+  than in the browser. Operators get the same control for the console.
+  `FR-1011`, [ADR-0017](docs/decisions/0017-two-variants-keyed-to-grade.md).
+- **Arabic and Social Studies are back in the app.** They were never dropped: the
+  bundles, the teaching voices and the loader's support for all three had been in the
+  tree the whole time, and one line of a local setup script loaded maths and nothing
+  else. Now loaded — social studies 84 objectives, arabic 100 — and **loading is not
+  showing**: each one stays invisible until somebody sets it live for a year.
+- **The security record can be explored instead of scrolled.** Filter by what happened,
+  to whom, by which operator, with what outcome, over which window; page through it; see
+  a true total instead of an arbitrary cut at two hundred. Every view is an address an
+  operator can paste into an incident. Sign-in history is the same list in a different
+  mode. A student's record now links straight to who has read it and how she has signed
+  in. `FR-2502`, `FR-2306`.
 
 ### Fixed
 
@@ -106,6 +142,23 @@ That is the thing that changes.
 - **The tool that proves a prompt did not change had been broken**, so every change
   for weeks could only report that it "fails the same way it did before". It works
   again, and now covers two prompts it had never been able to reach.
+- **A button that did nothing and said nothing about why.** Clicking "Live" on an empty
+  course asked for confirmation with the browser's own dialog box — and Samuel's browser
+  had dialogs switched off, which makes that question answer itself with "no". Every
+  embedded preview, kiosk and corporate policy that suppresses dialogs does the same. The
+  question is part of the page now, and no screen in the product uses a browser dialog
+  for anything.
+- **The cohort overview had quietly become Arabic's.** Loading two more subjects made the
+  page default to whichever sorted first alphabetically, while still reading as though it
+  described the product. It now defaults to the busiest cohort, names its subject in its
+  own heading, and offers a control instead of links you had to spot.
+- **The cost tile showed a dash and did not say why.** It holds only days that have
+  closed, and every interaction on record happened today. It now says which of three
+  empty states it is in, and names today's figure without pretending it is part of the
+  stored series.
+- **Two console pages had never been added to the routing rule** the other twelve pass
+  through, since the day they shipped. And the local environment-file reader mis-read a
+  line break written as `\n`.
 
 ### Security
 
@@ -126,6 +179,43 @@ That is the thing that changes.
   operator is created without one and obtains it through the ordinary reset flow,
   and reset links are built from a configured address rather than from whatever host
   the request claimed to be for.
+- **Three ways to reach a subject you were not given.** Found while building the course
+  switch, and none of them was reachable while only one subject existed — all three go
+  live the moment a second one does, which is now. An answer-checking endpoint graded
+  *any* question in the database and handed back the correct answer with the full worked
+  solution; the curriculum explorer shipped every question in every subject, answers and
+  solutions included; and practice mode served questions from subjects a student could not
+  open. All three are closed by the same rule, applied where the data is read rather than
+  where it is displayed.
+- **A local convenience nearly published scripture nobody had read.** The setup script
+  promotes questions to live so the local database is usable. It selected by how a
+  question was authored, which meant "the maths book" only because maths was the only
+  book. With Arabic loaded it would have promoted 576 held questions — 297 of them Quran
+  and hadith passages held for a named religious-content owner to check against a printed
+  source — and stamped them as reviewed by a script. It names the subject it was always
+  about now. Verified: it promotes none of them, and all 576 stay held.
+
+### Requirements and records
+
+- **Eleven requirements were written for work that had already shipped**, on Samuel's
+  explicit instruction, and every one of them is stamped with the date it was written
+  rather than the date of the code it describes. Course availability had deliberately
+  gone out with no requirement and no traceability row, because inventing one unasked is
+  how a requirements record stops being worth reading. `FR-2701`…`FR-2711`.
+- **A contradiction the matrix had been carrying for six days is settled.** `FR-205` said
+  uploads worked and were verified; `SC-009`, eleven rows later, said uploads were
+  unreachable and the link to the tutor was dead. The second one was right. The row now
+  carries that history — when it was verified in error, what the error was (code that
+  existed, rather than a path a student could walk) and what closed it — instead of being
+  quietly flipped to true.
+- **`FR-905` — "no Arabic or Social Studies in this environment" — is recorded as unmet**
+  rather than rewritten. All three subjects are loaded and live for year 9 on Samuel's own
+  instruction. Reinstating it is one action per subject in the console and unloads
+  nothing; whether to reinstate it or withdraw it is his call.
+- **`FR-1011` (the two skins) is recorded as partial, not done.** The mechanism works and
+  was driven live. Master itself is a colour name over the baseline tokens — its
+  component guidelines, type scale and motion spec are unpublished — so ADR-0017's rule
+  stands: **no secondary-year students should be onboarded yet**.
 
 ### Known gaps
 
@@ -141,8 +231,21 @@ That is the thing that changes.
   what "delete" means has not been made.
 - **The Arabic prompts still carry masculine forms outside direct address.** Out of
   scope for a maths-only build, and named so it is not forgotten.
+- **The course switch's undo has never been used.** Turning the whole thing off is one
+  setting and a script, promised before the feature was built and not once exercised.
+- **Half of the course switch's enforcement points have no test asserting they are
+  called.** The rule itself is heavily tested; whether the curriculum explorer, the
+  practice plan and the tutor's data block actually ask it is not, which is precisely the
+  failure `FR-205` above records.
+- **Nobody can re-run the evening of 2026-09-21.** Every earlier phase closed with a smoke
+  script anyone can run again; this work was proved by hand in a browser and a database
+  console. The evidence is real and there is nothing to re-run it with.
+- **Seventy-eight tests prove requirements and declare none of them**, because the files
+  were written when the requirements did not exist. Until a comment lands in each, the
+  generated "requirements a test declares" count under-reports.
 - Full status, row by row, with what proves each one:
-  `specs/002-identity-and-admin-console/traceability.md`.
+  `specs/002-identity-and-admin-console/traceability.md` and
+  `specs/001-student-mvp1-delta/traceability.md`.
 
 ## [PDR1-0-v0.4.0] — 2026-09-20
 
