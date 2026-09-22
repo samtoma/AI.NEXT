@@ -15,6 +15,8 @@
 
 # next.js
 /.next/
+# the console build's distDir (ADR-0014) — same artefact, second surface
+/.next-admin/
 /out/
 
 # production
@@ -41,3 +43,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local mail transport (verification / reset links written by lib/mail.ts)
+/.local-mail/
+
+# prompt-capture output (constitution IX before/after diffs) — a local
+# artefact of a gate, regenerated on demand, never a source of truth
+/.captures/

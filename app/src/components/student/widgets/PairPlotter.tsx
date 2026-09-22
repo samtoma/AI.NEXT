@@ -31,12 +31,25 @@ function quadrant(x: number, y: number): { en: string; ar: string } {
 export function PairPlotter({
   prompt,
   target,
+  studentName,
+  pronoun,
   onResult,
 }: {
   prompt: string;
   target: [number, number];
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
+  /** Lower-case third-person pronoun for "swapped the coordinates", already
+   *  resolved from `lib/address.ts` (FR-2605). Defaults to singular "they" —
+   *  never the masculine. */
+  pronoun?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
+  const they = pronoun?.trim() || "they";
   const [picked, setPicked] = useState<[number, number] | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const done = picked !== null;
@@ -72,9 +85,9 @@ export function PairPlotter({
         : "off-target",
       given: `(${x},${y})`,
       detail: ok
-        ? `✓ Omar plotted (${target[0]},${target[1]}) correctly on the grid — ${q.en}`
-        : `✗ Omar plotted (${x},${y}) instead of (${target[0]},${target[1]}) on the pair plotter${
-            swapped ? " — he swapped the coordinates (order confusion)" : ""
+        ? `✓ ${who} plotted (${target[0]},${target[1]}) correctly on the grid — ${q.en}`
+        : `✗ ${who} plotted (${x},${y}) instead of (${target[0]},${target[1]}) on the pair plotter${
+            swapped ? ` — ${they} swapped the coordinates (order confusion)` : ""
           }`,
     });
   };

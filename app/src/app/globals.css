@@ -480,20 +480,101 @@ body[data-focus="lesson"] > footer {
 }
 
 /* ===========================================================================
+   THE TWO VARIANTS — `[data-ds]` is the whole switch (ADR-0017, FR-1011)
+   ---------------------------------------------------------------------------
+   The published design system has TWO variants over ONE semantic token set,
+   and the product picks one per page render from the student's grade:
+   Preparatory → **Play** (ages 10–16), Secondary → **Master** (15–18), with a
+   per-student override stored server-side that wins over the grade rule. The
+   attribute is written by `layout.tsx` in the same render that produces the
+   document, so a surface never renders in one skin and re-renders in the
+   other — a visible skin flip is a defect, not a loading state.
+
+   THREE SELECTOR STATES, AND THEY ARE NOT THE SAME THING:
+
+     [data-ds="play"]     the Play variant, named.
+     [data-ds="master"]   the Master variant, named (see its own block below).
+     [data-ds="noor"]     an ALIAS of `play`, retained for compatibility.
+     (attribute absent)   the frozen `family-tutor` baseline's Ledger identity,
+                          which is NOT a variant and is NOT how either named
+                          variant is reached. ADR-0017: "a surface with no
+                          attribute is a bug rather than a silent choice."
+
+   WHY `noor` SURVIVES AS AN ALIAS. Until FR-1011 the single skin was spelled
+   `noor`, and the name is still in the published artifact, in the handoff
+   under `docs/design/handoffs/noor-play/`, and in any branch or screenshot
+   taken before this change. Dropping it would silently un-skin whatever still
+   writes it — the loudest possible regression with the quietest possible
+   cause. It is an alias and nothing more: nothing in `src/` writes it any
+   more, and `design-variant-scan.test.mts` keeps it that way.
+
+   WHY `:is(…)` RATHER THAN A DUPLICATED SELECTOR LIST. `:is()` takes the
+   specificity of its most specific argument, so `:is([data-ds="play"],
+   [data-ds="noor"])` is (0,1,0) — **byte-for-byte the same weight as the bare
+   `[data-ds="noor"]` these rules used to carry**, which is what makes this a
+   rename rather than a cascade change. `:where()` would have been wrong for
+   exactly that reason: it zeroes specificity, `:root` above is (0,1,0), and
+   every token below would have lost to the value it is meant to override.
+   Writing the pair out longhand on all 51 rules would have worked too and
+   cost about 1 kB of repeated compound selectors; this costs ~300 bytes.
+
+   Everything below REDEFINES the existing semantic tokens rather than
+   introducing a parallel set, so every surface in the product picks up the
+   variant without being touched one component at a time.
+
+   ======================================================================== */
+
+/* ===========================================================================
+   MASTER — the named sibling (ages 15–18), ADR-0017
+   ---------------------------------------------------------------------------
+   Master's token VALUES are the `:root` set at the top of this file, and this
+   block deliberately RESTATES NONE OF THEM.
+
+   WHY INHERITANCE RATHER THAN A COPY. Master and the frozen baseline's Ledger
+   identity are the same palette — ADR-0017 says so in as many words: "`play`
+   and `ledger`, the latter being the restrained identity every surface still
+   renders when the `[data-ds]` attribute is absent". Writing those thirty-odd
+   values out a second time under this selector would create two spellings of
+   one palette that must never disagree, and they would disagree — the first
+   time somebody fixed a contrast pairing in one place. So Master is reached
+   by matching NO Play rule and inheriting `:root`, which is not a trick: it
+   is what "one semantic token set, two skins" means when one of the skins is
+   the set's own default rendering.
+
+   WHAT THIS BLOCK IS FOR, THEN. ADR-0017 asks for Master to be "a named
+   sibling rather than the unnamed default, so the selector set is explicit".
+   `[data-ds="master"]` is that name. It is what `layout.tsx` writes, what a
+   student's override stores, and what an operator's console preference means.
+   The absent attribute stays what it always was — the frozen baseline — and
+   is NOT how Master is reached, so the two cases can be told apart in a
+   screenshot, in devtools and in a curl of the served HTML.
+
+   ⚠ WHAT IS NOT HERE, AND MUST NOT BE ASSUMED. **Master's anatomy is not
+   published.** The component guidelines, the type scale and the motion spec
+   on the design artifact are written for Play; what exists for Master today
+   is a colour theme and nothing else. ADR-0017's Consequences are explicit
+   about the obligation that follows: both variants owe the same accessibility
+   pairings, the contrast table in `docs/design/handoffs/noor-play/README.md`
+   needs its Master counterpart, and **until that anatomy is published no
+   Secondary cohort should be onboarded** — the grade rule would route them to
+   a variant that is half specified. Do not read this block as Master being
+   finished. It is the mechanism, ready for the anatomy to land on top of it.
+   ======================================================================== */
+
+[data-ds="master"] {
+  /* See the note on `--ds-variant` in the Play block below: a name, so the
+     active variant is legible from the document's own computed styles, and so
+     this rule says something rather than being an empty selector. */
+  --ds-variant: master;
+}
+
+/* ===========================================================================
    NOOR SKIN — v0.3, the "Play" variant (ages 10–16)
    ---------------------------------------------------------------------------
-   Applied by <html data-ds="noor">, which layout.tsx sets when
-   AINEXT_ENVIRONMENT=mvp1. Everything below REDEFINES the existing semantic
-   tokens rather than introducing a parallel set, so every surface in the
-   product picks up the Noor Play palette without being touched one component
-   at a time — and the frozen baseline (data-ds absent) renders exactly as
-   before.
-
-   This REPLACES the v0.2 "Master" skin (restrained, ages 15–18) with Play: a
-   louder, more physical, character-led interface — thick ink outlines, hard
+   A louder, more physical, character-led interface — thick ink outlines, hard
    offset shadows, bigger radii, 52px targets, Baloo running the whole UI.
    Handoff: docs/design/handoffs/noor-play/ (design_handoff_nour_play v1.0a).
-   Superseded decision record: docs/design/noor/README.md.
+   Decision record: docs/design/noor/README.md.
 
    Two rules from that system are load-bearing and are enforced here rather
    than left to each component:
@@ -508,7 +589,17 @@ body[data-focus="lesson"] > footer {
        screen, never by a blanket mapping.
    ======================================================================== */
 
-[data-ds="noor"] {
+:is([data-ds="play"], [data-ds="noor"]) {
+  /* Which variant is in force, readable from the computed styles on <html>.
+     Nothing in the product branches on it — the whole design is that no
+     component knows which variant it is in — but ADR-0017 makes "resolved
+     before first paint" a property somebody has to be able to CHECK, and the
+     honest way to check it in a browser is to read a value off the document
+     rather than to trust the attribute a script could have written after the
+     fact. It also keeps the Master block below from being an empty rule that
+     a minifier would drop. Not a colour, not a size: a name. */
+  --ds-variant: play;
+
   --paper: #fff6e6; /* bg-page — Cream */
   --paper-deep: #f6f5fa; /* inactive fill */
   --card: #ffffff; /* bg-surface */
@@ -574,7 +665,7 @@ body[data-focus="lesson"] > footer {
 
   /* inactive / wrong-answer / disabled */
   --play-inactive-fill: #f6f5fa;
-  --play-inactive-border: #9c95b8;
+  --play-inactive-border: #9890b5; /* darkened 2026-09-20 from #9c95b8 (2.84:1) — 3.00:1 on white */
   --play-disabled-border: #b4aecb;
   --play-disabled-text: #8a83a6; /* permitted ONLY on a [disabled] control */
 
@@ -625,22 +716,22 @@ body[data-focus="lesson"] > footer {
 /* The ledger's ruled-paper grid, warm vignette and grain belong to the frozen
    baseline's identity. Play's ground is flat and quiet too — Cream, no
    texture — just warmer and more saturated than v0.2's Paper. */
-[data-ds="noor"] body {
+:is([data-ds="play"], [data-ds="noor"]) body {
   font-feature-settings: normal;
   line-height: 1.75; /* leading-latin */
   background-image: none;
 }
 
-[data-ds="noor"] body::before {
+:is([data-ds="play"], [data-ds="noor"]) body::before {
   content: none;
 }
 
-[data-ds="noor"] ::selection {
+:is([data-ds="play"], [data-ds="noor"]) ::selection {
   background: rgba(240, 162, 47, 0.28);
 }
 
 /* One focus treatment, everywhere, amber — it is the only ring in the system. */
-[data-ds="noor"] :focus-visible {
+:is([data-ds="play"], [data-ds="noor"]) :focus-visible {
   outline: none;
   box-shadow: var(--noor-focus-ring);
 }
@@ -649,7 +740,7 @@ body[data-focus="lesson"] > footer {
    for six words and tiring for sixty (handoff CLAUDE.md §TYPE). Apply this to
    any lesson explanation, chat message body, or reading passage. */
 .font-read,
-[data-ds="noor"] .font-read {
+:is([data-ds="play"], [data-ds="noor"]) .font-read {
   font-family: var(--stack-read, var(--stack-sans));
 }
 
@@ -657,43 +748,43 @@ body[data-focus="lesson"] > footer {
    without touching its existing (baseline) classes. No `!important` needed:
    these are plain classes with no Tailwind counterpart, so there's nothing to
    out-specificity — just add the class alongside whatever is already there. */
-[data-ds="noor"] .sticker-shadow-sm {
+:is([data-ds="play"], [data-ds="noor"]) .sticker-shadow-sm {
   box-shadow: var(--play-shadow-sm);
 }
-[data-ds="noor"] .sticker-shadow {
+:is([data-ds="play"], [data-ds="noor"]) .sticker-shadow {
   box-shadow: var(--play-shadow);
 }
-[data-ds="noor"] .sticker-shadow-lg {
+:is([data-ds="play"], [data-ds="noor"]) .sticker-shadow-lg {
   box-shadow: var(--play-shadow-lg);
 }
-[data-ds="noor"] .sticker-shadow-xl {
+:is([data-ds="play"], [data-ds="noor"]) .sticker-shadow-xl {
   box-shadow: var(--play-shadow-xl);
 }
 
 /* /student check-in anatomy's own press spec (docs/design/handoffs/noor-play
    check-in brief) — gentler than .play-pressable by design: 2px of travel,
    the shadow only shrinks (5px -> 3px) rather than collapsing to 0, 80ms. */
-[data-ds="noor"] .checkin-press {
+:is([data-ds="play"], [data-ds="noor"]) .checkin-press {
   box-shadow: 5px 5px 0 var(--ink);
   transition: transform 80ms ease-out, box-shadow 80ms ease-out;
 }
-[data-ds="noor"] .checkin-press:active {
+:is([data-ds="play"], [data-ds="noor"]) .checkin-press:active {
   transform: translate(2px, 2px);
   box-shadow: 3px 3px 0 var(--ink);
 }
 
-[data-ds="noor"] .ledger-card {
+:is([data-ds="play"], [data-ds="noor"]) .ledger-card {
   border-width: var(--play-stroke);
   border-radius: var(--play-radius-lg);
   box-shadow: var(--play-shadow-lg);
 }
 
-[data-ds="noor"] .rule-label {
+:is([data-ds="play"], [data-ds="noor"]) .rule-label {
   letter-spacing: 0.06em;
   color: var(--ink-soft);
 }
 
-[data-ds="noor"] .chip {
+:is([data-ds="play"], [data-ds="noor"]) .chip {
   border-width: var(--play-stroke-sm);
   box-shadow: 2px 2px 0 var(--ink);
 }
@@ -704,12 +795,12 @@ body[data-focus="lesson"] > footer {
    these OVERRIDE the existing bg-card-warm/bg-ink/text-paper utilities via
    ordinary two-class specificity, the same trick `.chip`/`.ledger-card` use
    above; the baseline classes are never edited, only outranked here. */
-[data-ds="noor"] .noor-bubble-tutor {
+:is([data-ds="play"], [data-ds="noor"]) .noor-bubble-tutor {
   background: var(--card);
   border-color: var(--ink);
   box-shadow: var(--play-shadow-sm);
 }
-[data-ds="noor"] .noor-bubble-student {
+:is([data-ds="play"], [data-ds="noor"]) .noor-bubble-student {
   background: var(--play-sky);
   color: var(--play-on-sky);
   border: var(--play-stroke-sm) solid var(--ink);
@@ -718,8 +809,8 @@ body[data-focus="lesson"] > footer {
 
 /* Disabled reads as "not ready yet", not "broken": the outline goes dashed
    and the shadow disappears rather than just dimming (handoff, Buttons). */
-[data-ds="noor"] button:disabled,
-[data-ds="noor"] [disabled] {
+:is([data-ds="play"], [data-ds="noor"]) button:disabled,
+:is([data-ds="play"], [data-ds="noor"]) [disabled] {
   box-shadow: none !important;
   border-style: dashed;
   border-color: var(--play-disabled-border);
@@ -733,37 +824,37 @@ body[data-focus="lesson"] > footer {
    radii with no component touched. Directional border utilities (border-t/
    -b/-s/-e) are deliberately left alone — those are the thin rail/panel
    dividers (--line-soft, 2px in the handoff), not sticker outlines. */
-[data-ds="noor"] .rounded,
-[data-ds="noor"] .rounded-sm,
-[data-ds="noor"] .rounded-md {
+:is([data-ds="play"], [data-ds="noor"]) .rounded,
+:is([data-ds="play"], [data-ds="noor"]) .rounded-sm,
+:is([data-ds="play"], [data-ds="noor"]) .rounded-md {
   border-radius: var(--play-radius-sm);
 }
-[data-ds="noor"] .rounded-lg,
-[data-ds="noor"] .rounded-xl {
+:is([data-ds="play"], [data-ds="noor"]) .rounded-lg,
+:is([data-ds="play"], [data-ds="noor"]) .rounded-xl {
   border-radius: var(--play-radius);
 }
-[data-ds="noor"] .rounded-2xl,
-[data-ds="noor"] .rounded-3xl {
+:is([data-ds="play"], [data-ds="noor"]) .rounded-2xl,
+:is([data-ds="play"], [data-ds="noor"]) .rounded-3xl {
   border-radius: var(--play-radius-lg);
 }
-[data-ds="noor"] .border,
-[data-ds="noor"] .border-2 {
+:is([data-ds="play"], [data-ds="noor"]) .border,
+:is([data-ds="play"], [data-ds="noor"]) .border-2 {
   border-width: var(--play-stroke);
 }
 
 /* The press: the highest-value interaction in the kit. Wire this class onto
    any control that carries a resting shadow (`.chip`, `.ledger-card`, or a
    sticker button) — "if it doesn't move, it isn't a control." */
-[data-ds="noor"] .play-pressable {
+:is([data-ds="play"], [data-ds="noor"]) .play-pressable {
   transition: transform 90ms cubic-bezier(0.2, 0.7, 0.3, 1),
     box-shadow 90ms cubic-bezier(0.2, 0.7, 0.3, 1);
 }
-[data-ds="noor"] .play-pressable:active {
+:is([data-ds="play"], [data-ds="noor"]) .play-pressable:active {
   transform: translate(var(--play-press-offset), var(--play-press-offset));
   box-shadow: 0 0 0 var(--ink);
 }
 @media (hover: hover) and (pointer: fine) {
-  [data-ds="noor"] .play-pressable:hover {
+  :is([data-ds="play"], [data-ds="noor"]) .play-pressable:hover {
     transform: translate(-1px, -1px);
     box-shadow: 5px 5px 0 var(--ink);
   }
@@ -773,14 +864,14 @@ body[data-focus="lesson"] > footer {
    no Arabic script, so a mono label containing Arabic silently falls through
    to a system face at the wrong size. This is the handoff's single
    most-repeated bug note. */
-[data-ds="noor"] [lang="ar"],
-[data-ds="noor"] [dir="rtl"] {
+:is([data-ds="play"], [data-ds="noor"]) [lang="ar"],
+:is([data-ds="play"], [data-ds="noor"]) [dir="rtl"] {
   font-family: var(--stack-sans);
   letter-spacing: normal;
 }
 
 /* Equations render LTR inline in any page direction (constitution v2.0.0). */
-[data-ds="noor"] .katex {
+:is([data-ds="play"], [data-ds="noor"]) .katex {
   direction: ltr;
   text-align: left;
 }
@@ -882,47 +973,47 @@ body[data-focus="lesson"] > footer {
   }
 }
 
-[data-ds="noor"] .anim-bob {
+:is([data-ds="play"], [data-ds="noor"]) .anim-bob {
   animation: play-bob 3.2s ease-in-out infinite;
 }
-[data-ds="noor"] .anim-wiggle {
+:is([data-ds="play"], [data-ds="noor"]) .anim-wiggle {
   animation: play-wiggle 0.9s ease-in-out infinite;
 }
-[data-ds="noor"] .anim-nudge {
+:is([data-ds="play"], [data-ds="noor"]) .anim-nudge {
   animation: play-nudge 420ms ease-in-out;
 }
-[data-ds="noor"] .anim-fill-bar {
+:is([data-ds="play"], [data-ds="noor"]) .anim-fill-bar {
   animation: play-fill 1.4s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
-[data-ds="noor"] .anim-ring-pulse {
+:is([data-ds="play"], [data-ds="noor"]) .anim-ring-pulse {
   animation: play-ring 1.6s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
-[data-ds="noor"] .anim-particle-rise {
+:is([data-ds="play"], [data-ds="noor"]) .anim-particle-rise {
   animation: play-rise 2.4s ease-in-out infinite;
 }
 
 /* `.anim-pop` already marks every "reveal with a pop" spot in the product
    (AskSpineDock, ChatCore, StudentLoop, VizRefCard, …) — Play just gives it a
    punchier spring, matching the handoff's `pop` exactly, for free. */
-[data-ds="noor"] .anim-pop {
+:is([data-ds="play"], [data-ds="noor"]) .anim-pop {
   animation: play-pop 380ms cubic-bezier(0.34, 1.6, 0.64, 1) both;
 }
 
 /* Mastery: ring + squash, once per skill, ever. */
-[data-ds="noor"] .anim-mastered {
+:is([data-ds="play"], [data-ds="noor"]) .anim-mastered {
   animation: play-squash 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-ds="noor"] .anim-mastered,
-  [data-ds="noor"] .anim-bob,
-  [data-ds="noor"] .anim-wiggle,
-  [data-ds="noor"] .anim-nudge,
-  [data-ds="noor"] .anim-fill-bar,
-  [data-ds="noor"] .anim-ring-pulse,
-  [data-ds="noor"] .anim-particle-rise,
-  [data-ds="noor"] .play-pressable,
-  [data-ds="noor"] .checkin-press {
+  :is([data-ds="play"], [data-ds="noor"]) .anim-mastered,
+  :is([data-ds="play"], [data-ds="noor"]) .anim-bob,
+  :is([data-ds="play"], [data-ds="noor"]) .anim-wiggle,
+  :is([data-ds="play"], [data-ds="noor"]) .anim-nudge,
+  :is([data-ds="play"], [data-ds="noor"]) .anim-fill-bar,
+  :is([data-ds="play"], [data-ds="noor"]) .anim-ring-pulse,
+  :is([data-ds="play"], [data-ds="noor"]) .anim-particle-rise,
+  :is([data-ds="play"], [data-ds="noor"]) .play-pressable,
+  :is([data-ds="play"], [data-ds="noor"]) .checkin-press {
     animation: none;
     transition: none;
   }

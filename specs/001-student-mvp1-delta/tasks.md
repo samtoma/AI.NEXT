@@ -263,7 +263,7 @@ through **FR-1001…FR-1010** (spec.md §Design system) and
 - [X] T077 Load Baloo Bhaijaan 2 + Cairo + IBM Plex Mono via `next/font`, both Arabic subsets included, and force Arabic out of the mono stack in `globals.css` (FR-1007)
 - [X] T078 Flip the check-in and Today's Plan headlines to English-first with Arabic at equal size and weight, spacing from flex rather than inline margins (FR-1006, FR-208)
 - [X] T079 Add `/dashboard` to the shell navigation — it was built in Phase 8 with no way into it, which is the same as not having been built (FR-401)
-- [X] T080 Publish the six-artboard design canvas and commit its source to `docs/design/nour/`, recording the master-vs-Play choice as Samuel's to confirm (constitution Principle I)
+- [X] T080 Publish the six-artboard design canvas and commit its source to `docs/design/noor/`, recording the master-vs-Play choice as Samuel's to confirm (constitution Principle I)
 
 **Not done, and deliberately so**: `.anim-mastered` (FR-1010) is defined and unspent — the one
 signature spring is reserved for a proficient → mastered transition, which needs live band movement

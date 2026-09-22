@@ -1,34 +1,141 @@
-# Expose the tutor at ainext.reletix.com — THIS tunnel is TOKEN-MANAGED
+# Cloudflare tunnel ingress — THIS TUNNEL IS TOKEN-MANAGED
 # ============================================================================
+# READ THIS FIRST: THERE IS NO FILE TO EDIT.
+#
 # The cloudflared on this box runs as a CONTAINER with a TUNNEL_TOKEN
 # (/opt/reletix/infrastructure/cloudflared, network_mode: host). Ingress is
-# therefore managed in the Cloudflare Zero Trust DASHBOARD, NOT a local
+# therefore managed in the Cloudflare Zero Trust DASHBOARD, not in a local
 # config.yml. `cloudflared tunnel route dns` and `systemctl reload cloudflared`
-# do NOT apply here — there is nothing to edit on disk.
+# do NOT apply here. This file is a WRITTEN RECORD of what somebody must click,
+# because that part is not code and nothing in this repository can assert it.
 #
-# ---- To expose the tutor (additive; talent's hostnames stay untouched) ----
-#   Zero Trust -> Networks -> Tunnels -> <the talent tunnel> -> Public Hostname -> Add:
-#     Subdomain: ainext
-#     Domain:    reletix.com
-#     Path:      (empty)
-#     Type:      HTTP            # NOT HTTPS
-#     URL:       localhost:3100  # host-network cloudflared reaches the app on loopback
-#   Save -> DNS auto-created -> the connector hot-reloads (no restart).
+# The corollary is the thing to be afraid of: **nothing in CI can prove the
+# console is protected.** A deploy can succeed, every test can pass, and the
+# console can be sitting on the public internet because an Access application
+# was never created. The checklist below is the only control there is.
 #
-# ---- Then LOCK it (only named people get in) ----
-#   Zero Trust -> Access -> Applications -> Add application -> Self-hosted:
-#     hostname ainext.reletix.com ; policy Allow -> Include -> Emails: <allow-list>
-#   (Create from a clean .../apps/self-hosted/add — the wizard's private-IP
-#    template otherwise 400s a public app on use_clientless_isolation_app_launcher_url.)
+# Ports on this box, for reference — all bound to 127.0.0.1, none published:
+#
+#   3100  frozen baseline, student surface   (project `ainext`)
+#   3101  PDR1-0 student surface             (project `ainext-mvp1`)
+#   3102  PDR1-0 ADMIN CONSOLE               (project `ainext-mvp1`)
+#
+# host-network cloudflared reaches all three on loopback.
 #
 # ============================================================================
-# FALLBACK ONLY — if you EVER switch this to a locally-managed (config.yml)
-# tunnel, the equivalent ingress would be:
+# 1. THE STUDENT HOSTNAME — noor.reletix.com
+# ============================================================================
+#   Zero Trust -> Networks -> Tunnels -> <the shared tunnel> -> Public Hostname
+#   -> Add (or Edit, when taking the hostname over from another service):
+#     Subdomain: noor
+#     Domain:    reletix.com
+#     Path:      (empty)
+#     Type:      HTTP            # NOT HTTPS — the tunnel terminates TLS at the edge
+#     URL:       localhost:3101
+#   Save -> DNS auto-created -> the connector hot-reloads (no restart).
+#
+# ⚠ ONE LABEL DEEP, ALWAYS. Universal SSL covers `*.reletix.com` and a wildcard
+# matches EXACTLY ONE label. `noor.reletix.com` is covered;
+# `console.noor.reletix.com` is NOT, and would serve a certificate error to the
+# one audience least able to shrug it off. Any new hostname on this zone is
+# `something.reletix.com` or it needs an Advanced Certificate Manager
+# subscription, which is a cost decision, not a naming one.
+#
+# ⚠ CHANGING THIS URL IS THE TAKEOVER. Repointing an existing hostname from
+# `localhost:3100` to `localhost:3101` swaps which product the world sees, in
+# seconds, with no deploy and no DNS propagation — and swaps it back just as
+# fast. `deploy/TAKEOVER.md` treats that as the safest cut-over there is and
+# explains what each step costs. Nothing else in the takeover is this reversible.
+#
+# ============================================================================
+# 2. THE CONSOLE HOSTNAME — NOT YET DECIDED (Samuel's call)
+# ============================================================================
+# **Decided (Samuel, 2026-09-22): admin-noor.reletix.com** — a sibling, one label deep, so it is
+# inside the Universal SSL wildcard. `console.noor.reletix.com` reads better and
+# is not certificate-covered; that trade is Samuel's to make.
+#
+#     Subdomain: admin-noor
+#     Domain:    reletix.com
+#     Path:      (empty)
+#     Type:      HTTP
+#     URL:       localhost:3102
+#
+# Whatever the name is, it must also be written into `AINEXT_CONSOLE_URL` in
+# deploy/.env — the compose stack refuses to start until it is, because an
+# operator's password-reset link is built from that value and a reset link
+# pointing at the wrong origin is a dead link at best.
+#
+# ============================================================================
+# 3. ACCESS — DO THIS BEFORE THE CONSOLE HOSTNAME RESOLVES, NOT AFTER
+# ============================================================================
+# Creating the public hostname makes the console reachable from anywhere the
+# moment you press Save. The Access application is what makes it reachable only
+# by named people (FR-2208). Create the application FIRST, then the hostname.
+#
+#   Zero Trust -> Access -> Applications -> Add an application -> Self-hosted:
+#     Application domain: <the console hostname>
+#     Policy: Allow -> Include -> Emails: <the operator allow-list, by address>
+#
+#   Start from a clean .../apps/self-hosted/add — the wizard's private-IP
+#   template otherwise 400s a public app on
+#   use_clientless_isolation_app_launcher_url.
+#
+# WHY THIS IS NOT BELT-AND-BRACES. Two decisions in SETUP.md were accepted for
+# the pilot *on the stated assumption that Access is in front of the console*:
+#
+#   S18 — a student credential presented to the console is refused in a way that
+#         reveals whether an address has an account (403 vs 401). Accepted
+#         "bounded by Cloudflare Access + operator-only audience".
+#   S19 — a refused console page renders its refusal with HTTP 200.
+#
+# Remove Access and those are no longer bounded by anything; they become an
+# account-enumeration oracle on the open internet, in front of a sign-in page
+# for an account that can read every student's transcripts. If Access cannot be
+# configured, the correct answer is to give the console NO public hostname and
+# reach it over an SSH tunnel:
+#
+#   ssh -L 3102:127.0.0.1:3102 <the box>   # then open http://localhost:3102
+#
+# That is a perfectly good posture for a one-operator pilot and costs nothing.
+#
+# ---- The student hostname's Access application is a SEPARATE question --------
+# Today the same Access application fronts the tutor, and ADR-0007 leans on it:
+# it is what bounds the risk of serving pipeline-generated explanation content
+# that has not been reviewed, and removing a hostname from Access is the fastest
+# withdrawal lever there is — faster than any deploy. Real accounts now exist,
+# so it is tempting to conclude Access is redundant on the student surface. It
+# is not the same control: Access decides WHO MAY REACH THE SERVER, sign-in
+# decides who may reach a student's data. Dropping it is a deliberate change to
+# the review posture ADR-0007 argued, and belongs in an ADR, not in a dashboard
+# session at midnight.
+#
+# ============================================================================
+# 4. VERIFY, FROM OFF THE BOX
+# ============================================================================
+#   curl -sS -o /dev/null -w '%{http_code}\n' https://<student-host>/
+#     -> 200 (or the Access login page, if the student surface is still gated)
+#   curl -sS -o /dev/null -w '%{http_code}\n' https://<console-host>/
+#     -> 302 to a cloudflareaccess.com login. **A 200 here is the failure.**
+#        If you see the console's own sign-in form, Access is not applied and
+#        the hostname must be removed from the tunnel until it is.
+#
+# Check from Egypt as well as from here: the edge PoP that serves Cairo is not
+# the one that serves this machine, and "it works for me" has never been the
+# question for this product.
+#
+# ============================================================================
+# FALLBACK ONLY — if this is EVER switched to a locally-managed (config.yml)
+# tunnel, the equivalent ingress would be the following. It is written with
+# placeholders on purpose: the hostnames live in deploy/.env and in the
+# dashboard, and a second copy in a file nobody reads is how they diverge.
 #
 # ingress:
-#   - hostname: ainext.reletix.com
-#     service: http://localhost:3100
-#   # ... existing talent.reletix.com rules stay exactly as they are ...
+#   - hostname: <student-host>
+#     service: http://localhost:3101
+#   - hostname: <console-host>
+#     service: http://localhost:3102
+#   # ... existing hostnames for the other products on this box stay as they are
 #   - service: http_status:404          # catch-all MUST stay last
 #
-# then:  cloudflared tunnel route dns <TUNNEL_NAME> ainext.reletix.com
+# then, per hostname:  cloudflared tunnel route dns <TUNNEL_NAME> <hostname>
+# ============================================================================

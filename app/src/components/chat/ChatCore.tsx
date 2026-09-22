@@ -16,6 +16,7 @@ import type {
   TurnMeta,
 } from "@/lib/types";
 import { labelArOfSpineKey } from "@/lib/subjects";
+import { track } from "@/lib/ga";
 import { masteryLabel } from "@/lib/mastery";
 import {
   directiveEndAt,
@@ -25,9 +26,10 @@ import {
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
-import { TeX } from "@/components/TeX";
-import { CitationChip, type CiteInfo } from "./CitationChip";
+import type { CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
+import { StudentBubble, TutorBubble, renderChatBlocks } from "./message-blocks";
+import { useUploadAttachment } from "./upload-attachment";
 
 /**
  * Imperative bridge for surfaces that host intercepted cards OUTSIDE the
@@ -207,8 +209,19 @@ export function ChatCore({
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [capped, setCapped] = useState(false);
-  const chatSession = useRef<string>(
-    sessionId ??
+  /**
+   * This chat's stable session id, computed once.
+   *
+   * A lazily-initialised state rather than a `useRef`, which is what it was:
+   * `useRef(crypto.randomUUID())` evaluates its argument on EVERY render and
+   * throws the result away, so the id was correct but a fresh UUID was minted
+   * on every keystroke — and the value had to be read back out of a ref during
+   * render to be used. The lazy initialiser runs once, which is what was always
+   * meant, and leaves a plain string that anything may read.
+   */
+  const [chatSession] = useState<string>(
+    () =>
+      sessionId ??
       (typeof crypto !== "undefined" && "randomUUID" in crypto
         ? crypto.randomUUID()
         : `s-${Date.now()}-${Math.random().toString(36).slice(2)}`)
@@ -216,6 +229,30 @@ export function ChatCore({
   const citedKeys = useRef(new Set<string>());
   const scrollRef = useRef<HTMLDivElement>(null);
   const autoSent = useRef(false);
+
+  /**
+   * The upload affordance (FR-205, PRD B10), in the one composer every student
+   * surface renders.
+   *
+   * ON FOR THE STUDENT SURFACES, derived rather than configured. `spine_chat`
+   * is the glass-box "Ask the Spine" dock on the Evidence Walk — an
+   * instrumentation surface for a room full of adults, not a place a student
+   * photographs homework — so it is the one surface without it. Deriving the
+   * rule from `surface`, which this component already has, means no host has to
+   * remember to pass a flag and no two hosts can disagree about it.
+   *
+   * The hook is called unconditionally, as hooks must be: with nothing picked
+   * it holds no state, opens no request and renders two buttons, and the `&&`
+   * below is what decides whether those buttons are placed.
+   */
+  const uploadsOn = surface !== "spine_chat";
+  const attachment = useUploadAttachment({
+    chatSession,
+    surface,
+    lang: arabicUi ? "ar" : "en",
+  });
+  /** The id the next turn carries — undefined on the surface without uploads. */
+  const attachedUploadId = uploadsOn ? attachment.uploadId : undefined;
   // live mirror so notes appended just before an auto-continue are included
   const messagesRef = useRef<ChatMsg[]>(messages);
   messagesRef.current = messages;
@@ -474,16 +511,29 @@ export function ChatCore({
 
       let metaBuf: TurnMeta | null = null;
 
+      // GA4's audience layer sees that a question was asked and on which
+      // surface — never the question, never who asked it (lib/ga.ts). Fired
+      // before the request rather than after it, because "asked" is the
+      // student's action and a failed turn is still an asked question.
+      track("question_asked", { surface });
+
       try {
         const res = await fetch("/api/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             surface,
-            chatSession: chatSession.current,
+            chatSession,
             questionId,
             wrongAnswer,
             lesson: lessonSlug,
+            // The worksheet this turn is about, when there is one. It stays
+            // attached across turns on purpose: a student who photographs a
+            // page asks two or three questions about it, and making them
+            // re-send it for the second one would be a strange thing to do to
+            // somebody who is already stuck. The remove button on the strip is
+            // how it goes out of scope.
+            uploadId: attachedUploadId,
             messages: transcript
               .filter((m) => !m.localOnly)
               .map((m) => ({ role: m.role, text: m.text })),
@@ -612,6 +662,11 @@ export function ChatCore({
       questionId,
       wrongAnswer,
       lessonSlug,
+      // Recreating `send` when a parse settles is cheap and honest: this
+      // callback already depends on `streaming` and `capped`, so it was never
+      // stable across a turn, and mirroring the id through a ref to avoid a
+      // dependency would only have hidden that.
+      attachedUploadId,
       streaming,
       capped,
       emitNewCites,
@@ -810,12 +865,20 @@ export function ChatCore({
         </div>
       )}
 
+      {/* the attached upload, above the composer so a long sentence about an
+          unreadable photograph never squeezes the text input on a phone */}
+      {uploadsOn && attachment.banner}
+
       {/* input */}
       <div
         className={`flex items-center gap-2 px-4 pb-3.5 ${
           suggestions.length > 0 && !capped ? "pt-1.5" : "border-t border-line-soft pt-3"
         }`}
       >
+        {/* Deliberately NOT disabled while a parse runs, and deliberately not
+            gated on `capped` either: sending a photograph is not an AI turn and
+            costs no turn of the per-surface cap. */}
+        {uploadsOn && attachment.controls}
         <input
           type="text"
           value={input}
@@ -901,17 +964,7 @@ const MessageRow = memo(function MessageRow({
   };
 
   if (m.role === "user") {
-    return (
-      <div className="anim-pop flex justify-end">
-        <div
-          dir="auto"
-          className="max-w-[85%] rounded-xl rounded-ee-sm bg-ink px-3.5 py-2 text-[13px] leading-relaxed text-paper shadow-sm noor-bubble-student"
-          style={{ textAlign: "start" }}
-        >
-          {m.text}
-        </div>
-      </div>
-    );
+    return <StudentBubble>{m.text}</StudentBubble>;
   }
 
   if (m.role === "note") {
@@ -947,120 +1000,84 @@ const MessageRow = memo(function MessageRow({
   const blocks = parseMessage(visibleText, !!m.streaming);
 
   return (
-    <div className="anim-pop flex justify-start" style={dimStyle}>
-      <div
-        dir="auto"
-        className={`max-w-[94%] rounded-xl rounded-es-sm border px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-sm font-read ${
-          m.error
-            ? "border-rust/40 bg-rust-wash/50"
-            : "border-line-soft bg-card-warm noor-bubble-tutor"
-        }`}
-        style={{ textAlign: "start" }}
-      >
+    <TutorBubble error={!!m.error} style={dimStyle}>
         {m.streaming && visibleText.length === 0 && (
           <Thinking writing={writing} arabicUi={arabicUi} />
         )}
 
-        {blocks.map((b, i) => {
-          if (b.t === "highlight") return null; // side-effect only
-          if (b.t === "finish") return null; // handled by the surface
-          if (b.t === "beat") return null; // pacing marker — renders as time
-          if (b.t === "check_in") {
-            return (
+        {/* The blocks are rendered by components/chat/message-blocks.tsx —
+            the SAME function the console's replay calls, so a reconstruction
+            cannot drift from what the student saw (ADR-0015 §3). The five
+            interactive block types stay here as slots, because they are the
+            student surface's to own and a read-only replay must not be able to
+            import them. */}
+        {renderChatBlocks(blocks, {
+          debug,
+          arabicUi,
+          resolveCite,
+          onCiteClick,
+          slots: {
+            checkIn: (i) => (
               <CheckInCard
                 key={i}
                 onPick={onCheckIn}
                 disabled={!!m.streaming}
                 arabicUi={arabicUi}
               />
-            );
-          }
-          if (b.t === "widget") {
-            // whiteboard interception: the surface owns the card on its
-            // board — the transcript keeps a small re-pin chip in place
-            if (
-              (b.name === "viz" || b.name === "viz_ref") &&
-              interceptWidget?.(b.name, b.props)
-            ) {
-              const name = b.name;
-              const props = b.props;
-              return (
-                <BoardChip
+            ),
+            widget: (b, i) => {
+              // whiteboard interception: the surface owns the card on its
+              // board — the transcript keeps a small re-pin chip in place
+              if (
+                (b.name === "viz" || b.name === "viz_ref") &&
+                interceptWidget?.(b.name, b.props)
+              ) {
+                const name = b.name;
+                const props = b.props;
+                return (
+                  <BoardChip
+                    key={i}
+                    flavor="figure"
+                    onOpen={onDirective ? () => onDirective(name, props) : undefined}
+                  />
+                );
+              }
+              const card =
+                onWidgetNote && renderWidget
+                  ? renderWidget(b.name, b.props, onWidgetNote)
+                  : null;
+              return card ? <div key={i}>{card}</div> : null;
+            },
+            question: (b, i) => {
+              if (interceptWidget?.("question", { qid: b.qid })) {
+                const qid = b.qid;
+                return (
+                  <BoardChip
+                    key={i}
+                    flavor="question"
+                    onOpen={
+                      onDirective ? () => onDirective("question", { qid }) : undefined
+                    }
+                  />
+                );
+              }
+              const q = lookupQuestion?.(b.qid);
+              return q ? (
+                <ChatQuestionCard
                   key={i}
-                  flavor="figure"
-                  onOpen={onDirective ? () => onDirective(name, props) : undefined}
+                  question={q}
+                  debug={debug}
+                  lang={arabicUi ? "ar" : "en"}
+                  onResult={onAttempt}
+                  onOpenQuestion={onOpenQuestion}
                 />
+              ) : (
+                <p key={i} className="my-1 font-mono text-[10px] text-ink-faint">
+                  → {b.qid}
+                </p>
               );
-            }
-            const card =
-              onWidgetNote && renderWidget
-                ? renderWidget(b.name, b.props, onWidgetNote)
-                : null;
-            return card ? <div key={i}>{card}</div> : null;
-          }
-          if (b.t === "question") {
-            if (interceptWidget?.("question", { qid: b.qid })) {
-              const qid = b.qid;
-              return (
-                <BoardChip
-                  key={i}
-                  flavor="question"
-                  onOpen={
-                    onDirective
-                      ? () => onDirective("question", { qid })
-                      : undefined
-                  }
-                />
-              );
-            }
-            const q = lookupQuestion?.(b.qid);
-            return q ? (
-              <ChatQuestionCard
-                key={i}
-                question={q}
-                debug={debug}
-                lang={arabicUi ? "ar" : "en"}
-                onResult={onAttempt}
-                onOpenQuestion={onOpenQuestion}
-              />
-            ) : (
-              <p key={i} className="my-1 font-mono text-[10px] text-ink-faint">
-                → {b.qid}
-              </p>
-            );
-          }
-          if (b.t === "list") {
-            return (
-              <ul key={i} className="my-1.5 space-y-1 ps-1">
-                {b.items.map((item, k) => (
-                  <li key={k} className="flex gap-1.5" dir="auto">
-                    <span className="mt-[1px] shrink-0 text-accent">·</span>
-                    <span
-                      className="tex-block min-w-0"
-                      style={{ textAlign: "start" }}
-                    >
-                      {item.map((seg, s) =>
-                        seg.t === "text" ? (
-                          <TeX key={s} text={seg.v} />
-                        ) : (
-                          <CitationChip
-                            key={s}
-                            cite={seg}
-                            friendly={!debug}
-                            arabic={arabicUi}
-                            resolve={resolveCite}
-                            onActivate={onCiteClick}
-                          />
-                        )
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            );
-          }
-          if (b.t === "switch_subject") {
-            return (
+            },
+            switchSubject: (b, i) => (
               <SubjectHandoffCard
                 key={i}
                 subject={b.subject}
@@ -1068,57 +1085,34 @@ const MessageRow = memo(function MessageRow({
                   onSwitchSubject ? () => onSwitchSubject(b.subject) : undefined
                 }
               />
-            );
-          }
-          if (b.t === "passage_ref") {
-            // sealed text: resolved by the SURFACE from verified data — if it
-            // is board-intercepted the transcript keeps a re-pin chip, exactly
-            // like figures. The id is all the model ever emitted.
-            if (interceptWidget?.("passage", { id: b.id })) {
-              const id = b.id;
-              return (
-                <BoardChip
-                  key={i}
-                  flavor="figure"
-                  onOpen={
-                    onDirective ? () => onDirective("passage", { id }) : undefined
-                  }
-                />
-              );
-            }
-            return renderPassage ? (
-              <div key={i}>
-                {renderPassage(b.id, {
-                  quote: b.quote,
-                  unit: b.unit,
-                  view: b.view,
-                })}
-              </div>
-            ) : null;
-          }
-          return (
-            <p
-              key={i}
-              dir="auto"
-              className="tex-block my-1.5 first:mt-0 last:mb-0"
-              style={{ textAlign: "start" }}
-            >
-              {b.inlines.map((seg, s) =>
-                seg.t === "text" ? (
-                  <TeX key={s} text={seg.v} />
-                ) : (
-                  <CitationChip
-                    key={s}
-                    cite={seg}
-                    friendly={!debug}
-                    arabic={arabicUi}
-                    resolve={resolveCite}
-                    onActivate={onCiteClick}
+            ),
+            passageRef: (b, i) => {
+              // sealed text: resolved by the SURFACE from verified data — if it
+              // is board-intercepted the transcript keeps a re-pin chip, exactly
+              // like figures. The id is all the model ever emitted.
+              if (interceptWidget?.("passage", { id: b.id })) {
+                const id = b.id;
+                return (
+                  <BoardChip
+                    key={i}
+                    flavor="figure"
+                    onOpen={
+                      onDirective ? () => onDirective("passage", { id }) : undefined
+                    }
                   />
-                )
-              )}
-            </p>
-          );
+                );
+              }
+              return renderPassage ? (
+                <div key={i}>
+                  {renderPassage(b.id, {
+                    quote: b.quote,
+                    unit: b.unit,
+                    view: b.view,
+                  })}
+                </div>
+              ) : null;
+            },
+          },
         })}
 
         {m.streaming && visibleText.length > 0 && (
@@ -1138,8 +1132,7 @@ const MessageRow = memo(function MessageRow({
               ` · logged #${m.meta.interactionId}`}
           </p>
         )}
-      </div>
-    </div>
+    </TutorBubble>
   );
 });
 

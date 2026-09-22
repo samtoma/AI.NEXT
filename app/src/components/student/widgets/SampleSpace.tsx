@@ -82,14 +82,21 @@ export function SampleSpace({
   rows = 6,
   cols = 6,
   rule,
+  studentName,
   onResult,
 }: {
   prompt: string;
   rows?: number;
   cols?: number;
   rule: SpaceRule;
+  /** The signed-in student's display name, narrated into the [live event]
+   *  line below in place of the retired "Omar" demo persona (FR-2602,
+   *  ADR-0010 plan A10). Falls back to a name-free "the student" — never a
+   *  guess — when a caller (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (outcome: WidgetOutcome) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const R = clamp(Math.round(rows), 2, 8);
   const C = clamp(Math.round(cols), 2, 8);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -180,10 +187,10 @@ export function SampleSpace({
       predicate: pred,
       given: `${picked.size} of ${total} outcomes`,
       detail: ok
-        ? `✓ Omar selected all ${truth.size} outcomes where ${ruleText(rule)} out of ${total}, giving P = ${answer}`
-        : `✗ Omar selected ${picked.size} outcomes for "${ruleText(rule)}"${why}; n(E) is ${truth.size}, P = ${answer}`,
+        ? `✓ ${who} selected all ${truth.size} outcomes where ${ruleText(rule)} out of ${total}, giving P = ${answer}`
+        : `✗ ${who} selected ${picked.size} outcomes for "${ruleText(rule)}"${why}; n(E) is ${truth.size}, P = ${answer}`,
     });
-  }, [truth, picked, total, rule, onResult]);
+  }, [truth, picked, total, rule, onResult, who]);
 
   const ink = verdict === "correct" ? "var(--accent)" : "var(--gold)";
 

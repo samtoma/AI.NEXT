@@ -66,6 +66,7 @@ export function ReportCard({
   costUsd,
   studentName,
   rtl = false,
+  readOnly = false,
 }: {
   check: UnderstandingCheck;
   mode: LessonMode;
@@ -73,6 +74,21 @@ export function ReportCard({
   studentName: string;
   /** RTL subjects: RTL layout + Arabic-first labels (LTR unchanged) */
   rtl?: boolean;
+  /**
+   * **Additive, and for the console's replay only** (ADR-0015 §3, FR-2305).
+   *
+   * The report card ends in three doors — the graph, practice, done — and they
+   * are the student's next actions. In a reconstruction they are wrong twice
+   * over: those routes do not exist in the console build at all (ADR-0014), so
+   * they lead nowhere, and an operator clicking one would be taking a student's
+   * action inside a surface whose contract is that it cannot. `readOnly` drops
+   * the row and says why in its place. Everything above it — the score dial,
+   * the verdict stamp, the strengths, the gaps, the next step — is what the
+   * student was shown and is rendered unchanged.
+   *
+   * Default false: the student path is untouched.
+   */
+  readOnly?: boolean;
 }) {
   const v = VERDICT_META[check.verdict];
 
@@ -225,6 +241,11 @@ export function ReportCard({
         </div>
       </div>
 
+      {readOnly ? (
+        <p className="mt-4 rounded-lg border border-dashed border-line px-4 py-2.5 text-center font-mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
+          the student was offered three next steps here
+        </p>
+      ) : (
       <div className="anim-rise mt-4 flex flex-wrap gap-3" style={{ animationDelay: "650ms" }}>
         <Link
           href="/spine"
@@ -254,6 +275,7 @@ export function ReportCard({
           {rtl ? "خلصنا النهاردة" : "Done for today"}
         </Link>
       </div>
+      )}
     </section>
   );
 }

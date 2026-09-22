@@ -9,7 +9,10 @@
 > `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk` (created 2026-09-01, revised 2026-09-03).
 > **Baseline being differenced against**: `specs/000-baseline/spec.md` (as-built at main `f0cb192`,
 > live at `ainext.reletix.com`).
-> **Engineering authority**: `.specify/memory/constitution.md` **v2.0.0** + ADR-0001..**0007**.
+> **Engineering authority**: `.specify/memory/constitution.md` **v3.1.1** + ADR-0001…**0017**.
+> *(Corrected 2026-09-20 — this line still read "v2.0.0 + ADR-0001..0007", the state at drafting.
+> The constitution has moved five times since and ADR-0008…0017 have landed, several of which amend
+> requirements in this spec.)*
 > **Scope decisions**: `decisions.md` in this directory — twelve answers from Samuel (2026-09-08),
 > which this spec has been re-cut against. Requirements dropped or changed by those answers are marked
 > **[DEFERRED]** or **[REVISED]** rather than deleted, so the diff against the PRD stays legible.
@@ -352,9 +355,15 @@ document: a requirement whose code exists but has never been executed does not c
 - **FR-104**: "Create new user" MUST offer interest capture across five categories plus free-text
   "Other", with an optional follow-up detail for Sports and Music, skippable without blocking.
 - **FR-105**: The last selected student MUST be remembered across visits, restoring their position
-  (FR-204) without re-entry.
-- **FR-106** *(deferred)*: PRD A1/A2/A4 self-signup with email or phone and verification is
-  **[DEFERRED]** — reachable only through the Cloudflare Access invite list (FR-907).
+  (FR-204) without re-entry. *(2026-09-20: under 002 FR-2001 "the last selected student" becomes "the
+  signed-in student"; the obligation — return without re-entry — is unchanged.)*
+- **FR-106** *[REVISED 2026-09-20 — superseded by 002 FR-2001…FR-2011]*: ~~PRD A1/A2/A4 self-signup
+  with email or phone and verification is **[DEFERRED]** — reachable only through the Cloudflare
+  Access invite list (FR-907).~~ **The deferral is lifted.** ADR-0013 replaces the picker with
+  student-owned accounts: email and password, Google sign-in, email confirmation, sessions a student
+  can list and revoke. Phone and one-time code remain deferred (002 FR-2903). Cloudflare Access
+  (FR-907) stays in front of the pilot **in addition to** accounts, not instead of them (002
+  FR-2208). This unblocks FR-606.
 
 ### Learning core (PRD Epic B)
 
@@ -437,11 +446,15 @@ document: a requirement whose code exists but has never been executed does not c
 
 ### Parent (PRD Epic E)
 
-- **FR-501** *(revised)*: A parent MUST reach a read-only view of the same performance data as
-  FR-401 through the same student picker used by students (decisions.md Q11), and MUST NOT have access
-  to lesson or chat transcripts. **Accepted limitation**: any pilot parent can therefore see any pilot
-  student's data. This is acceptable only at invited-cohort scale behind Access and MUST NOT survive
-  into any public build.
+- **FR-501** *[REVISED 2026-09-20 — superseded by 002 FR-2901, FR-2902]*: ~~A parent MUST reach a
+  read-only view of the same performance data as FR-401 through the same student picker used by
+  students (decisions.md Q11), and MUST NOT have access to lesson or chat transcripts. **Accepted
+  limitation**: any pilot parent can therefore see any pilot student's data. This is acceptable only
+  at invited-cohort scale behind Access and MUST NOT survive into any public build.~~ The mechanism
+  is withdrawn with the picker itself (ADR-0013), and with it the accepted limitation — under 002
+  FR-2101 no account can see another student's data at all. **The parent view is deferred**: 002
+  FR-2901 models the student-to-parent link and builds nothing, 002 FR-2902 carries the
+  performance-data-only, never-transcripts rule forward to whenever it ships.
 - **FR-502**: Threshold alerts (prolonged inactivity, sustained struggle on a topic) MUST be
   delivered to the linked parent in supportive, non-punitive wording.
 
@@ -452,9 +465,16 @@ document: a requirement whose code exists but has never been executed does not c
 - **FR-602**: Crisis flags MUST reach a human channel immediately, on a path separate from routine
   analytics.
 - **FR-603**: A student's conversations and personal data MUST NOT be exposed to other students, and
-  data shared with a parent MUST be limited to FR-501's scope.
-- **FR-604** *(deferred)*: PRD F2 account-sharing deterrence is **[DEFERRED]** — there are no
-  accounts to share in this build, and the audience is an invited list behind Access.
+  data shared with a parent MUST be limited to FR-501's scope. *(2026-09-20: unchanged in substance.
+  002 FR-2101…FR-2103 move the enforcement beneath the application so a forgotten filter returns
+  nothing, and 002 FR-2306 adds that an operator's read of a student's record is itself recorded.
+  The parent clause now reads against 002 FR-2902, FR-501 having been superseded.)*
+- **FR-604** *[REVISED 2026-09-20 — superseded by 002 FR-2009]*: ~~PRD F2 account-sharing deterrence
+  is **[DEFERRED]** — there are no accounts to share in this build, and the audience is an invited
+  list behind Access.~~ The stated reason no longer holds: 002 creates accounts. What ships is the
+  deterrent's minimum honest form — a student can see every place their account is signed in, with
+  device and last-used time, and end one or all of them (002 FR-2009). Detecting shared use remains
+  out of scope, and was always acknowledged as a deterrent rather than a guarantee.
 - **FR-605** **[ADDED 2026-09-20 — feedback #10, #11, #12]**: The student-facing build MUST NOT
   carry the operator surfaces — the extraction pipeline, the content review queue, the visual
   gallery and the developer harnesses. Absent from navigation is not sufficient: those routes
@@ -466,7 +486,13 @@ document: a requirement whose code exists but has never been executed does not c
   **evidence access**, so each is granted deliberately rather than inherited from knowing a URL.
   Because the content-review role controls the human gate that ADR-0007's unreviewed-content
   exception depends on (constitution III, FR-C02), it is a safety control and not an
-  administrative convenience. **Blocked on FR-106** — roles need accounts to attach to.
+  administrative convenience. ~~**Blocked on FR-106** — roles need accounts to attach to.~~
+  *[REVISED 2026-09-20 — superseded by 002 FR-2202, FR-2203, FR-2204]*: **unblocked.** FR-106's
+  deferral is lifted, so roles now have accounts to attach to. 002 FR-2203 names four roles rather
+  than the two minimum asked for here — `content-review`, `evidence-access`, `student-data`,
+  `cost-billing` — 002 FR-2202 requires a signed-in operator account for every operator surface, 002
+  FR-2106 requires one server-side authorisation point they all pass through, and 002 FR-2204 carries
+  forward, unchanged, that content-review is a safety control and not an administrative convenience.
 
 ### Billing (PRD Epic G, §10) **[DEFERRED — decisions.md Q7]**
 
@@ -518,6 +544,15 @@ document: a requirement whose code exists but has never been executed does not c
 
 - **FR-905**: The new environment MUST NOT serve Arabic Language or Social Studies content; the
   comparison is mathematics-only on both sides.
+  *[CONTRADICTED 2026-09-21, recorded 2026-09-22 — routed to Samuel, not rewritten]*: on Samuel's
+  direction to see the product as it will be sold, `scripts/local-dev.sh` now loads all three
+  courses and all three are set **live for grade 9** in the local `mvp1` database (`62f780c`) — a
+  Social Studies lesson opens and is taught. The requirement is therefore **unmet**, deliberately
+  and by his own instruction. It is left standing rather than reworded, because rewriting a
+  requirement to match what got built is the failure this spec set exists to prevent. What changed
+  underneath it is that **loading and serving are now two different acts** (ADR-0018): reinstating
+  FR-905 costs one console action per course and unloads nothing. Whether it is reinstated or
+  withdrawn is Samuel's call — traceability §9.
 - **FR-906**: Provisioning the new environment MUST NOT remove volumes on the shared box, and MUST
   leave the existing environment's one-time AI runtime login intact.
 - **FR-907**: The new environment MUST sit behind Cloudflare Access with an explicitly invited
@@ -530,20 +565,36 @@ document: a requirement whose code exists but has never been executed does not c
 
 ### Design system & visual language **[ADDED 2026-09-10]**
 
-The *Nour Design System v0.2* handoff (Drive `1eAJeMHy5m3D-FhS8RAv2KMg5F6eO0QOM`) is the visual
-authority for this environment. These requirements exist because it was possible to ship a
+The **Noor Play design system**, published at
+<https://claude.ai/artifact/SXTAsvPUCjU4ZMp5oZtM6J>, is the visual authority. It carries the
+resolved tokens (two themes on one semantic set — Play and the Ledger baseline), the type scale,
+the motion specification and a guideline per component, and it is the system
+**constitution v3.1.0 Principle XII binds every surface we build to**.
+
+*Superseded pointer, kept for the record:* this section previously named the *Nour Design System
+v0.2* handoff (Drive `1eAJeMHy5m3D-FhS8RAv2KMg5F6eO0QOM`) as the authority "for this environment".
+That handoff is the **Master** variant, replaced by Play in ADR-0011, and the per-environment
+scoping is withdrawn by Principle XII. `docs/design/handoffs/noor-play/` remains the published
+system's source material and is superseded wherever the two differ.
+
+These requirements exist because it was possible to ship a
 behaviour that violated a stated product rule — the Phase 8 dashboard's burnt-sienna mastery ramp —
 with nothing in the requirement set able to catch it. They are written as product constraints, not
 as styling preferences: each one names a student-visible behaviour with a reason behind it.
 
-- **FR-1001**: The comparison environment MUST apply the Noor design system. The frozen baseline
-  MUST remain visually unchanged, so the visual language is never a confounding variable in the
-  comparison (Principle XI).
+- **FR-1001**: **Every surface this repository builds MUST apply the Noor Play design system** —
+  the student product and the internal tools (`/admin`, `/pipeline`, `/spine`, `/dev`, `/gallery`)
+  alike. Values come from the published token set; no component hardcodes a colour, stroke width,
+  radius or shadow. The frozen `family-tutor` baseline is **not** bound: it keeps the Ledger
+  identity, which is the second theme of the same system.
+  *Amended 2026-09-20 (constitution v3.1.0, Principle XII):* this requirement was scoped to "the
+  comparison environment", and ADR-0011 held the internal surfaces out of scope. Both scopings are
+  withdrawn — Samuel's direction is that the system is respected everywhere we build. What is
+  **unchanged**: the baseline carries no obligation to stay visually frozen (ADR-0010's
+  Clarification withdrew cross-solution parity), so it is frozen because nobody is working on it,
+  not because this requirement freezes it.
   *Amended 2026-09-20 (ADR-0011):* the system this names is **Noor Play**, not the Master variant
-  that shipped first. The renaming of `nour` → `noor` throughout is the same amendment. The second
-  sentence is retained as written but no longer carries the weight it did — ADR-0010's Clarification
-  withdrew cross-solution parity, so the baseline staying unchanged is now a consequence of nobody
-  working on it rather than an obligation this requirement imposes.
+  that shipped first. The renaming of `nour` → `noor` throughout is the same amendment.
 - **FR-1002**: **No red and no coral may appear in the product palette.** A wrong answer MUST grey
   out and invite a retry rather than being marked in a warning colour. The persona's stated fear is
   looking stupid, and a red screen is what that fear looks like.
@@ -570,11 +621,16 @@ as styling preferences: each one names a student-visible behaviour with a reason
   shaming, or "you're behind" framing on any surface.
 - **FR-1010**: The single signature motion MUST be reserved for a proficient → mastered transition,
   and MUST respect `prefers-reduced-motion`.
+- **FR-1011** **[ADDED 2026-09-20 — ADR-0017]**: The product MUST render exactly one design-system
+  variant per page render, selected before first paint by the student's grade (Preparatory → Play,
+  Secondary → Master) unless the student has stored an override, which MUST survive sign-out; no
+  surface may hard-code a variant.
 
-**Open decision (Samuel's, per Principle I)**: the handoff ships two variants — *master* (15–18)
-and *Play* (10–16) — and forbids mixing them in one build. Prep-3 is 14–15 and sits inside both.
-**Master is implemented**, on the reasoning that the comparison already varies BKT against Elo and a
-second visual variable is a confound. Reversal is a token swap.
+**Variant selection — decided, not open.** Both variants ship. Which one applies is keyed to the
+student's grade, with a stored student override, per
+[ADR-0017](../../docs/decisions/0017-two-variants-keyed-to-grade.md) (amending
+[ADR-0011](../../docs/decisions/0011-noor-play-design-system.md)) and constitution v3.1.1
+Principle XII. The obligation is **FR-1011** above.
 
 ### Generated question bank **[ADDED 2026-09-10 — ADR-0008]**
 

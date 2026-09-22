@@ -1,16 +1,31 @@
 import { spawn } from "node:child_process";
 import { NextResponse } from "next/server";
-import { pool } from "@/lib/db";
-import { ENVIRONMENT } from "@/lib/env";
+import { withPrincipal } from "@/lib/db";
+import { AuthError, requireStudent } from "@/lib/auth/principal";
+import { mapRlsError } from "@/lib/rls-errors";
+import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import {
   getLessonData,
   lessonAnchorLo,
   sanitizeLessonSlug,
 } from "@/lib/lesson";
-import { deriveMasteryStage, learnOpeningFrame } from "@/lib/checkin";
+import {
+  UNDERSTANDING_SYSTEM_PROMPT,
+  buildUnderstandingPrompt,
+  understandingRetryPrompt,
+} from "@/lib/understanding-prompt";
 import { spineKeyOf } from "@/lib/subjects";
-import { resolveStudentId } from "@/lib/student-context";
-import { gradeLabel } from "@/lib/profile";
+import { closeSession, currentSessionOrNull } from "@/lib/sessions";
+import {
+  ZERO_TOKENS,
+  addTokens,
+  costFor,
+  tokensFromUsage,
+  totalInputTokens,
+  type CliUsage,
+  type Outcome,
+  type TokenCounts,
+} from "@/lib/pricing";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
 
 /**
@@ -20,6 +35,10 @@ import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
  * to the LLM asking for STRICT JSON {score, verdict, strengths, gaps,
  * next_step}; parses (one retry on invalid output), inserts the row into
  * understanding_checks, and logs cost to ai_interactions.
+ *
+ * Two units of work with the model between them (research R7). Up to two CLI
+ * calls of ninety seconds each sit in the gap, and a connection held across
+ * that is three minutes of a pool of twenty spent on one rating.
  */
 
 export const dynamic = "force-dynamic";
@@ -32,20 +51,39 @@ interface InMsg {
   text: string;
 }
 
-interface CliResult {
-  text: string;
-  costUsd: number;
-  inputTokens: number;
-  outputTokens: number;
-  latencyMs: number;
-}
+/**
+ * One call's outcome, and it always resolves.
+ *
+ * It used to reject on a CLI failure, which threw past the ledger write and
+ * left no row — so a rating attempt that burned a full lesson transcript of
+ * input tokens and then died was recorded as costing nothing (research A4.2).
+ * A failed call is a cost line with its outcome, so the failure comes back as
+ * a value carrying whatever usage was reported.
+ */
+type CliResult =
+  | {
+      ok: true;
+      text: string;
+      /** The CLI's own total, or null if it did not report one. */
+      cliCostUsd: number | null;
+      tokens: TokenCounts;
+      latencyMs: number;
+    }
+  | {
+      ok: false;
+      outcome: Extract<Outcome, "error" | "timeout">;
+      tokens: TokenCounts;
+      latencyMs: number;
+      detail: string;
+    };
 
 function runClaudeJson(
   systemPrompt: string,
   userPrompt: string
 ): Promise<CliResult> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const started = Date.now();
+    let timedOut = false;
     const child = spawn(
       "claude",
       [
@@ -70,7 +108,10 @@ function runClaudeJson(
         stdio: ["pipe", "pipe", "pipe"],
       }
     );
-    const timeout = setTimeout(() => child.kill("SIGKILL"), TIMEOUT_MS);
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      child.kill("SIGKILL");
+    }, TIMEOUT_MS);
     let out = "";
     let errTail = "";
     child.stdout.on("data", (c: Buffer) => (out += c.toString("utf8")));
@@ -81,41 +122,49 @@ function runClaudeJson(
     child.stdin.on("error", () => {});
     child.stdin.write(userPrompt);
     child.stdin.end();
+    const failed = (tokens: TokenCounts, detail: string): CliResult => ({
+      ok: false,
+      outcome: timedOut ? "timeout" : "error",
+      tokens,
+      latencyMs: Date.now() - started,
+      detail,
+    });
     child.on("error", (e) => {
       clearTimeout(timeout);
-      reject(e);
+      // The process never started: nothing was spent and there is nothing to
+      // price. ZERO_TOKENS here means "none were used", not "none were counted"
+      // — the caller writes no row for it.
+      resolve(failed(ZERO_TOKENS, String(e)));
     });
     child.on("close", () => {
       clearTimeout(timeout);
+      let j: {
+        result?: string;
+        is_error?: boolean;
+        total_cost_usd?: number;
+        duration_ms?: number;
+        usage?: CliUsage;
+      } | null = null;
       try {
-        const j = JSON.parse(out) as {
-          result?: string;
-          is_error?: boolean;
-          total_cost_usd?: number;
-          duration_ms?: number;
-          usage?: {
-            input_tokens?: number;
-            cache_creation_input_tokens?: number;
-            cache_read_input_tokens?: number;
-            output_tokens?: number;
-          };
-        };
-        if (j.is_error || typeof j.result !== "string")
-          throw new Error("cli error");
-        const u = j.usage ?? {};
-        resolve({
-          text: j.result,
-          costUsd: j.total_cost_usd ?? 0,
-          inputTokens:
-            (u.input_tokens ?? 0) +
-            (u.cache_creation_input_tokens ?? 0) +
-            (u.cache_read_input_tokens ?? 0),
-          outputTokens: u.output_tokens ?? 0,
-          latencyMs: j.duration_ms ?? Date.now() - started,
-        });
+        j = JSON.parse(out);
       } catch {
-        reject(new Error(`claude CLI failed — ${errTail.slice(-300)}`));
+        // No parseable envelope at all — killed mid-write, or the CLI printed
+        // something that is not its own JSON. Nothing countable came back.
+        return resolve(failed(ZERO_TOKENS, errTail.slice(-300)));
       }
+      // An `is_error` envelope still reports its usage, and those tokens were
+      // spent: they are carried out rather than discarded with the failure.
+      const tokens = tokensFromUsage(j?.usage);
+      if (!j || j.is_error || typeof j.result !== "string") {
+        return resolve(failed(tokens, errTail.slice(-300) || "cli reported is_error"));
+      }
+      resolve({
+        ok: true,
+        text: j.result,
+        cliCostUsd: typeof j.total_cost_usd === "number" ? j.total_cost_usd : null,
+        tokens,
+        latencyMs: j.duration_ms ?? Date.now() - started,
+      });
     });
   });
 }
@@ -180,138 +229,279 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "empty transcript" }, { status: 400 });
   }
 
-  // Which demo student this comprehension check belongs to — a cookie,
-  // validated against the students table, defaulting to Omar. DEMO
-  // AFFORDANCE, NOT AUTH: auth is a PRD §3 non-goal for the MVP
-  // (see lib/demo-student.ts).
-  const studentId = await resolveStudentId();
+  let me;
+  try {
+    me = await requireStudent();
+  } catch (err) {
+    if (err instanceof AuthError) {
+      return NextResponse.json({ error: err.code }, { status: err.status });
+    }
+    throw err;
+  }
+  // FR-2004: rating a lesson writes a mastery-adjacent record about a named
+  // child. That is learning, and it waits for a confirmed address.
+  if (!me.emailVerified) {
+    return NextResponse.json({ error: "email_unverified" }, { status: 403 });
+  }
 
-  const data = await getLessonData(sanitizeLessonSlug(body.lesson), studentId);
-  const loLines = data.los
-    .map((l) => `- ${l.id} "${l.label}": ${l.description ?? ""}`)
-    .join("\n");
+  // UNIT ONE — the lesson slice and the sitting, before any model call.
+  //
+  // The lesson's own session (ADR-0015): the client does not send `chatSession`
+  // here at all — which is exactly why the check could never be tied to the
+  // lesson that produced it — so the session is found server-side by kind, and
+  // this is the same sitting /api/ask has been writing turns into.
+  const studentId = me.studentId;
+  let data: NonNullable<Awaited<ReturnType<typeof getLessonData>>>;
+  let sessionId: number | null;
+  try {
+    const pre = await withPrincipal(studentId, async (client) => {
+      const d = await getLessonData(
+        sanitizeLessonSlug(body.lesson),
+        studentId,
+        client
+      );
+      // The course gate (migration 023): `body.lesson` is a client-supplied
+      // slug and this endpoint would otherwise rate — and therefore read the
+      // objectives of — a lesson from a course this student may not have. A
+      // null slice is refused before the session is opened, so a refused
+      // rating leaves no sitting behind either.
+      if (!d) return null;
+      return {
+        data: d,
+        sessionId: await currentSessionOrNull(
+          studentId,
+          mode === "review" ? "lesson_review" : "lesson_learn",
+          {
+            surface: "understanding_check",
+            loId: lessonAnchorLo(d),
+            clientKey: chatSession || undefined,
+          },
+          client
+        ),
+      };
+    });
+    // Same answer for "no such lesson" and "not yours", for the reason
+    // `lib/lesson.ts` gives: two answers would let a client enumerate the
+    // courses that exist but are switched off for this student.
+    if (!pre) return NextResponse.json({ error: "not_found" }, { status: 404 });
+    ({ data, sessionId } = pre);
+  } catch (err) {
+    const denied = await mapRlsError(err, {
+      req,
+      actorAccountId: me.accountId,
+      targetStudentId: studentId,
+      resource: "api/understanding",
+    });
+    if (denied) return denied;
+    console.error("understanding: pre-rating reads failed:", err);
+    return NextResponse.json({ error: "internal error" }, { status: 500 });
+  }
 
-  const systemPrompt = `You are the honest comprehension grader of AI.Next, an adaptive math tutor. You rate how well the student actually understood a lesson, based ONLY on the session transcript. You output STRICT JSON and nothing else — no markdown fences, no prose.`;
-
-  const transcriptText = transcript
-    .map((m) =>
-      m.role === "user"
-        ? `Student: ${m.text}`
-        : m.role === "assistant"
-          ? `Tutor: ${m.text}`
-          : `[live event] ${m.text}`
-    )
-    .join("\n");
-
-  // Same mastery-stage premise the learn-mode tutor prompt opens with
-  // (lib/lesson.ts `learnOpeningFrame`) — the grader must not judge the
-  // session against a "he understood NOTHING" starting point when the real
-  // one might be "first time seeing this" or "already handles it well".
-  const sessionDesc =
-    mode === "learn"
-      ? `AI-taught lesson (${learnOpeningFrame(deriveMasteryStage(data.los), data.studentName.split(" ")[0]).premise})`
-      : `quick revision (the student said he understood everything at school)`;
-  const basePrompt = `Session: ${sessionDesc}.
-Student: ${data.studentName}, ${gradeLabel(data.grade).toLowerCase()}. Lesson: ${data.lessonRef} — ${data.title} (${data.moduleLabel}).
-Learning objectives covered:
-${loLines}
-
-GRADING RULES:
-- Weigh ACTUAL performance — the "[live event]" lines (question attempts ✓/✗, widget results) — far above self-report or politeness.
-- Be honest but fair: in learn mode, visible progress across the session counts in his favor; early mistakes that were later corrected are progress, not failure.
-- verdict bands: got_it = score >= 80, nearly = 55–79, needs_work < 55.
-- strengths and gaps: 1–4 short concrete phrases each, referencing the actual content of THIS lesson (its objectives, figures, and exercises as they appeared in the transcript). gaps may be empty ([]) if there truly are none.
-- next_step: ONE actionable, encouraging sentence for tomorrow. Never punitive.
-
-Return STRICT JSON exactly in this shape:
-{"score": <integer 0-100>, "verdict": "got_it" | "nearly" | "needs_work", "strengths": ["...", ...], "gaps": ["...", ...], "next_step": "..."}
-
-TRANSCRIPT:
-${transcriptText}`;
+  // The grading prompt is built in `lib/understanding-prompt.ts` — a pure
+  // builder, so `scripts/capture-prompts.mts` can render it and constitution IX
+  // has a surface to diff. It used to be four interpolations in the middle of
+  // this handler, which is why it was one of the two prompts no gate covered.
+  const systemPrompt = UNDERSTANDING_SYSTEM_PROMPT;
+  const basePrompt = buildUnderstandingPrompt({
+    mode,
+    los: data.los,
+    studentName: data.studentName,
+    grade: data.grade,
+    lessonRef: data.lessonRef,
+    title: data.title,
+    moduleLabel: data.moduleLabel,
+    transcript,
+    // FR-2602: the same register the tutor used this session, read from the
+    // same one profile query (`getLessonData`) rather than a second one.
+    gender: data.gender,
+  });
 
   try {
-    let totalCost = 0;
-    let totalIn = 0;
-    let totalOut = 0;
+    /** The CLI's own totals, summed over the attempts that reported one. */
+    let cliCost: number | null = null;
+    let tokens: TokenCounts = ZERO_TOKENS;
     let totalMs = 0;
     let rating: RatingJson | null = null;
     let rawOut = "";
+    /** Set when an attempt failed outright, for the ledger row's outcome. */
+    let failure: { outcome: Extract<Outcome, "error" | "timeout">; detail: string } | null =
+      null;
 
     for (let attempt = 0; attempt < 2 && !rating; attempt++) {
       const prompt =
         attempt === 0
           ? basePrompt
-          : `${basePrompt}\n\nYour previous output was INVALID:\n${rawOut.slice(0, 500)}\nReturn ONLY the strict JSON object this time. No other text.`;
+          : understandingRetryPrompt(basePrompt, rawOut);
       const r = await runClaudeJson(systemPrompt, prompt);
-      totalCost += r.costUsd;
-      totalIn += r.inputTokens;
-      totalOut += r.outputTokens;
+      // Both branches spent tokens, so both branches accumulate them.
+      tokens = addTokens(tokens, r.tokens);
       totalMs += r.latencyMs;
+      if (!r.ok) {
+        failure = { outcome: r.outcome, detail: r.detail };
+        break;
+      }
+      failure = null;
+      if (r.cliCostUsd !== null) cliCost = (cliCost ?? 0) + r.cliCostUsd;
       rawOut = r.text;
       rating = parseRating(r.text);
     }
 
     if (!rating) {
+      // THE RATING FAILED, AND IT WAS NOT FREE. A full lesson transcript went
+      // into the model on each attempt; writing no row is how the most
+      // expensive failure in the product looks like nothing happened
+      // (research A4.2). No `understanding_checks` row is written — there is no
+      // rating — so this one is its own unit rather than a savepoint inside one.
+      if (totalInputTokens(tokens) + tokens.outputTokens > 0) {
+        const { costUsd, priceBasis } = costFor(MODEL, tokens, cliCost);
+        try {
+          await withPrincipal(studentId, (client) =>
+            client.query(
+              `INSERT INTO ai_interactions
+                 (student_id, surface, turn_index, user_message, assistant_message,
+                  grounding, citations, model, input_tokens, output_tokens,
+                  cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
+                  environment, surface_kind, session_id, renderer_version,
+                  outcome, price_basis, priced_at)
+               VALUES ($1,'understanding_check',1,$2,$3,$4,'[]',$5,$6,$7,$8,$9,$10,$11,$12,
+                       'understanding',$13,$14,$15,$16,now())`,
+              [
+                studentId,
+                `[rate ${mode} session — ${transcript.length} transcript lines]`,
+                failure
+                  ? `[no rating — the grading model ${failure.outcome === "timeout" ? "timed out" : "failed"}]`
+                  : "[no rating — the grading model returned invalid JSON twice]",
+                JSON.stringify({
+                  chat_session: chatSession,
+                  mode,
+                  lesson: data.slug,
+                  lo_ids: data.los.map((l) => l.id),
+                }),
+                MODEL,
+                tokens.inputTokens,
+                tokens.outputTokens,
+                tokens.cacheReadTokens,
+                tokens.cacheCreationTokens,
+                costUsd,
+                totalMs,
+                ENVIRONMENT,
+                sessionId,
+                RELEASE_TAG,
+                failure?.outcome ?? "error",
+                priceBasis,
+              ]
+            )
+          );
+        } catch (e) {
+          console.error("understanding: failed to log a failed rating:", e);
+        }
+      }
       return NextResponse.json(
         { error: "rating model returned invalid JSON twice" },
         { status: 502 }
       );
     }
 
-    const ins = await pool.query(
-      `INSERT INTO understanding_checks
-         (student_id, lo_id, mode, score, verdict, strengths, gaps, next_step, turns, subject)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-       RETURNING id`,
-      [
-        studentId,
-        lessonAnchorLo(data),
-        mode,
-        rating.score,
-        rating.verdict,
-        JSON.stringify(rating.strengths),
-        JSON.stringify(rating.gaps),
-        rating.next_step,
-        turns,
-        // the subject key stored on the rating row: an EXACT registry
-        // mapping, not a two-armed guess that filed everything else as maths
-        spineKeyOf(data.subject),
-      ]
-    );
-    const id = Number(ins.rows[0].id);
-
-    // cost instrumentation — every LLM call is logged (PRD hard requirement)
-    try {
-      await pool.query(
-        `INSERT INTO ai_interactions
-           (student_id, surface, turn_index, user_message, assistant_message,
-            grounding, citations, model, input_tokens, output_tokens,
-            cost_usd, latency_ms, environment, surface_kind)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'understanding')`,
+    // UNIT TWO — the rating and its cost row, after the model has answered and
+    // with no connection held while it did.
+    const id = await withPrincipal(studentId, async (client) => {
+      const ins = await client.query(
+        `INSERT INTO understanding_checks
+           (student_id, lo_id, session_id, mode, score, verdict, strengths, gaps,
+            next_step, turns, subject)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+         RETURNING id`,
         [
           studentId,
-          "understanding_check",
-          1,
-          `[rate ${mode} session — ${transcript.length} transcript lines]`,
-          rawOut.slice(0, 4000),
-          JSON.stringify({
-            chat_session: chatSession,
-            mode,
-            lesson: data.slug,
-            lo_ids: data.los.map((l) => l.id),
-            check_id: id,
-          }),
-          JSON.stringify([]),
-          MODEL,
-          totalIn,
-          totalOut,
-          totalCost,
-          totalMs,
-          ENVIRONMENT,
+          lessonAnchorLo(data),
+          sessionId,
+          mode,
+          rating.score,
+          rating.verdict,
+          JSON.stringify(rating.strengths),
+          JSON.stringify(rating.gaps),
+          rating.next_step,
+          turns,
+          // the subject key stored on the rating row: an EXACT registry
+          // mapping, not a two-armed guess that filed everything else as maths
+          spineKeyOf(data.subject),
         ]
       );
-    } catch (e) {
-      console.error("understanding: failed to log ai_interaction:", e);
+      const checkId = Number(ins.rows[0].id);
+
+      // Cost instrumentation — every LLM call is logged (PRD hard requirement).
+      // Behind a SAVEPOINT because the rule this code already stated is that
+      // instrumentation is observability, not behaviour: it used to be a
+      // separate statement in its own try/catch, and inside one transaction a
+      // bare failure here would roll back the rating the student is waiting to
+      // read. The savepoint keeps the old degradation with the new atomicity.
+      await client.query("SAVEPOINT cost_row");
+      try {
+        const { costUsd, priceBasis } = costFor(MODEL, tokens, cliCost);
+        await client.query(
+          `INSERT INTO ai_interactions
+             (student_id, surface, turn_index, user_message, assistant_message,
+              grounding, citations, model, input_tokens, output_tokens,
+              cache_read_tokens, cache_creation_tokens, cost_usd, latency_ms,
+              environment, surface_kind, session_id, renderer_version,
+              outcome, price_basis, priced_at)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'understanding',
+                   $16,$17,'ok',$18,now())`,
+          [
+            studentId,
+            "understanding_check",
+            1,
+            `[rate ${mode} session — ${transcript.length} transcript lines]`,
+            rawOut.slice(0, 4000),
+            JSON.stringify({
+              chat_session: chatSession,
+              mode,
+              lesson: data.slug,
+              lo_ids: data.los.map((l) => l.id),
+              check_id: checkId,
+            }),
+            JSON.stringify([]),
+            MODEL,
+            // UNCACHED input, and the two cache counters beside it — this
+            // route summed all three into `input_tokens` and wrote no cache
+            // columns at all, so a rating's cache hits were invisible (A0.2).
+            tokens.inputTokens,
+            tokens.outputTokens,
+            tokens.cacheReadTokens,
+            tokens.cacheCreationTokens,
+            costUsd,
+            totalMs,
+            ENVIRONMENT,
+            sessionId,
+            // The build that produced this check's report card (ADR-0015 §3) —
+            // the console replays the verdict through the student's own
+            // ReportCard, so it has to know which one drew it.
+            RELEASE_TAG,
+            priceBasis,
+          ]
+        );
+        await client.query("RELEASE SAVEPOINT cost_row");
+      } catch (e) {
+        await client.query("ROLLBACK TO SAVEPOINT cost_row");
+        console.error("understanding: failed to log ai_interaction:", e);
+      }
+      return checkId;
+    });
+
+    // The rating IS the end of the lesson — the client discards its resume key
+    // on the same response (LessonSession.tsx:568). Closing here is the only
+    // place `completed` is ever written; without it every sitting would end up
+    // swept as `inactivity`, and FR-2302's "did she finish, or walk away"
+    // would have one answer for both.
+    //
+    // Its own unit, deliberately: a failure to close must not undo the rating
+    // the student is waiting to read.
+    if (sessionId !== null) {
+      try {
+        await closeSession(studentId, sessionId, "completed");
+      } catch (e) {
+        console.error("understanding: failed to close the session:", e);
+      }
     }
 
     const check: UnderstandingCheck = {
@@ -324,8 +514,20 @@ ${transcriptText}`;
       nextStep: rating.next_step,
       turns,
     };
-    return NextResponse.json({ check, costUsd: totalCost });
+    // The same figure the ledger row carries, arrived at the same way — an
+    // imputation at list price, never money that left an account.
+    return NextResponse.json({
+      check,
+      costUsd: costFor(MODEL, tokens, cliCost).costUsd ?? 0,
+    });
   } catch (err) {
+    const denied = await mapRlsError(err, {
+      req,
+      actorAccountId: me.accountId,
+      targetStudentId: studentId,
+      resource: "api/understanding",
+    });
+    if (denied) return denied;
     console.error("understanding POST failed:", err);
     return NextResponse.json(
       { error: "rating backend unavailable" },

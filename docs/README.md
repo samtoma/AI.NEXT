@@ -16,7 +16,7 @@ a constitution two major versions out of date.
 | Know where the project stands today | [`PROJECT_STATE.md`](PROJECT_STATE.md) — living status, updated as work lands |
 | Know what we promised to build | [`specs/001-student-mvp1-delta/spec.md`](../specs/001-student-mvp1-delta/spec.md) — 90 functional requirements + 6 success criteria |
 | Know what is actually **proven** | [`specs/001-student-mvp1-delta/traceability.md`](../specs/001-student-mvp1-delta/traceability.md) — every requirement, its status, and the evidence |
-| Know **why** something is built that way | [`decisions/`](decisions/) — ADR-0001…0011 |
+| Know **why** something is built that way | [`decisions/`](decisions/) — ADR-0001…0016 |
 | Give feedback or report a problem | [`FEEDBACK.md`](FEEDBACK.md) |
 | See what is coming next | [`ROADMAP.md`](ROADMAP.md) |
 | Run it on your machine | [`LOCAL-DEV.md`](LOCAL-DEV.md) |
@@ -30,9 +30,10 @@ brainstorm material in the Google folder is context and never an authority.
 | Question | Authority | Where |
 |---|---|---|
 | WHAT we build & why (product scope) | **PRD: AI Tutor — Student MVP v0.4** (Tamer Deif) | Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk` |
-| HOW we build (engineering principles) | **Constitution v3.0.0** | [`.specify/memory/constitution.md`](../.specify/memory/constitution.md) |
+| HOW we build (engineering principles) | **Constitution v3.1.1** | [`.specify/memory/constitution.md`](../.specify/memory/constitution.md) |
 | Design philosophy (data spine) | Thesis, adopted by ADR-0001 | [`agentic-data-thesis.html`](../agentic-data-thesis.html) |
 | Which product is under change | **ADR-0010** — one branch per solution *(amends ADR-0007's delivery model; its product scope stands)* | [`decisions/0007-student-mvp1-comparison-build.md`](decisions/0007-student-mvp1-comparison-build.md) |
+| How it looks (visual language) | **The published Noor Play design system** — binding on every surface we build under constitution **Principle XII**; two variants, selected by grade per **ADR-0011** and **ADR-0017** | <https://claude.ai/artifact/SXTAsvPUCjU4ZMp5oZtM6J> · source material in [`design/handoffs/noor-play/`](design/handoffs/noor-play/) |
 
 The **superseded** PRD v1.0 (parent-sold, Arabic-RTL, three subjects) still
 governs the frozen baseline on `family-tutor`, and nothing else:
@@ -77,9 +78,21 @@ The Spec Kit baseline set — the full as-built requirements of the shipped prod
   requirements of the shipped baseline (31). Frozen; reported by the
   traceability tool but never gated, because it is history rather than work.
 - [`specs/001-student-mvp1-delta/`](../specs/001-student-mvp1-delta/) — **the
-  active feature**: `spec.md` (what), `plan.md` (how), `tasks.md` (135 tasks),
-  `traceability.md` (what is proven), `decisions.md` (open questions Samuel has
-  answered).
+  shipped feature** (`PDR1-0-v0.4.0`): `spec.md` (what), `plan.md` (how),
+  `tasks.md` (135 tasks), `traceability.md` (what is proven), `decisions.md`
+  (open questions Samuel has answered).
+- [`specs/002-identity-and-admin-console/`](../specs/002-identity-and-admin-console/) —
+  **the active feature** (specced 2026-09-20, **implemented 2026-09-21** on
+  `feat/002-identity-and-admin-console`; not merged, not deployed): `spec.md` (70 FRs,
+  14 SCs), `plan.md`, `research.md` + `research/`, `data-model.md`,
+  `contracts/`, [`quickstart.md`](../specs/002-identity-and-admin-console/quickstart.md)
+  (one command, both surfaces),
+  [`traceability.md`](../specs/002-identity-and-admin-console/traceability.md) (rev. 2 —
+  62 verified, 2 built, 13 partial, 2 open, 1 blocked, 4 deferred),
+  [`SETUP.md`](../specs/002-identity-and-admin-console/SETUP.md) — **the hand-off: what
+  only Samuel can provide**, `decisions.md` (Samuel's D1–D11), and
+  `constitution-amendment-proposal.md` — Principle VII, v3.1.1 → v3.2.0, **awaiting his
+  approval**, which the voice and audit work now assumes.
 - [`specs/000-baseline/plan.md`](../specs/000-baseline/plan.md) — as-built
   architecture, constitution check, runtime/content flows, deployment topology.
 - [`specs/000-baseline/data-model.md`](../specs/000-baseline/data-model.md) —
@@ -104,6 +117,12 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
 | [0004](decisions/0004-social-studies-vertical.md) | Social Studies vertical (Wave-0: voice, grounding, sensitive content) |
 | [0005](decisions/0005-extraction-pipeline.md) | The extraction line: agentic, coverage-audited book ingest |
 | [0006](decisions/0006-arabic-language-vertical.md) | Arabic vertical: sealed texts, typed answers, containment |
+| [0012](decisions/0012-per-student-isolation-rls.md) | Per-student isolation is enforced by the database (Postgres row-level security) |
+| [0013](decisions/0013-student-accounts-and-sign-in.md) | Student-owned accounts, parent-linkable, with Reletix-pattern sign-in |
+| [0014](decisions/0014-admin-console-second-build-target.md) | The admin console is a second build target of one codebase |
+| [0015](decisions/0015-interaction-timeline-and-replay.md) | One interaction timeline per student per session, replayed by reconstruction |
+| [0016](decisions/0016-analytics-and-monitoring-posture.md) | Analytics and monitoring: three layers, one system of record |
+| [0017](decisions/0017-two-variants-keyed-to-grade.md) | Two design-system variants, selected at runtime and keyed to grade *(amends ADR-0011)* |
 
 ## 3. Architecture (`docs/architecture/`)
 
@@ -154,8 +173,9 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
   counts as *built*, not *verified*.
 - [`docs/reviews/`](reviews/) — dated build reviews written to be presented. Snapshots, never
   edited after the fact; the two documents above are the ones that stay current.
-- [`docs/design/nour/`](design/nour/) — source artboards for the Nour design canvas, and the
-  record of the master-vs-Play variant choice.
+- [`docs/design/noor/`](design/noor/) — source artboards for the Noor design canvas, and the
+  record of the Master-vs-Play variant decision (ADR-0011, amended by ADR-0017: both ship,
+  selected by grade).
 
 ## 7. Source material
 

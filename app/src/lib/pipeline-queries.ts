@@ -1,5 +1,22 @@
-import { pool } from "./db";
-import { DEFAULT_STUDENT_ID } from "./demo-student";
+import { sequential } from "./db";
+import { scoped, type Db } from "./student-context";
+
+/**
+ * `/pipeline` is an internal explainer: how the book became a graph. Everything
+ * it shows is CORPUS data — documents, extraction runs, node and edge counts,
+ * one exemplar question — except the mastery overlay on the mini-map, which is
+ * the viewer's own and is read under their principal.
+ *
+ * **FR-2104: the latest-turn panel is gone.** Stage 05 ("Context assembly")
+ * read `SELECT … FROM ai_interactions ORDER BY created_at DESC LIMIT 1` — the
+ * most recent tutor turn written by ANY student — and rendered its prompt
+ * slice, its token counts and its cost to whoever opened the page. It was a
+ * demo affordance from when there was one student; with accounts it is one
+ * student's conversation shown to another. The policy in migration 017 would
+ * now return nothing for it anyway, but leaving a query whose only correct
+ * result is "empty" invites someone to "fix" it later. So it is deleted, along
+ * with the `AiTurn`/`GroundingSlice` types and the stage that rendered them.
+ */
 
 /* ------------------------------------------------------------------ */
 /* Types                                                               */
@@ -49,24 +66,6 @@ export interface ReviewQuestion {
   status: string;
 }
 
-export interface GroundingSlice {
-  loIds: string[];
-  pages: number[];
-  questionIds: string[];
-}
-
-export interface AiTurn {
-  id: number;
-  surface: string;
-  model: string;
-  inputTokens: number;
-  outputTokens: number;
-  costUsd: number;
-  latencyMs: number;
-  createdAt: string;
-  grounding: GroundingSlice;
-}
-
 export interface PipelineData {
   doc: PipelineDoc;
   run: PipelineRun | null;
@@ -77,7 +76,6 @@ export interface PipelineData {
   prereqEdges: { src: string; dst: string }[];
   questionStats: { live: number; reviewed: number };
   reviewQuestion: ReviewQuestion | null;
-  aiTurn: AiTurn | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -108,7 +106,34 @@ function computeLayers(
 /* ------------------------------------------------------------------ */
 
 export async function getPipelineData(
-  studentId: number = DEFAULT_STUDENT_ID
+  studentId: number | null
+): Promise<PipelineData> {
+  return scoped(studentId, undefined, (db) => pipelineDataOn(db, studentId));
+}
+
+/**
+ * The same read, from the console, under `ainext_operator` (ADR-0014, P2).
+ *
+ * `studentId` is `null` and always will be: on the console there is no student
+ * principal, so the mastery overlay is empty and everything else on the page is
+ * corpus data — documents, runs, node and edge counts, one exemplar question.
+ * That is the point rather than a limitation. `evidence-access` reads content,
+ * not students, and this function is what makes that true of the query and not
+ * only of the role's description.
+ *
+ * It is a separate export rather than a parameter on `getPipelineData` because
+ * the two differ in the connection they open, not in the data they want, and a
+ * boolean that switches database roles is a boolean somebody eventually passes
+ * from a request.
+ */
+export async function getPipelineDataForOperator(operatorId: number): Promise<PipelineData> {
+  const { withOperator } = await import("./db");
+  return withOperator(operatorId, (db) => pipelineDataOn(db as unknown as Db, null));
+}
+
+async function pipelineDataOn(
+  db: Db,
+  studentId: number | null
 ): Promise<PipelineData> {
   const [
     docRes,
@@ -120,25 +145,25 @@ export async function getPipelineData(
     masteryRes,
     qStatsRes,
     reviewQRes,
-    aiRes,
-  ] = await Promise.all([
-    pool.query(`
+    // One client per unit of work, so one query at a time (pg@9).
+  ] = await sequential([
+    () => db.query(`
       SELECT sha256, title, publisher, edition, language, grade, subject,
              file_path, ingested_at
       FROM source_documents LIMIT 1
     `),
-    pool.query(`
+    () => db.query(`
       SELECT extractor, extractor_version, schema_version, finished_at
       FROM extraction_runs ORDER BY id DESC LIMIT 1
     `),
-    pool.query(`
+    () => db.query(`
       SELECT kind, count(*)::int AS count FROM graph_nodes
       GROUP BY kind
       ORDER BY CASE kind
         WHEN 'program' THEN 0 WHEN 'course' THEN 1 WHEN 'module' THEN 2
         WHEN 'learning_objective' THEN 3 ELSE 4 END
     `),
-    pool.query(`
+    () => db.query(`
       SELECT edge_type AS type, count(*)::int AS count, min(syllabus_version) AS sv
       FROM graph_edges WHERE system_to IS NULL
       GROUP BY edge_type
@@ -146,20 +171,26 @@ export async function getPipelineData(
         WHEN 'part_of' THEN 0 WHEN 'about' THEN 1
         WHEN 'teaches' THEN 2 ELSE 3 END
     `),
-    pool.query(`
+    () => db.query(`
       SELECT id, label, source_page FROM graph_nodes
       WHERE kind = 'learning_objective' ORDER BY order_in_parent
     `),
-    pool.query(`
+    () => db.query(`
       SELECT src_id, dst_id FROM graph_edges
       WHERE edge_type = 'prerequisite_of' AND system_to IS NULL
     `),
-    pool.query(
-      `SELECT lo_id, score FROM mastery
-       WHERE student_id = $1 AND system_to IS NULL`,
-      [studentId]
-    ),
-    pool.query(`
+    // The viewer's own mastery, or nothing at all when nobody is signed in —
+    // the overlay is a personal detail on a corpus page, not part of the
+    // explainer.
+    () =>
+      studentId == null
+        ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
+        : db.query(
+            `SELECT lo_id, score FROM mastery
+           WHERE student_id = $1 AND system_to IS NULL`,
+            [studentId]
+          ),
+    () => db.query(`
       SELECT
         count(*) FILTER (WHERE status = 'live')::int          AS live,
         count(*) FILTER (WHERE reviewed_by IS NOT NULL)::int  AS reviewed
@@ -167,7 +198,7 @@ export async function getPipelineData(
     `),
     // the exemplar plate: prefer the function-definition question (book p.16,
     // the same page shown in the Source scans); fall back to any live row
-    pool.query(`
+    () => db.query(`
       SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.choices,
              q.correct_answer, q.canonical_solution, q.source_page,
              q.source_note, q.reviewed_by, q.reviewed_at, q.status,
@@ -178,12 +209,7 @@ export async function getPipelineData(
       ORDER BY (q.id = 'q:u1-3-1:001') DESC, q.id
       LIMIT 1
     `),
-    pool.query(`
-      SELECT id, surface, model, input_tokens, output_tokens, cost_usd,
-             latency_ms, grounding, created_at
-      FROM ai_interactions ORDER BY created_at DESC LIMIT 1
-    `),
-  ]);
+  ] as const);
 
   const d = docRes.rows[0];
   const doc: PipelineDoc = {
@@ -246,25 +272,6 @@ export async function getPipelineData(
       }
     : null;
 
-  const a = aiRes.rows[0];
-  const aiTurn: AiTurn | null = a
-    ? {
-        id: Number(a.id),
-        surface: a.surface,
-        model: a.model,
-        inputTokens: Number(a.input_tokens),
-        outputTokens: Number(a.output_tokens),
-        costUsd: Number(a.cost_usd),
-        latencyMs: Number(a.latency_ms),
-        createdAt: new Date(a.created_at).toISOString(),
-        grounding: {
-          loIds: a.grounding?.lo_ids ?? [],
-          pages: a.grounding?.pages ?? [],
-          questionIds: a.grounding?.question_ids ?? [],
-        },
-      }
-    : null;
-
   return {
     doc,
     run,
@@ -278,6 +285,5 @@ export async function getPipelineData(
     prereqEdges,
     questionStats: qStatsRes.rows[0],
     reviewQuestion,
-    aiTurn,
   };
 }

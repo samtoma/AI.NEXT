@@ -1,5 +1,8 @@
-import { pool } from "./db";
-import { DEFAULT_STUDENT_ID } from "./demo-student";
+import type { PoolClient } from "pg";
+
+import { pool, sequential } from "./db";
+import { visibleCoursesFor } from "./catalog-queries";
+import { scoped, type Db } from "./student-context";
 import {
   compareSpineSubjects,
   displayLabelOfSpineKey,
@@ -25,10 +28,6 @@ import type { LessonBridge, SpineSubject, SubjectSummary, Verdict } from "./type
  * (`null`) and simply does not roll up into any subject.
  */
 
-/** Callers pass the request's resolved demo student; this is only the
- *  fallback for a call with no student in scope (see lib/student-context.ts). */
-const STUDENT_ID = DEFAULT_STUDENT_ID;
-
 /** "lo:soc1-2-1" → lesson slug "soc1-2" (LO-id minus the trailing part). */
 function slugOfLo(loId: string): string {
   return loId.replace(/^lo:/, "").replace(/-[0-9]+$/, "");
@@ -48,10 +47,31 @@ async function columnExists(table: string, column: string): Promise<boolean> {
 /* ------------------------------------------------------------------ */
 
 export async function getSubjectSummaries(
-  studentId: number = STUDENT_ID
+  studentId: number,
+  c?: PoolClient
 ): Promise<SubjectSummary[]> {
-  const [losRes, checksRes] = await Promise.all([
-    pool.query(
+  return scoped(studentId, c, (db) => subjectSummariesOn(db, studentId));
+}
+
+async function subjectSummariesOn(
+  db: Db,
+  studentId: number
+): Promise<SubjectSummary[]> {
+  // The course gate (migration 023). This is the student home — the surface
+  // that decides whether a subject exists at all as far as a child is
+  // concerned — so a hidden course must not appear here even as a zero. It is
+  // the same set `lib/lesson.ts` gates on; the two surfaces cannot disagree
+  // about which subjects are on.
+  //
+  // `studentId` is always a real student here (the one caller resolves it from
+  // the session), so there is no ungated path through this function.
+  const visible = await visibleCoursesFor(
+    studentId,
+    "release" in db ? (db as PoolClient) : undefined
+  );
+  // One client, so one query at a time (pg@9; lib/db.ts `sequential`).
+  const [losRes, checksRes] = await sequential([
+    () => db.query(
       `SELECT lo.id, lo.label, lo.order_in_parent,
               m.id AS module_id, m.order_in_parent AS module_order,
               c.id AS course_id, c.label AS course_label,
@@ -70,7 +90,7 @@ export async function getSubjectSummaries(
                 m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`,
       [studentId]
     ),
-    pool.query(
+    () => db.query(
       // `subject` is written by /api/understanding on every insert and was
       // backfilled by migration 006 — read it instead of guessing the subject
       // back out of the LO id.
@@ -80,7 +100,7 @@ export async function getSubjectSummaries(
        ORDER BY created_at DESC`,
       [studentId]
     ),
-  ]);
+  ] as const);
 
   interface Acc {
     subject: SpineSubject;
@@ -95,6 +115,10 @@ export async function getSubjectSummaries(
   const bySubject = new Map<SpineSubject, Acc>();
 
   for (const r of losRes.rows) {
+    // Gated before it is filed: a hidden course contributes no LO, so it
+    // produces no summary, no average and no "0%" card hinting that a subject
+    // is there and empty.
+    if (r.course_id == null || !visible.has(r.course_id)) continue;
     // Unfiled LO (course not in the registry): it belongs to no subject, so it
     // rolls up into none. It is NOT quietly added to maths' average.
     const subject = spineSubjectOfCourse(r.course_id);

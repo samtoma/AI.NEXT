@@ -133,13 +133,29 @@ perceived responsiveness than any loading state. `tokens.css` ships it as
 
 | Background | Foreground | Ratio |
 |---|---|---|
-| amber `#F0A22F` | `#241F3D` | 8.1:1 — **never white** (2.1:1) |
+| amber `#F0A22F` | `#241F3D` | 7.4:1 — **never white** (2.1:1) |
 | teal `#2F9E8F` | `#241F3D` | 4.79:1 — **never white** (3.28:1) |
-| violet `#7B4FC9` | `#FFFFFF` / dim `#F0E9FB` | 7.4:1 |
+| violet `#7B4FC9` | `#FFFFFF` / dim `#F0E9FB` | 5.5:1 / dim 4.7:1 |
 | sky `#7FD1F0` | `#0F3D51` / dim `#134B63` | |
 | leaf `#B6E88F` | `#1F3D12` / dim `#3A5B26` | |
 | berry `#FFA8C5` | `#7A2447` / dim `#6E2440` | |
 | Honey `#FFE9BD` | `#6B5A2E`, small mono on amber `#5E3806` | |
+| white `#FFFFFF` | inactive border `#9890B5` | 3.00:1 — clears the 3:1 floor for a meaningful border. **Darkened 2026-09-20** from `#9C95B8`, which was 2.84:1 and did not. |
+
+*Two ratios in this table were recomputed and corrected on 2026-09-20: amber on ink
+read 8.1:1 (it is 7.41:1) and violet read 7.4:1 for both foregrounds (white is 5.52:1,
+the dim `#F0E9FB` is 4.67:1). Every pair still clears WCAG AA at every size. Re-check
+after any re-sync of the handoff bundle, which would restore the original figures.*
+
+*The inactive-border row is a **change**, not a correction: `#9C95B8` measured 2.84:1 on
+white, under the 3:1 floor a border that carries meaning has to clear, and **Samuel decided
+on 2026-09-20 to darken it** to the nearest violet on the same hue that clears the floor.
+`#9890B5` is that value — 3.00:1 on white, 2.77:1 on the `#F6F5FA` inactive fill it outlines
+(up from 2.61:1), 2.80:1 on the Cream page. **The margin over 3.0 is thin (3.0036:1)**, so any
+further nudge to this token must be re-measured rather than eyeballed. Applied in
+`tokens.css`, `tokens.json` and `app/src/app/globals.css`; the **published artifact still shows
+the old value and must be updated from its own page.**  The reasoning sits with
+[ADR-0017](../../../decisions/0017-two-variants-keyed-to-grade.md).*
 
 **Text greys on Cream/white:** `#4A4266` secondary body · `#5A5570` labels, option
 letters, inactive nav · `#615B7D` mono eyebrows in cards · `#655B80` section
@@ -318,9 +334,13 @@ rather than "broken".
   `3px 3px 0` shadow, option letter at the end in `#5A5570`.
 - **Selected:** Honey fill, keeps stroke and shadow, label "اخترتها" in `#8A4208`.
 - **Correct:** leaf fill, `#1F3D12` text, `✓`, **`pop` 380ms**.
-- **Wrong:** `#F6F5FA` fill, 2.5px `#9C95B8` border, `#5A5570` text, **no shadow**,
+- **Wrong:** `#F6F5FA` fill, 2.5px `#9890B5` border, `#5A5570` text, **no shadow**,
   **`nudge` 420ms**, and an invitation to retry. **Never red.** It is still an active
   control — the student can pick again immediately, so it keeps AA-legible text.
+  *(Border darkened 2026-09-20 from `#9C95B8`, 2.84:1 on white, to `#9890B5`, 3.00:1 —
+  Samuel's decision; see the contrast table above. This state is **specified here but not
+  built**: `--play-inactive-border` is defined once in `app/src/app/globals.css` and read by
+  no component, so nothing in the product renders it yet.)*
 
 ### Chat bubbles
 - **Nour:** white, 2.5px ink, `3px 3px 0` shadow, notch at **top-start** toward the

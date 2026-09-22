@@ -20,6 +20,7 @@ export function TimelineBuilder({
   events,
   correctOrder,
   answerOrder,
+  studentName,
   onResult,
 }: {
   prompt: string;
@@ -27,8 +28,14 @@ export function TimelineBuilder({
   correctOrder?: number[];
   /** legacy alias from the design spec */
   answerOrder?: number[];
+  /** The signed-in student's display name, narrated into the note below in
+   *  place of the retired "Omar" demo persona (FR-2602, ADR-0010 plan A10).
+   *  Falls back to a name-free "the student" — never a guess — when a caller
+   *  (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (note: string) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const order = useMemo(() => {
     const o = (correctOrder ?? answerOrder ?? events.map((_, i) => i)).filter(
       (i) => Number.isInteger(i) && i >= 0 && i < events.length
@@ -56,8 +63,8 @@ export function TimelineBuilder({
       if (next >= n) {
         fire(
           missteps === 0
-            ? `✓ Omar ordered all ${n} events correctly on the timeline on the first try`
-            : `✓ Omar completed the timeline order after ${missteps} wrong pick${missteps > 1 ? "s" : ""} (self-corrected)`
+            ? `✓ ${who} ordered all ${n} events correctly on the timeline on the first try`
+            : `✓ ${who} completed the timeline order after ${missteps} wrong pick${missteps > 1 ? "s" : ""} (self-corrected)`
         );
       }
     } else {

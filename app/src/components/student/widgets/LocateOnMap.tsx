@@ -19,14 +19,21 @@ export function LocateOnMap({
   prompt,
   target,
   decoys,
+  studentName,
   onResult,
 }: {
   base: string;
   prompt: string;
   target: string;
   decoys?: string[];
+  /** The signed-in student's display name, narrated into the note below in
+   *  place of the retired "Omar" demo persona (FR-2602, ADR-0010 plan A10).
+   *  Falls back to a name-free "the student" — never a guess — when a caller
+   *  (dev fixture, admin replay) has none to give. */
+  studentName?: string;
   onResult: (note: string) => void;
 }) {
+  const who = studentName?.trim() || "the student";
   const { map, status } = useBaseMap(base);
   const fire = useFireOnce(onResult);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -65,8 +72,8 @@ export function LocateOnMap({
     const ok = hit === t.name;
     fire(
       ok
-        ? `✓ Omar located "${t.name}" correctly on the ${base} map`
-        : `✗ Omar tapped ${hit ? `"${hit}"` : "an empty area"} instead of "${t.name}" on the ${base} map`
+        ? `✓ ${who} located "${t.name}" correctly on the ${base} map`
+        : `✗ ${who} tapped ${hit ? `"${hit}"` : "an empty area"} instead of "${t.name}" on the ${base} map`
     );
   };
 
