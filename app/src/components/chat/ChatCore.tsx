@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type {
   AttemptResult,
   ChatMsg,
@@ -55,6 +48,23 @@ export type ChatSuggestion = string | { label: string; onSelect: () => void };
 export interface ChatCoreProps {
   surface: "spine_chat" | "student_chat" | "lesson_learn" | "lesson_review";
   suggestions?: ChatSuggestion[];
+  /**
+   * How the starter prompts sit above the composer.
+   *
+   * "chips" (default) is the wrapping inline row every existing surface
+   * renders. "stacked" is the skill map's docked panel: full-width sticker
+   * buttons, one per line, the first one amber — the build spec asks for
+   * exactly three, always visible, with no scrolling to reach them, and a
+   * wrapping row cannot promise that at 340px. Opt-in on purpose; changing
+   * the default would restyle the lesson surfaces too.
+   */
+  suggestionLayout?: "chips" | "stacked";
+  /**
+   * Send-button fill. "ink" (default) keeps every existing surface as-is;
+   * "amber" is the skill map's composer, where the panel carries the screen's
+   * one amber primary. Text on amber is always ink, never white.
+   */
+  sendTone?: "ink" | "amber";
   questionId?: string;
   wrongAnswer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
@@ -189,6 +199,8 @@ const GOT_IT_SENTINEL = "Got it — next ✓";
 export function ChatCore({
   surface,
   suggestions = [],
+  suggestionLayout = "chips",
+  sendTone = "ink",
   questionId,
   wrongAnswer,
   lessonSlug,
@@ -223,7 +235,8 @@ export function ChatCore({
   onMessagesChange,
   inputAccessory,
 }: ChatCoreProps) {
-  const lessonSurface = surface === "lesson_learn" || surface === "lesson_review";
+  const lessonSurface =
+    surface === "lesson_learn" || surface === "lesson_review";
   /**
    * Socratic-probing prototype (wip/socratic-probing-route-b, Route B +
    * Option 1). Scoped to lesson_learn only: review mode's whole design is a
@@ -600,9 +613,7 @@ export function ChatCore({
           const events = buf.split("\n\n");
           buf = events.pop() ?? "";
           for (const ev of events) {
-            const line = ev
-              .split("\n")
-              .find((l) => l.startsWith("data: "));
+            const line = ev.split("\n").find((l) => l.startsWith("data: "));
             if (!line) continue;
             let j: {
               type: string;
@@ -843,7 +854,9 @@ export function ChatCore({
           const material = r.refutation
             ? r.refutation.steps.map((st) => st.text_md).join(" ")
             : r.solution.length > 0
-              ? r.solution.map((st) => `Step ${st.step}. ${stepText(st)}`).join(" ")
+              ? r.solution
+                  .map((st) => `Step ${st.step}. ${stepText(st)}`)
+                  .join(" ")
               : null;
           note +=
             wrongCountAfter >= 2
@@ -1004,15 +1017,56 @@ export function ChatCore({
         ))}
       </div>
 
-      {/* suggestion chips — stay clickable after every stream */}
+      {/* starter prompts — stay clickable after every stream */}
       {suggestions.length > 0 && !capped && (
-        <div className="flex flex-wrap gap-1.5 border-t border-line-soft px-4 pb-1.5 pt-2.5">
+        <div
+          className={
+            suggestionLayout === "stacked"
+              ? "flex flex-col gap-0.5 px-4 pb-1 pt-2"
+              : "flex flex-wrap gap-1.5 border-t border-line-soft px-4 pb-1.5 pt-2.5"
+          }
+        >
+          {suggestionLayout === "stacked" && (
+            <p className="mb-1 px-1 font-display text-[0.72rem] font-bold leading-none text-ink-soft">
+              Try asking
+            </p>
+          )}
           {suggestions.map((s) => {
             const label = typeof s === "string" ? s : s.label;
+            const onSelect = () =>
+              typeof s === "string" ? send(s) : s.onSelect();
+            if (suggestionLayout === "stacked") {
+              /* A suggestion, not a control.
+                 These were sticker buttons — ink outline, hard shadow, the
+                 first one filled amber — which dressed two example questions
+                 as the screen's primary actions. They are neither: they are
+                 things you could say, sitting above the box you say things
+                 in, and the amber fill was claiming a primacy over the
+                 composer it does not have. A button element is still the
+                 right ELEMENT (it is clickable and must be reachable by
+                 keyboard); what changes is that it stops wearing a button.
+                 The panel's one amber is the send circle now. */
+              return (
+                <button
+                  key={label}
+                  onClick={onSelect}
+                  disabled={streaming}
+                  className="group flex w-full items-center gap-2 rounded-[10px] px-1 py-1.5 text-start font-display text-[0.88rem] font-bold leading-[1.4] text-ink-soft transition-colors duration-150 enabled:hover:bg-card-warm enabled:hover:text-ink disabled:opacity-40"
+                >
+                  <span
+                    aria-hidden
+                    className="shrink-0 text-ink-faint transition-transform duration-150 group-enabled:group-hover:translate-x-0.5"
+                  >
+                    ›
+                  </span>
+                  <span className="min-w-0">{label}</span>
+                </button>
+              );
+            }
             return (
               <button
                 key={label}
-                onClick={() => (typeof s === "string" ? send(s) : s.onSelect())}
+                onClick={onSelect}
                 disabled={streaming}
                 className="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-1 text-start text-[11px] font-medium leading-snug text-accent-deep transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent enabled:hover:text-paper disabled:opacity-40 play-pressable sticker-shadow-sm"
               >
@@ -1025,16 +1079,24 @@ export function ChatCore({
 
       {/* input */}
       <div
-        className={`flex items-center gap-2 px-4 pb-3.5 ${
-          suggestions.length > 0 && !capped ? "pt-1.5" : "border-t border-line-soft pt-3"
-        }`}
+        className={
+          suggestionLayout === "stacked"
+            ? "flex items-center gap-2 px-5 pb-4 pt-3.5"
+            : `flex items-center gap-2 px-4 pb-3.5 ${
+                suggestions.length > 0 && !capped
+                  ? "pt-1.5"
+                  : "border-t border-line-soft pt-3"
+              }`
+        }
       >
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send(input)}
-          placeholder={capped ? "AI turn limit reached for this question" : placeholder}
+          placeholder={
+            capped ? "AI turn limit reached for this question" : placeholder
+          }
           disabled={streaming || capped}
           className="min-w-0 flex-1 rounded-full border border-line bg-card px-4 py-2 text-[13px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-accent sticker-shadow-sm"
         />
@@ -1043,7 +1105,18 @@ export function ChatCore({
           onClick={() => send(input)}
           disabled={streaming || capped || !input.trim()}
           aria-label="Send"
-          className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-ink text-paper transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent-deep disabled:opacity-30 play-pressable sticker-shadow-sm"
+          className={
+            sendTone === "amber"
+              ? // amber fill, ink glyph — white on amber fails contrast and is
+                // forbidden outright by the design system.
+                "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-[2.5px] border-ink text-ink transition-all duration-150 disabled:opacity-30 play-pressable sticker-shadow-sm"
+              : "flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-ink text-paper transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent-deep disabled:opacity-30 play-pressable sticker-shadow-sm"
+          }
+          style={
+            sendTone === "amber"
+              ? { background: "var(--noor-action)" }
+              : undefined
+          }
         >
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
             <path
@@ -1218,7 +1291,9 @@ const MessageRow = memo(function MessageRow({
                 <BoardChip
                   key={i}
                   flavor="figure"
-                  onOpen={onDirective ? () => onDirective(name, props) : undefined}
+                  onOpen={
+                    onDirective ? () => onDirective(name, props) : undefined
+                  }
                 />
               );
             }
@@ -1253,9 +1328,13 @@ const MessageRow = memo(function MessageRow({
                 onResult={onAttempt}
                 onOpenQuestion={onOpenQuestion}
                 probing={probing}
-                revealAnswer={pendingLoId === q.loId && (pendingWrongCount ?? 0) >= 2}
+                revealAnswer={
+                  pendingLoId === q.loId && (pendingWrongCount ?? 0) >= 2
+                }
                 retryOfAttemptId={
-                  pendingLoId === q.loId ? (pendingAttemptId ?? undefined) : undefined
+                  pendingLoId === q.loId
+                    ? (pendingAttemptId ?? undefined)
+                    : undefined
                 }
                 externalResult={
                   externalAttempt && externalAttempt.questionId === q.id
@@ -1321,7 +1400,9 @@ const MessageRow = memo(function MessageRow({
                   key={i}
                   flavor="figure"
                   onOpen={
-                    onDirective ? () => onDirective("passage", { id }) : undefined
+                    onDirective
+                      ? () => onDirective("passage", { id })
+                      : undefined
                   }
                 />
               );
@@ -1405,7 +1486,10 @@ function SubjectHandoffCard({
     );
   }
   return (
-    <div dir="rtl" className="my-2 rounded-xl border border-gold/45 bg-gold-wash/50 p-3">
+    <div
+      dir="rtl"
+      className="my-2 rounded-xl border border-gold/45 bg-gold-wash/50 p-3"
+    >
       <p className="text-[13px] font-medium leading-relaxed text-ink">
         ده سؤال في <strong>{label}</strong> — تحب نفتح المادة دي، ولا نكمل اللي
         إحنا فيه ونرجعله بعدين؟
@@ -1476,7 +1560,10 @@ function CheckInCard({
     : "Not yet — explain it another way";
   return (
     <div className="anim-pop my-2 rounded-lg border border-accent/40 bg-accent-wash/60 px-3.5 py-3">
-      <p dir={dir} className="mb-2.5 text-center font-display text-[16px] font-medium text-ink">
+      <p
+        dir={dir}
+        className="mb-2.5 text-center font-display text-[16px] font-medium text-ink"
+      >
         {arabicUi ? "لسه معايا؟" : "Still with me?"}
       </p>
       <div className="grid grid-cols-2 gap-2">
@@ -1524,9 +1611,7 @@ function Thinking({
             بيكتب…
           </span>
         ) : (
-          <span className="text-[12.5px] italic text-ink-faint">
-            writing…
-          </span>
+          <span className="text-[12.5px] italic text-ink-faint">writing…</span>
         )
       ) : (
         <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">

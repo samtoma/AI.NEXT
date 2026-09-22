@@ -1,55 +1,61 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { SpineBridge, SpineLo, SpineSubject } from "@/lib/types";
-import {
-  SPINE_SUBJECT_KEYS,
-  compareSpineSubjects,
-  spineSubjectDef,
-} from "@/lib/subjects";
-import { masteryColor, pct } from "@/lib/mastery";
+import type { SpineLo } from "@/lib/types";
+import { spineSubjectDef } from "@/lib/subjects";
+import { masteryStage, masteryPhrase } from "@/lib/mastery";
+import { MasteryFill } from "./MasteryFill";
 
 export type AsOf = "baseline" | "today";
 
-const NODE_H = 106;
-const MIN_W = 118;
-const MAX_W = 198;
-const GAP_MIN = 26;
-const PAD = 10;
-const ARC_HEADROOM = 96; // room above the first band for long-span prereq arcs
-const BAND_LABEL_H = 34; // vertical room for a territory's label strip
-const BAND_GAP = 58; // vertical gap between territories
-const ROW_SPREAD = NODE_H + 34; // vertical spacing of stacked nodes in a column
+const NODE_H = 124; // three clamped title lines + the fill + the count
+const MIN_W = 200; // the build spec's card, not a cell in a fixed canvas
+const MAX_W = 232;
+const GAP_MIN = 34;
+const PAD = 16;
+const ARC_HEADROOM = 84; // room above the first row for long-span arcs
+const ROW_SPREAD = NODE_H + 34;
+
+/** Unlit card border — never ink, never a shadow. */
+const UNLIT_BORDER = "#B4AECB";
+/** Edges: one flat lilac, 2.5px, no arrowheads and no labels. */
+const EDGE = "#C9C2E0";
 
 /**
- * Territory order, labels and accents come from the subject registry — this
- * file used to carry its own two-entry copy of them (Wave 1.5). `null` is a
- * real band: LOs whose course is not in the registry are UNFILED and get their
- * own neutral territory instead of being drawn inside maths'.
+ * The card's own wash, one per stage — the SAME five colours the fill uses,
+ * laid on at wash strength.
+ *
+ * The screen you stare at for minutes needs to answer "where am I strong?"
+ * from across the room, and a six-pixel bar four segments wide does not.
+ * The old Evidence Walk got that part right: it tinted the whole node by
+ * mastery. What it got wrong was pairing the tint with a percentage badge,
+ * and mixing a CONTINUOUS hue, so two topics in the same band looked
+ * different. This is the banded version of the same idea — five discrete
+ * washes off `--mastery-0…4`, so the card and its fill can never disagree
+ * about which band a topic is in.
+ *
+ * The percentages are tuned per pigment, not set on a straight line: amber
+ * and the tan a step above it are near neighbours by design, so the tan
+ * needs roughly twice the strength before the two read apart, while teal is
+ * the heaviest of the five and lands in the same lightness family at 22%.
+ * Measured, the five come out #FFFFFF · #FDF2E2 · #F3E4CD · #E2EDE1 ·
+ * #D1EAE6 — even steps to the eye. All stay above ~80% white, which keeps
+ * ink body text over 12:1: the wash is a second carrier for the band,
+ * never a contrast risk.
+ *
+ * This is the one place the build spec's token list is not followed to the
+ * letter: it names leaf #EAF7DF "fill for the strongest stage", which was
+ * right when stage 4 was the ONLY tinted card. Now that every stage carries
+ * a wash, the top of the ramp wears the ramp's own top colour instead of a
+ * green borrowed from outside it.
  */
-type BandKey = SpineSubject | null;
-
-const UNFILED_BAND = {
-  label: "unfiled",
-  accent: "var(--ink-faint)",
-  wash: "transparent",
-  line: "var(--line)",
-};
-
-function bandMetaOf(key: BandKey) {
-  const def = spineSubjectDef(key);
-  return def
-    ? {
-        label: def.labelAr,
-        accent: def.accent.color,
-        wash: def.accent.wash,
-        line: def.accent.line,
-      }
-    : UNFILED_BAND;
-}
-
-/** Registry order, with the unfiled band last. */
-const BAND_ORDER: BandKey[] = [...SPINE_SUBJECT_KEYS, null];
+const STAGE_WASH = [
+  "var(--card)", // 0 · not started — plain white, the only untinted card
+  "color-mix(in srgb, var(--mastery-1) 14%, var(--card))",
+  "color-mix(in srgb, var(--mastery-2) 30%, var(--card))",
+  "color-mix(in srgb, var(--mastery-3) 26%, var(--card))",
+  "color-mix(in srgb, var(--mastery-4) 22%, var(--card))",
+] as const;
 
 interface Placed {
   lo: SpineLo;
@@ -58,44 +64,80 @@ interface Placed {
   cy: number; // center
 }
 
-interface Band {
-  subject: BandKey;
-  yTop: number;
-  yBottom: number;
-}
+type Pt = { x: number; y: number };
 
-/** Lay out one subject's LOs (barycentric, layered) in local band coordinates
- *  starting at cy=0. Prerequisite layout runs strictly WITHIN the territory. */
-function layoutBand(group: SpineLo[], nLayers: number, xOf: (l: number) => number) {
-  const byLayer: SpineLo[][] = Array.from({ length: nLayers }, () => []);
-  for (const lo of group) byLayer[lo.layer]?.push(lo);
-  const maxCount = Math.max(1, ...byLayer.map((c) => c.length));
-  const bandH = maxCount * ROW_SPREAD;
-  const midY = bandH / 2;
-
-  const centers = new Map<string, number>();
-  const placed: Placed[] = [];
-  for (let layer = 0; layer < nLayers; layer++) {
-    const col = byLayer[layer];
-    if (col.length === 0) continue;
-    const bary = (lo: SpineLo) => {
-      const preds = lo.prereqIds
-        .map((p) => centers.get(p))
-        .filter((v): v is number => v !== undefined);
-      return preds.length ? preds.reduce((a, b) => a + b, 0) / preds.length : midY;
-    };
-    col.sort((a, b) => bary(a) - bary(b) || a.orderInParent - b.orderInParent);
-    const start = midY - ((col.length - 1) * ROW_SPREAD) / 2;
-    col.forEach((lo, i) => {
-      const cy = start + i * ROW_SPREAD;
-      centers.set(lo.id, cy);
-      placed.push({ lo, x: xOf(lo.layer), y: cy - NODE_H / 2, cy });
-    });
+/**
+ * One edge's cubic, as its four control points.
+ *
+ * Extracted so the drawn path and the occlusion test below are literally the
+ * same curve. Inlining the `d` string and eyeballing a second approximation
+ * for the hit test is how a line ends up dashed while passing through clear
+ * air, or solid while buried under a card.
+ */
+function edgeCurve(s: Placed, t: Placed, nodeW: number): [Pt, Pt, Pt, Pt] {
+  const p0 = { x: s.x + nodeW, y: s.cy };
+  const p3 = { x: t.x, y: t.cy };
+  const dx = p3.x - p0.x;
+  if (t.lo.layer - s.lo.layer <= 1) {
+    return [
+      p0,
+      { x: p0.x + dx * 0.45, y: p0.y },
+      { x: p3.x - dx * 0.45, y: p3.y },
+      p3,
+    ];
   }
-  return { placed, bandH };
+  // A multi-layer span arcs over the columns it skips rather than ploughing
+  // through them — the arc is the FIRST defence against occlusion; the dash
+  // is what admits the cases it cannot clear.
+  const arcY = Math.max(PAD, Math.min(p0.y, p3.y) - 86);
+  return [
+    p0,
+    { x: p0.x + dx * 0.22, y: arcY },
+    { x: p3.x - dx * 0.22, y: arcY },
+    p3,
+  ];
 }
 
-function computeLayout(los: SpineLo[], width: number) {
+const curvePath = (c: [Pt, Pt, Pt, Pt]) =>
+  `M ${c[0].x} ${c[0].y} C ${c[1].x} ${c[1].y}, ${c[2].x} ${c[2].y}, ${c[3].x} ${c[3].y}`;
+
+function cubicAt(c: [Pt, Pt, Pt, Pt], u: number): Pt {
+  const v = 1 - u;
+  const a = v * v * v,
+    b = 3 * v * v * u,
+    d = 3 * v * u * u,
+    e = u * u * u;
+  return {
+    x: a * c[0].x + b * c[1].x + d * c[2].x + e * c[3].x,
+    y: a * c[0].y + b * c[1].y + d * c[2].y + e * c[3].y,
+  };
+}
+
+/** How many points along a curve get tested for occlusion. 32 puts a sample
+ *  every ~7px on a typical one-layer span — finer than a card is wide, so a
+ *  card cannot sit between two samples and be missed. */
+const OCCLUSION_SAMPLES = 32;
+
+/**
+ * Barycentric layered layout over the whole subject.
+ *
+ * The screen is subject-wide by definition now (build spec 01), so there is
+ * one graph, not a stack of per-subject territories: the dashed band
+ * backdrops, their labels and the cross-subject bridge arcs came off with the
+ * rest of the graph metadata. `SpineData` still carries `bridges`, and the
+ * layered DAG still drives x — a multi-subject view is a different screen.
+ *
+ * Each node sits AT its barycentre — the average height of the topics it
+ * builds on — pushed down only as far as it takes to stop it overlapping the
+ * node above it in its own column. The previous version used the barycentre
+ * to ORDER a column and then threw the values away, re-centring every column
+ * on the tallest one's midline. On 90 topics that reserved the full height of
+ * the widest layer for all of them: a five-node column got a thirteen-node
+ * column's worth of canvas, the void went above and below it, and the tree
+ * drifted away from the parents it was supposed to sit beside. Packing to the
+ * barycentre keeps a child next to its prerequisite and gives the voids back.
+ */
+function layout(los: SpineLo[], width: number) {
   const nLayers = Math.max(1, Math.max(...los.map((l) => l.layer)) + 1);
   let nodeW = (width - 2 * PAD - GAP_MIN * (nLayers - 1)) / nLayers;
   nodeW = Math.max(MIN_W, Math.min(MAX_W, nodeW));
@@ -103,62 +145,93 @@ function computeLayout(los: SpineLo[], width: number) {
     GAP_MIN,
     (width - 2 * PAD - nodeW * nLayers) / Math.max(1, nLayers - 1)
   );
-  const canvasW = Math.max(width, 2 * PAD + nodeW * nLayers + gap * (nLayers - 1));
+  const canvasW = Math.max(
+    width,
+    2 * PAD + nodeW * nLayers + gap * (nLayers - 1)
+  );
   const xOf = (layer: number) => PAD + layer * (nodeW + gap);
 
-  const present = BAND_ORDER.filter((key) => los.some((l) => l.subject === key));
+  const byLayer: SpineLo[][] = Array.from({ length: nLayers }, () => []);
+  for (const lo of los) byLayer[lo.layer]?.push(lo);
 
+  const centers = new Map<string, number>();
   const placed: Placed[] = [];
-  const bands: Band[] = [];
-  let cursor = PAD + ARC_HEADROOM;
-
-  for (const key of present) {
-    const group = los.filter((l) => l.subject === key);
-    const { placed: local, bandH } = layoutBand(group, nLayers, xOf);
-    const bodyTop = cursor + BAND_LABEL_H;
-    for (const p of local) {
-      p.cy += bodyTop;
-      p.y += bodyTop;
-      placed.push(p);
+  for (let layer = 0; layer < nLayers; layer++) {
+    const col = byLayer[layer];
+    if (col.length === 0) continue;
+    /** Average height of this node's already-placed prerequisites, or null
+     *  when it has none on screen — layer 0, and the odd orphan later on. */
+    const bary = (lo: SpineLo): number | null => {
+      const preds = lo.prereqIds
+        .map((p) => centers.get(p))
+        .filter((v): v is number => v !== undefined);
+      return preds.length
+        ? preds.reduce((a, b) => a + b, 0) / preds.length
+        : null;
+    };
+    // Anchored nodes first, in barycentre order; unanchored ones keep the
+    // book's own order and fall in behind whatever precedes them.
+    col.sort(
+      (a, b) =>
+        (bary(a) ?? Infinity) - (bary(b) ?? Infinity) ||
+        a.orderInParent - b.orderInParent
+    );
+    let cursor: number | null = null;
+    for (const lo of col) {
+      // The first node in a column is free; every one after it has to clear
+      // the one above by a full row.
+      const floor = cursor === null ? -Infinity : cursor + ROW_SPREAD;
+      const cy = Math.max(bary(lo) ?? (cursor === null ? 0 : floor), floor);
+      cursor = cy;
+      centers.set(lo.id, cy);
+      placed.push({ lo, x: xOf(lo.layer), y: cy - NODE_H / 2, cy });
     }
-    bands.push({ subject: key, yTop: cursor, yBottom: bodyTop + bandH });
-    cursor = bodyTop + bandH + BAND_GAP;
+  }
+  if (placed.length === 0) {
+    return { placed, nodeW, canvasW, canvasH: 420 };
   }
 
-  const canvasH = Math.max(360, cursor - BAND_GAP + PAD);
-  return { placed, bands, nodeW, canvasW, canvasH };
+  // Normalise: the first column starts at -Infinity + ROW_SPREAD, and later
+  // columns float wherever their parents put them, so the whole graph is
+  // shifted into the canvas once at the end rather than being anchored twice.
+  const top = Math.min(...placed.map((p) => p.y));
+  const shift = PAD + ARC_HEADROOM - top;
+  for (const p of placed) {
+    p.y += shift;
+    p.cy += shift;
+  }
+  for (const [id, cy] of centers) centers.set(id, cy + shift);
+
+  const canvasH = Math.max(
+    420,
+    Math.max(...placed.map((p) => p.y + NODE_H)) + PAD
+  );
+  return { placed, nodeW, canvasW, canvasH };
 }
 
 export function GraphCanvas({
   los,
   edges,
-  bridges = [],
   asOf,
   selectedLoId,
   questionCounts,
   onSelect,
   citedIds,
   pulses,
-  showTerritories = true,
 }: {
   los: SpineLo[];
   edges: { src: string; dst: string }[];
-  /** cross-subject associative links — rendered as dashed gold arcs */
-  bridges?: SpineBridge[];
   asOf: AsOf;
   selectedLoId: string | null;
   questionCounts: Map<string, number>;
   onSelect: (id: string) => void;
-  /** LOs cited by the AI in the current answer — soft viridian glow */
+  /** topics Noor referenced in the answer she is writing — a passing ring */
   citedIds?: Set<string>;
-  /** id → nonce; bumping the nonce re-fires the pulse ring */
+  /** id → nonce; bumping the nonce re-fires the ring */
   pulses?: Record<string, number>;
-  /** draw territory bands + labels (only meaningful in the "All" view) */
-  showTerritories?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(1200);
-  const [activeBridge, setActiveBridge] = useState<number | null>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -171,54 +244,75 @@ export function GraphCanvas({
     return () => ro.disconnect();
   }, []);
 
-  const { placed, bands, nodeW, canvasW, canvasH } = useMemo(
-    () => computeLayout(los, width),
+  const { placed, nodeW, canvasW, canvasH } = useMemo(
+    () => layout(los, width),
     [los, width]
   );
   const posById = useMemo(
     () => new Map(placed.map((p) => [p.lo.id, p])),
     [placed]
   );
-  const bandBySubject = useMemo(
-    () => new Map(bands.map((b) => [b.subject, b])),
-    [bands]
-  );
 
-  // only bridges whose BOTH endpoints are visible in this view
-  const visibleBridges = useMemo(
-    () => bridges.filter((b) => posById.has(b.src) && posById.has(b.dst)),
-    [bridges, posById]
-  );
+  /* No scroll-into-view on mount: `layout` normalises the graph so its
+     topmost node sits one headroom below the canvas origin, which puts the
+     start of the map at the pane's own scroll origin. That was not true while
+     columns were centred on the tallest one — the first layer landed ~600px
+     into a 2000px canvas and the map opened on blank paper, which is what the
+     scroll-on-mount was there to hide. */
 
-  const scoreOf = (lo: SpineLo) => (asOf === "today" ? lo.current : lo.baseline);
-  const bandMeta = bandMetaOf;
+  /**
+   * Which edges pass behind a card that is not one of their own endpoints.
+   *
+   * Sampled rather than solved: a cubic-vs-rectangle intersection has a
+   * closed form, and it is far more code than this problem is worth on a
+   * graph where the answer only has to be right to the nearest few pixels.
+   * The endpoints are skipped because every edge starts and ends flush
+   * against a card by construction — testing them would dash all 112.
+   *
+   * Recomputed only when the layout does. Worst case here is 112 edges x 32
+   * samples x 90 cards, which sounds alarming and is about a millisecond of
+   * integer comparisons; it is not worth a spatial index.
+   */
+  const occluded = useMemo(() => {
+    const rects = placed.map((p) => ({
+      id: p.lo.id,
+      x1: p.x,
+      y1: p.y,
+      x2: p.x + nodeW,
+      y2: p.y + NODE_H,
+    }));
+    const hit = new Set<number>();
+    edges.forEach((e, i) => {
+      const s = posById.get(e.src);
+      const t = posById.get(e.dst);
+      if (!s || !t) return;
+      const c = edgeCurve(s, t, nodeW);
+      for (let k = 1; k < OCCLUSION_SAMPLES; k++) {
+        const pt = cubicAt(c, k / OCCLUSION_SAMPLES);
+        for (const r of rects) {
+          if (r.id === e.src || r.id === e.dst) continue;
+          if (pt.x >= r.x1 && pt.x <= r.x2 && pt.y >= r.y1 && pt.y <= r.y2) {
+            hit.add(i);
+            return;
+          }
+        }
+      }
+    });
+    return hit;
+  }, [edges, placed, posById, nodeW]);
+
+  const stageOf = (lo: SpineLo) => {
+    const score = asOf === "today" ? lo.current : lo.baseline;
+    // A topic she has never touched is stage 0 on its own merit, not because
+    // the cold-start prior happens to band low — same rule the check-in card
+    // and the dashboard apply.
+    return masteryStage(score, score > 0);
+  };
 
   return (
-    <div ref={ref} className="thin-scroll overflow-x-auto">
+    <div ref={ref} className="thin-scroll h-full overflow-auto p-4">
       <div className="relative" style={{ width: canvasW, height: canvasH }}>
-        {/* territory backdrops (behind everything) */}
-        {showTerritories &&
-          bands.map((b) => {
-            const meta = bandMeta(b.subject);
-            return (
-              <div
-                key={String(b.subject)}
-                className="absolute rounded-xl"
-                style={{
-                  left: 4,
-                  top: b.yTop,
-                  width: canvasW - 8,
-                  height: b.yBottom - b.yTop,
-                  background: meta.wash,
-                  border: `1px dashed ${meta.line}`,
-                  zIndex: 0,
-                }}
-                aria-hidden
-              />
-            );
-          })}
-
-        {/* edges + bridges */}
+        {/* edges — plain lines, no arrowheads, no direction labels */}
         <svg
           className="absolute inset-0"
           width={canvasW}
@@ -227,337 +321,133 @@ export function GraphCanvas({
           style={{ zIndex: 1 }}
           aria-hidden
         >
-          <defs>
-            <marker
-              id="arr"
-              viewBox="0 0 8 8"
-              refX="7"
-              refY="4"
-              markerWidth="7"
-              markerHeight="7"
-              orient="auto-start-reverse"
-            >
-              <path d="M0.5 0.8 L7.2 4 L0.5 7.2" stroke="rgba(32,41,58,0.38)" strokeWidth="1.4" fill="none" />
-            </marker>
-            <marker
-              id="arr-hot"
-              viewBox="0 0 8 8"
-              refX="7"
-              refY="4"
-              markerWidth="7"
-              markerHeight="7"
-              orient="auto-start-reverse"
-            >
-              <path d="M0.5 0.8 L7.2 4 L0.5 7.2" stroke="var(--accent)" strokeWidth="1.6" fill="none" />
-            </marker>
-          </defs>
           {edges.map((e, i) => {
             const s = posById.get(e.src);
             const t = posById.get(e.dst);
             if (!s || !t) return null;
-            const sx = s.x + nodeW;
-            const sy = s.cy;
-            const tx = t.x;
-            const ty = t.cy;
-            const span = t.lo.layer - s.lo.layer;
-            const dx = tx - sx;
-            let d: string;
-            if (span <= 1) {
-              d = `M ${sx} ${sy} C ${sx + dx * 0.45} ${sy}, ${tx - dx * 0.45} ${ty}, ${tx} ${ty}`;
-            } else {
-              const bandTop = bandBySubject.get(s.lo.subject)?.yTop ?? 0;
-              const arcY = Math.max(bandTop + 10, Math.min(sy, ty) - 100);
-              d = `M ${sx} ${sy} C ${sx + dx * 0.22} ${arcY}, ${tx - dx * 0.22} ${arcY}, ${tx} ${ty}`;
-            }
-            const hot =
+            const d = curvePath(edgeCurve(s, t, nodeW));
+            const touched =
               selectedLoId !== null &&
               (e.src === selectedLoId || e.dst === selectedLoId);
-            const dim = selectedLoId !== null && !hot;
+            const dim = selectedLoId !== null && !touched;
             return (
               <path
                 key={i}
                 d={d}
-                pathLength={1}
-                stroke={hot ? "var(--accent)" : "rgba(32,41,58,0.3)"}
-                strokeWidth={hot ? 2 : 1.3}
-                strokeDasharray={span > 1 ? "0.015 0.008" : undefined}
-                markerEnd={hot ? "url(#arr-hot)" : "url(#arr)"}
+                stroke={touched ? "var(--ink)" : EDGE}
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                /* Dashed = this line runs behind a card on its way across.
+                   A solid line that vanishes under one card and reappears
+                   from under another reads as two unrelated links; the dash
+                   says "same line, it goes behind that". It carries no
+                   direction and no meaning about the relationship — the
+                   build spec's "no arrowheads, no directional labels" is
+                   about semantics, and this is legibility. */
+                strokeDasharray={occluded.has(i) ? "9 7" : undefined}
                 style={{
-                  opacity: dim ? 0.22 : 1,
+                  opacity: dim ? 0.3 : 1,
                   transition: "opacity 0.35s ease, stroke 0.35s ease",
                 }}
               />
             );
           })}
-
-          {/* cross-subject bridges — rare dashed gold arcs spanning territories */}
-          {visibleBridges.map((b, i) => {
-            const a = posById.get(b.src)!;
-            const z = posById.get(b.dst)!;
-            // draw from the lower edge of the upper node to the top of the lower
-            const [hi, lo] = a.cy <= z.cy ? [a, z] : [z, a];
-            const x1 = hi.x + nodeW / 2;
-            const y1 = hi.y + NODE_H;
-            const x2 = lo.x + nodeW / 2;
-            const y2 = lo.y;
-            const my = (y1 + y2) / 2;
-            const bow = Math.min(80, Math.abs(x2 - x1) * 0.25 + 24);
-            const cx = (x1 + x2) / 2 + bow;
-            const d = `M ${x1} ${y1} C ${cx} ${my}, ${cx} ${my}, ${x2} ${y2}`;
-            const active = activeBridge === i;
-            const touched =
-              selectedLoId === b.src || selectedLoId === b.dst || active;
-            const midx = (x1 + x2) / 2 + bow * 0.75;
-            const midy = my;
-            return (
-              <g key={`bridge-${i}`} style={{ cursor: "pointer" }}>
-                {/* wide invisible hit path */}
-                <path
-                  d={d}
-                  stroke="transparent"
-                  strokeWidth={18}
-                  fill="none"
-                  onMouseEnter={() => setActiveBridge(i)}
-                  onClick={() => setActiveBridge(active ? null : i)}
-                />
-                <path
-                  d={d}
-                  className="anim-bridge"
-                  stroke="var(--bridge-gold)"
-                  strokeWidth={touched ? 2.6 : 1.8}
-                  strokeDasharray="7 6"
-                  fill="none"
-                  strokeLinecap="round"
-                  style={{
-                    filter: touched
-                      ? "drop-shadow(0 0 6px rgba(199,154,58,0.75))"
-                      : "drop-shadow(0 0 3px rgba(199,154,58,0.45))",
-                    transition: "stroke-width 0.2s ease",
-                    pointerEvents: "none",
-                  }}
-                />
-                <circle
-                  cx={midx}
-                  cy={midy}
-                  r={touched ? 10 : 8}
-                  fill="var(--card)"
-                  stroke="var(--bridge-gold)"
-                  strokeWidth={1.5}
-                  onMouseEnter={() => setActiveBridge(i)}
-                  onClick={() => setActiveBridge(active ? null : i)}
-                  style={{ transition: "r 0.2s ease" }}
-                />
-                <text
-                  x={midx}
-                  y={midy + 3.5}
-                  textAnchor="middle"
-                  fontSize="10"
-                  style={{ pointerEvents: "none" }}
-                >
-                  🔗
-                </text>
-              </g>
-            );
-          })}
         </svg>
 
-        {/* territory labels */}
-        {showTerritories &&
-          bands.map((b) => {
-            const meta = bandMeta(b.subject);
-            return (
-              <div
-                key={`label-${String(b.subject)}`}
-                dir="rtl"
-                className="absolute inline-flex items-center gap-1.5 rounded-full border bg-card/85 px-2.5 py-1 backdrop-blur-sm"
-                style={{
-                  right: 12,
-                  top: b.yTop + 4,
-                  borderColor: meta.line,
-                  zIndex: 3,
-                }}
-              >
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ backgroundColor: meta.accent }}
-                />
-                <span
-                  className="font-display text-[12.5px] font-semibold"
-                  style={{ color: meta.accent }}
-                >
-                  {meta.label}
-                </span>
-              </div>
-            );
-          })}
-
-        {/* nodes */}
+        {/* topic cards */}
         {placed.map(({ lo, x, y }, i) => {
-          const score = scoreOf(lo);
-          const color = masteryColor(score);
+          const stage = stageOf(lo);
+          const lit = stage > 0;
           const selected = lo.id === selectedLoId;
           const cited = citedIds?.has(lo.id) ?? false;
           const pulseNonce = pulses?.[lo.id];
-          const dim = selectedLoId !== null && !selected &&
+          const dim =
+            selectedLoId !== null &&
+            !selected &&
             !lo.prereqIds.includes(selectedLoId) &&
             !(posById.get(selectedLoId)?.lo.prereqIds ?? []).includes(lo.id);
+          const count = questionCounts.get(lo.id) ?? 0;
           return (
             <button
               key={lo.id}
+              /* The internal id stays in the DOM for debugging and for tests
+                 to hang off — never on the face of the card (build spec 02,
+                 DO NOT #2). */
+              data-lo-id={lo.id}
               onClick={() => onSelect(lo.id)}
-              className="group absolute rounded-lg border text-left"
+              aria-label={`${lo.label} — ${masteryPhrase(stage)}, ${count} questions`}
+              /* `items-stretch` is NOT redundant with the flex default.
+                 WebKit's UA stylesheet overrides `align-items` on a <button>,
+                 so a button used as a flex container does not stretch its
+                 children across the cross axis the way every other element
+                 does. On the card that silently collapses the mastery fill —
+                 its segments are `flex-1` off a zero basis, so with no
+                 stretch they shrink to their 1.5px borders and the bar
+                 renders as four dots in the corner. Chromium stretches and
+                 looks correct, which is exactly how this shipped: iPad
+                 Safari is a hard device target (constitution, devices), and
+                 it is the browser that gets it wrong. */
+              className="group play-pressable absolute flex flex-col items-stretch gap-2 text-start"
               style={{
                 left: x,
                 top: y,
                 width: nodeW,
                 height: NODE_H,
-                borderColor: selected
-                  ? "var(--ink)"
-                  : cited
-                    ? "var(--accent)"
-                    : masteryColor(score, 0.55),
-                backgroundColor: `color-mix(in srgb, ${color} ${selected ? 13 : 9}%, var(--card))`,
+                padding: "12px 14px",
+                borderRadius: 16,
+                border: `2.5px solid ${
+                  lit || selected || cited ? "var(--ink)" : UNLIT_BORDER
+                }`,
+                background: STAGE_WASH[stage],
+                // Sticker treatment is what "you have started this" looks
+                // like: an unlit card is a flat outline with no shadow, and
+                // the first lit segment buys the ink edge and the hard
+                // offset. Selection lifts the same sticker; it never
+                // introduces a second visual language.
                 boxShadow: selected
-                  ? "0 0 0 1.5px var(--ink), 0 16px 28px -14px rgba(32,41,58,0.45)"
-                  : cited
-                    ? "0 0 0 1px var(--accent), 0 0 22px -4px rgba(22,102,92,0.5), 0 8px 20px -14px rgba(32,41,58,0.3)"
-                    : "0 1px 2px rgba(32,41,58,0.06), 0 8px 20px -14px rgba(32,41,58,0.3)",
+                  ? "5px 5px 0 var(--ink)"
+                  : lit || cited
+                    ? "var(--play-shadow-sm)"
+                    : "none",
                 opacity: dim && !cited ? 0.45 : 1,
                 zIndex: selected ? 4 : 2,
-                transform: selected ? "translateY(-2px)" : undefined,
                 transition:
-                  "background-color 0.5s ease, border-color 0.5s ease, opacity 0.35s ease, transform 0.25s ease, box-shadow 0.25s ease",
-                animation: `pop-in 0.4s cubic-bezier(0.22,1,0.36,1) ${i * 45}ms both`,
+                  "opacity 0.35s ease, box-shadow 0.15s ease, background 0.5s ease, border-color 0.5s ease",
+                animation: `pop-in 0.4s cubic-bezier(0.22,1,0.36,1) ${Math.min(i, 24) * 30}ms both`,
               }}
             >
               {pulseNonce !== undefined && (
                 <span key={pulseNonce} className="anim-cite-ring" aria-hidden />
               )}
-              <div className="flex h-full flex-col px-2.5 pb-2 pt-2">
-                <div className="flex items-center justify-between gap-1">
-                  <span className="font-mono text-[9px] tracking-wider text-ink-faint">
-                    {lo.id.replace("lo:u", "").replace("lo:", "")}
-                  </span>
-                  <span
-                    className="rounded px-1 font-mono text-[9.5px] font-semibold text-paper transition-colors duration-500"
-                    style={{ backgroundColor: color }}
-                  >
-                    {pct(score)}
-                  </span>
-                </div>
-                <p
-                  className="mt-1 line-clamp-3 flex-1 text-[11px] font-medium leading-[1.3] text-ink"
-                  dir={spineSubjectDef(lo.subject)?.dir === "rtl" ? "rtl" : undefined}
+              {/* The clamp lives on a CHILD, never on the flex item itself:
+                  a flex item blockifies `display:-webkit-box` to `flow-root`
+                  and the line clamp silently stops applying — the title then
+                  gets cut by the card's overflow at whatever height the flex
+                  line leaves it, mid-line and with no ellipsis. */}
+              <span className="min-h-0 flex-1 overflow-hidden">
+                <span
+                  className="line-clamp-3 font-display text-[0.92rem] font-bold leading-[1.3] text-ink"
+                  dir={
+                    spineSubjectDef(lo.subject)?.dir === "rtl"
+                      ? "rtl"
+                      : undefined
+                  }
                 >
                   {lo.label}
-                </p>
-                <div className="mt-1.5 flex items-center gap-1.5">
-                  <div className="h-1 flex-1 overflow-hidden rounded-full bg-ink/10">
-                    <div
-                      className="h-full rounded-full transition-all duration-700 ease-out"
-                      style={{ width: pct(score), backgroundColor: color }}
-                    />
-                  </div>
-                  <span className="font-mono text-[8.5px] text-ink-faint">
-                    {questionCounts.get(lo.id) ?? 0}q
-                  </span>
-                </div>
-              </div>
+                </span>
+              </span>
+              {/* Belt and braces with the `items-stretch` above: an explicit
+                  width means the bar is correct even if something later
+                  re-centres or re-starts this card's cross axis. */}
+              <MasteryFill stage={stage} className="w-full" />
+              {/* The numeral sits in its own span so an Arabic build can wrap
+                  it dir="ltr" without touching the sentence around it. */}
+              <span className="font-read text-[0.76rem] leading-none text-ink-soft">
+                <span dir="ltr">{count}</span> questions
+              </span>
             </button>
           );
         })}
-
-        {/* bridge rationale card */}
-        {activeBridge !== null &&
-          visibleBridges[activeBridge] &&
-          (() => {
-            const b = visibleBridges[activeBridge];
-            const a = posById.get(b.src)!;
-            const z = posById.get(b.dst)!;
-            // the two endpoints in registry order (was: "the math one" and
-            // "the social one" — a pairing only two subjects could satisfy)
-            const [firstEnd, secondEnd] = [a.lo, z.lo].sort((p, q) =>
-              compareSpineSubjects(p.subject, q.subject)
-            );
-            const secondDef = spineSubjectDef(secondEnd.subject);
-            const midx = (a.x + z.x) / 2 + nodeW / 2;
-            const midy = (a.cy + z.cy) / 2;
-            const cardW = 300;
-            const left = Math.max(
-              8,
-              Math.min(canvasW - cardW - 8, midx - cardW / 2)
-            );
-            return (
-              <div
-                className="anim-pop absolute"
-                style={{
-                  left,
-                  top: midy - 8,
-                  width: cardW,
-                  zIndex: 6,
-                }}
-                onMouseLeave={() => setActiveBridge(null)}
-              >
-                <div
-                  className="ledger-card overflow-hidden"
-                  style={{ borderColor: "var(--bridge-gold)" }}
-                >
-                  <div
-                    className="flex items-center gap-1.5 border-b px-3 py-1.5"
-                    style={{
-                      borderColor: "var(--gold-wash)",
-                      background: "var(--gold-wash)",
-                    }}
-                  >
-                    <span aria-hidden>🔗</span>
-                    <span
-                      className="font-display text-[12px] font-semibold"
-                      style={{ color: "var(--gold)" }}
-                    >
-                      Cross-subject link
-                    </span>
-                  </div>
-                  <div className="px-3 py-2.5">
-                    <div className="flex flex-wrap items-center gap-1.5 text-[12px]">
-                      <button
-                        onClick={() => {
-                          onSelect(firstEnd.id);
-                          setActiveBridge(null);
-                        }}
-                        className="rounded-md border border-line-soft px-2 py-1 text-left font-medium text-ink transition-colors hover:border-accent/50 hover:bg-accent-wash"
-                      >
-                        {firstEnd.label}
-                      </button>
-                      <span className="font-mono text-ink-faint">↔</span>
-                      <button
-                        dir={secondDef?.dir === "rtl" ? "rtl" : undefined}
-                        onClick={() => {
-                          onSelect(secondEnd.id);
-                          setActiveBridge(null);
-                        }}
-                        className="rounded-md border border-line-soft px-2 py-1 text-right font-medium text-ink transition-colors hover:bg-[var(--bridge-far-wash)]"
-                        style={
-                          {
-                            borderColor: secondDef?.accent.line,
-                            // hover wash = the far subject's own accent
-                            "--bridge-far-wash": secondDef?.accent.wash,
-                          } as React.CSSProperties
-                        }
-                      >
-                        {secondEnd.label}
-                      </button>
-                    </div>
-                    <p
-                      dir="rtl"
-                      className="mt-2 text-[12.5px] leading-relaxed text-ink-soft"
-                    >
-                      {b.rationale}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })()}
       </div>
     </div>
   );

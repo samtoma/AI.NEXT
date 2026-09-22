@@ -23,6 +23,11 @@ import {
   subjectDef,
   subjectOfCourse,
 } from "./subjects";
+import {
+  DEFAULT_LESSON_SLUG,
+  sanitizeLessonSlug,
+  slugOfLo,
+} from "@/lib/lesson-slug";
 import type {
   ClaimStep,
   LessonBridge,
@@ -57,14 +62,11 @@ import type {
  *  (lib/student-context.ts); a demo affordance, never auth. */
 const STUDENT_ID = DEFAULT_STUDENT_ID;
 
-export const DEFAULT_LESSON_SLUG = "u1-1";
-
-const SLUG_RE = /^[a-z0-9]{1,12}-[0-9]{1,3}$/;
-
-/** "lo:geo1-2-1" → lesson slug "geo1-2" (LO-id prefix minus the last part). */
-function slugOfLo(loId: string): string {
-  return loId.replace(/^lo:/, "").replace(/-[0-9]+$/, "");
-}
+// The slug rule itself lives in `lib/lesson-slug.ts` — a client-safe module,
+// because the skill map's topic panel needs the same mapping to build its
+// "Study" link and cannot import this file (it opens a pool). Re-exported
+// here so every existing importer keeps working unchanged.
+export { DEFAULT_LESSON_SLUG, sanitizeLessonSlug } from "@/lib/lesson-slug";
 
 /**
  * Subject detection (ADR-0004 Wave 0): the lesson's module sits `part_of` a
@@ -102,11 +104,6 @@ const LESSON_TITLES: Record<string, string> = {
   "geo1-3": "The circumcircle",
   "geo1-4": "Chords and distance from the center",
 };
-
-export function sanitizeLessonSlug(raw: unknown): string {
-  const s = String(raw ?? "").trim();
-  return SLUG_RE.test(s) ? s : DEFAULT_LESSON_SLUG;
-}
 
 /* ------------------------------------------------------------------ */
 /* Catalog — every teachable lesson, grouped by module                 */
@@ -709,11 +706,7 @@ interface LessonPromptKit {
   groundingRules: (data: LessonData) => string;
   /** extra review-mode rule bullets ("" when the subject adds none) */
   reviewSubjectRules: string;
-  protocol: (
-    rhythm: string,
-    ex: ProtocolExamples,
-    data: LessonData
-  ) => string;
+  protocol: (rhythm: string, ex: ProtocolExamples, data: LessonData) => string;
   /** learn mode: the extra "teach from the script" paragraph ("" if none) */
   learnRichNote: (data: LessonData) => string;
   /** review mode: the example opener line */
@@ -808,7 +801,10 @@ function lessonPromptKit(subject: Subject): LessonPromptKit {
 export function learnPrompt(data: LessonData): string {
   const kit = lessonPromptKit(data.subject);
   const arc = data.los
-    .map((l, i) => `${l.id} "${l.label}" (${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`)
+    .map(
+      (l, i) =>
+        `${l.id} "${l.label}" (${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`
+    )
     .join(" → ");
   // the subject's tap-only widgets (registry) — what a stuck student gets next
   const tapWidgets = ["figure", ...subjectDef(data.subject).tapWidgets].join(
@@ -878,9 +874,9 @@ RULES:
 ${languageContract(data.subject)}
 
 ${sharedProtocol(
-    data,
-    "- Review messages are ONE beat — never emit {{beat}}. One short line + the directive."
-  )}`;
+  data,
+  "- Review messages are ONE beat — never emit {{beat}}. One short line + the directive."
+)}`;
 }
 
 /**
@@ -910,7 +906,10 @@ function sealedPassagesBlock(
     }، ${p.units.length} ${p.kind === "quran" ? "آيات" : "وحدات"}) — ${pointerEg}`;
     if (!withText) return head;
     const body = p.units
-      .map((u) => `  ${u.printed_n ? `﴿${u.printed_n}﴾ ` : `(${u.n}) `}${u.text_ar}`)
+      .map(
+        (u) =>
+          `  ${u.printed_n ? `﴿${u.printed_n}﴾ ` : `(${u.n}) `}${u.text_ar}`
+      )
       .join("\n");
     return `${head}\n${body}`;
   });
@@ -964,7 +963,9 @@ export async function buildLessonContext(
   // Curated cross-subject bridges touching this lesson's LOs (§5). Fetched for
   // every subject — the connection is symmetric — and appended only when some
   // exist, so lessons without a bridge keep byte-identical data blocks.
-  const bridges = bridgeBlock(await getLessonBridges(data.los.map((l) => l.id)));
+  const bridges = bridgeBlock(
+    await getLessonBridges(data.los.map((l) => l.id))
+  );
   // The rich teaching script grounds the AI-LED lesson (learn mode) only —
   // review stays a fast 3-minute lock-in, and not every subject's pipeline
   // emits content bundles (maths has none, so its data block is unchanged).

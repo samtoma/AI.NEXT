@@ -902,10 +902,20 @@ body[data-focus="lesson"] > footer {
 }
 
 /* `.anim-pop` already marks every "reveal with a pop" spot in the product
-   (AskSpineDock, ChatCore, StudentLoop, VizRefCard, …) — Play just gives it a
+   (NoorPanel, ChatCore, StudentLoop, VizRefCard, …) — Play just gives it a
    punchier spring, matching the handoff's `pop` exactly, for free. */
 [data-ds="noor"] .anim-pop {
   animation: play-pop 380ms cubic-bezier(0.34, 1.6, 0.64, 1) both;
+}
+
+/* The skill map's citation ring rides the sticker card, not the ledger node:
+   the baseline's 1.5px viridian hairline at a 0.55rem radius reads as a stray
+   outline on a 2.5px-stroked, 16px-radius card. Teal because it is already
+   the ramp's top step — amber is spoken for by the one primary per screen. */
+[data-ds="noor"] .anim-cite-ring {
+  inset: -6px;
+  border-radius: 21px;
+  border: 2.5px solid var(--noor-progress);
 }
 
 /* Mastery: ring + squash, once per skill, ever. */

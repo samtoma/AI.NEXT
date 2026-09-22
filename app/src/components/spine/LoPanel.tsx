@@ -1,38 +1,75 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import type { SpineBridge, SpineLo, SpineQuestion, Tier } from "@/lib/types";
-import { spineSubjectDef } from "@/lib/subjects";
+import type { SpineLo, SpineQuestion, Tier } from "@/lib/types";
 import type { VisualRow } from "@/lib/visuals";
-import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
+import { masteryStage, masteryPhrase } from "@/lib/mastery";
+import { MasteryFill } from "./MasteryFill";
 import { TeX } from "@/components/TeX";
-import { ProvenanceBadge } from "@/components/ProvenanceBadge";
 import { Visual } from "@/components/viz/Visual";
-import { kindMeta } from "@/components/viz/kind-meta";
+import { learnHrefForLo } from "@/lib/lesson-slug";
 import type { AsOf } from "./GraphCanvas";
 
 const TIER_ORDER: Tier[] = ["basic", "standard", "advanced"];
 
-export const tierStyle: Record<Tier, string> = {
-  basic: "bg-accent-wash text-accent-deep border-accent/30",
-  standard: "bg-gold-wash text-gold border-gold/35",
-  advanced: "bg-rust-wash text-rust border-rust/30",
+/** Px of the panel that must stay inside the map however far it is dragged. */
+const EDGE_KEEP = 140;
+/** Px of its top that must stay inside — the handle, so it is always grabbable. */
+const HANDLE_KEEP = 56;
+
+const clamp = (v: number, lo: number, hi: number) =>
+  Math.min(Math.max(v, lo), Math.max(lo, hi));
+
+/**
+ * The panel's chips are set in Baloo, not in the shared `.chip`.
+ *
+ * `.chip` is IBM Plex Mono, which carries no Arabic script and no
+ * Arabic-Indic digits: the moment "questions" is translated, a mono chip
+ * silently falls through to a system face at the wrong size. That is the
+ * design handoff's single most-repeated bug, and these two strings are
+ * ordinary translatable copy rather than the Latin-only counters mono is
+ * for. Same sticker geometry, a typeface that survives the Arabic build.
+ */
+const CHIP =
+  "inline-flex items-center rounded-full border-[2.5px] border-ink bg-card px-3 py-1 font-display text-[0.75rem] font-bold leading-none text-ink";
+
+/** Plain words for the three question tiers — the tier key is internal. */
+const TIER_LABEL: Record<Tier, string> = {
+  basic: "To warm up",
+  standard: "The main ones",
+  advanced: "If you want a push",
 };
 
-/** The subject chip's label + tokens come from the registry entry, so an LO
- *  whose course is unfiled shows NO chip rather than another subject's. */
-function subjectChipOf(subject: SpineLo["subject"]) {
-  const def = spineSubjectDef(subject);
-  return def ? { label: def.labelAr, cls: def.accent.chip } : null;
-}
-
+/**
+ * One topic, opened from the map.
+ *
+ * Same cuts as the screen around it. What used to lead this panel was
+ * "3-1-4 · node lo:u3-1-4"; what used to sit in the middle of it was
+ * "Mastery trend · as-of query" over two percentage bars and a "▲ 12 pts
+ * since diagnostic" badge. The panel says the same things now in the
+ * vocabulary the cards use — a fill and one plain word — and the internal
+ * key stays in the DOM as `data-lo-id` for debugging.
+ *
+ * It floats over the TREE, never over Noor: she is docked at a fixed width
+ * and full height, and nothing is allowed to cover her.
+ *
+ * DRAGGABLE by its header. The panel opens docked to the map's inline end,
+ * which is the one place guaranteed to be out of the way of nothing — the
+ * topic you just clicked is often underneath it, and so are the
+ * prerequisites you opened the panel to go and look at. `offset` lives in
+ * the parent rather than here so the position survives clicking through to
+ * another topic: move it once, and it stays where you put it for the rest
+ * of the session.
+ */
 export function LoPanel({
   lo,
   allLos,
   questions,
-  bridges = [],
   asOf,
+  offset,
+  onOffsetChange,
   onClose,
   onSelectLo,
   onOpenQuestion,
@@ -40,236 +77,288 @@ export function LoPanel({
   lo: SpineLo;
   allLos: SpineLo[];
   questions: SpineQuestion[];
-  /** cross-subject relates_to links touching this LO */
-  bridges?: SpineBridge[];
   asOf: AsOf;
+  /** how far the student has dragged the panel from its docked position */
+  offset: { x: number; y: number };
+  onOffsetChange: (next: { x: number; y: number }) => void;
   onClose: () => void;
   onSelectLo: (id: string) => void;
   onOpenQuestion: (q: SpineQuestion) => void;
 }) {
-  const delta = lo.current - lo.baseline;
+  const frameRef = useRef<HTMLDivElement>(null);
+  /** Where the drag started, plus the panel's position at zero offset —
+   *  measured once on pointerdown so the clamp never has to reason about a
+   *  rect that is moving underneath it. */
+  const grab = useRef<{
+    px: number;
+    py: number;
+    baseLeft: number;
+    baseTop: number;
+    w: number;
+    h: number;
+    bounds: DOMRect;
+  } | null>(null);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Close and Study both live INSIDE the drag handle, so the handle has to
+    // stand down for them. `a` as well as `button`: Study is a Link, and a
+    // drag that starts on it captures the pointer and swallows the click —
+    // the button would look perfectly normal and simply never navigate.
+    if ((e.target as HTMLElement).closest("button, a")) return;
+    const el = frameRef.current;
+    const parent = el?.offsetParent as HTMLElement | null;
+    if (!el || !parent) return;
+    const r = el.getBoundingClientRect();
+    grab.current = {
+      px: e.clientX,
+      py: e.clientY,
+      baseLeft: r.left - offset.x,
+      baseTop: r.top - offset.y,
+      w: r.width,
+      h: r.height,
+      bounds: parent.getBoundingClientRect(),
+    };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const g = grab.current;
+    if (!g) return;
+    // Clamp so a strip of the panel and the whole of its handle stay
+    // reachable: drag it off the edge and you could never drag it back.
+    const left = clamp(
+      g.baseLeft + (e.clientX - g.px),
+      g.bounds.left - (g.w - EDGE_KEEP),
+      g.bounds.right - EDGE_KEEP
+    );
+    const top = clamp(
+      g.baseTop + (e.clientY - g.py),
+      g.bounds.top,
+      g.bounds.bottom - HANDLE_KEEP
+    );
+    onOffsetChange({ x: left - g.baseLeft, y: top - g.baseTop });
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    grab.current = null;
+    if (e.currentTarget.hasPointerCapture(e.pointerId))
+      e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+
   const byId = new Map(allLos.map((l) => [l.id, l]));
-  const subjectChip = subjectChipOf(lo.subject);
-  // resolve each bridge's far endpoint (the LO in the OTHER subject)
-  const connections = bridges
-    .map((b) => {
-      const otherId = b.src === lo.id ? b.dst : b.src;
-      return { other: byId.get(otherId) ?? null, rationale: b.rationale };
-    })
-    .filter((c) => c.other);
+  const stageOf = (score: number) => masteryStage(score, score > 0);
+  const prereqs = lo.prereqIds
+    .map((pid) => byId.get(pid))
+    .filter((p): p is SpineLo => Boolean(p));
 
   return (
-    <aside className="anim-panel ledger-card thin-scroll w-[372px] shrink-0 self-stretch overflow-y-auto"
-      style={{ maxHeight: H_PANEL }}
+    /* Two elements, and they have to stay two.
+       The drag offset is a `transform: translate`, and `.anim-pop` — the
+       reveal every panel in this product opens with — is a `transform:
+       scale` keyframe with fill-mode `both`. On one element the animation
+       wins and keeps winning: it settles on `scale(1)` and holds it
+       forever, so the translate silently never applies and the panel cannot
+       be moved at all. The positioned wrapper carries the drag; the inner
+       card carries the reveal. */
+    <div
+      ref={frameRef}
+      className="absolute z-10 w-[360px]"
+      style={{
+        insetBlock: 16,
+        insetInlineEnd: 18,
+        transform: `translate(${offset.x}px, ${offset.y}px)`,
+      }}
     >
-      <div className="sticky top-0 z-10 border-b border-line-soft bg-card/95 px-5 pb-3 pt-4 backdrop-blur-sm">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
-              {lo.syllabusRef} · node {lo.id}
-            </p>
-            <h2 className="mt-1 font-display text-xl font-medium leading-snug text-ink">
-              {lo.label}
-            </h2>
-          </div>
-          <button
-            onClick={onClose}
-            className="rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink"
-            aria-label="Close panel"
+      <aside
+        data-lo-id={lo.id}
+        className="anim-pop thin-scroll h-full overflow-y-auto rounded-[20px] border-[3px] border-ink bg-card"
+        style={{ boxShadow: "5px 5px 0 var(--ink)" }}
+      >
+        <div
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          className="sticky top-0 z-10 flex cursor-grab items-center justify-between gap-2.5 bg-card-warm px-4 py-2.5 active:cursor-grabbing"
+          style={{
+            borderBlockEndWidth: 3,
+            borderBlockEndStyle: "solid",
+            borderBlockEndColor: "var(--ink)",
+            // Without this a touch drag scrolls the panel instead of moving it,
+            // and iPad Safari is a hard device target.
+            touchAction: "none",
+          }}
+        >
+          {/* Clamped, so the header is the same height on every topic.
+              Unclamped it is not: adding the Study pill took ~140px off the
+              title's line width, which pushed longer topics onto a fourth
+              and fifth line and made the panel look like it grew when all
+              that changed was which topic you clicked. Two lines and the
+              full label stays in `title` for the rest. */}
+          <h2
+            title={lo.label}
+            className="line-clamp-2 min-w-0 font-display text-[1rem] font-extrabold leading-[1.25] text-ink"
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
-          </button>
-        </div>
-      </div>
+            {lo.label}
+          </h2>
+          <div className="flex shrink-0 items-center gap-2">
+            {/* Straight into the lesson for THIS topic — the map's whole job
+                is telling you what to work on, and until now the answer was
+                "go to Study and find it again yourself".
 
-      <div className="space-y-5 px-5 py-4">
-        {lo.description && (
-          <p className="text-[13.5px] leading-relaxed text-ink-soft">
-            <TeX text={lo.description} />
-          </p>
-        )}
-
-        <div className="flex flex-wrap gap-2">
-          {subjectChip && (
-            <span className={`chip border ${subjectChip.cls}`}>{subjectChip.label}</span>
-          )}
-          <span className="chip">source page {lo.sourcePage ?? "—"}</span>
-          <span className="chip">{lo.syllabusRef}</span>
-          <span className="chip">{questions.length} questions</span>
-        </div>
-
-        {connections.length > 0 && (
-          <div>
-            <p className="rule-label mb-2.5">🔗 cross-subject connections</p>
-            <div className="space-y-2">
-              {connections.map((c) => (
-                <button
-                  key={c.other!.id}
-                  onClick={() => onSelectLo(c.other!.id)}
-                  className="block w-full rounded-lg border border-gold/35 bg-gold-wash/50 px-3 py-2 text-start transition-colors hover:bg-gold-wash"
-                >
-                  <span className="flex items-center gap-1.5 text-[12.5px] font-semibold text-gold">
-                    <span aria-hidden>↗</span>
-                    {c.other!.label}
-                  </span>
-                  <span className="mt-0.5 block text-[11.5px] leading-snug text-ink-soft">
-                    {c.rationale}
-                  </span>
-                </button>
-              ))}
-            </div>
+                Ink, not amber: the design system keeps primary buttons on
+                the ink CTA surface and reserves amber for one accent per
+                screen, which the active snapshot tab and the composer's
+                send circle already spend. It sits in the sticky header so
+                it survives scrolling the panel, and inside the drag handle,
+                where `onPointerDown` already steps aside for anything that
+                is a control. */}
+            <Link
+              href={learnHrefForLo(lo.id)}
+              className="play-pressable sticker-shadow-sm flex h-[52px] items-center rounded-full border-[2.5px] border-ink bg-accent px-4 font-display text-[0.82rem] font-bold leading-none text-paper"
+            >
+              Study
+            </Link>
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="play-pressable sticker-shadow-sm flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full border-[2.5px] border-ink bg-card text-ink"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path
+                  d="M2 2l10 10M12 2L2 12"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
           </div>
-        )}
+        </div>
 
-        {/* mastery trend */}
-        <div>
-          <p className="rule-label mb-2.5">Mastery trend · as-of query</p>
-          <div className="space-y-2">
+        <div className="space-y-5 px-5 py-4">
+          {lo.description && (
+            <p className="font-read text-[0.9rem] leading-[1.75] text-ink-soft">
+              <TeX text={lo.description} />
+            </p>
+          )}
+
+          {/* Where she stands, in the two snapshots the tabs name. No
+            percentage, no delta badge, no "as-of" anything. */}
+          <div className="space-y-2.5">
             {(
               [
-                ["Baseline", lo.baseline, "baseline"],
+                ["Where you started", lo.baseline, "baseline"],
                 ["Today", lo.current, "today"],
               ] as const
-            ).map(([label, score, key]) => (
-              <div key={label} className="flex items-center gap-2.5">
-                <span
-                  className={`w-14 text-[11px] ${
-                    asOf === key ? "font-semibold text-ink" : "text-ink-faint"
-                  }`}
-                >
-                  {label}
-                </span>
-                <div className="h-2 flex-1 overflow-hidden rounded-full bg-ink/10">
-                  <div
-                    className="h-full rounded-full transition-all duration-700"
-                    style={{
-                      width: pct(score),
-                      backgroundColor: masteryColor(score),
-                    }}
-                  />
-                </div>
-                <span className="w-9 text-right font-mono text-[11px] text-ink-soft">
-                  {pct(score)}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-2.5 flex items-center gap-2">
-            <span
-              className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-mono text-[11px] font-semibold ${
-                delta >= 0
-                  ? "bg-accent-wash text-accent-deep"
-                  : "bg-rust-wash text-rust"
-              }`}
-            >
-              {delta >= 0 ? "▲" : "▼"} {Math.round(Math.abs(delta) * 100)} pts
-              since diagnostic
-            </span>
-            <span className="text-[11px] text-ink-faint">
-              now {masteryLabel(lo.current)}
-            </span>
-          </div>
-        </div>
-
-        <VisualsStrip loId={lo.id} />
-
-        {/* prerequisites */}
-        {lo.prereqIds.length > 0 && (
-          <div>
-            <p className="rule-label mb-2.5">Prerequisites</p>
-            <div className="space-y-1.5">
-              {lo.prereqIds.map((pid) => {
-                const p = byId.get(pid);
-                if (!p) return null;
-                const met = p.current >= 0.5;
-                return (
-                  <button
-                    key={pid}
-                    onClick={() => onSelectLo(pid)}
-                    className="flex w-full items-center gap-2 rounded-md border border-line-soft bg-card-warm px-2.5 py-1.5 text-left transition-colors hover:border-line"
-                  >
-                    <span
-                      className="h-2 w-2 shrink-0 rounded-full"
-                      style={{ backgroundColor: masteryColor(p.current) }}
-                    />
-                    <span className="flex-1 truncate text-[12px] text-ink">
-                      {p.label}
-                    </span>
-                    <span
-                      className={`font-mono text-[10px] ${
-                        met ? "text-accent-deep" : "text-rust"
-                      }`}
-                    >
-                      {met ? "met ✓" : "not met"}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* questions by tier */}
-        <div>
-          <p className="rule-label mb-2.5">Questions</p>
-          <div className="space-y-3.5">
-            {TIER_ORDER.map((tier) => {
-              const qs = questions.filter((q) => q.tier === tier);
-              if (qs.length === 0) return null;
+            ).map(([label, score, key]) => {
+              const stage = stageOf(score);
               return (
-                <div key={tier}>
+                <div key={label} className="flex items-center gap-2.5">
                   <span
-                    className={`inline-block rounded border px-1.5 py-px font-mono text-[9.5px] uppercase tracking-[0.12em] ${tierStyle[tier]}`}
+                    className={`w-[104px] shrink-0 font-display text-[0.78rem] leading-none ${
+                      asOf === key
+                        ? "font-extrabold text-ink"
+                        : "font-bold text-ink-soft"
+                    }`}
                   >
-                    {tier}
+                    {label}
                   </span>
-                  <div className="mt-1.5 space-y-1.5">
-                    {qs.map((q) => (
-                      <button
-                        key={q.id}
-                        onClick={() => onOpenQuestion(q)}
-                        className="group w-full rounded-md border border-line-soft bg-card px-3 py-2 text-left transition-all duration-200 hover:-translate-y-px hover:border-accent/40 hover:shadow-[0_6px_16px_-8px_rgba(13,74,66,0.35)]"
-                      >
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="font-mono text-[10px] text-ink-faint">
-                            {q.id}
-                          </span>
-                          <span className="flex items-center gap-1.5">
-                            {/* Whether a human has read this item is worth a
-                                chip in the dense list, not only in the modal:
-                                an operator scanning a unit should not have to
-                                open twelve questions to find the unchecked one. */}
-                            <ProvenanceBadge question={q.provenance} />
-                            <span className="chip border-accent/30 bg-accent-wash px-1.5! py-px! text-[9px]! text-accent-deep">
-                              {q.status}
-                            </span>
-                            <span className="font-mono text-[9px] uppercase text-ink-faint">
-                              p.{q.provenance.sourcePage}
-                            </span>
-                          </span>
-                        </div>
-                        <p className="mt-1 text-[12.5px] leading-snug text-ink-soft transition-colors group-hover:text-ink">
-                          <TeX text={q.stem} />
-                        </p>
-                      </button>
-                    ))}
-                  </div>
+                  <MasteryFill stage={stage} className="w-[76px] shrink-0" />
+                  <span className="font-display text-[0.78rem] font-bold leading-none text-ink-soft">
+                    {masteryPhrase(stage)}
+                  </span>
                 </div>
               );
             })}
           </div>
+
+          <div className="flex flex-wrap gap-2">
+            <span className={CHIP}>
+              <span dir="ltr">{questions.length}</span>&nbsp;questions
+            </span>
+            {lo.sourcePage !== null && (
+              <span className={CHIP}>
+                Book p.<span dir="ltr">{lo.sourcePage}</span>
+              </span>
+            )}
+          </div>
+
+          <VisualsStrip loId={lo.id} />
+
+          {prereqs.length > 0 && (
+            <div>
+              <p className="mb-2.5 font-display text-[0.78rem] font-extrabold text-ink">
+                Worth having first
+              </p>
+              <div className="space-y-2">
+                {prereqs.map((p) => (
+                  <button
+                    key={p.id}
+                    data-lo-id={p.id}
+                    onClick={() => onSelectLo(p.id)}
+                    className="play-pressable sticker-shadow-sm flex w-full items-center gap-2.5 rounded-[14px] border-[2.5px] border-ink bg-card-warm px-3 py-2 text-start"
+                  >
+                    <span className="flex-1 truncate font-display text-[0.82rem] font-bold text-ink">
+                      {p.label}
+                    </span>
+                    <MasteryFill
+                      stage={stageOf(p.current)}
+                      height={5}
+                      className="w-[44px] shrink-0"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div>
+            <p className="mb-2.5 font-display text-[0.78rem] font-extrabold text-ink">
+              Questions
+            </p>
+            <div className="space-y-3.5">
+              {TIER_ORDER.map((tier) => {
+                const qs = questions.filter((q) => q.tier === tier);
+                if (qs.length === 0) return null;
+                return (
+                  <div key={tier}>
+                    <span className="font-display text-[0.72rem] font-bold text-ink-soft">
+                      {TIER_LABEL[tier]}
+                    </span>
+                    <div className="mt-1.5 space-y-2">
+                      {qs.map((q) => (
+                        <button
+                          key={q.id}
+                          data-question-id={q.id}
+                          onClick={() => onOpenQuestion(q)}
+                          className="play-pressable sticker-shadow-sm block w-full rounded-[14px] border-[2.5px] border-ink bg-card px-3 py-2.5 text-start"
+                        >
+                          <p className="font-read text-[0.82rem] leading-[1.6] text-ink">
+                            <TeX text={q.stem} />
+                          </p>
+                          {q.provenance.sourcePage !== null && (
+                            <span className="mt-1 block font-display text-[0.7rem] font-bold text-ink-soft">
+                              Book p.
+                              <span dir="ltr">{q.provenance.sourcePage}</span>
+                            </span>
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </div>
   );
 }
 
-const H_PANEL = 470 + 41; // graph height + canvas footer, keeps rows aligned
-
 /* ------------------------------------------------------------------ */
-/* Visuals strip — animated figures attached to this LO                */
+/* Visuals strip — figures from the book, attached to this topic       */
 /* ------------------------------------------------------------------ */
 
 function VisualsStrip({ loId }: { loId: string }) {
@@ -301,24 +390,24 @@ function VisualsStrip({ loId }: { loId: string }) {
 
   return (
     <div className="anim-fade">
-      <p className="rule-label mb-2.5">Visuals · animated from the book</p>
-      <div className="thin-scroll -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+      <p className="mb-2.5 font-display text-[0.78rem] font-extrabold text-ink">
+        Figures from the book
+      </p>
+      <div className="thin-scroll -mx-1 flex gap-2.5 overflow-x-auto px-1 pb-2">
         {visuals.map((v) => (
           <button
             key={v.id}
+            data-visual-id={v.id}
             onClick={() => setOpen(v)}
-            title={v.caption ?? v.id}
-            className="group w-[150px] shrink-0 rounded-md border border-line-soft bg-card p-1.5 text-left transition-all duration-200 hover:-translate-y-px hover:border-accent/40 hover:shadow-[0_6px_16px_-8px_rgba(13,74,66,0.35)]"
+            title={v.caption ?? undefined}
+            className="play-pressable sticker-shadow-sm w-[150px] shrink-0 rounded-[14px] border-[2.5px] border-ink bg-card p-2 text-start"
           >
             <Visual kind={v.kind} spec={v.spec} />
-            <span className="mt-1 flex items-center justify-between gap-1 px-0.5">
-              <span className="truncate font-mono text-[8.5px] text-ink-faint">
-                <span aria-hidden>{kindMeta(v.kind).glyph}</span> {v.kind}
+            {v.sourcePage !== null && (
+              <span className="mt-1 block font-display text-[0.68rem] font-bold text-ink-soft">
+                Book p.<span dir="ltr">{v.sourcePage}</span>
               </span>
-              <span className="shrink-0 font-mono text-[8.5px] text-ink-faint">
-                p.{v.sourcePage ?? "—"}
-              </span>
-            </span>
+            )}
           </button>
         ))}
       </div>
@@ -326,55 +415,56 @@ function VisualsStrip({ loId }: { loId: string }) {
       {open &&
         createPortal(
           <div
-            className="anim-fade fixed inset-0 z-50 flex items-center justify-center bg-ink/45 p-6 backdrop-blur-[2px]"
+            className="anim-fade fixed inset-0 z-50 flex items-center justify-center bg-ink/45 p-6"
             onClick={() => setOpen(null)}
             role="dialog"
             aria-modal="true"
-            aria-label={open.caption ?? open.id}
+            aria-label={open.caption ?? "Figure from the book"}
           >
             <div
-              className="ledger-card anim-pop w-full max-w-[520px] overflow-hidden"
+              className="anim-pop w-full max-w-[520px] overflow-clip rounded-[20px] border-[3px] border-ink bg-card sticker-shadow-lg"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between gap-3 border-b border-line-soft bg-card-warm px-4 py-2.5">
-                <span className="truncate font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-                  {open.id} · {open.loLabel}
+              <div
+                className="flex items-center justify-between gap-3 bg-card-warm px-5 py-3"
+                style={{
+                  borderBlockEndWidth: 3,
+                  borderBlockEndStyle: "solid",
+                  borderBlockEndColor: "var(--ink)",
+                }}
+              >
+                <span className="truncate font-display text-[0.85rem] font-extrabold text-ink">
+                  {open.loLabel}
                 </span>
                 <button
                   onClick={() => setOpen(null)}
-                  aria-label="Close visual"
-                  className="rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink"
+                  aria-label="Close"
+                  className="play-pressable sticker-shadow-sm flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-[2.5px] border-ink bg-card text-ink"
                 >
                   <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                    <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                    <path
+                      d="M2 2l10 10M12 2L2 12"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </button>
               </div>
               <div className="px-5 pt-4">
                 <Visual kind={open.kind} spec={open.spec} />
               </div>
-              <div className="px-5 pb-4 pt-3">
+              <div className="px-5 pb-5 pt-3">
                 {open.caption && (
-                  <p className="text-[13px] leading-relaxed text-ink">
+                  <p className="font-read text-[0.88rem] leading-[1.7] text-ink">
                     {open.caption}
                   </p>
                 )}
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <span
-                    className={`inline-flex items-center gap-1 rounded-full border px-2 py-px font-mono text-[9.5px] ${kindMeta(open.kind).chip}`}
-                  >
-                    <span aria-hidden>{kindMeta(open.kind).glyph}</span>
-                    {open.kind}
+                {open.sourcePage !== null && (
+                  <span className={`mt-3 ${CHIP}`}>
+                    Book p.<span dir="ltr">{open.sourcePage}</span>
                   </span>
-                  <span className="chip px-2! py-px! text-[9.5px]!">
-                    source page {open.sourcePage ?? "—"}
-                  </span>
-                  {open.questionId && (
-                    <span className="chip px-2! py-px! text-[9.5px]!">
-                      {open.questionId}
-                    </span>
-                  )}
-                </div>
+                )}
               </div>
             </div>
           </div>,

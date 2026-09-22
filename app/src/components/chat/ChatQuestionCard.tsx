@@ -7,7 +7,7 @@ import { MathWidget } from "@/components/student/widgets/render-math-widget";
 import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
 import { pct } from "@/lib/mastery";
-import { tierStyle } from "@/components/spine/LoPanel";
+import { tierStyle } from "@/components/spine/tier-style";
 import { submitAttempt } from "@/lib/attempts-client";
 
 /**

@@ -5,7 +5,7 @@ import { mcqChoices } from "@/lib/types";
 import type { SpineData, SpineLo, SpineQuestion } from "@/lib/types";
 import { stepText } from "@/lib/types";
 import { TeX } from "@/components/TeX";
-import { tierStyle } from "./LoPanel";
+import { tierStyle } from "./tier-style";
 import { questionProvenance } from "@/lib/provenance";
 import { ProvenanceBadge } from "@/components/ProvenanceBadge";
 

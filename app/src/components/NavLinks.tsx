@@ -20,7 +20,10 @@ const LINKS = [
 const MVP1_LINKS = [
   { href: "/student", label: "Study" },
   { href: "/dashboard", label: "Where you stand" },
-  { href: "/spine", label: "Evidence Walk" },
+  // "Skill graph", not "Evidence Walk" — "Evidence" frames the student as a
+  // case being built. LINKS above keeps the old label: that nav is the
+  // investor walk.
+  { href: "/spine", label: "Skill graph" },
   { href: "/admin/content", label: "Content" },
   { href: "/pipeline", label: "Pipeline" },
 ];
