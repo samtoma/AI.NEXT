@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  untriedObjectives,
   previousCompletedSlug,
   lessonGatePassed,
   lessonPrereqsMet,
@@ -215,4 +216,48 @@ test("the nearest finished lesson wins when several are behind", () => {
 
 test("an unknown current slug yields nothing rather than the last finished", () => {
   assert.equal(previousCompletedSlug(scored({ "u1-1": 0.98 }), "nope-1"), null);
+});
+
+/* ---------------------------------------------------------------- */
+/* "hasn't come up yet"                                              */
+/* ---------------------------------------------------------------- */
+
+const obj = (label: string, mastery: number) => ({ label, mastery });
+
+// The case the line was written for: u1-1 has four objectives, review mode
+// scripts its questions from three, and the fourth never gets an attempt.
+test("the objective review mode cannot reach is named", () => {
+  assert.deepEqual(
+    untriedObjectives([
+      obj("Ordered pairs", 0.9),
+      obj("Cartesian product", 0.9),
+      obj("Representing products", 0.9),
+      obj("Product cardinality", 0),
+    ]),
+    ["Product cardinality"]
+  );
+});
+
+// An untouched lesson is every objective untried — which the ramp already
+// says ("not started") and the doors already answer. Repeating it is noise.
+test("a lesson nobody has started names nothing", () => {
+  assert.deepEqual(untriedObjectives([obj("A", 0), obj("B", 0)]), []);
+});
+
+test("a fully attempted lesson names nothing", () => {
+  assert.deepEqual(untriedObjectives([obj("A", 0.4), obj("B", 0.9)]), []);
+});
+
+// The floor is load-bearing: BKT clamps to MIN_SCORE (0.02), so an objective
+// answered even once — and answered WRONG every time — can never read as 0.
+// A struggling student must never be told their worst objective is untried.
+test("a repeatedly-wrong objective is attempted, not untried", () => {
+  assert.deepEqual(untriedObjectives([obj("A", 0.02), obj("B", 0.9)]), []);
+});
+
+test("several untried objectives all come back, in lesson order", () => {
+  assert.deepEqual(
+    untriedObjectives([obj("A", 0.8), obj("B", 0), obj("C", 0)]),
+    ["B", "C"]
+  );
 });

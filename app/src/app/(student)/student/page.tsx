@@ -7,7 +7,7 @@ import { decideLanding } from "@/lib/student-landing";
 import { courseIdOfSpineKey } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
 import { getCurrentLesson, isCourseComplete } from "@/lib/progression-db";
-import { previousCompletedSlug } from "@/lib/progression";
+import { previousCompletedSlug, untriedObjectives } from "@/lib/progression";
 import {
   deriveMasteryStage,
   deriveRecommendation,
@@ -225,6 +225,11 @@ export default async function StudentPage({
   // component can never render it (docs/design/handoffs/noor-play).
   const masteryStage = deriveMasteryStage(lesson.los);
   const weakestSubskill = deriveWeakestSubskill(lesson.los);
+  // Why a clean review can leave a lesson unfinished: review mode scripts
+  // its questions from the first three objectives only, so a fourth never
+  // gets an attempt and the gate cannot cross. Naming it beats leaving the
+  // student to infer it from a card that did not move.
+  const untried = untriedObjectives(lesson.los);
   const recommendation = deriveRecommendation(masteryStage);
   const estimates = estimateMinutes(lesson.los, lesson.questions.length);
   console.info(
@@ -244,6 +249,7 @@ export default async function StudentPage({
       estimates={estimates}
       completedToday={false /* no real "attempted today" signal yet — never inferred from time of day */}
       courseComplete={courseComplete}
+      untriedSubskills={untried}
       justFinished={
         justFinished
           ? {

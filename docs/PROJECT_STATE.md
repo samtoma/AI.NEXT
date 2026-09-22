@@ -1006,7 +1006,12 @@ Web Speech API is inherently robotic (plays OS voices; weak for Arabic). Added a
   parks on the course's last lesson, where the card shows a "whole course" banner above the doors.
   The lesson just completed stays on screen as a **collapsed "✓ ... Revisit" row** above the card
   (nearest earlier gate-passing lesson, derived — no stored history), because the gate can cross
-  before the student taps Finish. An explicit `?lesson=` still wins, and suppresses that row. Fixed in passing: `MODULE_ORDER` interleaved Term 1 and Term 2
+  before the student taps Finish. An explicit `?lesson=` still wins, and suppresses that row.
+  The card also **names any objective with no attempt yet** ("X hasn't come up yet"), shown only
+  once a lesson is part-done: review mode scripts its questions from `los.slice(0, 3)`, so on a
+  four-objective lesson (`u1-1`, `u3-1`, `u3-2`, `u4-2`, `t2u1-1`) a clean review can score
+  `got_it` and still leave the lesson unfinished, with nothing otherwise explaining why.
+  Fixed in passing: `MODULE_ORDER` interleaved Term 1 and Term 2
   (both number their first unit 1), so the catalogue ran t2u1-1 → u1-1 → t2u1-2 → u1-2 …
 - **/student adaptive check-in:** "How did today's lesson go?" → **Learn mode** (AI-led interactive lesson: teaching beats, pair_plotter + product_builder widgets, check questions, 14-turn cap) or **Review mode** (non-annoying: 3 quick checks + 1 widget, hard 5-turn cap) or quiet practice. Both end in an AI-graded **comprehension report card** (0–100 score dial, verdict stamp, strengths/gaps, next step → `understanding_checks` table, migration 003). **Voice:** browser TTS + mic (Web Speech API, feature-gated, no keys).
 - **Cost datapoints:** full learn session ≈ $0.17 (≈EGP 8) incl. rating; review ≈ $0.10; spine chat ≈ $0.045/turn. Caps bound worst case; per-mode budget lines needed for any student-facing version.
