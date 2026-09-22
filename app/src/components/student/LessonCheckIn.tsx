@@ -170,26 +170,43 @@ function PlayCheckIn({
 
             The tick takes the ramp's own `mastered` colour rather than a new
             green, so "finished" means the same thing here as in the segments
-            below. No red here either: a completed lesson has no failure state. */}
+            below. No red here either: a completed lesson has no failure state.
+
+            Restyled into the Play language after it arrived in the ledger one:
+            a 1.5px hairline on a soft-grey border with no shadow, its label in
+            mono uppercase, and a 44px target. On this page that reads as a
+            fragment of a different product sitting above the card. It is a
+            control — you press it and go somewhere — so it takes the sticker
+            treatment and the press the system gives controls, at one clear
+            tier below the card: a 2.5px stroke and a 3px shadow against the
+            card's 3px and 4px. `checkin-press` would NOT have given it that
+            — that class carries a 5px shadow, which is bigger than the card
+            it sits above.
+
+            The tick's glyph is INK on the teal, never paper. White on
+            #2F9E8F measures 3.28:1 and the design system forbids it by name;
+            ink on the same fill is 4.79:1. */}
         {justFinished && (
           <Link
             href={`/student?lesson=${encodeURIComponent(justFinished.slug)}`}
             prefetch={false}
-            className="flex shrink-0 items-center gap-2.5 rounded-[16px] border-[1.5px] border-line-soft bg-card-warm px-4 py-2.5 transition-colors hover:border-ink"
+            className="play-pressable sticker-shadow-sm flex min-h-[48px] shrink-0 items-center gap-3 rounded-[16px] border-[2.5px] border-ink bg-card-warm px-4 py-2"
           >
             <span
               aria-hidden
-              className="grid h-5 w-5 shrink-0 place-items-center rounded-full text-[11px] font-bold text-paper"
+              className="grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-ink text-[0.72rem] font-extrabold text-ink"
               style={{ background: MASTERY_LEGEND[4].hex }}
             >
               ✓
             </span>
-            <span className="font-read min-w-0 flex-1 truncate text-[0.9rem] text-ink-soft">
-              <span className="font-medium text-ink">{justFinished.ref}</span>
+            <span className="min-w-0 flex-1 truncate font-display text-[0.92rem] font-bold text-ink">
+              {justFinished.ref}
               {" — "}
-              {justFinished.title}
+              <span className="font-semibold text-ink-soft">
+                {justFinished.title}
+              </span>
             </span>
-            <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
+            <span className="shrink-0 font-display text-[0.8rem] font-bold text-ink-soft">
               Revisit
             </span>
           </Link>
@@ -364,7 +381,7 @@ function PlayCheckIn({
               full width and shoved "Just practise" onto its own line for no
               reason. */}
           <details className="group w-fit open:w-full">
-            <summary className="checkin-press flex min-h-[46px] w-fit cursor-pointer list-none items-center gap-2 rounded-[16px] border-[2.5px] border-ink bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden">
+            <summary className="checkin-press flex min-h-[48px] w-fit cursor-pointer list-none items-center gap-2 rounded-[16px] border-[2.5px] border-ink bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden">
               Pick something else
               <span
                 aria-hidden
@@ -460,7 +477,7 @@ function PlayCheckIn({
                               prefetch={false}
                               aria-current={selected ? "true" : undefined}
                               aria-label={`${l.ref} — ${masteryPhrase(stage)}`}
-                              className={`flex min-h-[40px] items-center gap-2 rounded-full px-3.5 font-display text-[0.85rem] leading-none transition-colors ${
+                              className={`flex min-h-[48px] items-center gap-2 rounded-full px-3.5 font-display text-[0.85rem] leading-none transition-colors ${
                                 selected
                                   ? "border-[2.5px] border-ink bg-ink font-bold text-card-warm"
                                   : "border-2 border-[#C9C2E0] bg-card font-semibold text-ink hover:border-ink"
@@ -501,7 +518,7 @@ function PlayCheckIn({
           <Link
             href="/student?mode=practice"
             prefetch={false}
-            className="checkin-press flex min-h-[46px] items-center rounded-[16px] border-[2.5px] border-ink bg-card px-4 font-display text-[0.92rem] font-bold text-ink"
+            className="checkin-press flex min-h-[48px] items-center rounded-[16px] border-[2.5px] border-ink bg-card px-4 font-display text-[0.92rem] font-bold text-ink"
           >
             Just practise — today&apos;s plan
           </Link>
@@ -571,6 +588,14 @@ function ActionRow({
     </Link>
   );
 }
+
+/* Every target on this page is >=48px, which is the build spec's floor and
+   NOT what its mockup draws: the mockup has the two change-of-mind buttons
+   at 46 and the picker's lesson chips at 40. A tap-target minimum is a
+   floor rather than a taste call — the design system's own number is 52,
+   stricter still — so the spec wins over the drawing here, where on the
+   bordered-secondary-button question it went the other way. 37 of the 40
+   targets on this page were under it. */
 
 /**
  * Which term a module belongs to, and its label without the term in it.
