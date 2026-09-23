@@ -8,16 +8,6 @@ import { BADGE, HEADING, STROKE, STROKE_SM, cx } from "@/components/sticker";
 const shortName = (displayName: string) => displayName.split(" ")[0] || displayName;
 
 /**
- * The name to drop INSIDE Arabic copy («أهلاً يا نور»), or null when the row
- * name is not Arabic — «أهلاً يا Omar» reads as a bug, so a Latin name is
- * omitted and the sentence greets without it.
- */
-const arabicGreetingName = (displayName: string): string | null => {
-  const first = shortName(displayName);
-  return /^[؀-ۿݐ-ݿ]+$/.test(first) ? first : null;
-};
-
-/**
  * The student's home (Wave 1.5, multi-subject spine §4): one card PER SUBJECT,
  * each with its own accent, mastery, and weakest topic. Mastery is rolled up
  * ONLY within a subject — the product NEVER shows a single blended score.
@@ -66,7 +56,19 @@ const arabicGreetingName = (displayName: string): string | null => {
  * beside it and the bar itself carries a label for a screen reader.
  */
 
+/**
+ * Verdict labels, English first — this is the cross-subject default per
+ * constitution v3.2.0 Principle V. The Arabic form is used only inside an
+ * Arabic-subject row (`SubjectCard`'s own `rtl`, from the subject registry's
+ * `dir`), the same split `ReportCard`'s `VERDICT_META`/`AR_STAMP` already
+ * make for the same data.
+ */
 const VERDICT_LABEL: Record<string, string> = {
+  got_it: "Got it ✓",
+  nearly: "Nearly there",
+  needs_work: "Needs work",
+};
+const VERDICT_LABEL_AR: Record<string, string> = {
   got_it: "فهمها ✓",
   nearly: "قريّب",
   needs_work: "محتاج شغل",
@@ -82,7 +84,6 @@ export function SubjectHome({
   studentName?: string;
 }) {
   const first = shortName(studentName); // same convention as LessonCheckIn
-  const ar = arabicGreetingName(studentName); // null when the row name is Latin
 
   /**
    * **An empty list is a screen, not an error.** It is reached by a student in
@@ -100,16 +101,24 @@ export function SubjectHome({
 
   return (
     <main className="mx-auto max-w-4xl px-6 pb-16">
+      {/*
+       * This page is the home for EVERY student regardless of which subject
+       * they end up in — it is reached before any subject is chosen, and an
+       * empty grade (no live course yet) lands here too. So its chrome is
+       * English, unconditionally, per constitution v3.2.0 Principle V: English
+       * is the MVP 1.0 default and this screen has no single subject whose
+       * `dir`/language it could otherwise follow. Only the cards below, one
+       * per subject, take on that subject's own language (`SubjectCard`).
+       */}
       <section className="anim-rise pt-10">
         <p className="rule-label mb-4">After school · {first}</p>
         <h1 className={cx(HEADING, "text-[1.9rem] md:text-[2.4rem]")}>
-          {ar ? `أهلاً يا ${ar} — ` : "أهلاً — "}
-          {empty ? "لسه مافيش مادة جاهزة هنا" : "تحب تذاكر إيه النهاردة؟"}
+          {empty ? `${first}, nothing's ready here yet` : `What do you want to study today, ${first}?`}
         </h1>
         <p className="mt-2.5 text-[1rem] text-ink-soft">
           {empty
-            ? "مش حاجة عملتها إنت. أول ما تبقى فيه مادة جاهزة هتلاقيها في الصفحة دي."
-            : "كل مادة لوحدها — تقدمك ودرجاتك محسوبة لكل مادة على حدة."}
+            ? "This isn't anything you did — the moment a subject is ready, it'll show up on this page by itself."
+            : "Every subject stands alone — your progress and scores are tracked separately for each one."}
         </p>
       </section>
 
@@ -134,16 +143,24 @@ export function SubjectHome({
  * subject arrives styled instead of inheriting maths' tile by default. A
  * subject with no registry entry falls back to a plain white tile — ink on
  * card, still a correct pair — rather than borrowing another subject's colour.
+ *
+ * `rtl` — from the subject's own registry `dir`, the same source
+ * `LessonSession` reads (`isRtlSubject`) — is this card's `arabicUi`: it is
+ * the only thing in this file allowed to render Arabic copy, and only for an
+ * Arabic-taught subject (Arabic, Social Studies). English (maths, and the
+ * unknown-subject fallback) is not a translation of a Arabic default here —
+ * it is the default, per constitution v3.2.0 Principle V.
  */
 function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
   const def = spineSubjectDef(s.subject);
   const tile = def?.accent.tile ?? "bg-card text-ink";
   const dim = def?.accent.tileDim ?? "text-ink-soft";
+  const rtl = def?.dir === "rtl";
 
   return (
     <Link
       href={`/student?subject=${s.subject}`}
-      dir={def?.dir === "rtl" ? "rtl" : "ltr"}
+      dir={rtl ? "rtl" : "ltr"}
       className={cx(
         STROKE,
         tile,
@@ -158,13 +175,17 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
             {s.courseLabel}
           </h2>
           <span className={cx(BADGE, "shrink-0 bg-card text-ink")}>
-            {s.lessonsCount} دروس
+            {rtl ? `${s.lessonsCount} دروس` : `${s.lessonsCount} lessons`}
           </span>
         </div>
         <p className={cx("mt-1 text-[0.85rem] font-bold", dim)}>
           {s.lastCheck
-            ? `آخر تقييم: ${VERDICT_LABEL[s.lastCheck.verdict] ?? s.lastCheck.verdict} · ${s.lastCheck.score}/100`
-            : "لسه مافيش تقييم"}
+            ? rtl
+              ? `آخر تقييم: ${VERDICT_LABEL_AR[s.lastCheck.verdict] ?? s.lastCheck.verdict} · ${s.lastCheck.score}/100`
+              : `Last check: ${VERDICT_LABEL[s.lastCheck.verdict] ?? s.lastCheck.verdict} · ${s.lastCheck.score}/100`
+            : rtl
+              ? "لسه مافيش تقييم"
+              : "No check yet"}
         </p>
       </div>
 
@@ -179,7 +200,11 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
             // The bar is a picture of a number. Sighted readers get the
             // percentage beside it; this is the same fact for everyone
             // else, in the card's own language.
-            aria-label={`تقدمك في ${s.courseLabel}: ${pct(s.avgMastery)}`}
+            aria-label={
+              rtl
+                ? `تقدمك في ${s.courseLabel}: ${pct(s.avgMastery)}`
+                : `Your progress in ${s.courseLabel}: ${pct(s.avgMastery)}`
+            }
             className={cx(
               STROKE_SM,
               "h-[18px] flex-1 overflow-hidden rounded-[var(--play-radius-pill)] bg-card p-0.5"
@@ -200,7 +225,7 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
 
         {s.weakestLo ? (
           <p className={cx("mt-2 truncate text-[0.9rem] font-bold", dim)}>
-            أضعف نقطة:{" "}
+            {rtl ? "أضعف نقطة:" : "Weakest point:"}{" "}
             <span className="font-extrabold">{s.weakestLo.label}</span>{" "}
             <span className="font-mono text-[0.8rem] font-medium">
               ({pct(s.weakestLo.mastery)})
@@ -208,7 +233,7 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
           </p>
         ) : (
           <p className={cx("mt-2 text-[0.9rem] font-bold", dim)}>
-            لسه بدري نقول أضعف نقطة
+            {rtl ? "لسه بدري نقول أضعف نقطة" : "Too early to say a weakest point"}
           </p>
         )}
       </div>
@@ -216,7 +241,7 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
       {/* 3. the way in. `shrink-0` so the label never wraps mid-phrase
              on a narrow iPad column. */}
       <span className="inline-flex shrink-0 items-center gap-1.5 font-display text-[1.15rem] font-bold">
-        ابدأ
+        {rtl ? "ابدأ" : "Start"}
         <ForwardChevron />
       </span>
     </Link>
@@ -248,7 +273,7 @@ function ForwardChevron() {
 }
 
 /**
- * «مواد تانية في الطريق» — the "+" Samuel asked for, and the reason it does
+ * "More subjects coming" — the "+" Samuel asked for, and the reason it does
  * nothing.
  *
  * ---------------------------------------------------------------------------
@@ -265,9 +290,9 @@ function ForwardChevron() {
  * So it is **not a link, not a button, and not focusable**. It carries no
  * `href`, no `onClick`, no `tabIndex` and no `role`; it is a paragraph in a
  * frame, and a keyboard tab goes straight past it to the next real thing. The
- * copy is explicit about the absence — «مش محتاج تطلبها ولا تعمل أي حاجة» —
- * because "more coming" on its own invites the question "how do I get them?",
- * and the honest answer is that there is nothing to do.
+ * copy is explicit about the absence — "you don't need to request it or do
+ * anything" — because "more coming" on its own invites the question "how do
+ * I get them?", and the honest answer is that there is nothing to do.
  *
  * ---------------------------------------------------------------------------
  * AND IT MUST NOT LOOK LIKE A COURSE
@@ -300,9 +325,9 @@ function MoreSubjectsComing() {
         +
       </span>
       <div className="min-w-0">
-        <p className="font-display text-[1rem] font-bold text-ink-soft">مواد تانية في الطريق</p>
+        <p className="font-display text-[1rem] font-bold text-ink-soft">More subjects coming</p>
         <p className="mt-0.5 text-[0.9rem] leading-relaxed text-ink-faint">
-          لما تتضاف مادة جديدة هتلاقيها هنا على طول — مش محتاج تطلبها ولا تعمل أي حاجة.
+          When a new subject is added it&apos;ll show up here on its own — you don&apos;t need to request it or do anything.
         </p>
       </div>
     </div>

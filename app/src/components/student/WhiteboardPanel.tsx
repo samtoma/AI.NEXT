@@ -1,7 +1,8 @@
 "use client";
 
 /**
- * "السبورة" — the persistent lesson whiteboard (Wave B2).
+ * "Whiteboard" ("السبورة" in the Arabic verticals) — the persistent lesson
+ * whiteboard (Wave B2).
  *
  * The current figure and the current question live HERE, outside the chat
  * scroll container: desktop = the sticky right column of the lesson grid,
@@ -9,9 +10,14 @@
  * re-pin chips at the original positions (ChatCore interceptWidget).
  *
  * Figures play in controlled steps (VizPlaybackContext mode "step"):
- * auto-advance ~3s per step while the beat is being read, "▸ التالي"
+ * auto-advance ~3s per step while the beat is being read, "▸ Next"/"▸ التالي"
  * tap-advance, step dots, replay. Questions take the board focus and hand
  * it back to the last figure once answered.
+ *
+ * Every string here branches on `arabicUi` (the subject's registered `dir`,
+ * same source as `ChatCore`/`ReportCard`) — this panel hosts figures for
+ * EVERY subject, including maths, so its chrome used to leak unconditional
+ * Arabic into English lessons before this fix.
  */
 
 import {
@@ -289,9 +295,15 @@ export function WhiteboardPanel({
       {/* header */}
       <div className={cx(HONEY_BAND, "flex shrink-0 items-center justify-between gap-2 px-3.5 py-2")}>
         <span className="flex items-center gap-2">
-          <span dir="rtl" className="font-display text-[1.05rem] font-extrabold text-ink">
-            السبورة ✎
-          </span>
+          {arabicUi ? (
+            <span dir="rtl" className="font-display text-[1.05rem] font-extrabold text-ink">
+              السبورة ✎
+            </span>
+          ) : (
+            <span className="font-display text-[1.05rem] font-extrabold text-ink">
+              Whiteboard ✎
+            </span>
+          )}
           {debug && figReady && (fig as ResolvedFigure).refId && (
             <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
               {(fig as ResolvedFigure).refId}
@@ -299,16 +311,30 @@ export function WhiteboardPanel({
           )}
         </span>
         <span className="flex items-center gap-2">
-          {/* Arabic, so never the mono face (handoff, TYPE) */}
-          {page != null && (
-            <span dir="rtl" className="text-[0.85rem] font-bold text-ink-faint">
-              من الكتاب ص{page}
-            </span>
-          )}
+          {/* Arabic, so never the mono face (handoff, TYPE) — the English
+              form is mono like LessonCheckIn's "Textbook · {pageRange}". */}
+          {page != null &&
+            (arabicUi ? (
+              <span dir="rtl" className="text-[0.85rem] font-bold text-ink-faint">
+                من الكتاب ص{page}
+              </span>
+            ) : (
+              <span dir="ltr" className="font-mono text-[0.72rem] font-medium text-ink-faint">
+                Textbook · p.{page}
+              </span>
+            ))}
           <button
             onClick={onToggleCollapsed}
             aria-expanded={!collapsed}
-            aria-label={collapsed ? "افتح السبورة" : "اقفل السبورة"}
+            aria-label={
+              arabicUi
+                ? collapsed
+                  ? "افتح السبورة"
+                  : "اقفل السبورة"
+                : collapsed
+                  ? "Open the whiteboard"
+                  : "Close the whiteboard"
+            }
             className={cx(ICON_BUTTON, "text-[0.85rem] md:hidden")}
           >
             {collapsed ? "▾" : "▴"}
@@ -322,14 +348,19 @@ export function WhiteboardPanel({
           collapsed ? "hidden md:block" : ""
         }`}
       >
-        {!focused && (
-          <p
-            dir="rtl"
-            className="py-8 text-center text-[1rem] leading-relaxed text-ink-faint"
-          >
-            هنرسم هنا مع بعض ✏️
-          </p>
-        )}
+        {!focused &&
+          (arabicUi ? (
+            <p
+              dir="rtl"
+              className="py-8 text-center text-[1rem] leading-relaxed text-ink-faint"
+            >
+              هنرسم هنا مع بعض ✏️
+            </p>
+          ) : (
+            <p className="py-8 text-center text-[1rem] leading-relaxed text-ink-faint">
+              We'll draw here together ✏️
+            </p>
+          ))}
 
         {/* crossfade on swap: key remount + fade-in */}
         {focused && (
@@ -355,9 +386,13 @@ export function WhiteboardPanel({
                 const p = lookupPassage?.(focused.id);
                 return p ? (
                   <SealedPassageCard passage={p} compact />
-                ) : (
+                ) : arabicUi ? (
                   <p dir="rtl" className="py-6 text-center text-[0.9rem] font-bold text-[color:var(--play-text-muted)]">
                     النص ده مش متاح في بيانات الدرس
+                  </p>
+                ) : (
+                  <p className="py-6 text-center text-[0.9rem] font-bold text-[color:var(--play-text-muted)]">
+                    This text isn't available in the lesson data
                   </p>
                 );
               })()}
@@ -375,14 +410,17 @@ export function WhiteboardPanel({
                     />
                   ))}
                 </span>
-                <span dir="rtl" className="text-[0.85rem] text-ink-faint">
-                  بجهّز الرسمة…
+                <span dir={arabicUi ? "rtl" : "ltr"} className="text-[0.85rem] text-ink-faint">
+                  {arabicUi ? "بجهّز الرسمة…" : "Preparing the figure…"}
                 </span>
               </div>
             )}
             {focused.type !== "question" && fig === "missing" && (
-              <p dir="rtl" className="py-6 text-center text-[0.9rem] font-bold text-[color:var(--play-text-muted)]">
-                الرسمة دي مش موجودة
+              <p
+                dir={arabicUi ? "rtl" : undefined}
+                className="py-6 text-center text-[0.9rem] font-bold text-[color:var(--play-text-muted)]"
+              >
+                {arabicUi ? "الرسمة دي مش موجودة" : "This figure isn't available"}
               </p>
             )}
 
@@ -401,12 +439,17 @@ export function WhiteboardPanel({
                 {/* step controls */}
                 {total > 1 && (
                   <div className="mt-2 flex items-center justify-between gap-2">
-                    <span className="flex items-center gap-1" aria-label={`خطوة ${step} من ${total}`}>
+                    <span
+                      className="flex items-center gap-1"
+                      aria-label={
+                        arabicUi ? `خطوة ${step} من ${total}` : `Step ${step} of ${total}`
+                      }
+                    >
                       {Array.from({ length: Math.min(total, 12) }, (_, i) => (
                         <button
                           key={i}
                           onClick={() => setStep(fKey, i + 1)}
-                          aria-label={`الخطوة ${arDigits(i + 1)}`}
+                          aria-label={arabicUi ? `الخطوة ${arDigits(i + 1)}` : `Step ${i + 1}`}
                           className="flex h-6 w-5 items-center justify-center"
                         >
                           {/* drawn steps are ink, steps to come are the
@@ -424,19 +467,19 @@ export function WhiteboardPanel({
                     </span>
                     {step < total ? (
                       <button
-                        dir="rtl"
+                        dir={arabicUi ? "rtl" : "ltr"}
                         onClick={() => setStep(fKey, Math.min(step + 1, total))}
                         className={BOARD_STEP_BUTTON}
                       >
-                        ▸ التالي
+                        {arabicUi ? "▸ التالي" : "▸ Next"}
                       </button>
                     ) : (
                       <button
-                        dir="rtl"
+                        dir={arabicUi ? "rtl" : "ltr"}
                         onClick={() => setStep(fKey, 1)}
                         className={BOARD_STEP_BUTTON}
                       >
-                        ↺ ارسمها تاني
+                        {arabicUi ? "↺ ارسمها تاني" : "↺ Draw it again"}
                       </button>
                     )}
                   </div>
@@ -455,6 +498,7 @@ export function WhiteboardPanel({
                 item={it}
                 resolve={resolve}
                 onFocus={onFocus}
+                arabicUi={arabicUi}
               />
             ))}
           </div>
@@ -478,13 +522,24 @@ function FilmThumb({
   item,
   resolve,
   onFocus,
+  arabicUi,
 }: {
   item: BoardItem;
   resolve: (it: BoardItem) => ResolvedFigure | "loading" | "missing" | null;
   onFocus: (key: string) => void;
+  arabicUi: boolean;
 }) {
-  const label =
-    item.type === "question" ? "سؤال" : item.type === "passage" ? "النص" : "رسمة";
+  const label = arabicUi
+    ? item.type === "question"
+      ? "سؤال"
+      : item.type === "passage"
+        ? "النص"
+        : "رسمة"
+    : item.type === "question"
+      ? "Question"
+      : item.type === "passage"
+        ? "Text"
+        : "Figure";
   const fig =
     item.type !== "question" && item.type !== "passage" ? resolve(item) : null;
   const ready = fig !== null && fig !== "loading" && fig !== "missing";

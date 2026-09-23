@@ -1334,12 +1334,16 @@ export function LessonSession({
                 if (!p)
                   return (
                     // an unresolvable id must fail VISIBLY, not vanish — the
-                    // tutor believes it just showed the student a text
+                    // tutor believes it just showed the student a text.
+                    // Passages are the Arabic vertical's own feature (ADR-0006)
+                    // so this only fires there in practice, but the fallback
+                    // still follows `rtl` like every other string in this file
+                    // rather than assuming its caller's subject.
                     <p
-                      dir="rtl"
+                      dir={rtl ? "rtl" : undefined}
                       className="py-2 text-center text-[0.85rem] text-[color:var(--play-text-muted)]"
                     >
-                      النص ده مش متاح في بيانات الدرس
+                      {rtl ? "النص ده مش متاح في بيانات الدرس" : "This text isn't available in the lesson data"}
                     </p>
                   );
                 // "line" (default when a span is given): inline excerpt card

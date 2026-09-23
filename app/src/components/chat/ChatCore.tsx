@@ -15,7 +15,7 @@ import type {
   SpineSubject,
   TurnMeta,
 } from "@/lib/types";
-import { labelArOfSpineKey } from "@/lib/subjects";
+import { displayLabelOfSpineKey, labelArOfSpineKey } from "@/lib/subjects";
 import { track } from "@/lib/ga";
 import { masteryLabel } from "@/lib/mastery";
 import {
@@ -1074,6 +1074,7 @@ const MessageRow = memo(function MessageRow({
                     key={i}
                     flavor="figure"
                     onOpen={onDirective ? () => onDirective(name, props) : undefined}
+                    arabicUi={arabicUi}
                   />
                 );
               }
@@ -1093,6 +1094,7 @@ const MessageRow = memo(function MessageRow({
                     onOpen={
                       onDirective ? () => onDirective("question", { qid }) : undefined
                     }
+                    arabicUi={arabicUi}
                   />
                 );
               }
@@ -1116,6 +1118,7 @@ const MessageRow = memo(function MessageRow({
               <SubjectHandoffCard
                 key={i}
                 subject={b.subject}
+                arabicUi={arabicUi}
                 onOpen={
                   onSwitchSubject ? () => onSwitchSubject(b.subject) : undefined
                 }
@@ -1134,6 +1137,7 @@ const MessageRow = memo(function MessageRow({
                     onOpen={
                       onDirective ? () => onDirective("passage", { id }) : undefined
                     }
+                    arabicUi={arabicUi}
                   />
                 );
               }
@@ -1175,31 +1179,52 @@ const MessageRow = memo(function MessageRow({
  * Cross-subject handoff (Wave 1.5, multi-subject spine §3): the tutor stays
  * in its subject and OFFERS to switch rather than answering out-of-subject
  * (which would break grounding). "Open" navigates; "stay" collapses the card.
+ *
+ * This card can fire from ANY subject's session — a maths question can name a
+ * social-studies topic just as easily as the reverse — so its own prose
+ * follows the calling session's `arabicUi`, exactly like `CheckInCard` above
+ * (previously it did not: the whole card was hardcoded Arabic regardless of
+ * which subject asked for the handoff, the bug class this fixes). The TARGET
+ * subject's name still renders in its own script either way
+ * (`displayLabelOfSpineKey`/`labelArOfSpineKey` — the same "each subject named
+ * in its own script" rule `SubjectHome`'s `courseLabel` follows), because a
+ * subject's name is not a translation.
  */
 function SubjectHandoffCard({
   subject,
+  arabicUi,
   onOpen,
 }: {
   subject: SpineSubject;
+  arabicUi: boolean;
   onOpen?: () => void;
 }) {
   const [dismissed, setDismissed] = useState(false);
-  const label = labelArOfSpineKey(subject);
+  const label = arabicUi ? labelArOfSpineKey(subject) : displayLabelOfSpineKey(subject);
   if (dismissed) {
     return (
       <p className="my-1 text-[0.85rem] text-ink-faint" dir="auto">
-        — نكمل اللي إحنا فيه ✓
+        {arabicUi ? "— نكمل اللي إحنا فيه ✓" : "— staying here ✓"}
       </p>
     );
   }
   return (
     <div
-      dir="rtl"
+      dir={arabicUi ? "rtl" : "ltr"}
       className={cx(STROKE, "my-2 rounded-[var(--play-radius)] bg-card-warm p-3 text-ink sticker-shadow-sm")}
     >
       <p className="text-[1rem] text-ink">
-        ده سؤال في <strong>{label}</strong> — تحب نفتح المادة دي، ولا نكمل اللي
-        إحنا فيه ونرجعله بعدين؟
+        {arabicUi ? (
+          <>
+            ده سؤال في <strong>{label}</strong> — تحب نفتح المادة دي، ولا نكمل اللي
+            إحنا فيه ونرجعله بعدين؟
+          </>
+        ) : (
+          <>
+            That's a <strong>{label}</strong> question — want to open that subject, or stay
+            here and come back to it later?
+          </>
+        )}
       </p>
       <div className="mt-2.5 flex flex-wrap items-center gap-2">
         <button
@@ -1207,13 +1232,13 @@ function SubjectHandoffCard({
           disabled={!onOpen}
           className={BUTTON_SECONDARY}
         >
-          افتح {label} ←
+          {arabicUi ? `افتح ${label} ←` : `Open ${label} →`}
         </button>
         <button
           onClick={() => setDismissed(true)}
           className={BUTTON_TERTIARY}
         >
-          نكمل
+          {arabicUi ? "نكمل" : "Stay here"}
         </button>
       </div>
     </div>
@@ -1223,21 +1248,35 @@ function SubjectHandoffCard({
 /**
  * Transcript stand-in for a board-intercepted figure/question — keeps the
  * position in the thread; tapping re-pins the card on the whiteboard.
+ *
+ * Figures and questions are intercepted in every subject (the whiteboard
+ * hosts maths figures too), so this chip's label follows `arabicUi` the same
+ * way `CheckInCard` does — it used to be hardcoded Arabic and `dir="rtl"`
+ * regardless of the session's language.
  */
 function BoardChip({
   flavor,
+  arabicUi,
   onOpen,
 }: {
   flavor: "figure" | "question";
+  arabicUi: boolean;
   onOpen?: () => void;
 }) {
   // The pop lives on a wrapper: an entrance animation that fills `both`
   // keeps its last transform, which would swallow the press's translate.
+  const label = arabicUi
+    ? flavor === "figure"
+      ? "شوف الرسمة ←"
+      : "السؤال ع السبورة ←"
+    : flavor === "figure"
+      ? "See the figure →"
+      : "Question on the board →";
   return (
     <span className="anim-pop my-1.5 inline-block">
-      <button dir="rtl" onClick={onOpen} className={CHIP_CONTROL}>
+      <button dir={arabicUi ? "rtl" : "ltr"} onClick={onOpen} className={CHIP_CONTROL}>
         <span aria-hidden>{flavor === "figure" ? "✎" : "⚡"}</span>
-        {flavor === "figure" ? "شوف الرسمة ←" : "السؤال ع السبورة ←"}
+        {label}
       </button>
     </span>
   );
