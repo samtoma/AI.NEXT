@@ -10,6 +10,17 @@ import {
 import { MasteryFill } from "@/components/MasteryFill";
 import { NoorMark } from "@/components/NoorMark";
 import { deriveMasteryStage, type Recommendation } from "@/lib/checkin";
+import {
+  BUTTON_LABEL,
+  BUTTON_TERTIARY,
+  HEADING,
+  HONEY_BAND,
+  STICKER_CARD,
+  STICKER_PANEL,
+  STROKE,
+  STROKE_SM,
+  cx,
+} from "@/components/sticker";
 
 type CheckInProps = {
   lesson: LessonData;
@@ -62,9 +73,16 @@ type CheckInProps = {
  * English/math renders the Noor Play check-in anatomy below (rail, sticker
  * card, mastery ramp, two instruction-to-Nour action rows — see
  * docs/design/handoffs/noor-play). The Arabic/social verticals are NOT part
- * of this brief ("English ships, Arabic stays cheap") and keep the prior
- * bilingual rendering untouched below, per constitution Principle V — no
- * Arabic-capable surface is removed to ship English first.
+ * of this brief ("English ships, Arabic stays cheap") and keep their own
+ * bilingual layout below, per constitution Principle V — no Arabic-capable
+ * surface is removed to ship English first.
+ *
+ * TRIAL MERGE (2026-09-23): the maths card is Tamer's after-school home
+ * redesign (`d8a659b`, `bba9edc`, `d23417a`) with main's Principle XII token
+ * rules re-applied — every stroke, radius, shadow and divider below is a Play
+ * token or a `components/sticker.ts` class, and targets hold the 52px
+ * `--noor-touch-min` floor. The Arabic/Social layout is main's, byte for byte
+ * (review 2026-09-23 F17): the branch still carried the pre-fix Ledger card.
  */
 export function LessonCheckIn(props: CheckInProps) {
   const { lesson, lessons, hasContent = false } = props;
@@ -119,22 +137,17 @@ function PlayCheckIn({
           read "AFTER SCHOOL · OMAR" — an assumption that the student is on
           their school's track AND studying right after school, both wrong
           for someone working ahead, catching up, or revising at 11pm. */}
-      <div
-        className="flex shrink-0 flex-wrap items-center gap-3 bg-card-warm px-6 py-3.5"
-        style={{
-          borderBlockEndWidth: 3,
-          borderBlockEndStyle: "solid",
-          borderBlockEndColor: "var(--ink)",
-        }}
-      >
+      <div className={cx(HONEY_BAND, "flex shrink-0 flex-wrap items-center gap-3 px-6 py-3.5")}>
         <p className="font-display text-[1.15rem] font-extrabold leading-none text-ink">
           Hi {first}
         </p>
         {/* Absent entirely when null — never "subscribed", never a zero. */}
         {trial != null && (
           <span
-            className="ms-auto rounded-full border-[2.5px] border-ink bg-card px-3 py-1.5 font-mono text-[0.7rem] uppercase leading-none text-ink"
-            style={{ boxShadow: "2px 2px 0 var(--ink)" }}
+            className={cx(
+              STROKE_SM,
+              "ms-auto rounded-[var(--play-radius-pill)] bg-card px-3 py-1.5 font-mono text-[0.7rem] uppercase leading-none text-ink sticker-shadow-sm"
+            )}
           >
             Trial · <span dir="ltr">{trial}</span>{" "}
             {trial === 1 ? "day" : "days"}
@@ -146,10 +159,10 @@ function PlayCheckIn({
         <div className="flex items-center gap-3.5">
           {/* The companion is present, and carried by motion alone — bob is
               idle and the only infinite loop the system permits. */}
-          <span className="anim-bob flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-[3px] border-ink bg-card-warm sticker-shadow">
+          <span className={cx(STROKE, "anim-bob flex h-14 w-14 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-card-warm sticker-shadow")}>
             <NoorMark className="h-[34px] w-[34px]" />
           </span>
-          <h1 className="font-display text-[1.75rem] font-extrabold leading-[1.2] text-ink min-[1024px]:text-[2rem] min-[1280px]:text-[2.4rem]">
+          <h1 className={cx(HEADING, "text-[1.75rem] min-[1024px]:text-[2rem] min-[1280px]:text-[2.4rem]")}>
             What do you want to work on today?
           </h1>
         </div>
@@ -190,12 +203,18 @@ function PlayCheckIn({
           <Link
             href={`/student?lesson=${encodeURIComponent(justFinished.slug)}`}
             prefetch={false}
-            className="play-pressable sticker-shadow-sm flex min-h-[48px] shrink-0 items-center gap-3 rounded-[16px] border-[2.5px] border-ink bg-card-warm px-4 py-2"
+            className={cx(
+              STROKE_SM,
+              "play-pressable sticker-shadow-sm flex min-h-[var(--noor-touch-min)] shrink-0 items-center gap-3 rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-2"
+            )}
           >
             <span
               aria-hidden
-              className="grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-ink text-[0.72rem] font-extrabold text-ink"
-              style={{ background: MASTERY_LEGEND[4].color }}
+              // the progress pair: teal with its on- ink (4.79:1), never paper
+              className={cx(
+                STROKE_SM,
+                "grid h-6 w-6 shrink-0 place-items-center rounded-[var(--play-radius-pill)] bg-progress text-[0.72rem] font-extrabold text-on-progress"
+              )}
             >
               ✓
             </span>
@@ -222,15 +241,8 @@ function PlayCheckIn({
             overflow:hidden + border-radius loses the clip on relayout — the
             "corner went square after I resized" symptom, on a hard device
             target. */}
-        <section className="shrink-0 overflow-clip rounded-[24px] border-[3px] border-ink bg-card sticker-shadow">
-          <div
-            className="flex flex-wrap items-center gap-3 bg-card-warm px-5 py-3"
-            style={{
-              borderBlockEndWidth: 3,
-              borderBlockEndStyle: "solid",
-              borderBlockEndColor: "var(--ink)",
-            }}
-          >
+        <section className={cx(STICKER_CARD, "shrink-0 overflow-clip")}>
+          <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-3 px-5 py-3")}>
             <span className="font-display text-[0.9rem] font-bold leading-none text-[var(--play-text-amber-warm)]">
               Up next
             </span>
@@ -323,7 +335,7 @@ function PlayCheckIn({
                 the doors — a student who has finished everything must still
                 be able to reopen the last lesson. */}
             {courseComplete && (
-              <div className="rounded-[16px] bg-card-warm px-4 py-3.5">
+              <div className="rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-3.5">
                 <p className="font-display text-[1.05rem] font-bold text-ink">
                   That&apos;s the whole course 🎉
                 </p>
@@ -338,7 +350,7 @@ function PlayCheckIn({
           <div
             className="flex flex-col gap-2.5 bg-paper px-5 pb-5 pt-4 min-[900px]:px-[22px]"
             style={{
-              borderBlockStartWidth: 3,
+              borderBlockStartWidth: "var(--play-stroke)",
               borderBlockStartStyle: "solid",
               borderBlockStartColor: "var(--ink)",
             }}
@@ -381,7 +393,7 @@ function PlayCheckIn({
               full width and shoved "Just practise" onto its own line for no
               reason. */}
           <details className="group w-fit open:w-full">
-            <summary className="checkin-press flex min-h-[48px] w-fit cursor-pointer list-none items-center gap-2 rounded-[16px] border-[2.5px] border-ink bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden">
+            <summary className={cx(STROKE_SM, "checkin-press flex min-h-[var(--noor-touch-min)] w-fit cursor-pointer list-none items-center gap-2 rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden")}>
               Pick something else
               <span
                 aria-hidden
@@ -398,15 +410,8 @@ function PlayCheckIn({
                 and bare lesson numbers cannot answer it. The dots and the
                 ramp read off the SAME banding the card above uses, so the
                 picker can never disagree with the topic it opens. */}
-            <div className="mt-3 w-full overflow-clip rounded-[20px] border-[3px] border-ink bg-card sticker-shadow">
-              <div
-                className="flex flex-wrap items-center gap-x-3 gap-y-1 bg-card-warm px-4 py-2.5"
-                style={{
-                  borderBlockEndWidth: 3,
-                  borderBlockEndStyle: "solid",
-                  borderBlockEndColor: "var(--ink)",
-                }}
-              >
+            <div className={cx(STICKER_PANEL, "mt-3 w-full overflow-clip")}>
+              <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2.5")}>
                 <span className="font-display text-[0.9rem] font-bold leading-none text-[var(--play-text-amber-warm)]">
                   Everything in the book
                 </span>
@@ -415,7 +420,7 @@ function PlayCheckIn({
                 <span className="ms-auto flex items-center gap-1.5">
                   <span
                     aria-hidden
-                    className="h-2.5 w-2.5 rounded-full border-[1.5px] border-ink"
+                    className={cx(STROKE_SM, "size-3 rounded-[var(--play-radius-pill)]")}
                     style={{ background: MASTERY_LEGEND[3].color }}
                   />
                   <span className="font-read text-[0.78rem] leading-none text-ink-soft">
@@ -442,9 +447,10 @@ function PlayCheckIn({
                       style={
                         mi < modules.length - 1
                           ? {
-                              borderBlockEndWidth: 2,
+                              // a divider inside a panel: the line-soft token
+                              borderBlockEndWidth: "var(--play-stroke-sm)",
                               borderBlockEndStyle: "solid",
-                              borderBlockEndColor: "#EDE4CE",
+                              borderBlockEndColor: "var(--line-soft)",
                             }
                           : undefined
                       }
@@ -477,15 +483,16 @@ function PlayCheckIn({
                               prefetch={false}
                               aria-current={selected ? "true" : undefined}
                               aria-label={`${l.ref} — ${masteryPhrase(stage)}`}
-                              className={`flex min-h-[48px] items-center gap-2 rounded-full px-3.5 font-display text-[0.85rem] leading-none transition-colors ${
+                              className={cx(
+                                "flex min-h-[var(--noor-touch-min)] items-center gap-2 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-solid px-3.5 font-display text-[0.85rem] leading-none transition-colors",
                                 selected
-                                  ? "border-[2.5px] border-ink bg-ink font-bold text-card-warm"
-                                  : "border-2 border-[#C9C2E0] bg-card font-semibold text-ink hover:border-ink"
-                              }`}
+                                  ? "border-ink bg-ink font-bold text-paper"
+                                  : "border-[color:var(--play-inactive-border)] bg-card font-semibold text-ink hover:border-ink"
+                              )}
                             >
                               <span
                                 aria-hidden
-                                className="h-[9px] w-[9px] shrink-0 rounded-full"
+                                className="size-3 shrink-0 rounded-[var(--play-radius-pill)]"
                                 style={{
                                   // Not-started takes the disabled border
                                   // colour, not the ramp's own #EFEEF6: at
@@ -496,7 +503,7 @@ function PlayCheckIn({
                                       ? "var(--play-disabled-border)"
                                       : MASTERY_LEGEND[stage].color,
                                   border: selected
-                                    ? "1.5px solid var(--card-warm)"
+                                    ? "var(--play-stroke-sm) solid var(--paper)"
                                     : undefined,
                                 }}
                               />
@@ -518,7 +525,7 @@ function PlayCheckIn({
           <Link
             href="/student?mode=practice"
             prefetch={false}
-            className="checkin-press flex min-h-[48px] items-center rounded-[16px] border-[2.5px] border-ink bg-card px-4 font-display text-[0.92rem] font-bold text-ink"
+            className={cx(STROKE_SM, "checkin-press flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink")}
           >
             Just practise — today&apos;s plan
           </Link>
@@ -565,9 +572,11 @@ function ActionRow({
     <Link
       href={href}
       prefetch={false}
-      className={`checkin-press flex min-h-[60px] items-center gap-3.5 rounded-[20px] border-[3px] border-ink px-5 py-3 text-start ${
-        active ? "bg-[var(--noor-action)]" : "bg-card"
-      }`}
+      className={cx(
+        STROKE,
+        "checkin-press flex min-h-[60px] items-center gap-3.5 rounded-[var(--play-radius)] px-5 py-3 text-start",
+        active ? "bg-[var(--noor-action)] text-[color:var(--noor-on-action)]" : "bg-card text-ink"
+      )}
     >
       <span className="flex-1 font-display text-[1.1rem] font-extrabold leading-[1.3] text-ink min-[900px]:text-[1.2rem]">
         {label}
@@ -595,7 +604,9 @@ function ActionRow({
    floor rather than a taste call — the design system's own number is 52,
    stricter still — so the spec wins over the drawing here, where on the
    bordered-secondary-button question it went the other way. 37 of the 40
-   targets on this page were under it. */
+   targets on this page were under it.
+   On main (trial merge) the floor is the design system's own 52px,
+   `--noor-touch-min`, which main's Play pass applied everywhere else. */
 
 /**
  * Which term a module belongs to, and its label without the term in it.
@@ -645,8 +656,33 @@ function groupByModule(lessons: LessonInfo[]) {
   return modules;
 }
 
+/**
+ * One lesson in the "different topic" picker, in both layouts. A real 52px
+ * target (the handoff's floor holds on desktop too), a thin ink sticker that
+ * presses; the current lesson is the filled ink one and carries no shadow,
+ * because it is where she already is. Hover lives in `.play-pressable`,
+ * behind `(hover: hover)`, so an iPad tap leaves no sticky state.
+ */
+function lessonChip(selected: boolean, mono: boolean) {
+  return cx(
+    STROKE_SM,
+    "inline-flex min-h-[var(--noor-touch-min)] min-w-[var(--noor-touch-min)] items-center justify-center rounded-[var(--play-radius-pill)] px-3 text-[0.85rem] leading-none",
+    // Latin lesson refs take the data face; an Arabic one never does.
+    mono ? "font-mono font-medium" : "font-display font-bold",
+    selected ? "bg-ink text-paper" : "bg-card text-ink sticker-shadow-sm play-pressable"
+  );
+}
+
+/** A door card on the Arabic/Social check-in: a big sticker that presses. */
+const DOOR = cx(
+  STROKE,
+  "group block h-full rounded-[var(--play-radius-lg)] bg-card px-6 pb-5 pt-6 sticker-shadow play-pressable"
+);
+/** The button-shaped label inside a door — the whole card is the link. */
+const DOOR_BUTTON = cx(BUTTON_LABEL, "mt-4");
+
 /* =============================================================================
-   ARABIC / SOCIAL — unchanged prior bilingual rendering (kept reintroducible,
+   ARABIC / SOCIAL — its own bilingual layout (kept reintroducible,
    constitution Principle V). Not part of the Noor Play check-in brief.
    ========================================================================= */
 
@@ -677,10 +713,8 @@ function SocialCheckIn({
   return (
     <main className="mx-auto max-w-3xl px-6 pb-16">
       <section className="anim-rise pb-6 pt-10">
-        <p className="rule-label mb-4">
-          After school · {lesson.studentName.split(" ")[0]}
-        </p>
-        <h1 className="flex flex-wrap items-baseline gap-x-3 font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
+        <p className="rule-label mb-4">After school · {lesson.studentName.split(" ")[0]}</p>
+        <h1 className={cx(HEADING, "flex flex-wrap items-baseline gap-x-3 text-[1.9rem] md:text-[2.4rem]")}>
           <span dir="rtl" className="text-accent-deep">
             إزاي كان درس النهاردة؟
           </span>
@@ -689,55 +723,42 @@ function SocialCheckIn({
         </h1>
       </section>
 
-      <section
-        className="ledger-card anim-rise overflow-hidden"
-        style={{ animationDelay: "100ms" }}
-      >
-        <div
-          dir="rtl"
-          className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-card-warm px-5 py-2.5"
-        >
-          <span className="text-[10.5px] font-semibold tracking-wide text-ink-faint">
+      <section className={cx(STICKER_CARD, "anim-rise overflow-hidden")} style={{ animationDelay: "100ms" }}>
+        <div dir="rtl" className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-5 py-2.5")}>
+          <span className="text-[0.85rem] font-bold text-ink">
             النهاردة في المدرسة
           </span>
-          <span className="text-[10.5px] text-ink-faint">
-            كتاب الوزارة · {pageSpan}
-          </span>
+          <span className="text-[0.85rem] font-bold text-ink-faint">كتاب الوزارة · {pageSpan}</span>
         </div>
 
-        <div
-          dir="rtl"
-          className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-4"
-        >
+        <div dir="rtl" className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-4">
           <div>
-            <p className="font-display text-xl font-medium text-ink">
+            <p className="font-display text-[1.5rem] font-extrabold leading-[1.3] text-ink">
               {selectedIsGeo && (
-                <span dir="rtl" className="me-2 text-[15px] text-gold">
+                <span dir="rtl" className="me-2 text-[1rem] text-gold">
                   هندسة
                 </span>
               )}
-              <span className="ms-0 me-2 text-[15px] text-gold">
+              <span className="ms-0 me-2 text-[1rem] text-gold">
                 {subjectDef(lesson.subject).labelArShort}
               </span>
               {lesson.lessonRef} — {lesson.title}
             </p>
-            <p className="mt-0.5 text-[11.5px] text-ink-faint">
+            <p className="mt-0.5 text-[0.85rem] font-bold text-ink-faint">
               {subjectDef(lesson.subject).labelAr} · {lesson.moduleLabel}
             </p>
           </div>
           <div className="space-y-1">
             {lesson.los.map((l) => (
               <div key={l.id} className="flex items-center gap-2">
+                {/* Outlined, so the not-started step (the inactive fill) is
+                    still a visible dot on the white card. */}
                 <span
-                  className="h-2 w-2 shrink-0 rounded-full"
-                  style={{
-                    backgroundColor: masteryColor(l.mastery, 1, l.mastery > 0),
-                  }}
+                  className={cx(STROKE_SM, "h-3.5 w-3.5 shrink-0 rounded-[var(--play-radius-pill)]")}
+                  style={{ backgroundColor: masteryColor(l.mastery, 1, l.mastery > 0) }}
                 />
-                <span className="text-[12px] text-ink-soft">{l.label}</span>
-                <span className="font-mono text-[9.5px] text-ink-faint">
-                  {pct(l.mastery)}
-                </span>
+                <span className="text-[0.9rem] text-ink-soft">{l.label}</span>
+                <span className="font-mono text-[0.72rem] font-medium text-ink-faint">{pct(l.mastery)}</span>
               </div>
             ))}
           </div>
@@ -745,122 +766,83 @@ function SocialCheckIn({
       </section>
 
       <section className="mt-5 grid gap-4 sm:grid-cols-2">
+        {/* The two doors are ONE anatomy (F17): same stroke, radius, shadow
+            and press, told apart by their words and by the fill of the
+            button inside — amber on the recommended "teach me" (the one
+            amber on this screen), white on the other. */}
+        {/* `anim-rise` sits on a wrapper, never on the door itself: an
+            animation that fills `both` keeps its last transform, which
+            outranks the press's `translate` and freezes the control. */}
+        <div className="anim-rise" style={{ animationDelay: "180ms" }}>
         <Link
           href={`/student?mode=learn&lesson=${encodeURIComponent(lesson.slug)}`}
           prefetch={false}
-          className="anim-rise group relative overflow-hidden rounded-xl border border-line bg-card px-6 pb-5 pt-6 shadow-[0_2px_8px_rgba(30,36,80,0.08)] transition-all duration-200 hover:-translate-y-1 hover:border-[var(--noor-action)] hover:shadow-[0_12px_32px_rgba(30,36,80,0.16)] play-pressable sticker-shadow"
-          style={{ animationDelay: "180ms" }}
+          className={DOOR}
         >
-          <div
-            className="pointer-events-none absolute inset-0 opacity-70"
-            style={{
-              background:
-                "radial-gradient(ellipse 110% 90% at 85% -10%, var(--gold-wash), transparent 60%)",
-            }}
-          />
-          <p
-            dir="rtl"
-            className="relative font-display text-[26px] font-medium leading-tight text-ink"
-          >
+          <p dir="rtl" className="font-display text-[1.5rem] font-extrabold leading-[1.3] text-ink">
             مش فاهم حاجة
           </p>
-          <p
-            dir="rtl"
-            className="relative mt-1.5 text-[14.5px] font-semibold text-ink"
-          >
+          <p dir="rtl" className="mt-1.5 text-[1rem] font-bold text-ink">
             اشرحهولي من الأول خالص.
           </p>
-          <p dir="rtl" className="relative mt-3 text-[10.5px] text-ink-faint">
+          <p dir="rtl" className="mt-3 text-[0.85rem] font-bold text-ink-faint">
             درس تفاعلي · خرايط ورسومات · تقرير فهم بأمانة
           </p>
           <span
             dir="rtl"
-            className="relative mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl px-4 text-[13px] font-semibold transition-transform duration-200 group-hover:-translate-x-1"
-            style={{
-              background: "var(--noor-action)",
-              color: "var(--noor-on-action)",
-            }}
+            className={cx(DOOR_BUTTON, "bg-[var(--noor-action)] text-[color:var(--noor-on-action)]")}
           >
             علّمني ←
           </span>
         </Link>
+        </div>
 
+        <div className="anim-rise" style={{ animationDelay: "260ms" }}>
         <Link
           href={`/student?mode=review&lesson=${encodeURIComponent(lesson.slug)}`}
           prefetch={false}
-          className="anim-rise group relative overflow-hidden rounded-xl border border-accent/40 bg-card px-6 pb-5 pt-6 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_12px_32px_-18px_rgba(13,74,66,0.4)] transition-all duration-200 hover:-translate-y-1 hover:border-accent/70 hover:shadow-[0_22px_44px_-20px_rgba(13,74,66,0.55)] play-pressable sticker-shadow"
-          style={{ animationDelay: "260ms" }}
+          className={DOOR}
         >
-          <div
-            className="pointer-events-none absolute inset-0 opacity-70"
-            style={{
-              background:
-                "radial-gradient(ellipse 110% 90% at 85% -10%, var(--accent-wash), transparent 60%)",
-            }}
-          />
-          <p
-            dir="rtl"
-            className="relative font-display text-[26px] font-medium leading-tight text-ink"
-          >
+          <p dir="rtl" className="font-display text-[1.5rem] font-extrabold leading-[1.3] text-ink">
             فهمت كله ✓
           </p>
-          <p
-            dir="rtl"
-            className="relative mt-1.5 text-[14.5px] font-semibold text-ink"
-          >
+          <p dir="rtl" className="mt-1.5 text-[1rem] font-bold text-ink">
             فاهمه — مراجعة سريعة في ٣ دقايق.
           </p>
-          <p dir="rtl" className="relative mt-3 text-[10.5px] text-ink-faint">
+          <p dir="rtl" className="mt-3 text-[0.85rem] font-bold text-ink-faint">
             ٣ أسئلة سريعة · تحدي واحد · وخلصنا
           </p>
-          <span
-            dir="rtl"
-            className="relative mt-4 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl bg-accent-deep px-4 text-[13px] font-semibold text-paper transition-transform duration-200 group-hover:-translate-x-1"
-          >
+          <span dir="rtl" className={cx(DOOR_BUTTON, "bg-card text-ink")}>
             ثبّته ←
           </span>
         </Link>
+        </div>
       </section>
 
-      <details
-        className="anim-rise group mt-5"
-        style={{ animationDelay: "340ms" }}
-      >
-        <summary className="ledger-card play-pressable flex cursor-pointer list-none items-center justify-between px-5 py-3 [&::-webkit-details-marker]:hidden">
+      <details className="anim-rise group mt-5" style={{ animationDelay: "340ms" }}>
+        <summary className={cx(STICKER_PANEL, "play-pressable flex min-h-[var(--noor-touch-min)] cursor-pointer list-none items-center justify-between px-5 py-3 [&::-webkit-details-marker]:hidden")}>
           <span className="flex items-baseline gap-2.5">
-            <span
-              dir="rtl"
-              className="font-display text-[16px] font-medium text-ink"
-            >
+            <span dir="rtl" className="font-display text-[1.05rem] font-bold text-ink">
               درس تاني؟
             </span>
-            <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint">
+            <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint">
               pick a different school lesson
             </span>
           </span>
-          <span
-            aria-hidden
-            className="text-[11px] text-ink-faint transition-transform duration-200 group-open:rotate-180"
-          >
+          <span aria-hidden className="text-[0.85rem] text-ink-faint transition-transform duration-200 group-open:rotate-180">
             ▾
           </span>
         </summary>
 
-        <div className="ledger-card mt-2 space-y-2.5 px-5 pb-4 pt-3.5">
+        <div className={cx(STICKER_PANEL, "mt-2 space-y-2.5 px-5 pb-4 pt-3.5")}>
           {modules.map((m) => (
-            <div
-              key={m.id}
-              className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5"
-            >
+            <div key={m.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
               {isRtlSubject(m.subject) ? (
-                <span
-                  dir="rtl"
-                  className="w-full text-[10.5px] font-semibold text-ink-faint sm:w-56 sm:shrink-0"
-                >
+                <span dir="rtl" className="w-full text-[0.85rem] font-bold text-ink-faint sm:w-56 sm:shrink-0">
                   {subjectDef(m.subject!).labelArShort} · {m.label}
                 </span>
               ) : (
-                <span className="w-full font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint sm:w-56 sm:shrink-0">
+                <span className="w-full font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint sm:w-56 sm:shrink-0">
                   {isGeoModule(m.id) ? "Term 2 · " : "Term 1 · "}
                   {m.label}
                 </span>
@@ -879,11 +861,7 @@ function SocialCheckIn({
                       dir={soc ? "rtl" : undefined}
                       title={`${geo ? "Geometry · " : soc ? `${subjectDef(m.subject!).labelArShort} · ` : ""}${l.ref} — ${l.title}`}
                       aria-current={selected ? "true" : undefined}
-                      className={`rounded-full border px-2.5 py-1 play-pressable sticker-shadow-sm ${soc ? "" : "font-mono "}text-[10px] leading-none transition-all duration-150 ${
-                        selected
-                          ? "border-accent bg-accent text-paper shadow-sm"
-                          : "border-line bg-card text-ink-soft hover:-translate-y-px hover:border-accent/50 hover:text-accent-deep"
-                      }`}
+                      className={lessonChip(selected, !soc)}
                     >
                       {geo && (
                         <span dir="rtl" className="me-1">
@@ -900,14 +878,11 @@ function SocialCheckIn({
         </div>
       </details>
 
-      <p
-        className="anim-rise mt-6 text-center"
-        style={{ animationDelay: "420ms" }}
-      >
+      <p className="anim-rise mt-6 text-center" style={{ animationDelay: "420ms" }}>
         <Link
           href="/student?mode=practice"
           prefetch={false}
-          className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-faint underline decoration-dotted underline-offset-4 transition-colors hover:text-accent-deep"
+          className={BUTTON_TERTIARY}
         >
           just practice — today&apos;s plan →
         </Link>
