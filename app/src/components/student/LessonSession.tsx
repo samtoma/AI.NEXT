@@ -1285,7 +1285,7 @@ export function LessonSession({
                 </span>
               ) : (
                 <span className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-accent-deep">
-                  ✦ grounded in the reviewed spine · {lesson.lessonRef} only
+                  ✦ grounded in the lesson · {lesson.lessonRef} only
                 </span>
               )}
               {debug ? (
@@ -1417,7 +1417,7 @@ export function LessonSession({
         </p>
       ) : (
         <p className="mt-2 shrink-0 text-center font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-faint">
-          every beat grounded in human-reviewed solutions · session ends with an
+          every beat grounded in worked solutions · session ends with an
           honest comprehension score ·{" "}
           <Link
             href="/student"

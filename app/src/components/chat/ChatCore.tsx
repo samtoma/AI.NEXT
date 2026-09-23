@@ -640,7 +640,7 @@ export function ChatCore({
                 ...prev,
                 {
                   role: "note",
-                  text: "That was my second explanation — my limit, on purpose. The reviewed canonical steps above are the ground truth: walk them once more slowly, then keep going. You've got this ✦",
+                  text: "That was my second explanation — my limit, on purpose. The worked steps above are the ground truth: walk them once more slowly, then keep going. You've got this ✦",
                 },
               ]);
             }

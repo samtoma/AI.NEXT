@@ -3,6 +3,24 @@
 > Living document. Read at session start; update when progress or decisions land.
 > Last updated: 2026-09-23 (`main`; released `v0.5.0`; constitution v3.1.1)
 
+## 📚 THE WHOLE MATHS BANK, LIVE — rule changed (2026-09-23, `main`)
+
+The live site had **only the textbook** (450 maths questions, 29 of them at review). None of the
+543 generated questions, 49 widget questions or 96 misconceptions was loaded: the first-boot deploy
+step skipped the three bundles in `services/extraction/seed/generated/` that `local-dev.sh` loads.
+The console's "0 generated" was accurate.
+
+**Samuel changed the rule** (constitution **v3.2.0**, Principle III; **ADR-0019**; FR-907
+**dropped**): everything in the maths bank is live on the open site until he says otherwise. He
+owns distribution directly. Review status stays in the data and in the console only.
+
+- CI deploy step **"Generated maths content (only when none is loaded)"**, one-time: it loads the
+  misconceptions and restores both bundles with `--restore` (each row keeps its own status and
+  review stamp), then puts the 29 maths book questions live **without** a reviewer stamp.
+- Student copy that claimed "reviewed" is neutral now; the debug-only "unreviewed" marker is gone.
+- Undo is one query (in ADR-0019). Arabic scripture (Principle IV) stays held. Social Studies and
+  Arabic are not touched.
+
 ## 🎨 ONE SKIN FOR NOW — Master hidden, Play fixed (2026-09-23, `main`)
 
 Samuel reported "a lot of bad UI and conflict of UI with the play view and the master view". The

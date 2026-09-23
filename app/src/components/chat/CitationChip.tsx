@@ -116,9 +116,9 @@ export function CitationChip({
               {cite.kind === "lo"
                 ? "learning objective"
                 : cite.kind === "q"
-                  ? "question · reviewed"
+                  ? "question"
                   : cite.kind === "term"
-                    ? "term · flagged for review"
+                    ? "term"
                     : "source reference"}
             </span>
             <span className="mt-1 block font-display text-[0.85rem] font-bold leading-snug text-ink">

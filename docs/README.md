@@ -123,6 +123,8 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
 | [0015](decisions/0015-interaction-timeline-and-replay.md) | One interaction timeline per student per session, replayed by reconstruction |
 | [0016](decisions/0016-analytics-and-monitoring-posture.md) | Analytics and monitoring: three layers, one system of record |
 | [0017](decisions/0017-two-variants-keyed-to-grade.md) | Two design-system variants, selected at runtime and keyed to grade *(amends ADR-0011)* |
+| [0018](decisions/0018-course-availability.md) | Who may see which course, decided in the console |
+| [0019](decisions/0019-serve-the-whole-maths-bank.md) | Serve the whole maths bank on the open site — generated and unreviewed items live, review status in the console only *(constitution v3.2.0, drops FR-907)* |
 
 ## 3. Architecture (`docs/architecture/`)
 

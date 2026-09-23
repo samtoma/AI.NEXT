@@ -327,7 +327,6 @@ export function ChatQuestionCard({
                 {debug && (
                   <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
                     {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
-                    {result.refutation.reviewed ? "" : " · unreviewed"}
                   </p>
                 )}
               </div>

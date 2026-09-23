@@ -502,6 +502,56 @@ jobs:
               left join questions q on q.lo_id = ns.node_id
              group by 1 order by 1"
 
+      # Samuel's decision of 2026-09-23 (constitution v3.2.0, Principle III;
+      # ADR-0019): everything in the maths bank is served, generated and
+      # unreviewed items included, on the open site, until he says otherwise.
+      # Review status is kept exactly as it is in the data and shown in the
+      # console only.
+      #
+      # ONE-TIME, like the curriculum step: it acts only while the generated
+      # bank is missing, so a later deploy never reloads over live data and
+      # never re-promotes a question somebody has since held back. The bundles
+      # are EXPORTS replayed with --restore: every row keeps the status and the
+      # review stamp it carries, so nothing asserts a review that did not happen.
+      - name: Generated maths content (only when none is loaded)
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR/deploy"
+          C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
+          Q() { $C exec -T db psql -U ainext -d ainext_mvp1 -tAc "$1"; }
+          GEN=$(Q "select count(*) from questions where source='variant'")
+          if [ "$GEN" -ge 590 ]; then
+            echo "generated maths content already loaded ($GEN questions) — not touching it"; exit 0
+          fi
+          PY="$C --profile tools run --rm -e AINEXT_ENVIRONMENT=mvp1 --entrypoint python loader"
+          # The catalogue first: a restore refuses to run against an empty one,
+          # because every distractor that names an entry would be unknown.
+          MC=$(Q "select count(*) from misconceptions")
+          if [ "$MC" -lt 90 ]; then
+            $PY load_misconceptions.py seed/generated/misconceptions.json
+          fi
+          for bundle in generated-questions.json widget-questions.json; do
+            $PY load_generated_questions.py "seed/generated/$bundle" --restore --sample 0
+          done
+          # The maths book questions still at 'review' go live WITHOUT a reviewer
+          # stamp, so the console still reports them as unreviewed and the
+          # decision can be undone exactly (ADR-0019). A materialised inline
+          # widget can never be live (CHECK questions_materialised_not_live).
+          $C exec -T db psql -U ainext -d ainext_mvp1 -c "
+            update questions q set status = 'live'
+             where q.status = 'review' and q.materialised_from is null
+               and exists (select 1 from node_subject ns
+                            where ns.node_id = q.lo_id
+                              and ns.course_id = 'course:prep3-math-en')"
+          $C exec -T db psql -U ainext -d ainext_mvp1 -c "
+            select q.source, q.status,
+                   count(*) filter (where q.reviewed_by is null) as unreviewed,
+                   count(*) as total
+              from questions q join node_subject ns on ns.node_id = q.lo_id
+             where ns.course_id = 'course:prep3-math-en'
+             group by 1, 2 order by 1, 2"
+          echo "misconceptions: $(Q 'select count(*) from misconceptions')"
+
       - name: Trim dangling images (untagged rebuild leftovers only — talent-safe)
         if: always()
         run: |

@@ -185,7 +185,7 @@ without a checklist row going red.
 | FR-904 | ~~Same bundles both sides~~ → **per-solution drift guard only** (ADR-0010 Clarification): a solution MUST NOT silently drift from the set it is supposed to serve. Cross-solution parity is **withdrawn** — solutions may serve entirely different curricula | **VERIFIED** | `services/extraction/parity_check.py` | Proven to catch its target failure: a fresh scoped load gives 450 total but only **421 live** (Unit 1's 29 demoted) — a totals-only check would have called that parity. A `source_documents` bug that returned **zero rows instead of erroring** was found the same way |
 | FR-905 | No Arabic or Social Studies content in this environment | **BLOCKED** ⛔ | `COURSE_SUBJECT="math"`, `node_subject` view scoping — both still present and still course-scoped | **Demoted from VERIFIED 2026-09-22. The requirement is unmet, by Samuel's own instruction, and is left standing rather than reworded.** The 2026-09-13 proof was "loader and parity check are both course-scoped", which was true of a `local-dev.sh` that called the loader once. It now calls it for all three courses (`62f780c`), and all three are **live for grade 9** in the local `mvp1` database — 90 maths objectives, 84 social, 100 Arabic; a Social Studies lesson opens in Arabic right-to-left and is taught. This is the only `mvp1` environment that exists (nothing is deployed — FR-902, FR-907), so there is nowhere the requirement is still holding. **What changed underneath it is that loading and serving are now separable** ([ADR-0018](../../docs/decisions/0018-course-availability.md), 002 FR-2702…FR-2706): reinstating FR-905 is one console action per course and unloads nothing. Whether it is reinstated or withdrawn is a product call and belongs to **Samuel** — §9 item 13. Parity is unaffected and stayed GREEN: it fingerprints the maths book this solution serves, and ADR-0010's Clarification withdrew cross-solution content parity. |
 | FR-906 | Provisioning removes no volumes on the shared box | **BUILT** | DEPLOY-MVP1 rails | Procedural; verified by following it (T013) |
-| FR-907 | Behind Cloudflare Access, explicitly invited list | **BLOCKED** | Hostname `ainext-mvp1.reletix.com` fixed at **one label** (research.md R6) | T016 — needs the Cloudflare Zero Trust dashboard |
+| FR-907 | ~~Behind Cloudflare Access, explicitly invited list~~ | **DROPPED** | — | **Dropped 2026-09-23 (ADR-0019, constitution v3.2.0).** Samuel lifted the containment bound: noor.reletix.com is open and serves the whole maths bank, generated and unreviewed items included, until he revokes it; review status stays in the data and is shown in the console only. The console's own Access policy is unaffected. |
 | FR-908 | ~~The baseline emits the same conversion metric, with no teaching change~~ | **DROPPED** | — | **Dropped 2026-09-13 (ADR-0010 Clarification).** Required a PR to `main`, which Samuel ruled out (*"don't touch the main now"*), and it existed only to make a controlled comparison valid — an obligation now released. `T059`/`T060` dropped with it. |
 
 ---
@@ -371,7 +371,7 @@ ADR-0008 bounds the rest. That is T122.
 | — built | 17 |
 | — partial | 8 |
 | — open | 6 |
-| — blocked | 4 |
+| — blocked | 3 |
 | — deferred | 12 |
 | Requirements a test declares | **9** |
 | Tasks complete / total | **99 / 143** |

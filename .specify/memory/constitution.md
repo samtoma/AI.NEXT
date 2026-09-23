@@ -1,6 +1,17 @@
 <!--
 Sync Impact Report
-- Version change: 3.1.0 → 3.1.1 (PATCH — clarification. Principle XII gains
+- Version change: 3.1.1 → 3.2.0 (MINOR — Principle III's standing exception
+  materially expanded, as in 2.0.0 → 2.1.0: on the MVP 1.0 solution deployment
+  the Cloudflare Access / invited-audience bound is lifted, and every maths
+  question, generated and unreviewed ones included, is served on the open site
+  until Samuel revokes it. What is kept: attribution, the unreviewed flag and
+  the review stamps in the data, shown in the operator console only; the
+  baseline exclusion; Principle IV untouched. No principle removed.)
+- Amended by: Samuel (CTO, solution architect), 2026-09-23 — "let's change the
+  rules, get everything live until I say otherwise, keep the review status for
+  the admin view only, I take the responsibility here, I need all ... I manage
+  the distribution myself directly" (ADR-0019).
+- Previous: 3.1.0 → 3.1.1 (PATCH — clarification. Principle XII gains
   two clauses and no new obligation. First: the published system has two
   variants, and which one applies is a product rule keyed to the student's
   grade (ADR-0017), never a choice made per surface. Second: brand marks and
@@ -165,6 +176,26 @@ being right. The 10% sample reduces that risk; it does not remove it. Nothing
 in this exception permits generated content on `ainext.reletix.com`, and
 promoting the comparison environment to any wider audience still requires
 reinstating the full gate first.
+
+**Extended again, authorized by Samuel 2026-09-23 (ADR-0019):** on the MVP 1.0
+solution deployment (`noor.reletix.com`), the bound "behind Cloudflare Access
+with an explicitly invited audience" is **lifted**. Samuel owns the
+distribution of that site directly and takes responsibility for what it
+serves. Until he revokes it:
+
+- **everything in the maths bank is live**: book questions still at `review`,
+  pipeline-generated questions, widget questions and the misconception
+  catalogue, whether a human has read them or not;
+- **review status is kept, not erased**: every row keeps its attribution, its
+  unreviewed flag and its review stamp exactly as they are. Nothing is stamped
+  as reviewed by this decision, so the decision can be undone exactly;
+- **review status is an operator fact**: the console shows it; a student
+  surface shows neither "reviewed" nor "unreviewed" about any item;
+- the baseline exclusion above still holds, and **Principle IV is untouched**:
+  scripture held by the sacred-content gate stays held.
+
+The cost statement above applies in full, now to an audience nobody invited
+individually.
 
 ### IV. Sacred Text Containment (NON-NEGOTIABLE)
 Quran and Hadith text reaches a student surface ONLY from the sealed,
@@ -363,4 +394,4 @@ PATCH = clarification), and obtain Samuel's approval. Exceptions MUST be
 time-boxed or condition-boxed, attributed, reversible, and recorded here or in
 an ADR — Principle III's suspension is the current example.
 
-**Version**: 3.1.1 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-20
+**Version**: 3.2.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-23

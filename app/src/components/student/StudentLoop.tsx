@@ -391,7 +391,7 @@ export function StudentLoop({
                         Not quite — let&apos;s look at it step by step.
                       </p>
                       <span className={cx(BADGE, "bg-card text-ink")}>
-                        grounded in reviewed solution ✓
+                        grounded in the worked solution ✓
                       </span>
                     </div>
                     <ol className="mt-4 space-y-2.5">
@@ -459,7 +459,7 @@ export function StudentLoop({
                                 : c.kind === "q"
                                   ? {
                                       title: "This question",
-                                      sub: `${c.id} · reviewed canonical solution`,
+                                      sub: `${c.id} · worked solution`,
                                     }
                                   : {
                                       title:

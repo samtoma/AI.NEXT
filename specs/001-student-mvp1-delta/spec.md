@@ -555,9 +555,13 @@ document: a requirement whose code exists but has never been executed does not c
   withdrawn is Samuel's call — traceability §9.
 - **FR-906**: Provisioning the new environment MUST NOT remove volumes on the shared box, and MUST
   leave the existing environment's one-time AI runtime login intact.
-- **FR-907**: The new environment MUST sit behind Cloudflare Access with an explicitly invited
+- **FR-907** — ~~The new environment MUST sit behind Cloudflare Access with an explicitly invited
   audience (decisions.md Q9). This containment is what makes FR-C02's review-gate suspension
-  acceptable; unreviewed content MUST never be reachable by an uninvited person.
+  acceptable; unreviewed content MUST never be reachable by an uninvited person.~~ — **DROPPED
+  2026-09-23 (ADR-0019, constitution v3.2.0).** Samuel lifted the containment bound: the student
+  site is open, he manages its distribution directly, and the whole maths bank is served while the
+  review status stays in the data and in the console. The operator console keeps its own Access
+  policy; that is unaffected.
 - **FR-908** — ~~The baseline environment MUST be instrumented to emit the same conversion metric
   (SC-005), provably behaviour-neutral~~ — **DROPPED 2026-09-13 (ADR-0010 Clarification).** It
   required a PR to `main`, which Samuel has ruled out, and it existed to make a controlled

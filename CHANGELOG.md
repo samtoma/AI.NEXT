@@ -18,6 +18,15 @@ requirement names it.
   comes back with one change once it is really built (ADR-0017 amendment; FR-1011 PARTIAL;
   review `docs/reviews/2026-09-23-play-master-ui-review.md`, issues #46–#51).
 
+- **The whole maths bank is live on noor.reletix.com.** The site had only the textbook's questions:
+  none of the 543 generated questions, 49 widget questions or 96 misconceptions your laptop has.
+  The first deploy never loaded them. Samuel changed the rule that kept unreviewed generated
+  content behind an invite-only gate (constitution v3.2.0, ADR-0019; FR-907 dropped). The next
+  deploy loads them once, and the 29 maths book questions still waiting go live too. Review status
+  is kept in the data and shown in the console only; nothing is marked as reviewed that was not.
+  Student screens no longer say content is "reviewed". Arabic scripture held by the sacred-content
+  gate stays held.
+
 ### Fixed
 - **Console in Play:** small buttons and labels no longer carry the thick 3px outline, tables
   are set tighter in the reading face, empty heatmap cells read as empty instead of darkest, and
