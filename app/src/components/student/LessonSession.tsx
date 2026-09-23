@@ -972,8 +972,8 @@ export function LessonSession({
       if (c.kind === "q") {
         const q = questionById.get(c.id);
         return {
-          title: q ? "Reviewed question" : c.id,
-          sub: `${c.id} · human-approved canonical solution`,
+          title: q ? "This question" : c.id,
+          sub: `${c.id} · worked solution`,
         };
       }
       if (c.kind === "term") {

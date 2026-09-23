@@ -206,8 +206,7 @@ export function QuestionModal({
               </button>
             ) : (
               <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-                {total} steps · reviewed canonical solution — the ground truth
-                every generated explanation is checked against
+                {total} steps · the worked solution
               </p>
             )}
           </div>
@@ -221,20 +220,12 @@ export function QuestionModal({
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
                   Provenance record
                 </p>
-                {/* This stamp used to read "Reviewed ✓" unconditionally. That
-                    was true when every question came out of the reviewed book
-                    extraction, and became a lie the moment generated items
-                    landed beside them (ADR-0008): the passport would have
-                    asserted a human check that never happened, on the one
-                    screen built to make provenance believable. */}
-                <span
-                  className={cx(
-                    BADGE,
-                    "anim-pop",
-                    prov.humanChecked ? VERDICT_INK.correct : VERDICT_INK.partial
-                  )}
-                >
-                  {prov.humanChecked ? "Reviewed ✓" : "Not reviewed"}
+                {/* Where the question came from, never whether a human has read
+                    it: review status is an operator fact, shown in the console
+                    only (ADR-0019). This stamp once read "Reviewed ✓"
+                    unconditionally, then "Reviewed ✓ / Not reviewed". */}
+                <span className={cx(BADGE, "anim-pop", VERDICT_INK.partial)}>
+                  {prov.origin === "book" ? "From the textbook" : "Practice question"}
                 </span>
               </div>
 
@@ -284,12 +275,10 @@ export function QuestionModal({
                   k="extracted"
                   v={fmtDateTime(q.provenance.extractionFinishedAt)}
                 />
-                <Field k="origin" v={prov.label} />
+                <Field k="origin" v={prov.origin === "book" ? "From the textbook" : "Generated from a textbook question"} />
                 {q.provenance.parentQuestionId && (
                   <Field k="derived from" v={q.provenance.parentQuestionId} />
                 )}
-                <Field k="reviewed by" v={q.provenance.reviewedBy ?? "— nobody"} />
-                <Field k="reviewed at" v={fmtDateTime(q.provenance.reviewedAt)} />
                 <Field k="source value" v={q.provenance.source} />
                 <Field k="sha-256" v={shortSha(q.provenance.sourceSha256)} />
               </div>
