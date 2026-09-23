@@ -393,6 +393,89 @@ jobs:
           docker compose -p "$COMPOSE_PROJECT" -f "$COMPOSE_FILE_NAME" logs --tail=120 console
           exit 1
 
+      # ---------------------------------------------------------------------
+      # FIRST BOOT: the operator, then the curriculum. Both gated, both safe to
+      # run on every deploy, and neither ever touches a database in use.
+      # ---------------------------------------------------------------------
+      # The first real deploy came up healthy and EMPTY: no operator, so nobody
+      # could sign into admin-noor.reletix.com; no curriculum, so a student who
+      # signed up would find nothing to study. Samuel: "I want it from GitHub."
+      # Both were things local-dev.sh does and the deploy never did.
+      - name: First operator (only when none exists)
+        env:
+          AINEXT_MAINT_PASSWORD: ${{ secrets.AINEXT_MAINT_PASSWORD }}
+          # The three founders, space-separated. Configuration, not a secret.
+          # Addresses confirmed from the AI.Next founders' calendar invite
+          # (organiser Kamil Sayour; guests Samuel Toma and Tamer Deif), not
+          # inferred from the shape of an address. Override with a repository
+          # variable of the same name.
+          BOOTSTRAP_EMAILS: ${{ vars.AINEXT_BOOTSTRAP_OPERATOR_EMAILS || 'samuel.s.toma@gmail.com t.deifa@gmail.com ksayour@gmail.com' }}
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR/deploy"
+          C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
+          N=$($C exec -T db psql -U ainext -d ainext_mvp1 -tAc "select count(*) from operators")
+          # GATED ON "NONE", not merely re-run because the script is
+          # idempotent: it re-grants each of the four roles if missing, so an
+          # ungated run would silently hand back a role an operator had
+          # deliberately removed on the next deploy.
+          if [ "$N" -gt 0 ]; then
+            echo "operators already exist ($N) — not touching them"; exit 0
+          fi
+          # It SETS NO PASSWORD, on purpose: the operator obtains one through
+          # the ordinary reset flow, so no credential sits in a file, a log or a
+          # shell history. It runs inside the console container because the
+          # image already carries the script and its resolver; maint is handed
+          # in for this one command and is never part of the console's own
+          # environment.
+          # One run per address: the script upserts by lower(email), so each
+          # founder gets exactly one operator row however the list is edited.
+          for email in $BOOTSTRAP_EMAILS; do
+            $C exec -T \
+              -e DATABASE_URL_MAINT="postgres://ainext_maint:${AINEXT_MAINT_PASSWORD}@db:5432/ainext_mvp1" \
+              -e AINEXT_BOOTSTRAP_OPERATOR_EMAIL="$email" \
+              console npm run --silent bootstrap:operator
+            echo "operator ready: $email"
+          done
+          echo "Each sets their own password at https://admin-noor.reletix.com/forgot-password"
+          echo "— after passing Cloudflare Access, which must list them too."
+
+      - name: Curriculum (only when none is loaded)
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR/deploy"
+          C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
+          N=$($C exec -T db psql -U ainext -d ainext_mvp1 -tAc \
+                "select count(*) from graph_nodes where kind='course'")
+          # A course load REPLACES that course's subtree. On a database with
+          # students that would be a content refresh, which has its own manual
+          # workflow with a backup first. So this acts ONLY on a database with
+          # no course at all — which is to say, only on first boot.
+          if [ "$N" -ge 3 ]; then
+            echo "curriculum already loaded ($N courses) — not touching it"; exit 0
+          fi
+          L="$C --profile tools run --rm loader"
+          # The same four steps local-dev.sh runs, rehearsed on a scratch
+          # database before this was written. Social Studies takes two passes:
+          # social-t1 names its book but does not define it, the skeleton does,
+          # and a scoped load excludes the skeleton because social-t1
+          # supersedes it — so the skeleton goes first to register the book.
+          $L --all --course course:prep3-math-en
+          $L --all --course course:prep3-arabic-ar
+          $L seed/social-skeleton.json --course course:prep3-social-ar
+          $L --all --course course:prep3-social-ar
+          # What a student will actually get, in the log. Held questions stay
+          # held: 297 Arabic ones sit behind the sacred-content gate (ADR-0006)
+          # and nothing here promotes them.
+          $C exec -T db psql -U ainext -d ainext_mvp1 -c "
+            select ns.course_id,
+                   count(distinct ns.node_id) as objectives,
+                   count(distinct q.id) filter (where q.status='live')   as live,
+                   count(distinct q.id) filter (where q.status='review') as held
+              from node_subject ns
+              left join questions q on q.lo_id = ns.node_id
+             group by 1 order by 1"
+
       - name: Trim dangling images (untagged rebuild leftovers only — talent-safe)
         if: always()
         run: |
