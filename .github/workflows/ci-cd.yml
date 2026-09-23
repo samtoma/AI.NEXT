@@ -274,6 +274,24 @@ jobs:
             echo "::error::deploy/.env.example documents every one of them, and why."
             exit 1
           fi
+          # URL-SAFETY GUARD. Compose builds DATABASE_URL and
+          # DATABASE_URL_OPERATOR by pasting AINEXT_APP_PASSWORD and
+          # AINEXT_OPERATOR_PASSWORD into `postgres://user:PASSWORD@db/...`, and
+          # compose cannot percent-encode. A `/`, `?`, `#`, `@`, `:` or `%` in
+          # either one produces an invalid URL and an app that dies at its first
+          # query — and it only works today because those two happen not to
+          # contain one. Refuse that here, loudly and by name, rather than let a
+          # future rotation break production in a way whose error points at
+          # pg's URL parser instead of at the password.
+          for key in AINEXT_APP_PASSWORD AINEXT_OPERATOR_PASSWORD; do
+            eval "v=\${$key:-}"
+            case "$v" in
+              *[/?#@:%]*)
+                echo "::error::$key contains a character that breaks a database URL (/ ? # @ : %)."
+                echo "::error::Regenerate it URL-safe and deploy again:  openssl rand -hex 32 | gh secret set $key --repo ${{ github.repository }}"
+                exit 1 ;;
+            esac
+          done
           # The console origin is a hostname, not a secret (ADR/TAKEOVER §2.2).
           CONSOLE_URL="https://admin-noor.reletix.com"
           PUBLIC_URL="https://noor.reletix.com"
@@ -430,9 +448,17 @@ jobs:
           # environment.
           # One run per address: the script upserts by lower(email), so each
           # founder gets exactly one operator row however the list is edited.
+          # PERCENT-ENCODE the password before it goes inside a URL. The first
+          # run of this step failed with `TypeError: Invalid URL`: the role
+          # passwords were generated with `openssl rand -base64`, base64 can
+          # contain `/`, and a `/` inside the userinfo of a URL ends the
+          # authority section. Encoded with the container's own node, so this
+          # step needs nothing on the runner beyond docker.
+          MAINT_ENC=$($C exec -T -e P="$AINEXT_MAINT_PASSWORD" console \
+                        node -e 'process.stdout.write(encodeURIComponent(process.env.P))')
           for email in $BOOTSTRAP_EMAILS; do
             $C exec -T \
-              -e DATABASE_URL_MAINT="postgres://ainext_maint:${AINEXT_MAINT_PASSWORD}@db:5432/ainext_mvp1" \
+              -e DATABASE_URL_MAINT="postgres://ainext_maint:${MAINT_ENC}@db:5432/ainext_mvp1" \
               -e AINEXT_BOOTSTRAP_OPERATOR_EMAIL="$email" \
               console npm run --silent bootstrap:operator
             echo "operator ready: $email"
