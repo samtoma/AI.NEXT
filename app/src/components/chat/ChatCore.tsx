@@ -4,6 +4,7 @@ import {
   memo,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -359,7 +360,12 @@ export function ChatCore({
     questionId: string;
   } | null>(null);
   const pendingConfirmationRef = useRef(pendingConfirmation);
-  pendingConfirmationRef.current = pendingConfirmation;
+  // Mirrored at commit, not during render (react-hooks/refs): every reader
+  // is an event handler or a stream callback, all of which run after the
+  // commit that set it, and a layout effect lands before any of them.
+  useLayoutEffect(() => {
+    pendingConfirmationRef.current = pendingConfirmation;
+  }, [pendingConfirmation]);
   useEffect(() => {
     onPendingConfirmationChange?.(pendingConfirmation);
   }, [pendingConfirmation, onPendingConfirmationChange]);
@@ -955,7 +961,11 @@ export function ChatCore({
     },
     [onAttemptResult, scheduleContinue, lessonSurface, arabicUi, probingSurface]
   );
-  handleAttemptRef.current = handleAttempt;
+  // Same commit-time mirror as `pendingConfirmationRef` above; its one
+  // reader is the stream's completion callback.
+  useLayoutEffect(() => {
+    handleAttemptRef.current = handleAttempt;
+  }, [handleAttempt]);
 
   /** Widget cards report their outcome here → visible note + next AI beat. */
   const handleWidgetNote = useCallback(
@@ -1066,7 +1076,7 @@ export function ChatCore({
           }
         >
           {suggestionLayout === "stacked" && (
-            <p className="mb-1 px-1 font-display text-[0.72rem] font-bold leading-none text-ink-soft">
+            <p className="mb-1 px-1 font-display text-[0.72rem] font-bold leading-none text-[color:var(--play-text-muted)]">
               Try asking
             </p>
           )}
@@ -1076,17 +1086,21 @@ export function ChatCore({
             if (suggestionLayout === "stacked") {
               /* A suggestion, not a control-shaped primary: no outline, no
                  shadow, no amber — the composer's send keeps the one amber.
-                 Still a real <button> holding the touch floor. */
+                 Still a real <button> holding the touch floor. Its label is
+                 under 0.9rem, so `--play-text-muted`, not ink-soft.
+                 RTL: "›" is a Bidi_Mirrored character, so in a right-to-left
+                 run it already DRAWS as "‹" — rotating it too would flip it
+                 back. Only the hover nudge is physical, so it reverses. */
               return (
                 <button
                   key={label}
                   onClick={onSelect}
                   disabled={streaming}
-                  className="group flex min-h-[var(--noor-touch-min)] w-full items-center gap-2 rounded-[var(--play-radius-sm)] px-1 text-start font-display text-[0.88rem] font-bold leading-[1.4] text-ink-soft transition-colors duration-150 enabled:hover:bg-card-warm enabled:hover:text-ink disabled:opacity-40"
+                  className="group flex min-h-[var(--noor-touch-min)] w-full items-center gap-2 rounded-[var(--play-radius-sm)] px-1 text-start font-display text-[0.88rem] font-bold leading-[1.4] text-[color:var(--play-text-muted)] transition-colors duration-150 enabled:hover:bg-card-warm enabled:hover:text-ink disabled:opacity-40"
                 >
                   <span
                     aria-hidden
-                    className="shrink-0 text-ink-faint transition-transform duration-150 group-enabled:group-hover:translate-x-0.5"
+                    className="shrink-0 text-ink-faint transition-transform duration-150 group-enabled:group-hover:translate-x-0.5 rtl:group-enabled:group-hover:-translate-x-0.5"
                   >
                     ›
                   </span>
@@ -1461,7 +1475,7 @@ function SubjectHandoffCard({
           </>
         ) : (
           <>
-            That's a <strong>{label}</strong> question — want to open that subject, or stay
+            That&apos;s a <strong>{label}</strong> question — want to open that subject, or stay
             here and come back to it later?
           </>
         )}

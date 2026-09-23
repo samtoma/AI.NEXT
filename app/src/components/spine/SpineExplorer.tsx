@@ -15,8 +15,12 @@ import { QuestionModal } from "./QuestionModal";
 import { NoorPanel } from "./NoorPanel";
 import type { CiteInfo } from "@/components/chat/CitationChip";
 import { MASTERY_LEGEND, masteryStage, masteryPhrase } from "@/lib/mastery";
-import { SPINE_SUBJECT_KEYS, displayLabelOfSpineKey } from "@/lib/subjects";
-import { HONEY_BAND, STROKE_SM, cx } from "@/components/sticker";
+import {
+  SPINE_SUBJECT_KEYS,
+  displayLabelOfSpineKey,
+  spineSubjectDef,
+} from "@/lib/subjects";
+import { HEADING, HONEY_BAND, STROKE_SM, cx } from "@/components/sticker";
 
 /** "mathematics" → "Mathematics". The subject, never a unit name. */
 const titleCase = (s: string) =>
@@ -27,18 +31,19 @@ const SEGMENTED = cx(
   STROKE_SM,
   "flex gap-1.5 rounded-[var(--play-radius-pill)] bg-card p-[3px]"
 );
-/** One segment. The chosen snapshot spends the screen's one amber (Tamer's
- *  design); the subject picker's chosen segment is ink, so there is never a
- *  second amber. Both hold the touch floor (main's Play fixes). */
-const segment = (on: boolean, tone: "amber" | "ink") =>
+/** One segment. The chosen one is ink in BOTH pickers — subject and
+ *  snapshot. The snapshot toggle used to spend amber on its chosen segment
+ *  (Tamer's design), which made two selected-state styles in one header and
+ *  a second amber beside the composer's send; the send keeps the screen's one
+ *  amber. Both hold the touch floor (main's Play fixes); an unchosen label is
+ *  under 0.9rem, so it takes `--play-text-muted`, not ink-soft. */
+const segment = (on: boolean) =>
   cx(
     "inline-flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-pill)] px-3.5",
     "font-display text-[0.82rem] font-bold leading-none transition-colors duration-200",
     on
-      ? tone === "amber"
-        ? "bg-[var(--noor-action)] text-[color:var(--noor-on-action)]"
-        : "bg-ink text-paper"
-      : "text-ink-soft hover:text-ink"
+      ? "bg-ink text-paper"
+      : "text-[color:var(--play-text-muted)] hover:text-ink"
   );
 
 /**
@@ -98,6 +103,9 @@ export function SpineExplorer({ data }: { data: SpineData }) {
      dock each time — which is exactly the behaviour dragging is meant to
      escape. */
   const [panelOffset, setPanelOffset] = useState({ x: 0, y: 0 });
+  /* The topic panel's frame, shared with the map so the selected card can be
+     scrolled out from under it. */
+  const panelRef = useRef<HTMLDivElement>(null);
   // Topics Noor references while she writes: the card rings once.
   const [citedIds, setCitedIds] = useState<Set<string>>(new Set());
   const [pulses, setPulses] = useState<Record<string, number>>({});
@@ -289,10 +297,13 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         )}
       >
         <div>
-          <p className="font-display text-[0.78rem] font-bold leading-none text-ink-soft">
+          <p className="font-display text-[0.78rem] font-bold leading-none text-[color:var(--play-text-muted)]">
             {subject ? displayLabelOfSpineKey(subject) : titleCase(data.doc.subject)}
           </p>
-          <h1 className="mt-1 font-display text-[1.25rem] font-extrabold leading-[1.1] text-ink">
+          {/* main's HEADING (Baloo 800 at a 1.2 leading — Baloo is tall, and
+              the 1.1 this carried makes a wrapped title collide) at the
+              handoff's title step, 1.5rem. */}
+          <h1 className={cx(HEADING, "mt-1 text-[1.5rem]")}>
             How you&apos;re doing
           </h1>
         </div>
@@ -308,7 +319,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
                   setSelectedLoId(null);
                 }}
                 aria-pressed={subject === key}
-                className={segment(subject === key, "ink")}
+                className={segment(subject === key)}
               >
                 {displayLabelOfSpineKey(key)}
               </button>
@@ -316,7 +327,11 @@ export function SpineExplorer({ data }: { data: SpineData }) {
           </div>
         )}
 
-        <div className={SEGMENTED}>
+        <div
+          className={SEGMENTED}
+          role="group"
+          aria-label="Show your topics as of"
+        >
           {(
             [
               ["baseline", "Where you started"],
@@ -327,7 +342,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
               key={key}
               onClick={() => setAsOf(key)}
               aria-pressed={asOf === key}
-              className={segment(asOf === key, "amber")}
+              className={segment(asOf === key)}
             >
               {label}
             </button>
@@ -337,15 +352,23 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         <StageTally counts={tally} />
       </header>
 
-      <div className="flex min-h-0 flex-1">
+      {/* Below 1024 (iPad portrait, the collapse the handoff's device
+          table names) the row becomes a column: the map on top, Noor docked
+          under it as a collapsible bottom sheet — so the map gets the whole
+          width instead of losing 300px of a 744px screen to her. At 1024 and
+          up this is the two-pane row it always was. */}
+      <div className="flex min-h-0 flex-1 flex-col min-[1024px]:flex-row">
         {/* the tree — subject-wide, so it scrolls in both axes.
             `overflow-clip` is what stops a dragged topic panel from growing
             the DOCUMENT: the panel is absolutely positioned in here, and
             absolute overflow propagates up to the nearest scroll container,
             which on a page with no scroll container is the document itself.
             Drag the panel low enough and the whole app picks up a scrollbar
-            and the shell header scrolls away with it. */}
-        <div className="relative min-w-0 flex-1 overflow-clip">
+            and the shell header scrolls away with it.
+            Below 1024 it is a column too, so the topic panel can dock under
+            the map as a full-width sheet instead of floating over 70% of
+            it; at 1024 and up it is a block, exactly as before. */}
+        <div className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-clip min-[1024px]:block">
           <GraphCanvas
             los={visibleLos}
             edges={data.edges}
@@ -357,6 +380,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
             }
             citedIds={citedIds}
             pulses={pulses}
+            coverRef={panelRef}
           />
 
           {/* One topic, opened. It covers the tree it came from — never
@@ -364,6 +388,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
           {selectedLo && (
             <LoPanel
               key={selectedLo.id}
+              frameRef={panelRef}
               lo={selectedLo}
               allLos={data.los}
               questions={questionsByLo.get(selectedLo.id) ?? []}
@@ -378,6 +403,12 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         </div>
 
         <NoorPanel
+          subjectLabel={
+            subject
+              ? (spineSubjectDef(subject)?.label ??
+                displayLabelOfSpineKey(subject))
+              : titleCase(data.doc.subject)
+          }
           lookupQuestion={(qid) => questionsById.get(qid)}
           resolveCite={resolveCite}
           onCite={handleCite}
@@ -421,7 +452,10 @@ export function SpineExplorer({ data }: { data: SpineData }) {
  * difference straight out of the map — so the gaps, the type and the
  * swatches here are all a notch tighter than they would otherwise be. It is
  * still `flex-wrap` underneath: below 1024 it drops to its own line rather
- * than crushing the tabs.
+ * than crushing the tabs. The title has since stepped up to the handoff's
+ * 1.5rem (review 2026-09-23), so at exactly 1024 — and with the subject
+ * picker showing — this row may now wrap there too; that is the wrap this
+ * was built to allow, not a break.
  *
  * "Your topics", not "Across Mathematics": the subject is already named two
  * inches to the left, and saying it twice in one bar is the kind of chrome
@@ -430,7 +464,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
 function StageTally({ counts }: { counts: number[] }) {
   return (
     <div className="ms-auto">
-      <p className="font-display text-[0.72rem] font-bold leading-none text-ink-soft">
+      <p className="font-display text-[0.72rem] font-bold leading-none text-[color:var(--play-text-muted)]">
         Your topics
       </p>
       <ul className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -448,7 +482,7 @@ function StageTally({ counts }: { counts: number[] }) {
             >
               {counts[stage]}
             </span>
-            <span className="font-display text-[0.7rem] font-bold leading-none text-ink-soft">
+            <span className="font-display text-[0.7rem] font-bold leading-none text-[color:var(--play-text-muted)]">
               {masteryPhrase(stage as 0 | 1 | 2 | 3 | 4)}
             </span>
           </li>

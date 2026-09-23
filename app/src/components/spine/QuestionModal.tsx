@@ -38,16 +38,34 @@ function shortSha(sha: string) {
   return v.length > 20 ? `${v.slice(0, 12)}…${v.slice(-6)}` : v;
 }
 
+/**
+ * One question, opened from the skill map's topic panel.
+ *
+ * A STUDENT SCREEN (it is only mounted by /spine), so by default it carries
+ * nothing a student has no use for and nothing ADR-0019 keeps in the console:
+ * no review status (the provenance chip read "Generated · unchecked" with a
+ * "No human has read this item…" tooltip; the status chip printed the
+ * review state outright), and none of the engineering record — question and
+ * objective ids, the syllabus key, the extraction run and time, the source
+ * value, the SHA-256, the solution version. What stays is what she can use:
+ * the topic, the question, the answer, the worked solution, and the page of
+ * the book it came from.
+ *
+ * `debug` brings the engineering record back for an operator surface that
+ * mounts this; nothing passes it today.
+ */
 export function QuestionModal({
   question: q,
   lo,
   doc,
   onClose,
+  debug = false,
 }: {
   question: SpineQuestion;
   lo: SpineLo | null;
   doc: SpineData["doc"];
   onClose: () => void;
+  debug?: boolean;
 }) {
   const [revealed, setRevealed] = useState(1);
   const total = q.solution.length;
@@ -80,7 +98,9 @@ export function QuestionModal({
         {/* header */}
         <div className={cx(HONEY_BAND, "sticky top-0 z-10 flex items-center justify-between gap-3 px-6 py-3.5")}>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono text-[11px] text-ink-soft">{q.id}</span>
+            {debug && (
+              <span className="font-mono text-[11px] text-ink-soft">{q.id}</span>
+            )}
             <span
               className={cx(
                 STROKE_WIDTH_SM,
@@ -90,15 +110,24 @@ export function QuestionModal({
             >
               {q.tier}
             </span>
-            <span className="chip border-accent/30 bg-accent-wash px-1.5! py-px! text-[9px]! text-accent-deep">
-              status · {q.status}
-            </span>
-            {/* Same chip as the list this modal was opened from, so provenance
-                does not disappear the moment you look closer at an item. */}
-            <ProvenanceBadge question={q.provenance} />
-            <span className="font-mono text-[10px] text-ink-faint">
-              {lo?.syllabusRef} · {q.loId}
-            </span>
+            {debug ? (
+              <>
+                <span className="chip border-accent/30 bg-accent-wash px-1.5! py-px! text-[9px]! text-accent-deep">
+                  status · {q.status}
+                </span>
+                <ProvenanceBadge question={q.provenance} />
+                <span className="font-mono text-[10px] text-ink-faint">
+                  {lo?.syllabusRef} · {q.loId}
+                </span>
+              </>
+            ) : (
+              lo && (
+                // The topic, in the words its card uses — never its key.
+                <span className="font-display text-[0.95rem] font-bold leading-[1.3] text-ink">
+                  {lo.label}
+                </span>
+              )
+            )}
           </div>
           <button
             onClick={onClose}
@@ -130,14 +159,14 @@ export function QuestionModal({
                     className={cx(
                       STROKE_WIDTH,
                       "flex items-center gap-3 rounded-[var(--play-radius)] px-3.5 py-2.5 text-[14px] sticker-shadow-sm",
-                      correct ? VERDICT_INK.correct : "border-ink bg-card text-ink-soft"
+                      correct ? VERDICT_INK.correct : "border-ink bg-card text-[color:var(--play-text-muted)]"
                     )}
                   >
                     <span
                       className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] font-mono text-[11px] font-semibold ${
                         correct
                           ? "bg-accent text-paper"
-                          : "bg-ink/8 text-ink-soft"
+                          : "bg-ink/8 text-[color:var(--play-text-muted)]"
                       }`}
                     >
                       {c.key}
@@ -176,7 +205,9 @@ export function QuestionModal({
           <div>
             <div className="mb-3 flex items-center justify-between">
               <p className="rule-label">
-                Canonical solution · v{q.solutionVersion}
+                {debug
+                  ? `Canonical solution · v${q.solutionVersion}`
+                  : "Worked solution"}
               </p>
             </div>
             <ol className="space-y-2.5">
@@ -251,7 +282,7 @@ export function QuestionModal({
                   <p className="font-display text-[15px] font-bold leading-snug text-ink">
                     {doc.title}
                   </p>
-                  <p className="mt-1 text-[12px] leading-relaxed text-ink-soft">
+                  <p className="mt-1 text-[12px] leading-relaxed text-[color:var(--play-text-muted)]">
                     {doc.publisher} · edition {doc.edition}
                   </p>
                   {q.provenance.sourceNote && (
@@ -262,6 +293,9 @@ export function QuestionModal({
                 </div>
               </div>
 
+              {/* The engineering record — operator surfaces only. The origin
+                  it also listed is already the badge above. */}
+              {debug && (
               <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 border-t border-line-soft pt-3 font-mono text-[11px]">
                 <Field
                   k="extraction run"
@@ -282,6 +316,7 @@ export function QuestionModal({
                 <Field k="source value" v={q.provenance.source} />
                 <Field k="sha-256" v={shortSha(q.provenance.sourceSha256)} />
               </div>
+              )}
             </div>
           </div>
         </div>

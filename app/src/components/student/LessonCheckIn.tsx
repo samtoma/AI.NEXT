@@ -19,6 +19,7 @@ import {
   STICKER_PANEL,
   STROKE,
   STROKE_SM,
+  STROKE_WIDTH_SM,
   cx,
 } from "@/components/sticker";
 
@@ -158,9 +159,11 @@ function PlayCheckIn({
       <main className="mx-auto flex w-full flex-1 flex-col gap-5 px-4 py-6 min-[900px]:px-8 min-[900px]:py-7 min-[1280px]:max-w-[860px]">
         <div className="flex items-center gap-3.5">
           {/* The companion is present, and carried by motion alone — bob is
-              idle and the only infinite loop the system permits. */}
-          <span className={cx(STROKE, "anim-bob flex h-14 w-14 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-card-warm sticker-shadow")}>
-            <NoorMark className="h-[34px] w-[34px]" />
+              idle and the only infinite loop the system permits. 44px, the
+              handoff's header/panel badge size (28 inline, 96 celebrating),
+              with the mark at NoorPanel's 28 inside it. */}
+          <span className={cx(STROKE, "anim-bob flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-card-warm sticker-shadow")}>
+            <NoorMark className="h-7 w-7" />
           </span>
           <h1 className={cx(HEADING, "text-[1.75rem] min-[1024px]:text-[2rem] min-[1280px]:text-[2.4rem]")}>
             What do you want to work on today?
@@ -203,9 +206,12 @@ function PlayCheckIn({
           <Link
             href={`/student?lesson=${encodeURIComponent(justFinished.slug)}`}
             prefetch={false}
+            // `play-pressable-sm` (globals.css, PLAY FIXES): the base hover
+            // lifts every pressable to a 5px shadow, which put this row a
+            // pixel ABOVE the 4px card it is meant to sit a tier below.
             className={cx(
               STROKE_SM,
-              "play-pressable sticker-shadow-sm flex min-h-[var(--noor-touch-min)] shrink-0 items-center gap-3 rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-2"
+              "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] shrink-0 items-center gap-3 rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-2"
             )}
           >
             <span
@@ -225,7 +231,7 @@ function PlayCheckIn({
                 {justFinished.title}
               </span>
             </span>
-            <span className="shrink-0 font-display text-[0.8rem] font-bold text-ink-soft">
+            <span className="shrink-0 font-display text-[0.8rem] font-bold text-[color:var(--play-text-muted)]">
               Revisit
             </span>
           </Link>
@@ -272,14 +278,31 @@ function PlayCheckIn({
               </p>
             </div>
 
-            {/* Fill only. The band name that used to sit under this ("FAMILIAR")
-                is gone: the ramp plus the one named sub-skill below is the
-                whole progress story, and no digit, grade or stage name is
-                printed anywhere on this page. Colour is still not the only
-                carrier — every segment keeps its ink outline, so lit-vs-unlit
-                survives greyscale as fill-vs-empty, and the component's
-                aria-label states the stage in words for the screen reader. */}
-            <MasteryFill stage={masteryStage} height={13} gap={5} />
+            {/* The fill and its band, in words — FR-1003: "named bands
+                alongside the value, never colour alone". No digit, grade or
+                percentage is printed anywhere on this page (feedback #42),
+                but the band word is not one of those: it is the one
+                number-free way to say where she is, and the trial merge had
+                dropped it. It is the skill map's own phrase for the stage
+                (`masteryPhrase`), so this card and the map name a stage the
+                same way. Every segment keeps its ink outline, so lit-vs-unlit
+                also survives greyscale as fill-vs-empty. The printed word is
+                aria-hidden because the fill's own `aria-label` already says
+                it — once is enough for a screen reader. */}
+            <div className="flex items-center gap-3">
+              <MasteryFill
+                stage={masteryStage}
+                height={13}
+                gap={5}
+                className="min-w-0 flex-1"
+              />
+              <span
+                aria-hidden
+                className="shrink-0 whitespace-nowrap font-display text-[0.85rem] font-bold leading-none text-[color:var(--play-text-muted)]"
+              >
+                {masteryPhrase(masteryStage)}
+              </span>
+            </div>
 
             {/* The one gap. Naming a single sub-skill is the actionable part;
                 the closing clause is what stops the sentence reading as bad
@@ -383,8 +406,13 @@ function PlayCheckIn({
             were: "Pick something else" is how a student who is NOT on their
             school's pace navigates the whole product, and a dotted underline
             at the bottom of the page was too small a door for that. Still a
-            clear tier below the two rows above — thinner stroke, smaller
-            shadow, no fill. */}
+            clear tier below the two rows above: the thin 2.5px stroke
+            against their 3px, the small 3px sticker shadow against their
+            5px, and never the amber fill. They wear the Revisit row's
+            anatomy (`sticker-shadow-sm play-pressable`), not `checkin-press`
+            — that class carries the rows' own 5px shadow, which is what
+            made the old "smaller shadow" here untrue, and it outranked the
+            amber focus ring. */}
         <div className="mt-auto flex flex-wrap items-start gap-3 pt-1.5">
           {/* `w-fit` closed so the trigger stays a button beside its
               neighbour; `open:w-full` so the panel underneath gets the whole
@@ -393,7 +421,7 @@ function PlayCheckIn({
               full width and shoved "Just practise" onto its own line for no
               reason. */}
           <details className="group w-fit open:w-full">
-            <summary className={cx(STROKE_SM, "checkin-press flex min-h-[var(--noor-touch-min)] w-fit cursor-pointer list-none items-center gap-2 rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden")}>
+            <summary className={cx(STROKE_SM, "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] w-fit cursor-pointer list-none items-center gap-2 rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden")}>
               Pick something else
               <span
                 aria-hidden
@@ -404,8 +432,8 @@ function PlayCheckIn({
             </summary>
 
             {/* Open, this is a map of the course, not a list of links. Every
-                row carries how solid the student is on it â a unit ramp with
-                its stage in words, and a dot per lesson â because the whole
+                row carries how solid the student is on it — a unit ramp with
+                its stage in words, and a dot per lesson — because the whole
                 question being answered here is "what should I do instead?"
                 and bare lesson numbers cannot answer it. The dots and the
                 ramp read off the SAME banding the card above uses, so the
@@ -423,7 +451,7 @@ function PlayCheckIn({
                     className={cx(STROKE_SM, "size-3 rounded-[var(--play-radius-pill)]")}
                     style={{ background: MASTERY_LEGEND[3].color }}
                   />
-                  <span className="font-read text-[0.78rem] leading-none text-ink-soft">
+                  <span className="font-read text-[0.78rem] leading-none text-[color:var(--play-text-muted)]">
                     = how solid you are on it
                   </span>
                 </span>
@@ -433,7 +461,7 @@ function PlayCheckIn({
                 {modules.map((m, mi) => {
                   const geo = m.id.startsWith("module:geo");
                   const term = termOfModule(m.id);
-                  // "Unit 1 â Relations and Functions" arrives as one string;
+                  // "Unit 1 — Relations and Functions" arrives as one string;
                   // the design wants the number as a mono eyebrow and the
                   // name as the row title, so split on the em dash and fall
                   // back to the whole label when there isn't one.
@@ -458,7 +486,7 @@ function PlayCheckIn({
                       {/* No unit-level ramp. It aggregated the very lessons
                           listed directly underneath it, so the row said the
                           same thing twice and the louder copy was the vaguer
-                          one â a unit average cannot tell you WHICH lesson is
+                          one — a unit average cannot tell you WHICH lesson is
                           weak, which is the only question this list exists to
                           answer. The dots do, one per lesson. */}
                       <div className="flex flex-col gap-0.5">
@@ -475,6 +503,11 @@ function PlayCheckIn({
                         {m.lessons.map((l) => {
                           const selected = l.slug === lesson.slug;
                           const stage = deriveMasteryStage(l.los);
+                          // What the chip SHOWS, so the accessible name
+                          // starts with the visible label (WCAG 2.5.3) — it
+                          // used to drop "Geo", and "Unit 4" exists in both
+                          // terms.
+                          const visible = `${geo ? "Geo " : ""}${l.ref.replace(/^Lesson /, "")}`;
                           return (
                             <Link
                               key={l.slug}
@@ -482,7 +515,8 @@ function PlayCheckIn({
                               scroll={false}
                               prefetch={false}
                               aria-current={selected ? "true" : undefined}
-                              aria-label={`${l.ref} — ${masteryPhrase(stage)}`}
+                              aria-label={`${visible} — ${masteryPhrase(stage)}`}
+                              title={`${l.title} — ${masteryPhrase(stage)}`}
                               className={cx(
                                 "flex min-h-[var(--noor-touch-min)] items-center gap-2 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-solid px-3.5 font-display text-[0.85rem] leading-none transition-colors",
                                 selected
@@ -490,21 +524,25 @@ function PlayCheckIn({
                                   : "border-[color:var(--play-inactive-border)] bg-card font-semibold text-ink hover:border-ink"
                               )}
                             >
+                              {/* The legend swatch's anatomy: the thin
+                                  stroke round the ramp colour. Unoutlined, the
+                                  dot was colour-only and under 3:1 against
+                                  white on four of five stages; outlined, it
+                                  reads as filled-vs-empty like the fill
+                                  segments do, and not-started can be the
+                                  ramp's own step 0 instead of a borrowed
+                                  grey. The band is also in the chip's name
+                                  and `title`. Paper outline on the selected
+                                  (ink) chip, where an ink one would vanish. */}
                               <span
                                 aria-hidden
-                                className="size-3 shrink-0 rounded-[var(--play-radius-pill)]"
+                                className={cx(
+                                  STROKE_WIDTH_SM,
+                                  "size-3 shrink-0 rounded-[var(--play-radius-pill)]",
+                                  selected ? "border-paper" : "border-ink"
+                                )}
                                 style={{
-                                  // Not-started takes the disabled border
-                                  // colour, not the ramp's own #EFEEF6: at
-                                  // 9px on white that grey is invisible, and
-                                  // "no dot" is not one of the states.
-                                  background:
-                                    stage === 0
-                                      ? "var(--play-disabled-border)"
-                                      : MASTERY_LEGEND[stage].color,
-                                  border: selected
-                                    ? "var(--play-stroke-sm) solid var(--paper)"
-                                    : undefined,
+                                  background: MASTERY_LEGEND[stage].color,
                                 }}
                               />
                               {geo && <span>Geo</span>}
@@ -525,7 +563,7 @@ function PlayCheckIn({
           <Link
             href="/student?mode=practice"
             prefetch={false}
-            className={cx(STROKE_SM, "checkin-press flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink")}
+            className={cx(STROKE_SM, "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink")}
           >
             Just practise — today&apos;s plan
           </Link>
@@ -583,7 +621,9 @@ function ActionRow({
       </span>
       <span
         className={`whitespace-nowrap font-display text-[0.85rem] font-bold leading-none ${
-          active ? "text-[var(--play-text-on-amber-s)]" : "text-ink-soft"
+          active
+            ? "text-[var(--play-text-on-amber-s)]"
+            : "text-[color:var(--play-text-muted)]"
         }`}
       >
         <span dir="ltr">{minutes}</span> min
@@ -598,15 +638,14 @@ function ActionRow({
   );
 }
 
-/* Every target on this page is >=48px, which is the build spec's floor and
-   NOT what its mockup draws: the mockup has the two change-of-mind buttons
-   at 46 and the picker's lesson chips at 40. A tap-target minimum is a
-   floor rather than a taste call — the design system's own number is 52,
-   stricter still — so the spec wins over the drawing here, where on the
-   bordered-secondary-button question it went the other way. 37 of the 40
-   targets on this page were under it.
-   On main (trial merge) the floor is the design system's own 52px,
-   `--noor-touch-min`, which main's Play pass applied everywhere else. */
+/* Every target on this page holds the Play floor: 52px, `--noor-touch-min`
+   ("not 44 — fast, imprecise taps, holds on desktop too"), which main's Play
+   pass applied everywhere else. The branch this card came from used the
+   build spec's 48px floor, and its mockup drew less still — the two
+   change-of-mind buttons at 46 and the picker's lesson chips at 40. A
+   tap-target minimum is a floor rather than a taste call, so the design
+   system's number wins over both the spec and the drawing; 37 of the 40
+   targets on this page were under 48 before it. */
 
 /**
  * Which term a module belongs to, and its label without the term in it.

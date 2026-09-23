@@ -71,9 +71,24 @@ const TIER_LABEL: Record<Tier, string> = {
  * prerequisites you opened the panel to go and look at. `offset` lives in
  * the parent rather than here so the position survives clicking through to
  * another topic: move it once, and it stays where you put it for the rest
- * of the session.
+ * of the session. (The map also scrolls the opened card out from under it —
+ * GraphCanvas `keepClear` — so dragging is a convenience, not the only way
+ * to see what is underneath.)
+ *
+ * Dragging is never the ONLY way to move it (WCAG 2.5.7): once moved, a Dock
+ * button in the header puts it back with one press or one key.
+ *
+ * KEYBOARD: opening moves focus to the panel's heading; Escape (or Close)
+ * closes it and hands focus back to whatever opened it — the card, or the
+ * citation in Noor's answer — falling back to the topic's card on the map.
+ *
+ * BELOW 1024px (iPad portrait) it is not a floating panel at all: it docks
+ * under the map as a full-width sheet, in flow, so it shortens the map
+ * rather than covering 70% of it. No drag and no offset there — the offset a
+ * wider window left behind is kept, and applies again at 1024 and up.
  */
 export function LoPanel({
+  frameRef,
   lo,
   allLos,
   questions,
@@ -84,6 +99,9 @@ export function LoPanel({
   onSelectLo,
   onOpenQuestion,
 }: {
+  /** the positioned frame — owned by the parent, which shares it with the
+   *  map so the selected card can be scrolled clear of the panel */
+  frameRef: React.RefObject<HTMLDivElement | null>;
   lo: SpineLo;
   allLos: SpineLo[];
   questions: SpineQuestion[];
@@ -95,7 +113,41 @@ export function LoPanel({
   onSelectLo: (id: string) => void;
   onOpenQuestion: (q: SpineQuestion) => void;
 }) {
-  const frameRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  /** The control that opened the panel — focus goes back there on close. */
+  const returnTo = useRef<HTMLElement | null>(null);
+
+  // Focus follows the panel open. `preventScroll`: the heading is in the
+  // sticky band, and the map has its own opinion about what to scroll.
+  // Keyed by topic id in the parent, so this runs on every click-through too.
+  useEffect(() => {
+    const active = document.activeElement;
+    returnTo.current =
+      active instanceof HTMLElement &&
+      active !== document.body &&
+      !frameRef.current?.contains(active)
+        ? active
+        : null;
+    headingRef.current?.focus({ preventScroll: true });
+  }, [frameRef]);
+
+  /** Close, handing focus back: to the opener if it is still on the page,
+   *  else to this topic's card on the map. */
+  const close = () => {
+    const frame = frameRef.current;
+    let back = returnTo.current?.isConnected ? returnTo.current : null;
+    if (!back && frame?.parentElement) {
+      back =
+        Array.from(
+          frame.parentElement.querySelectorAll<HTMLElement>(
+            `button[data-lo-id="${CSS.escape(lo.id)}"]`
+          )
+        ).find((el) => !frame.contains(el)) ?? null;
+    }
+    back?.focus();
+    onClose();
+  };
+
   /** Where the drag started, plus the panel's position at zero offset —
    *  measured once on pointerdown so the clamp never has to reason about a
    *  rect that is moving underneath it. */
@@ -115,6 +167,8 @@ export function LoPanel({
     // drag that starts on it captures the pointer and swallows the click —
     // the button would look perfectly normal and simply never navigate.
     if ((e.target as HTMLElement).closest("button, a")) return;
+    // Docked as a sheet below 1024: nothing to drag.
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
     const el = frameRef.current;
     const parent = el?.offsetParent as HTMLElement | null;
     if (!el || !parent) return;
@@ -160,6 +214,7 @@ export function LoPanel({
   const prereqs = lo.prereqIds
     .map((pid) => byId.get(pid))
     .filter((p): p is SpineLo => Boolean(p));
+  const moved = offset.x !== 0 || offset.y !== 0;
 
   return (
     /* Two elements, and they have to stay two.
@@ -169,15 +224,30 @@ export function LoPanel({
        wins and keeps winning: it settles on `scale(1)` and holds it
        forever, so the translate silently never applies and the panel cannot
        be moved at all. The positioned wrapper carries the drag; the inner
-       card carries the reveal. */
+       card carries the reveal.
+       The drag offset rides in two custom properties and is applied only at
+       1024 and up; below that the frame is an in-flow sheet under the map. */
     <div
       ref={frameRef}
-      className="absolute z-10 w-[360px]"
-      style={{
-        insetBlock: 16,
-        insetInlineEnd: 18,
-        transform: `translate(${offset.x}px, ${offset.y}px)`,
+      onKeyDown={(e) => {
+        if (e.key !== "Escape" || e.defaultPrevented) return;
+        // A modal opened from inside the panel — the question pop-up, a
+        // figure — owns Escape; it closes first, and the panel stays.
+        if (document.querySelector('[aria-modal="true"]')) return;
+        e.preventDefault();
+        close();
       }}
+      className={cx(
+        "relative z-10 h-[55%] w-full shrink-0 px-4 pb-4 pt-2",
+        "min-[1024px]:absolute min-[1024px]:inset-y-[16px] min-[1024px]:end-[18px] min-[1024px]:h-auto min-[1024px]:w-[360px] min-[1024px]:p-0",
+        "min-[1024px]:[transform:translate(var(--lo-dx),var(--lo-dy))]"
+      )}
+      style={
+        {
+          "--lo-dx": `${offset.x}px`,
+          "--lo-dy": `${offset.y}px`,
+        } as React.CSSProperties
+      }
     >
       <aside
         data-lo-id={lo.id}
@@ -191,15 +261,15 @@ export function LoPanel({
           onPointerMove={onPointerMove}
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
+          /* `touch-none` — without it a touch drag scrolls the panel instead
+             of moving it, and iPad Safari is a hard device target. Only
+             where there is a drag: on the sheet below 1024 it would just
+             stop the header scrolling the panel. */
           className={cx(
             HONEY_BAND,
-            "sticky top-0 z-10 flex cursor-grab items-center justify-between gap-2.5 px-4 py-2.5 active:cursor-grabbing"
+            "sticky top-0 z-10 flex items-center justify-between gap-2.5 px-4 py-2.5",
+            "min-[1024px]:cursor-grab min-[1024px]:touch-none min-[1024px]:active:cursor-grabbing"
           )}
-          style={{
-            // Without this a touch drag scrolls the panel instead of moving it,
-            // and iPad Safari is a hard device target.
-            touchAction: "none",
-          }}
         >
           {/* Clamped, so the header is the same height on every topic.
               Unclamped it is not: adding the Study pill took ~140px off the
@@ -208,8 +278,10 @@ export function LoPanel({
               that changed was which topic you clicked. Two lines and the
               full label stays in `title` for the rest. */}
           <h2
+            ref={headingRef}
+            tabIndex={-1}
             title={lo.label}
-            className="line-clamp-2 min-w-0 font-display text-[1rem] font-extrabold leading-[1.25] text-ink"
+            className="line-clamp-2 min-w-0 rounded-[var(--play-radius-sm)] font-display text-[1rem] font-extrabold leading-[1.25] text-ink"
           >
             {lo.label}
           </h2>
@@ -220,11 +292,10 @@ export function LoPanel({
 
                 Ink, not amber: the design system keeps primary buttons on
                 the ink CTA surface and reserves amber for one accent per
-                screen, which the active snapshot tab and the composer's
-                send circle already spend. It sits in the sticky header so
-                it survives scrolling the panel, and inside the drag handle,
-                where `onPointerDown` already steps aside for anything that
-                is a control. */}
+                screen, which the composer's send circle already spends. It
+                sits in the sticky header so it survives scrolling the panel,
+                and inside the drag handle, where `onPointerDown` already
+                steps aside for anything that is a control. */}
             <Link
               href={learnHrefForLo(lo.id)}
               className={cx(
@@ -234,7 +305,35 @@ export function LoPanel({
             >
               Study
             </Link>
-            <button onClick={onClose} aria-label="Close" className={ICON_BUTTON}>
+            {/* The keyboard- and tap-operable alternative to dragging (WCAG
+                2.5.7): there once the panel has been moved, and only where
+                it can be (1024 and up). */}
+            {moved && (
+              <button
+                onClick={() => onOffsetChange({ x: 0, y: 0 })}
+                aria-label="Dock the panel"
+                title="Dock the panel"
+                className={cx(ICON_BUTTON, "max-[1024px]:hidden")}
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  aria-hidden
+                  className="rtl:-scale-x-100"
+                >
+                  <path
+                    d="M12 2v10M2 7h7M6 4l3 3-3 3"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            )}
+            <button onClick={close} aria-label="Close" className={ICON_BUTTON}>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path
                   d="M2 2l10 10M12 2L2 12"
@@ -270,13 +369,13 @@ export function LoPanel({
                     className={`w-[104px] shrink-0 font-display text-[0.78rem] leading-none ${
                       asOf === key
                         ? "font-extrabold text-ink"
-                        : "font-bold text-ink-soft"
+                        : "font-bold text-[color:var(--play-text-muted)]"
                     }`}
                   >
                     {label}
                   </span>
                   <MasteryFill stage={stage} className="w-[76px] shrink-0" />
-                  <span className="font-display text-[0.78rem] font-bold leading-none text-ink-soft">
+                  <span className="font-display text-[0.78rem] font-bold leading-none text-[color:var(--play-text-muted)]">
                     {masteryPhrase(stage)}
                   </span>
                 </div>
@@ -313,10 +412,12 @@ export function LoPanel({
                     <span className="flex-1 truncate font-display text-[0.82rem] font-bold text-ink">
                       {p.label}
                     </span>
+                    {/* The fill's own default height (10) and a 64px width: at
+                        height 5 two 2.5px outlines left 0px of fill and the
+                        bar drew as a solid ink pill whatever the stage. */}
                     <MasteryFill
                       stage={stageOf(p.current)}
-                      height={5}
-                      className="w-[44px] shrink-0"
+                      className="w-16 shrink-0"
                     />
                   </button>
                 ))}
@@ -334,7 +435,7 @@ export function LoPanel({
                 if (qs.length === 0) return null;
                 return (
                   <div key={tier}>
-                    <span className="font-display text-[0.72rem] font-bold text-ink-soft">
+                    <span className="font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]">
                       {TIER_LABEL[tier]}
                     </span>
                     <div className="mt-1.5 space-y-2">
@@ -349,7 +450,7 @@ export function LoPanel({
                             <TeX text={q.stem} />
                           </p>
                           {q.provenance.sourcePage !== null && (
-                            <span className="mt-1 block font-display text-[0.7rem] font-bold text-ink-soft">
+                            <span className="mt-1 block font-display text-[0.7rem] font-bold text-[color:var(--play-text-muted)]">
                               Book p.
                               <span dir="ltr">{q.provenance.sourcePage}</span>
                             </span>
@@ -415,7 +516,7 @@ function VisualsStrip({ loId }: { loId: string }) {
           >
             <Visual kind={v.kind} spec={v.spec} />
             {v.sourcePage !== null && (
-              <span className="mt-1 block font-display text-[0.68rem] font-bold text-ink-soft">
+              <span className="mt-1 block font-display text-[0.68rem] font-bold text-[color:var(--play-text-muted)]">
                 Book p.<span dir="ltr">{v.sourcePage}</span>
               </span>
             )}

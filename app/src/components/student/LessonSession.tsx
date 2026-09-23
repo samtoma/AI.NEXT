@@ -18,6 +18,7 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
+import { probingActive } from "@/lib/socratic-probing";
 import { addressForms } from "@/lib/address";
 import { track } from "@/lib/ga";
 import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
@@ -1290,7 +1291,13 @@ export function LessonSession({
                 vizMeta={vizMeta}
                 collapsed={!sheetOpen}
                 onToggleCollapsed={() => setSheetOpen((o) => !o)}
-                probing={mode === "learn"}
+                /* The same switch ChatCore reads for this surface
+                   (lib/socratic-probing.ts), never the mode alone: a board
+                   card that withheld its reveal while the chat beside it
+                   did not would be two rules for one wrong answer. */
+                probing={probingActive(
+                  mode === "learn" ? "lesson_learn" : "lesson_review"
+                )}
                 pendingLoId={pendingConfirmation?.loId ?? null}
                 pendingAttemptId={pendingConfirmation?.lastAttemptId ?? null}
                 pendingWrongCount={pendingConfirmation?.wrongCount ?? null}

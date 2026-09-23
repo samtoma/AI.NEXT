@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { SpineLo } from "@/lib/types";
 import { spineSubjectDef } from "@/lib/subjects";
 import { masteryStage, masteryPhrase } from "@/lib/mastery";
 import { MasteryFill } from "@/components/MasteryFill";
+import { cx } from "@/components/sticker";
 
 export type AsOf = "baseline" | "today";
 
@@ -220,6 +221,7 @@ export function GraphCanvas({
   onSelect,
   citedIds,
   pulses,
+  coverRef,
 }: {
   los: SpineLo[];
   edges: { src: string; dst: string }[];
@@ -231,9 +233,81 @@ export function GraphCanvas({
   citedIds?: Set<string>;
   /** id → nonce; bumping the nonce re-fires the ring */
   pulses?: Record<string, number>;
+  /** the topic panel's frame, which floats over the map at 1024px and up —
+   *  the selected (or keyboard-focused) card is scrolled clear of it */
+  coverRef?: React.RefObject<HTMLElement | null>;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(1200);
+
+  /**
+   * Scroll the map so `card` is inside the part of it nothing covers.
+   *
+   * At 1024px and up the topic panel floats over the map's inline end, and
+   * the card you just opened is very often the one underneath it — as are
+   * the prerequisites you opened it to go and find. Below 1024 the panel is
+   * docked under the map instead, which covers nothing but shortens the map,
+   * so the card can end up below the fold. Both are the same question: where
+   * is the visible, uncovered part of the map, and is the card in it?
+   *
+   * "Where feasible": a card at the far edge of a map that cannot scroll any
+   * further stays where it is, and the panel is draggable (and dockable) for
+   * exactly that case.
+   */
+  const keepClear = useCallback(
+    (card: HTMLElement, smooth: boolean) => {
+      const scroller = ref.current;
+      if (!scroller) return;
+      const view = scroller.getBoundingClientRect();
+      let left = view.left + PAD;
+      let right = view.left + scroller.clientWidth - PAD;
+      const top = view.top + PAD;
+      let bottom = view.top + scroller.clientHeight - PAD;
+      const cover = coverRef?.current?.getBoundingClientRect();
+      if (
+        cover &&
+        cover.width > 0 &&
+        cover.left < right &&
+        cover.right > left &&
+        cover.top < bottom &&
+        cover.bottom > top
+      ) {
+        if (cover.height >= (bottom - top) * 0.6) {
+          // A side panel: keep whichever side of it is wider.
+          if (cover.left - left >= right - cover.right) right = cover.left - PAD;
+          else left = cover.right + PAD;
+        } else if (cover.top > top) {
+          bottom = cover.top - PAD;
+        }
+      }
+      const c = card.getBoundingClientRect();
+      let dx = 0;
+      let dy = 0;
+      if (c.right > right) dx = c.right - right;
+      if (c.left - dx < left) dx = c.left - left;
+      if (c.bottom > bottom) dy = c.bottom - bottom;
+      if (c.top - dy < top) dy = c.top - top;
+      if (dx === 0 && dy === 0) return;
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      scroller.scrollBy({
+        left: dx,
+        top: dy,
+        behavior: smooth && !reduce ? "smooth" : "auto",
+      });
+    },
+    [coverRef]
+  );
+
+  // On selection, after the panel for it has mounted (same commit).
+  useEffect(() => {
+    if (selectedLoId === null) return;
+    const card = ref.current?.querySelector<HTMLElement>(
+      `button[data-lo-id="${CSS.escape(selectedLoId)}"]`
+    );
+    if (card) keepClear(card, true);
+  }, [selectedLoId, keepClear]);
 
   useEffect(() => {
     const el = ref.current;
@@ -312,7 +386,10 @@ export function GraphCanvas({
   };
 
   return (
-    <div ref={ref} className="thin-scroll h-full overflow-auto p-4">
+    /* `min-h-0 flex-1` only bite below 1024, where the map's container is a
+       column with the docked topic sheet under it; at 1024 and up the
+       container is a block and `h-full` is what sizes this, as before. */
+    <div ref={ref} className="thin-scroll h-full min-h-0 flex-1 overflow-auto p-4">
       <div className="relative" style={{ width: canvasW, height: canvasH }}>
         {/* edges — plain lines, no arrowheads, no direction labels */}
         <svg
@@ -377,6 +454,15 @@ export function GraphCanvas({
                  DO NOT #2). */
               data-lo-id={lo.id}
               onClick={() => onSelect(lo.id)}
+              /* Keyboard focus only (`:focus-visible`): a mouse press also
+                 focuses the button in Chromium, and scrolling the card out
+                 from under the pointer between mousedown and mouseup would
+                 eat the click. */
+              onFocus={(e) => {
+                if (e.currentTarget.matches(":focus-visible"))
+                  keepClear(e.currentTarget, false);
+              }}
+              aria-pressed={selected}
               aria-label={`${lo.label} — ${masteryPhrase(stage)}, ${count} questions`}
               /* `items-stretch` is NOT redundant with the flex default.
                  WebKit's UA stylesheet overrides `align-items` on a <button>,
@@ -389,33 +475,48 @@ export function GraphCanvas({
                  looks correct, which is exactly how this shipped: iPad
                  Safari is a hard device target (constitution, devices), and
                  it is the browser that gets it wrong. */
-              className="group play-pressable absolute flex flex-col items-stretch gap-2 text-start"
+              className={cx(
+                "group play-pressable map-card absolute flex flex-col items-stretch gap-2 text-start",
+                // Sticker treatment is what "you have started this" looks
+                // like: an unlit card is a flat outline with no shadow, and
+                // the first lit segment buys the ink edge and the hard
+                // offset. Selection lifts the same sticker; it never
+                // introduces a second visual language.
+                //
+                // CLASSES, never an inline `box-shadow` (main's 114214e): an
+                // inline shadow outranks both the amber `:focus-visible` ring
+                // and `.play-pressable:active`, so a keyboard-focused card
+                // showed no focus and a pressed one never collapsed. The
+                // transition lives on `.map-card` (globals.css, PLAY FIXES)
+                // for the same reason — inline, it replaced the press's own
+                // timing and ignored reduced motion.
+                selected
+                  ? "sticker-shadow"
+                  : lit || cited
+                    ? "sticker-shadow-sm"
+                    : undefined
+              )}
               style={{
                 left: x,
                 top: y,
                 width: nodeW,
                 height: NODE_H,
                 padding: "12px 14px",
-                borderRadius: "var(--play-radius-sm)",
+                // a small card, so the card radius — not the chip's 14
+                borderRadius: "var(--play-radius)",
                 border: `var(--play-stroke-sm) solid ${
                   lit || selected || cited ? "var(--ink)" : UNLIT_BORDER
                 }`,
                 background: STAGE_WASH[stage],
-                // Sticker treatment is what "you have started this" looks
-                // like: an unlit card is a flat outline with no shadow, and
-                // the first lit segment buys the ink edge and the hard
-                // offset. Selection lifts the same sticker; it never
-                // introduces a second visual language.
-                boxShadow: selected
-                  ? "var(--play-shadow)"
-                  : lit || cited
-                    ? "var(--play-shadow-sm)"
-                    : "none",
                 opacity: dim && !cited ? 0.45 : 1,
                 zIndex: selected ? 4 : 2,
-                transition:
-                  "opacity 0.35s ease, box-shadow 0.15s ease, background 0.5s ease, border-color 0.5s ease",
-                animation: `pop-in 0.4s cubic-bezier(0.22,1,0.36,1) ${Math.min(i, 24) * 30}ms both`,
+                // `backwards`, not `both`: a finished animation that FILLS
+                // keeps its last keyframe, and animated values outrank every
+                // normal declaration — so `both` pinned `transform` (the
+                // press never moved the card) and `opacity: 1` (the dim above
+                // never applied). `backwards` still holds the 0% frame
+                // through each card's stagger delay, then lets go.
+                animation: `pop-in 0.4s cubic-bezier(0.22,1,0.36,1) ${Math.min(i, 24) * 30}ms backwards`,
               }}
             >
               {pulseNonce !== undefined && (
@@ -442,10 +543,16 @@ export function GraphCanvas({
                   width means the bar is correct even if something later
                   re-centres or re-starts this card's cross axis. */}
               <MasteryFill stage={stage} className="w-full" />
-              {/* The numeral sits in its own span so an Arabic build can wrap
-                  it dir="ltr" without touching the sentence around it. */}
-              <span className="font-read text-[0.76rem] leading-none text-ink-soft">
-                <span dir="ltr">{count}</span> questions
+              {/* The band word first (FR-1003: a named band beside the fill,
+                  never colour alone), then the count. The numeral sits in its
+                  own span so an Arabic build can wrap it dir="ltr" without
+                  touching the sentence around it. `--play-text-muted`, not
+                  ink-soft: at 0.76rem ink-soft fell under AA on two of the
+                  stage washes. `truncate` clips, so the leading is the
+                  reading face's own rather than `leading-none`, which would
+                  shave the descenders off "questions". */}
+              <span className="truncate font-read text-[0.76rem] leading-[1.3] text-[color:var(--play-text-muted)]">
+                {masteryPhrase(stage)} · <span dir="ltr">{count}</span> questions
               </span>
             </button>
           );

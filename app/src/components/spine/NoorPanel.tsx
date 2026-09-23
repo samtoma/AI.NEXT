@@ -1,12 +1,13 @@
 "use client";
 
+import { useId, useState } from "react";
 import type { AttemptResult, SpineQuestion } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
 import { ChatCore } from "@/components/chat/ChatCore";
 import type { CiteInfo } from "@/components/chat/CitationChip";
 import { renderVizWidget } from "@/components/viz/render-viz-widget";
 import { NoorMark } from "@/components/NoorMark";
-import { HONEY_BAND, STROKE_SM, cx } from "@/components/sticker";
+import { HONEY_BAND, ICON_BUTTON, STROKE_SM, cx } from "@/components/sticker";
 
 /**
  * Two, and never more than three.
@@ -46,24 +47,40 @@ const PROMPTS = ["What should I work on next?", "Make me a study plan"];
  * underneath: no per-message cost/token rows, no database ids on cards,
  * friendly citation chips ("book p.40" rather than a node key), and the
  * [live event] instrumentation rows hidden.
+ *
+ * BELOW 1024px (iPad portrait — the handoff's device table: "Nour docks to a
+ * bottom sheet") the panel docks under the map, full width, and starts
+ * collapsed to its Honey band with a toggle, so the map gets the screen. The
+ * conversation is only HIDDEN when collapsed, never unmounted — ChatCore
+ * keeps its transcript through any number of open/close cycles. At 1024 and
+ * up the toggle does not exist and the panel is the docked column it always
+ * was, whatever the toggle's state.
  */
 export function NoorPanel({
+  subjectLabel,
   lookupQuestion,
   resolveCite,
   onCite,
   onCiteClick,
   onAttemptResult,
 }: {
+  /** the subject the map is showing, in English ("Mathematics") — the
+   *  empty-state line names it rather than assuming maths */
+  subjectLabel: string;
   lookupQuestion: (qid: string) => SpineQuestion | undefined;
   resolveCite: (c: Cite) => CiteInfo | null;
   onCite: (c: Cite) => void;
   onCiteClick: (c: Cite) => void;
   onAttemptResult: (r: AttemptResult, q: SpineQuestion) => void;
 }) {
+  /** The bottom sheet's state below 1024; ignored (always open) above. */
+  const [open, setOpen] = useState(false);
+  const bodyId = useId();
   return (
     <aside
-      /* 300px at EVERY width — deliberately not the design system's
-         300/340 device table.
+      /* 300px at EVERY width from 1024 up — deliberately not the design
+         system's 300/340 device table. (Below 1024 it is the bottom sheet,
+         full width; see the component comment.)
          The table is right in the abstract and wrong here: a panel that
          steps up 40px as you widen the window reads as the panel growing
          on its own, and the 40px comes straight out of the map beside it.
@@ -73,7 +90,13 @@ export function NoorPanel({
       /* Logical border, so RTL moves the panel to the other side of the
          tree for free — the panel's edge is the only thing that has to flip.
          Width and colour are the Play stroke tokens. */
-      className="flex min-h-0 w-[300px] shrink-0 flex-col border-s-[length:var(--play-stroke)] border-solid border-ink bg-card"
+      /* Below 1024 the same edge moves to the block-start side (the sheet
+         sits under the map), and the sheet is 55% of the row when open. */
+      className={cx(
+        "flex min-h-0 w-full shrink-0 flex-col border-t-[length:var(--play-stroke)] border-solid border-ink bg-card",
+        open && "h-[55%]",
+        "min-[1024px]:h-auto min-[1024px]:w-[300px] min-[1024px]:border-t-0 min-[1024px]:border-s-[length:var(--play-stroke)]"
+      )}
     >
       <div className={cx(HONEY_BAND, "flex shrink-0 items-center gap-3 px-[22px] py-[18px]")}>
         {/* The companion is present, not summoned from a tab — and it is
@@ -85,8 +108,45 @@ export function NoorPanel({
         <h2 className="font-display text-[1.1rem] font-extrabold leading-[1.2] text-ink">
           Got a question?
         </h2>
+        {/* The sheet's toggle — only below 1024, where there is a sheet. */}
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-controls={bodyId}
+          aria-label={open ? "Hide the chat with Noor" : "Chat with Noor"}
+          className={cx(ICON_BUTTON, "ms-auto min-[1024px]:hidden")}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden
+            className={cx(
+              "transition-transform duration-200 motion-reduce:transition-none",
+              open && "rotate-180"
+            )}
+          >
+            <path
+              d="M2 9l5-5 5 5"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
 
+      <div
+        id={bodyId}
+        className={cx(
+          "min-h-0 flex-1 flex-col",
+          open ? "flex" : "hidden",
+          "min-[1024px]:flex"
+        )}
+      >
       <ChatCore
         surface="spine_chat"
         debug={false}
@@ -95,8 +155,9 @@ export function NoorPanel({
         placeholder="Ask Noor anything…"
         emptyState={
           <p className="font-read px-1 text-[0.95rem] leading-[1.75] text-ink-soft">
-            Ask me anything about your maths so far — what to do next, why a
-            topic is still weak, or for a study plan before your test.
+            Ask me anything about your {subjectLabel} so far — what to do
+            next, why a topic is still weak, or for a study plan before your
+            test.
           </p>
         }
         lookupQuestion={lookupQuestion}
@@ -106,6 +167,7 @@ export function NoorPanel({
         onAttemptResult={onAttemptResult}
         renderWidget={(name, props) => renderVizWidget(name, props)}
       />
+      </div>
     </aside>
   );
 }

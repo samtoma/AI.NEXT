@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { mcqChoices, stepText } from "@/lib/types";
 import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
@@ -77,7 +77,13 @@ export function ChatQuestionCard({
   const [numeric, setNumeric] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<AttemptResult | null>(null);
+  // Seeded from a chat-typed attempt that already matches (see the sync
+  // below): the first render is the mount case the old effect handled.
+  const [result, setResult] = useState<AttemptResult | null>(() =>
+    externalResult && externalResult.questionId === q.id
+      ? externalResult.result
+      : null
+  );
   const [answerShown, setAnswerShown] = useState(false);
   const shownAt = useRef(Date.now());
 
@@ -127,12 +133,23 @@ export function ChatQuestionCard({
   // sync this card's own display to match, exactly as if it had been tapped
   // here. Guarded on `!result` so it only ever applies once. Never fires
   // while the switch is off: nothing sets `externalResult` then.
-  useEffect(() => {
+  //
+  // Adjusted DURING RENDER when `externalResult` or the question changes
+  // (react.dev, "storing information from previous renders"), not in an
+  // effect: an effect that only calls setState renders the card twice, and
+  // is what react-hooks/set-state-in-effect flags. Same triggers as the
+  // effect's deps, same guard, same result; the mount case is the seed on
+  // `result` above.
+  const [syncedFrom, setSyncedFrom] = useState({
+    ext: externalResult,
+    qid: q.id,
+  });
+  if (syncedFrom.ext !== externalResult || syncedFrom.qid !== q.id) {
+    setSyncedFrom({ ext: externalResult, qid: q.id });
     if (!result && externalResult && externalResult.questionId === q.id) {
       setResult(externalResult.result);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [externalResult, q.id]);
+  }
 
   return (
     <div className={cx(STICKER_PANEL, "anim-pop my-2 overflow-hidden")}>
@@ -414,7 +431,7 @@ export function ChatQuestionCard({
                   <div
                     className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
                   >
-                    <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-soft">
+                    <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-[color:var(--play-text-muted)]">
                       here&apos;s how to solve it
                     </p>
                     <ol className="mt-1.5 grid gap-1.5 font-read">
