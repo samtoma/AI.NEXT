@@ -290,7 +290,18 @@ jobs:
                        AINEXT_GA_MEASUREMENT_ID AINEXT_ALERT_EMAIL \
                        AINEXT_BOOTSTRAP_OPERATOR_EMAIL AINEXT_COURSE_GATING; do
               eval "v=\${$key:-}"
-              [ -n "$v" ] && printf '%s=%s\n' "$key" "$v"
+              # SINGLE-QUOTED, ALWAYS. Compose's `.env` parser is not a shell:
+              # an unquoted value ends at the first space, and everything after
+              # it is read as a new variable name. AINEXT_MAIL_FROM is
+              # `"Noor" <admin@noor.reletix.com>` — a perfectly ordinary RFC 5322
+              # display name carrying a space, double quotes AND angle brackets —
+              # and unquoted it failed the deploy with
+              #   line 9: unexpected character "<" in variable name
+              # Single quotes are literal to that parser, and the sed escapes any
+              # single quote inside the value by closing, escaping and reopening
+              # ('"'"' is the standard idiom) so no value can break out of them.
+              esc=$(printf '%s' "$v" | sed "s/'/'\\\\''/g")
+              [ -n "$v" ] && printf "%s='%s'\n" "$key" "$esc"
             done
             printf 'AINEXT_PUBLIC_URL=%s\n'  "$PUBLIC_URL"
             printf 'AINEXT_CONSOLE_URL=%s\n' "$CONSOLE_URL"
