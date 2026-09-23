@@ -303,9 +303,22 @@ jobs:
               esc=$(printf '%s' "$v" | sed "s/'/'\\\\''/g")
               [ -n "$v" ] && printf "%s='%s'\n" "$key" "$esc"
             done
-            printf 'AINEXT_PUBLIC_URL=%s\n'  "$PUBLIC_URL"
-            printf 'AINEXT_CONSOLE_URL=%s\n' "$CONSOLE_URL"
-            printf 'AINEXT_GOOGLE_REDIRECT_URI=%s/api/auth/google/callback\n' "$PUBLIC_URL"
+            printf "AINEXT_PUBLIC_URL='%s'\n"  "$PUBLIC_URL"
+            printf "AINEXT_CONSOLE_URL='%s'\n" "$CONSOLE_URL"
+            # The Google redirect ONLY when the other two halves exist. The app
+            # treats Google sign-in as all-or-nothing — CLIENT_ID, CLIENT_SECRET
+            # and REDIRECT_URI must be all set or all unset — and refuses to
+            # render on a half-configured set rather than showing a button that
+            # fails. This line used to write the redirect unconditionally, so
+            # with Google not yet configured the first real deploy came up with
+            # the student app returning 500 on every page:
+            #   Google sign-in is partially configured: ... must all be set, or
+            #   all be unset (the button then renders disabled).
+            # Unset is a SUPPORTED state — the button renders disabled and says
+            # so — which is exactly what an unconfigured Google should do.
+            if [ -n "${AINEXT_GOOGLE_CLIENT_ID:-}" ] && [ -n "${AINEXT_GOOGLE_CLIENT_SECRET:-}" ]; then
+              printf "AINEXT_GOOGLE_REDIRECT_URI='%s/api/auth/google/callback'\n" "$PUBLIC_URL"
+            fi
           } > "$ENV_FILE.tmp"
           mv "$ENV_FILE.tmp" "$ENV_FILE"
           chmod 600 "$ENV_FILE"
