@@ -340,19 +340,21 @@ export function ChatQuestionCard({
                 to repeat the same borrowed explanation across unrelated
                 questions on the same objective. */}
             {!result.refutation && !result.isCorrect && result.solution.length > 0 && (
-              <div className="mt-2 rounded-md border border-line bg-card px-3 py-2.5">
-                <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-soft">
+              <div
+                className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
+              >
+                <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-soft">
                   here&apos;s how to solve it
                 </p>
                 <ol className="mt-1.5 grid gap-1.5 font-read">
                   {result.solution.map((st) => (
-                    <li key={st.step} className="text-[13px] leading-relaxed text-ink">
+                    <li key={st.step} className="text-[1rem] text-ink">
                       <TeX text={stepText(st)} />
                     </li>
                   ))}
                 </ol>
                 {debug && (
-                  <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
+                  <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
                     no misconception diagnosed · canonical solution
                   </p>
                 )}
