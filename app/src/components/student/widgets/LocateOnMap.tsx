@@ -2,7 +2,18 @@
 
 import { useRef, useState } from "react";
 import { resolvePlace, useBaseMap, type BaseMap } from "@/components/viz/maps";
+import { cx } from "@/components/sticker";
 import { useFireOnce } from "./util";
+import {
+  FIGURE_MARK,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT_AR,
+  WIDGET_KIND_AR,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+  WIDGET_WELL,
+} from "./WidgetShell";
 
 /**
  * {{widget:locate_on_map:{"base":"egypt","prompt":"فين قناة السويس؟ دوس على مكانها","target":"قناة السويس"}}}
@@ -90,11 +101,11 @@ export function LocateOnMap({
     return (
       <g className="anim-pop">
         {d ? (
-          <path d={d} fill="var(--accent)" opacity="0.2" stroke="var(--accent)" strokeWidth="1.8">
+          <path d={d} fill={FIGURE_MARK.correct} opacity="0.2" stroke={FIGURE_MARK.correct} strokeWidth="1.8">
             <animate attributeName="opacity" values="0.28;0.1;0.28" dur="1.6s" repeatCount="3" />
           </path>
         ) : (
-          <circle cx={x} cy={y} r={Math.min(t.place.r, 22)} fill="var(--accent)" opacity="0.22" stroke="var(--accent)" strokeWidth="1.8">
+          <circle cx={x} cy={y} r={Math.min(t.place.r, 22)} fill={FIGURE_MARK.correct} opacity="0.22" stroke={FIGURE_MARK.correct} strokeWidth="1.8">
             <animate attributeName="opacity" values="0.3;0.12;0.3" dur="1.6s" repeatCount="3" />
           </circle>
         )}
@@ -104,8 +115,9 @@ export function LocateOnMap({
           fontSize="10.5"
           fontWeight="700"
           textAnchor="middle"
-          fill="var(--accent-deep)"
-          style={{ paintOrder: "stroke", stroke: "var(--card-warm)", strokeWidth: 3 }}
+          fill="var(--ink)"
+          // halo in the well's own Cream, so the name reads over coastlines
+          style={{ paintOrder: "stroke", stroke: "var(--paper)", strokeWidth: 3 }}
         >
           {t.name}
         </text>
@@ -114,24 +126,26 @@ export function LocateOnMap({
   };
 
   return (
-    <div
-      dir="rtl"
-      className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
-          ✳ تفاعلي · حدد على الخريطة
-        </span>
-        <span className="font-mono text-[9px] text-ink-faint">دوس على المكان الصح</span>
+    <div dir="rtl" className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND_AR}>✳ تفاعلي · حدد على الخريطة</span>
+        <span className={WIDGET_HINT_AR}>دوس على المكان الصح</span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="text-[13px] font-medium leading-relaxed text-ink">{prompt}</p>
+        <p className={WIDGET_PROMPT}>{prompt}</p>
 
         {status === "error" ? (
-          <p className="mt-2 font-mono text-[10px] text-rust">الخريطة مش متاحة دلوقتي</p>
+          <p className="ar-label mt-2 font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]">
+            الخريطة مش متاحة دلوقتي
+          </p>
         ) : !map ? (
-          <div className="mt-2.5 flex h-40 items-center justify-center rounded-md border border-line-soft bg-card-warm font-mono text-[9.5px] text-ink-faint">
+          <div
+            className={cx(
+              WIDGET_WELL,
+              "ar-label mt-2.5 flex h-40 items-center justify-center font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]"
+            )}
+          >
             الخريطة بتتحمّل…
           </div>
         ) : (
@@ -141,9 +155,11 @@ export function LocateOnMap({
             onClick={handleClick}
             role="img"
             aria-label={prompt}
-            className={`mx-auto mt-2.5 block w-full max-w-[360px] rounded-md border border-line-soft bg-card-warm ${
+            className={cx(
+              WIDGET_WELL,
+              "mx-auto mt-2.5 block w-full max-w-[360px]",
               done ? "cursor-default" : "cursor-pointer"
-            }`}
+            )}
             style={{ fontFamily: "var(--stack-sans)" }}
           >
             <g dangerouslySetInnerHTML={{ __html: map.inner }} />
@@ -175,14 +191,14 @@ export function LocateOnMap({
                   cx={picked.x}
                   cy={picked.y}
                   r="7"
-                  fill={correct ? "var(--accent)" : "var(--rust)"}
+                  fill={correct ? FIGURE_MARK.correct : FIGURE_MARK.wrong}
                   opacity="0.25"
                 />
                 <circle
                   cx={picked.x}
                   cy={picked.y}
                   r="3.2"
-                  fill={correct ? "var(--accent-deep)" : "var(--rust)"}
+                  fill={correct ? FIGURE_MARK.correct : FIGURE_MARK.wrongText}
                 />
               </g>
             )}
@@ -193,16 +209,8 @@ export function LocateOnMap({
         )}
 
         {done && t && (
-          <div
-            className={`anim-pop mt-2.5 rounded-md border px-3 py-2 ${
-              correct ? "border-accent/45 bg-accent-wash" : "border-rust/40 bg-rust-wash/60"
-            }`}
-          >
-            <span
-              className={`font-display text-[13.5px] font-medium ${
-                correct ? "text-accent-deep" : "text-rust"
-              }`}
-            >
+          <div className={cx("mt-2.5 px-3 py-2", WIDGET_RESULT[correct ? "correct" : "wrong"])}>
+            <span className="font-display text-[13.5px] font-bold">
               {correct
                 ? `تمام! دي ${t.name} ✓`
                 : picked.hit

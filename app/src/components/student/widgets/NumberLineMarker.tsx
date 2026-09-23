@@ -20,7 +20,8 @@
  */
 
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Handle, WidgetShell, type Verdict } from "./WidgetShell";
+import { BUTTON_SECONDARY, BUTTON_TERTIARY } from "@/components/sticker";
+import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { clamp, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
@@ -217,7 +218,7 @@ export function NumberLineMarker({
         viewBox={`0 0 ${W} ${H}`}
         role="application"
         aria-label={prompt}
-        className={`mx-auto block w-full max-w-[320px] rounded-md border border-line-soft bg-card-warm ${
+        className={`mx-auto block w-full max-w-[320px] ${WIDGET_WELL} ${
           verdict ? "cursor-default" : "cursor-pointer"
         }`}
         {...(verdict ? {} : surface)}
@@ -293,7 +294,7 @@ export function NumberLineMarker({
       </svg>
 
       {!verdict && (
-        <div className="mt-2.5 flex flex-wrap items-center justify-center gap-2">
+        <div className={WIDGET_ACTIONS}>
           {mode === "interval" &&
             (["a", "b"] as const).map((k) => (
               <button
@@ -301,7 +302,7 @@ export function NumberLineMarker({
                 type="button"
                 onClick={() => setOpen((c) => ({ ...c, [k]: !c[k] }))}
                 aria-pressed={open[k]}
-                className="min-h-[36px] rounded-md border border-line px-3 font-mono text-[10.5px] text-ink-soft transition-colors hover:border-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+                className={BUTTON_TERTIARY}
               >
                 {k === "a" ? "left" : "right"}: {open[k] ? "○ excluded" : "● included"}
               </button>
@@ -310,7 +311,7 @@ export function NumberLineMarker({
             <button
               type="button"
               onClick={() => setMarks([])}
-              className="min-h-[36px] rounded-md border border-line px-3 font-mono text-[10.5px] text-ink-soft transition-colors hover:border-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+              className={BUTTON_TERTIARY}
             >
               clear
             </button>
@@ -318,7 +319,7 @@ export function NumberLineMarker({
           <button
             type="button"
             onClick={check}
-            className="min-h-[36px] rounded-md border border-accent/45 bg-accent-wash px-3.5 font-display text-[13px] font-medium text-accent-deep transition-colors hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+            className={BUTTON_SECONDARY}
           >
             Check
           </button>

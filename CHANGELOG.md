@@ -10,7 +10,25 @@ requirement names it.
 
 ## [Unreleased]
 
-Nothing yet.
+### Changed
+- **Everyone sees Play for now.** Master — the calmer look meant for Secondary students — is
+  hidden behind one switch (`MASTER_VARIANT_ENABLED`), because it was showing the old family-tutor
+  look under Master's name with Play's buttons on top. Students and the console both get Play; the
+  appearance setting shows a single line instead of a choice. Saved choices are kept, so Master
+  comes back with one change once it is really built (ADR-0017 amendment; FR-1011 PARTIAL;
+  review `docs/reviews/2026-09-23-play-master-ui-review.md`, issues #46–#51).
+
+### Fixed
+- **Console in Play:** small buttons and labels no longer carry the thick 3px outline, tables
+  are set tighter in the reading face, empty heatmap cells read as empty instead of darkest, and
+  the "Confirmed" badge is readable (it was 2.7:1).
+- **Student screens in Play:** subject colours show on the home cards again. The report card,
+  check-in and feedback prompt use one sticker look instead of three. No red anywhere: wrong
+  answers are grey, mastery uses one amber-to-teal scale on every screen. Chat messages are
+  readable size, and the bubble tail is back and flips in Arabic. Headings no longer collide.
+  Keyboard focus is visible on sticker controls.
+- Fewer font files preloaded on every page (the old family-tutor faces are no longer preloaded).
+- `app/.env.example` now sets `AINEXT_ENVIRONMENT`, so a fresh checkout renders a skin at all.
 
 ## [v0.5.0] — 2026-09-22
 

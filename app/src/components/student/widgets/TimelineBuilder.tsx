@@ -2,7 +2,21 @@
 
 import { useMemo, useState } from "react";
 import { arDigits } from "@/components/viz/arabic";
+import { cx } from "@/components/sticker";
 import { stableShuffle, useFireOnce } from "./util";
+import {
+  OPTION_INK,
+  SLOT_INK,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT_AR,
+  WIDGET_KIND_AR,
+  WIDGET_OPTION,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+  WIDGET_SLOT,
+  WIDGET_WELL,
+} from "./WidgetShell";
 
 /**
  * {{widget:timeline_builder:{"prompt":"رتب الأحداث دي زي ما حصلت","events":["أ","ب","ج"],"correctOrder":[0,1,2]}}}
@@ -78,44 +92,39 @@ export function TimelineBuilder({
   const placedSet = new Set(order.slice(0, placed));
 
   return (
-    <div
-      dir="rtl"
-      className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
-          ✳ تفاعلي · رتب الأحداث
-        </span>
-        <span className="font-mono text-[9px] text-ink-faint">
-          دوس على الأحداث بالترتيب — الأول على اليمين
-        </span>
+    <div dir="rtl" className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND_AR}>✳ تفاعلي · رتب الأحداث</span>
+        <span className={WIDGET_HINT_AR}>دوس على الأحداث بالترتيب — الأول على اليمين</span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="text-[13px] font-medium leading-relaxed text-ink">{prompt}</p>
+        <p className={WIDGET_PROMPT}>{prompt}</p>
 
         {/* the timeline strip: slots fill right-to-left */}
-        <div className="mt-3 rounded-md border border-line-soft bg-card-warm px-2 pb-2 pt-2.5">
+        <div className={cx(WIDGET_WELL, "mt-3 px-2 pb-2 pt-2.5")}>
           <div className="flex items-stretch gap-1.5">
             {order.map((evIdx, slot) => {
               const filled = slot < placed;
               return (
                 <div key={slot} className="min-w-0 flex-1">
                   <div
-                    className={`flex min-h-[44px] items-center justify-center rounded-md border px-1 py-1 text-center text-[10.5px] leading-snug transition-all duration-200 ${
-                      filled
-                        ? "anim-pop border-accent/60 bg-accent-wash font-medium text-accent-deep"
-                        : "border-dashed border-line text-ink-faint"
-                    }`}
+                    className={cx(
+                      WIDGET_SLOT,
+                      "flex min-h-[44px] items-center justify-center px-1 py-1 text-center text-[10.5px] leading-snug transition-all duration-200",
+                      filled ? SLOT_INK.filled : SLOT_INK.empty
+                    )}
                   >
                     {filled ? <bdi>{arDigits(events[evIdx])}</bdi> : arDigits(slot + 1)}
                   </div>
-                  <div className="mx-auto mt-1 h-[7px] w-[7px] rounded-full border-2 border-ink-soft/50 bg-card" />
+                  {/* the bead on the time axis */}
+                  <div className="mx-auto mt-1 h-[7px] w-[7px] rounded-[var(--play-radius-pill)] bg-ink" />
                 </div>
               );
             })}
           </div>
-          <div className="mt-[-4px] h-[2px] rounded bg-ink-soft/40" />
+          {/* the time axis, one thin ink stroke under the beads */}
+          <div className="mt-[-4px] h-[var(--play-stroke-sm)] rounded-[var(--play-radius-pill)] bg-ink" />
         </div>
 
         {/* the shuffled pool */}
@@ -126,11 +135,12 @@ export function TimelineBuilder({
                 <button
                   key={evIdx}
                   onClick={() => tap(evIdx)}
-                  className={`rounded-md border px-2.5 py-1.5 text-[11.5px] font-medium leading-snug transition-all duration-150 ${
-                    flash === evIdx
-                      ? "border-rust bg-rust-wash text-rust"
-                      : "border-line bg-card text-ink hover:-translate-y-px hover:border-ink/40"
-                  }`}
+                  className={cx(
+                    WIDGET_OPTION,
+                    "px-2.5 py-1.5 text-[11.5px] leading-snug",
+                    // a wrong pick greys and nudges, then comes back live
+                    flash === evIdx ? cx(OPTION_INK.wrong, "anim-nudge") : OPTION_INK.idle
+                  )}
                 >
                   <bdi>{arDigits(events[evIdx])}</bdi>
                 </button>
@@ -140,8 +150,8 @@ export function TimelineBuilder({
         )}
 
         {done && (
-          <div className="anim-pop mt-3 rounded-md border border-accent/45 bg-accent-wash px-3 py-2">
-            <span className="font-display text-[13.5px] font-medium text-accent-deep">
+          <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
+            <span className="font-display text-[13.5px] font-bold">
               {missteps === 0
                 ? "برافو! رتبت الأحداث كلها صح من أول مرة ✓"
                 : "تمام — وصلنا للترتيب الصح. دي نفس فكرة سؤال «رتب» في الامتحان"}

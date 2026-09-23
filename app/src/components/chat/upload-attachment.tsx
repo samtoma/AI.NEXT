@@ -9,6 +9,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import { track } from "@/lib/ga";
+import { ICON_BUTTON, STROKE_WIDTH_SM, VERDICT_INK, cx } from "@/components/sticker";
 import {
   UPLOAD_ACCEPT_ATTR,
   UPLOAD_POLL_CEILING_MS,
@@ -457,7 +458,11 @@ export function useUploadAttachment({
  *
  * A clipped input shows no focus ring of its own, so the ring is drawn on the
  * label through `peer-focus-visible:` — the same amber ring every other
- * interactive surface in the product uses.
+ * interactive surface in the product uses, stacked on the sticker shadow.
+ * Both peer states carry `!`: `.sticker-shadow-sm` is an unlayered rule, so a
+ * layered utility only outranks it as an important one. Disabled follows the
+ * handoff's Buttons spec — dashed outline, disabled text, no shadow — rather
+ * than an opacity, which read as broken (review 2026-09-23, F22).
  */
 function PickerButton({
   id,
@@ -492,7 +497,12 @@ function PickerButton({
       <label
         htmlFor={id}
         title={label}
-        className="flex h-8.5 w-8.5 shrink-0 cursor-pointer items-center justify-center rounded-full border border-line bg-card text-ink-soft transition-all duration-150 hover:-translate-y-px hover:border-accent/50 hover:text-accent-deep peer-focus-visible:ring-2 peer-focus-visible:ring-gold/45 peer-disabled:cursor-not-allowed peer-disabled:opacity-30 play-pressable sticker-shadow-sm"
+        className={cx(
+          ICON_BUTTON,
+          "cursor-pointer",
+          "peer-focus-visible:[box-shadow:var(--play-shadow-sm),var(--noor-focus-ring)]!",
+          "peer-disabled:cursor-not-allowed peer-disabled:border-dashed peer-disabled:border-[color:var(--play-disabled-border)] peer-disabled:text-[color:var(--play-disabled-text)] peer-disabled:[box-shadow:none]!"
+        )}
       >
         {children}
         <span className="sr-only">{label}</span>
@@ -540,15 +550,18 @@ function UploadStrip({
         role={bad ? "alert" : "status"}
         aria-live={bad ? "assertive" : "polite"}
         aria-label={regionLabel}
-        className={`anim-pop flex items-start gap-2 rounded-xl border px-3 py-2 ${
-          bad
-            ? "border-rust/45 bg-rust-wash text-rust"
-            : "border-accent/40 bg-accent-wash text-accent-deep"
-        }`}
+        // A refusal greys out like a wrong answer — inactive fill, muted AA
+        // text, no shadow — and is never red; the sentence carries the news.
+        // Progress sits on the Honey band.
+        className={cx(
+          STROKE_WIDTH_SM,
+          "anim-pop flex items-start gap-2 rounded-[var(--play-radius-sm)] px-3 py-2",
+          bad ? VERDICT_INK.wrong : "border-ink bg-card-warm text-ink sticker-shadow-sm"
+        )}
       >
         <span className="mt-0.5 shrink-0" aria-hidden>
           {working ? (
-            <span className="block h-2 w-2 animate-pulse rounded-full bg-accent" />
+            <span className="block size-2 animate-pulse rounded-full bg-[var(--noor-action)]" />
           ) : (
             <PaperclipIcon />
           )}
@@ -556,7 +569,7 @@ function UploadStrip({
         <span className="flex min-w-0 flex-1 flex-col gap-0.5">
           <span
             dir="auto"
-            className="truncate text-start text-[12px] font-medium leading-snug"
+            className="truncate text-start font-display text-[0.85rem] font-bold leading-snug"
           >
             {attachment.name}
           </span>
@@ -564,7 +577,7 @@ function UploadStrip({
               refusal READS as a refusal instead of being the one grey line on
               a red card. Hierarchy comes from weight, which is the axis that
               survives every theme the design system defines. */}
-          <span dir="auto" className="text-start text-[11.5px] leading-relaxed">
+          <span dir="auto" className="text-start text-[0.85rem] leading-relaxed">
             {attachment.message}
           </span>
         </span>
@@ -573,7 +586,9 @@ function UploadStrip({
           onClick={onRemove}
           aria-label={removeLabel}
           title={removeLabel}
-          className="-me-1 shrink-0 rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink play-pressable"
+          // a borderless icon control that still holds the 52px floor; the
+          // negative margins keep it from inflating the strip
+          className="-my-2.5 -me-2.5 flex size-[var(--noor-touch-min)] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] text-ink-soft play-pressable"
         >
           <CloseIcon />
         </button>

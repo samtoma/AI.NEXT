@@ -8,6 +8,12 @@ import {
   pct,
 } from "@/lib/mastery";
 import { DashboardViewed } from "@/components/DashboardViewed";
+import {
+  BUTTON_PRIMARY,
+  STICKER_PANEL,
+  STROKE_SM,
+  cx,
+} from "@/components/sticker";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -56,10 +62,10 @@ export default async function DashboardPage() {
       <header className="mb-6 flex items-start justify-between gap-4">
         <div>
           <p className="rule-label">Where you stand</p>
-          <h1 className="mt-1 font-display text-[26px] font-bold text-ink">
+          <h1 className="mt-1 font-display text-[1.75rem] font-extrabold leading-[1.2] text-ink">
             {studentName}
           </h1>
-          <p className="mt-1 max-w-[62ch] text-[14px] text-ink-soft">
+          <p className="mt-1 max-w-[62ch] text-[1rem] text-ink-soft">
             The topics you have started come first, the one worth your time at the
             top. Nothing here is a score, and nobody else sees it.
           </p>
@@ -67,19 +73,12 @@ export default async function DashboardPage() {
       </header>
 
       {practised.length === 0 && (
-        <div className="ledger-card p-5">
-          <p className="text-[14px] text-ink-soft">
+        <div className={cx(STICKER_PANEL, "p-5")}>
+          <p className="text-[1rem] text-ink-soft">
             Nothing practised yet — answer a few questions and this fills in.
           </p>
           {/* ONE dominant action per screen, and never white text on amber. */}
-          <Link
-            href="/student"
-            className="mt-3 inline-flex min-h-[44px] items-center rounded-xl px-4 text-[14px] font-semibold"
-            style={{
-              background: "var(--noor-action)",
-              color: "var(--noor-on-action)",
-            }}
-          >
+          <Link href="/student" className={cx(BUTTON_PRIMARY, "mt-3")}>
             Start practising
           </Link>
         </div>
@@ -125,10 +124,10 @@ function MasteryLegend() {
         <span key={step.band} className="flex items-center gap-1.5">
           <span
             aria-hidden
-            className="h-3 w-3 shrink-0 rounded-[3px] border border-line"
-            style={{ background: step.hex }}
+            className={cx(STROKE_SM, "h-4 w-4 shrink-0 rounded-[var(--play-radius-pill)]")}
+            style={{ background: step.color }}
           />
-          <span className="text-[12px] text-ink-soft">{step.band}</span>
+          <span className="text-[0.9rem] text-ink-soft">{step.band}</span>
         </span>
       ))}
     </div>
@@ -143,12 +142,12 @@ function TopicBar({ topic: t }: { topic: TopicRow }) {
   const band = masteryLabel(t.mastery, !untouched);
 
   return (
-    <li className="ledger-card px-4 py-3">
+    <li className={cx(STICKER_PANEL, "px-4 py-3")}>
       <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[15px] font-semibold text-ink">{t.label}</span>
+        <span className="font-display text-[1.05rem] font-bold text-ink">{t.label}</span>
         {/* Value and band travel together: colour is never the only signal. */}
         <span
-          className="shrink-0 font-mono text-[11px] text-ink-faint"
+          className="shrink-0 font-mono text-[0.72rem] font-medium text-ink-faint"
           title={
             untouched
               ? undefined
@@ -160,8 +159,10 @@ function TopicBar({ topic: t }: { topic: TopicRow }) {
       </div>
 
       <div
-        className="mt-2 h-2.5 w-full overflow-hidden rounded-full"
-        style={{ background: "var(--mastery-0, rgb(0 0 0 / 0.06))" }}
+        className={cx(
+          STROKE_SM,
+          "mt-2 h-[18px] w-full overflow-hidden rounded-[var(--play-radius-pill)] bg-card p-0.5"
+        )}
         role="img"
         aria-label={
           untouched
@@ -170,7 +171,7 @@ function TopicBar({ topic: t }: { topic: TopicRow }) {
         }
       >
         <div
-          className="h-full rounded-full transition-[width]"
+          className="h-full rounded-[var(--play-radius-pill)] transition-[width]"
           style={{
             width: `${width}%`,
             background: masteryColor(t.mastery, 1, !untouched),
@@ -178,7 +179,7 @@ function TopicBar({ topic: t }: { topic: TopicRow }) {
         />
       </div>
 
-      <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] text-ink-faint">
+      <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.72rem] font-medium text-ink-faint">
         <span>
           {t.practisedCount} of {t.loCount} objectives practised
         </span>

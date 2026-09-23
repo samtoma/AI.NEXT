@@ -2,7 +2,20 @@
 
 import { useState } from "react";
 import { arDigits } from "@/components/viz/arabic";
+import { cx } from "@/components/sticker";
 import { useFireOnce } from "./util";
+import {
+  pickInk,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT_AR,
+  WIDGET_KIND_AR,
+  WIDGET_OPTION,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+  WIDGET_RULE_QUOTE,
+  WIDGET_WELL,
+} from "./WidgetShell";
 
 /**
  * {{widget:hamza_seat:{"prompt":"الهمزة دي بتتكتب إزاي؟","items":[{"word":"فُ_َاد","answer":"ؤ","rule":"مفتوحة وما قبلها مضموم","page":12}]}}}
@@ -90,20 +103,16 @@ export function HamzaSeat({
   };
 
   return (
-    <div
-      dir="rtl"
-      lang="ar"
-      className="anim-pop my-2 overflow-hidden rounded-lg border border-rust/40 bg-card shadow-[0_10px_24px_-16px_rgba(168,68,42,0.45)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-rust-wash px-3.5 py-2">
-        <span className="ar-label font-mono text-[9px] text-rust">✳ تفاعلي · إملاء</span>
-        <span className="ar-label font-mono text-[9px] text-ink-faint">
+    <div dir="rtl" lang="ar" className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND_AR}>✳ تفاعلي · إملاء</span>
+        <span className={WIDGET_HINT_AR}>
           {arDigits(settled)} من {arDigits(clean.length)}
         </span>
       </div>
 
       <div className="flex flex-col gap-2 px-3.5 py-3">
-        <p className="ar-block ar-plain text-[13px] font-medium text-ink">{prompt}</p>
+        <p className={cx("ar-block ar-plain", WIDGET_PROMPT)}>{prompt}</p>
 
         {clean.map((it, i) => {
           const s = state[i];
@@ -113,12 +122,17 @@ export function HamzaSeat({
           // one text run, always: the completed word must shape as a word
           const shown = closed ? it.word.replace("_", it.answer) : it.word;
           return (
-            <div key={i} className="rounded-md border border-line-soft bg-card-warm px-2.5 py-2">
+            <div key={i} className={cx(WIDGET_WELL, "px-2.5 py-2")}>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span
-                  className={`ar-block ar-vowelled text-[20px] ${
-                    solved ? "text-accent-deep" : s.revealed ? "text-rust" : "text-ink"
-                  }`}
+                  className={cx(
+                    "ar-block ar-vowelled text-[20px]",
+                    solved
+                      ? "text-[color:var(--play-on-leaf)]"
+                      : s.revealed
+                        ? "text-[color:var(--play-text-muted)]"
+                        : "text-ink"
+                  )}
                 >
                   {shown}
                 </span>
@@ -132,13 +146,12 @@ export function HamzaSeat({
                         type="button"
                         onClick={() => pick(i, seat)}
                         disabled={closed || isWrong}
-                        className={`min-h-[44px] min-w-[44px] rounded-md border text-[19px] leading-none transition-all duration-150 ${
-                          isRight
-                            ? "border-accent bg-accent text-paper"
-                            : isWrong
-                              ? "border-line-soft bg-card text-ink-faint opacity-45"
-                              : "border-line bg-card text-ink hover:-translate-y-px hover:border-ink/40"
-                        }`}
+                        data-verdict={isRight ? "correct" : isWrong ? "wrong" : undefined}
+                        className={cx(
+                          WIDGET_OPTION,
+                          "min-w-[var(--noor-touch-min)] text-[19px] leading-none",
+                          pickInk(isRight, isWrong, closed)
+                        )}
                       >
                         {seat}
                       </button>
@@ -147,7 +160,12 @@ export function HamzaSeat({
                 </div>
               </div>
               {closed && it.rule && (
-                <p className="ar-block ar-plain anim-pop mt-1.5 border-r-2 border-gold/50 pr-1.5 text-[11.5px] text-ink-soft">
+                <p
+                  className={cx(
+                    WIDGET_RULE_QUOTE,
+                    "ar-block ar-plain anim-pop mt-1.5 text-[11.5px] text-[color:var(--play-text-muted)]"
+                  )}
+                >
                   <bdi>
                     {it.rule}
                     {it.page ? ` — ص ${arDigits(it.page)}` : ""}
@@ -159,8 +177,8 @@ export function HamzaSeat({
         })}
 
         {done && (
-          <div className="anim-pop rounded-md border border-accent/45 bg-accent-wash px-3 py-2">
-            <span className="ar-block font-display text-[13.5px] font-medium text-accent-deep">
+          <div className={cx("px-3 py-2", WIDGET_RESULT.correct)}>
+            <span className="ar-block font-display text-[13.5px] font-bold">
               {firstTry === clean.length
                 ? "الهمزة دي بقت في إيدك ✓"
                 : "تمام — القاعدة هي اللي بتقولك مكان الهمزة، مش الشكل"}

@@ -29,7 +29,8 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { makePlane, PlaneFrame } from "../../viz/plane";
-import { WidgetShell, type Verdict } from "./WidgetShell";
+import { BUTTON_SECONDARY, BUTTON_TERTIARY } from "@/components/sticker";
+import { WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { tidy, useStroke, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
@@ -263,7 +264,7 @@ export function CurveSketcher({
         viewBox={`0 0 ${W} ${H}`}
         role="application"
         aria-label={prompt}
-        className={`mx-auto block w-full max-w-[310px] rounded-md border border-line-soft bg-card-warm ${
+        className={`mx-auto block w-full max-w-[310px] ${WIDGET_WELL} ${
           verdict ? "cursor-default" : "cursor-crosshair"
         }`}
         {...(verdict ? {} : surface)}
@@ -298,7 +299,7 @@ export function CurveSketcher({
       </svg>
 
       {!verdict && (
-        <div className="mt-2.5 flex flex-wrap items-center justify-center gap-2">
+        <div className={WIDGET_ACTIONS}>
           {done && (
             <button
               type="button"
@@ -306,7 +307,7 @@ export function CurveSketcher({
                 reset();
                 setDone(false);
               }}
-              className="min-h-[36px] rounded-md border border-line px-3 font-mono text-[10.5px] text-ink-soft transition-colors hover:border-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+              className={BUTTON_TERTIARY}
             >
               clear
             </button>
@@ -315,7 +316,7 @@ export function CurveSketcher({
             type="button"
             onClick={score}
             disabled={!done}
-            className="min-h-[36px] rounded-md border border-accent/45 bg-accent-wash px-3.5 font-display text-[13px] font-medium text-accent-deep transition-colors hover:bg-accent/15 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+            className={BUTTON_SECONDARY}
           >
             Check my sketch
           </button>

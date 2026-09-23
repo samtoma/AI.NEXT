@@ -23,7 +23,8 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { makePlane, PlaneFrame } from "../../viz/plane";
-import { Handle, WidgetShell, type Verdict } from "./WidgetShell";
+import { BUTTON_SECONDARY } from "@/components/sticker";
+import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { lineText, numText } from "./format";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
@@ -269,7 +270,7 @@ export function LineDrawer({
         viewBox={`0 0 ${W} ${H}`}
         role="application"
         aria-label={prompt}
-        className={`mx-auto block w-full max-w-[300px] rounded-md border border-line-soft bg-card-warm ${
+        className={`mx-auto block w-full max-w-[300px] ${WIDGET_WELL} ${
           verdict ? "cursor-default" : "cursor-crosshair"
         }`}
         {...(verdict ? {} : surface)}
@@ -330,13 +331,11 @@ export function LineDrawer({
       </svg>
 
       {!verdict && (
-        <button
-          type="button"
-          onClick={check}
-          className="mx-auto mt-2.5 block min-h-[40px] rounded-md border border-accent/45 bg-accent-wash px-4 font-display text-[13px] font-medium text-accent-deep transition-colors hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
-        >
-          That&apos;s my line
-        </button>
+        <div className={WIDGET_ACTIONS}>
+          <button type="button" onClick={check} className={BUTTON_SECONDARY}>
+            That&apos;s my line
+          </button>
+        </div>
       )}
     </WidgetShell>
   );

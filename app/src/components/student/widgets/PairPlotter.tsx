@@ -2,6 +2,17 @@
 
 import { useRef, useState } from "react";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { cx } from "@/components/sticker";
+import {
+  FIGURE_MARK,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT,
+  WIDGET_KIND,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+  WIDGET_WELL,
+} from "./WidgetShell";
 
 /**
  * {{widget:pair_plotter:{"prompt":"Plot the point (3,2)","target":[3,2]}}}
@@ -96,20 +107,14 @@ export function PairPlotter({
   const q = quadrant(target[0], target[1]);
 
   return (
-    <div className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
-          ✳ interactive · pair plotter
-        </span>
-        <span className="font-mono text-[9px] text-ink-faint">
-          tap a point on the grid
-        </span>
+    <div className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND}>✳ interactive · pair plotter</span>
+        <span className={WIDGET_HINT}>tap a point on the grid</span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="text-[13px] font-medium leading-relaxed text-ink">
-          {prompt}
-        </p>
+        <p className={WIDGET_PROMPT}>{prompt}</p>
 
         <svg
           ref={svgRef}
@@ -117,9 +122,11 @@ export function PairPlotter({
           onClick={handleClick}
           role="img"
           aria-label={prompt}
-          className={`mx-auto mt-2.5 block w-full max-w-[280px] rounded-md border border-line-soft bg-card-warm ${
+          className={cx(
+            WIDGET_WELL,
+            "mx-auto mt-2.5 block w-full max-w-[280px]",
             done ? "cursor-default" : "cursor-crosshair"
-          }`}
+          )}
         >
           {/* grid */}
           {ticks.map((t) => (
@@ -162,10 +169,10 @@ export function PairPlotter({
           {/* the target, revealed on a wrong pick */}
           {done && !correct && (
             <g>
-              <line x1={px(target[0])} y1={py(0)} x2={px(target[0])} y2={py(target[1])} stroke="var(--accent)" strokeWidth="1" strokeDasharray="3 2.5" opacity="0.55" />
-              <line x1={px(0)} y1={py(target[1])} x2={px(target[0])} y2={py(target[1])} stroke="var(--accent)" strokeWidth="1" strokeDasharray="3 2.5" opacity="0.55" />
-              <circle cx={px(target[0])} cy={py(target[1])} r="6" fill="none" stroke="var(--accent)" strokeWidth="1.6" />
-              <circle cx={px(target[0])} cy={py(target[1])} r="2.4" fill="var(--accent)" />
+              <line x1={px(target[0])} y1={py(0)} x2={px(target[0])} y2={py(target[1])} stroke={FIGURE_MARK.correct} strokeWidth="1" strokeDasharray="3 2.5" opacity="0.55" />
+              <line x1={px(0)} y1={py(target[1])} x2={px(target[0])} y2={py(target[1])} stroke={FIGURE_MARK.correct} strokeWidth="1" strokeDasharray="3 2.5" opacity="0.55" />
+              <circle cx={px(target[0])} cy={py(target[1])} r="6" fill="none" stroke={FIGURE_MARK.correct} strokeWidth="1.6" />
+              <circle cx={px(target[0])} cy={py(target[1])} r="2.4" fill={FIGURE_MARK.correct} />
             </g>
           )}
 
@@ -174,23 +181,23 @@ export function PairPlotter({
             <g className="anim-pop">
               {correct && (
                 <>
-                  <line x1={px(picked![0])} y1={py(0)} x2={px(picked![0])} y2={py(picked![1])} stroke="var(--accent)" strokeWidth="1" strokeDasharray="3 2.5" opacity="0.55" />
-                  <line x1={px(0)} y1={py(picked![1])} x2={px(picked![0])} y2={py(picked![1])} stroke="var(--accent)" strokeWidth="1" strokeDasharray="3 2.5" opacity="0.55" />
+                  <line x1={px(picked![0])} y1={py(0)} x2={px(picked![0])} y2={py(picked![1])} stroke={FIGURE_MARK.correct} strokeWidth="1" strokeDasharray="3 2.5" opacity="0.55" />
+                  <line x1={px(0)} y1={py(picked![1])} x2={px(picked![0])} y2={py(picked![1])} stroke={FIGURE_MARK.correct} strokeWidth="1" strokeDasharray="3 2.5" opacity="0.55" />
                 </>
               )}
               <circle
                 cx={px(picked![0])} cy={py(picked![1])} r="5.5"
-                fill={correct ? "var(--accent)" : "var(--rust)"}
+                fill={correct ? FIGURE_MARK.correct : FIGURE_MARK.wrong}
                 opacity="0.25"
               />
               <circle
                 cx={px(picked![0])} cy={py(picked![1])} r="3"
-                fill={correct ? "var(--accent)" : "var(--rust)"}
+                fill={correct ? FIGURE_MARK.correct : FIGURE_MARK.wrong}
               />
               <text
                 x={px(picked![0]) + 7} y={py(picked![1]) - 5}
                 fontSize="8" fontWeight="600"
-                fill={correct ? "var(--accent-deep)" : "var(--rust)"}
+                fill={correct ? "var(--ink)" : FIGURE_MARK.wrongText}
                 fontFamily="var(--stack-mono)"
               >
                 ({picked![0]},{picked![1]})
@@ -200,24 +207,14 @@ export function PairPlotter({
         </svg>
 
         {done && (
-          <div
-            className={`anim-pop mt-2.5 rounded-md border px-3 py-2 ${
-              correct
-                ? "border-accent/45 bg-accent-wash"
-                : "border-rust/40 bg-rust-wash/60"
-            }`}
-          >
-            <span
-              className={`font-display text-[13.5px] font-medium ${
-                correct ? "text-accent-deep" : "text-rust"
-              }`}
-            >
+          <div className={cx("mt-2.5 px-3 py-2", WIDGET_RESULT[correct ? "correct" : "wrong"])}>
+            <span className="font-display text-[13.5px] font-bold">
               {correct
                 ? `تمام! (${target[0]},${target[1]}) ✓`
                 : `Not quite — that's (${picked![0]},${picked![1]}). The target is shown in green.`}
             </span>
-            <span className="ml-2 font-mono text-[10px] text-ink-soft">
-              {q.en} · {q.ar}
+            <span className="ms-2 font-mono text-[10px] font-medium">
+              {q.en} · <span className="ar-label font-display font-bold">{q.ar}</span>
             </span>
           </div>
         )}

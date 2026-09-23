@@ -8,6 +8,19 @@ import { TeX } from "@/components/TeX";
 import { tierStyle } from "./LoPanel";
 import { questionProvenance } from "@/lib/provenance";
 import { ProvenanceBadge } from "@/components/ProvenanceBadge";
+import {
+  BADGE,
+  BUTTON_SECONDARY,
+  HONEY_BAND,
+  ICON_BUTTON,
+  STICKER_CARD,
+  STICKER_PANEL,
+  STROKE,
+  STROKE_WIDTH,
+  STROKE_WIDTH_SM,
+  VERDICT_INK,
+  cx,
+} from "@/components/sticker";
 
 const fmtDateTime = (iso: string | null) =>
   iso
@@ -56,17 +69,24 @@ export function QuestionModal({
       onClick={onClose}
     >
       <div
-        className="anim-pop ledger-card thin-scroll max-h-[90vh] w-full max-w-2xl overflow-y-auto"
+        className={cx(
+          STICKER_CARD,
+          "anim-pop thin-scroll max-h-[90vh] w-full max-w-2xl overflow-y-auto"
+        )}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
       >
         {/* header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-line-soft bg-card/95 px-6 py-3.5 backdrop-blur-sm">
+        <div className={cx(HONEY_BAND, "sticky top-0 z-10 flex items-center justify-between gap-3 px-6 py-3.5")}>
           <div className="flex flex-wrap items-center gap-2">
             <span className="font-mono text-[11px] text-ink-soft">{q.id}</span>
             <span
-              className={`rounded border px-1.5 py-px font-mono text-[9.5px] uppercase tracking-[0.12em] ${tierStyle[q.tier]}`}
+              className={cx(
+                STROKE_WIDTH_SM,
+                "rounded-[var(--play-radius-sm)] px-1.5 py-px font-mono text-[9.5px] uppercase tracking-[0.12em]",
+                tierStyle[q.tier]
+              )}
             >
               {q.tier}
             </span>
@@ -82,7 +102,7 @@ export function QuestionModal({
           </div>
           <button
             onClick={onClose}
-            className="rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink"
+            className={ICON_BUTTON}
             aria-label="Close"
           >
             <svg width="15" height="15" viewBox="0 0 14 14" fill="none">
@@ -103,16 +123,18 @@ export function QuestionModal({
               {mcqChoices(q)!.map((c) => {
                 const correct = c.key === q.correctAnswer;
                 return (
+                  // Not a control — a reference view of the options, with the
+                  // correct one on the leaf verdict ink and the rest on white.
                   <div
                     key={c.key}
-                    className={`flex items-center gap-3 rounded-lg border px-3.5 py-2.5 text-[14px] ${
-                      correct
-                        ? "border-accent/60 bg-accent-wash text-ink"
-                        : "border-line-soft bg-card-warm text-ink-soft"
-                    }`}
+                    className={cx(
+                      STROKE_WIDTH,
+                      "flex items-center gap-3 rounded-[var(--play-radius)] px-3.5 py-2.5 text-[14px] sticker-shadow-sm",
+                      correct ? VERDICT_INK.correct : "border-ink bg-card text-ink-soft"
+                    )}
                   >
                     <span
-                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-semibold ${
+                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] font-mono text-[11px] font-semibold ${
                         correct
                           ? "bg-accent text-paper"
                           : "bg-ink/8 text-ink-soft"
@@ -124,7 +146,7 @@ export function QuestionModal({
                       <TeX text={c.text} />
                     </span>
                     {correct && (
-                      <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-accent-deep">
+                      <span className="font-mono text-[10px] font-semibold uppercase tracking-wider">
                         correct ✓
                       </span>
                     )}
@@ -134,11 +156,17 @@ export function QuestionModal({
             </div>
           )}
           {q.questionType === "numeric" && (
-            <div className="flex items-center gap-3 rounded-lg border border-accent/50 bg-accent-wash px-4 py-2.5">
-              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent-deep">
+            <div
+              className={cx(
+                STROKE_WIDTH,
+                "flex items-center gap-3 rounded-[var(--play-radius)] px-4 py-2.5 sticker-shadow-sm",
+                VERDICT_INK.correct
+              )}
+            >
+              <span className="font-mono text-[10px] uppercase tracking-[0.14em]">
                 numeric answer
               </span>
-              <span className="font-mono text-[15px] font-semibold text-ink">
+              <span className="font-mono text-[15px] font-semibold">
                 {q.correctAnswer}
               </span>
             </div>
@@ -155,9 +183,12 @@ export function QuestionModal({
               {q.solution.slice(0, revealed).map((s) => (
                 <li
                   key={s.step}
-                  className="anim-rise flex gap-3 rounded-lg border border-line-soft bg-card-warm px-4 py-3"
+                  className={cx(
+                    STROKE,
+                    "anim-rise flex gap-3 rounded-[var(--play-radius)] bg-card-warm px-4 py-3 sticker-shadow-sm"
+                  )}
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink font-mono text-[11px] font-semibold text-paper">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-ink font-mono text-[11px] font-semibold text-paper">
                     {s.step}
                   </span>
                   <span className="tex-block pt-0.5 text-[14px] leading-relaxed text-ink">
@@ -169,7 +200,7 @@ export function QuestionModal({
             {revealed < total ? (
               <button
                 onClick={() => setRevealed((r) => r + 1)}
-                className="mt-3 inline-flex items-center gap-2 rounded-full border border-accent/50 bg-accent-wash px-4 py-1.5 text-[13px] font-semibold text-accent-deep transition-all duration-200 hover:bg-accent hover:text-paper"
+                className={cx(BUTTON_SECONDARY, "mt-3")}
               >
                 Reveal step {revealed + 1} of {total} ↓
               </button>
@@ -181,8 +212,10 @@ export function QuestionModal({
             )}
           </div>
 
-          {/* provenance passport */}
-          <div className="passport p-5">
+          {/* provenance passport — a sticker panel under Play; the ledger's
+              dashed-gold passport and rotated rubber stamp were the frozen
+              baseline's anatomy */}
+          <div className={cx(STICKER_PANEL, "p-5")}>
             <div className="relative">
               <div className="flex items-start justify-between gap-4">
                 <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">
@@ -195,7 +228,11 @@ export function QuestionModal({
                     asserted a human check that never happened, on the one
                     screen built to make provenance believable. */}
                 <span
-                  className={`stamp-seal anim-stamp ${prov.humanChecked ? "" : "stamp-seal--gold"}`}
+                  className={cx(
+                    BADGE,
+                    "anim-pop",
+                    prov.humanChecked ? VERDICT_INK.correct : VERDICT_INK.partial
+                  )}
                 >
                   {prov.humanChecked ? "Reviewed ✓" : "Not reviewed"}
                 </span>
@@ -203,16 +240,24 @@ export function QuestionModal({
 
               <div className="mt-3 flex items-start gap-5">
                 {/* page stamp */}
-                <div className="flex shrink-0 flex-col items-center rounded-md border border-gold/45 bg-gold-wash px-4 py-2.5">
-                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-gold">
+                <div
+                  className={cx(
+                    STROKE,
+                    "flex shrink-0 flex-col items-center rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-2.5"
+                  )}
+                >
+                  {/* amber-family text on Honey takes its own token */}
+                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[color:var(--play-text-amber-warm)]">
                     page
                   </span>
-                  <span className="font-display text-3xl font-semibold leading-none text-ink">
+                  {/* a page number on one line — it cannot wrap, so the
+                      tight leading stays */}
+                  <span className="font-display text-3xl font-extrabold leading-none text-ink">
                     {q.provenance.sourcePage ?? "—"}
                   </span>
                 </div>
                 <div className="min-w-0">
-                  <p className="font-display text-[15px] font-medium leading-snug text-ink">
+                  <p className="font-display text-[15px] font-bold leading-snug text-ink">
                     {doc.title}
                   </p>
                   <p className="mt-1 text-[12px] leading-relaxed text-ink-soft">
@@ -226,7 +271,7 @@ export function QuestionModal({
                 </div>
               </div>
 
-              <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 border-t border-gold/25 pt-3 font-mono text-[11px]">
+              <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 border-t border-line-soft pt-3 font-mono text-[11px]">
                 <Field
                   k="extraction run"
                   v={

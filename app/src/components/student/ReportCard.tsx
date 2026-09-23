@@ -2,18 +2,37 @@
 
 import Link from "next/link";
 import type { LessonMode, UnderstandingCheck, Verdict } from "@/lib/types";
+import { MASTERY_LEGEND } from "@/lib/mastery";
+import {
+  BADGE,
+  BUTTON_PRIMARY,
+  BUTTON_SECONDARY,
+  HONEY_BAND,
+  STICKER_CARD,
+  STROKE,
+  cx,
+} from "@/components/sticker";
 
 /**
- * The honest comprehension report card — Ledger style.
- * Big score dial (SVG arc), verdict stamp (viridian / ochre / rust),
- * strengths & gaps columns, next step, and a warm non-punitive close.
+ * The honest comprehension report card — Noor Play anatomy.
+ * Big score dial (SVG arc on the mastery ramp), a verdict BADGE (leaf /
+ * Honey / inactive grey — never red), strengths & gaps columns, next step,
+ * and a warm non-punitive close.
+ *
+ * It was the Ledger's: a dashed gold "passport" for the next step and a
+ * rubber stamp rotated -8° for the verdict, beside sticker buttons (review
+ * 2026-09-23, F14), and a button row in three border weights (F15). Every
+ * surface below is now a sticker from `components/sticker.ts`, and the dial
+ * paints with the same `--mastery-*` ramp as every other screen (F21) instead
+ * of `--m-*`, which is red at the bottom under the Ledger palette.
  */
 
 const VERDICT_META: Record<
   Verdict,
   {
     stamp: string;
-    stampCls: string;
+    /** badge fill + its paired foreground — the border is the badge's ink */
+    badgeInk: string;
     color: string;
     headline: string;
     arabic: string;
@@ -21,22 +40,24 @@ const VERDICT_META: Record<
 > = {
   got_it: {
     stamp: "Got it ✓",
-    stampCls: "stamp-seal",
-    color: "var(--m-high)",
+    // handoff: "Correct = leaf green"
+    badgeInk: "bg-[var(--play-leaf)] text-[color:var(--play-on-leaf)]",
+    color: MASTERY_LEGEND[4].color,
     headline: "Confirmed. Go enjoy your evening 🎉",
     arabic: "فاهم الدرس — برافو عليك",
   },
   nearly: {
     stamp: "Nearly there",
-    stampCls: "stamp-seal stamp-seal--gold",
-    color: "var(--m-mid)",
+    badgeInk: "bg-card-warm text-[color:var(--play-text-amber-warm)]",
+    color: MASTERY_LEGEND[2].color,
     headline: "So close — we'll work on this together.",
     arabic: "النهاردة أحسن من امبارح",
   },
   needs_work: {
     stamp: "Needs work",
-    stampCls: "stamp-seal stamp-seal--rust",
-    color: "var(--m-low)",
+    // the inactive grey, never a warning colour
+    badgeInk: "bg-[var(--play-inactive-fill)] text-[color:var(--play-text-muted)]",
+    color: MASTERY_LEGEND[1].color,
     headline: "We'll work on this together — no stress.",
     arabic: "النهاردة أحسن من امبارح",
   },
@@ -97,40 +118,50 @@ export function ReportCard({
       dir={rtl ? "rtl" : undefined}
       className="anim-pop mx-auto w-full max-w-2xl"
     >
-      <div className="ledger-card overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-card-warm px-6 py-3">
+      <div className={cx(STICKER_CARD, "overflow-hidden")}>
+        <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-6 py-3")}>
           {rtl ? (
-            <span className="text-[11.5px] font-semibold text-ink-faint">
+            <span className="text-[0.85rem] font-bold text-ink">
               تقرير الفهم · {mode === "learn" ? "درس متشرح" : "مراجعة"} ·{" "}
               {studentName.split(" ")[0]}
             </span>
           ) : (
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
+            <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint">
               Comprehension report · {mode === "learn" ? "taught lesson" : "revision"} ·{" "}
               {studentName.split(" ")[0]}
             </span>
           )}
-          <span className="font-mono text-[9.5px] text-ink-faint">
+          <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
             understanding_checks #{check.id} · {check.turns} AI turns
           </span>
         </div>
 
         <div className="px-6 pb-6 pt-5 sm:px-8">
-          {/* dial + stamp */}
+          {/* dial + verdict badge */}
           <div className="relative mx-auto max-w-[300px]">
             <svg viewBox="0 0 200 150" className="block w-full" role="img" aria-label={`Score ${check.score} out of 100`}>
+              {/* The quest-bar anatomy bent into an arc: an ink outline, a
+                  white track inside it, and the ramp colour on top. Widths
+                  are figure geometry in viewBox units, not sticker strokes. */}
               <path
                 d={ARC}
                 fill="none"
-                stroke="var(--line)"
-                strokeWidth="9"
+                stroke="var(--ink)"
+                strokeWidth="13"
                 strokeLinecap="round"
               />
               <path
                 d={ARC}
                 fill="none"
-                stroke={v.color}
-                strokeWidth="9"
+                stroke="var(--card)"
+                strokeWidth="8"
+                strokeLinecap="round"
+              />
+              <path
+                d={ARC}
+                fill="none"
+                style={{ stroke: v.color }}
+                strokeWidth="8"
                 strokeLinecap="round"
                 pathLength={100}
                 strokeDasharray="100"
@@ -143,7 +174,7 @@ export function ReportCard({
                 textAnchor="middle"
                 fontFamily="var(--stack-display)"
                 fontSize="46"
-                fontWeight="500"
+                fontWeight="800"
                 fill="var(--ink)"
               >
                 {check.score}
@@ -160,19 +191,31 @@ export function ReportCard({
                 / 100 COMPREHENSION
               </text>
             </svg>
-            <span
-              className={`${v.stampCls} anim-stamp absolute -end-2 top-2 sm:-end-8 ${check.verdict === "got_it" ? "anim-ring-pulse" : ""}`}
-            >
-              {rtl ? AR_STAMP[check.verdict] : v.stamp}
+            {/* The badge lands with `pop` (the handoff's "badge landing").
+                "Got it" also sends one ring out from behind it, after the pop
+                rather than with it — one animation at a time. The ring sits
+                on its own element: on the badge itself, `play-ring` ends at
+                opacity 0 and took the verdict with it. */}
+            <span className="anim-pop absolute -end-2 top-2 sm:-end-8">
+              {check.verdict === "got_it" && (
+                <span
+                  aria-hidden
+                  className="anim-ring-pulse pointer-events-none absolute inset-0 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-solid border-[color:var(--noor-progress)]"
+                  style={{ animationDelay: "380ms" }}
+                />
+              )}
+              <span className={cx(BADGE, "relative", v.badgeInk)}>
+                {rtl ? AR_STAMP[check.verdict] : v.stamp}
+              </span>
             </span>
           </div>
 
           {rtl ? (
-            <p dir="rtl" className="mt-1 text-center font-display text-[22px] font-medium leading-snug text-ink">
+            <p dir="rtl" className="mt-1 text-center font-display text-[1.5rem] font-extrabold leading-[1.3] text-ink">
               {v.arabic}
             </p>
           ) : (
-            <p className="mt-1 text-center font-display text-[22px] font-medium leading-snug text-ink">
+            <p className="mt-1 text-center font-display text-[1.5rem] font-extrabold leading-[1.3] text-ink">
               {v.headline}
             </p>
           )}
@@ -183,7 +226,7 @@ export function ReportCard({
               <p className="rule-label mb-2.5">{rtl ? "اللي ثبت معاك" : "What clicked"}</p>
               <ul className="space-y-1.5">
                 {check.strengths.length === 0 && (
-                  <li className="text-[12.5px] italic text-ink-faint">
+                  <li className="text-[0.9rem] text-ink-faint">
                     {rtl
                       ? "— لسه مفيش حاجة ثابتة، وولا يهمك"
                       : "— nothing solid yet, and that's okay"}
@@ -192,10 +235,10 @@ export function ReportCard({
                 {check.strengths.map((s, i) => (
                   <li
                     key={i}
-                    className="anim-rise flex gap-2 text-[13px] leading-snug text-ink"
+                    className="anim-rise flex gap-2 font-read text-[1rem] leading-relaxed text-ink"
                     style={{ animationDelay: `${350 + i * 90}ms` }}
                   >
-                    <span className="mt-px shrink-0 font-semibold text-accent-deep">✓</span>
+                    <span className="mt-px shrink-0 font-bold text-[color:var(--play-on-leaf-dim)]">✓</span>
                     {s}
                   </li>
                 ))}
@@ -205,7 +248,7 @@ export function ReportCard({
               <p className="rule-label mb-2.5">{rtl ? "اللي هنظبطه مع بعض" : "What we'll polish"}</p>
               <ul className="space-y-1.5">
                 {check.gaps.length === 0 && (
-                  <li className="text-[12.5px] italic text-ink-faint">
+                  <li className="text-[0.9rem] text-ink-faint">
                     {rtl
                       ? "— مفيش ثغرات ظهرت في الجلسة دي"
                       : "— no gaps found in this session"}
@@ -214,10 +257,10 @@ export function ReportCard({
                 {check.gaps.map((g, i) => (
                   <li
                     key={i}
-                    className="anim-rise flex gap-2 text-[13px] leading-snug text-ink"
+                    className="anim-rise flex gap-2 font-read text-[1rem] leading-relaxed text-ink"
                     style={{ animationDelay: `${350 + i * 90}ms` }}
                   >
-                    <span className="mt-px shrink-0 font-semibold text-rust">✎</span>
+                    <span className="mt-px shrink-0 font-bold text-[color:var(--play-text-muted)]">✎</span>
                     {g}
                   </li>
                 ))}
@@ -226,31 +269,42 @@ export function ReportCard({
           </div>
 
           {/* next step */}
-          <div className="passport anim-rise mt-6 px-4 py-3" style={{ animationDelay: "550ms" }}>
-            <p className="relative font-mono text-[8.5px] uppercase tracking-[0.2em] text-gold">
-              {rtl ? "الخطوة الجاية · بكرة" : "Next step · tomorrow"}
-            </p>
-            <p className="relative mt-1 text-[13.5px] leading-relaxed text-ink font-read">
+          <div
+            className={cx(STROKE, "anim-rise mt-6 rounded-[var(--play-radius)] bg-card-warm px-4 py-3 sticker-shadow-sm")}
+            style={{ animationDelay: "550ms" }}
+          >
+            {/* Arabic is never set in mono and never letter-spaced (handoff,
+                TYPE) — the eyebrow changes face with the language. */}
+            {rtl ? (
+              <p className="font-display text-[0.85rem] font-bold text-[color:var(--play-text-amber-warm)]">
+                الخطوة الجاية · بكرة
+              </p>
+            ) : (
+              <p className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-[color:var(--play-text-amber-warm)]">
+                Next step · tomorrow
+              </p>
+            )}
+            <p className="mt-1 font-read text-[1rem] leading-relaxed text-ink">
               {check.nextStep}
             </p>
           </div>
 
-          <p className="mt-4 text-center font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint">
+          <p className="mt-4 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
             rated by the tutor from the full session transcript · ${costUsd.toFixed(4)} · logged
           </p>
         </div>
       </div>
 
       {readOnly ? (
-        <p className="mt-4 rounded-lg border border-dashed border-line px-4 py-2.5 text-center font-mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
+        <p className="mt-4 rounded-[var(--play-radius)] border-[length:var(--play-stroke)] border-dashed border-[color:var(--play-disabled-border)] px-4 py-2.5 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
           the student was offered three next steps here
         </p>
       ) : (
       <div className="anim-rise mt-4 flex flex-wrap gap-3" style={{ animationDelay: "650ms" }}>
-        <Link
-          href="/spine"
-          className="flex-1 rounded-xl bg-ink px-6 py-3.5 text-center font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow"
-        >
+        {/* One row, one anatomy (F15): the same stroke, radius, shadow and
+            52px floor on all three doors; only the fill says which one is
+            the primary. Amber on the graph — the ONE amber on this screen. */}
+        <Link href="/spine" className={cx(BUTTON_PRIMARY, "flex-1 py-3")}>
           {rtl ? "شوفها على الشبكة ←" : "See it on the graph →"}
         </Link>
         {/* The third door (#29). Two options after a lesson meant a student
@@ -262,16 +316,10 @@ export function ReportCard({
             five items are the weakest objectives whose prerequisites are
             met). What was missing was a door into it from the one screen
             where a student has just been told what her weak spots are. */}
-        <Link
-          href="/student?mode=practice"
-          className="rounded-xl border-[3px] border-line bg-card-warm px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
-        >
+        <Link href="/student?mode=practice" className={cx(BUTTON_SECONDARY, "py-3")}>
           {rtl ? "ذاكر نقطة ضعفي" : "Practise my weak spots"}
         </Link>
-        <Link
-          href="/student"
-          className="rounded-xl border border-line bg-card px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
-        >
+        <Link href="/student" className={cx(BUTTON_SECONDARY, "py-3")}>
           {rtl ? "خلصنا النهاردة" : "Done for today"}
         </Link>
       </div>

@@ -11,7 +11,29 @@ import {
   type IrabAnswer,
   type NounType,
 } from "@/lib/irab";
+import { cx } from "@/components/sticker";
+import { categoryStyle } from "@/components/viz/arabic-ui";
 import { stableShuffle, useFireOnce } from "./util";
+import {
+  pickInk,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT_AR,
+  WIDGET_KIND_AR,
+  WIDGET_NOTE,
+  WIDGET_OPTION,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+  WIDGET_RULE_QUOTE,
+  WIDGET_WELL,
+} from "./WidgetShell";
+
+/** «أعرب» is نحو: the target wears the نحو span colour and underline. */
+const NAHW = categoryStyle("نحو");
+
+/** One option, for the موقع and the علامة rows alike. */
+const optionCls = (isRight: boolean, isWrong: boolean, settled: boolean) =>
+  cx(WIDGET_OPTION, "ar-block px-2.5 py-1 text-[12.5px]", pickInk(isRight, isWrong, settled));
 
 /**
  * «أعرب ما تحته خط» — the canonical Arabic exam item, in two taps.
@@ -198,33 +220,26 @@ export function IrabBuilder({
   const tail = at ? sentence.slice(at[1]) : "";
 
   return (
-    <div
-      dir="rtl"
-      lang="ar"
-      className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="ar-label font-mono text-[9px] text-accent-deep">
-          ✳ تفاعلي · إعراب
-        </span>
-        <span className="ar-label font-mono text-[9px] text-ink-faint">
+    <div dir="rtl" lang="ar" className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND_AR}>✳ تفاعلي · إعراب</span>
+        <span className={WIDGET_HINT_AR}>
           {done ? "تمام" : roleDone ? "٢ · العلامة" : "١ · الموقع"}
         </span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="ar-block ar-plain text-[13px] font-medium text-ink">{prompt}</p>
+        <p className={cx("ar-block ar-plain", WIDGET_PROMPT)}>{prompt}</p>
 
-        <p className="ar-block ar-vowelled mt-2 rounded-md border border-line-soft bg-card-warm px-2.5 py-1.5 text-[16.5px] text-ink">
+        <p className={cx(WIDGET_WELL, "ar-block ar-vowelled mt-2 px-2.5 py-1.5 text-[16.5px] text-ink")}>
           {head}
           {mid && (
             <mark
               style={{
-                background: "rgba(13,74,66,0.16)",
+                background: NAHW.tint,
                 color: "inherit",
-                borderRadius: "0.2rem",
                 textDecorationLine: "underline",
-                textDecorationColor: "var(--accent-deep)",
+                textDecorationColor: NAHW.line,
                 textUnderlineOffset: "0.45em",
               }}
             >
@@ -245,15 +260,8 @@ export function IrabBuilder({
                 type="button"
                 onClick={() => pickRole(r)}
                 disabled={roleDone || isWrong}
-                className={`ar-block min-h-[36px] rounded-md border px-2.5 py-1 text-[12.5px] font-medium transition-all duration-150 ${
-                  isRight
-                    ? "border-accent bg-accent text-paper"
-                    : isWrong
-                      ? "border-rust/45 bg-rust-wash text-rust opacity-60"
-                      : roleDone
-                        ? "border-line-soft bg-card text-ink-faint"
-                        : "border-line bg-card text-ink hover:-translate-y-px hover:border-ink/40"
-                }`}
+                data-verdict={isRight ? "correct" : isWrong ? "wrong" : undefined}
+                className={optionCls(isRight, isWrong, roleDone)}
               >
                 <bdi>{r}</bdi>
               </button>
@@ -263,7 +271,7 @@ export function IrabBuilder({
 
         {/* stage 2 — العلامة, unlocked (and narrowed) by stage 1 */}
         <div className={`mt-2.5 ${roleDone ? "" : "pointer-events-none opacity-40"}`}>
-          <span className="ar-label ar-block font-mono text-[9.5px] text-ink-faint">
+          <span className="ar-label ar-block font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]">
             العلامة
           </span>
           <div className="mt-1 flex flex-wrap gap-1.5">
@@ -276,13 +284,8 @@ export function IrabBuilder({
                   type="button"
                   onClick={() => pickMark(m)}
                   disabled={!roleDone || done || isWrong}
-                  className={`ar-block min-h-[36px] rounded-md border px-2.5 py-1 text-[12.5px] font-medium transition-all duration-150 ${
-                    isRight
-                      ? "border-accent bg-accent text-paper"
-                      : isWrong
-                        ? "border-rust/45 bg-rust-wash text-rust opacity-60"
-                        : "border-line bg-card text-ink hover:-translate-y-px hover:border-ink/40"
-                  }`}
+                  data-verdict={isRight ? "correct" : isWrong ? "wrong" : undefined}
+                  className={optionCls(isRight, isWrong, false)}
                 >
                   <bdi>{m}</bdi>
                 </button>
@@ -293,18 +296,18 @@ export function IrabBuilder({
 
         {/* the COMPUTED diagnosis — a slot diff verbalised, never a red X */}
         {coach && !done && (
-          <p className="ar-block ar-plain anim-fade mt-2 rounded-md border border-gold/40 bg-gold-wash px-2.5 py-1.5 text-[12px] text-ink-soft">
+          <p className={cx(WIDGET_NOTE, "ar-block ar-plain anim-fade mt-2 px-2.5 py-1.5 text-[12px]")}>
             <bdi>{coach}</bdi>
           </p>
         )}
 
         {done && (
-          <div className="anim-pop mt-3 rounded-md border border-accent/45 bg-accent-wash px-3 py-2">
-            <span className="ar-block font-display text-[13.5px] font-medium text-accent-deep">
+          <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
+            <span className="ar-block font-display text-[13.5px] font-bold">
               <bdi>{answer.surface_ar}</bdi>
             </span>
             {rule_ref?.quote && (
-              <p className="ar-block ar-plain mt-1 border-r-2 border-gold/50 pr-1.5 text-[11.5px] text-ink-soft">
+              <p className={cx(WIDGET_RULE_QUOTE, "ar-block ar-plain mt-1 text-[11.5px]")}>
                 <bdi>
                   «{rule_ref.quote}»
                   {rule_ref.page ? ` — ص ${arDigits(rule_ref.page)}` : ""}

@@ -24,7 +24,8 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { WidgetShell, type Verdict } from "./WidgetShell";
+import { BUTTON_SECONDARY } from "@/components/sticker";
+import { WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_INPUT, WIDGET_WELL } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
@@ -205,7 +206,7 @@ export function BarBuilder({
         viewBox={`0 0 ${W} ${H}`}
         role="application"
         aria-label={prompt}
-        className={`mx-auto block w-full max-w-[320px] rounded-md border border-line-soft bg-card-warm ${
+        className={`mx-auto block w-full max-w-[320px] ${WIDGET_WELL} ${
           verdict ? "cursor-default" : "cursor-ns-resize"
         }`}
         {...(verdict ? {} : surface)}
@@ -263,7 +264,7 @@ export function BarBuilder({
       </svg>
 
       {!verdict && (
-        <div className="mt-2.5 flex flex-wrap items-center justify-center gap-2">
+        <div className={WIDGET_ACTIONS}>
           {/* Keyboard path: the bars are a grid of numbers as much as a
               picture, so they can be typed as well as dragged. */}
           {vals.map((v, i) => (
@@ -278,13 +279,13 @@ export function BarBuilder({
                 const nv = clamp(Math.round(Number(e.target.value) || 0), 0, MAXV);
                 setVals((cur) => cur.map((x, j) => (j === i ? nv : x)));
               }}
-              className="h-9 w-11 rounded-md border border-line bg-card text-center font-mono text-[12px] text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+              className={`w-11 ${WIDGET_INPUT}`}
             />
           ))}
           <button
             type="button"
             onClick={check}
-            className="min-h-[36px] rounded-md border border-accent/45 bg-accent-wash px-3.5 font-display text-[13px] font-medium text-accent-deep transition-colors hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+            className={BUTTON_SECONDARY}
           >
             Check
           </button>

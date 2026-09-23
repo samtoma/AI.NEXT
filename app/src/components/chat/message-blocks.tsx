@@ -37,6 +37,7 @@
 import type { ReactNode } from "react";
 
 import { TeX } from "@/components/TeX";
+import { STROKE_SM, STROKE_WIDTH_SM, VERDICT_INK, cx } from "@/components/sticker";
 import type { Block, Cite, Inline } from "@/lib/chat-parse";
 
 import { CitationChip, type CiteInfo } from "./CitationChip";
@@ -44,21 +45,65 @@ import { CitationChip, type CiteInfo } from "./CitationChip";
 /* --------------------------------------------------------------- bubbles */
 
 /**
+ * The bubble frame both speakers share (handoff, Chat bubbles): a 2.5px ink
+ * outline, the 20px radius with ONE corner cut to the notch, and body copy at
+ * the read scale in the reading face — a chat message is a passage, not a
+ * label, so it is Cairo at 1rem rather than Baloo at 13px (review 2026-09-23,
+ * F27). Leading is not set here: under Play the body carries the Latin 1.75.
+ *
+ * The notch is written with LOGICAL corner utilities so it mirrors with the
+ * direction on its own: Nour's sits at the top-start corner, toward the
+ * speaker; the student's at the bottom-start corner — the corner facing back
+ * into the conversation from the end-aligned bubble ("the bottom far corner",
+ * `18px 18px 18px 6px` LTR / `18px 18px 6px 18px` RTL in the published
+ * ChatBubble spec). Token arbitrary values rather than `rounded-xl`: the Play
+ * stylesheet re-rounds `.rounded-xl` on all four corners from an unlayered
+ * rule, which is how the tail had gone missing.
+ *
+ * **The frame and the text take their direction from different places.** The
+ * frame has no `dir`, so it inherits the conversation's and its notch mirrors
+ * with the page. The text sits in an inner `dir="auto"` wrapper, so a message
+ * still resolves its own direction from its first strong character, exactly as
+ * it did when the attribute sat on the bubble itself. Both on one element was
+ * wrong in RTL: `dir="auto"` skips descendants that carry their own `dir`, and
+ * every paragraph the block renderer emits does, so Nour's bubble resolved to
+ * LTR inside an Arabic lesson and cut its notch on the far corner.
+ */
+const BUBBLE_SHAPE = "px-4 py-3 text-[1rem] font-read";
+
+/** Nour's frame, minus the fill — the say-row in `ChatCore` wears it too. */
+export const TUTOR_BUBBLE_FRAME = cx(
+  STROKE_WIDTH_SM,
+  "rounded-[var(--play-radius)] rounded-ss-[var(--play-radius-notch)]",
+  BUBBLE_SHAPE
+);
+
+/** Nour on white, resting on the small hard shadow. */
+export const TUTOR_BUBBLE_FILL = "border-ink bg-card sticker-shadow-sm noor-bubble-tutor";
+
+/**
  * The two bubbles a transcript is made of, extracted for the same reason the
  * block renderer was: the console's replay must be able to render the
- * student's chrome, not chrome that resembles it. Every class here was moved
- * from `MessageRow` unchanged — including `anim-pop`, which is part of how the
+ * student's chrome, not chrome that resembles it. These are the only bubbles
+ * `MessageRow` renders — including `anim-pop`, which is part of how the
  * message arrived and therefore part of what is being reconstructed.
  */
 export function StudentBubble({ children }: { children: ReactNode }) {
   return (
     <div className="anim-pop flex justify-end">
       <div
-        dir="auto"
-        className="max-w-[85%] rounded-xl rounded-ee-sm bg-ink px-3.5 py-2 text-[13px] leading-relaxed text-paper shadow-sm noor-bubble-student"
-        style={{ textAlign: "start" }}
+        className={cx(
+          STROKE_SM,
+          "max-w-[85%] rounded-[var(--play-radius)] rounded-es-[var(--play-radius-notch)]",
+          BUBBLE_SHAPE,
+          // the student's own turn is the sky playmate with its paired ink —
+          // never ink: their own words are not the darkest thing on screen
+          "bg-[var(--play-sky)] text-[color:var(--play-on-sky)] sticker-shadow-sm noor-bubble-student"
+        )}
       >
-        {children}
+        <div dir="auto" style={{ textAlign: "start" }}>
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -76,13 +121,17 @@ export function TutorBubble({
   return (
     <div className="anim-pop flex justify-start" style={style}>
       <div
-        dir="auto"
-        className={`max-w-[94%] rounded-xl rounded-es-sm border px-3.5 py-2.5 text-[13px] leading-relaxed text-ink shadow-sm font-read ${
-          error ? "border-rust/40 bg-rust-wash/50" : "border-line-soft bg-card-warm noor-bubble-tutor"
-        }`}
-        style={{ textAlign: "start" }}
+        className={cx(
+          "max-w-[94%]",
+          TUTOR_BUBBLE_FRAME,
+          // A failed turn greys out like a wrong answer does — the inactive
+          // fill and border, muted AA text, no shadow — and is never red.
+          error ? VERDICT_INK.wrong : cx(TUTOR_BUBBLE_FILL, "text-ink")
+        )}
       >
-        {children}
+        <div dir="auto" style={{ textAlign: "start" }}>
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -207,7 +256,7 @@ export function renderChatBlocks(blocks: Block[], o: BlockRenderOptions = {}): R
  */
 function Descriptor({ what }: { what: string; key?: number }) {
   return (
-    <p className="my-1.5 rounded border border-dashed border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">
+    <p className="my-1.5 rounded-[var(--play-radius-sm)] border-[length:var(--play-stroke-sm)] border-dashed border-[color:var(--play-inactive-border)] px-2 py-1 font-mono text-[0.72rem] uppercase tracking-[0.1em] text-ink-faint">
       {what}
     </p>
   );

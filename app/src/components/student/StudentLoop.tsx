@@ -11,27 +11,67 @@ import { ChatCore } from "@/components/chat/ChatCore";
 import { FeedbackPrompt } from "@/components/student/FeedbackPrompt";
 import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
+import {
+  BADGE,
+  BUTTON_PRIMARY,
+  BUTTON_SECONDARY,
+  HEADING,
+  HONEY_BAND,
+  STICKER_CARD,
+  STICKER_PANEL,
+  STROKE,
+  STROKE_SM,
+  STROKE_WIDTH,
+  STROKE_WIDTH_SM,
+  VERDICT_INK,
+  cx,
+} from "@/components/sticker";
 
+/**
+ * Noor Play anatomy throughout (`components/sticker.ts`): the reason tags are
+ * badges told apart by their WORDS, with the Honey band reserved for the one
+ * worth attention; there is no red — "weakest" used to be the Ledger's rust.
+ */
 const REASON_META: Record<
   PlanReason,
   { label: string; className: string; why: string }
 > = {
   weakest: {
     label: "weakest topic",
-    className: "bg-rust-wash text-rust border-rust/35",
+    className: "bg-card-warm text-ink",
     why: "lowest mastery with prerequisites met",
   },
   review: {
     label: "spaced review",
-    className: "bg-accent-wash text-accent-deep border-accent/35",
+    className: "bg-card text-ink",
     why: "strong topic — keep it warm",
   },
   stretch: {
     label: "stretch",
-    className: "bg-gold-wash text-gold border-gold/40",
+    className: "bg-card text-ink",
     why: "one step past the frontier",
   },
 };
+
+/**
+ * One pip in the session's progress row. Correct is the leaf playmate, a
+ * miss is the inactive grey (never red — review 2026-09-23, F21: this read
+ * `--m-low`, which is red under the Ledger palette), the current question is
+ * ink, and the ones still to come are empty white.
+ */
+function pipClass(state: "correct" | "wrong" | "current" | "todo") {
+  const ink = {
+    correct: "border-ink bg-[var(--play-leaf)]",
+    wrong: "border-[color:var(--play-inactive-border)] bg-[var(--play-inactive-fill)]",
+    current: "border-ink bg-ink",
+    todo: "border-ink bg-card",
+  }[state];
+  return cx(
+    STROKE_WIDTH_SM,
+    "h-3.5 w-7 rounded-[var(--play-radius-pill)] transition-colors duration-300",
+    ink
+  );
+}
 
 type Phase = "plan" | "asking" | "correct" | "explain" | "summary";
 
@@ -141,7 +181,7 @@ export function StudentLoop({
               beside it at the same size and weight, not beneath it at half.
               The gap is flex, not a margin: margin-inline-start on a dir="rtl"
               span resolves to its right edge and the two scripts render flush. */}
-          <h1 className="flex flex-wrap items-baseline gap-x-3 font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
+          <h1 className={cx(HEADING, "flex flex-wrap items-baseline gap-x-3 text-[1.9rem] md:text-[2.4rem]")}>
             <span>Today&apos;s Plan</span>
             <span className="text-ink-faint">/</span>
             <span dir="rtl" className="text-accent-deep">خطة اليوم</span>
@@ -153,16 +193,15 @@ export function StudentLoop({
                 return (
                   <span
                     key={p.questionId}
-                    className="h-2 w-7 rounded-full transition-colors duration-300"
-                    style={{
-                      backgroundColor: rec
+                    className={pipClass(
+                      rec
                         ? rec.result.isCorrect
-                          ? "var(--m-high)"
-                          : "var(--m-low)"
+                          ? "correct"
+                          : "wrong"
                         : i === idx
-                          ? "var(--ink)"
-                          : "rgba(32,41,58,0.15)",
-                    }}
+                          ? "current"
+                          : "todo"
+                    )}
                   />
                 );
               })}
@@ -175,7 +214,7 @@ export function StudentLoop({
       {phase === "plan" && (
         <section className="space-y-3">
           <p
-            className="anim-rise text-[15px] leading-relaxed text-ink-soft"
+            className="anim-rise font-read text-[1rem] leading-relaxed text-ink-soft"
             style={{ animationDelay: "60ms" }}
           >
             Five questions picked from the curriculum graph — weighted toward
@@ -187,31 +226,29 @@ export function StudentLoop({
             return (
               <div
                 key={p.questionId}
-                className="ledger-card anim-rise flex items-center gap-4 px-5 py-3.5"
+                className={cx(STICKER_PANEL, "anim-rise flex items-center gap-4 px-5 py-3.5")}
                 style={{ animationDelay: `${120 + i * 70}ms` }}
               >
-                <span className="font-display text-xl font-medium text-ink-faint">
+                <span className="font-display text-[1.5rem] font-extrabold text-ink-faint">
                   {i + 1}
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="truncate text-[13.5px] font-semibold text-ink">
+                    <span className="truncate font-display text-[1.05rem] font-bold text-ink">
                       {p.loLabel}
                     </span>
-                    <span
-                      className={`rounded-full border px-2 py-px font-mono text-[9.5px] uppercase tracking-[0.1em] ${meta.className}`}
-                    >
+                    <span className={cx(BADGE, meta.className)}>
                       {meta.label}
                     </span>
                   </div>
-                  <p className="mt-0.5 font-mono text-[10.5px] text-ink-faint">
+                  <p className="mt-0.5 font-mono text-[0.72rem] font-medium text-ink-faint">
                     {/* band, not percentage — same reason as MasteryDelta below */}
                     {meta.why} · {masteryLabel(p.loScore, p.loScore > 0)} · {p.tier} tier
                   </p>
                 </div>
                 {/* 0 means no evidence, not a bad result: the not-started step. */}
                 <span
-                  className="h-2.5 w-2.5 shrink-0 rounded-full"
+                  className={cx(STROKE_SM, "h-4 w-4 shrink-0 rounded-[var(--play-radius-pill)]")}
                   style={{
                     backgroundColor: masteryColor(p.loScore, 1, p.loScore > 0),
                   }}
@@ -220,10 +257,7 @@ export function StudentLoop({
             );
           })}
           <div className="anim-rise pt-3" style={{ animationDelay: "520ms" }}>
-            <button
-              onClick={begin}
-              className="w-full rounded-xl bg-ink py-3.5 font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep hover:shadow-[0_16px_32px_-16px_rgba(13,74,66,0.6)] play-pressable sticker-shadow"
-            >
+            <button onClick={begin} className={cx(BUTTON_PRIMARY, "w-full")}>
               Start the session →
             </button>
           </div>
@@ -234,25 +268,23 @@ export function StudentLoop({
       {(phase === "asking" || phase === "correct" || phase === "explain") &&
         item && (
           <section key={item.questionId} className="anim-pop">
-            <div className="ledger-card overflow-hidden">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-card-warm px-6 py-3">
+            <div className={cx(STICKER_CARD, "overflow-hidden")}>
+              <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-6 py-3")}>
                 <div className="flex items-center gap-2.5">
-                  <span className="text-[13px] font-semibold text-ink">
+                  <span className="font-display text-[1rem] font-bold text-ink">
                     {item.loLabel}
                   </span>
-                  <span
-                    className={`rounded-full border px-2 py-px font-mono text-[9.5px] uppercase tracking-[0.1em] ${REASON_META[item.reason].className}`}
-                  >
+                  <span className={cx(BADGE, REASON_META[item.reason].className)}>
                     {REASON_META[item.reason].label}
                   </span>
                 </div>
-                <span className="font-mono text-[10px] text-ink-faint">
+                <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
                   {item.questionId} · p.{item.sourcePage ?? "—"} · {item.tier}
                 </span>
               </div>
 
               <div className="px-6 py-6">
-                <p className="tex-block text-[18px] leading-relaxed text-ink">
+                <p className="tex-block text-[1.15rem] leading-relaxed text-ink">
                   <TeX text={item.stem} />
                 </p>
 
@@ -262,21 +294,26 @@ export function StudentLoop({
                     {item.questionType === "mcq" && item.choices ? (
                       <div className="grid gap-2.5 sm:grid-cols-2">
                         {mcqChoices(item)!.map((c) => (
+                          // The handoff's answer option: 2.5px ink, 3px hard
+                          // shadow, a real 56px target; SELECTED fills Honey
+                          // and keeps its stroke and shadow.
                           <button
                             key={c.key}
                             onClick={() => setChoice(c.key)}
-                            className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-left text-[15px] transition-all duration-150 play-pressable sticker-shadow-sm ${
-                              choice === c.key
-                                ? "border-ink bg-ink/5 shadow-[0_0_0_1px_var(--ink)]"
-                                : "border-line bg-card hover:-translate-y-px hover:border-ink/40"
-                            }`}
+                            aria-pressed={choice === c.key}
+                            className={cx(
+                              STROKE_SM,
+                              "flex min-h-[56px] items-center gap-3 rounded-[var(--play-radius-sm)] px-4 py-3 text-start font-display text-[1.1rem] font-bold text-ink sticker-shadow-sm play-pressable",
+                              choice === c.key ? "bg-card-warm" : "bg-card"
+                            )}
                           >
                             <span
-                              className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-mono text-[12px] font-semibold transition-colors ${
+                              className={cx(
+                                "flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] font-mono text-[0.85rem] font-medium transition-colors",
                                 choice === c.key
                                   ? "bg-ink text-paper"
-                                  : "bg-ink/8 text-ink-soft"
-                              }`}
+                                  : "bg-[var(--play-inactive-fill)] text-[color:var(--play-text-muted)]"
+                              )}
                             >
                               {c.key}
                             </span>
@@ -293,7 +330,7 @@ export function StudentLoop({
                         onKeyDown={(e) => e.key === "Enter" && submit()}
                         placeholder="Type your answer…"
                         autoFocus
-                        className="w-full max-w-xs rounded-lg border border-line bg-card px-4 py-3 font-mono text-lg text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-accent"
+                        className={cx(STROKE, "min-h-[var(--noor-touch-min)] w-full max-w-xs rounded-[var(--play-radius-sm)] bg-card px-4 py-3 font-mono text-lg text-ink placeholder:text-ink-faint")}
                       />
                     )}
 
@@ -304,12 +341,12 @@ export function StudentLoop({
                           busy ||
                           (item.questionType === "mcq" ? !choice : !numeric.trim())
                         }
-                        className="rounded-full bg-ink px-7 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 enabled:hover:-translate-y-0.5 enabled:hover:bg-accent-deep disabled:opacity-35 play-pressable sticker-shadow-sm"
+                        className={cx(BUTTON_PRIMARY, "disabled:bg-[var(--play-inactive-fill)]")}
                       >
                         {busy ? "Checking…" : "Submit answer"}
                       </button>
                       {error && (
-                        <span className="text-[13px] text-rust">
+                        <span className="text-[0.9rem] font-bold text-[color:var(--play-text-muted)]">
                           {error} — try again
                         </span>
                       )}
@@ -319,17 +356,21 @@ export function StudentLoop({
 
                 {/* correct */}
                 {phase === "correct" && lastResult && (
-                  <div className="anim-pop mt-6 rounded-xl border border-accent/40 bg-accent-wash px-5 py-4">
+                  // Correct is the leaf playmate with its paired ink (handoff).
+                  <div
+                    className={cx(
+                      STROKE_WIDTH,
+                      VERDICT_INK.correct,
+                      "anim-pop mt-6 rounded-[var(--play-radius)] px-5 py-4"
+                    )}
+                  >
                     <div className="flex items-center justify-between gap-4">
-                      <p className="font-display text-xl font-medium text-accent-deep">
+                      <p className="font-display text-[1.5rem] font-extrabold leading-[1.2]">
                         Correct — nicely done. ✓
                       </p>
                       <MasteryDelta result={lastResult} />
                     </div>
-                    <button
-                      onClick={advance}
-                      className="mt-4 rounded-full bg-accent-deep px-6 py-2 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
-                    >
+                    <button onClick={advance} className={cx(BUTTON_PRIMARY, "mt-4")}>
                       {idx + 1 >= plan.length ? "Finish session →" : "Next question →"}
                     </button>
                   </div>
@@ -337,12 +378,19 @@ export function StudentLoop({
 
                 {/* wrong → grounded explanation */}
                 {phase === "explain" && lastResult && (
-                  <div className="anim-pop mt-6 rounded-xl border border-rust/35 bg-rust-wash/60 px-5 py-4">
+                  // Wrong greys out and nudges — never red (handoff).
+                  <div
+                    className={cx(
+                      STROKE_WIDTH,
+                      VERDICT_INK.wrong,
+                      "anim-pop mt-6 rounded-[var(--play-radius)] px-5 py-4"
+                    )}
+                  >
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                      <p className="font-display text-lg font-medium text-ink anim-nudge">
+                      <p className="font-display text-[1.25rem] font-extrabold leading-[1.25] text-ink anim-nudge">
                         Not quite — let&apos;s look at it step by step.
                       </p>
-                      <span className="chip border-accent/40 bg-accent-wash text-accent-deep">
+                      <span className={cx(BADGE, "bg-card text-ink")}>
                         grounded in reviewed solution ✓
                       </span>
                     </div>
@@ -350,13 +398,13 @@ export function StudentLoop({
                       {lastResult.solution.map((s, i) => (
                         <li
                           key={s.step}
-                          className="anim-rise flex gap-3 rounded-lg border border-line-soft bg-card px-4 py-3"
+                          className={cx(STROKE_SM, "anim-rise flex gap-3 rounded-[var(--play-radius-sm)] bg-card px-4 py-3")}
                           style={{ animationDelay: `${200 + i * 550}ms` }}
                         >
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink font-mono text-[11px] font-semibold text-paper">
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-ink font-mono text-[0.8rem] font-medium text-paper">
                             {s.step}
                           </span>
-                          <span className="tex-block pt-0.5 text-[14px] leading-relaxed text-ink font-read">
+                          <span className="tex-block pt-0.5 text-[1rem] leading-relaxed text-ink font-read">
                             <TeX text={stepText(s)} />
                           </span>
                         </li>
@@ -371,29 +419,23 @@ export function StudentLoop({
                       <MasteryDelta result={lastResult} />
                       <div className="flex flex-wrap items-center gap-2.5">
                         {!askOpen && (
-                          <button
-                            onClick={() => setAskOpen(true)}
-                            className="rounded-full border border-accent/50 bg-accent-wash px-5 py-2 text-[13px] font-semibold text-accent-deep transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent hover:text-paper play-pressable sticker-shadow-sm"
-                          >
+                          <button onClick={() => setAskOpen(true)} className={BUTTON_SECONDARY}>
                             Still confused? Ask the tutor ✦
                           </button>
                         )}
-                        <button
-                          onClick={advance}
-                          className="rounded-full bg-ink px-6 py-2 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow-sm"
-                        >
+                        <button onClick={advance} className={BUTTON_PRIMARY}>
                           Got it {idx + 1 >= plan.length ? "— finish →" : "→"}
                         </button>
                       </div>
                     </div>
 
                     {askOpen && (
-                      <div className="anim-pop mt-4 overflow-hidden rounded-xl border border-accent/35 bg-card">
-                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-4 py-2">
-                          <span className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-accent-deep">
+                      <div className={cx(STICKER_PANEL, "anim-pop mt-4 overflow-hidden")}>
+                        <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-4 py-2")}>
+                          <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink">
                             ✦ AI tutor · grounded in the canonical steps only
                           </span>
-                          <span className="font-mono text-[9px] text-ink-faint">
+                          <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
                             max 2 AI turns per question
                           </span>
                         </div>
@@ -435,7 +477,7 @@ export function StudentLoop({
                 )}
               </div>
             </div>
-            <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
+            <p className="mt-3 text-center font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink-faint">
               every attempt is written to attempts + mastery (temporal) ·
               wrong answers log a grounded explanation
             </p>
@@ -445,12 +487,12 @@ export function StudentLoop({
       {/* ------- summary ------- */}
       {phase === "summary" && (
         <section className="space-y-5">
-          <div className="ledger-card anim-pop px-7 py-6">
+          <div className={cx(STICKER_CARD, "anim-pop px-7 py-6")}>
             <div className="flex flex-wrap items-baseline justify-between gap-3">
-              <h2 className="font-display text-2xl font-medium text-ink">
+              <h2 className="font-display text-[1.5rem] font-extrabold leading-[1.2] text-ink">
                 Session complete
               </h2>
-              <p className="font-mono text-[12px] text-ink-soft">
+              <p className="font-mono text-[0.9rem] font-medium text-ink-soft">
                 {records.filter((r) => r.result.isCorrect).length} / {records.length}{" "}
                 correct
               </p>
@@ -462,19 +504,25 @@ export function StudentLoop({
                 const delta = d.last - d.first;
                 return (
                   <div key={d.label} className="flex items-center gap-3">
-                    <span className="w-56 truncate text-[13px] font-medium text-ink">
+                    <span className="w-56 truncate font-display text-[0.95rem] font-bold text-ink">
                       {d.label}
                     </span>
-                    <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-ink/10">
+                    <div
+                      className={cx(
+                        STROKE_SM,
+                        "relative h-4 flex-1 overflow-hidden rounded-[var(--play-radius-pill)] bg-card"
+                      )}
+                    >
+                      {/* where it started, as a ghost of the same ramp step */}
                       <div
-                        className="absolute h-full rounded-full opacity-35"
+                        className="absolute h-full rounded-[var(--play-radius-pill)]"
                         style={{
                           width: pct(d.first),
-                          backgroundColor: masteryColor(d.first),
+                          backgroundColor: masteryColor(d.first, 0.35),
                         }}
                       />
                       <div
-                        className="absolute h-full rounded-full transition-all duration-1000 ease-out"
+                        className="absolute h-full rounded-[var(--play-radius-pill)] transition-all duration-1000 ease-out"
                         style={{
                           width: pct(d.last),
                           backgroundColor: masteryColor(d.last),
@@ -482,9 +530,12 @@ export function StudentLoop({
                       />
                     </div>
                     <span
-                      className={`w-20 text-right font-mono text-[12px] font-semibold ${
-                        delta >= 0 ? "text-accent-deep" : "text-ink-soft"
-                      }`}
+                      className={cx(
+                        "w-20 text-end font-mono text-[0.85rem] font-medium",
+                        delta >= 0
+                          ? "text-[color:var(--play-on-leaf-dim)]"
+                          : "text-[color:var(--play-text-muted)]"
+                      )}
                     >
                       {delta >= 0 ? "▲" : "▼"} {Math.abs(Math.round(delta * 100))} pts
                     </span>
@@ -495,16 +546,10 @@ export function StudentLoop({
           </div>
 
           <div className="anim-rise flex flex-wrap gap-3" style={{ animationDelay: "250ms" }}>
-            <Link
-              href="/spine"
-              className="flex-1 rounded-xl bg-ink px-6 py-3.5 text-center font-display text-lg font-medium text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow"
-            >
+            <Link href="/spine" className={cx(BUTTON_PRIMARY, "flex-1")}>
               See it on the graph →
             </Link>
-            <button
-              onClick={() => window.location.reload()}
-              className="rounded-xl border border-line bg-card px-6 py-3.5 font-display text-lg font-medium text-ink transition-all duration-200 hover:-translate-y-0.5 play-pressable sticker-shadow"
-            >
+            <button onClick={() => window.location.reload()} className={BUTTON_SECONDARY}>
               New plan
             </button>
           </div>
@@ -557,9 +602,12 @@ function MasteryDelta({ result }: { result: AttemptResult }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-soft ${
-        isMastered ? "anim-mastered" : ""
-      }`}
+      // No colour of its own: it inherits the panel's paired foreground, so
+      // it is legible on the leaf "correct" panel and the grey "wrong" one.
+      className={cx(
+        "inline-flex items-center gap-2 font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em]",
+        isMastered && "anim-mastered"
+      )}
     >
       {moved ? (
         <>
@@ -567,7 +615,7 @@ function MasteryDelta({ result }: { result: AttemptResult }) {
           <svg width="14" height="8" viewBox="0 0 14 8" fill="none" aria-hidden="true">
             <path d="M0 4h12m0 0L9 1m3 3L9 7" stroke="currentColor" strokeWidth="1.2" />
           </svg>
-          <strong className="font-semibold text-ink">{after}</strong>
+          <strong className="font-bold">{after}</strong>
         </>
       ) : (
         <span>still {after}</span>

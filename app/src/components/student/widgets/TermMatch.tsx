@@ -2,7 +2,18 @@
 
 import { useMemo, useState } from "react";
 import { arDigits } from "@/components/viz/arabic";
+import { cx } from "@/components/sticker";
 import { stableShuffle, useFireOnce } from "./util";
+import {
+  OPTION_INK,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT_AR,
+  WIDGET_KIND_AR,
+  WIDGET_OPTION,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+} from "./WidgetShell";
 
 /**
  * {{widget:term_match:{"prompt":"وصّل المصطلح بمعناه","pairs":[{"term":"الجلاء","definition":"رحيل قوات الاحتلال عن البلد المحتل"}],"decoyDefs":["…"]}}}
@@ -35,15 +46,22 @@ interface Pair {
 /**
  * Relation chips take their colour from the §1.1 span palette (معجم / تضاد /
  * صرف) and a glyph on top of it: معجم and تضاد share a colour there and are
- * separated by underline style, which a chip cannot show.
+ * separated by underline style, which a chip cannot show — so the glyph is
+ * what tells معنى from مضاد. صرف is the berry playmate, as a paired fill.
+ * Nothing here is red: مضاد is an opposite, not an error.
  */
 const RELATION_CHIP: Record<string, { glyph: string; cls: string }> = {
-  معنى: { glyph: "≡", cls: "border-ink-faint/50 text-ink-soft" },
-  مرادف: { glyph: "≡", cls: "border-ink-faint/50 text-ink-soft" },
-  مضاد: { glyph: "↔", cls: "border-rust/45 text-rust" },
-  مفرد: { glyph: "⇄", cls: "border-arabic-line text-arabic" },
-  جمع: { glyph: "⇄", cls: "border-arabic-line text-arabic" },
+  معنى: { glyph: "≡", cls: "bg-card text-[color:var(--play-text-muted)]" },
+  مرادف: { glyph: "≡", cls: "bg-card text-[color:var(--play-text-muted)]" },
+  مضاد: { glyph: "↔", cls: "bg-card text-[color:var(--play-text-muted)]" },
+  مفرد: { glyph: "⇄", cls: "bg-[var(--play-berry)] text-[color:var(--play-on-berry-dim)]" },
+  جمع: { glyph: "⇄", cls: "bg-[var(--play-berry)] text-[color:var(--play-on-berry-dim)]" },
 };
+
+/** The relation tag inside a term: a small sticker pill. Arabic, so the UI
+ *  face, never tracked mono. */
+const RELATION_TAG =
+  "ar-label ar-block mb-0.5 block rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-ink px-1 py-px font-display text-[0.72rem] font-bold";
 
 export function TermMatch({
   prompt,
@@ -128,25 +146,16 @@ export function TermMatch({
   if (n === 0) return null;
 
   return (
-    <div
-      dir="rtl"
-      className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        {/* .ar-label resets the tracking/uppercase of the mono label voice —
+    <div dir="rtl" className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        {/* .ar-label resets the tracking/uppercase of the label voice —
             letter-spacing visually breaks the Arabic cursive join (§3.3) */}
-        <span className="ar-label font-mono text-[9px] text-accent-deep">
-          ✳ تفاعلي · المصطلحات
-        </span>
-        <span className="ar-label font-mono text-[9px] text-ink-faint">
-          دوس على المصطلح وبعدين على معناه
-        </span>
+        <span className={WIDGET_KIND_AR}>✳ تفاعلي · المصطلحات</span>
+        <span className={WIDGET_HINT_AR}>دوس على المصطلح وبعدين على معناه</span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="text-[13px] font-medium leading-relaxed text-ink">
-          {prompt || "وصّل كل مصطلح بمعناه"}
-        </p>
+        <p className={WIDGET_PROMPT}>{prompt || "وصّل كل مصطلح بمعناه"}</p>
 
         <div className="mt-3 grid grid-cols-[1fr_1.7fr] gap-2">
           {/* terms (right column in RTL) */}
@@ -159,20 +168,24 @@ export function TermMatch({
                   key={pairIdx}
                   onClick={() => tapTerm(pairIdx)}
                   disabled={isMatched}
-                  className={`rounded-md border px-2 py-1.5 text-[12px] font-semibold leading-snug transition-all duration-150 ${
+                  data-verdict={isMatched ? "correct" : undefined}
+                  className={cx(
+                    WIDGET_OPTION,
+                    "px-2 py-1.5 text-[12px] leading-snug",
                     isMatched
-                      ? "border-accent bg-accent text-paper"
+                      ? cx(OPTION_INK.correct, "anim-pop")
                       : isSel
-                        ? "border-ink bg-ink text-paper shadow-[0_4px_10px_-4px_rgba(32,41,58,0.5)]"
-                        : "border-gold/50 bg-gold-wash text-ink hover:-translate-y-px"
-                  }`}
+                        ? OPTION_INK.selected
+                        : OPTION_INK.idle
+                  )}
                 >
                   {clean[pairIdx].relation && (
                     <span
-                      className={`ar-label ar-block mb-0.5 block rounded-full border bg-card px-1 py-px font-mono text-[8.5px] font-bold ${
+                      className={cx(
+                        RELATION_TAG,
                         RELATION_CHIP[clean[pairIdx].relation]?.cls ??
-                        "border-line text-ink-faint"
-                      }`}
+                          "bg-card text-[color:var(--play-text-muted)]"
+                      )}
                     >
                       {RELATION_CHIP[clean[pairIdx].relation]?.glyph ?? "·"}{" "}
                       <bdi>{clean[pairIdx].relation}</bdi>
@@ -192,19 +205,22 @@ export function TermMatch({
                   key={pos}
                   onClick={() => tapDef(pos)}
                   disabled={isMatched || selectedTerm === null}
-                  className={`rounded-md border px-2 py-1.5 text-right text-[11px] leading-snug transition-all duration-150 ${
+                  data-verdict={isMatched ? "correct" : flashDef === pos ? "wrong" : undefined}
+                  className={cx(
+                    WIDGET_OPTION,
+                    "px-2 py-1.5 text-start text-[11px] leading-snug",
                     isMatched
-                      ? "border-accent/50 bg-accent-wash text-accent-deep"
+                      ? cx(OPTION_INK.correct, "anim-pop")
                       : flashDef === pos
-                        ? "border-rust bg-rust-wash text-rust"
+                        ? cx(OPTION_INK.wrong, "anim-nudge")
                         : selectedTerm !== null
-                          ? "border-line bg-card text-ink hover:-translate-y-px hover:border-ink/40"
-                          : "border-line-soft bg-card text-ink-soft"
-                  }`}
+                          ? OPTION_INK.idle
+                          : OPTION_INK.rest
+                  )}
                 >
                   <bdi>{arDigits(d.text)}</bdi>
                   {isMatched && d.pairIdx >= 0 && (
-                    <span className="mr-1 font-mono text-[9px] font-bold text-accent">
+                    <span className="ms-1 font-display text-[0.72rem] font-bold">
                       ✓ {clean[d.pairIdx].term}
                     </span>
                   )}
@@ -215,8 +231,8 @@ export function TermMatch({
         </div>
 
         {done && (
-          <div className="anim-pop mt-3 rounded-md border border-accent/45 bg-accent-wash px-3 py-2">
-            <span className="font-display text-[13.5px] font-medium text-accent-deep">
+          <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
+            <span className="font-display text-[13.5px] font-bold">
               {mistakes === 0
                 ? `برافو! ${arDigits(n)} مصطلحات كلها صح من أول مرة ✓`
                 : "تمام — المصطلحات دي ثبتت. دي نفسها سؤال «ضع المصطلح» في الامتحان"}

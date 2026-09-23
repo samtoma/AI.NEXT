@@ -8,6 +8,14 @@ import {
   spineSubjectDef,
 } from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
+import {
+  HONEY_BAND,
+  STICKER_PANEL,
+  STROKE,
+  STROKE_SM,
+  STROKE_WIDTH,
+  cx,
+} from "@/components/sticker";
 
 export type AsOf = "baseline" | "today";
 
@@ -47,6 +55,23 @@ function bandMetaOf(key: BandKey) {
       }
     : UNFILED_BAND;
 }
+
+/**
+ * Edge inks. Prerequisite edges are quiet ink at the weights the graph has
+ * always drawn them at, mixed from the token rather than written as channels,
+ * so the colour lives in the stylesheet (constitution XII). They go on `style`,
+ * not on the `stroke` attribute: a presentation attribute is not guaranteed to
+ * resolve `var()` or `color-mix()`.
+ */
+const EDGE_INK = "color-mix(in srgb, var(--ink) 30%, transparent)";
+const ARROW_INK = "color-mix(in srgb, var(--ink) 38%, transparent)";
+
+/** The two LO buttons inside a bridge's rationale card. */
+const BRIDGE_END = cx(
+  STROKE,
+  "min-h-[var(--noor-touch-min)] rounded-[var(--play-radius-sm)] bg-card px-2 py-1",
+  "font-bold text-ink sticker-shadow-sm play-pressable"
+);
 
 /** Registry order, with the unfiled band last. */
 const BAND_ORDER: BandKey[] = [...SPINE_SUBJECT_KEYS, null];
@@ -149,7 +174,7 @@ export function GraphCanvas({
   selectedLoId: string | null;
   questionCounts: Map<string, number>;
   onSelect: (id: string) => void;
-  /** LOs cited by the AI in the current answer — soft viridian glow */
+  /** LOs cited by the AI in the current answer — ink outline, lifted shadow */
   citedIds?: Set<string>;
   /** id → nonce; bumping the nonce re-fires the pulse ring */
   pulses?: Record<string, number>;
@@ -203,14 +228,14 @@ export function GraphCanvas({
             return (
               <div
                 key={String(b.subject)}
-                className="absolute rounded-xl"
+                className="absolute rounded-[var(--play-radius-lg)] border-[length:var(--play-stroke-sm)] border-dashed"
                 style={{
                   left: 4,
                   top: b.yTop,
                   width: canvasW - 8,
                   height: b.yBottom - b.yTop,
                   background: meta.wash,
-                  border: `1px dashed ${meta.line}`,
+                  borderColor: meta.line,
                   zIndex: 0,
                 }}
                 aria-hidden
@@ -237,7 +262,7 @@ export function GraphCanvas({
               markerHeight="7"
               orient="auto-start-reverse"
             >
-              <path d="M0.5 0.8 L7.2 4 L0.5 7.2" stroke="rgba(32,41,58,0.38)" strokeWidth="1.4" fill="none" />
+              <path d="M0.5 0.8 L7.2 4 L0.5 7.2" strokeWidth="1.4" fill="none" style={{ stroke: ARROW_INK }} />
             </marker>
             <marker
               id="arr-hot"
@@ -248,7 +273,7 @@ export function GraphCanvas({
               markerHeight="7"
               orient="auto-start-reverse"
             >
-              <path d="M0.5 0.8 L7.2 4 L0.5 7.2" stroke="var(--accent)" strokeWidth="1.6" fill="none" />
+              <path d="M0.5 0.8 L7.2 4 L0.5 7.2" strokeWidth="1.6" fill="none" style={{ stroke: "var(--accent)" }} />
             </marker>
           </defs>
           {edges.map((e, i) => {
@@ -278,11 +303,11 @@ export function GraphCanvas({
                 key={i}
                 d={d}
                 pathLength={1}
-                stroke={hot ? "var(--accent)" : "rgba(32,41,58,0.3)"}
                 strokeWidth={hot ? 2 : 1.3}
                 strokeDasharray={span > 1 ? "0.015 0.008" : undefined}
                 markerEnd={hot ? "url(#arr-hot)" : "url(#arr)"}
                 style={{
+                  stroke: hot ? "var(--accent)" : EDGE_INK,
                   opacity: dim ? 0.22 : 1,
                   transition: "opacity 0.35s ease, stroke 0.35s ease",
                 }}
@@ -290,7 +315,10 @@ export function GraphCanvas({
             );
           })}
 
-          {/* cross-subject bridges — rare dashed gold arcs spanning territories */}
+          {/* cross-subject bridges — rare dashed arcs spanning territories, in
+              --bridge-gold (amber under Play). No glow: the sticker system has
+              no blurred shadows, so "touched" is carried by the heavier stroke
+              and the larger end-cap instead. */}
           {visibleBridges.map((b, i) => {
             const a = posById.get(b.src)!;
             const z = posById.get(b.dst)!;
@@ -329,9 +357,6 @@ export function GraphCanvas({
                   fill="none"
                   strokeLinecap="round"
                   style={{
-                    filter: touched
-                      ? "drop-shadow(0 0 6px rgba(199,154,58,0.75))"
-                      : "drop-shadow(0 0 3px rgba(199,154,58,0.45))",
                     transition: "stroke-width 0.2s ease",
                     pointerEvents: "none",
                   }}
@@ -369,22 +394,24 @@ export function GraphCanvas({
               <div
                 key={`label-${String(b.subject)}`}
                 dir="rtl"
-                className="absolute inline-flex items-center gap-1.5 rounded-full border bg-card/85 px-2.5 py-1 backdrop-blur-sm"
+                className={cx(
+                  STROKE_SM,
+                  "absolute inline-flex items-center gap-1.5 rounded-[var(--play-radius-pill)] bg-card px-2.5 py-1 sticker-shadow-sm"
+                )}
                 style={{
                   right: 12,
                   top: b.yTop + 4,
-                  borderColor: meta.line,
                   zIndex: 3,
                 }}
               >
+                {/* the dot carries the subject colour; the name stays ink,
+                    because a territory accent (teal, for one) is not an AA
+                    text colour at label size */}
                 <span
-                  className="h-2 w-2 rounded-full"
+                  className="h-2 w-2 rounded-[var(--play-radius-pill)]"
                   style={{ backgroundColor: meta.accent }}
                 />
-                <span
-                  className="font-display text-[12.5px] font-semibold"
-                  style={{ color: meta.accent }}
-                >
+                <span className="font-display text-[12.5px] font-bold text-ink">
                   {meta.label}
                 </span>
               </div>
@@ -405,7 +432,17 @@ export function GraphCanvas({
             <button
               key={lo.id}
               onClick={() => onSelect(lo.id)}
-              className="group absolute rounded-lg border text-left"
+              className={cx(
+                STROKE_WIDTH,
+                "group absolute rounded-[var(--play-radius)] text-left",
+                // hard offset shadows, lifted by state; the classes (not an
+                // inline box-shadow) so the amber focus ring still shows
+                selected
+                  ? "sticker-shadow-lg"
+                  : cited
+                    ? "sticker-shadow"
+                    : "sticker-shadow-sm"
+              )}
               style={{
                 left: x,
                 top: y,
@@ -417,11 +454,6 @@ export function GraphCanvas({
                     ? "var(--accent)"
                     : masteryColor(score, 0.55),
                 backgroundColor: `color-mix(in srgb, ${color} ${selected ? 13 : 9}%, var(--card))`,
-                boxShadow: selected
-                  ? "0 0 0 1.5px var(--ink), 0 16px 28px -14px rgba(32,41,58,0.45)"
-                  : cited
-                    ? "0 0 0 1px var(--accent), 0 0 22px -4px rgba(22,102,92,0.5), 0 8px 20px -14px rgba(32,41,58,0.3)"
-                    : "0 1px 2px rgba(32,41,58,0.06), 0 8px 20px -14px rgba(32,41,58,0.3)",
                 opacity: dim && !cited ? 0.45 : 1,
                 zIndex: selected ? 4 : 2,
                 transform: selected ? "translateY(-2px)" : undefined,
@@ -438,23 +470,25 @@ export function GraphCanvas({
                   <span className="font-mono text-[9px] tracking-wider text-ink-faint">
                     {lo.id.replace("lo:u", "").replace("lo:", "")}
                   </span>
+                  {/* ink on every ramp step: amber and teal both pair with
+                      ink (never white), and so do the two steps between */}
                   <span
-                    className="rounded px-1 font-mono text-[9.5px] font-semibold text-paper transition-colors duration-500"
+                    className="rounded-[var(--play-radius-sm)] px-1 font-mono text-[9.5px] font-semibold text-ink transition-colors duration-500"
                     style={{ backgroundColor: color }}
                   >
                     {pct(score)}
                   </span>
                 </div>
                 <p
-                  className="mt-1 line-clamp-3 flex-1 text-[11px] font-medium leading-[1.3] text-ink"
+                  className="mt-1 line-clamp-3 flex-1 text-[11px] font-bold leading-[1.3] text-ink"
                   dir={spineSubjectDef(lo.subject)?.dir === "rtl" ? "rtl" : undefined}
                 >
                   {lo.label}
                 </p>
                 <div className="mt-1.5 flex items-center gap-1.5">
-                  <div className="h-1 flex-1 overflow-hidden rounded-full bg-ink/10">
+                  <div className="h-1 flex-1 overflow-hidden rounded-[var(--play-radius-pill)] bg-ink/10">
                     <div
-                      className="h-full rounded-full transition-all duration-700 ease-out"
+                      className="h-full rounded-[var(--play-radius-pill)] transition-all duration-700 ease-out"
                       style={{ width: pct(score), backgroundColor: color }}
                     />
                   </div>
@@ -498,22 +532,11 @@ export function GraphCanvas({
                 }}
                 onMouseLeave={() => setActiveBridge(null)}
               >
-                <div
-                  className="ledger-card overflow-hidden"
-                  style={{ borderColor: "var(--bridge-gold)" }}
-                >
-                  <div
-                    className="flex items-center gap-1.5 border-b px-3 py-1.5"
-                    style={{
-                      borderColor: "var(--gold-wash)",
-                      background: "var(--gold-wash)",
-                    }}
-                  >
+                <div className={cx(STICKER_PANEL, "overflow-hidden")}>
+                  <div className={cx(HONEY_BAND, "flex items-center gap-1.5 px-3 py-1.5")}>
                     <span aria-hidden>🔗</span>
-                    <span
-                      className="font-display text-[12px] font-semibold"
-                      style={{ color: "var(--gold)" }}
-                    >
+                    {/* amber-family text on Honey takes its own token */}
+                    <span className="font-display text-[12px] font-bold text-[color:var(--play-text-amber-warm)]">
                       Cross-subject link
                     </span>
                   </div>
@@ -524,7 +547,7 @@ export function GraphCanvas({
                           onSelect(firstEnd.id);
                           setActiveBridge(null);
                         }}
-                        className="rounded-md border border-line-soft px-2 py-1 text-left font-medium text-ink transition-colors hover:border-accent/50 hover:bg-accent-wash"
+                        className={cx(BRIDGE_END, "text-left hover:bg-accent-wash")}
                       >
                         {firstEnd.label}
                       </button>
@@ -535,10 +558,12 @@ export function GraphCanvas({
                           onSelect(secondEnd.id);
                           setActiveBridge(null);
                         }}
-                        className="rounded-md border border-line-soft px-2 py-1 text-right font-medium text-ink transition-colors hover:bg-[var(--bridge-far-wash)]"
+                        className={cx(
+                          BRIDGE_END,
+                          "text-right hover:bg-[var(--bridge-far-wash)]"
+                        )}
                         style={
                           {
-                            borderColor: secondDef?.accent.line,
                             // hover wash = the far subject's own accent
                             "--bridge-far-wash": secondDef?.accent.wash,
                           } as React.CSSProperties

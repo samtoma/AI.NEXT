@@ -28,8 +28,32 @@ import {
 } from "@/lib/chat-parse";
 import type { CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
-import { StudentBubble, TutorBubble, renderChatBlocks } from "./message-blocks";
+import {
+  StudentBubble,
+  TUTOR_BUBBLE_FILL,
+  TUTOR_BUBBLE_FRAME,
+  TutorBubble,
+  renderChatBlocks,
+} from "./message-blocks";
 import { useUploadAttachment } from "./upload-attachment";
+import {
+  BUTTON_SECONDARY,
+  BUTTON_TERTIARY,
+  HEADING,
+  STROKE,
+  cx,
+} from "@/components/sticker";
+
+/**
+ * A tappable chip in the Play anatomy: white, ink outline, pill, the small
+ * hard shadow and the press. It is a real target, so it holds the 52px floor —
+ * and at that height it takes the full 3px stroke, not the thin one.
+ */
+const CHIP_CONTROL = cx(
+  STROKE,
+  "inline-flex min-h-[var(--noor-touch-min)] items-center gap-1.5 rounded-[var(--play-radius-pill)] bg-card px-4",
+  "font-display text-[0.85rem] font-bold leading-snug text-ink sticker-shadow-sm play-pressable"
+);
 
 /**
  * Imperative bridge for surfaces that host intercepted cards OUTSIDE the
@@ -848,7 +872,7 @@ export function ChatCore({
 
       {/* suggestion chips — stay clickable after every stream */}
       {suggestions.length > 0 && !capped && (
-        <div className="flex flex-wrap gap-1.5 border-t border-line-soft px-4 pb-1.5 pt-2.5">
+        <div className="flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3">
           {suggestions.map((s) => {
             const label = typeof s === "string" ? s : s.label;
             return (
@@ -856,7 +880,7 @@ export function ChatCore({
                 key={label}
                 onClick={() => (typeof s === "string" ? send(s) : s.onSelect())}
                 disabled={streaming}
-                className="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-1 text-start text-[11px] font-medium leading-snug text-accent-deep transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent enabled:hover:text-paper disabled:opacity-40 play-pressable sticker-shadow-sm"
+                className={cx(CHIP_CONTROL, "text-start")}
               >
                 {label}
               </button>
@@ -886,14 +910,25 @@ export function ChatCore({
           onKeyDown={(e) => e.key === "Enter" && send(input)}
           placeholder={capped ? "AI turn limit reached for this question" : placeholder}
           disabled={streaming || capped}
-          className="min-w-0 flex-1 rounded-full border border-line bg-card px-4 py-2 text-[13px] text-ink outline-none transition-colors placeholder:text-ink-faint focus:border-accent sticker-shadow-sm"
+          className={cx(
+            STROKE,
+            // 1rem, not 13px: the read scale, and the size below which iPad
+            // Safari zooms the page on focus
+            "min-h-[var(--noor-touch-min)] min-w-0 flex-1 rounded-[var(--play-radius-sm)] bg-card px-4 text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm"
+          )}
         />
         {inputAccessory?.({ setInput })}
         <button
           onClick={() => send(input)}
           disabled={streaming || capped || !input.trim()}
           aria-label="Send"
-          className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full bg-ink text-paper transition-all duration-150 enabled:hover:-translate-y-px enabled:hover:bg-accent-deep disabled:opacity-30 play-pressable sticker-shadow-sm"
+          // The composer's send is amber with ink on it (handoff, Nour panel).
+          // Empty, it is disabled: white and dashed — "not ready yet".
+          className={cx(
+            STROKE,
+            "flex size-[var(--noor-touch-min)] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)]",
+            "bg-[var(--noor-action)] text-[color:var(--noor-on-action)] disabled:bg-card sticker-shadow-sm play-pressable"
+          )}
         >
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
             <path
@@ -972,12 +1007,12 @@ const MessageRow = memo(function MessageRow({
     if (m.kind === "say") {
       return (
         <div className="anim-pop flex justify-start" style={dimStyle}>
-          <div
-            dir="auto"
-            className="max-w-[85%] rounded-xl rounded-es-sm border border-line-soft bg-card-warm px-3.5 py-2 text-[13px] leading-relaxed text-ink-soft shadow-sm noor-bubble-tutor"
-            style={{ textAlign: "start" }}
-          >
-            {m.text}
+          {/* frame inherits the conversation's direction (notch mirrors);
+              the text resolves its own — see message-blocks.tsx */}
+          <div className={cx("max-w-[85%] text-ink-soft", TUTOR_BUBBLE_FRAME, TUTOR_BUBBLE_FILL)}>
+            <div dir="auto" style={{ textAlign: "start" }}>
+              {m.text}
+            </div>
           </div>
         </div>
       );
@@ -986,7 +1021,7 @@ const MessageRow = memo(function MessageRow({
     if (m.kind === "event" && !debug) return null;
     return (
       <div className="anim-pop flex justify-center">
-        <div className="max-w-[92%] rounded-lg border border-dashed border-gold/50 bg-gold-wash px-3 py-1.5 text-center font-mono text-[10px] leading-relaxed text-ink-soft">
+        <div className="max-w-[92%] rounded-[var(--play-radius-sm)] border-[length:var(--play-stroke-sm)] border-dashed border-gold/50 bg-gold-wash px-3 py-1.5 text-center font-mono text-[0.72rem] leading-relaxed text-ink-soft">
           {m.text}
         </div>
       </div>
@@ -1072,7 +1107,7 @@ const MessageRow = memo(function MessageRow({
                   onOpenQuestion={onOpenQuestion}
                 />
               ) : (
-                <p key={i} className="my-1 font-mono text-[10px] text-ink-faint">
+                <p key={i} className="my-1 font-mono text-[0.72rem] text-ink-faint">
                   → {b.qid}
                 </p>
               );
@@ -1116,11 +1151,11 @@ const MessageRow = memo(function MessageRow({
         })}
 
         {m.streaming && visibleText.length > 0 && (
-          <span className="ms-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-[1px] bg-accent" />
+          <span className="ms-0.5 inline-block h-3.5 w-[7px] translate-y-[2px] animate-pulse rounded-full bg-accent" />
         )}
 
         {debug && m.meta && (
-          <p className="mt-2 border-t border-line-soft pt-1.5 font-mono text-[9px] tracking-wide text-ink-faint">
+          <p className="mt-2 border-t border-line-soft pt-1.5 font-mono text-[0.72rem] tracking-wide text-ink-faint">
             ${m.meta.costUsd.toFixed(4)} · {m.meta.inputTokens.toLocaleString()}
             →{m.meta.outputTokens.toLocaleString()} tok
             {(m.meta.cacheReadTokens ?? 0) > 0 ||
@@ -1152,28 +1187,31 @@ function SubjectHandoffCard({
   const label = labelArOfSpineKey(subject);
   if (dismissed) {
     return (
-      <p className="my-1 text-[11px] text-ink-faint" dir="auto">
+      <p className="my-1 text-[0.85rem] text-ink-faint" dir="auto">
         — نكمل اللي إحنا فيه ✓
       </p>
     );
   }
   return (
-    <div dir="rtl" className="my-2 rounded-xl border border-gold/45 bg-gold-wash/50 p-3">
-      <p className="text-[13px] font-medium leading-relaxed text-ink">
+    <div
+      dir="rtl"
+      className={cx(STROKE, "my-2 rounded-[var(--play-radius)] bg-card-warm p-3 text-ink sticker-shadow-sm")}
+    >
+      <p className="text-[1rem] text-ink">
         ده سؤال في <strong>{label}</strong> — تحب نفتح المادة دي، ولا نكمل اللي
         إحنا فيه ونرجعله بعدين؟
       </p>
-      <div className="mt-2.5 flex gap-2">
+      <div className="mt-2.5 flex flex-wrap items-center gap-2">
         <button
           onClick={onOpen}
           disabled={!onOpen}
-          className="rounded-full bg-ink px-3.5 py-1.5 text-[12.5px] font-medium text-paper transition-opacity hover:opacity-90 disabled:opacity-40 play-pressable sticker-shadow-sm"
+          className={BUTTON_SECONDARY}
         >
           افتح {label} ←
         </button>
         <button
           onClick={() => setDismissed(true)}
-          className="rounded-full border border-line px-3.5 py-1.5 text-[12.5px] text-ink-soft transition-colors hover:text-ink play-pressable sticker-shadow-sm"
+          className={BUTTON_TERTIARY}
         >
           نكمل
         </button>
@@ -1193,19 +1231,32 @@ function BoardChip({
   flavor: "figure" | "question";
   onOpen?: () => void;
 }) {
+  // The pop lives on a wrapper: an entrance animation that fills `both`
+  // keeps its last transform, which would swallow the press's translate.
   return (
-    <button
-      dir="rtl"
-      onClick={onOpen}
-      className="anim-pop my-1.5 inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent-wash px-3 py-1.5 text-[12px] font-semibold text-accent-deep transition-all duration-150 hover:-translate-y-px hover:bg-accent hover:text-paper play-pressable sticker-shadow-sm"
-    >
-      <span aria-hidden className="text-[11px]">
-        {flavor === "figure" ? "✎" : "⚡"}
-      </span>
-      {flavor === "figure" ? "شوف الرسمة ←" : "السؤال ع السبورة ←"}
-    </button>
+    <span className="anim-pop my-1.5 inline-block">
+      <button dir="rtl" onClick={onOpen} className={CHIP_CONTROL}>
+        <span aria-hidden>{flavor === "figure" ? "✎" : "⚡"}</span>
+        {flavor === "figure" ? "شوف الرسمة ←" : "السؤال ع السبورة ←"}
+      </button>
+    </span>
   );
 }
+
+/**
+ * The choice the student made, once the card has locked. Both buttons are
+ * `disabled` after a pick, and the Play stylesheet's disabled rule (unlayered)
+ * dashes the outline and greys the text of every disabled button — right for
+ * the option NOT taken, wrong for the one that was: it would read as "broken"
+ * rather than "you chose this". The picked one takes the Selected state from
+ * the answer-option spec instead — Honey fill, solid ink outline, ink text —
+ * and the `!` is what lets a layered utility outrank that unlayered rule. It
+ * stays shadowless: a chosen button sits pressed into its own shadow.
+ *
+ * Neither choice is ever red. "Not yet" is not a wrong answer; asking for
+ * another explanation is the product working as intended.
+ */
+const CHECK_IN_PICKED = "bg-card-warm! border-solid! border-ink! text-ink!";
 
 /** {{check_in}} — two-big-buttons card. */
 function CheckInCard({
@@ -1228,8 +1279,10 @@ function CheckInCard({
     ? "لسه مش فاهم — اشرحها بطريقة تانية"
     : "Not yet — explain it another way";
   return (
-    <div className="anim-pop my-2 rounded-lg border border-accent/40 bg-accent-wash/60 px-3.5 py-3">
-      <p dir={dir} className="mb-2.5 text-center font-display text-[16px] font-medium text-ink">
+    <div
+      className={cx(STROKE, "anim-pop my-2 rounded-[var(--play-radius)] bg-card-warm px-4 py-3 sticker-shadow-sm")}
+    >
+      <p dir={dir} className={cx(HEADING, "mb-2.5 text-center text-[1.15rem]")}>
         {arabicUi ? "لسه معايا؟" : "Still with me?"}
       </p>
       <div className="grid grid-cols-2 gap-2">
@@ -1237,11 +1290,7 @@ function CheckInCard({
           dir={dir}
           onClick={() => choose("no", noSignal)}
           disabled={disabled || picked != null}
-          className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 play-pressable sticker-shadow-sm ${
-            picked === "no"
-              ? "border-rust bg-rust text-paper"
-              : "border-rust/40 bg-card text-rust enabled:hover:-translate-y-px enabled:hover:border-rust disabled:opacity-50"
-          }`}
+          className={cx(BUTTON_SECONDARY, picked === "no" && CHECK_IN_PICKED)}
         >
           {arabicUi ? "لسه مش فاهم 🤔" : "Not yet 🤔"}
         </button>
@@ -1249,11 +1298,7 @@ function CheckInCard({
           dir={dir}
           onClick={() => choose("yes", GOT_IT_SENTINEL)}
           disabled={disabled || picked != null}
-          className={`rounded-lg border px-3 py-2.5 text-[14px] font-semibold transition-all duration-150 play-pressable sticker-shadow-sm ${
-            picked === "yes"
-              ? "border-accent bg-accent text-paper"
-              : "border-accent/40 bg-card text-accent-deep enabled:hover:-translate-y-px enabled:hover:border-accent disabled:opacity-50"
-          }`}
+          className={cx(BUTTON_SECONDARY, picked === "yes" && CHECK_IN_PICKED)}
         >
           {arabicUi ? "كمل ✓" : GOT_IT_SENTINEL}
         </button>
@@ -1273,26 +1318,28 @@ function Thinking({
     <span className="inline-flex items-center gap-1.5 py-0.5">
       {writing ? (
         arabicUi ? (
-          <span dir="rtl" className="text-[12.5px] italic text-ink-faint">
+          <span dir="rtl" className="text-[0.85rem] text-ink-faint">
             بيكتب…
           </span>
         ) : (
-          <span className="text-[12.5px] italic text-ink-faint">
+          <span className="text-[0.85rem] italic text-ink-faint">
             writing…
           </span>
         )
       ) : (
-        <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
+        <span className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-ink-faint">
           walking the graph
         </span>
       )}
-      <span className="inline-flex gap-[3px]">
+      {/* the Play wait: three 9px amber dots, 1.3s, staggered 0/.18/.36s —
+          "he's working on it", never a spinner */}
+      <span className="inline-flex gap-1.5">
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            className="h-1 w-1 rounded-full bg-accent"
+            className="size-[9px] rounded-full bg-[var(--noor-action)]"
             style={{
-              animation: `think-dot 1.1s ease-in-out ${i * 0.18}s infinite`,
+              animation: `think-dot 1.3s ease-in-out ${i * 0.18}s infinite`,
             }}
           />
         ))}

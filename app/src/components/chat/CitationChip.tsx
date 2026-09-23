@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Cite } from "@/lib/chat-parse";
+import { STROKE_SM, cx } from "@/components/sticker";
 
 export interface CiteInfo {
   title: string;
@@ -10,9 +11,13 @@ export interface CiteInfo {
 }
 
 /**
- * Inline receipt-chip for a citation marker — a miniature passport stamp.
- * Hover ⇒ mini provenance card. Click ⇒ delegated to the surface
+ * Inline receipt-chip for a citation marker — a small sticker pill set in the
+ * running text. Hover ⇒ mini provenance card. Click ⇒ delegated to the surface
  * (highlight LO on the graph / open the question modal / pin page reference).
+ *
+ * It sits INSIDE a line of reading text, so it is the one control in the chat
+ * that does not hold the 52px floor: a 52px pill would break the line it
+ * annotates. It still wears the sticker (thin stroke, hard shadow, press).
  */
 export function CitationChip({
   cite,
@@ -33,14 +38,22 @@ export function CitationChip({
   const [pinned, setPinned] = useState(false);
   const info = hover || pinned ? (resolve?.(cite) ?? null) : null;
 
+  // Fill + paired foreground per kind; the glyph (◈ # ❡ ✱) carries the kind
+  // too, so it is never told by colour alone. No hover recolouring: the press
+  // is the feedback, and hover lives inside `play-pressable`'s media query.
   const styles: Record<Cite["kind"], string> = {
-    lo: "border-accent/55 bg-accent-wash text-accent-deep hover:bg-accent hover:text-paper",
-    q: "border-ink/40 bg-card text-ink-soft hover:bg-ink hover:text-paper",
-    page: "border-gold/60 bg-gold-wash text-gold hover:bg-gold hover:text-paper",
+    lo: cx(STROKE_SM, "bg-card text-ink sticker-shadow-sm play-pressable"),
+    q: cx(STROKE_SM, "bg-card text-ink sticker-shadow-sm play-pressable"),
+    // a page of the book — the Honey band with its paired amber text
+    page: cx(
+      STROKE_SM,
+      "bg-card-warm text-[color:var(--play-text-amber-warm)] sticker-shadow-sm play-pressable"
+    ),
     // [[term?:…]] — a term missing from the lesson data, flagged for review
     // (the ministry-terminology rule in the Arabic-script subjects' language
-    // contracts). Subtle ochre, review-flag semantics, no action.
-    term: "cursor-default border-gold/50 bg-gold-wash/70 text-gold",
+    // contracts). Review-flag semantics, no action: the inactive treatment,
+    // dashed, no shadow, because it is not a control.
+    term: "cursor-default border-[length:var(--play-stroke-sm)] border-dashed border-[color:var(--play-inactive-border)] bg-[var(--play-inactive-fill)] text-[color:var(--play-text-muted)]",
   };
   const label =
     cite.kind === "term"
@@ -76,9 +89,13 @@ export function CitationChip({
           if (cite.kind === "page") setPinned((p) => !p);
           onActivate?.(cite);
         }}
-        className={`mx-0.5 inline-flex translate-y-[-1px] items-center gap-1 rounded border border-dashed px-1 py-px font-semibold leading-[1.35] transition-colors duration-150 ${
-          friendly ? "text-[10px]" : "font-mono text-[9.5px] tracking-[0.03em]"
-        } ${styles[cite.kind]}`}
+        className={cx(
+          "mx-0.5 inline-flex translate-y-[-1px] items-center gap-1 rounded-[var(--play-radius-pill)] px-2 py-px leading-[1.35]",
+          friendly
+            ? "font-display text-[0.85rem] font-bold"
+            : "font-mono text-[0.72rem] font-medium tracking-[0.03em]",
+          styles[cite.kind]
+        )}
       >
         {cite.kind === "lo" && <span aria-hidden>◈</span>}
         {cite.kind === "q" && <span aria-hidden>#</span>}
@@ -88,9 +105,14 @@ export function CitationChip({
       </button>
 
       {(hover || pinned) && info && (
-        <span className="passport anim-pop absolute bottom-full left-1/2 z-30 mb-1.5 block w-52 -translate-x-1/2 p-2.5 shadow-[0_14px_30px_-14px_rgba(32,41,58,0.5)]">
+        <span
+          className={cx(
+            STROKE_SM,
+            "anim-pop absolute bottom-full left-1/2 z-30 mb-2 block w-60 -translate-x-1/2 rounded-[var(--play-radius-sm)] bg-card p-2.5 text-start text-ink sticker-shadow-sm"
+          )}
+        >
           <span className="relative block">
-            <span className="block font-mono text-[8px] uppercase tracking-[0.2em] text-gold">
+            <span className="block font-mono text-[0.72rem] uppercase tracking-[0.2em] text-gold">
               {cite.kind === "lo"
                 ? "learning objective"
                 : cite.kind === "q"
@@ -99,11 +121,11 @@ export function CitationChip({
                     ? "term · flagged for review"
                     : "source reference"}
             </span>
-            <span className="mt-1 block text-[11px] font-medium leading-snug text-ink">
+            <span className="mt-1 block font-display text-[0.85rem] font-bold leading-snug text-ink">
               {info.title}
             </span>
             {info.sub && (
-              <span className="mt-0.5 block font-mono text-[9px] leading-relaxed text-ink-soft">
+              <span className="mt-0.5 block font-mono text-[0.72rem] leading-relaxed text-ink-soft">
                 {info.sub}
               </span>
             )}

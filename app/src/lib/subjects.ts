@@ -43,10 +43,18 @@ export interface SubjectAccent {
   wash: string;
   /** territory border — `var(--subject-*-line)` */
   line: string;
-  /** student-home subject card background (Tailwind class) */
-  cardWash: string;
-  /** student-home subject card border (Tailwind class) */
-  cardBorder: string;
+  /**
+   * Student-home subject tile: the Play PLAYMATE fill with its paired
+   * foreground, as Tailwind classes. Playmates exist for subject and quest
+   * coding only (handoff: "a ten-year-old finds 'the blue one' faster than a
+   * word"), and the pairing is fixed by the handoff's subject grid: maths sky,
+   * the second subject leaf, Arabic berry. A fill is never written without its
+   * `on-` colour (constitution XII).
+   */
+  tile: string;
+  /** Small text on that tile — the playmate's darkened `-dim` foreground,
+   *  which is what clears AA at label sizes on the fill. */
+  tileDim: string;
   /** subject chip on the spine LO panel (Tailwind classes) */
   chip: string;
 }
@@ -127,8 +135,8 @@ export const SUBJECTS = {
       color: "var(--subject-math)",
       wash: "var(--subject-math-wash)",
       line: "var(--subject-math-line)",
-      cardWash: "bg-accent-wash",
-      cardBorder: "border-accent/35",
+      tile: "bg-[var(--play-sky)] text-[color:var(--play-on-sky)]",
+      tileDim: "text-[color:var(--play-on-sky-dim)]",
       chip: "border-accent/40 text-accent-deep bg-accent-wash",
     },
     book: "Mathematics — Student's Book, Preparatory Year Three, First Term",
@@ -163,8 +171,8 @@ export const SUBJECTS = {
       color: "var(--subject-social)",
       wash: "var(--subject-social-wash)",
       line: "var(--subject-social-line)",
-      cardWash: "bg-gold-wash",
-      cardBorder: "border-gold/40",
+      tile: "bg-[var(--play-leaf)] text-[color:var(--play-on-leaf)]",
+      tileDim: "text-[color:var(--play-on-leaf-dim)]",
       chip: "border-gold/45 text-gold bg-gold-wash",
     },
     book: "الدراسات الاجتماعية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",
@@ -191,8 +199,8 @@ export const SUBJECTS = {
       color: "var(--subject-arabic)",
       wash: "var(--subject-arabic-wash)",
       line: "var(--subject-arabic-line)",
-      cardWash: "bg-arabic-wash",
-      cardBorder: "border-arabic/40",
+      tile: "bg-[var(--play-berry)] text-[color:var(--play-on-berry)]",
+      tileDim: "text-[color:var(--play-on-berry-dim)]",
       chip: "border-arabic/45 text-arabic bg-arabic-wash",
     },
     book: "اللغة العربية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",

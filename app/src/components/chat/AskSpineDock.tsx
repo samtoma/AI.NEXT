@@ -6,6 +6,15 @@ import type { Cite } from "@/lib/chat-parse";
 import { ChatCore } from "./ChatCore";
 import type { CiteInfo } from "./CitationChip";
 import { renderVizWidget } from "@/components/viz/render-viz-widget";
+import {
+  HEADING,
+  HONEY_BAND,
+  ICON_BUTTON,
+  STICKER_CARD,
+  STROKE,
+  STROKE_SM,
+  cx,
+} from "@/components/sticker";
 
 /** "Omar Hassan" → "Omar". Inlined when the demo cast (and the module this
  *  lived in) was retired — the student's name now comes from her session. */
@@ -57,35 +66,48 @@ export function AskSpineDock({
   const [turns, setTurns] = useState(0);
 
   if (!open) {
+    // The entrance pop lives on the wrapper: an animation that fills `both`
+    // keeps its final transform, and animation values outrank the press's
+    // translate, so on the same element the button would never move.
     return (
-      <button
-        onClick={() => setOpen(true)}
-        className="anim-pop fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full border border-accent/40 bg-ink py-2.5 pl-4 pr-5 text-paper shadow-[0_18px_40px_-16px_rgba(13,74,66,0.7)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow"
-      >
-        <SpineGlyph />
-        <span className="font-display text-[15px] font-medium">
-          Ask the Spine
-        </span>
-        {turns > 0 && (
-          <span className="rounded-full bg-paper/15 px-2 py-0.5 font-mono text-[10px]">
-            ${totalUsd.toFixed(2)}
+      <div className="anim-pop fixed bottom-6 end-6 z-40">
+        <button
+          onClick={() => setOpen(true)}
+          className={cx(
+            STROKE,
+            "flex min-h-[var(--noor-touch-min)] items-center gap-2.5 rounded-[var(--play-radius-pill)] bg-ink py-2.5 ps-4 pe-5 text-paper sticker-shadow play-pressable"
+          )}
+        >
+          <SpineGlyph />
+          <span className="font-display text-[15px] font-bold">
+            Ask the Spine
           </span>
-        )}
-      </button>
+          {turns > 0 && (
+            <span className="rounded-[var(--play-radius-pill)] bg-paper/15 px-2 py-0.5 font-mono text-[10px]">
+              ${totalUsd.toFixed(2)}
+            </span>
+          )}
+        </button>
+      </div>
     );
   }
 
   return (
-    <div className="anim-pop ledger-card fixed bottom-5 right-5 z-40 flex h-[min(74vh,680px)] w-[430px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden">
+    <div
+      className={cx(
+        STICKER_CARD,
+        "anim-pop fixed bottom-5 end-5 z-40 flex h-[min(74vh,680px)] w-[430px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden"
+      )}
+    >
       {/* header + cost meter */}
-      <div className="border-b border-line bg-card-warm px-4 pb-2.5 pt-3">
+      <div className={cx(HONEY_BAND, "px-4 pb-2.5 pt-3")}>
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <span className="text-accent-deep">
               <SpineGlyph />
             </span>
             <div>
-              <h2 className="font-display text-[17px] font-medium leading-tight text-ink">
+              <h2 className={cx(HEADING, "text-[17px]")}>
                 Ask the Spine
               </h2>
               <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-ink-faint">
@@ -96,7 +118,7 @@ export function AskSpineDock({
           <button
             onClick={() => setOpen(false)}
             aria-label="Collapse chat"
-            className="rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink play-pressable"
+            className={ICON_BUTTON}
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
@@ -109,7 +131,14 @@ export function AskSpineDock({
             </svg>
           </button>
         </div>
-        <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 rounded-md border border-dashed border-gold/45 bg-gold-wash px-2.5 py-1.5">
+        {/* a white inset on the Honey band — solid, not dashed: under Play a
+            dashed outline means "disabled", and the meter is live */}
+        <div
+          className={cx(
+            STROKE_SM,
+            "mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 rounded-[var(--play-radius-sm)] bg-card px-2.5 py-1.5"
+          )}
+        >
           <span className="font-mono text-[10px] text-ink">
             session AI spend:{" "}
             <strong className="font-semibold">${totalUsd.toFixed(2)}</strong> ·
@@ -128,7 +157,7 @@ export function AskSpineDock({
         placeholder={`Ask about ${shortName(studentName)}, the graph, the syllabus…`}
         emptyState={
           <div className="anim-fade px-2 py-6 text-center">
-            <p className="font-display text-[15px] font-medium text-ink">
+            <p className="font-display text-[15px] font-bold text-ink">
               Chat with the curriculum itself.
             </p>
             <p className="mx-auto mt-2 max-w-[300px] text-[12px] leading-relaxed text-ink-soft font-read">

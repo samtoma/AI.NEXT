@@ -4,7 +4,21 @@ import { useMemo, useState } from "react";
 import { locateSpan, tokenizeWords } from "@/components/viz/arabic";
 import { categoryStyle } from "@/components/viz/arabic-ui";
 import { arDigits } from "@/components/viz/arabic";
+import { cx } from "@/components/sticker";
 import { useFireOnce } from "./util";
+import {
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT_AR,
+  WIDGET_KIND_AR,
+  WIDGET_NOTE,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+  WIDGET_WELL,
+} from "./WidgetShell";
+
+/** A wrong tap's band: the inactive grey, never red (Noor Play, no red). */
+const MISS_BAND = "color-mix(in srgb, var(--play-inactive-border) 32%, transparent)";
 
 /**
  * {{widget:extract_spans:{"prompt":"دوس على كل منادى في الفقرة","text":"…","category":"نحو","targets":["يا شبابَ مصر"]}}}
@@ -17,8 +31,8 @@ import { useFireOnce } from "./util";
  * and the extra leading (`.ar-tappable`) is what buys a ≥44px target inside
  * running text without spacing the passage into unreadability.
  *
- * No partial credit, no timer, no red X: a wrong tap flashes and costs nothing
- * but a counter the student never sees (anxious-teenager rule).
+ * No partial credit, no timer, no red X: a wrong tap flashes grey and costs
+ * nothing but a counter the student never sees (anxious-teenager rule).
  */
 
 export function ExtractSpans({
@@ -89,24 +103,18 @@ export function ExtractSpans({
   );
 
   return (
-    <div
-      dir="rtl"
-      lang="ar"
-      className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="ar-label font-mono text-[9px] text-accent-deep">
-          ✳ تفاعلي · استخراج
-        </span>
-        <span className="ar-label font-mono text-[9px] text-ink-faint">
+    <div dir="rtl" lang="ar" className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND_AR}>✳ تفاعلي · استخراج</span>
+        <span className={WIDGET_HINT_AR}>
           {arDigits(found.size)} من {arDigits(n)}
         </span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="ar-block ar-plain text-[13px] font-medium text-ink">{prompt}</p>
+        <p className={cx("ar-block ar-plain", WIDGET_PROMPT)}>{prompt}</p>
 
-        <p className="ar-block ar-tappable mt-2 rounded-md border border-line-soft bg-card-warm px-2.5 py-1.5 text-[16.5px] text-ink">
+        <p className={cx(WIDGET_WELL, "ar-block ar-tappable mt-2 px-2.5 py-1.5 text-[16.5px] text-ink")}>
           {words.map((w, i) => {
             const isFound = foundWords.has(i);
             const isFlash = flash === i;
@@ -118,17 +126,17 @@ export function ExtractSpans({
                 disabled={done && !isFound}
                 // inline (not inline-block): an inline-block button would open
                 // its own line box and shred the passage's line rhythm
-                className="mx-[1px] rounded px-0.5 py-3 align-baseline transition-colors duration-150"
+                className="mx-[1px] rounded-[var(--play-radius-sm)] px-0.5 py-3 align-baseline transition-colors duration-150"
                 style={{
                   display: "inline",
                   font: "inherit",
-                  color: isFlash ? "var(--rust)" : "inherit",
+                  color: isFlash ? "var(--play-text-muted)" : "inherit",
                   // The generous padding above buys the 44px tap target; the
                   // tint is painted as a text-height BAND inside it, so the
                   // highlight reads as a highlighter stroke and not a button.
                   backgroundColor: "transparent",
                   backgroundImage: isFlash
-                    ? "linear-gradient(var(--rust-wash), var(--rust-wash))"
+                    ? `linear-gradient(${MISS_BAND}, ${MISS_BAND})`
                     : isFound
                       ? `linear-gradient(${style.tint}, ${style.tint})`
                       : "none",
@@ -148,14 +156,14 @@ export function ExtractSpans({
         </p>
 
         {misses >= 2 && distractorHint && !done && (
-          <p className="ar-block ar-plain anim-fade mt-2 rounded-md border border-gold/40 bg-gold-wash px-2.5 py-1.5 text-[12px] text-ink-soft">
+          <p className={cx(WIDGET_NOTE, "ar-block ar-plain anim-fade mt-2 px-2.5 py-1.5 text-[12px]")}>
             <bdi>{distractorHint}</bdi>
           </p>
         )}
 
         {done && (
-          <div className="anim-pop mt-3 rounded-md border border-accent/45 bg-accent-wash px-3 py-2">
-            <span className="ar-block font-display text-[13.5px] font-medium text-accent-deep">
+          <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
+            <span className="ar-block font-display text-[13.5px] font-bold">
               {misses === 0
                 ? "برافو — لقيتهم كلهم من أول مرة ✓"
                 : "تمام، لقيتهم كلهم. دي بالظبط «استخرج من النص» بتاعة الامتحان"}

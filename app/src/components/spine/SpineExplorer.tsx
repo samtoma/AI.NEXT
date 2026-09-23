@@ -15,7 +15,28 @@ import { LoPanel } from "./LoPanel";
 import { QuestionModal } from "./QuestionModal";
 import { AskSpineDock } from "@/components/chat/AskSpineDock";
 import type { CiteInfo } from "@/components/chat/CitationChip";
-import { pct } from "@/lib/mastery";
+import { MASTERY_LEGEND, pct } from "@/lib/mastery";
+import {
+  HEADING,
+  MASTERY_SWATCH,
+  STICKER_CARD,
+  STROKE,
+  cx,
+} from "@/components/sticker";
+
+/** The as-of / subject toggles: one sticker pill holding its segments. */
+const SEGMENTED = cx(
+  STROKE,
+  "flex items-center gap-1 rounded-[var(--play-radius-pill)] bg-card p-1 sticker-shadow"
+);
+/** A segment keeps the 52px target; the chosen one is the ink surface with
+ *  its inverse text, the pairing every ink control in the product uses. */
+const segment = (on: boolean) =>
+  cx(
+    "inline-flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-pill)] px-4",
+    "font-display text-[0.85rem] font-bold transition-colors duration-200",
+    on ? "bg-ink text-paper" : "text-ink-soft hover:text-ink"
+  );
 
 const fmtDate = (iso: string) =>
   iso
@@ -188,7 +209,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
       <section className="anim-rise flex flex-wrap items-end justify-between gap-x-8 gap-y-4 pb-5 pt-9">
         <div className="max-w-2xl">
           <p className="rule-label mb-4">The Evidence Walk</p>
-          <h1 className="font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
+          <h1 className={cx(HEADING, "text-3xl md:text-4xl")}>
             The curriculum spine, with receipts.
           </h1>
           <p className="mt-2.5 text-[15px] leading-relaxed text-ink-soft">
@@ -216,23 +237,19 @@ export function SpineExplorer({ data }: { data: SpineData }) {
       >
         <div className="flex flex-wrap items-center gap-4">
           {subjectsPresent.length > 1 && (
-            <div className="ledger-card flex items-center gap-1 rounded-full! p-1">
+            <div className={SEGMENTED}>
               {(["all", ...subjectsPresent] as const).map((key) => (
                 <button
                   key={key}
                   onClick={() => pickSubject(key)}
-                  className={`rounded-full px-3.5 py-1.5 text-[12.5px] font-medium transition-all duration-300 ${
-                    subjectFilter === key
-                      ? "bg-ink text-paper shadow-sm"
-                      : "text-ink-soft hover:text-ink"
-                  }`}
+                  className={segment(subjectFilter === key)}
                 >
                   {key === "all" ? "All subjects" : displayLabelOfSpineKey(key)}
                 </button>
               ))}
             </div>
           )}
-          <div className="ledger-card flex items-center gap-1 rounded-full! p-1">
+          <div className={SEGMENTED}>
             {(
               [
                 ["baseline", `Baseline (diagnostic) · ${fmtDate(data.baselineDate)}`],
@@ -242,11 +259,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
               <button
                 key={key}
                 onClick={() => setAsOf(key)}
-                className={`rounded-full px-4 py-1.5 text-[12.5px] font-medium transition-all duration-300 ${
-                  asOf === key
-                    ? "bg-ink text-paper shadow-sm"
-                    : "text-ink-soft hover:text-ink"
-                }`}
+                className={segment(asOf === key)}
               >
                 {label}
               </button>
@@ -259,19 +272,31 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         </div>
 
         <div className="flex items-center gap-5">
-          <div className="flex items-center gap-2.5">
+          {/* The same five-step ramp every other screen paints (lib/mastery):
+              not started → amber → teal, no red, each step named, because
+              colour is never the only carrier of a band. */}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
             <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
               mastery
             </span>
-            <span className="font-mono text-[10px] text-ink-faint">0</span>
-            <div
-              className="h-1.5 w-28 rounded-full"
-              style={{
-                background:
-                  "linear-gradient(90deg, #b8472a, #cf9227, #2c7a56)",
-              }}
-            />
-            <span className="font-mono text-[10px] text-ink-faint">1</span>
+            <ul
+              aria-label="Mastery bands"
+              className="flex flex-wrap items-center gap-x-3 gap-y-1.5"
+            >
+              {MASTERY_LEGEND.map((s) => (
+                <li
+                  key={s.band}
+                  className="inline-flex items-center gap-1.5 font-display text-[0.72rem] font-bold text-ink-soft"
+                >
+                  <span
+                    aria-hidden
+                    className={MASTERY_SWATCH}
+                    style={{ backgroundColor: s.color }}
+                  />
+                  {s.band}
+                </li>
+              ))}
+            </ul>
           </div>
           {/* Whose graph this is. It used to be a triple-tap door onto the
               demo-student switcher; the cast is retired and the student now
@@ -293,7 +318,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         className="anim-rise flex items-stretch gap-4"
         style={{ animationDelay: "160ms" }}
       >
-        <div className="ledger-card min-w-0 flex-1 overflow-hidden">
+        <div className={cx(STICKER_CARD, "min-w-0 flex-1 overflow-hidden")}>
           <GraphCanvas
             los={visibleLos}
             edges={data.edges}

@@ -3,6 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 
 import { FEEDBACK_NOTE_MAX, type FeedbackMoment } from "@/lib/feedback-rules";
+import {
+  BUTTON_SECONDARY,
+  BUTTON_TERTIARY,
+  STROKE,
+  cx,
+} from "@/components/sticker";
 
 /**
  * "How did that go?" — the one place the product asks a student about itself
@@ -68,13 +74,17 @@ import { FEEDBACK_NOTE_MAX, type FeedbackMoment } from "@/lib/feedback-rules";
  * ---------------------------------------------------------------------------
  * CONSTITUTION XII
  * ---------------------------------------------------------------------------
- * Every colour is a token-backed utility (`border-line`, `bg-card-warm`,
- * `text-ink`, `text-ink-soft`, `text-ink-faint`, `bg-ink`/`text-paper` as a
- * paired background and foreground). No literal colour, stroke width, radius
- * or shadow anywhere below; radii and borders come from the named scale. The
- * up and down choices are told apart by their WORDS first — the glyph and any
- * fill are second and third signals, never the only one (WCAG 1.4.1, the same
- * rule `Chip` and `WidgetShell` enforce).
+ * Every colour is a token-backed utility, and the anatomy is Noor Play's from
+ * `components/sticker.ts`: the card is a Honey sticker (3px ink, 20px radius,
+ * hard shadow — not a control, so it does not press), the thumbs and "Send"
+ * are sticker SECONDARY buttons that press, and "Not now" is the TERTIARY
+ * text button. The send button used to be a flat ink slab with no shadow and
+ * no press (review 2026-09-23, F14) — "if it doesn't move, it isn't a
+ * control". There is deliberately no amber here: this block sits under the
+ * report card's doors, and the amber one belongs to them. No literal colour,
+ * stroke width, radius or shadow anywhere below. The up and down choices are
+ * told apart by their WORDS first — the glyph is the second signal, never the
+ * only one (WCAG 1.4.1, the same rule `Chip` and `WidgetShell` enforce).
  */
 
 type Phase = "checking" | "asking" | "note" | "done" | "gone";
@@ -243,21 +253,18 @@ export function FeedbackPrompt({
     <section
       dir={c.dir}
       aria-label={c.heading}
-      className="mt-6 rounded-xl border border-line bg-card-warm px-5 py-4"
+      className={cx(STROKE, "mt-6 rounded-[var(--play-radius)] bg-card-warm px-5 py-4 sticker-shadow-sm")}
     >
       {phase === "asking" ? (
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
-          <p className="font-display text-[1.05rem] font-medium text-ink">{c.heading}</p>
+          <p className="font-display text-[1.15rem] font-bold text-ink">{c.heading}</p>
           <div className="flex flex-wrap items-center gap-2">
             <Thumb glyph="👍" label={c.up} onPress={() => rate("up")} />
             <Thumb glyph="👎" label={c.down} onPress={() => rate("down")} />
-            {/* Quiet on purpose — no border, no fill. It is not an action she
-                is being encouraged to take, it is the way out. */}
-            <button
-              type="button"
-              onClick={dismiss}
-              className="min-h-[44px] px-2 text-[13px] text-ink-faint underline decoration-dotted underline-offset-4 transition-colors hover:text-ink"
-            >
+            {/* Quiet on purpose — the tertiary button: no border, no fill.
+                It is not an action she is being encouraged to take, it is
+                the way out. Still a full 52px target. */}
+            <button type="button" onClick={dismiss} className={BUTTON_TERTIARY}>
               {c.notNow}
             </button>
           </div>
@@ -268,8 +275,8 @@ export function FeedbackPrompt({
         <div>
           {/* Said before the box, not after it: the interaction is already
               finished and she is being told so before being offered more. */}
-          <p className="text-[13px] leading-relaxed text-ink-soft">
-            <span className="font-medium text-ink">{c.recorded}</span> {c.noteInvite}
+          <p className="text-[1rem] leading-relaxed text-ink-soft">
+            <span className="font-bold text-ink">{c.recorded}</span> {c.noteInvite}
           </p>
           <textarea
             value={note}
@@ -277,22 +284,18 @@ export function FeedbackPrompt({
             maxLength={FEEDBACK_NOTE_MAX}
             rows={2}
             placeholder={c.placeholder}
-            className="mt-2 block w-full rounded-lg border border-line bg-card px-3 py-2 text-[15px] leading-relaxed text-ink placeholder:text-ink-faint"
+            className={cx(STROKE, "mt-2 block w-full rounded-[var(--play-radius-sm)] bg-card px-3 py-2 font-read text-[1rem] leading-relaxed text-ink placeholder:text-ink-faint")}
           />
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => void sendNote()}
               disabled={busy}
-              className="min-h-[44px] rounded-lg bg-ink px-5 text-[14px] font-semibold text-paper transition-opacity disabled:opacity-60"
+              className={BUTTON_SECONDARY}
             >
               {busy ? c.sending : c.send}
             </button>
-            <button
-              type="button"
-              onClick={() => setPhase("done")}
-              className="min-h-[44px] px-2 text-[13px] text-ink-faint underline decoration-dotted underline-offset-4 transition-colors hover:text-ink"
-            >
+            <button type="button" onClick={() => setPhase("done")} className={BUTTON_TERTIARY}>
               {c.notNow}
             </button>
           </div>
@@ -302,7 +305,7 @@ export function FeedbackPrompt({
       {phase === "done" ? (
         // `aria-live` so a screen-reader user learns the card changed under
         // them without the focus having been moved to tell them.
-        <p aria-live="polite" className="text-[13px] leading-relaxed text-ink-soft">
+        <p aria-live="polite" className="text-[1rem] leading-relaxed text-ink-soft">
           {failed ? c.failed : c.thanks}
         </p>
       ) : null}
@@ -327,11 +330,7 @@ function Thumb({
   onPress: () => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onPress}
-      className="flex min-h-[44px] items-center gap-2 rounded-lg border border-line bg-card px-4 text-[14px] font-semibold text-ink transition-colors hover:bg-paper-deep"
-    >
+    <button type="button" onClick={onPress} className={BUTTON_SECONDARY}>
       <span aria-hidden>{glyph}</span>
       <span>{label}</span>
     </button>

@@ -1,8 +1,32 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-22 (`main`, working tree dirty — in-product feedback is written and
-> unstaged; released `PDR1-0-v0.5.0`; constitution v3.1.1)
+> Last updated: 2026-09-23 (`main`; released `v0.5.0`; constitution v3.1.1)
+
+## 🎨 ONE SKIN FOR NOW — Master hidden, Play fixed (2026-09-23, `main`)
+
+Samuel reported "a lot of bad UI and conflict of UI with the play view and the master view". The
+review ([`docs/reviews/2026-09-23-play-master-ui-review.md`](reviews/2026-09-23-play-master-ui-review.md),
+visual version <https://claude.ai/artifact/NTUidvZjBr3BRaTLpe4ZYp>) found that **Master was built
+(`df1bf29`), overwritten by Play (`bb0bd1e`), then brought back under its name with the Ledger
+palette** (`3db8981`, `85fe3b8`), while components kept Play's look as fixed values: 29 findings,
+three of them P0 under Master.
+
+**Decision (Samuel):** hide Master now, fix the Play findings, keep Master as a backlog.
+
+- `MASTER_VARIANT_ENABLED = false` in `app/src/lib/design-variant.ts`. Every student **and every
+  operator** resolves to Play; the pickers show one read-only line; both appearance endpoints
+  refuse `master`. Stored overrides are untouched, so flipping it back restores every choice.
+  ADR-0017 carries the amendment; FR-1011 is PARTIAL by decision.
+- Play findings fixed across the console (F9–F11, F22, F25/F26 partly, F29) and the student
+  surfaces (F13–F15, F17–F21, F27, F28). Student anatomy now lives in `components/sticker.ts`, and
+  console anatomy in `ds-*` classes in `globals.css`. Folding the two into one variant-neutral
+  layer is part of #47.
+- **Not seen signed in by anybody yet.** Every check is typecheck, tests, both builds, and
+  computed-style probes; no signed-in screen has been viewed.
+- **Backlog:** tracking [#51](https://github.com/samtoma/AI.NEXT/issues/51). Master: #50 decisions,
+  #46 tokens and states, #47 shared tokens, #48 Ledger off `main`, #49 guardrails. Play leftovers: #52.
+  **Do not onboard a Secondary cohort, and do not flip the switch, before #46, #47 and #49.**
 
 ## 🗣️ ASKING THE STUDENT HOW WE DID — in-product feedback (2026-09-22, `main`, UNCOMMITTED)
 

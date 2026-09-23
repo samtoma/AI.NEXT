@@ -22,7 +22,8 @@
  */
 
 import { useCallback, useMemo, useRef, useState } from "react";
-import { WidgetShell, type Verdict } from "./WidgetShell";
+import { BUTTON_SECONDARY } from "@/components/sticker";
+import { WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_INPUT, WIDGET_WELL } from "./WidgetShell";
 import { clamp, tidy, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
@@ -208,7 +209,7 @@ export function RatioBalance({
         viewBox={`0 0 ${W} ${H}`}
         role="application"
         aria-label={prompt}
-        className={`mx-auto block w-full max-w-[320px] rounded-md border border-line-soft bg-card-warm ${
+        className={`mx-auto block w-full max-w-[320px] ${WIDGET_WELL} ${
           verdict ? "cursor-default" : "cursor-ns-resize"
         }`}
         {...(verdict ? {} : surface)}
@@ -243,8 +244,8 @@ export function RatioBalance({
       </svg>
 
       {!verdict && (
-        <div className="mt-2.5 flex flex-wrap items-center justify-center gap-2">
-          <label className="font-mono text-[10.5px] text-ink-soft">
+        <div className={WIDGET_ACTIONS}>
+          <label className="font-mono text-[10.5px] font-medium text-[color:var(--play-text-muted)]">
             fourth term
             <input
               type="number"
@@ -253,13 +254,13 @@ export function RatioBalance({
               value={d}
               onKeyDown={nudge}
               onChange={(e) => setD(clamp(Math.round(Number(e.target.value) || 1), 1, MAXV))}
-              className="ml-2 h-9 w-14 rounded-md border border-line bg-card text-center font-mono text-[12px] text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+              className={`ms-2 w-14 ${WIDGET_INPUT}`}
             />
           </label>
           <button
             type="button"
             onClick={check}
-            className="min-h-[36px] rounded-md border border-accent/45 bg-accent-wash px-3.5 font-display text-[13px] font-medium text-accent-deep transition-colors hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+            className={BUTTON_SECONDARY}
           >
             Check
           </button>

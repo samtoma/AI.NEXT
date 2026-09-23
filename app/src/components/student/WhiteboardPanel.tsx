@@ -32,6 +32,13 @@ import { Visual } from "@/components/viz/Visual";
 import { VizPlaybackContext } from "@/components/viz/core";
 import { vizStepCount } from "@/components/viz/steps";
 import { ChatQuestionCard } from "@/components/chat/ChatQuestionCard";
+import {
+  HONEY_BAND,
+  ICON_BUTTON,
+  STICKER_CARD,
+  STROKE_SM,
+  cx,
+} from "@/components/sticker";
 
 /* ---------------- board model ---------------- */
 
@@ -278,22 +285,23 @@ export function WhiteboardPanel({
   const page = figReady ? (fig as ResolvedFigure).page : undefined;
 
   return (
-    <section className="ledger-card flex min-h-0 flex-col overflow-hidden">
+    <section className={cx(STICKER_CARD, "flex min-h-0 flex-col overflow-hidden")}>
       {/* header */}
-      <div className="flex shrink-0 items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
+      <div className={cx(HONEY_BAND, "flex shrink-0 items-center justify-between gap-2 px-3.5 py-2")}>
         <span className="flex items-center gap-2">
-          <span dir="rtl" className="font-display text-[14px] font-medium text-accent-deep">
+          <span dir="rtl" className="font-display text-[1.05rem] font-extrabold text-ink">
             السبورة ✎
           </span>
           {debug && figReady && (fig as ResolvedFigure).refId && (
-            <span className="font-mono text-[8.5px] text-ink-faint">
+            <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
               {(fig as ResolvedFigure).refId}
             </span>
           )}
         </span>
         <span className="flex items-center gap-2">
+          {/* Arabic, so never the mono face (handoff, TYPE) */}
           {page != null && (
-            <span dir="rtl" className="font-mono text-[10px] text-ink-soft">
+            <span dir="rtl" className="text-[0.85rem] font-bold text-ink-faint">
               من الكتاب ص{page}
             </span>
           )}
@@ -301,7 +309,7 @@ export function WhiteboardPanel({
             onClick={onToggleCollapsed}
             aria-expanded={!collapsed}
             aria-label={collapsed ? "افتح السبورة" : "اقفل السبورة"}
-            className="flex h-6 w-6 items-center justify-center rounded-full border border-line bg-card text-[10px] text-ink-soft md:hidden"
+            className={cx(ICON_BUTTON, "text-[0.85rem] md:hidden")}
           >
             {collapsed ? "▾" : "▴"}
           </button>
@@ -317,7 +325,7 @@ export function WhiteboardPanel({
         {!focused && (
           <p
             dir="rtl"
-            className="py-8 text-center text-[13px] leading-relaxed text-ink-faint"
+            className="py-8 text-center text-[1rem] leading-relaxed text-ink-faint"
           >
             هنرسم هنا مع بعض ✏️
           </p>
@@ -335,7 +343,7 @@ export function WhiteboardPanel({
                   onResult={onAttempt}
                 />
               ) : (
-                <p className="font-mono text-[10px] text-ink-faint">
+                <p className="font-mono text-[0.72rem] font-medium text-ink-faint">
                   → {focused.qid}
                 </p>
               ))}
@@ -348,7 +356,7 @@ export function WhiteboardPanel({
                 return p ? (
                   <SealedPassageCard passage={p} compact />
                 ) : (
-                  <p dir="rtl" className="py-6 text-center text-[12px] text-rust">
+                  <p dir="rtl" className="py-6 text-center text-[0.9rem] font-bold text-[color:var(--play-text-muted)]">
                     النص ده مش متاح في بيانات الدرس
                   </p>
                 );
@@ -360,20 +368,20 @@ export function WhiteboardPanel({
                   {[0, 1, 2].map((i) => (
                     <span
                       key={i}
-                      className="h-1 w-1 rounded-full bg-accent"
+                      className="h-2 w-2 rounded-[var(--play-radius-pill)] bg-[var(--noor-action)]"
                       style={{
                         animation: `think-dot 1.1s ease-in-out ${i * 0.18}s infinite`,
                       }}
                     />
                   ))}
                 </span>
-                <span dir="rtl" className="text-[11px] text-ink-faint">
+                <span dir="rtl" className="text-[0.85rem] text-ink-faint">
                   بجهّز الرسمة…
                 </span>
               </div>
             )}
             {focused.type !== "question" && fig === "missing" && (
-              <p dir="rtl" className="py-6 text-center text-[12px] text-rust">
+              <p dir="rtl" className="py-6 text-center text-[0.9rem] font-bold text-[color:var(--play-text-muted)]">
                 الرسمة دي مش موجودة
               </p>
             )}
@@ -399,16 +407,17 @@ export function WhiteboardPanel({
                           key={i}
                           onClick={() => setStep(fKey, i + 1)}
                           aria-label={`الخطوة ${arDigits(i + 1)}`}
-                          className="flex h-4 w-4 items-center justify-center"
+                          className="flex h-6 w-5 items-center justify-center"
                         >
+                          {/* drawn steps are ink, steps to come are the
+                              inactive grey — both outlined, so neither
+                              vanishes on the white card */}
                           <span
-                            className="h-1.5 w-1.5 rounded-full transition-colors duration-300"
-                            style={{
-                              backgroundColor:
-                                i + 1 <= step
-                                  ? "var(--accent)"
-                                  : "rgba(32,41,58,0.18)",
-                            }}
+                            className={cx(
+                              STROKE_SM,
+                              "h-2.5 w-2.5 rounded-[var(--play-radius-pill)] transition-colors duration-300",
+                              i + 1 <= step ? "bg-ink" : "bg-[var(--play-inactive-fill)]"
+                            )}
                           />
                         </button>
                       ))}
@@ -417,7 +426,7 @@ export function WhiteboardPanel({
                       <button
                         dir="rtl"
                         onClick={() => setStep(fKey, Math.min(step + 1, total))}
-                        className="rounded-full border border-accent/40 bg-card px-3 py-1 text-[11.5px] font-semibold text-accent-deep transition-all duration-150 hover:-translate-y-px hover:border-accent"
+                        className={BOARD_STEP_BUTTON}
                       >
                         ▸ التالي
                       </button>
@@ -425,7 +434,7 @@ export function WhiteboardPanel({
                       <button
                         dir="rtl"
                         onClick={() => setStep(fKey, 1)}
-                        className="rounded-full border border-line bg-card px-3 py-1 text-[11.5px] font-medium text-ink-soft transition-all duration-150 hover:-translate-y-px hover:border-accent/50 hover:text-accent-deep"
+                        className={BOARD_STEP_BUTTON}
                       >
                         ↺ ارسمها تاني
                       </button>
@@ -455,6 +464,14 @@ export function WhiteboardPanel({
   );
 }
 
+/** "Next step" / "draw it again" under a board figure: a small sticker
+ *  that presses. Still a 52px target — the handoff's floor has no
+ *  exception for secondary controls. */
+const BOARD_STEP_BUTTON = cx(
+  STROKE_SM,
+  "inline-flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-pill)] bg-card px-4 font-display text-[0.95rem] font-bold text-ink sticker-shadow-sm play-pressable"
+);
+
 /* ---------------- filmstrip thumb ---------------- */
 
 function FilmThumb({
@@ -476,10 +493,13 @@ function FilmThumb({
       onClick={() => onFocus(item.key)}
       title={label}
       aria-label={label}
-      className="w-16 shrink-0 overflow-hidden rounded-md border border-line bg-card transition-all duration-150 hover:-translate-y-px hover:border-accent/50"
+      className={cx(
+        STROKE_SM,
+        "w-16 shrink-0 overflow-hidden rounded-[var(--play-radius-sm)] bg-card sticker-shadow-sm play-pressable"
+      )}
     >
       {item.type === "question" ? (
-        <span className="flex h-11 items-center justify-center text-[15px] text-accent-deep">
+        <span className="flex h-11 items-center justify-center text-[1rem] text-ink">
           ⚡
         </span>
       ) : ready ? (
@@ -492,7 +512,7 @@ function FilmThumb({
           />
         </span>
       ) : (
-        <span className="flex h-11 items-center justify-center text-[12px] text-ink-faint">
+        <span className="flex h-11 items-center justify-center text-[0.9rem] text-ink-faint">
           ✎
         </span>
       )}

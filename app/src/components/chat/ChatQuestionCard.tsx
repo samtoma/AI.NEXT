@@ -8,7 +8,18 @@ import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
 import { pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
-import { tierStyle } from "@/components/spine/LoPanel";
+import {
+  BUTTON_PRIMARY,
+  BUTTON_TERTIARY,
+  HONEY_BAND,
+  STICKER_PANEL,
+  STROKE,
+  STROKE_SM,
+  STROKE_WIDTH_SM,
+  TIER_INK,
+  VERDICT_INK,
+  cx,
+} from "@/components/sticker";
 
 /**
  * Live question card pushed into the chat by a {{show_question:…}} directive.
@@ -85,19 +96,23 @@ export function ChatQuestionCard({
   };
 
   return (
-    <div className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
+    <div className={cx(STICKER_PANEL, "anim-pop my-2 overflow-hidden")}>
+      <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-3.5 py-2")}>
+        <span className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-accent-deep">
           ⚡ live question · pushed by the tutor
         </span>
         <span className="flex items-center gap-1.5">
           <span
-            className={`rounded border px-1.5 py-px font-mono text-[8.5px] uppercase tracking-[0.1em] ${tierStyle[q.tier]}`}
+            className={cx(
+              STROKE_WIDTH_SM,
+              "rounded-[var(--play-radius-pill)] px-2 py-px font-mono text-[0.72rem] uppercase tracking-[0.1em]",
+              TIER_INK[q.tier]
+            )}
           >
             {q.tier}
           </span>
           {debug && (
-            <span className="font-mono text-[9px] text-ink-faint">
+            <span className="font-mono text-[0.72rem] text-ink-faint">
               {q.id} · p.{q.provenance.sourcePage ?? "—"}
             </span>
           )}
@@ -105,7 +120,7 @@ export function ChatQuestionCard({
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="tex-block text-[13.5px] leading-relaxed text-ink">
+        <p className="tex-block text-[1rem] text-ink">
           <TeX text={q.stem} />
         </p>
 
@@ -129,30 +144,41 @@ export function ChatQuestionCard({
                 hostShowsPrompt
                 onOutcome={(outcome) => void submit(outcome)}
                 fallback={
-                  <p className="rounded-md border border-gold/50 bg-gold-wash px-3 py-2 text-[12.5px] text-gold">
+                  <p
+                    className={cx(
+                      STROKE_SM,
+                      "rounded-[var(--play-radius-sm)] bg-card-warm px-3 py-2 text-[0.85rem] text-[color:var(--play-text-amber-warm)]"
+                    )}
+                  >
                     This construction could not be set up. Ask for another question.
                   </p>
                 }
               />
             ) : q.questionType === "mcq" && q.choices ? (
-              <div className="grid gap-1.5">
+              <div className="grid gap-2">
                 {mcqChoices(q)!.map((c) => (
                   <button
                     key={c.key}
                     onClick={() => setChoice(c.key)}
                     disabled={busy}
-                    className={`flex items-center gap-2.5 rounded-md border px-3 py-2 text-left text-[12.5px] transition-all duration-150 play-pressable sticker-shadow-sm ${
-                      choice === c.key
-                        ? "border-ink bg-ink/5 shadow-[0_0_0_1px_var(--ink)]"
-                        : "border-line bg-card hover:border-ink/40"
-                    }`}
+                    // The answer-option anatomy: 2.5px ink, white, 52px,
+                    // Baloo 700; Selected is the Honey fill, keeping its
+                    // stroke and shadow. `text-start`, not `text-left`, so an
+                    // Arabic option reads from the right.
+                    className={cx(
+                      STROKE_SM,
+                      "flex min-h-[var(--noor-touch-min)] items-center gap-2.5 rounded-[var(--play-radius-sm)] px-3 py-2 text-start",
+                      "font-display text-[1.05rem] font-bold text-ink sticker-shadow-sm play-pressable",
+                      choice === c.key ? "bg-card-warm" : "bg-card"
+                    )}
                   >
                     <span
-                      className={`flex h-5.5 w-5.5 shrink-0 items-center justify-center rounded-full font-mono text-[10px] font-semibold ${
+                      className={cx(
+                        "flex size-6 shrink-0 items-center justify-center rounded-full font-mono text-[0.72rem] font-medium",
                         choice === c.key
-                          ? "bg-ink text-paper"
-                          : "bg-ink/8 text-ink-soft"
-                      }`}
+                          ? "bg-card text-[color:var(--play-text-amber-warm)]"
+                          : "bg-[var(--play-inactive-fill)] text-[color:var(--play-text-muted)]"
+                      )}
                     >
                       {c.key}
                     </span>
@@ -168,7 +194,10 @@ export function ChatQuestionCard({
                 onChange={(e) => setNumeric(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && submit()}
                 placeholder="Type the answer…"
-                className="w-full rounded-md border border-line bg-card px-3 py-2 font-mono text-[13px] text-ink outline-none placeholder:text-ink-faint focus:border-accent"
+                className={cx(
+                  STROKE,
+                  "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm"
+                )}
               />
             )}
             {/* A widget question has nothing to submit: the construction IS
@@ -182,7 +211,9 @@ export function ChatQuestionCard({
                   disabled={
                     busy || (q.questionType === "mcq" ? !choice : !numeric.trim())
                   }
-                  className="rounded-full bg-accent-deep px-4 py-1.5 text-[11.5px] font-semibold text-paper transition-all duration-150 enabled:hover:-translate-y-px disabled:opacity-35 play-pressable sticker-shadow-sm"
+                  // the card's one action — amber; disabled, it goes white
+                  // and dashed rather than dimming (handoff, Buttons)
+                  className={cx(BUTTON_PRIMARY, "disabled:bg-card")}
                 >
                   {busy ? "Checking…" : "Submit answer"}
                 </button>
@@ -195,7 +226,7 @@ export function ChatQuestionCard({
                 counted. Every question type can fail the same way, so the
                 message belongs to the card, not to the button. */}
             {error && (
-              <p className="mt-2.5 text-[11px] text-rust" role="alert">
+              <p className="mt-2.5 text-[0.85rem] text-[color:var(--play-text-muted)]" role="alert">
                 {error}
               </p>
             )}
@@ -204,18 +235,21 @@ export function ChatQuestionCard({
 
         {result && (
           <div
-            className={`anim-pop mt-3 rounded-md border px-3 py-2.5 ${
-              result.isCorrect
-                ? "border-accent/45 bg-accent-wash"
-                : "border-rust/40 bg-rust-wash/60"
-            }`}
+            // Correct is the leaf playmate and pops; wrong greys out and
+            // nudges. There is no red verdict (handoff, Answer options).
+            className={cx(
+              STROKE_WIDTH_SM,
+              "anim-pop mt-3 rounded-[var(--play-radius-sm)] px-3 py-2.5",
+              result.isCorrect ? VERDICT_INK.correct : VERDICT_INK.wrong
+            )}
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span
                 dir="auto"
-                className={`font-display text-[14px] font-medium ${
-                  result.isCorrect ? "text-accent-deep" : "text-rust anim-nudge"
-                }`}
+                className={cx(
+                  "font-display text-[1.05rem] font-bold",
+                  !result.isCorrect && "anim-nudge"
+                )}
               >
                 {result.isCorrect
                   ? debug
@@ -236,15 +270,9 @@ export function ChatQuestionCard({
                       : "Not quite — let's look at it together"}
               </span>
               {debug && (
-                <span className="font-mono text-[10px] text-ink-soft">
+                <span className="font-mono text-[0.72rem]">
                   mastery {pct(result.oldScore)} →{" "}
-                  <strong
-                    className={
-                      result.newScore >= result.oldScore
-                        ? "text-accent-deep"
-                        : "text-rust"
-                    }
-                  >
+                  <strong>
                     {pct(result.newScore)}
                   </strong>
                 </span>
@@ -255,7 +283,7 @@ export function ChatQuestionCard({
             {!debug && !result.isCorrect && q.questionType !== "widget" && (
               <p
                 dir={lang === "ar" ? "rtl" : "ltr"}
-                className="mt-1.5 text-[12px] text-ink-soft"
+                className="mt-1.5 text-[0.85rem]"
               >
                 {answerShown ? (
                   lang === "ar" ? (
@@ -270,7 +298,7 @@ export function ChatQuestionCard({
                 ) : (
                   <button
                     onClick={() => setAnswerShown(true)}
-                    className="underline decoration-dotted underline-offset-2 hover:text-accent-deep"
+                    className={BUTTON_TERTIARY}
                   >
                     {lang === "ar" ? "شوف الإجابة الصح" : "Show the answer"}
                   </button>
@@ -283,19 +311,21 @@ export function ChatQuestionCard({
                 dropped, so the text written for the mistake reached a
                 dashboard and never reached the student. */}
             {result.refutation && !result.isCorrect && (
-              <div className="mt-2 rounded-md border border-accent/35 bg-accent-wash px-3 py-2.5">
-                <p className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-accent-deep">
+              <div
+                className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
+              >
+                <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-accent-deep">
                   why that happened
                 </p>
                 <ol className="mt-1.5 grid gap-1.5 font-read">
                   {result.refutation.steps.map((st) => (
-                    <li key={st.step} className="text-[13px] leading-relaxed text-ink">
+                    <li key={st.step} className="text-[1rem] text-ink">
                       {st.text_md}
                     </li>
                   ))}
                 </ol>
                 {debug && (
-                  <p className="mt-2 font-mono text-[9.5px] text-ink-faint">
+                  <p className="mt-2 font-mono text-[0.72rem] text-ink-faint">
                     {result.diagnosis?.misconceptionId} · via {result.diagnosis?.via}
                     {result.refutation.reviewed ? "" : " · unreviewed"}
                   </p>
@@ -305,7 +335,7 @@ export function ChatQuestionCard({
             {debug && !result.isCorrect && onOpenQuestion && (
               <button
                 onClick={() => onOpenQuestion(q.id)}
-                className="mt-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.1em] text-accent-deep underline decoration-dotted underline-offset-2 hover:text-accent"
+                className="mt-1.5 font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-[color:var(--play-text-link)] underline decoration-dotted underline-offset-2"
               >
                 open canonical solution ↗
               </button>

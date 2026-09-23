@@ -7,8 +7,15 @@
  * (id + book page).
  */
 
+import { HONEY_BAND, STICKER_PANEL, cx } from "@/components/sticker";
 import { Visual } from "./Visual";
 import { kindMeta } from "./kind-meta";
+
+/** The same frame the interactive widgets wear (student/widgets/WidgetShell):
+ *  a Play sticker panel with a Honey header band. It carried the Ledger's
+ *  viridian soft shadow before (review 2026-09-23, F18). */
+const FRAME = cx(STICKER_PANEL, "anim-pop my-2 max-w-[420px] overflow-hidden");
+const HEAD = cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-3.5 py-2");
 
 export function VizCard({
   kind,
@@ -25,20 +32,20 @@ export function VizCard({
   sourcePage?: number | null;
 }) {
   return (
-    <div className="anim-pop my-2 max-w-[420px] overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
+    <div className={FRAME}>
+      <div className={HEAD}>
+        <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[color:var(--play-text-amber-warm)]">
           ✦ figure · {kind.replace(/_/g, " ")}
         </span>
         <span className="flex items-center gap-2">
           {(refId || sourcePage != null) && (
-            <span className="font-mono text-[8.5px] tracking-wide text-ink-faint">
+            <span className="font-mono text-[0.72rem] font-medium tracking-wide">
               {refId}
               {refId && sourcePage != null && " · "}
               {sourcePage != null && `book p.${sourcePage}`}
             </span>
           )}
-          <span aria-hidden className="font-mono text-[10px] text-accent-deep">
+          <span aria-hidden className="font-mono text-[10px] text-[color:var(--play-text-amber-warm)]">
             {kindMeta(kind).glyph}
           </span>
         </span>

@@ -2,6 +2,17 @@
 
 import { useMemo, useState } from "react";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { BADGE, BUTTON_SECONDARY, VERDICT_INK, cx } from "@/components/sticker";
+import {
+  OPTION_INK,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT,
+  WIDGET_KIND,
+  WIDGET_OPTION,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+} from "./WidgetShell";
 
 /**
  * {{widget:product_builder:{"X":[1,2],"Y":[3,4,5],"prompt":"Tap all pairs of X×Y"}}}
@@ -120,12 +131,18 @@ export function ProductBuilder({
     return "idle";
   };
 
+  // The chips are answer options at chip scale. After Check every chip is
+  // disabled, so each graded state carries `data-verdict` and keeps its ink.
+  // Nothing animates per chip: the result strip below is the one thing that
+  // moves when the grade lands.
   const chipCls: Record<string, string> = {
-    idle: "border-line bg-card text-ink-soft hover:border-ink/40 hover:-translate-y-px",
-    on: "border-ink bg-ink text-paper shadow-[0_4px_10px_-4px_rgba(32,41,58,0.5)]",
-    hit: "border-accent bg-accent text-paper",
-    wrong: "border-rust bg-rust-wash text-rust line-through",
-    missed: "border-dashed border-accent/70 bg-accent-wash text-accent-deep",
+    idle: OPTION_INK.idle,
+    on: OPTION_INK.selected,
+    hit: OPTION_INK.correct,
+    // grey, and struck through — the non-colour "not this one", never red
+    wrong: cx(OPTION_INK.wrong, "line-through"),
+    // a pair that belonged in X×Y and was not picked: the correct ink, dashed
+    missed: cx(VERDICT_INK.correct, "border-dashed"),
   };
 
   const allGood =
@@ -134,27 +151,23 @@ export function ProductBuilder({
     selected.size === n;
 
   return (
-    <div className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
-          ✳ interactive · product builder
-        </span>
-        <span className="font-mono text-[9px] text-ink-faint">
+    <div className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND}>✳ interactive · product builder</span>
+        <span className={WIDGET_HINT}>
           X = {`{${setX.join(", ")}}`} · Y = {`{${setY.join(", ")}}`}
         </span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="text-[13px] font-medium leading-relaxed text-ink">
-          {prompt}
-        </p>
+        <p className={WIDGET_PROMPT}>{prompt}</p>
 
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className="chip border-gold/50 bg-gold-wash text-ink">
+          <span className={cx(BADGE, "bg-card-warm text-ink")}>
             n(X)×n(Y) = {setX.length}×{setY.length} ={" "}
-            <strong className="font-semibold">{n}</strong>
+            <strong className="font-extrabold">{n}</strong>
           </span>
-          <span className="chip">
+          <span className={cx(BADGE, "bg-card text-ink")}>
             selected {selected.size} / {n}
           </span>
         </div>
@@ -168,10 +181,15 @@ export function ProductBuilder({
                 key={k}
                 onClick={() => toggle(k)}
                 disabled={checked}
-                className={`rounded-full border px-2.5 py-1 font-mono text-[12px] font-medium transition-all duration-150 ${chipCls[st]}`}
+                data-verdict={checked && st !== "idle" ? st : undefined}
+                className={cx(
+                  WIDGET_OPTION,
+                  "px-3 font-mono text-[12px]",
+                  chipCls[st]
+                )}
               >
                 {k}
-                {st === "missed" && <span className="ml-1 text-[9px]">missed</span>}
+                {st === "missed" && <span className="ms-1 text-[9px]">missed</span>}
               </button>
             );
           })}
@@ -181,23 +199,13 @@ export function ProductBuilder({
           <button
             onClick={check}
             disabled={selected.size === 0}
-            className="mt-3 rounded-full bg-accent-deep px-4 py-1.5 text-[11.5px] font-semibold text-paper transition-all duration-150 enabled:hover:-translate-y-px disabled:opacity-35"
+            className={cx(BUTTON_SECONDARY, "mt-3")}
           >
             Check my pairs
           </button>
         ) : (
-          <div
-            className={`anim-pop mt-3 rounded-md border px-3 py-2 ${
-              allGood
-                ? "border-accent/45 bg-accent-wash"
-                : "border-rust/40 bg-rust-wash/60"
-            }`}
-          >
-            <span
-              className={`font-display text-[13.5px] font-medium ${
-                allGood ? "text-accent-deep" : "text-rust"
-              }`}
-            >
+          <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT[allGood ? "correct" : "wrong"])}>
+            <span className="font-display text-[13.5px] font-bold">
               {allGood
                 ? `برافو! X×Y complete — all ${n} pairs ✓`
                 : "Check the marks — first from X, second from Y. Order matters!"}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { SubjectSummary } from "@/lib/types";
 import { spineSubjectDef } from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
+import { BADGE, HEADING, STROKE, STROKE_SM, cx } from "@/components/sticker";
 
 /** "Omar Hassan" → "Omar" — the convention LessonCheckIn uses too. */
 const shortName = (displayName: string) => displayName.split(" ")[0] || displayName;
@@ -48,23 +49,22 @@ const arabicGreetingName = (displayName: string): string | null => {
  * ---------------------------------------------------------------------------
  * COLOUR AND TOKENS (constitution XII)
  * ---------------------------------------------------------------------------
- * Every value here is a token: the card wash and border come from the subject's
- * registry accent, the type and rules from `ink`/`line`, and the only inline
- * style is the mastery fill, whose five steps live in `lib/mastery.ts` verbatim
- * from `tokens.css`. The bar is never the only carrier — the percentage sits
+ * Every value here is a token. Each row is a Noor Play SUBJECT TILE: 3px ink,
+ * 20px radius, hard shadow, and the subject's PLAYMATE fill with its paired
+ * foreground (sky / leaf / berry, from the registry's `accent.tile`), because
+ * the playmates exist for exactly this — recognition, not decoration.
+ *
+ * It used to be `.ledger-card` plus `bg-*-wash`/`border-*` utilities, and every
+ * card rendered identical white (review 2026-09-23, F13): `.ledger-card` is an
+ * unlayered rule in `globals.css`, Tailwind's utilities live in a cascade
+ * layer, and an unlayered declaration beats a layered one whatever its
+ * specificity. So the tile no longer wears `.ledger-card` at all — its fill,
+ * outline, radius and shadow are all token utilities that nothing outranks.
+ *
+ * The only inline style is the mastery fill, `var(--mastery-N)` from
+ * `lib/mastery.ts`. The bar is never the only carrier — the percentage sits
  * beside it and the bar itself carries a label for a screen reader.
  */
-
-/** Card tokens + direction come from the subject's registry entry, so a new
- *  subject arrives styled instead of inheriting maths' card by default. */
-const cardOf = (subject: SubjectSummary["subject"]) => {
-  const def = spineSubjectDef(subject);
-  return {
-    wash: def?.accent.cardWash ?? "",
-    border: def?.accent.cardBorder ?? "border-line",
-    rtl: def?.dir === "rtl",
-  };
-};
 
 const VERDICT_LABEL: Record<string, string> = {
   got_it: "فهمها ✓",
@@ -102,11 +102,11 @@ export function SubjectHome({
     <main className="mx-auto max-w-4xl px-6 pb-16">
       <section className="anim-rise pt-10">
         <p className="rule-label mb-4">After school · {first}</p>
-        <h1 className="font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
+        <h1 className={cx(HEADING, "text-[1.9rem] md:text-[2.4rem]")}>
           {ar ? `أهلاً يا ${ar} — ` : "أهلاً — "}
           {empty ? "لسه مافيش مادة جاهزة هنا" : "تحب تذاكر إيه النهاردة؟"}
         </h1>
-        <p className="mt-2.5 text-[15px] text-ink-soft">
+        <p className="mt-2.5 text-[1rem] text-ink-soft">
           {empty
             ? "مش حاجة عملتها إنت. أول ما تبقى فيه مادة جاهزة هتلاقيها في الصفحة دي."
             : "كل مادة لوحدها — تقدمك ودرجاتك محسوبة لكل مادة على حدة."}
@@ -117,82 +117,9 @@ export function SubjectHome({
         className="anim-rise mt-8 flex flex-col gap-4"
         style={{ animationDelay: "110ms" }}
       >
-        {summaries.map((s) => {
-          const a = cardOf(s.subject);
-          return (
-            <Link
-              key={s.subject}
-              href={`/student?subject=${s.subject}`}
-              dir={a.rtl ? "rtl" : "ltr"}
-              className={`ledger-card play-pressable group flex w-full flex-col gap-4 rounded-2xl border ${a.border} ${a.wash} p-5 transition-transform hover:-translate-y-0.5 sm:flex-row sm:items-center sm:gap-6`}
-            >
-              {/* 1. who this row is — the subject in its own script, and how
-                     much of it there is to do */}
-              <div className="min-w-0 sm:basis-[36%]">
-                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                  <h2 className="font-display text-xl font-medium text-ink">
-                    {s.courseLabel}
-                  </h2>
-                  <span className="chip shrink-0">{s.lessonsCount} دروس</span>
-                </div>
-                <p className="mt-1 text-[12px] text-ink-faint">
-                  {s.lastCheck
-                    ? `آخر تقييم: ${VERDICT_LABEL[s.lastCheck.verdict] ?? s.lastCheck.verdict} · ${s.lastCheck.score}/100`
-                    : "لسه مافيش تقييم"}
-                </p>
-              </div>
-
-              {/* 2. per-subject mastery — never blended across subjects — and
-                     the one topic worth naming */}
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-3">
-                  <div
-                    role="img"
-                    // The bar is a picture of a number. Sighted readers get the
-                    // percentage beside it; this is the same fact for everyone
-                    // else, in the card's own language.
-                    aria-label={`تقدمك في ${s.courseLabel}: ${pct(s.avgMastery)}`}
-                    className="h-2 flex-1 overflow-hidden rounded-full bg-ink/10"
-                  >
-                    <div
-                      className="h-full rounded-full transition-all duration-700"
-                      style={{
-                        width: pct(s.avgMastery),
-                        backgroundColor: masteryColor(s.avgMastery),
-                      }}
-                    />
-                  </div>
-                  <span className="font-mono text-sm font-semibold text-ink">
-                    {pct(s.avgMastery)}
-                  </span>
-                </div>
-
-                {s.weakestLo ? (
-                  <p className="mt-2 truncate text-[13px] leading-relaxed text-ink-soft">
-                    أضعف نقطة:{" "}
-                    <span className="font-medium text-ink">
-                      {s.weakestLo.label}
-                    </span>{" "}
-                    <span className="font-mono text-[11px] text-ink-faint">
-                      ({pct(s.weakestLo.mastery)})
-                    </span>
-                  </p>
-                ) : (
-                  <p className="mt-2 text-[13px] leading-relaxed text-ink-faint">
-                    لسه بدري نقول أضعف نقطة
-                  </p>
-                )}
-              </div>
-
-              {/* 3. the way in. `shrink-0` so the label never wraps mid-phrase
-                     on a narrow iPad column. */}
-              <span className="inline-flex shrink-0 items-center gap-1.5 text-[13px] font-medium text-ink">
-                ابدأ
-                <ForwardChevron />
-              </span>
-            </Link>
-          );
-        })}
+        {summaries.map((s) => (
+          <SubjectCard key={s.subject} summary={s} />
+        ))}
 
         <MoreSubjectsComing />
       </section>
@@ -201,9 +128,105 @@ export function SubjectHome({
 }
 
 /**
+ * One subject, as a Play subject tile.
+ *
+ * Card tokens + direction come from the subject's registry entry, so a new
+ * subject arrives styled instead of inheriting maths' tile by default. A
+ * subject with no registry entry falls back to a plain white tile — ink on
+ * card, still a correct pair — rather than borrowing another subject's colour.
+ */
+function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
+  const def = spineSubjectDef(s.subject);
+  const tile = def?.accent.tile ?? "bg-card text-ink";
+  const dim = def?.accent.tileDim ?? "text-ink-soft";
+
+  return (
+    <Link
+      href={`/student?subject=${s.subject}`}
+      dir={def?.dir === "rtl" ? "rtl" : "ltr"}
+      className={cx(
+        STROKE,
+        tile,
+        "sticker-shadow play-pressable group flex w-full flex-col gap-4 rounded-[var(--play-radius)] p-5 sm:flex-row sm:items-center sm:gap-6"
+      )}
+    >
+      {/* 1. who this row is — the subject in its own script, and how
+             much of it there is to do */}
+      <div className="min-w-0 sm:basis-[36%]">
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <h2 className="font-display text-[1.5rem] font-extrabold leading-[1.2]">
+            {s.courseLabel}
+          </h2>
+          <span className={cx(BADGE, "shrink-0 bg-card text-ink")}>
+            {s.lessonsCount} دروس
+          </span>
+        </div>
+        <p className={cx("mt-1 text-[0.85rem] font-bold", dim)}>
+          {s.lastCheck
+            ? `آخر تقييم: ${VERDICT_LABEL[s.lastCheck.verdict] ?? s.lastCheck.verdict} · ${s.lastCheck.score}/100`
+            : "لسه مافيش تقييم"}
+        </p>
+      </div>
+
+      {/* 2. per-subject mastery — never blended across subjects — and
+             the one topic worth naming */}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-3">
+          {/* The handoff's quest-bar anatomy: a white track in a thin ink
+              outline, so the fill reads on any playmate behind it. */}
+          <div
+            role="img"
+            // The bar is a picture of a number. Sighted readers get the
+            // percentage beside it; this is the same fact for everyone
+            // else, in the card's own language.
+            aria-label={`تقدمك في ${s.courseLabel}: ${pct(s.avgMastery)}`}
+            className={cx(
+              STROKE_SM,
+              "h-[18px] flex-1 overflow-hidden rounded-[var(--play-radius-pill)] bg-card p-0.5"
+            )}
+          >
+            <div
+              className="h-full rounded-[var(--play-radius-pill)] transition-all duration-700"
+              style={{
+                width: pct(s.avgMastery),
+                backgroundColor: masteryColor(s.avgMastery),
+              }}
+            />
+          </div>
+          <span className="font-mono text-[0.95rem] font-medium">
+            {pct(s.avgMastery)}
+          </span>
+        </div>
+
+        {s.weakestLo ? (
+          <p className={cx("mt-2 truncate text-[0.9rem] font-bold", dim)}>
+            أضعف نقطة:{" "}
+            <span className="font-extrabold">{s.weakestLo.label}</span>{" "}
+            <span className="font-mono text-[0.8rem] font-medium">
+              ({pct(s.weakestLo.mastery)})
+            </span>
+          </p>
+        ) : (
+          <p className={cx("mt-2 text-[0.9rem] font-bold", dim)}>
+            لسه بدري نقول أضعف نقطة
+          </p>
+        )}
+      </div>
+
+      {/* 3. the way in. `shrink-0` so the label never wraps mid-phrase
+             on a narrow iPad column. */}
+      <span className="inline-flex shrink-0 items-center gap-1.5 font-display text-[1.15rem] font-bold">
+        ابدأ
+        <ForwardChevron />
+      </span>
+    </Link>
+  );
+}
+
+/**
  * The way-in arrow, pointing along the reading order.
  *
- * `currentColor` rather than a stroke colour, so it is the row's own `text-ink`
+ * `currentColor` rather than a stroke colour, so it is the tile's own `on-` colour
  * and there is no literal in this file (constitution XII). `rtl:-scale-x-100`
  * is what makes it point the right way in both directions — see the header.
  */
@@ -250,7 +273,7 @@ function ForwardChevron() {
  * AND IT MUST NOT LOOK LIKE A COURSE
  * ---------------------------------------------------------------------------
  * Every signal the real rows use to say "you can enter me" is deliberately
- * absent: no `ledger-card` (so no fill and no sticker shadow), no
+ * absent: no playmate fill and no sticker shadow, no
  * `play-pressable` (so it does not move when pressed — "if it doesn't move, it
  * isn't a control", and the converse is what is being avoided here), no accent
  * wash, no progress, no chevron. What is left is a dashed outline on the page's
@@ -269,16 +292,16 @@ function ForwardChevron() {
  */
 function MoreSubjectsComing() {
   return (
-    <div className="flex w-full items-center gap-4 rounded-2xl border border-dashed border-line px-5 py-4">
+    <div className="flex w-full items-center gap-4 rounded-[var(--play-radius)] border-[length:var(--play-stroke)] border-dashed border-[color:var(--play-disabled-border)] px-5 py-4">
       <span
         aria-hidden
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-dashed border-line font-display text-[20px] leading-none text-ink-faint"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-dashed border-[color:var(--play-disabled-border)] font-display text-[1.25rem] font-bold leading-none text-ink-faint"
       >
         +
       </span>
       <div className="min-w-0">
-        <p className="text-[15px] font-medium text-ink-soft">مواد تانية في الطريق</p>
-        <p className="mt-0.5 text-[13px] leading-relaxed text-ink-faint">
+        <p className="font-display text-[1rem] font-bold text-ink-soft">مواد تانية في الطريق</p>
+        <p className="mt-0.5 text-[0.9rem] leading-relaxed text-ink-faint">
           لما تتضاف مادة جديدة هتلاقيها هنا على طول — مش محتاج تطلبها ولا تعمل أي حاجة.
         </p>
       </div>

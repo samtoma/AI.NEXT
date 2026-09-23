@@ -12,11 +12,13 @@ import { HamzaSeat } from "@/components/student/widgets/HamzaSeat";
 import { StylePurpose } from "@/components/student/widgets/StylePurpose";
 import { IrabBuilder } from "@/components/student/widgets/IrabBuilder";
 import type { IrabAnswer, NounType } from "@/lib/irab";
+import { STICKER_PANEL, STROKE, STROKE_SM, cx } from "@/components/sticker";
 
 /**
  * «شرح الدرس» — the readable lesson surface for the rich content the
  * extraction pipeline emits (exposition, glossary, enrichment, misconceptions,
- * interactive beats). Arabic RTL throughout, Ledger design system.
+ * interactive beats). Arabic RTL throughout, Noor Play anatomy
+ * (`components/sticker.ts`); prose sets in Cairo (`.font-read`) at 1.9 leading.
  *
  * This is the calm READING companion to the AI-led check-in doors: the student
  * comes here to read the teaching narrative and try a few taps, at their own
@@ -49,10 +51,12 @@ export function LessonContentView({ content }: { content: LessonContent }) {
     >
       {/* title */}
       <header className="anim-rise">
-        <p className="text-[10.5px] font-semibold tracking-wide text-ink-faint">
+        <p className="text-[0.85rem] font-bold text-ink-faint">
           شرح الدرس · قراءة هادية
         </p>
-        <h1 className="mt-1 font-display text-2xl font-medium tracking-tight text-ink md:text-3xl">
+        {/* Arabic display type needs more leading than Latin — Baloo
+            Bhaijaan's marks sit high — and is never letter-spaced. */}
+        <h1 className="mt-1 font-display text-[1.75rem] font-extrabold leading-[1.4] text-ink md:text-[2rem]">
           {title}
         </h1>
       </header>
@@ -63,7 +67,7 @@ export function LessonContentView({ content }: { content: LessonContent }) {
           {qadaya.map((q) => (
             <span
               key={q}
-              className="rounded-full border border-line-soft bg-paper px-3 py-1 text-[11.5px] text-ink-soft"
+              className={cx(STROKE_SM, "rounded-[var(--play-radius-pill)] bg-card px-3 py-1 text-[0.85rem] font-bold text-ink")}
             >
               {q}
             </span>
@@ -84,13 +88,13 @@ export function LessonContentView({ content }: { content: LessonContent }) {
       {/* tamheed — the opening hook */}
       {tamheed && (
         <section
-          className="anim-rise mt-5 overflow-hidden rounded-xl border border-accent/30 bg-accent-wash px-5 py-4"
+          className={cx(STROKE, "anim-rise mt-5 overflow-hidden rounded-[var(--play-radius)] bg-card-warm px-5 py-4 sticker-shadow-sm")}
           style={{ animationDelay: "80ms" }}
         >
-          <p className="mb-1.5 text-[10px] font-semibold tracking-wide text-accent-deep">
+          <p className="mb-1.5 text-[0.85rem] font-bold text-[color:var(--play-text-amber-warm)]">
             تمهيد
           </p>
-          <p className="text-[15px] leading-loose text-ink">{tamheed}</p>
+          <p className="font-read text-[1rem] leading-[1.9] text-ink">{tamheed}</p>
         </section>
       )}
 
@@ -103,13 +107,13 @@ export function LessonContentView({ content }: { content: LessonContent }) {
           />
           <div className="mt-4 space-y-5">
             {subtopics.map((st) => (
-              <article key={st.key} className="ledger-card px-5 py-4">
+              <article key={st.key} className={cx(STICKER_PANEL, "px-5 py-4")}>
                 {st.title && (
-                  <h2 className="font-display text-[17px] font-medium text-accent-deep">
+                  <h2 className="font-display text-[1.15rem] font-extrabold leading-[1.4] text-ink">
                     {st.title}
                   </h2>
                 )}
-                <p className="mt-2 text-[14.5px] leading-loose text-ink-soft">
+                <p className="mt-2 font-read text-[1rem] leading-[1.9] text-ink-soft">
                   {st.exposition}
                 </p>
               </article>
@@ -122,18 +126,18 @@ export function LessonContentView({ content }: { content: LessonContent }) {
       {key_terms.length > 0 && (
         <section className="anim-rise mt-8" style={{ animationDelay: "180ms" }}>
           <SectionRule ar="مفاهيم أتعلمها" note={`${key_terms.length}`} />
-          <dl className="mt-4 overflow-hidden rounded-xl border border-gold/40 bg-gold-wash">
+          <dl className={cx(STROKE, "mt-4 overflow-hidden rounded-[var(--play-radius)] bg-card-warm sticker-shadow-sm")}>
             {key_terms.map((t, i) => (
               <div
                 key={`${t.term_ar}-${i}`}
                 className={`grid grid-cols-[minmax(88px,34%)_1fr] gap-x-4 px-4 py-3 ${
-                  i > 0 ? "border-t border-gold/20" : ""
+                  i > 0 ? "border-t-2 border-card" : ""
                 }`}
               >
-                <dt className="text-[13.5px] font-bold leading-snug text-ink">
+                <dt className="text-[1rem] font-bold leading-snug text-ink">
                   {t.term_ar}
                 </dt>
-                <dd className="text-[13px] leading-relaxed text-ink-soft">
+                <dd className="font-read text-[1rem] leading-[1.9] text-ink-soft">
                   {t.definition_ar}
                 </dd>
               </div>
@@ -150,22 +154,19 @@ export function LessonContentView({ content }: { content: LessonContent }) {
             {enrichment.map((e, i) => (
               <aside
                 key={`${e.title}-${i}`}
-                className="relative overflow-hidden rounded-lg border border-line bg-card px-4 py-3.5 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset,0_10px_24px_-18px_rgba(32,41,58,0.3)]"
+                className={cx(STICKER_PANEL, "relative overflow-hidden px-4 py-3.5")}
               >
-                <span
-                  aria-hidden
-                  className="absolute inset-y-0 right-0 w-1"
-                  style={{ background: "var(--gold)" }}
-                />
-                <p className="pe-1 text-[10px] font-semibold tracking-wide text-gold">
+                {/* the side-box tab, on the reading-start edge */}
+                <span aria-hidden className="absolute inset-y-0 start-0 w-1.5 bg-gold" />
+                <p className="pe-1 text-[0.85rem] font-bold text-gold">
                   ✦ اعرف أكتر
                 </p>
                 {e.title && (
-                  <h3 className="mt-1 font-display text-[15px] font-medium text-ink">
+                  <h3 className="mt-1 font-display text-[1.05rem] font-extrabold leading-[1.4] text-ink">
                     {e.title}
                   </h3>
                 )}
-                <p className="mt-1.5 text-[12.5px] leading-relaxed text-ink-soft">
+                <p className="mt-1.5 font-read text-[0.95rem] leading-[1.9] text-ink-soft">
                   {e.body_ar}
                 </p>
               </aside>
@@ -182,14 +183,16 @@ export function LessonContentView({ content }: { content: LessonContent }) {
             {misconceptions.map((m, i) => (
               <div
                 key={i}
-                className="rounded-lg border border-line-soft bg-card-warm px-4 py-3"
+                className={cx(STROKE_SM, "rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-3")}
               >
-                <p className="flex items-start gap-2 text-[13px] leading-relaxed text-ink-faint">
-                  <span className="mt-[3px] shrink-0 text-[11px] text-rust">✕</span>
-                  <span className="line-through decoration-rust/40">{m.wrong}</span>
+                {/* The misconception greys out — Play's "not this one" —
+                    and the correction takes the leaf family. Never red. */}
+                <p className="flex items-start gap-2 text-[0.95rem] leading-relaxed text-[color:var(--play-text-muted)]">
+                  <span className="mt-[3px] shrink-0 text-[0.8rem]">✕</span>
+                  <span className="line-through decoration-[color:var(--play-inactive-border)]">{m.wrong}</span>
                 </p>
-                <p className="mt-1.5 flex items-start gap-2 text-[13.5px] font-medium leading-relaxed text-ink">
-                  <span className="mt-[3px] shrink-0 text-[11px] text-accent">✓</span>
+                <p className="mt-1.5 flex items-start gap-2 text-[1rem] font-bold leading-relaxed text-ink">
+                  <span className="mt-[3px] shrink-0 text-[0.8rem] text-[color:var(--play-on-leaf-dim)]">✓</span>
                   <span>{m.correction}</span>
                 </p>
               </div>
@@ -216,10 +219,10 @@ export function LessonContentView({ content }: { content: LessonContent }) {
       {out_of_scope.length > 0 && (
         <section className="anim-rise mt-8" style={{ animationDelay: "340ms" }}>
           <SectionRule ar="مهارات في الكتاب لا نقيسها هنا" note="بأمانة" />
-          <div className="mt-4 rounded-xl border border-line-soft bg-paper px-5 py-4">
+          <div className={cx(STROKE_SM, "mt-4 rounded-[var(--play-radius)] bg-card px-5 py-4")}>
             {out_of_scope.map((o) => (
-              <p key={o.text} className="py-1 text-[13.5px] leading-relaxed text-ink-soft">
-                <span className="font-medium text-ink">{o.text}</span>
+              <p key={o.text} className="py-1 text-[0.95rem] leading-relaxed text-ink-soft">
+                <span className="font-bold text-ink">{o.text}</span>
                 <span className="text-ink-faint"> — {o.reason}</span>
               </p>
             ))}
@@ -227,7 +230,7 @@ export function LessonContentView({ content }: { content: LessonContent }) {
         </section>
       )}
 
-      <p className="mt-10 text-center text-[10.5px] text-ink-faint">
+      <p className="mt-10 text-center text-[0.85rem] text-ink-faint">
         كل جملة من كتاب الوزارة، بمراجعة بشرية · اقرأ على راحتك من غير امتحان
       </p>
     </main>
@@ -239,9 +242,10 @@ export function LessonContentView({ content }: { content: LessonContent }) {
 function SectionRule({ ar, note }: { ar: string; note?: string }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="font-display text-[15px] font-medium text-ink">{ar}</span>
-      {note && <span className="text-[10.5px] text-ink-faint">{note}</span>}
-      <span aria-hidden className="h-px flex-1 bg-line" />
+      <span className="font-display text-[1.15rem] font-extrabold text-ink">{ar}</span>
+      {note && <span className="text-[0.85rem] font-bold text-ink-faint">{note}</span>}
+      {/* the handoff's divider: 2px of line-soft, never a sticker edge */}
+      <span aria-hidden className="h-0.5 flex-1 bg-line-soft" />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import type {
   LessonPassageUnit,
 } from "@/lib/lesson-content";
 import { QuranPassage } from "@/components/QuranPassage";
+import { BUTTON_TERTIARY, STROKE, cx } from "@/components/sticker";
 
 /**
  * A SEALED passage, rendered verbatim from the verified store (ADR-0006).
@@ -184,10 +185,32 @@ export function jumpToPinnedPassage(passageId: string) {
   if (!el) return;
   el.scrollIntoView({ behavior: "smooth", block: "center" });
   const card = document.getElementById(`sealed-${passageId}`);
-  card?.classList.add("ring-2", "ring-gold", "rounded-xl");
-  window.setTimeout(
-    () => card?.classList.remove("ring-2", "ring-gold", "rounded-xl"),
-    2200
+  // An OUTLINE, not a ring: Tailwind's ring is a box-shadow, and the card's
+  // sticker shadow is an unlayered rule that outranks it, so under Play the
+  // ring was never visible. The outline sits outside the ink edge instead.
+  const flash = [
+    "outline-[length:var(--play-stroke)]",
+    "outline-offset-4",
+    "outline-[color:var(--noor-action)]",
+  ];
+  card?.classList.add(...flash);
+  window.setTimeout(() => card?.classList.remove(...flash), 2200);
+}
+
+/**
+ * The passage frame. Scripture sits on the Honey band so it is told apart from
+ * ordinary quoted text at a glance; everything else is a white sticker.
+ *
+ * This used to be `.ledger-card` plus `bg-gold-wash`/`border-gold` utilities,
+ * and `.ledger-card` is an unlayered rule that outranks both — so every sacred
+ * passage rendered on plain white with an ink edge (the same cascade trap as
+ * the student home's subject cards, review 2026-09-23 F13).
+ */
+function passageCard(sacred: boolean) {
+  return cx(
+    STROKE,
+    "rounded-[var(--play-radius)] sticker-shadow-sm",
+    sacred ? "bg-card-warm" : "bg-card"
   );
 }
 
@@ -211,32 +234,30 @@ export function PassageExcerptCard({
       className={
         sacred
           ? "text-[17px] leading-[2.2] text-ink"
-          : "text-[15px] leading-loose text-ink"
+          : "font-read text-[1rem] leading-[1.9] text-ink"
       }
     >
       {sacred ? excerpt.text : <>«{excerpt.text}»</>}
       {excerpt.printedN && (
-        <span className="mx-1.5 text-[13px] text-gold">﴿{excerpt.printedN}﴾</span>
+        <span className="mx-1.5 text-[0.85rem] text-gold">﴿{excerpt.printedN}﴾</span>
       )}
     </p>
   );
   return (
     <article
       dir="rtl"
-      className={`ledger-card my-1 px-4 py-3 ${
-        sacred ? "border-gold/45 bg-gold-wash/40" : "border-gold/30"
-      }`}
+      className={cx(passageCard(sacred), "my-1 px-4 py-3")}
     >
       {sacred ? <QuranPassage>{body}</QuranPassage> : body}
-      <div className="mt-1.5 flex items-baseline justify-between gap-3">
-        <span className="text-[10.5px] text-ink-faint">
+      <div className="mt-1.5 flex items-center justify-between gap-3">
+        <span className="text-[0.85rem] text-ink-faint">
           {passage.citation_ref ?? passage.title_ar}
           {passage.attribution_ar ? ` · ${passage.attribution_ar}` : ""} · من
           الحافظة الموثقة
         </span>
         <button
           onClick={() => jumpToPinnedPassage(passage.id)}
-          className="shrink-0 text-[10.5px] font-medium text-ink-soft underline decoration-line underline-offset-2 transition-colors hover:text-ink"
+          className={cx(BUTTON_TERTIARY, "shrink-0")}
         >
           شوف السياق كامل ⬆
         </button>
@@ -298,12 +319,12 @@ export function SealedPassageCard({
                 ? compact
                   ? "text-[16.5px] leading-[2.1] text-ink"
                   : "text-[19px] leading-[2.3] text-ink"
-                : "text-[15px] leading-loose text-ink"
+                : "font-read text-[1rem] leading-[1.9] text-ink"
             }
           >
             {content}
             {u.printed_n && (
-              <span className="mx-1.5 text-[13px] text-gold">﴿{u.printed_n}﴾</span>
+              <span className="mx-1.5 text-[0.85rem] text-gold">﴿{u.printed_n}﴾</span>
             )}
           </p>
         );
@@ -313,21 +334,19 @@ export function SealedPassageCard({
   return (
     <article
       dir="rtl"
-      className={`ledger-card px-5 py-4 ${sacred ? "border-gold/45 bg-gold-wash/40" : ""} ${
-        compact ? "" : "mt-3 first:mt-0"
-      }`}
+      className={cx(passageCard(sacred), "px-5 py-4", !compact && "mt-3 first:mt-0")}
     >
       <div className="mb-2 flex items-baseline justify-between gap-3">
-        <h2 className="font-display text-[16px] font-medium text-ink">
+        <h2 className="font-display text-[1.15rem] font-extrabold leading-[1.4] text-ink">
           {passage.title_ar}
         </h2>
         {passage.attribution_ar && (
-          <span className="text-[11px] text-ink-faint">{passage.attribution_ar}</span>
+          <span className="text-[0.85rem] text-ink-faint">{passage.attribution_ar}</span>
         )}
       </div>
       {sacred ? <QuranPassage>{body}</QuranPassage> : body}
       {sacred && (
-        <p className="mt-2 text-[10px] text-ink-faint">
+        <p className="mt-2 text-[0.85rem] text-ink-faint">
           نصٌّ موثَّق: تمت مطابقته آليًا مع مصدرين مستقلين للمصحف
           {passage.verification_verdict === "agree" ? " · مطابق" : " · قيد المراجعة"}
         </p>

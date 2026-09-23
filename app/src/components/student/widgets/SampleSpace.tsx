@@ -22,7 +22,8 @@
  */
 
 import { useCallback, useMemo, useRef, useState } from "react";
-import { WidgetShell, type Verdict } from "./WidgetShell";
+import { BUTTON_SECONDARY, BUTTON_TERTIARY } from "@/components/sticker";
+import { WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { clamp, useDragSurface, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
 
@@ -215,7 +216,7 @@ export function SampleSpace({
         viewBox={`0 0 ${W} ${H}`}
         role="application"
         aria-label={prompt}
-        className={`mx-auto block w-full max-w-[320px] rounded-md border border-line-soft bg-card-warm ${
+        className={`mx-auto block w-full max-w-[320px] ${WIDGET_WELL} ${
           verdict ? "cursor-default" : "cursor-pointer"
         }`}
         {...(verdict ? {} : surface)}
@@ -263,7 +264,16 @@ export function SampleSpace({
                   x={PAD + (a - 0.5) * cell}
                   y={PAD + (b - 0.5) * cell + 3.5}
                   fontSize="8.5" textAnchor="middle"
-                  fill={on && !wrong ? "var(--paper)" : "var(--ink-faint)"}
+                  // ink on the amber-family working fill (Cream on it was
+                  // white-on-amber, ~3:1); Cream only on the ink fill of a
+                  // correct grid
+                  fill={
+                    on && !wrong
+                      ? verdict === "correct"
+                        ? "var(--paper)"
+                        : "var(--ink)"
+                      : "var(--ink-faint)"
+                  }
                   style={{ fontFamily: "var(--stack-mono)" }}
                 >
                   {rule.kind === "sum" ? a + b
@@ -284,12 +294,12 @@ export function SampleSpace({
       </svg>
 
       {!verdict && (
-        <div className="mt-2.5 flex flex-wrap items-center justify-center gap-2">
+        <div className={WIDGET_ACTIONS}>
           {picked.size > 0 && (
             <button
               type="button"
               onClick={() => setPicked(new Set())}
-              className="min-h-[36px] rounded-md border border-line px-3 font-mono text-[10.5px] text-ink-soft transition-colors hover:border-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+              className={BUTTON_TERTIARY}
             >
               clear
             </button>
@@ -297,7 +307,7 @@ export function SampleSpace({
           <button
             type="button"
             onClick={check}
-            className="min-h-[36px] rounded-md border border-accent/45 bg-accent-wash px-3.5 font-display text-[13px] font-medium text-accent-deep transition-colors hover:bg-accent/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/45"
+            className={BUTTON_SECONDARY}
           >
             That&apos;s the event
           </button>

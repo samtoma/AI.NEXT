@@ -3,7 +3,23 @@
 import { useMemo, useState } from "react";
 import { locateSpan } from "@/components/viz/arabic";
 import { categoryStyle } from "@/components/viz/arabic-ui";
+import { cx } from "@/components/sticker";
 import { stableShuffle, useFireOnce } from "./util";
+import {
+  pickInk,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT_AR,
+  WIDGET_KIND_AR,
+  WIDGET_OPTION,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+  WIDGET_WELL,
+} from "./WidgetShell";
+
+/** One option, for the أسلوب and the غرض rows alike. */
+const optionCls = (isRight: boolean, isWrong: boolean, settled: boolean) =>
+  cx(WIDGET_OPTION, "ar-block px-2.5 py-1 text-[12.5px]", pickInk(isRight, isWrong, settled));
 
 /**
  * {{widget:style_purpose:{"prompt":"…","text":"…","span":"كيفَ تَغدُو","styles":["نداء","استفهام","أمر"],"purposes":["التنبيه","الاستنكار"],"answer":{"style":"استفهام","purpose":"الاستنكار"}}}}
@@ -104,24 +120,16 @@ export function StylePurpose({
   const tail = at ? text.slice(at[1]) : "";
 
   return (
-    <div
-      dir="rtl"
-      lang="ar"
-      className="anim-pop my-2 overflow-hidden rounded-lg border border-gold/45 bg-card shadow-[0_10px_24px_-16px_rgba(169,126,34,0.5)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-gold-wash px-3.5 py-2">
-        <span className="ar-label font-mono text-[9px] text-gold">
-          ✳ تفاعلي · أسلوب وغرض
-        </span>
-        <span className="ar-label font-mono text-[9px] text-ink-faint">
-          {styleOk ? "الغرض" : "الأسلوب"}
-        </span>
+    <div dir="rtl" lang="ar" className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND_AR}>✳ تفاعلي · أسلوب وغرض</span>
+        <span className={WIDGET_HINT_AR}>{styleOk ? "الغرض" : "الأسلوب"}</span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="ar-block ar-plain text-[13px] font-medium text-ink">{prompt}</p>
+        <p className={cx("ar-block ar-plain", WIDGET_PROMPT)}>{prompt}</p>
 
-        <p className="ar-block ar-vowelled mt-2 rounded-md border border-line-soft bg-card-warm px-2.5 py-1.5 text-[16.5px] text-ink">
+        <p className={cx(WIDGET_WELL, "ar-block ar-vowelled mt-2 px-2.5 py-1.5 text-[16.5px] text-ink")}>
           {head}
           {mid && (
             <mark
@@ -129,7 +137,6 @@ export function StylePurpose({
                 // `background` (shorthand) also clears the UA's yellow
                 background: st.tint,
                 color: "inherit",
-                borderRadius: "0.2rem",
                 textDecorationLine: "underline",
                 textDecorationStyle: "dashed",
                 textDecorationColor: st.line,
@@ -153,15 +160,8 @@ export function StylePurpose({
                 type="button"
                 onClick={() => pickStyle(s)}
                 disabled={styleOk || isWrong}
-                className={`ar-block min-h-[36px] rounded-md border px-2.5 py-1 text-[12.5px] font-medium transition-all duration-150 ${
-                  isRight
-                    ? "border-accent bg-accent text-paper"
-                    : isWrong
-                      ? "border-rust/45 bg-rust-wash text-rust opacity-60"
-                      : styleOk
-                        ? "border-line-soft bg-card text-ink-faint"
-                        : "border-line bg-card text-ink hover:-translate-y-px hover:border-ink/40"
-                }`}
+                data-verdict={isRight ? "correct" : isWrong ? "wrong" : undefined}
+                className={optionCls(isRight, isWrong, styleOk)}
               >
                 <bdi>{s}</bdi>
               </button>
@@ -169,7 +169,7 @@ export function StylePurpose({
           })}
         </div>
         {styleWrong.length > 0 && !styleOk && (
-          <p className="ar-block ar-plain anim-fade mt-1.5 text-[12px] text-ink-soft">
+          <p className="ar-block ar-plain anim-fade mt-1.5 text-[12px] text-[color:var(--play-text-muted)]">
             {/* coach the CLUE, never the answer — teaching the clue is teaching
                 the skill (arabic-student-experience.md §3.2) */}
             مش كده. بص على أول الجملة — في أداة بتقولك النوع.
@@ -178,7 +178,7 @@ export function StylePurpose({
 
         {/* stage 2 — الغرض, unlocked only after the أسلوب */}
         <div className={`mt-2.5 ${styleOk ? "" : "pointer-events-none opacity-40"}`}>
-          <span className="ar-label ar-block font-mono text-[9.5px] text-ink-faint">
+          <span className="ar-label ar-block font-display text-[0.72rem] font-bold text-[color:var(--play-text-muted)]">
             غرضه
           </span>
           <div className="mt-1 flex flex-wrap gap-1.5">
@@ -191,13 +191,8 @@ export function StylePurpose({
                   type="button"
                   onClick={() => pickPurpose(p)}
                   disabled={!styleOk || purposeOk || isWrong}
-                  className={`ar-block min-h-[36px] rounded-md border px-2.5 py-1 text-[12.5px] font-medium transition-all duration-150 ${
-                    isRight
-                      ? "border-accent bg-accent text-paper"
-                      : isWrong
-                        ? "border-rust/45 bg-rust-wash text-rust opacity-60"
-                        : "border-line bg-card text-ink hover:-translate-y-px hover:border-ink/40"
-                  }`}
+                  data-verdict={isRight ? "correct" : isWrong ? "wrong" : undefined}
+                  className={optionCls(isRight, isWrong, false)}
                 >
                   <bdi>{p}</bdi>
                 </button>
@@ -207,8 +202,8 @@ export function StylePurpose({
         </div>
 
         {purposeOk && (
-          <div className="anim-pop mt-3 rounded-md border border-accent/45 bg-accent-wash px-3 py-2">
-            <span className="ar-block font-display text-[13.5px] font-medium text-accent-deep">
+          <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
+            <span className="ar-block font-display text-[13.5px] font-bold">
               {revealed
                 ? `الإجابة: أسلوب ${answer.style} وغرضه ${answer.purpose}. دي بالظبط «أسلوب … وغرضه …» اللي بتيجي في الامتحان`
                 : "برافو. دي بالظبط «أسلوب … وغرضه …» اللي بتيجي في الامتحان ✓"}

@@ -2,7 +2,21 @@
 
 import { useMemo, useState } from "react";
 import { arDigits } from "@/components/viz/arabic";
+import { cx } from "@/components/sticker";
 import { stableShuffle, useFireOnce } from "./util";
+import {
+  OPTION_INK,
+  SLOT_INK,
+  WIDGET_FRAME,
+  WIDGET_HEAD,
+  WIDGET_HINT_AR,
+  WIDGET_KIND_AR,
+  WIDGET_OPTION,
+  WIDGET_PROMPT,
+  WIDGET_RESULT,
+  WIDGET_SLOT,
+  WIDGET_WELL,
+} from "./WidgetShell";
 
 /**
  * {{widget:chain_builder:{"prompt":"ركّب السلسلة","cards":[{"label":"فرض الضرائب","role":"سبب"},{"label":"ثورة القاهرة الأولى","role":"حدث"},{"label":"إعدام الثوار","role":"نتيجة"}],"correctChain":[0,1,2]}}}
@@ -20,9 +34,12 @@ interface Card {
 
 const ROLE_COLOR: Record<string, string> = {
   "سبب": "text-gold",
-  "حدث": "text-ink-soft",
-  "نتيجة": "text-accent-deep",
+  "حدث": "text-[color:var(--play-text-muted)]",
+  "نتيجة": "text-ink",
 };
+
+/** The role tag over a card: Arabic, so the UI face, never tracked mono. */
+const ROLE_TAG = "ar-label block font-display text-[0.72rem] font-bold";
 
 export function ChainBuilder({
   prompt,
@@ -85,22 +102,17 @@ export function ChainBuilder({
   const placedSet = new Set(chain.slice(0, placed));
 
   return (
-    <div
-      dir="rtl"
-      className="anim-pop my-2 overflow-hidden rounded-lg border border-accent/40 bg-card shadow-[0_10px_24px_-16px_rgba(13,74,66,0.5)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-accent-wash px-3.5 py-2">
-        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
-          ✳ تفاعلي · السبب والنتيجة
-        </span>
-        <span className="font-mono text-[9px] text-ink-faint">ركّب السلسلة بالترتيب</span>
+    <div dir="rtl" className={WIDGET_FRAME}>
+      <div className={WIDGET_HEAD}>
+        <span className={WIDGET_KIND_AR}>✳ تفاعلي · السبب والنتيجة</span>
+        <span className={WIDGET_HINT_AR}>ركّب السلسلة بالترتيب</span>
       </div>
 
       <div className="px-3.5 py-3">
-        <p className="text-[13px] font-medium leading-relaxed text-ink">{prompt}</p>
+        <p className={WIDGET_PROMPT}>{prompt}</p>
 
         {/* the chain slots (RTL: first slot on the right) */}
-        <div className="mt-3 flex flex-wrap items-center gap-y-2 rounded-md border border-line-soft bg-card-warm px-2 py-2.5">
+        <div className={cx(WIDGET_WELL, "mt-3 flex flex-wrap items-center gap-y-2 px-2 py-2.5")}>
           {chain.map((cardIdx, slot) => {
             const filled = slot < placed;
             const role = cards[cardIdx]?.role ?? "";
@@ -112,24 +124,18 @@ export function ChainBuilder({
                   </span>
                 )}
                 <div
-                  className={`min-w-0 flex-1 rounded-md border px-1.5 py-1.5 text-center transition-all duration-200 ${
-                    filled
-                      ? "anim-pop border-accent/60 bg-accent-wash"
-                      : "border-dashed border-line"
-                  }`}
+                  className={cx(
+                    WIDGET_SLOT,
+                    "min-w-0 flex-1 px-1.5 py-1.5 text-center transition-all duration-200",
+                    filled ? SLOT_INK.filled : SLOT_INK.empty
+                  )}
                 >
                   {role && (
-                    <span
-                      className={`block font-mono text-[8.5px] font-bold ${ROLE_COLOR[role] ?? "text-ink-faint"}`}
-                    >
+                    <span className={cx(ROLE_TAG, filled ? "" : ROLE_COLOR[role] ?? "")}>
                       {role}
                     </span>
                   )}
-                  <span
-                    className={`block text-[10.5px] leading-snug ${
-                      filled ? "font-medium text-accent-deep" : "text-ink-faint"
-                    }`}
-                  >
+                  <span className="block text-[10.5px] leading-snug">
                     {filled ? <bdi>{arDigits(cards[cardIdx].label)}</bdi> : "؟"}
                   </span>
                 </div>
@@ -146,26 +152,25 @@ export function ChainBuilder({
                 <button
                   key={cardIdx}
                   onClick={() => tap(cardIdx)}
-                  className={`rounded-md border px-2.5 py-1.5 text-right transition-all duration-150 ${
-                    flash === cardIdx
-                      ? "border-rust bg-rust-wash"
-                      : "border-line bg-card hover:-translate-y-px hover:border-ink/40"
-                  }`}
+                  className={cx(
+                    WIDGET_OPTION,
+                    "px-2.5 py-1.5 text-start",
+                    // a wrong pick greys and nudges, then comes back live —
+                    // never red, and the card stays in the pool
+                    flash === cardIdx ? cx(OPTION_INK.wrong, "anim-nudge") : OPTION_INK.idle
+                  )}
                 >
                   {cards[cardIdx]?.role && (
                     <span
-                      className={`block font-mono text-[8px] font-bold ${
-                        flash === cardIdx ? "text-rust" : ROLE_COLOR[cards[cardIdx].role!] ?? "text-ink-faint"
-                      }`}
+                      className={cx(
+                        ROLE_TAG,
+                        flash === cardIdx ? "" : ROLE_COLOR[cards[cardIdx].role!] ?? ""
+                      )}
                     >
                       {cards[cardIdx].role}
                     </span>
                   )}
-                  <span
-                    className={`block text-[11.5px] font-medium leading-snug ${
-                      flash === cardIdx ? "text-rust" : "text-ink"
-                    }`}
-                  >
+                  <span className="block text-[11.5px] leading-snug">
                     <bdi>{arDigits(cards[cardIdx].label)}</bdi>
                   </span>
                 </button>
@@ -175,8 +180,8 @@ export function ChainBuilder({
         )}
 
         {done && (
-          <div className="anim-pop mt-3 rounded-md border border-accent/45 bg-accent-wash px-3 py-2">
-            <span className="font-display text-[13.5px] font-medium text-accent-deep">
+          <div className={cx("mt-3 px-3 py-2", WIDGET_RESULT.correct)}>
+            <span className="font-display text-[13.5px] font-bold">
               {missteps === 0
                 ? "برافو! السلسلة كاملة صح — سبب، حدث، نتيجة ✓"
                 : "تمام — كده فهمت إيه اللي أدى لإيه. دي إجابة «بم تفسر» جاهزة"}

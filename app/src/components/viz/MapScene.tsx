@@ -19,9 +19,9 @@
 import {
   ACCENT,
   ACCENT_DEEP,
+  CARD,
   GOLD,
   INK,
-  RUST,
   VizError,
   arr,
   colorOf,
@@ -47,7 +47,7 @@ interface Mark {
 /** halo so Arabic labels stay readable over coastlines */
 const HALO: React.CSSProperties = {
   paintOrder: "stroke",
-  stroke: "var(--card-warm, #faf6e9)",
+  stroke: "var(--card-warm)",
   strokeWidth: 3,
   strokeLinejoin: "round",
 };
@@ -84,7 +84,7 @@ export function MapScene({ spec, animOn }: VizProps) {
   if (!map) {
     return (
       <div
-        className="flex h-40 items-center justify-center rounded bg-card-warm font-mono text-[9.5px] uppercase tracking-[0.14em] text-ink-faint"
+        className="ar-label flex h-40 items-center justify-center rounded-[var(--play-radius-sm)] bg-card-warm font-display text-[0.72rem] font-bold text-ink-faint"
         dir="rtl"
       >
         الخريطة بتتحمّل…
@@ -128,7 +128,8 @@ function renderMark(
       .filter((r): r is NonNullable<typeof r> => r !== null)
       .map((r) => r.place.at);
     if (pts.length < 2) return null;
-    const color = colorOf(m.color, RUST);
+    // a route defaults to the amber-family ink, as a badge does
+    const color = colorOf(m.color, GOLD);
     // gentle quadratic smoothing through midpoints
     let path = `M${pts[0][0]},${pts[0][1]}`;
     for (let j = 1; j < pts.length - 1; j++) {
@@ -244,7 +245,7 @@ function renderMark(
             width={w}
             height={18}
             rx="3.5"
-            fill="var(--card, #fdfbf3)"
+            fill={CARD}
             stroke={color}
             strokeWidth="1.5"
             opacity="0.92"

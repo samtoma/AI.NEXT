@@ -57,6 +57,15 @@ import {
   type PassageExcerpt,
   type PassageHighlight,
 } from "@/components/student/SealedPassageCard";
+import {
+  BUTTON_PRIMARY,
+  BUTTON_SECONDARY,
+  HEADING,
+  HONEY_BAND,
+  STICKER_CARD,
+  STROKE,
+  cx,
+} from "@/components/sticker";
 
 /**
  * The adaptive lesson surface — same engine, two temperaments.
@@ -180,7 +189,11 @@ function PassageRefChip({
     <div dir="rtl" className="py-1">
       <button
         onClick={() => jumpToPinnedPassage(passage.id)}
-        className="rounded-full border border-gold/50 bg-gold-wash px-3.5 py-1.5 text-[12px] font-medium text-ink-soft shadow-sm transition-all duration-150 hover:-translate-y-px hover:border-gold"
+        className={cx(
+          STROKE,
+          "inline-flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-pill)] bg-card-warm px-4 py-1.5 text-start",
+          "font-display text-[0.85rem] font-bold text-ink sticker-shadow-sm play-pressable"
+        )}
       >
         {hasSpan
           ? span?.unit != null
@@ -1055,16 +1068,24 @@ export function LessonSession({
         dir={rtl ? "rtl" : undefined}
         className="mx-auto max-w-3xl px-6 pb-16 pt-10"
       >
-        <section className="ledger-card anim-pop mx-auto max-w-xl px-8 py-10 text-center">
+        <section className={cx(STICKER_CARD, "anim-pop mx-auto max-w-xl px-8 py-10 text-center")}>
           {phase === "rating" ? (
             <>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint">
+              {/* Arabic is never set in mono or letter-spaced */}
+              <p
+                className={cx(
+                  "text-ink-faint",
+                  rtl
+                    ? "text-[0.85rem] font-bold"
+                    : "font-mono text-[0.72rem] uppercase tracking-[0.2em]"
+                )}
+              >
                 {rtl ? "بنقيّم الجلسة كلها · بأمانة" : "grading the whole session · honestly"}
               </p>
-              <p className="mt-3 font-display text-2xl font-medium text-ink">
+              <p className={cx(HEADING, "mt-3 text-2xl")}>
                 {rtl ? "قد إيه فعلاً رسّخ معاك؟" : "How much of it really landed?"}
               </p>
-              <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">
+              <p className="mt-2 text-[1rem] text-ink-soft">
                 {rtl
                   ? "المدرّس بيرجع يقرأ كل اللي عملته النهاردة — كل إجابة وكل لمسة — وبيكتب تقرير فهمك."
                   : "The tutor is re-reading everything you did — every answer, every tap on a widget — and writing your comprehension report."}
@@ -1073,9 +1094,9 @@ export function LessonSession({
                 {[0, 1, 2].map((i) => (
                   <span
                     key={i}
-                    className="h-1.5 w-1.5 rounded-full bg-accent"
+                    className="size-[9px] rounded-full bg-[var(--noor-action)]"
                     style={{
-                      animation: `think-dot 1.1s ease-in-out ${i * 0.18}s infinite`,
+                      animation: `think-dot 1.3s ease-in-out ${i * 0.18}s infinite`,
                     }}
                   />
                 ))}
@@ -1083,17 +1104,17 @@ export function LessonSession({
             </>
           ) : (
             <>
-              <p className="font-display text-2xl font-medium text-ink">
+              <p className={cx(HEADING, "text-2xl")}>
                 {rtl ? "المصحّح مش متاح دلوقتي" : "The grader is unavailable"}
               </p>
-              <p className="mt-2 text-[13.5px] text-ink-soft">
+              <p className="mt-2 text-[1rem] text-ink-soft">
                 {rtl
                   ? "جلستك محفوظة — جرّب التقييم تاني."
                   : "Your session is safe — try the rating again."}
               </p>
               <button
                 onClick={() => finish()}
-                className="mt-5 rounded-full bg-ink px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-deep play-pressable sticker-shadow-sm"
+                className={cx(BUTTON_PRIMARY, "mt-5")}
               >
                 {rtl ? "جرّب التقييم تاني ←" : "Retry rating →"}
               </button>
@@ -1119,7 +1140,10 @@ export function LessonSession({
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
           {/* triple-tap = founders' easter egg: toggles the receipts back on */}
           <div onClick={headerTap} className="select-none">
-            <p className="rule-label mb-1 pe-2">
+            {/* `dir` on the label itself, not just inherited: the Play rule
+                that keeps Arabic out of mono keys on the attribute, and
+                `.rule-label` would otherwise set this Arabic chip in Plex */}
+            <p dir={rtl ? "rtl" : undefined} className="rule-label mb-1 pe-2">
               {rtl ? arCopy.chip : copy.chip} · {first}
               {debug && (
                 <span className="ms-2 text-gold" title="debug receipts on">
@@ -1127,7 +1151,7 @@ export function LessonSession({
                 </span>
               )}
             </p>
-            <h1 className="font-display text-xl font-medium tracking-tight text-ink md:text-2xl">
+            <h1 className={cx(HEADING, "text-xl md:text-2xl")}>
               {lesson.lessonRef} — {lesson.title}
             </h1>
           </div>
@@ -1139,11 +1163,11 @@ export function LessonSession({
                 aria-pressed={voiceOn}
                 aria-label={voiceOn ? "Turn voice off" : "Turn voice on"}
                 title={voiceOn ? "Voice on — tutor speaks" : "Voice off"}
-                className={`flex h-8 items-center gap-1.5 rounded-full border px-3 font-mono text-[10px] uppercase tracking-[0.1em] transition-all duration-150 play-pressable sticker-shadow-sm ${
-                  voiceOn
-                    ? "border-accent bg-accent text-paper"
-                    : "border-line bg-card text-ink-soft hover:border-accent/50 hover:text-accent-deep"
-                }`}
+                className={cx(
+                  STROKE,
+                  "flex min-h-[var(--noor-touch-min)] items-center gap-1.5 rounded-[var(--play-radius-pill)] px-4 font-mono text-[0.72rem] uppercase tracking-[0.1em] text-ink sticker-shadow-sm play-pressable",
+                  voiceOn ? "bg-card-warm" : "bg-card"
+                )}
               >
                 <SpeakerIcon />
                 {speaking ? (
@@ -1166,11 +1190,10 @@ export function LessonSession({
 
             <button
               onClick={requestFinish}
-              className={`h-8 rounded-full px-4 text-[12px] font-semibold text-paper transition-all duration-150 hover:-translate-y-px play-pressable sticker-shadow-sm ${
-                readyToFinish
-                  ? "anim-nudge bg-accent hover:bg-accent-deep"
-                  : "bg-ink hover:bg-accent-deep"
-              }`}
+              // Amber only once the lesson is done and finishing IS the next
+              // step; until then it is a secondary, so the composer's send is
+              // the screen's one amber.
+              className={readyToFinish ? cx(BUTTON_PRIMARY, "anim-nudge") : BUTTON_SECONDARY}
             >
               {rtl ? `${arCopy.finish} ←` : `${copy.finish} →`}
             </button>
@@ -1187,14 +1210,14 @@ export function LessonSession({
                 style={{
                   backgroundColor: covered.includes(l.id)
                     ? "var(--accent)"
-                    : "rgba(32,41,58,0.15)",
+                    : "color-mix(in srgb, var(--ink) 15%, transparent)",
                 }}
               />
             ))}
           </span>
           <span
             dir={rtl ? "rtl" : "ltr"}
-            className="text-[12.5px] font-semibold text-ink"
+            className="text-[0.85rem] font-bold text-ink"
           >
             {rtl
               ? `${arDigits(stepNow)} من ${arDigits(lesson.los.length)}`
@@ -1205,7 +1228,7 @@ export function LessonSession({
               {currentLo?.label}
             </span>
           </span>
-          <span dir={rtl ? "rtl" : "ltr"} className="text-[11px] text-ink-faint">
+          <span dir={rtl ? "rtl" : "ltr"} className="text-[0.85rem] text-ink-faint">
             {readyToFinish
               ? rtl
                 ? `خلصنا — دوس "${arCopy.finish}" لما تكون جاهز تشوف تقريرك 📋`
@@ -1254,30 +1277,30 @@ export function LessonSession({
           )}
 
           {/* lesson stream */}
-          <section className="ledger-card flex min-h-0 flex-1 flex-col overflow-hidden md:order-1">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line-soft bg-card-warm px-4 py-2">
+          <section className={cx(STICKER_CARD, "flex min-h-0 flex-1 flex-col overflow-hidden md:order-1")}>
+            <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-4 py-2")}>
               {rtl ? (
-                <span dir="rtl" className="text-[10.5px] font-semibold text-accent-deep">
+                <span dir="rtl" className="text-[0.85rem] font-bold text-ink">
                   {arCopy.strip} · {lesson.lessonRef}
                 </span>
               ) : (
-                <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent-deep">
+                <span className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-accent-deep">
                   ✦ grounded in the reviewed spine · {lesson.lessonRef} only
                 </span>
               )}
               {debug ? (
-                <span className="font-mono text-[9px] text-ink-faint">
+                <span className="font-mono text-[0.72rem] text-ink-faint">
                   {mode === "review"
                     ? `turn ${Math.min(turns, REVIEW_TURN_CAP)}/${REVIEW_TURN_CAP} · `
                     : ""}
                   ${totalUsd.toFixed(3)} session spend
                 </span>
               ) : rtl ? (
-                <span dir="rtl" className="text-[10.5px] text-ink-faint">
+                <span dir="rtl" className="text-[0.85rem] text-ink-faint">
                   {mode === "review" ? "٣ دقايق وخلصنا ⏱" : "خطوة خطوة مع بعض ✏️"}
                 </span>
               ) : (
-                <span className="text-[10.5px] text-ink-faint">
+                <span className="text-[0.85rem] text-ink-faint">
                   {mode === "review" ? "3 minutes and done ⏱" : "step by step, together ✏️"}
                 </span>
               )}
@@ -1314,7 +1337,7 @@ export function LessonSession({
                     // tutor believes it just showed the student a text
                     <p
                       dir="rtl"
-                      className="py-2 text-center text-[12px] text-rust"
+                      className="py-2 text-center text-[0.85rem] text-[color:var(--play-text-muted)]"
                     >
                       النص ده مش متاح في بيانات الدرس
                     </p>
@@ -1355,7 +1378,7 @@ export function LessonSession({
                         />
                       </div>
                     ))}
-                    <p className="pb-1 text-center text-[10.5px] text-ink-faint">
+                    <p className="pb-1 text-center text-[0.85rem] text-ink-faint">
                       النص من الحافظة الموثقة · هنذاكر عليه مع بعض ⬇
                     </p>
                   </div>
@@ -1383,22 +1406,22 @@ export function LessonSession({
       )}
 
       {rtl ? (
-        <p dir="rtl" className="mt-2 shrink-0 text-center text-[10px] text-ink-faint">
+        <p dir="rtl" className="mt-2 shrink-0 text-center text-[0.85rem] text-ink-faint">
           كل جملة من كتاب الوزارة، بمراجعة بشرية · وفي الآخر تقرير فهم بأمانة ·{" "}
           <Link
             href="/student"
-            className="underline decoration-dotted underline-offset-2 hover:text-accent-deep"
+            className="font-bold text-[color:var(--play-text-link)] underline decoration-dotted underline-offset-2"
           >
             ارجع للبداية
           </Link>
         </p>
       ) : (
-        <p className="mt-2 shrink-0 text-center font-mono text-[9px] uppercase tracking-[0.14em] text-ink-faint">
+        <p className="mt-2 shrink-0 text-center font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-faint">
           every beat grounded in human-reviewed solutions · session ends with an
           honest comprehension score ·{" "}
           <Link
             href="/student"
-            className="underline decoration-dotted underline-offset-2 hover:text-accent-deep"
+            className="font-bold text-[color:var(--play-text-link)] underline decoration-dotted underline-offset-2"
           >
             back to check-in
           </Link>
@@ -1422,16 +1445,13 @@ function ResumePrompt({
 }) {
   return (
     <div className="flex min-h-0 flex-1 items-start justify-center">
-      <section className="ledger-card anim-pop mt-10 w-full max-w-md px-8 py-8 text-center">
-        <p
-          dir={rtl ? "rtl" : "ltr"}
-          className="font-display text-2xl font-medium text-ink"
-        >
+      <section className={cx(STICKER_CARD, "anim-pop mt-10 w-full max-w-md px-8 py-8 text-center")}>
+        <p dir={rtl ? "rtl" : "ltr"} className={cx(HEADING, "text-2xl")}>
           {rtl ? "استكمل الدرس؟" : "Continue the lesson?"}
         </p>
         <p
           dir={rtl ? "rtl" : "ltr"}
-          className="mt-2 text-[13.5px] leading-relaxed text-ink-soft"
+          className="mt-2 text-[1rem] text-ink-soft"
         >
           {rtl
             ? "كان معاك درس شغّال هنا قبل كده — تحب تكمّل من حيث وقفت؟"
@@ -1441,14 +1461,14 @@ function ResumePrompt({
           <button
             dir={rtl ? "rtl" : "ltr"}
             onClick={onResume}
-            className="rounded-full bg-accent-deep px-6 py-2.5 text-[14px] font-semibold text-paper transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent play-pressable sticker-shadow-sm"
+            className={BUTTON_PRIMARY}
           >
             {rtl ? "كمل من حيث وقفت ✓" : "Continue where I left off ✓"}
           </button>
           <button
             dir={rtl ? "rtl" : "ltr"}
             onClick={onFresh}
-            className="rounded-full border border-line bg-card px-6 py-2.5 text-[13px] font-medium text-ink-soft transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent-deep play-pressable sticker-shadow-sm"
+            className={BUTTON_SECONDARY}
           >
             {rtl ? "لا — ابدأ من الأول" : "No — start from the beginning"}
           </button>
@@ -1510,11 +1530,14 @@ function MicButton({ setInput }: { setInput: (v: string) => void }) {
       onClick={toggle}
       aria-label={listening ? "Stop listening" : "Speak your answer"}
       title={listening ? "Listening… tap to stop" : "Speak your answer"}
-      className={`flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-full border transition-all duration-150 play-pressable sticker-shadow-sm ${
-        listening
-          ? "anim-mic border-rust bg-rust text-paper"
-          : "border-line bg-card text-ink-soft hover:border-accent/50 hover:text-accent-deep"
-      }`}
+      // A sticker control like the composer's other buttons. Listening, it
+      // takes the Honey "selected" fill and pulses amber (`.anim-mic` under
+      // Play) — the Ledger's red mic is gone with the Ledger.
+      className={cx(
+        STROKE,
+        "flex size-[var(--noor-touch-min)] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] text-ink sticker-shadow-sm play-pressable",
+        listening ? "anim-mic bg-card-warm" : "bg-card"
+      )}
     >
       <MicIcon />
     </button>

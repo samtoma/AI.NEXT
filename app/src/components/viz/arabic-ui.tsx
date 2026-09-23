@@ -21,27 +21,45 @@ import { arr, num, obj, str } from "./core";
 /* ------------------------------------------------------------------ */
 
 export interface CategoryStyle {
-  /** underline + chip colour */
+  /** the underline colour — a graphic, not text */
   line: string;
-  /** the highlighter tint */
+  /** the highlighter tint, behind ink text */
   tint: string;
   /** colour *and* underline style — never colour alone (accessibility) */
   underline: "solid" | "dashed" | "dotted" | "double" | "wavy" | "none";
 }
 
+/** A highlighter tint: the token, thinned so ink text on it stays AA. */
+const tint = (token: string, pct: number) =>
+  `color-mix(in srgb, var(${token}) ${pct}%, transparent)`;
+
+/**
+ * Every colour here is a Noor Play token (constitution XII) and none is red —
+ * «إملاء» used to be the rust red, which read as "mistake" on the one
+ * category that is about spelling. The branches of Arabic are sub-subjects,
+ * so they take the playmates the way subjects do, and each keeps a distinct
+ * underline, the carrier that survives without colour:
+ *
+ *   نحو  mastery teal · solid      بلاغة amber · dashed
+ *   إملاء sky          · dotted     صرف   berry · double
+ *   معجم / تضاد  ink-soft · none / wavy
+ *
+ * صرف is berry rather than `--subject-arabic`: under Play that token IS the
+ * mastery teal, so نحو and صرف would differ by underline alone.
+ */
 export const SPAN_CATEGORIES: Record<string, CategoryStyle> = {
   // منادى، مضاف إليه، أداة نداء، بدل
-  نحو: { line: "var(--accent-deep)", tint: "rgba(13,74,66,0.16)", underline: "solid" },
+  نحو: { line: "var(--noor-progress)", tint: tint("--noor-progress", 22), underline: "solid" },
   // أسلوب مؤكد، استفهام، أمر، نهي، نداء، تشبيه
-  بلاغة: { line: "var(--gold)", tint: "rgba(169,126,34,0.2)", underline: "dashed" },
+  بلاغة: { line: "var(--gold)", tint: tint("--noor-action", 26), underline: "dashed" },
   // همزة متوسطة / متطرفة
-  إملاء: { line: "var(--rust)", tint: "rgba(168,68,42,0.16)", underline: "dotted" },
+  إملاء: { line: "var(--play-on-sky-dim)", tint: tint("--play-sky", 45), underline: "dotted" },
   // مفرد/جمع/مثنى، فعل مضارع
-  صرف: { line: "var(--subject-arabic)", tint: "rgba(107,76,134,0.16)", underline: "double" },
+  صرف: { line: "var(--play-on-berry-dim)", tint: tint("--play-berry", 45), underline: "double" },
   // معنى، مرادف — tint only, no rule under the word
-  معجم: { line: "var(--ink-soft)", tint: "rgba(77,86,105,0.14)", underline: "none" },
+  معجم: { line: "var(--ink-soft)", tint: tint("--ink-soft", 14), underline: "none" },
   // opposition pairs
-  تضاد: { line: "var(--ink-soft)", tint: "rgba(77,86,105,0.14)", underline: "wavy" },
+  تضاد: { line: "var(--ink-soft)", tint: tint("--ink-soft", 14), underline: "wavy" },
 };
 
 export function categoryStyle(c: string | undefined): CategoryStyle {
@@ -132,7 +150,6 @@ function markStyle(
     backgroundRepeat: "no-repeat",
     // RTL: the highlighter sweeps from the right edge, the way a hand would
     backgroundPosition: "right center",
-    borderRadius: "0.2rem",
     color: "inherit",
     paddingBlock: "0.08em",
   };
@@ -142,7 +159,7 @@ function markStyle(
     base.textDecorationLine = "underline";
     base.textDecorationStyle = st.underline;
     base.textDecorationColor = st.line;
-    base.textDecorationThickness = "1.5px";
+    base.textDecorationThickness = "var(--play-stroke-sm)";
     // clear the kasra / shadda sitting under the baseline
     base.textUnderlineOffset = "0.45em";
   }
@@ -218,13 +235,16 @@ export function SpanChips({
             className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5"
             style={a.pop(delayOf(s.step) + 0.18)}
           >
+            {/* the chip wears its span's own highlighter, so the label and
+                the words it names read as one colour; ink outline and ink
+                text like every sticker, AA on every tint */}
             <span
-              className="ar-label shrink-0 rounded-full border px-1.5 py-px font-mono text-[9.5px] font-semibold"
-              style={{ color: st.line, borderColor: st.line }}
+              className="ar-label shrink-0 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-ink px-1.5 py-px font-display text-[0.72rem] font-bold text-ink"
+              style={{ background: st.tint }}
             >
               {s.label || s.category}
             </span>
-            <span className="ar-block ar-plain text-[11.5px] text-ink-soft">
+            <span className="ar-block ar-plain text-[11.5px] text-[color:var(--play-text-muted)]">
               <bdi>
                 «{s.find}»
                 {s.pairWith ? ` ↔ «${s.pairWith}»` : ""}
@@ -243,15 +263,16 @@ export function SpanChips({
 /* Small shared bits                                                   */
 /* ------------------------------------------------------------------ */
 
-/** The mono kind label every Arabic figure carries, with the tracking reset. */
+/** The kind label every Arabic figure carries. Arabic, so the UI face with
+ *  the tracking reset — Plex Mono carries no Arabic glyphs (handoff TYPE). */
 export function ArHeader({ label, note }: { label: string; note?: string }) {
   return (
     <div className="mb-1.5 flex flex-wrap items-baseline justify-between gap-x-2">
-      <span className="ar-label font-mono text-[9.5px] font-semibold text-ink-faint">
+      <span className="ar-label font-display text-[0.72rem] font-bold text-ink-faint">
         {label}
       </span>
       {note ? (
-        <span className="ar-label ar-block font-mono text-[9.5px] text-ink-faint">
+        <span className="ar-label ar-block font-display text-[0.72rem] font-bold text-ink-faint">
           <bdi>{arDigits(note)}</bdi>
         </span>
       ) : null}

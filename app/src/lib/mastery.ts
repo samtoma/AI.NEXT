@@ -32,15 +32,39 @@ export type MasteryBand =
   | "proficient"
   | "mastered";
 
-type Step = { readonly band: MasteryBand; readonly hex: string };
+type Step = {
+  readonly band: MasteryBand;
+  /** The custom property that holds this step's colour (`globals.css`). */
+  readonly token: `--mastery-${0 | 1 | 2 | 3 | 4}`;
+  /** `var(--mastery-N)` — what every caller paints with. */
+  readonly color: string;
+};
 
-/** tokens.css --mastery-0-not-started … --mastery-4-mastered, verbatim. */
+/**
+ * THE RAMP IS TOKENS, NOT HEX (constitution XII; review 2026-09-23, F21).
+ *
+ * This table used to carry the five hex values verbatim from `tokens.css`,
+ * which made `lib/mastery.ts` a second copy of the ramp: the dashboard and the
+ * home painted from here while the report card and the practice loop read
+ * `var(--m-*)` from the stylesheet, and the two disagreed the moment a skin
+ * redefined one of them. Every screen now paints with `var(--mastery-N)`, so
+ * the stylesheet is the only place a ramp colour is written down.
+ *
+ * `var()` is safe everywhere a caller uses it: inline `style` on HTML, and the
+ * `style` prop (not a presentation attribute) on SVG.
+ */
+const step = (n: 0 | 1 | 2 | 3 | 4, band: MasteryBand): Step => ({
+  band,
+  token: `--mastery-${n}`,
+  color: `var(--mastery-${n})`,
+});
+
 const STEPS: readonly Step[] = [
-  { band: "not started", hex: "#EFEEF6" },
-  { band: "attempted", hex: "#F0A22F" },
-  { band: "familiar", hex: "#D9A75A" },
-  { band: "proficient", hex: "#8FB98A" },
-  { band: "mastered", hex: "#2F9E8F" },
+  step(0, "not started"),
+  step(1, "attempted"),
+  step(2, "familiar"),
+  step(3, "proficient"),
+  step(4, "mastered"),
 ] as const;
 
 /**
@@ -77,14 +101,6 @@ function stepIndex(score: number, started: boolean): number {
   return 4;
 }
 
-function hexToRgb(hex: string): [number, number, number] {
-  return [
-    parseInt(hex.slice(1, 3), 16),
-    parseInt(hex.slice(3, 5), 16),
-    parseInt(hex.slice(5, 7), 16),
-  ];
-}
-
 /**
  * `started` defaults to true so every existing single-argument call site keeps
  * meaning what it meant: those callers only ever render a learner who has a
@@ -96,16 +112,18 @@ export function masteryStep(score: number, started = true): Step {
   return STEPS[stepIndex(score, started)];
 }
 
-export function masteryRgb(
-  score: number,
-  started = true
-): [number, number, number] {
-  return hexToRgb(masteryStep(score, started).hex);
-}
-
+/**
+ * The ramp colour for a score, as a CSS value.
+ *
+ * `alpha < 1` mixes the token toward transparent with `color-mix()` rather
+ * than decomposing it into channels, because a token has no channels to read
+ * until the browser resolves it — which is the whole point of it being a token.
+ */
 export function masteryColor(score: number, alpha = 1, started = true): string {
-  const [r, g, b] = masteryRgb(score, started);
-  return alpha >= 1 ? `rgb(${r} ${g} ${b})` : `rgb(${r} ${g} ${b} / ${alpha})`;
+  const { color } = masteryStep(score, started);
+  if (alpha >= 1) return color;
+  const pctAlpha = Math.round(Math.max(0, alpha) * 100);
+  return `color-mix(in srgb, ${color} ${pctAlpha}%, transparent)`;
 }
 
 /**

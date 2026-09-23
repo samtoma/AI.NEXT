@@ -11,14 +11,29 @@ import { ProvenanceBadge } from "@/components/ProvenanceBadge";
 import { Visual } from "@/components/viz/Visual";
 import { kindMeta } from "@/components/viz/kind-meta";
 import type { AsOf } from "./GraphCanvas";
+import {
+  HONEY_BAND,
+  ICON_BUTTON,
+  STICKER_CARD,
+  STROKE,
+  STROKE_WIDTH_SM,
+  TIER_INK,
+  cx,
+} from "@/components/sticker";
 
 const TIER_ORDER: Tier[] = ["basic", "standard", "advanced"];
 
-export const tierStyle: Record<Tier, string> = {
-  basic: "bg-accent-wash text-accent-deep border-accent/30",
-  standard: "bg-gold-wash text-gold border-gold/35",
-  advanced: "bg-rust-wash text-rust border-rust/30",
-};
+/** Tier chip colours (fill + paired text + border colour, no width) — pair
+ *  with `STROKE_WIDTH_SM`. Kept under this name because other surfaces
+ *  import it from here. */
+export const tierStyle: Record<Tier, string> = TIER_INK;
+
+/** A list row that opens something: a sticker that presses, 52px floor. */
+const ROW_BUTTON = cx(
+  STROKE,
+  "w-full min-h-[var(--noor-touch-min)] rounded-[var(--play-radius)] text-left",
+  "sticker-shadow-sm play-pressable"
+);
 
 /** The subject chip's label + tokens come from the registry entry, so an LO
  *  whose course is unfiled shows NO chip rather than another subject's. */
@@ -59,22 +74,26 @@ export function LoPanel({
     .filter((c) => c.other);
 
   return (
-    <aside className="anim-panel ledger-card thin-scroll w-[372px] shrink-0 self-stretch overflow-y-auto"
+    <aside
+      className={cx(
+        STICKER_CARD,
+        "anim-panel thin-scroll w-[372px] shrink-0 self-stretch overflow-y-auto"
+      )}
       style={{ maxHeight: H_PANEL }}
     >
-      <div className="sticky top-0 z-10 border-b border-line-soft bg-card/95 px-5 pb-3 pt-4 backdrop-blur-sm">
+      <div className={cx(HONEY_BAND, "sticky top-0 z-10 px-5 pb-3 pt-4")}>
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
               {lo.syllabusRef} · node {lo.id}
             </p>
-            <h2 className="mt-1 font-display text-xl font-medium leading-snug text-ink">
+            <h2 className="mt-1 font-display text-xl font-extrabold leading-snug text-ink">
               {lo.label}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink"
+            className={ICON_BUTTON}
             aria-label="Close panel"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -86,14 +105,14 @@ export function LoPanel({
 
       <div className="space-y-5 px-5 py-4">
         {lo.description && (
-          <p className="text-[13.5px] leading-relaxed text-ink-soft">
+          <p className="font-read text-[13.5px] leading-relaxed text-ink-soft">
             <TeX text={lo.description} />
           </p>
         )}
 
         <div className="flex flex-wrap gap-2">
           {subjectChip && (
-            <span className={`chip border ${subjectChip.cls}`}>{subjectChip.label}</span>
+            <span className={`chip ${subjectChip.cls}`}>{subjectChip.label}</span>
           )}
           <span className="chip">source page {lo.sourcePage ?? "—"}</span>
           <span className="chip">{lo.syllabusRef}</span>
@@ -108,9 +127,10 @@ export function LoPanel({
                 <button
                   key={c.other!.id}
                   onClick={() => onSelectLo(c.other!.id)}
-                  className="block w-full rounded-lg border border-gold/35 bg-gold-wash/50 px-3 py-2 text-start transition-colors hover:bg-gold-wash"
+                  className={cx(ROW_BUTTON, "block bg-card-warm px-3 py-2 text-start")}
                 >
-                  <span className="flex items-center gap-1.5 text-[12.5px] font-semibold text-gold">
+                  {/* amber-family text on Honey takes its own token */}
+                  <span className="flex items-center gap-1.5 text-[12.5px] font-bold text-[color:var(--play-text-amber-warm)]">
                     <span aria-hidden>↗</span>
                     {c.other!.label}
                   </span>
@@ -141,9 +161,9 @@ export function LoPanel({
                 >
                   {label}
                 </span>
-                <div className="h-2 flex-1 overflow-hidden rounded-full bg-ink/10">
+                <div className="h-2 flex-1 overflow-hidden rounded-[var(--play-radius-pill)] bg-ink/10">
                   <div
-                    className="h-full rounded-full transition-all duration-700"
+                    className="h-full rounded-[var(--play-radius-pill)] transition-all duration-700"
                     style={{
                       width: pct(score),
                       backgroundColor: masteryColor(score),
@@ -157,12 +177,17 @@ export function LoPanel({
             ))}
           </div>
           <div className="mt-2.5 flex items-center gap-2">
+            {/* a gain is progress, so the progress pair (teal + its ink);
+                a drop greys out like everything else that went the wrong
+                way — never red */}
             <span
-              className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-mono text-[11px] font-semibold ${
+              className={cx(
+                STROKE_WIDTH_SM,
+                "inline-flex items-center gap-1 rounded-[var(--play-radius-pill)] px-2 py-0.5 font-mono text-[11px] font-semibold",
                 delta >= 0
-                  ? "bg-accent-wash text-accent-deep"
-                  : "bg-rust-wash text-rust"
-              }`}
+                  ? "border-ink bg-[var(--noor-progress)] text-[color:var(--noor-on-progress)]"
+                  : "border-[color:var(--play-inactive-border)] bg-[var(--play-inactive-fill)] text-[color:var(--play-text-muted)]"
+              )}
             >
               {delta >= 0 ? "▲" : "▼"} {Math.round(Math.abs(delta) * 100)} pts
               since diagnostic
@@ -188,10 +213,10 @@ export function LoPanel({
                   <button
                     key={pid}
                     onClick={() => onSelectLo(pid)}
-                    className="flex w-full items-center gap-2 rounded-md border border-line-soft bg-card-warm px-2.5 py-1.5 text-left transition-colors hover:border-line"
+                    className={cx(ROW_BUTTON, "flex items-center gap-2 bg-card-warm px-2.5 py-1.5")}
                   >
                     <span
-                      className="h-2 w-2 shrink-0 rounded-full"
+                      className="h-2 w-2 shrink-0 rounded-[var(--play-radius-pill)]"
                       style={{ backgroundColor: masteryColor(p.current) }}
                     />
                     <span className="flex-1 truncate text-[12px] text-ink">
@@ -199,7 +224,9 @@ export function LoPanel({
                     </span>
                     <span
                       className={`font-mono text-[10px] ${
-                        met ? "text-accent-deep" : "text-rust"
+                        met
+                          ? "text-accent-deep"
+                          : "text-[color:var(--play-text-muted)]"
                       }`}
                     >
                       {met ? "met ✓" : "not met"}
@@ -221,7 +248,11 @@ export function LoPanel({
               return (
                 <div key={tier}>
                   <span
-                    className={`inline-block rounded border px-1.5 py-px font-mono text-[9.5px] uppercase tracking-[0.12em] ${tierStyle[tier]}`}
+                    className={cx(
+                      STROKE_WIDTH_SM,
+                      "inline-block rounded-[var(--play-radius-sm)] px-1.5 py-px font-mono text-[9.5px] uppercase tracking-[0.12em]",
+                      tierStyle[tier]
+                    )}
                   >
                     {tier}
                   </span>
@@ -230,7 +261,7 @@ export function LoPanel({
                       <button
                         key={q.id}
                         onClick={() => onOpenQuestion(q)}
-                        className="group w-full rounded-md border border-line-soft bg-card px-3 py-2 text-left transition-all duration-200 hover:-translate-y-px hover:border-accent/40 hover:shadow-[0_6px_16px_-8px_rgba(13,74,66,0.35)]"
+                        className={cx(ROW_BUTTON, "group bg-card px-3 py-2")}
                       >
                         <div className="flex items-center justify-between gap-2">
                           <span className="font-mono text-[10px] text-ink-faint">
@@ -302,13 +333,18 @@ function VisualsStrip({ loId }: { loId: string }) {
   return (
     <div className="anim-fade">
       <p className="rule-label mb-2.5">Visuals · animated from the book</p>
-      <div className="thin-scroll -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+      {/* end/bottom padding leaves room for the sticker shadow and its
+          hover lift, which the scroller would otherwise clip */}
+      <div className="thin-scroll -mx-1 flex gap-2.5 overflow-x-auto px-1 pb-2 pe-2 pt-0.5">
         {visuals.map((v) => (
           <button
             key={v.id}
             onClick={() => setOpen(v)}
             title={v.caption ?? v.id}
-            className="group w-[150px] shrink-0 rounded-md border border-line-soft bg-card p-1.5 text-left transition-all duration-200 hover:-translate-y-px hover:border-accent/40 hover:shadow-[0_6px_16px_-8px_rgba(13,74,66,0.35)]"
+            className={cx(
+              STROKE,
+              "group w-[150px] shrink-0 rounded-[var(--play-radius)] bg-card p-1.5 text-left sticker-shadow-sm play-pressable"
+            )}
           >
             <Visual kind={v.kind} spec={v.spec} />
             <span className="mt-1 flex items-center justify-between gap-1 px-0.5">
@@ -333,17 +369,17 @@ function VisualsStrip({ loId }: { loId: string }) {
             aria-label={open.caption ?? open.id}
           >
             <div
-              className="ledger-card anim-pop w-full max-w-[520px] overflow-hidden"
+              className={cx(STICKER_CARD, "anim-pop w-full max-w-[520px] overflow-hidden")}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between gap-3 border-b border-line-soft bg-card-warm px-4 py-2.5">
+              <div className={cx(HONEY_BAND, "flex items-center justify-between gap-3 px-4 py-2.5")}>
                 <span className="truncate font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
                   {open.id} · {open.loLabel}
                 </span>
                 <button
                   onClick={() => setOpen(null)}
                   aria-label="Close visual"
-                  className="rounded-full p-1.5 text-ink-faint transition-colors hover:bg-line-soft hover:text-ink"
+                  className={ICON_BUTTON}
                 >
                   <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                     <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -361,7 +397,11 @@ function VisualsStrip({ loId }: { loId: string }) {
                 )}
                 <div className="mt-3 flex flex-wrap gap-2">
                   <span
-                    className={`inline-flex items-center gap-1 rounded-full border px-2 py-px font-mono text-[9.5px] ${kindMeta(open.kind).chip}`}
+                    className={cx(
+                      STROKE_WIDTH_SM,
+                      "inline-flex items-center gap-1 rounded-[var(--play-radius-pill)] px-2 py-px font-mono text-[9.5px]",
+                      kindMeta(open.kind).chip
+                    )}
                   >
                     <span aria-hidden>{kindMeta(open.kind).glyph}</span>
                     {open.kind}
