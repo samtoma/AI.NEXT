@@ -10,6 +10,7 @@ build step reads this directory.
 | Date | Review | Published |
 |---|---|---|
 | 2026-09-10 | [Two Environments, One Book](./2026-09-10-two-environments-one-book.html) — Student MVP 1.0 build review: what is done, what proves it, and the four decisions blocking a pilot | [artifact](https://claude.ai/code/artifact/ce3ee819-00b3-474b-b630-c73f6a7537ac) |
+| 2026-09-23 | [Play and Master — UI review](./2026-09-23-play-master-ui-review.md) — why the two skins conflict (Master wired to the Ledger palette, Play hard-coded into components), 29 findings, the options, and the decision to hide Master | [artifact](https://claude.ai/artifact/NTUidvZjBr3BRaTLpe4ZYp) |
 
 ## Conventions
 
