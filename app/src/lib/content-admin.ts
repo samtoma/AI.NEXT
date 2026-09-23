@@ -35,6 +35,8 @@ export type AdminQuestionRow = {
   generatedBy: string | null;
   sourcePage: number | null;
   attempts: number;
+  /** The course the question's objective belongs to; `null` if it has none. */
+  courseId: string | null;
 };
 
 export type ContentAdminView = {
@@ -45,7 +47,36 @@ export type ContentAdminView = {
   all: ProvenanceTally;
   /** generated rows still waiting on a promote decision */
   pendingPromotion: number;
+  /** book rows at `review` — loaded, not servable (includes scripture held by ADR-0006) */
+  bookHeld: number;
 };
+
+/**
+ * The same view narrowed to one course, or the whole bank for `null`.
+ *
+ * Every count on the page is computed from the rows it is given, so a
+ * narrowed view cannot disagree with its own table. The page used to sum the
+ * three books into one "From the book" figure without saying so, which read as
+ * a maths number (2026-09-23).
+ */
+export function scopeContentView(
+  view: ContentAdminView,
+  courseId: string | null
+): ContentAdminView {
+  const rows = courseId ? view.rows.filter((r) => r.courseId === courseId) : view.rows;
+  return summarise(rows);
+}
+
+function summarise(rows: AdminQuestionRow[]): ContentAdminView {
+  const liveRows = rows.filter((r) => r.status === "live");
+  return {
+    rows,
+    live: tallyProvenance(liveRows),
+    all: tallyProvenance(rows),
+    pendingPromotion: rows.filter((r) => r.source === "variant" && r.status === "review").length,
+    bookHeld: rows.filter((r) => r.source !== "variant" && r.status === "review").length,
+  };
+}
 
 export async function getContentAdminView(operatorId: number): Promise<ContentAdminView> {
   const res = await withOperator(operatorId, (db) =>
@@ -55,7 +86,9 @@ export async function getContentAdminView(operatorId: number): Promise<ContentAd
             lo.label AS lo_label,
             mod.label AS module_label,
             er.extractor AS generated_by,
-            (SELECT count(*) FROM attempts a WHERE a.question_id = q.id) AS attempts
+            (SELECT count(*) FROM attempts a WHERE a.question_id = q.id) AS attempts,
+            (SELECT ns.course_id FROM node_subject ns
+              WHERE ns.node_id = q.lo_id ORDER BY ns.course_id LIMIT 1) AS course_id
        FROM questions q
        JOIN graph_nodes lo ON lo.id = q.lo_id
        LEFT JOIN graph_edges te
@@ -87,16 +120,8 @@ export async function getContentAdminView(operatorId: number): Promise<ContentAd
     generatedBy: r.generated_by ?? null,
     sourcePage: r.source_page ?? null,
     attempts: Number(r.attempts ?? 0),
+    courseId: r.course_id ?? null,
   }));
 
-  const liveRows = rows.filter((r) => r.status === "live");
-
-  return {
-    rows,
-    live: tallyProvenance(liveRows),
-    all: tallyProvenance(rows),
-    pendingPromotion: rows.filter(
-      (r) => r.source === "variant" && r.status === "review"
-    ).length,
-  };
+  return summarise(rows);
 }

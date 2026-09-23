@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getContentAdminView } from "@/lib/content-admin";
+import { getContentAdminView, scopeContentView } from "@/lib/content-admin";
+import { SUBJECTS, SUBJECT_IDS } from "@/lib/subjects";
 import { questionProvenance } from "@/lib/provenance";
 import { ProvenanceBadge } from "@/components/ProvenanceBadge";
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
@@ -25,12 +26,28 @@ export const metadata = { title: "Content review — Noor Console" };
  */
 const PATH = "/content";
 
-export default async function ContentConsolePage() {
+export default async function ContentConsolePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const access = await consoleAccess(PATH);
   if (!access.ok) {
     return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
   }
-  return <ContentAdminPage operatorId={access.operatorId} />;
+  const raw = (await searchParams).course;
+  const course = COURSES.find((c) => c.courseId === raw)?.courseId ?? null;
+  return <ContentAdminPage operatorId={access.operatorId} course={course} />;
+}
+
+/** The subjects, in catalogue order, as the switcher offers them. */
+const COURSES = SUBJECT_IDS.map((id) => ({
+  courseId: SUBJECTS[id].courseId,
+  label: SUBJECTS[id].label,
+}));
+
+function courseLabel(courseId: string | null): string {
+  return COURSES.find((c) => c.courseId === courseId)?.label ?? "—";
 }
 
 /**
@@ -46,8 +63,16 @@ export default async function ContentConsolePage() {
  * Operator surface, not a student one. It shows stems and answers-adjacent
  * metadata and is reachable only from the internal nav.
  */
-async function ContentAdminPage({ operatorId }: { operatorId: number }) {
-  const view = await getContentAdminView(operatorId);
+async function ContentAdminPage({
+  operatorId,
+  course,
+}: {
+  operatorId: number;
+  course: string | null;
+}) {
+  const bank = await getContentAdminView(operatorId);
+  const view = scopeContentView(bank, course);
+  const scope = course ? courseLabel(course) : "All subjects";
 
   return (
     <main className="mx-auto w-full max-w-6xl px-6 py-8">
@@ -74,10 +99,29 @@ async function ContentAdminPage({ operatorId }: { operatorId: number }) {
         </div>
       )}
 
-      <section className="mb-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <nav aria-label="Subject" className="mb-3 flex flex-wrap items-center gap-1.5">
+        <SubjectLink href={PATH} active={course === null}>
+          All subjects · {bank.rows.length}
+        </SubjectLink>
+        {COURSES.map((c) => (
+          <SubjectLink
+            key={c.courseId}
+            href={`${PATH}?course=${encodeURIComponent(c.courseId)}`}
+            active={course === c.courseId}
+          >
+            {c.label} · {bank.rows.filter((r) => r.courseId === c.courseId).length}
+          </SubjectLink>
+        ))}
+      </nav>
+      <p className="mb-3 text-[13px] text-ink-soft">
+        <strong className="text-ink">{scope}</strong> — {view.rows.length} questions,{" "}
+        {view.live.total} of them live. The first four tiles count live questions only.
+      </p>
+
+      <section className="mb-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <Tile
           n={view.live.book}
-          k="From the book"
+          k="From the book · live"
           note="Extracted and gated normally"
         />
         <Tile
@@ -100,8 +144,17 @@ async function ContentAdminPage({ operatorId }: { operatorId: number }) {
         />
         <Tile
           n={view.pendingPromotion}
-          k="Waiting on promotion"
+          k="Generated · waiting"
           note="Loaded, not yet servable"
+        />
+        <Tile
+          n={view.bookHeld}
+          k="From the book · held"
+          note={
+            course === null || course === SUBJECTS["arabic-ar"].courseId
+              ? "At review, not servable. Arabic scripture waits for its named checker (ADR-0006)"
+              : "At review, not servable to students"
+          }
         />
       </section>
 
@@ -110,6 +163,7 @@ async function ContentAdminPage({ operatorId }: { operatorId: number }) {
           <thead>
             <tr className="border-b border-line text-left">
               <Th>Question</Th>
+              {course === null && <Th>Subject</Th>}
               <Th>Provenance</Th>
               <Th>Objective</Th>
               <Th>Tier</Th>
@@ -139,6 +193,9 @@ async function ContentAdminPage({ operatorId }: { operatorId: number }) {
                       <TeX text={r.stem} />
                     </span>
                   </td>
+                  {course === null && (
+                    <td className="py-2.5 pr-3 text-ink-soft">{courseLabel(r.courseId)}</td>
+                  )}
                   <td className="py-2.5 pr-3">
                     <ProvenanceBadge question={r} size="md" />
                     {r.reviewedBy && (
@@ -186,6 +243,28 @@ async function ContentAdminPage({ operatorId }: { operatorId: number }) {
         allowed any of this.
       </p>
     </main>
+  );
+}
+
+function SubjectLink({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      aria-current={active ? "true" : undefined}
+      className={`ds-control-quiet rounded px-2.5 py-1 text-[12.5px] font-medium ${
+        active ? "bg-ink text-paper" : "text-ink-soft hover:bg-line-soft hover:text-ink"
+      }`}
+    >
+      {children}
+    </Link>
   );
 }
 

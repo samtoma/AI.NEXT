@@ -28,6 +28,10 @@ requirement names it.
   gate stays held.
 
 ### Fixed
+- **The console's Content page says which subject it is counting.** Its "From the book" figure
+  added all three books together without saying so (914 = 421 maths + 483 Social Studies + 10
+  Arabic), and the questions held at review appeared nowhere. It now has a subject switcher, a
+  "held" tile, and a subject column.
 - **Console in Play:** small buttons and labels no longer carry the thick 3px outline, tables
   are set tighter in the reading face, empty heatmap cells read as empty instead of darkest, and
   the "Confirmed" badge is readable (it was 2.7:1).
