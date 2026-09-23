@@ -1003,7 +1003,10 @@ Web Speech API is inherently robotic (plays OS voices; weak for Arabic). Added a
   per-course pointer** (`student_progress`, migration 028 on `main`; 012 on the branch), not the old constant. The pointer
   advances when **every** LO in the current lesson reaches 0.75, to the next lesson in catalogue
   order whose prerequisites are met; it is monotonic (never walks back when mastery drops) and
-  parks on the course's last lesson, where the card shows a "whole course" banner above the doors.
+  parks on the course's last lesson, where the card shows a "whole course" banner above the doors
+  — only when **every** lesson in the course passes the gate; a pointer with nothing ready ahead
+  mid-course parks without completing. **No backfill** (ADR-0020 amendment, 2026-09-23): every
+  student starts on each course's first lesson.
   The lesson just completed stays on screen as a **collapsed "✓ ... Revisit" row** above the card
   (nearest earlier gate-passing lesson, derived — no stored history), because the gate can cross
   before the student taps Finish. An explicit `?lesson=` still wins, and suppresses that row.
@@ -1054,7 +1057,7 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0015 | One interaction timeline per student per session, replayed by reconstruction; every operator read audited | ✅ Accepted 2026-09-20 |
 | ADR-0016 | Analytics and monitoring: three layers, one system of record — first-party events, anonymous GA4 as audience layer, console as presentation | ✅ Accepted 2026-09-20 |
 | ADR-0017 | Two design-system variants ship — Play and Master, one per render, keyed to the student's grade with a stored override; amends ADR-0011's "Master is replaced" | ✅ Accepted 2026-09-20 |
-| ADR-0020 | Mastery-gated lesson progression — persisted per-student-per-course lesson pointer, advances when every LO ≥ 0.75; `/student` no longer opens on a constant (Tamer's ADR-0012 on `wip/socratic-probing-route-b`, renumbered on `main`) | ✅ Accepted 2026-09-22 per the branch — **Samuel to confirm on merge** |
+| ADR-0020 | Mastery-gated lesson progression — persisted per-student-per-course lesson pointer, advances when every LO ≥ 0.75; `/student` no longer opens on a constant (Tamer's ADR-0012 on `wip/socratic-probing-route-b`, renumbered on `main`) | ✅ Accepted — Samuel, 2026-09-23, by approving the merge onto `main` · amended same day: no backfill, stricter "complete" |
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·

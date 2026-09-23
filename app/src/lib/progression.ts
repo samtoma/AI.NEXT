@@ -19,10 +19,11 @@
  * into a module the client can reach. One definition, no server import — the
  * same reasoning lib/lesson-slug.ts and lib/checkin.ts are already split on.
  *
- * PURE. No database, no clock. `resolveCurrentLesson` and `advanceIfMastered`
- * in lib/progression-db.ts own persistence; everything here is a function of
- * its arguments, which is what makes the branching graph testable without a
- * database.
+ * PURE. No database, no clock. `getCurrentLesson`, `advanceIfMastered` and
+ * `isCourseComplete` in lib/progression-db.ts own persistence and call the
+ * decisions below (`resolvePointer`, `advanceTarget`, `courseComplete`);
+ * everything here is a function of its arguments, which is what makes the
+ * branching graph testable without a database.
  */
 /**
  * The rules need four fields, not the whole `LessonInfo`: a slug, its course,
@@ -104,8 +105,14 @@ export function lessonPrereqsMet(
 
 /**
  * The next lesson after `currentSlug`, in catalogue order, skipping any whose
- * prerequisites are not met. Returns null at the end of the course — the
+ * prerequisites are not met. Returns null when NO later lesson is ready — the
  * caller parks the pointer rather than wrapping or falling back.
+ *
+ * NULL IS NOT "END OF COURSE". It is returned both at the course's last lesson
+ * and mid-course when every remaining lesson is still waiting on a
+ * prerequisite. Only `courseComplete` decides the terminal state; treating
+ * this null as completion once told a student parked mid-course that she had
+ * finished the whole course.
  *
  * CATALOGUE ORDER, NOT THE GRAPH. "The next lesson on the graph" is not a
  * value the graph can return: `prerequisite_of` edges are LO-to-LO and there
@@ -134,6 +141,76 @@ export function nextLessonSlug(
     }
   }
   return null;
+}
+
+/**
+ * The lesson the pointer is on in ONE course: the stored slug while it is
+ * still in that course's catalogue, otherwise the course's first lesson. Null
+ * only when the course has no lessons at all.
+ *
+ * A stored slug can fall out of the catalogue — a content reload that renamed
+ * or re-cut a lesson. Treating it as the first lesson is what keeps such a
+ * student movable: the read side has always shown her the first lesson, and
+ * the advance side must agree, or her attempts on the lesson she is SHOWN
+ * would never match the lesson the pointer is ON, and she would be stuck.
+ */
+export function resolvePointer(
+  inCourse: readonly { slug: string }[],
+  stored: string | null | undefined
+): string | null {
+  if (inCourse.length === 0) return null;
+  if (stored && inCourse.some((l) => l.slug === stored)) return stored;
+  return inCourse[0].slug;
+}
+
+/**
+ * Where the pointer moves after an attempt on `attemptedSlug`, or null when
+ * it stays exactly where it is.
+ *
+ * It moves only when (1) the attempt was on the lesson the pointer is ON —
+ * re-drilling an old lesson or answering ahead through the picker must not
+ * skip a student past lessons she has not done — (2) that lesson now passes
+ * the gate, and (3) some later lesson is ready. When (3) fails the pointer
+ * PARKS: at the course's last lesson that is the terminal state, and mid-course
+ * it simply waits for a prerequisite; neither is reported as anything here.
+ *
+ * `inCourse` must be ONE course's lessons in catalogue order.
+ */
+export function advanceTarget(
+  inCourse: readonly ProgressionLesson[],
+  storedSlug: string | null | undefined,
+  attemptedSlug: string,
+  mastery: ReadonlyMap<string, number>,
+  prereqs: ReadonlyMap<string, readonly string[]>
+): string | null {
+  const current = resolvePointer(inCourse, storedSlug);
+  if (current === null || current !== attemptedSlug) return null;
+  const lesson = inCourse.find((l) => l.slug === current);
+  if (!lesson || !lessonGatePassed(lesson.los)) return null;
+  return nextLessonSlug(inCourse, current, mastery, prereqs);
+}
+
+/**
+ * The terminal state (ADR-0020): the card for `slug` renders "that's the whole
+ * course" only when `slug` is the course's LAST catalogue lesson — where the
+ * pointer parks — AND every lesson in the course passes the gate.
+ *
+ * The stricter of the two readings, on purpose. "The last lesson is mastered"
+ * alone would still celebrate a student whose pointer reached the end by
+ * skipping lessons that were not ready, and the banner tells her she has been
+ * through every topic. Requiring the last lesson keeps the celebration where
+ * ADR-0020 puts it — on the lesson the pointer parks on — rather than on
+ * whichever lesson she happens to be viewing.
+ *
+ * `inCourse` must be ONE course's lessons in catalogue order.
+ */
+export function courseComplete(
+  inCourse: readonly ProgressionLesson[],
+  slug: string
+): boolean {
+  const last = inCourse[inCourse.length - 1];
+  if (!last || last.slug !== slug) return false;
+  return inCourse.every((l) => lessonGatePassed(l.los));
 }
 
 /**

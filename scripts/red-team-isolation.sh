@@ -126,6 +126,7 @@ cleanup_account() {
     psql_maint -c "DELETE FROM explanation_log WHERE attempt_id IN (SELECT id FROM attempts WHERE student_id=$sid)" >/dev/null
     psql_maint -c "DELETE FROM attempts WHERE student_id=$sid" >/dev/null
     psql_maint -c "DELETE FROM mastery WHERE student_id=$sid" >/dev/null
+    psql_maint -c "DELETE FROM student_progress WHERE student_id=$sid" >/dev/null 2>/dev/null || true
     psql_maint -c "DELETE FROM ai_interactions WHERE student_id=$sid" >/dev/null
     psql_maint -c "DELETE FROM understanding_checks WHERE student_id=$sid" >/dev/null
     psql_maint -c "DELETE FROM uploads WHERE student_id=$sid" >/dev/null

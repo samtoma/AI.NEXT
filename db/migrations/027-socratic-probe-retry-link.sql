@@ -36,18 +36,77 @@
 -- `scripts/red-team-isolation.sh` deletes a probe student's attempts. A bare
 -- self-reference would make either fail the day one retry pointed at a row it
 -- was removing. A retry whose original is gone is still a retry.
+--
+-- RE-RUN TAKES NO LOCK ON `attempts`. Every deploy re-applies this file while
+-- the previous app is still grading answers, and `attempts` is the hottest
+-- table there is. `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` takes ACCESS
+-- EXCLUSIVE even when the column is already there, and `CREATE INDEX IF NOT
+-- EXISTS` takes SHARE (which blocks every INSERT) before it notices the index
+-- exists — queued behind one long transaction, either stalls every answer on
+-- the site. So each piece is added only when the catalogue says it is
+-- missing: the first deploy pays one brief lock per piece, every later deploy
+-- pays none. The FK is matched by what it does (this column, referencing
+-- `attempts`, ON DELETE SET NULL), not by its name, and one that exists
+-- without SET NULL is replaced.
 
 BEGIN;
 
-ALTER TABLE attempts
-  ADD COLUMN IF NOT EXISTS retry_of_attempt_id BIGINT
-  REFERENCES attempts(id) ON DELETE SET NULL;
+DO $add$
+DECLARE
+  col_attnum smallint;
+  fk record;
+  want_comment text :=
+    'Socratic-probing prototype (507bb31, migration 027): the attempt this one is a confirmation-retry of, when stance_used = ''probe''. NULL for every ordinary attempt, and for every attempt while SOCRATIC_PROBING_ENABLED is false.';
+BEGIN
+  -- 1. The column.
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+     WHERE table_schema = 'public' AND table_name = 'attempts'
+       AND column_name = 'retry_of_attempt_id'
+  ) THEN
+    ALTER TABLE attempts ADD COLUMN retry_of_attempt_id BIGINT;
+  END IF;
 
-COMMENT ON COLUMN attempts.retry_of_attempt_id IS
-  'Socratic-probing prototype (507bb31, migration 027): the attempt this one is a confirmation-retry of, when stance_used = ''probe''. NULL for every ordinary attempt, and for every attempt while SOCRATIC_PROBING_ENABLED is false.';
+  SELECT attnum INTO col_attnum FROM pg_attribute
+   WHERE attrelid = 'public.attempts'::regclass
+     AND attname = 'retry_of_attempt_id' AND NOT attisdropped;
 
-CREATE INDEX IF NOT EXISTS idx_attempts_retry_of
-  ON attempts(retry_of_attempt_id) WHERE retry_of_attempt_id IS NOT NULL;
+  -- 2. The self-reference, ON DELETE SET NULL. Any FK on this one column that
+  --    does something else (a hand-made one, or 011's bare REFERENCES) is
+  --    dropped so the right one can replace it.
+  FOR fk IN
+    SELECT conname FROM pg_constraint
+     WHERE conrelid = 'public.attempts'::regclass AND contype = 'f'
+       AND conkey = ARRAY[col_attnum]
+       AND NOT (confrelid = 'public.attempts'::regclass AND confdeltype = 'n')
+  LOOP
+    EXECUTE format('ALTER TABLE attempts DROP CONSTRAINT %I', fk.conname);
+  END LOOP;
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+     WHERE conrelid = 'public.attempts'::regclass AND contype = 'f'
+       AND conkey = ARRAY[col_attnum]
+       AND confrelid = 'public.attempts'::regclass AND confdeltype = 'n'
+  ) THEN
+    ALTER TABLE attempts
+      ADD CONSTRAINT attempts_retry_of_attempt_id_fkey
+      FOREIGN KEY (retry_of_attempt_id) REFERENCES attempts(id) ON DELETE SET NULL;
+  END IF;
+
+  -- 3. The partial index, for "the retries of this attempt".
+  IF to_regclass('public.idx_attempts_retry_of') IS NULL THEN
+    CREATE INDEX idx_attempts_retry_of
+      ON attempts(retry_of_attempt_id) WHERE retry_of_attempt_id IS NOT NULL;
+  END IF;
+
+  -- 4. The comment — rewritten only when it differs, so it too costs nothing
+  --    on a re-run and still converges when this text is edited.
+  IF col_description('public.attempts'::regclass, col_attnum)
+       IS DISTINCT FROM want_comment THEN
+    EXECUTE format('COMMENT ON COLUMN attempts.retry_of_attempt_id IS %L', want_comment);
+  END IF;
+END
+$add$;
 
 DO $verify$
 BEGIN
@@ -56,6 +115,17 @@ BEGIN
     RAISE EXCEPTION
       'attempts is not ENABLE + FORCE row level security — migration 017 must '
       'have run first; this column must not land on an unprotected table';
+  END IF;
+  IF (SELECT count(*) FROM pg_constraint c
+        JOIN pg_attribute a
+          ON a.attrelid = c.conrelid AND a.attnum = ANY (c.conkey)
+       WHERE c.conrelid = 'public.attempts'::regclass AND c.contype = 'f'
+         AND a.attname = 'retry_of_attempt_id') <> 1 THEN
+    RAISE EXCEPTION
+      'attempts.retry_of_attempt_id must carry exactly one foreign key';
+  END IF;
+  IF to_regclass('public.idx_attempts_retry_of') IS NULL THEN
+    RAISE EXCEPTION 'idx_attempts_retry_of is missing';
   END IF;
 END
 $verify$;

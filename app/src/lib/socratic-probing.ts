@@ -92,14 +92,16 @@ export function learnWrongAnswerRules(
 /**
  * The retry link `/api/attempts` may record, or `null`. Off → always null, so
  * a client that sends `retryOfAttemptId` while the switch is off changes
- * nothing about the row it writes. On → only a positive integer survives; the
- * route then confirms, under the student's own principal, that the attempt it
- * names is one of hers before writing it.
+ * nothing about the row it writes. On → only a positive SAFE integer survives
+ * (above 2^53 a JSON number no longer names one id exactly, so it could point
+ * at a neighbouring attempt); the route then confirms, under the student's
+ * own principal, that it names one of her wrong attempts on the same
+ * objective before writing it.
  */
 export function acceptedRetryOf(
   raw: unknown,
   enabled: boolean = SOCRATIC_PROBING_ENABLED
 ): number | null {
   if (!enabled) return null;
-  return typeof raw === "number" && Number.isInteger(raw) && raw > 0 ? raw : null;
+  return typeof raw === "number" && Number.isSafeInteger(raw) && raw > 0 ? raw : null;
 }

@@ -155,6 +155,11 @@ export default async function StudentPage({
   // The course is unambiguous when ?subject= names one, or when her gated
   // catalogue holds exactly one course. With several courses and no subject
   // the landing is the subject home and no pointer is read.
+  //
+  // No fallback for a database without `student_progress` (migration 028),
+  // deliberately: production applies every migration before the app starts
+  // (deploy/apply-migrations.sh), so a missing table fails the deploy rather
+  // than reaching this read.
   const courses = [
     ...new Set(allLessons.map((l) => l.courseId).filter((c): c is string => !!c)),
   ];
@@ -213,7 +218,9 @@ export default async function StudentPage({
         })()
       : null;
 
-  // Terminal state — mastered AND nothing left to advance to.
+  // Terminal state — this is the course's last lesson and every lesson in the
+  // course passes the gate (`courseComplete`, lib/progression.ts). NOT "no
+  // later lesson is ready": that is also true of a student parked mid-course.
   const courseComplete = await isCourseComplete(
     studentId,
     lesson.slug,

@@ -15,6 +15,7 @@ import { visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import { learnWrongAnswerRules } from "./socratic-probing";
+import { MODULE_ORDER } from "./module-order";
 import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
 import type { WidgetQuestionSpec } from "./types";
 import { mathWidgetDocs } from "./widget-docs";
@@ -138,32 +139,9 @@ export const LO_MODULE_SELECT = `
   WHERE lo.kind = 'learning_objective'
 `;
 
-/**
- * Term-1 algebra, then Term-2 algebra, then geometry.
- *
- * THE TERM RANK IS LOAD-BEARING, and its absence was a live defect. This used
- * to push only `module:geo%` last, leaving the rest to `m.order_in_parent` —
- * but `module:u1` and `module:t2-u1` BOTH carry order_in_parent = 1 (each is
- * unit 1 of its own term), so the two terms tied, the tie fell through to
- * `lo.id`, and "t2u..." sorts before "u..." alphabetically. The catalogue came
- * out interleaved: t2u1-1, u1-1, t2u1-2, u1-2, t2u1-3, u1-3, u1-4, u2-1...
- *
- * That was survivable while nothing walked the order — the check-in read
- * `lessons[0]` only on the `?subject=` path and fell through to a literal
- * otherwise, so the interleaving showed up only as an oddly-shuffled picker.
- * ADR-0020 makes this order the progression sequence, where it would have sent
- * a student ping-ponging between terms after every lesson.
- *
- * Exported because lib/progression-db.ts walks the same order to decide the
- * next lesson and the two must not drift — "next in the catalogue" has to mean
- * the catalogue the student is actually looking at.
- */
-export const MODULE_ORDER = `CASE
-           WHEN m.id LIKE 'module:geo%' THEN 2
-           WHEN m.id LIKE 'module:t2-%' THEN 1
-           ELSE 0
-         END,
-         m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`;
+// Catalogue order lives in lib/module-order.ts (see why there); re-exported so
+// lib/progression-db.ts and any other importer of it from here keep working.
+export { MODULE_ORDER } from "./module-order";
 
 /* ------------------------------------------------------------------ */
 /* The course gate (migration 023, lib/catalog.ts)                     */

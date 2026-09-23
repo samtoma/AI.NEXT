@@ -110,3 +110,12 @@ test("on: only a positive integer id survives", () => {
     assert.equal(acceptedRetryOf(bad, true), null, String(bad));
   }
 });
+
+// Above 2^53 a JSON number stops naming one integer: 2^53 + 1 parses as 2^53,
+// so an id that large could link a retry to a NEIGHBOURING attempt. Only a
+// safe integer is an id this route can trust.
+test("on: an id beyond the safe-integer range is refused", () => {
+  assert.equal(acceptedRetryOf(Number.MAX_SAFE_INTEGER, true), Number.MAX_SAFE_INTEGER);
+  assert.equal(acceptedRetryOf(2 ** 53, true), null);
+  assert.equal(acceptedRetryOf(Number.POSITIVE_INFINITY, true), null);
+});

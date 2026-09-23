@@ -1,6 +1,6 @@
 # ADR-0020 — Mastery-gated lesson progression replaces the constant lesson on `/student`
 
-**Status**: Accepted — Samuel, 2026-09-22
+**Status**: Accepted — Samuel, 2026-09-23, by approving the merge onto `main` (accepted on Tamer's branch 2026-09-22) · **Amended** 2026-09-23 — no backfill; see [Amendment](#amendment-2026-09-23--no-backfill-and-what-complete-means)
 **Renumbered**: written as ADR-0012 on `wip/socratic-probing-route-b` (Tamer Deif); `main` had already used 0012 for per-student isolation (RLS) and 0019 for the maths-bank rule, so this is ADR-0020 on `main`. The decision text below is unchanged except where it names a file that moved.
 **Affects**: `app/src/app/(student)/student/page.tsx` · `app/src/lib/student-landing.ts` (`decideLanding` takes the pointer) · `app/src/lib/progression.ts`, `app/src/lib/progression-db.ts` · `app/src/lib/lesson-slug.ts` (`DEFAULT_LESSON_SLUG`) · `app/src/lib/lesson.ts` (`getLessonCatalog`) · `app/src/lib/checkin.ts` · `app/src/components/student/LessonCheckIn.tsx` · `db/migrations/028-lesson-progress.sql` (012 on the branch) and its rollback
 **Does not affect**: the tutor prompts in `app/src/lib/lesson.ts` (`learnPrompt`, `reviewPrompt`) — deliberately, see Consequences
@@ -141,3 +141,53 @@ would then compete with it for authority over "today's lesson"); or the
 prerequisite graph gains real lesson-level edges, at which point book order can
 be replaced by a genuine topological walk; or the tutor-prompt reframing lands
 and the self-paced framing becomes consistent end to end.
+
+## Amendment 2026-09-23 — no backfill, and what "complete" means
+
+Recorded when the branch was reviewed for the merge onto `main`. The Decision
+section above is left as written; where the two differ, this section wins.
+
+**No backfill (Samuel, 2026-09-23).** Migration 028 no longer seeds a pointer
+for existing students. Production holds only founder and test students, so
+every student starts on each course's first lesson — the app's own fallback for
+a student with no row — and advances by the runtime rule alone. The backfill
+was removed for two reasons:
+
+- **It was a latent outage.** `deploy/apply-migrations.sh` re-applies every
+  migration on every deploy, with no ledger. The seed re-ran on each deploy
+  until the table held a row, and every row it wrote had to satisfy the
+  `lesson_slug` CHECK, which it never checked. One unexpected objective id
+  would have failed the migration, and a failed migration fails the deploy.
+  Migration 008 took the site down on 2026-09-23 the same way: on a re-run, a
+  CHECK constraint was violated by rows already in the table (`886b302`).
+- **It did not follow the runtime rule.** It put a student on the lesson after
+  the *furthest* passing one. That skipped unmastered earlier lessons and
+  ignored prerequisites, so it produced pointers the app itself could never
+  produce.
+
+The Decision's **Backfill** bullet and the "a backfill" in Consequences → Cost
+are therefore withdrawn. Rolling back 028 now loses every pointer outright, and
+re-applying it restarts every student at the first lesson.
+
+**What "complete" means (implementation note, same review).** "Terminal
+state" above is implemented as follows: the card shows the completed state only
+when the lesson is the course's **last** catalogue lesson **and every lesson
+in the course** passes the gate. The first build used a different test, "no
+later lesson has its prerequisites met". That is also true mid-course, whenever
+every remaining lesson is still waiting on a prerequisite, so it told parked
+students they had finished the whole course. A pointer with nothing ready ahead
+now **parks without completing**. It moves again on the next gate-passing
+attempt on its lesson once a later lesson is ready. The stricter "every lesson"
+half is there because the banner says *"You've been through every topic
+here"*: a pointer can reach the last lesson by skipping lessons that were not
+ready. The cost is that the banner goes away if an earlier lesson later drops
+below the gate. The pointer itself never moves back. Samuel may prefer the
+looser "last lesson mastered" reading; if so, that is a one-line change in
+`courseComplete` (`app/src/lib/progression.ts`).
+
+**Stale pointers.** A stored slug that is no longer in the course's catalogue
+(for example, after a content reload renamed a lesson) counts as the course's
+first lesson, both on `/student` and when an attempt advances the pointer.
+Before this, the page showed the first lesson but the advance never matched
+it, so the student could not move again.
+

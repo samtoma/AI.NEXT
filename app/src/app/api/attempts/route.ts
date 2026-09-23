@@ -161,7 +161,7 @@ export async function POST(req: Request) {
       const qRes = await client.query(
         `SELECT q.id, q.lo_id, q.question_type, q.correct_answer, q.choices,
                 q.canonical_solution, q.solution_version, n.label AS lo_label,
-                c.id AS course_id
+                c.id AS course_id, (q.reviewed_by IS NOT NULL) AS solution_reviewed
          FROM questions q
          JOIN graph_nodes n ON n.id = q.lo_id
          LEFT JOIN graph_edges te
@@ -258,12 +258,22 @@ export async function POST(req: Request) {
       // Socratic-probing prototype (`507bb31`): the attempt this one confirms,
       // if any. `acceptedRetryOf` answers null while the switch is off, so
       // nothing below changes for any client until Samuel rules. When it is
-      // on, the id must name one of THIS student's attempts — read under her
-      // own principal, so another child's id is simply not found (ADR-0012)
-      // and is dropped rather than written as a cross-student edge.
+      // on, the id must name a WRONG attempt of THIS student's on THIS
+      // question's objective — the only thing a probe cycle ever retries (the
+      // client links a retry to its pending LO's last wrong attempt). Anything
+      // else is dropped rather than written as a false edge. The student is
+      // checked twice on purpose: RLS already hides another child's attempt
+      // under her principal (ADR-0012), and `student_id = $2` keeps the
+      // statement correct on its own if it is ever run on another connection.
       let retryOf = acceptedRetryOf(retryOfAttemptId);
       if (retryOf !== null) {
-        const own = await client.query(`SELECT 1 FROM attempts WHERE id = $1`, [retryOf]);
+        const own = await client.query(
+          `SELECT 1 FROM attempts a
+             JOIN questions tq ON tq.id = a.question_id
+            WHERE a.id = $1 AND a.student_id = $2
+              AND a.is_correct = false AND tq.lo_id = $3`,
+          [retryOf, studentId, q.lo_id]
+        );
         if (own.rowCount === 0) retryOf = null;
       }
 
@@ -401,10 +411,13 @@ export async function POST(req: Request) {
       // Only a CORRECT answer can cross the gate, so the catalogue read — which
       // is not cheap — is skipped entirely on the common path.
       //
-      // Under a SAVEPOINT (trial merge): a failure in the pointer — a bug, or a
-      // database that has not yet run migration 028 — rolls back the pointer
-      // alone and leaves the graded attempt exactly as main writes it. The
-      // pointer is a convenience; the attempt is the student's evidence.
+      // Under a SAVEPOINT (trial merge): a failure in the pointer code rolls
+      // back the pointer alone and leaves the graded attempt exactly as main
+      // writes it. The pointer is a convenience; the attempt is the student's
+      // evidence. It is NOT a shim for a database without migration 028 —
+      // production applies every migration before the app starts
+      // (deploy/apply-migrations.sh, the compose `migrate` service), and
+      // /student reads the pointer with no such cover.
       let advancedTo: string | null = null;
       if (isCorrect) {
         await client.query("SAVEPOINT lesson_progress");
@@ -488,7 +501,34 @@ export async function POST(req: Request) {
           })
         : [];
       if (entries.length === 0) {
-        void flagAuthoringGap(studentId, misconceptionId);
+        // An AUTHORING GAP is a misconception the question names with no
+        // refutation written for it (FR-305) — something an author can fix.
+        // An undiagnosed error is not one: there is no misconception to write
+        // a refutation OF, so flagging it would bury the real gaps under one
+        // flag per wrong numeric answer.
+        if (misconceptionId) void flagAuthoringGap(studentId, misconceptionId);
+        // The student is shown the question's worked solution instead
+        // (client-side, from `solution` below), and that is an explanation
+        // delivered as much as a refutation is. Before the undiagnosed path
+        // stopped borrowing another misconception's entry this event fired
+        // for it; it now fires for what is actually shown, typed so a
+        // refutation-only count stays one filter away.
+        if (solution.length > 0) {
+          void emit({
+            event: "explanation_delivered",
+            studentId,
+            properties: {
+              lo_id: q.lo_id,
+              entry_id: null,
+              entry_type: "canonical_solution",
+              misconception_id: misconceptionId,
+              // The question's own review stamp (ADR-0019 keeps it in the
+              // data): SC-011 counts unreviewed teaching SEEN, and a worked
+              // solution nobody has read is exactly that.
+              reviewed: q.solution_reviewed === true,
+            },
+          });
+        }
       } else {
         const chosen = entries[0];
         const content = chosen.content as

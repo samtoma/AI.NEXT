@@ -32,8 +32,10 @@ import { scoped, type Db } from "./student-context";
 import { sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
 import { LO_MODULE_SELECT, MODULE_ORDER } from "./lesson";
 import {
+  advanceTarget,
+  courseComplete,
   lessonGatePassed,
-  nextLessonSlug,
+  resolvePointer,
   type ProgressionLesson,
   type ProgressionLo,
 } from "./progression";
@@ -125,12 +127,11 @@ export async function getCurrentLesson(
       [studentId, courseId]
     )
   );
-  const stored = r.rows[0]?.lesson_slug as string | undefined;
   // A stored slug no longer in this course's catalogue (content re-extracted,
   // a lesson renamed) must not strand the student on a lesson that cannot be
-  // loaded — fall back to the course's first.
-  if (stored && inCourse.some((l) => l.slug === stored)) return stored;
-  return inCourse[0].slug;
+  // loaded — `resolvePointer` falls back to the course's first, and
+  // `advanceIfMastered` resolves it the SAME way so the two sides agree.
+  return resolvePointer(inCourse, r.rows[0]?.lesson_slug as string | undefined);
 }
 
 /**
@@ -168,19 +169,22 @@ export async function advanceIfMastered(
      FOR UPDATE`,
     [studentId, courseId]
   );
-  const current =
-    (cur.rows[0]?.lesson_slug as string | undefined) ?? inCourse[0]?.slug;
+  const stored = cur.rows[0]?.lesson_slug as string | undefined;
 
-  // Only the lesson the student is actually ON can advance the pointer.
-  // Re-drilling an old lesson, or answering ahead through the picker, must not
-  // skip them forward past lessons they have not done.
-  if (current !== slug) return null;
+  // The whole decision is `advanceTarget` (lib/progression.ts), pure and
+  // unit-tested. In short: only the lesson the student is actually ON can
+  // advance the pointer (a stored slug that has left the catalogue counts as
+  // the course's first lesson, exactly as `getCurrentLesson` shows it); it must
+  // pass the gate; and a later lesson must be ready. The prerequisite read is
+  // skipped unless the first two already hold — it is the expensive one.
+  if (resolvePointer(inCourse, stored) !== slug) return null;
   if (!lessonGatePassed(lesson.los)) return null;
-
   const prereqs = await prereqMap(db);
-  const next = nextLessonSlug(inCourse, slug, mastery, prereqs);
-  // End of the course: park on the last lesson (terminal state). The pointer
-  // stays put and the check-in renders "complete" instead.
+  const next = advanceTarget(inCourse, stored, slug, mastery, prereqs);
+  // Nothing ready after this lesson: PARK. At the course's last lesson that
+  // is the terminal state; mid-course it waits for a prerequisite. Either way
+  // the pointer stays put, and only `isCourseComplete` decides what the card
+  // calls it.
   if (next === null) return null;
 
   await db.query(
@@ -194,8 +198,13 @@ export async function advanceIfMastered(
 }
 
 /**
- * Whether this lesson is mastered AND the end of its course — the terminal
- * state the check-in renders instead of an assignment. Read-side only.
+ * Whether the check-in for `slug` shows the terminal state: `slug` is the
+ * course's LAST catalogue lesson and every lesson in the course passes the
+ * gate (`courseComplete`, lib/progression.ts). Read-side only.
+ *
+ * It no longer asks "is any later lesson ready?" — that is null mid-course
+ * too, whenever everything after the current lesson is waiting on a
+ * prerequisite, and it used to celebrate those students as finished.
  */
 export async function isCourseComplete(
   studentId: number,
@@ -205,12 +214,10 @@ export async function isCourseComplete(
 ): Promise<boolean> {
   if (!courseId) return false;
   return scoped(studentId, client, async (db) => {
-    const { lessons, mastery } = await loadCatalog(db, studentId);
-    const inCourse = lessons.filter((l) => l.courseId === courseId);
-    const lesson = inCourse.find((l) => l.slug === slug);
-    if (!lesson || !lessonGatePassed(lesson.los)) return false;
-
-    const prereqs = await prereqMap(db);
-    return nextLessonSlug(inCourse, slug, mastery, prereqs) === null;
+    const { lessons } = await loadCatalog(db, studentId);
+    return courseComplete(
+      lessons.filter((l) => l.courseId === courseId),
+      slug
+    );
   });
 }

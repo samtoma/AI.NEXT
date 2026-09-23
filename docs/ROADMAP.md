@@ -98,7 +98,7 @@ today's events would produce a plausible wrong number:
 
 | Event | Fires | Should mean |
 |---|---|---|
-| `explanation_delivered` | only when a **refutation** is served — a wrong answer matching a known misconception | every explanation the tutor gives |
+| `explanation_delivered` | only on a **wrong answer** — the refutation served, or (since 2026-09-23) the worked solution when no refutation fits, typed `entry_type = 'canonical_solution'` | every explanation the tutor gives |
 | `retrieval_attempt_submitted` | on **every** graded attempt | the retrieval that follows an explanation |
 
 The ratio of those two, as they fire today, is *all attempts over refutations

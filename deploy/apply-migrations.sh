@@ -169,10 +169,10 @@ say "$applied migrations applied"
 # know the name of every migration, which would be a second list to maintain and
 # therefore a second list to forget.
 #
-# 23, not 24: the files are numbered 002-024 because 001 was folded into
+# 27, not 28: the files are numbered 002-028 because 001 was folded into
 # schema.sql, so the count and the highest number will never agree. Raise this
 # when a migration is added; it is one line and its failure message says so.
-[ "$applied" -ge 23 ] || fail "only $applied migration files were found; this branch has at least 23 (002-024). Is ../db a complete checkout?"
+[ "$applied" -ge 27 ] || fail "only $applied migration files were found; this branch has at least 27 (002-028). Is ../db a complete checkout?"
 
 # ---------------------------------------------------------------------------
 # 3. Post-flight: is the stack actually able to run?
@@ -305,9 +305,12 @@ fi
 # 3c. The newest migration really landed. `course_availability` (023) and
 # `students.design_variant` (024) are the two objects the current app reads on
 # the first page render, so their absence is an immediate 500 rather than a
-# latent one. This is a canary, not an inventory: add to it only when a
-# migration adds something the app cannot start without.
-say "checking the newest objects (023, 024)"
+# latent one. `student_progress` (028) is read by the same first render of
+# /student, and `attempts.retry_of_attempt_id` (027) is named by the attempt
+# INSERT the moment Socratic probing is switched on. This is a canary, not an
+# inventory: add to it only when a migration adds something the app cannot
+# start without.
+say "checking the newest objects (023, 024, 027, 028)"
 $PSQL <<'SQL'
 DO $check$
 BEGIN
@@ -320,6 +323,16 @@ BEGIN
        AND column_name = 'design_variant'
   ) THEN
     RAISE EXCEPTION 'students.design_variant is missing — migration 024 did not land';
+  END IF;
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+     WHERE table_schema = 'public' AND table_name = 'attempts'
+       AND column_name = 'retry_of_attempt_id'
+  ) THEN
+    RAISE EXCEPTION 'attempts.retry_of_attempt_id is missing — migration 027 did not land';
+  END IF;
+  IF to_regclass('public.student_progress') IS NULL THEN
+    RAISE EXCEPTION 'student_progress is missing — migration 028 did not land';
   END IF;
 END
 $check$;

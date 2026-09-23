@@ -6,6 +6,9 @@ import {
   lessonGatePassed,
   lessonPrereqsMet,
   nextLessonSlug,
+  resolvePointer,
+  advanceTarget,
+  courseComplete,
   MASTERED_GATE,
   PREREQ_GATE,
   type ProgressionLesson,
@@ -156,8 +159,9 @@ test("the walk never goes backwards", () => {
   assert.ok(to > from, `${next} must come after u1-3 in the catalogue`);
 });
 
-// The terminal state: null is what parks the pointer and renders "complete".
-// Wrapping to the start here would silently restart a finished course.
+// null is what PARKS the pointer. It is not, by itself, "complete" — see the
+// terminal-state tests below. Wrapping to the start here would silently
+// restart a finished course.
 test("the last lesson has no next", () => {
   assert.equal(nextLessonSlug(catalog, "u5-1", allAt(0.98), prereqs), null);
 });
@@ -174,16 +178,133 @@ test("the walk stays inside the catalogue it was given", () => {
   assert.equal(next, null);
 });
 
-/* ---------------------------------------------------------------- */
-/* The collapsed "just finished" row                                 */
-/* ---------------------------------------------------------------- */
-
 /** Same catalogue, with an explicit mastery score per lesson. */
 const scored = (scores: Record<string, number>): ProgressionLesson[] =>
   catalog.map((l) => ({
     ...l,
     los: l.los.map((lo) => ({ ...lo, mastery: scores[l.slug] ?? 0 })),
   }));
+
+/** The per-LO mastery map a scored catalogue implies (what the DB would hold). */
+const masteryOf = (cat: readonly ProgressionLesson[]) =>
+  new Map(cat.flatMap((l) => l.los.map((lo) => [lo.id, lo.mastery] as [string, number])));
+
+/* ---------------------------------------------------------------- */
+/* The pointer: where it is, and where an attempt moves it           */
+/* ---------------------------------------------------------------- */
+
+test("a student with no stored pointer is on the course's first lesson", () => {
+  assert.equal(resolvePointer(catalog, undefined), "u1-1");
+  assert.equal(resolvePointer(catalog, null), "u1-1");
+});
+
+test("a stored pointer that is still in the catalogue is kept", () => {
+  assert.equal(resolvePointer(catalog, "u1-3"), "u1-3");
+});
+
+test("an empty course has no pointer at all", () => {
+  assert.equal(resolvePointer([], "u1-1"), null);
+});
+
+// A content reload that renames or re-cuts a lesson leaves a stored slug the
+// catalogue no longer has. The page shows such a student the first lesson;
+// the advance must agree, or her attempts on the lesson she is SHOWN never
+// match the lesson the pointer is ON and she can never move again.
+test("a stale stored slug counts as the first lesson, and can advance again", () => {
+  assert.equal(resolvePointer(catalog, "u9-9"), "u1-1");
+  const cat = scored({ "u1-1": 0.98 });
+  assert.equal(
+    advanceTarget(cat, "u9-9", "u1-1", masteryOf(cat), prereqs),
+    "u1-2",
+    "mastering the lesson she is shown moves the stale pointer on"
+  );
+  assert.equal(
+    advanceTarget(cat, "u9-9", "u1-2", masteryOf(scored({ "u1-2": 0.98 })), prereqs),
+    null,
+    "a stale pointer is the FIRST lesson, not a wildcard for any lesson"
+  );
+});
+
+test("only an attempt on the lesson the pointer is on can move it", () => {
+  const cat = scored({ "u1-1": 0.98, "u1-2": 0.98 });
+  // Re-drilling a lesson behind the pointer, or answering ahead through the
+  // picker, must not skip her past lessons she has not done.
+  assert.equal(advanceTarget(cat, "u1-3", "u1-2", masteryOf(cat), prereqs), null);
+  assert.equal(advanceTarget(cat, "u1-1", "u1-2", masteryOf(cat), prereqs), null);
+});
+
+test("the pointer does not move until the current lesson passes the gate", () => {
+  const cat = scored({ "u1-1": MASTERED_GATE - 0.01 });
+  assert.equal(advanceTarget(cat, "u1-1", "u1-1", masteryOf(cat), prereqs), null);
+});
+
+test("passing the gate moves the pointer to the next ready lesson", () => {
+  const cat = scored({ "u1-1": 0.98 });
+  assert.equal(advanceTarget(cat, "u1-1", "u1-1", masteryOf(cat), prereqs), "u1-2");
+});
+
+/* ---------------------------------------------------------------- */
+/* The terminal state                                                */
+/* ---------------------------------------------------------------- */
+
+// THE P1 THIS FILE NOW GUARDS. u2-1 is mastered and the only lesson after it,
+// u5-1, waits on lo:u1-1-1, which is below PREREQ_GATE. Nothing later is
+// ready, so `nextLessonSlug` is null — and that null used to be read as "end
+// of course", which put "That's the whole course" on the card of a student
+// with a lesson still ahead of her.
+test("mid-course with nothing ready yet: the pointer parks and the course is NOT complete", () => {
+  const cat = scored({ "u2-1": 0.98, "u1-1": PREREQ_GATE - 0.1 });
+  const mastery = masteryOf(cat);
+  assert.equal(
+    nextLessonSlug(cat, "u2-1", mastery, prereqs),
+    null,
+    "fixture must be one where no later lesson is ready"
+  );
+  assert.equal(
+    advanceTarget(cat, "u2-1", "u2-1", mastery, prereqs),
+    null,
+    "the pointer stays on u2-1"
+  );
+  assert.equal(courseComplete(cat, "u2-1"), false);
+});
+
+// ADR-0020: the pointer parks on the last lesson and the card renders the
+// completed state there.
+test("the last lesson, with the whole course mastered, is complete", () => {
+  const cat = scored(Object.fromEntries(catalog.map((l) => [l.slug, 0.98])));
+  assert.equal(
+    advanceTarget(cat, "u5-1", "u5-1", masteryOf(cat), prereqs),
+    null,
+    "the pointer parks on the last lesson rather than wrapping"
+  );
+  assert.equal(courseComplete(cat, "u5-1"), true);
+});
+
+test("the last lesson is not complete until it passes the gate itself", () => {
+  const all = Object.fromEntries(catalog.map((l) => [l.slug, 0.98]));
+  const cat = scored({ ...all, "u5-1": MASTERED_GATE - 0.01 });
+  assert.equal(courseComplete(cat, "u5-1"), false);
+});
+
+// The stricter reading, on purpose: the banner tells her she has been through
+// every topic, so a pointer that reached the end by skipping an unready lesson
+// does not earn it.
+test("reaching the last lesson with an earlier lesson unmastered is not complete", () => {
+  const all = Object.fromEntries(catalog.map((l) => [l.slug, 0.98]));
+  const cat = scored({ ...all, "u1-3": 0.3 });
+  assert.equal(courseComplete(cat, "u5-1"), false);
+});
+
+test("a mastered course shows complete only on its last lesson", () => {
+  const cat = scored(Object.fromEntries(catalog.map((l) => [l.slug, 0.98])));
+  assert.equal(courseComplete(cat, "u2-1"), false);
+  assert.equal(courseComplete(cat, "nope-1"), false);
+  assert.equal(courseComplete([], "u5-1"), false);
+});
+
+/* ---------------------------------------------------------------- */
+/* The collapsed "just finished" row                                 */
+/* ---------------------------------------------------------------- */
 
 test("the finished lesson behind the pointer is the one shown", () => {
   const cat = scored({ "u1-1": 0.98 });

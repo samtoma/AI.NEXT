@@ -104,8 +104,8 @@ export default async function DefinitionsConsolePage() {
           <strong>The SC-005 funnel.</strong> The share of explanations that turn into a practice
           attempt is not shown, because{" "}
           <code className="font-mono text-[12px]">explanation_delivered</code> currently fires only
-          on refutations of a wrong answer rather than on the taught explanations that make up most
-          of what a student reads. The computable ratio is not a conversion rate and must not be
+          when a wrong answer is explained (a refutation, or the worked solution when none fits)
+          rather than on the taught explanations that make up most of what a student reads. The computable ratio is not a conversion rate and must not be
           drawn as one.
         </p>
         <p className="mt-3 max-w-[80ch] text-[13px] leading-relaxed text-ink-soft">

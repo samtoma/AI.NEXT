@@ -14,7 +14,7 @@ Every row carries `environment` (`baseline` | `mvp1`), stamped server-side from 
 | `unit_started` / `unit_completed` | B1 | `unit_id` |
 | `lesson_step_viewed` | B1 step advance | `step_id`, `unit_id` |
 | `question_asked` | B3 | `mode` (`conceptual`\|`assignment_like`), `guardrail_triggered` |
-| `explanation_delivered` | tutor serves a library entry | `lo_id`, `entry_type`, `misconception_id`, `reviewed` |
+| `explanation_delivered` | a wrong answer is explained: a library entry, or — when none fits — the question's worked solution (`entry_type = 'canonical_solution'`, `entry_id` null; added 2026-09-23) | `lo_id`, `entry_type`, `misconception_id`, `reviewed` |
 | `retrieval_attempt_started` / `retrieval_attempt_submitted` | practice attempt | `skill_id`, `correct`, `diagnosis_type` |
 | `upload_submitted` | B10 | `file_type`, `parse_status` |
 | `dashboard_viewed` | D1 | — |

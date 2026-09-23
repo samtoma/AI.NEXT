@@ -15,7 +15,7 @@ export async function submitAttempt(params: {
    *  a construction has no free-text equivalent. */
   predicate?: string;
   /** Socratic-probing prototype: set when this attempt is the same-tier
-   *  sibling confirming a pending LO (migration 011). */
+   *  sibling confirming a pending LO (migration 027). */
   retryOfAttemptId?: number;
 }): Promise<AttemptResult> {
   const res = await fetch("/api/attempts", {

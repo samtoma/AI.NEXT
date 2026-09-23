@@ -40,9 +40,14 @@
 --    student table in migration 017 carries (ADR-0012). The branch predates
 --    017 on `main`; without this the table would be the one student table a
 --    forgotten WHERE could read across children.
---  · Grants to the three roles: `ainext_app` SELECT/INSERT/UPDATE (the read,
---    the first advance, the later advances — never DELETE); `ainext_operator`
---    SELECT (Student 360 may show where a child is); `ainext_maint` ALL.
+--  · Grants: `ainext_app` SELECT/INSERT/UPDATE (the read, the first advance,
+--    the later advances — never DELETE); `ainext_maint` ALL; `ainext_operator`
+--    NOTHING. No console surface reads the pointer, and the console's
+--    cross-student reads are enumerated per surface (`lib/auth/authorize.ts`
+--    CROSS_STUDENT_READS, data-model §14): a grant with no surface behind it
+--    is a read of children's data nobody asked for. When Student 360 wants to
+--    show where a child is, that surface adds the grant, the policy and its
+--    registry entry together.
 --  · `environment`, NOT NULL, defaulting to 'mvp1' exactly as `mastery` does
 --    (migration 012): constitution XI, every student-scoped row says which
 --    build wrote it.
@@ -54,14 +59,33 @@
 --  · `student_id ... ON DELETE CASCADE`: a cursor means nothing without its
 --    student, and `scripts/red-team-isolation.sh` / the smoke scripts delete
 --    test students through `ainext_maint`.
---  · THE BACKFILL RUNS ONCE, and writes only what it knows. Migrations here
---    re-run on every deploy (there is no ledger); the branch's backfill would
---    have re-inserted a row for every student x every course on every deploy,
---    which contradicts its own rule that a read never creates progression
---    state. It now runs only while the table is empty, and inserts a row only
---    for a (student, course) where the student has already passed at least one
---    lesson — everybody else is on the first lesson by the app's own fallback,
---    with no row, as ADR-0020 intends.
+--  · NO BACKFILL (Samuel, 2026-09-23 — ADR-0020 amendment). The branch seeded
+--    a pointer for every existing student from their current mastery. Two
+--    things were wrong with that, and one of them was a latent outage:
+--      1. Migrations re-run on EVERY deploy (`deploy/apply-migrations.sh`, no
+--         ledger). The seed ran again on every deploy until the table held a
+--         row, and every row it wrote had to satisfy the `lesson_slug` CHECK
+--         — which it never checked. One unexpected LO id in any course would
+--         have failed the whole migration, which fails the deploy, and on the
+--         2026-09-23 box that is the site down.
+--      2. It did not implement the runtime rule. It jumped a student to the
+--         lesson after the FURTHEST passing one, skipping unmastered earlier
+--         lessons and ignoring prerequisites — a pointer the app itself could
+--         never have produced.
+--    Production holds only founder and test students, so every student starts
+--    on the course's first lesson — the app's own fallback for a student with
+--    no row — and advances by the runtime rule alone (lib/progression.ts).
+--    The branch's comment claimed the backfill could read every student's
+--    mastery because it "runs as the migration owner"; it could only because
+--    that owner, `ainext`, is a SUPERUSER — the table owner is still subject
+--    to FORCE ROW LEVEL SECURITY. Nothing here reads student data any more.
+--  · RE-RUN TAKES NO TABLE LOCK. Every deploy re-applies this file while the
+--    previous app is still serving. `ALTER TABLE ... ROW LEVEL SECURITY` and
+--    `CREATE`/`DROP POLICY` take ACCESS EXCLUSIVE even when they change
+--    nothing, so each is guarded by a catalogue check and runs only when the
+--    database actually differs. The GRANT/REVOKE and COMMENT statements take
+--    no lock that blocks a reader or a writer and stay unconditional, so a
+--    hand-edited privilege converges back on the next deploy.
 
 BEGIN;
 
@@ -75,114 +99,64 @@ CREATE TABLE IF NOT EXISTS student_progress (
 );
 
 COMMENT ON TABLE student_progress IS
-  'ADR-0020: the lesson each student is currently on, per course. Monotonic — advanced when every LO in the current lesson reaches 0.75, never walked back when mastery later drops. Student data: RLS forced (ADR-0012).';
+  'ADR-0020: the lesson each student is currently on, per course. Monotonic — advanced when every LO in the current lesson reaches 0.75, never walked back when mastery later drops. No row = the course''s first lesson. Student data: RLS forced (ADR-0012).';
 COMMENT ON COLUMN student_progress.lesson_slug IS
   'LO-id prefix ("u1-1", "geo1-2"), matching lib/lesson-slug.ts SLUG_RE. Not an FK: a lesson is a lexical group of learning objectives, not a row.';
 COMMENT ON COLUMN student_progress.course_id IS
   'Course node id. Deliberately not a foreign key (migrations 023/025): a scoped content reload replaces the course subtree.';
 
 -- --- grants ------------------------------------------------------------------
+-- The REVOKE also withdraws the operator SELECT an earlier draft of this file
+-- granted, from any database that ran it.
 REVOKE ALL ON student_progress FROM ainext_app, ainext_operator;
 GRANT SELECT, INSERT, UPDATE ON student_progress TO ainext_app;
-GRANT SELECT                 ON student_progress TO ainext_operator;
 GRANT ALL PRIVILEGES         ON student_progress TO ainext_maint;
 
--- --- row-level security (ADR-0012) -------------------------------------------
-ALTER TABLE student_progress ENABLE ROW LEVEL SECURITY;
-ALTER TABLE student_progress FORCE  ROW LEVEL SECURITY;
+-- --- row-level security (ADR-0012), guarded so a re-run locks nothing ---------
+DO $rls$
+DECLARE
+  -- The one policy this table carries. Compared, not assumed: a policy that
+  -- exists with a different predicate is replaced, so a hand edit converges.
+  want_qual text := '(student_id = (NULLIF(current_setting(''app.student_id''::text, true), ''''::text))::bigint)';
+  have_qual text;
+  have_check text;
+  have_roles name[];
+  have_cmd text;
+BEGIN
+  IF NOT (SELECT relrowsecurity FROM pg_class
+           WHERE oid = 'public.student_progress'::regclass) THEN
+    ALTER TABLE student_progress ENABLE ROW LEVEL SECURITY;
+  END IF;
+  IF NOT (SELECT relforcerowsecurity FROM pg_class
+           WHERE oid = 'public.student_progress'::regclass) THEN
+    ALTER TABLE student_progress FORCE ROW LEVEL SECURITY;
+  END IF;
 
-DROP POLICY IF EXISTS student_progress_app ON student_progress;
-CREATE POLICY student_progress_app ON student_progress FOR ALL TO ainext_app
-  USING      (student_id = nullif(current_setting('app.student_id', true), '')::bigint)
-  WITH CHECK (student_id = nullif(current_setting('app.student_id', true), '')::bigint);
+  SELECT qual, with_check, roles, cmd
+    INTO have_qual, have_check, have_roles, have_cmd
+    FROM pg_policies
+   WHERE schemaname = 'public' AND tablename = 'student_progress'
+     AND policyname = 'student_progress_app';
+  IF NOT FOUND
+     OR have_cmd IS DISTINCT FROM 'ALL'
+     OR have_roles IS DISTINCT FROM ARRAY['ainext_app']::name[]
+     OR have_qual IS DISTINCT FROM want_qual
+     OR have_check IS DISTINCT FROM want_qual THEN
+    DROP POLICY IF EXISTS student_progress_app ON student_progress;
+    CREATE POLICY student_progress_app ON student_progress FOR ALL TO ainext_app
+      USING      (student_id = nullif(current_setting('app.student_id', true), '')::bigint)
+      WITH CHECK (student_id = nullif(current_setting('app.student_id', true), '')::bigint);
+  END IF;
 
-DROP POLICY IF EXISTS student_progress_operator ON student_progress;
-CREATE POLICY student_progress_operator ON student_progress FOR SELECT TO ainext_operator
-  USING (true);
-
--- --- one-time backfill -------------------------------------------------------
--- Each existing student who has already passed a lesson starts on the lesson
--- AFTER the furthest catalogue lesson that passes the gate (capped at the
--- course's last), so a student who has been practising is not sent back to
--- lesson 1 on deploy. Runs as the migration owner (see apply-migrations.sh),
--- which is why it can read every student's mastery.
---
--- "Furthest" is catalogue order, reproduced exactly as lib/lesson.ts
--- MODULE_ORDER builds it: Term-1 algebra, then Term-2 algebra, then geometry,
--- and within a term by module order then LO order. lib/progression.ts owns the
--- ordering from here on; this block is a one-time snapshot of it.
-INSERT INTO student_progress (student_id, course_id, lesson_slug)
-WITH lesson_lo AS (
-  SELECT
-    regexp_replace(regexp_replace(lo.id, '^lo:', ''), '-[0-9]+$', '') AS slug,
-    c.id AS course_id,
-    lo.id AS lo_id,
-    CASE
-      WHEN m.id LIKE 'module:geo%' THEN 2
-      WHEN m.id LIKE 'module:t2-%' THEN 1
-      ELSE 0
-    END AS term_rank,
-    m.order_in_parent AS module_order,
-    lo.order_in_parent AS lo_order
-  FROM graph_nodes lo
-  LEFT JOIN graph_edges e
-    ON e.dst_id = lo.id AND e.edge_type = 'teaches' AND e.system_to IS NULL
-  LEFT JOIN graph_nodes m ON m.id = e.src_id AND m.kind = 'module'
-  LEFT JOIN graph_edges ec
-    ON ec.src_id = m.id AND ec.edge_type = 'part_of' AND ec.system_to IS NULL
-  LEFT JOIN graph_nodes c ON c.id = ec.dst_id AND c.kind = 'course'
-  WHERE lo.kind = 'learning_objective' AND c.id IS NOT NULL
-),
-lesson AS (
-  SELECT slug, course_id,
-         min(term_rank)    AS term_rank,
-         min(module_order) AS module_order,
-         min(lo_order)     AS lo_order
-  FROM lesson_lo
-  GROUP BY slug, course_id
-),
--- A lesson passes the gate only when EVERY one of its LOs is at >= 0.75.
--- An LO with no mastery row counts as 0 (never attempted).
-passed AS (
-  SELECT s.id AS student_id, ll.slug, ll.course_id
-  FROM students s
-  CROSS JOIN lesson_lo ll
-  LEFT JOIN mastery ms
-    ON ms.lo_id = ll.lo_id
-   AND ms.student_id = s.id
-   AND ms.system_to IS NULL
-  GROUP BY s.id, ll.slug, ll.course_id
-  HAVING bool_and(coalesce(ms.score, 0) >= 0.75)
-),
-ranked AS (
-  SELECT s.id AS student_id, l.course_id, l.slug,
-         row_number() OVER (
-           PARTITION BY s.id, l.course_id
-           ORDER BY l.term_rank, l.module_order NULLS LAST, l.lo_order, l.slug
-         ) AS seq
-  FROM students s CROSS JOIN lesson l
-),
-furthest AS (
-  SELECT r.student_id, r.course_id, max(r.seq) AS seq
-  FROM ranked r
-  JOIN passed p
-    ON p.slug = r.slug
-   AND p.course_id = r.course_id
-   AND p.student_id = r.student_id
-  GROUP BY r.student_id, r.course_id
-),
-bounds AS (
-  SELECT course_id, max(seq) AS max_seq FROM ranked GROUP BY course_id
-)
-SELECT r.student_id, r.course_id, r.slug
-FROM ranked r
-JOIN bounds b
-  ON b.course_id = r.course_id
-JOIN furthest f
-  ON f.student_id = r.student_id AND f.course_id = r.course_id
-WHERE r.seq = least(f.seq + 1, b.max_seq)
-  AND NOT EXISTS (SELECT 1 FROM student_progress)
-ON CONFLICT (student_id, course_id) DO NOTHING;
+  -- An earlier draft of this file gave the console a read-all policy. Gone
+  -- with its grant (see the header); removed only where it still exists.
+  IF EXISTS (SELECT 1 FROM pg_policies
+              WHERE schemaname = 'public' AND tablename = 'student_progress'
+                AND policyname = 'student_progress_operator') THEN
+    DROP POLICY student_progress_operator ON student_progress;
+  END IF;
+END
+$rls$;
 
 -- --- verify ------------------------------------------------------------------
 DO $verify$
@@ -191,6 +165,11 @@ BEGIN
             FROM pg_class WHERE oid = 'public.student_progress'::regclass) THEN
     RAISE EXCEPTION
       'student_progress needs ENABLE *and* FORCE row level security (ADR-0012)';
+  END IF;
+  IF (SELECT count(*) FROM pg_policies
+       WHERE schemaname = 'public' AND tablename = 'student_progress') <> 1 THEN
+    RAISE EXCEPTION
+      'student_progress must carry exactly one policy, student_progress_app';
   END IF;
   IF NOT has_table_privilege('ainext_app', 'student_progress', 'SELECT')
      OR NOT has_table_privilege('ainext_app', 'student_progress', 'INSERT')
@@ -202,12 +181,16 @@ BEGIN
   IF has_table_privilege('ainext_app', 'student_progress', 'DELETE') THEN
     RAISE EXCEPTION 'ainext_app can DELETE student_progress — the pointer is monotonic and no surface removes it';
   END IF;
-  IF has_table_privilege('ainext_operator', 'student_progress', 'INSERT')
+  IF has_table_privilege('ainext_operator', 'student_progress', 'SELECT')
+     OR has_table_privilege('ainext_operator', 'student_progress', 'INSERT')
      OR has_table_privilege('ainext_operator', 'student_progress', 'UPDATE')
      OR has_table_privilege('ainext_operator', 'student_progress', 'DELETE') THEN
-    RAISE EXCEPTION 'ainext_operator must only read student_progress';
+    RAISE EXCEPTION
+      'ainext_operator holds a privilege on student_progress. No console '
+      'surface reads it; a read belongs with the surface that needs it and '
+      'its entry in lib/auth/authorize.ts CROSS_STUDENT_READS';
   END IF;
-  RAISE NOTICE 'student_progress: ready — % row(s)', (SELECT count(*) FROM student_progress);
+  RAISE NOTICE 'student_progress: ready';
 END
 $verify$;
 
