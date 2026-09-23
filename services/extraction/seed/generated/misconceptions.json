@@ -789,17 +789,6 @@
       "aliases": []
     },
     {
-      "id": "mc:axis-points-counted",
-      "lo_id": "lo:u1-1-4",
-      "label": "Points on an axis counted inside a quadrant",
-      "description": "Counts a point with a zero coordinate as belonging to a quadrant; the axes belong to no quadrant.",
-      "signal": null,
-      "kind": "conceptual",
-      "refutation": [],
-      "maps": [],
-      "aliases": []
-    },
-    {
       "id": "mc:u1-1-4:axis-point-given-a-quadrant",
       "lo_id": "lo:u1-1-4",
       "label": "A point on an axis placed in a quadrant",
@@ -830,7 +819,9 @@
           "choice_text": "in the fourth quadrant"
         }
       ],
-      "aliases": []
+      "aliases": [
+        "mc:axis-points-counted"
+      ]
     },
     {
       "id": "mc:u1-1-4:quadrant-from-x-alone",
@@ -936,9 +927,26 @@
       "lo_id": "lo:u1-2-2",
       "label": "a divides b read as b divides a",
       "description": "Reverses the direction of the divisibility relation, which is not symmetric.",
-      "signal": null,
+      "signal": "The pairs given are the correct pairs with their order reversed.",
       "kind": "conceptual",
-      "refutation": [],
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the right numbers to pair. What needs checking is which one comes first."
+        },
+        {
+          "step": 2,
+          "text_md": "In $a\\,R\\,b$, the first element divides the second: $(2, 4)$ belongs to the relation because $2$ divides $4$."
+        },
+        {
+          "step": 3,
+          "text_md": "Turning a pair round changes what it says: $(4, 2)$ would claim that $4$ divides $2$, which is false. Divisibility works in one direction only."
+        },
+        {
+          "step": 4,
+          "text_md": "Read every pair left to right as \"first divides second\", and keep only the pairs where that is true."
+        }
+      ],
       "maps": [],
       "aliases": []
     },
@@ -2828,6 +2836,64 @@
         }
       ],
       "maps": [],
+      "aliases": []
+    },
+    {
+      "id": "mc:t2u1-2-1:no-meeting-read-as-every-x",
+      "lo_id": "lo:t2u1-2-1",
+      "label": "No meeting point read as \"every x is a solution\"",
+      "description": "When the curve does not meet the x-axis, concludes that every real number solves the equation, instead of none.",
+      "signal": "The solution set given is $\\mathbb{R}$ although the curve does not meet the $x$-axis.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "A root is a value of $x$ that makes $f(x) = 0$. On the graph it is a point where the curve sits exactly on the $x$-axis."
+        },
+        {
+          "step": 2,
+          "text_md": "If the curve never meets the $x$-axis, no such point exists: no value of $x$ makes $f(x) = 0$."
+        },
+        {
+          "step": 3,
+          "text_md": "So the solution set is empty, $\\varnothing$. $\\mathbb{R}$ would mean that every $x$ works, which is the opposite."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:t2u1-2-1:g002",
+          "choice_text": "$\\mathbb{R}$"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:t2u1-2-1:roots-read-from-coefficients",
+      "lo_id": "lo:t2u1-2-1",
+      "label": "Roots read off the numbers in the equation",
+      "description": "Takes numbers written in the equation (its coefficients) as its roots, instead of reading where the curve meets the x-axis.",
+      "signal": "The solution set is made of numbers taken from the equation itself.",
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "The numbers written in the equation, its coefficients, describe the curve. They are not its roots."
+        },
+        {
+          "step": 2,
+          "text_md": "A root is an $x$ that makes $f(x) = 0$: on the graph, the $x$-coordinate of a point where the curve meets the $x$-axis. Substituting a candidate tells you at once whether it is one."
+        },
+        {
+          "step": 3,
+          "text_md": "Read the roots from the meeting points: two, one, or none. When the curve does not meet the axis, the solution set is $\\varnothing$."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:t2u1-2-1:g002",
+          "choice_text": "$\\{1,\\ 5\\}$"
+        }
+      ],
       "aliases": []
     }
   ]

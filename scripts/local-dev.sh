@@ -220,14 +220,13 @@ PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions q set status='live', r
 # Order matters: the catalogue first, or every distractor that names a real
 # entry is reported as unknown (the loader refuses rather than guess).
 GEN_DSN="host=$HOST port=$PORT dbname=$DB user=$USER"
-MC_COUNT=$($PSQL -d $DB -tAc "select count(*) from misconceptions" 2>/dev/null || echo 0)
-if [ "$MC_COUNT" -ge 90 ]; then
-  ok "$MC_COUNT misconceptions already loaded"
-else
-  ( cd "$ROOT/services/extraction" \
-    && AINEXT_ENVIRONMENT=mvp1 $PYRUN load_misconceptions.py seed/generated/misconceptions.json --dsn "$GEN_DSN" ) \
-    || die "misconception load failed"
-fi
+# The catalogue is synced on EVERY run, as the deploy does: the loader is
+# idempotent, and a fix to the catalogue (an explanation written, a duplicate
+# folded in through `aliases`) should reach every laptop, not only fresh ones.
+( cd "$ROOT/services/extraction" \
+  && AINEXT_ENVIRONMENT=mvp1 $PYRUN load_misconceptions.py seed/generated/misconceptions.json --dsn "$GEN_DSN" ) \
+  || die "misconception load failed"
+ok "$($PSQL -d $DB -tAc "select count(*) from misconceptions") misconceptions in the catalogue"
 
 GEN_COUNT=$($PSQL -d $DB -tAc "select count(*) from questions where source='variant'" 2>/dev/null || echo 0)
 if [ "$GEN_COUNT" -ge 590 ]; then

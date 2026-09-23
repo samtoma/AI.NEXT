@@ -552,6 +552,27 @@ jobs:
              group by 1, 2 order by 1, 2"
           echo "misconceptions: $(Q 'select count(*) from misconceptions')"
 
+      # EVERY deploy, unlike the two one-time steps above: the misconception
+      # catalogue in the repo is the source of truth, and a fix to it (an
+      # explanation written, a duplicate folded in through `aliases`, a
+      # distractor re-pointed through `maps`) must reach the site without a
+      # manual refresh. The loader is idempotent: it upserts entries and their
+      # explanations (never touching the reviewed flag), and it only ever edits
+      # the misconception tag on answer choices. It changes no question's
+      # status and deletes nothing but an alias the catalogue names.
+      - name: Misconception catalogue (every deploy — idempotent)
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR/deploy"
+          C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
+          $C --profile tools run --rm -e AINEXT_ENVIRONMENT=mvp1 --entrypoint python loader \
+            load_misconceptions.py seed/generated/misconceptions.json
+          $C exec -T db psql -U ainext -d ainext_mvp1 -tAc "
+            select 'misconceptions: ' || count(*) || ', without an explanation: ' ||
+                   count(*) filter (where not exists (
+                     select 1 from explanation_library e where e.misconception_id = m.id))
+              from misconceptions m"
+
       - name: Trim dangling images (untagged rebuild leftovers only — talent-safe)
         if: always()
         run: |

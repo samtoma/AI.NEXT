@@ -28,6 +28,12 @@ requirement names it.
   gate stays held.
 
 ### Fixed
+- **Every maths misconception now has an explanation, and one question's wrong answers point
+  at the right mistakes.** An empty duplicate ("points on an axis counted inside a quadrant") is
+  folded into the full entry, and "a divides b read as b divides a" gets its explanation. The
+  graphical-solution question `q:t2u1-2-1:g002` tagged two wrong answers with a mistake from the
+  next lesson; they now name two new mistakes of their own lesson. The catalogue is re-synced on
+  every deploy, so fixes like this reach the site without a manual refresh.
 - **The console's Content page says which subject it is counting.** Its "From the book" figure
   added all three books together without saying so (914 = 421 maths + 483 Social Studies + 10
   Arabic), and the questions held at review appeared nowhere. It now has a subject switcher, a
