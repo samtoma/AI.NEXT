@@ -21,6 +21,8 @@ import localFont from "next/font/local";
    a browser receives changes: same family names, same weight ranges, same
    per-subset unicode-ranges, same ten preloaded files, same `display: swap`.
    Re-vendoring is now a deliberate act with a diff, which is the point.
+   (The preload set has since shrunk on purpose — the three Ledger latin cuts
+   are no longer preloaded; see the note above Fraunces.)
 
    Rules for anyone editing this file:
      · woff2 only, and variable files stay variable. Substituting a static cut
@@ -78,6 +80,21 @@ import localFont from "next/font/local";
    `subsets: ["latin"]` already shipped. That option only ever decided which
    cuts were *preloaded*, never which were self-hosted. */
 
+/* ================= the Ledger faces: Fraunces and the Splines ==============
+   NOT PRELOADED since 2026-09-23 (review F29,
+   docs/reviews/2026-09-23-play-master-ui-review.md). With Master hidden
+   (`MASTER_VARIANT_ENABLED` in lib/design-variant.ts) every page on `main`
+   renders Play, whose stacks name Baloo, Cairo and IBM Plex Mono — so these
+   three latin cuts were ~3 preload requests per page for faces no Play page
+   paints. They stay DECLARED: the `:root` stacks in globals.css still name
+   them for the attribute-less Ledger identity (the frozen baseline, and a
+   checkout with AINEXT_ENVIRONMENT unset), and a page that does use them
+   fetches them on first use through the normal @font-face path. Preload was
+   only ever a head-start, never whether the face exists.
+
+   When Master returns with its own published type (Baloo headings, Cairo
+   body — no Fraunces), revisit this list rather than flipping these back. */
+
 /* ============================ Fraunces — display ===========================
    Variable 100–900 carrying the opsz, SOFT and WONK axes, which is what
    `axes: ["opsz", "SOFT", "WONK"]` requested; every optical size and every
@@ -113,7 +130,7 @@ export const frauncesLatin = localFont({
   weight: "100 900",
   style: "normal",
   display: "swap",
-  preload: true,
+  preload: false, // Ledger face — not preloaded while Master is hidden (review F29)
   adjustFontFallback: false,
   declarations: [
     { prop: "font-family", value: "'Fraunces'" },
@@ -140,7 +157,7 @@ export const splineSansLatin = localFont({
   weight: "300 700",
   style: "normal",
   display: "swap",
-  preload: true,
+  preload: false, // Ledger face — not preloaded while Master is hidden (review F29)
   adjustFontFallback: false,
   declarations: [
     { prop: "font-family", value: "'Spline Sans'" },
@@ -167,7 +184,7 @@ export const splineSansMonoLatin = localFont({
   weight: "300 700",
   style: "normal",
   display: "swap",
-  preload: true,
+  preload: false, // Ledger face — not preloaded while Master is hidden (review F29)
   adjustFontFallback: false,
   declarations: [
     { prop: "font-family", value: "'Spline Sans Mono'" },

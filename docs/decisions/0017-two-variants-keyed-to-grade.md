@@ -1,6 +1,7 @@
 # ADR-0017 — Two design-system variants, selected at runtime and keyed to grade
 
 **Status**: Accepted — Samuel, 2026-09-20, on finalising the design-system governance
+**Amended**: 2026-09-23 — Master hidden; Play for every student and operator until Master's published tokens are implemented ([Amendment](#amendment--samuel-2026-09-23-master-hidden-play-everywhere))
 **Amends**: [ADR-0011](./0011-noor-play-design-system.md) — the "Master is replaced, not retained" decision
 **Affects**: constitution Principle XII (v3.1.1) · `FR-1001` and the new `FR-1011` in `specs/001-student-mvp1-delta/spec.md` · `app/src/app/globals.css` (`[data-ds]`) · `docs/design/noor/README.md` · `docs/design/handoffs/noor-play/`
 
@@ -134,3 +135,73 @@ boundary. A measured cost: if maintaining two skins starts delaying teaching wor
 the honest answer is to drop one, not to let one decay. And the arrival of
 non-Egyptian grade structures, which would break the Preparatory/Secondary
 partition and force a different key entirely.
+
+## Amendment — Samuel, 2026-09-23: Master hidden, Play everywhere
+
+**Status of this ADR: Accepted, with its Master half suspended.** The grade rule,
+the override and every pinned parameter above stand and stay implemented. What is
+suspended is *reaching* Master.
+
+### What happened
+
+A UI review on 2026-09-23
+([`docs/reviews/2026-09-23-play-master-ui-review.md`](../reviews/2026-09-23-play-master-ui-review.md))
+found that `[data-ds="master"]` does not render Master. This ADR's Context called
+the two published themes "`play` and `ledger`" and treated Master as the Ledger
+palette; the implementation (`FR-1011`, `85fe3b8`) followed that wording, so the
+Master selector restates no tokens and inherits the `:root` **Ledger** set — the
+frozen family-tutor identity: ruled paper, grain, Fraunces, viridian, rust red.
+Components meanwhile carry Play's shapes as fixed values. Every Master screen, and
+the whole console (operators defaulted to Master), therefore mixed three
+identities.
+
+Two statements above are also wrong and are corrected here rather than edited in
+place: **Master's anatomy is published.** The design system's `tokens.json`
+carries a `master` theme (synced 2026-09-20), its screens are drawn in
+`docs/design/noor/{Welcome,Main,Progress}.dc.html`, and it was implemented once,
+verbatim, in `df1bf29` on 2026-09-10 before ADR-0011 replaced it. "Master's
+anatomy is not published yet" (Consequences) and the Context's "`play` and
+`ledger`" should be read in that light.
+
+### Decision
+
+Samuel: **hide Master now, fix the Play findings, keep the Master work as a
+backlog.**
+
+- **One switch**: `MASTER_VARIANT_ENABLED = false` in `app/src/lib/design-variant.ts`.
+  While it is off, every resolver answers **Play** — every student whatever her
+  grade or stored override, and every operator; the console default is Play.
+- **Nothing is migrated.** Stored `master` overrides stay in `students` and
+  `operators` untouched; turning the switch back on restores every choice as it
+  was.
+- **Master cannot be chosen.** The student `/settings` and console `/profile`
+  pickers collapse to one read-only line naming the look in force; both
+  appearance endpoints refuse `"master"` with the same `400 invalid_variant`
+  they give any unknown value.
+- **The rule stays proved.** `design-variant.test.mts` runs the grade rule and
+  the override with the switch ON, and separately proves that everything is Play
+  with it OFF.
+
+### What turns it back on
+
+Master's published tokens implemented under `[data-ds="master"]` in
+`app/src/app/globals.css` (the review's option A: restore the published values,
+give the ~15 tokens the code uses and the theme leaves undefined their Master
+values, give every Play-only token and state a Master version, and take the
+Ledger identity off `main`) — tracked in GitHub issues #46, #47, #48 and #50 under
+tracking issue #51. Flipping the switch is a decision recorded here, not a
+refactor; the suite's tripwire (`MASTER_VARIANT_ENABLED` asserted `false`)
+changes in the same commit.
+
+### Consequences
+
+- The console is Play. Its own Play defects (review F9–F11, F22, and a stacking
+  guard for F25) were addressed the same day, largely through semantic classes (`ds-tag`, `ds-control`,
+  `ds-field`, `ds-empty`, `ds-dense`) that Play styles in `globals.css` and that
+  stay inert in any other variant, so no console component learns which variant
+  it is in.
+- `FR-1011` stays **PARTIAL**: the mechanism is intact and proved, but
+  "Secondary → Master" currently resolves to Play by this decision.
+- Until the switch is back on, this ADR's grade key has no visible effect; no
+  Secondary cohort should be onboarded expecting Master, which was already the
+  rule above.

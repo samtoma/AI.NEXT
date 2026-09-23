@@ -103,6 +103,13 @@
   --color-arabic: var(--subject-arabic);
   --color-arabic-wash: var(--subject-arabic-wash);
   --color-arabic-line: var(--subject-arabic-line);
+  /* The progress (mastery teal) pair as utilities — `bg-progress`,
+     `text-on-progress`, `bg-progress/15`, `border-progress` — so a component
+     can reach the handoff's paired colours without an inline style or a
+     literal fallback hex (review 2026-09-23, F9). A variant with no progress
+     colour of its own gets the accent pair instead, never a missing colour. */
+  --color-progress: var(--noor-progress, var(--accent));
+  --color-on-progress: var(--noor-on-progress, var(--paper));
   --font-display: var(--stack-display);
   --font-sans: var(--stack-sans);
   --font-mono: var(--stack-mono);
@@ -490,6 +497,9 @@ body[data-focus="lesson"] > footer {
    document, so a surface never renders in one skin and re-renders in the
    other — a visible skin flip is a defect, not a loading state.
 
+   **Since 2026-09-23 Master is hidden** and every page on `main` is Play —
+   see the Master block below and ADR-0017's Amendment of that date.
+
    THREE SELECTOR STATES, AND THEY ARE NOT THE SAME THING:
 
      [data-ds="play"]     the Play variant, named.
@@ -525,40 +535,42 @@ body[data-focus="lesson"] > footer {
    ======================================================================== */
 
 /* ===========================================================================
-   MASTER — the named sibling (ages 15–18), ADR-0017
+   MASTER — the named sibling (ages 15–18), ADR-0017 — HIDDEN since 2026-09-23
    ---------------------------------------------------------------------------
-   Master's token VALUES are the `:root` set at the top of this file, and this
-   block deliberately RESTATES NONE OF THEM.
+   **Nothing on `main` writes this selector today.** Samuel hid Master on
+   2026-09-23 (ADR-0017, Amendment 2026-09-23; review record
+   docs/reviews/2026-09-23-play-master-ui-review.md): `MASTER_VARIANT_ENABLED`
+   in lib/design-variant.ts is `false`, so every student and every operator
+   resolves to Play, and a stored `master` preference waits in the database
+   until the switch is turned back on.
 
-   WHY INHERITANCE RATHER THAN A COPY. Master and the frozen baseline's Ledger
-   identity are the same palette — ADR-0017 says so in as many words: "`play`
-   and `ledger`, the latter being the restrained identity every surface still
-   renders when the `[data-ds]` attribute is absent". Writing those thirty-odd
-   values out a second time under this selector would create two spellings of
-   one palette that must never disagree, and they would disagree — the first
-   time somebody fixed a contrast pairing in one place. So Master is reached
-   by matching NO Play rule and inheriting `:root`, which is not a trick: it
-   is what "one semantic token set, two skins" means when one of the skins is
-   the set's own default rendering.
+   WHY IT IS HIDDEN. This block restates none of Master's token values, so a
+   document carrying `[data-ds="master"]` matches no Play rule and inherits
+   the `:root` set at the top of this file — which is the frozen baseline's
+   **Ledger** palette (paper grid, grain, Fraunces, viridian, rust red), NOT
+   the published Master design. It was written on ADR-0017's original premise
+   that Master and Ledger were the same palette. They are not, and the result
+   was a hybrid of three identities on every Master screen and the whole
+   console.
 
-   WHAT THIS BLOCK IS FOR, THEN. ADR-0017 asks for Master to be "a named
+   MASTER'S ANATOMY IS PUBLISHED. An earlier version of this comment said it
+   was not; that was wrong. The published design system's `tokens.json`
+   (the artifact CLAUDE.md names, synced 2026-09-20 — not the Play-only copy
+   under docs/design/handoffs/noor-play/) carries a `master` theme (paper `#f7f6fb`, ink `#2b2a38`, accent `#1e2450`, 1px
+   stroke, radii 8/12/16, soft shadows, 44px targets, Baloo for headings and
+   Cairo for everything else), its screens are drawn in
+   docs/design/noor/{Welcome,Main,Progress}.dc.html, and it was implemented
+   here once, verbatim, in commit df1bf29 on 2026-09-10 before Play replaced
+   that block. What remains is to give the ~fifteen tokens the code uses and
+   the published theme leaves undefined their Master values, and to implement
+   it under this selector — the review's option A, GitHub issues #46/#47.
+
+   WHAT THIS BLOCK IS FOR, UNTIL THEN. ADR-0017 asks for Master to be "a named
    sibling rather than the unnamed default, so the selector set is explicit".
-   `[data-ds="master"]` is that name. It is what `layout.tsx` writes, what a
-   student's override stores, and what an operator's console preference means.
-   The absent attribute stays what it always was — the frozen baseline — and
-   is NOT how Master is reached, so the two cases can be told apart in a
-   screenshot, in devtools and in a curl of the served HTML.
-
-   ⚠ WHAT IS NOT HERE, AND MUST NOT BE ASSUMED. **Master's anatomy is not
-   published.** The component guidelines, the type scale and the motion spec
-   on the design artifact are written for Play; what exists for Master today
-   is a colour theme and nothing else. ADR-0017's Consequences are explicit
-   about the obligation that follows: both variants owe the same accessibility
-   pairings, the contrast table in `docs/design/handoffs/noor-play/README.md`
-   needs its Master counterpart, and **until that anatomy is published no
-   Secondary cohort should be onboarded** — the grade rule would route them to
-   a variant that is half specified. Do not read this block as Master being
-   finished. It is the mechanism, ready for the anatomy to land on top of it.
+   `[data-ds="master"]` is that name, and the absent attribute stays what it
+   always was — the frozen baseline — so the two can be told apart in a
+   screenshot, in devtools and in a curl of the served HTML. Master's
+   published tokens land HERE; only then may the switch be turned back on.
    ======================================================================== */
 
 [data-ds="master"] {
@@ -842,6 +854,121 @@ body[data-focus="lesson"] > footer {
   border-width: var(--play-stroke);
 }
 
+/* ===========================================================================
+   WHAT AN ELEMENT IS — semantic classes the blanket pass cannot infer
+   (review 2026-09-23, F10/F11/F22; docs/reviews/2026-09-23-play-master-ui-review.md)
+   ---------------------------------------------------------------------------
+   The pass above gives every `.border` the 3px ink sticker edge. That is right
+   for a card or a panel and wrong for four things the console is full of — a
+   10px state label, a 20px micro-button, an empty heatmap cell, a dense table
+   — because CSS cannot see an element's height or its job. So the element says
+   which thing it is, and Play styles each one WITHIN its own spec:
+
+     .ds-tag            a pure LABEL (a state word, provenance, a model name).
+                        Not a control, so not a sticker: its fill and paired
+                        foreground carry it, with no outline, on a pill radius.
+     .ds-small          a small outlined MARK that is neither (a step-number
+                        disc): the handoff's own rule, 2.5px under 40px tall.
+     .ds-control        a real CONTROL (a button, a link styled as one). The
+                        52px target (`--noor-touch-min` — it "holds on desktop
+                        with a mouse too"), the answer-option anatomy (2.5px
+                        ink, 3px hard shadow, 20px radius), Baloo 700 at the
+                        Label step. Pair it with `.play-pressable` for the press.
+     .ds-control-quiet  a control with no edge — a nav link, a filter, a
+                        Cancel: the tertiary-button anatomy, 52px and no
+                        border, no shadow. (A dashed edge would read as
+                        DISABLED under Play, so a quiet control loses its edge.)
+     .ds-field          an input or a select: the 52px target. The pass above
+                        already gives it the 3px edge and the 14px radius.
+     .ds-empty          an EMPTY region or data mark — a heatmap cell nobody
+                        has reached, a placeholder for something that could not
+                        be rebuilt. The inactive fill and a dashed inactive
+                        hairline, so "nothing here" always reads lighter than
+                        any real value (F11: 3px dashed ink read darker).
+     .ds-dense          a dense DATA region (the console shell). Its tables set
+                        in Cairo, the reading face, at 1.45 — Baloo at the UI's
+                        1.75 leading is the handoff's face for six words, not
+                        for a ninety-row table.
+
+   No component learns which variant it is in. Under a variant without these
+   rules the classes match nothing and the utilities beside them render
+   exactly as written — which is why each call site keeps its own `border`,
+   `rounded`, padding and colour classes.
+   ======================================================================== */
+
+:is([data-ds="play"], [data-ds="noor"]) .ds-tag {
+  border-width: 0;
+  border-radius: var(--play-radius-pill);
+}
+
+:is([data-ds="play"], [data-ds="noor"]) .ds-small {
+  border-width: var(--play-stroke-sm);
+}
+
+:is([data-ds="play"], [data-ds="noor"]) .ds-control,
+:is([data-ds="play"], [data-ds="noor"]) .ds-control-quiet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--noor-touch-min);
+  padding-inline: 1rem;
+  font-family: var(--stack-sans);
+  font-size: 0.85rem; /* the handoff's Label step */
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: 1.2;
+}
+:is([data-ds="play"], [data-ds="noor"]) .ds-control {
+  border-width: var(--play-stroke-sm);
+  border-radius: var(--play-radius);
+  box-shadow: var(--play-shadow-sm);
+}
+:is([data-ds="play"], [data-ds="noor"]) .ds-control-quiet {
+  border-width: 0;
+  border-radius: var(--play-radius);
+  box-shadow: none;
+}
+/* Play's disabled anatomy (dashed edge, `--play-disabled-text`, no shadow —
+   the rule above) IS the signal. A `disabled:opacity-*` utility kept for the
+   other variants would dim it again, to 1.76:1 on the picker's Save (F22). */
+:is([data-ds="play"], [data-ds="noor"]) .ds-control:disabled,
+:is([data-ds="play"], [data-ds="noor"]) .ds-control-quiet:disabled,
+:is([data-ds="play"], [data-ds="noor"]) .ds-field:disabled {
+  opacity: 1;
+}
+
+:is([data-ds="play"], [data-ds="noor"]) .ds-field {
+  min-height: var(--noor-touch-min);
+  padding-inline: 0.75rem;
+}
+
+/* 1px, deliberately, and the only sub-sticker edge in this block: this is a
+   data mark, not a control or a card, and its whole job is to read as absent.
+   The colours are the handoff's inactive pair (wrong answer / inactive nav). */
+:is([data-ds="play"], [data-ds="noor"]) .ds-empty {
+  border-width: 1px;
+  border-style: dashed;
+  border-color: var(--play-inactive-border);
+  background-color: var(--play-inactive-fill);
+}
+
+:is([data-ds="play"], [data-ds="noor"]) .ds-dense table {
+  font-family: var(--stack-read);
+  line-height: 1.45;
+}
+
+/* The Ledger's gold "passport" (the gallery's empty state) is written with
+   literal Ledger golds above. Under Play it is a Honey sticker card. */
+:is([data-ds="play"], [data-ds="noor"]) .passport {
+  background: var(--card-warm);
+  border: var(--play-stroke) solid var(--ink);
+  border-radius: var(--play-radius-lg);
+  box-shadow: var(--play-shadow);
+}
+:is([data-ds="play"], [data-ds="noor"]) .passport::before {
+  content: none;
+}
+
 /* The press: the highest-value interaction in the kit. Wire this class onto
    any control that carries a resting shadow (`.chip`, `.ledger-card`, or a
    sticker button) — "if it doesn't move, it isn't a control." */
@@ -1017,4 +1144,101 @@ body[data-focus="lesson"] > footer {
     animation: none;
     transition: none;
   }
+}
+
+/* ===========================================================================
+   PLAY FIXES — student surfaces (review 2026-09-23)
+   ---------------------------------------------------------------------------
+   docs/reviews/2026-09-23-play-master-ui-review.md, F13–F28. Append-only:
+   nothing above this line is edited by this pass. Every rule carries both
+   spellings of the Play selector, like the block above.
+   ======================================================================== */
+
+/* Two handoff values the Play block does not carry yet. */
+:is([data-ds="play"], [data-ds="noor"]) {
+  /* tokens.css --play-text-muted, 6.9:1 on white: labels, option letters,
+     and the text of a wrong answer, which is still a live control */
+  --play-text-muted: #5a5570;
+  /* the chat bubble's tail corner — `18px 6px 18px 18px` in the handoff's
+     Chat bubbles spec, the notch toward the speaker */
+  --play-radius-notch: 6px;
+}
+
+/* A sticker keeps its shadow AND shows the amber focus ring. The focus rule in
+   the block above sets `box-shadow` at the same weight as `.sticker-shadow*`
+   and loses to them on source order, so every keyboard-focused sticker control
+   showed no focus indicator at all (`outline` is off under Play). */
+:is([data-ds="play"], [data-ds="noor"]) .sticker-shadow-sm:focus-visible {
+  box-shadow: var(--play-shadow-sm), var(--noor-focus-ring);
+}
+:is([data-ds="play"], [data-ds="noor"]) .sticker-shadow:focus-visible {
+  box-shadow: var(--play-shadow), var(--noor-focus-ring);
+}
+:is([data-ds="play"], [data-ds="noor"]) .sticker-shadow-lg:focus-visible {
+  box-shadow: var(--play-shadow-lg), var(--noor-focus-ring);
+}
+
+/* The listening mic pulsed in the Ledger's rust red (`mic-pulse` above). Under
+   Play it pulses amber: there is no red in this palette, and a live mic is the
+   one control the student is waiting on. */
+@keyframes play-mic-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--noor-action) 45%, transparent);
+  }
+  55% {
+    box-shadow: 0 0 0 9px color-mix(in srgb, var(--noor-action) 0%, transparent);
+  }
+}
+:is([data-ds="play"], [data-ds="noor"]) .anim-mic {
+  animation: play-mic-pulse 1.4s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is([data-ds="play"], [data-ds="noor"]) .anim-mic {
+    animation: none;
+  }
+}
+
+/* Ask-the-Spine citation ring (GraphCanvas): the Ledger's viridian pulse
+   becomes an amber one on the sticker's radius. It is reactive — it fires
+   when the tutor cites a node — so it keeps its two pulses. */
+@keyframes play-cite-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--noor-action) 55%, transparent);
+    opacity: 1;
+  }
+  75% {
+    box-shadow: 0 0 0 15px color-mix(in srgb, var(--noor-action) 0%, transparent);
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 0 15px color-mix(in srgb, var(--noor-action) 0%, transparent);
+    opacity: 0;
+  }
+}
+:is([data-ds="play"], [data-ds="noor"]) .anim-cite-ring {
+  inset: calc(-1 * var(--play-stroke));
+  border-radius: var(--play-radius);
+  border: var(--play-stroke-sm) solid var(--noor-action);
+  animation: play-cite-ring 1.3s cubic-bezier(0.22, 1, 0.36, 1) 2 both;
+}
+
+/* The cross-subject bridge's travelling dash is an infinite ambient loop on a
+   study screen, which Play forbids outright (only the companion's `bob` may
+   loop). The arc stays dashed; it just stops crawling. */
+:is([data-ds="play"], [data-ds="noor"]) .anim-bridge {
+  animation: none;
+}
+
+/* A graded answer option is usually `disabled` (the item has closed) AND
+   carries a verdict ink — leaf for right, the inactive grey for wrong. The
+   generic disabled rule above repainted it in the disabled grey, which put
+   `--play-disabled-text` on leaf at ~2.5:1 and hid the verdict. An element
+   that says which verdict it is (`data-verdict`, set by the widgets) keeps
+   the border and text its utilities give it. `revert-layer` in an unlayered
+   rule rolls back to the layered (Tailwind utility) value. */
+:is([data-ds="play"], [data-ds="noor"]) [disabled][data-verdict] {
+  border-style: revert-layer;
+  border-color: revert-layer;
+  color: revert-layer;
 }

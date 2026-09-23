@@ -307,7 +307,7 @@ function BulkButtons({
 }) {
   const disabled = bulk.running || bulk.ask !== null;
   return (
-    <span className="mt-1.5 flex gap-1">
+    <span className="mt-1.5 flex flex-wrap gap-1.5">
       {(["live", "hidden"] as const).map((state) => (
         <button
           key={state}
@@ -319,7 +319,7 @@ function BulkButtons({
           // two controls do very different amounts.
           aria-label={`Set ${what} ${state}`}
           title={`Set ${what} ${state}`}
-          className="rounded border border-dashed border-line px-1.5 py-0.5 font-mono text-[9.5px] font-medium uppercase tracking-[0.06em] text-ink-soft hover:bg-line-soft disabled:opacity-40"
+          className="ds-control play-pressable rounded border border-line bg-card px-1.5 py-0.5 font-mono text-[9.5px] font-medium uppercase tracking-[0.06em] text-ink-soft hover:bg-line-soft disabled:opacity-40"
         >
           all {state}
         </button>
@@ -354,18 +354,18 @@ function BulkBanner({ bulk }: { bulk: Bulk }) {
               </li>
             ))}
           </ul>
-          <div className="mt-2.5 flex gap-1.5">
+          <div className="mt-2.5 flex flex-wrap gap-1.5">
             <button
               type="button"
               onClick={() => bulk.confirm(ask)}
-              className="rounded border border-line bg-card px-2 py-1 text-[12px] font-semibold text-ink hover:bg-line-soft"
+              className="ds-control play-pressable rounded border border-line bg-card px-2 py-1 text-[12px] font-semibold text-ink hover:bg-line-soft"
             >
               Publish all {ask.todo.length}, empty ones included
             </button>
             <button
               type="button"
               onClick={bulk.cancel}
-              className="rounded border border-dashed border-line-soft px-2 py-1 text-[12px] font-semibold text-ink-soft hover:bg-line-soft"
+              className="ds-control-quiet rounded border border-dashed border-line-soft px-2 py-1 text-[12px] font-semibold text-ink-soft hover:bg-line-soft"
             >
               Cancel
             </button>
@@ -387,7 +387,7 @@ function BulkBanner({ bulk }: { bulk: Bulk }) {
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="mt-2 rounded border border-line bg-card px-2 py-1 text-[12px] font-semibold text-ink hover:bg-line-soft"
+            className="ds-control play-pressable mt-2 rounded border border-line bg-card px-2 py-1 text-[12px] font-semibold text-ink hover:bg-line-soft"
           >
             Reload
           </button>
@@ -494,7 +494,7 @@ function GridCell({ row }: { row: CourseCatalogRow }) {
     <td className="px-2 py-3">
       <div
         className={`flex flex-col items-start gap-1.5 rounded-md border px-2 py-2 ${
-          row.explicit ? "border-line bg-card" : "border-dashed border-line-soft"
+          row.explicit ? "border-line bg-card" : "ds-empty border-dashed border-line-soft"
         }`}
       >
         <Chip tone={chipTone}>{chipLabel}</Chip>
@@ -513,12 +513,12 @@ function GridCell({ row }: { row: CourseCatalogRow }) {
               {row.questionsLoaded === 1 ? "" : "s"} for {row.gradeLabel}. Students would
               see an empty course.
             </p>
-            <div className="flex gap-1">
+            <div className="flex flex-wrap gap-1.5">
               <button
                 type="button"
                 onClick={() => void setTo("live")}
                 disabled={busy !== null}
-                className="rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
+                className="ds-control play-pressable rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
               >
                 {busy === "live" ? "…" : "Publish it empty"}
               </button>
@@ -526,19 +526,19 @@ function GridCell({ row }: { row: CourseCatalogRow }) {
                 type="button"
                 onClick={() => setAsking(false)}
                 disabled={busy !== null}
-                className="rounded border border-dashed border-line-soft px-1.5 py-0.5 text-[10.5px] font-semibold text-ink-soft hover:bg-line-soft disabled:opacity-40"
+                className="ds-control-quiet rounded border border-dashed border-line-soft px-1.5 py-0.5 text-[10.5px] font-semibold text-ink-soft hover:bg-line-soft disabled:opacity-40"
               >
                 Cancel
               </button>
             </div>
           </div>
         ) : (
-          <div className="mt-0.5 flex gap-1">
+          <div className="mt-0.5 flex flex-wrap gap-1.5">
             <button
               type="button"
               onClick={() => request("live")}
               disabled={busy !== null || !needsWrite(row, "live")}
-              className="rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
+              className="ds-control play-pressable rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
             >
               {busy === "live" ? "…" : "Live"}
             </button>
@@ -546,7 +546,7 @@ function GridCell({ row }: { row: CourseCatalogRow }) {
               type="button"
               onClick={() => request("hidden")}
               disabled={busy !== null || !needsWrite(row, "hidden")}
-              className="rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
+              className="ds-control play-pressable rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
             >
               {busy === "hidden" ? "…" : "Hidden"}
             </button>

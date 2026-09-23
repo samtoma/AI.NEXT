@@ -26,8 +26,20 @@
  * family is deliberately unused across the console: a wrong answer, a failed
  * parse and a low mastery estimate are all states of a fourteen-year-old's
  * learning, and an internal tool that paints them as alarms teaches the reader
- * to read them as faults. Gold is the "look here" colour; accent is "this went
- * well"; ink and its tints are everything else.
+ * to read them as faults. Gold is the "look here" colour; the progress tint
+ * (`bg-progress/15`, ink text) is "this went well"; ink and its tints are
+ * everything else.
+ *
+ * **Say what an element IS, and Play sizes it** (review 2026-09-23, F10). The
+ * Play variant's blanket pass gives every `border` a 3px ink sticker edge,
+ * which is right for a `Panel` and wrong for a 10px state word or a 20px
+ * button. So console markup carries one semantic class per element, styled
+ * in `globals.css` and inert in any variant that does not define it:
+ * `ds-tag` (a label — `Chip` below), `ds-control` + `play-pressable` (a
+ * button or a link styled as one), `ds-control-quiet` (a borderless nav link,
+ * filter or Cancel), `ds-field` (an input or select), `ds-empty` (a region or
+ * data mark with nothing in it). Tables inside the console shell read in the
+ * dense data type through `ds-dense` on the shell itself.
  */
 
 import type { ReactNode } from "react";
@@ -186,13 +198,13 @@ export type ChipTone = "neutral" | "good" | "attention";
 export function Chip({ tone = "neutral", children }: { tone?: ChipTone; children: ReactNode }) {
   const skin =
     tone === "good"
-      ? "border-accent/45 bg-accent-wash text-accent-deep"
+      ? "border-progress/60 bg-progress/15 text-ink"
       : tone === "attention"
         ? "border-gold/50 bg-gold-wash text-gold"
         : "border-line bg-paper-deep text-ink-soft";
   return (
     <span
-      className={`inline-block whitespace-nowrap rounded border px-1.5 py-[1px] font-mono text-[10px] uppercase tracking-[0.08em] ${skin}`}
+      className={`ds-tag inline-block whitespace-nowrap rounded border px-1.5 py-[1px] font-mono text-[10px] uppercase tracking-[0.08em] ${skin}`}
     >
       {children}
     </span>

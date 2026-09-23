@@ -12,6 +12,15 @@ import { questionProvenance } from "@/lib/provenance";
  * Amber means "look at this", not "something is wrong". An unreviewed question
  * is an authorised state under the standing exception, not a fault, and there
  * is no red anywhere in this palette to reach for anyway.
+ *
+ * **Paired colours, as utilities** (review 2026-09-23, F9). "Confirmed" used
+ * to be teal text on a teal tint — 2.74:1 at 9.5px, with a literal hex
+ * fallback. It is now ink on a 15% progress tint (`bg-progress/15`, from the
+ * `@theme` block in globals.css), which clears AA at any size in every
+ * variant; the teal is carried by the tint (and, outside Play, the edge),
+ * the meaning by the word. Gold on the gold wash measures ≈5.1:1 on white
+ * under Play and passes as it was. `ds-tag` says this is a label, not a
+ * control, so Play draws it as a fill with no sticker outline (F10).
  */
 export function ProvenanceBadge({
   question,
@@ -24,18 +33,17 @@ export function ProvenanceBadge({
 
   const tone =
     v.tone === "attention"
-      ? { bg: "var(--gold-wash)", fg: "var(--gold)", br: "var(--gold)" }
+      ? "border-gold bg-gold-wash text-gold"
       : v.tone === "confirmed"
-        ? { bg: "rgb(47 158 143 / 0.14)", fg: "var(--noor-progress, #2F9E8F)", br: "var(--noor-progress, #2F9E8F)" }
-        : { bg: "var(--accent-wash)", fg: "var(--ink-soft)", br: "var(--line)" };
+        ? "border-progress bg-progress/15 text-ink"
+        : "border-line bg-accent-wash text-ink-soft";
 
   return (
     <span
       title={v.detail}
-      className={`inline-flex shrink-0 items-center gap-1 rounded border font-mono uppercase tracking-[0.1em] ${
+      className={`ds-tag inline-flex shrink-0 items-center gap-1 rounded border font-mono uppercase tracking-[0.1em] ${tone} ${
         size === "md" ? "px-2 py-0.5 text-[10.5px]" : "px-1.5 py-px text-[9.5px]"
       }`}
-      style={{ background: tone.bg, color: tone.fg, borderColor: tone.br }}
     >
       {v.short}
     </span>

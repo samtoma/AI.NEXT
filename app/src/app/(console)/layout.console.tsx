@@ -58,13 +58,19 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
     group: r.navGroup ?? null,
   }));
 
+  // `relative z-10` lifts the whole shell above `body::before`, the fixed
+  // grain overlay the attribute-less Ledger identity paints at z-index 0 —
+  // the same lift the student shell's content already has (review F25). Play
+  // turns the overlay off, so this is the guard against its coming back.
+  // `ds-dense` sets the console's tables in the dense data type under Play
+  // (globals.css, review F10).
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="ds-dense relative z-10 flex min-h-full flex-col">
       <header className="border-b border-line bg-card">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-5 gap-y-2 px-5 py-2.5">
           <Link href="/" className="flex shrink-0 items-center gap-2">
             <NoorMark className="h-6 w-6 shrink-0" />
-            <span className="font-display text-[15px] font-bold tracking-tight text-ink">
+            <span className="font-display text-[15px] font-bold text-ink">
               Noor
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
@@ -87,7 +93,7 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
             </div>
             <Link
               href="/profile"
-              className="rounded-md border border-line px-2.5 py-1 text-[12px] font-medium text-ink-soft hover:bg-line-soft hover:text-ink"
+              className="ds-control play-pressable rounded-md border border-line px-2.5 py-1 text-[12px] font-medium text-ink-soft hover:bg-line-soft hover:text-ink"
             >
               My account
             </Link>

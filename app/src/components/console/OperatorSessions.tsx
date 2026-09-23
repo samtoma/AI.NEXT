@@ -181,7 +181,7 @@ export function OperatorSessions({ sessions }: { sessions: OperatorSessionItem[]
                         type="button"
                         onClick={() => void revoke(s.id, s.current)}
                         disabled={busy !== null}
-                        className="rounded-md border border-line px-2.5 py-1 text-[12px] font-medium text-ink-soft hover:bg-line-soft hover:text-ink disabled:opacity-50"
+                        className="ds-control play-pressable rounded-md border border-line px-2.5 py-1 text-[12px] font-medium text-ink-soft hover:bg-line-soft hover:text-ink disabled:opacity-50"
                       >
                         {busy === s.id ? "Revoking…" : s.current ? "Sign out here" : "Revoke"}
                       </button>
@@ -198,7 +198,7 @@ export function OperatorSessions({ sessions }: { sessions: OperatorSessionItem[]
         type="button"
         onClick={() => void signOut()}
         disabled={busy !== null}
-        className="mt-4 rounded-md border border-line bg-card px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
+        className="ds-control play-pressable mt-4 rounded-md border border-line bg-card px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
       >
         {busy === "all" ? "Signing out…" : "Sign out"}
       </button>

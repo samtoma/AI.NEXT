@@ -434,7 +434,7 @@ function FilterLink({
     <Link
       href={href}
       aria-current={active ? "true" : undefined}
-      className={`rounded px-2 py-0.5 text-[11.5px] font-medium ${
+      className={`ds-control-quiet rounded px-2 py-0.5 text-[11.5px] font-medium ${
         active ? "bg-ink text-paper" : "text-ink-soft hover:bg-line-soft hover:text-ink"
       }`}
     >

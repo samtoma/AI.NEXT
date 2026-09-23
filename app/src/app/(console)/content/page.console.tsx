@@ -220,7 +220,7 @@ function Tile({
     tone === "attention"
       ? "var(--gold)"
       : tone === "confirmed"
-        ? "var(--noor-progress, #2F9E8F)"
+        ? "var(--noor-progress, var(--accent))"
         : "var(--ink)";
   return (
     <div className="ledger-card px-4 py-3">

@@ -79,7 +79,7 @@ export function CourseAccessEditor({
         value={choice}
         onChange={(e) => setChoice(e.target.value as OverrideChoice)}
         disabled={busy}
-        className="w-40 rounded border border-line bg-card px-2 py-1 text-[12px] text-ink"
+        className="ds-field w-40 rounded border border-line bg-card px-2 py-1 text-[12px] text-ink"
       >
         <option value="inherit">Inherit grade rule</option>
         <option value="live">Force live</option>
@@ -92,13 +92,13 @@ export function CourseAccessEditor({
         onChange={(e) => setText(e.target.value)}
         disabled={busy}
         placeholder="why (optional)"
-        className="w-40 rounded border border-line bg-card px-2 py-1 text-[11.5px] text-ink"
+        className="ds-field w-40 rounded border border-line bg-card px-2 py-1 text-[11.5px] text-ink"
       />
       <button
         type="button"
         onClick={() => void save()}
         disabled={busy || unchanged}
-        className="rounded border border-line bg-card px-2.5 py-1 text-[12px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
+        className="ds-control play-pressable rounded border border-line bg-card px-2.5 py-1 text-[12px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
       >
         {busy ? "Saving…" : "Save"}
       </button>

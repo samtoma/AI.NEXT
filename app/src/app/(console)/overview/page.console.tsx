@@ -458,7 +458,7 @@ function CohortLink({
         option.grade
       )}&syllabus=${encodeURIComponent(option.syllabusVersion)}`}
       aria-current={active ? "true" : undefined}
-      className={`rounded px-2.5 py-1 text-[12px] font-medium ${
+      className={`ds-control-quiet rounded px-2.5 py-1 text-[12px] font-medium ${
         active ? "bg-ink text-paper" : "text-ink-soft hover:bg-line-soft hover:text-ink"
       }`}
     >
@@ -559,7 +559,7 @@ function Cell({
       <span
         title={`${label} · ${week} · never reached — no student has any evidence on this objective yet`}
         aria-label="never reached"
-        className="block h-4 w-4 rounded-[2px] border border-dashed border-line"
+        className="ds-empty block h-4 w-4 rounded-[2px] border border-dashed border-line"
       />
     );
   }
@@ -578,7 +578,7 @@ function Legend() {
   return (
     <div className="flex flex-wrap items-center gap-3 text-[11px] text-ink-soft">
       <span className="flex items-center gap-1.5">
-        <span className="block h-3.5 w-3.5 rounded-[2px] border border-dashed border-line" />
+        <span className="ds-empty block h-3.5 w-3.5 rounded-[2px] border border-dashed border-line" />
         never reached
       </span>
       <span className="flex items-center gap-1.5">

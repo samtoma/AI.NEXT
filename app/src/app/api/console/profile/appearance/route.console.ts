@@ -1,6 +1,6 @@
 import { authorize } from "@/lib/auth/authorize";
 import { AuthError } from "@/lib/auth/principal";
-import { DESIGN_VARIANTS, isDesignVariant } from "@/lib/design-variant";
+import { isSelectableVariant, selectableVariants } from "@/lib/design-variant";
 import { setOperatorVariant } from "@/lib/design-variant-queries";
 
 export const runtime = "nodejs";
@@ -85,11 +85,15 @@ export async function POST(req: Request) {
   // this operator back on the console default. An `if (!variant)` here would
   // turn "clear it" into a 400 and leave the choice unreversible.
   const variant = body.variant;
-  if (variant !== null && !isDesignVariant(variant)) {
+  if (variant !== null && !isSelectableVariant(variant)) {
     // From the module that owns the set, not re-typed — the student endpoint
     // makes the same choice for the same reason.
+    //
+    // SELECTABLE, not merely well-formed: while Master is hidden (ADR-0017
+    // Amendment, 2026-09-23) a request to store it is refused with the same
+    // 400 as an unknown value, and `allowed` lists only what may be chosen.
     return Response.json(
-      { error: "invalid_variant", allowed: [...DESIGN_VARIANTS, null] },
+      { error: "invalid_variant", allowed: [...selectableVariants(), null] },
       { status: 400 }
     );
   }

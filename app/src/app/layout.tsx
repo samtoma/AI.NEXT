@@ -100,7 +100,13 @@ export default async function RootLayout({
   // rather than a loading state. `documentVariant()` never throws and never
   // answers `undefined` on the comparison build: a student's override, else
   // her grade, else `play`; on the console an operator's own preference, else
-  // `master`, because an operator tool is not a children's surface.
+  // `master`, because an operator tool is not a children's surface. While
+  // Master is hidden (`MASTER_VARIANT_ENABLED`, ADR-0017 Amendment 2026-09-23)
+  // it answers `play` for everybody.
+  //
+  // `undefined` — no attribute, the Ledger identity — is what a checkout with
+  // AINEXT_ENVIRONMENT unset gets (lib/env.ts defaults to `baseline`). That is
+  // a configuration mistake on `main`, not a look: app/.env.example sets it.
   //
   // This is the ONLY place in `src/` that writes a variant name.
   // `design-variant-scan.test.mts` is what keeps that sentence true — a

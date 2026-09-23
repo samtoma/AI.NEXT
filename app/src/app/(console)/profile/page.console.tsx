@@ -6,7 +6,11 @@ import { listSessions, withAuthTx } from "@/lib/auth/session";
 import { consoleAccess } from "@/lib/console-auth";
 import { getOperatorCard } from "@/lib/console-queries";
 import { ALL_ROLES, consoleRoute } from "@/lib/console-routes";
-import { OPERATOR_DEFAULT_VARIANT } from "@/lib/design-variant";
+import {
+  DESIGN_VARIANT_LABELS,
+  MASTER_VARIANT_ENABLED,
+  OPERATOR_DEFAULT_VARIANT,
+} from "@/lib/design-variant";
 import { storedOperatorVariant } from "@/lib/design-variant-queries";
 
 /**
@@ -115,20 +119,28 @@ export default async function ConsoleProfilePage() {
         <h2 className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
           Appearance
         </h2>
-        <p className="mb-2 mt-1 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-soft">
-          The design system has two variants, and the student product picks one
-          from each student&apos;s grade (Preparatory gets Play, Secondary gets
-          Master). The console has no grade to read, so it defaults to Master —
-          an operator tool is not a children&apos;s surface. This changes your
-          console only: it is not visible to any student and it changes nothing
-          about what any student sees.
-        </p>
+        {MASTER_VARIANT_ENABLED ? (
+          <p className="mb-2 mt-1 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-soft">
+            The design system has two variants, and the student product picks one
+            from each student&apos;s grade (Preparatory gets Play, Secondary gets
+            Master). The console has no grade to read, so it defaults to Master —
+            an operator tool is not a children&apos;s surface. This changes your
+            console only: it is not visible to any student and it changes nothing
+            about what any student sees.
+          </p>
+        ) : (
+          <p className="mb-2 mt-1 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-soft">
+            Master is hidden while it is rebuilt from its published design (ADR-0017,
+            amendment of 2026-09-23), so every student and every operator sees Play.
+            A preference you stored earlier is kept and comes back with Master.
+          </p>
+        )}
         <div className="rounded-lg border border-line bg-card px-4 py-3">
           <DesignVariantPicker
             endpoint="/api/console/profile/appearance"
             stored={storedVariant}
             ruleVariant={OPERATOR_DEFAULT_VARIANT}
-            followLabel="Console default — Master"
+            followLabel={`Console default — ${DESIGN_VARIANT_LABELS[OPERATOR_DEFAULT_VARIANT]}`}
             ruleReason="the console default"
             compact
           />

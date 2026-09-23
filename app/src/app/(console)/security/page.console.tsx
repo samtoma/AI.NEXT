@@ -715,7 +715,7 @@ function ActiveFilterChips({ view }: { view: SecurityView }) {
         <Link
           key={c.key}
           href={c.href}
-          className="inline-flex items-center gap-1 rounded border border-line bg-paper-deep px-1.5 py-[1px] font-mono text-[10.5px] uppercase tracking-[0.06em] text-ink-soft hover:border-ink hover:text-ink"
+          className="ds-control play-pressable inline-flex items-center gap-1 rounded border border-line bg-paper-deep px-1.5 py-[1px] font-mono text-[10.5px] uppercase tracking-[0.06em] text-ink-soft hover:border-ink hover:text-ink"
         >
           {c.label} <span aria-hidden="true">×</span>
           <span className="sr-only">, remove this filter</span>
@@ -752,7 +752,7 @@ function FilterLink({
     <Link
       href={href}
       aria-current={active ? "true" : undefined}
-      className={`rounded px-2 py-0.5 text-[11.5px] font-medium ${
+      className={`ds-control-quiet rounded px-2 py-0.5 text-[11.5px] font-medium ${
         active ? "bg-ink text-paper" : "text-ink-soft hover:bg-line-soft hover:text-ink"
       }`}
     >

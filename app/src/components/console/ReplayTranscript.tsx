@@ -113,7 +113,7 @@ function Frame({
                       readOnly
                       onOutcome={() => {}}
                       fallback={
-                        <p className="my-1.5 rounded border border-dashed border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">
+                        <p className="ds-empty my-1.5 rounded border border-dashed border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">
                           an interactive {b.name} was shown here and cannot be rebuilt from the
                           stored payload
                         </p>
@@ -254,7 +254,7 @@ function AnsweredCard({
             readOnly
             onOutcome={() => {}}
             fallback={
-              <p className="rounded border border-dashed border-line px-2 py-1.5 font-mono text-[10.5px] text-ink-faint">
+              <p className="ds-empty rounded border border-dashed border-line px-2 py-1.5 font-mono text-[10.5px] text-ink-faint">
                 The construction could not be rebuilt from the stored spec.
               </p>
             }

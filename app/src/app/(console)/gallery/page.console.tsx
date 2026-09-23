@@ -41,7 +41,7 @@ async function GalleryPage() {
       <section className="anim-rise flex flex-wrap items-end justify-between gap-x-8 gap-y-4 pb-6 pt-9">
         <div className="max-w-2xl">
           <p className="rule-label mb-4">The Plate Gallery</p>
-          <h1 className="font-display text-3xl font-medium tracking-tight text-ink md:text-4xl">
+          <h1 className="font-display text-3xl font-medium text-ink md:text-4xl">
             Every figure is data.
           </h1>
           <p className="mt-2.5 text-[15px] leading-relaxed text-ink-soft">
@@ -85,7 +85,7 @@ async function GalleryPage() {
                       {v.id}
                     </span>
                     <span
-                      className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-px font-mono text-[9px] tracking-[0.04em] ${kindMeta(v.kind).chip}`}
+                      className={`ds-tag inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-px font-mono text-[9px] tracking-[0.04em] ${kindMeta(v.kind).chip}`}
                     >
                       <span aria-hidden>{kindMeta(v.kind).glyph}</span>
                       {v.kind}

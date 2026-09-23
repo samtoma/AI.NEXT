@@ -156,8 +156,8 @@ function PeriodSwitch({ current }: { current: PeriodDays }) {
           aria-current={p === current ? "page" : undefined}
           className={
             p === current
-              ? "rounded border border-accent/45 bg-accent-wash px-2.5 py-1 text-[12.5px] font-semibold text-accent-deep"
-              : "rounded border border-line bg-card px-2.5 py-1 text-[12.5px] text-ink-soft hover:bg-line-soft hover:text-ink"
+              ? "ds-control play-pressable rounded border border-accent/45 bg-accent-wash px-2.5 py-1 text-[12.5px] font-semibold text-accent-deep"
+              : "ds-control play-pressable rounded border border-line bg-card px-2.5 py-1 text-[12.5px] text-ink-soft hover:bg-line-soft hover:text-ink"
           }
         >
           {p} days

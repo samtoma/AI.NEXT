@@ -93,7 +93,7 @@ export default async function ConsoleSessionTimelinePage({
         </h1>
         <Link
           href={`/students/${studentId}/sessions/${session.id}/replay`}
-          className="rounded-md border border-line px-3 py-1.5 text-[12.5px] font-medium text-accent hover:bg-accent-wash"
+          className="ds-control play-pressable rounded-md border border-line px-3 py-1.5 text-[12.5px] font-medium text-accent hover:bg-accent-wash"
         >
           See it as the student saw it (reconstructed) →
         </Link>

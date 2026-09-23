@@ -4,6 +4,7 @@ import { currentPrincipal } from "@/lib/auth/principal";
 import { authPool, withOperator, withPrincipal } from "@/lib/db";
 import { ENVIRONMENT, IS_CONSOLE, IS_MVP1 } from "@/lib/env";
 import {
+  MASTER_VARIANT_ENABLED,
   asDesignVariant,
   resolveVariant,
   resolveVariantForOperator,
@@ -110,7 +111,8 @@ async function studentVariant(): Promise<DesignVariant> {
 }
 
 /**
- * The console's answer: the operator's own stored preference, else `master`.
+ * The console's answer: the operator's own stored preference, else `master` —
+ * and, while Master is hidden, `play` for everybody (see `MASTER_VARIANT_ENABLED`).
  *
  * **An operator tool is not a children's surface**, which is why the default
  * differs from the student product's rather than being copied from it. Play is
@@ -136,6 +138,11 @@ async function studentVariant(): Promise<DesignVariant> {
  * inside the design system rather than beside it.
  */
 async function consoleVariant(): Promise<DesignVariant> {
+  // While Master is hidden (ADR-0017 Amendment, 2026-09-23) no stored
+  // preference can change the answer, so the principal read and the column
+  // read are skipped rather than paid for on every console render. The answer
+  // still comes from the resolver, not from a literal here.
+  if (!MASTER_VARIANT_ENABLED) return resolveVariantForOperator(null);
   try {
     const me = await currentPrincipal();
     if (me.kind !== "operator") return resolveVariantForOperator(null);

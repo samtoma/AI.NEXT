@@ -135,7 +135,7 @@ function StageCard({ s }: { s: (typeof STAGES)[number] }) {
     >
       <div className="flex items-center gap-2.5">
         <span
-          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 font-mono text-[12px] font-semibold ${
+          className={`ds-small flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 font-mono text-[12px] font-semibold ${
             s.star
               ? "border-gold/60 bg-card text-gold"
               : "border-gold/45 bg-card text-gold"
@@ -147,7 +147,7 @@ function StageCard({ s }: { s: (typeof STAGES)[number] }) {
           {s.name}
         </h3>
         <span
-          className={`ml-auto rounded-full border px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] ${MODEL_STYLE[s.model]}`}
+          className={`ds-tag ml-auto rounded-full border px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] ${MODEL_STYLE[s.model]}`}
         >
           {s.model}
         </span>
@@ -190,7 +190,7 @@ function Stage({
       style={{ animationDelay: `${delay}ms` }}
     >
       <div className="absolute left-0 top-1 hidden md:block">
-        <div className="flex h-14 w-14 -rotate-6 items-center justify-center rounded-full border-2 border-gold/55 bg-card font-mono text-[13px] font-semibold tracking-wider text-gold shadow-[0_2px_8px_rgba(32,41,58,0.08)]">
+        <div className="flex h-14 w-14 -rotate-6 items-center justify-center rounded-full border-2 border-gold/55 bg-card font-mono text-[13px] font-semibold tracking-wider text-gold sticker-shadow-sm">
           {no}
         </div>
       </div>
@@ -198,7 +198,7 @@ function Stage({
         <span className="md:hidden">{no} · </span>
         {name}
       </p>
-      <h2 className="mt-2 max-w-3xl font-display text-[1.9rem] font-medium leading-tight tracking-tight text-ink">
+      <h2 className="mt-2 max-w-3xl font-display text-[1.9rem] font-medium leading-tight text-ink">
         {headline}
       </h2>
       <p className="mt-2 max-w-3xl text-[15px] leading-relaxed text-ink-soft">
@@ -257,7 +257,7 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
         <p className="rule-label mb-6">
           The extraction engine · a book in, a taught curriculum out
         </p>
-        <h1 className="max-w-4xl font-display text-[clamp(2.3rem,4.6vw,3.6rem)] font-medium leading-[1.06] tracking-tight text-ink">
+        <h1 className="max-w-4xl font-display text-[clamp(2.3rem,4.6vw,3.6rem)] font-medium leading-[1.06] text-ink">
           How we turn a ministry textbook into a{" "}
           <em className="not-italic text-accent-deep underline decoration-gold/60 decoration-[3px] underline-offset-[7px]">
             tutor
@@ -318,7 +318,7 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
         style={{ animationDelay: "120ms" }}
       >
         <div className="flex items-baseline gap-3">
-          <h2 className="font-display text-[1.6rem] font-medium tracking-tight text-ink">
+          <h2 className="font-display text-[1.6rem] font-medium text-ink">
             The line · one lesson, nine stops
           </h2>
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
@@ -344,7 +344,7 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
         style={{ animationDelay: "160ms" }}
       >
         <div className="flex items-baseline gap-3">
-          <h2 className="font-display text-[1.6rem] font-medium tracking-tight text-ink">
+          <h2 className="font-display text-[1.6rem] font-medium text-ink">
             Why you can trust what it ships
           </h2>
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
@@ -418,7 +418,7 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
       {/* live proof — the deterministic backbone the agents feed */}
       <section className="anim-rise mb-4" style={{ animationDelay: "240ms" }}>
         <div className="flex items-baseline gap-3">
-          <h2 className="font-display text-[1.6rem] font-medium tracking-tight text-ink">
+          <h2 className="font-display text-[1.6rem] font-medium text-ink">
             And here it is, running for real
           </h2>
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
@@ -501,7 +501,7 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
 
       {/* scaling strip */}
       <section
-        className="anim-rise mb-16 rounded-xl border-[1.5px] border-dashed border-gold/50 bg-card-warm px-6 py-5"
+        className="anim-rise mb-16 rounded-xl border-2 border-dashed border-gold/50 bg-card-warm px-6 py-5"
         style={{ animationDelay: "540ms" }}
       >
         <div className="flex flex-wrap items-center gap-x-4 gap-y-3">

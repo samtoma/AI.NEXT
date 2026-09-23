@@ -1,5 +1,5 @@
 import { currentPrincipal } from "@/lib/auth/principal";
-import { DESIGN_VARIANTS, isDesignVariant } from "@/lib/design-variant";
+import { isSelectableVariant, selectableVariants } from "@/lib/design-variant";
 import { setStudentVariant } from "@/lib/design-variant-queries";
 
 export const runtime = "nodejs";
@@ -71,12 +71,16 @@ export async function POST(req: Request) {
   // that names the closed set, so a caller learns the real vocabulary instead
   // of a constraint violation from Postgres.
   const variant = body.variant;
-  if (variant !== null && !isDesignVariant(variant)) {
+  if (variant !== null && !isSelectableVariant(variant)) {
     // The closed set comes from the module that owns it, never re-typed here:
     // a second hand-written list of variant names is the drift
     // `design-variant-scan.test.mts` exists to refuse.
+    //
+    // SELECTABLE, not merely well-formed: while Master is hidden (ADR-0017
+    // Amendment, 2026-09-23) a request to store it is refused with the same
+    // 400 as an unknown value, and `allowed` lists only what may be chosen.
     return Response.json(
-      { error: "invalid_variant", allowed: [...DESIGN_VARIANTS, null] },
+      { error: "invalid_variant", allowed: [...selectableVariants(), null] },
       { status: 400 }
     );
   }

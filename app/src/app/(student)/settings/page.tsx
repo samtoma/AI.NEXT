@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { DesignVariantPicker } from "@/components/DesignVariantPicker";
 import { gradeDisplayLabel } from "@/lib/catalog";
-import { variantForGrade } from "@/lib/design-variant";
+import { MASTER_VARIANT_ENABLED, variantForGrade } from "@/lib/design-variant";
 import { resolveStudentContext } from "@/lib/student-context";
 
 export const dynamic = "force-dynamic";
@@ -74,11 +74,17 @@ export default async function SettingsPage() {
         <h2 className="font-display text-[18px] font-bold text-ink">
           How the app looks
         </h2>
-        <p className="mt-1 max-w-[62ch] text-[14px] leading-relaxed text-ink-soft">
-          There are two looks. Everything works the same in both — the lessons,
-          your progress and what the tutor says do not change. Pick whichever is
-          easier for you to read.
-        </p>
+        {/* While Master is hidden (ADR-0017 Amendment, 2026-09-23) there is one
+            look and nothing to pick, so the invitation to choose is not made;
+            the picker below says which look is in force and that another is
+            coming. */}
+        {MASTER_VARIANT_ENABLED && (
+          <p className="mt-1 max-w-[62ch] text-[14px] leading-relaxed text-ink-soft">
+            There are two looks. Everything works the same in both — the lessons,
+            your progress and what the tutor says do not change. Pick whichever is
+            easier for you to read.
+          </p>
+        )}
 
         <DesignVariantPicker
           endpoint="/api/settings/appearance"

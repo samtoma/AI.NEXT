@@ -52,6 +52,15 @@
  * is loaded by `node --test`, which has no `@/` alias, and by `layout.tsx`
  * through the bundler. The whole graph reachable from here (`catalog.ts` →
  * `profile.ts`) runs outside the bundler too.
+ *
+ * ---------------------------------------------------------------------------
+ * MASTER IS HIDDEN (ADR-0017 Amendment, 2026-09-23)
+ * ---------------------------------------------------------------------------
+ * `MASTER_VARIANT_ENABLED` below is the one switch. While it is `false`, every
+ * resolver in this file answers Play — for every student whatever her grade or
+ * stored override, and for every operator — and Master cannot be chosen. The
+ * rule above is kept intact behind the switch and is still proved by the suite
+ * with the switch ON, so turning Master back on is one edit, not a rebuild.
  */
 
 import { canonicalGrade } from "./catalog.ts";
@@ -71,18 +80,90 @@ export type DesignVariant = "play" | "master";
 export const DESIGN_VARIANTS: readonly DesignVariant[] = ["play", "master"] as const;
 
 /**
+ * Whether Master may be resolved or chosen at all — THE switch.
+ *
+ * Hidden 2026-09-23 by Samuel after the Play/Master review
+ * (docs/reviews/2026-09-23-play-master-ui-review.md): `[data-ds="master"]`
+ * renders the frozen Ledger palette, not the published Master design, and
+ * reads as a broken hybrid of three identities. While this is `false`:
+ *
+ *   · every student resolves to Play, whatever her grade and whatever override
+ *     she has stored;
+ *   · every operator resolves to Play, and the console default is Play;
+ *   · the pickers do not offer Master and both appearance endpoints refuse it.
+ *
+ * Stored `master` overrides are left in the database untouched — nothing is
+ * migrated — so flipping this back restores every choice exactly as it was.
+ *
+ * **Flip to `true` only once Master's published tokens are implemented** in
+ * `globals.css` (ADR-0017, Amendment 2026-09-23; GitHub issues #46/#47).
+ *
+ * Typed `boolean` rather than inferred as the literal `false`, so the branches
+ * that read it stay live code to the type checker in both positions.
+ */
+export const MASTER_VARIANT_ENABLED: boolean = false;
+
+/**
+ * The one option every resolver below takes, so the suite can prove both
+ * positions of the switch without editing it. Production callers pass nothing
+ * and get `MASTER_VARIANT_ENABLED`.
+ */
+export type VariantOptions = {
+  /** Overrides `MASTER_VARIANT_ENABLED` for this call. Tests only. */
+  masterEnabled?: boolean;
+};
+
+function masterEnabled(opts?: VariantOptions): boolean {
+  return opts?.masterEnabled ?? MASTER_VARIANT_ENABLED;
+}
+
+/**
  * The answer when nothing is known — ADR-0017's "default when grade is unknown
  * or unreadable: Play". Exported as a named constant rather than written as a
  * literal at each of the three sites that need it, so the default is one fact
  * that can be changed once and read everywhere.
+ *
+ * It is also the variant that stays on while Master is hidden.
  */
 export const DEFAULT_DESIGN_VARIANT: DesignVariant = "play";
 
 /**
- * The default for the **console**, which is a different question with a
- * different answer. See `resolveVariantForOperator`.
+ * The variants a person may be put in or may choose right now, in documented
+ * order. Both variants while Master is enabled; Play alone while it is hidden.
+ *
+ * `DESIGN_VARIANTS` stays the full VOCABULARY — what a stored value may say —
+ * because a `master` row written before the switch was turned off is still a
+ * well-formed value and must still narrow to itself, not to `null`.
  */
-export const OPERATOR_DEFAULT_VARIANT: DesignVariant = "master";
+export function selectableVariants(opts?: VariantOptions): readonly DesignVariant[] {
+  return masterEnabled(opts)
+    ? DESIGN_VARIANTS
+    : DESIGN_VARIANTS.filter((v) => v === DEFAULT_DESIGN_VARIANT);
+}
+
+/**
+ * The guard both appearance endpoints use: a variant AND one that may be
+ * chosen now. While Master is hidden, a request to store it is refused with
+ * the same 400 an unknown value gets.
+ */
+export function isSelectableVariant(
+  value: unknown,
+  opts?: VariantOptions
+): value is DesignVariant {
+  return isDesignVariant(value) && selectableVariants(opts).includes(value);
+}
+
+/**
+ * The default for the **console**, which is a different question with a
+ * different answer. See `resolveVariantForOperator`. Master while Master is
+ * enabled; Play while it is hidden.
+ */
+export function operatorDefaultVariant(opts?: VariantOptions): DesignVariant {
+  return masterEnabled(opts) ? "master" : DEFAULT_DESIGN_VARIANT;
+}
+
+/** `operatorDefaultVariant()` for the switch as it stands, for display. */
+export const OPERATOR_DEFAULT_VARIANT: DesignVariant = operatorDefaultVariant();
 
 /** What each variant is called on a screen a person reads. */
 export const DESIGN_VARIANT_LABELS: Record<DesignVariant, string> = {
@@ -155,8 +236,15 @@ export function asDesignVariant(raw: unknown): DesignVariant | null {
  * happen to be the right answer for Prep 3, which is precisely why it has to
  * be done properly: a rule that is accidentally right for today's only cohort
  * is a rule that breaks silently on the first Secondary student.
+ *
+ * While Master is hidden this answers Play for every grade: the rule is kept,
+ * not deleted, and the suite proves it with the switch ON.
  */
-export function variantForGrade(grade: string | null | undefined): DesignVariant {
+export function variantForGrade(
+  grade: string | null | undefined,
+  opts?: VariantOptions
+): DesignVariant {
+  if (!masterEnabled(opts)) return DEFAULT_DESIGN_VARIANT;
   const canonical = canonicalGrade(grade);
   if (canonical === null) return DEFAULT_DESIGN_VARIANT;
   if (!(GRADES as readonly string[]).includes(canonical)) {
@@ -176,13 +264,19 @@ export function variantForGrade(grade: string | null | undefined): DesignVariant
  * string for the grade) because both come from a database row, and a resolver
  * that demanded well-formed input would push the narrowing out to every
  * caller — which is where it would eventually be forgotten.
+ *
+ * While Master is hidden this answers Play even for a stored `master`
+ * override. The override stays in the column; it is simply not honoured
+ * until the switch is turned back on.
  */
 export function resolveVariant(
   grade: string | null | undefined,
-  override: DesignVariant | null | undefined
+  override: DesignVariant | null | undefined,
+  opts?: VariantOptions
 ): DesignVariant {
+  if (!masterEnabled(opts)) return DEFAULT_DESIGN_VARIANT;
   if (override != null) return override;
-  return variantForGrade(grade);
+  return variantForGrade(grade, opts);
 }
 
 /**
@@ -195,9 +289,15 @@ export function resolveVariant(
  * fourteen-year-old. Constitution XII binds the console exactly as it binds
  * the student product — the console is skinned, not unskinned — so this
  * returns a named variant and never `undefined`.
+ *
+ * While Master is hidden the console is Play for every operator, whatever
+ * they have stored — the restrained variant this default was reaching for
+ * currently renders the Ledger palette, which is worse than the loud one.
  */
 export function resolveVariantForOperator(
-  override: DesignVariant | null | undefined
+  override: DesignVariant | null | undefined,
+  opts?: VariantOptions
 ): DesignVariant {
-  return override ?? OPERATOR_DEFAULT_VARIANT;
+  if (!masterEnabled(opts)) return DEFAULT_DESIGN_VARIANT;
+  return override ?? operatorDefaultVariant(opts);
 }

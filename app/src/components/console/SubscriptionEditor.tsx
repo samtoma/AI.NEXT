@@ -88,7 +88,7 @@ export function SubscriptionEditor({
             value={status}
             onChange={(e) => setStatus(e.target.value as Status)}
             disabled={busy}
-            className="mt-1 rounded border border-line bg-card px-2 py-1 text-[13px] text-ink"
+            className="ds-field mt-1 rounded border border-line bg-card px-2 py-1 text-[13px] text-ink"
           >
             {STATUSES.map((s) => (
               <option key={s} value={s}>
@@ -106,14 +106,14 @@ export function SubscriptionEditor({
             onChange={(e) => setText(e.target.value)}
             disabled={busy}
             placeholder="e.g. agreed with the family on 20 September"
-            className="mt-1 w-full rounded border border-line bg-card px-2 py-1 text-[13px] text-ink"
+            className="ds-field mt-1 w-full rounded border border-line bg-card px-2 py-1 text-[13px] text-ink"
           />
         </label>
         <button
           type="button"
           onClick={() => void save()}
           disabled={busy || unchanged}
-          className="rounded border border-line bg-card px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
+          className="ds-control play-pressable rounded border border-line bg-card px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
         >
           {busy ? "Saving…" : "Save"}
         </button>

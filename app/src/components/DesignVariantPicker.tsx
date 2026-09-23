@@ -3,8 +3,9 @@
 import { useState } from "react";
 
 import {
-  DESIGN_VARIANTS,
+  DEFAULT_DESIGN_VARIANT,
   DESIGN_VARIANT_LABELS,
+  selectableVariants,
   type DesignVariant,
 } from "@/lib/design-variant";
 
@@ -68,7 +69,18 @@ import {
  * `bg-card`, `text-ink`, `text-ink-soft`, `text-ink-faint`) — no literal
  * colour, stroke width, radius or shadow, on either surface. That is what lets
  * this one component render correctly in both variants without knowing which
- * one it is in, which is the whole design.
+ * one it is in, which is the whole design. The field and the button carry
+ * `ds-field` / `ds-control` (globals.css), which is how Play gets its 52px
+ * target, sticker edge and press without this file knowing Play exists.
+ *
+ * ---------------------------------------------------------------------------
+ * WHILE MASTER IS HIDDEN (ADR-0017 Amendment, 2026-09-23)
+ * ---------------------------------------------------------------------------
+ * With one look selectable there is nothing to choose, and a select with one
+ * real option beside a Save that can never be enabled reads as broken. So the
+ * control collapses to one read-only sentence naming the look in force and
+ * saying another is coming. It re-appears on its own when
+ * `MASTER_VARIANT_ENABLED` is turned back on — nothing here needs editing.
  */
 
 /** `null` is not a variant; it is the absence of an override. */
@@ -87,14 +99,7 @@ const VARIANT_HELP: Record<DesignVariant, string> = {
   master: "quieter, more restrained",
 };
 
-export function DesignVariantPicker({
-  endpoint,
-  stored,
-  ruleVariant,
-  followLabel,
-  ruleReason,
-  compact = false,
-}: {
+type PickerProps = {
   /** The route handler that writes it. Server-side, same-origin, POST. */
   endpoint: string;
   /** The stored override, or `null` when the rule is in charge. */
@@ -112,7 +117,39 @@ export function DesignVariantPicker({
    * density there is the consistent choice rather than a concession.
    */
   compact?: boolean;
-}) {
+};
+
+export function DesignVariantPicker(props: PickerProps) {
+  const options = selectableVariants();
+  if (options.length < 2) {
+    // Master hidden: the only look there is, said once, with no control.
+    return <CurrentLookOnly look={options[0] ?? DEFAULT_DESIGN_VARIANT} compact={props.compact} />;
+  }
+  return <VariantSelect {...props} options={options} />;
+}
+
+function CurrentLookOnly({ look, compact = false }: { look: DesignVariant; compact?: boolean }) {
+  return (
+    <p
+      className={`${compact ? "text-[12.5px]" : "mt-2 text-[14px]"} max-w-[70ch] leading-relaxed text-ink-soft`}
+    >
+      You are using{" "}
+      <strong className="font-semibold text-ink">{DESIGN_VARIANT_LABELS[look]}</strong> —{" "}
+      {VARIANT_HELP[look]}. Another look is on its way, and you will be able to choose it here
+      when it is ready.
+    </p>
+  );
+}
+
+function VariantSelect({
+  endpoint,
+  stored,
+  ruleVariant,
+  followLabel,
+  ruleReason,
+  compact = false,
+  options,
+}: PickerProps & { options: readonly DesignVariant[] }) {
   const [selection, setSelection] = useState<Selection>(stored ?? "follow");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -126,12 +163,16 @@ export function DesignVariantPicker({
   const effective: DesignVariant = selection === "follow" ? ruleVariant : selection;
   const byRule = selection === "follow";
 
+  // `disabled:opacity-50` dims the unsaved-nothing Save in a variant with no
+  // disabled anatomy of its own. Under Play it is cancelled in globals.css:
+  // Play's disabled state (dashed edge, `--play-disabled-text`) is already the
+  // signal, and dimming it on top fell to 1.76:1 (review F22).
   const field = compact
-    ? "mt-1 rounded border border-line bg-card px-2 py-1 text-[13px] text-ink"
-    : "mt-1 min-h-[44px] w-full max-w-[26rem] rounded-lg border border-line bg-card px-3 text-[15px] text-ink";
+    ? "ds-field mt-1 rounded border border-line bg-card px-2 py-1 text-[13px] text-ink"
+    : "ds-field mt-1 min-h-[44px] w-full max-w-[26rem] rounded-lg border border-line bg-card px-3 text-[15px] text-ink";
   const action = compact
-    ? "rounded border border-line bg-card px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
-    : "min-h-[44px] rounded-lg border border-line bg-card px-4 text-[15px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50";
+    ? "ds-control play-pressable rounded border border-line bg-card px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
+    : "ds-control play-pressable min-h-[44px] rounded-lg border border-line bg-card px-4 text-[15px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50";
 
   async function save() {
     if (busy) return;
@@ -173,7 +214,7 @@ export function DesignVariantPicker({
             className={field}
           >
             <option value="follow">{followLabel}</option>
-            {DESIGN_VARIANTS.map((v) => (
+            {options.map((v) => (
               <option key={v} value={v}>
                 {DESIGN_VARIANT_LABELS[v]} — {VARIANT_HELP[v]}
               </option>

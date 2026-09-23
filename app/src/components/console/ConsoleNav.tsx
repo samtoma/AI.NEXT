@@ -50,7 +50,7 @@ export function ConsoleNav({
             <Link
               href={href}
               aria-current={active ? "page" : undefined}
-              className={`rounded-md px-2.5 py-1 text-[13px] font-medium transition-colors duration-150 ${
+              className={`ds-control-quiet rounded-md px-2.5 py-1 text-[13px] font-medium transition-colors duration-150 ${
                 active
                   ? "bg-ink text-paper"
                   : "text-ink-soft hover:bg-line-soft hover:text-ink"
