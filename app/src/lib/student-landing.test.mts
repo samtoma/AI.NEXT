@@ -105,6 +105,67 @@ test("one subject, several lessons → the FIRST in teaching order", () => {
 });
 
 /* ------------------------------------------------------------------ */
+/* The lesson pointer (ADR-0020), which must not bend the rules above  */
+/* ------------------------------------------------------------------ */
+
+test("pointer in her list → the check-in opens on it, not the first lesson", () => {
+  const out = decideLanding({
+    subject: undefined,
+    courseId: null,
+    lessonSlug: undefined,
+    lessons: [ARABIC_LESSON, lesson("ara1-2", ARABIC, "arabic-ar")],
+    pointer: "ara1-2",
+  });
+  assert.deepEqual(out, { screen: "check-in", slug: "ara1-2" });
+});
+
+test("a pointer NOT in her gated list is ignored — the first lesson, as before", () => {
+  // A stale pointer, or one into a course the gate now hides, must never be
+  // the way a slug from outside her list reaches the page.
+  const out = decideLanding({
+    subject: undefined,
+    courseId: null,
+    lessonSlug: undefined,
+    lessons: [ARABIC_LESSON],
+    pointer: "u1-4",
+  });
+  assert.deepEqual(out, { screen: "check-in", slug: "ara1-1" });
+});
+
+test("?lesson= beats the pointer (the 2026-07-30 field report)", () => {
+  const out = decideLanding({
+    subject: undefined,
+    courseId: null,
+    lessonSlug: "ara1-1",
+    lessons: [ARABIC_LESSON, lesson("ara1-2", ARABIC, "arabic-ar")],
+    pointer: "ara1-2",
+  });
+  assert.deepEqual(out, { screen: "check-in", slug: "ara1-1" });
+});
+
+test("a pointer never turns the subject home into a check-in", () => {
+  const out = decideLanding({
+    subject: undefined,
+    courseId: null,
+    lessonSlug: undefined,
+    lessons: [MATHS_LESSON, SOCIAL_LESSON],
+    pointer: "u1-1",
+  });
+  assert.deepEqual(out, { screen: "subject-home" });
+});
+
+test("a pointer never softens the refusal of a subject she may not see", () => {
+  const out = decideLanding({
+    subject: "math",
+    courseId: MATH,
+    lessonSlug: undefined,
+    lessons: [ARABIC_LESSON],
+    pointer: "u1-1",
+  });
+  assert.deepEqual(out, { screen: "refused" });
+});
+
+/* ------------------------------------------------------------------ */
 /* The non-disclosure rule, which the fix must not soften              */
 /* ------------------------------------------------------------------ */
 
