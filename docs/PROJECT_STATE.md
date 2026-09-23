@@ -1,7 +1,31 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-23 (`main`; released `v0.5.0`; constitution v3.1.1)
+> Last updated: 2026-09-23 (`main`; released `v0.6.0`; constitution v3.2.0)
+
+## 🚢 v0.6.0 — Tamer's work on `main`, deep-reviewed (2026-09-23)
+
+Tamer's `wip/socratic-probing-route-b` (12 commits) was rebuilt onto `main` in the
+`trial/tamer-onto-main` branch. It brings the `/spine` skill map, the "Up next" check-in card,
+mastery-gated lesson progression (ADR-0020, migration 028), the refutation TeX fix, and "stop
+guessing a misconception". Socratic probing merged **switched off** (migration 027). His port-3002
+launch entry was dropped, because 3002 is the console.
+
+Four independent reviews read every change before merge (student flows, database and privacy,
+design and copy, probing). They found no P0, several P1s, and a latent outage in 028's backfill
+(the backfill is removed). All of it was fixed; 704/704 tests pass, both builds pass, migrations
+re-run cleanly three times, and per-student isolation holds on `student_progress`.
+
+**Open, by owner:**
+- **Samuel:**
+  - Socratic probing blockers before switching it on: #53. The two worst are credit a student did
+    not earn, and a lesson that can stall.
+  - Tutor prompt wording still says "HUMAN-REVIEWED": #51 (reverted per ADR-0020's "no prompt
+    changes").
+  - Master: #46–#50.
+- **Pre-existing, found in passing:** #54.
+- **Nobody has seen the redesigned screens signed in.** A founder should walk `/student` and
+  `/spine` at desktop and iPad portrait.
 
 ## 📚 THE WHOLE MATHS BANK, LIVE — rule changed (2026-09-23, `main`)
 
