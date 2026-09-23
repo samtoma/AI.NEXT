@@ -4,6 +4,7 @@ import {
   memo,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -15,17 +16,22 @@ import type {
   SpineSubject,
   TurnMeta,
 } from "@/lib/types";
+import { stepText } from "@/lib/types";
 import { displayLabelOfSpineKey, labelArOfSpineKey } from "@/lib/subjects";
 import { track } from "@/lib/ga";
 import { masteryLabel } from "@/lib/mastery";
 import {
   directiveEndAt,
+  extractAnswerSubmitted,
   extractCites,
   extractHighlights,
+  hasRevealAnswerDirective,
   parseMessage,
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
+import { submitAttempt } from "@/lib/attempts-client";
+import { probingActive } from "@/lib/socratic-probing";
 import type { CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
 import {
@@ -78,6 +84,16 @@ export type ChatSuggestion = string | { label: string; onSelect: () => void };
 export interface ChatCoreProps {
   surface: "spine_chat" | "student_chat" | "lesson_learn" | "lesson_review";
   suggestions?: ChatSuggestion[];
+  /**
+   * How the starter prompts sit above the composer (Tamer's skill map,
+   * `1fcf346`). "chips" (default) is the wrapping inline row every existing
+   * surface renders. "stacked" is the skill map's docked panel: a "Try asking"
+   * list, one suggestion per line, that reads as things you could say rather
+   * than as the screen's primary actions. Opt-in, so no other surface
+   * changes. (The branch's `sendTone` prop is not carried: main's send is
+   * already amber-with-ink on every surface.)
+   */
+  suggestionLayout?: "chips" | "stacked";
   questionId?: string;
   wrongAnswer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
@@ -115,6 +131,26 @@ export interface ChatCoreProps {
   onCite?: (c: Cite) => void;
   onCiteClick?: (c: Cite) => void;
   onAttemptResult?: (r: AttemptResult, q: SpineQuestion) => void;
+  /**
+   * Socratic-probing prototype (`507bb31`): fired whenever ChatCore's own
+   * confirmation-pending state changes (lesson_learn only, and only while
+   * `SOCRATIC_PROBING_ENABLED` is on — null otherwise). The lesson whiteboard
+   * hosts its own question cards outside the transcript and mirrors this so
+   * ITS cards gate the same way; ChatCore stays the single source of truth.
+   */
+  onPendingConfirmationChange?: (
+    pending: {
+      loId: string;
+      lastAttemptId: number;
+      wrongCount: number;
+      questionId: string;
+    } | null
+  ) => void;
+  /** Socratic-probing prototype: fired whenever ChatCore grades a chat-typed
+   *  answer itself — mirrored the same way so a board-hosted card can sync. */
+  onExternalAttemptChange?: (
+    attempt: { questionId: string; result: AttemptResult } | null
+  ) => void;
   onTotalChange?: (totalUsd: number, turns: number) => void;
   /** render a {{widget:…}} directive as a live interactive card */
   renderWidget?: (
@@ -190,6 +226,7 @@ const GOT_IT_SENTINEL = "Got it — next ✓";
 export function ChatCore({
   surface,
   suggestions = [],
+  suggestionLayout = "chips",
   questionId,
   wrongAnswer,
   lessonSlug,
@@ -207,6 +244,8 @@ export function ChatCore({
   onCite,
   onCiteClick,
   onAttemptResult,
+  onPendingConfirmationChange,
+  onExternalAttemptChange,
   onTotalChange,
   renderWidget,
   renderPassage,
@@ -223,6 +262,13 @@ export function ChatCore({
   inputAccessory,
 }: ChatCoreProps) {
   const lessonSurface = surface === "lesson_learn" || surface === "lesson_review";
+  /**
+   * Socratic-probing prototype (`507bb31`, Route B + Option 1). Scoped to
+   * lesson_learn only — review mode's ≤5-message lock-in would fight it — and
+   * OFF everywhere while `SOCRATIC_PROBING_ENABLED` is false
+   * (lib/socratic-probing.ts), pending Samuel's ruling on Principle II.
+   */
+  const probingSurface = probingActive(surface);
   const [messages, setMessages] = useState<ChatMsg[]>(() =>
     initialMessages && initialMessages.length > 0
       ? initialMessages
@@ -299,6 +345,44 @@ export function ChatCore({
   }, [messages]);
   const openQuestionIdRef = useRef<string | null>(null);
   openQuestionIdRef.current = openQuestionId;
+  // Socratic-probing prototype: which LO a wrong answer put into
+  // confirmation-pending, the attempt a fresh sibling attempt on that LO
+  // should link to via retry_of_attempt_id, how many wrong attempts this
+  // cycle has taken, and which question that last attempt was against.
+  // Session-scoped only (never persisted, never touches mastery). Once
+  // `wrongCount` reaches 2 the card stops withholding — the same threshold an
+  // explicit {{reveal_answer}} forces early. Always null while the switch is
+  // off: handleAttempt below never sets it unless `probingSurface`.
+  const [pendingConfirmation, setPendingConfirmation] = useState<{
+    loId: string;
+    lastAttemptId: number;
+    wrongCount: number;
+    questionId: string;
+  } | null>(null);
+  const pendingConfirmationRef = useRef(pendingConfirmation);
+  // Mirrored at commit, not during render (react-hooks/refs): every reader
+  // is an event handler or a stream callback, all of which run after the
+  // commit that set it, and a layout effect lands before any of them.
+  useLayoutEffect(() => {
+    pendingConfirmationRef.current = pendingConfirmation;
+  }, [pendingConfirmation]);
+  useEffect(() => {
+    onPendingConfirmationChange?.(pendingConfirmation);
+  }, [pendingConfirmation, onPendingConfirmationChange]);
+  // A chat-typed answer ({{answer_submitted:…}}) ChatCore graded itself —
+  // handed down so the open question's OWN card syncs its display.
+  const [externalAttempt, setExternalAttempt] = useState<{
+    questionId: string;
+    result: AttemptResult;
+  } | null>(null);
+  useEffect(() => {
+    onExternalAttemptChange?.(externalAttempt);
+  }, [externalAttempt, onExternalAttemptChange]);
+  // send() is declared above handleAttempt; a ref breaks the ordering and
+  // staleness problem (same pattern as sendRef/scheduleContinueRef below).
+  const handleAttemptRef = useRef<(r: AttemptResult, q: SpineQuestion) => void>(
+    () => {}
+  );
   const continueTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // live streaming flag (state is stale inside timers) + queued auto-continue
   const streamingRef = useRef(false);
@@ -416,6 +500,21 @@ export function ChatCore({
             kind: "say",
             localOnly: true,
             text: "Give it a try first or tell me if you need help.",
+          },
+        ]);
+        return;
+      }
+      // Socratic probing: a wrong answer left the LO confirmation-pending —
+      // the same FR-1214 shape as the guard above, for "not SOLVED yet"
+      // rather than "not tried yet". Never pending while the switch is off.
+      if (text === GOT_IT_SENTINEL && pendingConfirmationRef.current) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "note",
+            kind: "say",
+            localOnly: true,
+            text: "Let's make sure it clicked first — one more try on this before we move on.",
           },
         ]);
         return;
@@ -632,6 +731,45 @@ export function ChatCore({
           emitNewCites(acc);
           onAssistantDone?.(acc);
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
+          // SOCRATIC PROBING (`507bb31`): a chat-typed answer or an explicit
+          // "just tell me", tagged by the tutor with a directive, routed
+          // through the SAME grading pipeline a tapped card uses. Scoped to
+          // probingSurface — a no-op everywhere else, and everywhere while
+          // the switch is off, even if the model somehow emitted one.
+          if (probingSurface) {
+            const submittedGiven = extractAnswerSubmitted(acc);
+            const pendingNow = pendingConfirmationRef.current;
+            const targetQuestionId =
+              openQuestionIdRef.current ?? pendingNow?.questionId ?? null;
+            if (submittedGiven != null && targetQuestionId) {
+              const openQ = lookupQuestion?.(targetQuestionId);
+              // Widgets grade from the construction itself (ADR-0009), never
+              // from typed text.
+              if (openQ && openQ.questionType !== "widget") {
+                try {
+                  const r = await submitAttempt({
+                    questionId: openQ.id,
+                    givenAnswer: submittedGiven,
+                    // storage only here, never part of grading
+                    timeMs: 0,
+                    ...(pendingNow?.loId === openQ.loId
+                      ? { retryOfAttemptId: pendingNow.lastAttemptId }
+                      : {}),
+                  });
+                  setExternalAttempt({ questionId: openQ.id, result: r });
+                  handleAttemptRef.current(r, openQ);
+                } catch (e) {
+                  console.error("chat-typed answer submission failed:", e);
+                }
+              }
+            } else if (hasRevealAnswerDirective(acc)) {
+              // Bail-out: force the same reveal the 2-attempt cap would
+              // produce. A no-op if nothing is pending yet.
+              setPendingConfirmation((prev) =>
+                prev ? { ...prev, wrongCount: Math.max(prev.wrongCount, 2) } : prev
+              );
+            }
+          }
           if (metaBuf.capped) {
             setCapped(true);
             onCapped?.();
@@ -697,6 +835,8 @@ export function ChatCore({
       onAssistantDone,
       onFinishDirective,
       onCapped,
+      probingSurface,
+      lookupQuestion,
     ]
   );
 
@@ -746,9 +886,55 @@ export function ChatCore({
         bandBefore === bandAfter
           ? `still ${bandAfter}`
           : `${bandBefore} → ${bandAfter}`;
-      const note = `${r.isCorrect ? "✓" : "✗"} the student answered ${q.id} ${
+      let note = `${r.isCorrect ? "✓" : "✗"} the student answered ${q.id} ${
         r.isCorrect ? "correctly" : "incorrectly"
       }${r.isCorrect ? "" : ` (correct answer: ${r.correctAnswer})`} — ${bandNote} (for you only: never say the band, a score or a percentage to the student)`;
+
+      // SOCRATIC PROBING (`507bb31`, Route B + Option 1). With probing on,
+      // the card withholds the reveal and the matched material rides into
+      // the TUTOR's next turn as reference-only context, until the 2nd wrong
+      // attempt on the same LO. Scoring is untouched: bktUpdate() already ran
+      // server-side. Nothing here runs while the switch is off.
+      const wasPending = pendingConfirmationRef.current;
+      const wrongCountAfter =
+        wasPending?.loId === q.loId ? wasPending.wrongCount + 1 : 1;
+      if (probingSurface) {
+        if (!r.isCorrect) {
+          const material = r.refutation
+            ? r.refutation.steps.map((st) => st.text_md).join(" ")
+            : r.solution.length > 0
+              ? r.solution.map((st) => `Step ${st.step}. ${stepText(st)}`).join(" ")
+              : null;
+          note +=
+            wrongCountAfter >= 2
+              ? `\nSOCRATIC PROBE — REVEALED — ${q.loId}: that's two attempts without landing it. The card is now showing the student the correct answer and the reference material directly — stop withholding. Walk the student through it PLAINLY, in the material's own steps, in order (never just the final value): ${
+                  material ??
+                  "no reviewed material matches this specific error — walk the LO's own definition through to the correct answer instead, still step by step."
+                } Once the student seems ready, your next check on ${q.loId} must still be a fresh same-tier question before you can treat it as resolved.`
+              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote or assert it until the student has engaged with at least one guiding question, or explicitly asks you to just say it): ${
+                  material ??
+                  "no reviewed material matches this specific error — reason from the LO's own definition instead, still without stating the answer outright."
+                } Ask ONE short guiding question toward it now.`;
+        } else if (wasPending?.loId === q.loId) {
+          note += `\n✓ confirmation received for ${q.loId} — resolved, safe to move on.`;
+        }
+      }
+      setPendingConfirmation((prev) => {
+        if (!probingSurface) return prev;
+        if (r.isCorrect) return prev?.loId === q.loId ? null : prev;
+        // one open probe at a time: a wrong answer on a DIFFERENT LO leaves
+        // the earlier one authoritative
+        if (!prev || prev.loId === q.loId) {
+          return {
+            loId: q.loId,
+            lastAttemptId: r.attemptId,
+            wrongCount: wrongCountAfter,
+            questionId: q.id,
+          };
+        }
+        return prev;
+      });
+
       setMessages((prev) => [
         ...prev,
         { role: "note", kind: "event", text: note },
@@ -773,8 +959,13 @@ export function ChatCore({
       onAttemptResult?.(r, q);
       scheduleContinue();
     },
-    [onAttemptResult, scheduleContinue, lessonSurface, arabicUi]
+    [onAttemptResult, scheduleContinue, lessonSurface, arabicUi, probingSurface]
   );
+  // Same commit-time mirror as `pendingConfirmationRef` above; its one
+  // reader is the stream's completion callback.
+  useLayoutEffect(() => {
+    handleAttemptRef.current = handleAttempt;
+  }, [handleAttempt]);
 
   /** Widget cards report their outcome here → visible note + next AI beat. */
   const handleWidgetNote = useCallback(
@@ -858,6 +1049,11 @@ export function ChatCore({
             resolveCite={resolveCite}
             onCiteClick={onCiteClick}
             onAttempt={handleAttempt}
+            probing={probingSurface}
+            pendingLoId={pendingConfirmation?.loId ?? null}
+            pendingAttemptId={pendingConfirmation?.lastAttemptId ?? null}
+            pendingWrongCount={pendingConfirmation?.wrongCount ?? null}
+            externalAttempt={externalAttempt}
             renderWidget={renderWidget}
             renderPassage={renderPassage}
             onWidgetNote={handleWidgetNote}
@@ -872,13 +1068,50 @@ export function ChatCore({
 
       {/* suggestion chips — stay clickable after every stream */}
       {suggestions.length > 0 && !capped && (
-        <div className="flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3">
+        <div
+          className={
+            suggestionLayout === "stacked"
+              ? "flex flex-col gap-0.5 px-4 pb-1 pt-2"
+              : "flex flex-wrap gap-2 border-t border-line-soft px-4 pb-2 pt-3"
+          }
+        >
+          {suggestionLayout === "stacked" && (
+            <p className="mb-1 px-1 font-display text-[0.72rem] font-bold leading-none text-[color:var(--play-text-muted)]">
+              Try asking
+            </p>
+          )}
           {suggestions.map((s) => {
             const label = typeof s === "string" ? s : s.label;
+            const onSelect = () => (typeof s === "string" ? send(s) : s.onSelect());
+            if (suggestionLayout === "stacked") {
+              /* A suggestion, not a control-shaped primary: no outline, no
+                 shadow, no amber — the composer's send keeps the one amber.
+                 Still a real <button> holding the touch floor. Its label is
+                 under 0.9rem, so `--play-text-muted`, not ink-soft.
+                 RTL: "›" is a Bidi_Mirrored character, so in a right-to-left
+                 run it already DRAWS as "‹" — rotating it too would flip it
+                 back. Only the hover nudge is physical, so it reverses. */
+              return (
+                <button
+                  key={label}
+                  onClick={onSelect}
+                  disabled={streaming}
+                  className="group flex min-h-[var(--noor-touch-min)] w-full items-center gap-2 rounded-[var(--play-radius-sm)] px-1 text-start font-display text-[0.88rem] font-bold leading-[1.4] text-[color:var(--play-text-muted)] transition-colors duration-150 enabled:hover:bg-card-warm enabled:hover:text-ink disabled:opacity-40"
+                >
+                  <span
+                    aria-hidden
+                    className="shrink-0 text-ink-faint transition-transform duration-150 group-enabled:group-hover:translate-x-0.5 rtl:group-enabled:group-hover:-translate-x-0.5"
+                  >
+                    ›
+                  </span>
+                  <span className="min-w-0">{label}</span>
+                </button>
+              );
+            }
             return (
               <button
                 key={label}
-                onClick={() => (typeof s === "string" ? send(s) : s.onSelect())}
+                onClick={onSelect}
                 disabled={streaming}
                 className={cx(CHIP_CONTROL, "text-start")}
               >
@@ -961,6 +1194,11 @@ const MessageRow = memo(function MessageRow({
   resolveCite,
   onCiteClick,
   onAttempt,
+  probing,
+  pendingLoId,
+  pendingAttemptId,
+  pendingWrongCount,
+  externalAttempt,
   onOpenQuestion,
   renderWidget,
   renderPassage,
@@ -982,6 +1220,12 @@ const MessageRow = memo(function MessageRow({
   resolveCite?: (c: Cite) => CiteInfo | null;
   onCiteClick?: (c: Cite) => void;
   onAttempt: (r: AttemptResult, q: SpineQuestion) => void;
+  /** Socratic-probing prototype: forwarded to ChatQuestionCard (see there) */
+  probing: boolean;
+  pendingLoId: string | null;
+  pendingAttemptId: number | null;
+  pendingWrongCount: number | null;
+  externalAttempt: { questionId: string; result: AttemptResult } | null;
   onOpenQuestion?: (qid: string) => void;
   renderWidget?: ChatCoreProps["renderWidget"];
   renderPassage?: ChatCoreProps["renderPassage"];
@@ -1107,6 +1351,16 @@ const MessageRow = memo(function MessageRow({
                   lang={arabicUi ? "ar" : "en"}
                   onResult={onAttempt}
                   onOpenQuestion={onOpenQuestion}
+                  probing={probing}
+                  revealAnswer={pendingLoId === q.loId && (pendingWrongCount ?? 0) >= 2}
+                  retryOfAttemptId={
+                    pendingLoId === q.loId ? (pendingAttemptId ?? undefined) : undefined
+                  }
+                  externalResult={
+                    externalAttempt && externalAttempt.questionId === q.id
+                      ? externalAttempt
+                      : undefined
+                  }
                 />
               ) : (
                 <p key={i} className="my-1 font-mono text-[0.72rem] text-ink-faint">
@@ -1221,7 +1475,7 @@ function SubjectHandoffCard({
           </>
         ) : (
           <>
-            That's a <strong>{label}</strong> question — want to open that subject, or stay
+            That&apos;s a <strong>{label}</strong> question — want to open that subject, or stay
             here and come back to it later?
           </>
         )}

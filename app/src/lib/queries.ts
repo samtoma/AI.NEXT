@@ -12,6 +12,7 @@ import type {
 } from "./types";
 
 import { spineSubjectOf } from "./subjects";
+import { PREREQ_GATE } from "./progression";
 
 /**
  * Every function here mixes curriculum reads (no policies — the graph is not
@@ -251,13 +252,16 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
   let currentDate = "";
   for (const row of masteryRes.rows) {
     const lo = row.lo_id as string;
+    const systemFrom = new Date(row.system_from).toISOString();
     if (!baseline.has(lo)) {
       baseline.set(lo, Number(row.score));
-      baselineDate = new Date(row.system_from).toISOString();
+      // earliest diagnostic row across all LOs, not just the last one seen
+      if (!baselineDate || systemFrom < baselineDate) baselineDate = systemFrom;
     }
     if (row.system_to === null) {
       current.set(lo, Number(row.score));
-      currentDate = new Date(row.system_from).toISOString();
+      // most recent open row across all LOs — the true "as of now"
+      if (!currentDate || systemFrom > currentDate) currentDate = systemFrom;
     }
   }
 
@@ -348,7 +352,10 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
 /* Student plan builder                                                */
 /* ------------------------------------------------------------------ */
 
-const PREREQ_GATE = 0.5;
+// PREREQ_GATE moved to lib/progression.ts (ADR-0020) so the plan builder and
+// the lesson-progression walk share one definition of "prerequisites met".
+// It lives there, not here, because that module is pure and this one opens a
+// connection pool — the import has to point this way round.
 const REVIEW_FLOOR = 0.72;
 
 function pickTierFor(score: number): Tier {

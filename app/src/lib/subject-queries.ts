@@ -3,6 +3,7 @@ import type { PoolClient } from "pg";
 import { pool, sequential } from "./db";
 import { visibleCoursesFor } from "./catalog-queries";
 import { scoped, type Db } from "./student-context";
+import { MODULE_ORDER } from "./module-order";
 import {
   compareSpineSubjects,
   displayLabelOfSpineKey,
@@ -86,8 +87,7 @@ async function subjectSummariesOn(
        LEFT JOIN mastery ms
          ON ms.lo_id = lo.id AND ms.student_id = $1 AND ms.system_to IS NULL
        WHERE lo.kind = 'learning_objective'
-       ORDER BY CASE WHEN m.id LIKE 'module:geo%' THEN 1 ELSE 0 END,
-                m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`,
+       ORDER BY ${MODULE_ORDER}`,
       [studentId]
     ),
     () => db.query(

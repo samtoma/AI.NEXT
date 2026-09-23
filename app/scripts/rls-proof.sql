@@ -52,6 +52,7 @@ UNION ALL SELECT 'mastery',              count(*) FROM mastery
 UNION ALL SELECT 'sessions',             count(*) FROM sessions
 UNION ALL SELECT 'analytics_events',     count(*) FROM analytics_events
 UNION ALL SELECT 'explanation_log',      count(*) FROM explanation_log
+UNION ALL SELECT 'student_progress',     count(*) FROM student_progress
 ORDER BY 1;
 
 \echo ''
@@ -71,6 +72,7 @@ BEGIN
     UNION ALL SELECT 1 FROM uploads
     UNION ALL SELECT 1 FROM understanding_checks
     UNION ALL SELECT 1 FROM mastery
+    UNION ALL SELECT 1 FROM student_progress
   ) s;
   IF n <> 0 THEN
     RAISE EXCEPTION 'PROOF FAILED: % row(s) visible with no principal set', n;

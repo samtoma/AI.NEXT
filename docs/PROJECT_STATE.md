@@ -1,7 +1,31 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-23 (`main`; released `v0.5.0`; constitution v3.1.1)
+> Last updated: 2026-09-23 (`main`; released `v0.6.0`; constitution v3.2.0)
+
+## 🚢 v0.6.0 — Tamer's work on `main`, deep-reviewed (2026-09-23)
+
+Tamer's `wip/socratic-probing-route-b` (12 commits) was rebuilt onto `main` in the
+`trial/tamer-onto-main` branch. It brings the `/spine` skill map, the "Up next" check-in card,
+mastery-gated lesson progression (ADR-0020, migration 028), the refutation TeX fix, and "stop
+guessing a misconception". Socratic probing merged **switched off** (migration 027). His port-3002
+launch entry was dropped, because 3002 is the console.
+
+Four independent reviews read every change before merge (student flows, database and privacy,
+design and copy, probing). They found no P0, several P1s, and a latent outage in 028's backfill
+(the backfill is removed). All of it was fixed; 704/704 tests pass, both builds pass, migrations
+re-run cleanly three times, and per-student isolation holds on `student_progress`.
+
+**Open, by owner:**
+- **Samuel:**
+  - Socratic probing blockers before switching it on: #53. The two worst are credit a student did
+    not earn, and a lesson that can stall.
+  - Tutor prompt wording still says "HUMAN-REVIEWED": #51 (reverted per ADR-0020's "no prompt
+    changes").
+  - Master: #46–#50.
+- **Pre-existing, found in passing:** #54.
+- **Nobody has seen the redesigned screens signed in.** A founder should walk `/student` and
+  `/spine` at desktop and iPad portrait.
 
 ## 📚 THE WHOLE MATHS BANK, LIVE — rule changed (2026-09-23, `main`)
 
@@ -422,6 +446,39 @@ Ten fixed in this pass, on top of the seven in v0.3.0. The three worth knowing:
 [#15](https://github.com/samtoma/AI.NEXT/issues/15) — does `/spine` stay a student surface
 at all? · [#36](https://github.com/samtoma/AI.NEXT/issues/36) — how much grounding should
 a student see?
+
+## 🧭 SOCRATIC PROBING — prototype, unmerged, blocked on a Samuel ruling (2026-09-20, `wip/socratic-probing-route-b`)
+
+First move on the Socratic cluster named in the release below (`SC-005`,
+feedback rows 029/030). **Not a decision, not landed anywhere real** — a
+working prototype on its own branch (off `wip/q3-q4-explore`), built to make
+the open question concrete rather than resolve it. Full detail:
+[`docs/reviews/2026-09-19-prototype-1.1-feedback-triage.md`](reviews/2026-09-19-prototype-1.1-feedback-triage.md)'s
+2026-09-20 addendum.
+
+**What it does:** a wrong answer in the learn-mode lesson no longer
+auto-reveals its refutation/canonical solution — the tutor asks a guiding
+question first, grounded in the same reviewed material but never stating it
+outright, and the LO stays "confirmation-pending" (session-scoped, `mastery`
+untouched) until a fresh same-tier question on it is answered correctly.
+Verified live end to end (wrong attempt → two genuine guiding turns → correct
+same-tier retry, `stance_used='probe'` + `retry_of_attempt_id` linking the
+two in `attempts`, migration 011 — renumbered **027** when brought onto `main`).
+
+**Why it isn't just a fix:** it breaks a previously-absolute rule — the
+model's live words have never before been the graded explanation, only
+narration around a deterministically-served reviewed entry. Constitution
+Principle II requires grounded explanations with receipts; ADR-0007/0008's
+exception is scoped to offline pipeline content flagged `reviewed=false`, not
+live per-turn generation. Needs a scope ruling from Samuel (a probing
+question isn't a claim → fine as-is) or a new ADR. Until then this stays a
+branch, not a fix rows 029/030 close on.
+
+**On `main` (2026-09-23 trial merge):** the code is in, switched **off** —
+`SOCRATIC_PROBING_ENABLED = false` in `app/src/lib/socratic-probing.ts`. Off means
+the card reveals on a wrong answer exactly as before, the learn prompt is main's byte for
+byte, and `/api/attempts` ignores `retryOfAttemptId`. Flipping it is one edit and waits on
+the same ruling.
 
 ## 🏷️ RELEASE PREPARED — `PDR1-0-v0.3.0` (2026-09-20, `PDR1-0`)
 
@@ -966,6 +1023,23 @@ Web Speech API is inherently robotic (plays OS voices; weak for Arabic). Added a
 
 ## Demo v2 additions (2026-07-17 evening, for co-founder demo)
 - **/pipeline "The Digestion":** 5-stage visual story of book→spine — real scanned pages + sha256 passport, actual Pydantic schema contract, reviewed question with stamp, graph summary, and a real grounding slice from ai_interactions ("178 pages in 5,225 tokens" with live token/cost receipt).
+- **/student lesson progression (ADR-0020; ADR-0012 on Tamer's branch):** the check-in opens on a **persisted per-student,
+  per-course pointer** (`student_progress`, migration 028 on `main`; 012 on the branch), not the old constant. The pointer
+  advances when **every** LO in the current lesson reaches 0.75, to the next lesson in catalogue
+  order whose prerequisites are met; it is monotonic (never walks back when mastery drops) and
+  parks on the course's last lesson, where the card shows a "whole course" banner above the doors
+  — only when **every** lesson in the course passes the gate; a pointer with nothing ready ahead
+  mid-course parks without completing. **No backfill** (ADR-0020 amendment, 2026-09-23): every
+  student starts on each course's first lesson.
+  The lesson just completed stays on screen as a **collapsed "✓ ... Revisit" row** above the card
+  (nearest earlier gate-passing lesson, derived — no stored history), because the gate can cross
+  before the student taps Finish. An explicit `?lesson=` still wins, and suppresses that row.
+  The card also **names any objective with no attempt yet** ("X hasn't come up yet"), shown only
+  once a lesson is part-done: review mode scripts its questions from `los.slice(0, 3)`, so on a
+  four-objective lesson (`u1-1`, `u3-1`, `u3-2`, `u4-2`, `t2u1-1`) a clean review can score
+  `got_it` and still leave the lesson unfinished, with nothing otherwise explaining why.
+  Fixed in passing: `MODULE_ORDER` interleaved Term 1 and Term 2
+  (both number their first unit 1), so the catalogue ran t2u1-1 → u1-1 → t2u1-2 → u1-2 …
 - **/student adaptive check-in:** "How did today's lesson go?" → **Learn mode** (AI-led interactive lesson: teaching beats, pair_plotter + product_builder widgets, check questions, 14-turn cap) or **Review mode** (non-annoying: 3 quick checks + 1 widget, hard 5-turn cap) or quiet practice. Both end in an AI-graded **comprehension report card** (0–100 score dial, verdict stamp, strengths/gaps, next step → `understanding_checks` table, migration 003). **Voice:** browser TTS + mic (Web Speech API, feature-gated, no keys).
 - **Cost datapoints:** full learn session ≈ $0.17 (≈EGP 8) incl. rating; review ≈ $0.10; spine chat ≈ $0.045/turn. Caps bound worst case; per-mode budget lines needed for any student-facing version.
 
@@ -1007,6 +1081,7 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0015 | One interaction timeline per student per session, replayed by reconstruction; every operator read audited | ✅ Accepted 2026-09-20 |
 | ADR-0016 | Analytics and monitoring: three layers, one system of record — first-party events, anonymous GA4 as audience layer, console as presentation | ✅ Accepted 2026-09-20 |
 | ADR-0017 | Two design-system variants ship — Play and Master, one per render, keyed to the student's grade with a stored override; amends ADR-0011's "Master is replaced" | ✅ Accepted 2026-09-20 |
+| ADR-0020 | Mastery-gated lesson progression — persisted per-student-per-course lesson pointer, advances when every LO ≥ 0.75; `/student` no longer opens on a constant (Tamer's ADR-0012 on `wip/socratic-probing-route-b`, renumbered on `main`) | ✅ Accepted — Samuel, 2026-09-23, by approving the merge onto `main` · amended same day: no backfill, stricter "complete" |
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·

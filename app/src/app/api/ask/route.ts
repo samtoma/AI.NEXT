@@ -101,7 +101,7 @@ const TURN_CAPS: Record<Surface, number | null> = {
 
 const CAP_MESSAGES: Partial<Record<Surface, string>> = {
   student_chat:
-    "We've walked through this one together twice now — that's my limit, on purpose. The canonical steps above are the reviewed ground truth, and they're the best guide from here: read them once more, slowly, saying each step out loud. Then move on and come back to this topic tomorrow — spacing helps more than a third explanation would. You're closer than you think.",
+    "We've walked through this one together twice now — that's my limit, on purpose. The canonical steps above are the ground truth, and they're the best guide from here: read them once more, slowly, saying each step out loud. Then move on and come back to this topic tomorrow — spacing helps more than a third explanation would. You're closer than you think.",
   lesson_learn:
     "That's a full lesson's worth of work for one evening — let's stop here and see how far you've come. Tap Finish for your report.",
   lesson_review:

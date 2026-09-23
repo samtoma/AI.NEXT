@@ -9,6 +9,8 @@ import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import { currentSessionOrNull } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { evaluateArithmeticExpression } from "@/lib/arithmetic";
+import { acceptedRetryOf } from "@/lib/socratic-probing";
+import { advanceIfMastered } from "@/lib/progression-db";
 
 /**
  * A refusal decided INSIDE the unit of work.
@@ -68,13 +70,22 @@ export async function POST(req: Request) {
      *  Answering one materialises it (ADR-0009 §3) so that nothing can move a
      *  reported number without leaving a reviewable artefact. */
     inlineWidget?: { kind: string; spec: Record<string, unknown>; loId: string; stem: string };
+    /** Socratic-probing prototype (`507bb31`): set by the client when this
+     *  attempt is the same-tier sibling question served to confirm
+     *  understanding after a wrong answer put the LO into
+     *  confirmation-pending (ChatCore's `pendingConfirmation`). Links the
+     *  retry back to the attempt it is confirming — correct or not — so a
+     *  probe cycle is reconstructible from `attempts` alone (migration 027).
+     *  **Ignored while `SOCRATIC_PROBING_ENABLED` is false** — see
+     *  `lib/socratic-probing.ts`. */
+    retryOfAttemptId?: number;
   };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "invalid JSON body" }, { status: 400 });
   }
-  const { questionId, givenAnswer, timeMs, predicate, inlineWidget } = body;
+  const { questionId, givenAnswer, timeMs, predicate, inlineWidget, retryOfAttemptId } = body;
   if (!questionId || typeof givenAnswer !== "string") {
     return NextResponse.json(
       { error: "questionId and givenAnswer are required" },
@@ -150,7 +161,7 @@ export async function POST(req: Request) {
       const qRes = await client.query(
         `SELECT q.id, q.lo_id, q.question_type, q.correct_answer, q.choices,
                 q.canonical_solution, q.solution_version, n.label AS lo_label,
-                c.id AS course_id
+                c.id AS course_id, (q.reviewed_by IS NOT NULL) AS solution_reviewed
          FROM questions q
          JOIN graph_nodes n ON n.id = q.lo_id
          LEFT JOIN graph_edges te
@@ -244,6 +255,28 @@ export async function POST(req: Request) {
         client
       );
 
+      // Socratic-probing prototype (`507bb31`): the attempt this one confirms,
+      // if any. `acceptedRetryOf` answers null while the switch is off, so
+      // nothing below changes for any client until Samuel rules. When it is
+      // on, the id must name a WRONG attempt of THIS student's on THIS
+      // question's objective — the only thing a probe cycle ever retries (the
+      // client links a retry to its pending LO's last wrong attempt). Anything
+      // else is dropped rather than written as a false edge. The student is
+      // checked twice on purpose: RLS already hides another child's attempt
+      // under her principal (ADR-0012), and `student_id = $2` keeps the
+      // statement correct on its own if it is ever run on another connection.
+      let retryOf = acceptedRetryOf(retryOfAttemptId);
+      if (retryOf !== null) {
+        const own = await client.query(
+          `SELECT 1 FROM attempts a
+             JOIN questions tq ON tq.id = a.question_id
+            WHERE a.id = $1 AND a.student_id = $2
+              AND a.is_correct = false AND tq.lo_id = $3`,
+          [retryOf, studentId, q.lo_id]
+        );
+        if (own.rowCount === 0) retryOf = null;
+      }
+
       // 1. record the attempt
       // `diagnosis_type` records HOW the outcome was determined. `confidence` is
       // deliberately left NULL unless a distractor named the error outright —
@@ -252,8 +285,13 @@ export async function POST(req: Request) {
       const attemptRes = await client.query(
         `INSERT INTO attempts
            (student_id, question_id, session_id, given_answer, is_correct, time_ms,
-            attempted_at, diagnosis_type, misconception_id, stance_used, confidence, modality)
-         VALUES ($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11)
+            attempted_at, diagnosis_type, misconception_id, stance_used, confidence, modality${
+              // The column is named only when a link exists, so with the
+              // switch off this statement is exactly main's and does not
+              // depend on migration 027 having run.
+              retryOf !== null ? ", retry_of_attempt_id" : ""
+            })
+         VALUES ($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11${retryOf !== null ? ", $12" : ""})
          RETURNING id`,
         [
           studentId,
@@ -270,7 +308,10 @@ export async function POST(req: Request) {
                 : "distractor_diagnosed"
               : "deterministic_grade_incorrect",
           misconceptionId,
-          isCorrect ? "confirm" : "re_explain",
+          // A confirmation-retry (Socratic probing) is tagged "probe"
+          // regardless of outcome — a distinct teaching stance, not a third
+          // verdict. Unreachable while the switch is off (retryOf is null).
+          retryOf !== null ? "probe" : isCorrect ? "confirm" : "re_explain",
           // Confidence 1 for both: neither is inferred. A distractor carries a
           // label the student clicked; a predicate is a geometric fact about
           // what they built. Reading a label is not guessing.
@@ -279,6 +320,7 @@ export async function POST(req: Request) {
           // and this column is what keeps that auditable — every comparison
           // metric can be recomputed with and without them.
           isWidget ? "widget" : "question",
+          ...(retryOf !== null ? [retryOf] : []),
         ]
       );
       const attemptId = attemptRes.rows[0].id;
@@ -358,10 +400,43 @@ export async function POST(req: Request) {
         );
       }
 
+      // 4. advance the lesson pointer if this attempt just completed the lesson
+      // (Tamer's mastery-gated progression, ADR-0020 on main). Inside the unit
+      // of work deliberately: the mastery write and the advance it implies
+      // commit together, so a student never ends up mastered-but-not-advanced
+      // because the request died between two writes. Same client, so the
+      // advance sees the mastery row written above and runs under the same
+      // student principal (ADR-0012).
+      //
+      // Only a CORRECT answer can cross the gate, so the catalogue read — which
+      // is not cheap — is skipped entirely on the common path.
+      //
+      // Under a SAVEPOINT (trial merge): a failure in the pointer code rolls
+      // back the pointer alone and leaves the graded attempt exactly as main
+      // writes it. The pointer is a convenience; the attempt is the student's
+      // evidence. It is NOT a shim for a database without migration 028 —
+      // production applies every migration before the app starts
+      // (deploy/apply-migrations.sh, the compose `migrate` service), and
+      // /student reads the pointer with no such cover.
+      let advancedTo: string | null = null;
+      if (isCorrect) {
+        await client.query("SAVEPOINT lesson_progress");
+        try {
+          advancedTo = await advanceIfMastered(client, studentId, q.lo_id);
+          await client.query("RELEASE SAVEPOINT lesson_progress");
+        } catch (err) {
+          await client.query("ROLLBACK TO SAVEPOINT lesson_progress");
+          console.error("lesson pointer advance failed (attempt kept):", err);
+          advancedTo = null;
+        }
+      }
+
       // The unit of work ends here: `withPrincipal` COMMITs on return. Everything
       // below used to run after the explicit COMMIT and still does — it just
       // does it outside the callback rather than after a statement.
       return {
+        advancedTo,
+        attemptId: Number(attemptId),
         q,
         isWidget,
         isCorrect,
@@ -374,6 +449,8 @@ export async function POST(req: Request) {
     });
 
     const {
+      advancedTo,
+      attemptId,
       q,
       isWidget,
       isCorrect,
@@ -412,17 +489,46 @@ export async function POST(req: Request) {
       // Ask for THE refutation of the error she actually made, not whichever
       // entry this objective happens to have first. Serving a refutation of a
       // mistake the student did not make is worse than serving the plain
-      // solution: it corrects something she never thought.
+      // solution: it corrects something she never thought — so an undiagnosed
+      // error (a numeric answer, or an MCQ distractor with no misconception
+      // label) skips the library entirely and falls back to the canonical
+      // solution client-side (FR-305), rather than guessing at one of the
+      // LO's OTHER misconceptions.
       const entries = misconceptionId
         ? await getLibraryEntries([q.lo_id], {
             misconceptionId,
             entryTypes: ["refutation", "contrasting_case"],
           })
-        : await getLibraryEntries([q.lo_id], {
-            entryTypes: ["refutation", "contrasting_case"],
-          });
+        : [];
       if (entries.length === 0) {
-        void flagAuthoringGap(studentId, misconceptionId);
+        // An AUTHORING GAP is a misconception the question names with no
+        // refutation written for it (FR-305) — something an author can fix.
+        // An undiagnosed error is not one: there is no misconception to write
+        // a refutation OF, so flagging it would bury the real gaps under one
+        // flag per wrong numeric answer.
+        if (misconceptionId) void flagAuthoringGap(studentId, misconceptionId);
+        // The student is shown the question's worked solution instead
+        // (client-side, from `solution` below), and that is an explanation
+        // delivered as much as a refutation is. Before the undiagnosed path
+        // stopped borrowing another misconception's entry this event fired
+        // for it; it now fires for what is actually shown, typed so a
+        // refutation-only count stays one filter away.
+        if (solution.length > 0) {
+          void emit({
+            event: "explanation_delivered",
+            studentId,
+            properties: {
+              lo_id: q.lo_id,
+              entry_id: null,
+              entry_type: "canonical_solution",
+              misconception_id: misconceptionId,
+              // The question's own review stamp (ADR-0019 keeps it in the
+              // data): SC-011 counts unreviewed teaching SEEN, and a worked
+              // solution nobody has read is exactly that.
+              reviewed: q.solution_reviewed === true,
+            },
+          });
+        }
       } else {
         const chosen = entries[0];
         const content = chosen.content as
@@ -467,6 +573,7 @@ export async function POST(req: Request) {
     });
 
     const result: AttemptResult = {
+      attemptId,
       isCorrect,
       correctAnswer: q.correct_answer,
       solution,
@@ -478,6 +585,7 @@ export async function POST(req: Request) {
       // error was not one the question names — which is the honest answer, not
       // a gap to fill with the nearest entry.
       modality: isWidget ? "widget" : "question",
+      advancedTo,
       diagnosis: misconceptionId
         ? { misconceptionId, via: isWidget ? predicate! : givenAnswer }
         : null,

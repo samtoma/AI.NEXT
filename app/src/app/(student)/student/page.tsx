@@ -6,6 +6,8 @@ import { getSubjectSummaries } from "@/lib/subject-queries";
 import { decideLanding } from "@/lib/student-landing";
 import { courseIdOfSpineKey } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
+import { getCurrentLesson, isCourseComplete } from "@/lib/progression-db";
+import { previousCompletedSlug, untriedObjectives } from "@/lib/progression";
 import {
   deriveMasteryStage,
   deriveRecommendation,
@@ -139,7 +141,40 @@ export default async function StudentPage({
   //
   // `getSubjectSummaries` is now read only when the home is actually rendered,
   // so the other branches lost a query rather than gained one.
-  const landing = decideLanding({ subject, courseId, lessonSlug, lessons: allLessons });
+  //
+  // THE PERSISTED POINTER (Tamer's mastery-gated progression, ADR-0020). The
+  // check-in's lesson used to be the course's first catalogue row, which is
+  // why every student saw the same first lesson however much she had
+  // mastered. It is now her stored pointer for the course — read from the
+  // GATED catalogue, so a pointer into a course she may not see is never
+  // offered — and `decideLanding` still makes the decision: an explicit
+  // ?lesson= wins over the pointer (the 2026-07-30 field report, "picking
+  // another lesson brings me back"), and a pointer that is not in her list
+  // falls back to the first lesson exactly as before.
+  //
+  // The course is unambiguous when ?subject= names one, or when her gated
+  // catalogue holds exactly one course. With several courses and no subject
+  // the landing is the subject home and no pointer is read.
+  //
+  // No fallback for a database without `student_progress` (migration 028),
+  // deliberately: production applies every migration before the app starts
+  // (deploy/apply-migrations.sh), so a missing table fails the deploy rather
+  // than reaching this read.
+  const courses = [
+    ...new Set(allLessons.map((l) => l.courseId).filter((c): c is string => !!c)),
+  ];
+  const pointerCourse = courseId ?? (courses.length === 1 ? courses[0] : null);
+  const pointer =
+    !lessonSlug && pointerCourse
+      ? await getCurrentLesson(studentId, pointerCourse, allLessons)
+      : null;
+  const landing = decideLanding({
+    subject,
+    courseId,
+    lessonSlug,
+    lessons: allLessons,
+    pointer,
+  });
 
   if (landing.screen === "refused") notFound();
 
@@ -169,11 +204,39 @@ export default async function StudentPage({
   // Offer the readable «شرح الدرس» door only when this lesson has a bundle.
   const hasContent = (await getLessonContent(lesson.slug)) !== null;
 
+  // The lesson just finished, kept visible as a collapsed row above the card
+  // so a completed lesson does not simply vanish when the pointer moves on.
+  // Free: `allLessons` already carries this student's mastery on every
+  // objective. Suppressed when she arrived via an explicit ?lesson= — that
+  // link is a deliberate choice of what to look at.
+  const justFinished =
+    !lessonSlug && pointerCourse
+      ? (() => {
+          const inCourse = allLessons.filter((l) => l.courseId === pointerCourse);
+          const slug = previousCompletedSlug(inCourse, lesson.slug);
+          return slug ? (inCourse.find((l) => l.slug === slug) ?? null) : null;
+        })()
+      : null;
+
+  // Terminal state — this is the course's last lesson and every lesson in the
+  // course passes the gate (`courseComplete`, lib/progression.ts). NOT "no
+  // later lesson is ready": that is also true of a student parked mid-course.
+  const courseComplete = await isCourseComplete(
+    studentId,
+    lesson.slug,
+    lesson.courseId
+  );
+
   // Check-in card derivation (Noor Play brief). recommendationReason is
   // logged here and stops here — it must never become a prop, so a client
   // component can never render it (docs/design/handoffs/noor-play).
   const masteryStage = deriveMasteryStage(lesson.los);
   const weakestSubskill = deriveWeakestSubskill(lesson.los);
+  // Why a clean review can leave a lesson unfinished: review mode scripts
+  // its questions from the first three objectives only, so a fourth never
+  // gets an attempt and the gate cannot cross. Naming it beats leaving the
+  // student to infer it from a card that did not move.
+  const untried = untriedObjectives(lesson.los);
   const recommendation = deriveRecommendation(masteryStage);
   const estimates = estimateMinutes(lesson.los, lesson.questions.length);
   console.info(
@@ -192,6 +255,17 @@ export default async function StudentPage({
       recommendation={recommendation}
       estimates={estimates}
       completedToday={false /* no real "attempted today" signal yet — never inferred from time of day */}
+      courseComplete={courseComplete}
+      untriedSubskills={untried}
+      justFinished={
+        justFinished
+          ? {
+              slug: justFinished.slug,
+              ref: justFinished.ref,
+              title: justFinished.title,
+            }
+          : null
+      }
       trial={null /* no trial/subscription model in this MVP — chip stays hidden */}
     />
   );

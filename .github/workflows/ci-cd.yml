@@ -350,7 +350,7 @@ jobs:
           VERSION="$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' app/package.json | head -1)"
           SHA="$(git rev-parse --short HEAD)"
           TAG="$(git describe --tags --exact-match 2>/dev/null || true)"
-          RELEASE_TAG="${TAG:-PDR1-0-v${VERSION}+${SHA}}"
+          RELEASE_TAG="${TAG:-v${VERSION}+${SHA}}"
           echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
           echo "deploying $RELEASE_TAG"
 

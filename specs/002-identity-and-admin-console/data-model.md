@@ -365,6 +365,10 @@ console — role checks in the application, the database grants the read), **`ai
 | `cost_daily` | no grant | S all | written by `ainext_maint` |
 | `guardians` | S where `student_id = app.student_id` | S all | nothing writes it this release |
 | content tables (`graph_nodes`, `graph_edges`, `questions`, `visuals`, `misconceptions`, `explanation_library`) | S | S | **no policies** — curriculum is not student data, and `parity_check.py` must keep reading it |
+| `course_availability` *(023, added after this matrix)* | S | S/I/U | **no policies** — a (course, grade) rule is product configuration, not student data (ADR-0018) |
+| `student_course_access` *(023)* | S where `student_id = app.student_id` | S/I/U/D all | a per-student override of the course gate, set from the console |
+| `feedback` *(025)* | S/I/U where `student_id = app.student_id` | S all | read by the console's Feedback page |
+| `student_progress` *(028, ADR-0020)* | S/I/U where `student_id = app.student_id` — **no D** | **no grant** | the lesson pointer is monotonic, so nothing deletes it; no console surface reads it, so the operator has no read to enumerate (add the grant, the policy and a `CROSS_STUDENT_READS` entry together when one does) |
 
 **The enumerated cross-student reads** (FR-2108) are exactly the `ainext_operator` "S all" rows above
 plus `cost_daily`; a read not on this list fails closed, because `ainext_app` has no policy that

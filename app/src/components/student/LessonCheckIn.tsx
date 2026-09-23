@@ -1,10 +1,16 @@
 import Link from "next/link";
 import type { LessonData, LessonInfo } from "@/lib/types";
 import { isRtlSubject, spineKeyOf, subjectDef } from "@/lib/subjects";
-import { masteryColor, MASTERY_LEGEND, pct } from "@/lib/mastery";
-import type { Recommendation } from "@/lib/checkin";
 import {
-  BADGE,
+  masteryColor,
+  MASTERY_LEGEND,
+  masteryPhrase,
+  pct,
+} from "@/lib/mastery";
+import { MasteryFill } from "@/components/MasteryFill";
+import { NoorMark } from "@/components/NoorMark";
+import { deriveMasteryStage, type Recommendation } from "@/lib/checkin";
+import {
   BUTTON_LABEL,
   BUTTON_TERTIARY,
   HEADING,
@@ -13,6 +19,7 @@ import {
   STICKER_PANEL,
   STROKE,
   STROKE_SM,
+  STROKE_WIDTH_SM,
   cx,
 } from "@/components/sticker";
 
@@ -26,6 +33,26 @@ type CheckInProps = {
   recommendation: Recommendation;
   estimates: { reteach: number; refresh: number };
   completedToday: boolean;
+  /** ADR-0020 terminal state: this lesson is mastered AND it is the last one
+   *  in the course, so the pointer has nowhere to advance to. Shown as a
+   *  banner ABOVE the doors, never instead of them — a student who has
+   *  finished everything must still be able to reopen the last lesson, or
+   *  "complete" becomes a dead end. */
+  courseComplete: boolean;
+  /** Objective labels in THIS lesson with no attempt yet, empty when the
+   *  lesson is untouched (see lib/checkin.ts). Rendered because a lesson
+   *  completes only when every objective is mastered, while review mode can
+   *  only ever ask about the first three — so a student can do everything
+   *  right and still watch the card not move. Naming what has not come up
+   *  makes that rule visible instead of mysterious. */
+  untriedSubskills: string[];
+  /** The lesson completed just before the current one, or null. Rendered as a
+   *  quiet collapsed row ABOVE the card: the pointer moving on should not make
+   *  the lesson the student just worked through disappear, and the gate can
+   *  cross before they even tap Finish — so without this, a student can come
+   *  back from a report card about 1-1 to a screen with no 1-1 on it. Null
+   *  when they arrived via an explicit ?lesson= (page.tsx decides that). */
+  justFinished: { slug: string; ref: string; title: string } | null;
   /** days remaining, or null when there is nothing to show (subscribed, or
    *  no trial model at all) — the chip must not exist in the DOM when null */
   trial: number | null;
@@ -51,17 +78,24 @@ type CheckInProps = {
  * bilingual layout below, per constitution Principle V — no Arabic-capable
  * surface is removed to ship English first.
  *
- * Both layouts wear the same Play anatomy from `components/sticker.ts`. The
- * Arabic one used to mix it with the Ledger's: one door card had a sticker
- * shadow and the other a soft viridian glow, a colour Play does not have
- * (review 2026-09-23, F17), and the file carried ~16 literal strokes, radii
- * and shadows. Every value is a token now; the recommended row keeps its
- * amber (`--noor-action` / `--noor-on-action`), the one amber on the screen.
+ * TRIAL MERGE (2026-09-23): the maths card is Tamer's after-school home
+ * redesign (`d8a659b`, `bba9edc`, `d23417a`) with main's Principle XII token
+ * rules re-applied — every stroke, radius, shadow and divider below is a Play
+ * token or a `components/sticker.ts` class, and targets hold the 52px
+ * `--noor-touch-min` floor. The Arabic/Social layout is main's, byte for byte
+ * (review 2026-09-23 F17): the branch still carried the pre-fix Ledger card.
  */
 export function LessonCheckIn(props: CheckInProps) {
   const { lesson, lessons, hasContent = false } = props;
   const social = isRtlSubject(lesson.subject);
-  if (social) return <SocialCheckIn lesson={lesson} lessons={lessons} hasContent={hasContent} />;
+  if (social)
+    return (
+      <SocialCheckIn
+        lesson={lesson}
+        lessons={lessons}
+        hasContent={hasContent}
+      />
+    );
   return <PlayCheckIn {...props} />;
 }
 
@@ -77,6 +111,9 @@ function PlayCheckIn({
   recommendation,
   estimates,
   completedToday,
+  courseComplete,
+  untriedSubskills,
+  justFinished,
   trial,
 }: CheckInProps) {
   const first = lesson.studentName.split(" ")[0];
@@ -84,193 +121,480 @@ function PlayCheckIn({
     .map((l) => l.sourcePage)
     .filter((p): p is number => p != null);
   const pageRange = pages.length
-    ? `p.${Math.min(...pages)}–${Math.max(...pages)}`
+    ? `P.${Math.min(...pages)}–${Math.max(...pages)}`
     : null;
+  // Term-2 geometry and Term-1 algebra both contain a "Unit 4", so the term
+  // has to be said out loud or the subtitle is ambiguous half the year.
+  const term = termOfSlug(lesson.slug);
 
   const modules = groupByModule(lessons);
   const q = (slug: string, subject?: LessonInfo["subject"]) =>
     `/student?${subject ? `subject=${spineKeyOf(subject)}&` : ""}lesson=${encodeURIComponent(slug)}`;
 
   return (
-    <div className="min-h-screen bg-paper">
-      {/* Rail/bottom-bar (companion mark) removed for now — top bar only.
-          Re-add per docs/design/handoffs/noor-play if it comes back. */}
-      <div>
-        <main className="mx-auto w-full px-6 py-10 min-[900px]:py-14 min-[1280px]:max-w-[860px]">
-          <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
-            <h1 className={cx(HEADING, "text-[1.75rem] min-[900px]:text-[2rem] min-[1280px]:text-[2.4rem]")}>
-              Hey, {first}
-            </h1>
-            {trial != null && (
-              <span className={cx(BADGE, "bg-card text-ink")}>
-                {trial} {trial === 1 ? "day" : "days"} left
+    <div className="flex min-h-full flex-col bg-paper">
+      {/* Topbar. The greeting moved OFF the h1 and into here, which is what
+          frees the h1 to ask a question instead of saying hello. It used to
+          read "AFTER SCHOOL · OMAR" — an assumption that the student is on
+          their school's track AND studying right after school, both wrong
+          for someone working ahead, catching up, or revising at 11pm. */}
+      <div className={cx(HONEY_BAND, "flex shrink-0 flex-wrap items-center gap-3 px-6 py-3.5")}>
+        <p className="font-display text-[1.15rem] font-extrabold leading-none text-ink">
+          Hi {first}
+        </p>
+        {/* Absent entirely when null — never "subscribed", never a zero. */}
+        {trial != null && (
+          <span
+            className={cx(
+              STROKE_SM,
+              "ms-auto rounded-[var(--play-radius-pill)] bg-card px-3 py-1.5 font-mono text-[0.7rem] uppercase leading-none text-ink sticker-shadow-sm"
+            )}
+          >
+            Trial · <span dir="ltr">{trial}</span>{" "}
+            {trial === 1 ? "day" : "days"}
+          </span>
+        )}
+      </div>
+
+      <main className="mx-auto flex w-full flex-1 flex-col gap-5 px-4 py-6 min-[900px]:px-8 min-[900px]:py-7 min-[1280px]:max-w-[860px]">
+        <div className="flex items-center gap-3.5">
+          {/* The companion is present, and carried by motion alone — bob is
+              idle and the only infinite loop the system permits. 44px, the
+              handoff's header/panel badge size (28 inline, 96 celebrating),
+              with the mark at NoorPanel's 28 inside it. */}
+          <span className={cx(STROKE, "anim-bob flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-card-warm sticker-shadow")}>
+            <NoorMark className="h-7 w-7" />
+          </span>
+          <h1 className={cx(HEADING, "text-[1.75rem] min-[1024px]:text-[2rem] min-[1280px]:text-[2.4rem]")}>
+            What do you want to work on today?
+          </h1>
+        </div>
+
+        {/* The lesson just finished — collapsed, still reachable.
+
+            Quiet by construction: no sticker shadow, a soft border and smaller
+            type, so it reads as context BEHIND the live card rather than a
+            second thing to choose. It is still a link — staying referenceable
+            is the whole point — and carries prefetch={false} like the doors,
+            so hovering never spends a server render on a lesson nobody opened.
+
+            It exists because the pointer can advance BEFORE the student taps
+            Finish: the gate needs only the last objective's check question
+            answered, with the closing recap still to come. Without this row a
+            student returns from a report card about 1-1 to a screen with no
+            1-1 anywhere on it.
+
+            The tick takes the ramp's own `mastered` colour rather than a new
+            green, so "finished" means the same thing here as in the segments
+            below. No red here either: a completed lesson has no failure state.
+
+            Restyled into the Play language after it arrived in the ledger one:
+            a 1.5px hairline on a soft-grey border with no shadow, its label in
+            mono uppercase, and a 44px target. On this page that reads as a
+            fragment of a different product sitting above the card. It is a
+            control — you press it and go somewhere — so it takes the sticker
+            treatment and the press the system gives controls, at one clear
+            tier below the card: a 2.5px stroke and a 3px shadow against the
+            card's 3px and 4px. `checkin-press` would NOT have given it that
+            — that class carries a 5px shadow, which is bigger than the card
+            it sits above.
+
+            The tick's glyph is INK on the teal, never paper. White on
+            #2F9E8F measures 3.28:1 and the design system forbids it by name;
+            ink on the same fill is 4.79:1. */}
+        {justFinished && (
+          <Link
+            href={`/student?lesson=${encodeURIComponent(justFinished.slug)}`}
+            prefetch={false}
+            // `play-pressable-sm` (globals.css, PLAY FIXES): the base hover
+            // lifts every pressable to a 5px shadow, which put this row a
+            // pixel ABOVE the 4px card it is meant to sit a tier below.
+            className={cx(
+              STROKE_SM,
+              "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] shrink-0 items-center gap-3 rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-2"
+            )}
+          >
+            <span
+              aria-hidden
+              // the progress pair: teal with its on- ink (4.79:1), never paper
+              className={cx(
+                STROKE_SM,
+                "grid h-6 w-6 shrink-0 place-items-center rounded-[var(--play-radius-pill)] bg-progress text-[0.72rem] font-extrabold text-on-progress"
+              )}
+            >
+              ✓
+            </span>
+            <span className="min-w-0 flex-1 truncate font-display text-[0.92rem] font-bold text-ink">
+              {justFinished.ref}
+              {" — "}
+              <span className="font-semibold text-ink-soft">
+                {justFinished.title}
+              </span>
+            </span>
+            <span className="shrink-0 font-display text-[0.8rem] font-bold text-[color:var(--play-text-muted)]">
+              Revisit
+            </span>
+          </Link>
+        )}
+
+        {/* The topic card. One card, read top to bottom as context — topic,
+            how far along, the one shaky part — ending in the two actions, so
+            the decision sits directly under the reason for it rather than in
+            separate boxes below it.
+
+            overflow-clip, not -hidden: pure decorative corner-clipping with
+            no scroll need, and it sidesteps a WebKit/Chromium bug class where
+            overflow:hidden + border-radius loses the clip on relayout — the
+            "corner went square after I resized" symptom, on a hard device
+            target. */}
+        <section className={cx(STICKER_CARD, "shrink-0 overflow-clip")}>
+          <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-3 px-5 py-3")}>
+            <span className="font-display text-[0.9rem] font-bold leading-none text-[var(--play-text-amber-warm)]">
+              Up next
+            </span>
+            {/* The citation stays mono: it is a citation, and the one thing
+                on the page proving Noor follows the real curriculum. Omitted
+                when the topic has no textbook anchor rather than printed
+                empty. Latin-only by construction, which is what mono
+                requires. */}
+            {pageRange && (
+              <span
+                dir="ltr"
+                className="ms-auto font-mono text-[0.7rem] uppercase leading-none text-[var(--play-text-amber-warm)]"
+              >
+                Ministry textbook · {pageRange}
               </span>
             )}
           </div>
 
-          {/* the topic card — sticker treatment, flex-shrink:0 so content can
-              never compress it below what it needs. overflow-clip (not
-              -hidden): pure decorative corner-clipping with no scroll need,
-              and it sidesteps a real WebKit/Chromium bug class where
-              overflow:hidden + border-radius loses the clip on relayout —
-              exactly the "corner went square after I resized" symptom this
-              was written to prevent (iPad Safari is a hard device target). */}
-          <section className={cx(STICKER_CARD, "shrink-0 overflow-clip")}>
-            <div className={cx(HONEY_BAND, "flex flex-wrap items-center justify-between gap-2 px-5 py-2.5")}>
-              <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint">
-                {lesson.moduleLabel}
-              </span>
-              {pageRange && (
-                <span dir="ltr" className="font-mono text-[0.72rem] font-medium text-ink-faint">
-                  Textbook · {pageRange}
-                </span>
-              )}
-            </div>
-
-            <div className="px-6 py-6">
-              <h2 className="font-display text-[1.5rem] font-extrabold leading-[1.25] text-ink min-[1280px]:text-[1.7rem]">
-                {lesson.lessonRef} — {lesson.title}
+          <div className="flex flex-col gap-4 px-5 py-6 min-[900px]:px-6">
+            <div className="flex flex-col gap-1">
+              <h2 className="font-display text-[1.45rem] font-extrabold leading-[1.3] text-ink min-[1280px]:text-[1.7rem]">
+                {lesson.title}
               </h2>
-
-              {/* the mastery ramp — 4 segments, filled left to right from the
-                  shared 5-stage ramp. Segment 0 lit is amber, never grey;
-                  grey is only ever "not yet". Never a number, percent or
-                  grade anywhere near it (feedback #42).
-
-                  FR-1003 is what shapes the rest of this block. Dropping the
-                  percentage is fine; dropping every non-colour signal is not,
-                  and the first cut of this card did both. Measured, lit
-                  against unlit ran 1.84:1 to 2.84:1 — all under the 3:1 floor
-                  for graphical objects — and adjacent lit bands are 1.02:1
-                  apart, so in greyscale or with low vision you cannot count
-                  which segments are lit. The aria-label covered the screen
-                  reader and nothing covered the other two channels the
-                  requirement names.
-
-                  So the ramp carries the value three ways now, not one: the
-                  ink outline makes lit-vs-unlit a fill-vs-empty difference
-                  that survives greyscale, the band name states it in words,
-                  and the aria-label keeps the screen-reader path. */}
-              <div
-                role="img"
-                aria-label={`Progress: ${MASTERY_LEGEND[masteryStage].band}, ${masteryStage} of 4 steps`}
-                className="mt-4 flex gap-1.5"
-              >
-                {[0, 1, 2, 3].map((i) => (
-                  <span
-                    key={i}
-                    className={cx(STROKE_SM, "h-4 flex-1 rounded-[var(--play-radius-pill)]")}
-                    style={{
-                      background:
-                        i < masteryStage
-                          ? MASTERY_LEGEND[i + 1].color
-                          : "transparent",
-                    }}
-                  />
-                ))}
-              </div>
-              {/* The named band — the non-colour signal FR-1003 requires,
-                  and the one number-free way to say where she is. */}
-              <p className="mt-2 font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint">
-                {MASTERY_LEGEND[masteryStage].band}
+              <p className="font-read text-[0.95rem] leading-[1.6] text-ink-soft">
+                Term <span dir="ltr">{term}</span> ·{" "}
+                {withoutTerm(lesson.moduleLabel)}
               </p>
-
-              {/* the one gap — the single named sub-skill, or nothing at all */}
-              {weakestSubskill && (
-                <div className="mt-4 rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-2.5">
-                  <p className="font-read text-[1rem] leading-[1.7] text-ink-soft">
-                    Worth another look:{" "}
-                    <span className="font-bold text-ink">{weakestSubskill}</span>
-                  </p>
-                </div>
-              )}
-
-              {completedToday ? (
-                <p className="font-read mt-6 text-[1rem] leading-[1.7] text-ink-soft">
-                  Done here for today ✓
-                </p>
-              ) : (
-                <div className="mt-6 grid grid-cols-1 gap-3 min-[640px]:grid-cols-2">
-                  <ActionRow
-                    href={`/student?mode=learn&lesson=${encodeURIComponent(lesson.slug)}`}
-                    label="Walk me through it"
-                    minutes={estimates.reteach}
-                    active={recommendation === "reteach"}
-                  />
-                  <ActionRow
-                    href={`/student?mode=review&lesson=${encodeURIComponent(lesson.slug)}`}
-                    label="Quiz me on it"
-                    minutes={estimates.refresh}
-                    active={recommendation === "refresh"}
-                  />
-                </div>
-              )}
             </div>
-          </section>
 
-          {/* quiet, change-of-mind controls — deliberately no border, radius
-              or shadow. They are not actions. */}
-          <details className="mt-6 group">
-            <summary className="flex min-h-[var(--noor-touch-min)] cursor-pointer list-none items-center justify-between font-display text-[1rem] font-bold text-ink-soft [&::-webkit-details-marker]:hidden">
-              <span>Pick a different topic</span>
+            {/* The fill and its band, in words — FR-1003: "named bands
+                alongside the value, never colour alone". No digit, grade or
+                percentage is printed anywhere on this page (feedback #42),
+                but the band word is not one of those: it is the one
+                number-free way to say where she is, and the trial merge had
+                dropped it. It is the skill map's own phrase for the stage
+                (`masteryPhrase`), so this card and the map name a stage the
+                same way. Every segment keeps its ink outline, so lit-vs-unlit
+                also survives greyscale as fill-vs-empty. The printed word is
+                aria-hidden because the fill's own `aria-label` already says
+                it — once is enough for a screen reader. */}
+            <div className="flex items-center gap-3">
+              <MasteryFill
+                stage={masteryStage}
+                height={13}
+                gap={5}
+                className="min-w-0 flex-1"
+              />
               <span
                 aria-hidden
-                className="text-[0.85rem] transition-transform duration-200 group-open:rotate-180"
+                className="shrink-0 whitespace-nowrap font-display text-[0.85rem] font-bold leading-none text-[color:var(--play-text-muted)]"
+              >
+                {masteryPhrase(masteryStage)}
+              </span>
+            </div>
+
+            {/* The one gap. Naming a single sub-skill is the actionable part;
+                the closing clause is what stops the sentence reading as bad
+                news. Omitted entirely when there is nothing to name — an
+                empty panel is worse than no panel. */}
+            {weakestSubskill && (
+              <p className="font-read text-[0.95rem] leading-[1.7] text-ink-soft">
+                Still a bit shaky on{" "}
+                <strong className="font-semibold text-ink">
+                  {weakestSubskill}
+                </strong>
+                . Everything else is solid.
+              </p>
+            )}
+
+            {/* What has not come up yet.
+
+                This exists to answer a question the card was otherwise
+                leaving unanswered. A lesson completes only when EVERY
+                objective reaches the mastered band, but review mode scripts
+                its questions from the first three objectives alone — so on a
+                four-objective lesson (u1-1 among them, the course opener) a
+                student can pick "Quiz me on it", get everything right, score
+                got_it on the report, and come back to the very same card.
+                Without this line there is nothing on screen to explain it.
+
+                Counted in words, not digits: no number, grade or percentage
+                is printed anywhere near the ramp. Phrased as "hasn't come up
+                yet" rather than anything the student failed to do — the part
+                that did not come up is the SESSION's doing, not theirs — and
+                it points at the door that actually covers it. */}
+            {untriedSubskills.length > 0 && (
+              <p className="font-read text-[0.95rem] leading-[1.7] text-ink-soft">
+                {untriedSubskills.length === 1 ? (
+                  <>
+                    <strong className="font-semibold text-ink">
+                      {untriedSubskills[0]}
+                    </strong>{" "}
+                    hasn&apos;t come up yet.
+                  </>
+                ) : (
+                  <>
+                    {untriedSubskills.length === 2 ? "Two parts" : "A few parts"}{" "}
+                    haven&apos;t come up yet.
+                  </>
+                )}{" "}
+                The walk-through goes through all of it.
+              </p>
+            )}
+
+            {/* ADR-0020 terminal state: every lesson in the course is mastered
+                and the pointer has parked. A banner, never a replacement for
+                the doors — a student who has finished everything must still
+                be able to reopen the last lesson. */}
+            {courseComplete && (
+              <div className="rounded-[var(--play-radius-sm)] bg-card-warm px-4 py-3.5">
+                <p className="font-display text-[1.05rem] font-bold text-ink">
+                  That&apos;s the whole course 🎉
+                </p>
+                <p className="font-read mt-1 text-[0.95rem] leading-[1.7] text-ink-soft">
+                  You&apos;ve been through every topic here. Go over any of them
+                  again whenever you like.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div
+            className="flex flex-col gap-2.5 bg-paper px-5 pb-5 pt-4 min-[900px]:px-[22px]"
+            style={{
+              borderBlockStartWidth: "var(--play-stroke)",
+              borderBlockStartStyle: "solid",
+              borderBlockStartColor: "var(--ink)",
+            }}
+          >
+            {completedToday ? (
+              <p className="font-read text-[0.95rem] leading-[1.7] text-ink-soft">
+                Done here for today ✓
+              </p>
+            ) : (
+              <>
+                <ActionRow
+                  href={`/student?mode=learn&lesson=${encodeURIComponent(lesson.slug)}`}
+                  label="Walk me through it, step by step"
+                  minutes={estimates.reteach}
+                  active={recommendation === "reteach"}
+                />
+                <ActionRow
+                  href={`/student?mode=review&lesson=${encodeURIComponent(lesson.slug)}`}
+                  label="Quick review"
+                  minutes={estimates.refresh}
+                  active={recommendation === "refresh"}
+                />
+              </>
+            )}
+          </div>
+        </section>
+
+        {/* Change-of-mind controls, pinned to the bottom of the column.
+            Bordered secondary buttons rather than the quiet text links they
+            were: "Pick something else" is how a student who is NOT on their
+            school's pace navigates the whole product, and a dotted underline
+            at the bottom of the page was too small a door for that. Still a
+            clear tier below the two rows above: the thin 2.5px stroke
+            against their 3px, the small 3px sticker shadow against their
+            5px, and never the amber fill. They wear the Revisit row's
+            anatomy (`sticker-shadow-sm play-pressable`), not `checkin-press`
+            — that class carries the rows' own 5px shadow, which is what
+            made the old "smaller shadow" here untrue, and it outranked the
+            amber focus ring. */}
+        <div className="mt-auto flex flex-wrap items-start gap-3 pt-1.5">
+          {/* `w-fit` closed so the trigger stays a button beside its
+              neighbour; `open:w-full` so the panel underneath gets the whole
+              column rather than being squeezed into the trigger's width.
+              Without the pair, opening the picker stretched the trigger to
+              full width and shoved "Just practise" onto its own line for no
+              reason. */}
+          <details className="group w-fit open:w-full">
+            <summary className={cx(STROKE_SM, "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] w-fit cursor-pointer list-none items-center gap-2 rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden")}>
+              Pick something else
+              <span
+                aria-hidden
+                className="text-[0.7rem] transition-transform duration-200 group-open:rotate-180"
               >
                 ▾
               </span>
             </summary>
-            <div className="mt-3 space-y-2.5">
-              {modules.map((m) => (
-                <div key={m.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
-                  <span className="w-full font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint min-[640px]:w-56 min-[640px]:shrink-0">
-                    {m.id.startsWith("module:geo") ? "Term 2 · " : "Term 1 · "}
-                    {m.label}
+
+            {/* Open, this is a map of the course, not a list of links. Every
+                row carries how solid the student is on it — a unit ramp with
+                its stage in words, and a dot per lesson — because the whole
+                question being answered here is "what should I do instead?"
+                and bare lesson numbers cannot answer it. The dots and the
+                ramp read off the SAME banding the card above uses, so the
+                picker can never disagree with the topic it opens. */}
+            <div className={cx(STICKER_PANEL, "mt-3 w-full overflow-clip")}>
+              <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2.5")}>
+                <span className="font-display text-[0.9rem] font-bold leading-none text-[var(--play-text-amber-warm)]">
+                  Everything in the book
+                </span>
+                {/* The legend earns its place: a coloured dot with nothing
+                    explaining it is decoration. */}
+                <span className="ms-auto flex items-center gap-1.5">
+                  <span
+                    aria-hidden
+                    className={cx(STROKE_SM, "size-3 rounded-[var(--play-radius-pill)]")}
+                    style={{ background: MASTERY_LEGEND[3].color }}
+                  />
+                  <span className="font-read text-[0.78rem] leading-none text-[color:var(--play-text-muted)]">
+                    = how solid you are on it
                   </span>
-                  <span className="flex flex-wrap gap-1.5">
-                    {m.lessons.map((l) => {
-                      const selected = l.slug === lesson.slug;
-                      const geo = m.id.startsWith("module:geo");
-                      return (
-                        <Link
-                          key={l.slug}
-                          href={q(l.slug, m.subject)}
-                          scroll={false}
-                          prefetch={false}
-                          aria-current={selected ? "true" : undefined}
-                          className={lessonChip(selected, true)}
-                        >
-                          {geo && <span className="me-1">Geo</span>}
-                          {l.ref.replace(/^Lesson /, "")}
-                        </Link>
-                      );
-                    })}
-                  </span>
-                </div>
-              ))}
+                </span>
+              </div>
+
+              <div className="px-4 py-1">
+                {modules.map((m, mi) => {
+                  const geo = m.id.startsWith("module:geo");
+                  const term = termOfModule(m.id);
+                  // "Unit 1 — Relations and Functions" arrives as one string;
+                  // the design wants the number as a mono eyebrow and the
+                  // name as the row title, so split on the em dash and fall
+                  // back to the whole label when there isn't one.
+                  const plain = withoutTerm(m.label);
+                  const [unitRef, ...rest] = plain.split(" — ");
+                  const unitName = rest.join(" — ") || plain;
+                  return (
+                    <div
+                      key={m.id}
+                      className="flex flex-col gap-2.5 py-3.5"
+                      style={
+                        mi < modules.length - 1
+                          ? {
+                              // a divider inside a panel: the line-soft token
+                              borderBlockEndWidth: "var(--play-stroke-sm)",
+                              borderBlockEndStyle: "solid",
+                              borderBlockEndColor: "var(--line-soft)",
+                            }
+                          : undefined
+                      }
+                    >
+                      {/* No unit-level ramp. It aggregated the very lessons
+                          listed directly underneath it, so the row said the
+                          same thing twice and the louder copy was the vaguer
+                          one — a unit average cannot tell you WHICH lesson is
+                          weak, which is the only question this list exists to
+                          answer. The dots do, one per lesson. */}
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em] text-[var(--play-text-amber-warm)]">
+                          Term <span dir="ltr">{term}</span>
+                          {unitRef !== unitName && ` · ${unitRef}`}
+                        </span>
+                        <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-ink">
+                          {unitName}
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {m.lessons.map((l) => {
+                          const selected = l.slug === lesson.slug;
+                          const stage = deriveMasteryStage(l.los);
+                          // What the chip SHOWS, so the accessible name
+                          // starts with the visible label (WCAG 2.5.3) — it
+                          // used to drop "Geo", and "Unit 4" exists in both
+                          // terms.
+                          const visible = `${geo ? "Geo " : ""}${l.ref.replace(/^Lesson /, "")}`;
+                          return (
+                            <Link
+                              key={l.slug}
+                              href={q(l.slug, m.subject)}
+                              scroll={false}
+                              prefetch={false}
+                              aria-current={selected ? "true" : undefined}
+                              aria-label={`${visible} — ${masteryPhrase(stage)}`}
+                              title={`${l.title} — ${masteryPhrase(stage)}`}
+                              className={cx(
+                                "flex min-h-[var(--noor-touch-min)] items-center gap-2 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-solid px-3.5 font-display text-[0.85rem] leading-none transition-colors",
+                                selected
+                                  ? "border-ink bg-ink font-bold text-paper"
+                                  : "border-[color:var(--play-inactive-border)] bg-card font-semibold text-ink hover:border-ink"
+                              )}
+                            >
+                              {/* The legend swatch's anatomy: the thin
+                                  stroke round the ramp colour. Unoutlined, the
+                                  dot was colour-only and under 3:1 against
+                                  white on four of five stages; outlined, it
+                                  reads as filled-vs-empty like the fill
+                                  segments do, and not-started can be the
+                                  ramp's own step 0 instead of a borrowed
+                                  grey. The band is also in the chip's name
+                                  and `title`. Paper outline on the selected
+                                  (ink) chip, where an ink one would vanish. */}
+                              <span
+                                aria-hidden
+                                className={cx(
+                                  STROKE_WIDTH_SM,
+                                  "size-3 shrink-0 rounded-[var(--play-radius-pill)]",
+                                  selected ? "border-paper" : "border-ink"
+                                )}
+                                style={{
+                                  background: MASTERY_LEGEND[stage].color,
+                                }}
+                              />
+                              {geo && <span>Geo</span>}
+                              <span dir="ltr">
+                                {l.ref.replace(/^Lesson /, "")}
+                              </span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </details>
 
-          <p className="mt-3">
-            <Link
-              href="/student?mode=practice"
-              prefetch={false}
-              className={BUTTON_TERTIARY}
-            >
-              Just practice today&apos;s plan
-            </Link>
-          </p>
-        </main>
-      </div>
+          <Link
+            href="/student?mode=practice"
+            prefetch={false}
+            className={cx(STROKE_SM, "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] items-center rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink")}
+          >
+            Just practise — today&apos;s plan
+          </Link>
+        </div>
+      </main>
     </div>
   );
 }
 
-/** One of the two equal action rows. Only the fill differs — never the
- *  size, the target, the border or the shadow. Both are instructions to
- *  Nour ("walk me through it" / "quiz me"), never a statement about the
- *  student. The arrow glyph is swapped, never mirrored, for a future RTL
- *  pass (→ becomes ←, same span, no transform). */
+/**
+ * One of the two action rows.
+ *
+ * EQUAL in every dimension that can be measured — height, target, border,
+ * shadow, type. Only the fill differs, and only on the recommended one.
+ * Shrinking or reordering the other would turn a default into a verdict,
+ * which is the same reason no badge explains the amber: the fill is the
+ * whole signal, and naming it says Noor has formed a view about the student.
+ * With no recommendation both are white and the page carries no accent at
+ * all.
+ *
+ * Both labels are INSTRUCTIONS TO NOOR — "walk me through it", "quick
+ * review". Neither asks the student to describe their own state. The pair
+ * this replaced was "I'm lost" against "I got it": a confession set against
+ * a claim, which made the two incomparable and put the anxious answer first.
+ *
+ * Minutes, not turns: "≤5 AI turns" is engineering language, and time is
+ * both the only thing this student weighs and the named brand promise. The
+ * estimate comes from real content length — a wrong one costs more trust
+ * than none. The arrow glyph is swapped for RTL, never mirrored by a
+ * transform.
+ */
 function ActionRow({
   href,
   label,
@@ -288,29 +612,67 @@ function ActionRow({
       prefetch={false}
       className={cx(
         STROKE,
-        "checkin-press flex min-h-[58px] items-center justify-between rounded-[var(--play-radius)] px-5 font-display text-[1.15rem] font-bold transition-colors",
-        active
-          ? "bg-[var(--noor-action)] text-[color:var(--noor-on-action)]"
-          : "bg-card text-ink"
+        "checkin-press flex min-h-[60px] items-center gap-3.5 rounded-[var(--play-radius)] px-5 py-3 text-start",
+        active ? "bg-[var(--noor-action)] text-[color:var(--noor-on-action)]" : "bg-card text-ink"
       )}
     >
-      <span>{label}</span>
-      {/* Small mono on amber takes the handoff's darkened amber-brown, not a
-          faded ink: opacity on text is contrast nobody measured. */}
+      <span className="flex-1 font-display text-[1.1rem] font-extrabold leading-[1.3] text-ink min-[900px]:text-[1.2rem]">
+        {label}
+      </span>
       <span
-        className={cx(
-          "flex items-center gap-2 font-mono text-[0.75rem] font-medium",
+        className={`whitespace-nowrap font-display text-[0.85rem] font-bold leading-none ${
           active
-            ? "text-[color:var(--play-text-on-amber-s)]"
+            ? "text-[var(--play-text-on-amber-s)]"
             : "text-[color:var(--play-text-muted)]"
-        )}
+        }`}
       >
-        <span dir="ltr">~{minutes} min</span>
-        <span aria-hidden>→</span>
+        <span dir="ltr">{minutes}</span> min
+      </span>
+      <span
+        aria-hidden
+        className="font-display text-[1.1rem] font-extrabold leading-none text-ink"
+      >
+        →
       </span>
     </Link>
   );
 }
+
+/* Every target on this page holds the Play floor: 52px, `--noor-touch-min`
+   ("not 44 — fast, imprecise taps, holds on desktop too"), which main's Play
+   pass applied everywhere else. The branch this card came from used the
+   build spec's 48px floor, and its mockup drew less still — the two
+   change-of-mind buttons at 46 and the picker's lesson chips at 40. A
+   tap-target minimum is a floor rather than a taste call, so the design
+   system's number wins over both the spec and the drawing; 37 of the 40
+   targets on this page were under 48 before it. */
+
+/**
+ * Which term a module belongs to, and its label without the term in it.
+ *
+ * The stored labels disagree with each other: `module:t2-u1` is "Term 2 ·
+ * Unit 1 — Equations" and `module:geo-u2` is "Term 2 · Unit 5 — …", while
+ * `module:u1` is plain "Unit 1 — Relations and Functions" and
+ * `module:geo-u1` is plain "Unit 4 — The Circle" despite being Term 2. Any
+ * code that prefixes the term onto the label as-is therefore prints "Term 1
+ * · Term 2 · Unit 1" for the five that already carry it — which the picker
+ * did, before and after this redesign, and the topic card did too.
+ *
+ * The ID is the one thing that is consistent, so the term comes from there
+ * and the label is normalised rather than trusted.
+ */
+const termOfModule = (moduleId: string): 1 | 2 =>
+  moduleId.startsWith("module:geo") || moduleId.startsWith("module:t2-")
+    ? 2
+    : 1;
+
+/** Same question, from a lesson slug ("t2u1-1", "geo1-2", "u1-1"). */
+const termOfSlug = (slug: string): 1 | 2 =>
+  slug.startsWith("geo") || slug.startsWith("t2") ? 2 : 1;
+
+/** "Term 2 · Unit 1 — Equations" → "Unit 1 — Equations" */
+const withoutTerm = (label: string) =>
+  label.replace(/^\s*Term\s*\d+\s*\u00b7\s*/u, "");
 
 function groupByModule(lessons: LessonInfo[]) {
   const modules: {
@@ -322,7 +684,13 @@ function groupByModule(lessons: LessonInfo[]) {
   for (const l of lessons) {
     const m = modules.find((x) => x.id === l.moduleId);
     if (m) m.lessons.push(l);
-    else modules.push({ id: l.moduleId, label: l.moduleLabel, subject: l.subject, lessons: [l] });
+    else
+      modules.push({
+        id: l.moduleId,
+        label: l.moduleLabel,
+        subject: l.subject,
+        lessons: [l],
+      });
   }
   return modules;
 }

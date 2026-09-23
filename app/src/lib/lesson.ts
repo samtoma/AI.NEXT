@@ -14,6 +14,9 @@ import { getLessonBridges } from "./subject-queries";
 import { visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
+import { learnWrongAnswerRules } from "./socratic-probing";
+import { MODULE_ORDER } from "./module-order";
+import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
 import type { WidgetQuestionSpec } from "./types";
 import { mathWidgetDocs } from "./widget-docs";
 import {
@@ -73,14 +76,11 @@ import type {
  * query runs on and the type of one parameter.
  */
 
-export const DEFAULT_LESSON_SLUG = "u1-1";
-
-const SLUG_RE = /^[a-z0-9]{1,12}-[0-9]{1,3}$/;
-
-/** "lo:geo1-2-1" → lesson slug "geo1-2" (LO-id prefix minus the last part). */
-function slugOfLo(loId: string): string {
-  return loId.replace(/^lo:/, "").replace(/-[0-9]+$/, "");
-}
+// The slug rule itself lives in `lib/lesson-slug.ts` — a client-safe module,
+// because the skill map's topic panel needs the same mapping to build its
+// "Study" link and cannot import this file (it opens a pool). Re-exported
+// here so every existing importer keeps working unchanged (Tamer's `1fcf346`).
+export { DEFAULT_LESSON_SLUG, sanitizeLessonSlug } from "./lesson-slug";
 
 /**
  * Subject detection (ADR-0004 Wave 0): the lesson's module sits `part_of` a
@@ -119,16 +119,11 @@ const LESSON_TITLES: Record<string, string> = {
   "geo1-4": "Chords and distance from the center",
 };
 
-export function sanitizeLessonSlug(raw: unknown): string {
-  const s = String(raw ?? "").trim();
-  return SLUG_RE.test(s) ? s : DEFAULT_LESSON_SLUG;
-}
-
 /* ------------------------------------------------------------------ */
 /* Catalog — every teachable lesson, grouped by module                 */
 /* ------------------------------------------------------------------ */
 
-const LO_MODULE_SELECT = `
+export const LO_MODULE_SELECT = `
   SELECT lo.id, lo.label, lo.description, lo.syllabus_ref, lo.source_page,
          lo.order_in_parent,
          m.id AS module_id, m.label AS module_label,
@@ -144,9 +139,9 @@ const LO_MODULE_SELECT = `
   WHERE lo.kind = 'learning_objective'
 `;
 
-/** Term-1 algebra units first, Term-2 geometry after (both are "Unit 4"). */
-const MODULE_ORDER = `CASE WHEN m.id LIKE 'module:geo%' THEN 1 ELSE 0 END,
-         m.order_in_parent NULLS LAST, lo.order_in_parent, lo.id`;
+// Catalogue order lives in lib/module-order.ts (see why there); re-exported so
+// lib/progression-db.ts and any other importer of it from here keep working.
+export { MODULE_ORDER } from "./module-order";
 
 /* ------------------------------------------------------------------ */
 /* The course gate (migration 023, lib/catalog.ts)                     */
@@ -981,8 +976,7 @@ export function learnPrompt(data: LessonData): string {
 - ONE IDEA PER BEAT WHEN EXPLAINING. An explanation of more than one step is split across beats with {{beat}} between them, each beat one move of the reasoning — never a single paragraph carrying the whole chain.
 - The very FIRST message of the lesson has no [live event] yet — there is nothing to react to. Open with upbeat energy for the topic itself (see your opening instructions above), not a reaction to anything.
 - THE QUESTION UNDER DISCUSSION IS ALWAYS THE MOST RECENT ONE YOU PUSHED. The whole QUESTION BANK is in your context and every question you have already used is still sitting in the transcript above — explaining an EARLIER one is the single easiest mistake to make here, and from ${a.their} side it looks like you stopped listening. Before you react to a [live event], check its question id against the last {{show_question}} you emitted. Never explain a question ${a.they} ${a.has} already moved past unless ${a.they} ask${a.s} you to go back to it.
-- From the SECOND message on: open with one warm beat reacting to ${a.their} latest [live event]. If ${a.they} got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking ${a.them} toward the correct answer, in the same upbeat tone — never open with the correct letter.
-- After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.
+${learnWrongAnswerRules(a, tapWidgets)}
 - Never repeat a widget, figure or question ${a.they} already saw.
 - Closing message: one-line recap beat of the big ideas, then a line telling ${a.them} plainly this is the end of today's lesson and ${a.they} can finish whenever ${a.they}${a.isContr} ready, then {{finish_lesson}}. {{finish_lesson}} only arms ${a.their} Finish button — it doesn't end the session, so if ${a.they} keep${a.s} chatting after it, keep answering normally.`;
   const richNote = kit.learnRichNote(data);

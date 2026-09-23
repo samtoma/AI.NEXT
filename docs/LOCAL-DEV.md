@@ -213,7 +213,7 @@ Verified behaviour on this exact path:
 | History | one row per observation, previous rows closed, `evidence` carrying prior/posterior/observation |
 | Grade validation | `{"grade":"99"}` → 400 |
 | Interests optional | omitting them succeeds, event records `skipped_interests: true` |
-| Authoring gap | with an empty library, each wrong answer writes one `misconception_gap` flag |
+| Authoring gap | with an empty library, each wrong answer the question **diagnoses** (a distractor or widget predicate naming a misconception) writes one `misconception_gap` flag; an undiagnosed wrong answer writes none (2026-09-23) |
 
 Useful queries:
 

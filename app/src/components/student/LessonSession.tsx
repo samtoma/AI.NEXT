@@ -18,6 +18,7 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
+import { probingActive } from "@/lib/socratic-probing";
 import { addressForms } from "@/lib/address";
 import { track } from "@/lib/ga";
 import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
@@ -655,6 +656,24 @@ export function LessonSession({
     []
   );
 
+  // Socratic-probing prototype (wip/socratic-probing-route-b): mirrors
+  // ChatCore's own confirmation-pending state so the whiteboard's
+  // board-hosted question card (a sibling of ChatCore, not its child) gates
+  // its reveal identically to the inline-transcript card. ChatCore stays the
+  // single source of truth — this is read-only here.
+  const [pendingConfirmation, setPendingConfirmation] = useState<{
+    loId: string;
+    lastAttemptId: number;
+    wrongCount: number;
+  } | null>(null);
+  // Same mirroring, for a chat-typed answer ChatCore graded itself — the
+  // board's own card needs this to sync its display too when it's the one
+  // hosting the currently-open question.
+  const [externalAttempt, setExternalAttempt] = useState<{
+    questionId: string;
+    result: AttemptResult;
+  } | null>(null);
+
   /** Board-hosted question answered → back into the chat flow; the board
    *  hands focus back to the last figure after the result lands. */
   const boardAttempt = useCallback((r: AttemptResult, q: SpineQuestion) => {
@@ -954,8 +973,8 @@ export function LessonSession({
       if (c.kind === "q") {
         const q = questionById.get(c.id);
         return {
-          title: q ? "Reviewed question" : c.id,
-          sub: `${c.id} · human-approved canonical solution`,
+          title: q ? "This question" : c.id,
+          sub: `${c.id} · worked solution`,
         };
       }
       if (c.kind === "term") {
@@ -1272,6 +1291,17 @@ export function LessonSession({
                 vizMeta={vizMeta}
                 collapsed={!sheetOpen}
                 onToggleCollapsed={() => setSheetOpen((o) => !o)}
+                /* The same switch ChatCore reads for this surface
+                   (lib/socratic-probing.ts), never the mode alone: a board
+                   card that withheld its reveal while the chat beside it
+                   did not would be two rules for one wrong answer. */
+                probing={probingActive(
+                  mode === "learn" ? "lesson_learn" : "lesson_review"
+                )}
+                pendingLoId={pendingConfirmation?.loId ?? null}
+                pendingAttemptId={pendingConfirmation?.lastAttemptId ?? null}
+                pendingWrongCount={pendingConfirmation?.wrongCount ?? null}
+                externalAttempt={externalAttempt}
               />
             </div>
           )}
@@ -1328,6 +1358,8 @@ export function LessonSession({
               lookupQuestion={lookupQuestion}
               resolveCite={resolveCite}
               onCite={onCite}
+              onPendingConfirmationChange={setPendingConfirmation}
+              onExternalAttemptChange={setExternalAttempt}
               renderWidget={renderWidget}
               renderPassage={(id, span) => {
                 const p = lookupPassage(id);

@@ -10,6 +10,33 @@ requirement names it.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [v0.6.0] — 2026-09-23
+
+A deep-reviewed release. It brings Tamer's work onto `main` and carries the day's fixes. Four
+independent reviews (student flows, database and privacy, design and copy, Socratic probing)
+read every change before merge, and each finding was fixed and re-tested. Explainer:
+[`docs/releases/v0.6.0.html`](docs/releases/v0.6.0.html).
+
+### Added — Tamer's work, brought onto `main`
+- **"How you're doing" skill map on `/spine`.** A student-facing map of every topic, with a
+  simple fill and one plain word per topic in place of percentages and internal ids. Noor sits
+  in a side panel beside it, and becomes a bottom sheet on iPad portrait.
+- **A new "Up next" card for each subject.** It reads top to bottom: topic, how far along, the
+  one shaky part, then two actions ("Walk me through it" / "Quick review"). It says which
+  objectives a lesson has not asked about yet, and keeps a "Revisit" row for the lesson just
+  finished.
+- **Lessons move on when they are mastered** (ADR-0020). Each student has a saved place in each
+  course, and it advances to the next lesson once every objective in the current one is
+  mastered. Everyone starts at lesson 1; no existing progress was guessed at.
+- Maths lessons now run Term 1 before Term 2 (they were interleaved).
+- A wrong answer with no diagnosed mistake now shows the worked solution, instead of an
+  unrelated mistake's explanation. Explanation steps render maths properly.
+- **Socratic probing is in the code, switched OFF** (`SOCRATIC_PROBING_ENABLED`). Students get
+  exactly today's behaviour; the review proved every tutor prompt byte-identical. What must be
+  fixed before it is switched on is listed in #53.
+
 ### Changed
 - **Everyone sees Play for now.** Master — the calmer look meant for Secondary students — is
   hidden behind one switch (`MASTER_VARIANT_ENABLED`), because it was showing the old family-tutor
@@ -28,6 +55,11 @@ requirement names it.
   gate stays held.
 
 ### Fixed
+- **The site went down for about 15 minutes during a deploy, and cannot again the same way.**
+  An old migration re-ran on every deploy and rebuilt a rule without the "widget" question type;
+  once widget questions existed it failed and the app never started. It now leaves a wider rule
+  alone. The new migrations (027, 028) are proven to re-run cleanly and take no locks.
+- The subject home's English copy no longer leaks another subject's labels (#41 pattern).
 - **Every maths misconception now has an explanation, and one question's wrong answers point
   at the right mistakes.** An empty duplicate ("points on an axis counted inside a quadrant") is
   folded into the full entry, and "a divides b read as b divides a" gets its explanation. The

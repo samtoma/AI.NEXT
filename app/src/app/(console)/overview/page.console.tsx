@@ -304,8 +304,9 @@ function OverviewPage({ view }: { view: Overview }) {
           explanations a student sees turn into a practice attempt —{" "}
           <code className="font-mono text-[12px]">explanation_delivered</code> against{" "}
           <code className="font-mono text-[12px]">retrieval_attempt_submitted</code>. Today the first
-          of those fires <em>only</em> when a wrong answer is refuted from the explanation library,
-          not on the taught explanations that make up most of what a student reads. The ratio that
+          of those fires <em>only</em> when a wrong answer is explained — by a refutation from the
+          library, or by the worked solution when none fits — not on the taught explanations that
+          make up most of what a student reads. The ratio that
           can be computed from it is therefore not a conversion rate, and drawing it as one would
           make a real number out of an instrumentation gap. It appears here the release after the
           teaching path emits that event, and not before.

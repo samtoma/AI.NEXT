@@ -70,6 +70,10 @@ const STUBS = {
       // `auth/principal.ts` import, same reason it needs no real principal:
       // the student id is a parameter.
       "student-landing.test.mts",
+      // renders `learnPrompt` with the Socratic-probing switch in its shipped
+      // (off) position, to prove the merged prototype leaves the prompt as it
+      // was. Same `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
+      "socratic-probing.test.mts",
     ],
   },
 };

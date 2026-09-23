@@ -68,7 +68,7 @@ export default async function Home() {
             </strong>{" "}
             — a knowledge graph extracted from the Egyptian Ministry textbook,
             with full provenance, temporal mastery tracking, and explanations
-            grounded in reviewed canonical solutions.
+            grounded in worked solutions.
           </p>
           <div className="mt-8 flex flex-wrap gap-2">
             {/* Badges, not `.chip`: the chip's ink-soft text is under the
@@ -128,7 +128,7 @@ export default async function Home() {
       >
         {[
           { n: stats.los, label: "learning objectives", sub: "Unit 1 · prerequisite DAG" },
-          { n: stats.questions, label: "live questions", sub: "reviewed, with canonical solutions" },
+          { n: stats.questions, label: "live questions", sub: "each with a worked solution" },
           { n: stats.attempts, label: "attempts logged", sub: `by ${stats.studentName}` },
           { n: stats.prereqs, label: "prerequisite edges", sub: "syllabus 2025–2026" },
           { n: stats.aiTurns, label: "AI turns logged", sub: "grounded · cost-metered" },
@@ -182,7 +182,7 @@ export default async function Home() {
             <p className="mt-3 max-w-md font-read text-[1rem] leading-relaxed text-ink-soft">
               Today&apos;s plan for {stats.studentName}: five questions chosen
               from the graph — weakest topics first, spaced review, one stretch.
-              Wrong answers get explanations grounded in the reviewed solution.
+              Wrong answers get explanations grounded in the worked solution.
             </p>
             {/* The one amber on this page: today's plan is the action. */}
             <span

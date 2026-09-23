@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noor v0.6.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Cairo:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Tokens from the product's Noor Play layer. No red anywhere (FR-1002):
+     attention is amber, done is teal, open is slate. */
+  :root {
+    --ink: #241f3d; --ink-soft: #574f75; --paper: #fff6e6; --card: #ffffff;
+    --honey: #ffe9bd; --amber: #a34f0a; --teal: #1f7a6e; --slate: #5a5570;
+    --line: #241f3d; --hair: rgba(36, 31, 61, 0.14); --shadow: 4px 4px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+      --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+      --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+    --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+    --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "Cairo", system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1, h2 { font-family: "Baloo Bhaijaan 2", system-ui, sans-serif; line-height: 1.2; margin: 0; }
+  h1 { font-size: 2.4rem; font-weight: 800; }
+  h2 { font-size: 1.45rem; font-weight: 800; margin-top: 44px; }
+  .eyebrow { font: 500 0.78rem/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--ink-soft); text-transform: uppercase; }
+  .lead { font-size: 1.1rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .card { background: var(--card); border: 3px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 20px 22px; margin-top: 18px; }
+  .card h3 { font: 700 1.1rem/1.35 "Cairo", sans-serif; margin: 0 0 6px; }
+  .row { display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; margin: 0; }
+  .row dt { font: 500 0.78rem/1.9 "IBM Plex Mono", monospace; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .row dd { margin: 0; }
+  .tag { display: inline-block; font: 700 0.8rem/1 "Cairo", sans-serif; padding: 5px 10px; border-radius: 999px; border: 2px solid var(--line); margin-right: 6px; }
+  .done { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .off { background: var(--honey); color: var(--ink); }
+  .open { background: transparent; color: var(--slate); border-color: var(--slate); }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+  th, td { text-align: start; padding: 8px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 500 0.75rem/1.4 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  code { font: 500 0.88em "IBM Plex Mono", monospace; }
+  a { color: var(--teal); }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Noor · release v0.6.0 · 2026-09-23</p>
+  <h1>Tamer's work on main, and the day's fixes</h1>
+  <p class="lead">What each of you reported, what was actually wrong, and what proves it is fixed. Every change in this release was read by four independent reviewers before it merged.</p>
+
+  <h2>Reported today</h2>
+
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> "A lot of bad UI, and Play and Master conflict"</h3>
+    <dl class="row">
+      <dt>What was wrong</dt><dd>Master was built on 10 Sep, overwritten by Play on 16 Sep, then brought back under its name with the old family-tutor palette. Every Master screen, and the whole console, mixed three looks.</dd>
+      <dt>What changed</dt><dd>Master is hidden behind one switch; everyone gets Play. The Play defects on the console and student screens are fixed.</dd>
+      <dt>Proof</dt><dd>Review record <code>docs/reviews/2026-09-23-play-master-ui-review.md</code>. Master's own work is in issues #46–#50.</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> "Zero generated questions" and "the numbers look like all subjects"</h3>
+    <dl class="row">
+      <dt>What was wrong</dt><dd>The first deploy loaded only the textbook. The Content page added all three subjects together without saying so (914 = 421 maths + 483 Social Studies + 10 Arabic).</dd>
+      <dt>What changed</dt><dd>By Samuel's rule change (ADR-0019), the whole maths bank is live: 1,041 questions and 96 misconceptions. The page has a subject switcher and a "held" tile.</dd>
+      <dt>Proof</dt><dd>Live database: maths 450 book + 591 generated live. Social Studies 483 live, 279 held. Arabic 10 live, 297 scripture held.</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> Two misconceptions without explanations, one mis-tagged question</h3>
+    <dl class="row">
+      <dt>What changed</dt><dd>An empty duplicate folded into its full entry. "a divides b read backwards" explained. Two wrong answers on the graphical-solution question now name their own lesson's mistakes.</dd>
+      <dt>Proof</dt><dd>Live: 97 misconceptions, 0 without an explanation.</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> The site was down for about 15 minutes</h3>
+    <dl class="row">
+      <dt>What was wrong</dt><dd>An old database migration re-ran on the next deploy and rebuilt a rule without the "widget" question type. With widget questions now live, it failed and the app never started.</dd>
+      <dt>Proof</dt><dd>Tested on a scratch database with widgets present. The two new migrations re-run cleanly three times and take no locks.</dd>
+    </dl>
+  </div>
+
+  <h2>Tamer's work, now on main</h2>
+  <table>
+    <tr><th>What</th><th>For a student</th><th>State</th></tr>
+    <tr><td>Skill map on <code>/spine</code></td><td>"How you're doing": every topic with a simple fill and one plain word. Noor beside it.</td><td><span class="tag done">In</span></td></tr>
+    <tr><td>"Up next" card</td><td>Topic, how far along, the one shaky part, then two actions. Says which objectives a lesson has not asked yet.</td><td><span class="tag done">In</span></td></tr>
+    <tr><td>Lesson progression</td><td>Moves to the next lesson once the current one is mastered. Everyone starts at lesson 1.</td><td><span class="tag done">In</span></td></tr>
+    <tr><td>Explanation fixes</td><td>Maths renders properly. An undiagnosed wrong answer shows the worked solution, not an unrelated mistake.</td><td><span class="tag done">In</span></td></tr>
+    <tr><td>Socratic probing</td><td>Guiding questions after a wrong answer. In the code, switched off: students see exactly today's behaviour.</td><td><span class="tag off">Off</span></td></tr>
+  </table>
+
+  <h2>What the review caught before merge</h2>
+  <p>Four reviewers (student flows, database and privacy, design and copy, probing) found no bug that breaks a student today, but they did find real problems. All were fixed and re-tested:</p>
+  <table>
+    <tr><th>Found</th><th>Would have meant</th></tr>
+    <tr><td>Progress read the database the wrong way under main's privacy rules</td><td>Every student silently stuck on lesson 1</td></tr>
+    <tr><td>A one-time backfill that re-ran on every deploy</td><td>A future deploy taking the site down, like today's</td></tr>
+    <tr><td>"That's the whole course" fired mid-course</td><td>A false celebration, and a frozen lesson pointer</td></tr>
+    <tr><td>Every undiagnosed wrong answer raised a safety flag</td><td>Real flags buried in the console</td></tr>
+    <tr><td>Review status still shown on the <code>/spine</code> pop-up</td><td>Students told "not reviewed" (against ADR-0019)</td></tr>
+    <tr><td>Focus rings lost, mastery words missing, no iPad-portrait layout</td><td>Keyboard and iPad users poorly served</td></tr>
+  </table>
+  <p>Proof: 704 of 704 tests pass. Both apps build. Migrations re-run three times on empty and real-data copies. One student can never see or change another's progress.</p>
+
+  <h2>Still open</h2>
+  <table>
+    <tr><th>Item</th><th>Why it waits</th><th>Where</th></tr>
+    <tr><td><span class="tag open">Probing on</span></td><td>As built, the tutor could give a student credit they did not earn, and a lesson could stall. Fixes first, then switch on as one reversible change.</td><td>#53</td></tr>
+    <tr><td><span class="tag open">Prompt wording</span></td><td>The tutor prompts still say "human-reviewed". Unchanged, per Samuel's "no prompt changes for now".</td><td>#51</td></tr>
+    <tr><td><span class="tag open">Signed-in check</span></td><td>No one has yet walked the new screens signed in, at desktop and iPad portrait.</td><td>A founder</td></tr>
+    <tr><td><span class="tag open">Found in passing</span></td><td>Problems already on main (brief errors mid-deploy, faint focus ring, and others).</td><td>#54</td></tr>
+  </table>
+</main>
+</body>
+</html>

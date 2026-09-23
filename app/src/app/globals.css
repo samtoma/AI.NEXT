@@ -1120,7 +1120,7 @@ body[data-focus="lesson"] > footer {
 }
 
 /* `.anim-pop` already marks every "reveal with a pop" spot in the product
-   (AskSpineDock, ChatCore, StudentLoop, VizRefCard, …) — Play just gives it a
+   (NoorPanel, ChatCore, StudentLoop, VizRefCard, …) — Play just gives it a
    punchier spring, matching the handoff's `pop` exactly, for free. */
 :is([data-ds="play"], [data-ds="noor"]) .anim-pop {
   animation: play-pop 380ms cubic-bezier(0.34, 1.6, 0.64, 1) both;
@@ -1241,4 +1241,42 @@ body[data-focus="lesson"] > footer {
   border-style: revert-layer;
   border-color: revert-layer;
   color: revert-layer;
+}
+
+/* The check-in's action rows press with `.checkin-press`, whose own 5px
+   shadow (the check-in brief's spec) outranked the amber focus ring above,
+   so a keyboard-focused row showed no focus at all. Same fix as the sticker
+   shadows: keep the shadow, add the ring. */
+:is([data-ds="play"], [data-ds="noor"]) .checkin-press:focus-visible {
+  box-shadow: 5px 5px 0 var(--ink), var(--noor-focus-ring);
+}
+
+/* `.play-pressable-sm` — the press for a control on the SMALL sticker
+   shadow that sits beside a bigger card: the check-in's Revisit row and its
+   two change-of-mind buttons, under the 4px topic card. The base hover
+   lifts every pressable to a 5px shadow, which put these a tier ABOVE the
+   card they are meant to sit a tier below. Here the hover lift stops at the
+   card's own 4px. The focus ring still shows while hovered. */
+@media (hover: hover) and (pointer: fine) {
+  :is([data-ds="play"], [data-ds="noor"]) .play-pressable-sm:hover {
+    box-shadow: var(--play-shadow);
+  }
+  :is([data-ds="play"], [data-ds="noor"]) .play-pressable-sm:hover:focus-visible {
+    box-shadow: var(--play-shadow), var(--noor-focus-ring);
+  }
+}
+
+/* The skill map's topic cards (GraphCanvas). Their transition used to be
+   inline, which replaced `.play-pressable`'s 90ms press timing outright and
+   ignored the reduced-motion rule above. The press keeps its timing; the
+   card's own slower fades (dim, wash, edge) ride alongside it. */
+:is([data-ds="play"], [data-ds="noor"]) .play-pressable.map-card {
+  transition: transform 90ms cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 90ms cubic-bezier(0.2, 0.7, 0.3, 1),
+    opacity 0.35s ease, background-color 0.5s ease, border-color 0.5s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is([data-ds="play"], [data-ds="noor"]) .play-pressable.map-card {
+    transition: none;
+  }
 }
