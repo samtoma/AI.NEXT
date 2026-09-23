@@ -90,6 +90,15 @@ services:
       PGUSER: ainext
       PGDATABASE: ainext_mvp1
       PGPASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}
+      # The three role passwords, so apply-migrations.sh SETS them rather than
+      # stopping to ask a human to SSH in and run ALTER ROLE — which is exactly
+      # what the first real deploy did. Same values the app and console use,
+      # from the same file the deploy writes from GitHub secrets. `:-` rather
+      # than `:?` on purpose: the script's own check names what is missing and
+      # how to fix it, which is a better error than compose's.
+      AINEXT_APP_PASSWORD: ${AINEXT_APP_PASSWORD:-}
+      AINEXT_OPERATOR_PASSWORD: ${AINEXT_OPERATOR_PASSWORD:-}
+      AINEXT_MAINT_PASSWORD: ${AINEXT_MAINT_PASSWORD:-}
       # Read by the script's last check only: when the course gate is ON, an
       # empty allow-list stops the deploy instead of locking every student out.
       AINEXT_COURSE_GATING: ${AINEXT_COURSE_GATING:-off}

@@ -211,6 +211,57 @@ END
 $check$;
 SQL
 
+# 3a'. SET the role passwords, from the values the deploy already wrote.
+#
+# Added 2026-09-23 after the first real deploy stopped here with "no password
+# set for: ainext_app, ainext_maint, ainext_operator" and a remedy that told a
+# human to SSH in and run three ALTER ROLEs. Samuel had already said, about the
+# secrets file: "I want the deployment to be from the CI, why should I run the
+# cmd myself." The three values were ALREADY in GitHub secrets and ALREADY in
+# deploy/.env; this script simply never used them.
+#
+# It is idempotent — setting the same password again changes nothing — and that
+# makes ROTATION one step: change the GitHub secret, deploy. The app and the
+# console pick up the new value from the same file in the same run.
+#
+# The values arrive as psql variables and are quoted by psql's own `:'var'`
+# form, so no password, whatever it contains, can close its own string and
+# become SQL. They are briefly visible in this one-shot container's process
+# list; anybody who can see that can already read deploy/.env, so it widens
+# nothing. `log_statement` is `none` by default, so Postgres does not log them;
+# do not turn statement logging on for this database without revisiting this.
+#
+# THREE DIFFERENT VALUES, enforced. `ainext_maint` is BYPASSRLS and reads every
+# student's rows. If the app's password also unlocked it, a compromised app
+# container would hold a key that walks straight past every RLS policy in
+# migration 017 — the isolation would be decoration with a password on it.
+if [ -n "${AINEXT_APP_PASSWORD:-}" ] && [ -n "${AINEXT_OPERATOR_PASSWORD:-}" ] \
+   && [ -n "${AINEXT_MAINT_PASSWORD:-}" ]; then
+  if [ "$AINEXT_APP_PASSWORD" = "$AINEXT_OPERATOR_PASSWORD" ] \
+     || [ "$AINEXT_APP_PASSWORD" = "$AINEXT_MAINT_PASSWORD" ] \
+     || [ "$AINEXT_OPERATOR_PASSWORD" = "$AINEXT_MAINT_PASSWORD" ]; then
+    cat >&2 <<'SAME'
+
+!! Two of the three database role passwords are IDENTICAL.
+!! `ainext_maint` bypasses row-level security; sharing its password with the
+!! app or the console makes every RLS policy decoration. Set three different
+!! values and deploy again:
+!!   gh secret set AINEXT_APP_PASSWORD      --repo samtoma/AI.NEXT
+!!   gh secret set AINEXT_OPERATOR_PASSWORD --repo samtoma/AI.NEXT
+!!   gh secret set AINEXT_MAINT_PASSWORD    --repo samtoma/AI.NEXT
+SAME
+    exit 1
+  fi
+  say "setting the three role passwords from deploy/.env"
+  $PSQL -v app_pw="$AINEXT_APP_PASSWORD" \
+        -v op_pw="$AINEXT_OPERATOR_PASSWORD" \
+        -v maint_pw="$AINEXT_MAINT_PASSWORD" <<'SQL'
+ALTER ROLE ainext_app      PASSWORD :'app_pw';
+ALTER ROLE ainext_operator PASSWORD :'op_pw';
+ALTER ROLE ainext_maint    PASSWORD :'maint_pw';
+SQL
+fi
+
 # 3b. Those roles have passwords. Migration 017 creates them with NONE, on
 # purpose — a migration that set one would put a known credential in git — so on
 # a brand-new box the correct state after this script's first run is "schema
@@ -236,20 +287,17 @@ then
 
 !! One or more database roles still have no password.
 !!
-!! This is the EXPECTED state the first time this stack is brought up: migration
-!! 017 deliberately creates the roles without one. Set them once, on the box,
-!! then put the same three values in deploy/.env (AINEXT_APP_PASSWORD,
-!! AINEXT_OPERATOR_PASSWORD, AINEXT_MAINT_PASSWORD) and deploy again:
+!! This script sets them itself from AINEXT_APP_PASSWORD, AINEXT_OPERATOR_PASSWORD
+!! and AINEXT_MAINT_PASSWORD — so reaching this line means at least one of those
+!! was EMPTY in deploy/.env. The deploy writes that file from GitHub secrets, so
+!! set whichever is missing there and deploy again. No SSH:
 !!
-!!   cd "$APP_DIR/deploy"   # the checkout this stack deploys into
-!!   docker compose -p ainext-mvp1 -f docker-compose.mvp1.yml exec db \
-!!     psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
-!!       -c "ALTER ROLE ainext_app      PASSWORD '...'" \
-!!       -c "ALTER ROLE ainext_operator PASSWORD '...'" \
-!!       -c "ALTER ROLE ainext_maint    PASSWORD '...'"
+!!   gh secret set AINEXT_APP_PASSWORD      --repo samtoma/AI.NEXT
+!!   gh secret set AINEXT_OPERATOR_PASSWORD --repo samtoma/AI.NEXT
+!!   gh secret set AINEXT_MAINT_PASSWORD    --repo samtoma/AI.NEXT
 !!
-!! Use three DIFFERENT strong values. `ainext_maint` is BYPASSRLS: it reads every
-!! student's rows, and it is never given to the running app.
+!! Use three DIFFERENT strong values (openssl rand -hex 32). `ainext_maint` is
+!! BYPASSRLS: it reads every student's rows, and it is never given to the app.
 REMEDY
   exit 1
 fi
