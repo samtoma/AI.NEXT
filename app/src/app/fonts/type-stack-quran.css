@@ -1,0 +1,46 @@
+/* The type stack's contract with globals.css — written by hand, on purpose.
+
+   Two kinds of rule live here, and both exist because `next/font/local` cannot
+   produce them correctly under this version's Turbopack pipeline. See the long
+   note at the top of src/app/fonts.ts; the short version:
+
+   1. THE METRIC-MATCHED FALLBACK FACES hold the line's size while the real
+      face is in flight — `local(Arial)` or `local(Times New Roman)` stretched
+      by size-adjust and the ascent/descent overrides so that swapping in the
+      web font moves nothing. next/font/local recomputes these from the font
+      file with fontkit and gets different numbers from the table
+      next/font/google used (Fraunces by 12 points of size-adjust, Noto Naskh
+      Arabic by 17), so every font call passes `adjustFontFallback: false` and
+      the values below are copied verbatim out of the CSS of the last build
+      made before the fonts were vendored. They are measurements, not choices:
+      re-derive them only by re-measuring.
+
+   2. THE --font-* VARIABLES are what `variable:` used to emit. Turbopack names
+      a local face after its JS binding rather than after the `font-family` in
+      `declarations`, so it would write `--font-cairo: "cairoArabic", …` — a
+      family no @font-face answers to, and therefore a silent fall-through to a
+      system face. Written out here, they say exactly what they said before.
+
+   The family names are load-bearing. globals.css names "Spline Sans Fallback",
+   "Fraunces Fallback" and "Spline Sans Mono Fallback" directly in its stacks,
+   positioned AFTER Noto Naskh Arabic so a Latin face in flight cannot serve
+   Arabic. Do not rename anything here.
+
+   This file carries Amiri Quran alone, imported from fonts-quran.ts, so the
+   face and the variable ship with the scripture component rather than with
+   every route — and --font-quran stays on a CLASS, not on :root, so
+   `.font-quran` still falls back to Noto Naskh until a passage mounts.
+*/
+
+@font-face {
+  font-family: "Amiri Quran Fallback";
+  src: local("Times New Roman");
+  ascent-override: 181.61%;
+  descent-override: 63.44%;
+  line-gap-override: 0.0%;
+  size-adjust: 99.94%;
+}
+
+.font-quran-vars {
+  --font-quran: "Amiri Quran", "Amiri Quran Fallback";
+}

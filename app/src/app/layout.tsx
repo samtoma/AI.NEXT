@@ -1,15 +1,8 @@
 import type { Metadata } from "next";
-import {
-  Baloo_Bhaijaan_2,
-  Cairo,
-  Fraunces,
-  IBM_Plex_Mono,
-  Noto_Naskh_Arabic,
-  Spline_Sans,
-  Spline_Sans_Mono,
-} from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import "./fonts";
+import "./fonts/type-stack.css";
 import { GaScript } from "@/components/GaScript";
 import { NavLinks } from "@/components/NavLinks";
 import { NoorMark } from "@/components/NoorMark";
@@ -18,93 +11,30 @@ import { documentVariant } from "@/lib/design-variant-queries";
 import { IS_CONSOLE, IS_MVP1 } from "@/lib/env";
 import { resolveStudentContext } from "@/lib/student-context";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  axes: ["opsz", "SOFT", "WONK"],
-});
+/* ------------------------- the type stack lives in ./fonts -----------------
+   The seven families that used to be declared here are now `next/font/local`
+   calls over .woff2 files committed under `src/app/fonts/`, and this is not a
+   refactor anybody should undo.
 
-const splineSans = Spline_Sans({
-  variable: "--font-spline",
-  subsets: ["latin"],
-});
+   `next/font/google` self-hosts at runtime but downloads the files **during
+   `next build`**. That made the first production deploy depend on the CI
+   runner reaching fonts.googleapis.com, and it could not: three failed runs on
+   `Module not found ... [next]/internal/font/google/baloo_bhaijaan_2_*.module.css`,
+   one re-run that passed, two more that failed. The deploy job never ran. The
+   on-box image build runs `next build` twice and would fail the same way.
 
-const splineMono = Spline_Sans_Mono({
-  variable: "--font-spline-mono",
-  subsets: ["latin"],
-});
+   Vendoring moves that download from build time to commit time. Nothing about
+   what a browser receives changes: same families, same weight ranges, same
+   per-subset unicode-ranges, same preload set, same `display` — the files are
+   byte-for-byte the ones the last successful build had fetched. `./fonts.ts`
+   carries the full note, the per-subset reasoning and the bilingual-parity
+   rules; `./fonts/LICENSES.md` carries the OFL provenance.
 
-/* ---------------- the Noor families (MVP 1.0 comparison build) -------------
-   Baloo Bhaijaan 2 and Cairo each ship Latin AND Arabic in one family, which
-   is precisely why the handoff picked them: bilingual parity — same face, same
-   size, same weight in both scripts — becomes a property of the type stack
-   instead of something every component has to remember. Both Arabic subsets
-   are requested for that reason, even though MVP 1.0 ships English-first: the
-   direction seam stays switchable (constitution v2.0.0 Principle V), and a
-   language flip that arrives with no Arabic cut loaded is not switchable in
-   any useful sense.
-
-   IBM Plex Mono is Latin-only on purpose. It carries no Arabic script and no
-   Arabic-Indic digits, so globals.css forces any Arabic run out of the mono
-   stack rather than letting it fall through to an arbitrary system face. */
-const baloo = Baloo_Bhaijaan_2({
-  variable: "--font-baloo",
-  subsets: ["latin", "arabic"],
-  weight: ["600", "700", "800"],
-  display: "swap",
-});
-
-const cairo = Cairo({
-  variable: "--font-cairo",
-  subsets: ["latin", "arabic"],
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-});
-
-/**
- * Arabic webfont for the whole product (ADR-0006 §3).
- *
- * Loaded from the root layout — and therefore preloaded on every route —
- * because Arabic is the primary script here: the student surface and the
- * shipped Social Studies vertical are entirely Arabic, and `display: swap`
- * without a preload means the most important text on the page reflows late on
- * a 3G connection.
- *
- * `subsets: ["arabic"]` preloads the Arabic cut only (93,960 B). Note that it
- * does NOT stop next/font from self-hosting the family's latin / latin-ext /
- * math / symbols cuts with their unicode-ranges intact. Those cuts never render
- * anything — Fraunces and Spline win every Latin character (see the font-stack
- * note in globals.css) — but a page containing a character the Latin faces lack
- * (Greek maths letters φ σ θ α, arrows → ⇢ ↳, operators ≈ ≠, dingbats ✓ ✕ ✦ ✳)
- * matches their unicode-range, so the browser fetches the cut, finds the glyph
- * missing from its cmap too, and falls through to the system font exactly as
- * before. Measured dead weight: latin 19,732 B, math 14,248 B, symbols 9,404 B,
- * whichever apply to the page. Eliminating it means dropping next/font/google
- * for a vendored Arabic-only cut via next/font/local — a separate call.
- *
- * Variable weight (400–700) is one file for every weight the UI uses. The
- * static 400 cut is ~43 KB smaller but leaves the browser to synthesise bold,
- * which smears تشكيل — the one thing this font is here to render correctly.
- *
- * `adjustFontFallback: false` states the intent — next/font's metric-matched
- * fallback is a `local(...)` face with no unicode-range, which is exactly the
- * mechanism that was swallowing Arabic in the first place. Note that this
- * version's Turbopack font pipeline ignores the flag and emits the fallback
- * face anyway, so globals.css names "Noto Naskh Arabic" directly rather than
- * using var(--font-naskh) in the stacks; see the note there.
- */
-const notoNaskhArabic = Noto_Naskh_Arabic({
-  variable: "--font-naskh",
-  subsets: ["arabic"],
-  display: "swap",
-  adjustFontFallback: false,
-});
+   `./fonts` is imported for its side effects — the @font-face rules and the
+   fingerprinted, preloaded files. `./fonts/type-stack.css` carries the two
+   things next/font/local cannot emit correctly here: the metric-matched
+   fallback faces, and the `--font-*` variables globals.css consumes. Both are
+   explained there; neither is a free-hand invention. */
 
 // The root layout is async and reads cookies (via `currentPrincipal()`), so no
 // segment under it can be prerendered — `/_not-found` otherwise is, throwing at
@@ -185,7 +115,7 @@ export default async function RootLayout({
     <html
       lang="en"
       data-ds={variant}
-      className={`${fraunces.variable} ${splineSans.variable} ${splineMono.variable} ${notoNaskhArabic.variable} ${baloo.variable} ${cairo.variable} ${plexMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
       <body className="min-h-full flex flex-col">
         {IS_CONSOLE ? (

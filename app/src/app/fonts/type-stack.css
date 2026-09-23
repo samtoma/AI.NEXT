@@ -1,0 +1,103 @@
+/* The type stack's contract with globals.css — written by hand, on purpose.
+
+   Two kinds of rule live here, and both exist because `next/font/local` cannot
+   produce them correctly under this version's Turbopack pipeline. See the long
+   note at the top of src/app/fonts.ts; the short version:
+
+   1. THE METRIC-MATCHED FALLBACK FACES hold the line's size while the real
+      face is in flight — `local(Arial)` or `local(Times New Roman)` stretched
+      by size-adjust and the ascent/descent overrides so that swapping in the
+      web font moves nothing. next/font/local recomputes these from the font
+      file with fontkit and gets different numbers from the table
+      next/font/google used (Fraunces by 12 points of size-adjust, Noto Naskh
+      Arabic by 17), so every font call passes `adjustFontFallback: false` and
+      the values below are copied verbatim out of the CSS of the last build
+      made before the fonts were vendored. They are measurements, not choices:
+      re-derive them only by re-measuring.
+
+   2. THE --font-* VARIABLES are what `variable:` used to emit. Turbopack names
+      a local face after its JS binding rather than after the `font-family` in
+      `declarations`, so it would write `--font-cairo: "cairoArabic", …` — a
+      family no @font-face answers to, and therefore a silent fall-through to a
+      system face. Written out here, they say exactly what they said before.
+
+   The family names are load-bearing. globals.css names "Spline Sans Fallback",
+   "Fraunces Fallback" and "Spline Sans Mono Fallback" directly in its stacks,
+   positioned AFTER Noto Naskh Arabic so a Latin face in flight cannot serve
+   Arabic. Do not rename anything here.
+*/
+
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Times New Roman");
+  ascent-override: 84.71%;
+  descent-override: 22.09%;
+  line-gap-override: 0.0%;
+  size-adjust: 115.45%;
+}
+
+@font-face {
+  font-family: "Spline Sans Fallback";
+  src: local("Arial");
+  ascent-override: 95.03%;
+  descent-override: 23.33%;
+  line-gap-override: 0.0%;
+  size-adjust: 101.39%;
+}
+
+@font-face {
+  font-family: "Spline Sans Mono Fallback";
+  src: local("Arial");
+  ascent-override: 71.59%;
+  descent-override: 17.57%;
+  line-gap-override: 0.0%;
+  size-adjust: 134.59%;
+}
+
+@font-face {
+  font-family: "Baloo Bhaijaan 2 Fallback";
+  src: local("Arial");
+  ascent-override: 112.76%;
+  descent-override: 65.98%;
+  line-gap-override: 0.0%;
+  size-adjust: 95.78%;
+}
+
+@font-face {
+  font-family: "Cairo Fallback";
+  src: local("Arial");
+  ascent-override: 137.65%;
+  descent-override: 60.32%;
+  line-gap-override: 0.0%;
+  size-adjust: 94.66%;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono Fallback";
+  src: local("Arial");
+  ascent-override: 76.16%;
+  descent-override: 20.43%;
+  line-gap-override: 0.0%;
+  size-adjust: 134.59%;
+}
+
+@font-face {
+  font-family: "Noto Naskh Arabic Fallback";
+  src: local("Times New Roman");
+  ascent-override: 91.43%;
+  descent-override: 54.22%;
+  line-gap-override: 0.0%;
+  size-adjust: 116.92%;
+}
+
+/* The same seven variables, same values, same order as the classes next/font put
+   on <html> before. Declared on :root because that IS <html>. */
+:root {
+  --font-fraunces: "Fraunces", "Fraunces Fallback";
+  --font-spline: "Spline Sans", "Spline Sans Fallback";
+  --font-spline-mono: "Spline Sans Mono", "Spline Sans Mono Fallback";
+  --font-naskh: "Noto Naskh Arabic", "Noto Naskh Arabic Fallback";
+  --font-baloo: "Baloo Bhaijaan 2", "Baloo Bhaijaan 2 Fallback";
+  --font-cairo: "Cairo", "Cairo Fallback";
+  --font-plex-mono: "IBM Plex Mono", "IBM Plex Mono Fallback";
+}
