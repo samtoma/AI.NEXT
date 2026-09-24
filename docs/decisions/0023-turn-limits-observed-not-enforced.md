@@ -4,9 +4,14 @@
 instruction, the same day — *"please remove the limit of the photo uploads for now as well, and add
 the monitoring and cost if any in the admin console"* — extends this ADR to the daily upload cap,
 which the Decision below first recorded as untouched. Title and scope widened to match; everything
-about the turn caps below is unchanged by this amendment.
-**Amends**: [constitution](../../.specify/memory/constitution.md) v3.2.0 → **v3.3.0** (Principle VI, folded into one amendment covering both limits) · the `TURN_CAPS` refusal in `app/src/app/api/ask/route.ts` (removed) · the `DAILY_UPLOAD_CAP` refusal in `app/src/lib/upload-contract.ts` and `app/src/app/api/uploads/route.ts` (removed) · `FR-051` in [`specs/000-baseline/spec.md`](../../specs/000-baseline/spec.md), **superseded** · the cap clause of `T047` in [`specs/001-student-mvp1-delta/tasks.md`](../../specs/001-student-mvp1-delta/tasks.md), **superseded** (the metering half of T047 stands) · `research.md` L66 (`specs/001-student-mvp1-delta/`), **superseded** · `specs/001-student-mvp1-delta/delta-matrix.md`'s FR-051 row · `specs/001-student-mvp1-delta/traceability.md`'s FR-212 row · `specs/001-student-mvp1-delta/contracts/api.md` (both the turn-cap line and the uploads `429` line) · `specs/000-baseline/contracts/api.md` · `docs/architecture/system-design-deep-dive.md`
-**Affects**: `app/src/lib/turn-thresholds.ts` (new — `TURN_THRESHOLDS`, `thresholdStatus`, and now `DAILY_UPLOAD_THRESHOLD`, `uploadThresholdStatus`, `summariseUploadDays`) · `app/src/lib/turn-threshold-queries.ts` (new — the console's turn reads) · `app/src/lib/upload-threshold-queries.ts` (new — `readUploadsView`, the console's upload reads, reusing `cost-queries.ts`'s existing photo/OCR spend figure rather than recomputing it) · `app/src/lib/upload-contract.ts`, `app/src/app/api/uploads/route.ts` (the daily-cap refusal removed; size/type limits untouched) · `app/src/app/(console)/cost/page.console.tsx` (turn-limit panel, and now the photo-upload monitoring panel) · `app/src/app/(console)/students/[id]/sessions/` (list, timeline, replay) · `app/src/components/console/ui.tsx` (the chip) · `specs/002-identity-and-admin-console/spec.md` and `traceability.md`, **FR-3401…FR-3409**
+about the turn caps below is unchanged by this amendment. **Amended again the same day** (gating and
+definitions): the branch finished — a "Definitions the code chose" section added below, a new
+Decision bullet records the `costDetailAccess` (FR-2406) gate on the two new panels' student-identifying
+detail, and a Consequences bullet records `peekSessionProbing` and the `cap` frame's probing
+declaration being removed as a side effect of the turn-cap refusal itself being removed (002
+FR-3106).
+**Amends**: [constitution](../../.specify/memory/constitution.md) v3.2.0 → **v3.3.0** (Principle VI, folded into one amendment covering both limits) · the `TURN_CAPS` refusal in `app/src/app/api/ask/route.ts` (removed) · the `DAILY_UPLOAD_CAP` refusal in `app/src/lib/upload-contract.ts` and `app/src/app/api/uploads/route.ts` (removed) · `FR-051` in [`specs/000-baseline/spec.md`](../../specs/000-baseline/spec.md), **superseded** · the cap clause of `T047` in [`specs/001-student-mvp1-delta/tasks.md`](../../specs/001-student-mvp1-delta/tasks.md), **superseded** (the metering half of T047 stands) · `research.md` L66 (`specs/001-student-mvp1-delta/`), **superseded** · `specs/001-student-mvp1-delta/delta-matrix.md`'s FR-051 row · `specs/001-student-mvp1-delta/traceability.md`'s FR-212 and FR-1218 rows · `specs/001-student-mvp1-delta/contracts/api.md` (both the turn-cap line and the uploads `429` line) · `specs/000-baseline/contracts/api.md` · `docs/architecture/system-design-deep-dive.md` · `specs/002-identity-and-admin-console/spec.md`'s FR-3106 clause (the turn-limit case superseded, not deleted) and its `traceability.md` row
+**Affects**: `app/src/lib/turn-thresholds.ts` (new — `TURN_THRESHOLDS`, `thresholdStatus`, and now `DAILY_UPLOAD_THRESHOLD`, `uploadThresholdStatus`) · `app/src/lib/turn-threshold-queries.ts` (new — the console's turn reads, `costDetailAccess`) · `app/src/lib/upload-threshold-queries.ts` (new — `readUploadsView`, the console's upload reads, reusing `cost-queries.ts`'s existing photo/OCR spend figure rather than recomputing it) · `app/src/lib/upload-contract.ts`, `app/src/app/api/uploads/route.ts` (the daily-cap refusal removed; size/type limits untouched) · `app/src/app/(console)/cost/page.console.tsx` (turn-limit panel, and now the photo-upload monitoring panel, both gated by `costDetailAccess` for their student-identifying detail — FR-2406) · `app/src/app/(console)/students/[id]/sessions/` (list, timeline, replay) · `app/src/components/console/ui.tsx` (the chip) · `app/src/lib/sessions.ts` (`peekSessionProbing` removed) · `app/src/lib/socratic-probing.ts` (`probingDeclaredBy` loses its `cap`-frame branch) · `specs/002-identity-and-admin-console/spec.md` and `traceability.md`, **FR-3401…FR-3409**
 **Related**: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md) (raised `lesson_learn` 14→18, the number this ADR carries forward unenforced) · [ADR-0019](./0019-serve-the-whole-maths-bank.md) (the other case in this repo where Samuel lifted a standing bound and kept the record instead) · constitution Principle VI (Cost Discipline) and Principle XI (per-environment attribution, no pooling) · FR-2402/FR-2406 (specs/002 — the existing spend split and the cost-billing role's content-blindness, both of which FR-3409's upload panel must keep true)
 
 ## Context
@@ -115,6 +120,37 @@ admin console."**
   against the surface, chat session and student the reply was actually served to, the same isolation
   `TURN_CAPS` already had. Two solutions' turn-limit numbers are never added together. The same rule
   governs the upload threshold and its student-day counts.
+- **The two new panels' student-identifying detail is gated the way a session link already was**
+  (FR-2406). The Cost page's `cost-billing` role already refused to link a session without
+  `student-data`, so an operator without it saw a session only by number. The same pairing —
+  `costDetailAccess(roles)`, `cost-billing` AND `student-data` — now decides three more things: the
+  turn-limit panel's highest-reply figure and its recent-conversations list, and the upload panel's
+  student-day list. Without `student-data` an operator sees the aggregates and a note citing FR-2406
+  in each one's place, and **the detail is not queried on their behalf**, not merely withheld after a
+  query returns it.
+
+## Definitions the code chose
+
+None of these were obvious in advance, and getting them wrong would have made the console's numbers
+plausible-looking and false. Recorded here because the code, not this ADR, is where they were
+actually decided:
+
+- **A conversation counts in a period if any of its turns falls in it, and its reply count is the
+  whole conversation's** — not only the replies that happen to land inside the period. A conversation
+  that started three days ago and got one more reply today is one of today's conversations, counted
+  by everything it has ever delivered, not by today's slice of it. This is what "conversations",
+  "reached" and "went past" mean on the Cost page's turn-limit panel.
+- **A session's chip counts replies up to the end of that session**, not the conversation's live
+  total. A conversation can outlive the session it started in (ADR-0015 reuses an open session of the
+  same kind); the chip on an earlier session reports what that session actually saw, so two sessions
+  touching the same conversation can show two different counts, both true of the moment each one
+  ended.
+- **The upload "day" is the old rolling 24-hour window** — the 24 hours before each upload, not a
+  calendar day — **labelled by the UTC date the upload landed on.** This is `DAILY_UPLOAD_CAP`'s own
+  window, reproduced exactly rather than redefined, so a threshold crossing means the same thing it
+  would have meant under the old refusal. The label is only a label: **one burst of uploads spanning
+  UTC midnight can therefore mark two different student-days**, each showing part of what was, from
+  the student's clock, one sitting.
 
 ## Why this and not an alternative
 
@@ -170,6 +206,12 @@ both panels.
   tasks.md` T047 asked for both — meter upload parsing as its own surface, and enforce the daily cap
   — in one line. Only the second half is superseded here; the metering `T047` also asked for is what
   FR-3409's spend split still runs on, unchanged.
+- **Removing the turn-cap refusal deleted a code path 002's Socratic-probing switch (ADR-0021) depended
+  on.** `lib/sessions.ts`'s `peekSessionProbing` and the `cap` SSE frame's own probing declaration
+  existed only to answer "was this refused turn probing?" — a question that no longer has a subject,
+  since no turn is refused. Both are gone (`dc18085`); `probingDeclaredBy` now reads only the session
+  frame. This is 002 `FR-3106`'s row, corrected the same day this branch finished — a consequence of
+  this ADR landing on the same code the teaching switch shares, not a new decision.
 
 ## How to undo this
 

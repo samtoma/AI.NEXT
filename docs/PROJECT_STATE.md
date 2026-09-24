@@ -45,19 +45,43 @@ upload/OCR spend and its per-upload average kept separate from tutoring spend, a
 reached or went past the daily threshold, with a list). The session list, timeline and replay get an
 amber — never red (FR-1002) — chip on a session that reached its turn threshold.
 
+**Build finished on the branch, 894/894 tests, all still uncommitted** (Samuel: nothing lands
+before his review). The Cost page's two new panels also gate their student-identifying detail —
+the highest-reply figure, the recent-conversations list, and the upload student-day list — behind
+`student-data` as well as `cost-billing` (FR-2406, `costDetailAccess` in `lib/turn-threshold-queries.ts`);
+a billing-only operator sees the aggregates and a note instead. Rendered against a scratch database
+as both role types (not a browser). See ADR-0023's "Definitions the code chose" for three rules the
+code settled that were not obvious in advance: a conversation counts in whichever period any of its
+turns falls in, by its whole reply count; a session's chip counts only up to that session's own end;
+an upload "day" is the old rolling 24 hours, labelled by UTC date, so one burst near midnight can
+mark two dates.
+
+**Also on this branch: Socratic probing's reveal rule, closed (ADR-0021's 2026-09-24 amendment,
+FR-3112).** Samuel: *"it should be 2 questions as well."* The card already withheld the answer until
+a student's second wrong attempt; the tutor's own prompt let the same answer out after only one, on
+request. Both now agree — nothing reveals it before the second wrong attempt, whether asked or not.
+The one prompt change ADR-0020's hold permits. This only matters while probing is on, which in
+production today means **test accounts only** — Samuel set the switch to that position at **09:33
+today** for one test student, so the change is live for exactly one account. #53's "two reveal rules
+disagree" item is resolved by it; "a lesson can stall" and "'I don't get it' loses its step-down"
+stay open, and the reveal rule being stricter now makes the stall risk, if anything, a little sharper.
+
 **Open:**
 - **Samuel / Tamer:** PRD §6.3 ("max 2 AI turns per question") is now departed from by this decision.
   Tamer owns the PRD; he should be told rather than finding the drift later.
-- **Nobody has seen either console panel or a session chip live.** Every FR-3401…FR-3409 row in spec
-  002's traceability is BUILT, not VERIFIED — a founder needs to open the Cost page and a session
-  that actually crossed a threshold. FR-3407…FR-3409 (the uploads half) are additionally still
-  **target-only in this working tree** as of this writing — the backend session had not yet started
-  on them when these rows were last checked.
+- **Nobody has seen either console panel or a session chip live in a browser.** Every FR-3401…FR-3409
+  row in spec 002's traceability is BUILT, not VERIFIED — a founder needs to sign in and open the
+  Cost page as both a billing-only and a full operator, and a session that actually crossed a
+  threshold. `scripts/console-p4-smoke.sh` has the gated-headings checks written but not run (needs
+  live password sign-ins).
 - **The upload cap's removal has zero production signal to lean on**, unlike the turn caps' two
-  capped lessons. Worth reading the Cost page's photo-upload panel earlier rather than later, once it
-  exists — there is no baseline for what "normal" looks like yet.
-- Code paths in the traceability rows are this session's best guess at file names as of 2026-09-24;
-  the implementing session's own report should correct them.
+  capped lessons. Worth reading the Cost page's photo-upload panel earlier rather than later — there
+  is no baseline for what "normal" looks like yet.
+- **FR-3112 has no test coverage yet.** No file in this working tree mentions
+  `REVEAL_AFTER_WRONG_ATTEMPTS` or `cardRevealUnlocked` — the code is complete and consistent, but
+  unproven by a test, and unobserved with a real probing lesson.
+- **Nothing on this branch is committed.** All of v0.9.0 — turn limits, upload limits, the FR-2406
+  gating, and this documentation pass — sits in the working tree pending Samuel's review.
 
 ## 🔐 v0.8.0 — console sign-in from Cloudflare Access (released 2026-09-24)
 

@@ -47,6 +47,17 @@ Requirements: FR-3401…FR-3409 in `specs/002-identity-and-admin-console/spec.md
 baseline's FR-051 and the cap clause of 001's `T047`. Record:
 [ADR-0023](docs/decisions/0023-turn-limits-observed-not-enforced.md).
 
+### Changed — Socratic probing: asking for the answer no longer skips a step (ADR-0021, FR-3112)
+- **While probing is on, asking the tutor for the answer no longer gets it early.** The card already
+  waited for a student's second wrong attempt before showing the answer; the tutor's own words did
+  not — asking "just tell me" could get it after only one. Samuel: *"it should be 2 questions as
+  well."* Both now agree: nothing — not asking, not the tutor's own judgement — reveals it before the
+  second wrong attempt on that objective. This applies only while a sitting is probing, which in
+  production today means test accounts only.
+
+Requirements: FR-3112 in `specs/002-identity-and-admin-console/spec.md`. Record:
+[ADR-0021](docs/decisions/0021-runtime-teaching-toggle-and-testers.md#amendment-2026-09-24--reveal-threshold).
+
 ## [v0.8.0] — 2026-09-24
 
 Console sign-in from the email Cloudflare Access has already verified. A security review read it

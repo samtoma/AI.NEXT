@@ -1,9 +1,9 @@
 # ADR-0021 — Socratic probing becomes a console switch — On at the next sitting, Off at the next message — for test accounts first
 
-**Status**: Accepted — Samuel, 2026-09-24. **Amended the same day** (fix pass): when a change reaches a student — Samuel chose option B, below; the tester mark needs two roles; the role grant and the rollback path hardened. **Amended again the same day** (fix pass 2): a sitting that has stopped probing never starts again — the consequence "Off then On probes again", recorded below as deliberate in the first amendment, is withdrawn because it let On reach a sitting under way, which FR-3105 forbids.
-**Amends**: the compile-time `SOCRATIC_PROBING_ENABLED = false` that v0.6.0 merged Tamer's prototype behind (`app/src/lib/socratic-probing.ts`, [CHANGELOG v0.6.0](../../CHANGELOG.md))
-**Affects**: `db/migrations/014-operators-and-roles.sql` (five-role vocabulary) · `db/migrations/029-teaching-controls-role.sql` · `db/migrations/030-teaching-toggle-and-testers.sql` and both rollbacks · `app/src/lib/socratic-probing.ts` (the rules) · `app/src/lib/sessions.ts` (the snapshot) · `app/src/lib/teaching-queries.ts` · `app/src/lib/env.ts` (`RELEASE_TAG`) · `app/src/app/api/ask/route.ts`, `app/src/app/api/attempts/route.ts` · `app/src/components/chat/ChatCore.tsx`, `ChatQuestionCard.tsx`, `components/student/LessonSession.tsx`, `WhiteboardPanel.tsx` · `app/src/app/(console)/teaching/`, `app/src/app/api/console/teaching/`, `app/src/app/api/console/students/[id]/tester/` · the Student 360 and the three session pages · `FR-3101`…`FR-3111` in [`specs/002-identity-and-admin-console/spec.md`](../../specs/002-identity-and-admin-console/spec.md)
-**Related**: [ADR-0014](./0014-admin-console-second-build-target.md) (roles, and what a safety control is) · [ADR-0015](./0015-interaction-timeline-and-replay.md) (the learning session this snapshot is stored on) · [ADR-0018](./0018-course-availability.md) (the per-student override pattern the tester mark copies) · [ADR-0012](./0012-per-student-isolation-rls.md) (why the mark is a table the student surface cannot write) · issue [#53](https://github.com/samtoma/AI.NEXT/issues/53) (what probing still has to fix)
+**Status**: Accepted — Samuel, 2026-09-24. **Amended the same day** (fix pass): when a change reaches a student — Samuel chose option B, below; the tester mark needs two roles; the role grant and the rollback path hardened. **Amended again the same day** (fix pass 2): a sitting that has stopped probing never starts again — the consequence "Off then On probes again", recorded below as deliberate in the first amendment, is withdrawn because it let On reach a sitting under way, which FR-3105 forbids. **Amended again the same day** ([reveal threshold](#amendment-2026-09-24--reveal-threshold)): *"for the The student asks for the answer … it should be 2 questions as well"* — the tutor's "just tell me" bullet no longer reveals before the student's second wrong attempt, resolving #53's "two reveal rules disagree" item; the one prompt change ADR-0020's hold permits, FR-3112.
+**Amends**: the compile-time `SOCRATIC_PROBING_ENABLED = false` that v0.6.0 merged Tamer's prototype behind (`app/src/lib/socratic-probing.ts`, [CHANGELOG v0.6.0](../../CHANGELOG.md)) · [ADR-0020](./0020-mastery-gated-lesson-progression.md)'s prompt hold, for FR-3112 only
+**Affects**: `db/migrations/014-operators-and-roles.sql` (five-role vocabulary) · `db/migrations/029-teaching-controls-role.sql` · `db/migrations/030-teaching-toggle-and-testers.sql` and both rollbacks · `app/src/lib/socratic-probing.ts` (the rules; now also `REVEAL_AFTER_WRONG_ATTEMPTS`, `cardRevealUnlocked`) · `app/src/lib/sessions.ts` (the snapshot) · `app/src/lib/teaching-queries.ts` · `app/src/lib/env.ts` (`RELEASE_TAG`) · `app/src/app/api/ask/route.ts`, `app/src/app/api/attempts/route.ts` · `app/src/components/chat/ChatCore.tsx`, `ChatQuestionCard.tsx`, `components/student/LessonSession.tsx`, `WhiteboardPanel.tsx` · `app/src/lib/chat-parse.ts` (`hasRevealAnswerDirective` removed) · `app/src/components/chat/message-blocks.tsx` · `app/src/app/(console)/teaching/`, `app/src/app/api/console/teaching/`, `app/src/app/api/console/students/[id]/tester/` · the Student 360 and the three session pages · `FR-3101`…`FR-3112` in [`specs/002-identity-and-admin-console/spec.md`](../../specs/002-identity-and-admin-console/spec.md)
+**Related**: [ADR-0014](./0014-admin-console-second-build-target.md) (roles, and what a safety control is) · [ADR-0015](./0015-interaction-timeline-and-replay.md) (the learning session this snapshot is stored on) · [ADR-0018](./0018-course-availability.md) (the per-student override pattern the tester mark copies) · [ADR-0012](./0012-per-student-isolation-rls.md) (why the mark is a table the student surface cannot write) · [ADR-0020](./0020-mastery-gated-lesson-progression.md) (the prompt hold FR-3112 is the one exception to) · issue [#53](https://github.com/samtoma/AI.NEXT/issues/53) (what probing still has to fix — the reveal-rule item closed by FR-3112, "a lesson can stall" and "I don't get it" still open)
 
 ## Context
 
@@ -206,3 +206,70 @@ switch Off the lesson's course is never looked up.
 "stop now" argument above has to be made. A cohort large enough to power an A/B
 comparison. And translating the probing strings, at which point "maths only"
 becomes a list.
+
+## Amendment 2026-09-24 — reveal threshold
+
+Samuel, verbatim, 2026-09-24, replying to a finding from the day's review: *"for the The student asks
+for the answer … it should be 2 questions as well."*
+
+**The finding.** With probing on, `ChatQuestionCard` already held the answer and worked solution back
+until the student's **second** wrong attempt on an objective — that was always the card's rule. But
+the tutor's own system prompt let the model give the student the same answer after only **one**
+attempt, the moment the student asked to be told: *"if they explicitly ask to just be told the
+answer … ONLY once a genuine attempt already exists"* — one attempt, not two. A student who asked
+got the answer a full attempt earlier than one who didn't. Two different reveal rules, in two
+different places, disagreeing — exactly #53's own item: *"Two different reveal rules: the event note
+and the system prompt disagree. Pick one."* **This amendment picks one, and resolves that item.**
+
+**The decision.** Both paths now use the second wrong attempt, and nothing else:
+
+- **The card is unchanged.** It already opened at the second wrong attempt; nothing about it moved.
+- **The system prompt's "just tell me" bullet** no longer reveals on request after one attempt. It
+  now insists on an attempt at the guiding question first, whatever the student asks, until the
+  "SOCRATIC PROBE — REVEALED" event fires on the second wrong attempt — at which point the ask is
+  answered the same way the REVEALED case always was.
+- **The live-event note** that primes the tutor for a confirmation-pending objective no longer says
+  "or explicitly asks you to just say it." It now says not to reveal even if asked, until REVEALED.
+- **The client-side bail-out is removed.** A `{{reveal_answer}}` directive used to force the card's
+  wrong-attempt count to 2, opening it immediately if the model emitted one — by design, so a model
+  that honoured "just tell me" could still open the card. With the prompt no longer telling the model
+  to emit it, keeping the bail-out would have been a second, silent way past the same threshold this
+  amendment closes; removing it means **a model slip can no longer open the card early**, only the
+  student's own second wrong attempt can.
+- **One threshold constant.** `REVEAL_AFTER_WRONG_ATTEMPTS = 2` and `cardRevealUnlocked()` in
+  `lib/socratic-probing.ts` are now the one rule the card, the board and the live-event note all
+  read — previously the card read a literal `2` in three places and the prompt read nothing at all.
+
+Recorded as **FR-3112** in `specs/002-identity-and-admin-console/spec.md`, traced in `traceability.md`
+§7e beside FR-3101…FR-3111 — the switch mechanics those eleven cover are untouched by this amendment.
+
+**This is a prompt change, and ADR-0020 holds those.** Samuel's instruction there, 2026-09-22 — "do
+not make changes to the prompt for now" — stands as the general rule. **This amendment is Samuel
+authorising the one rule above, and only that rule, against it** — not a reopening of the hold. Any
+other prompt edit still needs its own authorisation.
+
+**The stall risk this raises, left open.** Forcing two attempts before REVEALED means a student who
+will not attempt the guiding question at all is held longer than before — the same shape of risk
+#53's P1 items already name and this amendment does not resolve:
+
+- **"A lesson can stall"** when the objective has no second question at the same tier (~160
+  objectives affected) — nudging the tutor when "Got it" is blocked and releasing the probe when no
+  unseen question remains is still unbuilt.
+- **"'I don't get it' loses its step-down during a probe"** — needs its own ruling from Samuel, for
+  example treating it as a reveal request; this amendment does not make that ruling, and a
+  "confused, not merely stuck" student is still held to the same two-attempt rule as a student who
+  simply hasn't tried.
+
+Both stay open, tracked on #53, and are not smaller after this amendment — if anything the second one
+is sharper, because the reveal rule it would soften is now stricter than before.
+
+## Consequences of the amendment
+
+**Worst case, a student is held one attempt longer than before this change** — previously "just tell
+me" after one attempt worked; now it never does before REVEALED. That is the change Samuel asked for,
+not a side effect of it, and the stall risk above is the cost of it stated plainly rather than
+assumed away.
+
+**Nothing about probing's other rules moves.** FR-3101…FR-3111 (the switch, the roles, the per-sitting
+snapshot, FR-3105's narrowing) are unaffected; this amendment changes only what the tutor says and
+does once a sitting is already probing.
