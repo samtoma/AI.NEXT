@@ -12,6 +12,22 @@ requirement names it.
 
 Nothing yet.
 
+## [v0.6.1] — 2026-09-24
+
+A safety release with nothing visible to students or operators. It makes going back from v0.7.0
+safe.
+
+### Fixed
+- **Migration 014 no longer rebuilds the operator-roles rule on every deploy.** Every deploy
+  re-applies every migration. 014 dropped and re-added its four-role list unconditionally, so once
+  v0.7.0 adds a fifth role (`teaching-controls`), deploying this line of code again would fail the
+  migrate step and leave the site down, the same failure as 008 on 2026-09-23. 014 now rebuilds the
+  rule only when it lacks one of its own roles, so a wider rule from a later release is left alone.
+  Tested on scratch databases: fresh (built, then left alone), a copy of real data (left alone),
+  v0.7.0 on top, then this release re-applied twice over the v0.7.0 database (passes; the
+  `teaching-controls` rows survive). Deploy this before v0.7.0. Part of the migration re-run
+  requirement recorded with v0.7.0 (FR-3213).
+
 ## [v0.6.0] — 2026-09-23
 
 A deep-reviewed release. It brings Tamer's work onto `main` and carries the day's fixes. Four
