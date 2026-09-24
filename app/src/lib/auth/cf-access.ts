@@ -214,6 +214,31 @@ export function readAccessAssertion(
   return token ? token : null;
 }
 
+/**
+ * May this request START a session from the proof? Only when it is a
+ * top-level navigation (security review F6).
+ *
+ * `GET /api/auth/cloudflare` creates a session, and a GET is something any
+ * other site can make a browser send — `<img src>`, `<iframe src>`, a
+ * `<link rel=prefetch>`. Cloudflare admits such a request whenever the browser
+ * holds its Access cookie, so without this check a page elsewhere could start
+ * (or swap, by FR-3305) a console session on an operator's browser without
+ * the operator doing anything. The sign-in page reaches the route by a
+ * redirect of a navigation, which browsers label `Sec-Fetch-Dest: document`;
+ * an image says `image`, a frame `iframe`, a fetch `empty`.
+ *
+ * **Absent is allowed.** Every browser the console supports sends the header
+ * (Safari since 16.4); a client that sends none — curl on the box, an old
+ * browser — still had to pass Access and still needs a verified assertion, so
+ * refusing it would only break the fallback checks in `deploy/TAKEOVER.md`.
+ * Present and anything but `document` is refused.
+ */
+export function isSigninNavigation(headers: { get(name: string): string | null }): boolean {
+  const dest = headers.get("sec-fetch-dest");
+  if (dest === null) return true;
+  return dest.trim().toLowerCase() === "document";
+}
+
 export type CfRefusal =
   | "no_assertion"
   | "too_long"

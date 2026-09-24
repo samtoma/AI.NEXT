@@ -28,6 +28,12 @@
  *    audited, → `/signin?cf=invalid` — the password form (FR-3308)
  *  - feature off → `/signin?cf=unavailable` — the password form
  *
+ * One answer is not a redirect: a request that is not a top-level navigation
+ * (`Sec-Fetch-Dest` present and not `document` — an `<img>`, an `<iframe>`, a
+ * prefetch another site planted) gets a bare `403` before anything is read,
+ * verified or recorded. A session is started by a person arriving, never by a
+ * resource loading (`isSigninNavigation`, security review F6).
+ *
  * Nothing about the token is logged or stored — not the token, not its
  * signature, not its claims beyond the address it proved.
  */
@@ -35,7 +41,12 @@
 import { cookies } from "next/headers";
 
 import { safeNext } from "@/components/auth/next-param";
-import { cfAccessConfig, readAccessAssertion, verifyAccessAssertion } from "@/lib/auth/cf-access";
+import {
+  cfAccessConfig,
+  isSigninNavigation,
+  readAccessAssertion,
+  verifyAccessAssertion,
+} from "@/lib/auth/cf-access";
 import { accessCookie, applyCookies, clearedAuthCookies, cookieNames, refreshCookie } from "@/lib/auth/cookies";
 import { recordAuthEvent, requestMeta } from "@/lib/auth/events";
 import { recordUnverifiedAssertion, signInOperator } from "@/lib/auth/operator-signin";
@@ -67,6 +78,11 @@ export async function GET(req: Request) {
 
   // The file only exists in the console build; this is the runtime half.
   if (SURFACE !== "admin") return new Response(null, { status: 404 });
+
+  // Not a navigation — an image, a frame, a prefetch: no session, no record.
+  if (!isSigninNavigation(req.headers)) {
+    return new Response(null, { status: 403, headers: { "Cache-Control": "no-store" } });
+  }
 
   const state = cfAccessConfig();
   if (state.state !== "on") return backToSignin(next, "unavailable");

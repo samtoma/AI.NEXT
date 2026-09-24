@@ -27,6 +27,7 @@ import {
   ACCESS_APP_LOGOUT_PATH,
   ACCESS_ASSERTION_HEADER,
   consoleSigninMode,
+  isSigninNavigation,
   readAccessAssertion,
   resolveCfAccessConfig,
   sessionMatchesAccessIdentity,
@@ -353,4 +354,30 @@ test("the sign-in page forwards once, and the route's answer (?cf=) stops it for
   // Feature off, or no assertion: the ordinary form, as before this feature.
   assert.deepEqual(consoleSigninMode({ ...base, accessOn: false, cf: null }), { mode: "form", notice: null });
   assert.deepEqual(consoleSigninMode({ ...base, hasAssertion: false, cf: null }), { mode: "form", notice: null });
+});
+
+// ------------------------------------------------------ only a navigation (F6)
+
+test("a session is started only by a top-level navigation, never by an image, a frame or a fetch", () => {
+  const h = (dest?: string) => new Headers(dest === undefined ? {} : { "sec-fetch-dest": dest });
+  assert.equal(isSigninNavigation(h("document")), true, "the sign-in page's redirect");
+  assert.equal(isSigninNavigation(h("Document")), true);
+  for (const dest of ["image", "iframe", "frame", "embed", "object", "empty", "script", "style", "video", ""]) {
+    assert.equal(isSigninNavigation(h(dest)), false, `Sec-Fetch-Dest: ${dest || "(empty)"}`);
+  }
+  assert.equal(isSigninNavigation(h()), true, "absent (curl, an older browser) still needs a verified assertion");
+});
+
+test("the sign-in route applies the navigation check before it verifies, records or signs in", () => {
+  const route = readFileSync(
+    fileURLToPath(new URL("../../app/api/auth/cloudflare/route.console.ts", import.meta.url)),
+    "utf8"
+  );
+  const body = route.slice(route.indexOf("export async function GET"));
+  const guard = body.indexOf("isSigninNavigation(req.headers)");
+  assert.ok(guard > 0, "the route calls isSigninNavigation");
+  for (const later of ["verifyAccessAssertion(", "recordUnverifiedAssertion(", "signInOperator("]) {
+    const at = body.indexOf(later);
+    assert.ok(at > guard, `${later} comes after the navigation check`);
+  }
 });
