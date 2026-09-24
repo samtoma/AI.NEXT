@@ -19,7 +19,7 @@ import {
 import { snapshotContext, snapshotKey } from "@/lib/session-cache";
 import { coerceUploadId } from "@/lib/upload-contract";
 import { getStudentProfile } from "@/lib/student-context";
-import { currentSessionSnapshot } from "@/lib/sessions";
+import { currentSessionSnapshot, peekSessionProbing } from "@/lib/sessions";
 import {
   ZERO_TOKENS,
   costFor,
@@ -84,9 +84,10 @@ import {
  * probing never resumes), AND the lesson being maths. The value the prompt was actually
  * built with goes to the client as the stream's first frame,
  * `{type:"session", probing}`, so the cards follow the prompt rather than a
- * guess — including un-withholding a card when this turn says Off. An older
- * client ignores a frame type it does not know, which is every client before
- * this one.
+ * guess — including un-withholding a card when this turn says Off. A turn the
+ * cap refuses carries the same answer on its `cap` frame (fix pass 2), read
+ * from the open sitting without touching it. An older client ignores a frame
+ * type it does not know, which is every client before this one.
  */
 
 export const dynamic = "force-dynamic";
@@ -250,7 +251,23 @@ export async function POST(req: Request) {
       );
       const turns = Number(turnsRes.rows[0].logged);
       const delivered = Number(turnsRes.rows[0].delivered);
-      if (cap != null && delivered >= cap) return { turns, delivered, capped: true as const };
+      if (cap != null && delivered >= cap) {
+        // Refused before any session is opened or touched — but the client
+        // must still learn this request's probing answer, or switching Off
+        // would never reach a lesson that has hit its cap (its cards would
+        // stay held back behind a probe nobody is running). Read, not
+        // written: the open sitting's answer exactly as a reuse would give
+        // it, narrowed by this lesson's course (fix pass 2).
+        const probing = await peekSessionProbing(
+          studentId,
+          surface,
+          surface === "lesson_learn"
+            ? { courseOf: () => lessonCourseId(body.lesson, client) }
+            : {},
+          client
+        );
+        return { turns, delivered, capped: true as const, probing };
+      }
 
       // The learning session this turn belongs to (ADR-0015). Opened AFTER the
       // cap check, because a turn the cap refused is not a sitting. All four
@@ -343,8 +360,13 @@ export async function POST(req: Request) {
     });
 
     if (pre.capped) {
+      // `probing` rides on the cap frame (ChatCore: `probingDeclaredBy`).
       return new Response(
-        sse({ type: "cap", text: CAP_MESSAGES[surface] ?? "Session limit reached." }),
+        sse({
+          type: "cap",
+          text: CAP_MESSAGES[surface] ?? "Session limit reached.",
+          probing: pre.probing,
+        }),
         { headers: { "Content-Type": "text/event-stream" } }
       );
     }

@@ -29,6 +29,7 @@ import {
   PROBING_SURFACE,
   acceptedRetryOf,
   asProbingSetting,
+  attemptProbingDeclaration,
   cardWithholdsAnswer,
   effectiveProbing,
   effectiveSetting,
@@ -36,6 +37,7 @@ import {
   pendingAfterDeclaration,
   probingActive,
   probingCouldApply,
+  probingDeclaredBy,
   resolveProbing,
   settingChangeRefusal,
   type ProbingSetting,
@@ -324,4 +326,89 @@ test("Off mid-probe, end to end on the client's rules: nothing stays stuck, the 
   // directive handling both gate on exactly this.
   assert.equal(probingActive(surface, declared), false);
   assert.equal(acceptedRetryOf(41, false), null, "and the server writes no retry link");
+});
+
+/* ------------------------------------------------------------------ */
+/* What each response declares (fix pass 2)                            */
+/* ------------------------------------------------------------------ */
+
+test("an attempt declares probing only from inside a learn-mode lesson sitting", () => {
+  assert.deepEqual(attemptProbingDeclaration("lesson_learn", true), { probing: true });
+  assert.deepEqual(attemptProbingDeclaration("lesson_learn", false), { probing: false });
+  // attempt-before-ask opens `practice`; an idle lesson sitting is replaced
+  // by one; a session that could not be opened has no kind — none of them
+  // knows anything about the lesson on screen, so the field is OMITTED
+  for (const kind of ["practice", "lesson_review", "student_chat", "spine_chat", null, undefined]) {
+    for (const probing of [true, false]) {
+      const out = attemptProbingDeclaration(kind, probing);
+      assert.deepEqual(out, {}, `${String(kind)}/${probing}`);
+      assert.ok(!("probing" in { ...out }), "omitted, not undefined");
+    }
+  }
+});
+
+test("an omitted declaration keeps the pending probe; a declared false drops it", () => {
+  // ChatCore's rule for an attempt result: adopt a boolean, keep otherwise.
+  const pending = { loId: "lo:u1-1-1", lastAttemptId: 41, wrongCount: 1, questionId: "q:u1-1-1:001" };
+  const afterResult = (current: boolean, result: { probing?: boolean }) =>
+    typeof result.probing === "boolean"
+      ? { probing: result.probing, pending: pendingAfterDeclaration(pending, result.probing) }
+      : { probing: current, pending };
+  const practice = afterResult(true, JSON.parse(JSON.stringify(attemptProbingDeclaration("practice", false))));
+  assert.deepEqual(practice, { probing: true, pending }, "a practice attempt must not end the lesson's probe");
+  const lesson = afterResult(true, JSON.parse(JSON.stringify(attemptProbingDeclaration("lesson_learn", false))));
+  assert.deepEqual(lesson, { probing: false, pending: null }, "the lesson's own Off still reaches the client");
+});
+
+/** The server's frame encoder (`/api/ask`'s `sse`) and ChatCore's line parse, as shipped. */
+const sse = (obj: unknown) => `data: ${JSON.stringify(obj)}\n\n`;
+const parseFrames = (body: string) =>
+  body
+    .split("\n\n")
+    .map((ev) => ev.split("\n").find((l) => l.startsWith("data: ")))
+    .filter((l): l is string => Boolean(l))
+    .map((l) => JSON.parse(l.slice(6)) as { type: string; probing?: unknown });
+
+test("which frames declare probing: session always, cap when it says, nothing else", () => {
+  assert.equal(probingDeclaredBy({ type: "session", probing: true }), true);
+  assert.equal(probingDeclaredBy({ type: "session", probing: false }), false);
+  assert.equal(probingDeclaredBy({ type: "session" }), false, "a session frame always declares");
+  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: false } as never), false);
+  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: true } as never), true);
+  assert.equal(probingDeclaredBy({ type: "cap", text: "…" } as never), null, "an older server's cap declares nothing");
+  assert.equal(probingDeclaredBy({ type: "cap", probing: "false" }), null, "only a boolean counts");
+  for (const type of ["delta", "done", "error", "unknown"]) {
+    assert.equal(probingDeclaredBy({ type, probing: true }), null, type);
+  }
+});
+
+test("Off reaches a capped lesson: the cap frame's false is parsed, adopted, and un-sticks the card", () => {
+  // A tester mid-probe hits the lesson's turn cap after the switch went Off.
+  // The server's whole response is one cap frame (`/api/ask`, capped branch).
+  const body = sse({ type: "cap", text: "That's a full lesson's worth of work", probing: false });
+  let declared = true;
+  let pending: { loId: string; wrongCount: number } | null = { loId: "lo:u1-1-1", wrongCount: 1 };
+  for (const frame of parseFrames(body)) {
+    const d = probingDeclaredBy(frame);
+    if (d !== null) {
+      declared = d; // adoptProbing
+      pending = pendingAfterDeclaration(pending, d);
+    }
+  }
+  assert.equal(declared, false);
+  assert.equal(pending, null);
+  assert.equal(cardWithholdsAnswer(probingActive(PROBING_SURFACE, declared), false), false);
+
+  // …and a cap that says ON (switch untouched) leaves the probe running.
+  declared = true;
+  pending = { loId: "lo:u1-1-1", wrongCount: 1 };
+  for (const frame of parseFrames(sse({ type: "cap", text: "…", probing: true }))) {
+    const d = probingDeclaredBy(frame);
+    if (d !== null) {
+      declared = d;
+      pending = pendingAfterDeclaration(pending, d);
+    }
+  }
+  assert.equal(declared, true);
+  assert.deepEqual(pending, { loId: "lo:u1-1-1", wrongCount: 1 });
 });

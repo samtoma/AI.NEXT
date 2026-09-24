@@ -237,6 +237,48 @@ export function pendingAfterDeclaration<T>(pending: T | null, declared: boolean)
   return declared ? pending : null;
 }
 
+/**
+ * What `/api/attempts` declares about probing, spread into its JSON result
+ * (fix pass 2).
+ *
+ * Only an attempt written inside a learn-mode lesson sitting has a probing
+ * answer to give — that sitting's answer for this request. An attempt with
+ * no lesson sitting around it (an answer on a restored card before any tutor
+ * turn opens a `practice` session; a lesson sitting that went idle) knows
+ * nothing about the lesson the client is showing, so it declares NOTHING:
+ * the field is omitted and ChatCore keeps what the last lesson response told
+ * it, instead of a `false` that would drop a pending probe the lesson is
+ * still running. The row it writes is unaffected — the retry link and the
+ * `probe` stance still follow `effectiveProbing`, which is false there.
+ */
+export function attemptProbingDeclaration(
+  sessionKind: string | null | undefined,
+  probing: boolean
+): { probing?: boolean } {
+  return sessionKind === PROBING_SURFACE ? { probing } : {};
+}
+
+/**
+ * The probing answer a `/api/ask` stream frame declares, or `null` when the
+ * frame declares none — ChatCore's parser asks this of every frame and adopts
+ * a non-null answer (fix pass 2).
+ *
+ *   `{type:"session", probing}` — the first frame of every served turn; a
+ *                                 missing flag is `false` (what the prompt
+ *                                 was built with is always known);
+ *   `{type:"cap", text, probing}` — a turn refused by the per-surface cap,
+ *                                 which still carries the request's answer so
+ *                                 Off reaches a capped lesson too; an older
+ *                                 server's cap frame without it declares
+ *                                 nothing;
+ *   anything else               — nothing.
+ */
+export function probingDeclaredBy(frame: { type?: unknown; probing?: unknown }): boolean | null {
+  if (frame.type === "session") return frame.probing === true;
+  if (frame.type === "cap" && typeof frame.probing === "boolean") return frame.probing;
+  return null;
+}
+
 /** The address forms the prompt reads (FR-2602) — the subset used here. */
 export type ProbeAddress = {
   they: string;

@@ -129,10 +129,14 @@ until #53 closes, it can reach test accounts and nobody else.**
   maths only — is applied to the lesson or question actually in front of the
   server.
 - **The server is the authority.** `/api/ask` builds the prompt from the
-  request's answer and tells the client in the stream's first frame;
-  `/api/attempts` records a retry link and the `probe` stance only when the
-  request probes, and returns the answer; `ChatCore` starts off and adopts
-  what the server declares on every response — and when that turns false
+  request's answer and tells the client in the stream's first frame — and a
+  turn refused by the cap carries it on its `cap` frame, read from the open
+  sitting without touching it (fix pass 2); `/api/attempts` records a retry
+  link and the `probe` stance only when the request probes, and returns the
+  answer when the attempt was written inside a learn-mode lesson sitting —
+  from any other session it says nothing, so the client keeps what the lesson
+  last told it (fix pass 2); `ChatCore` starts off and adopts what the server
+  declares — and when that turns false
   mid-sitting it drops the pending probe and every held-back card shows its
   answer and worked solution; the whiteboard mirrors ChatCore. No request
   carries a probing flag.

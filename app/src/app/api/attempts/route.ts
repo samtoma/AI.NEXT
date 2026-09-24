@@ -9,7 +9,11 @@ import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import { currentSessionSnapshot } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { evaluateArithmeticExpression } from "@/lib/arithmetic";
-import { acceptedRetryOf, effectiveProbing } from "@/lib/socratic-probing";
+import {
+  acceptedRetryOf,
+  attemptProbingDeclaration,
+  effectiveProbing,
+} from "@/lib/socratic-probing";
 import { advanceIfMastered } from "@/lib/progression-db";
 
 /**
@@ -450,6 +454,7 @@ export async function POST(req: Request) {
       return {
         advancedTo,
         probing,
+        sessionKind: session.kind,
         attemptId: Number(attemptId),
         q,
         isWidget,
@@ -465,6 +470,7 @@ export async function POST(req: Request) {
     const {
       advancedTo,
       probing,
+      sessionKind,
       attemptId,
       q,
       isWidget,
@@ -605,13 +611,18 @@ export async function POST(req: Request) {
         ? { misconceptionId, via: isWidget ? predicate! : givenAnswer }
         : null,
       refutation: served,
-      // Probing as it applied to THIS attempt (ADR-0021). The client adopts
+      // Probing as it applied to THIS attempt (ADR-0021) — declared only
+      // when the attempt was written inside a learn-mode lesson sitting
+      // (`attemptProbingDeclaration`, fix pass 2). There the client adopts
       // it, so the card that shows this result withholds or reveals by the
-      // same rule the server just wrote the row by — including in the one
-      // case the chat has not told it yet (an answer on a restored card,
-      // before any tutor turn this sitting) — and a false here, after the
-      // switch went Off mid-sitting, un-withholds any card still held back.
-      probing,
+      // same rule the server just wrote the row by, and a false after the
+      // switch went Off mid-sitting un-withholds any card still held back.
+      // An attempt in any other session (a `practice` one opened by an
+      // answer before any tutor turn, or after the lesson sitting went idle)
+      // declares nothing, and ChatCore keeps what the lesson last told it
+      // rather than dropping a pending probe on a `false` that is not about
+      // the lesson at all.
+      ...attemptProbingDeclaration(sessionKind, probing),
     };
     return NextResponse.json(result);
   } catch (err) {

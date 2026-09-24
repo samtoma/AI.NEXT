@@ -35,7 +35,7 @@ import type { PoolClient } from "pg";
 
 import { pool } from "./db.ts";
 import { RELEASE_TAG, resolveReleaseTag } from "./env.ts";
-import { currentSession, currentSessionSnapshot } from "./sessions.ts";
+import { currentSession, currentSessionSnapshot, peekSessionProbing } from "./sessions.ts";
 
 // No database, whatever DATABASE_URL says.
 (pool as unknown as { connect: () => Promise<never> }).connect = async () => {
@@ -502,6 +502,78 @@ test("RELEASE_TAG: the deployed tag first, then v<version> — never the retired
   assert.ok(!RELEASE_TAG.startsWith("PDR1-0-"), `RELEASE_TAG is ${RELEASE_TAG}`);
 });
 
+/* A capped turn is refused outside any sitting, and still told its answer (fix pass 2). */
+
+test("peek: an open learn sitting that opened ON, untouched, on a maths lesson → on — and nothing is written", async () => {
+  const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) },
+    setting: "testers",
+    isTester: true,
+  });
+  const spy = courseOfSpy(MATHS);
+  const { out } = await quietly(() => peekSessionProbing(7, "lesson_learn", { courseOf: spy.courseOf }, f.client));
+  assert.equal(out, true);
+  assert.equal(spy.calls.n, 1);
+  assert.ok(!f.log.some((q) => /^(UPDATE|INSERT|DELETE)/.test(q)), `a peek wrote: ${f.log.join(" | ")}`);
+});
+
+test("peek: every reason to say off says off, and never opens, stamps or closes a session", async () => {
+  const cases: [string, Parameters<typeof fakeClient>[0], (() => Promise<string | null>) | undefined][] = [
+    ["switched Off since", { open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) }, setting: "off", switchUpdatedAt: minutesAgo(1) }, async () => MATHS],
+    ["Off then On since", { open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) }, setting: "testers", isTester: true, switchUpdatedAt: minutesAgo(1) }, async () => MATHS],
+    ["opened off", { open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: false }, setting: "testers", isTester: true }, async () => MATHS],
+    ["nothing open", { open: null, setting: "testers", isTester: true }, async () => MATHS],
+    ["idle sitting", { open: { id: 9, kind: "lesson_learn", last_seen_at: minutesAgo(45), probing: true, opened_at: minutesAgo(50) }, setting: "testers", isTester: true }, async () => MATHS],
+    ["another kind open", { open: { id: 9, kind: "practice", last_seen_at: new Date(), probing: false }, setting: "testers", isTester: true }, async () => MATHS],
+    ["a Social Studies lesson", { open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) }, setting: "testers", isTester: true }, async () => SOCIAL],
+    ["no way to learn the course", { open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) }, setting: "testers", isTester: true }, undefined],
+    ["the read fails", { open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) }, inputsFail: true }, async () => MATHS],
+    ["the course read throws", { open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) }, setting: "testers", isTester: true }, async () => { throw new Error("boom"); }],
+  ];
+  for (const [label, fx, courseOf] of cases) {
+    const f = fakeClient(fx);
+    const { out } = await quietly(() =>
+      peekSessionProbing(7, "lesson_learn", courseOf ? { courseOf } : {}, f.client)
+    );
+    assert.equal(out, false, label);
+    assert.ok(!f.log.some((q) => /^(UPDATE|INSERT|DELETE)/.test(q)), `${label}: a peek wrote`);
+  }
+  // a surface that can never probe asks nothing at all
+  const f = fakeClient({});
+  const { out } = await quietly(() => peekSessionProbing(7, "lesson_review", {}, f.client));
+  assert.equal(out, false);
+  assert.equal(f.log.length, 0);
+});
+
+test("/api/ask's capped turn carries the request's answer, read without opening a sitting; ChatCore adopts it", () => {
+  const ask = code("app/api/ask/route.ts");
+  const capped = ask.slice(ask.indexOf("if (cap != null && delivered >= cap)"), ask.indexOf("const session = await currentSessionSnapshot("));
+  assert.ok(capped.length > 0);
+  assert.match(capped, /peekSessionProbing\(\s*studentId,\s*surface,/);
+  assert.match(capped, /courseOf: \(\) => lessonCourseId\(body\.lesson, client\)/);
+  assert.match(capped, /capped: true as const, probing/);
+  assert.doesNotMatch(capped, /currentSession(Snapshot|OrNull)?\(/, "a capped turn must not open or touch a sitting");
+  assert.match(ask, /type: "cap",[\s\S]{0,120}probing: pre\.probing/, "the cap frame must carry probing");
+  // the encoder socratic-probing.test.mts parses with is this one
+  assert.match(ask, /const sse = \(obj: unknown\) => `data: \$\{JSON\.stringify\(obj\)\}\\n\\n`;/);
+  const core = code("components/chat/ChatCore.tsx");
+  assert.match(core, /\.find\(\(l\) => l\.startsWith\("data: "\)\)/);
+  assert.match(core, /JSON\.parse\(line\.slice\(6\)\)/);
+  // the declaration is taken before the per-type dispatch, so the cap branch gets it too
+  const parse = core.slice(core.indexOf("const declaredProbing = probingDeclaredBy(j)"));
+  assert.ok(parse.indexOf('j.type === "cap"') > 0);
+});
+
+test("/api/attempts declares probing only from a learn-mode lesson sitting", () => {
+  const attempts = code("app/api/attempts/route.ts");
+  assert.match(attempts, /sessionKind: session\.kind/);
+  assert.match(attempts, /\.\.\.attemptProbingDeclaration\(sessionKind, probing\)/);
+  const result = attempts.slice(attempts.indexOf("const result: AttemptResult = {"), attempts.indexOf("return NextResponse.json(result)"));
+  assert.doesNotMatch(result, /^\s*probing,\s*$/m, "no unconditional probing field in the result");
+  // …and the row-writing rule is unchanged: still the effective answer
+  assert.match(attempts, /acceptedRetryOf\(retryOfAttemptId, probing\)/);
+});
+
 /* --------------------------------------------------------------------- */
 /* The routes obey the snapshot — read from source                        */
 /* --------------------------------------------------------------------- */
@@ -587,7 +659,8 @@ test("the client never sends a probing flag; it adopts what the server declares"
   assert.ok(askBody.length > 0);
   assert.doesNotMatch(askBody, /probing/, "the /api/ask request body must not carry probing");
   assert.match(core, /j\.type === "session"/);
-  assert.match(core, /adoptProbing\(j\.probing === true\)/);
+  assert.match(core, /const declaredProbing = probingDeclaredBy\(j\)/);
+  assert.match(core, /if \(declaredProbing !== null\) adoptProbing\(declaredProbing\)/);
   assert.match(core, /typeof r\.probing === "boolean"/);
   assert.doesNotMatch(core, /SOCRATIC_PROBING_ENABLED/);
   const lesson = code("components/student/LessonSession.tsx");

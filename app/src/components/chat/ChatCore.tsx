@@ -31,7 +31,11 @@ import {
   type Cite,
 } from "@/lib/chat-parse";
 import { submitAttempt } from "@/lib/attempts-client";
-import { pendingAfterDeclaration, probingActive } from "@/lib/socratic-probing";
+import {
+  pendingAfterDeclaration,
+  probingActive,
+  probingDeclaredBy,
+} from "@/lib/socratic-probing";
 import type { CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
 import {
@@ -276,8 +280,9 @@ export function ChatCore({
    * **The client never decides this.** The server resolves it once per
    * learning session, stores it on the session row, and declares it on every
    * response that session serves: the first frame of each `/api/ask` stream
-   * (`{type:"session", probing}`) and the `probing` field of every
-   * `/api/attempts` result. ChatCore adopts whatever the server last said —
+   * (`{type:"session", probing}`), the `cap` frame of a turn the cap
+   * refused, and the `probing` field of an `/api/attempts` result written
+   * inside a lesson sitting (absent otherwise: keep what we had). ChatCore adopts whatever the server last said —
    * starting from OFF, which is what every surface was before v0.7.0 — and
    * scopes it to lesson_learn (review mode's ≤5-message lock-in would fight
    * it). With the server saying false, nothing below behaves differently from
@@ -740,10 +745,15 @@ export function ChatCore({
             } catch {
               continue;
             }
+            // Probing, as the server declares it on this frame
+            // (`probingDeclaredBy`): the `session` frame — this turn's
+            // prompt, sent before any text — and, since fix pass 2, the
+            // `cap` frame, so switching Off reaches a lesson that has hit its
+            // turn cap too. Every other frame declares nothing.
+            const declaredProbing = probingDeclaredBy(j);
+            if (declaredProbing !== null) adoptProbing(declaredProbing);
             if (j.type === "session") {
-              // The lesson's probing snapshot, as this turn's prompt applied
-              // it (ADR-0021). Sent before any text.
-              adoptProbing(j.probing === true);
+              // handled above: it carries nothing but the declaration
             } else if (j.type === "delta" && j.t) {
               acc += j.t;
               patchLast({ text: acc });
@@ -949,10 +959,13 @@ export function ChatCore({
       // attempt on the same LO. Scoring is untouched: bktUpdate() already ran
       // server-side. Nothing here runs in a lesson that does not probe.
       //
-      // Which lesson that is comes from THIS result: the attempt route says
-      // whether the session it wrote against probes (ADR-0021), and the note,
-      // the pending state and the card all follow the server's answer for
-      // this attempt rather than the chat's last-known one.
+      // Which lesson that is comes from THIS result when it says: the attempt
+      // route declares whether the lesson sitting it wrote against probes
+      // (ADR-0021), and the note, the pending state and the card all follow
+      // the server's answer for this attempt. A result that declares nothing
+      // — the attempt was written outside any lesson sitting, e.g. a
+      // `practice` one (`attemptProbingDeclaration`, fix pass 2) — leaves the
+      // chat's last-known answer in force; it must not drop a pending probe.
       const declared =
         typeof r.probing === "boolean" ? r.probing : serverProbingRef.current;
       if (typeof r.probing === "boolean") adoptProbing(r.probing);
