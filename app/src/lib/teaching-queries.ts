@@ -21,6 +21,8 @@
  * caller's authorised principal and never from a request body.
  */
 
+import { cache } from "react";
+
 import { sequential, withOperator } from "@/lib/db";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import {
@@ -94,15 +96,27 @@ export async function getTeachingState(operatorId: number): Promise<TeachingStat
  * (a missing table after a partial rollback, a revoked grant, a dropped
  * connection). `/teaching` itself keeps the throwing read: on the page whose
  * subject IS the switch, an error page is the honest answer.
+ *
+ * **One read per request, however many surfaces ask** (fix pass 2): wrapped
+ * in React's `cache()`, which memoises per server render — the layout's header
+ * chip and a page that also shows the switch (the Student 360) share one
+ * round trip instead of two, the shape `documentVariant` and
+ * `resolveStudentId` already have. Per request, NOT across requests: a
+ * process-wide TTL would let the header say the old position for seconds
+ * after an operator moved the switch, and this chip exists to be believed.
+ * A failure is memoised as the `null` it becomes, so "unknown" is printed
+ * consistently for the whole render rather than retried per caller.
  */
-export async function getTeachingStateOrNull(operatorId: number): Promise<TeachingState | null> {
+export const getTeachingStateOrNull = cache(async function getTeachingStateOrNull(
+  operatorId: number
+): Promise<TeachingState | null> {
   try {
     return await getTeachingState(operatorId);
   } catch (err) {
     console.error("[console] could not read the teaching switch; showing it as unknown:", err);
     return null;
   }
-}
+});
 
 export type TeachingChange = {
   id: number;

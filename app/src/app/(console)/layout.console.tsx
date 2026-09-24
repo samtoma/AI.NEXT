@@ -60,7 +60,8 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
 
   const card = await getOperatorCard(access.operatorId);
   // A side fact on every page, so a failed read prints "unknown" rather than
-  // turning every console page into a 500 (`getTeachingStateOrNull`).
+  // turning every console page into a 500 (`getTeachingStateOrNull`). React-
+  // cached per request: a page that shows the switch too reuses this read.
   const teaching = await getTeachingStateOrNull(access.operatorId);
   const probingWord =
     teaching === null

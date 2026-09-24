@@ -36,10 +36,17 @@ import type { PoolClient } from "pg";
 import { pool } from "./db.ts";
 import { RELEASE_TAG, resolveReleaseTag } from "./env.ts";
 import { currentSession, currentSessionSnapshot, peekSessionProbing } from "./sessions.ts";
+import { getTeachingStateOrNull } from "./teaching-queries.ts";
 
-// No database, whatever DATABASE_URL says.
+// No database, whatever DATABASE_URL says — the operator pool included
+// (read lazily from this global by `operatorPool()`).
 (pool as unknown as { connect: () => Promise<never> }).connect = async () => {
   throw new Error("teaching-snapshot.test: no database in a unit test");
+};
+(globalThis as unknown as { pgOperatorPool: unknown }).pgOperatorPool = {
+  connect: async () => {
+    throw new Error("teaching-snapshot.test: no operator database in a unit test");
+  },
 };
 // …and the one line that refusal produces, which `emit` logs after the call
 // under test has returned: expected here, and noise in the test output.
@@ -685,4 +692,23 @@ test("the console refuses Everyone and requires teaching-controls before it writ
   assert.doesNotMatch(tester, /authorize\(\{ roles:/, "`roles` is ConsoleRoute's ANY-OF; the seam's ALL-OF is `allRoles`");
   assert.doesNotMatch(tester, /authorize\(\{ role: "/);
   assert.match(tester, /typeof body\.tester !== "boolean"/);
+});
+
+test("the console header's switch read: one per request (React cache), and \"unknown\" when it fails", async () => {
+  // Fix pass 2. The failure half runs for real: the operator pool refuses,
+  // and the answer is null — which the layout prints as "Probing: unknown".
+  const { out } = await quietly(() => getTeachingStateOrNull(1));
+  assert.equal(out, null);
+
+  // The per-request half is React's `cache()`, which only memoises inside a
+  // server render — so it is pinned from source, as `documentVariant` is.
+  const q = code("lib/teaching-queries.ts");
+  assert.match(q, /import \{ cache \} from "react";/);
+  assert.match(q, /export const getTeachingStateOrNull = cache\(async function getTeachingStateOrNull\(/);
+  const layout = code("app/(console)/layout.console.tsx");
+  assert.match(layout, /await getTeachingStateOrNull\(access\.operatorId\)/);
+  assert.doesNotMatch(layout, /getTeachingState\(/, "the header must use the cached, never-throwing read");
+  assert.match(layout, /teaching === null\s*\?\s*"unknown"/);
+  const s360 = code("app/(console)/students/[id]/page.console.tsx");
+  assert.match(s360, /getTeachingStateOrNull\(access\.operatorId\)/, "the Student 360 shares the header's read");
 });
