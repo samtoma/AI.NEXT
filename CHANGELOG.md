@@ -10,7 +10,10 @@ requirement names it.
 
 ## [Unreleased]
 
-Being prepared as v0.9.1. **Not committed**; Samuel has not reviewed it yet.
+## [v0.9.1] — 2026-09-25
+
+The skill map reads in lesson order again, in tidy columns. Student-facing, `/spine` only; no
+migration.
 
 ### Fixed — the skill map's order (FR-3215)
 - **The skill map now lists topics in the same order as the lesson list.** Topics used to be
