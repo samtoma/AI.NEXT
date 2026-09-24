@@ -91,6 +91,18 @@ observed thresholds, not an enforced cap) — accepted 2026-09-24
 >
 > ---
 >
+> **Rev. 10 (2026-09-24) — the upload cap folded into the same amendment.** Samuel's follow-up, the
+> same day: *"please remove the limit of the photo uploads for now as well, and add the monitoring
+> and cost if any in the admin console."* **FR-3407…FR-3409**, added to **§7g** beside the turn
+> requirements rather than a new section, because ADR-0023 was amended in place to cover both rather
+> than superseded by a second ADR. Superseded 001 `T047`'s cap clause (the metering half stands).
+> Same caveat as Rev. 9: every row is **BUILT**, and this one has less to point to than the turn
+> caps did — production has served **zero uploads** as of today, so there is no live evidence yet of
+> what the daily count was ever protecting against, only that FR-3409's monitoring exists to find
+> out.
+>
+> ---
+>
 > **Rev. 9 (2026-09-24) — turn limits become observed, not enforced.** Samuel: *"remove the limits,
 > make them highlight in the admin console, we need to know how often those limits are triggered"*
 > ([ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md)). **FR-3401…FR-3406**,
@@ -520,7 +532,7 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ---
 
-## 7g. Turn limits observed, not enforced — FR-3401…FR-3406 **[ADDED 2026-09-24 — ADR-0023]**
+## 7g. Turn and upload limits observed, not enforced — FR-3401…FR-3409 **[ADDED 2026-09-24 — ADR-0023]**
 
 > **Written with the code**, on `feat/turn-limits-observed`, in the same working tree as the backend
 > session building it. Every row is **BUILT**: the requirement is met by design and (where noted)
@@ -528,7 +540,9 @@ needs a database. That is why several rows below distinguish "proved once" from 
 > threshold yet — the same gap rev. 6/7/8's rows named for the teaching switch. Code paths were
 > corrected once against the implementing session's own files (`turn-thresholds.ts`,
 > `turn-threshold-queries.ts` both exist in this tree as of this writing) rather than guessed twice;
-> they may still move before the branch is done.
+> they may still move before the branch is done. **FR-3407…FR-3409** (Rev. 10) are one column
+> shorter on proof than FR-3401…FR-3406: the turn caps had two real capped lessons to point at, and
+> the upload cap has never fired once against a real upload — production has zero.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
@@ -538,6 +552,9 @@ needs a database. That is why several rows below distinguish "proved once" from 
 | FR-3404 | The Cost page lists the most recent conversations that reached a threshold, linked to their session | **BUILT** | Same module and read (`readTurnLimitsView`) as FR-3403 | Not yet rendered in a browser. |
 | FR-3405 | The session list, session timeline and replay mark a session that reached its threshold, in the attention (amber, never red) treatment | **BUILT** | `app/src/app/(console)/students/[id]/sessions/page.console.tsx`, `sessions/[sid]/page.console.tsx`, `sessions/[sid]/replay/page.console.tsx`; `readSessionTurnLimits` in `turn-threshold-queries.ts` feeding `sessionTurnLimit`/`thresholdChipLabel` in `turn-thresholds.ts`; chip styling in `app/src/components/console/ui.tsx` | Not yet rendered in a browser. FR-1002's red prohibition is the same rule the teaching-switch and course-availability chips already follow on these same three pages. |
 | FR-3406 | A threshold crossing is counted per environment, using the same conversation key and delivered-reply definition as the old cap; never pooled across environments or solutions | **BUILT** | `turn-threshold-queries.ts`'s `CONVERSATION_KEY`/`DELIVERED` fragments — `(surface, grounding->>'chat_session', student_id)`, `outcome = 'ok'` — the identical key and predicate `TURN_CAPS`'s `SELECT count(*)` used; every read filters `ai.environment = $1` first, the way `cost-queries.ts` does (constitution XI), and runs `withOperator` under migration 017's grants | Not yet run against a loaded database in this working tree. |
+| FR-3407 | No upload is refused for daily count; size/type checks and the unverified-email refusal (FR-2004) are unchanged | **BUILT** | `app/src/lib/upload-contract.ts` (the `DAILY_UPLOAD_CAP` refusal replaced by the observed threshold; `MAX_UPLOAD_BYTES`, `ACCEPTED_UPLOAD_TYPES` untouched — a `429` is "no longer" issued, per the module's own header); `app/src/app/api/uploads/route.ts` (the daily-cap branch removed; `413`/`415` untouched) | Not yet exercised live. Pre-change behaviour (the refusal this removes) has never fired in production — 0 uploads to date, so it has never actually refused a student. |
+| FR-3408 | The old daily number survives as one named, observed threshold, `DAILY_UPLOAD_THRESHOLD = 10` per student per day | **BUILT** | `app/src/lib/turn-thresholds.ts` — `DAILY_UPLOAD_THRESHOLD`, `uploadThresholdStatus`, `uploadChipLabel`, `summariseUploadDays`; the window is the old cap's own, reproduced exactly: the rolling 24 hours before each upload (`created_at - 1 day, created_at]`), not a calendar day, so no timezone enters it | Not yet unit-tested in this working tree as of this writing. |
+| FR-3409 | The Cost page shows photo-upload monitoring: uploads, students who uploaded, parse outcomes, upload/OCR spend and its per-upload average kept separate from tutoring (FR-2402); student-days that reached/went past the daily threshold, highlighted, with a list | **BUILT** *(target — Cost page wiring not yet in this tree)* | `app/src/lib/upload-threshold-queries.ts` — `readUploadsView` (uploads and uploaders over `UPLOAD_TOTALS_SQL`, parse outcomes over `PARSE_OUTCOMES_SQL`, the per-student-day histogram over `STUDENT_DAY_HISTOGRAM_SQL`/`STUDENT_DAYS_SQL`, folded through `summariseUploadDays` in `turn-thresholds.ts`); spend itself is **not** recomputed here — it reuses the photo/OCR figure `cost-queries.ts` already prices (FR-2402) rather than a second dollar figure; `app/src/app/(console)/cost/page.console.tsx` not yet wired to it as of this writing | Not yet present to test. Nothing in production has reached the threshold, so the panel's "highlighted" state cannot be observed live yet either — its correctness is design-only until a real student-day crosses it. |
 
 ---
 
@@ -606,16 +623,16 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **146** |
+| Functional requirements | **149** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **160 / 160** |
+| Traced (every one needs a row) | **163 / 163** |
 | — verified | 98 |
-| — built | 11 |
+| — built | 14 |
 | — partial | 44 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **77** |
+| Requirements a test declares | **84** |
 | Tasks complete / total | **0 / 0** |
 
 **Of 98 requirements marked VERIFIED, 52 have an automated test declaring them.** The remaining 46 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
