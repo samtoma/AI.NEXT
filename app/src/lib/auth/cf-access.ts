@@ -253,6 +253,7 @@ export type CfRefusal =
   | "bad_audience"
   | "bad_claims"
   | "no_email"
+  | "non_ascii_email"
   | "invalid";
 
 export type CfVerifyResult = { ok: true; email: string } | { ok: false; reason: CfRefusal };
@@ -280,15 +281,45 @@ function remoteKeys(certsUrl: string): JWTVerifyGetKey {
 }
 
 /**
+ * THE one definition of "the same operator address" (security review F7).
+ *
+ * Two places decide whether an address is an operator's: the sign-in route
+ * (which looks the operator up in SQL) and `principal.ts` on every console
+ * request (which compares the session's operator with the proven address in
+ * JS). They used to lower-case with two different rules — Postgres `lower()`
+ * and JS `toLowerCase()` — and outside ASCII those disagree (`İ`, the Kelvin
+ * sign `K`, collation-dependent folds). An address one of them matched and
+ * the other did not would be signed in by the route, unseated by the next
+ * request, forwarded back to the route, signed in again: a redirect loop.
+ *
+ * So both sides go through THIS function, and it accepts printable ASCII only,
+ * where every lower-casing rule agrees. Anything else is `null` — never equal
+ * to anything. SQL may still find a candidate row (`lower(email) = lower($1)`
+ * is how the unique index is searched), but the row counts only if this
+ * function says it is the same address.
+ */
+export function canonicalOperatorEmail(raw: unknown): string | null {
+  if (typeof raw !== "string") return null;
+  const s = raw.trim();
+  if (!s || s.length > 320) return null;
+  // Printable ASCII, no spaces: `!` (0x21) to `~` (0x7e).
+  if (!/^[\x21-\x7e]+$/.test(s)) return null;
+  if (!/^[^@]+@[^@]+$/.test(s)) return null;
+  return s.toLowerCase();
+}
+
+/**
  * Verify an Access assertion and return the address it proves — or why not.
  *
  * `keys` is the seam the tests use: a key resolver over a locally generated
  * RSA key, served from a local stub. Production passes nothing and gets the
  * team's published keys.
  *
- * The email is returned lower-cased and trimmed. Operators are matched
- * case-insensitively (`lower(email)`, the same rule as the unique index), so
- * this is the form every comparison uses.
+ * The email is returned in `canonicalOperatorEmail` form — trimmed, ASCII,
+ * lower-cased — which is the form every comparison uses. A proven address
+ * outside ASCII (an internationalised mailbox or domain) is refused as
+ * `non_ascii_email`: "no proof", so the password fallback still works for that
+ * person, and no two parts of the console can disagree about who it is.
  */
 export async function verifyAccessAssertion(
   token: string | null | undefined,
@@ -313,12 +344,14 @@ export async function verifyAccessAssertion(
     return { ok: false, reason: refusalFor(err) };
   }
 
-  const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+  const raw = typeof payload.email === "string" ? payload.email.trim() : "";
   // A service token (machine-to-machine Access credential) carries no email —
   // it proves a machine, not a person, and the console signs in people.
-  if (!email || email.length > 320 || !/^[^@\s]+@[^@\s]+$/.test(email)) {
-    return { ok: false, reason: "no_email" };
-  }
+  if (!raw) return { ok: false, reason: "no_email" };
+  // Checked before the shape, so the record says WHY a real address was refused.
+  if (/[^\x00-\x7f]/.test(raw)) return { ok: false, reason: "non_ascii_email" };
+  const email = canonicalOperatorEmail(raw);
+  if (!email) return { ok: false, reason: "no_email" };
   return { ok: true, email };
 }
 
@@ -365,7 +398,8 @@ function refusalFor(err: unknown): CfRefusal {
  *   NEW sign-in. That is deliberate: if the Access keys cannot be fetched, or
  *   the AUD is misconfigured, the password fallback (FR-3308) must still be
  *   usable, and it would not be if an unverifiable header ended every session.
- * - A verified proof of the SAME address (case-insensitive) → yes.
+ * - A verified proof of the SAME address (by `canonicalOperatorEmail`, the
+ *   rule the sign-in route also uses) → yes.
  * - A verified proof of a DIFFERENT address → **no**. The proven person wins
  *   (FR-3305): the session is treated as signed out, and the sign-in route
  *   ends it and signs the proven person in.
@@ -377,7 +411,7 @@ export function sessionMatchesAccessIdentity(
 ): boolean {
   if (surface !== "admin") return true;
   if (!proof || !proof.ok) return true;
-  return operatorEmail.trim().toLowerCase() === proof.email;
+  return canonicalOperatorEmail(operatorEmail) === proof.email;
 }
 
 /** What `/signin` does on the console, decided without a request in sight. */

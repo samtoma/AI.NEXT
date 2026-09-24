@@ -26,6 +26,7 @@ import { createRemoteJWKSet, exportJWK, generateKeyPair, SignJWT, type JWTVerify
 import {
   ACCESS_APP_LOGOUT_PATH,
   ACCESS_ASSERTION_HEADER,
+  canonicalOperatorEmail,
   consoleSigninMode,
   isSigninNavigation,
   readAccessAssertion,
@@ -380,4 +381,34 @@ test("the sign-in route applies the navigation check before it verifies, records
     const at = body.indexOf(later);
     assert.ok(at > guard, `${later} comes after the navigation check`);
   }
+});
+
+// ------------------------------------------------- one address rule (F7)
+
+test("a proven address outside ASCII is refused as non_ascii_email — no proof, not a guess", async () => {
+  for (const email of [
+    "s\u00e4muel@example.com", // ä
+    "samuel@b\u00fccher.de", // an IDN domain, unencoded
+    "\u212Aelvin@example.com", // KELVIN SIGN, which JS lower-cases to a plain k
+    "\u0130nci@example.com", // İ — JS and Postgres fold it differently
+    "\uff53amuel@example.com", // fullwidth s
+  ]) {
+    const r = await verifyAccessAssertion(await mint({ email }), CONFIG, { keys });
+    assert.deepEqual(r, { ok: false, reason: "non_ascii_email" }, JSON.stringify(email));
+  }
+});
+
+test("canonicalOperatorEmail: trims and lower-cases ASCII, and is null for everything else", () => {
+  assert.equal(canonicalOperatorEmail("  Samuel.S.Toma@Gmail.com "), "samuel.s.toma@gmail.com");
+  assert.equal(canonicalOperatorEmail("a+tag@example.co.uk"), "a+tag@example.co.uk");
+  for (const bad of ["\u212Aelvin@example.com", "\u0130@x.com", "no-at-sign", "a@b@c", "a b@c.d", "", null, 42]) {
+    assert.equal(canonicalOperatorEmail(bad), null, JSON.stringify(bad));
+  }
+});
+
+test("the per-request check and the sign-in route use ONE rule, so they cannot disagree (no redirect loop)", () => {
+  const proof = { ok: true as const, email: "kelvin@example.com" };
+  // JS would fold the Kelvin sign to `k`; the one rule refuses to call it the same address.
+  assert.equal(sessionMatchesAccessIdentity("admin", "\u212Aelvin@example.com", proof), false);
+  assert.equal(sessionMatchesAccessIdentity("admin", "KELVIN@example.com", proof), true);
 });

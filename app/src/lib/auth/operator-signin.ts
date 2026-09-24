@@ -20,7 +20,8 @@
  * `reason`, then the roles in effect (FR-2207): `cloudflare-access:<roles>` or
  * `dev-picker:<roles>`. The password path keeps writing the bare role list, as
  * it always has. The address the proof carried IS the operator's own address
- * (matched case-insensitively), so `actor_id` names it; a refusal has no
+ * (matched by `canonicalOperatorEmail`: ASCII only, ignoring case), so
+ * `actor_id` names it; a refusal has no
  * operator to point at, so it carries the proven address in `reason` instead —
  * the one place an address is written into this table, and it is an operator's
  * or would-be operator's, never a student's. No token of any kind is recorded.
@@ -43,6 +44,7 @@
  * (`operator-signin.test.mts`).
  */
 
+import { canonicalOperatorEmail } from "./cf-access.ts";
 import type { AuthEventRecorder } from "./events.ts";
 import {
   createAuthSession,
@@ -90,12 +92,22 @@ type LiveSession = { id: number; operatorId: number };
 
 async function loadOperator(db: Queryable, who: OperatorIdentity): Promise<OperatorRow | null> {
   // No `password_hash`: this path never needs it and should never hold it.
-  const res =
-    "email" in who
-      ? await db.query(`SELECT id, status FROM operators WHERE lower(email) = lower($1)`, [
-          who.email.trim(),
-        ])
-      : await db.query(`SELECT id, status FROM operators WHERE id = $1`, [who.operatorId]);
+  if ("email" in who) {
+    const want = canonicalOperatorEmail(who.email);
+    if (!want) return null;
+    // SQL finds the candidate through the unique index's own rule; the row
+    // counts only if `canonicalOperatorEmail` — the rule `principal.ts` applies
+    // on every later request — agrees it is the same address. Otherwise the
+    // route would sign in a session the next request unseats: a loop (F7).
+    const res = await db.query(
+      `SELECT id, status, email FROM operators WHERE lower(email) = lower($1)`,
+      [want]
+    );
+    const r = res.rows[0];
+    if (!r || canonicalOperatorEmail(r.email) !== want) return null;
+    return { id: Number(r.id), status: String(r.status) };
+  }
+  const res = await db.query(`SELECT id, status FROM operators WHERE id = $1`, [who.operatorId]);
   const r = res.rows[0];
   return r ? { id: Number(r.id), status: String(r.status) } : null;
 }

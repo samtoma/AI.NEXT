@@ -52,7 +52,11 @@ function fakeDb(operators: Operator[], sessions: Session[] = []) {
       const rows = ((): Record<string, unknown>[] => {
         if (sql.includes("FROM operators WHERE lower(email) = lower($1)")) {
           const e = String(values[0]).toLowerCase();
-          return operators.filter((o) => o.email.toLowerCase() === e).map((o) => ({ id: o.id, status: o.status }));
+          // JS toLowerCase stands in for Postgres lower(): both fold some
+          // non-ASCII letters to ASCII ones, which is the case F7 is about.
+          return operators
+            .filter((o) => o.email.toLowerCase() === e)
+            .map((o) => ({ id: o.id, status: o.status, email: o.email }));
         }
         if (sql.includes("FROM operators WHERE id = $1")) {
           return operators.filter((o) => o.id === values[0]).map((o) => ({ id: o.id, status: o.status }));
@@ -184,6 +188,19 @@ test("an email with no operator is refused, audited with the proven address, and
     seen.map((e) => [e.event, e.outcome, e.actor?.kind, e.reason]),
     [["failed_login", "failure", "anonymous", "cloudflare-access:no_operator:stranger@example.com"]]
   );
+});
+
+test("a row only a Unicode case rule would match is refused, not signed in (F7: no route/principal disagreement)", async () => {
+  // `\u212A` (KELVIN SIGN) lower-cases to a plain `k` — in JS, and in Postgres
+  // under common collations — so SQL finds this row for kelvin@example.com.
+  // principal.ts would then never accept the session, and the browser would
+  // loop. The one rule says it is not the same address, so: no account.
+  const { db, sessions } = fakeDb([{ id: 9, email: "\u212Aelvin@example.com", status: "active", roles: ["cost-billing"] }]);
+  const { seen, record } = recorder();
+  const out = await signInOperator(db, { email: "kelvin@example.com" }, "cloudflare-access", {}, record, META, NOW);
+  assert.equal(out.kind, "no_account");
+  assert.equal(sessions.length, 0, "no session row");
+  assert.equal(seen[0]?.reason, "cloudflare-access:no_operator:kelvin@example.com");
 });
 
 test("a disabled operator is refused and gets no session", async () => {
