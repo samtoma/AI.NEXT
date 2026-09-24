@@ -490,10 +490,16 @@ password sign-in.
 >
 > "The access control" below is the invited-audience control FR-2208 names — Cloudflare Access on
 > the console's hostname for the pilot.
+>
+> **Amended 2026-09-24, before merge — a security review of the branch.** FR-3301, FR-3305,
+> FR-3306, FR-3307, FR-3309, FR-3311 and FR-3312 each gained a sentence, marked *[review]*; no
+> requirement was withdrawn or weakened. The review's findings and what was done about each are in
+> ADR-0022 (*Amended*, *Accepted risks*, *Open decision for Samuel*).
 
 - **FR-3301**: When the access control in front of the console has proven the visitor's email
   address, the console MUST sign the visitor in as the operator with that address — without a
-  password and without a form.
+  password and without a form. *[review]* Such a sign-in MUST be started only by the visitor's own
+  top-level navigation, never by a resource another page embeds (an image, a frame, a prefetch).
 - **FR-3302**: The proof MUST be the access control's **signed** statement, verified before it is
   believed: the signature against the control's own published keys, the issuer, the application the
   statement was issued for, and its period of validity. An unsigned statement of the address — a
@@ -508,13 +514,21 @@ password sign-in.
 - **FR-3305**: **The proven person wins.** If the browser already holds a console session for a
   different operator, that session MUST be ended, and recorded as ended, before the proven person is
   signed in. A console session MUST NOT be honoured while a verified proof names somebody else.
+  *[review]* The check made on every console request MUST be bounded in time; a check that cannot
+  finish within its bound counts as no proof (FR-3306) — it neither ends the session nor signs
+  anybody in.
 - **FR-3306**: It MUST fail closed. A missing proof, one that does not verify, one that has expired,
   one issued for another application, keys that cannot be fetched, or a configuration that is
   incomplete MUST NOT sign anybody in; where a sign-in was attempted the refusal MUST be recorded,
   and the visitor MUST be offered FR-3308's fallback. An unverifiable proof MUST NOT end an
-  existing session — only a verified proof of somebody else does (FR-3305).
+  existing session — only a verified proof of somebody else does (FR-3305). *[review]* The record
+  of refused, unverifiable proofs MUST be bounded — per client address and in total, per window —
+  so that requests which never passed the access control cannot flood it; exceeding the bound MUST
+  itself be recorded once, and MUST NOT change the answer the visitor gets.
 - **FR-3307**: Signing out of the console MUST end the console session **and** the access control's
   own session, so that the next request does not silently sign the same person back in.
+  *[review]* The access control's session MUST end for the console's own hostname at once, not after
+  a propagation delay during which a request could still carry the old proof.
 - **FR-3308**: Password sign-in MUST remain available as a fallback for when the proof cannot be
   used. It MUST NOT be presented as the primary path while a verified proof is present. *(Samuel may
   withdraw the fallback later; that is a separate decision.)*
@@ -522,14 +536,22 @@ password sign-in.
   without a credential, and only when **all three** hold: the build is not a production build, an
   explicit local-only switch is on, and the request is to the local machine. The server MUST enforce
   all three, not only the page; a production build MUST NOT contain the capability at all, and this
-  MUST be checked against the build itself. Every such sign-in MUST be recorded as one.
+  MUST be checked against the build itself. Every such sign-in MUST be recorded as one. *[review]*
+  "To the local machine" MUST rest on the development server accepting connections only from the
+  local machine whenever the switch is on; request headers, which a client writes, MUST NOT be
+  taken as proof of it on their own, and a request that declines to name its origin MUST be
+  refused.
 - **FR-3310**: The student surface MUST NOT read, act on, or offer a route for the access control's
   identity in any form, signed or unsigned.
 - **FR-3311**: Which access-control team and which application the console trusts MUST be
   configuration, not code, and MUST NOT be treated as secrets. Absent configuration MUST mean the
-  feature is off, and switching it off MUST need no code change.
+  feature is off, and switching it off MUST need no code change. *[review]* A malformed value MUST
+  fail the deployment loudly rather than silently switching the feature off.
 - **FR-3312**: The proven address MUST be matched to an operator exactly, ignoring only letter case —
-  no domain-wide rule, no prefix, no automatic creation of an operator.
+  no domain-wide rule, no prefix, no automatic creation of an operator. *[review]* The address MUST
+  be plain ASCII — a proven address outside ASCII MUST be treated as unverified — and every part of
+  the console that compares addresses MUST use one rule, so that no two of them can disagree about
+  whom an address belongs to.
 
 ### Interaction timeline & replay (FR-2301…)
 

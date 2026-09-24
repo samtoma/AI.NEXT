@@ -629,6 +629,12 @@ gh variable set AINEXT_CF_ACCESS_AUD --body <new AUD> --repo samtoma/AI.NEXT
 gh variable set AINEXT_CF_ACCESS_TEAM_DOMAIN --body off --repo samtoma/AI.NEXT
 ```
 
+**CI refuses a malformed value** rather than writing it: the team must be exactly
+`https://<team>.cloudflareaccess.com` (lower case, no path, no trailing slash) and the AUD exactly 64
+lower-case hex characters, or the *Write deploy/.env* step fails with an `::error::` naming the
+variable and the `gh` command that fixes it. `off` works in any letter case. (The app would treat a
+malformed value as "off" too — but silently, behind a green deploy.)
+
 **If the Access application is ever deleted and recreated, its AUD changes** and Cloudflare sign-in
 stops — safely: every assertion then fails the audience check, the console shows the password form
 with a one-line notice, and each attempt is recorded as `failed_login` /
@@ -653,18 +659,39 @@ password form; it never signs anybody in without them.
    you should land on the student list **without seeing the console's sign-in form**. In the
    Security view, the newest row is *Operator signed in* with reason
    `cloudflare-access:<your roles>`.
-3. **Sign out** from *My account*. The browser must end on Cloudflare's "You have been logged out"
-   page; opening the console again must ask for a new PIN. (If it signs you straight back in, the
-   Access logout did not happen — check the variables.)
+3. **Sign out** from *My account*. The browser must go to
+   `https://admin-noor.reletix.com/cdn-cgi/access/logout` — the console's **own** hostname, not
+   `reletix.cloudflareaccess.com` — and end on Cloudflare's "You have been logged out" page. Opening
+   the console again **straight away** must ask for a new PIN. (If it signs you straight back in, the
+   Access logout did not happen: view the page source of *My account* and check the sign-out
+   destination is that path, and check the variables. The team-wide logout used to be the
+   destination and left the console's Access cookie valid for the 20–30 s revocation takes — long
+   enough to be signed back in by the next request.) Do the same from the refusal page's "Sign out of
+   Cloudflare" link in check 4.
 4. **Access with an address that has no operator row** (a second inbox): the page must say *This
    Cloudflare identity has no console account*, with no console data, and a `failed_login` row with
    `cloudflare-access:no_operator:<that address>`.
 5. **Swap identity on one browser**: sign in as operator A, sign out of Access only
-   (`https://reletix.cloudflareaccess.com/cdn-cgi/access/logout` directly), come back as operator B.
+   (`https://admin-noor.reletix.com/cdn-cgi/access/logout` directly), come back as operator B.
    The console must show B, and the record must show `session_revoked` for A's session with reason
    `cloudflare-access:identity_changed`, then B's sign-in.
 6. `docker logs ainext-mvp1-console 2>&1 | grep cf-access` — no `Cloudflare sign-in is OFF` line
-   (that line means the variables are missing or malformed).
+   (that line means the variables are missing or malformed), and no `identity check did not finish`
+   line (that one means the console could not fetch Cloudflare's keys within a second — check
+   outbound HTTPS; sessions are kept meanwhile, but nobody new is signed in by proof).
+7. **Only a navigation starts a session.** On the box (this goes straight to the origin, so it
+   needs no Access login):
+   `curl -s -o /dev/null -w '%{http_code}\n' -H 'Sec-Fetch-Dest: image' http://127.0.0.1:3102/api/auth/cloudflare`
+   must print `403`. The same with `Sec-Fetch-Dest: document` prints `302` (to `/signin?…cf=unavailable`,
+   since curl carries no assertion).
+8. **Refused assertions are recorded within a budget** *(optional — it writes 21 rows to the real
+   record, all from the documentation address `192.0.2.1`)*. On the box:
+   `for i in $(seq 25); do curl -s -o /dev/null -H 'Sec-Fetch-Dest: document' -H 'Cf-Access-Jwt-Assertion: x' -H 'CF-Connecting-IP: 192.0.2.1' http://127.0.0.1:3102/api/auth/cloudflare; done`
+   then, in the Security view filtered to that address (or
+   `select event, reason, count(*) from auth_events where ip_address = '192.0.2.1' and occurred_at > now() - interval '15 minutes' group by 1, 2;`):
+   **20** `failed_login` `cloudflare-access:unverified:malformed` and **1** `suspicious_activity`
+   `cloudflare-access:unverified_ip_throttled` — not 25. (The budget is a fixed 15-minute window;
+   if the loop straddles a quarter-hour boundary the counts split across two — run it again.)
 
 ### 9.3 What it does not change
 
@@ -678,4 +705,39 @@ password form; it never signs anybody in without them.
   build, and neither variable is set on the `app` service.
 - **The dev operator picker** (`AINEXT_DEV_OPERATOR_PICKER`) is local-only and **is not in any
   production build** — `npm run check:surface:admin` fails if its endpoint appears. Never set that
-  variable on the box; it would do nothing there, and that is the point.
+  variable on the box; it would do nothing there, and that is the point. On a laptop, its
+  "request is to this machine" lock is real only because `scripts/local-dev.sh` and
+  `.claude/launch.json` start the console with `-H 127.0.0.1` while the flag is set; a console
+  started by hand needs `-- -H 127.0.0.1` too (ADR-0022 rule 11).
+
+### 9.4 The Access application's own settings — a dashboard checklist
+
+From v0.8.0, **whoever can read an operator's inbox can become that operator** — Access emails the
+PIN, and the PIN now signs them in. That is no weaker than before (the password reset link goes to
+the same inbox), but it is now the first path, so these settings carry the weight (ADR-0022,
+*Consequences*). Zero Trust dashboard → *Access* → *Applications* → the admin-noor application:
+
+- [ ] **Policy → Include → Emails: an explicit list of the operators' addresses.** Not *Emails
+      ending in* (`gmail.com` would admit everyone), not *Everyone*, not a group nobody reviews.
+      The list and `select email from operators where status = 'active'` should match.
+- [ ] **Session duration: 8–12 hours** (the application's own setting, not the 24-hour default).
+- [ ] **Settings → Cookies: Binding cookie ON.**
+- [ ] **Settings → Cookies: HttpOnly ON, SameSite = Lax.** (Lax also stops a cross-site image or
+      frame at the edge — a second wall behind the navigation check in §9.2 check 7.)
+- [ ] **MFA when feasible**: an identity provider with MFA (Google with 2-Step Verification on the
+      founders' accounts) or an MFA requirement on the policy, rather than the email PIN alone.
+- [ ] *Optional, recommended, one toggle:* **"Protect with Access" on the tunnel's public hostname**
+      for `admin-noor.reletix.com` (origin enforcement — `cloudflared` checks the Access token before
+      forwarding). It guards against the Access application being deleted or loosened while the
+      tunnel still routes the hostname. It does **not** close §9.5.
+- [ ] Note the AUD on the application's Overview tab and confirm it equals the
+      `AINEXT_CF_ACCESS_AUD` variable (§9.1).
+
+### 9.5 Open — the console is reachable without Cloudflare (a decision for Samuel)
+
+The `console` container is on the shared `mailu-network` (for sending mail), so Mailu's and Talent's
+containers — and anything on the box's loopback — can reach it **without passing Access**. On that
+path the password form is exposed and a stolen console cookie is honoured, because no Access header
+means "no proof", which keeps the session. **Nothing was changed for this in v0.8.0.** The three
+options, their costs and the recommendation — take the console off `mailu-network` behind a small
+mail relay, plus the origin-enforcement toggle above — are in ADR-0022, *Open decision for Samuel*.

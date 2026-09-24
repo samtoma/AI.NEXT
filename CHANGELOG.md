@@ -20,12 +20,34 @@ requirement names it.
 - **A Cloudflare identity with no console account is refused** with a page that says exactly that,
   and the refusal is recorded with the address. If the browser held another operator's console
   session, that session is ended — the person Cloudflare proved wins.
-- **Signing out of the console also signs you out of Cloudflare Access**, so the next visit asks for
-  a new PIN instead of silently signing you back in.
+- **Signing out of the console also signs you out of Cloudflare Access** — through the console's own
+  `/cdn-cgi/access/logout` — so the next visit asks for a new PIN instead of silently signing you
+  back in.
 - **Locally, "Sign in as <operator>"** on the console's sign-in page, only when all three hold: not a
   production build, `AINEXT_DEV_OPERATOR_PICKER=on` (written by `local-dev.sh`), and a request to
-  localhost. The endpoint is not compiled into any production build, and `check:surface:admin`
-  fails if it ever is.
+  this machine — which `local-dev.sh` and `.claude/launch.json` make true by starting the console on
+  `127.0.0.1` only while the flag is set. The endpoint is not compiled into any production build,
+  and `check:surface:admin` fails if it ever is.
+
+### Security — a review of this feature, fixed before release (ADR-0022 *Amended*)
+- **Dev picker:** the console dev server listens on `127.0.0.1` whenever the picker is set (before,
+  anyone on the same Wi-Fi could forge `Host: localhost` and be any operator); `Origin: null` is
+  refused.
+- **Sign-out** goes to the console's own Access logout, not the team-wide one, which left the
+  console's Access cookie valid for 20–30 s — long enough to be signed straight back in.
+- **Only a top-level navigation** starts a Cloudflare sign-in; an image, frame or prefetch planted by
+  another site gets `403`.
+- **Proven addresses must be plain ASCII** and are compared by one rule everywhere, closing a
+  redirect loop two lower-casing rules could cause.
+- **The per-request identity check waits at most a second**, so a hung Cloudflare key endpoint
+  cannot stall every console page; the key cache is kept for an hour.
+- **Refused assertions are recorded within a budget** (20 per address, 200 in total per 15 minutes)
+  so the security record cannot be flooded; the Security view's note on the reason column is
+  corrected.
+- **CI rejects a malformed team domain or AUD** instead of deploying with the feature silently off.
+- **Open, for Samuel:** the console is reachable without Cloudflare from the shared mail network —
+  options and a recommendation in ADR-0022; Access dashboard settings to confirm in
+  `deploy/TAKEOVER.md` §9.4.
 
 ### Changed
 - **Password sign-in on the console is now the fallback**, shown when Cloudflare's identity is

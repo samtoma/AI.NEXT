@@ -17,11 +17,24 @@ Built on `origin/main` (v0.6.1); **v0.7.0 merges first** — expect small rebase
 `package.json`'s test list, `CHANGELOG.md`, `docs/README.md`, this file and the traceability
 counts block (re-run `./scripts/traceability.py --write`).
 
+**Security review, fixed the same day (F2–F11, ADR-0022 *Amended*):** the dev picker's console now
+listens on `127.0.0.1` only and refuses `Origin: null`; sign-out uses the console's own Access
+logout; only a top-level navigation starts a Cloudflare sign-in; proven addresses are ASCII and
+compared by one rule; the per-request identity check is capped at 1 s; refused assertions are
+recorded within a budget; CI validates the two variables. 767/767 unit tests.
+
 **Open:**
+- **Samuel — decide:** the console is reachable **without Cloudflare** from the shared
+  `mailu-network` (review F4). Nothing changed; three options and a recommendation (take the console
+  off that network behind a small mail relay, plus Cloudflare's origin-enforcement toggle) in
+  ADR-0022, *Open decision for Samuel*.
 - **Samuel:** every operator's email must equal the address they give Access — check on the box
-  (`deploy/TAKEOVER.md` §9.2, six checks). Decide later whether to remove the password fallback.
+  (`deploy/TAKEOVER.md` §9.2, eight checks) — and confirm the Access application's settings against
+  the §9.4 dashboard checklist (explicit email list, 8–12 h session, binding cookie, HttpOnly +
+  SameSite Lax, MFA when feasible). Decide later whether to remove the password fallback.
 - **Nobody has seen the happy path**: a real Access PIN → a real assertion → signed in. It cannot
-  exist off the box. FR-3301 is BUILT, FR-3303/3305/3307/3311 PARTIAL until §9.2 is run.
+  exist off the box. FR-3301 is BUILT, FR-3303/3305/3307/3309/3311 PARTIAL — FR-3309 because a
+  console dev server started by hand without `-H 127.0.0.1` does not meet the tightened rule.
 
 ## 🎛️ v0.7.0 in progress — the teaching switch (2026-09-24, `feat/probing-toggle`, NOT merged)
 
