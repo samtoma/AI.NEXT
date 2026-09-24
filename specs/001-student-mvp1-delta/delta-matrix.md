@@ -148,7 +148,7 @@ explanation/refutation library — is the one that genuinely needs a subject-mat
 | Baseline | New PRD | Disposition |
 |---|---|---|
 | `FR-050` per-call token/cost/latency ledger; in-session spend meter | H1 + §13 product event taxonomy (~20 events) | **EXTEND** — different layer, both needed |
-| `FR-051` server-enforced per-surface turn caps | Not mentioned; still the cost lever | **KEEP** |
+| `FR-051` server-enforced per-surface turn caps | Not mentioned; still the cost lever | **KEEP** *(superseded 2026-09-24, ADR-0023 — Samuel removed the enforcement; the numbers survive as observed thresholds, 002 FR-3401…FR-3406)* |
 | EGP 40/student/month ceiling (Constitution VI) | No ceiling stated; uploads/OCR add unbudgeted cost | **REPLACE** — needs a decision |
 
 ### Operations

@@ -33,7 +33,10 @@ Grounding is composed by `lib/retrieval.ts` rather than assembled inline. Two ad
 
 Turn caps, the sacred guard and cost logging are unchanged. The guard stays wired even though this
 environment serves no sacred content — removing it would be a code change to a safety path for no
-reason.
+reason. *(Superseded 2026-09-24 — ADR-0023: turn caps stopped being unchanged. No surface refuses a
+turn for reply count any more; the same numbers survive as observed thresholds shown in the console,
+never enforced — `specs/002-identity-and-admin-console/spec.md` FR-3401…FR-3406. The sacred guard and
+cost logging are still unchanged.)*
 
 ## New
 

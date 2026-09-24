@@ -219,7 +219,7 @@ sequenceDiagram
 **Step by step, technically** (`app/src/app/api/ask/route.ts` + `app/src/lib/ask.ts`):
 
 1. **Request.** The browser POSTs the message, a `chatSession` id, the `surface` (`spine_chat` | `student_chat` | `lesson_learn` | `lesson_review`), and optionally a `lesson` slug or a `questionId` in scope.
-2. **Cap check.** A `SELECT count(*)` over `ai_interactions` for this session enforces the per-surface turn cap (e.g. review mode ≤ 5) server-side — the client can't bypass it.
+2. **Threshold check.** A `SELECT count(*)` over `ai_interactions` for this session reads against the per-surface turn threshold (e.g. review mode 5) server-side. *(Was a cap that refused the turn; superseded 2026-09-24 by ADR-0023 — Samuel removed the enforcement, so this read now feeds the console's "reached"/"went past" counters instead of blocking anything. See `specs/002-identity-and-admin-console/spec.md` FR-3401…FR-3406.)*
 3. **Grounding assembly — the graph-as-index step** (`buildAskContext`). One `Promise.all` of Postgres queries pulls: all learning objectives with baseline+current mastery, the prerequisite edge list, all live questions, the module list, and the visuals. Then it computes a **focus set** = the in-scope question's LO + the 8 weakest LOs (`FOCUS_LO_COUNT`). The data block is built asymmetrically:
    - **Focus LOs get the full treatment:** descriptions, question *stems*, the **human-reviewed canonical solution** for the in-scope question, and the figure catalog.
    - **Everything else is a compact index:** LO label + mastery + question *counts* + figure ids — enough for the model to reason about coverage and cite, without shipping all 450 stems.

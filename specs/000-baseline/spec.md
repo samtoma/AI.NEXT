@@ -103,7 +103,9 @@ question (expect the redirect script), and a cross-subject question (expect the 
    student sees a redirect to the sealed card, and a redacted row is logged.
 2. **Given** surface turn caps (student_chat 2, lesson_learn 14, lesson_review 5),
    **When** the cap is reached for THIS student, **Then** the server refuses further
-   turns with a friendly cap message.
+   turns with a friendly cap message. *(Superseded 2026-09-24 — ADR-0023: this scenario describes
+   behaviour the product no longer has. A conversation reaching a threshold is now observed and
+   shown in the console, never refused; see FR-051 above and 002 FR-3401…FR-3406.)*
 
 ---
 
@@ -226,7 +228,13 @@ and zero writes; run `status` and verify drift detection between image and check
 **Cost & observability (constitution VI)**
 - **FR-050**: Every AI call MUST log tokens, cost, latency, surface, and student to the
   `ai_interactions` ledger; lesson surfaces show a live session-spend meter in debug.
-- **FR-051**: Server-enforced per-surface turn caps MUST bound spend per student.
+- **FR-051** *[SUPERSEDED 2026-09-24 — ADR-0023, 002 FR-3401…FR-3406]*: ~~Server-enforced per-surface
+  turn caps MUST bound spend per student.~~ Samuel: *"remove the limits, make them highlight in the
+  admin console, we need to know how often those limits are triggered."* No surface refuses a turn
+  for reply count any more; the same three numbers (student_chat 2, lesson_learn 18, lesson_review 5)
+  survive as a named, observed threshold, read by the console and counted, never enforced. This
+  baseline row is left standing rather than deleted — it is what was true when this environment
+  shipped it, and PRD §6.3's "max 2 AI turns per question" is departed from as of this decision.
 
 **Ops (constitution X)**
 - **FR-060**: Code deploys MUST flow: PR → main → self-hosted runner → build on box →
