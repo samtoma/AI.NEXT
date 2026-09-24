@@ -59,6 +59,22 @@ export const ACCESS_ASSERTION_HEADER = "cf-access-jwt-assertion";
 /** Seconds of clock skew tolerated on `exp` / `nbf` / `iat`. Small on purpose. */
 export const CLOCK_TOLERANCE_SECONDS = 30;
 
+/**
+ * Where a browser is sent to end its Access session: the APPLICATION's own
+ * logout, a path on the console's hostname that Cloudflare answers at the edge
+ * (it never reaches the origin). Relative on purpose.
+ *
+ * Not the team-wide `https://<team>.cloudflareaccess.com/cdn-cgi/access/logout`.
+ * Both revoke the person's Access tokens, but Cloudflare's revocation takes
+ * 20–30 seconds to reach every edge, and each URL deletes the authorisation
+ * cookie only on its OWN domain. The team URL leaves the console's
+ * `CF_Authorization` cookie in the browser, so for those seconds the next
+ * console request still carries a valid assertion and is signed straight back
+ * in — a sign-out that silently undoes itself (security review F3). The app
+ * URL deletes that cookie at once.
+ */
+export const ACCESS_APP_LOGOUT_PATH = "/cdn-cgi/access/logout";
+
 /** A Cloudflare Access token is well under 2 KB. Anything this long is not one. */
 const MAX_ASSERTION_LENGTH = 8192;
 
@@ -71,7 +87,7 @@ export type CfAccessConfig = {
   audience: string;
   /** Where the team's signing keys are published. */
   certsUrl: string;
-  /** Where a browser is sent to end its Access session. */
+  /** Where a browser is sent to end its Access session — `ACCESS_APP_LOGOUT_PATH`. */
   logoutUrl: string;
 };
 
@@ -134,7 +150,7 @@ export function resolveCfAccessConfig(
       issuer: teamDomain,
       audience,
       certsUrl: `${teamDomain}/cdn-cgi/access/certs`,
-      logoutUrl: `${teamDomain}/cdn-cgi/access/logout`,
+      logoutUrl: ACCESS_APP_LOGOUT_PATH,
     },
   };
 }

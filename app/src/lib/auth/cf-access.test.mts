@@ -24,6 +24,7 @@ import { fileURLToPath } from "node:url";
 import { createRemoteJWKSet, exportJWK, generateKeyPair, SignJWT, type JWTVerifyGetKey } from "jose";
 
 import {
+  ACCESS_APP_LOGOUT_PATH,
   ACCESS_ASSERTION_HEADER,
   consoleSigninMode,
   readAccessAssertion,
@@ -42,7 +43,7 @@ const CONFIG: CfAccessConfig = {
   issuer: TEAM,
   audience: AUD,
   certsUrl: `${TEAM}/cdn-cgi/access/certs`,
-  logoutUrl: `${TEAM}/cdn-cgi/access/logout`,
+  logoutUrl: "/cdn-cgi/access/logout",
 };
 
 let server: Server;
@@ -244,6 +245,18 @@ test("configuration: both values set gives the team's certs, issuer and logout U
     if (s.state !== "on") continue;
     assert.deepEqual(s.config, CONFIG, team);
   }
+});
+
+test("sign-out goes to the console's OWN Access logout, not the team-wide one (F3)", () => {
+  // The team URL leaves the console's CF_Authorization cookie valid for the
+  // 20–30 s revocation takes, and the next request signs the person back in.
+  const s = resolveCfAccessConfig({ AINEXT_CF_ACCESS_TEAM_DOMAIN: TEAM, AINEXT_CF_ACCESS_AUD: AUD });
+  assert.equal(s.state, "on");
+  if (s.state !== "on") return;
+  assert.equal(s.config.logoutUrl, ACCESS_APP_LOGOUT_PATH);
+  assert.equal(ACCESS_APP_LOGOUT_PATH, "/cdn-cgi/access/logout");
+  assert.ok(s.config.logoutUrl.startsWith("/") && !s.config.logoutUrl.startsWith("//"), "relative, same host");
+  assert.ok(!s.config.logoutUrl.includes("cloudflareaccess.com"), "never the team domain");
 });
 
 test("configuration: a team domain with NO audience is not 'verify without aud' — it is off", () => {

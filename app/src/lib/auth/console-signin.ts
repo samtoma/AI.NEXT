@@ -102,7 +102,9 @@ export async function consoleSigninState(cf: string | null | undefined): Promise
  * Where the console's sign-out sends the browser once the session is ended
  * (FR-3307). With Cloudflare sign-in on it MUST be Access's own logout: the
  * Access session outlives ours, and the next request would otherwise carry a
- * valid assertion straight back into a new console session.
+ * valid assertion straight back into a new console session. And it must be the
+ * console's OWN `/cdn-cgi/access/logout`, not the team-wide one — see
+ * `ACCESS_APP_LOGOUT_PATH` for the 20–30 seconds that difference is about.
  */
 export function consoleSignOutDestination(): string {
   const state = cfAccessConfig();

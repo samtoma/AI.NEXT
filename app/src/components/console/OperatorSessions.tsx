@@ -100,9 +100,12 @@ export function OperatorSessions({
    * Where the browser goes once THIS sign-in has ended (ADR-0022, FR-3307).
    * Decided on the server and handed down, like every other configuration
    * value on this page. With Cloudflare sign-in on it is Access's own logout
-   * URL: ending only our session would leave the Access session alive, and
-   * the very next request would carry a valid assertion straight back into a
-   * new console session — a sign-out that silently undoes itself.
+   * on THIS hostname (`/cdn-cgi/access/logout`): ending only our session
+   * would leave the Access session alive, and the very next request would
+   * carry a valid assertion straight back into a new console session — a
+   * sign-out that silently undoes itself. The team-wide logout would too, for
+   * the 20–30 seconds revocation takes, because it leaves this hostname's
+   * Access cookie in place (`ACCESS_APP_LOGOUT_PATH` in `cf-access.ts`).
    */
   signOutTo?: string;
 }) {
