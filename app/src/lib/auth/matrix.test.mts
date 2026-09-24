@@ -25,6 +25,7 @@
  * @covers FR-2205
  * @covers FR-2406
  * @covers FR-3102
+ * @covers FR-3107
  */
 
 import assert from "node:assert/strict";
@@ -82,15 +83,16 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/courses": ["content-review"],
   "/api/console/courses": ["content-review"],
   "/api/console/students/[id]/courses": ["student-data"],
-  // ADR-0021 — the tester mark. `student-data`: it names a student and is
-  // posted from the Student 360, which only `student-data` opens. The mark
-  // decides nothing on its own; the switch that gives it meaning is below.
-  "/api/console/students/[id]/tester": ["student-data"],
+  // ADR-0021 — the tester mark. NO SINGLE ROLE admits it (fix pass,
+  // 2026-09-24): it needs `student-data` AND `teaching-controls` together —
+  // transcribed in EXPECTED_ALL_OF below, and asserted on its own.
+  "/api/console/students/[id]/tester": [],
   "/content": ["content-review"],
-  // ADR-0021 — the teaching switches. The page is readable by all five roles
-  // (it discloses no student: a position, who moved it, a count), and the
-  // write is `teaching-controls` ALONE — not `content-review`, which it was
-  // split out of on 2026-09-24 so it can be narrowed on its own.
+  // ADR-0021 — the teaching switches. The page is readable by any ONE of the
+  // five roles (it discloses no student: a position, who moved it, a count) —
+  // and, since the fix pass, by nobody holding none. The write is
+  // `teaching-controls` ALONE — not `content-review`, which it was split out
+  // of on 2026-09-24 so it can be narrowed on its own.
   "/teaching": ["content-review", "evidence-access", "student-data", "cost-billing", "teaching-controls"],
   "/api/console/teaching": ["teaching-controls"],
   "/cost": ["cost-billing"],
@@ -130,6 +132,15 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/dev/widget-questions": ["evidence-access"],
 };
 
+/**
+ * The rows that need SEVERAL roles at once, transcribed by hand for the same
+ * reason EXPECTED is. For these, EXPECTED lists no single role — none admits
+ * alone — and this is the set that must be held together.
+ */
+const EXPECTED_ALL_OF: Record<string, readonly OperatorRole[]> = {
+  "/api/console/students/[id]/tester": ["student-data", "teaching-controls"],
+};
+
 test("every console route is in the matrix, and every matrix row is a console route", () => {
   const listed = CONSOLE_ROUTES.map((r) => r.path).sort();
   const expected = Object.keys(EXPECTED).sort();
@@ -151,6 +162,23 @@ test("every role × every console route matches the contract", () => {
         shouldAdmit,
         `${role} ${shouldAdmit ? "should" : "should NOT"} reach ${path}`
       );
+    }
+  }
+});
+
+test("an ALL-OF row is exactly the transcribed set, and every other row is ANY-OF", () => {
+  for (const route of CONSOLE_ROUTES) {
+    const pair = EXPECTED_ALL_OF[route.path];
+    if (pair === undefined) {
+      assert.notEqual(route.allOf, true, `${route.path} is ALL-OF, and the contract says ANY-OF`);
+      continue;
+    }
+    assert.equal(route.allOf, true, `${route.path} must need every one of ${pair.join(" + ")}`);
+    assert.deepEqual([...route.roles].sort(), [...pair].sort());
+    // Together they admit; each one alone, and every other role, does not.
+    assert.equal(routeAdmits(route, pair), true);
+    for (const role of ALL_ROLES) {
+      assert.equal(routeAdmits(route, [role]), false, `${role} alone must not reach ${route.path}`);
     }
   }
 });
@@ -285,15 +313,38 @@ test("the teaching switch is teaching-controls' alone, and content-review no lon
     assert.equal(refused.ok === false && refused.reason, "missing_role:teaching-controls");
   }
 
-  // Reading it is every operator's.
+  // Reading it is any role-holder's — and not an operator's whose every role
+  // was revoked (fix pass, 2026-09-24).
   assert.equal(routeAdmits(consoleRoute("/teaching")!, ["cost-billing"]), true);
-  assert.equal(routeAdmits(consoleRoute("/teaching")!, []), true);
+  assert.equal(routeAdmits(consoleRoute("/teaching")!, []), false);
 });
 
-test("the tester mark is student-data's, and teaching-controls alone cannot name a student with it", () => {
+test("the tester mark needs student-data AND teaching-controls — neither alone (ADR-0021)", () => {
+  // Fix pass, 2026-09-24: it names a child (student-data) and decides who the
+  // tutor experiments on (teaching-controls). Either alone would let one of
+  // those decisions be made by somebody the other role was meant to stop.
   const route = consoleRoute("/api/console/students/[id]/tester")!;
-  assert.equal(routeAdmits(route, ["student-data"]), true);
+  assert.equal(routeAdmits(route, ["student-data", "teaching-controls"]), true);
+  assert.equal(routeAdmits(route, ["student-data"]), false);
   assert.equal(routeAdmits(route, ["teaching-controls"]), false);
   assert.equal(routeAdmits(route, ["content-review"]), false);
   assert.equal(routeAdmits(route, ["cost-billing"]), false);
+  assert.equal(routeAdmits(route, []), false);
+
+  // And through the seam the handler actually calls: one ALL-OF requirement,
+  // refused with the first role missing, in order.
+  const req = { roles: ["student-data", "teaching-controls"] as const };
+  const op = (roles: OperatorRole[]) => ({ kind: "operator" as const, operatorId: 1, roles });
+  assert.equal(checkRequirement(op(["student-data", "teaching-controls"]), req).ok, true);
+  assert.equal(checkRequirement(op([...ALL_ROLES]), req).ok, true);
+  const onlyData = checkRequirement(op(["student-data"]), req);
+  assert.equal(onlyData.ok === false && onlyData.status, 403);
+  assert.equal(onlyData.ok === false && onlyData.reason, "missing_role:teaching-controls");
+  const onlyTeaching = checkRequirement(op(["teaching-controls"]), req);
+  assert.equal(onlyTeaching.ok === false && onlyTeaching.reason, "missing_role:student-data");
+  const student = { kind: "student" as const, studentId: 1, accountId: 1, emailVerified: true };
+  const s = checkRequirement(student, req);
+  assert.equal(s.ok === false && s.reason, "student_on_console:student-data");
+  const anon = checkRequirement({ kind: "anonymous" as const }, req);
+  assert.equal(anon.ok === false && anon.status, 401);
 });

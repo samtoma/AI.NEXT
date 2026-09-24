@@ -48,9 +48,9 @@ a preview, not a length, not a count (spec edge cases).
 | Subscription / payment status — read and change | | | | ✓ | |
 | Security view — sign-ins, lockouts, denials | | | ✓ | | |
 | Overviews — cohort, subject/year heatmap (no individual content) | ✓ | ✓ | ✓ | ✓ | ✓ |
-| `/teaching` — read the teaching switch, its history, the test-account count (names need `student-data`) | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `/teaching` — read the teaching switch, its history, the test-account count (names need `student-data`); an operator holding **no** role is refused | ✓ | ✓ | ✓ | ✓ | ✓ |
 | **Move the teaching switch** (Socratic probing: off / test accounts / everyone) | | | | | ✓ |
-| Mark or unmark a student as a test account (from the Student 360) | | | ✓ | | |
+| Mark or unmark a student as a test account (from the Student 360) — **`student-data` AND `teaching-controls` together**; neither alone | | | ✓ + | | + ✓ |
 | Operator management — grant and revoke roles | | | | | |
 | `operator_reads` audit — who read whose record | | | ✓ | | |
 
@@ -68,9 +68,11 @@ product as a content-management permission.
 answers a child who got a question wrong. It was specified under `content-review` and split out on
 2026-09-24 so it can be narrowed on its own. Migration 029 granted it once to every active operator
 then holding `content-review`; a later deploy never grants it again, and neither does withdrawing it
-(`rollback/029`) and deploying again — 029's guard reads the `auth_events` trail too. The test-account mark it gives meaning to is
-`student-data`'s, because the mark names a person — the same split as the course-availability grade
-rule (`content-review`) and the per-student exception (`student-data`).
+(`rollback/029`) and deploying again — 029's guard reads the `auth_events` trail too. The test-account mark it gives meaning to
+needs **both** `student-data` (it names a person, and is set from the Student 360) **and**
+`teaching-controls` (it decides which child the tutor tries an unfinished behaviour on) — the one
+ALL-OF requirement in this matrix (`authorize({ roles: [...] })`; `allOf` on its route row). It was
+`student-data` alone until the 2026-09-24 fix pass; every operator held every role that day.
 
 **Operator management is in no row on purpose.** No role grants roles this release. The first
 operator is seeded (ADR-0014, plan A5) and further grants are a deliberate operational act, because

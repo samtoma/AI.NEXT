@@ -24,8 +24,9 @@ export const metadata = { title: "Teaching — Noor Console" };
  * v0.6.0 merged it behind a compile-time constant, switched off; this page is
  * the runtime replacement Samuel approved on 2026-09-24.
  *
- * **Every operator may read this page; only `teaching-controls` may move the
- * switch** (`/api/console/teaching`). Nothing here names a student unless the
+ * **Any operator holding at least one role may read this page** (not one
+ * whose every role was revoked — fix pass, 2026-09-24); **only
+ * `teaching-controls` may move the switch** (`/api/console/teaching`). Nothing here names a student unless the
  * reader already holds `student-data`, the role that lists students: the
  * position, who moved it and when, its history, the deployed release, and a
  * COUNT of test accounts are facts about the product, and "is the tutor

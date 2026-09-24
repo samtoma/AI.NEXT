@@ -25,7 +25,7 @@ import { getStudent360 } from "@/lib/console-queries";
 import { consoleRoute } from "@/lib/console-routes";
 import { ENVIRONMENT } from "@/lib/env";
 import { humanDuration } from "@/lib/timeline-rules";
-import { getTeachingState, studentTesterMarks } from "@/lib/teaching-queries";
+import { getTeachingStateOrNull, studentTesterMarksOrNull } from "@/lib/teaching-queries";
 
 /**
  * Student 360 (contracts/admin.md §2, FR-2211, FR-2306, FR-2508).
@@ -112,9 +112,15 @@ export default async function ConsoleStudentPage({
 
   // The tester mark (ADR-0021), and the switch that gives it meaning. The
   // same audit argument as `studentAccess` above: the one `student_360` row
-  // already records that this operator opened this record.
-  const testerMarks = await studentTesterMarks(access.operatorId, studentId);
-  const teaching = await getTeachingState(access.operatorId);
+  // already records that this operator opened this record. Both are side
+  // facts on this page, so a failed read shows "unknown" in the panel instead
+  // of a 500 for the whole record (`...OrNull`).
+  const testerMarks = await studentTesterMarksOrNull(access.operatorId, studentId);
+  const teaching = await getTeachingStateOrNull(access.operatorId);
+  // Marking needs BOTH roles (fix pass, 2026-09-24): the endpoint refuses
+  // either alone, so the page offers the control only when it would work.
+  const canMarkTester =
+    access.roles.includes("student-data") && access.roles.includes("teaching-controls");
 
   const s = data.profile;
   const t = data.timeOnTask;
@@ -294,67 +300,99 @@ export default async function ConsoleStudentPage({
         when, and one click to undo it. The mark changes nothing on its own:
         it matters only while the teaching switch reads "Test accounts only",
         and the panel says where that switch stands so the reader never has
-        to guess what a mark is doing right now. `student-data` writes it
-        (this page's role); `teaching-controls` moves the switch.
+        to guess what a mark is doing right now. Marking needs `student-data`
+        AND `teaching-controls` — the endpoint refuses either alone.
       */}
       <Panel
         title="Test account"
         right={
-          <Chip tone={testerMarks.current ? "attention" : "neutral"}>
-            {testerMarks.current ? "test account" : "not a test account"}
+          <Chip tone={testerMarks?.current ? "attention" : "neutral"}>
+            {testerMarks === null
+              ? "unknown"
+              : testerMarks.current
+                ? "test account"
+                : "not a test account"}
           </Chip>
         }
         note={
-          <>
-            Socratic probing is currently{" "}
-            <Link href="/teaching" className="underline">
-              {teaching.effective === "off"
-                ? "off for everyone"
-                : teaching.effective === "testers"
-                  ? "on for test accounts only"
-                  : "on for everyone"}
-            </Link>
-            . {teaching.effective === "testers"
-              ? testerMarks.current
-                ? "So this student's maths lessons probe — from the next lesson they start."
-                : "This student is not marked, so their lessons do not probe."
-              : teaching.effective === "off"
-                ? "So a mark here changes nothing this student sees until it is switched on."
-                : "A mark here makes no difference while it is on for everyone."}
-          </>
+          teaching === null ? (
+            <>
+              Socratic probing: <strong>unknown</strong> — the{" "}
+              <Link href="/teaching" className="underline">
+                teaching switch
+              </Link>{" "}
+              could not be read just now.
+            </>
+          ) : (
+            <>
+              Socratic probing is currently{" "}
+              <Link href="/teaching" className="underline">
+                {teaching.effective === "off"
+                  ? "off for everyone"
+                  : teaching.effective === "testers"
+                    ? "on for test accounts only"
+                    : "on for everyone"}
+              </Link>
+              .{" "}
+              {teaching.effective === "testers"
+                ? testerMarks?.current
+                  ? "So this student's maths lessons probe — from their next sitting. Removing the mark stops it from their next message."
+                  : "This student is not marked, so their lessons do not probe."
+                : teaching.effective === "off"
+                  ? "So a mark here changes nothing this student sees until it is switched on."
+                  : "A mark here makes no difference while it is on for everyone."}
+            </>
+          )
         }
       >
-        {testerMarks.current ? (
-          <p className="text-[13px] text-ink">
-            Marked by{" "}
-            <strong>{testerMarks.current.markedBy ?? "an operator no longer on record"}</strong> at{" "}
-            {stamp(testerMarks.current.markedAt)}
-            {testerMarks.current.note ? (
-              <>
-                {" "}
-                — <span className="text-ink-soft">{testerMarks.current.note}</span>
-              </>
-            ) : null}
-            .
+        {testerMarks === null ? (
+          <p className="text-[13px] text-ink-soft">
+            This student&rsquo;s test-account marks could not be read just now. Nothing has been
+            changed; reload to try again.
           </p>
         ) : (
-          <p className="text-[13px] text-ink-soft">
-            This student is taught exactly as every other student is.
-          </p>
+          <>
+            {testerMarks.current ? (
+              <p className="text-[13px] text-ink">
+                Marked by{" "}
+                <strong>{testerMarks.current.markedBy ?? "an operator no longer on record"}</strong>{" "}
+                at {stamp(testerMarks.current.markedAt)}
+                {testerMarks.current.note ? (
+                  <>
+                    {" "}
+                    — <span className="text-ink-soft">{testerMarks.current.note}</span>
+                  </>
+                ) : null}
+                .
+              </p>
+            ) : (
+              <p className="text-[13px] text-ink-soft">
+                This student is taught exactly as every other student is.
+              </p>
+            )}
+            {testerMarks.history.length > 0 && (
+              <ul className="mt-2 space-y-1 text-[12px] text-ink-soft">
+                {testerMarks.history.map((m) => (
+                  <li key={m.id} className="font-mono">
+                    marked by {m.markedBy ?? "an operator no longer on record"} {stamp(m.markedAt)}{" "}
+                    · removed by {m.unmarkedBy ?? "an operator no longer on record"}{" "}
+                    {m.unmarkedAt ? stamp(m.unmarkedAt) : ""}
+                    {m.note ? ` · ${m.note}` : ""}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {canMarkTester ? (
+              <TesterMarkEditor studentId={s.id} isTester={testerMarks.current != null} />
+            ) : (
+              <p className="mt-3 border-t border-line-soft pt-3 text-[12.5px] leading-relaxed text-ink-soft">
+                Marking or unmarking a test account needs both the{" "}
+                <code className="font-mono text-[12px]">student-data</code> and the{" "}
+                <code className="font-mono text-[12px]">teaching-controls</code> roles.
+              </p>
+            )}
+          </>
         )}
-        {testerMarks.history.length > 0 && (
-          <ul className="mt-2 space-y-1 text-[12px] text-ink-soft">
-            {testerMarks.history.map((m) => (
-              <li key={m.id} className="font-mono">
-                marked by {m.markedBy ?? "an operator no longer on record"} {stamp(m.markedAt)} ·
-                removed by {m.unmarkedBy ?? "an operator no longer on record"}{" "}
-                {m.unmarkedAt ? stamp(m.unmarkedAt) : ""}
-                {m.note ? ` · ${m.note}` : ""}
-              </li>
-            ))}
-          </ul>
-        )}
-        <TesterMarkEditor studentId={s.id} isTester={testerMarks.current != null} />
       </Panel>
 
       {/* ------------------------------------------------------- time on task */}

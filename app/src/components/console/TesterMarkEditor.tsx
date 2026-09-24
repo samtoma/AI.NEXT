@@ -4,8 +4,14 @@ import { useState } from "react";
 
 /**
  * Mark this student as a test account, or remove the mark — one click either
- * way (ADR-0021). Rendered on the Student 360, which only `student-data`
- * reaches; `POST /api/console/students/{id}/tester` checks the same role.
+ * way (ADR-0021). Rendered on the Student 360 only for an operator holding
+ * `student-data` AND `teaching-controls`, the pair
+ * `POST /api/console/students/{id}/tester` requires.
+ *
+ * **"Only accounts the team owns — never a real student."** Said beside the
+ * control, every time, because the one mistake that matters here is marking
+ * a real child: a test account is where probing — with #53's known defects —
+ * is tried.
  *
  * Marking takes an optional note ("Samuel's iPad account"), because a mark
  * found months later with no reason is a mark nobody dares remove. Removing
@@ -52,11 +58,15 @@ export function TesterMarkEditor({
 
   return (
     <div className="mt-3 border-t border-line-soft pt-3">
+      <p id="tester-owned-only" className="mb-2 text-[12.5px] font-semibold leading-snug text-ink">
+        Only accounts the team owns — never a real student.
+      </p>
       {isTester ? (
         <button
           type="button"
           onClick={() => void post(false)}
           disabled={busy}
+          aria-describedby="tester-owned-only"
           className="ds-control play-pressable rounded border border-line bg-card px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
         >
           {busy ? "Removing…" : "Remove the test-account mark"}
@@ -79,6 +89,7 @@ export function TesterMarkEditor({
             type="button"
             onClick={() => void post(true)}
             disabled={busy}
+            aria-describedby="tester-owned-only"
             className="ds-control play-pressable rounded border border-line bg-card px-3 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
           >
             {busy ? "Marking…" : "Mark as a test account"}

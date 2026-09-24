@@ -773,8 +773,11 @@ password sign-in.
 - **FR-3106**: Everything that behaves differently under probing — the tutor's instructions, whether
   a question card reveals the worked solution, and how the answer is recorded — MUST follow the
   lesson's recorded decision and **never anything the student's device sends**.
-- **FR-3107**: An operator MUST be able to mark a student account as a **test account**, and remove
-  the mark in one action, from that student's page. Who marked it, who removed it and when MUST be
+- **FR-3107**: An operator holding **both** the student-data role and the teaching-controls role
+  MUST be able to mark a student account as a **test account**, and remove the mark in one action,
+  from that student's page; **neither role alone may**, and the page MUST say beside the control that
+  only accounts the team owns may be marked, never a real student. *(Amended 2026-09-24, fix pass:
+  was student-data alone; every operator held every role that day, so nobody lost access.)* Who marked it, who removed it and when MUST be
   recorded and kept after removal, and a removed mark MUST stay removed — marking the student again
   is a new mark, never the old one reopened or rewritten. **No student surface may be able to set or
   remove the mark**, for the student or anyone else.
@@ -785,9 +788,11 @@ password sign-in.
   and the server MUST log both when the lesson starts. The release MUST come from the build actually
   deployed, not from a version number that two builds share.
 - **FR-3110**: The console MUST show, on every page, the **deployed release** and the **current
-  probing position**, and MUST show who last changed the position and when. Every change MUST be
-  recorded — from, to, who, when — and listed, and nothing in the console may edit or remove that
-  record.
+  probing position** — and, when the position cannot be read, MUST say it is **unknown** rather than
+  fail the page. It MUST show who last changed the position and when, to any operator holding at
+  least one role. Every change MUST be recorded — from, to, who, when — and listed, and nothing in
+  the console may edit or remove that record; the note kept with a change MUST be marked as not
+  the place to name a student, because every role reads it.
 - **FR-3111**: A student's session list, timeline and replay MUST show, for each lesson, the release
   that served it and whether probing applied — and MUST say "not recorded" for lessons from before
   it was recorded, rather than guessing.

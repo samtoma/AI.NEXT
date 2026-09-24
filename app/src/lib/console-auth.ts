@@ -100,7 +100,7 @@ export async function consoleAccess(path: string): Promise<ConsoleAccess> {
       subject: { kind: "console_route" },
       // The role(s) that would have admitted, and the route. An operational
       // code — there is nothing here a client sees or an attacker learns.
-      reason: `missing_role:${route.roles.join("|") || "operator"}:${route.path}`,
+      reason: `missing_role:${route.roles.join(route.allOf ? "+" : "|") || "operator"}:${route.path}`,
     });
     return { ok: false, status: 403, code: "permission_denied" };
   }
@@ -115,6 +115,7 @@ export async function consoleAccess(path: string): Promise<ConsoleAccess> {
 function admits(route: ConsoleRoute, roles: OperatorRole[]): boolean {
   if (route.roles.length === 0) return true;
   const me: Principal = { kind: "operator", operatorId: 0, roles };
+  if (route.allOf) return checkRequirement(me, { roles: route.roles }).ok;
   return route.roles.some((role) => checkRequirement(me, { role }).ok);
 }
 

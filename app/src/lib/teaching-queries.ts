@@ -86,6 +86,24 @@ export async function getTeachingState(operatorId: number): Promise<TeachingStat
   return withOperator(operatorId, (db) => stateOn(db));
 }
 
+/**
+ * `getTeachingState`, or `null` when it cannot be read — for the surfaces
+ * where the switch is a side fact rather than the subject: the console header
+ * on every page, and the Student 360's test-account panel. A failed read there
+ * must print "Probing: unknown", never take the whole console down with a 500
+ * (a missing table after a partial rollback, a revoked grant, a dropped
+ * connection). `/teaching` itself keeps the throwing read: on the page whose
+ * subject IS the switch, an error page is the honest answer.
+ */
+export async function getTeachingStateOrNull(operatorId: number): Promise<TeachingState | null> {
+  try {
+    return await getTeachingState(operatorId);
+  } catch (err) {
+    console.error("[console] could not read the teaching switch; showing it as unknown:", err);
+    return null;
+  }
+}
+
 export type TeachingChange = {
   id: number;
   /** null: there was no row — the default (off) nobody had chosen */
@@ -278,6 +296,19 @@ export async function studentTesterMarks(
     current: marks.find((m) => m.unmarkedAt == null) ?? null,
     history: marks.filter((m) => m.unmarkedAt != null),
   };
+}
+
+/** `studentTesterMarks`, or `null` when the marks cannot be read (see `getTeachingStateOrNull`). */
+export async function studentTesterMarksOrNull(
+  operatorId: number,
+  studentId: number
+): Promise<{ current: TesterMark | null; history: TesterMark[] } | null> {
+  try {
+    return await studentTesterMarks(operatorId, studentId);
+  } catch (err) {
+    console.error("[console] could not read the tester marks; showing them as unknown:", err);
+    return null;
+  }
 }
 
 /**

@@ -82,11 +82,22 @@ nobody else.**
   records a grant of it" — so neither a re-run nor withdrawing the role
   (`rollback/029`) and deploying again hands it back to someone it was removed
   from. New operators get it from the bootstrap script. *(Fix pass,
-  2026-09-24: was "every operator holding a role", guarded on the rows only.)* Reading the Teaching page is every operator's:
+  2026-09-24: was "every operator holding a role", guarded on the rows only.)* Reading the Teaching page is any role-holder's:
   it names no student unless the reader holds `student-data`.
-- **The tester mark is `student-data`'s**, the Student 360's own role — as the
-  per-student course override is — because it names a person. It decides
-  nothing by itself; the switch does.
+- **The tester mark needs `student-data` AND `teaching-controls`** (Samuel,
+  fix pass 2026-09-24; it was `student-data` alone). It names a person — the
+  Student 360's own role, as the per-student course override — and it decides
+  which child the tutor tries an unfinished teaching behaviour on, which is
+  the switch's safety decision in another form: marking a REAL child by
+  mistake is the failure that matters while #53 is open. So neither role
+  alone may do it, and the control says "Only accounts the team owns — never
+  a real student." **Nobody lost access**: every operator held all five roles
+  on the day. The seam gained its one ALL-OF (`authorize({ roles })`).
+- **Reading `/teaching` needs a role — any one of the five** (fix pass): an
+  operator whose every role was revoked reads the shell's own pages only. The
+  switch's note is readable by every role, so the field says "Don't name a
+  student". A failed read of the switch prints "Probing: unknown" in the
+  console header and on the Student 360 instead of a 500.
 - **Per-lesson snapshot.** When a learning session is created the server
   resolves `off → false; testers → tester AND maths AND lesson_learn;
   everyone → maths AND lesson_learn` and stores the answer on `sessions.probing`

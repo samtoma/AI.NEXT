@@ -5,12 +5,16 @@
  *
  *   body: { tester: boolean, note?: string }
  *
- * `student-data`, the role of the Student 360 it is posted from, for the
- * reason the per-student course override is (ADR-0018): it names a person.
- * The mark decides nothing by itself — it matters only while the teaching
- * switch reads "Test accounts only", and that switch is `teaching-controls`'s
- * (`/api/console/teaching`). So the safety decision and the bookkeeping sit
- * under different roles, the way the grade rule and the student override do.
+ * **`student-data` AND `teaching-controls`, both** (fix pass, 2026-09-24,
+ * ADR-0021). `student-data` because it names a person and is posted from the
+ * Student 360, that role's page — the per-student course override's reason
+ * (ADR-0018). `teaching-controls` because the mark decides which child the
+ * tutor tries an unfinished teaching behaviour on (#53): marking a REAL
+ * student by mistake is the failure that matters, and it is the teaching
+ * switch's safety decision in another form. Neither role alone may do it.
+ * One call to the seam's ALL-OF (`authorize({ roles })`), so a refusal is
+ * recorded once, naming the first role missing. Every operator held every
+ * role on the day this changed, so nobody lost access.
  *
  * **Removable with one click, and never erased.** `tester: false` stamps the
  * open mark with who removed it and when; the console holds no DELETE on the
@@ -37,7 +41,7 @@ const MAX_NOTE = 280;
 export async function POST(req: Request, ctx: { params: Promise<{ id: string }> }) {
   let me;
   try {
-    me = await authorize({ role: "student-data" });
+    me = await authorize({ roles: ["student-data", "teaching-controls"] });
   } catch (err) {
     if (err instanceof AuthError) return err.toResponse();
     throw err;

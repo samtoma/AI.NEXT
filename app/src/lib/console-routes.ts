@@ -45,8 +45,22 @@ export type ConsoleRoute = {
    * endpoints existed still means what it meant.
    */
   kind?: "page" | "route";
-  /** Any ONE of these admits. Empty = any operator (the shell's own pages). */
+  /**
+   * Any ONE of these admits — unless `allOf` is set, when EVERY one must be
+   * held. Empty = any operator (the shell's own pages).
+   */
   roles: readonly OperatorRole[];
+  /**
+   * `roles` is an ALL-OF for this row: the caller must hold every role listed.
+   *
+   * One row uses it: the test-account mark (ADR-0021), which names a child —
+   * `student-data`'s business — and decides who the tutor experiments on —
+   * `teaching-controls`'. Either role alone would let one of those two
+   * decisions be made by somebody the other role was meant to stop. The
+   * handler asks `authorize({ roles })`, the seam's own ALL-OF, so the table
+   * and the check say the same thing.
+   */
+  allOf?: true;
   /** What the nav calls it, or null for a route reached from another page. */
   nav: string | null;
   /**
@@ -177,17 +191,19 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
   },
   {
     // ADR-0021: mark or unmark one student as a TEST account, posted from the
-    // Test account panel on the Student 360. `student-data`, for the reason
-    // the course override above is: it names a student, and it is written
-    // from the one page that already requires that role. The mark alone
-    // changes nothing a student sees — what it does is decided by the
-    // teaching switch, which is `teaching-controls` (`/api/console/teaching`
-    // below) — so the safety decision stays with that role and this one only
-    // records who is a tester.
+    // Test account panel on the Student 360. **Both `student-data` AND
+    // `teaching-controls`** (fix pass, 2026-09-24). It names a student — the
+    // Student 360's own role, as the course override above — and it decides
+    // which child the tutor tries an unfinished teaching behaviour on, which
+    // is the teaching switch's safety decision. Marking a real child by
+    // mistake is the failure that matters here (probing still has #53's
+    // defects), so neither role alone may do it. Nobody lost access by the
+    // change: every operator held every role on the day.
     path: "/api/console/students/[id]/tester",
     file: "api/console/students/[id]/tester/route.console.ts",
     kind: "route",
-    roles: ["student-data"],
+    roles: ["student-data", "teaching-controls"],
+    allOf: true,
     nav: null,
   },
   {
@@ -253,17 +269,29 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     // ADR-0021: the teaching switches — today one, Socratic probing (Off /
     // Test accounts only / Everyone, the last locked until #53).
     //
-    // **The PAGE is every operator's; the SWITCH is `teaching-controls`'s.**
+    // **The PAGE is any role-holder's; the SWITCH is `teaching-controls`'s.**
     // Reading it discloses no student: the position, who last moved it and
     // when, its history, the deployed release, and how many accounts are
     // marked as testers (their names only for a `student-data` holder, the
-    // role that already lists students). Every operator should be able to
-    // answer "is the tutor probing right now, and since when?" — it explains
-    // a lesson that behaved differently, and the console header says it on
-    // every page anyway. Changing it is the endpoint below.
+    // role that already lists students). Every operator with a job in the
+    // console should be able to answer "is the tutor probing right now, and
+    // since when?" — it explains a lesson that behaved differently.
+    //
+    // **All five roles, any one of them — not an empty list** (fix pass,
+    // 2026-09-24). An operator whose every role has been revoked was stripped
+    // on purpose and reads the shell's own pages only; the switch's history
+    // carries operators' names and their notes, which is more than "an
+    // account exists". The header's one-word position stays on every page.
+    // Changing it is the endpoint below.
     path: "/teaching",
     file: "(console)/teaching/page.console.tsx",
-    roles: [],
+    roles: [
+      "content-review",
+      "evidence-access",
+      "student-data",
+      "cost-billing",
+      "teaching-controls",
+    ],
     nav: "Teaching",
   },
   {
@@ -411,7 +439,9 @@ export function consoleRoute(path: string): ConsoleRoute | undefined {
 /** Does holding these roles admit this route? Pure — this is the matrix. */
 export function routeAdmits(route: ConsoleRoute, roles: readonly OperatorRole[]): boolean {
   if (route.roles.length === 0) return true; // any operator; the shell decides who is one
-  return route.roles.some((r) => roles.includes(r));
+  return route.allOf
+    ? route.roles.every((r) => roles.includes(r))
+    : route.roles.some((r) => roles.includes(r));
 }
 
 /** The nav an operator holding these roles is offered, in table order. */
