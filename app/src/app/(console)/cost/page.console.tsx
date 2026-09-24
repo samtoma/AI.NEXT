@@ -289,10 +289,9 @@ function TurnLimits({
           Until v0.9.0 each function refused the next turn once a conversation had this many
           replies, and locked the student&apos;s input. <strong>Nothing is refused any more</strong>{" "}
           (ADR-0023); the numbers are kept as thresholds so we can see how often they would have
-          fired. A conversation counts in the {periodText} if any of its turns falls in it, and its
-          replies are every answer it delivered — the count the old limit read. Before v0.9.0 the
-          refused turn was never recorded, so an older conversation can show &ldquo;reached&rdquo;
-          but never &ldquo;went past&rdquo;.
+          fired. A conversation is counted when any of its turns falls in the {periodText}, and
+          its replies are every answer it delivered — the count the old limit read. Before v0.9.0 the refused turn was never recorded, so an older
+          conversation can show &ldquo;reached&rdquo; but never &ldquo;went past&rdquo;.
         </>
       }
     >
@@ -451,10 +450,12 @@ function PhotoUploads({ view, periodText }: { view: CostView; periodText: string
       note={
         <>
           Until v0.9.0 a student could upload {t.threshold} photos or PDFs in 24 hours and the next
-          one was refused. <strong>No upload is refused for count any more</strong> (ADR-0023); the
-          10 MB size limit and the JPEG, PNG or PDF type check still apply, because neither is a
-          count. The cost below is the headline&apos;s photo/OCR figure, the same dollars, never
-          added to teaching.
+          one was refused. <strong>No upload is refused for count any more</strong>{" "}
+          (ADR-0023); the 10 MB size limit and the JPEG, PNG or PDF type check still apply, because
+          neither is a count.
+          {nothing
+            ? null
+            : " The cost below is the headline's photo/OCR figure, the same dollars, never added to teaching."}
         </>
       }
     >
