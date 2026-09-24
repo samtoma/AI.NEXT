@@ -43,6 +43,8 @@ ALTER TABLE sessions DROP COLUMN IF EXISTS release_tag;
 DROP TABLE IF EXISTS teaching_setting_changes;
 DROP TABLE IF EXISTS teaching_settings;
 DROP TABLE IF EXISTS student_testers;
+-- Its trigger went with the table; the function is free-standing.
+DROP FUNCTION IF EXISTS student_testers_close_once();
 
 DO $verify$
 BEGIN

@@ -755,9 +755,11 @@ password sign-in.
   **Off**, **Test accounts only**, **Everyone** — and MUST treat the absence of any recorded choice
   as **Off**, so a new environment changes nothing until somebody decides.
 - **FR-3102**: Moving the switch MUST require a dedicated operator role, **separate from content
-  review**, so who may change how a child is taught can be narrowed on its own. Every operator who
-  held a role when the role was introduced MUST receive it once; a later deploy MUST NOT give it
-  back to an operator it was removed from.
+  review**, so who may change how a child is taught can be narrowed on its own. Every **active**
+  operator who held **content review** — the role it is split from — when the role was introduced
+  MUST receive it once, and nobody else. A later deploy MUST NOT give it back to an operator it was
+  removed from, and neither may withdrawing the role and deploying again. *(Amended 2026-09-24,
+  fix pass: was "every operator who held a role".)*
 - **FR-3103**: **Everyone** MUST be unavailable until the known probing defects are fixed (#53): the
   console MUST show it disabled with the reason beside it, the server MUST refuse it whoever asks,
   and a stored **Everyone** MUST act as **Test accounts only** while it is locked. Unlocking it MUST
@@ -773,8 +775,9 @@ password sign-in.
   lesson's recorded decision and **never anything the student's device sends**.
 - **FR-3107**: An operator MUST be able to mark a student account as a **test account**, and remove
   the mark in one action, from that student's page. Who marked it, who removed it and when MUST be
-  recorded and kept after removal. **No student surface may be able to set or remove the mark**, for
-  the student or anyone else.
+  recorded and kept after removal, and a removed mark MUST stay removed — marking the student again
+  is a new mark, never the old one reopened or rewritten. **No student surface may be able to set or
+  remove the mark**, for the student or anyone else.
 - **FR-3108**: With probing **Off**, a student MUST get exactly what they got before the switch
   existed — the same tutor instructions, word for word, the same card behaviour and the same record
   of every answer.

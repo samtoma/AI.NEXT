@@ -66,8 +66,9 @@ product as a content-management permission.
 
 **`teaching-controls` is a safety control too** (ADR-0021, FR-3102): it decides how the tutor
 answers a child who got a question wrong. It was specified under `content-review` and split out on
-2026-09-24 so it can be narrowed on its own. Migration 029 granted it once to every operator then
-holding a role; a later deploy never grants it again. The test-account mark it gives meaning to is
+2026-09-24 so it can be narrowed on its own. Migration 029 granted it once to every active operator
+then holding `content-review`; a later deploy never grants it again, and neither does withdrawing it
+(`rollback/029`) and deploying again — 029's guard reads the `auth_events` trail too. The test-account mark it gives meaning to is
 `student-data`'s, because the mark names a person — the same split as the course-availability grade
 rule (`content-review`) and the per-student exception (`student-data`).
 

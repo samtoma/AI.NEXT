@@ -199,7 +199,10 @@ credential logic, paid down by sharing the same library functions.
 and when (FR-2204). Active set is `revoked_at IS NULL`. **No role implies another and none grants
 everything** (FR-2203): "Samuel holds all five" is five rows, not an "all" role. The fifth,
 `teaching-controls` (2026-09-24, ADR-0021, FR-3102), gates the console's teaching switch; migration
-029 granted it once to every operator then holding a role, and never again.
+029 granted it once to every active operator then holding `content-review`, and never again — its
+guard also reads the `auth_events` trail, so withdrawing the role (`rollback/029`) and deploying
+again does not re-grant it. `014` rebuilds the CHECK only when it lacks one of the five (the v0.6.1
+guard), so an older build's `014` leaves a wider vocabulary alone.
 
 ## 8. `students` — account link, gender, commercial status, guardian hooks
 
@@ -372,7 +375,7 @@ console — role checks in the application, the database grants the read), **`ai
 | `student_course_access` *(023)* | S where `student_id = app.student_id` | S/I/U/D all | a per-student override of the course gate, set from the console |
 | `feedback` *(025)* | S/I/U where `student_id = app.student_id` | S all | read by the console's Feedback page |
 | `student_progress` *(028, ADR-0020)* | S/I/U where `student_id = app.student_id` — **no D** | **no grant** | the lesson pointer is monotonic, so nothing deletes it; no console surface reads it, so the operator has no read to enumerate (add the grant, the policy and a `CROSS_STUDENT_READS` entry together when one does) |
-| `student_testers` *(030, ADR-0021)* | **S only**, where `student_id = app.student_id` | S/I all; U only `unmarked_at`, `unmarked_by`; **no D** | the test-account mark; the student surface reads its own (the probing resolver needs it) and can never set it — the reason it is not a `students` column (FR-3107) |
+| `student_testers` *(030, ADR-0021)* | **S only**, where `student_id = app.student_id` | S/I all; U only `unmarked_at`, `unmarked_by`; **no D** | the test-account mark; the student surface reads its own (the probing resolver needs it) and can never set it — the reason it is not a `students` column (FR-3107). A trigger (`student_testers_close_once`, every role) lets the two "removed" columns go from NULL to a value once and nothing else change, so a removed mark is never reopened or rewritten |
 | `teaching_settings` *(030)* | S | S/I/U | **no policies** — the teaching switch is product configuration, like `course_availability`; no row means off |
 | `teaching_setting_changes` *(030)* | **no grant** | **S + I only** | the switch's history, append-only by privilege (FR-3110) |
 | `sessions.probing`, `sessions.release_tag` *(030)* | written at INSERT only | S | the per-lesson snapshot; a trigger refuses any UPDATE of either, for every role (FR-3105) |
@@ -394,7 +397,7 @@ surface that may perform each.
 | `016-auth-events.sql` | §10 `auth_events` |
 | `017-rls-roles-and-policies.sql` | §14 — roles, grants, `ENABLE`/`FORCE`, every policy |
 | `018-cost-ledger-and-rollups.sql` | §12 `ai_interactions` columns, `cost_daily`, the three overview views |
-| `029-teaching-controls-role.sql` | the fifth role, granted once (ADR-0021) — the vocabulary itself is widened in `014` |
+| `029-teaching-controls-role.sql` | the fifth role, granted once to active `content-review` holders (ADR-0021) — the vocabulary itself is widened in `014` |
 | `030-teaching-toggle-and-testers.sql` | `student_testers`, `teaching_settings`, `teaching_setting_changes`, `sessions.probing` / `release_tag` and their trigger (ADR-0021) |
 
 `017` is late because every table it protects must exist first; `011` is first because it is the only

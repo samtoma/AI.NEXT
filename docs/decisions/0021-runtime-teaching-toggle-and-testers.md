@@ -76,10 +76,13 @@ nobody else.**
 - **A dedicated role gates the write: `teaching-controls`.** Specified under
   `content-review` and moved the same day, so who may change how a child is
   taught can be narrowed without touching who reviews content. A safety control
-  in ADR-0014's sense. Every operator holding a role got it **once**, from
-  migration 029, guarded on "no `teaching-controls` row has ever existed" so a
-  re-run never hands it back to someone it was removed from. New operators get
-  it from the bootstrap script. Reading the Teaching page is every operator's:
+  in ADR-0014's sense. Every **active** operator holding **`content-review`**
+  (the role it is split from) got it **once**, from migration 029, guarded on
+  "a `teaching-controls` row has ever existed, or the `auth_events` trail
+  records a grant of it" — so neither a re-run nor withdrawing the role
+  (`rollback/029`) and deploying again hands it back to someone it was removed
+  from. New operators get it from the bootstrap script. *(Fix pass,
+  2026-09-24: was "every operator holding a role", guarded on the rows only.)* Reading the Teaching page is every operator's:
   it names no student unless the reader holds `student-data`.
 - **The tester mark is `student-data`'s**, the Student 360's own role — as the
   per-student course override is — because it names a person. It decides
@@ -119,11 +122,16 @@ maths snapshot can meet an Arabic lesson. `effectiveProbing` narrows at use time
 (maths, learn mode) and can never turn a stored `false` on, so this errs only
 towards off.
 
-**A pre-v0.7.0 build cannot be redeployed onto a v0.7.0 database** while any
+**v0.6.0 cannot be redeployed onto a v0.7.0 database** while any
 `teaching-controls` row exists: its migration 014 re-adds the four-value role
-CHECK on every deploy and Postgres refuses it. `rollback/029` removes those rows
-first and says so; rolling back only the feature (keeping the build) needs
-nothing.
+CHECK unconditionally on every deploy and Postgres refuses it. **v0.6.1 can**:
+it is v0.6.0 plus a guard that rebuilds that CHECK only when it lacks one of
+its roles, and v0.7.0's 014 carries the same guard with five — so v0.7.0 is a
+safe rollback target for whatever comes next. CI now proves it on every change
+to `db/` (job `migrations`: fresh ×3, upgrade from the previous release,
+rollback onto it and forward again). The three levers — switch Off, revert and
+deploy, and the manual path if v0.6.0 itself is ever unavoidable — are in
+[`deploy/DEPLOY-MVP1.md` → "Rolling back"](../../deploy/DEPLOY-MVP1.md#rolling-back).
 
 **The Off path adds one read per session open** (the switch and the student's
 own mark, in one statement) and nothing per turn. With the switch Off the

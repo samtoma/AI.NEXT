@@ -21,6 +21,10 @@
 --      "who made this child a tester, when, and who took it off" survives the
 --      removal. At most one open mark per (environment, student) — a partial
 --      unique index, the same invariant shape as `idx_sessions_open_one`.
+--      A trigger (§4b) makes the removal happen ONCE: `unmarked_at` and
+--      `unmarked_by` may go from NULL to a value, and nothing else on the row
+--      may change, ever — a removed mark is never reopened, and who made it
+--      is never rewritten. It binds every role, the owner included.
 --
 --      It is a SEPARATE table and not a column on `students`, because
 --      `ainext_app` holds table-level UPDATE on `students` (017: a student
@@ -262,6 +266,65 @@ END
 $trigger$;
 
 -- ---------------------------------------------------------------------------
+-- 4b. A tester mark is closed once, and never reopened or rewritten
+-- ---------------------------------------------------------------------------
+-- The column grant below (UPDATE on `unmarked_by`, `unmarked_at` only) already
+-- stops the console rewriting who made a mark. It does not stop it reopening
+-- one (`SET unmarked_at = NULL`) or rewriting who removed it and when — and it
+-- binds `ainext_operator` alone. This binds every role, the owner included:
+-- the only UPDATE a row ever takes is its one removal, NULL → a value for
+-- `unmarked_at` (with `unmarked_by`, or without it for a removal made outside
+-- the console). Marking a student again is a NEW row, which is what keeps the
+-- history of episodes honest. BEFORE UPDATE with no column list, so a
+-- statement naming any column is checked. The rollback drops the table, and
+-- the trigger with it, and then the function.
+
+CREATE OR REPLACE FUNCTION student_testers_close_once() RETURNS trigger
+LANGUAGE plpgsql AS $fn$
+BEGIN
+  IF NEW.id          IS DISTINCT FROM OLD.id
+     OR NEW.environment IS DISTINCT FROM OLD.environment
+     OR NEW.student_id  IS DISTINCT FROM OLD.student_id
+     OR NEW.note        IS DISTINCT FROM OLD.note
+     OR NEW.marked_by   IS DISTINCT FROM OLD.marked_by
+     OR NEW.marked_at   IS DISTINCT FROM OLD.marked_at THEN
+    RAISE EXCEPTION
+      'student_testers %: only unmarked_at/unmarked_by may change, once (ADR-0021)', OLD.id
+      USING ERRCODE = 'check_violation';
+  END IF;
+  IF OLD.unmarked_at IS NOT NULL OR OLD.unmarked_by IS NOT NULL THEN
+    IF NEW.unmarked_at IS DISTINCT FROM OLD.unmarked_at
+       OR NEW.unmarked_by IS DISTINCT FROM OLD.unmarked_by THEN
+      RAISE EXCEPTION
+        'student_testers %: a removed mark stays removed — mark the student again instead (ADR-0021)',
+        OLD.id
+        USING ERRCODE = 'check_violation';
+    END IF;
+  ELSIF NEW.unmarked_by IS NOT NULL AND NEW.unmarked_at IS NULL THEN
+    RAISE EXCEPTION
+      'student_testers %: unmarked_by is stamped together with unmarked_at (ADR-0021)', OLD.id
+      USING ERRCODE = 'check_violation';
+  END IF;
+  RETURN NEW;
+END
+$fn$;
+
+DO $close_once$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_trigger
+     WHERE tgrelid = 'public.student_testers'::regclass
+       AND tgname = 'student_testers_close_once'
+       AND NOT tgisinternal
+  ) THEN
+    CREATE TRIGGER student_testers_close_once
+      BEFORE UPDATE ON student_testers
+      FOR EACH ROW EXECUTE FUNCTION student_testers_close_once();
+  END IF;
+END
+$close_once$;
+
+-- ---------------------------------------------------------------------------
 -- 5. Grants — start from nothing on these three tables (017's rule)
 -- ---------------------------------------------------------------------------
 
@@ -426,6 +489,11 @@ BEGIN
                   WHERE tgrelid = 'public.sessions'::regclass
                     AND tgname = 'sessions_snapshot_is_fixed' AND NOT tgisinternal) THEN
     RAISE EXCEPTION 'sessions_snapshot_is_fixed is missing — a lesson''s snapshot could be rewritten';
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger
+                  WHERE tgrelid = 'public.student_testers'::regclass
+                    AND tgname = 'student_testers_close_once' AND NOT tgisinternal) THEN
+    RAISE EXCEPTION 'student_testers_close_once is missing — a removed tester mark could be reopened';
   END IF;
 
   RAISE NOTICE 'teaching toggle: ready — probing % in % environment(s), % open tester mark(s)',
