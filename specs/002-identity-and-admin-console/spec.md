@@ -6,7 +6,10 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 (reveal threshold) — **FR-3112** added: while a sitting probes, the
+**Last amended**: 2026-09-24 (skill-map order, v0.9.1) — **FR-3215, FR-3216** added: the skill
+map orders its topics in catalogue order (`MODULE_ORDER`), and each of its columns is an evenly spaced
+stack centred on one midline again (Samuel, restoring the pre-v0.6.0 packing inside Tamer's
+redesign). Written with the code, not after it. Before that, 2026-09-24 (reveal threshold) — **FR-3112** added: while a sitting probes, the
 answer and worked solution are withheld until the student's second wrong attempt on the objective,
 whether asked for or not (Samuel, ADR-0021's 2026-09-24 amendment; the one prompt change his ADR-0020
 hold permits). Before that, 2026-09-24 (gating correction) — **FR-3403, FR-3404, FR-3409** amended in place to
@@ -994,6 +997,18 @@ password sign-in.
 - **FR-3210**: The map MUST work without a pointer: a topic opens from the keyboard with focus on its
   heading, Escape closes it and returns focus to the topic, and a panel that has been dragged MUST be
   returnable to its place by a control, not only by dragging.
+- **FR-3215** **[ADDED 2026-09-24 — v0.9.1]**: The skill map orders topics in catalogue order
+  (`MODULE_ORDER`), the same order the lesson list and progression use; the order is deterministic.
+- **FR-3216** **[ADDED 2026-09-24 — v0.9.1]**: Each prerequisite-depth column of the skill map is an
+  evenly spaced stack centred on the map's midline, ordered by prerequisite barycentre and then
+  catalogue order (Samuel, 2026-09-24, restoring the pre-v0.6.0 packing).
+
+> *FR-3215 and FR-3216 are not part of the "written after the code" set above: Samuel approved them
+> on 2026-09-24 after comparing the map before and after v0.6.0 — "nice and sequential" before, "looks
+> random" since — and they were written in the same pass as their code. The order half was a defect
+> (the objective query sorted by `order_in_parent`, a per-module position nine maths objectives
+> share, and Postgres returned the ties in no fixed order); the column half is a deliberate reversal
+> of the v0.6.0 redesign's floating columns, which the layout comment keeps and marks superseded.*
 
 **The rest of v0.6.0**
 

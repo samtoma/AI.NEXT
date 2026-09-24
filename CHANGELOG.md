@@ -10,6 +10,35 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.9.1] — 2026-09-25
+
+The skill map reads in lesson order again, in tidy columns. Student-facing, `/spine` only; no
+migration.
+
+### Fixed — the skill map's order (FR-3215)
+- **The skill map now lists topics in the same order as the lesson list.** Topics used to be
+  sorted by their position inside their own unit, and nine maths topics share each position. The
+  database therefore chose the order of every tie, and could choose differently between visits: on
+  production the first column read Geometry 1, Unit 2, Unit 3, Unit 1, Unit 4, Unit 3. It now reads
+  Unit 1 → Unit 2 → Unit 3 → Unit 3 → Unit 4 → Geometry 1, in the catalogue order the lesson list and
+  the progression already use. It is the same on every visit.
+- The topic panel's "Worth having first" list follows the same order. Before, it came out in whatever
+  order the database returned.
+
+### Changed — the skill map's columns are packed again (FR-3216)
+- **Each column of the skill map is again an evenly spaced stack, centred on one line the whole
+  map shares**, as it was before v0.6.0. Tamer's v0.6.0 redesign placed each topic at the height
+  of the topics it builds on. That kept a topic next to its prerequisites, but left long lines
+  and large gaps, and the map read as scattered. Samuel preferred the ordered, list-like reading. The
+  rest of Tamer's redesign is unchanged: the cards, their colours, the lines and arcs, both
+  panels, and keyboard use. His reasoning for the floating columns stays in the code, marked
+  as superseded.
+- The first column is shorter than the tallest one, so it now sits in the middle of the map. The map
+  therefore opens scrolled to show it, starting from its first topic.
+- For whoever maintains it next: the map's layout moved into `app/src/lib/spine-layout.ts`, a module
+  with no React and no database, and is tested on the real maths curriculum (20 new tests; 3 of them
+  need a scratch database and run only when asked).
+
 ## [v0.9.0] — 2026-09-24
 
 The turn and upload limits become numbers the console watches instead of walls a student hits, and

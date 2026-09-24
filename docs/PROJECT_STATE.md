@@ -1,10 +1,25 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`main` at `v0.8.0`; `v0.9.0` released on `feat/turn-limits-observed`, in review as a PR,
-> not deployed; constitution v3.3.0)
+> Last updated: 2026-09-25 (`main`; `v0.9.0` deployed; `v0.9.1` released, not deployed; constitution v3.3.0)
 
-## 🔓 v0.9.0 — turn and upload limits observed, not enforced; the answer waits for the second attempt (released 2026-09-24, NOT deployed — awaiting Samuel's go)
+## 🗺️ v0.9.1 — the skill map's order and packing (released 2026-09-25, NOT deployed — awaiting Samuel's go)
+
+Samuel approved this on 2026-09-24 after comparing `/spine` before and after v0.6.0. Before, it was
+*"nice and sequential"*; since, it *"looks random"*. The work is on branch `fix/spine-order-and-columns`
+(from `main` at v0.9.0). Samuel reviewed the summary and the before/after layout renders and approved
+the push on 2026-09-25.
+- **FR-3215 (fixed):** the objective query sorted by `order_in_parent`, which is a position inside a
+  module, so Postgres picked the order of every tie. It now sorts by `MODULE_ORDER`, the lesson
+  list's order (`lib/spine-lo-query.ts`), and the layout breaks ties by that rank (`catalogRank`).
+- **FR-3216 (changed):** columns are evenly spaced stacks centred on one midline again. This is the
+  pre-v0.6.0 packing inside Tamer's design, now in the pure module `lib/spine-layout.ts`. The pane
+  opens on the first column.
+- Both are **BUILT**, with 20 new tests (3 of them opt-in against a scratch database). Samuel has
+  the before/after **layout renders**, which are not app screenshots. **Nobody has viewed the page
+  signed in on this build**, including on iPad Safari.
+
+## 🔓 v0.9.0 — turn and upload limits observed, not enforced; the answer waits for the second attempt (released and deployed 2026-09-24)
 
 Samuel, verbatim: *"remove the limits, make them highlight in the admin console, we need to know how
 often those limits are triggered."* — and, the same day, extending it: *"please remove the limit of

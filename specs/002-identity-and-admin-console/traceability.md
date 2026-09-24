@@ -91,6 +91,18 @@ observed thresholds, not an enforced cap) — accepted 2026-09-24
 >
 > ---
 >
+> **Rev. 13 (2026-09-24) — the skill map's order, and its columns packed again (v0.9.1, not yet
+> committed).** Samuel compared the map before and after v0.6.0: *"nice and sequential"* then, *"looks
+> random"* now. Two causes, two requirements, written with their code and traced in **§7f** beside the
+> skill-map rows they extend. **FR-3215**: the objective query sorted by `order_in_parent`, a
+> per-module position nine maths objectives share, so Postgres chose the order of every tie; it now
+> joins each objective to its module and sorts by `MODULE_ORDER`, the lesson list's order. **FR-3216**:
+> each column is an evenly spaced stack centred on one midline again — the pre-v0.6.0 packing, restored
+> inside Tamer's redesign on Samuel's call. Both **BUILT**: 20 new tests (17 in `npm test`, 3 opt-in
+> against a scratch database, run once), and **no browser has rendered the page**. No other row moved.
+>
+> ---
+>
 > **Rev. 12 (2026-09-24) — the reveal threshold.** Samuel, replying to a #53 item: *"for the The
 > student asks for the answer … it should be 2 questions as well."* **FR-3112**, added to **§7e**
 > beside FR-3101…FR-3111 — the switch mechanics they cover are untouched; this is the first prompt
@@ -551,7 +563,7 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ---
 
-## 7f. Shipped in v0.6.0 without a requirement — FR-3201…FR-3214 **[ADDED 2026-09-24]**
+## 7f. Shipped in v0.6.0 without a requirement — FR-3201…FR-3214 **[ADDED 2026-09-24]**, and the skill map's order and packing — FR-3215, FR-3216 **[ADDED 2026-09-24 — v0.9.1]**
 
 > **Written after the code, on Samuel's instruction**, and the rows say where each piece of evidence
 > came from. "Signed-in run" below is one session on 2026-09-24 against the **v0.6.0** build
@@ -575,6 +587,8 @@ needs a database. That is why several rows below distinguish "proved once" from 
 | FR-3212 | The Content page says which subject it counts, counts what is held, and computes every count from the rows shown | **BUILT** | `a809e90`: `(console)/content/page.console.tsx`, `lib/content-admin.ts` — a subject switcher, a "From the book · held" tile, a Subject column | The per-course counts were checked against the **production** database: maths 1041 (450 book + 591 generated), Social Studies 483 live / 279 held, Arabic 10 live / 297 held. **Gap: nobody has viewed the page signed in.** |
 | FR-3213 | Migrations re-run on every deploy without failing, never narrow a wider definition, and take no blocking lock when there is nothing to change | **PARTIAL** | `886b302` (008 no longer re-applies its narrower `question_type` CHECK over 010's); 027 and 028 add each piece only when the catalogue says it is missing; 029/030 (v0.7.0) follow the same rule; **014's role CHECK is rebuilt only when it lacks a role** (v0.6.1, and v0.7.0 with five), so an older build's migrations no longer narrow a newer vocabulary; **CI job `migrations`** (`scripts/ci-migrations.sh`) applies HEAD to an empty database three times, upgrades from the previous release, and rolls back onto it and forward again, on every change to `db/` | Deploy run 35914293656 re-applied all 27 migrations on **production data**, green. Scratch runs for v0.6.0: three on an empty database, twice on a copy. v0.7.0: 002→030 three times on an empty database and three times on a copy, clean. Fix pass 2026-09-24: the CI script run locally against **v0.6.1** — fresh ×3, upgrade, rollback ×2 and roll-forward, all green; against **v0.6.0** the rollback fails at 014 exactly as expected ("check constraint operator_roles_role_check … is violated by some row"), reported as a warning. **Gap: migrations 002–016 still take exclusive locks on every re-run** (#54); the CI job has not yet run on GitHub. |
 | FR-3214 | The misconception catalogue re-syncs on every deploy, idempotently, and every live misconception has an explanation | **VERIFIED** | `89d7a3a`: a CI step running `load_misconceptions.py` on every deploy (it never touches a question's status or review stamp), and `local-dev.sh` on every run; the missing explanations written, the empty duplicate folded in through `aliases` | Deploy run 35914293656 printed **"misconceptions: 97, without an explanation: 0"**. |
+| FR-3215 | The skill map orders topics in catalogue order (`MODULE_ORDER`), the order the lesson list and progression use; deterministic | **BUILT** | `app/src/lib/spine-lo-query.ts` — `SPINE_LO_SQL` and `SPINE_LO_SQL_NO_SUBJECT_VIEW`, each objective LEFT JOINed to its module over open `teaches` edges and sorted `ORDER BY ${MODULE_ORDER}` (which ends in `lo.id`); `lib/queries.ts` `spineDataOn` — the row index becomes `SpineLo.catalogRank`, one card per objective, each topic's prerequisites sorted by rank (the panel's "Worth having first" list); `lib/spine-layout.ts` — `catalogRank` is the layout's only tie-break (was `orderInParent`) | `spine-layout.test.mts` (13, `@covers FR-3215, FR-3216`): *"the first column reads in catalogue order: Unit 1, Unit 2, Unit 3, Unit 3, Unit 4, geometry"*, *"a tie is broken by catalogue rank, never by order-in-module or input order"*, *"the same graph in any order lays out identically"* (25 seeded shuffles of topics and prerequisites), on the ten maths seed files. `spine-order-scan.test.mts` (4): both query variants `ORDER BY MODULE_ORDER` through LEFT JOINs only; `spineDataOn` has no bare `order_in_parent` sort and takes the rank from the gated row index; no spine component reads `orderInParent` or sorts the topics. `spine-order-db.test.mts` (3) — **opt-in (`AINEXT_SCRATCH_PG`), skipped in CI**: run once against a scratch database (`ainext_spine_order_<pid>_<ms>`, dropped by exact name) holding the maths seed rows inserted out of order plus one objective with no module — 91 rows in catalogue order, identical in both variants and on re-run, the moduleless objective kept at the end of Term 1. Read-only against the local dev database: 274 objectives, **90 maths**; first column Unit 1 → Unit 2 → Unit 3 → Unit 3 → Unit 4 → Geometry 1, where the v0.9.0 query gave Unit 2 → Unit 3 → Unit 4 → Geometry 1 → Unit 1 → Unit 3 on the same data. **Gap: nobody has viewed `/spine` signed in on this build.** |
+| FR-3216 | Each prerequisite-depth column is an evenly spaced stack centred on the map's midline, ordered by barycentre then catalogue order | **BUILT** | `app/src/lib/spine-layout.ts` `layoutSpine` — the pre-v0.6.0 `layoutBand` packing (`886b302`) inside Tamer's card, wash, edge and arc design, which is unchanged; the v0.6.0 rationale is kept in the comment and marked superseded. `components/spine/GraphCanvas.tsx` renders it, and opens the pane with the midline centred but never scrolled past the first column's first card (the short first column now sits mid-canvas) | `spine-layout.test.mts` (13): *"every column is an evenly spaced stack, one ROW_SPREAD apart, with no other gap"*, *"every column is centred on the one midline the map shares"*, *"every column is ordered by prerequisite barycentre, then catalogue rank"*, *"the canvas holds every card: the tallest column starts one headroom down, nothing is clipped"* (every long-span arc included), *"iPad and desktop widths move only x"* (820–1920) — on the real maths graph, 15 columns, the tallest 13. Before/after **layout renders** (drawn from the pure module, not app screenshots) of the local maths data were produced for Samuel's review: the canvas is 2136px tall after, 2847px before. **Gap: no browser has rendered the page — not the opening scroll, not iPad Safari.** |
 
 ---
 
@@ -674,16 +688,16 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **150** |
+| Functional requirements | **152** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **164 / 164** |
+| Traced (every one needs a row) | **166 / 166** |
 | — verified | 98 |
-| — built | 15 |
+| — built | 17 |
 | — partial | 44 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **87** |
+| Requirements a test declares | **89** |
 | Tasks complete / total | **0 / 0** |
 
 **Of 98 requirements marked VERIFIED, 52 have an automated test declaring them.** The remaining 46 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.

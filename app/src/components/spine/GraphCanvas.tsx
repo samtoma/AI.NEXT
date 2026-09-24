@@ -1,21 +1,32 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import type { SpineLo } from "@/lib/types";
 import { spineSubjectDef } from "@/lib/subjects";
 import { masteryStage, masteryPhrase } from "@/lib/mastery";
+import {
+  NODE_H,
+  PAD,
+  curvePath,
+  edgeCurve,
+  layoutSpine,
+  occludedEdges,
+} from "@/lib/spine-layout";
 import { MasteryFill } from "@/components/MasteryFill";
 import { cx } from "@/components/sticker";
 
 export type AsOf = "baseline" | "today";
 
-const NODE_H = 124; // three clamped title lines + the fill + the count
-const MIN_W = 200; // the build spec's card, not a cell in a fixed canvas
-const MAX_W = 232;
-const GAP_MIN = 34;
-const PAD = 16;
-const ARC_HEADROOM = 84; // room above the first row for long-span arcs
-const ROW_SPREAD = NODE_H + 34;
+/* The map's geometry — card size, column placement, edge curves, occlusion —
+   is pure and lives in lib/spine-layout.ts (FR-3215, FR-3216), where it is
+   unit-tested on the real maths graph. This file renders it. */
 
 /** Unlit card border — never ink, never a shadow. The Play inactive-border
  *  token (3.00:1 on white), not the branch's literal lilac. */
@@ -59,158 +70,6 @@ const STAGE_WASH = [
   "color-mix(in srgb, var(--mastery-3) 26%, var(--card))",
   "color-mix(in srgb, var(--mastery-4) 22%, var(--card))",
 ] as const;
-
-interface Placed {
-  lo: SpineLo;
-  x: number;
-  y: number; // top
-  cy: number; // center
-}
-
-type Pt = { x: number; y: number };
-
-/**
- * One edge's cubic, as its four control points.
- *
- * Extracted so the drawn path and the occlusion test below are literally the
- * same curve. Inlining the `d` string and eyeballing a second approximation
- * for the hit test is how a line ends up dashed while passing through clear
- * air, or solid while buried under a card.
- */
-function edgeCurve(s: Placed, t: Placed, nodeW: number): [Pt, Pt, Pt, Pt] {
-  const p0 = { x: s.x + nodeW, y: s.cy };
-  const p3 = { x: t.x, y: t.cy };
-  const dx = p3.x - p0.x;
-  if (t.lo.layer - s.lo.layer <= 1) {
-    return [
-      p0,
-      { x: p0.x + dx * 0.45, y: p0.y },
-      { x: p3.x - dx * 0.45, y: p3.y },
-      p3,
-    ];
-  }
-  // A multi-layer span arcs over the columns it skips rather than ploughing
-  // through them — the arc is the FIRST defence against occlusion; the dash
-  // is what admits the cases it cannot clear.
-  const arcY = Math.max(PAD, Math.min(p0.y, p3.y) - 86);
-  return [
-    p0,
-    { x: p0.x + dx * 0.22, y: arcY },
-    { x: p3.x - dx * 0.22, y: arcY },
-    p3,
-  ];
-}
-
-const curvePath = (c: [Pt, Pt, Pt, Pt]) =>
-  `M ${c[0].x} ${c[0].y} C ${c[1].x} ${c[1].y}, ${c[2].x} ${c[2].y}, ${c[3].x} ${c[3].y}`;
-
-function cubicAt(c: [Pt, Pt, Pt, Pt], u: number): Pt {
-  const v = 1 - u;
-  const a = v * v * v,
-    b = 3 * v * v * u,
-    d = 3 * v * u * u,
-    e = u * u * u;
-  return {
-    x: a * c[0].x + b * c[1].x + d * c[2].x + e * c[3].x,
-    y: a * c[0].y + b * c[1].y + d * c[2].y + e * c[3].y,
-  };
-}
-
-/** How many points along a curve get tested for occlusion. 32 puts a sample
- *  every ~7px on a typical one-layer span — finer than a card is wide, so a
- *  card cannot sit between two samples and be missed. */
-const OCCLUSION_SAMPLES = 32;
-
-/**
- * Barycentric layered layout over the whole subject.
- *
- * The screen is subject-wide by definition now (build spec 01), so there is
- * one graph, not a stack of per-subject territories: the dashed band
- * backdrops, their labels and the cross-subject bridge arcs came off with the
- * rest of the graph metadata. `SpineData` still carries `bridges`, and the
- * layered DAG still drives x — a multi-subject view is a different screen.
- *
- * Each node sits AT its barycentre — the average height of the topics it
- * builds on — pushed down only as far as it takes to stop it overlapping the
- * node above it in its own column. The previous version used the barycentre
- * to ORDER a column and then threw the values away, re-centring every column
- * on the tallest one's midline. On 90 topics that reserved the full height of
- * the widest layer for all of them: a five-node column got a thirteen-node
- * column's worth of canvas, the void went above and below it, and the tree
- * drifted away from the parents it was supposed to sit beside. Packing to the
- * barycentre keeps a child next to its prerequisite and gives the voids back.
- */
-function layout(los: SpineLo[], width: number) {
-  const nLayers = Math.max(1, Math.max(...los.map((l) => l.layer)) + 1);
-  let nodeW = (width - 2 * PAD - GAP_MIN * (nLayers - 1)) / nLayers;
-  nodeW = Math.max(MIN_W, Math.min(MAX_W, nodeW));
-  const gap = Math.max(
-    GAP_MIN,
-    (width - 2 * PAD - nodeW * nLayers) / Math.max(1, nLayers - 1)
-  );
-  const canvasW = Math.max(
-    width,
-    2 * PAD + nodeW * nLayers + gap * (nLayers - 1)
-  );
-  const xOf = (layer: number) => PAD + layer * (nodeW + gap);
-
-  const byLayer: SpineLo[][] = Array.from({ length: nLayers }, () => []);
-  for (const lo of los) byLayer[lo.layer]?.push(lo);
-
-  const centers = new Map<string, number>();
-  const placed: Placed[] = [];
-  for (let layer = 0; layer < nLayers; layer++) {
-    const col = byLayer[layer];
-    if (col.length === 0) continue;
-    /** Average height of this node's already-placed prerequisites, or null
-     *  when it has none on screen — layer 0, and the odd orphan later on. */
-    const bary = (lo: SpineLo): number | null => {
-      const preds = lo.prereqIds
-        .map((p) => centers.get(p))
-        .filter((v): v is number => v !== undefined);
-      return preds.length
-        ? preds.reduce((a, b) => a + b, 0) / preds.length
-        : null;
-    };
-    // Anchored nodes first, in barycentre order; unanchored ones keep the
-    // book's own order and fall in behind whatever precedes them.
-    col.sort(
-      (a, b) =>
-        (bary(a) ?? Infinity) - (bary(b) ?? Infinity) ||
-        a.orderInParent - b.orderInParent
-    );
-    let cursor: number | null = null;
-    for (const lo of col) {
-      // The first node in a column is free; every one after it has to clear
-      // the one above by a full row.
-      const floor = cursor === null ? -Infinity : cursor + ROW_SPREAD;
-      const cy = Math.max(bary(lo) ?? (cursor === null ? 0 : floor), floor);
-      cursor = cy;
-      centers.set(lo.id, cy);
-      placed.push({ lo, x: xOf(lo.layer), y: cy - NODE_H / 2, cy });
-    }
-  }
-  if (placed.length === 0) {
-    return { placed, nodeW, canvasW, canvasH: 420 };
-  }
-
-  // Normalise: the first column starts at -Infinity + ROW_SPREAD, and later
-  // columns float wherever their parents put them, so the whole graph is
-  // shifted into the canvas once at the end rather than being anchored twice.
-  const top = Math.min(...placed.map((p) => p.y));
-  const shift = PAD + ARC_HEADROOM - top;
-  for (const p of placed) {
-    p.y += shift;
-    p.cy += shift;
-  }
-  for (const [id, cy] of centers) centers.set(id, cy + shift);
-
-  const canvasH = Math.max(
-    420,
-    Math.max(...placed.map((p) => p.y + NODE_H)) + PAD
-  );
-  return { placed, nodeW, canvasW, canvasH };
-}
 
 export function GraphCanvas({
   los,
@@ -320,8 +179,8 @@ export function GraphCanvas({
     return () => ro.disconnect();
   }, []);
 
-  const { placed, nodeW, canvasW, canvasH } = useMemo(
-    () => layout(los, width),
+  const { placed, nodeW, canvasW, canvasH, midY } = useMemo(
+    () => layoutSpine(los, width),
     [los, width]
   );
   const posById = useMemo(
@@ -329,53 +188,61 @@ export function GraphCanvas({
     [placed]
   );
 
-  /* No scroll-into-view on mount: `layout` normalises the graph so its
-     topmost node sits one headroom below the canvas origin, which puts the
-     start of the map at the pane's own scroll origin. That was not true while
-     columns were centred on the tallest one — the first layer landed ~600px
-     into a 2000px canvas and the map opened on blank paper, which is what the
-     scroll-on-mount was there to hide. */
-
   /**
-   * Which edges pass behind a card that is not one of their own endpoints.
+   * Where the map opens (FR-3216).
    *
-   * Sampled rather than solved: a cubic-vs-rectangle intersection has a
-   * closed form, and it is far more code than this problem is worth on a
-   * graph where the answer only has to be right to the nearest few pixels.
-   * The endpoints are skipped because every edge starts and ends flush
-   * against a card by construction — testing them would dash all 112.
+   * Columns are centred on one midline again, so a short first column sits in
+   * the middle of a canvas as tall as the tallest one — on maths, six cards
+   * against thirteen, ~550px down. Opened at the scroll origin, an iPad pane
+   * would show the top of the middle columns and not the topic the map
+   * starts with. So the pane opens with the midline in the middle of the
+   * view, but never scrolled past the first column's first card: on a short
+   * pane that card sits at the top, on a tall one the whole centred map
+   * shows. Vertical only; the first column is already at the inline start.
    *
-   * Recomputed only when the layout does. Worst case here is 112 edges x 32
-   * samples x 90 cards, which sounds alarming and is about a millisecond of
-   * integer comparisons; it is not worth a spatial index.
+   * Once per set of cards (a subject), not on every layout: a resize or a
+   * refreshed snapshot with the same topics must not yank the pane away from
+   * wherever the student has scrolled to. A layout effect, so the first paint
+   * is already in place.
+   *
+   * SUPERSEDED — the v0.6.0 note this replaces: "No scroll-into-view on
+   * mount: `layout` normalises the graph so its topmost node sits one
+   * headroom below the canvas origin, which puts the start of the map at the
+   * pane's own scroll origin. That was not true while columns were centred
+   * on the tallest one — the first layer landed ~600px into a 2000px canvas
+   * and the map opened on blank paper, which is what the scroll-on-mount was
+   * there to hide." Centring is back, so the opening position is too.
    */
-  const occluded = useMemo(() => {
-    const rects = placed.map((p) => ({
-      id: p.lo.id,
-      x1: p.x,
-      y1: p.y,
-      x2: p.x + nodeW,
-      y2: p.y + NODE_H,
-    }));
-    const hit = new Set<number>();
-    edges.forEach((e, i) => {
-      const s = posById.get(e.src);
-      const t = posById.get(e.dst);
-      if (!s || !t) return;
-      const c = edgeCurve(s, t, nodeW);
-      for (let k = 1; k < OCCLUSION_SAMPLES; k++) {
-        const pt = cubicAt(c, k / OCCLUSION_SAMPLES);
-        for (const r of rects) {
-          if (r.id === e.src || r.id === e.dst) continue;
-          if (pt.x >= r.x1 && pt.x <= r.x2 && pt.y >= r.y1 && pt.y <= r.y2) {
-            hit.add(i);
-            return;
-          }
-        }
-      }
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const openedFor = useRef<string | null>(null);
+  useLayoutEffect(() => {
+    const scroller = ref.current;
+    const canvas = canvasRef.current;
+    const first = placed[0]; // column 0's top card: columns are placed in order
+    if (!scroller || !canvas || !first) return;
+    const key = `${placed.length}:${first.lo.id}`;
+    if (openedFor.current === key) return;
+    openedFor.current = key;
+    // The canvas's own origin inside the scroller's content (its padding).
+    const origin =
+      canvas.getBoundingClientRect().top -
+      scroller.getBoundingClientRect().top +
+      scroller.scrollTop;
+    const centred = midY - scroller.clientHeight / 2;
+    const firstInView = first.y - PAD;
+    scroller.scrollTo({
+      top: Math.max(0, origin + Math.min(centred, firstInView)),
+      behavior: "auto",
     });
-    return hit;
-  }, [edges, placed, posById, nodeW]);
+  }, [placed, midY]);
+
+  /* Which edges pass behind a card that is not one of their own endpoints —
+     drawn dashed below. Recomputed only when the layout does; the reasoning
+     is on `occludedEdges` (lib/spine-layout.ts). */
+  const occluded = useMemo(
+    () => occludedEdges(edges, placed, nodeW),
+    [edges, placed, nodeW]
+  );
 
   const stageOf = (lo: SpineLo) => {
     const score = asOf === "today" ? lo.current : lo.baseline;
@@ -390,7 +257,11 @@ export function GraphCanvas({
        column with the docked topic sheet under it; at 1024 and up the
        container is a block and `h-full` is what sizes this, as before. */
     <div ref={ref} className="thin-scroll h-full min-h-0 flex-1 overflow-auto p-4">
-      <div className="relative" style={{ width: canvasW, height: canvasH }}>
+      <div
+        ref={canvasRef}
+        className="relative"
+        style={{ width: canvasW, height: canvasH }}
+      >
         {/* edges — plain lines, no arrowheads, no direction labels */}
         <svg
           className="absolute inset-0"
