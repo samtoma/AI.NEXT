@@ -64,10 +64,25 @@ function devOrigins(): string[] {
   return raw ? raw.split(",").map((s) => s.trim()).filter(Boolean) : [];
 }
 
+/**
+ * Console routes that exist ONLY in local development (ADR-0022, FR-3309):
+ * files named `route.dev.console.ts`. Today that is the dev operator picker's
+ * endpoint, which signs an operator in with no credential and so must not be
+ * a route in anything that is ever deployed.
+ *
+ * `next build` is always `NODE_ENV=production` (the CLI sets it before this
+ * file is loaded unless something already has), so a production build of the
+ * console does not see these files as routes at all — they never reach the
+ * route manifest, and `npm run check:surface:admin` fails if one ever does.
+ * `next dev` is `development`, where they are ordinary console routes. The
+ * student build never lists the extension, in either mode.
+ */
+const DEV_ONLY_CONSOLE = process.env.NODE_ENV === "production" ? [] : ["dev.console.ts"];
+
 const nextConfig: NextConfig = {
   pageExtensions:
     SURFACE === "admin"
-      ? ["console.tsx", "console.ts", "tsx", "ts"]
+      ? ["console.tsx", "console.ts", ...DEV_ONLY_CONSOLE, "tsx", "ts"]
       : ["student.tsx", "tsx", "ts"],
   distDir: SURFACE === "admin" ? ".next-admin" : ".next",
   allowedDevOrigins: devOrigins(),

@@ -345,6 +345,14 @@ env_add AINEXT_CONSOLE_URL "$CONSOLE_URL" \
 env_add AINEXT_BOOTSTRAP_OPERATOR_EMAIL "$BOOTSTRAP_EMAIL" \
   "The first operator (ADR-0014). Seeded with all four roles and NO password;" \
   "you get one through the ordinary reset flow."
+env_add AINEXT_DEV_OPERATOR_PICKER on \
+  "!!! LOCAL DEVELOPMENT ONLY — NEVER SET THIS ON ANY DEPLOYED STACK !!!" \
+  "ON shows 'Sign in as <operator>' on the console's /signin at :3002 and" \
+  "signs you in as ANY operator with NO password (ADR-0022). It stands in for" \
+  "Cloudflare Access, which proves who you are in production and is absent" \
+  "here. Three locks, all checked by the server: NODE_ENV is not production" \
+  "(the endpoint is not even compiled into 'next build'), this is exactly 'on'," \
+  "and the request is to localhost. Remove the line to use the password form."
 
 [ -n "$ADDED" ] && ok "app/.env.local updated:$ADDED" || ok "app/.env.local already complete"
 
