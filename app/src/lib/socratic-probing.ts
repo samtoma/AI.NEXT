@@ -266,16 +266,16 @@ export function attemptProbingDeclaration(
  *   `{type:"session", probing}` — the first frame of every served turn; a
  *                                 missing flag is `false` (what the prompt
  *                                 was built with is always known);
- *   `{type:"cap", text, probing}` — a turn refused by the per-surface cap,
- *                                 which still carries the request's answer so
- *                                 Off reaches a capped lesson too; an older
- *                                 server's cap frame without it declares
- *                                 nothing;
  *   anything else               — nothing.
+ *
+ * Every request is served since v0.9.0 (ADR-0023: no turn is refused for
+ * count), so the session frame is the one declaration, and Off reaches the
+ * student's next message through it on every surface. The `cap` frame that
+ * used to carry the answer for a refused turn no longer exists; one arriving
+ * from anywhere declares nothing.
  */
 export function probingDeclaredBy(frame: { type?: unknown; probing?: unknown }): boolean | null {
   if (frame.type === "session") return frame.probing === true;
-  if (frame.type === "cap" && typeof frame.probing === "boolean") return frame.probing;
   return null;
 }
 

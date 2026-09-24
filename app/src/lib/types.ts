@@ -199,7 +199,6 @@ export interface TurnMeta {
   model: string;
   interactionId: number | null;
   turnIndex: number;
-  capped?: boolean;
 }
 
 export type ChatRole = "user" | "assistant" | "note";

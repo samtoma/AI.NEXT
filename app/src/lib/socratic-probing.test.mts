@@ -369,23 +369,28 @@ const parseFrames = (body: string) =>
     .filter((l): l is string => Boolean(l))
     .map((l) => JSON.parse(l.slice(6)) as { type: string; probing?: unknown });
 
-test("which frames declare probing: session always, cap when it says, nothing else", () => {
+test("which frames declare probing: the session frame always, nothing else", () => {
   assert.equal(probingDeclaredBy({ type: "session", probing: true }), true);
   assert.equal(probingDeclaredBy({ type: "session", probing: false }), false);
   assert.equal(probingDeclaredBy({ type: "session" }), false, "a session frame always declares");
-  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: false } as never), false);
-  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: true } as never), true);
-  assert.equal(probingDeclaredBy({ type: "cap", text: "…" } as never), null, "an older server's cap declares nothing");
-  assert.equal(probingDeclaredBy({ type: "cap", probing: "false" }), null, "only a boolean counts");
+  // v0.9.0 (ADR-0023): no turn is refused for count, so the `cap` frame that
+  // carried a refused turn's answer is gone — one arriving declares nothing.
+  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: false } as never), null);
+  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: true } as never), null);
   for (const type of ["delta", "done", "error", "unknown"]) {
     assert.equal(probingDeclaredBy({ type, probing: true }), null, type);
   }
 });
 
-test("Off reaches a capped lesson: the cap frame's false is parsed, adopted, and un-sticks the card", () => {
-  // A tester mid-probe hits the lesson's turn cap after the switch went Off.
-  // The server's whole response is one cap frame (`/api/ask`, capped branch).
-  const body = sse({ type: "cap", text: "That's a full lesson's worth of work", probing: false });
+test("Off reaches the next message on a long lesson: the session frame's false is parsed, adopted, and un-sticks the card", () => {
+  // A tester mid-probe, 18 replies into a lesson — where v0.8.0 would have
+  // refused the turn — sends a message after the switch went Off. Every
+  // request is served now, so the answer arrives the one way it always
+  // arrives: the stream's first frame, before any text.
+  const body =
+    sse({ type: "session", probing: false }) +
+    sse({ type: "delta", t: "Let's look at it together." }) +
+    sse({ type: "done", meta: { turnIndex: 19 } });
   let declared = true;
   let pending: { loId: string; wrongCount: number } | null = { loId: "lo:u1-1-1", wrongCount: 1 };
   for (const frame of parseFrames(body)) {
@@ -399,10 +404,10 @@ test("Off reaches a capped lesson: the cap frame's false is parsed, adopted, and
   assert.equal(pending, null);
   assert.equal(cardWithholdsAnswer(probingActive(PROBING_SURFACE, declared), false), false);
 
-  // …and a cap that says ON (switch untouched) leaves the probe running.
+  // …and a session frame that says ON (switch untouched) leaves the probe running.
   declared = true;
   pending = { loId: "lo:u1-1-1", wrongCount: 1 };
-  for (const frame of parseFrames(sse({ type: "cap", text: "…", probing: true }))) {
+  for (const frame of parseFrames(sse({ type: "session", probing: true }) + sse({ type: "delta", t: "…" }))) {
     const d = probingDeclaredBy(frame);
     if (d !== null) {
       declared = d;

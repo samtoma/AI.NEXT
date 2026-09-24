@@ -18,6 +18,7 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
+import { TURN_THRESHOLDS } from "@/lib/turn-thresholds";
 import { addressForms } from "@/lib/address";
 import { track } from "@/lib/ga";
 import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
@@ -74,13 +75,21 @@ import {
  *          (desktop: right column of the h-dvh app frame; mobile: a
  *          collapsible top sheet ≤40dvh) while the transcript keeps small
  *          re-pin chips in place (ChatCore interceptWidget).
- * review : non-annoying 3-minute lock-it-in (3 questions, 1 widget, ≤5 turns).
+ * review : non-annoying 3-minute lock-it-in (3 questions, 1 widget); Finish is
+ *          offered after 5 replies — a nudge, never a block (ADR-0023).
  * Both run in FOCUS MODE (body[data-focus] hides the global nav) and end in
  * the honest report card. An in-progress session survives reloads via
  * sessionStorage ("استكمل الدرس؟").
  */
 
-const REVIEW_TURN_CAP = 5;
+/**
+ * Quick revision offers Finish once this many replies have arrived — a NUDGE:
+ * it arms the Finish button and chip and never stops the student typing.
+ * Since v0.9.0 (ADR-0023) no surface refuses a turn for count, so this is the
+ * only place the review threshold reaches a student, and it reads the number
+ * the console counts against rather than keeping a copy of it.
+ */
+const REVIEW_FINISH_NUDGE_AT = TURN_THRESHOLDS.lesson_review;
 
 // Voice UI pulled per founder feedback 016 — backend (lib/voice.ts,
 // lib/tts-client.ts, api/tts/route.ts) stays wired and dormant; flip this
@@ -286,7 +295,7 @@ export function LessonSession({
 }) {
   const router = useRouter();
   const [phase, setPhase] = useState<Phase>("session");
-  // the tutor's closing recap (or a hit turn cap) marks the lesson as OVER,
+  // the tutor's closing recap (or the review-mode Finish nudge) marks the lesson as OVER,
   // but that is not the student's decision to leave the transcript — it only
   // arms the header's Finish button; requestFinish still only fires on tap.
   const [readyToFinish, setReadyToFinish] = useState(false);
@@ -1021,7 +1030,7 @@ export function LessonSession({
       setTotalUsd(usd);
       setTurns(t);
       turnsRef.current = t;
-      if (mode === "review" && t >= REVIEW_TURN_CAP) setReadyToFinish(true);
+      if (mode === "review" && t >= REVIEW_FINISH_NUDGE_AT) setReadyToFinish(true);
     },
     [mode]
   );
@@ -1323,7 +1332,7 @@ export function LessonSession({
               {debug ? (
                 <span className="font-mono text-[0.72rem] text-ink-faint">
                   {mode === "review"
-                    ? `turn ${Math.min(turns, REVIEW_TURN_CAP)}/${REVIEW_TURN_CAP} · `
+                    ? `turn ${Math.min(turns, REVIEW_FINISH_NUDGE_AT)}/${REVIEW_FINISH_NUDGE_AT} · `
                     : ""}
                   ${totalUsd.toFixed(3)} session spend
                 </span>
@@ -1428,7 +1437,6 @@ export function LessonSession({
               handleRef={coreHandle}
               onAssistantDone={onAssistantDone}
               onFinishDirective={() => setReadyToFinish(true)}
-              onCapped={() => setReadyToFinish(true)}
               onTotalChange={onTotalChange}
               onMessagesChange={onMessagesChange}
               onSwitchSubject={(subj) => router.push(`/student?subject=${subj}`)}

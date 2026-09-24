@@ -19,7 +19,7 @@ import {
 import { snapshotContext, snapshotKey } from "@/lib/session-cache";
 import { coerceUploadId } from "@/lib/upload-contract";
 import { getStudentProfile } from "@/lib/student-context";
-import { currentSessionSnapshot, peekSessionProbing } from "@/lib/sessions";
+import { currentSessionSnapshot } from "@/lib/sessions";
 import {
   ZERO_TOKENS,
   costFor,
@@ -84,10 +84,21 @@ import {
  * probing never resumes), AND the lesson being maths. The value the prompt was actually
  * built with goes to the client as the stream's first frame,
  * `{type:"session", probing}`, so the cards follow the prompt rather than a
- * guess — including un-withholding a card when this turn says Off. A turn the
- * cap refuses carries the same answer on its `cap` frame (fix pass 2), read
- * from the open sitting without touching it. An older client ignores a frame
- * type it does not know, which is every client before this one.
+ * guess — including un-withholding a card when this turn says Off. An older
+ * client ignores a frame type it does not know, which is every client before
+ * this one.
+ *
+ * NO TURN IS REFUSED FOR COUNT (ADR-0023, FR-3401, v0.9.0). Until v0.9.0 this
+ * route held `TURN_CAPS` — 2 replies per question, 18 per lesson, 5 per
+ * revision — and refused the next request with a limit message and a `cap`
+ * frame that locked the student's input. On production two of six lessons hit
+ * 18 after about ten minutes, a third of those turns being button taps.
+ * Samuel's call: remove the limits and watch them instead. The numbers live on
+ * as thresholds in `lib/turn-thresholds.ts`, and the console counts how often
+ * a conversation reaches one from the rows this route writes
+ * (`lib/turn-threshold-queries.ts`) — which is why the conversation key in
+ * `grounding.chat_session` and the `outcome` column matter as much as they
+ * did. Nothing here reads a threshold, and no frame carries one.
  */
 
 export const dynamic = "force-dynamic";
@@ -96,32 +107,6 @@ const MODEL = "claude-sonnet-5";
 const TIMEOUT_MS = 90_000;
 
 type Surface = AskSurface | "lesson_learn" | "lesson_review";
-
-/** Per-surface AI-turn caps (server-enforced, PRD cost discipline). */
-const TURN_CAPS: Record<Surface, number | null> = {
-  spine_chat: null,
-  student_chat: 2, // PRD §6.3: max 2 AI turns per question
-  // Raised 14 -> 18 for the Socratic arc (#33, #34, #35). Asking the student
-  // to try a step before it is explained, asking how he got there, and ending
-  // on a from-memory retrieval all cost TURNS — that is what they are. At 14
-  // a full lesson reached the cap before the final retrieval could happen, so
-  // the fix for #34 would have been silently skipped on exactly the lessons
-  // that ran long. A cap that truncates the ending is worse than no ending
-  // rule at all. Cost implication is real and deliberate: ~29% more turns on
-  // the most expensive surface, for the teaching behaviour the pilot exists
-  // to test (SC-005).
-  lesson_learn: 18,
-  lesson_review: 5, // the non-annoying path: hard ≤ 5 turns
-};
-
-const CAP_MESSAGES: Partial<Record<Surface, string>> = {
-  student_chat:
-    "We've walked through this one together twice now — that's my limit, on purpose. The canonical steps above are the ground truth, and they're the best guide from here: read them once more, slowly, saying each step out loud. Then move on and come back to this topic tomorrow — spacing helps more than a third explanation would. You're closer than you think.",
-  lesson_learn:
-    "That's a full lesson's worth of work for one evening — let's stop here and see how far you've come. Tap Finish for your report.",
-  lesson_review:
-    "That's our whole 3 minutes — done. Let's see your score.",
-};
 
 interface InMsg {
   role: "user" | "assistant" | "note";
@@ -202,8 +187,8 @@ export async function POST(req: Request) {
   }
 
   // Whose mastery grounds this turn. From the verified access token, never
-  // from the request (FR-2102). Resolved BEFORE the turn-cap check, because the
-  // cap is scoped per student and no student may inherit another's turn count.
+  // from the request (FR-2102). Resolved BEFORE the turn count is read, because
+  // it is scoped per student and no student may inherit another's turn index.
   let me;
   try {
     me = await requireStudent();
@@ -222,56 +207,26 @@ export async function POST(req: Request) {
   // UNIT ONE — everything the turn needs before the model is spawned.
   // ---------------------------------------------------------------------
   let priorTurns: number;
-  /** Turns the student actually received; what the cap counts. */
-  let deliveredTurns: number;
   let sessionId: number | null;
   let ctx: Awaited<ReturnType<typeof buildAskContext>>;
   /** what the system prompt was built with — this request's answer, effective */
   let probing: boolean;
-  const cap = TURN_CAPS[surface];
   try {
     const pre = await withPrincipal(studentId, async (client) => {
-      // Server-side turn counts for this chat session. TWO of them, and the
-      // difference arrived with P4's honest ledger:
-      //
-      //   · `delivered` drives the per-surface CAP. The cap is a teaching rule
-      //     ("max 2 AI turns per question", PRD §6.3) — it counts explanations
-      //     the student actually received. A turn the backend dropped taught
-      //     nobody anything, and spending one of two chances on an outage is a
-      //     product defect, not cost discipline. Spend is REPORTED, not capped.
-      //   · `logged` drives `turn_index`, which stays monotonic across every
-      //     row in the session so a failed turn and the retry after it are two
-      //     places in the timeline rather than one.
+      // Server-side turn count for this chat session: every row, whatever its
+      // outcome. It drives `turn_index`, which stays monotonic across every
+      // row in the conversation so a failed turn and the retry after it are
+      // two places in the timeline rather than one. It limits nothing (FR-3401).
       const turnsRes = await client.query(
-        `SELECT count(*) AS logged,
-                count(*) FILTER (WHERE outcome = 'ok') AS delivered
+        `SELECT count(*) AS logged
            FROM ai_interactions
           WHERE surface = $1 AND grounding->>'chat_session' = $2 AND student_id = $3`,
         [surface, chatSession, studentId]
       );
       const turns = Number(turnsRes.rows[0].logged);
-      const delivered = Number(turnsRes.rows[0].delivered);
-      if (cap != null && delivered >= cap) {
-        // Refused before any session is opened or touched — but the client
-        // must still learn this request's probing answer, or switching Off
-        // would never reach a lesson that has hit its cap (its cards would
-        // stay held back behind a probe nobody is running). Read, not
-        // written: the open sitting's answer exactly as a reuse would give
-        // it, narrowed by this lesson's course (fix pass 2).
-        const probing = await peekSessionProbing(
-          studentId,
-          surface,
-          surface === "lesson_learn"
-            ? { courseOf: () => lessonCourseId(body.lesson, client) }
-            : {},
-          client
-        );
-        return { turns, delivered, capped: true as const, probing };
-      }
 
-      // The learning session this turn belongs to (ADR-0015). Opened AFTER the
-      // cap check, because a turn the cap refused is not a sitting. All four
-      // ask surfaces are session kinds by the same name, so the surface IS the
+      // The learning session this turn belongs to (ADR-0015). All four ask
+      // surfaces are session kinds by the same name, so the surface IS the
       // kind; `chatSession` rides along as the transitional correlation key.
       //
       // Opening one resolves and STORES its probing snapshot (ADR-0021); a
@@ -352,24 +307,11 @@ export async function POST(req: Request) {
       );
       return {
         turns,
-        delivered,
-        capped: false as const,
         sessionId: session.sessionId,
         ctx: built,
       };
     });
 
-    if (pre.capped) {
-      // `probing` rides on the cap frame (ChatCore: `probingDeclaredBy`).
-      return new Response(
-        sse({
-          type: "cap",
-          text: CAP_MESSAGES[surface] ?? "Session limit reached.",
-          probing: pre.probing,
-        }),
-        { headers: { "Content-Type": "text/event-stream" } }
-      );
-    }
     if (!pre.ctx) {
       // THE COURSE GATE (migration 023, lib/catalog.ts). `body.lesson` is a
       // client-supplied slug: without this, a student who could not open a
@@ -383,7 +325,6 @@ export async function POST(req: Request) {
       return Response.json({ error: "not_found" }, { status: 404 });
     }
     priorTurns = pre.turns;
-    deliveredTurns = pre.delivered;
     sessionId = pre.sessionId;
     ctx = pre.ctx;
     probing = pre.ctx.probing === true;
@@ -633,7 +574,6 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
                     model: MODEL,
                     interactionId: null,
                     turnIndex: priorTurns + 1,
-                    capped: cap != null && deliveredTurns >= cap,
                     redacted: true,
                   },
                 });
@@ -853,9 +793,6 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
             model: MODEL,
             interactionId,
             turnIndex: priorTurns + 1,
-            // This turn was delivered, so it counts: the cap is reached when
-            // the answer just sent is the last one the surface allows.
-            capped: cap != null && deliveredTurns + 1 >= cap,
           },
         });
         finish();

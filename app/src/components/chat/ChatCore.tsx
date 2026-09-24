@@ -102,7 +102,7 @@ export interface ChatCoreProps {
   wrongAnswer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
   lessonSlug?: string;
-  /** stable chat-session id (session restore keeps the server turn caps) */
+  /** stable chat-session id (session restore keeps the conversation's turn count and snapshot) */
   sessionId?: string;
   /** restored transcript (session restore) — suppresses autoStart */
   initialMessages?: ChatMsg[];
@@ -203,8 +203,6 @@ export interface ChatCoreProps {
   onFinishDirective?: () => void;
   /** the "open" button of a {{switch_subject:…}} handoff card was tapped */
   onSwitchSubject?: (subject: SpineSubject) => void;
-  /** fired when the server turn cap is reached */
-  onCapped?: () => void;
   /** transcript mirror for the parent (rating pass) */
   onMessagesChange?: (msgs: ChatMsg[]) => void;
   /** extra control rendered beside the input (mic button) */
@@ -269,7 +267,6 @@ export function ChatCore({
   onAssistantDone,
   onFinishDirective,
   onSwitchSubject,
-  onCapped,
   onMessagesChange,
   inputAccessory,
 }: ChatCoreProps) {
@@ -280,9 +277,9 @@ export function ChatCore({
    * **The client never decides this.** The server resolves it once per
    * learning session, stores it on the session row, and declares it on every
    * response that session serves: the first frame of each `/api/ask` stream
-   * (`{type:"session", probing}`), the `cap` frame of a turn the cap
-   * refused, and the `probing` field of an `/api/attempts` result written
-   * inside a lesson sitting (absent otherwise: keep what we had). ChatCore adopts whatever the server last said —
+   * (`{type:"session", probing}`) and the `probing` field of an
+   * `/api/attempts` result written inside a lesson sitting (absent
+   * otherwise: keep what we had). ChatCore adopts whatever the server last said —
    * starting from OFF, which is what every surface was before v0.7.0 — and
    * scopes it to lesson_learn (review mode's ≤5-message lock-in would fight
    * it). With the server saying false, nothing below behaves differently from
@@ -304,7 +301,6 @@ export function ChatCore({
   );
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
-  const [capped, setCapped] = useState(false);
   /**
    * This chat's stable session id, computed once.
    *
@@ -539,7 +535,7 @@ export function ChatCore({
   const send = useCallback(
     async (raw: string, opts?: { hidden?: boolean }) => {
       const text = raw.trim();
-      if (!text || streaming || streamingRef.current || capped) return;
+      if (!text || streaming || streamingRef.current) return;
       // The "Got it — next ✓" check-in affordance is an acknowledgement, not
       // an attempt — it must never let the lesson move past a question that
       // was never answered (FR-1214: the client can't decide it was solved).
@@ -735,7 +731,6 @@ export function ChatCore({
             let j: {
               type: string;
               t?: string;
-              text?: string;
               message?: string;
               meta?: TurnMeta;
               probing?: boolean;
@@ -747,9 +742,9 @@ export function ChatCore({
             }
             // Probing, as the server declares it on this frame
             // (`probingDeclaredBy`): the `session` frame — this turn's
-            // prompt, sent before any text — and, since fix pass 2, the
-            // `cap` frame, so switching Off reaches a lesson that has hit its
-            // turn cap too. Every other frame declares nothing.
+            // prompt, sent before any text. Every request is served since
+            // v0.9.0 (ADR-0023), so Off reaches the next message through it
+            // on every surface. Every other frame declares nothing.
             const declaredProbing = probingDeclaredBy(j);
             if (declaredProbing !== null) adoptProbing(declaredProbing);
             if (j.type === "session") {
@@ -760,16 +755,6 @@ export function ChatCore({
               if (!paced) emitNewCites(acc);
             } else if (j.type === "done" && j.meta) {
               metaBuf = j.meta;
-              done = true;
-            } else if (j.type === "cap") {
-              cancelReveal();
-              patchLast({
-                role: "note",
-                streaming: false,
-                text: j.text ?? "",
-              });
-              setCapped(true);
-              onCapped?.();
               done = true;
             } else if (j.type === "error") {
               cancelReveal();
@@ -833,19 +818,6 @@ export function ChatCore({
               );
             }
           }
-          if (metaBuf.capped) {
-            setCapped(true);
-            onCapped?.();
-            if (surface === "student_chat") {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  role: "note",
-                  text: "That was my second explanation — my limit, on purpose. The worked steps above are the ground truth: walk them once more slowly, then keep going. You've got this ✦",
-                },
-              ]);
-            }
-          }
         } else {
           cancelReveal();
         }
@@ -888,16 +860,14 @@ export function ChatCore({
       wrongAnswer,
       lessonSlug,
       // Recreating `send` when a parse settles is cheap and honest: this
-      // callback already depends on `streaming` and `capped`, so it was never
-      // stable across a turn, and mirroring the id through a ref to avoid a
+      // callback already depends on `streaming`, so it was never stable
+      // across a turn, and mirroring the id through a ref to avoid a
       // dependency would only have hidden that.
       attachedUploadId,
       streaming,
-      capped,
       emitNewCites,
       onAssistantDone,
       onFinishDirective,
-      onCapped,
       adoptProbing,
       lookupQuestion,
     ]
@@ -1142,7 +1112,7 @@ export function ChatCore({
       </div>
 
       {/* suggestion chips — stay clickable after every stream */}
-      {suggestions.length > 0 && !capped && (
+      {suggestions.length > 0 && (
         <div
           className={
             suggestionLayout === "stacked"
@@ -1204,20 +1174,19 @@ export function ChatCore({
       {/* input */}
       <div
         className={`flex items-center gap-2 px-4 pb-3.5 ${
-          suggestions.length > 0 && !capped ? "pt-1.5" : "border-t border-line-soft pt-3"
+          suggestions.length > 0 ? "pt-1.5" : "border-t border-line-soft pt-3"
         }`}
       >
-        {/* Deliberately NOT disabled while a parse runs, and deliberately not
-            gated on `capped` either: sending a photograph is not an AI turn and
-            costs no turn of the per-surface cap. */}
+        {/* Deliberately NOT disabled while a parse runs: sending a photograph
+            is not an AI turn. */}
         {uploadsOn && attachment.controls}
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send(input)}
-          placeholder={capped ? "AI turn limit reached for this question" : placeholder}
-          disabled={streaming || capped}
+          placeholder={placeholder}
+          disabled={streaming}
           className={cx(
             STROKE,
             // 1rem, not 13px: the read scale, and the size below which iPad
@@ -1228,7 +1197,7 @@ export function ChatCore({
         {inputAccessory?.({ setInput })}
         <button
           onClick={() => send(input)}
-          disabled={streaming || capped || !input.trim()}
+          disabled={streaming || !input.trim()}
           aria-label="Send"
           // The composer's send is amber with ink on it (handoff, Nour panel).
           // Empty, it is disabled: white and dashed — "not ready yet".

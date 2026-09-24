@@ -39,9 +39,9 @@ const PROMPTS = ["What should I work on next?", "Make me a study plan"];
  * count — in front of the person it was metering. That meter is gone from the
  * UI layer entirely, not hidden: `onTotalChange` is deliberately not wired
  * here, so the number never reaches this component at all. Spend and turns
- * are still logged server-side for billing and for the per-surface turn caps
- * (constitution VI); they are operational telemetry and have no student-facing
- * surface.
+ * are still logged server-side for billing and for the console's per-surface
+ * turn thresholds, observed rather than enforced since ADR-0023 (constitution
+ * VI); they are operational telemetry and have no student-facing surface.
  *
  * `debug={false}` is the same cut applied to everything ChatCore renders
  * underneath: no per-message cost/token rows, no database ids on cards,
