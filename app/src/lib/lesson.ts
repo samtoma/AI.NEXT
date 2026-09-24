@@ -250,11 +250,45 @@ export async function getLessonCatalog(
 /* ------------------------------------------------------------------ */
 
 /**
+ * WHICH OBJECTIVES A LESSON SLUG MEANS — the one resolution, used by both
+ * `lessonCourseId` (the session's probing snapshot) and `lessonDataOn` (the
+ * lesson the tutor teaches, whose `courseId` the prompt's probing narrowing
+ * reads). Fix pass 2: they used to be two copies of the same rule — the same
+ * sanitising, the same `LIKE`, the same order, the same fall-back to the
+ * default lesson for an unknown slug — which agreed only because nobody had
+ * edited one of them yet. A drift between them is exactly "the sitting stored
+ * probing for one course and the prompt narrowed it by another".
+ *
+ * `firstOnly` adds `LIMIT 1` for the caller that only needs the course;
+ * everything else about the statement is shared, so the first row is the same
+ * row either way.
+ */
+async function resolveLessonLos(db: Db, slug: unknown, firstOnly = false) {
+  const read = async (s: string) =>
+    (
+      await db.query(
+        `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id${firstOnly ? " LIMIT 1" : ""}`,
+        [`lo:${s}-%`]
+      )
+    ).rows;
+  const safeSlug = sanitizeLessonSlug(slug);
+  const rows = await read(safeSlug);
+  if (rows.length > 0 || safeSlug === DEFAULT_LESSON_SLUG) return { slug: safeSlug, rows };
+  // unknown slug → the default lesson (same student, same unit of work)
+  return { slug: DEFAULT_LESSON_SLUG, rows: await read(DEFAULT_LESSON_SLUG) };
+}
+
+/** The course of a resolved lesson: its first objective's, or null. */
+function courseOfLessonRows(rows: readonly { course_id?: unknown }[]): string | null {
+  return (rows[0]?.course_id as string | null | undefined) ?? null;
+}
+
+/**
  * The course a lesson slug belongs to, or null — for ONE purpose: resolving a
  * new learning session's Socratic-probing snapshot (ADR-0021), which is maths
- * only. Resolved the way `lessonDataOn` resolves the lesson itself (the same
- * sanitising, the same fall-back to the default lesson for an unknown slug),
- * so the course this answers is the course the tutor will then teach.
+ * only. Resolved by `resolveLessonLos`, the same function `lessonDataOn` uses,
+ * so the course this answers IS the `courseId` of the lesson the tutor will
+ * then teach and narrow the prompt by (`buildLessonContext`).
  *
  * **Not a gate.** It reads curriculum rows only and decides nothing about
  * visibility — `getLessonData` still refuses a hidden course a few statements
@@ -265,18 +299,7 @@ export async function lessonCourseId(
   slug: string | undefined,
   client: PoolClient
 ): Promise<string | null> {
-  const safeSlug = sanitizeLessonSlug(slug);
-  const courseOf = async (s: string) => {
-    const res = await client.query(
-      `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id LIMIT 1`,
-      [`lo:${s}-%`]
-    );
-    return res.rows[0] ? ((res.rows[0].course_id as string | null) ?? null) : undefined;
-  };
-  const found = await courseOf(safeSlug);
-  if (found !== undefined) return found;
-  if (safeSlug === DEFAULT_LESSON_SLUG) return null;
-  return (await courseOf(DEFAULT_LESSON_SLUG)) ?? null;
+  return courseOfLessonRows((await resolveLessonLos(client, slug, true)).rows);
 }
 
 /**
@@ -320,25 +343,19 @@ async function lessonDataOn(
   slug: string,
   studentId: number | null
 ): Promise<LessonData | null> {
-  const safeSlug = sanitizeLessonSlug(slug);
-  const loPattern = `lo:${safeSlug}-%`;
-
+  // Which objectives — `resolveLessonLos`, the one resolution `lessonCourseId`
+  // shares, unknown slug → the default lesson included.
+  //
   // ONE student read, and it is the profile (plan A9, "the address seam").
   // This used to be its own `SELECT display_name, grade` beside the identical
   // read `retrieve()` was already doing for the same turn — two reads, and only
   // one of them could ever learn how to address the student.
-  const [losRes, profile] = await sequential([
-    () =>
-      db.query(
-        `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id`,
-        [loPattern]
-      ),
+  const [lesson, profile] = await sequential([
+    () => resolveLessonLos(db, slug),
     () => (studentId == null ? Promise.resolve(null) : getStudentProfile(studentId, db)),
   ] as const);
-  if (losRes.rows.length === 0 && safeSlug !== DEFAULT_LESSON_SLUG) {
-    // unknown slug → default lesson (same student, same unit of work)
-    return lessonDataOn(db, DEFAULT_LESSON_SLUG, studentId);
-  }
+  const safeSlug = lesson.slug;
+  const losRes = { rows: lesson.rows };
 
   // THE GATE, and it is deliberately the first thing after the lesson is
   // identified — before the question bank, the figures and the student's
@@ -462,7 +479,9 @@ async function lessonDataOn(
     lessonRef: first?.syllabus_ref ?? safeSlug,
     title: LESSON_TITLES[safeSlug] ?? first?.label ?? safeSlug,
     moduleLabel: first?.module_label ?? "Unfiled",
-    courseId: first?.course_id ?? null,
+    // the SAME answer `lessonCourseId` gives for this slug (`courseOfLessonRows`
+    // over `resolveLessonLos`): what `buildLessonContext` narrows probing by
+    courseId: courseOfLessonRows(lesson.rows),
     subject,
     los,
     questions,

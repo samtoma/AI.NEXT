@@ -83,6 +83,11 @@ const STUBS = {
       // and handed back on reuse (ADR-0021). Reaches `lib/student-context.ts`
       // -> `auth/principal.ts`; the student id is a parameter, no principal.
       "teaching-snapshot.test.mts",
+      // drives the REAL `lessonCourseId` and `getLessonData` against a fake
+      // PoolClient to prove the session's probing snapshot and the prompt's
+      // narrowing resolve a lesson's course the same way (fix pass 2). Same
+      // `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
+      "lesson-course.test.mts",
     ],
   },
 };
