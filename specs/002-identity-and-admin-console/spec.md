@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix). Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -395,6 +395,13 @@ password sign-in.
   student surface once accounts exist. Each MUST be either claimed by a real account or retired from
   every student surface. Their learning and interaction history MUST be retained and stay visible in
   the operator views; nothing in this migration may delete history silently.
+- **FR-2015** **[ADDED 2026-09-24 — security fix, fix pass 2]**: After signing in or signing up —
+  and when an already-signed-in visitor opens either page — the product MUST send the browser only
+  to a page on **its own site**, on both the student product and the console. A destination carried
+  in the link (`?next=`) that would leave the site, however it is spelled — another host, a
+  scheme, `//host`, a backslash, a tab or newline a browser would strip, or `.`/`..` segments that
+  resolve to `//host` — MUST be replaced by the page's own default destination. *(Written with its
+  fix: `?next=/%09/evil.example` was reaching another site from noor.reletix.com.)*
 
 ### Isolation & authorisation (FR-2101…)
 

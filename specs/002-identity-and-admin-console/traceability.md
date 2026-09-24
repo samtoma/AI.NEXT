@@ -186,6 +186,7 @@ needs a database. That is why several rows below distinguish "proved once" from 
 | FR-2012 | Student can sign out immediately, without waiting for expiry | **VERIFIED** | `api/auth/logout/route.ts`, `api/auth/logout-all/route.ts`, `components/NavLinks.tsx` | Red-team `FR-2012` ×2 live: logout → 204, then `/api/auth/me` → 401 on the same jar. `session.test.mts`. |
 | FR-2013 | Student can edit name, grade, gender, interests after signup | **PARTIAL** | Data model only: migration 015; `lib/session-cache.ts` keys the prompt snapshot on the register so a change lands next turn. **2026-09-22**: `(student)/settings/page.tsx` and `api/settings/appearance/route.ts` now exist | **Gap: there is still no editor for any of the four fields this row names.** What changed is narrower than it looks: a student settings surface exists for the first time and writes exactly one preference — the design-system variant (FR-1011) — so rev. 2's statement that "no student surface writes these columns" is now true only of *these* columns. Name, grade, gender and interests remain psql-or-a-new-signup. The surface the editor would live on is no longer the missing piece; the editor is. The *effect* half stays verified (P6 `FR-2606`, `session-cache.test.mts`), so FR-2606 is VERIFIED while this row is not. |
 | FR-2014 | Picker-era demo students are claimed or retired; history retained | **VERIFIED** | Migration 013 (`students.status`), `scripts/local-dev.sh` (seed first, retire second), `(console)/page.console.tsx` | Red-team `FR-2101`: as `ainext_app` with no principal, the students visible equal the *accounted* rows and every `legacy` row is invisible — retirement is enforced by RLS, not by a filter. Console-smoke `FR-2211`: the console still lists `Omar (demo)`. Nothing is deleted. |
+| FR-2015 | After sign-in or sign-up the browser goes only to a page on its own site, on both surfaces; an off-site `?next=` in any spelling falls back to the default | **VERIFIED** | `components/auth/next-param.ts` (`safeNext`: a single leading `/`; no C0 control, DEL or backslash; parsed against a placeholder origin, and the parsed result re-checked for `//`); the only readers of `?next=` — `(auth)/signin/page.tsx` (both builds, fallback `/` on the console) and `(auth)/signup/page.student.tsx` — clean it before `redirect()` and before handing it to `SigninForm` / `SignupForm`, which navigate only to their own `safeNext(next)`. Verification, Google and reset flows carry no `next` and redirect to fixed paths | `next-param.test.mts` (`@covers FR-2015`): the decoded tab/newline attack (`/\t/x`, `/\n/x`, `/\r/x`) and its raw `%09` form (kept, and stays home), `/\x`, `//x`, `https://x`, `javascript:`; **the dot-segment forms `/.//x`, `/a/..//x`, `/%2e//x`** — which the prescribed replacement itself still let through, because parsing resolves them to `//x`; every C0 control and DEL; honest paths keep query and fragment (`/ok?a=1#h`); idempotent; and a source scan that the two pages are the only readers of `?next=` and that both forms navigate only to `destination`. Each refusal is asserted by resolving the answer against `https://noor.reletix.com` with tabs and newlines stripped, as a browser does. **Written with the fix** (2026-09-24): `?next=/%09/evil.example` was live on noor.reletix.com before it. |
 
 ---
 
@@ -520,19 +521,19 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **127** |
+| Functional requirements | **128** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **141 / 141** |
-| — verified | 91 |
+| Traced (every one needs a row) | **142 / 142** |
+| — verified | 92 |
 | — built | 4 |
 | — partial | 39 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **66** |
+| Requirements a test declares | **67** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 91 requirements marked VERIFIED, 46 have an automated test declaring them.** The remaining 45 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 92 requirements marked VERIFIED, 47 have an automated test declaring them.** The remaining 45 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 
