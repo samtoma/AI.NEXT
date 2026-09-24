@@ -1,7 +1,46 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`main`; released and deployed `v0.7.0` and `v0.8.0`; constitution v3.2.0)
+> Last updated: 2026-09-24 (`main` at `v0.8.0`; `feat/turn-limits-observed` in progress, not merged;
+> constitution v3.3.0)
+
+## 🔓 v0.9.0 in progress — turn limits observed, not enforced (2026-09-24, `feat/turn-limits-observed`, NOT merged)
+
+Samuel, verbatim: *"remove the limits, make them highlight in the admin console, we need to know how
+often those limits are triggered."* **ADR-0023**, constitution v3.2.0 → **v3.3.0** (Principle VI),
+**FR-3401…FR-3406** in spec 002, superseding the baseline's `FR-051`. Building on branch
+`feat/turn-limits-observed` (from `main` at v0.8.0) — a backend session on `app/`, this session on
+requirements and decision records, in the same worktree.
+
+**The evidence that prompted it.** Until today `api/ask/route.ts` enforced `TURN_CAPS` — a hard
+refusal once a conversation had this many delivered replies: `student_chat` 2 (PRD §6.3),
+`lesson_learn` 18 (raised from 14 for #33–#35 so a lesson could reach its closing retrieval),
+`lesson_review` 5; `spine_chat` uncapped. On production today, 2 of the 6 lessons taught so far hit
+the 18-reply cap, both on lesson `u1-1`, after 10–11 minutes each — and the student restarted the
+lesson both times. 6–7 of each lesson's 18 replies were button taps ("Start now", "Continue.", "Got
+it — next ✓"); only 2–3 were the student's own typed questions. Cost ≈$0.028/reply, ≈$0.47 for a
+capped lesson.
+
+**What changes.** No surface refuses a turn for reply count any more, and the three cap messages plus
+the input lock are gone. The numbers survive as **observed thresholds** (`TURN_THRESHOLDS` in
+`app/src/lib/turn-thresholds.ts`): "reached" (at least the threshold, delivered replies) is
+countable from today; "went past" (more than it — the reply the old rule would have refused) is only
+observable from here forward, because the old refusal was never logged as its own event. The
+review-mode finish nudge at 5 stays, unchanged in effect — it offers Finish, never blocks. The Cost
+page gets a highlighted "Turn limits — observed, not enforced" panel (per surface: conversations,
+reached count + share, went-past count, highest reply count, a list of the most recent
+threshold-reaching conversations linked to their session); the session list, timeline and replay get
+an amber — never red (FR-1002) — chip on a session that reached its threshold. The uploads daily cap
+is untouched; it is not an AI-turn limit.
+
+**Open:**
+- **Samuel / Tamer:** PRD §6.3 ("max 2 AI turns per question") is now departed from by this decision.
+  Tamer owns the PRD; he should be told rather than finding the drift later.
+- **Nobody has seen the console panel or a session chip live.** Every FR-3401…FR-3406 row in spec
+  002's traceability is BUILT, not VERIFIED — a founder needs to open the Cost page and a session
+  that actually crossed a threshold.
+- Code paths in the traceability rows are this session's best guess at file names as of 2026-09-24;
+  the implementing session's own report should correct them.
 
 ## 🔐 v0.8.0 — console sign-in from Cloudflare Access (released 2026-09-24)
 
