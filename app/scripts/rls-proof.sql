@@ -53,6 +53,7 @@ UNION ALL SELECT 'sessions',             count(*) FROM sessions
 UNION ALL SELECT 'analytics_events',     count(*) FROM analytics_events
 UNION ALL SELECT 'explanation_log',      count(*) FROM explanation_log
 UNION ALL SELECT 'student_progress',     count(*) FROM student_progress
+UNION ALL SELECT 'student_testers',      count(*) FROM student_testers
 ORDER BY 1;
 
 \echo ''
@@ -73,6 +74,7 @@ BEGIN
     UNION ALL SELECT 1 FROM understanding_checks
     UNION ALL SELECT 1 FROM mastery
     UNION ALL SELECT 1 FROM student_progress
+    UNION ALL SELECT 1 FROM student_testers
   ) s;
   IF n <> 0 THEN
     RAISE EXCEPTION 'PROOF FAILED: % row(s) visible with no principal set', n;
@@ -120,4 +122,104 @@ SELECT count(*) AS rows_visible_after_rollback FROM attempts;
 \echo '  SELECT * FROM auth_events;      -- INSERT only: written, never read back'
 \echo '  SELECT * FROM safety_flags;     -- INSERT only: a student never reads their own flags'
 \echo '  DELETE FROM attempts;           -- append-only by privilege, not by convention'
+\echo ''
+
+\echo '=== 6. The student surface cannot change how it is taught (ADR-0021) ======'
+-- Executed, not listed: each refusal is caught and asserted, and a write that
+-- SUCCEEDS fails the proof. Under student 1's own principal, which is the
+-- strongest position ainext_app is ever in.
+--
+--   · a tester mark is written by an operator and never by ainext_app — not
+--     for herself, not for anybody (migration 030 grants SELECT only);
+--   · the console switch cannot be moved from the student surface;
+--   · the switch's history is not even readable;
+--   · a learning session's probing snapshot cannot be rewritten once it is
+--     open — by the trigger, which refuses this for every role.
+
+BEGIN;
+SELECT set_config('app.student_id', '1', true) AS principal;
+
+DO $teaching$
+DECLARE n bigint;
+BEGIN
+  -- She can READ whether she is a tester (the resolver needs to) …
+  SELECT count(*) INTO n FROM student_testers;
+  RAISE NOTICE 'student_testers readable under her own principal: % row(s)', n;
+
+  -- … and cannot write one, in any form.
+  BEGIN
+    INSERT INTO student_testers (environment, student_id) VALUES ('mvp1', 1);
+    RAISE EXCEPTION 'PROOF FAILED: ainext_app marked itself a tester';
+  EXCEPTION WHEN insufficient_privilege THEN
+    RAISE NOTICE 'refused: INSERT INTO student_testers (her own mark)';
+  END;
+  BEGIN
+    UPDATE student_testers SET unmarked_at = now() WHERE student_id = 1;
+    RAISE EXCEPTION 'PROOF FAILED: ainext_app updated a tester mark';
+  EXCEPTION WHEN insufficient_privilege THEN
+    RAISE NOTICE 'refused: UPDATE student_testers';
+  END;
+  BEGIN
+    DELETE FROM student_testers WHERE student_id = 1;
+    RAISE EXCEPTION 'PROOF FAILED: ainext_app deleted a tester mark';
+  EXCEPTION WHEN insufficient_privilege THEN
+    RAISE NOTICE 'refused: DELETE FROM student_testers';
+  END;
+
+  -- There is no tester column on students for the profile UPDATE to reach.
+  IF EXISTS (SELECT 1 FROM information_schema.columns
+              WHERE table_name = 'students' AND column_name ILIKE '%tester%') THEN
+    RAISE EXCEPTION 'PROOF FAILED: a tester column on students is writable by ainext_app';
+  END IF;
+
+  -- The switch.
+  BEGIN
+    INSERT INTO teaching_settings (environment, socratic_probing) VALUES ('mvp1', 'everyone');
+    RAISE EXCEPTION 'PROOF FAILED: ainext_app wrote the teaching switch';
+  EXCEPTION WHEN insufficient_privilege THEN
+    RAISE NOTICE 'refused: INSERT INTO teaching_settings';
+  END;
+  BEGIN
+    UPDATE teaching_settings SET socratic_probing = 'everyone';
+    RAISE EXCEPTION 'PROOF FAILED: ainext_app moved the teaching switch';
+  EXCEPTION WHEN insufficient_privilege THEN
+    RAISE NOTICE 'refused: UPDATE teaching_settings';
+  END;
+  BEGIN
+    SELECT count(*) INTO n FROM teaching_setting_changes;
+    RAISE EXCEPTION 'PROOF FAILED: ainext_app read the switch history';
+  EXCEPTION WHEN insufficient_privilege THEN
+    RAISE NOTICE 'refused: SELECT FROM teaching_setting_changes';
+  END;
+
+  -- The snapshot on her own open-or-closed session.
+  BEGIN
+    UPDATE sessions SET probing = NOT coalesce(probing, false)
+     WHERE id = (SELECT id FROM sessions ORDER BY id DESC LIMIT 1);
+    GET DIAGNOSTICS n = ROW_COUNT;
+    IF n = 0 THEN
+      RAISE NOTICE 'skipped: student 1 has no session to try the snapshot trigger on';
+    ELSE
+      RAISE EXCEPTION 'PROOF FAILED: ainext_app rewrote a session''s probing snapshot';
+    END IF;
+  EXCEPTION WHEN check_violation THEN
+    RAISE NOTICE 'refused: UPDATE sessions SET probing (the snapshot is fixed at open)';
+  END;
+  BEGIN
+    UPDATE sessions SET release_tag = 'forged'
+     WHERE id = (SELECT id FROM sessions ORDER BY id DESC LIMIT 1);
+    GET DIAGNOSTICS n = ROW_COUNT;
+    IF n = 0 THEN
+      RAISE NOTICE 'skipped: student 1 has no session to try the release trigger on';
+    ELSE
+      RAISE EXCEPTION 'PROOF FAILED: ainext_app rewrote a session''s release tag';
+    END IF;
+  EXCEPTION WHEN check_violation THEN
+    RAISE NOTICE 'refused: UPDATE sessions SET release_tag';
+  END;
+
+  RAISE NOTICE 'teaching controls: the student surface can read its own mark and change nothing';
+END
+$teaching$;
+ROLLBACK;
 \echo ''

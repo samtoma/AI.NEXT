@@ -169,10 +169,10 @@ say "$applied migrations applied"
 # know the name of every migration, which would be a second list to maintain and
 # therefore a second list to forget.
 #
-# 27, not 28: the files are numbered 002-028 because 001 was folded into
+# 29, not 30: the files are numbered 002-030 because 001 was folded into
 # schema.sql, so the count and the highest number will never agree. Raise this
 # when a migration is added; it is one line and its failure message says so.
-[ "$applied" -ge 27 ] || fail "only $applied migration files were found; this branch has at least 27 (002-028). Is ../db a complete checkout?"
+[ "$applied" -ge 29 ] || fail "only $applied migration files were found; this branch has at least 29 (002-030). Is ../db a complete checkout?"
 
 # ---------------------------------------------------------------------------
 # 3. Post-flight: is the stack actually able to run?
@@ -307,10 +307,12 @@ fi
 # the first page render, so their absence is an immediate 500 rather than a
 # latent one. `student_progress` (028) is read by the same first render of
 # /student, and `attempts.retry_of_attempt_id` (027) is named by the attempt
-# INSERT the moment Socratic probing is switched on. This is a canary, not an
-# inventory: add to it only when a migration adds something the app cannot
-# start without.
-say "checking the newest objects (023, 024, 027, 028)"
+# INSERT the moment Socratic probing is switched on. `sessions.probing` and
+# `sessions.release_tag` (030) are named by EVERY session open from v0.7.0 on,
+# and `teaching_settings` (030) is read by the console header on every page.
+# This is a canary, not an inventory: add to it only when a migration adds
+# something the app cannot start without.
+say "checking the newest objects (023, 024, 027, 028, 030)"
 $PSQL <<'SQL'
 DO $check$
 BEGIN
@@ -333,6 +335,21 @@ BEGIN
   END IF;
   IF to_regclass('public.student_progress') IS NULL THEN
     RAISE EXCEPTION 'student_progress is missing — migration 028 did not land';
+  END IF;
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+     WHERE table_schema = 'public' AND table_name = 'sessions'
+       AND column_name = 'probing'
+  ) OR NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+     WHERE table_schema = 'public' AND table_name = 'sessions'
+       AND column_name = 'release_tag'
+  ) THEN
+    RAISE EXCEPTION 'sessions.probing / sessions.release_tag are missing — migration 030 did not land';
+  END IF;
+  IF to_regclass('public.teaching_settings') IS NULL
+     OR to_regclass('public.student_testers') IS NULL THEN
+    RAISE EXCEPTION 'teaching_settings / student_testers are missing — migration 030 did not land';
   END IF;
 END
 $check$;
