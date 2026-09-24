@@ -11,11 +11,17 @@
  * route at all.
  *
  * **And it re-checks all three locks itself** (`dev-picker.ts`): not
- * production, `AINEXT_DEV_OPERATOR_PICKER=on`, and a request to localhost. The
- * page that draws the buttons checks the same three, but hiding a button is
- * not authorisation (FR-2107) — a hand-built POST gets exactly the same answer
- * as a click. A refused request gets a bare 404, as if the endpoint did not
- * exist, and a `permission_denied` row saying which lock held.
+ * production, `AINEXT_DEV_OPERATOR_PICKER=on`, and a request to this machine.
+ * The page that draws the buttons checks the same three, but hiding a button
+ * is not authorisation (FR-2107) — a hand-built POST gets exactly the same
+ * answer as a click. A refused request gets a bare 404, as if the endpoint did
+ * not exist, and a `permission_denied` row saying which lock held.
+ *
+ * The third lock's header checks (Host, Origin — `null` refused — and
+ * `x-forwarded-for`) are all client-writable. What makes "to this machine"
+ * true is that the console dev server listens on 127.0.0.1 only whenever the
+ * flag is set (`scripts/local-dev.sh`, `.claude/launch.json`); see
+ * `dev-picker.ts` for exactly what the headers do and do not stop.
  *
  * On success it starts a session through the same `signInOperator` the
  * Cloudflare route uses — same session machinery as a password sign-in — and

@@ -5,7 +5,9 @@
  * no credential, so the tests here are all refusals but one.
  *
  * Three locks, each proven to hold on its own — production, the flag, the
- * host — and then the production BUILD proven not to contain the endpoint:
+ * host — then the limit of the third stated as a test (headers are not proof;
+ * the loopback bind is, and both launchers are checked for it), and then the
+ * production BUILD proven not to contain the endpoint:
  * `next.config.ts` is evaluated in a child process under each `NODE_ENV` and
  * its page extensions compared, and the endpoint's file name is asserted to be
  * the one those extensions exclude. `npm run check:surface:admin` then asserts
@@ -13,7 +15,7 @@
  */
 import { strict as assert } from "node:assert";
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
@@ -70,6 +72,48 @@ test("refused when a local Host header arrives with a foreign Origin (a cross-si
     allowed: false,
     why: "not_local_origin",
   });
+});
+
+test("refused when the Origin is `null` — a sandboxed frame, a data: or file: page, a redirect chain", () => {
+  for (const origin of ["null", "NULL", " null "]) {
+    assert.deepEqual(
+      devPickerDecision({ ...OPEN, origin }),
+      { allowed: false, why: "null_origin" },
+      JSON.stringify(origin)
+    );
+  }
+  // An Origin header that is present but empty is no real browser's either.
+  assert.deepEqual(devPickerDecision({ ...OPEN, origin: "" }), { allowed: false, why: "not_local_origin" });
+  // Absent (a same-origin GET, curl on the laptop) is not the same as `null`.
+  assert.deepEqual(devPickerDecision({ ...OPEN, origin: null }), { allowed: true });
+  assert.deepEqual(devPickerDecision({ ...OPEN, origin: undefined }), { allowed: true });
+});
+
+test("the header checks are NOT proof: a forged Host + X-Forwarded-For passes them — the bind is the lock", () => {
+  // What a machine on the same Wi-Fi can send to a dev server that listens on
+  // every interface. Stated as a passing test so nobody reads lock 3 as more
+  // than it is; the next test is what makes it hold.
+  assert.deepEqual(
+    devPickerDecision({ ...OPEN, host: "localhost:3002", origin: null, forwardedFor: "127.0.0.1" }),
+    { allowed: true }
+  );
+});
+
+test("both ways of starting the console locally bind it to 127.0.0.1", () => {
+  const ROOT = fileURLToPath(new URL("../../../../", import.meta.url));
+  const script = readFileSync(ROOT + "scripts/local-dev.sh", "utf8");
+  const serveAdmin = script.slice(script.indexOf("serve_admin()"), script.indexOf("\nif [ \"$SERVE\" = 1 ]"));
+  assert.match(serveAdmin, /npm run dev -- -H 127\.0\.0\.1/, "local-dev.sh serve_admin binds loopback when the picker is set");
+  const launch = JSON.parse(readFileSync(ROOT + ".claude/launch.json", "utf8")) as {
+    configurations: { name: string; runtimeArgs?: string[]; env?: Record<string, string> }[];
+  };
+  const consoles = launch.configurations.filter((c) => c.env?.AINEXT_SURFACE === "admin");
+  assert.ok(consoles.length > 0, "launch.json has a console entry");
+  for (const c of consoles) {
+    const args = c.runtimeArgs ?? [];
+    const i = args.findIndex((a) => a === "-H" || a === "--hostname");
+    assert.ok(i >= 0 && args[i + 1] === "127.0.0.1", `${c.name}: ${args.join(" ")}`);
+  }
 });
 
 test("refused when Next recorded a non-loopback client address", () => {
