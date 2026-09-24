@@ -791,9 +791,13 @@ password sign-in.
   recorded and kept after removal, and a removed mark MUST stay removed — marking the student again
   is a new mark, never the old one reopened or rewritten. **No student surface may be able to set or
   remove the mark**, for the student or anyone else.
-- **FR-3108**: With probing **Off**, a student MUST get exactly what they got before the switch
-  existed — the same tutor instructions, word for word, the same card behaviour and the same record
-  of every answer.
+- **FR-3108**: With probing **Off**, the tutor's instructions MUST be **byte-identical** to what
+  they were before the switch existed — proved against a golden capture of every learn and review
+  prompt and against a full capture of 438 model inputs — and the question card and the record of
+  every answer MUST take the pre-switch code paths, selected by the same server-declared boolean.
+  Only that is claimed identical: the tutor's stream gains a first frame declaring probing, and each
+  session row gains the release and the probing record. *(Reworded 2026-09-24, fix pass: was "exactly
+  what they got before … word for word", which overreached.)*
 - **FR-3109**: Every lesson MUST record **which release served it** and **whether probing applied**,
   and the server MUST log both when the lesson starts. The release MUST come from the build actually
   deployed, not from a version number that two builds share.
@@ -829,7 +833,9 @@ password sign-in.
   no student's place may be read or changed by any other student's request.
 - **FR-3202**: A student's place MUST move on when **every** objective in the lesson they are on
   reaches the mastery gate, to the next lesson in course order whose prerequisites that student has
-  met — never past a lesson they are not ready for.
+  met — never onto a lesson whose prerequisites are not met; unready lessons are skipped. *(Reworded
+  2026-09-24, fix pass: "never past a lesson they are not ready for" said the opposite of what the
+  code does.)*
 - **FR-3203**: A student's place MUST never move backwards. When nothing later is ready yet it MUST
   stay where it is, and the course MUST read as complete only when the student is on its last lesson
   and every lesson has passed the gate.
