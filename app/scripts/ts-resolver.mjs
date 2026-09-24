@@ -74,6 +74,10 @@ const STUBS = {
       // (off) position, to prove the merged prototype leaves the prompt as it
       // was. Same `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
       "socratic-probing.test.mts",
+      // renders `learnPrompt` / `reviewPrompt` for three subjects × four
+      // address forms with probing off and compares them, whole, against the
+      // pre-toggle capture (ADR-0021). Same import chain; no principal.
+      "probing-prompts.test.mts",
     ],
   },
 };
