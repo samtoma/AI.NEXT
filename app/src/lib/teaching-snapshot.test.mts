@@ -334,7 +334,10 @@ test("the console refuses Everyone and requires teaching-controls before it writ
   assert.ok(refusal > 0 && write > refusal, "the lock must be checked before the write");
   assert.match(route, /status: 409/);
 
+  // The tester mark needs BOTH roles, in one ALL-OF call (fix pass,
+  // 2026-09-24) — and never either alone.
   const tester = code("app/api/console/students/[id]/tester/route.console.ts");
-  assert.match(tester, /authorize\(\{ role: "student-data" \}\)/);
+  assert.match(tester, /authorize\(\{ roles: \["student-data", "teaching-controls"\] \}\)/);
+  assert.doesNotMatch(tester, /authorize\(\{ role: "/);
   assert.match(tester, /typeof body\.tester !== "boolean"/);
 });
