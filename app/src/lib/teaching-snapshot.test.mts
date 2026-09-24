@@ -205,6 +205,18 @@ test("review mode and a practice session never probe, even for a tester with the
   }
 });
 
+test("a session that is not a learn-mode lesson opens with no probing query and no savepoint", async () => {
+  // Fix pass, 2026-09-24: only `lesson_learn` can ever probe, so every other
+  // kind returns before the switch is read — v0.6.0's session open, exactly.
+  for (const kind of ["lesson_review", "practice", "student_chat"] as const) {
+    const { client, log } = fakeClient({ setting: "testers", isTester: true });
+    const { out } = await quietly(() => currentSession(7, kind, { courseOf: async () => MATHS }, client));
+    assert.equal(out.probing, false, kind);
+    assert.ok(!log.some((q) => q.includes("teaching_settings")), `${kind}: the switch was read`);
+    assert.ok(!log.some((q) => /SAVEPOINT probing_/.test(q)), `${kind}: a probing savepoint was taken`);
+  }
+});
+
 test("a REUSED session keeps the snapshot it opened with — the switch is not read again", async () => {
   const now = new Date();
   // Opened OFF; the switch has since been turned on for this tester.

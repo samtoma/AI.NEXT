@@ -11,6 +11,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
+import { addressForms, type Gender } from "./address.ts";
 import { snapshotKey } from "./session-cache.ts";
 
 const BASE = {
@@ -69,4 +70,51 @@ test("students and sessions still never share a snapshot", () => {
   assert.notEqual(a, snapshotKey({ ...BASE, chatSession: "sess-2", gender: "female" }));
   assert.notEqual(a, snapshotKey({ ...BASE, questionId: "q:u1-1-1:001", gender: "female" }));
   assert.notEqual(a, snapshotKey({ ...BASE, wrongAnswer: "12", gender: "female" }));
+});
+
+/**
+ * v0.6.0's `snapshotKey`, copied verbatim from `fa2cd29` (the v0.6.0 merge) —
+ * the key every cached lesson prompt had before the teaching switch existed.
+ * Frozen here on purpose: the test below is "Off changes nothing", and the
+ * only honest statement of "nothing" is the old function itself.
+ */
+function v060SnapshotKey(k: {
+  surface: string;
+  chatSession: string;
+  studentId: number | null;
+  lesson?: string;
+  questionId?: string;
+  wrongAnswer?: string;
+  uploadId?: number;
+  gender: Gender;
+}): string {
+  return [
+    k.surface,
+    k.chatSession,
+    k.studentId ?? "",
+    k.lesson ?? "",
+    k.questionId ?? "",
+    k.wrongAnswer ?? "",
+    k.uploadId ?? "",
+    addressForms(k.gender).key,
+  ].join("|");
+}
+
+test("probing false or absent is v0.6.0's key exactly; probing true is a different key (ADR-0021)", () => {
+  const shapes = [
+    { ...BASE, gender: "female" as const },
+    { ...BASE, gender: null },
+    { ...BASE, questionId: "q:u1-1-1:001", wrongAnswer: "12", gender: "male" as const },
+    { ...BASE, uploadId: 41, gender: "unspecified" as const },
+    { surface: "lesson_review", chatSession: "s", studentId: null, gender: null },
+  ];
+  for (const k of shapes) {
+    const old = v060SnapshotKey(k);
+    assert.equal(snapshotKey(k), old, "probing absent must be v0.6.0's key");
+    assert.equal(snapshotKey({ ...k, probing: false }), old, "probing false must be v0.6.0's key");
+    // A lesson that probes carries a different system prompt, so it must
+    // never be served a prompt cached for the same lesson with probing off —
+    // nor the other way round when the switch goes Off mid-sitting.
+    assert.notEqual(snapshotKey({ ...k, probing: true }), old);
+  }
 });

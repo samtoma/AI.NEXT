@@ -250,34 +250,6 @@ export async function getLessonCatalog(
 /* ------------------------------------------------------------------ */
 
 /**
- * One lesson's grounded slice, or **`null` when this student may not have it**.
- *
- * ---------------------------------------------------------------------------
- * WHY `null` AND NOT A THROW — the refusal shape, decided once
- * ---------------------------------------------------------------------------
- * `?lesson=geo1-2` is a hand-typed URL. It reaches this function without
- * passing a catalogue, so whatever this function does IS the gate; filtering
- * the picker upstream would leave the slug working for anyone who guessed it.
- *
- * The refusal is a `null` rather than an exception because the three callers
- * need three different refusals — a 404 page, a JSON 404, and an SSE stream
- * that has to say something to a waiting client — and all three already wrap
- * this call in a broad `catch` that reports 500 "internal error". A thrown
- * refusal would therefore be delivered to the student as an outage: correct
- * behaviour wearing the costume of a bug, on the one path where telling those
- * apart matters. A `null` return type makes the compiler walk every caller and
- * ask what it wants to say, which is the same argument `lib/subjects.ts` makes
- * for deriving its unions from the registry.
- *
- * The page turns it into `notFound()`. A hidden course and a slug that never
- * existed are ONE answer, deliberately: two answers would let a student
- * enumerate which courses exist but are switched off for them, which is a
- * smaller leak than the content and still a leak.
- *
- * With no student in scope (`studentId === null`, the prompt-capture harness)
- * there is nobody to refuse and this behaves exactly as it always has.
- */
-/**
  * The course a lesson slug belongs to, or null — for ONE purpose: resolving a
  * new learning session's Socratic-probing snapshot (ADR-0021), which is maths
  * only. Resolved the way `lessonDataOn` resolves the lesson itself (the same
@@ -307,6 +279,34 @@ export async function lessonCourseId(
   return (await courseOf(DEFAULT_LESSON_SLUG)) ?? null;
 }
 
+/**
+ * One lesson's grounded slice, or **`null` when this student may not have it**.
+ *
+ * ---------------------------------------------------------------------------
+ * WHY `null` AND NOT A THROW — the refusal shape, decided once
+ * ---------------------------------------------------------------------------
+ * `?lesson=geo1-2` is a hand-typed URL. It reaches this function without
+ * passing a catalogue, so whatever this function does IS the gate; filtering
+ * the picker upstream would leave the slug working for anyone who guessed it.
+ *
+ * The refusal is a `null` rather than an exception because the three callers
+ * need three different refusals — a 404 page, a JSON 404, and an SSE stream
+ * that has to say something to a waiting client — and all three already wrap
+ * this call in a broad `catch` that reports 500 "internal error". A thrown
+ * refusal would therefore be delivered to the student as an outage: correct
+ * behaviour wearing the costume of a bug, on the one path where telling those
+ * apart matters. A `null` return type makes the compiler walk every caller and
+ * ask what it wants to say, which is the same argument `lib/subjects.ts` makes
+ * for deriving its unions from the registry.
+ *
+ * The page turns it into `notFound()`. A hidden course and a slug that never
+ * existed are ONE answer, deliberately: two answers would let a student
+ * enumerate which courses exist but are switched off for them, which is a
+ * smaller leak than the content and still a leak.
+ *
+ * With no student in scope (`studentId === null`, the prompt-capture harness)
+ * there is nobody to refuse and this behaves exactly as it always has.
+ */
 export async function getLessonData(
   slug: string = DEFAULT_LESSON_SLUG,
   studentId: number | null = null,

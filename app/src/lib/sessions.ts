@@ -55,6 +55,7 @@ import { scoped, type Db } from "@/lib/student-context";
 import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import { emit } from "@/lib/analytics";
 import {
+  PROBING_SURFACE,
   asProbingSetting,
   probingCouldApply,
   resolveProbing,
@@ -162,10 +163,15 @@ async function resolveSessionProbing(
   kind: SessionKind,
   opts: SessionOpts
 ): Promise<boolean> {
+  // Only a learn-mode lesson can ever probe (FR-3104). Every other kind —
+  // review, practice, open chat, an upload — answers false here, before any
+  // query and any savepoint: those sessions open exactly as they did in
+  // v0.6.0.
+  if (kind !== PROBING_SURFACE) return false;
   const { setting, isTester } = await probingInputs(db, studentId);
   // With the switch Off (the default) this is false and the course is never
-  // looked up: an Off build performs one read at session open that v0.6.0 did
-  // not (the one above), and nothing else.
+  // looked up: an Off build performs one read at a learn-lesson open that
+  // v0.6.0 did not (the one above), and nothing else.
   if (!probingCouldApply({ setting, isTester, surface: kind }) || !opts.courseOf) return false;
   let courseId: string | null = null;
   await db.query("SAVEPOINT probing_course");
@@ -268,6 +274,10 @@ export async function currentSession(
     if (plan.action === "close-then-open")
       await closeSessionOn(db, plan.sessionId, plan.reason);
 
+    // The per-lesson snapshot (ADR-0021): resolved once, for the row about to
+    // be written, and stored on it.
+    const probing = await resolveSessionProbing(db, studentId, kind, opts);
+
     // SAVEPOINT, because the insert below is EXPECTED to fail sometimes and the
     // recovery is a further query. Losing the one-open-session race used to be
     // survivable by simply asking again — on the bare pool a failed statement
@@ -276,10 +286,6 @@ export async function currentSession(
     // instead. Now that the default path IS a transaction, the retry needs a
     // point to roll back to or it would turn the normal two-tabs case into a
     // 500.
-    // The per-lesson snapshot (ADR-0021): resolved once, for the row about to
-    // be written, and stored on it.
-    const probing = await resolveSessionProbing(db, studentId, kind, opts);
-
     await db.query("SAVEPOINT session_insert");
     try {
       const sessionId = await insertSession(db, studentId, kind, opts, probing);
