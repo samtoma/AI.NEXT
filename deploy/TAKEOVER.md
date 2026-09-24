@@ -243,6 +243,13 @@ four post-flight checks run: the three roles exist and are neither superuser nor
 three have passwords; `course_availability` and `students.design_variant` are present; and, only
 when the course gate is on, at least one course is allow-listed.
 
+**Rolling back** re-runs the OLDER build's migrations over the newer database, so it is only as safe
+as the older build's files. v0.6.1 and later are safe to roll back to after v0.7.0; **v0.6.0 is
+not** (its 014 is unguarded) and must never be redeployed after v0.7.0. The three levers — switch
+the feature off, revert and deploy, and the manual path if v0.6.0 is ever unavoidable — are in
+[`DEPLOY-MVP1.md` → "Rolling back"](DEPLOY-MVP1.md#rolling-back). CI checks the rollback against the
+previous release on every change to `db/` (job `migrations`).
+
 ### 3.2 Fresh database or migrate in place
 
 Samuel: *"I'm also ready to start from scratch… but use all the username and passwords for the

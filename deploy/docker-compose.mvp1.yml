@@ -126,6 +126,16 @@ services:
     # deploy job's dangling-image pruning changes.
     image: ainext-mvp1-app
     restart: unless-stopped
+    # Rotated (v0.7.0). Every opened learning session now logs one
+    # `[sessions] opened {...}` line, on top of everything else; unrotated,
+    # json-file grows until the shared box's disk is full — and the box also
+    # runs production for another product. 5 × 10 MB per container keeps days
+    # of `docker logs` without ever becoming the reason that box falls over.
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
     environment:
       # THE APP CONNECTS AS `ainext_app`, NOT AS THE POSTGRES SUPERUSER (ADR-0012).
       # Superusers bypass every row-level-security policy unconditionally, so
@@ -341,6 +351,12 @@ services:
     # remembering compose's numbering suffix.
     container_name: ainext-mvp1-console
     restart: unless-stopped
+    # Rotated, for the reason `app` is.
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
     # `start:admin` sets AINEXT_SURFACE=admin for `next start`, which is what
     # points it at `.next-admin`. The environment below sets the same variable
     # for the application's own module graph; both are needed and they are read

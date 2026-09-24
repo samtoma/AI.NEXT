@@ -38,6 +38,20 @@ requirement names it.
   deploy computes (or `v<version>` on a laptop), no longer the old `PDR1-0-v…` package name that two
   builds could share.
 
+### Operations — rolling back, and proving it before every deploy
+- **Rolling back is written down**: [`deploy/DEPLOY-MVP1.md` → "Rolling back"](deploy/DEPLOY-MVP1.md#rolling-back).
+  A feature problem is the Teaching switch set to Off — no deploy. A code problem is a reverted
+  merge and a deploy, safe from v0.6.1 on. **Never redeploy v0.6.0 itself after this release**: its
+  migration 014 re-adds a four-role rule the database refuses once anyone holds the new role, and the
+  site stays down; the runbook has the manual path if it is ever unavoidable.
+- **This release's migration 014 carries the same guard as v0.6.1**, with the fifth role, so this
+  release is a safe place to roll back to later.
+- **CI now proves the migrations** on every change to `db/`: three times onto an empty database, as
+  an upgrade from the previous release, and as a rollback onto it and forward again (job
+  `migrations`). A deploy now waits for it.
+- **The app and console logs rotate** (5 × 10 MB each) — the shared box's disk no longer grows with
+  every lesson opened.
+
 ## [v0.6.1] — 2026-09-24
 
 A safety release with nothing visible to students or operators. It makes going back from v0.7.0
