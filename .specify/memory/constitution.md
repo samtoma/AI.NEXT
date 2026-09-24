@@ -1,6 +1,19 @@
 <!--
 Sync Impact Report
-- Version change: 3.1.1 → 3.2.0 (MINOR — Principle III's standing exception
+- Version change: 3.2.0 → 3.3.0 (MINOR — Principle VI's standing bound on
+  worst-case spend materially changed, in the same pattern as the 3.1.1 →
+  3.2.0 bump below: an existing bound is lifted and replaced with a
+  visibility-only alternative, and nothing else in the principle moves. The
+  server-enforced per-surface turn caps no longer bind — no surface refuses a
+  student's turn for a reply count. Each surface keeps a named, observed turn
+  threshold instead (`TURN_THRESHOLDS`); every crossing is counted per
+  environment, per Principle XI, and shown in the operator console. Spend
+  instrumentation — the ledger, the in-session meter, environment attribution
+  — is untouched and remains mandatory. No principle removed or redefined.)
+- Amended by: Samuel (CTO, solution architect), 2026-09-24 — "remove the
+  limits, make them highlight in the admin console, we need to know how often
+  those limits are triggered" (ADR-0023).
+- Previous: 3.1.1 → 3.2.0 (MINOR — Principle III's standing exception
   materially expanded, as in 2.0.0 → 2.1.0: on the MVP 1.0 solution deployment
   the Cloudflare Access / invited-audience bound is lifted, and every maths
   question, generated and unreviewed ones included, is served on the open site
@@ -96,6 +109,9 @@ Sync Impact Report
   - Principle III's suspension is reversible and MUST be revisited before any
     audience wider than the invited pilot cohort
   - Principle VI's numeric ceiling MUST be restored once the PRD §10 price point lands
+  - (3.3.0) The turn-cap withdrawal MUST be revisited if the console's observed
+    thresholds show worst-case spend materially exceeding what the old caps
+    would have bounded — ADR-0023's own "what would trigger revisiting"
   - (3.1.1) Master's component anatomy — type scale, targets, motion, component
     guidelines — is not published; only its colour theme exists. It MUST be
     published before any Secondary cohort is onboarded, or the grade rule routes
@@ -230,8 +246,20 @@ attribution — and cost visibility is never optional. The v1.0 ceiling of EGP 4
 per student per month was derived from a parent-pays price band the new PRD
 withdraws; no numeric ceiling binds until PRD §10 sets a price point, at which
 point one MUST be restored here. Until then: uploads, OCR and ask-anything add
-unbudgeted per-student cost, and the server-enforced per-surface turn caps
-remain the operative bound on worst-case spend.
+unbudgeted per-student cost.
+
+**Amended, authorized by Samuel 2026-09-24 (ADR-0023):** *"remove the limits,
+make them highlight in the admin console, we need to know how often those
+limits are triggered."* The server-enforced per-surface turn caps this
+principle previously named as the operative bound on worst-case spend are
+withdrawn as a bound. No surface refuses a student's turn on a reply count,
+and worst-case spend per conversation is therefore unbounded by the server.
+In their place, each surface keeps a named, observed turn threshold
+(`TURN_THRESHOLDS`): every crossing is counted per environment — never
+pooled across environments or solutions, per Principle XI — and shown in the
+operator console, so the product can say how often a threshold is reached
+even though nothing now stops a conversation from going past it. This does
+not touch the instrumentation obligation above, which stays unconditional.
 
 ### VII. Minors' Data Minimalism
 Collect the minimum: name, grade, and the interest signals the tutor actually
@@ -394,4 +422,4 @@ PATCH = clarification), and obtain Samuel's approval. Exceptions MUST be
 time-boxed or condition-boxed, attributed, reversible, and recorded here or in
 an ADR — Principle III's suspension is the current example.
 
-**Version**: 3.2.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-23
+**Version**: 3.3.0 | **Ratified**: 2026-08-02 | **Last Amended**: 2026-09-24
