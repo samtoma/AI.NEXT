@@ -392,13 +392,37 @@ jobs:
           PUBLIC_URL="https://noor.reletix.com"
           # Cloudflare Access sign-in for the console (ADR-0022): the reletix
           # team and the admin-noor Access application's AUD tag, unless a
-          # repository variable says otherwise. The literal `off` in the team
-          # variable switches the feature off (the app then signs operators in
-          # with a password only); an empty variable means "the default", not
-          # off, so an unset variable can never silently disable it.
+          # repository variable says otherwise. `off` in the team variable, in
+          # any letter case, switches the feature off (the app then signs
+          # operators in with a password only); an empty variable means "the
+          # default", not off, so an unset variable can never silently disable it.
           CF_TEAM="${AINEXT_CF_ACCESS_TEAM_DOMAIN:-https://reletix.cloudflareaccess.com}"
           CF_AUD="${AINEXT_CF_ACCESS_AUD:-d810c05df051342ae930ce6ce545e2347057e3ac62abeeb5c2a0f6b11277c004}"
-          if [ "$CF_TEAM" = "off" ]; then CF_TEAM=""; CF_AUD=""; fi
+          if [ "$(printf '%s' "$CF_TEAM" | tr '[:upper:]' '[:lower:]')" = "off" ]; then
+            CF_TEAM=""; CF_AUD=""
+          else
+            # VALIDATED HERE, not only in the app. The app would treat a
+            # malformed value as "off" and log it — correct, and silent: the
+            # deploy would go green with Cloudflare sign-in quietly disabled.
+            # Whole-string matches ([[ =~ ]], not grep, which would pass a
+            # multi-line value on its one good line), so nothing but the
+            # expected shape — and never a quote or a newline — reaches .env.
+            CF_TEAM_RE='^https://[a-z0-9-]+\.cloudflareaccess\.com$'
+            CF_AUD_RE='^[0-9a-f]{64}$'
+            if ! [[ "$CF_TEAM" =~ $CF_TEAM_RE ]]; then
+              echo "::error::AINEXT_CF_ACCESS_TEAM_DOMAIN must be https://<team>.cloudflareaccess.com (lower case, no path, no trailing slash) or 'off'. Got: $(printf '%q' "$CF_TEAM")"
+              echo "::error::fix:  gh variable set AINEXT_CF_ACCESS_TEAM_DOMAIN --body https://reletix.cloudflareaccess.com --repo ${{ github.repository }}"
+              exit 1
+            fi
+            if ! [[ "$CF_AUD" =~ $CF_AUD_RE ]]; then
+              echo "::error::AINEXT_CF_ACCESS_AUD must be the Access application's AUD tag: 64 lower-case hex characters. Got: $(printf '%q' "$CF_AUD")"
+              echo "::error::it is on the admin-noor Access application's Overview tab in the Zero Trust dashboard; fix:  gh variable set AINEXT_CF_ACCESS_AUD --body <AUD> --repo ${{ github.repository }}"
+              exit 1
+            fi
+          fi
+          # The .env quoting, as one function so every value gets the same
+          # treatment — see the SINGLE-QUOTED comment below for why.
+          sq_escape() { printf '%s' "$1" | sed "s/'/'\\\\''/g"; }
 
           ENV_FILE="$APP_DIR/deploy/.env"
           umask 077
@@ -422,13 +446,15 @@ jobs:
               # Single quotes are literal to that parser, and the sed escapes any
               # single quote inside the value by closing, escaping and reopening
               # ('"'"' is the standard idiom) so no value can break out of them.
-              esc=$(printf '%s' "$v" | sed "s/'/'\\\\''/g")
+              esc=$(sq_escape "$v")
               [ -n "$v" ] && printf "%s='%s'\n" "$key" "$esc"
             done
             printf "AINEXT_PUBLIC_URL='%s'\n"  "$PUBLIC_URL"
             printf "AINEXT_CONSOLE_URL='%s'\n" "$CONSOLE_URL"
-            printf "AINEXT_CF_ACCESS_TEAM_DOMAIN='%s'\n" "$CF_TEAM"
-            printf "AINEXT_CF_ACCESS_AUD='%s'\n" "$CF_AUD"
+            # Validated above; escaped anyway, so a future edit to the
+            # validation cannot turn a quote into a broken .env.
+            printf "AINEXT_CF_ACCESS_TEAM_DOMAIN='%s'\n" "$(sq_escape "$CF_TEAM")"
+            printf "AINEXT_CF_ACCESS_AUD='%s'\n" "$(sq_escape "$CF_AUD")"
             # The Google redirect ONLY when the other two halves exist. The app
             # treats Google sign-in as all-or-nothing — CLIENT_ID, CLIENT_SECRET
             # and REDIRECT_URI must be all set or all unset — and refuses to
