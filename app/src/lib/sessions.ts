@@ -67,7 +67,6 @@ import { emit } from "@/lib/analytics";
 import {
   PROBING_SURFACE,
   asProbingSetting,
-  effectiveProbing,
   probingCouldApply,
   resolveProbing,
   type ProbingSetting,
@@ -508,53 +507,6 @@ export async function currentSessionSnapshot(
   } catch (e) {
     console.error("[sessions] could not open a session; writing NULL:", e);
     return { sessionId: null, kind: null, probing: false, openedProbing: false };
-  }
-}
-
-/**
- * Probing for a request served OUTSIDE a sitting — `/api/ask`'s capped turn,
- * which is refused before any session is opened or touched, because a turn
- * the cap refused is not a sitting (fix pass 2).
- *
- * The client still has to be told the request's answer, or switching Off
- * would never reach a lesson that has hit its cap: its cards would stay held
- * back behind a probe nobody is running. So this READS the student's open
- * session and answers exactly what `currentSession` would have answered for
- * a reuse of it — stored snapshot, narrowed by the switch and the mark
- * unchanged since it opened (`liveProbing`), then by the lesson's course
- * (`effectiveProbing`) — without writing anything: no `last_seen_at` stamp,
- * no close, no open. Nothing open, another kind, an idle sitting, a failed
- * read, or no way to learn the course: `false`. Fail closed, never on.
- */
-export async function peekSessionProbing(
-  studentId: number,
-  kind: SessionKind,
-  opts: Pick<SessionOpts, "courseOf"> = {},
-  client?: PoolClient
-): Promise<boolean> {
-  if (kind !== PROBING_SURFACE) return false;
-  try {
-    return await scoped(studentId, client, async (db) => {
-      await db.query("SAVEPOINT probing_peek");
-      try {
-        const open = await selectOpen(db, studentId);
-        const plan = planForRequest(open, kind, new Date(), false);
-        let answer = false;
-        if (plan.action === "reuse" && open && (await liveProbing(db, studentId, open))) {
-          answer = opts.courseOf
-            ? effectiveProbing(true, open.kind, await opts.courseOf())
-            : false;
-        }
-        await db.query("RELEASE SAVEPOINT probing_peek");
-        return answer;
-      } catch (err) {
-        await db.query("ROLLBACK TO SAVEPOINT probing_peek");
-        throw err;
-      }
-    });
-  } catch (err) {
-    console.error("[sessions] could not read probing for a capped turn; declaring OFF:", err);
-    return false;
   }
 }
 

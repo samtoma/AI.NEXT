@@ -435,9 +435,6 @@ export function StudentLoop({
                           <span className="font-mono text-[0.72rem] font-medium uppercase tracking-[0.1em] text-ink">
                             ✦ AI tutor · grounded in the canonical steps only
                           </span>
-                          <span className="font-mono text-[0.72rem] font-medium text-ink-faint">
-                            max 2 AI turns per question
-                          </span>
                         </div>
                         <div className="flex h-[400px] flex-col">
                           <ChatCore

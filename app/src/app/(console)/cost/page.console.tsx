@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { CostSparkline } from "@/components/console/CostSparkline";
-import { Chip, Empty, Figure, Panel, Td, Th } from "@/components/console/ui";
+import { Chip, Empty, Figure, Panel, Td, Th, share, stamp } from "@/components/console/ui";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
 import {
@@ -14,7 +14,10 @@ import {
   type PeriodDays,
 } from "@/lib/cost-model";
 import { getCostView, type CostView } from "@/lib/cost-queries";
+import { costDetailAccess, type ThresholdConversation } from "@/lib/turn-threshold-queries";
 import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
+import { SUBJECTS, displayLabel, subjectOfCourse } from "@/lib/subjects";
+import { anyThresholdReached, thresholdChipLabel, uploadChipLabel } from "@/lib/turn-thresholds";
 
 /**
  * Cost — what the product spends, per student, over time (contracts/admin.md
@@ -22,9 +25,10 @@ import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
  *
  * `cost-billing` and nothing else. **There is no student content on this page**
  * (FR-2406): every cell is a name, an id, a count, a token figure, a dollar
- * figure, a date or a status word. No message, no transcript, no preview, and
- * no turn count of a conversation — and the role holds no grant that would let
- * one be read even if this page asked.
+ * figure, a date, a status word or a curriculum label. No message, no
+ * transcript, no preview. Since v0.9.0 there IS a reply count per
+ * conversation — the turn-threshold panel (ADR-0023, FR-3403, FR-3404) — and
+ * it is a count, never a word anybody wrote.
  *
  * **Every figure says "imputed at list price".** The runtime is a Claude
  * subscription, so no money left a bank account per turn (research A4.4); the
@@ -36,8 +40,13 @@ import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
  *
  * Reports only. It sets no budget and enforces no ceiling, because no price
  * exists yet to derive one from — PRD §10 is unset and the EGP 40 figure came
- * from a withdrawn parent price band. Per-surface turn caps are what actually
- * bound spend, and they live in `api/ask/route.ts`.
+ * from a withdrawn parent price band. **And since ADR-0023 (v0.9.0) nothing
+ * bounds spend per conversation either.** The per-surface turn caps that used
+ * to live in `api/ask/route.ts` are gone; their numbers survive as thresholds
+ * (`lib/turn-thresholds.ts`) that are observed, not enforced, and the panel
+ * right after the headline says how often a conversation reached one. The
+ * daily photo-upload cap went the same way (FR-3407); the panel beside it
+ * says how often a student reached ten uploads in 24 hours (FR-3409).
  */
 export const dynamic = "force-dynamic";
 
@@ -55,7 +64,17 @@ export default async function CostConsolePage({
     return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
   }
   const period = periodOf((await searchParams).period);
-  return <CostPage operatorId={access.operatorId} period={period} />;
+  // FR-2406: which parts of the threshold panels this operator may be sent,
+  // decided from the roles the principal holds and handed to the READ, so a
+  // billing-only operator's view is built without the per-conversation and
+  // per-student rows rather than built with them and hidden.
+  return (
+    <CostPage
+      operatorId={access.operatorId}
+      period={period}
+      detail={costDetailAccess(access.roles)}
+    />
+  );
 }
 
 /* --------------------------------------------------------------- format */
@@ -92,11 +111,13 @@ function basisNote(basis: string): string {
 async function CostPage({
   operatorId,
   period,
+  detail,
 }: {
   operatorId: number;
   period: PeriodDays;
+  detail: ReturnType<typeof costDetailAccess>;
 }) {
-  const view = await getCostView(operatorId, period);
+  const view = await getCostView(operatorId, period, detail);
   const periodText = periodLabel(period);
 
   return (
@@ -123,8 +144,17 @@ async function CostPage({
           </Empty>
         </Panel>
       ) : (
+        <Headline view={view} periodText={periodText} />
+      )}
+
+      {/* Outside the empty-ledger branch (FR-3403, FR-3409): an upload is counted from
+          `uploads`, so one can exist in a period with no ledger row, and zero is an answer
+          to "how often" too. Both panels carry their own empty states. */}
+      <TurnLimits view={view} periodText={periodText} />
+      <PhotoUploads view={view} periodText={periodText} />
+
+      {view.totalTurns === 0 ? null : (
         <>
-          <Headline view={view} periodText={periodText} />
           <PerStudent view={view} periodText={periodText} />
           <BySurface view={view} periodText={periodText} />
           <ByOutcome view={view} periodText={periodText} />
@@ -134,8 +164,9 @@ async function CostPage({
 
       <p className="mt-5 max-w-[80ch] text-[12.5px] leading-relaxed text-ink-faint">
         This page reports; it does not enforce. No numeric cost ceiling binds until a price exists
-        to derive one from (constitution VI, PRD §10). What actually bounds spend is the per-surface
-        turn cap in <code className="font-mono text-[12px]">api/ask/route.ts</code>.
+        to derive one from (constitution VI, PRD §10), and since v0.9.0 (ADR-0023) nothing bounds
+        spend per conversation either: the per-surface turn thresholds are observed, not enforced,
+        and the turn-limits panel above says how often a conversation reaches one.
       </p>
     </main>
   );
@@ -229,6 +260,417 @@ function Headline({ view, periodText }: { view: CostView; periodText: string }) 
         </p>
       )}
     </Panel>
+  );
+}
+
+/* --------------------------------------------------------- turn limits */
+
+/**
+ * How often the turn limits that no longer exist would have fired (ADR-0023,
+ * FR-3403, FR-3404). Amber when any conversation reached a threshold in the
+ * period — never red (FR-1002): nothing was refused and no student saw a
+ * limit, it is simply the number Samuel asked to be shown.
+ */
+function TurnLimits({ view, periodText }: { view: CostView; periodText: string }) {
+  const t = view.turnLimits;
+  const reached = anyThresholdReached(t.surfaces);
+  const totalReached = t.surfaces.reduce((n, r) => n + r.reached, 0);
+  // FR-2406: `detail` is null for an operator without student-data, and then
+  // neither the list nor the highest count was read.
+  const detail = t.detail;
+  return (
+    <Panel
+      title="Turn limits — observed, not enforced"
+      tone={reached ? "attention" : "neutral"}
+      right={
+        <Chip tone={reached ? "attention" : "neutral"}>
+          {reached
+            ? `${int(totalReached)} conversation${totalReached === 1 ? "" : "s"} reached a threshold`
+            : "no threshold reached"}
+        </Chip>
+      }
+      note={
+        <>
+          Until v0.9.0 each function refused the next turn once a conversation had this many
+          replies, and locked the student&apos;s input. <strong>Nothing is refused any more</strong>{" "}
+          (ADR-0023); the numbers are kept as thresholds so we can see how often they would have
+          fired. A conversation is counted when any of its turns falls in the {periodText}, and
+          its replies are every answer it delivered — the count the old limit read. Before v0.9.0
+          the refused turn was never recorded, so an older conversation can show
+          &ldquo;reached&rdquo; but never &ldquo;went past&rdquo;.
+        </>
+      }
+    >
+      <div className="overflow-x-auto rounded border border-line bg-card">
+        <table className="w-full border-collapse text-[13px]">
+          <thead>
+            <tr className="border-b border-line text-ink-soft">
+              <Th>Function</Th>
+              <Th right>Threshold</Th>
+              <Th right>Conversations</Th>
+              <Th right>Reached it</Th>
+              <Th right>Went past it</Th>
+              {detail ? <Th right>Most replies in one</Th> : null}
+            </tr>
+          </thead>
+          <tbody>
+            {t.surfaces.map((r) => (
+              <tr key={r.surface} className="border-b border-line-soft last:border-0">
+                <Td>
+                  {SURFACE_LABEL[r.surface] ?? r.surface}{" "}
+                  <span className="font-mono text-[11px] text-ink-faint">{r.surface}</span>
+                </Td>
+                <Td right mono>
+                  {r.threshold} replies
+                </Td>
+                <Td right mono>
+                  {int(r.conversations)}
+                </Td>
+                <Td right mono>
+                  {r.reached > 0 ? (
+                    <Chip tone="attention">{share(r.reached, r.conversations)}</Chip>
+                  ) : (
+                    share(r.reached, r.conversations)
+                  )}
+                </Td>
+                <Td right mono>
+                  {share(r.past, r.conversations)}
+                </Td>
+                {detail ? (
+                  <Td right mono>
+                    {r.conversations === 0 || r.highest == null ? "—" : int(r.highest)}
+                  </Td>
+                ) : null}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-2 text-[11.5px] text-ink-faint">
+        Conversations with at least one turn in the {periodText}, this environment only. Ask the
+        Spine never had a limit and is not counted.
+      </p>
+
+      {detail == null ? (
+        <p className="mt-4 text-[12.5px] leading-relaxed text-ink-soft">
+          {STUDENT_DATA_NOTE_TURNS}
+        </p>
+      ) : (
+        <ReachedConversations detail={detail} periodText={periodText} />
+      )}
+    </Panel>
+  );
+}
+
+/** What a billing-only operator reads in place of the gated parts (FR-2406). */
+const STUDENT_DATA_NOTE_TURNS =
+  "Which conversations, and their reply counts, need the student-data role (FR-2406).";
+const STUDENT_DATA_NOTE_UPLOADS =
+  "Which students, and their upload counts, need the student-data role (FR-2406).";
+
+/** FR-3404 — only ever rendered from a `detail` the read produced for a student-data holder. */
+function ReachedConversations({
+  detail,
+  periodText,
+}: {
+  detail: NonNullable<CostView["turnLimits"]["detail"]>;
+  periodText: string;
+}) {
+  return (
+    <>
+      <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+        Most recent conversations that reached a threshold
+      </h3>
+      {detail.recent.length === 0 ? (
+        <div className="mt-2">
+          <Empty>No conversation reached a threshold in the {periodText}.</Empty>
+        </div>
+      ) : (
+        <>
+          <div className="mt-2 overflow-x-auto rounded border border-line bg-card">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th>Reached at</Th>
+                  <Th>Function</Th>
+                  <Th>Lesson</Th>
+                  <Th>Student</Th>
+                  <Th>Replies</Th>
+                  <Th>Session</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {detail.recent.map((c) => (
+                  <tr
+                    key={`${c.studentId}-${c.surface}-${c.reachedAt}`}
+                    className="border-b border-line-soft last:border-0"
+                  >
+                    <Td mono>{stamp(c.reachedAt)}</Td>
+                    <Td>{SURFACE_LABEL[c.surface] ?? c.surface}</Td>
+                    <Td>
+                      <LessonLabel c={c} />
+                    </Td>
+                    <Td>
+                      {c.displayName ?? "name not recorded"}{" "}
+                      <span className="font-mono text-[11px] text-ink-faint">#{c.studentId}</span>
+                    </Td>
+                    <Td>
+                      <Chip tone="attention">
+                        {thresholdChipLabel(c.surface, c.delivered) ?? `${c.delivered} replies`}
+                      </Chip>
+                    </Td>
+                    <Td>
+                      {c.sessionId == null ? (
+                        <span className="text-[12px] text-ink-faint">no session recorded</span>
+                      ) : (
+                        <Link
+                          href={`/students/${c.studentId}/sessions/${c.sessionId}`}
+                          className="whitespace-nowrap text-accent underline-offset-2 hover:underline"
+                        >
+                          Session #{c.sessionId} →
+                        </Link>
+                      )}
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
+            Newest first, by when the conversation delivered its threshold-th reply — the moment
+            the old limit would have stopped it.{" "}
+            {detail.recentCapped
+              ? `Only the ${detail.recentLimit} most recent are listed; more than that reached a threshold in the ${periodText}, and the counts above include them all.`
+              : `Every conversation that reached a threshold in the ${periodText} is listed.`}
+          </p>
+        </>
+      )}
+    </>
+  );
+}
+
+/* -------------------------------------------------------- photo uploads */
+
+/**
+ * Photo uploads, observed (ADR-0023, FR-3409): how many, how the parses
+ * ended, what they cost, and how often a student reached the old limit of ten
+ * in 24 hours. The dollars are the headline's photo/OCR figure, reused rather
+ * than re-counted, and never added to teaching (FR-2402). Counts, ids and
+ * money only (FR-2406): no file, no parsed text.
+ */
+function PhotoUploads({ view, periodText }: { view: CostView; periodText: string }) {
+  const u = view.uploads;
+  const t = u.threshold;
+  const parses = u.parses.delivered + u.parses.failed + u.parses.other;
+  const nothing = u.uploads === 0 && parses === 0 && view.upload.turns === 0;
+  const reached = t.reached > 0;
+  const priced = view.upload.turns - view.upload.unpricedTurns;
+  return (
+    <Panel
+      title="Photo uploads — observed, not enforced"
+      tone={reached ? "attention" : "neutral"}
+      right={
+        nothing ? undefined : (
+          <Chip tone={reached ? "attention" : "neutral"}>
+            {reached
+              ? `${int(t.reached)} student-day${t.reached === 1 ? "" : "s"} reached ${t.threshold}`
+              : `no student reached ${t.threshold}`}
+          </Chip>
+        )
+      }
+      note={
+        <>
+          Until v0.9.0 a student could upload {t.threshold} photos or PDFs in 24 hours and the next
+          one was refused. <strong>No upload is refused for count any more</strong>{" "}
+          (ADR-0023); the 10 MB size limit and the JPEG, PNG or PDF type check still apply, because
+          neither is a count.
+          {nothing
+            ? null
+            : " The cost below is the headline's photo/OCR figure, the same dollars, never added to teaching."}
+        </>
+      }
+    >
+      {nothing ? (
+        <Empty>
+          No photo or PDF was uploaded in the <strong>{view.environment}</strong> environment over
+          the {periodText}. That means nobody used it, not that it is free. The figures appear with
+          the first upload.
+        </Empty>
+      ) : (
+        <>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <Figure
+              label="Uploads"
+              value={int(u.uploads)}
+              unit={`photo${u.uploads === 1 ? "" : "s"} and PDFs`}
+              period={periodText}
+              hint={`${int(u.students)} student${u.students === 1 ? "" : "s"} uploaded.`}
+            />
+            <Figure
+              label="Parses"
+              value={int(parses)}
+              unit="recorded in the ledger"
+              period={periodText}
+              hint={
+                <>
+                  {int(u.parses.delivered)} delivered · {int(u.parses.failed)} failed
+                  {u.parses.other > 0 ? ` · ${int(u.parses.other)} other` : ""}. One parse per
+                  upload, written when it ends.
+                </>
+              }
+            />
+            <Figure
+              label={BUCKET_LABEL.upload}
+              value={usd(view.upload.costUsd)}
+              unit={IMPUTED}
+              period={periodText}
+              hint="The headline's photo/OCR figure, not a second count."
+            />
+            <Figure
+              label="Average per upload"
+              value={priced <= 0 ? "—" : usd(view.upload.costUsd / priced)}
+              unit={IMPUTED}
+              period={periodText}
+              hint={
+                priced <= 0
+                  ? "No parse in this period was priced."
+                  : `Over ${int(priced)} priced parse${priced === 1 ? "" : "s"}${
+                      view.upload.unpricedTurns > 0
+                        ? `; ${int(view.upload.unpricedTurns)} unpriced left out, not counted as free`
+                        : ""
+                    }.`
+              }
+            />
+          </div>
+
+          <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+            Student-days at {t.threshold} uploads in 24 hours
+          </h3>
+          <div className="mt-2 overflow-x-auto rounded border border-line bg-card">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th right>Threshold</Th>
+                  <Th right>Student-days with an upload</Th>
+                  <Th right>Reached it</Th>
+                  <Th right>Went past it</Th>
+                  {u.detail ? <Th right>Most in 24 hours</Th> : null}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <Td right mono>
+                    {t.threshold} uploads
+                  </Td>
+                  <Td right mono>
+                    {int(t.studentDays)}
+                  </Td>
+                  <Td right mono>
+                    {reached ? (
+                      <Chip tone="attention">{share(t.reached, t.studentDays)}</Chip>
+                    ) : (
+                      share(t.reached, t.studentDays)
+                    )}
+                  </Td>
+                  <Td right mono>
+                    {share(t.past, t.studentDays)}
+                  </Td>
+                  {u.detail ? (
+                    <Td right mono>
+                      {t.studentDays === 0 || t.highest == null ? "—" : int(t.highest)}
+                    </Td>
+                  ) : null}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
+            Counted the way the old limit counted: at each upload, that student&apos;s uploads in the
+            24 hours before it, itself included. A student-day is one student&apos;s uploads on one
+            UTC date, at the highest count any of them reached.
+          </p>
+
+          {/* FR-2406: `detail` is null without student-data — the list and the
+              highest count were not read. */}
+          {u.detail == null ? (
+            <p className="mt-4 text-[12.5px] leading-relaxed text-ink-soft">
+              {STUDENT_DATA_NOTE_UPLOADS}
+            </p>
+          ) : (
+            <ReachedStudentDays detail={u.detail} periodText={periodText} />
+          )}
+        </>
+      )}
+    </Panel>
+  );
+}
+
+/** FR-3409's list — only ever rendered from a `detail` read for a student-data holder. */
+function ReachedStudentDays({
+  detail,
+  periodText,
+}: {
+  detail: NonNullable<CostView["uploads"]["detail"]>;
+  periodText: string;
+}) {
+  if (detail.recentDays.length === 0) return null;
+  return (
+    <>
+      <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+        Most recent student-days that reached it
+      </h3>
+      <div className="mt-2 overflow-x-auto rounded border border-line bg-card">
+        <table className="w-full border-collapse text-[13px]">
+          <thead>
+            <tr className="border-b border-line text-ink-soft">
+              <Th>Date, UTC</Th>
+              <Th>Student</Th>
+              <Th>Uploads in 24 hours</Th>
+              <Th right>Uploads that date</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {detail.recentDays.map((d) => (
+              <tr key={`${d.studentId}-${d.day}`} className="border-b border-line-soft last:border-0">
+                <Td mono>{d.day}</Td>
+                <Td>
+                  {d.displayName ?? "name not recorded"}{" "}
+                  <span className="font-mono text-[11px] text-ink-faint">#{d.studentId}</span>
+                </Td>
+                <Td>
+                  <Chip tone="attention">{uploadChipLabel(d.most) ?? `${d.most} uploads`}</Chip>
+                </Td>
+                <Td right mono>
+                  {int(d.uploads)}
+                </Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
+        Newest first.{" "}
+        {detail.recentCapped
+          ? `Only the ${detail.recentLimit} most recent are listed; more than that reached it in the ${periodText}, and the counts above include them all.`
+          : `Every student-day that reached it in the ${periodText} is listed.`}
+      </p>
+    </>
+  );
+}
+
+/** The course, the lesson slug and the first objective the conversation was grounded on. */
+function LessonLabel({ c }: { c: ThresholdConversation }) {
+  const subject = subjectOfCourse(c.courseId);
+  const course = subject ? displayLabel(SUBJECTS[subject]) : c.courseId;
+  const head = [course, c.lessonSlug ? `lesson ${c.lessonSlug}` : null].filter(Boolean).join(" · ");
+  if (!head && !c.loLabel) return <span className="text-[12px] text-ink-faint">not recorded</span>;
+  return (
+    <>
+      {head || null}
+      {c.loLabel ? (
+        <span className="block text-[11.5px] leading-snug text-ink-faint">{c.loLabel}</span>
+      ) : null}
+    </>
   );
 }
 

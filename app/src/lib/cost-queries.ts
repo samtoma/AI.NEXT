@@ -21,6 +21,12 @@ import {
   tokensFromUsage,
   type Outcome,
 } from "@/lib/pricing";
+import {
+  readTurnLimitsView,
+  type CostDetailAccess,
+  type TurnLimitsView,
+} from "@/lib/turn-threshold-queries";
+import { readUploadsView, type UploadsView } from "@/lib/upload-threshold-queries";
 
 /**
  * What the AI actually costs, per student and over time, honestly labelled
@@ -74,9 +80,19 @@ import {
  *
  * **No student content, anywhere in this file** (FR-2406). Every column
  * selected is an id, a name, a count, a token figure, a dollar figure, a
- * timestamp or a status word. There is no message, no transcript, no preview
- * and no turn count of a conversation — and `cost-billing` holds no grant that
- * would let one be read even if a query here asked.
+ * timestamp or a status word. There is no message, no transcript and no
+ * preview. **Since v0.9.0 there IS a reply count per conversation** — the turn
+ * thresholds are observed rather than enforced (ADR-0023, FR-3403, FR-3404),
+ * and how often a conversation reaches one is a number about spend. It is read
+ * by `lib/turn-threshold-queries.ts` and carries a count, a surface, a lesson
+ * slug and curriculum labels; never a word the student or the tutor wrote.
+ * The upload panel (FR-3409) reads `uploads.student_id` and `created_at` and
+ * the ledger's `outcome`, never a file, a path or parsed text
+ * (`lib/upload-threshold-queries.ts`). **Both panels send a billing-only
+ * operator aggregates only**: a conversation or a student beside a turn or
+ * upload count is read only for an operator who also holds `student-data`
+ * (`costDetailAccess`), so FR-2406's "no turn count of a conversation" holds
+ * for `cost-billing` by what is queried, not by what is drawn.
  */
 
 /* ----------------------------------------------------------------- types */
@@ -155,6 +171,17 @@ export type CostView = {
   priceCheck: PriceCheck;
   /** The most recent day the rollup has stored, or null if it has never run. */
   rolledThrough: string | null;
+  /**
+   * How often conversations reached the per-surface reply thresholds in the
+   * period — observed, not enforced (ADR-0023, FR-3403, FR-3404).
+   */
+  turnLimits: TurnLimitsView;
+  /**
+   * Photo uploads in the period: counts, parse outcomes and how often a
+   * student reached the old daily limit (ADR-0023, FR-3409). Its spend is NOT
+   * here — it is `upload` above, the one photo/OCR figure (FR-2402).
+   */
+  uploads: UploadsView;
 };
 
 const num = (v: unknown): number => {
@@ -182,7 +209,14 @@ export const TODAY_UTC = `(now() AT TIME ZONE 'UTC')::date`;
 
 export async function getCostView(
   operatorId: number,
-  periodDays: PeriodDays
+  periodDays: PeriodDays,
+  /**
+   * What the two threshold panels may carry beyond aggregates — from
+   * `costDetailAccess(roles)`, never from the request. A billing-only
+   * operator's view is built without the per-conversation and per-student
+   * reads at all (FR-2406).
+   */
+  access: CostDetailAccess
 ): Promise<CostView> {
   // THE PERIOD IS N WHOLE UTC DAYS ENDING TODAY, and the same N in both
   // sources — not "the last 720 hours" in the ledger and "the last 30 dates" in
@@ -193,8 +227,18 @@ export async function getCostView(
   const scope = `ai.environment = $1 AND ${UTC_DAY} > ${TODAY_UTC} - $2::int`;
   const args = [ENVIRONMENT, String(periodDays)];
 
-  const [totals, bySurface, byKind, byOutcome, perStudentRows, seriesRows, models, rolled] =
-    await withOperator(operatorId, (db) =>
+  const [
+    totals,
+    bySurface,
+    byKind,
+    byOutcome,
+    perStudentRows,
+    seriesRows,
+    models,
+    rolled,
+    turnLimits,
+    uploads,
+  ] = await withOperator(operatorId, (db) =>
       sequential([
         // 1. The period, as one figure. `cost_usd IS NULL` is an UNPRICED turn
         //    — tokens nobody counted — and is reported as a count rather than
@@ -319,6 +363,12 @@ export async function getCostView(
             `SELECT max(cd.day)::text AS through FROM cost_daily cd WHERE cd.environment = $1`,
             [ENVIRONMENT]
           ),
+        // 9. THE TURN THRESHOLDS — observed, not enforced (ADR-0023). Same
+        //    environment, same whole-UTC-day period, on this same client.
+        () => readTurnLimitsView(db, periodDays, access),
+        // 10. PHOTO UPLOADS — observed, not enforced (ADR-0023, FR-3409).
+        //     Counts and outcomes only; the spend is figure 5's upload bucket.
+        () => readUploadsView(db, periodDays, access),
       ] as const)
     );
 
@@ -397,6 +447,8 @@ export async function getCostView(
       legacyTurns: num(totals.rows[0]?.legacy),
     }),
     rolledThrough: rolled.rows[0]?.through ? String(rolled.rows[0].through) : null,
+    turnLimits,
+    uploads,
   };
 }
 

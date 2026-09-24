@@ -10,6 +10,60 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.9.0] — 2026-09-24
+
+The turn and upload limits become numbers the console watches instead of walls a student hits, and
+with probing on, asking for the answer waits for the second attempt like the card does. Explainer:
+[`docs/releases/v0.9.0.html`](docs/releases/v0.9.0.html).
+
+### Changed — turn and upload limits are now watched, not enforced (ADR-0023, FR-3401…FR-3409)
+- **Noor no longer stops a conversation after a fixed number of replies.** Until now the tutor
+  refused to answer past a per-surface limit and locked the input: 2 replies per question when asking
+  Noor about a question, 18 in a lesson's teach-and-practice mode, 5 in a lesson's quick review mode. Samuel removed the
+  limits — *"we need to know how often those limits are triggered"* — so a student can now keep a
+  conversation going for as long as they need it (FR-3401).
+- **A student can now upload as many photos or PDFs a day as they need.** Until now the 11th upload
+  in a day was refused. Samuel removed this one too, the same day — *"please remove the limit of the
+  photo uploads for now as well"* — on the same terms: only the daily count is gone. The 10 MB size
+  limit and the JPEG/PNG/PDF type limit are unchanged; neither one counts uploads (FR-3407).
+- **Worst-case spend per conversation, and per student's uploads, is now unbounded**, and both are
+  watched in the console instead of being capped on the server. The numbers above are unchanged and
+  still mean something — they are now *observed thresholds* rather than a hard stop.
+
+### Added
+- **The console's Cost page gets a "Turn limits — observed, not enforced" panel**: for the period
+  you're looking at, and per surface, it shows how many conversations there were, how many reached
+  their threshold (and what share that is), how many went further still, and the longest conversation
+  seen — highlighted whenever any conversation reached a threshold in that period. It also lists the
+  most recent conversations that reached a threshold, each linked to its session (FR-3403, FR-3404).
+- **The Cost page also gets photo-upload monitoring**: uploads in the period, the students who
+  uploaded, how each was parsed, and upload/OCR spend with its average per upload — kept separate
+  from tutoring spend, as it already was. It shows how many student-days reached or went past the old
+  daily limit, highlighted whenever any did, with a list of those student-days (FR-3409).
+- **A session that reached its threshold is flagged** — in amber, never red — on the student's session
+  list, on its timeline, and in its replay, so an operator can see it without opening the Cost page
+  first (FR-3405).
+
+### Removed
+- The three "you've reached the limit" messages a student could see mid-conversation, and the input
+  lock that came with them.
+- The "that's 10 uploads today" message and the upload lock.
+
+Requirements: FR-3401…FR-3409 in `specs/002-identity-and-admin-console/spec.md`, superseding the
+baseline's FR-051 and the cap clause of 001's `T047`. Record:
+[ADR-0023](docs/decisions/0023-turn-limits-observed-not-enforced.md).
+
+### Changed — Socratic probing: asking for the answer no longer skips a step (ADR-0021, FR-3112)
+- **While probing is on, asking the tutor for the answer no longer gets it early.** The card already
+  waited for a student's second wrong attempt before showing the answer; the tutor's own words did
+  not — asking "just tell me" could get it after only one. Samuel: *"it should be 2 questions as
+  well."* Both now agree: nothing — not asking, not the tutor's own judgement — reveals it before the
+  second wrong attempt on that objective. This applies only while a sitting is probing, which in
+  production today means test accounts only.
+
+Requirements: FR-3112 in `specs/002-identity-and-admin-console/spec.md`. Record:
+[ADR-0021](docs/decisions/0021-runtime-teaching-toggle-and-testers.md#amendment-2026-09-24--reveal-threshold).
+
 ## [v0.8.0] — 2026-09-24
 
 Console sign-in from the email Cloudflare Access has already verified. A security review read it

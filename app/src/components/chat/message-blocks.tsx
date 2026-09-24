@@ -185,9 +185,11 @@ export function renderChatBlocks(blocks: Block[], o: BlockRenderOptions = {}): R
   const out: ReactNode[] = [];
   blocks.forEach((b, i) => {
     if (b.t === "highlight" || b.t === "finish" || b.t === "beat") return;
-    // Socratic-probing directives (`507bb31`): consumed once per completed
-    // message by ChatCore's send(), never rendered — a replay shows nothing
-    // where the student saw nothing.
+    // Socratic-probing directives (`507bb31`): never rendered — a replay
+    // shows nothing where the student saw nothing. `answer_submitted` is
+    // consumed once per completed message by ChatCore's send();
+    // `reveal_answer` is no longer acted on at all (FR-3112) and is still
+    // swallowed here so a model that emits it shows no protocol text.
     if (b.t === "answer_submitted" || b.t === "reveal_answer") return;
 
     // Each of these asks "is there a slot" and NOT "did the slot return

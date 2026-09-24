@@ -43,7 +43,6 @@ import {
  */
 export {
   MAX_UPLOAD_BYTES,
-  DAILY_UPLOAD_CAP,
   isAcceptedUploadType as isAccepted,
 } from "@/lib/upload-contract";
 
@@ -71,20 +70,14 @@ function uploadRoot(): string {
   return process.env.AINEXT_UPLOAD_DIR ?? path.join(process.env.TMPDIR ?? "/tmp", "ainext-uploads");
 }
 
-/** Uploads used today, for the per-student cap (FR-047). */
-export async function uploadsToday(
-  studentId: number,
-  c?: Db
-): Promise<number> {
-  const res = await scoped(studentId, c, (db) =>
-    db.query(
-      `SELECT count(*) AS n FROM uploads
-        WHERE student_id = $1 AND created_at > now() - interval '1 day'`,
-      [studentId]
-    )
-  );
-  return Number(res.rows[0].n);
-}
+/*
+ * `uploadsToday` lived here until v0.9.0 and fed the per-student daily cap
+ * (T047). The cap is gone (ADR-0023, FR-3407) and nothing else called it. Its
+ * window, `created_at > now() - interval '1 day'` (rolling 24 hours, no
+ * timezone), is reproduced for the console by `lib/upload-threshold-queries.ts`,
+ * which counts how often a student reaches the old number instead of
+ * refusing the upload that would pass it.
+ */
 
 export async function storeUpload(
   studentId: number,

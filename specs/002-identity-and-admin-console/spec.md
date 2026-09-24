@@ -6,7 +6,13 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix); **FR-3105** (a sitting that stopped probing never starts again), FR-3106, FR-3107 and FR-3111 amended in place, each marked. Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 (reveal threshold) — **FR-3112** added: while a sitting probes, the
+answer and worked solution are withheld until the student's second wrong attempt on the objective,
+whether asked for or not (Samuel, ADR-0021's 2026-09-24 amendment; the one prompt change his ADR-0020
+hold permits). Before that, 2026-09-24 (gating correction) — **FR-3403, FR-3404, FR-3409** amended in place to
+say what the code actually gates: the highest-reply figure, the FR-3404 conversation list and the
+FR-3409 student-day upload list are shown, and queried, only for an operator who also holds
+`student-data` — cite FR-2406. Before that, 2026-09-24 (upload limit) — **FR-3407…FR-3409** added ([ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md), amended the same day to cover the daily upload cap too); superseded the cap clause of 001's `T047`. Before that, 2026-09-24 (turn limits) — **FR-3401…FR-3406** added (same ADR), turn limits become observed thresholds, not an enforced cap; superseded 001's `FR-051`. Before that, 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix); **FR-3105** (a sitting that stopped probing never starts again), FR-3106, FR-3107 and FR-3111 amended in place, each marked. Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -33,6 +39,18 @@ analytics.
 > **Amended 2026-09-24 (v0.8.0)**: **FR-3301…FR-3312** — console sign-in from the Cloudflare Access
 > identity ([ADR-0022](../../docs/decisions/0022-console-signin-from-cloudflare-access.md)), placed
 > after FR-2211 in *Admin console & roles* because it is how an operator reaches that console.
+>
+> **Amended 2026-09-24 (v0.9.0 in progress)**: **FR-3401…FR-3406** — Samuel: *"remove the limits,
+> make them highlight in the admin console, we need to know how often those limits are triggered"*
+> ([ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md)). No surface refuses a
+> turn for count any more; the three per-surface numbers survive as named, observed thresholds shown
+> in the console. Supersedes 001's `FR-051`.
+>
+> **Amended again the same day**: **FR-3407…FR-3409** — Samuel's follow-up: *"please remove the
+> limit of the photo uploads for now as well, and add the monitoring and cost if any in the admin
+> console"* (same ADR-0023, retitled to cover both limits). The daily upload cap (10/student/day) is
+> withdrawn the same way; size and type checks are untouched; the Cost page gains photo-upload
+> monitoring alongside FR-2402's existing spend split. Supersedes the cap clause of 001's `T047`.
 
 ## Why this feature exists
 
@@ -843,6 +861,13 @@ password sign-in.
 > **When a change reaches a student** (Samuel, 2026-09-24, option B): Off applies to the student's
 > next message; On applies from their next sitting. FR-3105 states it.
 >
+> **FR-3112, added the same day**: Samuel, replying to one of #53's items — *"for the The student
+> asks for the answer … it should be 2 questions as well."* The card already held the answer back
+> until the student's second wrong attempt; the tutor's own instructions let it be talked out of the
+> same answer after only one. Both paths now agree. Unlike FR-3101…FR-3111, this is a **prompt
+> change** — ADR-0020 holds those generally, and this is the one rule Samuel authorised against that
+> hold ([ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md)'s 2026-09-24
+> amendment).
 > Implementation status is in `traceability.md` here, §7e.
 
 - **FR-3101**: The console MUST offer a switch for Socratic probing with exactly three positions —
@@ -882,6 +907,11 @@ password sign-in.
   student's message is refused by the lesson's turn limit**. A response that is not about the lesson —
   an answer recorded outside the lesson's sitting — MUST NOT change what the student's device holds.
   *(Amended 2026-09-24, fix pass 2: the turn-limit case and the "not about the lesson" case added.)*
+  *(Superseded 2026-09-24, ADR-0023: no message is ever refused by a turn limit any more, so the
+  turn-limit clause above is vacuous rather than violated — recorded, not deleted, because it is what
+  "follow the server's answer" meant while a `cap` frame existed. `peekSessionProbing` and the `cap`
+  frame's probing declaration are removed; the session frame is now the only declaration
+  `probingDeclaredBy` reads.)*
 - **FR-3107**: An operator holding **both** the student-data role and the teaching-controls role
   MUST be able to mark a student account as a **test account**, and remove the mark in one action,
   from that student's page; **neither role alone may**, and the page MUST say beside the control that
@@ -914,6 +944,12 @@ password sign-in.
   once the switch is changed or the student's mark is removed, and does not start again in that
   sitting (FR-3105). They MUST say "not recorded" for sittings from before it was recorded, rather
   than guessing. *(Amended 2026-09-24, fix pass 2: was "follows the switch from then".)*
+- **FR-3112** **[ADDED 2026-09-24 — Samuel]**: While a sitting probes, the correct answer and the
+  worked solution MUST be withheld after a wrong result until the student's second attempt on that
+  objective. Neither a request to be told the answer nor any tutor directive MUST shorten this.
+  Probing Off is unchanged. *(This is a prompt change; ADR-0020 held prompt changes generally —
+  Samuel authorised this one rule only, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md)'s
+  2026-09-24 amendment.)*
 
 ### Shipped in v0.6.0 without a requirement — now written (FR-3201…) **[ADDED 2026-09-24]**
 
@@ -972,6 +1008,70 @@ password sign-in.
   when it has nothing to change.
 - **FR-3214**: The misconception catalogue MUST re-sync on every deploy without duplicating anything
   or changing a question's status, and every live misconception MUST have an explanation.
+
+### Turn and upload limits observed, not enforced (FR-3401…) **[ADDED 2026-09-24 — ADR-0023]**
+
+> Samuel, 2026-09-24, verbatim: *"remove the limits, make them highlight in the admin console, we
+> need to know how often those limits are triggered."* Until this decision `api/ask/route.ts`
+> refused a student's turn once a conversation reached a per-surface cap (`student_chat` 2,
+> `lesson_learn` 18, `lesson_review` 5, `spine_chat` uncapped) and locked the input. That refusal is
+> gone. The three numbers are not gone — they move to a named constant and become **observed
+> thresholds**: crossing one changes nothing for the student and is counted and shown to an operator.
+> [ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md) is the record; **FR-3401
+> …FR-3406** are what the code is held to. They supersede 001's `FR-051`.
+>
+> **The same day, Samuel extended it**: *"please remove the limit of the photo uploads for now as
+> well, and add the monitoring and cost if any in the admin console."* `api/uploads/route.ts` had its
+> own daily count — 10 uploads per student per day (`DAILY_UPLOAD_CAP`, 001 `T047`) — refused with a
+> `429` past it. **FR-3407…FR-3409** withdraw that refusal on the same terms as the turn caps above,
+> and ADR-0023 is amended, not replaced, to cover both. Unlike the turns, **production has served
+> zero uploads to date**, so there is no evidence yet of what removing this one costs — the Cost
+> page's monitoring (FR-3409) is how that becomes knowable rather than assumed.
+>
+> **Amended again, same day: FR-2406 gates the console's new detail, not just its old sessions
+> link.** The Cost page already refused to link a session without `student-data`; the same rule now
+> covers the two new monitoring panels' student-identifying parts — the FR-3404 conversation list,
+> the FR-3403 highest-reply figure, and the FR-3409 student-day upload list. A `cost-billing`
+> operator without `student-data` sees the aggregates and a note citing FR-2406 where each would be;
+> none of the three is queried on their behalf, not merely hidden after the fact.
+
+- **FR-3401**: No surface MUST refuse a student's turn because of how many replies the conversation
+  has had. A student MUST never see a limit message or a locked input on account of a reply count.
+- **FR-3402**: Each surface's threshold — `student_chat` 2, `lesson_learn` 18, `lesson_review` 5,
+  `spine_chat` none — MUST be one named constant, read by the console and by the review-mode finish
+  nudge, so the number is defined once and the nudge and the console can never disagree about it.
+- **FR-3403**: The Cost page MUST show, for the chosen period and per surface: how many conversations
+  there were, how many **reached** their threshold (count and share), and how many **went past** it —
+  MUST be visually highlighted whenever any conversation in the period reached a threshold. The
+  highest reply count seen MUST be shown, and queried, only for an operator who also holds
+  `student-data`; an operator without it MUST see a note citing FR-2406 in its place, never the
+  figure, and the figure MUST NOT be queried on their behalf (FR-2406).
+- **FR-3404**: The Cost page MUST list the most recent conversations that reached a threshold, each
+  linked to its session wherever one is recorded — MUST be shown, and queried, only for an operator
+  who also holds `student-data`; an operator without it MUST see a note citing FR-2406 in the list's
+  place, and the list MUST NOT be queried on their behalf.
+- **FR-3405**: The session list, the session timeline and replay MUST each mark a session whose
+  conversation reached its threshold, in the product's attention treatment — amber, never red
+  (FR-1002).
+- **FR-3406**: A threshold crossing MUST be counted per environment, using the same conversation key
+  and the same "delivered reply" definition the old cap used — surface, chat session and student;
+  `outcome = 'ok'` in `ai_interactions` — and MUST NOT be pooled across environments or solutions
+  (constitution XI).
+- **FR-3407**: No upload MUST be refused because of how many the student has already sent that day; a
+  student MUST never see an upload-limit message. The size limit (≤10 MB), the accepted-type limit
+  (JPEG/PNG/PDF), and the unverified-email refusal (FR-2004) are unchanged — none of them counts
+  uploads, and none is withdrawn by this requirement.
+- **FR-3408**: The old daily number MUST be kept as one named, observed threshold —
+  `DAILY_UPLOAD_THRESHOLD = 10`, per student per day — in `lib/turn-thresholds.ts`, on the same terms
+  as FR-3402.
+- **FR-3409**: The Cost page MUST show photo-upload monitoring for the chosen period: uploads, the
+  students who uploaded, parse outcomes, and upload/OCR spend with its average per upload — kept
+  separate from tutoring spend (FR-2402), never blended into it. It MUST also show how many
+  student-days reached or went past the daily threshold, highlighted whenever any did. The list of
+  those student-days MUST be shown, and queried, only for an operator who also holds `student-data`;
+  an operator without it MUST see a note citing FR-2406 in the list's place, and the list MUST NOT be
+  queried on their behalf. The data MUST be per environment (constitution XI) and MUST carry no
+  upload content (FR-2406) regardless of role.
 
 ### Deferred by design — architecture only (FR-2901…)
 
@@ -1097,6 +1197,7 @@ than deleted:
 | **FR-501** — parent view through the student picker | REVISED, accepting that any parent sees any student | **FR-2901, FR-2902** — the picker is withdrawn; the parent link is modelled, the view deferred |
 | **FR-604** — account-sharing deterrence | DEFERRED, "there are no accounts to share" | **FR-2009** — the student sees and can end every place their account is signed in |
 | **FR-606** — per-person operator authorisation | BLOCKED on FR-106 | **FR-2202, FR-2203, FR-2204** — unblocked; four roles, one authorisation point, content-review named as a safety control |
+| **FR-051** — server-enforced per-surface turn caps MUST bound spend | KEEP (baseline, `specs/000-baseline/spec.md`) | **FR-3401…FR-3406** — no surface refuses a turn for count any more; the same three numbers survive as named, observed thresholds shown in the console ([ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md)) |
 
 Noted, not superseded: **FR-105** carries over, with "last selected student" becoming "the signed-in
 student"; **FR-603** is unchanged in substance, with FR-2101…FR-2103 moving enforcement beneath the

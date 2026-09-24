@@ -225,6 +225,15 @@ check FR-2401 "/cost shows an outcome breakdown" "$ok"
 ok=0; [[ "$COST_BODY" == *"<svg"* ]] && ok=1
 check FR-2401 "/cost renders an inline <svg> sparkline" "$ok"
 
+# v0.9.0 (ADR-0023): the turn-threshold panel. Samuel holds student-data as
+# well as cost-billing, so the per-conversation column is drawn for him — the
+# counterweight to the cost-only checks in section 4, which would otherwise
+# pass on a page where the panel had simply disappeared.
+ok=0; [[ "$COST_BODY" == *"Turn limits — observed, not enforced"* ]] && [[ "$COST_BODY" == *"Most replies in one"* ]] && ok=1
+check FR-3403 "/cost (student-data + cost-billing) shows the turn-limit panel with the most-replies column" "$ok"
+ok=1; [[ "$COST_BODY" == *"need the student-data role (FR-2406)"* ]] && ok=0
+check FR-2406 "/cost (student-data + cost-billing) does not show the billing-only note" "$ok"
+
 for p in 7 30 90; do
   code=$(req GET "$CONSOLE" "/cost?period=$p" "$JAR_SAMUEL")
   check FR-2211 "/cost?period=$p -> 200 (got $code)" "$([ "$code" = 200 ] && echo 1 || echo 0)"
@@ -243,6 +252,30 @@ check FR-2406 "cost-only: /cost -> 200 (got $code)" "$([ "$code" = 200 ] && echo
 ok=1
 [[ "$COSTONLY_BODY" == *"/sessions/"* ]] && ok=0
 check FR-2406 "cost-only: /cost has no /sessions/ link (no transcript access)" "$ok"
+
+# v0.9.0 (ADR-0023, FR-3403/3404/3409): the threshold panels send a
+# billing-only operator aggregates only. No conversation beside a reply count
+# and no student beside an upload count may reach this page: not the
+# conversation list, not the most-replies column (a single conversation's turn
+# count), not the student-day list, not the most-in-24-hours column, and no
+# per-conversation or per-student chip ("Reached 18 replies", "Past 10 uploads
+# · 12"). The aggregates and the note that replaces the gated parts must be
+# there, so this cannot pass by the panel being absent.
+ok=0; [[ "$COSTONLY_BODY" == *"Turn limits — observed, not enforced"* ]] && ok=1
+check FR-2406 "cost-only: /cost still shows the turn-limit aggregates panel" "$ok"
+ok=0; [[ "$COSTONLY_BODY" == *"Which conversations, and their reply counts, need the student-data role (FR-2406)."* ]] && ok=1
+check FR-2406 "cost-only: /cost says which conversations need student-data, in place of the list" "$ok"
+ok=1
+for marker in "Most recent conversations that reached a threshold" "Most replies in one" \
+              "Most recent student-days that reached it" "Most in 24 hours"; do
+  [[ "$COSTONLY_BODY" == *"$marker"* ]] && { ok=0; note "cost-only /cost carries: $marker"; }
+done
+check FR-2406 "cost-only: /cost has no per-conversation or per-student threshold list or highest column" "$ok"
+ok=1
+if printf '%s' "$COSTONLY_BODY" | grep -qE '(Reached|Past) [0-9]+ (replies|uploads)'; then
+  ok=0; note "cost-only /cost carries a per-conversation/per-student chip: $(printf '%s' "$COSTONLY_BODY" | grep -oE '(Reached|Past) [0-9]+ (replies|uploads)[^<]{0,8}' | head -3 | tr '\n' ' ')"
+fi
+check FR-2406 "cost-only: /cost carries no per-conversation reply count and no per-student upload count" "$ok"
 
 code=$(req GET "$CONSOLE" "/students/$STUDENT_ID" "$JAR_COST")
 S360_BODY=$(cat "$BODY")

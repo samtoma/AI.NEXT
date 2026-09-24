@@ -17,6 +17,7 @@
  * @covers FR-3104
  * @covers FR-3105
  * @covers FR-3106
+ * @covers FR-3112
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -239,6 +240,11 @@ test("on: the learn prompt carries the probing block, voiced for the student", (
     const p = learnPrompt(lesson(g), true);
     assert.ok(p.includes("SOCRATIC PROBING"), `gender=${g}`);
     assert.ok(p.includes("{{answer_submitted:"), `gender=${g}`);
+    // FR-3112: asking is not an attempt — the answer waits for REVEALED, and
+    // the prompt no longer tells the model to emit {{reveal_answer}}
+    // (the rule itself is pinned word for word in socratic-reveal.test.mts).
+    assert.ok(p.includes('before the "SOCRATIC PROBE — REVEALED" event for this LO'), `gender=${g}`);
+    assert.ok(!p.includes("reveal_answer"), `gender=${g}: the prompt still mentions reveal_answer`);
   }
 });
 
@@ -288,7 +294,7 @@ test("on: an id beyond the safe-integer range is refused", () => {
 
 test("a card holds back its answer only while probing applies and the reveal is not unlocked", () => {
   assert.equal(cardWithholdsAnswer(true, false), true);
-  assert.equal(cardWithholdsAnswer(true, true), false, "the 2nd wrong attempt / {{reveal_answer}} unlocks it");
+  assert.equal(cardWithholdsAnswer(true, true), false, "the 2nd wrong attempt unlocks it (FR-3112: nothing else does)");
   assert.equal(cardWithholdsAnswer(false, false), false, "a lesson that does not probe never holds back");
   assert.equal(cardWithholdsAnswer(false, true), false);
 });
@@ -369,23 +375,28 @@ const parseFrames = (body: string) =>
     .filter((l): l is string => Boolean(l))
     .map((l) => JSON.parse(l.slice(6)) as { type: string; probing?: unknown });
 
-test("which frames declare probing: session always, cap when it says, nothing else", () => {
+test("which frames declare probing: the session frame always, nothing else", () => {
   assert.equal(probingDeclaredBy({ type: "session", probing: true }), true);
   assert.equal(probingDeclaredBy({ type: "session", probing: false }), false);
   assert.equal(probingDeclaredBy({ type: "session" }), false, "a session frame always declares");
-  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: false } as never), false);
-  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: true } as never), true);
-  assert.equal(probingDeclaredBy({ type: "cap", text: "…" } as never), null, "an older server's cap declares nothing");
-  assert.equal(probingDeclaredBy({ type: "cap", probing: "false" }), null, "only a boolean counts");
+  // v0.9.0 (ADR-0023): no turn is refused for count, so the `cap` frame that
+  // carried a refused turn's answer is gone — one arriving declares nothing.
+  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: false } as never), null);
+  assert.equal(probingDeclaredBy({ type: "cap", text: "…", probing: true } as never), null);
   for (const type of ["delta", "done", "error", "unknown"]) {
     assert.equal(probingDeclaredBy({ type, probing: true }), null, type);
   }
 });
 
-test("Off reaches a capped lesson: the cap frame's false is parsed, adopted, and un-sticks the card", () => {
-  // A tester mid-probe hits the lesson's turn cap after the switch went Off.
-  // The server's whole response is one cap frame (`/api/ask`, capped branch).
-  const body = sse({ type: "cap", text: "That's a full lesson's worth of work", probing: false });
+test("Off reaches the next message on a long lesson: the session frame's false is parsed, adopted, and un-sticks the card", () => {
+  // A tester mid-probe, 18 replies into a lesson — where v0.8.0 would have
+  // refused the turn — sends a message after the switch went Off. Every
+  // request is served now, so the answer arrives the one way it always
+  // arrives: the stream's first frame, before any text.
+  const body =
+    sse({ type: "session", probing: false }) +
+    sse({ type: "delta", t: "Let's look at it together." }) +
+    sse({ type: "done", meta: { turnIndex: 19 } });
   let declared = true;
   let pending: { loId: string; wrongCount: number } | null = { loId: "lo:u1-1-1", wrongCount: 1 };
   for (const frame of parseFrames(body)) {
@@ -399,10 +410,10 @@ test("Off reaches a capped lesson: the cap frame's false is parsed, adopted, and
   assert.equal(pending, null);
   assert.equal(cardWithholdsAnswer(probingActive(PROBING_SURFACE, declared), false), false);
 
-  // …and a cap that says ON (switch untouched) leaves the probe running.
+  // …and a session frame that says ON (switch untouched) leaves the probe running.
   declared = true;
   pending = { loId: "lo:u1-1-1", wrongCount: 1 };
-  for (const frame of parseFrames(sse({ type: "cap", text: "…", probing: true }))) {
+  for (const frame of parseFrames(sse({ type: "session", probing: true }) + sse({ type: "delta", t: "…" }))) {
     const d = probingDeclaredBy(frame);
     if (d !== null) {
       declared = d;

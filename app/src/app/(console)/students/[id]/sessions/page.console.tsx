@@ -6,8 +6,10 @@ import {
   Chip,
   SESSION_SNAPSHOT_NOTE,
   SessionSnapshotChips,
+  TURN_LIMIT_NOTE,
   Td,
   Th,
+  TurnLimitChip,
   stamp,
 } from "@/components/console/ui";
 import { consoleAccess } from "@/lib/console-auth";
@@ -105,6 +107,7 @@ export default async function ConsoleSessionListPage({
                 <Th>Kind of sitting</Th>
                 <Th>Objective it was about</Th>
                 <Th right>Tutor turns</Th>
+                <Th>Turn threshold</Th>
                 <Th right>Answers</Th>
                 <Th right>Objectives touched</Th>
                 <Th right>Cost, imputed</Th>
@@ -137,6 +140,13 @@ export default async function ConsoleSessionListPage({
                   </Td>
                   <Td right mono>
                     {r.turns}
+                  </Td>
+                  <Td>
+                    {r.turnLimit ? (
+                      <TurnLimitChip limit={r.turnLimit} />
+                    ) : (
+                      <span className="text-ink-faint">—</span>
+                    )}
                   </Td>
                   <Td right mono>
                     {r.attempts}
@@ -188,7 +198,9 @@ export default async function ConsoleSessionListPage({
           finished one: the two mean opposite things about whether the student got what they came
           for. <strong>Release and probing</strong> are what the session recorded when it opened —
           which build served it and whether Socratic probing was on — and neither record changes
-          after that. {SESSION_SNAPSHOT_NOTE} Sessions opened before v0.7.0 recorded neither.
+          after that. {SESSION_SNAPSHOT_NOTE} Sessions opened before v0.7.0 recorded neither.{" "}
+          <strong>Turn threshold</strong> marks a sitting whose conversation reached the reply count
+          that used to stop it. {TURN_LIMIT_NOTE}
         </p>
       )}
     </main>

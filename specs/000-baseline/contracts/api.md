@@ -26,7 +26,10 @@ The single AI endpoint for all chat surfaces.
 
 **Server-enforced invariants**
 - Turn caps per surface **per student**: student_chat 2, lesson_learn 14,
-  lesson_review 5, spine_chat uncapped.
+  lesson_review 5, spine_chat uncapped. *(Superseded 2026-09-24 — ADR-0023: as of `v0.9.0` no
+  surface enforces this any more. The numbers survive as observed thresholds — `lesson_learn`'s own
+  number moved 14→18 first, per ADR-0021 — shown in the console rather than refusing a turn; see
+  `specs/002-identity-and-admin-console/spec.md` FR-3401…FR-3406.)*
 - Grounding assembled server-side only (`buildAskContext` / `buildLessonContext`),
   snapshotted per `chatSession` (3 h TTL) for prompt-cache byte-stability.
 - **Sacred containment**: accumulated output scanned against the full sealed corpus;

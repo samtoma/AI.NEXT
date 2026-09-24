@@ -27,6 +27,9 @@
  * `sequential`ly rather than via `Promise.all`: pg queues same-client queries
  * for you today, but pg@9 turns that into a hard "client already executing a
  * query" error, so this module stops relying on the queuing being implicit.
+ * An eighth read rides in the same transaction since v0.9.0: the session's
+ * turn-threshold chip (ADR-0023, FR-3405), which is a count and not a source
+ * of timeline items.
  *
  * **`outcome` is read without being required to exist.** data-model §12 adds
  * four columns to `ai_interactions`; migration 020 adds only
@@ -52,6 +55,8 @@ import {
   type UnderstandingItem,
   type UploadItem,
 } from "@/lib/timeline-rules";
+import { readSessionTurnLimits } from "@/lib/turn-threshold-queries";
+import type { SessionTurnLimit } from "@/lib/turn-thresholds";
 
 export * from "@/lib/timeline-rules";
 
@@ -90,6 +95,11 @@ export type SessionTimeline = {
   /** Summed `attempts.time_ms` — the OTHER time-on-task number (admin.md §2). */
   attemptTimeMs: number;
   environment: string;
+  /**
+   * A conversation in this session at or past its reply threshold, counted to
+   * the end of the session (ADR-0023, FR-3405); null when none was.
+   */
+  turnLimit: SessionTurnLimit | null;
 };
 
 const iso = (v: unknown): string => new Date(v as string).toISOString();
@@ -133,12 +143,14 @@ export async function getSessionTimeline(
     // seconds ago belongs to the session the student is still in.
     const windowEnd = header.closedAt ?? new Date().toISOString();
 
-    const [turns, attempts, checks, uploads, masteryMoves] = await sequential([
+    const [turns, attempts, checks, uploads, masteryMoves, limits] = await sequential([
       () => loadTurns(db, studentId, sessionId),
       () => loadAttempts(db, studentId, sessionId),
       () => loadChecks(db, studentId, sessionId),
       () => loadUploads(db, studentId, sessionId),
       () => loadMastery(db, studentId, header.openedAt, windowEnd),
+      // The turn-threshold chip (FR-3405): counts only, same scope.
+      () => readSessionTurnLimits(db, studentId, sessionId),
     ] as const);
 
     // explanation_log has no student_id and only a nullable attempt_id
@@ -167,6 +179,7 @@ export async function getSessionTimeline(
       build: buildTimeline(items),
       attemptTimeMs: attempts.reduce((sum, a) => sum + (a.timeMs ?? 0), 0),
       environment: ENVIRONMENT,
+      turnLimit: limits.get(sessionId) ?? null,
     };
   });
 }

@@ -212,9 +212,32 @@ export function probingActive(surface: string | undefined, enabled: boolean): bo
 }
 
 /**
+ * How many wrong attempts on one objective, in one probing cycle, before the
+ * answer is revealed — the card opens, and the tutor is told "SOCRATIC PROBE
+ * — REVEALED" (FR-3112).
+ *
+ * The ONE place the number lives. Until Samuel's call of 2026-09-24 there
+ * were two ways past it: the tutor could honour "just tell me" after a single
+ * attempt, and its `{{reveal_answer}}` directive forced the card open at once.
+ * Both are gone: asking is not an attempt, and a directive the model emits
+ * cannot open a card. Only the student's second wrong attempt does.
+ */
+export const REVEAL_AFTER_WRONG_ATTEMPTS = 2;
+
+/**
+ * Has this probing cycle's wrong-attempt count unlocked the reveal? Pure, and
+ * the only rule the card, the board and the REVEALED live event read (FR-3112).
+ */
+export function cardRevealUnlocked(wrongCount: number | null | undefined): boolean {
+  return typeof wrongCount === "number" && wrongCount >= REVEAL_AFTER_WRONG_ATTEMPTS;
+}
+
+/**
  * Does a question card hold back the answer and the worked solution for a
  * WRONG result? Only while probing applies and the reveal has not been
- * unlocked (the second wrong attempt, or an explicit {{reveal_answer}}).
+ * unlocked — by the student's second wrong attempt on the objective and by
+ * nothing else (`cardRevealUnlocked`, FR-3112; a `{{reveal_answer}}` from the
+ * model no longer opens it).
  *
  * `probing` is what the server declared on its latest response. When a
  * sitting stops probing — the switch moves, or the student is unmarked,
@@ -266,16 +289,16 @@ export function attemptProbingDeclaration(
  *   `{type:"session", probing}` — the first frame of every served turn; a
  *                                 missing flag is `false` (what the prompt
  *                                 was built with is always known);
- *   `{type:"cap", text, probing}` — a turn refused by the per-surface cap,
- *                                 which still carries the request's answer so
- *                                 Off reaches a capped lesson too; an older
- *                                 server's cap frame without it declares
- *                                 nothing;
  *   anything else               — nothing.
+ *
+ * Every request is served since v0.9.0 (ADR-0023: no turn is refused for
+ * count), so the session frame is the one declaration, and Off reaches the
+ * student's next message through it on every surface. The `cap` frame that
+ * used to carry the answer for a refused turn no longer exists; one arriving
+ * from anywhere declares nothing.
  */
 export function probingDeclaredBy(frame: { type?: unknown; probing?: unknown }): boolean | null {
   if (frame.type === "session") return frame.probing === true;
-  if (frame.type === "cap" && typeof frame.probing === "boolean") return frame.probing;
   return null;
 }
 
@@ -298,6 +321,13 @@ export type ProbeAddress = {
  * from `507bb31`, re-voiced through the address seam: the prototype predates
  * P6 and wrote "him"/"his" literally, which main removed from every prompt
  * (FR-2602).
+ *
+ * FR-3112 (Samuel, 2026-09-24, the one prompt edit he authorised against
+ * ADR-0020's hold): with probing on, asking to be told the answer does not
+ * get it before the second attempt on the objective — the REVEALED event. The
+ * enabled branch used to allow it after one attempt and had the model emit
+ * `{{reveal_answer}}`; it now tells the model to hold until REVEALED, and no
+ * longer mentions the directive. The disabled branch is untouched.
  */
 export function learnWrongAnswerRules(
   a: ProbeAddress,
@@ -313,8 +343,8 @@ export function learnWrongAnswerRules(
   · A "SOCRATIC PROBE" [live event] means that LO is now confirmation-pending, carrying reference material for YOU ONLY — do NOT state the correct answer, name the misconception, or quote/paraphrase that material yet. Ask ONE short question that points ${a.them} toward ${a.their} own mistake instead (work backwards from ${a.their} answer, plug it back in to show the contradiction, or lean on the LO's own definition) — never open with the correct letter.
   · When ${a.their} NEXT chat reply is a genuine attempt at the currently-open question (not "I don't know", not a question back to you, not small talk) — extract the answer EXACTLY as shown on the card (the lettered choice, or the numeric/expression text) and emit {{answer_submitted:<that value>}} ALONE, nothing else directive-wise in that message. Do not say "correct" or "not quite" yourself — wait for the graded [live event] on your NEXT turn before reacting, exactly like a tapped card.
   · A "SOCRATIC PROBE — REVEALED" [live event] (${a.their} second wrong attempt on this LO) means withholding is OVER for this LO: explain plainly now, walking the material's OWN STEPS in order — never just the final value. Once ${a.they} seem${a.s} ready, your next check on this LO must still be a fresh same-tier question from the QUESTION BANK, pushed with {{show_question:...}}, before you can treat it as resolved.
-  · If ${a.they} explicitly ask${a.s} to just be told the answer / give${a.s} up — ONLY once a genuine attempt already exists on the open question (a SOCRATIC PROBE event has already fired for this LO) — emit {{reveal_answer}} and, in that SAME message, give the full walkthrough in steps, same as the REVEALED case above. If no attempt exists yet, do NOT reveal — warmly insist on a guess first ("no worries — even a guess helps, take your best shot") instead of honoring the ask.
-  · Never emit {{answer_submitted:...}} or {{reveal_answer}} for a currently-open WIDGET question — a construction has no free-text equivalent; widgets grade only from the construction itself.
+  · If ${a.they} explicitly ask${a.s} to just be told the answer / give${a.s} up before the "SOCRATIC PROBE — REVEALED" event for this LO (that is, before ${a.their} second attempt), do NOT reveal, hint at, or confirm the answer — warmly insist on an attempt at your guiding question first ("no worries — even a guess helps, take your best shot"). Once REVEALED has fired, answer the ask by walking the material's own steps, same as the REVEALED case above.
+  · Never emit {{answer_submitted:...}} for a currently-open WIDGET question — a construction has no free-text equivalent; widgets grade only from the construction itself.
   · Either way the LO stays confirmation-pending — never say "got it" or move on from it — until ${a.they} answer${a.s} a FRESH same-tier question on that same LO correctly ${a.themself}. A "✓ confirmation received" line closes the loop — react warmly, then continue the arc normally.
 - After a "لسه مش فاهم" / still-confused signal on a lesson beat that was NOT a wrong-answer probe: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.`;
 }

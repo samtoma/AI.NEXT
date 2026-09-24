@@ -8,9 +8,7 @@ import {
   isAccepted,
   storeUpload,
   parseUpload,
-  uploadsToday,
   MAX_UPLOAD_BYTES,
-  DAILY_UPLOAD_CAP,
 } from "@/lib/uploads";
 
 /**
@@ -20,12 +18,20 @@ import {
  * a worksheet should be back in their lesson at once, not watching a spinner
  * while a model reads their handwriting.
  *
- * Two units of work, with the file write between them — the cap check, the
- * session and the row go in ONE transaction under the student's principal, and
- * `parseUpload` opens its own afterwards because it outlives this request by up
- * to ninety seconds. It is handed the student id for the same reason it is
- * already handed the session: after the response there is no request left to
+ * Two units of work, with the file write between them — the session and the
+ * row go in ONE transaction under the student's principal, and `parseUpload`
+ * opens its own afterwards because it outlives this request by up to ninety
+ * seconds. It is handed the student id for the same reason it is already
+ * handed the session: after the response there is no request left to
  * re-derive either from (FR-2105).
+ *
+ * **No upload is refused for count** (ADR-0023, FR-3407, v0.9.0). Until
+ * v0.9.0 the unit began by counting the student's uploads in the last 24
+ * hours and answered 429 at ten. Samuel removed that limit; the number lives
+ * on as `DAILY_UPLOAD_THRESHOLD` (`lib/turn-thresholds.ts`) and the Cost page
+ * shows how often a student reaches it (`lib/upload-threshold-queries.ts`).
+ * What still refuses: an unconfirmed address (403), a type that is not JPEG,
+ * PNG or PDF (415), and a file over 10 MB (413). None of those is a count.
  */
 export const dynamic = "force-dynamic";
 
@@ -85,13 +91,6 @@ export async function POST(req: Request) {
   let sessionRef: number | null;
   try {
     const unit = await withPrincipal(studentId, async (client) => {
-      // Cost bound (Principle VI): image tokens are expensive, and an unbounded
-      // upload path is the one place this build could quietly outspend the
-      // baseline. Counted inside the unit so the count and the insert see the
-      // same snapshot — two tabs cannot both read "9" and both write.
-      const used = await uploadsToday(studentId, client);
-      if (used >= DAILY_UPLOAD_CAP) return { capped: true as const };
-
       // The learning session this upload belongs to (ADR-0015). A photo taken
       // mid-lesson joins that lesson's sitting (`adoptOpen`); `student_chat` is
       // only the fallback for a photo with no sitting around it — the student
@@ -107,7 +106,7 @@ export async function POST(req: Request) {
         client
       );
       // The bytes hit the disk inside the unit so a rolled-back row cannot
-      // leave an orphaned file the cap never counts.
+      // leave an orphaned file no row accounts for.
       const id = await storeUpload(
         studentId,
         sessionId,
@@ -116,17 +115,9 @@ export async function POST(req: Request) {
         bytes,
         client
       );
-      return { capped: false as const, uploadId: id, sessionRef: ref };
+      return { uploadId: id, sessionRef: ref };
     });
 
-    if (unit.capped) {
-      return NextResponse.json(
-        {
-          error: `daily upload limit of ${DAILY_UPLOAD_CAP} reached — try again tomorrow`,
-        },
-        { status: 429 }
-      );
-    }
     uploadId = unit.uploadId;
     sessionRef = unit.sessionRef;
   } catch (err) {

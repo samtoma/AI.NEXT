@@ -134,7 +134,8 @@ move teaching behaviour, and ADR-0010 keeps metrics unpooled across solutions, s
 a mid-stream prompt change wants its own deliberate cut. **Samuel, 2026-09-22:
 "do not make changes to the prompt for now."** The check-in card and the tutor
 therefore disagree about the premise until that follow-up lands; this is a known,
-accepted, temporary inconsistency.
+accepted, temporary inconsistency. *(This hold has one recorded exception: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md)'s
+2026-09-24 "reveal threshold" amendment, Samuel authorising one specific rule — not a reopening of the hold generally.)*
 
 **Revisit when**: a date or school-calendar signal enters the system (the pointer
 would then compete with it for authority over "today's lesson"); or the

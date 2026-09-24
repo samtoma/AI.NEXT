@@ -1,7 +1,87 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`main`; released and deployed `v0.7.0` and `v0.8.0`; constitution v3.2.0)
+> Last updated: 2026-09-24 (`main` at `v0.8.0`; `v0.9.0` released on `feat/turn-limits-observed`, in review as a PR,
+> not deployed; constitution v3.3.0)
+
+## 🔓 v0.9.0 — turn and upload limits observed, not enforced; the answer waits for the second attempt (released 2026-09-24, NOT deployed — awaiting Samuel's go)
+
+Samuel, verbatim: *"remove the limits, make them highlight in the admin console, we need to know how
+often those limits are triggered."* — and, the same day, extending it: *"please remove the limit of
+the photo uploads for now as well, and add the monitoring and cost if any in the admin console."*
+**ADR-0023** (amended in place the same day to cover both), constitution v3.2.0 → **v3.3.0**
+(Principle VI, one amendment), **FR-3401…FR-3409** in spec 002, superseding the baseline's `FR-051`
+and the cap clause of 001's `T047`. Building on branch `feat/turn-limits-observed` (from `main` at
+v0.8.0) — a backend session on `app/`, this session on requirements and decision records, in the same
+worktree.
+
+**Turn limits — the evidence that prompted it.** Until today `api/ask/route.ts` enforced `TURN_CAPS`
+— a hard refusal once a conversation had this many delivered replies: `student_chat` 2 (PRD §6.3),
+`lesson_learn` 18 (raised from 14 for #33–#35 so a lesson could reach its closing retrieval),
+`lesson_review` 5; `spine_chat` uncapped. On production today, 2 of the 6 lessons taught so far hit
+the 18-reply cap, both on lesson `u1-1`, after 10–11 minutes each — and the student restarted the
+lesson both times. 6–7 of each lesson's 18 replies were button taps ("Start now", "Continue.", "Got
+it — next ✓"); only 2–3 were the student's own typed questions. Cost ≈$0.028/reply, ≈$0.47 for a
+capped lesson.
+
+**Upload limit — the evidence, or the lack of it.** `api/uploads/route.ts` separately refused a
+student's 11th photo/PDF upload in a day (`DAILY_UPLOAD_CAP = 10`, from 001 `T047`). Unlike the turn
+caps, **production has served zero uploads to date** — a read-only check found nothing this cap has
+ever actually refused. Removing it is the same call with no prior evidence either way; the console
+monitoring below is how that evidence starts to exist.
+
+**What changes.** No surface refuses a turn for reply count, and no upload is refused for daily count
+— all four cap messages and the input/upload locks are gone. The numbers survive as **observed
+thresholds**, all in `app/src/lib/turn-thresholds.ts`: `TURN_THRESHOLDS` (the three turn numbers,
+unchanged) and now `DAILY_UPLOAD_THRESHOLD = 10`. "Reached" (at least the threshold) is countable
+from today; "went past" (more — the reply/upload the old rule would have refused) is only observable
+from here forward, because neither old refusal was ever logged as its own event. The review-mode
+finish nudge at 5 stays, unchanged in effect — it offers Finish, never blocks. The upload size (10 MB)
+and type (JPEG/PNG/PDF) limits are untouched; neither is a count. The Cost page gets two highlighted
+panels: "Turn limits — observed, not enforced" (per surface: conversations, reached count + share,
+went-past count, highest reply count, a list of the most recent threshold-reaching conversations
+linked to their session) and photo-upload monitoring (uploads, students who uploaded, parse outcomes,
+upload/OCR spend and its per-upload average kept separate from tutoring spend, and student-days that
+reached or went past the daily threshold, with a list). The session list, timeline and replay get an
+amber — never red (FR-1002) — chip on a session that reached its turn threshold.
+
+**Build finished on the branch, 894/894 tests, all still uncommitted** (Samuel: nothing lands
+before his review). The Cost page's two new panels also gate their student-identifying detail —
+the highest-reply figure, the recent-conversations list, and the upload student-day list — behind
+`student-data` as well as `cost-billing` (FR-2406, `costDetailAccess` in `lib/turn-threshold-queries.ts`);
+a billing-only operator sees the aggregates and a note instead. Rendered against a scratch database
+as both role types (not a browser). See ADR-0023's "Definitions the code chose" for three rules the
+code settled that were not obvious in advance: a conversation counts in whichever period any of its
+turns falls in, by its whole reply count; a session's chip counts only up to that session's own end;
+an upload "day" is the old rolling 24 hours, labelled by UTC date, so one burst near midnight can
+mark two dates.
+
+**Also on this branch: Socratic probing's reveal rule, closed (ADR-0021's 2026-09-24 amendment,
+FR-3112).** Samuel: *"it should be 2 questions as well."* The card already withheld the answer until
+a student's second wrong attempt; the tutor's own prompt let the same answer out after only one, on
+request. Both now agree — nothing reveals it before the second wrong attempt, whether asked or not.
+The one prompt change ADR-0020's hold permits. This only matters while probing is on, which in
+production today means **test accounts only** — Samuel set the switch to that position at **09:33
+today** for one test student, so the change is live for exactly one account. #53's "two reveal rules
+disagree" item is resolved by it; "a lesson can stall" and "'I don't get it' loses its step-down"
+stay open, and the reveal rule being stricter now makes the stall risk, if anything, a little sharper.
+
+**Open:**
+- **Samuel / Tamer:** PRD §6.3 ("max 2 AI turns per question") is now departed from by this decision.
+  Tamer owns the PRD; he should be told rather than finding the drift later.
+- **Nobody has seen either console panel or a session chip live in a browser.** Every FR-3401…FR-3409
+  row in spec 002's traceability is BUILT, not VERIFIED — a founder needs to sign in and open the
+  Cost page as both a billing-only and a full operator, and a session that actually crossed a
+  threshold. `scripts/console-p4-smoke.sh` has the gated-headings checks written but not run (needs
+  live password sign-ins).
+- **The upload cap's removal has zero production signal to lean on**, unlike the turn caps' two
+  capped lessons. Worth reading the Cost page's photo-upload panel earlier rather than later — there
+  is no baseline for what "normal" looks like yet.
+- **FR-3112 has no test coverage yet.** No file in this working tree mentions
+  `REVEAL_AFTER_WRONG_ATTEMPTS` or `cardRevealUnlocked` — the code is complete and consistent, but
+  unproven by a test, and unobserved with a real probing lesson.
+- **Nothing on this branch is committed.** All of v0.9.0 — turn limits, upload limits, the FR-2406
+  gating, and this documentation pass — sits in the working tree pending Samuel's review.
 
 ## 🔐 v0.8.0 — console sign-in from Cloudflare Access (released 2026-09-24)
 

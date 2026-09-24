@@ -25,13 +25,13 @@ import {
   extractAnswerSubmitted,
   extractCites,
   extractHighlights,
-  hasRevealAnswerDirective,
   parseMessage,
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
 import { submitAttempt } from "@/lib/attempts-client";
 import {
+  cardRevealUnlocked,
   pendingAfterDeclaration,
   probingActive,
   probingDeclaredBy,
@@ -102,7 +102,7 @@ export interface ChatCoreProps {
   wrongAnswer?: string;
   /** lesson slug for the lesson surfaces (e.g. "geo1-2") */
   lessonSlug?: string;
-  /** stable chat-session id (session restore keeps the server turn caps) */
+  /** stable chat-session id (session restore keeps the conversation's turn count and snapshot) */
   sessionId?: string;
   /** restored transcript (session restore) — suppresses autoStart */
   initialMessages?: ChatMsg[];
@@ -203,8 +203,6 @@ export interface ChatCoreProps {
   onFinishDirective?: () => void;
   /** the "open" button of a {{switch_subject:…}} handoff card was tapped */
   onSwitchSubject?: (subject: SpineSubject) => void;
-  /** fired when the server turn cap is reached */
-  onCapped?: () => void;
   /** transcript mirror for the parent (rating pass) */
   onMessagesChange?: (msgs: ChatMsg[]) => void;
   /** extra control rendered beside the input (mic button) */
@@ -269,7 +267,6 @@ export function ChatCore({
   onAssistantDone,
   onFinishDirective,
   onSwitchSubject,
-  onCapped,
   onMessagesChange,
   inputAccessory,
 }: ChatCoreProps) {
@@ -280,9 +277,9 @@ export function ChatCore({
    * **The client never decides this.** The server resolves it once per
    * learning session, stores it on the session row, and declares it on every
    * response that session serves: the first frame of each `/api/ask` stream
-   * (`{type:"session", probing}`), the `cap` frame of a turn the cap
-   * refused, and the `probing` field of an `/api/attempts` result written
-   * inside a lesson sitting (absent otherwise: keep what we had). ChatCore adopts whatever the server last said —
+   * (`{type:"session", probing}`) and the `probing` field of an
+   * `/api/attempts` result written inside a lesson sitting (absent
+   * otherwise: keep what we had). ChatCore adopts whatever the server last said —
    * starting from OFF, which is what every surface was before v0.7.0 — and
    * scopes it to lesson_learn (review mode's ≤5-message lock-in would fight
    * it). With the server saying false, nothing below behaves differently from
@@ -304,7 +301,6 @@ export function ChatCore({
   );
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
-  const [capped, setCapped] = useState(false);
   /**
    * This chat's stable session id, computed once.
    *
@@ -376,10 +372,11 @@ export function ChatCore({
   // should link to via retry_of_attempt_id, how many wrong attempts this
   // cycle has taken, and which question that last attempt was against.
   // Session-scoped only (never persisted, never touches mastery). Once
-  // `wrongCount` reaches 2 the card stops withholding — the same threshold an
-  // explicit {{reveal_answer}} forces early. Always null in a lesson that
-  // does not probe: handleAttempt below never sets it unless the server said
-  // this lesson probes, and `adoptProbing(false)` clears it.
+  // `wrongCount` unlocks the reveal (`cardRevealUnlocked`: the second wrong
+  // attempt) the card stops withholding — and only then (FR-3112): a
+  // `{{reveal_answer}}` from the model no longer forces it early. Always null
+  // in a lesson that does not probe: handleAttempt below never sets it unless
+  // the server said this lesson probes, and `adoptProbing(false)` clears it.
   const [pendingConfirmation, setPendingConfirmation] = useState<{
     loId: string;
     lastAttemptId: number;
@@ -539,7 +536,7 @@ export function ChatCore({
   const send = useCallback(
     async (raw: string, opts?: { hidden?: boolean }) => {
       const text = raw.trim();
-      if (!text || streaming || streamingRef.current || capped) return;
+      if (!text || streaming || streamingRef.current) return;
       // The "Got it — next ✓" check-in affordance is an acknowledgement, not
       // an attempt — it must never let the lesson move past a question that
       // was never answered (FR-1214: the client can't decide it was solved).
@@ -735,7 +732,6 @@ export function ChatCore({
             let j: {
               type: string;
               t?: string;
-              text?: string;
               message?: string;
               meta?: TurnMeta;
               probing?: boolean;
@@ -747,9 +743,9 @@ export function ChatCore({
             }
             // Probing, as the server declares it on this frame
             // (`probingDeclaredBy`): the `session` frame — this turn's
-            // prompt, sent before any text — and, since fix pass 2, the
-            // `cap` frame, so switching Off reaches a lesson that has hit its
-            // turn cap too. Every other frame declares nothing.
+            // prompt, sent before any text. Every request is served since
+            // v0.9.0 (ADR-0023), so Off reaches the next message through it
+            // on every surface. Every other frame declares nothing.
             const declaredProbing = probingDeclaredBy(j);
             if (declaredProbing !== null) adoptProbing(declaredProbing);
             if (j.type === "session") {
@@ -760,16 +756,6 @@ export function ChatCore({
               if (!paced) emitNewCites(acc);
             } else if (j.type === "done" && j.meta) {
               metaBuf = j.meta;
-              done = true;
-            } else if (j.type === "cap") {
-              cancelReveal();
-              patchLast({
-                role: "note",
-                streaming: false,
-                text: j.text ?? "",
-              });
-              setCapped(true);
-              onCapped?.();
               done = true;
             } else if (j.type === "error") {
               cancelReveal();
@@ -793,12 +779,17 @@ export function ChatCore({
           emitNewCites(acc);
           onAssistantDone?.(acc);
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
-          // SOCRATIC PROBING (`507bb31`): a chat-typed answer or an explicit
-          // "just tell me", tagged by the tutor with a directive, routed
-          // through the SAME grading pipeline a tapped card uses. Only in a
-          // lesson the server says probes (read from the ref: the value THIS
-          // stream declared) — a no-op everywhere else, even if the model
-          // somehow emitted one.
+          // SOCRATIC PROBING (`507bb31`): a chat-typed answer, tagged by the
+          // tutor with a directive, routed through the SAME grading pipeline
+          // a tapped card uses. Only in a lesson the server says probes (read
+          // from the ref: the value THIS stream declared) — a no-op everywhere
+          // else, even if the model somehow emitted one.
+          //
+          // A `{{reveal_answer}}` in the reply changes NOTHING here any more
+          // (FR-3112). It used to force the pending wrong count to 2, so one
+          // model slip opened the card after a single attempt. The card now
+          // opens on the student's second wrong attempt only; `chat-parse`
+          // still recognises the directive, so it never shows as text.
           if (probingActive(surface, serverProbingRef.current)) {
             const submittedGiven = extractAnswerSubmitted(acc);
             const pendingNow = pendingConfirmationRef.current;
@@ -825,25 +816,6 @@ export function ChatCore({
                   console.error("chat-typed answer submission failed:", e);
                 }
               }
-            } else if (hasRevealAnswerDirective(acc)) {
-              // Bail-out: force the same reveal the 2-attempt cap would
-              // produce. A no-op if nothing is pending yet.
-              setPendingConfirmation((prev) =>
-                prev ? { ...prev, wrongCount: Math.max(prev.wrongCount, 2) } : prev
-              );
-            }
-          }
-          if (metaBuf.capped) {
-            setCapped(true);
-            onCapped?.();
-            if (surface === "student_chat") {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  role: "note",
-                  text: "That was my second explanation — my limit, on purpose. The worked steps above are the ground truth: walk them once more slowly, then keep going. You've got this ✦",
-                },
-              ]);
             }
           }
         } else {
@@ -888,16 +860,14 @@ export function ChatCore({
       wrongAnswer,
       lessonSlug,
       // Recreating `send` when a parse settles is cheap and honest: this
-      // callback already depends on `streaming` and `capped`, so it was never
-      // stable across a turn, and mirroring the id through a ref to avoid a
+      // callback already depends on `streaming`, so it was never stable
+      // across a turn, and mirroring the id through a ref to avoid a
       // dependency would only have hidden that.
       attachedUploadId,
       streaming,
-      capped,
       emitNewCites,
       onAssistantDone,
       onFinishDirective,
-      onCapped,
       adoptProbing,
       lookupQuestion,
     ]
@@ -981,12 +951,12 @@ export function ChatCore({
               ? r.solution.map((st) => `Step ${st.step}. ${stepText(st)}`).join(" ")
               : null;
           note +=
-            wrongCountAfter >= 2
+            cardRevealUnlocked(wrongCountAfter)
               ? `\nSOCRATIC PROBE — REVEALED — ${q.loId}: that's two attempts without landing it. The card is now showing the student the correct answer and the reference material directly — stop withholding. Walk the student through it PLAINLY, in the material's own steps, in order (never just the final value): ${
                   material ??
                   "no reviewed material matches this specific error — walk the LO's own definition through to the correct answer instead, still step by step."
                 } Once the student seems ready, your next check on ${q.loId} must still be a fresh same-tier question before you can treat it as resolved.`
-              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote or assert it until the student has engaged with at least one guiding question, or explicitly asks you to just say it): ${
+              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote, hint at or assert it until the SOCRATIC PROBE — REVEALED event for this LO — the student's second attempt — even if the student asks you to just say it): ${
                   material ??
                   "no reviewed material matches this specific error — reason from the LO's own definition instead, still without stating the answer outright."
                 } Ask ONE short guiding question toward it now.`;
@@ -1142,7 +1112,7 @@ export function ChatCore({
       </div>
 
       {/* suggestion chips — stay clickable after every stream */}
-      {suggestions.length > 0 && !capped && (
+      {suggestions.length > 0 && (
         <div
           className={
             suggestionLayout === "stacked"
@@ -1204,20 +1174,19 @@ export function ChatCore({
       {/* input */}
       <div
         className={`flex items-center gap-2 px-4 pb-3.5 ${
-          suggestions.length > 0 && !capped ? "pt-1.5" : "border-t border-line-soft pt-3"
+          suggestions.length > 0 ? "pt-1.5" : "border-t border-line-soft pt-3"
         }`}
       >
-        {/* Deliberately NOT disabled while a parse runs, and deliberately not
-            gated on `capped` either: sending a photograph is not an AI turn and
-            costs no turn of the per-surface cap. */}
+        {/* Deliberately NOT disabled while a parse runs: sending a photograph
+            is not an AI turn. */}
         {uploadsOn && attachment.controls}
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send(input)}
-          placeholder={capped ? "AI turn limit reached for this question" : placeholder}
-          disabled={streaming || capped}
+          placeholder={placeholder}
+          disabled={streaming}
           className={cx(
             STROKE,
             // 1rem, not 13px: the read scale, and the size below which iPad
@@ -1228,7 +1197,7 @@ export function ChatCore({
         {inputAccessory?.({ setInput })}
         <button
           onClick={() => send(input)}
-          disabled={streaming || capped || !input.trim()}
+          disabled={streaming || !input.trim()}
           aria-label="Send"
           // The composer's send is amber with ink on it (handoff, Nour panel).
           // Empty, it is disabled: white and dashed — "not ready yet".
@@ -1428,7 +1397,7 @@ const MessageRow = memo(function MessageRow({
                   onResult={onAttempt}
                   onOpenQuestion={onOpenQuestion}
                   probing={probing}
-                  revealAnswer={pendingLoId === q.loId && (pendingWrongCount ?? 0) >= 2}
+                  revealAnswer={pendingLoId === q.loId && cardRevealUnlocked(pendingWrongCount)}
                   retryOfAttemptId={
                     pendingLoId === q.loId ? (pendingAttemptId ?? undefined) : undefined
                   }

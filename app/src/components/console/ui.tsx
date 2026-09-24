@@ -44,6 +44,8 @@
 
 import type { ReactNode } from "react";
 
+import { thresholdChipLabel, type SessionTurnLimit } from "@/lib/turn-thresholds";
+
 /* ------------------------------------------------------------------ frames */
 
 export function Panel({
@@ -51,15 +53,23 @@ export function Panel({
   note,
   children,
   right,
+  tone = "neutral",
 }: {
   title: string;
   /** One line under the heading: what the panel counts and over what period. */
   note?: ReactNode;
   right?: ReactNode;
   children: ReactNode;
+  /**
+   * `attention` is the console's "look here" treatment — the gold edge and
+   * wash `RuntimeHealthTile` and the course banners use, never red or rust.
+   * Pair it with a `Chip` that says WHY in words: the wash is a second signal.
+   */
+  tone?: "neutral" | "attention";
 }) {
+  const skin = tone === "attention" ? "border-gold bg-gold-wash" : "border-line bg-card";
   return (
-    <section className="mt-5 rounded-lg border border-line bg-card">
+    <section className={`mt-5 rounded-lg border ${skin}`}>
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-line px-4 py-2.5">
         <h2 className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
           {title}
@@ -262,3 +272,28 @@ export function SessionSnapshotChips({
     </span>
   );
 }
+
+/* ------------------------------------------------------- turn thresholds */
+
+/**
+ * A session whose conversation reached its surface's reply threshold
+ * (ADR-0023, FR-3405): "Reached 18 replies", or "Past 18 replies · 23".
+ *
+ * Attention, because it is the number Samuel asked to see — how often the
+ * limits that no longer exist would have fired. Not a fault: nothing was
+ * refused, and the student never saw a limit. The word carries the state and
+ * the gold is the second signal, as with every chip here.
+ */
+export function TurnLimitChip({ limit }: { limit: SessionTurnLimit }) {
+  const n = limit.conversationsAtThreshold;
+  return (
+    <span className="inline-flex flex-wrap items-center gap-1">
+      <Chip tone="attention">{thresholdChipLabel(limit.surface, limit.delivered)}</Chip>
+      {n > 1 ? <span className="text-[11.5px] text-ink-faint">in {n} conversations</span> : null}
+    </span>
+  );
+}
+
+/** What the chip means, wherever it appears. */
+export const TURN_LIMIT_NOTE =
+  "Observed, not enforced: since v0.9.0 (ADR-0023) no conversation is stopped at its threshold. Counted as delivered replies in the conversation up to the end of this session.";

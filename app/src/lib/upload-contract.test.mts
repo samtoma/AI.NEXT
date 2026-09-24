@@ -26,7 +26,6 @@ import assert from "node:assert/strict";
 
 import {
   ACCEPTED_UPLOAD_TYPES,
-  DAILY_UPLOAD_CAP,
   MAX_UPLOAD_BYTES,
   UPLOAD_ACCEPT_ATTR,
   UPLOAD_POLL_CEILING_MS,
@@ -105,12 +104,14 @@ test("the accept attribute offers exactly the accepted types", () => {
 test("every HTTP refusal maps to a failure the student can read", () => {
   assert.equal(uploadFailureOf(415), "type");
   assert.equal(uploadFailureOf(413), "size");
-  assert.equal(uploadFailureOf(429), "cap");
   assert.equal(uploadFailureOf(403), "unverified");
   assert.equal(uploadFailureOf(401), "unverified");
   // Anything unforeseen is still a thing that did not work.
   assert.equal(uploadFailureOf(500), "server");
   assert.equal(uploadFailureOf(418), "server");
+  // No count refuses an upload since v0.9.0 (ADR-0023, FR-3407): the route
+  // never sends 429, and one arriving anyway is not a "limit" to the student.
+  assert.equal(uploadFailureOf(429), "server");
 });
 
 /* ---------------------------------------------------------------- copy */
@@ -120,7 +121,6 @@ const REFUSALS: UploadRefusal[] = ["type", "empty", "size"];
 const FAILURES: UploadFailure[] = [
   "type",
   "size",
-  "cap",
   "unverified",
   "offline",
   "server",
@@ -172,10 +172,13 @@ test("the size refusal quotes the file's own size and the limit", () => {
   assert.match(msg, /\b10\b/, "…and what the limit is");
 });
 
-test("the cap message names the cap", () => {
-  assert.match(uploadFailureMessage("cap", 0, "en"), new RegExp(`\\b${DAILY_UPLOAD_CAP}\\b`));
-  // Arabic-Indic, per the Arabic register's own rule (lib/ask.ts).
-  assert.match(uploadFailureMessage("cap", 0, "ar"), /١٠/);
+test("no sentence tells the student they have run out of uploads", () => {
+  // The daily cap and its two sentences went in v0.9.0 (ADR-0023, FR-3407).
+  // Nothing the composer can say may bring the limit back in words.
+  for (const s of everySentence()) {
+    assert.doesNotMatch(s, /limit|tomorrow|uploads today/i, s);
+    assert.doesNotMatch(s, /حدّي|بكره/, s);
+  }
 });
 
 test("the Arabic register carries no Latin digits", () => {
