@@ -144,10 +144,17 @@ async function CostPage({
           </Empty>
         </Panel>
       ) : (
+        <Headline view={view} periodText={periodText} />
+      )}
+
+      {/* Outside the empty-ledger branch (FR-3403, FR-3409): an upload is counted from
+          `uploads`, so one can exist in a period with no ledger row, and zero is an answer
+          to "how often" too. Both panels carry their own empty states. */}
+      <TurnLimits view={view} periodText={periodText} />
+      <PhotoUploads view={view} periodText={periodText} />
+
+      {view.totalTurns === 0 ? null : (
         <>
-          <Headline view={view} periodText={periodText} />
-          <TurnLimits view={view} periodText={periodText} />
-          <PhotoUploads view={view} periodText={periodText} />
           <PerStudent view={view} periodText={periodText} />
           <BySurface view={view} periodText={periodText} />
           <ByOutcome view={view} periodText={periodText} />

@@ -340,9 +340,14 @@ test("the Cost page shows the panel right after the headline, in the attention t
   const page = code("app/(console)/cost/page.console.tsx");
   assert.match(
     page,
-    /<Headline view=\{view\} periodText=\{periodText\} \/>\s*<TurnLimits /,
-    "the panel sits right after the headline"
+    /<Headline view=\{view\} periodText=\{periodText\} \/>\s*\)\}[\s\S]*?<TurnLimits view=\{view\} periodText=\{periodText\} \/>\s*<PhotoUploads /,
+    "the panels sit right after the headline"
   );
+  // …and outside the empty-ledger branch: zero is an answer to "how often", and an upload
+  // can exist in a period with no ledger row (FR-3403, FR-3409).
+  const panels = page.indexOf("<TurnLimits view=");
+  assert.ok(panels > page.indexOf('<Panel title="Nothing recorded">'), "after the empty state");
+  assert.ok(panels < page.indexOf("{view.totalTurns === 0 ? null"), "not inside the empty-ledger branch");
   assert.match(page, /title="Turn limits — observed, not enforced"/);
   assert.match(page, /tone=\{reached \? "attention" : "neutral"\}/);
   assert.match(page, /anyThresholdReached\(t\.surfaces\)/);
