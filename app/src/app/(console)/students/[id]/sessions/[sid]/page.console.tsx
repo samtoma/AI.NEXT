@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { TimelineView } from "@/components/console/TimelineView";
-import { Chip, Figure, SessionSnapshotChips, SessionSnapshotNote, stamp } from "@/components/console/ui";
+import { Chip, Figure, SessionSnapshotChips, SessionSnapshotNote, TURN_LIMIT_NOTE, TurnLimitChip, stamp } from "@/components/console/ui";
 import { recordOperatorRead } from "@/lib/auth/events";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
@@ -124,6 +124,13 @@ export default async function ConsoleSessionTimelinePage({
         Opened on <SessionSnapshotChips releaseTag={session.releaseTag} probing={session.probing} />{" "}
         <SessionSnapshotNote />
       </p>
+      {/* ADR-0023, FR-3405: the reply threshold that used to stop this conversation. */}
+      {data.turnLimit ? (
+        <p className="mt-1.5 text-[12.5px] text-ink-soft">
+          Turn threshold <TurnLimitChip limit={data.turnLimit} />{" "}
+          <span className="text-[11.5px] text-ink-faint">{TURN_LIMIT_NOTE}</span>
+        </p>
+      ) : null}
 
       <section className="mt-4 grid gap-5 rounded-lg border border-line bg-card px-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
         <Figure

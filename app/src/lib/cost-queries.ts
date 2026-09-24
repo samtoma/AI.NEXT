@@ -21,6 +21,7 @@ import {
   tokensFromUsage,
   type Outcome,
 } from "@/lib/pricing";
+import { readTurnLimitsView, type TurnLimitsView } from "@/lib/turn-threshold-queries";
 
 /**
  * What the AI actually costs, per student and over time, honestly labelled
@@ -74,9 +75,12 @@ import {
  *
  * **No student content, anywhere in this file** (FR-2406). Every column
  * selected is an id, a name, a count, a token figure, a dollar figure, a
- * timestamp or a status word. There is no message, no transcript, no preview
- * and no turn count of a conversation — and `cost-billing` holds no grant that
- * would let one be read even if a query here asked.
+ * timestamp or a status word. There is no message, no transcript and no
+ * preview. **Since v0.9.0 there IS a reply count per conversation** — the turn
+ * thresholds are observed rather than enforced (ADR-0023, FR-3403, FR-3404),
+ * and how often a conversation reaches one is a number about spend. It is read
+ * by `lib/turn-threshold-queries.ts` and carries a count, a surface, a lesson
+ * slug and curriculum labels; never a word the student or the tutor wrote.
  */
 
 /* ----------------------------------------------------------------- types */
@@ -155,6 +159,11 @@ export type CostView = {
   priceCheck: PriceCheck;
   /** The most recent day the rollup has stored, or null if it has never run. */
   rolledThrough: string | null;
+  /**
+   * How often conversations reached the per-surface reply thresholds in the
+   * period — observed, not enforced (ADR-0023, FR-3403, FR-3404).
+   */
+  turnLimits: TurnLimitsView;
 };
 
 const num = (v: unknown): number => {
@@ -193,8 +202,17 @@ export async function getCostView(
   const scope = `ai.environment = $1 AND ${UTC_DAY} > ${TODAY_UTC} - $2::int`;
   const args = [ENVIRONMENT, String(periodDays)];
 
-  const [totals, bySurface, byKind, byOutcome, perStudentRows, seriesRows, models, rolled] =
-    await withOperator(operatorId, (db) =>
+  const [
+    totals,
+    bySurface,
+    byKind,
+    byOutcome,
+    perStudentRows,
+    seriesRows,
+    models,
+    rolled,
+    turnLimits,
+  ] = await withOperator(operatorId, (db) =>
       sequential([
         // 1. The period, as one figure. `cost_usd IS NULL` is an UNPRICED turn
         //    — tokens nobody counted — and is reported as a count rather than
@@ -319,6 +337,9 @@ export async function getCostView(
             `SELECT max(cd.day)::text AS through FROM cost_daily cd WHERE cd.environment = $1`,
             [ENVIRONMENT]
           ),
+        // 9. THE TURN THRESHOLDS — observed, not enforced (ADR-0023). Same
+        //    environment, same whole-UTC-day period, on this same client.
+        () => readTurnLimitsView(db, periodDays),
       ] as const)
     );
 
@@ -397,6 +418,7 @@ export async function getCostView(
       legacyTurns: num(totals.rows[0]?.legacy),
     }),
     rolledThrough: rolled.rows[0]?.through ? String(rolled.rows[0].through) : null,
+    turnLimits,
   };
 }
 

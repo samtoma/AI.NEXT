@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { CostSparkline } from "@/components/console/CostSparkline";
-import { Chip, Empty, Figure, Panel, Td, Th } from "@/components/console/ui";
+import { Chip, Empty, Figure, Panel, Td, Th, share, stamp } from "@/components/console/ui";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
 import {
@@ -15,6 +15,9 @@ import {
 } from "@/lib/cost-model";
 import { getCostView, type CostView } from "@/lib/cost-queries";
 import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
+import { SUBJECTS, displayLabel, subjectOfCourse } from "@/lib/subjects";
+import type { ThresholdConversation } from "@/lib/turn-threshold-queries";
+import { anyThresholdReached, thresholdChipLabel } from "@/lib/turn-thresholds";
 
 /**
  * Cost — what the product spends, per student, over time (contracts/admin.md
@@ -22,9 +25,10 @@ import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
  *
  * `cost-billing` and nothing else. **There is no student content on this page**
  * (FR-2406): every cell is a name, an id, a count, a token figure, a dollar
- * figure, a date or a status word. No message, no transcript, no preview, and
- * no turn count of a conversation — and the role holds no grant that would let
- * one be read even if this page asked.
+ * figure, a date, a status word or a curriculum label. No message, no
+ * transcript, no preview. Since v0.9.0 there IS a reply count per
+ * conversation — the turn-threshold panel (ADR-0023, FR-3403, FR-3404) — and
+ * it is a count, never a word anybody wrote.
  *
  * **Every figure says "imputed at list price".** The runtime is a Claude
  * subscription, so no money left a bank account per turn (research A4.4); the
@@ -36,8 +40,11 @@ import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
  *
  * Reports only. It sets no budget and enforces no ceiling, because no price
  * exists yet to derive one from — PRD §10 is unset and the EGP 40 figure came
- * from a withdrawn parent price band. Per-surface turn caps are what actually
- * bound spend, and they live in `api/ask/route.ts`.
+ * from a withdrawn parent price band. **And since ADR-0023 (v0.9.0) nothing
+ * bounds spend per conversation either.** The per-surface turn caps that used
+ * to live in `api/ask/route.ts` are gone; their numbers survive as thresholds
+ * (`lib/turn-thresholds.ts`) that are observed, not enforced, and the panel
+ * right after the headline says how often a conversation reached one.
  */
 export const dynamic = "force-dynamic";
 
@@ -55,7 +62,13 @@ export default async function CostConsolePage({
     return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
   }
   const period = periodOf((await searchParams).period);
-  return <CostPage operatorId={access.operatorId} period={period} />;
+  return (
+    <CostPage
+      operatorId={access.operatorId}
+      period={period}
+      canOpenSessions={access.roles.includes("student-data")}
+    />
+  );
 }
 
 /* --------------------------------------------------------------- format */
@@ -92,9 +105,12 @@ function basisNote(basis: string): string {
 async function CostPage({
   operatorId,
   period,
+  canOpenSessions,
 }: {
   operatorId: number;
   period: PeriodDays;
+  /** The session pages are `student-data`'s; link to them only for an operator who holds it. */
+  canOpenSessions: boolean;
 }) {
   const view = await getCostView(operatorId, period);
   const periodText = periodLabel(period);
@@ -125,6 +141,7 @@ async function CostPage({
       ) : (
         <>
           <Headline view={view} periodText={periodText} />
+          <TurnLimits view={view} periodText={periodText} canOpenSessions={canOpenSessions} />
           <PerStudent view={view} periodText={periodText} />
           <BySurface view={view} periodText={periodText} />
           <ByOutcome view={view} periodText={periodText} />
@@ -134,8 +151,9 @@ async function CostPage({
 
       <p className="mt-5 max-w-[80ch] text-[12.5px] leading-relaxed text-ink-faint">
         This page reports; it does not enforce. No numeric cost ceiling binds until a price exists
-        to derive one from (constitution VI, PRD §10). What actually bounds spend is the per-surface
-        turn cap in <code className="font-mono text-[12px]">api/ask/route.ts</code>.
+        to derive one from (constitution VI, PRD §10), and since v0.9.0 (ADR-0023) nothing bounds
+        spend per conversation either: the per-surface turn thresholds are observed, not enforced,
+        and the turn-limits panel above says how often a conversation reaches one.
       </p>
     </main>
   );
@@ -229,6 +247,188 @@ function Headline({ view, periodText }: { view: CostView; periodText: string }) 
         </p>
       )}
     </Panel>
+  );
+}
+
+/* --------------------------------------------------------- turn limits */
+
+/**
+ * How often the turn limits that no longer exist would have fired (ADR-0023,
+ * FR-3403, FR-3404). Amber when any conversation reached a threshold in the
+ * period — never red (FR-1002): nothing was refused and no student saw a
+ * limit, it is simply the number Samuel asked to be shown.
+ */
+function TurnLimits({
+  view,
+  periodText,
+  canOpenSessions,
+}: {
+  view: CostView;
+  periodText: string;
+  canOpenSessions: boolean;
+}) {
+  const t = view.turnLimits;
+  const reached = anyThresholdReached(t.surfaces);
+  const totalReached = t.surfaces.reduce((n, r) => n + r.reached, 0);
+  return (
+    <Panel
+      title="Turn limits — observed, not enforced"
+      tone={reached ? "attention" : "neutral"}
+      right={
+        <Chip tone={reached ? "attention" : "neutral"}>
+          {reached
+            ? `${int(totalReached)} conversation${totalReached === 1 ? "" : "s"} reached a threshold`
+            : "no threshold reached"}
+        </Chip>
+      }
+      note={
+        <>
+          Until v0.9.0 each function refused the next turn once a conversation had this many
+          replies, and locked the student&apos;s input. <strong>Nothing is refused any more</strong>{" "}
+          (ADR-0023); the numbers are kept as thresholds so we can see how often they would have
+          fired. A conversation counts in the {periodText} if any of its turns falls in it, and its
+          replies are every answer it delivered — the count the old limit read. Before v0.9.0 the
+          refused turn was never recorded, so an older conversation can show &ldquo;reached&rdquo;
+          but never &ldquo;went past&rdquo;.
+        </>
+      }
+    >
+      <div className="overflow-x-auto rounded border border-line bg-card">
+        <table className="w-full border-collapse text-[13px]">
+          <thead>
+            <tr className="border-b border-line text-ink-soft">
+              <Th>Function</Th>
+              <Th right>Threshold</Th>
+              <Th right>Conversations</Th>
+              <Th right>Reached it</Th>
+              <Th right>Went past it</Th>
+              <Th right>Most replies in one</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {t.surfaces.map((r) => (
+              <tr key={r.surface} className="border-b border-line-soft last:border-0">
+                <Td>
+                  {SURFACE_LABEL[r.surface] ?? r.surface}{" "}
+                  <span className="font-mono text-[11px] text-ink-faint">{r.surface}</span>
+                </Td>
+                <Td right mono>
+                  {r.threshold} replies
+                </Td>
+                <Td right mono>
+                  {int(r.conversations)}
+                </Td>
+                <Td right mono>
+                  {r.reached > 0 ? (
+                    <Chip tone="attention">{share(r.reached, r.conversations)}</Chip>
+                  ) : (
+                    share(r.reached, r.conversations)
+                  )}
+                </Td>
+                <Td right mono>
+                  {share(r.past, r.conversations)}
+                </Td>
+                <Td right mono>
+                  {r.conversations === 0 ? "—" : int(r.highest)}
+                </Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-2 text-[11.5px] text-ink-faint">
+        Conversations with at least one turn in the {periodText}, this environment only. Ask the
+        Spine never had a limit and is not counted.
+      </p>
+
+      <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+        Most recent conversations that reached a threshold
+      </h3>
+      {t.recent.length === 0 ? (
+        <div className="mt-2">
+          <Empty>No conversation reached a threshold in the {periodText}.</Empty>
+        </div>
+      ) : (
+        <>
+          <div className="mt-2 overflow-x-auto rounded border border-line bg-card">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th>Reached at</Th>
+                  <Th>Function</Th>
+                  <Th>Lesson</Th>
+                  <Th>Student</Th>
+                  <Th>Replies</Th>
+                  <Th>Session</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {t.recent.map((c) => (
+                  <tr
+                    key={`${c.studentId}-${c.surface}-${c.reachedAt}`}
+                    className="border-b border-line-soft last:border-0"
+                  >
+                    <Td mono>{stamp(c.reachedAt)}</Td>
+                    <Td>{SURFACE_LABEL[c.surface] ?? c.surface}</Td>
+                    <Td>
+                      <LessonLabel c={c} />
+                    </Td>
+                    <Td>
+                      {c.displayName ?? "name not recorded"}{" "}
+                      <span className="font-mono text-[11px] text-ink-faint">#{c.studentId}</span>
+                    </Td>
+                    <Td>
+                      <Chip tone="attention">
+                        {thresholdChipLabel(c.surface, c.delivered) ?? `${c.delivered} replies`}
+                      </Chip>
+                    </Td>
+                    <Td>
+                      {c.sessionId == null ? (
+                        <span className="text-[12px] text-ink-faint">no session recorded</span>
+                      ) : canOpenSessions ? (
+                        <Link
+                          href={`/students/${c.studentId}/sessions/${c.sessionId}`}
+                          className="whitespace-nowrap text-accent underline-offset-2 hover:underline"
+                        >
+                          Session #{c.sessionId} →
+                        </Link>
+                      ) : (
+                        <span className="font-mono text-[12px] text-ink-soft">#{c.sessionId}</span>
+                      )}
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
+            Newest first, by when the conversation delivered its threshold-th reply — the moment
+            the old limit would have stopped it.{" "}
+            {t.recentCapped
+              ? `Only the ${t.recentLimit} most recent are listed; more than that reached a threshold in the ${periodText}, and the counts above include them all.`
+              : `Every conversation that reached a threshold in the ${periodText} is listed.`}
+            {!canOpenSessions &&
+              " Opening a session needs the student-data role, so sessions are shown by number only."}
+          </p>
+        </>
+      )}
+    </Panel>
+  );
+}
+
+/** The course, the lesson slug and the first objective the conversation was grounded on. */
+function LessonLabel({ c }: { c: ThresholdConversation }) {
+  const subject = subjectOfCourse(c.courseId);
+  const course = subject ? displayLabel(SUBJECTS[subject]) : c.courseId;
+  const head = [course, c.lessonSlug ? `lesson ${c.lessonSlug}` : null].filter(Boolean).join(" · ");
+  if (!head && !c.loLabel) return <span className="text-[12px] text-ink-faint">not recorded</span>;
+  return (
+    <>
+      {head || null}
+      {c.loLabel ? (
+        <span className="block text-[11.5px] leading-snug text-ink-faint">{c.loLabel}</span>
+      ) : null}
+    </>
   );
 }
 

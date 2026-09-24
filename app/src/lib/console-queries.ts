@@ -2,6 +2,8 @@ import { sequential, withOperator } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
 import { studentFeedback, type FeedbackNote } from "@/lib/feedback-queries";
 import { sessionWallClockMs } from "@/lib/timeline-rules";
+import { readSessionTurnLimits } from "@/lib/turn-threshold-queries";
+import type { SessionTurnLimit } from "@/lib/turn-thresholds";
 
 /**
  * The narrow client shape `withOperator` hands a callback, and the only shape
@@ -702,6 +704,12 @@ export type SessionListRow = {
   releaseTag: string | null;
   /** Its probing snapshot (ADR-0021); null = opened before v0.7.0. */
   probing: boolean | null;
+  /**
+   * A conversation in it at or past its surface's reply threshold, counted to
+   * the end of this session (ADR-0023, FR-3405); null when none was. A count,
+   * not content — the list stays metadata only.
+   */
+  turnLimit: SessionTurnLimit | null;
 };
 
 /**
@@ -749,6 +757,9 @@ export async function getStudentSessions(
         ORDER BY s.opened_at DESC`,
       [studentId, ENVIRONMENT]
     );
+    // The turn-threshold chips (FR-3405): one more read on the same client,
+    // after the one above has finished, never beside it (`lib/db.ts`).
+    const limits = await readSessionTurnLimits(db, studentId);
 
     return {
       student: {
@@ -774,6 +785,7 @@ export async function getStudentSessions(
           costUsd: Number(r.cost_usd ?? 0),
           releaseTag: (r.release_tag as string | null) ?? null,
           probing: r.probing == null ? null : r.probing === true,
+          turnLimit: limits.get(Number(r.id)) ?? null,
         };
       }),
     };
