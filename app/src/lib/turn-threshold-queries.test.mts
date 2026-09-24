@@ -10,6 +10,12 @@
  * against a scratch Postgres with seeded `ai_interactions` rows when this was
  * written; the shapes pinned here are what that run exercised.
  *
+ * **FR-2406, by what is read.** A billing-only operator's view is built
+ * without the per-conversation list and without the highest reply count: the
+ * fake client proves the list's query is never sent and that `max(delivered)`
+ * is not in the one that is.
+ *
+ * @covers FR-2406
  * @covers FR-3403
  * @covers FR-3404
  * @covers FR-3405
@@ -24,11 +30,12 @@ import { ENVIRONMENT } from "./env.ts";
 import {
   CONVERSATION_KEY,
   DELIVERED,
-  HISTOGRAM_SQL,
   RECENT_LIMIT,
   RECENT_SQL,
   RUNNING_DELIVERED,
   SESSIONS_SQL,
+  SURFACE_SUMMARY_SQL,
+  costDetailAccess,
   readSessionTurnLimits,
   readTurnLimitsView,
   thresholdParams,
@@ -36,7 +43,8 @@ import {
 
 const squash = (sql: string) => sql.replace(/\s+/g, " ").trim();
 const ALL_SQL = {
-  histogram: HISTOGRAM_SQL,
+  "summary (aggregates)": SURFACE_SUMMARY_SQL(false),
+  "summary (with highest)": SURFACE_SUMMARY_SQL(true),
   recent: RECENT_SQL,
   "sessions (all)": SESSIONS_SQL(false),
   "sessions (one)": SESSIONS_SQL(true),
@@ -66,8 +74,8 @@ test("a conversation is (surface, chat_session, student) and a reply is outcome 
 
 test("every read counts from the running reply count, and none reads a message", () => {
   for (const [name, sql] of Object.entries(ALL_SQL)) {
-    if (name === "histogram") {
-      // the histogram counts whole conversations directly, by the same definition
+    if (name.startsWith("summary")) {
+      // the summary counts whole conversations directly, by the same definition
       assert.match(squash(sql), /count\(\*\) FILTER \(WHERE t\.outcome = 'ok'\) AS delivered/, name);
       assert.match(squash(sql), /GROUP BY t\.student_id, t\.surface, t\.chat_session/, name);
     } else {
@@ -96,7 +104,7 @@ test("only threshold surfaces, only rows with a conversation, only rows with a s
 });
 
 test("the period is the Cost page's: whole UTC days ending today, on the conversation's last turn", () => {
-  for (const sql of [HISTOGRAM_SQL, RECENT_SQL]) {
+  for (const sql of [SURFACE_SUMMARY_SQL(false), RECENT_SQL]) {
     assert.match(sql, /\(ai\.created_at AT TIME ZONE 'UTC'\)::date\s+AS day/);
     assert.match(sql, /HAVING max\(t\.day\) > \(now\(\) AT TIME ZONE 'UTC'\)::date - \$2::int/);
   }
@@ -150,13 +158,34 @@ test("the thresholds reach the SQL from TURN_THRESHOLDS, as two aligned arrays",
   assert.deepEqual(thresholds, [18, 5, 2]);
 });
 
-test("readTurnLimitsView: two queries, this environment, this period, one after the other", async () => {
+test("the summary counts with thresholdStatus's rule, every surface included, and the highest only on request", () => {
+  for (const withHighest of [false, true]) {
+    const sql = squash(SURFACE_SUMMARY_SQL(withHighest));
+    assert.match(sql, /count\(\*\) FILTER \(WHERE c\.delivered >= th\.threshold\) AS reached/, "reached is >=");
+    assert.match(sql, /count\(\*\) FILTER \(WHERE c\.delivered > th\.threshold\) AS past/, "past is >");
+    assert.match(sql, /FROM th LEFT JOIN conversations c ON c\.surface = th\.surface/, "a quiet surface is a zero row");
+  }
+  assert.doesNotMatch(SURFACE_SUMMARY_SQL(false), /max\(c\.delivered\)|AS highest/, "no single conversation's count without student-data");
+  assert.match(squash(SURFACE_SUMMARY_SQL(true)), /coalesce\(max\(c\.delivered\), 0\) AS highest/);
+});
+
+test("detail needs student-data AS WELL AS cost-billing (FR-2406)", () => {
+  assert.deepEqual(costDetailAccess(["cost-billing"]), { studentDetail: false });
+  assert.deepEqual(costDetailAccess(["student-data"]), { studentDetail: false });
+  assert.deepEqual(costDetailAccess([]), { studentDetail: false });
+  assert.deepEqual(costDetailAccess(["cost-billing", "content-review", "teaching-controls"]), { studentDetail: false });
+  assert.deepEqual(costDetailAccess(["student-data", "cost-billing"]), { studentDetail: true });
+});
+
+const SUMMARY_ROWS = [
+  { surface: "lesson_learn", threshold: 18, conversations: "6", reached: "3", past: "1", highest: "23" },
+  { surface: "student_chat", threshold: 2, conversations: "11", reached: "4", past: "0", highest: "2" },
+  { surface: "lesson_review", threshold: 5, conversations: "0", reached: "0", past: "0", highest: "0" },
+];
+
+test("readTurnLimitsView with student-data: the summary with its highest, then the list", async () => {
   const { db, calls } = fakeDb([
-    [
-      { surface: "lesson_learn", delivered: "18", conversations: "2" },
-      { surface: "lesson_learn", delivered: "23", conversations: "1" },
-      { surface: "lesson_learn", delivered: "4", conversations: "3" },
-    ],
+    SUMMARY_ROWS,
     [
       {
         student_id: "7",
@@ -174,11 +203,11 @@ test("readTurnLimitsView: two queries, this environment, this period, one after 
       },
     ],
   ]);
-  const view = await readTurnLimitsView(db, 30);
+  const view = await readTurnLimitsView(db, 30, { studentDetail: true });
 
   assert.equal(calls.length, 2);
-  assert.equal(calls[0].text, HISTOGRAM_SQL);
-  assert.deepEqual(calls[0].values, [ENVIRONMENT, "30", ["lesson_learn", "lesson_review", "student_chat"]]);
+  assert.equal(calls[0].text, SURFACE_SUMMARY_SQL(true));
+  assert.deepEqual(calls[0].values, [ENVIRONMENT, "30", ["lesson_learn", "lesson_review", "student_chat"], [18, 5, 2]]);
   assert.equal(calls[1].text, RECENT_SQL);
   assert.deepEqual(calls[1].values, [
     ENVIRONMENT,
@@ -188,17 +217,14 @@ test("readTurnLimitsView: two queries, this environment, this period, one after 
     RECENT_LIMIT + 1,
   ]);
 
-  const learn = view.surfaces.find((s) => s.surface === "lesson_learn")!;
-  assert.deepEqual(learn, {
-    surface: "lesson_learn",
-    threshold: 18,
-    conversations: 6,
-    reached: 3,
-    past: 1,
-    highest: 23,
-  });
-  assert.equal(view.recentCapped, false);
-  assert.deepEqual(view.recent, [
+  // in THRESHOLD_SURFACES order, whatever order the rows came back in
+  assert.deepEqual(view.surfaces, [
+    { surface: "lesson_learn", threshold: 18, conversations: 6, reached: 3, past: 1, highest: 23 },
+    { surface: "lesson_review", threshold: 5, conversations: 0, reached: 0, past: 0, highest: 0 },
+    { surface: "student_chat", threshold: 2, conversations: 11, reached: 4, past: 0, highest: 2 },
+  ]);
+  assert.equal(view.detail?.recentCapped, false);
+  assert.deepEqual(view.detail?.recent, [
     {
       studentId: 7,
       displayName: "Omar",
@@ -216,6 +242,26 @@ test("readTurnLimitsView: two queries, this environment, this period, one after 
   ]);
 });
 
+test("readTurnLimitsView without student-data: one aggregate query, no list, no highest (FR-2406)", async () => {
+  // Even if a row came back carrying a highest, it would not be passed on.
+  const { db, calls } = fakeDb([SUMMARY_ROWS]);
+  const view = await readTurnLimitsView(db, 7, { studentDetail: false });
+  assert.equal(calls.length, 1, "the per-conversation list's query is never sent");
+  assert.equal(calls[0].text, SURFACE_SUMMARY_SQL(false));
+  assert.ok(!calls.some((c) => c.text === RECENT_SQL));
+  assert.equal(view.detail, null);
+  assert.deepEqual(
+    view.surfaces.map((r) => [r.surface, r.conversations, r.reached, r.past, r.highest]),
+    [
+      ["lesson_learn", 6, 3, 1, null],
+      ["lesson_review", 0, 0, 0, null],
+      ["student_chat", 11, 4, 0, null],
+    ]
+  );
+  // nothing in what the page is handed names a student or a conversation
+  assert.doesNotMatch(JSON.stringify(view), /studentId|displayName|sessionId|reachedAt|"delivered"/);
+});
+
 test("the list says when it was cut: one row more than the limit is asked for, and dropped", async () => {
   const row = {
     student_id: 1,
@@ -231,15 +277,16 @@ test("the list says when it was cut: one row more than the limit is asked for, a
     lo_label: null,
     course_id: null,
   };
+  const all = { studentDetail: true };
   const { db } = fakeDb([[], Array.from({ length: RECENT_LIMIT + 1 }, () => row)]);
-  const view = await readTurnLimitsView(db, 7);
-  assert.equal(view.recent.length, RECENT_LIMIT);
-  assert.equal(view.recentCapped, true);
-  assert.equal(view.recent[0].sessionId, null, "no session recorded stays null, never 0");
-  assert.equal(view.recent[0].displayName, null);
+  const view = await readTurnLimitsView(db, 7, all);
+  assert.equal(view.detail?.recent.length, RECENT_LIMIT);
+  assert.equal(view.detail?.recentCapped, true);
+  assert.equal(view.detail?.recent[0].sessionId, null, "no session recorded stays null, never 0");
+  assert.equal(view.detail?.recent[0].displayName, null);
 
   const exact = fakeDb([[], Array.from({ length: RECENT_LIMIT }, () => row)]);
-  assert.equal((await readTurnLimitsView(exact.db, 7)).recentCapped, false);
+  assert.equal((await readTurnLimitsView(exact.db, 7, all)).detail?.recentCapped, false);
 });
 
 test("readSessionTurnLimits: chips per session from the conversations' counts, environment and student scoped", async () => {
@@ -285,7 +332,7 @@ test("readSessionTurnLimits: chips per session from the conversations' counts, e
 test("the Cost view reads the thresholds on its own client, in its own period", () => {
   const cost = code("lib/cost-queries.ts");
   const reads = cost.slice(cost.indexOf("await withOperator(operatorId, (db) =>"), cost.indexOf("] as const)"));
-  assert.match(reads, /\(\) => readTurnLimitsView\(db, periodDays\),/, "inside the page's one sequential read");
+  assert.match(reads, /\(\) => readTurnLimitsView\(db, periodDays, access\),/, "inside the page's one sequential read");
   assert.match(cost, /^\s*turnLimits,$/m);
 });
 
@@ -301,8 +348,14 @@ test("the Cost page shows the panel right after the headline, in the attention t
   assert.match(page, /anyThresholdReached\(t\.surfaces\)/);
   // no red, no rust, no literal colour (FR-1002, constitution XII)
   assert.doesNotMatch(page, /\b(red|rust|coral)\b|#[0-9a-fA-F]{3,8}\b|rgb\(/);
-  // the session link is offered only to an operator who can open it
-  assert.match(page, /canOpenSessions=\{access\.roles\.includes\("student-data"\)\}/);
+  // FR-2406: the read is told the operator's detail access, from the principal's roles
+  assert.match(page, /detail=\{costDetailAccess\(access\.roles\)\}/);
+  assert.match(page, /const view = await getCostView\(operatorId, period, detail\);/);
+  assert.doesNotMatch(page, /roles\.includes\(/, "one rule, costDetailAccess — not a second copy on the page");
+  // without detail: the note, and neither the list nor the highest column
+  assert.match(page, /\{detail == null \? \(\s*<p[^>]*>\s*\{STUDENT_DATA_NOTE_TURNS\}/);
+  assert.match(page, /"Which conversations, and their reply counts, need the student-data role \(FR-2406\)\."/);
+  assert.match(page, /\{detail \? <Th right>Most replies in one<\/Th> : null\}/);
   assert.match(page, /href=\{`\/students\/\$\{c\.studentId\}\/sessions\/\$\{c\.sessionId\}`\}/);
   // the old footer's claim is gone
   assert.doesNotMatch(src("app/(console)/cost/page.console.tsx"), /What actually bounds spend is the per-surface/);

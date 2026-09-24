@@ -22,11 +22,9 @@ import {
   TURN_THRESHOLDS,
   anyThresholdReached,
   sessionTurnLimit,
-  summariseThresholds,
   thresholdChipLabel,
   thresholdOf,
   thresholdStatus,
-  summariseUploadDays,
   uploadChipLabel,
   uploadThresholdStatus,
 } from "./turn-thresholds.ts";
@@ -134,52 +132,18 @@ test("a session's chip is its furthest conversation, and says how many reached",
   assert.equal(sessionTurnLimit([{ surface: "spine_chat", delivered: 50 }]), null);
 });
 
-test("the histogram folds into one row per threshold surface, zeros included", () => {
-  const rows = summariseThresholds([
-    { surface: "lesson_learn", delivered: 6, conversations: 3 },
-    { surface: "lesson_learn", delivered: 18, conversations: 2 },
-    { surface: "lesson_learn", delivered: 23, conversations: 1 },
-    { surface: "student_chat", delivered: 1, conversations: 7 },
-    { surface: "student_chat", delivered: 2, conversations: 4 },
-    // spine_chat is not a threshold surface and must not appear or be counted
-    { surface: "spine_chat", delivered: 90, conversations: 5 },
-  ]);
-  assert.deepEqual(
-    rows.map((r) => r.surface),
-    ["lesson_learn", "lesson_review", "student_chat"]
-  );
-  const [learn, review, chat] = rows;
-  assert.deepEqual(learn, {
-    surface: "lesson_learn",
-    threshold: 18,
-    conversations: 6,
-    reached: 3,
-    past: 1,
-    highest: 23,
-  });
-  assert.deepEqual(review, {
-    surface: "lesson_review",
-    threshold: 5,
-    conversations: 0,
-    reached: 0,
+test("the panel's attention state: any surface with a conversation at or past its threshold", () => {
+  const row = (surface: "lesson_learn" | "lesson_review" | "student_chat", reached: number) => ({
+    surface,
+    threshold: TURN_THRESHOLDS[surface],
+    conversations: 9,
+    reached,
     past: 0,
-    highest: 0,
+    highest: null,
   });
-  assert.deepEqual(chat, {
-    surface: "student_chat",
-    threshold: 2,
-    conversations: 11,
-    reached: 4,
-    past: 0,
-    highest: 2,
-  });
-  assert.equal(anyThresholdReached(rows), true);
-});
-
-test("nothing reached means no attention state", () => {
-  const rows = summariseThresholds([{ surface: "lesson_learn", delivered: 17, conversations: 9 }]);
-  assert.equal(anyThresholdReached(rows), false);
-  assert.equal(anyThresholdReached(summariseThresholds([])), false);
+  assert.equal(anyThresholdReached([row("lesson_learn", 0), row("student_chat", 0)]), false);
+  assert.equal(anyThresholdReached([row("lesson_learn", 0), row("student_chat", 1)]), true);
+  assert.equal(anyThresholdReached([]), false);
 });
 
 test("the module is pure: the lesson surface imports it, so it may import nothing", () => {
@@ -202,24 +166,4 @@ test("uploads: reached at the tenth in 24 hours, past at the eleventh", () => {
   assert.equal(uploadChipLabel(9), null);
   assert.equal(uploadChipLabel(10), "Reached 10 uploads");
   assert.equal(uploadChipLabel(13), "Past 10 uploads · 13");
-});
-
-test("student-days fold with the same rule, and an empty period is all zeros", () => {
-  assert.deepEqual(summariseUploadDays([]), {
-    threshold: 10,
-    studentDays: 0,
-    reached: 0,
-    past: 0,
-    highest: 0,
-  });
-  assert.deepEqual(
-    summariseUploadDays([
-      { most: 1, studentDays: 6 },
-      { most: 4, studentDays: 2 },
-      { most: 10, studentDays: 2 },
-      { most: 12, studentDays: 1 },
-      { most: 3, studentDays: 0 },
-    ]),
-    { threshold: 10, studentDays: 11, reached: 3, past: 1, highest: 12 }
-  );
 });

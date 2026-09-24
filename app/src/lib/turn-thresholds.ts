@@ -143,9 +143,12 @@ export function sessionTurnLimit(convs: readonly ConversationCount[]): SessionTu
 
 /* ------------------------------------------------------- the Cost panel */
 
-/** One bucket of the per-surface histogram: this many conversations delivered exactly `delivered` replies. */
-export type DeliveredBucket = { surface: string; delivered: number; conversations: number };
-
+/**
+ * One threshold surface on the Cost page, over one period. Counted in SQL
+ * (`lib/turn-threshold-queries.ts`) with the rule `thresholdStatus` states —
+ * reached is `delivered >= threshold`, past is `delivered > threshold` — and
+ * `turn-threshold-queries.test.mts` pins the two to each other.
+ */
 export type SurfaceThresholdSummary = {
   surface: ThresholdSurface;
   threshold: number;
@@ -155,39 +158,14 @@ export type SurfaceThresholdSummary = {
   reached: number;
   /** …of which delivered more than it (a subset of `reached`). */
   past: number;
-  /** The most replies any one conversation delivered; 0 when there were none. */
-  highest: number;
+  /**
+   * The most replies any one conversation delivered; 0 when there were none.
+   * **`null` unless the operator holds `student-data`** (FR-2406): it is the
+   * turn count of a single conversation, so it is not even selected for a
+   * billing-only operator.
+   */
+  highest: number | null;
 };
-
-/**
- * Fold the histogram into one row per threshold surface, every surface
- * present even when it had no conversation (a zero row is a fact; a missing
- * row is a question). The rule is `thresholdStatus`, so the panel and the
- * session chips cannot disagree about what "reached" means.
- */
-export function summariseThresholds(
-  buckets: readonly DeliveredBucket[]
-): SurfaceThresholdSummary[] {
-  return THRESHOLD_SURFACES.map((surface) => {
-    const row: SurfaceThresholdSummary = {
-      surface,
-      threshold: TURN_THRESHOLDS[surface],
-      conversations: 0,
-      reached: 0,
-      past: 0,
-      highest: 0,
-    };
-    for (const b of buckets) {
-      if (b.surface !== surface || b.conversations <= 0) continue;
-      row.conversations += b.conversations;
-      const status = thresholdStatus(surface, b.delivered);
-      if (status !== "below") row.reached += b.conversations;
-      if (status === "past") row.past += b.conversations;
-      row.highest = Math.max(row.highest, b.delivered);
-    }
-    return row;
-  });
-}
 
 /** True when any conversation in the summary reached its threshold — the panel's attention state. */
 export function anyThresholdReached(rows: readonly SurfaceThresholdSummary[]): boolean {
@@ -241,35 +219,20 @@ export function uploadChipLabel(inTwentyFourHours: number): string | null {
   return status === "reached" ? `Reached ${t}` : `Past ${t} · ${inTwentyFourHours}`;
 }
 
-/** Student-days whose highest 24-hour upload count was exactly `most`. */
-export type UploadDayBucket = { most: number; studentDays: number };
-
+/**
+ * The upload threshold on the Cost page, over one period — counted in SQL
+ * (`lib/upload-threshold-queries.ts`) with `uploadThresholdStatus`'s rule.
+ */
 export type UploadThresholdSummary = {
   threshold: number;
   /** Student-days with at least one upload. */
   studentDays: number;
   reached: number;
   past: number;
-  /** The most uploads one student made in any 24 hours; 0 when none. */
-  highest: number;
+  /**
+   * The most uploads one student made in any 24 hours; 0 when none. **`null`
+   * unless the operator holds `student-data`** (FR-2406): it is one student's
+   * upload count.
+   */
+  highest: number | null;
 };
-
-/** Fold the histogram with `uploadThresholdStatus` — the one rule, as for turns. */
-export function summariseUploadDays(buckets: readonly UploadDayBucket[]): UploadThresholdSummary {
-  const out: UploadThresholdSummary = {
-    threshold: DAILY_UPLOAD_THRESHOLD,
-    studentDays: 0,
-    reached: 0,
-    past: 0,
-    highest: 0,
-  };
-  for (const b of buckets) {
-    if (b.studentDays <= 0) continue;
-    out.studentDays += b.studentDays;
-    const status = uploadThresholdStatus(b.most);
-    if (status !== "below") out.reached += b.studentDays;
-    if (status === "past") out.past += b.studentDays;
-    out.highest = Math.max(out.highest, b.most);
-  }
-  return out;
-}

@@ -1,9 +1,6 @@
 import { ENVIRONMENT } from "@/lib/env";
-import {
-  DAILY_UPLOAD_THRESHOLD,
-  summariseUploadDays,
-  type UploadThresholdSummary,
-} from "@/lib/turn-thresholds";
+import type { CostDetailAccess } from "@/lib/turn-threshold-queries";
+import { DAILY_UPLOAD_THRESHOLD, type UploadThresholdSummary } from "@/lib/turn-thresholds";
 
 /**
  * Photo uploads, observed — the Cost page's upload panel (ADR-0023, FR-3409).
@@ -33,8 +30,15 @@ import {
  * **`withOperator`**, the caller's client, one query after another.
  * **No student content** (FR-2406): from `uploads` only `student_id` and
  * `created_at` are read, never `parsed_text`, `storage_path` or the file.
- * From the ledger only `outcome`. The student's display name comes from
- * `students`, as it does for the per-student panel.
+ * From the ledger only `outcome`.
+ *
+ * **A billing-only operator gets aggregates and nothing else** (FR-2406). The
+ * list of student-days that reached the threshold (a named student beside an
+ * upload count) and the most uploads in 24 hours (one student's count) are
+ * read only when the operator also holds `student-data` (`costDetailAccess`
+ * in `lib/turn-threshold-queries.ts`). Without it the list's query is not run
+ * and `max(d.most)` is not selected. The display name, from `students`, is
+ * read only by the list.
  */
 
 type Db = {
@@ -89,13 +93,21 @@ const STUDENT_DAYS_CTE = `
      GROUP BY w.student_id, w.day
   )`;
 
-/** Q3: how many student-days peaked at each 24-hour count. */
-export const STUDENT_DAY_HISTOGRAM_SQL = `
+/**
+ * Q3: student-days in the period, how many reached the threshold ($3) and how
+ * many went past it — `uploadThresholdStatus`'s comparisons. `withHighest`
+ * adds the most uploads one student made in 24 hours, selected only with
+ * `student-data` (FR-2406).
+ */
+export const STUDENT_DAY_SUMMARY_SQL = (withHighest: boolean) => `
   WITH ${STUDENT_DAYS_CTE}
-  SELECT d.most, count(*) AS student_days
-    FROM days d
-   GROUP BY d.most
-   ORDER BY d.most`;
+  SELECT count(*)                              AS student_days,
+         count(*) FILTER (WHERE d.most >= $3)  AS reached,
+         count(*) FILTER (WHERE d.most >  $3)  AS past${
+           withHighest ? `,
+         coalesce(max(d.most), 0)              AS highest` : ""
+         }
+    FROM days d`;
 
 /** Q4: the student-days at or over the threshold ($3), newest first, $4 rows. */
 export const STUDENT_DAYS_SQL = `
@@ -120,6 +132,13 @@ export type UploadStudentDay = {
   uploads: number;
 };
 
+/** The per-student part of the panel, read only with `student-data` (FR-2406). */
+export type UploadDetail = {
+  recentDays: UploadStudentDay[];
+  recentLimit: number;
+  recentCapped: boolean;
+};
+
 export type UploadsView = {
   /** Rows in `uploads` in the period. */
   uploads: number;
@@ -128,9 +147,8 @@ export type UploadsView = {
   /** Parse rows in the ledger in the period, by how they ended. */
   parses: { delivered: number; failed: number; other: number };
   threshold: UploadThresholdSummary;
-  recentDays: UploadStudentDay[];
-  recentLimit: number;
-  recentCapped: boolean;
+  /** `null` for an operator without `student-data`: not read, not passed. */
+  detail: UploadDetail | null;
 };
 
 export const UPLOAD_DAYS_LIMIT = 50;
@@ -142,17 +160,28 @@ const num = (v: unknown): number => {
 
 /* ------------------------------------------------------------- the read */
 
-export async function readUploadsView(db: Db, periodDays: number): Promise<UploadsView> {
+/**
+ * Totals, parse outcomes and the threshold's aggregates for every operator
+ * the Cost page admits; the student-day list and the highest count only with
+ * `access.studentDetail` — without it that query is never run (FR-2406).
+ */
+export async function readUploadsView(
+  db: Db,
+  periodDays: number,
+  access: CostDetailAccess
+): Promise<UploadsView> {
   const period = String(periodDays);
+  const withDetail = access.studentDetail === true;
   const totals = await db.query(UPLOAD_TOTALS_SQL, [ENVIRONMENT, period]);
   const outcomes = await db.query(PARSE_OUTCOMES_SQL, [ENVIRONMENT, period]);
-  const hist = await db.query(STUDENT_DAY_HISTOGRAM_SQL, [ENVIRONMENT, period]);
-  const days = await db.query(STUDENT_DAYS_SQL, [
+  const summary = await db.query(STUDENT_DAY_SUMMARY_SQL(withDetail), [
     ENVIRONMENT,
     period,
     DAILY_UPLOAD_THRESHOLD,
-    UPLOAD_DAYS_LIMIT + 1,
   ]);
+  const days = withDetail
+    ? await db.query(STUDENT_DAYS_SQL, [ENVIRONMENT, period, DAILY_UPLOAD_THRESHOLD, UPLOAD_DAYS_LIMIT + 1])
+    : null;
 
   const parses = { delivered: 0, failed: 0, other: 0 };
   for (const r of outcomes.rows) {
@@ -162,21 +191,31 @@ export async function readUploadsView(db: Db, periodDays: number): Promise<Uploa
     else parses.other += n;
   }
 
+  const s = summary.rows[0];
   return {
     uploads: num(totals.rows[0]?.uploads),
     students: num(totals.rows[0]?.students),
     parses,
-    threshold: summariseUploadDays(
-      hist.rows.map((r) => ({ most: num(r.most), studentDays: num(r.student_days) }))
-    ),
-    recentDays: days.rows.slice(0, UPLOAD_DAYS_LIMIT).map((r) => ({
-      studentId: num(r.student_id),
-      displayName: typeof r.display_name === "string" && r.display_name ? r.display_name : null,
-      day: String(r.day).slice(0, 10),
-      most: num(r.most),
-      uploads: num(r.uploads),
-    })),
-    recentLimit: UPLOAD_DAYS_LIMIT,
-    recentCapped: days.rows.length > UPLOAD_DAYS_LIMIT,
+    threshold: {
+      threshold: DAILY_UPLOAD_THRESHOLD,
+      studentDays: num(s?.student_days),
+      reached: num(s?.reached),
+      past: num(s?.past),
+      highest: withDetail ? num(s?.highest) : null,
+    },
+    detail: days
+      ? {
+          recentDays: days.rows.slice(0, UPLOAD_DAYS_LIMIT).map((r) => ({
+            studentId: num(r.student_id),
+            displayName:
+              typeof r.display_name === "string" && r.display_name ? r.display_name : null,
+            day: String(r.day).slice(0, 10),
+            most: num(r.most),
+            uploads: num(r.uploads),
+          })),
+          recentLimit: UPLOAD_DAYS_LIMIT,
+          recentCapped: days.rows.length > UPLOAD_DAYS_LIMIT,
+        }
+      : null,
   };
 }

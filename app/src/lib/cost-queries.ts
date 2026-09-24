@@ -21,7 +21,11 @@ import {
   tokensFromUsage,
   type Outcome,
 } from "@/lib/pricing";
-import { readTurnLimitsView, type TurnLimitsView } from "@/lib/turn-threshold-queries";
+import {
+  readTurnLimitsView,
+  type CostDetailAccess,
+  type TurnLimitsView,
+} from "@/lib/turn-threshold-queries";
 import { readUploadsView, type UploadsView } from "@/lib/upload-threshold-queries";
 
 /**
@@ -84,7 +88,11 @@ import { readUploadsView, type UploadsView } from "@/lib/upload-threshold-querie
  * slug and curriculum labels; never a word the student or the tutor wrote.
  * The upload panel (FR-3409) reads `uploads.student_id` and `created_at` and
  * the ledger's `outcome`, never a file, a path or parsed text
- * (`lib/upload-threshold-queries.ts`).
+ * (`lib/upload-threshold-queries.ts`). **Both panels send a billing-only
+ * operator aggregates only**: a conversation or a student beside a turn or
+ * upload count is read only for an operator who also holds `student-data`
+ * (`costDetailAccess`), so FR-2406's "no turn count of a conversation" holds
+ * for `cost-billing` by what is queried, not by what is drawn.
  */
 
 /* ----------------------------------------------------------------- types */
@@ -201,7 +209,14 @@ export const TODAY_UTC = `(now() AT TIME ZONE 'UTC')::date`;
 
 export async function getCostView(
   operatorId: number,
-  periodDays: PeriodDays
+  periodDays: PeriodDays,
+  /**
+   * What the two threshold panels may carry beyond aggregates — from
+   * `costDetailAccess(roles)`, never from the request. A billing-only
+   * operator's view is built without the per-conversation and per-student
+   * reads at all (FR-2406).
+   */
+  access: CostDetailAccess
 ): Promise<CostView> {
   // THE PERIOD IS N WHOLE UTC DAYS ENDING TODAY, and the same N in both
   // sources — not "the last 720 hours" in the ledger and "the last 30 dates" in
@@ -350,10 +365,10 @@ export async function getCostView(
           ),
         // 9. THE TURN THRESHOLDS — observed, not enforced (ADR-0023). Same
         //    environment, same whole-UTC-day period, on this same client.
-        () => readTurnLimitsView(db, periodDays),
+        () => readTurnLimitsView(db, periodDays, access),
         // 10. PHOTO UPLOADS — observed, not enforced (ADR-0023, FR-3409).
         //     Counts and outcomes only; the spend is figure 5's upload bucket.
-        () => readUploadsView(db, periodDays),
+        () => readUploadsView(db, periodDays, access),
       ] as const)
     );
 

@@ -3,7 +3,6 @@ import {
   THRESHOLD_SURFACES,
   TURN_THRESHOLDS,
   sessionTurnLimit,
-  summariseThresholds,
   type ConversationCount,
   type SessionTurnLimit,
   type SurfaceThresholdSummary,
@@ -19,7 +18,7 @@ import {
  * definitions:
  *
  *  · `readTurnLimitsView` — the Cost page's panel and its list (FR-3403,
- *    FR-3404), over the page's own period;
+ *    FR-3404), over the page's own period, shaped by `costDetailAccess`;
  *  · `readSessionTurnLimits` — the chips on one student's sessions, and on one
  *    session's timeline and replay (FR-3405).
  *
@@ -56,6 +55,15 @@ import {
  * counts, timestamps, a lesson slug and curriculum labels. `chat_session` is
  * an opaque correlation id and is grouped by, never returned. No message and
  * no transcript is read.
+ *
+ * **A billing-only operator gets aggregates and nothing else** (FR-2406:
+ * `cost-billing` never sees a turn count of a conversation). The Cost page's
+ * role is `cost-billing`; anything that pairs a count with ONE conversation or
+ * ONE student — the list of conversations that reached a threshold, and the
+ * highest reply count, which is a single conversation's — is read only when
+ * the operator ALSO holds `student-data` (`costDetailAccess`). Without it the
+ * list's query is not run and `max(delivered)` is not selected, so the rows
+ * never leave the database, rather than leaving it and being hidden.
  */
 
 /** The narrow client shape `withOperator` hands a callback. */
@@ -111,23 +119,39 @@ const TURNS_CTE = `
 /** Conversations with at least one turn in the last $2 whole UTC days. */
 const IN_PERIOD = `max(t.day) > ${TODAY_UTC} - $2::int`;
 
+/** The threshold surfaces and their thresholds, $3 and $4, as a relation. */
+const TH_CTE = `th AS (SELECT * FROM unnest($3::text[], $4::int[]) AS x(surface, threshold))`;
+
 /**
- * Q1 — the histogram: per surface, how many conversations delivered exactly
- * N replies. At most a few dozen rows however much traffic there was, and
- * `summariseThresholds` folds it with the one rule (`thresholdStatus`).
+ * Q1 — per threshold surface: conversations in the period, how many reached
+ * the threshold, how many went past it — one row per surface, a surface with
+ * no conversation included as zeros. The comparisons are `thresholdStatus`'s
+ * (`>=` reached, `>` past).
+ *
+ * `withHighest` adds the most replies in one conversation. It is a single
+ * conversation's turn count, so it is selected only for an operator who holds
+ * `student-data` (FR-2406); without it the column does not exist in the
+ * result at all.
  */
-export const HISTOGRAM_SQL = `
-  WITH ${TURNS_CTE},
+export const SURFACE_SUMMARY_SQL = (withHighest: boolean) => `
+  WITH ${TH_CTE},
+  ${TURNS_CTE},
   conversations AS (
     SELECT t.surface, count(*) FILTER (WHERE t.outcome = 'ok') AS delivered
       FROM turns t
      GROUP BY t.student_id, t.surface, t.chat_session
     HAVING ${IN_PERIOD}
   )
-  SELECT c.surface, c.delivered, count(*) AS conversations
-    FROM conversations c
-   GROUP BY c.surface, c.delivered
-   ORDER BY c.surface, c.delivered`;
+  SELECT th.surface, th.threshold,
+         count(c.surface)                                  AS conversations,
+         count(*) FILTER (WHERE c.delivered >= th.threshold) AS reached,
+         count(*) FILTER (WHERE c.delivered >  th.threshold) AS past${
+           withHighest ? `,
+         coalesce(max(c.delivered), 0)                     AS highest` : ""
+         }
+    FROM th
+    LEFT JOIN conversations c ON c.surface = th.surface
+   GROUP BY th.surface, th.threshold`;
 
 /**
  * Q2 — the most recent conversations that reached their threshold, newest
@@ -140,7 +164,7 @@ export const HISTOGRAM_SQL = `
  * first objective it was grounded on, with that objective's course.
  */
 export const RECENT_SQL = `
-  WITH th AS (SELECT * FROM unnest($3::text[], $4::int[]) AS x(surface, threshold)),
+  WITH ${TH_CTE},
   ${TURNS_CTE},
   conversations AS (
     SELECT t.student_id, t.surface, th.threshold,
@@ -214,13 +238,34 @@ export type ThresholdConversation = {
   courseId: string | null;
 };
 
-export type TurnLimitsView = {
-  surfaces: SurfaceThresholdSummary[];
+/** The per-conversation part of the panel, read only with `student-data` (FR-2406). */
+export type TurnLimitDetail = {
   recent: ThresholdConversation[];
   /** The list's cap, and whether it cut the list — said on the page when it did. */
   recentLimit: number;
   recentCapped: boolean;
 };
+
+export type TurnLimitsView = {
+  /** Aggregates, for every operator the Cost page admits. */
+  surfaces: SurfaceThresholdSummary[];
+  /** `null` for an operator without `student-data`: not read, not passed. */
+  detail: TurnLimitDetail | null;
+};
+
+/**
+ * Which parts of the Cost page's threshold panels an operator may be sent.
+ *
+ * `studentDetail` — a conversation or a student beside a turn or upload count
+ * — needs `student-data` AS WELL AS `cost-billing` (FR-2406, FR-3404,
+ * FR-3409). Both are asked for here, not just the one the Cost page does not
+ * already require, so the rule reads the same wherever it is called from.
+ */
+export type CostDetailAccess = { studentDetail: boolean };
+
+export function costDetailAccess(roles: readonly string[]): CostDetailAccess {
+  return { studentDetail: roles.includes("cost-billing") && roles.includes("student-data") };
+}
 
 /** How many reached conversations the Cost page lists. */
 export const RECENT_LIMIT = 50;
@@ -245,30 +290,49 @@ export function thresholdParams(): { surfaces: string[]; thresholds: number[] } 
 
 /**
  * The Cost page's panel and list, over the last `periodDays` whole UTC days in
- * this environment. Two queries on the caller's client, one after the other
- * (a shared client never runs two at once — `lib/db.ts`).
+ * this environment, on the caller's client, one query after the other (a
+ * shared client never runs two at once — `lib/db.ts`).
+ *
+ * Without `access.studentDetail` this is ONE query, the aggregates without
+ * the highest count, and `detail` is `null`: the per-conversation list is not
+ * queried at all (FR-2406).
  */
-export async function readTurnLimitsView(db: Db, periodDays: number): Promise<TurnLimitsView> {
+export async function readTurnLimitsView(
+  db: Db,
+  periodDays: number,
+  access: CostDetailAccess
+): Promise<TurnLimitsView> {
   const { surfaces, thresholds } = thresholdParams();
-  const hist = await db.query(HISTOGRAM_SQL, [ENVIRONMENT, String(periodDays), surfaces]);
-  const recent = await db.query(RECENT_SQL, [
+  const period = String(periodDays);
+  const withDetail = access.studentDetail === true;
+  const summary = await db.query(SURFACE_SUMMARY_SQL(withDetail), [
     ENVIRONMENT,
-    String(periodDays),
+    period,
     surfaces,
     thresholds,
-    RECENT_LIMIT + 1,
   ]);
+  const bySurface = new Map(summary.rows.map((r) => [String(r.surface), r]));
+  const rows: SurfaceThresholdSummary[] = THRESHOLD_SURFACES.map((surface) => {
+    const r = bySurface.get(surface);
+    return {
+      surface,
+      threshold: TURN_THRESHOLDS[surface],
+      conversations: num(r?.conversations),
+      reached: num(r?.reached),
+      past: num(r?.past),
+      highest: withDetail ? num(r?.highest) : null,
+    };
+  });
+  if (!withDetail) return { surfaces: rows, detail: null };
+
+  const recent = await db.query(RECENT_SQL, [ENVIRONMENT, period, surfaces, thresholds, RECENT_LIMIT + 1]);
   return {
-    surfaces: summariseThresholds(
-      hist.rows.map((r) => ({
-        surface: String(r.surface),
-        delivered: num(r.delivered),
-        conversations: num(r.conversations),
-      }))
-    ),
-    recent: recent.rows.slice(0, RECENT_LIMIT).map(mapConversation),
-    recentLimit: RECENT_LIMIT,
-    recentCapped: recent.rows.length > RECENT_LIMIT,
+    surfaces: rows,
+    detail: {
+      recent: recent.rows.slice(0, RECENT_LIMIT).map(mapConversation),
+      recentLimit: RECENT_LIMIT,
+      recentCapped: recent.rows.length > RECENT_LIMIT,
+    },
   };
 }
 

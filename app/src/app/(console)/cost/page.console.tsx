@@ -14,9 +14,9 @@ import {
   type PeriodDays,
 } from "@/lib/cost-model";
 import { getCostView, type CostView } from "@/lib/cost-queries";
+import { costDetailAccess, type ThresholdConversation } from "@/lib/turn-threshold-queries";
 import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
 import { SUBJECTS, displayLabel, subjectOfCourse } from "@/lib/subjects";
-import type { ThresholdConversation } from "@/lib/turn-threshold-queries";
 import { anyThresholdReached, thresholdChipLabel, uploadChipLabel } from "@/lib/turn-thresholds";
 
 /**
@@ -64,11 +64,15 @@ export default async function CostConsolePage({
     return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
   }
   const period = periodOf((await searchParams).period);
+  // FR-2406: which parts of the threshold panels this operator may be sent,
+  // decided from the roles the principal holds and handed to the READ, so a
+  // billing-only operator's view is built without the per-conversation and
+  // per-student rows rather than built with them and hidden.
   return (
     <CostPage
       operatorId={access.operatorId}
       period={period}
-      canOpenSessions={access.roles.includes("student-data")}
+      detail={costDetailAccess(access.roles)}
     />
   );
 }
@@ -107,14 +111,13 @@ function basisNote(basis: string): string {
 async function CostPage({
   operatorId,
   period,
-  canOpenSessions,
+  detail,
 }: {
   operatorId: number;
   period: PeriodDays;
-  /** The session pages are `student-data`'s; link to them only for an operator who holds it. */
-  canOpenSessions: boolean;
+  detail: ReturnType<typeof costDetailAccess>;
 }) {
-  const view = await getCostView(operatorId, period);
+  const view = await getCostView(operatorId, period, detail);
   const periodText = periodLabel(period);
 
   return (
@@ -143,7 +146,7 @@ async function CostPage({
       ) : (
         <>
           <Headline view={view} periodText={periodText} />
-          <TurnLimits view={view} periodText={periodText} canOpenSessions={canOpenSessions} />
+          <TurnLimits view={view} periodText={periodText} />
           <PhotoUploads view={view} periodText={periodText} />
           <PerStudent view={view} periodText={periodText} />
           <BySurface view={view} periodText={periodText} />
@@ -261,18 +264,13 @@ function Headline({ view, periodText }: { view: CostView; periodText: string }) 
  * period — never red (FR-1002): nothing was refused and no student saw a
  * limit, it is simply the number Samuel asked to be shown.
  */
-function TurnLimits({
-  view,
-  periodText,
-  canOpenSessions,
-}: {
-  view: CostView;
-  periodText: string;
-  canOpenSessions: boolean;
-}) {
+function TurnLimits({ view, periodText }: { view: CostView; periodText: string }) {
   const t = view.turnLimits;
   const reached = anyThresholdReached(t.surfaces);
   const totalReached = t.surfaces.reduce((n, r) => n + r.reached, 0);
+  // FR-2406: `detail` is null for an operator without student-data, and then
+  // neither the list nor the highest count was read.
+  const detail = t.detail;
   return (
     <Panel
       title="Turn limits — observed, not enforced"
@@ -290,8 +288,9 @@ function TurnLimits({
           replies, and locked the student&apos;s input. <strong>Nothing is refused any more</strong>{" "}
           (ADR-0023); the numbers are kept as thresholds so we can see how often they would have
           fired. A conversation is counted when any of its turns falls in the {periodText}, and
-          its replies are every answer it delivered — the count the old limit read. Before v0.9.0 the refused turn was never recorded, so an older
-          conversation can show &ldquo;reached&rdquo; but never &ldquo;went past&rdquo;.
+          its replies are every answer it delivered — the count the old limit read. Before v0.9.0
+          the refused turn was never recorded, so an older conversation can show
+          &ldquo;reached&rdquo; but never &ldquo;went past&rdquo;.
         </>
       }
     >
@@ -304,7 +303,7 @@ function TurnLimits({
               <Th right>Conversations</Th>
               <Th right>Reached it</Th>
               <Th right>Went past it</Th>
-              <Th right>Most replies in one</Th>
+              {detail ? <Th right>Most replies in one</Th> : null}
             </tr>
           </thead>
           <tbody>
@@ -330,9 +329,11 @@ function TurnLimits({
                 <Td right mono>
                   {share(r.past, r.conversations)}
                 </Td>
-                <Td right mono>
-                  {r.conversations === 0 ? "—" : int(r.highest)}
-                </Td>
+                {detail ? (
+                  <Td right mono>
+                    {r.conversations === 0 || r.highest == null ? "—" : int(r.highest)}
+                  </Td>
+                ) : null}
               </tr>
             ))}
           </tbody>
@@ -343,10 +344,37 @@ function TurnLimits({
         Spine never had a limit and is not counted.
       </p>
 
+      {detail == null ? (
+        <p className="mt-4 text-[12.5px] leading-relaxed text-ink-soft">
+          {STUDENT_DATA_NOTE_TURNS}
+        </p>
+      ) : (
+        <ReachedConversations detail={detail} periodText={periodText} />
+      )}
+    </Panel>
+  );
+}
+
+/** What a billing-only operator reads in place of the gated parts (FR-2406). */
+const STUDENT_DATA_NOTE_TURNS =
+  "Which conversations, and their reply counts, need the student-data role (FR-2406).";
+const STUDENT_DATA_NOTE_UPLOADS =
+  "Which students, and their upload counts, need the student-data role (FR-2406).";
+
+/** FR-3404 — only ever rendered from a `detail` the read produced for a student-data holder. */
+function ReachedConversations({
+  detail,
+  periodText,
+}: {
+  detail: NonNullable<CostView["turnLimits"]["detail"]>;
+  periodText: string;
+}) {
+  return (
+    <>
       <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
         Most recent conversations that reached a threshold
       </h3>
-      {t.recent.length === 0 ? (
+      {detail.recent.length === 0 ? (
         <div className="mt-2">
           <Empty>No conversation reached a threshold in the {periodText}.</Empty>
         </div>
@@ -365,7 +393,7 @@ function TurnLimits({
                 </tr>
               </thead>
               <tbody>
-                {t.recent.map((c) => (
+                {detail.recent.map((c) => (
                   <tr
                     key={`${c.studentId}-${c.surface}-${c.reachedAt}`}
                     className="border-b border-line-soft last:border-0"
@@ -387,15 +415,13 @@ function TurnLimits({
                     <Td>
                       {c.sessionId == null ? (
                         <span className="text-[12px] text-ink-faint">no session recorded</span>
-                      ) : canOpenSessions ? (
+                      ) : (
                         <Link
                           href={`/students/${c.studentId}/sessions/${c.sessionId}`}
                           className="whitespace-nowrap text-accent underline-offset-2 hover:underline"
                         >
                           Session #{c.sessionId} →
                         </Link>
-                      ) : (
-                        <span className="font-mono text-[12px] text-ink-soft">#{c.sessionId}</span>
                       )}
                     </Td>
                   </tr>
@@ -406,15 +432,13 @@ function TurnLimits({
           <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
             Newest first, by when the conversation delivered its threshold-th reply — the moment
             the old limit would have stopped it.{" "}
-            {t.recentCapped
-              ? `Only the ${t.recentLimit} most recent are listed; more than that reached a threshold in the ${periodText}, and the counts above include them all.`
+            {detail.recentCapped
+              ? `Only the ${detail.recentLimit} most recent are listed; more than that reached a threshold in the ${periodText}, and the counts above include them all.`
               : `Every conversation that reached a threshold in the ${periodText} is listed.`}
-            {!canOpenSessions &&
-              " Opening a session needs the student-data role, so sessions are shown by number only."}
           </p>
         </>
       )}
-    </Panel>
+    </>
   );
 }
 
@@ -523,7 +547,7 @@ function PhotoUploads({ view, periodText }: { view: CostView; periodText: string
                   <Th right>Student-days with an upload</Th>
                   <Th right>Reached it</Th>
                   <Th right>Went past it</Th>
-                  <Th right>Most in 24 hours</Th>
+                  {u.detail ? <Th right>Most in 24 hours</Th> : null}
                 </tr>
               </thead>
               <tbody>
@@ -544,9 +568,11 @@ function PhotoUploads({ view, periodText }: { view: CostView; periodText: string
                   <Td right mono>
                     {share(t.past, t.studentDays)}
                   </Td>
-                  <Td right mono>
-                    {t.studentDays === 0 ? "—" : int(t.highest)}
-                  </Td>
+                  {u.detail ? (
+                    <Td right mono>
+                      {t.studentDays === 0 || t.highest == null ? "—" : int(t.highest)}
+                    </Td>
+                  ) : null}
                 </tr>
               </tbody>
             </table>
@@ -557,54 +583,71 @@ function PhotoUploads({ view, periodText }: { view: CostView; periodText: string
             UTC date, at the highest count any of them reached.
           </p>
 
-          {u.recentDays.length > 0 && (
-            <>
-              <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
-                Most recent student-days that reached it
-              </h3>
-              <div className="mt-2 overflow-x-auto rounded border border-line bg-card">
-                <table className="w-full border-collapse text-[13px]">
-                  <thead>
-                    <tr className="border-b border-line text-ink-soft">
-                      <Th>Date, UTC</Th>
-                      <Th>Student</Th>
-                      <Th>Uploads in 24 hours</Th>
-                      <Th right>Uploads that date</Th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {u.recentDays.map((d) => (
-                      <tr
-                        key={`${d.studentId}-${d.day}`}
-                        className="border-b border-line-soft last:border-0"
-                      >
-                        <Td mono>{d.day}</Td>
-                        <Td>
-                          {d.displayName ?? "name not recorded"}{" "}
-                          <span className="font-mono text-[11px] text-ink-faint">#{d.studentId}</span>
-                        </Td>
-                        <Td>
-                          <Chip tone="attention">{uploadChipLabel(d.most) ?? `${d.most} uploads`}</Chip>
-                        </Td>
-                        <Td right mono>
-                          {int(d.uploads)}
-                        </Td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
-                Newest first.{" "}
-                {u.recentCapped
-                  ? `Only the ${u.recentLimit} most recent are listed; more than that reached it in the ${periodText}, and the counts above include them all.`
-                  : `Every student-day that reached it in the ${periodText} is listed.`}
-              </p>
-            </>
+          {/* FR-2406: `detail` is null without student-data — the list and the
+              highest count were not read. */}
+          {u.detail == null ? (
+            <p className="mt-4 text-[12.5px] leading-relaxed text-ink-soft">
+              {STUDENT_DATA_NOTE_UPLOADS}
+            </p>
+          ) : (
+            <ReachedStudentDays detail={u.detail} periodText={periodText} />
           )}
         </>
       )}
     </Panel>
+  );
+}
+
+/** FR-3409's list — only ever rendered from a `detail` read for a student-data holder. */
+function ReachedStudentDays({
+  detail,
+  periodText,
+}: {
+  detail: NonNullable<CostView["uploads"]["detail"]>;
+  periodText: string;
+}) {
+  if (detail.recentDays.length === 0) return null;
+  return (
+    <>
+      <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+        Most recent student-days that reached it
+      </h3>
+      <div className="mt-2 overflow-x-auto rounded border border-line bg-card">
+        <table className="w-full border-collapse text-[13px]">
+          <thead>
+            <tr className="border-b border-line text-ink-soft">
+              <Th>Date, UTC</Th>
+              <Th>Student</Th>
+              <Th>Uploads in 24 hours</Th>
+              <Th right>Uploads that date</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {detail.recentDays.map((d) => (
+              <tr key={`${d.studentId}-${d.day}`} className="border-b border-line-soft last:border-0">
+                <Td mono>{d.day}</Td>
+                <Td>
+                  {d.displayName ?? "name not recorded"}{" "}
+                  <span className="font-mono text-[11px] text-ink-faint">#{d.studentId}</span>
+                </Td>
+                <Td>
+                  <Chip tone="attention">{uploadChipLabel(d.most) ?? `${d.most} uploads`}</Chip>
+                </Td>
+                <Td right mono>
+                  {int(d.uploads)}
+                </Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
+        Newest first.{" "}
+        {detail.recentCapped
+          ? `Only the ${detail.recentLimit} most recent are listed; more than that reached it in the ${periodText}, and the counts above include them all.`
+          : `Every student-day that reached it in the ${periodText} is listed.`}
+      </p>
+    </>
   );
 }
 
