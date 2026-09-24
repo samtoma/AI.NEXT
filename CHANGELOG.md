@@ -10,6 +10,21 @@ requirement names it.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [v0.7.0] — 2026-09-24
+
+The teaching switch, test accounts, and a record of which version and which teaching mode served
+every lesson. Two independent reviews and a code review read it before merge. Explainer:
+[`docs/releases/v0.7.0.html`](docs/releases/v0.7.0.html).
+
+### Security
+- **A sign-in link can no longer send someone to another website** (FR-2015). The `?next=` address
+  after sign-in accepted look-alike paths (a tab character, or dot segments such as `/.//site`)
+  that a browser turns into a different site. That affected the live student site too, and on the
+  console could have been used to stage a fake "enter your code" page. The address is now checked
+  after the browser's own rules are applied, and must stay on the same site.
+
 ### Added — the teaching switch (ADR-0021, FR-3101…FR-3111)
 - **Socratic probing can now be switched on from the console, for test accounts only.** A new
   **Teaching** page offers three positions: **Off** (the default), **Test accounts only**, and
@@ -46,6 +61,14 @@ requirement names it.
 - **The release name is the deployed build's.** Turns and lessons are stamped with the tag the
   deploy computes (or `v<version>` on a laptop), no longer the old `PDR1-0-v…` package name that two
   builds could share.
+
+### Also in this release
+- **Once a lesson stops probing, it never starts again.** Switching Off, or removing a tester mark,
+  reaches the student's next message; switching back On only affects lessons that start afterwards
+  (FR-3105).
+- **Requirements written for what v0.6.0 shipped without them** (FR-3201…FR-3214): lesson
+  progression, the `/spine` skill map, "students never see review status", the per-subject Content
+  page, re-runnable migrations and the misconception sync, each with an honest status.
 
 ### Operations — rolling back, and proving it before every deploy
 - **Rolling back is written down**: [`deploy/DEPLOY-MVP1.md` → "Rolling back"](deploy/DEPLOY-MVP1.md#rolling-back).

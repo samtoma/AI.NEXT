@@ -1,7 +1,7 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`feat/probing-toggle`, v0.7.0 work + its fix pass, not released; `main` is `v0.6.1`; constitution v3.2.0)
+> Last updated: 2026-09-24 (`main`; released `v0.7.0`; constitution v3.2.0)
 
 ## 🎛️ v0.7.0 in progress — the teaching switch (2026-09-24, `feat/probing-toggle`, NOT merged)
 
