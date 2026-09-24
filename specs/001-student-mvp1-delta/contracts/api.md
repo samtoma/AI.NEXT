@@ -50,6 +50,10 @@ cost logging are still unchanged.)*
 ```
 
 Errors: `413` too large · `415` unsupported type · `429` daily cap (10/student/day) reached.
+*(Superseded 2026-09-24 — ADR-0023: the `429` daily-cap refusal is withdrawn. `413` and `415` are
+unaffected — they check size and type, not count. The 10/day survives as an observed threshold,
+`DAILY_UPLOAD_THRESHOLD` in `lib/turn-thresholds.ts`, shown in the console (002 FR-3407…FR-3409)
+rather than refused.)*
 
 ### `GET /api/uploads/:id`
 

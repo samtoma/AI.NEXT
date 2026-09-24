@@ -64,7 +64,10 @@ audit avoids sending minors' photographs to an additional third party.
 **Consequences**: upload parsing must be metered as its own surface in `ai_interactions`, because
 image tokens are materially more expensive than text and Principle VI requires that cost be visible
 separately from day one. A per-student upload cap is required — proposed 10/day — enforced
-server-side alongside the existing turn caps.
+server-side alongside the existing turn caps. *(Superseded 2026-09-24 — ADR-0023, 002 FR-3407/FR-3408:
+Samuel withdrew the enforcement, on the same terms as the turn caps this note names — "please remove
+the limit of the photo uploads for now as well." The metering half of this consequence stands; the
+10/day survives as an observed threshold rather than a server-side enforcement.)*
 
 **Alternatives considered**: Tesseract in the container (rejected — poor on handwriting, no semantic
 understanding, and adds a system dependency); a hosted OCR API such as Google Vision or Azure
