@@ -128,7 +128,7 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
 | [0020](decisions/0020-mastery-gated-lesson-progression.md) | Mastery-gated lesson progression replaces the constant lesson on `/student` *(Tamer Deif; amended 2026-09-23: no backfill)* |
 | [0021](decisions/0021-runtime-teaching-toggle-and-testers.md) | Socratic probing becomes a console switch — On at the next sitting, Off at the next message — for test accounts first; Everyone locked until #53; the `teaching-controls` role |
 | [0022](decisions/0022-console-signin-from-cloudflare-access.md) | Console sign-in from the Cloudflare Access identity — the verified JWT, never the plain header; fails closed; password kept as the fallback; a triple-locked dev picker locally *(amends ADR-0014)* |
-| [0023](decisions/0023-turn-limits-observed-not-enforced.md) | Turn limits become observed thresholds, not an enforced cap — no surface refuses a turn; the three numbers survive as `TURN_THRESHOLDS`, watched in the console *(constitution v3.3.0, supersedes FR-051)* |
+| [0023](decisions/0023-turn-limits-observed-not-enforced.md) | Turn and upload limits become observed thresholds, not an enforced cap — no surface refuses a turn or upload for count; the numbers survive in `turn-thresholds.ts`, watched in the console *(constitution v3.3.0, supersedes FR-051 and T047's cap clause)* |
 
 ## 3. Architecture (`docs/architecture/`)
 

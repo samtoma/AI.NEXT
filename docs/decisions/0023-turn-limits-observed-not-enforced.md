@@ -1,9 +1,13 @@
-# ADR-0023 — Turn limits become observed thresholds, not an enforced cap
+# ADR-0023 — Turn and upload limits become observed thresholds, not an enforced cap
 
-**Status**: Accepted — Samuel, 2026-09-24
-**Amends**: [constitution](../../.specify/memory/constitution.md) v3.2.0 → **v3.3.0** (Principle VI) · the `TURN_CAPS` refusal in `app/src/app/api/ask/route.ts` (removed) · `FR-051` in [`specs/000-baseline/spec.md`](../../specs/000-baseline/spec.md), **superseded** · `specs/001-student-mvp1-delta/delta-matrix.md`'s FR-051 row · `specs/001-student-mvp1-delta/traceability.md`'s FR-212 row · `specs/001-student-mvp1-delta/contracts/api.md` · `specs/000-baseline/contracts/api.md` · `docs/architecture/system-design-deep-dive.md`
-**Affects**: `app/src/lib/turn-thresholds.ts` (new — `TURN_THRESHOLDS`, `thresholdStatus`) · `app/src/lib/turn-threshold-queries.ts` (new — the console's reads) · `app/src/app/(console)/cost/page.console.tsx` · `app/src/app/(console)/students/[id]/sessions/` (list, timeline, replay) · `app/src/components/console/ui.tsx` (the chip) · `specs/002-identity-and-admin-console/spec.md` and `traceability.md`, **FR-3401…FR-3406**
-**Related**: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md) (raised `lesson_learn` 14→18, the number this ADR carries forward unenforced) · [ADR-0019](./0019-serve-the-whole-maths-bank.md) (the other case in this repo where Samuel lifted a standing bound and kept the record instead) · constitution Principle VI (Cost Discipline)
+**Status**: Accepted — Samuel, 2026-09-24. **Amended the same day** (uploads): Samuel's follow-up
+instruction, the same day — *"please remove the limit of the photo uploads for now as well, and add
+the monitoring and cost if any in the admin console"* — extends this ADR to the daily upload cap,
+which the Decision below first recorded as untouched. Title and scope widened to match; everything
+about the turn caps below is unchanged by this amendment.
+**Amends**: [constitution](../../.specify/memory/constitution.md) v3.2.0 → **v3.3.0** (Principle VI, folded into one amendment covering both limits) · the `TURN_CAPS` refusal in `app/src/app/api/ask/route.ts` (removed) · the `DAILY_UPLOAD_CAP` refusal in `app/src/lib/upload-contract.ts` and `app/src/app/api/uploads/route.ts` (removed) · `FR-051` in [`specs/000-baseline/spec.md`](../../specs/000-baseline/spec.md), **superseded** · the cap clause of `T047` in [`specs/001-student-mvp1-delta/tasks.md`](../../specs/001-student-mvp1-delta/tasks.md), **superseded** (the metering half of T047 stands) · `research.md` L66 (`specs/001-student-mvp1-delta/`), **superseded** · `specs/001-student-mvp1-delta/delta-matrix.md`'s FR-051 row · `specs/001-student-mvp1-delta/traceability.md`'s FR-212 row · `specs/001-student-mvp1-delta/contracts/api.md` (both the turn-cap line and the uploads `429` line) · `specs/000-baseline/contracts/api.md` · `docs/architecture/system-design-deep-dive.md`
+**Affects**: `app/src/lib/turn-thresholds.ts` (new — `TURN_THRESHOLDS`, `thresholdStatus`, and now `DAILY_UPLOAD_THRESHOLD`, `uploadThresholdStatus`, `summariseUploadDays`) · `app/src/lib/turn-threshold-queries.ts` (new — the console's turn reads) · `app/src/lib/upload-threshold-queries.ts` (new — `readUploadsView`, the console's upload reads, reusing `cost-queries.ts`'s existing photo/OCR spend figure rather than recomputing it) · `app/src/lib/upload-contract.ts`, `app/src/app/api/uploads/route.ts` (the daily-cap refusal removed; size/type limits untouched) · `app/src/app/(console)/cost/page.console.tsx` (turn-limit panel, and now the photo-upload monitoring panel) · `app/src/app/(console)/students/[id]/sessions/` (list, timeline, replay) · `app/src/components/console/ui.tsx` (the chip) · `specs/002-identity-and-admin-console/spec.md` and `traceability.md`, **FR-3401…FR-3409**
+**Related**: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md) (raised `lesson_learn` 14→18, the number this ADR carries forward unenforced) · [ADR-0019](./0019-serve-the-whole-maths-bank.md) (the other case in this repo where Samuel lifted a standing bound and kept the record instead) · constitution Principle VI (Cost Discipline) and Principle XI (per-environment attribution, no pooling) · FR-2402/FR-2406 (specs/002 — the existing spend split and the cost-billing role's content-blindness, both of which FR-3409's upload panel must keep true)
 
 ## Context
 
@@ -38,10 +42,33 @@ unbudgeted per-student cost, and **the server-enforced per-surface turn caps rem
 bound on worst-case spend**." Samuel's decision below removes exactly that bound, so the principle
 must be amended, not merely the code.
 
+**The upload cap, added the same day.** `app/src/app/api/uploads/route.ts` carried a second,
+separate limit: a student's 11th photo or PDF upload in a day was refused with a `429` and "That's
+10 uploads today — my limit…" (`DAILY_UPLOAD_CAP = 10` in `app/src/lib/upload-contract.ts`). It came
+from 001 `T047` and `research.md` L66 ("a per-student upload cap is required — proposed 10/day"),
+reasoned from the same worst-case-spend logic as the turn caps: image tokens are materially more
+expensive than text, so an unmetered upload path could quietly outspend the baseline. The 10 MB size
+limit and the JPEG/PNG/PDF type limit are a different kind of check — what a student may send, not
+how many times — and stay exactly as they are; neither is a count and neither is touched here. Upload
+parsing is metered as its own `surface_kind` (`upload_parse`) in `ai_interactions`, separately from
+tutoring spend (FR-2402), and that metering is unaffected.
+
+**The evidence is not symmetric, and it matters that this ADR says so.** The turn caps above had two
+real, capped conversations on production the day of the decision. **The upload cap has never fired
+against a real upload** — a read-only check of production on 2026-09-24 found **zero uploads to
+date**. Removing an enforced limit that has never once bound anything is not the same kind of call as
+removing one that visibly bound two lessons that morning: there is no cost-impact evidence either
+way, only the same reasoning ("image tokens are expensive") that set the number in the first place.
+Samuel's instruction covers it anyway — *"remove the limit of the photo uploads for now as well, and
+add the monitoring and cost if any in the admin console"* — and the console monitoring this ADR adds
+(FR-3409) is how that evidence starts to exist, rather than being assumed in either direction.
+
 ## Decision
 
 Samuel, verbatim, 2026-09-24: **"remove the limits, make them highlight in the admin console, we
-need to know how often those limits are triggered."**
+need to know how often those limits are triggered."** — and, the same day, extending it: **"please
+remove the limit of the photo uploads for now as well, and add the monitoring and cost if any in the
+admin console."**
 
 - **No surface refuses a student's turn because of how many replies the conversation has had.** The
   cap messages and the input lock are gone. A student never again sees a limit message.
@@ -67,12 +94,27 @@ need to know how often those limits are triggered."**
   session); an attention chip — amber, never red (FR-1002) — on a session that reached its threshold,
   on the student session list, the session timeline and replay. `/overview` is unchanged; it is
   anonymous by design and this is per-session detail.
-- **The uploads daily cap (`DAILY_UPLOAD_CAP`) is untouched.** It bounds a different kind of spend
-  (OCR calls) through a different mechanism (a daily ceiling, not a per-conversation reply count) and
-  nothing in this decision or Samuel's words above touches it.
+- **The uploads daily cap is withdrawn on the same terms, the same day.** No upload is refused
+  because of how many the student sent that day; the 429 and its message are gone (FR-3407). The 10
+  MB size limit and the JPEG/PNG/PDF type limit are untouched — they answer a different question
+  (what may be sent) and neither is a count. The unverified-email refusal on uploads (FR-2004) is
+  also untouched; it is not a count either.
+- **The daily number survives the same way the turn numbers did**: one named constant,
+  `DAILY_UPLOAD_THRESHOLD = 10`, added to `app/src/lib/turn-thresholds.ts` beside
+  `TURN_THRESHOLDS` (FR-3408) — the same module, because it is the same mechanism (an observed
+  count, no longer an enforced one) applied to a different resource.
+- **The console's Cost page gets photo-upload monitoring** (FR-3409), separate from the turn-limit
+  panel because it answers a different question: uploads in the period, the students who uploaded,
+  parse outcomes (parsed / failed / unreadable), and upload/OCR spend with its average per upload —
+  kept apart from tutoring spend, which FR-2402 already keeps apart and this does not change. Alongside
+  it: how many student-days reached or went past the daily threshold, highlighted whenever any did,
+  and a list of those student-days. Per environment, never pooled (constitution XI), and carrying no
+  upload content (FR-2406) — the same content-blindness the cost-billing role already has elsewhere
+  on this page.
 - **Counted per environment, never pooled** (constitution XI): a threshold crossing is counted
   against the surface, chat session and student the reply was actually served to, the same isolation
-  `TURN_CAPS` already had. Two solutions' turn-limit numbers are never added together.
+  `TURN_CAPS` already had. Two solutions' turn-limit numbers are never added together. The same rule
+  governs the upload threshold and its student-day counts.
 
 ## Why this and not an alternative
 
@@ -84,6 +126,14 @@ nobody how often it binds. Samuel's framing — remove the limit, watch how ofte
 treats "how many turns does a lesson actually need" as an empirical question to answer from usage,
 not a number to guess twice. This ADR records that framing as the decision, not as a justification
 invented after the fact: the quote above is what he said.
+
+**The upload cap has no equivalent evidence to weigh, and this ADR does not invent any.** With zero
+production uploads, there is no data showing the cap ever prevented an expensive day, and none
+showing it would be safe to remove either — the honest position is that nobody knows yet, which is
+exactly what "add the monitoring" is for. Applying the same mechanism (an observed threshold, not an
+enforced one) rather than a bespoke rule for uploads keeps the two limits legible as one policy
+rather than two, and means the Cost page's "reached / went past" language means the same thing on
+both panels.
 
 ## Consequences
 
@@ -111,12 +161,24 @@ invented after the fact: the quote above is what he said.
 - **The three numbers are not retired.** `TURN_THRESHOLDS` keeps them as the named constant every
   consumer (console, review nudge) reads, so a future re-enforcement — if the observed data calls for
   one — changes one file's meaning, not its numbers.
+- **Worst-case upload/OCR spend per student is now unbounded too**, and for this one there is no
+  "it only happened twice" to point to — it is unbounded with zero prior signal about what it is being
+  unbounded *from*. FR-3409's monitoring is the only mitigation, and it starts from nothing: the first
+  real reading of "how many uploads does a student-day actually need" happens after this ships, not
+  before it.
+- **`T047`'s cap clause is superseded**; its metering clause is not. `specs/001-student-mvp1-delta/
+  tasks.md` T047 asked for both — meter upload parsing as its own surface, and enforce the daily cap
+  — in one line. Only the second half is superseded here; the metering `T047` also asked for is what
+  FR-3409's spend split still runs on, unchanged.
 
 ## How to undo this
 
-The thresholds are already the right numbers — nothing here invents new ones. Undoing this ADR is
-reverting the code commit that removed the refusal in `app/src/app/api/ask/route.ts` (restoring
-`TURN_CAPS`'s refusal and the input lock) while keeping `TURN_THRESHOLDS` as the source of the
-numbers, so the console panel and the enforced cap read the same constant rather than drifting apart
-again. Constitution Principle VI would need a matching reversal, recorded as a further amendment
-citing this ADR, not a silent edit.
+The thresholds are already the right numbers — nothing here invents new ones, for either limit.
+Undoing the turn-cap half is reverting the code commit that removed the refusal in
+`app/src/app/api/ask/route.ts` (restoring `TURN_CAPS`'s refusal and the input lock) while keeping
+`TURN_THRESHOLDS` as the source of the numbers. Undoing the upload-cap half is the same shape:
+restore the `429` in `app/src/app/api/uploads/route.ts` and `upload-contract.ts`'s refusal message,
+reading `DAILY_UPLOAD_THRESHOLD` for the number rather than reintroducing a second copy of `10`. Each
+half can be undone independently of the other — they are one ADR because they are one policy, not
+because they must be reverted together. Constitution Principle VI would need a matching reversal,
+recorded as a further amendment citing this ADR, not a silent edit.
