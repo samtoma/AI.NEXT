@@ -10,7 +10,29 @@ requirement names it.
 
 ## [Unreleased]
 
-Nothing yet.
+### Added — console sign-in from Cloudflare Access (ADR-0022, FR-3301…FR-3312)
+- **Operators are signed in to the console from the email Cloudflare Access has already
+  verified** — no password, no form. The console checks Cloudflare's signed token (signature,
+  issuer, the admin-noor application, expiry), never the plain email header, and matches the
+  address to an active operator ignoring case. It fails closed: anything it cannot verify signs
+  nobody in and falls back to the password form. Recorded as *Operator signed in* with reason
+  `cloudflare-access:<roles>`.
+- **A Cloudflare identity with no console account is refused** with a page that says exactly that,
+  and the refusal is recorded with the address. If the browser held another operator's console
+  session, that session is ended — the person Cloudflare proved wins.
+- **Signing out of the console also signs you out of Cloudflare Access**, so the next visit asks for
+  a new PIN instead of silently signing you back in.
+- **Locally, "Sign in as <operator>"** on the console's sign-in page, only when all three hold: not a
+  production build, `AINEXT_DEV_OPERATOR_PICKER=on` (written by `local-dev.sh`), and a request to
+  localhost. The endpoint is not compiled into any production build, and `check:surface:admin`
+  fails if it ever is.
+
+### Changed
+- **Password sign-in on the console is now the fallback**, shown when Cloudflare's identity is
+  absent or cannot be verified (contracts/auth.md §Operator authentication, amended).
+- **Deploy:** `AINEXT_CF_ACCESS_TEAM_DOMAIN` and `AINEXT_CF_ACCESS_AUD` on the console service,
+  written by CI from repository variables (not secrets) with the production values as defaults;
+  `off` switches the feature off. Post-deploy checks: `deploy/TAKEOVER.md` §9.
 
 ## [v0.7.0] — 2026-09-24
 

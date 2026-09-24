@@ -1,7 +1,27 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`main`; released `v0.7.0`; constitution v3.2.0)
+> Last updated: 2026-09-24 (`main`; released `v0.7.0`; v0.8.0 console Cloudflare sign-in on its branch; constitution v3.2.0)
+
+## 🔐 v0.8.0 in progress — console sign-in from Cloudflare Access (2026-09-24, `feat/console-cloudflare-signin`, NOT merged)
+
+Samuel: *"the email verification is done through cloudflare, can you use this email from
+cloudflare"* — **ADR-0022**, **FR-3301…FR-3312**. On the console only, an operator who has passed
+the Access PIN is signed in from Cloudflare's **signed** token (RS256, reletix keys, the admin-noor
+AUD), matched to an active operator by email; no password, no form. Unknown or disabled → a refusal
+page, audited. A different operator's session on the same browser is ended (the proven person
+wins). Sign-out also ends the Access session. Password stays as the fallback. Locally, a
+"Sign in as <operator>" picker, locked three ways and absent from production builds. No migration.
+
+Built on `origin/main` (v0.6.1); **v0.7.0 merges first** — expect small rebase conflicts in
+`package.json`'s test list, `CHANGELOG.md`, `docs/README.md`, this file and the traceability
+counts block (re-run `./scripts/traceability.py --write`).
+
+**Open:**
+- **Samuel:** every operator's email must equal the address they give Access — check on the box
+  (`deploy/TAKEOVER.md` §9.2, six checks). Decide later whether to remove the password fallback.
+- **Nobody has seen the happy path**: a real Access PIN → a real assertion → signed in. It cannot
+  exist off the box. FR-3301 is BUILT, FR-3303/3305/3307/3311 PARTIAL until §9.2 is run.
 
 ## 🎛️ v0.7.0 in progress — the teaching switch (2026-09-24, `feat/probing-toggle`, NOT merged)
 

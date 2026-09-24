@@ -141,6 +141,44 @@ granted, ADR-0014); `POST /api/auth/login` on the console emits **`operator_logi
 in effect (FR-2207); and an `accounts` credential presented to the console is refused and recorded
 (`permission_denied`), never silently accepted as a student (FR-2205).
 
+**AMENDED 2026-09-24 — [ADR-0022](../../../docs/decisions/0022-console-signin-from-cloudflare-access.md),
+FR-3301…FR-3312.** With `AINEXT_CF_ACCESS_TEAM_DOMAIN` and `AINEXT_CF_ACCESS_AUD` set, the
+**primary** operator sign-in is the Cloudflare Access identity, and the password path above is the
+**fallback** (FR-3308). Console build only; the student build has none of the following.
+
+### `GET /api/auth/cloudflare?next=…` *(console build only — `route.console.ts`)*
+
+`/signin` forwards here once when the request carries `Cf-Access-Jwt-Assertion`. Verifies it (RS256,
+the team's published keys, issuer = team domain, audience = the Access application AUD, `exp`/`nbf`,
+30 s tolerance) and reads the email from the **verified** payload only. `Cf-Access-Authenticated-User-Email`
+is never read. Every answer is a `302`:
+
+| Case | Answer | Cookies | Event (`reason`) |
+|---|---|---|---|
+| verified, active operator, no console session here | → `next` | both set (a new session, same machinery as `login`) | `operator_login` (`cloudflare-access:<roles>`) |
+| verified, same operator already signed in here | → `next` | both set (refresh rotated, as `refresh` does) | none |
+| verified, a **different** operator's session here | → `next` | both set (new session) | `session_revoked` for the old one (`cloudflare-access:identity_changed`), then `operator_login` |
+| verified, no operator / disabled operator | → `/signin?cf=no_account` \| `disabled` | both cleared | `failed_login` (`cloudflare-access:no_operator:<email>` \| `cloudflare-access:disabled`); any other session here `session_revoked` |
+| assertion missing, invalid, expired, wrong audience… | → `/signin?cf=invalid` | untouched | `failed_login` (`cloudflare-access:unverified:<code>`) — never any part of the token |
+| feature off | → `/signin?cf=unavailable` | untouched | none |
+| server error | → `/signin?cf=error` | both cleared | none |
+
+`/signin` never forwards a request that carries `cf`, which is what makes the loop impossible. On
+the console, `principal.ts` treats an operator session as signed out while a **verified** assertion
+names a different address (FR-3305); a missing or unverifiable assertion changes nothing.
+
+**Sign-out**: `POST /api/auth/logout` is unchanged; with the feature on, the console then sends the
+browser to `https://<team>.cloudflareaccess.com/cdn-cgi/access/logout` (FR-3307).
+
+### `POST /api/auth/dev-operator` *(local development only — `route.dev.console.ts`)*
+
+Form body `operatorId`, `next`. **Absent from every production build** (`next.config.ts` adds the
+`dev.console.ts` extension only outside production; `check:surface:admin` asserts its absence).
+Refused with a bare `404` and `permission_denied` (`dev-picker:refused:<lock>`) unless all three hold:
+`NODE_ENV !== "production"`, `AINEXT_DEV_OPERATOR_PICKER === "on"`, a localhost request (Host,
+Origin when sent, Next's recorded client address when present). Otherwise `303` → `next` with both
+cookies and `operator_login` (`dev-picker:<roles>`).
+
 ## Cross-cutting rules
 
 1. **Password material never leaves the hashing module.** Not in a log, an event, an error, a URL, a
