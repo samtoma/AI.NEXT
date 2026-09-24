@@ -89,6 +89,17 @@ test accounts, the per-lesson snapshot) — accepted 2026-09-24
 >
 > ---
 >
+> **Rev. 7 (2026-09-24) — what v0.6.0 shipped without a requirement, written down.** A separate pass
+> from rev. 6, on Samuel's instruction: **FR-3201…FR-3214**, traced in **§7f**, written from the
+> approved decisions (ADR-0019, ADR-0020) and the code as it behaves. 001's §9 items 16 and 17 —
+> lesson progression and the `/spine` skill map, "shipped without a requirement" — are resolved by
+> them there. Eleven VERIFIED, two PARTIAL (the skill map's Dock control was not exercised; the
+> older migrations still lock on re-run, #54), one BUILT (the Content page has not been viewed
+> signed in). The live evidence is a signed-in run of the **v0.6.0** build (`fa2cd29`) on the
+> morning of 2026-09-24, as `omar@local.test`, recorded in each row with nothing added to it.
+>
+> ---
+>
 > **Rev. 6 (2026-09-24) — the teaching switch, written with its code.** Samuel approved a runtime
 > Socratic-probing toggle for v0.7.0 — Off / Test accounts only / Everyone (locked until #53), a
 > dedicated `teaching-controls` role, test-account marks, and a per-lesson snapshot of the release
@@ -401,6 +412,33 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ---
 
+## 7f. Shipped in v0.6.0 without a requirement — FR-3201…FR-3214 **[ADDED 2026-09-24]**
+
+> **Written after the code, on Samuel's instruction**, and the rows say where each piece of evidence
+> came from. "Signed-in run" below is one session on 2026-09-24 against the **v0.6.0** build
+> (`main` `fa2cd29`, dev server on :3005) signed in as the local student `omar@local.test`, with test
+> data staged and restored afterwards. Unit tests are the ones in `npm test`; "deploy" is CI run
+> 35914293656.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-3201 | A saved place per student per course; no other student's request can read or move it | **VERIFIED** | `student_progress` (migration 028: PK `(student_id, course_id)`, RLS ENABLE + FORCE, `ainext_app` S/I/U and no D, no operator grant); `lib/progression-db.ts` | Signed-in run: a correct answer created the row **student 1 · `course:prep3-math-en` → `u1-2`**. `app/scripts/rls-proof.sql` run as `ainext_app` on 2026-09-24 (scratch copy): `student_progress` answers 0 rows with no principal. The v0.6.0 database review found per-student isolation holding on the table. |
+| FR-3202 | Moves on when every objective reaches the gate, to the next ready lesson | **VERIFIED** | `lib/progression.ts` (`lessonPasses`, `nextLesson`), called from `/api/attempts` under a savepoint | Signed-in run: Omar's `u1-1` staged at 0.74 / 0.90 / 0.90 / 0.90; a correct answer to `q:u1-1-1:001` ("A") → 200, `isCorrect: true`, **`advancedTo: "u1-2"`**; `/student?subject=math` then showed "Up next: Relations (Term 1 · Unit 1)" and the Revisit row "✓ Lesson 1-1 — Cartesian product". Unit tests: one weak objective fails the gate; passing moves to the next *ready* lesson; an unready lesson is skipped. |
+| FR-3203 | Never backwards; parks when nothing is ready; complete only on the last lesson with every lesson passed | **VERIFIED** | `lib/progression.ts` | Signed-in run: a second correct answer on `u1-1` (`q:u1-1-1:003`) → **`advancedTo: null`** — only the lesson the pointer is on moves it. **Parking and completion are proved by unit tests only** (`progression.test.mts`: the walk never goes backwards; mid-course with nothing ready the pointer parks and the course is not complete; the last lesson is complete only when it and every earlier lesson pass) — neither was reached in the signed-in run. |
+| FR-3204 | A stale saved place reads as the first lesson and advances from there | **VERIFIED** | `lib/progression.ts` (`currentLessonSlug`), `lib/student-landing.ts` | **Unit tests only**: "a stale stored slug counts as the first lesson, and can advance again"; "a pointer NOT in her gated list is ignored — the first lesson, as before" (`student-landing.test.mts`). Not seen in the signed-in run. |
+| FR-3205 | No backfill: everyone starts on lesson 1 | **VERIFIED** | Migration 028 writes no rows (ADR-0020 amendment, 2026-09-23) | Signed-in run: before staging, with **no pointer row**, the landing opened `u1-1` with the band word "Just started" and "Two parts haven't come up yet." Unit test: a student with no stored pointer is on the course's first lesson. |
+| FR-3206 | An explicit lesson link wins; the saved place never opens a hidden course | **VERIFIED** | `lib/student-landing.ts` `decideLanding` | Signed-in run: with the pointer on `u1-2`, `?lesson=u1-1` still landed on Cartesian product ("Nailed it"). Unit tests (`student-landing.test.mts`): `?lesson=` beats the pointer; a pointer never softens the refusal of a subject she may not see. |
+| FR-3207 | Maths runs Term 1 before Term 2 | **VERIFIED** | `lib/module-order.ts` (`MODULE_ORDER`), the catalogue order | Signed-in run: with no pointer the landing opened `u1-1` (Term 1 first); after advancing, "Up next: Relations (Term 1 · Unit 1)". Unit tests: catalogue order breaks ties; one subject, several lessons → the first in teaching order. |
+| FR-3208 | A band word and a fill per topic; never a percentage or an internal id | **VERIFIED** | `components/spine/SpineExplorer.tsx`, `GraphCanvas.tsx`, `LoPanel.tsx` (`b9df1e1` and the v0.6.0 review fixes) | Signed-in run on `/spine`: **90 topic cards**, header tally 86 / 2 / 0 / 1 / 1 summing to 90; **0 percentages, 0 internal `lo:` ids** and 0 "review" words in the page text; every card reads "<band> · N questions" and carries `aria-pressed`; unrelated cards dim when a topic is selected. |
+| FR-3209 | Noor beside the map; below 1024px the topic panel docks full width and Noor collapses to a bar | **VERIFIED** | `components/spine/NoorPanel.tsx`, `LoPanel.tsx`, `GraphCanvas.tsx` | Signed-in run at **820 × 1180** (iPad portrait): the topic panel docked full width and Noor was a collapsed "Got a question?" bar (`aria-expanded=false`). |
+| FR-3210 | Works without a pointer: keyboard open/close with focus managed; a dragged panel returns by a control | **PARTIAL** | `LoPanel.tsx` (focus to the heading on open, Escape closes and restores focus, a "Dock the panel" button once the panel has been dragged, 1024px and up) | Signed-in run: **Enter** on a card opened the panel with focus on its heading; **Escape** closed it and returned focus to the card. **Gap: the Dock control was not exercised** — no panel was dragged in the run. |
+| FR-3211 | No student surface says whether content was reviewed | **VERIFIED** | `15906fa` (landing copy, `QuestionModal`, `LessonSession`); `QuestionModal`'s provenance badge and status only in its `debug` branch, which `/spine` never passes | Signed-in run: the `/spine` question pop-up for `q:u1-1-1:001` showed "From the textbook" and the book page, with **0 matches** for review / unchecked / checked / human, no `q:`/`lo:` ids and no SHA-256. **`review-status-scan.test.mts`** reads every student-surface source file, strips comments and fails on review-status wording in any printable string (negative-controlled against the wording `15906fa` removed), and asserts `/spine` never opens the pop-up in debug mode. One named exception: ChatCore's probing notes to the tutor, which student mode never renders (#51). |
+| FR-3212 | The Content page says which subject it counts, counts what is held, and computes every count from the rows shown | **BUILT** | `a809e90`: `(console)/content/page.console.tsx`, `lib/content-admin.ts` — a subject switcher, a "From the book · held" tile, a Subject column | The per-course counts were checked against the **production** database: maths 1041 (450 book + 591 generated), Social Studies 483 live / 279 held, Arabic 10 live / 297 held. **Gap: nobody has viewed the page signed in.** |
+| FR-3213 | Migrations re-run on every deploy without failing, never narrow a wider definition, and take no blocking lock when there is nothing to change | **PARTIAL** | `886b302` (008 no longer re-applies its narrower `question_type` CHECK over 010's); 027 and 028 add each piece only when the catalogue says it is missing; 029/030 (v0.7.0) follow the same rule | Deploy run 35914293656 re-applied all 27 migrations on **production data**, green. Scratch runs for v0.6.0: three on an empty database, twice on a copy. v0.7.0: 002→030 three times on an empty database and three times on a copy, clean. **Gap: migrations 002–016 still take exclusive locks on every re-run** (#54). |
+| FR-3214 | The misconception catalogue re-syncs on every deploy, idempotently, and every live misconception has an explanation | **VERIFIED** | `89d7a3a`: a CI step running `load_misconceptions.py` on every deploy (it never touches a question's status or review stamp), and `local-dev.sh` on every run; the missing explanations written, the empty duplicate folded in through `aliases` | Deploy run 35914293656 printed **"misconceptions: 97, without an explanation: 0"**. |
+
+---
+
 ## 8. Deferred by design — architecture only — FR-2901…
 
 | FR | Requirement | Status | Implementation | Proof |
@@ -466,19 +504,19 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **113** |
+| Functional requirements | **127** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **127 / 127** |
-| — verified | 81 |
-| — built | 3 |
-| — partial | 36 |
+| Traced (every one needs a row) | **141 / 141** |
+| — verified | 92 |
+| — built | 4 |
+| — partial | 38 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **58** |
+| Requirements a test declares | **65** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 81 requirements marked VERIFIED, 40 have an automated test declaring them.** The remaining 41 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 92 requirements marked VERIFIED, 47 have an automated test declaring them.** The remaining 45 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 

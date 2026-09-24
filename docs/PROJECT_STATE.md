@@ -26,6 +26,12 @@ deployed.
   the Test account panel and a probing lesson all need a founder to walk them.
 - **Before Everyone can be unlocked:** #53 closed, and the "Off is not instant for a lesson in
   progress" consequence in ADR-0021 re-argued.
+- **Also on this branch, as a separate commit:** requirements for what v0.6.0 shipped without any —
+  **FR-3201…FR-3214** in spec 002 (§"Shipped in v0.6.0 without a requirement"), traced in its
+  matrix §7f: lesson progression (FR-3201…3207), the `/spine` skill map (3208…3210), review status
+  is operator-only (3211, now with a source scan test), the Content page per subject (3212),
+  re-runnable migrations (3213, PARTIAL on #54), the misconception sync (3214). 001 §9 items 16
+  and 17 are struck through as resolved by them.
 
 ## 🚢 v0.6.0 — Tamer's work on `main`, deep-reviewed (2026-09-23)
 

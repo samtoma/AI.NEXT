@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -347,7 +347,7 @@ password sign-in.
 > marks what is designed for and not built, citing the decision that defers it. Numbering: **FR-20xx**
 > accounts and sign-in · **FR-21xx** isolation and authorisation · **FR-22xx** console and roles ·
 > **FR-23xx** timeline and replay · **FR-24xx** cost and status · **FR-25xx** monitoring and analytics
-> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred · **FR-30xx** runtime health · **FR-31xx** teaching controls and testers.
+> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred · **FR-30xx** runtime health · **FR-31xx** teaching controls and testers · **FR-32xx** shipped in v0.6.0 without a requirement, written afterwards.
 > (**FR-30xx** rather than continuing into 29xx: that block is "deferred by design" and has been
 > since rev. 1, so a live requirement inside it would be read as deferred by anybody scanning.)
 > `FR-1xx…FR-12xx` are from
@@ -788,6 +788,62 @@ password sign-in.
 - **FR-3111**: A student's session list, timeline and replay MUST show, for each lesson, the release
   that served it and whether probing applied — and MUST say "not recorded" for lessons from before
   it was recorded, rather than guessing.
+
+### Shipped in v0.6.0 without a requirement — now written (FR-3201…) **[ADDED 2026-09-24]**
+
+> **Written after the code, and saying so.** v0.6.0 (2026-09-23) brought Tamer's work onto `main`
+> together with the day's fixes, and several of the things it shipped had no requirement at all —
+> 001's matrix names two of them (§9 items 16 and 17) and asks for them to be written or recorded as
+> ADR-only, and **not** filed under an existing FR. **Samuel asked for them to be written on
+> 2026-09-24**, from the approved decision and the code as it actually behaves; that is the
+> authorisation. They are two days younger than the code, and the matrix rows (§7f) say which
+> evidence came from a signed-in run of the v0.6.0 build that morning, which from unit tests, and
+> which from the deploy log.
+>
+> Placed here rather than in 001 because 001 is the shipped v0.4.0 delta and its FR blocks are
+> closed; the surfaces are the same product.
+
+**Lesson progression ([ADR-0020](../../docs/decisions/0020-mastery-gated-lesson-progression.md))**
+
+- **FR-3201**: Each student MUST have their own saved place in each course, separate per course, and
+  no student's place may be read or changed by any other student's request.
+- **FR-3202**: A student's place MUST move on when **every** objective in the lesson they are on
+  reaches the mastery gate, to the next lesson in course order whose prerequisites that student has
+  met — never past a lesson they are not ready for.
+- **FR-3203**: A student's place MUST never move backwards. When nothing later is ready yet it MUST
+  stay where it is, and the course MUST read as complete only when the student is on its last lesson
+  and every lesson has passed the gate.
+- **FR-3204**: A saved place that no longer names a lesson the student can see MUST read as the
+  course's first lesson, and advance from there by the same rule.
+- **FR-3205**: No student's place may be guessed from history: everyone MUST start on a course's
+  first lesson and advance only by the rule above.
+- **FR-3206**: An explicit link to a lesson MUST win over the saved place, and the saved place MUST
+  never open a course the student is not allowed to see.
+- **FR-3207**: Maths lessons MUST run in the school's order — Term 1 before Term 2.
+
+**The `/spine` skill map ("How you're doing", `b9df1e1`)**
+
+- **FR-3208**: Each topic on the skill map MUST show a plain band word and a fill, and MUST NOT show
+  a student a percentage or an internal identifier.
+- **FR-3209**: Noor MUST sit in a panel beside the map. Below 1024px wide (iPad portrait) the topic
+  panel MUST dock full width under the map and Noor MUST collapse to a bar.
+- **FR-3210**: The map MUST work without a pointer: a topic opens from the keyboard with focus on its
+  heading, Escape closes it and returns focus to the topic, and a panel that has been dragged MUST be
+  returnable to its place by a control, not only by dragging.
+
+**The rest of v0.6.0**
+
+- **FR-3211**: No student surface may say whether content was reviewed. Review status is an operator
+  fact, shown in the console only ([ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md));
+  what a student may be told is where a question came from.
+- **FR-3212**: The console's Content page MUST say which subject it is counting: an operator MUST be
+  able to narrow it to one subject, the questions held back MUST be counted on the page, and every
+  count MUST be computed from the rows shown, so a figure cannot disagree with its own table.
+- **FR-3213**: Every database migration MUST be re-runnable on every deploy without failing, MUST
+  NOT re-apply a narrower definition over a wider one, and MUST NOT take a lock that blocks students
+  when it has nothing to change.
+- **FR-3214**: The misconception catalogue MUST re-sync on every deploy without duplicating anything
+  or changing a question's status, and every live misconception MUST have an explanation.
 
 ### Deferred by design — architecture only (FR-2901…)
 

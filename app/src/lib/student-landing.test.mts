@@ -2,8 +2,14 @@
  * WHICH SCREEN `/student` SHOWS — every branch, including the two that used to
  * be 404.
  *
- * **No `@covers` annotation.** The landing rule has no FR (see
- * `lib/student-landing.ts`), and `traceability.md` was not touched.
+ * **The landing rule itself has no FR** (see `lib/student-landing.ts`). The
+ * lesson POINTER's branches do since 2026-09-24 — spec 002 wrote down what
+ * ADR-0020 shipped without a requirement — and this file proves two of them:
+ * a pointer not in her gated list reads as the first lesson, and neither
+ * `?lesson=` nor the course gate yields to a pointer.
+ *
+ * @covers FR-3204
+ * @covers FR-3206
  *
  * ---------------------------------------------------------------------------
  * THE TABLE THIS FILE EXISTS FOR
