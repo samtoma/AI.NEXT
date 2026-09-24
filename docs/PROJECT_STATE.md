@@ -1,7 +1,31 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-23 (`main`; released `v0.6.0`; constitution v3.2.0)
+> Last updated: 2026-09-24 (`feat/probing-toggle`, v0.7.0 work, not released; `main` is `v0.6.0`; constitution v3.2.0)
+
+## 🎛️ v0.7.0 in progress — the teaching switch (2026-09-24, `feat/probing-toggle`, NOT merged)
+
+Samuel approved a runtime switch for Socratic probing ([ADR-0021](decisions/0021-runtime-teaching-toggle-and-testers.md),
+**FR-3101…FR-3111**). Built and committed on `feat/probing-toggle`; not pushed, merged, tagged or
+deployed.
+
+| What | Where |
+|---|---|
+| The switch: **Off** / **Test accounts only** / **Everyone** (locked until #53) | console `/teaching`; `POST /api/console/teaching` (`teaching-controls` only) |
+| The rules, pure and truth-tabled | `app/src/lib/socratic-probing.ts` (`PROBING_EVERYONE_UNLOCKED = false`) |
+| Decided once per lesson, stored with the release | `sessions.probing`, `sessions.release_tag` (migration 030), `app/src/lib/sessions.ts` |
+| Test-account marks | Student 360 "Test account" panel; `student_testers` (RLS; the student surface cannot write it) |
+| A fifth operator role, `teaching-controls` | migration 014 (vocabulary), 029 (granted once, never re-granted) |
+| Visible | console header (release + probing on every page), session list / timeline / replay chips |
+
+- **Off is v0.6.0, byte for byte** — all 24 learn/review prompts compared whole to a pre-change
+  capture. **Maths learn mode only.** A switch flipped mid-lesson reaches the next lesson.
+- `RELEASE_TAG` now reads the deploy's tag (fallback `v<version>`); TAKEOVER D4 closed.
+- **Nobody has seen it signed in.** Every check is unit tests, the real session/console functions
+  against a scratch database, migrations ×3, and `rls-proof.sql` §6. The Teaching page, the header,
+  the Test account panel and a probing lesson all need a founder to walk them.
+- **Before Everyone can be unlocked:** #53 closed, and the "Off is not instant for a lesson in
+  progress" consequence in ADR-0021 re-argued.
 
 ## 🚢 v0.6.0 — Tamer's work on `main`, deep-reviewed (2026-09-23)
 

@@ -15,7 +15,7 @@
  * @covers FR-3101
  * @covers FR-3103
  * @covers FR-3104
- * @covers FR-3107
+ * @covers FR-3106
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";

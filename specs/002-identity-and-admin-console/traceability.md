@@ -1,6 +1,6 @@
 # Traceability — Identity & Admin Console
 
-**Status date**: 2026-09-22 (rev. 5) · **Branch**: `main` (the single development branch since 2026-09-22)
+**Status date**: 2026-09-24 (rev. 6) · **Branch**: `main` (the single development branch since 2026-09-22)
 **Authority**: [spec.md](./spec.md) · [decisions.md](./decisions.md) ·
 constitution [v3.1.1](../../.specify/memory/constitution.md) ·
 [ADR-0012](../../docs/decisions/0012-per-student-isolation-rls.md) (per-student isolation, database-enforced) ·
@@ -10,7 +10,9 @@ constitution [v3.1.1](../../.specify/memory/constitution.md) ·
 [ADR-0016](../../docs/decisions/0016-analytics-and-monitoring-posture.md) (analytics and monitoring
 posture) — all five accepted 2026-09-20 ·
 [ADR-0018](../../docs/decisions/0018-course-availability.md) (who may see which course) — accepted
-2026-09-21
+2026-09-21 ·
+[ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md) (the teaching switch,
+test accounts, the per-lesson snapshot) — accepted 2026-09-24
 
 > **Rev. 2 (2026-09-21) — the implementation matrix.** Rev. 1 was written before any code and said
 > so: every row was OPEN by construction. Phases P0–P6 have since landed on
@@ -84,6 +86,20 @@ posture) — all five accepted 2026-09-20 ·
 >
 > Rev. 5 changed no status anywhere else in this document, and it did not touch 001's matrix or
 > FR-905.
+>
+> ---
+>
+> **Rev. 6 (2026-09-24) — the teaching switch, written with its code.** Samuel approved a runtime
+> Socratic-probing toggle for v0.7.0 — Off / Test accounts only / Everyone (locked until #53), a
+> dedicated `teaching-controls` role, test-account marks, and a per-lesson snapshot of the release
+> and the probing decision. **FR-3101…FR-3111**, traced in **§7e**. Four VERIFIED, seven PARTIAL, and
+> the missing half is the same everywhere: **nothing was rendered in a browser and no real tutor turn
+> ran with probing on** — the console cannot be signed into without a password this pass could not
+> type. What *was* run: the resolver's whole truth table, the 24 Off prompts against a pre-change
+> capture, the real session code against a fake client, every migration three times on an empty
+> database and on a copy of the local one, the one-time role grant with a revocation between
+> re-applies, `rls-proof.sql` §6 as `ainext_app`, and the shipped console and session functions with
+> their real SQL against a scratch copy of the local database.
 
 This document answers one question per row: **for this requirement, what code exists, and what
 actually proves it works?** Deliberately harsher than the spec — a requirement whose code exists but
@@ -347,6 +363,44 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ---
 
+## 7e. Teaching controls and testers — FR-3101…FR-3111 **[ADDED 2026-09-24]**
+
+> **Written with their code**, on the day Samuel approved the feature (ADR-0021). Nothing is
+> back-dated.
+>
+> **What was run.** `socratic-probing.test.mts` states the resolver's truth table by hand — three
+> positions × lock engaged/lifted × tester × four courses × six surfaces, 288 cells, probing on in
+> exactly five — and checks the lock, the narrowing rule and the Off helpers. `probing-prompts.test.mts`
+> compares all 24 learn and review prompts (three subjects × four address forms) with probing off,
+> **whole-string**, against `probing-prompts.golden.json`, captured from `fa2cd29` and committed
+> alone (`19dfcb2`) before any code changed. `teaching-snapshot.test.mts` drives the REAL
+> `currentSession` against a fake client that throws on any query it did not expect, and reads the
+> two routes and the client for the wiring. On a scratch copy of `ainext_mvp1`, as `ainext_operator`
+> and `ainext_app`, the shipped functions were driven with their real SQL (the numbered steps are
+> in the rows below). Migrations 002→030 were applied three times to an empty database and three
+> times to a copy of the local one; `app/scripts/rls-proof.sql` §6 ran as `ainext_app`.
+>
+> **What was not.** No browser rendered `/teaching`, the header, the Test account panel or the
+> session chips, and no tutor turn or question card ran with probing on: signing into the console
+> needs a password, and this pass does not type one. Every row that depends on a screen or a live
+> lesson says so.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-3101 | A three-position switch — Off / Test accounts only / Everyone — and no record means Off | **PARTIAL** | `teaching_settings` (migration 030, one row per environment, no row = off); `PROBING_SETTINGS`, `asProbingSetting` (anything unrecognised is off) in `lib/socratic-probing.ts`; `/teaching` + `TeachingSwitch.tsx`; `setProbingSetting` in `lib/teaching-queries.ts` | Unit: the three positions and the closed read. Live (scratch DB, as `ainext_operator`): `getTeachingState` with no row → `stored: off, updatedAt: null`; `setProbingSetting(testers)` → `{changed: true, from: null}`; again → `{changed: false}`. **Gap: the page and its three options have never been rendered.** |
+| FR-3102 | A dedicated role moves it, separate from content review; granted once to existing operators and never re-granted | **PARTIAL** | `teaching-controls` in migration 014's vocabulary, `OperatorRole`, `ALL_ROLES`, the bootstrap script; migration 029's one-time grant guarded on "no row for the role has EVER existed"; `POST /api/console/teaching` calls `authorize({ role: "teaching-controls" })` | `matrix.test.mts` (hand-transcribed): only `teaching-controls` admits `/api/console/teaching`, every other role is refused through `checkRequirement` with `missing_role:teaching-controls`. **One-time grant proved on a copy of the local database**: first apply granted it to 2 operators (2 `role_granted` events, no actor); revoked from operator 2; two more applies both printed "already introduced — nothing granted"; operator 2 still lacks it. **Gap: the endpoint's refusal has not been exercised over HTTP.** |
+| FR-3103 | Everyone locked until #53: shown disabled with the reason, refused by the server, a stored Everyone acts as Test accounts | **PARTIAL** | `PROBING_EVERYONE_UNLOCKED = false`, `settingChangeRefusal`, `effectiveSetting`; the route returns 409 `everyone_locked` before writing; `TeachingSwitch` disables the option with `PROBING_EVERYONE_LOCK_NOTE` | Unit: the refusal and the narrowing both ways (locked and unlocked); the truth table's locked-Everyone cells equal the Test-accounts cells; a static check that the route tests the lock before it writes. Live: a session resolved under a stored `everyone` reached a tester and not a non-tester (fake-client test). **Gap: neither the disabled option nor the 409 has been seen live.** |
+| FR-3104 | Maths lessons in learn mode only | **VERIFIED** | `resolveProbing` (course `course:prep3-math-en`, surface `lesson_learn`); `effectiveProbing` narrows at use time in `buildLessonContext` and `/api/attempts` | Truth table: every non-maths course and every other surface is off in every position. Live (scratch DB, switch on Test accounts, student 14 marked): maths `u1-1` → on; Social Studies `soc1-1` → off; Arabic `ara1-1` → off; maths `u1-2` → on. Fake-client tests: review, practice and chat sessions never probe and never look the course up. |
+| FR-3105 | Decided once by the server when the lesson starts, recorded, and never changed during it | **VERIFIED** | `lib/sessions.ts`: resolved in `currentSession` only when a session is INSERTed, stored in `sessions.probing`; a reused session returns its stored value; migration 030's `sessions_snapshot_is_fixed` trigger refuses any UPDATE of `probing` or `release_tag`, for every role | Live: student 14 opened a maths lesson (on); the switch was set **Off mid-lesson**; the next turn reused session 29 and stayed **on**; after the lesson closed the next lesson resolved afresh. As `ainext_app`: `UPDATE sessions SET probing …` → refused by the trigger (live, and in `rls-proof.sql` §6). Fake-client tests: a reused session never re-reads the switch; losing the one-open-session race adopts the winner's stored answer; a failed read resolves off and keeps the session. |
+| FR-3106 | The prompt, the card and the answer record follow the lesson's recorded decision, never the device | **PARTIAL** | `/api/ask` builds `learnPrompt` from `session.probing`, keys the context cache by it, and sends `{type:"session", probing}` first; `/api/attempts` passes `effectiveProbing(session.probing, …)` to `acceptedRetryOf` and returns `probing`; `ChatCore` adopts the server's value (`adoptProbing`), `LessonSession` mirrors it to the board | Static checks in `teaching-snapshot.test.mts`: no request body carries or reads a probing flag; both routes take the snapshot from the session. Live: an attempt joining the open lesson (`adoptOpen`) got that lesson's snapshot (session 29, on). **Gap: no tutor turn and no question card has run with probing on**, so the client's adoption and the withheld reveal are unobserved. |
+| FR-3107 | Mark and unmark a test account from the student's page, recorded and kept; no student surface can set it | **PARTIAL** | `student_testers` (migration 030: RLS forced; `ainext_app` SELECT only; console SELECT/INSERT + UPDATE on the two "removed" columns, no DELETE); `setTesterMark`, `studentTesterMarks`; `POST /api/console/students/{id}/tester` (`student-data`); the Test account panel on the Student 360 | Live (as `ainext_operator`): mark student 14 → changed; again → no change; a non-existent student → null (404); unmark → changed, again → no change; the history kept the mark with who removed it. **As `ainext_app` under student 1's own principal** (`rls-proof.sql` §6): INSERT, UPDATE and DELETE on `student_testers` all refused, and there is no tester column on `students`. The migration's own verify block asserts the grants. **Gap: the panel has never been rendered.** |
+| FR-3108 | With probing Off, exactly what a student got before | **VERIFIED** | `learnPrompt(data, false)` renders v0.6.0's wrong-answer lines; with the server declaring false, `ChatCore`'s card and notes run the v0.6.0 branches; `acceptedRetryOf(…, false)` is null, so the attempt INSERT is v0.6.0's statement | **All 24 prompts byte-identical** to the capture taken from unchanged code (`probing-prompts.test.mts`, with a positive control that probing on does change the learn prompt). The card and attempt halves are the v0.6.0 code paths selected by the same boolean, not observed in a browser. |
+| FR-3109 | Each lesson records its release and its probing decision, logged at start; the release is the deployed build's | **PARTIAL** | `sessions.release_tag` + `sessions.probing` written at INSERT; `[sessions] opened {…release_tag, probing}` via `console.info`; `session_started` carries both; `RELEASE_TAG = resolveReleaseTag(process.env.RELEASE_TAG, version)` → the deploy job's tag, else `v<version>` | Live: sessions 29–33 carry `release_tag = v0.6.0` (the fallback, no variable set) and their probing answers; a pre-v0.7.0 row reads NULL/NULL; the log lines printed. Unit: `resolveReleaseTag` both ways and never `PDR1-0-`; the log line's JSON. **Gap: the deployed tag has not been observed on a box** — it arrives from `ci-cd.yml` at deploy. |
+| FR-3110 | The deployed release and the probing position on every console page, who changed it; every change recorded and listed, uneditable | **PARTIAL** | `layout.console.tsx` (header: release + "Probing: …" linking to `/teaching`, footer: release); `/teaching` (position, "changed by … at …", full history); `teaching_setting_changes` append-only (`ainext_operator` SELECT/INSERT, asserted by migration 030's verify block); the write under an advisory lock | Live: three changes produced three history rows `[null→testers, testers→off, off→testers]` each with the operator and note; `getTeachingState` returned the operator and time. **Gap: neither the header nor the page has been rendered.** |
+| FR-3111 | Session list, timeline and replay show each lesson's release and probing, and "not recorded" before | **PARTIAL** | `getStudentSessions` and `loadSessionHeader` read both columns; `SessionSnapshotChips` in `components/console/ui.tsx` on all three pages | Live: `getStudentSessions` for student 14 returned `{releaseTag: "v0.6.0", probing: true/false}` on the new sessions and `{null, null}` on a pre-v0.7.0 one. **Gap: the chips have never been rendered.** |
+
+---
+
 ## 8. Deferred by design — architecture only — FR-2901…
 
 | FR | Requirement | Status | Implementation | Proof |
@@ -412,19 +466,19 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **102** |
+| Functional requirements | **113** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **116 / 116** |
-| — verified | 78 |
+| Traced (every one needs a row) | **127 / 127** |
+| — verified | 81 |
 | — built | 3 |
-| — partial | 28 |
+| — partial | 36 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **50** |
+| Requirements a test declares | **58** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 78 requirements marked VERIFIED, 37 have an automated test declaring them.** The remaining 41 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 81 requirements marked VERIFIED, 40 have an automated test declaring them.** The remaining 41 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 

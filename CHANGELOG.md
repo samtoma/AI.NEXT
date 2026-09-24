@@ -10,7 +10,33 @@ requirement names it.
 
 ## [Unreleased]
 
-Nothing yet.
+### Added — the teaching switch (ADR-0021, FR-3101…FR-3111)
+- **Socratic probing can now be switched on from the console, for test accounts only.** A new
+  **Teaching** page offers three positions: **Off** (the default), **Test accounts only**, and
+  **Everyone** — which is shown but locked, with "Not ready yet — see issue #53", and the server
+  refuses it. Probing only ever applies to maths lessons in learn mode; Social Studies, Arabic,
+  review mode and practice never probe, because none of its wording is translated.
+- **Test accounts.** An operator marks a student as a test account from the student's page, and
+  removes the mark with one click. Who marked it, who removed it and when are kept.
+- **A new operator role, `teaching-controls`**, is the only one that can move the switch — split
+  out of content review so it can be narrowed later. Every operator who had a role got it once;
+  a later deploy never gives it back to someone it was removed from.
+- **Each lesson decides once, when it starts.** Whether a lesson probes is decided by the server
+  when the lesson begins and written down with it; changing the switch mid-lesson changes the next
+  lesson, never the one a student is in. The tutor, the question cards and the saved answers all
+  follow that decision — never anything the student's device sends.
+- **You can see what each lesson got.** Every lesson now records which release served it and
+  whether probing applied. The console header shows the deployed release and the switch on every
+  page; the Teaching page shows who changed it, when, and every change since; a student's session
+  list, timeline and replay show both per lesson.
+
+### Changed
+- **With probing Off, nothing changes for any student.** All 24 tutor prompts (three subjects ×
+  four ways of addressing a student) were compared, character for character, with a copy taken
+  before any of this was written: identical.
+- **The release name is the deployed build's.** Turns and lessons are stamped with the tag the
+  deploy computes (or `v<version>` on a laptop), no longer the old `PDR1-0-v…` package name that two
+  builds could share.
 
 ## [v0.6.1] — 2026-09-24
 

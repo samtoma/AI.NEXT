@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -347,7 +347,7 @@ password sign-in.
 > marks what is designed for and not built, citing the decision that defers it. Numbering: **FR-20xx**
 > accounts and sign-in · **FR-21xx** isolation and authorisation · **FR-22xx** console and roles ·
 > **FR-23xx** timeline and replay · **FR-24xx** cost and status · **FR-25xx** monitoring and analytics
-> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred · **FR-30xx** runtime health.
+> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred · **FR-30xx** runtime health · **FR-31xx** teaching controls and testers.
 > (**FR-30xx** rather than continuing into 29xx: that block is "deferred by design" and has been
 > since rev. 1, so a live requirement inside it would be read as deferred by anybody scanning.)
 > `FR-1xx…FR-12xx` are from
@@ -736,6 +736,59 @@ password sign-in.
   MUST never spend money or wait on the tutor program, because the page is opened precisely when
   something is already wrong.
 
+### Teaching controls and testers (FR-3101…) **[ADDED 2026-09-24 — ADR-0021]**
+
+> **Written with their code, on the day Samuel approved the feature.** v0.6.0 brought Tamer's
+> Socratic-probing prototype onto `main` switched off behind a compile-time constant, and the
+> Socratic teaching protocol has been named in `CLAUDE.md` as shipped with no requirement. **Samuel
+> approving the runtime toggle on 2026-09-24 is the authorisation for these eleven** — they state the
+> switch, who may move it, who it reaches and what it must leave untouched. They do not retro-cover
+> the rest of the Socratic protocol (001 §9 still names that), and nothing here is back-dated.
+>
+> **What probing is, in one sentence**: when a student answers a maths question wrongly in a lesson,
+> the tutor asks a guiding question first instead of the card showing the worked solution
+> straight away. Issue #53 lists what it still gets wrong, and is why "everyone" is locked.
+>
+> Implementation status is in `traceability.md` here, §7e.
+
+- **FR-3101**: The console MUST offer a switch for Socratic probing with exactly three positions —
+  **Off**, **Test accounts only**, **Everyone** — and MUST treat the absence of any recorded choice
+  as **Off**, so a new environment changes nothing until somebody decides.
+- **FR-3102**: Moving the switch MUST require a dedicated operator role, **separate from content
+  review**, so who may change how a child is taught can be narrowed on its own. Every operator who
+  held a role when the role was introduced MUST receive it once; a later deploy MUST NOT give it
+  back to an operator it was removed from.
+- **FR-3103**: **Everyone** MUST be unavailable until the known probing defects are fixed (#53): the
+  console MUST show it disabled with the reason beside it, the server MUST refuse it whoever asks,
+  and a stored **Everyone** MUST act as **Test accounts only** while it is locked. Unlocking it MUST
+  be one deliberate change, not a migration.
+- **FR-3104**: Probing MUST apply only to **maths lessons in learn mode**. Social Studies, Arabic,
+  review mode, practice and open chat MUST never probe, whatever the switch says, because none of
+  its wording exists for them.
+- **FR-3105**: Whether a lesson probes MUST be decided **once, by the server, when the lesson
+  starts**, and recorded with it. It MUST NOT change during the lesson: a change to the switch or to
+  a student's test-account mark reaches only lessons that start afterwards.
+- **FR-3106**: Everything that behaves differently under probing — the tutor's instructions, whether
+  a question card reveals the worked solution, and how the answer is recorded — MUST follow the
+  lesson's recorded decision and **never anything the student's device sends**.
+- **FR-3107**: An operator MUST be able to mark a student account as a **test account**, and remove
+  the mark in one action, from that student's page. Who marked it, who removed it and when MUST be
+  recorded and kept after removal. **No student surface may be able to set or remove the mark**, for
+  the student or anyone else.
+- **FR-3108**: With probing **Off**, a student MUST get exactly what they got before the switch
+  existed — the same tutor instructions, word for word, the same card behaviour and the same record
+  of every answer.
+- **FR-3109**: Every lesson MUST record **which release served it** and **whether probing applied**,
+  and the server MUST log both when the lesson starts. The release MUST come from the build actually
+  deployed, not from a version number that two builds share.
+- **FR-3110**: The console MUST show, on every page, the **deployed release** and the **current
+  probing position**, and MUST show who last changed the position and when. Every change MUST be
+  recorded — from, to, who, when — and listed, and nothing in the console may edit or remove that
+  record.
+- **FR-3111**: A student's session list, timeline and replay MUST show, for each lesson, the release
+  that served it and whether probing applied — and MUST say "not recorded" for lessons from before
+  it was recorded, rather than guessing.
+
 ### Deferred by design — architecture only (FR-2901…)
 
 > Designed for, not built. None may be implemented this release; the point of stating them is that
@@ -788,6 +841,14 @@ Plain language; no field names. `data-model.md` owns the mapping.
 - **Student course exception** *(new, added 2026-09-22 — ADR-0018)*: one decision about one course
   for one named student, outranking the year's rule in both directions. A live permission rather
   than a record of anything the student did, so clearing it removes it.
+- **Teaching switch** *(new, added 2026-09-24 — ADR-0021)*: one position per environment for
+  Socratic probing — off, test accounts only, everyone — with who last moved it and when, and every
+  earlier position kept as a change from one to the next. No record means off.
+- **Test-account mark** *(new, added 2026-09-24 — ADR-0021)*: one operator's statement that one
+  student account is a test account, with who made it, when and why; removing it stamps who removed
+  it rather than erasing it.
+- **Lesson snapshot** *(new, added 2026-09-24 — ADR-0021)*: two facts fixed on a learning session
+  when it opens — the release that served it and whether probing applied — never changed afterwards.
 
 ## Success Criteria *(mandatory)*
 
