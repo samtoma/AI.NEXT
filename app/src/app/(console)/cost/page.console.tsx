@@ -17,7 +17,7 @@ import { getCostView, type CostView } from "@/lib/cost-queries";
 import { OUTCOME_LABEL, PRICE_BASIS_LABEL, type Outcome } from "@/lib/pricing";
 import { SUBJECTS, displayLabel, subjectOfCourse } from "@/lib/subjects";
 import type { ThresholdConversation } from "@/lib/turn-threshold-queries";
-import { anyThresholdReached, thresholdChipLabel } from "@/lib/turn-thresholds";
+import { anyThresholdReached, thresholdChipLabel, uploadChipLabel } from "@/lib/turn-thresholds";
 
 /**
  * Cost — what the product spends, per student, over time (contracts/admin.md
@@ -44,7 +44,9 @@ import { anyThresholdReached, thresholdChipLabel } from "@/lib/turn-thresholds";
  * bounds spend per conversation either.** The per-surface turn caps that used
  * to live in `api/ask/route.ts` are gone; their numbers survive as thresholds
  * (`lib/turn-thresholds.ts`) that are observed, not enforced, and the panel
- * right after the headline says how often a conversation reached one.
+ * right after the headline says how often a conversation reached one. The
+ * daily photo-upload cap went the same way (FR-3407); the panel beside it
+ * says how often a student reached ten uploads in 24 hours (FR-3409).
  */
 export const dynamic = "force-dynamic";
 
@@ -142,6 +144,7 @@ async function CostPage({
         <>
           <Headline view={view} periodText={periodText} />
           <TurnLimits view={view} periodText={periodText} canOpenSessions={canOpenSessions} />
+          <PhotoUploads view={view} periodText={periodText} />
           <PerStudent view={view} periodText={periodText} />
           <BySurface view={view} periodText={periodText} />
           <ByOutcome view={view} periodText={periodText} />
@@ -410,6 +413,194 @@ function TurnLimits({
             {!canOpenSessions &&
               " Opening a session needs the student-data role, so sessions are shown by number only."}
           </p>
+        </>
+      )}
+    </Panel>
+  );
+}
+
+/* -------------------------------------------------------- photo uploads */
+
+/**
+ * Photo uploads, observed (ADR-0023, FR-3409): how many, how the parses
+ * ended, what they cost, and how often a student reached the old limit of ten
+ * in 24 hours. The dollars are the headline's photo/OCR figure, reused rather
+ * than re-counted, and never added to teaching (FR-2402). Counts, ids and
+ * money only (FR-2406): no file, no parsed text.
+ */
+function PhotoUploads({ view, periodText }: { view: CostView; periodText: string }) {
+  const u = view.uploads;
+  const t = u.threshold;
+  const parses = u.parses.delivered + u.parses.failed + u.parses.other;
+  const nothing = u.uploads === 0 && parses === 0 && view.upload.turns === 0;
+  const reached = t.reached > 0;
+  const priced = view.upload.turns - view.upload.unpricedTurns;
+  return (
+    <Panel
+      title="Photo uploads — observed, not enforced"
+      tone={reached ? "attention" : "neutral"}
+      right={
+        nothing ? undefined : (
+          <Chip tone={reached ? "attention" : "neutral"}>
+            {reached
+              ? `${int(t.reached)} student-day${t.reached === 1 ? "" : "s"} reached ${t.threshold}`
+              : `no student reached ${t.threshold}`}
+          </Chip>
+        )
+      }
+      note={
+        <>
+          Until v0.9.0 a student could upload {t.threshold} photos or PDFs in 24 hours and the next
+          one was refused. <strong>No upload is refused for count any more</strong> (ADR-0023); the
+          10 MB size limit and the JPEG, PNG or PDF type check still apply, because neither is a
+          count. The cost below is the headline&apos;s photo/OCR figure, the same dollars, never
+          added to teaching.
+        </>
+      }
+    >
+      {nothing ? (
+        <Empty>
+          No photo or PDF was uploaded in the <strong>{view.environment}</strong> environment over
+          the {periodText}. That means nobody used it, not that it is free. The figures appear with
+          the first upload.
+        </Empty>
+      ) : (
+        <>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <Figure
+              label="Uploads"
+              value={int(u.uploads)}
+              unit={`photo${u.uploads === 1 ? "" : "s"} and PDFs`}
+              period={periodText}
+              hint={`${int(u.students)} student${u.students === 1 ? "" : "s"} uploaded.`}
+            />
+            <Figure
+              label="Parses"
+              value={int(parses)}
+              unit="recorded in the ledger"
+              period={periodText}
+              hint={
+                <>
+                  {int(u.parses.delivered)} delivered · {int(u.parses.failed)} failed
+                  {u.parses.other > 0 ? ` · ${int(u.parses.other)} other` : ""}. One parse per
+                  upload, written when it ends.
+                </>
+              }
+            />
+            <Figure
+              label={BUCKET_LABEL.upload}
+              value={usd(view.upload.costUsd)}
+              unit={IMPUTED}
+              period={periodText}
+              hint="The headline's photo/OCR figure, not a second count."
+            />
+            <Figure
+              label="Average per upload"
+              value={priced <= 0 ? "—" : usd(view.upload.costUsd / priced)}
+              unit={IMPUTED}
+              period={periodText}
+              hint={
+                priced <= 0
+                  ? "No parse in this period was priced."
+                  : `Over ${int(priced)} priced parse${priced === 1 ? "" : "s"}${
+                      view.upload.unpricedTurns > 0
+                        ? `; ${int(view.upload.unpricedTurns)} unpriced left out, not counted as free`
+                        : ""
+                    }.`
+              }
+            />
+          </div>
+
+          <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+            Student-days at {t.threshold} uploads in 24 hours
+          </h3>
+          <div className="mt-2 overflow-x-auto rounded border border-line bg-card">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th right>Threshold</Th>
+                  <Th right>Student-days with an upload</Th>
+                  <Th right>Reached it</Th>
+                  <Th right>Went past it</Th>
+                  <Th right>Most in 24 hours</Th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <Td right mono>
+                    {t.threshold} uploads
+                  </Td>
+                  <Td right mono>
+                    {int(t.studentDays)}
+                  </Td>
+                  <Td right mono>
+                    {reached ? (
+                      <Chip tone="attention">{share(t.reached, t.studentDays)}</Chip>
+                    ) : (
+                      share(t.reached, t.studentDays)
+                    )}
+                  </Td>
+                  <Td right mono>
+                    {share(t.past, t.studentDays)}
+                  </Td>
+                  <Td right mono>
+                    {t.studentDays === 0 ? "—" : int(t.highest)}
+                  </Td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
+            Counted the way the old limit counted: at each upload, that student&apos;s uploads in the
+            24 hours before it, itself included. A student-day is one student&apos;s uploads on one
+            UTC date, at the highest count any of them reached.
+          </p>
+
+          {u.recentDays.length > 0 && (
+            <>
+              <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+                Most recent student-days that reached it
+              </h3>
+              <div className="mt-2 overflow-x-auto rounded border border-line bg-card">
+                <table className="w-full border-collapse text-[13px]">
+                  <thead>
+                    <tr className="border-b border-line text-ink-soft">
+                      <Th>Date, UTC</Th>
+                      <Th>Student</Th>
+                      <Th>Uploads in 24 hours</Th>
+                      <Th right>Uploads that date</Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {u.recentDays.map((d) => (
+                      <tr
+                        key={`${d.studentId}-${d.day}`}
+                        className="border-b border-line-soft last:border-0"
+                      >
+                        <Td mono>{d.day}</Td>
+                        <Td>
+                          {d.displayName ?? "name not recorded"}{" "}
+                          <span className="font-mono text-[11px] text-ink-faint">#{d.studentId}</span>
+                        </Td>
+                        <Td>
+                          <Chip tone="attention">{uploadChipLabel(d.most) ?? `${d.most} uploads`}</Chip>
+                        </Td>
+                        <Td right mono>
+                          {int(d.uploads)}
+                        </Td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-2 text-[11.5px] leading-relaxed text-ink-faint">
+                Newest first.{" "}
+                {u.recentCapped
+                  ? `Only the ${u.recentLimit} most recent are listed; more than that reached it in the ${periodText}, and the counts above include them all.`
+                  : `Every student-day that reached it in the ${periodText} is listed.`}
+              </p>
+            </>
+          )}
         </>
       )}
     </Panel>

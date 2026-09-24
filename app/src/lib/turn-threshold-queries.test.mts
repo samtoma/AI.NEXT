@@ -284,8 +284,9 @@ test("readSessionTurnLimits: chips per session from the conversations' counts, e
 
 test("the Cost view reads the thresholds on its own client, in its own period", () => {
   const cost = code("lib/cost-queries.ts");
-  assert.match(cost, /\(\) => readTurnLimitsView\(db, periodDays\),\s*\] as const\)/);
-  assert.match(cost, /turnLimits,\s*\};/);
+  const reads = cost.slice(cost.indexOf("await withOperator(operatorId, (db) =>"), cost.indexOf("] as const)"));
+  assert.match(reads, /\(\) => readTurnLimitsView\(db, periodDays\),/, "inside the page's one sequential read");
+  assert.match(cost, /^\s*turnLimits,$/m);
 });
 
 test("the Cost page shows the panel right after the headline, in the attention treatment when reached", () => {

@@ -22,6 +22,7 @@ import {
   type Outcome,
 } from "@/lib/pricing";
 import { readTurnLimitsView, type TurnLimitsView } from "@/lib/turn-threshold-queries";
+import { readUploadsView, type UploadsView } from "@/lib/upload-threshold-queries";
 
 /**
  * What the AI actually costs, per student and over time, honestly labelled
@@ -81,6 +82,9 @@ import { readTurnLimitsView, type TurnLimitsView } from "@/lib/turn-threshold-qu
  * and how often a conversation reaches one is a number about spend. It is read
  * by `lib/turn-threshold-queries.ts` and carries a count, a surface, a lesson
  * slug and curriculum labels; never a word the student or the tutor wrote.
+ * The upload panel (FR-3409) reads `uploads.student_id` and `created_at` and
+ * the ledger's `outcome`, never a file, a path or parsed text
+ * (`lib/upload-threshold-queries.ts`).
  */
 
 /* ----------------------------------------------------------------- types */
@@ -164,6 +168,12 @@ export type CostView = {
    * period — observed, not enforced (ADR-0023, FR-3403, FR-3404).
    */
   turnLimits: TurnLimitsView;
+  /**
+   * Photo uploads in the period: counts, parse outcomes and how often a
+   * student reached the old daily limit (ADR-0023, FR-3409). Its spend is NOT
+   * here — it is `upload` above, the one photo/OCR figure (FR-2402).
+   */
+  uploads: UploadsView;
 };
 
 const num = (v: unknown): number => {
@@ -212,6 +222,7 @@ export async function getCostView(
     models,
     rolled,
     turnLimits,
+    uploads,
   ] = await withOperator(operatorId, (db) =>
       sequential([
         // 1. The period, as one figure. `cost_usd IS NULL` is an UNPRICED turn
@@ -340,6 +351,9 @@ export async function getCostView(
         // 9. THE TURN THRESHOLDS — observed, not enforced (ADR-0023). Same
         //    environment, same whole-UTC-day period, on this same client.
         () => readTurnLimitsView(db, periodDays),
+        // 10. PHOTO UPLOADS — observed, not enforced (ADR-0023, FR-3409).
+        //     Counts and outcomes only; the spend is figure 5's upload bucket.
+        () => readUploadsView(db, periodDays),
       ] as const)
     );
 
@@ -419,6 +433,7 @@ export async function getCostView(
     }),
     rolledThrough: rolled.rows[0]?.through ? String(rolled.rows[0].through) : null,
     turnLimits,
+    uploads,
   };
 }
 
