@@ -36,8 +36,9 @@ export const metadata = { title: "Teaching — Noor Console" };
  * **What the page must never let an operator believe** is the wrong timing.
  * Off applies to each student's next message — mid-lesson too; On applies
  * from their next sitting, because a sitting that opened with probing off is
- * never turned on (ADR-0021, option B; `lib/sessions.ts`). The page says so
- * beside the control, in those words.
+ * never turned on (ADR-0021, option B; `lib/sessions.ts`) — and a sitting
+ * that stopped probing never starts again, even if the switch goes back On
+ * (fix pass 2). The page says so beside the control, in those words.
  */
 const PATH = "/teaching";
 
@@ -127,7 +128,9 @@ export default async function TeachingConsolePage() {
           very next message, even in the middle of a lesson, and a question card that was holding
           back its answer shows it. Switching On never changes a sitting already under way: it
           reaches each student when they next start one (a sitting ends after thirty minutes
-          without a message). Every sitting records, when it opens, whether probing was on and
+          without a message). A sitting that has stopped probing does not start again — switching
+          Off and back On, or removing a mark and adding it back, leaves it without probing until
+          the student&rsquo;s next sitting. Every sitting records, when it opens, whether probing was on and
           which release served it — both are on every session in a student&rsquo;s session list.
         </p>
       </Panel>

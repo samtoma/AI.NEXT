@@ -78,9 +78,10 @@ import {
  * carries the Socratic-probing block is decided by the server and by nothing
  * the request says: the learning session's stored `probing` snapshot —
  * resolved once when the sitting opened (`lib/sessions.ts`) — AND the switch
- * and the student's tester mark as they stand at THIS request (option B:
- * Off, or removing the mark, reaches the next message; On waits for the next
- * sitting), AND the lesson being maths. The value the prompt was actually
+ * and the student's tester mark as they stand at THIS request, each unchanged
+ * since the sitting opened (option B: Off, or removing the mark, reaches the
+ * next message; On waits for the next sitting; a sitting that stopped
+ * probing never resumes), AND the lesson being maths. The value the prompt was actually
  * built with goes to the client as the stream's first frame,
  * `{type:"session", probing}`, so the cards follow the prompt rather than a
  * guess — including un-withholding a card when this turn says Off. An older

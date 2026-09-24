@@ -52,13 +52,28 @@ console.error = (...a: unknown[]) => {
 const MATHS = "course:prep3-math-en";
 const SOCIAL = "course:prep3-social-ar";
 
-type OpenRow = { id: number; kind: string; last_seen_at: Date; probing: boolean | null };
+type OpenRow = {
+  id: number;
+  kind: string;
+  last_seen_at: Date;
+  probing: boolean | null;
+  /** when the sitting opened; defaults to 10 minutes ago */
+  opened_at?: Date;
+};
+
+const minutesAgo = (m: number) => new Date(Date.now() - m * 60_000);
+/** Long before any sitting in these tests opened. */
+const LONG_AGO = new Date("2026-09-01T00:00:00Z");
 
 function fakeClient(opts: {
   open?: OpenRow | null;
   /** the stored switch; undefined = no row */
   setting?: string;
   isTester?: boolean;
+  /** `teaching_settings.updated_at` — when the switch last MOVED; default long ago */
+  switchUpdatedAt?: Date;
+  /** `student_testers.marked_at` of the student's OPEN mark; default long ago */
+  markedAt?: Date;
   /** make the probing-inputs read throw */
   inputsFail?: boolean;
   /** make the INSERT lose the one-open-session race to this row */
@@ -67,6 +82,10 @@ function fakeClient(opts: {
   const log: string[] = [];
   const inserts: unknown[][] = [];
   let selects = 0;
+  const openedAtOf = (id: unknown) => {
+    const row = [opts.open, opts.loseRaceTo].find((r) => r?.id === Number(id));
+    return row ? (row.opened_at ?? minutesAgo(10)) : null;
+  };
   const client = {
     async query(text: string, values: unknown[] = []) {
       const sql = text.replace(/\s+/g, " ").trim();
@@ -79,6 +98,26 @@ function fakeClient(opts: {
         const row = selects > 1 && opts.loseRaceTo ? opts.loseRaceTo : opts.open;
         return { rows: row ? [row] : [], rowCount: row ? 1 : 0 };
       }
+      // The per-request re-read for a sitting that opened ON (fix pass 2):
+      // the switch and the mark each count only if unchanged since the
+      // sitting opened — `updated_at <= opened_at`, `marked_at <= opened_at`,
+      // answered here from the fixture exactly as the SQL answers it.
+      if (sql.includes("FROM teaching_settings") && sql.includes("FROM sessions s")) {
+        if (opts.inputsFail) throw new Error("relation \"teaching_settings\" does not exist");
+        const openedAt = openedAtOf(values[2]);
+        if (!openedAt) return { rows: [], rowCount: 0 };
+        const switchSame = (opts.switchUpdatedAt ?? LONG_AGO) <= openedAt;
+        const markSame = (opts.markedAt ?? LONG_AGO) <= openedAt;
+        return {
+          rows: [
+            {
+              setting: switchSame ? (opts.setting ?? null) : null,
+              is_tester: opts.isTester === true && markSame,
+            },
+          ],
+          rowCount: 1,
+        };
+      }
       if (sql.includes("FROM teaching_settings") && sql.includes("FROM student_testers")) {
         if (opts.inputsFail) throw new Error("relation \"teaching_settings\" does not exist");
         return {
@@ -86,6 +125,7 @@ function fakeClient(opts: {
           rowCount: 1,
         };
       }
+      if (sql.startsWith("UPDATE sessions SET closed_at")) return { rows: [], rowCount: 0 };
       if (sql.startsWith("INSERT INTO sessions")) {
         inserts.push(values);
         if (opts.loseRaceTo) {
@@ -280,6 +320,98 @@ test("a sitting that opened ON keeps probing while the switch and the mark still
     assert.equal(r.out.probing, true, setting);
     assert.equal(r.out.openedProbing, true, setting);
   }
+});
+
+/* A sitting, once narrowed, never widens (fix pass 2, FR-3105). */
+
+test("Off then On mid-sitting: the sitting that opened ON stays off", async () => {
+  // Opened ON ten minutes ago under Test accounts only; the switch has since
+  // gone Off and back to Test accounts only (updated_at after opened_at).
+  // Stored AND now are both true again — and it must still not probe: the
+  // switch it is looking at is not the one it opened under.
+  const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) },
+    setting: "testers",
+    isTester: true,
+    switchUpdatedAt: minutesAgo(2),
+  });
+  const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+  assert.deepEqual(
+    { id: r.out.sessionId, opened: r.out.opened, probing: r.out.probing, openedProbing: r.out.openedProbing },
+    { id: 9, opened: false, probing: false, openedProbing: true }
+  );
+  assert.equal(f.inserts.length, 0, "the sitting is kept — only its probing ends");
+});
+
+test("any move of the switch after the sitting opened ends its probing, even to another On position", async () => {
+  const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) },
+    setting: "everyone", // testers → everyone, still on for this tester
+    isTester: true,
+    switchUpdatedAt: minutesAgo(1),
+  });
+  const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+  assert.equal(r.out.probing, false);
+});
+
+test("un-mark then re-mark mid-sitting: the sitting stays off", async () => {
+  // The switch has not moved; the student is marked again — but by a NEW mark
+  // made after the sitting opened, not the one it opened under.
+  const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) },
+    setting: "testers",
+    isTester: true,
+    switchUpdatedAt: minutesAgo(60),
+    markedAt: minutesAgo(3),
+  });
+  const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+  assert.equal(r.out.probing, false);
+  assert.equal(r.out.openedProbing, true);
+});
+
+test("untouched since it opened: the sitting keeps probing", async () => {
+  const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true, opened_at: minutesAgo(10) },
+    setting: "testers",
+    isTester: true,
+    switchUpdatedAt: minutesAgo(60),
+    markedAt: minutesAgo(45),
+  });
+  const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+  assert.equal(r.out.probing, true);
+});
+
+test("a NEW sitting after re-enabling probes", async () => {
+  // Same history as the Off-then-On case, but the old sitting has gone idle
+  // (> 30 min): this request closes it and opens a new one, which resolves
+  // from the switch and the mark as they stand — and probes.
+  const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: minutesAgo(45), probing: true, opened_at: minutesAgo(50) },
+    setting: "testers",
+    isTester: true,
+    switchUpdatedAt: minutesAgo(40),
+    markedAt: minutesAgo(40),
+  });
+  const r = await quietly(() =>
+    currentSession(7, "lesson_learn", { courseOf: async () => MATHS }, f.client)
+  );
+  assert.deepEqual(
+    { id: r.out.sessionId, opened: r.out.opened, probing: r.out.probing },
+    { id: 55, opened: true, probing: true }
+  );
+  assert.equal(stored(f.inserts[0]!).probing, true);
+});
+
+test("the live read compares the switch and the mark with the sitting's own opened_at", () => {
+  // The fake above answers the comparison; this pins that the shipped SQL
+  // makes it, on the session row it is asked about.
+  const sessions = code("lib/sessions.ts");
+  const live = sessions.slice(sessions.indexOf("function probingInputsSinceOpen"));
+  assert.match(live, /ts\.updated_at <= s\.opened_at/);
+  assert.match(live, /t\.unmarked_at IS NULL/);
+  assert.match(live, /t\.marked_at <= s\.opened_at/);
+  assert.match(live, /FROM sessions s\s+WHERE s\.id = \$3 AND s\.student_id = \$2/);
+  assert.match(sessions, /probingInputsSinceOpen\(db, studentId, sessionId\)/);
 });
 
 test("a failed live read in a sitting that opened ON answers off, and keeps the sitting", async () => {

@@ -336,7 +336,7 @@ export default async function ConsoleStudentPage({
               .{" "}
               {teaching.effective === "testers"
                 ? testerMarks?.current
-                  ? "So this student's maths lessons probe — from their next sitting. Removing the mark stops it from their next message."
+                  ? "So this student's maths lessons probe — from their next sitting. Removing the mark stops it from their next message, for the rest of that sitting."
                   : "This student is not marked, so their lessons do not probe."
                 : teaching.effective === "off"
                   ? "So a mark here changes nothing this student sees until it is switched on."

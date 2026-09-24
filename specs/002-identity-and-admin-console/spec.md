@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix). Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix); **FR-3105** (a sitting that stopped probing never starts again) and FR-3111 amended in place, each marked. Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -780,11 +780,16 @@ password sign-in.
 - **FR-3105**: Whether a sitting may probe MUST be decided **by the server when the sitting
   starts**, and recorded with it; that record MUST never be rewritten. Each request in the sitting
   MUST then probe only if the sitting started with probing on **and** the switch and the student's
-  test-account mark, as they stand at that request, still allow it. So switching **Off** — or
-  removing a student's mark — MUST apply to the student's **next message**, even mid-lesson; and
-  switching **On** MUST apply only from the student's **next sitting**: a sitting that started with
-  probing off MUST never start probing. *(Amended 2026-09-24, Samuel's option B: was "decided once
-  when the lesson starts; a change reaches only lessons that start afterwards".)*
+  test-account mark, as they stand at that request, still allow it **and neither has changed since
+  the sitting started**. So switching **Off** — or removing a student's mark — MUST apply to the
+  student's **next message**, even mid-lesson; and switching **On** MUST apply only from the
+  student's **next sitting**: a sitting that started with probing off MUST never start probing, and
+  a sitting that has stopped probing MUST never start again — switching Off and back On, or
+  removing the mark and adding it back, leaves it off until the student's next sitting. *(Amended
+  2026-09-24, Samuel's option B: was "decided once when the lesson starts; a change reaches only
+  lessons that start afterwards". Amended again 2026-09-24, fix pass 2: "and neither has changed
+  since the sitting started" added, because the rule as first written let Off-then-On resume a
+  sitting mid-lesson — On applying before the next sitting.)*
 - **FR-3106**: Everything that behaves differently under probing — the tutor's instructions, whether
   a question card reveals the worked solution, and how the answer is recorded — MUST follow the
   server's answer for that request (FR-3105) and **never anything the student's device sends**. When
@@ -816,9 +821,10 @@ password sign-in.
   the place to name a student, because every role reads it.
 - **FR-3111**: A student's session list, timeline and replay MUST show, for each sitting, the
   release that served it and whether probing was on when it **started** — and MUST say that probing
-  applies to maths learn-mode turns only and that a sitting which started with it on follows the
-  switch from then (FR-3105). They MUST say "not recorded" for sittings from before it was recorded,
-  rather than guessing.
+  applies to maths learn-mode turns only and that a sitting which started with it on stops probing
+  once the switch is changed or the student's mark is removed, and does not start again in that
+  sitting (FR-3105). They MUST say "not recorded" for sittings from before it was recorded, rather
+  than guessing. *(Amended 2026-09-24, fix pass 2: was "follows the switch from then".)*
 
 ### Shipped in v0.6.0 without a requirement — now written (FR-3201…) **[ADDED 2026-09-24]**
 

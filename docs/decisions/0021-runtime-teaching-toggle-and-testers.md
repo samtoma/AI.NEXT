@@ -1,6 +1,6 @@
 # ADR-0021 — Socratic probing becomes a console switch — On at the next sitting, Off at the next message — for test accounts first
 
-**Status**: Accepted — Samuel, 2026-09-24. **Amended the same day** (fix pass): when a change reaches a student — Samuel chose option B, below; the tester mark needs two roles; the role grant and the rollback path hardened.
+**Status**: Accepted — Samuel, 2026-09-24. **Amended the same day** (fix pass): when a change reaches a student — Samuel chose option B, below; the tester mark needs two roles; the role grant and the rollback path hardened. **Amended again the same day** (fix pass 2): a sitting that has stopped probing never starts again — the consequence "Off then On probes again", recorded below as deliberate in the first amendment, is withdrawn because it let On reach a sitting under way, which FR-3105 forbids.
 **Amends**: the compile-time `SOCRATIC_PROBING_ENABLED = false` that v0.6.0 merged Tamer's prototype behind (`app/src/lib/socratic-probing.ts`, [CHANGELOG v0.6.0](../../CHANGELOG.md))
 **Affects**: `db/migrations/014-operators-and-roles.sql` (five-role vocabulary) · `db/migrations/029-teaching-controls-role.sql` · `db/migrations/030-teaching-toggle-and-testers.sql` and both rollbacks · `app/src/lib/socratic-probing.ts` (the rules) · `app/src/lib/sessions.ts` (the snapshot) · `app/src/lib/teaching-queries.ts` · `app/src/lib/env.ts` (`RELEASE_TAG`) · `app/src/app/api/ask/route.ts`, `app/src/app/api/attempts/route.ts` · `app/src/components/chat/ChatCore.tsx`, `ChatQuestionCard.tsx`, `components/student/LessonSession.tsx`, `WhiteboardPanel.tsx` · `app/src/app/(console)/teaching/`, `app/src/app/api/console/teaching/`, `app/src/app/api/console/students/[id]/tester/` · the Student 360 and the three session pages · `FR-3101`…`FR-3111` in [`specs/002-identity-and-admin-console/spec.md`](../../specs/002-identity-and-admin-console/spec.md)
 **Related**: [ADR-0014](./0014-admin-console-second-build-target.md) (roles, and what a safety control is) · [ADR-0015](./0015-interaction-timeline-and-replay.md) (the learning session this snapshot is stored on) · [ADR-0018](./0018-course-availability.md) (the per-student override pattern the tester mark copies) · [ADR-0012](./0012-per-student-isolation-rls.md) (why the mark is a table the student surface cannot write) · issue [#53](https://github.com/samtoma/AI.NEXT/issues/53) (what probing still has to fix)
@@ -55,10 +55,12 @@ per lesson — what each student got.
    option B).** The sitting's snapshot is still resolved and stored when it
    opens, and never rewritten — it is the record of what the sitting started
    with. Each REQUEST then gets that snapshot AND what the switch resolves to
-   now for that student (the position and her tester mark). Narrowing only:
-   **Off — or removing a mark — reaches the student's next message**, even
-   mid-lesson; **On reaches their next sitting**, because a sitting that
-   opened off is never turned on. The alternative Samuel weighed (A: keep
+   now for that student (the position and her tester mark) — each counted
+   only while it is unchanged since the sitting opened (fix pass 2).
+   Narrowing only: **Off — or removing a mark — reaches the student's next
+   message**, even mid-lesson; **On reaches their next sitting**, because a
+   sitting that opened off is never turned on, and one that stopped probing
+   never starts again. The alternative Samuel weighed (A: keep
    per-sitting and reword the requirement) left Off without a way to stop a
    sitting in progress.
 
@@ -118,9 +120,12 @@ until #53 closes, it can reach test accounts and nobody else.**
   trigger refuses any later change to either: that row is the record of how
   the sitting OPENED. Every request in a sitting stored ON then re-reads the
   switch and the student's mark (one statement, fail closed) and probes only
-  if they still allow it; a sitting stored off reads nothing and never turns
-  on. So Off and un-marking reach the next message; On reaches the next
-  sitting (a sitting ends after 30 minutes idle, ADR-0015). The course half —
+  if they still allow it **and neither has changed since the sitting opened**
+  — `teaching_settings.updated_at` and the open mark's `marked_at` at or
+  before `sessions.opened_at`; a sitting stored off reads nothing and never
+  turns on. So Off and un-marking reach the next message; On reaches the next
+  sitting (a sitting ends after 30 minutes idle, ADR-0015); and a sitting that
+  stopped probing stays stopped. The course half —
   maths only — is applied to the lesson or question actually in front of the
   server.
 - **The server is the authority.** `/api/ask` builds the prompt from the
@@ -155,11 +160,20 @@ student is never switched into probing between two messages. The price is one
 extra read per request **in a sitting that opened with probing on** — today
 only test accounts' — and nothing for anybody else.
 
-**A sitting that opened on, switched Off and then On again, probes again.** The
-rule is "stored AND now", and both are true again. Deliberate: the student's
-sitting started under probing, so resuming it is not switching her INTO it.
-If that ever matters, the fix is to close open sittings on Off, not to make
-the rule stateful.
+**A sitting that stopped probing never starts again** *(fix pass 2 — this
+replaces the first amendment's "a sitting that opened on, switched Off and then
+On again, probes again", which it had called deliberate)*. "Stored AND now" let
+Off-then-On resume a sitting mid-lesson, which is On reaching a sitting under
+way — what FR-3105 and the `/teaching` copy both say it never does. The rule is
+now "stored AND now AND unchanged since the sitting opened", and it needs no new
+state: the switch's `updated_at` and the mark's `marked_at` already record
+whether anything moved, and un-marking then re-marking makes a NEW mark row
+with a later `marked_at`, so it is not the mark the sitting opened under. Any
+move of the switch counts, including one between two On positions; Save on the
+position already in force writes nothing, so an idle click ends nobody's
+probing. The comparison is between transaction start times, so a change whose
+transaction straddles a sitting's own opening can end its probing early —
+never start it, because the current values must still allow it.
 
 **A session can outlive the lesson it opened on.** ADR-0015 reuses an open
 session of the same kind rather than closing it when the lesson changes, so a

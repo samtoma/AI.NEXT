@@ -48,12 +48,15 @@
  * is the record of what the sitting OPENED with.
  *
  * What a REQUEST gets is narrower (Samuel, 2026-09-24, option B): the stored
- * snapshot AND what the switch resolves to NOW for this student — the
- * position and her tester mark as they stand at this request. So switching
- * Off, or removing a student's mark, reaches her next message even
- * mid-lesson; switching On reaches her next sitting only, because a sitting
- * that opened off is never turned on. The re-read happens only for a sitting
- * that opened ON, so every other request does exactly what it did in v0.6.0.
+ * snapshot AND the switch and her tester mark as they stand at this request —
+ * each counted only if it has NOT CHANGED since the sitting opened. So
+ * switching Off, or removing a student's mark, reaches her next message even
+ * mid-lesson; switching On reaches her next sitting only. And a sitting,
+ * once narrowed, never widens again: Off then On, or un-marking then
+ * re-marking, leaves it off for the rest of the sitting (fix pass 2), because
+ * the switch and the mark it is now looking at are not the ones it opened
+ * under. The re-read happens only for a sitting that opened ON, so every
+ * other request does exactly what it did in v0.6.0.
  */
 
 import type { PoolClient } from "pg";
@@ -106,17 +109,18 @@ export type SessionSnapshot = {
   /**
    * Whether Socratic probing applies to THIS REQUEST (ADR-0021, option B):
    * the sitting's stored snapshot AND the switch and the student's tester
-   * mark as they stand now. The course half of the rule is applied by the
-   * caller, which knows the lesson or question in front of it
-   * (`effectiveProbing`). `false` for a session opened before v0.7.0 (NULL in
-   * the column), for a session that could not be opened, and whenever the
-   * live read fails — fail closed, never on.
+   * mark as they stand now — each unchanged since the sitting opened, so a
+   * sitting that stopped probing never starts again (fix pass 2). The course
+   * half of the rule is applied by the caller, which knows the lesson or
+   * question in front of it (`effectiveProbing`). `false` for a session
+   * opened before v0.7.0 (NULL in the column), for a session that could not
+   * be opened, and whenever the live read fails — fail closed, never on.
    */
   probing: boolean;
   /**
    * The stored snapshot — what the sitting OPENED with, as the console shows
    * it. Never re-resolved; `probing` above can be false while this is true
-   * (switched Off, or unmarked, mid-sitting), never the other way round.
+   * (the switch or the mark changed mid-sitting), never the other way round.
    */
   openedProbing: boolean;
 };
@@ -139,28 +143,21 @@ async function selectOpen(db: Db, studentId: number): Promise<OpenSession | null
 }
 
 /**
- * The two facts the resolver needs from the database, read under the
- * student's own principal: this environment's console position, and whether
- * THIS student carries a tester mark. `student_testers` is RLS-forced, so the
- * second read cannot see another child's mark even if the id were wrong.
+ * The switch and the tester mark, as the resolver reads them — one statement
+ * under the student's own principal. `student_testers` is RLS-forced, so the
+ * mark read cannot see another child's even if the id were wrong.
  *
  * Its own SAVEPOINT: a failure here must cost the student probing, never
  * their turn and never the session row. The answer on failure is `off`.
  */
-async function probingInputs(
+async function readProbingInputs(
   db: Db,
-  studentId: number
+  sql: string,
+  values: unknown[]
 ): Promise<{ setting: ProbingSetting; isTester: boolean }> {
   await db.query("SAVEPOINT probing_inputs");
   try {
-    const res = await db.query(
-      `SELECT (SELECT socratic_probing FROM teaching_settings
-                WHERE environment = $1)                          AS setting,
-              EXISTS (SELECT 1 FROM student_testers
-                       WHERE environment = $1 AND student_id = $2
-                         AND unmarked_at IS NULL)                 AS is_tester`,
-      [ENVIRONMENT, studentId]
-    );
+    const res = await db.query(sql, values);
     await db.query("RELEASE SAVEPOINT probing_inputs");
     return {
       setting: asProbingSetting(res.rows[0]?.setting),
@@ -173,38 +170,98 @@ async function probingInputs(
   }
 }
 
+/** At OPEN: this environment's console position, and whether THIS student carries a mark. */
+function probingInputs(
+  db: Db,
+  studentId: number
+): Promise<{ setting: ProbingSetting; isTester: boolean }> {
+  return readProbingInputs(
+    db,
+    `SELECT (SELECT socratic_probing FROM teaching_settings
+              WHERE environment = $1)                          AS setting,
+            EXISTS (SELECT 1 FROM student_testers
+                     WHERE environment = $1 AND student_id = $2
+                       AND unmarked_at IS NULL)                 AS is_tester`,
+    [ENVIRONMENT, studentId]
+  );
+}
+
+/**
+ * For a sitting that opened ON: the same two facts, each counted ONLY IF IT
+ * HAS NOT CHANGED SINCE THE SITTING OPENED (fix pass 2, FR-3105).
+ *
+ *   · the switch counts only while `teaching_settings.updated_at` is at or
+ *     before the sitting's `opened_at`. Any move after it — Off, On, a
+ *     different position — reads as no switch at all, i.e. off. The console
+ *     writes nothing when Save is pressed on the position already in force
+ *     (`setProbingSetting`), so an idle click does not end anybody's probing.
+ *   · the mark counts only if the open mark was made at or before
+ *     `opened_at`. Removing it closes that row; marking again inserts a NEW
+ *     row with a later `marked_at` — so un-mark then re-mark mid-sitting is
+ *     not the mark the sitting opened under, and reads as unmarked.
+ *
+ * Why timestamps and not a column: the rule "a sitting never widens after it
+ * narrowed" then needs no mutable state on the session row (whose snapshot a
+ * trigger freezes) — "was it narrowed?" is answered by whether anything
+ * changed, which the rows already record.
+ *
+ * The comparison is between transaction start times (`now()` on both sides),
+ * so a change whose transaction straddles the sitting's own open can land on
+ * either side of it. The only direction that matters is covered: the CURRENT
+ * values are still read and still have to allow probing, so a straddling
+ * change can end a sitting's probing early but cannot turn one on that the
+ * switch as it now stands would refuse.
+ */
+function probingInputsSinceOpen(
+  db: Db,
+  studentId: number,
+  sessionId: number
+): Promise<{ setting: ProbingSetting; isTester: boolean }> {
+  return readProbingInputs(
+    db,
+    `SELECT (SELECT ts.socratic_probing FROM teaching_settings ts
+              WHERE ts.environment = $1
+                AND ts.updated_at <= s.opened_at)              AS setting,
+            EXISTS (SELECT 1 FROM student_testers t
+                     WHERE t.environment = $1 AND t.student_id = $2
+                       AND t.unmarked_at IS NULL
+                       AND t.marked_at <= s.opened_at)          AS is_tester
+       FROM sessions s
+      WHERE s.id = $3 AND s.student_id = $2`,
+    [ENVIRONMENT, studentId, sessionId]
+  );
+}
+
 /**
  * Does a sitting that OPENED with probing on still probe for this request?
- * (ADR-0021, option B — Off and un-marking reach the next message.)
+ * (ADR-0021, option B — Off and un-marking reach the next message; fix pass
+ * 2 — and a sitting, once narrowed, stays narrowed.)
  *
  * Called ONLY for a session whose stored snapshot is true, so it can only
  * ever narrow: a sitting that opened off never reaches here and never turns
- * on. It re-reads the switch and this student's mark (the same one statement
- * and savepoint as at open, `probingInputs`) and asks the resolver the same
- * question minus the course, which the caller narrows with the lesson or
- * question actually in front of it. A failed read answers false.
+ * on. It re-reads the switch and this student's mark as they stood when the
+ * sitting opened AND still stand (`probingInputsSinceOpen`), and asks the
+ * resolver the same question minus the course, which the caller narrows with
+ * the lesson or question actually in front of it. A failed read answers false.
  */
 async function probingStillApplies(
   db: Db,
   studentId: number,
+  sessionId: number,
   kind: SessionKind
 ): Promise<boolean> {
   if (kind !== PROBING_SURFACE) return false;
-  const { setting, isTester } = await probingInputs(db, studentId);
+  const { setting, isTester } = await probingInputsSinceOpen(db, studentId, sessionId);
   return probingCouldApply({ setting, isTester, surface: kind });
 }
 
 /**
  * A stored snapshot as it applies to this request: false stays false without
- * a query; true is re-checked against the switch and the mark as they are now.
+ * a query; true is re-checked against the switch and the mark — unchanged
+ * since the sitting opened, and still allowing it.
  */
-async function liveProbing(
-  db: Db,
-  studentId: number,
-  kind: SessionKind,
-  opened: boolean
-): Promise<boolean> {
-  return opened ? probingStillApplies(db, studentId, kind) : false;
+async function liveProbing(db: Db, studentId: number, open: OpenSession): Promise<boolean> {
+  return open.probing ? probingStillApplies(db, studentId, open.id, open.kind) : false;
 }
 
 /** Resolve the snapshot for a session about to be opened. Runs once per session. */
@@ -299,7 +356,7 @@ export async function currentSession(
   sessionId: number;
   opened: boolean;
   kind: SessionKind;
-  /** for THIS request: the snapshot narrowed by the switch and mark now */
+  /** for THIS request: the snapshot narrowed by the switch and mark — unchanged since open */
   probing: boolean;
   /** the stored snapshot the sitting opened with */
   openedProbing: boolean;
@@ -319,12 +376,13 @@ export async function currentSession(
       );
       // Reused: the snapshot it OPENED with stands on the row, never
       // re-resolved — but a sitting that opened ON is narrowed by the switch
-      // and the mark as they are now (option B). One read, and only then.
+      // and the mark (option B), and stays narrowed once either has changed
+      // since it opened (fix pass 2). One read, and only then.
       return {
         sessionId: plan.sessionId,
         opened: false,
         kind: open!.kind,
-        probing: await liveProbing(db, studentId, open!.kind, open!.probing),
+        probing: await liveProbing(db, studentId, open!),
         openedProbing: open!.probing,
       };
     }
@@ -368,7 +426,7 @@ export async function currentSession(
         sessionId: winner.id,
         opened: false,
         kind: winner.kind,
-        probing: await liveProbing(db, studentId, winner.kind, winner.probing),
+        probing: await liveProbing(db, studentId, winner),
         openedProbing: winner.probing,
       };
     }

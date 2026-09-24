@@ -229,13 +229,14 @@ export function Chip({ tone = "neutral", children }: { tone?: ChipTone; children
  * The footnote the chips need wherever they appear. "Opened with probing on"
  * is a fact about how the sitting STARTED, and it never meant every turn in it
  * probed: review mode, practice, open chat and the other two subjects never do
- * (FR-3104), and — ADR-0021, option B — a sitting that opened on follows the
- * switch from then, so switching Off, or removing the student's test-account
- * mark, stopped it from their next message. The turn-by-turn record is the
- * transcript; the chip is the snapshot.
+ * (FR-3104), and — ADR-0021, option B — a sitting that opened on stops
+ * probing at the student's next message once the switch moves or their
+ * test-account mark is removed, and (fix pass 2) does not start again for the
+ * rest of that sitting. The turn-by-turn record is the transcript; the chip
+ * is the snapshot.
  */
 export const SESSION_SNAPSHOT_NOTE =
-  "Probing applies to maths learn-mode turns only. A session that opened with it on follows the switch from then: switching Off, or removing the student’s test-account mark, stops it from their next message.";
+  "Probing applies to maths learn-mode turns only. A session that opened with it on stops probing from the student’s next message once the switch is changed or their test-account mark is removed, and does not start again in that session.";
 
 export function SessionSnapshotNote() {
   return <span className="text-[11.5px] text-ink-faint">{SESSION_SNAPSHOT_NOTE}</span>;

@@ -31,7 +31,9 @@
  * included: every request in a sitting that opened with probing on re-reads
  * the switch and the student's mark (`lib/sessions.ts`). On reaches each
  * student's NEXT SITTING: a sitting that opened with probing off is never
- * turned on. The response says so, so the page can too.
+ * turned on, and (fix pass 2) any move of the switch ends probing for the
+ * rest of a sitting already under way — Off then On does not resume it. The
+ * response says so, so the page can too.
  */
 
 import { authorize } from "@/lib/auth/authorize";

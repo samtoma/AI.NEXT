@@ -35,12 +35,14 @@
  * Each REQUEST then gets that snapshot NARROWED, never widened (Samuel,
  * 2026-09-24, option B): a sitting that opened ON re-reads the switch and
  * the student's tester mark on every request and stops probing the moment
- * either says no (`probingCouldApply`), and `effectiveProbing` narrows it to
- * the lesson or question actually in front of the server (maths, learn
- * mode — a session can outlive the lesson it opened on). A sitting that
- * opened OFF is never turned on. So: switching Off, or removing a mark,
- * reaches the student's next message; switching On reaches their next
- * sitting. The prompt builder, the attempt route and — through what the
+ * either says no (`probingCouldApply`) — and each counts only while it is
+ * UNCHANGED since the sitting opened, so a sitting that stopped probing
+ * never starts again, not after Off-then-On nor after un-mark-then-re-mark
+ * (fix pass 2; `lib/sessions.ts`). `effectiveProbing` narrows it to the
+ * lesson or question actually in front of the server (maths, learn mode — a
+ * session can outlive the lesson it opened on). A sitting that opened OFF is
+ * never turned on. So: switching Off, or removing a mark, reaches the
+ * student's next message; switching On reaches their next sitting. The prompt builder, the attempt route and — through what the
  * server declares on each response — the client's cards all follow the
  * request's answer.
  *
@@ -142,7 +144,8 @@ export type ProbingInputs = {
  * THE RESOLVER. Run when a learning session is created; its answer is stored
  * on the session row and never rewritten. For a sitting stored ON, the same
  * rule (minus the course, `probingCouldApply`) is asked again on every
- * request, and can only turn it off.
+ * request — of the switch and mark the sitting opened under, if unchanged —
+ * and can only turn it off.
  *
  *   off                      → false
  *   testers                  → tester AND maths AND lesson_learn
@@ -168,7 +171,8 @@ export function resolveProbing(
  * in?) whenever the answer is already no — which, with the switch Off, is
  * always, so an Off build does exactly the reads it did before. And it is the
  * per-request re-check for a sitting that opened ON (`lib/sessions.ts`): the
- * switch and the mark as they are now, with the course left to
+ * switch and the mark as they are now — a switch moved, or a mark made,
+ * since the sitting opened reads as off / unmarked — with the course left to
  * `effectiveProbing`.
  */
 export function probingCouldApply(
@@ -213,7 +217,7 @@ export function probingActive(surface: string | undefined, enabled: boolean): bo
  * unlocked (the second wrong attempt, or an explicit {{reveal_answer}}).
  *
  * `probing` is what the server declared on its latest response. When a
- * sitting stops probing — the switch goes Off, or the student is unmarked,
+ * sitting stops probing — the switch moves, or the student is unmarked,
  * mid-sitting — the next response declares false and every card holding
  * back re-renders with its answer on offer ("Show the answer") and its
  * worked solution shown: nothing stays stuck behind a probe that is no
