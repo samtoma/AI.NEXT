@@ -10,15 +10,19 @@ requirement names it.
 
 ## [Unreleased]
 
-### Changed — turn limits are now watched, not enforced (ADR-0023, FR-3401…FR-3406)
+### Changed — turn and upload limits are now watched, not enforced (ADR-0023, FR-3401…FR-3409)
 - **Noor no longer stops a conversation after a fixed number of replies.** Until now the tutor
   refused to answer past a per-surface limit and locked the input: 2 replies in the general chat, 18
   in a lesson's teach-and-practice mode, 5 in a lesson's quick review mode. Samuel removed the
   limits — *"we need to know how often those limits are triggered"* — so a student can now keep a
   conversation going for as long as she needs it (FR-3401).
-- **Worst-case spend per conversation is now unbounded**, and it is watched in the console instead of
-  being capped on the server. The three numbers above are unchanged and still mean something — they
-  are now *observed thresholds* rather than a hard stop.
+- **A student can now upload as many photos or PDFs a day as she needs.** Until now the 11th upload
+  in a day was refused. Samuel removed this one too, the same day — *"please remove the limit of the
+  photo uploads for now as well"* — on the same terms: only the daily count is gone. The 10 MB size
+  limit and the JPEG/PNG/PDF type limit are unchanged; neither one counts uploads (FR-3407).
+- **Worst-case spend per conversation, and per student's uploads, is now unbounded**, and both are
+  watched in the console instead of being capped on the server. The numbers above are unchanged and
+  still mean something — they are now *observed thresholds* rather than a hard stop.
 
 ### Added
 - **The console's Cost page gets a "Turn limits — observed, not enforced" panel**: for the period
@@ -26,6 +30,10 @@ requirement names it.
   their threshold (and what share that is), how many went further still, and the longest conversation
   seen — highlighted whenever any conversation reached a threshold in that period. It also lists the
   most recent conversations that reached a threshold, each linked to its session (FR-3403, FR-3404).
+- **The Cost page also gets photo-upload monitoring**: uploads in the period, the students who
+  uploaded, how each was parsed, and upload/OCR spend with its average per upload — kept separate
+  from tutoring spend, as it already was. It shows how many student-days reached or went past the old
+  daily limit, highlighted whenever any did, with a list of those student-days (FR-3409).
 - **A session that reached its threshold is flagged** — in amber, never red — on the student's session
   list, on its timeline, and in its replay, so an operator can see it without opening the Cost page
   first (FR-3405).
@@ -33,9 +41,11 @@ requirement names it.
 ### Removed
 - The three "you've reached the limit" messages a student could see mid-conversation, and the input
   lock that came with them.
+- The "that's 10 uploads today" message and the upload lock.
 
-Requirements: FR-3401…FR-3406 in `specs/002-identity-and-admin-console/spec.md`, superseding the
-baseline's FR-051. Record: [ADR-0023](docs/decisions/0023-turn-limits-observed-not-enforced.md).
+Requirements: FR-3401…FR-3409 in `specs/002-identity-and-admin-console/spec.md`, superseding the
+baseline's FR-051 and the cap clause of 001's `T047`. Record:
+[ADR-0023](docs/decisions/0023-turn-limits-observed-not-enforced.md).
 
 ## [v0.8.0] — 2026-09-24
 
