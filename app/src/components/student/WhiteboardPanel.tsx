@@ -196,10 +196,10 @@ export function WhiteboardPanel({
   /** mobile top-sheet collapse (ignored on desktop via CSS) */
   collapsed: boolean;
   onToggleCollapsed: () => void;
-  /** Socratic-probing prototype (wip/socratic-probing-route-b) — mirrors
-   *  ChatCore's own state (LessonSession wires it via
-   *  onPendingConfirmationChange) so a board-hosted question card gates its
-   *  reveal the same way an inline-transcript one does. */
+  /** Socratic probing — whether this lesson probes, as the SERVER declared it
+   *  (ADR-0021), mirrored from ChatCore by LessonSession (`onProbingChange`,
+   *  beside `onPendingConfirmationChange`) so a board-hosted question card
+   *  gates its reveal the same way an inline-transcript one does. */
   probing?: boolean;
   pendingLoId?: string | null;
   pendingAttemptId?: number | null;

@@ -37,13 +37,29 @@
  * sitting would then end up swept as `inactivity`, and FR-2302's "did she
  * finish, or walk away" would have one answer for both. A silent wrong answer,
  * from a change three files away; hence the extra argument.
+ *
+ * **v0.7.0 — the per-lesson snapshot (ADR-0021).** A session row is now also
+ * where two facts about the sitting are FIXED at the moment it opens: which
+ * release served it (`release_tag`) and whether Socratic probing applies to it
+ * (`probing`). Probing is resolved here and nowhere else — from the console's
+ * switch, the student's tester mark, the lesson's course and the session's
+ * kind (`resolveProbing`, pure) — and every later reader reads the stored
+ * answer. So a switch flipped mid-lesson reaches the NEXT session, never the
+ * running one, and migration 030's trigger refuses any later UPDATE of either
+ * column. A session reused rather than opened keeps the answer it opened with.
  */
 
 import type { PoolClient } from "pg";
 import { withMaint } from "@/lib/db";
 import { scoped, type Db } from "@/lib/student-context";
-import { ENVIRONMENT } from "@/lib/env";
+import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import { emit } from "@/lib/analytics";
+import {
+  asProbingSetting,
+  probingCouldApply,
+  resolveProbing,
+  type ProbingSetting,
+} from "@/lib/socratic-probing";
 import {
   attributableSessionId,
   endedEventProperties,
@@ -65,42 +81,140 @@ export type SessionOpts = {
   clientKey?: string;
   /** join whatever session is open instead of superseding it — see planForRequest */
   adoptOpen?: boolean;
+  /**
+   * The course of the lesson this session would open on, asked for LAZILY and
+   * only when probing could apply at all (ADR-0021: maths only). `/api/ask`
+   * passes it for the lesson surfaces; every other caller has no lesson, and
+   * a session with no course never probes.
+   */
+  courseOf?: () => Promise<string | null>;
+};
+
+/** What a session is, as the routes that serve inside it need to know it. */
+export type SessionSnapshot = {
+  /** null when the session could not be opened or attributed (FR-2309) */
+  sessionId: number | null;
+  kind: SessionKind | null;
+  /**
+   * The stored per-lesson Socratic-probing answer. `false` for a session
+   * opened before v0.7.0 (NULL in the column) and for a session that could
+   * not be opened at all — fail closed, never on.
+   */
+  probing: boolean;
 };
 
 async function selectOpen(db: Db, studentId: number): Promise<OpenSession | null> {
   const res = await db.query(
-    `SELECT id, kind, last_seen_at FROM sessions
+    `SELECT id, kind, last_seen_at, probing FROM sessions
       WHERE student_id = $1 AND closed_at IS NULL`,
     [studentId]
   );
   const r = res.rows[0];
   return r
-    ? { id: Number(r.id), kind: r.kind as SessionKind, lastSeenAt: new Date(r.last_seen_at) }
+    ? {
+        id: Number(r.id),
+        kind: r.kind as SessionKind,
+        lastSeenAt: new Date(r.last_seen_at),
+        probing: r.probing === true,
+      }
     : null;
+}
+
+/**
+ * The two facts the resolver needs from the database, read under the
+ * student's own principal: this environment's console position, and whether
+ * THIS student carries a tester mark. `student_testers` is RLS-forced, so the
+ * second read cannot see another child's mark even if the id were wrong.
+ *
+ * Its own SAVEPOINT: a failure here must cost the student probing, never
+ * their turn and never the session row. The answer on failure is `off`.
+ */
+async function probingInputs(
+  db: Db,
+  studentId: number
+): Promise<{ setting: ProbingSetting; isTester: boolean }> {
+  await db.query("SAVEPOINT probing_inputs");
+  try {
+    const res = await db.query(
+      `SELECT (SELECT socratic_probing FROM teaching_settings
+                WHERE environment = $1)                          AS setting,
+              EXISTS (SELECT 1 FROM student_testers
+                       WHERE environment = $1 AND student_id = $2
+                         AND unmarked_at IS NULL)                 AS is_tester`,
+      [ENVIRONMENT, studentId]
+    );
+    await db.query("RELEASE SAVEPOINT probing_inputs");
+    return {
+      setting: asProbingSetting(res.rows[0]?.setting),
+      isTester: res.rows[0]?.is_tester === true,
+    };
+  } catch (err) {
+    await db.query("ROLLBACK TO SAVEPOINT probing_inputs");
+    console.error("[sessions] could not read the probing inputs; resolving OFF:", err);
+    return { setting: "off", isTester: false };
+  }
+}
+
+/** Resolve the snapshot for a session about to be opened. Runs once per session. */
+async function resolveSessionProbing(
+  db: Db,
+  studentId: number,
+  kind: SessionKind,
+  opts: SessionOpts
+): Promise<boolean> {
+  const { setting, isTester } = await probingInputs(db, studentId);
+  // With the switch Off (the default) this is false and the course is never
+  // looked up: an Off build performs one read at session open that v0.6.0 did
+  // not (the one above), and nothing else.
+  if (!probingCouldApply({ setting, isTester, surface: kind }) || !opts.courseOf) return false;
+  let courseId: string | null = null;
+  await db.query("SAVEPOINT probing_course");
+  try {
+    courseId = await opts.courseOf();
+    await db.query("RELEASE SAVEPOINT probing_course");
+  } catch (err) {
+    await db.query("ROLLBACK TO SAVEPOINT probing_course");
+    console.error("[sessions] could not resolve the lesson's course; resolving OFF:", err);
+    return false;
+  }
+  return resolveProbing({ setting, isTester, courseId, surface: kind });
 }
 
 async function insertSession(
   db: Db,
   studentId: number,
   kind: SessionKind,
-  opts: SessionOpts
+  opts: SessionOpts,
+  probing: boolean
 ): Promise<number> {
   // `client_key` is dropped rather than made to collide: the unique index is
   // per student, and a browser reusing its string after the sitting it named
   // was closed must not reach back into that closed session. The key is a
   // transitional correlation aid, not an identity.
+  //
+  // `probing` and `release_tag` are written HERE and only here (ADR-0021):
+  // migration 030's trigger refuses any later change to either.
   const res = await db.query(
     `INSERT INTO sessions
        (student_id, kind, surface, lo_id, client_key, environment,
-        opened_at, last_seen_at, assigned_at)
+        opened_at, last_seen_at, assigned_at, probing, release_tag)
      VALUES ($1, $2, $3, $4,
              (SELECT CASE WHEN $5::text IS NULL OR EXISTS (
                             SELECT 1 FROM sessions s
                              WHERE s.student_id = $1 AND s.client_key = $5::text)
                           THEN NULL ELSE $5::text END),
-             $6, now(), now(), now())
+             $6, now(), now(), now(), $7, $8)
      RETURNING id`,
-    [studentId, kind, opts.surface ?? null, opts.loId ?? null, opts.clientKey ?? null, ENVIRONMENT]
+    [
+      studentId,
+      kind,
+      opts.surface ?? null,
+      opts.loId ?? null,
+      opts.clientKey ?? null,
+      ENVIRONMENT,
+      probing,
+      RELEASE_TAG,
+    ]
   );
   return Number(res.rows[0].id);
 }
@@ -124,14 +238,10 @@ export async function currentSession(
   kind: SessionKind,
   opts: SessionOpts = {},
   client?: PoolClient
-): Promise<{ sessionId: number; opened: boolean }> {
+): Promise<{ sessionId: number; opened: boolean; kind: SessionKind; probing: boolean }> {
   const outcome = await scoped(studentId, client, async (db) => {
-    const plan = planForRequest(
-      await selectOpen(db, studentId),
-      kind,
-      new Date(),
-      opts.adoptOpen === true
-    );
+    const open = await selectOpen(db, studentId);
+    const plan = planForRequest(open, kind, new Date(), opts.adoptOpen === true);
 
     if (plan.action === "reuse") {
       await db.query(
@@ -142,7 +252,13 @@ export async function currentSession(
           WHERE id = $1 AND closed_at IS NULL`,
         [plan.sessionId, opts.surface ?? null, opts.loId ?? null]
       );
-      return { sessionId: plan.sessionId, opened: false };
+      // Reused, so the snapshot it OPENED with stands — never re-resolved.
+      return {
+        sessionId: plan.sessionId,
+        opened: false,
+        kind: open!.kind,
+        probing: open!.probing,
+      };
     }
 
     // The lazy half of the sweep: this student's stale session closes on their
@@ -160,25 +276,46 @@ export async function currentSession(
     // instead. Now that the default path IS a transaction, the retry needs a
     // point to roll back to or it would turn the normal two-tabs case into a
     // 500.
+    // The per-lesson snapshot (ADR-0021): resolved once, for the row about to
+    // be written, and stored on it.
+    const probing = await resolveSessionProbing(db, studentId, kind, opts);
+
     await db.query("SAVEPOINT session_insert");
     try {
-      const sessionId = await insertSession(db, studentId, kind, opts);
+      const sessionId = await insertSession(db, studentId, kind, opts, probing);
       await db.query("RELEASE SAVEPOINT session_insert");
-      return { sessionId, opened: true };
+      return { sessionId, opened: true, kind, probing };
     } catch (err) {
       await db.query("ROLLBACK TO SAVEPOINT session_insert");
       // Lost the race for the one-open-session index (23505). Whoever won wrote
-      // a session for this student; adopt it rather than insisting on our own.
+      // a session for this student; adopt it rather than insisting on our own
+      // — and adopt ITS snapshot, which the winner resolved and stored.
       if ((err as { code?: string }).code !== "23505") throw err;
-      const open = await selectOpen(db, studentId);
-      if (!open) throw err;
-      return { sessionId: open.id, opened: false };
+      const winner = await selectOpen(db, studentId);
+      if (!winner) throw err;
+      return { sessionId: winner.id, opened: false, kind: winner.kind, probing: winner.probing };
     }
   });
 
   // Outside the unit on purpose: `emit` opens its own, and an analytics row
   // must not be able to roll back the session it is reporting.
   if (outcome.opened) {
+    // One structured line per opened session, in the shape the rest of the
+    // server logs (`[tag] message`): which build served it and whether it
+    // probes are the two facts an operator reading the box's logs needs to
+    // explain a lesson that behaved differently from the one before it.
+    console.info(
+      "[sessions] opened %s",
+      JSON.stringify({
+        session_id: outcome.sessionId,
+        student_id: studentId,
+        kind,
+        surface: opts.surface ?? null,
+        environment: ENVIRONMENT,
+        release_tag: RELEASE_TAG,
+        probing: outcome.probing,
+      })
+    );
     void emit({
       event: "session_started",
       studentId,
@@ -188,6 +325,8 @@ export async function currentSession(
         session_id: outcome.sessionId,
         kind,
         surface: opts.surface ?? null,
+        release_tag: RELEASE_TAG,
+        probing: outcome.probing,
       },
     });
   }
@@ -206,12 +345,32 @@ export async function currentSessionOrNull(
   opts: SessionOpts = {},
   client?: PoolClient
 ): Promise<number | null> {
+  return (await currentSessionSnapshot(studentId, kind, opts, client)).sessionId;
+}
+
+/**
+ * `currentSessionOrNull`, plus what the session says about itself: its kind
+ * and its stored probing snapshot (ADR-0021). The two routes that must obey
+ * the snapshot — `/api/ask` and `/api/attempts` — use this, so the session
+ * they write against and the snapshot they obey are the same row by
+ * construction. Fails exactly as `currentSessionOrNull` does, and a session
+ * that could not be opened is never a probing one.
+ */
+export async function currentSessionSnapshot(
+  studentId: number,
+  kind: SessionKind,
+  opts: SessionOpts = {},
+  client?: PoolClient
+): Promise<SessionSnapshot> {
   try {
-    const { sessionId } = await currentSession(studentId, kind, opts, client);
-    return attributableSessionId(sessionId);
+    const s = await currentSession(studentId, kind, opts, client);
+    const sessionId = attributableSessionId(s.sessionId);
+    return sessionId == null
+      ? { sessionId: null, kind: null, probing: false }
+      : { sessionId, kind: s.kind, probing: s.probing };
   } catch (e) {
     console.error("[sessions] could not open a session; writing NULL:", e);
-    return null;
+    return { sessionId: null, kind: null, probing: false };
   }
 }
 

@@ -6,10 +6,10 @@ import { bktUpdate, DEFAULT_PARAMS, type BktParams } from "@/lib/bkt";
 import { visibleCoursesFor } from "@/lib/catalog-queries";
 import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
-import { currentSessionOrNull } from "@/lib/sessions";
+import { currentSessionSnapshot } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { evaluateArithmeticExpression } from "@/lib/arithmetic";
-import { acceptedRetryOf } from "@/lib/socratic-probing";
+import { acceptedRetryOf, effectiveProbing } from "@/lib/socratic-probing";
 import { advanceIfMastered } from "@/lib/progression-db";
 
 /**
@@ -76,8 +76,9 @@ export async function POST(req: Request) {
      *  confirmation-pending (ChatCore's `pendingConfirmation`). Links the
      *  retry back to the attempt it is confirming — correct or not — so a
      *  probe cycle is reconstructible from `attempts` alone (migration 027).
-     *  **Ignored while `SOCRATIC_PROBING_ENABLED` is false** — see
-     *  `lib/socratic-probing.ts`. */
+     *  **Ignored unless the learning session this attempt joins was opened
+     *  with probing on** (ADR-0021: the session's stored snapshot, never
+     *  this field's presence) — see `lib/socratic-probing.ts`. */
     retryOfAttemptId?: number;
   };
   try {
@@ -248,24 +249,34 @@ export async function POST(req: Request) {
       // a `practice` one. It runs on the transaction's client, so an attempt that
       // rolls back takes its session with it rather than leaving a phantom — and
       // so P1's `withPrincipal` scopes both to the same student.
-      const sessionId = await currentSessionOrNull(
+      const session = await currentSessionSnapshot(
         studentId,
         "practice",
         { surface: "attempt", loId: q.lo_id, adoptOpen: true },
         client
       );
+      const sessionId = session.sessionId;
 
-      // Socratic-probing prototype (`507bb31`): the attempt this one confirms,
-      // if any. `acceptedRetryOf` answers null while the switch is off, so
-      // nothing below changes for any client until Samuel rules. When it is
-      // on, the id must name a WRONG attempt of THIS student's on THIS
-      // question's objective — the only thing a probe cycle ever retries (the
-      // client links a retry to its pending LO's last wrong attempt). Anything
-      // else is dropped rather than written as a false edge. The student is
-      // checked twice on purpose: RLS already hides another child's attempt
-      // under her principal (ADR-0012), and `student_id = $2` keeps the
-      // statement correct on its own if it is ever run on another connection.
-      let retryOf = acceptedRetryOf(retryOfAttemptId);
+      // THE LESSON'S PROBING SNAPSHOT (ADR-0021). Whether this attempt can be
+      // part of a probe cycle is what the session it joined was OPENED with —
+      // stored on the row, never re-resolved, never taken from the request —
+      // narrowed to a maths question in a learn-mode session. An attempt with
+      // no lesson around it opens a `practice` session, whose snapshot is
+      // always false.
+      const probing = effectiveProbing(session.probing, session.kind, q.course_id);
+
+      // Socratic probing (`507bb31`): the attempt this one confirms, if any.
+      // `acceptedRetryOf` answers null unless the session probes, so a lesson
+      // with probing off writes exactly the row v0.6.0 wrote whatever the
+      // client sends. When it is on, the id must name a WRONG attempt of THIS
+      // student's on THIS question's objective — the only thing a probe cycle
+      // ever retries (the client links a retry to its pending LO's last wrong
+      // attempt). Anything else is dropped rather than written as a false
+      // edge. The student is checked twice on purpose: RLS already hides
+      // another child's attempt under her principal (ADR-0012), and
+      // `student_id = $2` keeps the statement correct on its own if it is ever
+      // run on another connection.
+      let retryOf = acceptedRetryOf(retryOfAttemptId, probing);
       if (retryOf !== null) {
         const own = await client.query(
           `SELECT 1 FROM attempts a
@@ -286,8 +297,8 @@ export async function POST(req: Request) {
         `INSERT INTO attempts
            (student_id, question_id, session_id, given_answer, is_correct, time_ms,
             attempted_at, diagnosis_type, misconception_id, stance_used, confidence, modality${
-              // The column is named only when a link exists, so with the
-              // switch off this statement is exactly main's and does not
+              // The column is named only when a link exists, so with
+              // probing off this statement is exactly v0.6.0's and does not
               // depend on migration 027 having run.
               retryOf !== null ? ", retry_of_attempt_id" : ""
             })
@@ -310,7 +321,7 @@ export async function POST(req: Request) {
           misconceptionId,
           // A confirmation-retry (Socratic probing) is tagged "probe"
           // regardless of outcome — a distinct teaching stance, not a third
-          // verdict. Unreachable while the switch is off (retryOf is null).
+          // verdict. Unreachable unless the session probes (retryOf is null).
           retryOf !== null ? "probe" : isCorrect ? "confirm" : "re_explain",
           // Confidence 1 for both: neither is inferred. A distractor carries a
           // label the student clicked; a predicate is a geometric fact about
@@ -436,6 +447,7 @@ export async function POST(req: Request) {
       // does it outside the callback rather than after a statement.
       return {
         advancedTo,
+        probing,
         attemptId: Number(attemptId),
         q,
         isWidget,
@@ -450,6 +462,7 @@ export async function POST(req: Request) {
 
     const {
       advancedTo,
+      probing,
       attemptId,
       q,
       isWidget,
@@ -590,6 +603,12 @@ export async function POST(req: Request) {
         ? { misconceptionId, via: isWidget ? predicate! : givenAnswer }
         : null,
       refutation: served,
+      // The session's probing snapshot as it applied to THIS attempt
+      // (ADR-0021). The client adopts it, so the card that shows this result
+      // withholds or reveals by the same rule the server just wrote the row
+      // by — including in the one case the chat has not told it yet (an
+      // answer on a restored card, before any tutor turn this sitting).
+      probing,
     };
     return NextResponse.json(result);
   } catch (err) {

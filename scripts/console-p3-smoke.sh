@@ -36,7 +36,9 @@ ENVF="$APP/.env.local"
 env_value() { sed -n "s/^$1=//p" "$ENVF" | tail -1; }
 MAINT_DSN=$(env_value DATABASE_URL_MAINT)
 [ -n "$MAINT_DSN" ] || { echo "DATABASE_URL_MAINT missing from app/.env.local" >&2; exit 2; }
-RELEASE_TAG="PDR1-0-v$(node -p "require('$APP/package.json').version" 2>/dev/null)"
+# The same rule as app/src/lib/env.ts `resolveReleaseTag` (v0.7.0): the
+# RELEASE_TAG the dev server was started with, else `v<package version>`.
+RELEASE_TAG="${RELEASE_TAG:-v$(node -p "require('$APP/package.json').version" 2>/dev/null)}"
 
 psql_maint() { psql "$MAINT_DSN" -v ON_ERROR_STOP=1 -qtA "$@"; }
 psql_maint_trim() { psql_maint "$@" | tr -d '[:space:]'; }

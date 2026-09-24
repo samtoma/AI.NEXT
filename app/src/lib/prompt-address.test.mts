@@ -75,7 +75,9 @@ function payload(gender: Gender, name?: string): string {
   const data = lessonFor(gender, name);
   const a = addressForms(gender, name ?? "Nour Adel");
   return [
-    learnPrompt(data),
+    // Probing off: the register is the subject here, and the Off prompt is
+    // every student's unless an operator turns it on (ADR-0021).
+    learnPrompt(data, false),
     reviewPrompt(data),
     askSystemPrompt("student_chat", name ?? "Nour Adel", "math-en", a),
     askSystemPrompt("spine_chat", name ?? "Nour Adel", null, a),

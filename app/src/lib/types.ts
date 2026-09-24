@@ -337,6 +337,11 @@ export interface AttemptResult {
    *  can tell that the lesson just completed, rather than having to re-derive
    *  it from the mastery numbers and get a different answer. */
   advancedTo?: string | null;
+  /** Whether the learning session this attempt joined probes (ADR-0021) —
+   *  its stored snapshot, narrowed to maths in learn mode. The client's cards
+   *  follow this, never a flag of their own. Absent from an older server,
+   *  which is off. */
+  probing?: boolean;
   /** The named error, when the question itself named it: a chosen distractor
    *  for multiple choice, a construction predicate for a widget. Null means we
    *  do not know why the answer was wrong, which is a real answer. */

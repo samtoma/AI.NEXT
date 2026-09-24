@@ -9,7 +9,7 @@ import {
   claudeEnv,
   classifyCliFailure,
 } from "@/lib/claude-cli";
-import { buildLessonContext } from "@/lib/lesson";
+import { buildLessonContext, lessonCourseId } from "@/lib/lesson";
 import { getAllSacredPassages } from "@/lib/lesson-content";
 import {
   makeSacredGuard,
@@ -19,7 +19,7 @@ import {
 import { snapshotContext, snapshotKey } from "@/lib/session-cache";
 import { coerceUploadId } from "@/lib/upload-contract";
 import { getStudentProfile } from "@/lib/student-context";
-import { currentSessionOrNull } from "@/lib/sessions";
+import { currentSessionSnapshot } from "@/lib/sessions";
 import {
   ZERO_TOKENS,
   costFor,
@@ -73,6 +73,15 @@ import {
  *
  * And `input_tokens` is now UNCACHED input only (`lib/pricing.ts`), with the
  * two cache counters beside it as they always were in their own columns.
+ *
+ * THE LESSON'S PROBING SNAPSHOT (ADR-0021, v0.7.0). Whether this turn's
+ * system prompt carries the Socratic-probing block is decided by the learning
+ * session's stored `probing` column — resolved once when that session opened
+ * (`lib/sessions.ts`) and read back here — and by nothing the request says.
+ * The value the prompt was actually built with goes to the client as the
+ * stream's first frame, `{type:"session", probing}`, so the cards follow the
+ * prompt rather than a guess. An older client ignores a frame type it does not
+ * know, which is every client before this one.
  */
 
 export const dynamic = "force-dynamic";
@@ -211,6 +220,8 @@ export async function POST(req: Request) {
   let deliveredTurns: number;
   let sessionId: number | null;
   let ctx: Awaited<ReturnType<typeof buildAskContext>>;
+  /** what the system prompt was built with — the session's snapshot, effective */
+  let probing: boolean;
   const cap = TURN_CAPS[surface];
   try {
     const pre = await withPrincipal(studentId, async (client) => {
@@ -240,10 +251,22 @@ export async function POST(req: Request) {
       // cap check, because a turn the cap refused is not a sitting. All four
       // ask surfaces are session kinds by the same name, so the surface IS the
       // kind; `chatSession` rides along as the transitional correlation key.
-      const session = await currentSessionOrNull(
+      //
+      // Opening one resolves and STORES its probing snapshot (ADR-0021); a
+      // reused one hands back the snapshot it opened with. `courseOf` is how
+      // the resolver learns the lesson's course (probing is maths only), and
+      // it is only ever asked when probing could apply — never with the
+      // switch Off.
+      const session = await currentSessionSnapshot(
         studentId,
         surface,
-        { surface, clientKey: chatSession },
+        {
+          surface,
+          clientKey: chatSession,
+          ...(surface === "lesson_learn"
+            ? { courseOf: () => lessonCourseId(body.lesson, client) }
+            : {}),
+        },
         client
       );
 
@@ -277,6 +300,8 @@ export async function POST(req: Request) {
         wrongAnswer: body.wrongAnswer,
         uploadId,
         gender: me?.gender ?? null,
+        // The stored snapshot changes the system prompt, so it keys the cache.
+        probing: session.probing,
       });
       const built = await snapshotContext(key, () =>
         surface === "lesson_learn" || surface === "lesson_review"
@@ -286,7 +311,9 @@ export async function POST(req: Request) {
               body.lesson,
               studentId,
               uploadId,
-              client
+              client,
+              // the session's stored snapshot — never a request field
+              session.probing
             )
           : buildAskContext(
               surface,
@@ -298,7 +325,13 @@ export async function POST(req: Request) {
               client
             )
       );
-      return { turns, delivered, capped: false as const, sessionId: session, ctx: built };
+      return {
+        turns,
+        delivered,
+        capped: false as const,
+        sessionId: session.sessionId,
+        ctx: built,
+      };
     });
 
     if (pre.capped) {
@@ -323,6 +356,7 @@ export async function POST(req: Request) {
     deliveredTurns = pre.delivered;
     sessionId = pre.sessionId;
     ctx = pre.ctx;
+    probing = pre.ctx.probing === true;
   } catch (err) {
     console.error("ask: pre-turn reads failed:", err);
     return Response.json({ error: "internal error" }, { status: 500 });
@@ -388,6 +422,12 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
           }
         }
       };
+
+      // First frame, before any text: the lesson's probing snapshot as this
+      // prompt applied it (ADR-0021). ChatCore adopts it; the cards and the
+      // live-event notes follow it, so the client can never probe while the
+      // model was told not to, or the other way round.
+      send({ type: "session", probing });
 
       // Runtime thinking budget. The hard reasoning happened at EXTRACTION time
       // (grounded, human-reviewed claims/solutions); at runtime the tutor mostly

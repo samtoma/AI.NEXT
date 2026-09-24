@@ -18,7 +18,6 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
-import { probingActive } from "@/lib/socratic-probing";
 import { addressForms } from "@/lib/address";
 import { track } from "@/lib/ga";
 import { deriveMasteryStage, learnAutoStartLine } from "@/lib/checkin";
@@ -666,6 +665,11 @@ export function LessonSession({
     lastAttemptId: number;
     wrongCount: number;
   } | null>(null);
+  // Whether this lesson probes, as the SERVER declared it to ChatCore
+  // (ADR-0021: the learning session's stored snapshot). Mirrored read-only
+  // for the board for the same reason as the pending state above — never
+  // derived here from the mode, the subject or anything else the client knows.
+  const [probing, setProbing] = useState(false);
   // Same mirroring, for a chat-typed answer ChatCore graded itself — the
   // board's own card needs this to sync its display too when it's the one
   // hosting the currently-open question.
@@ -1291,13 +1295,11 @@ export function LessonSession({
                 vizMeta={vizMeta}
                 collapsed={!sheetOpen}
                 onToggleCollapsed={() => setSheetOpen((o) => !o)}
-                /* The same switch ChatCore reads for this surface
-                   (lib/socratic-probing.ts), never the mode alone: a board
-                   card that withheld its reveal while the chat beside it
-                   did not would be two rules for one wrong answer. */
-                probing={probingActive(
-                  mode === "learn" ? "lesson_learn" : "lesson_review"
-                )}
+                /* The server's answer for this lesson, mirrored from
+                   ChatCore (ADR-0021), never the mode alone: a board card
+                   that withheld its reveal while the chat beside it did not
+                   would be two rules for one wrong answer. */
+                probing={probing}
                 pendingLoId={pendingConfirmation?.loId ?? null}
                 pendingAttemptId={pendingConfirmation?.lastAttemptId ?? null}
                 pendingWrongCount={pendingConfirmation?.wrongCount ?? null}
@@ -1359,6 +1361,7 @@ export function LessonSession({
               resolveCite={resolveCite}
               onCite={onCite}
               onPendingConfirmationChange={setPendingConfirmation}
+              onProbingChange={setProbing}
               onExternalAttemptChange={setExternalAttempt}
               renderWidget={renderWidget}
               renderPassage={(id, span) => {

@@ -1,53 +1,196 @@
 /**
- * Socratic wrong-answer probing — THE switch, and the only prompt text that
- * depends on it (Tamer's prototype, `507bb31`, brought onto `main` switched
- * OFF).
+ * Socratic wrong-answer probing — the RULES, pure (ADR-0021).
+ *
+ * Tamer's prototype (`507bb31`) merged onto `main` in v0.6.0 behind a
+ * compile-time `SOCRATIC_PROBING_ENABLED = false`. v0.7.0 replaces that
+ * constant with a runtime decision an operator makes in the console
+ * (`/teaching`), and this file holds every rule of that decision with no
+ * database, no Next and no import anywhere near it — the same split as
+ * `lib/catalog.ts` / `lib/catalog-queries.ts`: a switch that decides what a
+ * child is taught has to be provable without a running system, including the
+ * branches that are hard to reach in one.
  *
  * ---------------------------------------------------------------------------
- * WHY IT IS OFF
+ * WHAT PROBING IS, AND WHY IT IS NOT SIMPLY ON
  * ---------------------------------------------------------------------------
  * With probing on, a wrong answer in a learn-mode lesson no longer reveals its
  * refutation or canonical solution on the card: the matched material rides
  * into the tutor's next turn as reference-only context and the tutor asks a
  * guiding question first. That breaks the previously-absolute rule that the
- * model's live words are never the graded explanation — a probing turn is
- * generated per turn and never stored as a reviewed entry. Tamer marked it
- * "unmerged prototype, do not point students at it" pending Samuel's ruling on
- * constitution Principle II (or a new ADR bounding live generation).
+ * model's live words are never the graded explanation, and issue #53 lists
+ * what still has to be fixed before a real student should meet it (credit a
+ * student did not earn; a lesson that can stall). Hence three positions:
  *
- * So it merges dark. While this is `false`:
+ *   off       — the default, and what an empty settings table means.
+ *   testers   — only student accounts an operator has marked as test accounts.
+ *   everyone  — LOCKED until #53 is closed: `PROBING_EVERYONE_UNLOCKED` below.
  *
- *   · `ChatCore` never enters probing (`probingActive` answers false for every
- *     surface), so the card reveals the refutation / solution on a wrong answer
- *     exactly as it did before the merge;
- *   · `learnPrompt` carries main's wrong-answer rules byte for byte — the
- *     SOCRATIC PROBING block never reaches the model;
- *   · `/api/attempts` ignores a `retryOfAttemptId` in the body, so
- *     `stance_used` is never `'probe'` and `retry_of_attempt_id` stays NULL.
- *     Migration 027's column is additive and harmless while nothing writes it.
+ * ---------------------------------------------------------------------------
+ * DECIDED ONCE PER LESSON, BY THE SERVER
+ * ---------------------------------------------------------------------------
+ * `resolveProbing` runs exactly once per learning session, when the session
+ * row is created (`lib/sessions.ts`), and its answer is STORED on that row.
+ * Everything downstream reads the stored answer — the prompt builder, the
+ * attempt route, the client's cards — and nothing re-resolves it, so an
+ * operator flipping the switch mid-lesson changes the NEXT lesson, never the
+ * one a child is in. `effectiveProbing` is the one use-time check, and it can
+ * only narrow: it turns a stored `true` off for a lesson that is not maths (a
+ * session can outlive the lesson it opened on), never a stored `false` on.
+ *
+ * With the answer `false` every helper here returns exactly what v0.6.0 sent
+ * with its switch off — `probing-prompts.test.mts` compares all 24 tutor
+ * prompts to a capture taken before this file changed.
+ */
+
+/** The three positions of the console switch. */
+export const PROBING_SETTINGS = ["off", "testers", "everyone"] as const;
+export type ProbingSetting = (typeof PROBING_SETTINGS)[number];
+
+/**
+ * **"Everyone" is locked until issue #53 is closed** (Samuel, 2026-09-24).
+ *
+ * #53 is the list of probing defects found in the v0.6.0 deep review — the two
+ * worst being credit a student did not earn and a lesson that can stall. Until
+ * it is closed, probing may reach test accounts and nobody else. While this is
+ * `false`:
+ *
+ *   · the console shows "Everyone" disabled, with "Not ready yet — see issue
+ *     #53" beside it;
+ *   · `POST /api/console/teaching` refuses `everyone` with 409
+ *     (`settingChangeRefusal`), whoever asks;
+ *   · a stored `everyone` — written while it was unlocked, or by hand — is
+ *     READ AS `testers` (`effectiveSetting`). The lock narrows what is already
+ *     stored rather than trusting it, so re-locking is also one edit.
  *
  * Typed `boolean` rather than inferred as the literal `false`, so the branches
  * that read it stay live code to the type checker in both positions — the
- * same shape as `MASTER_VARIANT_ENABLED` in `lib/design-variant.ts`.
- *
- * **Flip to `true` only on Samuel's ruling.** It is one edit; the prototype is
- * otherwise complete behind it.
- *
- * Pure and dependency-free: imported by client components (`ChatCore`), by the
- * server route, and by `node --test`.
+ * same shape `MASTER_VARIANT_ENABLED` has in `lib/design-variant.ts`.
+ * **Flip to `true` only when #53 is closed and Samuel says so.**
  */
-export const SOCRATIC_PROBING_ENABLED: boolean = false;
+export const PROBING_EVERYONE_UNLOCKED: boolean = false;
+
+/** Where to read about the lock, in the words the console prints. */
+export const PROBING_EVERYONE_LOCK_NOTE = "Not ready yet — see issue #53";
 
 /**
- * Whether probing runs on this chat surface. Scoped to `lesson_learn` only —
- * review mode is a fast ≤5-message lock-in with immediate corrective lines,
- * and probing there would fight its own purpose.
+ * The one course probing may run in. The probing block and every live-event
+ * note ChatCore writes for it are English maths strings; Social Studies and
+ * Arabic are taught in Egyptian Arabic and have no translation of any of it
+ * (#53 P1-6). Not "the English courses" — this one id, until someone writes
+ * the other two.
  */
-export function probingActive(
-  surface: string | undefined,
-  enabled: boolean = SOCRATIC_PROBING_ENABLED
+export const PROBING_COURSE_ID = "course:prep3-math-en";
+
+/**
+ * The one surface probing may run on. Review mode is a fast ≤5-message
+ * lock-in with immediate corrective lines, and probing there would fight its
+ * own purpose; every other surface has no lesson to probe inside.
+ */
+export const PROBING_SURFACE = "lesson_learn";
+
+/** A stored or posted value, read closed: anything unrecognised is `off`. */
+export function asProbingSetting(raw: unknown): ProbingSetting {
+  return typeof raw === "string" && (PROBING_SETTINGS as readonly string[]).includes(raw)
+    ? (raw as ProbingSetting)
+    : "off";
+}
+
+/**
+ * The position the product ACTS on, given the stored one. `everyone` while the
+ * lock is on is `testers`: see `PROBING_EVERYONE_UNLOCKED`.
+ */
+export function effectiveSetting(
+  stored: ProbingSetting,
+  everyoneUnlocked: boolean = PROBING_EVERYONE_UNLOCKED
+): ProbingSetting {
+  return stored === "everyone" && !everyoneUnlocked ? "testers" : stored;
+}
+
+/**
+ * Why the console may not store this position, or null when it may.
+ *
+ * The server's refusal, not the page's: the console renders the option
+ * disabled, and that is FR-2107's "hiding a control is not authorisation" —
+ * a request built by hand still reaches this.
+ */
+export function settingChangeRefusal(
+  to: ProbingSetting,
+  everyoneUnlocked: boolean = PROBING_EVERYONE_UNLOCKED
+): "everyone_locked" | null {
+  return to === "everyone" && !everyoneUnlocked ? "everyone_locked" : null;
+}
+
+export type ProbingInputs = {
+  /** the stored console position for this environment; no row is `off` */
+  setting: ProbingSetting;
+  /** whether an operator has marked this student as a test account */
+  isTester: boolean;
+  /** the course of the lesson the session is opening on, or null */
+  courseId: string | null;
+  /** the session's kind — `lesson_learn`, `practice`, … */
+  surface: string | null | undefined;
+};
+
+/**
+ * THE RESOLVER. Run once, when a learning session is created; its answer is
+ * stored on the session row and never recomputed for that session.
+ *
+ *   off                      → false
+ *   testers                  → tester AND maths AND lesson_learn
+ *   everyone (unlocked)      → maths AND lesson_learn
+ *   everyone (locked, #53)   → as testers
+ */
+export function resolveProbing(
+  input: ProbingInputs,
+  everyoneUnlocked: boolean = PROBING_EVERYONE_UNLOCKED
 ): boolean {
-  return enabled && surface === "lesson_learn";
+  const setting = effectiveSetting(input.setting, everyoneUnlocked);
+  if (setting === "off") return false;
+  if (input.surface !== PROBING_SURFACE) return false;
+  if (input.courseId !== PROBING_COURSE_ID) return false;
+  if (setting === "testers") return input.isTester === true;
+  return true; // everyone, unlocked
+}
+
+/**
+ * Could probing apply to this session if its lesson turned out to be maths?
+ *
+ * Lets session creation skip the one extra read (which course is this lesson
+ * in?) whenever the answer is already no — which, with the switch Off, is
+ * always, so an Off build does exactly the reads it did before.
+ */
+export function probingCouldApply(
+  input: Omit<ProbingInputs, "courseId">,
+  everyoneUnlocked: boolean = PROBING_EVERYONE_UNLOCKED
+): boolean {
+  return resolveProbing({ ...input, courseId: PROBING_COURSE_ID }, everyoneUnlocked);
+}
+
+/**
+ * The stored snapshot, as it applies to the lesson in front of the server now.
+ *
+ * Only ever NARROWS. A learning session can be reused across two lessons of
+ * the same kind (ADR-0015 closes one on completion, inactivity or a different
+ * kind, not on a different lesson), so a snapshot taken on a maths lesson can
+ * meet an Arabic one; this is what keeps probing out of it. It never turns a
+ * stored `false` on, and a NULL snapshot — a session opened before v0.7.0 —
+ * is off.
+ */
+export function effectiveProbing(
+  snapshot: boolean | null | undefined,
+  surface: string | null | undefined,
+  courseId: string | null | undefined
+): boolean {
+  return snapshot === true && surface === PROBING_SURFACE && courseId === PROBING_COURSE_ID;
+}
+
+/**
+ * Whether probing runs on this chat surface, given the server's answer for
+ * this lesson. The client's half of the same rule: `enabled` is what the
+ * server declared for the session, never a flag the client decided.
+ */
+export function probingActive(surface: string | undefined, enabled: boolean): boolean {
+  return enabled && surface === PROBING_SURFACE;
 }
 
 /** The address forms the prompt reads (FR-2602) — the subset used here. */
@@ -62,17 +205,18 @@ export type ProbeAddress = {
 /**
  * The wrong-answer lines of the learn-mode system prompt.
  *
- * `enabled = false` returns main's two lines exactly as they stand in
- * `learnPrompt`, so a merged-but-off build sends the model the same prompt it
- * always did (`socratic-probing.test.mts` pins that). `enabled = true` returns
- * Tamer's SOCRATIC PROBING block from `507bb31`, re-voiced through the address
- * seam: the prototype predates P6 and wrote "him"/"his" literally, which main
- * removed from every prompt (FR-2602).
+ * `enabled = false` returns main's two lines exactly as they stood in
+ * `learnPrompt` before the prototype merged, so a lesson with probing off
+ * sends the model the prompt it always did (`probing-prompts.test.mts` pins
+ * all 24 renders). `enabled = true` returns Tamer's SOCRATIC PROBING block
+ * from `507bb31`, re-voiced through the address seam: the prototype predates
+ * P6 and wrote "him"/"his" literally, which main removed from every prompt
+ * (FR-2602).
  */
 export function learnWrongAnswerRules(
   a: ProbeAddress,
   tapWidgets: string,
-  enabled: boolean = SOCRATIC_PROBING_ENABLED
+  enabled: boolean
 ): string {
   if (!enabled) {
     return `- From the SECOND message on: open with one warm beat reacting to ${a.their} latest [live event]. If ${a.they} got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking ${a.them} toward the correct answer, in the same upbeat tone — never open with the correct letter.
@@ -90,18 +234,18 @@ export function learnWrongAnswerRules(
 }
 
 /**
- * The retry link `/api/attempts` may record, or `null`. Off → always null, so
- * a client that sends `retryOfAttemptId` while the switch is off changes
- * nothing about the row it writes. On → only a positive SAFE integer survives
- * (above 2^53 a JSON number no longer names one id exactly, so it could point
- * at a neighbouring attempt); the route then confirms, under the student's
- * own principal, that it names one of her wrong attempts on the same
- * objective before writing it.
+ * The retry link `/api/attempts` may record, or `null`.
+ *
+ * `enabled` is the SESSION'S stored snapshot as it applies to this question
+ * (`effectiveProbing`), never the request's say-so. Off → always null, so a
+ * client that sends `retryOfAttemptId` for a lesson that is not probing
+ * changes nothing about the row it writes. On → only a positive SAFE integer
+ * survives (above 2^53 a JSON number no longer names one id exactly, so it
+ * could point at a neighbouring attempt); the route then confirms, under the
+ * student's own principal, that it names one of her wrong attempts on the
+ * same objective before writing it.
  */
-export function acceptedRetryOf(
-  raw: unknown,
-  enabled: boolean = SOCRATIC_PROBING_ENABLED
-): number | null {
+export function acceptedRetryOf(raw: unknown, enabled: boolean): number | null {
   if (!enabled) return null;
   return typeof raw === "number" && Number.isSafeInteger(raw) && raw > 0 ? raw : null;
 }

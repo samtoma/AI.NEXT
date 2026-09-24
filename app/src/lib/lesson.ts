@@ -14,7 +14,7 @@ import { getLessonBridges } from "./subject-queries";
 import { visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
-import { learnWrongAnswerRules } from "./socratic-probing";
+import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
 import { MODULE_ORDER } from "./module-order";
 import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
 import type { WidgetQuestionSpec } from "./types";
@@ -277,6 +277,36 @@ export async function getLessonCatalog(
  * With no student in scope (`studentId === null`, the prompt-capture harness)
  * there is nobody to refuse and this behaves exactly as it always has.
  */
+/**
+ * The course a lesson slug belongs to, or null — for ONE purpose: resolving a
+ * new learning session's Socratic-probing snapshot (ADR-0021), which is maths
+ * only. Resolved the way `lessonDataOn` resolves the lesson itself (the same
+ * sanitising, the same fall-back to the default lesson for an unknown slug),
+ * so the course this answers is the course the tutor will then teach.
+ *
+ * **Not a gate.** It reads curriculum rows only and decides nothing about
+ * visibility — `getLessonData` still refuses a hidden course a few statements
+ * later in the same request. And it is called only when probing could apply
+ * at all (`probingCouldApply`), so with the switch Off it never runs.
+ */
+export async function lessonCourseId(
+  slug: string | undefined,
+  client: PoolClient
+): Promise<string | null> {
+  const safeSlug = sanitizeLessonSlug(slug);
+  const courseOf = async (s: string) => {
+    const res = await client.query(
+      `${LO_MODULE_SELECT} AND lo.id LIKE $1 ORDER BY lo.order_in_parent, lo.id LIMIT 1`,
+      [`lo:${s}-%`]
+    );
+    return res.rows[0] ? ((res.rows[0].course_id as string | null) ?? null) : undefined;
+  };
+  const found = await courseOf(safeSlug);
+  if (found !== undefined) return found;
+  if (safeSlug === DEFAULT_LESSON_SLUG) return null;
+  return (await courseOf(DEFAULT_LESSON_SLUG)) ?? null;
+}
+
 export async function getLessonData(
   slug: string = DEFAULT_LESSON_SLUG,
   studentId: number | null = null,
@@ -955,7 +985,17 @@ function lessonPromptKit(subject: Subject): LessonPromptKit {
   return kit;
 }
 
-export function learnPrompt(data: LessonData): string {
+/**
+ * The learn-mode system prompt.
+ *
+ * `probing` is this lesson's Socratic-probing snapshot (ADR-0021), resolved
+ * ONCE when the learning session was created and read back from the session
+ * row — never a request flag, and never re-resolved here. It is required
+ * rather than defaulted so no caller can build a prompt without having
+ * decided. `false` renders the prompt v0.6.0 sent, byte for byte
+ * (`probing-prompts.test.mts`).
+ */
+export function learnPrompt(data: LessonData, probing: boolean): string {
   const kit = lessonPromptKit(data.subject);
   // The register this student is addressed in (FR-2602). Every pronoun below
   // reads from it; there is no longer a literal one anywhere in this prompt.
@@ -976,7 +1016,7 @@ export function learnPrompt(data: LessonData): string {
 - ONE IDEA PER BEAT WHEN EXPLAINING. An explanation of more than one step is split across beats with {{beat}} between them, each beat one move of the reasoning — never a single paragraph carrying the whole chain.
 - The very FIRST message of the lesson has no [live event] yet — there is nothing to react to. Open with upbeat energy for the topic itself (see your opening instructions above), not a reaction to anything.
 - THE QUESTION UNDER DISCUSSION IS ALWAYS THE MOST RECENT ONE YOU PUSHED. The whole QUESTION BANK is in your context and every question you have already used is still sitting in the transcript above — explaining an EARLIER one is the single easiest mistake to make here, and from ${a.their} side it looks like you stopped listening. Before you react to a [live event], check its question id against the last {{show_question}} you emitted. Never explain a question ${a.they} ${a.has} already moved past unless ${a.they} ask${a.s} you to go back to it.
-${learnWrongAnswerRules(a, tapWidgets)}
+${learnWrongAnswerRules(a, tapWidgets, probing)}
 - Never repeat a widget, figure or question ${a.they} already saw.
 - Closing message: one-line recap beat of the big ideas, then a line telling ${a.them} plainly this is the end of today's lesson and ${a.they} can finish whenever ${a.they}${a.isContr} ready, then {{finish_lesson}}. {{finish_lesson}} only arms ${a.their} Finish button — it doesn't end the session, so if ${a.they} keep${a.s} chatting after it, keep answering normally.`;
   const richNote = kit.learnRichNote(data);
@@ -1125,7 +1165,15 @@ export async function buildLessonContext(
    */
   uploadId?: number,
   /** the caller's unit of work, when it has one open (`/api/ask`) */
-  client?: PoolClient
+  client?: PoolClient,
+  /**
+   * The learning session's stored Socratic-probing snapshot (ADR-0021) —
+   * `sessions.probing`, as `/api/ask` read it back from the session row. The
+   * one use-time rule is applied below (`effectiveProbing`: maths, learn mode,
+   * or off), which can only narrow it. Absent is off: the prompt-capture
+   * harness and every caller that has no session render the Off prompt.
+   */
+  probingSnapshot: boolean = false
 ): Promise<AskContext | null> {
   const data = await getLessonData(
     sanitizeLessonSlug(lessonSlug),
@@ -1169,8 +1217,17 @@ export async function buildLessonContext(
     { uploadId, client }
   );
 
+  // Review mode never probes; learn mode probes only when the session's
+  // snapshot says so AND this lesson is the maths course (#53 P1-6: nothing in
+  // the probing block is translated). A snapshot taken on a maths lesson can
+  // meet an Arabic one when a session is reused across lessons, and this is
+  // the line that keeps it out.
+  const probing =
+    mode === "learn" && effectiveProbing(probingSnapshot, PROBING_SURFACE, data.courseId);
+
   return {
-    systemPrompt: mode === "learn" ? learnPrompt(data) : reviewPrompt(data),
+    systemPrompt: mode === "learn" ? learnPrompt(data, probing) : reviewPrompt(data),
+    probing,
     dataBlock:
       lessonDataBlock(data) +
       gazetteer +

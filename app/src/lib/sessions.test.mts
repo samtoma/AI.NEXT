@@ -26,6 +26,7 @@ const open = (over: Partial<OpenSession> = {}): OpenSession => ({
   id: 7,
   kind: "lesson_learn",
   lastSeenAt: NOW,
+  probing: false,
   ...over,
 });
 const agoMs = (ms: number) => new Date(NOW.getTime() - ms);

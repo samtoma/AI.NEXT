@@ -43,6 +43,15 @@ export interface AskContext {
   systemPrompt: string;
   dataBlock: string;
   grounding: Grounding;
+  /**
+   * Whether `systemPrompt` carries the Socratic-probing block (ADR-0021) —
+   * the learning session's stored snapshot after the maths-only use-time rule.
+   * Set by `buildLessonContext` only; absent everywhere else, which is off.
+   * `/api/ask` tells the client this value, so the cards follow exactly the
+   * prompt the model was given. Never stored in `grounding`: the ledger row
+   * is written the same with probing off as it always was.
+   */
+  probing?: boolean;
 }
 
 /**

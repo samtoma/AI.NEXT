@@ -46,13 +46,14 @@ export function ChatQuestionCard({
   onResult: (result: AttemptResult, q: SpineQuestion) => void;
   onOpenQuestion?: (qid: string) => void;
   /**
-   * Socratic-probing prototype (`507bb31`; Route B + Option 1). true only when
-   * ChatCore's `probingActive(surface)` is — i.e. never while
-   * `SOCRATIC_PROBING_ENABLED` is false (lib/socratic-probing.ts). When true,
-   * a wrong answer no longer reveals its correct answer OR its
-   * refutation/solution here — the tutor's own next turn probes for it
-   * instead. false (the default, and every surface today) keeps the
-   * immediate-reveal behaviour unchanged.
+   * Socratic probing (`507bb31`; Route B + Option 1). true only when
+   * ChatCore's `probingActive(surface, …)` is — i.e. only in a lesson_learn
+   * session the SERVER opened with probing on (ADR-0021; the session's stored
+   * snapshot, declared on every response). When true, a wrong answer no
+   * longer reveals its correct answer OR its refutation/solution here — the
+   * tutor's own next turn probes for it instead. false (the default, and
+   * every lesson with the console switch Off) keeps the immediate-reveal
+   * behaviour unchanged.
    */
   probing?: boolean;
   /**
@@ -132,7 +133,7 @@ export function ChatQuestionCard({
   // Socratic-probing prototype: a chat-typed answer graded by ChatCore —
   // sync this card's own display to match, exactly as if it had been tapped
   // here. Guarded on `!result` so it only ever applies once. Never fires
-  // while the switch is off: nothing sets `externalResult` then.
+  // in a lesson that does not probe: nothing sets `externalResult` then.
   //
   // Adjusted DURING RENDER when `externalResult` or the question changes
   // (react.dev, "storing information from previous renders"), not in an
@@ -375,8 +376,8 @@ export function ChatQuestionCard({
             {/* SOCRATIC PROBING (Route B): the material below is withheld
                 from THIS card while probing — it rides into the tutor's next
                 turn as reference-only context (ChatCore's handleAttempt).
-                With the switch off `probing` is always false and this is
-                exactly main's reveal. */}
+                In a lesson that does not probe `probing` is false and this
+                is exactly v0.6.0's reveal. */}
             {probing && !revealAnswer && !result.isCorrect ? (
               <div
                 className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}

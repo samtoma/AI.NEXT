@@ -84,9 +84,10 @@ export const IS_CONSOLE = SURFACE === "admin";
  * ======================================================================== */
 
 /**
- * The app's release tag, stamped onto every tutor turn as
- * `ai_interactions.renderer_version` and shown beside every turn in the
- * console's replay.
+ * The deployed release, stamped onto every tutor turn as
+ * `ai_interactions.renderer_version`, onto every learning session as
+ * `sessions.release_tag` (ADR-0021), and shown in the console's header and
+ * replay.
  *
  * **Why a replay needs it.** ADR-0015 rejected storing a rendered snapshot per
  * turn and chose to re-render the stored payload with the student's own
@@ -96,18 +97,32 @@ export const IS_CONSOLE = SURFACE === "admin";
  * silent drift into a visible mark — "differs from current renderer" — so a
  * replay that no longer matches can be recognised rather than believed.
  *
- * It comes from `package.json`'s `version` rather than from an environment
- * variable, because the version is what `docs/VERSIONING.md` already bumps at a
- * release cut and a variable would be a second place to remember. `PDR1-0` is
- * the solution prefix (ADR-0010); the two together are the release name the
- * CHANGELOG uses, so an operator reading `PDR1-0-v0.4.0` on a turn can find
- * that release's entry without a lookup table.
+ * **Where it comes from.** `RELEASE_TAG` in the environment first: the deploy
+ * job computes it from the deployed commit — the git tag when the commit
+ * carries one, otherwise `v<version>+<short sha>` (`ci-cd.yml`) — and compose
+ * hands it to both services, so two builds of the same version are two
+ * different stamps. Until v0.7.0 nothing read that variable, and every turn on
+ * the box was stamped with the package version whichever commit was running
+ * (`deploy/TAKEOVER.md` D4); this is the one line that made it true.
+ *
+ * **The fallback is `v<version>`**, from `package.json`, for a laptop or any
+ * stack started without the variable. Tags are bare `vX.Y.Z` from v0.5.0
+ * (`docs/VERSIONING.md`); the `PDR1-0-v` prefix it used to carry named a
+ * solution branch that no longer exists (ADR-0010 Amendment), so rows written
+ * before v0.7.0 read `PDR1-0-v0.6.0` and rows after read `v0.7.0` — the
+ * replay's drift mark treats them as different builds, which they are.
  *
  * Resolved at module load, not per call: it cannot change while a process runs,
- * and a per-turn `require` of a JSON file on the ledger write path would be
- * three syscalls to learn a constant.
+ * and a per-turn read on the ledger write path would be work to learn a
+ * constant.
  */
-export const RELEASE_TAG: string = `PDR1-0-v${pkg.version}`;
+export const RELEASE_TAG: string = resolveReleaseTag(process.env.RELEASE_TAG, pkg.version);
+
+/** Pure, so the fallback is testable without a process environment. */
+export function resolveReleaseTag(fromEnv: string | undefined, version: string): string {
+  const tag = (fromEnv ?? "").trim();
+  return tag || `v${version}`;
+}
 
 /**
  * Whether the INTERNAL surfaces are reachable: `/pipeline`, `/admin/*`,
