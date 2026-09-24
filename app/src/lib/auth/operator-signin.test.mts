@@ -1,5 +1,5 @@
 /**
- * @covers FR-3301, FR-3303, FR-3304, FR-3305, FR-3309, FR-3312
+ * @covers FR-3301, FR-3303, FR-3304, FR-3305, FR-3306, FR-3309, FR-3312
  *
  * Signing an operator in from a proven identity, against a fake pool that
  * behaves like the three tables involved (`operators`, `operator_roles`,
@@ -17,7 +17,12 @@ import { test } from "node:test";
 process.env.AINEXT_AUTH_SECRET ??= "test-secret-at-least-thirty-two-characters-long";
 
 import type { AuthEventArgs } from "./events.ts";
-import { recordUnverifiedAssertion, signInOperator } from "./operator-signin.ts";
+import {
+  recordUnverifiedAssertion,
+  signInOperator,
+  UNVERIFIED_PER_IP_LIMIT,
+  UNVERIFIED_TOTAL_LIMIT,
+} from "./operator-signin.ts";
 import type { Queryable } from "./throttle.ts";
 import { hashToken } from "./tokens.ts";
 
@@ -353,11 +358,76 @@ test("the dev picker refuses an unknown id and a disabled operator", async () =>
   );
 });
 
+/** Just enough of `auth_throttle` to count: the upsert `bumpThrottle` sends. */
+function throttleDb() {
+  const counts = new Map<string, number>();
+  const db: Queryable = {
+    query: async (sql: string, values: readonly unknown[] = []) => {
+      if (sql.includes("INSERT INTO auth_throttle")) {
+        const k = `${values[0]}|${values[1]}|${(values[2] as Date).toISOString()}`;
+        const n = (counts.get(k) ?? 0) + 1;
+        counts.set(k, n);
+        return { rows: [{ count: n }], rowCount: 1 };
+      }
+      return { rows: [], rowCount: 0 };
+    },
+  };
+  return { db, counts };
+}
+
 test("an assertion that did not verify is recorded as anonymous, with the verifier's code and nothing else", async () => {
   const { seen, record } = recorder();
-  await recordUnverifiedAssertion("bad_audience", record, { ip: "203.0.113.7", userAgent: "x" });
+  const { db } = throttleDb();
+  assert.equal(
+    await recordUnverifiedAssertion(db, "bad_audience", record, { ip: "203.0.113.7", userAgent: "x" }, NOW),
+    "recorded"
+  );
   assert.deepEqual(
     seen.map((e) => [e.event, e.outcome, e.actor?.kind, e.reason]),
     [["failed_login", "failure", "anonymous", "cloudflare-access:unverified:bad_audience"]]
   );
+});
+
+test("unverified refusals from one address are recorded up to the limit, flagged once, then not at all (F11)", async () => {
+  const { seen, record } = recorder();
+  const { db } = throttleDb();
+  const outcomes: string[] = [];
+  for (let i = 0; i < UNVERIFIED_PER_IP_LIMIT + 30; i++) {
+    outcomes.push(await recordUnverifiedAssertion(db, "malformed", record, { ip: "198.51.100.9" }, NOW));
+  }
+  const failed = seen.filter((e) => e.event === "failed_login");
+  const flagged = seen.filter((e) => e.event === "suspicious_activity");
+  assert.equal(failed.length, UNVERIFIED_PER_IP_LIMIT, "exactly the budget of failed_login rows");
+  assert.deepEqual(flagged.map((e) => e.reason), ["cloudflare-access:unverified_ip_throttled"], "one flag, not thirty");
+  assert.equal(outcomes.filter((o) => o === "throttled_ip").length, 30);
+
+  // Another address has its own budget.
+  assert.equal(await recordUnverifiedAssertion(db, "malformed", record, { ip: "198.51.100.10" }, NOW), "recorded");
+  // And the next window starts clean.
+  const nextWindow = new Date(NOW.getTime() + 15 * 60_000);
+  assert.equal(await recordUnverifiedAssertion(db, "malformed", record, { ip: "198.51.100.9" }, nextWindow), "recorded");
+});
+
+test("a caller rotating its claimed address meets the TOTAL ceiling instead (F11)", async () => {
+  const { seen, record } = recorder();
+  const { db } = throttleDb();
+  for (let i = 0; i < UNVERIFIED_TOTAL_LIMIT + 50; i++) {
+    // Off Cloudflare, cf-connecting-ip is whatever the caller writes — a fresh one every time.
+    await recordUnverifiedAssertion(db, "bad_signature", record, { ip: `10.${i >> 8}.${i & 255}.1` }, NOW);
+  }
+  // …and one with no usable address at all still counts against the total.
+  assert.equal(await recordUnverifiedAssertion(db, "bad_signature", record, { ip: null }, NOW), "throttled_total");
+  assert.equal(seen.filter((e) => e.event === "failed_login").length, UNVERIFIED_TOTAL_LIMIT);
+  assert.deepEqual(
+    seen.filter((e) => e.event === "suspicious_activity").map((e) => e.reason),
+    ["cloudflare-access:unverified_flood"]
+  );
+});
+
+test("the unverified budget is separate from the password path's per-address budget", async () => {
+  const { record } = recorder();
+  const { db, counts } = throttleDb();
+  await recordUnverifiedAssertion(db, "expired", record, { ip: "203.0.113.7" }, NOW);
+  const scopes = [...counts.keys()].map((k) => k.split("|")[0]).sort();
+  assert.deepEqual(scopes, ["cf_unverified_all", "cf_unverified_ip"], "never the `ip` scope password sign-in reads");
 });

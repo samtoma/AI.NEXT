@@ -45,6 +45,17 @@ export type Queryable = {
 
 export type PrincipalTable = "accounts" | "operators";
 
+/**
+ * The counters this table keeps. `scope` is free text in the schema
+ * (migration 013 comments `account | ip | email`); this union is the list.
+ * The two `cf_unverified_*` scopes (ADR-0022, security review F11) count
+ * console sign-in assertions that did not verify — per address and in total —
+ * so that the RECORD of them cannot be flooded. They are separate from `ip` on
+ * purpose: a misconfigured Access application must not spend an operator's
+ * password-sign-in budget and lock them out of the fallback.
+ */
+export type ThrottleScope = "account" | "ip" | "email" | "cf_unverified_ip" | "cf_unverified_all";
+
 /** The current fixed window's start: `now` floored to a 15-minute boundary. */
 export function windowStart(now: Date): Date {
   return new Date(Math.floor(now.getTime() / WINDOW_MS) * WINDOW_MS);
@@ -77,7 +88,7 @@ export function limitReached(count: number, limit: number): boolean {
 /** Atomic increment of one fixed-window counter. Returns the new count. */
 export async function bumpThrottle(
   db: Queryable,
-  scope: "account" | "ip" | "email",
+  scope: ThrottleScope,
   key: string,
   now: Date = new Date()
 ): Promise<number> {
@@ -95,7 +106,7 @@ export async function bumpThrottle(
 /** Read a counter without touching it — the pre-flight check on a request. */
 export async function peekThrottle(
   db: Queryable,
-  scope: "account" | "ip" | "email",
+  scope: ThrottleScope,
   key: string,
   now: Date = new Date()
 ): Promise<number> {

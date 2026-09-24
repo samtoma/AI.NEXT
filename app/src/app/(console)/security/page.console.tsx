@@ -776,7 +776,7 @@ function RecentEvents({ view }: { view: SecurityView }) {
           ? "No event matches the filters above."
           : `Showing ${from}–${to} of ${total.toLocaleString(
               "en-US"
-            )} events — page ${page} of ${totalPages}. The reason column is a short machine code by design — it never carries text somebody typed into a form, and never anything about a password.`
+            )} events — page ${page} of ${totalPages}. The reason column is a short machine code by design — never anything about a password, and never text somebody typed into one of our forms. One exception, deliberate: a console sign-in refused because the address Cloudflare proved has no operator account carries that address (cloudflare-access:no_operator:…), so the refusal says who was turned away.`
       }
     >
       {view.recent.length === 0 ? (

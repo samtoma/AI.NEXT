@@ -53,8 +53,8 @@ import {
   type OperatorRole,
   type SessionMeta,
 } from "./session.ts";
+import { bumpThrottle, IP_FAILURE_LIMIT, type Queryable } from "./throttle.ts";
 import { hashToken } from "./tokens.ts";
-import type { Queryable } from "./throttle.ts";
 
 export type OperatorSigninMethod = "cloudflare-access" | "dev-picker";
 
@@ -294,22 +294,86 @@ export async function signInOperator(
   };
 }
 
+/** Unverified-assertion refusals recorded per client address per 15-minute window. */
+export const UNVERIFIED_PER_IP_LIMIT = IP_FAILURE_LIMIT;
+/** …and in total per window, whatever address each one claimed. */
+export const UNVERIFIED_TOTAL_LIMIT = 200;
+
+export type UnverifiedRecordOutcome = "recorded" | "throttled_ip" | "throttled_total";
+
 /**
- * A refusal the sign-in route records BEFORE any database work: the assertion
- * was missing or did not verify. Anonymous, because nothing was proven — and
- * the reason is the verifier's short code, never any part of the token.
+ * A refusal the sign-in route records BEFORE any operator lookup: the
+ * assertion was missing or did not verify. Anonymous, because nothing was
+ * proven — and the reason is the verifier's short code, never any part of the
+ * token.
+ *
+ * **Rate-limited** (security review F11). Anything that can reach the console
+ * without passing Cloudflare can send a junk assertion on every request, and
+ * each one used to be a row in `auth_events` — the table the Security view and
+ * the alert sweep read. So the record is budgeted in `auth_throttle`'s fixed
+ * 15-minute windows:
+ *
+ *  - **per address** (`cf_unverified_ip`): the first `UNVERIFIED_PER_IP_LIMIT`
+ *    are recorded; the one that reaches the limit also records one
+ *    `suspicious_activity` (`cloudflare-access:unverified_ip_throttled`); the
+ *    rest are not recorded at all.
+ *  - **in total** (`cf_unverified_all`): the address is `cf-connecting-ip`
+ *    first (`requestMeta`), and off Cloudflare that header is whatever the
+ *    caller wrote — so a caller rotating it would never meet the per-address
+ *    limit. The total ceiling is what actually bounds the table:
+ *    `UNVERIFIED_TOTAL_LIMIT` rows per window, then one `suspicious_activity`
+ *    (`cloudflare-access:unverified_flood`), then silence.
+ *
+ * Only the RECORD is limited. The refusal itself is the same every time
+ * (`/signin?cf=invalid`, the password form), and a valid assertion is never
+ * affected: these counters are separate from the password path's `ip` budget,
+ * so a broken Access configuration cannot lock an operator out of the fallback.
  */
 export async function recordUnverifiedAssertion(
+  db: Queryable,
   reason: string,
   record: AuthEventRecorder,
-  meta: { ip?: string | null; userAgent?: string | null }
-): Promise<void> {
+  meta: { ip?: string | null; userAgent?: string | null },
+  now: Date = new Date()
+): Promise<UnverifiedRecordOutcome> {
+  const ip = meta.ip ?? null;
+  const userAgent = meta.userAgent ?? null;
+
+  if (ip) {
+    const fromHere = await bumpThrottle(db, "cf_unverified_ip", ip, now);
+    if (fromHere > UNVERIFIED_PER_IP_LIMIT) return "throttled_ip";
+    if (fromHere === UNVERIFIED_PER_IP_LIMIT) {
+      await record({
+        event: "suspicious_activity",
+        outcome: "denied",
+        actor: { kind: "anonymous" },
+        reason: "cloudflare-access:unverified_ip_throttled",
+        ip,
+        userAgent,
+      });
+    }
+  }
+
+  const total = await bumpThrottle(db, "cf_unverified_all", "all", now);
+  if (total > UNVERIFIED_TOTAL_LIMIT) return "throttled_total";
+  if (total === UNVERIFIED_TOTAL_LIMIT) {
+    await record({
+      event: "suspicious_activity",
+      outcome: "denied",
+      actor: { kind: "anonymous" },
+      reason: "cloudflare-access:unverified_flood",
+      ip,
+      userAgent,
+    });
+  }
+
   await record({
     event: "failed_login",
     outcome: "failure",
     actor: { kind: "anonymous" },
     reason: `cloudflare-access:unverified:${reason}`,
-    ip: meta.ip ?? null,
-    userAgent: meta.userAgent ?? null,
+    ip,
+    userAgent,
   });
+  return "recorded";
 }

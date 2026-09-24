@@ -165,6 +165,12 @@ Durable across restarts and shared by both Node processes (research R5); rows ol
 swept nightly. It carries **no `environment`** deliberately — operational state, not a record of
 anything, and nothing reports from it.
 
+**Scopes added 2026-09-24 (ADR-0022, no migration — `scope` is free text):** `cf_unverified_ip`
+(key: the client address) and `cf_unverified_all` (key: `all`) budget how many console sign-in
+assertions that did not verify are *recorded* in `auth_events` per window — 20 per address, 200 in
+total. They are deliberately not the `ip` scope, so a broken Access configuration cannot spend an
+operator's password-sign-in budget. `ThrottleScope` in `app/src/lib/auth/throttle.ts` is the list.
+
 ## 7. `operators` and `operator_roles`
 
 ```sql

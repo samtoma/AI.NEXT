@@ -25,7 +25,8 @@
  *    operator's session on this browser ended), cookies cleared,
  *    → `/signin?cf=no_account|disabled` — the refusal page, audited
  *  - missing, unverifiable, expired, wrong audience… → nothing signed in,
- *    audited, → `/signin?cf=invalid` — the password form (FR-3308)
+ *    audited within a per-address and a total budget (so it cannot be used to
+ *    flood the record), → `/signin?cf=invalid` — the password form (FR-3308)
  *  - feature off → `/signin?cf=unavailable` — the password form
  *
  * One answer is not a redirect: a request that is not a top-level navigation
@@ -93,7 +94,14 @@ export async function GET(req: Request) {
 
   const proof = await verifyAccessAssertion(assertion, state.config);
   if (!proof.ok) {
-    await recordUnverifiedAssertion(proof.reason, recordAuthEvent, meta);
+    // Recorded within a budget (per address and in total), so that callers
+    // reaching the origin without Cloudflare cannot flood `auth_events`. The
+    // answer is the same either way; only the record is limited.
+    try {
+      await withAuthTx((db) => recordUnverifiedAssertion(db, proof.reason, recordAuthEvent, meta));
+    } catch (err) {
+      console.error("[auth] could not record an unverified Cloudflare assertion:", err);
+    }
     return backToSignin(next, "invalid");
   }
 
