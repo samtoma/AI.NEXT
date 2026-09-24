@@ -12,7 +12,9 @@ posture) — all five accepted 2026-09-20 ·
 [ADR-0018](../../docs/decisions/0018-course-availability.md) (who may see which course) — accepted
 2026-09-21 ·
 [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md) (the teaching switch,
-test accounts, the per-lesson snapshot) — accepted 2026-09-24
+test accounts, the per-lesson snapshot) — accepted 2026-09-24 ·
+[ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md) (turn limits become
+observed thresholds, not an enforced cap) — accepted 2026-09-24
 
 > **Rev. 2 (2026-09-21) — the implementation matrix.** Rev. 1 was written before any code and said
 > so: every row was OPEN by construction. Phases P0–P6 have since landed on
@@ -86,6 +88,20 @@ test accounts, the per-lesson snapshot) — accepted 2026-09-24
 >
 > Rev. 5 changed no status anywhere else in this document, and it did not touch 001's matrix or
 > FR-905.
+>
+> ---
+>
+> **Rev. 9 (2026-09-24) — turn limits become observed, not enforced.** Samuel: *"remove the limits,
+> make them highlight in the admin console, we need to know how often those limits are triggered"*
+> ([ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md)). **FR-3401…FR-3406**,
+> traced in **§7g**, supersede 001's `FR-051`. Written **with** the code, on branch
+> `feat/turn-limits-observed` — a backend session is building the same contract this spec describes
+> in the same working tree, and every row below is stamped **BUILT**, not VERIFIED: nobody has seen
+> the console panel or a session chip live yet. Code paths in §7g were checked against the
+> implementing session's own files (`app/src/lib/turn-thresholds.ts`,
+> `app/src/lib/turn-threshold-queries.ts`, `app/src/app/api/ask/route.ts`, the Cost page, the three
+> session pages, `components/console/ui.tsx`) as they stood on 2026-09-24, and may still move before
+> the branch is done.
 >
 > ---
 >
@@ -504,6 +520,27 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ---
 
+## 7g. Turn limits observed, not enforced — FR-3401…FR-3406 **[ADDED 2026-09-24 — ADR-0023]**
+
+> **Written with the code**, on `feat/turn-limits-observed`, in the same working tree as the backend
+> session building it. Every row is **BUILT**: the requirement is met by design and (where noted)
+> by unit test, but nobody has signed into the console or watched a live conversation reach a
+> threshold yet — the same gap rev. 6/7/8's rows named for the teaching switch. Code paths were
+> corrected once against the implementing session's own files (`turn-thresholds.ts`,
+> `turn-threshold-queries.ts` both exist in this tree as of this writing) rather than guessed twice;
+> they may still move before the branch is done.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-3401 | No surface refuses a student's turn for reply count; no limit message is ever shown | **BUILT** | `app/src/app/api/ask/route.ts` — the `TURN_CAPS` refusal and the `cap` SSE frame are removed; the client's input-lock on a `cap` frame has nothing left to trigger it | Not yet exercised live post-change. Pre-change behaviour (the refusal this removes) was live in production, including the two capped `lesson_learn` conversations on 2026-09-24 cited in ADR-0023. |
+| FR-3402 | Each surface's threshold is one named constant, read by the console and the review-mode finish nudge | **BUILT** | `app/src/lib/turn-thresholds.ts` — `TURN_THRESHOLDS`, `thresholdOf`, `thresholdStatus`, `thresholdChipLabel`; carries forward `student_chat` 2, `lesson_learn` 18, `lesson_review` 5, `spine_chat` none, unchanged from `TURN_CAPS`; pure, no database or React, so the student lesson surface's Finish nudge and every console module import the same constant | Not yet unit-tested against the review nudge's own read of the constant in this working tree as of this writing. |
+| FR-3403 | The Cost page shows, per surface and period: conversations, reached (count + share), went past, highest reply count; highlighted when any conversation reached a threshold | **BUILT** | `app/src/app/(console)/cost/page.console.tsx`; `app/src/lib/turn-threshold-queries.ts` — `readTurnLimitsView`, folding through `summariseThresholds`/`anyThresholdReached` in `turn-thresholds.ts` | Not yet rendered in a browser. |
+| FR-3404 | The Cost page lists the most recent conversations that reached a threshold, linked to their session | **BUILT** | Same module and read (`readTurnLimitsView`) as FR-3403 | Not yet rendered in a browser. |
+| FR-3405 | The session list, session timeline and replay mark a session that reached its threshold, in the attention (amber, never red) treatment | **BUILT** | `app/src/app/(console)/students/[id]/sessions/page.console.tsx`, `sessions/[sid]/page.console.tsx`, `sessions/[sid]/replay/page.console.tsx`; `readSessionTurnLimits` in `turn-threshold-queries.ts` feeding `sessionTurnLimit`/`thresholdChipLabel` in `turn-thresholds.ts`; chip styling in `app/src/components/console/ui.tsx` | Not yet rendered in a browser. FR-1002's red prohibition is the same rule the teaching-switch and course-availability chips already follow on these same three pages. |
+| FR-3406 | A threshold crossing is counted per environment, using the same conversation key and delivered-reply definition as the old cap; never pooled across environments or solutions | **BUILT** | `turn-threshold-queries.ts`'s `CONVERSATION_KEY`/`DELIVERED` fragments — `(surface, grounding->>'chat_session', student_id)`, `outcome = 'ok'` — the identical key and predicate `TURN_CAPS`'s `SELECT count(*)` used; every read filters `ai.environment = $1` first, the way `cost-queries.ts` does (constitution XI), and runs `withOperator` under migration 017's grants | Not yet run against a loaded database in this working tree. |
+
+---
+
 ## 8. Deferred by design — architecture only — FR-2901…
 
 | FR | Requirement | Status | Implementation | Proof |
@@ -569,11 +606,11 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **140** |
+| Functional requirements | **146** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **154 / 154** |
+| Traced (every one needs a row) | **160 / 160** |
 | — verified | 98 |
-| — built | 5 |
+| — built | 11 |
 | — partial | 44 |
 | — open | 2 |
 | — blocked | 1 |

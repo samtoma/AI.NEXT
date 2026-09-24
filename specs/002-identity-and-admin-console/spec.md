@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix); **FR-3105** (a sitting that stopped probing never starts again), FR-3106, FR-3107 and FR-3111 amended in place, each marked. Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 (turn limits) — **FR-3401…FR-3406** added ([ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md), turn limits become observed thresholds, not an enforced cap); superseded 001's `FR-051`. Before that, 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix); **FR-3105** (a sitting that stopped probing never starts again), FR-3106, FR-3107 and FR-3111 amended in place, each marked. Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -33,6 +33,12 @@ analytics.
 > **Amended 2026-09-24 (v0.8.0)**: **FR-3301…FR-3312** — console sign-in from the Cloudflare Access
 > identity ([ADR-0022](../../docs/decisions/0022-console-signin-from-cloudflare-access.md)), placed
 > after FR-2211 in *Admin console & roles* because it is how an operator reaches that console.
+>
+> **Amended 2026-09-24 (v0.9.0 in progress)**: **FR-3401…FR-3406** — Samuel: *"remove the limits,
+> make them highlight in the admin console, we need to know how often those limits are triggered"*
+> ([ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md)). No surface refuses a
+> turn for count any more; the three per-surface numbers survive as named, observed thresholds shown
+> in the console. Supersedes 001's `FR-051`.
 
 ## Why this feature exists
 
@@ -973,6 +979,36 @@ password sign-in.
 - **FR-3214**: The misconception catalogue MUST re-sync on every deploy without duplicating anything
   or changing a question's status, and every live misconception MUST have an explanation.
 
+### Turn limits observed, not enforced (FR-3401…) **[ADDED 2026-09-24 — ADR-0023]**
+
+> Samuel, 2026-09-24, verbatim: *"remove the limits, make them highlight in the admin console, we
+> need to know how often those limits are triggered."* Until this decision `api/ask/route.ts`
+> refused a student's turn once a conversation reached a per-surface cap (`student_chat` 2,
+> `lesson_learn` 18, `lesson_review` 5, `spine_chat` uncapped) and locked the input. That refusal is
+> gone. The three numbers are not gone — they move to a named constant and become **observed
+> thresholds**: crossing one changes nothing for the student and is counted and shown to an operator.
+> [ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md) is the record; these six
+> requirements are what the code is held to. They supersede 001's `FR-051`.
+
+- **FR-3401**: No surface MUST refuse a student's turn because of how many replies the conversation
+  has had. A student MUST never see a limit message or a locked input on account of a reply count.
+- **FR-3402**: Each surface's threshold — `student_chat` 2, `lesson_learn` 18, `lesson_review` 5,
+  `spine_chat` none — MUST be one named constant, read by the console and by the review-mode finish
+  nudge, so the number is defined once and the nudge and the console can never disagree about it.
+- **FR-3403**: The Cost page MUST show, for the chosen period and per surface: how many conversations
+  there were, how many **reached** their threshold (count and share), how many **went past** it, and
+  the highest reply count seen — and MUST be visually highlighted whenever any conversation in the
+  period reached a threshold.
+- **FR-3404**: The Cost page MUST list the most recent conversations that reached a threshold, each
+  linked to its session wherever one is recorded.
+- **FR-3405**: The session list, the session timeline and replay MUST each mark a session whose
+  conversation reached its threshold, in the product's attention treatment — amber, never red
+  (FR-1002).
+- **FR-3406**: A threshold crossing MUST be counted per environment, using the same conversation key
+  and the same "delivered reply" definition the old cap used — surface, chat session and student;
+  `outcome = 'ok'` in `ai_interactions` — and MUST NOT be pooled across environments or solutions
+  (constitution XI).
+
 ### Deferred by design — architecture only (FR-2901…)
 
 > Designed for, not built. None may be implemented this release; the point of stating them is that
@@ -1097,6 +1133,7 @@ than deleted:
 | **FR-501** — parent view through the student picker | REVISED, accepting that any parent sees any student | **FR-2901, FR-2902** — the picker is withdrawn; the parent link is modelled, the view deferred |
 | **FR-604** — account-sharing deterrence | DEFERRED, "there are no accounts to share" | **FR-2009** — the student sees and can end every place their account is signed in |
 | **FR-606** — per-person operator authorisation | BLOCKED on FR-106 | **FR-2202, FR-2203, FR-2204** — unblocked; four roles, one authorisation point, content-review named as a safety control |
+| **FR-051** — server-enforced per-surface turn caps MUST bound spend | KEEP (baseline, `specs/000-baseline/spec.md`) | **FR-3401…FR-3406** — no surface refuses a turn for count any more; the same three numbers survive as named, observed thresholds shown in the console ([ADR-0023](../../docs/decisions/0023-turn-limits-observed-not-enforced.md)) |
 
 Noted, not superseded: **FR-105** carries over, with "last selected student" becoming "the signed-in
 student"; **FR-603** is unchanged in substance, with FR-2101…FR-2103 moving enforcement beneath the
