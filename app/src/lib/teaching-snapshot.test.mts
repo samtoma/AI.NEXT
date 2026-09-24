@@ -524,6 +524,32 @@ test("/api/ask builds the prompt from the session's stored snapshot, never the r
   assert.doesNotMatch(ask, /body\.probing|probing\?:\s*(unknown|boolean)/, "no probing field may be read from the request");
 });
 
+test("a learn-mode sitting opened by /api/understanding resolves its snapshot with the lesson's course, as /api/ask does", () => {
+  // Fix pass 2: the rating route can OPEN a lesson_learn sitting (the
+  // lesson's own had closed), and later asks reuse it. With no courseOf the
+  // resolver has no course and stores probing=false for a maths lesson.
+  const ask = code("app/api/ask/route.ts");
+  const und = code("app/api/understanding/route.ts");
+  const RESOLVER = /courseOf: \(\) => lessonCourseId\(body\.lesson, client\)/;
+  assert.match(ask, RESOLVER, "/api/ask's resolver moved — keep the two routes on the same one");
+  assert.match(und, RESOLVER, "/api/understanding must pass the lesson's course to the session resolver");
+  const call = und.slice(und.indexOf("currentSessionOrNull("), und.indexOf("client\n        ),"));
+  assert.match(call, /mode === "review"\s*\?\s*\{\}\s*:\s*\{ courseOf:/, "only the learn-mode sitting gets a course (review never probes)");
+});
+
+test("a sitting opened with the lesson's course stores ON for a maths lesson, and OFF with none", async () => {
+  // What the static check above buys, through the real resolver: the same
+  // tester, switch and maths lesson, with and without the course.
+  for (const [courseOf, want] of [[async () => MATHS, true], [undefined, false]] as const) {
+    const f = fakeClient({ setting: "testers", isTester: true });
+    const r = await quietly(() =>
+      currentSessionSnapshot(7, "lesson_learn", { surface: "understanding_check", ...(courseOf ? { courseOf } : {}) }, f.client)
+    );
+    assert.equal(r.out.probing, want);
+    assert.equal(stored(f.inserts[0]!).probing, want);
+  }
+});
+
 test("/api/attempts gates the retry link and the probe stance on the session's snapshot", () => {
   const attempts = code("app/api/attempts/route.ts");
   assert.match(attempts, /currentSessionSnapshot\(/);

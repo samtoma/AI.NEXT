@@ -7,6 +7,7 @@ import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
 import {
   getLessonData,
   lessonAnchorLo,
+  lessonCourseId,
   sanitizeLessonSlug,
 } from "@/lib/lesson";
 import {
@@ -311,6 +312,16 @@ export async function POST(req: Request) {
             surface: "understanding_check",
             loId: lessonAnchorLo(d),
             clientKey: chatSession || undefined,
+            // A learn-mode sitting can OPEN here (the lesson's own sitting
+            // closed or went idle before the rating), and later asks reuse
+            // it — so its probing snapshot must be resolved with the lesson's
+            // course, by the same resolver `/api/ask` uses (ADR-0021; fix
+            // pass 2). Without it the resolver has no course and stores
+            // probing=false for a maths lesson. Asked lazily: never with the
+            // switch Off, never for review.
+            ...(mode === "review"
+              ? {}
+              : { courseOf: () => lessonCourseId(body.lesson, client) }),
           },
           client
         ),
