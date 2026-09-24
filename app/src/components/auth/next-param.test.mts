@@ -144,8 +144,17 @@ test("every page or form that reads a `next` parameter cleans it with safeNext",
   const readsNext = /\bsp\.next\b|searchParams\.get\(\s*["']next["']\s*\)|\bnextUrl\.searchParams\.get\(\s*["']next["']/;
   const consumers = sources(SRC).filter((f) => readsNext.test(readFileSync(f, "utf8")));
   const names = consumers.map((f) => f.slice(SRC.length)).sort();
-  assert.deepEqual(names, ["app/(auth)/signin/page.tsx", "app/(auth)/signup/page.student.tsx"]);
-  for (const f of consumers) {
+  // The Cloudflare sign-in route (FR-3301) is the one handler that reads it:
+  // it cleans the value on its first line and redirects only through that.
+  const ROUTE = "app/api/auth/cloudflare/route.console.ts";
+  assert.deepEqual(names, ["app/(auth)/signin/page.tsx", "app/(auth)/signup/page.student.tsx", ROUTE]);
+  {
+    const src = readFileSync(join(SRC, ROUTE), "utf8");
+    assert.match(src, /const next = safeNext\(url\.searchParams\.get\(\s*["']next["']\s*\)/, `${ROUTE} must clean ?next=`);
+    assert.equal(src.match(/searchParams\.get\(\s*["']next["']/g)?.length, 1, `${ROUTE} reads ?next= a second time`);
+    assert.doesNotMatch(src, /Location:\s*url\.|to\(\s*url\./, `${ROUTE} redirects to an uncleaned value`);
+  }
+  for (const f of consumers.filter((c) => !c.endsWith(ROUTE))) {
     const src = readFileSync(f, "utf8");
     assert.match(src, /const next = safeNext\(\s*Array\.isArray\(sp\.next\)/, `${f} must clean ?next= before using it`);
     assert.doesNotMatch(src, /redirect\(\s*sp\./, `${f} redirects to an uncleaned value`);
