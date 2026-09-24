@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix); **FR-3105** (a sitting that stopped probing never starts again), FR-3106 and FR-3111 amended in place, each marked. Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix); **FR-3105** (a sitting that stopped probing never starts again), FR-3106, FR-3107 and FR-3111 amended in place, each marked. Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -804,8 +804,10 @@ password sign-in.
   only accounts the team owns may be marked, never a real student. *(Amended 2026-09-24, fix pass:
   was student-data alone; every operator held every role that day, so nobody lost access.)* Who marked it, who removed it and when MUST be
   recorded and kept after removal, and a removed mark MUST stay removed — marking the student again
-  is a new mark, never the old one reopened or rewritten. **No student surface may be able to set or
-  remove the mark**, for the student or anyone else.
+  is a new mark, never the old one reopened or rewritten. A removal MUST NOT accept a note it cannot
+  keep: a note sent with a removal MUST be refused, never silently dropped. *(Added 2026-09-24, fix
+  pass 2.)* **No student surface may be able to set or remove the mark**, for the student or anyone
+  else.
 - **FR-3108**: With probing **Off**, the tutor's instructions MUST be **byte-identical** to what
   they were before the switch existed — proved against a golden capture of every learn and review
   prompt and against a full capture of 438 model inputs — and the question card and the record of

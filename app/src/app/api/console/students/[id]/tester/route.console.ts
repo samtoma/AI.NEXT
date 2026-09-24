@@ -3,7 +3,13 @@
  * TEST account (ADR-0021, migration 030, `lib/teaching-queries.ts
  * setTesterMark`).
  *
- *   body: { tester: boolean, note?: string }
+ *   body: { tester: true, note?: string } | { tester: false }
+ *
+ *   400 invalid_tester               — `tester` is not a boolean
+ *   400 note_not_allowed_on_unmark   — a `note` sent with `tester: false`
+ *                                      (fix pass 2: it used to be accepted
+ *                                      and silently dropped; see
+ *                                      `lib/tester-mark-request.ts`)
  *
  * **`student-data` AND `teaching-controls`, both** (fix pass, 2026-09-24,
  * ADR-0021). `student-data` because it names a person and is posted from the
@@ -32,11 +38,10 @@
 import { authorize } from "@/lib/auth/authorize";
 import { AuthError } from "@/lib/auth/principal";
 import { setTesterMark } from "@/lib/teaching-queries";
+import { parseTesterMarkBody } from "@/lib/tester-mark-request";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-const MAX_NOTE = 280;
 
 export async function POST(req: Request, ctx: { params: Promise<{ id: string }> }) {
   let me;
@@ -55,22 +60,24 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
     return Response.json({ error: "not_found" }, { status: 404 });
   }
 
-  let body: { tester?: unknown; note?: unknown };
+  let body: unknown;
   try {
     body = await req.json();
   } catch {
     return Response.json({ error: "invalid_json" }, { status: 400 });
   }
-  if (typeof body.tester !== "boolean") {
-    return Response.json({ error: "invalid_tester", allowed: [true, false] }, { status: 400 });
+  const parsed = parseTesterMarkBody(body);
+  if (!parsed.ok) {
+    return Response.json(
+      parsed.error === "invalid_tester"
+        ? { error: parsed.error, allowed: [true, false] }
+        : { error: parsed.error },
+      { status: 400 }
+    );
   }
-  const note =
-    typeof body.note === "string" && body.note.trim().length > 0
-      ? body.note.trim().slice(0, MAX_NOTE)
-      : null;
 
   try {
-    const out = await setTesterMark(me.operatorId, studentId, body.tester, note);
+    const out = await setTesterMark(me.operatorId, studentId, parsed.tester, parsed.note);
     if (!out) return Response.json({ error: "not_found" }, { status: 404 });
     return Response.json({ ok: true, ...out });
   } catch (err) {

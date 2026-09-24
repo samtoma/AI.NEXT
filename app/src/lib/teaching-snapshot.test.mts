@@ -691,7 +691,7 @@ test("the console refuses Everyone and requires teaching-controls before it writ
   assert.match(tester, /authorize\(\{ allRoles: \["student-data", "teaching-controls"\] \}\)/);
   assert.doesNotMatch(tester, /authorize\(\{ roles:/, "`roles` is ConsoleRoute's ANY-OF; the seam's ALL-OF is `allRoles`");
   assert.doesNotMatch(tester, /authorize\(\{ role: "/);
-  assert.match(tester, /typeof body\.tester !== "boolean"/);
+  assert.match(tester, /parseTesterMarkBody\(body\)/, "the body is read closed (tester-mark-request.test.mts)");
 });
 
 test("the console header's switch read: one per request (React cache), and \"unknown\" when it fails", async () => {
