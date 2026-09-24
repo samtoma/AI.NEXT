@@ -223,6 +223,19 @@ export function Chip({ tone = "neutral", children }: { tone?: ChipTone; children
  * not probe, but the record does not say so, and the console does not
  * improve on the record.
  */
+/**
+ * The footnote the chips need wherever they appear: "probing on" is a fact
+ * about the session, and it never meant every turn in it probed — review
+ * mode, practice, open chat and the other two subjects never do (FR-3104).
+ */
+export function SessionSnapshotNote() {
+  return (
+    <span className="text-[11.5px] text-ink-faint">
+      Probing applies to maths learn-mode turns only.
+    </span>
+  );
+}
+
 export function SessionSnapshotChips({
   releaseTag,
   probing,

@@ -181,7 +181,8 @@ export default async function ConsoleSessionListPage({
           finished one: the two mean opposite things about whether the student got what they came
           for. <strong>Release and probing</strong> are what the session recorded when it opened —
           which build served it and whether Socratic probing applied — and neither can change after
-          that. Sessions opened before v0.7.0 recorded neither.
+          that. Probing applies to maths learn-mode turns only. Sessions opened before v0.7.0
+          recorded neither.
         </p>
       )}
     </main>
