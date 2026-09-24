@@ -27,6 +27,9 @@ import {
   ACCESS_APP_LOGOUT_PATH,
   ACCESS_ASSERTION_HEADER,
   canonicalOperatorEmail,
+  IDENTITY_CHECK_BUDGET_MS,
+  JWKS_OPTIONS,
+  proofWithin,
   consoleSigninMode,
   isSigninNavigation,
   readAccessAssertion,
@@ -411,4 +414,51 @@ test("the per-request check and the sign-in route use ONE rule, so they cannot d
   // JS would fold the Kelvin sign to `k`; the one rule refuses to call it the same address.
   assert.equal(sessionMatchesAccessIdentity("admin", "\u212Aelvin@example.com", proof), false);
   assert.equal(sessionMatchesAccessIdentity("admin", "KELVIN@example.com", proof), true);
+});
+
+// ------------------------------------------- a hanging key endpoint (F9)
+
+test("a key endpoint that HANGS costs a console request about one second, and keeps the session", async () => {
+  // Accepts the connection and never answers — the failure a timeout exists for.
+  const hung = createServer(() => {
+    /* never respond */
+  });
+  await new Promise<void>((r) => hung.listen(0, "127.0.0.1", () => r()));
+  const { port } = hung.address() as { port: number };
+  // Production's own options: a 5-second fetch timeout this check must not wait out.
+  const hangingKeys = createRemoteJWKSet(new URL(`http://127.0.0.1:${port}/cdn-cgi/access/certs`), {
+    ...JWKS_OPTIONS,
+  });
+  try {
+    let timedOut = false;
+    const started = Date.now();
+    const proof = await proofWithin(
+      verifyAccessAssertion(await mint({ email: "someone.else@example.com" }), CONFIG, { keys: hangingKeys }),
+      IDENTITY_CHECK_BUDGET_MS,
+      () => void (timedOut = true)
+    );
+    const took = Date.now() - started;
+    assert.equal(proof, null, "no proof");
+    assert.equal(timedOut, true, "and the caller is told it timed out");
+    assert.ok(took >= IDENTITY_CHECK_BUDGET_MS - 50 && took < 2_500, `waited ${took} ms, not the fetch's 5 s`);
+    // No proof keeps the session — even though the (unverified) token named somebody else.
+    assert.equal(sessionMatchesAccessIdentity("admin", "samuel.s.toma@gmail.com", proof), true);
+  } finally {
+    hung.closeAllConnections();
+    await new Promise<void>((r) => hung.close(() => r()));
+  }
+});
+
+test("proofWithin passes a prompt answer through unchanged, and a throw becomes no proof", async () => {
+  const ok = await proofWithin(verifyAccessAssertion(await mint(), CONFIG, { keys }), 1_000);
+  assert.deepEqual(ok, { ok: true, email: "samuel.s.toma@gmail.com" });
+  assert.equal(await proofWithin(Promise.resolve(null), 1_000), null);
+  assert.equal(await proofWithin(Promise.reject(new Error("boom")), 1_000), null);
+});
+
+test("the per-request budget is shorter than the key fetch's own timeout, and the cache outlives ten minutes", () => {
+  assert.ok(IDENTITY_CHECK_BUDGET_MS < JWKS_OPTIONS.timeoutDuration);
+  assert.ok(IDENTITY_CHECK_BUDGET_MS <= 1_000);
+  assert.ok(JWKS_OPTIONS.cacheMaxAge >= 60 * 60_000, "an hour: a slow endpoint reaches a request at most hourly");
+  assert.ok(JWKS_OPTIONS.cacheMaxAge <= 24 * 60 * 60_000, "and a withdrawn key is not believed for days");
 });

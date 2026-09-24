@@ -21,8 +21,8 @@
  *
  *  - the signature, against the team's published keys
  *    (`https://<team>.cloudflareaccess.com/cdn-cgi/access/certs`, fetched once
- *    and cached — `createRemoteJWKSet` refetches only when a key id it has not
- *    seen turns up, which is how Cloudflare's key rotation lands);
+ *    and cached for an hour — `createRemoteJWKSet` also refetches when a key id
+ *    it has not seen turns up, which is how Cloudflare's key rotation lands);
  *  - the algorithm, which must be RS256 — `none`, and HS256 signed with the
  *    public key (the classic confusion attack), are refused by allow-list;
  *  - the issuer, which must be the team domain itself;
@@ -259,25 +259,82 @@ export type CfRefusal =
 export type CfVerifyResult = { ok: true; email: string } | { ok: false; reason: CfRefusal };
 
 /**
+ * How the team's keys are fetched and kept (`createRemoteJWKSet`).
+ *
+ *  - `timeoutDuration` — a fetch is abandoned after 5 seconds (reported as
+ *    `keys_unavailable`: no proof, no sign-in).
+ *  - `cooldownDuration` — a token naming a key id we do not hold triggers a
+ *    refetch at most every 30 seconds. That is how Cloudflare's key rotation
+ *    lands, and it does not wait for `cacheMaxAge`.
+ *  - `cacheMaxAge` — **one hour** (was ten minutes; security review F9). Once
+ *    the cache is older than this, the next verification WAITS for a refetch,
+ *    and if the refetch fails that verification fails even though the old keys
+ *    are still in hand — `jose` does not serve stale keys. So this number is
+ *    how often a slow or dead key endpoint can reach a request at all. An hour
+ *    is still far inside Cloudflare's own rotation (a new key every six weeks,
+ *    the old one honoured for days after), and it bounds how long a key
+ *    Cloudflare withdrew in an emergency would still be believed here.
+ */
+export const JWKS_OPTIONS = {
+  timeoutDuration: 5_000,
+  cooldownDuration: 30_000,
+  cacheMaxAge: 60 * 60_000,
+} as const;
+
+/**
+ * How long ONE console request may wait for the per-request identity check
+ * (`principal.ts` → FR-3305) before it proceeds as if there were no proof —
+ * which keeps the session it already has, exactly as a missing assertion does
+ * (security review F9). Without it, a key endpoint that hangs would hold every
+ * console request for up to `timeoutDuration`. Shorter than that on purpose;
+ * the fetch itself is not cancelled, so the keys still arrive for later
+ * requests.
+ */
+export const IDENTITY_CHECK_BUDGET_MS = 1_000;
+
+/**
  * One key resolver per certs URL, for the life of the process — that is the
- * cache. `createRemoteJWKSet` holds the fetched keys, refetches at most every
- * 30 seconds and only when a token names a key it does not have, and gives up
- * a fetch after 5 seconds (which this module reports as `keys_unavailable`,
- * i.e. no proof, i.e. no sign-in).
+ * cache (`JWKS_OPTIONS` says how it behaves).
  */
 const remoteKeySets = new Map<string, JWTVerifyGetKey>();
 
 function remoteKeys(certsUrl: string): JWTVerifyGetKey {
   let keys = remoteKeySets.get(certsUrl);
   if (!keys) {
-    keys = createRemoteJWKSet(new URL(certsUrl), {
-      timeoutDuration: 5_000,
-      cooldownDuration: 30_000,
-      cacheMaxAge: 10 * 60_000,
-    });
+    keys = createRemoteJWKSet(new URL(certsUrl), { ...JWKS_OPTIONS });
     remoteKeySets.set(certsUrl, keys);
   }
   return keys;
+}
+
+/**
+ * A pending verification, or `null` if it has not finished within `ms`.
+ *
+ * `null` is "no proof", and no proof never ends a session (FR-3306) — so a
+ * timeout degrades to exactly the behaviour of a request that carried no
+ * assertion, never to a sign-in and never to a sign-out. A verification that
+ * throws is also `null`. `onTimeout` lets the caller say so in its log.
+ */
+export async function proofWithin(
+  pending: Promise<CfVerifyResult | null>,
+  ms: number = IDENTITY_CHECK_BUDGET_MS,
+  onTimeout?: () => void
+): Promise<CfVerifyResult | null> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timedOut = Symbol("timed out");
+  const deadline = new Promise<typeof timedOut>((resolve) => {
+    timer = setTimeout(() => resolve(timedOut), ms);
+  });
+  try {
+    const winner = await Promise.race([pending.catch(() => null), deadline]);
+    if (winner === timedOut) {
+      onTimeout?.();
+      return null;
+    }
+    return winner;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 /**

@@ -25,6 +25,8 @@ import { SURFACE } from "@/lib/env";
 import {
   cfAccessConfig,
   consoleSigninMode,
+  IDENTITY_CHECK_BUDGET_MS,
+  proofWithin,
   readAccessAssertion,
   sessionMatchesAccessIdentity,
   verifyAccessAssertion,
@@ -48,14 +50,31 @@ export async function currentAccessProof(): Promise<CfVerifyResult | null> {
   return verifyAccessAssertion(assertion, state.config);
 }
 
+let lastTimeoutLog = 0;
+function logTimeout(): void {
+  // Once a minute at most: this runs on every console request, and a hung key
+  // endpoint would otherwise write one line per request.
+  const now = Date.now();
+  if (now - lastTimeoutLog < 60_000) return;
+  lastTimeoutLog = now;
+  console.error(
+    `[cf-access] identity check did not finish within ${IDENTITY_CHECK_BUDGET_MS} ms ` +
+      "(Cloudflare's key endpoint slow or unreachable?); treating as no proof — sessions are kept."
+  );
+}
+
 /**
  * Does the console session belonging to `operatorEmail` still match the proven
  * person? See `sessionMatchesAccessIdentity` for the four answers. Never
- * throws: a verification failure is "no proof", which keeps the session.
+ * throws, and never waits longer than `IDENTITY_CHECK_BUDGET_MS` (security
+ * review F9): a verification that fails OR does not finish in time is "no
+ * proof", which keeps the session — the same answer as a request with no
+ * assertion at all.
  */
 export async function accessIdentityAllows(operatorEmail: string): Promise<boolean> {
   try {
-    return sessionMatchesAccessIdentity(SURFACE, operatorEmail, await currentAccessProof());
+    const proof = await proofWithin(currentAccessProof(), IDENTITY_CHECK_BUDGET_MS, logTimeout);
+    return sessionMatchesAccessIdentity(SURFACE, operatorEmail, proof);
   } catch (err) {
     console.error("[cf-access] identity check failed; treating as no proof:", err);
     return true;
@@ -86,7 +105,9 @@ export async function consoleSigninState(cf: string | null | undefined): Promise
   if (mode.mode === "refusal") {
     // Re-verified here rather than carried in the redirect: an address in a
     // query string lands in logs and history, and this page has the header.
-    const proof = await currentAccessProof().catch(() => null);
+    // Bounded like the per-request check: a hung key endpoint costs this page
+    // one second and the sentence says "this address" instead of the address.
+    const proof = await proofWithin(currentAccessProof(), IDENTITY_CHECK_BUDGET_MS);
     provenEmail = proof && proof.ok ? proof.email : null;
   }
 
