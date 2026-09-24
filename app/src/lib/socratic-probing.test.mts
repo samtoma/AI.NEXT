@@ -17,6 +17,7 @@
  * @covers FR-3104
  * @covers FR-3105
  * @covers FR-3106
+ * @covers FR-3112
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -239,6 +240,11 @@ test("on: the learn prompt carries the probing block, voiced for the student", (
     const p = learnPrompt(lesson(g), true);
     assert.ok(p.includes("SOCRATIC PROBING"), `gender=${g}`);
     assert.ok(p.includes("{{answer_submitted:"), `gender=${g}`);
+    // FR-3112: asking is not an attempt — the answer waits for REVEALED, and
+    // the prompt no longer tells the model to emit {{reveal_answer}}
+    // (the rule itself is pinned word for word in socratic-reveal.test.mts).
+    assert.ok(p.includes('before the "SOCRATIC PROBE — REVEALED" event for this LO'), `gender=${g}`);
+    assert.ok(!p.includes("reveal_answer"), `gender=${g}: the prompt still mentions reveal_answer`);
   }
 });
 
@@ -288,7 +294,7 @@ test("on: an id beyond the safe-integer range is refused", () => {
 
 test("a card holds back its answer only while probing applies and the reveal is not unlocked", () => {
   assert.equal(cardWithholdsAnswer(true, false), true);
-  assert.equal(cardWithholdsAnswer(true, true), false, "the 2nd wrong attempt / {{reveal_answer}} unlocks it");
+  assert.equal(cardWithholdsAnswer(true, true), false, "the 2nd wrong attempt unlocks it (FR-3112: nothing else does)");
   assert.equal(cardWithholdsAnswer(false, false), false, "a lesson that does not probe never holds back");
   assert.equal(cardWithholdsAnswer(false, true), false);
 });

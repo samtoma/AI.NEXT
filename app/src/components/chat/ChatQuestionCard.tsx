@@ -58,9 +58,10 @@ export function ChatQuestionCard({
    */
   probing?: boolean;
   /**
-   * Overrides `probing`'s withholding for THIS result once the 2-attempt cap
-   * or an explicit {{reveal_answer}} has been reached — falls back to exactly
-   * the non-probing display, never a bare final value.
+   * Overrides `probing`'s withholding for THIS result once the second wrong
+   * attempt on the objective has been reached (`cardRevealUnlocked`, FR-3112 —
+   * nothing the tutor emits can set it earlier) — falls back to exactly the
+   * non-probing display, never a bare final value.
    */
   revealAnswer?: boolean;
   /** Set when this card is the same-tier sibling question ChatCore is

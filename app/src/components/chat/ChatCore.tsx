@@ -25,13 +25,13 @@ import {
   extractAnswerSubmitted,
   extractCites,
   extractHighlights,
-  hasRevealAnswerDirective,
   parseMessage,
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
 import { submitAttempt } from "@/lib/attempts-client";
 import {
+  cardRevealUnlocked,
   pendingAfterDeclaration,
   probingActive,
   probingDeclaredBy,
@@ -372,10 +372,11 @@ export function ChatCore({
   // should link to via retry_of_attempt_id, how many wrong attempts this
   // cycle has taken, and which question that last attempt was against.
   // Session-scoped only (never persisted, never touches mastery). Once
-  // `wrongCount` reaches 2 the card stops withholding — the same threshold an
-  // explicit {{reveal_answer}} forces early. Always null in a lesson that
-  // does not probe: handleAttempt below never sets it unless the server said
-  // this lesson probes, and `adoptProbing(false)` clears it.
+  // `wrongCount` unlocks the reveal (`cardRevealUnlocked`: the second wrong
+  // attempt) the card stops withholding — and only then (FR-3112): a
+  // `{{reveal_answer}}` from the model no longer forces it early. Always null
+  // in a lesson that does not probe: handleAttempt below never sets it unless
+  // the server said this lesson probes, and `adoptProbing(false)` clears it.
   const [pendingConfirmation, setPendingConfirmation] = useState<{
     loId: string;
     lastAttemptId: number;
@@ -778,12 +779,17 @@ export function ChatCore({
           emitNewCites(acc);
           onAssistantDone?.(acc);
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
-          // SOCRATIC PROBING (`507bb31`): a chat-typed answer or an explicit
-          // "just tell me", tagged by the tutor with a directive, routed
-          // through the SAME grading pipeline a tapped card uses. Only in a
-          // lesson the server says probes (read from the ref: the value THIS
-          // stream declared) — a no-op everywhere else, even if the model
-          // somehow emitted one.
+          // SOCRATIC PROBING (`507bb31`): a chat-typed answer, tagged by the
+          // tutor with a directive, routed through the SAME grading pipeline
+          // a tapped card uses. Only in a lesson the server says probes (read
+          // from the ref: the value THIS stream declared) — a no-op everywhere
+          // else, even if the model somehow emitted one.
+          //
+          // A `{{reveal_answer}}` in the reply changes NOTHING here any more
+          // (FR-3112). It used to force the pending wrong count to 2, so one
+          // model slip opened the card after a single attempt. The card now
+          // opens on the student's second wrong attempt only; `chat-parse`
+          // still recognises the directive, so it never shows as text.
           if (probingActive(surface, serverProbingRef.current)) {
             const submittedGiven = extractAnswerSubmitted(acc);
             const pendingNow = pendingConfirmationRef.current;
@@ -810,12 +816,6 @@ export function ChatCore({
                   console.error("chat-typed answer submission failed:", e);
                 }
               }
-            } else if (hasRevealAnswerDirective(acc)) {
-              // Bail-out: force the same reveal the 2-attempt cap would
-              // produce. A no-op if nothing is pending yet.
-              setPendingConfirmation((prev) =>
-                prev ? { ...prev, wrongCount: Math.max(prev.wrongCount, 2) } : prev
-              );
             }
           }
         } else {
@@ -951,12 +951,12 @@ export function ChatCore({
               ? r.solution.map((st) => `Step ${st.step}. ${stepText(st)}`).join(" ")
               : null;
           note +=
-            wrongCountAfter >= 2
+            cardRevealUnlocked(wrongCountAfter)
               ? `\nSOCRATIC PROBE — REVEALED — ${q.loId}: that's two attempts without landing it. The card is now showing the student the correct answer and the reference material directly — stop withholding. Walk the student through it PLAINLY, in the material's own steps, in order (never just the final value): ${
                   material ??
                   "no reviewed material matches this specific error — walk the LO's own definition through to the correct answer instead, still step by step."
                 } Once the student seems ready, your next check on ${q.loId} must still be a fresh same-tier question before you can treat it as resolved.`
-              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote or assert it until the student has engaged with at least one guiding question, or explicitly asks you to just say it): ${
+              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote, hint at or assert it until the SOCRATIC PROBE — REVEALED event for this LO — the student's second attempt — even if the student asks you to just say it): ${
                   material ??
                   "no reviewed material matches this specific error — reason from the LO's own definition instead, still without stating the answer outright."
                 } Ask ONE short guiding question toward it now.`;
@@ -1397,7 +1397,7 @@ const MessageRow = memo(function MessageRow({
                   onResult={onAttempt}
                   onOpenQuestion={onOpenQuestion}
                   probing={probing}
-                  revealAnswer={pendingLoId === q.loId && (pendingWrongCount ?? 0) >= 2}
+                  revealAnswer={pendingLoId === q.loId && cardRevealUnlocked(pendingWrongCount)}
                   retryOfAttemptId={
                     pendingLoId === q.loId ? (pendingAttemptId ?? undefined) : undefined
                   }

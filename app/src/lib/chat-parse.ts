@@ -50,11 +50,11 @@ export type Block =
    *  graded from the tutor's own judgment. `given` is the MCQ choice key or
    *  the numeric/expression text, exactly as it would come from the card. */
   | { t: "answer_submitted"; given: string }
-  /** The tutor is honoring an explicit "just tell me" — only ever valid once
-   *  a genuine attempt already exists on the open question (lib/lesson.ts).
-   *  Bare marker; ChatCore reacts by forcing the same reveal state the
-   *  2-attempt cap would also produce, never by trusting the tutor's own
-   *  prose as the mechanism. */
+  /** A bare `{{reveal_answer}}`. Since FR-3112 the tutor is no longer told
+   *  to emit it and ChatCore no longer reacts to it — the card opens on the
+   *  student's second wrong attempt only. It is still PARSED, so a model that
+   *  emits it anyway never shows the student raw protocol text
+   *  (`message-blocks.tsx` renders nothing for it). */
   | { t: "reveal_answer" }
   /** {{show_passage:t:ara1-1:001}} — the tutor brings a SEALED text passage
    *  into focus BY ID. The app resolves the bytes from the verified store;
@@ -85,11 +85,6 @@ const citeKind = (k: string): CiteKind => (k === "term?" ? "term" : (k as CiteKi
 /** True once the (complete, non-streaming) text carries {{finish_lesson}}. */
 export function hasFinishDirective(text: string): boolean {
   return text.includes("{{finish_lesson}}");
-}
-
-/** True once the (complete, non-streaming) text carries {{reveal_answer}}. */
-export function hasRevealAnswerDirective(text: string): boolean {
-  return text.includes(REVEAL_ANSWER);
 }
 
 /** The extracted answer of a complete {{answer_submitted:<given>}}, or null

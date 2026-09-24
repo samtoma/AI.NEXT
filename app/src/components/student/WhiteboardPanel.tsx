@@ -33,6 +33,7 @@ import type {
   SpineQuestion,
 } from "@/lib/types";
 import type { LessonPassage } from "@/lib/lesson-content";
+import { cardRevealUnlocked } from "@/lib/socratic-probing";
 import { SealedPassageCard } from "@/components/student/SealedPassageCard";
 import { Visual } from "@/components/viz/Visual";
 import { VizPlaybackContext } from "@/components/viz/core";
@@ -203,9 +204,9 @@ export function WhiteboardPanel({
   probing?: boolean;
   pendingLoId?: string | null;
   pendingAttemptId?: number | null;
-  /** How many wrong attempts the pending cycle has taken — 2+ lifts the
-   *  withholding (ChatQuestionCard's `revealAnswer`), same threshold an
-   *  explicit {{reveal_answer}} forces early. */
+  /** How many wrong attempts the pending cycle has taken — once
+   *  `cardRevealUnlocked` says so (the second), the withholding lifts
+   *  (ChatQuestionCard's `revealAnswer`). Nothing else lifts it (FR-3112). */
   pendingWrongCount?: number | null;
   /** A chat-typed answer ChatCore graded itself, mirrored down so THIS
    *  board-hosted card syncs its display too when it's the open question. */
@@ -393,7 +394,7 @@ export function WhiteboardPanel({
                   onResult={onAttempt}
                   probing={probing}
                   revealAnswer={
-                    pendingLoId === focusedQ.loId && (pendingWrongCount ?? 0) >= 2
+                    pendingLoId === focusedQ.loId && cardRevealUnlocked(pendingWrongCount)
                   }
                   retryOfAttemptId={
                     pendingLoId === focusedQ.loId
