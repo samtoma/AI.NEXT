@@ -193,3 +193,83 @@ export function summariseThresholds(
 export function anyThresholdReached(rows: readonly SurfaceThresholdSummary[]): boolean {
   return rows.some((r) => r.reached > 0);
 }
+
+/* ===================================================== photo uploads */
+
+/**
+ * Uploads per student in 24 hours — **observed, not enforced** (ADR-0023,
+ * FR-3407, FR-3408).
+ *
+ * Until v0.9.0 this was `DAILY_UPLOAD_CAP` in `lib/upload-contract.ts`, and
+ * `POST /api/uploads` answered 429 to the upload that would have been the
+ * eleventh. It came from T047 (spec 001's research: image tokens cost
+ * materially more than text, and an unbounded upload path was the one place
+ * the comparison build could quietly outspend the baseline). Samuel,
+ * 2026-09-24: "remove the limit of the photo uploads for now as well, and add
+ * the monitoring and cost if any in the admin console". So nothing refuses an
+ * upload for count any more; size (10 MB) and type (JPEG, PNG, PDF) still
+ * refuse, because they are not counts.
+ *
+ * **"A day" is the old count's, unchanged: the 24 hours before each upload,
+ * rolling, not a calendar day, so no timezone enters it.** The retired
+ * `uploadsToday` counted `uploads.created_at > now() - interval '1 day'` at
+ * the moment of the request; `lib/upload-threshold-queries.ts` reproduces
+ * that window for every upload. A student-day is listed under the UTC date the
+ * upload landed on (the console's convention, `stamp`), which is only a label:
+ * the count behind it is still the rolling 24 hours.
+ *
+ * "Reached" and "past" mean what they mean for turns: the tenth upload in 24
+ * hours reached it (the old rule refused the next one), an eleventh went past
+ * it. Refused uploads were never stored, so history before v0.9.0 can show
+ * "reached" and never "past".
+ */
+export const DAILY_UPLOAD_THRESHOLD = 10;
+
+/** Where a student's count of uploads in 24 hours stands against the threshold. */
+export function uploadThresholdStatus(inTwentyFourHours: number): ThresholdStatus {
+  if (!Number.isFinite(inTwentyFourHours) || inTwentyFourHours < DAILY_UPLOAD_THRESHOLD) {
+    return "below";
+  }
+  return inTwentyFourHours > DAILY_UPLOAD_THRESHOLD ? "past" : "reached";
+}
+
+/** "Reached 10 uploads", "Past 10 uploads · 13", or null below it. */
+export function uploadChipLabel(inTwentyFourHours: number): string | null {
+  const status = uploadThresholdStatus(inTwentyFourHours);
+  if (status === "below") return null;
+  const t = `${DAILY_UPLOAD_THRESHOLD} uploads`;
+  return status === "reached" ? `Reached ${t}` : `Past ${t} · ${inTwentyFourHours}`;
+}
+
+/** Student-days whose highest 24-hour upload count was exactly `most`. */
+export type UploadDayBucket = { most: number; studentDays: number };
+
+export type UploadThresholdSummary = {
+  threshold: number;
+  /** Student-days with at least one upload. */
+  studentDays: number;
+  reached: number;
+  past: number;
+  /** The most uploads one student made in any 24 hours; 0 when none. */
+  highest: number;
+};
+
+/** Fold the histogram with `uploadThresholdStatus` — the one rule, as for turns. */
+export function summariseUploadDays(buckets: readonly UploadDayBucket[]): UploadThresholdSummary {
+  const out: UploadThresholdSummary = {
+    threshold: DAILY_UPLOAD_THRESHOLD,
+    studentDays: 0,
+    reached: 0,
+    past: 0,
+    highest: 0,
+  };
+  for (const b of buckets) {
+    if (b.studentDays <= 0) continue;
+    out.studentDays += b.studentDays;
+    const status = uploadThresholdStatus(b.most);
+    if (status !== "below") out.reached += b.studentDays;
+    if (status === "past") out.past += b.studentDays;
+    out.highest = Math.max(out.highest, b.most);
+  }
+  return out;
+}

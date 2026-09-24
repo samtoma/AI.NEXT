@@ -8,8 +8,8 @@
  * ---------------------------------------------------------------------------
  * `lib/uploads.ts` owns the server half — storage, the parse, the cost meter —
  * and it imports `node:child_process`, `node:fs/promises` and the database. No
- * browser bundle can ever contain it. So the three numbers it enforced (10 MB,
- * ten a day, three media types) were unreachable from the client, and the only
+ * browser bundle can ever contain it. So the numbers it enforced (10 MB and
+ * three media types) were unreachable from the client, and the only
  * way for a composer to refuse a 40 MB scan BEFORE sending it was to write
  * "10 MB" down a second time in a component.
  *
@@ -27,9 +27,13 @@
  * Everything in the "verdicts" section below runs in a browser and is therefore
  * advisory: it exists to save a student a doomed upload and to say something
  * useful instead of a status code. `POST /api/uploads` re-checks every one of
- * them and is the only enforcement that counts — and the cap, which no client
- * can see, is checked there inside the same unit of work that writes the row.
- * Nothing here may ever become the reason a limit holds.
+ * them and is the only enforcement that counts. Nothing here may ever become
+ * the reason a limit holds.
+ *
+ * There is no count limit any more (ADR-0023, FR-3407). The daily cap of ten
+ * and its "that's my limit" sentence were removed in v0.9.0; the number
+ * survives only as a threshold the console watches
+ * (`DAILY_UPLOAD_THRESHOLD`, `lib/turn-thresholds.ts`).
  *
  * ---------------------------------------------------------------------------
  * WHY THE COPY IS HERE AND NOT IN THE COMPONENT
@@ -54,13 +58,6 @@
 
 /** 10 MB. Enforced by `POST /api/uploads`; previewed here. */
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
-
-/**
- * Ten a day, per student (Principle VI — image tokens are the one place this
- * build could quietly outspend the baseline). The client never counts: it
- * learns it has run out from a 429 and says so.
- */
-export const DAILY_UPLOAD_CAP = 10;
 
 /**
  * A photograph of a worksheet, a screenshot, or a PDF handout. Deliberately
@@ -178,16 +175,18 @@ export function refuseUpload(file: {
 export type UploadFailure =
   | "type"
   | "size"
-  | "cap"
   | "unverified"
   | "offline"
   | "server";
 
-/** HTTP status → the failure the student is told about. */
+/**
+ * HTTP status → the failure the student is told about. A 429 is no longer
+ * something the route sends (no count refuses an upload, ADR-0023); if one
+ * ever arrives it is an unexpected status like any other.
+ */
 export function uploadFailureOf(status: number): UploadFailure {
   if (status === 415) return "type";
   if (status === 413) return "size";
-  if (status === 429) return "cap";
   if (status === 403 || status === 401) return "unverified";
   return "server";
 }
@@ -259,10 +258,6 @@ export function uploadFailureMessage(
     return uploadRefusalMessage(failure, bytes, lang);
   if (lang === "ar") {
     switch (failure) {
-      case "cap":
-        return `بعتّ ${arDigits(
-          String(DAILY_UPLOAD_CAP)
-        )} حاجات النهارده — ده حدّي. نكمّل بالكتابة دلوقتي، وبكره تبعت تاني.`;
       case "unverified":
         return "أكّد إيميلك الأول وبعدها تقدر تبعتلي شغلك.";
       case "offline":
@@ -272,8 +267,6 @@ export function uploadFailureMessage(
     }
   }
   switch (failure) {
-    case "cap":
-      return `That's ${DAILY_UPLOAD_CAP} uploads today — my limit. Let's keep going by typing, and send me more tomorrow.`;
     case "unverified":
       return "Confirm your email first, then you can send me your work.";
     case "offline":

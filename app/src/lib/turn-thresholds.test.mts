@@ -9,6 +9,7 @@
  * @covers FR-3402
  * @covers FR-3403
  * @covers FR-3405
+ * @covers FR-3408
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -16,6 +17,7 @@ import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import {
+  DAILY_UPLOAD_THRESHOLD,
   THRESHOLD_SURFACES,
   TURN_THRESHOLDS,
   anyThresholdReached,
@@ -24,6 +26,9 @@ import {
   thresholdChipLabel,
   thresholdOf,
   thresholdStatus,
+  summariseUploadDays,
+  uploadChipLabel,
+  uploadThresholdStatus,
 } from "./turn-thresholds.ts";
 
 test("the thresholds are the old caps' numbers: 2 per question, 18 per lesson, 5 per revision", () => {
@@ -180,4 +185,41 @@ test("nothing reached means no attention state", () => {
 test("the module is pure: the lesson surface imports it, so it may import nothing", () => {
   const src = readFileSync(fileURLToPath(new URL("./turn-thresholds.ts", import.meta.url)), "utf8");
   assert.doesNotMatch(src, /^\s*import\s/m, "turn-thresholds.ts must stay import-free");
+});
+
+/* ------------------------------------------------------------- uploads */
+
+test("the upload threshold is the old daily cap's number: ten", () => {
+  assert.equal(DAILY_UPLOAD_THRESHOLD, 10);
+});
+
+test("uploads: reached at the tenth in 24 hours, past at the eleventh", () => {
+  assert.equal(uploadThresholdStatus(0), "below");
+  assert.equal(uploadThresholdStatus(9), "below");
+  assert.equal(uploadThresholdStatus(10), "reached");
+  assert.equal(uploadThresholdStatus(11), "past");
+  assert.equal(uploadThresholdStatus(Number.NaN), "below");
+  assert.equal(uploadChipLabel(9), null);
+  assert.equal(uploadChipLabel(10), "Reached 10 uploads");
+  assert.equal(uploadChipLabel(13), "Past 10 uploads · 13");
+});
+
+test("student-days fold with the same rule, and an empty period is all zeros", () => {
+  assert.deepEqual(summariseUploadDays([]), {
+    threshold: 10,
+    studentDays: 0,
+    reached: 0,
+    past: 0,
+    highest: 0,
+  });
+  assert.deepEqual(
+    summariseUploadDays([
+      { most: 1, studentDays: 6 },
+      { most: 4, studentDays: 2 },
+      { most: 10, studentDays: 2 },
+      { most: 12, studentDays: 1 },
+      { most: 3, studentDays: 0 },
+    ]),
+    { threshold: 10, studentDays: 11, reached: 3, past: 1, highest: 12 }
+  );
 });
