@@ -1,7 +1,7 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`feat/probing-toggle`, v0.7.0 work, not released; `main` is `v0.6.0`; constitution v3.2.0)
+> Last updated: 2026-09-24 (`feat/probing-toggle`, v0.7.0 work + its fix pass, not released; `main` is `v0.6.1`; constitution v3.2.0)
 
 ## 🎛️ v0.7.0 in progress — the teaching switch (2026-09-24, `feat/probing-toggle`, NOT merged)
 
@@ -13,19 +13,25 @@ deployed.
 |---|---|
 | The switch: **Off** / **Test accounts only** / **Everyone** (locked until #53) | console `/teaching`; `POST /api/console/teaching` (`teaching-controls` only) |
 | The rules, pure and truth-tabled | `app/src/lib/socratic-probing.ts` (`PROBING_EVERYONE_UNLOCKED = false`) |
-| Decided once per lesson, stored with the release | `sessions.probing`, `sessions.release_tag` (migration 030), `app/src/lib/sessions.ts` |
-| Test-account marks | Student 360 "Test account" panel; `student_testers` (RLS; the student surface cannot write it) |
-| A fifth operator role, `teaching-controls` | migration 014 (vocabulary), 029 (granted once, never re-granted) |
+| **On at the next sitting, Off at the next message** (Samuel's option B): stored per sitting with the release, narrowed per request | `sessions.probing`, `sessions.release_tag` (migration 030), `app/src/lib/sessions.ts` |
+| Test-account marks — need `student-data` AND `teaching-controls`; a removed mark stays removed | Student 360 "Test account" panel; `student_testers` (RLS; the student surface cannot write it; a trigger closes a mark once) |
+| A fifth operator role, `teaching-controls` | migration 014 (vocabulary, CHECK rebuilt only when it lacks a role — v0.6.1's guard), 029 (granted once to active `content-review` holders; never re-granted, not even through `rollback/029`) |
 | Visible | console header (release + probing on every page), session list / timeline / replay chips |
 
-- **Off is v0.6.0, byte for byte** — all 24 learn/review prompts compared whole to a pre-change
-  capture. **Maths learn mode only.** A switch flipped mid-lesson reaches the next lesson.
+- **With probing Off the tutor's instructions are byte-identical to v0.6.0** — all 24 learn/review
+  prompts against a pre-change golden, and the reviews' 438 captured model inputs; the cards and
+  the answer record take v0.6.0's code paths. Not claimed for the whole product: the tutor stream
+  gains a first frame and session rows gain two columns. **Maths learn mode only.** Off (or
+  un-marking) reaches a student's next message; On their next sitting — proved live on a scratch copy.
+- **Rolling back is written down** (`deploy/DEPLOY-MVP1.md` → "Rolling back"): switch Off first;
+  revert-and-deploy is safe from v0.6.1 on; **never redeploy v0.6.0 after v0.7.0**. CI's new
+  `migrations` job proves fresh ×3, upgrade from the previous release and rollback onto it.
 - `RELEASE_TAG` now reads the deploy's tag (fallback `v<version>`); TAKEOVER D4 closed.
 - **Nobody has seen it signed in.** Every check is unit tests, the real session/console functions
   against a scratch database, migrations ×3, and `rls-proof.sql` §6. The Teaching page, the header,
   the Test account panel and a probing lesson all need a founder to walk them.
-- **Before Everyone can be unlocked:** #53 closed, and the "Off is not instant for a lesson in
-  progress" consequence in ADR-0021 re-argued.
+- **Before Everyone can be unlocked:** #53 closed. (The "Off is not instant" objection is gone —
+  option B made Off reach the next message.)
 - **Also on this branch, as a separate commit:** requirements for what v0.6.0 shipped without any —
   **FR-3201…FR-3214** in spec 002 (§"Shipped in v0.6.0 without a requirement"), traced in its
   matrix §7f: lesson progression (FR-3201…3207), the `/spine` skill map (3208…3210), review status

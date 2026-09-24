@@ -1,6 +1,6 @@
-# ADR-0021 — Socratic probing becomes a console switch, decided once per lesson, for test accounts first
+# ADR-0021 — Socratic probing becomes a console switch — On at the next sitting, Off at the next message — for test accounts first
 
-**Status**: Accepted — Samuel, 2026-09-24
+**Status**: Accepted — Samuel, 2026-09-24. **Amended the same day** (fix pass): when a change reaches a student — Samuel chose option B, below; the tester mark needs two roles; the role grant and the rollback path hardened.
 **Amends**: the compile-time `SOCRATIC_PROBING_ENABLED = false` that v0.6.0 merged Tamer's prototype behind (`app/src/lib/socratic-probing.ts`, [CHANGELOG v0.6.0](../../CHANGELOG.md))
 **Affects**: `db/migrations/014-operators-and-roles.sql` (five-role vocabulary) · `db/migrations/029-teaching-controls-role.sql` · `db/migrations/030-teaching-toggle-and-testers.sql` and both rollbacks · `app/src/lib/socratic-probing.ts` (the rules) · `app/src/lib/sessions.ts` (the snapshot) · `app/src/lib/teaching-queries.ts` · `app/src/lib/env.ts` (`RELEASE_TAG`) · `app/src/app/api/ask/route.ts`, `app/src/app/api/attempts/route.ts` · `app/src/components/chat/ChatCore.tsx`, `ChatQuestionCard.tsx`, `components/student/LessonSession.tsx`, `WhiteboardPanel.tsx` · `app/src/app/(console)/teaching/`, `app/src/app/api/console/teaching/`, `app/src/app/api/console/students/[id]/tester/` · the Student 360 and the three session pages · `FR-3101`…`FR-3111` in [`specs/002-identity-and-admin-console/spec.md`](../../specs/002-identity-and-admin-console/spec.md)
 **Related**: [ADR-0014](./0014-admin-console-second-build-target.md) (roles, and what a safety control is) · [ADR-0015](./0015-interaction-timeline-and-replay.md) (the learning session this snapshot is stored on) · [ADR-0018](./0018-course-availability.md) (the per-student override pattern the tester mark copies) · [ADR-0012](./0012-per-student-isolation-rls.md) (why the mark is a table the student surface cannot write) · issue [#53](https://github.com/samtoma/AI.NEXT/issues/53) (what probing still has to fix)
@@ -45,9 +45,22 @@ per lesson — what each student got.
    answer under the other. Rejected.
 2. **Per student** — cached on the account. The same mid-lesson flip, one step
    removed. Rejected.
-3. **Per lesson, stored — chosen.** Resolved once when the learning session
-   opens, stored on the session row with the release, and read back by
-   everything that behaves differently under probing.
+3. **Per lesson, stored — chosen first.** Resolved once when the learning
+   session opens, stored on the session row with the release, and read back
+   by everything that behaves differently under probing. The review of the
+   first build found the cost (F2/F3): Off was not an instant stop for a
+   sitting in progress, a reused session carried its answer across lessons,
+   and the snapshot was per sitting, not per lesson.
+4. **Stored per sitting, narrowed per request — chosen (Samuel, 2026-09-24,
+   option B).** The sitting's snapshot is still resolved and stored when it
+   opens, and never rewritten — it is the record of what the sitting started
+   with. Each REQUEST then gets that snapshot AND what the switch resolves to
+   now for that student (the position and her tester mark). Narrowing only:
+   **Off — or removing a mark — reaches the student's next message**, even
+   mid-lesson; **On reaches their next sitting**, because a sitting that
+   opened off is never turned on. The alternative Samuel weighed (A: keep
+   per-sitting and reword the requirement) left Off without a way to stop a
+   sitting in progress.
 
 **Where the tester mark lives**
 
@@ -59,9 +72,9 @@ per lesson — what each student got.
 
 ## Decision
 
-**Socratic probing is a console switch with three positions, decided once per
-lesson by the server, and — until #53 closes — it can reach test accounts and
-nobody else.**
+**Socratic probing is a console switch with three positions, decided by the
+server — On at a student's next sitting, Off at their next message — and,
+until #53 closes, it can reach test accounts and nobody else.**
 
 - **Three positions: Off, Test accounts only, Everyone.** No row means Off.
 - **Everyone is locked** behind one code constant, `PROBING_EVERYONE_UNLOCKED =
@@ -98,19 +111,33 @@ nobody else.**
   switch's note is readable by every role, so the field says "Don't name a
   student". A failed read of the switch prints "Probing: unknown" in the
   console header and on the Student 360 instead of a 500.
-- **Per-lesson snapshot.** When a learning session is created the server
-  resolves `off → false; testers → tester AND maths AND lesson_learn;
-  everyone → maths AND lesson_learn` and stores the answer on `sessions.probing`
-  with `sessions.release_tag`. A trigger refuses any later change to either. A
-  reused session keeps what it opened with; a lesson idle for 30 minutes ends
-  (ADR-0015) and the next one resolves again.
-- **The server is the authority.** `/api/ask` builds the prompt from the stored
-  snapshot and tells the client in the stream's first frame; `/api/attempts`
-  records a retry link and the `probe` stance only when the session probes, and
-  returns the answer; `ChatCore` starts off and adopts what the server declares,
-  and the whiteboard mirrors ChatCore. No request carries a probing flag.
-- **Off is v0.6.0, byte for byte.** All 24 learn/review prompts (3 subjects × 4
-  address forms) are compared whole to a capture taken before the change.
+- **The sitting's snapshot, narrowed per request (option B).** When a
+  learning session is created the server resolves `off → false; testers →
+  tester AND maths AND lesson_learn; everyone → maths AND lesson_learn` and
+  stores the answer on `sessions.probing` with `sessions.release_tag`. A
+  trigger refuses any later change to either: that row is the record of how
+  the sitting OPENED. Every request in a sitting stored ON then re-reads the
+  switch and the student's mark (one statement, fail closed) and probes only
+  if they still allow it; a sitting stored off reads nothing and never turns
+  on. So Off and un-marking reach the next message; On reaches the next
+  sitting (a sitting ends after 30 minutes idle, ADR-0015). The course half —
+  maths only — is applied to the lesson or question actually in front of the
+  server.
+- **The server is the authority.** `/api/ask` builds the prompt from the
+  request's answer and tells the client in the stream's first frame;
+  `/api/attempts` records a retry link and the `probe` stance only when the
+  request probes, and returns the answer; `ChatCore` starts off and adopts
+  what the server declares on every response — and when that turns false
+  mid-sitting it drops the pending probe and every held-back card shows its
+  answer and worked solution; the whiteboard mirrors ChatCore. No request
+  carries a probing flag.
+- **Off leaves the tutor's instructions byte-identical.** All 24 learn/review
+  prompts (3 subjects × 4 address forms) are compared whole to a capture
+  taken before the change, and the reviews compared all 438 captured model
+  inputs with probing Off against v0.6.0: identical. The card and the answer
+  record take v0.6.0's code paths, selected by the same boolean. That is the
+  claim, and no wider one: the stream gains a first frame, and session rows
+  gain two columns.
 - **Recorded and visible.** Every change to the switch: from, to, who, when
   (append-only). Every mark: who, when, and who removed it (removal stamps, never
   deletes). Every session: its release and its probing answer, a structured
@@ -120,12 +147,19 @@ nobody else.**
 
 ## Consequences
 
-**A switch flipped mid-lesson reaches the next lesson, not this one.** That is
-the point, and it is also the cost: Off is not an instant kill for a lesson in
-progress. Because Everyone is locked, the lessons that can be probing at any
-moment are test accounts' — the people who asked for it. If probing is ever on
-for everyone, "stop now" means Off plus waiting for open lessons to end (at most
-30 minutes idle), and that should be re-argued before Everyone is unlocked.
+**Off is a stop on the next message; On waits for the next sitting.** Off (or
+removing a mark) is the kill switch it should be — no deploy, no waiting for
+sittings to end — and a question card that was holding back its answer shows
+it on the student's next message. On never changes a sitting under way, so a
+student is never switched into probing between two messages. The price is one
+extra read per request **in a sitting that opened with probing on** — today
+only test accounts' — and nothing for anybody else.
+
+**A sitting that opened on, switched Off and then On again, probes again.** The
+rule is "stored AND now", and both are true again. Deliberate: the student's
+sitting started under probing, so resuming it is not switching her INTO it.
+If that ever matters, the fix is to close open sittings on Off, not to make
+the rule stateful.
 
 **A session can outlive the lesson it opened on.** ADR-0015 reuses an open
 session of the same kind rather than closing it when the lesson changes, so a
@@ -144,9 +178,10 @@ rollback onto it and forward again). The three levers — switch Off, revert and
 deploy, and the manual path if v0.6.0 itself is ever unavoidable — are in
 [`deploy/DEPLOY-MVP1.md` → "Rolling back"](../../deploy/DEPLOY-MVP1.md#rolling-back).
 
-**The Off path adds one read per session open** (the switch and the student's
-own mark, in one statement) and nothing per turn. With the switch Off the
-lesson's course is never looked up.
+**The Off path adds one read per learn-lesson session open** (the switch and
+the student's own mark, in one statement) and nothing per turn; review,
+practice, chat and upload sessions open with no extra query at all. With the
+switch Off the lesson's course is never looked up.
 
 **What would trigger revisiting.** #53 closing — the constant flips and the
 "stop now" argument above has to be made. A cohort large enough to power an A/B

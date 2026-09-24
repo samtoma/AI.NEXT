@@ -1,11 +1,12 @@
 -- ===========================================================================
--- 030 — the runtime teaching toggle, tester accounts, and the per-lesson
+-- 030 — the runtime teaching toggle, tester accounts, and the per-sitting
 --       snapshot on every learning session
 --
 -- ADR-0021 (Samuel, 2026-09-24). v0.6.0 merged Socratic probing behind a
 -- compile-time constant, switched off. This file is the database half of
 -- replacing that constant with a decision an operator makes in the console,
--- recorded, and applied ONE LESSON AT A TIME.
+-- recorded when each sitting opens — and narrowed on every request after
+-- (option B: Off reaches the next message, On the next sitting).
 --
 -- Additive and idempotent. Safe to re-run; `deploy/apply-migrations.sh` does,
 -- on every deploy, in filename order, while the previous app is still serving.
@@ -50,17 +51,20 @@
 --      nothing else, the shape `operator_reads` has for the same reason (an
 --      audit the audited party can edit is decoration).
 --
---   3. `sessions.probing` and `sessions.release_tag` — the PER-LESSON
---      SNAPSHOT. Whether probing applies is resolved once, server-side, when
+--   3. `sessions.probing` and `sessions.release_tag` — the SITTING'S
+--      SNAPSHOT. Whether probing was on is resolved once, server-side, when
 --      a learning session is created (`app/src/lib/sessions.ts`), and stored
---      on that row with the release that served it. Both nullable: every row
---      written before v0.7.0 is NULL, which reads as "not recorded" in the
---      console and as OFF everywhere the product decides anything.
+--      on that row with the release that served it: the record of how the
+--      sitting OPENED. Each later request narrows it by the switch and the
+--      student's mark as they stand then (never widens it) — that is code,
+--      not a column. Both nullable: every row written before v0.7.0 is NULL,
+--      which reads as "not recorded" in the console and as OFF everywhere the
+--      product decides anything.
 --
 --   4. A trigger that refuses any UPDATE changing either snapshot column —
---      for every role, the owner included. "It never flips mid-lesson" is
---      then a property of the table rather than of the code that happens to
---      write it today.
+--      for every role, the owner included. "The record of how a sitting
+--      opened is never rewritten" is then a property of the table rather
+--      than of the code that happens to write it today.
 --
 -- ---------------------------------------------------------------------------
 -- GRANTS AND RLS — why the three tables are not treated alike
@@ -188,7 +192,7 @@ END
 $changes$;
 
 -- ---------------------------------------------------------------------------
--- 3. The per-lesson snapshot on `sessions` — added only when missing
+-- 3. The per-sitting snapshot on `sessions` — added only when missing
 -- ---------------------------------------------------------------------------
 
 DO $snapshot$
@@ -212,9 +216,9 @@ BEGIN
        (SELECT attnum FROM pg_attribute
          WHERE attrelid = 'public.sessions'::regclass AND attname = 'probing'))
      IS DISTINCT FROM
-       'ADR-0021: whether Socratic probing applies to this learning session, resolved once when it opened and never changed. NULL = opened before v0.7.0 (read as off).' THEN
+       'ADR-0021: whether Socratic probing was on when this learning session opened, resolved once and never changed; each request narrows it by the switch and the tester mark as they stand then (option B). NULL = opened before v0.7.0 (read as off).' THEN
     COMMENT ON COLUMN sessions.probing IS
-      'ADR-0021: whether Socratic probing applies to this learning session, resolved once when it opened and never changed. NULL = opened before v0.7.0 (read as off).';
+      'ADR-0021: whether Socratic probing was on when this learning session opened, resolved once and never changed; each request narrows it by the switch and the tester mark as they stand then (option B). NULL = opened before v0.7.0 (read as off).';
   END IF;
   IF col_description('public.sessions'::regclass,
        (SELECT attnum FROM pg_attribute

@@ -104,7 +104,7 @@ function renderAllOff(): Record<string, string> {
         gender,
         studentName: NAMES[String(gender)]!,
       } as LessonData;
-      // The second argument is the per-lesson snapshot (ADR-0021). Before the
+      // The second argument is the request's probing answer (ADR-0021). Before the
       // toggle existed `learnPrompt` took one argument and ignored this — so
       // the same call captured the golden and now checks against it.
       out[`${subject}/${gender}/learn`] = learnPrompt(data, false);

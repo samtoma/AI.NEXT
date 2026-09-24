@@ -378,7 +378,7 @@ console — role checks in the application, the database grants the read), **`ai
 | `student_testers` *(030, ADR-0021)* | **S only**, where `student_id = app.student_id` | S/I all; U only `unmarked_at`, `unmarked_by`; **no D** | the test-account mark; the student surface reads its own (the probing resolver needs it) and can never set it — the reason it is not a `students` column (FR-3107). A trigger (`student_testers_close_once`, every role) lets the two "removed" columns go from NULL to a value once and nothing else change, so a removed mark is never reopened or rewritten |
 | `teaching_settings` *(030)* | S | S/I/U | **no policies** — the teaching switch is product configuration, like `course_availability`; no row means off |
 | `teaching_setting_changes` *(030)* | **no grant** | **S + I only** | the switch's history, append-only by privilege (FR-3110) |
-| `sessions.probing`, `sessions.release_tag` *(030)* | written at INSERT only | S | the per-lesson snapshot; a trigger refuses any UPDATE of either, for every role (FR-3105) |
+| `sessions.probing`, `sessions.release_tag` *(030)* | written at INSERT only | S | the sitting's snapshot — how it OPENED; each request narrows it in code (FR-3105, option B); a trigger refuses any UPDATE of either, for every role |
 
 **The enumerated cross-student reads** (FR-2108) are exactly the `ainext_operator` "S all" rows above
 plus `cost_daily`; a read not on this list fails closed, because `ainext_app` has no policy that

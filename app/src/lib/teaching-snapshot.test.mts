@@ -1,5 +1,6 @@
 /**
- * The per-lesson snapshot (ADR-0021), exercised through the REAL session code.
+ * The sitting's snapshot and its per-request narrowing (ADR-0021, option B),
+ * exercised through the REAL session code.
  *
  * `socratic-probing.test.mts` proves the rule. This file proves the WIRING:
  * that `currentSession` resolves the rule exactly once, when it opens a
@@ -11,8 +12,8 @@
  *
  * **The fake client THROWS on any query it was not expecting**, like
  * `catalog-gate.test.mts`'s. That is how "the course is never looked up with
- * the switch Off" and "a reused session never re-reads the switch" are
- * assertions rather than hopes: the query that should not run would fail the
+ * the switch Off" and "a sitting that opened off never re-reads the switch"
+ * are assertions rather than hopes: the query that should not run would fail the
  * test by existing.
  *
  * **Nothing here can reach a database.** `pool.connect` is replaced before any
@@ -217,45 +218,112 @@ test("a session that is not a learn-mode lesson opens with no probing query and 
   }
 });
 
-test("a REUSED session keeps the snapshot it opened with — the switch is not read again", async () => {
+test("On mid-sitting leaves the current sitting off — and the switch is not even read", async () => {
+  // ADR-0021, option B: a sitting that opened OFF is never turned on. The
+  // switch has since been turned on for this tester; the sitting stays off,
+  // with no extra query, until the next sitting opens.
   const now = new Date();
-  // Opened OFF; the switch has since been turned on for this tester.
-  let f = fakeClient({
+  const f = fakeClient({
     open: { id: 9, kind: "lesson_learn", last_seen_at: now, probing: false },
     setting: "testers",
     isTester: true,
   });
-  let r = await quietly(() => currentSession(7, "lesson_learn", { courseOf: async () => MATHS }, f.client));
+  const r = await quietly(() => currentSession(7, "lesson_learn", { courseOf: async () => MATHS }, f.client));
   assert.deepEqual(
-    { id: r.out.sessionId, opened: r.out.opened, probing: r.out.probing },
-    { id: 9, opened: false, probing: false }
+    { id: r.out.sessionId, opened: r.out.opened, probing: r.out.probing, openedProbing: r.out.openedProbing },
+    { id: 9, opened: false, probing: false, openedProbing: false }
   );
-  assert.ok(!f.log.some((q) => q.includes("teaching_settings")), "the switch was re-read mid-lesson");
+  assert.ok(!f.log.some((q) => q.includes("teaching_settings")), "an off sitting must not read the switch");
   assert.equal(f.inserts.length, 0);
-
-  // Opened ON; the switch has since been turned OFF. The lesson keeps probing.
-  f = fakeClient({
-    open: { id: 9, kind: "lesson_learn", last_seen_at: now, probing: true },
-    setting: "off",
-  });
-  r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
-  assert.equal(r.out.probing, true, "a switch flipped mid-lesson must not flip the lesson");
-
-  // A session opened before v0.7.0 has NULL, which is off.
-  f = fakeClient({ open: { id: 9, kind: "lesson_learn", last_seen_at: now, probing: null } });
-  r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
-  assert.equal(r.out.probing, false);
 });
 
-test("an attempt joining an open lesson takes the lesson's snapshot (adoptOpen)", async () => {
+test("Off mid-sitting: the NEXT request of a sitting that opened ON does not probe", async () => {
+  const now = new Date();
   const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: now, probing: true },
+    setting: "off",
+    isTester: true,
+  });
+  const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+  assert.equal(r.out.opened, false, "the same sitting, reused");
+  assert.equal(r.out.probing, false, "switching Off reaches the next message");
+  assert.equal(r.out.openedProbing, true, "the record of how it opened is untouched");
+  assert.equal(
+    f.log.filter((q) => q.includes("teaching_settings")).length,
+    1,
+    "exactly one live read of the switch and the mark"
+  );
+  assert.equal(f.inserts.length, 0, "no new session: Off does not end the sitting");
+});
+
+test("un-marking mid-sitting: the tester's NEXT request does not probe", async () => {
+  const now = new Date();
+  const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: now, probing: true },
+    setting: "testers",
+    isTester: false, // the mark was removed after the sitting opened
+  });
+  const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+  assert.equal(r.out.probing, false);
+  assert.equal(r.out.openedProbing, true);
+});
+
+test("a sitting that opened ON keeps probing while the switch and the mark still say so", async () => {
+  const now = new Date();
+  for (const setting of ["testers", "everyone"] as const) {
+    const f = fakeClient({
+      open: { id: 9, kind: "lesson_learn", last_seen_at: now, probing: true },
+      setting,
+      isTester: true,
+    });
+    const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+    assert.equal(r.out.probing, true, setting);
+    assert.equal(r.out.openedProbing, true, setting);
+  }
+});
+
+test("a failed live read in a sitting that opened ON answers off, and keeps the sitting", async () => {
+  const f = fakeClient({
+    open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: true },
+    inputsFail: true,
+  });
+  const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+  assert.deepEqual(
+    { id: r.out.sessionId, probing: r.out.probing, openedProbing: r.out.openedProbing },
+    { id: 9, probing: false, openedProbing: true }
+  );
+  assert.ok(f.log.includes("ROLLBACK TO SAVEPOINT probing_inputs"));
+});
+
+test("a session opened before v0.7.0 (NULL) is off, with no live read", async () => {
+  const f = fakeClient({ open: { id: 9, kind: "lesson_learn", last_seen_at: new Date(), probing: null } });
+  const r = await quietly(() => currentSession(7, "lesson_learn", {}, f.client));
+  assert.equal(r.out.probing, false);
+  assert.equal(r.out.openedProbing, false);
+  assert.ok(!f.log.some((q) => q.includes("teaching_settings")));
+});
+
+test("an attempt joining an open lesson gets the lesson's answer for THIS request (adoptOpen)", async () => {
+  // Opened ON, switch since turned Off: the attempt does not probe.
+  let f = fakeClient({
     open: { id: 12, kind: "lesson_learn", last_seen_at: new Date(), probing: true },
     setting: "off",
   });
-  const { out } = await quietly(() =>
+  let { out } = await quietly(() =>
     currentSessionSnapshot(7, "practice", { surface: "attempt", adoptOpen: true }, f.client)
   );
-  assert.deepEqual(out, { sessionId: 12, kind: "lesson_learn", probing: true });
+  assert.deepEqual(out, { sessionId: 12, kind: "lesson_learn", probing: false, openedProbing: true });
+
+  // Opened ON, still a tester under Test accounts only: it does.
+  f = fakeClient({
+    open: { id: 12, kind: "lesson_learn", last_seen_at: new Date(), probing: true },
+    setting: "testers",
+    isTester: true,
+  });
+  ({ out } = await quietly(() =>
+    currentSessionSnapshot(7, "practice", { surface: "attempt", adoptOpen: true }, f.client)
+  ));
+  assert.deepEqual(out, { sessionId: 12, kind: "lesson_learn", probing: true, openedProbing: true });
 });
 
 test("a failure reading the switch resolves OFF and still opens the session", async () => {
@@ -267,15 +335,29 @@ test("a failure reading the switch resolves OFF and still opens the session", as
   assert.ok(log.includes("ROLLBACK TO SAVEPOINT probing_inputs"));
 });
 
-test("losing the one-open-session race adopts the WINNER's stored snapshot", async () => {
-  const { client } = fakeClient({
+test("losing the one-open-session race adopts the WINNER's stored snapshot, narrowed like any reuse", async () => {
+  // The winner opened ON; the switch and the mark still say on → on.
+  let f = fakeClient({
+    setting: "testers",
+    isTester: true,
+    loseRaceTo: { id: 77, kind: "lesson_learn", last_seen_at: new Date(), probing: true },
+  });
+  let { out } = await quietly(() =>
+    currentSession(7, "lesson_learn", { courseOf: async () => MATHS }, f.client)
+  );
+  assert.deepEqual(
+    { id: out.sessionId, opened: out.opened, probing: out.probing, openedProbing: out.openedProbing },
+    { id: 77, opened: false, probing: true, openedProbing: true }
+  );
+  // The winner opened ON but the switch reads Off now → this request is off.
+  f = fakeClient({
     setting: "off",
     loseRaceTo: { id: 77, kind: "lesson_learn", last_seen_at: new Date(), probing: true },
   });
-  const { out } = await quietly(() => currentSession(7, "lesson_learn", {}, client));
+  ({ out } = await quietly(() => currentSession(7, "lesson_learn", {}, f.client)));
   assert.deepEqual(
-    { id: out.sessionId, opened: out.opened, probing: out.probing },
-    { id: 77, opened: false, probing: true }
+    { id: out.sessionId, probing: out.probing, openedProbing: out.openedProbing },
+    { id: 77, probing: false, openedProbing: true }
   );
 });
 
@@ -320,6 +402,25 @@ test("/api/attempts gates the retry link and the probe stance on the session's s
   assert.match(attempts, /acceptedRetryOf\(retryOfAttemptId, probing\)/);
   assert.match(attempts, /retryOf !== null \? "probe"/, "the probe stance follows the accepted link");
   assert.doesNotMatch(attempts, /body\.probing/);
+});
+
+test("a declared Off un-sticks the client: pending dropped, cards reveal (ADR-0021, option B)", () => {
+  // The rules are pure and tested in socratic-probing.test.mts; this pins
+  // that the components actually USE them, so the tested rule is the shipped one.
+  const core = code("components/chat/ChatCore.tsx");
+  assert.match(
+    core,
+    /setPendingConfirmation\(\(prev\) => pendingAfterDeclaration\(prev, declared\)\)/,
+    "adoptProbing must drop the pending state through pendingAfterDeclaration"
+  );
+  const card = code("components/chat/ChatQuestionCard.tsx");
+  assert.equal(
+    (card.match(/cardWithholdsAnswer\(probing, revealAnswer\)/g) ?? []).length,
+    2,
+    "the answer chip and the worked solution must both ask cardWithholdsAnswer"
+  );
+  assert.doesNotMatch(card, /probing && !revealAnswer/, "no second, hand-written copy of the rule");
+  assert.doesNotMatch(card, /!probing \|\| revealAnswer/);
 });
 
 test("the client never sends a probing flag; it adopts what the server declares", () => {

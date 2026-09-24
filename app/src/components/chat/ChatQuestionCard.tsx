@@ -21,6 +21,7 @@ import {
   VERDICT_INK,
   cx,
 } from "@/components/sticker";
+import { cardWithholdsAnswer } from "@/lib/socratic-probing";
 
 /**
  * Live question card pushed into the chat by a {{show_question:…}} directive.
@@ -343,7 +344,7 @@ export function ChatQuestionCard({
             {!debug &&
               !result.isCorrect &&
               q.questionType !== "widget" &&
-              (!probing || revealAnswer) && (
+              !cardWithholdsAnswer(probing, revealAnswer) && (
               <p
                 dir={lang === "ar" ? "rtl" : "ltr"}
                 className="mt-1.5 text-[0.85rem]"
@@ -378,7 +379,7 @@ export function ChatQuestionCard({
                 turn as reference-only context (ChatCore's handleAttempt).
                 In a lesson that does not probe `probing` is false and this
                 is exactly v0.6.0's reveal. */}
-            {probing && !revealAnswer && !result.isCorrect ? (
+            {cardWithholdsAnswer(probing, revealAnswer) && !result.isCorrect ? (
               <div
                 className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
               >

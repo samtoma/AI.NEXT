@@ -126,7 +126,7 @@ feature gets its own `specs/NNN-slug/` set, checked against the constitution.
 | [0018](decisions/0018-course-availability.md) | Who may see which course, decided in the console |
 | [0019](decisions/0019-serve-the-whole-maths-bank.md) | Serve the whole maths bank on the open site — generated and unreviewed items live, review status in the console only *(constitution v3.2.0, drops FR-907)* |
 | [0020](decisions/0020-mastery-gated-lesson-progression.md) | Mastery-gated lesson progression replaces the constant lesson on `/student` *(Tamer Deif; amended 2026-09-23: no backfill)* |
-| [0021](decisions/0021-runtime-teaching-toggle-and-testers.md) | Socratic probing becomes a console switch, decided once per lesson, for test accounts first — Everyone locked until #53; the `teaching-controls` role |
+| [0021](decisions/0021-runtime-teaching-toggle-and-testers.md) | Socratic probing becomes a console switch — On at the next sitting, Off at the next message — for test accounts first; Everyone locked until #53; the `teaching-controls` role |
 
 ## 3. Architecture (`docs/architecture/`)
 

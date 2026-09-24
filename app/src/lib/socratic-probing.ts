@@ -26,16 +26,23 @@
  *   everyone  — LOCKED until #53 is closed: `PROBING_EVERYONE_UNLOCKED` below.
  *
  * ---------------------------------------------------------------------------
- * DECIDED ONCE PER LESSON, BY THE SERVER
+ * ON AT A NEW SITTING, OFF ON THE NEXT MESSAGE — ALWAYS BY THE SERVER
  * ---------------------------------------------------------------------------
- * `resolveProbing` runs exactly once per learning session, when the session
- * row is created (`lib/sessions.ts`), and its answer is STORED on that row.
- * Everything downstream reads the stored answer — the prompt builder, the
- * attempt route, the client's cards — and nothing re-resolves it, so an
- * operator flipping the switch mid-lesson changes the NEXT lesson, never the
- * one a child is in. `effectiveProbing` is the one use-time check, and it can
- * only narrow: it turns a stored `true` off for a lesson that is not maths (a
- * session can outlive the lesson it opened on), never a stored `false` on.
+ * `resolveProbing` runs once per learning session, when the session row is
+ * created (`lib/sessions.ts`), and its answer is STORED on that row — the
+ * record of what the sitting opened with, which nothing rewrites.
+ *
+ * Each REQUEST then gets that snapshot NARROWED, never widened (Samuel,
+ * 2026-09-24, option B): a sitting that opened ON re-reads the switch and
+ * the student's tester mark on every request and stops probing the moment
+ * either says no (`probingCouldApply`), and `effectiveProbing` narrows it to
+ * the lesson or question actually in front of the server (maths, learn
+ * mode — a session can outlive the lesson it opened on). A sitting that
+ * opened OFF is never turned on. So: switching Off, or removing a mark,
+ * reaches the student's next message; switching On reaches their next
+ * sitting. The prompt builder, the attempt route and — through what the
+ * server declares on each response — the client's cards all follow the
+ * request's answer.
  *
  * With the answer `false` every helper here returns exactly what v0.6.0 sent
  * with its switch off — `probing-prompts.test.mts` compares all 24 tutor
@@ -132,8 +139,10 @@ export type ProbingInputs = {
 };
 
 /**
- * THE RESOLVER. Run once, when a learning session is created; its answer is
- * stored on the session row and never recomputed for that session.
+ * THE RESOLVER. Run when a learning session is created; its answer is stored
+ * on the session row and never rewritten. For a sitting stored ON, the same
+ * rule (minus the course, `probingCouldApply`) is asked again on every
+ * request, and can only turn it off.
  *
  *   off                      → false
  *   testers                  → tester AND maths AND lesson_learn
@@ -157,7 +166,10 @@ export function resolveProbing(
  *
  * Lets session creation skip the one extra read (which course is this lesson
  * in?) whenever the answer is already no — which, with the switch Off, is
- * always, so an Off build does exactly the reads it did before.
+ * always, so an Off build does exactly the reads it did before. And it is the
+ * per-request re-check for a sitting that opened ON (`lib/sessions.ts`): the
+ * switch and the mark as they are now, with the course left to
+ * `effectiveProbing`.
  */
 export function probingCouldApply(
   input: Omit<ProbingInputs, "courseId">,
@@ -167,7 +179,9 @@ export function probingCouldApply(
 }
 
 /**
- * The stored snapshot, as it applies to the lesson in front of the server now.
+ * A sitting's probing answer, as it applies to the lesson in front of the
+ * server now. `snapshot` is what `lib/sessions.ts` hands back for this
+ * request — the stored snapshot already narrowed by the switch and the mark.
  *
  * Only ever NARROWS. A learning session can be reused across two lessons of
  * the same kind (ADR-0015 closes one on completion, inactivity or a different
@@ -191,6 +205,32 @@ export function effectiveProbing(
  */
 export function probingActive(surface: string | undefined, enabled: boolean): boolean {
   return enabled && surface === PROBING_SURFACE;
+}
+
+/**
+ * Does a question card hold back the answer and the worked solution for a
+ * WRONG result? Only while probing applies and the reveal has not been
+ * unlocked (the second wrong attempt, or an explicit {{reveal_answer}}).
+ *
+ * `probing` is what the server declared on its latest response. When a
+ * sitting stops probing — the switch goes Off, or the student is unmarked,
+ * mid-sitting — the next response declares false and every card holding
+ * back re-renders with its answer on offer ("Show the answer") and its
+ * worked solution shown: nothing stays stuck behind a probe that is no
+ * longer happening. `ChatQuestionCard` asks this, for both halves.
+ */
+export function cardWithholdsAnswer(probing: boolean, revealAnswer: boolean): boolean {
+  return probing && !revealAnswer;
+}
+
+/**
+ * The confirmation-pending state after the server declares whether this
+ * sitting probes. A pending objective is a probing construct: once the server
+ * says false it is dropped, or ChatCore's "Got it" guard would go on refusing
+ * in a lesson that is no longer probing. `true` keeps it as it was.
+ */
+export function pendingAfterDeclaration<T>(pending: T | null, declared: boolean): T | null {
+  return declared ? pending : null;
 }
 
 /** The address forms the prompt reads (FR-2602) — the subset used here. */

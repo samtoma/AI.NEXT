@@ -33,10 +33,11 @@ export const metadata = { title: "Teaching — Noor Console" };
  * probing right now, and since when?" is a question every operator should be
  * able to answer when a lesson behaved oddly.
  *
- * **What the page must never let an operator believe.** That flipping the
- * switch changes a lesson in progress. It does not: each learning session
- * resolves probing once, when it opens, and keeps that answer to its end
- * (`lib/sessions.ts`). The page says so beside the control.
+ * **What the page must never let an operator believe** is the wrong timing.
+ * Off applies to each student's next message — mid-lesson too; On applies
+ * from their next sitting, because a sitting that opened with probing off is
+ * never turned on (ADR-0021, option B; `lib/sessions.ts`). The page says so
+ * beside the control, in those words.
  */
 const PATH = "/teaching";
 
@@ -118,11 +119,16 @@ export default async function TeachingConsolePage() {
           lockNote={PROBING_EVERYONE_LOCK_NOTE}
         />
 
-        <p className="mt-4 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
-          <strong>A change reaches lessons that start after it, never a lesson in progress.</strong>{" "}
-          Each lesson decides once, when it opens, whether it probes, and records that decision
-          with the release that served it — you can see both on every session in a student&rsquo;s
-          session list. A lesson left open for thirty minutes ends, and the next one decides again.
+        <p className="mt-4 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-soft">
+          <strong className="text-ink">
+            Off applies to the student&rsquo;s next message; On applies from their next sitting.
+          </strong>{" "}
+          Switching Off — or removing a student&rsquo;s test-account mark — stops probing on their
+          very next message, even in the middle of a lesson, and a question card that was holding
+          back its answer shows it. Switching On never changes a sitting already under way: it
+          reaches each student when they next start one (a sitting ends after thirty minutes
+          without a message). Every sitting records, when it opens, whether probing was on and
+          which release served it — both are on every session in a student&rsquo;s session list.
         </p>
       </Panel>
 
@@ -133,8 +139,11 @@ export default async function TeachingConsolePage() {
             {page.testerCount === 0
               ? "No student is marked as a test account in this environment."
               : `${page.testerCount} student account${page.testerCount === 1 ? " is" : "s are"} marked as test accounts in this environment.`}{" "}
-            A student is marked, or unmarked, from their own page. With probing on{" "}
-            <strong>Test accounts only</strong>, these are the only students it reaches.
+            A student is marked, or unmarked, from their own page, by an operator holding both{" "}
+            <code className="font-mono text-[11.5px]">student-data</code> and{" "}
+            <code className="font-mono text-[11.5px]">teaching-controls</code> — and only accounts
+            the team owns, never a real student. With probing on <strong>Test accounts only</strong>,
+            these are the only students it reaches.
           </>
         }
       >

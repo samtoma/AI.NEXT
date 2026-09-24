@@ -16,24 +16,33 @@ requirement names it.
   **Everyone** — which is shown but locked, with "Not ready yet — see issue #53", and the server
   refuses it. Probing only ever applies to maths lessons in learn mode; Social Studies, Arabic,
   review mode and practice never probe, because none of its wording is translated.
-- **Test accounts.** An operator marks a student as a test account from the student's page, and
-  removes the mark with one click. Who marked it, who removed it and when are kept.
+- **Test accounts.** An operator holding both the student-data and the teaching-controls roles
+  marks a student as a test account from the student's page — "only accounts the team owns, never
+  a real student" — and removes the mark with one click. Who marked it, who removed it and when are
+  kept, and a removed mark can never be reopened or rewritten.
 - **A new operator role, `teaching-controls`**, is the only one that can move the switch — split
-  out of content review so it can be narrowed later. Every operator who had a role got it once;
-  a later deploy never gives it back to someone it was removed from.
-- **Each lesson decides once, when it starts.** Whether a lesson probes is decided by the server
-  when the lesson begins and written down with it; changing the switch mid-lesson changes the next
-  lesson, never the one a student is in. The tutor, the question cards and the saved answers all
-  follow that decision — never anything the student's device sends.
-- **You can see what each lesson got.** Every lesson now records which release served it and
-  whether probing applied. The console header shows the deployed release and the switch on every
-  page; the Teaching page shows who changed it, when, and every change since; a student's session
-  list, timeline and replay show both per lesson.
+  out of content review so it can be narrowed later. Every active operator who held content review
+  got it once; a later deploy never gives it back to someone it was removed from — not even after
+  the role is withdrawn and re-added.
+- **Off applies to a student's next message; On from their next sitting.** Whether a sitting may
+  probe is decided by the server when it starts and written down with it. Switching Off — or
+  removing a student's test-account mark — stops probing on that student's very next message, even
+  mid-lesson, and a question card that was holding its answer back shows it. Switching On never
+  changes a sitting already under way. The tutor, the question cards and the saved answers all
+  follow the server's answer for each message — never anything the student's device sends.
+- **You can see what each sitting got.** Every sitting now records which release served it and
+  whether probing was on when it started. The console header shows the deployed release and the
+  switch on every page ("unknown" if it cannot be read, instead of an error page); the Teaching
+  page shows who changed it, when, and every change since, to any operator holding a role; a
+  student's session list, timeline and replay show both per sitting.
 
 ### Changed
-- **With probing Off, nothing changes for any student.** All 24 tutor prompts (three subjects ×
-  four ways of addressing a student) were compared, character for character, with a copy taken
-  before any of this was written: identical.
+- **With probing Off, the tutor's instructions are unchanged, character for character.** All 24
+  tutor prompts (three subjects × four ways of addressing a student) were compared with a copy taken
+  before any of this was written, and the reviews compared all 438 captured model inputs: identical.
+  The question cards and the saved answers take the same code paths as before. Two things did
+  change for everyone: the tutor's reply stream starts with one extra (invisible) frame saying
+  whether probing is on, and each sitting's record gains the release and the probing decision.
 - **The release name is the deployed build's.** Turns and lessons are stamped with the tag the
   deploy computes (or `v<version>` on a laptop), no longer the old `PDR1-0-v…` package name that two
   builds could share.

@@ -2,7 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
-import { Chip, SessionSnapshotChips, Td, Th, stamp } from "@/components/console/ui";
+import {
+  Chip,
+  SESSION_SNAPSHOT_NOTE,
+  SessionSnapshotChips,
+  Td,
+  Th,
+  stamp,
+} from "@/components/console/ui";
 import { consoleAccess } from "@/lib/console-auth";
 import { getStudentSessions } from "@/lib/console-queries";
 import { consoleRoute } from "@/lib/console-routes";
@@ -180,9 +187,8 @@ export default async function ConsoleSessionListPage({
           A sitting closed after thirty minutes of silence is shown as such rather than as a
           finished one: the two mean opposite things about whether the student got what they came
           for. <strong>Release and probing</strong> are what the session recorded when it opened —
-          which build served it and whether Socratic probing applied — and neither can change after
-          that. Probing applies to maths learn-mode turns only. Sessions opened before v0.7.0
-          recorded neither.
+          which build served it and whether Socratic probing was on — and neither record changes
+          after that. {SESSION_SNAPSHOT_NOTE} Sessions opened before v0.7.0 recorded neither.
         </p>
       )}
     </main>

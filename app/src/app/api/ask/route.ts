@@ -74,14 +74,18 @@ import {
  * And `input_tokens` is now UNCACHED input only (`lib/pricing.ts`), with the
  * two cache counters beside it as they always were in their own columns.
  *
- * THE LESSON'S PROBING SNAPSHOT (ADR-0021, v0.7.0). Whether this turn's
- * system prompt carries the Socratic-probing block is decided by the learning
- * session's stored `probing` column — resolved once when that session opened
- * (`lib/sessions.ts`) and read back here — and by nothing the request says.
- * The value the prompt was actually built with goes to the client as the
- * stream's first frame, `{type:"session", probing}`, so the cards follow the
- * prompt rather than a guess. An older client ignores a frame type it does not
- * know, which is every client before this one.
+ * PROBING, PER REQUEST (ADR-0021, v0.7.0). Whether this turn's system prompt
+ * carries the Socratic-probing block is decided by the server and by nothing
+ * the request says: the learning session's stored `probing` snapshot —
+ * resolved once when the sitting opened (`lib/sessions.ts`) — AND the switch
+ * and the student's tester mark as they stand at THIS request (option B:
+ * Off, or removing the mark, reaches the next message; On waits for the next
+ * sitting), AND the lesson being maths. The value the prompt was actually
+ * built with goes to the client as the stream's first frame,
+ * `{type:"session", probing}`, so the cards follow the prompt rather than a
+ * guess — including un-withholding a card when this turn says Off. An older
+ * client ignores a frame type it does not know, which is every client before
+ * this one.
  */
 
 export const dynamic = "force-dynamic";
@@ -220,7 +224,7 @@ export async function POST(req: Request) {
   let deliveredTurns: number;
   let sessionId: number | null;
   let ctx: Awaited<ReturnType<typeof buildAskContext>>;
-  /** what the system prompt was built with — the session's snapshot, effective */
+  /** what the system prompt was built with — this request's answer, effective */
   let probing: boolean;
   const cap = TURN_CAPS[surface];
   try {
@@ -253,10 +257,11 @@ export async function POST(req: Request) {
       // kind; `chatSession` rides along as the transitional correlation key.
       //
       // Opening one resolves and STORES its probing snapshot (ADR-0021); a
-      // reused one hands back the snapshot it opened with. `courseOf` is how
-      // the resolver learns the lesson's course (probing is maths only), and
-      // it is only ever asked when probing could apply — never with the
-      // switch Off.
+      // reused one that opened ON is narrowed by the switch and the mark as
+      // they are now (`session.probing`), and one that opened off stays off
+      // with no extra read. `courseOf` is how the resolver learns the
+      // lesson's course (probing is maths only), and it is only ever asked
+      // when probing could apply — never with the switch Off.
       const session = await currentSessionSnapshot(
         studentId,
         surface,
@@ -300,7 +305,9 @@ export async function POST(req: Request) {
         wrongAnswer: body.wrongAnswer,
         uploadId,
         gender: me?.gender ?? null,
-        // The stored snapshot changes the system prompt, so it keys the cache.
+        // This request's answer changes the system prompt, so it keys the
+        // cache: switching Off mid-sitting misses once and rebuilds the Off
+        // prompt, never replaying the probing one.
         probing: session.probing,
       });
       const built = await snapshotContext(key, () =>
@@ -312,7 +319,7 @@ export async function POST(req: Request) {
               studentId,
               uploadId,
               client,
-              // the session's stored snapshot — never a request field
+              // the server's answer for this request — never a request field
               session.probing
             )
           : buildAskContext(
@@ -423,8 +430,8 @@ Reply as the Tutor to the last user message. Output only the reply text (with ci
         }
       };
 
-      // First frame, before any text: the lesson's probing snapshot as this
-      // prompt applied it (ADR-0021). ChatCore adopts it; the cards and the
+      // First frame, before any text: probing as this prompt applied it
+      // (ADR-0021). ChatCore adopts it; the cards and the
       // live-event notes follow it, so the client can never probe while the
       // model was told not to, or the other way round.
       send({ type: "session", probing });

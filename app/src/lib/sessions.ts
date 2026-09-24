@@ -38,15 +38,22 @@
  * finish, or walk away" would have one answer for both. A silent wrong answer,
  * from a change three files away; hence the extra argument.
  *
- * **v0.7.0 — the per-lesson snapshot (ADR-0021).** A session row is now also
- * where two facts about the sitting are FIXED at the moment it opens: which
- * release served it (`release_tag`) and whether Socratic probing applies to it
- * (`probing`). Probing is resolved here and nowhere else — from the console's
- * switch, the student's tester mark, the lesson's course and the session's
- * kind (`resolveProbing`, pure) — and every later reader reads the stored
- * answer. So a switch flipped mid-lesson reaches the NEXT session, never the
- * running one, and migration 030's trigger refuses any later UPDATE of either
- * column. A session reused rather than opened keeps the answer it opened with.
+ * **v0.7.0 — the sitting's snapshot, and Off on the next message (ADR-0021).**
+ * A session row is now also where two facts about the sitting are FIXED at the
+ * moment it opens: which release served it (`release_tag`) and whether
+ * Socratic probing was on for it (`probing`). Probing is resolved here and
+ * nowhere else — from the console's switch, the student's tester mark, the
+ * lesson's course and the session's kind (`resolveProbing`, pure) — and
+ * migration 030's trigger refuses any later UPDATE of either column: the row
+ * is the record of what the sitting OPENED with.
+ *
+ * What a REQUEST gets is narrower (Samuel, 2026-09-24, option B): the stored
+ * snapshot AND what the switch resolves to NOW for this student — the
+ * position and her tester mark as they stand at this request. So switching
+ * Off, or removing a student's mark, reaches her next message even
+ * mid-lesson; switching On reaches her next sitting only, because a sitting
+ * that opened off is never turned on. The re-read happens only for a sitting
+ * that opened ON, so every other request does exactly what it did in v0.6.0.
  */
 
 import type { PoolClient } from "pg";
@@ -97,11 +104,21 @@ export type SessionSnapshot = {
   sessionId: number | null;
   kind: SessionKind | null;
   /**
-   * The stored per-lesson Socratic-probing answer. `false` for a session
-   * opened before v0.7.0 (NULL in the column) and for a session that could
-   * not be opened at all — fail closed, never on.
+   * Whether Socratic probing applies to THIS REQUEST (ADR-0021, option B):
+   * the sitting's stored snapshot AND the switch and the student's tester
+   * mark as they stand now. The course half of the rule is applied by the
+   * caller, which knows the lesson or question in front of it
+   * (`effectiveProbing`). `false` for a session opened before v0.7.0 (NULL in
+   * the column), for a session that could not be opened, and whenever the
+   * live read fails — fail closed, never on.
    */
   probing: boolean;
+  /**
+   * The stored snapshot — what the sitting OPENED with, as the console shows
+   * it. Never re-resolved; `probing` above can be false while this is true
+   * (switched Off, or unmarked, mid-sitting), never the other way round.
+   */
+  openedProbing: boolean;
 };
 
 async function selectOpen(db: Db, studentId: number): Promise<OpenSession | null> {
@@ -154,6 +171,40 @@ async function probingInputs(
     console.error("[sessions] could not read the probing inputs; resolving OFF:", err);
     return { setting: "off", isTester: false };
   }
+}
+
+/**
+ * Does a sitting that OPENED with probing on still probe for this request?
+ * (ADR-0021, option B — Off and un-marking reach the next message.)
+ *
+ * Called ONLY for a session whose stored snapshot is true, so it can only
+ * ever narrow: a sitting that opened off never reaches here and never turns
+ * on. It re-reads the switch and this student's mark (the same one statement
+ * and savepoint as at open, `probingInputs`) and asks the resolver the same
+ * question minus the course, which the caller narrows with the lesson or
+ * question actually in front of it. A failed read answers false.
+ */
+async function probingStillApplies(
+  db: Db,
+  studentId: number,
+  kind: SessionKind
+): Promise<boolean> {
+  if (kind !== PROBING_SURFACE) return false;
+  const { setting, isTester } = await probingInputs(db, studentId);
+  return probingCouldApply({ setting, isTester, surface: kind });
+}
+
+/**
+ * A stored snapshot as it applies to this request: false stays false without
+ * a query; true is re-checked against the switch and the mark as they are now.
+ */
+async function liveProbing(
+  db: Db,
+  studentId: number,
+  kind: SessionKind,
+  opened: boolean
+): Promise<boolean> {
+  return opened ? probingStillApplies(db, studentId, kind) : false;
 }
 
 /** Resolve the snapshot for a session about to be opened. Runs once per session. */
@@ -244,7 +295,15 @@ export async function currentSession(
   kind: SessionKind,
   opts: SessionOpts = {},
   client?: PoolClient
-): Promise<{ sessionId: number; opened: boolean; kind: SessionKind; probing: boolean }> {
+): Promise<{
+  sessionId: number;
+  opened: boolean;
+  kind: SessionKind;
+  /** for THIS request: the snapshot narrowed by the switch and mark now */
+  probing: boolean;
+  /** the stored snapshot the sitting opened with */
+  openedProbing: boolean;
+}> {
   const outcome = await scoped(studentId, client, async (db) => {
     const open = await selectOpen(db, studentId);
     const plan = planForRequest(open, kind, new Date(), opts.adoptOpen === true);
@@ -258,12 +317,15 @@ export async function currentSession(
           WHERE id = $1 AND closed_at IS NULL`,
         [plan.sessionId, opts.surface ?? null, opts.loId ?? null]
       );
-      // Reused, so the snapshot it OPENED with stands — never re-resolved.
+      // Reused: the snapshot it OPENED with stands on the row, never
+      // re-resolved — but a sitting that opened ON is narrowed by the switch
+      // and the mark as they are now (option B). One read, and only then.
       return {
         sessionId: plan.sessionId,
         opened: false,
         kind: open!.kind,
-        probing: open!.probing,
+        probing: await liveProbing(db, studentId, open!.kind, open!.probing),
+        openedProbing: open!.probing,
       };
     }
 
@@ -274,8 +336,8 @@ export async function currentSession(
     if (plan.action === "close-then-open")
       await closeSessionOn(db, plan.sessionId, plan.reason);
 
-    // The per-lesson snapshot (ADR-0021): resolved once, for the row about to
-    // be written, and stored on it.
+    // The sitting's snapshot (ADR-0021): resolved once, for the row about to
+    // be written, and stored on it — the record of how this sitting opened.
     const probing = await resolveSessionProbing(db, studentId, kind, opts);
 
     // SAVEPOINT, because the insert below is EXPECTED to fail sometimes and the
@@ -290,16 +352,25 @@ export async function currentSession(
     try {
       const sessionId = await insertSession(db, studentId, kind, opts, probing);
       await db.query("RELEASE SAVEPOINT session_insert");
-      return { sessionId, opened: true, kind, probing };
+      // Just resolved from the switch and the mark as they are now, so the
+      // request's answer and the stored one are the same.
+      return { sessionId, opened: true, kind, probing, openedProbing: probing };
     } catch (err) {
       await db.query("ROLLBACK TO SAVEPOINT session_insert");
       // Lost the race for the one-open-session index (23505). Whoever won wrote
       // a session for this student; adopt it rather than insisting on our own
-      // — and adopt ITS snapshot, which the winner resolved and stored.
+      // — and adopt ITS snapshot, which the winner resolved and stored,
+      // narrowed for this request like any reused sitting's.
       if ((err as { code?: string }).code !== "23505") throw err;
       const winner = await selectOpen(db, studentId);
       if (!winner) throw err;
-      return { sessionId: winner.id, opened: false, kind: winner.kind, probing: winner.probing };
+      return {
+        sessionId: winner.id,
+        opened: false,
+        kind: winner.kind,
+        probing: await liveProbing(db, studentId, winner.kind, winner.probing),
+        openedProbing: winner.probing,
+      };
     }
   });
 
@@ -355,12 +426,13 @@ export async function currentSessionOrNull(
 }
 
 /**
- * `currentSessionOrNull`, plus what the session says about itself: its kind
- * and its stored probing snapshot (ADR-0021). The two routes that must obey
- * the snapshot — `/api/ask` and `/api/attempts` — use this, so the session
- * they write against and the snapshot they obey are the same row by
- * construction. Fails exactly as `currentSessionOrNull` does, and a session
- * that could not be opened is never a probing one.
+ * `currentSessionOrNull`, plus what the session says about itself: its kind,
+ * its stored probing snapshot, and whether probing applies to THIS request
+ * (ADR-0021 — the snapshot narrowed by the switch and the mark now). The two
+ * routes that must obey it — `/api/ask` and `/api/attempts` — use this, so
+ * the session they write against and the answer they obey come from the same
+ * row by construction. Fails exactly as `currentSessionOrNull` does, and a
+ * session that could not be opened is never a probing one.
  */
 export async function currentSessionSnapshot(
   studentId: number,
@@ -372,11 +444,11 @@ export async function currentSessionSnapshot(
     const s = await currentSession(studentId, kind, opts, client);
     const sessionId = attributableSessionId(s.sessionId);
     return sessionId == null
-      ? { sessionId: null, kind: null, probing: false }
-      : { sessionId, kind: s.kind, probing: s.probing };
+      ? { sessionId: null, kind: null, probing: false, openedProbing: false }
+      : { sessionId, kind: s.kind, probing: s.probing, openedProbing: s.openedProbing };
   } catch (e) {
     console.error("[sessions] could not open a session; writing NULL:", e);
-    return { sessionId: null, kind: null, probing: false };
+    return { sessionId: null, kind: null, probing: false, openedProbing: false };
   }
 }
 

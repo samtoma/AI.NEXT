@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -749,6 +749,9 @@ password sign-in.
 > the tutor asks a guiding question first instead of the card showing the worked solution
 > straight away. Issue #53 lists what it still gets wrong, and is why "everyone" is locked.
 >
+> **When a change reaches a student** (Samuel, 2026-09-24, option B): Off applies to the student's
+> next message; On applies from their next sitting. FR-3105 states it.
+>
 > Implementation status is in `traceability.md` here, §7e.
 
 - **FR-3101**: The console MUST offer a switch for Socratic probing with exactly three positions —
@@ -767,12 +770,19 @@ password sign-in.
 - **FR-3104**: Probing MUST apply only to **maths lessons in learn mode**. Social Studies, Arabic,
   review mode, practice and open chat MUST never probe, whatever the switch says, because none of
   its wording exists for them.
-- **FR-3105**: Whether a lesson probes MUST be decided **once, by the server, when the lesson
-  starts**, and recorded with it. It MUST NOT change during the lesson: a change to the switch or to
-  a student's test-account mark reaches only lessons that start afterwards.
+- **FR-3105**: Whether a sitting may probe MUST be decided **by the server when the sitting
+  starts**, and recorded with it; that record MUST never be rewritten. Each request in the sitting
+  MUST then probe only if the sitting started with probing on **and** the switch and the student's
+  test-account mark, as they stand at that request, still allow it. So switching **Off** — or
+  removing a student's mark — MUST apply to the student's **next message**, even mid-lesson; and
+  switching **On** MUST apply only from the student's **next sitting**: a sitting that started with
+  probing off MUST never start probing. *(Amended 2026-09-24, Samuel's option B: was "decided once
+  when the lesson starts; a change reaches only lessons that start afterwards".)*
 - **FR-3106**: Everything that behaves differently under probing — the tutor's instructions, whether
   a question card reveals the worked solution, and how the answer is recorded — MUST follow the
-  lesson's recorded decision and **never anything the student's device sends**.
+  server's answer for that request (FR-3105) and **never anything the student's device sends**. When
+  that answer turns to Off mid-sitting, a card holding back its answer and worked solution MUST show
+  them, and the next wrong answer MUST be handled exactly as with probing Off.
 - **FR-3107**: An operator holding **both** the student-data role and the teaching-controls role
   MUST be able to mark a student account as a **test account**, and remove the mark in one action,
   from that student's page; **neither role alone may**, and the page MUST say beside the control that
@@ -793,9 +803,11 @@ password sign-in.
   least one role. Every change MUST be recorded — from, to, who, when — and listed, and nothing in
   the console may edit or remove that record; the note kept with a change MUST be marked as not
   the place to name a student, because every role reads it.
-- **FR-3111**: A student's session list, timeline and replay MUST show, for each lesson, the release
-  that served it and whether probing applied — and MUST say "not recorded" for lessons from before
-  it was recorded, rather than guessing.
+- **FR-3111**: A student's session list, timeline and replay MUST show, for each sitting, the
+  release that served it and whether probing was on when it **started** — and MUST say that probing
+  applies to maths learn-mode turns only and that a sitting which started with it on follows the
+  switch from then (FR-3105). They MUST say "not recorded" for sittings from before it was recorded,
+  rather than guessing.
 
 ### Shipped in v0.6.0 without a requirement — now written (FR-3201…) **[ADDED 2026-09-24]**
 

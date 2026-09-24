@@ -76,9 +76,10 @@ export async function POST(req: Request) {
      *  confirmation-pending (ChatCore's `pendingConfirmation`). Links the
      *  retry back to the attempt it is confirming — correct or not — so a
      *  probe cycle is reconstructible from `attempts` alone (migration 027).
-     *  **Ignored unless the learning session this attempt joins was opened
-     *  with probing on** (ADR-0021: the session's stored snapshot, never
-     *  this field's presence) — see `lib/socratic-probing.ts`. */
+     *  **Ignored unless probing applies to this attempt** (ADR-0021: the
+     *  learning session it joins opened with probing on, AND the switch and
+     *  the student's mark still say so now — never this field's presence) —
+     *  see `lib/socratic-probing.ts`. */
     retryOfAttemptId?: number;
   };
   try {
@@ -257,12 +258,13 @@ export async function POST(req: Request) {
       );
       const sessionId = session.sessionId;
 
-      // THE LESSON'S PROBING SNAPSHOT (ADR-0021). Whether this attempt can be
-      // part of a probe cycle is what the session it joined was OPENED with —
-      // stored on the row, never re-resolved, never taken from the request —
-      // narrowed to a maths question in a learn-mode session. An attempt with
-      // no lesson around it opens a `practice` session, whose snapshot is
-      // always false.
+      // PROBING, FOR THIS ATTEMPT (ADR-0021). The session it joined must have
+      // OPENED with probing on (stored on the row, never re-resolved, never
+      // taken from the request), the switch and her tester mark must still
+      // say so NOW (`session.probing`, option B: Off reaches her next
+      // message), and the question must be maths in a learn-mode session. An
+      // attempt with no lesson around it opens a `practice` session, which
+      // never probes.
       const probing = effectiveProbing(session.probing, session.kind, q.course_id);
 
       // Socratic probing (`507bb31`): the attempt this one confirms, if any.
@@ -603,11 +605,12 @@ export async function POST(req: Request) {
         ? { misconceptionId, via: isWidget ? predicate! : givenAnswer }
         : null,
       refutation: served,
-      // The session's probing snapshot as it applied to THIS attempt
-      // (ADR-0021). The client adopts it, so the card that shows this result
-      // withholds or reveals by the same rule the server just wrote the row
-      // by — including in the one case the chat has not told it yet (an
-      // answer on a restored card, before any tutor turn this sitting).
+      // Probing as it applied to THIS attempt (ADR-0021). The client adopts
+      // it, so the card that shows this result withholds or reveals by the
+      // same rule the server just wrote the row by — including in the one
+      // case the chat has not told it yet (an answer on a restored card,
+      // before any tutor turn this sitting) — and a false here, after the
+      // switch went Off mid-sitting, un-withholds any card still held back.
       probing,
     };
     return NextResponse.json(result);

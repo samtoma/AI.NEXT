@@ -1,5 +1,5 @@
 -- ===========================================================================
--- 030 DOWN — remove the teaching toggle, the tester marks and the per-lesson
+-- 030 DOWN — remove the teaching toggle, the tester marks and the per-sitting
 --            snapshot columns
 --
 -- Undoes `db/migrations/030-teaching-toggle-and-testers.sql`. Idempotent:

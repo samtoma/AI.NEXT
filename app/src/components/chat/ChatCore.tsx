@@ -31,7 +31,7 @@ import {
   type Cite,
 } from "@/lib/chat-parse";
 import { submitAttempt } from "@/lib/attempts-client";
-import { probingActive } from "@/lib/socratic-probing";
+import { pendingAfterDeclaration, probingActive } from "@/lib/socratic-probing";
 import type { CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
 import {
@@ -395,17 +395,26 @@ export function ChatCore({
     onProbingChange?.(probingSurface);
   }, [probingSurface, onProbingChange]);
   /**
-   * Take the server's word for this lesson's probing snapshot. Called from the
-   * stream and from attempt results — never from anything the client decided.
-   * Turning OFF also drops any confirmation-pending state: a pending LO is a
-   * probing construct, and one left behind would keep the "Got it" guard
-   * refusing forever in a lesson that no longer probes (a session can rotate
-   * after 30 minutes idle and re-resolve, ADR-0015).
+   * Take the server's word for whether this sitting probes, as of ITS latest
+   * response. Called from the stream and from attempt results — never from
+   * anything the client decided. It can go false mid-sitting (ADR-0021,
+   * option B: the switch went Off, or the student was unmarked — the server
+   * says so on the next message), and then:
+   *   · the confirmation-pending state is dropped (`pendingAfterDeclaration`):
+   *     a pending LO is a probing construct, and one left behind would keep
+   *     the "Got it" guard refusing in a lesson that no longer probes;
+   *   · every card re-renders with `probing` false, so one that was holding
+   *     back its answer and worked solution shows them (`cardWithholdsAnswer`);
+   *   · the next wrong answer takes v0.6.0's path — revealed on the card, the
+   *     Off prompt's re-explain lines — because `handleAttempt` and the
+   *     stream's directive handling read this same value.
+   * It can go true only at a new sitting (the server never turns on a
+   * sitting that opened off).
    */
   const adoptProbing = useCallback((declared: boolean) => {
     serverProbingRef.current = declared;
     setServerProbing(declared);
-    if (!declared) setPendingConfirmation(null);
+    setPendingConfirmation((prev) => pendingAfterDeclaration(prev, declared));
   }, []);
   // A chat-typed answer ({{answer_submitted:…}}) ChatCore graded itself —
   // handed down so the open question's OWN card syncs its display.

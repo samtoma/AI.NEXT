@@ -15,6 +15,7 @@
  * @covers FR-3101
  * @covers FR-3103
  * @covers FR-3104
+ * @covers FR-3105
  * @covers FR-3106
  */
 import { test } from "node:test";
@@ -28,9 +29,11 @@ import {
   PROBING_SURFACE,
   acceptedRetryOf,
   asProbingSetting,
+  cardWithholdsAnswer,
   effectiveProbing,
   effectiveSetting,
   learnWrongAnswerRules,
+  pendingAfterDeclaration,
   probingActive,
   probingCouldApply,
   resolveProbing,
@@ -275,4 +278,50 @@ test("on: an id beyond the safe-integer range is refused", () => {
   assert.equal(acceptedRetryOf(Number.MAX_SAFE_INTEGER, true), Number.MAX_SAFE_INTEGER);
   assert.equal(acceptedRetryOf(2 ** 53, true), null);
   assert.equal(acceptedRetryOf(Number.POSITIVE_INFINITY, true), null);
+});
+
+/* --------------------------------------------------------------------- */
+/* Off mid-sitting, on the client (ADR-0021, option B)                    */
+/* --------------------------------------------------------------------- */
+
+test("a card holds back its answer only while probing applies and the reveal is not unlocked", () => {
+  assert.equal(cardWithholdsAnswer(true, false), true);
+  assert.equal(cardWithholdsAnswer(true, true), false, "the 2nd wrong attempt / {{reveal_answer}} unlocks it");
+  assert.equal(cardWithholdsAnswer(false, false), false, "a lesson that does not probe never holds back");
+  assert.equal(cardWithholdsAnswer(false, true), false);
+});
+
+test("the pending state survives a declared ON and is dropped by a declared OFF", () => {
+  const pending = { loId: "lo:u1-1-1", lastAttemptId: 41, wrongCount: 1, questionId: "q:u1-1-1:001" };
+  assert.equal(pendingAfterDeclaration(pending, true), pending);
+  assert.equal(pendingAfterDeclaration(pending, false), null);
+  assert.equal(pendingAfterDeclaration(null, true), null);
+  assert.equal(pendingAfterDeclaration(null, false), null);
+});
+
+test("Off mid-probe, end to end on the client's rules: nothing stays stuck, the next wrong answer is v0.6.0's", () => {
+  // A tester is mid-probe: one wrong answer on lo:u1-1-1, the card holding
+  // back its answer and worked solution, the tutor asking a guiding question.
+  const surface = PROBING_SURFACE;
+  let declared = true;
+  let pending: { loId: string; wrongCount: number } | null = { loId: "lo:u1-1-1", wrongCount: 1 };
+  const revealUnlocked = () => pending !== null && pending.wrongCount >= 2;
+  assert.equal(probingActive(surface, declared), true);
+  assert.equal(cardWithholdsAnswer(probingActive(surface, declared), revealUnlocked()), true);
+
+  // An operator switches Off. The student's next message comes back with the
+  // stream's first frame declaring probing false; ChatCore adopts it.
+  declared = false;
+  pending = pendingAfterDeclaration(pending, declared);
+
+  // The pending objective is gone, so "Got it" is no longer refused …
+  assert.equal(pending, null);
+  // … the card that was holding back now offers "Show the answer" and shows
+  // the worked solution …
+  assert.equal(cardWithholdsAnswer(probingActive(surface, declared), revealUnlocked()), false);
+  // … and the next wrong answer takes v0.6.0's path: no probe note, no
+  // pending state, revealed on the card — `handleAttempt` and the stream's
+  // directive handling both gate on exactly this.
+  assert.equal(probingActive(surface, declared), false);
+  assert.equal(acceptedRetryOf(41, false), null, "and the server writes no retry link");
 });

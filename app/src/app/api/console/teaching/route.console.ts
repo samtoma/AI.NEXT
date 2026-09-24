@@ -25,12 +25,13 @@
  * whoever is asking — a role does not unlock it, #53 does.
  *
  * ---------------------------------------------------------------------------
- * WHAT A CHANGE REACHES
+ * WHAT A CHANGE REACHES (ADR-0021, option B)
  * ---------------------------------------------------------------------------
- * Only lessons that START after it. Each learning session resolves probing
- * once, when it opens, and stores the answer (`lib/sessions.ts`); a lesson in
- * progress keeps the answer it opened with. The response says so, so the page
- * can too.
+ * Off — and any narrowing — reaches each student's NEXT MESSAGE, mid-lesson
+ * included: every request in a sitting that opened with probing on re-reads
+ * the switch and the student's mark (`lib/sessions.ts`). On reaches each
+ * student's NEXT SITTING: a sitting that opened with probing off is never
+ * turned on. The response says so, so the page can too.
  */
 
 import { authorize } from "@/lib/auth/authorize";
@@ -96,7 +97,8 @@ export async function POST(req: Request) {
       changed: out.changed,
       from: out.from ?? "off",
       to: out.to,
-      appliesTo: "lessons that start from now on; a lesson in progress keeps its setting",
+      appliesTo:
+        "Off applies to the student's next message; On applies from their next sitting",
     });
   } catch (err) {
     console.error("[console] teaching switch update failed:", err);
