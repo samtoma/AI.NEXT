@@ -349,6 +349,11 @@ jobs:
           AINEXT_ALERT_EMAIL: ${{ secrets.AINEXT_ALERT_EMAIL }}
           AINEXT_BOOTSTRAP_OPERATOR_EMAIL: ${{ secrets.AINEXT_BOOTSTRAP_OPERATOR_EMAIL }}
           AINEXT_COURSE_GATING: ${{ vars.AINEXT_COURSE_GATING }}
+          # Console sign-in from Cloudflare Access (ADR-0022). NOT secrets — a
+          # public team domain and an application identifier — so repository
+          # VARIABLES, readable without unmasking. Defaults below when unset.
+          AINEXT_CF_ACCESS_TEAM_DOMAIN: ${{ vars.AINEXT_CF_ACCESS_TEAM_DOMAIN }}
+          AINEXT_CF_ACCESS_AUD: ${{ vars.AINEXT_CF_ACCESS_AUD }}
         run: |
           set -euo pipefail
           # Validate FIRST. Nothing is written until every required value is here.
@@ -385,6 +390,15 @@ jobs:
           # The console origin is a hostname, not a secret (ADR/TAKEOVER §2.2).
           CONSOLE_URL="https://admin-noor.reletix.com"
           PUBLIC_URL="https://noor.reletix.com"
+          # Cloudflare Access sign-in for the console (ADR-0022): the reletix
+          # team and the admin-noor Access application's AUD tag, unless a
+          # repository variable says otherwise. The literal `off` in the team
+          # variable switches the feature off (the app then signs operators in
+          # with a password only); an empty variable means "the default", not
+          # off, so an unset variable can never silently disable it.
+          CF_TEAM="${AINEXT_CF_ACCESS_TEAM_DOMAIN:-https://reletix.cloudflareaccess.com}"
+          CF_AUD="${AINEXT_CF_ACCESS_AUD:-d810c05df051342ae930ce6ce545e2347057e3ac62abeeb5c2a0f6b11277c004}"
+          if [ "$CF_TEAM" = "off" ]; then CF_TEAM=""; CF_AUD=""; fi
 
           ENV_FILE="$APP_DIR/deploy/.env"
           umask 077
@@ -413,6 +427,8 @@ jobs:
             done
             printf "AINEXT_PUBLIC_URL='%s'\n"  "$PUBLIC_URL"
             printf "AINEXT_CONSOLE_URL='%s'\n" "$CONSOLE_URL"
+            printf "AINEXT_CF_ACCESS_TEAM_DOMAIN='%s'\n" "$CF_TEAM"
+            printf "AINEXT_CF_ACCESS_AUD='%s'\n" "$CF_AUD"
             # The Google redirect ONLY when the other two halves exist. The app
             # treats Google sign-in as all-or-nothing — CLIENT_ID, CLIENT_SECRET
             # and REDIRECT_URI must be all set or all unset — and refuses to

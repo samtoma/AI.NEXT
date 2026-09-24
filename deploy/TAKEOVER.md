@@ -602,3 +602,80 @@ Said plainly, because a study that hides its blind spots is worse than no study.
 8. **`npm test` was not run here.** The brief states 514/514 pass locally against an unreachable
    database, and I confirmed the workflow still parses and the deploy gate is byte-for-byte
    unchanged — but I did not re-run the suite.
+
+---
+
+## 9. Console sign-in from Cloudflare Access (v0.8.0, ADR-0022)
+
+Samuel, 2026-09-24: *"the email verification is done through cloudflare, can you use this email
+from cloudflare"*. From v0.8.0 an operator who has passed the Access one-time PIN in front of
+`admin-noor.reletix.com` is **signed in to the console automatically**, as the operator whose email
+matches — no password, no form. Every console action is then traced to an address Cloudflare
+proved.
+
+### 9.1 What the box needs
+
+Two values, **not secrets**, on the `console` service only. CI writes them into `deploy/.env` from
+repository **variables**, and falls back to these defaults when the variables are unset:
+
+| Variable | Default written by CI | Where it comes from |
+|---|---|---|
+| `AINEXT_CF_ACCESS_TEAM_DOMAIN` | `https://reletix.cloudflareaccess.com` | The Zero Trust team domain (team `reletix`) |
+| `AINEXT_CF_ACCESS_AUD` | `d810c05d…c004` (the admin-noor Access app) | The Access application for admin-noor, "Application Audience (AUD) Tag" in the Zero Trust dashboard |
+
+```bash
+# only if a value ever changes, or to switch the feature off (password only):
+gh variable set AINEXT_CF_ACCESS_AUD --body <new AUD> --repo samtoma/AI.NEXT
+gh variable set AINEXT_CF_ACCESS_TEAM_DOMAIN --body off --repo samtoma/AI.NEXT
+```
+
+**If the Access application is ever deleted and recreated, its AUD changes** and Cloudflare sign-in
+stops — safely: every assertion then fails the audience check, the console shows the password form
+with a one-line notice, and each attempt is recorded as `failed_login` /
+`cloudflare-access:unverified:bad_audience`. Update the variable and redeploy.
+
+The console fetches the team's signing keys from
+`https://reletix.cloudflareaccess.com/cdn-cgi/access/certs` at runtime (cached, refetched only on
+key rotation), so **the console container needs outbound HTTPS**. Nothing in the compose file
+restricts egress, and the URL answered from a laptop on 2026-09-24 (a foreign token was refused as
+`unknown_key`, which needs the key set to have been fetched) — but the box itself was not checked,
+and a future egress lockdown must allow it. A console that cannot fetch the keys fails closed to the
+password form; it never signs anybody in without them.
+
+### 9.2 What must be checked on the live console after the first v0.8.0 deploy
+
+1. **Operator emails equal Access emails.** `select id, email, status from operators;` — every
+   person who should reach the console needs an active row whose email is the address they type
+   into the Access PIN screen (case does not matter; anything else does). Nobody is created
+   automatically: a proven address with no row gets the refusal page, and the refusal is recorded
+   with that address in `auth_events.reason`.
+2. **Open `admin-noor.reletix.com` in a fresh private window.** Access asks for the PIN; after it,
+   you should land on the student list **without seeing the console's sign-in form**. In the
+   Security view, the newest row is *Operator signed in* with reason
+   `cloudflare-access:<your roles>`.
+3. **Sign out** from *My account*. The browser must end on Cloudflare's "You have been logged out"
+   page; opening the console again must ask for a new PIN. (If it signs you straight back in, the
+   Access logout did not happen — check the variables.)
+4. **Access with an address that has no operator row** (a second inbox): the page must say *This
+   Cloudflare identity has no console account*, with no console data, and a `failed_login` row with
+   `cloudflare-access:no_operator:<that address>`.
+5. **Swap identity on one browser**: sign in as operator A, sign out of Access only
+   (`https://reletix.cloudflareaccess.com/cdn-cgi/access/logout` directly), come back as operator B.
+   The console must show B, and the record must show `session_revoked` for A's session with reason
+   `cloudflare-access:identity_changed`, then B's sign-in.
+6. `docker logs ainext-mvp1-console 2>&1 | grep cf-access` — no `Cloudflare sign-in is OFF` line
+   (that line means the variables are missing or malformed).
+
+### 9.3 What it does not change
+
+- **Access is still the gate.** The console trusts nothing about Cloudflare except the signed
+  assertion; the Access policy decides who may even try. FR-2208 (Access in front of the console,
+  in addition to operator accounts) is unchanged and now carries more weight: the operator row is
+  still required, and Access now proves which row.
+- **The password path still works**, as the fallback for when the assertion cannot be verified.
+  Removing it is a later decision for Samuel.
+- **The student surface ignores all of this.** The sign-in route does not exist in the student
+  build, and neither variable is set on the `app` service.
+- **The dev operator picker** (`AINEXT_DEV_OPERATOR_PICKER`) is local-only and **is not in any
+  production build** — `npm run check:surface:admin` fails if its endpoint appears. Never set that
+  variable on the box; it would do nothing there, and that is the point.

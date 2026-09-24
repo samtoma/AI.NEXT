@@ -378,6 +378,15 @@ services:
       AINEXT_AUTH_SECRET: ${AINEXT_AUTH_SECRET:?set AINEXT_AUTH_SECRET in deploy/.env}
       AINEXT_PUBLIC_URL: ${AINEXT_PUBLIC_URL:-https://noor.reletix.com}
       AINEXT_CONSOLE_URL: ${AINEXT_CONSOLE_URL:?set AINEXT_CONSOLE_URL in deploy/.env - the console origin, https://host, no path. Decided 2026-09-22 - https://admin-noor.reletix.com - see deploy/TAKEOVER.md}
+      # ---- console sign-in from Cloudflare Access (ADR-0022, v0.8.0) --------
+      # CONSOLE ONLY — deliberately absent from the `app` service above. With
+      # both set, an operator who passed the Access one-time PIN is signed in
+      # from the VERIFIED `Cf-Access-Jwt-Assertion` token (RS256, this team's
+      # keys, this application's AUD) — never from the plain email header.
+      # Empty = off (password sign-in only, as before). Not secrets: CI writes
+      # them from repository variables, see deploy/.env.example.
+      AINEXT_CF_ACCESS_TEAM_DOMAIN: ${AINEXT_CF_ACCESS_TEAM_DOMAIN:-}
+      AINEXT_CF_ACCESS_AUD: ${AINEXT_CF_ACCESS_AUD:-}
       # MAIL. `smtp` by default, not `console`: this service sits on the Mailu
       # network (see the `networks:` block at the foot of this file) and the
       # relay trusts that network, so sending needs no credential and there is
@@ -398,7 +407,8 @@ services:
       RELEASE_TAG: ${RELEASE_TAG:-}
       AINEXT_ALERT_EMAIL: ${AINEXT_ALERT_EMAIL:-}
       # NO AINEXT_GA_MEASUREMENT_ID (see the app service), NO Google client — an
-      # operator signs in with a password, and the console is not an audience.
+      # operator signs in from Cloudflare Access (above) or, as the fallback, a
+      # password; and the console is not an audience.
       AINEXT_DEV_ORIGINS: ""
       AINEXT_THINKING_BUDGET: "1024"
       NODE_ENV: production
