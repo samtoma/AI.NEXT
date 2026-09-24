@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { TimelineView } from "@/components/console/TimelineView";
-import { Chip, Figure, stamp } from "@/components/console/ui";
+import { Chip, Figure, SessionSnapshotChips, stamp } from "@/components/console/ui";
 import { recordOperatorRead } from "@/lib/auth/events";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
@@ -118,6 +118,10 @@ export default async function ConsoleSessionTimelinePage({
         ) : (
           <Chip tone="attention">still open</Chip>
         )}
+      </p>
+      {/* ADR-0021: what the session recorded when it opened, fixed for its life. */}
+      <p className="mt-1.5 text-[12.5px] text-ink-soft">
+        Opened on <SessionSnapshotChips releaseTag={session.releaseTag} probing={session.probing} />
       </p>
 
       <section className="mt-4 grid gap-5 rounded-lg border border-line bg-card px-4 py-4 sm:grid-cols-2 lg:grid-cols-4">

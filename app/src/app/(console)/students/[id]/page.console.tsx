@@ -6,6 +6,7 @@ import { CourseAccessEditor } from "@/components/console/CourseAccessEditor";
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { Sparkline } from "@/components/console/Sparkline";
 import { SubscriptionEditor } from "@/components/console/SubscriptionEditor";
+import { TesterMarkEditor } from "@/components/console/TesterMarkEditor";
 import {
   Chip,
   Cost,
@@ -24,6 +25,7 @@ import { getStudent360 } from "@/lib/console-queries";
 import { consoleRoute } from "@/lib/console-routes";
 import { ENVIRONMENT } from "@/lib/env";
 import { humanDuration } from "@/lib/timeline-rules";
+import { getTeachingState, studentTesterMarks } from "@/lib/teaching-queries";
 
 /**
  * Student 360 (contracts/admin.md §2, FR-2211, FR-2306, FR-2508).
@@ -107,6 +109,12 @@ export default async function ConsoleStudentPage({
   // covers "an operator opened this student's record". A second row would
   // record the same read twice under two names for the same click.
   const courseAccess = await studentAccess(access.operatorId, studentId);
+
+  // The tester mark (ADR-0021), and the switch that gives it meaning. The
+  // same audit argument as `studentAccess` above: the one `student_360` row
+  // already records that this operator opened this record.
+  const testerMarks = await studentTesterMarks(access.operatorId, studentId);
+  const teaching = await getTeachingState(access.operatorId);
 
   const s = data.profile;
   const t = data.timeOnTask;
@@ -278,6 +286,75 @@ export default async function ConsoleStudentPage({
           . This student&rsquo;s grade is {s.grade}; a course with no grade rule recorded reads
           &ldquo;not set&rdquo; and defaults to hidden, exactly as it does there.
         </p>
+      </Panel>
+
+      {/* ------------------------------------------------------ test account */}
+      {/*
+        ADR-0021. Whether this student is a TEST account, who said so and
+        when, and one click to undo it. The mark changes nothing on its own:
+        it matters only while the teaching switch reads "Test accounts only",
+        and the panel says where that switch stands so the reader never has
+        to guess what a mark is doing right now. `student-data` writes it
+        (this page's role); `teaching-controls` moves the switch.
+      */}
+      <Panel
+        title="Test account"
+        right={
+          <Chip tone={testerMarks.current ? "attention" : "neutral"}>
+            {testerMarks.current ? "test account" : "not a test account"}
+          </Chip>
+        }
+        note={
+          <>
+            Socratic probing is currently{" "}
+            <Link href="/teaching" className="underline">
+              {teaching.effective === "off"
+                ? "off for everyone"
+                : teaching.effective === "testers"
+                  ? "on for test accounts only"
+                  : "on for everyone"}
+            </Link>
+            . {teaching.effective === "testers"
+              ? testerMarks.current
+                ? "So this student's maths lessons probe — from the next lesson they start."
+                : "This student is not marked, so their lessons do not probe."
+              : teaching.effective === "off"
+                ? "So a mark here changes nothing this student sees until it is switched on."
+                : "A mark here makes no difference while it is on for everyone."}
+          </>
+        }
+      >
+        {testerMarks.current ? (
+          <p className="text-[13px] text-ink">
+            Marked by{" "}
+            <strong>{testerMarks.current.markedBy ?? "an operator no longer on record"}</strong> at{" "}
+            {stamp(testerMarks.current.markedAt)}
+            {testerMarks.current.note ? (
+              <>
+                {" "}
+                — <span className="text-ink-soft">{testerMarks.current.note}</span>
+              </>
+            ) : null}
+            .
+          </p>
+        ) : (
+          <p className="text-[13px] text-ink-soft">
+            This student is taught exactly as every other student is.
+          </p>
+        )}
+        {testerMarks.history.length > 0 && (
+          <ul className="mt-2 space-y-1 text-[12px] text-ink-soft">
+            {testerMarks.history.map((m) => (
+              <li key={m.id} className="font-mono">
+                marked by {m.markedBy ?? "an operator no longer on record"} {stamp(m.markedAt)} ·
+                removed by {m.unmarkedBy ?? "an operator no longer on record"}{" "}
+                {m.unmarkedAt ? stamp(m.unmarkedAt) : ""}
+                {m.note ? ` · ${m.note}` : ""}
+              </li>
+            ))}
+          </ul>
+        )}
+        <TesterMarkEditor studentId={s.id} isTester={testerMarks.current != null} />
       </Panel>
 
       {/* ------------------------------------------------------- time on task */}

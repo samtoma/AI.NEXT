@@ -24,6 +24,7 @@
  * @covers FR-2203
  * @covers FR-2205
  * @covers FR-2406
+ * @covers FR-3102
  */
 
 import assert from "node:assert/strict";
@@ -46,7 +47,7 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/": ["student-data", "cost-billing"],
   // `/students` is the redirect to the list, not a view of its own, so it
   // carries the shell's permission rather than the list's.
-  "/students": ["content-review", "evidence-access", "student-data", "cost-billing"],
+  "/students": ["content-review", "evidence-access", "student-data", "cost-billing", "teaching-controls"],
   "/students/[id]": ["student-data"],
   // The session list, the timeline and the replay (admin.md §3, §4, §5). Each
   // is transcribed on its own line for the reason the whole file is
@@ -55,7 +56,7 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/students/[id]/sessions": ["student-data"],
   "/students/[id]/sessions/[sid]": ["student-data"],
   "/students/[id]/sessions/[sid]/replay": ["student-data"],
-  "/profile": ["content-review", "evidence-access", "student-data", "cost-billing"],
+  "/profile": ["content-review", "evidence-access", "student-data", "cost-billing", "teaching-controls"],
   // ADR-0017 / FR-1011 — the operator's own console skin, posted from the
   // Appearance section of `/profile`. Transcribed with all four roles for the
   // same reason `/profile` carries all four: any signed-in operator may change
@@ -67,6 +68,7 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
     "evidence-access",
     "student-data",
     "cost-billing",
+    "teaching-controls",
   ],
   // Migration 023, `lib/catalog.ts` — course availability. NO FR covers this
   // capability (see the page's own header); it is transcribed here anyway
@@ -80,7 +82,17 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/courses": ["content-review"],
   "/api/console/courses": ["content-review"],
   "/api/console/students/[id]/courses": ["student-data"],
+  // ADR-0021 — the tester mark. `student-data`: it names a student and is
+  // posted from the Student 360, which only `student-data` opens. The mark
+  // decides nothing on its own; the switch that gives it meaning is below.
+  "/api/console/students/[id]/tester": ["student-data"],
   "/content": ["content-review"],
+  // ADR-0021 — the teaching switches. The page is readable by all five roles
+  // (it discloses no student: a position, who moved it, a count), and the
+  // write is `teaching-controls` ALONE — not `content-review`, which it was
+  // split out of on 2026-09-24 so it can be narrowed on its own.
+  "/teaching": ["content-review", "evidence-access", "student-data", "cost-billing", "teaching-controls"],
+  "/api/console/teaching": ["teaching-controls"],
   "/cost": ["cost-billing"],
   // contracts/authorization.md, "Subscription / payment status — read and
   // change": `cost-billing` only. The console's first write endpoint — one of
@@ -102,12 +114,13 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   // metric dictionary is transcribed on its own line rather than covered by a
   // prefix rule, for the reason this whole file exists — a rule cannot disagree
   // with the table it is meant to check.
-  "/overview": ["content-review", "evidence-access", "student-data", "cost-billing"],
+  "/overview": ["content-review", "evidence-access", "student-data", "cost-billing", "teaching-controls"],
   "/overview/definitions": [
     "content-review",
     "evidence-access",
     "student-data",
     "cost-billing",
+    "teaching-controls",
   ],
   "/pipeline": ["evidence-access"],
   "/gallery": ["evidence-access"],
@@ -245,4 +258,42 @@ test("an operator is refused the student surfaces", () => {
   assert.equal(d.ok, false);
   assert.equal(d.ok === false && d.status, 403);
   assert.equal(d.ok === false && d.reason, "operator_on_student_surface");
+});
+
+test("the teaching switch is teaching-controls' alone, and content-review no longer admits it (ADR-0021)", () => {
+  // Samuel, 2026-09-24: the write was specified as `content-review` and moved
+  // to a role of its own the same day, so it can be narrowed without touching
+  // who reviews content. This is the assertion that stops it drifting back.
+  const route = consoleRoute("/api/console/teaching")!;
+  assert.equal(routeAdmits(route, ["teaching-controls"]), true);
+  for (const role of ["content-review", "evidence-access", "student-data", "cost-billing"] as const) {
+    assert.equal(routeAdmits(route, [role]), false, `${role} must not move the teaching switch`);
+  }
+  assert.equal(routeAdmits(route, []), false, "no role admits no write");
+
+  // And through the seam the handler actually calls — every other role
+  // refused, and recorded as the missing role by name.
+  const teaching = { kind: "operator" as const, operatorId: 1, roles: ["teaching-controls" as const] };
+  assert.equal(checkRequirement(teaching, { role: "teaching-controls" }).ok, true);
+  for (const role of ["content-review", "evidence-access", "student-data", "cost-billing"] as const) {
+    const refused = checkRequirement(
+      { kind: "operator" as const, operatorId: 2, roles: [role] },
+      { role: "teaching-controls" }
+    );
+    assert.equal(refused.ok, false);
+    assert.equal(refused.ok === false && refused.status, 403);
+    assert.equal(refused.ok === false && refused.reason, "missing_role:teaching-controls");
+  }
+
+  // Reading it is every operator's.
+  assert.equal(routeAdmits(consoleRoute("/teaching")!, ["cost-billing"]), true);
+  assert.equal(routeAdmits(consoleRoute("/teaching")!, []), true);
+});
+
+test("the tester mark is student-data's, and teaching-controls alone cannot name a student with it", () => {
+  const route = consoleRoute("/api/console/students/[id]/tester")!;
+  assert.equal(routeAdmits(route, ["student-data"]), true);
+  assert.equal(routeAdmits(route, ["teaching-controls"]), false);
+  assert.equal(routeAdmits(route, ["content-review"]), false);
+  assert.equal(routeAdmits(route, ["cost-billing"]), false);
 });

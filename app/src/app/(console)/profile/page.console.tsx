@@ -46,6 +46,8 @@ const ROLE_NOTE: Record<string, string> = {
   "student-data":
     "A student's record and, from P3, their conversations. The highest privilege here — every read is recorded.",
   "cost-billing": "Spend and commercial status. Reads no student content.",
+  "teaching-controls":
+    "Moves the teaching switches — today, whether Socratic probing is off, on for test accounts, or on for everyone. A safety control: it changes how the tutor answers a child who got it wrong.",
 };
 
 export default async function ConsoleProfilePage() {

@@ -210,3 +210,32 @@ export function Chip({ tone = "neutral", children }: { tone?: ChipTone; children
     </span>
   );
 }
+
+/* ------------------------------------------------------- session snapshot */
+
+/**
+ * What a learning session recorded about itself when it opened (ADR-0021):
+ * the release that served it and whether Socratic probing applied. Both are
+ * fixed for the life of the session, so they are shown as facts, not states.
+ *
+ * NULL is "not recorded" — every session opened before v0.7.0 — and it is
+ * printed as that, never as off: a session from before the switch existed did
+ * not probe, but the record does not say so, and the console does not
+ * improve on the record.
+ */
+export function SessionSnapshotChips({
+  releaseTag,
+  probing,
+}: {
+  releaseTag: string | null;
+  probing: boolean | null;
+}) {
+  return (
+    <span className="inline-flex flex-wrap items-center gap-1">
+      <Chip>{releaseTag ?? "release not recorded"}</Chip>
+      <Chip tone={probing ? "attention" : "neutral"}>
+        {probing == null ? "probing not recorded" : probing ? "probing on" : "probing off"}
+      </Chip>
+    </span>
+  );
+}

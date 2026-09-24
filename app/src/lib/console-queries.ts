@@ -698,6 +698,10 @@ export type SessionListRow = {
   /** Distinct objectives touched by the attempts in the session. */
   objectivesTouched: number;
   costUsd: number;
+  /** The release that opened it (ADR-0021); null = opened before v0.7.0. */
+  releaseTag: string | null;
+  /** Its probing snapshot (ADR-0021); null = opened before v0.7.0. */
+  probing: boolean | null;
 };
 
 /**
@@ -728,6 +732,7 @@ export async function getStudentSessions(
 
     const res = await db.query(
       `SELECT s.id, s.kind, s.surface, s.lo_id, s.opened_at, s.closed_at, s.close_reason,
+              s.release_tag, s.probing,
               n.label AS lo_label,
               (SELECT count(*) FROM ai_interactions ai
                 WHERE ai.session_id = s.id AND ai.environment = $2)        AS turns,
@@ -767,6 +772,8 @@ export async function getStudentSessions(
           attempts: Number(r.attempts ?? 0),
           objectivesTouched: Number(r.objectives_touched ?? 0),
           costUsd: Number(r.cost_usd ?? 0),
+          releaseTag: (r.release_tag as string | null) ?? null,
+          probing: r.probing == null ? null : r.probing === true,
         };
       }),
     };

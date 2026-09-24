@@ -176,6 +176,21 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     nav: null,
   },
   {
+    // ADR-0021: mark or unmark one student as a TEST account, posted from the
+    // Test account panel on the Student 360. `student-data`, for the reason
+    // the course override above is: it names a student, and it is written
+    // from the one page that already requires that role. The mark alone
+    // changes nothing a student sees — what it does is decided by the
+    // teaching switch, which is `teaching-controls` (`/api/console/teaching`
+    // below) — so the safety decision stays with that role and this one only
+    // records who is a tester.
+    path: "/api/console/students/[id]/tester",
+    file: "api/console/students/[id]/tester/route.console.ts",
+    kind: "route",
+    roles: ["student-data"],
+    nav: null,
+  },
+  {
     path: "/profile",
     file: "(console)/profile/page.console.tsx",
     roles: [],
@@ -233,6 +248,34 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     file: "(console)/content/page.console.tsx",
     roles: ["content-review"],
     nav: "Content review",
+  },
+  {
+    // ADR-0021: the teaching switches — today one, Socratic probing (Off /
+    // Test accounts only / Everyone, the last locked until #53).
+    //
+    // **The PAGE is every operator's; the SWITCH is `teaching-controls`'s.**
+    // Reading it discloses no student: the position, who last moved it and
+    // when, its history, the deployed release, and how many accounts are
+    // marked as testers (their names only for a `student-data` holder, the
+    // role that already lists students). Every operator should be able to
+    // answer "is the tutor probing right now, and since when?" — it explains
+    // a lesson that behaved differently, and the console header says it on
+    // every page anyway. Changing it is the endpoint below.
+    path: "/teaching",
+    file: "(console)/teaching/page.console.tsx",
+    roles: [],
+    nav: "Teaching",
+  },
+  {
+    // The write behind `/teaching`, and the reason `teaching-controls` exists:
+    // Samuel split it out of `content-review` (2026-09-24) so who may change
+    // how a child is taught can be narrowed without touching who may review
+    // content. A safety control, in ADR-0014's sense.
+    path: "/api/console/teaching",
+    file: "api/console/teaching/route.console.ts",
+    kind: "route",
+    roles: ["teaching-controls"],
+    nav: null,
   },
   {
     path: "/cost",
@@ -351,6 +394,8 @@ export const ALL_ROLES: readonly OperatorRole[] = [
   "evidence-access",
   "student-data",
   "cost-billing",
+  // ADR-0021, 2026-09-24: the console's teaching switches.
+  "teaching-controls",
 ] as const;
 
 /**

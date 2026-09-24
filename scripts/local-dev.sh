@@ -376,7 +376,7 @@ run_app_script() {
   ok "$label"
 }
 
-run_app_script bootstrap-operator.mts "first operator ($BOOTSTRAP_EMAIL, four roles, no password)" || true
+run_app_script bootstrap-operator.mts "first operator ($BOOTSTRAP_EMAIL, five roles, no password)" || true
 
 # ORDER IS LOAD-BEARING: seed first, retire second.
 #

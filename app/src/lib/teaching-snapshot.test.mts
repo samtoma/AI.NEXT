@@ -7,7 +7,7 @@
  * reused session's stored answer back without looking at the switch again,
  * and fails closed. Then — statically, because a Next route handler cannot be
  * driven under `node --test` without a signed-in principal and a database —
- * that `/api/ask` and `/api/attempts` obey it.
+ * that `/api/ask`, `/api/attempts` and the console endpoint obey it.
  *
  * **The fake client THROWS on any query it was not expecting**, like
  * `catalog-gate.test.mts`'s. That is how "the course is never looked up with
@@ -323,4 +323,18 @@ test("the client never sends a probing flag; it adopts what the server declares"
   assert.match(lesson, /onProbingChange=\{setProbing\}/);
   assert.match(lesson, /probing=\{probing\}/);
   assert.doesNotMatch(lesson, /probingActive\(/, "the board must mirror the server, not decide");
+});
+
+test("the console refuses Everyone and requires teaching-controls before it writes", () => {
+  const route = code("app/api/console/teaching/route.console.ts");
+  assert.match(route, /authorize\(\{ role: "teaching-controls" \}\)/);
+  assert.doesNotMatch(route, /role: "content-review"/);
+  const refusal = route.indexOf("settingChangeRefusal(body.probing)");
+  const write = route.indexOf("setProbingSetting(");
+  assert.ok(refusal > 0 && write > refusal, "the lock must be checked before the write");
+  assert.match(route, /status: 409/);
+
+  const tester = code("app/api/console/students/[id]/tester/route.console.ts");
+  assert.match(tester, /authorize\(\{ role: "student-data" \}\)/);
+  assert.match(tester, /typeof body\.tester !== "boolean"/);
 });

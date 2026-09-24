@@ -434,9 +434,11 @@ jobs:
           C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
           N=$($C exec -T db psql -U ainext -d ainext_mvp1 -tAc "select count(*) from operators")
           # GATED ON "NONE", not merely re-run because the script is
-          # idempotent: it re-grants each of the four roles if missing, so an
+          # idempotent: it re-grants each of the five roles if missing, so an
           # ungated run would silently hand back a role an operator had
-          # deliberately removed on the next deploy.
+          # deliberately removed on the next deploy. (Five since v0.7.0:
+          # `teaching-controls`, ADR-0021. Operators that already exist got it
+          # once from migration 029, which is guarded the same way.)
           if [ "$N" -gt 0 ]; then
             echo "operators already exist ($N) — not touching them"; exit 0
           fi

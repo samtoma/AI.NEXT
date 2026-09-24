@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
-import { Chip, Td, Th, stamp } from "@/components/console/ui";
+import { Chip, SessionSnapshotChips, Td, Th, stamp } from "@/components/console/ui";
 import { consoleAccess } from "@/lib/console-auth";
 import { getStudentSessions } from "@/lib/console-queries";
 import { consoleRoute } from "@/lib/console-routes";
@@ -102,6 +102,7 @@ export default async function ConsoleSessionListPage({
                 <Th right>Objectives touched</Th>
                 <Th right>Cost, imputed</Th>
                 <Th>How it ended</Th>
+                <Th>Release and probing</Th>
                 <Th>Read it</Th>
               </tr>
             </thead>
@@ -149,6 +150,9 @@ export default async function ConsoleSessionListPage({
                     )}
                   </Td>
                   <Td>
+                    <SessionSnapshotChips releaseTag={r.releaseTag} probing={r.probing} />
+                  </Td>
+                  <Td>
                     <span className="flex flex-col gap-0.5">
                       <Link
                         href={`/students/${studentId}/sessions/${r.id}`}
@@ -175,7 +179,9 @@ export default async function ConsoleSessionListPage({
         <p className="mt-4 max-w-[80ch] text-[12.5px] leading-relaxed text-ink-faint">
           A sitting closed after thirty minutes of silence is shown as such rather than as a
           finished one: the two mean opposite things about whether the student got what they came
-          for.
+          for. <strong>Release and probing</strong> are what the session recorded when it opened —
+          which build served it and whether Socratic probing applied — and neither can change after
+          that. Sessions opened before v0.7.0 recorded neither.
         </p>
       )}
     </main>
