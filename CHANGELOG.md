@@ -10,6 +10,33 @@ requirement names it.
 
 ## [Unreleased]
 
+### Changed — turn limits are now watched, not enforced (ADR-0023, FR-3401…FR-3406)
+- **Noor no longer stops a conversation after a fixed number of replies.** Until now the tutor
+  refused to answer past a per-surface limit and locked the input: 2 replies in the general chat, 18
+  in a lesson's teach-and-practice mode, 5 in a lesson's quick review mode. Samuel removed the
+  limits — *"we need to know how often those limits are triggered"* — so a student can now keep a
+  conversation going for as long as she needs it (FR-3401).
+- **Worst-case spend per conversation is now unbounded**, and it is watched in the console instead of
+  being capped on the server. The three numbers above are unchanged and still mean something — they
+  are now *observed thresholds* rather than a hard stop.
+
+### Added
+- **The console's Cost page gets a "Turn limits — observed, not enforced" panel**: for the period
+  you're looking at, and per surface, it shows how many conversations there were, how many reached
+  their threshold (and what share that is), how many went further still, and the longest conversation
+  seen — highlighted whenever any conversation reached a threshold in that period. It also lists the
+  most recent conversations that reached a threshold, each linked to its session (FR-3403, FR-3404).
+- **A session that reached its threshold is flagged** — in amber, never red — on the student's session
+  list, on its timeline, and in its replay, so an operator can see it without opening the Cost page
+  first (FR-3405).
+
+### Removed
+- The three "you've reached the limit" messages a student could see mid-conversation, and the input
+  lock that came with them.
+
+Requirements: FR-3401…FR-3406 in `specs/002-identity-and-admin-console/spec.md`, superseding the
+baseline's FR-051. Record: [ADR-0023](docs/decisions/0023-turn-limits-observed-not-enforced.md).
+
 ## [v0.8.0] — 2026-09-24
 
 Console sign-in from the email Cloudflare Access has already verified. A security review read it
