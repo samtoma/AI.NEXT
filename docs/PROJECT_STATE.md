@@ -1,9 +1,9 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`main`; released `v0.7.0`; v0.8.0 console Cloudflare sign-in on its branch; constitution v3.2.0)
+> Last updated: 2026-09-24 (`main`; released and deployed `v0.7.0` and `v0.8.0`; constitution v3.2.0)
 
-## 🔐 v0.8.0 in progress — console sign-in from Cloudflare Access (2026-09-24, `feat/console-cloudflare-signin`, NOT merged)
+## 🔐 v0.8.0 — console sign-in from Cloudflare Access (released 2026-09-24)
 
 Samuel: *"the email verification is done through cloudflare, can you use this email from
 cloudflare"* — **ADR-0022**, **FR-3301…FR-3312**. On the console only, an operator who has passed
@@ -13,15 +13,15 @@ page, audited. A different operator's session on the same browser is ended (the 
 wins). Sign-out also ends the Access session. Password stays as the fallback. Locally, a
 "Sign in as <operator>" picker, locked three ways and absent from production builds. No migration.
 
-Built on `origin/main` (v0.6.1); **v0.7.0 merges first** — expect small rebase conflicts in
-`package.json`'s test list, `CHANGELOG.md`, `docs/README.md`, this file and the traceability
-counts block (re-run `./scripts/traceability.py --write`).
+Rebased onto v0.7.0 before release (conflicts resolved in the test list, CHANGELOG, docs/README,
+this file and the traceability counts); v0.7.0's `?next=` scan test now names the Cloudflare route
+as a known reader with its own assertions. Explainer: `docs/releases/v0.8.0.html`.
 
 **Security review, fixed the same day (F2–F11, ADR-0022 *Amended*):** the dev picker's console now
 listens on `127.0.0.1` only and refuses `Origin: null`; sign-out uses the console's own Access
 logout; only a top-level navigation starts a Cloudflare sign-in; proven addresses are ASCII and
 compared by one rule; the per-request identity check is capped at 1 s; refused assertions are
-recorded within a budget; CI validates the two variables. 767/767 unit tests.
+recorded within a budget; CI validates the two variables. 843/843 unit tests at release.
 
 **Open:**
 - **Samuel — decide:** the console is reachable **without Cloudflare** from the shared
@@ -36,11 +36,11 @@ recorded within a budget; CI validates the two variables. 767/767 unit tests.
   exist off the box. FR-3301 is BUILT, FR-3303/3305/3307/3309/3311 PARTIAL — FR-3309 because a
   console dev server started by hand without `-H 127.0.0.1` does not meet the tightened rule.
 
-## 🎛️ v0.7.0 in progress — the teaching switch (2026-09-24, `feat/probing-toggle`, NOT merged)
+## 🎛️ v0.7.0 — the teaching switch (released and deployed 2026-09-24, PR #60)
 
 Samuel approved a runtime switch for Socratic probing ([ADR-0021](decisions/0021-runtime-teaching-toggle-and-testers.md),
-**FR-3101…FR-3111**). Built and committed on `feat/probing-toggle`; not pushed, merged, tagged or
-deployed.
+**FR-3101…FR-3111**). Merged as PR #60 (CI green, including the first run of the `migrations`
+job), tagged `v0.7.0` and deployed from CI. The switch ships **Off**.
 
 | What | Where |
 |---|---|

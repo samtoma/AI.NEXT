@@ -10,6 +10,12 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.8.0] — 2026-09-24
+
+Console sign-in from the email Cloudflare Access has already verified. A security review read it
+before release and its findings are fixed below, except one decision left to Samuel. No database
+migration. Explainer: [`docs/releases/v0.8.0.html`](docs/releases/v0.8.0.html).
+
 ### Added — console sign-in from Cloudflare Access (ADR-0022, FR-3301…FR-3312)
 - **Operators are signed in to the console from the email Cloudflare Access has already
   verified** — no password, no form. The console checks Cloudflare's signed token (signature,
