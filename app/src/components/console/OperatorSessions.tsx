@@ -91,7 +91,21 @@ function ColumnLabel({ children, end = false }: { children: string; end?: boolea
   );
 }
 
-export function OperatorSessions({ sessions }: { sessions: OperatorSessionItem[] }) {
+export function OperatorSessions({
+  sessions,
+  signOutTo = "/signin",
+}: {
+  sessions: OperatorSessionItem[];
+  /**
+   * Where the browser goes once THIS sign-in has ended (ADR-0022, FR-3307).
+   * Decided on the server and handed down, like every other configuration
+   * value on this page. With Cloudflare sign-in on it is Access's own logout
+   * URL: ending only our session would leave the Access session alive, and
+   * the very next request would carry a valid assertion straight back into a
+   * new console session — a sign-out that silently undoes itself.
+   */
+  signOutTo?: string;
+}) {
   const [busy, setBusy] = useState<number | "all" | null>(null);
   // A fixed "now" for this render, not `Date.now()` re-read per row: every row's
   // staleness has to answer against the same instant or two rows a millisecond
@@ -112,7 +126,7 @@ export function OperatorSessions({ sessions }: { sessions: OperatorSessionItem[]
     // Revoking the session you are using IS signing out, and pretending
     // otherwise would leave a shell rendering against a session that no longer
     // resolves.
-    window.location.assign(current ? "/signin" : "/profile");
+    window.location.assign(current ? signOutTo : "/profile");
   }
 
   async function signOut() {
@@ -123,7 +137,7 @@ export function OperatorSessions({ sessions }: { sessions: OperatorSessionItem[]
     } catch {
       /* 204 either way */
     }
-    window.location.assign("/signin");
+    window.location.assign(signOutTo);
   }
 
   return (

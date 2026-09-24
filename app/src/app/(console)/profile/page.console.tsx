@@ -1,6 +1,7 @@
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { DesignVariantPicker } from "@/components/DesignVariantPicker";
 import { OperatorSessions } from "@/components/console/OperatorSessions";
+import { consoleSignOutDestination } from "@/lib/auth/console-signin";
 import { currentClaims } from "@/lib/auth/principal";
 import { listSessions, withAuthTx } from "@/lib/auth/session";
 import { consoleAccess } from "@/lib/console-auth";
@@ -157,7 +158,7 @@ export default async function ConsoleProfilePage() {
           Revoking ends that sign-in immediately — within one request, not at the next token
           expiry.
         </p>
-        <OperatorSessions sessions={sessions} />
+        <OperatorSessions sessions={sessions} signOutTo={consoleSignOutDestination()} />
       </section>
     </main>
   );

@@ -94,12 +94,17 @@ const STUDENT_ONLY = ["/signup"] as const;
  * are not rows in `CONSOLE_ROUTES` (they run before anybody has a role), and
  * are asserted here by name instead (ADR-0022).
  *
+ *  - `/api/auth/cloudflare` signs an operator in from a verified Cloudflare
+ *    Access assertion. Console build: MUST exist. Student build: MUST NOT —
+ *    the student surface never reads the Access header, and the strongest
+ *    form of "never reads" is "has no route that could" (FR-3310).
  *  - `/api/auth/dev-operator` is the local-development picker's endpoint
  *    (`route.dev.console.ts`), which signs an operator in with NO credential.
  *    It MUST NOT be in ANY production build — this script only ever reads a
  *    `next build` artefact, which is always production — so it is asserted
  *    absent on both surfaces (FR-3309).
  */
+const CONSOLE_SIGNIN_ROUTE = "/api/auth/cloudflare";
 const DEV_ONLY_ROUTES = ["/api/auth/dev-operator"] as const;
 
 if (surface === "student") {
@@ -135,8 +140,8 @@ if (surface === "student") {
     }
   }
 
-  // 3b. The dev picker is not here.
-  for (const url of DEV_ONLY_ROUTES) {
+  // 3b. The console's Cloudflare sign-in and the dev picker are not here.
+  for (const url of [CONSOLE_SIGNIN_ROUTE, ...DEV_ONLY_ROUTES]) {
     const files = answeredBy.get(url);
     if (files) problems.push(`${url} resolves in the student build (${files.join(", ")})`);
     else checked.push(`${url} absent`);
@@ -170,6 +175,20 @@ if (surface === "student") {
   // operators through the same form and the same endpoint (ADR-0014).
   if (!answeredBy.has("/signin")) problems.push("/signin is missing from the console build");
   else checked.push("/signin present");
+
+  // Cloudflare Access sign-in exists, from its own console-only file.
+  {
+    const files = answeredBy.get(CONSOLE_SIGNIN_ROUTE) ?? [];
+    const expected = `${CONSOLE_SIGNIN_ROUTE}/route`;
+    if (!files.includes(expected)) {
+      problems.push(
+        `${CONSOLE_SIGNIN_ROUTE} is not answered by ${expected} in the console build ` +
+          `(got: ${files.join(", ") || "nothing"})`
+      );
+    } else {
+      checked.push(`${CONSOLE_SIGNIN_ROUTE} <- ${expected}`);
+    }
+  }
 
   // The dev picker's endpoint does NOT exist in a production build.
   for (const url of DEV_ONLY_ROUTES) {
