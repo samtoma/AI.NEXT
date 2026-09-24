@@ -12,7 +12,7 @@
  * tutor tries an unfinished teaching behaviour on (#53): marking a REAL
  * student by mistake is the failure that matters, and it is the teaching
  * switch's safety decision in another form. Neither role alone may do it.
- * One call to the seam's ALL-OF (`authorize({ roles })`), so a refusal is
+ * One call to the seam's ALL-OF (`authorize({ allRoles })`), so a refusal is
  * recorded once, naming the first role missing. Every operator held every
  * role on the day this changed, so nobody lost access.
  *
@@ -41,7 +41,7 @@ const MAX_NOTE = 280;
 export async function POST(req: Request, ctx: { params: Promise<{ id: string }> }) {
   let me;
   try {
-    me = await authorize({ roles: ["student-data", "teaching-controls"] });
+    me = await authorize({ allRoles: ["student-data", "teaching-controls"] });
   } catch (err) {
     if (err instanceof AuthError) return err.toResponse();
     throw err;

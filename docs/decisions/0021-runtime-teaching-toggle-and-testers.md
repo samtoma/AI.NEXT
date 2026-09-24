@@ -107,7 +107,8 @@ until #53 closes, it can reach test accounts and nobody else.**
   mistake is the failure that matters while #53 is open. So neither role
   alone may do it, and the control says "Only accounts the team owns — never
   a real student." **Nobody lost access**: every operator held all five roles
-  on the day. The seam gained its one ALL-OF (`authorize({ roles })`).
+  on the day. The seam gained its one ALL-OF (`authorize({ allRoles })` — `allRoles`
+  since fix pass 2, so it is not read as the route table's ANY-OF `roles`).
 - **Reading `/teaching` needs a role — any one of the five** (fix pass): an
   operator whose every role was revoked reads the shell's own pages only. The
   switch's note is readable by every role, so the field says "Don't name a

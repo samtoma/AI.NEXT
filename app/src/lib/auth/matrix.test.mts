@@ -333,7 +333,7 @@ test("the tester mark needs student-data AND teaching-controls — neither alone
 
   // And through the seam the handler actually calls: one ALL-OF requirement,
   // refused with the first role missing, in order.
-  const req = { roles: ["student-data", "teaching-controls"] as const };
+  const req = { allRoles: ["student-data", "teaching-controls"] as const };
   const op = (roles: OperatorRole[]) => ({ kind: "operator" as const, operatorId: 1, roles });
   assert.equal(checkRequirement(op(["student-data", "teaching-controls"]), req).ok, true);
   assert.equal(checkRequirement(op([...ALL_ROLES]), req).ok, true);

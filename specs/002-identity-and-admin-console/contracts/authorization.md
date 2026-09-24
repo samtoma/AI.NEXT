@@ -71,7 +71,8 @@ then holding `content-review`; a later deploy never grants it again, and neither
 (`rollback/029`) and deploying again — 029's guard reads the `auth_events` trail too. The test-account mark it gives meaning to
 needs **both** `student-data` (it names a person, and is set from the Student 360) **and**
 `teaching-controls` (it decides which child the tutor tries an unfinished behaviour on) — the one
-ALL-OF requirement in this matrix (`authorize({ roles: [...] })`; `allOf` on its route row). It was
+ALL-OF requirement in this matrix (`authorize({ allRoles: [...] })` — named apart from the route
+table's ANY-OF `roles` since the 2026-09-24 fix pass 2; `allOf` on its route row). It was
 `student-data` alone until the 2026-09-24 fix pass; every operator held every role that day.
 
 **Operator management is in no row on purpose.** No role grants roles this release. The first

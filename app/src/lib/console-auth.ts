@@ -115,7 +115,8 @@ export async function consoleAccess(path: string): Promise<ConsoleAccess> {
 function admits(route: ConsoleRoute, roles: OperatorRole[]): boolean {
   if (route.roles.length === 0) return true;
   const me: Principal = { kind: "operator", operatorId: 0, roles };
-  if (route.allOf) return checkRequirement(me, { roles: route.roles }).ok;
+  // `route.roles` is the row's list; `allOf` makes it the seam's ALL-OF (`allRoles`).
+  if (route.allOf) return checkRequirement(me, { allRoles: route.roles }).ok;
   return route.roles.some((role) => checkRequirement(me, { role }).ok);
 }
 

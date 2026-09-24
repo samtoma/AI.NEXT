@@ -681,7 +681,8 @@ test("the console refuses Everyone and requires teaching-controls before it writ
   // The tester mark needs BOTH roles, in one ALL-OF call (fix pass,
   // 2026-09-24) — and never either alone.
   const tester = code("app/api/console/students/[id]/tester/route.console.ts");
-  assert.match(tester, /authorize\(\{ roles: \["student-data", "teaching-controls"\] \}\)/);
+  assert.match(tester, /authorize\(\{ allRoles: \["student-data", "teaching-controls"\] \}\)/);
+  assert.doesNotMatch(tester, /authorize\(\{ roles:/, "`roles` is ConsoleRoute's ANY-OF; the seam's ALL-OF is `allRoles`");
   assert.doesNotMatch(tester, /authorize\(\{ role: "/);
   assert.match(tester, /typeof body\.tester !== "boolean"/);
 });

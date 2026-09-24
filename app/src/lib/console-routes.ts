@@ -57,8 +57,9 @@ export type ConsoleRoute = {
    * `student-data`'s business — and decides who the tutor experiments on —
    * `teaching-controls`'. Either role alone would let one of those two
    * decisions be made by somebody the other role was meant to stop. The
-   * handler asks `authorize({ roles })`, the seam's own ALL-OF, so the table
-   * and the check say the same thing.
+   * handler asks `authorize({ allRoles })`, the seam's own ALL-OF (named
+   * apart from this ANY-OF `roles` on purpose), so the table and the check
+   * say the same thing.
    */
   allOf?: true;
   /** What the nav calls it, or null for a route reached from another page. */
