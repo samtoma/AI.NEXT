@@ -53,7 +53,10 @@ export type OperatorRole =
   | "content-review"
   | "evidence-access"
   | "student-data"
-  | "cost-billing";
+  | "cost-billing"
+  /** ADR-0021: the console's teaching switches (Socratic probing). Split out
+   *  of `content-review` so it can be narrowed on its own. */
+  | "teaching-controls";
 
 /**
  * Who is asking. Resolved from the verified access-token cookie by

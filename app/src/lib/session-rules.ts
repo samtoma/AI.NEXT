@@ -27,7 +27,13 @@ export type CloseReason = "completed" | "inactivity" | "superseded" | "abandoned
  */
 export const SESSION_IDLE_MS = 30 * 60 * 1000;
 
-export type OpenSession = { id: number; kind: SessionKind; lastSeenAt: Date };
+export type OpenSession = {
+  id: number;
+  kind: SessionKind;
+  lastSeenAt: Date;
+  /** the snapshot stored when it opened (ADR-0021); NULL in the column is false */
+  probing: boolean;
+};
 
 export type SessionPlan =
   | { action: "reuse"; sessionId: number }

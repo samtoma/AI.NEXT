@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
+**Last amended**: 2026-09-24 (fix pass 2) — **FR-2015** added (sign-in redirects stay on the site — a security fix); **FR-3105** (a sitting that stopped probing never starts again), FR-3106, FR-3107 and FR-3111 amended in place, each marked. Before that, 2026-09-24 (fix pass) — **FR-3105** (Off reaches the next message, On the next sitting — Samuel's option B), FR-3102, FR-3106, FR-3107, FR-3108, FR-3110, FR-3111 and FR-3202 amended in place, each marked. Before that, 2026-09-24 — **FR-3101…FR-3111** (teaching controls and testers, [ADR-0021](../../docs/decisions/0021-runtime-teaching-toggle-and-testers.md), migrations 029–030), and **FR-3201…FR-3214** (what v0.6.0 shipped without a requirement, written down). Earlier: 2026-09-22 — **FR-2701…FR-2711** added ([ADR-0018](../../docs/decisions/0018-course-availability.md)), then **FR-2801…FR-2811** (in-product feedback, migration 025), then **FR-3001…FR-3010** (runtime health, migration 026)
 **Input**: Samuel's brainstorm decisions D1–D11 (2026-09-20). Replace the student picker with real
 student-owned accounts and move per-student isolation from a remembered `WHERE` clause into the
 database. Give the operator surfaces a deliberate home — an admin console on its own build target,
@@ -347,7 +347,7 @@ password sign-in.
 > marks what is designed for and not built, citing the decision that defers it. Numbering: **FR-20xx**
 > accounts and sign-in · **FR-21xx** isolation and authorisation · **FR-22xx** console and roles ·
 > **FR-23xx** timeline and replay · **FR-24xx** cost and status · **FR-25xx** monitoring and analytics
-> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred · **FR-30xx** runtime health.
+> · **FR-26xx** tutor voice and gender · **FR-27xx** course availability · **FR-28xx** in-product feedback · **FR-29xx** deferred · **FR-30xx** runtime health · **FR-31xx** teaching controls and testers · **FR-32xx** shipped in v0.6.0 without a requirement, written afterwards.
 > (**FR-30xx** rather than continuing into 29xx: that block is "deferred by design" and has been
 > since rev. 1, so a live requirement inside it would be read as deferred by anybody scanning.)
 > `FR-1xx…FR-12xx` are from
@@ -395,6 +395,13 @@ password sign-in.
   student surface once accounts exist. Each MUST be either claimed by a real account or retired from
   every student surface. Their learning and interaction history MUST be retained and stay visible in
   the operator views; nothing in this migration may delete history silently.
+- **FR-2015** **[ADDED 2026-09-24 — security fix, fix pass 2]**: After signing in or signing up —
+  and when an already-signed-in visitor opens either page — the product MUST send the browser only
+  to a page on **its own site**, on both the student product and the console. A destination carried
+  in the link (`?next=`) that would leave the site, however it is spelled — another host, a
+  scheme, `//host`, a backslash, a tab or newline a browser would strip, or `.`/`..` segments that
+  resolve to `//host` — MUST be replaced by the page's own default destination. *(Written with its
+  fix: `?next=/%09/evil.example` was reaching another site from noor.reletix.com.)*
 
 ### Isolation & authorisation (FR-2101…)
 
@@ -736,6 +743,152 @@ password sign-in.
   MUST never spend money or wait on the tutor program, because the page is opened precisely when
   something is already wrong.
 
+### Teaching controls and testers (FR-3101…) **[ADDED 2026-09-24 — ADR-0021]**
+
+> **Written with their code, on the day Samuel approved the feature.** v0.6.0 brought Tamer's
+> Socratic-probing prototype onto `main` switched off behind a compile-time constant, and the
+> Socratic teaching protocol has been named in `CLAUDE.md` as shipped with no requirement. **Samuel
+> approving the runtime toggle on 2026-09-24 is the authorisation for these eleven** — they state the
+> switch, who may move it, who it reaches and what it must leave untouched. They do not retro-cover
+> the rest of the Socratic protocol (001 §9 still names that), and nothing here is back-dated.
+>
+> **What probing is, in one sentence**: when a student answers a maths question wrongly in a lesson,
+> the tutor asks a guiding question first instead of the card showing the worked solution
+> straight away. Issue #53 lists what it still gets wrong, and is why "everyone" is locked.
+>
+> **When a change reaches a student** (Samuel, 2026-09-24, option B): Off applies to the student's
+> next message; On applies from their next sitting. FR-3105 states it.
+>
+> Implementation status is in `traceability.md` here, §7e.
+
+- **FR-3101**: The console MUST offer a switch for Socratic probing with exactly three positions —
+  **Off**, **Test accounts only**, **Everyone** — and MUST treat the absence of any recorded choice
+  as **Off**, so a new environment changes nothing until somebody decides.
+- **FR-3102**: Moving the switch MUST require a dedicated operator role, **separate from content
+  review**, so who may change how a child is taught can be narrowed on its own. Every **active**
+  operator who held **content review** — the role it is split from — when the role was introduced
+  MUST receive it once, and nobody else. A later deploy MUST NOT give it back to an operator it was
+  removed from, and neither may withdrawing the role and deploying again. *(Amended 2026-09-24,
+  fix pass: was "every operator who held a role".)*
+- **FR-3103**: **Everyone** MUST be unavailable until the known probing defects are fixed (#53): the
+  console MUST show it disabled with the reason beside it, the server MUST refuse it whoever asks,
+  and a stored **Everyone** MUST act as **Test accounts only** while it is locked. Unlocking it MUST
+  be one deliberate change, not a migration.
+- **FR-3104**: Probing MUST apply only to **maths lessons in learn mode**. Social Studies, Arabic,
+  review mode, practice and open chat MUST never probe, whatever the switch says, because none of
+  its wording exists for them.
+- **FR-3105**: Whether a sitting may probe MUST be decided **by the server when the sitting
+  starts**, and recorded with it; that record MUST never be rewritten. Each request in the sitting
+  MUST then probe only if the sitting started with probing on **and** the switch and the student's
+  test-account mark, as they stand at that request, still allow it **and neither has changed since
+  the sitting started**. So switching **Off** — or removing a student's mark — MUST apply to the
+  student's **next message**, even mid-lesson; and switching **On** MUST apply only from the
+  student's **next sitting**: a sitting that started with probing off MUST never start probing, and
+  a sitting that has stopped probing MUST never start again — switching Off and back On, or
+  removing the mark and adding it back, leaves it off until the student's next sitting. *(Amended
+  2026-09-24, Samuel's option B: was "decided once when the lesson starts; a change reaches only
+  lessons that start afterwards". Amended again 2026-09-24, fix pass 2: "and neither has changed
+  since the sitting started" added, because the rule as first written let Off-then-On resume a
+  sitting mid-lesson — On applying before the next sitting.)*
+- **FR-3106**: Everything that behaves differently under probing — the tutor's instructions, whether
+  a question card reveals the worked solution, and how the answer is recorded — MUST follow the
+  server's answer for that request (FR-3105) and **never anything the student's device sends**. When
+  that answer turns to Off mid-sitting, a card holding back its answer and worked solution MUST show
+  them, and the next wrong answer MUST be handled exactly as with probing Off — **including when the
+  student's message is refused by the lesson's turn limit**. A response that is not about the lesson —
+  an answer recorded outside the lesson's sitting — MUST NOT change what the student's device holds.
+  *(Amended 2026-09-24, fix pass 2: the turn-limit case and the "not about the lesson" case added.)*
+- **FR-3107**: An operator holding **both** the student-data role and the teaching-controls role
+  MUST be able to mark a student account as a **test account**, and remove the mark in one action,
+  from that student's page; **neither role alone may**, and the page MUST say beside the control that
+  only accounts the team owns may be marked, never a real student. *(Amended 2026-09-24, fix pass:
+  was student-data alone; every operator held every role that day, so nobody lost access.)* Who marked it, who removed it and when MUST be
+  recorded and kept after removal, and a removed mark MUST stay removed — marking the student again
+  is a new mark, never the old one reopened or rewritten. A removal MUST NOT accept a note it cannot
+  keep: a note sent with a removal MUST be refused, never silently dropped. *(Added 2026-09-24, fix
+  pass 2.)* **No student surface may be able to set or remove the mark**, for the student or anyone
+  else.
+- **FR-3108**: With probing **Off**, the tutor's instructions MUST be **byte-identical** to what
+  they were before the switch existed — proved against a golden capture of every learn and review
+  prompt and against a full capture of 438 model inputs — and the question card and the record of
+  every answer MUST take the pre-switch code paths, selected by the same server-declared boolean.
+  Only that is claimed identical: the tutor's stream gains a first frame declaring probing, and each
+  session row gains the release and the probing record. *(Reworded 2026-09-24, fix pass: was "exactly
+  what they got before … word for word", which overreached.)*
+- **FR-3109**: Every lesson MUST record **which release served it** and **whether probing applied**,
+  and the server MUST log both when the lesson starts. The release MUST come from the build actually
+  deployed, not from a version number that two builds share.
+- **FR-3110**: The console MUST show, on every page, the **deployed release** and the **current
+  probing position** — and, when the position cannot be read, MUST say it is **unknown** rather than
+  fail the page. It MUST show who last changed the position and when, to any operator holding at
+  least one role. Every change MUST be recorded — from, to, who, when — and listed, and nothing in
+  the console may edit or remove that record; the note kept with a change MUST be marked as not
+  the place to name a student, because every role reads it.
+- **FR-3111**: A student's session list, timeline and replay MUST show, for each sitting, the
+  release that served it and whether probing was on when it **started** — and MUST say that probing
+  applies to maths learn-mode turns only and that a sitting which started with it on stops probing
+  once the switch is changed or the student's mark is removed, and does not start again in that
+  sitting (FR-3105). They MUST say "not recorded" for sittings from before it was recorded, rather
+  than guessing. *(Amended 2026-09-24, fix pass 2: was "follows the switch from then".)*
+
+### Shipped in v0.6.0 without a requirement — now written (FR-3201…) **[ADDED 2026-09-24]**
+
+> **Written after the code, and saying so.** v0.6.0 (2026-09-23) brought Tamer's work onto `main`
+> together with the day's fixes, and several of the things it shipped had no requirement at all —
+> 001's matrix names two of them (§9 items 16 and 17) and asks for them to be written or recorded as
+> ADR-only, and **not** filed under an existing FR. **Samuel asked for them to be written on
+> 2026-09-24**, from the approved decision and the code as it actually behaves; that is the
+> authorisation. They are two days younger than the code, and the matrix rows (§7f) say which
+> evidence came from a signed-in run of the v0.6.0 build that morning, which from unit tests, and
+> which from the deploy log.
+>
+> Placed here rather than in 001 because 001 is the shipped v0.4.0 delta and its FR blocks are
+> closed; the surfaces are the same product.
+
+**Lesson progression ([ADR-0020](../../docs/decisions/0020-mastery-gated-lesson-progression.md))**
+
+- **FR-3201**: Each student MUST have their own saved place in each course, separate per course, and
+  no student's place may be read or changed by any other student's request.
+- **FR-3202**: A student's place MUST move on when **every** objective in the lesson they are on
+  reaches the mastery gate, to the next lesson in course order whose prerequisites that student has
+  met — never onto a lesson whose prerequisites are not met; unready lessons are skipped. *(Reworded
+  2026-09-24, fix pass: "never past a lesson they are not ready for" said the opposite of what the
+  code does.)*
+- **FR-3203**: A student's place MUST never move backwards. When nothing later is ready yet it MUST
+  stay where it is, and the course MUST read as complete only when the student is on its last lesson
+  and every lesson has passed the gate.
+- **FR-3204**: A saved place that no longer names a lesson the student can see MUST read as the
+  course's first lesson, and advance from there by the same rule.
+- **FR-3205**: No student's place may be guessed from history: everyone MUST start on a course's
+  first lesson and advance only by the rule above.
+- **FR-3206**: An explicit link to a lesson MUST win over the saved place, and the saved place MUST
+  never open a course the student is not allowed to see.
+- **FR-3207**: Maths lessons MUST run in the school's order — Term 1 before Term 2.
+
+**The `/spine` skill map ("How you're doing", `b9df1e1`)**
+
+- **FR-3208**: Each topic on the skill map MUST show a plain band word and a fill, and MUST NOT show
+  a student a percentage or an internal identifier.
+- **FR-3209**: Noor MUST sit in a panel beside the map. Below 1024px wide (iPad portrait) the topic
+  panel MUST dock full width under the map and Noor MUST collapse to a bar.
+- **FR-3210**: The map MUST work without a pointer: a topic opens from the keyboard with focus on its
+  heading, Escape closes it and returns focus to the topic, and a panel that has been dragged MUST be
+  returnable to its place by a control, not only by dragging.
+
+**The rest of v0.6.0**
+
+- **FR-3211**: No student surface may say whether content was reviewed. Review status is an operator
+  fact, shown in the console only ([ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md));
+  what a student may be told is where a question came from.
+- **FR-3212**: The console's Content page MUST say which subject it is counting: an operator MUST be
+  able to narrow it to one subject, the questions held back MUST be counted on the page, and every
+  count MUST be computed from the rows shown, so a figure cannot disagree with its own table.
+- **FR-3213**: Every database migration MUST be re-runnable on every deploy without failing, MUST
+  NOT re-apply a narrower definition over a wider one, and MUST NOT take a lock that blocks students
+  when it has nothing to change.
+- **FR-3214**: The misconception catalogue MUST re-sync on every deploy without duplicating anything
+  or changing a question's status, and every live misconception MUST have an explanation.
+
 ### Deferred by design — architecture only (FR-2901…)
 
 > Designed for, not built. None may be implemented this release; the point of stating them is that
@@ -788,6 +941,14 @@ Plain language; no field names. `data-model.md` owns the mapping.
 - **Student course exception** *(new, added 2026-09-22 — ADR-0018)*: one decision about one course
   for one named student, outranking the year's rule in both directions. A live permission rather
   than a record of anything the student did, so clearing it removes it.
+- **Teaching switch** *(new, added 2026-09-24 — ADR-0021)*: one position per environment for
+  Socratic probing — off, test accounts only, everyone — with who last moved it and when, and every
+  earlier position kept as a change from one to the next. No record means off.
+- **Test-account mark** *(new, added 2026-09-24 — ADR-0021)*: one operator's statement that one
+  student account is a test account, with who made it, when and why; removing it stamps who removed
+  it rather than erasing it.
+- **Lesson snapshot** *(new, added 2026-09-24 — ADR-0021)*: two facts fixed on a learning session
+  when it opens — the release that served it and whether probing applied — never changed afterwards.
 
 ## Success Criteria *(mandatory)*
 

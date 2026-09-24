@@ -106,6 +106,16 @@ test("`selfOnly` is only ever claimed by an endpoint, and only with no roles", (
   }
 });
 
+test("`allOf` names at least two roles — one role is an ANY-OF of one", () => {
+  // An ALL-OF of a single role reads as a stronger rule than it is, and an
+  // ALL-OF of none would admit everyone (`routeAdmits` treats an empty list
+  // as the shell's). Both are a row somebody half-edited.
+  for (const r of CONSOLE_ROUTES.filter((x) => x.allOf)) {
+    assert.ok(r.roles.length >= 2, `${r.path}: allOf needs two or more roles`);
+    assert.notEqual(r.selfOnly, true, `${r.path}: allOf and selfOnly contradict each other`);
+  }
+});
+
 test("each file's directory is the URL it claims", () => {
   // This is the assertion that catches a row copied and half-edited: the table
   // says /cost and the file sits in content/. The manifest check catches the

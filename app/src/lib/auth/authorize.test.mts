@@ -25,6 +25,7 @@ const ROLES: OperatorRole[] = [
   "evidence-access",
   "student-data",
   "cost-billing",
+  "teaching-controls",
 ];
 
 const anonymous = { kind: "anonymous" } as const;

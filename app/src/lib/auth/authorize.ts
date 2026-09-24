@@ -41,6 +41,19 @@ export type { OperatorRole };
 export type Requirement = {
   /** An operator role the caller must currently hold. */
   role?: OperatorRole;
+  /**
+   * Operator roles the caller must hold **every one of** (ALL-OF). For the one
+   * action two roles must agree on: marking a student as a test account names
+   * a child (`student-data`) and decides who the tutor experiments on
+   * (`teaching-controls`), so neither role alone may do it (ADR-0021). The
+   * refusal names the first role missing, in the order given.
+   *
+   * Named `allRoles`, not `roles` (fix pass 2): `ConsoleRoute.roles` in
+   * `lib/console-routes.ts` is an ANY-OF, and one word meaning both "any of
+   * these" and "all of these" one import apart is how a requirement gets
+   * copied from a route row and silently changes meaning.
+   */
+  allRoles?: readonly OperatorRole[];
   /** The caller must be a student principal. */
   student?: true;
   /** …and must have confirmed their email (FR-2004 — this gates LEARNING). */
@@ -68,7 +81,11 @@ export function checkRequirement(me: Principal, req: Requirement): Decision {
     return { ok: false, status: 401, code: "unauthenticated", reason: "no_principal" };
   }
 
-  if (req.role !== undefined) {
+  const required: OperatorRole[] = [
+    ...(req.role !== undefined ? [req.role] : []),
+    ...(req.allRoles ?? []),
+  ];
+  if (required.length > 0) {
     if (me.kind !== "operator") {
       // FR-2205: a student account can never hold an operator role. On the
       // student build these routes do not exist at all (build scope, A4); this
@@ -77,15 +94,16 @@ export function checkRequirement(me: Principal, req: Requirement): Decision {
         ok: false,
         status: 403,
         code: "permission_denied",
-        reason: `student_on_console:${req.role}`,
+        reason: `student_on_console:${required[0]}`,
       };
     }
-    if (!me.roles.includes(req.role)) {
+    const missing = required.find((r) => !me.roles.includes(r));
+    if (missing !== undefined) {
       return {
         ok: false,
         status: 403,
         code: "permission_denied",
-        reason: `missing_role:${req.role}`,
+        reason: `missing_role:${missing}`,
       };
     }
   }

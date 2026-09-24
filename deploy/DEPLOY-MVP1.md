@@ -155,12 +155,70 @@ looks like a safeguard and is not one.
 > **Recipient:** _(unassigned — Samuel to fill in before any student is invited)_
 > **Response expectation:** _(unassigned)_
 
-## Rollback
+## Rolling back
+
+Every deploy re-applies **every** migration, in order, with the build being
+deployed (`deploy/apply-migrations.sh`; there is no ledger). So a rollback is
+never "undo the last migration": it is the OLD build's migrations running over
+the NEW build's database. Whether that is safe is a property of the old build,
+and CI checks it on every change to `db/` (`.github/workflows/ci-cd.yml`,
+job `migrations`, step (c)). Pick the smallest lever that fixes the problem:
+
+**1. A feature is misbehaving → switch it off. No deploy.**
+Socratic probing (v0.7.0): console → **Teaching** → **Off** → Save. It is
+recorded (who, when, from → to), it reaches every student on their next
+message — a lesson in progress stops probing then — and switching it back on
+is one click (On reaches a student from their next sitting, ADR-0021). A
+single student: remove their test-account mark on their Student 360. To cut
+all access at once, remove the hostname in the Cloudflare Zero Trust
+dashboard — faster than any deploy, and the right lever for withdrawing
+content from students. The baseline is unaffected either way.
+
+**2. The code is wrong → revert the merge and deploy.**
+`git revert -m 1 <merge sha>` on `main`, push, then Actions → CI/CD → Run
+workflow. This is safe from v0.6.1 on: v0.6.1 and every later release guard
+migration 014, so the previous build's migrations leave the newer role
+vocabulary (and the `teaching-controls` rows that depend on it) as they are.
+Nothing needs running by hand. The v0.7.0 tables and columns stay in the
+database, unread by the older build, and are picked up again, intact, by
+the next roll-forward.
+
+**3. Never redeploy v0.6.0 itself after v0.7.0.**
+Its migration 014 drops and re-adds a four-role CHECK unconditionally, and
+Postgres refuses to add it while any operator holds `teaching-controls`: the
+migrate step fails, the app never starts — the site is down (CI step (c)
+shows exactly this against v0.6.0). Roll back to v0.6.1 instead (it is v0.6.0
+plus the guard, nothing else). If v0.6.0 itself is ever unavoidable:
+
+```bash
+# on the box, against the mvp1 database, BEFORE deploying v0.6.0
+# a) keep who held teaching-controls — the rollback below deletes the rows
+psql <db> -c "\copy (SELECT * FROM operator_roles WHERE role = 'teaching-controls') TO '029-operator-roles.csv' CSV HEADER"
+# b) remove the v0.7.0 schema, the toggle first (its tables reference nothing)
+psql <db> -v ON_ERROR_STOP=1 -f db/migrations/rollback/030-teaching-toggle-and-testers.down.sql
+psql <db> -v ON_ERROR_STOP=1 -f db/migrations/rollback/029-teaching-controls-role.down.sql
+# c) deploy v0.6.0
+```
+
+After the next roll-forward (v0.7.0 or later) migration 029 grants the role
+to **nobody** — it reads the `auth_events` trail, which the rollback leaves,
+so an operator it was revoked from can never get it back that way. Put the
+grants back from the dump, exactly as they were (revocations included), then
+re-revoke anybody you removed it from in the meantime:
+
+```bash
+psql <db> -c "\copy operator_roles FROM '029-operator-roles.csv' CSV HEADER"
+```
+
+What 030's rollback loses and does not bring back: the switch position and its
+history (it comes back **Off**, the safe default), every tester mark, and
+which release opened each session. Dump them first if they matter — the
+commands are in the rollback file's header. This whole path was run on a
+scratch database on 2026-09-24: rollback/030, rollback/029, v0.6.0 twice,
+v0.7.0, restore — every step passed.
+
+To stop the stack outright (no `-v`: the volume is the database):
 
 ```bash
 $C down                                  # stop the comparison stack, no -v
 ```
-
-To cut access instantly, remove the hostname from the Cloudflare Zero Trust
-dashboard — faster than any deploy, and the right lever for withdrawing content
-from students. The baseline is unaffected either way.

@@ -9,7 +9,14 @@
  * **It sets no password.** Samuel obtains one through the ordinary reset flow,
  * so no credential ever sits in a config file, a compose file or a shell
  * history. Re-running grants nothing new: the operator row is upserted by
- * lower(email) and each of the four roles is skipped if it is already held.
+ * lower(email) and each of the five roles is skipped if it is already held.
+ *
+ * FIVE since v0.7.0: `teaching-controls` (ADR-0021) gates the console's
+ * Socratic-probing switch, and a new operator gets it like the other four.
+ * Like the other four, a role an EXISTING operator lacks is granted again if
+ * this is run for them — which is exactly why the CI "First operator" step
+ * runs it only when no operator exists at all. Operators who already existed
+ * when v0.7.0 landed got the role from migration 029, once, never again.
  *
  * Runs under `ainext_maint` (BYPASSRLS) because `operators` and `operator_roles`
  * have no grant to `ainext_app` at all — a student principal cannot even see
@@ -31,7 +38,13 @@
 import { withMaint } from "../src/lib/db.ts";
 import { BOOTSTRAP_OPERATOR_EMAIL, ENVIRONMENT } from "../src/lib/env.ts";
 
-const ROLES = ["content-review", "evidence-access", "student-data", "cost-billing"] as const;
+const ROLES = [
+  "content-review",
+  "evidence-access",
+  "student-data",
+  "cost-billing",
+  "teaching-controls",
+] as const;
 
 const email = BOOTSTRAP_OPERATOR_EMAIL;
 if (!email) {
@@ -80,8 +93,8 @@ await withMaint(async (c) => {
       [operatorId, role, environment]
     );
     // Recorded, because a grant nobody can see later is a grant nobody can
-    // audit — and `content-review` in particular is a safety control
-    // (constitution III, FR-2204). Written directly rather than through
+    // audit — and `content-review` and `teaching-controls` in particular are
+    // safety controls (constitution III, FR-2204, ADR-0021). Written directly rather than through
     // lib/auth/events.ts: that module writes as `ainext_app`, and this script
     // is the one path that runs as `ainext_maint`.
     await c.query(

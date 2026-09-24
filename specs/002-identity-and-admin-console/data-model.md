@@ -185,7 +185,8 @@ CREATE TABLE IF NOT EXISTS operator_roles (
   environment TEXT NOT NULL,
   PRIMARY KEY (operator_id, role, granted_at),
   CONSTRAINT operator_roles_role_check CHECK (
-    role IN ('content-review','evidence-access','student-data','cost-billing'))
+    role IN ('content-review','evidence-access','student-data','cost-billing',
+             'teaching-controls'))   -- fifth added 2026-09-24, ADR-0021
 );
 ```
 
@@ -196,7 +197,12 @@ credential logic, paid down by sharing the same library functions.
 
 **One row per grant, never updated in place**, so a revoked grant stays visible with who revoked it
 and when (FR-2204). Active set is `revoked_at IS NULL`. **No role implies another and none grants
-everything** (FR-2203): "Samuel holds all four" is four rows, not a fifth role.
+everything** (FR-2203): "Samuel holds all five" is five rows, not an "all" role. The fifth,
+`teaching-controls` (2026-09-24, ADR-0021, FR-3102), gates the console's teaching switch; migration
+029 granted it once to every active operator then holding `content-review`, and never again — its
+guard also reads the `auth_events` trail, so withdrawing the role (`rollback/029`) and deploying
+again does not re-grant it. `014` rebuilds the CHECK only when it lacks one of the five (the v0.6.1
+guard), so an older build's `014` leaves a wider vocabulary alone.
 
 ## 8. `students` — account link, gender, commercial status, guardian hooks
 
@@ -369,6 +375,10 @@ console — role checks in the application, the database grants the read), **`ai
 | `student_course_access` *(023)* | S where `student_id = app.student_id` | S/I/U/D all | a per-student override of the course gate, set from the console |
 | `feedback` *(025)* | S/I/U where `student_id = app.student_id` | S all | read by the console's Feedback page |
 | `student_progress` *(028, ADR-0020)* | S/I/U where `student_id = app.student_id` — **no D** | **no grant** | the lesson pointer is monotonic, so nothing deletes it; no console surface reads it, so the operator has no read to enumerate (add the grant, the policy and a `CROSS_STUDENT_READS` entry together when one does) |
+| `student_testers` *(030, ADR-0021)* | **S only**, where `student_id = app.student_id` | S/I all; U only `unmarked_at`, `unmarked_by`; **no D** | the test-account mark; the student surface reads its own (the probing resolver needs it) and can never set it — the reason it is not a `students` column (FR-3107). A trigger (`student_testers_close_once`, every role) lets the two "removed" columns go from NULL to a value once and nothing else change, so a removed mark is never reopened or rewritten |
+| `teaching_settings` *(030)* | S | S/I/U | **no policies** — the teaching switch is product configuration, like `course_availability`; no row means off |
+| `teaching_setting_changes` *(030)* | **no grant** | **S + I only** | the switch's history, append-only by privilege (FR-3110) |
+| `sessions.probing`, `sessions.release_tag` *(030)* | written at INSERT only | S | the sitting's snapshot — how it OPENED; each request narrows it in code (FR-3105, option B); a trigger refuses any UPDATE of either, for every role |
 
 **The enumerated cross-student reads** (FR-2108) are exactly the `ainext_operator` "S all" rows above
 plus `cost_daily`; a read not on this list fails closed, because `ainext_app` has no policy that
@@ -387,6 +397,8 @@ surface that may perform each.
 | `016-auth-events.sql` | §10 `auth_events` |
 | `017-rls-roles-and-policies.sql` | §14 — roles, grants, `ENABLE`/`FORCE`, every policy |
 | `018-cost-ledger-and-rollups.sql` | §12 `ai_interactions` columns, `cost_daily`, the three overview views |
+| `029-teaching-controls-role.sql` | the fifth role, granted once to active `content-review` holders (ADR-0021) — the vocabulary itself is widened in `014` |
+| `030-teaching-toggle-and-testers.sql` | `student_testers`, `teaching_settings`, `teaching_setting_changes`, `sessions.probing` / `release_tag` and their trigger (ADR-0021) |
 
 `017` is late because every table it protects must exist first; `011` is first because it is the only
 gap losing data now (ADR-0015, plan.md P0).
@@ -415,7 +427,7 @@ attempts 1─* explanation_log               (the only path explanation_log has 
 - **FR-2101 / FR-2102**: no principal ⇒ no rows, by `nullif(current_setting(...))` returning NULL. The principal comes from the verified cookie, never a request parameter.
 - **FR-2105**: `emit`, `parseUpload` and `flagAuthoringGap` each take an explicit student id.
 - **FR-2109 / FR-2509**: `environment NOT NULL` on every table created here and on the eight backfilled.
-- **FR-2203**: the `operator_roles.role` CHECK admits exactly four values; there is no fifth "all" role.
+- **FR-2203**: the `operator_roles.role` CHECK admits exactly five values (four until 2026-09-24; `teaching-controls` per ADR-0021); there is no "all" role.
 - **FR-2301 / FR-2302**: the partial unique index permits one open session per student; `close_reason` distinguishes `completed` from `inactivity`.
 - **FR-2306**: `operator_reads` has no FK to `students` and no UPDATE or DELETE grant to the role that writes it.
 - **FR-2402**: `surface_kind` keeps `upload_parse` separable from `chat` and `understanding` at row level, so no query blends them by accident.

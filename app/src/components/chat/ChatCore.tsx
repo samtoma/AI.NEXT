@@ -31,7 +31,11 @@ import {
   type Cite,
 } from "@/lib/chat-parse";
 import { submitAttempt } from "@/lib/attempts-client";
-import { probingActive } from "@/lib/socratic-probing";
+import {
+  pendingAfterDeclaration,
+  probingActive,
+  probingDeclaredBy,
+} from "@/lib/socratic-probing";
 import type { CiteInfo } from "./CitationChip";
 import { ChatQuestionCard } from "./ChatQuestionCard";
 import {
@@ -132,9 +136,9 @@ export interface ChatCoreProps {
   onCiteClick?: (c: Cite) => void;
   onAttemptResult?: (r: AttemptResult, q: SpineQuestion) => void;
   /**
-   * Socratic-probing prototype (`507bb31`): fired whenever ChatCore's own
-   * confirmation-pending state changes (lesson_learn only, and only while
-   * `SOCRATIC_PROBING_ENABLED` is on — null otherwise). The lesson whiteboard
+   * Socratic probing (`507bb31`): fired whenever ChatCore's own
+   * confirmation-pending state changes (lesson_learn only, and only in a
+   * lesson whose session probes — null otherwise). The lesson whiteboard
    * hosts its own question cards outside the transcript and mirrors this so
    * ITS cards gate the same way; ChatCore stays the single source of truth.
    */
@@ -146,6 +150,13 @@ export interface ChatCoreProps {
       questionId: string;
     } | null
   ) => void;
+  /**
+   * Whether this lesson probes, as the SERVER declared it (ADR-0021) — fired
+   * when that changes. The whiteboard's board-hosted cards read it through
+   * the host exactly as they read the pending state above, so a board card
+   * and a transcript card can never follow two different answers.
+   */
+  onProbingChange?: (probing: boolean) => void;
   /** Socratic-probing prototype: fired whenever ChatCore grades a chat-typed
    *  answer itself — mirrored the same way so a board-hosted card can sync. */
   onExternalAttemptChange?: (
@@ -245,6 +256,7 @@ export function ChatCore({
   onCiteClick,
   onAttemptResult,
   onPendingConfirmationChange,
+  onProbingChange,
   onExternalAttemptChange,
   onTotalChange,
   renderWidget,
@@ -263,12 +275,26 @@ export function ChatCore({
 }: ChatCoreProps) {
   const lessonSurface = surface === "lesson_learn" || surface === "lesson_review";
   /**
-   * Socratic-probing prototype (`507bb31`, Route B + Option 1). Scoped to
-   * lesson_learn only — review mode's ≤5-message lock-in would fight it — and
-   * OFF everywhere while `SOCRATIC_PROBING_ENABLED` is false
-   * (lib/socratic-probing.ts), pending Samuel's ruling on Principle II.
+   * Socratic probing (`507bb31`, Route B + Option 1; ADR-0021).
+   *
+   * **The client never decides this.** The server resolves it once per
+   * learning session, stores it on the session row, and declares it on every
+   * response that session serves: the first frame of each `/api/ask` stream
+   * (`{type:"session", probing}`), the `cap` frame of a turn the cap
+   * refused, and the `probing` field of an `/api/attempts` result written
+   * inside a lesson sitting (absent otherwise: keep what we had). ChatCore adopts whatever the server last said —
+   * starting from OFF, which is what every surface was before v0.7.0 — and
+   * scopes it to lesson_learn (review mode's ≤5-message lock-in would fight
+   * it). With the server saying false, nothing below behaves differently from
+   * v0.6.0's switched-off build.
+   *
+   * A ref beside the state, because the stream's completion callback and
+   * `handleAttempt` must read the value the server sent THIS turn, not the
+   * one their closure was created with.
    */
-  const probingSurface = probingActive(surface);
+  const [serverProbing, setServerProbing] = useState(false);
+  const serverProbingRef = useRef(false);
+  const probingSurface = probingActive(surface, serverProbing);
   const [messages, setMessages] = useState<ChatMsg[]>(() =>
     initialMessages && initialMessages.length > 0
       ? initialMessages
@@ -351,8 +377,9 @@ export function ChatCore({
   // cycle has taken, and which question that last attempt was against.
   // Session-scoped only (never persisted, never touches mastery). Once
   // `wrongCount` reaches 2 the card stops withholding — the same threshold an
-  // explicit {{reveal_answer}} forces early. Always null while the switch is
-  // off: handleAttempt below never sets it unless `probingSurface`.
+  // explicit {{reveal_answer}} forces early. Always null in a lesson that
+  // does not probe: handleAttempt below never sets it unless the server said
+  // this lesson probes, and `adoptProbing(false)` clears it.
   const [pendingConfirmation, setPendingConfirmation] = useState<{
     loId: string;
     lastAttemptId: number;
@@ -369,6 +396,31 @@ export function ChatCore({
   useEffect(() => {
     onPendingConfirmationChange?.(pendingConfirmation);
   }, [pendingConfirmation, onPendingConfirmationChange]);
+  useEffect(() => {
+    onProbingChange?.(probingSurface);
+  }, [probingSurface, onProbingChange]);
+  /**
+   * Take the server's word for whether this sitting probes, as of ITS latest
+   * response. Called from the stream and from attempt results — never from
+   * anything the client decided. It can go false mid-sitting (ADR-0021,
+   * option B: the switch went Off, or the student was unmarked — the server
+   * says so on the next message), and then:
+   *   · the confirmation-pending state is dropped (`pendingAfterDeclaration`):
+   *     a pending LO is a probing construct, and one left behind would keep
+   *     the "Got it" guard refusing in a lesson that no longer probes;
+   *   · every card re-renders with `probing` false, so one that was holding
+   *     back its answer and worked solution shows them (`cardWithholdsAnswer`);
+   *   · the next wrong answer takes v0.6.0's path — revealed on the card, the
+   *     Off prompt's re-explain lines — because `handleAttempt` and the
+   *     stream's directive handling read this same value.
+   * It can go true only at a new sitting (the server never turns on a
+   * sitting that opened off).
+   */
+  const adoptProbing = useCallback((declared: boolean) => {
+    serverProbingRef.current = declared;
+    setServerProbing(declared);
+    setPendingConfirmation((prev) => pendingAfterDeclaration(prev, declared));
+  }, []);
   // A chat-typed answer ({{answer_submitted:…}}) ChatCore graded itself —
   // handed down so the open question's OWN card syncs its display.
   const [externalAttempt, setExternalAttempt] = useState<{
@@ -506,7 +558,7 @@ export function ChatCore({
       }
       // Socratic probing: a wrong answer left the LO confirmation-pending —
       // the same FR-1214 shape as the guard above, for "not SOLVED yet"
-      // rather than "not tried yet". Never pending while the switch is off.
+      // rather than "not tried yet". Never pending in a lesson that does not probe.
       if (text === GOT_IT_SENTINEL && pendingConfirmationRef.current) {
         setMessages((prev) => [
           ...prev,
@@ -686,13 +738,23 @@ export function ChatCore({
               text?: string;
               message?: string;
               meta?: TurnMeta;
+              probing?: boolean;
             };
             try {
               j = JSON.parse(line.slice(6));
             } catch {
               continue;
             }
-            if (j.type === "delta" && j.t) {
+            // Probing, as the server declares it on this frame
+            // (`probingDeclaredBy`): the `session` frame — this turn's
+            // prompt, sent before any text — and, since fix pass 2, the
+            // `cap` frame, so switching Off reaches a lesson that has hit its
+            // turn cap too. Every other frame declares nothing.
+            const declaredProbing = probingDeclaredBy(j);
+            if (declaredProbing !== null) adoptProbing(declaredProbing);
+            if (j.type === "session") {
+              // handled above: it carries nothing but the declaration
+            } else if (j.type === "delta" && j.t) {
               acc += j.t;
               patchLast({ text: acc });
               if (!paced) emitNewCites(acc);
@@ -733,10 +795,11 @@ export function ChatCore({
           if (acc.includes("{{finish_lesson}}")) onFinishDirective?.();
           // SOCRATIC PROBING (`507bb31`): a chat-typed answer or an explicit
           // "just tell me", tagged by the tutor with a directive, routed
-          // through the SAME grading pipeline a tapped card uses. Scoped to
-          // probingSurface — a no-op everywhere else, and everywhere while
-          // the switch is off, even if the model somehow emitted one.
-          if (probingSurface) {
+          // through the SAME grading pipeline a tapped card uses. Only in a
+          // lesson the server says probes (read from the ref: the value THIS
+          // stream declared) — a no-op everywhere else, even if the model
+          // somehow emitted one.
+          if (probingActive(surface, serverProbingRef.current)) {
             const submittedGiven = extractAnswerSubmitted(acc);
             const pendingNow = pendingConfirmationRef.current;
             const targetQuestionId =
@@ -835,7 +898,7 @@ export function ChatCore({
       onAssistantDone,
       onFinishDirective,
       onCapped,
-      probingSurface,
+      adoptProbing,
       lookupQuestion,
     ]
   );
@@ -894,11 +957,23 @@ export function ChatCore({
       // the card withholds the reveal and the matched material rides into
       // the TUTOR's next turn as reference-only context, until the 2nd wrong
       // attempt on the same LO. Scoring is untouched: bktUpdate() already ran
-      // server-side. Nothing here runs while the switch is off.
+      // server-side. Nothing here runs in a lesson that does not probe.
+      //
+      // Which lesson that is comes from THIS result when it says: the attempt
+      // route declares whether the lesson sitting it wrote against probes
+      // (ADR-0021), and the note, the pending state and the card all follow
+      // the server's answer for this attempt. A result that declares nothing
+      // — the attempt was written outside any lesson sitting, e.g. a
+      // `practice` one (`attemptProbingDeclaration`, fix pass 2) — leaves the
+      // chat's last-known answer in force; it must not drop a pending probe.
+      const declared =
+        typeof r.probing === "boolean" ? r.probing : serverProbingRef.current;
+      if (typeof r.probing === "boolean") adoptProbing(r.probing);
+      const probingNow = probingActive(surface, declared);
       const wasPending = pendingConfirmationRef.current;
       const wrongCountAfter =
         wasPending?.loId === q.loId ? wasPending.wrongCount + 1 : 1;
-      if (probingSurface) {
+      if (probingNow) {
         if (!r.isCorrect) {
           const material = r.refutation
             ? r.refutation.steps.map((st) => st.text_md).join(" ")
@@ -920,7 +995,7 @@ export function ChatCore({
         }
       }
       setPendingConfirmation((prev) => {
-        if (!probingSurface) return prev;
+        if (!probingNow) return prev;
         if (r.isCorrect) return prev?.loId === q.loId ? null : prev;
         // one open probe at a time: a wrong answer on a DIFFERENT LO leaves
         // the earlier one authoritative
@@ -959,7 +1034,7 @@ export function ChatCore({
       onAttemptResult?.(r, q);
       scheduleContinue();
     },
-    [onAttemptResult, scheduleContinue, lessonSurface, arabicUi, probingSurface]
+    [onAttemptResult, scheduleContinue, lessonSurface, arabicUi, surface, adoptProbing]
   );
   // Same commit-time mirror as `pendingConfirmationRef` above; its one
   // reader is the stream's completion callback.
@@ -1220,7 +1295,8 @@ const MessageRow = memo(function MessageRow({
   resolveCite?: (c: Cite) => CiteInfo | null;
   onCiteClick?: (c: Cite) => void;
   onAttempt: (r: AttemptResult, q: SpineQuestion) => void;
-  /** Socratic-probing prototype: forwarded to ChatQuestionCard (see there) */
+  /** this lesson probes, as the server declared it (ADR-0021) — forwarded to
+   *  ChatQuestionCard (see there) */
   probing: boolean;
   pendingLoId: string | null;
   pendingAttemptId: number | null;

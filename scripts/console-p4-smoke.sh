@@ -264,8 +264,8 @@ check FR-2405 "students.subscription_updated_by = cost-only's operator id ($COST
   "$([ "$SUB_BY" = "$COSTONLY_OPID" ] && echo 1 || echo 0)"
 check FR-2405 "students.subscription_updated_at is set" "$([ "$SUB_AT_SET" = "t" ] && echo 1 || echo 0)"
 
-code=$(req POST "$CONSOLE" "/api/console/students/$STUDENT_ID/subscription" "$JAR_SAMUEL" '{"status":"active","note":"QA by four-role operator"}')
-check FR-2405 "four-role operator (holds cost-billing): POST subscription {active} -> 200 (got $code)" "$([ "$code" = 200 ] && echo 1 || echo 0)"
+code=$(req POST "$CONSOLE" "/api/console/students/$STUDENT_ID/subscription" "$JAR_SAMUEL" '{"status":"active","note":"QA by five-role operator"}')
+check FR-2405 "five-role operator (holds cost-billing): POST subscription {active} -> 200 (got $code)" "$([ "$code" = 200 ] && echo 1 || echo 0)"
 
 code=$(req POST "$STUDENT" "/api/console/students/$STUDENT_ID/subscription" "$JAR_OMAR" '{"status":"trial"}')
 check FR-2201 "Omar on :3000: POST .../subscription -> 404, route absent from student build (got $code)" \

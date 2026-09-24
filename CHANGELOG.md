@@ -12,6 +12,78 @@ requirement names it.
 
 Nothing yet.
 
+## [v0.7.0] — 2026-09-24
+
+The teaching switch, test accounts, and a record of which version and which teaching mode served
+every lesson. Two independent reviews and a code review read it before merge. Explainer:
+[`docs/releases/v0.7.0.html`](docs/releases/v0.7.0.html).
+
+### Security
+- **A sign-in link can no longer send someone to another website** (FR-2015). The `?next=` address
+  after sign-in accepted look-alike paths (a tab character, or dot segments such as `/.//site`)
+  that a browser turns into a different site. That affected the live student site too, and on the
+  console could have been used to stage a fake "enter your code" page. The address is now checked
+  after the browser's own rules are applied, and must stay on the same site.
+
+### Added — the teaching switch (ADR-0021, FR-3101…FR-3111)
+- **Socratic probing can now be switched on from the console, for test accounts only.** A new
+  **Teaching** page offers three positions: **Off** (the default), **Test accounts only**, and
+  **Everyone** — which is shown but locked, with "Not ready yet — see issue #53", and the server
+  refuses it. Probing only ever applies to maths lessons in learn mode; Social Studies, Arabic,
+  review mode and practice never probe, because none of its wording is translated.
+- **Test accounts.** An operator holding both the student-data and the teaching-controls roles
+  marks a student as a test account from the student's page — "only accounts the team owns, never
+  a real student" — and removes the mark with one click. Who marked it, who removed it and when are
+  kept, and a removed mark can never be reopened or rewritten.
+- **A new operator role, `teaching-controls`**, is the only one that can move the switch — split
+  out of content review so it can be narrowed later. Every active operator who held content review
+  got it once; a later deploy never gives it back to someone it was removed from — not even after
+  the role is withdrawn and re-added.
+- **Off applies to a student's next message; On from their next sitting.** Whether a sitting may
+  probe is decided by the server when it starts and written down with it. Switching Off — or
+  removing a student's test-account mark — stops probing on that student's very next message, even
+  mid-lesson, and a question card that was holding its answer back shows it. Switching On never
+  changes a sitting already under way. The tutor, the question cards and the saved answers all
+  follow the server's answer for each message — never anything the student's device sends.
+- **You can see what each sitting got.** Every sitting now records which release served it and
+  whether probing was on when it started. The console header shows the deployed release and the
+  switch on every page ("unknown" if it cannot be read, instead of an error page); the Teaching
+  page shows who changed it, when, and every change since, to any operator holding a role; a
+  student's session list, timeline and replay show both per sitting.
+
+### Changed
+- **With probing Off, the tutor's instructions are unchanged, character for character.** All 24
+  tutor prompts (three subjects × four ways of addressing a student) were compared with a copy taken
+  before any of this was written, and the reviews compared all 438 captured model inputs: identical.
+  The question cards and the saved answers take the same code paths as before. Two things did
+  change for everyone: the tutor's reply stream starts with one extra (invisible) frame saying
+  whether probing is on, and each sitting's record gains the release and the probing decision.
+- **The release name is the deployed build's.** Turns and lessons are stamped with the tag the
+  deploy computes (or `v<version>` on a laptop), no longer the old `PDR1-0-v…` package name that two
+  builds could share.
+
+### Also in this release
+- **Once a lesson stops probing, it never starts again.** Switching Off, or removing a tester mark,
+  reaches the student's next message; switching back On only affects lessons that start afterwards
+  (FR-3105).
+- **Requirements written for what v0.6.0 shipped without them** (FR-3201…FR-3214): lesson
+  progression, the `/spine` skill map, "students never see review status", the per-subject Content
+  page, re-runnable migrations and the misconception sync, each with an honest status.
+
+### Operations — rolling back, and proving it before every deploy
+- **Rolling back is written down**: [`deploy/DEPLOY-MVP1.md` → "Rolling back"](deploy/DEPLOY-MVP1.md#rolling-back).
+  A feature problem is the Teaching switch set to Off — no deploy. A code problem is a reverted
+  merge and a deploy, safe from v0.6.1 on. **Never redeploy v0.6.0 itself after this release**: its
+  migration 014 re-adds a four-role rule the database refuses once anyone holds the new role, and the
+  site stays down; the runbook has the manual path if it is ever unavoidable.
+- **This release's migration 014 carries the same guard as v0.6.1**, with the fifth role, so this
+  release is a safe place to roll back to later.
+- **CI now proves the migrations** on every change to `db/`: three times onto an empty database, as
+  an upgrade from the previous release, and as a rollback onto it and forward again (job
+  `migrations`). A deploy now waits for it.
+- **The app and console logs rotate** (5 × 10 MB each) — the shared box's disk no longer grows with
+  every lesson opened.
+
 ## [v0.6.1] — 2026-09-24
 
 A safety release with nothing visible to students or operators. It makes going back from v0.7.0

@@ -16,6 +16,14 @@ import {
 
 /**
  * @covers ADR-0020
+ * @covers FR-3202
+ * @covers FR-3203
+ * @covers FR-3204
+ * @covers FR-3205
+ * @covers FR-3207
+ *
+ * (The FR annotations were added 2026-09-24, when spec 002 wrote down what
+ * ADR-0020 shipped without a requirement — FR-3201…FR-3207.)
  *
  * The progression rules. Every one of these exists because getting it wrong
  * would be invisible in normal use and would move a real student to the wrong

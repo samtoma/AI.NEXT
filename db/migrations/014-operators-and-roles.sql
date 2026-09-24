@@ -12,9 +12,21 @@
 --
 --  2. `operator_roles` — ONE ROW PER GRANT, never updated in place, so a
 --     revoked grant stays visible with who revoked it and when (FR-2204). The
---     active set is `revoked_at IS NULL`. The CHECK admits exactly four values
---     and there is deliberately no fifth "all" role (FR-2203): "Samuel holds
---     all four" is four rows.
+--     active set is `revoked_at IS NULL`. The CHECK admits exactly FIVE values
+--     and there is deliberately no "all" role (FR-2203): "Samuel holds all
+--     five" is five rows.
+--
+--     The fifth, `teaching-controls`, was added 2026-09-24 (ADR-0021): it
+--     gates the console's Socratic-probing switch, split out of
+--     `content-review` so it can be narrowed on its own. It is added HERE,
+--     in the vocabulary's own file, and not in the migration that grants it
+--     (029), because this file re-runs on every deploy and owns the CHECK.
+--     The CHECK is rebuilt only when it lacks one of the five (below), so a
+--     later release's wider vocabulary survives a redeploy of this one.
+--     ⚠ v0.6.0 and earlier re-added a four-value CHECK UNCONDITIONALLY: they
+--     cannot be redeployed onto a database holding a `teaching-controls` row
+--     (the deploy stops — the site is down). v0.6.1 carries the same guard as
+--     this file and can. deploy/DEPLOY-MVP1.md "Rolling back" says what to do.
 --
 --  3. `operator_reads` — who opened whose record. Two things in it are
 --     deliberate and look like mistakes:
@@ -73,27 +85,28 @@ CREATE TABLE IF NOT EXISTS operator_roles (
 
 -- Rebuilt ONLY when the existing check lacks one of these roles (v0.6.1).
 -- Every deploy re-applies every migration. An unconditional drop-and-re-add
--- here would rebuild this four-role list over any wider one a later release
--- adds (v0.7.0 adds `teaching-controls`) and fail against those rows. That
--- makes rolling back to this release take the site down, exactly as 008 did
--- on 2026-09-23. Guarded, a later release's wider check is left as it is.
+-- here would rebuild this five-role list over any wider one a later release
+-- adds and fail against those rows. That makes rolling back to this release
+-- take the site down, exactly as 008 did on 2026-09-23. Guarded, a later
+-- release's wider check is left as it is. (v0.7.0: on a v0.6.1 database the
+-- check lacks `teaching-controls`, so the first deploy rebuilds it to five.)
 DO $roles$
 DECLARE def text; w text; missing boolean := false;
 BEGIN
   SELECT pg_get_constraintdef(oid) INTO def FROM pg_constraint
    WHERE conrelid = 'public.operator_roles'::regclass AND conname = 'operator_roles_role_check';
   IF def IS NULL THEN missing := true; ELSE
-    FOREACH w IN ARRAY ARRAY['content-review','evidence-access','student-data','cost-billing'] LOOP
+    FOREACH w IN ARRAY ARRAY['content-review','evidence-access','student-data','cost-billing','teaching-controls'] LOOP
       IF position(quote_literal(w) IN def) = 0 THEN missing := true; END IF;
     END LOOP;
   END IF;
   IF missing THEN
     ALTER TABLE operator_roles DROP CONSTRAINT IF EXISTS operator_roles_role_check;
     ALTER TABLE operator_roles ADD CONSTRAINT operator_roles_role_check
-      CHECK (role IN ('content-review','evidence-access','student-data','cost-billing'));
-    RAISE NOTICE 'operator_roles_role_check: rebuilt (four roles)';
+      CHECK (role IN ('content-review','evidence-access','student-data','cost-billing','teaching-controls'));
+    RAISE NOTICE 'operator_roles_role_check: rebuilt (five roles)';
   ELSE
-    RAISE NOTICE 'operator_roles_role_check: already admits the four roles - left as is';
+    RAISE NOTICE 'operator_roles_role_check: already admits the five roles - left as is';
   END IF;
 END $roles$;
 

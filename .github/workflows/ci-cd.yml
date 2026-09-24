@@ -5,7 +5,8 @@ name: CI/CD
 #   and currently MANUAL-ONLY — a push does not deploy. See the deploy job.)
 # This file is the `PDR1-0` branch's copy. Each solution branch carries its own
 # (ADR-0010). Editing this one can never change what another branch deploys.
-# Deploy has `needs: build`, so a broken build never reaches the box.
+# Deploy has `needs: [build, migrations]`, so a broken build — or a migration set
+# that fails fresh, on upgrade, or on rollback — never reaches the box.
 #
 # Image hygiene (shared prod box — talent.reletix.com lives here too):
 #   build-on-box uses a STABLE tag (ainext-app), so each rebuild leaves exactly one
@@ -17,11 +18,17 @@ on:
     paths:
       - "app/**"
       - "services/extraction/seed/content/**"
+      - "db/**"
       - "deploy/**"
+      - "deploy/apply-migrations.sh"
+      - "scripts/ci-migrations.sh"
       - ".github/workflows/ci-cd.yml"
   pull_request:
     paths:
       - "app/**"
+      - "db/**"
+      - "deploy/apply-migrations.sh"
+      - "scripts/ci-migrations.sh"
   workflow_dispatch: {}
 
 jobs:
@@ -101,6 +108,87 @@ jobs:
             exit 1
           fi
 
+  # ---- The migrations, as the box will run them — including on a bad day ----
+  #
+  # Added for v0.7.0 after two rollback hazards in two days: on 2026-09-23
+  # migration 008 undid 010 on redeploy and the site went down, and v0.6.0's
+  # 014 re-adds a four-role CHECK that a v0.7.0 database (holding the fifth
+  # role) refuses. Every deploy re-applies EVERY migration (no ledger —
+  # deploy/apply-migrations.sh says why), so "is this file safe to run again,
+  # and is the previous release's copy safe to run over it" is a question
+  # about every file on every deploy, and a reviewer cannot answer it by eye.
+  #
+  # `scripts/ci-migrations.sh all` runs each tree's OWN apply-migrations.sh
+  # (the box's script, not a re-implementation) against a real Postgres 17:
+  #   (a) HEAD onto an empty database, three times;
+  #   (b) the previous release, a bootstrapped operator, then HEAD twice —
+  #       the upgrade that will happen;
+  #   (c) the previous release's migrations over HEAD's schema twice, then
+  #       HEAD again — the rollback, and the roll-forward after it;
+  #   (d) the proofs 029 and 030 promise (a revoked role is never re-granted,
+  #       even through rollback/029; a removed tester mark stays removed).
+  #
+  # "The previous release" is the newest `v*` tag reachable from the BASE
+  # (the PR's base, or origin/main on a push) that is not HEAD itself — so a
+  # feature branch cut before the latest release is still checked against it.
+  # v0.6.0 is the one release whose rollback is KNOWN to fail after v0.7.0
+  # (its 014 is unguarded); the script reports that as a warning, not a
+  # failure, and every other release must pass (c) outright. v0.6.1 carries
+  # the guard, and is the release this compares against from 2026-09-24.
+  migrations:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          # A throwaway container that lives for this job; not a secret.
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      CI_DB_PREFIX: ainext_ci
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - name: psql on the runner
+        run: command -v psql >/dev/null || (sudo apt-get update && sudo apt-get install -y postgresql-client)
+      - name: Find the previous release
+        id: prev
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -eu
+          git fetch --force --tags origin
+          if [ "$EVENT" = "pull_request" ]; then BASE="$PR_BASE"; else BASE=origin/main; fi
+          HEAD_SHA=$(git rev-parse HEAD)
+          PREV=""
+          for t in $(git tag --merged "$BASE" --list 'v[0-9]*' --sort=-v:refname); do
+            if [ "$(git rev-parse "$t^{commit}")" != "$HEAD_SHA" ]; then PREV="$t"; break; fi
+          done
+          if [ -z "$PREV" ]; then
+            echo "::error::no v* release tag is reachable from $BASE"; exit 1
+          fi
+          mkdir -p "$RUNNER_TEMP/prev"
+          git archive "$PREV" db deploy/apply-migrations.sh | tar -x -C "$RUNNER_TEMP/prev"
+          echo "previous release: $PREV (reachable from $BASE)"
+          echo "tag=$PREV" >> "$GITHUB_OUTPUT"
+      - name: Migrations — fresh ×3, upgrade from the previous release, rollback onto it, proofs
+        env:
+          PREV_TAG: ${{ steps.prev.outputs.tag }}
+        run: sh scripts/ci-migrations.sh all "$RUNNER_TEMP/prev" "$GITHUB_WORKSPACE"
+
   # ---- Stage 2: deploy on the OCI box — ONLY if build passed, ONLY from THIS branch ----
   #
   # ONE BRANCH PER SOLUTION (ADR-0010 + its Clarification, T136).
@@ -142,7 +230,9 @@ jobs:
   # step of this job creates /opt/reletix/AI.NEXT-mvp1 and clones into it BEFORE the
   # secret check fails, so an accidental run is not inert — hence the lock.
   deploy:
-    needs: build
+    # `migrations` too (v0.7.0): a release whose migrations fail on a copy of
+    # the previous release's database must not reach the box's.
+    needs: [build, migrations]
     # `main`, since 2026-09-22. `PDR1-0` carried the active line under ADR-0010's
     # one-branch-per-solution rule; Samuel retired that branch and made `main`
     # the single development branch, so the gate follows the code rather than
@@ -434,9 +524,11 @@ jobs:
           C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
           N=$($C exec -T db psql -U ainext -d ainext_mvp1 -tAc "select count(*) from operators")
           # GATED ON "NONE", not merely re-run because the script is
-          # idempotent: it re-grants each of the four roles if missing, so an
+          # idempotent: it re-grants each of the five roles if missing, so an
           # ungated run would silently hand back a role an operator had
-          # deliberately removed on the next deploy.
+          # deliberately removed on the next deploy. (Five since v0.7.0:
+          # `teaching-controls`, ADR-0021. Operators that already exist got it
+          # once from migration 029, which is guarded the same way.)
           if [ "$N" -gt 0 ]; then
             echo "operators already exist ($N) — not touching them"; exit 0
           fi

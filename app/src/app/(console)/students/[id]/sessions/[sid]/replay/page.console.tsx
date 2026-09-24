@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { ReplayTranscript } from "@/components/console/ReplayTranscript";
-import { Chip, stamp } from "@/components/console/ui";
+import { Chip, SessionSnapshotChips, SessionSnapshotNote, stamp } from "@/components/console/ui";
 import { recordOperatorRead } from "@/lib/auth/events";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
@@ -116,6 +116,13 @@ export default async function ConsoleSessionReplayPage({
         ) : (
           <Chip tone="attention">still open</Chip>
         )}
+      </p>
+      {/* ADR-0021: what the session recorded when it opened. Probing changes
+          what the cards below showed after a wrong answer, so a reader needs
+          it before reading them. */}
+      <p className="mt-1.5 text-[12.5px] text-ink-soft">
+        Opened on <SessionSnapshotChips releaseTag={session.releaseTag} probing={session.probing} />{" "}
+        <SessionSnapshotNote />
       </p>
 
       {/*

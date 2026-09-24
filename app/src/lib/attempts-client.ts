@@ -14,8 +14,10 @@ export async function submitAttempt(params: {
   /** Widget attempts only (ADR-0009) — never set from the chat-text path,
    *  a construction has no free-text equivalent. */
   predicate?: string;
-  /** Socratic-probing prototype: set when this attempt is the same-tier
-   *  sibling confirming a pending LO (migration 027). */
+  /** Socratic probing: set when this attempt is the same-tier sibling
+   *  confirming a pending LO (migration 027). A request, not a decision: the
+   *  server records the link only when the learning session it joins was
+   *  opened with probing on (ADR-0021). */
   retryOfAttemptId?: number;
 }): Promise<AttemptResult> {
   const res = await fetch("/api/attempts", {

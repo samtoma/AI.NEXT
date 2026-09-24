@@ -12,7 +12,9 @@ type Principal =
   | { kind: "operator"; operatorId: number; roles: OperatorRole[] }
   | { kind: "anonymous" };
 
-type OperatorRole = "content-review" | "evidence-access" | "student-data" | "cost-billing";
+type OperatorRole =
+  | "content-review" | "evidence-access" | "student-data" | "cost-billing"
+  | "teaching-controls";   // added 2026-09-24, ADR-0021
 
 /** Resolve the principal, check the requirement, record a denial. Throws or notFound()s. */
 export async function authorize(req: Requirement): Promise<Principal>;
@@ -31,23 +33,26 @@ A read that is not on the list has no `ainext_operator` policy behind it and ret
 `✓` = permitted. Empty = refused by the seam, recorded as `permission_denied`, nothing returned — not
 a preview, not a length, not a count (spec edge cases).
 
-| Surface / action | `content-review` | `evidence-access` | `student-data` | `cost-billing` |
-|---|:--:|:--:|:--:|:--:|
-| Console shell, own profile, own sessions | ✓ | ✓ | ✓ | ✓ |
-| `/admin/content` — question & library review queue, approve/reject | ✓ | | | |
-| `/pipeline` — extraction provenance, coverage, evidence walk | | ✓ | | |
-| `/gallery`, `/dev/*` — widget and fixture harnesses | | ✓ | | |
-| Student list (names, grade, last seen, cost) | | | ✓ | ✓ |
-| Student 360 — profile, mastery, sessions, sign-in history | | | ✓ | |
-| Session list (metadata only: when, how long, turns, cost, close reason) | | | ✓ | |
-| **Session transcript / timeline / replay** | | | ✓ | |
-| Uploads: a student's images and parsed text | | | ✓ | |
-| Cost: totals, per-surface, per-student, over time | | | | ✓ |
-| Subscription / payment status — read and change | | | | ✓ |
-| Security view — sign-ins, lockouts, denials | | | ✓ | |
-| Overviews — cohort, subject/year heatmap (no individual content) | ✓ | ✓ | ✓ | ✓ |
-| Operator management — grant and revoke roles | | | | |
-| `operator_reads` audit — who read whose record | | | ✓ | |
+| Surface / action | `content-review` | `evidence-access` | `student-data` | `cost-billing` | `teaching-controls` |
+|---|:--:|:--:|:--:|:--:|:--:|
+| Console shell, own profile, own sessions | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `/admin/content` — question & library review queue, approve/reject | ✓ | | | | |
+| `/pipeline` — extraction provenance, coverage, evidence walk | | ✓ | | | |
+| `/gallery`, `/dev/*` — widget and fixture harnesses | | ✓ | | | |
+| Student list (names, grade, last seen, cost) | | | ✓ | ✓ | |
+| Student 360 — profile, mastery, sessions, sign-in history | | | ✓ | | |
+| Session list (metadata only: when, how long, turns, cost, close reason, release, probing) | | | ✓ | | |
+| **Session transcript / timeline / replay** | | | ✓ | | |
+| Uploads: a student's images and parsed text | | | ✓ | | |
+| Cost: totals, per-surface, per-student, over time | | | | ✓ | |
+| Subscription / payment status — read and change | | | | ✓ | |
+| Security view — sign-ins, lockouts, denials | | | ✓ | | |
+| Overviews — cohort, subject/year heatmap (no individual content) | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `/teaching` — read the teaching switch, its history, the test-account count (names need `student-data`); an operator holding **no** role is refused | ✓ | ✓ | ✓ | ✓ | ✓ |
+| **Move the teaching switch** (Socratic probing: off / test accounts / everyone) | | | | | ✓ |
+| Mark or unmark a student as a test account (from the Student 360) — **`student-data` AND `teaching-controls` together**; neither alone | | | ✓ + | | + ✓ |
+| Operator management — grant and revoke roles | | | | | |
+| `operator_reads` audit — who read whose record | | | ✓ | | |
 
 **`cost-billing` reads no student content** (FR-2406) — not a transcript, an upload, a message
 preview, or a turn count of a conversation. It sees a cost figure and a name, which is what a
@@ -58,6 +63,17 @@ commercial question needs and no more. The one place the two roles meet is the s
 ADR-0007/0008 unreviewed-content exception depends on. Granting, revoking and exercising it are
 recorded (`role_granted`, `role_revoked`, and the review action itself). It is never described in the
 product as a content-management permission.
+
+**`teaching-controls` is a safety control too** (ADR-0021, FR-3102): it decides how the tutor
+answers a child who got a question wrong. It was specified under `content-review` and split out on
+2026-09-24 so it can be narrowed on its own. Migration 029 granted it once to every active operator
+then holding `content-review`; a later deploy never grants it again, and neither does withdrawing it
+(`rollback/029`) and deploying again — 029's guard reads the `auth_events` trail too. The test-account mark it gives meaning to
+needs **both** `student-data` (it names a person, and is set from the Student 360) **and**
+`teaching-controls` (it decides which child the tutor tries an unfinished behaviour on) — the one
+ALL-OF requirement in this matrix (`authorize({ allRoles: [...] })` — named apart from the route
+table's ANY-OF `roles` since the 2026-09-24 fix pass 2; `allOf` on its route row). It was
+`student-data` alone until the 2026-09-24 fix pass; every operator held every role that day.
 
 **Operator management is in no row on purpose.** No role grants roles this release. The first
 operator is seeded (ADR-0014, plan A5) and further grants are a deliberate operational act, because

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noor v0.7.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Cairo:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Tokens from the product's Noor Play layer. No red anywhere (FR-1002):
+     attention is amber, done is teal, open is slate. */
+  :root {
+    --ink: #241f3d; --ink-soft: #574f75; --paper: #fff6e6; --card: #ffffff;
+    --honey: #ffe9bd; --amber: #a34f0a; --teal: #1f7a6e; --slate: #5a5570;
+    --line: #241f3d; --hair: rgba(36, 31, 61, 0.14); --shadow: 4px 4px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+      --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+      --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+    --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+    --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "Cairo", system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1, h2 { font-family: "Baloo Bhaijaan 2", system-ui, sans-serif; line-height: 1.2; margin: 0; }
+  h1 { font-size: 2.4rem; font-weight: 800; }
+  h2 { font-size: 1.45rem; font-weight: 800; margin-top: 44px; }
+  .eyebrow { font: 500 0.78rem/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--ink-soft); text-transform: uppercase; }
+  .lead { font-size: 1.1rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .card { background: var(--card); border: 3px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 20px 22px; margin-top: 18px; }
+  .card h3 { font: 700 1.1rem/1.35 "Cairo", sans-serif; margin: 0 0 6px; }
+  .row { display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; margin: 0; }
+  .row dt { font: 500 0.78rem/1.9 "IBM Plex Mono", monospace; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .row dd { margin: 0; }
+  .tag { display: inline-block; font: 700 0.8rem/1 "Cairo", sans-serif; padding: 5px 10px; border-radius: 999px; border: 2px solid var(--line); margin-right: 6px; }
+  .done { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .off { background: var(--honey); color: var(--ink); }
+  .open { background: transparent; color: var(--slate); border-color: var(--slate); }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+  th, td { text-align: start; padding: 8px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 500 0.75rem/1.4 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  code { font: 500 0.88em "IBM Plex Mono", monospace; }
+  a { color: var(--teal); }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Noor · release v0.7.0 · 2026-09-24</p>
+  <h1>A switch for Socratic probing, and a record of every lesson</h1>
+  <p class="lead">What changed, what it means for a student, and how you use it. Two independent reviews and a code review read every change before merge.</p>
+
+  <h2>The teaching switch</h2>
+  <div class="card">
+    <h3><span class="tag done">New</span> Console → Teaching</h3>
+    <dl class="row">
+      <dt>What it does</dt><dd>Socratic probing (after a wrong answer, Noor asks a guiding question instead of showing the solution) has three positions: <strong>Off</strong> (the default), <strong>Test accounts only</strong>, and <strong>Everyone</strong>, which stays locked until issue #53 is fixed.</dd>
+      <dt>Who can move it</dt><dd>Operators holding the new <code>teaching-controls</code> role. Today that is all three founders, and it can be removed from anyone later without touching their other rights.</dd>
+      <dt>When it takes effect</dt><dd><strong>Off</strong> reaches a student's very next message. <strong>On</strong> only affects lessons that start afterwards. Once a lesson stops probing, it never starts again.</dd>
+      <dt>Where it applies</dt><dd>Maths lessons in "walk me through it" mode only. Social Studies, Arabic and review mode never probe.</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag done">New</span> Test accounts</h3>
+    <dl class="row">
+      <dt>What it does</dt><dd>On a student's console page, an operator marks the account as a test account. With the switch on "Test accounts only", only those accounts get probing.</dd>
+      <dt>Rule</dt><dd>Only accounts the team owns, never a real student. Marking needs both <code>student-data</code> and <code>teaching-controls</code>. Who marked it and when is recorded, and a removed mark is stamped, never deleted.</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag done">New</span> Which version, which mode</h3>
+    <dl class="row">
+      <dt>What it records</dt><dd>Every lesson records the version that served it and whether probing was on. The console header shows the deployed version and the switch position. Each student's lesson list shows both.</dd>
+    </dl>
+  </div>
+
+  <h2>Also in this release</h2>
+  <table>
+    <tr><th>What</th><th>Why it matters</th></tr>
+    <tr><td>Sign-in links stay on our site</td><td>A crafted link could send someone to another website after signing in. That affected the live student site too.</td></tr>
+    <tr><td>A written rollback path, and CI that proves it</td><td>Every change to the database is now run fresh three times, as an upgrade, and as a rollback before any deploy.</td></tr>
+    <tr><td>Requirements for what v0.6.0 shipped without them</td><td>Lesson progression, the skill map and four other behaviours now have requirements with honest status.</td></tr>
+  </table>
+
+  <h2>With the switch Off, nothing changes for students</h2>
+  <p>All 24 tutor prompts, and 438 captured tutor inputs across 69 lessons, are identical to v0.6.0 when probing is off.</p>
+
+  <h2>Still open</h2>
+  <table>
+    <tr><th>Item</th><th>Where</th></tr>
+    <tr><td><span class="tag open">Probing for everyone</span> Two serious bugs first: credit a student did not earn, and lessons that stall.</td><td>#53</td></tr>
+    <tr><td><span class="tag open">Console sign-in without a password</span> Through Cloudflare.</td><td>v0.8.0</td></tr>
+  </table>
+</main>
+</body>
+</html>

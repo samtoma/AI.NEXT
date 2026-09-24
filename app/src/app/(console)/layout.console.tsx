@@ -7,7 +7,8 @@ import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { consoleShellAccess } from "@/lib/console-auth";
 import { getOperatorCard } from "@/lib/console-queries";
 import { navFor } from "@/lib/console-routes";
-import { ENVIRONMENT } from "@/lib/env";
+import { ENVIRONMENT, RELEASE_TAG } from "@/lib/env";
+import { getTeachingStateOrNull } from "@/lib/teaching-queries";
 
 /**
  * The console shell — the one layout every operator surface sits inside.
@@ -34,6 +35,12 @@ import { ENVIRONMENT } from "@/lib/env";
  *
  * `force-dynamic` because everything here depends on who is asking, and a
  * prerendered console shell is a shell that names the wrong operator.
+ *
+ * **Which build, and whether the tutor is probing, on every page** (ADR-0021).
+ * The two facts an operator needs first when a student says a lesson behaved
+ * differently. Both come from one indexed read of `teaching_settings` and the
+ * process's own `RELEASE_TAG`; the switch itself, its history and who moved it
+ * are on `/teaching`, which the probing line links to.
  */
 export const dynamic = "force-dynamic";
 
@@ -52,6 +59,19 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
   }
 
   const card = await getOperatorCard(access.operatorId);
+  // A side fact on every page, so a failed read prints "unknown" rather than
+  // turning every console page into a 500 (`getTeachingStateOrNull`). React-
+  // cached per request: a page that shows the switch too reuses this read.
+  const teaching = await getTeachingStateOrNull(access.operatorId);
+  const probingWord =
+    teaching === null
+      ? "unknown"
+      : teaching.effective === "off"
+        ? "off"
+        : teaching.effective === "testers"
+          ? "test accounts"
+          : "everyone";
+  const releaseTag = teaching?.releaseTag ?? RELEASE_TAG;
   const links = navFor(access.roles).map((r) => ({
     href: r.path,
     label: r.nav!,
@@ -74,8 +94,21 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
               Noor
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-faint">
-              Console · {ENVIRONMENT}
+              Console · {ENVIRONMENT} · {releaseTag}
             </span>
+          </Link>
+          <Link
+            href="/teaching"
+            title={
+              teaching === null
+                ? "The teaching switch could not be read just now"
+                : teaching.updatedAt
+                  ? `Changed by ${teaching.updatedBy ?? "an operator no longer on record"} at ${teaching.updatedAt}`
+                  : "The default: nobody has changed it"
+            }
+            className="shrink-0 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-soft underline-offset-2 hover:underline"
+          >
+            Probing: {probingWord}
           </Link>
 
           <ConsoleNav links={links} />
@@ -105,7 +138,9 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
 
       <footer className="border-t border-line-soft">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-2 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-faint">
-          <span>Noor Console · {ENVIRONMENT} environment · operator reads are recorded</span>
+          <span>
+            Noor Console · {ENVIRONMENT} environment · {releaseTag} · operator reads are recorded
+          </span>
           <span>Prep-3 Mathematics · MOETE 2025–2026</span>
         </div>
       </footer>

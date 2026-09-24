@@ -163,22 +163,24 @@ check FR-2501 "auth_events: password_reset_completed x${completed:-0}, actor_kin
 check FR-2501 "auth_events: password_changed x${changed:-0}, actor_kind=operator" "$([ "${changed:-0}" -ge 1 ] && echo 1 || echo 0)"
 
 code=$(req POST "$CONSOLE" /api/auth/login "$JAR_SAMUEL" "{\"email\":\"$SAMUEL_EMAIL\",\"password\":\"$SAMUEL_PASSWORD\"}")
-check FR-2207 "login (console, samuel, four roles) -> 200 (got $code)" "$([ "$code" = 200 ] && echo 1 || echo 0)"
+check FR-2207 "login (console, samuel, five roles) -> 200 (got $code)" "$([ "$code" = 200 ] && echo 1 || echo 0)"
 LOGIN_BODY=$(cat "$BODY")
-has4=0
-for r in content-review evidence-access student-data cost-billing; do
-  printf '%s' "$LOGIN_BODY" | grep -q "\"$r\"" && has4=$((has4+1))
+# Five roles since v0.7.0 (`teaching-controls`, ADR-0021); the bootstrap
+# grants all five to a new operator.
+has5=0
+for r in content-review evidence-access student-data cost-billing teaching-controls; do
+  printf '%s' "$LOGIN_BODY" | grep -q "\"$r\"" && has5=$((has5+1))
 done
-check FR-2207 "login response carries all four roles ($LOGIN_BODY)" "$([ "$has4" = 4 ] && echo 1 || echo 0)"
+check FR-2207 "login response carries all five roles ($LOGIN_BODY)" "$([ "$has5" = 5 ] && echo 1 || echo 0)"
 
 opevt=$(psql_maint -c "SELECT reason FROM auth_events WHERE event='operator_login' ORDER BY occurred_at DESC LIMIT 1")
-allfour=1
-for r in content-review evidence-access student-data cost-billing; do
-  [[ "$opevt" == *"$r"* ]] || allfour=0
+allfive=1
+for r in content-review evidence-access student-data cost-billing teaching-controls; do
+  [[ "$opevt" == *"$r"* ]] || allfive=0
 done
-check FR-2207 "auth_events.operator_login reason carries all four roles ($opevt)" "$allfour"
+check FR-2207 "auth_events.operator_login reason carries all five roles ($opevt)" "$allfive"
 
-# ============================================================ 4. four-role operator on console
+# ============================================================ 4. five-role operator on console
 say_section "4. Four-role operator (samuel) on the console"
 
 code=$(req GET "$CONSOLE" / "$JAR_SAMUEL")

@@ -78,6 +78,10 @@ export type SessionHeader = {
   closeReason: string | null;
   /** Wall-clock milliseconds, or null while the session is still open. */
   wallClockMs: number | null;
+  /** The release that opened it (ADR-0021); null = opened before v0.7.0. */
+  releaseTag: string | null;
+  /** Its Socratic-probing snapshot (ADR-0021); null = opened before v0.7.0. */
+  probing: boolean | null;
 };
 
 export type SessionTimeline = {
@@ -176,7 +180,7 @@ async function loadSessionHeader(
 ): Promise<SessionHeader | null> {
   const res = await db.query(
     `SELECT s.id, s.student_id, s.kind, s.surface, s.lo_id,
-            s.opened_at, s.closed_at, s.close_reason,
+            s.opened_at, s.closed_at, s.close_reason, s.release_tag, s.probing,
             st.display_name,
             n.label AS lo_label
        FROM sessions s
@@ -201,6 +205,8 @@ async function loadSessionHeader(
     closedAt,
     closeReason: strOrNull(r.close_reason),
     wallClockMs: sessionWallClockMs(openedAt, closedAt),
+    releaseTag: strOrNull(r.release_tag),
+    probing: r.probing == null ? null : r.probing === true,
   };
 }
 

@@ -126,6 +126,16 @@ services:
     # deploy job's dangling-image pruning changes.
     image: ainext-mvp1-app
     restart: unless-stopped
+    # Rotated (v0.7.0). Every opened learning session now logs one
+    # `[sessions] opened {...}` line, on top of everything else; unrotated,
+    # json-file grows until the shared box's disk is full — and the box also
+    # runs production for another product. 5 × 10 MB per container keeps days
+    # of `docker logs` without ever becoming the reason that box falls over.
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
     environment:
       # THE APP CONNECTS AS `ainext_app`, NOT AS THE POSTGRES SUPERUSER (ADR-0012).
       # Superusers bypass every row-level-security policy unconditionally, so
@@ -238,25 +248,15 @@ services:
       #         caught by the `migrate` service before the app starts, which is
       #         what makes `on` a safe thing to choose here specifically.
       AINEXT_COURSE_GATING: ${AINEXT_COURSE_GATING:-off}
-      # ---- which build rendered a turn (ADR-0015 §3, FR-2304) ---------------
-      # ⚠ NOTHING READS THIS YET, and saying so is the point of writing it down.
-      # `lib/env.ts` derives RELEASE_TAG from app/package.json's version, so every
-      # turn on the box would be stamped `PDR1-0-v0.4.0` regardless of which
-      # commit is actually running — and the console's replay marks a turn as
-      # "differs from current renderer" by comparing exactly that string. A stamp
-      # that cannot distinguish two builds cannot detect renderer drift, which is
-      # the whole reason the column exists.
-      #
-      # The deploy job computes this from the deployed commit (the git tag when
-      # the commit carries one, otherwise version+short sha) and exports it, so
-      # the value is already correct here. Making it TRUE is a one-line change in
-      # `app/src/lib/env.ts`, out of scope for a deploy-side change:
-      #
-      #   export const RELEASE_TAG: string =
-      #     (process.env.RELEASE_TAG ?? "").trim() || `PDR1-0-v${pkg.version}`;
-      #
-      # Until that lands, treat `renderer_version` on box data as the release
-      # series and not as the build.
+      # ---- which build served this (ADR-0015 §3, FR-2304, ADR-0021) -------
+      # READ by the app since v0.7.0 (`app/src/lib/env.ts` resolveReleaseTag):
+      # stamped on every tutor turn (`ai_interactions.renderer_version`) and
+      # every learning session (`sessions.release_tag`), and shown in the
+      # console header. The deploy job computes it from the deployed commit —
+      # the git tag when the commit carries one, otherwise `v<version>+<sha>` —
+      # so two builds of one version are two stamps. Empty (a hand-started
+      # stack) falls back to `v<package version>`. Before v0.7.0 nothing read
+      # it and every turn was stamped with the package version (TAKEOVER D4).
       RELEASE_TAG: ${RELEASE_TAG:-}
       # ---- analytics and alerting (ADR-0016) -------------------------------
       # GA4 measurement id, `G-XXXXXXXXXX`. Unset renders no script tag at all,
@@ -351,6 +351,12 @@ services:
     # remembering compose's numbering suffix.
     container_name: ainext-mvp1-console
     restart: unless-stopped
+    # Rotated, for the reason `app` is.
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
     # `start:admin` sets AINEXT_SURFACE=admin for `next start`, which is what
     # points it at `.next-admin`. The environment below sets the same variable
     # for the application's own module graph; both are needed and they are read
@@ -388,6 +394,7 @@ services:
       # The console reads the same gate so that what an operator sees about
       # course availability matches what the student surface enforces.
       AINEXT_COURSE_GATING: ${AINEXT_COURSE_GATING:-off}
+      # The console header and /teaching print the deployed release (v0.7.0).
       RELEASE_TAG: ${RELEASE_TAG:-}
       AINEXT_ALERT_EMAIL: ${AINEXT_ALERT_EMAIL:-}
       # NO AINEXT_GA_MEASUREMENT_ID (see the app service), NO Google client — an

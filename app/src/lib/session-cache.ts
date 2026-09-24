@@ -72,6 +72,14 @@ export function snapshotKey(k: {
   uploadId?: number;
   /** read this turn, from the one profile query (lib/student-context.ts) */
   gender: Gender;
+  /**
+   * The learning session's stored Socratic-probing snapshot (ADR-0021). Part
+   * of the key because it changes the system prompt: a chat whose session
+   * rotated (30 minutes idle, ADR-0015) re-resolves, and the cached prompt of
+   * the previous session must not be replayed into the new one. Appended ONLY
+   * when true, so every key with probing off is the key v0.6.0 built.
+   */
+  probing?: boolean;
 }): string {
   return [
     k.surface,
@@ -82,6 +90,7 @@ export function snapshotKey(k: {
     k.wrongAnswer ?? "",
     k.uploadId ?? "",
     addressForms(k.gender).key,
+    ...(k.probing === true ? ["probe"] : []),
   ].join("|");
 }
 

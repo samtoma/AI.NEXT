@@ -70,10 +70,24 @@ const STUBS = {
       // `auth/principal.ts` import, same reason it needs no real principal:
       // the student id is a parameter.
       "student-landing.test.mts",
-      // renders `learnPrompt` with the Socratic-probing switch in its shipped
-      // (off) position, to prove the merged prototype leaves the prompt as it
-      // was. Same `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
+      // renders `learnPrompt` with Socratic probing off and on (ADR-0021:
+      // the lesson's snapshot is an argument now, not a constant). Same
+      // `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
       "socratic-probing.test.mts",
+      // renders `learnPrompt` / `reviewPrompt` for three subjects × four
+      // address forms with probing off and compares them, whole, against the
+      // pre-toggle capture (ADR-0021). Same import chain; no principal.
+      "probing-prompts.test.mts",
+      // drives the REAL `currentSession` (lib/sessions.ts) against a fake
+      // PoolClient to prove the per-lesson snapshot is resolved once, stored,
+      // and handed back on reuse (ADR-0021). Reaches `lib/student-context.ts`
+      // -> `auth/principal.ts`; the student id is a parameter, no principal.
+      "teaching-snapshot.test.mts",
+      // drives the REAL `lessonCourseId` and `getLessonData` against a fake
+      // PoolClient to prove the session's probing snapshot and the prompt's
+      // narrowing resolve a lesson's course the same way (fix pass 2). Same
+      // `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
+      "lesson-course.test.mts",
     ],
   },
 };

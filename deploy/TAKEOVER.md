@@ -243,6 +243,13 @@ four post-flight checks run: the three roles exist and are neither superuser nor
 three have passwords; `course_availability` and `students.design_variant` are present; and, only
 when the course gate is on, at least one course is allow-listed.
 
+**Rolling back** re-runs the OLDER build's migrations over the newer database, so it is only as safe
+as the older build's files. v0.6.1 and later are safe to roll back to after v0.7.0; **v0.6.0 is
+not** (its 014 is unguarded) and must never be redeployed after v0.7.0. The three levers — switch
+the feature off, revert and deploy, and the manual path if v0.6.0 is ever unavoidable — are in
+[`DEPLOY-MVP1.md` → "Rolling back"](DEPLOY-MVP1.md#rolling-back). CI checks the rollback against the
+previous release on every change to `db/` (job `migrations`).
+
 ### 3.2 Fresh database or migrate in place
 
 Samuel: *"I'm also ready to start from scratch… but use all the username and passwords for the
@@ -559,7 +566,7 @@ throttle (know it when testing from the office).
 | | |
 |---|---|
 | **D3** | No automated database backup and no tested restore (§3.4). Do not start the pilot without it |
-| **D4** | `RELEASE_TAG` is carried by the stack and **not read by the app**. One line in `app/src/lib/env.ts` makes `renderer_version` name the deployed build instead of the package version; until then a replay cannot detect renderer drift, which is the only reason that column exists |
+| **D4** | ~~`RELEASE_TAG` is carried by the stack and **not read by the app**.~~ **Closed in v0.7.0** (ADR-0021): `app/src/lib/env.ts` reads it, falling back to `v<package version>`; turns, learning sessions and the console header now name the deployed build. Rows written before v0.7.0 still carry the package version (`PDR1-0-v0.6.0` and earlier) |
 | **D5** | `family-tutor`'s workflow copy is gated on `refs/heads/main` (§1.2). Once `main` moves, CI can no longer deploy the frozen baseline |
 
 ---

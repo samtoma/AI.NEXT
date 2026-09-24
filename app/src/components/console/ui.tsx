@@ -210,3 +210,55 @@ export function Chip({ tone = "neutral", children }: { tone?: ChipTone; children
     </span>
   );
 }
+
+/* ------------------------------------------------------- session snapshot */
+
+/**
+ * What a learning session recorded about itself when it opened (ADR-0021):
+ * the release that served it and whether Socratic probing was on when it
+ * opened. Both are fixed for the life of the row, so they are shown as facts
+ * about the OPENING, not as states — live requests follow the switch, which
+ * `SessionSnapshotNote` says beside them.
+ *
+ * NULL is "not recorded" — every session opened before v0.7.0 — and it is
+ * printed as that, never as off: a session from before the switch existed did
+ * not probe, but the record does not say so, and the console does not
+ * improve on the record.
+ */
+/**
+ * The footnote the chips need wherever they appear. "Opened with probing on"
+ * is a fact about how the sitting STARTED, and it never meant every turn in it
+ * probed: review mode, practice, open chat and the other two subjects never do
+ * (FR-3104), and — ADR-0021, option B — a sitting that opened on stops
+ * probing at the student's next message once the switch moves or their
+ * test-account mark is removed, and (fix pass 2) does not start again for the
+ * rest of that sitting. The turn-by-turn record is the transcript; the chip
+ * is the snapshot.
+ */
+export const SESSION_SNAPSHOT_NOTE =
+  "Probing applies to maths learn-mode turns only. A session that opened with it on stops probing from the student’s next message once the switch is changed or their test-account mark is removed, and does not start again in that session.";
+
+export function SessionSnapshotNote() {
+  return <span className="text-[11.5px] text-ink-faint">{SESSION_SNAPSHOT_NOTE}</span>;
+}
+
+export function SessionSnapshotChips({
+  releaseTag,
+  probing,
+}: {
+  releaseTag: string | null;
+  probing: boolean | null;
+}) {
+  return (
+    <span className="inline-flex flex-wrap items-center gap-1">
+      <Chip>{releaseTag ?? "release not recorded"}</Chip>
+      <Chip tone={probing ? "attention" : "neutral"}>
+        {probing == null
+          ? "probing not recorded"
+          : probing
+            ? "opened with probing on"
+            : "opened with probing off"}
+      </Chip>
+    </span>
+  );
+}
