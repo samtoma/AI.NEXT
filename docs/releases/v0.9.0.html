@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noor v0.9.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Cairo:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Tokens from the product's Noor Play layer. No red anywhere (FR-1002):
+     attention is amber, done is teal, open is slate. */
+  :root {
+    --ink: #241f3d; --ink-soft: #574f75; --paper: #fff6e6; --card: #ffffff;
+    --honey: #ffe9bd; --amber: #a34f0a; --teal: #1f7a6e; --slate: #5a5570;
+    --line: #241f3d; --hair: rgba(36, 31, 61, 0.14); --shadow: 4px 4px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+      --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+      --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+    --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+    --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "Cairo", system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1, h2 { font-family: "Baloo Bhaijaan 2", system-ui, sans-serif; line-height: 1.2; margin: 0; }
+  h1 { font-size: 2.4rem; font-weight: 800; }
+  h2 { font-size: 1.45rem; font-weight: 800; margin-top: 44px; }
+  .eyebrow { font: 500 0.78rem/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--ink-soft); text-transform: uppercase; }
+  .lead { font-size: 1.1rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .card { background: var(--card); border: 3px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 20px 22px; margin-top: 18px; }
+  .card h3 { font: 700 1.1rem/1.35 "Cairo", sans-serif; margin: 0 0 6px; }
+  .row { display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; margin: 0; }
+  .row dt { font: 500 0.78rem/1.9 "IBM Plex Mono", monospace; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .row dd { margin: 0; }
+  .tag { display: inline-block; font: 700 0.8rem/1 "Cairo", sans-serif; padding: 5px 10px; border-radius: 999px; border: 2px solid var(--line); margin-right: 6px; }
+  .done { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .off { background: var(--honey); color: var(--ink); }
+  .open { background: transparent; color: var(--slate); border-color: var(--slate); }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+  th, td { text-align: start; padding: 8px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 500 0.75rem/1.4 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  code { font: 500 0.88em "IBM Plex Mono", monospace; }
+  a { color: var(--teal); }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Noor · release v0.9.0 · 2026-09-24</p>
+  <h1>No more walls: the limits are watched, not enforced</h1>
+  <p class="lead">A tester hit the lesson limit after ten minutes, and a third of those replies were taps on "Continue". Noor no longer stops a student for talking too much or uploading too much. The console now shows how often that happens and what it costs.</p>
+
+  <h2>What changes for a student</h2>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> No limit on Noor's replies</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>A lesson stopped after 18 replies, a review after 5, and asking Noor about a question after 2. Each time the student saw a "that's my limit" message and could not type any more.</dd>
+      <dt>Now</dt><dd>There is no limit anywhere. After 5 replies in a review, the Finish button pulses to suggest finishing, but nothing stops the student.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> No daily limit on photo uploads</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>The 11th upload in a day was refused.</dd>
+      <dt>Now</dt><dd>A student can upload as much as they need. Files must still be 10 MB or smaller, and a photo (JPEG/PNG) or a PDF. Those checks keep out broken files; they do not ration use.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> With Socratic probing on, the answer waits for the second attempt</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>The answer box waited for the student's second wrong attempt, but a student who asked "just tell me" could get the answer after only one.</dd>
+      <dt>Now</dt><dd>Both wait for the second attempt. Noor asks for a try first, even a guess. The AI can no longer open the box early.</dd>
+      <dt>Who sees it</dt><dd>Only students on a lesson where probing is on. Today that means test accounts only.</dd>
+    </dl>
+  </div>
+
+  <h2>What the console shows</h2>
+  <div class="card">
+    <h3><span class="tag done">New</span> Cost → Turn limits</h3>
+    <dl class="row">
+      <dt>What it shows</dt><dd>For each old limit, in the period you choose: how many conversations there were, how many reached the old number, how many went past it, and the longest conversation. The panel turns amber when any conversation reached a limit. A list links to each of those conversations.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">New</span> Cost → Photo uploads</h3>
+    <dl class="row">
+      <dt>What it shows</dt><dd>Uploads and how many students sent them, whether each was read successfully, and the photo-reading cost with its average per upload, kept separate from tutoring cost. It also shows the days a student sent more than 10, highlighted and listed. Nobody has uploaded yet, so the panel starts empty.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">New</span> An amber tag on sessions</h3>
+    <dl class="row">
+      <dt>Where</dt><dd>The student's session list, the session page and the replay, for example "Past 18 replies · 23".</dd>
+      <dt>Who sees names</dt><dd>Which conversations and which students is shown only to operators who also hold the student-data role. Billing-only operators see the totals.</dd>
+    </dl>
+  </div>
+
+  <h2>The trade-off</h2>
+  <table>
+    <tr><th>What</th><th>What it means</th></tr>
+    <tr><td><span class="tag off">Cost</span> The most a single conversation or a single student's uploads can cost no longer has a ceiling</td><td>The console is where you see it first. A lesson reply costs about $0.03; an 18-reply lesson costs about $0.47.</td></tr>
+    <tr><td><span class="tag off">PRD</span> Tamer's PRD §6.3 says "max 2 AI turns per question"</td><td>This release goes against it by your decision. Tamer should hear it from you.</td></tr>
+    <tr><td><span class="tag off">Probing</span> A student who won't try again waits longer for the answer</td><td>This makes the #53 item "a lesson can stall" more likely.</td></tr>
+  </table>
+
+  <h2>Still open</h2>
+  <table>
+    <tr><th>Item</th><th>Where</th></tr>
+    <tr><td><span class="tag open">Probing for everyone</span> A lesson can stall, credit a student didn't earn, and the handling of "I don't get it" during a probe.</td><td>#53</td></tr>
+    <tr><td><span class="tag open">The tutor's wording</span> Every other change to the instructions is still on hold.</td><td>#51</td></tr>
+  </table>
+</main>
+</body>
+</html>

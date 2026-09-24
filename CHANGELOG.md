@@ -10,13 +10,19 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.9.0] — 2026-09-24
+
+The turn and upload limits become numbers the console watches instead of walls a student hits, and
+with probing on, asking for the answer waits for the second attempt like the card does. Explainer:
+[`docs/releases/v0.9.0.html`](docs/releases/v0.9.0.html).
+
 ### Changed — turn and upload limits are now watched, not enforced (ADR-0023, FR-3401…FR-3409)
 - **Noor no longer stops a conversation after a fixed number of replies.** Until now the tutor
-  refused to answer past a per-surface limit and locked the input: 2 replies in the general chat, 18
-  in a lesson's teach-and-practice mode, 5 in a lesson's quick review mode. Samuel removed the
+  refused to answer past a per-surface limit and locked the input: 2 replies per question when asking
+  Noor about a question, 18 in a lesson's teach-and-practice mode, 5 in a lesson's quick review mode. Samuel removed the
   limits — *"we need to know how often those limits are triggered"* — so a student can now keep a
-  conversation going for as long as she needs it (FR-3401).
-- **A student can now upload as many photos or PDFs a day as she needs.** Until now the 11th upload
+  conversation going for as long as they need it (FR-3401).
+- **A student can now upload as many photos or PDFs a day as they need.** Until now the 11th upload
   in a day was refused. Samuel removed this one too, the same day — *"please remove the limit of the
   photo uploads for now as well"* — on the same terms: only the daily count is gone. The 10 MB size
   limit and the JPEG/PNG/PDF type limit are unchanged; neither one counts uploads (FR-3407).

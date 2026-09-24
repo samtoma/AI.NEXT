@@ -1,10 +1,10 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`main` at `v0.8.0`; `feat/turn-limits-observed` in progress, not merged;
-> constitution v3.3.0)
+> Last updated: 2026-09-24 (`main` at `v0.8.0`; `v0.9.0` released on `feat/turn-limits-observed`, in review as a PR,
+> not deployed; constitution v3.3.0)
 
-## 🔓 v0.9.0 in progress — turn and upload limits observed, not enforced (2026-09-24, `feat/turn-limits-observed`, NOT merged)
+## 🔓 v0.9.0 — turn and upload limits observed, not enforced; the answer waits for the second attempt (released 2026-09-24, NOT deployed — awaiting Samuel's go)
 
 Samuel, verbatim: *"remove the limits, make them highlight in the admin console, we need to know how
 often those limits are triggered."* — and, the same day, extending it: *"please remove the limit of
