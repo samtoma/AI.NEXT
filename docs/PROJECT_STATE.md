@@ -1,13 +1,46 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-24 (`main`; released `v0.7.0`; constitution v3.2.0)
+> Last updated: 2026-09-24 (`main`; released and deployed `v0.7.0` and `v0.8.0`; constitution v3.2.0)
 
-## 🎛️ v0.7.0 in progress — the teaching switch (2026-09-24, `feat/probing-toggle`, NOT merged)
+## 🔐 v0.8.0 — console sign-in from Cloudflare Access (released 2026-09-24)
+
+Samuel: *"the email verification is done through cloudflare, can you use this email from
+cloudflare"* — **ADR-0022**, **FR-3301…FR-3312**. On the console only, an operator who has passed
+the Access PIN is signed in from Cloudflare's **signed** token (RS256, reletix keys, the admin-noor
+AUD), matched to an active operator by email; no password, no form. Unknown or disabled → a refusal
+page, audited. A different operator's session on the same browser is ended (the proven person
+wins). Sign-out also ends the Access session. Password stays as the fallback. Locally, a
+"Sign in as <operator>" picker, locked three ways and absent from production builds. No migration.
+
+Rebased onto v0.7.0 before release (conflicts resolved in the test list, CHANGELOG, docs/README,
+this file and the traceability counts); v0.7.0's `?next=` scan test now names the Cloudflare route
+as a known reader with its own assertions. Explainer: `docs/releases/v0.8.0.html`.
+
+**Security review, fixed the same day (F2–F11, ADR-0022 *Amended*):** the dev picker's console now
+listens on `127.0.0.1` only and refuses `Origin: null`; sign-out uses the console's own Access
+logout; only a top-level navigation starts a Cloudflare sign-in; proven addresses are ASCII and
+compared by one rule; the per-request identity check is capped at 1 s; refused assertions are
+recorded within a budget; CI validates the two variables. 843/843 unit tests at release.
+
+**Open:**
+- **Samuel — decide:** the console is reachable **without Cloudflare** from the shared
+  `mailu-network` (review F4). Nothing changed; three options and a recommendation (take the console
+  off that network behind a small mail relay, plus Cloudflare's origin-enforcement toggle) in
+  ADR-0022, *Open decision for Samuel*.
+- **Samuel:** every operator's email must equal the address they give Access — check on the box
+  (`deploy/TAKEOVER.md` §9.2, eight checks) — and confirm the Access application's settings against
+  the §9.4 dashboard checklist (explicit email list, 8–12 h session, binding cookie, HttpOnly +
+  SameSite Lax, MFA when feasible). Decide later whether to remove the password fallback.
+- **Nobody has seen the happy path**: a real Access PIN → a real assertion → signed in. It cannot
+  exist off the box. FR-3301 is BUILT, FR-3303/3305/3307/3309/3311 PARTIAL — FR-3309 because a
+  console dev server started by hand without `-H 127.0.0.1` does not meet the tightened rule.
+
+## 🎛️ v0.7.0 — the teaching switch (released and deployed 2026-09-24, PR #60)
 
 Samuel approved a runtime switch for Socratic probing ([ADR-0021](decisions/0021-runtime-teaching-toggle-and-testers.md),
-**FR-3101…FR-3111**). Built and committed on `feat/probing-toggle`; not pushed, merged, tagged or
-deployed.
+**FR-3101…FR-3111**). Merged as PR #60 (CI green, including the first run of the `migrations`
+job), tagged `v0.7.0` and deployed from CI. The switch ships **Off**.
 
 | What | Where |
 |---|---|

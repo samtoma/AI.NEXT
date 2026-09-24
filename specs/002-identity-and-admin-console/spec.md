@@ -29,6 +29,10 @@ analytics.
 > **Governance**: `constitution-amendment-proposal.md` here proposes that Principle VII be materially
 > expanded (v3.1.1 → v3.2.0). It is **awaiting Samuel's approval**; nothing in it binds until he
 > approves it in the constitution itself.
+>
+> **Amended 2026-09-24 (v0.8.0)**: **FR-3301…FR-3312** — console sign-in from the Cloudflare Access
+> identity ([ADR-0022](../../docs/decisions/0022-console-signin-from-cloudflare-access.md)), placed
+> after FR-2211 in *Admin console & roles* because it is how an operator reaches that console.
 
 ## Why this feature exists
 
@@ -468,6 +472,86 @@ password sign-in.
 - **FR-2211**: Every console view MUST be readable without reading code: every figure carries its
   unit and the period it covers, every identifier is shown beside the name it belongs to, and no
   column heading is a field name.
+
+### Console sign-in from Cloudflare Access (FR-3301…) **[ADDED 2026-09-24 — ADR-0022]**
+
+> **Samuel, 2026-09-24**: *"the email verification is done through cloudflare, can you use this
+> email from cloudflare"*. That is the authorisation; these twelve were written with their code, in
+> the same change, and nothing here is back-dated. Numbered **FR-33xx** because FR-31xx and FR-32xx
+> were taken by the v0.7.0 blocks written the same day.
+>
+> **What this amends, stated honestly.** No FR in this spec says an operator signs in *with a
+> password* — FR-2202 and FR-2207 say "a signed-in operator account" and "every operator sign-in",
+> and both still hold word for word. The password path for operators is specified only in
+> `contracts/auth.md` §Operator authentication, and **that section is AMENDED** (password becomes
+> the fallback, FR-3308). **FR-2208** — Access in front of the console *in addition to* operator
+> accounts — is unchanged and now carries more weight: Access admits, and also proves which operator
+> row; the row is still required. Implementation status is in `traceability.md`, §3b.
+>
+> "The access control" below is the invited-audience control FR-2208 names — Cloudflare Access on
+> the console's hostname for the pilot.
+>
+> **Amended 2026-09-24, before merge — a security review of the branch.** FR-3301, FR-3305,
+> FR-3306, FR-3307, FR-3309, FR-3311 and FR-3312 each gained a sentence, marked *[review]*; no
+> requirement was withdrawn or weakened. The review's findings and what was done about each are in
+> ADR-0022 (*Amended*, *Accepted risks*, *Open decision for Samuel*).
+
+- **FR-3301**: When the access control in front of the console has proven the visitor's email
+  address, the console MUST sign the visitor in as the operator with that address — without a
+  password and without a form. *[review]* Such a sign-in MUST be started only by the visitor's own
+  top-level navigation, never by a resource another page embeds (an image, a frame, a prefetch).
+- **FR-3302**: The proof MUST be the access control's **signed** statement, verified before it is
+  believed: the signature against the control's own published keys, the issuer, the application the
+  statement was issued for, and its period of validity. An unsigned statement of the address — a
+  plain header anyone reaching the origin could set — MUST NOT be trusted, alone or as a fallback.
+- **FR-3303**: A proven address with no operator account, or with a disabled one, MUST be refused
+  with a page that says so plainly — that this identity has no console account — and MUST NOT start
+  a session. The refusal MUST be recorded, naming the proven address.
+- **FR-3304**: A sign-in by proof MUST start the same kind of session a password sign-in starts —
+  the same lifetime, renewal and revocation — and MUST be recorded as an operator sign-in with the
+  roles in effect (FR-2207) **and the method that proved the person**. No part of the proof itself
+  MAY be recorded.
+- **FR-3305**: **The proven person wins.** If the browser already holds a console session for a
+  different operator, that session MUST be ended, and recorded as ended, before the proven person is
+  signed in. A console session MUST NOT be honoured while a verified proof names somebody else.
+  *[review]* The check made on every console request MUST be bounded in time; a check that cannot
+  finish within its bound counts as no proof (FR-3306) — it neither ends the session nor signs
+  anybody in.
+- **FR-3306**: It MUST fail closed. A missing proof, one that does not verify, one that has expired,
+  one issued for another application, keys that cannot be fetched, or a configuration that is
+  incomplete MUST NOT sign anybody in; where a sign-in was attempted the refusal MUST be recorded,
+  and the visitor MUST be offered FR-3308's fallback. An unverifiable proof MUST NOT end an
+  existing session — only a verified proof of somebody else does (FR-3305). *[review]* The record
+  of refused, unverifiable proofs MUST be bounded — per client address and in total, per window —
+  so that requests which never passed the access control cannot flood it; exceeding the bound MUST
+  itself be recorded once, and MUST NOT change the answer the visitor gets.
+- **FR-3307**: Signing out of the console MUST end the console session **and** the access control's
+  own session, so that the next request does not silently sign the same person back in.
+  *[review]* The access control's session MUST end for the console's own hostname at once, not after
+  a propagation delay during which a request could still carry the old proof.
+- **FR-3308**: Password sign-in MUST remain available as a fallback for when the proof cannot be
+  used. It MUST NOT be presented as the primary path while a verified proof is present. *(Samuel may
+  withdraw the fallback later; that is a separate decision.)*
+- **FR-3309**: For local development only, the console MAY offer a list of operators to sign in as
+  without a credential, and only when **all three** hold: the build is not a production build, an
+  explicit local-only switch is on, and the request is to the local machine. The server MUST enforce
+  all three, not only the page; a production build MUST NOT contain the capability at all, and this
+  MUST be checked against the build itself. Every such sign-in MUST be recorded as one. *[review]*
+  "To the local machine" MUST rest on the development server accepting connections only from the
+  local machine whenever the switch is on; request headers, which a client writes, MUST NOT be
+  taken as proof of it on their own, and a request that declines to name its origin MUST be
+  refused.
+- **FR-3310**: The student surface MUST NOT read, act on, or offer a route for the access control's
+  identity in any form, signed or unsigned.
+- **FR-3311**: Which access-control team and which application the console trusts MUST be
+  configuration, not code, and MUST NOT be treated as secrets. Absent configuration MUST mean the
+  feature is off, and switching it off MUST need no code change. *[review]* A malformed value MUST
+  fail the deployment loudly rather than silently switching the feature off.
+- **FR-3312**: The proven address MUST be matched to an operator exactly, ignoring only letter case —
+  no domain-wide rule, no prefix, no automatic creation of an operator. *[review]* The address MUST
+  be plain ASCII — a proven address outside ASCII MUST be treated as unverified — and every part of
+  the console that compares addresses MUST use one rule, so that no two of them can disagree about
+  whom an address belongs to.
 
 ### Interaction timeline & replay (FR-2301…)
 

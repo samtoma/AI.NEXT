@@ -224,6 +224,54 @@ needs a database. That is why several rows below distinguish "proved once" from 
 
 ---
 
+## 3b. Console sign-in from Cloudflare Access — FR-3301…FR-3312 **[ADDED 2026-09-24 — ADR-0022]**
+
+> **Written with the code, on the day Samuel asked** (*"the email verification is done through
+> cloudflare, can you use this email from cloudflare"*), on `feat/console-cloudflare-signin`, not
+> merged and not deployed. Rows here are rated by this document's own counting rule, and the rule
+> bites hard on this feature: **no valid Cloudflare-signed assertion can exist off the box.** The
+> verifier is proved against real RS256 tokens from a locally generated key served as a JWKS from a
+> stub, and the sign-in logic against a stateful fake pool; the live dev server was driven through
+> every path a laptop CAN reach — the picker, the refusal page, an unverifiable assertion against
+> the **real** reletix key set, a spoofed email header, the student build. What nobody has seen is
+> the composed happy path: a real Access PIN, a real assertion, a signed-in operator. That is the
+> first thing `deploy/TAKEOVER.md` §9.2 checks.
+>
+> Evidence for this section: `npx tsc --noEmit` clean · **751/751** unit tests (47 new:
+> `cf-access.test.mts` 25, `operator-signin.test.mts` 12, `dev-picker.test.mts` 10) · both builds ·
+> `check:surface` **31** assertions, `check:surface:admin` **28** · a console `next dev` on `:3082`
+> and a student one on `:3083` against the scratch database `ainext_cf8_smoke` (27 migrations, dropped afterwards; no
+> migration in this change), driven with curl and one real browser click.
+>
+> **Re-rated the same day after a security review of the branch (F2–F11, ADR-0022 *Amended*).**
+> Seven FRs gained a *[review]* sentence and each row below says what now proves it. Evidence for
+> the fix pass: `npx tsc --noEmit` clean · **767/767** unit tests (16 new: `cf-access.test.mts` 25→34,
+> `operator-signin.test.mts` 12→16, `dev-picker.test.mts` 10→13) · both builds · `check:surface` 31,
+> `check:surface:admin` 28 · a console `next dev -H 127.0.0.1` on `:3092` with the picker on and every
+> database URL pointed at a closed port (so nothing was written anywhere): `lsof` shows it listening
+> on `127.0.0.1` only; the same server from the Mac's LAN address, with a forged `Host: localhost` and
+> `X-Forwarded-For: 127.0.0.1`, cannot connect (`curl` exit 7); `Sec-Fetch-Dest: image` and `iframe`
+> on `/api/auth/cloudflare` → `403`, `document` → `302 /signin?…&cf=unavailable`; the picker endpoint
+> with `Origin: null` or a foreign Origin → `404`. **FR-3309 moves VERIFIED → PARTIAL** — the rule
+> it states was tightened, and a hand-started server does not meet it.
+
+| FR | Requirement | Status | Implementation | Proof |
+|---|---|---|---|---|
+| FR-3301 | A proven address signs the operator in, no password, no form; only from a top-level navigation | **BUILT** | `lib/auth/cf-access.ts` (verify; `isSigninNavigation`), `lib/auth/operator-signin.ts` (`signInOperator`), `app/api/auth/cloudflare/route.console.ts` (the seam), `app/(auth)/signin/page.tsx` + `lib/auth/console-signin.ts` (forward once) | The two halves are proved separately — a valid RS256 assertion verifies and yields the email (`cf-access.test.mts`), and that email produces a session and `operator_login` (`operator-signin.test.mts`). Live: an assertion on `/signin` forwards (`307` → `/api/auth/cloudflare?next=%2Fstudents`). *[review F6]* `cf-access.test.mts`: ten non-`document` destinations refused, absent allowed, and the route calls the check before it verifies, records or signs in; live on `:3092`: `Sec-Fetch-Dest: image`/`iframe` → `403`, `document` → `302`. **The composed path with a real Cloudflare assertion has never run** — it needs the box (TAKEOVER §9.2 checks 2 and 7). |
+| FR-3302 | The signed proof is verified; the plain header is never trusted | **VERIFIED** | `verifyAccessAssertion`: `jose` `jwtVerify`, `algorithms: ["RS256"]`, issuer, audience, `exp` required, 30 s tolerance; `createRemoteJWKSet` cached per certs URL; `readAccessAssertion` reads exactly one header | `cf-access.test.mts`: wrong aud, wrong iss, expired, `nbf` ahead, forged signature under the published kid, tampered payload, `alg: none`, HS256 keyed with the public key, unknown kid, no email, unfetchable keys — all refused; the key set fetched once for six verifications; a **source scan** fails if any non-test file mentions `authenticated-user-email` outside a comment. Live: a garbage assertion against the **real** `reletix` key set was refused as `unknown_key`. |
+| FR-3303 | No account / disabled → a plain refusal, no session, recorded with the address | **PARTIAL** | `signInOperator` (`no_account`, `disabled`), the route (clears both cookies, `→ /signin?cf=…`), `components/auth/CloudflareRefusal.tsx` (no password form, a "Sign out of Cloudflare" link to the console's own `/cdn-cgi/access/logout`); the Security view's reason-column note now says a `no_operator` refusal carries the proven address (review F11) | `operator-signin.test.mts`: unknown and disabled addresses write **no** session row — the INSERT is never attempted — and record `failed_login` with `cloudflare-access:no_operator:<address>` / `:disabled`. Live: the refusal page rendered in a browser at `/signin?cf=no_account`. **Missing**: the route's hand-off from a real refused assertion to that page — box only. |
+| FR-3304 | Same session as a password sign-in; recorded with roles and method; no proof material | **VERIFIED** | `signInOperator` calls `createAuthSession` and, for the same operator, `rotateRefreshToken(…, "admin")`; the route writes `accessCookie`/`refreshCookie` with the console's names | `operator-signin.test.mts`: one `auth_sessions` row, `operator_id` set, 7-day first expiry, token stored only as its hash; `operator_login` reason `cloudflare-access:content-review,evidence-access,student-data,cost-billing`; no event contains the token; the same operator is rotated in place, not duplicated. Live (the shared path, via the picker): a 7-day session row and `operator_login` `dev-picker:content-review`, cookies `ainext_cat` (`Max-Age=900`) and `ainext_crt` (`Path=/api/auth`). |
+| FR-3305 | The proven person wins; a mismatched session is not honoured; the per-request check is time-bounded | **PARTIAL** | `signInOperator` ends the other operator's session (`session_revoked`, `cloudflare-access:identity_changed`); `principal.ts` `loadOperatorPrincipal` → `console-signin.ts` `accessIdentityAllows` → `proofWithin(…, IDENTITY_CHECK_BUDGET_MS = 1000)` → `sessionMatchesAccessIdentity`; `JWKS_OPTIONS.cacheMaxAge` 1 h | `operator-signin.test.mts`: another operator's session, found by refresh cookie or by the access cookie's `sid`, is revoked **in the table** and recorded before the proven person's `operator_login`; same when the proven address has no account. `cf-access.test.mts`: the binding rule's four answers; *[review F9]* a JWKS stub that accepts and never answers, under production's own 5 s fetch timeout, costs the check ~1 s and yields no proof, which keeps the session; the budget is asserted shorter than the fetch timeout. Live: a signed-in session with an unverifiable assertion stays signed in (`/profile` `200`). **Missing**: `principal.ts` refusing a session under a real, verified, different assertion — box only (TAKEOVER §9.2 check 5); the time box has not run against Cloudflare's real endpoint. |
+| FR-3306 | Fails closed; refused attempts recorded within a budget; fallback offered | **VERIFIED** | Every `jose` failure maps to a short code and to "no proof"; `resolveCfAccessConfig` treats a team without an AUD, or a key URL off `cloudflareaccess.com`, as off; the route returns `cf=invalid`; *[review F11]* `recordUnverifiedAssertion` budgets the record in `auth_throttle` (`cf_unverified_ip` 20, `cf_unverified_all` 200 per 15 min) | `cf-access.test.mts` (every refusal above, plus five untrustworthy team domains and a team with no AUD). `operator-signin.test.mts`: 50 refusals from one address → exactly 20 `failed_login` + one `suspicious_activity` (`…:unverified_ip_throttled`), another address and the next window start clean; 250 refusals from rotating addresses → exactly 200 + one `…:unverified_flood`; the budget never touches the password path's `ip` scope. Live: garbage assertion → `/api/auth/cloudflare` → `302 /signin?next=%2Fstudents&cf=invalid` → the password form with the notice and **no second forward**; `auth_events` row `failed_login` `cloudflare-access:unverified:unknown_key`, anonymous. The budget has not run against a real database (TAKEOVER §9.2 check 8). |
+| FR-3307 | Sign-out ends the console session and the Access session, for the console's hostname at once | **PARTIAL** | `console-signin.ts` `consoleSignOutDestination()` → `profile/page.console.tsx` → `OperatorSessions` `signOutTo` (both "Sign out" and "Sign out here"), and `CloudflareRefusal`'s link; the console session is ended by the unchanged `POST /api/auth/logout`; *[review F3]* the destination is `ACCESS_APP_LOGOUT_PATH` = `/cdn-cgi/access/logout` on the console's own hostname, no longer the team-wide URL | `cf-access.test.mts`: the resolved configuration's logout is that relative path and never the team domain. Earlier live evidence (the rendered `/profile` carried the team-wide URL) is superseded by the change and was not re-taken. **Not clicked** — it needs a real Access session. Whether Cloudflare then asks for a new PIN *immediately* is TAKEOVER §9.2 check 3. |
+| FR-3308 | Password stays as the fallback, not the primary path when proof is present | **VERIFIED** | `/signin` forwards whenever an assertion is present and no `cf` marker is; with `cf=invalid`/`error` it shows the form with a one-line notice; `POST /api/auth/login` is unchanged | Live: with an assertion, `/signin` answers `307` (no form); with `cf=invalid` it renders the form and the notice (browser screenshot). The password path itself is unchanged and keeps `session.test.mts` and `scripts/console-smoke.sh` (not re-run in this pass). |
+| FR-3309 | Local dev picker: three locks, server-enforced, absent from production builds, recorded; "local" rests on a loopback-only server | **PARTIAL** | `lib/auth/dev-picker.ts` (now also refuses `Origin: null` as `null_origin`); `api/auth/dev-operator/route.dev.console.ts`; `next.config.ts` adds `dev.console.ts` only outside production; `components/auth/DevOperatorPicker.tsx`; `scripts/local-dev.sh` writes the flag and *[review F2]* starts the console with `-H 127.0.0.1` whenever it is set; `.claude/launch.json` `tutor-console` binds `127.0.0.1` | `dev-picker.test.mts` (13): each lock refuses alone; `Origin: null` refused; the forged `Host` + `X-Forwarded-For` case asserted to **pass** the header checks (so nobody reads them as proof); both launchers asserted to bind loopback; `next.config.ts` evaluated under both `NODE_ENV`s. `check:surface:admin`: `/api/auth/dev-operator absent (production build)`. Live (`:3092`, `-H 127.0.0.1`): listening on `127.0.0.1` only; unreachable from the LAN address even with forged headers; `Origin: null` → `404`. Earlier live evidence stands (LAN `Host` → `404` `not_local_host`; a real browser click → `operator_login` `dev-picker:<roles>`). **Why PARTIAL**: locks 1 and 2 are enforced by the server outright; lock 3 is real only when the server was started by one of the two launchers. A `next dev` started by hand with the flag on and without `-H 127.0.0.1` listens on every interface, and the server's own check then rests on headers a LAN client writes. The route cannot see its own socket; closing this in the server would need a check Next does not expose. |
+| FR-3310 | The student surface never reads or routes the identity | **VERIFIED** | Route files are `route.console.ts` / `route.dev.console.ts`; `readAccessAssertion("student", …)` is null without reading; `principal.ts` checks only `IS_CONSOLE`; the `app` compose service has neither variable | `check:surface`: `/api/auth/cloudflare absent`, `/api/auth/dev-operator absent`. `cf-access.test.mts`: a valid assertion is ignored on the student surface. Live, student dev server: `/signin` with an assertion → `200`, no forward; `/api/auth/cloudflare` → `404`; `/api/auth/dev-operator` → `404`; no `auth_events` row written. |
+| FR-3311 | Team and application are configuration, not code, not secrets; absent = off; malformed fails the deploy | **PARTIAL** | `resolveCfAccessConfig` (`AINEXT_CF_ACCESS_TEAM_DOMAIN`, `AINEXT_CF_ACCESS_AUD`); `deploy/docker-compose.mvp1.yml` (`console` only); `.github/workflows/ci-cd.yml` from `vars.*` with defaults; *[review F10]* `off` in any case switches it off, otherwise the team must match `^https://[a-z0-9-]+\.cloudflareaccess\.com$` and the AUD `^[0-9a-f]{64}$` (whole-string) or the step fails with `::error::`; both values through the step's `.env` escaping; `deploy/.env.example` | `cf-access.test.mts`: unset → off, four spellings of the team → the same config, half a config → off. The CI step's block was extracted and run in `bash` locally against eleven inputs — the default, `off`/`OFF`/`Off`, the valid pair, the shorthand `reletix`, a trailing slash, an embedded newline, an upper-case AUD, a quote-injection AUD, a foreign domain — each producing the expected value or `::error::`. **The deploy job itself has not run** with it. |
+| FR-3312 | Exact, case-insensitive address match; ASCII only; one comparison rule; no domain rule, no auto-creation | **VERIFIED** | *[review F7]* `canonicalOperatorEmail` in `cf-access.ts` is the one rule (trimmed, printable ASCII, lower-cased; else null): the verifier refuses anything else as `non_ascii_email`, `sessionMatchesAccessIdentity` compares through it, and `loadOperator` finds the candidate with `lower(email) = lower($1)` (the unique index) but accepts the row only if the one rule agrees; nothing inserts into `operators` | `operator-signin.test.mts`: `Samuel.S.Toma@Gmail.com` resolves to operator 1; an unknown address is refused, not created; a Kelvin-sign row that a Unicode fold would match is refused as `no_account`, not signed in. `cf-access.test.mts`: five non-ASCII proven addresses → `non_ascii_email`; the rule's own cases; the binding compare refuses the Kelvin-sign address and ignores ASCII case. |
+
+---
+
 ## 4. Interaction timeline & replay — FR-2301…
 
 | FR | Requirement | Status | Implementation | Proof |
@@ -521,19 +569,19 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **128** |
+| Functional requirements | **140** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **142 / 142** |
-| — verified | 92 |
-| — built | 4 |
-| — partial | 39 |
+| Traced (every one needs a row) | **154 / 154** |
+| — verified | 98 |
+| — built | 5 |
+| — partial | 44 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **67** |
+| Requirements a test declares | **77** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 92 requirements marked VERIFIED, 47 have an automated test declaring them.** The remaining 45 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 98 requirements marked VERIFIED, 52 have an automated test declaring them.** The remaining 46 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 

@@ -141,6 +141,54 @@ granted, ADR-0014); `POST /api/auth/login` on the console emits **`operator_logi
 in effect (FR-2207); and an `accounts` credential presented to the console is refused and recorded
 (`permission_denied`), never silently accepted as a student (FR-2205).
 
+**AMENDED 2026-09-24 — [ADR-0022](../../../docs/decisions/0022-console-signin-from-cloudflare-access.md),
+FR-3301…FR-3312.** With `AINEXT_CF_ACCESS_TEAM_DOMAIN` and `AINEXT_CF_ACCESS_AUD` set, the
+**primary** operator sign-in is the Cloudflare Access identity, and the password path above is the
+**fallback** (FR-3308). Console build only; the student build has none of the following.
+
+### `GET /api/auth/cloudflare?next=…` *(console build only — `route.console.ts`)*
+
+`/signin` forwards here once when the request carries `Cf-Access-Jwt-Assertion`. Verifies it (RS256,
+the team's published keys, issuer = team domain, audience = the Access application AUD, `exp`/`nbf`,
+30 s tolerance) and reads the email from the **verified** payload only — and only a plain-ASCII
+address (`canonicalOperatorEmail`, the one comparison rule; anything else is `non_ascii_email`).
+`Cf-Access-Authenticated-User-Email` is never read. Every answer but the first row is a `302`:
+
+| Case | Answer | Cookies | Event (`reason`) |
+|---|---|---|---|
+| `Sec-Fetch-Dest` present and not `document` (an image, a frame, a prefetch) | `403`, empty — before anything is read | untouched | none |
+| verified, active operator, no console session here | → `next` | both set (a new session, same machinery as `login`) | `operator_login` (`cloudflare-access:<roles>`) |
+| verified, same operator already signed in here | → `next` | both set (refresh rotated, as `refresh` does) | none |
+| verified, a **different** operator's session here | → `next` | both set (new session) | `session_revoked` for the old one (`cloudflare-access:identity_changed`), then `operator_login` |
+| verified, no operator / disabled operator | → `/signin?cf=no_account` \| `disabled` | both cleared | `failed_login` (`cloudflare-access:no_operator:<email>` \| `cloudflare-access:disabled`); any other session here `session_revoked` |
+| assertion missing, invalid, expired, wrong audience, non-ASCII address… | → `/signin?cf=invalid` | untouched | `failed_login` (`cloudflare-access:unverified:<code>`) — never any part of the token. **Budgeted**: 20 per client address and 200 in total per 15-minute window (`auth_throttle` scopes `cf_unverified_ip`, `cf_unverified_all`); the one that reaches each limit also writes `suspicious_activity` (`cloudflare-access:unverified_ip_throttled` / `…:unverified_flood`); beyond it, nothing is recorded and the answer is unchanged |
+| feature off | → `/signin?cf=unavailable` | untouched | none |
+| server error | → `/signin?cf=error` | both cleared | none |
+
+`/signin` never forwards a request that carries `cf`, which is what makes the loop impossible. On
+the console, `principal.ts` treats an operator session as signed out while a **verified** assertion
+names a different address (FR-3305); a missing or unverifiable assertion changes nothing.
+
+**Sign-out**: `POST /api/auth/logout` is unchanged; with the feature on, the console then sends the
+browser to `/cdn-cgi/access/logout` **on the console's own hostname** (FR-3307) — not the team-wide
+`https://<team>.cloudflareaccess.com/cdn-cgi/access/logout`, which leaves the console's Access cookie
+valid for the 20–30 s revocation takes, long enough for the next request to sign the person back in.
+
+**Per-request identity check**: bounded at 1 s (`IDENTITY_CHECK_BUDGET_MS`); a check that does not
+finish in time is no proof and keeps the session.
+
+### `POST /api/auth/dev-operator` *(local development only — `route.dev.console.ts`)*
+
+Form body `operatorId`, `next`. **Absent from every production build** (`next.config.ts` adds the
+`dev.console.ts` extension only outside production; `check:surface:admin` asserts its absence).
+Refused with a bare `404` and `permission_denied` (`dev-picker:refused:<lock>`) unless all three hold:
+`NODE_ENV !== "production"`, `AINEXT_DEV_OPERATOR_PICKER === "on"`, a request to this machine (Host
+names loopback; Origin, when sent, a loopback origin — `null` refused as `null_origin`; the
+recorded client address, when present, loopback). Otherwise `303` → `next` with both cookies and
+`operator_login` (`dev-picker:<roles>`). **Those header checks are not proof** — a client writes
+all of them; the third lock is real because `scripts/local-dev.sh` and `.claude/launch.json` bind
+the console dev server to `127.0.0.1` whenever the flag is set (FR-3309).
+
 ## Cross-cutting rules
 
 1. **Password material never leaves the hashing module.** Not in a log, an event, an error, a URL, a

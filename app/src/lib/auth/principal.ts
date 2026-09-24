@@ -151,7 +151,7 @@ async function loadStudentPrincipal(claims: AccessClaims): Promise<Principal> {
 async function loadOperatorPrincipal(claims: AccessClaims): Promise<Principal> {
   // The operator connection: `ainext_app` cannot see `operators` at all.
   const res = await authPool().query(
-    `SELECT o.id,
+    `SELECT o.id, o.email,
             coalesce(array_agg(DISTINCT r.role) FILTER (WHERE r.role IS NOT NULL), '{}') AS roles
        FROM auth_sessions x
        JOIN operators o ON o.id = x.operator_id
@@ -165,6 +165,17 @@ async function loadOperatorPrincipal(claims: AccessClaims): Promise<Principal> {
   );
   const row = res.rows[0];
   if (!row) return ANONYMOUS;
+  // ADR-0022, FR-3305: on the console, a session that belongs to somebody other
+  // than the person Cloudflare Access has just proven is at the keyboard is
+  // not honoured — it resolves to nobody, the shell sends the browser to
+  // /signin, and the sign-in route ends it and signs the proven person in.
+  // No event here: this runs on every console request, and the route records
+  // the swap itself (`session_revoked`, `<method>:identity_changed`). Lazily
+  // imported and console-only, so the student build never loads it.
+  if (IS_CONSOLE) {
+    const { accessIdentityAllows } = await import("./console-signin.ts");
+    if (!(await accessIdentityAllows(String(row.email ?? "")))) return ANONYMOUS;
+  }
   return {
     kind: "operator",
     operatorId: Number(row.id),

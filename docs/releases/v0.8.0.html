@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noor v0.8.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Cairo:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Tokens from the product's Noor Play layer. No red anywhere (FR-1002):
+     attention is amber, done is teal, open is slate. */
+  :root {
+    --ink: #241f3d; --ink-soft: #574f75; --paper: #fff6e6; --card: #ffffff;
+    --honey: #ffe9bd; --amber: #a34f0a; --teal: #1f7a6e; --slate: #5a5570;
+    --line: #241f3d; --hair: rgba(36, 31, 61, 0.14); --shadow: 4px 4px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+      --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+      --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+    --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+    --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "Cairo", system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1, h2 { font-family: "Baloo Bhaijaan 2", system-ui, sans-serif; line-height: 1.2; margin: 0; }
+  h1 { font-size: 2.4rem; font-weight: 800; }
+  h2 { font-size: 1.45rem; font-weight: 800; margin-top: 44px; }
+  .eyebrow { font: 500 0.78rem/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--ink-soft); text-transform: uppercase; }
+  .lead { font-size: 1.1rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .card { background: var(--card); border: 3px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 20px 22px; margin-top: 18px; }
+  .card h3 { font: 700 1.1rem/1.35 "Cairo", sans-serif; margin: 0 0 6px; }
+  .row { display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; margin: 0; }
+  .row dt { font: 500 0.78rem/1.9 "IBM Plex Mono", monospace; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .row dd { margin: 0; }
+  .tag { display: inline-block; font: 700 0.8rem/1 "Cairo", sans-serif; padding: 5px 10px; border-radius: 999px; border: 2px solid var(--line); margin-right: 6px; }
+  .done { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .off { background: var(--honey); color: var(--ink); }
+  .open { background: transparent; color: var(--slate); border-color: var(--slate); }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+  th, td { text-align: start; padding: 8px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 500 0.75rem/1.4 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  code { font: 500 0.88em "IBM Plex Mono", monospace; }
+  a { color: var(--teal); }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Noor · release v0.8.0 · 2026-09-24</p>
+  <h1>The console knows you from Cloudflare</h1>
+  <p class="lead">You already prove who you are to Cloudflare with your email and a PIN. The console now uses that proof, so there is no second password. A security review read the change before release.</p>
+
+  <h2>Signing in to the console</h2>
+  <div class="card">
+    <h3><span class="tag done">New</span> No password on admin-noor.reletix.com</h3>
+    <dl class="row">
+      <dt>What happens</dt><dd>You open the console, and Cloudflare asks for your email and a PIN, as it does today. The console then signs you in as the operator with that email. There is no second form.</dd>
+      <dt>Who gets in</dt><dd>Active operators whose console email is the same address you give Cloudflare. Capital letters don't matter.</dd>
+      <dt>What the console checks</dt><dd>Cloudflare's <strong>signed</strong> token: that Cloudflare issued it, for this console, and that it hasn't expired. The console never trusts a plain email header. If anything fails, nobody is signed in and the password form appears as a fallback.</dd>
+      <dt>What is recorded</dt><dd><em>Operator signed in</em>, with the reason <code>cloudflare-access</code> and your roles, on the Security page.</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag done">New</span> Someone Cloudflare knows but the console doesn't</h3>
+    <dl class="row">
+      <dt>What they see</dt><dd>A page that says this email has no console account. The console records the refusal with the address.</dd>
+      <dt>A shared browser</dt><dd>If the browser was signed in as another operator, the console ends that session. The console always follows the person Cloudflare just proved.</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <h3><span class="tag done">New</span> Sign out means sign out</h3>
+    <dl class="row">
+      <dt>What it does</dt><dd>Signing out of the console also ends your Cloudflare session for the console. Your next visit asks for a new PIN, so it can't quietly sign you back in.</dd>
+    </dl>
+  </div>
+
+  <h2>Also in this release</h2>
+  <table>
+    <tr><th>What</th><th>Why it matters</th></tr>
+    <tr><td>Hardening from the security review</td><td>A sign-in can't be started by an image or frame on another website. Only plain-ASCII addresses are accepted. The identity check never waits more than a second. A flood of fake tokens can't fill the security log.</td></tr>
+    <tr><td>A local "Sign in as…" for engineers</td><td>This exists only on a developer's own machine and is locked three ways. It isn't in the live console at all, and CI fails if it ever appears there.</td></tr>
+    <tr><td>CI checks the Cloudflare settings</td><td>A mistyped setting stops the deploy. Before, it would have switched the feature off without saying so.</td></tr>
+  </table>
+
+  <h2>What Samuel needs to do</h2>
+  <table>
+    <tr><th>Item</th><th>Where</th></tr>
+    <tr><td><span class="tag off">Try it</span> Open the console, enter the PIN, and confirm you land signed in. This is the one path that can only be tested on the live site.</td><td><code>deploy/TAKEOVER.md</code> §9.2</td></tr>
+    <tr><td><span class="tag off">Check</span> The Cloudflare Access settings: an explicit email list, 8–12 hour sessions, the binding cookie, SameSite Lax, and MFA where you can.</td><td><code>deploy/TAKEOVER.md</code> §9.4</td></tr>
+    <tr><td><span class="tag off">Decide</span> The console can still be reached without Cloudflare from the mail server's network. There are three options, and a recommendation to move the console off that network.</td><td>ADR-0022</td></tr>
+  </table>
+
+  <h2>Still open</h2>
+  <table>
+    <tr><th>Item</th><th>Where</th></tr>
+    <tr><td><span class="tag open">Remove the password fallback</span> Once the Cloudflare path has run for a while.</td><td>Later</td></tr>
+    <tr><td><span class="tag open">Probing for everyone</span> Two serious bugs must be fixed first.</td><td>#53</td></tr>
+  </table>
+</main>
+</body>
+</html>

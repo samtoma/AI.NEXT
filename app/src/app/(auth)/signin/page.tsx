@@ -1,5 +1,8 @@
 import { redirect } from "next/navigation";
 
+import { CloudflareRefusal } from "@/components/auth/CloudflareRefusal";
+import { FormNotice } from "@/components/auth/Controls";
+import { DevOperatorPicker } from "@/components/auth/DevOperatorPicker";
 import { SigninForm } from "@/components/auth/SigninForm";
 import { safeNext } from "@/components/auth/next-param";
 import { currentPrincipal } from "@/lib/auth/principal";
@@ -36,11 +39,21 @@ export const metadata = { title: IS_CONSOLE ? "Console sign-in — Noor" : "Sign
  * build 404s on: an operator whose silent refresh succeeds with no `?next=`
  * was landing on a dead end instead of the student list. The fallback is
  * surface-aware for exactly the same reason the copy already is.
+ *
+ * **On the console, Cloudflare Access comes first** (ADR-0022). When the
+ * request carries an Access assertion, this page does not show a form: it
+ * forwards to `/api/auth/cloudflare`, which verifies the assertion and starts
+ * the session (a Server Component cannot set the cookies). That route always
+ * comes back here with `?cf=` set when it could not sign anybody in, and
+ * `consoleSigninState` never forwards a request carrying `cf` — so a failed
+ * verification lands on the password form (the fallback, FR-3308) rather than
+ * looping, and a proven identity with no account lands on a refusal
+ * (FR-3303). None of this runs on the student surface.
  */
 export default async function SigninPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string | string[] }>;
+  searchParams: Promise<{ next?: string | string[]; cf?: string | string[] }>;
 }) {
   const sp = await searchParams;
   const next = safeNext(
@@ -54,6 +67,35 @@ export default async function SigninPage({
   // same reason: the form would be a screen they do not need.
   if (me.kind === "operator") redirect(next);
 
+  let notice: string | null = null;
+  let picker: React.ReactNode = null;
+  if (IS_CONSOLE) {
+    const { consoleSigninState, listPickerOperators } = await import("@/lib/auth/console-signin");
+    const state = await consoleSigninState(Array.isArray(sp.cf) ? sp.cf[0] : sp.cf);
+    if (state.mode === "forward") {
+      redirect(`/api/auth/cloudflare?${new URLSearchParams({ next }).toString()}`);
+    }
+    if (state.mode === "refusal") {
+      return (
+        <CloudflareRefusal
+          kind={state.kind}
+          email={state.provenEmail}
+          logoutUrl={state.accessLogoutUrl}
+        />
+      );
+    }
+    if (state.notice === "invalid") {
+      notice =
+        "Your Cloudflare sign-in could not be verified, so the console cannot sign you in with it. Use your operator password instead.";
+    } else if (state.notice === "error") {
+      notice =
+        "Signing you in from Cloudflare failed on our side. Try again in a moment, or use your operator password.";
+    }
+    if (state.pickerAllowed) {
+      picker = <DevOperatorPicker operators={await listPickerOperators()} next={next} />;
+    }
+  }
+
   return (
     <>
       <h1 className="mb-2 text-center font-display text-[1.9rem] font-extrabold text-ink">
@@ -64,6 +106,8 @@ export default async function SigninPage({
           ? "Operator accounts only. Student credentials are refused here."
           : "Pick up where you left off."}
       </p>
+      <FormNotice message={notice} />
+      {picker}
       <SigninForm
         next={next}
         googleAvailable={GOOGLE_OAUTH !== null}

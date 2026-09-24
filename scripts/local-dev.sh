@@ -345,6 +345,16 @@ env_add AINEXT_CONSOLE_URL "$CONSOLE_URL" \
 env_add AINEXT_BOOTSTRAP_OPERATOR_EMAIL "$BOOTSTRAP_EMAIL" \
   "The first operator (ADR-0014). Seeded with all four roles and NO password;" \
   "you get one through the ordinary reset flow."
+env_add AINEXT_DEV_OPERATOR_PICKER on \
+  "!!! LOCAL DEVELOPMENT ONLY — NEVER SET THIS ON ANY DEPLOYED STACK !!!" \
+  "ON shows 'Sign in as <operator>' on the console's /signin at :3002 and" \
+  "signs you in as ANY operator with NO password (ADR-0022). It stands in for" \
+  "Cloudflare Access, which proves who you are in production and is absent" \
+  "here. Three locks: NODE_ENV is not production (the endpoint is not even" \
+  "compiled into 'next build'), this is exactly 'on', and the request is to this" \
+  "machine — which is only TRUE because this script starts the console with" \
+  "-H 127.0.0.1 while this line exists. Starting it by hand? Add '-- -H 127.0.0.1'." \
+  "Remove the line to use the password form (and to reach :3002 from another device)."
 
 [ -n "$ADDED" ] && ok "app/.env.local updated:$ADDED" || ok "app/.env.local already complete"
 
@@ -518,8 +528,38 @@ INFO
 # other, the locks are different files for free. So `--both` is dev + dev, with
 # hot reload on both surfaces, and the `next build && next start` fallback R10
 # named for the console is not needed.
+#
+# THE CONSOLE LISTENS ON 127.0.0.1 WHENEVER THE DEV OPERATOR PICKER IS SET
+# (ADR-0022, FR-3309). The picker signs you in as ANY operator with no
+# credential, and its "the request is to this machine" lock can only read
+# headers — Host, Origin, X-Forwarded-For — every one of which a client writes.
+# `next dev` listens on every interface (0.0.0.0) by default, so without this
+# bind anyone on the same Wi-Fi could send `Host: localhost` and be any
+# operator. With it, nothing off this machine can open a connection at all.
+# ANY non-empty value of the flag binds, not only `on`: being stricter than the
+# picker costs nothing. The price is that the console is not reachable from
+# another device (the iPad path) while the picker is set — remove the line from
+# app/.env.local for that.
+picker_flag_set() {
+  [ -n "${AINEXT_DEV_OPERATOR_PICKER:-}" ] && return 0
+  # Every file Next loads in development, not only .env.local. One at a time:
+  # BSD grep exits 2 over a missing file even when another one matched.
+  local f
+  for f in "$ROOT/app/.env" "$ROOT/app/.env.local" \
+           "$ROOT/app/.env.development" "$ROOT/app/.env.development.local"; do
+    [ -f "$f" ] && grep -qE '^[[:space:]]*(export[[:space:]]+)?AINEXT_DEV_OPERATOR_PICKER=[^[:space:]#]' "$f" && return 0
+  done
+  return 1
+}
 serve_student() { NEXT_TELEMETRY_DISABLED=1 npm run dev; }
-serve_admin()   { AINEXT_SURFACE=admin PORT=3002 NEXT_TELEMETRY_DISABLED=1 npm run dev; }
+serve_admin()   {
+  if picker_flag_set; then
+    ok "dev operator picker is set: the console listens on 127.0.0.1 only (FR-3309)"
+    AINEXT_SURFACE=admin PORT=3002 NEXT_TELEMETRY_DISABLED=1 npm run dev -- -H 127.0.0.1
+  else
+    AINEXT_SURFACE=admin PORT=3002 NEXT_TELEMETRY_DISABLED=1 npm run dev
+  fi
+}
 
 if [ "$SERVE" = 1 ]; then
   cd "$ROOT/app"
@@ -536,5 +576,7 @@ if [ "$SERVE" = 1 ]; then
       ;;
   esac
 else
-  echo "  (--no-serve: start it yourself with  cd app && npm run dev)"
+  echo "  (--no-serve: start it yourself with  cd app && npm run dev"
+  echo "   — and the console, while the dev operator picker is set, with"
+  echo "   cd app && AINEXT_SURFACE=admin PORT=3002 npm run dev -- -H 127.0.0.1 )"
 fi
