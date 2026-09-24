@@ -13,6 +13,8 @@ import type {
 
 import { spineSubjectOf } from "./subjects";
 import { PREREQ_GATE } from "./progression";
+import { computeLayers } from "./spine-layout";
+import { SPINE_LO_SQL, SPINE_LO_SQL_NO_SUBJECT_VIEW } from "./spine-lo-query";
 
 /**
  * Every function here mixes curriculum reads (no policies — the graph is not
@@ -108,26 +110,8 @@ export async function getHomeStats(studentId: number) {
 /* Spine (Evidence Walk)                                               */
 /* ------------------------------------------------------------------ */
 
-/** Longest-path layering over the prerequisite DAG. */
-function computeLayers(
-  ids: string[],
-  edges: { src: string; dst: string }[]
-): Map<string, number> {
-  const layer = new Map<string, number>(ids.map((id) => [id, 0]));
-  // relax |V| times (tiny graph — simplicity over cleverness)
-  for (let i = 0; i < ids.length; i++) {
-    let changed = false;
-    for (const { src, dst } of edges) {
-      const cand = (layer.get(src) ?? 0) + 1;
-      if (cand > (layer.get(dst) ?? 0)) {
-        layer.set(dst, cand);
-        changed = true;
-      }
-    }
-    if (!changed) break;
-  }
-  return layer;
-}
+// Longest-path layering (`computeLayers`) lives in lib/spine-layout.ts with
+// the rest of the map's geometry, where it can be tested without a database.
 
 export async function getSpineData(studentId: number): Promise<SpineData> {
   return scoped(studentId, undefined, (db) => spineDataOn(db, studentId));
@@ -142,21 +126,10 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     () => columnExists(db, "graph_edges", "rationale"),
   ] as const);
 
-  const loQuery = hasSubjectView
-    ? `
-        SELECT n.id, n.label, n.description, n.syllabus_ref, n.source_page,
-               n.order_in_parent, ns.subject
-        FROM graph_nodes n
-        LEFT JOIN node_subject ns ON ns.node_id = n.id
-        WHERE n.kind = 'learning_objective'
-        ORDER BY n.order_in_parent
-      `
-    : `
-        SELECT id, label, description, syllabus_ref, source_page, order_in_parent
-        FROM graph_nodes
-        WHERE kind = 'learning_objective'
-        ORDER BY order_in_parent
-      `;
+  // Catalogue order (FR-3215): each objective joined to its module and sorted
+  // by MODULE_ORDER, never by bare `order_in_parent` — see lib/spine-lo-query.ts
+  // for the defect that was. The row index below becomes `catalogRank`.
+  const loQuery = hasSubjectView ? SPINE_LO_SQL : SPINE_LO_SQL_NO_SUBJECT_VIEW;
 
   // relates_to bridges: only queryable once the rationale column exists.
   // A thunk, not an already-started query — `db` is one shared client, so this
@@ -229,7 +202,16 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
   // narrowed IN PLACE deliberately: every projection below reads `.rows`, and
   // a filtered copy beside the original is a second thing to remember to use.
   const gate = await visibleGraphFor(db, studentId);
-  losRes.rows = losRes.rows.filter((r) => gate.lo(r.id as string));
+  // One card per objective, at its first (earliest-in-catalogue) row. The
+  // module join would fan an objective out if it were ever taught by two open
+  // modules; `node_subject` already could. Neither happens in today's data.
+  const seenLo = new Set<string>();
+  losRes.rows = losRes.rows.filter((r) => {
+    const id = r.id as string;
+    if (!gate.lo(id) || seenLo.has(id)) return false;
+    seenLo.add(id);
+    return true;
+  });
   questionsRes.rows = questionsRes.rows.filter((r) => gate.lo(r.lo_id as string));
   edgesRes.rows = edgesRes.rows.filter(
     (r) => gate.lo(r.src_id as string) && gate.lo(r.dst_id as string)
@@ -265,12 +247,20 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     }
   }
 
+  // Catalogue rank = row index of the ordered, gated query (FR-3215).
+  const rankOf = new Map(ids.map((id, i) => [id, i]));
+  const rank = (id: string) => rankOf.get(id) ?? ids.length;
+
   const prereqsOf = new Map<string, string[]>();
   for (const e of edges) {
     const list = prereqsOf.get(e.dst) ?? [];
     list.push(e.src);
     prereqsOf.set(e.dst, list);
   }
+  // The edge read has no ORDER BY, so the topic panel's "Worth having first"
+  // list came out in whatever order Postgres returned — the same defect as the
+  // map's columns, one level down. Catalogue order here too.
+  for (const list of prereqsOf.values()) list.sort((a, b) => rank(a) - rank(b));
 
   const los: SpineLo[] = losRes.rows.map((r) => ({
     id: r.id,
@@ -279,6 +269,7 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     syllabusRef: r.syllabus_ref,
     sourcePage: r.source_page,
     orderInParent: Number(r.order_in_parent),
+    catalogRank: rank(r.id),
     layer: layers.get(r.id) ?? 0,
     prereqIds: prereqsOf.get(r.id) ?? [],
     baseline: baseline.get(r.id) ?? 0,

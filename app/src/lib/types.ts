@@ -121,8 +121,19 @@ export interface SpineLo {
   description: string | null;
   syllabusRef: string | null;
   sourcePage: number | null;
+  /** Position inside this objective's OWN module — nine maths objectives
+   *  share every value. Not an order across the map; that is `catalogRank`. */
   orderInParent: number;
+  /**
+   * Position in catalogue order (FR-3215): the row index of the skill map's
+   * objective query, which sorts by `MODULE_ORDER` — the same Term 1 → Term 2
+   * → geometry, module, objective order the lesson list and the progression
+   * walk use. Unique within one `SpineData`; the only tie-break the map's
+   * layout uses.
+   */
+  catalogRank: number;
   layer: number;
+  /** Prerequisites, in catalogue order. */
   prereqIds: string[];
   baseline: number;
   current: number;
