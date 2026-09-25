@@ -6,7 +6,12 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-24 (skill-map order, v0.9.1) — **FR-3215, FR-3216** added: the skill
+**Last amended**: 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
+review) — **FR-3217, FR-3218** added: every reader of curriculum order uses the one catalogue order
+(`MODULE_ORDER`), a list of several subjects splits by subject first (Samuel, 2026-09-25), guarded by a
+source test, the tutor's Ask-the-Spine context included (Samuel lifted ADR-0020's hold for that ordering
+the same day); and every Term 2 module's label names its term (`module:geo-u1` was the one that did not; migration 031 — its reaching the prompts approved by
+Samuel the same day, recorded in ADR-0020). Written with the code. Before that, 2026-09-24 (skill-map order, v0.9.1) — **FR-3215, FR-3216** added: the skill
 map orders its topics in catalogue order (`MODULE_ORDER`), and each of its columns is an evenly spaced
 stack centred on one midline again (Samuel, restoring the pre-v0.6.0 packing inside Tamer's
 redesign). Written with the code, not after it. Before that, 2026-09-24 (reveal threshold) — **FR-3112** added: while a sitting probes, the
@@ -1009,6 +1014,52 @@ password sign-in.
 > (the objective query sorted by `order_in_parent`, a per-module position nine maths objectives
 > share, and Postgres returned the ties in no fixed order); the column half is a deliberate reversal
 > of the v0.6.0 redesign's floating columns, which the layout comment keeps and marks superseded.*
+
+**One curriculum order, and labels that name their term (v0.9.2)** — Samuel, 2026-09-25, verbatim:
+*"Fix that as well for sure, i thought they are all from the same source."* And, the same day, on lists
+that hold more than one subject: *"Yes they need to split by subject."* And on the tutor's Ask-the-Spine
+context: *"yes for sure, for decision 2, it is part of the overall consistency, so please proceed."*
+
+- **FR-3217** **[ADDED 2026-09-25 — v0.9.2]**: Every reader of curriculum order MUST use the one
+  catalogue order (`MODULE_ORDER`, `app/src/lib/module-order.ts`) — the lesson list, the progression,
+  the subject home, the skill map, the student's practice plan, the tutor's Ask-the-Spine context
+  (its objective list, its unit list and its figure catalogue), and the internal tools (`/pipeline`,
+  the console Overview, `/gallery`) — and the progress page's topic list MUST use the same order at
+  module level. **A list that holds more than one subject MUST be split by subject first** — in the
+  order of the product's subject registry (`lib/subjects.ts`: Mathematics, then Social Studies, then
+  Arabic) — and in catalogue order inside each subject, never interleaved (Samuel, 2026-09-25). That
+  covers the lesson catalogue, the practice plan, the Ask-the-Spine context, `/pipeline`, `/gallery`
+  and the progress page; a list of one subject or one course (the progression, the subject home, the
+  skill map, the Overview heatmap) uses the catalogue order alone. A reader whose own order is something else ("weakest first"
+  in the practice plan and for the Ask context's eight focus objectives, "started, weakest first" on the
+  progress page) keeps that as its primary key and MUST break every tie by subject and then catalogue
+  order. A list the model is shown MUST render the same way from the same data: the Ask context's
+  prerequisite edges are listed by the catalogue order of their source, then of their destination,
+  then by edge id. A source test MUST fail on any query that orders by `order_in_parent` without
+  `MODULE_ORDER`, and on any use of the catalogue order without the subject key in front that it has
+  not been told is single-subject, except the exceptions it lists with their reasons — two reads confined to ONE lesson (`resolveLessonLos` in
+  `lib/lesson.ts`, `getVisualsForLos` in `lib/visuals.ts`), where the catalogue order reduces to the
+  objective's position, a premise the test checks on every seeded lesson. No reader is held.
+- **FR-3218** **[ADDED 2026-09-25 — v0.9.2]**: Every Term 2 module's label MUST name its term;
+  `module:geo-u1` reads "Term 2 · Unit 4 — The Circle". A surface that prints the term itself MUST
+  NOT say it twice. The fix MUST reach an existing database (migration 031, idempotent, with a
+  rollback), because deploys do not reload the curriculum graph. The label reaches the tutor's
+  prompts; Samuel approved that on 2026-09-25 ("OK") as an exception to ADR-0020's prompt hold for
+  this one string only, recorded in ADR-0020.
+
+> *Written with their code, in the same pass. FR-3217's order is the one v0.9.1 shipped — the text of
+> `MODULE_ORDER` is pinned by a test, so the progression's sequence does not move; what changed is
+> who reads it. `MODULE_ORDER` has no subject key, so the subject is a separate shared piece
+> (`SUBJECT_RANK`, read from the registry) that the readers of several subjects put in front of it;
+> it is the same for every module of one course, so a list narrowed to one course reads exactly as
+> before. The Ask context was held under ADR-0020 until Samuel lifted the hold for its ordering on
+> 2026-09-25; it changes which objectives are a new student's focus (Unit 1's first eight for maths,
+> where Postgres's tie order used to pick Unit 2, 3, 4, 5 and geometry), and nothing in the wording of
+> any prompt. One property is recorded rather than changed: for Arabic and Social Studies `order_in_parent` numbers an objective
+> inside its lesson, not its unit, so a flat list of one of those units reads lesson-interleaved.
+> FR-3218's label change reaches the tutor: the four Unit-4 geometry lessons' prompts and the "Ask the
+> Spine" unit list now carry "Term 2 · Unit 4 — The Circle" (22 of 438 captured prompt files differ,
+> by that string only) — approved by Samuel, 2026-09-25.*
 
 **The rest of v0.6.0**
 

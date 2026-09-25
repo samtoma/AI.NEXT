@@ -10,6 +10,58 @@ requirement names it.
 
 ## [Unreleased]
 
+v0.9.2, in progress — **not committed; awaiting Samuel's review.** The whole product reads the curriculum
+in one order, lists that mix subjects keep each subject together, and the circle unit says which term it
+belongs to. Student-facing (the practice plan, the
+progress page, the check-in) and the internal tools; one data migration (031).
+
+### Fixed — one curriculum order, everywhere (FR-3217)
+- **The practice plan now falls back on the lesson order.** The plan picks your weakest topics first,
+  and that has not changed. But when topics tie — and for a new student every topic is at zero — the
+  database used to choose between them. On the local copy, a new maths student's practice opened on
+  Unit 2, Unit 3 and Unit 4. It now opens on Unit 1, lesson 1, and follows the lesson list from there.
+- **A list that holds more than one subject now keeps each subject together** — maths first, then
+  Social Studies, then Arabic, the order the app already shows subjects in. Samuel: *"Yes they need to
+  split by subject."* Before, a student who could see all three subjects got them mixed by unit number
+  (Arabic, Social Studies and maths objectives alternating). This applies to the practice plan, the
+  lesson picker when no subject is chosen, the progress page's list of topics not started yet, the
+  `/pipeline` map and `/gallery`. A list of one subject is unchanged, and so is the order lessons
+  unlock in (the progression).
+- **The progress page lists the topics you have not started in lesson order:** Term 1, then Term 2,
+  then geometry. Before, Term 1's Unit 1 and Term 2's Unit 1 counted as the same position, so the
+  database chose which came first.
+- The internal tools use the same order: the `/pipeline` map, the heatmap rows on the console
+  Overview, and the unit groups on `/gallery`. On `/gallery`, Term 2's Unit 1 used to come before
+  Term 1's, and the circle unit came between Units 3 and 4.
+- For whoever maintains it next: every reader now takes its order from `app/src/lib/module-order.ts`,
+  and a list of several subjects puts `SUBJECT_RANK` (read from the subject registry) in front of it.
+  A new test fails if any query sorts by a topic's position in its unit without that order, or uses
+  the order without the subject key and has not been declared a one-subject list.
+- **The tutor's "Ask the Spine" context uses the same order.** Samuel lifted the hold on prompt
+  changes for this ordering: *"yes for sure, for decision 2, it is part of the overall consistency."*
+  The tutor sees the topics, the units and the figures in lesson order, maths first. It still
+  focuses on the eight weakest topics — the only ones it gets full descriptions, question stems and
+  figure captions for — but a tie now goes to the earlier topic. For a new student every topic ties,
+  so her focus used to be whatever the database returned first: for a maths-only student, the first
+  topic of Units 2, 3, 4 and 5, geometry and Term 2. It is now Unit 1's first eight topics.
+- **The same data now always gives the tutor the same context.** Its list of prerequisite arrows
+  had no fixed order, and it changed when the database happened to store the rows differently. It
+  is now in lesson order: the arrows from the first topic come first. The wording of every prompt is
+  unchanged, and nothing else the tutor sees changed: 12 of 438 captured prompt files differ, all of
+  them the "Ask the Spine" context.
+
+### Fixed — the circle unit names its term (FR-3218)
+- **"Unit 4 — The Circle" is now "Term 2 · Unit 4 — The Circle"**, like every other Term 2 unit. It
+  is Term 2 by its own syllabus reference, and the book starts it on page 39 of the Term 2 book.
+- **The Arabic and Social Studies check-in no longer says a maths unit's term twice.** Its list of
+  maths units showed "Term 1 · Term 2 · Unit 1" and "Term 2 · Term 2 · Unit 5".
+- Existing databases get the new name through migration 031. Deploys never reload the curriculum,
+  so without the migration, production would keep the old name. The migration changes this one
+  label and nothing else, and a second run changes nothing.
+- The tutor sees the new name in the four circle lessons and in "Ask the Spine"'s list of units. No
+  other part of any prompt changes (22 of 438 captured prompts, by this name only). Samuel approved
+  this on 2026-09-25 as a one-string exception to the hold on prompt changes (ADR-0020).
+
 ## [v0.9.1] — 2026-09-25
 
 The skill map reads in lesson order again, in tidy columns. Student-facing, `/spine` only; no

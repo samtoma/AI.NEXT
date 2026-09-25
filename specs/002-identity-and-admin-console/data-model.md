@@ -405,6 +405,7 @@ surface that may perform each.
 | `018-cost-ledger-and-rollups.sql` | §12 `ai_interactions` columns, `cost_daily`, the three overview views |
 | `029-teaching-controls-role.sql` | the fifth role, granted once to active `content-review` holders (ADR-0021) — the vocabulary itself is widened in `014` |
 | `030-teaching-toggle-and-testers.sql` | `student_testers`, `teaching_settings`, `teaching_setting_changes`, `sessions.probing` / `release_tag` and their trigger (ADR-0021) |
+| `031-geo-u1-term-label.sql` | data only, no schema: `graph_nodes.label` of `module:geo-u1` becomes "Term 2 · Unit 4 — The Circle" while it still reads the old text (FR-3218; v0.9.2, not committed) — rollback in `rollback/031-geo-u1-term-label.down.sql` |
 
 `017` is late because every table it protects must exist first; `011` is first because it is the only
 gap losing data now (ADR-0015, plan.md P0).
