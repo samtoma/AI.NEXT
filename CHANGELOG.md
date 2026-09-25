@@ -10,6 +10,46 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.9.3] — 2026-09-25
+
+Hotfix. Three maths questions marked correct answers wrong;
+they are corrected, the whole widget bank is now checked against its own questions, and the mistake
+those three used to reward is named when a student makes it. Student-facing (the number-line widget);
+one data migration (032).
+
+### Fixed — three questions marked the right answer wrong (FR-1207)
+- **"Mark every value x cannot take in 1/((x − 2)(x + 3))" now expects −3 and 2.** It, and two
+  questions like it on the same topic (algebraic fractions and their domain), stored the *negatives*
+  of the right values as the answer. A student who answered correctly was told "not yet" and shown
+  the wrong values as the answer; one who made the classic sign mistake was told they were right.
+  The worked solutions were always correct, so the question and its own solution disagreed.
+  Production had no answers on them yet.
+- The cause was the program that generated these questions: it stored the numbers printed in the
+  brackets instead of the values that make each bracket zero. It is fixed, so a regenerated bank
+  cannot repeat it.
+- Existing databases get the corrected answers through migration 032. Deploys never reload the
+  question bank, so without the migration, production would keep the wrong answers. The migration
+  changes these three questions only, and only while they still hold the wrong answers; a second
+  run changes nothing. A rollback file restores the old values, and says why you should not need it.
+- **Every one of the 48 number-line, graph, angle, triangle, statistics, ratio and dice questions is
+  now read against its own wording.** A new test works out the answer each question asks for from
+  its text alone, and fails if the stored answer or the worked solution says otherwise. All 48
+  agree. It also checks each question can actually be answered with its tool (FR-1207). On the
+  previous release it fails on exactly these three questions.
+
+### Fixed — the sign mistake is named when a student makes it (FR-1206)
+- **Marking −2 and 3 for 1/((x − 2)(x + 3)) is now diagnosed as a sign mistake.** Before, the
+  number-line widget called any incomplete answer "missed values", and the explanation shown opens
+  with "the value you found genuinely does break the fraction". A student who flipped both signs
+  found neither value, so that explanation was wrong for them. The widget now recognises right
+  numbers with wrong signs, even when only one is flipped. On these three questions the student
+  gets the explanation for losing a sign when moving a term across the equals sign, which is the
+  skill this depends on. Stopping after one value still gets the "missed values" explanation.
+- For whoever maintains it next: `number_line_marker` has a new predicate, `sign-flipped`, added to
+  the shared contract (`contracts/widget-predicates.json`, 52 predicates). The widget's set grading
+  moved into `app/src/components/student/widgets/number-line-grade.ts`, which is tested without a
+  browser. The check that no widget reports an undeclared predicate now reads that file too.
+
 ## [v0.9.2] — 2026-09-25
 
 The whole product reads the curriculum

@@ -263,16 +263,27 @@ for _v, _n in ((7, 6), (5, 4), (9, 4)):
                    ("missed-outcomes", "mc:t2u3-1-1:compound-outcome-counted-once")])
 
 # --- FRACTIONAL FUNCTIONS ----------------------------------------------
+# `_r` and `_s` are the SHIFTS the stem prints, `(x + r)(x + s)`; the values x
+# cannot take are the ROOTS, `-r` and `-s`. Until v0.9.3 the targets stored the
+# shifts, so the answer key was the sign error itself: a correct student was
+# marked wrong and one who read the numbers off the factors was marked right
+# (q:t2u2-2-1:w001–w003, migration 032). The targets, the stem and the solution
+# now all come from the one pair of roots.
 for _r, _s in ((-2, 3), (1, -4), (-5, 2)):
+    _roots = sorted([-_r, -_s])
     t(lo="lo:t2u2-2-1", tier="standard", kind="number_line_marker",
-      spec={"mode": "points", "range": [-6, 6], "targets": sorted([_r, _s])},
+      spec={"mode": "points", "range": [-6, 6], "targets": _roots},
       family="domain-excluded",
       stem=f"Mark every value $x$ cannot take in $\\frac{{1}}{{(x {_r:+d})(x {_s:+d})}}$.",
       solution=["The fraction breaks wherever the denominator is zero.",
                 "Set the whole denominator to zero and solve it completely — every factor gives one root.",
                 f"Here that is $x = {-_r}$ and $x = {-_s}$.",
                 "Both are excluded. The domain is every real number except those two."],
-      diagnostics=[("missed-values", "mc:t2u2-2-1:excluded-values-incomplete")])
+      # The sign error first: it is the likelier one on a factored denominator.
+      # `mc:u1-1-1:transposition-sign` is on a prerequisite of lo:t2u2-2-1
+      # (FR-1215): x − 2 = 0 read as x = −2 is a sign lost across the equals.
+      diagnostics=[("sign-flipped", "mc:u1-1-1:transposition-sign"),
+                   ("missed-values", "mc:t2u2-2-1:excluded-values-incomplete")])
 
 
 def build() -> list[dict]:
