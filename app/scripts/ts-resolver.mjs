@@ -88,6 +88,20 @@ const STUBS = {
       // narrowing resolve a lesson's course the same way (fix pass 2). Same
       // `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
       "lesson-course.test.mts",
+      // drives the REAL `getStudentPlan` (lib/queries.ts) over a fake
+      // PoolClient to prove catalogue order breaks the plan's ties (FR-3217).
+      // Reaches `lib/student-context.ts` -> `auth/principal.ts`; the student
+      // id is a parameter, no principal.
+      "student-plan-order.test.mts",
+      // runs the REAL `getStudentPlan`, `getTopicBreakdown` and
+      // `getGalleryData`, and `LO_MODULE_SELECT`, against a scratch database
+      // (opt-in, FR-3217). Same import chain; the student id is a parameter.
+      "catalogue-order-db.test.mts",
+      // drives the REAL `buildAskContext` (lib/ask.ts) over a fake PoolClient
+      // to prove the ask context's order (FR-3217). Reaches
+      // `lib/student-context.ts` -> `auth/principal.ts`; the student id is a
+      // parameter, no principal.
+      "ask-order.test.mts",
     ],
   },
 };

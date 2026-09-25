@@ -1,4 +1,5 @@
 import { sequential } from "./db";
+import { catalogueObjectivesSql } from "./module-order";
 import { scoped, type Db } from "./student-context";
 
 /**
@@ -171,10 +172,12 @@ async function pipelineDataOn(
         WHEN 'part_of' THEN 0 WHEN 'about' THEN 1
         WHEN 'teaches' THEN 2 ELSE 3 END
     `),
-    () => db.query(`
-      SELECT id, label, source_page FROM graph_nodes
-      WHERE kind = 'learning_objective' ORDER BY order_in_parent
-    `),
+    // The mini-map's objectives — every subject's, so by SUBJECT first, then in
+    // CATALOGUE order (FR-3217): the stage lays
+    // each prerequisite layer out in the order it receives them, so a bare
+    // `ORDER BY order_in_parent` — a position inside a module that the first
+    // objective of every unit shares — let Postgres shuffle every column.
+    () => db.query(catalogueObjectivesSql("lo.id, lo.label, lo.source_page")),
     () => db.query(`
       SELECT src_id, dst_id FROM graph_edges
       WHERE edge_type = 'prerequisite_of' AND system_to IS NULL

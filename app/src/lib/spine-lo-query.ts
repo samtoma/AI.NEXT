@@ -11,13 +11,15 @@
  * the lesson list, the progression walk and the subject home already share —
  * which ends in `lo.id`, so no two rows ever tie.
  *
- * The join is the one `LO_MODULE_SELECT` (lib/lesson.ts) uses, with the
- * aliases `MODULE_ORDER` expects (`lo`, `m`), and it is a LEFT JOIN on
- * purpose: an objective with no module must still reach the map. It keeps its
- * card and lands after the last Term-1 module — `MODULE_ORDER`'s CASE reads a
- * missing module as term 0, and `m.order_in_parent NULLS LAST` puts it after
- * every module that has a position. (None exists today: all 274 objectives
- * on the local database have exactly one open `teaches` edge.)
+ * The join is `LO_MODULE_JOIN` (lib/module-order.ts; it lived here until
+ * v0.9.2, FR-3217, and moved so every flat reader of catalogue order shares
+ * it): the one `LO_MODULE_SELECT` (lib/lesson.ts) uses, with the aliases
+ * `MODULE_ORDER` expects (`lo`, `m`), and a LEFT JOIN on purpose: an objective
+ * with no module must still reach the map. It keeps its card and lands after
+ * the last Term-1 module — `MODULE_ORDER`'s CASE reads a missing module as
+ * term 0, and `m.order_in_parent NULLS LAST` puts it after every module that
+ * has a position. (None exists today: all 274 objectives on the local
+ * database have exactly one open `teaches` edge.)
  *
  * Its own module, rather than inline in queries.ts, so a test can run the
  * exact SQL against a scratch database: queries.ts reaches `next/headers`
@@ -26,13 +28,7 @@
  * Two variants, as before: `node_subject` (migration 006/007) may not exist
  * yet on an older database, and the reader degrades to "no subject" then.
  */
-import { MODULE_ORDER } from "./module-order";
-
-/** Objective → its module, open `teaches` edges only. */
-const LO_MODULE_JOIN = `
-        LEFT JOIN graph_edges te
-          ON te.dst_id = lo.id AND te.edge_type = 'teaches' AND te.system_to IS NULL
-        LEFT JOIN graph_nodes m ON m.id = te.src_id AND m.kind = 'module'`;
+import { LO_MODULE_JOIN, MODULE_ORDER } from "./module-order";
 
 /** With the `node_subject` view. */
 export const SPINE_LO_SQL = `

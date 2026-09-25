@@ -10,6 +10,7 @@
 
 import type { PoolClient } from "pg";
 
+import { MODULE_RANK, SUBJECT_RANK } from "@/lib/module-order";
 import { scoped } from "@/lib/student-context";
 
 export type TopicRow = {
@@ -69,8 +70,8 @@ export async function getTopicBreakdown(
                  ) AS rn
          FROM lo_state
      )
-     SELECT mod.id AS module_id,
-            mod.label,
+     SELECT m.id AS module_id,
+            m.label,
             avg(r.mastery)::float                              AS mastery,
             count(*)                                           AS lo_count,
             count(*) FILTER (WHERE r.practised)                AS practised_count,
@@ -79,15 +80,23 @@ export async function getTopicBreakdown(
             max(CASE WHEN r.rn = 1 AND r.attempts > 0 THEN r.lo_label END)       AS weakest_lo_label,
             max(CASE WHEN r.rn = 1 AND r.attempts > 0 THEN r.mastery END)::float AS weakest_lo_mastery
        FROM ranked r
-       JOIN graph_nodes mod ON mod.id = r.module_id
-      GROUP BY mod.id, mod.label, mod.order_in_parent
+       -- m is the MODULE here, the alias MODULE_RANK reads (the m inside
+       -- lo_state above is the mastery row, in its own scope).
+       JOIN graph_nodes m ON m.id = r.module_id
+      GROUP BY m.id, m.label, m.order_in_parent
       -- Started topics first, weakest of those at the top; untouched topics
-      -- after them in curriculum order. A topic you have never opened is not
+      -- after them by SUBJECT (registry order), then in CATALOGUE order
+      -- inside each (FR-3217) — the lesson list's, Term 1 then Term 2 then
+      -- geometry. The list holds every subject's units, and Samuel's rule is
+      -- that such a list splits by subject first. A topic you have never opened is not
       -- your weakest topic, and putting it above a genuine 4% weakness buries
-      -- the one thing this page exists to surface.
+      -- the one thing this page exists to surface. The tie-break used to be
+      -- the module's position alone, which Term-1 Unit 1 and Term-2 Unit 1
+      -- (and the other subjects' first units) share, so Postgres chose.
       ORDER BY (coalesce(sum(r.attempts), 0) = 0),
                mastery ASC,
-               mod.order_in_parent`,
+               ${SUBJECT_RANK},
+               ${MODULE_RANK}`,
       [studentId]
     )
   );

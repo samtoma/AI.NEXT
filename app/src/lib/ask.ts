@@ -5,6 +5,7 @@ import { addressForms, type AddressForms } from "./address";
 import { sequential } from "./db";
 import { visibleGraphFor } from "./catalog-queries";
 import { getAllVisuals } from "./visuals";
+import { MODULE_RANK, SUBJECT_RANK, catalogueObjectivesSql } from "./module-order";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
 import { masteryLabel } from "./mastery";
@@ -24,6 +25,11 @@ import type { Subject } from "./types";
  * the curriculum and no mastery rather than borrowing somebody's.
  *
  * NOTHING in this file's prompt text changed.
+ *
+ * v0.9.2 (FR-3217) changed the ORDER of three of its lists — objectives, units
+ * and prerequisite edges — to the one catalogue order, split by subject, and
+ * fixed the order of the edges, which had none. The wording of the prompt is
+ * unchanged.
  */
 
 export type AskSurface = "spine_chat" | "student_chat";
@@ -125,13 +131,22 @@ async function askContextOn(
     allModulesRes,
     everyVisual,
   ] = await sequential([
+      // THE ONE ORDER (FR-3217; Samuel, 2026-09-25, lifting ADR-0020's hold
+      // for this ordering: "yes for sure … it is part of the overall
+      // consistency"). The context lists every subject, so the subject comes
+      // first (registry order), then the catalogue order inside it — the
+      // lesson list's. It was `ORDER BY order_in_parent`: a position inside a
+      // module, shared by the first objective of every unit of every subject,
+      // so Postgres chose the order of every tie — and with it, for a student
+      // whose mastery ties, which objectives are the focus below.
+      () =>
+        db.query(
+          catalogueObjectivesSql("lo.id, lo.label, lo.description, lo.syllabus_ref, lo.source_page")
+        ),
+      // No ORDER BY here on purpose: the edges are put in catalogue order
+      // below, once the gate has narrowed the objectives they are ranked by.
       () => db.query(`
-        SELECT id, label, description, syllabus_ref, source_page
-        FROM graph_nodes WHERE kind = 'learning_objective'
-        ORDER BY order_in_parent
-      `),
-      () => db.query(`
-        SELECT src_id, dst_id FROM graph_edges
+        SELECT id, src_id, dst_id FROM graph_edges
         WHERE edge_type = 'prerequisite_of' AND system_to IS NULL
       `),
       () =>
@@ -154,10 +169,11 @@ async function askContextOn(
          FROM source_documents ORDER BY ingested_at, sha256`
       ),
       () => (studentId == null ? Promise.resolve(null) : getStudentProfile(studentId, db)),
+      // The unit list: subject first, then MODULE_RANK — Term 1, Term 2,
+      // geometry. It had no term rank, so Term 1 and Term 2 units interleaved.
       () => db.query(`
-        SELECT id, label FROM graph_nodes WHERE kind = 'module'
-        ORDER BY CASE WHEN id LIKE 'module:geo%' THEN 1 ELSE 0 END,
-                 order_in_parent, id
+        SELECT m.id, m.label FROM graph_nodes m WHERE m.kind = 'module'
+        ORDER BY ${SUBJECT_RANK}, ${MODULE_RANK}
       `),
       () => getAllVisuals(),
     ] as const);
@@ -185,10 +201,34 @@ async function askContextOn(
   const gate = await visibleGraphFor(db, studentId);
   const losRes = { rows: allLosRes.rows.filter((l) => gate.lo(l.id)) };
   const qRes = { rows: allQRes.rows.filter((q) => gate.lo(q.lo_id)) };
+
+  // Each visible objective's place in the catalogue: its row index in the
+  // ordered read above. The one rank this context breaks ties by — for the
+  // focus objectives and for the edges.
+  const catalogRank = new Map(losRes.rows.map((l, i) => [l.id as string, i]));
+  const byCatalogue = (a: string, b: string) =>
+    (catalogRank.get(a) ?? Number.MAX_SAFE_INTEGER) -
+    (catalogRank.get(b) ?? Number.MAX_SAFE_INTEGER);
+
   // An edge is kept only when BOTH endpoints survive: a prerequisite arrow
   // pointing into a hidden course names that course's objective in the prompt.
+  //
+  // THE EDGES IN A FIXED ORDER (FR-3217). They used to come back in whatever
+  // order the query plan produced, so the same data could render a different
+  // PREREQUISITE EDGES block — it did, between two captures of one database.
+  // Now: the source objective in catalogue order, then the destination in
+  // catalogue order, then the edge id — so the arrows read in the order the
+  // book teaches, each objective's outgoing arrows together, and two rows
+  // naming the same pair are still told apart. Same data, same prompt.
   const edgesRes = {
-    rows: allEdgesRes.rows.filter((e) => gate.lo(e.src_id) && gate.lo(e.dst_id)),
+    rows: allEdgesRes.rows
+      .filter((e) => gate.lo(e.src_id) && gate.lo(e.dst_id))
+      .sort(
+        (a, b) =>
+          byCatalogue(a.src_id, b.src_id) ||
+          byCatalogue(a.dst_id, b.dst_id) ||
+          Number(a.id) - Number(b.id)
+      ),
   };
   const modulesRes = { rows: allModulesRes.rows.filter((m) => gate.module(m.id)) };
   const allVisuals = everyVisual.filter((v) => gate.lo(v.loId));
@@ -270,8 +310,13 @@ async function askContextOn(
       : `Source books (all ingested): ${docs
           .map((d) => `"${d.title}" — ${d.publisher} (${d.subject}, grade ${d.grade})`)
           .join("; ")}. Syllabus 2025–2026.`;
+  // Weakest first is the primary key; catalogue order (subject, then the
+  // lesson list's order) breaks every tie, written out rather than left to
+  // sort stability — for a new student every score is 0, so it decides the
+  // whole focus set: a maths student's is Unit 1's first eight objectives.
   const byWeakness = [...losRes.rows].sort(
-    (a, b) => (current.get(a.id) ?? 0) - (current.get(b.id) ?? 0)
+    (a, b) =>
+      (current.get(a.id) ?? 0) - (current.get(b.id) ?? 0) || byCatalogue(a.id, b.id)
   );
   for (const l of byWeakness) {
     if (focusLos.size >= FOCUS_LO_COUNT) break;

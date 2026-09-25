@@ -15,6 +15,7 @@ import { spineSubjectOf } from "./subjects";
 import { PREREQ_GATE } from "./progression";
 import { computeLayers } from "./spine-layout";
 import { SPINE_LO_SQL, SPINE_LO_SQL_NO_SUBJECT_VIEW } from "./spine-lo-query";
+import { catalogueObjectivesSql } from "./module-order";
 
 /**
  * Every function here mixes curriculum reads (no policies — the graph is not
@@ -402,11 +403,13 @@ async function studentPlanOn(
   mastery: { loId: string; label: string; score: number }[];
 }> {
   const [losRes, edgesRes, masteryRes, qRes, studentRes] = await sequential([
-    () =>
-      db.query(`
-      SELECT id, label, order_in_parent FROM graph_nodes
-      WHERE kind = 'learning_objective' ORDER BY order_in_parent
-    `),
+    // Every objective of every subject, split by SUBJECT (registry order —
+    // maths first) and in CATALOGUE order inside each (FR-3217): the order
+    // the lesson list, the progression and the skill map use. It used to be
+    // `ORDER BY order_in_parent` alone: a position inside a module, shared by
+    // the first objective of every unit of every subject, so Postgres chose
+    // the order of each tie and the plan's tie-breaks below inherited it.
+    () => db.query(catalogueObjectivesSql("lo.id, lo.label")),
     () =>
       db.query(`
       SELECT src_id, dst_id FROM graph_edges
@@ -468,8 +471,17 @@ async function studentPlanOn(
   const eligible = (lo: string) =>
     (prereqs.get(lo) ?? []).every((p) => (score.get(p) ?? 0) >= PREREQ_GATE);
 
+  // The plan's own order is "weakest first" (and "strongest first" for
+  // review) — that stays the primary key. The tie-break is the subject, then
+  // catalogue order inside it, written out rather than left to sort
+  // stability: `rank` is each objective's row index in the read above. It
+  // decides almost everything for a new student, whose every score is 0.
+  const rank = new Map(loIds.map((id, i) => [id, i]));
+  const byCatalogue = (a: string, b: string) =>
+    (rank.get(a) ?? 0) - (rank.get(b) ?? 0);
+
   const byScoreAsc = [...loIds].sort(
-    (a, b) => (score.get(a) ?? 0) - (score.get(b) ?? 0)
+    (a, b) => (score.get(a) ?? 0) - (score.get(b) ?? 0) || byCatalogue(a, b)
   );
 
   const weakestEligible = byScoreAsc.filter(
@@ -477,7 +489,9 @@ async function studentPlanOn(
   );
   const reviewPool = [...loIds]
     .filter((lo) => (score.get(lo) ?? 0) >= REVIEW_FLOOR)
-    .sort((a, b) => (score.get(b) ?? 0) - (score.get(a) ?? 0));
+    .sort(
+      (a, b) => (score.get(b) ?? 0) - (score.get(a) ?? 0) || byCatalogue(a, b)
+    );
   // stretch: the frontier — weakest LO whose prerequisites are NOT yet met
   const stretchPool = byScoreAsc.filter((lo) => !eligible(lo));
 

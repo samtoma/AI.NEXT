@@ -1,4 +1,5 @@
 import { pool } from "./db";
+import { MODULE_ORDER, SUBJECT_RANK } from "./module-order";
 
 /** One row of the `visuals` table, joined to its LO (and module via the
  *  teaches edge) for grouping and labeling. */
@@ -65,11 +66,21 @@ const toRow = (r: RawRow): VisualRow => ({
   syllabusRef: r.syllabus_ref,
 });
 
-/** Everything, grouped by module, for /gallery. */
+/**
+ * Everything, grouped by module, for /gallery — modules and figures in
+ * CATALOGUE order (FR-3217), the lesson list's. It used to sort by module
+ * position with no term, so Term-1 Unit 1 and Term-2 Unit 1 (both position 1)
+ * tied, and the page's unit groups came out with the terms interleaved — on
+ * the local data, Term-2 Unit 1 before Term-1 Unit 1, and geometry's Unit 4
+ * between Units 3 and 4. The page holds every subject's figures, so the
+ * SUBJECT comes first (registry order — maths, then Social Studies, then
+ * Arabic), then the catalogue order inside it. `BASE_SELECT` already carries
+ * the `lo` and `m` aliases both read; `v.id` orders one objective's figures.
+ */
 export async function getGalleryData(): Promise<GalleryData> {
   const res = await pool.query(
     `${BASE_SELECT}
-     ORDER BY m.order_in_parent NULLS LAST, lo.order_in_parent, v.id`
+     ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER}, v.id`
   );
   const modules: GalleryModule[] = [];
   const byModule = new Map<string, GalleryModule>();
@@ -113,7 +124,15 @@ export async function getVisualById(id: string): Promise<VisualRow | null> {
   return r ? toRow(r) : null;
 }
 
-/** Visuals for a set of LOs (lesson grounding catalogs). */
+/**
+ * Visuals for a set of LOs (lesson grounding catalogs).
+ *
+ * NOT catalogue-ordered, on purpose (FR-3217's exception, listed in
+ * `catalogue-order-guard.test.mts`): its one caller (lib/lesson.ts) passes one
+ * lesson's objectives, a lesson sits in one module, and inside one module
+ * `MODULE_ORDER` reduces to exactly `lo.order_in_parent` then id. It also feeds
+ * the lesson prompt, which ADR-0020 holds.
+ */
 export async function getVisualsForLos(loIds: string[]): Promise<VisualRow[]> {
   if (loIds.length === 0) return [];
   const res = await pool.query(
@@ -123,10 +142,17 @@ export async function getVisualsForLos(loIds: string[]): Promise<VisualRow[]> {
   return (res.rows as RawRow[]).map(toRow);
 }
 
-/** Every visual — compact catalog for spine-chat grounding. */
+/**
+ * Every visual — compact catalog for spine-chat grounding (lib/ask.ts, its
+ * only caller). Its order is the order of the FIGURE LIBRARY and FIGURE INDEX
+ * lines in the tutor's prompt, so it follows the ask context's: subject
+ * first, then catalogue order, then the figure's id (FR-3217; Samuel,
+ * 2026-09-25, lifting ADR-0020's hold for this ordering). It used to sort by
+ * module position with no term, so Term 1 and Term 2 figures interleaved.
+ */
 export async function getAllVisuals(): Promise<VisualRow[]> {
   const res = await pool.query(
-    `${BASE_SELECT} ORDER BY m.order_in_parent NULLS LAST, lo.order_in_parent, v.id`
+    `${BASE_SELECT} ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER}, v.id`
   );
   return (res.rows as RawRow[]).map(toRow);
 }
