@@ -1,9 +1,9 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-25 (`main`; `v0.9.0` deployed; `v0.9.1` released, not deployed; **v0.9.2 in progress, NOT committed**; constitution v3.3.0)
+> Last updated: 2026-09-25 (`main`; `v0.9.1` deployed; `v0.9.2` released, NOT deployed — awaiting Samuel's go; constitution v3.3.0)
 
-## 🧭 v0.9.2 — one curriculum order, split by subject, and the circle unit names its term (in progress, NOT committed — awaiting Samuel's review)
+## 🧭 v0.9.2 — one curriculum order, split by subject, and the circle unit names its term (released 2026-09-25, NOT deployed — awaiting Samuel's go)
 
 Samuel, 2026-09-25: *"Fix that as well for sure, i thought they are all from the same source."* Then,
 the same day, on the three follow-ups: the label reaching prompts — *"OK"*; mixed-subject lists —
@@ -33,7 +33,7 @@ worktree `.claude/worktrees/v092` on branch `fix/one-curriculum-order` (from `ma
   Ask surfaces' data and grounding), plus the approved label; every other prompt path is byte-identical.
   **No browser has rendered any affected page, and nobody has chatted with the tutor on this build.**
 
-## 🗺️ v0.9.1 — the skill map's order and packing (released 2026-09-25, NOT deployed — awaiting Samuel's go)
+## 🗺️ v0.9.1 — the skill map's order and packing (released and deployed 2026-09-25)
 
 Samuel approved this on 2026-09-24 after comparing `/spine` before and after v0.6.0. Before, it was
 *"nice and sequential"*; since, it *"looks random"*. The work is on branch `fix/spine-order-and-columns`

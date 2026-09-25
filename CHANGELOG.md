@@ -10,7 +10,9 @@ requirement names it.
 
 ## [Unreleased]
 
-v0.9.2, in progress — **not committed; awaiting Samuel's review.** The whole product reads the curriculum
+## [v0.9.2] — 2026-09-25
+
+The whole product reads the curriculum
 in one order, lists that mix subjects keep each subject together, and the circle unit says which term it
 belongs to. Student-facing (the practice plan, the
 progress page, the check-in) and the internal tools; one data migration (031).
