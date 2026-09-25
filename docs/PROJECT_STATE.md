@@ -1,7 +1,19 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-25 (`main`; `v0.9.1` deployed; `v0.9.2` released, NOT deployed — awaiting Samuel's go; constitution v3.3.0)
+> Last updated: 2026-09-25 (`main`; `v0.9.1` deployed; `v0.9.2` released, NOT deployed — awaiting Samuel's go; `v0.9.3` hotfix prepared, NOT committed; constitution v3.3.0)
+
+## 🩹 v0.9.3 hotfix prepared, NOT committed (2026-09-25) — awaiting Samuel's review
+
+Worktree `.claude/worktrees/v093`, branch `fix/widget-excluded-values-sign` (from `main` at v0.9.2),
+**uncommitted by instruction; no version bump**. Three live widget questions (`q:t2u2-2-1:w001–w003`,
+excluded values of 1/((x + r)(x + s))) stored the negatives of their answers — the generator stored
+the factors' shifts, not their roots; 0 attempts on production. Fixed in the template, the seed and
+**migration 032** (+ rollback; floor 31); `number_line_marker` gains `sign-flipped` → the transposition
+refutation (FR-1206). A blind reading of all 48 stored widget stems found no other mismatch and is now
+a CI test (FR-1207). Details: `CHANGELOG.md` `[Unreleased]`, the FR-1206/1207/1213 rows in
+`specs/001-student-mvp1-delta/traceability.md`. **Not yet rendered in a browser; production keeps the
+wrong keys until a deploy runs 032.**
 
 ## 🧭 v0.9.2 — one curriculum order, split by subject, and the circle unit names its term (released 2026-09-25, NOT deployed — awaiting Samuel's go)
 

@@ -152,6 +152,12 @@ order at all, reads in catalogue order of each end. The wording of every prompt 
 every other prompt path — the lessons, the grader and the upload parser. 12 of 438 captured prompt files
 change: the data and grounding of the six Ask surfaces.)*
 
+*(A fourth exception — Samuel, 2026-09-25, choosing "Full fix + deploy" for hotfix v0.9.3. The hold is
+lifted for **one sentence in the number-line widget's live-event note**: when a student marks the right
+values with the wrong signs, the note now names that error ("right numbers, wrong signs … substitute a value
+back in to check its sign"), as FR-1206 requires of a widget note. It is emitted only by the new
+`sign-flipped` predicate. Every other widget note, and every system prompt, is unchanged.)*
+
 **Revisit when**: a date or school-calendar signal enters the system (the pointer
 would then compete with it for authority over "today's lesson"); or the
 prerequisite graph gains real lesson-level edges, at which point book order can
