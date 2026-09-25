@@ -73,6 +73,7 @@ export const WIDGET_PREDICATES = {
   number_line_marker: {
     "missed-values": "Part of the answer set was not marked",
     "extra-values": "Marked values that the answer set does not contain",
+    "sign-flipped": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
     "endpoint-inclusion-wrong": "Right endpoints, wrong circles — hollow excludes (< >), filled includes (<= >=)",
     "interval-wrong": "The interval does not run between the right endpoints",
     "off-target": "Wrong in a way none of the named errors describes",

@@ -9,7 +9,9 @@
  * Two jobs the book keeps asking for and the product could not show. Points
  * mode is the excluded values of an algebraic fraction — the answer is a SET,
  * so it is graded as one and a student who finds one of the two zeros gets
- * told exactly that rather than a flat "wrong". Interval mode is inequality
+ * told exactly that rather than a flat "wrong" — and one who marks −2 and 3
+ * for 1/((x − 2)(x + 3)) is told the signs are flipped, which is a different
+ * mistake with a different refutation (number-line-grade.ts). Interval mode is inequality
  * solutions, where the open/closed endpoint carries as much meaning as the
  * number: > and ≥ differ by nothing except the hollow circle, so the circle is
  * a control the student sets, not decoration.
@@ -24,6 +26,7 @@ import { BUTTON_SECONDARY, BUTTON_TERTIARY } from "@/components/sticker";
 import { Handle, WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { clamp, useDragSurface, useKeyNudge, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import { gradePoints } from "./number-line-grade";
 
 const W = 300;
 const H = 96;
@@ -120,19 +123,22 @@ export function NumberLineMarker({
     let pred = "off-target";
 
     if (mode === "points") {
-      const want = [...(targets ?? [])].sort((a, b) => a - b);
-      const got = [...marks].sort((a, b) => a - b);
-      ok = want.length === got.length && want.every((v, i) => v === got[i]);
+      // The diagnosis (sign-flipped, missed-values, extra-values) and its
+      // order live in number-line-grade.ts, where they are tested.
+      const g = gradePoints(targets ?? [], marks);
+      ok = g.ok;
       if (!ok) {
-        const missing = want.filter((v) => !got.includes(v));
-        const extra = got.filter((v) => !want.includes(v));
-        const bits: string[] = [];
-        // Missing values are the diagnosable error — a half-solved denominator.
-        // Extra ones are noise on top, so a set with both reports the omission.
-        pred = missing.length ? "missed-values" : "extra-values";
-        if (missing.length) bits.push(`missed ${missing.join(" and ")}`);
-        if (extra.length) bits.push(`marked ${extra.join(" and ")}, which ${extra.length > 1 ? "are" : "is"} allowed`);
-        why = bits.length ? ` — ${bits.join("; ")}` : "";
+        pred = g.predicate;
+        if (pred === "sign-flipped") {
+          why = ` — right numbers, wrong signs: ${g.extra
+            .map((v) => `${v} should be ${-v}`)
+            .join(" and ")}. Substitute a value back in to check its sign`;
+        } else {
+          const bits: string[] = [];
+          if (g.missing.length) bits.push(`missed ${g.missing.join(" and ")}`);
+          if (g.extra.length) bits.push(`marked ${g.extra.join(" and ")}, which ${g.extra.length > 1 ? "are" : "is"} allowed`);
+          why = bits.length ? ` — ${bits.join("; ")}` : "";
+        }
       }
     } else {
       ok =

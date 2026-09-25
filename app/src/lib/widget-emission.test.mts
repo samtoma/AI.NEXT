@@ -41,6 +41,15 @@ const FILES: Record<string, string> = {
 };
 
 /**
+ * Pure modules a component delegates its grading to. What they emit is what
+ * the widget emits, so they are read with it (v0.9.3: `number_line_marker`'s
+ * set grading, and its `sign-flipped` diagnosis, moved out to be testable).
+ */
+const HELPERS: Record<string, string[]> = {
+  number_line_marker: ["number-line-grade.ts"],
+};
+
+/**
  * Every predicate literal a file can actually emit.
  *
  * Scoped deliberately narrowly: `pred = "…"` assignments, and the string
@@ -86,18 +95,35 @@ test("every widget component exists and is mapped", () => {
 });
 
 test("no widget emits a predicate the contract does not declare", () => {
-  for (const [kind, file] of Object.entries(FILES)) {
-    const src = readFileSync(DIR + file, "utf8");
+  for (const [kind, component] of Object.entries(FILES)) {
     const allowed = new Set(predicatesFor(kind));
-    for (const p of emitted(src)) {
-      assert.ok(
-        allowed.has(p),
-        `${file} can emit "${p}", which is not in ${kind}'s vocabulary ` +
-          `(known: ${[...allowed].sort().join(", ")}). The server would find no ` +
-          `diagnostic for it and the student would get silence.`
-      );
+    for (const file of [component, ...(HELPERS[kind] ?? [])]) {
+      const src = readFileSync(DIR + file, "utf8");
+      for (const p of emitted(src)) {
+        assert.ok(
+          allowed.has(p),
+          `${file} can emit "${p}", which is not in ${kind}'s vocabulary ` +
+            `(known: ${[...allowed].sort().join(", ")}). The server would find no ` +
+            `diagnostic for it and the student would get silence.`
+        );
+      }
     }
   }
+});
+
+test("a grading helper is read, and every predicate it emits is declared", () => {
+  // The helper must exist and must actually be scanned — a lint that silently
+  // read nothing would pass for the wrong reason.
+  const src = readFileSync(DIR + "number-line-grade.ts", "utf8");
+  assert.deepEqual(
+    [...emitted(src)].sort(),
+    ["extra-values", "missed-values", "sign-flipped"],
+    "number-line-grade.ts's emitted predicates changed — update this test and the contract together"
+  );
+  assert.ok(
+    readFileSync(DIR + FILES.number_line_marker, "utf8").includes('from "./number-line-grade"'),
+    "NumberLineMarker.tsx no longer grades through number-line-grade.ts; drop it from HELPERS"
+  );
 });
 
 test("every widget declares the reserved correct predicate", () => {
