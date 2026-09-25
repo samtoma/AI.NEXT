@@ -1,9 +1,39 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-25 (`main`; `v0.9.0` deployed; `v0.9.1` released, not deployed; constitution v3.3.0)
+> Last updated: 2026-09-25 (`main`; `v0.9.1` deployed; `v0.9.2` released, NOT deployed — awaiting Samuel's go; constitution v3.3.0)
 
-## 🗺️ v0.9.1 — the skill map's order and packing (released 2026-09-25, NOT deployed — awaiting Samuel's go)
+## 🧭 v0.9.2 — one curriculum order, split by subject, and the circle unit names its term (released 2026-09-25, NOT deployed — awaiting Samuel's go)
+
+Samuel, 2026-09-25: *"Fix that as well for sure, i thought they are all from the same source."* Then,
+the same day, on the three follow-ups: the label reaching prompts — *"OK"*; mixed-subject lists —
+*"Yes they need to split by subject"*; `lib/ask.ts` — *"yes for sure, for decision 2, it is part of the
+overall consistency, so please proceed"*. Work is in the
+worktree `.claude/worktrees/v092` on branch `fix/one-curriculum-order` (from `main` at v0.9.1),
+**uncommitted by instruction**. No version bump yet.
+- **FR-3217 (BUILT):** the lesson catalogue, the practice plan (`getStudentPlan`), the tutor's Ask-the-
+  Spine context (`lib/ask.ts`, with its figure catalogue), `/pipeline`, the console Overview heatmap,
+  `/gallery` and the progress page now take their order from
+  `lib/module-order.ts`, like the progression, subject home and skill map already did. Lists that hold
+  several subjects put the subject first (`SUBJECT_RANK`, from the registry: maths, Social Studies,
+  Arabic); one-subject lists and the progression are unchanged. "Weakest first" stays the plan's
+  primary key, with subject and then catalogue order as the tie-break. A source test
+  (`catalogue-order-guard.test.mts`) fails on a new `order_in_parent` sort without the catalogue order,
+  or a use of it without the subject key that is not declared one-subject; nothing is held any more.
+  **The Ask context changes what the tutor focuses on for a new student:** Unit 1's first eight
+  objectives, where Postgres's tie order used to pick the first objective of Units 2–5, geometry and
+  Term 2. Its prerequisite edges, which had no order, now render the same from the same data.
+  ADR-0020 records the lifted hold.
+- **FR-3218 (BUILT):** `module:geo-u1` reads "Term 2 · Unit 4 — The Circle" in the seed and, through
+  **migration 031** (idempotent, with a rollback), in existing databases. The check-in's special case
+  for it is gone. The label reaches the tutor's prompts for the four circle lessons and the "Ask the
+  Spine" unit list, by that string only — **approved by Samuel, recorded in ADR-0020**.
+- 52 new tests (973 total; 12 of them opt-in against a scratch database, all run). The CI migrations
+  script passed locally against v0.9.1. Prompt captures: 12 of 438 files change from the code (the six
+  Ask surfaces' data and grounding), plus the approved label; every other prompt path is byte-identical.
+  **No browser has rendered any affected page, and nobody has chatted with the tutor on this build.**
+
+## 🗺️ v0.9.1 — the skill map's order and packing (released and deployed 2026-09-25)
 
 Samuel approved this on 2026-09-24 after comparing `/spine` before and after v0.6.0. Before, it was
 *"nice and sequential"*; since, it *"looks random"*. The work is on branch `fix/spine-order-and-columns`

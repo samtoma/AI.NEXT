@@ -1,6 +1,7 @@
 import { sequential, withOperator } from "@/lib/db";
 import { ENVIRONMENT } from "@/lib/env";
 import { UTC_DAY, TODAY_UTC } from "@/lib/cost-queries";
+import { LO_MODULE_JOIN, MODULE_ORDER } from "@/lib/module-order";
 import {
   MASTERY_THRESHOLD,
   cite,
@@ -476,9 +477,11 @@ export async function getOverview(
           [ENVIRONMENT]
         ),
 
-      // ---- the heatmap's rows: this subject's objectives in SYLLABUS order
-      //      (module ordinal, then the objective's own), not alphabetical and
-      //      not by id.
+      // ---- the heatmap's rows: this subject's objectives in CATALOGUE order
+      //      (FR-3217) — the lesson list's order, not alphabetical and not by
+      //      id. It was module ordinal then the objective's own, with no term:
+      //      Term-1 Unit 1 and Term-2 Unit 1 are both module 1, so the two
+      //      terms' rows came out interleaved.
       () =>
         db.query<{
           lo_id: string;
@@ -490,12 +493,9 @@ export async function getOverview(
                   m.order_in_parent AS module_ordinal,
                   lo.order_in_parent AS lo_ordinal
              FROM node_subject ns
-             JOIN graph_nodes lo ON lo.id = ns.node_id
-             LEFT JOIN graph_edges te ON te.dst_id = lo.id AND te.edge_type = 'teaches'
-                                     AND te.system_to IS NULL
-             LEFT JOIN graph_nodes m ON m.id = te.src_id AND m.kind = 'module'
+             JOIN graph_nodes lo ON lo.id = ns.node_id${LO_MODULE_JOIN}
             WHERE ns.subject = $1
-            ORDER BY m.order_in_parent NULLS LAST, lo.order_in_parent NULLS LAST, lo.id`,
+            ORDER BY ${MODULE_ORDER}`,
           [key.subject]
         ),
 

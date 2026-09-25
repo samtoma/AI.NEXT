@@ -1,8 +1,9 @@
 /**
  * TEST FIXTURE — the real Prep-3 maths skill map, read from the seed files the
  * content loader itself reads (`services/extraction/seed/`), for
- * `spine-layout.test.mts` and `spine-order-db.test.mts`. Nothing in the app
- * imports it.
+ * `spine-layout.test.mts` and `spine-order-db.test.mts` — and, at the bottom,
+ * the catalogue across all three subjects for the FR-3217 tests. Nothing in
+ * the app imports it.
  *
  * Not a copy: the ten files below ARE the maths curriculum that reaches the
  * database (90 objectives, 112 prerequisite edges, ten modules — the set
@@ -19,6 +20,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 import { computeLayers } from "./spine-layout.ts";
+import { SUBJECTS, SUBJECT_IDS } from "./subjects.ts";
 
 /** Load order is irrelevant; listed in catalogue order for the reader. */
 export const MATHS_SEED_FILES = [
@@ -162,4 +164,91 @@ export function loadMathsGraph(): {
     catalogRank: i,
   }));
   return { los, edges, moduleLabel };
+}
+
+/* ------------------------------------------------------------------ */
+/* The catalogue across subjects (FR-3217)                             */
+/* ------------------------------------------------------------------ */
+
+export interface CatalogueLo {
+  id: string;
+  label: string;
+  description: string | null;
+  syllabus_ref: string | null;
+  source_page: number | null;
+  moduleId: string | null;
+  courseId: string | null;
+}
+
+/**
+ * The curriculum as `catalogueObjectivesSql` returns it — for the tests that
+ * drive the REAL practice plan and ask context over a fake client. `"maths"`
+ * is the ten maths bundles; `"all"` adds Social Studies and Arabic (the
+ * bundles the loader loads for them; `social-t1` supersedes the skeleton).
+ *
+ * Ordered by the registry position of the course (`SUBJECT_RANK`, from
+ * `SUBJECT_IDS` in lib/subjects.ts), then `catalogueCompare` (`MODULE_ORDER`):
+ * the statement `catalogue-order-db.test.mts` holds the SQL to on a real
+ * database. Modules come back in the same split order (`SUBJECT_RANK`, then
+ * `MODULE_RANK`), and prerequisite edges carry ids in seed order.
+ */
+export function loadCatalogueFixture(which: "maths" | "all"): {
+  los: CatalogueLo[];
+  modules: { id: string; label: string; courseId: string | null }[];
+  edges: { id: number; src: string; dst: string }[];
+} {
+  const files = which === "maths" ? [...MATHS_SEED_FILES] : [...MATHS_SEED_FILES, "social-t1", "arabic-t1", "arabic-t2"];
+  const nodes = new Map<string, SeedNode>();
+  const seedEdges: SeedEdge[] = [];
+  for (const f of files) {
+    const doc = JSON.parse(
+      readFileSync(fileURLToPath(new URL(`../../../services/extraction/seed/${f}.json`, import.meta.url)), "utf8")
+    ) as { nodes: SeedNode[]; edges: SeedEdge[] };
+    for (const n of doc.nodes) if (!nodes.has(n.id)) nodes.set(n.id, n);
+    seedEdges.push(...doc.edges);
+  }
+  const moduleOf = new Map(seedEdges.filter((e) => e.type === "teaches").map((e) => [e.dst, e.src]));
+  const courseOf = new Map(seedEdges.filter((e) => e.type === "part_of").map((e) => [e.src, e.dst]));
+  const courses = SUBJECT_IDS.map((id) => SUBJECTS[id].courseId as string);
+  const subjectRank = (c: string | null | undefined) =>
+    c && courses.includes(c) ? courses.indexOf(c) : courses.length;
+  const position = (id: string | null) => (id ? (nodes.get(id)?.order_in_parent ?? null) : null);
+
+  const los = [...nodes.values()]
+    .filter((n) => n.kind === "learning_objective")
+    .map((n) => {
+      const moduleId = moduleOf.get(n.id) ?? null;
+      return {
+        id: n.id,
+        label: n.label,
+        description: n.description ?? null,
+        syllabus_ref: n.syllabus_ref ?? null,
+        source_page: n.source_page ?? null,
+        moduleId,
+        courseId: moduleId ? (courseOf.get(moduleId) ?? null) : null,
+        moduleOrder: position(moduleId),
+        orderInParent: Number(n.order_in_parent ?? 0),
+      };
+    })
+    .sort((a, b) => subjectRank(a.courseId) - subjectRank(b.courseId) || catalogueCompare(a, b))
+    .map(({ moduleOrder: _m, orderInParent: _o, ...rest }) => rest);
+
+  const modules = [...nodes.values()]
+    .filter((n) => n.kind === "module")
+    .map((n) => ({ id: n.id, label: n.label, courseId: courseOf.get(n.id) ?? null }))
+    .sort((a, b) => {
+      const pa = position(a.id) ?? Number.POSITIVE_INFINITY;
+      const pb = position(b.id) ?? Number.POSITIVE_INFINITY;
+      return (
+        subjectRank(a.courseId) - subjectRank(b.courseId) ||
+        termRank(a.id) - termRank(b.id) ||
+        pa - pb ||
+        (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)
+      );
+    });
+
+  const edges = seedEdges
+    .filter((e) => e.type === "prerequisite_of")
+    .map((e, i) => ({ id: i + 1, src: e.src, dst: e.dst }));
+  return { los, modules, edges };
 }

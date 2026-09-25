@@ -15,7 +15,7 @@ import { visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
-import { MODULE_ORDER } from "./module-order";
+import { MODULE_ORDER, SUBJECT_RANK } from "./module-order";
 import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
 import type { WidgetQuestionSpec } from "./types";
 import { mathWidgetDocs } from "./widget-docs";
@@ -193,7 +193,13 @@ export async function getLessonCatalog(
 ): Promise<LessonInfo[]> {
   const { losRes, masteryRes, visible } = await scoped(studentId, c, async (db) => {
     const [losRes, masteryRes] = await sequential([
-      () => db.query(`${LO_MODULE_SELECT} ORDER BY ${MODULE_ORDER}`),
+      // Every subject's lessons, so SUBJECT FIRST (registry order), then the
+      // catalogue order inside each (FR-3217). The subject key is the same for
+      // every module of one course, so a caller that narrows to one course —
+      // the landing, the pointer, "just finished" — sees the order it always
+      // did; the check-in's picker with no subject named no longer interleaves
+      // Arabic, Social Studies and maths units by unit number.
+      () => db.query(`${LO_MODULE_SELECT} ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER}`),
       () =>
         studentId == null
           ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
@@ -262,6 +268,14 @@ export async function getLessonCatalog(
  * `firstOnly` adds `LIMIT 1` for the caller that only needs the course;
  * everything else about the statement is shared, so the first row is the same
  * row either way.
+ *
+ * Its `ORDER BY lo.order_in_parent, lo.id` is the one objective sort in this
+ * file that does not name `MODULE_ORDER`, and it does not need to (FR-3217's
+ * listed exception, `catalogue-order-guard.test.mts`): the `LIKE` keeps ONE
+ * lesson, a lesson sits in one module, and inside one module `MODULE_ORDER`'s
+ * term and module keys are constants — it reduces to exactly this. The guard
+ * test checks that premise on every seeded lesson. This read also feeds the
+ * lesson prompt, which ADR-0020 holds.
  */
 async function resolveLessonLos(db: Db, slug: unknown, firstOnly = false) {
   const read = async (s: string) =>

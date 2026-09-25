@@ -136,6 +136,21 @@ a mid-stream prompt change wants its own deliberate cut. **Samuel, 2026-09-22:
 therefore disagree about the premise until that follow-up lands; this is a known,
 accepted, temporary inconsistency. *(This hold has one recorded exception: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md)'s
 2026-09-24 "reveal threshold" amendment, Samuel authorising one specific rule — not a reopening of the hold generally.)*
+*(A second exception, narrower still — Samuel, 2026-09-25: "OK". The hold is lifted for **one label string
+only**: `module:geo-u1`'s "Term 2 · Unit 4 — The Circle", which was "Unit 4 — The Circle" (FR-3218, migration
+031, v0.9.2). It is curriculum data, not prompt text, but it reaches the model: the lesson data block,
+`learnPrompt` and `reviewPrompt` of the four Unit-4 geometry lessons, the comprehension grader for them, and
+the "Ingested units" line of every Ask-the-Spine surface — 22 of 438 captured prompt files, by that string and
+nothing else. No prompt code changed; this is not a reopening of the hold.)*
+*(A third exception, the same day — Samuel, 2026-09-25: "yes for sure, for decision 2, it is part of
+the overall consistency, so please proceed". The hold is lifted for the **ordering of the Ask-the-Spine
+context** (`lib/ask.ts` and the figure catalogue it reads, `getAllVisuals`), FR-3217: its objective list,
+its unit list and its figure catalogue now follow the one catalogue order, split by subject (maths, Social
+Studies, Arabic); its eight focus objectives stay "weakest first" with catalogue order breaking ties, so a new
+maths student's focus is Unit 1's first eight objectives; and its prerequisite-edge list, which had no
+order at all, reads in catalogue order of each end. The wording of every prompt is unchanged, and so is
+every other prompt path — the lessons, the grader and the upload parser. 12 of 438 captured prompt files
+change: the data and grounding of the six Ask surfaces.)*
 
 **Revisit when**: a date or school-calendar signal enters the system (the pointer
 would then compete with it for authority over "today's lesson"); or the

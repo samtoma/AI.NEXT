@@ -88,13 +88,13 @@ const CASES: Case[] = [
     teaches: "the original tap widget, now on the shared interaction layer",
   },
   {
-    unit: "geo1", module: "Unit 4 — The Circle",
+    unit: "geo1", module: "Term 2 · Unit 4 — The Circle",
     name: "circle_builder",
     props: { prompt: "Draw a chord of circle M", element: "chord" },
     teaches: "sixty-six correct answers, all accepted — the property is graded, not a position",
   },
   {
-    unit: "geo1", module: "Unit 4 — The Circle",
+    unit: "geo1", module: "Term 2 · Unit 4 — The Circle",
     name: "circle_builder",
     props: { prompt: "Now draw a tangent to circle M", element: "tangent" },
     teaches: "distance from the centre must equal the radius; a secant is named as a secant",

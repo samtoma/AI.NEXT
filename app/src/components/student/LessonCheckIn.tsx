@@ -11,6 +11,12 @@ import { MasteryFill } from "@/components/MasteryFill";
 import { NoorMark } from "@/components/NoorMark";
 import { deriveMasteryStage, type Recommendation } from "@/lib/checkin";
 import {
+  moduleHeading,
+  termOfModule,
+  termOfSlug,
+  withoutTerm,
+} from "@/lib/module-term";
+import {
   BUTTON_LABEL,
   BUTTON_TERTIARY,
   HEADING,
@@ -647,32 +653,10 @@ function ActionRow({
    system's number wins over both the spec and the drawing; 37 of the 40
    targets on this page were under 48 before it. */
 
-/**
- * Which term a module belongs to, and its label without the term in it.
- *
- * The stored labels disagree with each other: `module:t2-u1` is "Term 2 ·
- * Unit 1 — Equations" and `module:geo-u2` is "Term 2 · Unit 5 — …", while
- * `module:u1` is plain "Unit 1 — Relations and Functions" and
- * `module:geo-u1` is plain "Unit 4 — The Circle" despite being Term 2. Any
- * code that prefixes the term onto the label as-is therefore prints "Term 1
- * · Term 2 · Unit 1" for the five that already carry it — which the picker
- * did, before and after this redesign, and the topic card did too.
- *
- * The ID is the one thing that is consistent, so the term comes from there
- * and the label is normalised rather than trusted.
- */
-const termOfModule = (moduleId: string): 1 | 2 =>
-  moduleId.startsWith("module:geo") || moduleId.startsWith("module:t2-")
-    ? 2
-    : 1;
-
-/** Same question, from a lesson slug ("t2u1-1", "geo1-2", "u1-1"). */
-const termOfSlug = (slug: string): 1 | 2 =>
-  slug.startsWith("geo") || slug.startsWith("t2") ? 2 : 1;
-
-/** "Term 2 · Unit 1 — Equations" → "Unit 1 — Equations" */
-const withoutTerm = (label: string) =>
-  label.replace(/^\s*Term\s*\d+\s*\u00b7\s*/u, "");
+/* Which term a module belongs to, and its label without the term: the
+   helpers live in lib/module-term.ts (FR-3218). Every Term 2 label names its
+   term and no Term 1 label does, so this page prints the term itself and
+   strips it from the label first — it never prefixes a stored label as-is. */
 
 function groupByModule(lessons: LessonInfo[]) {
   const modules: {
@@ -882,8 +866,7 @@ function SocialCheckIn({
                 </span>
               ) : (
                 <span className="w-full font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint sm:w-56 sm:shrink-0">
-                  {isGeoModule(m.id) ? "Term 2 · " : "Term 1 · "}
-                  {m.label}
+                  {moduleHeading(m.id, m.label)}
                 </span>
               )}
               <span className="flex flex-wrap gap-1.5">
