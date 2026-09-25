@@ -1,9 +1,9 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-25 (`main`; `v0.9.1` deployed; `v0.9.2` released, NOT deployed — awaiting Samuel's go; `v0.9.3` hotfix prepared, NOT committed; constitution v3.3.0)
+> Last updated: 2026-09-25 (`main`; `v0.9.2` deployed; `v0.9.3` hotfix released, deploy approved by Samuel; constitution v3.3.0)
 
-## 🩹 v0.9.3 hotfix prepared, NOT committed (2026-09-25) — awaiting Samuel's review
+## 🩹 v0.9.3 hotfix — three widget answers corrected (released 2026-09-25; Samuel: "Full fix + deploy")
 
 Worktree `.claude/worktrees/v093`, branch `fix/widget-excluded-values-sign` (from `main` at v0.9.2),
 **uncommitted by instruction; no version bump**. Three live widget questions (`q:t2u2-2-1:w001–w003`,
@@ -15,7 +15,7 @@ a CI test (FR-1207). Details: `CHANGELOG.md` `[Unreleased]`, the FR-1206/1207/12
 `specs/001-student-mvp1-delta/traceability.md`. **Not yet rendered in a browser; production keeps the
 wrong keys until a deploy runs 032.**
 
-## 🧭 v0.9.2 — one curriculum order, split by subject, and the circle unit names its term (released 2026-09-25, NOT deployed — awaiting Samuel's go)
+## 🧭 v0.9.2 — one curriculum order, split by subject, and the circle unit names its term (released and deployed 2026-09-25)
 
 Samuel, 2026-09-25: *"Fix that as well for sure, i thought they are all from the same source."* Then,
 the same day, on the three follow-ups: the label reaching prompts — *"OK"*; mixed-subject lists —

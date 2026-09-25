@@ -10,7 +10,9 @@ requirement names it.
 
 ## [Unreleased]
 
-Hotfix, prepared for v0.9.3 and not yet released. Three maths questions marked correct answers wrong;
+## [v0.9.3] — 2026-09-25
+
+Hotfix. Three maths questions marked correct answers wrong;
 they are corrected, the whole widget bank is now checked against its own questions, and the mistake
 those three used to reward is named when a student makes it. Student-facing (the number-line widget);
 one data migration (032).
