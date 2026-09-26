@@ -206,9 +206,10 @@ Checks after each code change: `AINEXT_TEST_PG="host=127.0.0.1 port=5432" uv run
 `uv run dryrun_chapter.py --book g10-math --chapter 8` and `… --mode inline`, `python3 scripts/traceability.py --check` (repo root).
 
 **3. Open decisions and backlog** (`docs/WIP-g10-pilot/integration-backlog.md`)
-- Human gates still to pass: **G3** (10% sample + #3's tier flag, `g3-flags.json`), **G3 held mappings** (22 claims, decision 47),
-  **G4** (catalogue sample). The **7** widget gaps in `coverage/g10-math.ch08.widget-gaps.json` need Samuel's sign-off (FR-4306):
-  s1-1-1, s1-1-3, s2-1-1, s3-1-1, s3-2-2 (line relationship classifier), s3-2-3 (collinearity checker), s4-1-3.
+- Human gates still to pass: **G3** (10% sample + #3's tier flag, `g3-flags.json`), **G3 held mappings** (16 claims, decision 47),
+  **G4** (catalogue sample). The **8** widget gaps in `coverage/g10-math.ch08.widget-gaps.json` need Samuel's sign-off (FR-4306):
+  s1-1-1, s1-1-3, s2-1-1, s3-1-1 (gradient formula builder), s3-1-2 (coordinate-from-gradient solver; its template
+  is held), s3-2-2 (line relationship classifier), s3-2-3 (collinearity checker), s4-1-3.
   (The pilot report's earlier "6 gaps … the other five stand" predates the re-author of g10m8s3-2, which
   replaced the s3-2-3 template with a collinearity-checker gap.)
 - Tier-floor gaps to list by name (FR-4305): s1-1-1 (no markable parent), s1-1-2 standard/advanced (diagram-dependent).
@@ -247,3 +248,15 @@ parity GREEN; tester setup unchanged. Next copies: `lesson-visuals-v6.<lesson>.w
 plan `runs/g10-math/visual-reruns-v6.plan.json`), `widgets.s7-author-r3.workflow.js` (g10m8s3-1, s7-v7),
 `widgets.s7-verify-r2.workflow.js` (s3-2-1 with the replacement instance, staged in
 `work/g10-math/pilot/widgets-staged/` — copy it into `widgets/g10-math/` only after the verify returns).
+**v6 visuals, S7 r3 and verify r2 in (2026-09-27, ≈$1.52 metered).** Four lesson-v6 re-runs merged
+(`runs/g10-math/visual-reruns/`; gaps left: 8.2 Ex8-6:38a → polygon_scene, 8.3a WE4 → segment-attached label,
+8.3b Ex8-6:29a — Compare rejected, the spec drew A,B,D where the image shows A,B,C). Caption rule (lesson-v7 +
+assembly `fix_caption` + coverage `captions`): a caption describes only what is drawn — 4 captions fixed (8.4's
+three "midpoint M marked", 8.3b Ex8-6:18c's tick marks). S7: g10m8s3-1 re-authored → no template, two gaps
+(gradient_formula_builder, coordinate_from_gradient_solver); s3-2-1 installed with its replacement instance and
+accepted on the fresh verify (a re-verification at the current sha now overrides a stale `verified_as`);
+points-swapped unconfirmed on all three → held. Pilot reloaded: **119 book questions live, 39 held at review**
+(26 by the figure gate, 13 G2-accepted but figureless); 21 widget questions from 6 templates in review
+(4 retired, the held s3-1-2 template); mappings 9 active / 16 held (G3 page re-rendered); 8 widget gaps in
+`coverage/g10-math.ch08.widget-gaps.json`. Coverage RED only on objective_evidence (s1-1-1) and tier_floor
+(pre-G3); parity GREEN; tester setup unchanged.
