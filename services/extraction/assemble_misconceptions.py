@@ -514,9 +514,10 @@ def assemble(run_paths: list[Path], book_name: str) -> tuple[dict, list[dict], l
 # a G2 fix that touched any of these replaced the book's answer, or the question the re-solve was shown (a stem
 # fix): the disagreement was the book's (or ours), not a student's
 ANSWER_FIELDS = {"answer", "marker", "answer_type", "printed_answer", "epub_final_answer", "solution", "stem"}
-# a G2 fix that touched any of these changed the WORKING or its result, so the canonical solution is no longer the
-# book's own text
-CORRECTION_FIELDS = {"answer", "marker", "epub_final_answer", "solution"}
+# a G2 fix that touched any of these changed the book's WORKING, so the canonical solution is no longer the book's
+# own text (a fix of the answer alone re-types it — a fraction typed numeric, a choice key — and every Chapter 8
+# fix of a wrong book answer also rewrote the solution lines that carried it)
+CORRECTION_FIELDS = {"epub_final_answer", "solution"}
 
 
 def _provenance(prov: str | None, corrected: bool) -> str | None:

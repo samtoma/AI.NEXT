@@ -237,14 +237,18 @@ class AnswerText(unittest.TestCase):
             key = it["marker"]["key"]
             build = lambda: alb.assemble(book_config.load_book("g10-math"), root / "manifest.json",  # noqa: E731
                                          root / "objectives", root / "runs" / "lesson", None)
+            # consistency review A1: the answer text is ALWAYS the marker key rendered — the printed answer is the
+            # PDF's text layer ("9 11" for 9/11), agreed at G2 or not
             it["printed_answer"] = "PRINTED (1; 2)"
             rp.write_text(json.dumps(run))
             q = next(q for b in build()[0].values() for q in b.get("questions", []) if q["id"].endswith("ex8-1-2"))
-            self.assertEqual(q["answer"], "PRINTED (1, 2)", "agreed and untouched at G2: the printed answer")
+            self.assertEqual(q["answer"], alb.answer_text(q["choices"]["marker"]), "agreed: still the key")
+            self.assertNotIn("PRINTED", q["answer"])
             it["g2"] = {"verdict": "fix", "by": "Samuel", "note": "book error"}
             rp.write_text(json.dumps(run))
             q = next(q for b in build()[0].values() for q in b.get("questions", []) if q["id"].endswith("ex8-1-2"))
-            self.assertEqual(q["answer"], alb.normalise(key)[0], "fixed at G2: the approved key")
+            self.assertEqual(q["answer"], alb.answer_text(q["choices"]["marker"]), "fixed at G2: the approved key")
+            self.assertEqual(q["choices"]["marker"]["key"], alb.normalise(key)[0])
 
 
 if __name__ == "__main__":

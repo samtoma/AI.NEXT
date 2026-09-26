@@ -4,14 +4,17 @@ This is the operator's page for the extraction line.
 - **Design:** `docs/specs/extraction-pipeline.md` (v2, decided 2026-09-25).
 - **Decisions:** ADR-0005 (the line, with its 2026-09-25 amendment), ADR-0006 (Arabic), ADR-0008
   (generated bank), ADR-0009 (widgets as questions); `specs/003-curriculum-tracks/decisions.md`
-  (#12–#16, #19–#22).
-- **Product requirements it serves:** `specs/003-curriculum-tracks/spec.md` FR-4301…FR-4320 and
-  FR-4401…FR-4409.
+  (#12–#16, #19–#22; and, as they touch the line, #25 prerequisite links, #31 S5 per objective, #32 the
+  third reading, #33 the second mapper, #36 items outside a chapter, #39–#45 the G2 answers, #47 held
+  widget mappings). Samuel's answers from the third round on are in
+  `docs/WIP-g10-pilot/samuel-answers.md`: answer N is decision N + 21.
+- **Product requirements it serves:** `specs/003-curriculum-tracks/spec.md` FR-4301…FR-4321 and
+  FR-4401…FR-4410.
 
-> **Status, 2026-09-25 (updated after Samuel's "ok for all").**
-> - **[exists]**: the step runs from committed code.
-> - **[on the branch]**: the code is written on `feat/003-curriculum-tracks-g10-american-math`, but is
->   not committed and not verified by anyone but its author.
+> **Status, 2026-09-25 (updated after Samuel's "ok for all"; commit wording corrected 2026-09-27).**
+> - **[exists]**: the step runs from committed code on `main`.
+> - **[on the branch]**: the code is on `feat/003-curriculum-tracks-g10-american-math`, committed only
+>   as unreviewed WIP snapshots, and not verified by anyone but its author.
 > - **[verified]**: read and its own test suite run 2026-09-25 (`uv run --project services/extraction
 >   --with pytest python -m pytest -q services/extraction/tests` — 272 passed, 47 skipped without a
 >   database). This proves the code is real and its unit tests pass; it does **not** mean this stage has
@@ -23,6 +26,10 @@ This is the operator's page for the extraction line.
 >
 > For Grade 10, **G0 is passed (65 lessons)**. S0a and S0 were done by the scouting scripts in
 > `scratch_g10/` (report: `runbook/g10-s0-report.md`). B2 and B3 must reproduce that manifest.
+> **Chapter 8 pilot (2026-09-26/27)**: S0b (853/853 accepted, G0b not needed), S1 and **G1 passed**,
+> S2–S4 and **G2 passed**, S5, S6 and S7 run, and the results loaded into the scratch database
+> `ainext_pilot_g10_ch08`; G3, G4 and G5 are still to come. Metered: $153.30 (`runs/g10-math/cost.jsonl`).
+> Where it stands: `docs/WIP-g10-pilot/README.md`.
 >
 > Review posture: ADR-0019 covers the maths bank of both maths courses. Switching a course on in the
 > console is the gate (decision 9).

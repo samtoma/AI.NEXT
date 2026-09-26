@@ -101,7 +101,7 @@ class Collect2(unittest.TestCase):
         rep, x = self.one(it, typing("Ex8-2:1", "6,71", "$d_{AB} \\approx\\text{6,71}$"), "6.71")
         self.assertEqual(x["typing_problems"], [])
         self.assertEqual(x["verification"], "agreed")
-        self.assertEqual(rep["result"]["collect_version"], "collect-4")
+        self.assertEqual(rep["result"]["collect_version"], "collect-5")
 
     def test_a_final_the_solution_does_not_contain_is_still_refused(self):
         it = item("Ex8-2:1", "Calculate $AB$.", ALIGN_SOL, "6,71")
@@ -168,8 +168,10 @@ class Collect2(unittest.TestCase):
     def test_versions(self):
         """collect-2 changed no prompt; lesson-v4 changed the TYPING prompt only (options_source "figure")."""
         src = WORKFLOW.read_text()
-        self.assertIn("const PROMPTS_VERSION = 'lesson-v4'", src)
-        self.assertIn("const COLLECT_VERSION = 'collect-4'", src)
+        # lesson-v5 / collect-5 (consistency review A3/A8/A9): the visuals prompt and rule, the objective id
+        # without "lo:", and the subject form from the book's rule
+        self.assertIn("const PROMPTS_VERSION = 'lesson-v5'", src)
+        self.assertIn("const COLLECT_VERSION = 'collect-5'", src)
 
 
 FIG = "/w/figures/tikzpicture__points.png"
