@@ -58,6 +58,10 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
 10. **Step-level working checker** (backlog 78, ≈$70–125 for the book).
 12. **"A question's own figure is shown with it"** (built in fixing A3) has no requirement — write it as an FR, or
     leave it unfiled?
+13. **Two more LIVE Prep-3 widget issues** (found fixing W1): q:geo2-2-2:w002 opens already solved (the angle
+    widget starts at its own target); u4-1-2's tan mapping names the wrong misconception. Plus: the corrected Prep-3
+    widget bank (14 dead links re-mapped/dropped) is ready in the repo and needs a data migration + a release to reach
+    production — on Samuel's go.
 11. Still open from before: "draw figures from coordinates" has no marked question (tier floor); Ex8-5:5 detailed review.
 
 ## C. Requirements and documents out of sync (fix; no decision needed)
@@ -110,3 +114,7 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
   wf_80d2fb22-698 (8.4) — 34 figures, lesson-v5 visuals_only.
   Known red until W1 lands: tests/dry runs that preload the Prep-3 widget bank (the new can-emit check rejects its 14
   dead rows until they're re-mapped).
+- Content side DONE: A5 (13 patches on 9 refutations, recorded; s5-v5 rule + validator), A7 (7 stems, orchestrator-
+  applied, flagged for G3/G4), A10 (opening-handle collision refused; w003 dropped pending re-verify), A12 (flag), W1
+  (`can_emit` table v2 enforced + mirrored in the app; G10 dead links dropped: widgets 25 → 20, active/held 11/13;
+  s3-1-2 lost its only widget → re-author; Prep-3 bank corrected IN REPO ONLY).
