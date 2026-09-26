@@ -156,10 +156,18 @@ def validate_widget(q: dict, known_misconceptions: set[str] | None = None) -> li
         )
         return problems
     allowed_held = predicates_for(kind) - {OK}
+    # W1: what THIS question can emit (its mode / ask / element / fn …), not only what the kind declares
+    emits, where = can_emit(kind, choices.get("spec"))
+    if emits is None:
+        problems.append(f"{qid}: spec ({where}) reaches no case of {kind}'s can_emit table — a value the widget "
+                        f"does not render")
     active = {d.get("predicate") for d in diags if isinstance(d, dict)}
     for d in held or []:
         if d["predicate"] not in allowed_held:
             problems.append(f"{qid}: held predicate {d['predicate']!r} is not one {kind} can emit")
+        elif emits is not None and d["predicate"] not in emits:
+            problems.append(f"{qid}: held predicate {d['predicate']!r} can never fire here — {kind} with {where} "
+                            f"emits only {sorted(emits)}")
         if d["predicate"] in active:
             problems.append(f"{qid}: predicate {d['predicate']!r} is both active and held")
         if known_misconceptions is not None and d["misconception_id"] not in known_misconceptions:
@@ -180,6 +188,11 @@ def validate_widget(q: dict, known_misconceptions: set[str] | None = None) -> li
             problems.append(
                 f"{qid}: predicate {p!r} is not one {kind} can emit "
                 f"(known: {sorted(allowed - {OK})})"
+            )
+        elif emits is not None and p not in emits:
+            problems.append(
+                f"{qid}: predicate {p!r} can never fire here — {kind} with {where} emits only "
+                f"{sorted(emits)}: the mapping is dead and the student would get a plain 'not quite'"
             )
         if p in seen:
             problems.append(f"{qid}: predicate {p!r} mapped twice")
