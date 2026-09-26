@@ -1386,9 +1386,10 @@ def _predicate_of(text, claimed: set) -> str | None:
 
 def verified_version(tpl: dict) -> tuple[dict | None, str]:
     """The template exactly as the blind verifier judged it, when a pipeline normalisation since then only REMOVED
-    diagnostics or instances (recorded in "verified_as"), else (None, why). Any other difference — a changed stem,
-    spec, solution, tier, an added or altered diagnostic or instance, notes rewritten rather than appended — and
-    the verdicts do not carry: the template must be verified again."""
+    diagnostics, instances or solution steps (recorded in "verified_as"), else (None, why). The verifier never sees
+    the solution, and a removal cannot make a verified construction unreachable or a confirmed mapping wrong. Any
+    other difference — a changed stem, spec or tier, an added or altered diagnostic, instance or step, notes
+    rewritten rather than appended — and the verdicts do not carry: the template must be verified again."""
     va = tpl.get("verified_as")
     if not va:
         return None, ""
@@ -1399,13 +1400,14 @@ def verified_version(tpl: dict) -> tuple[dict | None, str]:
     if set(cur) - {"notes"} != set(old) - {"notes"}:
         return None, "keys changed since verification"
     for k in cur:
-        if k not in ("diagnostics", "instances", "notes") and cur[k] != old[k]:
+        if k not in ("diagnostics", "instances", "solution", "notes") and cur[k] != old[k]:
             return None, f"{k} changed since verification"
     if any(d not in (old.get("diagnostics") or []) for d in cur.get("diagnostics") or []):
         return None, "a diagnostic was added or changed since verification"
-    rest = iter(old.get("instances") or [{}])
-    if not all(any(x == y for y in rest) for x in cur.get("instances") or [{}]):
-        return None, "an instance was added or changed since verification"
+    for k, none in (("instances", [{}]), ("solution", [])):
+        rest = iter(old.get(k) or none)
+        if not all(any(x == y for y in rest) for x in cur.get(k) or none):
+            return None, f"{k}: an entry was added or changed since verification"
     if not str(cur.get("notes") or "").startswith(str(old.get("notes") or "")):
         return None, "notes were rewritten, not appended to, since verification"
     return dict(old, _sha=va["sha"]), ""

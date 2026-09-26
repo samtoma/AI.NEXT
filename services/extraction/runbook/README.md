@@ -676,3 +676,24 @@ For reproduction and audit only. The details are in spec §2.
 
 Loading all three National books on a fresh local database is what `scripts/local-dev.sh` step 3
 does, and what `ci-cd.yml` "Curriculum (only when none is loaded)" does on first boot.
+
+### Consistency review 2026-09-27 (A1–A4, A8, A9): what the assembly, load and audit now enforce
+
+- **Answer text** (A1): a typed question's `answer` is its marker key rendered (`answer_text`), never the printed
+  text layer; `load_seed.py` refuses a mismatch and the audit counts it (`answer_text`).
+- **LaTeX** (A2): the assembly re-spaces S0b's whitespace-stripped LaTeX with the app's KaTeX as the judge
+  (`katex_check.mjs`; `runs/<book>/maths/accepted.json` and its hash proofs are untouched) and splits chained
+  coordinate assignments; `load_seed.py` refuses, and the audit counts (`katex`), any segment KaTeX cannot parse.
+- **Pairs** (A4): `(a,b)` becomes a pair only where the other side of its equation is a pair; any other whole-side
+  `(a,b)` is read as the book's decimal and listed for G2 (assembly report `ambiguous_pairs_for_g2`).
+- **Figures** (A3, A8): a figure that draws the question's unknown is withheld; a question showing `[figure]` with no
+  figure is held at review (assembly, `load_seed.py` figure gate, `apply_review_verdicts.py --g2`); a gap whose reason
+  is a pipeline error fails the audit (`figures`). Re-run S4 alone for the failed or withheld figures:
+  ```sh
+  uv run embed_workflow.py lesson-args <book> --lessons <slug> --visuals-only runs/<book>/visual-reruns.plan.json \
+      --out work/<book>/packets/embedded/lesson-visuals.<slug>.workflow.js     # run with scriptPath, no args
+  uv run merge_visual_reruns.py <the run's return>.json                          # into runs/<book>/lesson/
+  ```
+  then re-assemble and reload (`load_seed.py … --replace` prunes a withheld figure).
+- **Forms** (A9): `answer_rules.forms_from_stem` may name `"form": "subject", "subject": "y"` ("in the form y = …");
+  the assembly puts it on the marker and S3 (collect-5) does too; the audit counts a miss (`asked_forms`).

@@ -232,3 +232,11 @@ e.g. `P(2;1)` → `P(2, 1)`); `load_seed --update` updated 38 visuals, questions
 re-applied (no change); generated content not reloaded (nothing it depends on changed). Coverage RED on two
 decisions only — objective_evidence (s1-1-1) and tier_floor (pre-G3) — notation holds. Parity GREEN. The course
 gate row, the operator and roles, and course_lessons are unchanged (fingerprinted before and after).
+
+**Consistency review A1–A4/A8/A9 applied (2026-09-27, pipeline side).** Pilot seed re-assembled and reloaded
+(`--replace`): 120 glued LaTeX commands re-spaced, 19 assignment chains split, 0 KaTeX errors; every typed
+answer is its key rendered; Ex8-6:46c's pair fixed (2 whole-side `(a,b)` listed for G2: Ex8-4:9, Ex8-4:12); Ex8-6:46b
+carries `form: {subject: y}`; 16 figures that drew the unknown withheld; 59 book questions showing `[figure]` without
+one held at review (99 live). Re-run plan `runs/g10-math/visual-reruns.plan.json` (34 figures, 4 lessons); copies
+`work/g10-math/packets/embedded/lesson-visuals.<lesson>.workflow.js`; merge with `merge_visual_reruns.py`, then
+re-assemble, `load_seed --replace`, `apply_review_verdicts --g2`, `load_misconceptions`, export, coverage.
