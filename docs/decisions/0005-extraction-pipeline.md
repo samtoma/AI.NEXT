@@ -54,7 +54,7 @@ Full design: `docs/specs/extraction-pipeline.md`.
 `docs/specs/extraction-pipeline.md` §10: *"I would take your recommendations"*. After reading this
 text and the Grade 10 S0 report the same day, he answered *"ok for all"*. The coordinating session
 relayed both, recorded in `specs/003-curriculum-tracks/decisions.md` (#12–#16, #19, #20, #21, #22, and
-A–C). Items 3 and 4 below were amended by the second answer and are stamped. **Not committed.**
+A–C). Items 3 and 4 below were amended by the second answer and are stamped. **Not reviewed or merged**: on the feature branch as unreviewed WIP snapshots.
 The design it rests on is the v2 revision of `docs/specs/extraction-pipeline.md`.
 
 **Why.** The fourth book, Siyavula *Everything Maths* Grade 10 (English; written for South Africa's

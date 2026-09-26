@@ -5,7 +5,7 @@
 was applied to `.specify/memory/constitution.md` verbatim the same day, v3.3.0 → v3.4.0, with the Sync
 Impact Report given below (§"Proposed Sync Impact Report") copied into the constitution's header. This
 file is now a historical record of that proposal, not a live proposal; read the constitution itself for
-the current text. **Not committed to git** (worktree rule: no commits from this session).
+the current text. On the feature branch only, as unreviewed WIP snapshots — not reviewed or merged (T388/T389).
 
 **Proposed by:** the 003 "Curriculum Tracks" workstream, 2026-09-25. It drafts into governance what
 Samuel's decisions of the same day ([decisions.md](./decisions.md)) change about the constitution's

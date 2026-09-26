@@ -3,7 +3,7 @@
 **Status**: Accepted — Samuel, 2026-09-25, gate T413, third round of decisions, answer 2: *"Build our
 own (Recommended)."* Recorded in [`specs/003-curriculum-tracks/decisions.md`](../../specs/003-curriculum-tracks/decisions.md),
 decision 23 (marking-rules detail: decision 24).
-**Not committed** (worktree rule: no commits from this session).
+**Not reviewed or merged**: on the feature branch as unreviewed WIP snapshots (T388).
 **Amends**: nothing — this is a new capability. **Extended by**: spec 003 FR-4320 (the requirement),
 [`contracts/answer-marker.md`](../../specs/003-curriculum-tracks/contracts/answer-marker.md) (the
 interface), [`marker-evaluation.md`](../../specs/003-curriculum-tracks/marker-evaluation.md) (the

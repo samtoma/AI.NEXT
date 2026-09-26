@@ -4,7 +4,7 @@
 the options in `specs/003-curriculum-tracks/research.md`, the pipeline design's §10 and spec 003's
 three questions. Then, having read this text, *"ok for all"*. The coordinating session relayed both
 ([decisions.md](../../specs/003-curriculum-tracks/decisions.md)). The five recommendations marked ⚑
-(decisions.md A–E) were **confirmed** in the second answer. **Not committed** (T388).
+(decisions.md A–E) were **confirmed** in the second answer. **Not reviewed or merged** (T388): on the feature branch only, as unreviewed WIP snapshots.
 **Amends**: [ADR-0018](./0018-course-availability.md) — adds the curriculum dimension ADR-0018 named
 as its own revisit trigger, and changes what its kill switch suspends (⚑).
 **Related**: [ADR-0005](./0005-extraction-pipeline.md) (amended the same day for derived objectives) ·
