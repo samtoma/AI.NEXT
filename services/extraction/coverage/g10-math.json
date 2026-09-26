@@ -8,9 +8,9 @@
   "status": "RED",
   "summary": {
     "checks": 18,
-    "hold": 12,
+    "hold": 14,
     "excepted": 1,
-    "fail": 5
+    "fail": 3
   },
   "checks": [
     {
@@ -137,21 +137,16 @@
       "id": "module_widgets",
       "title": "Modules = modules with a widget question + signed-off widget gaps (FR-4306)",
       "want": 1,
-      "got": 0,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "module:g10m-c08",
-          "detail": "no widget question and no signed-off widget gap"
-        }
-      ],
+      "got": 1,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
       "id": "distractor_refutations",
       "title": "Tagged distractors and predicates = those whose misconception has a refutation (FR-1112)",
-      "want": 0,
-      "got": 0,
+      "want": 92,
+      "got": 92,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -159,8 +154,8 @@
     {
       "id": "misconception_refutations",
       "title": "Catalogue entries = entries with a refutation",
-      "want": 0,
-      "got": 0,
+      "want": 29,
+      "got": 29,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -169,14 +164,9 @@
       "id": "s5_catalogue",
       "title": "Entries S5 kept = entries in the catalogue; no dropped entry in it",
       "want": 29,
-      "got": 0,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "book",
-          "detail": "kept by S5 but not in the catalogue: ['mc:g10m8s1-1-2:flips-a-coordinate-sign', 'mc:g10m8s1-1-3:assumes-only-one-direction-counts', 'mc:g10m8s1-1-3:expects-labels-to-start-at-a', 'mc:g10m8s1-1-3:partial-arc-check', 'mc:g10m8s1-1-3:writes-descending-order', 'mc:g10m8s2-1-1:drops-double-negative-sign', 'mc:g10m8s2-1-1:reads-triangle-type-off-sketch', 'mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction']"
-        }
-      ],
+      "got": 29,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": [],
       "notes": [
         "2 entr(ies) dropped by the verifier"
@@ -249,12 +239,12 @@
       "id": "notation",
       "title": "Un-normalised decimal commas and (x; y) pairs left in the bundles = 0 (decision 15); no display-only environment (align*) inside the app's inline maths",
       "want": 0,
-      "got": 107,
+      "got": 118,
       "state": "fails",
       "failures": [
         {
           "scope": "book",
-          "detail": "107 un-normalised span(s): ['(2;1)', '(-2;-2)', '(2;-2)', '(x2;y2)', '(x1;y1)', '(x2;y1)', '(x1;y1)', '(x2;y2)']"
+          "detail": "118 un-normalised span(s): ['(2;1)', '(-2;-2)', '(2;-2)', '(x2;y2)', '(x1;y1)', '(x2;y1)', '(x1;y1)', '(x2;y2)']"
         }
       ],
       "excepted_scopes": [],
@@ -299,12 +289,42 @@
     }
   ],
   "widgets_per_chapter": {
-    "module:g10m-c08": 0
+    "module:g10m-c08": 25
   },
-  "refutations_per_misconception": {},
+  "refutations_per_misconception": {
+    "mc:g10m8s1-1-2:flips-a-coordinate-sign": 3,
+    "mc:g10m8s1-1-3:assumes-only-one-direction-counts": 4,
+    "mc:g10m8s1-1-3:expects-labels-to-start-at-a": 4,
+    "mc:g10m8s1-1-3:partial-arc-check": 4,
+    "mc:g10m8s1-1-3:writes-descending-order": 4,
+    "mc:g10m8s2-1-1:drops-double-negative-sign": 3,
+    "mc:g10m8s2-1-1:reads-triangle-type-off-sketch": 3,
+    "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction": 4,
+    "mc:g10m8s2-1-2:stops-at-first-root": 4,
+    "mc:g10m8s3-1-1:gradient-mismatched-subscript-order": 4,
+    "mc:g10m8s3-1-2:dropped-coefficient-on-unknown": 4,
+    "mc:g10m8s3-1-2:inverted-gradient-ratio": 4,
+    "mc:g10m8s3-1-2:mismatched-point-order": 4,
+    "mc:g10m8s3-2-1:gradient-formula-inversion": 4,
+    "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip": 4,
+    "mc:g10m8s3-2-1:sign-slip-converting-general-form": 4,
+    "mc:g10m8s3-2-1:swaps-coordinates-when-substituting": 4,
+    "mc:g10m8s3-2-2:judges-parallel-by-appearance": 4,
+    "mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property": 4,
+    "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests": 4,
+    "mc:g10m8s3-2-2:treats-contradiction-as-a-k-value": 4,
+    "mc:g10m8s3-2-3:same-sign-gradients-mistaken-for-equal": 4,
+    "mc:g10m8s4-1-1:checks-only-one-coordinate": 4,
+    "mc:g10m8s4-1-1:drops-sign-adding-negatives": 4,
+    "mc:g10m8s4-1-2:averages-known-point-with-midpoint": 4,
+    "mc:g10m8s4-1-2:skips-multiply-by-two-step": 4,
+    "mc:g10m8s4-1-3:diagonal-vs-side-confusion": 4,
+    "mc:g10m8s4-1-3:midpoint-formula-subtraction": 4,
+    "mc:g10m8s4-1-3:shared-midpoint-as-vertex": 4
+  },
   "notation": {
     "items_printed_in_book_notation": 193,
-    "residual_in_bundles": 107
+    "residual_in_bundles": 118
   },
   "missing_inputs": [],
   "inputs": {
@@ -313,6 +333,9 @@
     "content/g10m8s3-1.json": "359f502ef0790133752ed1e264bd2aed1d5086c68d84ec4ef9d3218f05142c60",
     "content/g10m8s3-2.json": "87f3c2e2269dd603fef4a944dd3d4f1436e46eb4c63402aa8ed2c63e6fa9a87d",
     "content/g10m8s4-1.json": "6f50a13bd5394d2272ffe3542828ba8fa30034368cc6b1a056846effaad8516a",
+    "generated/generated-questions.json": "20d9bb6a114c5fa938a8f60859d9a4371e0aca914a284ae78a681a8d08d6abed",
+    "generated/misconceptions.json": "662cdf5c644c7398bdb488f543837bf993eef43a4f5d479e804a74ff10fc3687",
+    "generated/widget-questions.json": "3f0a0b67a28d867ba9e21157a247e7dbf5f8bf4cc18079b8b234d3817510962e",
     "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
     "maths": "773bc135b62de698f278ba74f6d7c2b909ba0d81f8e384248fc3de98d2fc8153",
     "objectives/g10m8s1-1.json": "2c34e7513a5052128245052e61b0c261b4e915b50a4fd22f3a9931866ae1e952",

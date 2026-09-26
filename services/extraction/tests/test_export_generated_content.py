@@ -118,6 +118,24 @@ class ExportTest(unittest.TestCase):
         self.assertEqual(cat["misconceptions"][0]["aliases"], ["mc:g10m8s1-1-1:xy-swap"])
         self.assertTrue(all(m["id"].startswith("mc:g10m8") for m in cat["misconceptions"]))
 
+    def test_a_most_specific_choice_question_exports_its_stamps(self):
+        # decision 41: a choice question stores {"options": [...], "less_specific": [...]}; the export read it
+        # as a list and crashed on the Chapter 8 pilot. Wrapping every stamped G10 book choice list in that
+        # object must export exactly what the list form exports.
+        import psycopg
+        with psycopg.connect(self.db.dsn) as conn, conn.cursor() as cur:
+            cur.execute("""UPDATE questions SET choices = jsonb_build_object('options', choices, 'less_specific', '[]'::jsonb)
+                           WHERE question_type = 'mcq' AND source = 'seed' AND lo_id LIKE 'lo:g10m%'
+                             AND jsonb_typeof(choices) = 'array' RETURNING id""")
+            wrapped = [r[0] for r in cur.fetchall()]
+            try:
+                code, text, out = self.export(G10, FIX / "generated", "g10-options-object")
+            finally:
+                cur.execute("""UPDATE questions SET choices = choices->'options' WHERE id = ANY(%s)""", (wrapped,))
+        self.assertTrue(wrapped)
+        self.assertEqual(code, 0, text)
+        self.assertSameFiles(out, FIX / "generated")
+
     def test_a_first_export_derives_kind_from_use(self):
         code, text, out = self.export(G10, self.tmp / "nowhere", "g10-first")
         self.assertEqual(code, 0, text)
