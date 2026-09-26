@@ -7,10 +7,10 @@
   ],
   "status": "RED",
   "summary": {
-    "checks": 18,
-    "hold": 15,
+    "checks": 21,
+    "hold": 17,
     "excepted": 1,
-    "fail": 2
+    "fail": 3
   },
   "checks": [
     {
@@ -87,7 +87,7 @@
       "id": "tier_floor",
       "title": "Objectives × tiers = cells with at least one live item, book or generated (FR-4305)",
       "want": 39,
-      "got": 23,
+      "got": 20,
       "state": "fails",
       "failures": [
         {
@@ -100,7 +100,11 @@
         },
         {
           "scope": "lo:g10m8s1-1-3",
-          "detail": "no live item at tier(s) standard, advanced"
+          "detail": "no live item at tier(s) basic, standard, advanced"
+        },
+        {
+          "scope": "lo:g10m8s2-1-1",
+          "detail": "no live item at tier(s) basic"
         },
         {
           "scope": "lo:g10m8s2-1-2",
@@ -124,7 +128,7 @@
         },
         {
           "scope": "lo:g10m8s4-1-2",
-          "detail": "no live item at tier(s) basic"
+          "detail": "no live item at tier(s) basic, advanced"
         },
         {
           "scope": "lo:g10m8s4-1-3",
@@ -174,11 +178,16 @@
     },
     {
       "id": "figures",
-      "title": "Manifest figures = visuals + viz gaps with a reason (per chapter)",
+      "title": "Manifest figures = visuals + viz gaps with a reason + figures withheld for giving the answer away (per chapter); a gap whose reason is a pipeline error is a failure (consistency review A3)",
       "want": 71,
-      "got": 71,
-      "state": "holds",
-      "failures": [],
+      "got": 53,
+      "state": "fails",
+      "failures": [
+        {
+          "scope": "module:g10m-c08",
+          "detail": "71 figure(s) in the manifest, 53 visual(s) + reasoned gap(s); 18 gap(s) are pipeline errors — re-run their visuals: ['g10m8s2-1 WE1: the visuals agent returned nothing for it', 'g10m8s2-1 WE2: the visuals agent returned nothing for it', 'g10m8s2-1 Ex8-2:1: the visuals agent returned nothing for it', 'g10m8s2-1 Ex8-2:2: the visuals agent returned nothing for it']"
+        }
+      ],
       "excepted_scopes": []
     },
     {
@@ -246,6 +255,33 @@
       "notes": [
         "193 S3 item(s) printed in the book's notation were normalised"
       ]
+    },
+    {
+      "id": "katex",
+      "title": "Maths segments in student-facing text the app's KaTeX cannot parse = 0 (A2)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "answer_text",
+      "title": "Typed questions whose answer text is not their marker key, rendered = 0 (A1)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
+    },
+    {
+      "id": "asked_forms",
+      "title": "Typed questions whose stem asks for a form the book's rules name, and whose marker does not check it = 0 (A9)",
+      "want": 0,
+      "got": 0,
+      "state": "holds",
+      "failures": [],
+      "excepted_scopes": []
     },
     {
       "id": "claims_served",
@@ -329,7 +365,7 @@
     "content/g10m8s3-2.json": "87f3c2e2269dd603fef4a944dd3d4f1436e46eb4c63402aa8ed2c63e6fa9a87d",
     "content/g10m8s4-1.json": "6f50a13bd5394d2272ffe3542828ba8fa30034368cc6b1a056846effaad8516a",
     "generated/generated-questions.json": "20d9bb6a114c5fa938a8f60859d9a4371e0aca914a284ae78a681a8d08d6abed",
-    "generated/misconceptions.json": "662cdf5c644c7398bdb488f543837bf993eef43a4f5d479e804a74ff10fc3687",
+    "generated/misconceptions.json": "884ce6f470b47795fb099400815f0b97c9619b91492e339d3fecfe2f5fa53db2",
     "generated/widget-questions.json": "3f0a0b67a28d867ba9e21157a247e7dbf5f8bf4cc18079b8b234d3817510962e",
     "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
     "maths": "773bc135b62de698f278ba74f6d7c2b909ba0d81f8e384248fc3de98d2fc8153",
@@ -344,8 +380,8 @@
     "runs/lesson/g10m8s3-2.json": "14b9e2df82f2db58a2444ede74dc7dea92fd66a1221c2958ecdc0b4ccc513d39",
     "runs/lesson/g10m8s4-1.json": "0e8aa5ec487ae92d473f720f9ced46f60b0439b2be762b9916a19fcfd193da41",
     "s5/final-wf_ed8c8e80-51d.json": "5b576232d2bcfe7146ab58e96c0cda87726f3eaf54c02aec9ffc91e7fdf88795",
-    "seed/g10m-c08.json": "a0c1edf82b532823efd661f0fedc1ba956414cf651469dc829929432c203f3ec",
-    "seed/g10m-course.json": "4d73bba78f5b601052b8b56a4aa22c760d85ffef049fcbcf2b52d99dca3493ee",
+    "seed/g10m-c08.json": "d4d93c7e770798e759e106ac6bd039e2aca85b44687b84607a3046c18aa75a98",
+    "seed/g10m-course.json": "19916a26526c3cb43ebe28dff24af1272e9662067ebdec9e2c6c82184a48fcff",
     "widget-gaps": "8e8e5565a1ab7d584064d0cba3b97e1288a397e41ce9236f914c3f98e66287cc"
   },
   "exceptions": []
