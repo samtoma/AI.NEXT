@@ -1,6 +1,8 @@
 /**
  * THE GRADE 10 COURSE'S TUTOR PROMPTS (feature 003, decision 10; ADR-0020's
- * fourth exception, for this course's prompts only).
+ * fifth exception — numbered the fourth until 2026-09-27 — for this course's
+ * prompts only). In the test titles below, "decision 9" means Samuel's
+ * answer 9, which is decisions.md #30 (English only).
  *
  * Renders every prompt surface the capture harness renders — both lesson
  * modes, the Ask surfaces with and without a question in scope, the

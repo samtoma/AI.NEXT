@@ -71,8 +71,12 @@ class AssembleFixtureTest(unittest.TestCase):
         for want in ("q:g10m8s2-1-1:we01", "q:g10m8s2-1-1:ex8-2-2a", "q:g10m8s2-1-1:ex8-6-1",
                      "q:g10m8s4-1-1:we04"):
             self.assertIn(want, qids)
+        # consistency review A8: the fixture's WE4 figure draws the mid-point at the answer (4, 6), so it is
+        # dropped (and reported), never shown with its question
         self.assertEqual({v["id"] for v in self.ch8["visuals"]},
-                         {"v:g10m8s1-1:001", "v:g10m8s2-1:001", "v:g10m8s3-1:001", "v:g10m8s4-1:001"})
+                         {"v:g10m8s1-1:001", "v:g10m8s2-1:001", "v:g10m8s3-1:001"})
+        self.assertEqual([(x["visual"], x["question"]) for x in self.report.visuals_dropped],
+                         [("v:g10m8s4-1:001", "q:g10m8s4-1-1:we04")])
         self.assertEqual(self.ch8["nodes"][0]["id"], "module:g10m-c08")
         los = [n["id"] for n in self.ch8["nodes"] if n["kind"] == "learning_objective"]
         self.assertEqual(los, ["lo:g10m8s1-1-1", "lo:g10m8s2-1-1", "lo:g10m8s3-1-1",
