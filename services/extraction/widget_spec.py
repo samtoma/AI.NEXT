@@ -117,7 +117,9 @@ def validate_widget(q: dict, known_misconceptions: set[str] | None = None) -> li
 
     What this can catch is the class of defect that makes a widget unservable or
     silently mute: a kind nothing renders, a predicate the widget can never
-    emit, a misconception id that does not exist. That last one is the quiet
+    emit — in its kind's vocabulary, or (W1, 2026-09-27) for THIS question's
+    mode / ask / element / fn, active or held (`can_emit`) — a misconception id
+    that does not exist. That last one is the quiet
     killer — the widget diagnoses correctly, the lookup misses, and the student
     gets silence where a refutation was meant to be. Nothing raises; it just
     stops teaching.
