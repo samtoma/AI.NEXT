@@ -93,7 +93,9 @@ def g2_targets(g2: dict, runs_dir: Path) -> tuple[list[dict], list[str]]:
             problems.append(f"{key}: {ref} is not an item of lesson {slug}")
             continue
         targets.append({"key": key, "verdict": verdict, "note": (v or {}).get("note"),
-                        "question_id": item.question_id(), "teaching": item.answer_type == "not_markable"})
+                        "question_id": item.question_id(), "teaching": item.answer_type == "not_markable",
+                        "reviewer_verdict": (v or {}).get("samuel_verdict") or verdict,
+                        "stem_fix_by": (v or {}).get("stem_fix_by")})
     return targets, problems
 
 
@@ -130,14 +132,17 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
             want = ("review", f"{by} (G2 hold)")
             bucket = "held"
         else:
-            want = ("live", f"{by} (G2 {t['verdict']})")
+            # the reviewer's own verdict, and who else changed the item (2026-09-27): "Samuel Toma (G2 accept);
+            # stem fixed by orchestrator …" — never "(G2 fix)" for a fix the reviewer did not make
+            stamp = f"{by} (G2 {t['reviewer_verdict']})" + (f"; stem fixed by {t['stem_fix_by']}" if t.get("stem_fix_by") else "")
+            want = ("live", stamp)
             bucket = "stamped"
             # consistency review A3: a question whose stem shows [figure] and has no figure stays at review, G2's
             # verdict recorded, until its figure exists — it cannot be answered without it
             if "[figure]" in (stem or ""):
                 cur.execute("SELECT 1 FROM visuals WHERE question_id = %s LIMIT 1", (qid,))
                 if cur.fetchone() is None:
-                    want = ("review", f"{by} (G2 {t['verdict']}; held: its figure is missing)")
+                    want = ("review", f"{stamp}; held: its figure is missing")
                     bucket = "held_for_figure"
         if (status, reviewed_by) == want:
             out["unchanged"] += 1

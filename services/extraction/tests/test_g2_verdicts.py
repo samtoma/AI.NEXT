@@ -85,10 +85,30 @@ class G2Apply(unittest.TestCase):
         try:
             r = self.apply({"by": "Samuel", "items": {"g10m8s2-1:Ex8-6:1": {"verdict": "accept"}}})
             self.assertEqual(r.returncode, 0, r.stderr)
-            self.assertEqual(self.row(qid), ("review", "Samuel (G2 accept; held: its figure is missing)"))
+            self.assertEqual(self.row(qid), ("review", "Samuel (G2 accept); held: its figure is missing"))
             self.assertIn("keep 1 at review for a missing figure", r.stdout)
         finally:
             self.db.q("UPDATE questions SET stem = replace(stem, ' [figure]', '') WHERE id = %s", (qid,))
+
+    def test_a_fix_someone_else_applied_keeps_the_reviewers_own_verdict(self):
+        # 2026-09-27: Samuel ACCEPTED Ex8-2:2a; the orchestrator then fixed its stem. The stamp says both, apart —
+        # never "Samuel (G2 fix)" for a fix he did not make
+        qid = "q:g10m8s2-1-1:ex8-2-2a"
+        g2 = {"by": "Samuel", "items": {"g10m8s2-1:Ex8-2:2a": {
+            "verdict": "fix", "samuel_verdict": "accept", "stem_fix_by": "orchestrator (data-engineer agent), 2026-09-27",
+            "fields": {}}}}
+        r = self.apply(g2)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertEqual(self.row(qid), ("live", "Samuel (G2 accept); stem fixed by orchestrator (data-engineer agent), 2026-09-27"))
+        # and the lesson runs carry the same attribution into the item's g2 record
+        import assemble_objectives as ao
+        lesson = json.loads((FIX / "runs" / "lesson" / "g10m8s2-1.json").read_text())
+        run = {"stage": "S2-S4,S8", "prompts_version": "lesson-v4", "lessons": [lesson]}
+        fixed = {"by": "Samuel", "items": {"g10m8s2-1:Ex8-2:2a": {
+            "verdict": "fix", "samuel_verdict": "accept", "stem_fix_by": "orchestrator", "fields": {}}}}
+        out = ao.lesson_runs(run, fixed, draft=True)
+        g2rec = next(i["g2"] for i in out["g10m8s2-1"]["items"] if i["ref"] == "Ex8-2:2a")
+        self.assertEqual((g2rec["by"], g2rec["reviewer_verdict"], g2rec["stem_fix_by"]), ("Samuel", "accept", "orchestrator"))
 
     def test_an_unnamed_reviewer_or_an_unknown_item_writes_nothing(self):
         before = self.db.q("SELECT id, status, reviewed_by FROM questions ORDER BY id")

@@ -1901,7 +1901,12 @@ def lesson_runs(run: dict, g2: dict | None = None, draft: bool = False) -> dict[
                 it["g2"] = {"verdict": v["verdict"], "by": by, "note": v.get("note"),
                             # what a fix actually changed: S5 reads a disagreement as a student's error only
                             # where the book's answer stood (assemble_misconceptions.s5_args)
-                            **({"changed": changed} if v.get("verdict") == "fix" else {})}
+                            **({"changed": changed} if v.get("verdict") == "fix" else {}),
+                            # attribution (2026-09-27): the reviewer's OWN verdict when someone else applied a
+                            # fix on top of it (`samuel_verdict`), and who did that (`stem_fix_by`) — never
+                            # the file's `by` stamped on a change the reviewer did not make
+                            **({"reviewer_verdict": v["samuel_verdict"]} if v.get("samuel_verdict") else {}),
+                            **({"stem_fix_by": v["stem_fix_by"]} if v.get("stem_fix_by") else {})}
             if it.get("typing_problems") and not v:
                 if draft:
                     pending.append(key)
