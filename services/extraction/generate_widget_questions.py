@@ -1036,8 +1036,14 @@ def check_template(raw: dict) -> list[str]:
     return p
 
 
-def load_templates(directory: Path) -> tuple[list[dict], list[str]]:
+def template_sha(raw: dict) -> str:
+    """The sha a template is verified under (the blind verifier's verdicts name it)."""
     import hashlib
+    return hashlib.sha256(json.dumps({k: v for k, v in raw.items() if k != "_sha"}, sort_keys=True,
+                                     ensure_ascii=False).encode()).hexdigest()
+
+
+def load_templates(directory: Path) -> tuple[list[dict], list[str]]:
     out, problems, seen = [], [], set()
     for path in sorted(Path(directory).glob("*.json")):
         if path.name.startswith("_"):
@@ -1056,8 +1062,7 @@ def load_templates(directory: Path) -> tuple[list[dict], list[str]]:
             continue
         seen.add(raw["id"])
         raw = dict(raw)
-        raw["_sha"] = hashlib.sha256(json.dumps({k: v for k, v in raw.items() if k != "_sha"}, sort_keys=True,
-                                                ensure_ascii=False).encode()).hexdigest()
+        raw["_sha"] = template_sha(raw)
         out.append(raw)
     return out, problems
 
@@ -1379,6 +1384,60 @@ def _predicate_of(text, claimed: set) -> str | None:
     return m.group(0) if m and m.group(0) in claimed else None
 
 
+def verified_version(tpl: dict) -> tuple[dict | None, str]:
+    """The template exactly as the blind verifier judged it, when a pipeline normalisation since then only REMOVED
+    diagnostics or instances (recorded in "verified_as"), else (None, why). Any other difference — a changed stem,
+    spec, solution, tier, an added or altered diagnostic or instance, notes rewritten rather than appended — and
+    the verdicts do not carry: the template must be verified again."""
+    va = tpl.get("verified_as")
+    if not va:
+        return None, ""
+    old = va.get("template") if isinstance(va, dict) else None
+    if not isinstance(old, dict) or template_sha(old) != va.get("sha"):
+        return None, "its verified_as does not reproduce the verified sha"
+    cur = {k: v for k, v in tpl.items() if k not in ("_sha", "verified_as")}
+    if set(cur) - {"notes"} != set(old) - {"notes"}:
+        return None, "keys changed since verification"
+    for k in cur:
+        if k not in ("diagnostics", "instances", "notes") and cur[k] != old[k]:
+            return None, f"{k} changed since verification"
+    if any(d not in (old.get("diagnostics") or []) for d in cur.get("diagnostics") or []):
+        return None, "a diagnostic was added or changed since verification"
+    rest = iter(old.get("instances") or [{}])
+    if not all(any(x == y for y in rest) for x in cur.get("instances") or [{}]):
+        return None, "an instance was added or changed since verification"
+    if not str(cur.get("notes") or "").startswith(str(old.get("notes") or "")):
+        return None, "notes were rewritten, not appended to, since verification"
+    return dict(old, _sha=va["sha"]), ""
+
+
+def carried_verification(templates: list[dict], questions: list[dict]) -> tuple[dict[str, str], dict[str, list]]:
+    """({template id: the sha its verdicts are read under}, {template id: why its verdicts cannot carry}).
+
+    A verdict is read by question id, and ids are numbered per objective across its templates, so a carried verdict
+    is honoured only where every question of that objective still has, at its id, exactly the content the verifier
+    judged (dropping the LAST instance of an objective keeps them; dropping an earlier one shifts them)."""
+    olds, carried, problems = [], {}, {}
+    for t in templates:
+        old, why = verified_version(t)
+        olds.append(old or t)
+        if old:
+            carried[t["id"]] = old["_sha"]
+        elif why:
+            problems[t["id"]] = [f"{t['id']}: normalised since verification, but {why} — verify it again"]
+    if not carried:
+        return {}, problems
+    old_qs, _ = build_from_templates(olds)
+    content = lambda q: (q["family"], json.dumps(q["choices"]["spec"], sort_keys=True), q["stem"])  # noqa: E731
+    old_at = {q["id"]: content(q) for q in old_qs}
+    moved = {q["lo_id"] for q in questions if old_at.get(q["id"]) != content(q)}
+    for t in templates:
+        if t["id"] in carried and t["lo_id"] in moved:
+            del carried[t["id"]]
+            problems[t["id"]] = [f"{t['id']}: its normalisation moved question ids on {t['lo_id']} — verify it again"]
+    return carried, problems
+
+
 def verdict_scan(templates: list[dict], questions: list[dict], files: list[Path]) -> tuple[set, dict, dict]:
     """The blind reachability verifier's verdicts (widgets.workflow.js, mode verify), by decision 47.
 
@@ -1392,12 +1451,14 @@ def verdict_scan(templates: list[dict], questions: list[dict], files: list[Path]
     for f in files:
         for r in json.loads(Path(f).read_text()).get("results", []):
             got.setdefault(r.get("question_id"), []).append(r)
+    judged_sha, carry_problems = carried_verification(templates, questions)
     accepted, rejected, status = set(), {}, {}
     for tpl in templates:
-        reasons = []
+        reasons = list(carry_problems.get(tpl["id"], []))
+        sha = judged_sha.get(tpl["id"], tpl["_sha"])
         mine = [q for q in questions if q["family"] == tpl["id"]]
         for q in mine:
-            rs = [r for r in got.get(q["id"], []) if r.get("template_sha") == tpl["_sha"]]
+            rs = [r for r in got.get(q["id"], []) if r.get("template_sha") == sha]
             if not rs:
                 reasons.append(f"{q['id']}: not verified")
                 continue
