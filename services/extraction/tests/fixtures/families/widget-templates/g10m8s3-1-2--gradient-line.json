@@ -8,9 +8,9 @@
   "instances": [
     {
       "x1": -2,
-      "y1": -3,
+      "y1": -4,
       "x2": 2,
-      "y2": 5
+      "y2": 4
     }
   ],
   "spec": {
@@ -37,8 +37,9 @@
       "misconception_id": "mc:g10m8s3-1-2:coordinates-swapped"
     },
     {
-      "predicate": "slope-inverted",
+      "predicate": "off-target",
       "misconception_id": "mc:g10m8s3-1-1:run-over-rise"
     }
-  ]
+  ],
+  "notes": "Test fixture. Instance moved off (-2, -3), whose swap (-3, -2) is where LineDrawer's first handle opens (consistency review A10), and the prerequisite's mapping moved from slope-inverted, which points mode never emits (W1), to off-target: this fixture exercises the FR-1215 prerequisite mechanics, not the wisdom of that mapping."
 }

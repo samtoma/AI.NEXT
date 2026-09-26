@@ -91,19 +91,25 @@ def describe(kind: str, predicate: str) -> str | None:
     return k["predicates"].get(predicate) if k else None
 
 
-def widget_choices(kind: str, spec: dict, diagnostics: list[tuple[str, str]]) -> dict:
+def widget_choices(kind: str, spec: dict, diagnostics: list[tuple[str, str]],
+                   held: list[tuple[str, str, str]] | None = None) -> dict:
     """Build the `choices` payload for a widget question.
 
     `diagnostics` is a list of (predicate, misconception_id). Order is the order
-    a reviewer reads them in, so put the likeliest error first.
+    a reviewer reads them in, so put the likeliest error first. `held` is a list
+    of (predicate, misconception_id, why) a human has still to keep or drop
+    (decision 47): stored under `pending_review`, never read by the app.
     """
-    return {
+    out = {
         "kind": kind,
         "spec": spec,
         "diagnostics": [
             {"predicate": p, "misconception_id": m} for p, m in diagnostics
         ],
     }
+    if held:
+        out["pending_review"] = [{"predicate": p, "misconception_id": m, "why": w} for p, m, w in held]
+    return out
 
 
 def validate_widget(q: dict, known_misconceptions: set[str] | None = None) -> list[str]:
