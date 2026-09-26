@@ -1,0 +1,196 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v6",
+ "collect_version": "collect-5",
+ "book": "g10-math",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "9431d038503f55ac3ea231c6e9cc78f24bd6664d01b45712893290535e4ea589",
+  "args_sha256": "6a6f434b31bd1122aed9453155c28e15a75bc6a19bb9524cd14e026dad829591",
+  "generated_sha256": "5d0db738664d8519615d4bb15bbe3081d2eae8eb718dd82ceba15fca13881b42",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m8s3-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "b03190:7",
+    "b03191:8",
+    "b03298:10",
+    "b03299:11",
+    "b03180:4"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:g10m8s3-1-2",
+     "question": "Ex8-3:5",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -2,
+       2
+      ],
+      "yRange": [
+       -1,
+       5
+      ],
+      "points": [
+       {
+        "x": -1,
+        "y": 0,
+        "label": "A(-1; 0)"
+       }
+      ],
+      "segments": [],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Point A(-1; 0) is plotted on the grid; point B is out there on the same line at x = 1, but how high up it sits isn't marked yet.",
+     "printed_page": 297,
+     "figure_id": "b03190:7",
+     "src": "tikzpicture/1e20844ee903416550ff478159f03242.png",
+     "withheld": [
+      "B"
+     ]
+    },
+    {
+     "n": 2,
+     "lo": "lo:g10m8s3-1-2",
+     "question": "Ex8-3:6",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -2,
+       4
+      ],
+      "yRange": [
+       -4,
+       4
+      ],
+      "points": [
+       {
+        "x": -1,
+        "y": 3,
+        "label": "A(-1; 3)"
+       }
+      ],
+      "segments": [],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Point A(-1; 3) is plotted on the grid; point B sits down at height -3, but its left-right position isn't marked yet.",
+     "printed_page": 297,
+     "figure_id": "b03191:8",
+     "src": "tikzpicture/cc336ad929bda6251658967781136f60.png",
+     "withheld": [
+      "B"
+     ]
+    },
+    {
+     "n": 3,
+     "lo": "lo:g10m8s3-1-2",
+     "question": "Ex8-6:8",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -3,
+       5
+      ],
+      "yRange": [
+       -1,
+       5
+      ],
+      "points": [
+       {
+        "x": -2,
+        "y": 0.5,
+        "label": "A(-2; 0,5)"
+       }
+      ],
+      "segments": [],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Point A(-2; 0,5) is plotted on the grid; point B sits up at height 3,5, but its left-right position isn't marked yet.",
+     "printed_page": 317,
+     "figure_id": "b03298:10",
+     "src": "tikzpicture/7c5f98f613dbcdafcee61d1d6a5f7aef.png",
+     "withheld": [
+      "B"
+     ]
+    },
+    {
+     "n": 4,
+     "lo": "lo:g10m8s3-1-2",
+     "question": "Ex8-6:9",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -3,
+       2
+      ],
+      "yRange": [
+       -3,
+       5
+      ],
+      "points": [
+       {
+        "x": -2,
+        "y": -2,
+        "label": "A(-2; -2)"
+       }
+      ],
+      "segments": [],
+      "animate": "plot-sequence",
+      "interactive": false
+     },
+     "caption": "Point A(-2; -2) is plotted on the grid; point B sits above it at x = 1, but how high up it is isn't marked yet.",
+     "printed_page": 317,
+     "figure_id": "b03299:11",
+     "src": "tikzpicture/739c8475712445081b664acfb20639b9.png",
+     "withheld": [
+      "B"
+     ]
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "b03180:4",
+     "src": "tikzpicture/fa8f615a576d2b7381b992aa48d1e32f.png",
+     "ref": "WE4",
+     "printed_page": 295,
+     "reason": "This worked-example figure (WE4) plots G(7; -9) and H(x; 0) joined by a segment, and additionally carries a floating slope label, \"m_GH = 3\", positioned beside the segment rather than at either endpoint. coordinate_plot's spec only supports text via points[].label, i.e. a label anchored to a specific (x, y) point — it has no field for a free-floating text annotation attached to a segment/line. Drawing the two points and the segment is easy, but the gradient label would either have to be silently dropped (not allowed — it's a labelled element the figure shows) or faked as an invisible extra 'point' carrying that text, which misrepresents the data.",
+     "needed_kind": "coordinate_plot (or a segment-focused kind) that supports a text/value label attached to a segment or line itself, independent of its endpoint points"
+    }
+   ],
+   "counts": {
+    "visuals": 4,
+    "viz_gaps": 1,
+    "compared": 4
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 1,
+   "S4 Compare": 1
+  },
+  "per_lesson": {
+   "g10m8s3-1": 2
+  },
+  "total": 2
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ },
+ "run_id": "wf_f9d67e47-f95"
+}
