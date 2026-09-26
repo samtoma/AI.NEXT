@@ -483,10 +483,12 @@ class WhatAStudentReads(unittest.TestCase):
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
 class S5PromptRule(unittest.TestCase):
     def test_both_agents_are_told_what_a_student_must_not_read(self):
-        out = run_stub(WORKFLOW, base_args("draft"), fixture("s5-draft-responses.json"))
+        draft = draft_run()
+        a, responses = final_args(draft["result"])
+        out = run_stub(WORKFLOW, a, responses)
         self.assertTrue(out["ok"], out.get("error"))
         self.assertEqual(out["result"]["prompts_version"], "s5-v5")
-        author = next(c["prompt"] for c in out["calls"] if c["label"].startswith("author:"))
+        author = next(c["prompt"] for c in draft["calls"] if c["label"].startswith("author:"))
         verify = next(c["prompt"] for c in out["calls"] if c["label"].startswith("verify:"))
         self.assertIn("carries no question\n  ids, page numbers, figure references the student can't see, or review history", author)
         self.assertIn("NOT\nthe book's", author)

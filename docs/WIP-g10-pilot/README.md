@@ -133,7 +133,7 @@ curriculum still enforced) — make "on" the default, or refuse to start without
 
 ## Pipeline state at pause (2026-09-26) — Chapter 8 pilot, after S5 final
 
-Nothing below is committed since the WIP commit `383510c`; it is all on disk in this worktree
+Everything below is on disk in this worktree and, since `383510c`, in the unreviewed `[skip ci]` auto-snapshot commits on the pushed branch
 (`.claude/worktrees/g10`). Paths are relative to `services/extraction/` unless they start with `docs/` or `specs/`.
 
 **1. Files a new session needs**
@@ -150,8 +150,8 @@ Nothing below is committed since the WIP commit `383510c`; it is all on disk in 
 - S7: 7 templates `widgets/g10-math/*.json` (two carry a PIPELINE NORMALISATION note). Runs:
   `runs/g10-math/widgets/{author-wf_816352f4-fbc,author-wf_62e29981-c0a,verify-wf_dbca7b50-327}.json`; merged author
   record `runs/g10-math/widgets/author-merged.json` (pass ONLY this to `--gaps`); held-mapping queue
-  `runs/g10-math/widgets/pending-review.json` (23 held, 20 active — decision 47); S5 input `runs/g10-math/widgets/s5-distractors.json` (9).
-- G3 material: `runs/g10-math/g3-flags.json` (#3's tier), `runs/g10-math/g3-mappings-ch08.review.html` (the 23 held claims).
+  `runs/g10-math/widgets/pending-review.json` (22 held; 17 active mappings in the bundle — decision 47; the verifier's first count was 23 refused, 20 confirmed); S5 input `runs/g10-math/widgets/s5-distractors.json` (9).
+- G3 material: `runs/g10-math/g3-flags.json` (#3's tier), `runs/g10-math/g3-mappings-ch08.review.html` (the 22 held claims, re-rendered 2026-09-27).
 - Packets and embedded copies (all runs above are done): `work/g10-math/packets/` and `work/g10-math/packets/embedded/`.
 - Scratch DB (127.0.0.1 ONLY): `host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08`. Loaded: the pilot seed (G10 course,
   Chapter 8) and G2's verdicts (stamps); parity GREEN. NOT loaded yet: the S5 catalogue, S6/S7 bundles.
@@ -206,9 +206,11 @@ Checks after each code change: `AINEXT_TEST_PG="host=127.0.0.1 port=5432" uv run
 `uv run dryrun_chapter.py --book g10-math --chapter 8` and `… --mode inline`, `python3 scripts/traceability.py --check` (repo root).
 
 **3. Open decisions and backlog** (`docs/WIP-g10-pilot/integration-backlog.md`)
-- Human gates still to pass: **G3** (10% sample + #3's tier flag, `g3-flags.json`), **G3 held mappings** (23 claims, decision 47),
-  **G4** (catalogue sample). Widget gaps in `coverage/g10-math.ch08.widget-gaps.json` need Samuel's sign-off (FR-4306):
+- Human gates still to pass: **G3** (10% sample + #3's tier flag, `g3-flags.json`), **G3 held mappings** (22 claims, decision 47),
+  **G4** (catalogue sample). The **7** widget gaps in `coverage/g10-math.ch08.widget-gaps.json` need Samuel's sign-off (FR-4306):
   s1-1-1, s1-1-3, s2-1-1, s3-1-1, s3-2-2 (line relationship classifier), s3-2-3 (collinearity checker), s4-1-3.
+  (The pilot report's earlier "6 gaps … the other five stand" predates the re-author of g10m8s3-2, which
+  replaced the s3-2-3 template with a collinearity-checker gap.)
 - Tier-floor gaps to list by name (FR-4305): s1-1-1 (no markable parent), s1-1-2 standard/advanced (diagram-dependent).
 - Backlog open: **75** (Ex8-5:5 excluded pending review), **78** (step-level working checker, decide before fan-out),
   **80** (#3 re-authored and graded; its tier → G3). Closed this stretch: 76, 77, 79, 81, 82, 83.

@@ -124,7 +124,7 @@ def notation_problems(text: str) -> list[str]:
 # What it can see: an id or book reference, a page number, a numbered figure, and review-history phrasing (outside
 # $…$). What it cannot see is a figure of another question described in words ("shape Z") — that is the prompt's
 # and the verifier's job, and G4's.
-_LEAK_ID = re.compile(r"\b(?:q|mc|lo|expl|tpl|wt):[A-Za-z0-9]")
+_LEAK_ID = re.compile(r"\b(?:q|mc|lo|expl|tpl|wt):[a-z0-9]+(?:-[a-z0-9]+)+")   # q:g10m8s1-1-2…, not a ratio q:r
 _LEAK_REF = re.compile(r"(?i)\bex\s?\d+[-:.]\d+(?:[-:.]\d+)?[a-z]?\b|\bWE\s?\d+\b")
 _LEAK_PAGE = re.compile(r"(?i)\bp(?:ages?|p?\.)\s*\d+")
 _LEAK_FIGURE = re.compile(r"(?i)\bfig(?:ure|\.)\s*\d")
@@ -137,7 +137,7 @@ _MATH_SPAN = re.compile(r"\$[^$]*\$")
 def leak_problems(text: str) -> list[str]:
     """What in this student-facing text is the pipeline's bookkeeping rather than teaching ([] when none)."""
     t = text or ""
-    out = [f"an internal id {m.group(0)}… — describe the example in words" for m in _LEAK_ID.finditer(t)]
+    out = [f"an internal id {m.group(0)!r} — describe the example in words" for m in _LEAK_ID.finditer(t)]
     out += [f"a book item reference {m.group(0)!r} — describe the example in words" for m in _LEAK_REF.finditer(t)]
     out += [f"a page number {m.group(0)!r}" for m in _LEAK_PAGE.finditer(t)]
     out += [f"a numbered figure {m.group(0)!r}" for m in _LEAK_FIGURE.finditer(t)]

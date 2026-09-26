@@ -157,6 +157,8 @@ the usage limit — and wasted spend of that kind is avoidable, not projected. A
   pilot had to normalise (`--normalise-templates`). S6 refusals of the same mechanical kind: `families/normalise.py`.
 - Widget gaps named by Chapter 8 (input to FR-4321 / decision 27 builds): multi-vertex figure plotter, vertex-labelling
   checker, distance ruler, gradient builder, two-line relationship classifier, diagonal-aware vertex solver.
+  *(2026-09-27: after the g10m8s3-2 re-author, the gap report `coverage/g10-math.ch08.widget-gaps.json` has
+  **7** gaps — these six plus a collinearity checker for s3-2-3, whose template the re-author replaced.)*
 
 ## S5 final (2026-09-26)
 - wf_ed8c8e80-51d (s5-v4): 29 entries CONFIRMED by the fail-closed verifier, 2 dropped UNSUPPORTED

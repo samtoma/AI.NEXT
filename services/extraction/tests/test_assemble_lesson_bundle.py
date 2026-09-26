@@ -304,3 +304,81 @@ class CheckLessonsTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ConsistencyReviewTest(unittest.TestCase):
+    """The consistency review of 2026-09-27 (section A): what a student would have seen, fixed at assembly.
+    A1 the answer text is the marker key; A2 glued LaTeX re-spaced and judged by the app's KaTeX; A3 a question
+    that shows [figure] with no figure is held; A4 a pair written with a comma, only where provable; A8 a figure
+    never draws the unknown; A9 the book's form rules reach the marker."""
+
+    def test_a4_a_comma_pair_only_where_the_other_side_is_a_pair(self):
+        out, c = alb.normalise(r"$\begin{align*}(-1,4)&=(\frac{x_A+0}{2};\frac{y_A+0}{2})\end{align*}$")
+        self.assertIn("(-1, 4)&=", out)
+        self.assertEqual(c["pair_by_context"], 1)
+        out, c = alb.normalise(r"$\sqrt{(7,5)^{2}+(-6)^{2}}$")          # the book's bracketed decimal
+        self.assertEqual(out, r"$\sqrt{(7.5)^{2}+(-6)^{2}}$")
+        out, c = alb.normalise(r"$\begin{align*}y&=mx+c\\(-2,5)&=(0,5)(-1)+c\end{align*}$")
+        self.assertIn("(-2.5)&=(0.5)(-1)+c", out)
+        self.assertEqual(c["pair_ambiguous"], 1, "a whole side that is not provably a pair is listed for G2")
+
+    def test_a1_several_values_read_as_the_answer(self):
+        self.assertEqual(alb.answer_text({"kind": "values", "key": "3; 9", "variables": ["x"]}),
+                         r"x = 3 \text{ or } x = 9")
+        self.assertEqual(alb.answer_text({"kind": "values", "key": r"\sqrt{26}; \sqrt{8}", "variables": []}),
+                         r"\sqrt{26},\ \sqrt{8}")
+        self.assertEqual(alb.answer_text({"kind": "expression", "key": r"\frac{9}{11}"}), r"\frac{9}{11}")
+        b = {"questions": [{"id": "q:x:1", "answer": "9 11", "choices": {"marker": {"kind": "expression",
+                                                                                     "key": r"\frac{9}{11}"}}}]}
+        self.assertEqual(len(alb.answer_problems(b)), 1)
+
+    @unittest.skipUnless(shutil.which("node"), "the app's KaTeX runs in node")
+    def test_a2_respacing_follows_katex(self):
+        for glued, spaced in ((r"$\triangleABC$", r"$\triangle ABC$"), (r"$2\timesm$", r"$2\times m$"),
+                              (r"$\thereforey=2$", r"$\therefore y=2$"), (r"$x=3\m$", r"$x=3\ m$"),
+                              (r"$a\neM$", r"$a\ne M$"), (r"$a\neq b$", r"$a\neq b$"),
+                              (r"$\frac{1}{2}\\y&=1$", r"$\frac{1}{2}\\y&=1$")):
+            self.assertEqual(alb.respace_latex(glued)[0], spaced, glued)
+        self.assertEqual(alb.respace_latex("$x_{1}=-2y_{1}=-5x_{2}=7y_{2}=-2$")[0],
+                         r"$x_{1}=-2 \quad y_{1}=-5 \quad x_{2}=7 \quad y_{2}=-2$")
+        self.assertEqual(alb.respace_latex("$x_{1}=y_{1}=2$")[0], "$x_{1}=y_{1}=2$", "two tokens: not provable")
+        errs = alb.katex_errors([{"where": "a", "text": r"$\triangleABC$"}, {"where": "b", "text": r"$\triangle ABC$"}])
+        self.assertEqual([e["where"] for e in errs], ["a"])
+
+    def test_a8_a_figure_never_draws_the_unknown(self):
+        q = {"id": "q:1", "stem": "[figure] Line $AB$ has gradient 2. Find the missing co-ordinate of $B(1, y)$."}
+        drawn = {"spec": {"points": [{"x": -1, "y": 0, "label": "A"}, {"x": 1, "y": 4, "label": "B"}]}}
+        self.assertIn("unknown point B", alb.visual_gives_answer(q, drawn))
+        own_label = {"spec": {"points": [{"x": 1, "y": 0.8, "label": "B(2;a)"}]}}
+        self.assertIn("unknown point", alb.visual_gives_answer({"id": "q:2", "stem": "[figure] Find a."}, own_label))
+        mid = {"id": "q:3", "stem": "Find $M$.", "choices": {"marker": {"kind": "coordinates", "key": "(1, 0)"}}}
+        self.assertIn("answer", alb.visual_gives_answer(mid, {"spec": {"points": [{"x": 1, "y": 0}]}}))
+        fine = {"spec": {"points": [{"x": -1, "y": 0, "label": "A(-1;0)"}, {"x": 3, "y": 2, "label": "C"}]}}
+        self.assertIsNone(alb.visual_gives_answer(q, fine))
+
+    def test_a3_a_question_that_shows_a_figure_it_does_not_have_is_held(self):
+        rep = alb.Report()
+        b = {"questions": [{"id": "q:1", "stem": "[figure] Find $y$.", "verified": True},
+                           {"id": "q:2", "stem": "[figure] Find $x$.", "verified": True},
+                           {"id": "q:3", "stem": "Find $x$.", "verified": True}],
+             "visuals": [{"id": "v:1", "question": "q:2", "spec": {"points": [{"x": 0, "y": 0, "label": "O"}]}}]}
+        alb.police_figures(b, rep)
+        self.assertEqual([q["verified"] for q in b["questions"]], [False, True, True])
+        self.assertEqual(rep.held_for_figure, ["q:1"])
+
+    def test_a9_a_form_rule_reaches_the_marker(self):
+        book = book_config.load_book("g10-math")
+        rule = book_config.FormRule(match=r"in the form \$?\s*y\s*=\s*mx\s*\+\s*c", form="subject", subject="y")
+        book = book.model_copy(update={"answer_rules": book.answer_rules.model_copy(update={"forms_from_stem": [rule]})})
+        b = {"questions": [{"id": "q:1", "stem": "Find the equation in the form $y = mx + c$.",
+                            "choices": {"marker": {"kind": "equation", "key": "y=2x+1", "form": None}}},
+                           {"id": "q:2", "stem": "Find the gradient in the form $y = mx + c$.",
+                            "choices": {"marker": {"kind": "expression", "key": "2", "form": None}}}]}
+        self.assertEqual(len(alb.form_problems(b, book)), 1)
+        rep = alb.Report()
+        alb.apply_form_rules(b, book, rep)
+        self.assertEqual(b["questions"][0]["choices"]["marker"]["form"], {"subject": "y"})
+        self.assertIsNone(b["questions"][1]["choices"]["marker"]["form"], "a subject form needs an equation")
+        self.assertEqual(alb.form_problems(b, book), [])
+        with self.assertRaises(ValueError):
+            book_config.FormRule(match="x", form="subject")
