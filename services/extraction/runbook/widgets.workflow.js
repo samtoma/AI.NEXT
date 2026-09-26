@@ -49,13 +49,13 @@ export const meta = {
  * diagnosis, never S5 evidence until kept). Silence is not approval.
  *
  * ARGS
- *   author: { mode, book, course_id, contract: {kind: {predicates: {name: meaning}, instrument}},
+ *   author: { mode, book, course_id, contract: {kind: {predicates: {name: meaning}, can_emit, instrument}},
  *             objectives: [{lo_id, label, description, module, module_label,
  *               anchor_questions: [{id, stem, type, answer}],
  *               misconceptions: [{id, lo_id, label, description, own}]}],
  *             only_modules?: ["module:…"] }
  *   verify: { mode, book, widgets: [{question_id, template_id, template_sha, lo_id, kind, spec,
- *             stem, instrument, reading_fields, diagnostics: [{predicate, predicate_meaning,
+ *             stem, instrument, reading_fields, can_emit (the KIND's table), diagnostics: [{predicate, predicate_meaning,
  *             misconception_id, misconception_label, misconception_description}]}] }
  *             (`spec` is in args for the operator's record; it is never put in a prompt)
  *

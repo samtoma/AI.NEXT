@@ -111,7 +111,7 @@ class G10ProvenanceTest(unittest.TestCase):
         # consistency review A3: a live question whose stem shows [figure] with no figure is held at review, marked;
         # the load that brings its figure puts it back live; a question a human held is never released here
         qid = "q:g10m8s2-1-1:ex8-2-2a"
-        human = "q:g10m8s2-1-1:ex8-2-1"
+        human = "q:g10m8s2-1-1:ex8-6-1"
         self.db.q("UPDATE questions SET status = 'live', reviewed_by = 'ai dual-check (pending Samuel)' WHERE id = %s", (qid,))
         self.db.q("UPDATE questions SET status = 'review', reviewed_by = 'Samuel (G2 hold)' WHERE id = %s", (human,))
 
