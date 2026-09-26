@@ -141,6 +141,16 @@ class CoverageTest(unittest.TestCase):
         c = self.check(rep, "notation")
         self.assertEqual((c["got"], c["state"]), (2, "fails"))
 
+    def test_a_figures_point_labels_are_normalised_at_assembly(self):
+        # the Chapter 8 pilot: coordinate plots labelled points "P(2;1)" — 107 spans the audit caught
+        self.edit("runs/lesson/g10m8s2-1.json", lambda d: d["visuals"][0].update(
+            spec={**(d["visuals"][0].get("spec") or {}), "points": [{"x": 2, "y": 1, "label": "P(2;1)"}]}))
+        _, rep = self.audit()
+        self.assertEqual(self.check(rep, "notation")["got"], 0)
+        b = json.loads((self.seed / "g10m-c08.json").read_text())
+        labels = [p["label"] for v in b["visuals"] for p in (v.get("spec") or {}).get("points") or []]
+        self.assertIn("P(2, 1)", labels)
+
     def test_a_held_mappings_reviewer_prose_is_not_app_notation(self):
         # decision 47: `pending_review` carries the blind verifier's reason for the human reviewer, never shown
         # in the app — "{3,9}" there is not a decimal comma the app would show. A shown field still counts.

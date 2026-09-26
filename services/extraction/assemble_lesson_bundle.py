@@ -610,6 +610,17 @@ def _norm(text: str | None, where: str, report: Report) -> str | None:
     return out
 
 
+def _norm_spec(spec, where: str, report: Report):
+    """A figure's drawn text in the app's notation too (decision 15, FR-4308): the pilot's coordinate plots
+    labelled points "P(2;1)" — its `label` strings are shown on the figure. Nothing else in a spec is text."""
+    if isinstance(spec, dict):
+        return {k: (_norm(x, where, report) if k == "label" and isinstance(x, str) else _norm_spec(x, where, report))
+                for k, x in spec.items()}
+    if isinstance(spec, list):
+        return [_norm_spec(x, where, report) for x in spec]
+    return spec
+
+
 def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
                      objectives: dict[str, ObjectivesFile], runs: dict[str, LessonRun],
                      report: Report, inputs: dict[str, Path]) -> dict:
@@ -761,7 +772,7 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
                 report.counts["visuals_detached_from_non_questions"] += 1
             visuals.append({"id": f"v:{les.slug}:{v.n:03d}", "lo": v.lo,
                             "question": refs.get(v.question) if v.question else None,
-                            "kind": v.kind, "spec": v.spec,
+                            "kind": v.kind, "spec": _norm_spec(v.spec, f"{les.slug}:v{v.n}", report),
                             "caption": _norm(v.caption, f"{les.slug}:v{v.n}", report),
                             "source_page": v.printed_page})
         report.counts["viz_gaps"] += len(run.viz_gaps)
