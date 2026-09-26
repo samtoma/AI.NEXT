@@ -71,12 +71,9 @@ class AssembleFixtureTest(unittest.TestCase):
         for want in ("q:g10m8s2-1-1:we01", "q:g10m8s2-1-1:ex8-2-2a", "q:g10m8s2-1-1:ex8-6-1",
                      "q:g10m8s4-1-1:we04"):
             self.assertIn(want, qids)
-        # consistency review A8: the fixture's WE4 figure draws the mid-point at the answer (4, 6), so it is
-        # dropped (and reported), never shown with its question
         self.assertEqual({v["id"] for v in self.ch8["visuals"]},
-                         {"v:g10m8s1-1:001", "v:g10m8s2-1:001", "v:g10m8s3-1:001"})
-        self.assertEqual([(x["visual"], x["question"]) for x in self.report.visuals_dropped],
-                         [("v:g10m8s4-1:001", "q:g10m8s4-1-1:we04")])
+                         {"v:g10m8s1-1:001", "v:g10m8s2-1:001", "v:g10m8s3-1:001", "v:g10m8s4-1:001"})
+        self.assertEqual(self.report.visuals_dropped, [], "no fixture figure draws an unknown (A8)")
         self.assertEqual(self.ch8["nodes"][0]["id"], "module:g10m-c08")
         los = [n["id"] for n in self.ch8["nodes"] if n["kind"] == "learning_objective"]
         self.assertEqual(los, ["lo:g10m8s1-1-1", "lo:g10m8s2-1-1", "lo:g10m8s3-1-1",
@@ -351,8 +348,12 @@ class ConsistencyReviewTest(unittest.TestCase):
         self.assertIn("unknown point B", alb.visual_gives_answer(q, drawn))
         own_label = {"spec": {"points": [{"x": 1, "y": 0.8, "label": "B(2;a)"}]}}
         self.assertIn("unknown point", alb.visual_gives_answer({"id": "q:2", "stem": "[figure] Find a."}, own_label))
-        mid = {"id": "q:3", "stem": "Find $M$.", "choices": {"marker": {"kind": "coordinates", "key": "(1, 0)"}}}
-        self.assertIn("answer", alb.visual_gives_answer(mid, {"spec": {"points": [{"x": 1, "y": 0}]}}))
+        mid = {"id": "q:3", "stem": "Find the mid-point $M(x; y)$.", "choices": {"marker": {"kind": "coordinates", "key": "(1, 0)"}}}
+        self.assertIn("unknown point M", alb.visual_gives_answer(mid, {"spec": {"points": [{"x": 1, "y": 0, "label": "M"}]}}))
+        read = {"id": "q:4", "stem": "[figure] Find the coordinates of point $D$.",
+                "choices": {"marker": {"kind": "coordinates", "key": "(3, 3)"}}}
+        self.assertIsNone(alb.visual_gives_answer(read, {"spec": {"points": [{"x": 3, "y": 3, "label": "D"}]}}),
+                          "a point read off the figure is the question's data (Ex8-1:1)")
         fine = {"spec": {"points": [{"x": -1, "y": 0, "label": "A(-1;0)"}, {"x": 3, "y": 2, "label": "C"}]}}
         self.assertIsNone(alb.visual_gives_answer(q, fine))
 

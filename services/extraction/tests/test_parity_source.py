@@ -47,7 +47,7 @@ class SourceFingerprintTest(unittest.TestCase):
         self.assertEqual(fp.source_sha256, parity_check.expected_source_sha(G10))
         self.assertEqual(parity_check.check_source(fp, G10), [])
         self.assertEqual((fp.modules, fp.learning_objectives, fp.questions_total, fp.visuals),
-                         (1, 6, 17, 3))   # A8: the fixture WE4 figure draws its answer (dropped)
+                         (1, 6, 17, 4))
 
     def test_rows_stamped_with_another_document_are_red(self):
         self.db.q("INSERT INTO source_documents (sha256, title, publisher, language, grade, subject) "

@@ -896,22 +896,15 @@ def _spec_points(spec) -> list[dict]:
 
 def visual_gives_answer(question: dict, visual: dict) -> str | None:
     """Why a figure must not be shown with its question (A8), or None. Never draw the unknown: a point the question
-    (or the figure's own label) writes with a letter coordinate is the thing asked for, so drawing it anywhere either
-    gives the answer away or contradicts the key; and a figure never draws a point at a coordinates answer."""
+    (or the figure's own label) writes with a letter for a coordinate — B(1; y), M(x; y) — is the thing asked for,
+    so drawing it anywhere either gives the answer away or contradicts the key. (A point merely drawn at a
+    coordinates answer is NOT refused: "find the coordinates of point D" is read off the figure, Ex8-1:1.)"""
     unknown = _unknown_points(question.get("stem") or "")
     for p in _spec_points(visual.get("spec")):
         label = str(p.get("label") or "")
         name = re.match(r"\s*([A-Z])", label)
         if _unknown_points(label) or (name and name.group(1) in unknown):
             return f"draws the unknown point {label or name.group(1)} at ({p['x']}, {p['y']})"
-    ch = question.get("choices")
-    if isinstance(ch, dict) and isinstance(ch.get("marker"), dict) and ch["marker"].get("kind") == "coordinates":
-        m = re.fullmatch(r"\(\s*(-?[\d.]+)\s*[,;]\s*(-?[\d.]+)\s*\)", str(ch["marker"].get("key") or "").strip())
-        if m:
-            at = (float(m.group(1)), float(m.group(2)))
-            for p in _spec_points(visual.get("spec")):
-                if (float(p["x"]), float(p["y"])) == at:
-                    return f"draws a point at the answer {m.group(0)}"
     return None
 
 
