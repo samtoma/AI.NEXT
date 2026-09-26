@@ -6,14 +6,14 @@
   "templates": {
     "wt:g10m8s1-1-2:plot-the-point": "085a06f70e4863f758fab3745314b7dd2ca4c1e693d78438baa5d0dcb5c44a72",
     "wt:g10m8s2-1-2:missing-coord-number-line": "2c17b77e19dd5bb4b1a2175bbaed33bf5720e0bcd12db49feef2443961a3cb42",
-    "wt:g10m8s3-2-1:line-through-two-points": "07fa6f7705addbb9ab2efedb7191d44b182df706e1e042f922d299ddf2f60d53",
     "wt:g10m8s3-2-2:parallel-perpendicular-line": "03c31fc9a4e119f7ed00b9abb6a66294c758a82803c8e34c3ee1e0952ae11375",
     "wt:g10m8s4-1-1:plot-midpoint": "69d5b6190c717b11c543ec1fea2fa297f30f5101636d451e047b78c10f31ed13",
     "wt:g10m8s4-1-2:plot-endpoint": "7a170a351c05963ac15f818787e48eabec310ef72e4faef14715a8f6d1ccfc7f"
   },
-  "rejected_templates": {},
-  "carried_verification": {
-    "wt:g10m8s3-2-1:line-through-two-points": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f"
+  "rejected_templates": {
+    "wt:g10m8s3-2-1:line-through-two-points": [
+      "wt:g10m8s3-2-1:line-through-two-points: normalised since verification, but instances: an entry was added or changed since verification — verify it again"
+    ]
   },
   "questions": [
     {
@@ -227,6 +227,7 @@
             "misconception_id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
             "why": "There is no restriction in this question to ignore — {3,9} is the complete, unrestricted answer set. 'keeps-both-roots-ignores-restriction' describes a student who keeps a root a stated condition has ruled out; since no condition rules out either root here, any extra marked value (e.g. a stray 6 or 15) would come from an arithmetic/sign slip, not from ignoring a restriction that doesn't exist.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -291,6 +292,7 @@
             "misconception_id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
             "why": "The question states no condition that rules out either root, so there is nothing for 'keeps-both-roots-ignores-restriction' to ignore. A marked value outside {-5,3} would be a computational error, not a failure to apply a restriction that isn't there.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -355,6 +357,7 @@
             "misconception_id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
             "why": "No stated condition rules out either root here, so 'keeps-both-roots-ignores-restriction' has nothing to ignore — both roots are supposed to be kept. A stray extra value would stem from an unrelated arithmetic slip.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -418,6 +421,7 @@
             "misconception_id": "mc:g10m8s2-1-2:stops-at-first-root",
             "why": "Unlike W1-W3, this question's restriction (y≥0) makes -4 an invalid answer, not a second correct value. 'stops-at-first-root' is diagnosed by telling the student they dropped a valid solution — but here the 'other' root (-4) is not valid, it was correctly excluded. Firing this predicate (e.g. because a student wrote only -4) would misinform the student that -4 was a value they should have kept, which is false; any construction missing the value 4 reflects a wrong-root/sign error or restriction misuse, not 'failed to realize there are two solutions'. This is the question the restriction was added to distinguish, and the intended diagnosis for a both-roots answer is the other predicate below.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -452,102 +456,6 @@
       "template_sha": "2c17b77e19dd5bb4b1a2175bbaed33bf5720e0bcd12db49feef2443961a3cb42"
     },
     {
-      "id": "q:g10m8s3-2-1:w001",
-      "lo_id": "lo:g10m8s3-2-1",
-      "tier": "advanced",
-      "question_type": "widget",
-      "stem": "Draw the straight line through $A(-3, 1)$ and $B(3, 3)$.",
-      "choices": {
-        "kind": "line_drawer",
-        "spec": {
-          "mode": "points",
-          "through": [
-            [
-              -3,
-              1
-            ],
-            [
-              3,
-              3
-            ]
-          ]
-        },
-        "diagnostics": [
-          {
-            "predicate": "points-swapped",
-            "misconception_id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Find the gradient between A and B: m = (y2 − y1) / (x2 − x1)."
-        },
-        {
-          "step": 2,
-          "text_md": "Keep the sign of each difference exactly as it comes out — do not drop a sign when a coordinate is already negative."
-        },
-        {
-          "step": 3,
-          "text_md": "Starting from A, step according to that gradient (rise over run) to fix the line's direction."
-        }
-      ],
-      "parent_question_id": "q:g10m8s3-2-1:ex8-6-10a",
-      "source_note": "Generated from template family wt:g10m8s3-2-1:line-through-two-points.",
-      "family": "wt:g10m8s3-2-1:line-through-two-points",
-      "template_sha": "07fa6f7705addbb9ab2efedb7191d44b182df706e1e042f922d299ddf2f60d53"
-    },
-    {
-      "id": "q:g10m8s3-2-1:w002",
-      "lo_id": "lo:g10m8s3-2-1",
-      "tier": "advanced",
-      "question_type": "widget",
-      "stem": "Draw the straight line through $A(-4, -2)$ and $B(2, -5)$.",
-      "choices": {
-        "kind": "line_drawer",
-        "spec": {
-          "mode": "points",
-          "through": [
-            [
-              -4,
-              -2
-            ],
-            [
-              2,
-              -5
-            ]
-          ]
-        },
-        "diagnostics": [
-          {
-            "predicate": "points-swapped",
-            "misconception_id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Find the gradient between A and B: m = (y2 − y1) / (x2 − x1)."
-        },
-        {
-          "step": 2,
-          "text_md": "Keep the sign of each difference exactly as it comes out — do not drop a sign when a coordinate is already negative."
-        },
-        {
-          "step": 3,
-          "text_md": "Starting from A, step according to that gradient (rise over run) to fix the line's direction."
-        }
-      ],
-      "parent_question_id": "q:g10m8s3-2-1:ex8-6-10a",
-      "source_note": "Generated from template family wt:g10m8s3-2-1:line-through-two-points.",
-      "family": "wt:g10m8s3-2-1:line-through-two-points",
-      "template_sha": "07fa6f7705addbb9ab2efedb7191d44b182df706e1e042f922d299ddf2f60d53"
-    },
-    {
       "id": "q:g10m8s3-2-2:w001",
       "lo_id": "lo:g10m8s3-2-2",
       "tier": "standard",
@@ -567,6 +475,7 @@
             "misconception_id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
             "why": "A student with this exact misconception would plausibly draw one of two specific lines: (a) m=2 (reusing L's own slope, believing equal gradients signal perpendicularity) giving y=2x-7 through (4,1), via handles e.g. (4,1) and (5,3); or (b) m=-2 (flipping the sign but not reciprocating, believing opposite sign alone proves perpendicularity) giving y=-2x+9, via handles e.g. (4,1) and (2,5). Both have neither slope (2 or -2) matching the correct -1/2 nor intercept (-7 or 9) matching 3, so both would indeed trip the 'off-target' predicate. But 'off-target' is defined only as the negative catch-all -- 'neither the slope nor the intercept matches' -- with no requirement that the drawn slope be +2, -2, or any value connected to a parallel/perpendicular test. It fires identically for a mis-substituted point, a transposed m/b, an arithmetic slip in the point-slope step, or a plain guess -- none of which reflect this misconception. Because the predicate cannot distinguish the test-swap construction from these unrelated wrong answers, it mostly fires for other reasons; a wrong diagnosis here would refute a mistake the student may not have made.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -616,6 +525,7 @@
             "misconception_id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
             "why": "A student with this misconception, asked for a parallel line, might apply the perpendicular test instead (believing it is the relevant one, or blurring the two): (a) m=1/3 (true negative reciprocal of -3), giving y=1/3x - 13/3 through (1,-4) -- not a whole number or clean reciprocal intercept, awkward but constructible in points mode via handles like (1,-4) and (4,-3); or (b) m=3 (just the opposite sign, no reciprocal), giving y=3x-7, via handles e.g. (1,-4) and (2,-1). Both have a slope (1/3 or 3) that doesn't match -3 and an intercept that doesn't match -1, so both would trip 'off-target'. But that predicate is only the negative catch-all -- it fires equally for an unrelated slip such as using the wrong point, arithmetic errors in the point-slope expansion, or a random guess, none of which is this test-swap misconception. Since the predicate can't isolate the test-swap construction from these other wrong-answer causes, it mostly fires for other reasons, so it does not reliably diagnose this misconception.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -666,6 +576,7 @@
             "misconception_id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
             "why": "The misconception fires only when a coordinate sum in the midpoint formula adds two negative numbers and the student drops the sign. Here neither sum qualifies: x1+x2 = -1+3 (one negative, one positive) and y1+y2 = 3+(-3) (one negative, one positive). There is no 'both negative' addition step for this error to act on, so a student holding exactly this misconception would compute the sums correctly and land on the true midpoint (1,0), not a wrong-quadrant point. (The correct midpoint also sits on the x-axis, not inside any quadrant, making a 'wrong quadrant' diagnosis doubly inapt.) Any wrong-quadrant plot here would come from some other error, so the predicate would fire for the wrong reason.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -712,6 +623,7 @@
             "misconception_id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
             "why": "x1+x2 = 2+(-4) and y1+y2 = 5+(-3) each mix a positive and a negative addend — neither is a 'both negative' sum. The described misconception has no trigger condition here, so a student with exactly this misconception would still add correctly and reach the true midpoint (-1,1). A wrong-quadrant answer on this item would have to come from a different mistake, so the predicate misattributes the cause.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -799,6 +711,7 @@
             "misconception_id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
             "why": "x1+x2 = 5+(-3) and y1+y2 = -5+3 each combine one positive and one negative addend — never two negatives being added. The misconception's specific mechanism (dropping the sign when both addends are negative) has nothing to act on, so a student with exactly this misconception still computes the correct sums and correct midpoint (1,-1). Any wrong-quadrant plot on this item would trace to a different error, so the predicate would be firing for the wrong reason.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -845,6 +758,7 @@
             "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
             "why": "The claimed misconception (averaging the known endpoint A with the midpoint M, i.e. treating A and M as the segment's two endpoints) is a specific, deterministic construction: avg(A,M) = ((1+2)/2,(4+1)/2) = (1.5, 2.5). That is a computable, recognisable point (off by a fixed, describable transformation from the correct answer), not a patternless miss. The 'off-target' predicate is defined as firing precisely when there IS no recognisable pattern — i.e. it is the residual/catch-all bucket for essentially any wrong click that isn't one of the named signature errors. A catch-all with no pattern requirement will fire for many different underlying mistakes (miscopied A, arithmetic slips, guesses) far more often than for this one specific averaging error, and it cannot distinguish this construction from those other causes. So the predicate does not target what this misconception actually produces; it mostly fires for other reasons.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -895,6 +809,7 @@
             "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
             "why": "Averaging A(−3,2) and M(−1,−1) gives ((−3−1)/2,(2−1)/2) = (−2, 0.5): a specific, computable point (x-coordinate lands exactly on −2), not a patternless one. 'Off-target' is defined as the no-pattern case, so by construction it cannot be the signature check for a deterministic misconception like this — it is a generic catch-all that would also fire for unrelated slips (sign errors, transcription mistakes, random guesses). Attributing it specifically to the averaging misconception is unsupported.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -945,6 +860,7 @@
             "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
             "why": "Averaging A(4,−3) and M(0,0) gives (2, −1.5) — again a specific, derivable (if half-integer) point, not one with 'no recognisable pattern'. The predicate's own definition (patternless miss) is the opposite of what this misconception produces, and as a catch-all it would trigger for many unrelated wrong placements too, so it isn't a reliable signature for this specific error.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -995,6 +911,7 @@
             "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
             "why": "Averaging A(−2,−4) and M(−3,−1) gives (−2.5, −2.5): a specific, symmetric, computable point, not a patternless miss. Since 'off-target' is explicitly the bucket for answers with no discernible pattern, it structurally cannot be the targeted check for this well-defined arithmetic misconception, and as a broad catch-all it would fire for many other kinds of errors just as easily.",
             "verifier_runs": [
+              "wf_0276c362-c6a",
               "wf_dbca7b50-327"
             ]
           }
@@ -1025,46 +942,16 @@
       "template_sha": "7a170a351c05963ac15f818787e48eabec310ef72e4faef14715a8f6d1ccfc7f"
     }
   ],
-  "misconceptions": [
-    {
-      "id": "mc:g10m8s1-1-2:flips-a-coordinate-sign",
-      "lo_id": "lo:g10m8s1-1-2",
-      "label": "Flips the sign of one coordinate",
-      "description": "The student reads the right size for one of the two numbers in the pair but gives it the wrong sign, so they look on the wrong side for that value instead of the right one."
-    },
-    {
-      "id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
-      "lo_id": "lo:g10m8s2-1-2",
-      "label": "Keeps both roots when the question narrows it down",
-      "description": "Solves the quadratic and finds both values, then reports both even when the question's figure or a stated condition on the coordinate has already ruled one of them out."
-    },
-    {
-      "id": "mc:g10m8s2-1-2:stops-at-first-root",
-      "lo_id": "lo:g10m8s2-1-2",
-      "label": "Only writes down one root",
-      "description": "Clears the square root and reaches the quadratic correctly, then writes only one of its two solutions as the final answer, not realising a squared difference gives two values."
-    },
-    {
-      "id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting",
-      "lo_id": "lo:g10m8s3-2-1",
-      "label": "Swaps which number is $x$ and which is $y$",
-      "description": "The student substitutes a point's two values into the wrong slots — putting the $y$-value where $x$ belongs, or the reverse — when solving for $c$ in $y=mx+c$ or for a missing coordinate."
-    },
-    {
-      "id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
-      "lo_id": "lo:g10m8s4-1-1",
-      "label": "Adding two negative coordinates loses the sign",
-      "description": "When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative."
-    }
-  ],
+  "misconceptions": [],
   "mapping_review": {
     "rule": "decision 47",
     "verifier_runs": [
+      "wf_0276c362-c6a",
       "wf_dbca7b50-327"
     ],
     "counts": {
-      "active": 11,
-      "held": 13,
+      "active": 9,
+      "held": 16,
       "kept_by_review": 0,
       "dropped_by_review": 0
     },
