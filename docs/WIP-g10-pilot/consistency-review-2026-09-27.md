@@ -56,6 +56,8 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
 9. **The six new widget types were built before the gap list** existed (decision 27 said "only for chapters that name
    them") — confirm "built ahead".
 10. **Step-level working checker** (backlog 78, ≈$70–125 for the book).
+12. **"A question's own figure is shown with it"** (built in fixing A3) has no requirement — write it as an FR, or
+    leave it unfiled?
 11. Still open from before: "draw figures from coordinates" has no marked question (tier floor); Ex8-5:5 detailed review.
 
 ## C. Requirements and documents out of sync (fix; no decision needed)
@@ -89,3 +91,8 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
 7. Expect larger embedded scripts (≈200–250 KB); split per lesson if needed.
 8. Human gates G1–G4 for 13 chapters put Samuel on the critical path.
 9. Cost: ≈$0.85–1.1k one-time for the book, plus the working checker (≈$70–125) and the check run (≈$15).
+
+## Progress on fixes (2026-09-27)
+- App side DONE: A3 (question figures on cards; "[figure]" never printed), A6 (answer-only on cards + route), A10 (both
+  points must be swapped), A11 (/pipeline crash), I4 (G10 home label). npm test 1446/0 fail; builds OK; goldens
+  identical. W1 app test waits for the contract "can emit" table (content engineer).

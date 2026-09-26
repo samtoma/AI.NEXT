@@ -623,7 +623,7 @@ ${focusBlock}`;
 
   return {
     systemPrompt: askSystemPrompt(surface, student, subject, a, examples),
-    // An English-only course's tutor (decision 9) gets no Arabic address line.
+    // An English-only course's tutor (answer 9 (decisions.md #30)) gets no Arabic address line.
     dataBlock: dataBlock + retrievalBlock(retrieved, { arabicAddress: facts.arabicTouches }),
     grounding,
   };

@@ -34,7 +34,7 @@
  * written the course's one-section rows. The Grade 10 book has all three
  * shapes; no National course has any.
  *
- * ONE EXCEPTION, FOR TITLES ONLY (Samuel's decision 13, 2026-09-25; ADR-0020
+ * ONE EXCEPTION, FOR TITLES ONLY (Samuel's answer 13 (decisions.md #34), 2026-09-25; ADR-0020
  * note). The Arabic lessons are to be called by the book's printed names. So
  * the TITLE rule (`shownTitles`) also reads the store for a course whose
  * registry entry sets `tutor.bookLessonTitles` — Prep-3 Arabic — while the
@@ -90,14 +90,14 @@ export function shownProvenance(rows: readonly LessonProvenance[]): Map<string, 
  * it, by slug: every lesson of a book-shaped course (as `shownProvenance`),
  * and every lesson of a course whose registry entry says its lessons carry
  * the book's printed names (`CourseTutorFacts.bookLessonTitles` — Prep-3
- * Arabic, Samuel's decision 13 of 2026-09-25: «عِبادُ الرَّحمنِ», not the
+ * Arabic, Samuel's answer 13 of 2026-09-25 (decisions.md #34): «عِبادُ الرَّحمنِ», not the
  * first objective «فهم النص والاستماع» all twenty lessons share).
  *
  * TITLES ONLY. A course named here by its registry flag gets no provenance
  * (`shownProvenance` is unchanged), so its printed lesson number, its chips
  * and its headers stay exactly as they were (FR-4318's "that display is
  * unchanged"); only the title moves. That is the approved ADR-0020 exception
- * (ADR-0020 note, decision 13) — for the Arabic course's lesson title and
+ * (ADR-0020 note, answer 13 (decisions.md #34)) — for the Arabic course's lesson title and
  * nothing else. A course without the flag and without a book-shaped lesson
  * — Prep-3 maths, whose registry titles win anyway, and Social Studies —
  * reads exactly as before, with or without its one-section rows.

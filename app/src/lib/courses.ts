@@ -227,7 +227,7 @@ export interface CourseTutorFacts {
    * A book-shaped course (the Grade 10 book) is always named from the store
    * (`lib/section-label.ts` `shownTitles`); this is the switch for a course
    * whose lessons are each exactly one printed lesson. `true` for Prep-3
-   * Arabic (Samuel's decision 13, 2026-09-25: the book's printed names, such
+   * Arabic (Samuel's answer 13 (decisions.md #34), 2026-09-25: the book's printed names, such
    * as «عِبادُ الرَّحمنِ», instead of the first objective «فهم النص والاستماع»
    * that all twenty Arabic lessons share) — an approved exception to
    * ADR-0020's prompt hold, for the lesson title and nothing else. `false`
@@ -242,7 +242,7 @@ export interface CourseTutorFacts {
    * «لسه مش فاهم» name of the still-confused signal and the Arabic line of
    * the address block. `true` for every National course, whose prompts are
    * held byte-identical (ADR-0020). `false` for the Grade 10 course (Samuel's
-   * decision 9, 2026-09-25: "English only" — the student is still described
+   * answer 9 (decisions.md #30), 2026-09-25: "English only" — the student is still described
    * as an Egyptian grade-10 student, but the tutor is told to write no
    * Arabic at all). Only an English-taught subject may say `false`.
    */
@@ -417,7 +417,7 @@ export const COURSES = {
     tutor: {
       ...NATIONAL_BOOK,
       lessonTitles: null,
-      // Decision 13: the printed lesson names in the store, not the first objective.
+      // Answer 13 (decisions.md #34): the printed lesson names in the store, not the first objective.
       bookLessonTitles: true,
       figureLedSlugPrefix: null,
       lessonWidgets: null,
@@ -459,7 +459,7 @@ export const COURSES = {
       lessonWidgets: "module-questions",
       exampleFallbacks: null,
       askExamples: null,
-      // Decision 9 (2026-09-25): English only — no Arabic phrase in any prompt.
+      // Answer 9 (decisions.md #30, 2026-09-25): English only — no Arabic phrase in any prompt.
       arabicTouches: false,
     },
   },

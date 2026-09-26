@@ -193,7 +193,7 @@ function firstOf(displayName?: string): string {
  * itself: a model told a student's gender without being told what it is for is
  * a model that may decide the lesson should be about football.
  *
- * `arabic` (feature 003, decision 9): whether the block carries its Arabic
+ * `arabic` (feature 003, answer 9 (decisions.md #30)): whether the block carries its Arabic
  * line. `true` — the default, so every existing render is byte-identical —
  * for every course whose tutor may write Arabic; `false` for an English-only
  * course (the Grade 10 book, `CourseTutorFacts.arabicTouches`), whose tutor

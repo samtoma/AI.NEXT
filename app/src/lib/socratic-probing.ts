@@ -355,7 +355,7 @@ export type ProbeAddress = {
  * `{{reveal_answer}}`; it now tells the model to hold until REVEALED, and no
  * longer mentions the directive. The disabled branch is untouched.
  *
- * `arabicTouches` (feature 003, decision 9; the course's registry fact) names
+ * `arabicTouches` (feature 003, answer 9 (decisions.md #30); the course's registry fact) names
  * the still-confused signal: «لسه مش فاهم» / still-confused, as every
  * National prompt always has — the default, so every existing render is
  * byte-identical — or plain "still-confused" for an English-only course (the

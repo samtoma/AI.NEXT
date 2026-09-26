@@ -1,13 +1,13 @@
 /**
  * WHAT A LESSON IS CALLED, AND IN WHICH LANGUAGE THE TUTOR MAY SPEAK
- * (feature 003 integration; Samuel's decisions 9 and 13 of 2026-09-25;
+ * (feature 003 integration; Samuel's answers 9 and 13 of 2026-09-25 — decisions.md #30 and #34;
  * backlog #35, #36, #37, #38).
  *
- *   · decision 13 — the Arabic lessons take the book's printed names from the
+ *   · answer 13 (decisions.md #34) — the Arabic lessons take the book's printed names from the
  *     book-section store (`shownTitles`), while their numbers, chips and
  *     headers stay as they were (`shownProvenance` unchanged). Maths and
  *     Social Studies take nothing from it;
- *   · decision 9 — "Arabic touches" is a per-course registry fact, off only
+ *   · answer 9 (decisions.md #30) — "Arabic touches" is a per-course registry fact, off only
  *     for the Grade 10 course, and only an English-taught subject may turn
  *     it off;
  *   · #36 — each course cites its own book on a student surface;
@@ -16,7 +16,7 @@
  *     be a string (an accessible name, a tooltip).
  *
  * The prompt renders themselves are proved in `national-prompts.test.mts`
- * (decision 13) and `g10-prompts.test.mts` (decision 9, #35).
+ * (answer 13 (decisions.md #34)) and `g10-prompts.test.mts` (answer 9 (decisions.md #30), #35).
  *
  * @covers FR-4205, FR-4206, FR-4314, FR-4318
  */
@@ -88,7 +88,7 @@ test("the registry: Arabic touches off only for the Grade 10 course, and only an
     COURSE_IDS.filter((id) => !COURSES[id].tutor.arabicTouches),
     [US_G10_MATH_EN]
   );
-  // decision 13's flag: the Arabic course; the Grade 10 book is book-shaped anyway
+  // answer 13's flag (decisions.md #34): the Arabic course; the Grade 10 book is book-shaped anyway
   assert.equal(COURSES[PREP3_ARABIC_AR].tutor.bookLessonTitles, true);
   assert.equal(COURSES[PREP3_MATH_EN].tutor.bookLessonTitles, false);
   assert.equal(COURSES[PREP3_SOCIAL_AR].tutor.bookLessonTitles, false);

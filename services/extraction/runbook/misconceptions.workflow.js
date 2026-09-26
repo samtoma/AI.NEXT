@@ -84,8 +84,11 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's5-v4'   // v2: packet by reference; v3: by-ref shards unclipped (whole solutions and evidence);
-                                  // v4: each question names its figure image files, and the agents may open them
+const PROMPTS_VERSION = 's5-v5'   // v2: packet by reference; v3: by-ref shards unclipped (whole solutions and evidence);
+                                  // v4: each question names its figure image files, and the agents may open them;
+                                  // v5 (consistency review 2026-09-27, A5): what the student reads carries no question id,
+                                  //     page number, figure of another question or review history (RULES + the verifier),
+                                  //     and the evidence heading says the re-solve is our own check, not the book's
 
 // ---- the house style (was build_misconceptions.py's mc() docstring; retired by decision 22) ----
 const HOUSE_STYLE = `HOUSE STYLE for a refutation (the live catalogue's style; extraction-pipeline.md §3.8):
@@ -118,6 +121,13 @@ const RULES = (notation) => `RULES (non-negotiable — these refutations reach s
   one this book uses, keep the book's wording and list the term under "flags" for human review.
 - Numbers in the app's notation: ${notation.decimal === 'point' ? 'a decimal POINT (3.5, never 3,5)' : 'as printed'}; coordinate pairs as ${notation.pair_separator === 'comma' ? '(x, y), never (x; y)' : 'printed'}. Keep the book's contexts (names, currency, places) as printed.
 - Maths in LaTeX between $…$. English, plain, warm, concrete. No preamble and no filler praise.
+- WHAT THE STUDENT READS (label, description, signal and every refutation step) carries no question
+  ids, page numbers, figure references the student can't see, or review history. The student sees
+  only the question in front of them: never write an id or a book reference (q:…, ex8-1-4, Ex8-6:21c,
+  WE8), a page number, a numbered figure, or "the diagram"/"shape Z" of ANOTHER question — describe
+  the example in words instead (its numbers, points and labels). Never mention a reviewer, a review
+  note, a gate, a correction or a re-solve. Say "the book" only of what the book prints: a canonical
+  solution marked "corrected" is not the book's own working. Ids belong in "sources", never in the text.
 - Fewer entries is correct; padding is not.`
 
 // ---- schemas -----------------------------------------------------------------------------------
@@ -309,8 +319,9 @@ ${lo.description ? `Description: ${lo.description}\n` : ''}${lo.lesson ? `Lesson
 THE BOOK'S QUESTIONS ON THIS OBJECTIVE, WITH THEIR CANONICAL SOLUTIONS (the authority):
 ${ctx.questions}
 
-THE BOOK'S OWN EVIDENCE OF WHERE STUDENTS GO WRONG (caution boxes, worked-example remarks, and the
-wrong turns an independent re-solve of these questions took):
+EVIDENCE OF WHERE STUDENTS GO WRONG (the book's caution boxes and worked-example remarks, and the
+wrong turns an independent re-solve of these questions took — that re-solve is our own check, NOT
+the book's: never present it as something the book says or flags):
 ${ctx.sources}
 
 ENTRIES THIS OBJECTIVE ALREADY HAS (keep them; never add a second entry for the same error):
@@ -350,7 +361,7 @@ ${lo.description ? `Description: ${lo.description}\n` : ''}
 CANONICAL SOLUTIONS (the authority):
 ${ctx.questions}
 
-THE BOOK'S EVIDENCE:
+THE EVIDENCE (the book's cautions and remarks; the wrong turns of our own independent re-solve):
 ${ctx.sources}
 
 ENTRIES TO CHECK, each with the wrong options and widget predicates attached to it:
@@ -366,6 +377,10 @@ For EACH entry, by its id, return a verdict:
 - UNSUPPORTED           — the error, or a claim in the refutation, is not supported by this objective
                           and its evidence, it teaches outside the book, or it only restates the method.
 - UNCLEAR               — you cannot confirm it is correct.
+An entry is also UNSUPPORTED when its label, description, signal or any refutation step names a
+question id or book reference (q:…, ex8-1-4, Ex8-6:21c), a page number, a numbered figure or a figure
+of another question the student cannot see, or review history (a reviewer, a review note, a gate, a
+correction, a re-solve) — or calls working marked "corrected" the book's own. The student reads it.
 Set signal_ok to false if the entry's signal would misdiagnose a student (or it has none: then true).
 For each attached option or predicate (by its index), fits is true ONLY if a student making exactly
 this error would choose exactly this option, or trigger exactly this predicate.

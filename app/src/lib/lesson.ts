@@ -157,7 +157,7 @@ function tutorFacts(courseId: string | null | undefined): CourseTutorFacts {
  *      The same store names the lessons of a course whose registry entry
  *      says its lessons carry the book's printed names
  *      (`tutor.bookLessonTitles`, `shownTitles`): Prep-3 Arabic, Samuel's
- *      decision 13 — «عِبادُ الرَّحمنِ», where every Arabic lesson used to
+ *      answer 13 (decisions.md #34) — «عِبادُ الرَّحمنِ», where every Arabic lesson used to
  *      print its first objective «فهم النص والاستماع». An approved ADR-0020
  *      exception, for this title and nothing else;
  *   3. undefined — the caller then uses the first objective's label, as it
@@ -208,7 +208,7 @@ function lessonRefOf(
  *     a National lesson is never in the map;
  *   · `titles` — `shownTitles`, the printed titles of those courses' lessons
  *     and of a course whose registry names its lessons from the store
- *     (Prep-3 Arabic, decision 13).
+ *     (Prep-3 Arabic, answer 13 (decisions.md #34)).
  * `courseIds` must already be gated: the store holds lesson titles. No ids,
  * no read.
  *
@@ -1140,13 +1140,13 @@ function languageContract(subject: Subject, facts?: CourseTutorFacts): string {
         `its entry in lib/subjects.ts before teaching it.`
     );
   }
-  // An English-only course (decision 9) says so in one extra line; every
+  // An English-only course (answer 9 (decisions.md #30)) says so in one extra line; every
   // course with its Arabic touches reads the subject's contract unchanged.
   return facts && !facts.arabicTouches ? `${contract}\n${ENGLISH_ONLY.languageLine}` : contract;
 }
 
 /**
- * THE ENGLISH-ONLY VOICE (feature 003, Samuel's decision 9 of 2026-09-25:
+ * THE ENGLISH-ONLY VOICE (feature 003, Samuel's answer 9 of 2026-09-25 (decisions.md #30):
  * "English only" for the Grade 10 course; `CourseTutorFacts.arabicTouches`).
  *
  * The maths prompts carry a few Egyptian-Arabic touches — the review opener
@@ -1363,7 +1363,7 @@ function lessonPromptKit(subject: Subject): LessonPromptKit {
  */
 export function learnPrompt(data: LessonData, probing: boolean): string {
   const kit = lessonPromptKit(data.subject);
-  // the course's facts: its Arabic touches, or none (decision 9)
+  // the course's facts: its Arabic touches, or none (answer 9 (decisions.md #30))
   const facts = tutorFacts(data.courseId);
   // The register this student is addressed in (FR-2602). Every pronoun below
   // reads from it; there is no longer a literal one anywhere in this prompt.
@@ -1418,7 +1418,7 @@ export function reviewPrompt(data: LessonData): string {
   const kit = lessonPromptKit(data.subject);
   const a = addressForms(data.gender, data.studentName);
   const picks = data.los.slice(0, 3);
-  // English-only course (decision 9): English opener and closing examples.
+  // English-only course (answer 9 (decisions.md #30)): English opener and closing examples.
   const facts = tutorFacts(data.courseId);
   const openerEg = facts.arabicTouches ? kit.reviewOpenerEg : ENGLISH_ONLY.reviewOpenerEg;
   const closingEg = facts.arabicTouches

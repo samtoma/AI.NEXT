@@ -262,7 +262,7 @@ export async function retrieve(
 export function retrievalBlock(
   b: RetrievalBundle,
   /** `arabicAddress: false` drops the address block's Arabic line — an
-   *  English-only course (decision 9, `CourseTutorFacts.arabicTouches`).
+   *  English-only course (answer 9 (decisions.md #30), `CourseTutorFacts.arabicTouches`).
    *  Absent, the block is exactly what it always was. */
   opts: { arabicAddress?: boolean } = {}
 ): string {

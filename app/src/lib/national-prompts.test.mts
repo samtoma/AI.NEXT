@@ -211,7 +211,7 @@ test("the fixture reaches every fact 003 moved (so the golden above means someth
 });
 
 /*
- * DECISION 13 — THE ARABIC LESSONS' PRINTED NAMES (Samuel, 2026-09-25; the
+ * ANSWER 13 (decisions.md #34) — THE ARABIC LESSONS' PRINTED NAMES (Samuel, 2026-09-25; the
  * ADR-0020 exception for lesson titles). The loader writes a one-section
  * `course_lessons` row for every National lesson (T404): its number from
  * "Lesson n-m" in `syllabus_ref` (else the slug's digits) and its title from
