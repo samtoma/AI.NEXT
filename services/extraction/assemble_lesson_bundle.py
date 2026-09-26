@@ -188,14 +188,54 @@ def semicolon_groups(text: str) -> list[tuple[int, int, list[int]]]:
     return [(o, c, semis) for o, c, semis in out if _mathy(text[o + 1:c])]
 
 
+# A4 (consistency review 2026-09-27): in this book "(7,5)" is a bracketed DECIMAL (7.5) — "(7,5)^2", "(2,5)-(-3,5)"
+# — and a pair is written with ";". A whole side of an equation that is "(a,b)" with whole a, b, whose other side is
+# a ";"-pair, is provably a pair (Ex8-6:46c: "(-1,4) &= (\frac{x_A+0}{2}; …)"): it is written as one. Any other
+# "(a,b)" that is a whole side of an equation is ambiguous and is LISTED for G2 (counted as pair_ambiguous), read
+# as the book's decimal meanwhile; one inside arithmetic is the book's decimal.
+_INT_PAIR = re.compile(r"^(\\left)?\(\s*([-−]?\d+)\s*,\s*([-−]?\d+)\s*(\\right)?\)$")
+
+
+_ENV_EDGE = re.compile(r"\\(begin|end)\{[A-Za-z*]+\}")
+
+
+def _side(t: str) -> str:
+    return _ENV_EDGE.sub("", t).strip().strip("$").strip("&").strip()
+
+
+def _is_semicolon_pair(t: str) -> bool:
+    """`t` is one bracket group with ';' at its top level and nothing else: a point, written the book's way."""
+    return any(t[:o] in ("", "\\left") and c == len(t) - 1 for o, c, _ in semicolon_groups(t))
+
+
+def _pair_commas(text: str, counts: Counter) -> str:
+    rows = re.split(r"(\\\\)", text)
+    for i, row in enumerate(rows):
+        if row == "\\\\" or row.count("=") != 1:
+            continue
+        left, right = row.split("=", 1)
+        for side, other in ((left, right), (right, left)):
+            m = _INT_PAIR.match(_side(side))
+            if not m:
+                continue
+            if _is_semicolon_pair(_side(other)):
+                row = row.replace(m.group(0), m.group(0).replace(",", ", ", 1), 1)
+                counts["pair_by_context"] += 1
+            else:
+                counts["pair_ambiguous"] += 1
+        rows[i] = row
+    return "".join(rows)
+
+
 def normalise(text: str | None) -> tuple[str | None, Counter]:
-    """(normalised text, Counter of what changed: decimal, pair)."""
+    """(normalised text, Counter of what changed: decimal, pair, pair_by_context; pair_ambiguous is listed)."""
     counts: Counter = Counter()
     if not text:
         return text, counts
     text, n0 = _ALIGN_ENV.subn(lambda m: f"\\{m.group(1)}{{aligned}}", text)
     if n0:
         counts["aligned"] += n0 // 2 or 1
+    text = _pair_commas(text, counts)
     out, n1 = _DEC_LATEX.subn(".", text)
     out, n2 = _DEC_COMMA.subn(".", out)
     if n1 + n2:
