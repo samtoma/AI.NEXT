@@ -518,7 +518,11 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
         for s in _strings({k: v for k, v in b.items() if k not in ("assembled_from", "source_document")}):
             residual += residual_notation(s)
     for q in gen_q:
-        for s in _strings(q):
+        # a widget's held mappings (decision 47) carry the blind verifier's prose for the reviewer — never shown
+        # in the app, so not the app's notation to keep
+        ch = q.get("choices")
+        shown = {**q, "choices": {k: v for k, v in ch.items() if k != "pending_review"}} if isinstance(ch, dict) else q
+        for s in _strings(shown):
             residual += residual_notation(s)
     c.want = 0
     c.got = len(residual)
