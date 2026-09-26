@@ -405,21 +405,32 @@ item. Decisions 19 and 21.*
    **The PDF-only fallback hinges on content agreement**, not on how the maths is encoded. For
    Grade 10 the verdict is *same content, different packaging*, so there is no fallback.
 
-**S0b, maths transcription (B21, decision 21).** For each **unique** equation image, deduplicated
-(8,561 for Grade 10, not 16,388):
+**S0b, maths transcription (B21, decision 21; amended by decision 32).** For each **unique** equation
+image, deduplicated (8,561 for Grade 10, not 16,388):
 1. **Recover what can be recovered deterministically first.** Hash candidate strings (single symbols,
    and every number in the PDF text layer as `\text{n}`) and keep every exact `md5(latex) == filename`
    match. The S0 report reproduced 583 unique images (30.5% of references) this way.
-2. **Two independent vision passes** over the rest, each blind to the other, both at 2× upscale.
+2. **Two independent vision passes** (A and B) over the rest, each blind to the other, both at 2×
+   upscale.
 3. **Accept** a transcription when `md5(latex)` equals the file name (exact), **or** when both passes
    agree after normalisation.
-4. **Cross-check** every accepted transcription's digits and letters against the PDF text layer's maths
-   spans, which are identifiable by their Computer Modern fonts (CMMI, CMSY, CMR, CMEX, MSBM).
-5. **Queue** every image neither rule accepts, or that the cross-check contradicts, for a human at gate
+4. **A third reading where A and B disagree** (decision 32, answer 11: *"Add a third reading"*). Where the
+   two passes differ, or only one could read the image, a third pass C — blind to both — reads it
+   (`assemble_maths.py vision-args --pass C --runs …`). The image is accepted only when C agrees with A or
+   with B after the same normalisation: two of three independent readings, never one.
+5. **Cross-check** every accepted transcription's digits and letters against the PDF text layer's maths
+   spans, which are identifiable by their Computer Modern fonts (CMMI, CMSY, CMR, CMEX, MSBM). An image
+   used only inside an EPUB worked solution (class `solution_only`) is printed nowhere in the PDF, so it
+   follows the same acceptance rule — hash, agreement or the third reading — without a cross-check, and
+   is reported per class (`routes_by_class`).
+6. **Queue** every image no rule accepts, or that the cross-check contradicts, for a human at gate
    **G0b**. Never guess one (FR-4407). A lesson that needs a queued image waits for it.
 
 Long aligned derivations (714 exercise solutions are one image over 100 px tall) will rarely hash
-exactly, so they rest on agreement. The report counts acceptance per route (SC-213).
+exactly, so they rest on agreement or the third reading. The report counts acceptance per route —
+`accepted_by_hash`, `accepted_by_agreement`, `accepted_by_third_reading`, `resolved_at_g0b` and
+`unresolved` in `runs/<book>/maths/summary.json` (SC-213). **Chapter 8 pilot (2026-09-26)**: 853 of 853
+accepted — 558 by hash, 282 by agreement, 13 by the third reading — so G0b was not needed.
 
 **Grade 10 facts** (from the S0 report):
 - 14 chapters and 81 numbered sections: 59 teaching sections, 8 introductions and 14 chapter summaries.
@@ -537,10 +548,12 @@ knowledge are excluded.
    **A second, independent mapper checks this map for the chapter-end items** (decision 33,
    2026-09-25, third round: *"Yes, double-check"*). 1,228 of Grade 10's 2,531 exercise items sit in
    end-of-chapter sets a lesson does not directly contain, so a single mapper's assignment is not
-   self-evidently right the way an in-lesson item's is. `objectives.workflow.js` already carries the
-   option for this (`args.options.second_mapper`, currently `false` — set it `true` for Grade 10, T427).
-   A second mapper produces its own item→objective assignment, blind to the first, and any
-   disagreement is surfaced at **G1** next to the objectives themselves rather than trusted silently.
+   self-evidently right the way an in-lesson item's is. `objectives.workflow.js` runs it by default
+   (`args.options.second_mapper`, **`true` by default** since T427; it was `false` when this section was
+   first written). A second mapper produces its own item→objective assignment, blind to the first, and
+   `assemble_objectives.py` records every disagreement as a `mappers_disagree` decision G1 owes, shown on
+   the G1 page next to the objectives themselves rather than trusted silently. Used in the Chapter 8 pilot:
+   132 end-of-chapter items distributed by two blind mappers.
 
    **End-of-chapter items that fit no objective** (decision 36, Samuel's answer 15, 2026-09-26, from
    the Chapter 8 pilot, where both mappers placed Ex8-6:28a, 32e, 40c and 46d nowhere): *"Both"*.
@@ -572,16 +585,31 @@ knowledge are excluded.
    - Every `single` objective and every rule failure goes to the human reviewer at G1.
 6. **Order.** Objectives are numbered in the order the book teaches them. `order_in_parent` is
    the position inside the module, following the maths convention `MODULE_ORDER` relies on.
+7. **Prerequisite links, found in the book** (decision 25, answer 4: *"Yes, find them"*; spec 003
+   FR-4410 — whether that stays a requirement or becomes pipeline policy like decision 33 is an open
+   question for Samuel). After the objectives are reconciled, a linker proposes the links the book
+   itself evidences — a "recall" note, a reference back, a worked example that reuses a method taught
+   earlier — each quoting its evidence at its anchor; nothing is inferred from outside curriculum
+   knowledge. An independent link checker judges each one. `assemble_objectives.py` keeps a link only
+   with its quote at its anchor and the checker's agreement; a backward link or a dead linker is a
+   decision G1 owes, and a cycle fails the chapter. Links point only to objectives of this chapter or of
+   earlier chapters that passed G1, and never between parts of one section (those are derived
+   automatically, FR-4317). On by default (`links: true`). **Chapter 8 pilot**: 1 link (distance →
+   points on a line) confirmed and kept at G1; Chapter 8 ran first, so it could propose no link into
+   Chapters 1–7, and its links are re-run after those chapters pass G1.
 
 **Output:**
-- `objectives/<book>/<lesson>.json`;
+- `objectives/<book>/<lesson>.json`, with the kept prerequisite links as `prerequisites` (with their
+  evidence), which the bundle assembler writes as `prerequisite_of` edges;
 - the LO nodes in the bundle: `label`, `description` = statement, `source_page` = first evidence
   page, `syllabus_ref` = the section number. The evidence stays in the objectives file, which
   needs no schema or DB change. Decided (§10 D1): it stays in the files for now;
-- a per-chapter review page.
+- a per-chapter review page, listing every objective, every mapper disagreement and every
+  prerequisite link, kept or dropped.
 
 **Gate G1:** before any claim is extracted, a human (Samuel, or whoever owns the teaching
-methodology) approves each chapter's objectives. Objectives drive every later stage.
+methodology) approves each chapter's objectives, the second mapper's disagreements (rule 2) and the
+chapter's prerequisite links (rule 7). Objectives drive every later stage.
 
 ### 3.5 S2 Claims
 

@@ -116,6 +116,35 @@ def notation_problems(text: str) -> list[str]:
     return out
 
 
+# What a student reads never carries the pipeline's own bookkeeping (consistency review 2026-09-27, A5): nine of
+# the Chapter 8 pilot's 29 refutations did — "Take $q:g10m8s1-1-2:ex8-1-4$", shapes in the figures of three OTHER
+# questions cited by id, "the worked example on page 310", and Samuel's G2 note and a G2 verdict presented as "the
+# book's own review note" / "the trap the book itself flags … had to be corrected back". The S5 prompt forbids it
+# (s5-v5); this refuses it, fail-closed, at assembly and at --validate, for every catalogue (the Prep-3 one has none).
+# What it can see: an id or book reference, a page number, a numbered figure, and review-history phrasing (outside
+# $…$). What it cannot see is a figure of another question described in words ("shape Z") — that is the prompt's
+# and the verifier's job, and G4's.
+_LEAK_ID = re.compile(r"\b(?:q|mc|lo|expl|tpl|wt):[A-Za-z0-9]")
+_LEAK_REF = re.compile(r"(?i)\bex\s?\d+[-:.]\d+(?:[-:.]\d+)?[a-z]?\b|\bWE\s?\d+\b")
+_LEAK_PAGE = re.compile(r"(?i)\bp(?:ages?|p?\.)\s*\d+")
+_LEAK_FIGURE = re.compile(r"(?i)\bfig(?:ure|\.)\s*\d")
+_LEAK_REVIEW = re.compile(r"(?i)\breview(?:er)?(?:'s)?\s+notes?\b|\breviewers?\b|\breview history\b|\bat review\b"
+                          r"|\bG[1-5]\b|\bSamuel\b|\bapproved correction|\bre-solve\b|\bblind solver\b"
+                          r"|\bcorrected back\b|\btyping agent\b|\bpipeline\b")
+_MATH_SPAN = re.compile(r"\$[^$]*\$")
+
+
+def leak_problems(text: str) -> list[str]:
+    """What in this student-facing text is the pipeline's bookkeeping rather than teaching ([] when none)."""
+    t = text or ""
+    out = [f"an internal id {m.group(0)}… — describe the example in words" for m in _LEAK_ID.finditer(t)]
+    out += [f"a book item reference {m.group(0)!r} — describe the example in words" for m in _LEAK_REF.finditer(t)]
+    out += [f"a page number {m.group(0)!r}" for m in _LEAK_PAGE.finditer(t)]
+    out += [f"a numbered figure {m.group(0)!r}" for m in _LEAK_FIGURE.finditer(t)]
+    out += [f"review history {m.group(0)!r}" for m in _LEAK_REVIEW.finditer(_MATH_SPAN.sub(" ", t))]
+    return out
+
+
 def _student_texts(m: dict):
     for k in ("label", "description", "signal"):
         if isinstance(m.get(k), str):
@@ -172,6 +201,10 @@ def validate_catalogue(bundle: dict, *, new_ids: set[str] | None = None,
             for where, text in _student_texts(m):
                 for bad in notation_problems(text):
                     problems.append(f"{mid}: {where}: {bad} (FR-4308: a decimal point and (x, y) pairs)")
+        for where, text in _student_texts(m):
+            for bad in leak_problems(text):
+                problems.append(f"{mid}: {where}: {bad} (a student reads this: no ids, page numbers, "
+                                f"figures they cannot see or review history — patch it as a pipeline normalisation)")
         for mp in m["maps"]:
             if not mp.get("question_id") or not isinstance(mp.get("choice_text"), str):
                 problems.append(f"{mid}: a map needs question_id and choice_text: {mp}")
@@ -192,6 +225,66 @@ def validate_catalogue(bundle: dict, *, new_ids: set[str] | None = None,
             fresh = [m for m in ms if new_ids is None or m["id"] in new_ids]
             if len(fresh) > max_per_objective:
                 problems.append(f"{lo}: {len(fresh)} entries, more than {max_per_objective}")
+    return problems
+
+
+# ------------------------------------------------------------------ pipeline normalisations of an S5 run
+# A student-facing text S5 wrote wrongly in a way that needs no new model call — an id where the example should be
+# described in words, a page number, review history (consistency review 2026-09-27, A5) — is patched by the
+# PIPELINE, never by hand-editing the catalogue. The patch sits beside the run it patches,
+#     runs/<book>/misconceptions/<run stem>.normalisations.json
+#     {"format": "ainext.s5-normalisations/1", "run": "<run file name>",
+#      "patches": [{"id": "mc:…", "field": "refutation step 2" | "label" | "description" | "signal",
+#                   "from": "<the run's exact text>", "to": "<the patched text>", "by": "…", "at": "…", "why": "…"}]}
+# and is applied every time that run is assembled, so a re-assembly cannot lose it. Fail-closed: the entry must be
+# a CONFIRMED entry of that run and `from` must be its text exactly (a re-run S5 writes other text, and its patches
+# do not silently carry over); every patch names who made it and why, and is recorded on the entry
+# (provenance.normalisations). The patched text is held to every catalogue rule like any other.
+NORMALISATIONS_FORMAT = "ainext.s5-normalisations/1"
+_FIELD_RE = re.compile(r"^(label|description|signal)$|^refutation step ([1-9][0-9]*)$")
+
+
+def normalisations_path(run_path: Path) -> Path:
+    return Path(run_path).with_name(Path(run_path).stem + ".normalisations.json")
+
+
+def apply_normalisations(entries: dict[str, dict], doc: dict, run_name: str, source: str) -> list[str]:
+    """Apply one sidecar's patches to this run's CONFIRMED entries (by id), in place; the problems ([] when all
+    applied). Each applied patch is appended to the entry's `normalisations`."""
+    problems: list[str] = []
+    if doc.get("format") != NORMALISATIONS_FORMAT:
+        return [f"{source}: format is {doc.get('format')!r}, not {NORMALISATIONS_FORMAT!r}"]
+    if doc.get("run") != run_name:
+        return [f"{source}: patches run {doc.get('run')!r}, not {run_name!r}"]
+    for i, p in enumerate(doc.get("patches") or []):
+        where = f"{source} patch {i + 1} ({p.get('id')}, {p.get('field')})"
+        missing = [k for k in ("id", "field", "from", "to", "by", "why") if not (isinstance(p.get(k), str) and p[k].strip())]
+        if missing:
+            problems.append(f"{where}: missing {missing} — a patch names its text, who made it and why")
+            continue
+        e = entries.get(p["id"])
+        if e is None:
+            problems.append(f"{where}: {p['id']} is not a CONFIRMED entry of {run_name}")
+            continue
+        m = _FIELD_RE.match(p["field"])
+        if not m:
+            problems.append(f"{where}: field must be label, description, signal or 'refutation step N'")
+            continue
+        if m.group(1):
+            holder, key = e, m.group(1)
+        else:
+            holder = next((s for s in e.get("refutation") or [] if s.get("step") == int(m.group(2))), None)
+            key = "text_md"
+            if holder is None:
+                problems.append(f"{where}: the entry has no refutation step {m.group(2)}")
+                continue
+        if holder.get(key) != p["from"]:
+            problems.append(f"{where}: `from` is not the run's text (a different S5 run? re-check the patch)")
+            continue
+        holder[key] = p["to"]
+        e.setdefault("normalisations", []).append(
+            {"field": p["field"], "from": p["from"], "to": p["to"], "by": p["by"], "at": p.get("at"),
+             "why": p["why"], "file": Path(source).name})
     return problems
 
 
