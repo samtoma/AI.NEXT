@@ -123,7 +123,9 @@ FR**. Spec 003 writes no requirement about objectives.
    - Two independent vision passes transcribe each unique image. One is accepted when
      `md5(latex)` equals the file name, or when both passes agree, and is cross-checked against the PDF
      text layer.
-   - The rest go to a human at gate **G0b**. None is guessed.
+   - The rest go to a human at gate **G0b**. None is guessed. *(Amended by #32, 2026-09-25, third round:
+     where the two passes disagree, a third independent reading decides first — accepted only when it
+     agrees with one of the two — and only what no rule accepts goes to G0b. See the note below.)*
    - The edition check uses build markers plus the section and media codes, not the version string
      (the EPUB has none) or every item shortcode (the EPUB has none).
    - **Teacher notes** (the EPUB's 32 teacher's-guide notes) are dropped at S2.

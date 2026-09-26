@@ -1,0 +1,130 @@
+{
+ "format": "ainext.s5-normalisations/1",
+ "run": "final-wf_ed8c8e80-51d.json",
+ "$comment": [
+  "PIPELINE NORMALISATIONS of S5 final wf_ed8c8e80-51d (not an author or reviewer edit).",
+  "Consistency review 2026-09-27, A5: 9 of 29 refutations leaked internal ids, cited figures of other questions the student cannot see, a page number, or presented Samuel's G2 notes/corrections and our own re-solve as 'the book's own'.",
+  "Each patch changes only the offending words: the maths, the example's numbers and the book's facts stay as S5 wrote and its verifier confirmed them.",
+  "assemble_misconceptions.py applies this file whenever it assembles this run (fail-closed: `from` must be the run's exact text) and records each patch in the entry's provenance.normalisations.",
+  "Recurrence: S5 packets carry no G2 notes (s5_args), prompt s5-v5 forbids ids, pages, unseen figures and review history, and validate_catalogue refuses them (leak_problems)."
+ ],
+ "patches": [
+  {
+   "id": "mc:g10m8s1-1-2:flips-a-coordinate-sign",
+   "field": "refutation step 2",
+   "from": "Take $q:g10m8s1-1-2:ex8-1-4$: the point you want is at $(-4, -3)$. Keep the $-4$ but flip the $-3$ to $+3$, and you're pointed to a spot on the opposite side of where the point actually is — that's a different point altogether, not the one at $(-4, -3)$.",
+   "to": "Say the point you want is at $(-4, -3)$. Keep the $-4$ but flip the $-3$ to $+3$, and you're pointed to a spot on the opposite side of where the point actually is — that's a different point altogether, not the one at $(-4, -3)$.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "an internal question id / book item reference a student cannot use; the example is described in words, the maths unchanged"
+  },
+  {
+   "id": "mc:g10m8s1-1-3:assumes-only-one-direction-counts",
+   "field": "refutation step 3",
+   "from": "It's true that in ex8-1-5, ex8-1-6 and ex8-6-3 the correct shape always happens to be drawn climbing clockwise — but that's just how those particular diagrams were drawn, not evidence that anti-clockwise fails the rule.",
+   "to": "It's true that in the book's three shape-naming exercises the correct shape always happens to be drawn climbing clockwise — but that's just how those particular diagrams were drawn, not evidence that anti-clockwise fails the rule.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "it cites the figures of OTHER questions by id, which the student cannot see; the example is described in words, the maths and the book's facts unchanged"
+  },
+  {
+   "id": "mc:g10m8s1-1-3:expects-labels-to-start-at-a",
+   "field": "refutation step 2",
+   "from": "But the book's own correct answer never starts at A. In ex8-1-5, shape Z's labels run O, P, Q, R, S, T, A, B, C, D... — climbing one letter at a time and looping from T back round to A, exactly the pattern the rule asks for, even though the run begins at O.",
+   "to": "But the book's own correct answer never starts at A. In one of its shape-naming exercises, the correctly named shape's labels run O, P, Q, R, S, T, A, B, C, D... — climbing one letter at a time and looping from T back round to A, exactly the pattern the rule asks for, even though the run begins at O.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "it cites the figures of OTHER questions by id, which the student cannot see; the example is described in words, the maths and the book's facts unchanged"
+  },
+  {
+   "id": "mc:g10m8s1-1-3:expects-labels-to-start-at-a",
+   "field": "refutation step 3",
+   "from": "The same holds in ex8-1-6 (the correct shape starts at E) and in ex8-6-3 (it starts at T): across all three questions, the correct shape is never the one that happens to start at A — what makes it correct is that the climb never breaks, wherever it begins.",
+   "to": "The same holds in the other two (the correct shape starts at E in one and at T in the other): across all three questions, the correct shape is never the one that happens to start at A — what makes it correct is that the climb never breaks, wherever it begins.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "it cites the figures of OTHER questions by id, which the student cannot see; the example is described in words, the maths and the book's facts unchanged"
+  },
+  {
+   "id": "mc:g10m8s1-1-3:partial-arc-check",
+   "field": "refutation step 2",
+   "from": "In ex8-1-6, shape Y opens exactly like that: it starts L, M, which climbs perfectly — but the very next label jumps straight to Q, skipping right over N, the letter that should really come next.",
+   "to": "In one of the book's shape-naming exercises, a wrongly named shape opens exactly like that: it starts L, M, which climbs perfectly — but the very next label jumps straight to Q, skipping right over N, the letter that should really come next.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "it cites the figures of OTHER questions by id, which the student cannot see; the example is described in words, the maths and the book's facts unchanged"
+  },
+  {
+   "id": "mc:g10m8s1-1-3:partial-arc-check",
+   "field": "refutation step 3",
+   "from": "The same trap appears again in ex8-6-3: shape Y there opens G, H, another correct-looking climb, before jumping to R just one step later. A convincing pair anywhere around the ring doesn't mean the rest of the shape keeps climbing.",
+   "to": "The same trap appears again in another: a shape there opens G, H, another correct-looking climb, before jumping to R just one step later. A convincing pair anywhere around the ring doesn't mean the rest of the shape keeps climbing.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "it cites the figures of OTHER questions by id, which the student cannot see; the example is described in words, the maths and the book's facts unchanged"
+  },
+  {
+   "id": "mc:g10m8s1-1-3:writes-descending-order",
+   "field": "refutation step 2",
+   "from": "The book's own check, in every one of its naming questions (ex8-1-5, ex8-1-6, ex8-6-3), is to look at a shape and ask whether tracing around it gives the letters in alphabetical order — meaning climbing, like stepping up, not counting down.",
+   "to": "The book's own check, in every one of its naming questions, is to look at a shape and ask whether tracing around it gives the letters in alphabetical order — meaning climbing, like stepping up, not counting down.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "an internal question id / book item reference a student cannot use; the example is described in words, the maths unchanged"
+  },
+  {
+   "id": "mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property",
+   "field": "refutation step 2",
+   "from": "In ex8-6-21c, $AB\\parallel DC$ (both gradient $0$) is true and is the book's first fact — but the book then also compares the lengths of the other pair of opposite sides, $AD$ and $BC$, and finds them equal; only that second check earns 'isosceles.' Stopping after the parallel check alone gives 'trapezium'; assuming the other pair must also be parallel because it's equal in length gives 'parallelogram' — but $m_{AD}=4$ and $m_{BC}=-4$ are not equal, so that pair is not parallel.",
+   "to": "For the quadrilateral with $A(0, 3)$, $B(4, 3)$, $C(5, -1)$ and $D(-1, -1)$, $AB\\parallel DC$ (both gradient $0$) is true and is the book's first fact — but the book then also compares the lengths of the other pair of opposite sides, $AD$ and $BC$, and finds them equal; only that second check earns 'isosceles.' Stopping after the parallel check alone gives 'trapezium'; assuming the other pair must also be parallel because it's equal in length gives 'parallelogram' — but $m_{AD}=4$ and $m_{BC}=-4$ are not equal, so that pair is not parallel.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "an internal question id / book item reference a student cannot use; the example is described in words, the maths unchanged"
+  },
+  {
+   "id": "mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property",
+   "field": "refutation step 3",
+   "from": "In ex8-6-36b, showing $m_{MP}\\times m_{LN}=-1$ (diagonals perpendicular) proves $LMNP$ is a rhombus — true, but only half the picture; the book goes on to also show $LM\\perp MN$, and only combining both facts earns 'square.' The book's own review note on ex8-6-42e makes the same point explicitly: 'rectangle', 'rhombus' and 'kite' are 'also true, less precisely' — not wrong, just not the finished answer.",
+   "to": "For the parallelogram $LMNP$ with $L(-1, -1)$, $M(-2, 4)$ and $P(4, 0)$, showing $m_{MP}\\times m_{LN}=-1$ (diagonals perpendicular) proves $LMNP$ is a rhombus — true, but only half the picture; it takes a right angle as well, $LM\\perp MN$, to earn 'square'. A square is also a rectangle, a rhombus and a kite, so those names are true, just less precise — not wrong, just not the finished answer.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "question ids; and two things presented as the book's own that are not: 'the book goes on to also show LM ⊥ MN' is the line Samuel's approved correction appended to the book's solution (G2 answer 23, decision 44), and 'the book's own review note on ex8-6-42e' quotes Samuel's G2 note (G2 answer 20, decision 41). The attribution is dropped; the maths (a square is also a rectangle, a rhombus and a kite) is kept"
+  },
+  {
+   "id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
+   "field": "refutation step 2",
+   "from": "In ex8-4-1a, $m_{AB}=3$ and $m_{CD}=3$ — exactly equal, which is the book's whole test for **parallel**. It is not the test for perpendicular: $m_{AB}\\times m_{CD}=3\\times3=9$, nowhere near $-1$, so these lines cannot be perpendicular.",
+   "to": "For $A(3, -4)$, $B(5, 2)$, $C(-1, -1)$ and $D(7, 23)$, $m_{AB}=3$ and $m_{CD}=3$ — exactly equal, which is the book's whole test for **parallel**. It is not the test for perpendicular: $m_{AB}\\times m_{CD}=3\\times3=9$, nowhere near $-1$, so these lines cannot be perpendicular.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "an internal question id / book item reference a student cannot use; the example is described in words, the maths unchanged"
+  },
+  {
+   "id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
+   "field": "refutation step 3",
+   "from": "In ex8-4-1b, $m_{AB}=3$ and $m_{CD}=-3$: they are not equal (so not parallel), and $m_{AB}\\times m_{CD}=3\\times(-3)=-9\\ne-1$ (so not perpendicular either) — that is exactly why the book answers 'neither' here, not because one test half-passed.",
+   "to": "With $D(0, -4)$ instead, $m_{AB}=3$ and $m_{CD}=-3$: they are not equal (so not parallel), and $m_{AB}\\times m_{CD}=3\\times(-3)=-9\\ne-1$ (so not perpendicular either) — that is exactly why the book answers 'neither' here, not because one test half-passed.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "an internal question id / book item reference a student cannot use; the example is described in words, the maths unchanged"
+  },
+  {
+   "id": "mc:g10m8s3-2-2:treats-contradiction-as-a-k-value",
+   "field": "refutation step 3",
+   "from": "This is exactly the trap the book itself flags on this question: a full, careful re-solve of this same equation still landed on a specific fraction for $k$, and had to be corrected back to 'no value of $k$', because $D$ is a common point of both line $AD$ and line $CD$, so $AD$ can never be parallel to $CD$.",
+   "to": "It is an easy trap, because the working looks as if it should end on a number for $k$. But the book's answer is 'no value of $k$': $D$ is a common point of both line $AD$ and line $CD$, so $AD$ can never be parallel to $CD$.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "review history presented as the book's: the 're-solve … corrected back' is our pipeline's own blind re-solve (it answered 11/3) and Samuel's G2 verdict to keep the printed answer (G2 answer 22, decision 43) — the book flags nothing. Kept: the book's answer and the book's own reason (D is common to both lines)"
+  },
+  {
+   "id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
+   "field": "refutation step 3",
+   "from": "Dividing by $2$ gives $y = -4.5$, which matches the book's mid-point $M(-0.5, -4.5)$. If the sign had been dropped, the mid-point would land at $y = 4.5$ — above the $x$-axis, even though $B$ and $D$ are both below it, exactly the kind of mismatch the worked example on page 310 tells you to catch by checking your answer against a quick sketch.",
+   "to": "Dividing by $2$ gives $y = -4.5$, which matches the book's mid-point $M(-0.5, -4.5)$. If the sign had been dropped, the mid-point would land at $y = 4.5$ — above the $x$-axis, even though $B$ and $D$ are both below it, exactly the kind of mismatch the book's worked example tells you to catch by checking your answer against a quick sketch.",
+   "by": "data-engineer agent (pipeline), 2026-09-27 — consistency review A5, under Samuel's approval to fix the findings that need no decision from him; the wording is the agent's and has not been read by Samuel (G4)",
+   "at": "2026-09-27",
+   "why": "a page number the student cannot use"
+  }
+ ]
+}

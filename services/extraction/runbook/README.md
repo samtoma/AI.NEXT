@@ -169,10 +169,19 @@ work/<book>/packets/s0b-C` and run it again. Save each return value to
 `runs/<book>/maths/<pass>-<runId>.json`. (Without `--batch-dir` the image list is inline, ~120 KB.)
 
 ```sh
-uv run assemble_maths.py books/<book>.json runs/<book>/maths/*.json    # [verified] B21
-#   → runs/<book>/maths/accepted.json  {md5 → LaTeX, accepted_by: hash|agreement|human}
-#     runs/<book>/maths/queue.json     images neither rule accepted, or the PDF cross-check contradicted
+uv run assemble_maths.py assemble <book> runs/<book>/maths/*.json [--human runs/<book>/maths/human.json]   # [verified] B21
+#   → runs/<book>/maths/accepted.json  {md5 → LaTeX, accepted_by: hash|agreement|third_reading|human}
+#     runs/<book>/maths/queue.json     images no rule accepted, or the PDF cross-check contradicted
+#     runs/<book>/maths/summary.json   counts per route: accepted_by_hash, accepted_by_agreement,
+#                                      accepted_by_third_reading, resolved_at_g0b, unresolved,
+#                                      awaiting_third_reading; per class in routes_by_class (SC-213)
 ```
+
+Run `assemble` after passes A and B (it lists what pass C must read), and again after pass C. The
+third reading (decision 32) accepts an image only when C agrees with A or with B — two of three, never
+one. An image used only inside an EPUB worked solution (`solution_only`) follows the same rule and,
+being printed nowhere in the PDF, is not cross-checked. Chapter 8: 853/853 accepted — 558 hash,
+282 agreement, 13 third reading — so G0b was not needed.
 
 **An aligned derivation's hash.** The book names an `align*` image `md5` of its lines **without** the
 environment and with `&` written as the HTML entity `&amp;` (its source was HTML-escaped before hashing;
@@ -234,8 +243,18 @@ differs: the packet now carries the `cite` kinds): re-run S1.
   (`g1_exceptions`), so S8 is GREEN for it only because of that verdict. A ruling with no reason, on a
   lesson's own item, or together with a move fails the chapter.
 
+**The second mapper and the prerequisite links** (decisions 33 and 25) run inside the same workflow, on
+by default (`second_mapper: true`, `links: true`). Two blind mappers each place every end-of-chapter
+item; where they disagree, the assembler records a `mappers_disagree` decision on the G1 page. The
+linker proposes the prerequisite links the book itself evidences (a recall, a reference back, a method
+used before), each quoting its evidence, and an independent checker judges each one; the assembler
+keeps a link only with its quote at its anchor and the checker's agreement, and lists every link, kept
+or dropped, on the G1 page. A link may point only to this chapter or to earlier chapters that passed
+G1, so a chapter's links are re-run once the chapters before it have passed.
+
 **GATE G1 (Samuel, or the methodology owner), per chapter:** review every `single` or disputed
-objective, every terminology flag and every end-of-chapter item placed nowhere, then approve. Commit
+objective, every terminology flag, every end-of-chapter item placed nowhere, every item the two mappers
+placed differently, and every prerequisite link (keep or drop), then approve. Commit
 `objectives/<book>/`.
 
 ## 3. Lesson conveyor: claims, book questions, visuals, verification (per lesson)
