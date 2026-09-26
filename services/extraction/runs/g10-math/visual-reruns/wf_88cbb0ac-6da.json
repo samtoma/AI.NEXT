@@ -1,0 +1,162 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v6",
+ "collect_version": "collect-5",
+ "book": "g10-math",
+ "mode": "visuals",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "9431d038503f55ac3ea231c6e9cc78f24bd6664d01b45712893290535e4ea589",
+  "args_sha256": "904b3b14d4a052079b5468115219873f18d1db6cd9dd7ef7303a6f2a70227c9b",
+  "generated_sha256": "b576508c818bb87bbad882fbaaabd7c85c0a3d3c0cb42647965782e632e28f64",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m8s2-1",
+   "mode": "visuals",
+   "rerun_figures": [
+    "b03159:7",
+    "b03160:8",
+    "b03296:10",
+    "b03398:12"
+   ],
+   "visuals": [
+    {
+     "n": 1,
+     "lo": "lo:g10m8s2-1-2",
+     "question": "Ex8-2:3",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -3,
+       3
+      ],
+      "yRange": [
+       -1,
+       5
+      ],
+      "points": [
+       {
+        "x": -1,
+        "y": 3.5,
+        "label": "A(-1; 3,5)"
+       }
+      ],
+      "segments": [],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Point A sits at (-1, 3.5); point B is down near y = 0.5, but its x-coordinate is yours to find.",
+     "printed_page": 292,
+     "figure_id": "b03159:7",
+     "src": "tikzpicture/09a0189edac83981548c01fc9a0b276b.png",
+     "withheld": [
+      "B"
+     ]
+    },
+    {
+     "n": 2,
+     "lo": "lo:g10m8s2-1-2",
+     "question": "Ex8-2:4",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -4,
+       2
+      ],
+      "yRange": [
+       -3,
+       4
+      ],
+      "points": [
+       {
+        "x": -3,
+        "y": -2.5,
+        "label": "B(-3; -2,5)"
+       }
+      ],
+      "segments": [],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Point B sits at (-3, -2.5) in the third quadrant; point A is up and to the right at x = 1, with its y-coordinate left for you to find.",
+     "printed_page": 293,
+     "figure_id": "b03160:8",
+     "src": "tikzpicture/c35a838b135d81ef477ccb6acb1569d1.png",
+     "withheld": [
+      "A"
+     ]
+    },
+    {
+     "n": 3,
+     "lo": "lo:g10m8s2-1-2",
+     "question": "Ex8-6:6",
+     "kind": "coordinate_plot",
+     "spec": {
+      "xRange": [
+       -5,
+       5
+      ],
+      "yRange": [
+       -5,
+       4
+      ],
+      "points": [
+       {
+        "x": -3,
+        "y": 2,
+        "label": "A(-3; 2)"
+       }
+      ],
+      "segments": [],
+      "animate": "plot-sequence",
+      "interactive": "click-to-plot"
+     },
+     "caption": "Point A sits at (-3, 2); point B is down near y = -4, with its x-coordinate left for you to find.",
+     "printed_page": 317,
+     "figure_id": "b03296:10",
+     "src": "tikzpicture/141fb28239433f748ade612cbb012669.png",
+     "withheld": [
+      "B"
+     ]
+    }
+   ],
+   "viz_gaps": [
+    {
+     "figure_id": "b03398:12",
+     "src": "tikzpicture/118b1cac59d083366970242771d6e4d4.png",
+     "ref": "Ex8-6:38a",
+     "printed_page": 324,
+     "reason": "This is a full quadrilateral (parallelogram PQRS) scene: four vertices, two sides-vs-diagonals (PR and QS crossing), plus two extra labelled construction points (M, at the diagonals' intersection, and T). coordinate_plot only draws bare points and generic point-to-point segments revealed in one sequence — it has no notion of polygon sides versus diagonals, or of labelled interior/auxiliary points — and geo_scene is scoped to circle geometry (circles, chords, radii, arcs), not general quadrilaterals. Forcing this into either would drop the diagonal/side distinction and the M and T points, or misrepresent the shape as an unordered dot-and-line scatter.",
+     "needed_kind": "polygon_scene: labelled polygon vertices, sides and diagonals (plus auxiliary interior points) on a coordinate grid, revealed step by step"
+    }
+   ],
+   "counts": {
+    "visuals": 3,
+    "viz_gaps": 1,
+    "compared": 3
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S4 Visuals": 1,
+   "S4 Compare": 1
+  },
+  "per_lesson": {
+   "g10m8s2-1": 2
+  },
+  "total": 2
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ },
+ "run_id": "wf_88cbb0ac-6da"
+}
