@@ -480,11 +480,14 @@ function s7(label, prompt, args, stub, files) {
     if (!kind || !anchor || !mcId || !predicates || !predicates.length) {
       return { templates: [], gaps: [{ lo_id: o.lo_id, need_kind: 'none', description: '', why: `${STUB} no stub template for this lesson` }], notes: STUB }
     }
-    const pred = predicates[0]
+    // a predicate the stub's own spec can emit: a "points" line reports only points-swapped / off-target (the
+    // contract's can_emit, W1 2026-09-27) — the vocabulary's first line_drawer predicate is a slope
+    const pred = kind === 'line_drawer' ? 'points-swapped' : predicates[0]
     const t = kind === 'pair_plotter'
       ? { instances: [{ x: 2, y: -3 }, { x: -4, y: 1 }], spec: { target: ['{=x}', '{=y}'] },
           stem: `${STUB} widget: plot the point $({=x}, {=y})$.`, solution: [`${STUB} Move {=x} along the x-axis and {=y} up the y-axis.`] }
-      : { instances: [{ x1: -2, y1: -3, x2: 2, y2: 5 }], spec: { mode: 'points', through: [['{=x1}', '{=y1}'], ['{=x2}', '{=y2}']] },
+      // not (-2, -3): its swap (-3, -2) is where LineDrawer's first handle opens (A10, 2026-09-27)
+      : { instances: [{ x1: -2, y1: -4, x2: 2, y2: 4 }], spec: { mode: 'points', through: [['{=x1}', '{=y1}'], ['{=x2}', '{=y2}']] },
           stem: `${STUB} widget: draw the straight line through $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$.`,
           solution: [`${STUB} Put one handle on $A$ and the other on $B$.`] }
     return { templates: [{ format: 'ainext.widget-template/1', id: `wt:${tail}:stub-${kind.replace(/_/g, '-')}`, lo_id: o.lo_id,

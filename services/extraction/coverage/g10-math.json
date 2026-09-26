@@ -8,9 +8,9 @@
   "status": "RED",
   "summary": {
     "checks": 21,
-    "hold": 17,
+    "hold": 18,
     "excepted": 1,
-    "fail": 3
+    "fail": 2
   },
   "checks": [
     {
@@ -87,7 +87,7 @@
       "id": "tier_floor",
       "title": "Objectives × tiers = cells with at least one live item, book or generated (FR-4305)",
       "want": 39,
-      "got": 20,
+      "got": 21,
       "state": "fails",
       "failures": [
         {
@@ -101,10 +101,6 @@
         {
           "scope": "lo:g10m8s1-1-3",
           "detail": "no live item at tier(s) basic, standard, advanced"
-        },
-        {
-          "scope": "lo:g10m8s2-1-1",
-          "detail": "no live item at tier(s) basic"
         },
         {
           "scope": "lo:g10m8s2-1-2",
@@ -149,8 +145,8 @@
     {
       "id": "distractor_refutations",
       "title": "Tagged distractors and predicates = those whose misconception has a refutation (FR-1112)",
-      "want": 92,
-      "got": 92,
+      "want": 90,
+      "got": 90,
       "state": "holds",
       "failures": [],
       "excepted_scopes": []
@@ -180,14 +176,9 @@
       "id": "figures",
       "title": "Manifest figures = visuals + viz gaps with a reason + figures withheld for giving the answer away (per chapter); a gap whose reason is a pipeline error is a failure (consistency review A3)",
       "want": 71,
-      "got": 53,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "module:g10m-c08",
-          "detail": "71 figure(s) in the manifest, 53 visual(s) + reasoned gap(s); 18 gap(s) are pipeline errors — re-run their visuals: ['g10m8s2-1 WE1: the visuals agent returned nothing for it', 'g10m8s2-1 WE2: the visuals agent returned nothing for it', 'g10m8s2-1 Ex8-2:1: the visuals agent returned nothing for it', 'g10m8s2-1 Ex8-2:2: the visuals agent returned nothing for it']"
-        }
-      ],
+      "got": 71,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": []
     },
     {
@@ -360,13 +351,13 @@
   "missing_inputs": [],
   "inputs": {
     "content/g10m8s1-1.json": "547b0b966c031091be2dca9bb0e3309a906e5a847eb1450aef85bb539fc55006",
-    "content/g10m8s2-1.json": "7ef79bac11b43aa9c8f2716c0b823e3554c34dd64efc22b2e0dbf73e71aeb72d",
-    "content/g10m8s3-1.json": "359f502ef0790133752ed1e264bd2aed1d5086c68d84ec4ef9d3218f05142c60",
-    "content/g10m8s3-2.json": "87f3c2e2269dd603fef4a944dd3d4f1436e46eb4c63402aa8ed2c63e6fa9a87d",
-    "content/g10m8s4-1.json": "6f50a13bd5394d2272ffe3542828ba8fa30034368cc6b1a056846effaad8516a",
+    "content/g10m8s2-1.json": "a7e94d6716288184292675ed77484fb9a862b08487679cb384c4d1b3b8a57005",
+    "content/g10m8s3-1.json": "25347c217325fb27bca5f425bf0cdcf611eaede5c9de282bd323832e051d0cb6",
+    "content/g10m8s3-2.json": "33deba5d6cf099bf74592ee4edecc5aa9aab5589d0dbe7a2fbced2ee184fd957",
+    "content/g10m8s4-1.json": "73125b73a927707176cce3d702842672fc4e58e015c35f0913587997a51f0648",
     "generated/generated-questions.json": "20d9bb6a114c5fa938a8f60859d9a4371e0aca914a284ae78a681a8d08d6abed",
     "generated/misconceptions.json": "884ce6f470b47795fb099400815f0b97c9619b91492e339d3fecfe2f5fa53db2",
-    "generated/widget-questions.json": "3f0a0b67a28d867ba9e21157a247e7dbf5f8bf4cc18079b8b234d3817510962e",
+    "generated/widget-questions.json": "a77229be62fd5fe33644aa1b4d4f66b0e55ece55701acbb63331f931ffa7ac86",
     "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
     "maths": "773bc135b62de698f278ba74f6d7c2b909ba0d81f8e384248fc3de98d2fc8153",
     "objectives/g10m8s1-1.json": "2c34e7513a5052128245052e61b0c261b4e915b50a4fd22f3a9931866ae1e952",
@@ -375,14 +366,14 @@
     "objectives/g10m8s3-2.json": "c26257fa2819d29624732aadb67232056045ce112de9c836fc26a1c73ef3743f",
     "objectives/g10m8s4-1.json": "ad3e029af0c3272373b1fcb5438ca24798cbdc15a1db8cffeda52184db366a60",
     "runs/lesson/g10m8s1-1.json": "2b32ec544756c92184f17e57050c3d176663f8b6f1a4faed2564a0c3f797b017",
-    "runs/lesson/g10m8s2-1.json": "ea470e2e8d5a205a3d6fafeb09ada29e1edc7e2e0ae895ad519c743f6d633526",
-    "runs/lesson/g10m8s3-1.json": "221aa1f54c86908d03d92eef19f9f7b4f2577351351e33ab54a749fc4c71088e",
-    "runs/lesson/g10m8s3-2.json": "14b9e2df82f2db58a2444ede74dc7dea92fd66a1221c2958ecdc0b4ccc513d39",
-    "runs/lesson/g10m8s4-1.json": "0e8aa5ec487ae92d473f720f9ced46f60b0439b2be762b9916a19fcfd193da41",
+    "runs/lesson/g10m8s2-1.json": "5d2f5867081ce58e836057acd7c9f3496e2fdad44bbcd1f9e084e4fff949f343",
+    "runs/lesson/g10m8s3-1.json": "32ebabd85529a754356dbe33eeee09a8411a4138ae1f698dbe066f32a91208f0",
+    "runs/lesson/g10m8s3-2.json": "89707c139b986c85d880fe2687edf80c66bb4ba0a35d2b608f6ce6a4baf7da74",
+    "runs/lesson/g10m8s4-1.json": "cd38b91c23c1143a6149db985c3fc73494c3c90255a41cacc1bc02cf598c7539",
     "s5/final-wf_ed8c8e80-51d.json": "5b576232d2bcfe7146ab58e96c0cda87726f3eaf54c02aec9ffc91e7fdf88795",
-    "seed/g10m-c08.json": "d4d93c7e770798e759e106ac6bd039e2aca85b44687b84607a3046c18aa75a98",
+    "seed/g10m-c08.json": "dcfbc1d8404846b02a0f1a2d632aa436e8a18ae89b5ca4866c4999a4f58aa86e",
     "seed/g10m-course.json": "19916a26526c3cb43ebe28dff24af1272e9662067ebdec9e2c6c82184a48fcff",
-    "widget-gaps": "8e8e5565a1ab7d584064d0cba3b97e1288a397e41ce9236f914c3f98e66287cc"
+    "widget-gaps": "bf33c0a91ad9c93fcfe1298d713552624664aed5a49075149ac632e76b482483"
   },
   "exceptions": []
 }
