@@ -106,10 +106,11 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
         raise SystemExit("G2 NOT APPLIED — nothing was written:\n  " + "\n  ".join(problems))
     cur.execute("SELECT node_id FROM node_subject WHERE course_id = %s", (course,))
     course_los = {r[0] for r in cur.fetchall()}
-    out = {"stamped": [], "held": [], "rejected": [], "teaching": [], "absent": [], "unchanged": 0}
+    out = {"stamped": [], "held": [], "rejected": [], "teaching": [], "absent": [], "unchanged": 0,
+           "held_for_figure": []}
     for t in targets:
         qid = t["question_id"]
-        cur.execute("SELECT status, reviewed_by, source, lo_id FROM questions WHERE id = %s", (qid,))
+        cur.execute("SELECT status, reviewed_by, source, lo_id, stem FROM questions WHERE id = %s", (qid,))
         row = cur.fetchone()
         if t["teaching"]:
             out["teaching"].append(qid)
@@ -118,7 +119,7 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
             if t["verdict"] != "exclude":
                 out["absent"].append(qid)
             continue
-        status, reviewed_by, source, lo = row
+        status, reviewed_by, source, lo, stem = row
         if source != "seed" or lo not in course_los:
             raise SystemExit(f"G2 NOT APPLIED: {qid} is not a book question of {course} "
                              f"(source {source}, objective {lo}); nothing was written")
@@ -131,6 +132,13 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
         else:
             want = ("live", f"{by} (G2 {t['verdict']})")
             bucket = "stamped"
+            # consistency review A3: a question whose stem shows [figure] and has no figure stays at review, G2's
+            # verdict recorded, until its figure exists — it cannot be answered without it
+            if "[figure]" in (stem or ""):
+                cur.execute("SELECT 1 FROM visuals WHERE question_id = %s LIMIT 1", (qid,))
+                if cur.fetchone() is None:
+                    want = ("review", f"{by} (G2 {t['verdict']}; held: its figure is missing)")
+                    bucket = "held_for_figure"
         if (status, reviewed_by) == want:
             out["unchanged"] += 1
             continue
@@ -155,7 +163,8 @@ def main_g2(args) -> int:
             conn.commit()
     verb = "would" if args.dry_run else "did"
     print(f"{args.g2.name}: G2 by {g2.get('by')} on {book.course_id} — {verb} stamp "
-          f"{len(res['stamped'])} live, hold {len(res['held'])} at review, reject {len(res['rejected'])}; "
+          f"{len(res['stamped'])} live, hold {len(res['held'])} at review, reject {len(res['rejected'])}, "
+          f"keep {len(res['held_for_figure'])} at review for a missing figure; "
           f"{res['unchanged']} already as recorded")
     if res["teaching"]:
         print(f"  {len(res['teaching'])} verdict(s) on worked examples (not question rows): {res['teaching'][:6]}")

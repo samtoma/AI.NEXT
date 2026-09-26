@@ -75,7 +75,20 @@ class G2Apply(unittest.TestCase):
         self.assertEqual(self.row(held), ("review", "Samuel (G2 hold)"))
         self.assertIn("1 verdict(s) on worked examples", r.stdout)
         again = self.apply(g2)
-        self.assertIn("stamp 0 live, hold 0 at review, reject 0; 2 already as recorded", again.stdout)
+        self.assertIn("stamp 0 live, hold 0 at review, reject 0, keep 0 at review for a missing figure; "
+                      "2 already as recorded", again.stdout)
+
+    def test_an_accepted_question_whose_figure_is_missing_stays_at_review(self):
+        # consistency review A3: G2's accept is recorded, but a stem that shows [figure] with no figure is not live
+        qid = "q:g10m8s2-1-1:ex8-6-1"
+        self.db.q("UPDATE questions SET stem = stem || ' [figure]' WHERE id = %s", (qid,))
+        try:
+            r = self.apply({"by": "Samuel", "items": {"g10m8s2-1:Ex8-6:1": {"verdict": "accept"}}})
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertEqual(self.row(qid), ("review", "Samuel (G2 accept; held: its figure is missing)"))
+            self.assertIn("keep 1 at review for a missing figure", r.stdout)
+        finally:
+            self.db.q("UPDATE questions SET stem = replace(stem, ' [figure]', '') WHERE id = %s", (qid,))
 
     def test_an_unnamed_reviewer_or_an_unknown_item_writes_nothing(self):
         before = self.db.q("SELECT id, status, reviewed_by FROM questions ORDER BY id")
