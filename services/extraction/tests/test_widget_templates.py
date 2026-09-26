@@ -387,7 +387,8 @@ class TheChecks(unittest.TestCase):
         g.d["misconceptions"]["mc:g10m8s4-1-1:midpoint-difference"] = {"lo_id": "lo:g10m8s4-1-1", "label": "…",
                                                                          "description": "…"}
         _, questions = built()
-        q = next(q for q in questions if q["family"] == "wt:g10m8s3-1-2:gradient-line")
+        # an equation-mode line, whose intercept-wrong is free and can fire (W1: points mode never emits it)
+        q = next(q for q in questions if q["family"] == "wt:u5-3-1:line-equation")
         q["choices"]["diagnostics"].append({"predicate": "intercept-wrong",
                                             "misconception_id": "mc:g10m8s4-1-1:midpoint-difference"})
         problems, _ = GW.check_questions([q], g)

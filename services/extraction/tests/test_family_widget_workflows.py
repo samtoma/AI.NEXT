@@ -279,10 +279,15 @@ class Widgets(unittest.TestCase):
         out = run_workflow(WIDGETS_WF, args, responses)
         self.assertTrue(out["ok"], out["error"])
         for c in out["calls"]:
+            # the instrument is the app's DOCS text, the same for every question of a kind (s7-v7): its example
+            # payload is not this question's spec, even where they coincide (number_line_marker's targets [-2, 3])
+            prompt = c["prompt"]
+            for text in GW.INSTRUMENTS.values():
+                prompt = prompt.replace(text, "")
             for q in questions:  # the stored spec, in either serialisation, never reaches a prompt
                 spec = q["choices"]["spec"]
-                self.assertNotIn(json.dumps(spec), c["prompt"])
-                self.assertNotIn(json.dumps(spec, separators=(",", ":")), c["prompt"])
+                self.assertNotIn(json.dumps(spec), prompt)
+                self.assertNotIn(json.dumps(spec, separators=(",", ":")), prompt)
                 self.assertNotIn(q["canonical_solution"][-1]["text_md"], c["prompt"])
                 self.assertNotIn(q["id"], c["prompt"])
         res = out["result"]["results"]

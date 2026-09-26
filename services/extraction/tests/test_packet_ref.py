@@ -498,12 +498,15 @@ class S6S7ByRef(unittest.TestCase):
             "author:g10m8s4-1": {"templates": [], "gaps": []}, "author:g10m2s2-1": None})
         self.assertIn("zz_unapproved_kind", {g["need_kind"] for g in b["result"]["gaps"]})
         self.assertEqual(set(compact["contract_kinds"]), set(args["contract"]))
-        self.assertEqual(b["result"]["prompts_version"], "s7-v6")
+        self.assertEqual(b["result"]["prompts_version"], "s7-v7")
         # s7-v6: the two author errors the Chapter 8 pilot normalised are stated as rules, inline and by reference
         for run in (a, b):
             p = next(c["prompt"] for c in run["calls"] if c["label"] == "author:g10m8s3-1")
             self.assertIn("Only ids from THAT OBJECTIVE'S OWN\n  \"misconceptions\" list", p)
             self.assertIn("ONE PREDICATE, ONE MISCONCEPTION: never list a predicate twice.", p)
+            # s7-v7 (W1): map only what the spec can emit, from the contract's can_emit table
+            self.assertIn("Map ONLY predicates in the list for YOUR spec", p)
+        self.assertIn('"can_emit"', (Path(compact["by_ref"]["dir"]) / "contract.txt").read_text())
         # Q2 (2026-09-26): the author sees the WHOLE contract by reference; inline cuts it at 9000
         # characters, which drops the last kinds (venn_builder, area_model, …) off the prompt
         contract = (Path(compact["by_ref"]["dir"]) / "contract.txt").read_text()
@@ -560,6 +563,10 @@ class S6S7ByRef(unittest.TestCase):
             self.assertTrue(all('"predicate" is the predicate\'s NAME exactly as listed' in c["prompt"] for c in run["calls"]))
         d = Path(compact["by_ref"]["dir"])
         packet = "\n".join(p.read_text() for p in d.rglob("*.txt")) + json.dumps(compact, ensure_ascii=False)
+        # the instrument is the app's DOCS text, the same for every question of a kind (s7-v7): its example payload
+        # is not this question's spec, even where they coincide (number_line_marker's DOCS example targets [-2, 3])
+        for text in self.GW.INSTRUMENTS.values():
+            packet = packet.replace(text, "")
         for q in questions:   # the stored spec, the solution and the id never reach the verifier's files
             spec = q["choices"]["spec"]
             self.assertNotIn(json.dumps(spec), packet)
