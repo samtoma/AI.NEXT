@@ -66,13 +66,17 @@ export const meta = {
 //   uv run meter_run.py record --book <book> --stage S2-S4,S8 --run <runId>
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'lesson-v4'   // v3: ids are asked for WITHOUT their brackets, and read either way
+const PROMPTS_VERSION = 'lesson-v5'   // v3: ids are asked for WITHOUT their brackets, and read either way
 // v4 (2026-09-26, the Chapter 8 pilot): a choice's options may be the labels a figure shows ("Which point lies
 // at (5; −4)?" A–E, shape W–Z): options_source "figure". Only the TYPING prompt changed; on a resume the
 // claims replay, and typing and every agent after it run again.
+// v5 (2026-09-27, consistency review A8): the visuals prompt carries each figure's question and the rule "a figure
+// never draws the unknown, never contradicts the question's numbers, and its caption never changes the question".
+// ARGS.visuals_only (A3): run S4 alone, for the figures each lesson lists in rerun_figures (merge_visual_reruns.py).
 // The script's own deterministic collection is versioned apart from the prompts: a change here replays
 // every cached agent on a resume (no prompt changed) and re-decides what they answered.
-const COLLECT_VERSION = 'collect-4'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below)
+const COLLECT_VERSION = 'collect-5'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below);
+                                      // collect-5: an objective id without "lo:" is that objective; a subject form from the book's rule
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
 const BOOK = ARGS.book || {}
 if (ARGS.stage !== 'S2-S4,S8' || !Array.isArray(ARGS.lessons) || !ARGS.lessons.length) {
@@ -344,6 +348,9 @@ const count = (phase, slug) => { calls[phase] = calls[phase] || { total: 0, by_l
 const call = (phase, slug, label, prompt, opts) => { count(phase, slug); return agent(prompt, Object.assign({ label, phase }, opts)) }
 
 const objList = (L) => L.objectives.map((o) => `${o.id}: ${o.statement}`).join('\n')
+// collect-5 (consistency review A3): an agent that writes an objective id without its "lo:" prefix
+// ("g10m8s3-2-2") means that objective — lesson 8.3b lost 7 figures to "unknown objective g10m8s3-2-2"
+const loOf = (los, x) => (los.has(x) ? x : (x && los.has('lo:' + x) ? 'lo:' + x : null))
 const blockLine = (b) => `[${b.anchor || b.id}] (${b.type}${b.kind ? ':' + b.kind : ''}, p.${b.printed_page}) ${b.text}`
 const weLine = (w) => `[${w.ref}] Worked example ${w.n}: ${w.title} (p.${w.printed_page})\n  QUESTION: ${w.stem}\n` + w.solution.map((s) => `  - ${s}`).join('\n')
 
@@ -378,6 +385,7 @@ Return CLAIMS_SCHEMA.`
     const a = anchors[c.anchor]
     const teacher = (L.teacher_only || []).some((t) => contains(t.text, c.quote) || contains(t.text, c.text))
     if (teacher && !contains(studentText, c.quote)) { out.teacher_caught += 1; out.dropped.push(Object.assign({}, c, { reason: 'echoes a teacher-only note (FR-4408)' })); return }
+    if (loOf(los, c.lo)) c.lo = loOf(los, c.lo)
     if (!los.has(c.lo)) { out.dropped.push(Object.assign({}, c, { reason: `unknown objective ${c.lo}` })); return }
     if (!a) { out.dropped.push(Object.assign({}, c, { reason: `anchor ${c.anchor} is not in the lesson` })); return }
     const claim = { lo: c.lo, type: c.type, text: c.text, anchor: c.anchor, printed_page: c.printed_page, quote: c.quote, supported: true, teacher_only: false }
@@ -498,6 +506,11 @@ function checkTyping(it, t) {
     // when the app's marker knows the form; otherwise the item is held (below), never mis-specified
     if (it.asked_form && APP_FORMS.includes(it.asked_form) && form !== it.asked_form) {
       typed.form_overridden = { typing: form, book_rule: it.asked_form }; form = it.asked_form
+    }
+    // collect-5 (consistency review A9): "in the form y = mx + c" — a subject form from the book's rule
+    if (it.asked_form && typeof it.asked_form === 'object' && it.asked_form.subject && t.marker_kind === 'equation' &&
+        !(form && typeof form === 'object' && form.subject === it.asked_form.subject)) {
+      typed.form_overridden = { typing: form, book_rule: it.asked_form }; form = { subject: it.asked_form.subject }
     }
     if (form && typeof form === 'string' && !APP_FORMS.includes(form)) { problems.push(`form "${form}" is not one the app's marker knows`); form = null }
     if (form && typeof form === 'object' && t.marker_kind !== 'equation') problems.push('a subject form needs marker kind "equation" (the app\'s marker)')
@@ -633,7 +646,7 @@ async function runS3(L) {
     // a printed answer not in the form its question asks for: held for G2, never corrected here
     if (it.printed_form_defect && verification === 'agreed') verification = 'disputed'
     // a form the app's marker cannot check (a product of prime factors): held until it can
-    const formUnsupported = it.asked_form && !APP_FORMS.includes(it.asked_form) ? it.asked_form : null
+    const formUnsupported = it.asked_form && typeof it.asked_form === 'string' && !APP_FORMS.includes(it.asked_form) ? it.asked_form : null
     if (formUnsupported && verification === 'agreed') verification = 'disputed'
     let tier = t.tier || 'standard'
     let tierSource = typing[it.ref] ? 'typing' : 'default'
@@ -662,9 +675,11 @@ async function runS3(L) {
 }
 
 // ---- S4 visuals -------------------------------------------------------------------------------------
+const stemOf = (L, ref) => { const it = ref && (L.items || []).find((i) => i.ref === ref); return it ? String(it.stem || '').slice(0, 600) : '' }
 async function runS4(L, s2) {
   const s = L.slug
-  const figs = L.figures || []
+  // visuals-only re-run (consistency review A3/A8): only the figures named in L.rerun_figures
+  const figs = (L.figures || []).filter((f) => !ARGS.visuals_only || (L.rerun_figures || []).includes(f.figure_id))
   const gaps = [], visuals = []
   const usable = figs.filter((f) => { if (!f.path) { gaps.push({ figure_id: f.figure_id, src: f.src, ref: f.ref, printed_page: f.printed_page, reason: 'no crop file for this figure' }); return false } return true })
   if (!usable.length) return { visuals, gaps, compared: 0 }
@@ -676,13 +691,18 @@ ${kinds}
 
 Read each figure's image file with the Read tool. For each figure: decision "viz" with kind, spec (exactly the kind's shape, with the figure's own numbers and labels), a one-line caption in plain student-voiced English, and lo (the objective it illustrates); or decision "gap" when no kind above can show it faithfully (a hyperbola, an exponential or trig graph, a Venn diagram, a box plot, a 3-D solid, a triangle or quadrilateral scene …), with gap_reason and needed_kind. Never force a figure into the nearest kind: a wrong picture teaches the wrong thing.
 
+A FIGURE THAT BELONGS TO A QUESTION (its question is shown with it) MUST NOT ANSWER IT:
+- never draw the unknown the question asks for — a point written with a letter for a coordinate (B(1; y), M(x; y)) or the point to be found — at any position: at its answer it gives the answer away, anywhere else it contradicts the key. Leave that point out; if the figure cannot be drawn without it, decision "gap" with gap_reason "the figure would draw the unknown";
+- never draw a point at a value that contradicts the question's own numbers;
+- the caption describes the figure; it never restates, changes or adds to the question.
+
 The lesson's objectives:
 ${objList(L)}
 What the lesson claims (context only):
 ${claims || '(none)'}
 
 FIGURES:
-${batch.map((f) => `[${f.figure_id}] ${f.path} (context ${f.context}${f.ref ? ', belongs to ' + f.ref : ''}, p.${f.printed_page})${f.caption ? ' caption: ' + f.caption : ''}`).join('\n')}
+${batch.map((f) => `[${f.figure_id}] ${f.path} (context ${f.context}${f.ref ? ', belongs to ' + f.ref : ''}, p.${f.printed_page})${f.caption ? ' caption: ' + f.caption : ''}${stemOf(L, f.ref) ? `\n  ITS QUESTION: ${stemOf(L, f.ref)}` : ''}`).join('\n')}
 
 Return VIZ_SCHEMA with one row per figure; figure_id as shown in brackets, written without the brackets.`, { model: 'sonnet', schema: VIZ_SCHEMA })))
   const byId = {}
@@ -694,7 +714,7 @@ Return VIZ_SCHEMA with one row per figure; figure_id as shown in brackets, writt
     const a = byId[f.figure_id]
     if (!a) { gaps.push({ figure_id: f.figure_id, src: f.src, ref: f.ref, printed_page: f.printed_page, reason: 'the visuals agent returned nothing for it' }); continue }
     if (a.decision === 'gap') { gaps.push({ figure_id: f.figure_id, src: f.src, ref: f.ref, printed_page: f.printed_page, reason: a.gap_reason || 'no existing kind fits', needed_kind: a.needed_kind || null }); continue }
-    const lo = los.has(a.lo) ? a.lo : null
+    const lo = loOf(los, a.lo)
     if (!VIZ_NAMES.includes(a.kind) || !a.spec || !Object.keys(a.spec).length || !lo) {
       gaps.push({ figure_id: f.figure_id, src: f.src, ref: f.ref, printed_page: f.printed_page, needed_kind: a.needed_kind || null,
         reason: !VIZ_NAMES.includes(a.kind) ? `"${a.kind}" is not an existing VIZ kind` : (!lo ? `unknown objective ${a.lo}` : 'empty spec') })
@@ -745,7 +765,14 @@ Return ORACLE_SCHEMA; use anchor "${s}" for the whole lesson when there are no s
 }
 
 // ---- run ------------------------------------------------------------------------------------------
+async function runVisualsOnly(L) {
+  const s4 = await runS4(L, null)
+  return { lesson: L.slug, mode: 'visuals', rerun_figures: L.rerun_figures || [], visuals: s4.visuals, viz_gaps: s4.gaps,
+    counts: { visuals: s4.visuals.length, viz_gaps: s4.gaps.length, compared: s4.compared } }
+}
+
 async function runLesson(L) {
+  if (ARGS.visuals_only) return runVisualsOnly(L)
   const [s2, s3] = await parallel([() => runS2(L), () => runS3(L)])
   const s4 = await runS4(L, s2)
   const s8 = await runS8(L, s2, s3)
@@ -799,6 +826,7 @@ const perLesson = {}
 for (const c of Object.values(calls)) for (const [s, n] of Object.entries(c.by_lesson)) perLesson[s] = (perLesson[s] || 0) + n
 return {
   stage: 'S2-S4,S8', workflow: 'lesson', prompts_version: PROMPTS_VERSION, collect_version: COLLECT_VERSION, book: BOOK.book,
+  ...(ARGS.visuals_only ? { mode: 'visuals' } : {}),
   ...(ARGS.embedded ? { embedded: ARGS.embedded } : {}),
   lessons: lessons.filter(Boolean),
   failed_lessons: ARGS.lessons.filter((l, i) => !lessons[i]).map((l) => l.slug),

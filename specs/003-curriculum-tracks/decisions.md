@@ -1,14 +1,24 @@
-# 003 — Samuel's decisions, 2026-09-25
+# 003 — Samuel's decisions, 2026-09-25 and 2026-09-26
 
 **Authority level**: decided. This file records what Samuel decided for feature 003. The spec, the
 plan and ADR-0024 are cut against it. Where a later decision changes one of these, the change is
 stamped here with its date, not rewritten.
 
+**Numbering.** Decisions 1–47, in seven rounds (46 is not used). From the third round on, Samuel's
+answers are logged verbatim in [`docs/WIP-g10-pilot/samuel-answers.md`](../../docs/WIP-g10-pilot/samuel-answers.md),
+and **answer N there is decision N + 21 here** (answer 1, the v0.9.3 hotfix, is not a decision of this
+feature; answer 25 extends decision 45). Code comments and older notes that say "decision 9" or
+"decision 13" for a third-round answer mean the *answer* number: answer 9 is decision 30, answer 13 is
+decision 34.
+
+**Commit status (2026-09-27).** This file and the work it governs are committed only as unreviewed WIP
+snapshots on the pushed feature branch; Samuel has not reviewed or merged them.
+
 **Source.** On 2026-09-25 Samuel read three documents: the options in
 [research.md](./research.md) (app architect), `docs/specs/extraction-pipeline.md` §10 (pipeline
 auditor), and the three open questions in [spec.md](./spec.md). His answer, verbatim, relayed by
 the coordinating session: *"I would take your recommendations"*. The coordinating session then
-listed the seventeen decisions below. **Not committed**; Samuel reviews the written form.
+listed the seventeen decisions below. Samuel reviews the written form.
 
 **Second round, the same day.** Samuel read the written spec, plan, tasks and ADR drafts, and the
 Grade 10 S0 report (`services/extraction/runbook/g10-s0-report.md`), and answered *"ok for all"*.
@@ -59,8 +69,8 @@ rewritten.
 ## Third round — Samuel, 2026-09-25, one-by-one
 
 **Source.** Samuel answered thirteen questions one at a time, relayed by the coordinating session and
-recorded verbatim in the session scratchpad
-(`/private/tmp/claude-501/-Users-samueltoma-Documents-Claude-Projects-AI-Enthusiasts-PoC-Tutor-School-V1/5dd6b4ce-c4c4-4eab-b8f8-5465c092db24/scratchpad/g10/samuel-answers.md`).
+recorded verbatim in [`docs/WIP-g10-pilot/samuel-answers.md`](../../docs/WIP-g10-pilot/samuel-answers.md)
+(first kept in a session scratchpad file that no longer exists; the copy in the repository is the record).
 **Answer 1** (hotfix v0.9.3, "Full fix + deploy (Recommended)", including the sign-flipped note
 sentence — ADR-0020's fourth exception) **already shipped**; see `docs/PROJECT_STATE.md`'s v0.9.3
 section. It is referenced here, not repeated as a new decision. Answers 2–13 are decisions 23–34
@@ -76,15 +86,16 @@ below.
 | 28 | **Constitution v3.3.0 → v3.4.0: approved.** *"Yes, update it (Recommended)."* Applies `constitution-amendment-proposal.md`'s text verbatim, with the Sync Impact Report in the existing header format. This is the explicit word T389 was waiting for. | `.specify/memory/constitution.md`; `constitution-amendment-proposal.md` marked applied |
 | 29 | **"Load a course" gains a restore mode.** *"Yes, add restore (Recommended)."* Alongside the existing add-only load mode, the same GitHub Action gets a `restore` mode that replays a previously exported, reviewed bundle (`--restore`, keeping every row's own status and review stamp — the same semantics `export_generated_content.py`'s bundles already carry), gated by a **typed confirmation** (the course id), the same backup-first, verified-readback discipline as the load mode, and never touching a course's rows if the restore target's provenance does not match. | FR-4208, FR-4210 (amended) |
 | 30 | **The American track's prompts are English-only.** *"English only (Recommended)"* — no Egyptian-Arabic phrases or colloquialisms in the G10 course's prompts, but the address term **"Egyptian student" is kept**, because the audience is still an Egyptian student following an American-curriculum book. This is a per-course setting (an "Arabic touches" flag on `CourseDef`): on for the National courses (unchanged), off for G10. | FR-4205 (amended) |
-| 31 | **Misconception verification runs per objective (S5).** *"Per topic (Recommended)."* The option carried "~$22–32", which this record first wrote as "~$22–32 **per objective**" — a **mislabel** (corrected 2026-09-26): $22–32 was the planning estimate for S5 across the **whole book** (the per-lesson S5 figure × 65 lessons, inside the book total of $220–260). The Chapter 8 pilot measures S5 at **≈ $0.70 per objective** (draft + final, calibrated from the pilot's real/dry ratio ×5.5–6.3), ≈ $9 for the chapter's 13 objectives and ≈ $120 projected for the book (≈ 170 objectives). The decision itself — per objective — is unchanged. | pipeline doc §3.8 (S5), §5 (cost); `docs/WIP-g10-pilot/pilot-report.md` (projection) |
+| 31 | **Misconception verification runs per objective (S5).** *"Per topic (Recommended)."* The option carried "~$22–32", which this record first wrote as "~$22–32 **per objective**" — a **mislabel** (corrected 2026-09-26): $22–32 was the planning estimate for S5 across the **whole book** (the per-lesson S5 figure × 65 lessons, inside the book total of $220–260). *(Corrected again 2026-09-27.)* ≈ $0.70 per objective was the pilot's projection **before** S5 ran (the dry meter × 5.5–6.3). As metered on Chapter 8, S5 cost **$17.13 for 13 objectives, ≈ $1.3 per objective** including one superseded draft (`services/extraction/runs/g10-math/cost.jsonl`), which is ≈ $220 at that rate for the book's ≈ 170 objectives. The decision itself — per objective — is unchanged. | pipeline doc §3.8 (S5), §5 (cost); `docs/WIP-g10-pilot/pilot-report.md` (projection and metered runs) |
 | 32 | **A third independent reading decides an EPUB-only formula image**, instead of holding it, when two independent readings disagree. *"Add a third reading."* An image found only in an EPUB solution, with no printed-page counterpart, is accepted on a hash match, on two agreeing readings, or on the third reading breaking a tie between the first two — never guessed. | FR-4407 (amended); pipeline doc §3.3 (S0b) |
 | 33 | **A second, independent mapper checks the mapping of the 1,228 chapter-end exercises to objectives.** *"Yes, double-check (Recommended)."* This is S1's design (the objective-to-exercise map, spec.md §3.4 rule 2): a second blind mapper produces its own item→objective assignment, and disagreements are surfaced at gate **G1** alongside the objectives themselves, rather than trusting a single mapper's assignment for items no lesson directly contains. | pipeline doc §3.4 (S1) |
-| 34 | **Arabic lessons use the book's real printed names.** *"Use the book's names (Recommended)"* — where a National Arabic lesson's working title differs from the book's own printed section name, the printed name is used. This changes what a small number of Arabic lesson titles say, and therefore what reaches the tutor's prompts for those lessons: a fifth, narrow exception to ADR-0020's prompt hold. | ADR-0020 (fifth exception) |
+| 34 | **Arabic lessons use the book's real printed names.** *"Use the book's names (Recommended)"* — where a National Arabic lesson's working title differs from the book's own printed section name, the printed name is used. This changes what a small number of Arabic lesson titles say, and therefore what reaches the tutor's prompts for those lessons: a narrow exception to ADR-0020's prompt hold — written "the fifth", renumbered **the sixth** on 2026-09-27 when ADR-0020's list was put in one order. | ADR-0020 (sixth exception); FR-4206 and SC-207 (the third expected difference, written in 2026-09-27) |
 
 ## Fourth round — Samuel, 2026-09-26, the Chapter 8 pilot
 
-Relayed by the coordinating session and logged verbatim in the same scratchpad file as the third round
-(`g10/samuel-answers.md`). Answer N of that log is decision N + 21 here.
+Relayed by the coordinating session and logged verbatim in the same file as the third round
+([`docs/WIP-g10-pilot/samuel-answers.md`](../../docs/WIP-g10-pilot/samuel-answers.md)). Answer N of that
+log is decision N + 21 here.
 
 | # | Decision | Recorded in |
 |---|---|---|
