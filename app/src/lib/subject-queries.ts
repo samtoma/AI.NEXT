@@ -244,9 +244,12 @@ async function subjectSummariesOn(
     .map((a) => ({
       subject: a.subject,
       courseId: a.courseId,
+      // The registry's name when two cards share a subject; otherwise the
+      // course's own card label (Grade 10, I4), else its node label — every
+      // National card exactly as before.
       courseLabel: shared.has(a.subject)
         ? (courseDef(a.courseId)?.label ?? a.courseLabel)
-        : a.courseLabel,
+        : (courseDef(a.courseId)?.cardLabel ?? a.courseLabel),
       avgMastery: a.scoreN ? a.scoreSum / a.scoreN : 0,
       weakestLo: a.weakest,
       lessonsCount: a.slugs.size,

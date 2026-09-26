@@ -287,6 +287,8 @@ test("003: an American grade-10 student sees the Grade 10 book and nothing Natio
   assert.deepEqual(out.map((i) => i.slug), ["g10m1s1-1"]);
   const home = await getSubjectSummaries(STUDENT, fakeClient(AMERICAN_10));
   assert.deepEqual(home.map((s) => [s.subject, s.courseId]), [["math", G10]]);
+  // the app's name for the course, never the node's book title (consistency review I4)
+  assert.equal(home[0].courseLabel, "Mathematics — Grade 10");
 });
 
 test("003: the same live G10 rule reaches no National grade-10 student", async () => {

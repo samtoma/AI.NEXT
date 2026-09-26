@@ -51,6 +51,7 @@ const FILES: Record<string, string> = {
  * set grading, and its `sign-flipped` diagnosis, moved out to be testable).
  */
 const HELPERS: Record<string, string[]> = {
+  line_drawer: ["line-drawer-grade.ts"],
   number_line_marker: ["number-line-grade.ts"],
   polygon_builder: ["polygon-grade.ts"],
   solid_scaler: ["solid-scaler-grade.ts"],

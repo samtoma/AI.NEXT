@@ -94,6 +94,15 @@ export interface CourseDef {
   grades: readonly string[];
   /** the course's own name, for the console — "Mathematics — Grade 10" */
   label: string;
+  /**
+   * The name a STUDENT's course card gives the course (the subject home), or
+   * `null` for the course node's own label. `null` for every National course,
+   * whose cards read exactly as before (FR-4206). The Grade 10 node carries
+   * the book's full title ("Everything Maths, Grade 10 Mathematics (Siyavula,
+   * Version 1.1 CAPS)"), which is a citation, not a course name, so its card
+   * says `label` instead (consistency review 2026-09-27, I4).
+   */
+  cardLabel: string | null;
   /** the source book (`source_documents.title`) */
   book: string;
   /**
@@ -345,6 +354,7 @@ export const COURSES = {
     curriculum: "eg-national-en",
     grades: ["9"],
     label: "Mathematics — Prep 3",
+    cardLabel: null,
     book: "Mathematics — Student's Book, Preparatory Year Three, First Term",
     cite: NATIONAL_CITE,
     homeCopy: NATIONAL_HOME,
@@ -375,6 +385,7 @@ export const COURSES = {
     curriculum: "eg-national-en",
     grades: ["9"],
     label: "Social Studies — Prep 3",
+    cardLabel: null,
     book: "الدراسات الاجتماعية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",
     cite: NATIONAL_CITE,
     homeCopy: NATIONAL_HOME,
@@ -396,6 +407,7 @@ export const COURSES = {
     curriculum: "eg-national-en",
     grades: ["9"],
     label: "Arabic — Prep 3",
+    cardLabel: null,
     book: "اللغة العربية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",
     cite: NATIONAL_CITE,
     homeCopy: NATIONAL_HOME,
@@ -417,6 +429,7 @@ export const COURSES = {
     curriculum: "us-american-en",
     grades: ["10"],
     label: "Mathematics — Grade 10",
+    cardLabel: "Mathematics — Grade 10",
     book: "Everything Maths — Grade 10 (Siyavula)",
     // The book's own name, never "Ministry textbook" (FR-4205; backlog #36).
     cite: { name: "Everything Maths", edition: "Siyavula · Grade 10" },
