@@ -134,3 +134,26 @@ class ChapterEightDryRun(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class OneDryRunAtATime(unittest.TestCase):
+    """2026-09-27: two agents' dry runs in the same folder failed each other. A second run waits for the lock."""
+
+    def test_a_second_process_waits_for_the_lock(self):
+        import subprocess
+        import sys
+        import time
+        with tempfile.TemporaryDirectory() as d:
+            lock = Path(d) / ".ch08.lock"
+            code = ("import sys, time; sys.path.insert(0, %r); import dryrun_chapter as D; from pathlib import Path; "
+                    "D._hold_lock(Path(sys.argv[1])); print('got', flush=True); time.sleep(float(sys.argv[2]))")
+            here = str(Path(__file__).resolve().parents[1])
+            first = subprocess.Popen([sys.executable, "-c", code % here, str(lock), "1.5"], stdout=subprocess.PIPE, text=True)
+            self.assertEqual(first.stdout.readline().strip(), "got")
+            t0 = time.time()
+            second = subprocess.run([sys.executable, "-c", code % here, str(lock), "0"], capture_output=True, text=True)
+            waited = time.time() - t0
+            first.wait()
+            self.assertIn("waiting for the dry-run lock", second.stdout)
+            self.assertIn("got", second.stdout)
+            self.assertGreater(waited, 0.5)

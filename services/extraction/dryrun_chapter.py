@@ -700,6 +700,29 @@ def coverage(line: Line) -> dict:
     return rep
 
 
+_LOCK = None
+
+
+def _hold_lock(path: Path) -> None:
+    import fcntl
+    global _LOCK
+    if _LOCK is not None and _LOCK.name == str(path):
+        return         # this process already holds it (the test runs the line twice in one process)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    f = open(path, "a+")
+    try:
+        fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        f.seek(0)
+        print(f"waiting for the dry-run lock {path.name} (held by: {f.read().strip() or 'another run'})", flush=True)
+        fcntl.flock(f, fcntl.LOCK_EX)
+    f.seek(0)
+    f.truncate()
+    f.write(f"pid {os.getpid()} since {time.strftime('%Y-%m-%dT%H:%M:%S')}\n")
+    f.flush()
+    _LOCK = f          # kept open: the lock lives as long as this process
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--book", required=True)
@@ -713,6 +736,10 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     book = book_config.load_book(a.book)
     root = book.work_dir() / "dryrun" / f"ch{a.chapter:02d}"
+    # ONE DRY RUN AT A TIME PER CHAPTER (2026-09-27: two agents' runs in the same folder failed each other with a
+    # different error each time). The lock is held for the whole run — the rmtree below included — and released
+    # when the process ends, however it ends; a second run WAITS for it, saying who holds it.
+    _hold_lock(root.parent / f".ch{a.chapter:02d}.lock")
     if root.exists():
         shutil.rmtree(root)
     root.mkdir(parents=True)
