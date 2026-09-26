@@ -1,0 +1,91 @@
+# WIP: Grade 10 American maths — Chapter 8 pilot handoff (2026-09-26)
+
+Resume doc for the feature-003 branch `feat/003-curriculum-tracks-g10-american-math`, written when
+the work moved from a local session to a cloud session. Read this first, then `docs/PROJECT_STATE.md`,
+`specs/003-curriculum-tracks/` (spec, plan, tasks, traceability, decisions) and the files beside
+this one:
+
+- `samuel-answers.md` — Samuel's decisions 1–15 for this feature, in his words (recorded as
+  decisions 22–36 in `specs/003-curriculum-tracks/decisions.md`).
+- `integration-backlog.md` — every open follow-up (items 1–71), with what is done.
+- `pilot-report.md` — the Chapter 8 pilot's numbers and costs so far.
+- `g1-ch8-verdicts.json` — the G1 verdicts Samuel approved (the applied copy is
+  `services/extraction/runs/g10-math/objectives/g1-ch08.verdicts.json`).
+
+## Standing rules from Samuel (they bind the cloud session too)
+
+- **Review before commit/push.** Summarise every change and wait for his OK before committing or
+  pushing anything; deploy only on his explicit go, and only through GitHub CI
+  (`ci-cd.yml` workflow_dispatch), never by hand. This WIP branch was pushed at his explicit request.
+- **Never push to `main`.** Coordinate with the peer session "Comment accuracy on noor.reletix.com"
+  before any push to main or deploy.
+- **One question at a time.** Ask Samuel decisions as single questions with a recommendation.
+- **Spec Kit is the bible.** Every dev change updates FRs + traceability in the same work
+  (`python3 scripts/traceability.py --check`). Objectives methodology is **not** to be written as a
+  requirement yet.
+- **Licensing is out of scope** (Samuel's team handles CC-BY/attribution outside the app).
+- **Quality over cost** in trade-offs; keep the cost meter running (`meter_run.py`).
+- **Prompt hold (ADR-0020):** National (Prep-3) tutor prompts must stay byte-identical
+  (`national-prompts.test.mts`); any change needs a named exception.
+- Never print secret values; never type passwords or sign in for Samuel.
+
+## Where the pilot stands
+
+| Stage | State |
+|---|---|
+| G0 manifest (65 lessons) | passed 2026-09-25 |
+| S0b maths, chapter 8 | done — 853/853 formulas accepted (558 hash, 282 agreement, 13 third reading); G0b not needed |
+| S1 objectives, chapter 8 | done — 13 objectives, all agreed by both blind finders; run `wf_a70b525d-f44` |
+| **G1, chapter 8** | **passed 2026-09-26 by Samuel** ("Approve as recommended"); gate record in `specs/003-curriculum-tracks/decisions.md` |
+| S2–S4 lessons | 8.2, 8.1, 8.3a done and saved in `services/extraction/runs/g10-math/lessons/`; **8.3b and 8.4 were stopped mid-run and must be re-run** (a Workflow resume only works in the session that started it) |
+| S5–S7, assemble/load, coverage, G2–G5 | not started |
+
+Cost so far (API-equivalent, `services/extraction/runs/g10-math/cost.jsonl`): S0b ≈ $82.6 (≈ $36 of it lost
+to usage-limit kills), S1 ≈ $14.0 (one rejected run + the rerun), lessons 8.2 $2.28, 8.3a $2.53, 8.1 $2.17.
+
+## Next steps, in order
+
+1. **Investigate the "disputed" rate in the lesson runs before G2.** 8.3a: 20 of 25 items disputed; 8.1: 9 of 15
+   disputed + 6 no printed answer. Seen causes: the blind re-solve came back `missing` for figure-dependent items
+   (does the blind solver get the figure?); printed answers read from the PDF text layer lose fraction layout
+   (`"9 11"` for 9/11); typing checks flag a key vs a sentence-form final answer. These are verification
+   calibration faults (like S1's first run), not book errors — fix the causes, never weaken the rule.
+2. Re-run lessons 8.3b and 8.4:
+   `uv run embed_workflow.py lesson-args g10-math --lessons g10m8s3-2` (and `g10m8s4-1`), then run the generated
+   `work/g10-math/packets/embedded/lesson.<slug>.workflow.js` with the Workflow tool and no args.
+   Save each return value to `runs/g10-math/lessons/<runId>.json` and meter it
+   (`meter_run.py record --book g10-math --stage S2-S4 --lesson <slug> --run <runId>`).
+3. Split into per-lesson files: `uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<runId>.json`.
+4. G2 for Samuel (disputed solutions), including the **book misprint**: Worked example 8, §8.3, p.303 prints
+   m_AC = (3−7)/(3−3) — two independent readings agree; it must not reach a student as a canonical step.
+5. S5 draft → S6 families → S7 widgets (author, verify) → S5 final → assemble → load into a **scratch DB only** →
+   `coverage_report.py` → report output and actual cost to Samuel. Runbook: `services/extraction/runbook/README.md`.
+
+## Rebuilding the local working files in a new environment
+
+`services/extraction/work/` and `docs/Source/*.epub` are gitignored by design. Download Siyavula
+"Everything Maths Grade 10" v1.1 (EPUB and PDF) from siyavula.com into `docs/Source/`, then
+`uv run source_adapter.py books/g10-math.json` and `uv run build_manifest.py books/g10-math.json`
+(see the runbook §1). Packets for S1 and the lesson copies are regenerated by their builders.
+Some saved run files name figure paths under the original machine's worktree; the builders
+re-derive them from `work/`.
+
+## In-flight work that was stopped (partial edits are in this commit)
+
+**Curriculum/grade isolation fixes** (an agent was mid-edit in `app/` — it had started rewriting the bridge
+reader in `lib/subject-queries.ts`; `app/` may not type-check). The audit (2026-09-26) found, for an ordinary
+student with course gating on (production: `AINEXT_COURSE_GATING=on`), curricula and grades isolated on every
+teaching surface, with these gaps to close before Grade 10 goes live:
+1. `lesson.ts` cross-subject bridge hints are read without the course gate (`getLessonBridges`); the "social"
+   handoff should not be offered when that course is not visible.
+2. `retrieval.ts` follows one prerequisite link without the gate; the scope-guard test misses `seed/<book>/`
+   subdirectories; the loader should refuse cross-course prerequisite edges.
+3. The student-scope guard classifies whole files as scoped — make it per function.
+4. `/spine` (SpineExplorer) and the subject home card merge two maths courses for a student granted the
+   other curriculum's maths by an operator — make them per course (task T372); page citations on /spine must
+   use the page's own course's book.
+5. `session-cache.ts` key lacks a course-scope fingerprint (revocation reaches an open chat only after ≤3 h).
+6. Home page copy says "Egyptian Ministry textbook / syllabus 2025–2026" to American students.
+Rule: if a fix changes any National golden prompt line, stop and report instead of updating the golden.
+**Open question for Samuel:** the code default for `AINEXT_COURSE_GATING` is "off" (grade ignored when off;
+curriculum still enforced) — make "on" the default, or refuse to start without it?

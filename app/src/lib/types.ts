@@ -368,6 +368,16 @@ export interface LessonData {
   hasG10CurveFamily?: boolean;
   /** The lesson's book provenance — as `LessonInfo.provenance`, same rule. */
   provenance?: LessonProvenance;
+  /**
+   * The subjects a `{{switch_subject:…}}` handoff may name for THIS student:
+   * those with a course she may see (FR-4006; the 2026-09-26 isolation
+   * audit). Set by `buildLessonContext` from her scope, so the tutor never
+   * offers a handoff that lands on a course she cannot open (an American
+   * student has no Social Studies; the old rule sent her to a 404). Absent =
+   * not narrowed — the prompt-capture harness, which has no student — and the
+   * rule then reads exactly as it always has.
+   */
+  handoffSubjects?: readonly SpineSubject[];
 }
 
 /**

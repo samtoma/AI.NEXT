@@ -1,11 +1,11 @@
 import type { PoolClient } from "pg";
 
 import { pool, sequential } from "./db";
-import { visibleCoursesFor } from "./catalog-queries";
+import { visibleCoursesFor, type CourseScope } from "./catalog-queries";
 import { scoped, type Db } from "./student-context";
 import { MODULE_ORDER } from "./module-order";
+import { compareCourses, courseDef } from "./courses";
 import {
-  compareSpineSubjects,
   displayLabelOfSpineKey,
   spineSubjectOf,
   spineSubjectOfCourse,
@@ -43,8 +43,8 @@ function slugOfLo(loId: string): string {
   return loId.replace(/^lo:/, "").replace(/-[0-9]+$/, "");
 }
 
-async function columnExists(table: string, column: string): Promise<boolean> {
-  const r = await pool.query(
+async function columnExists(db: Db, table: string, column: string): Promise<boolean> {
+  const r = await db.query(
     `SELECT 1 FROM information_schema.columns
       WHERE table_name = $1 AND column_name = $2 LIMIT 1`,
     [table, column]
@@ -111,21 +111,35 @@ async function subjectSummariesOn(
     ),
   ] as const);
 
+  // ONE SUMMARY PER COURSE, never per subject (FR-4009, T371/T372). A student
+  // normally sees one course of each subject, and then this is exactly the
+  // per-subject home it always was. But an operator's exception can show her
+  // the other curriculum's course of the same subject (a tester previewing the
+  // Grade 10 book beside her Prep-3 maths), and a roll-up keyed by subject
+  // then averaged the two books into one "Mathematics" card, named after
+  // whichever course came first, with the other book's weakest topic and
+  // lessons folded in. Keyed by course, the two stay apart, each in its own
+  // book's order, each with its own mastery.
   interface Acc {
     subject: SpineSubject;
-    courseId: string | null;
+    courseId: string;
     courseLabel: string;
     scoreSum: number;
     scoreN: number;
     weakest: { id: string; label: string; mastery: number } | null;
     slugs: Set<string>;
     defaultSlug: string | null;
-    /** the subject's lessons in teach order, with mastery — for the roll-ups */
+    /** the course's lessons in teach order, with mastery — for the roll-ups */
     lessons: Map<string, ProgressionLesson & { los: { id: string; mastery: number }[] }>;
   }
-  const bySubject = new Map<SpineSubject, Acc>();
+  const byCourse = new Map<string, Acc>();
+  /** objective → its course, for the objectives that were filed (the checks below) */
+  const courseOfLo = new Map<string, string>();
+  /** every objective the graph holds, filed or not — to tell "hidden" from "gone" */
+  const inGraph = new Set<string>();
 
   for (const r of losRes.rows) {
+    inGraph.add(String(r.id));
     // Gated before it is filed: a hidden course contributes no LO, so it
     // produces no summary, no average and no "0%" card hinting that a subject
     // is there and empty.
@@ -134,11 +148,13 @@ async function subjectSummariesOn(
     // rolls up into none. It is NOT quietly added to maths' average.
     const subject = spineSubjectOfCourse(r.course_id);
     if (!subject) continue;
-    let acc = bySubject.get(subject);
+    const courseId = r.course_id as string;
+    if (!courseOfLo.has(r.id)) courseOfLo.set(r.id, courseId);
+    let acc = byCourse.get(courseId);
     if (!acc) {
       acc = {
         subject,
-        courseId: r.course_id ?? null,
+        courseId,
         courseLabel:
           (r.course_label as string) ?? displayLabelOfSpineKey(subject),
         scoreSum: 0,
@@ -148,7 +164,7 @@ async function subjectSummariesOn(
         defaultSlug: null,
         lessons: new Map(),
       };
-      bySubject.set(subject, acc);
+      byCourse.set(courseId, acc);
     }
     const mastery = r.mastery == null ? 0 : Number(r.mastery);
     acc.scoreSum += mastery;
@@ -170,30 +186,39 @@ async function subjectSummariesOn(
   // The book sections of the courses she may see (FR-4314; migration 034),
   // read after the gate — the store holds lesson titles. One read for every
   // subject; none when nothing is visible.
-  const courseIds = [
-    ...new Set(
-      [...bySubject.values()].flatMap((a) =>
-        [...a.lessons.values()].map((l) => l.courseId).filter((id): id is string => id != null)
-      )
-    ),
-  ];
+  const courseIds = [...byCourse.keys()];
   const sections: SectionIndex = sectionIndexFromRows(
     courseIds.length === 0
       ? []
       : ((await db.query(BOOK_SECTIONS_SQL, [courseIds])).rows as BookSectionRow[])
   );
 
-  // last comprehension check per subject (checks are newest-first already)
-  const lastCheck = new Map<
-    SpineSubject,
-    SubjectSummary["lastCheck"]
-  >();
+  // Last comprehension check per COURSE (checks are newest-first already),
+  // read through the check's own objective: the `subject` tag cannot tell two
+  // maths books apart. A check on an objective of a course she may not see
+  // (the other curriculum's book, an exception since revoked) is skipped — it
+  // is not evidence about any course on this page. Only a check whose
+  // objective the graph no longer holds at all (or that names none) falls
+  // back to its subject tag, and then only when exactly one of her courses
+  // teaches that subject — every National student — so an old row still lands
+  // where it always did and never on the wrong one of two books.
+  const coursesOfSubject = new Map<SpineSubject, string[]>();
+  for (const a of byCourse.values()) {
+    coursesOfSubject.set(a.subject, [...(coursesOfSubject.get(a.subject) ?? []), a.courseId]);
+  }
+  const lastCheck = new Map<string, SubjectSummary["lastCheck"]>();
   for (const c of checksRes.rows) {
-    // A check with no (or an unrecognized) subject tag is skipped rather than
-    // attributed to a subject it may not belong to.
-    const subject = spineSubjectOf(c.subject);
-    if (!subject || lastCheck.has(subject)) continue;
-    lastCheck.set(subject, {
+    let courseId: string | null = null;
+    const loId = c.lo_id == null ? null : String(c.lo_id);
+    if (loId != null && inGraph.has(loId)) {
+      courseId = courseOfLo.get(loId) ?? null;
+    } else {
+      const subject = spineSubjectOf(c.subject);
+      const only = subject ? coursesOfSubject.get(subject) : undefined;
+      courseId = only && only.length === 1 ? only[0] : null;
+    }
+    if (courseId == null || lastCheck.has(courseId)) continue;
+    lastCheck.set(courseId, {
       score: Number(c.score),
       verdict: c.verdict as Verdict,
       mode: c.mode === "review" ? "review" : "learn",
@@ -201,13 +226,25 @@ async function subjectSummariesOn(
     });
   }
 
-  // registry order — the same order the graph territories and the home use
-  return [...bySubject.values()]
-    .sort((a, b) => compareSpineSubjects(a.subject, b.subject))
+  // Two courses of one subject (the tester's exception) would otherwise show
+  // two cards that may carry the same node label ("Mathematics"): name each by
+  // its registry course label ("Mathematics — Grade 10") in that case only.
+  const shared = new Set(
+    [...coursesOfSubject].filter(([, ids]) => ids.length > 1).map(([s]) => s)
+  );
+
+  // Course order — curriculum, then subject, then course (`lib/courses.ts`).
+  // For a National student that IS the registry subject order the home has
+  // always used (maths, Social Studies, Arabic), and two courses of one
+  // subject sit side by side, never interleaved (FR-4009).
+  return [...byCourse.values()]
+    .sort((a, b) => compareCourses(a.courseId, b.courseId))
     .map((a) => ({
       subject: a.subject,
       courseId: a.courseId,
-      courseLabel: a.courseLabel,
+      courseLabel: shared.has(a.subject)
+        ? (courseDef(a.courseId)?.label ?? a.courseLabel)
+        : a.courseLabel,
       avgMastery: a.scoreN ? a.scoreSum / a.scoreN : 0,
       weakestLo: a.weakest,
       lessonsCount: a.slugs.size,
@@ -234,15 +271,48 @@ async function subjectSummariesOn(
  * LO id. The old `lo:soc*` prefix test named every non-social endpoint
  * «الرياضيات» in the tutor's own prompt — a mislabel the model would repeat
  * verbatim to the student.
+ *
+ * **THE COURSE GATE, ON BOTH ENDS** (FR-4006, FR-2705; the 2026-09-26
+ * isolation audit). A bridge is a piece of ANOTHER course put in front of the
+ * tutor — its objective's label and a rationale about it — so it is content,
+ * and it is refused like content: a bridge survives only when the courses of
+ * BOTH its objectives are ones this student may see. Before this, a student
+ * who could see Prep-3 maths but not Social Studies had a Social Studies
+ * objective and its explanation written into her maths tutor's instructions,
+ * and an American student would have had the same from any National course a
+ * bridge reached. An end that resolves to no course is refused, like an
+ * unknown course (FR-2704).
+ *
+ * `scope` is required, so no caller can read bridges without deciding whose
+ * they are. The prompt-capture harness passes the ungated scope (no student),
+ * whose `course()` admits everything — its captures are unchanged.
  */
-export async function getLessonBridges(loIds: string[]): Promise<LessonBridge[]> {
+export async function getLessonBridges(
+  loIds: string[],
+  scope: CourseScope,
+  db: Db = pool
+): Promise<LessonBridge[]> {
   if (loIds.length === 0) return [];
   try {
-    if (!(await columnExists("graph_edges", "rationale"))) return [];
-    const res = await pool.query(
+    if (!(await columnExists(db, "graph_edges", "rationale"))) return [];
+    // Each end's course, by the walk every gate uses: objective ← module
+    // (`teaches`) → course (`part_of`), open edges only.
+    const res = await db.query(
       `SELECT e.src_id, e.dst_id, e.rationale,
               ns.label AS src_label, nd.label AS dst_label,
-              ss.subject AS src_subject, ds.subject AS dst_subject
+              ss.subject AS src_subject, ds.subject AS dst_subject,
+              (SELECT pc.dst_id FROM graph_edges te
+                 JOIN graph_edges pc
+                   ON pc.src_id = te.src_id AND pc.edge_type = 'part_of' AND pc.system_to IS NULL
+                 JOIN graph_nodes c ON c.id = pc.dst_id AND c.kind = 'course'
+                WHERE te.dst_id = e.src_id AND te.edge_type = 'teaches' AND te.system_to IS NULL
+                ORDER BY pc.dst_id LIMIT 1) AS src_course,
+              (SELECT pc.dst_id FROM graph_edges te
+                 JOIN graph_edges pc
+                   ON pc.src_id = te.src_id AND pc.edge_type = 'part_of' AND pc.system_to IS NULL
+                 JOIN graph_nodes c ON c.id = pc.dst_id AND c.kind = 'course'
+                WHERE te.dst_id = e.dst_id AND te.edge_type = 'teaches' AND te.system_to IS NULL
+                ORDER BY pc.dst_id LIMIT 1) AS dst_course
        FROM graph_edges e
        JOIN graph_nodes ns ON ns.id = e.src_id
        JOIN graph_nodes nd ON nd.id = e.dst_id
@@ -256,6 +326,8 @@ export async function getLessonBridges(loIds: string[]): Promise<LessonBridge[]>
     const out: LessonBridge[] = [];
     const seen = new Set<string>();
     for (const r of res.rows) {
+      // the gate, per row and on both ends, before anything is built from it
+      if (!scope.course(r.src_course) || !scope.course(r.dst_course)) continue;
       const srcHere = here.has(r.src_id);
       const thisLo = srcHere ? r.src_id : r.dst_id;
       const otherLo = srcHere ? r.dst_id : r.src_id;

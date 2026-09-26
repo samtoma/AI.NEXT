@@ -114,6 +114,15 @@ export interface StudentScope {
   courseForSubject(spineKey: unknown): string | null;
 }
 
+/**
+ * The one question a reader that is HANDED the scope asks of it: may she see
+ * this course? A reader that takes a parameter of this type (or of
+ * `StudentScope` / `StudentGraphScope`) is gated by its caller's scope and
+ * cannot be called without one — `student-scope-guard.test.mts` accepts that,
+ * function by function, as a reader that goes through the scope.
+ */
+export type CourseScope = Pick<StudentScope, "course" | "courses">;
+
 /** The same scope over graph ids and source books (`resolveStudentGraphScope`). */
 export interface StudentGraphScope extends StudentScope {
   /** a learning objective whose course she may see */
@@ -122,6 +131,13 @@ export interface StudentGraphScope extends StudentScope {
   module(id: string): boolean;
   /** a source book (by `source_documents.sha256`) behind a course she may see */
   doc(sha256: string | null | undefined): boolean;
+  /**
+   * The course of an objective she may see, or `null` — for an objective she
+   * may not see, and always for the ungated harness scope, which has walked
+   * nothing. It lets a reader keep two courses of one subject apart (FR-4009)
+   * without a second walk of the graph.
+   */
+  courseOf(loId: string): string | null;
 }
 
 const UNGATED: StudentGraphScope = {
@@ -138,6 +154,7 @@ const UNGATED: StudentGraphScope = {
   lo: () => true,
   module: () => true,
   doc: () => true,
+  courseOf: () => null,
 };
 
 /**
@@ -261,11 +278,13 @@ export async function resolveStudentGraphScope(
         ),
     ] as const);
 
-    const los = new Set<string>();
+    // objective → its course, for the visible ones only (the first open
+    // `teaches` row wins, as everywhere else an objective is filed)
+    const los = new Map<string, string>();
     const modules = new Set<string>();
     for (const r of walk.rows) {
       if (r.course_id == null || !visible.has(r.course_id)) continue;
-      los.add(String(r.lo_id));
+      if (!los.has(String(r.lo_id))) los.set(String(r.lo_id), String(r.course_id));
       if (r.module_id != null) modules.add(String(r.module_id));
     }
     const docs = new Set<string>();
@@ -279,6 +298,7 @@ export async function resolveStudentGraphScope(
       lo: (id) => los.has(id),
       module: (id) => modules.has(id),
       doc: (sha) => sha != null && docs.has(sha),
+      courseOf: (id) => los.get(id) ?? null,
     };
   });
 }

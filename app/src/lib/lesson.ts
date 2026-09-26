@@ -11,7 +11,7 @@ import { gradeLabel } from "./profile";
 import type { AskContext } from "./ask";
 import { getLessonContent, type LessonContent } from "./lesson-content";
 import { getLessonBridges } from "./subject-queries";
-import { visibleCoursesFor } from "./catalog-queries";
+import { resolveStudentScope, visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
@@ -33,6 +33,7 @@ import {
   visualsCatalogLines,
 } from "./viz-prompt";
 import {
+  SPINE_SUBJECT_KEYS,
   labelArOfSpineKey,
   requireSubjectOfCourse,
   subjectDef,
@@ -919,6 +920,47 @@ The hint is light and optional — e.g. «فكرة الإحداثيات دي ش�
  */
 const CROSS_SUBJECT_RULE = `CROSS-SUBJECT AWARENESS (subjects stay separate; offer a clean handoff): if the student asks about a DIFFERENT school subject — e.g. a history or geography question during a math lesson, or a math question during a social-studies lesson (NOT merely another lesson inside THIS subject) — do NOT answer it from memory or from this lesson's data. Give ONE short warm acknowledgment in your own voice, then emit {{switch_subject:<subject>}} alone on its own line, where <subject> is exactly "math" or "social". This offers a handoff to that subject; it is NOT one of the interactive directives above and does not count as this message's single directive.`;
 
+/** The subjects `CROSS_SUBJECT_RULE` offers a handoff to, as it is written. */
+const HANDOFF_TARGETS = ["math", "social"] as const;
+const HANDOFF_CLAUSE = `exactly "math" or "social"`;
+if (!CROSS_SUBJECT_RULE.includes(HANDOFF_CLAUSE)) {
+  throw new Error("lesson: CROSS_SUBJECT_RULE no longer names its handoff targets as expected");
+}
+
+/**
+ * The same awareness with no handoff to offer: every other subject the rule
+ * names is closed to this student. Out of her material, so the tutor
+ * acknowledges, declines and brings her back to the lesson (spec 003 edge
+ * case, Principle II) — and never emits a handoff that would land on a 404.
+ */
+const NO_HANDOFF_RULE = `CROSS-SUBJECT AWARENESS (subjects stay separate): if the student asks about a DIFFERENT school subject — e.g. a history or geography question during a math lesson, or a math question during a social-studies lesson (NOT merely another lesson inside THIS subject) — do NOT answer it from memory or from this lesson's data. Give ONE short warm acknowledgment in your own voice that it is outside what you can help with here, then bring the student back to this lesson with a question about it. Never emit {{switch_subject:…}}: no other subject is open to this student here.`;
+
+/**
+ * The cross-subject rule THIS student's lesson prompt carries (FR-4006; the
+ * 2026-09-26 isolation audit). A handoff is offered only to a subject with a
+ * course she may see: `data.handoffSubjects`, set from her scope by
+ * `buildLessonContext`.
+ *
+ * Byte-identical to `CROSS_SUBJECT_RULE` whenever every subject the rule
+ * would offer is open to her — every National student who sees Social
+ * Studies, and the capture harness (no student, `handoffSubjects` absent), so
+ * both prompt goldens are untouched. Narrowed to the open ones when some are
+ * closed, and the no-handoff wording when none is.
+ */
+function crossSubjectRule(data: LessonData): string {
+  const open = data.handoffSubjects;
+  if (open === undefined) return CROSS_SUBJECT_RULE;
+  const own = subjectDef(data.subject).key;
+  const others = HANDOFF_TARGETS.filter((k) => k !== own);
+  const offered = others.filter((k) => open.includes(k));
+  if (offered.length === others.length) return CROSS_SUBJECT_RULE;
+  if (offered.length === 0) return NO_HANDOFF_RULE;
+  return CROSS_SUBJECT_RULE.replace(
+    HANDOFF_CLAUSE,
+    offered.map((k) => `exactly "${k}"`).join(" or ")
+  );
+}
+
 /** Real ids from the lesson in scope, injected into a subject's directive
  *  documentation so every example the model reads is one it can actually use. */
 interface ProtocolExamples {
@@ -976,7 +1018,7 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
 - {{finish_lesson}} — arms ${a.their} Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
-${CROSS_SUBJECT_RULE}
+${crossSubjectRule(data)}
 
 FORMAT: plain short Arabic paragraphs. No headings, no numbered lesson plans, no walls of text.`;
 }
@@ -1013,7 +1055,7 @@ INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive 
 This is an ARABIC lesson: the text IS the figure — anchor every beat to ONE specific آية/بيت/جملة by number, ask about one span at a time (معناها، جمالها، إعرابها), and vary the asks across chat questions, extract_spans, style_purpose, irab_builder and term_match instead of repeating open «ما رأيك» questions.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
-${CROSS_SUBJECT_RULE}
+${crossSubjectRule(data)}
 
 FORMAT: plain short Arabic paragraphs. No headings, no numbered lesson plans, no walls of text.`;
 }
@@ -1064,7 +1106,7 @@ ${widgetDocs}
 - {{finish_lesson}} — arms ${a.their} Finish button (shown both in the header and as a chat chip); tapping it is what triggers the comprehension report, not this marker. Emit it alone on the final line of your LAST message only.
 Results of widgets and questions arrive as "[live event]" lines — ALWAYS adapt your next beat to the latest result.
 
-${CROSS_SUBJECT_RULE}
+${crossSubjectRule(data)}
 
 FORMAT: plain short paragraphs, inline math in $...$ (LaTeX). No headings, no numbered lesson plans, no walls of text.`;
 }
@@ -1509,10 +1551,32 @@ export async function buildLessonContext(
     kit.usesGazetteer && data.mapBases.length > 0
       ? await gazetteerBlock(data.mapBases)
       : "";
+  // THE STUDENT'S SCOPE, for the two things below that reach OUTSIDE this
+  // lesson's own course: the cross-subject bridges and the handoff rule
+  // (FR-4006; the 2026-09-26 isolation audit). The lesson itself was admitted
+  // by `getLessonData`'s gate above; a bridge's far end and a handoff's target
+  // are other courses, and each is admitted only if she may see it. No
+  // student (the capture harness) is the ungated scope: nothing is refused,
+  // and both prompt goldens are unchanged.
+  const scope = await resolveStudentScope(studentId, client);
   // Curated cross-subject bridges touching this lesson's LOs (§5). Fetched for
   // every subject — the connection is symmetric — and appended only when some
-  // exist, so lessons without a bridge keep byte-identical data blocks.
-  const bridges = bridgeBlock(await getLessonBridges(data.los.map((l) => l.id)));
+  // exist, so lessons without a bridge keep byte-identical data blocks. Both
+  // ends must be courses she may see.
+  const bridges = bridgeBlock(
+    await getLessonBridges(data.los.map((l) => l.id), scope, client)
+  );
+  // The subjects a handoff may name: those with a course she may see. `null`
+  // courses is the ungated harness scope — not narrowed, the rule as written.
+  const taught: LessonData =
+    scope.courses === null
+      ? data
+      : {
+          ...data,
+          handoffSubjects: SPINE_SUBJECT_KEYS.filter((k) =>
+            scope.course(scope.courseForSubject(k))
+          ),
+        };
   // The rich teaching script grounds the AI-LED lesson (learn mode) only —
   // review stays a fast 3-minute lock-in, and not every subject's pipeline
   // emits content bundles (maths has none, so its data block is unchanged).
@@ -1549,7 +1613,7 @@ export async function buildLessonContext(
     mode === "learn" && effectiveProbing(probingSnapshot, PROBING_SURFACE, data.courseId);
 
   return {
-    systemPrompt: mode === "learn" ? learnPrompt(data, probing) : reviewPrompt(data),
+    systemPrompt: mode === "learn" ? learnPrompt(taught, probing) : reviewPrompt(taught),
     probing,
     dataBlock:
       lessonDataBlock(data) +
