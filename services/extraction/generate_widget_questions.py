@@ -370,105 +370,132 @@ VENN_REGION_KEYS = {2: ("a", "b", "ab", "n"), 3: ("a", "b", "c", "ab", "ac", "bc
 
 # What each instrument can express, in words — for the author and for the blind
 # reachability verifier (widgets.workflow.js). Same facts as the rules below.
-# The kinds of feature 003 (polygon_builder … area_model, and curve_sketcher's five
-# G10 families) carry app/src/lib/widget-docs.ts DOCS text WORD FOR WORD after the
+# EVERY kind carries app/src/lib/widget-docs.ts DOCS text WORD FOR WORD after the
 # spec example (tests/test_widget_templates.py checks it), then any limit
-# parseMathWidget enforces that the DOCS line does not state.
+# parseMathWidget enforces that the DOCS line does not state, then any pipeline rule
+# stricter than the app. Since 2026-09-27 (consistency review W1) that includes the
+# eleven original kinds: their paraphrases here had drifted — line_drawer's said "Any
+# two points on the right line are correct" after BOTH modes, so the pilot's S7 author
+# built "points" questions expecting the LINE to be graded, and mapped slope predicates
+# that points mode can never emit. What each mode can emit is the contract's can_emit
+# table, sent beside this text (author_args, verify_args).
 INSTRUMENTS = {
-    "pair_plotter": "A lattice grid from -5 to 5 on both axes; the student places ONE point. The target "
-                    "must be a whole-number pair within ±5.",
-    "product_builder": "Two sets X and Y of at most 4 numbers each, drawn as a grid of pairs; the student "
-                       "taps the pairs of X×Y.",
-    "line_drawer": "Two handles on lattice points from -5 to 5; the line through them is the answer. Mode "
-                   "'equation' (y = mx + b): b a whole number within ±5, m a whole number or the reciprocal "
-                   "of one, |m| ≤ 5. Mode 'points': the line through two given distinct lattice points "
-                   "within ±5. Any two points on the right line are correct.",
-    "circle_builder": "A circle of radius 5 centred at the origin on a lattice; the student constructs a "
-                      "radius, chord, diameter or tangent. Graded by the property, so every valid "
-                      "construction is correct.",
-    "angle_setter": "Points A, B, C on a circle; handles snap to 5°. ask 'central' targets 10–350°, "
-                    "'inscribed' 5–175°; the target must be a multiple of 5.",
-    "triangle_ratio": "A right triangle whose legs the student drags; ask sin, cos or tan of θ. sin and cos "
-                      "targets are strictly between 0 and 1; tan targets are > 0 and ≤ 12.",
-    "bar_builder": "n bars (3 ≤ n ≤ 8), each a value from 0 to 10; ask mean, median, mode or range of the "
-                   "set. The target is between 0 and 10; mode and range targets are whole numbers.",
-    "number_line_marker": "A number line whose range is two whole numbers within ±20, at most 24 wide. Mode "
-                          "'points': the student marks 1–4 whole-number values inside the range. Mode "
-                          "'interval': whole-number endpoints inside the range, each open or closed.",
-    "ratio_balance": "A beam with a : b = c : ? (direct) or a·b = c·? (inverse); the pan holds a whole "
-                     "number 1–24, so the fourth term must be one.",
-    "sample_space": "A rows × cols grid of outcomes (2–8 each, e.g. two dice); the student taps every "
-                    "outcome in the event described by a rule on the two values (sum, diff, product, same, "
-                    "first, second; eq, ne, lt, le, gt, ge).",
-    "curve_sketcher": "Freehand sketch of y = mx + c (fn 'linear', coefs [m, c]) or y = ax² + bx + c (fn "
-                      "'quadratic', coefs [a, b, c], a ≠ 0); every coefficient within ±10. Five more families, "
-                      "spec example {\"fn\":\"hyperbola\",\"coefs\":[2,-1]} — the same freehand "
-                      "curve_sketcher, five more families. fn ∈ hyperbola (coefs [a,q], y=a/x+q, a a nonzero "
-                      "whole number |a|≤6, q whole |q|≤3) | exponential (coefs [a,b,q], y=a·b^x+q, a nonzero "
-                      "whole |a|≤3, b ∈ {2,3,0.5}, q whole |q|≤3) | sine | cosine | tangent (coefs [a,q], "
-                      "amplitude a — nonzero whole, |a|≤4 for sine/cosine or ≤3 for tangent — and vertical "
-                      "shift q whole |q|≤3; θ is in DEGREES, domain 0..360, and the period is fixed by the "
-                      "book's own convention — 360° for sine/cosine, 180° for tangent — never a parameter you "
-                      "set). Hyperbola and tangent have more than one visible branch and CANNOT be drawn as "
-                      "one stroke: tell the student to lift their finger and draw each branch separately. "
-                      "Drawing straight through where the curve is undefined (x=0 for a hyperbola, θ=90°/270° "
-                      "for tangent) is rejected as \"asymptote-crossed\", which is the point — an asymptote is "
-                      "a boundary the curve approaches and never crosses.",
-    "polygon_builder": "Spec example {\"mode\":\"construct\",\"shape\":\"rhombus\"} — the student drags 3 or 4 "
-                       "vertices on a lattice into the named shape; graded on its PROPERTIES (side lengths, "
-                       "parallel sides, right angles), so every valid figure is accepted. shape (triangle) ∈ "
-                       "scalene | isosceles | right; shape (quadrilateral) ∈ parallelogram | rectangle | "
-                       "rhombus | square | trapezium | kite — never equilateral, which a square lattice cannot "
-                       "draw. Two other modes: "
-                       "{\"mode\":\"midsegment\",\"triangle\":[[0,0],[6,0],[0,6]],\"apex\":0} — the student "
-                       "drags a segment onto the two sides touching \"apex\" and it is graded "
-                       "parallel-and-half-length against the third side (the midpoint theorem, as a property, "
-                       "not a position); and {\"mode\":\"area\",\"shape\":\"triangle\",\"target\":6} — any "
-                       "polygon of that vertex count is accepted if its area matches (target must be a whole "
-                       "or half number, Pick's theorem). Validator limits (parseMathWidget): a midsegment "
-                       "triangle's vertices are whole-number pairs within ±6 and not collinear, apex 0, 1 or "
-                       "2; an area target is above 0 and at most 24.",
-    "solid_scaler": "Spec example {\"solid\":\"cylinder\",\"ask\":\"volume\",\"ratio\":8} — a simple isometric "
-                    "solid the student scales by dragging a factor k; the live readout shows V0·k³ and A0·k² "
-                    "together. solid ∈ box | cylinder | cone | pyramid | sphere; ask ∈ volume | area. "
-                    "\"ratio\" is the TARGET MULTIPLE (never an absolute number) and its correct k — ∛ratio "
-                    "for volume, √ratio for area — must land on the slider's own 0.5 stops from 0.5 to 4 (so "
-                    "favour ratio ∈ {1, 2.25, 4, 8, 9, 15.625, 16, 27, 64, …} — check ∛ or √ lands on a half "
-                    "before emitting). ask:\"area\" also shows toggles for which face(s) count, so leaving a "
-                    "base off is diagnosed on its own. Validator limits (parseMathWidget): ratio above 0; "
-                    "optional \"dims\" — box {l, w, h} (default 4, 3, 2), cylinder and cone {r, h} (default 2, "
-                    "4), pyramid {s, h} (default 4, 3), sphere {r} (default 2) — each above 0 and at most 8. "
-                    "Give dims whenever the question states the solid's measurements, so the drawing shows "
-                    "them.",
-    "box_plot_builder": "Spec example {\"data\":[2,4,4,5,6,7,9,12,15]} — the student drags five markers "
-                        "(minimum, Q1, median, Q3, maximum) onto a number line for the given data set. "
-                        "\"data\" must be 5–16 WHOLE numbers (so every quartile lands on the widget's snap "
-                        "grid) — never pre-sorted for the student, and include an outlier only when you want "
-                        "the whisker-vs-outlier distinction taught. Quartiles are graded by this book's own "
-                        "method: linear interpolation between ranks (Siyavula §10.4's \"percentile formula\"), "
-                        "not the split-at-the-median method some other syllabuses use. Validator limits "
-                        "(parseMathWidget): every value within ±500.",
-    "venn_builder": "Spec example "
-                    "{\"sets\":2,\"labels\":[\"Football\",\"Chess\"],\"mode\":\"shade\",\"target\":\"aOnly\"} "
-                    "— a real 2- or 3-circle Venn diagram; the student taps the region(s) that make the named "
-                    "target true. target ∈ union | intersection | aOnly | bOnly | cOnly | complementA | "
-                    "complementB | complementC | neither — cOnly/complementC need sets:3. The other mode fills "
-                    "in counts instead of shading: "
-                    "{\"mode\":\"counts\",\"sets\":2,\"labels\":[\"French\",\"German\"],\"total\":20,\"regions\":{\"a\":8,\"b\":5,\"ab\":4,\"n\":3},\"clues\":{\"a\":12,\"b\":9}} "
-                    "— \"regions\" is every exclusive zone's TRUE count (a/b/c/ab/ac/bc/abc/n, whichever the "
-                    "set count needs) and must sum to \"total\" when you give one; \"clues\" are the word "
-                    "problem's raw, PRE-overlap set sizes, which is what lets the widget name \"counted the "
-                    "overlap twice\" as the specific mistake it is. Validator limits (parseMathWidget): "
-                    "\"labels\" holds one non-empty name per set; every region count is a whole number 0–999; "
-                    "total and clues are whole numbers, not negative. Pipeline rule: each clue is the size of "
-                    "its set as the regions give it (a + ab for two sets; a + ab + ac + abc for three).",
-    "area_model": "Spec example {\"mode\":\"expand\",\"a\":2,\"b\":-3} — algebra tiles as a grid the student "
-                  "builds: one x² tile anchored, x-tiles run out along its top and left edges (the \"a\" and "
-                  "\"b\" signs — negative tiles are hatched AND marked \"−\", never colour alone), and the "
-                  "block those two runs bound is where the ab unit tiles go. mode ∈ expand | factor — same "
-                  "target (x+a)(x+b), same grading, only the prompt differs; a and b are whole numbers, not "
-                  "both zero, |a| and |b| ≤ 4 (the grid runs out past that). Prefer this over an explanation "
-                  "of FOIL: the cross term is something the student places, not a step they recite.",
+    "pair_plotter": "Spec example {\"target\":[3,2]} — a coordinate grid (−5..5); the student taps one lattice point. "
+        "Target coordinates must be whole numbers in −5..5.",
+    "product_builder": "Spec example {\"X\":[1,2],\"Y\":[3,4,5]} — the student taps ordered pairs to build X×Y (decoys are added "
+        "automatically). Small sets only: 2–3 numbers each, at most 4. Validator limits (parseMathWidget): X "
+        "and Y are non-empty lists of numbers.",
+    "line_drawer": "Spec example {\"mode\":\"equation\",\"m\":2,\"b\":-1} — the student DRAGS two lattice points and the line "
+        "through them is drawn, with its equation updating live. In \"equation\" mode any two points on the "
+        "correct line are accepted, so use it to ask for a line by its rule; m must be a whole number or the "
+        "reciprocal of one, and b a whole number in −5..5. The other mode is "
+        "{\"mode\":\"points\",\"through\":[[-2,1],[3,4]]} — there the two named points ARE the answer. Validator "
+        "limits (parseMathWidget): |m| is at most 5; in \"points\" mode the two points are distinct lattice "
+        "points within ±5. Pipeline rule (stricter than the app; consistency review A10): in \"points\" mode "
+        "neither named point, nor either point with its x and y exchanged, may sit at (-3, -2) or (1, 1) — "
+        "the two handles open there, so the widget would start half-answered and a handle the student never "
+        "moved could not be told from one she placed.",
+    "circle_builder": "Spec example {\"element\":\"chord\"} — a circle of radius 5 about M; the student drags both ends of a "
+        "segment to construct the named element. element ∈ radius | chord | diameter | tangent. Every "
+        "construction with the right PROPERTY is accepted (a chord has dozens of correct answers), and the "
+        "defining properties light up live as the student drags — so use it to teach what the word means, not "
+        "to test one remembered picture.",
+    "angle_setter": "Spec example {\"ask\":\"inscribed\",\"target\":35} — A, B and C all drag on a circle; the arc AB that C "
+        "faces and the angle ∠ACB are shown together and stay in a 2:1 ratio through every drag. ask ∈ "
+        "central | inscribed. target must be a multiple of 5 (inscribed 5–175, central 10–350). This is the "
+        "inscribed-angle theorem as a thing the student does with their hands — prefer it to any explanation "
+        "of that theorem.",
+    "triangle_ratio": "Spec example {\"ask\":\"sin\",\"target\":0.6} — a right triangle whose two legs the student drags, with "
+        "sin, cos and tan all updating live. ask ∈ sin | cos | tan; it is graded on the RATIO, so every "
+        "similar triangle is accepted — 3-4 and 6-8 both give tan 0.75. sin and cos targets must be below 1. "
+        "Use it to show that the ratio does not depend on the size. Validator limits (parseMathWidget): every "
+        "target is above 0, and a tan target is at most 12.",
+    "bar_builder": "Spec example {\"ask\":\"mean\",\"target\":6,\"n\":5} — the student drags bars (0..10) to BUILD a data set "
+        "with a given statistic; mean, median, mode, range and the population standard deviation are all "
+        "shown live. ask ∈ mean | median | mode | range; n is 3–8. This runs the book's question backwards on "
+        "purpose: many data sets have a mean of 6, and discovering that is the lesson. Validator limits "
+        "(parseMathWidget): the target is between 0 and 10, the bars' own range; a mode or range target is a "
+        "whole number.",
+    "number_line_marker": "Spec example {\"mode\":\"points\",\"range\":[-6,6],\"targets\":[-2,3]} — the student taps values on a number "
+        "line; the answer is a SET and is graded as one (1–4 targets). The other mode is "
+        "{\"mode\":\"interval\",\"range\":[-6,6],\"from\":2,\"to\":6,\"openFrom\":true,\"openTo\":true} — an inequality, "
+        "where the student also sets each endpoint hollow (excluded, < or >) or filled (included, ≤ or ≥). "
+        "Validator limits (parseMathWidget): \"range\" is two increasing whole numbers within ±20, at most 24 "
+        "wide; every target, and each interval endpoint (from ≤ to), is a whole number inside the range.",
+    "ratio_balance": "Spec example {\"mode\":\"direct\",\"a\":3,\"b\":4,\"c\":9} — a beam balance for the fourth term; the student "
+        "drags the right pan until it is level. mode \"direct\" requires the two QUOTIENTS to match, \"inverse\" "
+        "the two PRODUCTS (use inverse for \"more workers, fewer days\"). The fourth term must come out a whole "
+        "number from 1 to 24 — check that before emitting. Validator limits (parseMathWidget): a, b and c are "
+        "positive.",
+    "sample_space": "Spec example {\"rows\":6,\"cols\":6,\"rule\":{\"kind\":\"sum\",\"op\":\"eq\",\"value\":7}} — the whole sample space "
+        "as a grid; the student taps or drags across the outcomes in the event and n(E)/n(S) assembles live. "
+        "kind ∈ sum | diff | product | same | first | second; op ∈ eq | ne | lt | le | gt | ge. You name the "
+        "RULE and the app works out which cells satisfy it — never send a list of correct cells. Validator "
+        "limits (parseMathWidget): rows and cols are 2–8 each. Pipeline rule (stricter than the app): the "
+        "event holds at least one outcome.",
+    "curve_sketcher": "Spec example {\"fn\":\"quadratic\",\"coefs\":[1,0,-4]} — the student draws the curve FREEHAND with a "
+        "finger and the sketch is scored on shape, within about one grid square. fn ∈ linear (coefs [m,c]) | "
+        "quadratic (coefs [a,b,c], a ≠ 0). A stroke that doubles back is rejected for failing the vertical "
+        "line test, which makes it a good way to revisit what a function is. Keep the curve mostly inside "
+        "−5..5. Validator limits (parseMathWidget): every linear or quadratic coefficient is within ±10. Five "
+        "more families: spec example {\"fn\":\"hyperbola\",\"coefs\":[2,-1]} — the same freehand curve_sketcher, "
+        "five more families. fn ∈ hyperbola (coefs [a,q], y=a/x+q, a a nonzero whole number |a|≤6, q whole "
+        "|q|≤3) | exponential (coefs [a,b,q], y=a·b^x+q, a nonzero whole |a|≤3, b ∈ {2,3,0.5}, q whole |q|≤3) "
+        "| sine | cosine | tangent (coefs [a,q], amplitude a — nonzero whole, |a|≤4 for sine/cosine or ≤3 for "
+        "tangent — and vertical shift q whole |q|≤3; θ is in DEGREES, domain 0..360, and the period is fixed "
+        "by the book's own convention — 360° for sine/cosine, 180° for tangent — never a parameter you set). "
+        "Hyperbola and tangent have more than one visible branch and CANNOT be drawn as one stroke: tell the "
+        "student to lift their finger and draw each branch separately. Drawing straight through where the "
+        "curve is undefined (x=0 for a hyperbola, θ=90°/270° for tangent) is rejected as \"asymptote-crossed\", "
+        "which is the point — an asymptote is a boundary the curve approaches and never crosses.",
+    "polygon_builder": "Spec example {\"mode\":\"construct\",\"shape\":\"rhombus\"} — the student drags 3 or 4 vertices on a lattice "
+        "into the named shape; graded on its PROPERTIES (side lengths, parallel sides, right angles), so "
+        "every valid figure is accepted. shape (triangle) ∈ scalene | isosceles | right; shape "
+        "(quadrilateral) ∈ parallelogram | rectangle | rhombus | square | trapezium | kite — never "
+        "equilateral, which a square lattice cannot draw. Two other modes: "
+        "{\"mode\":\"midsegment\",\"triangle\":[[0,0],[6,0],[0,6]],\"apex\":0} — the student drags a segment onto the "
+        "two sides touching \"apex\" and it is graded parallel-and-half-length against the third side (the "
+        "midpoint theorem, as a property, not a position); and {\"mode\":\"area\",\"shape\":\"triangle\",\"target\":6} "
+        "— any polygon of that vertex count is accepted if its area matches (target must be a whole or half "
+        "number, Pick's theorem). Validator limits (parseMathWidget): a midsegment triangle's vertices are "
+        "whole-number pairs within ±6 and not collinear, apex 0, 1 or 2; an area target is above 0 and at "
+        "most 24.",
+    "solid_scaler": "Spec example {\"solid\":\"cylinder\",\"ask\":\"volume\",\"ratio\":8} — a simple isometric solid the student "
+        "scales by dragging a factor k; the live readout shows V0·k³ and A0·k² together. solid ∈ box | "
+        "cylinder | cone | pyramid | sphere; ask ∈ volume | area. \"ratio\" is the TARGET MULTIPLE (never an "
+        "absolute number) and its correct k — ∛ratio for volume, √ratio for area — must land on the slider's "
+        "own 0.5 stops from 0.5 to 4 (so favour ratio ∈ {1, 2.25, 4, 8, 9, 15.625, 16, 27, 64, …} — check ∛ "
+        "or √ lands on a half before emitting). ask:\"area\" also shows toggles for which face(s) count, so "
+        "leaving a base off is diagnosed on its own. Validator limits (parseMathWidget): ratio above 0; "
+        "optional \"dims\" — box {l, w, h} (default 4, 3, 2), cylinder and cone {r, h} (default 2, 4), pyramid "
+        "{s, h} (default 4, 3), sphere {r} (default 2) — each above 0 and at most 8. Give dims whenever the "
+        "question states the solid's measurements, so the drawing shows them.",
+    "box_plot_builder": "Spec example {\"data\":[2,4,4,5,6,7,9,12,15]} — the student drags five markers (minimum, Q1, median, "
+        "Q3, maximum) onto a number line for the given data set. \"data\" must be 5–16 WHOLE numbers (so every "
+        "quartile lands on the widget's snap grid) — never pre-sorted for the student, and include an outlier "
+        "only when you want the whisker-vs-outlier distinction taught. Quartiles are graded by this book's "
+        "own method: linear interpolation between ranks (Siyavula §10.4's \"percentile formula\"), not the "
+        "split-at-the-median method some other syllabuses use. Validator limits (parseMathWidget): every "
+        "value within ±500.",
+    "venn_builder": "Spec example {\"sets\":2,\"labels\":[\"Football\",\"Chess\"],\"mode\":\"shade\",\"target\":\"aOnly\"} — a real 2- or "
+        "3-circle Venn diagram; the student taps the region(s) that make the named target true. target ∈ "
+        "union | intersection | aOnly | bOnly | cOnly | complementA | complementB | complementC | neither — "
+        "cOnly/complementC need sets:3. The other mode fills in counts instead of shading: "
+        "{\"mode\":\"counts\",\"sets\":2,\"labels\":[\"French\",\"German\"],\"total\":20,\"regions\":{\"a\":8,\"b\":5,\"ab\":4,\"n\":3},\"clues\":{\"a\":12,\"b\":9}} "
+        "— \"regions\" is every exclusive zone's TRUE count (a/b/c/ab/ac/bc/abc/n, whichever the set count "
+        "needs) and must sum to \"total\" when you give one; \"clues\" are the word problem's raw, PRE-overlap "
+        "set sizes, which is what lets the widget name \"counted the overlap twice\" as the specific mistake it "
+        "is. Validator limits (parseMathWidget): \"labels\" holds one non-empty name per set; every region "
+        "count is a whole number 0–999; total and clues are whole numbers, not negative. Pipeline rule: each "
+        "clue is the size of its set as the regions give it (a + ab for two sets; a + ab + ac + abc for "
+        "three).",
+    "area_model": "Spec example {\"mode\":\"expand\",\"a\":2,\"b\":-3} — algebra tiles as a grid the student builds: one x² "
+        "tile anchored, x-tiles run out along its top and left edges (the \"a\" and \"b\" signs — negative tiles "
+        "are hatched AND marked \"−\", never colour alone), and the block those two runs bound is where the ab "
+        "unit tiles go. mode ∈ expand | factor — same target (x+a)(x+b), same grading, only the prompt "
+        "differs; a and b are whole numbers, not both zero, |a| and |b| ≤ 4 (the grid runs out past that). "
+        "Prefer this over an explanation of FOIL: the cross term is something the student places, not a step "
+        "they recite.",
 }
 
 
