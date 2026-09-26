@@ -468,19 +468,41 @@ and is now passed. These are the remaining build items that round adds.
   previously exported, reviewed bundle for a course, keeping each row's own status and review stamp,
   gated by a **typed confirmation of the course id**, with the same backup-first, verified-readback
   discipline as the load mode, refusing if the restore target's provenance does not match the course
-  already present.
-- [ ] T431 [US1] (WP-E) **The per-course "Arabic touches" setting** (decision 30; FR-4205 amended): add
+  already present. **Checked 2026-09-27, not ticked**: the workflow has a `restore` mode, but it is a
+  different thing — it rolls the **whole database** back to a named `pg_dump` backup, confirmed by
+  retyping the backup's file name, and so also undoes every student's progress since that backup
+  (`load-course.yml:16–22`, `deploy/load-course.sh` step 7). That conflicts with FR-4210 ("keeps every
+  student's progress or refuses"). Which one is right is **Samuel's decision** (open question in
+  `docs/PROJECT_STATE.md`): build the bundle replay described here, or keep the rollback and amend
+  decision 29, FR-4208/FR-4210 and constitution X.
+- [x] T431 [US1] (WP-E) **The per-course "Arabic touches" setting** (decision 30; FR-4205 amended): add
   an `arabicTouches` (or similarly named) flag to `CourseDef`, `true` for every National course
   (unchanged) and `false` for G10. Where G10's prompts are built, no Egyptian-Arabic phrase or
   colloquialism is used; the address term "Egyptian student" is kept regardless of the flag. Extend the
-  byte-identity capture (T323) to prove National prompts are unaffected.
-- [ ] T432 [US2] (WP-P3, coordinate with WP-DOC) **Arabic lesson titles from the book's own printed
-  names** (decision 34; ADR-0020's fifth exception): where a National Arabic lesson's working title
-  differs from the book's own printed section name, retitle it to the book's name. This is a content
-  change to the already-loaded Arabic bundles, not new pipeline code; commit the retitled bundle and add
-  the affected lessons' prompts to the byte-identity capture set as new, deliberately-changed goldens
-  (not a regression), per ADR-0020's fifth exception.
-- [ ] T433 [US2] (WP-P8) **The third-reading rule for disagreeing maths transcriptions** (decision 32;
+  byte-identity capture (T323) to prove National prompts are unaffected. **Verified 2026-09-27**:
+  `CourseTutorFacts.arabicTouches` in `lib/courses.ts` (`true` for the National courses, `false` for
+  G10); `lib/lesson.ts` swaps each Arabic touch for an English one when it is off.
+  `g10-prompts.test.mts` (no Arabic script in any G10 render; "an Egyptian grade-10 student" kept in
+  all four address registers), `national-prompts.test.mts` (unchanged) and `lesson-names.test.mts`
+  pass. **Open for Samuel, not part of this tick**: the language line the code adds for G10 ("write no
+  Arabic at all … even if the student writes to you in Arabic") goes further than decision 30's "no
+  Egyptian-Arabic phrases" (integration backlog 53).
+- [x] T432 [US2] (WP-P3, coordinate with WP-DOC) **Arabic lesson titles from the book's own printed
+  names** (decision 34; ADR-0020's sixth exception, numbered the fifth until 2026-09-27): where a
+  National Arabic lesson's working title differs from the book's own printed section name, retitle it
+  to the book's name. This is a content change to the already-loaded Arabic bundles, not new pipeline
+  code; commit the retitled bundle and add the affected lessons' prompts to the byte-identity capture
+  set as new, deliberately-changed goldens (not a regression), per ADR-0020's sixth exception.
+  **Verified 2026-09-27**: the printed names are in `services/extraction/books/prep3-arabic-ar.json`
+  (`lesson_titles`, identical to the bundles' `syllabus_ref` titles); `load_seed.py` writes them to
+  `course_lessons.title`; the app reads them only for the Arabic course
+  (`CourseTutorFacts.bookLessonTitles`, `shownTitles`). `national-prompts.test.mts` proves the
+  deliberate change: with the loader's rows in the store, exactly five Arabic renders change, each by
+  the title only (for example «فهم النص والاستماع» → «عِبادُ الرَّحمنِ»), and every maths and Social
+  Studies render stays the v0.9.2 golden. Not yet done: the full 438-file capture over a real
+  database (integration backlog 58). Open review question: the lesson data line now names the lesson
+  twice (backlog 52).
+- [x] T433 [US2] (WP-P8) **The third-reading rule for disagreeing maths transcriptions** (decision 32;
   FR-4407 amended): extend `services/extraction/runbook/transcribe-maths.workflow.js` and
   `services/extraction/assemble_maths.py` (B21) so that when S0b's two independent readings disagree, a
   **third** independent reading decides, instead of holding the image; the third reading is itself
@@ -488,7 +510,14 @@ and is now passed. These are the remaining build items that round adds.
   rule: an image with no printed-page counterpart (found only inside an EPUB worked solution) is
   accepted on a hash match, on two agreeing readings, or on the third reading, by the same rule as any
   other image. Extend `tests/test_assemble_maths.py`'s `@covers FR-4407` cases and the route-count report
-  (SC-213) to include the third-reading route.
+  (SC-213) to include the third-reading route. **Verified 2026-09-27**: `transcribe-maths.workflow.js`
+  runs pass C alone, blind to A and B, on the images they did not agree on
+  (`assemble_maths.py vision-args --pass C --runs …`); `assemble_maths.py` accepts a third reading only
+  when it agrees with A or with B (two of three), then cross-checks it against the PDF text layer; an
+  image used only in an EPUB worked solution (class `solution_only`) follows the same rule and is
+  reported per class (`routes_by_class`). The summary counts `accepted_by_third_reading`. Three
+  third-reading tests in `test_assemble_maths.py` pass. Used in the Chapter 8 pilot: 13 images accepted
+  by the third reading, 853/853 accepted, 0 queued.
 
 ---
 

@@ -278,11 +278,19 @@ ASKED_FORMS = ("factorised", "expanded", "simplest", "prime_factors", "decimal")
 
 class FormRule(BaseModel):
     """S3: an item whose stem matches `match` (a case-insensitive regex) asks for `form`, and its
-    marker spec carries that form check whatever the typing agent said (backlog 30/31)."""
+    marker spec carries that form check whatever the typing agent said (backlog 30/31). form "subject"
+    names its variable in `subject` ("in the form y = mx + c" → y as the subject; consistency review A9)."""
     model_config = ConfigDict(extra="forbid")
     match: str
-    form: Literal["factorised", "expanded", "simplest", "prime_factors", "decimal"]
+    form: Literal["factorised", "expanded", "simplest", "prime_factors", "decimal", "subject"]
+    subject: Optional[str] = None
     note: Optional[str] = None
+
+    @model_validator(mode="after")
+    def _subject(self):
+        if (self.form == "subject") != bool(self.subject):
+            raise ValueError('form "subject" names its variable in `subject`, and only it does')
+        return self
 
     @field_validator("match")
     @classmethod

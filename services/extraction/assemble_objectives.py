@@ -1712,7 +1712,7 @@ def answer_rule_flags(book, ref: str, stem: str, printed: str | None) -> dict:
         return out
     for r in rules.forms_from_stem:
         if re.search(r.match, stem or "", re.I):
-            out["asked_form"] = r.form
+            out["asked_form"] = {"subject": r.subject} if r.form == "subject" else r.form
             break
     for d in rules.printed_not_in_asked_form:
         if d.item == ref:

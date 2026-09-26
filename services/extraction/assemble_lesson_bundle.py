@@ -1321,8 +1321,9 @@ def assemble(book, manifest_path: Path, objectives_dir: Path, runs_dir: Path,
         if "questions" in b:
             apply_form_rules(b, book, report)
             police_figures(b, report)
-    prime_known(t for b in bundles.values() for t in _strings(b))
-    bundles = {name: respace_tree(b, report) for name, b in bundles.items()}
+    if check_markers:   # both need node (the app's KaTeX); --no-marker-check skips them and says so
+        prime_known(t for b in bundles.values() for t in _strings(b))
+        bundles = {name: respace_tree(b, report) for name, b in bundles.items()}
     for b in bundles.values():               # the answer text follows the re-spaced key
         for q in b.get("questions") or []:
             ch = q.get("choices")
@@ -1349,10 +1350,10 @@ def assemble(book, manifest_path: Path, objectives_dir: Path, runs_dir: Path,
         lesson_inputs = {k: v for k, v in inputs[mod["id"]].items() if k.endswith(f"/{les.slug}.json")}
         report.content[les.slug] = lesson_content(book, les, objectives[les.slug],
                                                   claims_by_lesson.get(les.slug, []), lesson_inputs)
-    prime_known(t for c in report.content.values() for t in _strings(c))
-    report.content = {slug: respace_tree(c, report) for slug, c in report.content.items()}
     report.counts["content_files"] = len(report.content)
-    if check_markers:     # the same node run as the marker check; skipped with it
+    if check_markers:     # node, as the marker check; skipped with it
+        prime_known(t for c in report.content.values() for t in _strings(c))
+        report.content = {slug: respace_tree(c, report) for slug, c in report.content.items()}
         rows = [r for name, b in bundles.items() for r in student_texts(b, name)]
         rows += [r for slug, c in report.content.items() for r in student_texts(c, slug)]
         report.katex_errors = katex_errors(rows)
@@ -1417,6 +1418,19 @@ def main(argv: list[str] | None = None) -> int:
           + ("" if rep["marker_check"] == "run" else f" — {rep['marker_check']}"))
     for x in rep["held_by_marker"][:12]:
         print(f"    held: {x['id']} key {x['key']!r} — {x['why']}")
+    print(f"  LaTeX: {rep['latex_respaced']} glued command(s) re-spaced, {rep['assignments_split']} assignment "
+          f"chain(s) split; the app's KaTeX: {len(rep['katex_errors'])} error(s)")
+    for x in rep["katex_errors"][:12]:
+        print(f"    KaTeX: {x['where']}: {x['segment'][:80]} — {x['why'][:100]}")
+    if rep["ambiguous_pairs_for_g2"]:
+        print(f"  (a,b) sides of an equation, read as decimals, listed for G2: {rep['ambiguous_pairs_for_g2']}")
+    for x in rep["forms_from_rules"]:
+        print(f"  form from the book's rules: {x['id']} → {x['form']} (was {x['was']})")
+    for x in rep["visuals_dropped"]:
+        print(f"  figure dropped: {x['visual']} ({x['question']}) — {x['why']}")
+    if rep["held_for_figure"]:
+        print(f"  held (review, not live): {len(rep['held_for_figure'])} question(s) whose stem shows [figure] "
+              f"and have no figure")
     if a.report:
         a.report.parent.mkdir(parents=True, exist_ok=True)
         a.report.write_text(json.dumps(rep, indent=2, ensure_ascii=False) + "\n")
