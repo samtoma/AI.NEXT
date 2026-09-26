@@ -924,6 +924,22 @@ class NormalisedAfterVerification(unittest.TestCase):
         self.assertEqual(acc, set())
         self.assertIn("stem changed since verification", " ".join(rej[out["id"]]))
 
+    def test_a_fresh_verification_at_the_current_sha_overrides_a_stale_verified_as(self):
+        """An instance added after a carried verification cannot carry — re-verifying the template as it now stands
+        is the repair, and those fresh verdicts decide (s3-2-1's replacement instance, Chapter 8)."""
+        out, _ = GW.normalise_template(self.verified, graph())
+        grown = dict(out, instances=out["instances"] + [{"x1": 0, "y1": 1, "x2": 3, "y2": 7}])
+        t, qs = self.build(grown)
+        stale = self.verdicts(qs, self.sha)
+        acc, rej = GW.apply_verdicts(t, qs, [stale])
+        self.assertEqual(acc, set())
+        self.assertIn("verify it again", " ".join(rej[out["id"]]))
+        fresh = self.verdicts(qs, t[0]["_sha"])
+        self.assertEqual(GW.apply_verdicts(t, qs, [stale, fresh]), ({out["id"]}, {}))
+        # fresh verdicts for only SOME instances do not repair it
+        partial = self.verdicts(qs[:1], t[0]["_sha"])
+        self.assertEqual(GW.apply_verdicts(t, qs, [stale, partial])[0], set())
+
     def test_a_template_with_only_dead_mappings_goes_back_to_the_author(self):
         raw = dict(self.verified, diagnostics=[{"predicate": "slope-inverted", "misconception_id": "mc:g10m8s3-1-1:run-over-rise"}],
                    instances=[{"x1": -1, "y1": 0, "x2": 1, "y2": 4}])
