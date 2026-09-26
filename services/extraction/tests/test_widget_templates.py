@@ -270,20 +270,39 @@ class Reachability(unittest.TestCase):
             self.assertNotIn("unknown widget kind", " ".join(GW.reachability(kind, {})), kind)
             self.assertIn(f"{kind} {{", rules, kind)
 
+    @staticmethod
+    def docs_line(docs: str, key: str) -> tuple[str, dict, str]:
+        """(name, the example payload without its prompt, the text after " — ") of one widget-docs.ts DOCS entry.
+        The directive closes with "}}" — sample_space's line has one brace too few, so both are tried."""
+        m = re.search(r"\n  %s: \{\n    name: \"(\w+)\",\n    line: `(.*?)`,\n  \}," % key, docs, re.S)
+        assert m, key
+        head = re.match(r"\{\{widget:(\w+):", m.group(2))
+        rest = m.group(2)[head.end():]
+        for sep in re.finditer(" — ", rest):
+            for n in (2, 1):
+                if rest[sep.start() - n:sep.start()] == "}" * n:
+                    try:
+                        payload = json.loads(rest[:sep.start() - n])
+                    except json.JSONDecodeError:
+                        continue
+                    return m.group(1), {k: v for k, v in payload.items() if k != "prompt"}, rest[sep.end():]
+        raise AssertionError(f"{key}: no example payload")
+
     def test_the_instruments_carry_the_apps_docs_word_for_word(self):
+        """Every kind (W1, 2026-09-27: the eleven original kinds too — their paraphrases had drifted, and
+        line_drawer's told the S7 author a "points" question is graded on the line)."""
         docs = (REPO / "app" / "src" / "lib" / "widget-docs.ts").read_text()
-        for key, kind in (("polygon_builder", "polygon_builder"), ("solid_scaler", "solid_scaler"),
-                          ("box_plot_builder", "box_plot_builder"), ("venn_builder", "venn_builder"),
-                          ("area_model", "area_model"), ("curve_sketcher_g10", "curve_sketcher")):
-            m = re.search(r"\n  %s: \{\n    name: \"(\w+)\",\n    line: `(.*?)`,\n  \}," % key, docs, re.S)
-            self.assertIsNotNone(m, key)
-            self.assertEqual(m.group(1), kind)
-            d = re.match(r"\{\{widget:(\w+):(\{.*?\})\}\} — (.*)$", m.group(2), re.S)
-            example = {k: v for k, v in json.loads(d.group(2)).items() if k != "prompt"}
-            text = GW.INSTRUMENTS[kind]
-            self.assertIn(d.group(3), text, f"{key}: the DOCS text, word for word")
-            self.assertIn(json.dumps(example, ensure_ascii=False, separators=(",", ":")) + " — " + d.group(3), text)
+        keys = re.findall(r"\n  (\w+): \{\n    name: \"\w+\",", docs)
+        self.assertEqual({dict(curve_sketcher_g10="curve_sketcher").get(k, k) for k in keys}, set(GW.INSTRUMENTS))
+        for key in keys:
+            kind, example, text = self.docs_line(docs, key)
+            self.assertEqual(kind, dict(curve_sketcher_g10="curve_sketcher").get(key, key))
+            self.assertIn(json.dumps(example, ensure_ascii=False, separators=(",", ":")) + " — " + text,
+                          GW.INSTRUMENTS[kind], f"{key}: the DOCS text, word for word, after its example")
             self.assertEqual(GW.reachability(kind, example), [], f"{key}: the DOCS example is reachable")
+        # the paraphrase that misled the pilot's author is gone
+        self.assertNotIn("Any two points on the right line are correct", GW.INSTRUMENTS["line_drawer"])
+        self.assertIn("there the two named points ARE the answer", GW.INSTRUMENTS["line_drawer"])
 
 
 class ReadingNewKinds(unittest.TestCase):
