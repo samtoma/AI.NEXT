@@ -637,6 +637,7 @@ class Report:
         self.forms_from_rules: list[dict] = [] # A9: marker forms set from the book's form rules
         self.visuals_dropped: list[dict] = []  # A8: a figure that draws the question's unknown
         self.held_for_figure: list[str] = []   # A3: a stem that shows [figure] with no figure: review
+        self.captions_fixed: list[dict] = []   # a caption that described a withheld point as shown
 
     def as_dict(self) -> dict:
         return {"counts": dict(sorted(self.counts.items())),
@@ -649,7 +650,7 @@ class Report:
                 "ambiguous_pairs_for_g2": sorted(set(self.ambiguous_pairs)), "latex_respaced": self.respaced,
                 "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
                 "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
-                "held_for_figure": self.held_for_figure}
+                "held_for_figure": self.held_for_figure, "captions_fixed": self.captions_fixed}
 
 
 def _norm(text: str | None, where: str, report: Report) -> str | None:
@@ -908,6 +909,51 @@ def visual_gives_answer(question: dict, visual: dict) -> str | None:
     return None
 
 
+# A caption describes only what is drawn (2026-09-27): a point a figure WITHHOLDS (lesson-v6 `withheld`, the
+# exercise's unknown) must not be described as marked, shown, drawn or plotted — "with the midpoint M marked on it",
+# "tick marks along GH showing where its midpoint M falls". Deterministic: the clause that says so is dropped.
+_SHOWN = re.compile(r"\b(mark(?:ed|s|ing)?|shown?|showing|drawn|draws?|plotted|labell?ed|tick(?:s| marks?)?)\b", re.I)
+_NOT_SHOWN = re.compile(r"(\bnot\b|n't\b|\bun)\s*(mark|shown|drawn|plotted|label)", re.I)
+
+
+def _clauses(caption: str) -> list[str]:
+    """Split at "," ";" "—" outside brackets: "A(-1; 0) is plotted; B is not" is two clauses, not three."""
+    out, cur, depth = [], "", 0
+    for ch in caption:
+        depth += ch in "([{"
+        depth -= ch in ")]}"
+        if ch == "—" and depth <= 0 and cur.strip():
+            out.append(cur)
+            cur = ch
+            continue
+        cur += ch
+        if ch in ",;" and depth <= 0:
+            out.append(cur)
+            cur = ""
+    out.append(cur)
+    return [c.strip() for c in out if c.strip()]
+
+
+def caption_problems(caption: str | None, withheld) -> list[str]:
+    """The clauses of a caption that describe a withheld point as marked or shown."""
+    out = []
+    for c in _clauses(caption or ""):
+        if any(re.search(rf"(?<![A-Za-z]){re.escape(w)}(?![A-Za-z])", c) for w in withheld or []) \
+                and _SHOWN.search(c) and not _NOT_SHOWN.search(c):
+            out.append(c.strip())
+    return out
+
+
+def fix_caption(caption: str | None, withheld) -> str | None:
+    """The caption without its clauses that describe a withheld point as shown; its sentence closed again."""
+    bad = caption_problems(caption, withheld)
+    if not bad:
+        return caption
+    kept = [c for c in _clauses(caption) if c.strip() not in bad]
+    text = " ".join(kept).strip().rstrip(",;—").strip()
+    return (text + ".") if text and not text.endswith((".", "?", "!")) else (text or None)
+
+
 def police_figures(bundle: dict, report: Report) -> None:
     """A8: drop an EXERCISE figure that draws its question's unknown (a worked example's may show its answer).
     A3: a question whose stem shows [figure] and has no figure is not verified, so it loads as `review`, never
@@ -971,6 +1017,14 @@ def form_problems(bundle: dict, book) -> list[str]:
                     out.append(f"{q['id']}: the stem asks for {want}, the marker checks {ch['marker'].get('form')}")
                 break
     return out
+
+
+def _captioned(v, report: Report, slug: str) -> str | None:
+    withheld = getattr(v, "withheld", None) or []
+    fixed = fix_caption(v.caption, withheld)
+    if fixed != v.caption:
+        report.captions_fixed.append({"visual": f"v:{slug}:{v.n:03d}", "was": v.caption, "now": fixed})
+    return fixed
 
 
 def _norm_spec(spec, where: str, report: Report):
@@ -1137,7 +1191,7 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
             visuals.append({"id": f"v:{les.slug}:{v.n:03d}", "lo": v.lo,
                             "question": refs.get(v.question) if v.question else None,
                             "kind": v.kind, "spec": _norm_spec(v.spec, f"{les.slug}:v{v.n}", report),
-                            "caption": _norm(v.caption, f"{les.slug}:v{v.n}", report),
+                            "caption": _norm(_captioned(v, report, les.slug), f"{les.slug}:v{v.n}", report),
                             "source_page": v.printed_page})
         report.counts["viz_gaps"] += len(run.viz_gaps)
         report.counts["teacher_only_dropped"] += run.teacher_only.dropped
@@ -1427,6 +1481,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  form from the book's rules: {x['id']} → {x['form']} (was {x['was']})")
     for x in rep["visuals_dropped"]:
         print(f"  figure dropped: {x['visual']} ({x['question']}) — {x['why']}")
+    for x in rep["captions_fixed"]:
+        print(f"  caption fixed: {x['visual']}: {x['now']!r} (was {x['was']!r})")
     if rep["held_for_figure"]:
         print(f"  held (review, not live): {len(rep['held_for_figure'])} question(s) whose stem shows [figure] "
               f"and have no figure")
