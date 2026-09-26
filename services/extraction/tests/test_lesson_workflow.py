@@ -347,3 +347,48 @@ class LessonConveyor(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class VisualsRerun(LessonConveyor):
+    """Consistency review A3/A8: S4 re-run alone for named figures (args.visuals_only), an objective id written
+    without "lo:" is that objective, the visuals prompt carries the question and the never-draw-the-unknown rule,
+    and merge_visual_reruns.py puts the result into the lesson run without touching anything else."""
+
+    def test_s4_alone_for_the_named_figures(self):
+        import merge_visual_reruns as mvr
+        args = copy.deepcopy(self.args)
+        L = next(l for l in args["lessons"] if l["slug"] == "g10m8s2-1")
+        args["lessons"] = [L]
+        args["visuals_only"] = True
+        figs = {f["context"]: f for f in L["figures"]}
+        L["rerun_figures"] = [figs["exercise_problem"]["figure_id"]]
+        fid = figs["exercise_problem"]["figure_id"]
+        lo_bare = L["objectives"][0]["id"].removeprefix("lo:")          # the pilot's "unknown objective" bug
+        responses = {"S4:viz:g10m8s2-1:1": {"figures": [
+            {"figure_id": fid, "decision": "viz", "kind": "coordinate_plot", "lo": lo_bare,
+             "spec": {"xRange": [0, 6], "yRange": [0, 7], "points": [{"x": 1, "y": 2, "label": "A"}],
+                      "animate": "plot-sequence"}, "caption": "Point A"}]},
+            "S4:compare:g10m8s2-1": {"checks": [{"figure_id": fid, "faithful": True}]}}
+        rep = fx.run_workflow(WORKFLOW, args, responses, self.tmp)
+        self.assertTrue(rep["ok"], rep["error"])
+        self.assertEqual({c["label"] for c in rep["calls"]}, {"S4:viz:g10m8s2-1:1", "S4:compare:g10m8s2-1"},
+                         "S4 alone: no claims, typing, blind check or oracle")
+        prompt = next(c["prompt"] for c in rep["calls"] if c["label"] == "S4:viz:g10m8s2-1:1")
+        self.assertIn("MUST NOT ANSWER IT", prompt)
+        self.assertIn("ITS QUESTION:", prompt)
+        self.assertEqual(prompt.count(f"[{fid}]"), 1, "only the named figure")
+        self.assertEqual(rep["result"]["mode"], "visuals")
+        (les,) = rep["result"]["lessons"]
+        self.assertEqual([v["lo"] for v in les["visuals"]], [L["objectives"][0]["id"]])
+        # merged into a lesson run: the old gap for that figure goes, the new visual takes the next number
+        old = {"lesson": "g10m8s2-1", "items": [{"ref": "x"}], "counts": {},
+               "visuals": [{"n": 1, "figure_id": "keep:1", "lo": "lo:a"}],
+               "viz_gaps": [{"figure_id": fid, "reason": "the visuals agent returned nothing for it"},
+                            {"figure_id": "other:2", "reason": "no kind fits"}]}
+        merged, info = mvr.merge_one(old, les, "wf_test")
+        self.assertEqual([(v["n"], v["figure_id"]) for v in merged["visuals"]], [(1, "keep:1"), (2, fid)])
+        self.assertEqual([g["figure_id"] for g in merged["viz_gaps"]], ["other:2"])
+        self.assertEqual(merged["items"], old["items"])
+        self.assertEqual(merged["visual_reruns"][0]["figures"], [fid])
+        with self.assertRaises(ValueError):
+            mvr.merge_one(old, dict(les, rerun_figures=[]), "wf_test")
