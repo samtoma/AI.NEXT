@@ -169,7 +169,7 @@ but has never been executed is not done.
 
 | FR | Requirement | Status | Implementation | Proof | Tasks · Privacy |
 |---|---|---|---|---|---|
-| FR-4001 | Curricula are an extensible list: National `eg-national-en`, American `us-american-en` | **OPEN** | planned: `lib/curricula.ts` | `curricula-registry.test.mts` | T304 |
+| FR-4001 | Curricula are an extensible list: National `eg-national-en`, American `us-american-en` | **OPEN** | built: `lib/curricula.ts` (`CURRICULA` with labels, `labelAr`, `gradeLabels`, `programNodeId`, key order; `DEFAULT_CURRICULUM`, `asCurriculumId`, `isKnownCurriculum`) — T304 ticked 2026-09-27 | `curricula-registry.test.mts` (12 tests, passing 2026-09-27) | T304 |
 | FR-4002 | Every course belongs to exactly one curriculum; none means hidden | **OPEN** | planned: `lib/courses.ts`, `isCourseVisible` step 2 | `catalog.test.mts` | T305, T306 |
 | FR-4003 | Exactly one curriculum per student, recorded as chosen or implied; existing students National, implied; unknown value sees nothing and is flagged | **OPEN** | planned: `students.curriculum_source` (033) | `catalog.test.mts`; migration proof | T306, T312 |
 | FR-4004 | One "offered" rule: a curriculum with a live course for the grade; gate off, a course written for it | **OPEN** | planned: `offeredCurricula` | `catalog.test.mts` | T306 |
@@ -293,10 +293,10 @@ shows how each was closed.
 | 1 | ~~decisions.md A–E adopted under "all recommendations"~~ **Confirmed 2026-09-25** ("ok for all", T301) | Samuel | A: the kill switch keeps curriculum scoping (FR-4015) |
 | 2 | ~~Privacy review F5~~ **Option (b) confirmed 2026-09-25**: anonymous analytics stay unconfigured until the cohort is larger | Samuel | Configuring the measurement id reopens it |
 | 3 | ~~The Ask book-list line~~ **Acknowledged 2026-09-25** | Samuel | FR-4206's one expected difference |
-| 4 | ADR-0024 and the notes on ADR-0005, 0018, 0019 and 0020 are accepted ("ok for all") but not committed | **Samuel** (T388) | The commit is his |
+| 4 | ADR-0024 and the notes on ADR-0005, 0018, 0019 and 0020 are accepted ("ok for all"). They sit on the feature branch only as unreviewed WIP snapshots, not reviewed or merged | **Samuel** (T388) | The reviewed commit and the merge are his |
 | 5 | ~~The constitution amendment proposal~~ **Approved and applied 2026-09-25** (third round, answer 7: *"Yes, update it (Recommended)"*; decisions.md decision 28). `.specify/memory/constitution.md` is v3.4.0. T389 is still unticked (a human-gate checkbox no agent marks), but the substance is done | **Samuel**, explicitly | Done |
 | 6 | ~~The expression marker's library or approach~~ **Decided 2026-09-25**: build in-house, no library (third round, answer 2; [ADR-0025](../../docs/decisions/0025-answer-marker-build-in-house.md); T413 gate record) | **Samuel** | Done |
-| 7 | **G0b and G2 human time**: S0b's queue, and the three-way disagreements across 2,531 items | **Samuel** | The critical path of the ingest run; the Chapter 8 pilot sizes it |
+| 7 | **G0b and G2 human time**: S0b's queue, and the three-way disagreements across 2,531 items | **Samuel** | The critical path of the ingest run. The Chapter 8 pilot sized it (2026-09-26): G0b not needed (0 queued after the third reading); G2 took 71 recommended items, 11 of them "your call", for 201 book items |
 | 8 | **B19 touches live Prep-3 content** | Engineering, then Samuel at merge | Tests and the CI proof (T423) before merge (FR-4409) |
 | 9 | **The book's licence terms** | Samuel's team, outside the app | Out of scope by instruction; recorded so it is not lost |
 | 10 | **Stale comments in migrations 027 and 028** describe a loader that deletes on reload | the app and devops agents (T425, T426) | They now contradict the add-only, refusing loader. Also `deploy/refresh-content.sh:261`, `deploy/DEPLOY.md:136`, `ci-cd.yml:610`, `local-dev.sh:162` |

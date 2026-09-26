@@ -4,18 +4,22 @@ description: "Task list for 003 — Curriculum Tracks and the Grade 10 American 
 
 # Tasks: Curriculum Tracks and the Grade 10 American Mathematics Course
 
-**Input**: [spec.md](./spec.md) (rev. 2) · [plan.md](./plan.md) · [data-model.md](./data-model.md) ·
-[contracts/](./contracts/) · [research.md](./research.md) · [privacy-review.md](./privacy-review.md) ·
-[decisions.md](./decisions.md) · `docs/specs/extraction-pipeline.md` §9 (B1–B20)
-**Status**: rev. 2, 2026-09-25, after Samuel's *"ok for all"*. G0 is passed and the confirmations are
-in. Code for several tasks is on the branch, written by other agents, and **not committed**. A task is
-ticked only when its evidence exists. Where code exists but nobody has verified it, the task says so
-and stays unticked.
+**Input**: [spec.md](./spec.md) (rev. 4, with its 2026-09-26/27 amendments) · [plan.md](./plan.md) ·
+[data-model.md](./data-model.md) · [contracts/](./contracts/) · [research.md](./research.md) ·
+[privacy-review.md](./privacy-review.md) · [decisions.md](./decisions.md) (decisions 1–47) ·
+`docs/specs/extraction-pipeline.md` §9 (B1–B21)
+**Status**: rev. 3, 2026-09-27. Rev. 2 (2026-09-25, after Samuel's *"ok for all"*) added the phases up to
+8c; Phase 9b (T427–T433) came with the third round of decisions. G0 is passed; for the Chapter 8 pilot,
+G1 and G2 are passed (decisions.md, *Gate record*). Code is on the branch, committed only as unreviewed
+WIP snapshots (an auto-snapshot job, `[skip ci]`) — nothing is reviewed or merged. A task is ticked only
+when its evidence exists. Where code exists but nobody has verified it, the task says so and stays
+unticked.
 **Tests**: this feature asks for them. The spec names guard tests, and the constitution's gates
 require byte-identity captures and migration proofs. Every test file declares what it proves with
 `// @covers FR-…` (or `# @covers` in Python), so `scripts/traceability.py` can see it.
 
-**Numbering**: tasks are **T301–T399**. Spec 001 uses T001–T143, and `scripts/traceability.py` reads
+**Numbering**: tasks are **T301–T433** (planned as T301–T399; T400–T433 were added with rev. 2's and the
+third round's work). Spec 001 uses T001–T143, and `scripts/traceability.py` reads
 task ids from every spec's `tasks.md` into one set, so 003 starts at T301 to keep each id unique
 across the repository. That matters when an id is cited in an issue or a commit.
 
@@ -63,7 +67,7 @@ package's task (named in *Dependencies*) and does not edit the file itself.
 
 - [x] T301 ⛔ HUMAN GATE — Samuel confirms decisions.md **A–E** and picks privacy review F5 (a) or (b); record the answers in `specs/003-curriculum-tracks/decisions.md` (WP-DOC). FR-4015's build waits on A. **Done 2026-09-25**: *"ok for all"* — A–E confirmed, F5 (b); see the gate record.
 - [ ] T302 [P] Run the read-only production checks in research.md Appendix A: `gh variable get AINEXT_COURSE_GATING`, today's `course_availability` rows for grade 10, every student's `curriculum_system` and grade, and the loaded courses and books. Record the results in the v0.10 section of `docs/PROJECT_STATE.md` (WP-Q runs them, WP-DOC records them).
-- [ ] T303 [P] Pin the Grade 10 ids from `contracts/pipeline-handoff.md` in the G10 book config under `services/extraction/books/` and in `services/extraction/manifest/g10-math-american.json` (replacing its `course_id` placeholder): `course:us-g10-math-en`, `us-american-en`, `math`, `"10"`, `["g10m"]`, `objectives_mode: "derived"`, notation `point`/`comma` (WP-P1).
+- [x] T303 [P] Pin the Grade 10 ids from `contracts/pipeline-handoff.md` in the G10 book config under `services/extraction/books/` and in `services/extraction/manifest/g10-math-american.json` (replacing its `course_id` placeholder): `course:us-g10-math-en`, `us-american-en`, `math`, `"10"`, `["g10m"]`, `objectives_mode: "derived"`, notation `point`/`comma` (WP-P1). **Verified 2026-09-27**: `services/extraction/books/g10-math.json` carries `course_id: "course:us-g10-math-en"`, `curriculum: "us-american-en"`, `subject: "math"`, `grade: "10"`, `id_prefixes: ["g10m"]`, `objectives_mode: "derived"`, `notation: {decimal: "point", pair_separator: "comma"}`; the manifest carries the same `course_id`, `curriculum` and `objectives_mode` (no placeholder left).
 
 ---
 

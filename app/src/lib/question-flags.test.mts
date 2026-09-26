@@ -10,6 +10,9 @@
  *    for a question whose book prints none, on every prompt path that would
  *    otherwise carry one (grounded teaching, constitution Principle II; 001 FR-C01).
  *
+ * Also the consistency review of 2026-09-27: A6 (answer_only on the cards and
+ * in the attempts route) and A11 (the console's pipeline review).
+ *
  * @covers FR-4320
  */
 import { test } from "node:test";
@@ -18,6 +21,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 import {
+  ANSWER_ONLY_CARD_NOTE as ANSWER_ONLY_CARD_NOTE_TEXT,
   ANSWER_ONLY_INSTRUCTION,
   LESS_SPECIFIC_MESSAGE,
   choiceOptions,
@@ -157,4 +161,39 @@ test("the Socratic probe's live-event note never hands an answer_only question's
   const branch = arm.slice(0, arm.indexOf("} else if (probingNow)"));
   assert.match(branch, /ANSWER_ONLY_INSTRUCTION/);
   assert.doesNotMatch(branch, /r\.solution|r\.refutation/, "no worked material in the answer-only branch");
+});
+
+/* ---------------- answer_only on the cards and in the route (consistency review A6) ---------------- */
+
+test("the attempts route sends an answer_only question's card no steps and says so", () => {
+  const route = src("../app/api/attempts/route.ts");
+  assert.match(route, /const answerOnly = isAnswerOnly\(q\.choices\);/);
+  assert.match(route, /const solution: SolutionStep\[\] = answerOnly \? \[\] : \(q\.canonical_solution \?\? \[\]\);/);
+  assert.match(route, /if \(!isCorrect && !answerOnly\) \{/, "no library entry either");
+  assert.match(route, /\.\.\.\(answerOnly \? \{ answerOnly: true \} : \{\}\),/);
+  assert.match(route, /`\*\*Answer:\*\* \$\{q\.correct_answer\}\\n\\n\$\{ANSWER_ONLY_CARD_NOTE\}`/, "the log records what the card shows");
+});
+
+test("the wrong-answer cards show the answer and the pointer — never steps, never 'step by step'", () => {
+  const card = src("../components/chat/ChatQuestionCard.tsx");
+  assert.match(card, /const answerOnly = result\?\.answerOnly === true \|\| isAnswerOnly\(q\.choices\);/);
+  assert.match(card, /\{result\.refutation && !result\.isCorrect && !answerOnly && \(/);
+  assert.match(card, /\{!result\.refutation && !result\.isCorrect && !answerOnly && result\.solution\.length > 0 && \(/);
+  assert.match(card, /answerOnly && !cardWithholdsAnswer\(probing, revealAnswer\) && \(\s*<p[^>]*>\{ANSWER_ONLY_CARD_NOTE\}<\/p>/);
+  const loop = src("../components/student/StudentLoop.tsx");
+  assert.match(loop, /lastResult\?\.answerOnly === true \|\| isAnswerOnly\(/);
+  const start = loop.indexOf("{lastAnswerOnly ? (");
+  assert.ok(start > 0, "StudentLoop branches on lastAnswerOnly");
+  const branch = loop.slice(start, loop.indexOf(") : (", start));
+  assert.ok(branch.includes("{ANSWER_ONLY_CARD_NOTE}") && branch.includes("Correct answer:"));
+  assert.ok(!/step by step|solution\.map/.test(branch), "the answer-only branch has no steps");
+  assert.match(loop, /\(lastAnswerOnly \? \[\] : lastResult\.solution\)\.map/);
+  const { ANSWER_ONLY_CARD_NOTE: note } = { ANSWER_ONLY_CARD_NOTE: ANSWER_ONLY_CARD_NOTE_TEXT };
+  assert.doesNotMatch(note, /step by step|\b(he|she|him|her|his)\b/i);
+});
+
+test("the console's pipeline review reads the options in either shape (consistency review A11)", () => {
+  const q = src("./pipeline-queries.ts");
+  assert.match(q, /choices: choiceOptions\(q\.choices\),/);
+  assert.equal(choiceOptions({ marker: { kind: "expression" }, answer_only: true }), null, "a typed answer lists no options");
 });
