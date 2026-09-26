@@ -925,7 +925,7 @@ Prices checked on 2026-09-25 against the `claude-api` reference, per million tok
 |---|---|---|---|
 | S0a Source adapter | none | 0 | 0.00 |
 | S0 Manifest | Haiku (about $0.50 per book) | n/a | 0.01 |
-| **S0b Maths transcription** *(new; revised 2026-09-25, third round)* | Sonnet (vision) ×2 blind + reconcile, once per book: about 1.7M image tokens and 0.5M LaTeX tokens per pass, plus a third reading (decision 32) whenever the first two disagree | per book | **$24–44 per book**, depending on the batch setting (§4's Batch-API option); the exact figure is fixed after the Chapter 8 pilot measures how often a third reading is needed |
+| **S0b Maths transcription** *(new; revised 2026-09-25, third round)* | Sonnet (vision) ×2 blind + reconcile, once per book: about 1.7M image tokens and 0.5M LaTeX tokens per pass, plus a third reading (decision 32) whenever the first two disagree | per book | **$250–520 per book** (batch 50 vs 25), from the Chapter 8 pilot's measured useful cost per image (≈ $0.024 at batch 50, ≈ $0.05 at batch 25) × the ≈ 5,160 images still to read × 2 passes; the third reading was needed on ≈ 3% (13 of 422 sent to vision on Chapter 8). Chapter 8 alone metered $82.12, ≈ $36 of it lost to usage-limit kills. *(Planned at $24–44 before the pilot; corrected 2026-09-27.)* |
 | S1 Objectives | Sonnet ×2 blind, Sonnet reconcile, Haiku evidence | 4 | 0.30 |
 | S2 Claims | Sonnet, deterministic containment + Haiku provenance | 2 | 0.20 |
 | S3 Book questions | ~~Sonnet derivation (batched ×3)~~ (dropped: the EPUB supplies the solutions), Sonnet blind re-solve (×3, about 1.4× the items), Haiku typing and tier | 5 | 0.55 |
@@ -948,18 +948,24 @@ Prices checked on 2026-09-25 against the `claude-api` reference, per million tok
 - **Revised again, 2026-09-25, third round (decisions 31–32):** misconception verification runs **per
   objective** (decision 10, "per topic"). This section first said "$22–32 **per objective**" for S5: a
   **mislabel** (corrected 2026-09-26) — $22–32 was the S5 estimate for the **whole book** (it sits inside the
-  $220–260 book total below; per objective it would have been $3,700+ for ~170 objectives). The Chapter 8
-  pilot measures S5 at **≈ $0.70 per objective** (draft + final, dry meter calibrated ×5.5–6.3 against the
-  pilot's real runs), ≈ $120 projected for the book. S0b is **$24–44 per book**, depending on the Chapter-8-pilot's
-  batch-setting decision (above), not the earlier fixed $20–25.
+  $220–260 book total below; per objective it would have been $3,700+ for ~170 objectives). Before S5
+  ran, the pilot projected ≈ $0.70 per objective (the dry meter × 5.5–6.3). **As metered on Chapter 8, S5
+  cost $17.13 for 13 objectives — ≈ $1.3 per objective**, including one superseded draft
+  (`runs/g10-math/cost.jsonl`), which is ≈ $220 at that rate for the book's ≈ 170 objectives.
+  *(Corrected 2026-09-27: this bullet first called the $0.70 projection a measurement.)*
+- **S0b is $250–520 for the book** (batch 50 vs 25), from the pilot's measured cost per image — not the
+  $24–44 this section said before the pilot, nor the earlier fixed $20–25.
 - **The total for Grade 10 was planned at about $220–260 one-time**, including S0b and the S5 figure.
-  Earlier drafts said $120–190, then $210–230. **The Chapter 8 pilot's meter replaces it (2026-09-26):
-  ≈ $0.85–1.1k one-time** — S0b $250–520 (batch 50 vs 25), S1 ≈ $93, S2–S4 ≈ $146, S5–S7 ≈ $350
-  (S5 ≈ $120 of it) — projected from the pilot's measured runs and the dry meter calibrated ×5.5–6.3
-  (`docs/WIP-g10-pilot/pilot-report.md`, "Cost: calibrated projection").
+  Earlier drafts said $120–190, then $210–230. **The Chapter 8 pilot replaces it (2026-09-26/27):
+  ≈ $0.85–1.1k one-time** — S0b $250–520 (batch 50 vs 25), S1 ≈ $93, S2–S4 ≈ $146, S5–S7 ≈ $350–400.
+  S5–S7 was metered at $30.42 on Chapter 8's 13 objectives (S5 $17.13, S6 $8.63, S7 $4.66; ≈ $2.3 per
+  objective), which puts the book near the upper end of the range. Chapter 8 as a whole metered
+  **$153.30** API-equivalent, including first-chapter waste (a rejected S1 run, superseded lesson runs,
+  ≈ $36 of S0b lost to usage limits) that is avoidable, not projected
+  (`docs/WIP-g10-pilot/pilot-report.md`).
 - The PDF-only fallback is not needed for Grade 10. It would have cost $30–90 per book.
-- Batch pricing (§10 D9 option b) would lower S0b toward the bottom of its $24–44 range. The decision is
-  to stay on Workflow.
+- Batch pricing (§10 D9 option b) would lower S0b toward the bottom of its $250–520 range. The decision
+  is to stay on Workflow.
 - This sits above ADR-0005's $1–2 envelope because objectives, generated families, widgets and
   misconceptions are now inside the line. Samuel's standing call is quality over cost, with the
   meters on.
@@ -1059,7 +1065,7 @@ v1's twelve points, with these changes and additions:
 | 15 | The misconception catalogue is mined from book multiple choice | `build_misconceptions.py` (250 book MCQs; retired by B19) | This book has little multiple choice. Sources shift to caution boxes, family distractors, widget predicates and re-solve errors (§3.8) |
 | 17 | The book's text carries its maths | every workflow reads page text | The EPUB's maths is images named `md5(LaTeX)`; S0b transcribes them (#21) |
 | 18 | The book's text is all for students | — | The EPUB carries 32 notes addressed to teachers; S2 drops them (#21, FR-4408) |
-| 16 | $1–2 per lesson | ADR-0005 | About $3.2 per lesson with the new stages, and about $210–230 for the Grade 10 book including S0b (§5) |
+| 16 | $1–2 per lesson | ADR-0005 | About $3.2 per lesson with the new stages (planned). The Grade 10 book, S0b included, was planned at $210–230; the Chapter 8 pilot projects **≈ $0.85–1.1k** (§5) |
 
 ## 9. Build list
 
@@ -1068,10 +1074,14 @@ every item below was **verified** the same day — read in full, its own tests c
 stubs) and run (`uv run --project services/extraction --with pytest python -m pytest -q
 services/extraction/tests`: 272 passed, 47 skipped without a database, 0 failed). **Verified** means
 exactly that: the code and its unit tests are real and pass. It does **not** mean the stage has been
-run end to end against the actual Grade 10 book — that is the Chapter 8 pilot (§7), still to come — and
-it does **not** mean the code is committed: everything below is still on
-`feat/003-curriculum-tracks-g10-american-math`, uncommitted. Spec 003's `tasks.md` carries each item as
-a task (T331–T349, T418–T422), ticked where verified.
+run end to end against the actual Grade 10 book — that is the Chapter 8 pilot (§7) — and it does
+**not** mean the code is reviewed: everything below is on `feat/003-curriculum-tracks-g10-american-math`,
+committed only as unreviewed WIP snapshots. Spec 003's `tasks.md` carries each item as a task
+(T331–T349, T418–T422, and T427, T428, T433 for the third round's changes), ticked where verified.
+**Since then (2026-09-26/27):** the Chapter 8 pilot ran S0b through S7 on the real book — S0b, S1 and
+G1, S2–S4 and G2, S5, S6 and S7 — and loaded the results into a private scratch database; G3–G5 are
+still to come. The third reading (B21), the second mapper and the prerequisite links (B4, B5) are built,
+tested and were used in the pilot.
 
 **Pipeline** (`services/extraction/**`):
 

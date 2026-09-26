@@ -324,6 +324,13 @@ def load_runs(paths: list[Path], book: str) -> tuple[list[dict], list[dict], lis
                                     "reason": "assembler: no CONFIRMED verdict on the entry", "run": p.name})
                     continue
                 kept.append({**e, "_run": p.name})
+        side = normalisations_path(p)
+        if side.exists():
+            # the patches write into copies: the saved run itself is never modified
+            mine = {e["id"]: e for e in kept if e["_run"] == p.name}
+            for eid, e in mine.items():
+                e["refutation"] = [dict(s) for s in e.get("refutation") or []]
+            problems += apply_normalisations(mine, json.loads(side.read_text()), p.name, str(side))
     return kept, dropped, stripped, problems
 
 
@@ -344,6 +351,7 @@ def to_loader_shape(e: dict) -> dict:
             "verifier_reason": e["verdict"].get("reason"),
             "sources": e.get("sources") or [],
             "covers": e.get("covers") or [],
+            **({"normalisations": e["normalisations"]} if e.get("normalisations") else {}),
         },
     }
 
@@ -480,6 +488,7 @@ def assemble(run_paths: list[Path], book_name: str) -> tuple[dict, list[dict], l
     book = book_config.load_book(book_name)
     kept, dropped, stripped, problems = load_runs(run_paths, book.book)
     kept.sort(key=lambda e: (e["lo_id"], e["id"]))
+    patched = sum(len(e.get("normalisations") or []) for e in kept)
     catalogue = {
         "catalogue": f"{book.book}-misconceptions",
         "course_id": book.course_id,
@@ -487,7 +496,9 @@ def assemble(run_paths: list[Path], book_name: str) -> tuple[dict, list[dict], l
         "reviewed": False,
         "generator": ("S5 runbook/misconceptions.workflow.js (Sonnet author, Sonnet fail-closed verifier) "
                       f"via assemble_misconceptions.py — runs {', '.join(sorted({e['_run'] for e in kept}))}; "
-                      "pipeline-generated, UNREVIEWED"),
+                      + (f"{patched} PIPELINE NORMALISATION(S) on {sum(1 for e in kept if e.get('normalisations'))} "
+                         f"entries (provenance.normalisations says who and why); " if patched else "")
+                      + "pipeline-generated, UNREVIEWED"),
         "misconceptions": [to_loader_shape(e) for e in kept],
     }
     problems += validate_catalogue(catalogue, new_ids=None, max_per_objective=MAX_PER_OBJECTIVE, book=book)
@@ -503,6 +514,15 @@ def assemble(run_paths: list[Path], book_name: str) -> tuple[dict, list[dict], l
 # a G2 fix that touched any of these replaced the book's answer, or the question the re-solve was shown (a stem
 # fix): the disagreement was the book's (or ours), not a student's
 ANSWER_FIELDS = {"answer", "marker", "answer_type", "printed_answer", "epub_final_answer", "solution", "stem"}
+# a G2 fix that touched any of these changed the WORKING or its result, so the canonical solution is no longer the
+# book's own text
+CORRECTION_FIELDS = {"answer", "marker", "epub_final_answer", "solution"}
+
+
+def _provenance(prov: str | None, corrected: bool) -> str | None:
+    if not corrected:
+        return prov
+    return f"{prov or 'book'} — CORRECTED where the book has an error: not the book's own working"
 
 
 def item_question_id(it: dict) -> str:
@@ -533,6 +553,16 @@ def s5_args(book, bundles: list[dict], lesson_runs: list[dict], stage: str,
     """The args of runbook/misconceptions.workflow.js, from the assembled bundles and lesson runs."""
     objectives, questions, dists = [], [], []
     figs = figures_by_question(lesson_runs)
+    # A canonical solution G2 corrected is not the book's own working, and the packet says so — without the
+    # reviewer's note (review history never reaches S5: consistency review 2026-09-27, A5). The pilot's S5 read
+    # "solution: book_worked_epub" on a corrected solution and told students "the book goes on to show …".
+    corrected: set[str] = set()
+    for run in lesson_runs:
+        for it in run.get("items") or []:
+            g2 = it.get("g2") or {}
+            if g2.get("verdict") == "fix" and set(g2.get("changed") or []) & CORRECTION_FIELDS:
+                qid = item_question_id(it)
+                corrected |= {qid, "expl:" + qid.removeprefix("q:")}
     for b in bundles:
         for n in b.get("nodes", []):
             if n["kind"] == "learning_objective" and book.owns_lo(n["id"]):
@@ -541,7 +571,8 @@ def s5_args(book, bundles: list[dict], lesson_runs: list[dict], stage: str,
         for q in b.get("questions", []):
             kind = "worked_example" if (q.get("source_note") or "").startswith("Worked example") else "exercise"
             rec = {"id": q["id"], "lo": q["lo"], "kind": kind, "stem": q["stem"], "answer": q.get("answer"),
-                   "canonical_solution": q["solution"], "solution_provenance": q.get("solution_provenance"),
+                   "canonical_solution": q["solution"],
+                   "solution_provenance": _provenance(q.get("solution_provenance"), q["id"] in corrected),
                    "source_page": q.get("source_page")}
             opts = (q.get("choices") or {}).get("options") if isinstance(q.get("choices"), dict) else q.get("choices")
             if isinstance(opts, list):
@@ -563,7 +594,8 @@ def s5_args(book, bundles: list[dict], lesson_runs: list[dict], stage: str,
             if not steps:
                 continue
             rec = {"id": e["id"], "lo": e["lo"], "kind": "worked_example", "stem": problem, "answer": None,
-                   "canonical_solution": steps, "solution_provenance": "book (teaching item)",
+                   "canonical_solution": steps,
+                   "solution_provenance": _provenance("book (teaching item)", e["id"] in corrected),
                    "source_page": e.get("source_page")}
             if figs.get(e["id"]):
                 rec["figures"] = figs[e["id"]]
@@ -586,11 +618,12 @@ def s5_args(book, bundles: list[dict], lesson_runs: list[dict], stage: str,
             blind_differs = any(str(p.get("pair_id", "")).split("|")[-1].startswith("blind~") and p.get("verdict") == "different"
                                 for p in (it.get("verify") or {}).get("pairs") or [])
             if it.get("verification") == "disputed" and it.get("blind_answer") and book_answer_stood and blind_differs:
+                # the fact only — never the reviewer's note or the gate (A5: a G2 note reached a student as "the
+                # book's own review note", and a kept answer as "the trap the book itself flags")
                 sources.append({"lo": it["lo"], "kind": "resolve_disagreement", "ref": item_question_id(it),
                                 "page": it.get("printed_page"),
-                                "text": f"An independent re-solve answered {it['blind_answer']}; the book's answer, "
-                                        f"kept at review (G2), is {it.get('printed_answer') or it.get('epub_final_answer') or '(none)'}."
-                                        + (f" Reviewer's note: {g2['note']}" if g2.get("note") else "")})
+                                "text": f"Our own independent re-solve (not the book) answered {it['blind_answer']}; "
+                                        f"the book's answer is {it.get('printed_answer') or it.get('epub_final_answer') or '(none)'}."})
     args = {"book": book.book, "stage": stage, "language": book.language,
             "notation": book.notation or {"decimal": "point", "pair_separator": "comma"},
             "objectives": sorted(objectives, key=lambda o: o["id"]), "questions": questions,
