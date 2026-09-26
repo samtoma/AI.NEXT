@@ -105,6 +105,9 @@ class ChapterEightDryRun(unittest.TestCase):
                 parts = sorted(byref.glob(f"{stem}-part*.calls.json"), key=lambda p: int(p.name.split("-part")[1].split(".")[0]))
                 self.assertTrue(parts, f"{f.name}: no by-ref run and no parts")
                 b = [x for p in parts for x in json.loads(p.read_text())]
+                # each part runs its own solvers, then its own judges: the same calls, in part order
+                order = {x["label"]: i for i, x in enumerate(a)}
+                b = sorted(b, key=lambda x: order.get(x["label"], len(order)))
             self.assertEqual([x["label"] for x in a], [x["label"] for x in b], f.name)
             for xa, xb in zip(a, b):
                 x, y = same_as_inline(xa["prompt"], xb["prompt"])
