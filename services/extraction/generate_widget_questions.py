@@ -67,6 +67,7 @@ class T:
         solution: list[str],
         diagnostics: list[tuple[str, str]],
         family: str,
+        held: list[tuple[str, str, str]] = (),
     ):
         self.lo = lo
         self.tier = tier
@@ -76,6 +77,7 @@ class T:
         self.solution = solution
         self.diagnostics = diagnostics
         self.family = family
+        self.held = list(held)
 
 
 TEMPLATES: list[T] = []
@@ -103,8 +105,9 @@ t(lo="lo:geo1-1-1", tier="basic", kind="circle_builder",
             "Put both ends on the circle — $(-3, 4)$ and $(4, -3)$, for example.",
             "It does not matter where: any two points on the circle give a chord.",
             "Note what is NOT required — a chord need not pass through the centre. The one that does is the diameter."],
-  diagnostics=[("ends-not-on-circle", "mc:geo1-1-1:chord-endpoints-off-circle"),
-               ("radius-drawn-as-chord", "mc:geo1-1-1:radius-not-from-centre")])
+  # W1 (consistency review 2026-09-27): ("radius-drawn-as-chord", "mc:geo1-1-1:radius-not-from-centre") dropped —
+  # a chord question reports only ends-not-on-circle (both ends on the circle IS a chord), so it could never fire
+  diagnostics=[("ends-not-on-circle", "mc:geo1-1-1:chord-endpoints-off-circle")])
 
 t(lo="lo:geo1-1-2", tier="standard", kind="circle_builder",
   spec={"element": "diameter"}, family="circle-diameter",
@@ -135,8 +138,9 @@ for _target in (30, 35, 45, 55, 70):
                 f"So for $\\angle ACB = {_target}°$ the arc $AB$ that $C$ looks across at must measure ${2 * _target}°$.",
                 "Drag $B$ until the arc reads that, and the angle follows.",
                 "Then drag $C$ anywhere else on the same arc and watch: the angle does not move. Every inscribed angle on that arc is the same."],
-      diagnostics=[("arc-given-as-angle", "mc:geo2-2-2:inscribed-angle-doubled"),
-                   ("angle-given-as-arc", "mc:geo2-2-2:inscribed-angle-doubled")])
+      # W1 (consistency review 2026-09-27): ("angle-given-as-arc", same misconception) dropped — asked for the
+      # INSCRIBED angle, the setter reports arc-given-as-angle (kept: the same error), never angle-given-as-arc
+      diagnostics=[("arc-given-as-angle", "mc:geo2-2-2:inscribed-angle-doubled")])
 
 for _target in (60, 90, 120, 140):
     t(lo="lo:geo2-2-2", tier="standard", kind="angle_setter",
@@ -146,8 +150,9 @@ for _target in (60, 90, 120, 140):
                 f"The central angle $\\angle AMB$ is the same ${_target}°$ — a central angle equals its arc.",
                 f"The inscribed angle $\\angle ACB$ then reads ${_target // 2}°$, exactly half.",
                 "That 2:1 relationship is the theorem, and it holds for every position of $C$ on that arc."],
-      diagnostics=[("angle-given-as-arc", "mc:geo2-2-2:inscribed-angle-doubled"),
-                   ("arc-given-as-angle", "mc:geo2-2-2:inscribed-angle-doubled")])
+      # W1 (consistency review 2026-09-27): ("arc-given-as-angle", same misconception) dropped — asked for the
+      # CENTRAL angle / arc, the setter reports angle-given-as-arc (kept: the same error), never arc-given-as-angle
+      diagnostics=[("angle-given-as-arc", "mc:geo2-2-2:inscribed-angle-doubled")])
 
 # --- TRIGONOMETRY -------------------------------------------------------
 for _ask, _target, _legs in (("sin", 0.6, "3 and 4"), ("cos", 0.8, "3 and 4"),
@@ -160,7 +165,20 @@ for _ask, _target, _legs in (("sin", 0.6, "3 and 4"), ("cos", 0.8, "3 and 4"),
                 f"Legs of {_legs} give a hypotenuse you can read off exactly.",
                 f"That makes $\\{_ask} \\theta = {_target}$.",
                 "Now double both legs. The triangle is twice the size and the ratio has not moved — that is why these ratios depend only on the angle."],
-      diagnostics=[("ratio-inverted", "mc:u4-1-2:ratio-inverted")])
+      # W1 (consistency review 2026-09-27): ratio-inverted fires only for tan. The legs are whole numbers 1-12, so
+      # sin and cos stay below 1 and the upside-down ratio never equals a sin/cos target: on those asks the mapping
+      # was dead and is dropped (no emitting predicate is the same error). The widget stays what it always was in
+      # practice, plain right/wrong, with the one mapping the instrument CAN fire for this lesson held for a human.
+      diagnostics=[("ratio-inverted", "mc:u4-1-2:ratio-inverted")] if _ask == "tan" else [],
+      held=[] if _ask == "tan" else [(
+          "used-cosine" if _ask == "sin" else "used-sine", "mc:u4-1-2:opposite-adjacent-swapped",
+          "PROPOSED, NOT ACTIVE (pipeline, data-engineer agent, 2026-09-27; consistency review W1). The old mapping "
+          "ratio-inverted -> mc:u4-1-2:ratio-inverted could never fire on a " + _ask + " question (the legs are whole "
+          "numbers 1-12, so the ratio stays below 1 and its reciprocal never equals the target) and was dropped. On "
+          "this ask the instrument DOES report " + ("used-cosine" if _ask == "sin" else "used-sine") + " when opposite "
+          "and adjacent are exchanged, the error mc:u4-1-2:opposite-adjacent-swapped describes ('swapping sine with "
+          "cosine'). It is not the dropped mapping's error, so it is held for a human to keep or drop; until then the "
+          "widget is plain right/wrong, as it has been in practice since it shipped.")])
 
 # --- STATISTICS ---------------------------------------------------------
 for _target in (6, 5, 7):
@@ -310,7 +328,7 @@ def build() -> list[dict]:
             "tier": tpl.tier,
             "question_type": "widget",
             "stem": tpl.stem,
-            "choices": W.widget_choices(tpl.kind, tpl.spec, tpl.diagnostics),
+            "choices": W.widget_choices(tpl.kind, tpl.spec, tpl.diagnostics, tpl.held),
             "correct_answer": W.OK,
             "canonical_solution": [
                 {"step": i, "text_md": s} for i, s in enumerate(tpl.solution, 1)
