@@ -116,6 +116,7 @@ class G10ProvenanceTest(unittest.TestCase):
         def rekey(d):
             q = next(x for x in d["questions"] if x["id"] == "q:g10m8s2-1-1:ex8-2-1")
             q["choices"]["marker"]["key"] = "\\sqrt{8}"
+            q["answer"] = "\\sqrt{8}"          # the answer text follows the key (consistency review A1)
         with self.assertRaises(SystemExit) as cm:
             run_loader(self.db.dsn, str(self.variant(rekey)), "--course", G10, "--update")
         self.assertIn("students have attempted", str(cm.exception))
