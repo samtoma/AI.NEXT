@@ -1,5 +1,6 @@
 import { COURSE_IDS, compareCourses, isCourseId } from "./courses";
 import { pool, sequential } from "./db";
+import { choiceOptions } from "./question-flags";
 import { catalogueObjectivesSql } from "./module-order";
 import { scoped, type Db } from "./student-context";
 
@@ -69,6 +70,7 @@ export interface ReviewQuestion {
   tier: string;
   questionType: string;
   stem: string;
+  /** the lettered options, whichever shape they are stored in; null when there are none */
   choices: { key: string; text: string }[] | null;
   correctAnswer: string;
   solution: { step: number; text_md: string }[];
@@ -341,7 +343,11 @@ async function pipelineDataOn(
         tier: q.tier,
         questionType: q.question_type,
         stem: q.stem,
-        choices: q.choices,
+        // The options in either stored shape — a bare list, or `{options}` beside a flag
+        // (lib/question-flags.ts) — and null for a typed answer (the marker's spec) or a
+        // construction, which have none. Reading the column as a list crashed the page on
+        // the Grade 10 book (consistency review A11).
+        choices: choiceOptions(q.choices),
         correctAnswer: q.correct_answer,
         solution: q.canonical_solution ?? [],
         sourcePage: q.source_page,
