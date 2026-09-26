@@ -181,7 +181,12 @@ def misconception_bundle(cur, generator: str, los: list[str] | None = None,
              WHERE question_type = 'mcq' AND source IN ('seed', 'authored')
                AND choices IS NOT NULL{where} ORDER BY id""", args,
     ):
-        for c in q["choices"] or []:
+        ch = q["choices"]
+        # a choice question whose key is the most specific of several true names (decision 41) stores
+        # {"options": [...], "less_specific": [...]}, not a bare list (contracts/pipeline-handoff.md)
+        for c in (ch.get("options") or [] if isinstance(ch, dict) else ch or []):
+            if not isinstance(c, dict):
+                continue
             mid = c.get("misconception_id")
             if mid:
                 maps.setdefault(mid, []).append(
