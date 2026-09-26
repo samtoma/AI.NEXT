@@ -390,7 +390,11 @@ function s5(label, prompt, args) {
     const ds = [...(prompt.split('WRONG OPTIONS AND WIDGET PREDICATES')[1] || '').matchAll(/^D(\d+)\. /gm)].map((x) => Number(x[1]))
     let src, q
     if (args.sources === null) {                 // by reference: read back from the spliced prompt
-      const ev = (prompt.split('independent re-solve of these questions took):\n')[1] || '').split('\n\nENTRIES THIS OBJECTIVE')[0]
+      // the evidence section's header wraps over lines and grew in s5-v5 ("… took — that re-solve is our own
+      // check, NOT the book's …):"); read from its first "):\n" to the next section
+      const evm = /EVIDENCE OF WHERE STUDENTS GO WRONG[\s\S]*?\):\n([\s\S]*?)\n\nENTRIES THIS OBJECTIVE/.exec(prompt)
+      const ev = evm ? evm[1] : ''
+
       const s1m = /^\[(\S+) (\S+?)(?: p\.\S+)?\] /m.exec(ev)
       src = s1m ? { kind: s1m[1], ref: s1m[2] } : undefined
       const qs = (prompt.split('WITH THEIR CANONICAL SOLUTIONS (the authority):\n')[1] || '')
