@@ -70,6 +70,7 @@ test("every kind can express a failure it does not recognise", () => {
     const p = predicatesFor(kind);
     const catchAll =
       p.includes("off-target") ||
+      p.includes("not-the-shape") || // polygon_builder: no property named asks for
       p.some((x) => x.startsWith("missed-") || x.startsWith("missing-")) ||
       p.some((x) => x.startsWith("interval-") || x.startsWith("endpoint-"));
     assert.ok(catchAll, `${kind} has no way to report an unrecognised wrong answer`);

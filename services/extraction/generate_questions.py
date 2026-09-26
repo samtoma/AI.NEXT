@@ -270,9 +270,12 @@ def _u111b(rng):
         parent_question_id="q:u1-1-1:003", source_page=7, family="tpl:u1-1-1:solve-mcq")
 
 
-M_PROD_SUM = mc("mc:cardinality-added", "lo:u1-1-2",
-                "n(X x Y) computed as n(X) + n(Y)",
-                "Adds the cardinalities of the two sets instead of multiplying them.")
+# mc:cardinality-added (this generator's old id, never emitted: every family on its objective is
+# numeric) denotes the catalogue's mc:u1-1-3:product-is-sum; pointed at the live entry, with its own wording,
+# so nothing here can re-create an unrefuted duplicate (FR-1115).
+M_PROD_SUM = mc("mc:u1-1-3:product-is-sum", "lo:u1-1-3",
+    "Cardinalities added instead of multiplied",
+    "Computes n(X) + n(Y) where n(X) x n(Y) is required.")
 
 
 @family("tpl:u1-1-2:cardinality", "lo:u1-1-2", "q:u1-1-2:001", 8)
@@ -337,9 +340,12 @@ def _u114(rng):
         parent_question_id="q:u1-1-4:001", source_page=11, family="tpl:u1-1-4:quadrant")
 
 
-M_RANGE_CODOMAIN = mc("mc:range-equals-codomain", "lo:u1-3-2",
-                      "Range taken to be the whole codomain",
-                      "Assumes every element of the codomain is an image; the range can be a proper subset.")
+# mc:range-equals-codomain (this generator's old id, never emitted: every family on its objective is
+# numeric) denotes the catalogue's mc:u1-3-2:range-is-codomain; pointed at the live entry, with its own wording,
+# so nothing here can re-create an unrefuted duplicate (FR-1115).
+M_RANGE_CODOMAIN = mc("mc:u1-3-2:range-is-codomain", "lo:u1-3-2",
+    "Range and codomain treated as the same set",
+    "Reports the whole codomain as the range; the range is the set of images actually reached.")
 
 
 @family("tpl:u1-4-1:evaluate", "lo:u1-4-1", "q:u1-4-1:001", 19)
@@ -361,9 +367,12 @@ def _u141(rng):
         parent_question_id="q:u1-4-1:001", source_page=19, family="tpl:u1-4-1:evaluate")
 
 
-M_SLOPE_INTERCEPT = mc("mc:slope-intercept-swapped", "lo:u1-4-2",
-                       "Slope and intercept exchanged",
-                       "Reads b as the slope and a as the y-intercept in f(x) = ax + b.")
+# mc:slope-intercept-swapped (this generator's old id, never emitted: every family on its objective is
+# numeric) denotes the catalogue's mc:u1-4-2:intercept-is-slope; pointed at the live entry, with its own wording,
+# so nothing here can re-create an unrefuted duplicate (FR-1115).
+M_SLOPE_INTERCEPT = mc("mc:u1-4-2:intercept-is-slope", "lo:u1-4-2",
+    "Slope and y-intercept exchanged",
+    "Reads b as the slope and a as the intercept in f(x) = ax + b.")
 
 
 @family("tpl:u1-4-2:two-points", "lo:u1-4-2", "q:u1-4-2:002", 20)
@@ -385,6 +394,9 @@ def _u142(rng):
         parent_question_id="q:u1-4-2:002", source_page=20, family="tpl:u1-4-2:two-points")
 
 
+# NO CATALOGUE ENTRY denotes this error (checked 2026-09-25 against every lo:u1-4-3 entry).
+# Never emitted today (the family on lo:u1-4-3 is numeric). Do not put it on a distractor until
+# the misconceptions package writes the entry; flagged for it.
 M_VERTEX_SIGN = mc("mc:vertex-sign", "lo:u1-4-3",
                    "Vertex x-coordinate taken as +b/2a",
                    "Drops the minus sign in x = -b/(2a).")
@@ -416,9 +428,12 @@ def _u143(rng):
 M_RATIO_UNSIMPLIFIED = mc("mc:ratio-not-reduced", "lo:u2-1-1",
                           "Ratio left unreduced",
                           "Writes the ratio in its raw form without dividing by the common factor.")
-M_PROPORTION_CROSS = mc("mc:cross-multiply-reversed", "lo:u2-2-1",
-                        "Cross-multiplication taken the wrong way round",
-                        "Pairs a:b = c:d as a x c = b x d instead of a x d = b x c.")
+# mc:cross-multiply-reversed (this generator's old id, never emitted: every family on its objective is
+# numeric) denotes the catalogue's mc:u2-2-2:cross-multiplication-reversed; pointed at the live entry, with its own wording,
+# so nothing here can re-create an unrefuted duplicate (FR-1115).
+M_PROPORTION_CROSS = mc("mc:u2-2-2:cross-multiplication-reversed", "lo:u2-2-2",
+    "Cross-multiplication paired incorrectly",
+    "Multiplies numerator by numerator and denominator by denominator, or top-to-bottom on the same side.")
 
 
 @family("tpl:u2-1-1:simplify", "lo:u2-1-1", "q:u2-1-1:001", 30)
@@ -487,9 +502,12 @@ def _u223(rng):
         parent_question_id="q:u2-2-3:001", source_page=37, family="tpl:u2-2-3:middle")
 
 
-M_VARIATION_SWAP = mc("mc:direct-inverse-swapped", "lo:u2-3-2",
-                      "Direct and inverse variation exchanged",
-                      "Uses y = kx where xy = k is required, or the reverse.")
+# mc:direct-inverse-swapped (this generator's old id, never emitted: every family on its objective is
+# numeric) denotes the catalogue's mc:u2-3-2:inverse-solved-as-direct; pointed at the live entry, with its own wording,
+# so nothing here can re-create an unrefuted duplicate (FR-1115).
+M_VARIATION_SWAP = mc("mc:u2-3-2:inverse-solved-as-direct", "lo:u2-3-2",
+    "An inverse relationship solved by matching ratios",
+    "Applies the direct-variation move — set the two quotients equal and cross-multiply — to a situation where one quantity falls as the other rises.")
 
 
 @family("tpl:u2-3-1:direct", "lo:u2-3-1", "q:u2-3-1:001", 39)
@@ -593,9 +611,12 @@ def _u322(rng):
 # UNIT 4 — Trigonometry
 # ==========================================================================
 
-M_DMS_DECIMAL = mc("mc:dms-read-as-decimal", "lo:u4-1-1",
-                   "Minutes read as a decimal fraction of a degree",
-                   "Treats 30' as 0.30 degrees instead of 30/60 of a degree.")
+# mc:dms-read-as-decimal (this generator's old id, never emitted: every family on its objective is
+# numeric) denotes the catalogue's mc:u4-1-1:degree-split-decimally; pointed at the live entry, with its own wording,
+# so nothing here can re-create an unrefuted duplicate (FR-1115).
+M_DMS_DECIMAL = mc("mc:u4-1-1:degree-split-decimally", "lo:u4-1-1",
+    "Degree divided into 100 parts",
+    "Applies decimal place-value to degrees and minutes, so 0.25° is read as 25'.")
 M_TRIG_RECIPROCAL = mc("mc:sin-cos-swapped", "lo:u4-1-3",
                        "Opposite and adjacent sides exchanged",
                        "Uses the adjacent side where the opposite is required, swapping sine and cosine.")
@@ -860,6 +881,9 @@ def _u541(rng):
 # TERM 2 — Equations, algebraic fractions, probability
 # ==========================================================================
 
+# NO CATALOGUE ENTRY denotes this error (checked 2026-09-25 against every lo:t2u1-1-3 entry).
+# Never emitted today (the family on lo:t2u1-1-3 is numeric). Do not put it on a distractor until
+# the misconceptions package writes the entry; flagged for it.
 M_SUBST_SIGN = mc("mc:substitution-sign", "lo:t2u1-1-3",
                   "Sign error on elimination",
                   "Adds the equations where subtraction is required, or the reverse.")
@@ -1200,6 +1224,11 @@ def verify(item: Item) -> list[str]:
             float(item.correct_answer)
         except ValueError:
             problems.append(f"numeric answer {item.correct_answer!r} is not a number")
+    elif item.question_type == "short":
+        # A typed maths answer (FR-4320): the marker spec travels in choices,
+        # as a widget's does (contracts/answer-marker.md). Only declarative
+        # families produce these; none of the 35 below does.
+        problems += _verify_marker(item)
     else:
         keys = [c["key"] for c in (item.choices or [])]
         if len(keys) != 4:
@@ -1217,9 +1246,48 @@ def verify(item: Item) -> list[str]:
         if correct_opt and "misconception_id" in correct_opt:
             problems.append("the correct option is tagged with a misconception")
     # An unbalanced $ means a half-rendered expression on the student's screen.
-    for text in [item.stem] + [c["text"] for c in (item.choices or [])]:
+    option_texts = [c["text"] for c in item.choices] if isinstance(item.choices, list) else []
+    for text in [item.stem] + option_texts + [s["text_md"] for s in item.canonical_solution]:
         if text.count("$") % 2 != 0:
             problems.append(f"unbalanced math delimiters in {text[:40]!r}")
+    return problems
+
+
+MARKER_KINDS = {"expression", "equation", "values", "interval", "coordinates", "surd", "recurring"}
+MARKER_FORMS = {None, "factorised", "expanded", "simplest"}
+
+
+def _verify_marker(item: Item) -> list[str]:
+    """contracts/answer-marker.md: the stored spec the app's marker reads."""
+    problems = []
+    m = item.choices.get("marker") if isinstance(item.choices, dict) else None
+    if not isinstance(m, dict):
+        return ["a typed-answer item carries no choices.marker"]
+    if set(item.choices) != {"marker"}:
+        problems.append("choices of a typed-answer item hold only the marker")
+    if m.get("kind") not in MARKER_KINDS:
+        problems.append(f"marker kind {m.get('kind')!r} unknown")
+    key = m.get("key")
+    if not isinstance(key, str) or not key.strip():
+        problems.append("marker key is empty")
+    elif "$" in key:
+        problems.append("marker key is raw LaTeX, without $ delimiters")
+    if key != item.correct_answer:
+        problems.append("correct_answer and the marker key disagree")
+    form = m.get("form")
+    if not (form in MARKER_FORMS or (isinstance(form, dict) and set(form) == {"subject"})):
+        problems.append(f"marker form {form!r} unknown")
+    if not isinstance(m.get("variables"), list):
+        problems.append("marker variables must be a list")
+    # The stored shape is schemas.MarkerChoices — the model the lesson line (S3)
+    # writes book questions' markers with. Validating against it, not a copy of
+    # it, keeps a generated typed answer in exactly the same place and shape.
+    from pydantic import ValidationError
+    from schemas import MarkerChoices
+    try:
+        MarkerChoices.model_validate(item.choices)
+    except ValidationError as e:
+        problems += [f"marker: {err['msg']} at {'.'.join(map(str, err['loc']))}" for err in e.errors()]
     return problems
 
 
@@ -1257,28 +1325,45 @@ def rebalance_keys(questions: list[dict], rng: random.Random) -> None:
         assert next(c["text"] for c in q["choices"] if c["key"] == target) == correct_text
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--out", type=Path, required=True)
-    ap.add_argument("--per-family", type=int, default=10)
-    ap.add_argument("--seed", type=int, default=20260912)
-    ap.add_argument("--course", default="course:prep3-math-en")
-    args = ap.parse_args()
+def legacy_item_id(fam: Family, made: int) -> str:
+    return f"{fam.lo_id.replace('lo:', 'q:')}:g{made:03d}-{fam.id.split(':')[-1][:6]}"
 
+
+def instantiate(
+    families: list[Family],
+    per_family: int | Callable[[Family], int],
+    seed: int,
+    *,
+    item_id: Callable[[Family, int], str] = legacy_item_id,
+    to_row: Callable[[Item, str, Family], dict] | None = None,
+    spec_errors: tuple[type[BaseException], ...] = (),
+) -> tuple[list[dict], list[str], dict[str, int]]:
+    """THE driver: one seeded stream per family, verify(), duplicate stems dropped.
+
+    Shared by the 35 hand-written families and the declarative ones, so the
+    two cannot differ in how an item is accepted. `spec_errors` are exceptions a
+    declarative spec may raise on one attempt (an evaluation error); they are
+    recorded as rejections, never swallowed silently. For the hand-written
+    families the tuple is empty and an exception propagates, as it always has.
+    """
     questions: list[dict] = []
     rejected: list[str] = []
     per_family_counts: dict[str, int] = {}
-
-    for fam in REGISTRY:
+    for fam in families:
+        target = per_family(fam) if callable(per_family) else per_family
         # Each family gets its own stream, so adding a family never renumbers
         # the items of the families before it.
-        rng = random.Random(f"{args.seed}:{fam.id}")
+        rng = random.Random(f"{seed}:{fam.id}")
         seen_stems: set[str] = set()
         made = 0
         attempts = 0
-        while made < args.per_family and attempts < args.per_family * 25:
+        while made < target and attempts < target * 25:
             attempts += 1
-            item = fam.build(rng)
+            try:
+                item = fam.build(rng)
+            except spec_errors as e:  # an empty tuple catches nothing
+                rejected.append(f"{fam.id}: evaluation error: {e}")
+                continue
             if item is None:
                 continue
             if item.stem in seen_stems:
@@ -1289,9 +1374,23 @@ def main() -> int:
                 continue
             seen_stems.add(item.stem)
             made += 1
-            qid = f"{fam.lo_id.replace('lo:', 'q:')}:g{made:03d}-{fam.id.split(':')[-1][:6]}"
-            questions.append(item.as_question(qid))
+            qid = item_id(fam, made)
+            questions.append(to_row(item, qid, fam) if to_row else item.as_question(qid))
         per_family_counts[fam.id] = made
+    return questions, rejected, per_family_counts
+
+
+def main() -> int:
+    if "--families" in sys.argv[1:]:
+        return main_families(sys.argv[1:])
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--per-family", type=int, default=10)
+    ap.add_argument("--seed", type=int, default=20260912)
+    ap.add_argument("--course", default="course:prep3-math-en")
+    args = ap.parse_args()
+
+    questions, rejected, per_family_counts = instantiate(REGISTRY, args.per_family, args.seed)
 
     rebalance_keys(questions, random.Random(args.seed))
 
@@ -1337,6 +1436,729 @@ def main() -> int:
     if thin:
         print(f"  families under target ({args.per_family}): {', '.join(thin)}")
     return 0
+
+
+# ==========================================================================
+# DECLARATIVE FAMILIES (decision 16, FR-4304; pipeline spec §3.9, B12)
+#
+#   uv run generate_questions.py --families families/<book> --book <book> --check
+#   uv run generate_questions.py --families families/<book> --book <book> \
+#       --catalogue seed/generated/<book>/misconceptions.json --author-args <args.json> [--by-ref [DIR]]
+#   uv run generate_questions.py --families families/<book> --book <book> \
+#       --grading-set runs/<book>/families/grading-set.json --grade-args <args.json> [--by-ref [DIR]]
+#   uv run generate_questions.py --families families/<book> --book <book> \
+#       --catalogue … --grades runs/<book>/families/grade-*.json \
+#       --out seed/generated/<book>/generated-questions.json --floor-report coverage/<book>.tier-floor.json
+#   uv run generate_questions.py --families families/prep3-math-en --compare-legacy \
+#       --per-family 16 --export seed/generated/generated-questions.json
+#
+# The order is the stage's: author (families.workflow.js, mode "author") →
+# --check → --grading-set → blind grader (families.workflow.js, mode "grade") →
+# --grades … --out. A family reaches a bundle only with a passing grade for its
+# CURRENT spec (the grade names the spec's sha); one disagreement rejects it.
+# ==========================================================================
+
+GRADE_SAMPLE = 3
+DECLARATIVE_ONLY_KEYS = ("family", "family_spec_sha", "answer_check", "authored")
+
+
+def _declarative_row(item: Item, qid: str, fam: Family) -> dict:
+    from families import spec as FS
+    return FS.to_question(item, qid, fam.spec)
+
+
+def declarative_families(specs) -> list[Family]:
+    from families import spec as FS
+    out = []
+    for s in specs:
+        fam = FS.as_family(s)
+        fam.spec = s  # the driver's to_row reads it back
+        out.append(fam)
+    return out
+
+
+def run_specs(specs, per_family: int, seed: int) -> tuple[list[dict], list[str], dict[str, int]]:
+    """Instantiate declarative specs with the shared driver (pre-rebalance)."""
+    from families import evaluator as FE
+    from families import spec as FS
+    fams = declarative_families(specs)
+    by_id = {s.id: s for s in specs}
+    return instantiate(
+        fams,
+        lambda f: 1 if by_id[f.id].kind == "authored" else per_family,
+        seed,
+        item_id=lambda f, n: FS.item_id(by_id[f.id], n),
+        to_row=_declarative_row,
+        spec_errors=(FE.EvalError,),
+    )
+
+
+def load_catalogue(path: Path | None) -> tuple[dict[str, dict], dict[str, str]]:
+    """The S5 catalogue (load_misconceptions.py shape): entries by id, and alias → id.
+
+    An S5 RUN is read too ({stage, records: [{entries}]}): the author step reads the DRAFT's
+    entries (§3.2 order: S5 draft, then S6 names its ids), before any catalogue is assembled.
+    The final bundle is still written only against the assembled final catalogue."""
+    if path is None:
+        return {}, {}
+    data = json.loads(Path(path).read_text())
+    if "records" in data and "misconceptions" not in data:
+        data = {"misconceptions": [e for r in data.get("records") or [] for e in r.get("entries") or []]}
+    entries = {m["id"]: m for m in data.get("misconceptions", [])}
+    alias = {a: m["id"] for m in entries.values() for a in (m.get("aliases") or [])}
+    return entries, alias
+
+
+def resolve_tags(questions: list[dict], entries: dict, alias: dict) -> tuple[list[str], list[str], set[str]]:
+    """Point every distractor at the catalogue's canonical id (FR-1115).
+
+    A tag the catalogue does not hold loses its tag (S5 dropped the entry, or it
+    was never written): the option stays a distractor with nothing to serve,
+    which FR-1112 prefers to a pointer at nothing. A tag on another objective is
+    an error — the loader would refuse it (FR-1106).
+    """
+    problems, untagged, used = [], [], set()
+    for q in questions:
+        if not isinstance(q.get("choices"), list):
+            continue
+        for c in q["choices"]:
+            mid = c.get("misconception_id")
+            if not mid:
+                continue
+            canon = alias.get(mid, mid)
+            entry = entries.get(canon)
+            if entry is None:
+                del c["misconception_id"]
+                untagged.append(f"{q['id']} option {c['key']}: {mid} is not in the catalogue — tag dropped")
+            elif entry.get("lo_id") != q["lo_id"]:
+                problems.append(f"{q['id']} option {c['key']}: {canon} belongs to {entry.get('lo_id')}, "
+                                f"not {q['lo_id']}")
+            else:
+                c["misconception_id"] = canon
+                used.add(canon)
+    return problems, untagged, used
+
+
+def s5_distractors(specs, questions: list[dict]) -> list[dict]:
+    """S6's distractors in the shape S5's final pass reads (misconceptions.workflow.js args.distractors).
+
+    One record per (family, tagged error) and per untagged wrong option, each
+    with a rendered example, so S5 can attach it to the entry whose error it
+    encodes — or author that entry — and verify the fit (FR-1115, §3.8).
+    """
+    out, seen = [], set()
+    for s in specs:
+        proposed = {e["id"]: {"label": e["label"], "description": e["description"]}
+                    for e in s.raw.get("proposed_misconceptions") or [] if isinstance(e, dict)}
+        for q in questions:
+            if q.get("family_spec_sha") != s.sha or not isinstance(q.get("choices"), list):
+                continue
+            for c in q["choices"]:
+                if c["key"] == q["correct_answer"]:
+                    continue
+                mid = c.get("misconception_id")
+                key = (s.id, mid or c["text"])
+                if key in seen:
+                    continue
+                seen.add(key)
+                rec = {"lo": s.lo_id, "origin": "S6", "ref": f"{s.id}#{mid or 'untagged'}",
+                       "question_id": q["id"], "text": c["text"], "misconception_id": mid}
+                if mid in proposed:
+                    rec["proposed"] = proposed[mid]
+                out.append(rec)
+    return out
+
+
+def _stem_sha(stem: str) -> str:
+    import hashlib
+    return hashlib.sha256(stem.encode()).hexdigest()[:16]
+
+
+def grading_set(specs, questions: list[dict], seed: int, n: int = GRADE_SAMPLE) -> dict:
+    """What the blind grader sees (``blind``) and what only the comparison sees (``sealed``).
+
+    ``families.workflow.js`` (mode "grade") puts ONLY ``blind`` in the solver's
+    prompt. ``sealed`` goes to the separate judge of distractors and to this
+    script, which compares answers deterministically (:func:`apply_grades`).
+    """
+    fams = []
+    for s in specs:
+        items = [q for q in questions if q.get("family_spec_sha") == s.sha]
+        k = min(n, len(items))
+        pick = sorted(random.Random(f"{seed}:grade:{s.id}").sample(range(len(items)), k))
+        instances = []
+        for i in pick:
+            q = items[i]
+            blind = {"instance_id": q["id"], "stem": q["stem"], "stem_sha": _stem_sha(q["stem"])}
+            sealed = {"correct_answer": q["correct_answer"], "canonical_solution": q["canonical_solution"]}
+            if q["question_type"] == "mcq":
+                blind["options"] = [{"key": c["key"], "text": c["text"]} for c in q["choices"]]
+                blind["answer_format"] = {"type": "choice"}
+                sealed["choices"] = q["choices"]
+            elif q["question_type"] == "short":
+                m = q["choices"]["marker"]
+                blind["answer_format"] = {"type": "expression", "kind": m["kind"], "form": m["form"],
+                                          "variables": m["variables"]}
+                sealed["marker"] = m
+                sealed["answer_check"] = q.get("answer_check")
+            else:
+                blind["answer_format"] = {"type": "number"}
+            instances.append({"instance_id": q["id"], "blind": blind, "sealed": sealed})
+        fams.append({
+            "family_id": s.id, "spec_sha": s.sha, "kind": s.kind, "lo_id": s.lo_id, "tier": s.tier,
+            "answer_type": s.answer_type, "context": s.raw.get("context"),
+            "parent_question_id": s.parent, "instances_available": len(items), "instances": instances,
+        })
+    return {"format": "ainext.family-grading/1", "seed": seed, "sample_per_family": n, "families": fams}
+
+
+def _decimals(s: str) -> int:
+    return len(s.split(".", 1)[1]) if "." in s else 0
+
+
+def answer_agrees(q: dict, given: dict) -> tuple[bool, str]:
+    """Deterministic comparison of one blind answer with the family's computed key."""
+    from families import evaluator as FE
+    t = q["question_type"]
+    if t == "mcq":
+        correct = next(c["text"] for c in q["choices"] if c["key"] == q["correct_answer"])
+        chosen = given.get("choice_text")
+        return chosen == correct, f"chose {chosen!r}, key {correct!r}"
+    if t == "numeric":
+        raw = str(given.get("value", "")).strip().replace(" ", "")
+        try:
+            got = float(Fraction(raw)) if "/" in raw else float(raw)
+        except (ValueError, ZeroDivisionError):
+            return False, f"unreadable number {raw!r}"
+        key = q["correct_answer"]
+        tol = 0.5 * 10 ** -_decimals(key) + 1e-12 if "." in key else 1e-9
+        return abs(got - float(key)) <= tol, f"answered {raw}, key {key}"
+    m = q["choices"]["marker"]
+    try:
+        ok = FE.equivalent(m["kind"], q["answer_check"], str(given.get("plain", "")), m["variables"],
+                           (m.get("tolerance") or {}).get("abs"))
+    except FE.Unreadable as e:
+        return False, f"unreadable answer ({e})"
+    return ok, f"answered {given.get('plain')!r}, key {q['answer_check']!r}"
+
+
+def apply_grades(specs, questions: list[dict], grade_files: list[Path]) -> tuple[dict, dict]:
+    """Accept a family only on a clean blind grade of its current spec. Fail closed.
+
+    Returns ({family_id: record} accepted, {family_id: [reasons]} rejected). A
+    family with no grade is rejected as "not graded": silence is not approval.
+    """
+    results: dict[str, dict] = {}
+    for gf in grade_files:
+        data = json.loads(Path(gf).read_text())
+        for r in data.get("results", []):
+            results.setdefault(r["family_id"], {"runs": []})["runs"].append((Path(gf).name, r))
+    by_id = {q["id"]: q for q in questions}
+    accepted, rejected = {}, {}
+    for s in specs:
+        runs = [(f, r) for f, r in results.get(s.id, {}).get("runs", []) if r.get("spec_sha") == s.sha]
+        if not runs:
+            stale = results.get(s.id)
+            rejected[s.id] = ["not graded" + (" (grades exist for an older version of the spec)" if stale else "")]
+            continue
+        reasons, graded = [], 0
+        for fname, r in runs:
+            for a in r.get("answers", []):
+                q = by_id.get(a.get("instance_id"))
+                if q is None or _stem_sha(q["stem"]) != a.get("stem_sha"):
+                    reasons.append(f"{a.get('instance_id')}: graded instance is not in this run")
+                    continue
+                ok, why = answer_agrees(q, a.get("answer") or {})
+                graded += 1
+                if not ok:
+                    reasons.append(f"{a['instance_id']}: blind answer disagrees — {why}")
+            j = r.get("judge") or {}
+            for field_ in ("distractors_ok", "key_form_ok", "context_ok", "solution_ok"):
+                if j.get(field_) is not True:
+                    reasons.append(f"judge: {field_} is {j.get(field_)!r} — {j.get('notes', '')}".strip())
+        available = sum(1 for q in questions if q.get("family_spec_sha") == s.sha)
+        if graded < min(GRADE_SAMPLE, available):
+            reasons.append(f"only {graded} instance(s) graded, {min(GRADE_SAMPLE, available)} required")
+        if reasons:
+            rejected[s.id] = reasons
+        else:
+            accepted[s.id] = {"grades": sorted({f for f, _ in runs}), "graded_instances": graded}
+    return accepted, rejected
+
+
+# ---- the book side: objectives, book questions, the tier floor -----------
+def book_objectives(book) -> dict[str, dict]:
+    """Objectives, their module and their book questions, from the book's bundles."""
+    los: dict[str, dict] = {}
+    module_of: dict[str, str] = {}
+    questions: dict[str, list] = {}
+    for path in book.bundle_paths():
+        if not path.exists():
+            continue
+        b = json.loads(path.read_text())
+        for n in b.get("nodes", []):
+            if n.get("kind") == "learning_objective" and book.owns_lo(n["id"]):
+                los[n["id"]] = {"label": n.get("label"), "description": n.get("description"),
+                                "source_page": n.get("source_page")}
+        for e in b.get("edges", []):
+            if e.get("type") == "teaches" and str(e.get("src", "")).startswith("module:"):
+                module_of[e["dst"]] = e["src"]
+        for q in b.get("questions", []):
+            questions.setdefault(q.get("lo"), []).append(q)
+    for lo, rec in los.items():
+        rec["module"] = module_of.get(lo)
+        rec["questions"] = questions.get(lo, [])
+    return los
+
+
+def tier_floor(objectives: dict[str, dict], generated: list[dict]) -> dict:
+    """FR-4305 / FR-1109: every objective × tier cell, book and generated together.
+
+    A book question fills a cell only when it will be LIVE: `verified` in its bundle, which is what
+    the loader serves and what coverage_report.py's tier_floor counts. A question held at G2 (a
+    three-way disagreement, a key the app's marker cannot read) fills nothing, so S6 authors for
+    that tier — the Chapter 8 dry run found the two counts disagreeing."""
+    cells = {lo: {t: {"book": 0, "generated": 0} for t in ("basic", "standard", "advanced")}
+             for lo in objectives}
+    for lo, rec in objectives.items():
+        for q in rec["questions"]:
+            if q.get("tier") in cells[lo] and q.get("verified", True):
+                cells[lo][q["tier"]]["book"] += 1
+    for q in generated:
+        if q["lo_id"] in cells and q["tier"] in cells[q["lo_id"]]:
+            cells[q["lo_id"]][q["tier"]]["generated"] += 1
+    below = [{"lo_id": lo, "missing": [t for t, c in tiers.items() if c["book"] + c["generated"] == 0]}
+             for lo, tiers in cells.items()]
+    below = [b for b in below if b["missing"]]
+    return {"format": "ainext.tier-floor/1", "objectives": len(cells),
+            "cells": len(cells) * 3, "cells_filled": sum(1 for t in cells.values() for c in t.values()
+                                                         if c["book"] + c["generated"]),
+            "below_floor": below, "by_objective": cells}
+
+
+def author_args(book, specs, objectives: dict, entries: dict, all_objectives: bool, generated: list[dict]) -> dict:
+    """``args`` for families.workflow.js (mode "author"): the gap list and its evidence."""
+    import book_config
+    floor = tier_floor(objectives, generated)
+    gaps = {b["lo_id"]: b["missing"] for b in floor["below_floor"]}
+    existing: dict[str, list[str]] = {}
+    for s in specs:
+        existing.setdefault(s.lo_id, []).append(s.id)
+    objs = []
+    for lo, rec in sorted(objectives.items()):
+        if not all_objectives and lo not in gaps:
+            continue
+        # parents: the book's verified questions first (a family names a reviewed parent, FR-1101)
+        qs = sorted(rec["questions"], key=lambda q: (not q.get("verified", True), q.get("type") != "numeric",
+                                                     q.get("id")))[:8]
+        objs.append({
+            "lo_id": lo, "label": rec["label"], "description": rec["description"],
+            "module": rec["module"], "lesson": book_config.lesson_slug(lo),
+            "tier_gaps": gaps.get(lo, []), "existing_families": existing.get(lo, []),
+            "book_questions": [{k: q.get(k) for k in ("id", "tier", "type", "stem", "choices", "answer",
+                                                       "solution", "source_page")} for q in qs],
+            "misconceptions": [{"id": m["id"], "label": m.get("label"), "description": m.get("description")}
+                               for m in entries.values() if m.get("lo_id") == lo],
+        })
+    return book_config.workflow_args(book, extra={"mode": "author", "objectives": objs})
+
+
+# ---- packet by reference (packet_ref.py) ---------------------------------
+# `--author-args A --by-ref [DIR]` and `--grade-args G --by-ref [DIR]`: the big blocks of
+# families.workflow.js's prompts go to shard files, rendered as the workflow renders them, and the
+# args keep what its control flow reads. tests/test_packet_ref.py splices them back and compares.
+#   author  o/<tail>.book-questions.txt   JSON.stringify(book_questions, null, 1)   that objective's author
+#           o/<tail>.misconceptions.txt   JSON.stringify(misconceptions, null, 1)
+#   grade   solve/f001-q1.txt …           an instance's STEM only       the BLIND solver of family 1
+#           judge/f001.txt …              the family line, then JSON.stringify({id, stem, ...sealed}, null, 1)
+#                                         per instance: the judge of family 1
+# WHOLE by reference (decision of 2026-09-26, Q2): inline clips these at 12000, 4000 and 5000 characters;
+# by reference nothing is cut.
+# The solver's shards hold nothing sealed (no key, no worked solution, no misconception tag, no
+# instance id): the blind rule holds by construction, and the judge's shards are in another folder.
+BOOK_KEYS_S6 = ("book", "title", "language", "grade", "notation")
+
+
+def _small_book(book_block: dict, keys=BOOK_KEYS_S6) -> dict:
+    return {k: book_block.get(k) for k in keys if k in book_block}
+
+
+def author_args_by_ref(args: dict, directory: Path) -> dict:
+    import packet_ref
+    shards = packet_ref.Shards(directory, "S6 author")
+    refs = []
+    for o in args["objectives"]:
+        tail = o["lo_id"].removeprefix("lo:")
+        shards.put(f"o/{tail}.book-questions.txt", packet_ref.js_json(packet_ref.js_or(o.get("book_questions"), []), 1))
+        shards.put(f"o/{tail}.misconceptions.txt", packet_ref.js_json(packet_ref.js_or(o.get("misconceptions"), []), 1))
+        refs.append({k: o.get(k) for k in ("lo_id", "label", "description", "module", "lesson", "tier_gaps",
+                                           "existing_families")})
+    out = {k: v for k, v in args.items() if k not in ("objectives", "book")}
+    out["book"] = _small_book(args["book"])
+    out["by_ref"] = shards.finish({"book": args["book"]["book"], "mode": "author"})
+    out["objective_refs"] = refs
+    return out
+
+
+def grade_args(book_block: dict, gs: dict) -> dict:
+    """families.workflow.js's args, mode "grade", inline."""
+    return {"mode": "grade", "book": book_block, "grading_set": gs}
+
+
+def _js_judge_head(f: dict) -> str:
+    from packet_ref import js, js_truthy
+    return (f"Family {js(f.get('family_id'))} on {js(f.get('lo_id'))}, tier {js(f.get('tier'))}, answer type "
+            f"{js(f.get('answer_type'))}.\n" + (f"Fixed context: {js(f['context'])}" if js_truthy(f.get("context")) else ""))
+
+
+def grade_args_by_ref(book_block: dict, gs: dict, directory: Path, limit: int | None = None) -> list[dict]:
+    """Compact grade args. Per family: {"f": family_id, "s": spec_sha, "i": instance rows}, an
+    instance row being [instance_id, stem_sha, fmt] with fmt = the options as [[key, text], …] (a
+    choice), "n" (a number) or the blind answer_format itself (anything else) — what the script
+    needs to write the solver's answer instructions and to map a letter back to its option text.
+    Everything else the two prompts carry is in the shards.
+
+    A list: one args, or — when one would pass `limit` bytes (default packet_ref.COMPACT_LIMIT) —
+    PARTS, each a run of its own over consecutive families (`grading_ref.offset` numbers their
+    shards). Every part's return value is a grade file; `--grades` takes them all."""
+    import packet_ref
+    shards = packet_ref.Shards(directory, "S6 grade")
+    fams = []
+    for n, f in enumerate(gs["families"], start=1):
+        rows = []
+        for i, inst in enumerate(f.get("instances") or [], start=1):
+            b = inst["blind"]
+            shards.put(f"solve/f{n:03d}-q{i}.txt", b["stem"])
+            af = b.get("answer_format")
+            if "options" in b:
+                if (af or {}).get("type") != "choice":
+                    raise ValueError(f"{inst['instance_id']}: options without a choice answer format")
+                fmt = [[o["key"], o["text"]] for o in b["options"]]
+            elif af is None or af.get("type") == "number":
+                fmt = "n"
+            else:
+                fmt = af
+            rows.append([inst["instance_id"], b["stem_sha"], fmt])
+        if rows:
+            shards.put(f"judge/f{n:03d}.txt", _js_judge_head(f) + "\n\nINSTANCES:\n" + "\n\n".join(
+                packet_ref.js_json({"id": inst["instance_id"], "stem": inst["blind"]["stem"], **inst["sealed"]}, 1)
+                for inst in f["instances"]))
+        fams.append({"f": f["family_id"], "s": f["spec_sha"], "i": rows})
+    ref = shards.finish({"book": book_block.get("book"), "mode": "grade", "grading_seed": gs.get("seed")})
+
+    def part(offset: int, fs: list) -> dict:
+        return {"mode": "grade", "book": _small_book(book_block), "by_ref": ref,
+                "grading_ref": {"format": gs["format"], "offset": offset, "families": fs}}
+    limit = limit or packet_ref.COMPACT_LIMIT
+    whole = part(0, fams)
+    if packet_ref.args_size(whole) <= limit or len(fams) < 2:
+        return [whole]
+    parts, start = [], 0
+    for k in range(1, len(fams) + 1):          # greedy: the longest run of families that fits
+        if k - start > 1 and packet_ref.args_size(part(start, fams[start:k])) > limit:
+            parts.append(part(start, fams[start:k - 1]))
+            start = k - 1
+    parts.append(part(start, fams[start:]))
+    return parts
+
+
+# ---- the reproduction proof ----------------------------------------------
+def _strip(q: dict) -> dict:
+    return {k: v for k, v in q.items() if k not in DECLARATIVE_ONLY_KEYS}
+
+
+def _mc_free(q: dict) -> dict:
+    q = json.loads(json.dumps(q))
+    for c in q.get("choices") or []:
+        c.pop("misconception_id", None)
+    return q
+
+
+def compare_legacy(specs, per_family: int, seed: int, export: Path | None = None) -> dict:
+    """Prove a spec reproduces the hand-written family of the same id.
+
+    1. Per family, before key rebalancing: every field of every item equal, except
+       misconception ids, which must map one-to-one (legacy id → spec id).
+    2. With ``export``: splice the declarative families into the registry in
+       place of their hand-written twins, run the whole bank through the one
+       driver and ``rebalance_keys()``, and compare with the committed bank.
+    """
+    legacy = {f.id: f for f in REGISTRY}
+    report: dict = {"per_family": per_family, "seed": seed, "families": {}, "all_identical": True}
+    for s in specs:
+        fam = legacy.get(s.id)
+        if fam is None:
+            report["families"][s.id] = {"status": "no hand-written twin"}
+            continue
+        a, _, _ = instantiate([fam], per_family, seed)
+        b, rej, _ = run_specs([s], per_family, seed)
+        rec: dict = {"items": [len(a), len(b)], "differences": [], "misconception_map": {}}
+        if rej:
+            rec["differences"].append(f"spec rejections: {rej[:3]}")
+        for x, y in zip(a, b):
+            y = _strip(y)
+            if _mc_free(x) != _mc_free(y):
+                rec["differences"].append(f"{x['id']}: {[k for k in x if x.get(k) != y.get(k)]}")
+            for cx, cy in zip(x.get("choices") or [], y.get("choices") or []):
+                mx, my = cx.get("misconception_id"), cy.get("misconception_id")
+                if mx != my:
+                    prev = rec["misconception_map"].setdefault(str(mx), my)
+                    if prev != my:
+                        rec["differences"].append(f"{x['id']}: {mx} maps to both {prev} and {my}")
+        if len(a) != len(b):
+            rec["differences"].append(f"item counts differ: {len(a)} vs {len(b)}")
+        rec["status"] = "identical" if not rec["differences"] else "DIFFERENT"
+        report["all_identical"] &= rec["status"] == "identical"
+        report["families"][s.id] = rec
+    if export is not None:
+        report["export"] = compare_with_export(specs, per_family, seed, export)
+        report["all_identical"] &= report["export"]["spliced_items_identical"]
+    return report
+
+
+def compare_with_export(specs, per_family: int, seed: int, export: Path) -> dict:
+    by_id = {s.id: s for s in specs}
+    spliced = [declarative_families([by_id[f.id]])[0] if f.id in by_id else f for f in REGISTRY]
+    from families import evaluator as FE
+    from families import spec as FS
+
+    def row(item, qid, fam):
+        return FS.to_question(item, qid, fam.spec) if hasattr(fam, "spec") else item.as_question(qid)
+
+    questions, _, _ = instantiate(spliced, per_family, seed, to_row=row, spec_errors=(FE.EvalError,))
+    rebalance_keys(questions, random.Random(seed))
+    committed = {q["id"]: q for q in json.loads(Path(export).read_text())["questions"]}
+    export_only = {"status", "reviewed_by", "reviewed_at"}
+    out = {"export": str(export), "items": len(questions), "spliced_items": 0, "spliced_differences": [],
+           "other_items_differing_only_in_misconception_ids": 0, "other_differences": []}
+    for q in questions:
+        c = committed.get(q["id"])
+        if c is None:
+            (out["spliced_differences"] if q.get("family") else out["other_differences"]).append(
+                f"{q['id']}: not in the committed bank")
+            continue
+        # The export omits `source` (the loader forces 'variant') and writes
+        # `"choices": null` on a numeric row, where the generator omits the key.
+        c = {k: v for k, v in c.items() if k not in export_only and not (k == "choices" and v is None)}
+        mine = {k: v for k, v in _strip(q).items() if k != "source"}
+        if q.get("family"):
+            out["spliced_items"] += 1
+            if mine != c:
+                keys = sorted(k for k in set(mine) | set(c) if mine.get(k) != c.get(k))
+                out["spliced_differences"].append(f"{q['id']}: {keys}")
+        elif mine != c:
+            if _mc_free(mine) == _mc_free(c):
+                out["other_items_differing_only_in_misconception_ids"] += 1
+            else:
+                out["other_differences"].append(q["id"])
+    out["spliced_items_identical"] = not out["spliced_differences"] and out["spliced_items"] > 0
+    return out
+
+
+def main_families(argv: list[str]) -> int:
+    ap = argparse.ArgumentParser(description="declarative question families (decision 16)")
+    ap.add_argument("--families", type=Path, required=True, help="families/<book>/ — one spec per *.json")
+    ap.add_argument("--book", help="book config name (books/<book>.json): course, bundles, sacred guard")
+    ap.add_argument("--course")
+    ap.add_argument("--catalogue", type=Path, help="the S5 misconception catalogue (load_misconceptions.py shape)")
+    ap.add_argument("--per-family", type=int, default=10,
+                    help="a CAP, not a quota: a family stops early when its stems run out (§3.9)")
+    ap.add_argument("--seed", type=int, default=20260925)
+    ap.add_argument("--check", action="store_true", help="validate and instantiate; write nothing")
+    ap.add_argument("--grading-set", type=Path, help="write the blind-grading set for families.workflow.js")
+    ap.add_argument("--grade-sample", type=int, default=GRADE_SAMPLE)
+    ap.add_argument("--grades", type=Path, nargs="*", default=[], help="families.workflow.js grade outputs")
+    ap.add_argument("--out", type=Path, help="the generated-questions bundle (graded families only)")
+    ap.add_argument("--floor-report", type=Path, help="FR-4305 tier floor, book and generated together")
+    ap.add_argument("--author-args", type=Path, help="write args for families.workflow.js (mode author)")
+    ap.add_argument("--all-objectives", action="store_true", help="author args for every objective, not only gaps")
+    ap.add_argument("--s5-distractors", type=Path, help="write S6's distractors for S5's final pass")
+    ap.add_argument("--grade-args", type=Path, help="write families.workflow.js's args for mode grade (the grading set)")
+    ap.add_argument("--by-ref", nargs="?", const="", default=None, metavar="DIR",
+                    help="with --author-args or --grade-args: packet by reference (packet_ref.py) — the prompts' big "
+                         "blocks to shard files in DIR (default work/<book>/packets/s6-<mode>/), compact args naming them")
+    ap.add_argument("--compare-legacy", action="store_true", help="prove specs reproduce their hand-written twins")
+    ap.add_argument("--export", type=Path, help="with --compare-legacy: the committed bank to compare against")
+    args = ap.parse_args(argv)
+
+    from families import spec as FS
+
+    book = None
+    if args.book:
+        import book_config
+        book = book_config.load_book(args.book)
+        if book.sacred_content:
+            # The variant engine's rule (ADR-0006): sacred text is copied, never
+            # produced. A book that carries it gets no generated families at all.
+            print(f"REFUSING: {book.book} carries sacred content; families are never generated for it "
+                  "(ADR-0006, variant_engine.assert_variable).", file=sys.stderr)
+            return 2
+    course = args.course or (book.course_id if book else None)
+
+    specs, problems = FS.load_dir(args.families)
+    for p in problems:
+        print(f"  x {p}", file=sys.stderr)
+    if book:
+        for s in specs:
+            if not book.owns_lo(s.lo_id):
+                problems.append(f"{s.id}: {s.lo_id} is not an objective of {book.book}")
+                print(f"  x {problems[-1]}", file=sys.stderr)
+    if problems:
+        print(f"{len(problems)} spec problem(s); nothing instantiated from a malformed spec.", file=sys.stderr)
+        if not args.check:
+            return 1
+
+    if args.compare_legacy:
+        rep = compare_legacy(specs, args.per_family, args.seed if "--seed" in argv else 20260912, args.export)
+        print(json.dumps(rep, indent=2, ensure_ascii=False))
+        return 0 if rep["all_identical"] else 1
+
+    questions, rejected, counts = run_specs(specs, args.per_family, args.seed)
+    rebalance_keys(questions, random.Random(args.seed))
+    for r in rejected[:20]:
+        print(f"  x rejected: {r}", file=sys.stderr)
+    print(f"{len(specs)} spec(s) → {len(questions)} item(s); per family: "
+          + ", ".join(f"{k.split(':')[-1]}={v}" for k, v in counts.items()))
+    empty = [k for k, v in counts.items() if v == 0]
+    if empty:
+        print(f"  x families that produced nothing: {', '.join(empty)}", file=sys.stderr)
+
+    entries, alias = load_catalogue(args.catalogue)
+    objectives = book_objectives(book) if book else {}
+
+    if args.by_ref and args.author_args and args.grade_args:
+        print("--by-ref DIR with both --author-args and --grade-args would write both packets into one "
+              "directory: give them separately, or use the default directories (--by-ref with no DIR)",
+              file=sys.stderr)
+        return 2
+    if args.author_args:
+        if not book:
+            print("--author-args needs --book (the objectives and book questions come from its bundles)",
+                  file=sys.stderr)
+            return 2
+        a = author_args(book, specs, objectives, entries, args.all_objectives, [])
+        n_obj, extra = len(a["objectives"]), ""
+        if args.by_ref is not None:
+            import packet_ref
+            a = author_args_by_ref(a, Path(args.by_ref) if args.by_ref else packet_ref.default_dir(book.book, "s6", "author"))
+            extra = f"; {a['by_ref']['files']} shard(s) in {a['by_ref']['dir']}; " + packet_ref.report(a, "by ref")
+        args.author_args.parent.mkdir(parents=True, exist_ok=True)
+        import packet_ref
+        args.author_args.write_text((packet_ref.dumps(a) if "by_ref" in a   # by ref: one line, to paste
+                                     else json.dumps(a, indent=2, ensure_ascii=False)) + "\n")
+        print(f"wrote {args.author_args} — {n_obj} objective(s) for the author{extra}")
+
+    if args.grading_set or args.grade_args:
+        gs = grading_set(specs, questions, args.seed, args.grade_sample)
+        gs.update({"book": book.book if book else None, "per_family": args.per_family})
+    if args.grading_set:
+        args.grading_set.parent.mkdir(parents=True, exist_ok=True)
+        args.grading_set.write_text(json.dumps(gs, indent=2, ensure_ascii=False) + "\n")
+        print(f"wrote {args.grading_set} — {sum(len(f['instances']) for f in gs['families'])} instance(s) "
+              f"from {len(gs['families'])} famil(ies) for the blind grader")
+    if args.grade_args:
+        if not book:
+            print("--grade-args needs --book", file=sys.stderr)
+            return 2
+        import book_config
+        bb = book_config.workflow_args(book)["book"]
+        args.grade_args.parent.mkdir(parents=True, exist_ok=True)
+        if args.by_ref is not None:
+            import packet_ref
+            parts = grade_args_by_ref(bb, gs, Path(args.by_ref) if args.by_ref else packet_ref.default_dir(book.book, "s6", "grade"))
+            outs = [args.grade_args] if len(parts) == 1 else \
+                [args.grade_args.with_name(f"{args.grade_args.stem}.part{k}{args.grade_args.suffix}")
+                 for k in range(1, len(parts) + 1)]
+            for stale in [args.grade_args, *args.grade_args.parent.glob(f"{args.grade_args.stem}.part*{args.grade_args.suffix}")]:
+                stale.unlink(missing_ok=True)       # never leave an earlier build's args beside these
+            for ga, out in zip(parts, outs):
+                out.write_text(packet_ref.dumps(ga) + "\n")
+                print(f"wrote {out} — families.workflow.js args, mode grade, "
+                      f"{len(ga['grading_ref']['families'])} famil(ies); {ga['by_ref']['files']} shard(s) in "
+                      f"{ga['by_ref']['dir']}; " + packet_ref.report(ga, "by ref"))
+            if len(parts) > 1:
+                print(f"  {len(parts)} parts: run the workflow once per part and pass every return value to --grades")
+        else:
+            args.grade_args.write_text(json.dumps(grade_args(bb, gs), indent=2, ensure_ascii=False) + "\n")
+            print(f"wrote {args.grade_args} — families.workflow.js args, mode grade")
+
+    eval_errors = [r for r in rejected if ": evaluation error: " in r]
+    if eval_errors:
+        print(f"  x {len(eval_errors)} attempt(s) failed to evaluate — a spec bug, fix it with a "
+              "constraint or a require", file=sys.stderr)
+    if args.s5_distractors:
+        ds = s5_distractors(specs, questions)
+        args.s5_distractors.parent.mkdir(parents=True, exist_ok=True)
+        args.s5_distractors.write_text(json.dumps({"distractors": ds}, indent=2, ensure_ascii=False) + "\n")
+        print(f"wrote {args.s5_distractors} — {len(ds)} distractor(s) for S5 (misconceptions.workflow.js, "
+              "stage final, args.distractors)")
+
+    status = 1 if (problems or empty or eval_errors) and args.check else 0
+    if args.out:
+        if problems:
+            return 1
+        if not args.grades:
+            print("REFUSING --out without --grades: no family reaches a bundle before its blind grade "
+                  "(§3.9). Run --grading-set, then families.workflow.js in grade mode.", file=sys.stderr)
+            return 1
+        if not args.catalogue:
+            print("REFUSING --out without --catalogue: distractor tags must resolve against S5's "
+                  "catalogue (FR-1112, FR-1115).", file=sys.stderr)
+            return 1
+        if "records" in json.loads(args.catalogue.read_text()):
+            print("REFUSING --out against an S5 run: the bundle is written only against the ASSEMBLED "
+                  "final catalogue (assemble_misconceptions.py), never a draft's unverified entries.",
+                  file=sys.stderr)
+            return 1
+        accepted, refused = apply_grades(specs, questions, args.grades)
+        for fid, reasons in refused.items():
+            print(f"  x {fid}: REJECTED — {'; '.join(reasons[:3])}", file=sys.stderr)
+        accepted_shas = {s.sha for s in specs if s.id in accepted}
+        keep = [q for q in questions if q.get("family_spec_sha") in accepted_shas]
+        tag_problems, untagged, used = resolve_tags(keep, entries, alias)
+        for u in untagged:
+            print(f"  ! {u}", file=sys.stderr)
+        if tag_problems:
+            for p in tag_problems:
+                print(f"  x {p}", file=sys.stderr)
+            return 1
+        bundle = {
+            "bundle": "generated-questions-v2",
+            "generator": "declarative families — services/extraction/generate_questions.py --families "
+                         "(decision 16)",
+            "course_id": course,
+            "book": book.book if book else None,
+            "reviewed": False,
+            "seed": args.seed,
+            "per_family": args.per_family,
+            "note": ("Declarative families: every key computed from the sampled parameters by the safe "
+                     "evaluator that writes the stem; each family blind-graded on sampled instances "
+                     "before it could reach this file (ADR-0008, decision 16)."),
+            "families": {k: v for k, v in counts.items() if k in accepted},
+            "family_specs": {s.id: s.sha for s in specs if s.id in accepted},
+            "family_grades": accepted,
+            "rejected_families": refused,
+            "untagged_distractors": untagged,
+            "misconceptions": [{k: entries[m].get(k) for k in ("id", "lo_id", "label", "description")}
+                               for m in sorted(used)],
+            "questions": keep,
+        }
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
+        print(f"wrote {args.out} — {len(keep)} item(s) from {len(accepted)} accepted famil(ies); "
+              f"{len(refused)} rejected or ungraded")
+        questions = keep
+
+    if args.floor_report:
+        if not book:
+            print("--floor-report needs --book", file=sys.stderr)
+            return 2
+        fl = tier_floor(objectives, questions)
+        args.floor_report.parent.mkdir(parents=True, exist_ok=True)
+        args.floor_report.write_text(json.dumps(fl, indent=2, ensure_ascii=False) + "\n")
+        print(f"wrote {args.floor_report} — {fl['cells_filled']}/{fl['cells']} objective×tier cells filled; "
+              f"{len(fl['below_floor'])} objective(s) below the floor")
+    return status
 
 
 if __name__ == "__main__":

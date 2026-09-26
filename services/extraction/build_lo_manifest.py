@@ -12,7 +12,10 @@ workflow consumes, generated rather than hand-maintained because it is 90
 objectives deep.
 
 Usage:
-    uv run build_lo_manifest.py [--out manifest/math-los.json] [--lo lo:u1-1-1 ...]
+    uv run build_lo_manifest.py [--book prep3-math-en] [--out manifest/math-los.json] [--lo lo:u1-1-1 ...]
+
+The bundle list comes from the book config (books/<book>.json), not from a list
+kept here (B1/B20).
 """
 
 from __future__ import annotations
@@ -22,28 +25,25 @@ import json
 import os
 import sys
 
+import book_config
+
 HERE = os.path.dirname(__file__)
-SEED = os.path.join(HERE, "seed")
-BUNDLES = [
-    "unit1.json", "unit2.json", "unit3.json", "unit4.json", "unit5.json",
-    "geo-unit1.json", "t2-unit12.json", "t2-unit3.json",
-    "geo-unit2a.json", "geo-unit2b.json",
-]
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", default=os.path.join(HERE, "manifest", "math-los.json"))
     ap.add_argument("--lo", action="append", help="restrict to these LO ids (repeatable)")
+    ap.add_argument("--book", default="prep3-math-en", help="book config to read bundles from")
     args = ap.parse_args()
+    bundles = book_config.load_book(args.book).bundle_paths()
 
     only = set(args.lo or [])
     los: dict[str, dict] = {}
 
-    for name in BUNDLES:
-        path = os.path.join(SEED, name)
-        if not os.path.exists(path):
-            print(f"  skip (missing): {name}", file=sys.stderr)
+    for path in bundles:
+        if not path.exists():
+            print(f"  skip (missing): {path.name}", file=sys.stderr)
             continue
         b = json.load(open(path, encoding="utf-8"))
         for n in b.get("nodes", []):

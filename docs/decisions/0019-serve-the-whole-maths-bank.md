@@ -1,6 +1,6 @@
 # ADR-0019 — Serve the whole maths bank on the open site
 
-**Status**: Accepted — Samuel, 2026-09-23, on finding the live site had none of the generated maths content
+**Status**: Accepted — Samuel, 2026-09-23, on finding the live site had none of the generated maths content · **Note 2026-09-25** (accepted, not committed): extended to the Grade 10 American maths course; see [the note](#note--samuel-2026-09-25-the-grade-10-american-maths-course-is-covered)
 **Affects**: [constitution](../../.specify/memory/constitution.md) v3.1.1 → **v3.2.0** (Principle III) · `FR-907` in [`specs/001-student-mvp1-delta/spec.md`](../../specs/001-student-mvp1-delta/spec.md), **dropped** · the "Generated maths content" step in `.github/workflows/ci-cd.yml` · student-facing copy in `app/src/components/{chat,student}/` that claimed content was "reviewed"
 **Related**: [ADR-0007](./0007-student-mvp1-comparison-build.md) and ADR-0008 (the exception this widens) · [ADR-0006](./0006-arabic-language-vertical.md) (the sacred-content gate this does not touch) · [ADR-0018](./0018-course-availability.md) (which course a student sees at all)
 
@@ -70,3 +70,29 @@ I manage the distribution myself directly."*
   Any rows added after this decision would need their own check before running it. The
   misconception catalogue has no status column; revoking it means removing the rows or gating their
   use, which is a separate change.
+
+## Note — Samuel, 2026-09-25: the Grade 10 American maths course is covered
+
+**Accepted ("ok for all"), not committed.** On 2026-09-25 Samuel answered spec 003's question 2 — *"I would take your
+recommendations"* ([decisions.md](../../specs/003-curriculum-tracks/decisions.md) #9). This decision
+was written when the maths bank was one course, and its revocation query names only
+`course:prep3-math-en`. **It now also covers the second maths course**, `course:us-g10-math-en`
+(Siyavula *Everything Maths* Grade 10, American curriculum —
+[ADR-0024](./0024-curriculum-as-a-visibility-dimension.md)).
+
+- **Switching the course on in the console is the gate.** Once an operator makes the G10 course live
+  for a grade, its whole bank is served to those students: book questions, generated questions,
+  widget questions and its misconception catalogue, whether a human has read them or not.
+- **Everything above still holds for it.**
+  - Review status is kept and never erased.
+  - Nothing is stamped as reviewed by this decision.
+  - Status is shown to operators only.
+  - The 10% family sample is still drawn and read (ADR-0005 amendment, gate G3).
+  - Items the solutions gate disputed, and families rejected at G3, stay held.
+- **How it reaches production.** The course's content is made live in the data before it is exported
+  (the book questions without a reviewer stamp, as the 29 Prep-3 book questions were). The "Load a
+  course" action replays the export with `--restore`. The course itself stays hidden until an
+  operator's rule says otherwise (spec 003 FR-4202, FR-4208).
+- **Revoking it** puts unread G10 items back behind the gate exactly as for Prep-3. Run the query
+  above with `course_id = 'course:us-g10-math-en'`, or with `IN` both courses. Or simply hide the
+  course in the console, which removes it from every student at once.

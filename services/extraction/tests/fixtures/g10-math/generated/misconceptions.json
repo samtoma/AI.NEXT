@@ -1,0 +1,131 @@
+{
+  "catalogue": "g10-math-misconceptions (fixture)",
+  "course_id": "course:us-g10-math-en",
+  "reviewed": false,
+  "generator": "fixture generator — tests only",
+  "misconceptions": [
+    {
+      "id": "mc:g10m8s1-1-1:coordinates-swapped",
+      "lo_id": "lo:g10m8s1-1-1",
+      "label": "Coordinates read in the wrong order",
+      "description": "Takes the first number of a pair as the vertical coordinate.",
+      "signal": "The point is (y, x).",
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You found the right two numbers."
+        },
+        {
+          "step": 2,
+          "text_md": "A pair is written across first, then up: $(x, y)$."
+        },
+        {
+          "step": 3,
+          "text_md": "Read the first number along the $x$-axis before you move up or down."
+        }
+      ],
+      "maps": [],
+      "aliases": [
+        "mc:g10m8s1-1-1:xy-swap"
+      ]
+    },
+    {
+      "id": "mc:g10m8s1-1-1:sign-dropped",
+      "lo_id": "lo:g10m8s1-1-1",
+      "label": "A negative coordinate plotted as positive",
+      "description": "Uses the size of each coordinate but ignores its sign.",
+      "signal": null,
+      "kind": "generated_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Your distances from the axes are right."
+        },
+        {
+          "step": 2,
+          "text_md": "A minus sign sends you left or down."
+        },
+        {
+          "step": 3,
+          "text_md": "Check each sign before you plot."
+        }
+      ],
+      "maps": [],
+      "aliases": []
+    },
+    {
+      "id": "mc:g10m8s2-1-1:forgot-square-root",
+      "lo_id": "lo:g10m8s2-1-1",
+      "label": "Stops at the sum of squares",
+      "description": "Adds the squared differences and gives that as the distance.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Squaring and adding was the right start."
+        },
+        {
+          "step": 2,
+          "text_md": "That sum is the distance squared."
+        },
+        {
+          "step": 3,
+          "text_md": "Take its square root to finish."
+        }
+      ],
+      "maps": [],
+      "aliases": []
+    },
+    {
+      "id": "mc:g10m8s3-2-1:parallel-for-perpendicular",
+      "lo_id": "lo:g10m8s3-2-1",
+      "label": "Perpendicular gradients taken as parallel",
+      "description": "Treats two gradients whose product is -1 as the mark of parallel lines.",
+      "signal": null,
+      "kind": "book_distractor",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "You noticed the gradients are related."
+        },
+        {
+          "step": 2,
+          "text_md": "Parallel lines have EQUAL gradients."
+        },
+        {
+          "step": 3,
+          "text_md": "A product of $-1$ is the sign of perpendicular lines."
+        }
+      ],
+      "maps": [
+        {
+          "question_id": "q:g10m8s3-2-1:ex8-4-1",
+          "choice_text": "parallel"
+        }
+      ],
+      "aliases": []
+    },
+    {
+      "id": "mc:g10m8s4-1-1:halved-difference",
+      "lo_id": "lo:g10m8s4-1-1",
+      "label": "Halves the difference instead of the sum",
+      "description": "Subtracts the end points' coordinates before halving.",
+      "signal": null,
+      "kind": "conceptual",
+      "refutation": [
+        {
+          "step": 1,
+          "text_md": "Halving was right."
+        },
+        {
+          "step": 2,
+          "text_md": "The mid-point averages the end points: add, then halve."
+        }
+      ],
+      "maps": [],
+      "aliases": []
+    }
+  ]
+}

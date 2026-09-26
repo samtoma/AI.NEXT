@@ -5,8 +5,9 @@ Validation happens here, before anything touches the database.
 """
 from __future__ import annotations
 
+import re
 from typing import Literal, Optional
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from arabic_text import (
     COMPARE_VERIFY_VERSION,
@@ -76,21 +77,69 @@ class ClaimFact(BaseModel):
     value: str
 
 
+# Where a claim's evidence sits. The first four are the social-studies contract's
+# (§3) and are unchanged. The rest are the v2 line's (extraction-pipeline.md §3.4
+# evidence kinds and §3.5 claim anchors), added for the English maths books.
+EvidenceKind = Literal[
+    "text", "map", "concept_box", "enrichment_box",
+    "heading", "intro", "summary", "definition", "box", "worked_example", "exercise",
+    "figure",
+]
+# What a maths claim states (extraction-pipeline.md §3.5).
+ClaimType = Literal["definition", "rule", "method", "convention", "caution"]
+Lang = Literal["ar", "en"]
+
+
 class ClaimStep(BaseModel):
-    """Social-studies claim-step: one atomic Arabic claim with page evidence
-    (الإجابة النموذجية بالأدلة — docs/specs/social-extraction-contract.md §3).
-    `step` is assigned by the loader from list order, mirroring math strings.
+    """One atomic claim with page evidence.
+
+    Social studies (docs/specs/social-extraction-contract.md §3): an Arabic
+    claim-step, `claim_ar`, exactly as before. The v2 line (extraction-pipeline.md
+    §3.5, specs/003 T336) generalises it: `claim` + `lang` carry a claim in any
+    language, with the book anchor it came from and what kind of statement it is.
+
+    `claim_ar` is kept as the Arabic spelling of the same field, so every shipped
+    bundle validates and dumps byte-identically (selfcheck_arabic.py) and the
+    loader's `s.claim_ar` keeps working for them. Exactly one of the two is set.
+    Read `text` and `language` rather than either field when the language is not
+    known in advance. `step` is assigned by the loader from list order,
+    mirroring math strings.
     """
-    claim_ar: str = Field(min_length=1)
+    claim_ar: Optional[str] = Field(default=None, min_length=1)
     evidence_page: int
-    evidence_kind: Literal["text", "map", "concept_box", "enrichment_box"]
+    evidence_kind: EvidenceKind
     facts: Optional[list[ClaimFact]] = None
+    # --- v2 line (T336). All defaulted: the Arabic and social bundles are
+    #     unchanged under model_dump(exclude_defaults=True).
+    claim: Optional[str] = None
+    lang: Optional[Lang] = None
+    claim_type: Optional[ClaimType] = None
+    anchor: Optional[str] = None           # the book anchor: a section code, WE8.3, Ex8-2:5b …
 
     @model_validator(mode="after")
     def claim_not_blank(self) -> "ClaimStep":
-        if not self.claim_ar.strip():
-            raise ValueError("claim_ar must be non-empty")
+        if self.claim_ar is not None and self.claim is not None:
+            raise ValueError("set claim or claim_ar, not both (claim_ar is the Arabic spelling "
+                             "of the same field)")
+        if self.claim_ar is None and self.claim is None:
+            raise ValueError("claim_ar must be non-empty (or set claim + lang)")
+        if not self.text.strip():
+            raise ValueError("claim_ar must be non-empty" if self.claim is None
+                             else "claim must be non-empty")
+        if self.claim is not None and self.lang is None:
+            raise ValueError("a `claim` names its language: set lang ('en' or 'ar')")
+        if self.claim_ar is not None and self.lang not in (None, "ar"):
+            raise ValueError(f"claim_ar is Arabic by definition; lang '{self.lang}' contradicts it")
         return self
+
+    @property
+    def text(self) -> str:
+        """The claim, whichever field carries it."""
+        return self.claim if self.claim is not None else (self.claim_ar or "")
+
+    @property
+    def language(self) -> str:
+        return self.lang or "ar"
 
 
 # =============================================================================
@@ -729,13 +778,244 @@ AR_ANSWER_BY_TYPE: dict[str, type[BaseModel]] = {
 PASSAGE_BOUND_TYPES = frozenset({"extract"})
 
 
+# =============================================================================
+# The v2 line (extraction-pipeline.md §3.3–§3.6; specs/003 T336, T401)
+#
+# Everything below is additive and defaulted, like the Arabic vertical before
+# it: every shipped bundle validates and dumps byte-identically
+# (tests/test_schemas_v2.py compares against the committed schema's dumps).
+# =============================================================================
+
+# Where a book question's canonical solution comes from (FR-4302, decision 19).
+#   book_worked       a worked example: the book's printed QUESTION/SOLUTION
+#   book_worked_epub  an exercise: the worked solution the EPUB edition carries
+#                     for it, which the PDF (the citation authority) does not print
+#   teachers_guide    the Teacher's Guide's solution, only where it adds something
+#                     the book and its EPUB lack
+#   answer_anchored   steps derived to the printed answer from the lesson's own
+#                     methods, kept for books with no worked solutions; not
+#                     expected for Grade 10
+SolutionProvenance = Literal["book_worked", "book_worked_epub", "teachers_guide",
+                             "answer_anchored"]
+QuestionSource = Literal["seed", "authored"]
+
+# The maths-expression marker's answer spec (specs/003 contracts/answer-marker.md,
+# FR-4320). It travels in the question's existing `choices` JSON as
+# {"marker": {...}}, the way widgets carry theirs (ADR-0009), so no
+# question_type CHECK is widened; question_type stays 'short'.
+MarkerKind = Literal["expression", "equation", "values", "interval", "coordinates",
+                     "surd", "recurring"]
+# `tolerance` is for the kinds whose key can be a decimal. An exact kind never
+# takes one: a surd question refuses a decimal (contract, Behaviour §3).
+NUMERIC_MARKER_KINDS = frozenset({"values", "interval", "coordinates", "recurring"})
+_VARIABLE_RE = re.compile(r"^[A-Za-z](?:_[A-Za-z0-9]+)?$|^\\[a-zA-Z]+$")
+
+
+class SubjectForm(BaseModel):
+    """`form: {"subject": "x"}` — "make x the subject of the formula"."""
+    model_config = ConfigDict(extra="forbid")
+    subject: str = Field(min_length=1)
+
+
+class Tolerance(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    abs: float = Field(gt=0)
+
+
+class AnswerSpec(BaseModel):
+    """What the app's expression marker needs to mark one typed answer.
+
+    `key` is LaTeX, written by S3 from the book's printed answer. Notation is
+    normalised at assembly (decision 15: decimal point, `(x, y)`), and put into
+    the marker library's canonical form once T413 has chosen the library.
+    `form` is the form the question asks for; an equivalent answer in another
+    form is marked `wrong_form`, never correct (FR-4320). The forms are EXACTLY the
+    ones the app's `readMarkerSpec` accepts (app/src/lib/answer-marker.ts FORM_NAMES,
+    which throws on any other): factorised, expanded, simplest, `decimal` (the
+    per-question flag for "write it as a decimal": 7/33 is not 0.2̇1̇, backlog 31) and
+    {subject} on an equation. A form the app does not know never reaches a spec: the
+    book's "product of prime factors" (backlog 30) is carried as the item's
+    `asked_form` and the item is HELD until the app's marker can check it.
+    `marker_check.mjs` runs the app's own reader and key check on every bundle.
+    """
+    model_config = ConfigDict(extra="forbid")
+    kind: MarkerKind
+    key: str = Field(min_length=1)
+    form: Optional[Literal["factorised", "expanded", "simplest", "decimal"] | SubjectForm] = None
+    variables: list[str] = []
+    tolerance: Optional[Tolerance] = None
+
+    @model_validator(mode="after")
+    def coherent(self) -> "AnswerSpec":
+        if not self.key.strip():
+            raise ValueError("marker key must be non-empty")
+        for v in self.variables:
+            if not _VARIABLE_RE.match(v):
+                raise ValueError(f"marker variable {v!r} is not a single letter, a subscripted "
+                                 "letter or a LaTeX Greek name")
+        if len(set(self.variables)) != len(self.variables):
+            raise ValueError(f"marker variables repeat: {self.variables}")
+        if self.tolerance is not None and self.kind not in NUMERIC_MARKER_KINDS:
+            raise ValueError(f"marker kind '{self.kind}' is exact; a tolerance belongs only to "
+                             f"{sorted(NUMERIC_MARKER_KINDS)}")
+        if isinstance(self.form, SubjectForm):
+            if self.kind != "equation":
+                # the app's reader: "a subject form needs an equation"
+                raise ValueError("'make x the subject' is a form of an equation (the app's marker)")
+            if self.variables and self.form.subject not in self.variables:
+                raise ValueError(f"subject {self.form.subject!r} is not among the variables "
+                                 f"{self.variables}")
+        if self.form in ("factorised", "expanded") and self.kind not in ("expression", "equation"):
+            raise ValueError(f"form '{self.form}' applies to an expression or an equation, "
+                             f"not to kind '{self.kind}'")
+        if self.form == "decimal" and self.kind not in ("expression", "recurring", "values"):
+            raise ValueError(f"form 'decimal' applies to a number, a recurring decimal or values, "
+                             f"not to kind '{self.kind}'")
+        return self
+
+
+class MarkerChoices(BaseModel):
+    """The `choices` value of a marker-graded question: {"marker": AnswerSpec}."""
+    model_config = ConfigDict(extra="forbid")
+    marker: AnswerSpec
+
+
+# --- A lesson's book provenance (FR-4311, decision 18; data-model §2) --------
+
+_SECTION_NUMBER_RE = re.compile(r"^[0-9]{1,2}\.[0-9]{1,2}$")
+# The app's lesson-slug rule (app/src/lib/lesson-slug.ts SLUG_RE).
+LESSON_SLUG_RE = re.compile(r"^[a-z0-9]{1,12}-[0-9]{1,3}$")
+
+
+class BookSection(BaseModel):
+    """One printed section a lesson covers: its number and title as printed, and its
+    section code (EMA…) where the book has one."""
+    model_config = ConfigDict(extra="forbid")
+    number: str
+    title: str = Field(min_length=1)
+    code: Optional[str] = None
+
+    @model_validator(mode="after")
+    def printed_number(self) -> "BookSection":
+        if not _SECTION_NUMBER_RE.match(self.number):
+            raise ValueError(f"section number {self.number!r} is not a printed '<chapter>.<n>'")
+        return self
+
+
+class LessonPart(BaseModel):
+    """Part n of m of one split section."""
+    model_config = ConfigDict(extra="forbid")
+    n: int = Field(ge=1)
+    of: int = Field(ge=2)
+
+    @model_validator(mode="after")
+    def in_range(self) -> "LessonPart":
+        if self.n > self.of:
+            raise ValueError(f"part {self.n} of {self.of}")
+        return self
+
+
+class Lesson(BaseModel):
+    """A lesson and where it comes from in its book (FR-4311).
+
+    - one section, no part: the ordinary case (every National lesson);
+    - one section with `part`: one part of a split section (G0 P1a–e);
+    - several sections: a merged lesson (G0 P3a–b), which takes its first
+      section's slug;
+    - `chapter_intro`: a promoted chapter introduction (G0 P2a–b).
+
+    The loader writes it to the book-sections store (migration 034). Part
+    prerequisites are derived from it at read time, never written as edges
+    (FR-4317).
+    """
+    model_config = ConfigDict(extra="forbid")
+    slug: str
+    title: str = Field(min_length=1)
+    module: Optional[str] = None
+    order_in_module: Optional[int] = Field(default=None, ge=1)
+    sections: list[BookSection] = Field(min_length=1)
+    part: Optional[LessonPart] = None
+    chapter_intro: bool = False
+    # data-model §2: the key a section's parts share. Derived when absent (below).
+    group_key: Optional[str] = None
+    printed_pages: Optional[tuple[int, int]] = None
+
+    @model_validator(mode="after")
+    def provenance_is_coherent(self) -> "Lesson":
+        if not LESSON_SLUG_RE.match(self.slug):
+            raise ValueError(f"lesson slug {self.slug!r} does not match the app's SLUG_RE "
+                             f"{LESSON_SLUG_RE.pattern}")
+        numbers = [s.number for s in self.sections]
+        if len(set(numbers)) != len(numbers):
+            raise ValueError(f"{self.slug}: a section is listed twice: {numbers}")
+        if self.part is not None and len(self.sections) != 1:
+            raise ValueError(f"{self.slug}: a part belongs to exactly one section, "
+                             f"not {numbers}")
+        if self.chapter_intro and (len(self.sections) != 1 or self.part is not None):
+            raise ValueError(f"{self.slug}: a promoted introduction is one whole section")
+        derived = self.derived_group_key()
+        if self.group_key is None:
+            self.group_key = derived
+        elif self.part is not None and self.group_key != derived:
+            raise ValueError(f"{self.slug}: a part's group_key is its section ({derived}), "
+                             f"not {self.group_key!r}")
+        if self.printed_pages and self.printed_pages[0] > self.printed_pages[1]:
+            raise ValueError(f"{self.slug}: printed_pages {self.printed_pages} run backwards")
+        return self
+
+    def derived_group_key(self) -> str:
+        """A part: its section. A merged lesson: the section its slug names (g10m1s3-1
+        covering 1.2 and 1.3 is grouped as 1.3), else its first. Anything else: its
+        one section."""
+        if self.part is not None or len(self.sections) == 1:
+            return self.sections[0].number
+        named = section_of_slug(self.slug)
+        numbers = [s.number for s in self.sections]
+        return named if named in numbers else numbers[0]
+
+
+def section_of_slug(slug: str) -> Optional[str]:
+    """`g10m8s3-2` → "8.3": the printed section a v2 lesson slug names (None for
+    slugs that name no section, such as the Prep-3 `u1-1`)."""
+    m = re.match(r"^[a-z]+?\d*[a-z](\d+)s(\d+)-\d+$", slug)
+    return f"{m.group(1)}.{m.group(2)}" if m else None
+
+
+# --- Id helpers (specs/003 contracts/pipeline-handoff.md, "Ids") -------------
+
+def lo_id(lesson_slug: str, n: int) -> str:
+    """`lo:<lesson>-<n>`: the lesson is the LO id's prefix (lesson-slug.ts)."""
+    if not LESSON_SLUG_RE.match(lesson_slug) or n < 1:
+        raise ValueError(f"cannot mint an objective id from {lesson_slug!r}, {n}")
+    return f"lo:{lesson_slug}-{n}"
+
+
+def lo_tail(lo: str) -> str:
+    return lo.removeprefix("lo:")
+
+
+def worked_example_question_id(lo: str, we_number: int) -> str:
+    """`q:<lo tail>:we03` for the book's worked example 3 (numbered per chapter)."""
+    return f"q:{lo_tail(lo)}:we{we_number:02d}"
+
+
+def exercise_question_id(lo: str, item_id: str) -> str:
+    """`q:<lo tail>:ex8-2-5b` for exercise item `Ex8-2:5b` (label, question, sub-part)."""
+    m = re.match(r"^Ex(\d{1,2})-(\d{1,2}):(\d{1,3})([a-z]{0,3}(?:-[ivx]+)?)$", item_id)
+    if not m:
+        raise ValueError(f"exercise item id {item_id!r} is not Ex<ch>-<set>:<q><sub>")
+    return f"q:{lo_tail(lo)}:ex{m.group(1)}-{m.group(2)}-{m.group(3)}{m.group(4)}"
+
+
 class Question(BaseModel):
     id: str
     lo: str
     tier: Tier
     type: QuestionType
     stem: str
-    choices: Optional[list[Choice]] = None
+    # A choice list (mcq), or the marker's answer spec {"marker": {...}} for a
+    # typed maths answer (contracts/answer-marker.md, FR-4320; type 'short').
+    choices: Optional[list[Choice] | MarkerChoices] = None
     # Math / social / mcq: the answer key as a string (unchanged).
     # Arabic (ADR-0006): a typed answer record. An إعراب answer is a slot record
     # so it can be slot-diffed with no LLM; a bare string is rejected below.
@@ -755,6 +1035,34 @@ class Question(BaseModel):
     sensitivity_class: Optional[SensitivityClass] = None   # human-assigned, never inferred
     sensitivity_reviewed_by: Optional[str] = None  # clears a detector escalation (§1)
     variant_of: Optional[str] = None               # seed question id (provenance, ADR-0001)
+    # --- The v2 line (T336). All defaulted: every shipped bundle is unchanged
+    #     under model_dump(exclude_defaults=True).
+    # 'seed' = a verbatim book item; 'authored' = agent-written (every bundle so
+    # far, which is why absent means 'authored' to the loader). Never 'variant'.
+    source: Optional[QuestionSource] = None
+    solution_provenance: Optional[SolutionProvenance] = None   # FR-4302
+    family: Optional[str] = None                   # a generated item's family (S6), as a field
+
+    @property
+    def marker(self) -> Optional[AnswerSpec]:
+        """The expression marker's spec, when this question is marker-graded."""
+        return self.choices.marker if isinstance(self.choices, MarkerChoices) else None
+
+    @model_validator(mode="after")
+    def marker_is_a_short_answer(self) -> "Question":
+        if isinstance(self.choices, MarkerChoices):
+            if self.type != "short":
+                raise ValueError(
+                    f"{self.id}: a marker-graded question is question_type 'short' "
+                    f"(contracts/answer-marker.md: no CHECK is widened), not '{self.type}'")
+            if not isinstance(self.answer, str) or not self.answer.strip():
+                raise ValueError(f"{self.id}: a marker-graded question still carries its "
+                                 "answer as text (the printed answer), for the tutor and the "
+                                 "console")
+        if self.family is not None and self.solution_provenance is not None:
+            raise ValueError(f"{self.id}: a generated family's item computes its own solution; "
+                             "it cannot also claim a book solution provenance")
+        return self
 
     @model_validator(mode="after")
     def answer_matches_type(self) -> "Question":
@@ -789,7 +1097,7 @@ class Question(BaseModel):
     @model_validator(mode="after")
     def mcq_has_valid_answer(self) -> "Question":
         if self.type == "mcq":
-            if not self.choices or len(self.choices) < 2:
+            if not isinstance(self.choices, list) or len(self.choices) < 2:
                 raise ValueError(f"{self.id}: mcq needs >= 2 choices")
             if self.answer not in {c.key for c in self.choices}:
                 raise ValueError(f"{self.id}: answer '{self.answer}' not among choice keys")
@@ -854,7 +1162,10 @@ class KeyTerm(BaseModel):
 class Misconception(BaseModel):
     """A diagnosable wrong turn a student takes on one learning objective."""
 
-    id: str = Field(pattern=r"^misc:[a-z0-9\-]+:[a-z0-9\-]+$")
+    # `mc:<lo tail>:<slug>` is the shipped catalogue's convention
+    # (seed/generated/misconceptions.json, pipeline-handoff "Ids"); `misc:` is
+    # the retired refutation workflow's and stays accepted for old bundles.
+    id: str = Field(pattern=r"^(?:mc|misc):[a-z0-9\-]+:[a-z0-9\-]+$")
     lo: str
     label: str = Field(min_length=1)
     description: str = Field(min_length=1)
@@ -920,6 +1231,50 @@ class SeedBundle(BaseModel):
     # --- Explanation library (ADR-0007); empty for every pre-MVP1.0 bundle.
     misconceptions: list[Misconception] = []
     explanation_entries: list[ExplanationEntry] = []
+    # --- Lesson book provenance (FR-4311, T401), in catalogue order. Empty for
+    #     every shipped bundle; the loader derives one-section provenance for
+    #     them from their slugs and titles (T404).
+    lessons: list[Lesson] = []
+
+    @model_validator(mode="after")
+    def lesson_provenance(self) -> "SeedBundle":
+        """FR-4311/FR-4312 as far as one bundle can see them.
+
+        Returns at once for a bundle with no lessons, so every shipped bundle's
+        path is untouched."""
+        if not self.lessons:
+            return self
+        slugs = [lsn.slug for lsn in self.lessons]
+        if len(set(slugs)) != len(slugs):
+            raise ValueError(f"a lesson is listed twice: {sorted(s for s in slugs if slugs.count(s) > 1)}")
+        # Parts of one section: numbered 1..m, all saying the same m, consecutive
+        # in the listed (catalogue) order (FR-4312).
+        parts: dict[str, list[tuple[int, Lesson]]] = {}
+        for i, lsn in enumerate(self.lessons):
+            if lsn.part is not None:
+                parts.setdefault(lsn.group_key, []).append((i, lsn))
+        for key, members in parts.items():
+            ns = [lsn.part.n for _, lsn in members]
+            ofs = {lsn.part.of for _, lsn in members}
+            if len(ofs) != 1 or sorted(ns) != list(range(1, next(iter(ofs)) + 1)):
+                raise ValueError(f"section {key}: parts {sorted(ns)} of {sorted(ofs)} — a split "
+                                 "section's parts are numbered 1..m, every one of them present")
+            idx = [i for i, _ in members]
+            if idx != list(range(idx[0], idx[0] + len(idx))) or ns != sorted(ns):
+                raise ValueError(f"section {key}: its parts are not consecutive and in part "
+                                 f"order in `lessons` ({[lsn.slug for _, lsn in members]})")
+        # Every objective in the bundle belongs to a listed lesson, and every
+        # listed lesson has an objective here.
+        known = set(slugs)
+        lo_lessons = {re.sub(r"-[0-9]+$", "", n.id.removeprefix("lo:"))
+                      for n in self.nodes if n.kind == "learning_objective"}
+        orphans = sorted(lo_lessons - known)
+        if orphans:
+            raise ValueError(f"objectives of lessons {orphans} have no book provenance in `lessons`")
+        empty = sorted(known - lo_lessons)
+        if empty:
+            raise ValueError(f"lessons {empty} carry no objective in this bundle")
+        return self
 
     @model_validator(mode="after")
     def referential_integrity(self) -> "SeedBundle":

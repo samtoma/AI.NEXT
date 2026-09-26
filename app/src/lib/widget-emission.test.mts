@@ -38,6 +38,11 @@ const FILES: Record<string, string> = {
   ratio_balance: "RatioBalance.tsx",
   sample_space: "SampleSpace.tsx",
   curve_sketcher: "CurveSketcher.tsx",
+  polygon_builder: "PolygonBuilder.tsx",
+  solid_scaler: "SolidScaler.tsx",
+  box_plot_builder: "BoxPlotBuilder.tsx",
+  venn_builder: "VennBuilder.tsx",
+  area_model: "AreaModel.tsx",
 };
 
 /**
@@ -47,6 +52,12 @@ const FILES: Record<string, string> = {
  */
 const HELPERS: Record<string, string[]> = {
   number_line_marker: ["number-line-grade.ts"],
+  polygon_builder: ["polygon-grade.ts"],
+  solid_scaler: ["solid-scaler-grade.ts"],
+  box_plot_builder: ["box-plot-grade.ts"],
+  curve_sketcher: ["curve-sketcher-grade.ts"],
+  venn_builder: ["venn-builder-grade.ts"],
+  area_model: ["area-model-grade.ts"],
 };
 
 /**

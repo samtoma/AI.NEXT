@@ -35,6 +35,13 @@ export interface Pt {
   y: number;
 }
 
+/** The lift-and-continue marker `useStroke`'s `multiSegment` mode inserts
+ *  between gestures. Identified structurally (both fields `NaN`), not by
+ *  reference, so any module can recognise one without importing this file —
+ *  `curve-sketcher-grade.ts` defines its own `BREAK` the same way rather than
+ *  making the generic drag layer depend on one widget's grading module. */
+const STROKE_BREAK: Pt = { x: NaN, y: NaN };
+
 /** Clamp helper — every widget needs it, none should re-type it. */
 export const clamp = (v: number, lo: number, hi: number) =>
   v < lo ? lo : v > hi ? hi : v;
@@ -202,17 +209,35 @@ export function useStroke(opts: {
   minGap?: number;
   onDone: (stroke: Pt[]) => void;
   disabled?: boolean;
+  /**
+   * Additive (feature 003, curve_sketcher's multi-branch families). Off by
+   * default, so every existing caller — the shipped linear/quadratic sketches
+   * — keeps the original one-gesture contract byte-for-byte: a fresh press
+   * clears whatever was drawn before it.
+   *
+   * On, a fresh press APPENDS a new segment after a `{x:NaN,y:NaN}` marker
+   * instead of discarding what came before — a hyperbola's two branches, or a
+   * tangent's three, cannot be drawn without lifting the pointer between them,
+   * so a widget that only ever kept the last gesture could never be answered
+   * correctly. The marker is never itself a sample: nothing downstream reads
+   * a stroke without going through `splitSegments` first.
+   */
+  multiSegment?: boolean;
 }) {
-  const { svgRef, toValue, minGap = 3, onDone, disabled } = opts;
+  const { svgRef, toValue, minGap = 3, onDone, disabled, multiSegment = false } = opts;
   const [stroke, setStroke] = useState<Pt[]>([]);
   const [drawing, setDrawing] = useState(false);
   /** Same reason as useDragSurface: a state-gated pointermove drops the start
    *  of every stroke, which on a sketch is the part that sets the shape. */
   const isDown = useRef(false);
   const lastRaw = useRef<Pt | null>(null);
-  const live = useRef({ toValue, onDone, disabled, minGap });
+  /** Where the CURRENT segment started in `stroke` — so a stray tap appended
+   *  after a good segment can be judged (and dropped) on its own, rather than
+   *  discarding everything drawn before it. */
+  const segStart = useRef(0);
+  const live = useRef({ toValue, onDone, disabled, minGap, multiSegment });
   useEffect(() => {
-    live.current = { toValue, onDone, disabled, minGap };
+    live.current = { toValue, onDone, disabled, minGap, multiSegment };
   });
 
   const push = useCallback(
@@ -237,8 +262,19 @@ export function useStroke(opts: {
       e.currentTarget.setPointerCapture?.(e.pointerId);
       lastRaw.current = null;
       isDown.current = true;
-      setStroke([]);
       setDrawing(true);
+      if (live.current.multiSegment) {
+        // Append: a break marker after whatever is already there (nothing,
+        // the first time), then the new segment starts right after it.
+        setStroke((s) => {
+          const next = s.length ? [...s, STROKE_BREAK] : s;
+          segStart.current = next.length;
+          return next;
+        });
+      } else {
+        segStart.current = 0;
+        setStroke([]);
+      }
       push(e);
     },
     [push]
@@ -259,10 +295,20 @@ export function useStroke(opts: {
       setDrawing(false);
       e.currentTarget.releasePointerCapture?.(e.pointerId);
       setStroke((s) => {
-        // A stray tap is not a sketch. Below this it is discarded rather than
-        // scored, so a mis-touch never counts as a wrong answer.
-        if (s.length >= 4) live.current.onDone(s);
-        return s;
+        // A stray tap is not a sketch. Below this length THIS SEGMENT is
+        // discarded rather than scored. Single-gesture mode (segStart is
+        // always 0 there) keeps the ORIGINAL behaviour exactly: too short
+        // means nothing fires and the whole (only) segment stays on screen
+        // for the student to keep drawing into. Multi-segment mode trims
+        // back to before the break marker instead, so a mis-tap after a good
+        // branch does not leave a dangling break with nothing after it.
+        const segLen = s.length - segStart.current;
+        if (segLen >= 4) {
+          live.current.onDone(s);
+          return s;
+        }
+        if (!live.current.multiSegment || segStart.current === 0) return s;
+        return s.slice(0, segStart.current - 1);
       });
     },
     []
@@ -271,6 +317,7 @@ export function useStroke(opts: {
   const reset = useCallback(() => {
     isDown.current = false;
     lastRaw.current = null;
+    segStart.current = 0;
     setStroke([]);
   }, []);
 

@@ -1,6 +1,6 @@
 export const meta = {
   name: 'refutation',
-  description: 'Authors the explanation / refutation library for the maths LOs (ADR-0007, Phase 6)',
+  description: 'RETIRED (B18): superseded by the S5 misconceptions stage (B11). Refuses to run unless args.allow_retired is true.',
   phases: [
     { title: 'Misconceptions', detail: 'enumerate the wrong turns each LO actually invites (Sonnet)' },
     { title: 'Author', detail: 'worked example / faded / contrasting case / refutation per LO (Sonnet)' },
@@ -43,18 +43,43 @@ export const meta = {
 //
 //   uv run build_lo_manifest.py            # writes manifest/math-los.json
 //
-// The manifest is injected as MANIFEST (same convention as LO_FILTER below).
-// It is 90 objectives deep, so unlike the smaller extraction workflows it is
-// not inlined here.
-if (typeof MANIFEST === 'undefined' || !MANIFEST || !MANIFEST.learning_objectives) {
+// ⛔ RETIRED 2026-09-25 (extraction-pipeline.md B18, G7). Kept as the reference
+// design for its replacement, the S5 misconceptions stage (B11), and not run:
+//   * it mints `misc:<lo>:<slug>` ids, while the catalogue students are served
+//     uses `mc:<lo>:<slug>` (seed/generated/misconceptions.json). Its output
+//     would put a second id on errors the catalogue already names — two
+//     entries for one error, which FR-1115 forbids and which splits the
+//     evidence the tutor diagnoses from;
+//   * its assembler (assemble_refutations.py) writes a SeedBundle that
+//     load_seed.py would load, a second path into `misconceptions` that
+//     load_misconceptions.py's alias folding and distractor stamping never see;
+//   * it has never produced output (seed/refutations-math.json exists nowhere
+//     in git history), so nothing depends on it.
+// B11 keeps its fail-closed verifier and author ≠ grader rule, mints `mc:` ids,
+// reads everything from `args`, and writes the load_misconceptions.py shape.
+//
+// Workflow scripts receive only `args`; the MANIFEST / LO_FILTER globals this
+// used to read were never injected, so it threw before its first agent (G7).
+// They are read from args now, so the design below is runnable as a reference
+// by passing {allow_retired: true, manifest: <manifest/math-los.json>, only: [...]}.
+const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
+if (!ARGS.allow_retired) {
   throw new Error(
-    'MANIFEST not provided. Run `uv run build_lo_manifest.py` and inject ' +
-    'manifest/math-los.json as MANIFEST before running this workflow.'
+    'refutation.workflow.js is RETIRED (B18): it mints misc: ids that would duplicate the ' +
+    'shipped mc: misconception catalogue. Use the S5 misconceptions stage (B11). ' +
+    'Pass {"allow_retired": true, ...} only to run it as a reference.'
+  )
+}
+const MANIFEST = ARGS.manifest
+if (!MANIFEST || !MANIFEST.learning_objectives) {
+  throw new Error(
+    'args.manifest not provided. Run `uv run build_lo_manifest.py` and pass the contents of ' +
+    'manifest/math-los.json as args.manifest.'
   )
 }
 
 // Optional: restrict to a subset while iterating, e.g. ['lo:u1-1-1'].
-const ONLY = (typeof LO_FILTER !== 'undefined' && LO_FILTER) || null
+const ONLY = ARGS.only || null
 
 const STEP = {
   type: 'object', required: ['step', 'text_md'],
@@ -206,7 +231,7 @@ Output VERIFY_SCHEMA with lo="${lo.id}".`
 
 // ---- run -------------------------------------------------------------------
 const los = MANIFEST.learning_objectives.filter((lo) => !ONLY || ONLY.includes(lo.id))
-if (los.length === 0) throw new Error('no learning objectives selected — check LO_FILTER')
+if (los.length === 0) throw new Error('no learning objectives selected — check args.only')
 log(`authoring library for ${los.length} learning objectives`)
 
 const records = await parallel(los.map((lo) => async () => {

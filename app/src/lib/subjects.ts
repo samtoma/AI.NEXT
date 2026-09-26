@@ -12,10 +12,11 @@
  * bug this registry exists to make impossible (docs/specs/multi-subject-app.md
  * §1.1). Everything subject-shaped is now ONE entry here:
  *
- *   - the two keys (prompt-contract id + spine/DB key) and the course node id
+ *   - the two keys (prompt-contract id + spine/DB key)
  *   - display labels (English / Arabic / compact Arabic) and text direction
  *   - the accent world (graph territory vars + student-home card tokens)
- *   - the source book, the widget catalogue, the language contract
+ *   - the widget catalogue and the language contract
+ *   (the course node id and the source book moved to `lib/courses.ts` — 003)
  *
  * The rules that keep it honest:
  *   1. Lookups are EXACT — a course id either matches an entry or it does not.
@@ -29,7 +30,21 @@
  *
  * Adding subject #4 = one entry here + its prompt contract. Not an audit of
  * sixteen files.
+ *
+ * SPLIT, feature 003 (Samuel, 2026-09-25, decision E). A subject is the
+ * teaching CONTRACT; the BOOK it is taught from is a course, and courses live
+ * in `lib/courses.ts`, each in one curriculum (`lib/curricula.ts`). Two
+ * courses may share a subject — Prep-3 maths and Grade-10 American maths are
+ * both `math-en` — so this file no longer names a course, and there is no
+ * subject → course lookup here at all. "Which course does `?subject=math`
+ * mean for THIS student" is answered by the student scope
+ * (`lib/catalog-queries.ts` `resolveStudentScope` → `courseForSubject` in
+ * `lib/catalog.ts`), because the answer depends on her curriculum. The other
+ * direction — which subject does this course teach — is still answered here,
+ * exactly, from the course registry.
  */
+
+import { COURSES, COURSE_IDS, courseDef } from "./courses.ts";
 
 export type TextDirection = "ltr" | "rtl";
 
@@ -67,8 +82,6 @@ export interface SubjectDef {
    * tutor prompt contract.
    */
   key: string;
-  /** the course node this subject is taught from (`graph_nodes.kind='course'`) */
-  courseId: string;
   /** English display label */
   label: string;
   /** Arabic display label (graph territories, handoff card, bridge prompts) */
@@ -78,8 +91,6 @@ export interface SubjectDef {
   /** base text direction of this subject's teaching surface */
   dir: TextDirection;
   accent: SubjectAccent;
-  /** the ministry book this subject is extracted from (`source_documents.title`) */
-  book: string;
   /** interactive widgets + figure kinds this subject's tutor may emit */
   widgets: readonly string[];
   /** the tap-only subset offered after a "لسه مش فاهم" signal */
@@ -126,7 +137,6 @@ const ARABIC_AR_CONTRACT = `LANGUAGE & VOICE (fixed contract — identical in ev
 export const SUBJECTS = {
   "math-en": {
     key: "math",
-    courseId: "course:prep3-math-en",
     label: "Mathematics",
     labelAr: "الرياضيات",
     labelArShort: "رياضيات",
@@ -139,7 +149,6 @@ export const SUBJECTS = {
       tileDim: "text-[color:var(--play-on-sky-dim)]",
       chip: "border-accent/40 text-accent-deep bg-accent-wash",
     },
-    book: "Mathematics — Student's Book, Preparatory Year Three, First Term",
     widgets: [
       // tap
       "pair_plotter", "product_builder", "sample_space", "number_line_marker",
@@ -162,7 +171,6 @@ export const SUBJECTS = {
 
   "social-ar": {
     key: "social",
-    courseId: "course:prep3-social-ar",
     label: "Social Studies",
     labelAr: "الدراسات الاجتماعية",
     labelArShort: "دراسات اجتماعية",
@@ -175,7 +183,6 @@ export const SUBJECTS = {
       tileDim: "text-[color:var(--play-on-leaf-dim)]",
       chip: "border-gold/45 text-gold bg-gold-wash",
     },
-    book: "الدراسات الاجتماعية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",
     widgets: [
       "locate_on_map",
       "timeline_builder",
@@ -190,7 +197,6 @@ export const SUBJECTS = {
 
   "arabic-ar": {
     key: "arabic",
-    courseId: "course:prep3-arabic-ar",
     label: "Arabic",
     labelAr: "اللغة العربية",
     labelArShort: "لغة عربية",
@@ -203,7 +209,6 @@ export const SUBJECTS = {
       tileDim: "text-[color:var(--play-on-berry-dim)]",
       chip: "border-arabic/45 text-arabic bg-arabic-wash",
     },
-    book: "اللغة العربية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",
     widgets: [
       "extract_spans",
       "hamza_seat",
@@ -240,9 +245,6 @@ export const SPINE_SUBJECT_KEYS = SUBJECT_IDS.map(
   (id) => SUBJECTS[id].key
 ) as SpineSubject[];
 
-const BY_COURSE_ID = new Map<string, Subject>(
-  SUBJECT_IDS.map((id) => [SUBJECTS[id].courseId, id])
-);
 const BY_SPINE_KEY = new Map<string, Subject>(
   SUBJECT_IDS.map((id) => [SUBJECTS[id].key, id])
 );
@@ -253,9 +255,7 @@ export class UnknownSubjectError extends Error {
   constructor(courseId: string | null | undefined, context: string) {
     super(
       `Unknown subject for course ${courseId ? `"${courseId}"` : "(none)"} — ${context}. ` +
-        `Add it to app/src/lib/subjects.ts (known: ${SUBJECT_IDS.map(
-          (id) => SUBJECTS[id].courseId
-        ).join(", ")}).`
+        `Add it to app/src/lib/courses.ts (known: ${COURSE_IDS.join(", ")}).`
     );
     this.name = "UnknownSubjectError";
   }
@@ -266,14 +266,15 @@ export class UnknownSubjectError extends Error {
 /* ------------------------------------------------------------------ */
 
 /**
- * Course node id → prompt-contract subject, by EXACT match.
- * Unknown or missing course → `null`. Callers decide what a subject-less
- * course means; nobody gets to assume maths.
+ * Course node id → prompt-contract subject, by EXACT match against the course
+ * registry (`lib/courses.ts`). Unknown or missing course → `null`. Callers
+ * decide what a subject-less course means; nobody gets to assume maths.
  */
 export function subjectOfCourse(
   courseId: string | null | undefined
 ): Subject | null {
-  return (courseId && BY_COURSE_ID.get(courseId)) || null;
+  const def = courseDef(courseId);
+  return def && Object.hasOwn(SUBJECTS, def.subject) ? def.subject : null;
 }
 
 /**
@@ -314,10 +315,17 @@ export function subjectOfSpineKey(raw: unknown): Subject | null {
   return typeof raw === "string" ? (BY_SPINE_KEY.get(raw) ?? null) : null;
 }
 
-/** Spine key → the course it is taught from. Unknown → `null`. */
-export function courseIdOfSpineKey(raw: unknown): string | null {
+/**
+ * Every registry course taught under this spine key, in course order. It is
+ * NOT "the course of this subject" — there can be several (Prep-3 and
+ * Grade-10 maths) — and it is not a student's answer: which one a student
+ * means by `?subject=` depends on her curriculum and what she may see, and
+ * only `courseForSubject` (lib/catalog.ts, through the student scope) may
+ * decide that. `student-scope-guard.test.mts` keeps it that way.
+ */
+export function coursesOfSpineKey(raw: unknown): string[] {
   const s = subjectOfSpineKey(raw);
-  return s ? SUBJECTS[s].courseId : null;
+  return s ? COURSE_IDS.filter((c) => COURSES[c].subject === s) : [];
 }
 
 /* ------------------------------------------------------------------ */

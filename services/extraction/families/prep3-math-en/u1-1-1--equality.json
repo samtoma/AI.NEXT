@@ -1,0 +1,66 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:u1-1-1:equality",
+  "kind": "family",
+  "lo_id": "lo:u1-1-1",
+  "parent_question_id": "q:u1-1-1:002",
+  "source_page": 7,
+  "tier": "standard",
+  "answer_type": "numeric",
+  "context": null,
+  "params": [
+    {
+      "name": "a",
+      "randint": [
+        2,
+        12
+      ]
+    },
+    {
+      "name": "b",
+      "randint": [
+        2,
+        12
+      ]
+    },
+    {
+      "name": "dx",
+      "randint": [
+        2,
+        9
+      ]
+    },
+    {
+      "name": "dy",
+      "randint": [
+        2,
+        9
+      ]
+    },
+    {
+      "name": "x",
+      "let": "a + dx"
+    },
+    {
+      "name": "y",
+      "let": "b + dy"
+    },
+    {
+      "name": "p",
+      "let": "x - a"
+    },
+    {
+      "name": "q",
+      "let": "y + b"
+    }
+  ],
+  "stem": "If ${=pair('x - ' + num(a), num(q))} = {=pair(num(p), 'y + ' + num(b))}$, find the value of $x \\times y$.",
+  "answer": "x * y",
+  "solution": [
+    "Two ordered pairs are equal when like components are equal.",
+    "First components: $x - {=a} = {=p}$, so $x = {=x}$.",
+    "Second components: ${=q} = y + {=b}$, so $y = {=y}$.",
+    "$x \\times y = {=x} \\times {=y} = {=x * y}$."
+  ],
+  "notes": "Reproduces the hand-written family tpl:u1-1-1:equality in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}

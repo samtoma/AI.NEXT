@@ -226,9 +226,15 @@ export async function retrieve(
  * now read the profile, so a change to the register lands on every surface at
  * once rather than on the two that remembered to look.
  */
-export function retrievalBlock(b: RetrievalBundle): string {
+export function retrievalBlock(
+  b: RetrievalBundle,
+  /** `arabicAddress: false` drops the address block's Arabic line — an
+   *  English-only course (decision 9, `CourseTutorFacts.arabicTouches`).
+   *  Absent, the block is exactly what it always was. */
+  opts: { arabicAddress?: boolean } = {}
+): string {
   const parts: string[] = [
-    addressBlock(b.profile?.gender ?? null, b.profile?.displayName),
+    addressBlock(b.profile?.gender ?? null, b.profile?.displayName, opts.arabicAddress ?? true),
   ];
 
   if (b.profile) {

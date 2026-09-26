@@ -242,12 +242,14 @@ export const DEFINITIONS: readonly Definition[] = [
   {
     term: "cohort",
     text:
-      `The students of one (subject, grade, syllabus version) whose first learning session falls ` +
-      `in that school year. Subject comes from the course the objective belongs to, grade from the ` +
-      `student's own record, and syllabus version from the curriculum edges — three different axes ` +
-      `that a single "year" would conflate into a number meaning nothing. No figure is ever pooled ` +
-      `across environments or solutions.`,
-    computedIn: "lib/overview-queries.ts — getCohortOverview()",
+      `The students of one (course, grade, syllabus version) who follow that course's curriculum ` +
+      `and whose first learning session falls in that school year. The course is the book the ` +
+      `objectives belong to, grade comes from the student's own record, ` +
+      `and syllabus version from the curriculum edges — three different axes that a single "year" ` +
+      `would conflate into a number meaning nothing. Two courses of one subject (Prep-3 and Grade 10 ` +
+      `mathematics) are two cohorts, never one. No figure is ever pooled across environments, ` +
+      `solutions or courses.`,
+    computedIn: "lib/overview-queries.ts — getOverview()",
   },
   {
     term: "session",

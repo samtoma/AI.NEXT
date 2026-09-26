@@ -12,14 +12,39 @@ export const meta = {
   ],
 }
 
-const PDF = '/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/docs/Source/Arabic_Prp3_Tr1_2.pdf'
+// ---- book config (B1/B20) --------------------------------------------------
+// Nothing in this script names a path. The operating session resolves the book
+// config and passes it as `args`:
+//     uv run book_config.py workflow-args prep3-arabic-ar [--only a,b]
+// Absolute paths exist only in that runtime value, and point at whichever
+// checkout the operator stands in — a worktree included (the gitignored source
+// PDF is found in the main checkout, read-only).
+const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
+const BOOK = ARGS.book
+if (!BOOK || BOOK.book !== 'prep3-arabic-ar') {
+  throw new Error('args.book must be the prep3-arabic-ar config: run `uv run book_config.py workflow-args ' +
+    'prep3-arabic-ar` in services/extraction and pass its output as this workflow\'s args.')
+}
+if (!BOOK.paths || !BOOK.paths.pdf) {
+  throw new Error(`the source PDF ${BOOK.sources && BOOK.sources.pdf} was not found in this checkout, ` +
+    'the main checkout, or $AINEXT_SOURCES_ROOT (it is gitignored: put it in docs/Source/).')
+}
+const PDF = BOOK.paths.pdf
+// Page-offset regimes come from the book config (`page_offsets`), not from here.
+const offsetOf = (label) => {
+  const r = (BOOK.page_offsets || []).find((x) => x.label === label)
+  if (!r || r.pdf_minus_printed == null) throw new Error(`book config has no verified offset for '${label}'`)
+  return r.pdf_minus_printed
+}
 
 // Page-offset regimes (scout, verified at 30 sample pages). NOT one rule:
 //   Term 1: printed = PDF − 1   (PDF 9–62)
 //   Term 2: printed = PDF − 61  (PDF 67–119)
 // Carrying T1's rule into T2 cites a REAL but WRONG page — silent corruption.
-const t1 = (a, b) => ({ printed: `${a}-${b}`, pdf: `${a + 1}-${b + 1}` })
-const t2 = (a, b) => ({ printed: `${a}-${b}`, pdf: `${a + 61}-${b + 61}` })
+const T1 = offsetOf('First Term')
+const T2 = offsetOf('Second Term')
+const t1 = (a, b) => ({ printed: `${a}-${b}`, pdf: `${a + T1}-${b + T1}` })
+const t2 = (a, b) => ({ printed: `${a}-${b}`, pdf: `${a + T2}-${b + T2}` })
 
 // IDs are TERM-QUALIFIED: «كُنْ جَمِيلًا» is both a T1 lesson and a T2 unit title,
 // and unit numbers restart per term — anything keyed on unit+lesson collides.
@@ -46,7 +71,6 @@ const LESSONS = [
   { id: 'ar-t2u3l4', title: 'المشروعاتُ الصغيرةُ', grammar: 'صوغ اسم التفضيل', kind: 'prose', src: 'مقال', ...t2(54, 58) },
 ]
 
-const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
 const RUN = LESSONS.filter((l) => (ARGS.only || ['ar-t1u1l1']).includes(l.id))
 const isSacred = (l) => l.kind === 'quran' || l.kind === 'hadith'
 

@@ -1,0 +1,280 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 8,
+ "module": "module:g10m-c08",
+ "lesson": "g10m8s3-1",
+ "title": "Gradient between two points",
+ "provenance": {
+  "sections": [
+   {
+    "number": "8.3",
+    "title": "Gradient of a line"
+   }
+  ],
+  "part": {
+   "n": 1,
+   "of": 2
+  },
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "Samuel Toma",
+  "approved_at": "2026-09-26T07:19:34+00:00",
+  "verdicts": {
+   "move_items": {
+    "Ex8-6:19d": "lo:g10m8s3-2-2",
+    "Ex8-6:21c": "lo:g10m8s3-2-2",
+    "Ex8-6:22e": "lo:g10m8s3-2-2",
+    "Ex8-6:42e": "lo:g10m8s3-2-2",
+    "Ex8-6:24d": "lo:g10m8s4-1-1",
+    "Ex8-6:28b": "lo:g10m8s4-1-1",
+    "Ex8-6:26": "lo:g10m8s3-2-2",
+    "Ex8-6:29b": "lo:g10m8s3-2-1",
+    "Ex8-6:29c": "lo:g10m8s4-1-2",
+    "Ex8-6:37d": "lo:g10m8s3-2-2",
+    "Ex8-6:40a": "lo:g10m8s3-2-1"
+   },
+   "outside_items": {
+    "Ex8-6:28a": {
+     "why": "Pure recall of parallelogram properties from earlier geometry; this chapter teaches no such objective."
+    },
+    "Ex8-6:32e": {
+     "why": "Area of a triangle from coordinates is not taught in this chapter."
+    },
+    "Ex8-6:46d": {
+     "why": "Ratio of triangle areas via the mid-point theorem / similar triangles is not taught in this chapter."
+    }
+   },
+   "terminology": {
+    "Cartesian plane": "keep",
+    "ordered pair": "keep",
+    "vertices": "keep",
+    "distance formula": "keep",
+    "surd form": "keep",
+    "gradient": "keep",
+    "standard form": "keep",
+    "negative inverse": "keep",
+    "gradient method": "keep",
+    "mid-point": "keep",
+    "end point": "keep"
+   }
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch08-wf_a70b525d-f44.json",
+  "sha256": "eee6ed9cd090e2a5546bee783714255cf2853e2751a7ef3480936242c1363aca",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "d5edd2cc963ee59333c27b0a27d97322a423f2ba98ab509376fb0fc1cd7940a9"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m8s3-1-1",
+   "provisional_id": "lo:g10m8s3-1-1",
+   "n": 1,
+   "statement": "Calculate the gradient of the line between two given points using the gradient formula.",
+   "label": "Calculate the gradient between two points",
+   "evidence": [
+    {
+     "kind": "heading",
+     "anchor": "EMA6B",
+     "printed_page": 293,
+     "quote": "Gradient of a line",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "definition",
+     "anchor": "b03170",
+     "printed_page": 293,
+     "quote": "The gradient of a line is determined by the ratio of vertical change to horizontal change.",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE3",
+     "printed_page": 294,
+     "quote": "Find the gradient of the line between points $E\\left(2;5\\right)$ and $F\\left(-3;9\\right)$ .",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-3:1a",
+     "printed_page": 296,
+     "quote": "Find the gradient of $AB$ if: $A(7;10)$ and $B(-4;1)$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex8-3:1a",
+    "Ex8-3:1b",
+    "Ex8-3:1c",
+    "Ex8-3:2",
+    "Ex8-3:3",
+    "Ex8-6:7",
+    "Ex8-6:24b",
+    "Ex8-6:25d",
+    "Ex8-6:30b",
+    "Ex8-6:32a",
+    "Ex8-6:34b",
+    "Ex8-6:35b",
+    "Ex8-6:37a",
+    "Ex8-6:39c",
+    "Ex8-6:43b",
+    "Ex8-6:44e",
+    "Ex8-6:46a"
+   ],
+   "worked_examples": [
+    "WE3"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "gradient"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 6,
+   "node": {
+    "id": "lo:g10m8s3-1-1",
+    "kind": "learning_objective",
+    "label": "Calculate the gradient between two points",
+    "description": "Calculate the gradient of the line between two given points using the gradient formula.",
+    "source_page": 293,
+    "syllabus_ref": "8.3",
+    "order_in_parent": 6
+   }
+  },
+  {
+   "id": "lo:g10m8s3-1-2",
+   "provisional_id": "lo:g10m8s3-1-2",
+   "n": 2,
+   "statement": "Determine an unknown coordinate of a point, or the value of an unknown variable, given the gradient of the line and the other coordinates.",
+   "label": "Determine unknown coordinate from gradient",
+   "evidence": [
+    {
+     "kind": "definition",
+     "anchor": "b03176",
+     "printed_page": 294,
+     "quote": "Gradient $(m)=\\dfrac{y_2-y_1}{x_2-x_1}$ or $\\dfrac{y_1-y_2}{x_1-x_2}$",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE4",
+     "printed_page": 295,
+     "quote": "Given $G\\left(7;-9\\right)$ and $H\\left(x;0\\right)$ , with ${m}_{GH}=3$ , find $x$ .",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex8-3:4a",
+     "printed_page": 297,
+     "quote": "If the gradient of $CD=\\frac{2}{3}$ , find $p$ given: $C(16;2)$ and $D(8;p)$ .",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex8-3:4a",
+    "Ex8-3:4b",
+    "Ex8-3:5",
+    "Ex8-3:6",
+    "Ex8-6:8",
+    "Ex8-6:9"
+   ],
+   "worked_examples": [
+    "WE4"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "gradient",
+    "coordinate"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 7,
+   "node": {
+    "id": "lo:g10m8s3-1-2",
+    "kind": "learning_objective",
+    "label": "Determine unknown coordinate from gradient",
+    "description": "Determine an unknown coordinate of a point, or the value of an unknown variable, given the gradient of the line and the other coordinates.",
+    "source_page": 294,
+    "syllabus_ref": "8.3",
+    "order_in_parent": 7
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex8-6:24b",
+  "Ex8-6:25d",
+  "Ex8-6:30b",
+  "Ex8-6:32a",
+  "Ex8-6:34b",
+  "Ex8-6:35b",
+  "Ex8-6:37a",
+  "Ex8-6:39c",
+  "Ex8-6:43b",
+  "Ex8-6:44e",
+  "Ex8-6:46a",
+  "Ex8-6:7",
+  "Ex8-6:8",
+  "Ex8-6:9"
+ ],
+ "prerequisites": [],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": []
+ },
+ "outside_items": [
+  {
+   "item": "Ex8-6:28a",
+   "why": "Pure recall of parallelogram properties from earlier geometry; this chapter teaches no such objective.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  },
+  {
+   "item": "Ex8-6:32e",
+   "why": "Area of a triangle from coordinates is not taught in this chapter.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  },
+  {
+   "item": "Ex8-6:46d",
+   "why": "Ratio of triangle areas via the mid-point theorem / similar triangles is not taught in this chapter.",
+   "by": "Samuel Toma",
+   "at": "2026-09-26T07:19:34+00:00"
+  }
+ ]
+}

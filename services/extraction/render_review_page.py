@@ -1,4 +1,17 @@
-"""Render a generated question bundle as a human review page.
+"""Render review pages for the human gates: the legacy G3 page, and the G1–G4 dossiers.
+
+    uv run render_review_page.py <bundle.json> --queue <q.json> --out page.html   # legacy G3
+    uv run render_review_page.py --gate g1 --book g10-math --chapter 8 --out g1.html
+    uv run render_review_page.py --gate g2 --book g10-math --chapter 8 --out g2.html
+    uv run render_review_page.py --gate g3 --bundles seed/generated/g10-math/generated-questions.json \
+        --bundles seed/generated/g10-math/widget-questions.json \
+        --catalogue seed/generated/g10-math/misconceptions.json --out g3.html
+    uv run render_review_page.py --gate g4 --catalogue seed/generated/g10-math/misconceptions.json \
+        --s5 runs/g10-math/misconceptions/<run>.json --out g4.html
+
+The dossiers are described at the head of their section below (B17).
+
+The legacy page renders a generated question bundle as a human review page.
 
 The reviewer's job is to find mathematics that is plausible and wrong, so the
 page has to show everything that could be wrong: the stem, every choice, which
@@ -23,6 +36,7 @@ import html
 import json
 import re
 import sys
+from collections import Counter, defaultdict
 from pathlib import Path
 
 # Structural commands handled by rewriting rather than substitution, because a
@@ -208,18 +222,534 @@ def build(bundle: dict, queue: dict | None) -> str:
 TEMPLATE = Path(__file__).with_name("review_page_template.html").read_text()
 
 
-def main() -> int:
+# =============================================================================
+# Review dossiers for Samuel's gates (B17; extraction-pipeline.md §3.13)
+#
+#   --gate g1   objectives with their evidence, per chapter           (after S1)
+#   --gate g2   book questions: EVERY three-way disagreement, EVERY item with no
+#               printed answer, and a seeded 10% sample of the rest    (after S3)
+#   --gate g3   generated families and widgets: a seeded 10% sample stratified by
+#               family, so every family is read at least once          (after S6/S7)
+#   --gate g4   misconceptions: the verifier's dropped count, and a seeded 10%
+#               sample of the kept entries with their refutations      (after S5)
+#
+# Each page is ONE self-contained HTML file: inline CSS and script, no fonts or
+# scripts fetched, readable on a phone. The values are the Noor Play tokens
+# (docs/design/handoffs/noor-play/tokens.css, as published), copied in because a
+# self-contained page cannot link them. Verdicts are kept in the browser
+# (localStorage, best effort) and leave the page as JSON — "Copy verdicts" or
+# "Download" — in the shape apply_review_verdicts.py reads for G3
+# ({bundle, reviewer, verdicts: {id: verdict}}, plus notes), and the same shape
+# for the other gates. The sample's seed and ids are printed on the page, so the
+# draw can be reproduced.
+# =============================================================================
+
+import hashlib
+import math
+import random
+
+DOSSIER_SYMBOLS = {**SYMBOLS, r"\infty": "\u221e", r"\leq": "\u2264", r"\geq": "\u2265",
+                   r"\ne": "\u2260", r"\theta": "\u03b8", r"\alpha": "\u03b1", r"\beta": "\u03b2",
+                   r"\Delta": "\u0394", r"\triangle": "\u25b3", r"\perp": "\u22a5",
+                   r"\parallel": "\u2225", r"\quad": " ", r"\qquad": "  ", r"\ldots": "\u2026",
+                   r"\dots": "\u2026", r"\hat": "", r"\degree": "\u00b0", r"\%": "%",
+                   r"\notin": "\u2209", r"\therefore": "\u2234", r"\mid": "|"}
+
+
+def tex_html(tex: str) -> str:
+    """LaTeX -> readable HTML (sub/superscripts as tags). Falls back to the raw source,
+    marked as such, rather than failing the page or showing a half-converted formula."""
+    try:
+        out = re.sub(r"\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}", r"\1", tex)
+        out = out.replace(r"\dfrac", r"\frac").replace(r"\tfrac", r"\frac")
+        out = re.sub(r"\\mathbb\{([A-Z])\}", lambda m: BLACKBOARD.get(m.group(1), m.group(1)), out)
+        out = _expand_structural(out)
+        for cmd in sorted(DOSSIER_SYMBOLS, key=len, reverse=True):
+            out = out.replace(cmd, DOSSIER_SYMBOLS[cmd])
+        out = out.replace(r"\ ", " ").replace(r"\,", "\u2009").replace(r"\;", "\u2009")
+        out = out.replace(r"\{", "{").replace(r"\}", "}")
+        if re.search(r"\\[a-zA-Z]+", out):
+            raise ValueError("unhandled")
+        esc = html.escape(out)
+        esc = re.sub(r"\^\{([^{}]*)\}", r"<sup>\1</sup>", esc)
+        esc = re.sub(r"\^(.)", r"<sup>\1</sup>", esc)
+        esc = re.sub(r"_\{([^{}]*)\}", r"<sub>\1</sub>", esc)
+        esc = re.sub(r"_(.)", r"<sub>\1</sub>", esc)
+        return f'<span class="m">{esc.replace("{", "").replace("}", "")}</span>'
+    except ValueError:
+        return f'<code class="tex" title="raw LaTeX">{html.escape(tex)}</code>'
+
+
+def md_html(md: str | None) -> str:
+    if not md:
+        return ""
+    parts = re.split(r"(\$[^$]*\$)", str(md))
+    out = []
+    for part in parts:
+        if len(part) > 1 and part.startswith("$") and part.endswith("$"):
+            out.append(tex_html(part[1:-1]))
+        else:
+            esc = html.escape(part)
+            out.append(re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", esc))
+    return "".join(out)
+
+
+def steps_html(steps) -> str:
+    items = [s.get("text_md", "") if isinstance(s, dict) else s for s in steps or []]
+    return "<ol class=\"steps\">" + "".join(f"<li>{md_html(t)}</li>" for t in items) + "</ol>"
+
+
+def seeded_sample(ids_by_stratum: dict[str, list[str]], percent: float, seed: int) -> list[str]:
+    """One per stratum first, then the rest at random up to ceil(percent% of all)."""
+    rng = random.Random(seed)
+    all_ids = [i for ids in ids_by_stratum.values() for i in ids]
+    if not all_ids:
+        return []
+    picked = [rng.choice(sorted(ids)) for _, ids in sorted(ids_by_stratum.items()) if ids]
+    target = max(len(picked), math.ceil(len(all_ids) * percent / 100))
+    rest = sorted(set(all_ids) - set(picked))
+    rng.shuffle(rest)
+    return sorted(set(picked) | set(rest[: max(0, target - len(picked))]))
+
+
+PAGE_CSS = """
+:root{--play-bg-page:#FFF6E6;--play-bg-surface:#FFFFFF;--play-bg-warm:#FFE9BD;--play-ink:#241F3D;
+--play-text-dim:#4A4266;--play-text-muted:#5A5570;--play-text-label:#615B7D;--play-text-link:#136386;
+--play-action:#F0A22F;--play-on-action:#241F3D;--play-mastery:#2F9E8F;--play-on-mastery:#241F3D;
+--play-celebrate:#7B4FC9;--play-on-celebrate:#FFFFFF;--play-sky:#7FD1F0;--play-on-sky:#0F3D51;
+--play-berry:#FFA8C5;--play-on-berry:#7A2447;--play-leaf:#B6E88F;--play-on-leaf:#1F3D12;
+--play-text-amber:#A34F0A;--play-inactive-fill:#F6F5FA;--play-inactive-border:#9890B5;
+--play-stroke:3px;--play-stroke-sm:2.5px;--play-shadow:4px 4px 0 var(--play-ink);
+--play-shadow-sm:3px 3px 0 var(--play-ink);--play-radius-sm:14px;--play-radius:20px;
+--play-radius-lg:28px;--play-radius-pill:999px;--play-target-min:52px;
+--play-font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+--play-font-read:"Cairo",system-ui,sans-serif;--play-font-mono:"IBM Plex Mono",ui-monospace,monospace;
+--play-text-title:1.5rem;--play-text-ui:1.15rem;--play-text-label-size:.85rem;--play-text-read:1rem;
+--play-text-data:.72rem;--play-leading-latin:1.75;--play-press:90ms cubic-bezier(.2,.7,.3,1)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--play-bg-page);color:var(--play-ink);font-family:var(--play-font-read);
+font-size:var(--play-text-read);line-height:var(--play-leading-latin);-webkit-text-size-adjust:100%}
+.shell{max-width:860px;margin:0 auto;padding:0 16px}
+header.top{background:var(--play-bg-warm);border-bottom:var(--play-stroke) solid var(--play-ink);padding:24px 0 20px}
+h1,h2,h3{font-family:var(--play-font-display);font-weight:800;line-height:1.2;margin:0}
+h1{font-size:clamp(1.4rem,5vw,var(--play-text-title))}
+h2{font-size:var(--play-text-ui);margin:28px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-family:var(--play-font-mono);
+font-size:var(--play-text-data);color:var(--play-text-dim)}
+.brief{margin:18px 0 0;color:var(--play-text-dim)}
+.brief p{margin:0 0 8px}
+.card{background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);
+border-radius:var(--play-radius);box-shadow:var(--play-shadow);padding:16px;margin:18px 0}
+.card header{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:8px}
+.id{font-family:var(--play-font-mono);font-size:var(--play-text-data);color:var(--play-text-label);
+overflow-wrap:anywhere}
+.tag{font-family:var(--play-font-mono);font-size:var(--play-text-data);padding:2px 10px;
+border-radius:var(--play-radius-pill);border:var(--play-stroke-sm) solid var(--play-ink)}
+.tag.attention{background:var(--play-action);color:var(--play-on-action)}
+.tag.ok{background:var(--play-mastery);color:var(--play-on-mastery)}
+.tag.info{background:var(--play-sky);color:var(--play-on-sky)}
+.tag.sample{background:var(--play-celebrate);color:var(--play-on-celebrate)}
+.tag.plain{background:var(--play-inactive-fill);color:var(--play-text-muted);border-color:var(--play-inactive-border)}
+.stem{font-size:1.05rem;margin:4px 0 10px}
+.m{font-family:var(--play-font-mono);font-size:.95em;unicode-bidi:isolate;direction:ltr}
+code.tex{font-family:var(--play-font-mono);font-size:.85em;background:var(--play-inactive-fill);
+border-radius:6px;padding:0 4px;overflow-wrap:anywhere}
+table.answers{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+table.answers th,table.answers td{text-align:start;padding:6px 8px;border-bottom:1px solid var(--play-inactive-border);vertical-align:top}
+table.answers tr.disagree td{background:var(--play-bg-warm)}
+ul.list,ol.steps{margin:6px 0;padding-inline-start:22px}
+ul.choices{list-style:none;padding:0;margin:6px 0;display:grid;gap:6px}
+ul.choices li{padding:8px 10px;border-radius:var(--play-radius-sm);border:var(--play-stroke-sm) solid var(--play-inactive-border);background:var(--play-inactive-fill)}
+ul.choices li.key{border-color:var(--play-ink);background:var(--play-leaf);color:var(--play-on-leaf)}
+.note{font-size:.9rem;color:var(--play-text-dim)}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--play-text-link);min-height:32px}
+.verdict{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.verdict button{font-family:var(--play-font-display);font-weight:700;font-size:1rem;min-height:var(--play-target-min);
+min-width:var(--play-target-min);padding:0 16px;border-radius:var(--play-radius);border:var(--play-stroke) solid var(--play-ink);
+background:var(--play-bg-surface);color:var(--play-ink);box-shadow:var(--play-shadow-sm);cursor:pointer;
+transition:transform var(--play-press),box-shadow var(--play-press)}
+.verdict button:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--play-ink)}
+.verdict button[aria-pressed="true"]{background:var(--play-action);color:var(--play-on-action)}
+.verdict button:focus-visible,textarea:focus-visible,input:focus-visible{outline:var(--play-stroke) solid var(--play-text-link);outline-offset:2px}
+textarea,input[type=text]{width:100%;font:inherit;border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm);
+padding:8px;background:var(--play-bg-surface);color:var(--play-ink);margin-top:8px}
+footer.bar{position:sticky;bottom:0;background:var(--play-bg-warm);border-top:var(--play-stroke) solid var(--play-ink);padding:10px 0;margin-top:24px}
+footer.bar .shell{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+footer.bar .count{font-family:var(--play-font-mono);font-size:var(--play-text-data);margin-inline-end:auto}
+.stat{display:inline-block;margin-inline-end:18px}
+.stat b{font-family:var(--play-font-display);font-size:1.4rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+"""
+
+PAGE_JS = r"""
+(() => {
+  const PAGE = document.body.dataset.page, GATE = document.body.dataset.gate;
+  const KEY = 'review:' + PAGE;
+  let state = {reviewer: '', verdicts: {}, notes: {}};
+  try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (_) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
+  const boxes = [...document.querySelectorAll('.verdict[data-id]')];
+  const count = document.querySelector('.count');
+  const paint = () => {
+    boxes.forEach((b) => b.querySelectorAll('button').forEach((x) =>
+      x.setAttribute('aria-pressed', String(state.verdicts[b.dataset.id] === x.dataset.v))));
+    const n = boxes.filter((b) => state.verdicts[b.dataset.id]).length;
+    if (count) count.textContent = n + ' of ' + boxes.length + ' decided';
+  };
+  boxes.forEach((b) => {
+    b.querySelectorAll('button').forEach((x) => x.addEventListener('click', () => {
+      state.verdicts[b.dataset.id] = x.dataset.v; save(); paint(); }));
+    const t = b.parentElement.querySelector('textarea');
+    if (t) { t.value = state.notes[b.dataset.id] || '';
+             t.addEventListener('input', () => { state.notes[b.dataset.id] = t.value; save(); }); }
+  });
+  const who = document.querySelector('#reviewer');
+  if (who) { who.value = state.reviewer || '';
+             who.addEventListener('input', () => { state.reviewer = who.value; save(); }); }
+  const doc = () => JSON.stringify(Object.assign(JSON.parse(document.querySelector('#meta').textContent),
+    {reviewer: state.reviewer, verdicts: state.verdicts, notes: state.notes}), null, 2);
+  const status = document.querySelector('.status');
+  document.querySelector('#copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(doc()); status.textContent = 'copied'; }
+    catch (_) { status.textContent = 'copy failed — use Download'; }
+  });
+  document.querySelector('#download').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([doc()], {type: 'application/json'}));
+    a.download = PAGE + '.verdicts.json'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  paint();
+})();
+"""
+
+
+def verdict_box(item_id: str, options: list[tuple[str, str]]) -> str:
+    buttons = "".join(f'<button type="button" data-v="{v}" aria-pressed="false">{html.escape(label)}'
+                      f'</button>' for v, label in options)
+    return (f'<div class="verdict" data-id="{html.escape(item_id)}" role="group" '
+            f'aria-label="Verdict for {html.escape(item_id)}">{buttons}</div>'
+            f'<textarea rows="2" aria-label="Note on {html.escape(item_id)}" '
+            f'placeholder="Note (optional)"></textarea>')
+
+
+def page(gate: str, title: str, meta_lines: list[str], brief: list[str], cards: list[str],
+         meta: dict) -> str:
+    body = "".join(cards)
+    page_id = f"{gate}-" + hashlib.sha256((title + body).encode()).hexdigest()[:12]
+    meta = {"gate": gate.upper(), "page": page_id, **meta}
+    return f"""<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{html.escape(title)}</title>
+<style>{PAGE_CSS}</style>
+</head>
+<body data-page="{page_id}" data-gate="{gate}">
+<header class="top"><div class="shell">
+<h1>{html.escape(title)}</h1>
+<div class="meta">{''.join(f'<span>{m}</span>' for m in meta_lines)}</div>
+<div class="brief">{''.join(f'<p>{b}</p>' for b in brief)}</div>
+<label for="reviewer" class="note">Reviewer (your name goes on every verdict)</label>
+<input id="reviewer" type="text" autocomplete="name">
+</div></header>
+<main class="shell">{body}</main>
+<footer class="bar"><div class="shell">
+<span class="count"></span><span class="status note" aria-live="polite"></span>
+<div class="verdict" style="margin:0"><button type="button" id="copy">Copy verdicts</button>
+<button type="button" id="download">Download</button></div>
+</div></footer>
+<script type="application/json" id="meta">{json.dumps(meta, ensure_ascii=False).replace("</", "<\\/")}</script>
+<script>{PAGE_JS}</script>
+</body>
+</html>
+"""
+
+
+# ---- G1: objectives ----------------------------------------------------------
+def dossier_g1(book, manifest: dict, objectives_dir: Path, chapters: set[int] | None) -> str:
+    from assemble_lesson_bundle import ObjectivesFile, book_lesson, manifest_lessons
+    cards, n_obj, n_single, n_rule = [], 0, 0, 0
+    current = None
+    for mod, les in manifest_lessons(manifest):
+        if chapters and mod["chapter"] not in chapters:
+            continue
+        if current != mod["id"]:
+            cards.append(f"<h2>Chapter {mod['chapter']} — {html.escape(mod['title'])}</h2>")
+            current = mod["id"]
+        prov = book_lesson(mod, les)
+        where = ", ".join(f"{s.number} {s.title}" for s in prov.sections)
+        part = f" · part {prov.part.n} of {prov.part.of}" if prov.part else ""
+        intro = " · chapter introduction" if prov.chapter_intro else ""
+        p = objectives_dir / f"{prov.slug}.json"
+        if not p.exists():
+            cards.append(f'<div class="card"><header><span class="tag attention">missing</span>'
+                         f'<span class="id">{prov.slug}</span></header><p>No objectives file.</p></div>')
+            continue
+        of = ObjectivesFile.model_validate_json(p.read_text())
+        for o in of.objectives:
+            n_obj += 1
+            extra = o.model_extra or {}
+            conf = extra.get("confidence", "—")
+            kinds = {e.kind for e in o.evidence}
+            rule_ok = len(kinds) >= 2 and bool(kinds & {"worked_example", "exercise"})
+            n_single += conf == "single"
+            n_rule += not rule_ok
+            tags = (f'<span class="tag {"attention" if conf == "single" else "ok"}">{html.escape(str(conf))}</span>'
+                    + ("" if rule_ok else '<span class="tag attention">evidence rule fails</span>'))
+            ev = "".join(f"<li><b>{html.escape(e.kind)}</b> · {html.escape(e.anchor)} · p.{e.printed_page}"
+                         + (f" — “{html.escape(e.quote)}”" if e.quote else "") + "</li>"
+                         for e in o.evidence)
+            prereq = [pr.src for pr in of.prerequisites if pr.dst == o.id]
+            cards.append(f"""<article class="card"><header>{tags}<span class="id">{o.id}</span></header>
+<p class="note">{html.escape(prov.title)} · {html.escape(where)}{part}{intro}</p>
+<h3>{html.escape(o.label)}</h3><p class="stem">{md_html(o.statement)}</p>
+<details open><summary>Evidence ({len(o.evidence)}, {len(kinds)} kind(s))</summary><ul class="list">{ev}</ul></details>
+<details><summary>Exercise items mapped here ({len(o.exercise_items)})</summary>
+<p class="id">{html.escape(', '.join(o.exercise_items) or 'none')}</p></details>
+{f'<p class="note">Prerequisites: {html.escape(", ".join(prereq))}</p>' if prereq else ''}
+{verdict_box(o.id, [("approve", "Approve"), ("edit", "Edit"), ("drop", "Drop")])}</article>""")
+    return page("g1", f"G1 · Objectives — {book.book}",
+                [f"<b>{n_obj}</b> objectives", f"<b>{n_single}</b> found by one finder only",
+                 f"<b>{n_rule}</b> failing the evidence rule",
+                 f"chapters {', '.join(map(str, sorted(chapters))) if chapters else 'all'}"],
+                ["Each objective is derived from the book, not copied from an objectives box "
+                 "(extraction-pipeline.md §3.4). Check that it is something the book teaches and "
+                 "practises, in the book's own words, at the right grain (2–5 per lesson).",
+                 "<b>single</b> means only one of the two blind finders found it; an amber evidence "
+                 "tag means it lacks two kinds of evidence including a worked example or exercise. "
+                 "Approve, edit (say how in the note) or drop."],
+                cards, {"book": book.book, "chapters": sorted(chapters) if chapters else "all"})
+
+
+# ---- G2: book questions ------------------------------------------------------
+def dossier_g2(book, manifest: dict, runs_dir: Path, chapters: set[int] | None,
+               percent: float, seed: int) -> str:
+    from assemble_lesson_bundle import LessonRun, manifest_lessons
+    must, rest, items = [], defaultdict(list), {}
+    for mod, les in manifest_lessons(manifest):
+        if chapters and mod["chapter"] not in chapters:
+            continue
+        p = runs_dir / f"{les['id']}.json"
+        if not p.exists():
+            continue
+        for it in LessonRun.model_validate_json(p.read_text()).items:
+            key = f"{les['id']}:{it.ref}"
+            items[key] = (les, it)
+            if it.verification in ("disputed", "no_printed_answer"):
+                must.append(key)
+            else:
+                rest[les["id"]].append(key)
+    sample = seeded_sample(rest, percent, seed)
+    shown = must + sample
+    cards = []
+    for key in shown:
+        les, it = items[key]
+        why = ("disagreement" if it.verification == "disputed" else
+               "no printed answer" if it.verification == "no_printed_answer" else "sample")
+        rows_ = [("Printed answer", it.printed_answer), ("EPUB solution's answer", it.epub_final_answer),
+                 ("Blind re-solve", it.blind_answer)]
+        vals = {v for _, v in rows_ if v}
+        cls = "disagree" if len(vals) > 1 else ""
+        table = "".join(f'<tr class="{cls}"><th>{k}</th><td>{md_html("$" + v + "$") if v else "—"}</td></tr>'
+                        for k, v in rows_)
+        choices = ""
+        if it.choices:
+            choices = '<ul class="choices">' + "".join(
+                f'<li class="{"key" if c.get("key") == it.answer else ""}">{html.escape(str(c.get("key")))}. '
+                f'{md_html(c.get("text"))}</li>' for c in it.choices) + "</ul>"
+        marker = (f'<p class="note">Marked as <b>{html.escape(it.marker.get("kind", ""))}</b>'
+                  + (f', form: {html.escape(str(it.marker.get("form")))}' if it.marker.get("form") else "")
+                  + f' · key {md_html("$" + it.marker.get("key", "") + "$")}</p>') if it.marker else ""
+        prior = (f'<p class="note">Already at G2: {html.escape(it.g2.verdict)} by {html.escape(it.g2.by)}'
+                 + (f' — {html.escape(it.g2.note)}' if it.g2.note else "") + "</p>") if it.g2 else ""
+        tag = {"disagreement": "attention", "no printed answer": "info", "sample": "sample"}[why]
+        cards.append(f"""<article class="card"><header><span class="tag {tag}">{why}</span>
+<span class="tag plain">{html.escape(it.answer_type)}</span><span class="tag plain">{html.escape(it.tier)}</span>
+<span class="id">{html.escape(key)} · p.{it.printed_page}</span></header>
+<p class="stem">{md_html(it.stem)}</p>{choices}{marker}
+<table class="answers">{table}</table>
+<details {'open' if why != 'sample' else ''}><summary>Canonical solution ({html.escape(it.solution_provenance)})</summary>{steps_html(it.solution)}</details>
+{prior}{verdict_box(key, [("accept", "Accept"), ("fix", "Fix"), ("exclude", "Exclude"), ("hold", "Hold")])}</article>""")
+    n_dis = sum(1 for k in must if items[k][1].verification == "disputed")
+    return page("g2", f"G2 · Book questions — {book.book}",
+                [f"<b>{n_dis}</b> disagreements", f"<b>{len(must) - n_dis}</b> without a printed answer",
+                 f"<b>{len(sample)}</b> sampled of {sum(len(v) for v in rest.values())} agreed "
+                 f"({percent:g}%, seed {seed}, at least one per lesson)"],
+                ["Every book question is checked three ways: the printed answer, the EPUB worked "
+                 "solution's final answer and a blind re-solve (FR-4302). Where they disagree the "
+                 "row is highlighted. Books have errata: nothing here was corrected silently.",
+                 "Accept keeps the item as the book gives it; Fix means the note says what to change; "
+                 "Exclude drops it with a reason; Hold keeps it out of the live set for now."],
+                cards, {"book": book.book, "seed": seed, "sample_percent": percent,
+                        "sampled": sample, "must_review": must})
+
+
+# ---- G3: generated families and widgets --------------------------------------
+def family_of(q: dict) -> str:
+    if q.get("family"):
+        return q["family"]
+    note = q.get("source_note") or ""
+    return (note.split("template family ", 1)[1].rstrip(". ") if "template family " in note
+            else f"(no family) {q['id']}")
+
+
+def dossier_g3(bundles: list[dict], catalogue: dict | None, percent: float, seed: int,
+               queue: dict | None) -> str:
+    qs = {q["id"]: q for b in bundles for q in b.get("questions", [])}
+    mc = {m["id"]: m for m in (catalogue or {}).get("misconceptions", [])}
+    fams: dict[str, list[str]] = defaultdict(list)
+    for q in qs.values():
+        fams[family_of(q)].append(q["id"])
+    picked = sorted(set(queue["question_ids"]) & set(qs)) if queue else seeded_sample(fams, percent, seed)
+    cards = []
+    for qid in picked:
+        q = qs[qid]
+        ch = q.get("choices")
+        body = ""
+        if isinstance(ch, list):
+            body = '<ul class="choices">' + "".join(
+                f'<li class="{"key" if c["key"] == q["correct_answer"] else ""}">{html.escape(c["key"])}. '
+                f'{md_html(c["text"])}'
+                + (f'<br><span class="note">encodes: {html.escape(mc[c["misconception_id"]]["label"])}</span>'
+                   if c.get("misconception_id") in mc else
+                   f'<br><span class="note">names {html.escape(c["misconception_id"])} — NOT IN THE CATALOGUE</span>'
+                   if c.get("misconception_id") else "")
+                + "</li>" for c in ch) + "</ul>"
+        elif isinstance(ch, dict) and "kind" in ch:
+            diags = "".join(
+                f"<li><b>{html.escape(d.get('predicate', ''))}</b> → "
+                + (html.escape(mc[d["misconception_id"]]["label"]) if d.get("misconception_id") in mc
+                   else html.escape(str(d.get("misconception_id"))) + " — NOT IN THE CATALOGUE")
+                + "</li>" for d in ch.get("diagnostics") or [])
+            body = (f'<p class="note">Widget <b>{html.escape(ch["kind"])}</b></p>'
+                    f'<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">'
+                    f'{html.escape(json.dumps(ch.get("spec"), ensure_ascii=False))}</pre>'
+                    f'<p class="note">Wrong constructions it diagnoses:</p><ul class="list">{diags}</ul>')
+        else:
+            body = f'<p class="note">Answer: {md_html("$" + str(q["correct_answer"]) + "$")}</p>'
+        cards.append(f"""<article class="card"><header><span class="tag sample">{html.escape(family_of(q))}</span>
+<span class="tag plain">{html.escape(q["question_type"])}</span><span class="tag plain">{html.escape(q["tier"])}</span>
+<span class="id">{html.escape(qid)}</span></header>
+<p class="stem">{md_html(q["stem"])}</p>{body}
+<details><summary>Worked solution — what the tutor teaches from</summary>{steps_html(q.get("canonical_solution"))}
+<p class="note">Parent book question: {html.escape(q.get("parent_question_id") or "—")}</p></details>
+{verdict_box(qid, [("accept", "Accept"), ("fix", "Needs a fix"), ("reject", "Reject family")])}</article>""")
+    return page("g3", "G3 · Generated families and widgets",
+                [f"<b>{len(picked)}</b> sampled of {len(qs)}", f"<b>{len(fams)}</b> families, every one read",
+                 f"seed {seed}" if not queue else "sample from the load's review queue"],
+                ["One item per family, then more at random to reach the sample size (ADR-0008). A "
+                 "verdict travels to the item's family: Reject retires the whole family, Needs a fix "
+                 "pulls back the item only (apply_review_verdicts.py).",
+                 "Check the answer key against the worked solution, and that each distractor or "
+                 "widget diagnosis is really the mistake its misconception names."],
+                cards, {"bundle": ", ".join(b.get("bundle", "") or "generated" for b in bundles),
+                        "seed": seed, "sample_percent": percent, "sampled": picked})
+
+
+# ---- G4: misconceptions ------------------------------------------------------
+def dossier_g4(catalogue: dict, s5_runs: list[dict], percent: float, seed: int) -> str:
+    entries = catalogue.get("misconceptions", [])
+    dropped = [d for run in s5_runs for r in run.get("records") or [] for d in r.get("dropped") or []]
+    kept_by_runs = sum((run.get("totals") or {}).get("entries", 0) for run in s5_runs)
+    verdicts = Counter(d.get("verdict") or "NO_VERDICT" for d in dropped)
+    by_kind: dict[str, list[str]] = defaultdict(list)
+    for m in entries:
+        by_kind[m.get("kind") or "?"].append(m["id"])
+    picked = seeded_sample(by_kind, percent, seed)
+    by_id = {m["id"]: m for m in entries}
+    cards = [f"""<section class="card"><h3>What the verifier dropped</h3>
+<p><span class="stat"><b>{len(dropped)}</b> dropped</span>
+<span class="stat"><b>{kept_by_runs}</b> kept by the S5 run(s)</span>
+<span class="stat"><b>{len(entries)}</b> in the catalogue</span></p>
+<p class="note">{', '.join(f'{html.escape(k)} {v}' for k, v in sorted(verdicts.items())) or 'nothing dropped'}.
+A dropped entry never ships; only the count is shown here (§3.13).</p></section>"""]
+    for mid in picked:
+        m = by_id[mid]
+        maps = "".join(f"<li>{html.escape(x.get('question_id', ''))}: “{md_html(x.get('choice_text'))}”</li>"
+                       for x in m.get("maps") or [])
+        cards.append(f"""<article class="card"><header><span class="tag info">{html.escape(m.get('kind') or '?')}</span>
+<span class="id">{html.escape(mid)}</span></header>
+<h3>{md_html(m['label'])}</h3><p class="stem">{md_html(m['description'])}</p>
+{f'<p class="note">Signal: {md_html(m["signal"])}</p>' if m.get('signal') else ''}
+<details open><summary>Refutation</summary>{steps_html(m.get('refutation'))}</details>
+{f'<details><summary>Book options it is stamped on ({len(m["maps"])})</summary><ul class="list">{maps}</ul></details>' if m.get('maps') else ''}
+{f'<p class="note">Aliases: {html.escape(", ".join(m["aliases"]))}</p>' if m.get('aliases') else ''}
+{verdict_box(mid, [("accept", "Accept"), ("send_back", "Send back")])}</article>""")
+    return page("g4", f"G4 · Misconceptions — {catalogue.get('catalogue') or catalogue.get('course_id') or 'catalogue'}",
+                [f"<b>{len(dropped)}</b> dropped by the verifier", f"<b>{len(picked)}</b> of {len(entries)} kept entries sampled",
+                 f"{percent:g}%, seed {seed}, at least one per kind"],
+                ["Each refutation was worked by a second agent against the canonical solutions and "
+                 "kept only when CONFIRMED (fail-closed). Read the sample for the house style: step 1 "
+                 "names the student's thinking without calling it wrong-headed, the last step leaves "
+                 "them with the move that works, and nothing corrects them with a convention the book "
+                 "does not teach (FR-1114)."],
+                cards, {"catalogue": catalogue.get("catalogue"), "course_id": catalogue.get("course_id"),
+                        "seed": seed, "sample_percent": percent, "sampled": picked,
+                        "dropped": len(dropped)})
+
+
+def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("bundle", type=Path)
+    ap.add_argument("bundle", type=Path, nargs="?",
+                    help="(legacy G3 page) a generated question bundle")
+    ap.add_argument("--gate", choices=["g1", "g2", "g3", "g4"],
+                    help="write a gate dossier instead of the legacy G3 page")
+    ap.add_argument("--book", help="g1/g2: the book (name or config path)")
+    ap.add_argument("--chapter", type=int, action="append")
+    ap.add_argument("--manifest", type=Path)
+    ap.add_argument("--objectives", type=Path)
+    ap.add_argument("--runs", type=Path)
+    ap.add_argument("--bundles", type=Path, action="append", default=[],
+                    help="g3: generated and widget question bundles")
+    ap.add_argument("--catalogue", type=Path, help="g3/g4: the misconception catalogue")
+    ap.add_argument("--s5", type=Path, action="append", default=[], help="g4: S5 final run output(s)")
+    ap.add_argument("--sample", type=float, default=10)
+    ap.add_argument("--seed", type=int, default=20260925)
     ap.add_argument("--queue", type=Path, help="the *.review-queue.json written at load time")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--sampled-only", action="store_true",
-                    help="render only the drawn sample. Reading one item validates its family, "
-                         "so the sample IS the review surface; the full bundle stays in the repo.")
-    args = ap.parse_args()
-
-    bundle = json.loads(args.bundle.read_text())
+                    help="(legacy) render only the drawn sample. Reading one item validates its "
+                         "family, so the sample IS the review surface; the full bundle stays in the repo.")
+    args = ap.parse_args(argv)
     queue = json.loads(args.queue.read_text()) if args.queue and args.queue.exists() else None
+
+    if args.gate:
+        import book_config
+        here = Path(__file__).resolve().parent
+        if args.gate in ("g1", "g2"):
+            if not args.book:
+                ap.error("--gate g1/g2 needs --book")
+            book = book_config.load_book(args.book)
+            mp = args.manifest or (book.repo_path(book.manifest) if book.manifest else None)
+            manifest = json.loads(mp.read_text())
+            chapters = set(args.chapter) if args.chapter else None
+            if args.gate == "g1":
+                out = dossier_g1(book, manifest, args.objectives or here / "objectives" / book.book,
+                                 chapters)
+            else:
+                out = dossier_g2(book, manifest, args.runs or here / "runs" / book.book / "lesson",
+                                 chapters, args.sample, args.seed)
+        elif args.gate == "g3":
+            bundles = [json.loads(p.read_text()) | {"bundle": p.name} for p in args.bundles]
+            if not bundles:
+                ap.error("--gate g3 needs --bundles")
+            cat = json.loads(args.catalogue.read_text()) if args.catalogue else None
+            out = dossier_g3(bundles, cat, args.sample, args.seed, queue)
+        else:
+            if not args.catalogue:
+                ap.error("--gate g4 needs --catalogue")
+            out = dossier_g4(json.loads(args.catalogue.read_text()),
+                             [json.loads(p.read_text()) for p in args.s5], args.sample, args.seed)
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(out)
+        print(f"wrote {args.out} ({args.gate.upper()} dossier, {len(out) // 1024} KB)")
+        return 0
+
+    if not args.bundle:
+        ap.error("pass a bundle (legacy G3 page) or --gate")
+    bundle = json.loads(args.bundle.read_text())
     if args.sampled_only:
         if not queue:
             print("ERROR: --sampled-only needs --queue", file=sys.stderr)
@@ -227,11 +757,11 @@ def main() -> int:
         picked = set(queue["question_ids"])
         bundle = dict(bundle, questions=[q for q in bundle["questions"] if q["id"] in picked])
     try:
-        page = build(bundle, queue)
+        out = build(bundle, queue)
     except ValueError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
-    args.out.write_text(page)
+    args.out.write_text(out)
     print(f"wrote {args.out} — {len(bundle['questions'])} questions")
     return 0
 

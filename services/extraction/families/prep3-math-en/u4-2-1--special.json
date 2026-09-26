@@ -1,0 +1,66 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:u4-2-1:special",
+  "kind": "family",
+  "lo_id": "lo:u4-2-1",
+  "parent_question_id": "q:u4-2-1:001",
+  "source_page": 70,
+  "tier": "basic",
+  "answer_type": "mcq",
+  "context": null,
+  "params": [
+    {
+      "name": "ang",
+      "choice": [
+        30,
+        45,
+        60
+      ]
+    },
+    {
+      "name": "fn",
+      "choice": [
+        "sin",
+        "cos",
+        "tan"
+      ]
+    },
+    {
+      "name": "special",
+      "let": "{30: {'sin': '\\\\frac{1}{2}', 'cos': '\\\\frac{\\\\sqrt{3}}{2}', 'tan': '\\\\frac{\\\\sqrt{3}}{3}'}, 45: {'sin': '\\\\frac{\\\\sqrt{2}}{2}', 'cos': '\\\\frac{\\\\sqrt{2}}{2}', 'tan': '1'}, 60: {'sin': '\\\\frac{\\\\sqrt{3}}{2}', 'cos': '\\\\frac{1}{2}', 'tan': '\\\\sqrt{3}'}}"
+    },
+    {
+      "name": "correct",
+      "let": "special[ang][fn]"
+    },
+    {
+      "name": "pool",
+      "let": "[special[a2][f2] for a2 in special for f2 in special[a2] if special[a2][f2] != correct]"
+    },
+    {
+      "name": "shuffled",
+      "shuffle": "pool"
+    },
+    {
+      "name": "names",
+      "let": "{'sin': '\\\\sin', 'cos': '\\\\cos', 'tan': '\\\\tan'}"
+    }
+  ],
+  "stem": "${=names[fn]} {=ang}^\\circ =$ ?",
+  "solution": [
+    "${=names[fn]} {=ang}^\\circ$ is one of the exact values from the $30$–$60$–$90$ and $45$–$45$–$90$ triangles.",
+    "${=names[fn]} {=ang}^\\circ = {=correct}$."
+  ],
+  "choices": {
+    "correct": "${=correct}$",
+    "distractors": [
+      {
+        "each": "shuffled[:3]",
+        "as": "w",
+        "text": "${=w}$",
+        "misconception_id": null
+      }
+    ]
+  },
+  "notes": "Reproduces the hand-written family tpl:u4-2-1:special in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}

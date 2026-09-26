@@ -5,27 +5,51 @@ import { COURSE_GATING, ENVIRONMENT } from "./env";
 import { scoped, type Db } from "./student-context";
 import {
   SUBJECTS,
-  SUBJECT_IDS,
+  coursesOfSpineKey,
   type Subject,
   type SpineSubject,
   type TextDirection,
 } from "./subjects";
+import { COURSES, COURSE_IDS, type CourseId } from "./courses";
+import {
+  CURRICULA,
+  asCurriculumId,
+  curriculumLabel,
+  type CurriculumId,
+} from "./curricula";
 import {
   GRADES,
   canonicalGrade,
+  courseForSubject,
   gradeDisplayLabel,
   isCourseVisible,
   visibleCourseIds,
   type AvailabilityRule,
   type CourseState,
   type StudentOverride,
+  type SwitchedOff,
 } from "./catalog";
 
 /**
- * Course availability — the DATABASE SEAM (migration 023, `lib/catalog.ts`).
+ * Course availability — the DATABASE SEAM (migration 023, `lib/catalog.ts`),
+ * and THE STUDENT SCOPE (feature 003).
  *
- * ⚠ NO REQUIREMENT COVERS THIS YET. No FR has been invented for it and
- * `traceability.md` was not touched; see the header of `lib/catalog.ts`.
+ * Requirements: FR-2701…FR-2711 (002) and FR-4006/FR-4009 (003) — see the
+ * header of `lib/catalog.ts`. (This note used to say no requirement covered
+ * it; the course-gate FRs have existed since 2026-09-22.)
+ *
+ * ---------------------------------------------------------------------------
+ * ONE STUDENT SCOPE PER REQUEST (003, decision 5 of the brief)
+ * ---------------------------------------------------------------------------
+ * `resolveStudentScope` answers, once, everything a student surface needs to
+ * decide what she may be shown: her grade, her curriculum, the courses she may
+ * see, and which course she means by `?subject=`. `resolveStudentGraphScope`
+ * adds the same answer over graph ids (objectives, modules) and source books,
+ * for the readers that walk the spine rather than a course. Every student page
+ * and API reaches curriculum data through one of them — directly, or through
+ * `visibleCoursesFor` / `visibleGraphFor`, which are now thin wrappers kept so
+ * their existing callers read unchanged. `student-scope-guard.test.mts` fails
+ * on a student surface that reads curriculum data without it.
  *
  * ---------------------------------------------------------------------------
  * THE SPLIT, AND WHY IT IS WORTH TWO FILES
@@ -58,146 +82,268 @@ import {
  */
 
 /* ------------------------------------------------------------------ */
-/* Student side — the gate's only database call                        */
+/* Student side — the scope, and the gate's only database reads         */
 /* ------------------------------------------------------------------ */
+
+/**
+ * What one student may be shown, decided once. `studentId === null` is the
+ * prompt-capture harness (`scripts/capture-prompts.mts`), which has nobody to
+ * refuse: its scope refuses nothing and `courses` is `null`, meaning
+ * "ungated", never an empty set.
+ */
+export interface StudentScope {
+  readonly studentId: number | null;
+  /** her grade, folded onto the canonical spelling (`prep-3` → `9`) */
+  readonly grade: string | null;
+  /** her curriculum, validated against the registry; `null` = unknown */
+  readonly curriculum: CurriculumId | null;
+  /** `false` when the stored value is not one the registry knows (FR-4003) */
+  readonly curriculumKnown: boolean;
+  /** the value as stored, so an operator can see an unknown one */
+  readonly storedCurriculum: string | null;
+  /** every course she may see — `null` only for the ungated harness scope */
+  readonly courses: ReadonlySet<string> | null;
+  /** May she see this course? A course-less row is refused (FR-2704). */
+  course(courseId: string | null | undefined): boolean;
+  /**
+   * Which course she means by `?subject=<spine key>` — `lib/catalog.ts`
+   * `courseForSubject`, the only subject → course lookup outside the
+   * registries. A known subject always yields a course id (a hidden one is
+   * then refused like any hidden course); an unknown one yields `null`.
+   */
+  courseForSubject(spineKey: unknown): string | null;
+}
+
+/** The same scope over graph ids and source books (`resolveStudentGraphScope`). */
+export interface StudentGraphScope extends StudentScope {
+  /** a learning objective whose course she may see */
+  lo(id: string): boolean;
+  /** a module whose course she may see */
+  module(id: string): boolean;
+  /** a source book (by `source_documents.sha256`) behind a course she may see */
+  doc(sha256: string | null | undefined): boolean;
+}
+
+const UNGATED: StudentGraphScope = {
+  studentId: null,
+  grade: null,
+  curriculum: null,
+  curriculumKnown: false,
+  storedCurriculum: null,
+  courses: null,
+  course: () => true,
+  // No student, no curriculum: the registry's first course of the subject —
+  // what `?subject=` meant before 003. Only the harness ever gets here.
+  courseForSubject: (key) => courseForSubject(coursesOfSpineKey(key), () => true, null),
+  lo: () => true,
+  module: () => true,
+  doc: () => true,
+};
+
+/**
+ * THE STUDENT SCOPE — her grade, her curriculum and the courses she may see,
+ * from ONE read of the student, the rules for this environment and her own
+ * exceptions. Every decision is `lib/catalog.ts`'s.
+ *
+ * **The kill switch is honoured HERE**, at the one place every student-side
+ * gate asks its question, rather than at each call site. With
+ * `AINEXT_COURSE_GATING` unset or `off` the grade rules are suspended and not
+ * even read — but the student's curriculum still is, and still scopes, and
+ * her exceptions still apply (FR-4015; decision A): she sees every LOADED
+ * course of her own curriculum, plus any exception. No branch at the call
+ * site, nothing to forget, and nothing that can be half-disabled.
+ *
+ * **A missing student is an empty scope**, not an error and not everything.
+ *
+ * `c`: the caller's unit of work when it has one. A bare `Pool` is treated as
+ * "none" and a principalled unit is opened instead (`asClient`), because the
+ * read of `student_course_access` with NO principal returns zero rows under
+ * migration 023's policy — a silently WRONG answer, every exception lost.
+ */
+export async function resolveStudentScope(
+  studentId: number | null,
+  c?: Db
+): Promise<StudentScope> {
+  if (studentId == null) return UNGATED;
+  return scoped(studentId, asClient(c), (db) => scopeOn(db, studentId));
+}
+
+async function scopeOn(db: Db, studentId: number): Promise<StudentScope> {
+  const { grade, curriculum, rules, overrides, switchedOff } = await availabilityFor(
+    db,
+    studentId,
+    COURSE_GATING
+  );
+  const courses: ReadonlySet<string> = new Set(
+    visibleCourseIds({ grade, curriculum }, rules, overrides, switchedOff)
+  );
+  const course = (id: string | null | undefined) => id != null && courses.has(id);
+  return {
+    studentId,
+    grade,
+    curriculum: asCurriculumId(curriculum),
+    curriculumKnown: asCurriculumId(curriculum) !== null,
+    storedCurriculum: curriculum,
+    courses,
+    course,
+    courseForSubject: (key) =>
+      courseForSubject(coursesOfSpineKey(key), (id) => courses.has(id), curriculum),
+  };
+}
 
 /**
  * The course ids this student may see. A `Set`, because every caller uses it
  * as a membership test and nothing should read an order out of it.
  *
- * Three small reads rather than one join: the student's grade, the grade rules
- * for this environment, and this student's own overrides have three unrelated
- * cardinalities, and joining them produces a cross product that has to be
- * de-duplicated in JavaScript anyway. Three indexed reads on an open client
- * are cheaper than that, and each one is legible on its own.
- *
- * **A missing student is an empty set**, not an error and not everything. The
- * one caller that can legitimately have no student — `scripts/capture-prompts`
- * — never reaches this function (see `courseGateFor` in `lib/lesson.ts`).
- *
- * **The kill switch is honoured HERE**, at the one place every student-side
- * gate asks its question, rather than at each of the five call sites. With
- * `AINEXT_COURSE_GATING` unset or `off` this answers "every course there is"
- * and every caller behaves exactly as it did before migration 023 — no branch
- * at the call site, nothing to forget, and nothing that can be half-disabled.
+ * A thin wrapper over `resolveStudentScope`, kept so the gate's five original
+ * callers read as they did. A missing student is an empty set.
  */
 export async function visibleCoursesFor(
   studentId: number,
   c?: PoolClient
 ): Promise<Set<string>> {
-  return scoped(studentId, c, async (db) => {
-    if (!COURSE_GATING) return allCourseIds(db);
-    const { grade, rules, overrides } = await availabilityFor(db, studentId);
-    return new Set(visibleCourseIds(grade, rules, overrides));
+  const scope = await resolveStudentScope(studentId, c);
+  return new Set(scope.courses ?? []);
+}
+
+/**
+ * THE STUDENT SCOPE over GRAPH ids and source books — for the surfaces that
+ * read the spine directly and never see a `course_id` column.
+ *
+ * `/spine`, the practice plan, "Ask the Spine", the progress page, the home
+ * page and the figures API all select objectives, modules, questions, figures
+ * or books across the whole database. They are the quietest way a hidden
+ * course — or another curriculum's book — could reach a student: no lesson to
+ * open and no URL to guess, just a subject that is switched off appearing
+ * among the objectives, or a book's title in the tutor's context.
+ *
+ * ONE walk of the graph and ONE read of the course books, turned into three
+ * predicates. Not a query per row, for the obvious reason (ninety objectives
+ * is ninety round trips) and a less obvious one: a check that can fail per
+ * row can also PARTLY fail, and a page gated for eighty-nine objectives and
+ * not the ninetieth is worse than one that is not gated at all, because it
+ * looks right.
+ *
+ * An objective or module that resolves to no course is refused, like an
+ * unknown course id: explicit allow has one answer for anything it cannot
+ * check. So is a book no visible course is built from. `studentId === null` is
+ * the prompt-capture harness — nothing is refused (see `courseGateFor` in
+ * `lib/lesson.ts`).
+ */
+export async function resolveStudentGraphScope(
+  studentId: number | null,
+  c?: Db
+): Promise<StudentGraphScope> {
+  if (studentId == null) return UNGATED;
+  return scoped(studentId, asClient(c), async (db) => {
+    const scope = await scopeOn(db, studentId);
+    const visible = scope.courses ?? new Set<string>();
+
+    // LO ← module (`teaches`) → course (`part_of`), in one pass. LEFT joins so
+    // a detached objective still produces a row, with a null course.
+    const [walk, books] = await sequential([
+      () =>
+        db.query(
+          `SELECT lo.id AS lo_id, m.id AS module_id, c.id AS course_id
+             FROM graph_nodes lo
+             LEFT JOIN graph_edges e
+               ON e.dst_id = lo.id AND e.edge_type = 'teaches' AND e.system_to IS NULL
+             LEFT JOIN graph_nodes m ON m.id = e.src_id AND m.kind = 'module'
+             LEFT JOIN graph_edges ec
+               ON ec.src_id = m.id AND ec.edge_type = 'part_of' AND ec.system_to IS NULL
+             LEFT JOIN graph_nodes c ON c.id = ec.dst_id AND c.kind = 'course'
+            WHERE lo.kind = 'learning_objective'`
+        ),
+      // the book each course is built from (the loader stamps it on the node)
+      () =>
+        db.query(
+          `SELECT id AS course_id, source_sha256 FROM graph_nodes WHERE kind = 'course'`
+        ),
+    ] as const);
+
+    const los = new Set<string>();
+    const modules = new Set<string>();
+    for (const r of walk.rows) {
+      if (r.course_id == null || !visible.has(r.course_id)) continue;
+      los.add(String(r.lo_id));
+      if (r.module_id != null) modules.add(String(r.module_id));
+    }
+    const docs = new Set<string>();
+    for (const r of books.rows) {
+      if (r.source_sha256 != null && visible.has(String(r.course_id))) {
+        docs.add(String(r.source_sha256));
+      }
+    }
+    return {
+      ...scope,
+      lo: (id) => los.has(id),
+      module: (id) => modules.has(id),
+      doc: (sha) => sha != null && docs.has(sha),
+    };
   });
 }
 
 /**
- * Every course that exists, from both places one can: the subject registry
- * (which knows courses the spine has never held) and `graph_nodes` (which
- * knows courses loaded before a registry entry caught up). Their union is what
- * "ungated" means, and it is a real set rather than a `has()` that always says
- * yes — a caller reading it as a list gets the truth either way.
- */
-async function allCourseIds(db: Db): Promise<Set<string>> {
-  const res = await db.query(
-    `SELECT id FROM graph_nodes WHERE kind = 'course'`
-  );
-  return new Set([
-    ...SUBJECT_IDS.map((id) => SUBJECTS[id].courseId),
-    ...res.rows.map((r) => String(r.id)),
-  ]);
-}
-
-/**
- * The same gate, expressed over GRAPH ids instead of course ids — for the
- * surfaces that read the spine directly and never see a `course_id` column.
- *
- * `/spine`, the practice plan and "Ask the Spine" all select every objective
- * and every live question in the database and reason over the graph. They are
- * the quietest way a hidden course could reach a student: no lesson to open
- * and no URL to guess, just a subject that is switched off appearing among the
- * objectives — and, on two of those three surfaces, its questions complete
- * with correct answers and canonical solutions.
- *
- * ONE walk of the graph and ONE read of the rules, turned into two predicates.
- * Not a query per row, for the obvious reason (ninety objectives is ninety
- * round trips) and a less obvious one: a check that can fail per row can also
- * PARTLY fail, and a page gated for eighty-nine objectives and not the
- * ninetieth is worse than one that is not gated at all, because it looks right.
- *
- * An objective or module that resolves to no course is refused, like an
- * unknown course id: explicit allow has one answer for anything it cannot
- * check. `studentId === null` is the prompt-capture harness — nobody to
- * refuse, so nothing is refused (see `courseGateFor` in `lib/lesson.ts`).
+ * The same gate over graph ids — `resolveStudentGraphScope`, under the name
+ * its first three callers (`/spine`, the practice plan, the ask context) use.
  */
 export async function visibleGraphFor(
   db: Db,
   studentId: number | null
-): Promise<{ lo: (id: string) => boolean; module: (id: string) => boolean }> {
-  if (studentId == null) return { lo: () => true, module: () => true };
-
-  const visible = await visibleCoursesFor(studentId, asClient(db));
-
-  // LO ← module (`teaches`) → course (`part_of`), in one pass. LEFT joins so a
-  // detached objective still produces a row, with a null course.
-  const walk = await db.query(
-    `SELECT lo.id AS lo_id, m.id AS module_id, c.id AS course_id
-       FROM graph_nodes lo
-       LEFT JOIN graph_edges e
-         ON e.dst_id = lo.id AND e.edge_type = 'teaches' AND e.system_to IS NULL
-       LEFT JOIN graph_nodes m ON m.id = e.src_id AND m.kind = 'module'
-       LEFT JOIN graph_edges ec
-         ON ec.src_id = m.id AND ec.edge_type = 'part_of' AND ec.system_to IS NULL
-       LEFT JOIN graph_nodes c ON c.id = ec.dst_id AND c.kind = 'course'
-      WHERE lo.kind = 'learning_objective'`
-  );
-
-  const los = new Set<string>();
-  const modules = new Set<string>();
-  for (const r of walk.rows) {
-    if (r.course_id == null || !visible.has(r.course_id)) continue;
-    los.add(String(r.lo_id));
-    if (r.module_id != null) modules.add(String(r.module_id));
-  }
-  return { lo: (id) => los.has(id), module: (id) => modules.has(id) };
+): Promise<StudentGraphScope> {
+  return resolveStudentGraphScope(studentId, db);
 }
 
 /**
  * A `PoolClient` to reuse, or `undefined` for "open your own unit of work".
  *
- * Handing a bare `Pool` to `visibleCoursesFor` would read
- * `student_course_access` with NO principal set, and migration 023's policy
- * answers that with zero rows — a silently WRONG answer (every override lost)
- * rather than an error. So a pool is reported as "no client" and the gate
- * opens its own principalled transaction instead.
+ * Handing a bare `Pool` to the scope would read `student_course_access` with
+ * NO principal set, and migration 023's policy answers that with zero rows — a
+ * silently WRONG answer (every override lost) rather than an error. So a pool
+ * is reported as "no client" and the scope opens its own principalled
+ * transaction instead.
  */
-function asClient(db: Db): PoolClient | undefined {
-  return "release" in db ? (db as PoolClient) : undefined;
+function asClient(db: Db | undefined): PoolClient | undefined {
+  return db && "release" in db ? (db as PoolClient) : undefined;
 }
 
 /**
- * The three inputs the rule needs, fetched once. Shared by the student gate
- * and by the console's per-student view so the two can never disagree about
- * what the database says — only about who is allowed to ask.
+ * The inputs the rule needs, fetched once. Shared by the student scope and by
+ * the console's per-student view so the two can never disagree about what the
+ * database says — only about who is allowed to ask.
+ *
+ * `gatingOn === false` (the kill switch, FR-4015): the grade rules are
+ * suspended, so they are not read; the loaded courses are read instead
+ * (`switchedOff`). The student's curriculum and her exceptions are read
+ * either way — neither switches off.
  */
 async function availabilityFor(
   db: Db,
-  studentId: number
+  studentId: number,
+  gatingOn: boolean
 ): Promise<{
   grade: string | null;
+  curriculum: string | null;
   rules: AvailabilityRule[];
   overrides: StudentOverride[];
+  switchedOff: SwitchedOff | undefined;
 }> {
   const [studentRes, ruleRes, overrideRes] = await sequential([
     () =>
-      db.query(`SELECT grade FROM students WHERE id = $1`, [studentId]),
-    () =>
       db.query(
-        `SELECT course_id, grade, state FROM course_availability
-          WHERE environment = $1`,
-        [ENVIRONMENT]
+        `SELECT grade, curriculum_system FROM students WHERE id = $1`,
+        [studentId]
       ),
+    // with the switch on, this environment's rules; with it off, the courses
+    // the spine holds — the one read the kill switch always made
+    () =>
+      gatingOn
+        ? db.query(
+            `SELECT course_id, grade, state FROM course_availability
+              WHERE environment = $1`,
+            [ENVIRONMENT]
+          )
+        : db.query(`SELECT id FROM graph_nodes WHERE kind = 'course'`),
     () =>
       db.query(
         `SELECT course_id, state FROM student_course_access
@@ -206,15 +352,23 @@ async function availabilityFor(
       ),
   ] as const);
 
+  const row = studentRes.rows[0] as
+    | { grade?: string | null; curriculum_system?: string | null }
+    | undefined;
   return {
     // `canonicalGrade` folds the legacy `prep-3` spelling onto `9`; without it
     // every migrated row matches no rule and the student sees an empty product.
-    grade: canonicalGrade(studentRes.rows[0]?.grade as string | undefined),
-    rules: ruleRes.rows.map(asRule),
+    grade: canonicalGrade(row?.grade ?? null),
+    // As stored. The rule validates it; an unknown value matches no course.
+    curriculum: row?.curriculum_system ?? null,
+    rules: gatingOn ? ruleRes.rows.map(asRule) : [],
     overrides: overrideRes.rows.map((r) => ({
       courseId: String(r.course_id),
       state: asState(r.state),
     })),
+    switchedOff: gatingOn
+      ? undefined
+      : { loaded: new Set(ruleRes.rows.map((r) => String(r.id))) },
   };
 }
 
@@ -254,6 +408,14 @@ function asRule(r: Record<string, unknown>): AvailabilityRule {
  */
 export type CourseCatalogRow = {
   courseId: string;
+  /** the course's own name (`lib/courses.ts`) — "Mathematics — Grade 10" */
+  courseLabel: string;
+  /** the one curriculum it belongs to (FR-4002, FR-4101) */
+  curriculum: CurriculumId;
+  /** that curriculum's name — "National", "American" */
+  curriculumLabel: string;
+  /** the grades the book is written for (information, not a gate) */
+  courseGrades: readonly string[];
   /** registry id — the prompt-contract key (`math-en`) */
   subject: Subject;
   /** spine/DB key (`math`) — what `graph_nodes.subject` holds */
@@ -263,6 +425,7 @@ export type CourseCatalogRow = {
   dir: TextDirection;
   book: string;
   grade: string;
+  /** the grade in THIS course's curriculum's words (FR-4013) */
   gradeLabel: string;
   state: CourseState;
   /**
@@ -361,28 +524,36 @@ export async function courseCatalog(
   });
 
   const byCell = new Map(
-    rules.map((r) => [`${r.course_id} ${r.grade}`, r])
+    rules.map((r) => [`${r.course_id}\x00${r.grade}`, r])
   );
   const byCourse = new Map(depth.map((d) => [String(d.course_id), d]));
 
   const out: CourseCatalogRow[] = [];
-  // Registry order, so the console's grid reads in the same sequence as the
-  // graph territories and the student home (`lib/subjects.ts` §SUBJECT_IDS).
-  for (const subject of SUBJECT_IDS) {
+  // COURSE registry order (`lib/courses.ts`): curriculum, then subject, then
+  // course — so the three National courses read in the sequence the subject
+  // registry gave them, and every course of one curriculum sits together. A
+  // course is listed whether or not its book is loaded (ADR-0018).
+  for (const courseId of COURSE_IDS) {
+    const course = COURSES[courseId];
+    const subject: Subject = course.subject;
     const def = SUBJECTS[subject];
-    const d = byCourse.get(def.courseId);
+    const d = byCourse.get(courseId);
     for (const g of GRADES) {
-      const row = byCell.get(`${def.courseId} ${g.value}`);
+      const row = byCell.get(`${courseId}\x00${g.value}`);
       out.push({
-        courseId: def.courseId,
+        courseId,
+        courseLabel: course.label,
+        curriculum: course.curriculum,
+        curriculumLabel: CURRICULA[course.curriculum].label,
+        courseGrades: course.grades,
         subject,
         spineKey: def.key,
         label: def.label,
         labelAr: def.labelAr,
         dir: def.dir,
-        book: def.book,
+        book: course.book,
         grade: g.value,
-        gradeLabel: g.label,
+        gradeLabel: gradeDisplayLabel(g.value, course.curriculum),
         state: row ? asState(row.state) : "hidden",
         explicit: row != null,
         note: (row?.note as string | null) ?? null,
@@ -505,12 +676,19 @@ export async function setStudentOverride(
  */
 export type StudentAccessRow = {
   courseId: string;
+  /** the course's own name — two maths courses are told apart by it */
+  courseLabel: string;
   subject: Subject;
   label: string;
   labelAr: string;
   dir: TextDirection;
+  /** the course's curriculum, and whether it is the student's own (FR-4105) */
+  curriculum: CurriculumId;
+  curriculumLabel: string;
+  inStudentCurriculum: boolean;
   /** the student's own grade, folded onto the canonical spelling */
   grade: string | null;
+  /** her grade, in her own curriculum's words (FR-4013) */
   gradeLabel: string;
   /** what the grade rule says on its own — `hidden` when there is no rule */
   gradeState: CourseState;
@@ -523,16 +701,39 @@ export type StudentAccessRow = {
   overrideAt: string | null;
   /** what the student actually gets — `lib/catalog.ts`, not a second rule */
   effectiveState: CourseState;
+  /**
+   * WHY, in one word an operator can read (FR-4105), in the order the rule
+   * decides: an exception did — and one for a course OUTSIDE her curriculum is
+   * named as such, so it is never read as her own (privacy review F18); the
+   * course is another curriculum's; the kill switch has suspended the grade
+   * rules and the course is available because it is loaded (or hidden because
+   * it is not); or the grade rule said so, or said nothing.
+   */
+  reason:
+    | "exception"
+    | "exception-outside-curriculum"
+    | "other-curriculum"
+    | "switch-off"
+    | "rule"
+    | "no-rule";
 };
 
 export async function studentAccess(
   operatorId: number,
   studentId: number
 ): Promise<StudentAccessRow[]> {
-  const { grade, rules, overrides, overrideRows } = await withOperator(
+  // The console always reads the levers, switch or no switch: an operator
+  // must be able to see what is configured while it is suspended (FR-2709:
+  // "leaves every configured rule in place").
+  const { grade, curriculum, rules, overrides, loaded, overrideRows } = await withOperator(
     operatorId,
     async (db) => {
-      const base = await availabilityFor(db, studentId);
+      const base = await availabilityFor(db, studentId, true);
+      // what the kill switch would make visible, so the answer below is the
+      // one the student gets whichever way the switch is set
+      const courses = COURSE_GATING
+        ? null
+        : await db.query(`SELECT id FROM graph_nodes WHERE kind = 'course'`);
       const detail = await db.query(
         `SELECT sca.course_id, sca.state, sca.note, sca.updated_at,
                 op.display_name AS updated_by
@@ -541,26 +742,51 @@ export async function studentAccess(
           WHERE sca.environment = $1 AND sca.student_id = $2`,
         [ENVIRONMENT, studentId]
       );
-      return { ...base, overrideRows: detail.rows };
+      return {
+        ...base,
+        loaded: courses ? new Set(courses.rows.map((r) => String(r.id))) : null,
+        overrideRows: detail.rows,
+      };
     }
   );
 
   const byCourse = new Map(overrideRows.map((r) => [String(r.course_id), r]));
+  const switchedOff: SwitchedOff | undefined = loaded ? { loaded } : undefined;
+  const own = asCurriculumId(curriculum);
 
-  return SUBJECT_IDS.map((subject) => {
+  return COURSE_IDS.map((courseId: CourseId) => {
+    const course = COURSES[courseId];
+    const subject: Subject = course.subject;
     const def = SUBJECTS[subject];
     const rule = rules.find(
-      (r) => r.courseId === def.courseId && canonicalGrade(r.grade) === grade
+      (r) => r.courseId === courseId && canonicalGrade(r.grade) === grade
     );
-    const o = byCourse.get(def.courseId);
+    const o = byCourse.get(courseId);
+    const inStudentCurriculum = own === course.curriculum;
+    // The step of `isCourseVisible` that decided it, in its order.
+    const reason: StudentAccessRow["reason"] = o
+      ? inStudentCurriculum
+        ? "exception"
+        : "exception-outside-curriculum"
+      : !inStudentCurriculum
+        ? "other-curriculum"
+        : !COURSE_GATING
+          ? "switch-off"
+          : rule
+            ? "rule"
+            : "no-rule";
     return {
-      courseId: def.courseId,
+      courseId,
+      courseLabel: course.label,
       subject,
       label: def.label,
       labelAr: def.labelAr,
       dir: def.dir,
+      curriculum: course.curriculum,
+      curriculumLabel: curriculumLabel(course.curriculum),
+      inStudentCurriculum,
       grade,
-      gradeLabel: gradeDisplayLabel(grade),
+      gradeLabel: gradeDisplayLabel(grade, curriculum),
       gradeState: rule?.state ?? "hidden",
       gradeExplicit: rule != null,
       override: o ? asState(o.state) : null,
@@ -571,9 +797,10 @@ export async function studentAccess(
         : null,
       // Computed by the SAME function the student gate runs, so the console
       // cannot show an answer the product does not give.
-      effectiveState: isCourseVisible(def.courseId, grade, rules, overrides)
+      effectiveState: isCourseVisible(courseId, { grade, curriculum }, rules, overrides, switchedOff)
         ? "live"
         : "hidden",
+      reason,
     };
   });
 }

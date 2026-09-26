@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 import { getPipelineDataForOperator } from "@/lib/pipeline-queries";
+import { courseName, coursesByCurriculum } from "@/lib/console-course-names";
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { consoleAccess } from "@/lib/console-auth";
 import { consoleRoute } from "@/lib/console-routes";
@@ -228,17 +231,32 @@ function Stage({
  */
 const PATH = "/pipeline";
 
-export default async function PipelineConsolePage() {
+export default async function PipelineConsolePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const access = await consoleAccess(PATH);
   if (!access.ok) {
     return <ConsoleRefusal status={access.status} roles={consoleRoute(PATH)?.roles} />;
   }
-  return <PipelinePage operatorId={access.operatorId} />;
+  const raw = (await searchParams).course;
+  return (
+    <PipelinePage operatorId={access.operatorId} course={typeof raw === "string" ? raw : null} />
+  );
 }
 
-async function PipelinePage({ operatorId }: { operatorId: number }) {
-  const data = await getPipelineDataForOperator(operatorId);
+/**
+ * The live stages count ONE course, named on the page, picked with the
+ * switcher below (003, FR-4104): a figure over the whole spine would add two
+ * maths books into one. `getPipelineDataForOperator` validates the choice
+ * against the courses the spine holds.
+ */
+async function PipelinePage({ operatorId, course }: { operatorId: number; course: string | null }) {
+  const data = await getPipelineDataForOperator(operatorId, course);
   const {
+    courseId,
+    loadedCourses,
     doc,
     run,
     los,
@@ -261,7 +279,7 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
           How we turn a ministry textbook into a{" "}
           <em className="not-italic text-accent-deep underline decoration-gold/60 decoration-[3px] underline-offset-[7px]">
             tutor
-          </em>
+          </em>{" "}
           — automatically.
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">
@@ -417,9 +435,9 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
 
       {/* live proof — the deterministic backbone the agents feed */}
       <section className="anim-rise mb-4" style={{ animationDelay: "240ms" }}>
-        <div className="flex items-baseline gap-3">
+        <div className="flex flex-wrap items-baseline gap-3">
           <h2 className="font-display text-[1.6rem] font-medium text-ink">
-            And here it is, running for real
+            And here it is, running for real — {courseName(courseId)}
           </h2>
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
             live from the database
@@ -429,8 +447,9 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
           The agents feed a deterministic backbone — a content-addressed source,
           a typed schema, a review stamp, a versioned graph, and the exact
           context the tutor was handed on its last turn. Everything below is
-          pulled live, not mocked.
+          pulled live, not mocked, and every figure counts this one course.
         </p>
+        <CourseSwitch current={courseId} loaded={loadedCourses} />
       </section>
 
       <div className="relative">
@@ -446,7 +465,13 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
           caption="The official Ministry textbook is ingested exactly once and addressed by its content — the anchor every downstream fact points back to."
           delay={280}
         >
-          <SourceStage doc={doc} />
+          {doc ? (
+            <SourceStage doc={doc} />
+          ) : (
+            <p className="text-[13.5px] text-ink-soft">
+              No source book is recorded for {courseName(courseId)} in this database yet.
+            </p>
+          )}
         </Stage>
 
         <Stage
@@ -522,5 +547,41 @@ async function PipelinePage({ operatorId }: { operatorId: number }) {
         </div>
       </section>
     </main>
+  );
+}
+
+/**
+ * The course the live stages count, as links grouped by curriculum — a URL an
+ * operator can paste, no client JavaScript (the console's `FilterLink` idiom).
+ * Only courses the spine holds are offered.
+ */
+function CourseSwitch({ current, loaded }: { current: string; loaded: string[] }) {
+  if (loaded.length <= 1) return null;
+  return (
+    <nav aria-label="Course" className="mt-4 space-y-1.5">
+      {coursesByCurriculum().map((g) => {
+        const here = g.courses.filter((id) => loaded.includes(id));
+        if (here.length === 0) return null;
+        return (
+          <div key={g.curriculum} className="flex flex-wrap items-center gap-1.5">
+            <span className="w-[6.5rem] shrink-0 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-faint">
+              {g.label}
+            </span>
+            {here.map((id) => (
+              <Link
+                key={id}
+                href={`${PATH}?course=${encodeURIComponent(id)}`}
+                aria-current={id === current ? "true" : undefined}
+                className={`ds-control-quiet rounded px-2.5 py-1 text-[12.5px] font-medium ${
+                  id === current ? "bg-ink text-paper" : "text-ink-soft hover:bg-line-soft hover:text-ink"
+                }`}
+              >
+                {courseName(id)}
+              </Link>
+            ))}
+          </div>
+        );
+      })}
+    </nav>
   );
 }

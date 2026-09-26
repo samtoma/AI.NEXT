@@ -54,7 +54,9 @@ export default async function SettingsPage() {
   // browser, so nothing in the client can hold a second, disagreeing copy of
   // the Preparatory/Secondary boundary.
   const ruleVariant = variantForGrade(me.grade);
-  const gradeLabel = gradeDisplayLabel(me.grade);
+  // Her year in her own curriculum's words (FR-4013): "Grade 10" for an
+  // American-curriculum student, "Secondary 1" for a National one.
+  const gradeLabel = gradeDisplayLabel(me.grade, me.curriculum);
   const knowsGrade = me.grade != null && me.grade !== "";
 
   return (

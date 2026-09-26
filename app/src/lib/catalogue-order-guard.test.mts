@@ -11,13 +11,15 @@
  * when an exception goes stale (its clause is no longer in the file), so the
  * list cannot quietly outlive the code it excuses.
  *
- * AND IT SPLITS MIXED LISTS BY SUBJECT (Samuel, 2026-09-25: "Yes they need
- * to split by subject"). `MODULE_ORDER` has no subject key: maths, Arabic and
- * Social Studies units share positions, so a list of every subject ordered by
- * it alone interleaves them. Any clause that uses `MODULE_ORDER` or
- * `MODULE_RANK` must put `SUBJECT_RANK` in front of it — unless it is one of
- * the SINGLE_SUBJECT readers below, each of which says why it only ever
- * orders one subject (or one course), and each of whose premises is checked
+ * AND IT SPLITS MIXED LISTS BY COURSE (Samuel, 2026-09-25: "Yes they need to
+ * split by subject" — and since 003 a subject can have two courses, so the
+ * key is the course, FR-4009). `MODULE_ORDER` has no course key: maths,
+ * Arabic and Social Studies units — and two maths books' units — share
+ * positions, so a list of several courses ordered by it alone interleaves
+ * them. Any clause that uses `MODULE_ORDER` or `MODULE_RANK` must put
+ * `COURSE_RANK` in front of it (or `SUBJECT_RANK`, its pre-003 alias) —
+ * unless it is one of the SINGLE_COURSE readers below, each of which says why
+ * it only ever orders one course, and each of whose premises is checked
  * against the source. A new reader therefore has to decide, in this file,
  * which kind it is.
  *
@@ -36,7 +38,7 @@
  * a comment (which several files now do) is not a failure. The scanner is
  * negative-controlled below against the exact shapes the old readers had.
  *
- * @covers FR-3217
+ * @covers FR-3217, FR-4009
  */
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
@@ -86,13 +88,22 @@ export const EXCEPTIONS: readonly Exception[] = [
 // other reader. Only the two in-lesson reads remain, and neither is held.
 
 /**
- * Readers that use `MODULE_ORDER` WITHOUT `SUBJECT_RANK`, because what they
- * order is only ever one subject (or one course) at a time. `count` is how
- * many such clauses the file holds; `premise` is a check on `premiseFile`'s
- * code (comments stripped) that makes the reason true, run below so the
- * reason cannot go stale.
+ * Readers that use `MODULE_ORDER` WITHOUT `COURSE_RANK`, because what they
+ * order is only ever one course at a time. `count` is how many such clauses
+ * the file holds; `premise` is a check on `premiseFile`'s code (comments
+ * stripped) that makes the reason true, run below so the reason cannot go
+ * stale.
+ *
+ * THREE OF THEM ORDER ONE *SUBJECT* (003). The subject home, the skill map
+ * and the console Overview file or filter rows by subject. Under curriculum
+ * scoping a student sees one course per subject — her own curriculum's — so
+ * for a student those are one course. The exception is a test account with an
+ * exception for the other curriculum's course of the same subject (FR-4009):
+ * for her the subject home and the skill map would merge two maths books. That
+ * is reported as open in the 003 build, not hidden here; the Overview's split
+ * by course is 003's console work (decision 8).
  */
-export const SINGLE_SUBJECT: readonly {
+export const SINGLE_COURSE: readonly {
   file: string;
   clause: string;
   count: number;
@@ -135,18 +146,19 @@ export const SINGLE_SUBJECT: readonly {
     file: "src/lib/overview-queries.ts",
     clause: "ORDER BY ${MODULE_ORDER}",
     count: 1,
-    why: "the Overview heatmap query reads one subject: WHERE ns.subject = $1.",
+    why: "the Overview heatmap query reads one course: WHERE ns.course_id = $1 (003, FR-4104).",
     premiseFile: "src/lib/overview-queries.ts",
-    premise: (code) => /WHERE ns\.subject = \$1\s+ORDER BY \$\{MODULE_ORDER\}/.test(code),
+    premise: (code) => /WHERE ns\.course_id = \$1\s+ORDER BY \$\{MODULE_ORDER\}/.test(code),
   },
 ];
 
-/** Does a clause use the catalogue order, and if so, is the subject first? */
-export function subjectKeyStatus(clause: string): "none" | "subject-first" | "missing" {
+/** Does a clause use the catalogue order, and if so, is the course first?
+ *  `SUBJECT_RANK` is `COURSE_RANK`'s pre-003 alias and counts as the key. */
+export function courseKeyStatus(clause: string): "none" | "course-first" | "missing" {
   const order = clause.search(/\$\{(MODULE_ORDER|MODULE_RANK)\}/);
   if (order < 0) return "none";
-  const subject = clause.indexOf("${SUBJECT_RANK}");
-  return subject >= 0 && subject < order ? "subject-first" : "missing";
+  const key = clause.search(/\$\{(COURSE_RANK|SUBJECT_RANK)\}/);
+  return key >= 0 && key < order ? "course-first" : "missing";
 }
 
 /** The one file allowed to spell the order out: the definition itself. */
@@ -331,36 +343,36 @@ test("every exception is still in its file, exactly once — none has gone stale
   }
 });
 
-test("every list of more than one subject puts SUBJECT_RANK first; the rest are declared single-subject", () => {
+test("every list of more than one course puts COURSE_RANK first; the rest are declared single-course", () => {
   const { clauses } = scanAll();
-  const missing = clauses.filter((c) => subjectKeyStatus(c.clause) === "missing");
+  const missing = clauses.filter((c) => courseKeyStatus(c.clause) === "missing");
   const undeclared = missing.filter(
-    (m) => !SINGLE_SUBJECT.some((d) => d.file === m.file && d.clause === m.clause)
+    (m) => !SINGLE_COURSE.some((d) => d.file === m.file && d.clause === m.clause)
   );
   assert.deepEqual(
     undeclared,
     [],
-    "A query orders by the catalogue order with no subject key in front. If it can list more " +
-      "than one subject, write ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER} (or MODULE_RANK); if it " +
-      "only ever orders one subject, add it to SINGLE_SUBJECT with the reason:\n" +
+    "A query orders by the catalogue order with no course key in front. If it can list more " +
+      "than one course, write ORDER BY ${COURSE_RANK}, ${MODULE_ORDER} (or MODULE_RANK); if it " +
+      "only ever orders one course, add it to SINGLE_COURSE with the reason:\n" +
       undeclared.map((u) => `  ${u.file}: ${u.clause}`).join("\n")
   );
   // …and every declaration is still exactly as many clauses as it says
-  for (const d of SINGLE_SUBJECT) {
+  for (const d of SINGLE_COURSE) {
     const n = missing.filter((m) => m.file === d.file && m.clause === d.clause).length;
     assert.equal(n, d.count, `${d.file}: ${d.clause} — ${n} found, ${d.count} declared`);
   }
-  // the mixed readers really do lead with the subject
+  // the mixed readers really do lead with the course
   const first = (file: string) =>
-    clauses.filter((c) => c.file === file && subjectKeyStatus(c.clause) === "subject-first").length;
+    clauses.filter((c) => c.file === file && courseKeyStatus(c.clause) === "course-first").length;
   assert.equal(first("src/lib/lesson.ts"), 1, "the lesson catalogue");
   assert.equal(first("src/lib/visuals.ts"), 2, "/gallery and the ask context's figure catalogue");
   assert.equal(first("src/lib/dashboard.ts"), 1, "the progress page");
   assert.equal(first("src/lib/ask.ts"), 1, "the ask context's unit list");
 });
 
-test("each single-subject reader's reason is still true in the source", () => {
-  for (const d of SINGLE_SUBJECT) {
+test("each single-course reader's reason is still true in the source", () => {
+  for (const d of SINGLE_COURSE) {
     const code = stripComments(readFileSync(join(APP, d.premiseFile), "utf8"));
     assert.ok(d.premise(code), `${d.file}: ${d.why}`);
   }
@@ -448,12 +460,13 @@ test("the scanner flags every shape the old readers had, and passes the rerouted
     orderClauses("`OVER (PARTITION BY a ORDER BY b, c) AS rn FROM t ORDER BY d`"),
     ["ORDER BY b, c", "ORDER BY d"]
   );
-  // the subject key: first, missing, or after the order (which does not count)
-  assert.equal(subjectKeyStatus("ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER}"), "subject-first");
-  assert.equal(subjectKeyStatus("ORDER BY (a = 0), mastery ASC, ${SUBJECT_RANK}, ${MODULE_RANK}"), "subject-first");
-  assert.equal(subjectKeyStatus("ORDER BY ${MODULE_ORDER}"), "missing");
-  assert.equal(subjectKeyStatus("ORDER BY ${MODULE_ORDER}, ${SUBJECT_RANK}"), "missing");
-  assert.equal(subjectKeyStatus("ORDER BY lo_id, tier, id"), "none");
+  // the course key: first, missing, or after the order (which does not count)
+  assert.equal(courseKeyStatus("ORDER BY ${COURSE_RANK}, ${MODULE_ORDER}"), "course-first");
+  assert.equal(courseKeyStatus("ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER}"), "course-first", "the pre-003 alias");
+  assert.equal(courseKeyStatus("ORDER BY (a = 0), mastery ASC, ${COURSE_RANK}, ${MODULE_RANK}"), "course-first");
+  assert.equal(courseKeyStatus("ORDER BY ${MODULE_ORDER}"), "missing");
+  assert.equal(courseKeyStatus("ORDER BY ${MODULE_ORDER}, ${COURSE_RANK}"), "missing");
+  assert.equal(courseKeyStatus("ORDER BY lo_id, tier, id"), "none");
   // JavaScript comparators on a position are caught
   const js = sortComparators("rows.sort((a, b) => a.orderInParent - b.orderInParent)");
   assert.ok(JS_ORDER_NAMES.test(js[0]));

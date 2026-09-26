@@ -133,7 +133,17 @@ function barycentre(lo: LayoutLo, centers: Map<string, number>): number | null {
  * tall canvas, and GraphCanvas opens the pane on the first column so the map
  * never opens on blank paper.
  */
-export function layoutSpine<L extends LayoutLo>(los: readonly L[], width: number) {
+export function layoutSpine<L extends LayoutLo>(
+  los: readonly L[],
+  width: number,
+  /**
+   * The book section each topic belongs to as a part (FR-4315), or null. When
+   * given, a column's members of one section are placed together — see
+   * `gatherSections`. Omitted (every map with no split section — every
+   * National subject) the placement is exactly the one described above.
+   */
+  groupOf?: (id: string) => string | null
+) {
   const nLayers = Math.max(1, Math.max(...los.map((l) => l.layer)) + 1);
   let nodeW = (width - 2 * PAD - GAP_MIN * (nLayers - 1)) / nLayers;
   nodeW = Math.max(MIN_W, Math.min(MAX_W, nodeW));
@@ -170,8 +180,9 @@ export function layoutSpine<L extends LayoutLo>(los: readonly L[], width: number
         a.catalogRank - b.catalogRank || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)
       );
     });
-    const start = midY - ((col.length - 1) * ROW_SPREAD) / 2;
-    col.forEach((lo, i) => {
+    const stack = groupOf ? gatherSections(col, groupOf) : col;
+    const start = midY - ((stack.length - 1) * ROW_SPREAD) / 2;
+    stack.forEach((lo, i) => {
       const cy = start + i * ROW_SPREAD;
       centers.set(lo.id, cy);
       placed.push({ lo, x: xOf(lo.layer), y: cy - NODE_H / 2, cy });
@@ -183,6 +194,117 @@ export function layoutSpine<L extends LayoutLo>(los: readonly L[], width: number
       ? 420
       : Math.max(420, Math.max(...placed.map((p) => p.y + NODE_H)) + PAD);
   return { placed, nodeW, canvasW, canvasH, midY };
+}
+
+/* ------------------------------------------------------------------ */
+/* Book sections as groups (feature 003, FR-4315)                      */
+/* ------------------------------------------------------------------ */
+
+/**
+ * One column, sorted, with each book section's members gathered where its
+ * first member already stands, in the order they were sorted — so a split
+ * section's cards in that column sit together and can be framed as one group.
+ * Every card that is not a part keeps its relative order, and a column with
+ * no part in it comes back in exactly the sorted order (the packed-column
+ * rule of FR-3216 is untouched: this only reorders WITHIN the stack).
+ */
+export function gatherSections<L extends LayoutLo>(
+  col: readonly L[],
+  groupOf: (id: string) => string | null
+): L[] {
+  const out: L[] = [];
+  const placed = new Set<string>();
+  for (const lo of col) {
+    if (placed.has(lo.id)) continue;
+    const key = groupOf(lo.id);
+    if (key == null) {
+      out.push(lo);
+      placed.add(lo.id);
+      continue;
+    }
+    for (const m of col) {
+      if (!placed.has(m.id) && groupOf(m.id) === key) {
+        out.push(m);
+        placed.add(m.id);
+      }
+    }
+  }
+  return out;
+}
+
+/** The frame's margin round its cards, and the room above them for its label. */
+export const FRAME_PAD = 7;
+export const FRAME_LABEL_H = 19;
+
+/**
+ * A book section's frame on the map: one per run of vertically adjacent cards
+ * of the SAME section in one column. The derived part n-1 → n prerequisites
+ * put each part a column to the right of the one before, so a split section
+ * reads as a short staircase of framed runs, each labelled.
+ *
+ * Sized to stay inside the 34px between rows: 26px above the top card (the
+ * margin and the label) and 7px below the bottom one, so two frames stacked
+ * in one column never overlap and no frame ever covers a card it does not
+ * hold.
+ */
+export interface SectionFrame {
+  key: string;
+  /** the framed topics, top to bottom */
+  loIds: string[];
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+/**
+ * The frames for `placed` — the output of `layoutSpine` called with the same
+ * `groupOf`, whose cards are listed column by column, top to bottom. Empty
+ * when no card has a section.
+ */
+export function sectionFrames(
+  placed: readonly Placed<LayoutLo>[],
+  nodeW: number,
+  groupOf: (id: string) => string | null
+): SectionFrame[] {
+  const frames: SectionFrame[] = [];
+  let run: Placed<LayoutLo>[] = [];
+  let runKey: string | null = null;
+  const close = () => {
+    if (runKey != null && run.length > 0) {
+      const first = run[0];
+      const last = run[run.length - 1];
+      const y = first.y - FRAME_PAD - FRAME_LABEL_H;
+      frames.push({
+        key: runKey,
+        loIds: run.map((p) => p.lo.id),
+        x: first.x - FRAME_PAD,
+        y,
+        width: nodeW + 2 * FRAME_PAD,
+        height: last.y + NODE_H + FRAME_PAD - y,
+      });
+    }
+    run = [];
+    runKey = null;
+  };
+  let prev: Placed<LayoutLo> | null = null;
+  for (const p of placed) {
+    const key = groupOf(p.lo.id);
+    const continues =
+      key != null &&
+      key === runKey &&
+      prev != null &&
+      prev.lo.layer === p.lo.layer &&
+      Math.abs(p.y - prev.y - ROW_SPREAD) < 1e-6;
+    if (!continues) close();
+    if (key != null) {
+      runKey = key;
+      run.push(p);
+    }
+    prev = p;
+  }
+  close();
+  return frames;
 }
 
 /* ------------------------------------------------------------------ */

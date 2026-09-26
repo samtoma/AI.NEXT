@@ -29,7 +29,7 @@ import {
   stripIncompleteTail,
   type Cite,
 } from "@/lib/chat-parse";
-import { submitAttempt } from "@/lib/attempts-client";
+import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
 import {
   cardRevealUnlocked,
   pendingAfterDeclaration,
@@ -813,7 +813,22 @@ export function ChatCore({
                   setExternalAttempt({ questionId: openQ.id, result: r });
                   handleAttemptRef.current(r, openQ);
                 } catch (e) {
-                  console.error("chat-typed answer submission failed:", e);
+                  // The maths-expression marker sent this chat-typed answer
+                  // back for re-entry (T416, FR-4320): nothing was recorded —
+                  // no attempt, no mastery change. Before this it was only
+                  // logged, so a student who typed an unreadable or
+                  // wrong-form answer in chat saw nothing and never knew to
+                  // retype it. Shown as a local note (never sent to the
+                  // model, never counted as an attempt) — the same words the
+                  // tapped card already shows via its own `reentry` prop.
+                  if (e instanceof AttemptRetryError) {
+                    setMessages((prev) => [
+                      ...prev,
+                      { role: "note", kind: "say", localOnly: true, text: e.retry.message },
+                    ]);
+                  } else {
+                    console.error("chat-typed answer submission failed:", e);
+                  }
                 }
               }
             }

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AuditPanel } from "@/components/console/AuditPanel";
 import { CourseAccessEditor } from "@/components/console/CourseAccessEditor";
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
+import { CurriculumEditor } from "@/components/console/CurriculumEditor";
 import { Sparkline } from "@/components/console/Sparkline";
 import { SubscriptionEditor } from "@/components/console/SubscriptionEditor";
 import { TesterMarkEditor } from "@/components/console/TesterMarkEditor";
@@ -19,10 +20,14 @@ import {
   stamp,
 } from "@/components/console/ui";
 import { recordOperatorRead } from "@/lib/auth/events";
-import { studentAccess } from "@/lib/catalog-queries";
+import { canonicalGrade, gradeDisplayLabel } from "@/lib/catalog";
+import { studentAccess, type StudentAccessRow } from "@/lib/catalog-queries";
 import { consoleAccess } from "@/lib/console-auth";
-import { getStudent360 } from "@/lib/console-queries";
+import { courseName, coursesByCurriculum } from "@/lib/console-course-names";
+import { curriculumProjection, getStudent360 } from "@/lib/console-queries";
 import { consoleRoute } from "@/lib/console-routes";
+import { CURRICULA, CURRICULUM_IDS, asCurriculumId, curriculumLabel } from "@/lib/curricula";
+import { offeredCurriculaByGrade, studentCurriculum } from "@/lib/curriculum-queries";
 import { ENVIRONMENT } from "@/lib/env";
 import { humanDuration } from "@/lib/timeline-rules";
 import { getTeachingStateOrNull, studentTesterMarksOrNull } from "@/lib/teaching-queries";
@@ -110,6 +115,26 @@ export default async function ConsoleStudentPage({
   // record the same read twice under two names for the same click.
   const courseAccess = await studentAccess(access.operatorId, studentId);
 
+  // Her curriculum (feature 003, FR-4105): the value, how it was set, its
+  // history, what her grade offers, and what she would see under each
+  // curriculum — the last for the editor's in-page question (FR-4010). The
+  // same audit argument as `studentAccess`: the `student_360` row above
+  // already records that this operator opened this record. Side facts, so a
+  // failed read renders "could not be read" in the panel instead of a 500 for
+  // the whole record (the `...OrNull` pattern below).
+  const curriculum = await studentCurriculum(access.operatorId, studentId).catch((err) => {
+    console.error("[console] curriculum record read failed:", err);
+    return null;
+  });
+  const offeredByGrade = await offeredCurriculaByGrade(access.operatorId).catch((err) => {
+    console.error("[console] offered-curricula read failed:", err);
+    return null;
+  });
+  const projection = await curriculumProjection(access.operatorId, studentId).catch((err) => {
+    console.error("[console] curriculum projection read failed:", err);
+    return null;
+  });
+
   // The tester mark (ADR-0021), and the switch that gives it meaning. The
   // same audit argument as `studentAccess` above: the one `student_360` row
   // already records that this operator opened this record. Both are side
@@ -128,6 +153,24 @@ export default async function ConsoleStudentPage({
   const attemptsTotal = data.accuracy.reduce((n, a) => n + a.attempts, 0);
   const correctTotal = data.accuracy.reduce((n, a) => n + a.correct, 0);
 
+  // Her year in her own curriculum's words (FR-4013), and the two flags
+  // FR-4105 asks for: a value the registry does not know, and a curriculum
+  // her grade does not offer (FR-4008 — a chosen one is kept and flagged; an
+  // implied one is flagged too, which is how an operator finds a grade-10
+  // student still stored as National before the launch, quickstart.md).
+  const grade = canonicalGrade(s.grade);
+  const gradeInWords = gradeDisplayLabel(s.grade, s.curriculumSystem);
+  const ownCurriculum = asCurriculumId(s.curriculumSystem);
+  const offered =
+    grade !== null && offeredByGrade !== null
+      ? (offeredByGrade.find((g) => g.grade === grade)?.curricula ?? [])
+      : null;
+  const notOffered = ownCurriculum !== null && offered !== null && !offered.includes(ownCurriculum);
+  const seesNothing = projection !== null && projection.current.length === 0;
+  const curriculumWords = ownCurriculum
+    ? `${CURRICULA[ownCurriculum].label} (${ownCurriculum})`
+    : `not one the product knows: “${s.curriculumSystem}”`;
+
   return (
     <main className="mx-auto w-full max-w-[1100px] px-5 py-7">
       <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-faint">
@@ -141,18 +184,23 @@ export default async function ConsoleStudentPage({
         <span className="font-mono text-[14px] font-normal text-ink-faint">#{s.id}</span>
       </h1>
       <p className="mt-1 text-[13px] text-ink-soft">
-        Year group {s.grade} · {data.environment} environment · every figure below covers{" "}
-        <strong>{ALL_TIME}</strong> unless it says otherwise.
+        Year group {gradeInWords} ·{" "}
+        {ownCurriculum ? `${CURRICULA[ownCurriculum].label} curriculum` : "curriculum not known"} ·{" "}
+        {data.environment} environment · every figure below covers <strong>{ALL_TIME}</strong>{" "}
+        unless it says otherwise.
       </p>
 
       {/* ------------------------------------------------------------ profile */}
       <Panel title="Profile">
         <dl className="grid gap-x-8 gap-y-3 text-[13px] sm:grid-cols-2 lg:grid-cols-3">
-          <Fact k="Year group" v={s.grade} />
+          <Fact k="Year group" v={`${gradeInWords} · stored as ${s.grade || "—"}`} />
           <Fact k="Gender" v={s.gender ?? "not set"} />
           <Fact k="Interests" v={s.interests.length ? s.interests.join(", ") : "none recorded"} />
           <Fact k="Language preference" v={s.languagePref} />
-          <Fact k="Curriculum" v={s.curriculumSystem} />
+          <Fact
+            k="Curriculum"
+            v={`${curriculumWords}${curriculum ? ` · ${curriculum.source}` : ""}`}
+          />
           <Fact
             k="Record status"
             v={s.studentStatus === "legacy" ? "retired (picker-era, no account)" : "active"}
@@ -194,103 +242,284 @@ export default async function ConsoleStudentPage({
         )}
       </Panel>
 
+      {/* --------------------------------------------------------- curriculum */}
+      {/*
+        Feature 003, FR-4105 and FR-4010…FR-4012 (contracts/console.md,
+        "Student 360 — curriculum"). Her curriculum, how it was set, the two
+        flags an operator must see — a value the product does not know, and a
+        curriculum her grade does not offer — every change after sign-up,
+        newest first, and the one control that changes it. All student data,
+        on a `student-data` page, under the read this page already recorded:
+        `cost-billing` never reaches it (FR-2406, privacy review F7).
+      */}
+      <Panel
+        title="Curriculum"
+        tone={curriculum === null || !curriculum.known || notOffered || seesNothing ? "attention" : "neutral"}
+        right={
+          <span className="flex flex-wrap items-center gap-1">
+            {curriculum === null ? (
+              <Chip tone="attention">could not be read</Chip>
+            ) : (
+              <>
+                <Chip>{curriculum.source}</Chip>
+                {!curriculum.known && <Chip tone="attention">unknown value</Chip>}
+                {notOffered && (
+                  <Chip tone="attention">
+                    {curriculum.source === "chosen" ? "kept — grade no longer offers it" : "grade does not offer it"}
+                  </Chip>
+                )}
+                {seesNothing && <Chip tone="attention">sees no course</Chip>}
+                {curriculum.onboardingPending && <Chip tone="attention">Google step not finished</Chip>}
+              </>
+            )}
+          </span>
+        }
+        note={
+          <>
+            The track of study she follows, which decides which courses the grade rules can show her
+            (FR-4006). <strong>Chosen</strong> means she answered the sign-up question or the
+            first-Google-sign-in step, or an operator set it; <strong>implied</strong> means it was
+            stored without asking, because her grade offered one curriculum or none.
+          </>
+        }
+      >
+        <dl className="grid gap-x-8 gap-y-3 text-[13px] sm:grid-cols-2 lg:grid-cols-3">
+          <Fact k="Curriculum" v={curriculumWords} />
+          <Fact
+            k="How it was set"
+            v={
+              curriculum === null
+                ? "could not be read just now"
+                : curriculum.source === "chosen"
+                  ? "chosen — asked, or set by an operator"
+                  : "implied — stored without asking"
+            }
+          />
+          <Fact
+            k={`What ${gradeInWords} offers at sign-up today`}
+            v={
+              offered === null
+                ? grade === null
+                  ? "no grade recorded"
+                  : "could not be read just now"
+                : offered.length === 0
+                  ? "no curriculum — nothing is live for this grade"
+                  : offered.map((c) => CURRICULA[c].label).join(" and ")
+            }
+          />
+          <Fact
+            k="Courses she can see"
+            v={
+              projection === null
+                ? "could not be read just now"
+                : projection.current.length === 0
+                  ? "none — she sees the “nothing to study yet” page"
+                  : projection.current.map(courseName).join(", ")
+            }
+          />
+        </dl>
+
+        {curriculum !== null && !curriculum.known && (
+          <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink">
+            The stored value <code className="font-mono text-[12px]">{curriculum.stored}</code> is not
+            a curriculum the product knows, so no grade rule reaches her: she sees only what an
+            exception grants (FR-4003). Set a known curriculum below.
+          </p>
+        )}
+        {notOffered && curriculum !== null && (
+          <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink">
+            {curriculum.source === "chosen"
+              ? `${gradeInWords} no longer offers the ${curriculumLabel(s.curriculumSystem)} curriculum. A chosen curriculum is kept when that happens and only an operator changes it (FR-4008).`
+              : `${gradeInWords} does not offer the ${curriculumLabel(s.curriculumSystem)} curriculum today. If she is a real student, check which curriculum her school follows and set it below.`}
+          </p>
+        )}
+
+        <h3 className="mt-5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+          Every change after sign-up, newest first
+        </h3>
+        {curriculum === null ? (
+          <p className="mt-1.5 text-[13px] text-ink-soft">
+            The history could not be read just now. Nothing has been changed; reload to try again.
+          </p>
+        ) : curriculum.history.length === 0 ? (
+          <p className="mt-1.5 text-[13px] text-ink-soft">
+            Never changed. The value set at sign-up is recorded with the account&rsquo;s creation,
+            not here.
+          </p>
+        ) : (
+          <div className="mt-1.5 overflow-x-auto rounded border border-line">
+            <table className="w-full border-collapse text-[13px]">
+              <thead>
+                <tr className="border-b border-line text-ink-soft">
+                  <Th>When</Th>
+                  <Th>From</Th>
+                  <Th>To</Th>
+                  <Th>How</Th>
+                  <Th>Changed by</Th>
+                  <Th>Why</Th>
+                </tr>
+              </thead>
+              <tbody>
+                {curriculum.history.map((c) => (
+                  <tr key={c.id} className="border-b border-line-soft last:border-0">
+                    <Td mono>{stamp(c.changedAt)}</Td>
+                    <Td>{curriculumLabel(c.fromCurriculum)}</Td>
+                    <Td>{curriculumLabel(c.toCurriculum)}</Td>
+                    <Td>
+                      <Chip>{c.toSource}</Chip>
+                    </Td>
+                    <Td>
+                      {c.reason === "grade_change_reresolved"
+                        ? "re-resolved by the product on a grade change"
+                        : (c.changedBy ?? "an operator no longer on record")}
+                    </Td>
+                    <Td>{c.note ?? <span className="text-ink-faint">no note</span>}</Td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {/* FR-4010: `student-data` is the only role that reaches this page,
+            and the endpoint refuses every other role on its own (FR-2107).
+            The courses each choice would show her are decided server-side by
+            the gate's own rule; without them the question cannot be asked
+            honestly, so the control is withheld rather than guessed. */}
+        {projection === null ? (
+          <p className="mt-3 border-t border-line-soft pt-3 text-[12.5px] leading-relaxed text-ink-soft">
+            The curriculum cannot be changed right now: what each choice would show her could not be
+            read, and the change is only offered with that answer. Reload to try again.
+          </p>
+        ) : (
+          <CurriculumEditor
+            studentId={s.id}
+            stored={s.curriculumSystem}
+            storedLabel={ownCurriculum ? CURRICULA[ownCurriculum].label : `“${s.curriculumSystem}”`}
+            currentSees={projection.current.map(courseName)}
+            options={CURRICULUM_IDS.map((id) => ({
+              id,
+              label: CURRICULA[id].label,
+              gradeLabel: gradeDisplayLabel(s.grade, id),
+              sees: projection.byCurriculum[id].map(courseName),
+            }))}
+          />
+        )}
+      </Panel>
+
       {/* ------------------------------------------------------ course access */}
       {/*
-        Migration 023, `lib/catalog.ts`. ⚠ NO REQUIREMENT COVERS THIS PANEL —
-        see the header of `(console)/courses/page.console.tsx`, which is where
-        the broad per-grade rule this student's own row is measured against
-        lives. This panel is deliberately the ONLY place course access is
-        editable per-student: `content-review`, which owns the grade rule on
-        `/courses`, cannot reach this page at all (it does not hold
-        `student-data`) and so cannot learn this student's name from this
-        feature — the same separation FR-2107/contracts/authorization.md draws
-        between content decisions and decisions about a named person
-        everywhere else in this console.
+        Migration 023 and FR-2701…FR-2711 (the course gate), per curriculum
+        since 003 (FR-4105; privacy review F18). Every registry course, grouped
+        under its curriculum, with the step of the gate that decided it. An
+        exception for a course OUTSIDE her curriculum is labelled as exactly
+        that and never folded into her own curriculum's list — it is the one
+        sanctioned way across (FR-4009), and an operator must be able to tell
+        it from the rule. The per-student exception is editable only here:
+        `content-review`, which owns the grade rule on `/courses`, cannot reach
+        this page and so cannot learn this student's name from this feature.
       */}
       <Panel
         title="Course access"
         note={
           <>
-            What this student can actually see, course by course, and why. An{" "}
-            <strong>override wins over the grade rule in both directions</strong> — it is what
-            lets one test student see a subject the rest of their year does not, and what lets one
-            student be held back from a course their whole grade otherwise has.
+            What this student can actually see, course by course, and why. Her curriculum comes
+            first: a grade rule reaches only students of that course&rsquo;s curriculum. An{" "}
+            <strong>exception wins over the grade rule in both directions</strong>, and across
+            curricula — it is what lets one test student see another curriculum&rsquo;s course, and
+            what holds one student back from a course the rest of her grade has.
           </>
         }
       >
-        <div className="overflow-x-auto rounded border border-line">
-          <table className="w-full border-collapse text-[13px]">
-            <thead>
-              <tr className="border-b border-line text-ink-soft">
-                <Th>Course</Th>
-                <Th>Grade rule</Th>
-                <Th>Override</Th>
-                <Th>Effective</Th>
-                <Th right>Change</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {courseAccess.map((row) => (
-                <tr key={row.courseId} className="border-b border-line-soft last:border-0">
-                  <Td>
-                    <span className="block font-semibold text-ink">{row.label}</span>
-                    <span dir={row.dir} className="block text-[12.5px] text-ink-soft">
-                      {row.labelAr}
-                    </span>
-                  </Td>
-                  <Td>
-                    <Chip tone={row.gradeState === "live" ? "good" : "neutral"}>
-                      {row.gradeState === "live" ? "live" : row.gradeExplicit ? "hidden" : "not set"}
-                    </Chip>
-                    <span className="ms-1.5 text-[11.5px] text-ink-faint">for {row.gradeLabel}</span>
-                  </Td>
-                  <Td>
-                    {row.override ? (
-                      <>
-                        <Chip tone={row.override === "live" ? "good" : "attention"}>
-                          forced {row.override}
+        {accessGroups(courseAccess, ownCurriculum).map((group) => (
+          <div key={group.curriculum} className="mt-4 first:mt-0">
+            <h3 className="mb-1.5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink-faint">
+              {group.label} ·{" "}
+              {group.own ? "her curriculum" : "not her curriculum"}
+            </h3>
+            <div className="overflow-x-auto rounded border border-line">
+              <table className="w-full border-collapse text-[13px]">
+                <thead>
+                  <tr className="border-b border-line text-ink-soft">
+                    <Th>Course</Th>
+                    <Th>Grade rule</Th>
+                    <Th>Exception</Th>
+                    <Th>Effective</Th>
+                    <Th>Why</Th>
+                    <Th right>Change</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {group.rows.map((row) => (
+                    <tr key={row.courseId} className="border-b border-line-soft last:border-0">
+                      <Td>
+                        <span className="block font-semibold text-ink">{courseName(row.courseId)}</span>
+                        <span dir={row.dir} className="block text-[12.5px] text-ink-soft">
+                          {row.labelAr}
+                        </span>
+                      </Td>
+                      <Td>
+                        <Chip tone={row.gradeState === "live" ? "good" : "neutral"}>
+                          {row.gradeState === "live" ? "live" : row.gradeExplicit ? "hidden" : "not set"}
                         </Chip>
-                        {row.overrideAt && (
-                          <span className="mt-1 block font-mono text-[10.5px] text-ink-faint">
-                            {row.overrideBy ?? "an operator no longer on record"} ·{" "}
-                            {stamp(row.overrideAt)}
-                          </span>
+                        <span className="ms-1.5 text-[11.5px] text-ink-faint">
+                          for {gradeDisplayLabel(s.grade, row.curriculum)}
+                        </span>
+                      </Td>
+                      <Td>
+                        {row.override ? (
+                          <>
+                            <Chip tone={row.override === "live" ? "good" : "attention"}>
+                              forced {row.override}
+                            </Chip>
+                            {row.overrideAt && (
+                              <span className="mt-1 block font-mono text-[10.5px] text-ink-faint">
+                                {row.overrideBy ?? "an operator no longer on record"} ·{" "}
+                                {stamp(row.overrideAt)}
+                              </span>
+                            )}
+                            {row.overrideNote && (
+                              <span className="mt-0.5 block max-w-[22ch] text-[11.5px] text-ink-soft">
+                                {row.overrideNote}
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-ink-faint">none</span>
                         )}
-                        {row.overrideNote && (
-                          <span className="mt-0.5 block max-w-[22ch] text-[11.5px] text-ink-soft">
-                            {row.overrideNote}
-                          </span>
-                        )}
-                      </>
-                    ) : (
-                      <span className="text-ink-faint">inherits the grade rule</span>
-                    )}
-                  </Td>
-                  <Td>
-                    <Chip tone={row.effectiveState === "live" ? "good" : "neutral"}>
-                      {row.effectiveState}
-                    </Chip>
-                  </Td>
-                  <Td right>
-                    <CourseAccessEditor
-                      studentId={s.id}
-                      courseId={row.courseId}
-                      current={row.override}
-                      note={row.overrideNote}
-                    />
-                  </Td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                      </Td>
+                      <Td>
+                        <Chip tone={row.effectiveState === "live" ? "good" : "neutral"}>
+                          {row.effectiveState}
+                        </Chip>
+                      </Td>
+                      <Td>
+                        <Chip tone={row.reason === "exception-outside-curriculum" ? "attention" : "neutral"}>
+                          {accessReason(row)}
+                        </Chip>
+                      </Td>
+                      <Td right>
+                        <CourseAccessEditor
+                          studentId={s.id}
+                          courseId={row.courseId}
+                          current={row.override}
+                          note={row.overrideNote}
+                        />
+                      </Td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
         <p className="mt-3 max-w-[78ch] text-[12.5px] leading-relaxed text-ink-faint">
           The grade rule column is the broad decision on{" "}
           <Link href="/courses" className="underline">
-            the course availability grid
+            the course availability page
           </Link>
-          . This student&rsquo;s grade is {s.grade}; a course with no grade rule recorded reads
-          &ldquo;not set&rdquo; and defaults to hidden, exactly as it does there.
+          , for her grade ({s.grade || "none recorded"}) in each curriculum&rsquo;s words. A course
+          with no rule reads &ldquo;not set&rdquo; and defaults to hidden, exactly as it does there.
         </p>
       </Panel>
 
@@ -918,6 +1147,49 @@ export default async function ConsoleStudentPage({
       </p>
     </main>
   );
+}
+
+/**
+ * The access rows, grouped under their curriculum — hers first, then the
+ * others in registry order (FR-4105). A course the registry lists always has
+ * a curriculum, so every row lands in exactly one group.
+ */
+function accessGroups(rows: StudentAccessRow[], own: string | null) {
+  const groups = coursesByCurriculum().map((g) => ({
+    curriculum: g.curriculum,
+    label: g.label,
+    own: g.curriculum === own,
+    rows: rows.filter((r) => r.curriculum === g.curriculum),
+  }));
+  return [...groups.filter((g) => g.own), ...groups.filter((g) => !g.own)].filter(
+    (g) => g.rows.length > 0
+  );
+}
+
+/**
+ * WHY, in the words contracts/console.md gives — the step of the gate that
+ * decided it (`StudentAccessRow.reason`). An exception outside her
+ * curriculum says so in as many words (privacy review F18).
+ */
+function accessReason(row: StudentAccessRow): string {
+  switch (row.reason) {
+    case "exception-outside-curriculum":
+      return `exception — outside her curriculum (${row.override ?? "set"})`;
+    case "exception":
+      return row.override === "live" ? "exception — shown" : "exception — held back";
+    case "other-curriculum":
+      return "not her curriculum";
+    case "switch-off":
+      return row.effectiveState === "live"
+        ? "her curriculum; gate off, and loaded"
+        : "her curriculum; gate off, not loaded";
+    case "rule":
+      return row.gradeState === "live"
+        ? `her curriculum and live for ${row.gradeLabel}`
+        : "hidden by rule";
+    case "no-rule":
+      return "no rule";
+  }
 }
 
 function Fact({ k, v }: { k: string; v: string }) {

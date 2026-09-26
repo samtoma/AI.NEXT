@@ -9,6 +9,8 @@ import { masteryStage, masteryPhrase } from "@/lib/mastery";
 import { MasteryFill } from "@/components/MasteryFill";
 import { HONEY_BAND, ICON_BUTTON, STROKE, STROKE_SM, cx } from "@/components/sticker";
 import { TeX } from "@/components/TeX";
+import { MathText } from "@/components/MathText";
+import { plainMath } from "@/lib/math-text";
 import { Visual } from "@/components/viz/Visual";
 import { learnHrefForLo } from "@/lib/lesson-slug";
 import type { AsOf } from "./GraphCanvas";
@@ -280,10 +282,11 @@ export function LoPanel({
           <h2
             ref={headingRef}
             tabIndex={-1}
-            title={lo.label}
+            title={plainMath(lo.label)}
             className="line-clamp-2 min-w-0 rounded-[var(--play-radius-sm)] font-display text-[1rem] font-extrabold leading-[1.25] text-ink"
           >
-            {lo.label}
+            {/* an objective label may carry maths (backlog #37) */}
+            <MathText text={lo.label} />
           </h2>
           <div className="flex shrink-0 items-center gap-2">
             {/* Straight into the lesson for THIS topic — the map's whole job
@@ -410,7 +413,7 @@ export function LoPanel({
                     className={cx(ROW, "flex w-full items-center gap-2.5 bg-card-warm px-3 py-2 text-start")}
                   >
                     <span className="flex-1 truncate font-display text-[0.82rem] font-bold text-ink">
-                      {p.label}
+                      <MathText text={p.label} />
                     </span>
                     {/* The fill's own default height (10) and a 64px width: at
                         height 5 two 2.5px outlines left 0px of fill and the
@@ -544,7 +547,7 @@ function VisualsStrip({ loId }: { loId: string }) {
                 className={cx(HONEY_BAND, "flex items-center justify-between gap-3 px-5 py-3")}
               >
                 <span className="truncate font-display text-[0.85rem] font-extrabold text-ink">
-                  {open.loLabel}
+                  <MathText text={open.loLabel} />
                 </span>
                 <button onClick={() => setOpen(null)} aria-label="Close" className={ICON_BUTTON}>
                   <svg width="12" height="12" viewBox="0 0 14 14" fill="none">

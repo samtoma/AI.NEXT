@@ -110,25 +110,198 @@ deploy onto the box at the same time.
 
 Content no longer has to match the baseline — cross-solution parity was withdrawn
 (ADR-0010 Clarification; the two solutions may diverge completely). What `parity_check.py` still
-enforces is a **per-solution drift guard**: this environment must not silently drift from the
-content set it is supposed to serve.
+enforces is a **per-solution drift guard**: every loaded course must not silently drift from the
+counts its book config (`services/extraction/books/<book>.json`, `parity`) says it has.
+
+**Never load content by hand on the box.** Every content change goes through one of two manual
+actions, both of which take a verified backup first and print the one-line rollback:
+
+| The course is… | Use | Runbook |
+|---|---|---|
+| **not loaded yet** (a new book) | Actions → **Load a course (manual)** | [Loading a course](#loading-a-course) below |
+| **already loaded** (a correction) | Actions → **Content refresh (manual)**, `stack: mvp1` | this section |
+
+`Content refresh` acts on **noor** since 2026-09-25 (it used to act on the frozen baseline). Its
+modes on noor, safest first:
+
+| Mode | What it does | Confirm box |
+|---|---|---|
+| `status` | stack, counts, courses, backups — reads only | empty |
+| `preview` / `preview-update` / `preview-replace` | the whole load inside a transaction, then rolled back; prints what would change | empty |
+| `course` | **adds** what the bundles have and the database lacks; changes nothing that exists | the course id |
+| `update` | also applies bundle edits to existing rows (never a question's status or review stamp; refuses to change what an attempted question asks) | `UPDATE <course-id>` |
+| `replace` | also prunes what the bundles dropped: an attempted question is **retired** (kept, not served); an objective with progress makes it **refuse** | `REPLACE <course-id> <N>` — `N` is the number of students with progress, as `preview-replace` prints it |
+
+It never moves the box's checkout: it loads the bundles of the **deployed** commit, and lesson
+prose lives in the image — so **deploy first, then refresh**. `full-reseed` and `promote-poc` exist
+only on the frozen baseline (`stack: poc`), which runs that checkout's own script, unmoved.
+
+The drift guard, by hand, for every configured course:
 
 ```bash
-# load the same bundles the baseline serves
-$C run --rm loader python load_seed.py --all --course course:prep3-math-en
-
-# then PROVE they match — run this after every refresh in EITHER environment
-uv run services/extraction/parity_check.py \
-  --baseline "$BASELINE_DSN" --candidate "$MVP1_DSN"
+cd /opt/reletix/AI.NEXT-mvp1/deploy
+C="docker compose -p ainext-mvp1 -f docker-compose.mvp1.yml"
+$C --profile tools run --rm -T --no-deps --entrypoint python loader parity_check.py --all-courses
 ```
 
-Expect `PARITY: GREEN` with 10 modules / 90 LOs / 112 prerequisite edges /
-450 questions / 212 visuals.
+Expect `PARITY: GREEN` for each course — Prep-3 maths at 10 modules / 90 LOs / 112 prerequisite
+edges / 450 questions / 212 visuals. (`--all-courses` checks every book config, so a book whose
+config is committed but which is not loaded yet shows RED until it is; the load action checks only
+loaded courses.)
 
-If **live** counts differ while totals match, a scoped refresh has demoted
-questions back to `review` on one side. The environments are then serving
-different question sets while looking identical by count — promote or reload
-until live counts match. The check fails on this deliberately.
+If **live** counts differ while totals match, a scoped refresh or a restore has demoted questions
+back to `review`. The environment is then serving a different question set while looking identical
+by count. The check fails on this deliberately for a course whose constant says `require_all_live`.
+
+## Loading a course
+
+For a book that is **not in the database yet** — the Grade 10 course (`course:us-g10-math-en`) is
+the first. Three runs of one workflow: **dry-run → rehearse → load**. Then a rule in the console.
+Nothing a student sees changes until that rule. (FR-4208, FR-4209; `contracts/load-course.md`.)
+
+### Before you start — all four must be true
+
+1. **The book is merged to `main` and deployed.** The load uses the bundles of the commit the box
+   is running; it does not pull. Actions → CI/CD → Run workflow (branch `main`), and wait for green.
+2. **Its book config is complete**: `services/extraction/books/<book>.json` with `status` not
+   `ingest`, its bundles listed, and a `parity` block. The workflow's first job checks this.
+3. **The running image is new enough.** It must carry the label that says the student readers are
+   scoped to what each student may see. The load checks it; to see it yourself:
+   ```bash
+   docker image inspect ainext-mvp1-app -f '{{index .Config.Labels "org.ainext.features"}}'
+   # success: curriculum-scope
+   ```
+4. **Nobody has set a rule for the course yet** (console → `/courses`, and no Student 360
+   exception). A rule written before the load would make it visible the moment it lands.
+
+### 1. Dry run — writes nothing
+
+Actions → **Load a course (manual)** → Run workflow:
+
+| branch | course | mode | confirm |
+|---|---|---|---|
+| `main` | `course:us-g10-math-en` | `dry-run` | *(empty)* |
+
+**Success looks like:** a green run; the summary says `OK`; the log ends with
+`DRY RUN CLEAN` and, just above it, `OK nothing was written`. Every precondition line reads `OK`.
+
+### 2. Rehearse — the whole load, on a throwaway copy
+
+Same form, mode **`rehearse`**, confirm empty. It backs the database up, proves the backup reads
+back, restores it into a scratch database, runs the real load **there**, checks it, then drops the
+scratch database and its copy of the backup. The real database is only read. A few minutes; for
+those minutes the database container holds a second copy of the data.
+
+**Success looks like:** `OK the backup restores cleanly (this is the rollback path, proven)`, a
+post-flight where every line is `OK`, then `REHEARSAL CLEAN`.
+
+### 3. Load — the real thing
+
+Same form, mode **`load`**, and **retype the course id** in confirm. **Success looks like:**
+
+```
+== LOADED — course:us-g10-math-en is in the database, complete, and HIDDEN from every student
+   roll back with:  bash /opt/reletix/AI.NEXT-mvp1/deploy/load-course.sh restore /opt/reletix/backups/mvp1/load-us-g10-math-en-<UTC>.dump
+```
+
+The run summary repeats the rollback line. **Copy it somewhere** before you do anything else.
+Running the action again later is harmless: it says `already loaded — nothing to do` and writes
+nothing.
+
+### Reading the post-flight (printed by `rehearse` and `load`)
+
+| Line | Means | If it is not `OK` |
+|---|---|---|
+| `the course is complete` | the course node, every catalogue entry and every generated question are in | a load step failed — see below |
+| `objectives / questions … / visuals / misconceptions / explanations` | what students would get once a rule allows it; `held` = at `review` | information only |
+| `visibility rows … 0 rules, 0 exceptions` | nobody can see it yet | somebody wrote a rule meanwhile — remove it or roll back |
+| `PARITY: GREEN — <course>` (one per loaded course) | the drift guard, every course | the loaded course's counts differ from its book config: roll back, tell Samuel |
+| `every other course's content is byte-identical` | nothing outside this course changed | **roll back** — the log shows which course changed |
+| `every student table is byte-identical` (rehearse only) | no student row moved | roll back is not needed (it was a copy) — do not run `load`; tell Samuel |
+
+### Exit codes (the summary's first row says which)
+
+| | Means | What to do |
+|---|---|---|
+| 0 | loaded; or already loaded; or the dry run / rehearsal is clean | the next step |
+| 2 | a precondition **refused** — nothing was written | read the `!!` lines: deploy first, remove a rule, fix the book config |
+| 3 | the backup failed or did not read back — nothing was written | disk space: `df -h /opt/reletix/backups`; then run again |
+| 4 | a load step or the post-flight failed **after writing** | below |
+
+**Exit 4 in a load step:** each step is its own transaction, so the course may be half there — and
+it is still hidden. Run `load` again (it resumes: every step is add-only and skips what is present),
+or roll back.
+**Exit 4 in the post-flight:** the course is loaded and hidden. If you are unsure, roll back.
+
+### Rolling back
+
+**Preferred, from a phone at midnight: Actions → "Load a course (manual)" → Run workflow, `mode: restore`.**
+No SSH, no terminal. Fill in:
+
+| branch | course | mode | backup | confirm |
+|---|---|---|---|---|
+| `main` | the course you were loading (used only to find `latest`) | `restore` | the exact backup file name, or `latest` | **retype the exact backup file name** |
+
+If you do not remember the exact file name, put `backup: latest` and **anything** in confirm first —
+the run refuses (nothing is touched) and its `::error::` names the file `latest` resolved to on the
+box; run it again with that name in **both** `backup` and `confirm`. (`latest` means the newest
+`load-<course>-*.dump` for the course you named — not the newest backup of any kind, and not a
+`pre-restore-*` one; to restore one of those, or any other backup by name, put its exact file name in
+both `backup` and `confirm` directly.)
+
+**What it does, in order** (`deploy/load-course.sh restore`, the same steps whether the GitHub Action
+calls it or you run it by hand): verifies the backup end to end — refuses before touching anything if
+it does not read back; takes a **pre-restore** backup of its own (so the restore can itself be
+undone); stops the student app and the console; restores in **one transaction** (a failure rolls
+itself back — the database is exactly as it was, and the app and console are restarted); re-applies
+this checkout's migrations; starts both back up and checks they answer; then a **read-only**
+post-flight — the drift guard for every course now in the database. **Everything students did since
+the backup was taken is replaced by the backup** — the pre-restore backup keeps it, and both the log
+and the run's summary print the one line that brings it back.
+
+Success in the run's summary looks like: result `OK — restored`, then `OK restored`,
+`OK student app answers on :3101`, `OK console answers on :3102` in the log, and — in the post-flight
+— `OK drift guard GREEN for every loaded course`. If the drift guard is **not** green after a restore,
+the backup itself predates a content fix that is now missing again: read the warning, and decide with
+Samuel before anyone uses the environment; the restore itself still succeeded (the database matches
+the backup exactly).
+
+On the box directly, the same thing, with the line the `load` run printed:
+
+```bash
+bash /opt/reletix/AI.NEXT-mvp1/deploy/load-course.sh restore /opt/reletix/backups/mvp1/load-<course>-<UTC>.dump
+```
+
+If the script itself cannot run, the raw restore command (also printed by the load). It does **only**
+the `pg_restore` — no verification, no pre-restore backup, no stopping or restarting the app and
+console, no re-applied migrations, no post-flight. Do all of that by hand around it if you must use
+it: `verify-backup` first, `pg_dump` the current database yourself before you run this, stop `app` and
+`console`, and re-run `migrate` and the drift guard afterwards:
+
+```bash
+cd /opt/reletix/AI.NEXT-mvp1/deploy && docker compose -p ainext-mvp1 -f docker-compose.mvp1.yml \
+  exec -T db sh -c 'PGPASSWORD="$POSTGRES_PASSWORD" pg_restore --clean --if-exists --single-transaction -U ainext -d ainext_mvp1' \
+  < /opt/reletix/backups/mvp1/load-<course>-<UTC>.dump
+```
+
+Backups live in `/opt/reletix/backups/mvp1/`, mode 0600. They hold students' rows (minors' data):
+they never leave the box and never enter git. Nothing deletes them automatically; prune old ones by
+hand when you are sure. `bash deploy/load-course.sh verify-backup <file>` says whether one still
+reads back end to end — the GitHub Action's `check` job runs the equivalent name/shape checks before
+the box is touched, but a corrupt file is only ever caught by an actual read-back, which happens on
+the box, inside `restore` itself, before anything is stopped.
+
+### 4. Then set the rule
+
+Console → **`/courses`** → the course → the grade → **live**, with a note saying why. To try it
+first with one test account, give that account an exception in its **Student 360** instead. The
+console's **Content** page shows the course's completeness, so the result can be checked without a
+database shell (FR-4209). After the load, every deploy also syncs this book's misconception
+catalogue, so fixes to it reach production without another load.
+
+**What the action never does:** touch another course, touch a student row, write a rule, run
+inside a deploy, or re-load a course that is present. A change to a loaded course is a content
+refresh (above).
 
 ## Unreviewed content — what is live and to whom
 

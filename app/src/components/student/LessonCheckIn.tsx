@@ -9,7 +9,16 @@ import {
 } from "@/lib/mastery";
 import { MasteryFill } from "@/components/MasteryFill";
 import { NoorMark } from "@/components/NoorMark";
+import { MathText } from "@/components/MathText";
+import { courseDef } from "@/lib/courses";
 import { deriveMasteryStage, type Recommendation } from "@/lib/checkin";
+import { buildSectionIndex, sectionRecommendation } from "@/lib/book-sections";
+import {
+  continueText,
+  lessonChipText,
+  lessonHeading,
+  lessonHeadingText,
+} from "@/lib/section-label";
 import {
   moduleHeading,
   termOfModule,
@@ -130,8 +139,31 @@ function PlayCheckIn({
     ? `P.${Math.min(...pages)}–${Math.max(...pages)}`
     : null;
   // Term-2 geometry and Term-1 algebra both contain a "Unit 4", so the term
-  // has to be said out loud or the subtitle is ambiguous half the year.
-  const term = termOfSlug(lesson.slug);
+  // has to be said out loud or the subtitle is ambiguous half the year. A
+  // course without school terms (the Grade 10 book, FR-4203) says none.
+  const term = termOfSlug(lesson.slug, lesson.courseId);
+  // The book the pages are in, as this course cites it (backlog #36): "Ministry
+  // textbook" for a National course, as it always read; the Grade 10 book by
+  // its own name. From the course registry, never a literal here.
+  const bookName = courseDef(lesson.courseId)?.cite.name ?? null;
+
+  // BOOK SECTIONS (feature 003; FR-4313, FR-4318). Only a lesson of a course
+  // whose book provenance changes what it shows carries `provenance` (a split,
+  // merged or promoted lesson somewhere in its course — the Grade 10 book;
+  // lib/section-label.ts). For it, the card names the printed section and the
+  // part ("1.7 Factorisation · part 2 of 3"), and once any part of a split
+  // section has been attempted the band says "Continue Factorisation". Every
+  // National lesson has none, so every line below falls back to exactly what
+  // it rendered before.
+  const heading = lesson.provenance ? lessonHeading(lesson.provenance) : null;
+  const sectionIndex = buildSectionIndex(
+    lessons.flatMap((l) => (l.provenance ? [l.provenance] : []))
+  );
+  const continueSection = sectionRecommendation(
+    lesson.slug,
+    lessons.filter((l) => l.courseId === lesson.courseId),
+    sectionIndex
+  );
 
   const modules = groupByModule(lessons);
   const q = (slug: string, subject?: LessonInfo["subject"]) =>
@@ -231,11 +263,33 @@ function PlayCheckIn({
               ✓
             </span>
             <span className="min-w-0 flex-1 truncate font-display text-[0.92rem] font-bold text-ink">
-              {justFinished.ref}
-              {" — "}
-              <span className="font-semibold text-ink-soft">
-                {justFinished.title}
-              </span>
+              {(() => {
+                // A Grade 10 part says which part it was (FR-4318); a
+                // National lesson reads "Lesson 1-1 — Cartesian product", as
+                // it always has.
+                const p = lessons.find((x) => x.slug === justFinished.slug)?.provenance;
+                if (!p) {
+                  return (
+                    <>
+                      {justFinished.ref}
+                      {" — "}
+                      <span className="font-semibold text-ink-soft">
+                        {justFinished.title}
+                      </span>
+                    </>
+                  );
+                }
+                const h = lessonHeading(p);
+                return (
+                  <>
+                    <span dir="ltr">{h.number}</span>{" "}
+                    <span className="font-semibold text-ink-soft">
+                      {h.title}
+                      {h.part && ` · ${h.part}`}
+                    </span>
+                  </>
+                );
+              })()}
             </span>
             <span className="shrink-0 font-display text-[0.8rem] font-bold text-[color:var(--play-text-muted)]">
               Revisit
@@ -255,8 +309,12 @@ function PlayCheckIn({
             target. */}
         <section className={cx(STICKER_CARD, "shrink-0 overflow-clip")}>
           <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-3 px-5 py-3")}>
+            {/* "Continue Factorisation" once a part of a split section has
+                been attempted (FR-4313): the recommendation is named by the
+                section, not by the part. Otherwise, and for every National
+                lesson, "Up next" as before. */}
             <span className="font-display text-[0.9rem] font-bold leading-none text-[var(--play-text-amber-warm)]">
-              Up next
+              {continueSection ? continueText(continueSection) : "Up next"}
             </span>
             {/* The citation stays mono: it is a citation, and the one thing
                 on the page proving Noor follows the real curriculum. Omitted
@@ -268,7 +326,8 @@ function PlayCheckIn({
                 dir="ltr"
                 className="ms-auto font-mono text-[0.7rem] uppercase leading-none text-[var(--play-text-amber-warm)]"
               >
-                Ministry textbook · {pageRange}
+                {bookName ? `${bookName} · ` : ""}
+                {pageRange}
               </span>
             )}
           </div>
@@ -276,10 +335,29 @@ function PlayCheckIn({
           <div className="flex flex-col gap-4 px-5 py-6 min-[900px]:px-6">
             <div className="flex flex-col gap-1">
               <h2 className="font-display text-[1.45rem] font-extrabold leading-[1.3] text-ink min-[1280px]:text-[1.7rem]">
-                {lesson.title}
+                {heading ? (
+                  // FR-4318: the printed section number beside the title, and
+                  // the part. The number is LTR in any direction (constitution
+                  // V: equations and numbers run left to right inline).
+                  <>
+                    <span dir="ltr">{heading.number}</span> {heading.title}
+                    {heading.part && (
+                      <span className="font-bold text-[color:var(--play-text-muted)]">
+                        {" · "}
+                        {heading.part}
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  lesson.title
+                )}
               </h2>
               <p className="font-read text-[0.95rem] leading-[1.6] text-ink-soft">
-                Term <span dir="ltr">{term}</span> ·{" "}
+                {term != null && (
+                  <>
+                    Term <span dir="ltr">{term}</span> ·{" "}
+                  </>
+                )}
                 {withoutTerm(lesson.moduleLabel)}
               </p>
             </div>
@@ -318,7 +396,8 @@ function PlayCheckIn({
               <p className="font-read text-[0.95rem] leading-[1.7] text-ink-soft">
                 Still a bit shaky on{" "}
                 <strong className="font-semibold text-ink">
-                  {weakestSubskill}
+                  {/* an objective label may carry maths (backlog #37) */}
+                  <MathText text={weakestSubskill} />
                 </strong>
                 . Everything else is solid.
               </p>
@@ -345,7 +424,7 @@ function PlayCheckIn({
                 {untriedSubskills.length === 1 ? (
                   <>
                     <strong className="font-semibold text-ink">
-                      {untriedSubskills[0]}
+                      <MathText text={untriedSubskills[0]} />
                     </strong>{" "}
                     hasn&apos;t come up yet.
                   </>
@@ -466,7 +545,7 @@ function PlayCheckIn({
               <div className="px-4 py-1">
                 {modules.map((m, mi) => {
                   const geo = m.id.startsWith("module:geo");
-                  const term = termOfModule(m.id);
+                  const term = termOfModule(m.id, m.courseId);
                   // "Unit 1 — Relations and Functions" arrives as one string;
                   // the design wants the number as a mono eyebrow and the
                   // name as the row title, so split on the em dash and fall
@@ -496,10 +575,20 @@ function PlayCheckIn({
                           weak, which is the only question this list exists to
                           answer. The dots do, one per lesson. */}
                       <div className="flex flex-col gap-0.5">
-                        <span className="font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em] text-[var(--play-text-amber-warm)]">
-                          Term <span dir="ltr">{term}</span>
-                          {unitRef !== unitName && ` · ${unitRef}`}
-                        </span>
+                        {term != null ? (
+                          <span className="font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em] text-[var(--play-text-amber-warm)]">
+                            Term <span dir="ltr">{term}</span>
+                            {unitRef !== unitName && ` · ${unitRef}`}
+                          </span>
+                        ) : (
+                          // A course without terms (FR-4203): the unit's own
+                          // reference is the eyebrow, and no term is named.
+                          unitRef !== unitName && (
+                            <span className="font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em] text-[var(--play-text-amber-warm)]">
+                              {unitRef}
+                            </span>
+                          )
+                        )}
                         <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-ink">
                           {unitName}
                         </span>
@@ -509,11 +598,22 @@ function PlayCheckIn({
                         {m.lessons.map((l) => {
                           const selected = l.slug === lesson.slug;
                           const stage = deriveMasteryStage(l.los);
+                          // A Grade 10 lesson's chip is its printed section,
+                          // and a part says which ("1.7 · part 2") — the three
+                          // parts of 1.7 all print "1.7" as their reference,
+                          // so the ref alone would be three identical chips
+                          // (FR-4318). National chips are unchanged.
+                          const book = l.provenance
+                            ? { h: lessonHeading(l.provenance), p: l.provenance }
+                            : null;
+                          const chip = book
+                            ? lessonChipText(book.h, book.p)
+                            : l.ref.replace(/^Lesson /, "");
                           // What the chip SHOWS, so the accessible name
                           // starts with the visible label (WCAG 2.5.3) — it
                           // used to drop "Geo", and "Unit 4" exists in both
                           // terms.
-                          const visible = `${geo ? "Geo " : ""}${l.ref.replace(/^Lesson /, "")}`;
+                          const visible = `${geo ? "Geo " : ""}${chip}`;
                           return (
                             <Link
                               key={l.slug}
@@ -522,7 +622,7 @@ function PlayCheckIn({
                               prefetch={false}
                               aria-current={selected ? "true" : undefined}
                               aria-label={`${visible} — ${masteryPhrase(stage)}`}
-                              title={`${l.title} — ${masteryPhrase(stage)}`}
+                              title={`${book ? lessonHeadingText(book.h) : l.title} — ${masteryPhrase(stage)}`}
                               className={cx(
                                 "flex min-h-[var(--noor-touch-min)] items-center gap-2 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-solid px-3.5 font-display text-[0.85rem] leading-none transition-colors",
                                 selected
@@ -552,9 +652,7 @@ function PlayCheckIn({
                                 }}
                               />
                               {geo && <span>Geo</span>}
-                              <span dir="ltr">
-                                {l.ref.replace(/^Lesson /, "")}
-                              </span>
+                              <span dir="ltr">{chip}</span>
                             </Link>
                           );
                         })}
@@ -663,6 +761,8 @@ function groupByModule(lessons: LessonInfo[]) {
     id: string;
     label: string;
     subject: LessonInfo["subject"];
+    /** the module's course — whose term rules name its term (lib/module-term.ts) */
+    courseId: LessonInfo["courseId"];
     lessons: LessonInfo[];
   }[] = [];
   for (const l of lessons) {
@@ -673,6 +773,7 @@ function groupByModule(lessons: LessonInfo[]) {
         id: l.moduleId,
         label: l.moduleLabel,
         subject: l.subject,
+        courseId: l.courseId,
         lessons: [l],
       });
   }
@@ -866,7 +967,7 @@ function SocialCheckIn({
                 </span>
               ) : (
                 <span className="w-full font-mono text-[0.72rem] font-medium uppercase tracking-[0.14em] text-ink-faint sm:w-56 sm:shrink-0">
-                  {moduleHeading(m.id, m.label)}
+                  {moduleHeading(m.id, m.label, m.courseId)}
                 </span>
               )}
               <span className="flex flex-wrap gap-1.5">

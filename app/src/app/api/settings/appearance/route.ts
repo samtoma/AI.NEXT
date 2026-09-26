@@ -1,4 +1,4 @@
-import { currentPrincipal } from "@/lib/auth/principal";
+import { currentPrincipal, onboardingRefusal } from "@/lib/auth/principal";
 import { isSelectableVariant, selectableVariants } from "@/lib/design-variant";
 import { setStudentVariant } from "@/lib/design-variant-queries";
 
@@ -59,6 +59,9 @@ export async function POST(req: Request) {
     // principal with no `students` row has nothing here to change.
     return Response.json({ error: "unauthenticated" }, { status: 401 });
   }
+  // FR-4014: every student API waits for the first-Google-sign-in step.
+  const pending = onboardingRefusal(me);
+  if (pending) return pending;
 
   let body: { variant?: unknown };
   try {

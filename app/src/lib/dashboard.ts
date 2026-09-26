@@ -10,8 +10,21 @@
 
 import type { PoolClient } from "pg";
 
-import { MODULE_RANK, SUBJECT_RANK } from "@/lib/module-order";
-import { scoped } from "@/lib/student-context";
+import { resolveStudentGraphScope, type StudentGraphScope } from "@/lib/catalog-queries";
+import { sequential } from "@/lib/db";
+import { COURSE_RANK, MODULE_RANK } from "@/lib/module-order";
+import { catalogueObjectivesSql } from "@/lib/module-order";
+import { scoped, type Db } from "@/lib/student-context";
+import { slugOfLo } from "@/lib/lesson-slug";
+import { sectionProgress } from "@/lib/section-label";
+import {
+  BOOK_SECTIONS_SQL,
+  NO_SECTIONS,
+  sectionIndexFromRows,
+  type BookSectionRow,
+} from "@/lib/book-sections";
+import type { ProgressionLesson } from "@/lib/progression";
+import type { SectionProgress } from "@/lib/types";
 
 export type TopicRow = {
   moduleId: string;
@@ -25,6 +38,13 @@ export type TopicRow = {
   weakestLoId: string | null;
   weakestLoLabel: string | null;
   weakestLoMastery: number | null;
+  /**
+   * The module's split book sections, "k of m parts mastered" each (FR-4314;
+   * feature 003). A section's parts are always in one chapter, so each roll-up
+   * belongs to exactly one row. Empty for a module with no split section —
+   * every National module — so nothing a National row shows changes.
+   */
+  sections: SectionProgress[];
 };
 
 /**
@@ -33,13 +53,24 @@ export type TopicRow = {
  * student picker already use. Dividing by only the objectives a student has
  * touched would flatter someone who has practised three of twelve, and would
  * make this page disagree with the graph beside it.
+ *
+ * THE COURSE GATE (003; FR-2705, FR-4006). This page used to list every
+ * loaded course's modules — a hidden course's units, and once a second
+ * curriculum is loaded, the other curriculum's chapters, each by name as "not
+ * started". It is narrowed by the student scope now: a module is listed only
+ * when its course is one she may see. The rows are filtered after the query
+ * rather than inside it so the gate stays ONE implementation
+ * (`resolveStudentGraphScope`), and the order of what survives is untouched.
+ * A module's objectives all belong to its course, so its average is
+ * unaffected by the filter.
  */
 export async function getTopicBreakdown(
   studentId: number,
   c?: PoolClient
 ): Promise<TopicRow[]> {
-  const res = await scoped(studentId, c, (db) =>
-    db.query(
+  const { res, gate, sectionsByModule } = await scoped(studentId, c, async (db) => {
+    const gate = await resolveStudentGraphScope(studentId, db);
+    const res = await db.query(
       `WITH module_lo AS (
        SELECT e.src_id AS module_id, e.dst_id AS lo_id
          FROM graph_edges e
@@ -85,7 +116,8 @@ export async function getTopicBreakdown(
        JOIN graph_nodes m ON m.id = r.module_id
       GROUP BY m.id, m.label, m.order_in_parent
       -- Started topics first, weakest of those at the top; untouched topics
-      -- after them by SUBJECT (registry order), then in CATALOGUE order
+      -- after them by COURSE (registry order; since 003, so two courses of
+      -- one subject never interleave), then in CATALOGUE order
       -- inside each (FR-3217) — the lesson list's, Term 1 then Term 2 then
       -- geometry. The list holds every subject's units, and Samuel's rule is
       -- that such a list splits by subject first. A topic you have never opened is not
@@ -95,22 +127,76 @@ export async function getTopicBreakdown(
       -- (and the other subjects' first units) share, so Postgres chose.
       ORDER BY (coalesce(sum(r.attempts), 0) = 0),
                mastery ASC,
-               ${SUBJECT_RANK},
+               ${COURSE_RANK},
                ${MODULE_RANK}`,
       [studentId]
-    )
-  );
+    );
+    return { gate, res, sectionsByModule: await sectionsByModuleOn(db, studentId, gate) };
+  });
 
-  return res.rows.map((r) => ({
-    moduleId: r.module_id as string,
-    label: r.label as string,
-    mastery: Number(r.mastery),
-    loCount: Number(r.lo_count),
-    practisedCount: Number(r.practised_count),
-    attempts: Number(r.attempts),
-    weakestLoId: (r.weakest_lo_id as string | null) ?? null,
-    weakestLoLabel: (r.weakest_lo_label as string | null) ?? null,
-    weakestLoMastery:
-      r.weakest_lo_mastery == null ? null : Number(r.weakest_lo_mastery),
-  }));
+  return res.rows
+    .filter((r) => gate.module(r.module_id as string))
+    .map((r) => ({
+      moduleId: r.module_id as string,
+      label: r.label as string,
+      mastery: Number(r.mastery),
+      loCount: Number(r.lo_count),
+      practisedCount: Number(r.practised_count),
+      attempts: Number(r.attempts),
+      weakestLoId: (r.weakest_lo_id as string | null) ?? null,
+      weakestLoLabel: (r.weakest_lo_label as string | null) ?? null,
+      weakestLoMastery:
+        r.weakest_lo_mastery == null ? null : Number(r.weakest_lo_mastery),
+      sections: sectionsByModule.get(r.module_id as string) ?? [],
+    }));
+}
+
+/**
+ * The split-section roll-ups of the courses this student may see, by module
+ * (FR-4314). One read of the book-section store for her gated courses; only
+ * when it holds a split section are her objectives and mastery read to score
+ * the parts — so a National student costs this page one small read and
+ * nothing else. `gate` is the page's own scope, so the roll-ups count only
+ * objectives she may see.
+ */
+async function sectionsByModuleOn(
+  db: Db,
+  studentId: number,
+  gate: StudentGraphScope
+): Promise<Map<string, SectionProgress[]>> {
+  const ids = [...(gate.courses ?? [])];
+  const index =
+    ids.length === 0
+      ? NO_SECTIONS
+      : sectionIndexFromRows((await db.query(BOOK_SECTIONS_SQL, [ids])).rows as BookSectionRow[]);
+  const out = new Map<string, SectionProgress[]>();
+  if (!index.hasSplits) return out;
+
+  const [losRes, masteryRes] = await sequential([
+    // catalogue order (FR-3217), so the roll-ups come out in the book's order
+    () => db.query(catalogueObjectivesSql("lo.id, m.id AS module_id")),
+    () =>
+      db.query(
+        `SELECT lo_id, score FROM mastery WHERE student_id = $1 AND system_to IS NULL`,
+        [studentId]
+      ),
+  ] as const);
+  const score = new Map(masteryRes.rows.map((r) => [r.lo_id as string, Number(r.score)]));
+  const byModule = new Map<string, Map<string, ProgressionLesson & { los: { id: string; mastery: number }[] }>>();
+  for (const r of losRes.rows) {
+    const id = r.id as string;
+    const moduleId = r.module_id as string | null;
+    if (moduleId == null || !gate.lo(id)) continue;
+    const lessons = byModule.get(moduleId) ?? new Map();
+    byModule.set(moduleId, lessons);
+    const slug = slugOfLo(id);
+    const lesson = lessons.get(slug) ?? { slug, courseId: null, los: [] };
+    lessons.set(slug, lesson);
+    lesson.los.push({ id, mastery: score.get(id) ?? 0 });
+  }
+  for (const [moduleId, lessons] of byModule) {
+    const rows = sectionProgress([...lessons.values()], index);
+    if (rows.length > 0) out.set(moduleId, rows);
+  }
+  return out;
 }

@@ -48,7 +48,7 @@ import { authorize } from "@/lib/auth/authorize";
 import { AuthError } from "@/lib/auth/principal";
 import type { CourseState } from "@/lib/catalog";
 import { setStudentOverride } from "@/lib/catalog-queries";
-import { SUBJECT_IDS, SUBJECTS } from "@/lib/subjects";
+import { COURSE_IDS as REGISTRY_COURSE_IDS } from "@/lib/courses";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -57,10 +57,10 @@ const STATES = ["live", "hidden"] as const;
 const isState = (v: unknown): v is CourseState =>
   typeof v === "string" && (STATES as readonly string[]).includes(v);
 
-/** Every course id the registry knows — the CLOSED list an override may name.
+/** Every course id the course registry knows — the CLOSED list an override may name.
  *  Unlike the grade-rule endpoint, an override is not grade-scoped: it can
  *  name any registry course regardless of the student's own year. */
-const COURSE_IDS = new Set<string>(SUBJECT_IDS.map((id) => SUBJECTS[id].courseId));
+const COURSE_IDS = new Set<string>(REGISTRY_COURSE_IDS);
 
 /** Same bound as `SubscriptionEditor` and the grade-rule endpoint. */
 const MAX_NOTE = 280;

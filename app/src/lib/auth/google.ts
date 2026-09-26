@@ -103,18 +103,34 @@ export async function completeGoogleLogin(
 }
 
 export type GoogleUpsert =
-  | { kind: "ok"; accountId: number; studentId: number; created: boolean; displayName: string }
+  | {
+      kind: "ok";
+      accountId: number;
+      studentId: number;
+      created: boolean;
+      displayName: string;
+      /**
+       * The grade-and-curriculum step is still owed (feature 003, FR-4014):
+       * true for an account this sign-in just created, and for a returning
+       * one that left before finishing it. The callback sends both to
+       * `/welcome`; everybody else goes where they always went.
+       */
+      onboardingPending: boolean;
+    }
   | { kind: "conflict"; accountId: number };
 
 /**
- * The grade a Google-created account starts at.
+ * The grade a Google-created account is STORED with until its first step
+ * answers the question (feature 003, FR-4014).
  *
- * DEVIATION, flagged on purpose: `students.grade` is NOT NULL and Google
- * supplies no grade, so a first Google sign-in has to write something. This
- * build serves exactly one curriculum — Prep-3 Mathematics, which is grade 9 —
- * so 9 is the only value that is not a coin toss, and FR-2013 lets the student
- * correct it from their profile. `gender` is left NULL, which data-model §8
- * defines as "never asked" and is therefore exactly true.
+ * `students.grade` is NOT NULL and Google supplies no grade, so the INSERT has
+ * to write something. It is a placeholder, not a fact about the student: the
+ * row is created `onboarding_pending`, no lesson opens while it is, and the
+ * one-screen step at `/welcome` replaces both grade and curriculum through
+ * `complete_student_onboarding()` (migration 033) — once. It is never sent to
+ * analytics as her grade: `account_created` is recorded when the step
+ * completes, with the grade she gave. `gender` is left NULL, which
+ * data-model §8 defines as "never asked" and is therefore exactly true.
  */
 export const GOOGLE_DEFAULT_GRADE = "9";
 
@@ -134,7 +150,8 @@ export async function upsertGoogleAccount(
   now: Date = new Date()
 ): Promise<GoogleUpsert> {
   const existing = await db.query(
-    `SELECT a.id, a.google_sub, s.id AS student_id, coalesce(s.display_name, '') AS display_name
+    `SELECT a.id, a.google_sub, s.id AS student_id, coalesce(s.display_name, '') AS display_name,
+            coalesce(s.onboarding_pending, false) AS onboarding_pending
        FROM accounts a LEFT JOIN students s ON s.account_id = a.id
       WHERE lower(a.email) = lower($1)`,
     [profile.email]
@@ -170,6 +187,9 @@ export async function upsertGoogleAccount(
       studentId: Number(row.student_id),
       created: false,
       displayName: String(row.display_name ?? ""),
+      // A returning sign-in is unchanged, unless it is the SAME first sign-in
+      // coming back before finishing its step (FR-4014).
+      onboardingPending: row.onboarding_pending === true,
     };
   }
 
@@ -180,9 +200,13 @@ export async function upsertGoogleAccount(
     [profile.email.trim().toLowerCase(), profile.sub, now, environment]
   );
   const accountId = Number(created.rows[0]!.id);
+  // `onboarding_pending = true`: the grade above is a placeholder and the
+  // curriculum is 009's default, and neither is hers until `/welcome` asks
+  // (FR-4014). INSERT is `ainext_app`'s privilege; UPDATE of these columns is
+  // not (FR-4017) — only the once-only definer function clears the flag.
   const student = await db.query(
-    `INSERT INTO students (display_name, grade, account_id, status, environment)
-     VALUES ($1, $2, $3, 'active', $4) RETURNING id`,
+    `INSERT INTO students (display_name, grade, account_id, status, environment, onboarding_pending)
+     VALUES ($1, $2, $3, 'active', $4, true) RETURNING id`,
     [displayName, GOOGLE_DEFAULT_GRADE, accountId, environment]
   );
   return {
@@ -191,6 +215,7 @@ export async function upsertGoogleAccount(
     studentId: Number(student.rows[0]!.id),
     created: true,
     displayName,
+    onboardingPending: true,
   };
 }
 

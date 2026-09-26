@@ -9,7 +9,8 @@ import type {
   SpineSubject,
 } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
-import { GraphCanvas, type AsOf } from "./GraphCanvas";
+import { GraphCanvas, type AsOf, type MapSection } from "./GraphCanvas";
+import { sectionLabel } from "@/lib/section-label";
 import { LoPanel } from "./LoPanel";
 import { QuestionModal } from "./QuestionModal";
 import { NoorPanel } from "./NoorPanel";
@@ -94,6 +95,30 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         ? data.los
         : data.los.filter((l) => l.subject === subject),
     [data.los, subject, subjectsPresent.length]
+  );
+  /* BOOK SECTIONS (feature 003; FR-4315, FR-4317). Each split section's
+     topics, keyed for the map, which frames them as one group labelled
+     "1.7 Factorisation" and draws the part n-1 → part n prerequisites the
+     product adds beside the book's own. Both come from `getSpineData`
+     (`sectionGroups`, `partEdges`). A subject with no split section — every
+     National one — passes no sections and the book's edges alone, the very
+     array it passed before, so its map is unchanged. */
+  const mapSections = useMemo(() => {
+    if (data.sectionGroups.length === 0) return undefined;
+    const m = new Map<string, MapSection>();
+    for (const g of data.sectionGroups) {
+      const label = sectionLabel(g) || g.key;
+      for (const p of g.parts) {
+        for (const id of p.loIds) {
+          m.set(id, { key: g.key, label, part: `part ${p.n} of ${p.of}` });
+        }
+      }
+    }
+    return m;
+  }, [data.sectionGroups]);
+  const mapEdges = useMemo(
+    () => (data.partEdges.length === 0 ? data.edges : [...data.edges, ...data.partEdges]),
+    [data.edges, data.partEdges]
   );
   const [selectedLoId, setSelectedLoId] = useState<string | null>(null);
   const [openQuestion, setOpenQuestion] = useState<SpineQuestion | null>(null);
@@ -371,7 +396,8 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         <div className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-clip min-[1024px]:block">
           <GraphCanvas
             los={visibleLos}
-            edges={data.edges}
+            edges={mapEdges}
+            sections={mapSections}
             asOf={asOf}
             selectedLoId={selectedLoId}
             questionCounts={questionCounts}

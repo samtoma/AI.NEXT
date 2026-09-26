@@ -1,7 +1,146 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-25 (`main`; `v0.9.2` deployed; `v0.9.3` hotfix released, deploy approved by Samuel; constitution v3.3.0)
+> Last updated: 2026-09-26 (`main`; `v0.9.2` deployed; `v0.9.3` hotfix released, deploy approved by Samuel; constitution **v3.4.0**; **v0.10 — spec 003, third round of decisions taken, 14 of 22 work packages verified built, still NOT committed**)
+
+## 🧭 v0.10 — curriculum tracks and the Grade 10 American maths course (IN PROGRESS, being verified 2026-09-25/26, NOT committed)
+
+Samuel, 2026-09-25, first round:
+- *"we need to digest this book"*. The book is Siyavula *Everything Maths* Grade 10, in English,
+  written for South Africa's CAPS curriculum; Samuel calls it the "Grade 10 American Curriculum,
+  Math".
+- On curriculum tracks: *"When the user sign up for grade 10, they can have at the beginning choose:
+  American, National, etc.. as much as we add Curriculum, and consider that in the console, to choose
+  which subject for which grade, should be done also per curriculum."*
+- On the options: *"I would take your recommendations"*.
+- Then, on the written spec, plan, tasks, ADRs and the Grade 10 S0 report: **"ok for all"**.
+
+**Then a third round, the same day, thirteen questions taken one by one** (`specs/003-curriculum-tracks/decisions.md`,
+"Third round" — decisions 23–34). Highlights: the expression marker is **built in-house, no library**
+(gate T413 closed, [ADR-0025](decisions/0025-answer-marker-build-in-house.md)); the **constitution
+amendment is approved and applied**, v3.3.0 → **v3.4.0**; a new pipeline stage finds this book's
+prerequisite links (FR-4410); figures no existing kind can draw get **native renderers**, not static
+images (FR-4321); all six proposed widget kinds are approved in principle; "Load a course" gains a
+**restore** mode; a third independent reading decides a disagreeing maths transcription (FR-4407
+amended); the G10 course's prompts are **English-only**, a per-course setting (FR-4205 amended); and
+National Arabic lesson titles move to the book's own printed names (ADR-0020's fifth exception).
+
+The work is in worktree `.claude/worktrees/g10` on branch `feat/003-curriculum-tracks-g10-american-math`,
+from `main` at v0.9.2, brought up to v0.9.3 on 2026-09-25 (its migrations renumbered to **033**
+curriculum tracks and **034** book sections, after main's widget 032). **Nothing is committed**: Samuel
+reviews first. There is no version bump yet.
+
+**Verified 2026-09-25/26**: the tech-writer read every task's claimed code against the actual files on
+the branch (not just the task descriptions) and ran the pipeline's whole test suite
+(`uv run --project services/extraction --with pytest python -m pytest -q services/extraction/tests`:
+**272 passed, 47 skipped without a database, 0 failed**). Of `tasks.md`'s 128 tasks, **72 are now
+ticked** as confirmed-built (T301, T306–T318, T319–T329, T331–T349, T350–T352, T368–T371,
+T374–T382, T400–T402, T404–T405, T407–T409, T411, T413, T418–T419, T422). Package by package, **14 of
+the workstream's 22 work packages have their described code built with real, passing tests**: WP-A
+(registries and gate), WP-B (migration 033/034), WP-C (the four MUST readers plus the rest), WP-D
+(sign-up and the Google onboarding step), WP-E (teaching facts and G10 prompts), WP-G (the console),
+WP-H (deploy and the load path) and all eight pipeline packages, **WP-P1 through WP-P7** (WP-P8 needs
+decision 32's third-reading rule, T433, before it is complete). **Five specific, real gaps were found**
+and are noted rather than papered over (tasks.md carries each, unticked, with a note):
+- **T305**: `courses.ts` is right, but `subjects.ts` never got the deprecated `SubjectDef.courseId`
+  alias the task asked for — the code jumped straight to T397's end state. No importer is broken by
+  this, but T397 (removing an alias that was never added) may now be moot.
+- **T308**: `studentAccess` is real, but `courseCatalog` is a flat list, not curriculum sections; there
+  is no `CourseCompleteness` type anywhere in `app/src`; and the headcount read lives in
+  `console-queries.ts`, not `catalog-queries.ts` as specified (though it works, wired through
+  `authorize.ts`).
+- **T372**: `SpineExplorer.tsx` is a subject picker, not a course picker, and `module-order.ts`'s own
+  header comment records an **open, acknowledged gap**: a tester with a cross-curriculum exception
+  would see the skill map merge the two maths courses.
+- **T406**: the section-gating rule itself works and is tested, but "a recommendation into a started
+  section is named by the section" is wired only into `LessonCheckIn.tsx`'s own logic, not into
+  `queries.ts`'s practice plan; `progression-db.ts`'s `getSectionIndex()` looks like dead code — written
+  for this, never called.
+- **T410**: `LessonCheckIn.tsx` and `SubjectHome.tsx` show "part *n* of *m*" correctly; `LessonSession.tsx`
+  — the screen a student is actually looking at mid-lesson — drops the part label entirely.
+
+**Seven new tasks** were added for the third round's build items: T427 (the second blind mapper,
+decision 33 — `objectives.workflow.js` already carries the `second_mapper` flag, off), T428
+(prerequisite links, FR-4410), T429 (the figure-gap inventory, FR-4321), T430 (restore mode, FR-4208/10),
+T431 (the "Arabic touches" per-course setting, FR-4205), T432 (Arabic lesson titles, a content change)
+and T433 (the third-reading rule, FR-4407).
+
+**Requirements and design** (`specs/003-curriculum-tracks/`, spec rev. 4):
+- **FR-4001…FR-4017** curriculum; **FR-4101…FR-4105** console; **FR-4201…FR-4212** the G10 course;
+  **FR-4301…FR-4310** content plus **FR-4321** (native figure types); **book-section grouping**
+  (4311–4319) and the **maths-expression marker** (4320); **FR-4401…FR-4410** pipeline (4410 is the new
+  prerequisite-link stage). Also SC-201…SC-213.
+- That is **65 FRs and 13 SCs** (78), the matrix is **gated and traced 78/78**; **1 is now BUILT**
+  (FR-4409, the misconception catalogue's single source), 77 still OPEN pending the rest of the
+  reclassification pass (`tasks.md` T387, not yet run — the evidence for it now exists, from this
+  verification pass).
+- Also written: `decisions.md` (34 decisions across three rounds, plus A–E and the gate record —
+  T413's gate is now in it), `plan.md`, `data-model.md`, `contracts/` (6), `quickstart.md`, `tasks.md`
+  (128 tasks, T301–T433, in work packages with disjoint files), and a privacy review whose MUSTs are
+  folded in.
+- **ADR-0024** (curriculum as a visibility dimension) and **ADR-0025** (the marker, built in-house) are
+  accepted, with the 2026-09-25 notes on **ADR-0005** (derived objectives; the v2 line; EPUB solutions;
+  S0b; B19), **ADR-0018**, **ADR-0019** (covers the G10 course) and **ADR-0020** (G10 prompts; a book
+  section's parts are one unit; two more exceptions — Arabic lesson titles, and G10's English-only
+  setting). **None is committed to git.**
+- `docs/specs/extraction-pipeline.md` v2 and `services/extraction/runbook/README.md` are both current
+  as of this pass: the Build list (§9) reflects the verification above, the run-path convention
+  (`runs/<book>/lessons/<runId>.json` split by `assemble_objectives.py lesson-runs` into
+  `runs/<book>/lesson/<slug>.json`), S5's and S7's full CLI contracts, the merged-lesson slug rule
+  (`slug_section` — the section that carries the practice, not the first one), and the correct
+  whole-suite test command are all written in.
+
+**What is decided, in short:**
+- **Curricula**: National `eg-national-en`, American `us-american-en`. One course belongs to one
+  curriculum. The gate stays (course, grade). The kill switch suspends rules, not curriculum scoping.
+- **Sign-up** asks only when two or more curricula are live for a grade. At launch nobody is asked,
+  because grade 10 has only American. A first Google sign-in gets a once-only step.
+- **Changing a curriculum** is console-only, recorded as history, and loses nothing.
+- **The G10 course** is the only course live for grade 10 at launch. It renders Play, probing is off,
+  ADR-0019 covers it once switched on, and its prompts are English-only (a per-course setting). The
+  prompt hold is lifted for its prompts only.
+- **The marker is built in-house** (ADR-0025): no library, exact-rational + seeded sampling, a
+  pluggable engine seam for later.
+- **Production**: a manual **"Load a course"** action (presence-gated, verified backup, add-only), now
+  also with a **restore mode** (typed confirmation). `refresh-content` is retargeted to noor. The loader
+  **refuses** rather than deleting student data.
+- **Pipeline**:
+  - G0 passed at **65 lessons**;
+  - objectives derived from the book (pipeline policy, not an FR); a second blind mapper checks the
+    1,228 chapter-end items (decision 33, T427);
+  - a new stage finds this book's prerequisite links, evidence-backed and independently checked
+    (FR-4410);
+  - **S0b transcribes the EPUB's 8,561 maths images**, two blind passes plus a **third reading** when
+    they disagree (decision 32);
+  - **canonical solutions are the EPUB's worked solutions**, with a three-way check;
+  - teacher notes are dropped;
+  - declarative families; widget questions for every chapter, six new kinds pre-approved; figures no
+    kind can draw get native renderers too, once Samuel approves the kind (FR-4321);
+  - one source for the misconception catalogue (B19, now **built and verified**, T423's CI proof
+    still to run);
+  - misconception verification runs per objective, **$22–32/objective**; S0b is **$24–44/book**
+    (batch-setting dependent, fixed after the Chapter 8 pilot); **the book total is about $220–260**
+    one-time.
+- **Every curriculum**: a book section's parts stay together, for recommendations, progression, a
+  roll-up score, the skill map, the Ask context, the printed number and the console.
+
+**Open:**
+- **Samuel — T389 (unticked, human gate)**: the substance is done — the constitution amendment is
+  applied — but the checkbox is his to close, not an agent's.
+- **Samuel — T388**: commit the ADRs (ADR-0024, ADR-0025, and the notes).
+- **Samuel — gates G0b, G1, G2–G5**: G0b, the S0b queue, and G2, the three-way disagreements, are the
+  heavy ones.
+- **Production facts not yet read** (T302): `AINEXT_COURSE_GATING`, today's grade-10 rules, and
+  whether any real grade-10 student exists.
+- **B19 touches live Prep-3 content.** T423's CI proof and T424's rehearsal are required before merge.
+- **Stale comments in migrations 027 and 028, and in the deploy scripts,** still describe a loader that deletes on reload. That is
+  for the app and devops agents (T425, T426).
+- **FR-304 in spec 001 is PARTIAL** (already corrected); **FR-1111's row is corrected** to cite the
+  loaded catalogue instead of the retired generator.
+- **The five gaps above (T305, T308, T372, T406, T410)** and **the seven new tasks (T427–T433)** are
+  the concrete next-build list. **T387** (moving the rest of spec 003's traceability rows from OPEN to
+  BUILT/PARTIAL/VERIFIED) is next — the evidence for it now exists in this session's verification
+  passes and does not need re-deriving.
 
 ## 🩹 v0.9.3 hotfix — three widget answers corrected (released 2026-09-25; Samuel: "Full fix + deploy")
 
@@ -1274,7 +1413,7 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0002 | AI runtime = Python service; app layer = Next.js/React; PoC content = ministry Prep-3 Math (English) | ✅ Accepted 2026-07-17 |
 | ADR-0003 | Graph store: Postgres system of record + demo layer as P0 | ✅ Accepted 2026-07-17 |
 | ADR-0004 | Social Studies vertical (2nd subject on the spine) | ✅ Accepted 2026-07-20 |
-| ADR-0005 | Agentic extraction pipeline + coverage oracle | ✅ Accepted 2026-07-21 |
+| ADR-0005 | Agentic extraction pipeline + coverage oracle | ✅ Accepted 2026-07-21 · amendment 2026-09-25 (accepted, not committed): derived objectives, the v2 line, EPUB solutions, S0b, B19 |
 | ADR-0006 | Arabic Language vertical — new contract: vendored Quran corpus, Noto Naskh font, 5 assessable LOs/lesson, scope = text+grammar+إملاء | ✅ Accepted 2026-07-28 |
 | ADR-0007 | Two distinct decisions share this number: PRD supersession — "Student MVP" (International) replaces "Founding Families" (Bakaloreya) (`0007-prd-supersession-student-mvp.md`); and Student MVP 1.0 built as a side-by-side comparison on the same book (`0007-student-mvp1-comparison-build.md`) | ✅ Accepted 2026-09-02 / 2026-09-08 |
 | ADR-0008 | Generate the question bank, review a 10% sample | ✅ Accepted 2026-09-10 |
@@ -1287,7 +1426,13 @@ Glass-box grounded AI chat on /spine + /student: streams answers with inline rec
 | ADR-0015 | One interaction timeline per student per session, replayed by reconstruction; every operator read audited | ✅ Accepted 2026-09-20 |
 | ADR-0016 | Analytics and monitoring: three layers, one system of record — first-party events, anonymous GA4 as audience layer, console as presentation | ✅ Accepted 2026-09-20 |
 | ADR-0017 | Two design-system variants ship — Play and Master, one per render, keyed to the student's grade with a stored override; amends ADR-0011's "Master is replaced" | ✅ Accepted 2026-09-20 |
-| ADR-0020 | Mastery-gated lesson progression — persisted per-student-per-course lesson pointer, advances when every LO ≥ 0.75; `/student` no longer opens on a constant (Tamer's ADR-0012 on `wip/socratic-probing-route-b`, renumbered on `main`) | ✅ Accepted — Samuel, 2026-09-23, by approving the merge onto `main` · amended same day: no backfill, stricter "complete" |
+| ADR-0018 | Who may see which course, decided in the console — per (course, grade) rule + per-student exception, default hidden | ✅ Accepted 2026-09-21 · amended by ADR-0024 (accepted 2026-09-25, not committed) |
+| ADR-0019 | Serve the whole maths bank on the open site; review status shown to operators only | ✅ Accepted 2026-09-23 · note 2026-09-25 (accepted, not committed): covers the G10 course |
+| ADR-0020 | Mastery-gated lesson progression — persisted per-student-per-course lesson pointer, advances when every LO ≥ 0.75; `/student` no longer opens on a constant (Tamer's ADR-0012 on `wip/socratic-probing-route-b`, renumbered on `main`) | ✅ Accepted — Samuel, 2026-09-23, by approving the merge onto `main` · amended same day: no backfill, stricter "complete" · notes 2026-09-25 (accepted, not committed): G10 prompts exception; a book section's parts are one unit |
+| ADR-0021 | Socratic probing becomes a console switch, test accounts first | ✅ Accepted 2026-09-24 · amended same day |
+| ADR-0022 | Console sign-in from the Cloudflare Access identity | ✅ Accepted 2026-09-24 |
+| ADR-0023 | Turn and upload limits become observed thresholds, not an enforced cap | ✅ Accepted 2026-09-24 · amended same day |
+| ADR-0024 | Curriculum is a dimension of what a student sees — curricula and courses registries, one curriculum per course and per student, the manual "Load a course" action | ✅ Accepted 2026-09-25 ("I would take your recommendations", then "ok for all") · **not committed** |
 
 ## Key metrics to watch (once live)
 50 paying families · ≥60% M2 retention · diagnostic score lift at day 45 · ≥3 sessions/week/student ·

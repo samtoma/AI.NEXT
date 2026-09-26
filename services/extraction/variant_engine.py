@@ -45,9 +45,18 @@ class VariantRefused(RuntimeError):
 
 
 def _question_text(seed: Question) -> str:
-    """Every surface a variant generator would rewrite."""
+    """Every surface a variant generator would rewrite.
+
+    `choices` has two shapes (schemas.Question): a list of options for multiple
+    choice, or `{"marker": AnswerSpec}` for a typed maths answer (FR-4320,
+    contracts/answer-marker.md), whose key is a surface too.
+    """
     parts = [seed.stem]
-    parts += [c.text for c in (seed.choices or [])]
+    choices = seed.choices
+    if isinstance(choices, list):
+        parts += [c.text for c in choices]
+    elif choices is not None and getattr(choices, "marker", None) is not None:
+        parts.append(choices.marker.key)
     if isinstance(seed.answer, str):
         parts.append(seed.answer)
     parts += [s if isinstance(s, str) else s.claim_ar for s in seed.solution]

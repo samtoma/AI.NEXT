@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { asksCurriculum, curriculumToSend } from "@/lib/auth/onboarding";
+import type { CurriculumId } from "@/lib/curricula";
 import { GRADES, INTEREST_CATEGORIES, type InterestId } from "@/lib/profile";
 
 import {
@@ -15,6 +17,7 @@ import {
   messageFor,
 } from "./Controls";
 import { safeNext } from "./next-param";
+import { CurriculumChoice, type CurriculumOption } from "./CurriculumChoice";
 import { GoogleButton } from "./GoogleButton";
 import { MIN_PASSWORD_LENGTH } from "./password-rule";
 
@@ -36,21 +39,47 @@ import { MIN_PASSWORD_LENGTH } from "./password-rule";
  *
  * The password rule is printed before it is enforced. A refusal after the fact
  * that could have been a sentence before it is the cheapest kind of rudeness.
+ *
+ * **One conditional question, feature 003's only addition** (FR-4005, FR-2002):
+ * after grade, "which curriculum does your school follow?" — shown only when
+ * that grade offers two or more curricula, naming only those, with none
+ * pre-selected. A grade that offers one sends nothing and the server stores
+ * that one without asking. When the server answers 409 `curriculum_required`
+ * (an operator changed the grade's offer after this page loaded), the form
+ * takes the offer it carries and asks again.
  */
 
 export function SignupForm({
   next,
   googleAvailable,
+  offered,
+  curricula,
 }: {
   next: string;
   googleAvailable: boolean;
+  /** What each grade offers, computed on the server for this environment. */
+  offered: Readonly<Record<string, CurriculumId[]>>;
+  /** Every curriculum's flat label, in registry order. */
+  curricula: readonly CurriculumOption[];
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [interests, setInterests] = useState<InterestId[]>([]);
+  const [grade, setGrade] = useState("9");
+  const [picked, setPicked] = useState<CurriculumId | null>(null);
+  // The server's answer wins: a 409 carries what the grade offers NOW.
+  const [offer, setOffer] = useState<Record<string, CurriculumId[]>>({ ...offered });
 
   const destination = safeNext(next);
+  const gradeOffer = offer[grade] ?? [];
+  const askingCurriculum = asksCurriculum(gradeOffer);
+
+  function chooseGrade(value: string) {
+    setGrade(value);
+    // A pick the new grade does not offer is not carried across.
+    if (picked && !(offer[value] ?? []).includes(picked)) setPicked(null);
+  }
 
   function toggleInterest(id: InterestId) {
     setInterests((prev) =>
@@ -61,6 +90,15 @@ export function SignupForm({
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (busy) return;
+
+    // Asked and not answered: say so here rather than after a round trip.
+    const curriculum = curriculumToSend(gradeOffer, picked);
+    if (askingCurriculum && !curriculum) {
+      setError(null);
+      setFieldErrors({ curriculum: messageFor("curriculum_required") });
+      return;
+    }
+
     setBusy(true);
     setError(null);
     setFieldErrors({});
@@ -76,11 +114,13 @@ export function SignupForm({
           email: String(data.get("email") ?? ""),
           password: String(data.get("password") ?? ""),
           displayName: String(data.get("displayName") ?? ""),
-          grade: String(data.get("grade") ?? ""),
+          grade,
           // Omitted entirely when untouched: "" would be a value, and the
           // column's NULL is the record of a question we never asked.
           ...(gender ? { gender } : {}),
           interests,
+          // Only when the grade asked (FR-4005); otherwise the server decides.
+          ...(curriculum ? { curriculum } : {}),
         }),
       });
 
@@ -94,7 +134,13 @@ export function SignupForm({
         error?: string;
         field?: string;
         retryAfter?: number;
+        offered?: CurriculumId[];
       };
+      if (body.error === "curriculum_required" && Array.isArray(body.offered)) {
+        const now = body.offered;
+        setOffer((prev) => ({ ...prev, [grade]: now }));
+        if (picked && !now.includes(picked)) setPicked(null);
+      }
       const message = messageFor(body.error, body);
       if (body.field) setFieldErrors({ [body.field]: message });
       else setError(message);
@@ -152,7 +198,13 @@ export function SignupForm({
         </Field>
 
         <Field id="grade" label="Which grade are you in?" error={fieldErrors.grade}>
-          <SelectInput id="grade" defaultValue="9" required error={fieldErrors.grade}>
+          <SelectInput
+            id="grade"
+            value={grade}
+            onChange={(e) => chooseGrade(e.target.value)}
+            required
+            error={fieldErrors.grade}
+          >
             {GRADES.map((g) => (
               <option key={g} value={g}>
                 Grade {g}
@@ -160,6 +212,18 @@ export function SignupForm({
             ))}
           </SelectInput>
         </Field>
+
+        {askingCurriculum && (
+          <CurriculumChoice
+            options={curricula.filter((c) => gradeOffer.includes(c.id))}
+            value={picked}
+            onChange={(id) => {
+              setPicked(id);
+              setFieldErrors((prev) => ({ ...prev, curriculum: "" }));
+            }}
+            error={fieldErrors.curriculum}
+          />
+        )}
 
         <GenderChoice error={fieldErrors.gender} />
 

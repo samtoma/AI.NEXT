@@ -10,6 +10,8 @@ import { VerificationBanner } from "@/components/auth/VerificationBanner";
 import { documentVariant } from "@/lib/design-variant-queries";
 import { IS_CONSOLE, IS_MVP1 } from "@/lib/env";
 import { resolveStudentContext } from "@/lib/student-context";
+import { gradeDisplayLabel } from "@/lib/catalog";
+import { CURRICULA, DEFAULT_CURRICULUM, asCurriculumId } from "@/lib/curricula";
 
 /* ------------------------- the type stack lives in ./fonts -----------------
    The seven families that used to be declared here are now `next/font/local`
@@ -117,6 +119,24 @@ export default async function RootLayout({
   // a hard-coded direction — constitution v2.0.0 Principle V.
   const variant = await documentVariant();
 
+  // The chrome names the product's National course set ("Prep 3 ·
+  // Mathematics", and the ministry's syllabus in the footer). For a student of
+  // ANOTHER curriculum that is untrue — FR-4205: nothing may tell her that her
+  // material comes from the Egyptian ministry's books — so she gets her own
+  // grade, in her curriculum's words, and her curriculum's name (flat, FR-4016),
+  // and no syllabus line. Everybody else — every National student, anybody
+  // signed out, and a curriculum the registry does not know — reads exactly
+  // what they read before 003. From the context already loaded: no extra query.
+  const ownCurriculum = asCurriculumId(student?.curriculum);
+  const otherCurriculum =
+    student && ownCurriculum && ownCurriculum !== DEFAULT_CURRICULUM ? ownCurriculum : null;
+  // A first Google sign-in whose grade and curriculum are still owed
+  // (FR-4014; backlog #15): the account holds a placeholder grade and no
+  // chosen curriculum, so the chrome may name neither — no "Prep 3 ·
+  // Mathematics", no ministry syllabus line — and offers no study links,
+  // which would only bounce her back to `/welcome`.
+  const onboardingPending = student?.onboardingPending === true;
+
   return (
     <html
       lang="en"
@@ -143,14 +163,21 @@ export default async function RootLayout({
                   <span className="font-display text-lg font-bold tracking-tight text-ink">
                     Noor
                   </span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
-                    {IS_MVP1 ? "Prep 3 · Mathematics" : "Tutor PoC · Data Spine"}
-                  </span>
+                  {!(IS_MVP1 && onboardingPending) && (
+                    <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-ink-faint">
+                      {!IS_MVP1
+                        ? "Tutor PoC · Data Spine"
+                        : otherCurriculum
+                          ? `${gradeDisplayLabel(student?.grade, otherCurriculum)} · ${CURRICULA[otherCurriculum].label}`
+                          : "Prep 3 · Mathematics"}
+                    </span>
+                  )}
                 </Link>
                 <NavLinks
                   mvp1={IS_MVP1}
                   signedIn={student !== null}
                   studentName={student?.studentName ?? null}
+                  onboardingPending={onboardingPending}
                 />
               </div>
             </header>
@@ -165,7 +192,9 @@ export default async function RootLayout({
                 </span>
                 {/* course-level, not lesson-level: any selected lesson/unit shows
                     its own module label on the surface itself */}
-                <span>Prep-3 Mathematics · MOETE 2025–2026</span>
+                {!otherCurriculum && !onboardingPending && (
+                  <span>Prep-3 Mathematics · MOETE 2025–2026</span>
+                )}
               </div>
             </footer>
           </>

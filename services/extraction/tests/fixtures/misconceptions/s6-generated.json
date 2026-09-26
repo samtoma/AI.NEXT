@@ -1,0 +1,30 @@
+{
+  "generator": "tests: an S6 bundle",
+  "questions": [
+    {"id": "q:zz1s1-1-1:g001-product", "lo_id": "lo:zz1s1-1-1", "tier": "basic", "question_type": "mcq", "family": "fam:zz1s1-1-1:product",
+     "stem": "Simplify $5^3 \\times 5^4$.", "correct_answer": "A",
+     "choices": [{"key": "A", "text": "$5^7$"},
+                 {"key": "B", "text": "$5^{12}$", "misconception_id": "mc:zz1s1-1-1:exponents-multiplied"},
+                 {"key": "C", "text": "$25^7$", "misconception_id": "mc:zz1s1-1-1:bases-times"},
+                 {"key": "D", "text": "$5^{1}$", "misconception_id": "mc:zz1s1-1-1:exponents-subtracted"}],
+     "canonical_solution": [{"step": 1, "text_md": "$5^{3+4} = 5^7$."}], "source_note": "Generated from template family fam:zz1s1-1-1:product."},
+    {"id": "q:zz1s1-1-1:g002-product", "lo_id": "lo:zz1s1-1-1", "tier": "basic", "question_type": "mcq",
+     "stem": "Simplify $4^2 \\times 4^5$.", "correct_answer": "A",
+     "choices": [{"key": "A", "text": "$4^7$"},
+                 {"key": "B", "text": "$4^{10}$", "misconception_id": "mc:zz1s1-1-1:exponents-multiplied"},
+                 {"key": "C", "text": "$16^7$", "misconception_id": "mc:zz1s1-1-1:bases-multiplied"},
+                 {"key": "D", "text": "$4^{9}$", "misconception_id": "mc:zz1s1-1-1:random"}],
+     "canonical_solution": [{"step": 1, "text_md": "$4^{2+5} = 4^7$."}], "source_note": "Generated from template family fam:zz1s1-1-1:product."},
+    {"id": "q:zz1s1-1-1:g003-product2", "lo_id": "lo:zz1s1-1-1", "tier": "standard", "question_type": "mcq", "family": "fam:zz1s1-1-1:product2",
+     "stem": "Simplify $a^2 \\times a^3$.", "correct_answer": "A",
+     "choices": [{"key": "A", "text": "$a^5$"},
+                 {"key": "B", "text": "$a^6$", "misconception_id": "mc:zz1s1-1-1:times-the-exponents"},
+                 {"key": "C", "text": "$2a^5$"},
+                 {"key": "D", "text": "$a^1$"}],
+     "canonical_solution": [{"step": 1, "text_md": "$a^{2+3} = a^5$."}], "source_note": "Generated from template family fam:zz1s1-1-1:product2."}
+  ],
+  "misconceptions": [
+    {"id": "mc:zz1s1-1-1:bases-times", "lo_id": "lo:zz1s1-1-1", "label": "Bases multiplied", "description": "Multiplies the two bases."},
+    {"id": "mc:zz1s1-1-1:random", "lo_id": "lo:zz1s1-1-1", "label": "Off by two", "description": "No recognisable error."}
+  ]
+}

@@ -1,7 +1,10 @@
 import { ConsoleRefusal } from "@/components/console/ConsoleRefusal";
 import { consoleAccess } from "@/lib/console-auth";
+import { courseName } from "@/lib/console-course-names";
 import { consoleRoute } from "@/lib/console-routes";
-import { getGalleryData } from "@/lib/visuals";
+import { compareCourses } from "@/lib/courses";
+import { moduleCourses } from "@/lib/pipeline-queries";
+import { getGalleryData, type GalleryData } from "@/lib/visuals";
 import { Visual } from "@/components/viz/Visual";
 import { kindMeta } from "@/components/viz/kind-meta";
 
@@ -21,6 +24,11 @@ export const metadata = {
  * the ordinary connection: that table has no RLS and is granted to both roles,
  * so there is nothing here for the operator connection to unlock and no reason
  * to open a second pool to read it.
+ *
+ * **Course by course since 003** (FR-4104; contracts/console.md): each
+ * course's units sit under its own heading, and every count — plates, units,
+ * objectives, kinds — is that course's. There is no gallery-wide total: it
+ * would add two maths books' figures into one number.
  */
 const PATH = "/gallery";
 
@@ -32,8 +40,43 @@ export default async function GalleryConsolePage() {
   return <GalleryPage />;
 }
 
+type CourseGroup = {
+  courseId: string | null;
+  modules: GalleryData["modules"];
+  plates: number;
+  objectives: number;
+  kinds: { kind: string; count: number }[];
+};
+
+/** The plates, grouped by the course each unit belongs to, registry order;
+ *  a unit with no course is its own group, said as such. */
+function byCourse(data: GalleryData, courseOf: Map<string, string>): CourseGroup[] {
+  const groups = new Map<string | null, GalleryData["modules"]>();
+  for (const m of data.modules) {
+    const c = courseOf.get(m.id) ?? null;
+    groups.set(c, [...(groups.get(c) ?? []), m]);
+  }
+  return [...groups.entries()]
+    .sort(([a], [b]) => (a === null ? 1 : b === null ? -1 : compareCourses(a, b)))
+    .map(([courseId, modules]) => {
+      const visuals = modules.flatMap((m) => m.visuals);
+      const kinds = new Map<string, number>();
+      for (const v of visuals) kinds.set(v.kind, (kinds.get(v.kind) ?? 0) + 1);
+      return {
+        courseId,
+        modules,
+        plates: visuals.length,
+        objectives: new Set(visuals.map((v) => v.loId)).size,
+        kinds: [...kinds.entries()]
+          .map(([kind, count]) => ({ kind, count }))
+          .sort((x, y) => y.count - x.count || x.kind.localeCompare(y.kind)),
+      };
+    });
+}
+
 async function GalleryPage() {
   const data = await getGalleryData();
+  const groups = byCourse(data, await moduleCourses());
 
   return (
     <main className="mx-auto max-w-[1400px] px-6 pb-16">
@@ -52,23 +95,34 @@ async function GalleryPage() {
           </p>
         </div>
         <div className="flex max-w-md flex-wrap gap-2">
-          <span className="chip border-gold/50 text-gold">
-            {data.total} plates
+          <span className="chip">
+            {groups.length} course{groups.length === 1 ? "" : "s"} with figures — counted each on
+            its own
           </span>
-          <span className="chip">{data.modules.length} modules</span>
-          <span className="chip">{data.loCount} objectives illustrated</span>
-          {data.kindCounts.map(({ kind, count }) => (
-            <span key={kind} className="chip">
-              <span aria-hidden>{kindMeta(kind).glyph}</span> {kind} ×{count}
-            </span>
-          ))}
         </div>
       </section>
 
       {data.total === 0 ? (
         <EmptyState />
       ) : (
-        data.modules.map((mod, mi) => (
+        groups.map((g) => (
+          <div key={g.courseId ?? "unfiled"} className="pb-4">
+            <header className="mb-5 flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-line-soft pb-3">
+              <h2 className="font-display text-2xl font-medium text-ink">
+                {g.courseId ? courseName(g.courseId) : "Units with no course recorded"}
+              </h2>
+              <div className="flex max-w-xl flex-wrap gap-2">
+                <span className="chip border-gold/50 text-gold">{g.plates} plates</span>
+                <span className="chip">{g.modules.length} units</span>
+                <span className="chip">{g.objectives} objectives illustrated</span>
+                {g.kinds.map(({ kind, count }) => (
+                  <span key={kind} className="chip">
+                    <span aria-hidden>{kindMeta(kind).glyph}</span> {kind} ×{count}
+                  </span>
+                ))}
+              </div>
+            </header>
+        {g.modules.map((mod, mi) => (
           <section
             key={mod.id}
             className="anim-rise pb-10"
@@ -130,6 +184,8 @@ async function GalleryPage() {
               ))}
             </div>
           </section>
+        ))}
+          </div>
         ))
       )}
 

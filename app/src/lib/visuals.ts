@@ -1,5 +1,5 @@
 import { pool } from "./db";
-import { MODULE_ORDER, SUBJECT_RANK } from "./module-order";
+import { COURSE_RANK, MODULE_ORDER } from "./module-order";
 
 /** One row of the `visuals` table, joined to its LO (and module via the
  *  teaches edge) for grouping and labeling. */
@@ -72,15 +72,15 @@ const toRow = (r: RawRow): VisualRow => ({
  * position with no term, so Term-1 Unit 1 and Term-2 Unit 1 (both position 1)
  * tied, and the page's unit groups came out with the terms interleaved — on
  * the local data, Term-2 Unit 1 before Term-1 Unit 1, and geometry's Unit 4
- * between Units 3 and 4. The page holds every subject's figures, so the
- * SUBJECT comes first (registry order — maths, then Social Studies, then
- * Arabic), then the catalogue order inside it. `BASE_SELECT` already carries
+ * between Units 3 and 4. The page holds every course's figures, so the
+ * COURSE comes first (course-registry order — National maths, Social Studies
+ * and Arabic, then American maths), then the catalogue order inside it. `BASE_SELECT` already carries
  * the `lo` and `m` aliases both read; `v.id` orders one objective's figures.
  */
 export async function getGalleryData(): Promise<GalleryData> {
   const res = await pool.query(
     `${BASE_SELECT}
-     ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER}, v.id`
+     ORDER BY ${COURSE_RANK}, ${MODULE_ORDER}, v.id`
   );
   const modules: GalleryModule[] = [];
   const byModule = new Map<string, GalleryModule>();
@@ -145,14 +145,14 @@ export async function getVisualsForLos(loIds: string[]): Promise<VisualRow[]> {
 /**
  * Every visual — compact catalog for spine-chat grounding (lib/ask.ts, its
  * only caller). Its order is the order of the FIGURE LIBRARY and FIGURE INDEX
- * lines in the tutor's prompt, so it follows the ask context's: subject
+ * lines in the tutor's prompt, so it follows the ask context's: course
  * first, then catalogue order, then the figure's id (FR-3217; Samuel,
  * 2026-09-25, lifting ADR-0020's hold for this ordering). It used to sort by
  * module position with no term, so Term 1 and Term 2 figures interleaved.
  */
 export async function getAllVisuals(): Promise<VisualRow[]> {
   const res = await pool.query(
-    `${BASE_SELECT} ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER}, v.id`
+    `${BASE_SELECT} ORDER BY ${COURSE_RANK}, ${MODULE_ORDER}, v.id`
   );
   return (res.rows as RawRow[]).map(toRow);
 }

@@ -1,0 +1,224 @@
+{
+  "config_version": 1,
+  "book": "g10-math",
+  "title": "Everything Maths, Grade 10 Mathematics (Siyavula, Version 1.1 CAPS)",
+  "course_id": "course:us-g10-math-en",
+  "curriculum": "us-american-en",
+  "subject": "math",
+  "grade": "10",
+  "language": "en",
+  "direction": "ltr",
+  "id_prefixes": ["g10m"],
+  "load_order": 40,
+  "status": "ingest",
+  "sources": {
+    "pdf": "docs/Source/Gr10_Mathematics_Learner_Eng_v11.pdf",
+    "epub": "docs/Source/Gr10_Mathematics_Learner_Eng_CC-BY.epub",
+    "teacher_pdf": null
+  },
+  "page_offsets": [
+    {
+      "label": "Learner book body, front matter to back matter",
+      "pdf_from": 13,
+      "pdf_to": 532,
+      "pdf_minus_printed": 11,
+      "verified_at": [[6, 17], [236, 247], [293, 304], [500, 511], [515, 526]],
+      "note": "One regime: printed = PDF - 11 on all 497 pages that print a folio, no exception (runbook/g10-s0-report.md §3.1). source_adapter.py re-derives it from every footer on each run and fails if this entry disagrees."
+    }
+  ],
+  "objectives_mode": "derived",
+  "maths_source": "epub-images-md5",
+  "notation": { "decimal": "point", "pair_separator": "comma" },
+  "sacred_content": false,
+  "bundles": [
+    "services/extraction/seed/g10-math/g10m-course.json",
+    "services/extraction/seed/g10-math/g10m-c01.json",
+    "services/extraction/seed/g10-math/g10m-c02.json",
+    "services/extraction/seed/g10-math/g10m-c03.json",
+    "services/extraction/seed/g10-math/g10m-c04.json",
+    "services/extraction/seed/g10-math/g10m-c05.json",
+    "services/extraction/seed/g10-math/g10m-c06.json",
+    "services/extraction/seed/g10-math/g10m-c07.json",
+    "services/extraction/seed/g10-math/g10m-c08.json",
+    "services/extraction/seed/g10-math/g10m-c09.json",
+    "services/extraction/seed/g10-math/g10m-c10.json",
+    "services/extraction/seed/g10-math/g10m-c11.json",
+    "services/extraction/seed/g10-math/g10m-c12.json",
+    "services/extraction/seed/g10-math/g10m-c13.json",
+    "services/extraction/seed/g10-math/g10m-c14.json"
+  ],
+  "superseded_bundles": {},
+  "content_files": [
+    "services/extraction/seed/content/g10m1s3-1.json",
+    "services/extraction/seed/content/g10m1s4-1.json",
+    "services/extraction/seed/content/g10m1s5-1.json",
+    "services/extraction/seed/content/g10m1s6-1.json",
+    "services/extraction/seed/content/g10m1s7-1.json",
+    "services/extraction/seed/content/g10m1s7-2.json",
+    "services/extraction/seed/content/g10m1s7-3.json",
+    "services/extraction/seed/content/g10m1s8-1.json",
+    "services/extraction/seed/content/g10m2s2-1.json",
+    "services/extraction/seed/content/g10m2s3-1.json",
+    "services/extraction/seed/content/g10m2s4-1.json",
+    "services/extraction/seed/content/g10m3s2-1.json",
+    "services/extraction/seed/content/g10m4s2-1.json",
+    "services/extraction/seed/content/g10m4s3-1.json",
+    "services/extraction/seed/content/g10m4s4-1.json",
+    "services/extraction/seed/content/g10m4s5-1.json",
+    "services/extraction/seed/content/g10m4s6-1.json",
+    "services/extraction/seed/content/g10m4s7-1.json",
+    "services/extraction/seed/content/g10m5s3-1.json",
+    "services/extraction/seed/content/g10m5s5-1.json",
+    "services/extraction/seed/content/g10m5s6-1.json",
+    "services/extraction/seed/content/g10m5s7-1.json",
+    "services/extraction/seed/content/g10m5s8-1.json",
+    "services/extraction/seed/content/g10m6s1-1.json",
+    "services/extraction/seed/content/g10m6s2-1.json",
+    "services/extraction/seed/content/g10m6s3-1.json",
+    "services/extraction/seed/content/g10m6s4-1.json",
+    "services/extraction/seed/content/g10m6s5-1.json",
+    "services/extraction/seed/content/g10m6s6-1.json",
+    "services/extraction/seed/content/g10m6s6-2.json",
+    "services/extraction/seed/content/g10m6s6-3.json",
+    "services/extraction/seed/content/g10m6s7-1.json",
+    "services/extraction/seed/content/g10m7s1-1.json",
+    "services/extraction/seed/content/g10m7s2-1.json",
+    "services/extraction/seed/content/g10m7s3-1.json",
+    "services/extraction/seed/content/g10m7s4-1.json",
+    "services/extraction/seed/content/g10m8s1-1.json",
+    "services/extraction/seed/content/g10m8s2-1.json",
+    "services/extraction/seed/content/g10m8s3-1.json",
+    "services/extraction/seed/content/g10m8s3-2.json",
+    "services/extraction/seed/content/g10m8s4-1.json",
+    "services/extraction/seed/content/g10m9s2-1.json",
+    "services/extraction/seed/content/g10m9s3-1.json",
+    "services/extraction/seed/content/g10m9s4-1.json",
+    "services/extraction/seed/content/g10m9s5-1.json",
+    "services/extraction/seed/content/g10m10s1-1.json",
+    "services/extraction/seed/content/g10m10s2-1.json",
+    "services/extraction/seed/content/g10m10s3-1.json",
+    "services/extraction/seed/content/g10m10s4-1.json",
+    "services/extraction/seed/content/g10m10s5-1.json",
+    "services/extraction/seed/content/g10m11s1-1.json",
+    "services/extraction/seed/content/g10m12s1-1.json",
+    "services/extraction/seed/content/g10m13s1-1.json",
+    "services/extraction/seed/content/g10m13s2-1.json",
+    "services/extraction/seed/content/g10m13s2-2.json",
+    "services/extraction/seed/content/g10m13s3-1.json",
+    "services/extraction/seed/content/g10m13s3-2.json",
+    "services/extraction/seed/content/g10m13s4-1.json",
+    "services/extraction/seed/content/g10m14s1-1.json",
+    "services/extraction/seed/content/g10m14s2-1.json",
+    "services/extraction/seed/content/g10m14s3-1.json",
+    "services/extraction/seed/content/g10m14s4-1.json",
+    "services/extraction/seed/content/g10m14s5-1.json",
+    "services/extraction/seed/content/g10m14s6-1.json",
+    "services/extraction/seed/content/g10m14s7-1.json"
+  ],
+  "manifest": "services/extraction/manifest/g10-math-american.json",
+  "program": { "id": "program:us-american-en", "label": "American" },
+  "generated": null,
+  "parity": null,
+  "answer_rules": {
+    "source": "specs/003-curriculum-tracks/marker-evaluation.md §5 (2026-09-25); integration backlog items 30 and 31",
+    "multiplication_dot": true,
+    "forms_from_stem": [
+      { "match": "product of (its )?prime factors", "form": "prime_factors",
+        "note": "Ex1-11:28a–e: a numeric equivalence would accept 143 for 11 × 13" },
+      { "match": "(in decimal form|as (a )?decimal( numbers?)?( |[.,:;]|$))", "form": "decimal",
+        "note": "Ex1-1:11a–g, Ex1-11:8a–b: the fraction is equal but not the form asked" }
+    ],
+    "printed_not_in_asked_form": [
+      { "item": "Ex1-5:15", "asked_form": "factorised", "printed": "7a + 4",
+        "note": "'Factorise', but the printed answer is a sum" },
+      { "item": "Ex1-11:29n", "asked_form": "factorised", "printed": "x(x−2)+(1+y)(1−y)(1+y2)",
+        "note": "'Factorise', but the printed answer is a sum of two products" },
+      { "item": "Ex1-6:14", "asked_form": "factorised", "printed": "(4k −2)(4k + 2)",
+        "note": "a common factor 2 is left in both brackets: 4(2k − 1)(2k + 1)" },
+      { "item": "Ex1-10:3h", "asked_form": "simplest", "printed": "4t−12 (t−2)(t−3)",
+        "note": "not in lowest terms" },
+      { "item": "Ex1-10:3i", "asked_form": "simplest", "printed": "2(k+2) (k2+2)(k+2)",
+        "note": "not in lowest terms: (k + 2) cancels" }
+    ]
+  },
+  "lesson_unit": {
+    "rule": "One numbered teaching section is one lesson (specs/003-curriculum-tracks/decisions.md B). Introductions and chapter summaries are S1 evidence, not lessons, unless promoted.",
+    "gate": {
+      "name": "G0",
+      "passed": "2026-09-25",
+      "by": "Samuel",
+      "record": "specs/003-curriculum-tracks/decisions.md, Gate record, T352"
+    },
+    "splits": [
+      {
+        "id": "P1a",
+        "section": "1.7",
+        "parts": [
+          { "title": "Common factors, difference of two squares and grouping in pairs",
+            "subheadings": ["EMAH", "EMAJ", "EMAK"], "worked_examples": [10, 11, 12], "exercise_sets": ["1-5", "1-6", "1-7"] },
+          { "title": "Factorising a quadratic trinomial",
+            "subheadings": ["EMAM", "EMAN"], "worked_examples": [13], "exercise_sets": ["1-8"] },
+          { "title": "Sum and difference of two cubes",
+            "subheadings": ["EMAP"], "worked_examples": [14, 15, 16, 17], "exercise_sets": ["1-9"] }
+        ]
+      },
+      {
+        "id": "P1b",
+        "section": "6.6",
+        "parts": [
+          { "title": "Sine function",
+            "subheadings": ["EMA53", "EMA54", "EMA55", "EMA56"], "worked_examples": [16, 17], "exercise_sets": [] },
+          { "title": "Cosine function, and comparing the sine and cosine graphs",
+            "subheadings": ["EMA57", "EMA58", "EMA59", "EMA5B", "EMA5C"], "worked_examples": [18, 19], "exercise_sets": [] },
+          { "title": "Tangent function",
+            "subheadings": ["EMA5D", "EMA5F", "EMA5G", "EMA5H"], "worked_examples": [20, 21], "exercise_sets": [] }
+        ],
+        "unassigned_exercise_sets": ["6-6"],
+        "note": "Exercise 6-6 (41 items) closes the whole section; S1's exercise map distributes its items across the three parts."
+      },
+      {
+        "id": "P1c",
+        "section": "8.3",
+        "parts": [
+          { "title": "Gradient between two points",
+            "subheadings": [], "worked_examples": [3, 4], "exercise_sets": ["8-3"] },
+          { "title": "Straight lines: parallel, perpendicular, horizontal and vertical lines, and points on a line",
+            "subheadings": ["EMA6C", "EMA6D", "EMA6F", "EMA6G"], "worked_examples": [5, 6, 7, 8, 9], "exercise_sets": ["8-4"] }
+        ]
+      },
+      {
+        "id": "P1d",
+        "section": "13.2",
+        "parts": [
+          { "title": "Surface area of prisms and cylinders",
+            "subheadings": ["EMA7N"], "worked_examples": [2, 3, 4], "exercise_sets": ["13-2"] },
+          { "title": "Volume of prisms and cylinders",
+            "subheadings": ["EMA7P"], "worked_examples": [5, 6, 7], "exercise_sets": ["13-3"] }
+        ]
+      },
+      {
+        "id": "P1e",
+        "section": "13.3",
+        "parts": [
+          { "title": "Surface area of pyramids, cones and spheres",
+            "subheadings": ["EMA7R"], "worked_examples": [8, 9, 10, 11], "exercise_sets": ["13-4"] },
+          { "title": "Volume of pyramids, cones and spheres",
+            "subheadings": ["EMA7S"], "worked_examples": [12, 13, 14, 15, 16, 17], "exercise_sets": ["13-5"] }
+        ]
+      }
+    ],
+    "promotions": [
+      { "id": "P2a", "section": "6.1" },
+      { "id": "P2b", "section": "7.1" }
+    ],
+    "merges": [
+      { "id": "P3a", "sections": ["1.2", "1.3"], "slug_section": "1.3" },
+      { "id": "P3b", "sections": ["5.2", "5.3", "5.4"], "slug_section": "5.3" }
+    ],
+    "declined": [
+      { "id": "P3c", "kind": "merge_optional", "sections": ["14.4", "14.5"], "note": "Not applied at G0." },
+      { "id": "P3d", "kind": "merge_optional", "sections": ["14.6", "14.7"], "note": "Not applied at G0." }
+    ],
+    "expected_lessons": 65
+  }
+}

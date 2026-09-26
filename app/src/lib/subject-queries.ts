@@ -11,6 +11,15 @@ import {
   spineSubjectOfCourse,
 } from "./subjects";
 import type { LessonBridge, SpineSubject, SubjectSummary, Verdict } from "./types";
+import type { ProgressionLesson } from "./progression";
+import {
+  BOOK_SECTIONS_SQL,
+  sectionIndexFromRows,
+  type BookSectionRow,
+  type SectionIndex,
+} from "./book-sections";
+import { sectionProgress } from "./section-label";
+
 
 /**
  * Per-subject roll-ups + cross-subject bridges (Wave 1.5, the multi-subject
@@ -111,6 +120,8 @@ async function subjectSummariesOn(
     weakest: { id: string; label: string; mastery: number } | null;
     slugs: Set<string>;
     defaultSlug: string | null;
+    /** the subject's lessons in teach order, with mastery — for the roll-ups */
+    lessons: Map<string, ProgressionLesson & { los: { id: string; mastery: number }[] }>;
   }
   const bySubject = new Map<SpineSubject, Acc>();
 
@@ -135,6 +146,7 @@ async function subjectSummariesOn(
         weakest: null,
         slugs: new Set(),
         defaultSlug: null,
+        lessons: new Map(),
       };
       bySubject.set(subject, acc);
     }
@@ -147,7 +159,29 @@ async function subjectSummariesOn(
     const slug = slugOfLo(r.id);
     if (!acc.slugs.has(slug)) acc.slugs.add(slug);
     if (acc.defaultSlug == null) acc.defaultSlug = slug; // first in teach order
+    let lesson = acc.lessons.get(slug);
+    if (!lesson) {
+      lesson = { slug, courseId: r.course_id ?? null, los: [] };
+      acc.lessons.set(slug, lesson);
+    }
+    lesson.los.push({ id: r.id, mastery });
   }
+
+  // The book sections of the courses she may see (FR-4314; migration 034),
+  // read after the gate — the store holds lesson titles. One read for every
+  // subject; none when nothing is visible.
+  const courseIds = [
+    ...new Set(
+      [...bySubject.values()].flatMap((a) =>
+        [...a.lessons.values()].map((l) => l.courseId).filter((id): id is string => id != null)
+      )
+    ),
+  ];
+  const sections: SectionIndex = sectionIndexFromRows(
+    courseIds.length === 0
+      ? []
+      : ((await db.query(BOOK_SECTIONS_SQL, [courseIds])).rows as BookSectionRow[])
+  );
 
   // last comprehension check per subject (checks are newest-first already)
   const lastCheck = new Map<
@@ -179,6 +213,8 @@ async function subjectSummariesOn(
       lessonsCount: a.slugs.size,
       defaultSlug: a.defaultSlug,
       lastCheck: lastCheck.get(a.subject) ?? null,
+      // "k of m parts mastered" per split section; [] for every National course
+      sections: sectionProgress([...a.lessons.values()], sections),
     }));
 }
 

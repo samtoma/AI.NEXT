@@ -1,0 +1,66 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:u2-1-1:simplify",
+  "kind": "family",
+  "lo_id": "lo:u2-1-1",
+  "parent_question_id": "q:u2-1-1:001",
+  "source_page": 30,
+  "tier": "basic",
+  "answer_type": "mcq",
+  "context": null,
+  "params": [
+    {
+      "name": "g",
+      "choice": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "name": "a",
+      "randint": [
+        2,
+        9
+      ]
+    },
+    {
+      "name": "b",
+      "randint": [
+        2,
+        9
+      ],
+      "resample_while": "b == a"
+    }
+  ],
+  "constraints": [
+    "gcd(a, b) == 1"
+  ],
+  "stem": "Write the ratio ${=a * g} : {=b * g}$ in its simplest form.",
+  "solution": [
+    "The highest common factor of ${=a * g}$ and ${=b * g}$ is ${=g}$.",
+    "Divide both terms by ${=g}$: ${=a * g} \\div {=g} = {=a}$ and ${=b * g} \\div {=g} = {=b}$.",
+    "The ratio in simplest form is ${=a} : {=b}$."
+  ],
+  "choices": {
+    "correct": "${=a} : {=b}$",
+    "distractors": [
+      {
+        "text": "${=a * g} : {=b * g}$",
+        "misconception_id": "mc:u2-1-1:ratio-left-unreduced"
+      },
+      {
+        "text": "${=b} : {=a}$",
+        "misconception_id": null
+      },
+      {
+        "text": "${=a + g} : {=b + g}$",
+        "misconception_id": "mc:u2-1-1:ratio-left-unreduced"
+      }
+    ]
+  },
+  "notes": "Reproduces the hand-written family tpl:u2-1-1:simplify in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}

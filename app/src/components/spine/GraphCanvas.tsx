@@ -12,14 +12,25 @@ import type { SpineLo } from "@/lib/types";
 import { spineSubjectDef } from "@/lib/subjects";
 import { masteryStage, masteryPhrase } from "@/lib/mastery";
 import {
+  FRAME_LABEL_H,
   NODE_H,
   PAD,
   curvePath,
   edgeCurve,
   layoutSpine,
   occludedEdges,
+  sectionFrames,
 } from "@/lib/spine-layout";
+
+/**
+ * A topic's book section on the map (feature 003, FR-4315): the split section
+ * it is a part of, as the frame round its cards names it. `label` is
+ * "1.7 Factorisation", `part` is "part 2 of 3".
+ */
+export type MapSection = { key: string; label: string; part: string | null };
 import { MasteryFill } from "@/components/MasteryFill";
+import { MathText } from "@/components/MathText";
+import { plainMath } from "@/lib/math-text";
 import { cx } from "@/components/sticker";
 
 export type AsOf = "baseline" | "today";
@@ -81,9 +92,16 @@ export function GraphCanvas({
   citedIds,
   pulses,
   coverRef,
+  sections,
 }: {
   los: SpineLo[];
   edges: { src: string; dst: string }[];
+  /**
+   * Topic id → its split book section (FR-4315). Omitted when the subject has
+   * none — every National subject — and then nothing below differs from the
+   * map before 003: same placement, no frames, same card names.
+   */
+  sections?: ReadonlyMap<string, MapSection>;
   asOf: AsOf;
   selectedLoId: string | null;
   questionCounts: Map<string, number>;
@@ -179,9 +197,20 @@ export function GraphCanvas({
     return () => ro.disconnect();
   }, []);
 
+  const groupOf = useMemo(
+    () => (sections ? (id: string) => sections.get(id)?.key ?? null : undefined),
+    [sections]
+  );
   const { placed, nodeW, canvasW, canvasH, midY } = useMemo(
-    () => layoutSpine(los, width),
-    [los, width]
+    () => layoutSpine(los, width, groupOf),
+    [los, width, groupOf]
+  );
+  /* A split section's cards, framed as one group per column run, labelled by
+     the section (and the part, when the run is one part). None without a
+     split section. */
+  const frames = useMemo(
+    () => (groupOf ? sectionFrames(placed, nodeW, groupOf) : []),
+    [placed, nodeW, groupOf]
   );
   const posById = useMemo(
     () => new Map(placed.map((p) => [p.lo.id, p])),
@@ -262,6 +291,45 @@ export function GraphCanvas({
         className="relative"
         style={{ width: canvasW, height: canvasH }}
       >
+        {/* book sections (FR-4315) — a Honey tray behind each run of one
+            section's cards, its label in the Honey band's own pairing (amber
+            text on Honey). Behind the edges and the cards; decoration for the
+            eye only, since every framed card also says its section in its
+            accessible name below. */}
+        {frames.map((f) => {
+          const members = f.loIds.map((id) => sections?.get(id));
+          const first = members[0];
+          const onePart = members.every((m) => m?.part && m.part === first?.part);
+          const label = first ? `${first.label}${onePart && first.part ? ` · ${first.part}` : ""}` : "";
+          return (
+            <div
+              key={`${f.key}|${f.loIds[0]}`}
+              aria-hidden
+              className="pointer-events-none absolute"
+              style={{
+                left: f.x,
+                top: f.y,
+                width: f.width,
+                height: f.height,
+                zIndex: 0,
+                borderRadius: "var(--play-radius)",
+                border: "var(--play-stroke-sm) solid var(--play-inactive-border)",
+                background: "var(--card-warm)",
+              }}
+            >
+              {/* The display face in sentence case, not the mono eyebrow:
+                  "1.7 Factorisation · part 2 of 3" must fit one card's width,
+                  and uppercase mono truncated it to "…PART 1…". */}
+              <span
+                className="block truncate px-2.5 font-display text-[0.74rem] font-bold text-[var(--play-text-amber-warm)]"
+                style={{ height: FRAME_LABEL_H, lineHeight: `${FRAME_LABEL_H}px` }}
+              >
+                {label}
+              </span>
+            </div>
+          );
+        })}
+
         {/* edges — plain lines, no arrowheads, no direction labels */}
         <svg
           className="absolute inset-0"
@@ -317,6 +385,12 @@ export function GraphCanvas({
             !lo.prereqIds.includes(selectedLoId) &&
             !(posById.get(selectedLoId)?.lo.prereqIds ?? []).includes(lo.id);
           const count = questionCounts.get(lo.id) ?? 0;
+          // Its book section, said in words too (FR-4315): the frame is
+          // aria-hidden, so the grouping reaches a screen reader here.
+          const section = sections?.get(lo.id);
+          const sectionName = section
+            ? `, ${section.label}${section.part ? ` ${section.part}` : ""}`
+            : "";
           return (
             <button
               key={lo.id}
@@ -334,7 +408,7 @@ export function GraphCanvas({
                   keepClear(e.currentTarget, false);
               }}
               aria-pressed={selected}
-              aria-label={`${lo.label} — ${masteryPhrase(stage)}, ${count} questions`}
+              aria-label={`${plainMath(lo.label)} — ${masteryPhrase(stage)}, ${count} questions${sectionName}`}
               /* `items-stretch` is NOT redundant with the flex default.
                  WebKit's UA stylesheet overrides `align-items` on a <button>,
                  so a button used as a flex container does not stretch its
@@ -407,7 +481,14 @@ export function GraphCanvas({
                       : undefined
                   }
                 >
-                  {lo.label}
+                  {/* An objective label may carry maths (backlog #37). The
+                      card's height is fixed and its title clamps at three
+                      lines, so a formula is set a size down: at full size a
+                      superscript's taller line box pushed a three-line
+                      label's last line under the card's edge. Important
+                      (`!`): `globals.css` sizes `.katex` in an unlayered
+                      rule, which outranks any layered utility. */}
+                  <MathText text={lo.label} className="[&_.katex]:text-[0.9em]!" />
                 </span>
               </span>
               {/* Belt and braces with the `items-stretch` above: an explicit

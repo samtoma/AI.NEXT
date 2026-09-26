@@ -1,0 +1,57 @@
+{
+  "generator": "fixture generator — tests only",
+  "questions": [
+    {
+      "id": "q:g10m8s1-1-1:w001",
+      "lo_id": "lo:g10m8s1-1-1",
+      "tier": "basic",
+      "question_type": "widget",
+      "stem": "Plot the point $(3, -2)$.",
+      "choices": {
+        "kind": "pair_plotter",
+        "spec": {
+          "target": {
+            "x": 3,
+            "y": -2
+          },
+          "xRange": [
+            -5,
+            5
+          ],
+          "yRange": [
+            -5,
+            5
+          ]
+        },
+        "diagnostics": [
+          {
+            "predicate": "swapped-coordinates",
+            "misconception_id": "mc:g10m8s1-1-1:coordinates-swapped"
+          },
+          {
+            "predicate": "wrong-quadrant",
+            "misconception_id": "mc:g10m8s1-1-1:sign-dropped"
+          }
+        ]
+      },
+      "correct_answer": "ok",
+      "canonical_solution": [
+        {
+          "step": 1,
+          "text_md": "Move $3$ to the right along the $x$-axis."
+        },
+        {
+          "step": 2,
+          "text_md": "Then $2$ down: the point is $(3, -2)$."
+        }
+      ],
+      "status": "live",
+      "parent_question_id": "q:g10m8s1-1-1:ex8-1-2",
+      "source_page": null,
+      "source_note": "Generated from template family fam:g10m8s1-1-1:plot.",
+      "reviewed_by": null,
+      "reviewed_at": null
+    }
+  ],
+  "misconceptions": []
+}

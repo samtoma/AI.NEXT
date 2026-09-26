@@ -18,6 +18,9 @@ import type {
   UnderstandingCheck,
 } from "@/lib/types";
 import { isRtlSubject } from "@/lib/subjects";
+import { courseDef } from "@/lib/courses";
+import { lessonHeading } from "@/lib/section-label";
+import { MathText } from "@/components/MathText";
 import { TURN_THRESHOLDS } from "@/lib/turn-thresholds";
 import { addressForms } from "@/lib/address";
 import { track } from "@/lib/ga";
@@ -976,13 +979,16 @@ export function LessonSession({
     [first, widgetPronoun]
   );
 
+  // The book a [[page:N]] receipt points into, as this course cites it
+  // (backlog #36): "Ministry textbook · MOETE 2025–2026" for a National
+  // course, as it always read; the Grade 10 book by its own name.
+  const bookCite = courseDef(lesson.courseId)?.cite ?? null;
   const resolveCite = useCallback(
     (c: Cite) => {
       if (c.kind === "page")
-        return {
-          title: "Ministry textbook",
-          sub: `MOETE 2025–2026 · page ${c.id}`,
-        };
+        return bookCite
+          ? { title: bookCite.name, sub: `${bookCite.edition} · page ${c.id}` }
+          : { title: `Page ${c.id}`, sub: "the lesson's book" };
       if (c.kind === "q") {
         const q = questionById.get(c.id);
         return {
@@ -1003,7 +1009,7 @@ export function LessonSession({
         sub: `learning objective · ${lesson.lessonRef}`,
       };
     },
-    [questionById, loById, lesson.lessonRef]
+    [questionById, loById, lesson.lessonRef, bookCite]
   );
 
   const onCite = useCallback(
@@ -1158,6 +1164,7 @@ export function LessonSession({
   }
 
   const stepNow = Math.min(Math.max(covered.length, 1), lesson.los.length);
+  const heading = lesson.provenance ? lessonHeading(lesson.provenance) : null;
   const currentLo =
     (covered.length ? loById.get(covered[covered.length - 1]) : undefined) ??
     lesson.los[0];
@@ -1184,7 +1191,26 @@ export function LessonSession({
               )}
             </p>
             <h1 className={cx(HEADING, "text-xl md:text-2xl")}>
-              {lesson.lessonRef} — {lesson.title}
+              {heading ? (
+                // A lesson with book provenance (the Grade 10 book) names its
+                // printed section and its part — "1.7 Factorisation · part 2
+                // of 3" — the check-in's words (FR-4318, backlog #34). The
+                // number reads LTR in any direction. Every National lesson
+                // has no provenance and keeps "Lesson 1-1 — Cartesian product".
+                <>
+                  <span dir="ltr">{heading.number}</span> {heading.title}
+                  {heading.part && (
+                    <span className="text-[color:var(--play-text-muted)]">
+                      {" · "}
+                      {heading.part}
+                    </span>
+                  )}
+                </>
+              ) : (
+                <>
+                  {lesson.lessonRef} — {lesson.title}
+                </>
+              )}
             </h1>
           </div>
 
@@ -1257,7 +1283,8 @@ export function LessonSession({
             ·{" "}
             {/* social LO labels are Arabic — keep them in the RTL flow */}
             <span dir={rtl ? undefined : "ltr"} className="font-normal text-ink-soft">
-              {currentLo?.label}
+              {/* an objective label may carry maths (backlog #37) */}
+              {currentLo?.label != null && <MathText text={currentLo.label} />}
             </span>
           </span>
           <span dir={rtl ? "rtl" : "ltr"} className="text-[0.85rem] text-ink-faint">

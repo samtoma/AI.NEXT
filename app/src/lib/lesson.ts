@@ -15,10 +15,18 @@ import { visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
-import { MODULE_ORDER, SUBJECT_RANK } from "./module-order";
+import { COURSE_RANK, MODULE_ORDER } from "./module-order";
 import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
 import type { WidgetQuestionSpec } from "./types";
-import { mathWidgetDocs } from "./widget-docs";
+import { CURVE_SKETCHER_G10_FAMILIES, documentedMathWidgets, mathWidgetDocs, mathWidgetDocsNamed } from "./widget-docs";
+import { courseDef, type CourseTutorFacts } from "./courses";
+import {
+  BOOK_SECTIONS_SQL,
+  provenanceFromRow,
+  type BookSectionRow,
+  type LessonProvenance,
+} from "./book-sections";
+import { lessonHeading, shownProvenance, shownTitles } from "./section-label";
 import {
   figureDirectivesDoc,
   socialFigureDirectivesDoc,
@@ -74,6 +82,16 @@ import type {
  *
  * NOTHING in this file's prompt text changed. The edits are the connection a
  * query runs on and the type of one parameter.
+ *
+ * Feature 003 (ADR-0020 note, 2026-09-25; FR-4205, FR-4206): the facts these
+ * prompts state about a BOOK — its name, the lead of a lesson reference, the
+ * lesson titles, the geometry lessons, the fallback example ids, where a
+ * lesson's widgets come from — are read from the course registry
+ * (`lib/courses.ts` `CourseTutorFacts`) instead of being written here for the
+ * Prep-3 book. The National courses carry exactly the values this file used,
+ * so their prompts are byte-identical (the capture harness, 438 files, and
+ * `national-prompts.test.mts`); the Grade 10 course's are new
+ * (`g10-prompts.test.mts`).
  */
 
 // The slug rule itself lives in `lib/lesson-slug.ts` — a client-safe module,
@@ -96,28 +114,117 @@ export { DEFAULT_LESSON_SLUG, sanitizeLessonSlug } from "./lesson-slug";
  * @see lib/subjects.ts — `subjectOfCourse` / `requireSubjectOfCourse`
  */
 
-/** Short display titles per lesson slug; fallback = first LO label. */
-const LESSON_TITLES: Record<string, string> = {
-  "u1-1": "Cartesian product",
-  "u1-2": "Relations",
-  "u1-3": "Functions",
-  "u1-4": "Polynomial functions",
-  "u2-1": "Ratio",
-  "u2-2": "Proportion",
-  "u2-3": "Direct and inverse variation",
-  "u3-1": "Collecting data and samples",
-  "u3-2": "Dispersion and standard deviation",
-  "u4-1": "Trigonometric ratios",
-  "u4-2": "Special angles and applications",
-  "u5-1": "The distance between two points",
-  "u5-2": "The midpoint of a segment",
-  "u5-3": "The slope of a straight line",
-  "u5-4": "The equation of a straight line",
-  "geo1-1": "The circle: definitions and chords",
-  "geo1-2": "Point, line and circle positions — tangents",
-  "geo1-3": "The circumcircle",
-  "geo1-4": "Chords and distance from the center",
-};
+/* ------------------------------------------------------------------ */
+/* What the tutor is told about the course's book (feature 003)        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The course's tutor facts — book name, syllabus line, example ids, lesson
+ * titles, the figure-led lessons and where its widgets come from — from the
+ * course registry (`lib/courses.ts` `CourseTutorFacts`). They used to be
+ * strings in this file's maths kit, true of the Prep-3 book only.
+ *
+ * A course the registry does not know has no facts and cannot be taught: this
+ * throws rather than lending it another book's name, the same refusal
+ * `requireSubjectOfCourse` makes for its subject.
+ */
+function tutorFacts(courseId: string | null | undefined): CourseTutorFacts {
+  const def = courseDef(courseId);
+  if (!def) {
+    throw new Error(
+      `Course "${courseId}" is not in the course registry (lib/courses.ts), so ` +
+        `the tutor has no facts about its book. Refusing to teach it with another book's.`
+    );
+  }
+  return def.tutor;
+}
+
+/**
+ * A lesson's display title, in this order:
+ *
+ *   1. the registry's printed title, for a book whose bundles carry none
+ *      (Prep-3 maths, `LESSON_TITLES` before 003, text unchanged);
+ *   2. its printed title from the book-section store (FR-4311, migration 034)
+ *      — `printedLabel(...).title` — for a lesson of a course whose book
+ *      provenance changes what it shows (`shownProvenance`,
+ *      lib/section-label.ts: a course with a split, merged or promoted lesson,
+ *      i.e. the Grade 10 book). This is what puts "Rational and irrational
+ *      numbers" where the prompt used to print the merged lesson's first
+ *      objective;
+ *      The same store names the lessons of a course whose registry entry
+ *      says its lessons carry the book's printed names
+ *      (`tutor.bookLessonTitles`, `shownTitles`): Prep-3 Arabic, Samuel's
+ *      decision 13 — «عِبادُ الرَّحمنِ», where every Arabic lesson used to
+ *      print its first objective «فهم النص والاستماع». An approved ADR-0020
+ *      exception, for this title and nothing else;
+ *   3. undefined — the caller then uses the first objective's label, as it
+ *      always has. Every maths and Social Studies lesson ends here or at 1,
+ *      with or without a one-section row in the store, so its title is
+ *      byte-identical (FR-4206; the section-label header says why "with a
+ *      row" is not enough). So does an Arabic lesson with no row yet.
+ *
+ * One function, so the catalogue and the tutor's prompt cannot disagree about
+ * it. The store is read by its callers on the handle they already hold
+ * (`bookSectionsOn`); this stays pure.
+ */
+function lessonTitle(
+  courseId: unknown,
+  slug: string,
+  printed?: string
+): string | undefined {
+  const registry = courseDef(courseId)?.tutor.lessonTitles?.[slug];
+  if (registry !== undefined) return registry;
+  return printed != null && printed !== "" ? printed : undefined;
+}
+
+/**
+ * The printed reference a lesson is called by (backlog #35, FR-4318): for a
+ * lesson whose book provenance is shown, its printed section number(s) —
+ * "1.7" for each part of 1.7, and the RANGE "1.2–1.3" for the merged lesson
+ * that covers both — the same words the check-in, the chips and the lesson
+ * header print, so the tutor never says "section 1.3" of a lesson the
+ * student sees as "1.2–1.3". Every other lesson — every National one — keeps
+ * its objectives' `syllabus_ref` ("Lesson 1-1"), byte for byte.
+ */
+function lessonRefOf(
+  syllabusRef: string | null | undefined,
+  slug: string,
+  provenance?: LessonProvenance | null
+): string {
+  if (provenance) {
+    const number = lessonHeading(provenance).number;
+    if (number !== "") return number;
+  }
+  return syllabusRef ?? slug;
+}
+
+/**
+ * What the book-section store says about the given courses' lessons, by slug
+ * (FR-4311): `BOOK_SECTIONS_SQL` on the caller's handle, then
+ *   · `provenance` — `shownProvenance`, only the book-shaped courses' rows, so
+ *     a National lesson is never in the map;
+ *   · `titles` — `shownTitles`, the printed titles of those courses' lessons
+ *     and of a course whose registry names its lessons from the store
+ *     (Prep-3 Arabic, decision 13).
+ * `courseIds` must already be gated: the store holds lesson titles. No ids,
+ * no read.
+ *
+ * Not `getSectionIndex` (lib/progression-db.ts): that module imports this one,
+ * and the read is one statement.
+ */
+async function bookSectionsOn(
+  db: Db,
+  courseIds: readonly string[]
+): Promise<{ provenance: Map<string, LessonProvenance>; titles: Map<string, string> }> {
+  if (courseIds.length === 0) return { provenance: new Map(), titles: new Map() };
+  const r = await db.query(BOOK_SECTIONS_SQL, [courseIds]);
+  const rows = (r.rows as BookSectionRow[]).map(provenanceFromRow);
+  return { provenance: shownProvenance(rows), titles: shownTitles(rows) };
+}
+
+/** Placeholders for an example id a lesson has none of — never another book's id. */
+const PLACEHOLDER_ID = "<id>";
+const PLACEHOLDER_PAGE = "N";
 
 /* ------------------------------------------------------------------ */
 /* Catalog — every teachable lesson, grouped by module                 */
@@ -191,15 +298,17 @@ export async function getLessonCatalog(
   studentId: number | null = null,
   c?: PoolClient
 ): Promise<LessonInfo[]> {
-  const { losRes, masteryRes, visible } = await scoped(studentId, c, async (db) => {
+  const { losRes, masteryRes, visible, book } = await scoped(studentId, c, async (db) => {
     const [losRes, masteryRes] = await sequential([
-      // Every subject's lessons, so SUBJECT FIRST (registry order), then the
-      // catalogue order inside each (FR-3217). The subject key is the same for
+      // Every course's lessons, so COURSE FIRST (course-registry order:
+      // curriculum, then subject — for a National student exactly the old
+      // subject order), then the catalogue order inside each (FR-3217,
+      // FR-4009). The course key is the same for
       // every module of one course, so a caller that narrows to one course —
       // the landing, the pointer, "just finished" — sees the order it always
       // did; the check-in's picker with no subject named no longer interleaves
       // Arabic, Social Studies and maths units by unit number.
-      () => db.query(`${LO_MODULE_SELECT} ORDER BY ${SUBJECT_RANK}, ${MODULE_ORDER}`),
+      () => db.query(`${LO_MODULE_SELECT} ORDER BY ${COURSE_RANK}, ${MODULE_ORDER}`),
       () =>
         studentId == null
           ? Promise.resolve({ rows: [] as { lo_id: string; score: string }[] })
@@ -211,7 +320,17 @@ export async function getLessonCatalog(
     ] as const);
     // One client, so this runs after the two above rather than beside them
     // (pg@9; lib/db.ts `sequential`).
-    return { losRes, masteryRes, visible: await courseGateFor(db, studentId) };
+    const visible = await courseGateFor(db, studentId);
+    // The book provenance of the courses she may see (FR-4311), after the
+    // gate: the store holds lesson titles, and a hidden course's are not hers.
+    const courseIds = [
+      ...new Set(
+        losRes.rows
+          .map((r) => r.course_id as string | null)
+          .filter((id): id is string => id != null && visible(id))
+      ),
+    ];
+    return { losRes, masteryRes, visible, book: await bookSectionsOn(db, courseIds) };
   });
   const mastery = new Map<string, number>(
     masteryRes.rows.map((r) => [r.lo_id, Number(r.score)])
@@ -227,15 +346,18 @@ export async function getLessonCatalog(
     const slug = slugOfLo(r.id);
     let info = bySlug.get(slug);
     if (!info) {
+      const provenance = book.provenance.get(slug);
       info = {
         slug,
-        ref: r.syllabus_ref ?? slug,
-        title: LESSON_TITLES[slug] ?? r.label,
+        ref: lessonRefOf(r.syllabus_ref, slug, provenance),
+        title: lessonTitle(r.course_id, slug, book.titles.get(slug)) ?? r.label,
         moduleId: r.module_id ?? "module:unfiled",
         moduleLabel: r.module_label ?? "Unfiled",
         courseId: r.course_id ?? null,
         subject: subjectOfCourse(r.course_id),
         los: [],
+        // only for a book-shaped course: a National lesson carries no key at all
+        ...(provenance ? { provenance } : {}),
       };
       bySlug.set(slug, info);
       out.push(info);
@@ -450,6 +572,58 @@ async function lessonDataOn(
   );
   const kit = lessonPromptKit(subject);
 
+  // The widgets of the lesson's OWN unit, for a course whose registry facts
+  // say they come from its data (FR-1209; feature 003, decision 10): the kinds
+  // of the live widget questions of the lesson's module, most used first. The
+  // Prep-3 unit map in `lib/widget-docs.ts` knows nothing of such a book, and
+  // its fallback (pair_plotter, product_builder) is Prep-3's Unit 1 — the
+  // borrowed widget decision 10 rules out. Prep-3 never runs this read.
+  let unitWidgets: string[] | undefined;
+  let hasG10CurveFamily = false;
+  if (tutorFacts(first?.course_id).lessonWidgets === "module-questions") {
+    const moduleId = (first?.module_id as string | null | undefined) ?? null;
+    const w =
+      moduleId == null
+        ? { rows: [] as { kind: unknown }[] }
+        : await db.query(
+            `SELECT q.choices->>'kind' AS kind, count(*) AS n
+               FROM questions q
+               JOIN graph_edges t
+                 ON t.dst_id = q.lo_id AND t.edge_type = 'teaches' AND t.system_to IS NULL
+              WHERE t.src_id = $1 AND q.status = 'live' AND q.question_type = 'widget'
+              GROUP BY 1
+              ORDER BY count(*) DESC, 1`,
+            [moduleId]
+          );
+    unitWidgets = w.rows
+      .map((r) => r.kind)
+      .filter((k): k is string => typeof k === "string" && k.length > 0);
+
+    // `widget-docs.ts` documents curve_sketcher's five NEW families (hyperbola,
+    // exponential, sine, cosine, tangent) under a separate key
+    // ("curve_sketcher_g10") so the National unit map's own entry — read by
+    // every Prep-3 unit that already offers curve_sketcher — stays exactly as
+    // it was. A G10 unit whose live bank holds a curve_sketcher question of
+    // one of those five is told about that key instead (`mathProtocol`
+    // below), which needs to know that BEFORE it asks `mathWidgetDocsNamed`
+    // for its widget list — a second, cheap read, only when the unit has a
+    // curve_sketcher at all.
+    if (unitWidgets.includes("curve_sketcher") && moduleId != null) {
+      const fnRes = await db.query(
+        `SELECT DISTINCT q.choices->'spec'->>'fn' AS fn
+           FROM questions q
+           JOIN graph_edges t
+             ON t.dst_id = q.lo_id AND t.edge_type = 'teaches' AND t.system_to IS NULL
+          WHERE t.src_id = $1 AND q.status = 'live' AND q.question_type = 'widget'
+            AND q.choices->>'kind' = 'curve_sketcher'`,
+        [moduleId]
+      );
+      hasG10CurveFamily = fnRes.rows.some((r) =>
+        CURVE_SKETCHER_G10_FAMILIES.has(String((r as { fn: unknown }).fn))
+      );
+    }
+  }
+
   // Distinct base maps referenced by the stored map_scene figures (≤2, in
   // first-appearance order) — keys the gazetteer injection for social lessons.
   const mapBases: string[] = [];
@@ -488,14 +662,29 @@ async function lessonDataOn(
     mastery: mastery.get(r.id) ?? 0,
   }));
 
+  // The lesson's book provenance (FR-4311, FR-4318): the printed title of a
+  // Grade 10 lesson, where the header used to print its first objective. Read
+  // for the lesson's whole course, not by `LESSON_PROVENANCE_SQL`'s one row,
+  // because whether the store may name it is a property of the course
+  // (`shownProvenance`): a National lesson's own one-section row would
+  // otherwise rename it. The course has passed the gate above.
+  const courseId = courseOfLessonRows(lesson.rows);
+  const book = await bookSectionsOn(db, courseId ? [courseId] : []);
+  const provenance = book.provenance.get(safeSlug);
+
   return {
     slug: safeSlug,
-    lessonRef: first?.syllabus_ref ?? safeSlug,
-    title: LESSON_TITLES[safeSlug] ?? first?.label ?? safeSlug,
+    // the printed range for a merged Grade 10 lesson ("1.2–1.3"), as the
+    // check-in prints it (backlog #35); `syllabus_ref` for every other
+    lessonRef: lessonRefOf(first?.syllabus_ref, safeSlug, provenance),
+    title:
+      lessonTitle(first?.course_id, safeSlug, book.titles.get(safeSlug)) ??
+      first?.label ??
+      safeSlug,
     moduleLabel: first?.module_label ?? "Unfiled",
     // the SAME answer `lessonCourseId` gives for this slug (`courseOfLessonRows`
     // over `resolveLessonLos`): what `buildLessonContext` narrows probing by
-    courseId: courseOfLessonRows(lesson.rows),
+    courseId,
     subject,
     los,
     questions,
@@ -517,6 +706,14 @@ async function lessonDataOn(
     // Address and voice only (FR-2603). Nothing below reads it except the
     // prompt templates; `null` means "not recorded", never "masculine".
     gender: profile?.gender ?? null,
+    // only for a course that names its own unit's widgets (see above)
+    ...(unitWidgets ? { unitWidgets } : {}),
+    // only true for a G10 unit whose live curve_sketcher bank needs the wider
+    // ("curve_sketcher_g10") documentation (see above)
+    ...(hasG10CurveFamily ? { hasG10CurveFamily } : {}),
+    // only for a book-shaped course (lib/section-label.ts): the check-in's
+    // "1.7 Factorisation · part 2 of 3" (FR-4318)
+    ...(provenance ? { provenance } : {}),
   };
 }
 
@@ -525,7 +722,27 @@ export function lessonAnchorLo(data: LessonData): string {
   return data.los[0]?.id ?? "lo:u1-1-1";
 }
 
-const isGeoLesson = (data: LessonData) => data.slug.startsWith("geo");
+/**
+ * A lesson taught figure-first — Prep-3's geometry units (`geo…`), by the
+ * course's own registry fact. A course without one has none: a Grade 10
+ * geometry chapter is not told about Prep-3's circle and angle widgets.
+ */
+function isGeoLesson(data: LessonData): boolean {
+  const prefix = tutorFacts(data.courseId).figureLedSlugPrefix;
+  return prefix != null && data.slug.startsWith(prefix);
+}
+
+/**
+ * The lesson's own unit's widgets, documented ones only, for a course that
+ * names them from its data (`lessonWidgets: "module-questions"`); `null` for a
+ * course that reads the unit map in `lib/widget-docs.ts` (Prep-3), whose
+ * prompts therefore stay as they were.
+ */
+function ownUnitWidgets(data: LessonData): string[] | null {
+  return tutorFacts(data.courseId).lessonWidgets === "module-questions"
+    ? documentedMathWidgets(data.unitWidgets ?? [])
+    : null;
+}
 
 /* ------------------------------------------------------------------ */
 /* Grounding block shared by both modes + the rating pass              */
@@ -589,9 +806,13 @@ export function lessonDataBlock(data: LessonData): string {
     .join("\n");
 
   const vizLines = visualsCatalogLines(data.visuals);
-  const bookName = kit.bookName(data.docTitle);
+  // the course's own book (FR-4205): "Egyptian ministry textbook" and "school
+  // Lesson 1-1" for the National books, exactly as before; "this book" and
+  // "section 1.3" for Grade 10
+  const facts = tutorFacts(data.courseId);
+  const bookName = kit.bookName(data.docTitle, facts);
 
-  return `LESSON DATA — your ONLY source of truth (school ${data.lessonRef}: ${data.title} — ${data.moduleLabel}, ${bookName})
+  return `LESSON DATA — your ONLY source of truth (${facts.lessonRefLead} ${data.lessonRef}: ${data.title} — ${data.moduleLabel}, ${bookName})
 Student: ${data.studentName} (id ${data.studentId}), ${lowerGrade(data.grade)}.
 
 LEARNING OBJECTIVES of this lesson, in teaching order:
@@ -703,21 +924,28 @@ const CROSS_SUBJECT_RULE = `CROSS-SUBJECT AWARENESS (subjects stay separate; off
 interface ProtocolExamples {
   lo: string;
   q: string;
-  page: number;
+  /** a page number, or the placeholder "N" when neither the lesson nor its course has one */
+  page: number | string;
   viz: string;
 }
 
 /** Dispatches to the subject's own protocol — the directive catalogue, the
- *  citation rules and the FORMAT line are all per-subject (registry §widgets). */
+ *  citation rules and the FORMAT line are all per-subject (registry §widgets).
+ *
+ *  The examples are the lesson's own ids. When it has none of one kind, the
+ *  course's registry fallback applies (the National books: exactly the ids
+ *  they have always shown) — and for a course with none (Grade 10), a
+ *  placeholder, never another book's id (decision 10). */
 function sharedProtocol(data: LessonData, rhythm: string): string {
   const kit = lessonPromptKit(data.subject);
+  const fallback = tutorFacts(data.courseId).exampleFallbacks;
   return kit.protocol(
     rhythm,
     {
-      lo: data.los[0]?.id.replace(/^lo:/, "") ?? "u1-1-1",
-      q: data.questions[0]?.id.replace(/^q:/, "") ?? "u1-1-1:001",
-      page: data.los[0]?.sourcePage ?? 8,
-      viz: data.visuals[0]?.id ?? kit.fallbackVizId,
+      lo: data.los[0]?.id.replace(/^lo:/, "") ?? fallback?.lo ?? PLACEHOLDER_ID,
+      q: data.questions[0]?.id.replace(/^q:/, "") ?? fallback?.q ?? PLACEHOLDER_ID,
+      page: data.los[0]?.sourcePage ?? fallback?.page ?? PLACEHOLDER_PAGE,
+      viz: data.visuals[0]?.id ?? fallback?.viz ?? PLACEHOLDER_ID,
     },
     data
   );
@@ -806,6 +1034,21 @@ function mathProtocol(
   const vizGuidance = isGeoLesson(data)
     ? `This is a GEOMETRY lesson: lean on figures — open most teaching beats with a stored geo_scene from the FIGURE LIBRARY ({{widget:viz_ref:…}}), or compose one, so ${a.they} SEE${a.S} every definition and theorem drawn out. Then hand the construction over: the circle/angle widgets below let ${a.them} build the thing the figure just showed, which is where a definition actually sticks.`
     : `Figures are for SEEING and widgets are for DOING — show the stored library figure when one fits the beat, then give ${a.them} the matching widget so ${a.they} ${a.does} it ${a.themself}.`;
+  // FR-1209: the lesson's own unit's widgets and no others. Prep-3 reads the
+  // unit map (byte-identical); a course that names its own reads its data.
+  const own = ownUnitWidgets(data);
+  // T417: a G10 unit whose live curve_sketcher bank holds one of the five new
+  // families (`hasG10CurveFamily`, set only for such a course) is documented
+  // under "curve_sketcher_g10" instead — the wider entry, never folded into
+  // the original so every Prep-3 lesson's prompt (which never sets this flag)
+  // stays byte-identical.
+  const widgetDocs =
+    own == null
+      ? mathWidgetDocs(data.slug, a)
+      : mathWidgetDocsNamed(
+          data.hasG10CurveFamily ? own.map((w) => (w === "curve_sketcher" ? "curve_sketcher_g10" : w)) : own,
+          a
+        );
 
   return `CITATIONS: embed [[lo:${exLo}]] / [[q:${exQ}]] / [[page:${exPage}]] receipt markers after substantive claims, ids strictly from the LESSON DATA. Never inside $...$ math.
 
@@ -814,7 +1057,7 @@ ${rhythm}
 
 INTERACTIVE DIRECTIVES (each on its OWN line; at most ONE interactive directive per message, always as its LAST beat — {{beat}} itself is a pause marker, not an interactive directive):
 - {{show_question:q:${exQ}}} — pushes that live question card (ids from the QUESTION BANK only; each id at most once per session).
-${mathWidgetDocs(data.slug, a)}
+${widgetDocs}
   Every widget payload is FLAT JSON in exactly the shape shown, plain ASCII inside the JSON. Each one grades itself on the student's device and reports back — never state the answer in the same message you emit a widget in, and never emit one whose numbers you have not checked are reachable: a widget with an impossible target does not render at all, and the beat is simply lost.
 - ${figureDirectivesDoc(exViz)}
   A figure counts as the ONE directive of its message. ${vizGuidance}
@@ -833,7 +1076,7 @@ FORMAT: plain short paragraphs, inline math in $...$ (LaTeX). No headings, no nu
  * no voice to borrow, so this throws instead of silently teaching it in
  * another subject's language.
  */
-function languageContract(subject: Subject): string {
+function languageContract(subject: Subject, facts?: CourseTutorFacts): string {
   const contract = subjectDef(subject).languageContract;
   if (contract == null) {
     throw new Error(
@@ -841,8 +1084,32 @@ function languageContract(subject: Subject): string {
         `its entry in lib/subjects.ts before teaching it.`
     );
   }
-  return contract;
+  // An English-only course (decision 9) says so in one extra line; every
+  // course with its Arabic touches reads the subject's contract unchanged.
+  return facts && !facts.arabicTouches ? `${contract}\n${ENGLISH_ONLY.languageLine}` : contract;
 }
+
+/**
+ * THE ENGLISH-ONLY VOICE (feature 003, Samuel's decision 9 of 2026-09-25:
+ * "English only" for the Grade 10 course; `CourseTutorFacts.arabicTouches`).
+ *
+ * The maths prompts carry a few Egyptian-Arabic touches — the review opener
+ * «فهمت كله؟ حلو», the Arabic closing example, the «لسه مش فاهم» name of the
+ * still-confused signal and the address block's Arabic line — written for a
+ * National student. A course that turns them off gets these English lines in
+ * their places, and one explicit line in the language contract, so the model
+ * is not left to infer from "an Egyptian grade-10 student" that a little
+ * Arabic is welcome. The student is still described as Egyptian: that is who
+ * she is, and it is not a language instruction. Every National prompt keeps
+ * its touches, byte for byte (ADR-0020's hold).
+ */
+const ENGLISH_ONLY = {
+  reviewOpenerEg: `"Got all of it? Nice — let's lock it in. 3 minutes ⏱"`,
+  closingEg: (firstName: string) =>
+    `${firstName ? `Nice work, ${firstName}` : "Nice work"} — that's the revision done, and the Finish button is there whenever you're ready.`,
+  languageLine:
+    "- English only in this course: write no Arabic at all — no Arabic greeting, interjection, praise or sign-off — even if the student writes to you in Arabic.",
+} as const;
 
 /**
  * HARD GROUNDING RULES for the learn prompt, per subject. Social studies adds
@@ -907,16 +1174,18 @@ interface LessonPromptKit {
   solutionLabel: string;
   /** LESSON DATA: how the question bank is introduced */
   bankNote: string;
-  /** LESSON DATA header: how the source book is named */
-  bookName: (docTitle: string | null) => string;
+  /**
+   * LESSON DATA header: how the source book is named. `facts` is the
+   * course's registry entry — its `lessonBookName` is the unnamed form
+   * ("Egyptian ministry textbook", or "this book" for Grade 10).
+   */
+  bookName: (docTitle: string | null, facts: CourseTutorFacts) => string;
   /** resolve the course's real book title (source_documents) for the header */
   namesSourceBook: boolean;
   /** append the base-map gazetteer to the data block (map-based figures) */
   usesGazetteer: boolean;
   /** learn mode injects the reviewed teaching script (content bundles exist) */
   usesTeachingScript: boolean;
-  /** figure id used in directive examples when the lesson has no stored one */
-  fallbackVizId: string;
   groundingRules: (data: LessonData) => string;
   /** extra review-mode rule bullets ("" when the subject adds none) */
   reviewSubjectRules: (a: AddressForms) => string;
@@ -943,11 +1212,10 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     solutionLabel: "CANONICAL SOLUTION (v",
     bankNote:
       "each with its human-reviewed canonical solution — the ONLY permitted mathematical paths",
-    bookName: () => "Egyptian ministry textbook",
+    bookName: (_docTitle, facts) => facts.lessonBookName,
     namesSourceBook: false,
     usesGazetteer: false,
     usesTeachingScript: false,
-    fallbackVizId: "v:geo1-1:001",
     groundingRules: mathGroundingRules,
     reviewSubjectRules: () => "",
     protocol: mathProtocol,
@@ -955,9 +1223,20 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     reviewOpenerEg: `"فهمت كله؟ حلو — let's lock it in. 3 minutes ⏱"`,
     reviewWidgetMoment: (data) => {
       const a = addressForms(data.gender, data.studentName);
-      return isGeoLesson(data)
-        ? `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask ${a.them} ONE quick question about what it shows — ${a.they} answer${a.s} in chat.`
-        : `ONE widget moment: {{widget:product_builder:{"X":[1,2],"Y":[4,5],"prompt":"Last one - build X x Y yourself"}}} (or a pair_plotter / stored figure if it fits this lesson better).`;
+      const visualMoment = `ONE visual moment: push the single most illustrative stored figure ({{widget:viz_ref:...}} from the FIGURE LIBRARY) and ask ${a.them} ONE quick question about what it shows — ${a.they} answer${a.s} in chat.`;
+      if (isGeoLesson(data)) return visualMoment;
+      const own = ownUnitWidgets(data);
+      // Prep-3 (the unit map): the moment it has always had, byte for byte.
+      if (own == null) {
+        return `ONE widget moment: {{widget:product_builder:{"X":[1,2],"Y":[4,5],"prompt":"Last one - build X x Y yourself"}}} (or a pair_plotter / stored figure if it fits this lesson better).`;
+      }
+      // A course that names its own unit's widgets (Grade 10): only those
+      // (FR-1209) — product_builder is Prep-3's Unit 1, not this book's.
+      if (own.length > 0) {
+        return `ONE widget moment: one of this unit's own widgets (${own.join(" / ")}), in exactly the payload shape documented under INTERACTIVE DIRECTIVES below, or a stored construction from the QUESTION BANK pushed with {{show_question:...}} (or a stored figure from the FIGURE LIBRARY if it fits this lesson better).`;
+      }
+      if (data.visuals.length > 0) return visualMoment;
+      return `ONE last check instead of a widget (this unit has none): {{show_question:...}} with a standard-tier question from the QUESTION BANK that you have not used yet.`;
     },
   },
 
@@ -965,12 +1244,11 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     solutionLabel: "MODEL ANSWER WITH EVIDENCE (الإجابة النموذجية — v",
     bankNote:
       "each with its human-reviewed model answer — الإجابة النموذجية بالأدلة — the ONLY permitted factual path",
-    bookName: (docTitle) =>
-      docTitle ? `كتاب الوزارة «${docTitle}»` : "Egyptian ministry textbook",
+    bookName: (docTitle, facts) =>
+      docTitle ? `كتاب الوزارة «${docTitle}»` : facts.lessonBookName,
     namesSourceBook: true,
     usesGazetteer: true,
     usesTeachingScript: true,
-    fallbackVizId: "v:soc1-1:001",
     groundingRules: socialGroundingRules,
     reviewSubjectRules: SOCIAL_REVIEW_RULES,
     protocol: socialProtocol,
@@ -989,12 +1267,11 @@ const LESSON_PROMPTS: Record<Subject, LessonPromptKit | null> = {
     solutionLabel: "MODEL ANSWER (الإجابة النموذجية — v",
     bankNote:
       "each with its human-reviewed answer record — typed إعراب slots / closed rhetoric labels — the ONLY permitted answer path",
-    bookName: (docTitle) =>
-      docTitle ? `كتاب الوزارة «${docTitle}»` : "Egyptian ministry textbook",
+    bookName: (docTitle, facts) =>
+      docTitle ? `كتاب الوزارة «${docTitle}»` : facts.lessonBookName,
     namesSourceBook: true,
     usesGazetteer: false,
     usesTeachingScript: true,
-    fallbackVizId: "v:ara1-1:001",
     groundingRules: arabicGroundingRules,
     reviewSubjectRules: ARABIC_REVIEW_RULES,
     protocol: arabicProtocol,
@@ -1030,16 +1307,22 @@ function lessonPromptKit(subject: Subject): LessonPromptKit {
  */
 export function learnPrompt(data: LessonData, probing: boolean): string {
   const kit = lessonPromptKit(data.subject);
+  // the course's facts: its Arabic touches, or none (decision 9)
+  const facts = tutorFacts(data.courseId);
   // The register this student is addressed in (FR-2602). Every pronoun below
   // reads from it; there is no longer a literal one anywhere in this prompt.
   const a = addressForms(data.gender, data.studentName);
   const arc = data.los
     .map((l, i) => `${l.id} "${l.label}" (${i === data.los.length - 1 ? "1–2" : "2–3"} messages)`)
     .join(" → ");
-  // the subject's tap-only widgets (registry) — what a stuck student gets next
-  const tapWidgets = ["figure", ...subjectDef(data.subject).tapWidgets].join(
-    " / "
+  // the subject's tap-only widgets (registry) — what a stuck student gets next.
+  // A course that names its own unit's widgets offers only the tap widgets
+  // among them (FR-1209); Prep-3 offers the subject's list, as before.
+  const own = ownUnitWidgets(data);
+  const taps = subjectDef(data.subject).tapWidgets.filter(
+    (w) => own == null || own.includes(w)
   );
+  const tapWidgets = ["figure", ...taps].join(" / ");
   const rhythm = `- Every message is 2–4 beats, separated by {{beat}} alone on its own line ({{beat}} renders as a natural writing pause, never as text).
 - One beat = at most 2 short sentences (≤25 words total), OR one figure directive, OR one interactive directive.
 - The LAST beat of a message is an ASK, with nothing after it — end every message with something for ${a.them} to do or answer. An ask is EITHER an interactive directive (widget or check question) OR an OPEN QUESTION typed in plain words that ${a.they} answer${a.s} by typing back. Both count. Neither is the default.
@@ -1049,7 +1332,7 @@ export function learnPrompt(data: LessonData, probing: boolean): string {
 - ONE IDEA PER BEAT WHEN EXPLAINING. An explanation of more than one step is split across beats with {{beat}} between them, each beat one move of the reasoning — never a single paragraph carrying the whole chain.
 - The very FIRST message of the lesson has no [live event] yet — there is nothing to react to. Open with upbeat energy for the topic itself (see your opening instructions above), not a reaction to anything.
 - THE QUESTION UNDER DISCUSSION IS ALWAYS THE MOST RECENT ONE YOU PUSHED. The whole QUESTION BANK is in your context and every question you have already used is still sitting in the transcript above — explaining an EARLIER one is the single easiest mistake to make here, and from ${a.their} side it looks like you stopped listening. Before you react to a [live event], check its question id against the last {{show_question}} you emitted. Never explain a question ${a.they} ${a.has} already moved past unless ${a.they} ask${a.s} you to go back to it.
-${learnWrongAnswerRules(a, tapWidgets, probing)}
+${learnWrongAnswerRules(a, tapWidgets, probing, facts.arabicTouches)}
 - Never repeat a widget, figure or question ${a.they} already saw.
 - Closing message: one-line recap beat of the big ideas, then a line telling ${a.them} plainly this is the end of today's lesson and ${a.they} can finish whenever ${a.they}${a.isContr} ready, then {{finish_lesson}}. {{finish_lesson}} only arms ${a.their} Finish button — it doesn't end the session, so if ${a.they} keep${a.s} chatting after it, keep answering normally.`;
   const richNote = kit.learnRichNote(data);
@@ -1066,7 +1349,7 @@ TONE: upbeat, playful and curious throughout, whatever the stage — like explor
 
 ${kit.groundingRules(data)}
 
-${languageContract(data.subject)}
+${languageContract(data.subject, facts)}
 
 LESSON ARC: greet ${a.them} in one line and start immediately → ${arc} → FINAL RETRIEVAL, then closing recap message with {{finish_lesson}}.
 FINAL RETRIEVAL is its own message and it is not optional: before any recap, ask ${a.them} to bring back today's main idea FROM MEMORY, in ${a.their} own words, with nothing on screen to copy from — "without scrolling up, tell me what a radius actually is" / "what was the trick we used, in your own words?". Not a question card, not a widget: an open question. Then react to what ${a.they} say${a.s}, and only then recap and finish. A lesson that ends by telling ${a.them} what ${a.they} learned has skipped the part that makes it stick.
@@ -1079,7 +1362,12 @@ export function reviewPrompt(data: LessonData): string {
   const kit = lessonPromptKit(data.subject);
   const a = addressForms(data.gender, data.studentName);
   const picks = data.los.slice(0, 3);
-  const openerEg = kit.reviewOpenerEg;
+  // English-only course (decision 9): English opener and closing examples.
+  const facts = tutorFacts(data.courseId);
+  const openerEg = facts.arabicTouches ? kit.reviewOpenerEg : ENGLISH_ONLY.reviewOpenerEg;
+  const closingEg = facts.arabicTouches
+    ? a.arClosingEg
+    : ENGLISH_ONLY.closingEg(data.studentName.split(" ")[0] ?? "");
   const checkList = picks
     .map(
       (l, i) =>
@@ -1093,7 +1381,7 @@ export function reviewPrompt(data: LessonData): string {
 HARD BUDGET: at most 5 messages total, then ${a.their} Finish button lights up (the session itself doesn't auto-end). Follow this script exactly:
 ${checkList}
 ${picks.length + 1}. One-line reaction + ${widgetMoment}
-${picks.length + 2}. One-line warm wrap that also tells ${a.them} the revision is done and ${a.they} can finish whenever ${a.they}${a.isContr} ready (e.g. "${a.arClosingEg}") + {{finish_lesson}}.
+${picks.length + 2}. One-line warm wrap that also tells ${a.them} the revision is done and ${a.they} can finish whenever ${a.they}${a.isContr} ready (e.g. "${closingEg}") + {{finish_lesson}}.
 
 RULES:
 - Never more than ONE short line of prose per message. No explanations unless ${a.they} got it wrong — then ONE crisp corrective line taken from that question's canonical solution, and still move on.
@@ -1101,7 +1389,7 @@ RULES:
 - If a [live event] says ${a.they} tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${kit.reviewSubjectRules(a)}
 - {{finish_lesson}} only arms ${a.their} Finish button — it doesn't end the session, so if ${a.they} keep${a.s} chatting after it, keep answering normally.
 
-${languageContract(data.subject)}
+${languageContract(data.subject, facts)}
 
 ${sharedProtocol(
     data,
@@ -1251,10 +1539,12 @@ export async function buildLessonContext(
   );
 
   // Review mode never probes; learn mode probes only when the session's
-  // snapshot says so AND this lesson is the maths course (#53 P1-6: nothing in
-  // the probing block is translated). A snapshot taken on a maths lesson can
-  // meet an Arabic one when a session is reused across lessons, and this is
-  // the line that keeps it out.
+  // snapshot says so AND this lesson's course may probe — the registry's
+  // `probing` fact: Prep-3 maths, and not the Grade 10 course, whatever the
+  // switch says (#53 P1-6: nothing in the probing block is translated or
+  // written for another book; decision 7, FR-4212). A snapshot taken on a
+  // Prep-3 maths lesson can meet another course's when a session is reused
+  // across lessons, and this is the line that keeps it out.
   const probing =
     mode === "learn" && effectiveProbing(probingSnapshot, PROBING_SURFACE, data.courseId);
 
@@ -1267,7 +1557,7 @@ export async function buildLessonContext(
       bridges +
       passagesBlock +
       teaching +
-      retrievalBlock(retrieved),
+      retrievalBlock(retrieved, { arabicAddress: tutorFacts(data.courseId).arabicTouches }),
     grounding: {
       lo_ids: data.los.map((l) => l.id),
       question_ids: data.questions.map((q) => q.id),

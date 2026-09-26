@@ -169,10 +169,10 @@ say "$applied migrations applied"
 # know the name of every migration, which would be a second list to maintain and
 # therefore a second list to forget.
 #
-# 31, not 32: the files are numbered 002-032 because 001 was folded into
+# 33, not 34: the files are numbered 002-034 because 001 was folded into
 # schema.sql, so the count and the highest number will never agree. Raise this
 # when a migration is added; it is one line and its failure message says so.
-[ "$applied" -ge 31 ] || fail "only $applied migration files were found; this branch has at least 31 (002-032). Is ../db a complete checkout?"
+[ "$applied" -ge 33 ] || fail "only $applied migration files were found; this branch has at least 33 (002-034). Is ../db a complete checkout?"
 
 # ---------------------------------------------------------------------------
 # 3. Post-flight: is the stack actually able to run?

@@ -18,6 +18,11 @@ export type { Subject, SpineSubject } from "./subjects";
 
 import type { Subject, SpineSubject } from "./subjects";
 import type { Gender } from "./address";
+import type {
+  DerivedPrereqEdge,
+  LessonProvenance,
+  SectionRollup,
+} from "./book-sections";
 
 export interface Choice {
   key: string;
@@ -175,6 +180,43 @@ export interface SpineData {
   currentDate: string;
   counts: { los: number; questions: number; edges: number; attempts: number };
   studentName: string;
+  /**
+   * The book sections split into parts among these objectives (feature 003,
+   * FR-4315): the skill map draws each as one visible group, labelled by the
+   * section. Empty for a course with no split section — every National course
+   * — so the map it draws is exactly the one it drew before.
+   */
+  sectionGroups: SpineSectionGroup[];
+  /**
+   * Part n-1 → part n prerequisites, DERIVED from the book-section store and
+   * marked as the product's (FR-4317) — never in `edges`, which stays the
+   * book's own. Already folded into each objective's `layer` and `prereqIds`,
+   * so the map's columns and the topic panel respect them; drawn beside
+   * `edges`. Empty with no split section.
+   */
+  partEdges: DerivedPrereqEdge[];
+}
+
+/** One split book section as the skill map groups it (FR-4315). */
+export interface SpineSectionGroup {
+  /** `lib/book-sections.ts` `SectionGroup.key` */
+  key: string;
+  /** the printed section number ("1.7") */
+  number: string | null;
+  /** the printed section title ("Factorisation") */
+  title: string | null;
+  /** each part, in part order, with its objectives in catalogue order */
+  parts: { slug: string; n: number; of: number; loIds: string[] }[];
+}
+
+/**
+ * A split section's roll-up (FR-4314, `lib/book-sections.ts`
+ * `SectionRollup`), plus whether the student has started it — any objective
+ * of any part with evidence. What the subject home and the progress page
+ * read.
+ */
+export interface SectionProgress extends SectionRollup {
+  started: boolean;
 }
 
 export type PlanReason = "weakest" | "review" | "stretch";
@@ -263,6 +305,15 @@ export interface LessonInfo {
   /** registry lookup of `courseId`; `null` = course not in the registry */
   subject: Subject | null;
   los: LessonLo[];
+  /**
+   * Where the lesson comes from in its book (FR-4311, the `course_lessons`
+   * store): printed section number(s) and title, "part n of m", chapter
+   * introduction. Present only for a course whose book provenance changes
+   * what it shows — one with a split, merged or promoted lesson
+   * (`bookShapedCourses`, lib/section-label.ts). Absent for every National
+   * course, whose lessons keep exactly the number and title they had.
+   */
+  provenance?: LessonProvenance;
 }
 
 export interface LessonData {
@@ -297,6 +348,26 @@ export interface LessonData {
    *  profile query per turn, so a change lands on the next turn (FR-2606).
    *  `null` is "not recorded", which is NOT the masculine: see lib/address.ts. */
   gender: Gender;
+  /**
+   * The widgets of the lesson's own unit, for a course whose registry facts
+   * say its widgets come from its unit's live widget questions
+   * (`CourseTutorFacts.lessonWidgets === "module-questions"`, feature 003,
+   * FR-1209). Most used first. Absent for every other course, whose widget
+   * list is the unit map in `lib/widget-docs.ts` — so their prompts are
+   * unchanged.
+   */
+  unitWidgets?: readonly string[];
+  /**
+   * True when `unitWidgets` includes "curve_sketcher" AND this unit's live
+   * bank holds one drawn from one of the five families `curve_sketcher_g10`
+   * documents (hyperbola, exponential, sine, cosine, tangent) rather than only
+   * the original two (linear, quadratic) — set only for a course whose
+   * widgets come from its unit's live questions (feature 003, T417). The
+   * National unit map never sets it, so its prompts are unaffected.
+   */
+  hasG10CurveFamily?: boolean;
+  /** The lesson's book provenance — as `LessonInfo.provenance`, same rule. */
+  provenance?: LessonProvenance;
 }
 
 /**
@@ -390,4 +461,10 @@ export interface SubjectSummary {
     mode: LessonMode;
     createdAt: string;
   } | null;
+  /**
+   * The subject's split book sections, "k of m parts mastered" each, in
+   * catalogue order (FR-4314). Empty for a course with no split section —
+   * every National course — so nothing its card shows changes.
+   */
+  sections: SectionProgress[];
 }

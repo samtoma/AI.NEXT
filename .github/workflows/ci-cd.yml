@@ -17,7 +17,7 @@ on:
   push:
     paths:
       - "app/**"
-      - "services/extraction/seed/content/**"
+      - "services/extraction/**"
       - "db/**"
       - "deploy/**"
       - "deploy/apply-migrations.sh"
@@ -26,6 +26,7 @@ on:
   pull_request:
     paths:
       - "app/**"
+      - "services/extraction/**"
       - "db/**"
       - "deploy/apply-migrations.sh"
       - "scripts/ci-migrations.sh"
@@ -188,6 +189,22 @@ jobs:
         env:
           PREV_TAG: ${{ steps.prev.outputs.tag }}
         run: sh scripts/ci-migrations.sh all "$RUNNER_TEMP/prev" "$GITHUB_WORKSPACE"
+      # T423 (FR-4409): the misconception catalogue's DeployReplayTest, replayed
+      # on THIS job's own Postgres service — the one already running above, a
+      # separate database (ainext_test_mcat_*), never touching the ainext_ci_*
+      # ones ci-migrations.sh made and dropped. It loads the maths course and
+      # v0.9.2's catalogue the way first boot does, students' attempts citing
+      # misconceptions, then the current seed/generated/misconceptions.json
+      # through load_misconceptions.py exactly as the "every deploy" step
+      # below calls it — twice — and asserts nothing live is lost or renamed.
+      # A catalogue change that would lose data fails HERE, not on the box.
+      - name: uv (for the extraction pipeline's tests)
+        uses: astral-sh/setup-uv@v5
+      - name: Misconception catalogue — the deploy replayed on Postgres (T423, FR-4409)
+        working-directory: services/extraction
+        env:
+          AINEXT_TEST_PG: "host=127.0.0.1 port=5432"
+        run: uv run --with pytest python -m pytest -q tests/test_misconception_catalogue.py
 
   # ---- Stage 2: deploy on the OCI box — ONLY if build passed, ONLY from THIS branch ----
   #
@@ -600,30 +617,47 @@ jobs:
           echo "Each sets their own password at https://admin-noor.reletix.com/forgot-password"
           echo "— after passing Cloudflare Access, which must list them too."
 
-      - name: Curriculum (only when none is loaded)
+      - name: Curriculum (first boot only — the three National courses, by id)
         run: |
           set -euo pipefail
           cd "$APP_DIR/deploy"
           C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
-          N=$($C exec -T db psql -U ainext -d ainext_mvp1 -tAc \
-                "select count(*) from graph_nodes where kind='course'")
-          # A course load REPLACES that course's subtree. On a database with
-          # students that would be a content refresh, which has its own manual
-          # workflow with a backup first. So this acts ONLY on a database with
-          # no course at all — which is to say, only on first boot.
-          if [ "$N" -ge 3 ]; then
-            echo "curriculum already loaded ($N courses) — not touching it"; exit 0
+          Q() { $C exec -T db psql -U ainext -d ainext_mvp1 -tAc "$1"; }
+          # PRESENCE BY EACH COURSE'S OWN ID, never by a total count (feature
+          # 003, T327; privacy review F14). The old gate was `count >= 3`,
+          # which stops meaning "the curriculum is loaded" the moment a fourth
+          # course exists or one is removed for any other reason.
+          #
+          # These are the product's first-boot courses. The Grade 10 course is
+          # NEVER named here: a deploy must not load a course (FR-4208) — it
+          # goes through the manual "Load a course" action, which backs up first.
+          NATIONAL="course:prep3-math-en course:prep3-arabic-ar course:prep3-social-ar"
+          MISSING=""
+          for c in $NATIONAL; do
+            [ "$(Q "select count(*) from graph_nodes where id = '$c' and kind = 'course'")" = 1 ] \
+              || MISSING="$MISSING $c"
+          done
+          if [ -z "$MISSING" ]; then
+            echo "the three National courses are loaded — not touching them"; exit 0
+          fi
+          # Something is missing. Only a database with NO course at all is a
+          # first boot. One that holds other courses is in use: loading into it
+          # is a content change, which needs a verified backup this step does
+          # not take. Say so, loudly, and leave it to the manual action.
+          ANY=$(Q "select count(*) from graph_nodes where kind = 'course'")
+          if [ "$ANY" -gt 0 ]; then
+            echo "::warning::this database holds $ANY course(s) but not:$MISSING. A deploy never loads into a database in use — run Actions -> 'Load a course (manual)' (dry-run, rehearse, load), which backs up first."
+            exit 0
           fi
           L="$C --profile tools run --rm loader"
-          # The same four steps local-dev.sh runs, rehearsed on a scratch
-          # database before this was written. Social Studies takes two passes:
-          # social-t1 names its book but does not define it, the skeleton does,
-          # and a scoped load excludes the skeleton because social-t1
-          # supersedes it — so the skeleton goes first to register the book.
-          $L --all --course course:prep3-math-en
-          $L --all --course course:prep3-arabic-ar
-          $L seed/social-skeleton.json --course course:prep3-social-ar
-          $L --all --course course:prep3-social-ar
+          # First boot. --if-absent makes each load a no-op on a course that
+          # is present, so this step can never change a loaded course. Social
+          # Studies no longer needs its skeleton pass first: a course load
+          # registers the superseded skeleton's source document itself
+          # (load_seed.py superseded_doc_bundles).
+          for c in $NATIONAL; do
+            $L --all --course "$c" --if-absent
+          done
           # What a student will actually get, in the log. Held questions stay
           # held: 297 Arabic ones sit behind the sacred-content gate (ADR-0006)
           # and nothing here promotes them.
@@ -647,25 +681,49 @@ jobs:
       # never re-promotes a question somebody has since held back. The bundles
       # are EXPORTS replayed with --restore: every row keeps the status and the
       # review stamp it carries, so nothing asserts a review that did not happen.
-      - name: Generated maths content (only when none is loaded)
+      - name: Generated maths content (Prep-3 only, only when none is loaded)
         run: |
           set -euo pipefail
           cd "$APP_DIR/deploy"
           C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
           Q() { $C exec -T db psql -U ainext -d ainext_mvp1 -tAc "$1"; }
-          GEN=$(Q "select count(*) from questions where source='variant'")
-          if [ "$GEN" -ge 590 ]; then
-            echo "generated maths content already loaded ($GEN questions) — not touching it"; exit 0
+          # GATED ON PREP-3 MATHS' OWN ROWS, BY ID (feature 003, T327), not on
+          # `GEN >= 590` across the whole database: a second course's generated
+          # bank would have pushed that total over the line and hidden a
+          # missing Prep-3 bank — or, below it, re-run this over live data.
+          # By id rather than "any generated row": a first boot that stopped
+          # between the two bundles is completed by the next deploy instead of
+          # being skipped for ever (rehearsed 2026-09-25: 543 of 591 loaded, the
+          # widget bundle failed, and an "any row" gate never retried it).
+          if [ "$(Q "select count(*) from graph_nodes where id = 'course:prep3-math-en' and kind = 'course'")" != 1 ]; then
+            echo "Prep-3 maths is not loaded — nothing to attach a generated bank to"; exit 0
           fi
+          BUNDLES="seed/generated/generated-questions.json seed/generated/widget-questions.json"
+          # "<missing> <total>": the bundles' question ids the database lacks.
+          read -r ABSENT TOTAL <<< "$($C --profile tools run --rm -T --entrypoint python loader -c '
+          import json, os, sys, psycopg
+          ids = [q["id"] for f in sys.argv[1:] for q in json.load(open(f))["questions"]]
+          with psycopg.connect(os.environ["AINEXT_DB_DSN"]) as c:
+              have = c.execute("select count(*) from questions where id = any(%s)", (ids,)).fetchone()[0]
+          print(len(ids) - have, len(ids))' $BUNDLES)"
+          if [ "$ABSENT" = 0 ]; then
+            echo "Prep-3 generated maths content already loaded ($TOTAL of $TOTAL questions) — not touching it"; exit 0
+          fi
+          echo "Prep-3 generated maths content: $ABSENT of $TOTAL questions not loaded — loading them (add-only)"
           PY="$C --profile tools run --rm -e AINEXT_ENVIRONMENT=mvp1 --entrypoint python loader"
           # The catalogue first: a restore refuses to run against an empty one,
           # because every distractor that names an entry would be unknown.
-          MC=$(Q "select count(*) from misconceptions")
-          if [ "$MC" -lt 90 ]; then
+          # Prep-3's own entries, not a database-wide `MC < 90`.
+          MC=$(Q "select count(*) from misconceptions m join node_subject ns on ns.node_id = m.lo_id
+                   where ns.course_id = 'course:prep3-math-en'")
+          if [ "$MC" -eq 0 ]; then
             $PY load_misconceptions.py seed/generated/misconceptions.json
           fi
-          for bundle in generated-questions.json widget-questions.json; do
-            $PY load_generated_questions.py "seed/generated/$bundle" --restore --sample 0
+          # --add-only: only the missing ids are inserted. A row that is already
+          # there keeps the status and review stamp it has now, so completing a
+          # half-finished first boot can never revert a promotion or a hold.
+          for bundle in $BUNDLES; do
+            $PY load_generated_questions.py "$bundle" --restore --sample 0 --add-only
           done
           # The maths book questions still at 'review' go live WITHOUT a reviewer
           # stamp, so the console still reports them as unreviewed and the
@@ -694,13 +752,37 @@ jobs:
       # explanations (never touching the reviewed flag), and it only ever edits
       # the misconception tag on answer choices. It changes no question's
       # status and deletes nothing but an alias the catalogue names.
-      - name: Misconception catalogue (every deploy — idempotent)
+      #
+      # PER BOOK, AND ONLY FOR A LOADED COURSE (feature 003, T327, FR-3214).
+      # Each book config names its own catalogue; a book's is synced only when
+      # that book's course is present, so a new course's catalogue fixes reach
+      # production after "Load a course" has put it there, and never before —
+      # a deploy writes nothing for a course that is not loaded.
+      - name: Misconception catalogue (every deploy — idempotent, per loaded course)
         run: |
           set -euo pipefail
           cd "$APP_DIR/deploy"
           C="docker compose -p $COMPOSE_PROJECT -f $COMPOSE_FILE_NAME"
-          $C --profile tools run --rm -e AINEXT_ENVIRONMENT=mvp1 --entrypoint python loader \
-            load_misconceptions.py seed/generated/misconceptions.json
+          Q() { $C exec -T db psql -U ainext -d ainext_mvp1 -tAc "$1"; }
+          PY="$C --profile tools run --rm -e AINEXT_ENVIRONMENT=mvp1 --entrypoint python loader"
+          # "<course id> <catalogue path>" per book that has a catalogue, read
+          # from the book configs by the loader's own book_config.py.
+          CATALOGUES=$($C --profile tools run --rm -T --entrypoint python loader -c '
+          import book_config
+          for b in book_config.all_books():
+              if b.generated and b.generated.misconceptions:
+                  print(b.course_id, b.generated.misconceptions)')
+          # fd 3, not stdin: `compose run` and `compose exec` keep stdin open
+          # and would swallow the rest of the list after the first book.
+          while read -r course catalogue <&3; do
+            [ -n "$course" ] || continue
+            if [ "$(Q "select count(*) from graph_nodes where id = '$course' and kind = 'course'")" != 1 ]; then
+              echo "$course is not loaded — its catalogue ($catalogue) waits for 'Load a course'"
+              continue
+            fi
+            echo "$course: syncing $catalogue"
+            $PY load_misconceptions.py "/repo/$catalogue"
+          done 3<<< "$CATALOGUES"
           $C exec -T db psql -U ainext -d ainext_mvp1 -tAc "
             select 'misconceptions: ' || count(*) || ', without an explanation: ' ||
                    count(*) filter (where not exists (

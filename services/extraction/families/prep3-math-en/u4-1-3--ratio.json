@@ -1,0 +1,143 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:u4-1-3:ratio",
+  "kind": "family",
+  "lo_id": "lo:u4-1-3",
+  "parent_question_id": "q:u4-1-3:001",
+  "source_page": 67,
+  "tier": "standard",
+  "answer_type": "mcq",
+  "context": null,
+  "params": [
+    {
+      "name": "t",
+      "choice": [
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          6,
+          8,
+          10
+        ],
+        [
+          5,
+          12,
+          13
+        ],
+        [
+          8,
+          15,
+          17
+        ],
+        [
+          9,
+          12,
+          15
+        ],
+        [
+          7,
+          24,
+          25
+        ],
+        [
+          20,
+          21,
+          29
+        ],
+        [
+          12,
+          16,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "a",
+      "let": "t[0]"
+    },
+    {
+      "name": "b",
+      "let": "t[1]"
+    },
+    {
+      "name": "c",
+      "let": "t[2]"
+    },
+    {
+      "name": "at_a",
+      "choice": [
+        true,
+        false
+      ]
+    },
+    {
+      "name": "opp",
+      "let": "a if at_a else b"
+    },
+    {
+      "name": "adj",
+      "let": "b if at_a else a"
+    },
+    {
+      "name": "angle",
+      "let": "'A' if at_a else 'C'"
+    },
+    {
+      "name": "which",
+      "choice": [
+        "sin",
+        "cos",
+        "tan"
+      ]
+    },
+    {
+      "name": "names",
+      "let": "{'sin': '\\\\sin', 'cos': '\\\\cos', 'tan': '\\\\tan'}"
+    },
+    {
+      "name": "expl",
+      "let": "{'sin': 'the side opposite the angle over the hypotenuse', 'cos': 'the side adjacent to the angle over the hypotenuse', 'tan': 'the opposite side over the adjacent side'}"
+    },
+    {
+      "name": "ratios",
+      "let": "{'sin': Fraction(opp, c), 'cos': Fraction(adj, c), 'tan': Fraction(opp, adj)}"
+    },
+    {
+      "name": "correct",
+      "let": "ratios[which]"
+    },
+    {
+      "name": "others",
+      "let": "[ratios[k] for k in ['sin', 'cos', 'tan'] if k != which]"
+    },
+    {
+      "name": "recip",
+      "let": "1 / correct"
+    }
+  ],
+  "stem": "In right-angled triangle $ABC$ where $\\angle B = 90^\\circ$, $AB = {=b}$, $BC = {=a}$ and $AC = {=c}$. Find ${=names[which]} {=angle}$.",
+  "solution": [
+    "${=names[which]} {=angle}$ is {=expl[which]}.",
+    "Relative to $\\angle {=angle}$: opposite $= {=opp}$, adjacent $= {=adj}$, hypotenuse $= {=c}$.",
+    "${=names[which]} {=angle} = {=frac(opp if which != 'cos' else adj, c if which != 'tan' else adj)} = {=correct}$."
+  ],
+  "choices": {
+    "correct": "${=correct}$",
+    "distractors": [
+      {
+        "each": "others",
+        "as": "v",
+        "text": "${=v}$",
+        "misconception_id": "mc:u4-1-3:opposite-adjacent-swapped"
+      },
+      {
+        "text": "${=recip}$",
+        "misconception_id": "mc:u4-1-3:opposite-adjacent-swapped"
+      }
+    ]
+  },
+  "notes": "Reproduces the hand-written family tpl:u4-1-3:ratio in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}

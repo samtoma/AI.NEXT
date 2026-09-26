@@ -26,6 +26,8 @@
  * @covers FR-2406
  * @covers FR-3102
  * @covers FR-3107
+ * @covers FR-4010
+ * @covers FR-4105
  */
 
 import assert from "node:assert/strict";
@@ -83,6 +85,11 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   "/courses": ["content-review"],
   "/api/console/courses": ["content-review"],
   "/api/console/students/[id]/courses": ["student-data"],
+  // Feature 003 (FR-4010, contracts/console.md): a student's curriculum is
+  // changed from her console record, by `student-data` only. Not
+  // `content-review` (it names a child), not `cost-billing` (FR-2406: no
+  // per-student curriculum on any page that role reaches alone).
+  "/api/console/students/[id]/curriculum": ["student-data"],
   // ADR-0021 — the tester mark. NO SINGLE ROLE admits it (fix pass,
   // 2026-09-24): it needs `student-data` AND `teaching-controls` together —
   // transcribed in EXPECTED_ALL_OF below, and asserted on its own.
@@ -317,6 +324,39 @@ test("the teaching switch is teaching-controls' alone, and content-review no lon
   // was revoked (fix pass, 2026-09-24).
   assert.equal(routeAdmits(consoleRoute("/teaching")!, ["cost-billing"]), true);
   assert.equal(routeAdmits(consoleRoute("/teaching")!, []), false);
+});
+
+test("a student's curriculum is student-data's alone to read and change (FR-4010, FR-4105, FR-2406)", () => {
+  // Feature 003, decision 4 and privacy review F7. The record that SHOWS a
+  // curriculum (the Student 360) and the endpoint that CHANGES one admit the
+  // same single role. `cost-billing` reaches the student list — whose
+  // cost projection carries no curriculum (`console-curriculum.test.mts`) —
+  // and nothing else about a student; `content-review` owns the per-grade
+  // rule on `/courses` and learns a headcount there, never a name.
+  const record = consoleRoute("/students/[id]")!;
+  const change = consoleRoute("/api/console/students/[id]/curriculum")!;
+  for (const route of [record, change]) {
+    assert.equal(routeAdmits(route, ["student-data"]), true, `${route.path}`);
+    for (const role of ["content-review", "evidence-access", "cost-billing", "teaching-controls"] as const) {
+      assert.equal(routeAdmits(route, [role]), false, `${role} must not reach ${route.path}`);
+    }
+    assert.equal(routeAdmits(route, []), false, "no role admits no student record");
+  }
+  assert.equal(change.kind, "route");
+  assert.notEqual(change.allOf, true, "one role, not a pair");
+
+  // Through the seam the handler calls: billing-only is refused, and the
+  // refusal names the role it lacks.
+  const billing = { kind: "operator" as const, operatorId: 1, roles: ["cost-billing" as const] };
+  const content = { kind: "operator" as const, operatorId: 2, roles: ["content-review" as const] };
+  const data = { kind: "operator" as const, operatorId: 3, roles: ["student-data" as const] };
+  assert.equal(checkRequirement(data, { role: "student-data" }).ok, true);
+  for (const op of [billing, content]) {
+    const refused = checkRequirement(op, { role: "student-data" });
+    assert.equal(refused.ok, false);
+    assert.equal(refused.ok === false && refused.status, 403);
+    assert.equal(refused.ok === false && refused.reason, "missing_role:student-data");
+  }
 });
 
 test("the tester mark needs student-data AND teaching-controls — neither alone (ADR-0021)", () => {

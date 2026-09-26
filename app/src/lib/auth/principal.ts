@@ -28,7 +28,10 @@ import { cookies } from "next/headers";
 import { authPool, pool, type Principal } from "@/lib/db";
 import { ENVIRONMENT, IS_CONSOLE, SURFACE } from "@/lib/env";
 
+import { asCurriculumId, type CurriculumId } from "@/lib/curricula";
+
 import { cookieNames } from "./cookie-names.ts";
+import { ONBOARDING_PENDING, isOnboardingPending } from "./onboarding.ts";
 import { verifyAccessToken, type AccessClaims } from "./tokens.ts";
 import type { OperatorRole } from "./session.ts";
 
@@ -127,8 +130,13 @@ export async function currentPrincipal(): Promise<Principal> {
 }
 
 async function loadStudentPrincipal(claims: AccessClaims): Promise<Principal> {
+  // `onboarding_pending` rides on the SAME indexed read (feature 003, FR-4014):
+  // whether a first Google sign-in still owes its grade-and-curriculum step is
+  // a durable fact on the row, read on every request like revocation is — never
+  // a cookie, never cached. It needs migration 033.
   const res = await pool.query(
-    `SELECT s.id AS student_id, a.id AS account_id, a.email_verified_at
+    `SELECT s.id AS student_id, a.id AS account_id, a.email_verified_at,
+            s.onboarding_pending
        FROM auth_sessions x
        JOIN accounts a ON a.id = x.account_id
        JOIN students s ON s.account_id = a.id
@@ -145,6 +153,7 @@ async function loadStudentPrincipal(claims: AccessClaims): Promise<Principal> {
     studentId: Number(row.student_id),
     accountId: Number(row.account_id),
     emailVerified: row.email_verified_at != null,
+    onboardingPending: row.onboarding_pending === true,
   };
 }
 
@@ -183,10 +192,32 @@ async function loadOperatorPrincipal(claims: AccessClaims): Promise<Principal> {
   };
 }
 
+/**
+ * The signed-in student, or a refusal — the seam every student API reads
+ * through (`/api/ask`, `/api/attempts`, `/api/understanding`, `/api/uploads`,
+ * `/api/visuals`, `/api/dashboard`, `/api/tts`, `/api/analytics`).
+ *
+ * **403 `onboarding_pending`** while a first Google sign-in still owes its
+ * grade-and-curriculum step (FR-4014: "before any lesson opens"). Refused
+ * here, where every one of those routes already resolves her, rather than in
+ * each route — a route added later inherits it. The step's own route and the
+ * rest of `/api/auth/*` read `currentPrincipal()` and are not refused: she must
+ * be able to finish the step, see who she is, and sign out.
+ */
 export async function requireStudent(): Promise<Extract<Principal, { kind: "student" }>> {
   const me = await currentPrincipal();
   if (me.kind !== "student") throw new AuthError(401, "unauthenticated");
+  if (isOnboardingPending(me)) throw new AuthError(403, ONBOARDING_PENDING);
   return me;
+}
+
+/**
+ * The same refusal, for the two student APIs that resolve the principal
+ * themselves because they answer an anonymous caller differently
+ * (`/api/feedback`, `/api/settings/appearance`). `null` means "go on".
+ */
+export function onboardingRefusal(me: Principal): Response | null {
+  return isOnboardingPending(me) ? new AuthError(403, ONBOARDING_PENDING).toResponse() : null;
 }
 
 export type PrincipalProfile = {
@@ -197,6 +228,18 @@ export type PrincipalProfile = {
   gender?: string | null;
   emailVerified: boolean;
   roles?: string[];
+  /**
+   * Feature 003 (contracts/student-api.md "What the student surface can
+   * read"): her curriculum when the registry knows it, else `null` with
+   * `curriculumKnown: false` (an unknown stored value is never guessed into a
+   * known one, FR-4003). Deliberately NOT `curriculum_source` or the change
+   * history — operator facts. And first-party only: this is a response to
+   * her own browser, never a GA4 property (FR-4016).
+   */
+  curriculum?: CurriculumId | null;
+  curriculumKnown?: boolean;
+  /** The first-Google-sign-in step is still owed (FR-4014). */
+  onboardingPending?: boolean;
 };
 
 /**
@@ -207,11 +250,12 @@ export type PrincipalProfile = {
 export async function principalProfile(me: Principal): Promise<PrincipalProfile | null> {
   if (me.kind === "student") {
     const res = await pool.query(
-      `SELECT display_name, grade, gender FROM students WHERE id = $1`,
+      `SELECT display_name, grade, gender, curriculum_system FROM students WHERE id = $1`,
       [me.studentId]
     );
     const row = res.rows[0];
     if (!row) return null;
+    const curriculum = asCurriculumId(row.curriculum_system);
     return {
       principal: "student",
       studentId: me.studentId,
@@ -219,6 +263,9 @@ export async function principalProfile(me: Principal): Promise<PrincipalProfile 
       grade: row.grade == null ? undefined : String(row.grade),
       gender: (row.gender as string | null) ?? null,
       emailVerified: me.emailVerified,
+      curriculum,
+      curriculumKnown: curriculum !== null,
+      onboardingPending: isOnboardingPending(me),
     };
   }
   if (me.kind === "operator") {

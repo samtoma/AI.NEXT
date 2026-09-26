@@ -1,0 +1,44 @@
+{
+  "format": "ainext.widget-template/1",
+  "id": "wt:g10m8s3-1-2:gradient-line",
+  "lo_id": "lo:g10m8s3-1-2",
+  "parent_question_id": "q:g10m8s3-1-2:ex8-3-1a",
+  "tier": "standard",
+  "kind": "line_drawer",
+  "instances": [
+    {
+      "x1": -2,
+      "y1": -3,
+      "x2": 2,
+      "y2": 5
+    }
+  ],
+  "spec": {
+    "mode": "points",
+    "through": [
+      [
+        "{=x1}",
+        "{=y1}"
+      ],
+      [
+        "{=x2}",
+        "{=y2}"
+      ]
+    ]
+  },
+  "stem": "Draw the straight line through $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$.",
+  "solution": [
+    "Put one handle on $A$ and the other on $B$.",
+    "Its gradient is $\\frac{{=y2 - y1}}{{=x2 - x1}} = {=Fraction(y2 - y1, x2 - x1)}$."
+  ],
+  "diagnostics": [
+    {
+      "predicate": "points-swapped",
+      "misconception_id": "mc:g10m8s3-1-2:coordinates-swapped"
+    },
+    {
+      "predicate": "slope-inverted",
+      "misconception_id": "mc:g10m8s3-1-1:run-over-rise"
+    }
+  ]
+}

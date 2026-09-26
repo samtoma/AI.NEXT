@@ -153,38 +153,85 @@ say "3/8  Curriculum content"
 # it puts the content within reach of the console, and changes nothing about
 # what any student sees.
 #
-# WHY SOCIAL STUDIES TAKES TWO PASSES. `social-t1.json` names its source book
-# with `source_file` but does not define it; `social-skeleton.json` does, and
-# a scoped load excludes the skeleton because social-t1 supersedes it
-# (SUPERSEDED_BY in load_seed.py). Loading the skeleton first registers the
-# `source_documents` row, and the real bundle then replaces its 44 questions
-# with the 762 that supersede them while the book row survives — a course
-# subtree delete does not touch source documents. Arabic needs no such dance:
-# `arabic-t1.json` defines its own book.
+# Social Studies used to take two passes (the skeleton first, to register the
+# book `social-t1.json` only names). The loader now does that itself: a course
+# load registers a superseded bundle's source document and never its content
+# (`superseded_bundles` in books/prep3-social-ar.json).
 #
 # The review gate still governs what is servable. Arabic lands ~297 questions
 # at `review` because the sacred-content gate (ADR-0006) holds every Quran and
 # hadith passage for a human; those are NOT promoted below, and must not be.
-load_course() { # <course-id> [bundle…]
-  local course="$1"; shift
+#
+# PER COURSE, IF ABSENT (feature 003, T328). This used to load all three when
+# fewer than three courses existed — a total count, the gate privacy review F14
+# names. It now walks every book config (services/extraction/books/*.json) and
+# loads a course only when THAT course's node is missing, with --if-absent so
+# the loader itself refuses to touch a present one. A present course is never
+# re-loaded here; changing one is refresh-content's job. Social Studies no
+# longer takes a skeleton pass first: a course load registers the superseded
+# skeleton's source document itself.
+#
+# A COURSE BEYOND THE THREE NATIONAL ONES (the Grade 10 book, and any after
+# it) loads only when its bundles are in the tree AND the scoped student
+# readers are in this source — `student-scope-guard.test.mts` present (T318).
+# Without them, a loaded book is named to every local student by the Ask
+# context and the home page whatever the course rules say (privacy review F13).
+# There is no image to label on a laptop, so the test file is the marker.
+PYEXEC="$PYRUN"; [ "$PYRUN" = "uv run" ] && PYEXEC="uv run python"
+NATIONAL_COURSES="course:prep3-math-en course:prep3-social-ar course:prep3-arabic-ar"
+SCOPE_GUARD="$ROOT/app/src/lib/student-scope-guard.test.mts"
+# One line per book, in load order:
+#   <course> <book> <bundles present 1|0> <catalogue|-> <generated bundles, comma-separated|->
+BOOKS=$( cd "$ROOT/services/extraction" && $PYEXEC -c '
+import book_config
+for b in book_config.all_books():
+    g = b.generated
+    # "present" needs a loadable book with at least one bundle: a config
+    # written ahead of its bundles (status "ingest", bundles: []) is a book
+    # still going through the line, not a course.
+    ready = getattr(b, "status", "loadable") == "loadable" and b.bundles \
+        and all(p.exists() for p in b.bundle_paths())
+    print(b.course_id, b.book, 1 if ready else 0,
+          (g.misconceptions if g and g.misconceptions else "-"),
+          (",".join(g.questions) if g and g.questions else "-"))' ) \
+  || die "could not read the book configs (services/extraction/books/*.json)"
+
+course_present() {
+  [ "$($PSQL -d $DB -tAc "select count(*) from graph_nodes where id = '$1' and kind = 'course'")" = 1 ]
+}
+load_course() { # <course-id>
   ( cd "$ROOT/services/extraction" \
     && AINEXT_DB_DSN="host=$HOST port=$PORT dbname=$DB user=$USER" \
        AINEXT_ENVIRONMENT="${AINEXT_ENVIRONMENT:-mvp1}" \
-       $PYRUN load_seed.py "${@:---all}" --course "$course" ) \
-    || die "content load failed for $course"
+       $PYRUN load_seed.py --all --course "$1" --if-absent ) \
+    || die "content load failed for $1"
 }
 
-COURSES_LOADED=$($PSQL -d $DB -tAc \
-  "select count(*) from graph_nodes where kind='course'" 2>/dev/null || echo 0)
-if [ "$COURSES_LOADED" -ge 3 ]; then
-  ok "$COURSES_LOADED course(s) already loaded"
-else
-  load_course course:prep3-math-en
-  load_course course:prep3-arabic-ar
-  load_course course:prep3-social-ar seed/social-skeleton.json   # registers the book
-  load_course course:prep3-social-ar                             # …then supersedes it
-  ok "loaded mathematics, arabic and social studies"
-fi
+while read -r course book bundles_ok _mc _gq <&3; do
+  [ -n "$course" ] || continue
+  if course_present "$course"; then
+    ok "$course present — not touched"
+    continue
+  fi
+  case " $NATIONAL_COURSES " in
+    *" $course "*) ;;
+    *)
+      if [ "$bundles_ok" != 1 ]; then
+        warn "$course ($book) not loaded: its bundles are not in this tree yet"
+        continue
+      fi
+      if [ ! -f "$SCOPE_GUARD" ]; then
+        warn "$course ($book) not loaded: the scoped student readers are not in this source"
+        echo "     yet (app/src/lib/student-scope-guard.test.mts, T318). Loading it now would name"
+        echo "     the book to every local student."
+        continue
+      fi ;;
+  esac
+  load_course "$course"
+  ok "loaded $course ($book)"
+done 3<<EOF
+$BOOKS
+EOF
 
 # A scoped load demotes Unit 1's bulk-promoted questions back to 'review'.
 # Locally that is just noise, so promote them and let the parity check pass.
@@ -220,25 +267,45 @@ PROMOTED=$($PSQL -d $DB -tAc "with p as (update questions q set status='live', r
 # Order matters: the catalogue first, or every distractor that names a real
 # entry is reported as unknown (the loader refuses rather than guess).
 GEN_DSN="host=$HOST port=$PORT dbname=$DB user=$USER"
-# The catalogue is synced on EVERY run, as the deploy does: the loader is
-# idempotent, and a fix to the catalogue (an explanation written, a duplicate
-# folded in through `aliases`) should reach every laptop, not only fresh ones.
-( cd "$ROOT/services/extraction" \
-  && AINEXT_ENVIRONMENT=mvp1 $PYRUN load_misconceptions.py seed/generated/misconceptions.json --dsn "$GEN_DSN" ) \
-  || die "misconception load failed"
-ok "$($PSQL -d $DB -tAc "select count(*) from misconceptions") misconceptions in the catalogue"
-
-GEN_COUNT=$($PSQL -d $DB -tAc "select count(*) from questions where source='variant'" 2>/dev/null || echo 0)
-if [ "$GEN_COUNT" -ge 590 ]; then
-  ok "$GEN_COUNT generated question(s) already loaded"
-else
-  for bundle in generated-questions.json widget-questions.json; do
+# PER BOOK, ONLY FOR A LOADED COURSE (T328), from each book config's
+# `generated` block — the same rule the deploy follows.
+#   * The catalogue is synced on EVERY run, as the deploy does: the loader is
+#     idempotent, and a fix to the catalogue (an explanation written, a
+#     duplicate folded in through `aliases`) should reach every laptop.
+#   * The generated bank is restored only while that COURSE has no generated
+#     question (not a database-wide count), and --add-only, so a present row
+#     is never touched.
+while read -r course book _ok catalogue generated <&3; do
+  [ -n "$course" ] || continue
+  [ "$catalogue" = "-" ] && [ "$generated" = "-" ] && continue
+  if ! course_present "$course"; then
+    warn "$course not loaded — its generated content waits for it"
+    continue
+  fi
+  if [ "$catalogue" != "-" ]; then
     ( cd "$ROOT/services/extraction" \
-      && AINEXT_ENVIRONMENT=mvp1 $PYRUN load_generated_questions.py "seed/generated/$bundle" \
-           --dsn "$GEN_DSN" --restore --sample 0 ) \
-      || die "$bundle restore failed"
-  done
-fi
+      && AINEXT_ENVIRONMENT=mvp1 $PYRUN load_misconceptions.py "$ROOT/$catalogue" --dsn "$GEN_DSN" ) \
+      || die "misconception load failed for $course ($catalogue)"
+  fi
+  if [ "$generated" != "-" ]; then
+    GEN_COUNT=$($PSQL -d $DB -tAc "select count(*) from questions q join node_subject ns on ns.node_id = q.lo_id
+                                    where q.source = 'variant' and ns.course_id = '$course'")
+    if [ "$GEN_COUNT" -gt 0 ]; then
+      ok "$course: $GEN_COUNT generated question(s) already loaded"
+    else
+      for bundle in $(printf '%s' "$generated" | tr ',' ' '); do
+        ( cd "$ROOT/services/extraction" \
+          && AINEXT_ENVIRONMENT=mvp1 $PYRUN load_generated_questions.py "$ROOT/$bundle" \
+               --dsn "$GEN_DSN" --restore --sample 0 --add-only ) \
+          || die "$bundle restore failed"
+      done
+      ok "$course: generated bank restored (add-only)"
+    fi
+  fi
+done 3<<EOF
+$BOOKS
+EOF
+ok "$($PSQL -d $DB -tAc "select count(*) from misconceptions") misconceptions in the catalogue"
 TOTAL=$($PSQL -d $DB -tAc "select count(*) from questions where status='live'")
 UNREVIEWED=$($PSQL -d $DB -tAc "select count(*) from questions where status='live' and source='variant' and reviewed_by is null")
 ok "$TOTAL live questions, $UNREVIEWED of them generated and unreviewed"

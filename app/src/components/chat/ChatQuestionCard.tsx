@@ -1,14 +1,16 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { mcqChoices, stepText } from "@/lib/types";
+import { markerInputOf } from "@/lib/answer-marker";
+import { MathAnswerInput } from "./MathAnswerInput";
 import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
 import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
 import { pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
-import { submitAttempt } from "@/lib/attempts-client";
+import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
 import {
   BUTTON_PRIMARY,
   BUTTON_TERTIARY,
@@ -96,6 +98,14 @@ export function ChatQuestionCard({
     q.questionType === "widget" && q.choices && !Array.isArray(q.choices)
       ? (q.choices as WidgetQuestionSpec)
       : null;
+  // A typed maths question (FR-4320): its `choices` carry a marker spec, and
+  // it is answered in the maths input. Every other question is untouched.
+  const markerInput = useMemo(
+    () => markerInputOf({ questionType: q.questionType, choices: q.choices }),
+    [q.questionType, q.choices]
+  );
+  // The marker's message when the server sent the answer back unrecorded.
+  const [reentry, setReentry] = useState<string | null>(null);
 
   const submit = async (widget?: WidgetOutcome) => {
     const given = widget
@@ -123,10 +133,13 @@ export function ChatQuestionCard({
         ...(widget ? { predicate: widget.predicate } : {}),
         ...(retryOfAttemptId != null ? { retryOfAttemptId } : {}),
       });
+      setReentry(null);
       setResult(r);
       onResult(r, q);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "request failed");
+      // Re-entry (T416): nothing was recorded; ask again with the marker's words.
+      if (e instanceof AttemptRetryError) setReentry(e.retry.message);
+      else setError(e instanceof Error ? e.message : "request failed");
     } finally {
       setBusy(false);
     }
@@ -245,6 +258,15 @@ export function ChatQuestionCard({
                   </button>
                 ))}
               </div>
+            ) : markerInput ? (
+              <MathAnswerInput
+                input={markerInput}
+                value={numeric}
+                onChange={setNumeric}
+                onSubmit={() => void submit()}
+                disabled={busy}
+                reentry={reentry}
+              />
             ) : (
               <input
                 type="text"
@@ -357,7 +379,21 @@ export function ChatQuestionCard({
                     </>
                   ) : (
                     <>
-                      Correct answer: <strong>{result.correctAnswer}</strong>
+                      Correct answer:{" "}
+                      <strong dir={markerInput ? "ltr" : undefined}>
+                        {/* a typed maths answer's key is maths: typeset it, left to right */}
+                        {markerInput ? (
+                          <TeX
+                            text={
+                              result.correctAnswer.includes("$")
+                                ? result.correctAnswer
+                                : `$${result.correctAnswer}$`
+                            }
+                          />
+                        ) : (
+                          result.correctAnswer
+                        )}
+                      </strong>
                     </>
                   )
                 ) : (

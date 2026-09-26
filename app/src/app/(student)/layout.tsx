@@ -1,6 +1,8 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
+import { WELCOME_PATH } from "@/lib/auth/onboarding";
 import { IS_CONSOLE } from "@/lib/env";
+import { resolveStudentContext } from "@/lib/student-context";
 
 /**
  * The student product's routes — `/`, `/student`, `/dashboard`, `/spine` —
@@ -23,10 +25,22 @@ import { IS_CONSOLE } from "@/lib/env";
  * time, which would bake the surface into the artefact instead of reading it
  * from the process. The root layout is already dynamic for its own reasons;
  * this states the requirement locally so it survives a change up there.
+ *
+ * **A first Google sign-in that still owes its step goes to `/welcome`**
+ * (feature 003, FR-4014: grade and curriculum "before any lesson opens").
+ * Checked on entry to the group, from the principal — the same read that says
+ * who she is, never a cookie — through `resolveStudentContext()`, which the
+ * root layout has already resolved for this request (React `cache`), so the
+ * check costs no query of its own. A layout does not re-run on navigation inside
+ * the group, and it need not: the flag only ever goes from pending to done,
+ * so a student inside the group is never pending. The data is refused below
+ * the page as well — every student API answers 403 while it is
+ * (`requireStudent`), which is the half that does not depend on rendering.
  */
 export const dynamic = "force-dynamic";
 
-export default function StudentSurfaceLayout({ children }: { children: React.ReactNode }) {
+export default async function StudentSurfaceLayout({ children }: { children: React.ReactNode }) {
   if (IS_CONSOLE) notFound();
+  if ((await resolveStudentContext())?.onboardingPending) redirect(WELCOME_PATH);
   return <>{children}</>;
 }

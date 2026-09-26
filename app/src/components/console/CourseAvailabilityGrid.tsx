@@ -5,10 +5,23 @@ import { useState } from "react";
 import { Chip, Th, stamp } from "@/components/console/ui";
 import { GRADES, type CourseState } from "@/lib/catalog";
 import type { CourseCatalogRow } from "@/lib/catalog-queries";
+import { coursesByCurriculum } from "@/lib/console-course-names";
+import type { CurriculumHeadcounts } from "@/lib/console-queries";
+import type { CourseCompletenessView } from "@/lib/course-completeness";
+import { CompletenessPanel } from "@/components/console/CompletenessPanel";
+import { CURRICULA, type CurriculumId } from "@/lib/curricula";
 
 /**
- * The grid Samuel asked for: one row per course (`SUBJECTS` registry order),
- * one column per grade (`GRADES` order), each cell the toggle itself.
+ * The course availability grid — one SECTION PER CURRICULUM (feature 003,
+ * FR-4101…FR-4103; contracts/console.md), each a table of that curriculum's
+ * courses × the six school years, each cell the toggle itself.
+ *
+ * Requirements: FR-2701…FR-2711 (002, the course gate) hold unchanged, and
+ * FR-4101 adds that availability is decided per curriculum, grade and course.
+ * The stored rule is still one row per (course, grade) (migration 023,
+ * decision 2): because a course belongs to exactly one curriculum, a rule for
+ * it already IS a (curriculum, subject, grade) decision, and it reaches only
+ * students of that curriculum (`lib/catalog.ts`, step 2).
  *
  * `"use client"` because a toggle is a write with feedback, not a link — the
  * same reason `SubscriptionEditor` is a client component, and this copies its
@@ -22,75 +35,125 @@ import type { CourseCatalogRow } from "@/lib/catalog-queries";
  * THREE STATES ON EVERY CELL, NOT TWO
  * ---------------------------------------------------------------------------
  * "Nobody has decided" and "somebody decided no" are the same `state: hidden`
- * and very different facts (`CourseCatalogRow.explicit`), and the brief this
- * page was built from is explicit that the console must show the difference.
- * So a cell renders one of three things: a solid-bordered LIVE chip, a
- * solid-bordered HIDDEN chip with the operator and the timestamp who chose it,
- * or a dashed-bordered NOT SET cell with neither — the dashed border carries
- * the distinction on its own, so it survives a screenshot with the colour
- * desaturated exactly the way `ui.tsx`'s `Chip` is written to.
+ * and very different facts (`CourseCatalogRow.explicit`). So a cell renders a
+ * solid-bordered LIVE chip, a solid-bordered HIDDEN chip with the operator and
+ * the time who chose it, or a dashed-bordered NOT SET cell with neither — the
+ * dashed border carries the distinction on its own, so it survives a
+ * screenshot with the colour desaturated exactly the way `ui.tsx`'s `Chip` is
+ * written to.
  *
  * ---------------------------------------------------------------------------
- * THE HONESTY RULE — THE POINT OF THE WHOLE PAGE
+ * THE QUESTIONS, ASKED IN THE PAGE (FR-2710) — NEVER `window.confirm`
  * ---------------------------------------------------------------------------
- * Social Studies and Arabic have zero objectives in this database today.
- * Flipping either of them live for a grade would publish an empty course to a
- * real student with nothing on screen to say so — so a "Live" click on a cell
- * with zero objectives OR zero questions asks first, naming the exact numbers,
- * before anything is written. It does not block the click: Samuel may well
- * want an empty course live for his own testing, and the whole design of this
- * feature is "full flexibility now" — it only refuses to let that happen
- * *silently*.
+ * A click that would do something an operator might not mean turns the cell
+ * (or, for a bulk action, the section's banner) into its own question, and
+ * the answer is a button. It was a native confirm first, and that was a
+ * defect: embedded browsers and some policies make `confirm()` return `false`
+ * silently, so "Live" did nothing and said nothing. The questions:
  *
- * **The question is asked IN THE PAGE, never with `window.confirm`.** It was
- * a native confirm first, and that was a defect: embedded browsers (the one
- * this console is previewed in), some kiosk and corporate policies, and any
- * context that has suppressed dialogs make `confirm()` return `false`
- * immediately and silently. The operator then clicks "Live", nothing happens,
- * nothing is written and nothing is said — which is exactly how it was found.
- * A control whose confirmation step can be disabled by the surrounding browser
- * is a control that does not work, so the confirmation is ordinary in-flow
- * markup: the cell turns into its own question, and the answer is a button.
+ *   · **An empty course.** "Live" on a course with zero objectives or zero
+ *     questions names the numbers first (the honesty rule this page was built
+ *     on: it never publishes an empty course silently).
+ *   · **A grade the book is not written for** (FR-2710, contracts/console.md).
+ *     "Live" for a year outside `CourseDef.grades` — the Grade 10 book for
+ *     Prep 3 — asks first. It does not block: an operator may mean it.
+ *   · **The last live course of a curriculum for a grade** (FR-4103). "Hidden"
+ *     that would leave a curriculum with nothing live for a grade states HOW
+ *     MANY students follow that curriculum in that grade and would have
+ *     nothing to study. **A count only** — `lastLiveCourseHeadcount`, a
+ *     `CROSS_STUDENT_READS` entry owned by `content-review`; this view is
+ *     handed numbers and nothing else, so it cannot print a name or an id
+ *     (privacy review F9; `course-count-guard.test.mts` scans it). When the
+ *     count is zero there is nobody to warn about, and the click writes.
+ *
+ * None of them blocks. The whole design is "full flexibility, never silent".
  *
  * ---------------------------------------------------------------------------
- * SETTING A WHOLE ROW OR A WHOLE COLUMN (Samuel, 2026-09-22)
+ * BULK ACTIONS, PER SECTION (Samuel, 2026-09-22; 003)
  * ---------------------------------------------------------------------------
- * Samuel's intent is that every subject his grades have content for is
- * available: *"the default is that they are all subject per grade available"*,
- * with *"let me do myself the configuration"*. **The stored default is not
- * changed by any of this and must not be** — a course with no rule stays
- * hidden, because a course nobody has decided about is a course nobody has
- * reviewed, and eighteen cells is exactly the number at which somebody stops
- * clicking and asks for the default to be flipped instead. So the answer is to
- * make his intent cheap rather than implicit: one action sets a whole subject
- * across every grade, or a whole grade across every subject.
+ * One action sets a whole course across every grade, or every course OF ONE
+ * CURRICULUM for one grade. **A bulk action never crosses curricula**: until
+ * 003 "every subject for Secondary 1" wrote a rule for every course in the
+ * registry, which would now include the other curriculum's maths. Each
+ * section's controls see only that section's cells.
  *
- * **A bulk action is a convenience, never a second code path.** It sends one
- * POST per (course, grade) to the same endpoint a single cell uses, so every
- * rule is still written by `setGradeRule` with its own `updated_by` and
- * `updated_at`, and the audit trail after "set the whole row live" is
- * indistinguishable from six clicks. There is no bulk endpoint, no multi-row
- * INSERT, and nothing here that could ever write a rule the single-cell path
- * could not.
+ * A bulk action is a convenience, never a second code path: one POST per
+ * (course, grade) to the endpoint a single cell uses, sequential (a failure
+ * half-way must leave an operator able to say which cells were written), so
+ * the audit trail after "set the whole row live" is indistinguishable from six
+ * clicks. The same questions apply, asked once for the whole action, in a
+ * banner above that section's table — a grade column is about a hundred pixels
+ * wide, and a question nobody can read is a question nobody answered.
  *
- * The writes are **sequential**, not `Promise.all`: each one opens an operator
- * transaction, and a failure half-way through must leave an operator able to
- * say which cells were written. "Saved 4 of 6, the fifth failed" is a sentence
- * this can produce; with six parallel requests it is not.
- *
- * The same empty-course question applies, asked once for the whole action and
- * naming every empty course it would publish. It is asked ABOVE the table
- * rather than inside a header cell, because a grade column is about a hundred
- * pixels wide and a question nobody can read is a question nobody answered.
- *
- * **Hidden is offered as well as Live**, though only Live was asked for: a bulk
- * action with no bulk undo is a one-way door, and the whole feature was built
- * on the promise that it is reversible three ways (ADR-0018).
+ * **The stored default is not changed by any of this and must not be** — a
+ * course with no rule stays hidden, because a course nobody has decided about
+ * is a course nobody has reviewed. Hidden is offered as well as Live: a bulk
+ * action with no bulk undo is a one-way door.
  */
-export function CourseAvailabilityGrid({ rows }: { rows: CourseCatalogRow[] }) {
-  // Group the flat (course × grade) list back into one row per course. Order
-  // is preserved from the server's own SUBJECT_IDS loop (lib/catalog-queries.ts
-  // `courseCatalog`), so this is a grouping, not a re-sort.
+export function CourseAvailabilityGrid({
+  rows,
+  headcounts,
+  gating,
+  completeness = {},
+}: {
+  rows: CourseCatalogRow[];
+  /** per (curriculum, grade), how many students a stranding hide leaves with
+   *  nothing — counts only; `null` when they could not be counted */
+  headcounts: CurriculumHeadcounts | null;
+  gating: boolean;
+  /** by course id — shown in the course's cell, beside its switches (FR-4309) */
+  completeness?: Record<string, CourseCompletenessView>;
+}) {
+  const bulk = useBulkSet(headcounts);
+
+  return (
+    <div className="space-y-8">
+      {coursesByCurriculum().map((section) => {
+        const sectionRows = rows.filter((r) => r.curriculum === section.curriculum);
+        if (sectionRows.length === 0) return null;
+        return (
+          <CurriculumSection
+            key={section.curriculum}
+            curriculum={section.curriculum}
+            label={section.label}
+            description={section.description}
+            rows={sectionRows}
+            bulk={bulk}
+            headcounts={headcounts}
+            gating={gating}
+            completeness={completeness}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* One curriculum's section                                            */
+/* ------------------------------------------------------------------ */
+
+function CurriculumSection({
+  curriculum,
+  label,
+  description,
+  rows,
+  bulk,
+  headcounts,
+  gating,
+  completeness,
+}: {
+  curriculum: CurriculumId;
+  label: string;
+  description: string;
+  rows: CourseCatalogRow[];
+  bulk: Bulk;
+  headcounts: CurriculumHeadcounts | null;
+  gating: boolean;
+  completeness: Record<string, CourseCompletenessView>;
+}) {
+  // Group the flat (course × grade) list back into one row per course, in the
+  // server's registry order — a grouping, not a re-sort.
   const courseOrder: string[] = [];
   const byCourse = new Map<string, CourseCatalogRow[]>();
   for (const row of rows) {
@@ -100,12 +163,23 @@ export function CourseAvailabilityGrid({ rows }: { rows: CourseCatalogRow[] }) {
     }
     byCourse.get(row.courseId)!.push(row);
   }
-
-  const bulk = useBulkSet();
+  const gradeWords = CURRICULA[curriculum].gradeLabels;
 
   return (
-    <div>
-      <BulkBanner bulk={bulk} />
+    <section aria-labelledby={`curriculum-${curriculum}`}>
+      <header className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h2 id={`curriculum-${curriculum}`} className="font-display text-[19px] font-bold text-ink">
+          {label}
+        </h2>
+        <span className="text-[13px] text-ink-soft">{description}</span>
+        <span className="font-mono text-[11px] text-ink-faint">{curriculum}</span>
+      </header>
+      <p className="mb-3 max-w-[80ch] text-[12.5px] leading-relaxed text-ink-soft">
+        A rule here reaches only students who follow the {label} curriculum, or who hold an
+        exception for the course. Grades are named the way this curriculum names them.
+      </p>
+
+      {bulk.section === curriculum && <BulkBanner bulk={bulk} />}
 
       <div className="overflow-x-auto rounded-lg border border-line">
         <table className="w-full min-w-[1000px] border-collapse text-[13px]">
@@ -114,11 +188,16 @@ export function CourseAvailabilityGrid({ rows }: { rows: CourseCatalogRow[] }) {
               <Th>Course</Th>
               {GRADES.map((g) => (
                 <Th key={g.value}>
-                  <span className="block">{g.label}</span>
+                  <span className="block">{gradeWords[g.value as keyof typeof gradeWords]}</span>
+                  <span className="block text-[9.5px] normal-case tracking-normal text-ink-faint">
+                    grade {g.value}
+                  </span>
                   <BulkButtons
                     bulk={bulk}
-                    what={`every subject for ${g.label}`}
+                    section={curriculum}
+                    what={`every ${label} course for ${gradeWords[g.value as keyof typeof gradeWords]}`}
                     cells={rows.filter((r) => r.grade === g.value)}
+                    sectionRows={rows}
                   />
                 </Th>
               ))}
@@ -132,27 +211,48 @@ export function CourseAvailabilityGrid({ rows }: { rows: CourseCatalogRow[] }) {
               return (
                 <tr key={courseId} className="border-b border-line-soft align-top last:border-0">
                   <td className="min-w-[220px] px-3 py-3">
-                    <p className="text-[14px] font-semibold text-ink">{head.label}</p>
+                    <p className="text-[14px] font-semibold text-ink">{head.courseLabel}</p>
                     <p dir={head.dir} className="text-[13px] text-ink-soft">
                       {head.labelAr}
                     </p>
                     <p className="mt-1 max-w-[26ch] text-[11.5px] leading-snug text-ink-faint">
                       {head.book}
                     </p>
+                    <p className="mt-1 text-[11.5px] leading-snug text-ink-soft">
+                      Written for{" "}
+                      {head.courseGrades
+                        .map((g) => gradeWords[g as keyof typeof gradeWords] ?? `grade ${g}`)
+                        .join(", ") || "no grade recorded"}
+                    </p>
                     <p className="mt-1.5 font-mono text-[11px] text-ink-faint">
                       {head.objectivesLoaded} objective{head.objectivesLoaded === 1 ? "" : "s"} ·{" "}
                       {head.questionsLoaded} question{head.questionsLoaded === 1 ? "" : "s"} loaded
                     </p>
+                    {completeness[courseId] && (
+                      <CompletenessPanel depth={completeness[courseId]} />
+                    )}
                     <BulkButtons
                       bulk={bulk}
-                      what={`${head.label} for every grade`}
+                      section={curriculum}
+                      what={`${head.courseLabel} for every grade`}
                       cells={cells}
+                      sectionRows={rows}
                     />
                   </td>
                   {GRADES.map((g) => {
                     const cell = cells.find((c) => c.grade === g.value);
                     if (!cell) return <td key={g.value} className="px-2 py-3" />;
-                    return <GridCell key={g.value} row={cell} />;
+                    return (
+                      <GridCell
+                        key={g.value}
+                        row={cell}
+                        liveInSection={
+                          rows.filter((r) => r.grade === g.value && r.state === "live").length
+                        }
+                        headcount={headcountFor(headcounts, curriculum, g.value)}
+                        gating={gating}
+                      />
+                    );
                   })}
                   <PlanCell cells={cells} />
                 </tr>
@@ -161,12 +261,23 @@ export function CourseAvailabilityGrid({ rows }: { rows: CourseCatalogRow[] }) {
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
   );
 }
 
+/** The count for (curriculum, grade): a number, `0` when nobody follows it, or
+ *  `null` when the counts could not be read. */
+function headcountFor(
+  headcounts: CurriculumHeadcounts | null,
+  curriculum: CurriculumId,
+  grade: string
+): number | null {
+  if (headcounts === null) return null;
+  return headcounts[curriculum]?.[grade] ?? 0;
+}
+
 /* ------------------------------------------------------------------ */
-/* The one write, shared by a single cell and by a bulk action         */
+/* The questions                                                       */
 /* ------------------------------------------------------------------ */
 
 /** True when publishing this course would show a student an empty course. */
@@ -174,17 +285,42 @@ function isEmpty(row: CourseCatalogRow): boolean {
   return row.objectivesLoaded === 0 || row.questionsLoaded === 0;
 }
 
+/** True when the book is not written for this cell's grade (FR-2710). */
+function isOffGrade(row: CourseCatalogRow): boolean {
+  return !row.courseGrades.includes(row.grade);
+}
+
 /** A cell that already says exactly this, on purpose, needs no write. */
 function needsWrite(row: CourseCatalogRow, next: CourseState): boolean {
   return !(row.explicit && row.state === next);
 }
 
+/** The sentence for a stranding hide: a COUNT, never a name (FR-4103). */
+function strandSentence(curriculumLabel: string, gradeLabel: string, n: number | null): string {
+  const who =
+    n === null
+      ? "The number of students who follow it in this grade could not be counted just now; any of them"
+      : `${n} student${n === 1 ? "" : "s"} follow${n === 1 ? "s" : ""} this curriculum in this grade and`;
+  return `This leaves the ${curriculumLabel} curriculum with no live course for ${gradeLabel}. ${who} would have nothing to study.`;
+}
+
+/** The sentence for a grade the book is not written for (FR-2710). */
+function offGradeSentence(row: CourseCatalogRow): string {
+  const words = CURRICULA[row.curriculum].gradeLabels;
+  const written = row.courseGrades
+    .map((g) => words[g as keyof typeof words] ?? `grade ${g}`)
+    .join(", ");
+  return `${row.courseLabel} is written for ${written || "no grade"}, not ${row.gradeLabel}.`;
+}
+
+/* ------------------------------------------------------------------ */
+/* The one write, shared by a single cell and by a bulk action         */
+/* ------------------------------------------------------------------ */
+
 /**
- * The POST, in one place.
- *
- * Returns an error string rather than throwing, because both callers need to
- * put it on the screen next to the control the operator just used — and the
- * bulk caller needs to stop at the first one with a count of what it managed.
+ * The POST, in one place. Returns an error string rather than throwing, so
+ * both callers can put it next to the control the operator just used — and
+ * the bulk caller can stop at the first one with a count of what it managed.
  */
 async function writeRule(row: CourseCatalogRow, next: CourseState): Promise<string | null> {
   try {
@@ -202,10 +338,13 @@ async function writeRule(row: CourseCatalogRow, next: CourseState): Promise<stri
 }
 
 /* ------------------------------------------------------------------ */
-/* Bulk: the state machine, held once for the whole grid               */
+/* Bulk: the state machine, held once for the whole page               */
 /* ------------------------------------------------------------------ */
 
+type Strand = { gradeLabel: string; n: number | null };
+
 type BulkAsk = {
+  section: CurriculumId;
   /** what the operator asked for, in words, for the question and the progress */
   what: string;
   state: CourseState;
@@ -213,31 +352,40 @@ type BulkAsk = {
   todo: CourseCatalogRow[];
   /** the ones that would publish a course with nothing in it */
   empties: CourseCatalogRow[];
+  /** the ones for a grade the book is not written for */
+  offGrade: CourseCatalogRow[];
+  /** the grades this would leave with no live course of the curriculum */
+  strands: Strand[];
 };
 
 type Bulk = ReturnType<typeof useBulkSet>;
 
 /**
- * One bulk action at a time, for the whole grid.
- *
- * Deliberately not per-control state: two bulk actions in flight would write
- * overlapping cells in an order nobody chose, and the second one's "saved 6 of
- * 6" would be describing rules the first one had already changed. The grid can
- * hold one question and one run, and every bulk control is disabled while
- * either is open.
+ * One bulk action at a time, for the whole page — two in flight would write
+ * overlapping cells in an order nobody chose. The page holds one question and
+ * one run, every bulk control is disabled while either is open, and the
+ * banner renders in the section the action belongs to.
  */
-function useBulkSet() {
+function useBulkSet(headcounts: CurriculumHeadcounts | null) {
   const [ask, setAsk] = useState<BulkAsk | null>(null);
   const [progress, setProgress] = useState<{ what: string; done: number; total: number } | null>(
     null
   );
   const [note, setNote] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [section, setSection] = useState<CurriculumId | null>(null);
 
   const running = progress !== null;
 
-  function request(what: string, cells: CourseCatalogRow[], state: CourseState) {
+  function request(
+    sectionId: CurriculumId,
+    what: string,
+    cells: CourseCatalogRow[],
+    sectionRows: CourseCatalogRow[],
+    state: CourseState
+  ) {
     if (running) return;
+    setSection(sectionId);
     setError(null);
     const todo = cells.filter((c) => needsWrite(c, state));
     if (todo.length === 0) {
@@ -246,14 +394,30 @@ function useBulkSet() {
       return;
     }
     setNote(null);
-    // The single cell's rule, applied to a set: only a move to `live` on a
-    // course with nothing behind it needs an answer first.
     const empties = state === "live" ? todo.filter(isEmpty) : [];
-    if (empties.length > 0) {
-      setAsk({ what, state, todo, empties });
+    const offGrade = state === "live" ? todo.filter(isOffGrade) : [];
+    // FR-4103: per grade this action touches, would the curriculum be left
+    // with nothing live? Counted against the SECTION's cells — the courses of
+    // this one curriculum — never the whole registry.
+    const strands: Strand[] = [];
+    if (state === "hidden") {
+      for (const grade of new Set(todo.map((c) => c.grade))) {
+        const liveBefore = sectionRows.filter((r) => r.grade === grade && r.state === "live");
+        const liveAfter = liveBefore.filter(
+          (r) => !todo.some((t) => t.courseId === r.courseId && t.grade === grade)
+        );
+        if (liveBefore.length === 0 || liveAfter.length > 0) continue;
+        const n = headcountFor(headcounts, sectionId, grade);
+        if (n === 0) continue; // nobody follows it in this grade: nobody to warn about
+        strands.push({ gradeLabel: liveBefore[0].gradeLabel, n });
+      }
+    }
+    const a: BulkAsk = { section: sectionId, what, state, todo, empties, offGrade, strands };
+    if (empties.length > 0 || offGrade.length > 0 || strands.length > 0) {
+      setAsk(a);
       return;
     }
-    void run({ what, state, todo, empties });
+    void run(a);
   }
 
   async function run(a: BulkAsk) {
@@ -266,15 +430,15 @@ function useBulkSet() {
       if (failure) {
         setProgress(null);
         setError(
-          `Saved ${i} of ${a.todo.length}. ${a.todo[i].label} for ${a.todo[i].gradeLabel} failed: ${failure}. ` +
+          `Saved ${i} of ${a.todo.length}. ${a.todo[i].courseLabel} for ${a.todo[i].gradeLabel} failed: ${failure}. ` +
             `Reload to see what was written.`
         );
         return;
       }
       setProgress({ what: a.what, done: i + 1, total: a.todo.length });
     }
-    // Same reason a single cell reloads: the server now holds `updated_by` and
-    // `updated_at` values this component cannot reconstruct.
+    // The server now holds `updated_by`/`updated_at` this component cannot
+    // reconstruct.
     window.location.reload();
   }
 
@@ -284,6 +448,7 @@ function useBulkSet() {
     note,
     error,
     running,
+    section,
     request,
     confirm: (a: BulkAsk) => void run(a),
     cancel: () => {
@@ -294,16 +459,20 @@ function useBulkSet() {
   };
 }
 
-/** The Live / Hidden pair that sets a whole row or a whole column. */
+/** The Live / Hidden pair that sets a whole row or a whole column of ONE section. */
 function BulkButtons({
   bulk,
+  section,
   what,
   cells,
+  sectionRows,
 }: {
   bulk: Bulk;
-  /** the action in words — "Mathematics for every grade", "every subject for Prep 3" */
+  section: CurriculumId;
+  /** the action in words — "Mathematics — Grade 10 for every grade", "every National course for Prep 3" */
   what: string;
   cells: CourseCatalogRow[];
+  sectionRows: CourseCatalogRow[];
 }) {
   const disabled = bulk.running || bulk.ask !== null;
   return (
@@ -312,11 +481,10 @@ function BulkButtons({
         <button
           key={state}
           type="button"
-          onClick={() => bulk.request(what, cells, state)}
+          onClick={() => bulk.request(section, what, cells, sectionRows, state)}
           disabled={disabled}
-          // The accessible name says what the button does to what, because
-          // "Live" on its own is the same word the single cell uses and these
-          // two controls do very different amounts.
+          // The accessible name says what the button does to what: "Live" on
+          // its own is the single cell's word, and these do far more.
           aria-label={`Set ${what} ${state}`}
           title={`Set ${what} ${state}`}
           className="ds-control play-pressable rounded border border-line bg-card px-1.5 py-0.5 font-mono text-[9.5px] font-medium uppercase tracking-[0.06em] text-ink-soft hover:bg-line-soft disabled:opacity-40"
@@ -329,8 +497,8 @@ function BulkButtons({
 }
 
 /**
- * The question, the progress and the failure, above the table where there is
- * room to read them. Renders nothing at all when no bulk action is in play.
+ * The question, the progress and the failure, above the section's table.
+ * Renders nothing when no bulk action is in play.
  */
 function BulkBanner({ bulk }: { bulk: Bulk }) {
   const { ask, progress, note, error } = bulk;
@@ -341,16 +509,25 @@ function BulkBanner({ bulk }: { bulk: Bulk }) {
       {ask && (
         <>
           <p className="text-[13.5px] font-semibold leading-relaxed text-ink">
-            Set {ask.what} live? {ask.empties.length} of the {ask.todo.length}{" "}
-            {ask.todo.length === 1 ? "rule" : "rules"} this writes would publish a course with
-            nothing in it.
+            Set {ask.what} {ask.state}? It writes {ask.todo.length}{" "}
+            {ask.todo.length === 1 ? "rule" : "rules"}.
           </p>
           <ul className="mt-1.5 space-y-0.5">
             {ask.empties.map((c) => (
-              <li key={`${c.courseId} ${c.grade}`} className="text-[13px] leading-relaxed text-ink-soft">
-                {c.label} for {c.gradeLabel} — {c.objectivesLoaded} objective
+              <li key={`empty ${c.courseId} ${c.grade}`} className="text-[13px] leading-relaxed text-ink-soft">
+                {c.courseLabel} for {c.gradeLabel} — {c.objectivesLoaded} objective
                 {c.objectivesLoaded === 1 ? "" : "s"}, {c.questionsLoaded} question
                 {c.questionsLoaded === 1 ? "" : "s"}. Students would see an empty course.
+              </li>
+            ))}
+            {ask.offGrade.map((c) => (
+              <li key={`off ${c.courseId} ${c.grade}`} className="text-[13px] leading-relaxed text-ink-soft">
+                {offGradeSentence(c)}
+              </li>
+            ))}
+            {ask.strands.map((s) => (
+              <li key={`strand ${s.gradeLabel}`} className="text-[13px] leading-relaxed text-ink-soft">
+                {strandSentence(CURRICULA[ask.section].label, s.gradeLabel, s.n)}
               </li>
             ))}
           </ul>
@@ -360,7 +537,7 @@ function BulkBanner({ bulk }: { bulk: Bulk }) {
               onClick={() => bulk.confirm(ask)}
               className="ds-control play-pressable rounded border border-line bg-card px-2 py-1 text-[12px] font-semibold text-ink hover:bg-line-soft"
             >
-              Publish all {ask.todo.length}, empty ones included
+              {ask.state === "live" ? "Set" : "Hide"} all {ask.todo.length} anyway
             </button>
             <button
               type="button"
@@ -402,20 +579,12 @@ function BulkBanner({ bulk }: { bulk: Bulk }) {
 /* ------------------------------------------------------------------ */
 
 /**
- * `requires_plan` for one course, across its grades — **read-only, and it is
- * read by nothing else** (migration 023, ADR-0018, and see `courseCatalog`).
- *
- * It exists so the column does not have to be invented under time pressure the
- * day PRD §10 sets a price. It is NULL on every row today, nothing writes it,
- * and no gate consults it: a student is never refused a course because of what
- * this says. Printing it is how an operator can know that — the alternative
- * was a column nobody could see, which is not the same as a column that does
- * nothing.
- *
- * Rendered per COURSE rather than per cell because it is empty everywhere and
- * six empty cells per row would be six times the noise for the same fact; when
- * a value does appear it is named with the grade it was written for, so the
- * summary cannot hide a difference between grades.
+ * `requires_plan` for one course, across its grades — **read-only, and read by
+ * nothing else** (migration 023, ADR-0018, `courseCatalog`). NULL on every row
+ * today; no gate consults it. Printed so an operator can see it is empty.
+ * Per COURSE rather than per cell, because six empty cells per row would be
+ * six times the noise for one fact; a value that does appear is named with
+ * the grade it was written for.
  */
 function PlanCell({ cells }: { cells: CourseCatalogRow[] }) {
   const recorded = cells.filter((c) => c.requiresPlan != null);
@@ -445,24 +614,49 @@ function PlanCell({ cells }: { cells: CourseCatalogRow[] }) {
 /* One cell                                                            */
 /* ------------------------------------------------------------------ */
 
-function GridCell({ row }: { row: CourseCatalogRow }) {
+type CellAsk = { next: CourseState; reasons: string[] };
+
+function GridCell({
+  row,
+  liveInSection,
+  headcount,
+  gating,
+}: {
+  row: CourseCatalogRow;
+  /** live courses of THIS curriculum for this cell's grade, this one included */
+  liveInSection: number;
+  /** students of this curriculum and grade a stranding hide would leave with nothing */
+  headcount: number | null;
+  gating: boolean;
+}) {
   const [busy, setBusy] = useState<CourseState | null>(null);
   const [error, setError] = useState<string | null>(null);
-  /** Set when a "Live" click on an empty course is waiting to be confirmed. */
-  const [asking, setAsking] = useState(false);
-
-  const empty = isEmpty(row);
+  /** Set when a click is waiting for its answer. */
+  const [asking, setAsking] = useState<CellAsk | null>(null);
 
   /**
-   * The first half of the click. A "Live" on a course with nothing behind it
-   * turns the cell into its own question rather than calling a dialog the
-   * browser may have disabled; every other click writes straight away.
+   * The first half of the click: collect the reasons to ask, and ask in the
+   * cell when there are any; otherwise write straight away.
    */
   function request(next: CourseState) {
     if (busy) return;
     if (!needsWrite(row, next)) return;
-    if (next === "live" && empty && !asking) {
-      setAsking(true);
+    const reasons: string[] = [];
+    if (next === "live") {
+      if (isEmpty(row)) {
+        reasons.push(
+          `${row.courseLabel} has ${row.objectivesLoaded} objective${row.objectivesLoaded === 1 ? "" : "s"} and ${row.questionsLoaded} question${row.questionsLoaded === 1 ? "" : "s"}. Students would see an empty course.`
+        );
+      }
+      if (isOffGrade(row)) reasons.push(offGradeSentence(row));
+    } else if (row.state === "live" && liveInSection === 1 && headcount !== 0) {
+      reasons.push(
+        strandSentence(CURRICULA[row.curriculum].label, row.gradeLabel, headcount) +
+          (gating ? "" : " (Once the gate is switched on.)")
+      );
+    }
+    if (reasons.length > 0) {
+      setAsking({ next, reasons });
       setError(null);
       return;
     }
@@ -471,11 +665,9 @@ function GridCell({ row }: { row: CourseCatalogRow }) {
 
   async function setTo(next: CourseState) {
     if (busy) return;
-    // Already exactly this, on purpose — the buttons below disable that case,
-    // but a stale render (two tabs open) should not fire a no-op write.
+    // A stale render (two tabs open) should not fire a no-op write.
     if (!needsWrite(row, next)) return;
-
-    setAsking(false);
+    setAsking(null);
     setBusy(next);
     setError(null);
     const failure = await writeRule(row, next);
@@ -507,24 +699,23 @@ function GridCell({ row }: { row: CourseCatalogRow }) {
         )}
         {asking ? (
           <div className="flex max-w-[9.5rem] flex-col items-start gap-1">
-            <p className="text-[10.5px] leading-snug text-ink">
-              {row.label} has {row.objectivesLoaded} objective
-              {row.objectivesLoaded === 1 ? "" : "s"} and {row.questionsLoaded} question
-              {row.questionsLoaded === 1 ? "" : "s"} for {row.gradeLabel}. Students would
-              see an empty course.
-            </p>
+            {asking.reasons.map((r) => (
+              <p key={r} className="text-[10.5px] leading-snug text-ink">
+                {r}
+              </p>
+            ))}
             <div className="flex flex-wrap gap-1.5">
               <button
                 type="button"
-                onClick={() => void setTo("live")}
+                onClick={() => void setTo(asking.next)}
                 disabled={busy !== null}
                 className="ds-control play-pressable rounded border border-line bg-card px-1.5 py-0.5 text-[10.5px] font-semibold text-ink hover:bg-line-soft disabled:opacity-40"
               >
-                {busy === "live" ? "…" : "Publish it empty"}
+                {busy ? "…" : asking.next === "live" ? "Make it live anyway" : "Hide it anyway"}
               </button>
               <button
                 type="button"
-                onClick={() => setAsking(false)}
+                onClick={() => setAsking(null)}
                 disabled={busy !== null}
                 className="ds-control-quiet rounded border border-dashed border-line-soft px-1.5 py-0.5 text-[10.5px] font-semibold text-ink-soft hover:bg-line-soft disabled:opacity-40"
               >

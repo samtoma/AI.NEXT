@@ -1,0 +1,334 @@
+name: Load a course (manual)
+
+# Puts ONE course that is not yet loaded into noor's database — add-only,
+# backed up and verified first, hidden from every student until an operator
+# sets a rule in the console. (FR-4208, FR-4209; specs/003-curriculum-tracks/
+# contracts/load-course.md; privacy review F13-F17.)
+#
+# MANUAL ONLY. No push, merge or tag runs this, and no deploy does: a deploy
+# must never load a course (FR-4208, constitution X). Run it in this order:
+#   1. dry-run   what the load would do; writes nothing
+#   2. rehearse  the whole load on a throwaway copy of the database, checked,
+#                then dropped; the real database is only read
+#   3. load      back up, verify the backup, load, check — retype the course id
+# Runbook: deploy/DEPLOY-MVP1.md -> "Loading a course".
+#
+# A FOURTH MODE, unrelated to loading a course: RESTORE — roll the database
+# back to a named backup (Samuel, answer 8: "Yes, add restore"). Pick the
+# backup by its exact file name, or `latest` for the newest `load-<course>-*`
+# backup of `course`. Verified before anything is touched, and retype the
+# EXACT backup file name (not "latest") to run it for real. It stops and
+# restarts the student app and the console, and ends with a read-only
+# post-flight (the drift guard for every course now in the database).
+# Runbook: deploy/DEPLOY-MVP1.md -> "Loading a course" -> "Rolling back".
+#
+# NO NEW SECRET. It runs on the box and uses what the deploy already put there
+# (deploy/.env): backups as the database owner inside the db container, content
+# as `ainext_maint` through the loader service (privacy review F16). No secret
+# is passed to, or printed by, any step here. Restore uses the exact same
+# credentials and the exact same box path — nothing new to leak.
+#
+# THE BOX'S CHECKOUT IS NOT MOVED. The load uses the bundles and the
+# deploy/load-course.sh of the commit that is DEPLOYED, because the lesson
+# prose lives in the running image and must match. To load a course whose
+# bundles arrived in a newer commit: deploy that commit first (Actions ->
+# CI/CD), then run this.
+
+on:
+  workflow_dispatch:
+    inputs:
+      course:
+        description: "Course node id, e.g. course:us-g10-math-en. restore mode: only used to find 'latest' — ignored when backup names an exact file."
+        type: string
+        required: true
+      mode:
+        description: "dry-run = writes nothing. rehearse = the whole load on a throwaway copy. load = the real thing. restore = roll back to a backup (see the 'backup' input)."
+        type: choice
+        required: true
+        default: dry-run
+        options: [dry-run, rehearse, load, restore]
+      backup:
+        description: "restore mode only: the exact backup file name in /opt/reletix/backups/mvp1 (e.g. load-us-g10-math-en-20260925T120000Z.dump), or 'latest' for the newest load-<course> backup."
+        type: string
+        required: false
+        default: ""
+      confirm:
+        description: "load mode: retype the course id. restore mode: retype the EXACT backup file name (never 'latest'). Leave empty for dry-run and rehearse."
+        type: string
+        required: false
+        default: ""
+
+# The same group as the deploy job and the content refresh: a load never runs
+# beside a deploy or another content change on the same box.
+concurrency:
+  group: deploy-oci
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  # ---- Everything that can be checked without the box, on a GitHub-hosted
+  #      runner. If any of it fails, the box is never touched.
+  check:
+    name: Check the inputs (the box is not touched)
+    runs-on: ubuntu-latest
+    env:
+      # Inputs are passed as environment variables, never interpolated into a
+      # script body: a workflow input is untrusted text.
+      COURSE: ${{ inputs.course }}
+      MODE: ${{ inputs.mode }}
+      BACKUP: ${{ inputs.backup }}
+      CONFIRM: ${{ inputs.confirm }}
+      REF: ${{ github.ref_name }}
+    steps:
+      - name: The course id, the mode and the confirmation
+        run: |
+          set -euo pipefail
+          if ! [[ "$COURSE" =~ ^course:[a-z0-9-]+$ ]]; then
+            echo "::error::'$COURSE' is not a course node id (e.g. course:us-g10-math-en)"
+            exit 1
+          fi
+          case "$MODE" in
+            dry-run|rehearse) ;;
+            load)
+              if [ "$CONFIRM" != "$COURSE" ]; then
+                echo "::error::To load '$COURSE' for real, retype it in the confirm box. (Run dry-run and rehearse first.)"
+                exit 1
+              fi ;;
+            restore)
+              # As much as a GitHub-hosted runner can check without the box's
+              # filesystem: the file name is well-formed either way, and when
+              # it is an EXACT name (not "latest") the typed confirmation can
+              # already be checked here, before anything is touched. "latest"
+              # cannot be resolved to a name here — the box does that, and
+              # then requires this SAME confirm value to match the name it
+              # resolves, before it touches a container (deploy/load-course.sh,
+              # the "Resolve the backup" step below).
+              if [ -z "$BACKUP" ]; then
+                echo "::error::restore mode needs 'backup': an exact file name in /opt/reletix/backups/mvp1, or 'latest'"
+                exit 1
+              fi
+              if [ "$BACKUP" != "latest" ] && ! [[ "$BACKUP" =~ ^[A-Za-z0-9][A-Za-z0-9._-]*\.dump$ ]]; then
+                echo "::error::'$BACKUP' is not a bare backup file name (letters, digits, '.', '_', '-', ending .dump — no '/' or '..') and is not 'latest'"
+                exit 1
+              fi
+              if [ -z "$CONFIRM" ]; then
+                echo "::error::restore mode needs 'confirm': retype the exact backup file name to run it for real."
+                exit 1
+              fi
+              if [ "$BACKUP" != "latest" ] && [ "$CONFIRM" != "$BACKUP" ]; then
+                echo "::error::To restore '$BACKUP', retype it EXACTLY in the confirm box (you typed '$CONFIRM')."
+                exit 1
+              fi
+              if [ "$BACKUP" = "latest" ]; then
+                echo "::warning::backup=latest: which file that resolves to is decided on the box, which then checks 'confirm' against THAT name — this run does not yet know it matches."
+              fi ;;
+            *) echo "::error::unknown mode '$MODE'"; exit 1 ;;
+          esac
+          if [ "$REF" != "main" ]; then
+            echo "::warning::Dispatched from '$REF', not main. The box still loads from its DEPLOYED checkout, which this run does not move."
+          fi
+          echo "course=$COURSE mode=$MODE backup=$BACKUP ref=$REF"
+
+      - uses: actions/checkout@v4
+
+      - name: A book config names this course (services/extraction/books/*.json)
+        if: ${{ inputs.mode != 'restore' }}
+        run: |
+          set -euo pipefail
+          python3 - "$COURSE" <<'PY'
+          import json, pathlib, sys
+          course = sys.argv[1]
+          hits = []
+          for p in sorted(pathlib.Path("services/extraction/books").glob("*.json")):
+              b = json.loads(p.read_text())
+              if b.get("course_id") == course:
+                  hits.append((p, b))
+          if len(hits) != 1:
+              print(f"::error::{len(hits)} book configs name {course} (exactly one must). "
+                    "A course is loadable only once its book config is committed.")
+              sys.exit(1)
+          p, b = hits[0]
+          if not b.get("parity"):
+              print(f"::error::{p} has no parity constant: the drift guard could not check the course after the load (FR-4207).")
+              sys.exit(1)
+          print(f"book config: {p} ({b.get('title')}), curriculum {b.get('curriculum')}")
+          PY
+
+      - uses: actions/setup-node@v4
+        if: ${{ inputs.mode != 'restore' }}
+        with:
+          node-version: "22"
+
+      - name: The app's course registry knows it (app/src/lib/courses.ts)
+        if: ${{ inputs.mode != 'restore' }}
+        run: |
+          set -euo pipefail
+          # A course the registry does not know has no curriculum and is hidden
+          # from every student (FR-4002) — loading it would be pointless, and
+          # usually means a typo.
+          IDS="$(node --experimental-strip-types --no-warnings --input-type=module \
+                   -e "const m = await import('./app/src/lib/courses.ts'); console.log(m.COURSE_IDS.join('\n'))")"
+          if ! grep -qxF -- "$COURSE" <<<"$IDS"; then
+            echo "::error::$COURSE is not in COURSES (app/src/lib/courses.ts). Known: $(echo $IDS)"
+            exit 1
+          fi
+          echo "registry: $COURSE is a known course"
+
+  # ---- On the box. Nothing above could have touched it.
+  load:
+    name: ${{ inputs.mode }} ${{ inputs.course }}
+    needs: check
+    runs-on: [self-hosted, oci]
+    env:
+      APP_DIR: /opt/reletix/AI.NEXT-mvp1        # noor's stack — NOT the frozen baseline's
+      BACKUP_DIR: /opt/reletix/backups/mvp1     # deploy/ops-lib.sh's OPS_BACKUP_DIR default
+      COURSE: ${{ inputs.course }}
+      MODE: ${{ inputs.mode }}
+      BACKUP: ${{ inputs.backup }}
+      CONFIRM: ${{ inputs.confirm }}
+      DISPATCHED: ${{ github.sha }}
+    steps:
+      - name: The box's checkout (read, never moved)
+        run: |
+          set -euo pipefail
+          if [ ! -d "$APP_DIR/.git" ]; then
+            echo "::error::$APP_DIR is not a checkout — deploy first (Actions -> CI/CD -> Run workflow)."
+            exit 1
+          fi
+          SCRIPT="$APP_DIR/deploy/load-course.sh"
+          if ! grep -q '^# load-course interface: 1$' "$SCRIPT" 2>/dev/null; then
+            echo "::error::the deployed commit has no deploy/load-course.sh. Deploy the release that carries it, then run this again."
+            exit 1
+          fi
+          HEAD_SHA="$(git -C "$APP_DIR" rev-parse HEAD)"
+          echo "deployed checkout: $(git -C "$APP_DIR" log -1 --format='%h %s')"
+          if [ "$HEAD_SHA" != "$DISPATCHED" ]; then
+            echo "::warning::The box is at ${HEAD_SHA:0:7}; you dispatched ${DISPATCHED:0:7}. The load uses the box's (deployed) bundles. If the course's content arrived in a newer commit, deploy it first."
+          fi
+
+      # restore only. This is the one place the confirmation is checked against
+      # the REAL file name when `backup` was "latest": the check job could not
+      # — it never sees the box's disk. Read-only (an `ls`); nothing here stops
+      # a container or writes to the database. If this step fails, nothing
+      # past it runs (`needs`-style ordering by default), so a bad or
+      # mismatched name never reaches `load-course.sh restore`.
+      - name: Resolve the backup (restore mode)
+        id: resolve
+        if: ${{ inputs.mode == 'restore' }}
+        run: |
+          set -euo pipefail
+          SLUG="$(printf '%s' "${COURSE#course:}" | tr -c 'a-z0-9-' '-')"
+          if [ "$BACKUP" = "latest" ]; then
+            FOUND="$(ls -1t "$BACKUP_DIR/load-$SLUG-"*.dump 2>/dev/null | head -1 || true)"
+            if [ -z "$FOUND" ]; then
+              echo "::error::no load-$SLUG-*.dump backup exists in $BACKUP_DIR for $COURSE. List them on the box: ls -lt $BACKUP_DIR | head"
+              exit 1
+            fi
+          else
+            case "$BACKUP" in
+              */*|*..*)
+                echo "::error::'$BACKUP' is not a bare backup file name"; exit 1 ;;
+            esac
+            FOUND="$BACKUP_DIR/$BACKUP"
+            if [ ! -f "$FOUND" ]; then
+              echo "::error::no such backup: $FOUND"
+              exit 1
+            fi
+          fi
+          NAME="$(basename "$FOUND")"
+          if [ "$CONFIRM" != "$NAME" ]; then
+            echo "::error::To restore '$NAME', retype it EXACTLY in the confirm box (you typed '$CONFIRM'). Nothing was touched."
+            exit 1
+          fi
+          echo "resolved backup: $FOUND"
+          echo "path=$FOUND" >> "$GITHUB_OUTPUT"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Load a course
+        id: run
+        env:
+          RESOLVED_PATH: ${{ steps.resolve.outputs.path }}
+        run: |
+          set -uo pipefail
+          cd "$APP_DIR/deploy" || exit 1
+          # `bash …`: immune to a lost exec bit. tee: the summary step reads the log.
+          if [ "$MODE" = restore ]; then
+            bash ./load-course.sh restore "$RESOLVED_PATH" 2>&1 | tee "$RUNNER_TEMP/load-course.log"
+          else
+            bash ./load-course.sh "$COURSE" "$MODE" 2>&1 | tee "$RUNNER_TEMP/load-course.log"
+          fi
+          status=${PIPESTATUS[0]}
+          echo "load-course.sh exited $status"
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit "$status"
+
+      - name: Run summary (what happened, and how to undo it)
+        if: always()
+        env:
+          STATUS: ${{ steps.run.outputs.status }}
+          RESOLVED_NAME: ${{ steps.resolve.outputs.name }}
+        run: |
+          set +e -u
+          LOG="$RUNNER_TEMP/load-course.log"
+          if [ "$MODE" = restore ]; then
+            case "${STATUS:-}" in
+              0) MEANING="OK — restored. Everything students did after that backup was taken is gone from the live database; the pre-restore backup (below) keeps it." ;;
+              "") MEANING="did not start — the backup could not be resolved or confirmed (see the steps above); nothing was touched" ;;
+              *) MEANING="FAILED (exit $STATUS) — read the log. A failed restore rolls itself back (single transaction): the database is exactly as it was before this run" ;;
+            esac
+          else
+            case "${STATUS:-}" in
+              0) MEANING="OK — loaded, already loaded (nothing to do), or the dry run / rehearsal is clean" ;;
+              2) MEANING="REFUSED — a precondition failed. Nothing was written." ;;
+              3) MEANING="BACKUP FAILED — the backup did not complete or verify. Nothing was written." ;;
+              4) MEANING="FAILED after writing, or in the post-flight — read the log; the rollback line is below" ;;
+              "") MEANING="did not start (see the steps above)" ;;
+              *) MEANING="unexpected error (exit $STATUS)" ;;
+            esac
+          fi
+          {
+            if [ "$MODE" = restore ]; then
+              echo "### Restore — \`${RESOLVED_NAME:-$BACKUP}\` over \`$COURSE\`'s database"
+            else
+              echo "### Load a course — \`$MODE\` \`$COURSE\`"
+            fi
+            echo ""
+            echo "| | |"
+            echo "|---|---|"
+            echo "| result | $MEANING |"
+            echo "| exit code | ${STATUS:-—} |"
+            echo ""
+            if [ -f "$LOG" ] && grep -q 'roll back with:' "$LOG"; then
+              echo "**Roll back on the box with** (everything students did since the backup is replaced):"
+              echo ""
+              echo '```'
+              grep 'roll back with:' "$LOG" | tail -1 | sed 's|.*roll back with: *||'
+              echo '```'
+              echo ""
+            fi
+            if [ -f "$LOG" ] && grep -q 'undo this restore with:' "$LOG"; then
+              echo "**Undo THIS restore on the box with** (brings back what students did right up to this run):"
+              echo ""
+              echo '```'
+              grep 'undo this restore with:' "$LOG" | tail -1 | sed 's|.*undo this restore with: *||'
+              echo '```'
+              echo ""
+            fi
+            if [ -f "$LOG" ] && grep -qE 'PARITY: (GREEN|RED)' "$LOG"; then
+              echo "**Drift guard (last run):**"
+              echo ""
+              echo '```'
+              grep -E 'PARITY: (GREEN|RED)' "$LOG" | tail -8
+              echo '```'
+              echo ""
+            fi
+            echo "<details><summary>Last 80 log lines</summary>"
+            echo ""
+            echo '```'
+            [ -f "$LOG" ] && tail -80 "$LOG" || echo "(no log — the run stopped before the script started)"
+            echo '```'
+            echo ""
+            echo "</details>"
+          } >> "$GITHUB_STEP_SUMMARY"

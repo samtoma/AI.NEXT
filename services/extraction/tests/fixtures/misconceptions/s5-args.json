@@ -1,0 +1,31 @@
+{
+  "_about": "S5 fixture: a three-objective lesson of a made-up book (tests/fixtures/misconceptions/zz-test.json). lo:zz1s1-1-3 has no canonical solution, so S5 must skip it rather than write from general mathematics.",
+  "book": "zz-test",
+  "language": "en",
+  "notation": {"decimal": "point", "pair_separator": "comma"},
+  "objectives": [
+    {"id": "lo:zz1s1-1-1", "label": "Multiply powers with the same base", "description": "Uses $a^m \\times a^n = a^{m+n}$.", "lesson": "zz1s1-1", "page": 12},
+    {"id": "lo:zz1s1-1-2", "label": "Raise a power to a power", "lesson": "zz1s1-1", "page": 13},
+    {"id": "lo:zz1s1-1-3", "label": "Negative exponents", "lesson": "zz1s1-1", "page": 14}
+  ],
+  "questions": [
+    {"id": "q:zz1s1-1-1:we01", "lo": "lo:zz1s1-1-1", "kind": "worked_example", "stem": "Simplify $2^3 \\times 2^4$.", "answer": "$2^7 = 128$",
+     "canonical_solution": ["The bases are the same, so add the exponents: $2^3 \\times 2^4 = 2^{3+4}$.", "$2^7 = 128$."],
+     "solution_provenance": "book_worked", "source_page": 12},
+    {"id": "q:zz1s1-1-1:ex1-1", "lo": "lo:zz1s1-1-1", "kind": "exercise", "stem": "Simplify $3^2 \\times 3^4$.",
+     "choices": [{"key": "A", "text": "$3^6$"}, {"key": "B", "text": "$3^8$"}, {"key": "C", "text": "$9^6$"}], "answer": "A",
+     "canonical_solution": [{"text_md": "Same base, so add the exponents: $3^{2+4} = 3^6$."}],
+     "solution_provenance": "book_worked_epub", "source_page": 12},
+    {"id": "q:zz1s1-1-2:ex2-1", "lo": "lo:zz1s1-1-2", "kind": "exercise", "stem": "Simplify $(x^3)^2$.", "answer": "$x^6$",
+     "canonical_solution": ["A power of a power multiplies the exponents: $(x^3)^2 = x^{3 \\times 2} = x^6$."],
+     "solution_provenance": "book_worked_epub", "source_page": 13}
+  ],
+  "sources": [
+    {"lo": "lo:zz1s1-1-1", "kind": "caution", "ref": "b:zz1s1:caution-1", "page": 12, "text": "Do not multiply the exponents: $a^m \\times a^n = a^{m+n}$, not $a^{mn}$."},
+    {"lo": "lo:zz1s1-1-2", "kind": "resolve_disagreement", "ref": "q:zz1s1-1-2:ex2-1", "text": "The blind re-solve answered $x^5$ (added the exponents); the EPUB solution and the printed answer give $x^6$."}
+  ],
+  "distractors": [
+    {"lo": "lo:zz1s1-1-1", "origin": "book", "ref": "q:zz1s1-1-1:ex1-1", "question_id": "q:zz1s1-1-1:ex1-1", "text": "$3^8$"},
+    {"lo": "lo:zz1s1-1-1", "origin": "book", "ref": "q:zz1s1-1-1:ex1-1", "question_id": "q:zz1s1-1-1:ex1-1", "text": "$9^6$"}
+  ]
+}

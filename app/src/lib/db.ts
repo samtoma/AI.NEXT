@@ -64,7 +64,16 @@ export type OperatorRole =
  * anything else a client can choose (FR-2102).
  */
 export type Principal =
-  | { kind: "student"; studentId: number; accountId: number; emailVerified: boolean }
+  | {
+      kind: "student";
+      studentId: number;
+      accountId: number;
+      emailVerified: boolean;
+      /** A first Google sign-in whose grade-and-curriculum step is still owed
+       *  (feature 003, FR-4014). `lib/auth/principal.ts` always sets it; absent
+       *  reads as "not pending". While true, no lesson opens. */
+      onboardingPending?: boolean;
+    }
   | { kind: "operator"; operatorId: number; roles: OperatorRole[] }
   | { kind: "anonymous" };
 

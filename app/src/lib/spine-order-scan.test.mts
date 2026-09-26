@@ -103,7 +103,9 @@ test("nothing on the skill map re-sorts topics by their position in the module",
     assert.doesNotMatch(c, /\blos\b[\w.]*\.sort\(|\bLos\b[\w.]*\.sort\(/, `${f} sorts the topics`);
   }
   // GraphCanvas renders the pure layout rather than carrying its own copy
+  // (with its optional book-section lookup since 003, FR-4315 — undefined for
+  // every subject with no split section, so the call is the one it was)
   const canvas = code("components/spine/GraphCanvas.tsx");
-  assert.match(canvas, /layoutSpine\(los, width\)/);
+  assert.match(canvas, /layoutSpine\(los, width(, groupOf)?\)/);
   assert.doesNotMatch(canvas, /function layout\(/);
 });

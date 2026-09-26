@@ -8,6 +8,8 @@ import {
   pct,
 } from "@/lib/mastery";
 import { DashboardViewed } from "@/components/DashboardViewed";
+import { MathText } from "@/components/MathText";
+import { rollupText } from "@/lib/section-label";
 import {
   BUTTON_PRIMARY,
   STICKER_PANEL,
@@ -200,11 +202,39 @@ function TopicBar({ topic: t }: { topic: TopicRow }) {
         {!untouched && t.weakestLoLabel && (
           <span className="text-ink-soft">
             {t.practisedCount > 1 ? "weakest of those practised" : "practising"}:{" "}
-            {t.weakestLoLabel}
+            {/* an objective label may carry maths (backlog #37) */}
+            <MathText text={t.weakestLoLabel} />
             {t.weakestLoMastery != null && ` (${pct(t.weakestLoMastery)})`}
           </span>
         )}
       </div>
+
+      {/* BOOK SECTIONS (feature 003, FR-4314; backlog #33). A chapter whose
+          book section is split into parts says how far through each one she
+          is — "1.7 Factorisation · 2 of 3 parts mastered" — the subject
+          home's words, from the same roll-up (`TopicRow.sections`). "Mastered"
+          is the progression gate, so this line and the pointer agree. Only
+          on a topic she has started: an untouched chapter's "0 of 3" says
+          nothing its "not started" does not. A module with no split section
+          — every National module — renders exactly what it did. */}
+      {!untouched && t.sections.length > 0 && (
+        <ul className="mt-1.5 space-y-0.5 text-[0.85rem] text-ink-soft">
+          {t.sections.map((sec) => (
+            <li key={sec.key}>
+              <span className="font-semibold text-ink">
+                {sec.number && (
+                  <>
+                    <span dir="ltr">{sec.number}</span>{" "}
+                  </>
+                )}
+                {sec.title ?? (sec.number ? "" : sec.key)}
+              </span>
+              {" · "}
+              {rollupText(sec)}
+            </li>
+          ))}
+        </ul>
+      )}
     </li>
   );
 }

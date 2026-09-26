@@ -8,7 +8,8 @@ import { emit } from "@/lib/analytics";
 import { getLibraryEntries, flagAuthoringGap } from "@/lib/explanations";
 import { currentSessionSnapshot } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
-import { evaluateArithmeticExpression } from "@/lib/arithmetic";
+import { markAnswer, type AttemptRetry } from "@/lib/attempt-grading";
+import { MarkerKeyError } from "@/lib/answer-marker";
 import {
   acceptedRetryOf,
   attemptProbingDeclaration,
@@ -36,29 +37,17 @@ class HttpError extends Error {
   }
 }
 
-function grade(
-  questionType: string,
-  correct: string,
-  given: string
-): boolean {
-  if (questionType === "numeric") {
-    const a = parseFloat(correct);
-    if (!Number.isNaN(a)) {
-      const trimmedGiven = given.trim();
-      // The common case: a clean numeric literal, no working shown.
-      if (/^[+-]?\d+(\.\d+)?$/.test(trimmedGiven)) {
-        return Math.abs(a - parseFloat(trimmedGiven)) < 1e-6;
-      }
-      // The student typed the steps that lead to the answer ("3x4" for 12)
-      // instead of the final value. Evaluate deterministically — no model
-      // call — before falling back to treating it as text.
-      const evaluated = evaluateArithmeticExpression(trimmedGiven);
-      if (evaluated !== null) return Math.abs(a - evaluated) < 1e-6;
-      const b = parseFloat(trimmedGiven);
-      if (!Number.isNaN(b)) return Math.abs(a - b) < 1e-6;
-    }
+/**
+ * An answer the maths-expression marker sends back for re-entry (T416, FR-4320): in a form the question
+ * does not ask for, or not readable as maths. It is NOT a verdict, so it leaves the unit of work by
+ * throwing — `withPrincipal` rolls back, and nothing this request touched survives: no attempt row, no
+ * mastery change, no learning session opened. Answered 422 with the marker's message, so a client that
+ * does not know the shape fails safe (an error, never "wrong").
+ */
+class ReentryRequested extends Error {
+  constructor(readonly body: AttemptRetry) {
+    super(body.retry);
   }
-  return correct.trim().toLowerCase() === given.trim().toLowerCase();
 }
 
 export async function POST(req: Request) {
@@ -214,9 +203,25 @@ export async function POST(req: Request) {
           error: "a widget attempt must report a predicate",
         });
       }
+      // THE MARKER (T416, FR-4320). A question carrying `choices.marker` is
+      // marked by mathematical equivalence (lib/answer-marker.ts, ADR-0025);
+      // every other question by today's `grade()`, unchanged (FR-C03) —
+      // `markAnswer` decides which, and the replay proves the second half on
+      // every recorded attempt (SC-212). A re-entry is decided HERE, before
+      // the session below is adopted or opened and before any write, and it
+      // leaves by throwing so the unit of work rolls back whole.
+      const verdict = isWidget ? null : markAnswer(q, givenAnswer);
+      if (verdict?.verdict === "retry") {
+        throw new ReentryRequested({
+          retry: verdict.retry,
+          ...(verdict.form ? { form: verdict.form } : {}),
+          ...(verdict.reason ? { reason: verdict.reason } : {}),
+          message: verdict.message,
+        });
+      }
       const isCorrect = isWidget
         ? predicate === q.correct_answer
-        : grade(q.question_type, q.correct_answer, givenAnswer);
+        : verdict!.isCorrect;
 
       // THE DIAGNOSIS. On a multiple-choice question the distractors are not
       // filler — somebody chose each one to encode a specific error, and the
@@ -628,6 +633,24 @@ export async function POST(req: Request) {
   } catch (err) {
     if (err instanceof HttpError) {
       return NextResponse.json(err.body, { status: err.status });
+    }
+    if (err instanceof ReentryRequested) {
+      // Which question and why, never what was typed: the list of unreadable
+      // answers is the parser's to-do list (marker-evaluation §7), but a
+      // minor's free text is not ours to log without a privacy review.
+      console.info("[marker] re-entry, nothing recorded:", {
+        question_id: questionId,
+        retry: err.body.retry,
+        ...(err.body.form ? { form: err.body.form } : { reason: err.body.reason }),
+      });
+      return NextResponse.json(err.body, { status: 422 });
+    }
+    if (err instanceof MarkerKeyError) {
+      // The question's key or spec cannot be marked: a content defect for the
+      // loader's check (validateKey), never the student's. Logged, and no
+      // attempt recorded — the transaction rolled back with the throw.
+      console.error("[marker] key defect, no attempt recorded:", { question_id: questionId, error: err.message });
+      return NextResponse.json({ error: "internal error" }, { status: 500 });
     }
     // A write the POLICY refused — someone else's ids on this student's
     // request. 403, and the one security event whose alert threshold is zero

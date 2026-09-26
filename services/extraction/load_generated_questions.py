@@ -20,10 +20,35 @@ this file has exists to make that fact impossible to lose track of:
     exposure-to-students are two separate acts and should require two separate
     decisions, even when the same person makes both a second apart.
 
+Course scope (B15): `--course <id>` refuses any item whose objective is not one of
+that course's, before anything is written, and prints the course's own counts at
+the end — the figures a per-course gate reads instead of a database-wide total
+(ci-cd.yml's old `GEN >= 590`, specs/003 T327):
+
+    course counts: <id> generated=N live=L review=R unreviewed=U widgets=W
+
 Sampling: `--sample N` marks N% of the loaded items for human review by writing
 them to a review queue file. Samuel reviews a sample rather than the whole bank
 (his decision, 2026-09-10); this makes the sample reproducible and its size
 auditable rather than a claim in a commit message.
+
+THE v2 LINE'S BUNDLES (S6 declarative families, S7 widget templates; integration backlog 2):
+  * typed answers: `question_type 'short'` with `choices = {"marker": {...}}`, the expression
+    marker's spec (contracts/answer-marker.md), validated by schemas.MarkerChoices;
+  * the family is a FIELD (`family`), read before the legacy `source_note` text, and it must
+    agree with the note the database keeps ("Generated from template family <id>."), which is
+    what apply_review_verdicts.py reads back;
+  * with a database, every misconception a distractor or widget diagnostic names must be in
+    the loaded catalogue (load_misconceptions.py runs FIRST) or be declared by the bundle; an
+    unknown one refuses the load. `--catalogue-only` also refuses bundle-declared entries the
+    catalogue does not hold (the S5 rule: nothing unverified becomes a row);
+  * every typed answer goes through the APP'S OWN marker (marker_check.mjs runs answer-marker.ts's
+    `readMarkerSpec` and `validateKey`): a fresh bundle whose spec the app would reject, or whose
+    key does not mark itself correct, is refused (a generated key is computed; one the marker
+    cannot read is a broken family). A restore runs the same check where node exists;
+  * a catalogue entry is NEVER edited here: a declared entry the database already has is left
+    exactly as it is — its label, its description and its `generated_by` (the S5 author's
+    attribution is not overwritten by the question generator's).
 """
 
 from __future__ import annotations
@@ -47,7 +72,16 @@ REQUIRED_QUESTION_KEYS = {
     "canonical_solution",
 }
 VALID_TIERS = {"basic", "standard", "advanced"}
-VALID_TYPES = {"mcq", "numeric", "widget"}
+VALID_TYPES = {"mcq", "numeric", "widget", "short"}
+FAMILY_NOTE = "template family "
+
+
+def family_of(q: dict) -> str | None:
+    """The item's family: the v2 field, else the legacy note ("Generated from template family X.")."""
+    if q.get("family"):
+        return q["family"]
+    note = q.get("source_note") or ""
+    return note.split(FAMILY_NOTE, 1)[1].rstrip(". ") if FAMILY_NOTE in note else None
 
 
 def validate(
@@ -95,6 +129,11 @@ def validate(
             problems.append(f"{qid}: question_type {q['question_type']!r} unsupported")
         if not q["canonical_solution"]:
             problems.append(f"{qid}: canonical_solution is empty — a wrong answer would have nothing to teach from")
+        if q.get("family"):
+            note = q.get("source_note") or ""
+            if FAMILY_NOTE in note and note.split(FAMILY_NOTE, 1)[1].rstrip(". ") != q["family"]:
+                problems.append(f"{qid}: family {q['family']!r} disagrees with its source_note {note!r} "
+                                "(the database keeps the note; a review verdict travels by it)")
         if q["question_type"] == "widget":
             # A widget's wrong answers are PREDICATES rather than options
             # (ADR-0009), so its structural checks live with the contract that
@@ -124,9 +163,49 @@ def validate(
                         f"{lo_of_misconception[mc]}, not to this question's {q['lo_id']}"
                     )
                     (notes if restoring else problems).append(msg)
+        elif q["question_type"] == "short":
+            # a typed maths answer, marked by the expression marker (FR-4320): the spec is the
+            # `choices` object, exactly as the loader stores it and the app reads it
+            from pydantic import ValidationError
+            from schemas import MarkerChoices
+            try:
+                MarkerChoices.model_validate(q.get("choices"))
+            except ValidationError as exc:
+                problems.append(f"{qid}: a typed answer carries its marker spec as choices "
+                                f"{{'marker': …}} (contracts/answer-marker.md): {exc.errors()[0]['msg']}")
+            if not str(q["correct_answer"]).strip():
+                problems.append(f"{qid}: a typed answer still carries its answer as text, for the tutor")
         elif q.get("choices"):
             problems.append(f"{qid}: numeric question carries choices")
+        tags = ([(c.get("key"), c.get("misconception_id")) for c in q.get("choices") or []
+                 if isinstance(c, dict) and c.get("misconception_id")]
+                if isinstance(q.get("choices"), list) else
+                [(d.get("predicate"), d.get("misconception_id"))
+                 for d in (q.get("choices") or {}).get("diagnostics") or [] if d.get("misconception_id")]
+                if q["question_type"] == "widget" and isinstance(q.get("choices"), dict) else [])
+        if q["question_type"] == "widget" and known_misconceptions is not None:
+            # only against a real catalogue: a widget bundle declares none of its own
+            for where, mc in tags:
+                if mc not in lo_of_misconception:
+                    problems.append(f"{qid}: diagnostic {where} names unknown misconception {mc!r}")
     return problems, notes
+
+
+def catalogue_problems(bundle: dict, catalogue: dict[str, str], catalogue_only: bool) -> list[str]:
+    """A FRESH bundle against the database's catalogue (id -> lo_id): every entry the bundle
+    declares must agree with the catalogue on its objective, and — with `catalogue_only` —
+    must already be in it. (The tags themselves are checked by `validate`, against the
+    catalogue plus what the bundle declares.)"""
+    problems = []
+    for m in bundle.get("misconceptions", []):
+        if m["id"] in catalogue:
+            if catalogue[m["id"]] != m.get("lo_id"):
+                problems.append(f"{m['id']}: the bundle puts it on {m.get('lo_id')}, the catalogue on "
+                                f"{catalogue[m['id']]}")
+        elif catalogue_only:
+            problems.append(f"{m['id']}: declared by the bundle but not in the loaded catalogue — load "
+                            "the S5 catalogue first (load_misconceptions.py); nothing unverified becomes a row")
+    return problems
 
 
 def main() -> int:
@@ -146,18 +225,29 @@ def main() -> int:
                          "stamps instead of forcing reviewed_by=NULL. Never use this on "
                          "a freshly generated bundle: provenance is not something a "
                          "generator gets to assert about itself")
+    ap.add_argument("--add-only", action="store_true",
+                    help="insert questions the database does not have and leave every existing "
+                         "row exactly as it is (status and review stamps included). The mode the "
+                         "'Load a course' action uses, so a re-run can never revert a promotion")
+    ap.add_argument("--course", help="refuse any item outside this course; print its counts")
+    ap.add_argument("--catalogue-only", action="store_true",
+                    help="refuse a misconception the bundle declares that the loaded catalogue does not "
+                         "hold (the v2 line: S5 is the only source of catalogue rows)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
     bundle = json.loads(args.bundle.read_text())
 
     known = None
-    if args.restore and args.dsn:
+    catalogue: dict[str, str] | None = None
+    if args.dsn:
         import psycopg as _pg
 
         with _pg.connect(args.dsn) as _c, _c.cursor() as _cur:
             _cur.execute("SELECT id, lo_id FROM misconceptions")
-            known = dict(_cur.fetchall())
+            catalogue = dict(_cur.fetchall())
+    if args.restore and args.dsn:
+        known = catalogue
         if not known:
             print(
                 "REFUSING: --restore with an empty misconception catalogue. Load the "
@@ -166,8 +256,32 @@ def main() -> int:
                 file=sys.stderr,
             )
             return 2
+    elif catalogue is not None:
+        # a FRESH bundle is validated against the loaded catalogue plus what it declares
+        known = dict(catalogue)
+        known.update({m["id"]: m.get("lo_id") for m in bundle.get("misconceptions", [])
+                      if m["id"] not in catalogue})
 
     problems, notes = validate(bundle, known, restoring=args.restore)
+    typed = [{"id": q.get("id"), "choices": q.get("choices")} for q in bundle.get("questions", [])
+             if q.get("question_type") == "short"]
+    if typed:
+        import shutil
+        if shutil.which("node"):
+            from assemble_lesson_bundle import marker_check
+            mc = marker_check(typed)
+            problems += [f"{x['id']}: the app's marker rejects its spec — {x['why']}" for x in mc["specs_rejected"]]
+            problems += [f"{x['id']}: the app's marker cannot mark its key {x['key']!r} — {x['why']}"
+                         for x in mc["keys_unreadable"]]
+        elif not args.restore:
+            problems.append(f"{len(typed)} typed answer(s) and no node to run the app's marker over them "
+                            "(marker_check.mjs): a fresh bundle is not loaded unchecked")
+        else:
+            notes.append(f"{len(typed)} typed answer(s) restored without the marker check (no node here)")
+    if catalogue is not None and not args.restore:
+        problems += catalogue_problems(bundle, catalogue, args.catalogue_only)
+    elif args.catalogue_only and catalogue is None:
+        problems.append("--catalogue-only needs the database (--dsn): the catalogue is what it checks against")
     if problems:
         print("BUNDLE REJECTED\n", file=sys.stderr)
         for p in problems:
@@ -222,23 +336,40 @@ def main() -> int:
 
         status = "live" if args.promote else "review"
 
+        if args.course:
+            cur.execute("SELECT node_id FROM node_subject WHERE course_id = %s", (args.course,))
+            course_los = {r[0] for r in cur.fetchall()}
+            outside = sorted(q["id"] for q in questions if q["lo_id"] not in course_los)
+            outside += sorted(m["id"] for m in misconceptions if m.get("lo_id") not in course_los)
+            if outside:
+                print(f"REFUSING: {len(outside)} item(s) are not on an objective of {args.course}: "
+                      f"{outside[:6]}{' …' if len(outside) > 6 else ''}. Nothing was written.",
+                      file=sys.stderr)
+                return 1
+
         # `generated_by` is NOT NULL in the schema on purpose (migration 009):
         # attribution for machine-authored content is a column, not a convention,
         # so it cannot be omitted by a loader that forgets.
         generator = bundle.get("generator") or "unattributed-generator"
 
+        # A catalogue entry is never edited here, in any mode: the catalogue's own loader owns
+        # it (B19: one source), and the S5 author's `generated_by` is never overwritten by the
+        # question generator's. A declared entry the database lacks is created, attributed to
+        # this bundle's generator (the legacy path; --catalogue-only refuses it instead).
+        created_mc = 0
         for m in misconceptions:
             cur.execute(
                 """INSERT INTO misconceptions (id, lo_id, label, description, generated_by)
                    VALUES (%s, %s, %s, %s, %s)
-                   ON CONFLICT (id) DO UPDATE
-                     SET label = EXCLUDED.label,
-                         description = EXCLUDED.description,
-                         generated_by = EXCLUDED.generated_by""",
+                   ON CONFLICT (id) DO NOTHING""",
                 (m["id"], m.get("lo_id"), m["label"], m.get("description"), generator),
             )
+            created_mc += cur.rowcount
 
-        loaded = 0
+        loaded = kept = 0
+        conflict = ("ON CONFLICT (id) DO NOTHING" if args.add_only else
+                    """ON CONFLICT (id) DO UPDATE"""
+                    )
         for q in questions:
             cur.execute(
                 """INSERT INTO questions
@@ -246,14 +377,14 @@ def main() -> int:
                       canonical_solution, solution_version, status, source,
                       parent_question_id, source_page, source_note, reviewed_by, reviewed_at)
                    VALUES (%s,%s,%s,%s,%s,%s,%s,%s,1,%s,'variant',%s,%s,%s,%s,%s)
-                   ON CONFLICT (id) DO UPDATE
+                   """ + conflict + ("" if args.add_only else """
                      SET stem = EXCLUDED.stem,
                          choices = EXCLUDED.choices,
                          correct_answer = EXCLUDED.correct_answer,
                          canonical_solution = EXCLUDED.canonical_solution,
                          status = EXCLUDED.status,
                          reviewed_by = EXCLUDED.reviewed_by,
-                         reviewed_at = EXCLUDED.reviewed_at""",
+                         reviewed_at = EXCLUDED.reviewed_at"""),
                 (
                     q["id"], q["lo_id"], q["tier"], q["question_type"], q["stem"],
                     json.dumps(q.get("choices")) if q.get("choices") else None,
@@ -272,10 +403,36 @@ def main() -> int:
                     q.get("reviewed_at") if args.restore else None,
                 ),
             )
-            loaded += 1
+            if cur.rowcount:
+                loaded += 1
+            else:
+                kept += 1
+        course_counts = None
+        if args.course:
+            cur.execute(
+                """SELECT count(*) FILTER (WHERE question_type <> 'widget'),
+                          count(*) FILTER (WHERE question_type <> 'widget' AND status = 'live'),
+                          count(*) FILTER (WHERE question_type <> 'widget' AND status = 'review'),
+                          count(*) FILTER (WHERE question_type <> 'widget' AND reviewed_by IS NULL),
+                          count(*) FILTER (WHERE question_type = 'widget')
+                     FROM questions
+                    WHERE source = 'variant' AND materialised_from IS NULL
+                      AND lo_id IN (SELECT node_id FROM node_subject WHERE course_id = %s)""",
+                (args.course,))
+            course_counts = cur.fetchone()
         conn.commit()
 
-    print(f"  loaded {loaded} questions as status={status}, source='variant', reviewed_by=NULL")
+    if args.add_only:
+        print(f"  add-only: inserted {loaded}, left {kept} existing question(s) exactly as they are")
+    if course_counts:
+        g, live, rev, unrev, w = course_counts
+        print(f"  course counts: {args.course} generated={g} live={live} review={rev} "
+              f"unreviewed={unrev} widgets={w}")
+    if misconceptions:
+        print(f"  catalogue: {created_mc} declared misconception(s) created, "
+              f"{len(misconceptions) - created_mc} already loaded and left exactly as they are")
+    print(f"  loaded {loaded} questions as status={status if not args.restore else 'as exported'}, "
+          f"source='variant', reviewed_by={'as exported' if args.restore else 'NULL'}")
 
     if args.sample > 0:
         # STRATIFIED BY FAMILY, not uniform across items.
@@ -292,9 +449,7 @@ def main() -> int:
         rng = random.Random(args.seed)
         by_family: dict[str, list[str]] = {}
         for q in questions:
-            note = q.get("source_note") or ""
-            fam = (note.split("template family ", 1)[1].rstrip(". ")
-                   if "template family " in note else f"(no family) {q['id']}")
+            fam = family_of(q) or f"(no family) {q['id']}"
             by_family.setdefault(fam, []).append(q["id"])
 
         picked = {rng.choice(ids) for ids in by_family.values()}

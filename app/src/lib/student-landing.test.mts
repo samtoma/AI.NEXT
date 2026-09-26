@@ -10,6 +10,7 @@
  *
  * @covers FR-3204
  * @covers FR-3206
+ * @covers FR-4006, FR-4009
  *
  * ---------------------------------------------------------------------------
  * THE TABLE THIS FILE EXISTS FOR
@@ -65,6 +66,9 @@ const STUDENT = 42;
 const MATH = "course:prep3-math-en";
 const SOCIAL = "course:prep3-social-ar";
 const ARABIC = "course:prep3-arabic-ar";
+const G10 = "course:us-g10-math-en";
+const { courseForSubject } = await import("./catalog.ts");
+const { coursesOfSpineKey } = await import("./subjects.ts");
 
 /* ------------------------------------------------------------------ */
 /* Layer 1 — the decision, on its own                                  */
@@ -236,9 +240,9 @@ test("a ?lesson= link is honoured even when the home would otherwise show", () =
 });
 
 test("an unrecognised ?subject= is no choice at all — never silently maths", () => {
-  // `courseIdOfSpineKey` answers null for a value the registry does not know,
-  // and null means "nothing was chosen". The home appears, which is the screen
-  // for a student who has not chosen.
+  // `courseForSubject` (the student scope) answers null for a value the
+  // registry does not know, and null means "nothing was chosen". The home
+  // appears, which is the screen for a student who has not chosen.
   const out = decideLanding({
     subject: "chemistry",
     courseId: null,
@@ -270,6 +274,8 @@ type Row = Record<string, unknown>;
 
 type Fixture = {
   grade: string | null;
+  /** `students.curriculum_system`; National when left out (every pre-003 student) */
+  curriculum?: string;
   rules: { course_id: string; grade: string; state: string }[];
   overrides: { course_id: string; state: string }[];
 };
@@ -278,6 +284,7 @@ const LO_ROWS: Row[] = [
   lo("lo:u1-1-1", "Ordered pairs", "module:u1", "Unit 1", MATH, "Mathematics"),
   lo("lo:soc1-1-1", "الموقع الفلكي", "module:soc1", "الوحدة ١", SOCIAL, "الدراسات الاجتماعية"),
   lo("lo:ara1-1-1", "المنادى", "module:ara1", "الوحدة ١", ARABIC, "اللغة العربية"),
+  lo("lo:g10m1s1-1-1", "Simplify expressions", "module:g10m-c01", "Chapter 1 — Algebraic expressions", G10, "Mathematics"),
 ];
 
 function lo(
@@ -313,10 +320,12 @@ function fakeClient(f: Fixture): PoolClient {
     let rows: Row[] | null = null;
     if (text.includes("FROM course_availability")) rows = f.rules;
     else if (text.includes("FROM student_course_access")) rows = f.overrides;
-    else if (text.includes("SELECT grade FROM students"))
-      rows = f.grade === null ? [] : [{ grade: f.grade }];
+    else if (text.includes("SELECT grade, curriculum_system FROM students"))
+      rows = [{ grade: f.grade, curriculum_system: f.curriculum ?? "eg-national-en" }];
     else if (text.includes("FROM graph_nodes lo")) rows = LO_ROWS;
     else if (text.includes("FROM mastery")) rows = [];
+    // the book-section store (migration 034): no split section here
+    else if (text.includes("FROM course_lessons")) rows = [];
     if (rows === null) {
       throw new Error(`the catalogue should not have reached:\n${text.trim().slice(0, 160)}`);
     }
@@ -327,17 +336,19 @@ function fakeClient(f: Fixture): PoolClient {
   return { query, release() {} } as unknown as PoolClient;
 }
 
-/** The catalogue this student actually gets, then the screen it produces. */
-async function landingFor(f: Fixture) {
+/** The catalogue this student actually gets, then the screen it produces —
+ *  for the bare `/student`, or for `?subject=<key>` resolved the way the page
+ *  resolves it (`courseForSubject`, in her scope). */
+async function landingFor(f: Fixture, subject?: string) {
   const lessons = await getLessonCatalog(STUDENT, fakeClient(f));
+  const visible = new Set(lessons.map((l) => l.courseId));
+  const courseId =
+    subject === undefined
+      ? null
+      : courseForSubject(coursesOfSpineKey(subject), (c) => visible.has(c), f.curriculum ?? "eg-national-en");
   return {
     lessons: lessons.map((l) => l.slug),
-    landing: decideLanding({
-      subject: undefined,
-      courseId: null,
-      lessonSlug: undefined,
-      lessons,
-    }),
+    landing: decideLanding({ subject, courseId, lessonSlug: undefined, lessons }),
   };
 }
 
@@ -397,4 +408,55 @@ test("end to end: a per-student override alone is enough to land somewhere", asy
   });
   assert.deepEqual(out.lessons, ["soc1-1"]);
   assert.deepEqual(out.landing, { screen: "check-in", slug: "soc1-1" });
+});
+
+/* ------------------------------------------------------------------ */
+/* 003 — a second curriculum, through the same landing                 */
+/* ------------------------------------------------------------------ */
+
+const LAUNCH = [
+  { course_id: MATH, grade: "9", state: "live" },
+  { course_id: SOCIAL, grade: "9", state: "live" },
+  { course_id: ARABIC, grade: "9", state: "live" },
+  { course_id: G10, grade: "10", state: "live" },
+];
+
+test("003: an American grade-10 student gets the Grade 10 book, and ?subject=math means it — not Prep 3", async () => {
+  const bare = await landingFor({ grade: "10", curriculum: "us-american-en", rules: LAUNCH, overrides: [] });
+  assert.deepEqual(bare.lessons, ["g10m1s1-1"]);
+  assert.deepEqual(bare.landing, { screen: "check-in", slug: "g10m1s1-1" });
+  // the tutor's handoff and the subject home link `?subject=math`: it used to
+  // resolve to the Prep-3 book for everyone, which she cannot see — a 404
+  const viaSubject = await landingFor({ grade: "10", curriculum: "us-american-en", rules: LAUNCH, overrides: [] }, "math");
+  assert.deepEqual(viaSubject.landing, { screen: "check-in", slug: "g10m1s1-1" });
+  // a subject her curriculum has no course of answers as a hidden one: 404
+  const social = await landingFor({ grade: "10", curriculum: "us-american-en", rules: LAUNCH, overrides: [] }, "social");
+  assert.deepEqual(social.landing, { screen: "refused" });
+});
+
+test("003: a National grade-10 student never sees the American book, even with it live for grade 10", async () => {
+  const out = await landingFor({ grade: "10", curriculum: "eg-national-en", rules: LAUNCH, overrides: [] });
+  assert.deepEqual(out.lessons, []);
+  assert.deepEqual(out.landing, { screen: "nothing-yet" });
+  const viaSubject = await landingFor({ grade: "10", curriculum: "eg-national-en", rules: LAUNCH, overrides: [] }, "math");
+  assert.deepEqual(viaSubject.landing, { screen: "refused" }, "hidden and absent are one answer (FR-2706)");
+});
+
+test("003: a National Prep-3 student lands exactly as before, and ?subject=math is still Prep-3 maths", async () => {
+  const out = await landingFor({ grade: "9", rules: LAUNCH, overrides: [] });
+  assert.deepEqual(out.lessons.sort(), ["ara1-1", "soc1-1", "u1-1"]);
+  assert.deepEqual(out.landing, { screen: "subject-home" });
+  const viaSubject = await landingFor({ grade: "9", rules: LAUNCH, overrides: [] }, "math");
+  assert.deepEqual(viaSubject.landing, { screen: "check-in", slug: "u1-1" });
+});
+
+test("003: a National tester with the American book by exception keeps her own maths on ?subject=math (FR-4009)", async () => {
+  const f = { grade: "9", rules: LAUNCH, overrides: [{ course_id: G10, state: "live" }] };
+  const out = await landingFor(f);
+  // both maths books reach her (their order — course by course, Prep 3 first —
+  // is COURSE_RANK's, proved against Postgres in curriculum-scope-db.test.mts;
+  // this fake returns rows in fixture order)
+  assert.deepEqual(out.lessons.sort(), ["ara1-1", "g10m1s1-1", "soc1-1", "u1-1"]);
+  const viaSubject = await landingFor(f, "math");
+  assert.deepEqual(viaSubject.landing, { screen: "check-in", slug: "u1-1" });
 });

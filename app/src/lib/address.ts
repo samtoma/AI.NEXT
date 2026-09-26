@@ -192,19 +192,25 @@ function firstOf(displayName?: string): string {
  * It is stated as grammar, with the FR-2603 boundary spelled out in the block
  * itself: a model told a student's gender without being told what it is for is
  * a model that may decide the lesson should be about football.
+ *
+ * `arabic` (feature 003, decision 9): whether the block carries its Arabic
+ * line. `true` — the default, so every existing render is byte-identical —
+ * for every course whose tutor may write Arabic; `false` for an English-only
+ * course (the Grade 10 book, `CourseTutorFacts.arabicTouches`), whose tutor
+ * writes no Arabic and so needs no Arabic register — and must not be handed
+ * «يا بطل» as a pattern.
  */
-export function addressBlock(gender: Gender, displayName?: string): string {
+export function addressBlock(gender: Gender, displayName?: string, arabic = true): string {
   const a = addressForms(gender, displayName);
   const who = firstOf(displayName) || "the student";
   const english = `- English: address ${who} as "you". Referring to ${who} in the third person, use ${a.they}/${a.them}/${a.their}${a.register === "either" ? " (singular they)" : ""}.`;
-  const arabic =
+  const arabicLine =
     a.register === "either"
       ? `- Arabic: ${who}'s grammatical gender is not recorded. Address ${who} by name with NO gendered vocative («يا ${firstOf(displayName) || "…"}» — never «يا بطل», never «يا بطلة»), and pick phrasings that need no gender agreement («وزرار الإنهاء متاح» rather than «دوس إنهاء» / «دوسي إنهاء»). Do not guess, and never fall back to the masculine.`
       : a.register === "feminine"
         ? `- Arabic: use the FEMININE second-person register throughout — «يا بطلة», «إنتِ», «دوسي», «جاهزة» — and agree every adjective and verb with it.`
         : `- Arabic: use the MASCULINE second-person register throughout — «يا بطل», «إنتَ», «دوس», «جاهز» — and agree every adjective and verb with it.`;
   return `HOW TO ADDRESS THIS STUDENT (grammatical forms only):
-${english}
-${arabic}
+${english}${arabic ? `\n${arabicLine}` : ""}
 - This decides the FORM of your sentences and nothing else: never the topic, never which question you push, never how hard it is. Never mention it, never ask about it, never remark on it.`;
 }

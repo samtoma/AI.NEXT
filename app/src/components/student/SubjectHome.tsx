@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { SubjectSummary } from "@/lib/types";
 import { spineSubjectDef } from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
+import { rollupText, rollupTextAr } from "@/lib/section-label";
+import { MathText } from "@/components/MathText";
 import { BADGE, HEADING, STROKE, STROKE_SM, cx } from "@/components/sticker";
 
 /** "Omar Hassan" → "Omar" — the convention LessonCheckIn uses too. */
@@ -156,6 +158,16 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
   const tile = def?.accent.tile ?? "bg-card text-ink";
   const dim = def?.accent.tileDim ?? "text-ink-soft";
   const rtl = def?.dir === "rtl";
+  // The book section she is in the middle of, rolled up (FR-4314): the first
+  // split section, in the book's order, that she has started and not yet
+  // mastered — "1.7 Factorisation · 2 of 3 parts mastered". One line, not a
+  // list: this card answers "where am I?", and the check-in names the part.
+  // A course with no split section (every National course) has no sections,
+  // so the card is exactly what it was. An Arabic (RTL) card words it in
+  // Arabic, «الأجزاء المتقنة: ٢ من ٣» (`rollupTextAr`) — provisional, for
+  // product-designer's review (backlog #38); no Arabic-taught course has a
+  // split section today, so no card shows it yet.
+  const inSection = (s.sections ?? []).find((x) => x.started && !x.isMastered);
 
   return (
     <Link
@@ -226,7 +238,8 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
         {s.weakestLo ? (
           <p className={cx("mt-2 truncate text-[0.9rem] font-bold", dim)}>
             {rtl ? "أضعف نقطة:" : "Weakest point:"}{" "}
-            <span className="font-extrabold">{s.weakestLo.label}</span>{" "}
+            {/* an objective label may carry maths (backlog #37) */}
+            <MathText className="font-extrabold" text={s.weakestLo.label} />{" "}
             <span className="font-mono text-[0.8rem] font-medium">
               ({pct(s.weakestLo.mastery)})
             </span>
@@ -234,6 +247,16 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
         ) : (
           <p className={cx("mt-2 text-[0.9rem] font-bold", dim)}>
             {rtl ? "لسه بدري نقول أضعف نقطة" : "Too early to say a weakest point"}
+          </p>
+        )}
+
+        {inSection && (
+          <p className={cx("mt-1 truncate text-[0.9rem] font-bold", dim)}>
+            <span className="font-extrabold">
+              <span dir="ltr">{inSection.number}</span> {inSection.title}
+            </span>
+            {" · "}
+            {rtl ? rollupTextAr(inSection) : rollupText(inSection)}
           </p>
         )}
       </div>

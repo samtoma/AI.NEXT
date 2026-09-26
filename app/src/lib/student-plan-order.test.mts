@@ -26,7 +26,14 @@
  * read it was not expecting. The curriculum is the real seed: maths alone,
  * then all three subjects.
  *
+ * BOOK SECTIONS (feature 003, T406; FR-4313, FR-4317). The last test declares
+ * a split section in the store and shows the plan treating part n-1 as a
+ * prerequisite of part n, derived by `withPartPrereqs` and never read from
+ * `graph_edges`; every other test has an empty store, which is every National
+ * course, and its plan is the one it always was.
+ *
  * @covers FR-3217
+ * @covers FR-4317
  */
 process.env.AINEXT_COURSE_GATING = "off";
 
@@ -40,7 +47,8 @@ import { fileURLToPath } from "node:url";
 import { pool } from "./db.ts";
 import { catalogueObjectivesSql } from "./module-order.ts";
 import { MATHS_SEED_FILES, catalogueCompare, loadMathsGraph } from "./spine-maths-fixture.mts";
-import { SPINE_SUBJECT_KEYS, SUBJECTS, SUBJECT_IDS } from "./subjects.ts";
+import { SPINE_SUBJECT_KEYS } from "./subjects.ts";
+import { COURSE_IDS } from "./courses.ts";
 
 const { getStudentPlan } = await import("./queries.ts");
 
@@ -59,7 +67,7 @@ type Curriculum = {
 
 /**
  * All three subjects from their seeds, in the order `catalogueObjectivesSql`
- * returns them: registry subject first (`SUBJECT_RANK`), then `MODULE_ORDER`
+ * returns them: registry course first (`COURSE_RANK`), then `MODULE_ORDER`
  * (`catalogueCompare`) — the order `catalogue-order-db.test.mts` holds the
  * SQL to on a real database.
  */
@@ -75,7 +83,7 @@ function allSubjects(): Curriculum {
   }
   const moduleOf = new Map(seedEdges.filter((e) => e.type === "teaches").map((e) => [e.dst, e.src]));
   const courseOf = new Map(seedEdges.filter((e) => e.type === "part_of").map((e) => [e.src, e.dst]));
-  const courses = SUBJECT_IDS.map((id) => SUBJECTS[id].courseId as string);
+  const courses: readonly string[] = COURSE_IDS;
   const subjectRank = (c: string | null) => (c && courses.includes(c) ? courses.indexOf(c) : courses.length);
   const list = [...nodes.values()]
     .filter((n) => n.kind === "learning_objective")
@@ -102,7 +110,12 @@ const MATHS_ONLY: Curriculum = {
   edges,
 };
 
-function fakeClient(mastery: Record<string, number>, cur: Curriculum = MATHS_ONLY): PoolClient {
+function fakeClient(
+  mastery: Record<string, number>,
+  cur: Curriculum = MATHS_ONLY,
+  /** `course_lessons` rows (migration 034); none by default, as for every National course */
+  lessons: Row[] = []
+): PoolClient {
   const { los, edges } = cur;
   const answer = (text: string): Row[] | null => {
     const sql = text.replace(/\s+/g, " ").trim();
@@ -131,9 +144,22 @@ function fakeClient(mastery: Record<string, number>, cur: Curriculum = MATHS_ONL
       }));
     }
     if (sql.startsWith("SELECT display_name FROM students")) return [{ display_name: "Nour Adel" }];
-    // the course gate, switched off: every course that exists…
+    // the book-section store (migration 034): no split section unless a test
+    // declares one, so the plan's prerequisites are the book's alone
+    if (sql.includes("FROM course_lessons")) return lessons;
+    // the course gate, switched off (FR-4015): the student's curriculum still
+    // scopes and her exceptions still apply, so both are read — a National
+    // student with none — and then every course that is loaded…
+    if (sql === "SELECT grade, curriculum_system FROM students WHERE id = $1") {
+      return [{ grade: "9", curriculum_system: "eg-national-en" }];
+    }
+    if (sql.startsWith("SELECT course_id, state FROM student_course_access")) return [];
     if (sql === "SELECT id FROM graph_nodes WHERE kind = 'course'") {
       return [...new Set(los.map((l) => l.courseId).filter(Boolean))].map((id) => ({ id }));
+    }
+    // …and the book each course is built from (the scope's `doc` predicate)
+    if (sql === "SELECT id AS course_id, source_sha256 FROM graph_nodes WHERE kind = 'course'") {
+      return [...new Set(los.map((l) => l.courseId).filter(Boolean))].map((id) => ({ course_id: id, source_sha256: null }));
     }
     // …and the one walk that maps objectives to their course
     if (sql.includes("AS lo_id, m.id AS module_id, c.id AS course_id")) {
@@ -149,8 +175,9 @@ function fakeClient(mastery: Record<string, number>, cur: Curriculum = MATHS_ONL
   return { query, release() {} } as unknown as PoolClient;
 }
 
-async function planFor(mastery: Record<string, number>, cur?: Curriculum) {
-  (pool as unknown as { connect: () => Promise<PoolClient> }).connect = async () => fakeClient(mastery, cur);
+async function planFor(mastery: Record<string, number>, cur?: Curriculum, lessons?: Row[]) {
+  (pool as unknown as { connect: () => Promise<PoolClient> }).connect = async () =>
+    fakeClient(mastery, cur, lessons);
   return getStudentPlan(STUDENT);
 }
 
@@ -227,4 +254,39 @@ test("a student who sees every subject: split by subject — maths from Unit 1, 
     plan.items.filter((i) => i.reason === "weakest").slice(0, 3).map((i) => i.loId),
     ["lo:u1-1-1", "lo:u2-1-1", "lo:u3-1-1"]
   );
+});
+
+test("FR-4317 in the plan: part 2 of a split section waits for part 1 — and with no split section nothing moves", async () => {
+  // Not a real split: two National lessons with no book edge between them
+  // (u2-1 and u3-1 are both roots), declared parts 1 and 2 of one section so
+  // the rule's effect on the plan is visible on the real maths graph. The
+  // Grade 10 book is not loaded yet; its own split is proven on the fixture
+  // (book-sections-surfaces.test.mts, book-sections-db.test.mts).
+  const part = (slug: string, n: number) => ({
+    course_id: MATH,
+    lesson_slug: slug,
+    title: "A section in two parts",
+    sections: ["9.9"],
+    section_titles: ["A section in two parts"],
+    part_n: n,
+    part_of: 2,
+    chapter_intro: false,
+    group_key: "9.9",
+  });
+  const weakest = async (lessons?: Row[]) =>
+    (await planFor({}, MATHS_ONLY, lessons)).items.filter((i) => i.reason === "weakest").slice(0, 3).map((i) => i.loId);
+
+  // no store rows — the plan it always was
+  assert.deepEqual(await weakest(), ["lo:u1-1-1", "lo:u2-1-1", "lo:u3-1-1"]);
+  // the store holds one-section rows only (no parts): still unchanged
+  assert.deepEqual(
+    await weakest([{ ...part("u2-1", 1), part_n: null, part_of: null, group_key: "2-1" }]),
+    ["lo:u1-1-1", "lo:u2-1-1", "lo:u3-1-1"]
+  );
+  // u3-1 is part 2 of u2-1's section: a new student's u3-1 objectives now wait
+  // on every u2-1 objective, so u3-1-1 is no longer "ready"
+  const split = await weakest([part("u2-1", 1), part("u3-1", 2)]);
+  assert.equal(split[0], "lo:u1-1-1");
+  assert.equal(split[1], "lo:u2-1-1");
+  assert.ok(!split.includes("lo:u3-1-1"), `part 2 waits for part 1: ${split.join(", ")}`);
 });

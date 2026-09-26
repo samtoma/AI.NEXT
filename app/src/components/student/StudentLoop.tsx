@@ -8,6 +8,9 @@ import { stepText } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
 import { TeX } from "@/components/TeX";
 import { ChatCore } from "@/components/chat/ChatCore";
+import { MathAnswerInput } from "@/components/chat/MathAnswerInput";
+import { markerInputOf } from "@/lib/answer-marker";
+import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
 import { FeedbackPrompt } from "@/components/student/FeedbackPrompt";
 import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
@@ -83,9 +86,13 @@ interface Recorded {
 export function StudentLoop({
   plan,
   studentName,
+  bookCite = null,
 }: {
   plan: PlanItem[];
   studentName: string;
+  /** how a page receipt names the book (`CourseDef.cite`); `null` when the
+   *  plan's courses cite different books, or none (backlog #36) */
+  bookCite?: { name: string; edition: string } | null;
 }) {
   const [phase, setPhase] = useState<Phase>("plan");
   const [idx, setIdx] = useState(0);
@@ -96,10 +103,20 @@ export function StudentLoop({
   const [records, setRecords] = useState<Recorded[]>([]);
   const [lastGiven, setLastGiven] = useState<string>("");
   const [askOpen, setAskOpen] = useState(false);
+  // The marker's message from the last submit, when the answer came back for
+  // re-entry (T416, FR-4320): never a verdict, so it is cleared on every fresh
+  // question and on a graded submit, never on a keystroke.
+  const [reentry, setReentry] = useState<string | null>(null);
   const shownAt = useRef<number>(Date.now());
 
   const item = plan[idx];
   const lastResult = records[records.length - 1]?.result;
+  // A typed maths question (FR-4320): its `choices` carry a marker spec, and
+  // it is answered in the maths input — same rule ChatQuestionCard applies.
+  const markerInput = useMemo(
+    () => markerInputOf({ questionType: item.questionType, choices: item.choices }),
+    [item.questionType, item.choices]
+  );
 
   // The practice loop is the one surface where a question being PUT IN FRONT of
   // a student is a distinct client moment, so it is the only place
@@ -114,6 +131,7 @@ export function StudentLoop({
   const advance = () => {
     setChoice(null);
     setNumeric("");
+    setReentry(null);
     setAskOpen(false);
     if (idx + 1 >= plan.length) {
       setPhase("summary");
@@ -133,21 +151,21 @@ export function StudentLoop({
     setError(null);
     track("retrieval_attempt_submitted", { surface: "practice" });
     try {
-      const res = await fetch("/api/attempts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          questionId: item.questionId,
-          givenAnswer: given,
-          timeMs: Date.now() - shownAt.current,
-        }),
+      const result = await submitAttempt({
+        questionId: item.questionId,
+        givenAnswer: given,
+        timeMs: Date.now() - shownAt.current,
       });
-      if (!res.ok) throw new Error(`API ${res.status}`);
-      const result: AttemptResult = await res.json();
+      setReentry(null);
       setRecords((r) => [...r, { item, result }]);
       setPhase(result.isCorrect ? "correct" : "explain");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "request failed");
+      // The maths-expression marker sent the answer back for re-entry (T416,
+      // FR-4320): nothing was recorded — no attempt, no mastery change. Not a
+      // wrong answer and not a request failure, so it gets its own message and
+      // keeps what the student typed, rather than surfacing as "API 422".
+      if (e instanceof AttemptRetryError) setReentry(e.retry.message);
+      else setError(e instanceof Error ? e.message : "request failed");
     } finally {
       setBusy(false);
     }
@@ -321,6 +339,15 @@ export function StudentLoop({
                           </button>
                         ))}
                       </div>
+                    ) : markerInput ? (
+                      <MathAnswerInput
+                        input={markerInput}
+                        value={numeric}
+                        onChange={setNumeric}
+                        onSubmit={() => void submit()}
+                        disabled={busy}
+                        reentry={reentry}
+                      />
                     ) : (
                       <input
                         type="text"
@@ -449,10 +476,12 @@ export function StudentLoop({
                             placeholder="Ask about this question…"
                             resolveCite={(c: Cite) =>
                               c.kind === "page"
-                                ? {
-                                    title: "Ministry textbook",
-                                    sub: `MOETE 2025–2026 · page ${c.id}`,
-                                  }
+                                ? bookCite
+                                  ? {
+                                      title: bookCite.name,
+                                      sub: `${bookCite.edition} · page ${c.id}`,
+                                    }
+                                  : { title: `Page ${c.id}`, sub: "the lesson's book" }
                                 : c.kind === "q"
                                   ? {
                                       title: "This question",

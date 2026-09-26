@@ -51,6 +51,10 @@
  * prompts to a capture taken before this file changed.
  */
 
+// The course registry is pure data (type-only imports), so this file still has
+// no database, no Next and nothing with a side effect anywhere near it.
+import { COURSE_IDS, COURSES, courseDef } from "./courses.ts";
+
 /** The three positions of the console switch. */
 export const PROBING_SETTINGS = ["off", "testers", "everyone"] as const;
 export type ProbingSetting = (typeof PROBING_SETTINGS)[number];
@@ -82,13 +86,34 @@ export const PROBING_EVERYONE_UNLOCKED: boolean = false;
 export const PROBING_EVERYONE_LOCK_NOTE = "Not ready yet — see issue #53";
 
 /**
- * The one course probing may run in. The probing block and every live-event
- * note ChatCore writes for it are English maths strings; Social Studies and
+ * MAY PROBING EVER RUN IN THIS COURSE? The course registry's `probing` fact
+ * (`lib/courses.ts`), and nothing else — not the subject, not the language.
+ *
+ * The probing block and every live-event note ChatCore writes for it are
+ * English maths strings written against the Prep-3 book; Social Studies and
  * Arabic are taught in Egyptian Arabic and have no translation of any of it
- * (#53 P1-6). Not "the English courses" — this one id, until someone writes
- * the other two.
+ * (#53 P1-6). Feature 003: not "the maths courses" either. The Grade 10
+ * American course is English maths too, and probing is off in it at launch
+ * (decision 7, FR-4212) — WHATEVER the console switch says, because every
+ * rule below asks this before it asks the switch's answer to count.
+ *
+ * A course the registry does not know never probes (an unknown id, a
+ * course-less lesson, `null`).
  */
-export const PROBING_COURSE_ID = "course:prep3-math-en";
+export function courseMayProbe(courseId: string | null | undefined): boolean {
+  return courseDef(courseId)?.probing === true;
+}
+
+/** Every course probing can reach, in registry order — what the console's teaching page names (FR-4212). */
+export const PROBING_COURSE_IDS: readonly string[] = COURSE_IDS.filter((id) => COURSES[id].probing);
+
+/**
+ * The course probing may run in — today exactly one, Prep-3 maths
+ * (`curricula-registry.test.mts` holds the registry to that). Kept for its
+ * readers (the console's teaching page, the tests); the rules themselves ask
+ * `courseMayProbe`. `""` if no course may probe — which no course id equals.
+ */
+export const PROBING_COURSE_ID: string = PROBING_COURSE_IDS[0] ?? "";
 
 /**
  * The one surface probing may run on. Review mode is a fast ≤5-message
@@ -159,7 +184,7 @@ export function resolveProbing(
   const setting = effectiveSetting(input.setting, everyoneUnlocked);
   if (setting === "off") return false;
   if (input.surface !== PROBING_SURFACE) return false;
-  if (input.courseId !== PROBING_COURSE_ID) return false;
+  if (!courseMayProbe(input.courseId)) return false;
   if (setting === "testers") return input.isTester === true;
   return true; // everyone, unlocked
 }
@@ -179,7 +204,8 @@ export function probingCouldApply(
   input: Omit<ProbingInputs, "courseId">,
   everyoneUnlocked: boolean = PROBING_EVERYONE_UNLOCKED
 ): boolean {
-  return resolveProbing({ ...input, courseId: PROBING_COURSE_ID }, everyoneUnlocked);
+  // "a course that may probe": no such course, no probing anywhere
+  return resolveProbing({ ...input, courseId: PROBING_COURSE_IDS[0] ?? null }, everyoneUnlocked);
 }
 
 /**
@@ -199,7 +225,7 @@ export function effectiveProbing(
   surface: string | null | undefined,
   courseId: string | null | undefined
 ): boolean {
-  return snapshot === true && surface === PROBING_SURFACE && courseId === PROBING_COURSE_ID;
+  return snapshot === true && surface === PROBING_SURFACE && courseMayProbe(courseId);
 }
 
 /**
@@ -328,15 +354,23 @@ export type ProbeAddress = {
  * enabled branch used to allow it after one attempt and had the model emit
  * `{{reveal_answer}}`; it now tells the model to hold until REVEALED, and no
  * longer mentions the directive. The disabled branch is untouched.
+ *
+ * `arabicTouches` (feature 003, decision 9; the course's registry fact) names
+ * the still-confused signal: «لسه مش فاهم» / still-confused, as every
+ * National prompt always has — the default, so every existing render is
+ * byte-identical — or plain "still-confused" for an English-only course (the
+ * Grade 10 book), whose prompts carry no Arabic phrase at all.
  */
 export function learnWrongAnswerRules(
   a: ProbeAddress,
   tapWidgets: string,
-  enabled: boolean
+  enabled: boolean,
+  arabicTouches = true
 ): string {
+  const confused = arabicTouches ? `a "لسه مش فاهم" / still-confused signal` : "a still-confused signal";
   if (!enabled) {
     return `- From the SECOND message on: open with one warm beat reacting to ${a.their} latest [live event]. If ${a.they} got it wrong: re-explain THAT exact point a different way (grounded in the canonical steps), walking ${a.them} toward the correct answer, in the same upbeat tone — never open with the correct letter.
-- After a "لسه مش فاهم" / still-confused signal: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.`;
+- After ${confused}: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.`;
   }
   return `- From the SECOND message on: open with one warm beat reacting to ${a.their} latest [live event].
 - SOCRATIC PROBING (a wrong answer is never explained outright, and a right answer is never assumed from your own reading of ${a.their} chat reply — grading is always server-side, never your judgment call):
@@ -346,7 +380,7 @@ export function learnWrongAnswerRules(
   · If ${a.they} explicitly ask${a.s} to just be told the answer / give${a.s} up before the "SOCRATIC PROBE — REVEALED" event for this LO (that is, before ${a.their} second attempt), do NOT reveal, hint at, or confirm the answer — warmly insist on an attempt at your guiding question first ("no worries — even a guess helps, take your best shot"). Once REVEALED has fired, answer the ask by walking the material's own steps, same as the REVEALED case above.
   · Never emit {{answer_submitted:...}} for a currently-open WIDGET question — a construction has no free-text equivalent; widgets grade only from the construction itself.
   · Either way the LO stays confirmation-pending — never say "got it" or move on from it — until ${a.they} answer${a.s} a FRESH same-tier question on that same LO correctly ${a.themself}. A "✓ confirmation received" line closes the loop — react warmly, then continue the arc normally.
-- After a "لسه مش فاهم" / still-confused signal on a lesson beat that was NOT a wrong-answer probe: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.`;
+- After ${confused} on a lesson beat that was NOT a wrong-answer probe: re-explain from a DIFFERENT angle, and the next check MUST be a basic-tier question or a tap widget (${tapWidgets}) — never a harder question.`;
 }
 
 /**

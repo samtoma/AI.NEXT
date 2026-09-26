@@ -38,6 +38,22 @@ RUN npm run build:admin
 
 # ---------- run ----------
 FROM node:22-bookworm-slim AS run
+# ---------------------------------------------------------------------------
+# WHAT THIS BUILD CAN BE TRUSTED WITH (feature 003, T319).
+# ---------------------------------------------------------------------------
+# `curriculum-scope`: every student reader is scoped to the courses that
+# student may see — the Ask context's list of books, /dashboard, the home
+# page's counts and book, figures by objective (T314-T318, privacy review §5,
+# FR-4202). `deploy/load-course.sh` reads this label off the RUNNING app and
+# console containers and REFUSES to load a course while it is missing, because
+# an image older than those readers would name a newly loaded book to every
+# student, whatever the console's rules say.
+#
+# The label is a promise about the code in this image, so it ships in the SAME
+# release as the scoped readers — never cherry-picked ahead of them. More
+# features go here comma-separated; never remove one a release still honours.
+# It changes nothing at runtime.
+LABEL org.ainext.features="curriculum-scope"
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     DISABLE_AUTOUPDATER=1 \
@@ -53,6 +69,9 @@ WORKDIR /repo/app
 COPY --from=build --chown=node:node /repo/app ./
 # content read at request time (lesson_content) — mirror the repo layout
 COPY --chown=node:node services/extraction/seed/content /repo/services/extraction/seed/content
+# the S8 coverage audits (coverage/<book>.json), read at request time by the
+# console's /courses page beside each course's switch (FR-4309, lib/coverage-status.ts)
+COPY --chown=node:node services/extraction/coverage /repo/services/extraction/coverage
 USER node
 EXPOSE 3000
 # The healthcheck hits `/` and is correct for BOTH surfaces: on the student

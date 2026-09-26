@@ -4,7 +4,8 @@ import { getLessonCatalog, getLessonData } from "@/lib/lesson";
 import { getLessonContent } from "@/lib/lesson-content";
 import { getSubjectSummaries } from "@/lib/subject-queries";
 import { decideLanding } from "@/lib/student-landing";
-import { courseIdOfSpineKey } from "@/lib/subjects";
+import { resolveStudentScope, visibleCoursesFor } from "@/lib/catalog-queries";
+import { courseDef } from "@/lib/courses";
 import { resolveStudentContext } from "@/lib/student-context";
 import { getCurrentLesson, isCourseComplete } from "@/lib/progression-db";
 import { previousCompletedSlug, untriedObjectives } from "@/lib/progression";
@@ -90,7 +91,19 @@ export default async function StudentPage({
 
   if (mode === "practice") {
     const plan = await getStudentPlan(studentId);
-    return <StudentLoop plan={plan.items} studentName={plan.studentName} />;
+    // How a [[page:N]] receipt names the book (backlog #36): the one citation
+    // every course she may see shares — "Ministry textbook" for a National
+    // student, the Grade 10 book's own name for a Grade 10 student — or none
+    // when her courses cite different books, so a page is never attributed
+    // to the wrong one.
+    const cites = [...(await visibleCoursesFor(studentId))]
+      .map((id) => courseDef(id)?.cite)
+      .filter((c) => c != null);
+    const bookCite =
+      cites.length > 0 && cites.every((c) => c.name === cites[0]!.name && c.edition === cites[0]!.edition)
+        ? cites[0]!
+        : null;
+    return <StudentLoop plan={plan.items} studentName={plan.studentName} bookCite={bookCite} />;
   }
 
   if (mode === "learn" || mode === "review") {
@@ -114,14 +127,30 @@ export default async function StudentPage({
   // «شرح الدرس» — the readable rich-content surface (exposition, glossary,
   // enrichment, misconceptions, interactive beats). Falls through to the
   // check-in when the lesson has no content bundle yet.
+  //
+  // Through the course gate first (003). The bundle is read from disk by slug,
+  // and this door used to open it for ANY slug — a hidden course's teaching
+  // script, or another curriculum's, one hand-typed `?mode=read&lesson=` away.
+  // `getLessonData` is the gate every other `?lesson=` door already goes
+  // through; a refused or unknown lesson falls through to the check-in, which
+  // refuses it the way it always has (404).
   if (mode === "read") {
-    const content = await getLessonContent(lessonSlug ?? "");
+    const gated = lessonSlug ? await getLessonData(lessonSlug, studentId) : null;
+    const content =
+      gated && gated.slug === lessonSlug ? await getLessonContent(gated.slug) : null;
     if (content) return <LessonContentView content={content} />;
   }
 
-  // ?subject → course by EXACT registry lookup: an unknown value yields no
-  // course, never silently the maths one.
-  const courseId = courseIdOfSpineKey(subject) ?? null;
+  // ?subject → course, within THIS student's scope (003). `?subject=` names a
+  // subject, and a subject can now have more than one course (Prep-3 and
+  // Grade-10 maths); which one she means depends on her curriculum and what
+  // she may see — `courseForSubject` (lib/catalog.ts), the only subject →
+  // course lookup outside the registries. An unknown value yields no course,
+  // never silently the maths one; a known subject she may not see yields its
+  // course, which her gated catalogue does not hold, so the landing refuses
+  // it (404) exactly as before.
+  const courseId =
+    subject == null ? null : (await resolveStudentScope(studentId)).courseForSubject(subject);
   const allLessons = await getLessonCatalog(studentId);
 
   // **Which screen this is, decided in one place** (`lib/student-landing.ts`).

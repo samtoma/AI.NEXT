@@ -129,7 +129,7 @@ without a checklist row going red.
 | FR-301 | Mastery as a **probability** with an inspectable evidence trail | **VERIFIED** | `lib/bkt.ts` (pure), `mastery.evidence` JSONB, `contracts/bkt.md` | 8 tests over all six contract invariants; live walk saturates at exactly 0.9800 after 15 correct and still drops to 0.8737 on one wrong — invariant 3 (revisability) holds |
 | FR-302 | Model holds mastery, grade, language preference, interests | **VERIFIED** | `db/migrations/009` `students` columns | Live rows carry all four |
 | FR-303 | A retrieval layer assembles grounding **before** any model call | **VERIFIED** | `lib/retrieval.ts` — the single composition seam | Nearest-skills CTE executed against the real graph; a column-name bug (`src`/`dst` vs `src_id`/`dst_id`) that would have failed **every tutor turn** was found only by running it |
-| FR-304 | Explanation library as first-class content, `reviewed=false` in this environment only | **BUILT** | `migrations/009`, `services/extraction/runbook/refutation.workflow.js`, `assemble_refutations.py`, `load_seed.py` | Pipeline dry-run verified end to end from manifest to assembler; **generation and load need the box** (T042) |
+| FR-304 | Explanation library as first-class content, `reviewed=false` in this environment only | **PARTIAL** | `migrations/009` (`explanation_library`); the entries students actually get are the **refutations of the misconception catalogue**, written to `explanation_library` as `entry_type='refutation'`, `reviewed=false`, by `services/extraction/load_misconceptions.py` from `seed/generated/misconceptions.json` on every deploy (FR-3214) | *Corrected 2026-09-25 (spec 003, pipeline audit G7; B18).* The row used to cite `runbook/refutation.workflow.js` and `assemble_refutations.py`, with "pipeline dry-run verified end to end". That workflow **never produced output**: it read globals the runtime never injects, and `seed/refutations-math.json` exists nowhere in git history. It is now **retired**. What is real is the refutation half of the library, loaded with the catalogue. The other entry types FR-304 names (worked example, faded variant, contrasting case) have no producer, hence PARTIAL. B19 (spec 003 FR-4409) makes the loaded catalogue the single source. The new producer for later books is S5 (`misconceptions.workflow.js`, B11). |
 | FR-305 | No library entry ⇒ serve the standard correct explanation and raise an authoring gap | **BUILT** | `lib/explanations.ts` (T035–T036) | Lookup path typechecks; needs library rows to exercise |
 | FR-306 | A student joining mid-year is **placed by assessment**, not assumed to start at zero | **OPEN** ⚠️ | — | **No placement flow exists.** Not deferred in the spec, so it currently reads as in-scope and unbuilt — see §9 |
 | FR-307 | Every attempt records diagnosis type, misconception, stance, confidence | **VERIFIED** | `api/attempts/route.ts`, `attempts` diagnosis columns (T032) | Columns exist and are written; `confidence` deliberately nullable |
@@ -254,7 +254,7 @@ grounded to say about the question.
 
 | FR | Requirement | Status | Implementation | Proof |
 |---|---|---|---|---|
-| FR-1111 | A catalogue covering generated and textbook questions, authored against each objective's own definition | **PARTIAL** | `build_misconceptions.py` (1,120+ lines, hand-authored, no LLM) -> `seed/misconceptions-math.json` | **Measured 2026-09-13: 43 of 90 objectives, 102 entries, 100 refutations in `explanation_library` (all unreviewed).** `lo:t2u3-1-2` was authored this session as a rate check: **6 entries for one objective**, each mined from that objective's own book distractors and mapped to the exact choices. Remaining: **47 objectives, ~110 entries** at the same standard — all 47 do have book MCQs to mine (135 of them), so the approach is proven, but this is the largest content job in the backlog and cannot be closed in one pass without dropping the grounding bar the constitution sets. |
+| FR-1111 | A catalogue covering generated and textbook questions, authored against each objective's own definition | **PARTIAL** | `seed/generated/misconceptions.json`, loaded by `load_misconceptions.py` on every deploy | **Corrected 2026-09-25 (spec 003, decision 22, B19).** The row used to cite `build_misconceptions.py` -> `seed/misconceptions-math.json` as the implementation. That script is now **retired**: it was a second, hand-edited source that had drifted from the loaded catalogue (six `t2u3-1-2` entries existed only there), and `seed/misconceptions-math.json` is **deleted**. The loaded JSON is now the single source of truth (FR-4409), and the six `t2u3-1-2` entries it lacked are folded in and live. **Measured 2026-09-13, still the last count taken: 43 of 90 objectives, 102 entries** (96 plus the six now folded in), **100 refutations in `explanation_library`** (all unreviewed). Remaining: **47 objectives, ~110 entries** at the same standard — all 47 do have book MCQs to mine (135 of them), so the approach is proven, but this is the largest content job in the backlog and cannot be closed in one pass without dropping the grounding bar the constitution sets. The producer for later books is S5 (`misconceptions.workflow.js`, spec 003 B11), not this retired script. |
 | FR-1112 | Every misconception a distractor points at has a servable refutation | **VERIFIED** | `load_misconceptions.py` writes one refutation per entry | **0** distractors point at nothing; `explanation_library` went from 0 rows to 76 |
 | FR-1113 | Diagnose from the chosen distractor; serve *that* refutation | **VERIFIED** | `api/attempts/route.ts` | Live: answering `q:u1-1-1:001` with B recorded `diagnosis_type=distractor_diagnosed`, `misconception_id=mc:u1-1-1:multiplied-not-added`, `confidence=1`, and served `expl:mc:u1-1-1:multiplied-not-added` |
 | FR-1114 | Conceptual entries for confusions no distractor encodes | **VERIFIED** | 2 entries, including `mc:u3-2-2:divisor-n-minus-one` | Answers within the syllabus — names the book's σ with n, explains where n−1 belongs, and tells the student to check the calculator's setting |
@@ -370,15 +370,15 @@ ADR-0008 bounds the rest. That is T122.
 | Success criteria | **6** |
 | Traced (every one needs a row) | **104 / 104** |
 | — verified | 56 |
-| — built | 17 |
-| — partial | 8 |
+| — built | 16 |
+| — partial | 9 |
 | — open | 6 |
 | — blocked | 3 |
 | — deferred | 12 |
-| Requirements a test declares | **11** |
+| Requirements a test declares | **12** |
 | Tasks complete / total | **99 / 143** |
 
-**Of 56 requirements marked VERIFIED, 11 have an automated test declaring them.** The remaining 45 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 56 requirements marked VERIFIED, 12 have an automated test declaring them.** The remaining 44 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 

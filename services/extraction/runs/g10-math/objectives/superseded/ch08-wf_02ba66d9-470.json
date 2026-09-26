@@ -1,0 +1,3658 @@
+{
+ "stage": "S1",
+ "workflow": "objectives",
+ "prompts_version": "s1-v3",
+ "book": "g10-math",
+ "chapter": 8,
+ "module": "module:g10m-c08",
+ "packet_sha256": "486e4c1296752a99f78d420b2939b3ee159f104c5822bf4e3ea1e204f2ad2b0c",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s1-ch08",
+  "stage": "S1",
+  "shards_sha256": "0127144ab39c7248753340f658bdcca1110d0e6a15387493aa0b0a36c6cdb34e",
+  "files": 168,
+  "pool_batch": 60
+ },
+ "teacher_only_dropped": 4,
+ "lessons": [
+  {
+   "slug": "g10m8s1-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Find the coordinates of points plotted on the Cartesian plane.",
+       "label": "Find point coordinates",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA68",
+         "printed_page": 284,
+         "quote": "Drawing figures on the Cartesian plane"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03126",
+         "printed_page": 284,
+         "quote": "we can draw the figure on the Cartesian plane"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03274",
+         "printed_page": 314,
+         "quote": "A point is an ordered pair of numbers written as $\\left(x;y\\right)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-1:1",
+         "printed_page": 285,
+         "quote": "Find the coordinates of point $D$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-1:2",
+         "printed_page": 285,
+         "quote": "Find the coordinates of all the labelled points"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-1:1",
+        "Ex8-1:2"
+       ],
+       "worked_examples": [],
+       "key": "A1"
+      },
+      {
+       "statement": "Identify the point that lies at given coordinates on the Cartesian plane.",
+       "label": "Identify point from coordinates",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b03128",
+         "printed_page": 284,
+         "quote": "coordinates written as $A(1,1)$"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03126",
+         "printed_page": 284,
+         "quote": "we can draw the figure on the Cartesian plane"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-1:3",
+         "printed_page": 286,
+         "quote": "Which point lies at the coordinates $(5;-4)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-1:4",
+         "printed_page": 286,
+         "quote": "Which point lies at the coordinates $(-4;-3)$"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-1:3",
+        "Ex8-1:4"
+       ],
+       "worked_examples": [],
+       "key": "A2"
+      },
+      {
+       "statement": "Determine which figure uses the correct (alphabetical) naming convention for its vertices.",
+       "label": "Apply naming convention",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b03130",
+         "printed_page": 284,
+         "quote": "it is conventional to write the letters in alphabetical order"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-1:5",
+         "printed_page": 287,
+         "quote": "Which shape uses the correct naming convention?"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-1:6",
+         "printed_page": 287,
+         "quote": "Which shape uses the correct naming convention?"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-1:5",
+        "Ex8-1:6"
+       ],
+       "worked_examples": [],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "label": "Locate points by coordinates",
+       "statement": "Determine the coordinates of a labelled point on the Cartesian plane, and identify which point corresponds to a given pair of coordinates.",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-1:1",
+         "printed_page": 285,
+         "quote": "Find the coordinates of point $D$"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03126",
+         "printed_page": 284,
+         "quote": "the coordinates of the vertices of a figure"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03274",
+         "printed_page": 314,
+         "quote": "ordered pair of numbers written as $\\left(x;y\\right)$"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-1:1",
+        "Ex8-1:2",
+        "Ex8-1:3",
+        "Ex8-1:4"
+       ],
+       "worked_examples": [],
+       "key": "B1"
+      },
+      {
+       "label": "Name figures correctly",
+       "statement": "Determine the correct naming convention for a figure by writing the letters of its vertices in the order they are joined, alphabetically.",
+       "evidence": [
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-1:5",
+         "printed_page": 287,
+         "quote": "Which shape uses the correct naming convention?"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03130",
+         "printed_page": 284,
+         "quote": "conventional to write the letters in alphabetical order"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-1:5",
+        "Ex8-1:6"
+       ],
+       "worked_examples": [],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "notes": "Two objectives fully account for all 5 source items and all 6 exercise items; no worked examples exist for this lesson. Objective 1 merges A1+A2 (finding a point's coordinates / identifying a point from coordinates) since B1 treats these as one skill — both directions are two faces of the same coordinate-reading skill and share the same exercise set (Ex8-1:1–4). Objective 2 is a straight agreement between A3 and B2 (alphabetical vertex-naming convention), differing only in how much mechanism each finder spelled out; B2's fuller wording was kept. Nothing was rejected — every key from both lists maps into these two objectives, and every exercise item is placed.",
+    "objectives": [
+     {
+      "statement": "Determine the coordinates of a point plotted on the Cartesian plane, and identify which point corresponds to a given pair of coordinates.",
+      "label": "Locate points by coordinates",
+      "confidence": "merged",
+      "from": {
+       "a": [
+        "A1",
+        "A2"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA68",
+        "printed_page": 284,
+        "quote": "Drawing figures on the Cartesian plane"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b03126",
+        "printed_page": 284,
+        "quote": "we can draw the figure on the Cartesian plane"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b03128",
+        "printed_page": 284,
+        "quote": "coordinates written as $A(1,1)$"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03274",
+        "printed_page": 314,
+        "quote": "A point is an ordered pair of numbers written as $\\left(x;y\\right)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-1:1",
+        "printed_page": 285,
+        "quote": "Find the coordinates of point $D$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-1:2",
+        "printed_page": 285,
+        "quote": "Find the coordinates of all the labelled points"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-1:3",
+        "printed_page": 286,
+        "quote": "Which point lies at the coordinates $(5;-4)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-1:4",
+        "printed_page": 286,
+        "quote": "Which point lies at the coordinates $(-4;-3)$"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-1:1",
+       "Ex8-1:2",
+       "Ex8-1:3",
+       "Ex8-1:4"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "coordinates",
+       "ordered pair",
+       "Cartesian plane"
+      ],
+      "term_flags": [
+       {
+        "term": "Cartesian plane",
+        "why": "some curricula say \"coordinate plane\"; this book always says \"Cartesian plane\" — kept as the book's own term."
+       },
+       {
+        "term": "$(x;y)$ notation",
+        "why": "coordinates are semicolon-separated here rather than the comma form $(x,y)$ common elsewhere; a reader from another curriculum could misread it as two separate numbers."
+       }
+      ]
+     },
+     {
+      "statement": "Determine the correct naming convention for a figure — writing the letters of its vertices, in the order they are joined, in alphabetical order — and identify which figure follows it.",
+      "label": "Name figures correctly",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "b03130",
+        "printed_page": 284,
+        "quote": "it is conventional to write the letters in alphabetical order"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-1:5",
+        "printed_page": 287,
+        "quote": "Which shape uses the correct naming convention?"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-1:6",
+        "printed_page": 287,
+        "quote": "Which shape uses the correct naming convention?"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-1:5",
+       "Ex8-1:6"
+      ],
+      "worked_examples": [],
+      "terms": [
+       "vertices",
+       "alphabetical order",
+       "naming convention",
+       "figure"
+      ],
+      "term_flags": [
+       {
+        "term": "figure",
+        "why": "the definition says \"figure\" while the exercises say \"shape\" for the same thing — this book's own wobble, not a rewrite into another curriculum's vocabulary."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false,
+      "note": "Heading is present but only labels the section topic 'Drawing figures on the Cartesian plane' without demonstrating how to determine coordinates or identify points by given coordinates"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Demonstrates the coordinate system with concrete example showing how coordinates map to points on the plane (A(1,1), B(3,1), C(3,3), D(1,3))"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Defines the coordinate notation format, which is essential for determining and identifying coordinates"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true,
+      "note": "Provides the foundational definition that a point is an ordered pair (x;y), essential to the objective"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true,
+      "note": "Exercise directly practices finding coordinates of a plotted point D"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true,
+      "note": "Exercise directly practices finding coordinates of multiple labelled points"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true,
+      "note": "Exercise directly practices identifying which point corresponds to given coordinates (5;-4)"
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 7,
+      "present": true,
+      "supports": true,
+      "note": "Exercise directly practices identifying which point corresponds to given coordinates (-4;-3)"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true,
+      "note": "Explicitly defines the naming convention requiring letters to be written in alphabetical order"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true,
+      "note": "Exercise directly practices identifying which of multiple shapes uses the correct naming convention"
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true,
+      "note": "Exercise directly practices identifying which of multiple shapes uses the correct naming convention"
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m8s2-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Calculate the distance between two points, given their coordinates, using the distance formula.",
+       "label": "Calculate distance between two points",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "[EMA69]",
+         "printed_page": 288,
+         "quote": "Distance between two points"
+        },
+        {
+         "kind": "summary",
+         "anchor": "[b03276]",
+         "printed_page": 314,
+         "quote": "The formula for finding the distance between any two points is:"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "[WE1]",
+         "printed_page": 289,
+         "quote": "Find the distance between $S\\left(-2;-5\\right)$ and $Q\\left(7;-2\\right)$ ."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "[Ex8-2:1]",
+         "printed_page": 292,
+         "quote": "Calculate the length of line $AB$ , correct to 2 decimal places."
+        }
+       ],
+       "exercise_items": [
+        "Ex8-2:1",
+        "Ex8-2:2",
+        "Ex8-2:5a",
+        "Ex8-2:5b",
+        "Ex8-2:5c"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Determine a missing coordinate of a point when the distance between it and another point is given.",
+       "label": "Determine missing coordinate from distance",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "[b03141]",
+         "printed_page": 288,
+         "quote": "Distance is a measure of the length between two points."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "[WE2]",
+         "printed_page": 290,
+         "quote": "Given $RS=13$ , $R\\left(3;9\\right)$ and $S\\left(8;y\\right)$ . Find $y$ ."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "[Ex8-2:3]",
+         "printed_page": 292,
+         "quote": "Calculate the missing coordinate of point $B$ ."
+        }
+       ],
+       "exercise_items": [
+        "Ex8-2:3",
+        "Ex8-2:4",
+        "Ex8-2:6a",
+        "Ex8-2:6b",
+        "Ex8-2:7"
+       ],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "A2"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate the distance between two points using the distance formula, giving the answer as a decimal or, where asked, in surd form.",
+       "label": "Calculate distance between points",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE1",
+         "printed_page": 289,
+         "quote": "Find the distance between $S\\left(-2;-5\\right)$ and $Q\\left(7;-2\\right)$"
+        },
+        {
+         "kind": "heading",
+         "anchor": "EMA69",
+         "printed_page": 288,
+         "quote": "Distance between two points"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03141",
+         "printed_page": 288,
+         "quote": "Distance is a measure of the length between two points."
+        }
+       ],
+       "exercise_items": [
+        "Ex8-2:1",
+        "Ex8-2:2",
+        "Ex8-2:5a",
+        "Ex8-2:5b",
+        "Ex8-2:5c"
+       ],
+       "worked_examples": [
+        "WE1"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Determine a missing coordinate of a point given the distance between it and another point.",
+       "label": "Find missing coordinate from distance",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE2",
+         "printed_page": 290,
+         "quote": "Given $RS=13$ , $R\\left(3;9\\right)$ and $S\\left(8;y\\right)$ . Find $y$ ."
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-2:7",
+         "printed_page": 293,
+         "quote": "find the possible values of $p$"
+        },
+        {
+         "kind": "heading",
+         "anchor": "EMA69",
+         "printed_page": 288,
+         "quote": "Distance between two points"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-2:3",
+        "Ex8-2:4",
+        "Ex8-2:6a",
+        "Ex8-2:6b",
+        "Ex8-2:7"
+       ],
+       "worked_examples": [
+        "WE2"
+       ],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate the distance between two points using the distance formula, giving the answer as a decimal or, where asked, in surd form.",
+      "label": "Calculate distance between two points",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "[EMA69]",
+        "printed_page": 288,
+        "quote": "Distance between two points"
+       },
+       {
+        "kind": "definition",
+        "anchor": "[b03141]",
+        "printed_page": 288,
+        "quote": "Distance is a measure of the length between two points."
+       },
+       {
+        "kind": "summary",
+        "anchor": "[b03276]",
+        "printed_page": 314,
+        "quote": "The formula for finding the distance between any two points is:"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "[WE1]",
+        "printed_page": 289,
+        "quote": "Find the distance between $S\\left(-2;-5\\right)$ and $Q\\left(7;-2\\right)$ ."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "[Ex8-2:1]",
+        "printed_page": 292,
+        "quote": "Calculate the length of line $AB$ , correct to 2 decimal places."
+       }
+      ],
+      "exercise_items": [
+       "Ex8-2:1",
+       "Ex8-2:2",
+       "Ex8-2:5a",
+       "Ex8-2:5b",
+       "Ex8-2:5c"
+      ],
+      "worked_examples": [
+       "WE1"
+      ],
+      "terms": [
+       "distance formula",
+       "coordinates",
+       "surd form"
+      ],
+      "term_flags": [
+       {
+        "term": "surd form",
+        "why": "Other curricula may call this an irrational or radical form rather than a 'surd'; the term is specific to this book's (CAPS/Siyavula) vocabulary."
+       }
+      ]
+     },
+     {
+      "statement": "Determine a missing coordinate of a point given the distance between it and another point.",
+      "label": "Determine missing coordinate from distance",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "[WE2]",
+        "printed_page": 290,
+        "quote": "Given $RS=13$ , $R\\left(3;9\\right)$ and $S\\left(8;y\\right)$ . Find $y$ ."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "[Ex8-2:3]",
+        "printed_page": 292,
+        "quote": "Calculate the missing coordinate of point $B$ ."
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-2:7",
+        "printed_page": 293,
+        "quote": "find the possible values of $p$"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-2:3",
+       "Ex8-2:4",
+       "Ex8-2:6a",
+       "Ex8-2:6b",
+       "Ex8-2:7"
+      ],
+      "worked_examples": [
+       "WE2"
+      ],
+      "terms": [
+       "coordinate",
+       "distance formula"
+      ],
+      "term_flags": []
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "Both analysts found the same two objectives for g10m8s2-1, in the same book order (distance-formula application, then solve-for-unknown-coordinate), so both are agreed 1:1 matches. All 10 exercise items and both worked examples split cleanly 5/5 and 1/1 with no leftovers. The definition [b03141] was cited by A under A2 and by B under B1; since it reads as the section's opening concept statement, it was placed under Objective 1 rather than duplicated. Statement wording for Objective 1 was taken from B1 (adds the decimal/surd-form detail); label from A1. For Objective 2, B2's statement and A2's label were kept. Surd form was flagged as book-specific vocabulary."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": false,
+      "supports": false
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": false,
+      "supports": false
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": false,
+      "supports": false
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": false,
+      "supports": false
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": false,
+      "supports": false
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": false,
+      "supports": false
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": false,
+      "supports": false
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m8s3-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Calculate the gradient of a line joining two given points using the gradient formula.",
+       "label": "Calculate gradient between points",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "[EMA6B]",
+         "printed_page": 293,
+         "quote": "Gradient of a line"
+        },
+        {
+         "kind": "definition",
+         "anchor": "[b03170]",
+         "printed_page": 293,
+         "quote": "the ratio of vertical change to horizontal change"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "[WE3]",
+         "printed_page": 294,
+         "quote": "Find the gradient of the line between points"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-3:1a",
+        "Ex8-3:1b",
+        "Ex8-3:1c",
+        "Ex8-3:2",
+        "Ex8-3:3"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Determine an unknown coordinate of a point given the gradient of the line and the other point's coordinates.",
+       "label": "Determine coordinate from gradient",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "[b03170]",
+         "printed_page": 293,
+         "quote": "the ratio of vertical change to horizontal change"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "[WE4]",
+         "printed_page": 295,
+         "quote": "find $x$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "[Ex8-3:4a]",
+         "printed_page": 297,
+         "quote": "find $p$"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-3:4a",
+        "Ex8-3:4b",
+        "Ex8-3:5",
+        "Ex8-3:6"
+       ],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "A2"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate the gradient of a line between two given points using the gradient formula",
+       "label": "Calculate gradient between points",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6B",
+         "printed_page": 293,
+         "quote": "Gradient of a line"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03170",
+         "printed_page": 293,
+         "quote": "The gradient of a line is determined by the ratio of vertical change to horizontal change."
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE3",
+         "printed_page": 294,
+         "quote": "Find the gradient of the line between points $E\\left(2;5\\right)$ and $F\\left(-3;9\\right)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-3:1a",
+         "printed_page": 296,
+         "quote": "Find the gradient of $AB$ if: $A(7;10)$ and $B(-4;1)$"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-3:1a",
+        "Ex8-3:1b",
+        "Ex8-3:1c",
+        "Ex8-3:2",
+        "Ex8-3:3"
+       ],
+       "worked_examples": [
+        "WE3"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Determine an unknown coordinate or variable given the gradient of a line and one known point",
+       "label": "Find unknown coordinate from gradient",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6B",
+         "printed_page": 293,
+         "quote": "Gradient of a line"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE4",
+         "printed_page": 295,
+         "quote": "Given $G\\left(7;-9\\right)$ and $H\\left(x;0\\right)$ , with ${m}_{GH}=3$ , find $x$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-3:4a",
+         "printed_page": 297,
+         "quote": "If the gradient of $CD=\\frac{2}{3}$ , find $p$ given: $C(16;2)$ and $D(8;p)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-3:5",
+         "printed_page": 297,
+         "quote": "line $AB$ has a gradient ( $m$ ) of $\\text{2}$ . Calculate the missing co-ordinate of point $B$"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-3:4a",
+        "Ex8-3:4b",
+        "Ex8-3:5",
+        "Ex8-3:6"
+       ],
+       "worked_examples": [
+        "WE4"
+       ],
+       "key": "B2"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Calculate the gradient of a line joining two given points using the gradient formula.",
+      "label": "Calculate gradient between points",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA6B",
+        "printed_page": 293,
+        "quote": "Gradient of a line"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b03170",
+        "printed_page": 293,
+        "quote": "The gradient of a line is determined by the ratio of vertical change to horizontal change."
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE3",
+        "printed_page": 294,
+        "quote": "Find the gradient of the line between points $E\\left(2;5\\right)$ and $F\\left(-3;9\\right)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-3:1a",
+        "printed_page": 296,
+        "quote": "Find the gradient of $AB$ if: $A(7;10)$ and $B(-4;1)$"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-3:1a",
+       "Ex8-3:1b",
+       "Ex8-3:1c",
+       "Ex8-3:2",
+       "Ex8-3:3"
+      ],
+      "worked_examples": [
+       "WE3"
+      ],
+      "terms": [
+       "gradient",
+       "gradient formula",
+       "point"
+      ],
+      "term_flags": [
+       {
+        "term": "gradient",
+        "why": "some curricula (e.g. American) call this 'slope' instead"
+       }
+      ]
+     },
+     {
+      "statement": "Determine an unknown coordinate or variable given the gradient of a line and one known point.",
+      "label": "Find unknown coordinate from gradient",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA6B",
+        "printed_page": 293,
+        "quote": "Gradient of a line"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE4",
+        "printed_page": 295,
+        "quote": "Given $G\\left(7;-9\\right)$ and $H\\left(x;0\\right)$ , with ${m}_{GH}=3$ , find $x$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-3:4a",
+        "printed_page": 297,
+        "quote": "If the gradient of $CD=\\frac{2}{3}$ , find $p$ given: $C(16;2)$ and $D(8;p)$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-3:5",
+        "printed_page": 297,
+        "quote": "line $AB$ has a gradient ( $m$ ) of $\\text{2}$ . Calculate the missing co-ordinate of point $B$"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-3:4a",
+       "Ex8-3:4b",
+       "Ex8-3:5",
+       "Ex8-3:6"
+      ],
+      "worked_examples": [
+       "WE4"
+      ],
+      "terms": [
+       "gradient",
+       "coordinate",
+       "point"
+      ],
+      "term_flags": [
+       {
+        "term": "co-ordinate",
+        "why": "spelled 'coordinate' in some curricula (e.g. American); same concept"
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "Both analysts found the same two objectives for g10m8s3-1, with near-identical statements, evidence, exercise coverage and worked examples; no keys required rejection. Evidence sets were consolidated using B's items (a strict superset in detail, including exercise-anchored evidence) since instructions permit choosing from either finder's exact evidence rather than merging quotes. All 9 exercise items and both worked examples map cleanly, one set each, to the two objectives, matching both finders' groupings exactly."
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m8s3-2",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Calculate the equation of a straight line given two points on it, and use the gradient formula to find an unknown coordinate on a line.",
+       "label": "Equation of a straight line",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6C",
+         "printed_page": 298,
+         "quote": "Straight lines"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03278",
+         "printed_page": 314,
+         "quote": "The formula for finding the gradient of a line"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 298,
+         "quote": "Find the equation of the straight line"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-4:6",
+         "printed_page": 306,
+         "quote": "has a gradient of $\\text{1}$"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-4:3",
+        "Ex8-4:4",
+        "Ex8-4:6",
+        "Ex8-4:15",
+        "Ex8-4:16"
+       ],
+       "worked_examples": [
+        "WE5"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Determine whether two lines are parallel, perpendicular, or neither by comparing their gradients, and use these conditions to calculate an unknown equation or coordinate.",
+       "label": "Parallel and perpendicular lines",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6D",
+         "printed_page": 300,
+         "quote": "Parallel and perpendicular lines"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03282",
+         "printed_page": 315,
+         "quote": "If two lines are parallel, their gradients are equal."
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03283",
+         "printed_page": 315,
+         "quote": "the product of their gradients is equal to $-\\text{1}$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 300,
+         "quote": "is parallel to line $CD$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE7",
+         "printed_page": 301,
+         "quote": "Line $AB$ is perpendicular to line $CD$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-4:1a",
+         "printed_page": 304,
+         "quote": "Determine whether $AB$ and $CD$ are parallel, perpendicular or neither"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-4:1a",
+        "Ex8-4:1b",
+        "Ex8-4:1c",
+        "Ex8-4:7",
+        "Ex8-4:8",
+        "Ex8-4:9",
+        "Ex8-4:10",
+        "Ex8-4:11",
+        "Ex8-4:12",
+        "Ex8-4:13",
+        "Ex8-4:14",
+        "Ex8-4:17",
+        "Ex8-4:19a",
+        "Ex8-4:19b",
+        "Ex8-4:20a",
+        "Ex8-4:20b",
+        "Ex8-4:20c"
+       ],
+       "worked_examples": [
+        "WE6",
+        "WE7"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Prove that three given points lie on the same straight line, using the gradient method or the distance formula.",
+       "label": "Points on a line",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6G",
+         "printed_page": 302,
+         "quote": "Points on a line"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03279",
+         "printed_page": 314,
+         "quote": "a constant gradient between any two of the points"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03276",
+         "printed_page": 314,
+         "quote": "The formula for finding the distance between any two points"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 303,
+         "quote": "are on a straight line"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE9",
+         "printed_page": 304,
+         "quote": "Calculate the three distances"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-4:2a",
+         "printed_page": 305,
+         "quote": "Determine whether the following points lie on the same straight line"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-4:2a",
+        "Ex8-4:2b",
+        "Ex8-4:2c",
+        "Ex8-4:5",
+        "Ex8-4:18"
+       ],
+       "worked_examples": [
+        "WE8",
+        "WE9"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Determine the equation of a straight line through two given points, or from a given gradient and a point, and use it to calculate a missing coordinate.",
+       "label": "Equation of a straight line",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6C",
+         "printed_page": 298,
+         "quote": "Straight lines"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE5",
+         "printed_page": 298,
+         "quote": "Finding the equation of a straight line"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-4:3",
+         "printed_page": 305,
+         "quote": "Calculate the equation of the line $AB$"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-4:3",
+        "Ex8-4:4",
+        "Ex8-4:6",
+        "Ex8-4:15",
+        "Ex8-4:16"
+       ],
+       "worked_examples": [
+        "WE5"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Determine whether two lines are parallel, perpendicular or neither, and calculate an unknown coordinate, gradient or equation using the parallel or perpendicular condition.",
+       "label": "Parallel and perpendicular lines",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6D",
+         "printed_page": 300,
+         "quote": "Parallel and perpendicular lines"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE6",
+         "printed_page": 300,
+         "quote": "Parallel lines"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-4:1a",
+         "printed_page": 304,
+         "quote": "Determine whether $AB$ and $CD$ are parallel, perpendicular or neither"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-4:1a",
+        "Ex8-4:1b",
+        "Ex8-4:1c",
+        "Ex8-4:7",
+        "Ex8-4:8",
+        "Ex8-4:9",
+        "Ex8-4:10",
+        "Ex8-4:11",
+        "Ex8-4:12",
+        "Ex8-4:13",
+        "Ex8-4:14",
+        "Ex8-4:17",
+        "Ex8-4:19a",
+        "Ex8-4:19b",
+        "Ex8-4:20a",
+        "Ex8-4:20b",
+        "Ex8-4:20c"
+       ],
+       "worked_examples": [
+        "WE6",
+        "WE7"
+       ],
+       "key": "B2"
+      },
+      {
+       "statement": "Prove that given points are collinear (lie on the same straight line) using the gradient method or the distance formula, and calculate an unknown coordinate.",
+       "label": "Points on a line",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6G",
+         "printed_page": 302,
+         "quote": "Points on a line"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE8",
+         "printed_page": 303,
+         "quote": "Points on a line"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-4:2a",
+         "printed_page": 305,
+         "quote": "Determine whether the following points lie on the same straight line"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-4:2a",
+        "Ex8-4:2b",
+        "Ex8-4:2c",
+        "Ex8-4:5",
+        "Ex8-4:18"
+       ],
+       "worked_examples": [
+        "WE8",
+        "WE9"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "objectives": [
+     {
+      "statement": "Determine the equation of a straight line given two points on it, or given its gradient and one point, and use the gradient formula to calculate an unknown coordinate on the line.",
+      "label": "Equation of a straight line",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA6C",
+        "printed_page": 298,
+        "quote": "Straight lines"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03278",
+        "printed_page": 314,
+        "quote": "The formula for finding the gradient of a line"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE5",
+        "printed_page": 298,
+        "quote": "Find the equation of the straight line"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-4:3",
+        "printed_page": 305,
+        "quote": "Calculate the equation of the line $AB$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-4:6",
+        "printed_page": 306,
+        "quote": "has a gradient of $text{1}$"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-4:3",
+       "Ex8-4:4",
+       "Ex8-4:6",
+       "Ex8-4:15",
+       "Ex8-4:16"
+      ],
+      "worked_examples": [
+       "WE5"
+      ],
+      "terms": [
+       "gradient",
+       "equation of a straight line",
+       "coordinate"
+      ],
+      "term_flags": [
+       {
+        "term": "gradient",
+        "why": "some curricula (e.g. American) call this the line's slope; the book's own term is gradient"
+       }
+      ]
+     },
+     {
+      "statement": "Determine whether two lines are parallel, perpendicular, or neither by comparing their gradients, and use the parallel and perpendicular conditions to calculate an unknown coordinate, gradient or equation.",
+      "label": "Parallel and perpendicular lines",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA6D",
+        "printed_page": 300,
+        "quote": "Parallel and perpendicular lines"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03282",
+        "printed_page": 315,
+        "quote": "If two lines are parallel, their gradients are equal."
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03283",
+        "printed_page": 315,
+        "quote": "the product of their gradients is equal to $-text{1}$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE6",
+        "printed_page": 300,
+        "quote": "is parallel to line $CD$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE7",
+        "printed_page": 301,
+        "quote": "Line $AB$ is perpendicular to line $CD$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-4:1a",
+        "printed_page": 304,
+        "quote": "Determine whether $AB$ and $CD$ are parallel, perpendicular or neither"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-4:1a",
+       "Ex8-4:1b",
+       "Ex8-4:1c",
+       "Ex8-4:7",
+       "Ex8-4:8",
+       "Ex8-4:9",
+       "Ex8-4:10",
+       "Ex8-4:11",
+       "Ex8-4:12",
+       "Ex8-4:13",
+       "Ex8-4:14",
+       "Ex8-4:17",
+       "Ex8-4:19a",
+       "Ex8-4:19b",
+       "Ex8-4:20a",
+       "Ex8-4:20b",
+       "Ex8-4:20c"
+      ],
+      "worked_examples": [
+       "WE6",
+       "WE7"
+      ],
+      "terms": [
+       "gradient",
+       "parallel",
+       "perpendicular"
+      ],
+      "term_flags": [
+       {
+        "term": "gradient",
+        "why": "some curricula (e.g. American) call this the line's slope; the book's own term is gradient"
+       }
+      ]
+     },
+     {
+      "statement": "Prove that given points lie on the same straight line, using the gradient method (a constant gradient between pairs of points) or the distance formula, and use this to calculate an unknown coordinate.",
+      "label": "Points on a line",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA6G",
+        "printed_page": 302,
+        "quote": "Points on a line"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03279",
+        "printed_page": 314,
+        "quote": "a constant gradient between any two of the points"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03276",
+        "printed_page": 314,
+        "quote": "The formula for finding the distance between any two points"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE8",
+        "printed_page": 303,
+        "quote": "are on a straight line"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE9",
+        "printed_page": 304,
+        "quote": "Calculate the three distances"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-4:2a",
+        "printed_page": 305,
+        "quote": "Determine whether the following points lie on the same straight line"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-4:2a",
+       "Ex8-4:2b",
+       "Ex8-4:2c",
+       "Ex8-4:5",
+       "Ex8-4:18"
+      ],
+      "worked_examples": [
+       "WE8",
+       "WE9"
+      ],
+      "terms": [
+       "gradient",
+       "distance formula"
+      ],
+      "term_flags": [
+       {
+        "term": "gradient",
+        "why": "some curricula (e.g. American) call this the line's slope; the book's own term is gradient"
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": [],
+    "notes": "All six inputs (A1/A2/A3, B1/B2/B3) pair up 1:1 into three objectives, in the book's teaching order (EMA6C p298 -> EMA6D p300 -> EMA6G p302). No key was rejected and no exercise item or worked example was left unmapped: the two finders' item sets were identical for each pair, and together the three objectives cover all 27 exercise items and all 5 worked examples exactly once. Where the same worked-example anchor had two different quotes across finders (WE5, WE6, WE8), one quote was kept and the other dropped rather than inventing a merged quote. \"Collinear\" (B3's gloss) was not used in the statement since the book's own evidence only supports \"lie on the same straight line\" - kept the book's own phrasing per the no-rewrite-into-another-vocabulary rule. Note: quotes containing LaTeX \\text{} macros are reproduced with the backslash omitted (rendered as \"text{1}\") due to an escaping constraint in this output channel; the surrounding wording is otherwise copied exactly.</parameter>\n</invoke>\n"
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  },
+  {
+   "slug": "g10m8s4-1",
+   "finders": {
+    "a": {
+     "objectives": [
+      {
+       "statement": "Calculate the coordinates of the mid-point of a line segment, given the coordinates of its two endpoints.",
+       "label": "Calculate the mid-point of a line",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6H",
+         "printed_page": 308,
+         "quote": "Mid-point of a line"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03257",
+         "printed_page": 309,
+         "quote": "M(x;y)=\\left(\\dfrac{x_1+x_2}{2};\\dfrac{y_1+y_2}{2}\\right)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 309,
+         "quote": "Calculate the coordinates of the mid-point $F\\left(x;y\\right)$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE11",
+         "printed_page": 310,
+         "quote": "Find the mid-point of line $AB$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-5:1",
+         "printed_page": 313,
+         "quote": "Calculate the coordinates of the mid-point ( $M$ )"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-5:1",
+        "Ex8-5:2",
+        "Ex8-5:3a",
+        "Ex8-5:3b",
+        "Ex8-5:3c"
+       ],
+       "worked_examples": [
+        "WE10",
+        "WE11"
+       ],
+       "key": "A1"
+      },
+      {
+       "statement": "Find the coordinates of an unknown endpoint of a line segment, given its mid-point and the other endpoint.",
+       "label": "Find an unknown endpoint",
+       "evidence": [
+        {
+         "kind": "definition",
+         "anchor": "b03257",
+         "printed_page": 309,
+         "quote": "M(x;y)=\\left(\\dfrac{x_1+x_2}{2};\\dfrac{y_1+y_2}{2}\\right)"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE12",
+         "printed_page": 311,
+         "quote": "Find point $D$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-5:4",
+         "printed_page": 314,
+         "quote": "Find $P$ if $Q$ is $(-2;5)$"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-5:4"
+       ],
+       "worked_examples": [
+        "WE12"
+       ],
+       "key": "A2"
+      },
+      {
+       "statement": "Find an unknown vertex of a parallelogram by equating the mid-points of its diagonals using the mid-point formula.",
+       "label": "Find a parallelogram vertex",
+       "evidence": [
+        {
+         "kind": "summary",
+         "anchor": "b03286",
+         "printed_page": 315,
+         "quote": "The formula for finding the mid-point between two points is:"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 312,
+         "quote": "the diagonals of a parallelogram bisect each other"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-5:5",
+         "printed_page": 314,
+         "quote": "$PQRS$ is a parallelogram"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-5:5"
+       ],
+       "worked_examples": [
+        "WE13"
+       ],
+       "key": "A3"
+      }
+     ]
+    },
+    "b": {
+     "objectives": [
+      {
+       "statement": "Calculate the coordinates of the mid-point of a line segment, given the coordinates of its two end points.",
+       "label": "Calculate a line's mid-point",
+       "evidence": [
+        {
+         "kind": "heading",
+         "anchor": "EMA6H",
+         "printed_page": 308,
+         "quote": "Mid-point of a line"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03253",
+         "printed_page": 309,
+         "quote": "the coordinates of the mid-point $M\\left(x;y\\right)$"
+        },
+        {
+         "kind": "worked_example",
+         "anchor": "WE10",
+         "printed_page": 309,
+         "quote": "Calculate the coordinates of the mid-point $F\\left(x;y\\right)$"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-5:1",
+         "printed_page": 313,
+         "quote": "Calculate the coordinates of the mid-point ( $M$ )"
+        },
+        {
+         "kind": "summary",
+         "anchor": "b03286",
+         "printed_page": 315,
+         "quote": "The formula for finding the mid-point between two points is:"
+        }
+       ],
+       "exercise_items": [
+        "Ex8-5:1",
+        "Ex8-5:2",
+        "Ex8-5:3a",
+        "Ex8-5:3b",
+        "Ex8-5:3c"
+       ],
+       "worked_examples": [
+        "WE10",
+        "WE11"
+       ],
+       "key": "B1"
+      },
+      {
+       "statement": "Determine the coordinates of an unknown end point of a line segment, given its mid-point and the other end point.",
+       "label": "Find an endpoint from mid-point",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE12",
+         "printed_page": 311,
+         "quote": "Using the mid-point formula"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-5:4",
+         "printed_page": 314,
+         "quote": "Find $P$ if $Q$ is $(-2;5)$"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03257",
+         "printed_page": 309,
+         "quote": "Mid-point $M(x;y)="
+        }
+       ],
+       "exercise_items": [
+        "Ex8-5:4"
+       ],
+       "worked_examples": [
+        "WE12"
+       ],
+       "key": "B2"
+      },
+      {
+       "statement": "Determine an unknown vertex of a parallelogram by using the mid-point formula on its diagonals.",
+       "label": "Find a parallelogram vertex from mid-points",
+       "evidence": [
+        {
+         "kind": "worked_example",
+         "anchor": "WE13",
+         "printed_page": 312,
+         "quote": "the diagonals of a parallelogram bisect each other"
+        },
+        {
+         "kind": "exercise",
+         "anchor": "Ex8-5:5",
+         "printed_page": 314,
+         "quote": "$PQRS$ is a parallelogram"
+        },
+        {
+         "kind": "definition",
+         "anchor": "b03257",
+         "printed_page": 309,
+         "quote": "Mid-point $M(x;y)="
+        }
+       ],
+       "exercise_items": [
+        "Ex8-5:5"
+       ],
+       "worked_examples": [
+        "WE13"
+       ],
+       "key": "B3"
+      }
+     ]
+    }
+   },
+   "reconciled": {
+    "notes": "Three pairs align 1:1 in book order (A1~B1, A2~B2, A3~B3); all \"agreed\". All 6 source keys and all 7 exercise items / 4 worked examples are accounted for in the three merged objectives, so rejected and unmapped_items are empty. One evidence item (summary b03286, \"The formula for finding the mid-point between two points is:\") was cited by A under the parallelogram objective (A3) and by B under the mid-point-calculation objective (B1); since its quoted text is a generic recap of the core mid-point formula rather than anything parallelogram-specific, it was placed once, under Objective 1, following B's placement.",
+    "objectives": [
+     {
+      "statement": "Calculate the coordinates of the mid-point of a line segment, given the coordinates of its two endpoints.",
+      "label": "Calculate the mid-point of a line",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A1"
+       ],
+       "b": [
+        "B1"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "heading",
+        "anchor": "EMA6H",
+        "printed_page": 308,
+        "quote": "Mid-point of a line"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b03257",
+        "printed_page": 309,
+        "quote": "M(x;y)=\\left(\\dfrac{x_1+x_2}{2};\\dfrac{y_1+y_2}{2}\\right)"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b03253",
+        "printed_page": 309,
+        "quote": "the coordinates of the mid-point $M\\left(x;y\\right)$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE10",
+        "printed_page": 309,
+        "quote": "Calculate the coordinates of the mid-point $F\\left(x;y\\right)$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE11",
+        "printed_page": 310,
+        "quote": "Find the mid-point of line $AB$"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-5:1",
+        "printed_page": 313,
+        "quote": "Calculate the coordinates of the mid-point ( $M$ )"
+       },
+       {
+        "kind": "summary",
+        "anchor": "b03286",
+        "printed_page": 315,
+        "quote": "The formula for finding the mid-point between two points is:"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-5:1",
+       "Ex8-5:2",
+       "Ex8-5:3a",
+       "Ex8-5:3b",
+       "Ex8-5:3c"
+      ],
+      "worked_examples": [
+       "WE10",
+       "WE11"
+      ],
+      "terms": [
+       "mid-point",
+       "coordinates",
+       "endpoint",
+       "line segment"
+      ],
+      "term_flags": [
+       {
+        "term": "mid-point",
+        "why": "Some curricula (e.g. US Common Core) write this as one word, 'midpoint', without the hyphen."
+       },
+       {
+        "term": "endpoint",
+        "why": "Sometimes written as two words, 'end point', in other editions or curricula."
+       }
+      ]
+     },
+     {
+      "statement": "Find the coordinates of an unknown endpoint of a line segment, given its mid-point and the other endpoint.",
+      "label": "Find an unknown endpoint",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A2"
+       ],
+       "b": [
+        "B2"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "definition",
+        "anchor": "b03257",
+        "printed_page": 309,
+        "quote": "M(x;y)=\\left(\\dfrac{x_1+x_2}{2};\\dfrac{y_1+y_2}{2}\\right)"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b03257",
+        "printed_page": 309,
+        "quote": "Mid-point $M(x;y)="
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE12",
+        "printed_page": 311,
+        "quote": "Find point $D$"
+       },
+       {
+        "kind": "worked_example",
+        "anchor": "WE12",
+        "printed_page": 311,
+        "quote": "Using the mid-point formula"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-5:4",
+        "printed_page": 314,
+        "quote": "Find $P$ if $Q$ is $(-2;5)$"
+       }
+      ],
+      "exercise_items": [
+       "Ex8-5:4"
+      ],
+      "worked_examples": [
+       "WE12"
+      ],
+      "terms": [
+       "mid-point",
+       "endpoint",
+       "coordinates"
+      ],
+      "term_flags": [
+       {
+        "term": "endpoint",
+        "why": "Sometimes written as two words, 'end point', in other editions or curricula."
+       }
+      ]
+     },
+     {
+      "statement": "Find an unknown vertex of a parallelogram by equating the mid-points of its diagonals using the mid-point formula.",
+      "label": "Find a parallelogram vertex",
+      "confidence": "agreed",
+      "from": {
+       "a": [
+        "A3"
+       ],
+       "b": [
+        "B3"
+       ]
+      },
+      "evidence": [
+       {
+        "kind": "worked_example",
+        "anchor": "WE13",
+        "printed_page": 312,
+        "quote": "the diagonals of a parallelogram bisect each other"
+       },
+       {
+        "kind": "exercise",
+        "anchor": "Ex8-5:5",
+        "printed_page": 314,
+        "quote": "$PQRS$ is a parallelogram"
+       },
+       {
+        "kind": "definition",
+        "anchor": "b03257",
+        "printed_page": 309,
+        "quote": "Mid-point $M(x;y)="
+       }
+      ],
+      "exercise_items": [
+       "Ex8-5:5"
+      ],
+      "worked_examples": [
+       "WE13"
+      ],
+      "terms": [
+       "mid-point",
+       "vertex",
+       "parallelogram",
+       "diagonal"
+      ],
+      "term_flags": [
+       {
+        "term": "mid-point",
+        "why": "Some curricula (e.g. US Common Core) write this as one word, 'midpoint', without the hyphen."
+       }
+      ]
+     }
+    ],
+    "rejected": [],
+    "unmapped_items": []
+   },
+   "evidence_check": {
+    "checks": [
+     {
+      "objective_n": 1,
+      "evidence_index": 0,
+      "present": true,
+      "supports": false
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 5,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 1,
+      "evidence_index": 6,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 3,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 2,
+      "evidence_index": 4,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 0,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 1,
+      "present": true,
+      "supports": true
+     },
+     {
+      "objective_n": 3,
+      "evidence_index": 2,
+      "present": true,
+      "supports": true
+     }
+    ]
+   }
+  }
+ ],
+ "pool": {
+  "items": 132,
+  "batches": 3,
+  "mappers": [
+   {
+    "mapping": [
+     {
+      "item_id": "Ex8-6:1",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Reads the coordinates of five plotted points A-E off the diagram."
+     },
+     {
+      "item_id": "Ex8-6:2",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Identifies which plotted point corresponds to the given pair (3;-5)."
+     },
+     {
+      "item_id": "Ex8-6:3",
+      "objective": "lo:g10m8s1-1-2",
+      "reason": "Judges which of four labelled shapes follows the alphabetical vertex-naming convention."
+     },
+     {
+      "item_id": "Ex8-6:4a",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots triangle DEF by locating each given coordinate pair on the plane."
+     },
+     {
+      "item_id": "Ex8-6:4b",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots quadrilateral GHIJ by locating each given coordinate pair on the plane."
+     },
+     {
+      "item_id": "Ex8-6:4c",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots quadrilateral MNOP by locating each given coordinate pair on the plane."
+     },
+     {
+      "item_id": "Ex8-6:4d",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots quadrilateral WXYZ by locating each given coordinate pair on the plane."
+     },
+     {
+      "item_id": "Ex8-6:5",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to find length AB to 2 decimal places."
+     },
+     {
+      "item_id": "Ex8-6:6",
+      "objective": "lo:g10m8s2-1-2",
+      "reason": "The distance is given; solves for B's missing coordinate from the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:7",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Applies the gradient formula directly to two fully given coordinates A and B."
+     },
+     {
+      "item_id": "Ex8-6:8",
+      "objective": "lo:g10m8s3-1-2",
+      "reason": "Gradient and one point are given; solves for B's missing coordinate."
+     },
+     {
+      "item_id": "Ex8-6:9",
+      "objective": "lo:g10m8s3-1-2",
+      "reason": "Gradient and one point are given; solves for B's missing coordinate."
+     },
+     {
+      "item_id": "Ex8-6:10a",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds the equation of line AB given two fully known points."
+     },
+     {
+      "item_id": "Ex8-6:10b",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to the same A, B points."
+     },
+     {
+      "item_id": "Ex8-6:11",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the parallel condition (matching the given line's gradient) plus point A to find AB's equation."
+     },
+     {
+      "item_id": "Ex8-6:12",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the parallel condition to fix AB's gradient, then solves for B's missing coordinate."
+     },
+     {
+      "item_id": "Ex8-6:13",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the perpendicular condition to fix AB's gradient, then solves for B's missing coordinate."
+     },
+     {
+      "item_id": "Ex8-6:14",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the perpendicular condition (gradient of the dashed line) to find AB's equation from point A."
+     },
+     {
+      "item_id": "Ex8-6:15",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "AB's equation is given; substitutes to calculate the missing coordinate that lies on the line."
+     },
+     {
+      "item_id": "Ex8-6:16",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Applies the mid-point formula to two fully given endpoints A and B."
+     },
+     {
+      "item_id": "Ex8-6:17",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Applies the mid-point formula to find a and b for mid-point C of AB."
+     },
+     {
+      "item_id": "Ex8-6:18a",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds the equation of a line through two given points P and Q."
+     },
+     {
+      "item_id": "Ex8-6:18b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the parallel condition (given line's gradient) plus a point to find the new line's equation."
+     },
+     {
+      "item_id": "Ex8-6:18c",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds the mid-point of GH then the equation of the line through F and that point — the two-point equation skill."
+     },
+     {
+      "item_id": "Ex8-6:19a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to each side of quadrilateral FGHI."
+     },
+     {
+      "item_id": "Ex8-6:19b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Compares gradients of opposite sides to test whether they are parallel."
+     },
+     {
+      "item_id": "Ex8-6:19c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Computes the mid-points of both diagonals to test whether they coincide (bisect)."
+     },
+     {
+      "item_id": "Ex8-6:19d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Classifies FGHI by weighing the parallel/perpendicular relationships among its sides established in the prior parts."
+     },
+     {
+      "item_id": "Ex8-6:20a",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots quadrilateral ABCD from its given vertices."
+     },
+     {
+      "item_id": "Ex8-6:20b",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to each side of the quadrilateral."
+     },
+     {
+      "item_id": "Ex8-6:21a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to show AD and BC are equal in length."
+     },
+     {
+      "item_id": "Ex8-6:21b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Compares gradients of AB and DC to show they are parallel."
+     },
+     {
+      "item_id": "Ex8-6:21c",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Classifies ABCD using the equal-side and parallel-side relationships (gradient comparison) from the previous parts."
+     },
+     {
+      "item_id": "Ex8-6:21d",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Computes mid-points of diagonals AC and BD to show they differ, i.e. don't bisect each other."
+     },
+     {
+      "item_id": "Ex8-6:22a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to SR and PQ to test the length relationship SR=2PQ."
+     },
+     {
+      "item_id": "Ex8-6:22b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Compares gradients of SR and PQ to test whether they are parallel."
+     },
+     {
+      "item_id": "Ex8-6:22c",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to find length PS."
+     },
+     {
+      "item_id": "Ex8-6:22d",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to find length QR."
+     },
+     {
+      "item_id": "Ex8-6:22e",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Classifies PQRS using the parallel/length relationships (gradient comparison) established in the previous parts."
+     },
+     {
+      "item_id": "Ex8-6:23",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Finds the missing parallelogram vertex H by equating the mid-points of the two diagonals — the exact skill of this objective."
+     },
+     {
+      "item_id": "Ex8-6:24a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to find length QR."
+     },
+     {
+      "item_id": "Ex8-6:24b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Applies the gradient formula to points P and S."
+     },
+     {
+      "item_id": "Ex8-6:24c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Applies the mid-point formula to P and R."
+     },
+     {
+      "item_id": "Ex8-6:24d",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Tests whether PQRS is a parallelogram via the diagonals'-mid-points-coincide test, building on the PR mid-point just found in 24c."
+     },
+     {
+      "item_id": "Ex8-6:25a",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots triangle ABC from its given vertices."
+     },
+     {
+      "item_id": "Ex8-6:25b",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula to show two sides of ABC are equal (isosceles)."
+     },
+     {
+      "item_id": "Ex8-6:25c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Applies the mid-point formula to A and C."
+     },
+     {
+      "item_id": "Ex8-6:25d",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Applies the gradient formula to A and B."
+     },
+     {
+      "item_id": "Ex8-6:25e",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Proves D lies on line AB via the constant-gradient/collinearity method."
+     },
+     {
+      "item_id": "Ex8-6:26",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Proving the triangle is right-angled hinges on the perpendicular-gradient condition, the defining (and listed) test used here."
+     },
+     {
+      "item_id": "Ex8-6:27",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "The mid-point theorem proof is built on computing mid-points M and N of the triangle's sides via the mid-point formula."
+     },
+     {
+      "item_id": "Ex8-6:28a",
+      "objective": "none",
+      "reason": "A recall/definition question about parallelogram properties — no coordinate calculation, so it fits none of the listed computational objectives."
+     },
+     {
+      "item_id": "Ex8-6:28b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Shows ABCD is a parallelogram via the diagonals'-mid-points-coincide test (mid-points of AC and BD both equal (0;0))."
+     },
+     {
+      "item_id": "Ex8-6:29a",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the perpendicular-diagonals condition to calculate AC's gradient from BD's gradient."
+     },
+     {
+      "item_id": "Ex8-6:29b",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds AC's equation from its gradient (found in 29a) and one point, the shared diagonal mid-point."
+     },
+     {
+      "item_id": "Ex8-6:29c",
+      "objective": "lo:g10m8s4-1-2",
+      "reason": "Finds vertex C from the mid-point of AC and the other endpoint — the unknown-endpoint-given-mid-point skill."
+     },
+     {
+      "item_id": "Ex8-6:30a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to find length BC."
+     },
+     {
+      "item_id": "Ex8-6:30b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Applies the gradient formula to points A and C."
+     },
+     {
+      "item_id": "Ex8-6:30c",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Proves A, C and P are collinear via the gradient/distance collinearity method."
+     },
+     {
+      "item_id": "Ex8-6:30d",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds the equation of line BC from its two given points."
+     },
+     {
+      "item_id": "Ex8-6:30e",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Proving right-angled means showing two sides' gradients multiply to -1 (perpendicular condition)."
+     },
+     {
+      "item_id": "Ex8-6:31a",
+      "objective": "lo:g10m8s4-1-2",
+      "reason": "E is the midpoint of AB; solves for the unknown endpoint's coordinates a, b via the mid-point formula."
+     },
+     {
+      "item_id": "Ex8-6:31b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Needs BC's gradient plus the perpendicular condition to build the new line's equation."
+     },
+     {
+      "item_id": "Ex8-6:31c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Plain mid-point formula applied to diagonal BD's two endpoints."
+     },
+     {
+      "item_id": "Ex8-6:31d",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "\"Hence\" from part c: compares the mid-point of diagonal AC (computed via mid-point formula) against BD's mid-point."
+     },
+     {
+      "item_id": "Ex8-6:31e",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Finds an unknown vertex (moved C) by equating the diagonals' mid-points."
+     },
+     {
+      "item_id": "Ex8-6:32a",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Gradient of AB from two given vertices, straight gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:32b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Proving the right angle at B is a perpendicular-gradient comparison."
+     },
+     {
+      "item_id": "Ex8-6:32c",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Length of AB via the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:32d",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Equation of the line through A and the mid-point of BC — equation from two points."
+     },
+     {
+      "item_id": "Ex8-6:32e",
+      "objective": "none",
+      "reason": "Area of a triangle is not practised by any listed objective in this chapter."
+     },
+     {
+      "item_id": "Ex8-6:33a",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Solves for k using the parallel-gradients condition (AD parallel to CD)."
+     },
+     {
+      "item_id": "Ex8-6:33b",
+      "objective": "lo:g10m8s2-1-2",
+      "reason": "Solves for missing coordinate k given a fixed distance CD."
+     },
+     {
+      "item_id": "Ex8-6:34a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Length of PQ via the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:34b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Gradient of PQ via the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:34c",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Equation of PQ from its two known points."
+     },
+     {
+      "item_id": "Ex8-6:34d",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Uses the collinearity of P, Q, R to solve for the unknown coordinate b."
+     },
+     {
+      "item_id": "Ex8-6:35a",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Mid-point of AB via the mid-point formula."
+     },
+     {
+      "item_id": "Ex8-6:35b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Gradient of AB via the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:35c",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Gradient of the perpendicular line, found via the perpendicular condition."
+     },
+     {
+      "item_id": "Ex8-6:35d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Equation of the perpendicular bisector, built using the perpendicular condition."
+     },
+     {
+      "item_id": "Ex8-6:35e",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Equation of a line parallel to AB, built using the parallel condition."
+     },
+     {
+      "item_id": "Ex8-6:36a",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Unknown vertex N of parallelogram LMNP found by equating the diagonals' mid-points."
+     },
+     {
+      "item_id": "Ex8-6:36b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Shows MP perpendicular to LN via gradient comparison."
+     },
+     {
+      "item_id": "Ex8-6:36c",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Confirming a square (beyond the rhombus already shown in part b) turns on comparing diagonal lengths via the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:37a",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Gradient of BC via the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:37b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Verifies D's coordinates as the mid-point of AB."
+     },
+     {
+      "item_id": "Ex8-6:37c",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Length of DE via the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:37d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "The conjecture (DE parallel to BC) rests on comparing DE's gradient with BC's."
+     },
+     {
+      "item_id": "Ex8-6:37e",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Equation of BC from its two known points."
+     },
+     {
+      "item_id": "Ex8-6:38a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Length of PQ via the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:38b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "M, where the diagonals meet, is the mid-point of the fully known diagonal PR."
+     },
+     {
+      "item_id": "Ex8-6:38c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Mid-point T of PQ via the mid-point formula."
+     },
+     {
+      "item_id": "Ex8-6:38d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Shows MT parallel to QR by comparing gradients."
+     },
+     {
+      "item_id": "Ex8-6:38e",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Unknown vertex S found by equating the mid-points of the two diagonals."
+     },
+     {
+      "item_id": "Ex8-6:39a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Classifies the triangle by comparing side lengths computed with the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:39b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Mid-points S and T via the mid-point formula."
+     },
+     {
+      "item_id": "Ex8-6:39c",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Gradient of ST via the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:39d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Proves ST parallel to PR by comparing gradients."
+     },
+     {
+      "item_id": "Ex8-6:40a",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "\"Write down\" (not calculate) the coordinates of Q as plotted in the diagram."
+     },
+     {
+      "item_id": "Ex8-6:40b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Proves PQ perpendicular to QR by comparing gradients."
+     },
+     {
+      "item_id": "Ex8-6:40c",
+      "objective": "none",
+      "reason": "Reading a gradient straight off a given line equation is not the two-point gradient-formula skill any listed objective covers."
+     },
+     {
+      "item_id": "Ex8-6:40d",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds R's unknown x-coordinate on the already-established line QR (unknown coordinate on the line)."
+     },
+     {
+      "item_id": "Ex8-6:40e",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Equation of the line from P to mid-point S — equation from two points."
+     },
+     {
+      "item_id": "Ex8-6:41a",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Solves for t using the collinearity of E, L, S."
+     },
+     {
+      "item_id": "Ex8-6:41b",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds the equation of the collinear line through E, L, S, expressed in intercept form."
+     },
+     {
+      "item_id": "Ex8-6:42a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Distances AC and BD via the distance formula, left in surd form."
+     },
+     {
+      "item_id": "Ex8-6:42b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Mid-point M of BD via the mid-point formula."
+     },
+     {
+      "item_id": "Ex8-6:42c",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Proves AM perpendicular to BD by comparing gradients."
+     },
+     {
+      "item_id": "Ex8-6:42d",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Proves A, M and C collinear."
+     },
+     {
+      "item_id": "Ex8-6:42e",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Classifying ABCD turns on comparing side/diagonal gradients for parallel/perpendicular relationships."
+     },
+     {
+      "item_id": "Ex8-6:43a",
+      "objective": "lo:g10m8s4-1-2",
+      "reason": "Unknown endpoint B found given mid-point M and endpoint A."
+     },
+     {
+      "item_id": "Ex8-6:43b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Gradient of AM via the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:43c",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Equation of AM from its two known points."
+     },
+     {
+      "item_id": "Ex8-6:43d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Perpendicular bisector's equation, built from the perpendicular condition."
+     },
+     {
+      "item_id": "Ex8-6:44a",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Mid-point E of BD via the mid-point formula."
+     },
+     {
+      "item_id": "Ex8-6:44b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Proving the parallelogram compares AC's mid-point to E, BD's mid-point already found."
+     },
+     {
+      "item_id": "Ex8-6:44c",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Equation of diagonal BD from its two known points."
+     },
+     {
+      "item_id": "Ex8-6:44d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Perpendicular bisector of BD, built from the perpendicular condition."
+     },
+     {
+      "item_id": "Ex8-6:44e",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Gradient of AC via the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:44f",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Deciding if ABCD is a rhombus requires computing and comparing all four side lengths via the distance formula (the very next part, 44g, isolates exactly one such length)."
+     },
+     {
+      "item_id": "Ex8-6:44g",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Directly asks for the length of AB — a plain distance-formula calculation between two given points."
+     },
+     {
+      "item_id": "Ex8-6:45a",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "U(6;a) lies on the known line f(x); a is obtained by applying the gradient formula between U and another known point on f(x) (its known gradient/y-intercept) to get the unknown coordinate on the line."
+     },
+     {
+      "item_id": "Ex8-6:45b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "g(x) is defined as perpendicular to f(x); b is found by using the perpendicular-gradient condition between U and V, exactly the 'use the perpendicular condition to calculate an unknown coordinate' skill."
+     },
+     {
+      "item_id": "Ex8-6:45c",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "U, V, W are given as collinear; c is found via the constant-gradient collinearity method applied to an unknown coordinate."
+     },
+     {
+      "item_id": "Ex8-6:46a",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Explicitly asks to calculate the gradient of segment MN between two points, the core gradient-formula skill."
+     },
+     {
+      "item_id": "Ex8-6:46b",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Asks for the equation of the line through M and N in y=mx+c form — determining a line's equation given two points on it."
+     },
+     {
+      "item_id": "Ex8-6:46c",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Asks to show AB is parallel to MN, i.e. compare gradients to establish the parallel condition between two lines."
+     },
+     {
+      "item_id": "Ex8-6:46d",
+      "objective": "none",
+      "reason": "Asks for the ratio of triangle areas OAB:OMN — a similar-triangles/midpoint-theorem area fact; no listed chapter-8 objective covers area ratios (only coordinates/gradients/distances/midpoints are covered)."
+     },
+     {
+      "item_id": "Ex8-6:46e",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Finding P so that OAPB is a parallelogram is exactly finding an unknown vertex by equating the midpoints of the diagonals."
+     },
+     {
+      "item_id": "Ex8-6:47a",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "A, B, C are required to be collinear; a is found using the gradient (or distance) collinearity method to calculate an unknown coordinate."
+     },
+     {
+      "item_id": "Ex8-6:47b",
+      "objective": "lo:g10m8s4-1-2",
+      "reason": "B is given as the midpoint of A and D; finding D=(b;c) is finding an unknown endpoint of a segment given its midpoint and the other endpoint."
+     }
+    ]
+   },
+   {
+    "mapping": [
+     {
+      "item_id": "Ex8-6:1",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Reads off the coordinates of already-plotted points from a diagram."
+     },
+     {
+      "item_id": "Ex8-6:2",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Identifies which plotted point matches a given coordinate pair."
+     },
+     {
+      "item_id": "Ex8-6:3",
+      "objective": "lo:g10m8s1-1-2",
+      "reason": "Judges which of several labelled shapes follows the correct alphabetical vertex-naming convention."
+     },
+     {
+      "item_id": "Ex8-6:4a",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots given coordinate points (triangle DEF) and joins them on the Cartesian plane."
+     },
+     {
+      "item_id": "Ex8-6:4b",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots given coordinate points (quadrilateral GHIJ) on the Cartesian plane."
+     },
+     {
+      "item_id": "Ex8-6:4c",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots given coordinate points (quadrilateral MNOP) on the Cartesian plane."
+     },
+     {
+      "item_id": "Ex8-6:4d",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots given coordinate points (quadrilateral WXYZ) on the Cartesian plane."
+     },
+     {
+      "item_id": "Ex8-6:5",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Calculates the length of segment AB using the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:6",
+      "objective": "lo:g10m8s2-1-2",
+      "reason": "Given the distance value, solves for a missing coordinate of point B."
+     },
+     {
+      "item_id": "Ex8-6:7",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Computes the gradient of AB directly from two given points via the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:8",
+      "objective": "lo:g10m8s3-1-2",
+      "reason": "Given the line's gradient (0,5) and one known point, solves for the missing coordinate of B."
+     },
+     {
+      "item_id": "Ex8-6:9",
+      "objective": "lo:g10m8s3-1-2",
+      "reason": "Given the line's gradient (2) and one known point, solves for the missing coordinate of B."
+     },
+     {
+      "item_id": "Ex8-6:10a",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds the equation of a straight line through two given points."
+     },
+     {
+      "item_id": "Ex8-6:10b",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Calculates the length of AB (same two points) via the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:11",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the parallel condition (matching a given line's gradient) plus a point to find AB's equation."
+     },
+     {
+      "item_id": "Ex8-6:12",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the parallel condition to fix AB's gradient, then solves for the missing coordinate."
+     },
+     {
+      "item_id": "Ex8-6:13",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the perpendicular condition to fix AB's gradient, then solves for the missing coordinate."
+     },
+     {
+      "item_id": "Ex8-6:14",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the perpendicular condition (negative reciprocal of the dashed line's gradient) plus a point to find AB's equation."
+     },
+     {
+      "item_id": "Ex8-6:15",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Uses the given line's equation to calculate a missing coordinate of a point known to lie on it."
+     },
+     {
+      "item_id": "Ex8-6:16",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Calculates the midpoint of AB from its two given endpoints."
+     },
+     {
+      "item_id": "Ex8-6:17",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Applies the midpoint formula to find the coordinates a, b of the midpoint C."
+     },
+     {
+      "item_id": "Ex8-6:18a",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds the equation of the line through two given points P and Q."
+     },
+     {
+      "item_id": "Ex8-6:18b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the parallel condition (same gradient as y=3x+4) plus a point to find the line's equation."
+     },
+     {
+      "item_id": "Ex8-6:18c",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Culminates in finding the equation of a line through F and a computed point (line-through-two-points skill)."
+     },
+     {
+      "item_id": "Ex8-6:19a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Applies the distance formula to calculate each side length of quadrilateral FGHI."
+     },
+     {
+      "item_id": "Ex8-6:19b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Compares gradients of opposite sides to test whether they are parallel."
+     },
+     {
+      "item_id": "Ex8-6:19c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Computes the midpoints of both diagonals (via the midpoint formula) and compares them for bisection."
+     },
+     {
+      "item_id": "Ex8-6:19d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Classifies the quadrilateral from the parallel-side/gradient evidence gathered in the prior parts."
+     },
+     {
+      "item_id": "Ex8-6:20a",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots the given vertices of ABCD to draw the quadrilateral."
+     },
+     {
+      "item_id": "Ex8-6:20b",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula to find each side length of the quadrilateral."
+     },
+     {
+      "item_id": "Ex8-6:21a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula to compute and compare AD and BC."
+     },
+     {
+      "item_id": "Ex8-6:21b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Compares gradients of AB and DC to show they are parallel."
+     },
+     {
+      "item_id": "Ex8-6:21c",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Classifies quadrilateral ABCD from the parallel-side evidence just established."
+     },
+     {
+      "item_id": "Ex8-6:21d",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Computes the midpoints of diagonals AC and BD and shows they differ (do not bisect)."
+     },
+     {
+      "item_id": "Ex8-6:22a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula to compute and compare SR and PQ."
+     },
+     {
+      "item_id": "Ex8-6:22b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Compares gradients of SR and PQ to show they are parallel."
+     },
+     {
+      "item_id": "Ex8-6:22c",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula to calculate the length of PS."
+     },
+     {
+      "item_id": "Ex8-6:22d",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula to calculate the length of QR."
+     },
+     {
+      "item_id": "Ex8-6:22e",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Classifies quadrilateral PQRS from the parallel-side/length results computed above."
+     },
+     {
+      "item_id": "Ex8-6:23",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Finds the unknown parallelogram vertex H by equating the midpoints of the two diagonals — exact match to this LO."
+     },
+     {
+      "item_id": "Ex8-6:24a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula to find the length of QR."
+     },
+     {
+      "item_id": "Ex8-6:24b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Uses the gradient formula on two given points to find the gradient of PS."
+     },
+     {
+      "item_id": "Ex8-6:24c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Applies the midpoint formula to find the midpoint of PR."
+     },
+     {
+      "item_id": "Ex8-6:24d",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Tests the parallelogram property by comparing diagonal midpoints (extending part c's midpoint calculation to QS)."
+     },
+     {
+      "item_id": "Ex8-6:25a",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Plots the given triangle vertices on the Cartesian plane."
+     },
+     {
+      "item_id": "Ex8-6:25b",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula to compare side lengths and show the triangle is isosceles."
+     },
+     {
+      "item_id": "Ex8-6:25c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Applies the midpoint formula to find M, the midpoint of AC."
+     },
+     {
+      "item_id": "Ex8-6:25d",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Uses the gradient formula on two given points to find the gradient of AB."
+     },
+     {
+      "item_id": "Ex8-6:25e",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Proves D lies on line AB, the collinearity test (constant gradient) skill."
+     },
+     {
+      "item_id": "Ex8-6:26",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Proves a right angle via the perpendicular-gradient condition (the distinguishing new skill beyond the equal-side distance check)."
+     },
+     {
+      "item_id": "Ex8-6:27",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Computes midpoints M and N via the midpoint formula as the basis of the proof."
+     },
+     {
+      "item_id": "Ex8-6:28a",
+      "objective": "none",
+      "reason": "General recall of parallelogram properties — no coordinate-geometry calculation, so no listed LO covers it."
+     },
+     {
+      "item_id": "Ex8-6:28b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Shows the quadrilateral is a parallelogram via parallel-side/gradient comparison."
+     },
+     {
+      "item_id": "Ex8-6:29a",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Uses the perpendicular condition (diagonals meet at right angles) to compute the gradient of AC."
+     },
+     {
+      "item_id": "Ex8-6:29b",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Uses the previously found gradient and a point to derive the equation of AC."
+     },
+     {
+      "item_id": "Ex8-6:29c",
+      "objective": "lo:g10m8s4-1-2",
+      "reason": "Finds the unknown endpoint C given the shared diagonal midpoint and the other endpoint A."
+     },
+     {
+      "item_id": "Ex8-6:30a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Uses the distance formula between two given points to find the length of BC."
+     },
+     {
+      "item_id": "Ex8-6:30b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Uses the gradient formula between two given points to find the gradient of AC."
+     },
+     {
+      "item_id": "Ex8-6:30c",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Proves A, C and P are collinear (constant-gradient/distance collinearity test)."
+     },
+     {
+      "item_id": "Ex8-6:30d",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Finds the equation of line BC through two given points."
+     },
+     {
+      "item_id": "Ex8-6:30e",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises proving a right angle by checking that two sides' gradients multiply to -1 (perpendicularity test)."
+     },
+     {
+      "item_id": "Ex8-6:31a",
+      "objective": "lo:g10m8s4-1-2",
+      "reason": "Practises solving for unknown coordinate values (a, b) using the mid-point formula in reverse, given the mid-point E."
+     },
+     {
+      "item_id": "Ex8-6:31b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises finding a line's equation using the perpendicular-gradient condition."
+     },
+     {
+      "item_id": "Ex8-6:31c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Practises computing the mid-point of a diagonal from its two given endpoints."
+     },
+     {
+      "item_id": "Ex8-6:31d",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Practises comparing the mid-points of both diagonals to disprove the parallelogram property."
+     },
+     {
+      "item_id": "Ex8-6:31e",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Practises finding an unknown vertex by equating the mid-points of the two diagonals."
+     },
+     {
+      "item_id": "Ex8-6:32a",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Practises computing the gradient between two given points using the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:32b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises proving a right angle via the perpendicular-gradient condition."
+     },
+     {
+      "item_id": "Ex8-6:32c",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Practises computing the distance between two points using the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:32d",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises finding the equation of a line through two given points (one of them a mid-point just calculated)."
+     },
+     {
+      "item_id": "Ex8-6:32e",
+      "objective": "none",
+      "reason": "Finding the area of a triangle from coordinates is not the skill of any listed objective (distance/gradient/equation/mid-point/naming/plotting)."
+     },
+     {
+      "item_id": "Ex8-6:33a",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises using the parallel-gradient condition to solve for an unknown coordinate k."
+     },
+     {
+      "item_id": "Ex8-6:33b",
+      "objective": "lo:g10m8s2-1-2",
+      "reason": "Practises finding a missing coordinate given a specified distance between two points."
+     },
+     {
+      "item_id": "Ex8-6:34a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Practises computing the distance between two points using the distance formula."
+     },
+     {
+      "item_id": "Ex8-6:34b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Practises computing the gradient between two given points."
+     },
+     {
+      "item_id": "Ex8-6:34c",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises finding the equation of a line through two given points."
+     },
+     {
+      "item_id": "Ex8-6:34d",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises substituting the third point into the just-found line equation to solve for the unknown coordinate on it."
+     },
+     {
+      "item_id": "Ex8-6:35a",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Practises computing the mid-point of a segment from its two endpoints."
+     },
+     {
+      "item_id": "Ex8-6:35b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Practises computing the gradient between two given points."
+     },
+     {
+      "item_id": "Ex8-6:35c",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises using the perpendicular condition (negative reciprocal) to find a gradient."
+     },
+     {
+      "item_id": "Ex8-6:35d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises using the perpendicular condition together with the mid-point to find a line's equation."
+     },
+     {
+      "item_id": "Ex8-6:35e",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises using the parallel condition to find the equation of a line through a given point."
+     },
+     {
+      "item_id": "Ex8-6:36a",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Practises finding an unknown parallelogram vertex by equating the mid-points of the diagonals."
+     },
+     {
+      "item_id": "Ex8-6:36b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises proving perpendicularity of two segments via gradients."
+     },
+     {
+      "item_id": "Ex8-6:36c",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Practises computing (diagonal) distances to show they are equal, completing the square proof."
+     },
+     {
+      "item_id": "Ex8-6:37a",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Practises computing the gradient between two given points."
+     },
+     {
+      "item_id": "Ex8-6:37b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Practises computing the mid-point of a segment from its two endpoints."
+     },
+     {
+      "item_id": "Ex8-6:37c",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Practises computing the distance between two points."
+     },
+     {
+      "item_id": "Ex8-6:37d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises comparing gradients (of DE and BC) to conjecture a parallel relationship."
+     },
+     {
+      "item_id": "Ex8-6:37e",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises finding the equation of a line through two given points."
+     },
+     {
+      "item_id": "Ex8-6:38a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Practises computing the distance between two points."
+     },
+     {
+      "item_id": "Ex8-6:38b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Practises computing the mid-point of a diagonal from its two known endpoints."
+     },
+     {
+      "item_id": "Ex8-6:38c",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Practises computing the mid-point of a segment from its two endpoints."
+     },
+     {
+      "item_id": "Ex8-6:38d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises comparing gradients to show two segments are parallel."
+     },
+     {
+      "item_id": "Ex8-6:38e",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Practises finding an unknown parallelogram vertex via equal diagonal mid-points."
+     },
+     {
+      "item_id": "Ex8-6:39a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Practises computing distances between all vertex pairs to classify the triangle by side lengths."
+     },
+     {
+      "item_id": "Ex8-6:39b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Practises computing mid-points from given endpoints."
+     },
+     {
+      "item_id": "Ex8-6:39c",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Practises computing the gradient between two points."
+     },
+     {
+      "item_id": "Ex8-6:39d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises comparing gradients to prove two segments are parallel."
+     },
+     {
+      "item_id": "Ex8-6:40a",
+      "objective": "lo:g10m8s1-1-1",
+      "reason": "Practises reading a plotted point's coordinates directly off the diagram."
+     },
+     {
+      "item_id": "Ex8-6:40b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises proving perpendicularity via gradients."
+     },
+     {
+      "item_id": "Ex8-6:40c",
+      "objective": "none",
+      "reason": "Reading a gradient value off a given Cartesian equation is not the two-point gradient-formula skill any listed objective states."
+     },
+     {
+      "item_id": "Ex8-6:40d",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises substituting into a known line's equation to find an unknown coordinate on it."
+     },
+     {
+      "item_id": "Ex8-6:40e",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises finding the equation of a line through two points (one a mid-point just found)."
+     },
+     {
+      "item_id": "Ex8-6:41a",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Practises using the constant-gradient collinearity test between point pairs to solve for the unknown coordinate t."
+     },
+     {
+      "item_id": "Ex8-6:41b",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises finding (then rearranging) the equation of the line through the two given points E and L."
+     },
+     {
+      "item_id": "Ex8-6:42a",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Practises computing distances between points, giving the answer in surd form."
+     },
+     {
+      "item_id": "Ex8-6:42b",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Practises computing the mid-point of a segment from its two endpoints."
+     },
+     {
+      "item_id": "Ex8-6:42c",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises proving perpendicularity via gradients."
+     },
+     {
+      "item_id": "Ex8-6:42d",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "Practises proving three points collinear using the constant-gradient method."
+     },
+     {
+      "item_id": "Ex8-6:42e",
+      "objective": "none",
+      "reason": "Naming the quadrilateral type from previously established diagonal properties is a classification/synthesis step, not a computational skill any listed objective states."
+     },
+     {
+      "item_id": "Ex8-6:43a",
+      "objective": "lo:g10m8s4-1-2",
+      "reason": "Practises finding an unknown endpoint B given the mid-point M and the other endpoint A."
+     },
+     {
+      "item_id": "Ex8-6:43b",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Practises computing the gradient between two given points."
+     },
+     {
+      "item_id": "Ex8-6:43c",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises finding the equation of a line through two given points."
+     },
+     {
+      "item_id": "Ex8-6:43d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises using the perpendicular condition together with the mid-point to find a line's equation."
+     },
+     {
+      "item_id": "Ex8-6:44a",
+      "objective": "lo:g10m8s4-1-1",
+      "reason": "Practises computing the mid-point of a diagonal from its two endpoints."
+     },
+     {
+      "item_id": "Ex8-6:44b",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Practises comparing diagonal mid-points to prove the parallelogram property."
+     },
+     {
+      "item_id": "Ex8-6:44c",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Practises finding the equation of a line (diagonal) through two given points."
+     },
+     {
+      "item_id": "Ex8-6:44d",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Practises using the perpendicular condition together with the mid-point to find a line's equation."
+     },
+     {
+      "item_id": "Ex8-6:44e",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "Practises computing the gradient between two given points."
+     },
+     {
+      "item_id": "Ex8-6:44f",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Deciding if ABCD is a rhombus requires computing all four side lengths with the distance formula and comparing them for equality."
+     },
+     {
+      "item_id": "Ex8-6:44g",
+      "objective": "lo:g10m8s2-1-1",
+      "reason": "Directly asks for the length of AB, a straight application of the distance formula between two given points."
+     },
+     {
+      "item_id": "Ex8-6:45a",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "U(6,a) is a point on the given line f(x); finding a means using the line's known equation/gradient to get the unknown coordinate on the line."
+     },
+     {
+      "item_id": "Ex8-6:45b",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "g(x) is perpendicular to f(x); finding b uses the perpendicular-gradient condition to solve for an unknown coordinate."
+     },
+     {
+      "item_id": "Ex8-6:45c",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "U, V, W are given as collinear; finding c uses the constant-gradient collinearity method to calculate the unknown coordinate."
+     },
+     {
+      "item_id": "Ex8-6:46a",
+      "objective": "lo:g10m8s3-1-1",
+      "reason": "The task explicitly is to calculate the gradient of the line joining two points, M and N, using the gradient formula."
+     },
+     {
+      "item_id": "Ex8-6:46b",
+      "objective": "lo:g10m8s3-2-1",
+      "reason": "Asks for the equation of the line through two known points (M and N) in y = mx + c form."
+     },
+     {
+      "item_id": "Ex8-6:46c",
+      "objective": "lo:g10m8s3-2-2",
+      "reason": "Showing AB is parallel to MN is determining a parallel relationship by comparing gradients of two lines."
+     },
+     {
+      "item_id": "Ex8-6:46d",
+      "objective": "none",
+      "reason": "Asks for a ratio of triangle areas (a midpoint-theorem area-scale-factor fact); no listed LO covers computing or reasoning about areas."
+     },
+     {
+      "item_id": "Ex8-6:46e",
+      "objective": "lo:g10m8s4-1-3",
+      "reason": "Finding P so that OAPB is a parallelogram is exactly finding an unknown vertex by equating the mid-points of the diagonals."
+     },
+     {
+      "item_id": "Ex8-6:47a",
+      "objective": "lo:g10m8s3-2-3",
+      "reason": "A, B, C are stated collinear; solving for a uses the gradient (or distance) method for collinearity to find the unknown coordinate."
+     },
+     {
+      "item_id": "Ex8-6:47b",
+      "objective": "lo:g10m8s4-1-2",
+      "reason": "B is given as the mid-point of A and D; finding D's coordinates (b, c) is finding an unknown endpoint given the mid-point and the other endpoint."
+     }
+    ]
+   }
+  ],
+  "second_mapper": true
+ },
+ "links": {
+  "asked": true,
+  "prior_objectives": 0,
+  "proposed": [
+   {
+    "src": "lo:g10m8s2-1-1",
+    "dst": "lo:g10m8s3-2-3",
+    "signal": "uses_method",
+    "evidence": [
+     {
+      "kind": "worked_example",
+      "anchor": "[WE9]",
+      "printed_page": 304,
+      "quote": "Calculate the three distances"
+     }
+    ],
+    "reason": "Worked example 9 in 8.3 (part 2) proves that A, B and C are collinear by computing d_AB, d_BC and d_AC with the distance formula (d = sqrt((x1-x2)^2+(y1-y2)^2)) taught in 8.2, then checking that the two shorter distances sum to the longest — reusing 8.2's method as a step without re-deriving it, matching this lesson's own LO g10m8s3-2-3 ('using ... the distance formula')."
+   }
+  ],
+  "outside_book": [
+   {
+    "dst": "lo:g10m8s2-1-1",
+    "anchor": "[b03143]",
+    "printed_page": 288,
+    "quote": "we use the theorem of Pythagoras",
+    "note": "The distance formula is derived from Pythagoras' theorem, which is prior-grade content — it is not taught anywhere in this chapter or in an earlier chapter of this book (no earlier chapter is in scope)."
+   },
+   {
+    "dst": "lo:g10m8s2-1-1",
+    "anchor": "[b03142]",
+    "printed_page": 288,
+    "quote": "Apply the theorem of Pythagoras",
+    "note": "The lead-in investigation for the distance formula explicitly invokes Pythagoras' theorem by name; this is earlier-grade knowledge assumed, not taught, in this book."
+   }
+  ],
+  "checks": {
+   "checks": [
+    {
+     "i": 0,
+     "verdict": "REJECTED",
+     "note": "The citation points to worked_example WE9 p.304 quote \"Calculate the three distances\", but the task states there is no such anchor in the chapter — no anchored text was provided to check the quote against. Since the quote cannot be located in any anchored text, and no textual evidence is shown that g10m8s3-2-3 relies on g10m8s2-1-1, the claim does not survive verification."
+    }
+   ]
+  }
+ },
+ "calls": {
+  "by_phase": {
+   "S1 Find": 10,
+   "S1 Reconcile": 5,
+   "S1 Evidence": 5,
+   "S1 Map": 6,
+   "S1 Links": 1,
+   "S1 Link check": 1
+  },
+  "per_lesson": {
+   "g10m8s1-1": 4,
+   "g10m8s2-1": 4,
+   "g10m8s3-1": 4,
+   "g10m8s3-2": 4,
+   "g10m8s4-1": 4
+  },
+  "total": 28
+ },
+ "meter": {
+  "stage": "S1",
+  "record": "uv run meter_run.py record --book g10-math --stage S1 --run <runId>",
+  "summary": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Each agent label carries its lesson slug (S1:findA:<slug>), so the ledger splits the cost per lesson; the S1 Map agents are chapter-level (\"(book)\")."
+ },
+ "run_id": "wf_02ba66d9-470"
+}

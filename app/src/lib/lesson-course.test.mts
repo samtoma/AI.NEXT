@@ -106,6 +106,8 @@ function fakeClient(log: string[] = []): PoolClient {
     }
     if (sql.includes("FROM questions")) return { rows: [], rowCount: 0 };
     if (sql.includes("JOIN source_documents")) return { rows: [], rowCount: 0 };
+    // the book-section store (migration 034): no split section here
+    if (sql.includes("FROM course_lessons")) return { rows: [], rowCount: 0 };
     throw new Error(`lesson-course.test: unexpected query: ${sql.slice(0, 160)}`);
   };
   return { query, release() {} } as unknown as PoolClient;

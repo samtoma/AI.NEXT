@@ -1,8 +1,13 @@
 /**
  * The student-side course gate, exercised through the REAL functions.
  *
- * **No `@covers` annotation** — this capability has no FR (see
- * `lib/catalog.ts`). Nothing in `traceability.md` was touched for it.
+ * The course gate's requirements exist now (002's FR-2701…FR-2711; 003's
+ * curriculum dimension), so this file says what it proves. The 003 block at
+ * the end runs a National and an American student, and a tester whose
+ * exception crosses curricula, through the same real functions with the gate
+ * ON; `catalog-gate-off.test.mts` does the same with it OFF (FR-4015).
+ *
+ * @covers FR-2705, FR-2706, FR-4006, FR-4009
  *
  * ---------------------------------------------------------------------------
  * WHY A FAKE CLIENT AND NOT A FAKE RULE
@@ -45,6 +50,7 @@ const STUDENT = 42;
 const MATH = "course:prep3-math-en";
 const SOCIAL = "course:prep3-social-ar";
 const ARABIC = "course:prep3-arabic-ar";
+const G10 = "course:us-g10-math-en";
 
 type Row = Record<string, unknown>;
 
@@ -53,6 +59,7 @@ const LO_ROWS: Row[] = [
   lo("lo:u1-1-1", "Ordered pairs", "module:u1", "Unit 1", MATH, "Mathematics"),
   lo("lo:soc1-1-1", "الموقع الفلكي", "module:soc1", "الوحدة ١", SOCIAL, "الدراسات الاجتماعية"),
   lo("lo:ara1-1-1", "المنادى", "module:ara1", "الوحدة ١", ARABIC, "اللغة العربية"),
+  lo("lo:g10m1s1-1-1", "Simplify expressions", "module:g10m-c01", "Chapter 1 — Algebraic expressions", G10, "Mathematics"),
 ];
 
 function lo(
@@ -80,6 +87,8 @@ function lo(
 
 type Fixture = {
   grade: string | null;
+  /** `students.curriculum_system`; National when left out */
+  curriculum?: string;
   /** rows of `course_availability` for this environment */
   rules: { course_id: string; grade: string; state: string }[];
   /** rows of `student_course_access` for this student */
@@ -123,7 +132,7 @@ function answer(text: string, values: unknown[] | undefined, f: Fixture): Row[] 
         interests: [],
         interest_detail: null,
         language_pref: "en",
-        curriculum_system: "eg-national-en",
+        curriculum_system: f.curriculum ?? "eg-national-en",
         gender: null,
       },
     ];
@@ -139,6 +148,9 @@ function answer(text: string, values: unknown[] | undefined, f: Fixture): Row[] 
 
   if (text.includes("FROM mastery")) return [];
   if (text.includes("FROM understanding_checks")) return [];
+  // the book-section store (migration 034), read for the VISIBLE courses only
+  // — no National course has a split section, so it holds nothing to change
+  if (text.includes("FROM course_lessons")) return [];
 
   // `questions`, `visuals`, `source_documents` — content. Reaching any of them
   // from a refused lesson is the bug this returns null to catch.
@@ -242,5 +254,70 @@ test("an ungated read (no student) is unchanged — the capture harness", async 
     /should not have reached this query[\s\S]*canonical_solution/i
   );
   const out = await getLessonCatalog(null, fakeClient(SEEDED));
+  assert.deepEqual(out.map((i) => i.slug).sort(), ["ara1-1", "g10m1s1-1", "soc1-1", "u1-1"]);
+});
+
+/* ------------------------------------------------------------------ */
+/* 003 — a second curriculum, through the same real functions           */
+/* ------------------------------------------------------------------ */
+
+/** Launch (decision 6): Prep-3 subjects live for grade 9, G10 for grade 10. */
+const LAUNCH: Fixture = {
+  grade: "9",
+  rules: [
+    { course_id: MATH, grade: "9", state: "live" },
+    { course_id: SOCIAL, grade: "9", state: "live" },
+    { course_id: ARABIC, grade: "9", state: "live" },
+    { course_id: G10, grade: "10", state: "live" },
+  ],
+  overrides: [],
+};
+const AMERICAN_10: Fixture = { ...LAUNCH, grade: "10", curriculum: "us-american-en" };
+const NATIONAL_10: Fixture = { ...LAUNCH, grade: "10", curriculum: "eg-national-en" };
+
+test("003: a National student sees exactly her National courses — never the American book", async () => {
+  const out = await getLessonCatalog(STUDENT, fakeClient(LAUNCH));
   assert.deepEqual(out.map((i) => i.slug).sort(), ["ara1-1", "soc1-1", "u1-1"]);
+  const home = await getSubjectSummaries(STUDENT, fakeClient(LAUNCH));
+  assert.deepEqual(home.map((s) => s.courseId), [MATH, SOCIAL, ARABIC]);
+});
+
+test("003: an American grade-10 student sees the Grade 10 book and nothing National", async () => {
+  const out = await getLessonCatalog(STUDENT, fakeClient(AMERICAN_10));
+  assert.deepEqual(out.map((i) => i.slug), ["g10m1s1-1"]);
+  const home = await getSubjectSummaries(STUDENT, fakeClient(AMERICAN_10));
+  assert.deepEqual(home.map((s) => [s.subject, s.courseId]), [["math", G10]]);
+});
+
+test("003: the same live G10 rule reaches no National grade-10 student", async () => {
+  assert.deepEqual(await getLessonCatalog(STUDENT, fakeClient(NATIONAL_10)), []);
+  assert.deepEqual(await getSubjectSummaries(STUDENT, fakeClient(NATIONAL_10)), []);
+});
+
+test("003: a direct read of the other curriculum's lesson refuses, before any content is read (FR-2706)", async () => {
+  // an American student pasting a Prep-3 lesson, and a National one pasting a G10 lesson
+  assert.equal(await getLessonData("u1-1", STUDENT, fakeClient(AMERICAN_10)), null);
+  assert.equal(await getLessonData("g10m1s1-1", STUDENT, fakeClient(NATIONAL_10)), null);
+  assert.equal(await getLessonData("g10m1s1-1", STUDENT, fakeClient(LAUNCH)), null);
+  // …and her own opens: the next thing read is the question bank
+  await assert.rejects(
+    () => getLessonData("g10m1s1-1", STUDENT, fakeClient(AMERICAN_10)),
+    /should not have reached this query[\s\S]*canonical_solution/i
+  );
+});
+
+test("003: a National tester with the G10 book by exception sees both maths courses (FR-4009)", async () => {
+  const tester: Fixture = { ...LAUNCH, overrides: [{ course_id: G10, state: "live" }] };
+  const out = await getLessonCatalog(STUDENT, fakeClient(tester));
+  assert.deepEqual(out.map((i) => i.slug).sort(), ["ara1-1", "g10m1s1-1", "soc1-1", "u1-1"]);
+  await assert.rejects(
+    () => getLessonData("g10m1s1-1", STUDENT, fakeClient(tester)),
+    /should not have reached this query[\s\S]*canonical_solution/i
+  );
+});
+
+test("003: an unknown stored curriculum sees nothing — not National by default (FR-4003)", async () => {
+  const odd: Fixture = { ...LAUNCH, curriculum: "eg-national-ar" };
+  assert.deepEqual(await getLessonCatalog(STUDENT, fakeClient(odd)), []);
+  assert.equal(await getLessonData("u1-1", STUDENT, fakeClient(odd)), null);
 });

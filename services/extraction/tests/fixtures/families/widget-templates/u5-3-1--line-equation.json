@@ -1,0 +1,48 @@
+{
+  "format": "ainext.widget-template/1",
+  "id": "wt:u5-3-1:line-equation",
+  "lo_id": "lo:u5-3-1",
+  "parent_question_id": "q:u5-3-1:001",
+  "tier": "standard",
+  "kind": "line_drawer",
+  "instances": [
+    {
+      "m": 2,
+      "b": -1
+    },
+    {
+      "m": -1,
+      "b": 3
+    },
+    {
+      "m": 1,
+      "b": 0
+    },
+    {
+      "m": -2,
+      "b": 2
+    }
+  ],
+  "spec": {
+    "mode": "equation",
+    "m": "{=m}",
+    "b": "{=b}"
+  },
+  "stem": "Draw the line $y = {=m}x + {=b}$.",
+  "solution": [
+    "The gradient is ${=m}$: for each step right, the line climbs ${=m}$.",
+    "It meets the $y$-axis at $(0, {=b})$ — start there.",
+    "One step right lands you at $(1, {=m + b})$. Put the handles on those two.",
+    "Any two points on the line are correct: the line is the answer, not a particular pair of points."
+  ],
+  "diagnostics": [
+    {
+      "predicate": "slope-inverted",
+      "misconception_id": "mc:u5-3-1:slope-inverted"
+    },
+    {
+      "predicate": "slope-sign-flipped",
+      "misconception_id": "mc:u5-3-1:slope-sign-flipped"
+    }
+  ]
+}

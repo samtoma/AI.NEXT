@@ -3,6 +3,9 @@
 /**
  * {{widget:curve_sketcher:{"prompt":"Sketch y = x² - 4","fn":"quadratic","coefs":[1,0,-4]}}}
  * {{widget:curve_sketcher:{"prompt":"Sketch y = -2x + 1","fn":"linear","coefs":[-2,1]}}}
+ * {{widget:curve_sketcher:{"prompt":"Sketch y = 2/x - 1","fn":"hyperbola","coefs":[2,-1]}}}
+ * {{widget:curve_sketcher:{"prompt":"Sketch y = 2·3^x - 1","fn":"exponential","coefs":[2,3,-1]}}}
+ * {{widget:curve_sketcher:{"prompt":"Sketch y = 2sin(θ) + 1","fn":"sine","coefs":[2,1]}}}
  *
  * Freehand. The student draws the curve with a finger or a mouse and the
  * sketch is scored against the real one.
@@ -25,6 +28,19 @@
  * Partial credit is real here and says what was right: "the shape and the
  * turning point are right, the whole sketch sits about a unit high" is a
  * different lesson from "wrong".
+ *
+ * FIVE FAMILIES ADDED BESIDE THE ORIGINAL TWO (feature 003, the Grade 10
+ * American course): hyperbola, exponential, sine, cosine, tangent. All the
+ * grading arithmetic — including linear and quadratic's, moved rather than
+ * changed — lives in the pure, React-free `curve-sketcher-grade.ts` module,
+ * so it is testable without a browser (FR-1208) and so a replay of every live
+ * curve_sketcher spec can prove the two original families are byte-identical
+ * to what shipped in v0.9.3. Hyperbola and tangent are the two families with
+ * more than one visible branch — a hyperbola's two halves, a tangent's three
+ * across one period — and NEITHER can be drawn as a single unbroken gesture,
+ * so this is also the first widget to use `useStroke`'s `multiSegment` mode:
+ * lift the pointer, press again elsewhere, and the new segment joins the
+ * first instead of erasing it.
  */
 
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -33,43 +49,21 @@ import { BUTTON_SECONDARY, BUTTON_TERTIARY } from "@/components/sticker";
 import { WidgetShell, type Verdict, WIDGET_ACTIONS, WIDGET_WELL } from "./WidgetShell";
 import { tidy, useStroke, type Pt } from "./drag";
 import { OK, type WidgetOutcome } from "@/lib/widget-predicates";
+import {
+  CURVE_PLANE,
+  describeCurve,
+  gradeCurve,
+  splitSegments,
+  tolFor,
+  type CurveFn,
+} from "./curve-sketcher-grade";
 
-const LIM = 5;
-const W = 290;
-const H = 290;
-const SAMPLES = 41;
-/** About one grid square — a sketch, not a plot. */
-const TOL = 0.9;
-/** Two y values this far apart at one x means the stroke doubled back. */
-const VLT = 0.7;
-/** Below this share of the domain the sketch is a fragment, not an answer. */
-const MIN_COVER = 0.7;
+export type { CurveFn };
 
-export type CurveFn = "linear" | "quadratic";
-
-const evalFn = (fn: CurveFn, k: number[], x: number) =>
-  fn === "linear" ? k[0] * x + k[1] : k[0] * x * x + k[1] * x + k[2];
-
-/** Every y at which the stroke crosses the vertical line at x. */
-function crossings(stroke: Pt[], x: number): number[] {
-  const out: number[] = [];
-  for (let i = 1; i < stroke.length; i++) {
-    const p = stroke[i - 1];
-    const q = stroke[i];
-    if (p.x === q.x) continue;
-    if ((p.x - x) * (q.x - x) > 0) continue;
-    const t = (x - p.x) / (q.x - p.x);
-    if (t >= 0 && t <= 1) out.push(p.y + t * (q.y - p.y));
-  }
-  return out;
-}
-
-function describe(fn: CurveFn, k: number[]): string {
-  if (fn === "linear")
-    return `a straight line ${k[0] > 0 ? "rising" : k[0] < 0 ? "falling" : "flat"}, crossing the y-axis at ${tidy(k[1], 2)}`;
-  const vx = -k[1] / (2 * k[0]);
-  return `a parabola opening ${k[0] > 0 ? "upwards" : "downwards"}, turning at (${tidy(vx, 2)}, ${tidy(evalFn(fn, k, vx), 2)})`;
-}
+/** Families whose visible domain has more than one disconnected branch — the
+ *  ones that need `multiSegment` because a correct answer cannot be one
+ *  unbroken gesture. */
+const MULTI_BRANCH: ReadonlySet<CurveFn> = new Set(["hyperbola", "tangent"]);
 
 export function CurveSketcher({
   prompt,
@@ -89,7 +83,11 @@ export function CurveSketcher({
   onResult: (outcome: WidgetOutcome) => void;
 }) {
   const who = studentName?.trim() || "the student";
-  const p = useMemo(() => makePlane([-LIM, LIM], [-LIM, LIM], W, H, 18), []);
+  const multiSegment = MULTI_BRANCH.has(fn);
+  const plane = CURVE_PLANE[fn];
+  const W = 290;
+  const H = 290;
+  const p = useMemo(() => makePlane(plane.x, plane.y, W, H, 18), [plane.x, plane.y]);
   const svgRef = useRef<SVGSVGElement>(null);
   const [verdict, setVerdict] = useState<Verdict>(null);
   const [note, setNote] = useState<string | null>(null);
@@ -102,110 +100,69 @@ export function CurveSketcher({
     minGap: 2.5,
     disabled: !!verdict,
     onDone: () => setDone(true),
+    multiSegment,
   });
 
-  const truth = useMemo(() => {
-    const pts: Pt[] = [];
-    for (let i = 0; i < 241; i++) {
-      const x = -LIM + (i / 240) * 2 * LIM;
-      pts.push({ x, y: evalFn(fn, coefs, x) });
-    }
-    return pts;
-  }, [fn, coefs]);
+  const [lo, hi] = plane.x;
+  const [yLo, yHi] = plane.y;
 
   const score = useCallback(() => {
     if (fired.current || stroke.length < 4) return;
-    let covered = 0;
-    let vltFails = 0;
-    let sum = 0;
-    let worst = 0;
-    let signedSum = 0;
-
-    for (let i = 0; i < SAMPLES; i++) {
-      const x = -LIM + (i / (SAMPLES - 1)) * 2 * LIM;
-      const truthY = evalFn(fn, coefs, x);
-      // A sample the real curve leaves the frame at cannot be drawn, so it is
-      // not held against the student.
-      if (truthY < -LIM || truthY > LIM) continue;
-      const ys = crossings(stroke, x);
-      if (ys.length === 0) continue;
-      covered++;
-      if (Math.max(...ys) - Math.min(...ys) > VLT) vltFails++;
-      const y = ys.reduce((s, v) => s + v, 0) / ys.length;
-      const err = y - truthY;
-      signedSum += err;
-      sum += Math.abs(err);
-      worst = Math.max(worst, Math.abs(err));
-    }
-
-    let inFrame = 0;
-    for (let i = 0; i < SAMPLES; i++) {
-      const x = -LIM + (i / (SAMPLES - 1)) * 2 * LIM;
-      const ty = evalFn(fn, coefs, x);
-      if (ty >= -LIM && ty <= LIM) inFrame++;
-    }
-    const cover = inFrame ? covered / inFrame : 0;
-    const mean = covered ? sum / covered : Infinity;
-    const bias = covered ? signedSum / covered : 0;
-
+    const g = gradeCurve(fn, coefs, stroke);
     fired.current = true;
-    let v: Verdict;
+    const want = describeCurve(fn, coefs);
+    const { TOL } = tolFor(fn);
+
     let msg: string;
     let streamNote: string;
-    let pred: string = OK;
-    const want = describe(fn, coefs);
 
-    if (vltFails > SAMPLES * 0.06) {
-      v = "wrong";
-      pred = "fails-vertical-line-test";
+    if (g.predicate === "fails-vertical-line-test") {
       msg = `Your stroke doubles back — at some x values it gives two different y values, so it is not the graph of a function at all. Draw left to right without going back.`;
-      streamNote = `✗ ${who}'s sketch failed the vertical line test (${vltFails} sample columns carried two y values) — worth revisiting what makes a relation a function`;
-    } else if (cover < MIN_COVER) {
-      v = "partial";
-      pred = "partial-coverage";
-      msg = `That covers only about ${Math.round(cover * 100)}% of the visible curve — carry the sketch across the whole grid.`;
-      streamNote = `~ ${who} sketched only ${Math.round(cover * 100)}% of the domain; the shape so far is ${tidy(mean, 2)} away from ${want}`;
-    } else if (worst <= TOL) {
-      v = "correct";
-      msg = `That is ${want}. Average distance from the true curve: ${tidy(mean, 2)}.`;
-      streamNote = `✓ ${who} sketched ${want} freehand — mean error ${tidy(mean, 2)}, worst ${tidy(worst, 2)}, within the ${TOL} tolerance`;
-    } else if (mean <= TOL) {
-      v = "partial";
-      pred = Math.abs(bias) > TOL * 0.6 ? "vertically-displaced" : "off-target";
-      const where = Math.abs(bias) > TOL * 0.6
-        ? ` The whole sketch sits about ${tidy(Math.abs(bias), 1)} ${bias > 0 ? "high" : "low"}.`
-        : " Most of it is right; one part drifts off.";
+      streamNote = `✗ ${who}'s sketch failed the vertical line test (${g.vltFails} sample columns carried two y values) — worth revisiting what makes a relation a function`;
+    } else if (g.predicate === "asymptote-crossed") {
+      msg = `Your stroke runs straight through where this curve is undefined. That gap is the asymptote — the curve gets close to it but never crosses it. Lift your finger and draw the other side as its own stroke.`;
+      streamNote = `✗ ${who}'s sketch ran through ${fn}'s asymptote as one continuous stroke, which no correct answer can do — worth revisiting what an asymptote means`;
+    } else if (g.predicate === "partial-coverage") {
+      msg = `That covers only about ${Math.round(g.cover * 100)}% of the visible curve — carry the sketch across the whole grid.`;
+      streamNote = `~ ${who} sketched only ${Math.round(g.cover * 100)}% of the domain; the shape so far is ${tidy(g.mean, 2)} away from ${want}`;
+    } else if (g.predicate === "ok") {
+      msg = `That is ${want}. Average distance from the true curve: ${tidy(g.mean, 2)}.`;
+      streamNote = `✓ ${who} sketched ${want} freehand — mean error ${tidy(g.mean, 2)}, worst ${tidy(g.worst, 2)}, within the ${TOL} tolerance`;
+    } else if (g.verdict === "partial") {
+      const where =
+        g.predicate === "vertically-displaced"
+          ? ` The whole sketch sits about ${tidy(Math.abs(g.bias), 1)} ${g.bias > 0 ? "high" : "low"}.`
+          : " Most of it is right; one part drifts off.";
       msg = `The shape is right — ${want}.${where}`;
-      streamNote = `~ ${who} sketched the right shape (${want}) but drifted: mean ${tidy(mean, 2)}, worst ${tidy(worst, 2)}${Math.abs(bias) > TOL * 0.6 ? `, biased ${bias > 0 ? "high" : "low"} by ${tidy(Math.abs(bias), 2)}` : ""}`;
+      streamNote = `~ ${who} sketched the right shape (${want}) but drifted: mean ${tidy(g.mean, 2)}, worst ${tidy(g.worst, 2)}${g.predicate === "vertically-displaced" ? `, biased ${g.bias > 0 ? "high" : "low"} by ${tidy(Math.abs(g.bias), 2)}` : ""}`;
     } else {
-      v = "wrong";
-      pred = "off-target";
-      // Name the structural error rather than the distance.
+      // wrong, and worth naming why where a name exists.
       let why = "";
-      if (fn === "quadratic") {
-        const mid = stroke[Math.floor(stroke.length / 2)];
-        const ends = (stroke[0].y + stroke[stroke.length - 1].y) / 2;
-        const opensUp = mid.y < ends;
-        if (opensUp !== coefs[0] > 0)
-          (pred = "opens-wrong-way"),
-          why = ` Your parabola opens ${opensUp ? "upwards" : "downwards"}; this one opens ${coefs[0] > 0 ? "upwards" : "downwards"}, because a is ${coefs[0] > 0 ? "positive" : "negative"}.`;
-      } else {
-        const rise = stroke[stroke.length - 1].y - stroke[0].y;
-        const run = stroke[stroke.length - 1].x - stroke[0].x;
-        if (run !== 0 && rise / run > 0 !== coefs[0] > 0)
-          (pred = "slope-sign-flipped"),
-          why = ` Your line ${rise / run > 0 ? "rises" : "falls"}; with a slope of ${tidy(coefs[0], 2)} it should ${coefs[0] > 0 ? "rise" : "fall"}.`;
+      if (g.predicate === "opens-wrong-way") {
+        why = ` Your parabola opens the wrong way — check the sign of a.`;
+      } else if (g.predicate === "slope-sign-flipped") {
+        why = ` Your line leans the wrong way — check the sign of the slope.`;
+      } else if (g.predicate === "wrong-quadrants") {
+        why = ` Your branches sit in the wrong pair of quadrants — check the sign of a.`;
+      } else if (g.predicate === "wrong-intercept") {
+        why = ` Check where the curve crosses the y-axis: it should pass through (0, ${tidy(coefs[0] + coefs[2], 2)}).`;
+      } else if (g.predicate === "amplitude-wrong") {
+        why = ` The curve reaches the right distance from the midline in the wrong direction — check the sign of a.`;
+      } else if (g.predicate === "period-wrong") {
+        why = ` The curve repeats at the wrong rate for this function.`;
+      } else if (g.predicate === "vertical-shift-wrong") {
+        why = ` The whole curve is centred on the wrong midline — check the vertical shift.`;
       }
       msg = `Not yet — the target is ${want}.${why}`;
-      streamNote = `✗ ${who}'s freehand sketch was ${tidy(mean, 2)} off on average (worst ${tidy(worst, 2)}) against ${want}.${why}`;
+      streamNote = `✗ ${who}'s freehand sketch was ${tidy(g.mean, 2)} off on average (worst ${tidy(g.worst, 2)}) against ${want}.${why}`;
     }
 
-    setVerdict(v);
+    setVerdict(g.verdict);
     setNote(msg);
     onResult({
-      correct: v === "correct",
-      predicate: v === "correct" ? OK : pred,
-      given: `freehand sketch, mean error ${tidy(mean, 2)}`,
+      correct: g.ok,
+      predicate: g.ok ? OK : g.predicate,
+      given: `freehand sketch, mean error ${tidy(g.mean, 2)}`,
       detail: streamNote,
     });
   }, [stroke, fn, coefs, onResult, who]);
@@ -217,13 +174,42 @@ export function CurveSketcher({
           .map((q, i) => `${i ? "L" : "M"} ${tidy(p.sx(q.x), 2)} ${tidy(p.sy(q.y), 2)}`)
           .join(" ");
 
+  /** The stroke as one or more subpaths — a `multiSegment` widget's break
+   *  markers become gaps in the drawing, never a chord across them. */
+  const strokeSegments = useMemo(() => splitSegments(stroke), [stroke]);
+
   const visibleTruth = useMemo(() => {
-    // Break the true curve wherever it leaves the frame, so the reveal does
-    // not draw a false chord across the top of the grid.
+    // Break the true curve wherever it leaves the frame (or is undefined —
+    // an asymptote makes the value huge, which leaves the frame the same
+    // way), so the reveal does not draw a false chord across the gap.
     const runs: Pt[][] = [];
     let cur: Pt[] = [];
-    for (const q of truth) {
-      if (q.y >= -LIM && q.y <= LIM) cur.push(q);
+    const evalAt = (x: number) => {
+      // Local, tiny re-evaluation kept in step with `evalCurve` — importing
+      // it here would duplicate nothing the module doesn't already export,
+      // but `gradeCurve`'s own sampling is the one that matters for the
+      // verdict, so this stays purely a drawing convenience.
+      switch (fn) {
+        case "linear":
+          return coefs[0] * x + coefs[1];
+        case "quadratic":
+          return coefs[0] * x * x + coefs[1] * x + coefs[2];
+        case "hyperbola":
+          return coefs[0] / x + coefs[1];
+        case "exponential":
+          return coefs[0] * Math.pow(coefs[1], x) + coefs[2];
+        case "sine":
+          return coefs[0] * Math.sin((x * Math.PI) / 180) + coefs[1];
+        case "cosine":
+          return coefs[0] * Math.cos((x * Math.PI) / 180) + coefs[1];
+        case "tangent":
+          return coefs[0] * Math.tan((x * Math.PI) / 180) + coefs[1];
+      }
+    };
+    for (let i = 0; i < 481; i++) {
+      const x = lo + (i / 480) * (hi - lo);
+      const y = evalAt(x);
+      if (Number.isFinite(y) && y >= yLo && y <= yHi) cur.push({ x, y });
       else if (cur.length) {
         runs.push(cur);
         cur = [];
@@ -231,7 +217,7 @@ export function CurveSketcher({
     }
     if (cur.length) runs.push(cur);
     return runs;
-  }, [truth]);
+  }, [fn, coefs, lo, hi, yLo, yHi]);
 
   return (
     <WidgetShell
@@ -253,9 +239,17 @@ export function CurveSketcher({
       resetLabel="Clear and redraw"
       footer={
         verdict ? null : done ? (
-          <span className="text-ink">sketch captured — check it, or clear and redraw</span>
+          <span className="text-ink">
+            {multiSegment
+              ? "sketch captured — lift and draw another branch, check it, or clear and redraw"
+              : "sketch captured — check it, or clear and redraw"}
+          </span>
         ) : (
-          <span className="text-ink-faint">press and drag across the grid, left to right</span>
+          <span className="text-ink-faint">
+            {multiSegment
+              ? "press and drag each branch left to right; lift between branches"
+              : "press and drag across the grid, left to right"}
+          </span>
         )
       }
     >
@@ -285,16 +279,19 @@ export function CurveSketcher({
             />
           ))}
 
-        {stroke.length > 1 && (
-          <path
-            d={path(stroke)}
-            fill="none"
-            stroke={verdict === "correct" ? "var(--accent)" : "var(--gold)"}
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity={drawing ? 0.85 : 1}
-          />
+        {strokeSegments.map((seg, i) =>
+          seg.length > 1 ? (
+            <path
+              key={i}
+              d={path(seg)}
+              fill="none"
+              stroke={verdict === "correct" ? "var(--accent)" : "var(--gold)"}
+              strokeWidth="2.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity={drawing ? 0.85 : 1}
+            />
+          ) : null
         )}
       </svg>
 

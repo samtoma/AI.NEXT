@@ -11,10 +11,34 @@ export const meta = {
   ],
 }
 
-const PDF = '/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/docs/Source/Social_prp3_T1_2.pdf'
-const COURSE = 'course:prep3-social-ar'
-// printed book page = PDF index - 7
-const pp = (a, b) => `${a + 7}-${b + 7}`
+// ---- book config (B1/B20) --------------------------------------------------
+// Nothing in this script names a path. The operating session resolves the book
+// config and passes it as `args`:
+//     uv run book_config.py workflow-args prep3-social-ar [--only a,b]
+// Absolute paths exist only in that runtime value, and point at whichever
+// checkout the operator stands in — a worktree included (the gitignored source
+// PDF is found in the main checkout, read-only).
+const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
+const BOOK = ARGS.book
+if (!BOOK || BOOK.book !== 'prep3-social-ar') {
+  throw new Error('args.book must be the prep3-social-ar config: run `uv run book_config.py workflow-args ' +
+    'prep3-social-ar` in services/extraction and pass its output as this workflow\'s args.')
+}
+if (!BOOK.paths || !BOOK.paths.pdf) {
+  throw new Error(`the source PDF ${BOOK.sources && BOOK.sources.pdf} was not found in this checkout, ` +
+    'the main checkout, or $AINEXT_SOURCES_ROOT (it is gitignored: put it in docs/Source/).')
+}
+const PDF = BOOK.paths.pdf
+// Page-offset regimes come from the book config (`page_offsets`), not from here.
+const offsetOf = (label) => {
+  const r = (BOOK.page_offsets || []).find((x) => x.label === label)
+  if (!r || r.pdf_minus_printed == null) throw new Error(`book config has no verified offset for '${label}'`)
+  return r.pdf_minus_printed
+}
+const COURSE = BOOK.course_id
+// printed book page = PDF index - offset (7 for this book, from the config)
+const OFFSET = offsetOf(BOOK.page_offsets[0].label)
+const pp = (a, b) => `${a + OFFSET}-${b + OFFSET}`
 // id, title, topic, printed range, pdf range
 const LESSONS = [
   { id: 'soc1-1', title: 'قارات العالم (الموقع والمساحة)', topic: 'geography-social', printed: '2-6', pdf: pp(2, 6) },
@@ -32,8 +56,6 @@ const LESSONS = [
   { id: 'soc4-3', title: 'الكفاح الوطني ضد الاحتلال البريطاني', topic: 'history', printed: '78-80', pdf: pp(78, 80) },
   { id: 'soc4-4', title: 'مصر من الحماية البريطانية حتى ثورة يوليو 1952', topic: 'history', printed: '81-90', pdf: pp(81, 90) },
 ]
-// args may arrive as an object OR a JSON string depending on the caller — handle both.
-const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
 const ONLY = (ARGS && ARGS.only) || ['soc1-1']
 const RUN = LESSONS.filter((l) => ONLY.includes(l.id))
 

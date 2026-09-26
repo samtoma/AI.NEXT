@@ -24,7 +24,21 @@
  * decisions below (`resolvePointer`, `advanceTarget`, `courseComplete`);
  * everything here is a function of its arguments, which is what makes the
  * branching graph testable without a database.
+ *
+ * BOOK SECTIONS (feature 003, decision 18; FR-4313, FR-4317; the ADR-0020
+ * note of 2026-09-25). A book section split into parts is ONE unit for the
+ * walk: the place never moves past it until every part passes the gate, and
+ * inside it the place moves to the first part not yet passed. The section
+ * rules live in lib/book-sections.ts; the walk takes them as an optional
+ * `SectionIndex` argument. Without one — or with one that holds no split
+ * section, which is every National course — `nextLessonSlug` runs the pre-003
+ * code path verbatim, so nothing a National student is walked through can
+ * change (`progression-sections.test.mts` proves it on the real catalogue).
+ * Only a TYPE is imported from lib/book-sections.ts: that module imports the
+ * gate from here, and the index object carries the rules this walk applies.
  */
+import type { SectionIndex } from "./book-sections";
+
 /**
  * The rules need four fields, not the whole `LessonInfo`: a slug, its course,
  * and each objective's id and score. Declaring that narrowly keeps this module
@@ -126,19 +140,101 @@ export function lessonPrereqsMet(
  * `catalog` must already be filtered to ONE course — a pointer is per course,
  * so walking off the end of maths into geometry's neighbour course would be a
  * bug, not a feature.
+ *
+ * `sections` (FR-4313): the course's book sections. When it holds a split
+ * section the walk is `nextPlaceBySection` below; otherwise this is the
+ * pre-003 loop, unchanged.
  */
 export function nextLessonSlug(
   catalog: readonly ProgressionLesson[],
   currentSlug: string,
   mastery: ReadonlyMap<string, number>,
-  prereqs: ReadonlyMap<string, readonly string[]>
+  prereqs: ReadonlyMap<string, readonly string[]>,
+  sections?: SectionIndex
 ): string | null {
+  if (sections?.hasSplits) {
+    return nextPlaceBySection(catalog, currentSlug, mastery, prereqs, sections);
+  }
   const i = catalog.findIndex((l) => l.slug === currentSlug);
   if (i < 0) return null;
   for (let j = i + 1; j < catalog.length; j++) {
     if (lessonPrereqsMet(catalog[j], mastery, prereqs)) {
       return catalog[j].slug;
     }
+  }
+  return null;
+}
+
+/**
+ * The walk when the course has a split section (FR-4313, FR-4317; the
+ * ADR-0020 note of 2026-09-25). The same rule as `nextLessonSlug`, with a
+ * split section as one unit:
+ *
+ *   1. INSIDE A SECTION. If the current lesson is a part and some OTHER part
+ *      has not passed the gate, the place moves to the first such part, in
+ *      part order — and nowhere else. When that part's prerequisites are not
+ *      met the pointer PARKS (null) rather than leave the section. "First
+ *      part not yet passed" can be an EARLIER part: a student on part 2 whose
+ *      part 1 has since fallen below the gate is sent back to part 1, inside
+ *      the same section, before she may leave it. The pointer never walks back
+ *      across a section boundary; ADR-0020's monotonic rule holds between
+ *      units.
+ *   2. LEAVING. Otherwise the walk continues in catalogue order after the
+ *      current unit. A lesson that is not a part is taken when ready and
+ *      skipped when not — exactly today's rule. A split section is ENTERED at
+ *      its first part not yet passed, when that part is ready; when it is not,
+ *      the pointer PARKS: a split section with a part not passed is never
+ *      skipped (SC-211: zero students moved past one). A section whose every
+ *      part has passed is landed on at part 1 when ready, as a passed lesson is
+ *      landed on today, and skipped when not — moving past a mastered section
+ *      is allowed.
+ *
+ * The catalogue is first put in section order (`sections.order`, FR-4312: a
+ * section's parts together, in part order) and the prerequisites get the
+ * derived part n-1 → n edges (`sections.prereqsFor`, FR-4317). Both are the
+ * identity for a course whose catalogue is already in that shape and has no
+ * split section.
+ */
+function nextPlaceBySection(
+  catalog: readonly ProgressionLesson[],
+  currentSlug: string,
+  mastery: ReadonlyMap<string, number>,
+  bookPrereqs: ReadonlyMap<string, readonly string[]>,
+  sections: SectionIndex
+): string | null {
+  const order = sections.order(catalog);
+  const prereqs = sections.prereqsFor(bookPrereqs, order);
+  const i = order.findIndex((l) => l.slug === currentSlug);
+  if (i < 0) return null;
+
+  const bySlug = new Map(order.map((l) => [l.slug, l] as const));
+  const partsOf = (slugs: readonly string[]) =>
+    slugs.map((s) => bySlug.get(s)).filter((l): l is ProgressionLesson => l !== undefined);
+  const ready = (l: ProgressionLesson) => lessonPrereqsMet(l, mastery, prereqs);
+  const passed = (l: ProgressionLesson) => lessonGatePassed(l.los);
+
+  // 1. Inside a section: the first OTHER part not yet passed, or park.
+  const own = sections.groupOf(currentSlug);
+  if (own.split) {
+    const pending = partsOf(own.slugs).find((l) => l.slug !== currentSlug && !passed(l));
+    if (pending) return ready(pending) ? pending.slug : null;
+  }
+
+  // 2. Leaving: continue after the current unit.
+  const visited = new Set<string>(own.split ? own.slugs : [currentSlug]);
+  for (let j = i + 1; j < order.length; j++) {
+    const l = order[j];
+    if (visited.has(l.slug)) continue;
+    const g = sections.groupOf(l.slug);
+    if (!g.split) {
+      if (ready(l)) return l.slug;
+      continue;
+    }
+    for (const s of g.slugs) visited.add(s);
+    const parts = partsOf(g.slugs);
+    const entry = parts.find((p) => !passed(p));
+    if (entry) return ready(entry) ? entry.slug : null; // never skipped
+    if (parts.length > 0 && ready(parts[0])) return parts[0].slug;
   }
   return null;
 }
@@ -174,6 +270,12 @@ export function resolvePointer(
  * PARKS: at the course's last lesson that is the terminal state, and mid-course
  * it simply waits for a prerequisite; neither is reported as anything here.
  *
+ * With `sections` holding a split section (FR-4313), (3) is the section-aware
+ * walk: a part moves to its section's first part not yet passed, and the
+ * pointer never moves past a split section with a part not passed. Condition
+ * (1) is unchanged — an attempt on part 3 through a direct link (FR-3206) does
+ * not move a pointer that is on part 1.
+ *
  * `inCourse` must be ONE course's lessons in catalogue order.
  */
 export function advanceTarget(
@@ -181,13 +283,14 @@ export function advanceTarget(
   storedSlug: string | null | undefined,
   attemptedSlug: string,
   mastery: ReadonlyMap<string, number>,
-  prereqs: ReadonlyMap<string, readonly string[]>
+  prereqs: ReadonlyMap<string, readonly string[]>,
+  sections?: SectionIndex
 ): string | null {
   const current = resolvePointer(inCourse, storedSlug);
   if (current === null || current !== attemptedSlug) return null;
   const lesson = inCourse.find((l) => l.slug === current);
   if (!lesson || !lessonGatePassed(lesson.los)) return null;
-  return nextLessonSlug(inCourse, current, mastery, prereqs);
+  return nextLessonSlug(inCourse, current, mastery, prereqs, sections);
 }
 
 /**

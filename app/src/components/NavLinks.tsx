@@ -59,17 +59,25 @@ export function NavLinks({
   mvp1 = false,
   signedIn = false,
   studentName = null,
+  onboardingPending = false,
 }: {
   mvp1?: boolean;
   signedIn?: boolean;
   studentName?: string | null;
+  /** signed in, with the first-Google-sign-in step still owed (FR-4014) */
+  onboardingPending?: boolean;
 }) {
   const pathname = usePathname();
 
   // Signed out: nothing that needs a principal. `/spine` drops out with the
   // student links, because it colours the graph by ONE student's mastery and
   // redirects a signed-out visitor straight back to `/signin`.
-  const links = signedIn ? (mvp1 ? MVP1_LINKS : LINKS) : [];
+  //
+  // Onboarding owed (feature 003, FR-4014; backlog #15): no study links
+  // either. Every lesson page sends her back to `/welcome` until the step is
+  // done, so "Study" and "Where you stand" would be doors that bounce — the
+  // same lie the signed-out rule avoids. She keeps her name and the way out.
+  const links = signedIn && !onboardingPending ? (mvp1 ? MVP1_LINKS : LINKS) : [];
 
   return (
     <nav className="flex items-center gap-1">
@@ -94,7 +102,7 @@ export function NavLinks({
       })}
 
       {signedIn ? (
-        <AccountMenu name={studentName ?? "You"} />
+        <AccountMenu name={studentName ?? "You"} settings={!onboardingPending} />
       ) : (
         <SignedOutActions pathname={pathname} />
       )}
@@ -149,7 +157,7 @@ function SignedOutActions({ pathname }: { pathname: string }) {
  * transport error still lands on `/signin`, which is where "signed out" looks
  * the same either way.
  */
-function AccountMenu({ name }: { name: string }) {
+function AccountMenu({ name, settings = true }: { name: string; settings?: boolean }) {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const wrap = useRef<HTMLDivElement>(null);
@@ -213,14 +221,18 @@ function AccountMenu({ name }: { name: string }) {
               (#10/#11/#12 — the tabs that were removed for exactly that). A
               plain link, not a client-side fetch: the page is a server
               component and the setting on it changes the document element. */}
-          <Link
-            href="/settings"
-            role="menuitem"
-            onClick={() => setOpen(false)}
-            className="play-pressable mt-1 flex min-h-[52px] w-full items-center rounded-[14px] border-[3px] border-ink bg-card px-3 text-start font-display text-[1rem] font-bold text-ink"
-          >
-            Settings
-          </Link>
+          {/* Not while onboarding is owed: `/settings` would send her
+              straight back to `/welcome` (backlog #15). */}
+          {settings && (
+            <Link
+              href="/settings"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="play-pressable mt-1 flex min-h-[52px] w-full items-center rounded-[14px] border-[3px] border-ink bg-card px-3 text-start font-display text-[1rem] font-bold text-ink"
+            >
+              Settings
+            </Link>
+          )}
           <button
             type="button"
             role="menuitem"

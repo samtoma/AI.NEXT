@@ -1,0 +1,48 @@
+{
+  "format": "ainext.widget-template/1",
+  "id": "wt:t2u2-2-1:domain-excluded",
+  "lo_id": "lo:t2u2-2-1",
+  "parent_question_id": "q:t2u2-2-1:001",
+  "tier": "standard",
+  "kind": "number_line_marker",
+  "instances": [
+    {
+      "r": -2,
+      "s": 3
+    },
+    {
+      "r": 1,
+      "s": -4
+    },
+    {
+      "r": -5,
+      "s": 2
+    }
+  ],
+  "spec": {
+    "mode": "points",
+    "range": [
+      -6,
+      6
+    ],
+    "targets": "{=sorted([-r, -s])}"
+  },
+  "stem": "Mark every value $x$ cannot take in $\\frac{1}{(x {=('+' if r > 0 else '-') + str(abs(r))})(x {=('+' if s > 0 else '-') + str(abs(s))})}$.",
+  "solution": [
+    "The fraction breaks wherever the denominator is zero.",
+    "Set the whole denominator to zero and solve it completely — every factor gives one root.",
+    "Here that is $x = {=-r}$ and $x = {=-s}$.",
+    "Both are excluded. The domain is every real number except those two."
+  ],
+  "diagnostics": [
+    {
+      "predicate": "sign-flipped",
+      "misconception_id": "mc:u1-1-1:transposition-sign"
+    },
+    {
+      "predicate": "missed-values",
+      "misconception_id": "mc:t2u2-2-1:excluded-values-incomplete"
+    }
+  ],
+  "notes": "Reproduces the live template exactly, as corrected in v0.9.3 (migration 032): the targets are the stem's zeros -r and -s, and the sign error is diagnosed first. Until v0.9.3 the targets were [r, s], the shifts the stem prints; the blind-verifier tests rebuild that defect from this file and must refuse it."
+}

@@ -191,6 +191,22 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     nav: null,
   },
   {
+    // Feature 003 (FR-4010…FR-4012, decision 4): change one student's
+    // curriculum, posted from the Curriculum panel on the Student 360 —
+    // the ONLY way a curriculum changes after sign-up at launch.
+    // `student-data` alone, like the course exception above: it names a
+    // student and decides which courses that child sees. `content-review`
+    // decides the per-grade rules on `/courses` and must not learn a name
+    // from this feature; `cost-billing` reads no student's curriculum at all
+    // (FR-2406, privacy review F7). The database agrees (migration 033):
+    // `ainext_app` holds no UPDATE on the curriculum columns.
+    path: "/api/console/students/[id]/curriculum",
+    file: "api/console/students/[id]/curriculum/route.console.ts",
+    kind: "route",
+    roles: ["student-data"],
+    nav: null,
+  },
+  {
     // ADR-0021: mark or unmark one student as a TEST account, posted from the
     // Test account panel on the Student 360. **Both `student-data` AND
     // `teaching-controls`** (fix pass, 2026-09-24). It names a student — the
@@ -237,13 +253,16 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     selfOnly: true,
   },
   {
-    // Migration 023, `lib/catalog.ts`. ⚠ NO REQUIREMENT COVERS THIS ROUTE —
-    // no FR has been invented for course availability and `traceability.md`
-    // was not touched (see the page's own header). `content-review` because
+    // Migration 023, `lib/catalog.ts` — course availability, FR-2701…FR-2711
+    // (002) and, since 003, per curriculum, grade and course (FR-4101…
+    // FR-4103). (This note used to say no requirement covered the route; the
+    // course-gate FRs have existed since 2026-09-22.) `content-review` because
     // this is the broad per-grade rule, a content decision rather than one
     // about a named student — the same boundary FR-2204 already draws on
-    // `/content`. Placed immediately before `/content` so the two content
-    // decisions read next to each other in the nav.
+    // `/content`. Its one cross-student figure is a headcount, count only
+    // (`last_live_course_headcount`, FR-4103). Placed immediately before
+    // `/content` so the two content decisions read next to each other in the
+    // nav.
     path: "/courses",
     file: "(console)/courses/page.console.tsx",
     roles: ["content-review"],

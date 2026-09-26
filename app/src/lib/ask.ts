@@ -5,11 +5,24 @@ import { addressForms, type AddressForms } from "./address";
 import { sequential } from "./db";
 import { visibleGraphFor } from "./catalog-queries";
 import { getAllVisuals } from "./visuals";
-import { MODULE_RANK, SUBJECT_RANK, catalogueObjectivesSql } from "./module-order";
+import { COURSE_RANK, MODULE_RANK, catalogueObjectivesSql } from "./module-order";
 import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
 import { masteryLabel } from "./mastery";
+import { COURSE_IDS, COURSES, coursesOf, isCourseId, type AskExampleIds, type CourseId } from "./courses";
 import type { Subject } from "./types";
+import { slugOfLo } from "./lesson-slug";
+import {
+  BOOK_SECTIONS_SQL,
+  NO_SECTIONS,
+  partPrereqEdges,
+  partsInCatalogue,
+  sectionIndexFromRows,
+  type BookSectionRow,
+  type DerivedPrereqEdge,
+  type SectionIndex,
+} from "./book-sections";
+import { sectionFocusObjectives, sectionLabel, sectionNumbers } from "./section-label";
 
 /**
  * "Ask the Spine" — server-side grounding assembly.
@@ -30,6 +43,15 @@ import type { Subject } from "./types";
  * and prerequisite edges — to the one catalogue order, split by subject, and
  * fixed the order of the edges, which had none. The wording of the prompt is
  * unchanged.
+ *
+ * Feature 003 (ADR-0020 note, 2026-09-25; FR-4205, FR-4206): three facts that
+ * were Prep-3 strings here now come from the course registry
+ * (`lib/courses.ts` `CourseTutorFacts`) — the syllabus line after each book,
+ * the book named when none is visible, and the example ids of the citation
+ * and directive documentation. Every National course carries exactly the
+ * values this file printed before, so its prompts are byte-identical; the
+ * Grade 10 course has no syllabus year and takes its examples from the
+ * student's own data, never Prep-3's ids.
  */
 
 export type AskSurface = "spine_chat" | "student_chat";
@@ -130,10 +152,11 @@ async function askContextOn(
     profile,
     allModulesRes,
     everyVisual,
+    courseBookRes,
   ] = await sequential([
       // THE ONE ORDER (FR-3217; Samuel, 2026-09-25, lifting ADR-0020's hold
       // for this ordering: "yes for sure … it is part of the overall
-      // consistency"). The context lists every subject, so the subject comes
+      // consistency"). The context lists every course, so the course comes
       // first (registry order), then the catalogue order inside it — the
       // lesson list's. It was `ORDER BY order_in_parent`: a position inside a
       // module, shared by the first objective of every unit of every subject,
@@ -169,13 +192,17 @@ async function askContextOn(
          FROM source_documents ORDER BY ingested_at, sha256`
       ),
       () => (studentId == null ? Promise.resolve(null) : getStudentProfile(studentId, db)),
-      // The unit list: subject first, then MODULE_RANK — Term 1, Term 2,
+      // The unit list: course first, then MODULE_RANK — Term 1, Term 2,
       // geometry. It had no term rank, so Term 1 and Term 2 units interleaved.
       () => db.query(`
         SELECT m.id, m.label FROM graph_nodes m WHERE m.kind = 'module'
-        ORDER BY ${SUBJECT_RANK}, ${MODULE_RANK}
+        ORDER BY ${COURSE_RANK}, ${MODULE_RANK}
       `),
       () => getAllVisuals(),
+      // The book each course is built from (the loader stamps it on the course
+      // node) — which course's registry facts speak for each book (003). The
+      // same statement the student scope reads the books with.
+      () => db.query(`SELECT id AS course_id, source_sha256 FROM graph_nodes WHERE kind = 'course'`),
     ] as const);
 
   /* ------------------------------------------------------------------ *
@@ -233,14 +260,22 @@ async function askContextOn(
   const modulesRes = { rows: allModulesRes.rows.filter((m) => gate.module(m.id)) };
   const allVisuals = everyVisual.filter((v) => gate.lo(v.loId));
 
-  const docs = docRes.rows as {
+  // The books, through the same gate (003; privacy review §5 item 1, MUST).
+  // This read used to be the one of the eight that was NOT narrowed, so every
+  // ingested book's title, publisher and grade reached every student's tutor
+  // turn — a hidden course's, and from the moment a second curriculum's book
+  // is loaded, that curriculum's, before any operator switched it on. A book is
+  // kept only when a course this student may see is built from it
+  // (`gate.doc`). The harness scope keeps every book, so the captures read as
+  // before; so does any student who may see every loaded course.
+  const docs = (docRes.rows as {
     sha256: string;
     title: string;
     publisher: string;
     edition: string | null;
     grade: string;
     subject: string;
-  }[];
+  }[]).filter((d) => gate.doc(d.sha256));
   const student = profile?.displayName ?? "the demo student";
   // Address and voice only (FR-2603): nothing below branches teaching on it.
   const a = addressForms(profile?.gender ?? null, student);
@@ -272,6 +307,7 @@ async function askContextOn(
   // in the registry throws instead, because grounding a real question in the
   // wrong subject's rules is exactly the failure this refactor removes.
   let subject: Subject | null = null;
+  let focusCourse: string | null = null;
   if (focusQRow) {
     const courseRes = await db.query(
       `SELECT c.id FROM graph_edges t
@@ -286,7 +322,41 @@ async function askContextOn(
       courseRes.rows[0]?.id,
       `question "${focusQRow.id}"`
     );
+    focusCourse = (courseRes.rows[0]?.id as string | undefined) ?? null;
   }
+
+  // WHOSE BOOK SPEAKS (003). A question in scope: its own course. None (the
+  // observer surface): the first course of THIS context — loaded, and one she
+  // may see — in registry order: Prep-3 maths for a National student, the
+  // Grade 10 course for a Grade 10 student. Every National course carries the
+  // same Ask facts, so a National context reads exactly as before whichever of
+  // its courses comes first. A context with no course at all — a student whose
+  // course is not switched on yet — speaks with her own curriculum's first
+  // course, so a Grade 10 student is never told about the ministry textbook;
+  // with no curriculum either (the harness), the registry's first.
+  const courseBooks = courseBookRes.rows as { course_id: string; source_sha256: string | null }[];
+  const askCourse: CourseId =
+    (isCourseId(focusCourse) ? focusCourse : null) ??
+    COURSE_IDS.find((id) => gate.course(id) && courseBooks.some((r) => r.course_id === id)) ??
+    (gate.curriculum ? coursesOf(gate.curriculum)[0] : undefined) ??
+    DEFAULT_ASK_COURSE;
+  const facts = COURSES[askCourse].tutor;
+  // Each book's course, by the sha the loader stamped on the course node.
+  const courseOfBook = new Map<string, CourseId>();
+  for (const id of COURSE_IDS) {
+    for (const r of courseBooks) {
+      if (r.course_id === id && r.source_sha256 && !courseOfBook.has(r.source_sha256)) {
+        courseOfBook.set(r.source_sha256, id);
+      }
+    }
+  }
+  // A book's syllabus line is its course's; a book no course is built from
+  // speaks with the context's course.
+  const syllabusOf = (sha: string | undefined): string | null => {
+    const c = sha ? courseOfBook.get(sha) : undefined;
+    return c ? COURSES[c].tutor.syllabusLine : facts.syllabusLine;
+  };
+  const withSyllabus = (line: string | null) => (line ? ` ${line}` : "");
 
   // Per-course source doc (Wave 1): a question in scope pins the document it
   // was actually extracted from (its bundle sha) instead of whichever book
@@ -296,20 +366,70 @@ async function askContextOn(
   const focusDoc = focusQRow
     ? docs.find((d) => d.sha256 === focusQRow.source_sha256)
     : undefined;
-  const doc = focusDoc ??
+  const doc: { sha256?: string; title: string; publisher: string; edition: string | null; grade: string; subject: string } =
+    focusDoc ??
     docs[0] ?? {
-      title: "ministry textbook",
+      title: facts.askBookFallback,
       publisher: "",
       edition: null,
       grade: "",
       subject: "",
     };
+  // The syllabus line comes from the book's course (003): "Syllabus
+  // 2025–2026." for a National book, as always; nothing for a book that prints
+  // no syllabus year (Grade 10). Several books that agree share one line at
+  // the end, exactly as before; books that disagree — only a tester who sees
+  // two curricula — each carry their own.
+  const bookSyllabus = docs.map((d) => syllabusOf(d.sha256));
+  const oneSyllabus = bookSyllabus.every((l) => l === bookSyllabus[0]);
   const sourceLine =
     focusDoc || docs.length <= 1
-      ? `Source book: "${doc.title}" — ${doc.publisher} (edition ${doc.edition}, ${doc.subject}, grade ${doc.grade}). Syllabus 2025–2026.`
-      : `Source books (all ingested): ${docs
-          .map((d) => `"${d.title}" — ${d.publisher} (${d.subject}, grade ${d.grade})`)
-          .join("; ")}. Syllabus 2025–2026.`;
+      ? `Source book: "${doc.title}" — ${doc.publisher} (edition ${doc.edition}, ${doc.subject}, grade ${doc.grade}).${withSyllabus(syllabusOf(doc.sha256))}`
+      : oneSyllabus
+        ? `Source books (all ingested): ${docs
+            .map((d) => `"${d.title}" — ${d.publisher} (${d.subject}, grade ${d.grade})`)
+            .join("; ")}.${withSyllabus(bookSyllabus[0] ?? null)}`
+        : `Source books (all ingested): ${docs
+            .map((d, i) => {
+              const line = bookSyllabus[i];
+              return `"${d.title}" — ${d.publisher} (${d.subject}, grade ${d.grade}${line ? `; ${line.replace(/\.$/, "")}` : ""})`;
+            })
+            .join("; ")}.`;
+  // BOOK SECTIONS (feature 003, decision 18; FR-4316, FR-4317). The book
+  // sections of the courses in this context (`course_lessons`, migration 034),
+  // read after the gate — the store holds lesson titles. With a split section
+  // among them, two things change, and ONLY then:
+  //
+  //   · a question in scope that sits in one part pulls its whole section into
+  //     the focus set, ahead of the weakest objectives: its own part, then the
+  //     other parts nearest first. While a student works in part 2 of 1.7,
+  //     parts 1 and 3 are the nearest related material (FR-4316);
+  //   · the part n-1 → part n prerequisites are listed, in a block of their
+  //     own that says the product added them (FR-4317), beside the book's.
+  //
+  // With none — every National course — `sections.hasSplits` is false, the
+  // focus set is chosen exactly as before and no block is added, so every
+  // National prompt is byte-identical (FR-4206; the capture harness).
+  const sectionCourses = courseBooks.map((r) => r.course_id).filter((id) => gate.course(id));
+  const sections: SectionIndex =
+    sectionCourses.length === 0
+      ? NO_SECTIONS
+      : sectionIndexFromRows(
+          (await db.query(BOOK_SECTIONS_SQL, [sectionCourses])).rows as BookSectionRow[]
+        );
+  const askLessons = sections.hasSplits
+    ? lessonsOfObjectives(losRes.rows.map((l) => l.id as string))
+    : [];
+  if (sections.hasSplits && focusQRow) {
+    for (const id of sectionFocusObjectives(focusQRow.lo_id, askLessons, sections)) {
+      if (focusLos.size >= FOCUS_LO_COUNT) break;
+      focusLos.add(id);
+    }
+  }
+  const partBlock = sections.hasSplits
+    ? partPrereqBlock(partPrereqEdges(askLessons, sections), askLessons, sections, byCatalogue)
+    : "";
+
   // Weakest first is the primary key; catalogue order (subject, then the
   // lesson list's order) breaks every tie, written out rather than left to
   // sort stability — for a new student every score is 0, so it decides the
@@ -323,9 +443,17 @@ async function askContextOn(
     focusLos.add(l.id);
   }
 
+  // A merged lesson's objectives cite the lesson's printed RANGE ("1.2–1.3"),
+  // the words the student's check-in and lesson header print (backlog #35);
+  // every other objective keeps its own `syllabus_ref`. No National lesson
+  // covers two sections, so every National line is unchanged.
+  const refOf = (l: { id: string; syllabus_ref: string | null }): string | null => {
+    const p = sections.provenanceOf(slugOfLo(l.id));
+    return p && p.sections.length > 1 ? sectionNumbers(p.sections.map((x) => x.number)) : l.syllabus_ref;
+  };
   const loLines = losRes.rows
     .map((l) => {
-      const head = `- ${l.id} | "${l.label}" | ref ${l.syllabus_ref ?? "—"} | book p.${l.source_page ?? "—"} | now ${bandStr(current.get(l.id) ?? 0)} | at baseline ${bandStr(baseline.get(l.id) ?? 0)}`;
+      const head = `- ${l.id} | "${l.label}" | ref ${refOf(l) ?? "—"} | book p.${l.source_page ?? "—"} | now ${bandStr(current.get(l.id) ?? 0)} | at baseline ${bandStr(baseline.get(l.id) ?? 0)}`;
       return focusLos.has(l.id) && l.description
         ? `${head}\n  ${l.description}`
         : head;
@@ -440,7 +568,7 @@ LEARNING OBJECTIVES (id | label | syllabus ref | book page | mastery; descriptio
 ${loLines}
 
 PREREQUISITE EDGES ("A -> B" means A is a prerequisite of B):
-${edgeLines}
+${edgeLines}${partBlock}
 
 DETAILED QUESTION BANK — focus objectives only (id | LO | tier | type | book page | stem). Push question cards ONLY from this list:
 ${qLines || "(none in focus)"}
@@ -472,10 +600,117 @@ ${focusBlock}`;
     client: db,
   });
 
+  // The examples the citation and directive documentation shows: the course's
+  // registry values (every National course: the ids this prompt has always
+  // printed), or, for a course with none (Grade 10), ids from this student's
+  // own context — never another book's (decision 10).
+  const examples =
+    facts.askExamples ??
+    askExamplesFromContext(
+      losRes.rows as { id: string; source_page: number | null }[],
+      qRes.rows as { id: string; lo_id: string; source_page: number | null }[],
+      allVisuals,
+      focusQRow?.lo_id ?? [...focusLos][0],
+      focusQRow?.id
+    );
+
   return {
-    systemPrompt: askSystemPrompt(surface, student, subject, a),
-    dataBlock: dataBlock + retrievalBlock(retrieved),
+    systemPrompt: askSystemPrompt(surface, student, subject, a, examples),
+    // An English-only course's tutor (decision 9) gets no Arabic address line.
+    dataBlock: dataBlock + retrievalBlock(retrieved, { arabicAddress: facts.arabicTouches }),
     grounding,
+  };
+}
+
+/* ------------------------------------------------------------------ */
+/* Book sections in the Ask context (feature 003, FR-4316, FR-4317)    */
+/* ------------------------------------------------------------------ */
+
+/** Objectives in catalogue order → the lessons they make up, in that order. */
+function lessonsOfObjectives(
+  loIds: readonly string[]
+): { slug: string; courseId: null; los: { id: string; mastery: number }[] }[] {
+  const bySlug = new Map<string, { slug: string; courseId: null; los: { id: string; mastery: number }[] }>();
+  for (const id of loIds) {
+    const slug = slugOfLo(id);
+    const l = bySlug.get(slug) ?? { slug, courseId: null, los: [] };
+    bySlug.set(slug, l);
+    l.los.push({ id, mastery: 0 });
+  }
+  return [...bySlug.values()];
+}
+
+
+/**
+ * The derived part prerequisites as a block of the data block (FR-4317):
+ * headed as ADDED BY THE PRODUCT, one line naming each split section and its
+ * parts, then its edges in catalogue order (source, then destination) — the
+ * order the book's own edge list uses. Starts with the blank line that
+ * separates blocks; "" when there are no such edges, so a context with no
+ * split section renders exactly as before.
+ */
+function partPrereqBlock(
+  edges: readonly DerivedPrereqEdge[],
+  catalog: readonly { slug: string; courseId: string | null; los: readonly { id: string; mastery: number }[] }[],
+  index: SectionIndex,
+  byCatalogue: (a: string, b: string) => number
+): string {
+  if (edges.length === 0) return "";
+  const lines: string[] = [];
+  for (const g of index.splitGroups) {
+    const own = edges
+      .filter((e) => index.groupOf(slugOfLo(e.dst)).key === g.key)
+      .sort((a, b) => byCatalogue(a.src, b.src) || byCatalogue(a.dst, b.dst));
+    if (own.length === 0) continue;
+    const parts = partsInCatalogue(g, catalog).map((l, i) => {
+      const n = index.provenanceOf(l.slug)?.part?.n ?? i + 1;
+      return `part ${n} ${l.slug}`;
+    });
+    lines.push(`${sectionLabel(g) || g.key} — ${parts.join(", ")}`);
+    for (const e of own) lines.push(`${e.src} -> ${e.dst}`);
+  }
+  if (lines.length === 0) return "";
+  return `
+
+PREREQUISITES ADDED BY THE PRODUCT, not stated by the book. Each book section below is taught as consecutive lessons, one per part, and every objective of part n-1 is a prerequisite of every objective of part n ("A -> B" as above):
+${lines.join("\n")}`;
+}
+
+/** The Ask prompt's examples; a page may be the placeholder "N". */
+type AskExamples = Omit<AskExampleIds, "page"> & { page: number | string };
+
+/** Placeholder for an example id the context has none of. */
+const PLACEHOLDER_ID = "<id>";
+
+/**
+ * Example ids from the student's own context, for a course whose registry
+ * entry names none (003): the objective in focus (the question's, else the
+ * first focus objective), a live question of it, its page, the objective
+ * after it for the highlight, and a figure of it. Each falls back to a
+ * placeholder, never to an id from another book.
+ */
+function askExamplesFromContext(
+  los: readonly { id: string; source_page: number | null }[],
+  questions: readonly { id: string; lo_id: string; source_page: number | null }[],
+  visuals: readonly { id: string; loId: string }[],
+  focusLo: string | undefined,
+  focusQuestion: string | undefined
+): AskExamples {
+  const loIndex = Math.max(0, los.findIndex((l) => l.id === focusLo));
+  const lo = los[loIndex];
+  const q =
+    questions.find((x) => x.id === focusQuestion) ??
+    questions.find((x) => x.lo_id === lo?.id) ??
+    questions[0];
+  const pair = los.slice(loIndex, loIndex + 2).map((l) => l.id);
+  const viz = visuals.find((v) => v.loId === lo?.id) ?? visuals[0];
+  return {
+    lo: lo?.id.replace(/^lo:/, "") ?? PLACEHOLDER_ID,
+    q: q?.id.replace(/^q:/, "") ?? PLACEHOLDER_ID,
+    page: lo?.source_page ?? q?.source_page ?? "N",
+    showQuestion: q?.id ?? `q:${PLACEHOLDER_ID}`,
+    highlight: pair.length > 0 ? pair.join(",") : `lo:${PLACEHOLDER_ID}`,
+    viz: viz?.id ?? PLACEHOLDER_ID,
   };
 }
 
@@ -567,6 +802,23 @@ ${a.They} answered the QUESTION IN SCOPE wrongly and its model answer was alread
  */
 const OBSERVER_VOICE: Subject = "math-en";
 
+/**
+ * The course whose facts speak for a context with no loaded course she may
+ * see: the registry's first (Prep-3 maths). Every National course carries the
+ * same Ask facts, which are the values this prompt printed before 003.
+ */
+const DEFAULT_ASK_COURSE: CourseId = COURSE_IDS[0]!;
+
+/** Its Ask examples — the default for a caller that names none. */
+const OBSERVER_EXAMPLES: AskExamples = COURSES[DEFAULT_ASK_COURSE].tutor.askExamples ?? {
+  lo: PLACEHOLDER_ID,
+  q: PLACEHOLDER_ID,
+  page: "N",
+  showQuestion: `q:${PLACEHOLDER_ID}`,
+  highlight: `lo:${PLACEHOLDER_ID}`,
+  viz: PLACEHOLDER_ID,
+};
+
 function askPromptKit(subject: Subject | null): AskPromptKit {
   const key = subject ?? OBSERVER_VOICE;
   const kit = ASK_PROMPTS[key];
@@ -591,7 +843,14 @@ export function askSystemPrompt(
   surface: AskSurface,
   student: string,
   subject: Subject | null,
-  a: AddressForms
+  a: AddressForms,
+  /**
+   * The example ids of the citation and directive documentation (003): the
+   * course's registry values, or ids from the student's own context for a
+   * course with none. Omitted: the registry's first course's — what every
+   * caller printed before 003.
+   */
+  ex: AskExamples = OBSERVER_EXAMPLES
 ): string {
   const kit = askPromptKit(subject);
   const { voiceLine, groundingRules } = kit;
@@ -601,15 +860,15 @@ ${groundingRules}
 
 CITATIONS (mandatory — this is the product's signature):
 Embed inline receipt markers right after each substantive claim:
-- [[lo:u1-4-3]] when referencing a learning objective (use the id WITHOUT the "lo:" prefix repeated — i.e. exactly [[lo:u1-4-3]])
-- [[q:u1-4-3:002]] when referencing a question
-- [[page:22]] when referencing a book page
+- [[lo:${ex.lo}]] when referencing a learning objective (use the id WITHOUT the "lo:" prefix repeated — i.e. exactly [[lo:${ex.lo}]])
+- [[q:${ex.q}]] when referencing a question
+- [[page:${ex.page}]] when referencing a book page
 Use them liberally — every claim about mastery, prerequisites, questions or pages gets one. Use ONLY ids that exist in the data. Never invent ids. Never put markers inside $...$ math.
 
 ACTIONS (interactive directives, each on its own line):
-- {{show_question:q:u1-4-1:002}} — pushes that live question card into the chat for ${student} to answer. AT MOST ONE per turn, and only at the natural moment (e.g. when quizzing). Pick the question deliberately (right LO, right tier for ${a.their} mastery).
-- {{highlight:lo:u1-2-1,lo:u1-3-1}} — pulses those nodes on the on-screen curriculum graph. Use when tracing a path or contrasting objectives.
-- ${figureDirectivesDoc("v:geo1-2:004")}
+- {{show_question:${ex.showQuestion}}} — pushes that live question card into the chat for ${student} to answer. AT MOST ONE per turn, and only at the natural moment (e.g. when quizzing). Pick the question deliberately (right LO, right tier for ${a.their} mastery).
+- {{highlight:${ex.highlight}}} — pulses those nodes on the on-screen curriculum graph. Use when tracing a path or contrasting objectives.
+- ${figureDirectivesDoc(ex.viz)}
 
 FORMAT:
 - Plain paragraphs and "- " bullets only. No headings. **bold** sparingly.

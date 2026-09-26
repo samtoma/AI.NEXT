@@ -1,0 +1,74 @@
+{
+  "format": "ainext.family/1",
+  "id": "tpl:t2u3-1-3:union",
+  "kind": "family",
+  "lo_id": "lo:t2u3-1-3",
+  "parent_question_id": "q:t2u3-1-3:001",
+  "source_page": 46,
+  "tier": "advanced",
+  "answer_type": "mcq",
+  "context": null,
+  "params": [
+    {
+      "name": "total",
+      "choice": [
+        20,
+        24,
+        30,
+        40
+      ]
+    },
+    {
+      "name": "na",
+      "randint": [
+        4,
+        "total // 2"
+      ]
+    },
+    {
+      "name": "nb",
+      "randint": [
+        4,
+        "total // 2"
+      ]
+    },
+    {
+      "name": "nab",
+      "randint": [
+        1,
+        "min(na, nb)"
+      ]
+    },
+    {
+      "name": "nunion",
+      "let": "na + nb - nab"
+    }
+  ],
+  "constraints": [
+    "nunion <= total"
+  ],
+  "stem": "In a sample space of ${=total}$ equally likely outcomes, $n(A) = {=na}$, $n(B) = {=nb}$ and $n(A \\cap B) = {=nab}$. Find $P(A \\cup B)$.",
+  "solution": [
+    "The addition rule: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.",
+    "The overlap is counted twice if it is not subtracted: $n(A \\cup B) = {=na} + {=nb} - {=nab} = {=nunion}$.",
+    "$P(A \\cup B) = {=frac(nunion, total)} = {=Fraction(nunion, total)}$."
+  ],
+  "choices": {
+    "correct": "${=Fraction(nunion, total)}$",
+    "distractors": [
+      {
+        "text": "${=Fraction(na + nb, total)}$",
+        "misconception_id": null
+      },
+      {
+        "text": "${=Fraction(nab, total)}$",
+        "misconception_id": null
+      },
+      {
+        "text": "${=Fraction(na, total)}$",
+        "misconception_id": null
+      }
+    ]
+  },
+  "notes": "Reproduces the hand-written family tpl:t2u3-1-3:union in generate_questions.py, item for item (decision 16 proof, tests/test_family_reproduction.py). Misconception ids are the catalogue's (seed/generated/misconceptions.json), which the live bank carries. Not loaded by anything: the live Prep-3 bank is the committed export."
+}
