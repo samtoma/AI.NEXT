@@ -9,7 +9,7 @@ AI.Next is a 3-founder edtech startup (founders: Samuel = CTO + solution archite
 |---|---|---|
 | Product | Student-facing, English LTR default, Maths + Social Studies + Arabic, BKT mastery | Parent-sold, Arabic RTL, 3 subjects, Elo mastery |
 | Authority | **PRD: AI Tutor — Student MVP v0.4** (Tamer Deif, Drive `1gUAF0IyHRBr47k7aqiPxe9q22CJy8A7JwVqI405bRnk`) | PRD v1.0 (below) |
-| Deploys to | `noor.reletix.com` (student) + `admin-noor.reletix.com` (console) — **not yet deployed**; see `deploy/TAKEOVER.md` | ainext.reletix.com — **no pipeline path any more**, see the Amendment |
+| Deploys to | `noor.reletix.com` (student) + `admin-noor.reletix.com` (console) — **deployed**: `v0.9.3` went out 2026-09-25 through the CI/CD workflow's manual run (run 36182444509, deploy job green); see `deploy/TAKEOVER.md` | ainext.reletix.com — **no pipeline path any more**, see the Amendment |
 
 `main` is the default branch, the only one anybody develops on, and the one the deploy trigger names. `family-tutor` holds what `main` contained before the move (`f0cb192`), byte-identical, and is the backup of the old baseline — keep it, never work on it.
 
@@ -60,7 +60,7 @@ Skills (in `.claude/skills/`): `project-status` (read/update project state), `ad
 - Specs in `docs/specs/`, ADRs in `docs/decisions/` (format: `NNNN-short-title.md`), status in `docs/PROJECT_STATE.md`. **Documentation map: `docs/README.md`.**
 - Branching: `docs/BRANCHING.md` — **one branch, `main`** (ADR-0010 Amendment); feedback and requirement *proposals* never get a branch, accepted requirements get `req/<id>-<slug>`. Versioning: `docs/VERSIONING.md`. Current release: **`v0.9.3`** (tags are bare `vX.Y.Z` from v0.5.0; the older `PDR1-0-v*` tags keep their names) — history in `CHANGELOG.md`, per-release explainers in `docs/releases/`.
 - Product code: the Next.js app in `app/`, the extraction pipeline in `services/extraction/`, deploy stack in `deploy/` (see ADR-0002/0003/0005).
-- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v3.4.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/002-identity-and-admin-console/` (001 is the shipped Student MVP delta); new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
+- Requirements: GitHub Spec Kit — constitution in `.specify/memory/constitution.md` (**v3.4.0**), baseline as-built spec set in `specs/000-baseline/`, active feature in `specs/003-curriculum-tracks/` (on branch `feat/003-curriculum-tracks-g10-american-math`; 002, identity and the console, and 001, the Student MVP delta, are shipped); new features via `/speckit-specify` → `/speckit-plan` → `/speckit-tasks` into `specs/NNN-slug/`.
 - Student- and parent-facing copy is **English** for MVP 1.0 (constitution v3.4.0 Principle V); the Arabic verticals stay in the tree and reintroducible. Internal docs and code are English.
 
 <!-- SPECKIT START -->
