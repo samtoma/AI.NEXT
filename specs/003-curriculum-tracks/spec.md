@@ -1005,7 +1005,8 @@ through the attempts route and confirm identical outcomes.
   and A8, approved by Samuel.)* A question whose stem shows a figure it does not have MUST be held at
   review, never live, until its figure exists; a figure MUST NOT draw the question's unknown — a point the
   question writes with a letter for a coordinate — anywhere, and one that does is withheld; its caption
-  MUST NOT change the question. A figure the visual stage failed to produce (an agent error, not a kind
+  MUST NOT change the question, and MUST describe only what is drawn — a withheld point is never described
+  as marked, shown or drawn *(amended 2026-09-27, Chapter 8 pilot)*. A figure the visual stage failed to produce (an agent error, not a kind
   no renderer can draw) is a coverage failure, re-run for that figure alone.
 
 ### Key Entities
