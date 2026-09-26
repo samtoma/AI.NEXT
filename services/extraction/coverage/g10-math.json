@@ -8,9 +8,9 @@
   "status": "RED",
   "summary": {
     "checks": 18,
-    "hold": 14,
+    "hold": 15,
     "excepted": 1,
-    "fail": 3
+    "fail": 2
   },
   "checks": [
     {
@@ -239,14 +239,9 @@
       "id": "notation",
       "title": "Un-normalised decimal commas and (x; y) pairs left in the bundles = 0 (decision 15); no display-only environment (align*) inside the app's inline maths",
       "want": 0,
-      "got": 107,
-      "state": "fails",
-      "failures": [
-        {
-          "scope": "book",
-          "detail": "107 un-normalised span(s): ['(2;1)', '(-2;-2)', '(2;-2)', '(x2;y2)', '(x1;y1)', '(x2;y1)', '(x1;y1)', '(x2;y2)']"
-        }
-      ],
+      "got": 0,
+      "state": "holds",
+      "failures": [],
       "excepted_scopes": [],
       "notes": [
         "193 S3 item(s) printed in the book's notation were normalised"
@@ -324,7 +319,7 @@
   },
   "notation": {
     "items_printed_in_book_notation": 193,
-    "residual_in_bundles": 107
+    "residual_in_bundles": 0
   },
   "missing_inputs": [],
   "inputs": {
@@ -349,7 +344,7 @@
     "runs/lesson/g10m8s3-2.json": "14b9e2df82f2db58a2444ede74dc7dea92fd66a1221c2958ecdc0b4ccc513d39",
     "runs/lesson/g10m8s4-1.json": "0e8aa5ec487ae92d473f720f9ced46f60b0439b2be762b9916a19fcfd193da41",
     "s5/final-wf_ed8c8e80-51d.json": "5b576232d2bcfe7146ab58e96c0cda87726f3eaf54c02aec9ffc91e7fdf88795",
-    "seed/g10m-c08.json": "a497231b5c3c19562afca7eea5e0c2ef595c3433313182e1bc3bc4768e8f8aa0",
+    "seed/g10m-c08.json": "a0c1edf82b532823efd661f0fedc1ba956414cf651469dc829929432c203f3ec",
     "seed/g10m-course.json": "4d73bba78f5b601052b8b56a4aa22c760d85ffef049fcbcf2b52d99dca3493ee",
     "widget-gaps": "8e8e5565a1ab7d584064d0cba3b97e1288a397e41ce9236f914c3f98e66287cc"
   },
