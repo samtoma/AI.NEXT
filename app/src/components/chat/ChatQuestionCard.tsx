@@ -9,6 +9,8 @@ import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/typ
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
 import type { WidgetOutcome } from "@/lib/widget-predicates";
 import { TeX } from "@/components/TeX";
+import { QuestionFigures } from "@/components/viz/QuestionFigures";
+import { displayStem } from "@/lib/question-figures";
 import { pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
 import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
@@ -194,8 +196,10 @@ export function ChatQuestionCard({
 
       <div className="px-3.5 py-3">
         <p className="tex-block text-[1rem] text-ink">
-          <TeX text={q.stem} />
+          <TeX text={displayStem(q.stem)} />
         </p>
+        {/* the question's own figure (A3) — never the "[figure]" placeholder */}
+        <QuestionFigures ids={q.figures} />
 
         {!result && (
           <div className="mt-3">

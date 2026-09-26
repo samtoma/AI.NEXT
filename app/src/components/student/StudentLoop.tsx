@@ -7,6 +7,8 @@ import type { AttemptResult, PlanItem, PlanReason } from "@/lib/types";
 import { stepText } from "@/lib/types";
 import type { Cite } from "@/lib/chat-parse";
 import { TeX } from "@/components/TeX";
+import { QuestionFigures } from "@/components/viz/QuestionFigures";
+import { displayStem } from "@/lib/question-figures";
 import { ChatCore } from "@/components/chat/ChatCore";
 import { MathAnswerInput } from "@/components/chat/MathAnswerInput";
 import { ReentryNote } from "@/components/chat/ReentryNote";
@@ -304,8 +306,10 @@ export function StudentLoop({
 
               <div className="px-6 py-6">
                 <p className="tex-block text-[1.15rem] leading-relaxed text-ink">
-                  <TeX text={item.stem} />
+                  <TeX text={displayStem(item.stem)} />
                 </p>
+                {/* the question's own figure (A3) — never the "[figure]" placeholder */}
+                <QuestionFigures ids={item.figures} />
 
                 {/* answers */}
                 {phase === "asking" && (

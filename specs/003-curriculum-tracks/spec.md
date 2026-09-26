@@ -82,10 +82,11 @@ all").
 > and the content patterns of `specs/001-student-mvp1-delta/spec.md` **FR-1101…FR-1115** and
 > **FR-1201…FR-1211** ([ADR-0008](../../docs/decisions/0008-generated-question-bank.md),
 > [ADR-0009](../../docs/decisions/0009-widgets-as-questions.md)).
-> **Engineering authority**: `.specify/memory/constitution.md` **v3.3.0** and ADR-0001…ADR-0023, plus
-> ADR-0024 (drafted) and the 2026-09-25 notes on ADR-0005, ADR-0019 and ADR-0020. A constitution
-> amendment is proposed in
-> [constitution-amendment-proposal.md](./constitution-amendment-proposal.md) and **not applied**.
+> **Engineering authority**: `.specify/memory/constitution.md` **v3.4.0** (amended 2026-09-25 by
+> [constitution-amendment-proposal.md](./constitution-amendment-proposal.md), approved as decision 28 and
+> applied) and ADR-0001…ADR-0023, plus ADR-0024 and ADR-0025 (both accepted 2026-09-25) and the
+> 2026-09-25/26 notes on ADR-0005, ADR-0019 and ADR-0020. *(Written v3.3.0 / "proposed, not applied" at
+> rev. 1; corrected 2026-09-27.)*
 > **Privacy review**: [privacy-review.md](./privacy-review.md) (security-privacy-officer, 2026-09-25).
 > Its MUST findings are folded in: F11 into FR-4008; F14, F15 and F17 into FR-4208 and FR-4210;
 > F4 into FR-4016; F8 into FR-4017; F10 into FR-4014; F13 into FR-4202; F7 into FR-4104. The
@@ -896,7 +897,23 @@ through the attempts route and confirm identical outcomes.
 
   An answer the marker cannot read MUST be returned for re-entry, never marked wrong. No language
   model is ever asked to mark. A question whose key is a number or a choice MUST be marked exactly as
-  today, so every existing course's marking is unchanged (FR-C03).
+  today, so every existing course's marking is unchanged (FR-C03) — with the one addition below for a
+  choice question that lists less specific true options.
+
+  Decision 24's detail (confirmed "as recommended", `marker-evaluation.md` §6):
+  - `1/2x` is ambiguous and MUST always be returned as unreadable, never guessed;
+  - a decimal answer to a question whose key is an exact value (a surd, π) is the wrong form
+    (`wrong_form: exact`), not incorrect;
+  - a fraction answered for a recurring-decimal key is accepted as equal, **except** where the question
+    asks for a decimal ("write as a decimal"): there the fraction is the wrong form;
+  - an answer of the wrong shape — a number for an interval question, an expression where an equation
+    of a line is asked for — MUST be returned for re-entry, never marked wrong.
+
+  *(Amended 2026-09-27, decision 41, Samuel's G2 answer 20.)* A choice question whose key is the most
+  specific true answer MAY list the other options that are also true but less precise
+  (`choices.less_specific`; for example "rhombus" where the key is "square"). Choosing one of those
+  MUST be returned for re-entry with "true, but be more precise", never marked wrong. Every other
+  choice is marked exactly as today.
 
 ### The extraction pipeline (FR-4401…)
 
@@ -1023,7 +1040,9 @@ Plain language; no field names. [data-model.md](./data-model.md) owns the mappin
   requests for one answer as not found.
 - **SC-207**: For every existing National course, the tutor's instructions are **byte-identical**
   before and after this feature across the whole prompt capture set, and a pre-existing student sees
-  **no** difference on any surface.
+  **no** difference on any surface — except the three differences FR-4206 names as expected and
+  deliberate: the Ask book-list line, the handoff line for a student who cannot see a subject
+  (decision 38), and the National Arabic lessons' printed names (decision 34, *added 2026-09-27*).
 - **SC-208**: The "Load a course" action, rehearsed on a copy of production, changes **zero** rows
   belonging to other courses or to any student; started a second time it changes **zero** rows; and
   its printed rollback returns the copy to its exact prior state.
@@ -1039,12 +1058,16 @@ Plain language; no field names. [data-model.md](./data-model.md) owns the mappin
   as printed, and every equivalent form in the test set. It marks correct **zero** answers in a form
   the question does not accept. Every existing course's recorded attempts mark **identically** when
   replayed through it.
-- **SC-213** **[ADDED rev. 3]**: **100%** of the book's unique maths images are accepted by fingerprint
-  or by agreement, or are on a list for a human. **Zero** are guessed.
+- **SC-213** **[ADDED rev. 3]**: **100%** of the book's unique maths images are accepted by fingerprint,
+  by agreement or *(rev. 4, decision 32)* by a third reading that agrees with one of the first two, or
+  are on a list for a human. **Zero** are guessed.
 
 ## Constitution check
 
-Against **v3.3.0**. "Holds" means the feature complies as specified; anything else is named.
+Against **v3.3.0**, as written at rev. 1–3. "Holds" means the feature complies as specified; anything else
+is named. *(Note 2026-09-27: the amendment this check proposed was approved as decision 28 and applied —
+the constitution is now **v3.4.0** — and T413 is decided (ADR-0025, built in-house). The rows are kept as
+written; see the dated notes in rows IX and "Additional constraints".)*
 
 | Principle | Result |
 |---|---|
@@ -1056,11 +1079,11 @@ Against **v3.3.0**. "Holds" means the feature complies as specified; anything el
 | **VI — Cost discipline** | Holds. Per-student spend instrumentation is untouched. The pipeline's one-time generation spend is reported per stage (FR-4403). |
 | **VII — Minors' data** | Holds. Curriculum is a learning attribute already in the student model (FR-302), not a new personal datum. It is asked only when there is a real choice (FR-4005), is labelled flatly and never leaves first-party data (FR-4016), and only an operator can change it, enforced by database privilege (FR-4017). The privacy review (F1, F5) names the residual risk: in Egypt, "American" is a weak proxy for fee-paying schooling. The amendment proposal adds a PATCH clarification that curriculum sits with grade and is never paired with a school name or address (F2). |
 | **VIII — MVP non-goals** | Holds. An international curriculum is inside the PRD's stated curriculum dimension (delta-matrix §2). Nothing here touches a non-goal. Tamer owns the PRD and should be told that the dimension 001 held constant now varies. |
-| **IX — Registry-driven subjects and prompt freeze** | Holds, **by decision 10**: National prompts are proven byte-identical (FR-4206); the G10 course's prompts are new captures, allowed by the ADR-0020 note of 2026-09-25. The subject registry keeps the teaching contract, and courses get their own registry (ADR-0024). Book-section grouping changes nothing for a course with no split or merged section (FR-4311…FR-4319), and the marker leaves numeric and choice marking unchanged (FR-4320). |
+| **IX — Registry-driven subjects and prompt freeze** | Holds, **by decision 10**: National prompts are proven byte-identical (FR-4206); the G10 course's prompts are new captures, allowed by the ADR-0020 note of 2026-09-25. The subject registry keeps the teaching contract, and courses get their own registry (ADR-0024). Book-section grouping changes nothing for a course with no split or merged section (FR-4311…FR-4319), and the marker leaves numeric and choice marking unchanged (FR-4320). *(2026-09-27: FR-4206 now names three expected National differences — the Ask book-list line, the handoff line (decision 38) and the Arabic lessons' printed names (decision 34); and a choice question may list less specific true options for re-entry (FR-4320, decision 41), which no National question carries.)* |
 | **X — Operational safety** | Holds, with a wording change proposed. Production gets the course only through the manual "Load a course" action — backed up, additive, re-runnable, never in a deploy (FR-4208) — and later changes go through `refresh-content`, now pointed at noor (FR-4210). X names `refresh-content` as the one content path, so the proposal adds the load action by name (PATCH). |
 | **XI — Solution integrity** | Holds, with one change: the drift guard learns a second book (FR-4207). Curricula live inside one solution, so this is not cross-solution pooling. FR-4104 keeps courses apart anyway, because a figure mixing two maths courses means nothing. |
 | **XII — Design system** | Holds. The sign-up question, the Google step, the console changes and any approved new widget kind are bound by the published Noor Play system. Grade 10 renders Play while ADR-0017's Master switch is off (decision 7, FR-4204). |
-| **Additional constraints** | **Amendment proposed, not applied.** *"Curriculum truth is the Egyptian ministry book"* and the *"Comparison constant: Prep-3 Mathematics …"* line stop describing the product once a non-ministry book is served. [constitution-amendment-proposal.md](./constitution-amendment-proposal.md) proposes per-course curriculum truth and per-course drift constants (MINOR, v3.3.0 → v3.4.0). Samuel approves the wording and the bump. |
+| **Additional constraints** | **Amendment proposed, not applied.** *"Curriculum truth is the Egyptian ministry book"* and the *"Comparison constant: Prep-3 Mathematics …"* line stop describing the product once a non-ministry book is served. [constitution-amendment-proposal.md](./constitution-amendment-proposal.md) proposes per-course curriculum truth and per-course drift constants (MINOR, v3.3.0 → v3.4.0). Samuel approves the wording and the bump. *(2026-09-25: approved, decision 28, and applied — constitution v3.4.0.)* |
 | **Quality gates** | Holds: `tsc`, unit tests, production build, the prompt byte-identity capture (FR-4206), and the pipeline's Arabic self-check and audit (FR-4405). |
 
 ## Governance impact

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { displayStem } from "@/lib/question-figures";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { SpineLo, SpineQuestion, Tier } from "@/lib/types";
@@ -450,7 +451,7 @@ export function LoPanel({
                           className={cx(ROW, "block w-full bg-card px-3 py-2.5 text-start")}
                         >
                           <p className="font-read text-[0.82rem] leading-[1.6] text-ink">
-                            <TeX text={q.stem} />
+                            <TeX text={displayStem(q.stem)} />
                           </p>
                           {q.provenance.sourcePage !== null && (
                             <span className="mt-1 block font-display text-[0.7rem] font-bold text-[color:var(--play-text-muted)]">

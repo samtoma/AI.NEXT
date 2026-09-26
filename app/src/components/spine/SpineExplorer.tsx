@@ -12,6 +12,7 @@ import type {
 import type { Cite } from "@/lib/chat-parse";
 import { GraphCanvas, type AsOf, type MapSection } from "./GraphCanvas";
 import { sectionLabel } from "@/lib/section-label";
+import { displayStem } from "@/lib/question-figures";
 import { LoPanel } from "./LoPanel";
 import { QuestionModal } from "./QuestionModal";
 import { NoorPanel } from "./NoorPanel";
@@ -280,7 +281,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         const q = questionsById.get(c.id);
         return q
           ? {
-              title: q.stem.length > 90 ? `${q.stem.slice(0, 90)}…` : q.stem,
+              title: ((s) => (s.length > 90 ? `${s.slice(0, 90)}…` : s))(displayStem(q.stem)),
               sub: q.provenance.sourcePage
                 ? `From the book, p.${q.provenance.sourcePage}`
                 : "From the book",
