@@ -102,3 +102,11 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
   one list (fifth…eighth), code comments "answer N (decisions.md #M)", WIP README + backlog, CLAUDE.md (active feature
   003; noor deployed — v0.9.3 verified deployed via CI run 36182444509). Left for Samuel: H1, M2, M6, M7, B2–B12, D1,
   decision 31 wording, the constitution's Cloudflare line. traceability --check OK (84/128 tasks, 78/78 traced).
+- Pipeline side DONE: A1 (answer text from marker key + load/coverage checks), A2 (KaTeX-judged re-spacing: 120
+  commands, 19 chains; 0 KaTeX errors), A3 (unknown-objective bug; figure-less questions held at review: 99 live,
+  59 review), A4 (narrowed: `(a,b)` is a pair only opposite a `;`-pair — the book writes decimals with commas; Ex8-4:9
+  and Ex8-4:12 listed for G2), A8 (16 figures withheld), A9 (form rule). FR-4303/4308/4321 amended.
+  Visuals re-run launched 2026-09-27: wf_cf69cd2a-301 (8.2), wf_f2998b98-934 (8.3a), wf_383382e9-e31 (8.3b),
+  wf_80d2fb22-698 (8.4) — 34 figures, lesson-v5 visuals_only.
+  Known red until W1 lands: tests/dry runs that preload the Prep-3 widget bank (the new can-emit check rejects its 14
+  dead rows until they're re-mapped).
