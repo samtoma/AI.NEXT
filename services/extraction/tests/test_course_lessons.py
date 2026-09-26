@@ -107,6 +107,36 @@ class G10ProvenanceTest(unittest.TestCase):
         self.assertEqual(self.db.one("SELECT question_type FROM questions "
                                      "WHERE id = 'q:g10m8s2-1-1:ex8-2-1'"), "short")
 
+    def test_the_figure_gate_holds_until_the_figure_exists_and_then_releases(self):
+        # consistency review A3: a live question whose stem shows [figure] with no figure is held at review, marked;
+        # the load that brings its figure puts it back live; a question a human held is never released here
+        qid = "q:g10m8s2-1-1:ex8-2-2a"
+        human = "q:g10m8s2-1-1:ex8-2-1"
+        self.db.q("UPDATE questions SET status = 'live', reviewed_by = 'ai dual-check (pending Samuel)' WHERE id = %s", (qid,))
+        self.db.q("UPDATE questions SET status = 'review', reviewed_by = 'Samuel (G2 hold)' WHERE id = %s", (human,))
+
+        def no_figure(d):
+            for q in d["questions"]:
+                if q["id"] in (qid, human):
+                    q["stem"] += " [figure]"
+            d["visuals"] = [v for v in d["visuals"] if v.get("question") not in (qid, human)]
+        run_loader(self.db.dsn, str(self.variant(no_figure)), "--course", G10, "--update")
+        st, by = self.db.q("SELECT status, reviewed_by FROM questions WHERE id = %s", (qid,))[0]
+        self.assertEqual(st, "review")
+        self.assertTrue(by.endswith("[held: figure missing]"))
+
+        def with_figure(d):
+            no_figure(d)
+            lo = next(q["lo"] for q in d["questions"] if q["id"] == qid)
+            d["visuals"].append({"id": "v:g10m8s2-1:099", "lo": lo, "question": qid, "kind": "coordinate_plot",
+                                 "spec": {"xRange": [-6, 6], "yRange": [-6, 6], "points": [{"x": 1, "y": 2, "label": "A"}],
+                                          "animate": "none"}, "caption": "A", "source_page": 292})
+        run_loader(self.db.dsn, str(self.variant(with_figure)), "--course", G10, "--update")
+        self.assertEqual(self.db.q("SELECT status, reviewed_by FROM questions WHERE id = %s", (qid,))[0],
+                         ("live", "ai dual-check (pending Samuel)"))
+        self.assertEqual(self.db.q("SELECT status, reviewed_by FROM questions WHERE id = %s", (human,))[0],
+                         ("review", "Samuel (G2 hold)"), "a human's hold is never released by the gate")
+
     def test_update_refuses_to_change_an_attempted_marker_key(self):
         self.db.q("INSERT INTO students (display_name, grade) VALUES ('Grade 10 student', '10')")
         sid = self.db.one("SELECT max(id) FROM students")

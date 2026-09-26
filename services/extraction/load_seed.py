@@ -367,6 +367,9 @@ def db_courses_of(cur, lo_ids: list[str]) -> dict[str, str]:
     return {lo: c for lo, c in cur.fetchall()}
 
 
+FIGURE_MARK = " [held: figure missing]"
+
+
 def figure_gate(paths: list[Path]) -> set[str]:
     """Consistency review A3: a book question whose stem shows [figure] and whose bundle has no figure for it
     cannot be answered, so it is held at review — on insert and, like the sacred gate, even if it was live —
@@ -1677,15 +1680,41 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
         # THE SACRED GATE IS NOT A LOAD-TIME DEFAULT. A question it holds is never
         # left live by any load, in any mode — including one inserted earlier and
         # promoted since, whose passage approval has now gone stale (ADR-0006).
-        if held:
+        sacred_held = held - figure_held
+        if sacred_held:
             cur.execute("UPDATE questions SET status = 'review' WHERE id = ANY(%s) "
-                        "AND status = 'live' RETURNING id", (list(held),))
+                        "AND status = 'live' RETURNING id", (list(sacred_held),))
             demoted = [r[0] for r in cur.fetchall()]
             if demoted:
                 print("!" * 72)
-                print(f"!! sacred/figure gate: {len(demoted)} live question(s) demoted to review — "
+                print(f"!! sacred gate: {len(demoted)} live question(s) demoted to review — "
                       f"{', '.join(demoted[:6])}{' …' if len(demoted) > 6 else ''}")
                 print("!" * 72)
+        # THE FIGURE GATE (consistency review A3) holds a question until its figure exists, and only until then:
+        # it marks what it demotes, and a later load that brings the figure puts exactly those back — a question
+        # a human held (G2 hold, the console) carries no mark and is never released here
+        figure_ids = [q["id"] for p in paths if p not in doc_only
+                      for q in (json.loads(Path(p).read_text()).get("questions") or [])
+                      if "assembled_from" in json.loads(Path(p).read_text())]
+        if figure_held:
+            cur.execute(f"""UPDATE questions SET status = 'review',
+                                  reviewed_by = coalesce(reviewed_by, '') || '{FIGURE_MARK}'
+                             WHERE id = ANY(%s) AND status = 'live' RETURNING id""", (list(figure_held),))
+            demoted = [r[0] for r in cur.fetchall()]
+            if demoted:
+                print(f"!! figure gate: {len(demoted)} live question(s) held at review until their figure exists — "
+                      f"{', '.join(demoted[:6])}{' …' if len(demoted) > 6 else ''}")
+        released = []
+        if figure_ids:
+            cur.execute(f"""UPDATE questions SET status = 'live',
+                                  reviewed_by = nullif(replace(reviewed_by, '{FIGURE_MARK}', ''), '')
+                             WHERE id = ANY(%s) AND NOT (id = ANY(%s)) AND status = 'review'
+                               AND reviewed_by LIKE %s RETURNING id""",
+                        (figure_ids, list(held), f"%{FIGURE_MARK}%"))
+            released = [r[0] for r in cur.fetchall()]
+            if released:
+                print(f"   figure gate: {len(released)} question(s) whose figure now exists are live again — "
+                      f"{', '.join(released[:6])}{' …' if len(released) > 6 else ''}")
 
         if demo_student:
             seed_demo_student(cur)

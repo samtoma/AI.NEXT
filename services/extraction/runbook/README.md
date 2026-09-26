@@ -393,6 +393,17 @@ uv run assemble_misconceptions.py runs/<book>/misconceptions/final-<runId>.json 
 proves the widget prerequisite rule (FR-1215); `--check` validates and reports without writing.
 `--validate <catalogue.json> [--book <book>]` re-checks an already-assembled catalogue on its own.
 
+**What a student reads carries no bookkeeping (consistency review 2026-09-27, A5; prompts `s5-v5`).** A label,
+description, signal or refutation step that names a question id or book reference (`q:…`, `ex8-1-4`,
+`Ex8-6:21c`), a page number, a numbered figure, or review history (a reviewer's note, a gate, a correction,
+our own re-solve) is refused at assembly for every catalogue (`leak_problems` in `validate_catalogue`). The S5
+packet no longer carries G2's notes (a disagreement is "our own independent re-solve answered X; the book's
+answer is Y"), and a canonical solution G2 corrected is marked "CORRECTED … not the book's own working"; both
+prompts state the rule. A run whose text leaks is fixed as a **pipeline normalisation** beside it —
+`runs/<book>/misconceptions/<run stem>.normalisations.json` (`{"format": "ainext.s5-normalisations/1", "run",
+"patches": [{id, field, from, to, by, why}]}`) — applied every time that run is assembled, fail-closed on the
+exact `from` text, and recorded on the entry (`provenance.normalisations`). Chapter 8: 13 patches on 9 entries.
+
 **What S5, S6 and S7 are shown (s5-v4, s6-v4, s7-v4; the Chapter 8 S5 draft).** A book question whose stem
 shows `[figure]` names its image files (from the lesson runs: `assemble_misconceptions.figures_by_question`),
 and the agents may open them — S5's author and verifier ("Figure(s): …"), S6's author (`figures` on each book
@@ -474,6 +485,18 @@ uv run generate_questions.py --families families/<book> --course <course-id> \
    `uv run generate_widget_questions.py --dsn … --catalogue <S5 draft> --normalise-templates <files> [--dry-run]`.
    Anything else goes back to the author. From `s7-v6` the author prompt states both as rules (ids from the
    objective's own list only; one predicate, one misconception), so fan-out should rarely need them.
+   **What a question can emit (consistency review 2026-09-27, W1 and A10; prompts `s7-v7`).** A kind declares
+   more predicates than one question reports: `contracts/widget-predicates.json` gives each kind a `can_emit`
+   table per mode / ask / element / fn (derived from the widget's grading code, mirrored in the app's
+   `widget-predicates.ts`), and `validate_widget` refuses an active or held mapping its question cannot emit.
+   A `line_drawer` "points" target, or its swap, on the position a handle opens at (`OPENING_HANDLES`) is
+   refused too. Every instrument is the app's `widget-docs.ts` DOCS text word for word. Two more normalisations,
+   first needed AFTER the blind verifier had judged Chapter 8: `drop-dead-predicate` (only while another mapping
+   remains) and `drop-opening-instance` (only while another instance remains). Each records the template as it
+   was verified (`verified_as`), and a change that only removed mappings, instances or solution steps keeps its
+   verdicts (`carried_verification`; the bundle lists it under `carried_verification`) — any other edit needs
+   the verifier again. A template left with no mapping goes back to the author: move it aside as
+   `widgets/<book>/_held--<file>.json` (Chapter 8: `gradient-to-missing-coord`).
 2. Pre-catalogue pass, so the reachability/prerequisite checks below have something to check against
    before S5's final catalogue is loaded:
    ```sh
