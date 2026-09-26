@@ -367,6 +367,24 @@ def db_courses_of(cur, lo_ids: list[str]) -> dict[str, str]:
     return {lo: c for lo, c in cur.fetchall()}
 
 
+def figure_gate(paths: list[Path]) -> set[str]:
+    """Consistency review A3: a book question whose stem shows [figure] and whose bundle has no figure for it
+    cannot be answered, so it is held at review — on insert and, like the sacred gate, even if it was live —
+    until a load brings its figure. Only for bundles the extraction line assembled (they carry
+    `assembled_from`); older bundles are not re-judged."""
+    held: set[str] = set()
+    for p in paths:
+        raw = json.loads(Path(p).read_text())
+        if "assembled_from" not in raw:
+            continue
+        drawn = {v.get("question") for v in raw.get("visuals") or []}
+        held |= {q["id"] for q in raw.get("questions") or [] if "[figure]" in (q.get("stem") or "")
+                 and q["id"] not in drawn}
+    if held:
+        print(f"  figure gate: {len(held)} question(s) whose stem shows [figure] have no figure — held at review")
+    return held
+
+
 def sacred_gate(paths: list[Path], bundles: list[SeedBundle], approve_all: bool) -> set[str]:
     """The promotion gate for sacred and sealed content (ADR-0006).
 
@@ -1194,6 +1212,8 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
     bundles = validate_all(paths)
     content = [(p, b) for p, b in zip(paths, bundles) if p not in doc_only]
     held = sacred_gate([p for p, _ in content], [b for _, b in content], approve_all)
+    figure_held = figure_gate([p for p, _ in content])
+    held |= figure_held
     repo_root = HERE.parents[1]
 
     dsn = db_dsn()
@@ -1650,7 +1670,7 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
             demoted = [r[0] for r in cur.fetchall()]
             if demoted:
                 print("!" * 72)
-                print(f"!! sacred gate: {len(demoted)} live question(s) demoted to review — "
+                print(f"!! sacred/figure gate: {len(demoted)} live question(s) demoted to review — "
                       f"{', '.join(demoted[:6])}{' …' if len(demoted) > 6 else ''}")
                 print("!" * 72)
 
