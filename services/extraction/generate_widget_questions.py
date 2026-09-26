@@ -1474,9 +1474,13 @@ def verdict_scan(templates: list[dict], questions: list[dict], files: list[Path]
     judged_sha, carry_problems = carried_verification(templates, questions)
     accepted, rejected, status = set(), {}, {}
     for tpl in templates:
-        reasons = list(carry_problems.get(tpl["id"], []))
-        sha = judged_sha.get(tpl["id"], tpl["_sha"])
         mine = [q for q in questions if q["family"] == tpl["id"]]
+        # verified AFRESH at its current sha (every instance): those verdicts decide, whatever a `verified_as`
+        # from an earlier verification says — a re-verify is how a template that cannot carry is repaired
+        fresh = bool(mine) and all(any(r.get("template_sha") == tpl["_sha"] for r in got.get(q["id"], []))
+                                   for q in mine)
+        reasons = [] if fresh else list(carry_problems.get(tpl["id"], []))
+        sha = tpl["_sha"] if fresh else judged_sha.get(tpl["id"], tpl["_sha"])
         for q in mine:
             rs = [r for r in got.get(q["id"], []) if r.get("template_sha") == sha]
             if not rs:
