@@ -1611,8 +1611,21 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                        VALUES (%s,%s,%s,%s,%s,%s,%s,FALSE) ON CONFLICT (id) DO NOTHING""",
                     (x.id, x.lo, x.misconception, x.entry_type,
                      json.dumps(content_steps), x.source_page, x.generated_by))
-                report.note("explanation_entries", "added" if cur.rowcount else "unchanged")
-                total_x += cur.rowcount
+                if cur.rowcount:
+                    report.note("explanation_entries", "added")
+                    total_x += 1
+                    continue
+                # --update: a book worked example's text follows its bundle, as a question's stem does (the
+                # consistency review's re-spaced LaTeX, A2). Refutations belong to load_misconceptions.py.
+                if editing and x.entry_type == "worked_example":
+                    cur.execute("""UPDATE explanation_library SET content = %s::jsonb, source_page = %s
+                                    WHERE id = %s AND entry_type = 'worked_example'
+                                      AND (content IS DISTINCT FROM %s::jsonb OR source_page IS DISTINCT FROM %s)""",
+                                (json.dumps(content_steps), x.source_page, x.id, json.dumps(content_steps),
+                                 x.source_page))
+                    report.note("explanation_entries", "updated" if cur.rowcount else "unchanged")
+                else:
+                    report.note("explanation_entries", "unchanged")
 
         if refused_edits:
             raise SystemExit(
