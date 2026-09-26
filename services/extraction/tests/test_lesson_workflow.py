@@ -375,11 +375,32 @@ class VisualsRerun(LessonConveyor):
                          "S4 alone: no claims, typing, blind check or oracle")
         prompt = next(c["prompt"] for c in rep["calls"] if c["label"] == "S4:viz:g10m8s2-1:1")
         self.assertIn("MUST NOT ANSWER IT", prompt)
+        self.assertIn("DRAW THE REST", prompt)                              # lesson-v6: withhold, never gap
+        self.assertIn("A WORKED EXAMPLE's figure may show its answer", prompt)
+        self.assertIn(f"belongs to exercise {figs['exercise_problem']['ref']}", prompt)
         self.assertIn("ITS QUESTION:", prompt)
         self.assertEqual(prompt.count(f"[{fid}]"), 1, "only the named figure")
         self.assertEqual(rep["result"]["mode"], "visuals")
         (les,) = rep["result"]["lessons"]
         self.assertEqual([v["lo"] for v in les["visuals"]], [L["objectives"][0]["id"]])
+        # lesson-v6: an exercise's figure withholds its unknown by name, and Compare is told exactly that
+        responses["S4:viz:g10m8s2-1:1"]["figures"][0]["withheld"] = ["B"]
+        rep6 = fx.run_workflow(WORKFLOW, args, responses, self.tmp)
+        cmp = next(c["prompt"] for c in rep6["calls"] if c["label"] == "S4:compare:g10m8s2-1")
+        self.assertIn("WITHHELD on purpose (the exercise's unknown, which the image shows): B", cmp)
+        self.assertEqual(rep6["result"]["lessons"][0]["visuals"][0]["withheld"], ["B"])
+        # a worked example's figure never withholds: the list is dropped, Compare sees the figure whole
+        we = next((f for f in L["figures"] if f["context"] != "exercise_problem"), None)
+        if we is not None:
+            a2 = copy.deepcopy(args)
+            a2["lessons"][0]["rerun_figures"] = [we["figure_id"]]
+            r2 = {"S4:viz:g10m8s2-1:1": {"figures": [dict(responses["S4:viz:g10m8s2-1:1"]["figures"][0],
+                                                           figure_id=we["figure_id"])]},
+                  "S4:compare:g10m8s2-1": {"checks": [{"figure_id": we["figure_id"], "faithful": True}]}}
+            rep7 = fx.run_workflow(WORKFLOW, a2, r2, self.tmp)
+            cmp7 = next(c["prompt"] for c in rep7["calls"] if c["label"] == "S4:compare:g10m8s2-1")
+            self.assertNotIn("WITHHELD", cmp7)
+            self.assertNotIn("withheld", rep7["result"]["lessons"][0]["visuals"][0])
         # merged into a lesson run: the old gap for that figure goes, the new visual takes the next number
         old = {"lesson": "g10m8s2-1", "items": [{"ref": "x"}], "counts": {},
                "visuals": [{"n": 1, "figure_id": "keep:1", "lo": "lo:a"}],

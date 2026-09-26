@@ -66,13 +66,16 @@ export const meta = {
 //   uv run meter_run.py record --book <book> --stage S2-S4,S8 --run <runId>
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'lesson-v5'   // v3: ids are asked for WITHOUT their brackets, and read either way
+const PROMPTS_VERSION = 'lesson-v6'   // v3: ids are asked for WITHOUT their brackets, and read either way
 // v4 (2026-09-26, the Chapter 8 pilot): a choice's options may be the labels a figure shows ("Which point lies
 // at (5; −4)?" A–E, shape W–Z): options_source "figure". Only the TYPING prompt changed; on a resume the
 // claims replay, and typing and every agent after it run again.
 // v5 (2026-09-27, consistency review A8): the visuals prompt carries each figure's question and the rule "a figure
 // never draws the unknown, never contradicts the question's numbers, and its caption never changes the question".
 // ARGS.visuals_only (A3): run S4 alone, for the figures each lesson lists in rerun_figures (merge_visual_reruns.py).
+// v6 (2026-09-27, after the first re-run): an EXERCISE figure withholds its unknown by name ("withheld") and draws the
+// rest — Compare accepts exactly that omission; a worked example's figure is drawn whole (it may show its answer);
+// every element a figure shows is drawn, or the figure is a gap naming exactly what its kind cannot draw.
 // The script's own deterministic collection is versioned apart from the prompts: a change here replays
 // every cached agent on a resume (no prompt changed) and re-decides what they answered.
 const COLLECT_VERSION = 'collect-5'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below);
@@ -127,6 +130,7 @@ const VIZ_SCHEMA = { type: 'object', required: ['figures'], properties: { figure
   type: 'object', required: ['figure_id', 'decision', 'lo'],
   properties: { figure_id: { type: 'string' }, decision: { type: 'string', enum: ['viz', 'gap'] },
     kind: { type: 'string' }, spec: { type: 'object' }, caption: { type: 'string' }, lo: { type: 'string' },
+    withheld: { type: 'array', items: { type: 'string' } },
     gap_reason: { type: 'string' }, needed_kind: { type: 'string' } } } } } }
 const COMPARE_SCHEMA = { type: 'object', required: ['checks'], properties: { checks: { type: 'array', items: {
   type: 'object', required: ['figure_id', 'faithful'], properties: { figure_id: { type: 'string' }, faithful: { type: 'boolean' }, issues: { type: 'string' } } } } } }
@@ -691,10 +695,13 @@ ${kinds}
 
 Read each figure's image file with the Read tool. For each figure: decision "viz" with kind, spec (exactly the kind's shape, with the figure's own numbers and labels), a one-line caption in plain student-voiced English, and lo (the objective it illustrates); or decision "gap" when no kind above can show it faithfully (a hyperbola, an exponential or trig graph, a Venn diagram, a box plot, a 3-D solid, a triangle or quadrilateral scene …), with gap_reason and needed_kind. Never force a figure into the nearest kind: a wrong picture teaches the wrong thing.
 
-A FIGURE THAT BELONGS TO A QUESTION (its question is shown with it) MUST NOT ANSWER IT:
-- never draw the unknown the question asks for — a point written with a letter for a coordinate (B(1; y), M(x; y)) or the point to be found — at any position: at its answer it gives the answer away, anywhere else it contradicts the key. Leave that point out; if the figure cannot be drawn without it, decision "gap" with gap_reason "the figure would draw the unknown";
+EVERY FIGURE: draw every element it shows — every labelled point, segment, side, line, function and label — with the figure's own values, except a withheld unknown (below). If the kind cannot draw one of them (two functions on one set of axes, a text annotation such as a slope, a shaded region …), decision "gap" with needed_kind naming exactly what is missing (e.g. "function_graph with two functions on one set of axes") — never a spec that leaves it out.
+
+A FIGURE THAT BELONGS TO AN EXERCISE (marked "exercise" below; its question is shown with it) MUST NOT ANSWER IT:
+- leave out the unknown the question asks for — a point written with a letter for a coordinate (B(1; y), M(x; y)) or the point to be found — name its label in "withheld" (e.g. ["B"]), and DRAW THE REST: the known points, segments, lines and labels. A figure is never a gap only because it holds the unknown;
 - never draw a point at a value that contradicts the question's own numbers;
 - the caption describes the figure; it never restates, changes or adds to the question.
+A WORKED EXAMPLE's figure may show its answer, as the book's does: draw it whole, at the book's values, with "withheld" empty.
 
 The lesson's objectives:
 ${objList(L)}
@@ -702,7 +709,7 @@ What the lesson claims (context only):
 ${claims || '(none)'}
 
 FIGURES:
-${batch.map((f) => `[${f.figure_id}] ${f.path} (context ${f.context}${f.ref ? ', belongs to ' + f.ref : ''}, p.${f.printed_page})${f.caption ? ' caption: ' + f.caption : ''}${stemOf(L, f.ref) ? `\n  ITS QUESTION: ${stemOf(L, f.ref)}` : ''}`).join('\n')}
+${batch.map((f) => `[${f.figure_id}] ${f.path} (context ${f.context}${f.ref ? `, belongs to ${f.context === 'exercise_problem' ? 'exercise' : f.context === 'we' ? 'worked example' : ''} ${f.ref}` : ''}, p.${f.printed_page})${f.caption ? ' caption: ' + f.caption : ''}${stemOf(L, f.ref) ? `\n  ITS QUESTION: ${stemOf(L, f.ref)}` : ''}`).join('\n')}
 
 Return VIZ_SCHEMA with one row per figure; figure_id as shown in brackets, written without the brackets.`, { model: 'sonnet', schema: VIZ_SCHEMA })))
   const byId = {}
@@ -720,10 +727,12 @@ Return VIZ_SCHEMA with one row per figure; figure_id as shown in brackets, writt
         reason: !VIZ_NAMES.includes(a.kind) ? `"${a.kind}" is not an existing VIZ kind` : (!lo ? `unknown objective ${a.lo}` : 'empty spec') })
       continue
     }
+    // lesson-v6: an exercise's figure may withhold its unknown (labels); anything else draws the figure whole
+    a.withheld = f.context === 'exercise_problem' && Array.isArray(a.withheld) ? a.withheld.map(String).filter(Boolean) : []
     candidates.push({ f, a, lo })
   }
   if (candidates.length) {
-    const cmp = await call('S4 Compare', s, `S4:compare:${s}`, `For each figure, read its image file with the Read tool and compare it with the spec an agent wrote to redraw it. faithful = the spec shows the same mathematical object: the same points, values, labels and relationships (styling may differ). Any wrong or missing value, point or label: faithful=false, with the issue.\n\n${candidates.map(({ f, a }) => `[${f.figure_id}] ${f.path}\n  kind ${a.kind} spec ${JSON.stringify(a.spec)}`).join('\n\n')}\n\nReturn COMPARE_SCHEMA.`, { model: 'haiku', effort: 'low', schema: COMPARE_SCHEMA })
+    const cmp = await call('S4 Compare', s, `S4:compare:${s}`, `For each figure, read its image file with the Read tool and compare it with the spec an agent wrote to redraw it. faithful = the spec shows the same mathematical object: the same points, values, labels and relationships (styling may differ). Any wrong or missing value, point or label: faithful=false, with the issue.\n\n${candidates.map(({ f, a }) => `[${f.figure_id}] ${f.path}\n  kind ${a.kind} spec ${JSON.stringify(a.spec)}${a.withheld.length ? `\n  WITHHELD on purpose (the exercise's unknown, which the image shows): ${a.withheld.join(', ')} — their absence, and that of a segment ending at them, is not a mismatch; anything else missing, extra or wrong is` : ''}`).join('\n\n')}\n\nReturn COMPARE_SCHEMA.`, { model: 'haiku', effort: 'low', schema: COMPARE_SCHEMA })
     const v = {}
     for (const c of (cmp && cmp.checks) || []) v[unbr(c.figure_id, isFig)] = c
     for (const { f, a, lo } of candidates) {
@@ -732,7 +741,8 @@ Return VIZ_SCHEMA with one row per figure; figure_id as shown in brackets, writt
         continue
       }
       visuals.push({ n: visuals.length + 1, lo, question: f.context === 'exercise_problem' || f.context === 'we' ? f.ref : null,
-        kind: a.kind, spec: a.spec, caption: a.caption || null, printed_page: f.printed_page, figure_id: f.figure_id, src: f.src })
+        kind: a.kind, spec: a.spec, caption: a.caption || null, printed_page: f.printed_page, figure_id: f.figure_id, src: f.src,
+        ...(a.withheld.length ? { withheld: a.withheld } : {}) })
     }
   }
   return { visuals, gaps, compared: candidates.length }
