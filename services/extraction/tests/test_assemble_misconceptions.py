@@ -389,3 +389,106 @@ class S5ArgsFromTheLine(unittest.TestCase):
         self.assertTrue(all(d["origin"] == "book" for d in a["distractors"]))
         with self.assertRaises(SystemExit):
             am.s5_args(book, list(bundles.values()), runs, "final")
+
+
+class WhatAStudentReads(unittest.TestCase):
+    """Consistency review 2026-09-27, A5: 9 of the Chapter 8 pilot's 29 refutations carried the pipeline's own
+    bookkeeping — question ids, figures of other questions cited by id, a page number, and Samuel's G2 notes and
+    corrections presented as "the book's own". The catalogue refuses them (leak_problems, every catalogue), a fix
+    is a pipeline normalisation beside the run (who, why, fail-closed on the exact text), and the S5 prompt
+    (s5-v5) forbids them in both agents' prompts. No node needed."""
+
+    ENTRY = {"id": "mc:zz1s1-1-1:a", "lo_id": "lo:zz1s1-1-1", "label": "Flips a sign", "description": "d",
+             "signal": None, "kind": "conceptual", "maps": [], "aliases": [], "sources": [], "covers": [],
+             "refutation": [{"step": 1, "text_md": "You kept the size and changed the sign."},
+                            {"step": 2, "text_md": "Take $q:zz1s1-1-1:ex8-1-4$: the point is at $(-4, -3)$."}],
+             "verdict": {"verdict": "CONFIRMED", "reason": "ok"}}
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="s5_leak_"))
+        self.run = self.tmp / "final-wf_x.json"
+        self.run.write_text(json.dumps({"stage": "final", "book": "zz-test",
+                                        "records": [{"lo": "lo:zz1s1-1-1", "entries": [copy.deepcopy(self.ENTRY)]}]}))
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def sidecar(self, **patch):
+        p = {"id": "mc:zz1s1-1-1:a", "field": "refutation step 2", "by": "pipeline (test)", "why": "an id",
+             "from": self.ENTRY["refutation"][1]["text_md"],
+             "to": "Say the point you want is at $(-4, -3)$."}
+        p.update(patch)
+        am.normalisations_path(self.run).write_text(json.dumps(
+            {"format": am.NORMALISATIONS_FORMAT, "run": self.run.name, "patches": [p]}))
+
+    def test_the_pilots_nine_kinds_of_leak_are_refused(self):
+        for text in ("Take $q:g10m8s1-1-2:ex8-1-4$: the point you want is at $(-4, -3)$.",
+                     "In ex8-1-6, shape Y opens exactly like that",
+                     "in every one of its naming questions (ex8-1-5, ex8-1-6, ex8-6-3)",
+                     "In Ex8-6:21c, AB is parallel to DC",
+                     "the worked example on page 310 tells you to check",
+                     "as p. 303 shows",
+                     "The book's own review note on 42e makes the same point",
+                     "a careful re-solve of this equation had to be corrected back to 'no value of $k$'",
+                     "Samuel's approved correction appends a line",
+                     "see Figure 8.3"):
+            self.assertTrue(am.leak_problems(text), text)
+
+    def test_ordinary_teaching_text_is_not_a_leak(self):
+        for text in ("$m_{AB}\\times m_{CD}=3\\times3=9$, nowhere near $-1$",
+                     "the ratio $p:q$ stays the same, and so does $q:r$",
+                     "The diagram of $FGHI$ shows sides that look parallel",
+                     "Look at the graph: point $G_1$ sits above $G_2$",
+                     "the book's worked example tells you to check against a quick sketch",
+                     "Expand $(x+2)(x-3)$ and look at the next term"):
+            self.assertEqual(am.leak_problems(text), [], text)
+
+    def test_every_catalogue_refuses_a_leak(self):
+        cat = {"misconceptions": [am.to_loader_shape(dict(copy.deepcopy(self.ENTRY), _run="r"))]}
+        problems = am.validate_catalogue(cat)
+        self.assertTrue(any("internal id" in p and "refutation step 2" in p for p in problems), problems)
+        self.assertTrue(any("book item reference 'ex8-1-4'" in p for p in problems), problems)
+        live = json.loads((EX / "seed" / "generated" / "misconceptions.json").read_text())
+        self.assertEqual([p for p in am.validate_catalogue(live, new_ids=set()) if "a student reads this" in p], [],
+                         "the Prep-3 catalogue carries no bookkeeping")
+
+    def test_without_its_normalisation_the_run_is_refused(self):
+        cat, _, _, problems = am.assemble([self.run], str(BOOK))
+        self.assertTrue(any("internal id" in p for p in problems), problems)
+
+    def test_a_normalisation_patches_the_text_and_says_who_and_why(self):
+        self.sidecar()
+        cat, _, _, problems = am.assemble([self.run], str(BOOK))
+        self.assertEqual(problems, [])
+        (m,) = cat["misconceptions"]
+        self.assertEqual(m["refutation"][1]["text_md"], "Say the point you want is at $(-4, -3)$.")
+        (n,) = m["provenance"]["normalisations"]
+        self.assertEqual((n["field"], n["by"], n["why"]), ("refutation step 2", "pipeline (test)", "an id"))
+        self.assertIn("PIPELINE NORMALISATION", cat["generator"])
+        saved = json.loads(self.run.read_text())
+        self.assertIn("q:zz1s1-1-1", saved["records"][0]["entries"][0]["refutation"][1]["text_md"],
+                      "the saved run is never modified")
+
+    def test_a_normalisation_is_fail_closed(self):
+        for bad, why in (({"from": "some other text"}, "is not the run's text"),
+                         ({"by": ""}, "missing ['by']"),
+                         ({"field": "refutation step 9"}, "no refutation step 9"),
+                         ({"field": "maps"}, "field must be"),
+                         ({"id": "mc:zz1s1-1-1:nope"}, "not a CONFIRMED entry")):
+            self.sidecar(**bad)
+            _, _, _, problems = am.assemble([self.run], str(BOOK))
+            self.assertTrue(any(why in p for p in problems), (bad, problems))
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class S5PromptRule(unittest.TestCase):
+    def test_both_agents_are_told_what_a_student_must_not_read(self):
+        out = run_stub(WORKFLOW, base_args("draft"), fixture("s5-draft-responses.json"))
+        self.assertTrue(out["ok"], out.get("error"))
+        self.assertEqual(out["result"]["prompts_version"], "s5-v5")
+        author = next(c["prompt"] for c in out["calls"] if c["label"].startswith("author:"))
+        verify = next(c["prompt"] for c in out["calls"] if c["label"].startswith("verify:"))
+        self.assertIn("carries no question\n  ids, page numbers, figure references the student can't see, or review history", author)
+        self.assertIn("NOT\nthe book's", author)
+        self.assertIn("An entry is also UNSUPPORTED when", verify)
+        self.assertIn("review history", verify)

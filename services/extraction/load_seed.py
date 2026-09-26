@@ -239,9 +239,29 @@ def manifest_sha(file_path: str) -> str | None:
     return None
 
 
+def display_problems(raw: dict) -> list[str]:
+    """Consistency review A1/A2, at load: a bundle the extraction line assembled (it carries `assembled_from`) is
+    refused when a typed question's answer text is not its marker key rendered, or when the app's KaTeX cannot
+    parse a maths segment a student would be shown. Older bundles (Prep 3) are not re-judged here."""
+    if "assembled_from" not in raw:
+        return []
+    import assemble_lesson_bundle as alb
+    out = alb.answer_problems(raw)
+    try:
+        out += [f"{e['where']}: KaTeX cannot parse {e['segment'][:80]} — {e['why'][:100]}"
+                for e in alb.katex_errors(alb.student_texts(raw, "bundle"))]
+    except alb.AssemblyError as exc:
+        out.append(f"the KaTeX check could not run: {exc}")
+    return out
+
+
 def validate_all(paths: list[Path]) -> list[SeedBundle]:
     bundles = []
     for p in paths:
+        problems = display_problems(json.loads(p.read_text()))
+        if problems:
+            raise SystemExit(f"REFUSING {p.name}: {len(problems)} display problem(s) (consistency review A1/A2):\n  "
+                             + "\n  ".join(problems[:20]))
         b = SeedBundle.model_validate_json(p.read_text())
         n_ver = sum(q.verified for q in b.questions)
         extra = ""

@@ -5,9 +5,12 @@ the work moved from a local session to a cloud session. Read this first, then `d
 `specs/003-curriculum-tracks/` (spec, plan, tasks, traceability, decisions) and the files beside
 this one:
 
-- `samuel-answers.md` — Samuel's decisions 1–15 for this feature, in his words (recorded as
-  decisions 22–36 in `specs/003-curriculum-tracks/decisions.md`).
-- `integration-backlog.md` — every open follow-up (items 1–71), with what is done.
+- `samuel-answers.md` — Samuel's answers 1–26 for this feature, in his words. **Answer N is decision
+  N + 21** in `specs/003-curriculum-tracks/decisions.md` (answer 2 → decision 23 … answer 24 → decision
+  45; answer 25 extends decision 45, so decision 46 is unused; answer 26 → decision 47). Answer 1, the
+  v0.9.3 hotfix, is not a decision of this feature. (This line used to say "decisions 1–15 … recorded
+  as decisions 22–36", which was wrong; corrected 2026-09-27.)
+- `integration-backlog.md` — every follow-up (items 1–83), each marked with its status where known.
 - `pilot-report.md` — the Chapter 8 pilot's numbers and costs so far.
 - `g1-ch8-verdicts.json` — the G1 verdicts Samuel approved (the applied copy is
   `services/extraction/runs/g10-math/objectives/g1-ch08.verdicts.json`).
@@ -29,10 +32,16 @@ this one:
   (`national-prompts.test.mts`); any change needs a named exception.
 - Never print secret values; never type passwords or sign in for Samuel.
 
-## STATUS UPDATE — 2026-09-26 (latest; supersedes the table below where they differ)
+## STATUS UPDATE — 2026-09-26, corrected 2026-09-27 (latest; everything from "Where the pilot stood" down to "Rebuilding" is the older state, kept for the record)
 
-Local session paused for credit safety. Everything below is on disk in this worktree (uncommitted since the
-WIP push 383510c unless Samuel commits it). Nothing is running.
+Local session paused for credit safety on 2026-09-26. **Commit status (corrected 2026-09-27):** the work
+is not only on disk. After the WIP push `383510c`, an auto-snapshot job has been committing the worktree
+every 30 seconds as `wip(003): auto-snapshot … [skip ci]`, and those commits are on the pushed branch
+`origin/feat/003-curriculum-tracks-g10-american-math`. None of it is reviewed by Samuel or merged.
+**CI on this branch is red and hidden:** the last CI run on the branch, at `383510c` (2026-09-26 07:52Z),
+failed its `traceability` and `build` jobs; every snapshot since carries `[skip ci]`, so no CI has run
+since. `python3 scripts/traceability.py --check` passes locally (2026-09-27); run CI once deliberately
+before any review.
 
 | Stage | State | Run(s) | Cost |
 |---|---|---|---|
@@ -41,17 +50,19 @@ WIP push 383510c unless Samuel commits it). Nothing is running.
 | S2–S4 lessons + G2 | done, G2 passed (Samuel, answers 18–25) — 158 marked, 40 worked examples, 3 excluded | 5 runs in runs/g10-math/lessons/ | ≈ $27 |
 | S5 draft | done (s5-v4) — 30 entries | wf_97ba80a6-9ad | $6.66 (+$4.59 superseded) |
 | S6 families | done — 11 families, all graded PASS | author wf_41c0663f-36d, revise wf_c8f00d37-c28, grade wf_c9fa108d-2eb + wf_c2fc95f0-6ec | ≈ $8.6 |
-| S7 widgets | done — 7 templates, 25 widgets reachable; 20 claims confirmed, 23 held for human review (decision 47) | author wf_816352f4-fbc + wf_62e29981-c0a, verify wf_dbca7b50-327 | ≈ $4.7 |
+| S7 widgets | done — 7 templates, 25 widgets reachable. The verifier confirmed 20 claims and refused 23 (decision 47); after the S5-dropped misconception was reconciled, the loaded bundle has **17 active mappings and 22 held** for human review, counted per widget (`seed/generated/g10-math/widget-questions.json`; 11 widgets plain right/wrong). 7 widget gaps (below) | author wf_816352f4-fbc + wf_62e29981-c0a, verify wf_dbca7b50-327 | ≈ $4.7 |
 | S5 final | done — 29 confirmed, 2 dropped (UNSUPPORTED) | wf_ed8c8e80-51d | $5.88 |
-| Assemble catalogue + generated bundles, load to scratch DB `ainext_pilot_g10_ch08`, coverage, parity | **next** | — | $0 (deterministic) |
-| G3 (family sample + 23 widget claims page `runs/g10-math/g3-mappings-ch08.review.html`), G4 (catalogue), G5 go/no-go | pending Samuel | — | — |
+| Assemble catalogue + generated bundles, load to scratch DB `ainext_pilot_g10_ch08`, coverage, parity | **done 2026-09-27** — see "Run 2026-09-27" and "Reload 2026-09-27" at the end of this file (coverage RED on two items that wait for decisions; parity GREEN) | — | $0 (deterministic) |
+| G3 (family sample + 22 held widget claims page `runs/g10-math/g3-mappings-ch08.review.html`), G4 (catalogue), G5 go/no-go | pending Samuel | — | — |
 
-Total metered so far ≈ $153 API-equivalent (`uv run meter_run.py summary --book g10-math`).
+Total metered so far $153.30 API-equivalent (`uv run meter_run.py summary --book g10-math`).
 Samuel's answers 1–26 are in `samuel-answers.md`; decisions up to 47 in `specs/003-curriculum-tracks/decisions.md`.
-App-side work done this session (uncommitted): curriculum-isolation fixes (decisions 37–38), `less_specific` /
-`answer_only` support, inline align fix — see integration-backlog.md.
+App-side work done this session (in the WIP snapshots, unreviewed): curriculum-isolation fixes (decisions 37–38),
+`less_specific` / `answer_only` support, inline align fix — see integration-backlog.md. The consolidated
+review of 2026-09-27 (`consistency-review-2026-09-27.md`) lists what must be fixed before Grade 10 goes live
+and the decisions owed to Samuel.
 
-## Where the pilot stands
+## Where the pilot stood on the morning of 2026-09-26 (superseded by the status update above)
 
 | Stage | State |
 |---|---|
@@ -65,7 +76,10 @@ App-side work done this session (uncommitted): curriculum-isolation fixes (decis
 Cost so far (API-equivalent, `services/extraction/runs/g10-math/cost.jsonl`): S0b ≈ $82.6 (≈ $36 of it lost
 to usage-limit kills), S1 ≈ $14.0 (one rejected run + the rerun), lessons 8.2 $2.28, 8.3a $2.53, 8.1 $2.17.
 
-## Next steps, in order
+## Next steps as they stood then (superseded — all five were done on 2026-09-26; do not re-run them)
+
+The current next steps are the open gates and decisions in the status update above, in "3. Open decisions
+and backlog" below, and in `consistency-review-2026-09-27.md`.
 
 1. **Investigate the "disputed" rate in the lesson runs before G2.** 8.3a: 20 of 25 items disputed; 8.1: 9 of 15
    disputed + 6 no printed answer. Seen causes: the blind re-solve came back `missing` for figure-dependent items
@@ -92,10 +106,15 @@ to usage-limit kills), S1 ≈ $14.0 (one rejected run + the rerun), lessons 8.2 
 Some saved run files name figure paths under the original machine's worktree; the builders
 re-derive them from `work/`.
 
-## In-flight work that was stopped (partial edits are in this commit)
+## In-flight work that was stopped at `383510c` — since finished
 
-**Curriculum/grade isolation fixes** (an agent was mid-edit in `app/` — it had started rewriting the bridge
-reader in `lib/subject-queries.ts`; `app/` may not type-check). The audit (2026-09-26) found, for an ordinary
+**Done later on 2026-09-26** (integration backlog, "Isolation fixes — DONE"; spec 003 traceability rev. 5):
+all six gaps below are fixed, Samuel answered the two questions they raised (answers 16–17, decisions
+37–38), `tsc` is clean and the app's tests pass. The paragraph below is the state at `383510c`, kept for the
+record. The one question still open is the `AINEXT_COURSE_GATING` default (last paragraph).
+
+**Curriculum/grade isolation fixes** (at `383510c` an agent was mid-edit in `app/` — it had started rewriting
+the bridge reader in `lib/subject-queries.ts`, and `app/` did not type-check there). The audit (2026-09-26) found, for an ordinary
 student with course gating on (production: `AINEXT_COURSE_GATING=on`), curricula and grades isolated on every
 teaching surface, with these gaps to close before Grade 10 goes live:
 1. `lesson.ts` cross-subject bridge hints are read without the course gate (`getLessonBridges`); the "social"
