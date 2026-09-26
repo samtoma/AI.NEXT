@@ -206,3 +206,8 @@ are not live until G3; s1-1-1 and s1-1-2 standard/advanced below the floor), not
 reloaded, then G2's verdicts and the catalogue re-applied). Parity: National GREEN. The Chapter 8 gap report is
 `coverage/g10-math.ch08.widget-gaps.json`; `coverage/g10-math.widget-gaps.json` is the whole-book file (the six
 approved kinds; figure_inventory reads it) — never write a chapter's report over it.
+**Reload 2026-09-27 (figure labels).** Pilot seed re-assembled (only 92 `visuals[].spec.points[].label` changed,
+e.g. `P(2;1)` → `P(2, 1)`); `load_seed --update` updated 38 visuals, questions unchanged; G2 and the catalogue
+re-applied (no change); generated content not reloaded (nothing it depends on changed). Coverage RED on two
+decisions only — objective_evidence (s1-1-1) and tier_floor (pre-G3) — notation holds. Parity GREEN. The course
+gate row, the operator and roles, and course_lessons are unchanged (fingerprinted before and after).
