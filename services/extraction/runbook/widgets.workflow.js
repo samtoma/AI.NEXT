@@ -78,7 +78,7 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's7-v6'   // v2: packet by reference; v3: by-ref shards unclipped (the whole contract);
+const PROMPTS_VERSION = 's7-v7'   // v2: packet by reference; v3: by-ref shards unclipped (the whole contract);
                                   // v4: anchor questions name their figure images; a stem never points at a [figure]
                                   // v5: the six kinds of feature 003 (polygon_builder, solid_scaler, box_plot_builder,
                                   //     venn_builder, area_model, curve_sketcher's five G10 families) get their spec
@@ -87,6 +87,11 @@ const PROMPTS_VERSION = 's7-v6'   // v2: packet by reference; v3: by-ref shards 
                                   //     misconception (the two author errors the Chapter 8 pilot normalised); the
                                   //     verifier's reading as typed JSON values (it wrote "[3, -2]" and "-1/2"),
                                   //     and each verdict's predicate as its bare name (it wrote the whole claim line)
+                                  // v7 (consistency review 2026-09-27, W1): the contract carries each kind's can_emit
+                                  //     table and the author maps only predicates its spec can emit; every instrument
+                                  //     is the app's DOCS text word for word (line_drawer's paraphrase said "any two
+                                  //     points on the right line" after BOTH modes); the verifier is told what each
+                                  //     question can emit and refuses a mapping outside it
 const need = (cond, msg) => { if (!cond) throw new Error(msg) }
 need(ARGS.mode === 'author' || ARGS.mode === 'verify', 'args.mode must be "author" or "verify" (see the header of this script)')
 need(ARGS.book && ARGS.book.book, 'args.book must be the book config (generate_widget_questions.py writes it)')
@@ -155,6 +160,12 @@ const AUTHOR_RULES = `RULES:
   its prerequisites (the list marks own=true for this objective's). Only ids from THAT OBJECTIVE'S OWN
   "misconceptions" list: the lesson file holds one list per objective, and an id taken from another
   objective's list is refused (FR-1215), even in the same lesson.
+- WHAT THE QUESTION CAN EMIT: a kind declares more predicates than any one question reports. Each
+  kind's "can_emit" gives, per value of the spec field named in "by" (mode, ask, element, fn, …), the
+  predicates that widget can actually report. Map ONLY predicates in the list for YOUR spec: any other
+  can never fire, and the student gets a plain "not quite" where you promised a refutation. (line_drawer
+  in "points" mode grades the two named points and reports only points-swapped or off-target — never a
+  slope; angle_setter asked for the inscribed angle never reports angle-given-as-arc.)
 - ONE PREDICATE, ONE MISCONCEPTION: never list a predicate twice. If two errors would fire the same
   predicate, map it to the likelier one and name the other in "notes"; a predicate that fires for many
   unrelated reasons (off-target) diagnoses nothing specific, so map it only if one error dominates.
@@ -257,6 +268,7 @@ ${REF ? refFile(`t/t${String(gi + 1).padStart(3, '0')}.txt`) : ws.map((w, i) => 
 Question: ${w.stem}
 Instrument: ${w.instrument}
 Fields to read from the question: ${JSON.stringify(w.reading_fields || {})}
+Predicates this question can emit: ${(w.can_emit || []).join(', ') || '(not given)'}
 Claimed diagnoses (predicate → misconception):
 ${w.diagnostics.map((d) => `  - ${d.predicate} ("${d.predicate_meaning}") → ${d.misconception_id}: ${d.misconception_label || '?'} — ${d.misconception_description || ''}`).join('\n')}`).join('\n\n')}
 
@@ -271,7 +283,8 @@ For EACH widget:
 2. predicates: for each claimed diagnosis, describe the construction that fires the predicate and
    decide whether that construction is what a student holding THAT misconception would build.
    "predicate" is the predicate's NAME exactly as listed (e.g. slope-inverted) — nothing else.
-   matches = false if the predicate would mostly fire for a different reason, or never for this error.
+   matches = false if the predicate would mostly fire for a different reason, or never for this error —
+   and always false for a predicate this question cannot emit (not in its list): it never fires.
 When in doubt, false: a wrong diagnosis serves a student the refutation of a mistake she did not make.
 Return VERIFY_SCHEMA with widget = "W1", "W2", … as labelled.${readRule()}`
 
