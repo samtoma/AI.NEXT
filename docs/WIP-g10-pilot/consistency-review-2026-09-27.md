@@ -96,3 +96,9 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
 - App side DONE: A3 (question figures on cards; "[figure]" never printed), A6 (answer-only on cards + route), A10 (both
   points must be swapped), A11 (/pipeline crash), I4 (G10 home label). npm test 1446/0 fail; builds OK; goldens
   identical. W1 app test waits for the contract "can emit" table (content engineer).
+- Documents (group C) DONE: FR-4206/SC-207 (third difference), FR-4320 (decisions 24, 41), FR-4302 (43–45), cost figures
+  everywhere, PROJECT_STATE rewritten (open decisions listed), tasks ticked with evidence (T303, T304, T427, T428, T431,
+  T432, T433), pipeline doc/ADR-0005/runbook (third reading, second mapper, links), ADR-0020 exceptions renumbered into
+  one list (fifth…eighth), code comments "answer N (decisions.md #M)", WIP README + backlog, CLAUDE.md (active feature
+  003; noor deployed — v0.9.3 verified deployed via CI run 36182444509). Left for Samuel: H1, M2, M6, M7, B2–B12, D1,
+  decision 31 wording, the constitution's Cloudflare line. traceability --check OK (84/128 tasks, 78/78 traced).
