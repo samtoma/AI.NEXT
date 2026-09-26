@@ -176,8 +176,10 @@ test("the table never claims a predicate the widget's code cannot produce", () =
 
 test("a declared predicate no case lists is never emitted — named here, so it cannot happen quietly", () => {
   // ProductBuilder.check() reports every wrong pick as reversed-pairs (its decoys ARE the reversed pairs), so
-  // extra-pairs is vocabulary no product_builder question can fire. Change this list only with the code.
-  const NEVER: Record<string, string[]> = { product_builder: ["extra-pairs"] };
+  // extra-pairs is vocabulary no product_builder question can fire; NumberLineMarker.check() starts from
+  // "off-target" but every wrong answer in either mode is re-named (number-line-grade.ts, or the interval
+  // branch), so off-target never leaves it. Change this list only with the code.
+  const NEVER: Record<string, string[]> = { product_builder: ["extra-pairs"], number_line_marker: ["off-target"] };
   for (const kind of Object.keys(WIDGET_PREDICATES)) {
     const listed = new Set(leaves((WIDGET_CAN_EMIT as Record<string, Node>)[kind]));
     const unlisted = predicatesFor(kind).filter((p) => p !== OK && !listed.has(p)).sort();
