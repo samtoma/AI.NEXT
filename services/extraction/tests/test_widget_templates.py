@@ -781,6 +781,154 @@ class TheCommandLine(unittest.TestCase):
         self.assertEqual(mine, {q["id"]: {k: v for k, v in q.items() if k in keep} for q in committed})
 
 
+
+class WhatAQuestionCanEmit(unittest.TestCase):
+    """W1 (consistency review 2026-09-27): a kind declares more predicates than any one question can report. The
+    contract's can_emit table (derived from the app's grading code, mirrored and checked in widget-predicates.ts)
+    is enforced on active AND held mappings; a dead one never fires and the student gets a plain "not quite"."""
+
+    def q(self, kind, spec, diags=(), held=()):
+        return {"id": "q:x:w001", "correct_answer": "ok",
+                "choices": W.widget_choices(kind, spec, list(diags), [(p, m, "why") for p, m in held])}
+
+    def test_the_table_dispatches_on_the_stored_spec(self):
+        self.assertEqual(W.can_emit("line_drawer", {"mode": "points"}), ({"points-swapped", "off-target"}, "mode=points"))
+        self.assertIn("slope-inverted", W.can_emit("line_drawer", {"mode": "equation", "m": 2, "b": 1})[0])
+        self.assertNotIn("angle-given-as-arc", W.can_emit("angle_setter", {"ask": "inscribed", "target": 30})[0])
+        self.assertNotIn("ratio-inverted", W.can_emit("triangle_ratio", {"ask": "cos", "target": 0.8})[0])
+        self.assertIn("ratio-inverted", W.can_emit("triangle_ratio", {"ask": "tan", "target": 0.75})[0])
+        self.assertEqual(W.can_emit("circle_builder", {"element": "chord"})[0], {"ends-not-on-circle"})
+        self.assertNotIn("wrong-formula-part", W.can_emit("solid_scaler", {"solid": "sphere", "ask": "area"})[0])
+        self.assertIn("overlap-counted-twice", W.can_emit("venn_builder", {"mode": "counts", "clues": {"a": 1}})[0])
+        self.assertNotIn("overlap-counted-twice", W.can_emit("venn_builder", {"mode": "counts"})[0])
+        self.assertIsNone(W.can_emit("line_drawer", {"mode": "sideways"})[0])
+
+    def test_a_dead_mapping_is_refused_active_or_held(self):
+        ok = self.q("line_drawer", {"mode": "points", "through": [[-1, 0], [1, 4]]}, [("points-swapped", "mc:a:b")])
+        self.assertEqual(W.validate_widget(ok), [])
+        dead = self.q("line_drawer", {"mode": "points", "through": [[-1, 0], [1, 4]]},
+                      [("points-swapped", "mc:a:b"), ("slope-inverted", "mc:a:c")])
+        self.assertTrue(any("slope-inverted' can never fire here" in p for p in W.validate_widget(dead)))
+        held = self.q("angle_setter", {"ask": "inscribed", "target": 30}, [("arc-given-as-angle", "mc:a:b")],
+                      [("angle-given-as-arc", "mc:a:b")])
+        self.assertTrue(any("held predicate 'angle-given-as-arc' can never fire" in p for p in W.validate_widget(held)))
+        self.assertTrue(any("reaches no case" in p for p in
+                            W.validate_widget(self.q("line_drawer", {"mode": "sideways"}, [("off-target", "mc:a:b")]))))
+
+    def test_no_bank_carries_a_dead_mapping(self):
+        """The live Prep-3 export had 14 (geo2-2-2 w001–w009, geo1-1-1:w002, u4-1-2 w001/w002/w004/w006) and the
+        Grade 10 pilot 5 active ones; both are corrected, and the legacy templates build the corrected bank."""
+        for path in (EX / "seed" / "generated" / "widget-questions.json",
+                     EX / "seed" / "generated" / "g10-math" / "widget-questions.json"):
+            for q in json.loads(path.read_text())["questions"]:
+                self.assertEqual([p for p in W.validate_widget(q) if "can never fire" in p], [], q["id"])
+        for q in GW.build():
+            self.assertEqual(W.validate_widget(q), [], q["id"])
+        record = json.loads((EX / "seed" / "generated" / "widget-questions.corrections.json").read_text())
+        rows = record["corrections"][0]["rows"]
+        self.assertEqual(sorted(r["question_id"] for r in rows),
+                         sorted(["q:geo1-1-1:w002", "q:u4-1-2:w001", "q:u4-1-2:w002", "q:u4-1-2:w004", "q:u4-1-2:w006"]
+                                + [f"q:geo2-2-2:w00{i}" for i in range(1, 10)]))
+
+    def test_the_author_and_the_verifier_are_given_the_table(self):
+        # the author's contract carries the table too (tests/test_packet_ref.py reads it in contract.txt)
+        g = GW.FixtureGraph(json.loads((FIX / "widget-graph.json").read_text()))
+        self.assertTrue(all(v.get("can_emit") for v in W.contract()["kinds"].values()))
+        _, qs = built()
+        v = GW.verify_args(None, g, qs[:1])
+        w = v["widgets"][0]
+        # the KIND's table — never the question's own mode, which would leak the spec to the blind verifier
+        self.assertEqual(w["can_emit"], W.contract()["kinds"][w["kind"]]["can_emit"])
+
+
+class OpeningHandles(unittest.TestCase):
+    """A10 (consistency review 2026-09-27): a "points" target, or its swap, on the position a handle opens at."""
+
+    def test_the_pipeline_knows_where_the_app_opens_its_handles(self):
+        src = (REPO / "app" / "src" / "components" / "student" / "widgets" / "LineDrawer.tsx").read_text()
+        m = re.search(r"useState<\[Pt, Pt\]>\(\[\s*\{ x: (-?\d+), y: (-?\d+) \},\s*\{ x: (-?\d+), y: (-?\d+) \},?\s*\]\)", src)
+        self.assertIsNotNone(m, "LineDrawer.tsx no longer opens its handles with a literal pair — re-read it")
+        a, b, c, d = map(int, m.groups())
+        self.assertEqual(GW.OPENING_HANDLES["line_drawer"], ((a, b), (c, d)))
+
+    def test_a_target_or_its_swap_on_an_opening_handle_is_refused(self):
+        self.assertEqual(GW.opening_collisions("line_drawer", {"mode": "points", "through": [[-1, 0], [1, 4]]}), [])
+        self.assertTrue(GW.opening_collisions("line_drawer", {"mode": "points", "through": [[-3, -2], [1, 0]]}))
+        (why,) = GW.opening_collisions("line_drawer", {"mode": "points", "through": [[-2, -3], [4, 3]]})
+        self.assertIn("swapped is (-3, -2)", why)
+        self.assertEqual(GW.opening_collisions("line_drawer", {"mode": "equation", "m": 1, "b": 1}), [])
+        self.assertEqual(GW.opening_collisions("pair_plotter", {"target": [-3, -2]}), [])
+        tpl = json.loads((TEMPLATES / "g10m8s3-1-2--gradient-line.json").read_text())
+        tpl["instances"] = [{"x1": -2, "y1": -3, "x2": 2, "y2": 5}]
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "t.json").write_text(json.dumps(tpl))
+            templates, _ = GW.load_templates(Path(d))
+        qs, _ = GW.build_from_templates(templates)
+        self.assertTrue(any("where a handle opens" in p for p in GW.check_questions(qs, graph())[0]))
+
+
+class NormalisedAfterVerification(unittest.TestCase):
+    """drop-dead-predicate (W1) and drop-opening-instance (A10) were first applied after the blind verifier judged
+    the Chapter 8 templates. A change that only REMOVES diagnostics, instances or solution steps keeps its verdicts
+    (verified_as); any other edit does not."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="wt_"))
+        tpl = json.loads((TEMPLATES / "g10m8s3-1-2--gradient-line.json").read_text())
+        tpl["instances"] = [{"x1": -1, "y1": 0, "x2": 1, "y2": 4}, {"x1": -2, "y1": -3, "x2": 2, "y2": 5}]
+        tpl["diagnostics"].append({"predicate": "slope-sign-flipped", "misconception_id": "mc:g10m8s3-1-2:coordinates-swapped"})
+        self.verified = tpl
+        self.sha = GW.template_sha(tpl)
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def verdicts(self, questions, sha):
+        p = self.tmp / "verify.json"
+        p.write_text(json.dumps({"results": [
+            {"question_id": q["id"], "template_sha": sha, "reachable": True, "construction": "…",
+             "reading": {"through": q["choices"]["spec"]["through"], "mode": "points"},
+             "predicates": [{"predicate": x, "matches": True, "why": "…"}
+                            for x in ("points-swapped", "off-target", "slope-sign-flipped")]} for q in questions]}))
+        return p
+
+    def build(self, raw):
+        d = self.tmp / "t"
+        shutil.rmtree(d, ignore_errors=True)
+        d.mkdir()
+        Path(d, "t.json").write_text(json.dumps(raw))
+        templates, problems = GW.load_templates(d)
+        self.assertEqual(problems, [])
+        return templates, GW.build_from_templates(templates)[0]
+
+    def test_both_normalisations_and_the_verdicts_carry(self):
+        _, old_qs = self.build(self.verified)
+        verify = self.verdicts(old_qs, self.sha)
+        out, done = GW.normalise_template(self.verified, graph())
+        self.assertEqual([x.split(":")[0] for x in done], ["drop-dead-predicate", "drop-opening-instance"])
+        self.assertEqual(out["verified_as"]["sha"], self.sha)
+        self.assertEqual([d["predicate"] for d in out["diagnostics"]], ["points-swapped", "off-target"])
+        self.assertEqual(len(out["instances"]), 1)
+        self.assertEqual(GW.normalise_template(out, graph())[1], [], "a fixpoint")
+        templates, qs = self.build(out)
+        self.assertEqual(GW.check_questions(copy.deepcopy(qs), graph())[0], [])
+        accepted, rejected = GW.apply_verdicts(templates, qs, [verify])
+        self.assertEqual((accepted, rejected), ({out["id"]}, {}))
+        # removing a solution step as well still carries; changing the stem does not
+        fewer = dict(out, solution=out["solution"][:1])
+        t2, q2 = self.build(fewer)
+        self.assertEqual(GW.apply_verdicts(t2, q2, [verify])[0], {out["id"]})
+        edited = dict(out, stem=out["stem"] + " Now.")
+        t3, q3 = self.build(edited)
+        acc, rej = GW.apply_verdicts(t3, q3, [verify])
+        self.assertEqual(acc, set())
+        self.assertIn("stem changed since verification", " ".join(rej[out["id"]]))
+
+    def test_a_template_with_only_dead_mappings_goes_back_to_the_author(self):
+        raw = dict(self.verified, diagnostics=[{"predicate": "slope-inverted", "misconception_id": "mc:g10m8s3-1-1:run-over-rise"}],
+                   instances=[{"x1": -1, "y1": 0, "x2": 1, "y2": 4}])
+        self.assertEqual(GW.normalise_template(raw, graph()), (raw, []))
+
 if __name__ == "__main__":
     with contextlib.redirect_stdout(io.StringIO()):
         unittest.main()
