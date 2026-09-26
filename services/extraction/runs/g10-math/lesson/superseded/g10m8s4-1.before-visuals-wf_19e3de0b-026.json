@@ -487,138 +487,130 @@
       "printed_page": 312,
       "figure_id": "b03263:5",
       "src": "tikzpicture/eda2a41b247014831065da41e7b426ff.png"
-    },
-    {
-      "n": 15,
-      "lo": "lo:g10m8s4-1-1",
-      "question": "Ex8-5:1",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -2,
-          4
-        ],
-        "yRange": [
-          -4,
-          4
-        ],
-        "points": [
-          {
-            "x": -1,
-            "y": 3,
-            "label": "A(-1, 3)"
-          },
-          {
-            "x": 3,
-            "y": -3,
-            "label": "B(3, -3)"
-          }
-        ],
-        "segments": [
-          [
-            0,
-            1
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Points A(-1, 3) and B(3, -3) are plotted and joined by a straight segment, with the midpoint M marked on it for you to find.",
-      "printed_page": 313,
-      "figure_id": "b03264:6",
-      "src": "tikzpicture/0c0389c4d35c5102de7a0a7f586bdb08.png",
-      "withheld": [
-        "M"
-      ]
-    },
-    {
-      "n": 16,
-      "lo": "lo:g10m8s4-1-1",
-      "question": "Ex8-5:2",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -3,
-          3
-        ],
-        "yRange": [
-          -4,
-          3
-        ],
-        "points": [
-          {
-            "x": -2,
-            "y": 1,
-            "label": "A(-2, 1)"
-          },
-          {
-            "x": 1,
-            "y": -3.5,
-            "label": "B(1, -3.5)"
-          }
-        ],
-        "segments": [
-          [
-            0,
-            1
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Points A(-2, 1) and B(1, -3.5) are plotted and joined by a straight segment, with the midpoint M marked on it for you to find.",
-      "printed_page": 313,
-      "figure_id": "b03265:7",
-      "src": "tikzpicture/371e723301b2a5ea72409ccd46975d11.png",
-      "withheld": [
-        "M"
-      ]
-    },
-    {
-      "n": 17,
-      "lo": "lo:g10m8s4-1-1",
-      "question": "Ex8-6:16",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -3,
-          3
-        ],
-        "yRange": [
-          -3,
-          4
-        ],
-        "points": [
-          {
-            "x": -2,
-            "y": -2.5,
-            "label": "A(-2, -2.5)"
-          },
-          {
-            "x": 1,
-            "y": 3.5,
-            "label": "B(1, 3.5)"
-          }
-        ],
-        "segments": [
-          [
-            0,
-            1
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Points A(-2, -2.5) and B(1, 3.5) are plotted and joined by a straight segment, with the midpoint M marked on it for you to find.",
-      "printed_page": 320,
-      "figure_id": "b03308:8",
-      "src": "tikzpicture/5e987b60c0dc9669c969c73ff45c79d0.png",
-      "withheld": [
-        "M"
-      ]
     }
   ],
-  "viz_gaps": [],
+  "viz_gaps": [
+    {
+      "figure_id": "b03264:6",
+      "src": "tikzpicture/0c0389c4d35c5102de7a0a7f586bdb08.png",
+      "ref": "Ex8-5:1",
+      "printed_page": 313,
+      "reason": "the spec does not match the figure: Spec lists only points A(-1;3) and B(3;-3), but image shows an additional point M(x;y) not specified in the coordinate_plot definition",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -3,
+            4
+          ],
+          "yRange": [
+            -4,
+            4
+          ],
+          "points": [
+            {
+              "x": -1,
+              "y": 3,
+              "label": "A(-1;3)"
+            },
+            {
+              "x": 3,
+              "y": -3,
+              "label": "B(3;-3)"
+            }
+          ],
+          "segments": [
+            [
+              0,
+              1
+            ]
+          ],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
+    {
+      "figure_id": "b03265:7",
+      "src": "tikzpicture/371e723301b2a5ea72409ccd46975d11.png",
+      "ref": "Ex8-5:2",
+      "printed_page": 313,
+      "reason": "the spec does not match the figure: Spec lists only points A(-2;1) and B(1;-3.5), but image shows an additional point M(x;y) not specified in the coordinate_plot definition",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -3,
+            3
+          ],
+          "yRange": [
+            -4,
+            2
+          ],
+          "points": [
+            {
+              "x": -2,
+              "y": 1,
+              "label": "A(-2;1)"
+            },
+            {
+              "x": 1,
+              "y": -3.5,
+              "label": "B(1;-3,5)"
+            }
+          ],
+          "segments": [
+            [
+              0,
+              1
+            ]
+          ],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
+    {
+      "figure_id": "b03308:8",
+      "src": "tikzpicture/5e987b60c0dc9669c969c73ff45c79d0.png",
+      "ref": "Ex8-6:16",
+      "printed_page": 320,
+      "reason": "the spec does not match the figure: Spec lists only points A(-2;-2.5) and B(1;3.5), but image shows an additional point M(x;y) not specified in the coordinate_plot definition",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -3,
+            2
+          ],
+          "yRange": [
+            -4,
+            5
+          ],
+          "points": [
+            {
+              "x": -2,
+              "y": -2.5,
+              "label": "A(-2;-2,5)"
+            },
+            {
+              "x": 1,
+              "y": 3.5,
+              "label": "B(1;3,5)"
+            }
+          ],
+          "segments": [
+            [
+              0,
+              1
+            ]
+          ],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    }
+  ],
   "teacher_only": {
     "seen": 1,
     "dropped": 1,
@@ -3349,20 +3341,10 @@
       ],
       "visuals": 4,
       "gaps": 3
-    },
-    {
-      "run_id": "wf_19e3de0b-026",
-      "figures": [
-        "b03264:6",
-        "b03265:7",
-        "b03308:8"
-      ],
-      "visuals": 3,
-      "gaps": 0
     }
   ],
   "counts": {
-    "visuals": 10,
-    "viz_gaps": 0
+    "visuals": 7,
+    "viz_gaps": 3
   }
 }

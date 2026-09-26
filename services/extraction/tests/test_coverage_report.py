@@ -65,7 +65,7 @@ class CoverageTest(unittest.TestCase):
         code, rep = self.audit()
         self.assertEqual((code, rep["status"]), (0, "GREEN"))
         # 18 + the consistency review's katex (A2), answer_text (A1) and asked_forms (A9)
-        self.assertEqual(rep["summary"], {"checks": 21, "hold": 21, "excepted": 0, "fail": 0})
+        self.assertEqual(rep["summary"], {"checks": 22, "hold": 22, "excepted": 0, "fail": 0})   # + captions
         served = self.check(rep, "claims_served")
         self.assertEqual((served["want"], served["got"]), (served["want"], served["want"]))
         self.assertGreater(served["want"], 0)
@@ -161,6 +161,25 @@ class CoverageTest(unittest.TestCase):
         p.write_text(json.dumps(b))
         _, rep = self.audit(assemble=False)
         self.assertEqual(self.check(rep, "katex")["got"], 1)
+
+    def test_a_caption_never_shows_a_withheld_point(self):
+        # 2026-09-27: "with the midpoint M marked on it" beside a figure that withholds M; the assembly drops the clause
+        def withhold(d):
+            v = d["visuals"][0]
+            v["withheld"] = ["M"]
+            v["caption"] = "Points A and B are joined by a segment, with the midpoint M marked on it for you to find."
+        self.edit("runs/lesson/g10m8s2-1.json", withhold)
+        _, rep = self.audit()
+        self.assertEqual(self.check(rep, "captions")["got"], 0)
+        b = json.loads((self.seed / "g10m-c08.json").read_text())
+        self.assertIn("Points A and B are joined by a segment.", [v["caption"] for v in b["visuals"]])
+        # a hand edit after assembly that says M is shown again is red
+        p = self.seed / "g10m-c08.json"
+        v = next(v for v in b["visuals"] if v["caption"] == "Points A and B are joined by a segment.")
+        v["caption"] += " Tick marks show where M falls."
+        p.write_text(json.dumps(b))
+        _, rep = self.audit(assemble=False)
+        self.assertEqual(self.check(rep, "captions")["got"], 1)
 
     def test_the_answer_text_is_the_marker_key_rendered(self):
         with contextlib.redirect_stdout(io.StringIO()):

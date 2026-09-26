@@ -524,115 +524,147 @@
       "printed_page": 321,
       "figure_id": "b03314:11",
       "src": "tikzpicture/9a73ddabd11640ecc3a0736b036d4587.png"
-    },
-    {
-      "n": 9,
-      "lo": "lo:g10m8s2-1-2",
-      "question": "Ex8-2:3",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -3,
-          3
-        ],
-        "yRange": [
-          -1,
-          5
-        ],
-        "points": [
-          {
-            "x": -1,
-            "y": 3.5,
-            "label": "A(-1; 3,5)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": "click-to-plot"
-      },
-      "caption": "Point A sits at (-1, 3.5); point B is down near y = 0.5, but its x-coordinate is yours to find.",
-      "printed_page": 292,
-      "figure_id": "b03159:7",
-      "src": "tikzpicture/09a0189edac83981548c01fc9a0b276b.png",
-      "withheld": [
-        "B"
-      ]
-    },
-    {
-      "n": 10,
-      "lo": "lo:g10m8s2-1-2",
-      "question": "Ex8-2:4",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -4,
-          2
-        ],
-        "yRange": [
-          -3,
-          4
-        ],
-        "points": [
-          {
-            "x": -3,
-            "y": -2.5,
-            "label": "B(-3; -2,5)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": "click-to-plot"
-      },
-      "caption": "Point B sits at (-3, -2.5) in the third quadrant; point A is up and to the right at x = 1, with its y-coordinate left for you to find.",
-      "printed_page": 293,
-      "figure_id": "b03160:8",
-      "src": "tikzpicture/c35a838b135d81ef477ccb6acb1569d1.png",
-      "withheld": [
-        "A"
-      ]
-    },
-    {
-      "n": 11,
-      "lo": "lo:g10m8s2-1-2",
-      "question": "Ex8-6:6",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -5,
-          5
-        ],
-        "yRange": [
-          -5,
-          4
-        ],
-        "points": [
-          {
-            "x": -3,
-            "y": 2,
-            "label": "A(-3; 2)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": "click-to-plot"
-      },
-      "caption": "Point A sits at (-3, 2); point B is down near y = -4, with its x-coordinate left for you to find.",
-      "printed_page": 317,
-      "figure_id": "b03296:10",
-      "src": "tikzpicture/141fb28239433f748ade612cbb012669.png",
-      "withheld": [
-        "B"
-      ]
     }
   ],
   "viz_gaps": [
+    {
+      "figure_id": "b03159:7",
+      "src": "tikzpicture/09a0189edac83981548c01fc9a0b276b.png",
+      "ref": "Ex8-2:3",
+      "printed_page": 292,
+      "reason": "the spec does not match the figure: Spec requires only one point A(-1; 3.5), but image contains an extra unlabeled point B(x; 0.5) at approximately (1, 0.5)",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -3,
+            3
+          ],
+          "yRange": [
+            -1,
+            4
+          ],
+          "points": [
+            {
+              "x": -1,
+              "y": 3.5,
+              "label": "A(-1; 3,5)"
+            }
+          ],
+          "segments": [],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
+    {
+      "figure_id": "b03160:8",
+      "src": "tikzpicture/c35a838b135d81ef477ccb6acb1569d1.png",
+      "ref": "Ex8-2:4",
+      "printed_page": 293,
+      "reason": "the spec does not match the figure: Spec requires only one point B(-3; -2.5), but image contains an extra point A(1; y) at approximately (1, 3)",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -5,
+            2
+          ],
+          "yRange": [
+            -4,
+            2
+          ],
+          "points": [
+            {
+              "x": -3,
+              "y": -2.5,
+              "label": "B(-3; -2,5)"
+            }
+          ],
+          "segments": [],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
+    {
+      "figure_id": "b03296:10",
+      "src": "tikzpicture/141fb28239433f748ade612cbb012669.png",
+      "ref": "Ex8-6:6",
+      "printed_page": 317,
+      "reason": "the spec does not match the figure: Spec requires only one point A(-3; 2), but image contains an extra point B(x; -4) at approximately (3, -4)",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -5,
+            4
+          ],
+          "yRange": [
+            -5,
+            3
+          ],
+          "points": [
+            {
+              "x": -3,
+              "y": 2,
+              "label": "A(-3; 2)"
+            }
+          ],
+          "segments": [],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
     {
       "figure_id": "b03398:12",
       "src": "tikzpicture/118b1cac59d083366970242771d6e4d4.png",
       "ref": "Ex8-6:38a",
       "printed_page": 324,
-      "reason": "This is a full quadrilateral (parallelogram PQRS) scene: four vertices, two sides-vs-diagonals (PR and QS crossing), plus two extra labelled construction points (M, at the diagonals' intersection, and T). coordinate_plot only draws bare points and generic point-to-point segments revealed in one sequence — it has no notion of polygon sides versus diagonals, or of labelled interior/auxiliary points — and geo_scene is scoped to circle geometry (circles, chords, radii, arcs), not general quadrilaterals. Forcing this into either would drop the diagonal/side distinction and the M and T points, or misrepresent the shape as an unordered dot-and-line scatter.",
-      "needed_kind": "polygon_scene: labelled polygon vertices, sides and diagonals (plus auxiliary interior points) on a coordinate grid, revealed step by step"
+      "reason": "the spec does not match the figure: Spec requires 3 points (P, Q, R) forming a line with 2 segments [P-Q, Q-R]. Image shows a completely different geometric structure: a diamond/kite shape with 6 labeled points (P, S, T, M, Q, R) and multiple additional segments forming a complex polygon",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -5,
+            6
+          ],
+          "yRange": [
+            -3,
+            6
+          ],
+          "points": [
+            {
+              "x": -3,
+              "y": 3,
+              "label": "P(-3; 3)"
+            },
+            {
+              "x": 1,
+              "y": -2,
+              "label": "Q(1; -2)"
+            },
+            {
+              "x": 5,
+              "y": 1,
+              "label": "R(5; 1)"
+            }
+          ],
+          "segments": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
     }
   ],
   "teacher_only": {
@@ -3021,21 +3053,10 @@
       ],
       "visuals": 6,
       "gaps": 4
-    },
-    {
-      "run_id": "wf_88cbb0ac-6da",
-      "figures": [
-        "b03159:7",
-        "b03160:8",
-        "b03296:10",
-        "b03398:12"
-      ],
-      "visuals": 3,
-      "gaps": 1
     }
   ],
   "counts": {
-    "visuals": 11,
-    "viz_gaps": 1
+    "visuals": 8,
+    "viz_gaps": 4
   }
 }

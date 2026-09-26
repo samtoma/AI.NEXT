@@ -1100,215 +1100,6 @@
       "printed_page": 318,
       "figure_id": "b03300:22",
       "src": "tikzpicture/210f1cf26efb7f7004269fa6b030bf75.png"
-    },
-    {
-      "n": 22,
-      "lo": "lo:g10m8s3-2-2",
-      "question": "WE7",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -4,
-          8
-        ],
-        "yRange": [
-          -4,
-          7
-        ],
-        "points": [
-          {
-            "x": 2,
-            "y": -3,
-            "label": "A(2,-3)"
-          },
-          {
-            "x": -2,
-            "y": 6,
-            "label": "B(-2,6)"
-          },
-          {
-            "x": 4,
-            "y": 3,
-            "label": "C(4,3)"
-          },
-          {
-            "x": 7,
-            "y": 4.33,
-            "label": "D(7,y)"
-          }
-        ],
-        "segments": [
-          [
-            0,
-            1
-          ],
-          [
-            2,
-            3
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Line AB and line CD cross at a right angle, with D sitting on the line through C.",
-      "printed_page": 301,
-      "figure_id": "b03208:4",
-      "src": "tikzpicture/7c52d46cc17c54f38d7b8d9da748f5d3.png"
-    },
-    {
-      "n": 23,
-      "lo": "lo:g10m8s3-2-1",
-      "question": "Ex8-4:15",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -5,
-          4
-        ],
-        "yRange": [
-          -1,
-          5
-        ],
-        "points": [
-          {
-            "x": -3,
-            "y": 3,
-            "label": "A(-3,3)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Point A is plotted on the grid; the line runs on to point B, whose height is left for you to find.",
-      "printed_page": 307,
-      "figure_id": "b03240:13",
-      "src": "tikzpicture/06e5c8131dc190380a1e0c338d5a69c7.png",
-      "withheld": [
-        "B"
-      ]
-    },
-    {
-      "n": 24,
-      "lo": "lo:g10m8s3-2-1",
-      "question": "Ex8-4:16",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -5,
-          2
-        ],
-        "yRange": [
-          -4,
-          1
-        ],
-        "points": [
-          {
-            "x": -4,
-            "y": -3,
-            "label": "A(-4,-3)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Point A sits on the grid; the line continues to point B, whose coordinate you'll work out.",
-      "printed_page": 307,
-      "figure_id": "b03241:14",
-      "src": "tikzpicture/c0bbfbb964e1750c996635366f2fe6d1.png",
-      "withheld": [
-        "B"
-      ]
-    },
-    {
-      "n": 25,
-      "lo": "lo:g10m8s3-2-1",
-      "question": "Ex8-6:15",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -4,
-          6
-        ],
-        "yRange": [
-          -5,
-          1
-        ],
-        "points": [
-          {
-            "x": -3,
-            "y": 0,
-            "label": "A(-3,0)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Point A is marked on the grid; the line runs down toward point B, whose coordinate is missing.",
-      "printed_page": 320,
-      "figure_id": "b03307:19",
-      "src": "tikzpicture/371134c5c3aad31dfe236c6caa3c147a.png",
-      "withheld": [
-        "B"
-      ]
-    },
-    {
-      "n": 26,
-      "lo": "lo:g10m8s3-2-1",
-      "question": "Ex8-6:18c",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -7,
-          3
-        ],
-        "yRange": [
-          -4,
-          4
-        ],
-        "points": [
-          {
-            "x": 2,
-            "y": 1,
-            "label": "F(2,1)"
-          },
-          {
-            "x": -6,
-            "y": 3,
-            "label": "G(-6,3)"
-          },
-          {
-            "x": -2,
-            "y": -3,
-            "label": "H(-2,-3)"
-          }
-        ],
-        "segments": [
-          [
-            1,
-            2
-          ],
-          [
-            1,
-            0
-          ],
-          [
-            2,
-            0
-          ]
-        ],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Triangle FGH is drawn, with tick marks along GH showing where its midpoint M falls.",
-      "printed_page": 320,
-      "figure_id": "b03313:20",
-      "src": "tikzpicture/14a6925a51839715b4da2c6fa5e70c02.png",
-      "withheld": [
-        "M"
-      ]
     }
   ],
   "viz_gaps": [
@@ -1319,6 +1110,210 @@
       "printed_page": 325,
       "reason": "The whole point of the figure is the marked angle θ at vertex P between rays PQ and PR (an angle-between-two-lines problem). None of the listed kinds can draw an arbitrary angle arc with a label between two rays from a shared vertex: coordinate_plot only draws points and straight segments (no angle annotation), and geo_scene's angle element is scoped to circle-geometry scenes, not a bare triangle. Dropping the angle arc to force it into coordinate_plot would leave just an unmarked triangle, which teaches nothing about the actual skill being tested.",
       "needed_kind": "an angle_diagram kind: two rays from a shared vertex with a labeled angle arc (independent of any circle), so gradients-to-angle (tan θ) problems can be drawn faithfully"
+    },
+    {
+      "figure_id": "b03208:4",
+      "src": "tikzpicture/7c52d46cc17c54f38d7b8d9da748f5d3.png",
+      "ref": "WE7",
+      "printed_page": 301,
+      "reason": "This worked example plots A(2,-3), B(-2,6), C(4,3) and a right angle between line AB and line CD, with D(7;y) the unknown the example solves for. D can't be shown at its answer position, and any segment from C toward x=7 (even stopping short) would let the perpendicular slope be read straight off the grid, handing over the same answer the algebra is meant to produce. Without that segment there is no second line to show the right angle against, so the figure's whole point (two lines meeting at 90 degrees, one point unresolved) can't be drawn.",
+      "needed_kind": "coordinate_plot"
+    },
+    {
+      "figure_id": "b03240:13",
+      "src": "tikzpicture/06e5c8131dc190380a1e0c338d5a69c7.png",
+      "ref": "Ex8-4:15",
+      "printed_page": 307,
+      "reason": "the spec does not match the figure: Spec shows only point A(-3,3) with no segments, but image contains additional point B(2,a) and a line segment connecting them",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -5,
+            4
+          ],
+          "yRange": [
+            -2,
+            5
+          ],
+          "points": [
+            {
+              "x": -3,
+              "y": 3,
+              "label": "A"
+            }
+          ],
+          "segments": [],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
+    {
+      "figure_id": "b03241:14",
+      "src": "tikzpicture/c0bbfbb964e1750c996635366f2fe6d1.png",
+      "ref": "Ex8-4:16",
+      "printed_page": 307,
+      "reason": "the spec does not match the figure: Spec shows only point A(-4,-3) with no segments, but image contains additional point B(1,a) and a line segment connecting them",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -6,
+            3
+          ],
+          "yRange": [
+            -5,
+            1
+          ],
+          "points": [
+            {
+              "x": -4,
+              "y": -3,
+              "label": "A"
+            }
+          ],
+          "segments": [],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
+    {
+      "figure_id": "b03307:19",
+      "src": "tikzpicture/371134c5c3aad31dfe236c6caa3c147a.png",
+      "ref": "Ex8-6:15",
+      "printed_page": 320,
+      "reason": "the spec does not match the figure: Spec shows only point A(-3,0) with no segments, but image contains additional point B(5,y) and a line segment connecting them",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -5,
+            7
+          ],
+          "yRange": [
+            -6,
+            2
+          ],
+          "points": [
+            {
+              "x": -3,
+              "y": 0,
+              "label": "A"
+            }
+          ],
+          "segments": [],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
+    {
+      "figure_id": "b03313:20",
+      "src": "tikzpicture/14a6925a51839715b4da2c6fa5e70c02.png",
+      "ref": "Ex8-6:18c",
+      "printed_page": 320,
+      "reason": "the spec does not match the figure: Spec specifies triangle with vertices G(-6,3), H(-2,-3), F(2,1), but image contains an additional labeled point M not present in the spec",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -7,
+            3
+          ],
+          "yRange": [
+            -4,
+            4
+          ],
+          "points": [
+            {
+              "x": -6,
+              "y": 3,
+              "label": "G"
+            },
+            {
+              "x": -2,
+              "y": -3,
+              "label": "H"
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "label": "F"
+            }
+          ],
+          "segments": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
+    },
+    {
+      "figure_id": "b03352:23",
+      "src": "tikzpicture/16961cdf54cd54e749f2782fb365b414.png",
+      "ref": "Ex8-6:29a",
+      "printed_page": 322,
+      "reason": "the spec does not match the figure: Spec specifies triangle with vertices A(-5,0), B(2,6), D(4,2) and three segments forming the triangle, but image contains additional labeled points (C, E, F) and segments not present in the spec",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -7,
+            5
+          ],
+          "yRange": [
+            -1,
+            7
+          ],
+          "points": [
+            {
+              "x": -5,
+              "y": 0,
+              "label": "A"
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "label": "B"
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "label": "D"
+            }
+          ],
+          "segments": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
     },
     {
       "figure_id": "b03437:25",
@@ -1341,59 +1336,6 @@
           "markers": [],
           "reveals": [],
           "animate": "draw"
-        }
-      }
-    },
-    {
-      "figure_id": "b03352:23",
-      "src": "tikzpicture/16961cdf54cd54e749f2782fb365b414.png",
-      "ref": "Ex8-6:29a",
-      "printed_page": 322,
-      "reason": "the spec does not match the figure: Image contains point C (approximately at 8,8) which is not in the spec. The spec specifies a triangle with vertices A, B, D (points [0,1,2] with segments [[0,1],[0,2],[1,2]]), but the image shows a triangle with vertices A, B, C instead, with D marked as a separate point.",
-      "rejected_spec": {
-        "kind": "coordinate_plot",
-        "spec": {
-          "xRange": [
-            -6,
-            12
-          ],
-          "yRange": [
-            -1,
-            9
-          ],
-          "points": [
-            {
-              "x": -5,
-              "y": 0,
-              "label": "A(-5,0)"
-            },
-            {
-              "x": 2,
-              "y": 6,
-              "label": "B(2,6)"
-            },
-            {
-              "x": 4,
-              "y": 2,
-              "label": "D(4,2)"
-            }
-          ],
-          "segments": [
-            [
-              0,
-              1
-            ],
-            [
-              0,
-              2
-            ],
-            [
-              1,
-              2
-            ]
-          ],
-          "animate": "plot-sequence",
-          "interactive": false
         }
       }
     }
@@ -7787,23 +7729,10 @@
       ],
       "visuals": 5,
       "gaps": 7
-    },
-    {
-      "run_id": "wf_ff44bf4d-d88",
-      "figures": [
-        "b03208:4",
-        "b03240:13",
-        "b03241:14",
-        "b03307:19",
-        "b03313:20",
-        "b03352:23"
-      ],
-      "visuals": 5,
-      "gaps": 1
     }
   ],
   "counts": {
-    "visuals": 22,
-    "viz_gaps": 3
+    "visuals": 17,
+    "viz_gaps": 8
   }
 }

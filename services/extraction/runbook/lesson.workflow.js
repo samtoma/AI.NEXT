@@ -66,7 +66,7 @@ export const meta = {
 //   uv run meter_run.py record --book <book> --stage S2-S4,S8 --run <runId>
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'lesson-v6'   // v3: ids are asked for WITHOUT their brackets, and read either way
+const PROMPTS_VERSION = 'lesson-v7'   // v3: ids are asked for WITHOUT their brackets, and read either way
 // v4 (2026-09-26, the Chapter 8 pilot): a choice's options may be the labels a figure shows ("Which point lies
 // at (5; −4)?" A–E, shape W–Z): options_source "figure". Only the TYPING prompt changed; on a resume the
 // claims replay, and typing and every agent after it run again.
@@ -76,6 +76,7 @@ const PROMPTS_VERSION = 'lesson-v6'   // v3: ids are asked for WITHOUT their bra
 // v6 (2026-09-27, after the first re-run): an EXERCISE figure withholds its unknown by name ("withheld") and draws the
 // rest — Compare accepts exactly that omission; a worked example's figure is drawn whole (it may show its answer);
 // every element a figure shows is drawn, or the figure is a gap naming exactly what its kind cannot draw.
+// v7: a caption describes only what is drawn — never a withheld point as marked (assembly drops such a clause).
 // The script's own deterministic collection is versioned apart from the prompts: a change here replays
 // every cached agent on a resume (no prompt changed) and re-decides what they answered.
 const COLLECT_VERSION = 'collect-5'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below);
@@ -700,7 +701,7 @@ EVERY FIGURE: draw every element it shows — every labelled point, segment, sid
 A FIGURE THAT BELONGS TO AN EXERCISE (marked "exercise" below; its question is shown with it) MUST NOT ANSWER IT:
 - leave out the unknown the question asks for — a point written with a letter for a coordinate (B(1; y), M(x; y)) or the point to be found — name its label in "withheld" (e.g. ["B"]), and DRAW THE REST: the known points, segments, lines and labels. A figure is never a gap only because it holds the unknown;
 - never draw a point at a value that contradicts the question's own numbers;
-- the caption describes the figure; it never restates, changes or adds to the question.
+- the caption describes only what is DRAWN; it never restates, changes or adds to the question, and it never describes a withheld point as marked, shown or drawn (no "with M marked on it", no tick marks the spec does not draw).
 A WORKED EXAMPLE's figure may show its answer, as the book's does: draw it whole, at the book's values, with "withheld" empty.
 
 The lesson's objectives:

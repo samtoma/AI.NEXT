@@ -560,6 +560,18 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
     for e in errs[:40]:
         c.fail(e["where"], f"{e['segment'][:80]} — {e['why'][:120]}")
     checks.append(c)
+    c = Check("captions", "Figure captions that describe a withheld point (the exercise's unknown) as marked or "
+              "shown = 0")
+    by_id = {v["id"]: v for v in visuals}
+    for s_ in slugs:
+        for rv in (runs[s_].visuals if s_ in runs else []):
+            w = getattr(rv, "withheld", None) or []
+            v = by_id.get(f"v:{s_}:{rv.n:03d}")
+            if w and v:
+                for clause in alb.caption_problems(v.get("caption"), w):
+                    c.fail(v["id"], f"describes withheld {w} as shown: {clause!r}")
+    c.got = len(c.failures)
+    checks.append(c)
     c = Check("answer_text", "Typed questions whose answer text is not their marker key, rendered = 0 (A1)")
     bad = [p for b in bundles for p in alb.answer_problems(b)]
     c.want, c.got = 0, len(bad)

@@ -370,138 +370,6 @@
       "printed_page": 317,
       "figure_id": "b03297:9",
       "src": "tikzpicture/db68da13a3b8f0395c995deb64398b3f.png"
-    },
-    {
-      "n": 10,
-      "lo": "lo:g10m8s3-1-2",
-      "question": "Ex8-3:5",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -2,
-          2
-        ],
-        "yRange": [
-          -1,
-          5
-        ],
-        "points": [
-          {
-            "x": -1,
-            "y": 0,
-            "label": "A(-1; 0)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Point A(-1; 0) is plotted on the grid; point B is out there on the same line at x = 1, but how high up it sits isn't marked yet.",
-      "printed_page": 297,
-      "figure_id": "b03190:7",
-      "src": "tikzpicture/1e20844ee903416550ff478159f03242.png",
-      "withheld": [
-        "B"
-      ]
-    },
-    {
-      "n": 11,
-      "lo": "lo:g10m8s3-1-2",
-      "question": "Ex8-3:6",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -2,
-          4
-        ],
-        "yRange": [
-          -4,
-          4
-        ],
-        "points": [
-          {
-            "x": -1,
-            "y": 3,
-            "label": "A(-1; 3)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Point A(-1; 3) is plotted on the grid; point B sits down at height -3, but its left-right position isn't marked yet.",
-      "printed_page": 297,
-      "figure_id": "b03191:8",
-      "src": "tikzpicture/cc336ad929bda6251658967781136f60.png",
-      "withheld": [
-        "B"
-      ]
-    },
-    {
-      "n": 12,
-      "lo": "lo:g10m8s3-1-2",
-      "question": "Ex8-6:8",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -3,
-          5
-        ],
-        "yRange": [
-          -1,
-          5
-        ],
-        "points": [
-          {
-            "x": -2,
-            "y": 0.5,
-            "label": "A(-2; 0,5)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Point A(-2; 0,5) is plotted on the grid; point B sits up at height 3,5, but its left-right position isn't marked yet.",
-      "printed_page": 317,
-      "figure_id": "b03298:10",
-      "src": "tikzpicture/7c5f98f613dbcdafcee61d1d6a5f7aef.png",
-      "withheld": [
-        "B"
-      ]
-    },
-    {
-      "n": 13,
-      "lo": "lo:g10m8s3-1-2",
-      "question": "Ex8-6:9",
-      "kind": "coordinate_plot",
-      "spec": {
-        "xRange": [
-          -3,
-          2
-        ],
-        "yRange": [
-          -3,
-          5
-        ],
-        "points": [
-          {
-            "x": -2,
-            "y": -2,
-            "label": "A(-2; -2)"
-          }
-        ],
-        "segments": [],
-        "animate": "plot-sequence",
-        "interactive": false
-      },
-      "caption": "Point A(-2; -2) is plotted on the grid; point B sits above it at x = 1, but how high up it is isn't marked yet.",
-      "printed_page": 317,
-      "figure_id": "b03299:11",
-      "src": "tikzpicture/739c8475712445081b664acfb20639b9.png",
-      "withheld": [
-        "B"
-      ]
     }
   ],
   "viz_gaps": [
@@ -522,12 +390,76 @@
       "needed_kind": "triangle/polygon scene with labeled interior points on axes"
     },
     {
+      "figure_id": "b03190:7",
+      "src": "tikzpicture/1e20844ee903416550ff478159f03242.png",
+      "ref": "Ex8-3:5",
+      "printed_page": 297,
+      "reason": "the figure would draw the unknown",
+      "needed_kind": "coordinate_plot"
+    },
+    {
+      "figure_id": "b03191:8",
+      "src": "tikzpicture/cc336ad929bda6251658967781136f60.png",
+      "ref": "Ex8-3:6",
+      "printed_page": 297,
+      "reason": "the figure would draw the unknown",
+      "needed_kind": "coordinate_plot"
+    },
+    {
+      "figure_id": "b03298:10",
+      "src": "tikzpicture/7c5f98f613dbcdafcee61d1d6a5f7aef.png",
+      "ref": "Ex8-6:8",
+      "printed_page": 317,
+      "reason": "the figure would draw the unknown",
+      "needed_kind": "coordinate_plot"
+    },
+    {
+      "figure_id": "b03299:11",
+      "src": "tikzpicture/739c8475712445081b664acfb20639b9.png",
+      "ref": "Ex8-6:9",
+      "printed_page": 317,
+      "reason": "the figure would draw the unknown",
+      "needed_kind": "coordinate_plot"
+    },
+    {
       "figure_id": "b03180:4",
       "src": "tikzpicture/fa8f615a576d2b7381b992aa48d1e32f.png",
       "ref": "WE4",
       "printed_page": 295,
-      "reason": "This worked-example figure (WE4) plots G(7; -9) and H(x; 0) joined by a segment, and additionally carries a floating slope label, \"m_GH = 3\", positioned beside the segment rather than at either endpoint. coordinate_plot's spec only supports text via points[].label, i.e. a label anchored to a specific (x, y) point — it has no field for a free-floating text annotation attached to a segment/line. Drawing the two points and the segment is easy, but the gradient label would either have to be silently dropped (not allowed — it's a labelled element the figure shows) or faked as an invisible extra 'point' carrying that text, which misrepresents the data.",
-      "needed_kind": "coordinate_plot (or a segment-focused kind) that supports a text/value label attached to a segment or line itself, independent of its endpoint points"
+      "reason": "the spec does not match the figure: Spec is missing the 'mGH = 3' slope label that appears in the figure",
+      "rejected_spec": {
+        "kind": "coordinate_plot",
+        "spec": {
+          "xRange": [
+            -2,
+            10
+          ],
+          "yRange": [
+            -10,
+            2
+          ],
+          "points": [
+            {
+              "x": 7,
+              "y": -9,
+              "label": "G(7; -9)"
+            },
+            {
+              "x": 10,
+              "y": 0,
+              "label": "H(x; 0)"
+            }
+          ],
+          "segments": [
+            [
+              0,
+              1
+            ]
+          ],
+          "animate": "plot-sequence",
+          "interactive": false
+        }
+      }
     }
   ],
   "teacher_only": {
@@ -2151,22 +2083,10 @@
       ],
       "visuals": 0,
       "gaps": 5
-    },
-    {
-      "run_id": "wf_f9d67e47-f95",
-      "figures": [
-        "b03180:4",
-        "b03190:7",
-        "b03191:8",
-        "b03298:10",
-        "b03299:11"
-      ],
-      "visuals": 4,
-      "gaps": 1
     }
   ],
   "counts": {
-    "visuals": 10,
-    "viz_gaps": 3
+    "visuals": 6,
+    "viz_gaps": 7
   }
 }
