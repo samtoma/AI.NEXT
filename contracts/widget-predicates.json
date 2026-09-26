@@ -20,9 +20,21 @@
     "",
     "Adding a predicate is additive and safe. RENAMING one silently breaks the",
     "mapping on every stored question that used it, so rename by adding the new",
-    "spelling, migrating the rows, then removing the old one."
+    "spelling, migrating the rows, then removing the old one.",
+    "",
+    "CAN EMIT (consistency review 2026-09-27, W1). A kind declares every predicate it knows, but a",
+    "given question emits only some of them: line_drawer in 'points' mode can never report a slope,",
+    "angle_setter asked for the INSCRIBED angle can never report 'angle-given-as-arc'. A mapping on",
+    "a predicate the question cannot emit is dead — it never fires, and the student gets a plain",
+    "'not quite' where a refutation was promised. 'can_emit' is, per kind, what the app's grading",
+    "code can actually return (derived from the file named in 'can_emit_source'): either a list, or",
+    "{\"by\": <spec field>, \"cases\": {<value>: <node>}} dispatching on the question's stored spec",
+    "(\"(absent)\" when the field is missing, \"(present)\" when it holds an object). A spec value",
+    "with no case is one the widget does not render. 'ok' is never listed: every widget can emit it.",
+    "Mirrored in app/src/lib/widget-predicates.ts (WIDGET_CAN_EMIT, checked by its test) and enforced",
+    "by services/extraction/widget_spec.validate_widget on active AND held mappings."
   ],
-  "version": 1,
+  "version": 2,
   "reserved": [
     "ok"
   ],
@@ -32,14 +44,25 @@
         "swapped-coordinates": "Plotted (y, x) — the pair read in the wrong order",
         "wrong-quadrant": "Right distances, wrong signs — the point is in the wrong quadrant",
         "off-target": "Neither coordinate matches, with no recognisable pattern"
-      }
+      },
+      "can_emit": [
+        "swapped-coordinates",
+        "wrong-quadrant",
+        "off-target"
+      ],
+      "can_emit_source": "PairPlotter.tsx pick()"
     },
     "product_builder": {
       "predicates": {
         "reversed-pairs": "Built Y×X — the pairs are the right numbers in the wrong order",
         "missing-pairs": "An incomplete product: some pairs of X×Y were not selected",
         "extra-pairs": "Selected pairs that are not in X×Y at all"
-      }
+      },
+      "can_emit": [
+        "reversed-pairs",
+        "missing-pairs"
+      ],
+      "can_emit_source": "ProductBuilder.tsx check() — a wrong pick is always reported as reversed-pairs, so extra-pairs is never emitted"
     },
     "line_drawer": {
       "predicates": {
@@ -49,7 +72,24 @@
         "vertical-line": "A vertical line, which has no slope and cannot be written y = mx + c",
         "points-swapped": "The named points plotted with x and y exchanged",
         "off-target": "Neither the slope nor the intercept matches"
-      }
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "points-swapped",
+            "off-target"
+          ],
+          "equation": [
+            "vertical-line",
+            "intercept-wrong",
+            "slope-sign-flipped",
+            "slope-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "can_emit_source": "LineDrawer.tsx check() + line-drawer-grade.ts (points mode)"
     },
     "circle_builder": {
       "predicates": {
@@ -60,7 +100,29 @@
         "is-secant": "The line cuts the circle twice — a secant, not a tangent",
         "is-external": "The line misses the circle completely",
         "off-target": "The construction does not satisfy the element asked for"
-      }
+      },
+      "can_emit": {
+        "by": "element",
+        "cases": {
+          "radius": [
+            "radius-drawn-as-chord",
+            "radius-short",
+            "off-target"
+          ],
+          "chord": [
+            "ends-not-on-circle"
+          ],
+          "diameter": [
+            "chord-not-through-centre",
+            "ends-not-on-circle"
+          ],
+          "tangent": [
+            "is-secant",
+            "is-external"
+          ]
+        }
+      },
+      "can_emit_source": "CircleBuilder.tsx check()"
     },
     "angle_setter": {
       "predicates": {
@@ -68,7 +130,23 @@
         "angle-given-as-arc": "Gave the inscribed angle where the central angle or arc was asked for — the arc is double",
         "other-arc": "Set the arc on the far side; C faces the arc across from it",
         "off-target": "The angle is not the one asked for, with no recognisable pattern"
-      }
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "inscribed": [
+            "arc-given-as-angle",
+            "other-arc",
+            "off-target"
+          ],
+          "central": [
+            "angle-given-as-arc",
+            "other-arc",
+            "off-target"
+          ]
+        }
+      },
+      "can_emit_source": "AngleSetter.tsx check()"
     },
     "triangle_ratio": {
       "predicates": {
@@ -77,7 +155,29 @@
         "used-cosine": "Built the cosine where another ratio was asked for",
         "used-tangent": "Built the tangent where another ratio was asked for",
         "off-target": "The ratio does not match and is not a recognised substitution"
-      }
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "sin": [
+            "used-cosine",
+            "used-tangent",
+            "off-target"
+          ],
+          "cos": [
+            "used-sine",
+            "used-tangent",
+            "off-target"
+          ],
+          "tan": [
+            "used-sine",
+            "used-cosine",
+            "ratio-inverted",
+            "off-target"
+          ]
+        }
+      },
+      "can_emit_source": "TriangleRatio.tsx check() — legs are whole numbers 1..12, so sin and cos are always below 1 and 1/reading can never equal a sin or cos target: ratio-inverted fires only for tan"
     },
     "bar_builder": {
       "predicates": {
@@ -87,7 +187,29 @@
         "multi-modal": "Two or more values tie at the top, so the set has more than one mode",
         "total-wrong": "For this mean across n values the total must be mean x n, and it is not",
         "off-target": "The statistic does not match the target"
-      }
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "mean": [
+            "median-for-mean",
+            "total-wrong"
+          ],
+          "median": [
+            "mean-for-median",
+            "off-target"
+          ],
+          "mode": [
+            "no-mode",
+            "multi-modal",
+            "off-target"
+          ],
+          "range": [
+            "off-target"
+          ]
+        }
+      },
+      "can_emit_source": "BarBuilder.tsx check() — every wrong mean that is not the median is total-wrong, so a mean never reports off-target"
     },
     "number_line_marker": {
       "predicates": {
@@ -97,21 +219,56 @@
         "endpoint-inclusion-wrong": "Right endpoints, wrong circles — hollow excludes (< >), filled includes (<= >=)",
         "interval-wrong": "The interval does not run between the right endpoints",
         "off-target": "Wrong in a way none of the named errors describes"
-      }
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "points": [
+            "missed-values",
+            "extra-values",
+            "sign-flipped"
+          ],
+          "interval": [
+            "endpoint-inclusion-wrong",
+            "interval-wrong"
+          ]
+        }
+      },
+      "can_emit_source": "NumberLineMarker.tsx check() + number-line-grade.ts"
     },
     "ratio_balance": {
       "predicates": {
         "inverse-solved-as-direct": "Matched the quotients where the products should match",
         "direct-solved-as-inverse": "Matched the products where the quotients should match",
         "off-target": "The fourth term does not balance the relationship"
-      }
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "direct": [
+            "direct-solved-as-inverse",
+            "off-target"
+          ],
+          "inverse": [
+            "inverse-solved-as-direct",
+            "off-target"
+          ]
+        }
+      },
+      "can_emit_source": "RatioBalance.tsx check()"
     },
     "sample_space": {
       "predicates": {
         "missed-outcomes": "Some outcomes in the event were not selected",
         "extra-outcomes": "Selected outcomes that do not satisfy the event",
         "counted-once": "Counted a compound outcome once where the grid shows several ways to make it"
-      }
+      },
+      "can_emit": [
+        "counted-once",
+        "missed-outcomes",
+        "extra-outcomes"
+      ],
+      "can_emit_source": "SampleSpace.tsx check()"
     },
     "curve_sketcher": {
       "predicates": {
@@ -127,7 +284,71 @@
         "period-wrong": "The curve repeats at the wrong rate for this function",
         "vertical-shift-wrong": "The curve is centred on the wrong midline",
         "off-target": "The sketch does not follow the curve"
-      }
+      },
+      "can_emit": {
+        "by": "fn",
+        "cases": {
+          "linear": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "slope-sign-flipped"
+          ],
+          "quadratic": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "opens-wrong-way"
+          ],
+          "hyperbola": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "wrong-quadrants"
+          ],
+          "exponential": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "wrong-intercept"
+          ],
+          "sine": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ],
+          "cosine": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ],
+          "tangent": [
+            "fails-vertical-line-test",
+            "partial-coverage",
+            "vertically-displaced",
+            "off-target",
+            "asymptote-crossed",
+            "vertical-shift-wrong",
+            "amplitude-wrong",
+            "period-wrong"
+          ]
+        }
+      },
+      "can_emit_source": "curve-sketcher-grade.ts gradeCurve() — asymptote-crossed only where the family has an asymptote (hyperbola, tangent: vertical; exponential: horizontal)"
     },
     "polygon_builder": {
       "predicates": {
@@ -137,7 +358,64 @@
         "midsegment-not-half": "Parallel to the third side, but not half its length",
         "area-missing-half": "Exactly double the target — the ÷2 was left out of the area formula",
         "not-the-shape": "The construction does not have the property this shape needs"
-      }
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "construct": {
+            "by": "shape",
+            "cases": {
+              "scalene": [
+                "not-the-shape"
+              ],
+              "isosceles": [
+                "sides-not-equal",
+                "not-the-shape"
+              ],
+              "right": [
+                "no-right-angle",
+                "not-the-shape"
+              ],
+              "parallelogram": [
+                "only-one-pair-parallel",
+                "not-the-shape"
+              ],
+              "rectangle": [
+                "only-one-pair-parallel",
+                "no-right-angle",
+                "not-the-shape"
+              ],
+              "rhombus": [
+                "only-one-pair-parallel",
+                "sides-not-equal",
+                "not-the-shape"
+              ],
+              "square": [
+                "only-one-pair-parallel",
+                "no-right-angle",
+                "sides-not-equal",
+                "not-the-shape"
+              ],
+              "trapezium": [
+                "not-the-shape"
+              ],
+              "kite": [
+                "sides-not-equal",
+                "not-the-shape"
+              ]
+            }
+          },
+          "midsegment": [
+            "midsegment-not-half",
+            "not-the-shape"
+          ],
+          "area": [
+            "area-missing-half",
+            "not-the-shape"
+          ]
+        }
+      },
+      "can_emit_source": "polygon-grade.ts gradeConstruct / gradeMidsegment / gradeArea"
     },
     "solid_scaler": {
       "predicates": {
@@ -145,7 +423,46 @@
         "area-scaled-by-k": "The scale factor was applied once (k), not squared (k²) — a linear length scaling used for an area",
         "wrong-formula-part": "The scale factor is right, but a face — usually a base — is missing from the surface-area reading",
         "off-target": "Neither the scale factor nor the surface reading matches"
-      }
+      },
+      "can_emit": {
+        "by": "ask",
+        "cases": {
+          "volume": [
+            "volume-scaled-by-k",
+            "off-target"
+          ],
+          "area": {
+            "by": "solid",
+            "cases": {
+              "box": [
+                "area-scaled-by-k",
+                "wrong-formula-part",
+                "off-target"
+              ],
+              "cylinder": [
+                "area-scaled-by-k",
+                "wrong-formula-part",
+                "off-target"
+              ],
+              "cone": [
+                "area-scaled-by-k",
+                "wrong-formula-part",
+                "off-target"
+              ],
+              "pyramid": [
+                "area-scaled-by-k",
+                "wrong-formula-part",
+                "off-target"
+              ],
+              "sphere": [
+                "area-scaled-by-k",
+                "off-target"
+              ]
+            }
+          }
+        }
+      },
+      "can_emit_source": "solid-scaler-grade.ts gradeVolumeScale / gradeAreaScale + SolidScaler.tsx FACES (a sphere has no face toggle, so its area is never wrong-formula-part)"
     },
     "box_plot_builder": {
       "predicates": {
@@ -154,7 +471,15 @@
         "quartile-method": "A different quartile method was used (splitting at the median) — this book uses linear interpolation between ranks",
         "whisker-to-outlier": "A whisker was dragged out to a raw outlier instead of stopping at the last value within 1.5×IQR",
         "off-target": "The five-number summary does not match, with no recognisable pattern"
-      }
+      },
+      "can_emit": [
+        "median-of-unsorted",
+        "iqr-as-range",
+        "quartile-method",
+        "whisker-to-outlier",
+        "off-target"
+      ],
+      "can_emit_source": "box-plot-grade.ts gradeBoxPlot()"
     },
     "venn_builder": {
       "predicates": {
@@ -164,7 +489,70 @@
         "exclusive-drawn-overlapping": "\"X only\" was shaded including its overlap with another set",
         "neither-region-missed": "The region outside every set was left unshaded or uncounted",
         "off-target": "Wrong in a way none of the named errors describes"
-      }
+      },
+      "can_emit": {
+        "by": "mode",
+        "cases": {
+          "shade": {
+            "by": "target",
+            "cases": {
+              "union": [
+                "intersection-for-union",
+                "off-target"
+              ],
+              "intersection": [
+                "off-target"
+              ],
+              "aOnly": [
+                "exclusive-drawn-overlapping",
+                "off-target"
+              ],
+              "bOnly": [
+                "exclusive-drawn-overlapping",
+                "off-target"
+              ],
+              "cOnly": [
+                "exclusive-drawn-overlapping",
+                "off-target"
+              ],
+              "complementA": [
+                "complement-inside-a",
+                "neither-region-missed",
+                "off-target"
+              ],
+              "complementB": [
+                "complement-inside-a",
+                "neither-region-missed",
+                "off-target"
+              ],
+              "complementC": [
+                "complement-inside-a",
+                "neither-region-missed",
+                "off-target"
+              ],
+              "neither": [
+                "neither-region-missed",
+                "off-target"
+              ]
+            }
+          },
+          "counts": {
+            "by": "clues",
+            "cases": {
+              "(present)": [
+                "overlap-counted-twice",
+                "neither-region-missed",
+                "off-target"
+              ],
+              "(absent)": [
+                "neither-region-missed",
+                "off-target"
+              ]
+            }
+          }
+        }
+      },
+      "can_emit_source": "venn-builder-grade.ts gradeVennShade / gradeVennCounts (overlap-counted-twice needs the word problem's clues)"
     },
     "area_model": {
       "predicates": {
@@ -173,7 +561,15 @@
         "constant-sign": "The linear (x) term is right and the constant term is not — usually its sign",
         "not-a-rectangle": "The placed tiles do not tile a rectangle: a gap, a stray tile, or more than one x² tile",
         "off-target": "A valid rectangle whose terms match neither the target sum nor its product"
-      }
+      },
+      "can_emit": [
+        "missing-cross-term",
+        "middle-term-sign",
+        "constant-sign",
+        "not-a-rectangle",
+        "off-target"
+      ],
+      "can_emit_source": "area-model-grade.ts gradeAreaModel() — expand and factor are graded alike"
     }
   }
 }

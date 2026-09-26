@@ -52,6 +52,38 @@ def predicates_for(kind: str) -> set[str]:
     return {OK} | (set(k["predicates"]) if k else set())
 
 
+def _case_key(v) -> str:
+    """The contract's dispatch key for a spec value (contracts/widget-predicates.json, CAN EMIT)."""
+    if v is None:
+        return "(absent)"
+    if isinstance(v, bool) or not isinstance(v, (str, int, float)):
+        return "(present)"
+    return str(v)
+
+
+def can_emit(kind: str, spec: dict | None) -> tuple[set[str] | None, str]:
+    """What a widget of this kind, with this stored spec, can actually report besides `ok` — the contract's
+    `can_emit` table, derived from the app's grading code (consistency review 2026-09-27, W1) — and where in the
+    table that was read ("mode=points"). None when the spec reaches no case: a value the widget does not render.
+
+    A kind DECLARES more predicates than any one question can emit: line_drawer in points mode grades the two
+    handles and never a slope, angle_setter asked for the inscribed angle never reports 'angle-given-as-arc'. A
+    mapping on a predicate the question cannot emit never fires, and the student gets a plain "not quite" where a
+    refutation was promised — the Prep-3 bank carried 14 such mappings and the Grade 10 pilot 5 active ones."""
+    k = contract()["kinds"].get(kind)
+    if not k or "can_emit" not in k:
+        return None, "no can_emit table"
+    node, path = k["can_emit"], []
+    s = spec if isinstance(spec, dict) else {}
+    while isinstance(node, dict):
+        key = _case_key(s.get(node["by"]))
+        path.append(f"{node['by']}={key}")
+        if key not in node["cases"]:
+            return None, ", ".join(path)
+        node = node["cases"][key]
+    return set(node), ", ".join(path) or "any spec"
+
+
 def describe(kind: str, predicate: str) -> str | None:
     if predicate == OK:
         return "Correct"

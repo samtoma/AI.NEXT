@@ -786,6 +786,10 @@ through the attempts route and confirm identical outcomes.
   end-of-chapter item the human reviewer rules, by name and with a reason, to be outside what its
   chapter teaches is one such fate: it MUST be kept out of practice, MUST NOT be dropped silently, and
   MUST be listed in the pipeline's coverage audit with the reviewer's name.
+  *(Amended 2026-09-27, consistency review A1 and A9, approved by Samuel.)* A typed question's shown
+  answer MUST be its marker key rendered, never the printed answer's text layer (which reads a printed
+  9/11 as "9 11"); and a stem that asks for a form the book's rules name — "in the form $y = mx + c$" —
+  MUST carry that form on its marker, so an equivalent answer in another form is returned for re-entry.
 - **FR-4304** *(changed rev. 2, decision 16)*: The course's generated questions MUST follow the decided
   pattern (ADR-0008, FR-1101…FR-1107): families whose answer key is computed together with the stem;
   each item naming the book question it derives from; each multiple-choice distractor naming a
@@ -826,6 +830,13 @@ through the attempts route and confirm identical outcomes.
   `(x, y)`, everywhere a student sees the book's mathematics. The book's vocabulary and its
   word-problem contexts, the Rand included, MUST stay as printed. Misconceptions and refutations MUST
   answer within this book, and no refutation in this course may cite the other maths course's book.
+  *(Amended 2026-09-27, consistency review A2 and A4, approved by Samuel.)* Every maths segment a student
+  can be shown MUST parse in the app's own KaTeX: the assembly re-spaces the transcriptions' stripped
+  whitespace (a command glued to letters, a control space, chained assignments) without touching their
+  hash proofs, and both the load and the coverage audit refuse any segment that does not parse. In this
+  book `(7,5)` is a bracketed decimal, so a comma group becomes a pair only where it is provably one (a
+  side of an equation whose other side is a pair); any other whole-side `(a,b)` is read as the book's
+  decimal and listed for G2.
 - **FR-4309**: The console MUST show the course's completeness beside its availability switch:
   chapters and sections; objectives; book questions, live and held, with each kind of solution counted
   apart; generated questions; widget questions; misconceptions with and without an explanation; and
@@ -990,7 +1001,12 @@ through the attempts route and confirm identical outcomes.
   the same discipline the existing VIZ kinds follow. Until a kind is approved, the figure stays on the
   gap list and the lesson it belongs to ships without it, exactly as a chapter without an approved
   widget kind ships without one. *(This supersedes the earlier assumption that an unmatched figure is
-  "reported, not approximated" — see Assumptions, below.)*
+  "reported, not approximated" — see Assumptions, below.)* *(Amended 2026-09-27, consistency review A3
+  and A8, approved by Samuel.)* A question whose stem shows a figure it does not have MUST be held at
+  review, never live, until its figure exists; a figure MUST NOT draw the question's unknown — a point the
+  question writes with a letter for a coordinate — anywhere, and one that does is withheld; its caption
+  MUST NOT change the question. A figure the visual stage failed to produce (an agent error, not a kind
+  no renderer can draw) is a coverage failure, re-run for that figure alone.
 
 ### Key Entities
 
