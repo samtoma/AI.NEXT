@@ -156,7 +156,7 @@ uv run generate_questions.py --families families/g10-math --book $B --catalogue 
     --out seed/generated/g10-math/generated-questions.json --floor-report coverage/g10-math.tier-floor.json
 uv run generate_widget_questions.py --templates widgets/g10-math --book $B \
     --verdicts runs/g10-math/widgets/verify-wf_dbca7b50-327.json --gaps runs/g10-math/widgets/author-merged.json \
-    --gap-report coverage/g10-math.widget-gaps.json --pending-review runs/g10-math/widgets/pending-review.json \
+    --gap-report coverage/g10-math.ch08.widget-gaps.json --pending-review runs/g10-math/widgets/pending-review.json \
     --out seed/generated/g10-math/widget-questions.json
 #    (the S5-dropped swaps-x-and-y-values drops plot-the-point's swapped-coordinates diagnostic; wrong-quadrant stays)
 # c. reconcile the tags against the catalogue
@@ -180,7 +180,7 @@ uv run load_generated_questions.py seed/generated/g10-math/widget-questions.json
 uv run export_generated_content.py --course course:us-g10-math-en --out-dir seed/generated/g10-math/export --dsn "$AINEXT_DB_DSN"
 uv run coverage_report.py --book g10-math --chapter 8 --objectives objectives/g10-math --runs runs/g10-math/lesson \
     --seed work/g10-math/pilot/seed --content work/g10-math/pilot/seed/content --generated seed/generated/g10-math/export \
-    --maths runs/g10-math/maths/summary.json --widget-gaps coverage/g10-math.widget-gaps.json --s5 $F --out coverage/g10-math.json
+    --maths runs/g10-math/maths/summary.json --widget-gaps coverage/g10-math.ch08.widget-gaps.json --s5 $F --out coverage/g10-math.json
 uv run parity_check.py --candidate "$AINEXT_DB_DSN" --all-courses
 ```
 Checks after each code change: `AINEXT_TEST_PG="host=127.0.0.1 port=5432" uv run --with pytest python -m pytest -q tests/`,
@@ -188,10 +188,21 @@ Checks after each code change: `AINEXT_TEST_PG="host=127.0.0.1 port=5432" uv run
 
 **3. Open decisions and backlog** (`docs/WIP-g10-pilot/integration-backlog.md`)
 - Human gates still to pass: **G3** (10% sample + #3's tier flag, `g3-flags.json`), **G3 held mappings** (23 claims, decision 47),
-  **G4** (catalogue sample). Widget gaps in `coverage/g10-math.widget-gaps.json` need Samuel's sign-off (FR-4306):
+  **G4** (catalogue sample). Widget gaps in `coverage/g10-math.ch08.widget-gaps.json` need Samuel's sign-off (FR-4306):
   s1-1-1, s1-1-3, s2-1-1, s3-1-1, s3-2-2 (line relationship classifier), s3-2-3 (collinearity checker), s4-1-3.
 - Tier-floor gaps to list by name (FR-4305): s1-1-1 (no markable parent), s1-1-2 standard/advanced (diagram-dependent).
 - Backlog open: **75** (Ex8-5:5 excluded pending review), **78** (step-level working checker, decide before fan-out),
   **80** (#3 re-authored and graded; its tier → G3). Closed this stretch: 76, 77, 79, 81, 82, 83.
 - Fan-out notes: prompts s6-v5 and s7-v6 are unused so far (revise read rule, bare values, own-list ids, one
   predicate → one misconception, typed readings, bare predicate names).
+
+**Run 2026-09-27 (deterministic steps a–d and g done; gates open).** Loaded into `ainext_pilot_g10_ch08`
+(`AINEXT_ENVIRONMENT=mvp1`, as the dry run sets it): 29 misconceptions (35 book options stamped); 110 generated
+items from 11 families and 25 widget questions, all `status=review` (17 active mappings, 22 held — the S5-dropped
+swaps-x-and-y-values took one active and one held; 11 widgets plain right/wrong). The G3 held-mappings page is
+re-rendered (22). Coverage RED: objective_evidence (s1-1-1 has no book question), tier_floor (generated items
+are not live until G3; s1-1-1 and s1-1-2 standard/advanced below the floor), notation (107 figure point labels
+"P(2;1)" in the pilot seed — the assembly now normalises them; clearing it needs the pilot seed re-assembled and
+reloaded, then G2's verdicts and the catalogue re-applied). Parity: National GREEN. The Chapter 8 gap report is
+`coverage/g10-math.ch08.widget-gaps.json`; `coverage/g10-math.widget-gaps.json` is the whole-book file (the six
+approved kinds; figure_inventory reads it) — never write a chapter's report over it.
