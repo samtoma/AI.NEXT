@@ -5,7 +5,7 @@ must be given only evidence G2 settled.
 
 @covers FR-4302, FR-4303
 
-  * S5 (s5-v4): a question whose stem shows [figure] names its image files ("Figure(s): …") in both
+  * S5 (s5-v4, still in s5-v5): a question whose stem shows [figure] names its image files ("Figure(s): …") in both
     modes, the author AND the verifier are told they may open them, and the by-ref prompt still splices
     back to the inline one. The book's teaching items (worked examples) are canonical solutions too, so
     an objective taught only by them is not skipped. A three-way disagreement is evidence of a STUDENT
@@ -106,8 +106,31 @@ class S5Inputs(unittest.TestCase):
         ])]
         src = [s for s in self.s5(runs)["sources"] if s["kind"] == "resolve_disagreement"]
         self.assertEqual([s["ref"] for s in src], [am.item_question_id(it) for it in runs[0]["items"][:2]])
-        self.assertIn("kept at review (G2)", src[0]["text"])
-        self.assertIn("Keep as printed", src[0]["text"])
+        # the fact only, never the review (consistency review 2026-09-27, A5): a G2 note reached students as "the
+        # book's own review note", and a kept answer as "the trap the book itself flags … corrected back"
+        self.assertIn("Our own independent re-solve (not the book) answered k = 7", src[0]["text"])
+        for t in (s["text"] for s in src):
+            self.assertNotIn("Keep as printed", t)
+            self.assertNotIn("G2", t)
+            self.assertNotIn("review", t.lower())
+        self.assertEqual(am.leak_problems(src[0]["text"].replace("k = 7", "")), ["review history 're-solve'"],
+                         "the packet may say re-solve; a student's text may not")
+
+    def test_a_solution_g2_corrected_is_marked_not_the_books_own(self):
+        lo = "lo:zz1s1-1-1"
+        runs = [lesson_run([
+            run_item("Ex8-6:36b", lo, g2={"verdict": "fix", "by": "S", "changed": ["answer", "less_specific", "solution"]}),
+            run_item("Ex8-6:35c", lo, g2={"verdict": "fix", "by": "S", "changed": ["answer", "answer_type", "marker"]}),
+            run_item("Ex8-6:22c", lo, g2={"verdict": "fix", "by": "S", "changed": ["printed_answer", "stem"]}),
+        ])]
+        ids = [am.item_question_id(it) for it in runs[0]["items"]]
+        bundle = {"nodes": [], "questions": [{"id": i, "lo": lo, "stem": "S", "answer": "A", "solution": ["x"],
+                                              "solution_provenance": "book_worked_epub"} for i in ids]}
+        prov = {q["id"]: q["solution_provenance"] for q in self.s5(runs, [bundle])["questions"]}
+        self.assertIn("CORRECTED", prov[ids[0]])
+        self.assertIn("not the book's own working", prov[ids[0]])
+        self.assertEqual(prov[ids[1]], "book_worked_epub", "a re-typed answer is still the book's working")
+        self.assertEqual(prov[ids[2]], "book_worked_epub", "a stem lead-in fix is not a correction of the working")
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
@@ -134,7 +157,7 @@ class S5Prompts(unittest.TestCase):
                 self.assertIn("you may open those image files as well", p)
             p_other = [c["prompt"] for c in inline["calls"] if c["label"].startswith("author:") and c["label"] != f"author:{lo}"]
             self.assertTrue(all("Figure(s)" not in x for x in p_other), "the rule only where a figure is named")
-        self.assertEqual(inline["result"]["prompts_version"], "s5-v4")
+        self.assertEqual(inline["result"]["prompts_version"], "s5-v5")
 
 
 class S6S7Inputs(unittest.TestCase):

@@ -546,6 +546,34 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
     c.notes.append(f"{printed} S3 item(s) printed in the book's notation were normalised")
     checks.append(c)
 
+    # ---- the app's KaTeX, the answer text and the asked forms (consistency review A1, A2, A9) -----------------
+    import assemble_lesson_bundle as alb
+    c = Check("katex", "Maths segments in student-facing text the app's KaTeX cannot parse = 0 (A2)")
+    rows = [r for b in bundles for r in alb.student_texts(b, "bundle")]
+    rows += [r for s_, cf in (content or {}).items() for r in alb.student_texts(cf, s_)]
+    rows += [r for r in alb.student_texts({"questions": gen_q}, "generated")]
+    try:
+        errs = alb.katex_errors(rows)
+    except alb.AssemblyError as exc:
+        errs = [{"where": "book", "segment": "", "why": f"the KaTeX check could not run: {exc}"}]
+    c.want, c.got = 0, len(errs)
+    for e in errs[:40]:
+        c.fail(e["where"], f"{e['segment'][:80]} — {e['why'][:120]}")
+    checks.append(c)
+    c = Check("answer_text", "Typed questions whose answer text is not their marker key, rendered = 0 (A1)")
+    bad = [p for b in bundles for p in alb.answer_problems(b)]
+    c.want, c.got = 0, len(bad)
+    for p in bad[:40]:
+        c.fail(p.split(":", 3)[0] + ":" + p.split(":", 3)[1] if p.count(":") >= 2 else "book", p)
+    checks.append(c)
+    c = Check("asked_forms", "Typed questions whose stem asks for a form the book's rules name, and whose marker does "
+              "not check it = 0 (A9)")
+    bad = [p for b in bundles for p in alb.form_problems(b, book)]
+    c.want, c.got = 0, len(bad)
+    for p in bad:
+        c.fail("book", p)
+    checks.append(c)
+
     # ---- S2's claims, where the lesson surfaces read them ------------------------------------
     c = Check("claims_served", "Claims in the bundles = claims in the lessons' content files")
     if content is not None:

@@ -98,6 +98,12 @@ and `docs/specs/extraction-pipeline.md` §5.
 | S5–S7 | ≈ $2.1 per objective (S5 ≈ $0.70) × ≈ 170 objectives (2.6/lesson × 65) | ≈ $350 (S5 ≈ $120) |
 | **total** | | **≈ $0.85–1.1k** |
 
+**Update 2026-09-27 — S5 to S7 as metered** (`runs/g10-math/cost.jsonl`): S5 $17.13 (≈ $1.3 per objective,
+including the superseded draft), S6 $8.63, S7 $4.66 — $30.42 for the chapter's 13 objectives, ≈ $2.3 per
+objective, so S5–S7 for the book is nearer ≈ $400 than $350 and S5 alone ≈ $220, not $120. The book total
+stays in the ≈ $0.85–1.1k range, towards its upper end. The "$0.70 per objective" above was this section's
+projection before S5 ran, never a measurement. Chapter 8 as a whole metered **$153.30**.
+
 Not in it: first-chapter overhead. This chapter actually spent more than the clean-run rates — S1 $13.98 (a
 rejected first run), S2–S4 $26.78 (superseded lesson-v3 runs and the figure re-solve resumes), S0b ~$36 lost to
 the usage limit — and wasted spend of that kind is avoidable, not projected. All figures are API-equivalent USD.

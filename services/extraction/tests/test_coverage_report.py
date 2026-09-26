@@ -64,7 +64,8 @@ class CoverageTest(unittest.TestCase):
     def test_the_fixture_is_green_and_every_equality_is_counted(self):
         code, rep = self.audit()
         self.assertEqual((code, rep["status"]), (0, "GREEN"))
-        self.assertEqual(rep["summary"], {"checks": 18, "hold": 18, "excepted": 0, "fail": 0})
+        # 18 + the consistency review's katex (A2), answer_text (A1) and asked_forms (A9)
+        self.assertEqual(rep["summary"], {"checks": 21, "hold": 21, "excepted": 0, "fail": 0})
         served = self.check(rep, "claims_served")
         self.assertEqual((served["want"], served["got"]), (served["want"], served["want"]))
         self.assertGreater(served["want"], 0)
@@ -140,6 +141,37 @@ class CoverageTest(unittest.TestCase):
         _, rep = self.audit(assemble=False)
         c = self.check(rep, "notation")
         self.assertEqual((c["got"], c["state"]), (2, "fails"))
+
+    def test_a_glued_latex_command_is_respaced_and_katex_is_the_judge(self):
+        # consistency review A2: S0b stores whitespace-stripped LaTeX ("\\triangleABC", "\\timesm", "\\m"); the
+        # assembly re-spaces it and the app's KaTeX then parses every student-facing segment
+        self.edit("runs/lesson/g10m8s2-1.json", lambda d: d["items"][0].update(
+            stem=d["items"][0]["stem"] + r" Area of $\triangleABC$, $2\timesm$, $x=3\m$ and "
+                 r"$x_{1}=-2y_{1}=-5x_{2}=7y_{2}=-2$."))
+        _, rep = self.audit()
+        self.assertEqual(self.check(rep, "katex")["got"], 0)
+        b = json.loads((self.seed / "g10m-c08.json").read_text())
+        stem = next(q["stem"] for q in b["questions"] if r"\triangle ABC" in q["stem"])
+        self.assertIn(r"2\times m", stem)
+        self.assertIn(r"x=3\ m", stem)
+        self.assertIn(r"x_{1}=-2 \quad y_{1}=-5 \quad x_{2}=7 \quad y_{2}=-2", stem)
+        # a hand edit after assembly that KaTeX refuses is red
+        p = self.seed / "g10m-c08.json"
+        b["questions"][0]["stem"] += r" $\frac{1}{$"
+        p.write_text(json.dumps(b))
+        _, rep = self.audit(assemble=False)
+        self.assertEqual(self.check(rep, "katex")["got"], 1)
+
+    def test_the_answer_text_is_the_marker_key_rendered(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assemble()
+        p = self.seed / "g10m-c08.json"
+        b = json.loads(p.read_text())
+        q = next(q for q in b["questions"] if isinstance(q.get("choices"), dict) and "marker" in q["choices"])
+        q["answer"] = "9 11"                                   # the PDF's text layer for 9/11 (A1)
+        p.write_text(json.dumps(b))
+        _, rep = self.audit(assemble=False)
+        self.assertEqual(self.check(rep, "answer_text")["got"], 1)
 
     def test_a_figures_point_labels_are_normalised_at_assembly(self):
         # the Chapter 8 pilot: coordinate plots labelled points "P(2;1)" — 107 spans the audit caught

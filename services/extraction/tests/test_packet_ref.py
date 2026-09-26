@@ -330,7 +330,7 @@ class S5ByRef(unittest.TestCase):
         rec = lambda r: next(x for x in r["result"]["records"] if x["lo"] == lo)   # noqa: E731
         self.assertTrue(any("truncated" in n for n in rec(inline)["notes"]))
         self.assertFalse(any("truncated" in n for n in rec(byref)["notes"]))
-        self.assertEqual(byref["result"]["prompts_version"], "s5-v4")
+        self.assertEqual(byref["result"]["prompts_version"], "s5-v5")
 
     def test_the_assembler_accepts_a_by_ref_final_run(self):
         (self.tmp / "i").mkdir(exist_ok=True)

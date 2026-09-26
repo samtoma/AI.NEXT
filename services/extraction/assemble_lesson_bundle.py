@@ -805,14 +805,16 @@ def student_texts(bundle: dict, where: str) -> list[dict]:
     """[{where, text}] for everything a student can be shown from a bundle or a lesson-content file."""
     rows = []
     for q in bundle.get("questions") or []:
-        rows += [{"where": q["id"], "text": t} for t in _strings({k: q.get(k) for k in
-                                                                  ("stem", "choices", "answer", "solution")})]
+        shown = {k: q.get(k) for k in ("stem", "answer", "solution", "correct_answer", "canonical_solution")}
+        ch = q.get("choices")
+        shown["choices"] = {k: v for k, v in ch.items() if k != "pending_review"} if isinstance(ch, dict) else ch
+        rows += [{"where": q["id"], "text": t} for t in _strings(shown)]
     for e in bundle.get("explanation_entries") or []:
         rows += [{"where": e["id"], "text": t} for t in _strings(e.get("content"))]
     for v in bundle.get("visuals") or []:
         rows += [{"where": v["id"], "text": t} for t in _strings({"caption": v.get("caption"), "spec": v.get("spec")})]
     for c in bundle.get("claims") or []:
-        rows += [{"where": f"claim:{c.get('lo')}", "text": c.get("text")}]
+        rows += [{"where": f"claim:{c.get('lo')}", "text": c.get("claim") or c.get("text")}]
     if "questions" not in bundle and "claims" in bundle:          # a lesson-content file: all of it is shown
         rows += [{"where": f"content:{where}", "text": t} for t in _strings(bundle)]
     return [r for r in rows if isinstance(r["text"], str) and "$" in r["text"]]
