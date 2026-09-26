@@ -1734,13 +1734,21 @@ def build_lesson_packet(book, manifest, blocks, maths, rec: dict, work: Path) ->
     headers = _headers(a["headers"], maths, missing)
     owner = {it: o["id"] for o in rec["objectives"] for it in o["exercise_items"]}
     we_owner = {w: o["id"] for o in rec["objectives"] for w in o["worked_examples"]}
+    # the figures of the words a question's parts share ("Given the following diagram: [figure]"): the
+    # stem of every part carries that text, so every part carries its figure — a blind solver that is
+    # told of a figure it is never shown cannot check the part (the Chapter 8 pilot, COLLECT-3)
+    header_figs: dict = {}
+    for h in a["headers"]:
+        header_figs.setdefault((h.get("exercise"), h.get("q")), []).extend(_figure_srcs(h))
     items = []
     for b in [x for x in bs if x["type"] == "exercise_item"] + a["pool"]:
         ref = item_ref(b)
         if ref not in owner:
             continue
         pa = b.get("printed_answer")
-        figs = _figure_srcs(b.get("problem"))
+        figs = list(dict.fromkeys(header_figs.get((b.get("exercise"), None), [])
+                                  + header_figs.get((b.get("exercise"), b.get("q")), [])
+                                  + _figure_srcs(b.get("problem"))))
         items.append({
             "ref": ref, "lo": owner[ref], "printed_page": b.get("printed_page"),
             "section": b.get("section"), "shortcode": b.get("shortcode"),
@@ -1858,10 +1866,14 @@ def lesson_args(book, manifest, blocks, maths, objectives_dir: Path, lessons: li
 
 
 # ============================================================================ lesson-runs (G2 handoff)
-def lesson_runs(run: dict, g2: dict | None = None) -> dict[str, dict]:
+def lesson_runs(run: dict, g2: dict | None = None, draft: bool = False) -> dict[str, dict]:
     """A saved lesson-workflow return value -> {slug: runs/<book>/lesson/<slug>.json}, with G2's
     verdicts on the items. Validated against assemble_lesson_bundle.py's LessonRun. An item whose
-    typing is invalid must carry a G2 `fix` (with the corrected fields) or `exclude`."""
+    typing is invalid must carry a G2 `fix` (with the corrected fields) or `exclude`.
+
+    `draft` is for G2's own page, which must show those items BEFORE G2 has ruled on them: the
+    files go to runs/<book>/lesson-draft/ (never read by assembly, the coverage audit or the loader),
+    each marked `draft: true` with the items still owed a G2 verdict in `pending_g2`."""
     from assemble_lesson_bundle import LessonRun  # WP-P4's model: the handoff's other side
     g2 = g2 or {}
     by = g2.get("by")
@@ -1870,7 +1882,7 @@ def lesson_runs(run: dict, g2: dict | None = None) -> dict[str, dict]:
     for l in run.get("lessons") or []:
         if not l:
             continue
-        items = []
+        items, pending = [], []
         for it in l.get("items") or []:
             key = f"{l['lesson']}:{it['ref']}"
             v = verdicts.get(key)
@@ -1879,15 +1891,34 @@ def lesson_runs(run: dict, g2: dict | None = None) -> dict[str, dict]:
                 if not by:
                     raise StageError("G2 verdicts need a reviewer: set `by` in the verdicts file")
                 if v.get("verdict") == "fix":
-                    it.update(v.get("fields") or {})
-                it["g2"] = {"verdict": v["verdict"], "by": by, "note": v.get("note")}
+                    fields = v.get("fields") or {}
+                    # decision 43: an answer-only item is marked on its answer alone; the book's
+                    # solution stays exactly as the book has it (nothing is written in its place)
+                    if fields.get("answer_only") and "solution" in fields:
+                        raise StageError(f"{key}: an answer_only fix must leave the book's solution as it is")
+                    changed = sorted(k for k, val in fields.items() if it.get(k) != val)
+                    it.update(fields)
+                it["g2"] = {"verdict": v["verdict"], "by": by, "note": v.get("note"),
+                            # what a fix actually changed: S5 reads a disagreement as a student's error only
+                            # where the book's answer stood (assemble_misconceptions.s5_args)
+                            **({"changed": changed} if v.get("verdict") == "fix" else {})}
             if it.get("typing_problems") and not v:
-                problems.append(f"{key}: {'; '.join(it['typing_problems'])} (needs a G2 fix or exclude)")
+                if draft:
+                    pending.append(key)
+                else:
+                    problems.append(f"{key}: {'; '.join(it['typing_problems'])} (needs a G2 fix or exclude)")
             items.append(it)
         rec = {k: l[k] for k in ("lesson", "claims", "visuals", "viz_gaps", "teacher_only") if k in l}
         rec["items"] = items
         rec["source_run"] = {"prompts_version": run.get("prompts_version"), "stage": run.get("stage"),
-                             **({"embedded": run["embedded"]} if run.get("embedded") else {})}
+                             **({"collect_version": run["collect_version"]} if run.get("collect_version") else {}),
+                             **({"run_id": run["run_id"]} if run.get("run_id") else {}),
+                             **({"embedded": run["embedded"]} if run.get("embedded") else {}),
+                             **({"recollected": {k: run["recollected"][k] for k in ("from_run", "collect_version", "script")}}
+                                if run.get("recollected") else {})}
+        if draft:
+            rec["draft"] = True
+            rec["pending_g2"] = pending
         rec["checks"] = {k: l.get(k) for k in ("verify", "oracle", "counts", "claims_dropped",
                                                   "figure_blocked", "rejected") if k in l}
         try:
@@ -2017,8 +2048,8 @@ def cmd_lesson_runs(a) -> int:
     run = json.loads(Path(a.run).read_text())
     run = run.get("result", run)
     g2 = json.loads(Path(a.g2).read_text()) if a.g2 else None
-    files = lesson_runs(run, g2)
-    out = p["runs"] / "lesson"
+    files = lesson_runs(run, g2, draft=a.draft)
+    out = p["runs"] / ("lesson-draft" if a.draft else "lesson")
     out.mkdir(parents=True, exist_ok=True)
     for slug, rec in files.items():
         (out / f"{slug}.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1) + "\n")
@@ -2069,6 +2100,9 @@ def main(argv: list[str] | None = None) -> int:
     common(p)
     p.add_argument("run", help="the saved lesson.workflow.js return value")
     p.add_argument("--g2", help="G2 verdicts JSON: {by, items: {'<slug>:<ref>': {verdict, note, fields}}}")
+    p.add_argument("--draft", action="store_true",
+                   help="for G2's page only: write runs/<book>/lesson-draft/ even while items still owe G2 a "
+                        "verdict (listed as pending_g2); assembly never reads it")
     p.set_defaults(fn=cmd_lesson_runs)
     a = ap.parse_args(argv)
     try:

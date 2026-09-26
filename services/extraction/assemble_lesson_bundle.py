@@ -64,6 +64,10 @@ NOTATION (decision 15, FR-4308): a decimal comma becomes a point and `(x; y)` be
 `(x, y)` — likewise intervals `[a; b)` and sets `\\{a; b\\}` — in stems, choices, answers,
 marker keys, solutions, captions, claims and worked-example entries. Words and contexts (the
 Rand, "gradient") stay as printed. A bracket whose content reads as prose is left alone.
+An aligned derivation `\\begin{align*}…\\end{align*}` inside `$…$` becomes `\\begin{aligned}…
+\\end{aligned}`: the app renders every `$…$` inline, and KaTeX draws align* only in display mode —
+inline it shows a red parse error with the raw source (the Chapter 8 pilot's "&amp;": KaTeX's error
+text, HTML-escaped). The coverage audit counts any align left in a bundle as residual.
 
 PART PREREQUISITES (FR-4317) are DERIVED — every objective of part n-1 before every objective
 of part n — and checked for cycles together with the book's own edges. They are never written
@@ -123,6 +127,9 @@ _WORD = re.compile(r"[A-Za-z]{3,}")
 # `;`-separated bracket groups, via semicolon_groups) in the assembled bundles and
 # requires 0.
 RESIDUAL_DECIMAL = re.compile(r"\d(?:,|\{,\})\d")
+# display-only environments KaTeX refuses inside the app's inline `$…$` (align, align*, eqnarray…)
+DISPLAY_ENV = re.compile(r"\\(begin|end)\{(align\*?|eqnarray\*?|gather\*?|multline\*?)\}")
+_ALIGN_ENV = re.compile(r"\\(begin|end)\{align\*?\}")
 
 
 def _mathy(inner: str) -> bool:
@@ -186,6 +193,9 @@ def normalise(text: str | None) -> tuple[str | None, Counter]:
     counts: Counter = Counter()
     if not text:
         return text, counts
+    text, n0 = _ALIGN_ENV.subn(lambda m: f"\\{m.group(1)}{{aligned}}", text)
+    if n0:
+        counts["aligned"] += n0 // 2 or 1
     out, n1 = _DEC_LATEX.subn(".", text)
     out, n2 = _DEC_COMMA.subn(".", out)
     if n1 + n2:
@@ -209,6 +219,7 @@ def residual_notation(text: str | None) -> list[str]:
     if not text:
         return []
     hits = [m.group(0) for m in RESIDUAL_DECIMAL.finditer(text)]
+    hits += [m.group(0) for m in DISPLAY_ENV.finditer(text)]
     hits += [text[o:c + 1] for o, c, _ in semicolon_groups(text)]
     return hits
 
@@ -358,6 +369,12 @@ class RunItem(BaseModel):
     printed_page: int
     shortcode: Optional[str] = None
     teacher_only: bool = False
+    # G2 (decisions 41 and 43; contracts/pipeline-handoff.md). `less_specific`: the keys of OTHER
+    # options that are also true, less precisely — the app returns such a pick for re-entry and never
+    # marks it wrong. `answer_only`: the book has no working, so the item is marked on its answer and
+    # the tutor gives no step-by-step explanation.
+    less_specific: Optional[list[str]] = None
+    answer_only: Optional[bool] = None
 
     @model_validator(mode="after")
     def _typed(self) -> "RunItem":
@@ -386,6 +403,25 @@ class RunItem(BaseModel):
             raise ValueError(f"{self.ref}: a {self.answer_type} item needs its answer key")
         if self.verification == "no_printed_answer" and self.printed_answer:
             raise ValueError(f"{self.ref}: 'no_printed_answer' but a printed answer is given")
+        if self.less_specific is not None:
+            keys = [c.get("key") for c in self.choices or []]
+            if self.answer_type != "choice":
+                raise ValueError(f"{self.ref}: less_specific belongs to a choice item, not {self.answer_type}")
+            bad = [k for k in self.less_specific if k not in keys]
+            if not self.less_specific or bad or len(set(self.less_specific)) != len(self.less_specific):
+                raise ValueError(f"{self.ref}: less_specific {self.less_specific} must name other options "
+                                 f"(keys {keys}), each once")
+            if self.answer in self.less_specific:
+                raise ValueError(f"{self.ref}: the key {self.answer!r} is the most specific answer, not a "
+                                 "less specific one")
+        if self.answer_only is not None:
+            if self.answer_only is not True or self.answer_type != "expression":
+                raise ValueError(f"{self.ref}: answer_only is `true` on a marked expression item only")
+            pair = next((p for p in ((self.model_extra or {}).get("verify") or {}).get("pairs") or []
+                         if str(p.get("pair_id", "")).endswith("|blind~printed")), None)
+            if not (self.printed_answer and self.blind_answer and pair and pair.get("verdict") == "equivalent"):
+                raise ValueError(f"{self.ref}: answer_only marks the answer alone, so its key must be agreed "
+                                 "by the printed answer AND the blind re-solve (blind~printed equivalent)")
         return self
 
     def question_id(self) -> str:
@@ -569,7 +605,8 @@ def _norm(text: str | None, where: str, report: Report) -> str | None:
     out, c = normalise(text)
     if c:
         report.notation.update(c)
-        report.notation_items.add(where)
+        if c.get("decimal") or c.get("pair"):       # decision 15's items; `aligned` is presentation only
+            report.notation_items.add(where)
     return out
 
 
@@ -683,16 +720,21 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
                                 "expression": "short"}[it.answer_type],
                        "stem": stem}
             if it.answer_type == "choice":
-                q["choices"] = [{"key": c["key"], "text": _norm(c["text"], wkey, report)}
-                                for c in it.choices]
+                options = [{"key": c["key"], "text": _norm(c["text"], wkey, report)} for c in it.choices]
+                # decision 41: other TRUE options travel as `less_specific` (pipeline-handoff.md)
+                q["choices"] = ({"options": options, "less_specific": list(it.less_specific)}
+                                if it.less_specific else options)
                 q["answer"] = it.answer
             elif it.answer_type == "expression":
                 marker = dict(it.marker)
                 marker["key"] = _norm(marker["key"], wkey, report)
-                q["choices"] = {"marker": marker}
-                # the printed answer, as text, for the tutor and the console (schemas.Question)
-                q["answer"] = _norm(it.printed_answer or it.epub_final_answer or marker["key"],
-                                    wkey, report)
+                q["choices"] = {"marker": marker, **({"answer_only": True} if it.answer_only else {})}
+                # the answer as text, for the tutor and the console (schemas.Question): the printed
+                # answer when all three agreed and G2 changed nothing; otherwise the key G2 approved —
+                # never a printed answer G2 corrected (the S5 pilot read "y = 2x + 12" beside the key
+                # y = 2x + 7 of a book error G2 had fixed)
+                trusted = it.verification == "agreed" and not (it.g2 and it.g2.verdict == "fix")
+                q["answer"] = _norm((it.printed_answer if trusted else None) or marker["key"], wkey, report)
             else:
                 ans = _norm(it.answer, wkey, report).replace(" ", "")
                 if not re.fullmatch(r"-?\d+(?:\.\d+)?(?:/\d+)?", ans.replace("−", "-")):
@@ -805,7 +847,7 @@ def marker_check(rows: list[dict]) -> dict:
 
 def apply_marker_check(bundles: dict[str, dict], report: Report) -> None:
     rows = [{"id": q["id"], "choices": q.get("choices")} for b in bundles.values() for q in b["questions"]
-            if isinstance(q.get("choices"), dict)]
+            if isinstance(q.get("choices"), dict) and "marker" in q["choices"]]
     if not rows:
         return
     res = marker_check(rows)
@@ -873,6 +915,9 @@ def load_inputs(manifest_path: Path, objectives_dir: Path, runs_dir: Path,
             runs[les.slug] = LessonRun.model_validate_json(rp.read_text())
         except ValidationError as exc:
             raise AssemblyError(f"{les.slug}: {exc}") from exc
+        if (runs[les.slug].model_extra or {}).get("draft"):
+            raise AssemblyError(f"{les.slug}: {rel(rp)} is a DRAFT for G2's page (lesson-runs --draft), "
+                                "written before G2 ruled on its items; assemble from the G2-signed split")
         inputs[mod["id"]].update({f"objectives/{op.name}": op, f"runs/lesson/{rp.name}": rp})
     return manifest, all_lessons, wanted, objectives, runs, inputs
 

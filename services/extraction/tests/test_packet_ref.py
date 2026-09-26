@@ -82,8 +82,10 @@ def same_as_inline(inline_prompt: str, byref_prompt: str) -> tuple[str, str]:
     if packet_ref.READ_RULE not in byref_prompt:            # a prompt that names no file is unchanged
         return inline_prompt, byref_prompt
     s = splice_as_inline(byref_prompt)
-    if s.endswith("\n\n" + packet_ref.READ_RULE) and not inline_prompt.endswith(packet_ref.READ_RULE):
-        s = s[: -len("\n\n" + packet_ref.READ_RULE)]
+    if "\n\n" + packet_ref.READ_RULE in s and packet_ref.READ_RULE not in inline_prompt:
+        # appended where the inline prompt had no rule — at the end, or before a rule both modes carry
+        # (the figure rule, s5-v4/s6-v4/s7-v4)
+        s = s.replace("\n\n" + packet_ref.READ_RULE, "", 1)
     x = inline_prompt
     for r in INLINE_RULES:
         x = x.replace(r, "<<RULE>>")
@@ -328,7 +330,7 @@ class S5ByRef(unittest.TestCase):
         rec = lambda r: next(x for x in r["result"]["records"] if x["lo"] == lo)   # noqa: E731
         self.assertTrue(any("truncated" in n for n in rec(inline)["notes"]))
         self.assertFalse(any("truncated" in n for n in rec(byref)["notes"]))
-        self.assertEqual(byref["result"]["prompts_version"], "s5-v3")
+        self.assertEqual(byref["result"]["prompts_version"], "s5-v4")
 
     def test_the_assembler_accepts_a_by_ref_final_run(self):
         (self.tmp / "i").mkdir(exist_ok=True)
@@ -404,7 +406,7 @@ class S6S7ByRef(unittest.TestCase):
         _, b = self.run2(self.T.FAMILIES_WF, args, compact, {
             "author:lo:g10m4s2-1-1": {"lo_id": "lo:g10m4s2-1-1", "families": [spec], "infeasible": []}})
         self.assertNotIn("Solve $2x = 4$", json.dumps(compact, ensure_ascii=False))
-        self.assertEqual(b["result"]["prompts_version"], "s6-v3")
+        self.assertEqual(b["result"]["prompts_version"], "s6-v5")
         for bad, words in ((dict(compact, objectives=objs), "not both"),
                            ({k: v for k, v in compact.items() if k != "objective_refs"}, "needs both")):
             rep = self.T.run_workflow(self.T.FAMILIES_WF, bad, {})
@@ -428,7 +430,11 @@ class S6S7ByRef(unittest.TestCase):
     def test_s6_grade_is_blind_and_round_trips(self):
         args = self.G.grade_args(self.book, self.gs)
         [compact] = self.G.grade_args_by_ref(self.book, self.gs, self.tmp / "s6g")
-        _, b = self.run2(self.T.FAMILIES_WF, args, compact, self.grade_resp)
+        a, b = self.run2(self.T.FAMILIES_WF, args, compact, self.grade_resp)
+        # s6-v5: a typed answer is asked for as the bare value, with no name in front
+        plain = [c["prompt"] for run in (a, b) for c in run["calls"] if 'Answer in "plain"' in c["prompt"]]
+        self.assertTrue(plain)
+        self.assertTrue(all("with no name in front: [0, 8], not x = [0, 8]" in p for p in plain))
         d = Path(compact["by_ref"]["dir"])
         sealed = []
         for fam in self.gs["families"]:
@@ -492,7 +498,12 @@ class S6S7ByRef(unittest.TestCase):
             "author:g10m8s4-1": {"templates": [], "gaps": []}, "author:g10m2s2-1": None})
         self.assertIn("zz_unapproved_kind", {g["need_kind"] for g in b["result"]["gaps"]})
         self.assertEqual(set(compact["contract_kinds"]), set(args["contract"]))
-        self.assertEqual(b["result"]["prompts_version"], "s7-v3")
+        self.assertEqual(b["result"]["prompts_version"], "s7-v6")
+        # s7-v6: the two author errors the Chapter 8 pilot normalised are stated as rules, inline and by reference
+        for run in (a, b):
+            p = next(c["prompt"] for c in run["calls"] if c["label"] == "author:g10m8s3-1")
+            self.assertIn("Only ids from THAT OBJECTIVE'S OWN\n  \"misconceptions\" list", p)
+            self.assertIn("ONE PREDICATE, ONE MISCONCEPTION: never list a predicate twice.", p)
         # Q2 (2026-09-26): the author sees the WHOLE contract by reference; inline cuts it at 9000
         # characters, which drops the last kinds (venn_builder, area_model, …) off the prompt
         contract = (Path(compact["by_ref"]["dir"]) / "contract.txt").read_text()
@@ -507,6 +518,19 @@ class S6S7ByRef(unittest.TestCase):
             rep = self.T.run_workflow(self.T.WIDGETS_WF, bad, {})
             self.assertFalse(rep["ok"])
             self.assertIn(words, rep["error"])
+
+    def test_s7_author_only_some_lessons(self):
+        args = self.GW.author_args(self.bookobj, self.graph, "course:us-g10-math-en")
+        lessons = sorted({self.GW._lesson_of(o["lo_id"]) for o in args["objectives"]})
+        self.assertGreater(len(lessons), 1)
+        some = self.GW.only_lessons(args, [lessons[0]])
+        compact = self.GW.author_args_by_ref(some, self.tmp / "s7a-only")
+        self.assertEqual([r["lesson"] for r in compact["lesson_refs"]], [lessons[0]])
+        self.assertEqual(sorted(p.name for p in (Path(compact["by_ref"]["dir"]) / "lessons").iterdir()),
+                         [f"{lessons[0]}.txt"])
+        self.assertEqual(compact["contract_kinds"], self.GW.author_args_by_ref(args, self.tmp / "s7a-all")["contract_kinds"])
+        with self.assertRaises(ValueError):
+            self.GW.only_lessons(args, ["no-such-lesson"])
 
     # ---------------------------------------------------------------- S7 verify (the blind verifier)
     def test_s7_verify_is_blind_and_round_trips(self):
@@ -530,7 +554,10 @@ class S6S7ByRef(unittest.TestCase):
                                 "predicates": [{"predicate": d["predicate"], "matches": True, "why": "…"} for d in w["diagnostics"]]})
             responses[f"verify:{tid}"] = {"results": results}
         responses["verify:wt:u2-3-1:variation-direct"] = None   # a skipped verifier
-        _, b = self.run2(self.T.WIDGETS_WF, args, compact, responses)
+        a, b = self.run2(self.T.WIDGETS_WF, args, compact, responses)
+        for run in (a, b):   # s7-v6: the reading comes back as typed JSON values
+            self.assertTrue(all("Write each field as a JSON VALUE, never as text" in c["prompt"] for c in run["calls"]))
+            self.assertTrue(all('"predicate" is the predicate\'s NAME exactly as listed' in c["prompt"] for c in run["calls"]))
         d = Path(compact["by_ref"]["dir"])
         packet = "\n".join(p.read_text() for p in d.rglob("*.txt")) + json.dumps(compact, ensure_ascii=False)
         for q in questions:   # the stored spec, the solution and the id never reach the verifier's files

@@ -91,6 +91,40 @@ def _norm(label: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", (label or "").lower()).strip()
 
 
+# FR-4308 / decision 15 in the catalogue: S5 writes in the APP's notation (its RULES), so a coordinate pair
+# is "(x, y)" — never normalise this text with the bundle's book-notation normaliser, which would read
+# "(-2,3)" as the decimal -2.3. What must not appear: a decimal comma OUTSIDE a pair ("9,60", "\\text{2,5}",
+# "2{,}5") and a book-style pair "(x; y)". Checked fail-closed at assembly (the verifier does not judge notation).
+# Inside brackets a comma separates things — a pair (-2,3), a set \{1,2,3\}, an interval [1,2] — so a
+# "digit,digit" is a decimal comma only OUTSIDE every bracket (or written 2{,}5, which is always one).
+_GROUP = re.compile(r"\\\{[^{}]*?\\\}|\([^()]*\)|\[[^\[\]]*\]")
+_DECIMAL_COMMA = re.compile(r"(?<![0-9])[0-9]+,[0-9]+(?![0-9])")
+_LATEX_DECIMAL_COMMA = re.compile(r"[0-9]\{,\}[0-9]")
+_BOOK_PAIR = re.compile(r"\(\s*[-−]?\s*[0-9.,]+\s*;\s*[-−]?\s*[0-9.,]+\s*\)")
+
+
+def notation_problems(text: str) -> list[str]:
+    t = text or ""
+    out = [f"book-style pair {m.group(0)!r}" for m in _BOOK_PAIR.finditer(t)]
+    out += [f"decimal comma {m.group(0)!r}" for m in _LATEX_DECIMAL_COMMA.finditer(t)]
+    rest = t
+    for _ in range(6):                                    # innermost brackets first, a few levels deep
+        rest, n = _GROUP.subn(" ", rest)
+        if not n:
+            break
+    out += [f"decimal comma {m.group(0)!r}" for m in _DECIMAL_COMMA.finditer(rest)]
+    return out
+
+
+def _student_texts(m: dict):
+    for k in ("label", "description", "signal"):
+        if isinstance(m.get(k), str):
+            yield k, m[k]
+    for st in m.get("refutation") or []:
+        if isinstance(st, dict) and isinstance(st.get("text_md"), str):
+            yield f"refutation step {st.get('step')}", st["text_md"]
+
+
 def validate_catalogue(bundle: dict, *, new_ids: set[str] | None = None,
                        max_per_objective: int | None = None,
                        book: "book_config.Book | None" = None) -> list[str]:
@@ -134,6 +168,10 @@ def validate_catalogue(bundle: dict, *, new_ids: set[str] | None = None,
                 problems.append(f"{mid}: refutation steps are not numbered 1..{len(steps)}")
             if any(not isinstance(s.get("text_md"), str) or not s["text_md"].strip() for s in steps):
                 problems.append(f"{mid}: a refutation step is empty")
+        if book is None or (book.notation or {}).get("decimal", "point") == "point":
+            for where, text in _student_texts(m):
+                for bad in notation_problems(text):
+                    problems.append(f"{mid}: {where}: {bad} (FR-4308: a decimal point and (x, y) pairs)")
         for mp in m["maps"]:
             if not mp.get("question_id") or not isinstance(mp.get("choice_text"), str):
                 problems.append(f"{mid}: a map needs question_id and choice_text: {mp}")
@@ -321,7 +359,19 @@ def reconcile_bundle(bundle: dict, entries: dict[str, dict], alias_of: dict[str,
                     kept.append({**d, "misconception_id": t})
                     referenced.add(t)
             ch["diagnostics"] = kept
-            if not kept:
+            held = []
+            for d in ch.get("pending_review") or []:   # decision 47: held mappings follow the catalogue too
+                t = resolve(qid, lo, d.get("misconception_id"), f"held predicate {d.get('predicate')}", widget=True)
+                if t is not None and is_unfit(q, t, predicate=d.get("predicate")):
+                    log.append(f"drop held {qid} predicate {d.get('predicate')}: the verifier judged it does not encode {t}")
+                elif t is not None:
+                    held.append({**d, "misconception_id": t})
+            if "pending_review" in ch:
+                if held:
+                    ch["pending_review"] = held
+                else:
+                    del ch["pending_review"]
+            if not kept and not held:
                 errors.append(f"{qid}: widget left with no diagnostic — it could mark an answer wrong and "
                               f"never say why (ADR-0009). S7 must re-author it or drop it")
     out["misconceptions"] = [
@@ -357,10 +407,39 @@ def assemble(run_paths: list[Path], book_name: str) -> tuple[dict, list[dict], l
     return catalogue, dropped, unfit, problems
 
 
+# a G2 fix that touched any of these replaced the book's answer, or the question the re-solve was shown (a stem
+# fix): the disagreement was the book's (or ours), not a student's
+ANSWER_FIELDS = {"answer", "marker", "answer_type", "printed_answer", "epub_final_answer", "solution", "stem"}
+
+
+def item_question_id(it: dict) -> str:
+    """The question id the assembler mints for a lesson-run item (schemas' own minting)."""
+    import schemas
+    return (schemas.worked_example_question_id(it["lo"], int(it["ref"][2:])) if it["ref"].startswith("WE")
+            else schemas.exercise_question_id(it["lo"], it["ref"]))
+
+
+def figures_by_question(lesson_runs: list[dict]) -> dict[str, list[str]]:
+    """Question id (and its worked-example entry id, expl:…) -> the figure image files the item's stem
+    shows as [figure], from the lesson runs. S5, S6 and S7 hand them to agents that must SEE the diagram:
+    the pilot's S5 draft stripped every figure-label option (points A–E, shapes W–Z) because its author
+    was shown "[figure]" and could not open the image."""
+    out: dict[str, list[str]] = {}
+    for run in lesson_runs:
+        for it in run.get("items") or []:
+            figs = [f for f in it.get("figures") or [] if f]
+            if figs:
+                qid = item_question_id(it)
+                out[qid] = figs
+                out["expl:" + qid.removeprefix("q:")] = figs
+    return out
+
+
 def s5_args(book, bundles: list[dict], lesson_runs: list[dict], stage: str,
             distractors: list[dict] | None = None, draft: dict | None = None) -> dict:
     """The args of runbook/misconceptions.workflow.js, from the assembled bundles and lesson runs."""
     objectives, questions, dists = [], [], []
+    figs = figures_by_question(lesson_runs)
     for b in bundles:
         for n in b.get("nodes", []):
             if n["kind"] == "learning_objective" and book.owns_lo(n["id"]):
@@ -371,10 +450,30 @@ def s5_args(book, bundles: list[dict], lesson_runs: list[dict], stage: str,
             rec = {"id": q["id"], "lo": q["lo"], "kind": kind, "stem": q["stem"], "answer": q.get("answer"),
                    "canonical_solution": q["solution"], "solution_provenance": q.get("solution_provenance"),
                    "source_page": q.get("source_page")}
-            if isinstance(q.get("choices"), list):
-                rec["choices"] = [{"key": c["key"], "text": c["text"]} for c in q["choices"]]
+            opts = (q.get("choices") or {}).get("options") if isinstance(q.get("choices"), dict) else q.get("choices")
+            if isinstance(opts, list):
+                rec["choices"] = [{"key": c["key"], "text": c["text"]} for c in opts]
                 dists += [{"lo": q["lo"], "origin": "book", "ref": q["id"], "question_id": q["id"],
-                           "text": c["text"]} for c in q["choices"] if c["key"] != q.get("answer")]
+                           "text": c["text"]} for c in opts if c["key"] != q.get("answer")]
+            if figs.get(q["id"]):
+                rec["figures"] = figs[q["id"]]
+            questions.append(rec)
+        # the book's teaching items (proofs, sketches, several-point answers: worked examples, not
+        # question rows) are canonical solutions too — an objective taught only by them is not
+        # "without a canonical solution" (the pilot skipped lo:g10m8s1-1-1 for that)
+        for e in b.get("explanation_entries", []):
+            if e.get("entry_type") != "worked_example" or not book.owns_lo(e.get("lo", "")):
+                continue
+            content = e.get("content") or []
+            problem = next((c.get("text_md") for c in content if c.get("kind") == "problem"), "")
+            steps = [c.get("text_md") for c in content if "step" in c]
+            if not steps:
+                continue
+            rec = {"id": e["id"], "lo": e["lo"], "kind": "worked_example", "stem": problem, "answer": None,
+                   "canonical_solution": steps, "solution_provenance": "book (teaching item)",
+                   "source_page": e.get("source_page")}
+            if figs.get(e["id"]):
+                rec["figures"] = figs[e["id"]]
             questions.append(rec)
     sources = []
     for run in lesson_runs:
@@ -383,15 +482,22 @@ def s5_args(book, bundles: list[dict], lesson_runs: list[dict], stage: str,
                 sources.append({"lo": c["lo"], "kind": "caution", "ref": c["anchor"],
                                 "page": c.get("printed_page"), "text": c["text"]})
         for it in run.get("items") or []:
-            if it.get("verification") == "disputed" and it.get("blind_answer"):
-                import schemas   # the assembler's own minting, so the ref is the question's real id
-                qid = (schemas.worked_example_question_id(it["lo"], int(it["ref"][2:])) if it["ref"].startswith("WE")
-                       else schemas.exercise_question_id(it["lo"], it["ref"]))
-                sources.append({"lo": it["lo"], "kind": "resolve_disagreement", "ref": qid,
+            # A re-solve's wrong turn is evidence of a student error only where G2 kept the book's answer
+            # (the re-solve was the odd one out). A disagreement G2 FIXED was the book's error or our
+            # typing / part numbering, one it EXCLUDED is out of practice, and one with no verdict is not
+            # settled: none of those says anything about students (the pilot's S5 draft flagged them all).
+            g2 = it.get("g2") or {}
+            book_answer_stood = g2.get("verdict") == "accept" or (
+                g2.get("verdict") == "fix" and not set(g2.get("changed") or ["?"]) & ANSWER_FIELDS)
+            # and the re-solve really took another turn: one of its pairs was judged different
+            blind_differs = any(str(p.get("pair_id", "")).split("|")[-1].startswith("blind~") and p.get("verdict") == "different"
+                                for p in (it.get("verify") or {}).get("pairs") or [])
+            if it.get("verification") == "disputed" and it.get("blind_answer") and book_answer_stood and blind_differs:
+                sources.append({"lo": it["lo"], "kind": "resolve_disagreement", "ref": item_question_id(it),
                                 "page": it.get("printed_page"),
-                                "text": f"An independent re-solve answered {it['blind_answer']}; the printed answer is "
-                                        f"{it.get('printed_answer') or '(none)'} and the book's solution ends "
-                                        f"{it.get('epub_final_answer') or '(unread)'}."})
+                                "text": f"An independent re-solve answered {it['blind_answer']}; the book's answer, "
+                                        f"kept at review (G2), is {it.get('printed_answer') or it.get('epub_final_answer') or '(none)'}."
+                                        + (f" Reviewer's note: {g2['note']}" if g2.get("note") else "")})
     args = {"book": book.book, "stage": stage, "language": book.language,
             "notation": book.notation or {"decimal": "point", "pair_separator": "comma"},
             "objectives": sorted(objectives, key=lambda o: o["id"]), "questions": questions,
@@ -443,6 +549,8 @@ def _js_question_block(qs: list[dict], notes: list, clip: bool = True) -> str:
         if js_truthy(q.get("solution_provenance")):
             head += f" — solution: {js(q['solution_provenance'])}"
         lines = [head, f"  Q: {js(q.get('stem'))}"]
+        if isinstance(q.get("figures"), list) and len(q["figures"]):
+            lines.append("  Figure(s): " + ", ".join(js(f) for f in q["figures"]))
         ch = q.get("choices")
         if isinstance(ch, list) and len(ch):
             lines.append("  Options: " + "   ".join(f"{js(c.get('key'))}) {js(c.get('text'))}" for c in ch))
@@ -478,7 +586,8 @@ def s5_args_by_ref(args: dict, directory: Path) -> dict:
             shards.put(f"o/{tail}.questions.txt", _js_question_block(qs, [], clip=False))
         if srcs:
             shards.put(f"o/{tail}.sources.txt", _js_source_block(srcs, [], clip=False))
-        refs[o["id"]] = {"questions": len(qs), "sources": len(srcs)}
+        refs[o["id"]] = {"questions": len(qs), "sources": len(srcs),
+                         "figures": sum(len(q.get("figures") or []) for q in qs)}
     compact = {k: v for k, v in args.items() if k not in ("questions", "sources")}
     compact["by_ref"] = shards.finish({"book": args["book"], "s5_stage": args["stage"]})
     compact["counts"] = {"questions": len(args["questions"]), "sources": len(args["sources"])}

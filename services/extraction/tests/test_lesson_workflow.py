@@ -282,7 +282,8 @@ class LessonConveyor(unittest.TestCase):
                          "answer": "B", "typing_problems": []}}}}
         files = ao.lesson_runs(rep["result"], g2)
         fixed = {i["ref"]: i for i in files["g10m8s3-1"]["items"]}["Ex8-3:2"]
-        self.assertEqual(fixed["g2"], {"verdict": "fix", "by": "Samuel", "note": "two options"})
+        self.assertEqual(fixed["g2"], {"verdict": "fix", "by": "Samuel", "note": "two options",
+                                       "changed": ["answer", "choices", "typing_problems"]})   # what the fix changed
 
     def test_the_books_answer_rules_reach_the_keys(self):
         # backlog 30/31: a form the stem asks for is on the marker whatever the typing said; the

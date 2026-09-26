@@ -54,6 +54,11 @@ const STUBS = {
     stub: pathToFileURL(path.join(HERE, "stubs", "next-headers.mjs")).href,
     entrypoints: [
       "capture-prompts.mts",
+      // renders the REAL lesson and Ask builders over the fake pool to prove
+      // an `answer_only` question's working never reaches the tutor (Samuel's
+      // G2 answer 22). Same `lib/lesson.ts` -> `auth/principal.ts` import; no
+      // student, so no principal.
+      "answer-only-prompts.test.mts",
       // renders the same prompt builders for each address register, and
       // reaches `lib/lesson.ts` -> `auth/principal.ts` to do it (P6)
       "prompt-address.test.mts",

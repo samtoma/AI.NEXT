@@ -97,6 +97,30 @@ class MeterTest(unittest.TestCase):
         line = self.run_meter(already={"a1": "wf_earlier"})
         self.assertEqual([s["agent_id"] for s in line["skipped_already_metered"]], ["a1"])
 
+    def test_a_resume_under_the_same_run_id_meters_only_its_new_agents(self):
+        """A resume keeps the run id. `--resumed` records a second line carrying only the agents
+        the resume ran; every agent already in the ledger is skipped, so nothing is billed twice
+        and nothing the resume spent is lost."""
+        ledger = self.tmp / "cost-resume.jsonl"
+        base = ["record", "--book", "prep3-social-ar", "--stage", "S2", "--run-record", str(self.record),
+                "--transcripts", str(self.tdir), "--ledger", str(ledger)]
+        with contextlib.redirect_stdout(io.StringIO()):
+            meter_run.main(base)
+        first = json.loads(ledger.read_text().splitlines()[0])
+        # pretend the first record had only metered a1: the resume then ran the others
+        first["agents"] = [a for a in first["agents"] if a["agent_id"] == "a1"]
+        ledger.write_text(json.dumps(first) + "\n")
+        with contextlib.redirect_stdout(io.StringIO()):
+            meter_run.main(base + ["--resumed"])
+        lines = [json.loads(l) for l in ledger.read_text().splitlines()]
+        self.assertEqual(len(lines), 2)
+        self.assertEqual(lines[1]["resume_of"], lines[0]["run_id"])
+        self.assertNotIn("a1", [a["agent_id"] for a in lines[1]["agents"]])
+        self.assertEqual([s["agent_id"] for s in lines[1]["skipped_already_metered"]], ["a1"])
+        with contextlib.redirect_stdout(io.StringIO()):
+            meter_run.main(base + ["--resumed"])          # a resume that ran nothing new records nothing
+        self.assertEqual(len(ledger.read_text().splitlines()), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

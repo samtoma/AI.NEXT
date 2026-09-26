@@ -30,6 +30,7 @@
 import { scoped, getStudentProfile, type Db, type StudentProfile } from "@/lib/student-context";
 import { addressBlock } from "@/lib/address";
 import { sequential } from "@/lib/db";
+import { resolveStudentScope, type CourseScope } from "@/lib/catalog-queries";
 import {
   getLibraryEntries,
   getMisconceptions,
@@ -106,13 +107,30 @@ async function getEngagementSignal(
  * usually lives: a student getting factorisation wrong often has a gap one edge
  * upstream, and a tutor that cannot see that will keep re-teaching the wrong
  * thing.
+ *
+ * **THE COURSE GATE** (FR-4006; the 2026-09-26 isolation audit). The focus
+ * objectives were admitted by the caller's gate; the one hop upstream was
+ * not. It relied on a premise — "a prerequisite never crosses courses",
+ * checked on the seed files — rather than on the scope, so one edge from a
+ * Prep-3 objective into another book would have put that book's objective
+ * label into the tutor's context. Every objective in the neighbourhood, focus
+ * included, must now belong to a course in `scope` (objective ← module
+ * `teaches`, module → course `part_of`, open edges — the walk every gate
+ * uses); `scope.courses === null`, the ungated harness scope, filters
+ * nothing. The premise is still checked, as defence in depth and not as the
+ * gate: on the seeds by `student-scope-guard.test.mts`, and at load time by
+ * `services/extraction/load_seed.py`. A retracted prerequisite (`system_to`
+ * set) is not a current fact and is not walked, as on every other reader.
  */
 async function nearestSkillMastery(
   db: Db,
   studentId: number,
-  focusLoIds: readonly string[]
+  focusLoIds: readonly string[],
+  scope: CourseScope
 ): Promise<SkillMastery[]> {
   if (focusLoIds.length === 0) return [];
+  const courses = scope.courses === null ? null : [...scope.courses];
+  if (courses !== null && courses.length === 0) return [];
   try {
     const res = await db.query(
       `WITH focus AS (
@@ -123,7 +141,7 @@ async function nearestSkillMastery(
          UNION
          SELECT e.src_id FROM graph_edges e
            JOIN focus f ON f.lo_id = e.dst_id
-          WHERE e.edge_type = 'prerequisite_of'
+          WHERE e.edge_type = 'prerequisite_of' AND e.system_to IS NULL
        )
        SELECT n.id AS lo_id, n.label,
               coalesce(m.score, 0) AS mastery
@@ -131,9 +149,19 @@ async function nearestSkillMastery(
          JOIN graph_nodes n ON n.id = h.lo_id
          LEFT JOIN mastery m
            ON m.lo_id = n.id AND m.student_id = $1 AND m.system_to IS NULL
+        WHERE $3::text[] IS NULL
+           OR EXISTS (
+                SELECT 1 FROM graph_edges te
+                  JOIN graph_edges pc
+                    ON pc.src_id = te.src_id AND pc.edge_type = 'part_of'
+                   AND pc.system_to IS NULL
+                 WHERE te.dst_id = n.id AND te.edge_type = 'teaches'
+                   AND te.system_to IS NULL
+                   AND pc.dst_id = ANY($3::text[])
+              )
         ORDER BY mastery ASC, n.id
         LIMIT ${NEAREST_SKILLS}`,
-      [studentId, [...focusLoIds]]
+      [studentId, [...focusLoIds], courses]
     );
     return res.rows.map((r) => ({
       loId: r.lo_id as string,
@@ -176,13 +204,18 @@ export async function retrieve(
   // `sequential`, not `Promise.all`: these four share ONE client when the
   // caller passes its unit of work, and pg@9 removed the implicit queue that
   // made the parallel-looking version work (lib/db.ts).
+  //
+  // The student scope is resolved inside the SAME unit of work (one
+  // principal), for the one read here that walks beyond the objectives the
+  // caller admitted.
   const [profile, nearestSkills, upload, engagement] = await scoped(
     studentId,
     opts.client,
     (db) =>
       sequential([
         () => getStudentProfile(studentId, db),
-        () => nearestSkillMastery(db, studentId, focusLoIds),
+        async () =>
+          nearestSkillMastery(db, studentId, focusLoIds, await resolveStudentScope(studentId, db)),
         () =>
           opts.uploadId
             ? getParsedUpload(opts.uploadId, studentId, db)

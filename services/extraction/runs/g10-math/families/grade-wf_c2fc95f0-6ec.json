@@ -1,0 +1,155 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v4",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s6-grade-r2",
+  "stage": "S6 grade",
+  "shards_sha256": "2f814b6a78aefe2bc2ec2785dd40287513938ee194e8df377259f182d6037a24",
+  "files": 8
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "9243f7fee136769dc3488515c3893477583d83fe626216504dbfec8129b64cf3",
+  "args_sha256": "9ebdb86629b6f3b5c5908b555e1865337d0d9e8175407e9ba857118e61142324",
+  "generated_sha256": "0aed9724a9e3acc0ab89d5b2f483bb5a48638f4d23b8d14bd3265e13dd09bfda",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m8s1-1-3:pentagon-partial-arc",
+   "spec_sha": "89dc2ad0e3e33d5d72b91f5514524475a9371ae05ef2bfaf0d72bcc4befa70e5",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s1-1-3:g005-pentag",
+     "stem_sha": "303074b50e9a1f8f",
+     "answer": {
+      "choice": "B",
+      "choice_text": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After H the next vertex is B, which does not continue the sequence, so the pentagon is not correctly named as given."
+     },
+     "working": "Clockwise labels: E, F, G, H, B. The first four (E→F→G→H) do climb one letter at a time, but the naming convention requires the full cyclic sequence of all 5 vertices to keep climbing one letter at a time and return to the start — checking only 4 of 5 vertices is insufficient. After H, the next vertex should continue the climb (to I) but is instead labelled B, breaking the pattern. So the student's conclusion (based on checking only 4 letters) is wrong."
+    },
+    {
+     "instance_id": "q:g10m8s1-1-3:g007-pentag",
+     "stem_sha": "711a9fbbb69dc09d",
+     "answer": {
+      "choice": "B",
+      "choice_text": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After S the next vertex is F, which does not continue the sequence, so the pentagon is not correctly named as given."
+     },
+     "working": "Clockwise labels: P, Q, R, S, F. The first four (P→Q→R→S) climb one letter at a time, but the fifth vertex must continue that climb (to T) for the naming to be valid across the whole shape. Instead the fifth label is F, breaking the required continuous sequence. The student checked only 4 of 5 vertices and reached the wrong conclusion."
+    },
+    {
+     "instance_id": "q:g10m8s1-1-3:g010-pentag",
+     "stem_sha": "04e7b8ca51a3411a",
+     "answer": {
+      "choice": "A",
+      "choice_text": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After J the next vertex is A, which does not continue the sequence, so the pentagon is not correctly named as given."
+     },
+     "working": "Clockwise labels: G, H, I, J, A. The first four (G→H→I→J) climb one letter at a time, but the fifth vertex must continue that climb (to K) for the whole shape to be validly named. Instead the fifth label is A, breaking the sequence. The student checked only 4 of 5 vertices and reached the wrong conclusion."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "Checked all 3 instances (g005-pentag, g007-pentag, g010-pentag) of tpl:g10m8s1-1-3:pentagon-partial-arc.\n\nArithmetic verified by hand for each instance (letter positions A=1..Z=26):\n- g005: E(5)F(6)G(7)H(8) climb by 1 each; H→B(2) breaks (would need I); closing edge B→E also non-consecutive but moot. Key B matches.\n- g007: P(16)Q(17)R(18)S(19) climb by 1 each; S→F(6) breaks (would need T); closing edge F→P moot. Key B matches.\n- g010: G(7)H(8)I(9)J(10) climb by 1 each; J→A(1) breaks (would need K); closing edge A→G moot. Key A matches.\nAll three canonical solutions correctly (1) verify the climbing prefix, (2) locate the exact breaking edge, (3) note the remaining closing edge can't rescue it since one break already fails the naming — valid step-by-step method, reaching the stated key each time. solution_ok = true.\n\nkey_form_ok: each key is a full \"No/Yes + reason\" statement in the same form the stem's \"why\" asks for, and its reasoning is word-for-word consistent with the canonical_solution's step 2 (names the exact breaking edge). True for all three.\n\ndistractors_ok: every wrong option is definitely wrong and matches its tagged misconception precisely:\n- partial-arc-check (\"Yes, first four climb, so correctly named\") is verbatim the flawed reasoning attributed to \"the student\" in the stem itself — exact match, and the \"Yes\" conclusion is objectively wrong since a later edge breaks.\n- expects-labels-to-start-at-a (\"wrong because it doesn't start with A\") is invalid reasoning (the convention checked is consecutive stepping around the full cycle, not a fixed starting letter) — wrong in all 3 instances, including g010 where the pentagon happens to contain letter A (as the last vertex, not the first) — the coincidence doesn't rescue the claim, since the actual reason for failure is the J→A gap, not a starting-letter rule. Confirmed still wrong.\n- assumes-only-one-direction-counts (\"must read anticlockwise, clockwise is never correct\") is checked by reversing the traversal for each instance (e.g. g005 anticlockwise from E: E,B,H,G,F — E→B is not consecutive either) — the claim is false in every instance, correctly wrong.\nNo option is ALSO_CORRECT, no misconception_id is attached to the wrong text (WRONG_LABEL), and the correct/keyed option in each instance correctly carries no misconception_id.\n\ncontext_ok: stems are unambiguous (pentagon, 5 distinct letters, \"first four\" clearly means the first four of the five listed), consistent across all three instances, no word-problem numeric realism issue since content is letters not quantities. One minor stylistic note (not an error): option A's \"clockwise is never the correct convention\" is a strongly worded caricature, and in some instances a pentagon vertex letter coincides with an answer-choice key letter (e.g. content letter B / choice key B in g005) — cosmetic overlap only, does not create real ambiguity since choice keys and stem content are clearly delimited.\n\nNo rejectable errors found in this family.",
+    "distractors": [
+     {
+      "instance_id": "q:g10m8s1-1-3:g005-pentag",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Claims anticlockwise reading is required; reversing the traversal (E,B,H,G,F) still fails at E→B, so the claim is false and matches the assumes-only-one-direction-counts misconception."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g005-pentag",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Claims the naming fails only because the sequence doesn't start at A; the real break is H→B, so this is invalid reasoning matching expects-labels-to-start-at-a."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g005-pentag",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Concludes 'Yes, correctly named' from only the first four labels, exactly the flawed check described in the stem (partial-arc-check); wrong since H→B breaks the pattern."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-pentag",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Same anticlockwise claim; reversed order P,F,S,R,Q still breaks at P→F, so the claim is false, matching assumes-only-one-direction-counts."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-pentag",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Blames failure on not starting at A rather than the actual S→F break; invalid reasoning matching expects-labels-to-start-at-a."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-pentag",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Concludes 'Yes' from only P,Q,R,S; wrong since S→F breaks the pattern; matches partial-arc-check."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g010-pentag",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Blames failure on not starting at A, even though A does appear (as the last, not first, vertex) — the real break is J→A; reasoning is invalid, matching expects-labels-to-start-at-a."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g010-pentag",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Concludes 'Yes' from only G,H,I,J; wrong since J→A breaks the pattern; matches partial-arc-check."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g010-pentag",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Anticlockwise claim; reversed order G,A,J,I,H still breaks at G→A, so the claim is false, matching assumes-only-one-direction-counts."
+     }
+    ]
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s4-1-1:unknown-coordinate-from-midpoint",
+   "spec_sha": "cf754efefbcbf6ceacdfa7940862150347559efde1b59e6f56ce00ba23acef42",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s4-1-1:g004-unknow",
+     "stem_sha": "7afb2c24570a27b3",
+     "answer": {
+      "value": "-4"
+     },
+     "working": "Midpoint formula: M_x = (t + (-6))/2 = -5 → t - 6 = -10 → t = -4. Check: M_y = (-6+2)/2 = -2, matches given M(-5,-2)."
+    },
+    {
+     "instance_id": "q:g10m8s4-1-1:g009-unknow",
+     "stem_sha": "5efc17076c80837d",
+     "answer": {
+      "value": "7"
+     },
+     "working": "Midpoint formula: M_x = (t + 3)/2 = 5 → t + 3 = 10 → t = 7. Check: M_y = (0+8)/2 = 4, matches given M(5,4)."
+    },
+    {
+     "instance_id": "q:g10m8s4-1-1:g010-unknow",
+     "stem_sha": "bf07c33c01848be2",
+     "answer": {
+      "value": "-7"
+     },
+     "working": "Midpoint formula: M_x = (t + (-5))/2 = -6 → t - 5 = -12 → t = -7. Check: M_y = (7+(-9))/2 = -1, matches given M(-6,-1)."
+    }
+   ],
+   "judge": {
+    "context_ok": true,
+    "distractors_ok": true,
+    "distractors": [],
+    "key_form_ok": true,
+    "solution_ok": true,
+    "notes": "Family tpl:g10m8s4-1-1:unknown-coordinate-from-midpoint, 3 instances (g004-unknow, g009-unknow, g010-unknow). No options/distractors are present in any instance (no misconception-tagged wrong answers to check), so distractors_ok is vacuously true per the rule for option-less families.\n\nVerified each instance by recomputing the midpoint formula independently:\n- g004: P(t,-6), Q(-6,2), M(-5,-2). x: (t-6)/2=-5 -> t=-4 (matches key). y-check: (-6+2)/2=-2 = M_y, consistent.\n- g009: P(t,0), Q(3,8), M(5,4). x: (t+3)/2=5 -> t=7 (matches key). y-check: (0+8)/2=4 = M_y, consistent.\n- g010: P(t,7), Q(-5,-9), M(-6,-1). x: (t-5)/2=-6 -> t=-7 (matches key). y-check: (7-9)/2=-1 = M_y, consistent.\n\nAll three canonical solutions state the midpoint formula, substitute correctly, and algebraically isolate t exactly as I recomputed, reaching the stated key each time (solution_ok=true). Each key is a single numeric value for t as the stem asks (\"Find the value of t\") with no additional form required (factorised/simplest/etc. don't apply here) — key_form_ok=true. Stems are unambiguous, integer coordinates, standard Grade-10 coordinate-geometry phrasing, and the given y-coordinates are internally consistent with the stated midpoint in every instance (no contradictory or unrealistic data) — context_ok=true. No word-problem context beyond the geometry setup itself.\n\nOverall: this family passes on all four checks."
+   }
+  }
+ ],
+ "run_id": "wf_c2fc95f0-6ec"
+}

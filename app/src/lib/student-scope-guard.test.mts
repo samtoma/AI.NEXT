@@ -36,7 +36,7 @@
  * And the privacy review's four readers may not be excused: they must be
  * gated by the scope itself (T318).
  *
- * @covers FR-4006, FR-4202
+ * @covers FR-4006, FR-4202, FR-2705
  */
 import assert from "node:assert/strict";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
@@ -148,6 +148,10 @@ export const MODULES: Readonly<Record<string, ModuleKind>> = {
   "src/lib/dashboard.ts": SCOPED,
   "src/lib/ask.ts": SCOPED,
   "src/lib/subject-queries.ts": SCOPED,
+  // retrieve() walks one prerequisite hop beyond the objectives it is handed,
+  // and that hop is gated by her scope (2026-09-26 isolation audit) — it used
+  // to be "upstream", trusting a premise about the seeds instead.
+  "src/lib/retrieval.ts": SCOPED,
   "src/app/api/attempts/route.ts": SCOPED,
 
   "src/lib/visuals.ts": {
@@ -162,13 +166,6 @@ export const MODULES: Readonly<Record<string, ModuleKind>> = {
       "src/lib/ask.ts",
       "src/lib/lesson.ts",
     ],
-  },
-  "src/lib/retrieval.ts": {
-    kind: "upstream",
-    why:
-      "retrieve() is handed the objective ids of a lesson or ask context the gate already narrowed, and walks " +
-      "one prerequisite hop from them — which never leaves a course (checked on the seeds below).",
-    importers: ["src/lib/ask.ts", "src/lib/lesson.ts"],
   },
   "src/lib/explanations.ts": {
     kind: "upstream",
@@ -290,6 +287,141 @@ test("each classification's premise holds in the source", () => {
 });
 
 /* ------------------------------------------------------------------ */
+/* 1b. Inside a "scoped" file, every reader — function by function      */
+/* ------------------------------------------------------------------ */
+
+/*
+ * "Scoped" used to be a property of a FILE: it called the scope somewhere.
+ * That is how `getLessonBridges` slipped through — `lib/subject-queries.ts`
+ * gates its roll-up, so the whole file passed, and the unfiltered bridge
+ * reader beside it put another course's objective into the tutor's
+ * instructions (the 2026-09-26 isolation audit). The check is now per
+ * top-level function: every function in a scoped file whose code reads a
+ * curriculum table — directly, or through a module-level SQL constant of the
+ * same file — must call the scope itself, take the scope as a parameter (a
+ * `CourseScope`, `StudentScope` or `StudentGraphScope`, so no caller can reach
+ * it without one), or be listed below with its reason.
+ */
+
+/** A declaration at the top level of a file (column 0). */
+type Decl = { name: string; kind: string; text: string };
+
+export function declarationsOf(code: string): Decl[] {
+  const re = /^(?:export\s+)?(?:default\s+)?(?:async\s+)?(function\*?|const|let|type|interface|class)\s+([A-Za-z0-9_$]+)/gm;
+  const starts: { i: number; kind: string; name: string }[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(code)) !== null) starts.push({ i: m.index, kind: m[1], name: m[2] });
+  return starts.map((d, k) => ({
+    name: d.name,
+    kind: d.kind,
+    text: code.slice(d.i, k + 1 < starts.length ? starts[k + 1].i : undefined),
+  }));
+}
+
+const isFunctionDecl = (d: Decl) =>
+  d.kind.startsWith("function") ||
+  (d.kind === "const" && /^[^=]*=\s*(async\s*)?(\([^)]*\)\s*(:[^=]*)?=>|function\b|[a-zA-Z_$]+\s*\(\s*(async\s+)?(function\b|\())/.test(d.text));
+
+/** The parameter list of a function declaration (balanced parentheses). */
+function paramsOf(d: Decl): string {
+  const open = d.text.indexOf("(", d.text.indexOf(d.name) + d.name.length);
+  if (open < 0) return "";
+  let depth = 0;
+  for (let i = open; i < d.text.length; i++) {
+    if (d.text[i] === "(") depth++;
+    else if (d.text[i] === ")" && --depth === 0) return d.text.slice(open + 1, i);
+  }
+  return "";
+}
+
+/** A parameter typed as the student scope: the caller must hand one over. */
+export const SCOPE_PARAM = /:\s*(CourseScope|StudentScope|StudentGraphScope)\b/;
+
+/**
+ * The reading functions of one file's code that reach the scope by no route
+ * the guard accepts, minus `exempt`. Exported for the negative control below.
+ */
+export function ungatedReaders(source: string, exempt: Readonly<Record<string, string>> = {}): string[] {
+  const decls = declarationsOf(source);
+  const sqlValues = decls.filter((d) => !isFunctionDecl(d) && CONTENT_READ.test(d.text)).map((d) => d.name);
+  return decls
+    .filter(isFunctionDecl)
+    .filter((d) => CONTENT_READ.test(d.text) || sqlValues.some((v) => new RegExp(`\\b${v}\\b`).test(d.text)))
+    .filter((d) => !SCOPE_CALL.test(d.text) && !SCOPE_PARAM.test(paramsOf(d)))
+    .map((d) => d.name)
+    .filter((name) => !(name in exempt));
+}
+
+/**
+ * Readers inside a scoped file that are gated some other way, each with why.
+ * A new entry is a decision, made here, in review.
+ */
+export const SCOPED_EXEMPT: Readonly<Record<string, Readonly<Record<string, string>>>> = {
+  "src/lib/catalog-queries.ts": {
+    availabilityFor:
+      "the scope's own input: with the gate switched off it reads which course ids are loaded, to decide " +
+      "visibility — ids, never content, and it IS the gate's read",
+    courseCatalog: "the console's catalogue grid, through withOperator — never a student surface",
+    studentAccess: "the console's per-student access view, through withOperator — never a student surface",
+  },
+  "src/lib/lesson.ts": {
+    resolveLessonLos:
+      "resolves which objectives a slug names; its two callers gate before anything reaches a student — " +
+      "lessonDataOn refuses the lesson's course first thing, and lessonCourseId returns only a course id " +
+      "for the probing snapshot, the lesson itself refused in the same request",
+  },
+};
+
+test("inside every scoped file, each function that reads curriculum content is itself gated", () => {
+  for (const [file, k] of Object.entries(MODULES)) {
+    if (k.kind !== "scoped") continue;
+    const exempt = SCOPED_EXEMPT[file] ?? {};
+    assert.deepEqual(
+      ungatedReaders(code(file), exempt),
+      [],
+      `${file}: a function reads a curriculum table and neither calls the student scope nor takes it as a ` +
+        "parameter (CourseScope / StudentScope / StudentGraphScope). A file that gates one reader does not " +
+        "gate the one beside it — gate this function, or list it in SCOPED_EXEMPT with the reason."
+    );
+    for (const [fn, why] of Object.entries(exempt)) {
+      assert.ok(why.length > 40, `${file}: ${fn}: the reason says why`);
+      assert.ok(
+        declarationsOf(code(file)).some((d) => d.name === fn),
+        `${file}: SCOPED_EXEMPT lists ${fn}, which no longer exists — remove it`
+      );
+    }
+  }
+  for (const file of Object.keys(SCOPED_EXEMPT)) {
+    assert.equal(MODULES[file]?.kind, "scoped", `SCOPED_EXEMPT lists ${file}, which is not a scoped file`);
+  }
+});
+
+test("the per-function check catches an unfiltered reader beside a gated one (negative control)", () => {
+  // The shape of lib/subject-queries.ts before the fix: a gated roll-up, and
+  // an ungated bridge reader in the same file.
+  const before = stripComments(`
+import { visibleCoursesFor } from "./catalog-queries";
+const BRIDGES_SQL = \`SELECT src_id FROM graph_edges WHERE edge_type = 'relates_to'\`;
+async function subjectSummariesOn(db, studentId) {
+  const visible = await visibleCoursesFor(studentId);
+  return db.query(\`SELECT id FROM graph_nodes WHERE kind = 'learning_objective'\`);
+}
+export async function getLessonBridges(loIds: string[]): Promise<LessonBridge[]> {
+  return (await pool.query(BRIDGES_SQL, [loIds])).rows;
+}
+export const rawReader = async (id: string) => pool.query(\`SELECT * FROM questions WHERE id = $1\`, [id]);
+`);
+  assert.deepEqual(ungatedReaders(before), ["getLessonBridges", "rawReader"]);
+  // …and after: the bridge reader takes her scope
+  const after = before.replace(
+    "getLessonBridges(loIds: string[])",
+    "getLessonBridges(loIds: string[], scope: CourseScope)"
+  );
+  assert.deepEqual(ungatedReaders(after), ["rawReader"]);
+  assert.deepEqual(ungatedReaders(after, { rawReader: "a test exemption" }), []);
+});
+
+/* ------------------------------------------------------------------ */
 /* 2. Every student entry, declared                                    */
 /* ------------------------------------------------------------------ */
 
@@ -333,7 +465,9 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
   },
 
   "src/app/api/ask/route.ts": {
-    reads: ["buildAskContext", "buildLessonContext", "lessonCourseId", "getAllSacredPassages"],
+    // resolveStudentScope: her scope keys the per-session snapshot, so a
+    // change of scope reaches an open chat on its next turn (lib/session-cache.ts)
+    reads: ["buildAskContext", "buildLessonContext", "lessonCourseId", "getAllSacredPassages", "resolveStudentScope"],
   },
   "src/app/api/attempts/route.ts": {
     reads: ["visibleCoursesFor", "getLibraryEntries", "flagAuthoringGap", "advanceIfMastered"],
@@ -578,7 +712,8 @@ test("the privacy review's four readers are gated by the scope itself — none i
   assert.match(code("src/app/api/visuals/route.ts"), /scope\.lo\(lo\)/);
   // …and the book `/` and `/spine` name is the first VISIBLE course's, not LIMIT 1's
   assert.doesNotMatch(code("src/lib/queries.ts"), /FROM source_documents LIMIT 1/);
-  assert.match(bodyOf(code("src/lib/queries.ts"), "sourceBookFor") ?? "", /gate\.course\(/);
+  assert.match(bodyOf(code("src/lib/queries.ts"), "sourceBooksFor") ?? "", /gate\.course\(/);
+  assert.match(bodyOf(code("src/lib/queries.ts"), "sourceBookFor") ?? "", /sourceBooksFor\(db, gate\)/);
 });
 
 /* ------------------------------------------------------------------ */
@@ -606,24 +741,80 @@ test("the scanner: a content read, a scope call, imports and bodies", () => {
 /* retrieval's premise, on the seeds                                   */
 /* ------------------------------------------------------------------ */
 
-test("a prerequisite never crosses courses — so retrieval's one hop from gated objectives stays inside them", () => {
-  const seedDir = join(REPO, "services/extraction/seed");
-  const courseOfModule = new Map<string, string>();
+/**
+ * Every seed bundle under `services/extraction/seed/`, SUBDIRECTORIES included
+ * — a book's chapter bundles live in their own directory (`seed/g10-math/`,
+ * `books/g10-math.json`), and a check that read only the top level would pass
+ * without ever seeing them.
+ */
+function seedJsonFiles(dir: string): string[] {
+  const out: string[] = [];
+  for (const entry of readdirSync(dir)) {
+    const full = join(dir, entry);
+    if (statSync(full).isDirectory()) out.push(...seedJsonFiles(full));
+    else if (entry.endsWith(".json")) out.push(full);
+  }
+  return out.sort();
+}
+
+/**
+ * The course of every objective in a set of edges: objective ← module
+ * (`teaches`), then `part_of` upward until a `course:` node — through any
+ * number of intermediate levels.
+ */
+export function coursesOfObjectives(edges: readonly { src: string; dst: string; type: string }[]) {
+  const parent = new Map<string, string>();
   const moduleOfLo = new Map<string, string>();
-  const prereqs: { src: string; dst: string }[] = [];
-  for (const name of readdirSync(seedDir).filter((n) => n.endsWith(".json"))) {
-    const doc = JSON.parse(readFileSync(join(seedDir, name), "utf8")) as {
-      edges?: { src: string; dst: string; type: string }[];
-    };
-    for (const e of doc.edges ?? []) {
-      if (e.type === "part_of" && e.dst.startsWith("course:")) courseOfModule.set(e.src, e.dst);
-      if (e.type === "teaches") moduleOfLo.set(e.dst, e.src);
-      if (e.type === "prerequisite_of") prereqs.push(e);
+  for (const e of edges) {
+    if (e.type === "part_of") parent.set(e.src, e.dst);
+    if (e.type === "teaches" && !moduleOfLo.has(e.dst)) moduleOfLo.set(e.dst, e.src);
+  }
+  return (lo: string): string | undefined => {
+    let node = moduleOfLo.get(lo);
+    for (let hops = 0; node !== undefined && hops < 16; hops++) {
+      if (node.startsWith("course:")) return node;
+      node = parent.get(node);
+    }
+    return undefined;
+  };
+}
+
+test("a prerequisite never crosses courses on the seeds — defence in depth behind retrieval's own gate", () => {
+  // Retrieval no longer RELIES on this (it filters its one hop by her scope,
+  // 2026-09-26); the loader refuses such an edge unless its allowlist names it
+  // (services/extraction/load_seed.py ALLOWED_CROSS_COURSE_PREREQUISITES,
+  // empty). This keeps the committed seeds honest as well.
+  const files = seedJsonFiles(join(REPO, "services/extraction/seed"));
+  const edges: { src: string; dst: string; type: string }[] = [];
+  for (const file of files) {
+    const doc = JSON.parse(readFileSync(file, "utf8")) as unknown;
+    if (doc && typeof doc === "object" && Array.isArray((doc as { edges?: unknown }).edges)) {
+      edges.push(...((doc as { edges: { src: string; dst: string; type: string }[] }).edges));
     }
   }
+  const prereqs = edges.filter((e) => e.type === "prerequisite_of");
   assert.ok(prereqs.length >= 100);
-  const courseOf = (lo: string) => courseOfModule.get(moduleOfLo.get(lo) ?? "");
+  const courseOf = coursesOfObjectives(edges);
   for (const e of prereqs) {
-    assert.equal(courseOf(e.src), courseOf(e.dst), `${e.src} -> ${e.dst} crosses courses`);
+    const a = courseOf(e.src);
+    const b = courseOf(e.dst);
+    assert.ok(a && b, `${e.src} -> ${e.dst}: an end is filed under no course`);
+    assert.equal(a, b, `${e.src} -> ${e.dst} crosses courses`);
   }
+});
+
+test("the seed walk sees subdirectories and multi-level part_of chains (negative control)", () => {
+  const courseOf = coursesOfObjectives([
+    { src: "module:x-c01", dst: "course:x", type: "part_of" },
+    { src: "module:x-s01", dst: "module:x-c01", type: "part_of" },
+    { src: "module:x-s01", dst: "lo:x1-1-1", type: "teaches" },
+    { src: "module:u1", dst: "course:prep3-math-en", type: "part_of" },
+    { src: "module:u1", dst: "lo:u1-1-1", type: "teaches" },
+  ]);
+  assert.equal(courseOf("lo:x1-1-1"), "course:x");
+  assert.equal(courseOf("lo:u1-1-1"), "course:prep3-math-en");
+  assert.equal(courseOf("lo:unfiled"), undefined);
+  // the directory walk descends: this repo's seeds have a subdirectory with JSON in it
+  const files = seedJsonFiles(join(REPO, "services/extraction/seed"));
+  assert.ok(files.some((f) => relative(join(REPO, "services/extraction/seed"), f).includes("/")));
 });

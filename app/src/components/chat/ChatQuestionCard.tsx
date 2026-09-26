@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { mcqChoices, stepText } from "@/lib/types";
 import { markerInputOf } from "@/lib/answer-marker";
 import { MathAnswerInput } from "./MathAnswerInput";
+import { ReentryNote } from "./ReentryNote";
 import type { AttemptResult, SpineQuestion, WidgetQuestionSpec } from "@/lib/types";
 import { MathWidget } from "@/components/student/widgets/render-math-widget";
 import type { WidgetOutcome } from "@/lib/widget-predicates";
@@ -257,6 +258,8 @@ export function ChatQuestionCard({
                     <TeX text={c.text} />
                   </button>
                 ))}
+                {/* a true but less precise option: asked again, nothing recorded */}
+                <ReentryNote message={reentry} />
               </div>
             ) : markerInput ? (
               <MathAnswerInput
@@ -280,6 +283,9 @@ export function ChatQuestionCard({
                   "min-h-[var(--noor-touch-min)] w-full rounded-[var(--play-radius-sm)] bg-card px-4 font-mono text-[1rem] text-ink outline-none placeholder:text-ink-faint sticker-shadow-sm"
                 )}
               />
+            )}
+            {!markerInput && q.questionType !== "mcq" && q.questionType !== "widget" && (
+              <ReentryNote message={reentry} />
             )}
             {/* A widget question has nothing to submit: the construction IS
                 the answer and posts itself the moment the student commits to

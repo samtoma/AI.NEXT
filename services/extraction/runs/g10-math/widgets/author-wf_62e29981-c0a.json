@@ -1,0 +1,181 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s7-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s7-author-r2",
+  "stage": "S7 author",
+  "shards_sha256": "5ade092cf5389d4a8896cc540a2d6ab3f967932c674f713b90a3711f5f074ce3",
+  "files": 2
+ },
+ "embedded": {
+  "source": "runbook/widgets.workflow.js",
+  "source_sha256": "ab8dbc9eff4a1c5148d3e48a479814753b3f1f0aeb240cb259e813da97676f08",
+  "args_sha256": "07e5e865791ee742f7ef5d285913fcff3fb0a9d99a1c5533653cd1e1a8bd1392",
+  "generated_sha256": "7239d88c68be095aee880d0a0d83a6ac2820e2b9d01702bcdd7a055e6510f609",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lesson": "g10m8s3-2",
+   "templates": [
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m8s3-2-1:line-through-two-points",
+     "lo_id": "lo:g10m8s3-2-1",
+     "parent_question_id": "q:g10m8s3-2-1:ex8-6-10a",
+     "tier": "advanced",
+     "kind": "line_drawer",
+     "instances": [
+      {
+       "x1": -3,
+       "y1": 1,
+       "x2": 3,
+       "y2": 3
+      },
+      {
+       "x1": -4,
+       "y1": -2,
+       "x2": 2,
+       "y2": -5
+      },
+      {
+       "x1": -2,
+       "y1": -3,
+       "x2": 4,
+       "y2": 3
+      }
+     ],
+     "spec": {
+      "mode": "points",
+      "through": [
+       [
+        "{=x1}",
+        "{=y1}"
+       ],
+       [
+        "{=x2}",
+        "{=y2}"
+       ]
+      ]
+     },
+     "stem": "Draw the straight line through $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$.",
+     "solution": [
+      "Find the gradient between A and B: m = (y2 − y1) / (x2 − x1).",
+      "Keep the sign of each difference exactly as it comes out — do not drop a sign when a coordinate is already negative.",
+      "Starting from A, step according to that gradient (rise over run) to fix the line's direction.",
+      "Any two points lying on this same line are an acceptable construction — it is the line itself that is graded, not the two named points."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "slope-inverted",
+       "misconception_id": "mc:g10m8s3-2-1:gradient-formula-inversion"
+      },
+      {
+       "predicate": "points-swapped",
+       "misconception_id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip"
+      }
+     ],
+     "notes": "Tests the geometric core of LO1 (the unique line two points determine) rather than the symbolic y = mx + c form; graded on the property (any two collinear points are correct, FR-1205). Anchor ex8-6-10a's own points (A(-6,1)) fall outside the instrument's ±5 lattice limit, so instance parameters were rescaled to the same gradient family (1/3) while two further instances stress negative coordinates and a whole-number gradient. intercept-wrong and vertical-line are valid predicates for this kind but have no clean, non-strained match among this LO's own misconceptions, so they are left undiagnosed rather than forced."
+    },
+    {
+     "format": "ainext.widget-template/1",
+     "id": "wt:g10m8s3-2-2:parallel-perpendicular-line",
+     "lo_id": "lo:g10m8s3-2-2",
+     "parent_question_id": "q:g10m8s3-2-2:ex8-4-13",
+     "tier": "standard",
+     "kind": "line_drawer",
+     "instances": [
+      {
+       "relation": "perpendicular",
+       "m0": 2,
+       "b0": -3,
+       "px": 4,
+       "py": 1,
+       "m": -0.5,
+       "b": 3
+      },
+      {
+       "relation": "parallel",
+       "m0": -3,
+       "b0": 2,
+       "px": 1,
+       "py": -4,
+       "m": -3,
+       "b": -1
+      }
+     ],
+     "spec": {
+      "mode": "equation",
+      "m": "{=m}",
+      "b": "{=b}"
+     },
+     "stem": "Line $L$ has equation $y = {=linear(m0, b0)}$. Draw the line through the point $({=px}, {=py})$ that is {=relation} to $L$.",
+     "solution": [
+      "Read the gradient of L from its equation (the coefficient of x).",
+      "Apply the rule for the relationship asked: parallel keeps the same gradient; perpendicular takes the negative reciprocal.",
+      "Substitute the given point's coordinates into y = mx + c with the new gradient and solve for c.",
+      "Draw the line with that gradient through the given point (or any other point lying on it)."
+     ],
+     "diagnostics": [
+      {
+       "predicate": "off-target",
+       "misconception_id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests"
+      },
+      {
+       "predicate": "intercept-wrong",
+       "misconception_id": "mc:g10m8s3-2-1:sign-slip-converting-general-form"
+      },
+      {
+       "predicate": "slope-inverted",
+       "misconception_id": "mc:g10m8s3-2-1:gradient-formula-inversion"
+      },
+      {
+       "predicate": "slope-sign-flipped",
+       "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip"
+      },
+      {
+       "predicate": "points-swapped",
+       "misconception_id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
+      }
+     ],
+     "notes": "Tests the 'use the relationship to find the equation of a line' half of LO2. Verified numerically for both instances (reference gradients 2 and -3, neither ±1) that applying the wrong relationship produces a gradient matching neither slope-inverted nor slope-sign-flipped against the true target, so it lands cleanly on off-target — mapped to this LO's own swaps-parallel-perpendicular-tests, the likeliest error and the one this construction most specifically reveals. The remaining predicates surface LO1 prerequisite slips (own=false) that a construction can't tell apart from a genuine relationship confusion once only the resulting line is observed. vertical-line has no match here. This LO's other three misconceptions (judges-parallel-by-appearance, stops-at-partial-quadrilateral-property, and swaps-parallel-perpendicular-tests read as a classification act rather than a construction act) describe judging an already-given relationship or shape, not drawing a fresh line — see the filed gap for this LO."
+    }
+   ],
+   "gaps": [
+    {
+     "lo_id": "lo:g10m8s3-2-2",
+     "need_kind": "line_relationship_classifier",
+     "description": "A widget showing two already-drawn line segments (or a quadrilateral's four vertices) on a lattice, where the student builds the comparison itself — e.g. exposing each segment's own rise-over-run and then classifying the pair as parallel, perpendicular, or neither, or for a quadrilateral, checking each side-pair in turn — rather than drawing one new line. This would diagnose: calling sides parallel/perpendicular from how the sketch looks rather than the computed gradients (judges-parallel-by-appearance); confirming only one defining property of a quadrilateral and stopping there instead of checking the second the book pairs with it (stops-at-partial-quadrilateral-property); and blurring the parallel test (equal gradients) with the perpendicular test (product of exactly -1) when reading the comparison (swaps-parallel-perpendicular-tests, as a judgement rather than a construction error).",
+     "why": "line_drawer only grades one freshly-drawn line's own slope and intercept against a single target; it has no mechanism for a student to compare two already-given gradients or classify a pre-drawn shape's sides, so these three misconceptions (all about mis-judging an existing relationship, not about drawing a new line) have no home. polygon_builder's construct mode is graded on the shape the student itself builds, not on classifying a pre-drawn one, so it does not fit either without inverting the whole interaction. treats-contradiction-as-a-k-value (recognising an equation with no solution) is purely algebraic and fits no visual construction kind at all."
+    },
+    {
+     "lo_id": "lo:g10m8s3-2-3",
+     "need_kind": "collinearity_checker",
+     "description": "A widget presenting three points on a lattice where the student builds the actual comparison the book teaches — either the two gradients between consecutive point-pairs (confirming or denying they are the exact same fraction), or the two shorter segment lengths against the longest (confirming or denying they sum to it) — rather than drawing any single line. This would diagnose: treating two gradients that merely share a sign as equal instead of checking they are the same fraction exactly (same-sign-gradients-mistaken-for-equal); and leaving distances as separate, un-simplified surds so a genuine match is missed and the points are wrongly called non-collinear (unsimplified-surds-look-unequal).",
+     "why": "Collinearity is a three-point equality judgement, not the construction of one line. line_drawer mode='points' only grades whether the drawn line passes through two given points and never involves or grades a third, so building it here would just re-test LO1's two-point-line skill under a different name rather than this LO's actual comparison step — the stretch the rules warn against. No other listed kind offers a multi-value numeric-equality comparison interaction (gradient-vs-gradient or surd-length-vs-surd-length)."
+    }
+   ],
+   "notes": "Lesson g10m8s3-2 (Chapter 8, Analytical geometry) has three objectives. Two get genuine line_drawer templates (equation of a line through two points; parallel/perpendicular construction), keeping the lesson's widget count at 2 as expected (\"usually zero to two\"). The third (collinearity) is a clean gap: it is an equality judgement across three points that no listed kind's grading model supports. A supplementary gap is also filed against the parallel/perpendicular objective for the three of its four misconceptions that describe judging an already-given relationship/shape rather than constructing a fresh line — the template covers the objective's construction half honestly but does not cover that other half, and forcing it would have meant stretching line_drawer's predicates past what they actually detect. Read only the three files named in the task plus the one figure (tikzpicture__210f1cf26efb7f7004269fa6b030bf75.png) needed to confirm anchor ex8-6-10a's point data before designing around it; that anchor's own points fall outside the line_drawer lattice limit (±5), so template instances use rescaled numbers carrying the same gradient family instead of the anchor's literal values."
+  }
+ ],
+ "gaps": [
+  {
+   "lo_id": "lo:g10m8s3-2-2",
+   "need_kind": "line_relationship_classifier",
+   "description": "A widget showing two already-drawn line segments (or a quadrilateral's four vertices) on a lattice, where the student builds the comparison itself — e.g. exposing each segment's own rise-over-run and then classifying the pair as parallel, perpendicular, or neither, or for a quadrilateral, checking each side-pair in turn — rather than drawing one new line. This would diagnose: calling sides parallel/perpendicular from how the sketch looks rather than the computed gradients (judges-parallel-by-appearance); confirming only one defining property of a quadrilateral and stopping there instead of checking the second the book pairs with it (stops-at-partial-quadrilateral-property); and blurring the parallel test (equal gradients) with the perpendicular test (product of exactly -1) when reading the comparison (swaps-parallel-perpendicular-tests, as a judgement rather than a construction error).",
+   "why": "line_drawer only grades one freshly-drawn line's own slope and intercept against a single target; it has no mechanism for a student to compare two already-given gradients or classify a pre-drawn shape's sides, so these three misconceptions (all about mis-judging an existing relationship, not about drawing a new line) have no home. polygon_builder's construct mode is graded on the shape the student itself builds, not on classifying a pre-drawn one, so it does not fit either without inverting the whole interaction. treats-contradiction-as-a-k-value (recognising an equation with no solution) is purely algebraic and fits no visual construction kind at all."
+  },
+  {
+   "lo_id": "lo:g10m8s3-2-3",
+   "need_kind": "collinearity_checker",
+   "description": "A widget presenting three points on a lattice where the student builds the actual comparison the book teaches — either the two gradients between consecutive point-pairs (confirming or denying they are the exact same fraction), or the two shorter segment lengths against the longest (confirming or denying they sum to it) — rather than drawing any single line. This would diagnose: treating two gradients that merely share a sign as equal instead of checking they are the same fraction exactly (same-sign-gradients-mistaken-for-equal); and leaving distances as separate, un-simplified surds so a genuine match is missed and the points are wrongly called non-collinear (unsimplified-surds-look-unequal).",
+   "why": "Collinearity is a three-point equality judgement, not the construction of one line. line_drawer mode='points' only grades whether the drawn line passes through two given points and never involves or grades a third, so building it here would just re-test LO1's two-point-line skill under a different name rather than this LO's actual comparison step — the stretch the rules warn against. No other listed kind offers a multi-value numeric-equality comparison interaction (gradient-vs-gradient or surd-length-vs-surd-length)."
+  }
+ ],
+ "run_id": "wf_62e29981-c0a"
+}

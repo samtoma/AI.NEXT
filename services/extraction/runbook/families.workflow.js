@@ -49,7 +49,8 @@ export const meta = {
  *       tier_gaps: ["basic"|"standard"|"advanced"], existing_families: [ids],
  *       book_questions: [{id, tier, type, stem, choices, answer, solution, source_page}],
  *       misconceptions: [{id, label, description}]}],
- *       revise?: [{spec, problems: [string]}],      // re-author these specs only
+ *       revise?: [{spec, problems: [string], figures?: [image path]}],   // re-author these specs only;
+ *                                                   // figures: the parent question's, the only files it may open
  *       only?: ["lo:…"] }
  *   mode "grade": { mode, book, grading_set: <generate_questions.py --grading-set output> }
  *     (generate_questions.py --grade-args writes exactly this)
@@ -80,7 +81,9 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's6-v3'   // v2: packet by reference; v3: by-ref shards unclipped
+const PROMPTS_VERSION = 's6-v5'   // v2: packet by reference; v3: by-ref shards unclipped; v4: book questions name their figure images
+                                  // v5: revise mode names its inputs: the spec, the reasons and the parent's figure images only;
+                                  //     the blind solver writes values without names (it wrote "x = [0, 8]", "H = (3, 1)")
 const need = (cond, msg) => { if (!cond) throw new Error(msg) }
 need(ARGS.mode === 'author' || ARGS.mode === 'grade', 'args.mode must be "author" or "grade" (see the header of this script)')
 need(ARGS.book && ARGS.book.book, 'args.book must be the book config (generate_questions.py --author-args writes it)')
@@ -102,6 +105,9 @@ if (ARGS.mode === 'grade') {
 const READ_RULE = 'Parts of this message are kept in files: wherever it shows [[file: <path>]], read that file with the Read tool (read them all in one turn); its whole content belongs in that place. Those files are the only files you may open.'
 const refFile = (name) => `[[file: ${REF.dir}/${name}]]`
 const readRule = () => (REF ? `\n\n${READ_RULE}` : '')
+// s6-v4: a book question whose stem shows [figure] names its image files ("figures"); the author may open them
+const FIGURE_RULE = 'Some book questions list "figures": the image files of the diagrams their stems show as [figure]. Read the figure images of the questions you build on, with the Read tool, so a family never rests on a diagram you have not seen; you may open those image files as well.'
+const figureRule = (o) => ((REF ? (o.figures || 0) : (o.book_questions || []).reduce((n, q) => n + ((q.figures || []).length), 0)) ? `\n\n${FIGURE_RULE}` : '')
 const loTailOf = (lo) => String(lo).replace(/^lo:/, '')
 
 // ---------------------------------------------------------------- author
@@ -239,7 +245,14 @@ ${FORMAT_RULES}
 ${AUTHOR_RULES}
 
 Return AUTHOR_SCHEMA with lo_id="${o.lo_id}": the families (usually one per missing tier, at most four in all),
-and "infeasible" for any gap you could not fill honestly, with the reason.${readRule()}`
+and "infeasible" for any gap you could not fill honestly, with the reason.${readRule()}${figureRule(o)}`
+
+// s6-v5: a revise agent works from its message alone. In the pilot one opened the pipeline's source and tests
+// to reason about the refusal; the only files it may open are the parent question's figure images, if any.
+const REVISE_READ_RULE = 'Work from this message alone: the spec and the reasons above are your only inputs. Do not open any file — not the pipeline\'s source code or tests, not other specs, not earlier runs.'
+const reviseReadRule = (r) => `\n\n${REVISE_READ_RULE}` + ((r.figures || []).length
+  ? ` The one exception: the image files of the diagrams this family's parent book question shows, which you may read with the Read tool: ${r.figures.join(', ')}.`
+  : '')
 
 const revisePrompt = (r) => `A family spec you (or a colleague) wrote was refused. Fix it.
 
@@ -255,7 +268,7 @@ ${AUTHOR_RULES}
 
 If the refusal was a blind-grader disagreement, first decide who was right by working one instance
 yourself. If the family is wrong, fix its mathematics; if the question was ambiguous, fix its wording.
-Increase "version" by one (start at 2). Keep the id. Return REVISE_SCHEMA.`
+Increase "version" by one (start at 2). Keep the id. Return REVISE_SCHEMA.${reviseReadRule(r)}`
 
 // ---------------------------------------------------------------- grade
 const SOLVE_SCHEMA = {
@@ -310,7 +323,8 @@ const formatHint = (f) => {
   const form = f.form ? ` The question asks for the ${typeof f.form === 'object' ? `formula with ${f.form.subject} as the subject` : f.form} form.` : ''
   return `Answer in "plain" as plain maths (kind: ${f.kind}), using only the letters ${JSON.stringify(f.variables || [])}: ` +
     '* for multiplication, ^ for powers, sqrt(), [a, b] for several values, (a, b) for coordinates, ' +
-    `interval(lo, hi, closed_lo, closed_hi) for an interval, "=" for an equation.${form}`
+    `interval(lo, hi, closed_lo, closed_hi) for an interval, "=" for an equation. Write the value itself, ` +
+    `with no name in front: [0, 8], not x = [0, 8]; (3, 1), not H = (3, 1).${form}`
 }
 
 // ONLY the blind block of each instance goes in here. Nothing sealed. (By reference the stem is the

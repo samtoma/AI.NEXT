@@ -76,6 +76,37 @@ class DossierTest(unittest.TestCase):
         self.assertIn("swapped-coordinates</b> → Coordinates read in the wrong order", page)
         self.assert_self_contained(page)
 
+    def test_g3_shows_a_pipeline_flag_on_its_family(self):
+        with tempfile.TemporaryDirectory() as d:
+            flags = Path(d, "g3-flags.json")
+            flags.write_text(json.dumps({"flags": {"fam:g10m8s3-2-2:find-k": "tier: advanced, but one step — standard?"}}))
+            page = render("--gate", "g3", "--bundles", str(FIX / "generated" / "generated-questions.json"),
+                          "--flags", str(flags))
+        self.assertEqual(page.count('<span class="tag attention">flagged</span>'), 1)
+        self.assertIn("tier: advanced, but one step — standard?", page)
+        self.assert_self_contained(page)
+
+    def test_g3_mappings_shows_every_held_claim_with_keep_and_drop(self):
+        queue = {"format": "ainext.widget-mapping-review/1", "items": [
+            {"key": f"q:g10m8s1-1-2:w00{i}#swapped-coordinates", "question_id": f"q:g10m8s1-1-2:w00{i}",
+             "template_id": "wt:g10m8s1-1-2:plot-the-point", "kind": "pair_plotter",
+             "stem": f"Plot the point $({i}, {i})$.", "reading": {"target": [i, i]}, "construction": "tap it",
+             "predicate": "swapped-coordinates", "predicate_meaning": "x and y exchanged",
+             "misconception_id": "mc:g10m8s1-1-2:swaps-x-and-y-values", "misconception_label": "Swaps x and y",
+             "misconception_description": "…", "why": "a no-op when x = y"} for i in (3, 4)]}
+        with tempfile.TemporaryDirectory() as d:
+            q = Path(d, "pending.json")
+            q.write_text(json.dumps(queue))
+            page = render("--gate", "g3-mappings", "--mappings", str(q))
+        m = meta(page)
+        self.assertEqual((m["gate"], m["held"]), ("G3", 2))
+        self.assertEqual(m["sampled"], [it["key"] for it in queue["items"]], "every held claim, no sample")
+        self.assertEqual(page.count('data-v="keep"'), 2)
+        self.assertEqual(page.count('data-v="drop"'), 2)
+        self.assertIn("a no-op when x = y", page)
+        self.assertIn("{reviewer: state.reviewer, verdicts: state.verdicts, notes: state.notes}", page)
+        self.assert_self_contained(page)
+
     def test_g4_counts_the_dropped_and_samples_the_kept(self):
         page = render("--gate", "g4", "--catalogue", str(FIX / "generated" / "misconceptions.json"),
                       "--s5", str(FIX / "runs" / "misconceptions" / "s5-final.json"))

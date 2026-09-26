@@ -12,6 +12,7 @@ import { masteryLabel } from "./mastery";
 import { COURSE_IDS, COURSES, coursesOf, isCourseId, type AskExampleIds, type CourseId } from "./courses";
 import type { Subject } from "./types";
 import { slugOfLo } from "./lesson-slug";
+import { ANSWER_ONLY_INSTRUCTION, choiceOptions, isAnswerOnly } from "./question-flags";
 import {
   BOOK_SECTIONS_SQL,
   NO_SECTIONS,
@@ -520,14 +521,20 @@ async function askContextOn(
           : `  Step ${s.step}. ${s.claim_ar ?? ""}${s.evidence_page != null ? ` [evidence: p.${s.evidence_page}]` : ""}`
       )
       .join("\n");
-    const choices = focusQ.choices
-      ? (focusQ.choices as { key: string; text: string }[])
-          .map((c) => `    (${c.key}) ${c.text}`)
-          .join("\n")
+    // The options in either shape (`lib/question-flags.ts`): a bare array, or
+    // `{ options }` beside a flag. A typed answer (the maths marker's spec)
+    // has none, and reads as a numeric one did — it used to reach `.map` on
+    // an object here.
+    const opts = choiceOptions(focusQ.choices);
+    const choices = opts
+      ? opts.map((c) => `    (${c.key}) ${c.text}`).join("\n")
       : "    (numeric answer)";
-    const solutionHeading = askPromptKit(subject).solutionHeading(
-      focusQ.solution_version
-    );
+    const answerOnly = isAnswerOnly(focusQ.choices);
+    const solutionHeading = answerOnly
+      ? // Samuel's G2 answer 22: no worked solution to walk, and this
+        // overrides every instruction to walk or re-explain one.
+        `${ANSWER_ONLY_INSTRUCTION} This overrides any instruction above to walk through or re-explain this question's solution.`
+      : askPromptKit(subject).solutionHeading(focusQ.solution_version);
     focusBlock = `
 QUESTION IN SCOPE (the one being discussed right now):
 ${focusQ.id} | ${focusQ.lo_id} | ${focusQ.tier} | book p.${focusQ.source_page ?? "—"}
@@ -537,7 +544,7 @@ ${choices}
 Correct answer: ${focusQ.correct_answer}
 ${wrongAnswer ? `${student}'s wrong answer: "${wrongAnswer}"` : ""}
 ${solutionHeading}
-${steps}
+${answerOnly ? "" : steps}
 `;
   }
 

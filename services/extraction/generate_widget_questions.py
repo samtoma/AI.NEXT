@@ -343,18 +343,37 @@ def prerequisite_closure(cur, lo: str) -> set[str]:
 # student can never see. This port runs at generation time, before load;
 # tests/test_widget_templates.py cross-checks it against the TypeScript on a
 # fixture set whenever node is on the machine, so the two cannot drift quietly.
-# One rule is STRICTER here than in the app, and says so: a sample_space event
-# with no outcome in it (every answer would be "select nothing").
+# Two rules are STRICTER here than in the app, and say so: a sample_space event
+# with no outcome in it (every answer would be "select nothing"), and a
+# venn_builder count clue that is not the size of its set as the regions give it
+# (the clue is what the widget's "counted the overlap twice" diagnosis reads).
 # ==========================================================================
 
 CIRCLE_ELEMENTS = ("radius", "chord", "diameter", "tangent")
 BAR_STATS = ("mean", "median", "mode", "range")
 RULE_KINDS = ("sum", "diff", "product", "same", "first", "second")
 RULE_OPS = ("eq", "ne", "lt", "le", "gt", "ge")
-CURVE_FNS = ("linear", "quadratic")
+# widget-payloads.ts CURVE_FNS / CURVE_COEF_COUNT: linear and quadratic, plus the five G10 families
+CURVE_COEF_COUNT = {"linear": 2, "quadratic": 3, "hyperbola": 2, "exponential": 3, "sine": 2, "cosine": 2,
+                    "tangent": 2}
+CURVE_FNS = tuple(CURVE_COEF_COUNT)
+POLYGON_SHAPES = ("scalene", "isosceles", "right",
+                  "parallelogram", "rectangle", "rhombus", "square", "trapezium", "kite")
+SOLID_KINDS = ("box", "cylinder", "cone", "pyramid", "sphere")
+# parseSolidDims: the fields each solid takes, and the default each falls back to
+SOLID_DIMS = {"box": {"l": 4, "w": 3, "h": 2}, "cylinder": {"r": 2, "h": 4}, "cone": {"r": 2, "h": 4},
+              "pyramid": {"s": 4, "h": 3}, "sphere": {"r": 2}}
+VENN_TARGETS = ("union", "intersection", "aOnly", "bOnly", "cOnly",
+                "complementA", "complementB", "complementC", "neither")
+THREE_SET_ONLY_TARGETS = ("cOnly", "complementC")
+VENN_REGION_KEYS = {2: ("a", "b", "ab", "n"), 3: ("a", "b", "c", "ab", "ac", "bc", "abc", "n")}
 
 # What each instrument can express, in words — for the author and for the blind
 # reachability verifier (widgets.workflow.js). Same facts as the rules below.
+# The kinds of feature 003 (polygon_builder … area_model, and curve_sketcher's five
+# G10 families) carry app/src/lib/widget-docs.ts DOCS text WORD FOR WORD after the
+# spec example (tests/test_widget_templates.py checks it), then any limit
+# parseMathWidget enforces that the DOCS line does not state.
 INSTRUMENTS = {
     "pair_plotter": "A lattice grid from -5 to 5 on both axes; the student places ONE point. The target "
                     "must be a whole-number pair within ±5.",
@@ -382,7 +401,74 @@ INSTRUMENTS = {
                     "outcome in the event described by a rule on the two values (sum, diff, product, same, "
                     "first, second; eq, ne, lt, le, gt, ge).",
     "curve_sketcher": "Freehand sketch of y = mx + c (fn 'linear', coefs [m, c]) or y = ax² + bx + c (fn "
-                      "'quadratic', coefs [a, b, c], a ≠ 0); every coefficient within ±10.",
+                      "'quadratic', coefs [a, b, c], a ≠ 0); every coefficient within ±10. Five more families, "
+                      "spec example {\"fn\":\"hyperbola\",\"coefs\":[2,-1]} — the same freehand "
+                      "curve_sketcher, five more families. fn ∈ hyperbola (coefs [a,q], y=a/x+q, a a nonzero "
+                      "whole number |a|≤6, q whole |q|≤3) | exponential (coefs [a,b,q], y=a·b^x+q, a nonzero "
+                      "whole |a|≤3, b ∈ {2,3,0.5}, q whole |q|≤3) | sine | cosine | tangent (coefs [a,q], "
+                      "amplitude a — nonzero whole, |a|≤4 for sine/cosine or ≤3 for tangent — and vertical "
+                      "shift q whole |q|≤3; θ is in DEGREES, domain 0..360, and the period is fixed by the "
+                      "book's own convention — 360° for sine/cosine, 180° for tangent — never a parameter you "
+                      "set). Hyperbola and tangent have more than one visible branch and CANNOT be drawn as "
+                      "one stroke: tell the student to lift their finger and draw each branch separately. "
+                      "Drawing straight through where the curve is undefined (x=0 for a hyperbola, θ=90°/270° "
+                      "for tangent) is rejected as \"asymptote-crossed\", which is the point — an asymptote is "
+                      "a boundary the curve approaches and never crosses.",
+    "polygon_builder": "Spec example {\"mode\":\"construct\",\"shape\":\"rhombus\"} — the student drags 3 or 4 "
+                       "vertices on a lattice into the named shape; graded on its PROPERTIES (side lengths, "
+                       "parallel sides, right angles), so every valid figure is accepted. shape (triangle) ∈ "
+                       "scalene | isosceles | right; shape (quadrilateral) ∈ parallelogram | rectangle | "
+                       "rhombus | square | trapezium | kite — never equilateral, which a square lattice cannot "
+                       "draw. Two other modes: "
+                       "{\"mode\":\"midsegment\",\"triangle\":[[0,0],[6,0],[0,6]],\"apex\":0} — the student "
+                       "drags a segment onto the two sides touching \"apex\" and it is graded "
+                       "parallel-and-half-length against the third side (the midpoint theorem, as a property, "
+                       "not a position); and {\"mode\":\"area\",\"shape\":\"triangle\",\"target\":6} — any "
+                       "polygon of that vertex count is accepted if its area matches (target must be a whole "
+                       "or half number, Pick's theorem). Validator limits (parseMathWidget): a midsegment "
+                       "triangle's vertices are whole-number pairs within ±6 and not collinear, apex 0, 1 or "
+                       "2; an area target is above 0 and at most 24.",
+    "solid_scaler": "Spec example {\"solid\":\"cylinder\",\"ask\":\"volume\",\"ratio\":8} — a simple isometric "
+                    "solid the student scales by dragging a factor k; the live readout shows V0·k³ and A0·k² "
+                    "together. solid ∈ box | cylinder | cone | pyramid | sphere; ask ∈ volume | area. "
+                    "\"ratio\" is the TARGET MULTIPLE (never an absolute number) and its correct k — ∛ratio "
+                    "for volume, √ratio for area — must land on the slider's own 0.5 stops from 0.5 to 4 (so "
+                    "favour ratio ∈ {1, 2.25, 4, 8, 9, 15.625, 16, 27, 64, …} — check ∛ or √ lands on a half "
+                    "before emitting). ask:\"area\" also shows toggles for which face(s) count, so leaving a "
+                    "base off is diagnosed on its own. Validator limits (parseMathWidget): ratio above 0; "
+                    "optional \"dims\" — box {l, w, h} (default 4, 3, 2), cylinder and cone {r, h} (default 2, "
+                    "4), pyramid {s, h} (default 4, 3), sphere {r} (default 2) — each above 0 and at most 8. "
+                    "Give dims whenever the question states the solid's measurements, so the drawing shows "
+                    "them.",
+    "box_plot_builder": "Spec example {\"data\":[2,4,4,5,6,7,9,12,15]} — the student drags five markers "
+                        "(minimum, Q1, median, Q3, maximum) onto a number line for the given data set. "
+                        "\"data\" must be 5–16 WHOLE numbers (so every quartile lands on the widget's snap "
+                        "grid) — never pre-sorted for the student, and include an outlier only when you want "
+                        "the whisker-vs-outlier distinction taught. Quartiles are graded by this book's own "
+                        "method: linear interpolation between ranks (Siyavula §10.4's \"percentile formula\"), "
+                        "not the split-at-the-median method some other syllabuses use. Validator limits "
+                        "(parseMathWidget): every value within ±500.",
+    "venn_builder": "Spec example "
+                    "{\"sets\":2,\"labels\":[\"Football\",\"Chess\"],\"mode\":\"shade\",\"target\":\"aOnly\"} "
+                    "— a real 2- or 3-circle Venn diagram; the student taps the region(s) that make the named "
+                    "target true. target ∈ union | intersection | aOnly | bOnly | cOnly | complementA | "
+                    "complementB | complementC | neither — cOnly/complementC need sets:3. The other mode fills "
+                    "in counts instead of shading: "
+                    "{\"mode\":\"counts\",\"sets\":2,\"labels\":[\"French\",\"German\"],\"total\":20,\"regions\":{\"a\":8,\"b\":5,\"ab\":4,\"n\":3},\"clues\":{\"a\":12,\"b\":9}} "
+                    "— \"regions\" is every exclusive zone's TRUE count (a/b/c/ab/ac/bc/abc/n, whichever the "
+                    "set count needs) and must sum to \"total\" when you give one; \"clues\" are the word "
+                    "problem's raw, PRE-overlap set sizes, which is what lets the widget name \"counted the "
+                    "overlap twice\" as the specific mistake it is. Validator limits (parseMathWidget): "
+                    "\"labels\" holds one non-empty name per set; every region count is a whole number 0–999; "
+                    "total and clues are whole numbers, not negative. Pipeline rule: each clue is the size of "
+                    "its set as the regions give it (a + ab for two sets; a + ab + ac + abc for three).",
+    "area_model": "Spec example {\"mode\":\"expand\",\"a\":2,\"b\":-3} — algebra tiles as a grid the student "
+                  "builds: one x² tile anchored, x-tiles run out along its top and left edges (the \"a\" and "
+                  "\"b\" signs — negative tiles are hatched AND marked \"−\", never colour alone), and the "
+                  "block those two runs bound is where the ab unit tiles go. mode ∈ expand | factor — same "
+                  "target (x+a)(x+b), same grading, only the prompt differs; a and b are whole numbers, not "
+                  "both zero, |a| and |b| ≤ 4 (the grid runs out past that). Prefer this over an explanation "
+                  "of FOIL: the cross term is something the student places, not a step they recite.",
 }
 
 
@@ -513,14 +599,170 @@ def reachability(kind: str, spec: dict) -> list[str]:
         return []
     if kind == "curve_sketcher":
         fn, coefs = s.get("fn"), s.get("coefs")
-        want = 2 if fn == "linear" else 3
-        if fn not in CURVE_FNS or not isinstance(coefs, list) or len(coefs) != want \
-                or not all(_isnum(k) for k in coefs):
-            return ["fn linear (2 coefs) or quadratic (3 coefs), all numbers"]
+        if not _is_str(fn) or fn not in CURVE_FNS:
+            return [f"fn must be one of {CURVE_FNS}"]
+        want = CURVE_COEF_COUNT[fn]
+        if not isinstance(coefs, list) or len(coefs) != want or not all(_isnum(k) for k in coefs):
+            return [f"a {fn} curve takes {want} coefs, all numbers"]
+        return _curve_reachable(fn, coefs)
+    if kind == "polygon_builder":
+        return _polygon_reachable(s)
+    if kind == "solid_scaler":
+        return _solid_reachable(s)
+    if kind == "box_plot_builder":
+        data = s.get("data")
+        if not isinstance(data, list) or not 5 <= len(data) <= 16:
+            return ["data holds 5–16 values"]
+        if not all(_isint(v) for v in data):
+            return ["every data value is a whole number (the quartiles land on the 0.25 snap grid)"]
+        return ["every data value is within ±500"] if any(abs(v) > 500 for v in data) else []
+    if kind == "venn_builder":
+        return _venn_reachable(s)
+    if kind == "area_model":
+        mode, a, b = s.get("mode"), s.get("a"), s.get("b")
+        if not _is_str(mode) or mode not in ("expand", "factor") or not _isint(a) or not _isint(b):
+            return ["mode must be expand|factor and a, b whole numbers"]
+        if a == 0 and b == 0:
+            return ["a and b are not both zero"]
+        return ["|a| and |b| are at most 4 (the tile grid runs out)"] if abs(a) > 4 or abs(b) > 4 else []
+    return [f"unknown widget kind {kind!r}"]
+
+
+def _is_str(v) -> bool:
+    return isinstance(v, str)
+
+
+def _exact(v, *allowed) -> bool:
+    """JavaScript's `v === x` for numbers: a bool is never a number."""
+    return _isnum(v) and any(v == x for x in allowed)
+
+
+def _curve_reachable(fn: str, coefs: list) -> list[str]:
+    """widget-payloads.ts `curveReachable`, per family."""
+    if fn in ("linear", "quadratic"):
         if fn == "quadratic" and coefs[0] == 0:
             return ["a quadratic needs a ≠ 0"]
         return ["every coefficient is within ±10"] if any(abs(k) > 10 for k in coefs) else []
-    return [f"unknown widget kind {kind!r}"]
+    whole = lambda v, lim, nonzero: _isint(v) and (v != 0 or not nonzero) and abs(v) <= lim  # noqa: E731
+    if fn == "hyperbola":
+        a, q = coefs
+        return [] if whole(a, 6, True) and whole(q, 3, False) else \
+            ["a hyperbola takes a a nonzero whole number |a| ≤ 6 and q whole |q| ≤ 3"]
+    if fn == "exponential":
+        a, b, q = coefs
+        return [] if whole(a, 3, True) and _exact(b, 2, 3, 0.5) and whole(q, 3, False) else \
+            ["an exponential takes a nonzero whole |a| ≤ 3, b ∈ {2, 3, 0.5} and q whole |q| ≤ 3"]
+    a, q = coefs
+    lim = 3 if fn == "tangent" else 4
+    return [] if whole(a, lim, True) and whole(q, 3, False) else \
+        [f"a {fn} curve takes a nonzero whole amplitude |a| ≤ {lim} and q whole |q| ≤ 3"]
+
+
+def _polygon_reachable(s: dict) -> list[str]:
+    mode = s.get("mode")
+    if not _is_str(mode) or mode not in ("construct", "midsegment", "area"):
+        return ["mode must be construct|midsegment|area"]
+    if mode == "construct":
+        shape = s.get("shape")
+        return [] if _is_str(shape) and shape in POLYGON_SHAPES else \
+            [f"a construct shape is one of {POLYGON_SHAPES} (never equilateral: a square lattice cannot draw one)"]
+    if mode == "midsegment":
+        tri = s.get("triangle")
+        if not isinstance(tri, list) or len(tri) != 3:
+            return ["triangle must be three vertices"]
+        pts = [_intpair(p, 6) for p in tri]
+        if not all(pts):
+            return ["every vertex is a whole-number pair within ±6"]
+        t0, t1, t2 = pts
+        if (t1[0] - t0[0]) * (t2[1] - t0[1]) - (t2[0] - t0[0]) * (t1[1] - t0[1]) == 0:
+            return ["the three vertices are collinear: no triangle"]
+        return [] if _exact(s.get("apex"), 0, 1, 2) else ["apex must be 0, 1 or 2"]
+    shape, target = s.get("shape"), s.get("target")
+    if not _is_str(shape) or shape not in ("triangle", "quadrilateral") or not _isnum(target):
+        return ["an area shape is triangle|quadrilateral and target a number"]
+    if target <= 0 or target > 24:
+        return ["an area target is above 0 and at most 24"]
+    return [] if float(target * 2).is_integer() else \
+        ["an area target is a whole or half number (a lattice polygon's area, Pick's theorem)"]
+
+
+def _solid_dims(solid: str, raw) -> dict | None:
+    """widget-payloads.ts `parseSolidDims`: the stated dims over the defaults, or None if one is out of range."""
+    d = raw if isinstance(raw, dict) else {}
+    out = {}
+    for key, fallback in SOLID_DIMS[solid].items():
+        if key not in d:
+            out[key] = fallback
+        elif _isnum(d[key]) and 0 < d[key] <= 8:
+            out[key] = d[key]
+        else:
+            return None
+    return out
+
+
+def _solid_reachable(s: dict) -> list[str]:
+    import math
+    solid, ask, ratio = s.get("solid"), s.get("ask"), s.get("ratio")
+    if not _is_str(solid) or solid not in SOLID_KINDS or not _is_str(ask) or ask not in ("volume", "area") \
+            or not _isnum(ratio) or ratio <= 0:
+        return [f"solid in {SOLID_KINDS}, ask volume|area, ratio a positive number"]
+    k = math.cbrt(ratio) if ask == "volume" else math.sqrt(ratio)
+    if k < 0.5 - 1e-9 or k > 4 + 1e-9:
+        return [f"the scale factor this ratio needs is {k:g}; the slider runs 0.5–4"]
+    steps = (k - 0.5) / 0.5
+    if abs(steps - round(steps)) > 1e-6:
+        return [f"the scale factor this ratio needs is {k:g}; the slider stops only at multiples of 0.5"]
+    return [] if _solid_dims(solid, s.get("dims")) is not None else \
+        ["every stated dimension is above 0 and at most 8, and only the solid's own fields"]
+
+
+def _venn_set_sizes(sets: int, regions: dict) -> dict:
+    keys = VENN_REGION_KEYS[sets]
+    return {x: sum(regions[k] for k in keys if k != "n" and x in k) for x in "abc"[:sets]}
+
+
+def _venn_reachable(s: dict) -> list[str]:
+    sets = s.get("sets")
+    if not _exact(sets, 2, 3):
+        return ["sets must be 2 or 3"]
+    sets = int(sets)
+    labels = s.get("labels")
+    if not isinstance(labels, list) or len(labels) != sets or \
+            not all(_is_str(x) and x.strip() for x in labels):
+        return ["labels holds one non-empty name per set"]
+    mode = s.get("mode")
+    if not _is_str(mode) or mode not in ("shade", "counts"):
+        return ["mode must be shade|counts"]
+    if mode == "shade":
+        target = s.get("target")
+        if not _is_str(target) or target not in VENN_TARGETS:
+            return [f"a shade target is one of {VENN_TARGETS}"]
+        return [f"{target} needs a third set (sets: 3)"] if sets == 2 and target in THREE_SET_ONLY_TARGETS else []
+    regions = s.get("regions")
+    if not isinstance(regions, dict):
+        return ["regions must be an object"]
+    keys = VENN_REGION_KEYS[sets]
+    if not all(_isint(regions.get(k)) and 0 <= regions[k] <= 999 for k in keys):
+        return [f"regions gives every zone {keys} a whole-number count 0–999"]
+    if "total" in s:
+        total = s["total"]
+        if not _isint(total) or total < 0:
+            return ["total is a whole number, not negative"]
+        if sum(regions[k] for k in keys) != total:
+            return [f"the regions sum to {sum(regions[k] for k in keys)}, not the total {total}"]
+    clues = s.get("clues")
+    if isinstance(clues, dict):
+        for k in "abc":
+            if k in clues and (not _isint(clues[k]) or clues[k] < 0):
+                return ["every clue is a whole number, not negative"]
+        # the pipeline rule, stricter than the app: a clue is its set's size as the regions give it
+        sizes = _venn_set_sizes(sets, regions)
+        wrong = [f"{k} {clues[k]} (the regions give {sizes.get(k, 'no such set')})" for k in "abc"
+                 if k in clues and clues[k] != sizes.get(k)]
+        if wrong:
+            return ["each clue is the size of its set as the regions give it: " + ", ".join(wrong)
+                    + " (pipeline rule, stricter than the app)"]
+    return []
 
 
 def _event_outcomes(rows: int, cols: int, kind: str, op: str, value) -> int:
@@ -575,6 +817,32 @@ class PgGraph:
         return dict(self._rows(
             """SELECT dst_id, src_id FROM graph_edges
                 WHERE edge_type = 'teaches' AND system_to IS NULL AND src_id LIKE 'module:%%'"""))
+
+
+class CatalogueOverlay:
+    """A graph whose misconceptions also include an S5 catalogue or DRAFT run not yet loaded (§3.2: S7's
+    author runs after the S5 draft, before any catalogue is assembled or loaded). Without it the author is
+    shown no misconception of the new book to name, and the verifier sees "?" for every draft id — the
+    Chapter 8 pilot's S7 would have authored against an empty catalogue."""
+
+    def __init__(self, graph, entries: dict[str, dict]):
+        self.graph, self.entries = graph, entries
+
+    def misconceptions(self) -> dict[str, dict]:
+        extra = {i: {"lo_id": e.get("lo_id"), "label": e.get("label"), "description": e.get("description")}
+                 for i, e in self.entries.items()}
+        return {**self.graph.misconceptions(), **extra}
+
+    def __getattr__(self, name):
+        return getattr(self.graph, name)
+
+
+def _with_catalogue(graph, path):
+    if not path:
+        return graph
+    import generate_questions as G
+    entries, _alias = G.load_catalogue(path)
+    return CatalogueOverlay(graph, entries)
 
 
 class FixtureGraph:
@@ -682,6 +950,11 @@ def check_template(raw: dict) -> list[str]:
     for key in ("stem",):
         if not isinstance(raw.get(key), str) or not raw[key].strip():
             p.append("stem must be a non-empty template")
+    # a widget question shows its instrument, never the book's diagram: a stem that points at a
+    # [figure] asks the student (and the blind verifier) about a picture neither will see (s7-v4)
+    if isinstance(raw.get("stem"), str) and "[figure]" in raw["stem"]:
+        p.append("stem refers to a [figure]: a widget question is answered on its instrument alone — write "
+                 "the stem so it needs no book diagram")
     if not isinstance(raw.get("solution"), list) or not raw["solution"]:
         p.append("solution must be a non-empty list of step templates")
     ds = raw.get("diagnostics")
@@ -842,7 +1115,34 @@ READING_FIELDS = {
     "ratio_balance": {"mode": "'direct' or 'inverse'", "a": "first term", "b": "second term", "c": "third term"},
     "sample_space": {"rows": "outcomes of the first trial", "cols": "outcomes of the second",
                      "event": "every outcome in the event as [first, second] pairs"},
-    "curve_sketcher": {"fn": "'linear' or 'quadratic'", "coefs": "[m, c] or [a, b, c]"},
+    "curve_sketcher": {"fn": "'linear', 'quadratic', 'hyperbola', 'exponential', 'sine', 'cosine' or 'tangent'",
+                       "coefs": "linear [m, c]; quadratic [a, b, c]; hyperbola y = a/x + q [a, q]; exponential "
+                                "y = a·b^x + q [a, b, q]; sine, cosine, tangent [a, q] (amplitude, vertical shift)"},
+    "polygon_builder": {"mode": "'construct', 'midsegment' or 'area'",
+                        "shape": "construct: the shape to build (scalene, isosceles, right, parallelogram, "
+                                 "rectangle, rhombus, square, trapezium or kite); area: 'triangle' or "
+                                 "'quadrilateral'",
+                        "triangle": "midsegment: the fixed triangle's three vertices as [x, y] pairs",
+                        "apex": "midsegment: which vertex (0, 1 or 2, in your triangle's order) the two sides "
+                                "the segment joins meet at",
+                        "target": "area: the area the polygon must have"},
+    "solid_scaler": {"solid": "box | cylinder | cone | pyramid | sphere",
+                     "ask": "'volume' or 'area' — which one must be scaled",
+                     "ratio": "how many times as large it must become",
+                     "dims": "only if the question states the solid's measurements: box {l, w, h}; cylinder "
+                             "and cone {r, h}; pyramid {s, h} (base side, height); sphere {r}"},
+    "box_plot_builder": {"data": "every value of the data set, as the question gives it"},
+    "venn_builder": {"sets": "2 or 3", "labels": "the sets' names, in the order the question names them",
+                     "mode": "'shade' (mark a region) or 'counts' (fill in every region's count)",
+                     "target": "shade: union | intersection | aOnly | bOnly | cOnly | complementA | "
+                               "complementB | complementC | neither — a, b, c being the sets in your labels' order",
+                     "total": "counts: the total, only if the question states one",
+                     "regions": "counts: every exclusive zone's true count, worked out from the question — "
+                                "a, b, ab, n for two sets; a, b, c, ab, ac, bc, abc, n for three (n: in none)",
+                     "clues": "counts: the set sizes the question states before any overlap is removed, "
+                              "as {a, b(, c)}"},
+    "area_model": {"a": "the target is (x + a)(x + b): a, a whole number (to factorise, read it from the "
+                        "factors)", "b": "b, likewise"},
 }
 
 
@@ -850,11 +1150,38 @@ def _near(a, b) -> bool:
     return _isnum(a) and _isnum(b) and abs(float(a) - float(b)) <= 1e-9
 
 
+def _reading_value(v):
+    """A reading field the verifier wrote as a STRING holding a value — "[3, -2]", "-1/2", "4", "true", or a value
+    followed by its own gloss ("[1, 0], the midpoint of A(-1,3) and B(3,-3)") — read as that value. Words that
+    are not a value stay words, and then disagree with the spec as before (s7-v5's schema typed no field)."""
+    import re
+    if not isinstance(v, str):
+        return v
+    t = v.strip()
+    try:
+        return json.loads(t)
+    except ValueError:
+        pass
+    m = re.fullmatch(r"(-?\d+)\s*/\s*(\d+)", t)
+    if m and int(m.group(2)):
+        return int(m.group(1)) / int(m.group(2))
+    m = re.fullmatch(r"\(\s*(-?\d+(?:\.\d+)?)\s*[,;]\s*(-?\d+(?:\.\d+)?)\s*\)", t)   # a point, (x, y) or (x; y)
+    if m:
+        return [json.loads(m.group(1)), json.loads(m.group(2))]
+    try:
+        val, end = json.JSONDecoder().raw_decode(t)
+    except ValueError:
+        return v
+    if isinstance(val, (list, int, float)) and not isinstance(val, bool) and t[end:end + 1] in (",", ";", " "):
+        return val
+    return v
+
+
 def reading_agrees(kind: str, spec: dict, reading: dict) -> tuple[bool, str]:
     """Does the blind verifier's reading of the stem say what the stored spec says?"""
     if not isinstance(reading, dict):
         return False, "no reading of the stem"
-    r, s = reading, spec
+    r, s = {k: _reading_value(v) for k, v in reading.items()}, spec
     try:
         if kind == "pair_plotter":
             ok = len(r["target"]) == 2 and all(_near(x, y) for x, y in zip(r["target"], s["target"]))
@@ -892,12 +1219,78 @@ def reading_agrees(kind: str, spec: dict, reading: dict) -> tuple[bool, str]:
         elif kind == "curve_sketcher":
             ok = r["fn"] == s["fn"] and len(r["coefs"]) == len(s["coefs"]) and \
                 all(_near(x, y) for x, y in zip(r["coefs"], s["coefs"]))
+        elif kind == "polygon_builder":
+            ok = r["mode"] == s["mode"]
+            if ok and s["mode"] == "construct":
+                ok = r["shape"] == s["shape"]
+            elif ok and s["mode"] == "midsegment":   # the same triangle, whatever order it is read in
+                vs = lambda t: sorted(tuple(float(c) for c in p) for p in t)  # noqa: E731
+                apex = lambda x: tuple(float(c) for c in x["triangle"][int(x["apex"])])  # noqa: E731
+                ok = len(r["triangle"]) == 3 and vs(r["triangle"]) == vs(s["triangle"]) and apex(r) == apex(s)
+            elif ok:
+                ok = r["shape"] == s["shape"] and _near(r["target"], s["target"])
+        elif kind == "solid_scaler":
+            ok = r["solid"] == s["solid"] and r["ask"] == s["ask"] and _near(r["ratio"], s["ratio"])
+            stated = r.get("dims") or {}
+            if ok and stated:   # measurements the question states must be the ones the widget draws
+                drawn = _solid_dims(s["solid"], s.get("dims")) or {}
+                ok = set(stated) <= set(drawn) and all(_near(v, drawn[k]) for k, v in stated.items())
+        elif kind == "box_plot_builder":
+            ok = sorted(float(v) for v in r["data"]) == sorted(float(v) for v in s["data"])
+        elif kind == "venn_builder":
+            ok, why = _venn_reading_agrees(r, s)
+            if not ok:
+                return False, why
+        elif kind == "area_model":
+            ok = sorted(float(v) for v in (r["a"], r["b"])) == sorted(float(v) for v in (s["a"], s["b"]))
         else:
             return False, f"no reading rule for kind {kind!r}"
-    except (KeyError, TypeError, ValueError) as e:
+    except (KeyError, TypeError, ValueError, AttributeError, IndexError) as e:
         return False, f"reading incomplete ({e})"
     shown = {k: v for k, v in r.items() if k in READING_FIELDS.get(kind, {})}
     return ok, ("" if ok else f"the stem reads as {json.dumps(shown)}; the spec stores {json.dumps(s)}")
+
+
+def _norm_label(x) -> str:
+    return " ".join(str(x).split()).casefold()
+
+
+def _venn_reading_agrees(r: dict, s: dict) -> tuple[bool, str]:
+    """The reading names the sets in its own order: map its letters onto the spec's by label, then compare
+    the target, or every region, the total and the clues, through that map."""
+    sets = int(s["sets"])
+    if int(r["sets"]) != sets or r["mode"] != s["mode"]:
+        return False, f"the stem reads as {r.get('sets')} set(s), mode {r.get('mode')!r}; the spec stores " \
+                      f"{sets}, {s['mode']!r}"
+    mine, theirs = [_norm_label(x) for x in s["labels"]], [_norm_label(x) for x in r["labels"]]
+    if len(theirs) != sets or sorted(mine) != sorted(theirs) or len(set(mine)) != sets:
+        return False, f"the stem names the sets {r.get('labels')}; the spec labels them {s['labels']}"
+    to_r = {"abc"[i]: "abc"[theirs.index(lab)] for i, lab in enumerate(mine)}   # spec letter -> reading letter
+    zone = lambda k: "n" if k == "n" else "".join(sorted(to_r[c] for c in k))  # noqa: E731
+    if s["mode"] == "shade":
+        t = s["target"]
+        want = t if t in ("union", "intersection", "neither") else \
+            t[:-1] + to_r[t[-1].lower()].upper() if t.startswith("complement") else to_r[t[0]] + "Only"
+        return (r["target"] == want), f"the stem asks for {r.get('target')!r}; the spec stores {t!r} " \
+                                      f"(labels {s['labels']})"
+    keys = VENN_REGION_KEYS[sets]
+    got = r["regions"]
+    bad = [k for k in keys if not _near(got.get(zone(k)), s["regions"][k])]
+    if bad:
+        return False, f"the stem's regions read as {json.dumps(got)}; the spec stores {json.dumps(s['regions'])} " \
+                      f"(labels {s['labels']})"
+    total = sum(s["regions"][k] for k in keys)   # = the spec's total when it gives one (reachability)
+    if r.get("total") is not None and not _near(r["total"], total):
+        return False, f"the stem's total reads as {r['total']}; the spec's regions sum to {total}"
+    sizes = _venn_set_sizes(sets, s["regions"])
+    rc = r.get("clues") or {}
+    for k in "abc"[:sets]:
+        stated = (s.get("clues") or {}).get(k)
+        read = rc.get(to_r[k])
+        if (stated is not None or read is not None) and not _near(read, sizes[k]):
+            return False, f"the stem gives set {s['labels']['abc'.index(k)]!r} as {read}; the spec's " \
+                          f"regions make it {sizes[k]}" + ("" if stated is None else f" (clue {stated})")
+    return True, ""
 
 
 def _event_cells(rows: int, cols: int, rule: dict):
@@ -915,13 +1308,32 @@ def _event_cells(rows: int, cols: int, rule: dict):
                 yield (a, b)
 
 
-def apply_verdicts(templates: list[dict], questions: list[dict], files: list[Path]) -> tuple[set, dict]:
-    """The blind reachability verifier's verdicts (widgets.workflow.js, mode verify). Fail closed."""
+def _predicate_of(text, claimed: set) -> str | None:
+    """The predicate a verifier's verdict is about. It was asked for the name, and sometimes wrote the whole
+    claim line instead ("slope-inverted → mc:…", 'off-target ("…") -> mc:…'): the leading name, if it is one
+    of the claimed predicates, is that verdict's predicate; anything else is no verdict."""
+    import re
+    t = str(text or "").strip()
+    if t in claimed:
+        return t
+    m = re.match(r"[a-z][a-z0-9-]*", t)
+    return m.group(0) if m and m.group(0) in claimed else None
+
+
+def verdict_scan(templates: list[dict], questions: list[dict], files: list[Path]) -> tuple[set, dict, dict]:
+    """The blind reachability verifier's verdicts (widgets.workflow.js, mode verify), by decision 47.
+
+    A TEMPLATE is accepted when every instance was verified against its current sha, is reachable, and its
+    stem reads as its spec. Fail closed: silence is not approval. A MAPPING (predicate → misconception) is
+    judged on its own: `status[question id][predicate]` is (True, "") where the verifier confirmed it on that
+    instance, else (False, the verifier's why). An unconfirmed mapping no longer rejects its template
+    (decision 47, Samuel: "Keep them, and let's human review"): it is held for a human (`hold_pending`).
+    Returns (accepted template ids, {rejected template id: reasons}, status)."""
     got: dict[str, list] = {}
     for f in files:
         for r in json.loads(Path(f).read_text()).get("results", []):
             got.setdefault(r.get("question_id"), []).append(r)
-    accepted, rejected = set(), {}
+    accepted, rejected, status = set(), {}, {}
     for tpl in templates:
         reasons = []
         mine = [q for q in questions if q["family"] == tpl["id"]]
@@ -936,17 +1348,109 @@ def apply_verdicts(templates: list[dict], questions: list[dict], files: list[Pat
                 agrees, why = reading_agrees(q["choices"]["kind"], q["choices"]["spec"], r.get("reading"))
                 if not agrees:
                     reasons.append(f"{q['id']}: blind reading disagrees with the spec — {why}")
-                preds = {p.get("predicate"): p for p in r.get("predicates", [])}
-                for d in q["choices"]["diagnostics"]:
-                    v = preds.get(d["predicate"])
-                    if not v or v.get("matches") is not True:
-                        reasons.append(f"{q['id']}: {d['predicate']} → {d['misconception_id']} not confirmed"
-                                       + (f" ({v.get('why')})" if v else ""))
+            claimed = {d["predicate"] for d in q["choices"]["diagnostics"]}
+            st = status.setdefault(q["id"], {})
+            for pred in claimed:
+                vs = [next((v for v in r.get("predicates") or [] if _predicate_of(v.get("predicate"), claimed) == pred), None)
+                      for r in rs]
+                ok = all(v is not None and v.get("matches") is True for v in vs)
+                why = " / ".join(str(v.get("why")) for v in vs if v is not None and v.get("matches") is not True and v.get("why"))
+                st[pred] = (ok, "" if ok else (why or "the verifier gave no verdict on this mapping"))
         if reasons or not mine:
             rejected[tpl["id"]] = reasons or ["no instances"]
         else:
             accepted.add(tpl["id"])
+    return accepted, rejected, status
+
+
+def apply_verdicts(templates: list[dict], questions: list[dict], files: list[Path]) -> tuple[set, dict]:
+    """(accepted, rejected) templates under decision 47 — see `verdict_scan`; mappings are held, not judged here."""
+    accepted, rejected, _ = verdict_scan(templates, questions, files)
     return accepted, rejected
+
+
+MAPPING_VERDICTS = ("keep", "drop")
+
+
+def mapping_key(question_id: str, predicate: str) -> str:
+    return f"{question_id}#{predicate}"
+
+
+def load_mapping_reviews(files: list[Path]) -> dict[str, dict]:
+    """Human verdicts on held mappings ({reviewer, verdicts: {"<question id>#<predicate>": keep|drop}, notes}),
+    the shape render_review_page.py --gate g3-mappings exports. A later file wins for the same key."""
+    out: dict[str, dict] = {}
+    for f in files:
+        d = json.loads(Path(f).read_text())
+        for k, v in (d.get("verdicts") or {}).items():
+            if v not in MAPPING_VERDICTS:
+                raise ValueError(f"{f}: {k}: verdict {v!r} is not keep|drop")
+            out[k] = {"verdict": v, "by": d.get("reviewer"), "note": (d.get("notes") or {}).get(k, ""),
+                      "file": Path(f).name}
+    return out
+
+
+def hold_pending(questions: list[dict], status: dict, reviews: dict | None = None,
+                 verifier_runs: list[str] | None = None) -> dict:
+    """Decision 47, applied to each question: a mapping the verifier confirmed stays in `choices.diagnostics`
+    (active). One it did not is moved to `choices.pending_review` with the verifier's why — inactive: the app
+    reads only `diagnostics`, so it is never shown, never a diagnosis, and never S5 evidence — until a human
+    keeps it (back into `diagnostics`) or drops it (gone). A question whose every mapping is held ships as a
+    plain right/wrong widget. Returns the counts."""
+    reviews = reviews or {}
+    n = {"active": 0, "held": 0, "kept_by_review": 0, "dropped_by_review": 0}
+    for q in questions:
+        ch = q["choices"]
+        st = status.get(q["id"], {})
+        active, held = [], []
+        for d in ch.get("diagnostics") or []:
+            ok, why = st.get(d["predicate"], (False, "the verifier gave no verdict on this mapping"))
+            if ok:
+                active.append(d)
+                continue
+            rv = reviews.get(mapping_key(q["id"], d["predicate"]))
+            if rv and rv["verdict"] == "keep":
+                active.append(d)
+                n["kept_by_review"] += 1
+            elif rv and rv["verdict"] == "drop":
+                n["dropped_by_review"] += 1
+            else:
+                held.append({**d, "why": why, **({"verifier_runs": verifier_runs} if verifier_runs else {})})
+        ch["diagnostics"] = active
+        if held:
+            ch["pending_review"] = held
+        else:
+            ch.pop("pending_review", None)
+        n["active"] += len(active)
+        n["held"] += len(held)
+    return n
+
+
+def pending_queue(questions: list[dict], graph, verify_files: list[Path]) -> dict:
+    """The held mappings as a review queue for render_review_page.py --gate g3-mappings: per claim, what the
+    student sees (stem), what the blind verifier read off it, the claim and the verifier's reason."""
+    readings: dict[str, dict] = {}
+    for f in verify_files:
+        for r in json.loads(Path(f).read_text()).get("results", []):
+            readings[r.get("question_id")] = r
+    mcs = graph.misconceptions() if graph else {}
+    kinds = W.contract()["kinds"]
+    items = []
+    for q in questions:
+        for d in (q["choices"].get("pending_review") or []):
+            m = mcs.get(d["misconception_id"]) or {}
+            r = readings.get(q["id"]) or {}
+            items.append({"key": mapping_key(q["id"], d["predicate"]), "question_id": q["id"],
+                          "template_id": q["family"], "lo_id": q["lo_id"], "kind": q["choices"]["kind"],
+                          "stem": q["stem"], "reading": r.get("reading"), "construction": r.get("construction"),
+                          "predicate": d["predicate"],
+                          "predicate_meaning": kinds[q["choices"]["kind"]]["predicates"].get(d["predicate"]),
+                          "misconception_id": d["misconception_id"], "misconception_label": m.get("label"),
+                          "misconception_description": m.get("description"), "why": d.get("why")})
+    return {"format": "ainext.widget-mapping-review/1",
+            "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a "
+                    "diagnosis, never S5 evidence — until a human keeps or drops it",
+            "items": items}
 
 
 def _gap_key(g: dict) -> tuple:
@@ -1021,9 +1525,12 @@ def gap_report(book: str, course: str, graph, questions: list[dict], gap_files: 
     }
 
 
-def author_args(book, graph, course: str) -> dict:
-    """args for widgets.workflow.js (mode author): objectives, anchors, reachable misconceptions, the contract."""
+def author_args(book, graph, course: str, figures: dict | None = None) -> dict:
+    """args for widgets.workflow.js (mode author): objectives, anchors, reachable misconceptions, the contract.
+    `figures` (question id -> image files, assemble_misconceptions.figures_by_question): an anchor whose
+    stem shows [figure] names its images, so the author sees the book's diagram (s7-v4)."""
     import book_config
+    figures = figures or {}
     mcs = graph.misconceptions()
     qs = graph.questions()
     module_of = graph.module_of()
@@ -1033,7 +1540,8 @@ def author_args(book, graph, course: str) -> dict:
         if module_of.get(lo) not in mods:
             continue
         closure = graph.closure(lo)
-        anchors = [{"id": i, "stem": q["stem"], "type": q["type"], "answer": q["answer"]}
+        anchors = [{"id": i, "stem": q["stem"], "type": q["type"], "answer": q["answer"],
+                    **({"figures": figures[i]} if figures.get(i) else {})}
                    for i, q in sorted(qs.items()) if q["lo_id"] == lo and q.get("source") == "seed"][:6]
         objs.append({"lo_id": lo, "label": rec["label"], "description": rec["description"],
                      "module": module_of[lo], "module_label": mods[module_of[lo]]["label"],
@@ -1086,6 +1594,121 @@ def _lesson_of(lo: str) -> str:
     return re.sub(r"-[0-9]+$", "", lo.removeprefix("lo:"))
 
 
+def only_lessons(args: dict, lessons) -> dict:
+    """Author args for a re-run of some lessons only (the rest keep their earlier run's record)."""
+    only = {x.strip() for x in lessons if x and x.strip()}
+    missing = only - {_lesson_of(o["lo_id"]) for o in args["objectives"]}
+    if not only or missing:
+        raise ValueError(f"no objective of lesson(s) {sorted(missing) or '(none named)'} in this course")
+    return dict(args, objectives=[o for o in args["objectives"] if _lesson_of(o["lo_id"]) in only])
+
+
+# ---- pipeline normalisations of an S7 author's template ---------------------
+# Two author errors that --templates refuses are fixed the same way every time, and each fix is recorded in the
+# template's "notes" (the same style as families/normalise.py for S6). Applied by an operator on named files
+# (--normalise-templates), never inside the checks, which keep refusing the raw author output:
+#   drop-foreign-diagnostic   a diagnostic naming a misconception of an objective that is neither the template's
+#                             nor one of its prerequisites (FR-1215) is dropped — only while at least one
+#                             diagnostic of its own remains; a template left with none goes back to the author
+#   drop-duplicate-predicate  a predicate mapped to more than one misconception keeps its FIRST mapping (the
+#                             author lists the likeliest error first, as the prompt asks); the others are dropped
+NORMALISED = "PIPELINE NORMALISATION (not an author edit)"
+
+
+def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
+    """The template with both normalisations applied, and what was done (empty: nothing to do)."""
+    import copy
+    out = copy.deepcopy(raw)
+    done: list[str] = []
+    ds = [d for d in out.get("diagnostics") or [] if isinstance(d, dict)]
+    mcs = graph.misconceptions()
+    allowed = graph.closure(out.get("lo_id"))
+    owner = lambda mid: (mcs.get(mid) or {}).get("lo_id") or "lo:" + str(mid).split(":")[1]  # noqa: E731
+    own = [d for d in ds if owner(d.get("misconception_id")) in allowed]
+    foreign = [d for d in ds if d not in own]
+    if foreign and own:
+        ds = own
+        done.append("drop-foreign-diagnostic: dropped " + ", ".join(
+            f"{d['predicate']} → {d['misconception_id']} (on {owner(d['misconception_id'])})" for d in foreign)
+            + f" — neither {out.get('lo_id')} nor a prerequisite of it (FR-1215)")
+    seen, kept, dup = set(), [], []
+    for d in ds:
+        (dup if d.get("predicate") in seen else kept).append(d)
+        seen.add(d.get("predicate"))
+    if dup:
+        ds = kept
+        done.append("drop-duplicate-predicate: kept the first mapping of each predicate, dropped " + ", ".join(
+            f"{d['predicate']} → {d['misconception_id']}" for d in dup))
+    if done:
+        out["diagnostics"] = ds
+        stamp = f"{NORMALISED}: " + "; ".join(done) + "."
+        out["notes"] = (out.get("notes") or "").rstrip() + ("\n\n" if out.get("notes") else "") + stamp
+    return out, done
+
+
+def merge_author_runs(files: list[Path]) -> dict:
+    """Several author runs (widgets.workflow.js, mode author) as one, OLDEST FIRST: a lesson's record in a later
+    run replaces its record in an earlier one WHOLE — templates and gaps together — so a re-authored lesson
+    (`--only-lessons`) never keeps a stale template or a gap its new record closed. A lesson the author did not
+    answer has no record, only an "unexamined" gap in the run's top-level list; it is a record of its own here."""
+    by_lesson: dict[str, dict] = {}
+    runs, book = [], None
+    for f in files:
+        run = json.loads(Path(f).read_text())
+        if run.get("mode") != "author":
+            raise ValueError(f"{f}: not an author run (mode {run.get('mode')!r})")
+        if book and run.get("book") != book:
+            raise ValueError(f"{f}: book {run.get('book')!r}, the other runs are {book!r}")
+        book = run.get("book")
+        mine = {r["lesson"]: {"lesson": r["lesson"], "templates": r.get("templates") or [],
+                              "gaps": r.get("gaps") or [], "notes": r.get("notes", "")}
+                for r in run.get("records") or []}
+        for g in run.get("gaps") or []:   # a lesson with no record: its unexamined gap is its whole record
+            lesson = _lesson_of(g.get("lo_id") or "")
+            mine.setdefault(lesson, {"lesson": lesson, "templates": [], "gaps": [], "notes": ""})
+            if g not in mine[lesson]["gaps"]:
+                mine[lesson]["gaps"].append(g)
+        for lesson, rec in mine.items():
+            by_lesson[lesson] = dict(rec, source=Path(f).name, run_id=run.get("run_id"))
+        runs.append({"file": Path(f).name, "run_id": run.get("run_id"), "prompts_version": run.get("prompts_version"),
+                     "lessons": sorted(mine)})
+    records = [by_lesson[k] for k in sorted(by_lesson)]
+    return {"mode": "author", "book": book, "merged_from": runs,
+            "rule": "oldest first; a lesson's record in a later run replaces its earlier one whole",
+            "records": records, "gaps": [g for r in records for g in r["gaps"]]}
+
+
+def write_templates(merged: dict, directory: Path) -> tuple[list[Path], list[str]]:
+    """Each template of a merged author record to <directory>/<objective tail>--<slug>.json. Never overwrites or
+    deletes: a file that differs, or a template file this merge does not hold, is reported and nothing is written."""
+    want: dict[Path, str] = {}
+    for r in merged["records"]:
+        for t in r["templates"]:
+            tail, slug = str(t.get("id", "")).split(":")[1:3] if str(t.get("id", "")).count(":") == 2 else ("", "")
+            if not tail or not slug:
+                return [], [f"template id {t.get('id')!r} is not wt:<objective tail>:<slug>"]
+            path = Path(directory) / f"{tail}--{slug}.json"
+            text = json.dumps(t, indent=1, ensure_ascii=False) + "\n"
+            if path in want and want[path] != text:
+                return [], [f"two templates would be written to {path.name}"]
+            want[path] = text
+    problems = [f"{p.name} exists and differs from the merged run's template — resolve it by hand"
+                + (" (it carries a pipeline normalisation: re-apply --normalise-templates to the merged one)"
+                   if NORMALISED in p.read_text() else "")
+                for p, text in want.items() if p.exists() and p.read_text() != text]
+    problems += [f"{p.name} is a template this merge does not hold (a superseded record?) — move it aside"
+                 for p in sorted(Path(directory).glob("*.json")) if not p.name.startswith("_") and p not in want]
+    if problems:
+        return [], problems
+    Path(directory).mkdir(parents=True, exist_ok=True)
+    written = []
+    for p, text in want.items():
+        if not p.exists():
+            p.write_text(text)
+            written.append(p)
+    return written, []
+
+
 def author_args_by_ref(args: dict, directory: Path) -> dict:
     import packet_ref
     shards = packet_ref.Shards(directory, "S7 author")
@@ -1096,8 +1719,9 @@ def author_args_by_ref(args: dict, directory: Path) -> dict:
     refs = []
     for lesson, objs in lessons.items():
         shards.put(f"lessons/{lesson}.txt", packet_ref.js_json(objs, 1))
+        n_fig = sum(len(q.get("figures") or []) for o in objs for q in o.get("anchor_questions") or [])
         refs.append({"lesson": lesson, "module": objs[0].get("module"), "module_label": objs[0].get("module_label"),
-                     "lo_ids": [o["lo_id"] for o in objs]})
+                     "lo_ids": [o["lo_id"] for o in objs], **({"figures": n_fig} if n_fig else {})})
     out = {k: v for k, v in args.items() if k not in ("objectives", "contract", "book")}
     out["book"] = {k: args["book"].get(k) for k in ("book", "title") if k in args["book"]}
     out["by_ref"] = shards.finish({"book": args["book"]["book"], "mode": "author"})
@@ -1138,6 +1762,17 @@ def verify_args_by_ref(args: dict, directory: Path) -> dict:
     return out
 
 
+def s5_widget_distractors(questions: list[dict], verified: set | None = None) -> list[dict]:
+    """S7's predicate mappings for S5's final pass: every diagnostic of every question, or — once the blind
+    verifier has run — of the verified templates only (`verified`, template ids)."""
+    preds = W.contract()["kinds"]
+    ds = [{"lo": q["lo_id"], "origin": "S7", "ref": f"{q['family']}#{d['predicate']}",
+           "question_id": q["id"], "text": preds[q["choices"]["kind"]]["predicates"].get(d["predicate"], d["predicate"]),
+           "misconception_id": d["misconception_id"]}
+          for q in questions if verified is None or q["family"] in verified for d in q["choices"]["diagnostics"]]
+    return list({(d["ref"], d["misconception_id"]): d for d in ds}.values())
+
+
 def main_templates(args) -> int:
     templates, problems = load_templates(args.templates)
     for p in problems:
@@ -1150,7 +1785,7 @@ def main_templates(args) -> int:
         import book_config
         book = book_config.load_book(args.book)
     course = args.course or (book.course_id if book else None)
-    graph = PgGraph(args.dsn)
+    graph = _with_catalogue(PgGraph(args.dsn), args.catalogue)
     questions, render_problems = build_from_templates(templates)
     s5_view = json.loads(json.dumps(questions))  # before any diagnostic is dropped
     checks, dropped = check_questions(questions, graph, pre_catalogue=args.pre_catalogue)
@@ -1179,22 +1814,43 @@ def main_templates(args) -> int:
         for p in problems:
             print(f"  x {p}", file=sys.stderr)
         return 1
+    # With the blind verifier's verdicts (decision 47): a template counts only if accepted, and a mapping the
+    # verifier did not confirm is HELD — out of `diagnostics`, so never shown, never a diagnosis and never S5
+    # evidence — until a human keeps or drops it (--mapping-review). The gap report counts accepted templates.
+    verified = None
+    if args.verdicts:
+        accepted_v, rejected_v, status = verdict_scan(templates, questions, args.verdicts)
+        verified = {t["id"] for t in templates if t["id"] in accepted_v}
+        try:
+            reviews = load_mapping_reviews(args.mapping_review)
+        except ValueError as e:
+            print(f"--mapping-review: {e}", file=sys.stderr)
+            return 2
+        runs = sorted({json.loads(Path(f).read_text()).get("run_id") or Path(f).stem for f in args.verdicts})
+        counts = hold_pending(questions, status, reviews, runs)
+        hold_pending(s5_view, status, reviews, runs)
+        print(f"verdicts: {len(verified)}/{len(templates)} template(s) accepted; mappings: {counts['active']} active, "
+              f"{counts['held']} held for human review, {counts['kept_by_review']} kept and "
+              f"{counts['dropped_by_review']} dropped by review (decision 47)")
+        if args.pending_review:
+            queue = pending_queue([q for q in questions if q["family"] in verified], graph, args.verdicts)
+            args.pending_review.parent.mkdir(parents=True, exist_ok=True)
+            args.pending_review.write_text(json.dumps(queue, indent=2, ensure_ascii=False) + "\n")
+            print(f"wrote {args.pending_review} — {len(queue['items'])} held mapping(s) for the human review "
+                  "(render_review_page.py --gate g3-mappings)")
     if args.s5_distractors:
-        preds = W.contract()["kinds"]
-        ds = [{"lo": q["lo_id"], "origin": "S7", "ref": f"{q['family']}#{d['predicate']}",
-               "question_id": q["id"], "text": preds[q["choices"]["kind"]]["predicates"].get(d["predicate"], d["predicate"]),
-               "misconception_id": d["misconception_id"]}
-              for q in s5_view for d in q["choices"]["diagnostics"]]
-        uniq = list({(d["ref"], d["misconception_id"]): d for d in ds}.values())
+        uniq = s5_widget_distractors(s5_view, verified)
         args.s5_distractors.parent.mkdir(parents=True, exist_ok=True)
         args.s5_distractors.write_text(json.dumps({"distractors": uniq}, indent=2, ensure_ascii=False) + "\n")
-        print(f"wrote {args.s5_distractors} — {len(uniq)} predicate mapping(s) for S5")
+        print(f"wrote {args.s5_distractors} — {len(uniq)} predicate mapping(s) for S5"
+              + ("" if verified is None else f", from the {len(verified)} verified template(s) only"))
     if args.gap_report:
         if not course:
             print("--gap-report needs --book or --course", file=sys.stderr)
             return 2
         previous = json.loads(args.gap_report.read_text()) if args.gap_report.exists() else None
-        rep = gap_report(book.book if book else "?", course, graph, questions, args.gaps, previous)
+        counted = questions if verified is None else [q for q in questions if q["family"] in verified]
+        rep = gap_report(book.book if book else "?", course, graph, counted, args.gaps, previous)
         args.gap_report.parent.mkdir(parents=True, exist_ok=True)
         args.gap_report.write_text(json.dumps(rep, indent=2, ensure_ascii=False) + "\n")
         print(f"wrote {args.gap_report} — {len(rep['chapters']) - len(rep['uncovered_chapters'])}/"
@@ -1209,13 +1865,15 @@ def main_templates(args) -> int:
                   "verifier first (§3.10). Run --verify-args, then widgets.workflow.js in verify mode.",
                   file=sys.stderr)
             return 1
-        accepted, rejected = apply_verdicts(templates, questions, args.verdicts)
+        accepted, rejected = verified, rejected_v
         for tid, rs in rejected.items():
             print(f"  x {tid}: REJECTED — {'; '.join(rs[:3])}", file=sys.stderr)
         keep = [q for q in questions if q["family"] in accepted]
         bundle = {"generator": GENERATOR + " --templates", "question_type": "widget", "book": args.book,
                   "course_id": course, "templates": {t["id"]: t["_sha"] for t in templates if t["id"] in accepted},
-                  "rejected_templates": rejected, "questions": keep, "misconceptions": []}
+                  "rejected_templates": rejected, "questions": keep, "misconceptions": [],
+                  "mapping_review": {"rule": "decision 47", "verifier_runs": runs, "counts": counts,
+                                     "reviews": sorted({v["file"] for v in reviews.values()})}}
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n")
         print(f"wrote {args.out} — {len(keep)} widget question(s) from {len(accepted)} template(s); "
@@ -1237,8 +1895,32 @@ def main() -> int:
     ap.add_argument("--gaps", type=Path, nargs="*", default=[], help="widgets.workflow.js author outputs (their gaps)")
     ap.add_argument("--gap-report", type=Path, help="coverage/<book>.widget-gaps.json")
     ap.add_argument("--author-args", type=Path, help="write args for widgets.workflow.js (mode author)")
+    ap.add_argument("--catalogue", type=Path,
+                    help="with --author-args/--verify-args: the S5 DRAFT run (or a catalogue) whose entries the "
+                         "author may name and the verifier reads, before any catalogue is loaded (§3.2)")
+    ap.add_argument("--lesson-runs", type=Path,
+                    help="with --author-args: the lesson runs whose items name each anchor question's figure "
+                         "images (default runs/<book>/lesson/)")
+    ap.add_argument("--only-lessons", help="with --author-args: a comma-separated list of lessons (e.g. g10m8s3-2) — "
+                                           "re-author only those; the packet holds nothing else")
+    ap.add_argument("--merge-author-runs", type=Path, nargs="+", metavar="RUN",
+                    help="author runs, OLDEST FIRST: a lesson's record in a later run replaces its earlier one whole. "
+                         "Needs --merged (and takes --write-templates); no database")
+    ap.add_argument("--merged", type=Path, help="with --merge-author-runs: the merged author record (pass it to --gaps)")
+    ap.add_argument("--normalise-templates", type=Path, nargs="+", metavar="TEMPLATE",
+                    help="apply the two pipeline normalisations of author errors to these template files, recorded "
+                         "in their notes (needs --dsn; --catalogue for the S5 draft); --dry-run to preview")
+    ap.add_argument("--dry-run", action="store_true", help="with --normalise-templates: write nothing")
+    ap.add_argument("--write-templates", type=Path, metavar="DIR",
+                    help="with --merge-author-runs: write each template to DIR (widgets/<book>/); never overwrites")
     ap.add_argument("--verify-args", type=Path, help="write args for widgets.workflow.js (mode verify)")
     ap.add_argument("--s5-distractors", type=Path, help="write S7's predicate mappings for S5's final pass")
+    ap.add_argument("--pending-review", type=Path,
+                    help="with --verdicts: write the held mappings (decision 47) as the review queue for "
+                         "render_review_page.py --gate g3-mappings")
+    ap.add_argument("--mapping-review", type=Path, nargs="*", default=[],
+                    help="with --verdicts: the human verdicts on held mappings (the g3-mappings page's export): "
+                         "keep → active, drop → gone")
     ap.add_argument("--by-ref", nargs="?", const="", default=None, metavar="DIR",
                     help="with --author-args or --verify-args: packet by reference (packet_ref.py) — the prompts' big "
                          "blocks to shard files in DIR (default work/<book>/packets/s7-<mode>/), compact args naming them")
@@ -1247,12 +1929,46 @@ def main() -> int:
                          "existence; the prerequisite rule reads the objective from the mc: id; no --out")
     args = ap.parse_args()
 
+    if args.merge_author_runs:   # files only: no graph is read, so no database
+        if not args.merged:
+            print("--merge-author-runs needs --merged OUT.json", file=sys.stderr)
+            return 2
+        try:
+            merged = merge_author_runs(args.merge_author_runs)
+        except (ValueError, KeyError, json.JSONDecodeError) as e:
+            print(f"--merge-author-runs: {e}", file=sys.stderr)
+            return 2
+        args.merged.parent.mkdir(parents=True, exist_ok=True)
+        args.merged.write_text(json.dumps(merged, indent=2, ensure_ascii=False) + "\n")
+        by_src = {}
+        for r in merged["records"]:
+            by_src.setdefault(r["source"], []).append(r["lesson"])
+        print(f"wrote {args.merged} — {len(merged['records'])} lesson record(s), "
+              f"{sum(len(r['templates']) for r in merged['records'])} template(s), {len(merged['gaps'])} gap(s); "
+              + "; ".join(f"{k}: {', '.join(v)}" for k, v in by_src.items()))
+        if args.write_templates:
+            written, problems = write_templates(merged, args.write_templates)
+            for x in problems:
+                print(f"  x {x}", file=sys.stderr)
+            if problems:
+                return 1
+            print(f"wrote {len(written)} template file(s) to {args.write_templates}")
+        return 0
+
     if not args.dsn:
         # The checks that matter most need the graph; skipping them silently was
         # finding G5 in the pipeline audit. No DSN, no bundle.
         print("REFUSING: --dsn (or AINEXT_DB_DSN) is required — the prerequisite rule (FR-1215) and the "
               "misconception catalogue are checked against the graph, never skipped.", file=sys.stderr)
         return 2
+    if args.normalise_templates:
+        graph = _with_catalogue(PgGraph(args.dsn), args.catalogue)
+        for f in args.normalise_templates:
+            out, done = normalise_template(json.loads(Path(f).read_text()), graph)
+            print(f"{Path(f).name}: " + ("; ".join(done) if done else "nothing to normalise"))
+            if done and not args.dry_run:
+                Path(f).write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
+        return 0
     if args.author_args:
         import book_config
         if not args.book:
@@ -1264,7 +1980,16 @@ def main() -> int:
                   "directory: give them separately, or use the default directories (--by-ref with no DIR)",
                   file=sys.stderr)
             return 2
-        a = author_args(book, PgGraph(args.dsn), args.course or book.course_id)
+        import assemble_misconceptions as am
+        runs_dir = args.lesson_runs or Path(__file__).resolve().parent / "runs" / book.book / "lesson"
+        figs = am.figures_by_question([json.loads(p.read_text()) for p in sorted(runs_dir.glob("*.json"))])
+        a = author_args(book, _with_catalogue(PgGraph(args.dsn), args.catalogue), args.course or book.course_id, figs)
+        if args.only_lessons:
+            try:
+                a = only_lessons(a, args.only_lessons.split(","))
+            except ValueError as e:
+                print(f"--only-lessons: {e}", file=sys.stderr)
+                return 2
         n, extra = len(a["objectives"]), ""
         if args.by_ref is not None:
             import packet_ref

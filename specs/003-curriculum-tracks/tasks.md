@@ -255,7 +255,12 @@ database" step also depends on T318.
   - `app/src/lib/subject-queries.ts`: roll up by course, and read the last check through the objective;
   - `app/src/lib/student-landing.ts` and `app/src/app/(student)/student/page.tsx`: `scope.courseForSubject`, counting courses rather than subjects;
   - `app/src/app/layout.tsx`: the strapline comes from the student's own courses.
-- [ ] T372 [P] [US3] (WP-F) Student components:
+
+  **Re-verified 2026-09-26 (isolation audit): three of these four bullets were ticked before they were
+  true** — `subject-queries.ts` still rolled up by subject and read the last check by its subject tag,
+  `student-landing.ts` still counted subjects, and the skill map still filtered by subject. All three are
+  now built, under T372's note below, where the proof is listed. The strapline bullet was already true.
+- [x] T372 [P] [US3] (WP-F) Student components:
   - `app/src/components/spine/SpineExplorer.tsx`: a course picker, and never a merged maths view;
   - `app/src/components/student/SubjectHome.tsx`: cards keyed by course;
   - `app/src/components/student/LessonCheckIn.tsx`: term labels from the course's term model, none for G10, and links resolved in scope.
@@ -267,6 +272,22 @@ database" step also depends on T318.
   and subject home **merge the two maths courses**. That is a real edge case this task was meant to
   close, still open. Fix `SpineExplorer.tsx` to pick by course, and either close the tester-merge gap or
   route it through FR-4009's decision explicitly rather than leaving it as an unticked comment.
+
+  **Done 2026-09-26 (isolation audit, gap 4) — the tester-merge gap is closed, not routed.** The merge was
+  in the readers T371 was ticked for, so they were fixed first: `lib/subject-queries.ts` rolls up per
+  **course** (one card per course, course order, the last check read through its objective), and
+  `getSpineData` files every objective under its course (`SpineLo.courseId`, from the gate's own walk,
+  `StudentGraphScope.courseOf`) and returns `SpineData.courses`, each with **its own book**
+  (`sourceBooksFor`). `SpineExplorer.tsx` picks by course — for a student with one course per subject the
+  picker's entries, order and labels are the subject picker's — and a page citation or a question's
+  provenance names the book of the course on screen, not the first course's. `SubjectHome.tsx` keys cards by
+  course; when two share a subject the card links `?subject=…&lesson=<its first lesson>`, and
+  `student/page.tsx` takes the course from a named lesson of that subject. `lib/student-landing.ts` counts
+  courses (T371's own wording), so a tester whose only courses are two maths books gets the home, not a
+  check-in mixing both. Proof: `catalog-gate.test.mts` and `student-landing.test.mts` (fake client);
+  `curriculum-scope-db.test.mts` against Postgres (two cards, two maps, each map's book); the order
+  guard's premises now name the course keys (`catalogue-order-guard.test.mts`). `LessonCheckIn.tsx` was
+  already done and is unchanged.
 - [ ] T373 [US3] (WP-Q) Walk US3 scenarios 1–6, and run the SC-206 pass: every student surface as a National and as an American student, with the gate **on and off**, and direct requests answering as not found. Record the result in `specs/003-curriculum-tracks/traceability.md` (WP-DOC).
 
 ---

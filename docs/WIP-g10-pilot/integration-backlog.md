@@ -126,3 +126,62 @@
     Samuel's call whether to flip the default to on / refuse to start without it.
 - Pilot: 8.2 lesson run wf_29588ac2-069 $2.28; 8.1/8.3a/8.3b/8.4 launched (wf_73acc1d0-255, wf_e927fd12-ec1,
   wf_96486877-d35, wf_e23ef7b4-30b).
+
+## Isolation fixes — DONE (2026-09-26, uncommitted on top of 383510c)
+- All six gaps fixed (bridges gated + handoff rule; retrieval hop + seed guard subdirs + loader refuses cross-course
+  prereqs; per-function scope guard; /spine + subject home per course (T372); session-cache scope fingerprint;
+  home copy per course). Decisions 37 (FR-4011 next turn) and 38 (prompt-hold 7th exception, FR-4206) applied;
+  server-side handoff-card filter (handoff-filter.ts); inline align* → aligned (math-text.ts / TeXRenderer).
+  npm test 1422 / 0 fail; tsc clean; both builds OK; goldens unchanged; traceability OK.
+72. ADR-0020 exception numbering: the ADR says "fourth" twice (G10 prompts + widget sign note) — tidy at review.
+73. Product-designer copy review: G10/neutral home wording; "official syllabus" + "Unit 1 · prerequisite DAG" fixed
+    text; tester's second maths card opens first lesson not saved place.
+74. Open for Samuel: AINEXT_COURSE_GATING code default "off" (grade ignored when off) — default "on" / refuse to start?
+
+## G2, Chapter 8 (2026-09-26, Samuel's answers 18–22 → decisions 39–43)
+75. OPEN — **Ex8-5:5 excluded pending a detailed review later (Samuel, G2).** "PQRS is a parallelogram with P(5;3),
+    Q(2;1), R(7;−3). Find S." The book (and its printed answer) gives S(4;−5), which makes PQSR the parallelogram;
+    for PQRS named in order S = P + R − Q = (10;−1), the blind re-solve's answer. Excluded from practice in
+    `runs/g10-math/g2.json`; decide key and solution at the review.
+76. CLOSED (decision 44, Samuel's answer 23: one line appended to the solution) — **Ex8-6:36b: key "square" (decision 41), but the book's solution concludes "rhombus".** LMNP is a square,
+    and the grounded tutor teaches from the book's solution, which proves only MP ⊥ LN. A one-line addition to the
+    solution (LM ⊥ MN and all sides √26, so a square) needs Samuel's approval; until then a student who answers
+    "rhombus" is returned for re-entry while the stored solution says rhombus.
+77. CLOSED (the app agent built to the contract: `choiceOptions` reads `options`; `mcqChoices` and the attempt route's distractor lookup go through it) — App (parallel agent): an mcq with `less_specific` stores `choices` as an OBJECT
+    `{"options": [{key,text}…], "less_specific": [keys]}` (a JSON list cannot carry the field); `mcqChoices()` and
+    the attempt route's mcq diagnosis must read `options` from it. Marker questions may carry `"answer_only": true`
+    beside `"marker"`. Contract: `specs/003-curriculum-tracks/contracts/pipeline-handoff.md`.
+78. QUALITY GAP (for Samuel at the go/no-go): the three-way check compares FINAL answers only, so typos inside the
+    book's working (Ex8-6:32d, Ex8-6:45a) reach the tutor unless an S5 author happens to notice. Propose a step-level
+    "working checker" (one agent per canonical solution, flags inconsistent lines) — cost to be measured; decide before fan-out.
+79. CLOSED (`s7-v5`; `tests/test_widget_templates.py`) — **The six kinds of decision 27 were in the widget contract
+    but never registered for the pipeline**: S7 author `wf_816352f4-fbc` saw polygon_builder, solid_scaler,
+    box_plot_builder, venn_builder and area_model with an empty instrument, curve_sketcher with only linear and
+    quadratic, and the pipeline's reachability refused all five as unknown. Now every contract kind has its
+    instrument (the app's `widget-docs.ts` text word for word), `parseMathWidget`/`curveReachable` ported and
+    cross-checked kind by kind through node, and blind-reading rules. Re-author g10m8s3-2 only
+    (`--only-lessons`); `--merge-author-runs` keeps one record per lesson.
+80. OPEN (author) — **S6 family `unknown-coordinate-from-midpoint` (lo:g10m8s4-1-1) held for re-authoring**
+    (`families/g10-math/_held--…`). Its stem asks for t and b as separate values; a `values` marker compares a
+    sorted list, so it cannot tell t from b, and the two are coordinates of different points, so no
+    `coordinates` key fits either. The other two S6 refusals were mechanical and are normalised
+    (`families/normalise.py`, recorded in each spec's notes).
+    Joined by `pentagon-partial-arc` (lo:g10m8s1-1-3), refused by the S6 blind judge (wf_c9fa108d-2eb,
+    solution_ok: step 2 names the 4th→5th edge as the loop-closing one). Both re-authored together through the
+    shared revise prompt (`generate_questions.py --revise-args`, reasons per family; s6 prompts unchanged).
+81. CLOSED (orchestrator's decision (a) for both: `--normalise-templates`, recorded in each template's notes; s7-v6 prompt tightening for fan-out after the pilot's verify run) — **S7 pre-catalogue pass refused two templates** (author errors, caught fail-closed):
+    `wt:g10m8s3-2-2:parallel-perpendicular-line` names four lo:g10m8s3-2-1 misconceptions, and g10m8s3-2-1 is
+    not a prerequisite of g10m8s3-2-2 in the G1 graph (FR-1215); `wt:g10m8s4-1-2:plot-endpoint` maps
+    `off-target` to two misconceptions (one predicate, one misconception). The re-author of g10m8s3-2 also
+    replaced the earlier s3-2-3 template (third-point-collinear) with a collinearity_checker gap.
+82. CLOSED (plumbing) — **S6's deterministic gate refused two families the judge passed** (grade wf_c9fa108d-2eb):
+    the blind solver wrote right values with names, "x = [0, 8]" and "H = (3, 1)". The app's marker removes
+    names; the pipeline's comparison now does too (`generate_questions.blind_plain`, cross-checked against
+    answer-marker.ts), and s6-v5 asks for bare values. All 11 families pass `apply_grades` over both grade runs.
+    S5 now hears only about graded families (`--s5-distractors` with `--grades`) and verified widgets
+    (`--s5-distractors`/`--gap-report` with `--verdicts`).
+83. CLOSED (decision 47, Samuel's answer 26: keep all 7, hold the 23 refused claims for human review on the G3 held-mappings page; 20 confirmed claims active) — **S7 verify accepted 0 of 7 templates under the old rule** (wf_dbca7b50-327): all 25 widgets
+    reachable and read correctly (once a reading written as a string, "[3, -2]" or "-1/2", is read as its
+    value), but every template has at least one mapping the verifier refused, and the documented rule rejects
+    a template on ANY refused mapping. Option: drop refused mappings and keep a template with one mapping
+    confirmed on every instance (2 templates: s1-1-2 plot-the-point, s3-2-1 line-through-two-points).

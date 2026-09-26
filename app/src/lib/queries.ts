@@ -1,11 +1,12 @@
 import { sequential } from "./db";
 import { visibleGraphFor, type StudentGraphScope } from "./catalog-queries";
-import { compareCourses } from "./courses";
+import { compareCourses, courseDef, sourceWordingFor } from "./courses";
 import { scoped, type Db } from "./student-context";
 import type {
   PlanItem,
   PlanReason,
   SpineBridge,
+  SpineCourse,
   SpineData,
   SpineLo,
   SpineQuestion,
@@ -13,7 +14,7 @@ import type {
   Tier,
 } from "./types";
 
-import { spineSubjectOf } from "./subjects";
+import { spineSubjectOf, spineSubjectOfCourse } from "./subjects";
 import { PREREQ_GATE, type ProgressionLesson } from "./progression";
 import { computeLayers } from "./spine-layout";
 import { SPINE_LO_SQL, SPINE_LO_SQL_NO_SUBJECT_VIEW } from "./spine-lo-query";
@@ -143,23 +144,37 @@ export async function sourceBookFor(
   db: Db,
   gate: StudentGraphScope
 ): Promise<SourceBook | null> {
+  return (await sourceBooksFor(db, gate))[0]?.book ?? null;
+}
+
+/**
+ * Every visible course's own book, in course order — for a page that shows
+ * more than one course and must cite each from its own book (the skill map's
+ * course picker, FR-4009, FR-4205). `sourceBookFor` is its first entry.
+ */
+export async function sourceBooksFor(
+  db: Db,
+  gate: StudentGraphScope
+): Promise<{ courseId: string; book: SourceBook }[]> {
   const res = await db.query(
     `SELECT c.id AS course_id, d.title, d.publisher, d.edition, d.grade, d.subject
        FROM graph_nodes c
        JOIN source_documents d ON d.sha256 = c.source_sha256
       WHERE c.kind = 'course'`
   );
-  const first = res.rows
+  return res.rows
     .filter((r) => gate.course(r.course_id as string))
-    .sort((a, b) => compareCourses(a.course_id, b.course_id) || String(a.course_id).localeCompare(String(b.course_id)))[0];
-  if (!first) return null;
-  return {
-    title: first.title as string,
-    publisher: first.publisher as string,
-    edition: first.edition as string,
-    grade: first.grade as string,
-    subject: first.subject as string,
-  };
+    .sort((a, b) => compareCourses(a.course_id, b.course_id) || String(a.course_id).localeCompare(String(b.course_id)))
+    .map((r) => ({
+      courseId: String(r.course_id),
+      book: {
+        title: r.title as string,
+        publisher: r.publisher as string,
+        edition: r.edition as string,
+        grade: r.grade as string,
+        subject: r.subject as string,
+      },
+    }));
 }
 
 /**
@@ -219,6 +234,12 @@ export async function getHomeStats(studentId: number) {
       aiTurns: Number(c.ai_turns),
       /** `null` when she may see no course at all — the plate is not drawn */
       doc,
+      /**
+       * How the page words where her material comes from, from the courses
+       * she may see (FR-4205): the National wording for a National student,
+       * her own book's for a Grade 10 student, neutral when they disagree.
+       */
+      sourceWording: sourceWordingFor(gate.courses ?? []),
       studentName: (student.rows[0]?.display_name as string) ?? "Student",
     };
   });
@@ -320,9 +341,12 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
   // narrowed IN PLACE deliberately: every projection below reads `.rows`, and
   // a filtered copy beside the original is a second thing to remember to use.
   const gate = await visibleGraphFor(db, studentId);
-  // The book the map names as its source: her first visible course's, never
-  // `LIMIT 1`'s (see `sourceBookFor`). An empty map has no book to name.
-  const doc = (await sourceBookFor(db, gate)) ?? NO_BOOK;
+  // The books the map names as its sources: each visible course's own, in
+  // course order, never `LIMIT 1`'s (see `sourceBookFor`). The map's `doc` is
+  // the first; a page citation names the book of the course being looked at
+  // (`courses`, below). An empty map has no book to name.
+  const books = await sourceBooksFor(db, gate);
+  const doc = books[0]?.book ?? NO_BOOK;
   // One card per objective, at its first (earliest-in-catalogue) row. The
   // module join would fan an objective out if it were ever taught by two open
   // modules; `node_subject` already could. Neither happens in today's data.
@@ -437,7 +461,23 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     // fell back to `id.startsWith("lo:soc") ? "social" : "math"`, which made
     // every unrecognised objective a maths objective on the graph.
     subject: spineSubjectOf(r.subject),
+    // from the gate's own walk: no second read, and the same filing
+    courseId: gate.courseOf(r.id),
   }));
+
+  // One entry per course on the map, in course order, each with its own book
+  // (FR-4009, FR-4205). Only courses that put an objective on the map — a
+  // visible course with nothing loaded has no map to pick.
+  const onMap = new Set(los.map((l) => l.courseId).filter((id): id is string => id != null));
+  const bookOf = new Map(books.map((b) => [b.courseId, b.book]));
+  const courses: SpineCourse[] = [...onMap]
+    .sort((a, b) => compareCourses(a, b) || a.localeCompare(b))
+    .map((id) => ({
+      id,
+      label: courseDef(id)?.label ?? id,
+      subject: spineSubjectOfCourse(id),
+      doc: bookOf.get(id) ?? NO_BOOK,
+    }));
 
   // Cross-subject bridges: keep only edges whose endpoints are both real LOs
   // in this graph (defensive — a bridge to a pruned node is meaningless).
@@ -483,6 +523,7 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
     bridges,
     questions,
     doc,
+    courses,
     syllabusVersion: (edgesRes.rows[0]?.syllabus_version as string) ?? "2025-2026",
     baselineDate,
     currentDate,

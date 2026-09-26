@@ -23,6 +23,7 @@ import type {
   LessonProvenance,
   SectionRollup,
 } from "./book-sections";
+import { choiceOptions } from "./question-flags";
 
 export interface Choice {
   key: string;
@@ -94,11 +95,11 @@ export interface WidgetQuestionSpec {
 /** The lettered options, or null when this question has none (numeric) or
  *  carries a construction instead (widget). Every site that renders options
  *  goes through this rather than asserting the array — the union exists
- *  precisely so the compiler asks. */
-export function mcqChoices(q: {
-  choices: Choice[] | WidgetQuestionSpec | null;
-}): Choice[] | null {
-  return Array.isArray(q.choices) ? q.choices : null;
+ *  precisely so the compiler asks. A choice question that carries a flag
+ *  (`less_specific`, `answer_only`) keeps its options under `options`
+ *  (`lib/question-flags.ts`); both shapes read the same here. */
+export function mcqChoices(q: { choices: unknown }): Choice[] | null {
+  return choiceOptions(q.choices);
 }
 
 export interface SpineQuestion {
@@ -149,6 +150,12 @@ export interface SpineLo {
    * never silently folded into maths.
    */
   subject: SpineSubject | null;
+  /**
+   * The course this objective is taught in (FR-4009): the skill map shows ONE
+   * course at a time, so two courses of one subject — a tester's exception
+   * for the other curriculum's maths — are never merged into one map.
+   */
+  courseId: string | null;
 }
 
 /**
@@ -168,13 +175,16 @@ export interface SpineData {
   /** cross-subject associative links (rare) — rendered as gold bridges */
   bridges: SpineBridge[];
   questions: SpineQuestion[];
-  doc: {
-    title: string;
-    publisher: string;
-    edition: string;
-    grade: string;
-    subject: string;
-  };
+  /** the book of her first visible course — the map's fallback source */
+  doc: SpineBook;
+  /**
+   * Every course on the map, in course order, each with ITS OWN book (FR-4009,
+   * FR-4205): the course picker's entries, and the source a page citation or
+   * a question's provenance names — the book of the course being looked at,
+   * never the first course's. A National student has one course per subject,
+   * so her picker reads exactly as the subject picker did.
+   */
+  courses: SpineCourse[];
   syllabusVersion: string;
   baselineDate: string;
   currentDate: string;
@@ -195,6 +205,26 @@ export interface SpineData {
    * `edges`. Empty with no split section.
    */
   partEdges: DerivedPrereqEdge[];
+}
+
+/** One source book, as the skill map names it. */
+export interface SpineBook {
+  title: string;
+  publisher: string;
+  edition: string;
+  grade: string;
+  subject: string;
+}
+
+/** One course on the skill map (`SpineData.courses`). */
+export interface SpineCourse {
+  id: string;
+  /** the registry's own name — "Mathematics — Grade 10" (`lib/courses.ts`) */
+  label: string;
+  /** its graph territory, or `null` for a course the registry does not know */
+  subject: SpineSubject | null;
+  /** its own book; empty strings when the loader stamped none */
+  doc: SpineBook;
 }
 
 /** One split book section as the skill map groups it (FR-4315). */

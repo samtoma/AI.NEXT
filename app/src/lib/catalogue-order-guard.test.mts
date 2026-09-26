@@ -127,20 +127,20 @@ export const SINGLE_COURSE: readonly {
     file: "src/lib/subject-queries.ts",
     clause: "ORDER BY ${MODULE_ORDER}",
     count: 1,
-    why: "the subject home files each row under its own subject and orders the subjects by the registry (compareSpineSubjects).",
+    why: "the subject home files each row under its own COURSE and orders the courses by the registry (compareCourses) — two courses of one subject never interleave (FR-4009).",
     premiseFile: "src/lib/subject-queries.ts",
     premise: (code) =>
-      /\.sort\(\(a, b\) => compareSpineSubjects\(a\.subject, b\.subject\)\)/.test(code) &&
-      /bySubject\.get\(subject\)/.test(code),
+      /\.sort\(\(a, b\) => compareCourses\(a\.courseId, b\.courseId\)\)/.test(code) &&
+      /byCourse\.get\(courseId\)/.test(code),
   },
   {
     file: "src/lib/spine-lo-query.ts",
     clause: "ORDER BY ${MODULE_ORDER}",
     count: 2,
-    why: "the skill map shows one subject at a time: SpineExplorer narrows the objectives to the chosen subject before the layout ranks them (FR-3215 kept as shipped).",
+    why: "the skill map shows one COURSE at a time: SpineExplorer narrows the objectives to the chosen course before the layout ranks them (FR-3215 kept as shipped; FR-4009).",
     premiseFile: "src/components/spine/SpineExplorer.tsx",
     premise: (code) =>
-      /data\.los\.filter\(\(l\) => l\.subject === subject\)/.test(code),
+      /data\.los\.filter\(\(l\) => l\.courseId === course\.id\)/.test(code),
   },
   {
     file: "src/lib/overview-queries.ts",

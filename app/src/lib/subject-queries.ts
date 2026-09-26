@@ -24,8 +24,10 @@ import { sectionProgress } from "./section-label";
 /**
  * Per-subject roll-ups + cross-subject bridges (Wave 1.5, the multi-subject
  * spine). "Separated by default, bridged by exception":
- *   - getSubjectSummaries → each subject's mastery, weakest topic and last
- *     check, rolled up ONLY within the subject (never a blended score, §4).
+ *   - getSubjectSummaries → each COURSE's mastery, weakest topic and last
+ *     check, rolled up ONLY within the course (never a blended score, §4) —
+ *     one per subject for every student who sees one course of each, and two
+ *     apart for a tester who sees two courses of one subject (FR-4009).
  *   - getLessonBridges → the curated `relates_to` connections touching a
  *     lesson's LOs, so the tutor can surface ONE grounded cross-subject hint
  *     at the natural moment (§5).
@@ -249,7 +251,7 @@ async function subjectSummariesOn(
       weakestLo: a.weakest,
       lessonsCount: a.slugs.size,
       defaultSlug: a.defaultSlug,
-      lastCheck: lastCheck.get(a.subject) ?? null,
+      lastCheck: lastCheck.get(a.courseId) ?? null,
       // "k of m parts mastered" per split section; [] for every National course
       sections: sectionProgress([...a.lessons.values()], sections),
     }));

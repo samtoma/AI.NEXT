@@ -86,6 +86,67 @@ class FamiliesAuthor(unittest.TestCase):
 
 
 @unittest.skipUnless(shutil.which("node"), "node is not installed")
+class FamiliesRevise(unittest.TestCase):
+    """One refused spec re-authored with its reasons (args.revise), through the SHARED revise prompt: no other
+    objective reaches the agent, and the reasons are the check's own plus the reviewer's."""
+
+    def test_one_spec_goes_back_with_its_refusal(self):
+        good = json.loads((FIX / "g10-specs" / "g10m4s7-1-1--interval.json").read_text())
+        broken = dict(good, marker=dict(good["marker"], kind="values", answer="t = {=a} and b = {=b}",
+                                        variables=["t", "b"]))
+        found = G.spec_problems(broken)
+        self.assertEqual(G.spec_problems(good), [])
+        self.assertIn("every attempt to instantiate it failed to evaluate: more than one '='", found)
+        self.assertIn("the family produced no question", found)
+        why = "The stem asks for two separate values; ask for ONE thing."
+        book = book_config.Book.model_validate_json((book_config.BOOKS_DIR / "g10-math.json").read_text())
+        args = G.revise_args(book, [{"spec": broken, "problems": found + [why]}])
+        fixed = dict(good, version=2)
+        out = run_workflow(FAMILIES_WF, json.loads(json.dumps(args)),
+                           {f"revise:{broken['id']}": {"spec": fixed, "changes": "one thing asked"}})
+        self.assertTrue(out["ok"], out["error"])
+        self.assertEqual([c["label"] for c in out["calls"]], [f"revise:{broken['id']}"])
+        prompt = out["calls"][0]["prompt"]
+        for reason in found + [why]:
+            self.assertIn(f"- {reason}", prompt)
+        self.assertIn('"t = {=a} and b = {=b}"', prompt)
+        self.assertEqual(out["result"]["revised"], [fixed])
+        self.assertEqual(out["result"]["prompts_version"], "s6-v5")
+        # s6-v5: the revise agent works from its message alone
+        self.assertIn("Work from this message alone", prompt)
+        self.assertNotIn("The one exception", prompt, "no figures, no file to open")
+        with_figs = json.loads(json.dumps(args))
+        with_figs["revise"][0]["figures"] = ["/abs/work/g10-math/figures/fig1.png"]
+        fig_run = run_workflow(FAMILIES_WF, with_figs, {f"revise:{broken['id']}": {"spec": fixed, "changes": "…"}})
+        self.assertIn("you may read with the Read tool: /abs/work/g10-math/figures/fig1.png.", fig_run["calls"][0]["prompt"])
+        skipped = run_workflow(FAMILIES_WF, json.loads(json.dumps(args)), {f"revise:{broken['id']}": None})
+        self.assertEqual(skipped["result"]["revised"], [], "silence revises nothing")
+
+    def test_the_command_line_gives_each_spec_its_own_reasons(self):
+        good = json.loads((FIX / "g10-specs" / "g10m4s7-1-1--interval.json").read_text())
+        broken = dict(good, marker=dict(good["marker"], kind="values", answer="t = {=a} and b = {=b}",
+                                        variables=["t", "b"]))
+        judged = json.loads((FIX / "g10-specs" / "g10m4s2-1-1--balance.json").read_text())   # passes --check
+        with tempfile.TemporaryDirectory() as d:
+            fa, fb, out = Path(d, "_held--a.json"), Path(d, "_held--b.json"), Path(d, "revise.json")
+            fa.write_text(json.dumps(broken))
+            fb.write_text(json.dumps(judged))
+            cli = ["python", "generate_questions.py", "--families", d, "--book", "g10-math", "--revise-args", str(out),
+                   "--revise", str(fa), str(fb)]
+            run = lambda extra: subprocess.run(["uv", "run", *cli, *extra], capture_output=True, text=True, cwd=EX)  # noqa: E731
+            r = run([])
+            self.assertEqual(r.returncode, 2)
+            self.assertIn("passes --check and no --revise-problem", r.stderr)
+            self.assertEqual(run(["--revise-problem", "tpl:nope:x", "why"]).returncode, 2)
+            r = run(["--revise-problem", judged["id"], "judge: step 2 names the wrong edge"])
+            self.assertEqual(r.returncode, 0, r.stderr)
+            got = {e["spec"]["id"]: e["problems"] for e in json.loads(out.read_text())["revise"]}
+            self.assertEqual(got[judged["id"]], ["judge: step 2 names the wrong edge"])
+            self.assertIn("the family produced no question", got[broken["id"]])
+            self.assertNotIn("judge: step 2 names the wrong edge", got[broken["id"]])
+
+
+@unittest.skipUnless(shutil.which("node"), "node is not installed")
 class FamiliesGrade(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

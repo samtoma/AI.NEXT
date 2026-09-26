@@ -1,0 +1,517 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v4",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/s6-grade",
+  "stage": "S6 grade",
+  "shards_sha256": "6b9f4bb703b3b78ebed3fe8efb3cc25b6a145f711d8f4e7d7855ee879d8a72d0",
+  "files": 40
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "9243f7fee136769dc3488515c3893477583d83fe626216504dbfec8129b64cf3",
+  "args_sha256": "9bb3e3e801e81a62d2c6b7e8c20ee80128c269955ea1338d5b236bb5918b3fc9",
+  "generated_sha256": "d086d8c123159b841ba8f1819fb6c2adcd9800c8b552d5418a3189960731e463",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m8s1-1-3:pentagon-partial-arc",
+   "spec_sha": "b022336219c56099ff5fbf8262b35ce8c340a3afea5b4d98d2b31fee5b292a82",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s1-1-3:g005-pentag",
+     "stem_sha": "303074b50e9a1f8f",
+     "answer": {
+      "choice": "C",
+      "choice_text": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After H the next vertex is B, which does not continue the sequence, so the pentagon is not correctly named as given."
+     },
+     "working": "Pentagon has 5 vertices; a correct alphabetic naming must climb one letter at a time through all 5 vertices and back to the start. Given clockwise order: E, F, G, H, B. Checking each step: E→F→G→H climbs correctly (4 steps), but H→B breaks the pattern (should be H→I to complete the cycle back toward E, or at least continue the alphabet). Checking only the first four letters and ignoring the fifth is insufficient — the fifth vertex (B) does not continue the sequence from H, so the student's conclusion is wrong."
+    },
+    {
+     "instance_id": "q:g10m8s1-1-3:g007-pentag",
+     "stem_sha": "711a9fbbb69dc09d",
+     "answer": {
+      "choice": "D",
+      "choice_text": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After S the next vertex is F, which does not continue the sequence, so the pentagon is not correctly named as given."
+     },
+     "working": "Given clockwise order: P, Q, R, S, F. The first four letters (P→Q→R→S) climb one at a time, which is what the student checked. But the naming convention requires this to hold for all vertices around the full shape. After S, the next vertex should continue the climb (to T), but it is F instead — breaking the sequence. So the student's conclusion (based on checking only 4 of 5 vertices) is incorrect."
+    },
+    {
+     "instance_id": "q:g10m8s1-1-3:g010-pentag",
+     "stem_sha": "04e7b8ca51a3411a",
+     "answer": {
+      "choice": "C",
+      "choice_text": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After J the next vertex is A, which does not continue the sequence, so the pentagon is not correctly named as given."
+     },
+     "working": "Given clockwise order: G, H, I, J, A. The first four letters (G→H→I→J) do climb one at a time, matching what the student verified. However, the full convention requires all 5 vertices in the cycle to continue the climb. After J, the next letter should be K, but it is A instead — the sequence does not continue. Therefore the student's conclusion is wrong because they stopped checking after the fourth vertex."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": false,
+    "distractors": [
+     {
+      "instance_id": "q:g10m8s1-1-3:g005-pentag",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reversing the direction (anticlockwise: E,B,H,G,F) also fails to climb consecutively, so 'must be read anticlockwise' is genuinely wrong and matches assumes-only-one-direction-counts."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g005-pentag",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Claiming the naming fails because it doesn't start at A is a false premise (no such rule exists) and matches expects-labels-to-start-at-a."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g005-pentag",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Exactly reproduces the stem's described partial-arc-check error (checking only E-F-G-H and stopping)."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-pentag",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reversed reading (F,S,R,Q,P) also fails to climb consecutively; direction-blame distractor is genuinely wrong."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-pentag",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sequence starts at P, not A; the 'must start at A' rule is false and this is the matching misconception."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-pentag",
+      "option": "C",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reproduces the stem's partial-arc-check error (student stops after P-Q-R-S)."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g010-pentag",
+      "option": "A",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Sequence starts at G, not A; matches expects-labels-to-start-at-a and is genuinely wrong reasoning even though A does appear later in the label set as the breaking vertex."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g010-pentag",
+      "option": "B",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reproduces the stem's partial-arc-check error (student stops after G-H-I-J)."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g010-pentag",
+      "option": "D",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reversed reading (A,J,I,H,G) also fails to climb consecutively; direction-blame distractor is genuinely wrong."
+     }
+    ],
+    "notes": "Reject: solution_ok fails, systematically, across all 3 instances. Each canonical_solution step 2 misdescribes which edge closes the pentagon's vertex cycle. Instance g005: vertices clockwise are E(1),F(2),G(3),H(4),B(5); step 2 says \"The last step closes the loop back to the start: H→B\" — but H→B is just the edge between vertex 4 and vertex 5, NOT the loop-closing edge. The actual edge that returns to the start (vertex 5 back to vertex 1) is B→E, which is never examined. The identical error recurs in g007 (labels \"S→F\" as the closing step; the true closing edge is F→P) and g010 (labels \"J→A\" as the closing step; the true closing edge is A→G). This is a template-level bug, not a one-off typo — repeated verbatim with different letters in every instance.\n\nThe final key answer (C/D/C) is still numerically/logically correct in each case, because the break found at that edge (H→B / S→F / J→A) is by itself a sufficient violation of \"climb by one,\" so the conclusion \"not correctly named\" holds regardless of the mislabeling. distractors_ok, key_form_ok and context_ok all pass: every tagged wrong option is genuinely wrong and matches its misconception (checked reversed-direction readings too — none of them accidentally produce a valid climb), the keys match the fully-correct choice text, and the stem is unambiguous with no word-problem realism issues.\n\nBut the worked solution actively teaches students an incorrect fact about pentagon (and by extension polygon) cycle geometry — that the 4th→5th vertex edge \"closes the loop back to the start\" — when it does not. Recommend the template's step-2 text be rewritten per-instance to correctly identify the closing edge (last label → first label) and either check it explicitly or state plainly that the break already found makes the closing edge moot, rather than mislabeling which edge is which."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s1-1-3:quad-rotated-start",
+   "spec_sha": "9553124f9d72148c39b087fe52cd846a7c324e6179f92681e356cfb62b778087",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s1-1-3:g001-quad-r",
+     "stem_sha": "c33b9ac35ebeb0a2",
+     "answer": {
+      "choice": "D",
+      "choice_text": "GHIJ"
+     },
+     "working": "Clockwise cyclic order given: J→G→H→I→(back to J). Among {G,H,I,J} the alphabetically first letter is G. Rewriting the name starting at G and continuing in the same (clockwise) direction around the cycle: G→H→I→J, i.e. GHIJ."
+    },
+    {
+     "instance_id": "q:g10m8s1-1-3:g004-quad-r",
+     "stem_sha": "be157fbb501a947a",
+     "answer": {
+      "choice": "D",
+      "choice_text": "TUVW"
+     },
+     "working": "Clockwise cyclic order given: U→V→W→T→(back to U). Among {T,U,V,W} the alphabetically first letter is T. Starting at T and continuing clockwise around the same cycle: T→U→V→W, i.e. TUVW."
+    },
+    {
+     "instance_id": "q:g10m8s1-1-3:g007-quad-r",
+     "stem_sha": "f0d14abcf645c2fb",
+     "answer": {
+      "choice": "B",
+      "choice_text": "EFGH"
+     },
+     "working": "Clockwise cyclic order given: G→H→E→F→(back to G). Among {E,F,G,H} the alphabetically first letter is E. Starting at E and continuing clockwise around the same cycle: E→F→G→H, i.e. EFGH."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m8s1-1-3:g001-quad-r",
+      "option": "A — JIHG",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Letters used are G,H,I,J; strict descending order is J,I,H,G — exactly this option."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g001-quad-r",
+      "option": "B — GIHJ",
+      "verdict": "UNTAGGED_OK",
+      "why": "Not the ascending reading (GHIJ) nor the valid reverse-direction reading from G (GJIH); just wrong, and untagged so no misconception claim to check."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g001-quad-r",
+      "option": "C — JGHI",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reading clockwise from the diagram's given start J instead of from the alphabetically-first vertex G gives J,G,H,I — exactly this option."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g004-quad-r",
+      "option": "A — TVUW",
+      "verdict": "UNTAGGED_OK",
+      "why": "Not the ascending reading (TUVW) nor the valid reverse-direction reading from T (TWVU); simply wrong, untagged."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g004-quad-r",
+      "option": "B — WVUT",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Descending order of T,U,V,W is W,V,U,T — exactly this option."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g004-quad-r",
+      "option": "C — UVWT",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reading clockwise from the diagram's given start U instead of from T gives U,V,W,T — exactly this option."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-quad-r",
+      "option": "A — EGFH",
+      "verdict": "UNTAGGED_OK",
+      "why": "Not the ascending reading (EFGH) nor the valid reverse-direction reading from E (EHGF); simply wrong, untagged."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-quad-r",
+      "option": "C — HGFE",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Descending order of E,F,G,H is H,G,F,E — exactly this option."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-3:g007-quad-r",
+      "option": "D — GHEF",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Reading clockwise from the diagram's given start G instead of from E gives G,H,E,F — exactly this option."
+     }
+    ],
+    "notes": "All three instances of tpl:g10m8s1-1-3:quad-rotated-start check out.\n\nVerification method: in every instance the four vertex labels are consecutive letters of the alphabet assigned around the quadrilateral in one rotational (here clockwise) direction. That means \"read clockwise starting at the alphabetically-first label\" is mathematically forced to produce the letters in strict ascending order — it is not a coincidence that the key in each case is just the four letters sorted (GHIJ, TUVW, EFGH); it's guaranteed by the construction, so the stem's shorthand \"named in alphabetical order\" and the solution's more explicit \"start at the alphabetically-first vertex, keep the same rotational direction\" are provably the same rule here, not a stem/solution mismatch.\n\ndistractors_ok: every misconception-tagged wrong option is an exact product of its named error — writes-descending-order always equals the four letters in strict descending order, and names-from-given-start always equals reading clockwise from the diagram's stated (non-alphabetical) starting vertex. Checked and confirmed for all 3 instances. Each untagged option (B in g001, A in g004, A in g007) is wrong and does not coincide with the one other geometrically defensible reading (the reverse-rotation name from the same start vertex, e.g. GJIH/TWVU/EHGF) — so none is secretly ALSO_CORRECT.\n\nkey_form_ok: mcq, key letter maps to the correctly-ordered name text in all 3 instances.\n\ncontext_ok: self-contained, unambiguous, no realistic-numbers word-problem concern; letters/sets match consistently between stem and choices in all 3 instances (no typos).\n\nsolution_ok: each 3-step canonical solution correctly identifies the four labels, correctly identifies the alphabetically-first one, and correctly reads it off in the stated direction to reach the stated key, for all 3 instances.\n\nNo issues found; approve as-is."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s2-1-2:constraint-picks-root-advanced",
+   "spec_sha": "7d92f9bb880617a7dfa6e61aa81ce8c8830f4e8f36eb21dbb14c4b3dce1c4e36",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s2-1-2:g002-constr",
+     "stem_sha": "060545c06a1ef1e2",
+     "answer": {
+      "value": "37"
+     },
+     "working": "CD^2 = (4-(-3))^2 + (k-13)^2 = 625. 7^2=49, so (k-13)^2 = 625-49 = 576, k-13 = ±24, k = 37 or k = -11. Since k≥0, k=37."
+    },
+    {
+     "instance_id": "q:g10m8s2-1-2:g004-constr",
+     "stem_sha": "085cbc1b8e8854de",
+     "answer": {
+      "value": "15"
+     },
+     "working": "CD^2 = (-8-1)^2 + (k-3)^2 = 225. (-9)^2=81, so (k-3)^2 = 225-81 = 144, k-3 = ±12, k = 15 or k = -9. Since k≥0, k=15."
+    },
+    {
+     "instance_id": "q:g10m8s2-1-2:g007-constr",
+     "stem_sha": "63d290b55572bf73",
+     "answer": {
+      "value": "28"
+     },
+     "working": "CD^2 = (14-6)^2 + (k-13)^2 = 289. 8^2=64, so (k-13)^2 = 289-64 = 225, k-13 = ±15, k = 28 or k = -2. Since k≥0, k=28."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "distractors": [],
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "Family tpl:g10m8s2-1-2:constraint-picks-root-advanced, 3 instances (g002, g004, g007), numeric answer type, no options/distractors present (family has no options, so distractors_ok=true trivially, empty list).\n\nVerified each instance's arithmetic independently:\n- g002: C(-3,13), D(4,k), CD=sqrt(625)=25. dx=4-(-3)=7, dx^2=49. 625-49=576, sqrt(576)=24. k=13±24 → 37 or -11; k≥0 selects 37. Matches correct_answer \"37\". Steps 1-6 each correct.\n- g004: C(1,3), D(-8,k), CD=sqrt(225)=15. dx=-8-1=-9, dx^2=81. 225-81=144, sqrt(144)=12. k=3±12 → 15 or -9; k≥0 selects 15. Matches correct_answer \"15\". Steps correct.\n- g007: C(6,13), D(14,k), CD=sqrt(289)=17. dx=14-6=8, dx^2=64. 289-64=225, sqrt(225)=15. k=13±15 → 28 or -2; k≥0 selects 28. Matches correct_answer \"28\". Steps correct.\n\nkey_form_ok: stem asks \"Find the value of k\"; key is a plain number in each case, matching the asked form (no factorised/simplest-form/subject-of-formula requirement, no typed LaTeX answer_check to reconcile).\n\ncontext_ok: standard Grade 10 coordinate-geometry distance-formula problem (two points, one unknown y-coordinate, non-negativity constraint to pick the root); numbers are realistic small integers, phrasing unambiguous, no word-problem context to assess for realism.\n\nsolution_ok: each of the three canonical solutions reaches its key via the book's method (distance formula → square both sides → isolate square → square root → apply sign constraint) with all arithmetic verified correct.\n\nNo issues found; family passes all four checks."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s2-1-2:isolate-both-roots-basic",
+   "spec_sha": "19606f5b2cbf89e4ac85643c6261ceb2091cceeecf877e20efbb1f7c36f955c7",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s2-1-2:g004-isolat",
+     "stem_sha": "488e2f56140c69f2",
+     "answer": {
+      "plain": "x = [0, 8]"
+     },
+     "working": "Distance formula: (x-4)^2 + (6-3)^2 = 5^2 => (x-4)^2 + 9 = 25 => (x-4)^2 = 16 => x-4 = ±4 => x = 8 or x = 0."
+    },
+    {
+     "instance_id": "q:g10m8s2-1-2:g007-isolat",
+     "stem_sha": "45d123bb13f4f453",
+     "answer": {
+      "plain": "x = [-6, 2]"
+     },
+     "working": "Distance formula: (x-(-2))^2 + (1-(-2))^2 = 5^2 => (x+2)^2 + 9 = 25 => (x+2)^2 = 16 => x+2 = ±4 => x = 2 or x = -6."
+    },
+    {
+     "instance_id": "q:g10m8s2-1-2:g008-isolat",
+     "stem_sha": "68e2ed9dab4f633c",
+     "answer": {
+      "plain": "x = [2, 10]"
+     },
+     "working": "Distance formula: (x-6)^2 + (6-3)^2 = 5^2 => (x-6)^2 + 9 = 25 => (x-6)^2 = 16 => x-6 = ±4 => x = 10 or x = 2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "distractors": [],
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "Family tpl:g10m8s2-1-2:isolate-both-roots-basic, 3 instances, all typed-answer (no distractor options) — distractors_ok is vacuously true per the \"no options\" rule.\n\nChecked each instance's algebra against its own worked solution and key:\n- g004-isolat: P(4,3), Q(x,6), d=5 → (x-4)²+9=25 → (x-4)²=16 → x=4±4 → x=0 or 8. Matches key and answer_check [0,8]. Correct.\n- g007-isolat: P(-2,-2), Q(x,1), d=5 → (x+2)²+9=25 → (x+2)²=16 → x=-2±4 → x=-6 or 2. Matches key and answer_check [-6,2]. Correct.\n- g008-isolat: P(6,3), Q(x,6), d=5 → (x-6)²+9=25 → (x-6)²=16 → x=6±4 → x=2 or 10. Matches key and answer_check [2,10]. Correct.\n\nEach canonical_solution's 5 steps (distance formula → square both sides → isolate square → take square root → solve) are algebraically sound and reach the stated key by the book's method (distance formula → quadratic-by-square-root). key_form_ok: marker.kind is \"values\" and the key (\"x = a or x = b\") matches the stem's \"find all possible values of x\", consistent with answer_check as a two-element list in each case. context_ok: each stem is a standard, unambiguous coordinate-geometry distance question with realistic small integer coordinates — no word-problem context to check for realism beyond that. No issues found; family passes on all four axes."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s3-1-1:algebraic-coeffs",
+   "spec_sha": "f7871bffe46dd0500594b6749d905537ef2bf72825ef9e42814db05de0409c87",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s3-1-1:g001-algebr",
+     "stem_sha": "66d9533db590eef4",
+     "answer": {
+      "plain": "6/5"
+     },
+     "working": "Gradient = (y2-y1)/(x2-x1) = [(5y+8)-(5y-4)] / [(5x+8)-(5x-2)] = 12/10 = 6/5."
+    },
+    {
+     "instance_id": "q:g10m8s3-1-1:g004-algebr",
+     "stem_sha": "cfeacb04b7c5736f",
+     "answer": {
+      "plain": "1/2"
+     },
+     "working": "Gradient = (y2-y1)/(x2-x1) = [(4y+4)-(4y-1)] / [(3x+9)-(3x-1)] = 5/10 = 1/2."
+    },
+    {
+     "instance_id": "q:g10m8s3-1-1:g005-algebr",
+     "stem_sha": "c70d99169abd4850",
+     "answer": {
+      "plain": "1/2"
+     },
+     "working": "Gradient = (y2-y1)/(x2-x1) = [(3y+3)-(3y-2)] / [(5x+5)-(5x-5)] = 5/10 = 1/2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "distractors": [],
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "Family tpl:g10m8s3-1-1:algebraic-coeffs, 3 instances (g001, g004, g005), all typed-answer \"expression\" markers — no options/distractors present, so distractors_ok is vacuously true per the instructions.\n\nVerified each instance by hand:\n- g001: A(5x-2,5y-4), B(5x+8,5y+8) → Δy=(5y+8)-(5y-4)=12, Δx=(5x+8)-(5x-2)=10, m=12/10=6/5. Matches key \\frac{6}{5} and answer_check \"6/5\". Solution's intermediate \"8+4\"/\"8+2\" is algebraically correct (8-(-4)=12, 8-(-2)=10).\n- g004: A(3x-1,4y-1), B(3x+9,4y+4) → Δy=5, Δx=10, m=5/10=1/2. Matches key and answer_check \"1/2\". Intermediate \"4+1\"/\"9+1\" correct.\n- g005: A(5x-5,3y-2), B(5x+5,3y+3) → Δy=5, Δx=10, m=5/10=1/2. Matches key and answer_check \"1/2\". Intermediate \"3+2\"/\"5+5\" correct.\n\nAll four steps in each canonical_solution follow the book's slope-formula method correctly and reach the stated key. Keys are given in simplest reduced fractional form as the stem implicitly requires (\"find the gradient\"), and answer_check is the same value as the LaTeX key in each case (6/5, 1/2, 1/2). The algebraic-coefficient setup (points expressed via shared x,y offsets that cancel) is the deliberate point of this \"algebraic-coeffs\" template tier — testing that the constant shift cancels in the gradient — so it reads as a sensible, unambiguous Grade 10 task rather than an error. No sign errors, no arithmetic errors, no mismatch between key and worked solution across any of the three instances."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s3-1-2:coefficient-unknown-point",
+   "spec_sha": "0d6c0846963a25f47618ffc61869b0892b7bf3d42b2f27e8e2b8a03fd04cd89a",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s3-1-2:g001-coeffi",
+     "stem_sha": "8a08495702e0a97f",
+     "answer": {
+      "value": "-2"
+     },
+     "working": "Gradient of CD = (y_D - y_C)/(x_D - x_C) = (-9 - 3p)/(0 - (-6)) = (-9 - 3p)/6. Set equal to -1/2: -9 - 3p = -3 → -3p = 6 → p = -2."
+    },
+    {
+     "instance_id": "q:g10m8s3-1-2:g007-coeffi",
+     "stem_sha": "9418a082c3fa8402",
+     "answer": {
+      "value": "-3"
+     },
+     "working": "Gradient of CD = (y_D - y_C)/(x_D - x_C) = (-8 - 2p)/(-4 - 4) = (-8 - 2p)/(-8). Set equal to 1/4: -8 - 2p = -2 → -2p = 6 → p = -3."
+    },
+    {
+     "instance_id": "q:g10m8s3-1-2:g009-coeffi",
+     "stem_sha": "f3b095f316c72e4e",
+     "answer": {
+      "value": "2"
+     },
+     "working": "Gradient of CD = (y_D - y_C)/(x_D - x_C) = (4 - 3p)/(2 - (-1)) = (4 - 3p)/3. Set equal to -2/3: 4 - 3p = -2 → -3p = -6 → p = 2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "distractors": [],
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "Family tpl:g10m8s3-1-2:coefficient-unknown-point, 3 instances, numeric answer type with no distractor options — distractors_ok is vacuously true (no options field present in any instance).\n\nVerified each instance's algebra independently against the gradient formula m_CD=(y2-y1)/(x2-x1):\n- g001: C(-6,3p), D(0,-9), m=-1/2 → (-9-3p)/6=-1/2 → -9-3p=-3 → 3p=-6 → p=-2. Matches correct_answer \"-2\" and the shown canonical_solution steps exactly.\n- g007: C(4,2p), D(-4,-8), m=1/4 → (-8-2p)/(-8)=1/4 → -8-2p=-2 → 2p=-6 → p=-3. Matches correct_answer \"-3\" and the shown steps exactly.\n- g009: C(-1,3p), D(2,4), m=-2/3 → (4-3p)/3=-2/3 → 4-3p=-2 → 3p=6 → p=2. Matches correct_answer \"2\" and the shown steps exactly.\n\nAll three use the same consistent method (assign coordinates, substitute into slope formula, cross-multiply, isolate 3p/2p term, divide by the coefficient — with an explicit reminder in step 4 that the point coordinate is Np, not p, so a final division is required). No sign errors, no algebra errors in any of the three worked solutions. Key form is a plain simplest-form integer, matching what the stem asks (\"find p\"). Stems are clear coordinate-geometry problems, numbers are ordinary small integers/fractions typical of a Grade 10 gradient-formula exercise, no ambiguity. No options/misconception-tagged distractors are present in this file to adjudicate."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s3-1-2:unknown-x-from-gradient",
+   "spec_sha": "31d3e8d5c9da9feff1fdf4237c54b87aadb89976b54987e9b70c8ee53490f2ba",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s3-1-2:g003-unknow",
+     "stem_sha": "db7746bdccd4858a",
+     "answer": {
+      "value": "-8"
+     },
+     "working": "Slope formula: m_AB = (y_B - y_A)/(x_B - x_A). Here (-5 - 5)/(x - (-3)) = -10/(x+3) = 2. Solve: -10 = 2(x+3) => -10 = 2x + 6 => 2x = -16 => x = -8."
+    },
+    {
+     "instance_id": "q:g10m8s3-1-2:g006-unknow",
+     "stem_sha": "c925b60509c92158",
+     "answer": {
+      "value": "0"
+     },
+     "working": "Slope formula: m_AB = (y_B - y_A)/(x_B - x_A). Here (0 - 3)/(x - 1) = -3/(x-1) = 3. Solve: -3 = 3(x-1) => -3 = 3x - 3 => 3x = 0 => x = 0."
+    },
+    {
+     "instance_id": "q:g10m8s3-1-2:g008-unknow",
+     "stem_sha": "13cab21fe5d3c206",
+     "answer": {
+      "value": "0"
+     },
+     "working": "Slope formula: m_AB = (y_B - y_A)/(x_B - x_A). Here (-7 - (-4))/(x - 3) = -3/(x-3) = 1. Solve: -3 = x - 3 => x = 0."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family tpl:g10m8s3-1-2:unknown-x-from-gradient, 3 instances, numeric answer type, no options field present in any instance — distractors_ok is vacuously true per the schema rule for option-less families.\n\nVerified each instance independently by recomputing m=(y2-y1)/(x2-x1) and solving for x:\n- g003-unknow: A(-3,5), B(x,-5), m=2 → 2=(-5-5)/(x+3) → 2(x+3)=-10 → x+3=-5 → x=-8. Matches key \"-8\". Canonical solution's algebra (cross-multiply, then divide by 2, then isolate x) is correct at every line and matches the key.\n- g006-unknow: A(1,3), B(x,0), m=3 → 3=(0-3)/(x-1) → 3(x-1)=-3 → x-1=-1 → x=0. Matches key \"0\". Solution steps correct.\n- g008-unknow: A(3,-4), B(x,-7), m=1 → 1=(-7+4)/(x-3) → x-3=-3 → x=0. Matches key \"0\". Solution steps correct.\n\nAll three back-substitute cleanly (e.g. instance 1: gradient of A(-3,5)/B(-8,-5) = -10/-5 = 2 ✓; instance 2: gradient of A(1,3)/B(0,0) = -3/-1 = 3 ✓; instance 3: gradient of A(3,-4)/B(0,-7) = -3/-3 = 1 ✓).\n\nkey_form_ok: stem asks \"find x\", correct_answer is the plain numeric x-value (not the coordinate pair), matching the asked form in all three instances.\n\ncontext_ok: no word-problem framing to assess for realism; stems are unambiguous coordinate-geometry statements with small, clean integers (no fractional/awkward intermediate values, no risk of confusing a student).\n\nNo issues found; family is sound as generated."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s3-2-3:third-point-via-line-equation",
+   "spec_sha": "21c8dccd5c73f77e3c546056f5f2bd6d05b4de3b50d497ff7d66db4a60729396",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s3-2-3:g001-third-",
+     "stem_sha": "4d48835057cb082d",
+     "answer": {
+      "value": "8"
+     },
+     "working": "Points A(-6,2), B(-2,-10), C(-8,a) are collinear, so slope(AB) = slope(AC). Slope(AB) = (-10-2)/(-2-(-6)) = -12/4 = -3. Set slope(AC) = (a-2)/(-8-(-6)) = (a-2)/(-2) = -3, so a-2 = 6, a = 8. Cross-check with slope(BC) = (a-(-10))/(-8-(-2)) = (a+10)/(-6) = -3 gives a = 8, consistent."
+    },
+    {
+     "instance_id": "q:g10m8s3-2-3:g002-third-",
+     "stem_sha": "78b626e420972346",
+     "answer": {
+      "value": "-2"
+     },
+     "working": "Points A(2,-1), B(-2,-5), C(1,a) are collinear, so slope(AB) = slope(AC). Slope(AB) = (-5-(-1))/(-2-2) = -4/-4 = 1. Set slope(AC) = (a-(-1))/(1-2) = (a+1)/(-1) = 1, so a+1 = -1, a = -2. Cross-check with slope(BC) = (a-(-5))/(1-(-2)) = (a+5)/3 = 1 gives a = -2, consistent."
+    },
+    {
+     "instance_id": "q:g10m8s3-2-3:g007-third-",
+     "stem_sha": "1f818a01fb618155",
+     "answer": {
+      "value": "16"
+     },
+     "working": "Points A(3,4), B(5,10), C(7,a) are collinear, so slope(AB) = slope(AC). Slope(AB) = (10-4)/(5-3) = 6/2 = 3. Set slope(AC) = (a-4)/(7-3) = (a-4)/4 = 3, so a-4 = 12, a = 16. Cross-check with slope(BC) = (a-10)/(7-5) = (a-10)/2 = 3 gives a = 16, consistent."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family tpl:g10m8s3-2-3:third-point-via-line-equation, numeric answer type, no MCQ options in any of the 3 instances (g001, g002, g007), so distractors_ok is vacuously true. Verified each instance's arithmetic independently (gradient calc, line-equation constant, substitution for a) and cross-checked collinearity via the alternate slope (AC vs AB) for all three — every key (8, -2, 16) is correct and every canonical_solution step is arithmetically sound and follows the book's gradient-then-substitute method. Stems are clean coordinate-geometry problems with unambiguous numbers; no word-problem context needed. Key form is a bare number matching what the stem asks (\\\"determine the value of a\\\"), consistent with answer type numeric."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s4-1-2:endpoint-from-midpoint",
+   "spec_sha": "43324b4aede14002c3b5ccdbb087b896b4200d0e95c2e68a6b623f312cbd41a7",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s4-1-2:g003-endpoi",
+     "stem_sha": "2ab50f6044965b70",
+     "answer": {
+      "plain": "(3, -2)"
+     },
+     "working": "Midpoint formula: M = ((Ax+Bx)/2, (Ay+By)/2), so B = (2*Mx - Ax, 2*My - Ay). With M(3,0) and A(3,2): Bx = 2*3 - 3 = 3, By = 2*0 - 2 = -2."
+    },
+    {
+     "instance_id": "q:g10m8s4-1-2:g004-endpoi",
+     "stem_sha": "a9b9b92f9b8070b6",
+     "answer": {
+      "plain": "(-3, -3)"
+     },
+     "working": "B = (2*Mx - Ax, 2*My - Ay). With M(-4,1) and A(-5,5): Bx = 2*(-4) - (-5) = -8 + 5 = -3, By = 2*1 - 5 = 2 - 5 = -3."
+    },
+    {
+     "instance_id": "q:g10m8s4-1-2:g005-endpoi",
+     "stem_sha": "2623d3f99c3025a4",
+     "answer": {
+      "plain": "(-4, -1)"
+     },
+     "working": "B = (2*Mx - Ax, 2*My - Ay). With M(-4,2) and A(-4,5): Bx = 2*(-4) - (-4) = -8 + 4 = -4, By = 2*2 - 5 = 4 - 5 = -1."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family tpl:g10m8s4-1-2:endpoint-from-midpoint, 3 instances (g003, g004, g005), all typed-answer (coordinates), no options/misconception distractors present. Independently recomputed each via the midpoint formula: g003 A(3,2)/M(3,0)->B(3,-2); g004 A(-5,5)/M(-4,1)->B(-3,-3); g005 A(-4,5)/M(-4,2)->B(-4,-1). All match correct_answer/marker.key/answer_check exactly (all three fields identical strings in each instance), and each canonical_solution's step sequence (state formula, substitute, multiply by 2, solve) is algebraically correct and reaches the key. Stems are plain, unambiguous coordinate-geometry prompts with simple integer values - no word-problem context to assess. No defects found; family passes clean."
+   }
+  },
+  {
+   "family_id": "tpl:g10m8s4-1-3:missing-vertex-bisect",
+   "spec_sha": "fbfca7b74e9c89349a1642676d5a95b1a25e3a4641fea4dfcd12706ed90890ba",
+   "answers": [
+    {
+     "instance_id": "q:g10m8s4-1-3:g003-missin",
+     "stem_sha": "3bb5d94fb7174524",
+     "answer": {
+      "plain": "H = (3, 1)"
+     },
+     "working": "Diagonals EG and FH of parallelogram EFGH bisect each other, so midpoint(EG) = midpoint(FH), giving H = E + G - F. Midpoint of EG = ((6+(-6))/2, (6+(-6))/2) = (0,0). H = 2*(0,0) - (-3,-1) = (3,1)."
+    },
+    {
+     "instance_id": "q:g10m8s4-1-3:g008-missin",
+     "stem_sha": "1ef2dfc33399b6a9",
+     "answer": {
+      "plain": "H = (-6, -11)"
+     },
+     "working": "H = E + G - F since diagonals EG and FH share the same midpoint. Midpoint of EG = ((-1+(-6))/2, (-3+(-3))/2) = (-7/2, -3). H = 2*(-7/2,-3) - (-1,5) = (-7,-6) - (-1,5) = (-6,-11)."
+    },
+    {
+     "instance_id": "q:g10m8s4-1-3:g010-missin",
+     "stem_sha": "b3bb7078e7cd6bbc",
+     "answer": {
+      "plain": "H = (6, -4)"
+     },
+     "working": "H = E + G - F from the shared midpoint of diagonals EG and FH. Midpoint of EG = ((6+5)/2, (0+(-5))/2) = (5.5, -2.5). H = 2*(5.5,-2.5) - (5,-1) = (11,-5) - (5,-1) = (6,-4)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family tpl:g10m8s4-1-3:missing-vertex-bisect, 3 instances (g003, g008, g010), typed-answer \"coordinates\" questions with no multiple-choice options, so distractors_ok is vacuously true (nothing to check).\n\nVerified each instance independently:\n- g003: E(6,6), F(-3,-1), G(-6,-6). M_EG=(0,0); solving (-3+x)/2=0, (-1+y)/2=0 gives H=(3,1), matching key and answer_check. Confirmed EFGH is a valid non-degenerate parallelogram: F-E=(-9,-7)=G-H, G-F=(-3,-5)=H-E.\n- g008: E(-1,-3), F(-1,5), G(-6,-3). M_EG=(-7/2,-3); solving gives H=(-6,-11), matching key/answer_check. Confirmed parallelogram: F-E=(0,8)=G-H, G-F=(-5,-8)=H-E.\n- g010: E(6,0), F(5,-1), G(5,-5). M_EG=(11/2,-5/2); solving gives H=(6,-4), matching key/answer_check. Confirmed parallelogram: F-E=(-1,-1)=G-H, G-F=(0,-4)=H-E.\n\nAll three: E/F/G are non-collinear (checked slopes), numbers are small clean integers appropriate for Grade 10 coordinate geometry, the stem's phrasing (\"find the coordinates of H ... diagonals bisect each other\") matches the method used and the key's form (an ordered pair), and each canonical_solution's arithmetic is correct and reaches the stated key step by step. No issues found."
+   }
+  }
+ ],
+ "run_id": "wf_c9fa108d-2eb"
+}

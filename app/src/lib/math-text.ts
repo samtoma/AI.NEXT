@@ -77,3 +77,22 @@ export function plainMath(text: string): string {
   if (!hasMath(text)) return text;
   return text.replace(/\$([^$]+)\$/g, (_, tex: string) => plainSegment(tex));
 }
+
+/**
+ * DISPLAY-ONLY ENVIRONMENTS, MADE INLINE-SAFE (the 2026-09-26 safety net).
+ *
+ * The app renders every `$...$` segment in KaTeX's inline mode
+ * (`components/TeXRenderer.tsx`), and KaTeX refuses `align` / `align*` there:
+ * they are display environments, so a worked solution written with one came
+ * out as a red error box instead of maths. The extraction pipeline now emits
+ * `aligned` — the same rows and `&` alignment, legal inline — and this
+ * rewrites anything older the same way before KaTeX sees it. The content is
+ * not changed: only the environment's name. Every other segment is returned
+ * as it came.
+ */
+export function inlineSafeTex(tex: string): string {
+  if (!tex.includes("\\begin{align")) return tex;
+  return tex
+    .replace(/\\begin\{align\*?\}/g, "\\begin{aligned}")
+    .replace(/\\end\{align\*?\}/g, "\\end{aligned}");
+}

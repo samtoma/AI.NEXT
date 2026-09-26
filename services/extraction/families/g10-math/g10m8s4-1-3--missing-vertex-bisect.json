@@ -1,0 +1,100 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s4-1-3:missing-vertex-bisect",
+ "kind": "family",
+ "lo_id": "lo:g10m8s4-1-3",
+ "parent_question_id": "q:g10m8s4-1-3:ex8-6-23",
+ "source_page": 322,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "e_x",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "e_y",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "f_x",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "f_y",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "g_x",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "g_y",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "sum_x",
+   "let": "e_x + g_x"
+  },
+  {
+   "name": "sum_y",
+   "let": "e_y + g_y"
+  },
+  {
+   "name": "mid_x",
+   "let": "sum_x / 2"
+  },
+  {
+   "name": "mid_y",
+   "let": "sum_y / 2"
+  },
+  {
+   "name": "h_x",
+   "let": "sum_x - f_x"
+  },
+  {
+   "name": "h_y",
+   "let": "sum_y - f_y"
+  }
+ ],
+ "constraints": [
+  "(f_x - e_x) * (g_y - e_y) - (f_y - e_y) * (g_x - e_x) != 0"
+ ],
+ "stem": "$EFGH$ is a parallelogram with vertices $E({=e_x}, {=e_y})$, $F({=f_x}, {=f_y})$ and $G({=g_x}, {=g_y})$. Find the coordinates of $H$ by using the fact that the diagonals of a parallelogram bisect each other.",
+ "solution": [
+  "Since the diagonals of a parallelogram bisect each other, the mid-point of $EG$ is equal to the mid-point of $FH$. First find the mid-point of $EG$, then use it together with $F$ to find the coordinates of $H$.",
+  "$\\begin{aligned}M_{EG}&=\\left(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2}\\right)\\\\&=\\left(\\frac{{=e_x}{=signed(g_x)}}{2}, \\frac{{=e_y}{=signed(g_y)}}{2}\\right)\\\\&=({=mid_x}, {=mid_y})\\\\M_{FH}&=\\left(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2}\\right)\\\\&=\\left(\\frac{{=f_x}+x}{2}, \\frac{{=f_y}+y}{2}\\right)\\\\({=mid_x}, {=mid_y})&=\\left(\\frac{{=f_x}+x}{2}, \\frac{{=f_y}+y}{2}\\right)\\end{aligned}$",
+  "Solve for $x$:",
+  "$\\begin{aligned}{=mid_x}&=\\frac{{=f_x}+x}{2}\\\\{=sum_x}&={=f_x}+x\\\\x&={=h_x}\\end{aligned}$",
+  "Solve for $y$:",
+  "$\\begin{aligned}{=mid_y}&=\\frac{{=f_y}+y}{2}\\\\{=sum_y}&={=f_y}+y\\\\y&={=h_y}\\end{aligned}$",
+  "Therefore $H({=h_x}, {=h_y})$."
+ ],
+ "marker": {
+  "kind": "coordinates",
+  "answer": "({=h_x}, {=h_y})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "notes": "Basic-tier entry point of the skill: the parallelogram is fully named (EFGH) with three vertices given in text, no diagram, mirroring q:g10m8s4-1-3:ex8-6-23's own template exactly (verified against its literal numbers: e_x=-1,e_y=2,f_x=-2,f_y=-1,g_x=2,g_y=0 reproduces H(3,3)). Diagonals are the 'skip-one' pairs EG and FH, the same fact the book's other five questions on this objective use (ex8-6-31e, ex8-6-36a uses a different, non-bisecting method and was therefore not used as a parent; we13, ex8-6-38e, ex8-6-46e all use this same bisecting method). Only the non-collinearity constraint is enforced, so the EG midpoint is sometimes a whole number and sometimes a genuine fraction (as in the book's own worked example, 1/2) — both are honest basic-tier outcomes since H itself is always a whole-number pair by construction (h_x = e_x+g_x-f_x has no division). signed(g_x)/signed(g_y) avoid a double sign such as '-1+-3' when the second addend is negative; f_x+x and f_y+y never need signed() since the second term is the literal unknown letter, not a signed number. Numeric range kept to [-6,6] to stay in the book's own magnitude (its examples range roughly -3 to 11) and avoid oversized coordinates for a first exposure to the skill. Answer type is 'expression'/coordinates rather than mcq: there is no natural finite set of plausible alternatives to choose from here (any error just produces a different, equally 'plausible-looking' wrong pair), so typing the pair is the honest format, consistent with the rule against using mcq to dodge typing. No new misconceptions were needed — the three already catalogued (diagonal-vs-side-confusion, midpoint-formula-subtraction, shared-midpoint-as-vertex) all describe numeric-answer errors a reviewer can recognise directly in a wrong (h_x, h_y) submission without needing a distractor list."
+}

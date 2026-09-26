@@ -235,6 +235,18 @@ class Assemble(unittest.TestCase):
         self.assertEqual(res["accepted"], {})
         self.assertEqual(res["queue"][0]["reason"], "the two passes disagree")
 
+    def test_an_aligned_derivation_is_proven_by_the_books_hash_form_and_stored_with_a_real_amp(self):
+        """S0b (COLLECT-2 round): the book names an aligned derivation's image md5(its lines, no
+        environment, `&` written `&amp;`). A pass that reads it as align* is accepted BY HASH, and a pass
+        that copies the entity is stored as real `&` inside align* — never an entity in accepted.json."""
+        h = md5("c&amp;=5+4\\\\c&amp;=9")
+        runA = {"pass": "A", "results": [{"md5": h, "latex": "\\begin{align*}c &= 5+4\\\\c &= 9\\end{align*}"}]}
+        runB = {"pass": "B", "results": [{"md5": h, "latex": "c&amp;=5+4\\\\c&amp;=9"}]}
+        acc = self.run_assemble({h: ("solution_only", [])}, [runA, runB])["accepted"]
+        self.assertEqual(acc[h]["accepted_by"], "hash")
+        self.assertNotIn("&amp;", acc[h]["latex"])
+        self.assertTrue(acc[h]["latex"].startswith("\\begin{align*}"))
+
     def test_a_pass_that_contradicts_itself_does_not_count(self):
         h = "a" * 32
         runs = [{"pass": "A", "results": [{"md5": h, "latex": "x"}]}, {"pass": "A", "results": [{"md5": h, "latex": "y"}]},

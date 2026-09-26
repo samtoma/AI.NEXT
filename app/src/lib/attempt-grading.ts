@@ -10,6 +10,9 @@
  *  - **absent** → `grade()`, today's grader, byte for byte. Every existing course's numbers and choices are
  *    marked exactly as before (FR-C03). `scripts/marker-eval/replay-attempts.mts` proves it on every
  *    recorded attempt, against a frozen copy of this function that must stay byte-identical to it.
+ *    One addition, for a choice question carrying `choices.less_specific` (Samuel's G2 answer 20): a
+ *    wrong pick that names one of those TRUE but less precise options is a re-entry (`less_specific`),
+ *    not a verdict — like the marker's. No recorded question carries the flag, so the replay is unmoved.
  *
  * Widget attempts never come here: the route grades their predicate (ADR-0009).
  *
@@ -17,6 +20,7 @@
  */
 import { evaluateArithmeticExpression } from "./arithmetic";
 import { mark, readMarkerSpec, reentryMessage, type MarkerEngine } from "./answer-marker";
+import { LESS_SPECIFIC_MESSAGE, lessSpecificKeys } from "./question-flags";
 
 export function grade(
   questionType: string,
@@ -48,7 +52,11 @@ export function grade(
  * mastery change, no session opened. `form` names the form asked; `message` is the student's copy.
  */
 export interface AttemptRetry {
-  retry: "wrong_form" | "unreadable";
+  /**
+   * `less_specific` (Samuel's G2 answer 20): a choice question's option that is TRUE but less precise
+   * than the key (`choices.less_specific`, `lib/question-flags.ts`) — "true, but be more precise".
+   */
+  retry: "wrong_form" | "unreadable" | "less_specific";
   /** wrong_form only: "factorised", "expanded", "simplest", "subject:x", "exact" or "decimal". */
   form?: string;
   /** unreadable only: what the marker could not read (never the student's text). */
@@ -66,12 +74,23 @@ export type AnswerVerdict =
  * defect: the route turns that into a logged server error and records nothing.
  */
 export function markAnswer(
-  q: { question_type: string; correct_answer: string; choices: unknown },
+  q: { question_type: string; correct_answer: string; choices: unknown; id?: string },
   given: string,
-  engine?: MarkerEngine
+  engine?: MarkerEngine,
+  /** where a malformed `less_specific` is reported (the route: the server log) */
+  warn: (message: string) => void = (m) => console.warn(`[attempts] ${m}`)
 ): AnswerVerdict {
   const spec = q.question_type === "widget" ? null : readMarkerSpec(q.choices);
-  if (!spec) return { verdict: "graded", isCorrect: grade(q.question_type, q.correct_answer, given), by: "grade" };
+  if (!spec) {
+    const isCorrect = grade(q.question_type, q.correct_answer, given);
+    // A TRUE option that is less precise than the key (Samuel's G2 answer 20): not wrong, not an
+    // attempt — asked again, as the marker's re-entry is. Read only for a wrong pick on a question
+    // that carries the flag, so every other answer is graded exactly as before (FR-C03).
+    if (!isCorrect && q.question_type !== "widget" && lessSpecificKeys(q, warn).has(given.trim().toUpperCase())) {
+      return { verdict: "retry", retry: "less_specific", message: LESS_SPECIFIC_MESSAGE };
+    }
+    return { verdict: "graded", isCorrect, by: "grade" };
+  }
   const r = mark(given, spec, engine);
   if (r.result === "correct" || r.result === "incorrect") {
     return { verdict: "graded", isCorrect: r.result === "correct", by: "marker" };

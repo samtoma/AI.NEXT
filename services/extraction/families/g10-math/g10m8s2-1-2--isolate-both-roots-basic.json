@@ -1,0 +1,108 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s2-1-2:isolate-both-roots-basic",
+ "kind": "family",
+ "lo_id": "lo:g10m8s2-1-2",
+ "parent_question_id": "q:g10m8s2-1-2:ex8-2-7",
+ "source_page": 293,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p_x",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "p_y",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "triple",
+   "choice": [
+    [
+     3,
+     4,
+     5
+    ],
+    [
+     6,
+     8,
+     10
+    ]
+   ]
+  },
+  {
+   "name": "leg_y",
+   "let": "triple[0]"
+  },
+  {
+   "name": "leg_x",
+   "let": "triple[1]"
+  },
+  {
+   "name": "dist",
+   "let": "triple[2]"
+  },
+  {
+   "name": "dir_y",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "q_y",
+   "let": "p_y + dir_y*leg_y"
+  },
+  {
+   "name": "dist_sq",
+   "let": "dist**2"
+  },
+  {
+   "name": "legy_sq",
+   "let": "leg_y**2"
+  },
+  {
+   "name": "legx_sq",
+   "let": "leg_x**2"
+  },
+  {
+   "name": "r1",
+   "let": "p_x + leg_x"
+  },
+  {
+   "name": "r2",
+   "let": "p_x - leg_x"
+  }
+ ],
+ "constraints": [
+  "legx_sq + legy_sq == dist_sq",
+  "r1 != r2"
+ ],
+ "stem": "Point $P({=p_x}, {=p_y})$ and point $Q(x, {=q_y})$ lie ${=dist}$ units apart. Find all possible values of $x$.",
+ "solution": [
+  "Write down the distance formula and substitute the known values: $d_{PQ}=\\sqrt{(x-({=p_x}))^{2}+({=q_y}-({=p_y}))^{2}}$, so ${=dist}=\\sqrt{(x-({=p_x}))^{2}+({=q_y}-({=p_y}))^{2}}$.",
+  "Square both sides: ${=dist_sq}=(x-({=p_x}))^{2}+({=q_y}-({=p_y}))^{2}$, and $({=q_y}-({=p_y}))^{2}={=legy_sq}$, so ${=dist_sq}=(x-({=p_x}))^{2}+{=legy_sq}$.",
+  "Isolate the square: $(x-({=p_x}))^{2}={=dist_sq}-{=legy_sq}={=legx_sq}$.",
+  "Take the square root of both sides: $x-({=p_x})=\\pm\\sqrt{{=legx_sq}}=\\pm{=leg_x}$.",
+  "So $x={=p_x}\\pm{=leg_x}$, giving $x={=r2}\\text{ or }x={=r1}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=r2}, {=r1}]",
+  "form": null,
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Entry-point version of the skill: same isolate-and-square-root method the book uses in ex8-2-3/ex8-2-4/ex8-6-6, but (like ex8-2-7, this family's parent) there is no diagram to narrow the two roots, so both values are the correct complete answer, matching the objective's own 'solving for all valid values'. A solver who states only one root is making the error already catalogued as mc:g10m8s2-1-2:stops-at-first-root — worth flagging in grading even though this is not an mcq family.\n\nPIPELINE NORMALISATION (not an author edit): drop-redundant-answer: removed the top-level \"answer\" (\"x = {=r2} or x = {=r1}\"); an expression family's answer is marker.answer (\"[{=r2}, {=r1}]\"), unchanged."
+}

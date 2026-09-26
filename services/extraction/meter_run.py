@@ -330,11 +330,20 @@ def cmd_record(a) -> int:
               "once, so a partial cost recorded now could never be completed. Record it when it "
               "has finished.", file=sys.stderr)
         return 1
-    if any(l.get("run_id") == run_id for l in ledger):
-        print(f"{run_id} is already in {path} — not recorded twice")
+    if any(l.get("run_id") == run_id for l in ledger) and not a.resumed:
+        print(f"{run_id} is already in {path} — not recorded twice (a finished RESUME of it keeps the same "
+              "run id: record it with --resumed, which meters only agents not already in the ledger)")
         return 0
     already = {ag["agent_id"]: l["run_id"] for l in ledger for ag in l.get("agents", [])}
     line = meter(rec, tdir, book, a.stage, a.lesson, already, a.estimate_overhead)
+    if a.resumed:
+        # A resume reuses the run id; its cached agents are already in the ledger and are skipped
+        # by `already`, so this line carries only the agents the resume actually ran.
+        line["resume_of"] = run_id
+        line["resume_no"] = 1 + sum(1 for l in ledger if l.get("run_id") == run_id)
+        if not line["agents"]:
+            print(f"{run_id}: the resume ran no new agent — nothing to record")
+            return 0
     t = line["totals"]
     print(f"{run_id} ({line['workflow'] or '?'}, {line['status'] or '?'}) — book {book.book}, "
           f"stage {a.stage}: {len(line['agents'])} agent(s), "
@@ -423,6 +432,8 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--lesson", help="attribute every agent to this lesson")
     r.add_argument("--ledger", help="ledger file (default runs/<book>/cost.jsonl)")
     r.add_argument("--dry-run", action="store_true")
+    r.add_argument("--resumed", action="store_true",
+                   help="the run was resumed after an earlier record: meter only its agents not yet in the ledger")
     r.add_argument("--estimate-overhead", type=int, default=0,
                    help="tokens of system prompt and tools added to each ESTIMATED agent (spec §5: 15000)")
     s = sub.add_parser("summary")

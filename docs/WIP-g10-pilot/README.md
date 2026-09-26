@@ -29,6 +29,28 @@ this one:
   (`national-prompts.test.mts`); any change needs a named exception.
 - Never print secret values; never type passwords or sign in for Samuel.
 
+## STATUS UPDATE — 2026-09-26 (latest; supersedes the table below where they differ)
+
+Local session paused for credit safety. Everything below is on disk in this worktree (uncommitted since the
+WIP push 383510c unless Samuel commits it). Nothing is running.
+
+| Stage | State | Run(s) | Cost |
+|---|---|---|---|
+| S0b maths | done, 853/853 accepted | A/B/C + calib | ≈ $82 (≈ $36 lost to limits) |
+| S1 + G1 | done, G1 passed (Samuel) | wf_a70b525d-f44 | ≈ $14 |
+| S2–S4 lessons + G2 | done, G2 passed (Samuel, answers 18–25) — 158 marked, 40 worked examples, 3 excluded | 5 runs in runs/g10-math/lessons/ | ≈ $27 |
+| S5 draft | done (s5-v4) — 30 entries | wf_97ba80a6-9ad | $6.66 (+$4.59 superseded) |
+| S6 families | done — 11 families, all graded PASS | author wf_41c0663f-36d, revise wf_c8f00d37-c28, grade wf_c9fa108d-2eb + wf_c2fc95f0-6ec | ≈ $8.6 |
+| S7 widgets | done — 7 templates, 25 widgets reachable; 20 claims confirmed, 23 held for human review (decision 47) | author wf_816352f4-fbc + wf_62e29981-c0a, verify wf_dbca7b50-327 | ≈ $4.7 |
+| S5 final | done — 29 confirmed, 2 dropped (UNSUPPORTED) | wf_ed8c8e80-51d | $5.88 |
+| Assemble catalogue + generated bundles, load to scratch DB `ainext_pilot_g10_ch08`, coverage, parity | **next** | — | $0 (deterministic) |
+| G3 (family sample + 23 widget claims page `runs/g10-math/g3-mappings-ch08.review.html`), G4 (catalogue), G5 go/no-go | pending Samuel | — | — |
+
+Total metered so far ≈ $153 API-equivalent (`uv run meter_run.py summary --book g10-math`).
+Samuel's answers 1–26 are in `samuel-answers.md`; decisions up to 47 in `specs/003-curriculum-tracks/decisions.md`.
+App-side work done this session (uncommitted): curriculum-isolation fixes (decisions 37–38), `less_specific` /
+`answer_only` support, inline align fix — see integration-backlog.md.
+
 ## Where the pilot stands
 
 | Stage | State |
@@ -89,3 +111,87 @@ teaching surface, with these gaps to close before Grade 10 goes live:
 Rule: if a fix changes any National golden prompt line, stop and report instead of updating the golden.
 **Open question for Samuel:** the code default for `AINEXT_COURSE_GATING` is "off" (grade ignored when off;
 curriculum still enforced) — make "on" the default, or refuse to start without it?
+
+## Pipeline state at pause (2026-09-26) — Chapter 8 pilot, after S5 final
+
+Nothing below is committed since the WIP commit `383510c`; it is all on disk in this worktree
+(`.claude/worktrees/g10`). Paths are relative to `services/extraction/` unless they start with `docs/` or `specs/`.
+
+**1. Files a new session needs**
+- Book config for the pilot: `work/g10-math/pilot/books/g10-math.json` (bundles → the pilot seed). Pilot seed:
+  `work/g10-math/pilot/seed/{g10m-course.json,g10m-c08.json,content/}`. `work/` is gitignored — do not delete it.
+- Lesson runs (final split, collect-4): `runs/g10-math/lesson/`; drafts `runs/g10-math/lesson-draft/`. G2 verdicts:
+  `runs/g10-math/g2.json` (Samuel); G2 page `runs/g10-math/g2-ch08.review.html`. Objectives: `objectives/g10-math/`.
+  Maths summary: `runs/g10-math/maths/summary.json`.
+- S5: draft `runs/g10-math/misconceptions/draft-wf_97ba80a6-9ad.json`; FINAL `runs/g10-math/misconceptions/final-wf_ed8c8e80-51d.json`
+  (29 confirmed, 2 dropped UNSUPPORTED: s1-1-2 swaps-x-and-y-values and one s3-2-3 entry).
+- S6: 11 specs `families/g10-math/*.json` (all pass `--check`; two carry a PIPELINE NORMALISATION note, two are
+  revise v2). Runs: `runs/g10-math/families/{author-wf_41c0663f-36d,grade-wf_c9fa108d-2eb,grade-wf_c2fc95f0-6ec,revise-wf_c8f00d37-c28}.json`.
+  S5 input written: `runs/g10-math/families/s5-distractors.json` (12, graded families only).
+- S7: 7 templates `widgets/g10-math/*.json` (two carry a PIPELINE NORMALISATION note). Runs:
+  `runs/g10-math/widgets/{author-wf_816352f4-fbc,author-wf_62e29981-c0a,verify-wf_dbca7b50-327}.json`; merged author
+  record `runs/g10-math/widgets/author-merged.json` (pass ONLY this to `--gaps`); held-mapping queue
+  `runs/g10-math/widgets/pending-review.json` (23 held, 20 active — decision 47); S5 input `runs/g10-math/widgets/s5-distractors.json` (9).
+- G3 material: `runs/g10-math/g3-flags.json` (#3's tier), `runs/g10-math/g3-mappings-ch08.review.html` (the 23 held claims).
+- Packets and embedded copies (all runs above are done): `work/g10-math/packets/` and `work/g10-math/packets/embedded/`.
+- Scratch DB (127.0.0.1 ONLY): `host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08`. Loaded: the pilot seed (G10 course,
+  Chapter 8) and G2's verdicts (stamps); parity GREEN. NOT loaded yet: the S5 catalogue, S6/S7 bundles.
+- Code/doc changes of this stretch (uncommitted): `generate_widget_questions.py` (six kinds registered, reachability,
+  readings, merge, normalise, decision 47 hold/review), `generate_questions.py` (`--revise-args`, `blind_plain`, graded-only
+  S5 distractors), `families/normalise.py`, `widget_spec.py`, `assemble_misconceptions.py`, `render_review_page.py`
+  (`--flags`, `--gate g3-mappings`), `runbook/{widgets,families}.workflow.js` (s7-v6, s6-v5 — unused so far), tests,
+  `runbook/README.md`, `docs/specs/extraction-pipeline.md`, `specs/003-curriculum-tracks/{spec,decisions,traceability}.md`.
+
+**2. Remaining commands to finish Chapter 8, in order** (from `services/extraction/`; no model calls)
+```sh
+export AINEXT_DB_DSN="host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08"
+B=work/g10-math/pilot/books/g10-math.json; F=runs/g10-math/misconceptions/final-wf_ed8c8e80-51d.json
+G="--graph work/g10-math/pilot/seed/g10m-c08.json --graph work/g10-math/pilot/seed/g10m-course.json"
+# a. the catalogue, then load it
+uv run assemble_misconceptions.py $F --book $B --out seed/generated/g10-math/misconceptions.json $G
+uv run load_misconceptions.py seed/generated/g10-math/misconceptions.json --course course:us-g10-math-en
+# b. S6 and S7 outputs (graded / verified only; S7 holds unconfirmed mappings — decision 47)
+uv run generate_questions.py --families families/g10-math --book $B --catalogue seed/generated/g10-math/misconceptions.json \
+    --grades runs/g10-math/families/grade-wf_c9fa108d-2eb.json runs/g10-math/families/grade-wf_c2fc95f0-6ec.json \
+    --out seed/generated/g10-math/generated-questions.json --floor-report coverage/g10-math.tier-floor.json
+uv run generate_widget_questions.py --templates widgets/g10-math --book $B \
+    --verdicts runs/g10-math/widgets/verify-wf_dbca7b50-327.json --gaps runs/g10-math/widgets/author-merged.json \
+    --gap-report coverage/g10-math.widget-gaps.json --pending-review runs/g10-math/widgets/pending-review.json \
+    --out seed/generated/g10-math/widget-questions.json
+#    (the S5-dropped swaps-x-and-y-values drops plot-the-point's swapped-coordinates diagnostic; wrong-quadrant stays)
+# c. reconcile the tags against the catalogue
+uv run assemble_misconceptions.py $F --book $B --out seed/generated/g10-math/misconceptions.json \
+    --bundle seed/generated/g10-math/generated-questions.json --bundle seed/generated/g10-math/widget-questions.json $G
+# d. load both bundles for review (status review, 10% queue)
+uv run load_generated_questions.py seed/generated/g10-math/generated-questions.json --course course:us-g10-math-en --sample 10 --seed 20260926 --catalogue-only
+uv run load_generated_questions.py seed/generated/g10-math/widget-questions.json --course course:us-g10-math-en --sample 10 --seed 20260926 --catalogue-only
+# e. gate pages: G3 (sample + flags), G3 held mappings (all 23), G4
+uv run render_review_page.py --gate g3 --bundles seed/generated/g10-math/generated-questions.json \
+    --bundles seed/generated/g10-math/widget-questions.json --catalogue seed/generated/g10-math/misconceptions.json \
+    --flags runs/g10-math/g3-flags.json --out runs/g10-math/g3-ch08.review.html
+uv run render_review_page.py --gate g3-mappings --mappings runs/g10-math/widgets/pending-review.json --out runs/g10-math/g3-mappings-ch08.review.html
+uv run render_review_page.py --gate g4 --catalogue seed/generated/g10-math/misconceptions.json --s5 $F --out runs/g10-math/g4-ch08.review.html
+# f. after Samuel's G3/G4 verdicts: held mappings → re-run step b's S7 line with --mapping-review <held-mappings export>,
+#    step c, then reload the widget bundle; then apply G3 and promote
+uv run apply_review_verdicts.py <g3 verdicts export>.json
+uv run load_generated_questions.py seed/generated/g10-math/generated-questions.json --course course:us-g10-math-en --promote --sample 0 --catalogue-only
+uv run load_generated_questions.py seed/generated/g10-math/widget-questions.json --course course:us-g10-math-en --promote --sample 0 --catalogue-only
+# g. export, coverage audit, drift guard
+uv run export_generated_content.py --course course:us-g10-math-en --out-dir seed/generated/g10-math/export --dsn "$AINEXT_DB_DSN"
+uv run coverage_report.py --book g10-math --chapter 8 --objectives objectives/g10-math --runs runs/g10-math/lesson \
+    --seed work/g10-math/pilot/seed --content work/g10-math/pilot/seed/content --generated seed/generated/g10-math/export \
+    --maths runs/g10-math/maths/summary.json --widget-gaps coverage/g10-math.widget-gaps.json --s5 $F --out coverage/g10-math.json
+uv run parity_check.py --candidate "$AINEXT_DB_DSN" --all-courses
+```
+Checks after each code change: `AINEXT_TEST_PG="host=127.0.0.1 port=5432" uv run --with pytest python -m pytest -q tests/`,
+`uv run dryrun_chapter.py --book g10-math --chapter 8` and `… --mode inline`, `python3 scripts/traceability.py --check` (repo root).
+
+**3. Open decisions and backlog** (`docs/WIP-g10-pilot/integration-backlog.md`)
+- Human gates still to pass: **G3** (10% sample + #3's tier flag, `g3-flags.json`), **G3 held mappings** (23 claims, decision 47),
+  **G4** (catalogue sample). Widget gaps in `coverage/g10-math.widget-gaps.json` need Samuel's sign-off (FR-4306):
+  s1-1-1, s1-1-3, s2-1-1, s3-1-1, s3-2-2 (line relationship classifier), s3-2-3 (collinearity checker), s4-1-3.
+- Tier-floor gaps to list by name (FR-4305): s1-1-1 (no markable parent), s1-1-2 standard/advanced (diagram-dependent).
+- Backlog open: **75** (Ex8-5:5 excluded pending review), **78** (step-level working checker, decide before fan-out),
+  **80** (#3 re-authored and graded; its tier → G3). Closed this stretch: 76, 77, 79, 81, 82, 83.
+- Fan-out notes: prompts s6-v5 and s7-v6 are unused so far (revise read rule, bare values, own-list ids, one
+  predicate → one misconception, typed readings, bare predicate names).

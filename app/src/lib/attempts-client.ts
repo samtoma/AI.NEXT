@@ -3,7 +3,8 @@ import type { AttemptRetry } from "./attempt-grading";
 
 /**
  * The maths-expression marker sent the answer back for re-entry (T416, FR-4320): a form the question does
- * not ask for, or not readable as maths. The server recorded NOTHING. Thrown rather than returned, so a
+ * not ask for, or not readable as maths — or a choice question's option that is true but less precise
+ * than the key (`less_specific`, Samuel's G2 answer 20). The server recorded NOTHING. Thrown rather than returned, so a
  * caller that does not know about re-entry treats it as a failed request — never as a wrong answer.
  */
 export class AttemptRetryError extends Error {
@@ -49,7 +50,11 @@ export async function submitAttempt(params: {
   });
   if (res.status === 422) {
     const body = (await res.json().catch(() => null)) as Partial<AttemptRetry> | null;
-    if (body && (body.retry === "wrong_form" || body.retry === "unreadable") && typeof body.message === "string") {
+    if (
+      body &&
+      (body.retry === "wrong_form" || body.retry === "unreadable" || body.retry === "less_specific") &&
+      typeof body.message === "string"
+    ) {
       throw new AttemptRetryError(body as AttemptRetry);
     }
   }

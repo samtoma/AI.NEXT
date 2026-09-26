@@ -23,6 +23,14 @@ approves the constitution amendment (applied, v3.3.0 → v3.4.0), and changes or
 - FR-4407's third-reading rule for disagreeing maths transcriptions;
 - FR-4205's per-course "Arabic touches" setting (the G10 course's prompts are English-only).
 
+**2026-09-26 (S7 widget verification; decision 47)**: FR-4306 now states the blind verifier's rule, and
+that a mapping it does not confirm is held for human review instead of refusing the widget.
+
+**2026-09-26 (curriculum-isolation audit; decisions 37–38)**: FR-4011's last sentence and its edge case
+now say an open conversation reads the new scope on its next turn; FR-4206 names a second expected
+difference in the National prompts, the handoff line and the cross-subject connections for a student
+who cannot see a subject (ADR-0020's seventh exception).
+
 **Not committed.** Code is being written on the branch by other agents.
 **Authority level**: a **derived spec** (Spec Kit). It turns Samuel's direction and his seventeen
 decisions of 2026-09-25 into testable obligations. The architecture those decisions imply is recorded
@@ -435,8 +443,10 @@ through the attempts route and confirm identical outcomes.
   covers.** It is out of the student's material. The tutor acknowledges, declines and redirects to
   the nearest material in the student's own courses (Principle II). It never grounds an answer in a
   course the student cannot see.
-- **A chat is open when an operator changes the student's curriculum.** It keeps its session
-  snapshot until it ends; the next session reads the new curriculum.
+- **A chat is open when an operator changes the student's curriculum** *(changed 2026-09-26, decision
+  37)*. The next turn reads the new scope: the open chat's snapshot is rebuilt under it, and a lesson
+  whose course the student may no longer see is refused like any hidden course. The same holds for an
+  exception granted or revoked, and a rule changed for her grade.
 - **A book exercise whose answer is a maths expression, an interval or a coordinate pair.** It is a
   typed question marked by equivalence (FR-4320). A proof, a sketch or a "show that" stays a worked
   example. Multiple choice is used only where it is natural. Every item is counted by what became of
@@ -543,8 +553,8 @@ through the attempts route and confirm identical outcomes.
 - **FR-4011** *(changed rev. 2, decision 4)*: Changing a student's curriculum MUST NOT delete, reset,
   copy, merge or transfer any progress. Mastery, attempts, saved places and history stay with the
   course they were earned in, and changing back MUST restore them exactly as left. No mastery moves
-  between courses of different curricula, even courses of the same subject. A conversation already
-  open keeps its session snapshot until it ends.
+  between courses of different curricula, even courses of the same subject. *(Changed 2026-09-26,
+  decision 37:)* A conversation already open MUST read the new scope on its next turn.
 - **FR-4012** *(changed rev. 2, decision 4)*: Every change to a student's curriculum after sign-up
   MUST be recorded as history, not as a value overwritten: when, from which curriculum, to which,
   whether chosen or implied, and which operator (or "re-resolved by the product", FR-4008). The
@@ -656,7 +666,12 @@ through the attempts route and confirm identical outcomes.
   deliberate**: the Ask context's list of source books. For a student who can see every loaded
   course it is byte-identical. For one who can see fewer, the hidden books stop being named —
   the privacy fix FR-4202 requires (privacy review §5.1). **Samuel acknowledged it on 2026-09-25**
-  (decisions.md, second round).
+  (decisions.md, second round). **A second difference is expected and deliberate** *(added
+  2026-09-26, decision 38)*: for a student who cannot see a subject the lesson prompt's
+  cross-subject rule would hand off to, that line offers no handoff to it (or, when no other subject
+  is open, none at all), and a curated cross-subject connection into a course she cannot see is not
+  given to the tutor. For a student who sees every course it touches, the prompt is byte-identical.
+  Any handoff card to a closed subject that a reply still carries is removed before it reaches her.
 - **FR-4207**: The solution's content drift guard MUST know this book, by its source fingerprint and
   its counts, and MUST fail loudly if the loaded course drifts from them. It MUST keep guarding the
   Prep-3 Mathematics set exactly as it does today (Principle XI, FR-1103).
@@ -763,7 +778,15 @@ through the attempts route and confirm identical outcomes.
   (decision 27): shape builder, extended curve sketcher, Venn diagram, box-plot builder, algebra tiles,
   3-D solid scaler. Each is still built only for the chapters the widget-gap list actually names it
   for, not built speculatively ahead of a named gap. An approved new kind is built under the published
-  design system (Principle XII).
+  design system (Principle XII). *(amended 2026-09-26, decision 47)* Before it ships, every widget
+  question MUST pass a **blind verifier** that sees only what the student sees: its target MUST be
+  reachable on the instrument and its stem MUST read as its stored spec, or its template is refused. Each
+  predicate → misconception mapping the verifier does **not** confirm MUST be **held for human review**:
+  stored, but inactive — never shown to a student, never used as a diagnosis, and never given to the
+  misconception stage as evidence — until a human keeps it (it becomes active) or drops it (it is
+  deleted). A widget whose every mapping is held ships as a plain right/wrong widget. *(001's FR-1213 and
+  FR-1218 are unchanged: a held mapping is not a diagnosis, so no refutation is owed for it; SC-204 counts
+  active diagnostics.)*
 - **FR-4307**: The course MUST carry a misconception catalogue written against this book's own
   objectives (FR-1111). It MUST cover the book's own distractors, the generated ones and the widget
   diagnostics, and include conceptual entries for confusions no distractor encodes (FR-1114). Every

@@ -309,6 +309,28 @@ class TheBundle(unittest.TestCase):
         self.assertEqual(problems, [])
         self.assertTrue(all(L.family_of(q) == q["family"] for q in b["questions"] if q.get("family")))
 
+    def test_with_grades_s5_is_told_only_about_the_families_that_passed(self):
+        with tempfile.TemporaryDirectory() as d:
+            gs_path = Path(d, "gs.json")
+            quiet(G.main_families, ["--families", str(SPECS), "--per-family", "5", "--grading-set", str(gs_path), "--check"])
+            specs, _ = FS.load_dir(SPECS)
+            qs, _, _ = run(specs, 5)
+            G.rebalance_keys(qs, random.Random(SEED))
+            mcq = next(s.id for s in specs if s.raw["answer_type"] == "mcq")
+            wrong = next(c for q in qs if q["family"] == mcq for c in q["choices"] if c["key"] != q["correct_answer"])
+            grades = good_grades(specs, qs, json.loads(gs_path.read_text()),
+                                 {mcq: {"choice": wrong["key"], "choice_text": wrong["text"]}})
+            Path(d, "grade.json").write_text(json.dumps(grades))
+            every, graded = Path(d, "all.json"), Path(d, "graded.json")
+            quiet(G.main_families, ["--families", str(SPECS), "--per-family", "5", "--s5-distractors", str(every), "--check"])
+            rc, err = quiet(G.main_families, ["--families", str(SPECS), "--per-family", "5", "--grades",
+                                              str(Path(d, "grade.json")), "--s5-distractors", str(graded), "--check"])
+            self.assertEqual(rc, 0, err)
+            refs = lambda p: {x["ref"].split("#")[0] for x in json.loads(p.read_text())["distractors"]}  # noqa: E731
+            self.assertIn(mcq, refs(every))
+            self.assertNotIn(mcq, refs(graded), "a family the blind grade refused tells S5 nothing")
+            self.assertEqual(refs(graded), refs(every) - {mcq})
+
     def test_a_sacred_book_gets_no_families(self):
         raw = json.loads((book_config.BOOKS_DIR / "prep3-math-en.json").read_text())
         raw.update(book="sacred-fixture", sacred_content=True, bundles=[], generated=None, parity=None)

@@ -6,6 +6,7 @@ import { getSubjectSummaries } from "@/lib/subject-queries";
 import { decideLanding } from "@/lib/student-landing";
 import { resolveStudentScope, visibleCoursesFor } from "@/lib/catalog-queries";
 import { courseDef } from "@/lib/courses";
+import { subjectOfCourse } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
 import { getCurrentLesson, isCourseComplete } from "@/lib/progression-db";
 import { previousCompletedSlug, untriedObjectives } from "@/lib/progression";
@@ -149,9 +150,28 @@ export default async function StudentPage({
   // never silently the maths one; a known subject she may not see yields its
   // course, which her gated catalogue does not hold, so the landing refuses
   // it (404) exactly as before.
-  const courseId =
+  const named =
     subject == null ? null : (await resolveStudentScope(studentId)).courseForSubject(subject);
   const allLessons = await getLessonCatalog(studentId);
+  // …and when the URL also names a lesson of ANOTHER course of that same
+  // subject, the lesson decides which course is meant (FR-4009, T372). Only a
+  // student who sees two courses of one subject can reach this — a tester's
+  // exception for the other curriculum's maths — and it is how her second
+  // maths card, and every lesson link inside that course's check-in, keep her
+  // in the book she chose instead of dropping her back into her own
+  // curriculum's. The lesson comes from her GATED catalogue, so this can only
+  // ever pick a course she may see; for every other student `named` stands.
+  const lessonCourse =
+    lessonSlug == null
+      ? null
+      : (allLessons.find((l) => l.slug === lessonSlug)?.courseId ?? null);
+  const courseId =
+    named != null &&
+    lessonCourse != null &&
+    lessonCourse !== named &&
+    subjectOfCourse(lessonCourse) === subjectOfCourse(named)
+      ? lessonCourse
+      : named;
 
   // **Which screen this is, decided in one place** (`lib/student-landing.ts`).
   //

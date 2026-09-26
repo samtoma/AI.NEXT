@@ -191,7 +191,12 @@ def main() -> int:
                 if row is None or not row[0]:
                     unmatched.append(f"{m['id']} -> {mp['question_id']} (no such question, or it has no choices)")
                     continue
-                choices = row[0]
+                # an mcq with less-specific options keeps them under "options" (schemas.McqChoices)
+                shell = row[0] if isinstance(row[0], dict) and isinstance(row[0].get("options"), list) else None
+                choices = shell["options"] if shell else row[0]
+                if not isinstance(choices, list):
+                    unmatched.append(f"{m['id']} -> {mp['question_id']} (its choices are not options)")
+                    continue
                 hit = [c for c in choices if c.get("text") == mp["choice_text"]]
                 if args.add_only and any(c.get("misconception_id") not in (None, m["id"]) for c in hit):
                     restamp.append(f"{mp['question_id']} {mp['choice_text']!r} already names "
@@ -211,7 +216,7 @@ def main() -> int:
                 ]
                 cur.execute(
                     "UPDATE questions SET choices = %s WHERE id = %s",
-                    (json.dumps(updated), mp["question_id"]),
+                    (json.dumps(dict(shell, options=updated) if shell else updated), mp["question_id"]),
                 )
 
         course_counts = None

@@ -321,3 +321,65 @@ test("003: an unknown stored curriculum sees nothing — not National by default
   assert.deepEqual(await getLessonCatalog(STUDENT, fakeClient(odd)), []);
   assert.equal(await getLessonData("u1-1", STUDENT, fakeClient(odd)), null);
 });
+
+/* ------------------------------------------------------------------ */
+/* The 2026-09-26 isolation audit                                      */
+/* ------------------------------------------------------------------ */
+
+const { getLessonBridges } = await import("./subject-queries.ts");
+const { resolveStudentScope } = await import("./catalog-queries.ts");
+
+test("isolation: a tester's two maths courses are two home cards, in course order, never one merged card (FR-4009)", async () => {
+  const tester: Fixture = { ...LAUNCH, overrides: [{ course_id: G10, state: "live" }] };
+  const home = await getSubjectSummaries(STUDENT, fakeClient(tester));
+  assert.deepEqual(home.map((s) => s.courseId), [MATH, SOCIAL, ARABIC, G10]);
+  assert.deepEqual(home.map((s) => s.subject), ["math", "social", "arabic", "math"]);
+  // named apart by their course labels, only because they share a subject
+  assert.equal(home[0].courseLabel, "Mathematics — Prep 3");
+  assert.equal(home[3].courseLabel, "Mathematics — Grade 10");
+  assert.equal(home[3].defaultSlug, "g10m1s1-1", "the Grade 10 card leads into its own book");
+  assert.equal(home[3].lessonsCount, 1, "no Prep-3 lesson folded into it");
+  // a National student with one course per subject: the labels she always had
+  const national = await getSubjectSummaries(STUDENT, fakeClient(LAUNCH));
+  assert.deepEqual(national.map((s) => s.courseLabel), ["Mathematics", "الدراسات الاجتماعية", "اللغة العربية"]);
+});
+
+/** The rows the bridge reader's query returns, each end with its course. */
+const BRIDGE_ROWS: Row[] = [
+  {
+    src_id: "lo:u1-1-1", dst_id: "lo:soc1-1-1", rationale: "coordinates on a map",
+    src_label: "Ordered pairs", dst_label: "الموقع الفلكي", src_subject: "math", dst_subject: "social",
+    src_course: MATH, dst_course: SOCIAL,
+  },
+  {
+    src_id: "lo:g10m1s1-1-1", dst_id: "lo:u1-1-1", rationale: "the same algebra, another book",
+    src_label: "Simplify expressions", dst_label: "Ordered pairs", src_subject: "math", dst_subject: "math",
+    src_course: G10, dst_course: MATH,
+  },
+];
+
+function bridgeDb(): PoolClient {
+  const query = async (text: string) => {
+    if (text.includes("information_schema.columns")) return { rows: [{ "?column?": 1 }], rowCount: 1 };
+    if (text.includes("edge_type = 'relates_to'")) return { rows: BRIDGE_ROWS, rowCount: BRIDGE_ROWS.length };
+    throw new Error(`the bridge reader should not have reached this query:\n${text.trim().slice(0, 200)}`);
+  };
+  return { query, release() {} } as unknown as PoolClient;
+}
+
+test("isolation: a bridge reaches the tutor only when BOTH its courses are hers (FR-4006)", async () => {
+  // Prep-3 maths and Social Studies visible: the Social Studies bridge, and not
+  // the one into the Grade 10 book
+  const national = await resolveStudentScope(STUDENT, fakeClient(LAUNCH));
+  const n = await getLessonBridges(["lo:u1-1-1"], national, bridgeDb());
+  assert.deepEqual(n.map((b) => b.otherLo), ["lo:soc1-1-1"]);
+  // Social Studies hidden for her: no bridge carries it into her maths lesson
+  const noSocial = await resolveStudentScope(STUDENT, fakeClient({ ...LAUNCH, overrides: [{ course_id: SOCIAL, state: "hidden" }] }));
+  assert.deepEqual(await getLessonBridges(["lo:u1-1-1"], noSocial, bridgeDb()), []);
+  // an American student: nothing National, whichever end is hers
+  const american = await resolveStudentScope(STUDENT, fakeClient(AMERICAN_10));
+  assert.deepEqual(await getLessonBridges(["lo:g10m1s1-1-1"], american, bridgeDb()), []);
+  // the ungated harness scope (no student) is unchanged: every bridge
+  const ungated = await resolveStudentScope(null);
+  assert.equal((await getLessonBridges(["lo:u1-1-1"], ungated, bridgeDb())).length, 2);
+});

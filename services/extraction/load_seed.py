@@ -257,6 +257,96 @@ def validate_all(paths: list[Path]) -> list[SeedBundle]:
     return bundles
 
 
+# ---------------------------------------------------------------------------
+# Cross-course prerequisites (the 2026-09-26 isolation audit; spec 003 FR-4006)
+#
+# A prerequisite is a fact about ONE book's teaching order. An edge from an
+# objective of one course to an objective of another — two curricula, or two
+# grades — is a path the app's graph readers could walk from a course a student
+# may see into one she may not. The app now gates each reader by the student's
+# scope itself (retrieval's one hop, the skill map, the progression), so this
+# is defence in depth, not the gate: the loader refuses such an edge unless it
+# is named here, deliberately, in review. Empty: none is allowed today.
+# ---------------------------------------------------------------------------
+
+ALLOWED_CROSS_COURSE_PREREQUISITES: frozenset[tuple[str, str]] = frozenset()
+
+
+def course_of_objectives(edges, known: dict[str, str] | None = None) -> dict[str, str]:
+    """Objective id -> course id: objective <- module (`teaches`), then
+    `part_of` upward until a `course:` node, through any number of levels.
+
+    `edges` are (src, dst, type) triples; `known` adds courses already
+    resolved elsewhere (the database, for a scoped load), and loses to the
+    batch when both know an objective.
+    """
+    parent: dict[str, str] = {}
+    module_of: dict[str, str] = {}
+    for src, dst, typ in edges:
+        if typ == "part_of":
+            parent[src] = dst
+        elif typ == "teaches":
+            module_of.setdefault(dst, src)
+    out = dict(known or {})
+    for lo, node in module_of.items():
+        for _ in range(16):
+            if node is None or node.startswith("course:"):
+                break
+            node = parent.get(node)
+        if node is not None and node.startswith("course:"):
+            out[lo] = node
+    return out
+
+
+def cross_course_prerequisites(edges, known: dict[str, str] | None = None,
+                               allowed=ALLOWED_CROSS_COURSE_PREREQUISITES) -> list[str]:
+    """Every `prerequisite_of` edge whose two ends resolve to DIFFERENT
+    courses and that `allowed` does not name, as readable lines. An end whose
+    course cannot be resolved is not reported here: that is not a crossing it
+    can prove (the external-reference check owns missing nodes)."""
+    edges = list(edges)
+    course = course_of_objectives(edges, known)
+    bad = []
+    for src, dst, typ in edges:
+        if typ != "prerequisite_of" or (src, dst) in allowed:
+            continue
+        a, b = course.get(src), course.get(dst)
+        if a and b and a != b:
+            bad.append(f"{src} ({a}) -> {dst} ({b})")
+    return sorted(set(bad))
+
+
+def refuse_cross_course_prerequisites(edges, known: dict[str, str] | None = None) -> None:
+    """Stop the load (or the validation) on a cross-course prerequisite."""
+    bad = cross_course_prerequisites(edges, known)
+    if bad:
+        raise SystemExit(
+            f"REFUSING: {len(bad)} prerequisite edge(s) join objectives of two different courses — "
+            "a prerequisite is one book's teaching order, and a student who may see one course must "
+            "not be walked into another (spec 003 FR-4006). If one is truly intended, name it in "
+            "ALLOWED_CROSS_COURSE_PREREQUISITES in load_seed.py, in review:\n  "
+            + "\n  ".join(bad[:20]) + (" ..." if len(bad) > 20 else ""))
+
+
+def db_courses_of(cur, lo_ids: list[str]) -> dict[str, str]:
+    """The course of each of `lo_ids` already in the database (open edges)."""
+    if not lo_ids:
+        return {}
+    cur.execute(
+        """WITH RECURSIVE up(lo, node) AS (
+               SELECT te.dst_id, te.src_id FROM graph_edges te
+                WHERE te.edge_type = 'teaches' AND te.system_to IS NULL AND te.dst_id = ANY(%s)
+               UNION
+               SELECT u.lo, e.dst_id FROM up u
+                 JOIN graph_edges e ON e.src_id = u.node AND e.edge_type = 'part_of'
+                                   AND e.system_to IS NULL
+           )
+           SELECT u.lo, min(n.id) FROM up u
+             JOIN graph_nodes n ON n.id = u.node AND n.kind = 'course'
+            GROUP BY u.lo""", (lo_ids,))
+    return {lo: c for lo, c in cur.fetchall()}
+
+
 def sacred_gate(paths: list[Path], bundles: list[SeedBundle], approve_all: bool) -> set[str]:
     """The promotion gate for sacred and sealed content (ADR-0006).
 
@@ -655,6 +745,8 @@ def _choice_pairs(choices) -> list[tuple] | dict | None:
     if not choices:
         return None
     if isinstance(choices, dict):
+        if isinstance(choices.get("options"), list):       # McqChoices: stamps live on its options
+            return dict(choices, options=[(c.get("key"), c.get("text")) for c in choices["options"]])
         return choices
     return [(c.get("key"), c.get("text")) for c in choices]
 
@@ -665,7 +757,12 @@ def bundle_choices_json(q) -> list | dict | None:
         return None
     if isinstance(q.choices, list):
         return [c.model_dump() for c in q.choices]
-    return q.choices.model_dump(mode="json")      # MarkerChoices: {"marker": {...}}
+    # MarkerChoices {"marker": {...}[, "answer_only": true]} or McqChoices {"options", "less_specific"};
+    # an absent answer_only is left out, so every marker question already loaded keeps its exact JSON
+    out = q.choices.model_dump(mode="json")
+    if out.get("answer_only") is None:
+        out.pop("answer_only", None)
+    return out
 
 
 def merged_choices(bundle_choices: list[dict] | dict | None,
@@ -681,6 +778,9 @@ def merged_choices(bundle_choices: list[dict] | dict | None,
     if not bundle_choices:
         return None
     if isinstance(bundle_choices, dict):
+        if isinstance(bundle_choices.get("options"), list):     # McqChoices: its options carry stamps
+            db_opts = db_choices.get("options") if isinstance(db_choices, dict) else db_choices
+            return dict(bundle_choices, options=merged_choices(bundle_choices["options"], db_opts))
         return bundle_choices
     if not isinstance(db_choices, list):
         db_choices = []
@@ -1205,6 +1305,13 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
             if missing:
                 raise SystemExit(f"{p.name}: external_node_refs not found in batch or DB: "
                                  f"{', '.join(missing)}")
+
+        # a prerequisite never joins two courses (see ALLOWED_CROSS_COURSE_PREREQUISITES).
+        # A scoped load also resolves ends it references in the database; a full
+        # load is about to truncate it, so only the batch counts.
+        prereq_ends = sorted({x for s_, d, t in batch_edges if t == "prerequisite_of" for x in (s_, d)})
+        refuse_cross_course_prerequisites(
+            batch_edges, db_courses_of(cur, prereq_ends) if course else None)
 
         # --- writes (single transaction: any failure rolls everything back)
         if not course:
@@ -1785,6 +1892,9 @@ def main(argv: list[str]) -> None:
         # Run the gate here too: `--validate-only --approve-all` must not report
         # a clean bill of health for a load that would be refused.
         sacred_gate(paths, bundles, "--approve-all" in flags)
+        # the batch alone (no DB here): a cross-course prerequisite is refused
+        refuse_cross_course_prerequisites(
+            {(e.src, e.dst, e.type) for b in bundles for e in b.edges})
         print("validation passed")
     else:
         if course and "--demo-student" in flags:

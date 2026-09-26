@@ -1,0 +1,68 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m8s3-1-2:gradient-to-missing-coord",
+ "lo_id": "lo:g10m8s3-1-2",
+ "parent_question_id": "q:g10m8s3-1-2:ex8-3-5",
+ "tier": "basic",
+ "kind": "line_drawer",
+ "instances": [
+  {
+   "x1": -1,
+   "y1": 0,
+   "m": 2,
+   "x2": 1,
+   "y2": 4
+  },
+  {
+   "x1": -2,
+   "y1": -2,
+   "m": 2,
+   "x2": 1,
+   "y2": 4
+  },
+  {
+   "x1": -4,
+   "y1": 3,
+   "m": -1,
+   "x2": 2,
+   "y2": -3
+  },
+  {
+   "x1": -3,
+   "y1": -2,
+   "m": 0.5,
+   "x2": 1,
+   "y2": 0
+  }
+ ],
+ "spec": {
+  "mode": "points",
+  "through": [
+   [
+    "{=x1}",
+    "{=y1}"
+   ],
+   [
+    "{=x2}",
+    "{=y2}"
+   ]
+  ]
+ },
+ "stem": "Line $AB$ has gradient $m = {=m}$. $A$ is at $({=x1}, {=y1})$ and $B$ is at $({=x2}, y)$ for some value $y$. Place $A$ and $B$.",
+ "solution": [
+  "Write the gradient formula using the known point: $m = \\dfrac{y - y_1}{x - x_1}$, with $(x_1, y_1) = A$.",
+  "Substitute the given gradient and the known $x$-coordinate of $B$, then solve for the missing $y$-coordinate: $y = y_1 + m(x - x_1)$.",
+  "Plot $A$ at its given coordinates, then plot $B$ at $(x, y)$ using the value just found."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "slope-inverted",
+   "misconception_id": "mc:g10m8s3-1-2:inverted-gradient-ratio"
+  },
+  {
+   "predicate": "slope-sign-flipped",
+   "misconception_id": "mc:g10m8s3-1-2:mismatched-point-order"
+  }
+ ],
+ "notes": "Uses line_drawer's 'points' mode in reverse of its usual sense: A is the known point and the student must solve for B's missing coordinate before placing it, since grading checks the resulting line's slope/intercept rather than the raw handle positions — placing B correctly is only possible once the coordinate is actually computed, which is the mathematics of this LO. Instances reuse the anchor's own diagram numbers where they land on the lattice (ex8-3-5's A(-1,0)/m=2/B(1,y) and ex8-6-9's A(-2,-2)/m=2/B(1,y) both resolve to y=4 and stay within +/-5) and add a negative and a fractional gradient for variety, all re-solved to keep both points inside the +/-5 lattice. Not covered: ex8-3-4b's 'C(3, 2p)' coefficient-on-unknown trap (mc:g10m8s3-1-2:dropped-coefficient-on-unknown) — that misconception lives entirely in how the student reads off the final numeric answer (p vs 2p) and never surfaces as a point-placement error, so no predicate here plausibly reveals it; ex8-3-4a's fractional target (-10/3) is also outside the lattice instrument and isn't reproduced."
+}

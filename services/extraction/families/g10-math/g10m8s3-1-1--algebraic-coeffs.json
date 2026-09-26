@@ -1,0 +1,99 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s3-1-1:algebraic-coeffs",
+ "kind": "family",
+ "lo_id": "lo:g10m8s3-1-1",
+ "parent_question_id": "q:g10m8s3-1-1:ex8-3-1c",
+ "source_page": 296,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "kx",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "ky",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "d",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "n",
+   "let": "d + b"
+  },
+  {
+   "name": "den",
+   "let": "c + a"
+  },
+  {
+   "name": "g",
+   "let": "gcd(n, den)"
+  },
+  {
+   "name": "rn",
+   "let": "n // g"
+  },
+  {
+   "name": "rd",
+   "let": "den // g"
+  }
+ ],
+ "constraints": [
+  "g > 1",
+  "rd > 1"
+ ],
+ "stem": "Find the gradient of $AB$ if: $A\\left({=kx}x-{=a},\\ {=ky}y-{=b}\\right)$ and $B\\left({=kx}x+{=c},\\ {=ky}y+{=d}\\right)$.",
+ "solution": [
+  "Let the coordinates of $A$ be $\\left(x_{1}, y_{1}\\right)$ and the coordinates of $B$ be $\\left(x_{2}, y_{2}\\right)$.",
+  "$x_{1}={=kx}x-{=a},\\ y_{1}={=ky}y-{=b},\\ x_{2}={=kx}x+{=c},\\ y_{2}={=ky}y+{=d}$",
+  "$\\begin{aligned}m_{AB}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{\\left({=ky}y+{=d}\\right)-\\left({=ky}y-{=b}\\right)}{\\left({=kx}x+{=c}\\right)-\\left({=kx}x-{=a}\\right)}\\\\&=\\frac{{=d}+{=b}}{{=c}+{=a}}\\\\&=\\frac{{=n}}{{=den}}\\end{aligned}$",
+  "Dividing the numerator and denominator by their common factor {=g}: $m_{AB}=\\frac{{=rn}}{{=rd}}$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=rn}/{=rd}",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced twist on the objective's only algebraic-coordinate book question (ex8-3-1c, standard tier). Same skeleton (gradient formula applied to symbolic coordinates where the variable terms cancel) but harder in two book-consistent ways: (1) matching coefficients kx, ky on the x- and y-terms of A and B, which cancel regardless of their value, so the student must notice the cancellation rather than being handed a bare x/y difference; (2) two-term constant offsets on each side, so the numerator and denominator must each be formed by combining two constants before the fraction is even written, then that raw fraction must be reduced to lowest terms (g>1 and rd>1 are enforced so the reduction step is always genuine and the final gradient is never a whole number). No new method is introduced beyond ex8-3-1c's own cancellation idea and ordinary fraction simplification already used elsewhere in this objective's book answers (9/11, 11/8, 4/3)."
+}

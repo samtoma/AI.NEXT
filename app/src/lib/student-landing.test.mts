@@ -460,3 +460,20 @@ test("003: a National tester with the American book by exception keeps her own m
   const viaSubject = await landingFor(f, "math");
   assert.deepEqual(viaSubject.landing, { screen: "check-in", slug: "u1-1" });
 });
+
+test("isolation: a tester whose only two courses are two maths books gets the home, one card each — not a check-in mixing both (FR-4009)", async () => {
+  // Prep-3 maths by rule, the Grade 10 book by exception: one SUBJECT, two
+  // COURSES. Counting subjects sent her straight into a check-in whose picker
+  // held both books; counting courses shows the two cards the home now draws.
+  const f = {
+    grade: "9",
+    rules: [{ course_id: MATH, grade: "9", state: "live" }],
+    overrides: [{ course_id: G10, state: "live" }],
+  };
+  const out = await landingFor(f);
+  assert.deepEqual(out.lessons.sort(), ["g10m1s1-1", "u1-1"]);
+  assert.deepEqual(out.landing, { screen: "subject-home" });
+  // a National student with one maths course still goes straight in
+  const one = await landingFor({ grade: "9", rules: [{ course_id: MATH, grade: "9", state: "live" }], overrides: [] });
+  assert.deepEqual(one.landing, { screen: "check-in", slug: "u1-1" });
+});

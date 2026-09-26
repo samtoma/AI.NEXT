@@ -1,0 +1,3274 @@
+{
+ "lesson": "g10m8s4-1",
+ "claims": [
+  {
+   "lo": "lo:g10m8s4-1-1",
+   "type": "definition",
+   "text": "The mid-point of a line segment between two points A(x1;y1) and B(x2;y2) is denoted M(x;y).",
+   "anchor": "b03253",
+   "printed_page": 309,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "the coordinates of the mid-point $M\\left(x;y\\right)$ of any line between the points $A\\left({x}_{1};{y}_{1}\\right)$ and $B\\left({x}_{2};{y}_{2}\\right)$",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m8s4-1-1",
+   "type": "convention",
+   "text": "Coordinates of a point are written as an ordered pair with a semicolon separating the x- and y-values, e.g. P(2;1), not a comma.",
+   "anchor": "b03252",
+   "printed_page": 308,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "$P\\left(2;1\\right)$",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m8s4-1-1",
+   "type": "rule",
+   "text": "The mid-point of a line is M(x;y) = ((x1+x2)/2 ; (y1+y2)/2).",
+   "anchor": "b03257",
+   "printed_page": 309,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "Mid-point $M(x;y)=\\left(\\dfrac{x_1+x_2}{2};\\dfrac{y_1+y_2}{2}\\right)$",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m8s4-1-1",
+   "type": "method",
+   "text": "To calculate the mid-point of a line between two given end points: draw a sketch of the two points to estimate the sign and position of the mid-point; assign the end points' coordinates to x1, y1, x2, y2; write down the mid-point formula; substitute the assigned values and simplify to find x and y; then compare the calculated mid-point to the sketch estimate.",
+   "anchor": "WE10",
+   "printed_page": 309,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "Write down the mid-point formula: $F(x;y)=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})$",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m8s4-1-1",
+   "type": "caution",
+   "text": "After calculating the mid-point, check that the coordinates found match what was expected from the sketch.",
+   "anchor": "WE11",
+   "printed_page": 310,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "We expected $M$ to have a positive $x$ - and $y$ -coordinate and this is indeed what we have found by calculation.",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m8s4-1-2",
+   "type": "method",
+   "text": "To find an unknown end point given the mid-point and the other end point: write down the mid-point formula with the known mid-point coordinates and the known end point's coordinates substituted in, then solve the resulting equations for the unknown x- and y-coordinates of the other end point.",
+   "anchor": "WE12",
+   "printed_page": 311,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "Substitute values and solve for and:",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m8s4-1-3",
+   "type": "rule",
+   "text": "The diagonals of a parallelogram bisect each other.",
+   "anchor": "WE13",
+   "printed_page": 312,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "the diagonals of a parallelogram bisect each other",
+   "provenance": "containment"
+  },
+  {
+   "lo": "lo:g10m8s4-1-3",
+   "type": "method",
+   "text": "To find an unknown vertex H of a parallelogram EFGH: calculate the mid-point of one diagonal (EG) using the mid-point formula; since the diagonals of a parallelogram bisect each other, this is also the mid-point of the other diagonal (FH); substitute this mid-point and the known vertex F into the mid-point formula and solve for the coordinates of H.",
+   "anchor": "WE13",
+   "printed_page": 312,
+   "supported": true,
+   "teacher_only": false,
+   "quote": "therefore the mid-point of $EG$ will be the same as the mid-point of $FH$",
+   "provenance": "containment"
+  }
+ ],
+ "visuals": [
+  {
+   "n": 1,
+   "lo": "lo:g10m8s4-1-1",
+   "question": null,
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -2,
+     6
+    ],
+    "yRange": [
+     -2,
+     6
+    ],
+    "points": [
+     {
+      "x": -1,
+      "y": 0,
+      "label": "A(x1;y1)"
+     },
+     {
+      "x": 2,
+      "y": 2.5,
+      "label": "M(x;y)"
+     },
+     {
+      "x": 5,
+      "y": 5,
+      "label": "B(x2;y2)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      2
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "Picture two points A and B on a line — the midpoint M sits exactly halfway between them.",
+   "printed_page": 309,
+   "figure_id": "b03254:1",
+   "src": "tikzpicture/a765960b01019d087415e28113620f7f.png"
+  },
+  {
+   "n": 2,
+   "lo": "lo:g10m8s4-1-1",
+   "question": "WE10",
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -4,
+     4
+    ],
+    "yRange": [
+     -4,
+     3
+    ],
+    "points": [
+     {
+      "x": 2,
+      "y": 1,
+      "label": "E(2;1)"
+     },
+     {
+      "x": -2,
+      "y": -2,
+      "label": "G(-2;-2)"
+     },
+     {
+      "x": 0,
+      "y": -0.5,
+      "label": "F(x;y)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "Find the point exactly halfway between E(2;1) and G(-2;-2).",
+   "printed_page": 309,
+   "figure_id": "b03259:2",
+   "src": "tikzpicture/81975ba476907c7931543631ce263b8f.png"
+  },
+  {
+   "n": 3,
+   "lo": "lo:g10m8s4-1-1",
+   "question": "WE11",
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -6,
+     7
+    ],
+    "yRange": [
+     -3,
+     4
+    ],
+    "points": [
+     {
+      "x": 6,
+      "y": 2,
+      "label": "A(6;2)"
+     },
+     {
+      "x": -5,
+      "y": -1,
+      "label": "B(-5;-1)"
+     },
+     {
+      "x": 0.5,
+      "y": 0.5,
+      "label": "M(x;y)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "Find the point exactly halfway between A(6;2) and B(-5;-1).",
+   "printed_page": 310,
+   "figure_id": "b03261:3",
+   "src": "tikzpicture/05d2db513b2526122fc1101894389a73.png"
+  },
+  {
+   "n": 4,
+   "lo": "lo:g10m8s4-1-2",
+   "question": "WE12",
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -4,
+     6
+    ],
+    "yRange": [
+     -11,
+     5
+    ],
+    "points": [
+     {
+      "x": -2,
+      "y": 4,
+      "label": "C(-2;4)"
+     },
+     {
+      "x": 1,
+      "y": -3,
+      "label": "M(1;-3)"
+     },
+     {
+      "x": 4,
+      "y": -10,
+      "label": "D(x;y)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "You know one end C(-2;4) and the midpoint M(1;-3) — where does the segment end up at D?",
+   "printed_page": 311,
+   "figure_id": "b03262:4",
+   "src": "tikzpicture/650aabdd8141850aaf827098f7939c8b.png"
+  },
+  {
+   "n": 5,
+   "lo": "lo:g10m8s4-1-3",
+   "question": "WE13",
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -3,
+     10
+    ],
+    "yRange": [
+     -2,
+     13
+    ],
+    "points": [
+     {
+      "x": -1,
+      "y": 0,
+      "label": "E(-1;0)"
+     },
+     {
+      "x": 0,
+      "y": 3,
+      "label": "F(0;3)"
+     },
+     {
+      "x": 8,
+      "y": 11,
+      "label": "G(8;11)"
+     },
+     {
+      "x": 3.5,
+      "y": 5.5,
+      "label": "M"
+     },
+     {
+      "x": 7,
+      "y": 8,
+      "label": "H(x;y)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      4
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "In parallelogram EFGH the diagonals cross at the same midpoint — use that to find H.",
+   "printed_page": 312,
+   "figure_id": "b03263:5",
+   "src": "tikzpicture/eda2a41b247014831065da41e7b426ff.png"
+  },
+  {
+   "n": 6,
+   "lo": "lo:g10m8s4-1-1",
+   "question": "Ex8-5:1",
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -3,
+     5
+    ],
+    "yRange": [
+     -5,
+     5
+    ],
+    "points": [
+     {
+      "x": -1,
+      "y": 3,
+      "label": "A(-1;3)"
+     },
+     {
+      "x": 3,
+      "y": -3,
+      "label": "B(3;-3)"
+     },
+     {
+      "x": 1,
+      "y": 0,
+      "label": "M(x;y)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "Find the midpoint M of the segment joining A(-1;3) and B(3;-3).",
+   "printed_page": 313,
+   "figure_id": "b03264:6",
+   "src": "tikzpicture/0c0389c4d35c5102de7a0a7f586bdb08.png"
+  },
+  {
+   "n": 7,
+   "lo": "lo:g10m8s4-1-1",
+   "question": "Ex8-5:2",
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -4,
+     3
+    ],
+    "yRange": [
+     -5,
+     3
+    ],
+    "points": [
+     {
+      "x": -2,
+      "y": 1,
+      "label": "A(-2;1)"
+     },
+     {
+      "x": 1,
+      "y": -3.5,
+      "label": "B(1;-3,5)"
+     },
+     {
+      "x": -0.5,
+      "y": -1.25,
+      "label": "M(x;y)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "Find the midpoint M of the segment joining A(-2;1) and B(1;-3.5).",
+   "printed_page": 313,
+   "figure_id": "b03265:7",
+   "src": "tikzpicture/371e723301b2a5ea72409ccd46975d11.png"
+  },
+  {
+   "n": 8,
+   "lo": "lo:g10m8s4-1-1",
+   "question": "Ex8-6:16",
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -4,
+     3
+    ],
+    "yRange": [
+     -4,
+     5
+    ],
+    "points": [
+     {
+      "x": -2,
+      "y": -2.5,
+      "label": "A(-2;-2,5)"
+     },
+     {
+      "x": 1,
+      "y": 3.5,
+      "label": "B(1;3,5)"
+     },
+     {
+      "x": -0.5,
+      "y": 0.5,
+      "label": "M(x;y)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "Find the midpoint M of the segment joining A(-2;-2.5) and B(1;3.5).",
+   "printed_page": 320,
+   "figure_id": "b03308:8",
+   "src": "tikzpicture/5e987b60c0dc9669c969c73ff45c79d0.png"
+  },
+  {
+   "n": 9,
+   "lo": "lo:g10m8s4-1-1",
+   "question": null,
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -4,
+     10
+    ],
+    "yRange": [
+     -5,
+     7
+    ],
+    "points": [
+     {
+      "x": -2,
+      "y": 2,
+      "label": "A(-2;2)"
+     },
+     {
+      "x": 4,
+      "y": 5,
+      "label": "B(4;5)"
+     },
+     {
+      "x": 8,
+      "y": 2,
+      "label": "C(8;2)"
+     },
+     {
+      "x": 1,
+      "y": -3,
+      "label": "D(1;-3)"
+     },
+     {
+      "x": 1,
+      "y": 3.5,
+      "label": "E(a;b)"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      0
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "In quadrilateral ABCD, E is the midpoint of side AB — find its coordinates.",
+   "printed_page": 323,
+   "figure_id": "b03362:9",
+   "src": "tikzpicture/cefb759f9539707727dce853ebb45447.png"
+  },
+  {
+   "n": 10,
+   "lo": "lo:g10m8s4-1-3",
+   "question": null,
+   "kind": "coordinate_plot",
+   "spec": {
+    "xRange": [
+     -11,
+     11
+    ],
+    "yRange": [
+     -11,
+     11
+    ],
+    "points": [
+     {
+      "x": -3,
+      "y": 6,
+      "label": "A(-3;6)"
+     },
+     {
+      "x": 5,
+      "y": 0,
+      "label": "B(5;0)"
+     },
+     {
+      "x": 4,
+      "y": -9,
+      "label": "C(4;-9)"
+     },
+     {
+      "x": -4,
+      "y": -3,
+      "label": "D(-4;-3)"
+     },
+     {
+      "x": 0.5,
+      "y": -1.5,
+      "label": "E"
+     }
+    ],
+    "segments": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      3,
+      0
+     ],
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      3
+     ]
+    ],
+    "animate": "plot-sequence",
+    "interactive": false
+   },
+   "caption": "In quadrilateral ABCD, E is where diagonals AC and BD cross at their shared midpoint.",
+   "printed_page": 325,
+   "figure_id": "b03429:10",
+   "src": "tikzpicture/6a35113644a14d671ff701773dc410c8.png"
+  }
+ ],
+ "viz_gaps": [],
+ "teacher_only": {
+  "seen": 1,
+  "dropped": 1,
+  "reached_claim": 0,
+  "caught_in_claims": 0
+ },
+ "items": [
+  {
+   "ref": "WE10",
+   "kind": "worked_example",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Calculate the coordinates of the mid-point $F\\left(x;y\\right)$ of the line between point $E\\left(2;1\\right)$ and point $G\\left(-2;-2\\right)$ .",
+   "answer_type": "expression",
+   "answer": "(0; -\\frac{1}{2})",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(0; -\\frac{1}{2})",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Draw a sketch: [figure] From the sketch, we can estimate that $F$ will lie on the $y$ -axis, with a negative $y$ -coordinate.",
+    "Assign values to and: $x_{1}=-2y_{1}=-2x_{1}=2y_{2}=1$",
+    "Write down the mid-point formula: $F(x;y)=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})$",
+    "Substitute values into the mid-point formula: $\\begin{align*}x&=\\frac{x_1+x_2}{2}\\\\&=\\frac{-2+2}{2}\\\\&=0\\\\y&=\\frac{y_1+y_2}{2}\\\\&=\\frac{-2+1}{2}\\\\&=-\\frac{1}{2}\\end{align*}$",
+    "Write the answer: The mid-point is at $F\\left(0;-\\frac{1}{2}\\right)$ . Looking at the sketch we see that this is what we expect for the coordinates of $F$ ."
+   ],
+   "solution_provenance": "book_worked",
+   "printed_answer": null,
+   "epub_final_answer": "The mid-point is at $F\\left(0;-\\frac{1}{2}\\right)$",
+   "blind_answer": "F\\left(0;-\\dfrac{1}{2}\\right)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 309,
+   "shortcode": null,
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "WE10|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__81975ba476907c7931543631ce263b8f.png"
+   ],
+   "figures_missing": [],
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "WE11",
+   "kind": "worked_example",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Find the mid-point of line $AB$ , given $A\\left(6;2\\right)$ and $B\\left(-5;-1\\right)$ .",
+   "answer_type": "expression",
+   "answer": "(\\frac{1}{2}; \\frac{1}{2})",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(\\frac{1}{2}; \\frac{1}{2})",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Draw a sketch: [figure] From the sketch, we can estimate that $M$ will lie in quadrant I, with positive $x$ - and $y$ -coordinates.",
+    "Assign values to and: Let the mid-point be $M\\left(x;y\\right)$ $x_{1}=6y_{1}=2x_{2}=-5y_{2}=-1$",
+    "Write down the mid-point formula: $M(x;y)=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})$",
+    "Substitute values and simplify: $M(x;y)=(\\frac{6-5}{2};\\frac{2-1}{2})=(\\frac{1}{2};\\frac{1}{2})$",
+    "Write the final answer: $M\\left(\\frac{1}{2};\\frac{1}{2}\\right)$ is the mid-point of line $AB$ . We expected $M$ to have a positive $x$ - and $y$ -coordinate and this is indeed what we have found by calculation."
+   ],
+   "solution_provenance": "book_worked",
+   "printed_answer": null,
+   "epub_final_answer": "$M\\left(\\frac{1}{2};\\frac{1}{2}\\right)$ is the mid-point of line $AB$",
+   "blind_answer": "\\left(\\dfrac{1}{2};\\dfrac{1}{2}\\right)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 310,
+   "shortcode": null,
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "WE11|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__05d2db513b2526122fc1101894389a73.png"
+   ],
+   "figures_missing": [],
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "WE12",
+   "kind": "worked_example",
+   "lo": "lo:g10m8s4-1-2",
+   "stem": "The line joining $C\\left(-2;4\\right)$ and $D\\left(x;y\\right)$ has the mid-point $M\\left(1;-3\\right)$ . Find point $D$ .",
+   "answer_type": "expression",
+   "answer": "(4; -10)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(4; -10)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Draw a sketch: [figure] From the sketch, we can estimate that $D$ will lie in Quadrant IV, with a positive $x$ - and negative $y$ -coordinate.",
+    "Assign values to and: Let the coordinates of $C$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $D$ be $\\left({x}_{2};{y}_{2}\\right)$ . $x_{1}=-2y_{1}=4x_{2}=xy_{2}=y$",
+    "Write down the mid-point formula: $M(x;y)=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})$",
+    "Substitute values and solve for and: $\\begin{align*}1&=\\frac{-2+x_2}{2}&-3&=\\frac{4+y_2}{2}\\\\1\\times2&=-2+x_2&-3\\times2&=4+y_2\\\\2&=-2+x_2&-6&=4+y_2\\\\x_2&=2+2&y_2&=-6-4\\\\x_2&=4&y_2&=-10\\end{align*}$",
+    "Write the final answer: The coordinates of point $D$ are $\\left(4;-10\\right)$ ."
+   ],
+   "solution_provenance": "book_worked",
+   "printed_answer": null,
+   "epub_final_answer": "The coordinates of point $D$ are $\\left(4;-10\\right)$",
+   "blind_answer": "D(4;-10)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 311,
+   "shortcode": null,
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "WE12|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__650aabdd8141850aaf827098f7939c8b.png"
+   ],
+   "figures_missing": [],
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "WE13",
+   "kind": "worked_example",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "Points $E\\left(-1;0\\right)$ , $F\\left(0;3\\right)$ , $G\\left(8;11\\right)$ and $H\\left(x;y\\right)$ are points on the Cartesian plane. Find $H\\left(x;y\\right)$ if $EFGH$ is a parallelogram.",
+   "answer_type": "expression",
+   "answer": "(7; 8)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(7; 8)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Draw a sketch: [figure] Method: the diagonals of a parallelogram bisect each other, therefore the mid-point of $EG$ will be the same as the mid-point of $FH$ . We must first find the mid-point of $EG$ . We can then use it to determine the coordinates of point $H$ .",
+    "Assign values to and: Let the mid-point of $EG$ be $M\\left(x;y\\right)$ $x_{1}=-1y_{1}=0x_{2}=8y_{2}=11$",
+    "Write down the mid-point formula: $M(x;y)=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})$",
+    "Substitute values calculate the coordinates of: $M(x;y)=(\\frac{-1+8}{2};\\frac{0+11}{2})=(\\frac{7}{2};\\frac{11}{2})$",
+    "Use the coordinates of to determine: $M$ is also the mid-point of $FH$ so we use $M\\left(\\dfrac{7}{2};\\dfrac{11}{2}\\right)$ and $F\\left(0;3\\right)$ to solve for $H\\left(x;y\\right)$ .",
+    "Substitute values and solve for and: $\\begin{align*}\\frac{7}{2}&=\\frac{0+x}{2}&\\frac{11}{2}&=\\frac{3+y}{2}\\\\7&=x+0&11&=3+y\\\\x&=7&y&=8\\end{align*}$",
+    "Write the final answer: The coordinates of $H$ are $\\left(7;8\\right)$ ."
+   ],
+   "solution_provenance": "book_worked",
+   "printed_answer": null,
+   "epub_final_answer": "The coordinates of $H$ are $\\left(7;8\\right)$",
+   "blind_answer": "H(7;8)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 312,
+   "shortcode": null,
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "WE13|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "tier check",
+   "printed_answer_scope": null,
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__eda2a41b247014831065da41e7b426ff.png"
+   ],
+   "figures_missing": [],
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-5:1",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "You are given the following diagram: [figure] Calculate the coordinates of the mid-point ( $M$ ) between point $A(-\\text{1};\\text{3})$ and point $B(\\text{3};-\\text{3})$ .",
+   "answer_type": "expression",
+   "answer": "(1; 0)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(1; 0)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$ .",
+    "$x_{1}=-1y_{1}=3x_{2}=3y_{2}=-3$",
+    "Substitute values into the mid-point formula:",
+    "$\\begin{align*}M(x;y)&=(\\frac{x_1+x_2}{2};\\frac{y_1+y_2}{2})\\\\x&=\\frac{x_1+x_2}{2}\\\\&=\\frac{-1+3}{2}\\\\&=1\\\\y&=\\frac{y_1+y_2}{2}\\\\&=\\frac{3+(-3)}{2}\\\\&=0\\end{align*}$",
+    "The mid-point is at $M\\left(1;0\\right)$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "M (1; 0)",
+   "epub_final_answer": "The mid-point is at $M\\left(1;0\\right)$",
+   "blind_answer": "M(1;0)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 313,
+   "shortcode": "2GDG",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-5:1|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-5:1|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-5:1|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__0c0389c4d35c5102de7a0a7f586bdb08.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-5:2",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "You are given the following diagram: [figure] Calculate the coordinates of the mid-point ( $M$ ) between point $A(-\\text{2};\\text{1})$ and point $B(\\text{1};-\\text{3,5})$ .",
+   "answer_type": "expression",
+   "answer": "(-0,5; -1,25)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(-0,5; -1,25)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Let the coordinates of $A$ be $\\left({x}_{1};{y}_{1}\\right)$ and the coordinates of $B$ be $\\left({x}_{2};{y}_{2}\\right)$ .",
+    "$x_{1}=-2y_{1}=1x_{2}=1y_{2}=-\\text{3,5}$",
+    "Substitute values into the mid-point formula:",
+    "$\\begin{align*}M(x;y)&=(\\frac{x_1+x_2}{2};\\frac{y_1+y_2}{2})\\\\x&=\\frac{x_1+x_2}{2}\\\\&=\\frac{-2+1}{2}\\\\&=-0,5\\\\y&=\\frac{y_1+y_2}{2}\\\\&=\\frac{1+(-3,5)}{2}\\\\&=-1,25\\end{align*}$",
+    "The mid-point is at $M\\left(-\\text{0,5};-\\text{1,25}\\right)$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "M (−0,5; −1,25)",
+   "epub_final_answer": "The mid-point is at $M\\left(-\\text{0,5};-\\text{1,25}\\right)$",
+   "blind_answer": "M\\left(-\\dfrac{1}{2};-\\dfrac{5}{4}\\right)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 313,
+   "shortcode": "2GDH",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-5:2|blind~printed",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "-1/2=-0.5 and -5/4=-1.25; same point, decimal vs fraction form."
+     },
+     {
+      "pair_id": "Ex8-5:2|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "-1/2=-0.5 and -5/4=-1.25 (decimal comma); same point."
+     },
+     {
+      "pair_id": "Ex8-5:2|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "tier check",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__371e723301b2a5ea72409ccd46975d11.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-5:3a",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Find the mid-points of the following lines: $A(2;5)$ , $B(-4;7)$",
+   "answer_type": "expression",
+   "answer": "(-1; 6)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(-1; 6)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{AB}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{\\text{2}-\\text{4}}{\\text{2}};\\frac{\\text{5}+\\text{7}}{\\text{2}})\\\\&=(\\frac{\\text{-2}}{\\text{2}};\\frac{\\text{12}}{\\text{2}})\\\\&=(\\text{-1};\\text{6})\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "(−1; 6)",
+   "epub_final_answer": "$M_{AB}=(\\text{-1};\\text{6})$",
+   "blind_answer": "(-1;6)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 314,
+   "shortcode": "2GDJ",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-5:3a|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-5:3a|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-5:3a|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-5:3b",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Find the mid-points of the following lines: $C(5;9)$ , $D(23;55)$",
+   "answer_type": "expression",
+   "answer": "(14; 32)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(14; 32)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{CD}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{\\text{5}+\\text{23}}{\\text{2}};\\frac{\\text{9}+\\text{55}}{\\text{2}})\\\\&=(\\frac{\\text{28}}{\\text{2}};\\frac{\\text{64}}{\\text{2}})\\\\&=(\\text{14};\\text{32})\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "(14; 32)",
+   "epub_final_answer": "$M_{CD}=(\\text{14};\\text{32})$",
+   "blind_answer": "(14;32)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 314,
+   "shortcode": "2GDK",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-5:3b|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-5:3b|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-5:3b|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-5:3c",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Find the mid-points of the following lines: $E(x+2;y-1)$ , $F(x-5;y-4)$",
+   "answer_type": "expression",
+   "answer": "(\\frac{2x-3}{2}; \\frac{2y-5}{2})",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(\\frac{2x-3}{2}; \\frac{2y-5}{2})",
+    "form": null,
+    "variables": [
+     "x",
+     "y"
+    ],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{EF}&=\\left(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2}\\right)\\\\&=\\left(\\frac{x+2+x-5}{2};\\frac{y-1+y-4}{2}\\right)\\\\&=\\left(\\frac{2x-3}{2};\\frac{2y-5}{2}\\right)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "( 2x−3 2 ; 2y−5 2 )",
+   "epub_final_answer": "$M_{EF}=\\left(\\frac{2x-3}{2};\\frac{2y-5}{2}\\right)$",
+   "blind_answer": "\\left(x-\\dfrac{3}{2};\\,y-\\dfrac{5}{2}\\right)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 314,
+   "shortcode": "2GDM",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-5:3c|blind~printed",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "(2x-3)/2 = x-3/2 and (2y-5)/2 = y-5/2; same midpoint, unsplit vs split fraction form."
+     },
+     {
+      "pair_id": "Ex8-5:3c|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "(2x-3)/2 = x-3/2 and (2y-5)/2 = y-5/2; same midpoint expression, different fraction layout."
+     },
+     {
+      "pair_id": "Ex8-5:3c|book~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-5:4",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-2",
+   "stem": "The mid-point $M$ of $PQ$ is $(3;9)$ . Find $P$ if $Q$ is $(-2;5)$ .",
+   "answer_type": "expression",
+   "answer": "(8; 13)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(8; 13)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "The mid-point formula is:",
+    "$M(x;y)=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})$",
+    "Substituting values and solving for ${x}_{2}$ and ${y}_{2}$ gives:",
+    "$\\begin{align*}3&=\\frac{-2+x_{2}}{2}&9&=\\frac{5+y_{2}}{2}\\\\6&=-2+x_{2}&18&=5+y_{2}\\\\x_{2}&=6+2&y_{2}&=18-5\\\\x_{2}&=8&y_{2}&=13\\end{align*}$",
+    "The coordinates of point $P$ are $\\left(8;13\\right)$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "(8; 13)",
+   "epub_final_answer": "The coordinates of point $P$ are $\\left(8;13\\right)$",
+   "blind_answer": "P(8;13)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 314,
+   "shortcode": "2GDN",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-5:4|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-5:4|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-5:4|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-5:5",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "$PQRS$ is a parallelogram with the points $P(5;3)$ , $Q(2;1)$ and $R(7;-3)$ . Find point $S$ .",
+   "answer_type": "expression",
+   "answer": "(4; -5)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(4; -5)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Draw a sketch: [figure] The diagonals of a parallelogram bisect each other, therefore the mid-point of $QR$ will be the same as the mid-point of $PS$ . We must first find the mid-point of $QR$ . We can then use it to determine the coordinates of point $H$ .",
+    "$\\begin{align*}M_{QR}&=\\left(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2}\\right)\\\\&=\\left(\\frac{2+7}{2};\\frac{1-3}{2}\\right)\\\\&=\\left(\\frac{9}{2};\\frac{-2}{2}\\right)\\\\&=\\left(\\frac{9}{2};-1\\right)\\end{align*}$",
+    "Use mid-point $M$ to find the coordinates of $S$ :",
+    "$\\begin{align*}M_{QR}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\(\\frac{9}{2};-1)&=(\\frac{x+5}{2};\\frac{y+3}{2})\\end{align*}$",
+    "Solve for $x$ :",
+    "$\\begin{align*}\\frac{9}{2}&=\\frac{x+5}{2}\\\\9&=x+5\\\\x&=4\\end{align*}$",
+    "Solve for $y$ :",
+    "$\\begin{align*}-1&=\\frac{y+3}{2}\\\\-2&=y+3\\\\y&=-5\\end{align*}$",
+    "Therefore $S(4;-5)$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "S(4; −5)",
+   "epub_final_answer": "Therefore $S(4;-5)$",
+   "blind_answer": "S(10;-1)",
+   "verification": "disputed",
+   "tier": "advanced",
+   "printed_page": 314,
+   "shortcode": "2GDP",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-5:5|blind~printed",
+      "route": "judge",
+      "verdict": "different",
+      "reason": "S(10,-1) (from S=P+R-Q, matches parallelogram diagonal bisection) vs S(4,-5): different coordinate values."
+     },
+     {
+      "pair_id": "Ex8-5:5|blind~book",
+      "route": "judge",
+      "verdict": "different",
+      "reason": "Same as printed variant: (10,-1) vs (4,-5) are different points."
+     },
+     {
+      "pair_id": "Ex8-5:5|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:16",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "You are given the following diagram: [figure] Calculate the coordinates of the mid-point ( $M$ ) between point $A(-\\text{2};-\\text{2,5})$ and point $B(\\text{1};\\text{3,5})$ correct to 1 decimal place.",
+   "answer_type": "expression",
+   "answer": "(-0,5; 0,5)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(-0,5; 0,5)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M(x;y)&=\\left(\\frac{x_{A}+x_{B}}{2};\\frac{y_{A}+y_{B}}{2}\\right)\\\\&=\\left(\\frac{(-2)+(1)}{2};\\frac{(-2,5)+(3,5)}{2}\\right)\\\\M(x;y)&=(-0,5;0,5)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "(−0,5; 0,5)",
+   "epub_final_answer": "$M(x;y)=(-0,5;0,5)$",
+   "blind_answer": "(-0.5;0.5)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 320,
+   "shortcode": "2GFD",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:16|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:16|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:16|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "tier check",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__5e987b60c0dc9669c969c73ff45c79d0.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:17",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "$A(-2;3)$ and $B(2;6)$ are points in the Cartesian plane. $C(a;b)$ is the mid-point of $AB$ . Find the values of $a$ and $b$ .",
+   "answer_type": "expression",
+   "answer": "a = 0 \\text{ and } b = \\frac{9}{2}",
+   "choices": null,
+   "marker": {
+    "kind": "values",
+    "key": "a = 0 \\text{ and } b = \\frac{9}{2}",
+    "form": null,
+    "variables": [
+     "a",
+     "b"
+    ],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{AB}&=\\left(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2}\\right)\\\\&=\\left(\\frac{-2-2}{2};\\frac{3+6}{2}\\right)\\\\(a;b)&=\\left(0;\\frac{9}{2}\\right)\\\\\\therefore a&=0\\text{ and }b=\\frac{9}{2}\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": null,
+   "epub_final_answer": "$\\therefore a=0\\text{ and }b=\\frac{9}{2}$",
+   "blind_answer": "a=0,\\ b=\\dfrac{9}{2}",
+   "verification": "no_printed_answer",
+   "tier": "standard",
+   "printed_page": 320,
+   "shortcode": "2GFF",
+   "verify": {
+    "agreed_with_book_solution": true,
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:17|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:19c",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "In the diagram below, the vertices of the quadrilateral are $F(2;0)$ , $G(1;5)$ , $H(3;7)$ and $I(7;2)$ . [figure] Do the diagonals of $FGHI$ bisect each other?",
+   "answer_type": "choice",
+   "answer": "B",
+   "choices": [
+    {
+     "key": "A",
+     "text": "bisect"
+    },
+    {
+     "key": "B",
+     "text": "do not bisect"
+    }
+   ],
+   "marker": null,
+   "solution": [
+    "To determine if the diagonals bisect each other we need to find the mid-point of $FH$ and $GI$ .",
+    "$\\begin{align*}M_{GI}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{1+7}{2};\\frac{5+2}{2})\\\\&=(\\frac{8}{2};\\frac{7}{2})\\\\&=(4;\\frac{7}{2})\\\\M_{FH}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{3+2}{2};\\frac{7+0}{2})\\\\&=(\\frac{5}{2};\\frac{7}{2})\\end{align*}$",
+    "Therefore $M_{GI}\\neM_{FH}$ and the diagonals do not bisect each other."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "do not bisect",
+   "epub_final_answer": "Therefore $M_{GI}\\ne M_{FH}$ and the diagonals do not bisect each other",
+   "blind_answer": null,
+   "verification": "disputed",
+   "tier": "standard",
+   "printed_page": 321,
+   "shortcode": "2GFH",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:19c|blind~printed",
+      "route": "missing",
+      "verdict": "missing",
+      "reason": "the blind solver judged the item not markable; typing says it is"
+     },
+     {
+      "pair_id": "Ex8-6:19c|blind~book",
+      "route": "missing",
+      "verdict": "missing",
+      "reason": "the blind solver judged the item not markable; typing says it is"
+     },
+     {
+      "pair_id": "Ex8-6:19c|book~printed",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both state the same final conclusion: diagonals do not bisect each other."
+     }
+    ]
+   },
+   "typing_problems": [
+    "options said to be the stem's are not all in the stem"
+   ],
+   "unit": null,
+   "options_source": "stem",
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__9a73ddabd11640ecc3a0736b036d4587.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:21d",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "$ABCD$ is a quadrilateral with vertices $A(0;3)$ , $B(4;3)$ , $C(5;-1)$ and $D(-1;-1)$ . Show by calculation that: Show that the diagonals $AC$ and $BD$ do not bisect each other.",
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
+   "marker": null,
+   "solution": [
+    "To show this we need to find the mid-points of $AC$ and $BD$ .",
+    "$\\begin{align*}M_{AC}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{0+5}{2};\\frac{3-1}{2})\\\\&=(\\frac{5}{2};\\frac{2}{2})\\\\&=(\\frac{5}{2};1)\\\\M_{BD}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{4-1}{2};\\frac{3-1}{2})\\\\&=(\\frac{3}{2};\\frac{2}{2})\\\\&=(\\frac{3}{2};1)\\end{align*}$",
+    "$M_{AC}\\neM_{BD}$ , therefore the diagonals do not bisect each other."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": null,
+   "epub_final_answer": "$M_{AC}\\ne M_{BD}$, therefore the diagonals do not bisect each other",
+   "blind_answer": null,
+   "verification": "no_printed_answer",
+   "tier": "standard",
+   "printed_page": 321,
+   "shortcode": "2GFK",
+   "verify": {
+    "agreed_with_book_solution": true,
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:21d|blind~book",
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typing and the blind solver agree it has no answer to mark"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": "proof / show that",
+   "tier_source": "tier check",
+   "printed_answer_scope": null,
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:23",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "$EFGH$ is a parallelogram with vertices $E(-1;2)$ , $F(-2;-1)$ and $G(2;0)$ . Find the coordinates of $H$ by using the fact that the diagonals of a parallelogram bisect each other.",
+   "answer_type": "expression",
+   "answer": "(3; 3)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(3; 3)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Since the diagonal bisect each other the mid-point of $EG$ is equal to the mid-point of $FH$ . We can first calculate the mid-point of $EG$ since we have the co-ordinates of both $E$ and $G$ . We can then use that mid-point to help us find the co-ordinates of $H$ .",
+    "$\\begin{align*}M_{EG}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{-1+2}{2};\\frac{2+0}{2})\\\\&=(\\frac{1}{2};1)\\\\M_{FH}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{-2+x}{2};\\frac{-1+y}{2})\\\\(\\frac{1}{2};1)&=(\\frac{-2+x}{2};\\frac{-1+y}{2})\\end{align*}$",
+    "Solve for $x$ :",
+    "$\\begin{align*}\\frac{1}{2}&=\\frac{-2+x}{2}\\\\1&=-2+x\\\\x&=3\\end{align*}$",
+    "Solve for $y$ :",
+    "$\\begin{align*}1&=\\frac{-1+y}{2}\\\\2&=-1+y\\\\y&=3\\end{align*}$",
+    "Therefore $H(3;3)$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "H(3; 3)",
+   "epub_final_answer": "Therefore $H(3;3)$",
+   "blind_answer": "H(3;3)",
+   "verification": "agreed",
+   "tier": "advanced",
+   "printed_page": 322,
+   "shortcode": "2GFN",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:23|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:23|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:23|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:24c",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "$PQRS$ is a quadrilateral with points $P(0;-3)$ , $Q(-2;5)$ , $R(3;2)$ and $S(3;-2)$ in the Cartesian plane. Find the mid-point of $PR$ .",
+   "answer_type": "expression",
+   "answer": "(\\frac{3}{2}; \\frac{-1}{2})",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(\\frac{3}{2}; \\frac{-1}{2})",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{QR}&=\\left(\\frac{x_1+x_2}{2};\\frac{y_1+y_2}{2}\\right)\\\\&=\\left(\\frac{0+3}{2};\\frac{-3+2}{2}\\right)\\\\&=\\left(\\frac{3}{2};\\frac{-1}{2}\\right)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "( 3 2 ; −1 2 )",
+   "epub_final_answer": "$M_{QR}=\\left(\\frac{3}{2};\\frac{-1}{2}\\right)$",
+   "blind_answer": "(3/2;\\,-1/2)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 322,
+   "shortcode": "2GFP",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:24c|blind~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:24c|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give (3/2,-1/2), the correct midpoint of PR; answer 2's 'M_QR' subscript is a mislabel but the numeric value matches answer 1 and the question asked."
+     },
+     {
+      "pair_id": "Ex8-6:24c|book~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:24d",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "$PQRS$ is a quadrilateral with points $P(0;-3)$ , $Q(-2;5)$ , $R(3;2)$ and $S(3;-2)$ in the Cartesian plane. Is $PQRS$ a parallelogram? Give reasons for your answer.",
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
+   "marker": null,
+   "solution": [
+    "We need to calculate the gradients of each of the sides to see if opposite sides are parallel. We have calculated the gradient of $PS$ so we only need to check the gradients of the other three sides. However, looking at our sketch $PS$ is not parallel to $QR$ (you can check this by calculating the gradient of $QR$ ).",
+    "$\\begin{align*}m_{RS}&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{-2-2}{3-3}\\\\&=\\frac{-4}{0}\\\\&=\\text{undefined}\\end{align*}$",
+    "And,",
+    "$\\begin{align*}m_{QR}&=\\frac{y_2-y_1}{x_2-x_1}\\\\&=\\frac{2-5}{3-(-2)}\\\\&=\\frac{-3}{5}\\end{align*}$",
+    "Therefore $PQRS$ is not a parallelogram. Opposite sides are not parallel."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": null,
+   "epub_final_answer": "Therefore $PQRS$ is not a parallelogram. Opposite sides are not parallel",
+   "blind_answer": null,
+   "verification": "no_printed_answer",
+   "tier": "advanced",
+   "printed_page": 322,
+   "shortcode": "2GFP",
+   "verify": {
+    "agreed_with_book_solution": true,
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:24d|blind~book",
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typing and the blind solver agree it has no answer to mark"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": "proof / explanation",
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:25c",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Consider triangle $ABC$ with vertices $A(1;3)$ , $B(4;1)$ and $C(6;4)$ . Determine the coordinates of $M$ , the mid-point of $AC$ .",
+   "answer_type": "expression",
+   "answer": "(\\frac{7}{2}; \\frac{7}{2})",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(\\frac{7}{2}; \\frac{7}{2})",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{AC}&=\\left(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2}\\right)\\\\&=\\left(\\frac{1+6}{2};\\frac{3+4}{2}\\right)\\\\&=\\left(\\frac{7}{2};\\frac{7}{2}\\right)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "( 7 2 ; 7 2 )",
+   "epub_final_answer": "$M_{AC}=\\left(\\frac{7}{2};\\frac{7}{2}\\right)$",
+   "blind_answer": "(7/2;\\,7/2)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 322,
+   "shortcode": "2GFQ",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:25c|blind~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:25c|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give (7/2,7/2), the midpoint of AC, with matching correct label M_AC."
+     },
+     {
+      "pair_id": "Ex8-6:25c|book~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "tier check",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:27",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "$\\triangleABC$ has vertices $A(-3;4)$ , $B(3;-2)$ and $C(-5;-2)$ . $M$ is the mid-point of $AC$ and $N$ is the mid-point of $BC$ . Use $\\triangleABC$ to prove the mid-point theorem using analytical geometry methods.",
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
+   "marker": null,
+   "solution": [
+    "First draw a sketch: [figure] The mid-point theorem states that the line joining the mid-points of two sides of a triangle is parallel to the third side and equal to half the length of the third side. Therefore we need to show that $MN\\parallelBC$ and that $MN=\\frac{1}{2}BC$ . We need to calculate the co-ordinates of mid-points $M$ and $N$ :",
+    "$\\begin{align*}M&=\\left(\\frac{-3-5}{2};\\frac{4-2}{2}\\right)\\\\&=(-4;1)\\\\N&=\\left(\\frac{-3+3}{2};\\frac{4-2}{2}\\right)\\\\&=(0;1)\\end{align*}$",
+    "Now we can show that $MN\\parallelBC$ :",
+    "$\\begin{align*}m&=\\frac{y_2-y_1}{x_2-x_1}\\\\m_{BC}&=\\frac{-2-(-2)}{3-(-5)}\\\\&=0\\\\m_{MN}&=\\frac{1-1}{-4-0}\\\\&=0\\\\\\thereforeMN&\\parallelBC\\end{align*}$",
+    "Finally we can use the distance formula to show that $MN=\\frac{1}{2}BC$ :",
+    "$\\begin{align*}d&=\\sqrt{(y_{2}-y_{1})^{2}+(x_{2}-x_{1})^{2}}\\\\d_{MN}&=\\sqrt{(1-1)^{2}+(-4-0)^{2}}\\\\&=4\\\\d_{BC}&=\\sqrt{(-2-(-2))^{2}+(-5-3)^{2}}\\\\&=8\\\\\\therefore MN&=\\frac{1}{2}CB\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": null,
+   "epub_final_answer": "$\\therefore MN=\\frac{1}{2}CB$",
+   "blind_answer": null,
+   "verification": "no_printed_answer",
+   "tier": "advanced",
+   "printed_page": 322,
+   "shortcode": "2GFS",
+   "verify": {
+    "agreed_with_book_solution": true,
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:27|blind~book",
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typing and the blind solver agree it has no answer to mark"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": "proof",
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:28b",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "The points $A(-2;-4)$ , $B(-4;1)$ , $C(2;4)$ and $D(4;-1)$ are the vertices of a quadrilateral. Show that the quadrilateral is a parallelogram.",
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
+   "marker": null,
+   "solution": [
+    "We need to show that both pairs of opposite sides are parallel. So we need to calculate the gradient of each of the sides:",
+    "$\\begin{align*}m_{AB}&=\\frac{1+4}{-4+2}\\\\&=\\frac{5}{-2}\\\\m_{CD}&=\\frac{-1-4}{4-2}\\\\&=\\frac{-5}{2}\\\\\\thereforeAB\\parallelCD\\\\m_{BC}&=\\frac{4-1}{2+4}\\\\&=\\frac{3}{6}=\\frac{1}{2}\\\\m_{AD}&=\\frac{-1+4}{4+2}\\\\&=\\frac{3}{6}=\\frac{1}{2}\\\\\\thereforeBC\\parallelAD\\end{align*}$",
+    "Therefore $ABCD$ is a parallelogram (2 pairs opp. sides $\\parallel$ )."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": null,
+   "epub_final_answer": "Therefore $ABCD$ is a parallelogram (2 pairs opp. sides $\\parallel$)",
+   "blind_answer": null,
+   "verification": "no_printed_answer",
+   "tier": "advanced",
+   "printed_page": 322,
+   "shortcode": "2GFT",
+   "verify": {
+    "agreed_with_book_solution": true,
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:28b|blind~book",
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typing and the blind solver agree it has no answer to mark"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": "proof / show that",
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:29c",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-2",
+   "stem": "The diagram shows a quadrilateral. The points $B$ and $D$ have the coordinates $(2;6)$ and $(4;2)$ respectively. The diagonals of $ABCD$ bisect each other at right angles. $F$ is the point of intersection of line $AC$ with the $y$ -axis. [figure] Determine the coordinates of $C$ .",
+   "answer_type": "expression",
+   "answer": "(11; 8)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(11; 8)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "We first calculate the coordinates of $E$ :",
+    "$E(\\frac{2+4}{2};\\frac{6+2}{2})\\\\E(3;4)$",
+    "Now we can use the coordinates of $E$ to find the coordinates of $C$ . Since $E$ is the mid-point of $AC$ we can use the mid-point formula to find $C$ :",
+    "$\\begin{align*}\\frac{-5+x}{2}&=3\\\\-5+x&=6\\\\x&=11\\\\\\frac{0+y}{2}&=4\\\\y&=8\\end{align*}$",
+    "Therefore $C(11;8)$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "C(11; 8)",
+   "epub_final_answer": "Therefore $C(11;8)$",
+   "blind_answer": "(11;\\,8)",
+   "verification": "agreed",
+   "tier": "advanced",
+   "printed_page": 322,
+   "shortcode": "2GFV",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:29c|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:29c|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:29c|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__16961cdf54cd54e749f2782fb365b414.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:31a",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-2",
+   "stem": "Given the following diagram: [figure] If $E$ is the mid-point of $AB$ , find the values of $a$ and $b$ .",
+   "answer_type": "expression",
+   "answer": "a = 1 \\text{ and } b = \\frac{7}{2}",
+   "choices": null,
+   "marker": {
+    "kind": "values",
+    "key": "a = 1 \\text{ and } b = \\frac{7}{2}",
+    "form": null,
+    "variables": [
+     "a",
+     "b"
+    ],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{AB}&=(\\frac{-2+4}{2};\\frac{2+5}{2})\\\\&=(1;\\frac{7}{2})\\end{align*}$",
+    "Therefore $a=1$ and $b=\\frac{7}{2}$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "a = 1 and b = 7 2",
+   "epub_final_answer": "Therefore $a=1$ and $b=\\frac{7}{2}$",
+   "blind_answer": "a=1,\\ b=7/2",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 323,
+   "shortcode": "2GFX",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:31a|blind~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:31a|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give a=1, b=7/2."
+     },
+     {
+      "pair_id": "Ex8-6:31a|book~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__cefb759f9539707727dce853ebb45447.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:31c",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Given the following diagram: [figure] Find the coordinates of the mid-point of diagonal $BD$ .",
+   "answer_type": "expression",
+   "answer": "(\\frac{7}{2}; 1)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(\\frac{7}{2}; 1)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{BD}&=(\\frac{4+1}{2};\\frac{5-3}{2})\\\\&=(\\frac{7}{2};1)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "( 7 2 ; 1 )",
+   "epub_final_answer": "$M_{BD}=(\\frac{7}{2};1)$",
+   "blind_answer": "(5/2;\\,1)",
+   "verification": "disputed",
+   "tier": "basic",
+   "printed_page": 323,
+   "shortcode": "2GFX",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:31c|blind~printed",
+      "route": "judge",
+      "verdict": "different",
+      "reason": "(5/2,1) vs (7/2,1): different x-coordinate."
+     },
+     {
+      "pair_id": "Ex8-6:31c|blind~book",
+      "route": "judge",
+      "verdict": "different",
+      "reason": "(5/2,1) vs (7/2,1): different x-coordinate, same as printed variant."
+     },
+     {
+      "pair_id": "Ex8-6:31c|book~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__cefb759f9539707727dce853ebb45447.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:31d",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "Given the following diagram: [figure] Hence show that $ABCD$ is not a parallelogram.",
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
+   "marker": null,
+   "solution": [
+    "$\\begin{align*}M_{AC}&=(\\frac{-2+8}{2};\\frac{2+2}{2})\\\\&=(3;2)\\end{align*}$",
+    "The mid-point of $BD$ is not the mid-point of $AC$ . Therefore the diagonals of the quadrilateral do not bisect each other and $ABCD$ is not a parallelogram."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": null,
+   "epub_final_answer": "The mid-point of $BD$ is not the mid-point of $AC$. Therefore the diagonals do not bisect each other and $ABCD$ is not a parallelogram",
+   "blind_answer": null,
+   "verification": "no_printed_answer",
+   "tier": "standard",
+   "printed_page": 323,
+   "shortcode": "2GFX",
+   "verify": {
+    "agreed_with_book_solution": true,
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:31d|blind~book",
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typing and the blind solver agree it has no answer to mark"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": "proof / show that",
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__cefb759f9539707727dce853ebb45447.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:31e",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "Given the following diagram: [figure] If $C$ could be moved, give its new coordinates so that $ABCD$ would be a parallelogram.",
+   "answer_type": "expression",
+   "answer": "(7; 0)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(7; 0)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "We use the mid-point of $BD$ to find the new $x$ and $y$ coordinates of $C$ :",
+    "$\\begin{align*}\\frac{5}{2}&=\\frac{-2+x}{2}\\\\\\frac{10}{2}&=-2+x\\\\x&=7\\\\1&=\\frac{2+y}{2}\\\\2&=2+y\\\\0&=y\\end{align*}$",
+    "Therefore $C(7;0)$ would make $ABCD$ a parallelogram."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "C(7; 0)",
+   "epub_final_answer": "Therefore $C(7;0)$ would make $ABCD$ a parallelogram",
+   "blind_answer": "(7;\\,0)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 323,
+   "shortcode": "2GFX",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:31e|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:31e|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:31e|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__cefb759f9539707727dce853ebb45447.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:35a",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Given $A(4;9)$ and $B(-2;-3)$ . Find the mid-point $M$ of $AB$ .",
+   "answer_type": "expression",
+   "answer": "(1; 3)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(1; 3)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$M\\left(\\frac{4+(-2)}{2};\\frac{9-3}{2}\\right)\\\\M(1;3)$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "M(1; 3)",
+   "epub_final_answer": "$M(1;3)$",
+   "blind_answer": "(1;\\,3)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 323,
+   "shortcode": "2GG3",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:35a|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:35a|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:35a|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:36a",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "$L(-1;-1)$ , $M(-2;4)$ , $N(x;y)$ and $P(4;0)$ are the vertices of parallelogram $LMNP$ . Determine the coordinates of $N$ .",
+   "answer_type": "expression",
+   "answer": "(3; 5)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(3; 5)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "Since $LMNP$ is a parallelogram we know that $LM\\parallelNP$ . Therefore:",
+    "$\\begin{align*}m_{LM}&=m_{NP}\\\\\\frac{4+1}{-2+1}&=\\frac{y-0}{x-4}\\\\\\frac{5}{-1}&=\\frac{y}{x-4}\\\\\\therefore y&=5\\\\-1&=x-4\\\\3&=x\\end{align*}$",
+    "Therefore $N(3;5)$ . We can now sketch the parallelogram: [figure]"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "N(3; 5)",
+   "epub_final_answer": "Therefore $N(3;5)$",
+   "blind_answer": "N(3;\\,5)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 323,
+   "shortcode": "2GG4",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:36a|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:36a|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:36a|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:37b",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "$A(-2;4)$ , $B(-4;-2)$ and $C(4;0)$ are the vertices of $\\triangleABC$ . $D$ and $E(1;2)$ are the mid-points of $AB$ and $AC$ respectively. [figure] Show that the coordinates of $D$ , the mid-point of $AB$ are $(-3;1)$ .",
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
+   "marker": null,
+   "solution": [
+    "$\\begin{align*}D&=(\\frac{-2-4}{2};\\frac{-2+4}{2})\\\\&=(-3;1)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": null,
+   "epub_final_answer": "$D=(-3;1)$",
+   "blind_answer": null,
+   "verification": "no_printed_answer",
+   "tier": "basic",
+   "printed_page": 324,
+   "shortcode": "2GG5",
+   "verify": {
+    "agreed_with_book_solution": true,
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:37b|blind~book",
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typing and the blind solver agree it has no answer to mark"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": "show that / proof",
+   "tier_source": "tier check",
+   "printed_answer_scope": null,
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__cd96fded5973b0e425a66a67c662b220.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:38b",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "In the diagram points $P(-3;3)$ , $Q(1;-2)$ , $R(5;1)$ and $S(x;y)$ are the vertices of a parallelogram. [figure] Find the coordinates of $M$ where the diagonals meet.",
+   "answer_type": "expression",
+   "answer": "(1; 2)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(1; 2)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$M$ is the mid-point of both $PR$ and $QS$ ( $PQRS$ is a parallelogram). Since we do not know the coordinates of $S$ we will use $PR$ to find $M$ .",
+    "$M(\\frac{-3+5}{2};\\frac{3+1}{2})\\\\\\therefore M(1;2)$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "M(1; 2)",
+   "epub_final_answer": "$\\therefore M(1;2)$",
+   "blind_answer": "(1;\\,2)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 324,
+   "shortcode": "2GG6",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:38b|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:38b|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:38b|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "tier check",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__118b1cac59d083366970242771d6e4d4.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:38c",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "In the diagram points $P(-3;3)$ , $Q(1;-2)$ , $R(5;1)$ and $S(x;y)$ are the vertices of a parallelogram. [figure] Find $T$ , the mid-point of $PQ$ .",
+   "answer_type": "expression",
+   "answer": "(-1; \\frac{1}{2})",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(-1; \\frac{1}{2})",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}T(\\frac{-3+1}{2};\\frac{3-2}{2})\\\\&\\therefore T(-1;\\frac{1}{2})\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "T ( −1; 1 2 )",
+   "epub_final_answer": "$T(-1;\\frac{1}{2})$",
+   "blind_answer": "(-1;\\,1/2)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 324,
+   "shortcode": "2GG6",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:38c|blind~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:38c|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Both give (-1, 1/2), correctly labeled T."
+     },
+     {
+      "pair_id": "Ex8-6:38c|book~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__118b1cac59d083366970242771d6e4d4.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:38e",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "In the diagram points $P(-3;3)$ , $Q(1;-2)$ , $R(5;1)$ and $S(x;y)$ are the vertices of a parallelogram. [figure] Calculate the coordinates of $S$ .",
+   "answer_type": "expression",
+   "answer": "(1; 6)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(1; 6)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "We can use the coordinates of $M$ to find the coordinates of $S$ :",
+    "$M(1;2)=S\\left(\\frac{x+1}{2};\\frac{y-2}{2}\\right)$",
+    "Solve for $x$ :",
+    "$\\begin{align*}1&=\\frac{x+1}{2}\\\\2&=x+1\\\\x&=1\\end{align*}$",
+    "Solve for $y$ :",
+    "$\\begin{align*}2&=\\frac{y-2}{2}\\\\4&=y-2\\\\y&=6\\end{align*}$",
+    "Therefore $S(1;6)$ ."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "S(1; 6)",
+   "epub_final_answer": "$S(1;6)$",
+   "blind_answer": "S(1;\\,6)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 324,
+   "shortcode": "2GG6",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:38e|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:38e|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:38e|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__118b1cac59d083366970242771d6e4d4.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:39b",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "The coordinates of $\\trianglePQR$ are as follows: $P(5;1)$ , $Q(1;3)$ and $R(1;-2)$ . Find the coordinates of points $S$ and $T$ , the mid-points of $PQ$ and $QR$ .",
+   "answer_type": "expression",
+   "answer": "S(3;2), T(1;\\frac{1}{2})",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "S(3;2), T(1;\\frac{1}{2})",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}&S\\left(\\frac{5+1}{2};\\frac{1+3}{2}\\right)\\\\&\\therefore S(3;2)\\\\&T\\left(\\frac{1+1}{2};\\frac{3-2}{2}\\right)\\\\&\\therefore T\\left(1;\\frac{1}{2}\\right)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": null,
+   "epub_final_answer": "$S(3;2)$ and $T(1;\\frac{1}{2})$",
+   "blind_answer": "S(3;2), \\ T\\left(1;\\dfrac{1}{2}\\right)",
+   "verification": "no_printed_answer",
+   "tier": "standard",
+   "printed_page": 324,
+   "shortcode": "2GG7",
+   "verify": {
+    "agreed_with_book_solution": true,
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:39b|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": null,
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:42b",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "Given: $A(-3;-4),B(-1;-7),C(2;-5)\\text{and}D(0;-2)$ . Determine the coordinates of $M$ , the mid-point of $BD$ .",
+   "answer_type": "expression",
+   "answer": "(-0,5; -4,5)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(-0,5; -4,5)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M(x;y)&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\&=(\\frac{\\text{-1}+\\text{0}}{\\text{2}};\\frac{\\text{-7}+(\\text{-2})}{\\text{2}})\\\\&=(\\frac{\\text{-1}}{\\text{2}};\\frac{\\text{-9}}{\\text{2}})\\\\M&=(\\text{-0,5};\\text{-4,5})\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "(−0,5; −4,5)",
+   "epub_final_answer": "$M=(-0,5;-4,5)$",
+   "blind_answer": "M\\left(-\\dfrac{1}{2};-\\dfrac{9}{2}\\right)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 325,
+   "shortcode": "2GGB",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:42b|blind~printed",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "-1/2=-0.5 and -9/2=-4.5; same point, fraction vs decimal comma form."
+     },
+     {
+      "pair_id": "Ex8-6:42b|blind~book",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "-1/2=-0.5 and -9/2=-4.5; same point."
+     },
+     {
+      "pair_id": "Ex8-6:42b|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:43a",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-2",
+   "stem": "$M(2;-2)$ is the mid-point of $AB$ with point $A(3;1)$ . Determine: the coordinates of $B$ .",
+   "answer_type": "expression",
+   "answer": "(1; -5)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(1; -5)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M(x;y)&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\(2;-2)&=(\\frac{3+x_{B}}{2};\\frac{1+y_{B}}{2})\\\\2&=\\frac{3+x_{B}}{2}\\\\4&=3+x_{B}\\\\x_{B}&=1\\\\-2&=\\frac{1+y_{B}}{2}\\\\-4&=1+y_{B}\\\\y_{B}&=-5\\\\\\thereforeB(x;y)&=(1;-5)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "(1; −5)",
+   "epub_final_answer": "$B(x;y)=(1;-5)$",
+   "blind_answer": "B(1;-5)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 325,
+   "shortcode": "2GGC",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:43a|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:43a|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:43a|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:44a",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-1",
+   "stem": "ABCD is a quadrilateral with $A(-3;6),B(5;0),C(4;-9),D(-4;-3)$ . [figure] Determine the coordinates of $E$ , the mid-point of $BD$ .",
+   "answer_type": "expression",
+   "answer": "(\\frac{1}{2};-\\frac{3}{2})",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(\\frac{1}{2};-\\frac{3}{2})",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M(x;y)&=\\left(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2}\\right)\\\\E&=\\left(\\frac{5+(-4)}{2};\\frac{0+(-3)}{2}\\right)\\\\\\therefore E&=\\left(\\frac{1}{2};-\\frac{3}{2}\\right)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "E = ( 1 2 ; −3 2 )",
+   "epub_final_answer": "$\\therefore E=(\\frac{1}{2};-\\frac{3}{2})$",
+   "blind_answer": "E\\left(\\dfrac{1}{2};-\\dfrac{3}{2}\\right)",
+   "verification": "agreed",
+   "tier": "basic",
+   "printed_page": 325,
+   "shortcode": "2GGD",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:44a|blind~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:44a|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:44a|book~printed",
+      "route": "signature",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__6a35113644a14d671ff701773dc410c8.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:44b",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "ABCD is a quadrilateral with $A(-3;6),B(5;0),C(4;-9),D(-4;-3)$ . [figure] Prove that $ABCD$ is a parallelogram.",
+   "answer_type": "not_markable",
+   "answer": null,
+   "choices": null,
+   "marker": null,
+   "solution": [
+    "$\\begin{align*}M(x;y)&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\M_{AC}&=(\\frac{\\text{-3}+\\text{4}}{\\text{2}};\\frac{\\text{6}+(\\text{-9})}{\\text{2}})\\\\&=(\\frac{\\text{1}}{\\text{2}};-\\frac{\\text{3}}{\\text{2}})\\\\\\therefore M_{AC}&=E\\end{align*}$",
+    "$ABCD$ is a parallelogram (Diagonals bisect at $E$ )."
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "ABCD is a parallelogram",
+   "epub_final_answer": "$ABCD$ is a parallelogram (Diagonals bisect at $E$)",
+   "blind_answer": null,
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 325,
+   "shortcode": "2GGD",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:44b|blind~printed",
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typing and the blind solver agree it has no answer to mark"
+     },
+     {
+      "pair_id": "Ex8-6:44b|blind~book",
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typing and the blind solver agree it has no answer to mark"
+     },
+     {
+      "pair_id": "Ex8-6:44b|book~printed",
+      "route": "judge",
+      "verdict": "equivalent",
+      "reason": "Same conclusion (ABCD is a parallelogram); answer 2 omits the justification clause but the stated result matches."
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": "proof",
+   "tier_source": "tier check",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__6a35113644a14d671ff701773dc410c8.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:46e",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-3",
+   "stem": "In the diagram below, $M$ and $N$ are the mid-points of $OA$ and $OB$ respectively. [figure] Write down the coordinates of $P$ such that $OAPB$ is a parallelogram.",
+   "answer_type": "expression",
+   "answer": "(8; 12)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(8; 12)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "We can use the fact that the diagonals of a parallelogram bisect each other to find $P$ . The mid-point of $AB$ must be the same as the mid-point of $OP$ .",
+    "$\\begin{align*}M_{AB}&=\\left(\\frac{x_1+x_2}{2};\\frac{y_1+y_2}{2}\\right)\\\\M_{AB}&=\\left(\\frac{-2+10}{2};\\frac{8+4}{2}\\right)\\\\M_{AB}&=(4;6)\\\\(4;6)&=\\left(\\frac{x_p+0}{2};\\frac{y_p+0}{2}\\right)\\\\(8;12)&=\\left(\\frac{x_p}{2};\\frac{y_p}{2}\\right)\\\\\\thereforeP(x;y)&=(8;12)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "P (x; y) = (8; 12)",
+   "epub_final_answer": "$\\therefore P(x;y)=(8;12)$",
+   "blind_answer": "P(8;12)",
+   "verification": "agreed",
+   "tier": "standard",
+   "printed_page": 327,
+   "shortcode": "2GGG",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:46e|blind~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:46e|blind~book",
+      "route": "normalised",
+      "verdict": "equivalent"
+     },
+     {
+      "pair_id": "Ex8-6:46e|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [
+    "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/figures/tikzpicture__f2dd529924b594a4e73779683c066c84.png"
+   ],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  },
+  {
+   "ref": "Ex8-6:47b",
+   "kind": "exercise",
+   "lo": "lo:g10m8s4-1-2",
+   "stem": "$A(6;-4),B(8;2),C(3;a)$ and $D(b;c)$ are points on the Cartesian plane. Determine the value of: $b$ and $c$ if $B$ is the mid-point of $A$ and $D$ .",
+   "answer_type": "expression",
+   "answer": "(8; 12)",
+   "choices": null,
+   "marker": {
+    "kind": "coordinates",
+    "key": "(8; 12)",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
+   "solution": [
+    "$\\begin{align*}M_{AD}&=(\\frac{x_{1}+x_{2}}{2};\\frac{y_{1}+y_{2}}{2})\\\\(8;2)&=(\\frac{6+b}{2};\\frac{-4+c}{2})\\\\8&=\\frac{6+b}{2}\\\\16&=6+b\\\\b&=10\\\\2&=\\frac{-4+c}{2}\\\\4&=-4+c\\\\c&=8\\\\B(x;y)&=(8;12)\\end{align*}$"
+   ],
+   "solution_provenance": "book_worked_epub",
+   "printed_answer": "(8; 12)",
+   "epub_final_answer": "$B(x;y)=(8;12)$",
+   "blind_answer": "b=10,\\ c=8",
+   "verification": "disputed",
+   "tier": "standard",
+   "printed_page": 327,
+   "shortcode": "2GGH",
+   "verify": {
+    "pairs": [
+     {
+      "pair_id": "Ex8-6:47b|blind~printed",
+      "route": "judge",
+      "verdict": "different",
+      "reason": "Correct b,c = (10,8) via D=2B-A; answer 2's (8,12) does not match either b,c or the given point B=(8,2)."
+     },
+     {
+      "pair_id": "Ex8-6:47b|blind~book",
+      "route": "judge",
+      "verdict": "different",
+      "reason": "b=10,c=8 vs claimed B=(8,12); values differ and don't correspond to the same quantity correctly."
+     },
+     {
+      "pair_id": "Ex8-6:47b|book~printed",
+      "route": "normalised",
+      "verdict": "equivalent"
+     }
+    ]
+   },
+   "typing_problems": [],
+   "unit": null,
+   "options_source": null,
+   "not_markable_reason": null,
+   "tier_source": "typing",
+   "printed_answer_scope": "item",
+   "figures": [],
+   "figures_missing": [],
+   "asked_form": null,
+   "printed_form_defect": null,
+   "form_overridden": null,
+   "form_unsupported": null,
+   "blocked_on_figure": false
+  }
+ ],
+ "source_run": {
+  "prompts_version": "lesson-v4",
+  "stage": "S2-S4,S8",
+  "collect_version": "collect-4",
+  "run_id": "wf_8103a341-b40",
+  "embedded": {
+   "source": "runbook/lesson.workflow.js",
+   "source_sha256": "911beabdf46cd43f1b4696004ca1f79151b7609c88c67bd0ee4f770e965f03ed",
+   "args_sha256": "45de419df84617a98dd3ab76f3dd266805b7e4e5b1e30db9bee5453cdfc1bfbf",
+   "generated_sha256": "d18e293f5155c9ae853094b0f6a3766e90d81a74581fe51f7b7d4bcece90d30b",
+   "generator": "services/extraction/embed_workflow.py v1"
+  },
+  "recollected": {
+   "from_run": "wf_8103a341-b40",
+   "collect_version": "collect-4",
+   "script": {
+    "source": "runbook/lesson.workflow.js",
+    "source_sha256": "911beabdf46cd43f1b4696004ca1f79151b7609c88c67bd0ee4f770e965f03ed",
+    "args_sha256": "45de419df84617a98dd3ab76f3dd266805b7e4e5b1e30db9bee5453cdfc1bfbf",
+    "generated_sha256": "d18e293f5155c9ae853094b0f6a3766e90d81a74581fe51f7b7d4bcece90d30b"
+   }
+  }
+ },
+ "draft": true,
+ "pending_g2": [
+  "g10m8s4-1:Ex8-6:19c"
+ ],
+ "checks": {
+  "verify": {
+   "disagreements": [
+    {
+     "ref": "Ex8-5:5",
+     "printed": "S(4; −5)",
+     "book": "Therefore $S(4;-5)$",
+     "blind": "S(10;-1)",
+     "pairs": [
+      {
+       "pair_id": "Ex8-5:5|blind~printed",
+       "route": "judge",
+       "verdict": "different",
+       "reason": "S(10,-1) (from S=P+R-Q, matches parallelogram diagonal bisection) vs S(4,-5): different coordinate values."
+      },
+      {
+       "pair_id": "Ex8-5:5|blind~book",
+       "route": "judge",
+       "verdict": "different",
+       "reason": "Same as printed variant: (10,-1) vs (4,-5) are different points."
+      },
+      {
+       "pair_id": "Ex8-5:5|book~printed",
+       "route": "normalised",
+       "verdict": "equivalent"
+      }
+     ],
+     "typing_problems": []
+    },
+    {
+     "ref": "Ex8-6:19c",
+     "printed": "do not bisect",
+     "book": "Therefore $M_{GI}\\ne M_{FH}$ and the diagonals do not bisect each other",
+     "blind": null,
+     "pairs": [
+      {
+       "pair_id": "Ex8-6:19c|blind~printed",
+       "route": "missing",
+       "verdict": "missing",
+       "reason": "the blind solver judged the item not markable; typing says it is"
+      },
+      {
+       "pair_id": "Ex8-6:19c|blind~book",
+       "route": "missing",
+       "verdict": "missing",
+       "reason": "the blind solver judged the item not markable; typing says it is"
+      },
+      {
+       "pair_id": "Ex8-6:19c|book~printed",
+       "route": "judge",
+       "verdict": "equivalent",
+       "reason": "Both state the same final conclusion: diagonals do not bisect each other."
+      }
+     ],
+     "typing_problems": [
+      "options said to be the stem's are not all in the stem"
+     ]
+    },
+    {
+     "ref": "Ex8-6:31c",
+     "printed": "( 7 2 ; 1 )",
+     "book": "$M_{BD}=(\\frac{7}{2};1)$",
+     "blind": "(5/2;\\,1)",
+     "pairs": [
+      {
+       "pair_id": "Ex8-6:31c|blind~printed",
+       "route": "judge",
+       "verdict": "different",
+       "reason": "(5/2,1) vs (7/2,1): different x-coordinate."
+      },
+      {
+       "pair_id": "Ex8-6:31c|blind~book",
+       "route": "judge",
+       "verdict": "different",
+       "reason": "(5/2,1) vs (7/2,1): different x-coordinate, same as printed variant."
+      },
+      {
+       "pair_id": "Ex8-6:31c|book~printed",
+       "route": "signature",
+       "verdict": "equivalent"
+      }
+     ],
+     "typing_problems": []
+    },
+    {
+     "ref": "Ex8-6:47b",
+     "printed": "(8; 12)",
+     "book": "$B(x;y)=(8;12)$",
+     "blind": "b=10,\\ c=8",
+     "pairs": [
+      {
+       "pair_id": "Ex8-6:47b|blind~printed",
+       "route": "judge",
+       "verdict": "different",
+       "reason": "Correct b,c = (10,8) via D=2B-A; answer 2's (8,12) does not match either b,c or the given point B=(8,2)."
+      },
+      {
+       "pair_id": "Ex8-6:47b|blind~book",
+       "route": "judge",
+       "verdict": "different",
+       "reason": "b=10,c=8 vs claimed B=(8,12); values differ and don't correspond to the same quantity correctly."
+      },
+      {
+       "pair_id": "Ex8-6:47b|book~printed",
+       "route": "normalised",
+       "verdict": "equivalent"
+      }
+     ],
+     "typing_problems": []
+    }
+   ],
+   "unchecked": [],
+   "off_task": [],
+   "no_printed_answer": [
+    {
+     "ref": "Ex8-6:17",
+     "book": "$\\therefore a=0\\text{ and }b=\\frac{9}{2}$",
+     "blind": "a=0,\\ b=\\dfrac{9}{2}",
+     "agreed_with_book_solution": true,
+     "answer_type": "expression"
+    },
+    {
+     "ref": "Ex8-6:21d",
+     "book": "$M_{AC}\\ne M_{BD}$, therefore the diagonals do not bisect each other",
+     "blind": null,
+     "agreed_with_book_solution": true,
+     "answer_type": "not_markable"
+    },
+    {
+     "ref": "Ex8-6:24d",
+     "book": "Therefore $PQRS$ is not a parallelogram. Opposite sides are not parallel",
+     "blind": null,
+     "agreed_with_book_solution": true,
+     "answer_type": "not_markable"
+    },
+    {
+     "ref": "Ex8-6:27",
+     "book": "$\\therefore MN=\\frac{1}{2}CB$",
+     "blind": null,
+     "agreed_with_book_solution": true,
+     "answer_type": "not_markable"
+    },
+    {
+     "ref": "Ex8-6:28b",
+     "book": "Therefore $ABCD$ is a parallelogram (2 pairs opp. sides $\\parallel$)",
+     "blind": null,
+     "agreed_with_book_solution": true,
+     "answer_type": "not_markable"
+    },
+    {
+     "ref": "Ex8-6:31d",
+     "book": "The mid-point of $BD$ is not the mid-point of $AC$. Therefore the diagonals do not bisect each other and $ABCD$ is not a parallelogram",
+     "blind": null,
+     "agreed_with_book_solution": true,
+     "answer_type": "not_markable"
+    },
+    {
+     "ref": "Ex8-6:37b",
+     "book": "$D=(-3;1)$",
+     "blind": null,
+     "agreed_with_book_solution": true,
+     "answer_type": "not_markable"
+    },
+    {
+     "ref": "Ex8-6:39b",
+     "book": "$S(3;2)$ and $T(1;\\frac{1}{2})$",
+     "blind": "S(3;2), \\ T\\left(1;\\dfrac{1}{2}\\right)",
+     "agreed_with_book_solution": true,
+     "answer_type": "expression"
+    }
+   ],
+   "typing_problems": [
+    {
+     "ref": "Ex8-6:19c",
+     "problems": [
+      "options said to be the stem's are not all in the stem"
+     ]
+    }
+   ],
+   "printed_not_in_asked_form": [],
+   "forms_from_book_rules": [],
+   "forms_the_marker_cannot_check": [],
+   "tier_checks": [
+    {
+     "ref": "WE13",
+     "typing": "advanced",
+     "check": "standard"
+    },
+    {
+     "ref": "Ex8-5:2",
+     "typing": "standard",
+     "check": "basic"
+    },
+    {
+     "ref": "Ex8-6:16",
+     "typing": "standard",
+     "check": "basic"
+    },
+    {
+     "ref": "Ex8-6:19c",
+     "typing": "standard",
+     "check": "standard"
+    },
+    {
+     "ref": "Ex8-6:21d",
+     "typing": "advanced",
+     "check": "standard"
+    },
+    {
+     "ref": "Ex8-6:25c",
+     "typing": "standard",
+     "check": "basic"
+    },
+    {
+     "ref": "Ex8-6:29c",
+     "typing": "advanced",
+     "check": "advanced"
+    },
+    {
+     "ref": "Ex8-6:31a",
+     "typing": "standard",
+     "check": "standard"
+    },
+    {
+     "ref": "Ex8-6:36a",
+     "typing": "standard",
+     "check": "standard"
+    },
+    {
+     "ref": "Ex8-6:37b",
+     "typing": "standard",
+     "check": "basic"
+    },
+    {
+     "ref": "Ex8-6:38b",
+     "typing": "standard",
+     "check": "basic"
+    },
+    {
+     "ref": "Ex8-6:44b",
+     "typing": "advanced",
+     "check": "standard"
+    }
+   ]
+  },
+  "oracle": {
+   "tally": {
+    "claims": 8,
+    "questions": 32,
+    "worked_examples_kept_as_teaching": 7,
+    "by_objective": [
+     {
+      "lo": "lo:g10m8s4-1-1",
+      "claims": 5,
+      "items": 24
+     },
+     {
+      "lo": "lo:g10m8s4-1-2",
+      "claims": 1,
+      "items": 6
+     },
+     {
+      "lo": "lo:g10m8s4-1-3",
+      "claims": 2,
+      "items": 9
+     }
+    ]
+   },
+   "verdict": "RED",
+   "subheadings": [
+    {
+     "anchor": "g10m8s4-1",
+     "status": "thin",
+     "missing_items": [
+      "b03252 (Investigation, p.308) — the actual discovery activity is not represented: plotting P(2;1) and Q(-2;2), folding the paper so P lies on Q, labelling the fold's intersection with PQ as S, counting blocks to find S's coordinates. The only produced claim tied to b03252 extracts a side detail (that coordinates use a semicolon separator, e.g. P(2;1)) rather than the hands-on midpoint-discovery task itself.",
+      "b03258 (box:note:visit, p.309) — the video resource pointer ('This video shows some examples of finding the mid-point of a line', video 2GDF) has no corresponding claim, question, or reference anywhere in the produced output."
+     ]
+    }
+   ]
+  },
+  "counts": {
+   "claims": 8,
+   "claims_dropped": 0,
+   "items": 39,
+   "worked_examples": 4,
+   "exercises": 35,
+   "by_answer_type": {
+    "expression": 31,
+    "choice": 1,
+    "not_markable": 7
+   },
+   "by_solution_provenance": {
+    "book_worked": 4,
+    "book_worked_epub": 35
+   },
+   "by_verification": {
+    "agreed": 27,
+    "disputed": 4,
+    "no_printed_answer": 8
+   },
+   "visuals": 10,
+   "viz_gaps": 0,
+   "figure_blocked": 0,
+   "unmapped_worked_examples": 0
+  },
+  "claims_dropped": [],
+  "figure_blocked": []
+ }
+}

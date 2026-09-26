@@ -109,12 +109,30 @@ def validate_widget(q: dict, known_misconceptions: set[str] | None = None) -> li
         )
 
     diags = choices.get("diagnostics")
-    if not isinstance(diags, list) or not diags:
+    held = choices.get("pending_review")
+    if held is not None and (not isinstance(held, list) or not all(
+            isinstance(d, dict) and d.get("predicate") and d.get("misconception_id") for d in held)):
+        problems.append(f"{qid}: pending_review is a list of {{predicate, misconception_id, why}}")
+        held = []
+    # Decision 47 (specs/003 FR-4306 amendment): a mapping the blind verifier did not confirm is HELD in
+    # `pending_review` until a human keeps or drops it, and a widget whose every mapping is held ships as a
+    # plain right/wrong widget. A widget with no mapping at all, active or held, is still refused.
+    if not isinstance(diags, list) or (not diags and not held):
         problems.append(
             f"{qid}: no diagnostics — a widget with no predicate mapping can mark an "
             f"answer wrong but can never say why, which is the reason for ADR-0009"
         )
         return problems
+    allowed_held = predicates_for(kind) - {OK}
+    active = {d.get("predicate") for d in diags if isinstance(d, dict)}
+    for d in held or []:
+        if d["predicate"] not in allowed_held:
+            problems.append(f"{qid}: held predicate {d['predicate']!r} is not one {kind} can emit")
+        if d["predicate"] in active:
+            problems.append(f"{qid}: predicate {d['predicate']!r} is both active and held")
+        if known_misconceptions is not None and d["misconception_id"] not in known_misconceptions:
+            problems.append(f"{qid}: held predicate {d['predicate']!r} names misconception "
+                            f"{d['misconception_id']!r}, which does not exist")
 
     allowed = predicates_for(kind)
     seen: set[str] = set()

@@ -1,0 +1,47 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m8s3-2-2:parallel-perpendicular-line",
+ "lo_id": "lo:g10m8s3-2-2",
+ "parent_question_id": "q:g10m8s3-2-2:ex8-4-13",
+ "tier": "standard",
+ "kind": "line_drawer",
+ "instances": [
+  {
+   "relation": "perpendicular",
+   "m0": 2,
+   "b0": -3,
+   "px": 4,
+   "py": 1,
+   "m": -0.5,
+   "b": 3
+  },
+  {
+   "relation": "parallel",
+   "m0": -3,
+   "b0": 2,
+   "px": 1,
+   "py": -4,
+   "m": -3,
+   "b": -1
+  }
+ ],
+ "spec": {
+  "mode": "equation",
+  "m": "{=m}",
+  "b": "{=b}"
+ },
+ "stem": "Line $L$ has equation $y = {=linear(m0, b0)}$. Draw the line through the point $({=px}, {=py})$ that is {=relation} to $L$.",
+ "solution": [
+  "Read the gradient of L from its equation (the coefficient of x).",
+  "Apply the rule for the relationship asked: parallel keeps the same gradient; perpendicular takes the negative reciprocal.",
+  "Substitute the given point's coordinates into y = mx + c with the new gradient and solve for c.",
+  "Draw the line with that gradient through the given point (or any other point lying on it)."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "off-target",
+   "misconception_id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests"
+  }
+ ],
+ "notes": "Tests the 'use the relationship to find the equation of a line' half of LO2. Verified numerically for both instances (reference gradients 2 and -3, neither ±1) that applying the wrong relationship produces a gradient matching neither slope-inverted nor slope-sign-flipped against the true target, so it lands cleanly on off-target — mapped to this LO's own swaps-parallel-perpendicular-tests, the likeliest error and the one this construction most specifically reveals. The remaining predicates surface LO1 prerequisite slips (own=false) that a construction can't tell apart from a genuine relationship confusion once only the resulting line is observed. vertical-line has no match here. This LO's other three misconceptions (judges-parallel-by-appearance, stops-at-partial-quadrilateral-property, and swaps-parallel-perpendicular-tests read as a classification act rather than a construction act) describe judging an already-given relationship or shape, not drawing a fresh line — see the filed gap for this LO.\n\nPIPELINE NORMALISATION (not an author edit): drop-foreign-diagnostic: dropped intercept-wrong → mc:g10m8s3-2-1:sign-slip-converting-general-form (on lo:g10m8s3-2-1), slope-inverted → mc:g10m8s3-2-1:gradient-formula-inversion (on lo:g10m8s3-2-1), slope-sign-flipped → mc:g10m8s3-2-1:negative-coordinate-subtraction-slip (on lo:g10m8s3-2-1), points-swapped → mc:g10m8s3-2-1:swaps-coordinates-when-substituting (on lo:g10m8s3-2-1) — neither lo:g10m8s3-2-2 nor a prerequisite of it (FR-1215)."
+}

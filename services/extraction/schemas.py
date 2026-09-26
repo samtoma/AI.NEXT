@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import re
 from typing import Literal, Optional
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator, model_serializer
 
 from arabic_text import (
     COMPARE_VERIFY_VERSION,
@@ -875,9 +875,45 @@ class AnswerSpec(BaseModel):
 
 
 class MarkerChoices(BaseModel):
-    """The `choices` value of a marker-graded question: {"marker": AnswerSpec}."""
+    """The `choices` value of a marker-graded question: {"marker": AnswerSpec}.
+
+    `answer_only: true` (G2, Samuel's answer 22 → decision 43; pipeline-handoff.md): the book has
+    no working for this item, so it is marked on its answer alone and the tutor gives NO step-by-step
+    explanation (there is nothing canonical to ground one in). Absent otherwise — never `false`."""
     model_config = ConfigDict(extra="forbid")
     marker: AnswerSpec
+    answer_only: Optional[Literal[True]] = None
+
+    @model_serializer(mode="wrap")
+    def _absent_is_absent(self, handler):
+        # the stored `choices` of every other marker question stays {"marker": {...}} exactly
+        out = handler(self)
+        if isinstance(out, dict) and out.get("answer_only") is None:
+            out.pop("answer_only", None)
+        return out
+
+
+class McqChoices(BaseModel):
+    """The `choices` value of a multiple-choice question some of whose OTHER options are also true,
+    less precisely (G2, Samuel's answer 20 → decision 41; pipeline-handoff.md, FR-4320's re-entry
+    rule): {"options": [Choice…], "less_specific": [<option key>…]}. The key is the most specific
+    answer; a pick in `less_specific` is returned for re-entry ("true, but be more precise") and is
+    never marked wrong. An ordinary multiple-choice question keeps its plain list."""
+    model_config = ConfigDict(extra="forbid")
+    options: list[Choice] = Field(min_length=2)
+    less_specific: list[str] = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def keys_exist(self) -> "McqChoices":
+        keys = [c.key for c in self.options]
+        if len(set(keys)) != len(keys):
+            raise ValueError(f"option keys repeat: {keys}")
+        unknown = [k for k in self.less_specific if k not in keys]
+        if unknown:
+            raise ValueError(f"less_specific names no option: {unknown} (options {keys})")
+        if len(set(self.less_specific)) != len(self.less_specific):
+            raise ValueError(f"less_specific repeats a key: {self.less_specific}")
+        return self
 
 
 # --- A lesson's book provenance (FR-4311, decision 18; data-model §2) --------
@@ -1015,7 +1051,7 @@ class Question(BaseModel):
     stem: str
     # A choice list (mcq), or the marker's answer spec {"marker": {...}} for a
     # typed maths answer (contracts/answer-marker.md, FR-4320; type 'short').
-    choices: Optional[list[Choice] | MarkerChoices] = None
+    choices: Optional[list[Choice] | MarkerChoices | McqChoices] = None
     # Math / social / mcq: the answer key as a string (unchanged).
     # Arabic (ADR-0006): a typed answer record. An إعراب answer is a slot record
     # so it can be slot-diffed with no LLM; a bare string is rejected below.
@@ -1096,11 +1132,17 @@ class Question(BaseModel):
 
     @model_validator(mode="after")
     def mcq_has_valid_answer(self) -> "Question":
+        if isinstance(self.choices, McqChoices) and self.type != "mcq":
+            raise ValueError(f"{self.id}: options with less_specific belong to an mcq, not '{self.type}'")
         if self.type == "mcq":
-            if not isinstance(self.choices, list) or len(self.choices) < 2:
+            options = self.choices.options if isinstance(self.choices, McqChoices) else self.choices
+            if not isinstance(options, list) or len(options) < 2:
                 raise ValueError(f"{self.id}: mcq needs >= 2 choices")
-            if self.answer not in {c.key for c in self.choices}:
+            if self.answer not in {c.key for c in options}:
                 raise ValueError(f"{self.id}: answer '{self.answer}' not among choice keys")
+            if isinstance(self.choices, McqChoices) and self.answer in self.choices.less_specific:
+                raise ValueError(f"{self.id}: the key '{self.answer}' is the most specific answer; "
+                                 "it cannot also be listed as less specific")
         return self
 
 

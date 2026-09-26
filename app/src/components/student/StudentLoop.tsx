@@ -9,6 +9,7 @@ import type { Cite } from "@/lib/chat-parse";
 import { TeX } from "@/components/TeX";
 import { ChatCore } from "@/components/chat/ChatCore";
 import { MathAnswerInput } from "@/components/chat/MathAnswerInput";
+import { ReentryNote } from "@/components/chat/ReentryNote";
 import { markerInputOf } from "@/lib/answer-marker";
 import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
 import { FeedbackPrompt } from "@/components/student/FeedbackPrompt";
@@ -338,6 +339,10 @@ export function StudentLoop({
                             <TeX text={c.text} />
                           </button>
                         ))}
+                        {/* a true but less precise option: asked again, nothing recorded */}
+                        <div className="sm:col-span-2">
+                          <ReentryNote message={reentry} />
+                        </div>
                       </div>
                     ) : markerInput ? (
                       <MathAnswerInput
@@ -360,6 +365,7 @@ export function StudentLoop({
                         className={cx(STROKE, "min-h-[var(--noor-touch-min)] w-full max-w-xs rounded-[var(--play-radius-sm)] bg-card px-4 py-3 font-mono text-lg text-ink placeholder:text-ink-faint")}
                       />
                     )}
+                    {!markerInput && item.questionType !== "mcq" && <ReentryNote message={reentry} />}
 
                     <div className="mt-6 flex items-center gap-4">
                       <button

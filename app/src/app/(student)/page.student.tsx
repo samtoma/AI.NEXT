@@ -66,7 +66,7 @@ export default async function Home() {
             <strong className="font-bold text-ink">
               agent-native data spine
             </strong>{" "}
-            — a knowledge graph extracted from the Egyptian Ministry textbook,
+            — a knowledge graph extracted from {stats.sourceWording.source},
             with full provenance, temporal mastery tracking, and explanations
             grounded in worked solutions.
           </p>
@@ -79,6 +79,11 @@ export default async function Home() {
           </div>
         </div>
 
+        {/* The book and syllabus above and in the ledger come from the
+            courses she may see (lib/courses.ts `sourceWordingFor`): a Grade
+            10 student is never told her material is the Egyptian Ministry
+            textbook's (FR-4205), and a National student reads what she always
+            did (FR-4206). */}
         {/* source-document plate — the book of her first visible course
             (lib/queries.ts `sourceBookFor`), and none at all when she may see
             no course yet: a plate naming a book she cannot open is the leak
@@ -135,7 +140,7 @@ export default async function Home() {
           { n: stats.los, label: "learning objectives", sub: "Unit 1 · prerequisite DAG" },
           { n: stats.questions, label: "live questions", sub: "each with a worked solution" },
           { n: stats.attempts, label: "attempts logged", sub: `by ${stats.studentName}` },
-          { n: stats.prereqs, label: "prerequisite edges", sub: "syllabus 2025–2026" },
+          { n: stats.prereqs, label: "prerequisite edges", sub: stats.sourceWording.syllabus },
           { n: stats.aiTurns, label: "AI turns logged", sub: "grounded · cost-metered" },
         ].map((s) => (
           <div key={s.label} className="px-6 py-5">

@@ -388,3 +388,128 @@ test("?subject=math means her own curriculum's maths", { skip }, async () => {
   const slugs = (await getLessonCatalog(A, asClient())).map((l) => slugOfLo(`lo:${l.slug}-1`));
   assert.ok(slugs.every(isG10Slug));
 });
+
+/* ------------------------------------------------------------------ */
+/* The 2026-09-26 isolation audit: what reaches the tutor, and the     */
+/* views that must not merge two maths books                           */
+/* ------------------------------------------------------------------ */
+
+const { getLessonBridges, getSubjectSummaries } = await import("./subject-queries.ts");
+const { buildLessonContext } = await import("./lesson.ts");
+const { retrieve } = await import("./retrieval.ts");
+
+const SOCIAL_LO = NATIONAL_LOS.find((id) => id.startsWith("lo:soc")) as string;
+const G10_LO = "lo:g10m1s1-1-1";
+const G10_LABEL = "Real numbers";
+let isolationReady = false;
+
+/**
+ * What these tests add to the shared database, once, AFTER every test above
+ * has run (node:test runs a file's tests in order): the `rationale` column
+ * and the `node_subject` view as migrations 006/007 define them, each course's
+ * subject, two curated bridges — Prep-3 maths ↔ Social Studies, and Prep-3
+ * maths ↔ the Grade 10 book — and one prerequisite that crosses from Prep 3
+ * into the Grade 10 book (the loader refuses such an edge; it is written
+ * directly here to prove the readers do not depend on that).
+ */
+async function isolationFixtures() {
+  if (isolationReady) return;
+  isolationReady = true;
+  assert.ok(SOCIAL_LO, "a Social Studies objective in the seeds");
+  await db!.query(`ALTER TABLE graph_edges ADD COLUMN IF NOT EXISTS rationale text`);
+  await db!.query(`
+    CREATE OR REPLACE VIEW node_subject AS
+    SELECT lo.id AS node_id, c.id AS course_id, c.subject AS subject
+      FROM graph_nodes lo
+      JOIN graph_edges te ON te.dst_id = lo.id AND te.edge_type = 'teaches'
+      JOIN graph_edges pe ON pe.src_id = te.src_id AND pe.edge_type = 'part_of'
+      JOIN graph_nodes c  ON c.id = pe.dst_id AND c.kind = 'course'
+     WHERE lo.kind = 'learning_objective'`);
+  for (const [course, subject] of [[MATH, "math"], [SOCIAL, "social"], [ARABIC, "arabic"], [G10, "math"]]) {
+    await db!.query(`UPDATE graph_nodes SET subject = $2 WHERE id = $1`, [course, subject]);
+  }
+  await db!.query(
+    `INSERT INTO graph_edges (src_id, dst_id, edge_type, rationale) VALUES
+       ('lo:u1-1-1', $1, 'relates_to', 'ISO-BRIDGE-SOCIAL'),
+       ($2, 'lo:u1-1-1', 'relates_to', 'ISO-BRIDGE-G10'),
+       ('lo:u1-1-1', $2, 'prerequisite_of', NULL)`,
+    [SOCIAL_LO, G10_LO]
+  );
+}
+
+test("isolation: a cross-subject bridge reaches her only when both its courses are hers (FR-4006)", { skip }, async () => {
+  await isolationFixtures();
+  const bridges = async (id: number, los: string[]) =>
+    (await getLessonBridges(los, await resolveStudentScope(id, asClient()), asClient()))
+      .map((b) => b.rationale)
+      .sort();
+  assert.deepEqual(await bridges(N, ["lo:u1-1-1"]), ["ISO-BRIDGE-SOCIAL"], "not the Grade 10 book's");
+  assert.deepEqual(await bridges(H, ["lo:u1-1-1"]), [], "Social Studies hidden: no bridge carries it in");
+  assert.deepEqual(await bridges(T, ["lo:u1-1-1"]), ["ISO-BRIDGE-G10", "ISO-BRIDGE-SOCIAL"], "a tester sees both");
+  assert.deepEqual(await bridges(A, [G10_LO]), [], "an American student gets nothing National");
+});
+
+test("isolation: the lesson prompt carries neither a hidden course's bridge nor a handoff to it (FR-4006)", { skip }, async () => {
+  await isolationFixtures();
+  const ctx = async (id: number, slug: string) => {
+    const c = await buildLessonContext("learn", `iso-${id}`, slug, id, undefined, asClient());
+    assert.ok(c, `${slug} opens for student ${id}`);
+    return c;
+  };
+  const n = await ctx(N, "u1-1");
+  assert.match(n.dataBlock, /CROSS-SUBJECT CONNECTIONS/);
+  assert.ok(n.dataBlock.includes("ISO-BRIDGE-SOCIAL"));
+  assert.ok(!n.dataBlock.includes("ISO-BRIDGE-G10"), "the other curriculum's book never reaches her tutor");
+  assert.ok(n.systemPrompt.includes(`where <subject> is exactly "math" or "social"`), "the rule she always had");
+
+  const h = await ctx(H, "u1-1");
+  assert.doesNotMatch(h.dataBlock, /CROSS-SUBJECT CONNECTIONS/);
+  assert.ok(!h.systemPrompt.includes("{{switch_subject:<subject>}}"), "no handoff offered to a hidden subject");
+  assert.ok(h.systemPrompt.includes("Never emit {{switch_subject:…}}"));
+
+  const a = await ctx(A, "g10m1s1-1");
+  assert.ok(!a.dataBlock.includes("ISO-BRIDGE-G10"));
+  assert.ok(!a.systemPrompt.includes("{{switch_subject:<subject>}}"), "American: no Social Studies to hand off to");
+  // the prerequisite into her book from Prep 3 is not walked: no Prep-3
+  // objective in her tutor's nearest skills
+  assert.ok(!a.dataBlock.includes("lo:u1-1-1"), "a Prep-3 objective reached the Grade 10 prompt");
+});
+
+test("isolation: retrieval's one prerequisite hop stays inside the courses she may see (FR-4006)", { skip }, async () => {
+  await isolationFixtures();
+  const near = async (id: number) =>
+    (await retrieve(id, [G10_LO], { client: asClient() })).nearestSkills.map((s) => s.loId);
+  assert.ok(!(await near(A)).includes("lo:u1-1-1"), "American: the Prep-3 prerequisite is not hers");
+  assert.ok((await near(T)).includes("lo:u1-1-1"), "a tester who sees both books walks the edge");
+});
+
+test("isolation: a tester's two maths books are two home cards and two skill maps, each citing its own book (FR-4009, FR-4205)", { skip }, async () => {
+  await isolationFixtures();
+  const home = await getSubjectSummaries(T, asClient());
+  assert.deepEqual(home.map((s) => s.courseId), [MATH, SOCIAL, ARABIC, G10]);
+  assert.deepEqual(
+    [home[0].courseLabel, home[3].courseLabel],
+    ["Mathematics — Prep 3", "Mathematics — Grade 10"]
+  );
+  assert.deepEqual((await getSubjectSummaries(N, asClient())).map((s) => s.courseId), [MATH, SOCIAL, ARABIC]);
+
+  const map = await getSpineData(T);
+  assert.deepEqual(map.courses.map((c) => c.id), [MATH, SOCIAL, ARABIC, G10]);
+  assert.equal(map.courses.find((c) => c.id === G10)?.doc.title, BOOKS[G10].title);
+  assert.equal(map.courses.find((c) => c.id === MATH)?.doc.title, BOOKS[MATH].title);
+  assert.ok(map.los.every((l) => l.courseId != null), "every objective is filed under its course");
+  assert.equal(map.los.find((l) => l.id === G10_LO)?.courseId, G10);
+  assert.equal(map.los.find((l) => l.id === "lo:u1-1-1")?.courseId, MATH);
+  // a National student's map: one course per subject, as the subject picker was
+  assert.deepEqual((await getSpineData(N)).courses.map((c) => c.id), [MATH, SOCIAL, ARABIC]);
+});
+
+test("isolation: the home page names her own book and syllabus, never another curriculum's (FR-4205, FR-4206)", { skip }, async () => {
+  const n = await getHomeStats(N);
+  assert.deepEqual(n.sourceWording, { source: "the Egyptian Ministry textbook", syllabus: "syllabus 2025–2026" });
+  const a = await getHomeStats(A);
+  assert.ok(!/Ministry|2025–2026/.test(`${a.sourceWording.source} ${a.sourceWording.syllabus}`));
+  assert.match(a.sourceWording.source, /Everything Maths/);
+  const t = await getHomeStats(T);
+  assert.ok(!/Ministry|Everything Maths/.test(`${t.sourceWording.source} ${t.sourceWording.syllabus}`), "two books: named neither");
+});

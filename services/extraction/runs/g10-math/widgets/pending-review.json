@@ -1,0 +1,574 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:g10m8s1-1-2:w004#swapped-coordinates",
+      "question_id": "q:g10m8s1-1-2:w004",
+      "template_id": "wt:g10m8s1-1-2:plot-the-point",
+      "lo_id": "lo:g10m8s1-1-2",
+      "kind": "pair_plotter",
+      "stem": "Plot the point with coordinates $(3, 3)$.",
+      "reading": {
+        "target": [
+          3,
+          3
+        ]
+      },
+      "construction": "Place the single point at lattice coordinates (3, 3): 3 units right of the origin, 3 units up.",
+      "predicate": "swapped-coordinates",
+      "predicate_meaning": "Plotted (y, x) — the pair read in the wrong order",
+      "misconception_id": "mc:g10m8s1-1-2:swaps-x-and-y-values",
+      "misconception_label": "Swaps the x- and y-values",
+      "misconception_description": "The student reads the two numbers in the coordinate pair in reverse order, treating the first number as the y value and the second as the x value.",
+      "why": "The target's x and y values are equal (3, 3), so reversing the order gives (3, 3) again — identical to the correct answer. A construction that fires this predicate cannot be distinguished from the correct construction: a student who plots the point correctly is indistinguishable from one who 'swapped' it, because the swap is a no-op here. This predicate would misfire on a student who plotted correctly, serving her a refutation of an error she did not make, so it does not match the claimed misconception for this widget."
+    },
+    {
+      "key": "q:g10m8s2-1-2:w001#extra-values",
+      "question_id": "q:g10m8s2-1-2:w001",
+      "template_id": "wt:g10m8s2-1-2:missing-coord-number-line",
+      "lo_id": "lo:g10m8s2-1-2",
+      "kind": "number_line_marker",
+      "stem": "One point is $(6, -2)$. A second point's x-coordinate is unknown; its other coordinate is $2$. The distance between the two points is $5$ units. Mark every value the missing coordinate could be.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          3,
+          9
+        ],
+        "from": null,
+        "to": null,
+        "openFrom": null,
+        "openTo": null
+      },
+      "construction": "Distance²=(x-6)²+(2-(-2))²=25 → (x-6)²=9 → x=3 or x=9. Both values are unrestricted valid answers. On a number line ranging 0 to 12 (width 12, within ±20 and ≤24 wide), mark the two points 3 and 9.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "misconception_id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
+      "misconception_label": "Keeps both roots when the question narrows it down",
+      "misconception_description": "Solves the quadratic and finds both values, then reports both even when the question's figure or a stated condition on the coordinate has already ruled one of them out.",
+      "why": "There is no restriction in this question to ignore — {3,9} is the complete, unrestricted answer set. 'keeps-both-roots-ignores-restriction' describes a student who keeps a root a stated condition has ruled out; since no condition rules out either root here, any extra marked value (e.g. a stray 6 or 15) would come from an arithmetic/sign slip, not from ignoring a restriction that doesn't exist."
+    },
+    {
+      "key": "q:g10m8s2-1-2:w002#extra-values",
+      "question_id": "q:g10m8s2-1-2:w002",
+      "template_id": "wt:g10m8s2-1-2:missing-coord-number-line",
+      "lo_id": "lo:g10m8s2-1-2",
+      "kind": "number_line_marker",
+      "stem": "One point is $(1, -1)$. A second point's y-coordinate is unknown; its other coordinate is $4$. The distance between the two points is $5$ units. Mark every value the missing coordinate could be.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -5,
+          3
+        ],
+        "from": null,
+        "to": null,
+        "openFrom": null,
+        "openTo": null
+      },
+      "construction": "Distance²=(4-1)²+(y+1)²=25 → 9+(y+1)²=25 → (y+1)²=16 → y=3 or y=-5. Both are unrestricted valid answers. On a number line ranging -10 to 10 (width 20, within ±20), mark the two points -5 and 3.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "misconception_id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
+      "misconception_label": "Keeps both roots when the question narrows it down",
+      "misconception_description": "Solves the quadratic and finds both values, then reports both even when the question's figure or a stated condition on the coordinate has already ruled one of them out.",
+      "why": "The question states no condition that rules out either root, so there is nothing for 'keeps-both-roots-ignores-restriction' to ignore. A marked value outside {-5,3} would be a computational error, not a failure to apply a restriction that isn't there."
+    },
+    {
+      "key": "q:g10m8s2-1-2:w003#extra-values",
+      "question_id": "q:g10m8s2-1-2:w003",
+      "template_id": "wt:g10m8s2-1-2:missing-coord-number-line",
+      "lo_id": "lo:g10m8s2-1-2",
+      "kind": "number_line_marker",
+      "stem": "One point is $(0, -3)$. A second point's y-coordinate is unknown; its other coordinate is $8$. The distance between the two points is $10$ units. Mark every value the missing coordinate could be.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -9,
+          3
+        ],
+        "from": null,
+        "to": null,
+        "openFrom": null,
+        "openTo": null
+      },
+      "construction": "Distance²=(8-0)²+(y+3)²=100 → 64+(y+3)²=100 → (y+3)²=36 → y=3 or y=-9. Both are unrestricted valid answers. On a number line ranging -12 to 12 (width 24, within ±20), mark the two points -9 and 3.",
+      "predicate": "extra-values",
+      "predicate_meaning": "Marked values that the answer set does not contain",
+      "misconception_id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
+      "misconception_label": "Keeps both roots when the question narrows it down",
+      "misconception_description": "Solves the quadratic and finds both values, then reports both even when the question's figure or a stated condition on the coordinate has already ruled one of them out.",
+      "why": "No stated condition rules out either root here, so 'keeps-both-roots-ignores-restriction' has nothing to ignore — both roots are supposed to be kept. A stray extra value would stem from an unrelated arithmetic slip."
+    },
+    {
+      "key": "q:g10m8s2-1-2:w004#missed-values",
+      "question_id": "q:g10m8s2-1-2:w004",
+      "template_id": "wt:g10m8s2-1-2:missing-coord-number-line",
+      "lo_id": "lo:g10m8s2-1-2",
+      "kind": "number_line_marker",
+      "stem": "One point is $(0, 0)$. A second point's y-coordinate is unknown; its other coordinate is $3$. The distance between the two points is $5$ units, taking only the value with $y \\geq 0$. Mark every value the missing coordinate could be.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          4
+        ],
+        "from": null,
+        "to": null,
+        "openFrom": null,
+        "openTo": null
+      },
+      "construction": "Distance²=(3-0)²+y²=25 → y²=16 → y=±4, then the stated restriction y≥0 rules out -4, leaving the single correct value y=4. On a number line ranging 0 to 10 (within ±20), mark the single point 4.",
+      "predicate": "missed-values",
+      "predicate_meaning": "Part of the answer set was not marked",
+      "misconception_id": "mc:g10m8s2-1-2:stops-at-first-root",
+      "misconception_label": "Only writes down one root",
+      "misconception_description": "Clears the square root and reaches the quadratic correctly, then writes only one of its two solutions as the final answer, not realising a squared difference gives two values.",
+      "why": "Unlike W1-W3, this question's restriction (y≥0) makes -4 an invalid answer, not a second correct value. 'stops-at-first-root' is diagnosed by telling the student they dropped a valid solution — but here the 'other' root (-4) is not valid, it was correctly excluded. Firing this predicate (e.g. because a student wrote only -4) would misinform the student that -4 was a value they should have kept, which is false; any construction missing the value 4 reflects a wrong-root/sign error or restriction misuse, not 'failed to realize there are two solutions'. This is the question the restriction was added to distinguish, and the intended diagnosis for a both-roots answer is the other predicate below."
+    },
+    {
+      "key": "q:g10m8s3-1-2:w002#slope-inverted",
+      "question_id": "q:g10m8s3-1-2:w002",
+      "template_id": "wt:g10m8s3-1-2:gradient-to-missing-coord",
+      "lo_id": "lo:g10m8s3-1-2",
+      "kind": "line_drawer",
+      "stem": "Line $AB$ has gradient $m = 2$. $A$ is at $(-2, -2)$ and $B$ is at $(1, y)$ for some value $y$. Place $A$ and $B$.",
+      "reading": {
+        "mode": "points",
+        "m": 2,
+        "b": null,
+        "through": [
+          [
+            -2,
+            -2
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      },
+      "construction": "A=(-2,-2) fixed; correct B solves 2=(y+2)/3 → y=4. Place A=(-2,-2), B=(1,4): both lattice points in [-5,5], slope=(4-(-2))/(1-(-2))=2. ✓",
+      "predicate": "slope-inverted",
+      "predicate_meaning": "Slope taken as run over rise instead of rise over run",
+      "misconception_id": "mc:g10m8s3-1-2:inverted-gradient-ratio",
+      "misconception_label": "Writes the gradient as run over rise",
+      "misconception_description": "The student sets up $\\dfrac{x_2-x_1}{y_2-y_1}=m$ instead of $\\dfrac{y_2-y_1}{x_2-x_1}=m$, putting the horizontal difference on top and the vertical difference on the bottom.",
+      "why": "Following the question's own point (x=1), the inverted-ratio setup 3/(y+2)=2 gives y=-0.5 — not a lattice point, so this exact wrong value cannot be placed on this instrument at all. A student forced to snap to an integer y near x=1 (e.g. -1 or 0) produces a slope of 1/3 or 2/3 from A, neither of which is 1/m (0.5), m (2), nor -m (-2) — an unclassifiable answer, not the reciprocal-ratio signature. The predicate would essentially never fire cleanly for a student making this exact error on this widget, so diagnosing it here is unreliable."
+    },
+    {
+      "key": "q:g10m8s3-1-2:w002#slope-sign-flipped",
+      "question_id": "q:g10m8s3-1-2:w002",
+      "template_id": "wt:g10m8s3-1-2:gradient-to-missing-coord",
+      "lo_id": "lo:g10m8s3-1-2",
+      "kind": "line_drawer",
+      "stem": "Line $AB$ has gradient $m = 2$. $A$ is at $(-2, -2)$ and $B$ is at $(1, y)$ for some value $y$. Place $A$ and $B$.",
+      "reading": {
+        "mode": "points",
+        "m": 2,
+        "b": null,
+        "through": [
+          [
+            -2,
+            -2
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      },
+      "construction": "A=(-2,-2) fixed; correct B solves 2=(y+2)/3 → y=4. Place A=(-2,-2), B=(1,4): both lattice points in [-5,5], slope=(4-(-2))/(1-(-2))=2. ✓",
+      "predicate": "slope-sign-flipped",
+      "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+      "misconception_id": "mc:g10m8s3-1-2:mismatched-point-order",
+      "misconception_label": "Takes the rise and the run from different point orders",
+      "misconception_description": "Writing $m=\\dfrac{y_2-y_1}{x_2-x_1}$, the student subtracts the two points one way round for the top and the opposite way round for the bottom, so the top and bottom no longer come from the same point pair.",
+      "why": "The mismatched-order setup (y+2)/(-3)=2 gives y=-8, which is outside the ±5 lattice entirely — this construction cannot be placed on the instrument at any x matching the question. There is no way for a student to express this exact misconception here, so the predicate cannot correspond to an actual student action for this question."
+    },
+    {
+      "key": "q:g10m8s3-1-2:w003#slope-inverted",
+      "question_id": "q:g10m8s3-1-2:w003",
+      "template_id": "wt:g10m8s3-1-2:gradient-to-missing-coord",
+      "lo_id": "lo:g10m8s3-1-2",
+      "kind": "line_drawer",
+      "stem": "Line $AB$ has gradient $m = -1$. $A$ is at $(-4, 3)$ and $B$ is at $(2, y)$ for some value $y$. Place $A$ and $B$.",
+      "reading": {
+        "mode": "points",
+        "m": -1,
+        "b": null,
+        "through": [
+          [
+            -4,
+            3
+          ],
+          [
+            2,
+            -3
+          ]
+        ]
+      },
+      "construction": "A=(-4,3) fixed; correct B solves -1=(y-3)/6 → y=-3. Place A=(-4,3), B=(2,-3): both lattice points in [-5,5], slope=(-3-3)/(2-(-4))=-1. ✓",
+      "predicate": "slope-inverted",
+      "predicate_meaning": "Slope taken as run over rise instead of rise over run",
+      "misconception_id": "mc:g10m8s3-1-2:inverted-gradient-ratio",
+      "misconception_label": "Writes the gradient as run over rise",
+      "misconception_description": "The student sets up $\\dfrac{x_2-x_1}{y_2-y_1}=m$ instead of $\\dfrac{y_2-y_1}{x_2-x_1}=m$, putting the horizontal difference on top and the vertical difference on the bottom.",
+      "why": "Because m=-1 is its own reciprocal, the inverted-ratio setup 6/(y-3)=-1 gives the SAME y=-3 as the correct method — the 'wrong' construction is literally the correct answer, B=(2,-3). This predicate would fire on a student who got the question exactly right, so it cannot discriminate this misconception here; flagging it would refute a mistake the student never made."
+    },
+    {
+      "key": "q:g10m8s3-1-2:w003#slope-sign-flipped",
+      "question_id": "q:g10m8s3-1-2:w003",
+      "template_id": "wt:g10m8s3-1-2:gradient-to-missing-coord",
+      "lo_id": "lo:g10m8s3-1-2",
+      "kind": "line_drawer",
+      "stem": "Line $AB$ has gradient $m = -1$. $A$ is at $(-4, 3)$ and $B$ is at $(2, y)$ for some value $y$. Place $A$ and $B$.",
+      "reading": {
+        "mode": "points",
+        "m": -1,
+        "b": null,
+        "through": [
+          [
+            -4,
+            3
+          ],
+          [
+            2,
+            -3
+          ]
+        ]
+      },
+      "construction": "A=(-4,3) fixed; correct B solves -1=(y-3)/6 → y=-3. Place A=(-4,3), B=(2,-3): both lattice points in [-5,5], slope=(-3-3)/(2-(-4))=-1. ✓",
+      "predicate": "slope-sign-flipped",
+      "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+      "misconception_id": "mc:g10m8s3-1-2:mismatched-point-order",
+      "misconception_label": "Takes the rise and the run from different point orders",
+      "misconception_description": "Writing $m=\\dfrac{y_2-y_1}{x_2-x_1}$, the student subtracts the two points one way round for the top and the opposite way round for the bottom, so the top and bottom no longer come from the same point pair.",
+      "why": "The mismatched-order setup (y-3)/(-6)=-1 gives y=9, outside the ±5 lattice — unplaceable on this instrument. A student cannot express this exact error here, so the predicate would never fire for this misconception on this question."
+    },
+    {
+      "key": "q:g10m8s3-1-2:w004#slope-inverted",
+      "question_id": "q:g10m8s3-1-2:w004",
+      "template_id": "wt:g10m8s3-1-2:gradient-to-missing-coord",
+      "lo_id": "lo:g10m8s3-1-2",
+      "kind": "line_drawer",
+      "stem": "Line $AB$ has gradient $m = 0.5$. $A$ is at $(-3, -2)$ and $B$ is at $(1, y)$ for some value $y$. Place $A$ and $B$.",
+      "reading": {
+        "mode": "points",
+        "m": 0.5,
+        "b": null,
+        "through": [
+          [
+            -3,
+            -2
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      "construction": "A=(-3,-2) fixed; correct B solves 0.5=(y+2)/4 → y=0. Place A=(-3,-2), B=(1,0): both lattice points in [-5,5], slope=(0-(-2))/(1-(-3))=0.5. ✓",
+      "predicate": "slope-inverted",
+      "predicate_meaning": "Slope taken as run over rise instead of rise over run",
+      "misconception_id": "mc:g10m8s3-1-2:inverted-gradient-ratio",
+      "misconception_label": "Writes the gradient as run over rise",
+      "misconception_description": "The student sets up $\\dfrac{x_2-x_1}{y_2-y_1}=m$ instead of $\\dfrac{y_2-y_1}{x_2-x_1}=m$, putting the horizontal difference on top and the vertical difference on the bottom.",
+      "why": "The inverted-ratio setup 4/(y+2)=0.5 gives y=6, outside the ±5 lattice — this exact wrong value cannot be placed on the instrument at the question's own x=1. There is no clean lattice construction expressing this misconception here, so the predicate would not reliably fire for it."
+    },
+    {
+      "key": "q:g10m8s3-2-1:w001#slope-sign-flipped",
+      "question_id": "q:g10m8s3-2-1:w001",
+      "template_id": "wt:g10m8s3-2-1:line-through-two-points",
+      "lo_id": "lo:g10m8s3-2-1",
+      "kind": "line_drawer",
+      "stem": "Draw the straight line through $A(-3, 1)$ and $B(3, 3)$.",
+      "reading": {
+        "mode": "points",
+        "through": [
+          [
+            -3,
+            1
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "m": null,
+        "b": null,
+        "note": "Question names two points to draw through (A, B); equivalent equation would be m=1/3, b=2, but the wording puts this in 'points' mode."
+      },
+      "construction": "Place the two handles exactly at A(-3,1) and B(3,3) - both are lattice points within the +/-5 range, so the line through them is directly drawable.",
+      "predicate": "slope-sign-flipped",
+      "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+      "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip",
+      "misconception_label": "Loses a sign subtracting negative coordinates",
+      "misconception_description": "When working out $y_2-y_1$ or $x_2-x_1$ and one of the values is already negative, the student simplifies $a-(-b)$ as $a-b$ instead of $a+b$.",
+      "why": "The named mechanism is x2-x1 = 3-(-3) miscomputed as a-(-b)->a-b, i.e. 3-3=0, since only the x-coordinate involves subtracting a negative here (y1=1 is positive, so dy=2 is unaffected). That yields dx=0 - a vertical/degenerate line - not a line with the same slope magnitude (1/3) and flipped sign (-1/3). A clean mirror-image line would only come from a different error (e.g. reversing subtraction order in just one difference), not from this misconception's actual arithmetic on these numbers."
+    },
+    {
+      "key": "q:g10m8s3-2-1:w002#slope-sign-flipped",
+      "question_id": "q:g10m8s3-2-1:w002",
+      "template_id": "wt:g10m8s3-2-1:line-through-two-points",
+      "lo_id": "lo:g10m8s3-2-1",
+      "kind": "line_drawer",
+      "stem": "Draw the straight line through $A(-4, -2)$ and $B(2, -5)$.",
+      "reading": {
+        "mode": "points",
+        "through": [
+          [
+            -4,
+            -2
+          ],
+          [
+            2,
+            -5
+          ]
+        ],
+        "m": null,
+        "b": null,
+        "note": "Question names two points to draw through; equivalent equation would be m=-1/2, b=-4."
+      },
+      "construction": "Place the two handles exactly at A(-4,-2) and B(2,-5) - both lattice points within +/-5.",
+      "predicate": "slope-sign-flipped",
+      "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+      "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip",
+      "misconception_label": "Loses a sign subtracting negative coordinates",
+      "misconception_description": "When working out $y_2-y_1$ or $x_2-x_1$ and one of the values is already negative, the student simplifies $a-(-b)$ as $a-b$ instead of $a+b$.",
+      "why": "Here both differences involve subtracting a negative (y1=-2, x1=-4), so the described slip (a-(-b)->a-b) gives dy_wrong = -5-2 = -7 and/or dx_wrong = 2-4 = -2. None of the resulting slopes (-7/6, -3/-2=1.5, or -7/-2=3.5) equal the clean sign-flip of the correct slope (+1/2). This misconception's actual arithmetic does not produce the mirrored line the predicate is meant to catch for these coordinates."
+    },
+    {
+      "key": "q:g10m8s3-2-1:w003#slope-inverted",
+      "question_id": "q:g10m8s3-2-1:w003",
+      "template_id": "wt:g10m8s3-2-1:line-through-two-points",
+      "lo_id": "lo:g10m8s3-2-1",
+      "kind": "line_drawer",
+      "stem": "Draw the straight line through $A(-2, -3)$ and $B(4, 3)$.",
+      "reading": {
+        "mode": "points",
+        "through": [
+          [
+            -2,
+            -3
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "m": null,
+        "b": null,
+        "note": "Question names two points to draw through; equivalent equation would be m=1, b=-1."
+      },
+      "construction": "Place the two handles exactly at A(-2,-3) and B(4,3) - both lattice points within +/-5.",
+      "predicate": "slope-inverted",
+      "predicate_meaning": "Slope taken as run over rise instead of rise over run",
+      "misconception_id": "mc:g10m8s3-2-1:gradient-formula-inversion",
+      "misconception_label": "Inverts the gradient formula (swaps rise and run)",
+      "misconception_description": "The student writes the gradient as $\\dfrac{x_2-x_1}{y_2-y_1}$ — the reciprocal of $\\dfrac{y_2-y_1}{x_2-x_1}$ — putting the $x$-difference on top instead of the $y$-difference.",
+      "why": "Correct gradient is dy/dx = 6/6 = 1. Because dx and dy are numerically identical (both 6) for this pair of points, the inverted formula dx/dy also equals 6/6 = 1 - the exact same value as the correct slope. A student making this error would draw a line indistinguishable from the correct answer, so this predicate can never fire as a genuine, distinguishing signal on this particular problem."
+    },
+    {
+      "key": "q:g10m8s3-2-1:w003#slope-sign-flipped",
+      "question_id": "q:g10m8s3-2-1:w003",
+      "template_id": "wt:g10m8s3-2-1:line-through-two-points",
+      "lo_id": "lo:g10m8s3-2-1",
+      "kind": "line_drawer",
+      "stem": "Draw the straight line through $A(-2, -3)$ and $B(4, 3)$.",
+      "reading": {
+        "mode": "points",
+        "through": [
+          [
+            -2,
+            -3
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "m": null,
+        "b": null,
+        "note": "Question names two points to draw through; equivalent equation would be m=1, b=-1."
+      },
+      "construction": "Place the two handles exactly at A(-2,-3) and B(4,3) - both lattice points within +/-5.",
+      "predicate": "slope-sign-flipped",
+      "predicate_meaning": "Right gradient, wrong sign — the line leans the other way",
+      "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip",
+      "misconception_label": "Loses a sign subtracting negative coordinates",
+      "misconception_description": "When working out $y_2-y_1$ or $x_2-x_1$ and one of the values is already negative, the student simplifies $a-(-b)$ as $a-b$ instead of $a+b$.",
+      "why": "Both differences involve subtracting a negative (y1=-3, x1=-2). The described slip gives dy_wrong = 3-3 = 0 and/or dx_wrong = 4-2 = 2, producing wrong slopes of 0/6=0, 6/2=3, or 0/2=0 - none equal the clean sign-flip of the correct slope (-1). As with W1 and W2, this misconception's arithmetic does not actually produce a mirrored-slope line for these coordinates, so the predicate would be firing (if at all) for reasons unrelated to this specific misconception."
+    },
+    {
+      "key": "q:g10m8s3-2-2:w001#off-target",
+      "question_id": "q:g10m8s3-2-2:w001",
+      "template_id": "wt:g10m8s3-2-2:parallel-perpendicular-line",
+      "lo_id": "lo:g10m8s3-2-2",
+      "kind": "line_drawer",
+      "stem": "Line $L$ has equation $y = 2x - 3$. Draw the line through the point $(4, 1)$ that is perpendicular to $L$.",
+      "reading": {
+        "mode": "equation",
+        "m": "-1/2",
+        "b": 3,
+        "through": null,
+        "note": "L: y=2x-3 has slope 2; perpendicular slope is the negative reciprocal, -1/2; through (4,1): y-1=-1/2(x-4) => y=-1/2x+3."
+      },
+      "construction": "Equation mode: m = -1/2 (reciprocal of the whole number -2, |m|=0.5<=5), b = 3 (whole number within +/-5). Equivalently in points mode: handles at (4,1) and (0,3), both lattice points within -5..5, giving the same line y=-1/2x+3.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither the slope nor the intercept matches",
+      "misconception_id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
+      "misconception_label": "Mixes up the parallel test and the perpendicular test",
+      "misconception_description": "The student compares $m_{AB}$ and $m_{CD}$ but applies the wrong rule to the result — treating two equal gradients as proof of perpendicular lines, or treating gradients that are merely opposite in sign (rather than an exact product of $-1$) as enough to call the lines perpendicular — so parallel and perpendicular get swapped or blurred.",
+      "why": "A student with this exact misconception would plausibly draw one of two specific lines: (a) m=2 (reusing L's own slope, believing equal gradients signal perpendicularity) giving y=2x-7 through (4,1), via handles e.g. (4,1) and (5,3); or (b) m=-2 (flipping the sign but not reciprocating, believing opposite sign alone proves perpendicularity) giving y=-2x+9, via handles e.g. (4,1) and (2,5). Both have neither slope (2 or -2) matching the correct -1/2 nor intercept (-7 or 9) matching 3, so both would indeed trip the 'off-target' predicate. But 'off-target' is defined only as the negative catch-all -- 'neither the slope nor the intercept matches' -- with no requirement that the drawn slope be +2, -2, or any value connected to a parallel/perpendicular test. It fires identically for a mis-substituted point, a transposed m/b, an arithmetic slip in the point-slope step, or a plain guess -- none of which reflect this misconception. Because the predicate cannot distinguish the test-swap construction from these unrelated wrong answers, it mostly fires for other reasons; a wrong diagnosis here would refute a mistake the student may not have made."
+    },
+    {
+      "key": "q:g10m8s3-2-2:w002#off-target",
+      "question_id": "q:g10m8s3-2-2:w002",
+      "template_id": "wt:g10m8s3-2-2:parallel-perpendicular-line",
+      "lo_id": "lo:g10m8s3-2-2",
+      "kind": "line_drawer",
+      "stem": "Line $L$ has equation $y = -3x + 2$. Draw the line through the point $(1, -4)$ that is parallel to $L$.",
+      "reading": {
+        "mode": "equation",
+        "m": -3,
+        "b": -1,
+        "through": null,
+        "note": "L: y=-3x+2 has slope -3; parallel line has the same slope; through (1,-4): y+4=-3(x-1) => y=-3x-1."
+      },
+      "construction": "Equation mode: m = -3 (whole number, |m|=3<=5), b = -1 (whole number within +/-5). Equivalently in points mode: handles at (1,-4) and (0,-1), both lattice points within -5..5, giving the same line y=-3x-1.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither the slope nor the intercept matches",
+      "misconception_id": "mc:g10m8s3-2-2:swaps-parallel-perpendicular-tests",
+      "misconception_label": "Mixes up the parallel test and the perpendicular test",
+      "misconception_description": "The student compares $m_{AB}$ and $m_{CD}$ but applies the wrong rule to the result — treating two equal gradients as proof of perpendicular lines, or treating gradients that are merely opposite in sign (rather than an exact product of $-1$) as enough to call the lines perpendicular — so parallel and perpendicular get swapped or blurred.",
+      "why": "A student with this misconception, asked for a parallel line, might apply the perpendicular test instead (believing it is the relevant one, or blurring the two): (a) m=1/3 (true negative reciprocal of -3), giving y=1/3x - 13/3 through (1,-4) -- not a whole number or clean reciprocal intercept, awkward but constructible in points mode via handles like (1,-4) and (4,-3); or (b) m=3 (just the opposite sign, no reciprocal), giving y=3x-7, via handles e.g. (1,-4) and (2,-1). Both have a slope (1/3 or 3) that doesn't match -3 and an intercept that doesn't match -1, so both would trip 'off-target'. But that predicate is only the negative catch-all -- it fires equally for an unrelated slip such as using the wrong point, arithmetic errors in the point-slope expansion, or a random guess, none of which is this test-swap misconception. Since the predicate can't isolate the test-swap construction from these other wrong-answer causes, it mostly fires for other reasons, so it does not reliably diagnose this misconception."
+    },
+    {
+      "key": "q:g10m8s4-1-1:w001#wrong-quadrant",
+      "question_id": "q:g10m8s4-1-1:w001",
+      "template_id": "wt:g10m8s4-1-1:plot-midpoint",
+      "lo_id": "lo:g10m8s4-1-1",
+      "kind": "pair_plotter",
+      "stem": "Points $A(-1, 3)$ and $B(3, -3)$ are the end points of a line segment. Plot the mid-point $M$ of $AB$.",
+      "reading": {
+        "target": "[1, 0], the midpoint of A(-1,3) and B(3,-3)"
+      },
+      "construction": "Plot the single point (1, 0): xM = (-1+3)/2 = 1, yM = (3+(-3))/2 = 0. This is an integer lattice point within the ±5 grid.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "misconception_id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
+      "misconception_label": "Adding two negative coordinates loses the sign",
+      "misconception_description": "When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative.",
+      "why": "The misconception fires only when a coordinate sum in the midpoint formula adds two negative numbers and the student drops the sign. Here neither sum qualifies: x1+x2 = -1+3 (one negative, one positive) and y1+y2 = 3+(-3) (one negative, one positive). There is no 'both negative' addition step for this error to act on, so a student holding exactly this misconception would compute the sums correctly and land on the true midpoint (1,0), not a wrong-quadrant point. (The correct midpoint also sits on the x-axis, not inside any quadrant, making a 'wrong quadrant' diagnosis doubly inapt.) Any wrong-quadrant plot here would come from some other error, so the predicate would fire for the wrong reason."
+    },
+    {
+      "key": "q:g10m8s4-1-1:w002#wrong-quadrant",
+      "question_id": "q:g10m8s4-1-1:w002",
+      "template_id": "wt:g10m8s4-1-1:plot-midpoint",
+      "lo_id": "lo:g10m8s4-1-1",
+      "kind": "pair_plotter",
+      "stem": "Points $A(2, 5)$ and $B(-4, -3)$ are the end points of a line segment. Plot the mid-point $M$ of $AB$.",
+      "reading": {
+        "target": "[-1, 1], the midpoint of A(2,5) and B(-4,-3)"
+      },
+      "construction": "Plot the single point (-1, 1): xM = (2+(-4))/2 = -1, yM = (5+(-3))/2 = 1. Integer lattice point within the ±5 grid.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "misconception_id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
+      "misconception_label": "Adding two negative coordinates loses the sign",
+      "misconception_description": "When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative.",
+      "why": "x1+x2 = 2+(-4) and y1+y2 = 5+(-3) each mix a positive and a negative addend — neither is a 'both negative' sum. The described misconception has no trigger condition here, so a student with exactly this misconception would still add correctly and reach the true midpoint (-1,1). A wrong-quadrant answer on this item would have to come from a different mistake, so the predicate misattributes the cause."
+    },
+    {
+      "key": "q:g10m8s4-1-1:w004#wrong-quadrant",
+      "question_id": "q:g10m8s4-1-1:w004",
+      "template_id": "wt:g10m8s4-1-1:plot-midpoint",
+      "lo_id": "lo:g10m8s4-1-1",
+      "kind": "pair_plotter",
+      "stem": "Points $A(5, -5)$ and $B(-3, 3)$ are the end points of a line segment. Plot the mid-point $M$ of $AB$.",
+      "reading": {
+        "target": "[1, -1], the midpoint of A(5,-5) and B(-3,3)"
+      },
+      "construction": "Plot the single point (1, -1): xM = (5+(-3))/2 = 1, yM = (-5+3)/2 = -1. Integer lattice point within the ±5 grid.",
+      "predicate": "wrong-quadrant",
+      "predicate_meaning": "Right distances, wrong signs — the point is in the wrong quadrant",
+      "misconception_id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
+      "misconception_label": "Adding two negative coordinates loses the sign",
+      "misconception_description": "When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative.",
+      "why": "x1+x2 = 5+(-3) and y1+y2 = -5+3 each combine one positive and one negative addend — never two negatives being added. The misconception's specific mechanism (dropping the sign when both addends are negative) has nothing to act on, so a student with exactly this misconception still computes the correct sums and correct midpoint (1,-1). Any wrong-quadrant plot on this item would trace to a different error, so the predicate would be firing for the wrong reason."
+    },
+    {
+      "key": "q:g10m8s4-1-2:w001#off-target",
+      "question_id": "q:g10m8s4-1-2:w001",
+      "template_id": "wt:g10m8s4-1-2:plot-endpoint",
+      "lo_id": "lo:g10m8s4-1-2",
+      "kind": "pair_plotter",
+      "stem": "$M(2, 1)$ is the mid-point of $AB$. Given $A(1, 4)$, plot the other end point $B$.",
+      "reading": {
+        "target": "[3, -2]"
+      },
+      "construction": "B = 2M − A = (2·2−1, 2·1−4) = (3, −2). Plot the single lattice point (3, −2) — within the ±5 grid, whole-number pair.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
+      "misconception_label": "Averages the known point with the midpoint",
+      "misconception_description": "The student takes the known endpoint and the mid-point $M$ as if they were the segment's two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.",
+      "why": "The claimed misconception (averaging the known endpoint A with the midpoint M, i.e. treating A and M as the segment's two endpoints) is a specific, deterministic construction: avg(A,M) = ((1+2)/2,(4+1)/2) = (1.5, 2.5). That is a computable, recognisable point (off by a fixed, describable transformation from the correct answer), not a patternless miss. The 'off-target' predicate is defined as firing precisely when there IS no recognisable pattern — i.e. it is the residual/catch-all bucket for essentially any wrong click that isn't one of the named signature errors. A catch-all with no pattern requirement will fire for many different underlying mistakes (miscopied A, arithmetic slips, guesses) far more often than for this one specific averaging error, and it cannot distinguish this construction from those other causes. So the predicate does not target what this misconception actually produces; it mostly fires for other reasons."
+    },
+    {
+      "key": "q:g10m8s4-1-2:w002#off-target",
+      "question_id": "q:g10m8s4-1-2:w002",
+      "template_id": "wt:g10m8s4-1-2:plot-endpoint",
+      "lo_id": "lo:g10m8s4-1-2",
+      "kind": "pair_plotter",
+      "stem": "$M(-1, -1)$ is the mid-point of $AB$. Given $A(-3, 2)$, plot the other end point $B$.",
+      "reading": {
+        "target": "[1, -4]"
+      },
+      "construction": "B = 2M − A = (2·−1−(−3), 2·−1−2) = (1, −4). Plot the single lattice point (1, −4) — within the ±5 grid, whole-number pair.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
+      "misconception_label": "Averages the known point with the midpoint",
+      "misconception_description": "The student takes the known endpoint and the mid-point $M$ as if they were the segment's two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.",
+      "why": "Averaging A(−3,2) and M(−1,−1) gives ((−3−1)/2,(2−1)/2) = (−2, 0.5): a specific, computable point (x-coordinate lands exactly on −2), not a patternless one. 'Off-target' is defined as the no-pattern case, so by construction it cannot be the signature check for a deterministic misconception like this — it is a generic catch-all that would also fire for unrelated slips (sign errors, transcription mistakes, random guesses). Attributing it specifically to the averaging misconception is unsupported."
+    },
+    {
+      "key": "q:g10m8s4-1-2:w003#off-target",
+      "question_id": "q:g10m8s4-1-2:w003",
+      "template_id": "wt:g10m8s4-1-2:plot-endpoint",
+      "lo_id": "lo:g10m8s4-1-2",
+      "kind": "pair_plotter",
+      "stem": "$M(0, 0)$ is the mid-point of $AB$. Given $A(4, -3)$, plot the other end point $B$.",
+      "reading": {
+        "target": "[-4, 3]"
+      },
+      "construction": "B = 2M − A = (2·0−4, 2·0−(−3)) = (−4, 3). Plot the single lattice point (−4, 3) — within the ±5 grid, whole-number pair.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
+      "misconception_label": "Averages the known point with the midpoint",
+      "misconception_description": "The student takes the known endpoint and the mid-point $M$ as if they were the segment's two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.",
+      "why": "Averaging A(4,−3) and M(0,0) gives (2, −1.5) — again a specific, derivable (if half-integer) point, not one with 'no recognisable pattern'. The predicate's own definition (patternless miss) is the opposite of what this misconception produces, and as a catch-all it would trigger for many unrelated wrong placements too, so it isn't a reliable signature for this specific error."
+    },
+    {
+      "key": "q:g10m8s4-1-2:w004#off-target",
+      "question_id": "q:g10m8s4-1-2:w004",
+      "template_id": "wt:g10m8s4-1-2:plot-endpoint",
+      "lo_id": "lo:g10m8s4-1-2",
+      "kind": "pair_plotter",
+      "stem": "$M(-3, -1)$ is the mid-point of $AB$. Given $A(-2, -4)$, plot the other end point $B$.",
+      "reading": {
+        "target": "[-4, 2]"
+      },
+      "construction": "B = 2M − A = (2·−3−(−2), 2·−1−(−4)) = (−4, 2). Plot the single lattice point (−4, 2) — within the ±5 grid, whole-number pair.",
+      "predicate": "off-target",
+      "predicate_meaning": "Neither coordinate matches, with no recognisable pattern",
+      "misconception_id": "mc:g10m8s4-1-2:averages-known-point-with-midpoint",
+      "misconception_label": "Averages the known point with the midpoint",
+      "misconception_description": "The student takes the known endpoint and the mid-point $M$ as if they were the segment's two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.",
+      "why": "Averaging A(−2,−4) and M(−3,−1) gives (−2.5, −2.5): a specific, symmetric, computable point, not a patternless miss. Since 'off-target' is explicitly the bucket for answers with no discernible pattern, it structurally cannot be the targeted check for this well-defined arithmetic misconception, and as a broad catch-all it would fire for many other kinds of errors just as easily."
+    }
+  ]
+}

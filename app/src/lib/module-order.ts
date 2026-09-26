@@ -47,21 +47,20 @@
  * thought they are all from the same source."* They do now. And on lists that
  * hold several subjects: *"Yes they need to split by subject."*
  *
- *   Lists of ONE subject (or one course, or one lesson), by `MODULE_ORDER`:
+ *   Lists of ONE course (or one lesson), by `MODULE_ORDER`:
  *     · the progression walk (lib/progression-db.ts) — it reads every course
  *       and walks one;
- *     · the subject home's roll-up (lib/subject-queries.ts) — per subject;
+ *     · the subject home's roll-up (lib/subject-queries.ts) — per COURSE;
  *     · the skill map (lib/spine-lo-query.ts, FR-3215) — the map shows one
- *       subject at a time (`SpineExplorer`'s subject filter);
+ *       COURSE at a time (`SpineExplorer`'s course filter);
  *     · the console Overview's heatmap rows (lib/overview-queries.ts) — one
- *       subject per query.
- *     Since 003 a subject can have two courses. The student gate shows a
- *     student only her own curriculum's courses, one per subject, so the
- *     student readers above still see one course per subject — except a test
- *     account holding an exception for the other curriculum's course of the
- *     same subject (FR-4009), for whom the subject home and the skill map
- *     would merge the two. Recorded as open in the 003 report; the Overview
- *     (console) splits by course in 003's console work (decision 8).
+ *       course per query.
+ *     Since 003 a subject can have two courses. A test account holding an
+ *     exception for the other curriculum's course of the same subject
+ *     (FR-4009) used to get the two merged on the subject home and the skill
+ *     map, which were keyed by subject. Both are keyed by course since the
+ *     2026-09-26 isolation fix (T372): two cards and two maps, each in its own
+ *     book's order. The Overview (console) splits by course (decision 8).
  *   Lists of EVERY course, by `COURSE_RANK` then `MODULE_ORDER`:
  *     · the lesson catalogue — `getLessonCatalog` (lib/lesson.ts), the
  *       check-in's picker when no subject is named;

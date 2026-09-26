@@ -44,8 +44,9 @@ export const meta = {
  *     cannot reach marks a correct student wrong);
  *   - says for each predicate whether the construction that fires it is the error its
  *     misconception names.
- * The Python side accepts a template only if every instance's reading agrees, it is
- * reachable, and every mapping is confirmed. Silence is not approval.
+ * The Python side accepts a template only if every instance's reading agrees and it is
+ * reachable; a mapping not confirmed is HELD for a human (decision 47: never shown, never a
+ * diagnosis, never S5 evidence until kept). Silence is not approval.
  *
  * ARGS
  *   author: { mode, book, course_id, contract: {kind: {predicates: {name: meaning}, instrument}},
@@ -77,7 +78,15 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's7-v3'   // v2: packet by reference; v3: by-ref shards unclipped (the whole contract)
+const PROMPTS_VERSION = 's7-v6'   // v2: packet by reference; v3: by-ref shards unclipped (the whole contract);
+                                  // v4: anchor questions name their figure images; a stem never points at a [figure]
+                                  // v5: the six kinds of feature 003 (polygon_builder, solid_scaler, box_plot_builder,
+                                  //     venn_builder, area_model, curve_sketcher's five G10 families) get their spec
+                                  //     fields here and their instruments in the contract (generate_widget_questions.py)
+                                  // v6: misconception ids from the objective's OWN list only; one predicate, one
+                                  //     misconception (the two author errors the Chapter 8 pilot normalised); the
+                                  //     verifier's reading as typed JSON values (it wrote "[3, -2]" and "-1/2"),
+                                  //     and each verdict's predicate as its bare name (it wrote the whole claim line)
 const need = (cond, msg) => { if (!cond) throw new Error(msg) }
 need(ARGS.mode === 'author' || ARGS.mode === 'verify', 'args.mode must be "author" or "verify" (see the header of this script)')
 need(ARGS.book && ARGS.book.book, 'args.book must be the book config (generate_widget_questions.py writes it)')
@@ -101,6 +110,9 @@ if (ARGS.mode === 'verify') {
 const READ_RULE = 'Parts of this message are kept in files: wherever it shows [[file: <path>]], read that file with the Read tool (read them all in one turn); its whole content belongs in that place. Those files are the only files you may open.'
 const refFile = (name) => `[[file: ${REF.dir}/${name}]]`
 const readRule = () => (REF ? `\n\n${READ_RULE}` : '')
+// s7-v4: an anchor book question whose stem shows [figure] names its image files ("figures")
+const FIGURE_RULE = 'Some anchor questions list "figures": the image files of the diagrams their stems show as [figure]. Read them with the Read tool before you design around those questions; you may open those image files as well. A widget question you write must never point at a [figure]: its instrument is all the student sees.'
+const figureRule = (objs) => ((REF ? (objs[0].figures || 0) : objs.reduce((n, o) => n + (o.anchor_questions || []).reduce((m, q) => m + ((q.figures || []).length), 0), 0)) ? `\n\n${FIGURE_RULE}` : '')
 
 // ---------------------------------------------------------------- author
 const TEMPLATE_RULES = `A WIDGET TEMPLATE (format "ainext.widget-template/1"):
@@ -123,7 +135,12 @@ line_drawer {mode:"equation",m,b} or {mode:"points",through:[[x1,y1],[x2,y2]]}; 
 angle_setter {ask:"central"|"inscribed",target}; triangle_ratio {ask:"sin"|"cos"|"tan",target};
 bar_builder {ask:"mean"|"median"|"mode"|"range",target,n}; number_line_marker {mode:"points",range:[lo,hi],
 targets:[…]} or {mode:"interval",range,from,to,openFrom,openTo}; ratio_balance {mode:"direct"|"inverse",a,b,c};
-sample_space {rows,cols,rule:{kind,op,value}}; curve_sketcher {fn:"linear"|"quadratic",coefs:[…]}.`
+sample_space {rows,cols,rule:{kind,op,value}}; curve_sketcher {fn:"linear"|"quadratic"|"hyperbola"|
+"exponential"|"sine"|"cosine"|"tangent",coefs:[…]}; polygon_builder {mode:"construct",shape} or
+{mode:"midsegment",triangle:[[x,y],[x,y],[x,y]],apex} or {mode:"area",shape:"triangle"|"quadrilateral",target};
+solid_scaler {solid,ask:"volume"|"area",ratio,dims?}; box_plot_builder {data:[…]};
+venn_builder {sets,labels:[…],mode:"shade",target} or {sets,labels,mode:"counts",regions:{…},total?,clues?};
+area_model {mode:"expand"|"factor",a,b}.`
 
 const AUTHOR_RULES = `RULES:
 - A kind must GENUINELY fit: the construction is the mathematics of this objective, not an answer box
@@ -135,7 +152,12 @@ const AUTHOR_RULES = `RULES:
   property is correct (FR-1205).
 - Diagnostics: map each predicate the construction can plausibly fire to the misconception that
   construction reveals, LIKELIEST ERROR FIRST. A misconception may be on this objective or on one of
-  its prerequisites (the list marks own=true for this objective's). Only ids from the list.
+  its prerequisites (the list marks own=true for this objective's). Only ids from THAT OBJECTIVE'S OWN
+  "misconceptions" list: the lesson file holds one list per objective, and an id taken from another
+  objective's list is refused (FR-1215), even in the same lesson.
+- ONE PREDICATE, ONE MISCONCEPTION: never list a predicate twice. If two errors would fire the same
+  predicate, map it to the likelier one and name the other in "notes"; a predicate that fires for many
+  unrelated reasons (off-target) diagnoses nothing specific, so map it only if one error dominates.
 - Parent: the objective's anchor book question. Tiers as the book's own exercises.
 - NOTATION: decimal point, (x, y). The book's vocabulary. Maths in $…$.
 - Every chapter needs at least one widget, but never at the price of a forced fit: an honest gap goes
@@ -201,7 +223,7 @@ ${TEMPLATE_RULES}
 ${AUTHOR_RULES}
 
 Return AUTHOR_SCHEMA: templates for the objectives an existing kind genuinely fits (usually zero to
-two for the lesson), and a gap for each objective where one would help and no kind fits.${readRule()}`
+two for the lesson), and a gap for each objective where one would help and no kind fits.${readRule()}${figureRule(objs)}`
 
 // ---------------------------------------------------------------- verify
 const VERIFY_SCHEMA = {
@@ -241,11 +263,14 @@ ${w.diagnostics.map((d) => `  - ${d.predicate} ("${d.predicate_meaning}") → ${
 For EACH widget:
 0. reading: from the QUESTION'S WORDS ALONE, fill the fields listed for its kind — what the question
    actually asks the student to build (e.g. the values the student must mark). Work it out; do not guess.
+   Write each field as a JSON VALUE, never as text: numbers as numbers (-0.5, not "-1/2"), a point as
+   [x, y], a list as a list, true/false as booleans — and no words inside a value.
 1. construction: build a correct answer ON THIS INSTRUMENT, concretely (exact lattice points, the angle,
    the five values, the cells). reachable = true only if you produced one that satisfies every limit.
    If the question is ambiguous or the target cannot be hit, reachable = false and say why.
 2. predicates: for each claimed diagnosis, describe the construction that fires the predicate and
    decide whether that construction is what a student holding THAT misconception would build.
+   "predicate" is the predicate's NAME exactly as listed (e.g. slope-inverted) — nothing else.
    matches = false if the predicate would mostly fire for a different reason, or never for this error.
 When in doubt, false: a wrong diagnosis serves a student the refutation of a mistake she did not make.
 Return VERIFY_SCHEMA with widget = "W1", "W2", … as labelled.${readRule()}`

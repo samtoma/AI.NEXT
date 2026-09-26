@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G3 · Widget diagnoses held for review</title>
+<style>
+:root{--play-bg-page:#FFF6E6;--play-bg-surface:#FFFFFF;--play-bg-warm:#FFE9BD;--play-ink:#241F3D;
+--play-text-dim:#4A4266;--play-text-muted:#5A5570;--play-text-label:#615B7D;--play-text-link:#136386;
+--play-action:#F0A22F;--play-on-action:#241F3D;--play-mastery:#2F9E8F;--play-on-mastery:#241F3D;
+--play-celebrate:#7B4FC9;--play-on-celebrate:#FFFFFF;--play-sky:#7FD1F0;--play-on-sky:#0F3D51;
+--play-berry:#FFA8C5;--play-on-berry:#7A2447;--play-leaf:#B6E88F;--play-on-leaf:#1F3D12;
+--play-text-amber:#A34F0A;--play-inactive-fill:#F6F5FA;--play-inactive-border:#9890B5;
+--play-stroke:3px;--play-stroke-sm:2.5px;--play-shadow:4px 4px 0 var(--play-ink);
+--play-shadow-sm:3px 3px 0 var(--play-ink);--play-radius-sm:14px;--play-radius:20px;
+--play-radius-lg:28px;--play-radius-pill:999px;--play-target-min:52px;
+--play-font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+--play-font-read:"Cairo",system-ui,sans-serif;--play-font-mono:"IBM Plex Mono",ui-monospace,monospace;
+--play-text-title:1.5rem;--play-text-ui:1.15rem;--play-text-label-size:.85rem;--play-text-read:1rem;
+--play-text-data:.72rem;--play-leading-latin:1.75;--play-press:90ms cubic-bezier(.2,.7,.3,1)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--play-bg-page);color:var(--play-ink);font-family:var(--play-font-read);
+font-size:var(--play-text-read);line-height:var(--play-leading-latin);-webkit-text-size-adjust:100%}
+.shell{max-width:860px;margin:0 auto;padding:0 16px}
+header.top{background:var(--play-bg-warm);border-bottom:var(--play-stroke) solid var(--play-ink);padding:24px 0 20px}
+h1,h2,h3{font-family:var(--play-font-display);font-weight:800;line-height:1.2;margin:0}
+h1{font-size:clamp(1.4rem,5vw,var(--play-text-title))}
+h2{font-size:var(--play-text-ui);margin:28px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-family:var(--play-font-mono);
+font-size:var(--play-text-data);color:var(--play-text-dim)}
+.brief{margin:18px 0 0;color:var(--play-text-dim)}
+.brief p{margin:0 0 8px}
+.card{background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);
+border-radius:var(--play-radius);box-shadow:var(--play-shadow);padding:16px;margin:18px 0}
+.card header{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:8px}
+.id{font-family:var(--play-font-mono);font-size:var(--play-text-data);color:var(--play-text-label);
+overflow-wrap:anywhere}
+.tag{font-family:var(--play-font-mono);font-size:var(--play-text-data);padding:2px 10px;
+border-radius:var(--play-radius-pill);border:var(--play-stroke-sm) solid var(--play-ink)}
+.tag.attention{background:var(--play-action);color:var(--play-on-action)}
+.tag.ok{background:var(--play-mastery);color:var(--play-on-mastery)}
+.tag.info{background:var(--play-sky);color:var(--play-on-sky)}
+.tag.sample{background:var(--play-celebrate);color:var(--play-on-celebrate)}
+.tag.plain{background:var(--play-inactive-fill);color:var(--play-text-muted);border-color:var(--play-inactive-border)}
+.stem{font-size:1.05rem;margin:4px 0 10px}
+.m{font-family:var(--play-font-mono);font-size:.95em;unicode-bidi:isolate;direction:ltr}
+code.tex{font-family:var(--play-font-mono);font-size:.85em;background:var(--play-inactive-fill);
+border-radius:6px;padding:0 4px;overflow-wrap:anywhere}
+table.answers{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+table.answers th,table.answers td{text-align:start;padding:6px 8px;border-bottom:1px solid var(--play-inactive-border);vertical-align:top}
+table.answers tr.disagree td{background:var(--play-bg-warm)}
+ul.list,ol.steps{margin:6px 0;padding-inline-start:22px}
+ul.choices{list-style:none;padding:0;margin:6px 0;display:grid;gap:6px}
+ul.choices li{padding:8px 10px;border-radius:var(--play-radius-sm);border:var(--play-stroke-sm) solid var(--play-inactive-border);background:var(--play-inactive-fill)}
+ul.choices li.key{border-color:var(--play-ink);background:var(--play-leaf);color:var(--play-on-leaf)}
+.note{font-size:.9rem;color:var(--play-text-dim)}
+.advice{border-inline-start:var(--play-stroke) solid var(--play-sky);padding:4px 10px;margin:8px 0;background:var(--play-bg-warm)}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--play-text-link);min-height:32px}
+.verdict{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.verdict button{font-family:var(--play-font-display);font-weight:700;font-size:1rem;min-height:var(--play-target-min);
+min-width:var(--play-target-min);padding:0 16px;border-radius:var(--play-radius);border:var(--play-stroke) solid var(--play-ink);
+background:var(--play-bg-surface);color:var(--play-ink);box-shadow:var(--play-shadow-sm);cursor:pointer;
+transition:transform var(--play-press),box-shadow var(--play-press)}
+.verdict button:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--play-ink)}
+.verdict button[aria-pressed="true"]{background:var(--play-action);color:var(--play-on-action)}
+.verdict button:focus-visible,textarea:focus-visible,input:focus-visible{outline:var(--play-stroke) solid var(--play-text-link);outline-offset:2px}
+textarea,input[type=text]{width:100%;font:inherit;border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm);
+padding:8px;background:var(--play-bg-surface);color:var(--play-ink);margin-top:8px}
+footer.bar{position:sticky;bottom:0;background:var(--play-bg-warm);border-top:var(--play-stroke) solid var(--play-ink);padding:10px 0;margin-top:24px}
+footer.bar .shell{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+footer.bar .count{font-family:var(--play-font-mono);font-size:var(--play-text-data);margin-inline-end:auto}
+.stat{display:inline-block;margin-inline-end:18px}
+.stat b{font-family:var(--play-font-display);font-size:1.4rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="g3-a0bd280a98a4" data-gate="g3">
+<header class="top"><div class="shell">
+<h1>G3 · Widget diagnoses held for review</h1>
+<div class="meta"><span><b>23</b> held claim(s)</span><span><b>7</b> widget template(s)</span><span>every one, no sample</span></div>
+<div class="brief"><p>Decision 47: a claim that a wrong construction reveals a named misconception, which the blind checker did not confirm, is held — the widget still marks right and wrong, but never names that misconception to a student and S5 never uses it as evidence — until you decide it.</p><p>Keep a claim only if a student holding that misconception would build exactly what fires the predicate, on this question's numbers. Drop it if the predicate would mostly fire for another reason, or never for this error. A dropped claim is deleted; the widget stays.</p></div>
+<label for="reviewer" class="note">Reviewer (your name goes on every verdict)</label>
+<input id="reviewer" type="text" autocomplete="name">
+</div></header>
+<main class="shell"><article class="card"><header><span class="tag sample">wt:g10m8s1-1-2:plot-the-point</span>
+<span class="tag plain">pair_plotter</span><span class="id">q:g10m8s1-1-2:w004#swapped-coordinates</span></header>
+<p class="stem">Plot the point with coordinates <span class="m">(3, 3)</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: [3, 3]}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>swapped-coordinates</b>
+(“Plotted (y, x) — the pair read in the wrong order”) holds
+<b>Swaps the x- and y-values</b></p>
+<p class="note">The student reads the two numbers in the coordinate pair in reverse order, treating the first number as the y value and the second as the x value.</p>
+<p class="advice"><span class="tag attention">checker refused</span> The target&#x27;s x and y values are equal (3, 3), so reversing the order gives (3, 3) again — identical to the correct answer. A construction that fires this predicate cannot be distinguished from the correct construction: a student who plots the point correctly is indistinguishable from one who &#x27;swapped&#x27; it, because the swap is a no-op here. This predicate would misfire on a student who plotted correctly, serving her a refutation of an error she did not make, so it does not match the claimed misconception for this widget.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Place the single point at lattice coordinates (3, 3): 3 units right of the origin, 3 units up.</p></details>
+<div class="verdict" data-id="q:g10m8s1-1-2:w004#swapped-coordinates" role="group" aria-label="Verdict for q:g10m8s1-1-2:w004#swapped-coordinates"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s1-1-2:w004#swapped-coordinates" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s2-1-2:missing-coord-number-line</span>
+<span class="tag plain">number_line_marker</span><span class="id">q:g10m8s2-1-2:w001#extra-values</span></header>
+<p class="stem">One point is <span class="m">(6, -2)</span>. A second point&#x27;s x-coordinate is unknown; its other coordinate is <span class="m">2</span>. The distance between the two points is <span class="m">5</span> units. Mark every value the missing coordinate could be.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;targets&quot;: [3, 9], &quot;from&quot;: null, &quot;to&quot;: null, &quot;openFrom&quot;: null, &quot;openTo&quot;: null}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>extra-values</b>
+(“Marked values that the answer set does not contain”) holds
+<b>Keeps both roots when the question narrows it down</b></p>
+<p class="note">Solves the quadratic and finds both values, then reports both even when the question&#x27;s figure or a stated condition on the coordinate has already ruled one of them out.</p>
+<p class="advice"><span class="tag attention">checker refused</span> There is no restriction in this question to ignore — {3,9} is the complete, unrestricted answer set. &#x27;keeps-both-roots-ignores-restriction&#x27; describes a student who keeps a root a stated condition has ruled out; since no condition rules out either root here, any extra marked value (e.g. a stray 6 or 15) would come from an arithmetic/sign slip, not from ignoring a restriction that doesn&#x27;t exist.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Distance²=(x-6)²+(2-(-2))²=25 → (x-6)²=9 → x=3 or x=9. Both values are unrestricted valid answers. On a number line ranging 0 to 12 (width 12, within ±20 and ≤24 wide), mark the two points 3 and 9.</p></details>
+<div class="verdict" data-id="q:g10m8s2-1-2:w001#extra-values" role="group" aria-label="Verdict for q:g10m8s2-1-2:w001#extra-values"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s2-1-2:w001#extra-values" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s2-1-2:missing-coord-number-line</span>
+<span class="tag plain">number_line_marker</span><span class="id">q:g10m8s2-1-2:w002#extra-values</span></header>
+<p class="stem">One point is <span class="m">(1, -1)</span>. A second point&#x27;s y-coordinate is unknown; its other coordinate is <span class="m">4</span>. The distance between the two points is <span class="m">5</span> units. Mark every value the missing coordinate could be.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;targets&quot;: [-5, 3], &quot;from&quot;: null, &quot;to&quot;: null, &quot;openFrom&quot;: null, &quot;openTo&quot;: null}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>extra-values</b>
+(“Marked values that the answer set does not contain”) holds
+<b>Keeps both roots when the question narrows it down</b></p>
+<p class="note">Solves the quadratic and finds both values, then reports both even when the question&#x27;s figure or a stated condition on the coordinate has already ruled one of them out.</p>
+<p class="advice"><span class="tag attention">checker refused</span> The question states no condition that rules out either root, so there is nothing for &#x27;keeps-both-roots-ignores-restriction&#x27; to ignore. A marked value outside {-5,3} would be a computational error, not a failure to apply a restriction that isn&#x27;t there.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Distance²=(4-1)²+(y+1)²=25 → 9+(y+1)²=25 → (y+1)²=16 → y=3 or y=-5. Both are unrestricted valid answers. On a number line ranging -10 to 10 (width 20, within ±20), mark the two points -5 and 3.</p></details>
+<div class="verdict" data-id="q:g10m8s2-1-2:w002#extra-values" role="group" aria-label="Verdict for q:g10m8s2-1-2:w002#extra-values"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s2-1-2:w002#extra-values" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s2-1-2:missing-coord-number-line</span>
+<span class="tag plain">number_line_marker</span><span class="id">q:g10m8s2-1-2:w003#extra-values</span></header>
+<p class="stem">One point is <span class="m">(0, -3)</span>. A second point&#x27;s y-coordinate is unknown; its other coordinate is <span class="m">8</span>. The distance between the two points is <span class="m">10</span> units. Mark every value the missing coordinate could be.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;targets&quot;: [-9, 3], &quot;from&quot;: null, &quot;to&quot;: null, &quot;openFrom&quot;: null, &quot;openTo&quot;: null}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>extra-values</b>
+(“Marked values that the answer set does not contain”) holds
+<b>Keeps both roots when the question narrows it down</b></p>
+<p class="note">Solves the quadratic and finds both values, then reports both even when the question&#x27;s figure or a stated condition on the coordinate has already ruled one of them out.</p>
+<p class="advice"><span class="tag attention">checker refused</span> No stated condition rules out either root here, so &#x27;keeps-both-roots-ignores-restriction&#x27; has nothing to ignore — both roots are supposed to be kept. A stray extra value would stem from an unrelated arithmetic slip.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Distance²=(8-0)²+(y+3)²=100 → 64+(y+3)²=100 → (y+3)²=36 → y=3 or y=-9. Both are unrestricted valid answers. On a number line ranging -12 to 12 (width 24, within ±20), mark the two points -9 and 3.</p></details>
+<div class="verdict" data-id="q:g10m8s2-1-2:w003#extra-values" role="group" aria-label="Verdict for q:g10m8s2-1-2:w003#extra-values"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s2-1-2:w003#extra-values" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s2-1-2:missing-coord-number-line</span>
+<span class="tag plain">number_line_marker</span><span class="id">q:g10m8s2-1-2:w004#missed-values</span></header>
+<p class="stem">One point is <span class="m">(0, 0)</span>. A second point&#x27;s y-coordinate is unknown; its other coordinate is <span class="m">3</span>. The distance between the two points is <span class="m">5</span> units, taking only the value with <span class="m">y ≥ 0</span>. Mark every value the missing coordinate could be.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;targets&quot;: [4], &quot;from&quot;: null, &quot;to&quot;: null, &quot;openFrom&quot;: null, &quot;openTo&quot;: null}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>missed-values</b>
+(“Part of the answer set was not marked”) holds
+<b>Only writes down one root</b></p>
+<p class="note">Clears the square root and reaches the quadratic correctly, then writes only one of its two solutions as the final answer, not realising a squared difference gives two values.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Unlike W1-W3, this question&#x27;s restriction (y≥0) makes -4 an invalid answer, not a second correct value. &#x27;stops-at-first-root&#x27; is diagnosed by telling the student they dropped a valid solution — but here the &#x27;other&#x27; root (-4) is not valid, it was correctly excluded. Firing this predicate (e.g. because a student wrote only -4) would misinform the student that -4 was a value they should have kept, which is false; any construction missing the value 4 reflects a wrong-root/sign error or restriction misuse, not &#x27;failed to realize there are two solutions&#x27;. This is the question the restriction was added to distinguish, and the intended diagnosis for a both-roots answer is the other predicate below.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Distance²=(3-0)²+y²=25 → y²=16 → y=±4, then the stated restriction y≥0 rules out -4, leaving the single correct value y=4. On a number line ranging 0 to 10 (within ±20), mark the single point 4.</p></details>
+<div class="verdict" data-id="q:g10m8s2-1-2:w004#missed-values" role="group" aria-label="Verdict for q:g10m8s2-1-2:w004#missed-values"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s2-1-2:w004#missed-values" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-1-2:gradient-to-missing-coord</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-1-2:w002#slope-inverted</span></header>
+<p class="stem">Line <span class="m">AB</span> has gradient <span class="m">m = 2</span>. <span class="m">A</span> is at <span class="m">(-2, -2)</span> and <span class="m">B</span> is at <span class="m">(1, y)</span> for some value <span class="m">y</span>. Place <span class="m">A</span> and <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;m&quot;: 2, &quot;b&quot;: null, &quot;through&quot;: [[-2, -2], [1, 4]]}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-inverted</b>
+(“Slope taken as run over rise instead of rise over run”) holds
+<b>Writes the gradient as run over rise</b></p>
+<p class="note">The student sets up <span class="m">(x<sub>2</sub>-x<sub>1</sub>)/(y<sub>2</sub>-y<sub>1</sub>)=m</span> instead of <span class="m">(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)=m</span>, putting the horizontal difference on top and the vertical difference on the bottom.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Following the question&#x27;s own point (x=1), the inverted-ratio setup 3/(y+2)=2 gives y=-0.5 — not a lattice point, so this exact wrong value cannot be placed on this instrument at all. A student forced to snap to an integer y near x=1 (e.g. -1 or 0) produces a slope of 1/3 or 2/3 from A, neither of which is 1/m (0.5), m (2), nor -m (-2) — an unclassifiable answer, not the reciprocal-ratio signature. The predicate would essentially never fire cleanly for a student making this exact error on this widget, so diagnosing it here is unreliable.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">A=(-2,-2) fixed; correct B solves 2=(y+2)/3 → y=4. Place A=(-2,-2), B=(1,4): both lattice points in [-5,5], slope=(4-(-2))/(1-(-2))=2. ✓</p></details>
+<div class="verdict" data-id="q:g10m8s3-1-2:w002#slope-inverted" role="group" aria-label="Verdict for q:g10m8s3-1-2:w002#slope-inverted"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-1-2:w002#slope-inverted" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-1-2:gradient-to-missing-coord</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-1-2:w002#slope-sign-flipped</span></header>
+<p class="stem">Line <span class="m">AB</span> has gradient <span class="m">m = 2</span>. <span class="m">A</span> is at <span class="m">(-2, -2)</span> and <span class="m">B</span> is at <span class="m">(1, y)</span> for some value <span class="m">y</span>. Place <span class="m">A</span> and <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;m&quot;: 2, &quot;b&quot;: null, &quot;through&quot;: [[-2, -2], [1, 4]]}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-sign-flipped</b>
+(“Right gradient, wrong sign — the line leans the other way”) holds
+<b>Takes the rise and the run from different point orders</b></p>
+<p class="note">Writing <span class="m">m=(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)</span>, the student subtracts the two points one way round for the top and the opposite way round for the bottom, so the top and bottom no longer come from the same point pair.</p>
+<p class="advice"><span class="tag attention">checker refused</span> The mismatched-order setup (y+2)/(-3)=2 gives y=-8, which is outside the ±5 lattice entirely — this construction cannot be placed on the instrument at any x matching the question. There is no way for a student to express this exact misconception here, so the predicate cannot correspond to an actual student action for this question.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">A=(-2,-2) fixed; correct B solves 2=(y+2)/3 → y=4. Place A=(-2,-2), B=(1,4): both lattice points in [-5,5], slope=(4-(-2))/(1-(-2))=2. ✓</p></details>
+<div class="verdict" data-id="q:g10m8s3-1-2:w002#slope-sign-flipped" role="group" aria-label="Verdict for q:g10m8s3-1-2:w002#slope-sign-flipped"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-1-2:w002#slope-sign-flipped" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-1-2:gradient-to-missing-coord</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-1-2:w003#slope-inverted</span></header>
+<p class="stem">Line <span class="m">AB</span> has gradient <span class="m">m = -1</span>. <span class="m">A</span> is at <span class="m">(-4, 3)</span> and <span class="m">B</span> is at <span class="m">(2, y)</span> for some value <span class="m">y</span>. Place <span class="m">A</span> and <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;m&quot;: -1, &quot;b&quot;: null, &quot;through&quot;: [[-4, 3], [2, -3]]}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-inverted</b>
+(“Slope taken as run over rise instead of rise over run”) holds
+<b>Writes the gradient as run over rise</b></p>
+<p class="note">The student sets up <span class="m">(x<sub>2</sub>-x<sub>1</sub>)/(y<sub>2</sub>-y<sub>1</sub>)=m</span> instead of <span class="m">(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)=m</span>, putting the horizontal difference on top and the vertical difference on the bottom.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Because m=-1 is its own reciprocal, the inverted-ratio setup 6/(y-3)=-1 gives the SAME y=-3 as the correct method — the &#x27;wrong&#x27; construction is literally the correct answer, B=(2,-3). This predicate would fire on a student who got the question exactly right, so it cannot discriminate this misconception here; flagging it would refute a mistake the student never made.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">A=(-4,3) fixed; correct B solves -1=(y-3)/6 → y=-3. Place A=(-4,3), B=(2,-3): both lattice points in [-5,5], slope=(-3-3)/(2-(-4))=-1. ✓</p></details>
+<div class="verdict" data-id="q:g10m8s3-1-2:w003#slope-inverted" role="group" aria-label="Verdict for q:g10m8s3-1-2:w003#slope-inverted"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-1-2:w003#slope-inverted" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-1-2:gradient-to-missing-coord</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-1-2:w003#slope-sign-flipped</span></header>
+<p class="stem">Line <span class="m">AB</span> has gradient <span class="m">m = -1</span>. <span class="m">A</span> is at <span class="m">(-4, 3)</span> and <span class="m">B</span> is at <span class="m">(2, y)</span> for some value <span class="m">y</span>. Place <span class="m">A</span> and <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;m&quot;: -1, &quot;b&quot;: null, &quot;through&quot;: [[-4, 3], [2, -3]]}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-sign-flipped</b>
+(“Right gradient, wrong sign — the line leans the other way”) holds
+<b>Takes the rise and the run from different point orders</b></p>
+<p class="note">Writing <span class="m">m=(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)</span>, the student subtracts the two points one way round for the top and the opposite way round for the bottom, so the top and bottom no longer come from the same point pair.</p>
+<p class="advice"><span class="tag attention">checker refused</span> The mismatched-order setup (y-3)/(-6)=-1 gives y=9, outside the ±5 lattice — unplaceable on this instrument. A student cannot express this exact error here, so the predicate would never fire for this misconception on this question.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">A=(-4,3) fixed; correct B solves -1=(y-3)/6 → y=-3. Place A=(-4,3), B=(2,-3): both lattice points in [-5,5], slope=(-3-3)/(2-(-4))=-1. ✓</p></details>
+<div class="verdict" data-id="q:g10m8s3-1-2:w003#slope-sign-flipped" role="group" aria-label="Verdict for q:g10m8s3-1-2:w003#slope-sign-flipped"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-1-2:w003#slope-sign-flipped" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-1-2:gradient-to-missing-coord</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-1-2:w004#slope-inverted</span></header>
+<p class="stem">Line <span class="m">AB</span> has gradient <span class="m">m = 0.5</span>. <span class="m">A</span> is at <span class="m">(-3, -2)</span> and <span class="m">B</span> is at <span class="m">(1, y)</span> for some value <span class="m">y</span>. Place <span class="m">A</span> and <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;m&quot;: 0.5, &quot;b&quot;: null, &quot;through&quot;: [[-3, -2], [1, 0]]}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-inverted</b>
+(“Slope taken as run over rise instead of rise over run”) holds
+<b>Writes the gradient as run over rise</b></p>
+<p class="note">The student sets up <span class="m">(x<sub>2</sub>-x<sub>1</sub>)/(y<sub>2</sub>-y<sub>1</sub>)=m</span> instead of <span class="m">(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)=m</span>, putting the horizontal difference on top and the vertical difference on the bottom.</p>
+<p class="advice"><span class="tag attention">checker refused</span> The inverted-ratio setup 4/(y+2)=0.5 gives y=6, outside the ±5 lattice — this exact wrong value cannot be placed on the instrument at the question&#x27;s own x=1. There is no clean lattice construction expressing this misconception here, so the predicate would not reliably fire for it.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">A=(-3,-2) fixed; correct B solves 0.5=(y+2)/4 → y=0. Place A=(-3,-2), B=(1,0): both lattice points in [-5,5], slope=(0-(-2))/(1-(-3))=0.5. ✓</p></details>
+<div class="verdict" data-id="q:g10m8s3-1-2:w004#slope-inverted" role="group" aria-label="Verdict for q:g10m8s3-1-2:w004#slope-inverted"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-1-2:w004#slope-inverted" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-2-1:line-through-two-points</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-2-1:w001#slope-sign-flipped</span></header>
+<p class="stem">Draw the straight line through <span class="m">A(-3, 1)</span> and <span class="m">B(3, 3)</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;through&quot;: [[-3, 1], [3, 3]], &quot;m&quot;: null, &quot;b&quot;: null, &quot;note&quot;: &quot;Question names two points to draw through (A, B); equivalent equation would be m=1/3, b=2, but the wording puts this in &#x27;points&#x27; mode.&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-sign-flipped</b>
+(“Right gradient, wrong sign — the line leans the other way”) holds
+<b>Loses a sign subtracting negative coordinates</b></p>
+<p class="note">When working out <span class="m">y<sub>2</sub>-y<sub>1</sub></span> or <span class="m">x<sub>2</sub>-x<sub>1</sub></span> and one of the values is already negative, the student simplifies <span class="m">a-(-b)</span> as <span class="m">a-b</span> instead of <span class="m">a+b</span>.</p>
+<p class="advice"><span class="tag attention">checker refused</span> The named mechanism is x2-x1 = 3-(-3) miscomputed as a-(-b)-&gt;a-b, i.e. 3-3=0, since only the x-coordinate involves subtracting a negative here (y1=1 is positive, so dy=2 is unaffected). That yields dx=0 - a vertical/degenerate line - not a line with the same slope magnitude (1/3) and flipped sign (-1/3). A clean mirror-image line would only come from a different error (e.g. reversing subtraction order in just one difference), not from this misconception&#x27;s actual arithmetic on these numbers.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Place the two handles exactly at A(-3,1) and B(3,3) - both are lattice points within the +/-5 range, so the line through them is directly drawable.</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-1:w001#slope-sign-flipped" role="group" aria-label="Verdict for q:g10m8s3-2-1:w001#slope-sign-flipped"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-1:w001#slope-sign-flipped" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-2-1:line-through-two-points</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-2-1:w002#slope-sign-flipped</span></header>
+<p class="stem">Draw the straight line through <span class="m">A(-4, -2)</span> and <span class="m">B(2, -5)</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;through&quot;: [[-4, -2], [2, -5]], &quot;m&quot;: null, &quot;b&quot;: null, &quot;note&quot;: &quot;Question names two points to draw through; equivalent equation would be m=-1/2, b=-4.&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-sign-flipped</b>
+(“Right gradient, wrong sign — the line leans the other way”) holds
+<b>Loses a sign subtracting negative coordinates</b></p>
+<p class="note">When working out <span class="m">y<sub>2</sub>-y<sub>1</sub></span> or <span class="m">x<sub>2</sub>-x<sub>1</sub></span> and one of the values is already negative, the student simplifies <span class="m">a-(-b)</span> as <span class="m">a-b</span> instead of <span class="m">a+b</span>.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Here both differences involve subtracting a negative (y1=-2, x1=-4), so the described slip (a-(-b)-&gt;a-b) gives dy_wrong = -5-2 = -7 and/or dx_wrong = 2-4 = -2. None of the resulting slopes (-7/6, -3/-2=1.5, or -7/-2=3.5) equal the clean sign-flip of the correct slope (+1/2). This misconception&#x27;s actual arithmetic does not produce the mirrored line the predicate is meant to catch for these coordinates.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Place the two handles exactly at A(-4,-2) and B(2,-5) - both lattice points within +/-5.</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-1:w002#slope-sign-flipped" role="group" aria-label="Verdict for q:g10m8s3-2-1:w002#slope-sign-flipped"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-1:w002#slope-sign-flipped" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-2-1:line-through-two-points</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-2-1:w003#slope-inverted</span></header>
+<p class="stem">Draw the straight line through <span class="m">A(-2, -3)</span> and <span class="m">B(4, 3)</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;through&quot;: [[-2, -3], [4, 3]], &quot;m&quot;: null, &quot;b&quot;: null, &quot;note&quot;: &quot;Question names two points to draw through; equivalent equation would be m=1, b=-1.&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-inverted</b>
+(“Slope taken as run over rise instead of rise over run”) holds
+<b>Inverts the gradient formula (swaps rise and run)</b></p>
+<p class="note">The student writes the gradient as <span class="m">(x<sub>2</sub>-x<sub>1</sub>)/(y<sub>2</sub>-y<sub>1</sub>)</span> — the reciprocal of <span class="m">(y<sub>2</sub>-y<sub>1</sub>)/(x<sub>2</sub>-x<sub>1</sub>)</span> — putting the <span class="m">x</span>-difference on top instead of the <span class="m">y</span>-difference.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Correct gradient is dy/dx = 6/6 = 1. Because dx and dy are numerically identical (both 6) for this pair of points, the inverted formula dx/dy also equals 6/6 = 1 - the exact same value as the correct slope. A student making this error would draw a line indistinguishable from the correct answer, so this predicate can never fire as a genuine, distinguishing signal on this particular problem.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Place the two handles exactly at A(-2,-3) and B(4,3) - both lattice points within +/-5.</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-1:w003#slope-inverted" role="group" aria-label="Verdict for q:g10m8s3-2-1:w003#slope-inverted"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-1:w003#slope-inverted" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-2-1:line-through-two-points</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-2-1:w003#slope-sign-flipped</span></header>
+<p class="stem">Draw the straight line through <span class="m">A(-2, -3)</span> and <span class="m">B(4, 3)</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;points&quot;, &quot;through&quot;: [[-2, -3], [4, 3]], &quot;m&quot;: null, &quot;b&quot;: null, &quot;note&quot;: &quot;Question names two points to draw through; equivalent equation would be m=1, b=-1.&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>slope-sign-flipped</b>
+(“Right gradient, wrong sign — the line leans the other way”) holds
+<b>Loses a sign subtracting negative coordinates</b></p>
+<p class="note">When working out <span class="m">y<sub>2</sub>-y<sub>1</sub></span> or <span class="m">x<sub>2</sub>-x<sub>1</sub></span> and one of the values is already negative, the student simplifies <span class="m">a-(-b)</span> as <span class="m">a-b</span> instead of <span class="m">a+b</span>.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Both differences involve subtracting a negative (y1=-3, x1=-2). The described slip gives dy_wrong = 3-3 = 0 and/or dx_wrong = 4-2 = 2, producing wrong slopes of 0/6=0, 6/2=3, or 0/2=0 - none equal the clean sign-flip of the correct slope (-1). As with W1 and W2, this misconception&#x27;s arithmetic does not actually produce a mirrored-slope line for these coordinates, so the predicate would be firing (if at all) for reasons unrelated to this specific misconception.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Place the two handles exactly at A(-2,-3) and B(4,3) - both lattice points within +/-5.</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-1:w003#slope-sign-flipped" role="group" aria-label="Verdict for q:g10m8s3-2-1:w003#slope-sign-flipped"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-1:w003#slope-sign-flipped" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-2-2:parallel-perpendicular-line</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-2-2:w001#off-target</span></header>
+<p class="stem">Line <span class="m">L</span> has equation <span class="m">y = 2x - 3</span>. Draw the line through the point <span class="m">(4, 1)</span> that is perpendicular to <span class="m">L</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;equation&quot;, &quot;m&quot;: &quot;-1/2&quot;, &quot;b&quot;: 3, &quot;through&quot;: null, &quot;note&quot;: &quot;L: y=2x-3 has slope 2; perpendicular slope is the negative reciprocal, -1/2; through (4,1): y-1=-1/2(x-4) =&gt; y=-1/2x+3.&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>off-target</b>
+(“Neither the slope nor the intercept matches”) holds
+<b>Mixes up the parallel test and the perpendicular test</b></p>
+<p class="note">The student compares <span class="m">m<sub>AB</sub></span> and <span class="m">m<sub>CD</sub></span> but applies the wrong rule to the result — treating two equal gradients as proof of perpendicular lines, or treating gradients that are merely opposite in sign (rather than an exact product of <span class="m">-1</span>) as enough to call the lines perpendicular — so parallel and perpendicular get swapped or blurred.</p>
+<p class="advice"><span class="tag attention">checker refused</span> A student with this exact misconception would plausibly draw one of two specific lines: (a) m=2 (reusing L&#x27;s own slope, believing equal gradients signal perpendicularity) giving y=2x-7 through (4,1), via handles e.g. (4,1) and (5,3); or (b) m=-2 (flipping the sign but not reciprocating, believing opposite sign alone proves perpendicularity) giving y=-2x+9, via handles e.g. (4,1) and (2,5). Both have neither slope (2 or -2) matching the correct -1/2 nor intercept (-7 or 9) matching 3, so both would indeed trip the &#x27;off-target&#x27; predicate. But &#x27;off-target&#x27; is defined only as the negative catch-all -- &#x27;neither the slope nor the intercept matches&#x27; -- with no requirement that the drawn slope be +2, -2, or any value connected to a parallel/perpendicular test. It fires identically for a mis-substituted point, a transposed m/b, an arithmetic slip in the point-slope step, or a plain guess -- none of which reflect this misconception. Because the predicate cannot distinguish the test-swap construction from these unrelated wrong answers, it mostly fires for other reasons; a wrong diagnosis here would refute a mistake the student may not have made.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Equation mode: m = -1/2 (reciprocal of the whole number -2, |m|=0.5&lt;=5), b = 3 (whole number within +/-5). Equivalently in points mode: handles at (4,1) and (0,3), both lattice points within -5..5, giving the same line y=-1/2x+3.</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-2:w001#off-target" role="group" aria-label="Verdict for q:g10m8s3-2-2:w001#off-target"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-2:w001#off-target" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s3-2-2:parallel-perpendicular-line</span>
+<span class="tag plain">line_drawer</span><span class="id">q:g10m8s3-2-2:w002#off-target</span></header>
+<p class="stem">Line <span class="m">L</span> has equation <span class="m">y = -3x + 2</span>. Draw the line through the point <span class="m">(1, -4)</span> that is parallel to <span class="m">L</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;mode&quot;: &quot;equation&quot;, &quot;m&quot;: -3, &quot;b&quot;: -1, &quot;through&quot;: null, &quot;note&quot;: &quot;L: y=-3x+2 has slope -3; parallel line has the same slope; through (1,-4): y+4=-3(x-1) =&gt; y=-3x-1.&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>off-target</b>
+(“Neither the slope nor the intercept matches”) holds
+<b>Mixes up the parallel test and the perpendicular test</b></p>
+<p class="note">The student compares <span class="m">m<sub>AB</sub></span> and <span class="m">m<sub>CD</sub></span> but applies the wrong rule to the result — treating two equal gradients as proof of perpendicular lines, or treating gradients that are merely opposite in sign (rather than an exact product of <span class="m">-1</span>) as enough to call the lines perpendicular — so parallel and perpendicular get swapped or blurred.</p>
+<p class="advice"><span class="tag attention">checker refused</span> A student with this misconception, asked for a parallel line, might apply the perpendicular test instead (believing it is the relevant one, or blurring the two): (a) m=1/3 (true negative reciprocal of -3), giving y=1/3x - 13/3 through (1,-4) -- not a whole number or clean reciprocal intercept, awkward but constructible in points mode via handles like (1,-4) and (4,-3); or (b) m=3 (just the opposite sign, no reciprocal), giving y=3x-7, via handles e.g. (1,-4) and (2,-1). Both have a slope (1/3 or 3) that doesn&#x27;t match -3 and an intercept that doesn&#x27;t match -1, so both would trip &#x27;off-target&#x27;. But that predicate is only the negative catch-all -- it fires equally for an unrelated slip such as using the wrong point, arithmetic errors in the point-slope expansion, or a random guess, none of which is this test-swap misconception. Since the predicate can&#x27;t isolate the test-swap construction from these other wrong-answer causes, it mostly fires for other reasons, so it does not reliably diagnose this misconception.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Equation mode: m = -3 (whole number, |m|=3&lt;=5), b = -1 (whole number within +/-5). Equivalently in points mode: handles at (1,-4) and (0,-1), both lattice points within -5..5, giving the same line y=-3x-1.</p></details>
+<div class="verdict" data-id="q:g10m8s3-2-2:w002#off-target" role="group" aria-label="Verdict for q:g10m8s3-2-2:w002#off-target"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s3-2-2:w002#off-target" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-1:plot-midpoint</span>
+<span class="tag plain">pair_plotter</span><span class="id">q:g10m8s4-1-1:w001#wrong-quadrant</span></header>
+<p class="stem">Points <span class="m">A(-1, 3)</span> and <span class="m">B(3, -3)</span> are the end points of a line segment. Plot the mid-point <span class="m">M</span> of <span class="m">AB</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: &quot;[1, 0], the midpoint of A(-1,3) and B(3,-3)&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>wrong-quadrant</b>
+(“Right distances, wrong signs — the point is in the wrong quadrant”) holds
+<b>Adding two negative coordinates loses the sign</b></p>
+<p class="note">When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative.</p>
+<p class="advice"><span class="tag attention">checker refused</span> The misconception fires only when a coordinate sum in the midpoint formula adds two negative numbers and the student drops the sign. Here neither sum qualifies: x1+x2 = -1+3 (one negative, one positive) and y1+y2 = 3+(-3) (one negative, one positive). There is no &#x27;both negative&#x27; addition step for this error to act on, so a student holding exactly this misconception would compute the sums correctly and land on the true midpoint (1,0), not a wrong-quadrant point. (The correct midpoint also sits on the x-axis, not inside any quadrant, making a &#x27;wrong quadrant&#x27; diagnosis doubly inapt.) Any wrong-quadrant plot here would come from some other error, so the predicate would fire for the wrong reason.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Plot the single point (1, 0): xM = (-1+3)/2 = 1, yM = (3+(-3))/2 = 0. This is an integer lattice point within the ±5 grid.</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-1:w001#wrong-quadrant" role="group" aria-label="Verdict for q:g10m8s4-1-1:w001#wrong-quadrant"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-1:w001#wrong-quadrant" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-1:plot-midpoint</span>
+<span class="tag plain">pair_plotter</span><span class="id">q:g10m8s4-1-1:w002#wrong-quadrant</span></header>
+<p class="stem">Points <span class="m">A(2, 5)</span> and <span class="m">B(-4, -3)</span> are the end points of a line segment. Plot the mid-point <span class="m">M</span> of <span class="m">AB</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: &quot;[-1, 1], the midpoint of A(2,5) and B(-4,-3)&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>wrong-quadrant</b>
+(“Right distances, wrong signs — the point is in the wrong quadrant”) holds
+<b>Adding two negative coordinates loses the sign</b></p>
+<p class="note">When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative.</p>
+<p class="advice"><span class="tag attention">checker refused</span> x1+x2 = 2+(-4) and y1+y2 = 5+(-3) each mix a positive and a negative addend — neither is a &#x27;both negative&#x27; sum. The described misconception has no trigger condition here, so a student with exactly this misconception would still add correctly and reach the true midpoint (-1,1). A wrong-quadrant answer on this item would have to come from a different mistake, so the predicate misattributes the cause.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Plot the single point (-1, 1): xM = (2+(-4))/2 = -1, yM = (5+(-3))/2 = 1. Integer lattice point within the ±5 grid.</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-1:w002#wrong-quadrant" role="group" aria-label="Verdict for q:g10m8s4-1-1:w002#wrong-quadrant"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-1:w002#wrong-quadrant" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-1:plot-midpoint</span>
+<span class="tag plain">pair_plotter</span><span class="id">q:g10m8s4-1-1:w004#wrong-quadrant</span></header>
+<p class="stem">Points <span class="m">A(5, -5)</span> and <span class="m">B(-3, 3)</span> are the end points of a line segment. Plot the mid-point <span class="m">M</span> of <span class="m">AB</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: &quot;[1, -1], the midpoint of A(5,-5) and B(-3,3)&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>wrong-quadrant</b>
+(“Right distances, wrong signs — the point is in the wrong quadrant”) holds
+<b>Adding two negative coordinates loses the sign</b></p>
+<p class="note">When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative.</p>
+<p class="advice"><span class="tag attention">checker refused</span> x1+x2 = 5+(-3) and y1+y2 = -5+3 each combine one positive and one negative addend — never two negatives being added. The misconception&#x27;s specific mechanism (dropping the sign when both addends are negative) has nothing to act on, so a student with exactly this misconception still computes the correct sums and correct midpoint (1,-1). Any wrong-quadrant plot on this item would trace to a different error, so the predicate would be firing for the wrong reason.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">Plot the single point (1, -1): xM = (5+(-3))/2 = 1, yM = (-5+3)/2 = -1. Integer lattice point within the ±5 grid.</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-1:w004#wrong-quadrant" role="group" aria-label="Verdict for q:g10m8s4-1-1:w004#wrong-quadrant"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-1:w004#wrong-quadrant" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-2:plot-endpoint</span>
+<span class="tag plain">pair_plotter</span><span class="id">q:g10m8s4-1-2:w001#off-target</span></header>
+<p class="stem"><span class="m">M(2, 1)</span> is the mid-point of <span class="m">AB</span>. Given <span class="m">A(1, 4)</span>, plot the other end point <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: &quot;[3, -2]&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>off-target</b>
+(“Neither coordinate matches, with no recognisable pattern”) holds
+<b>Averages the known point with the midpoint</b></p>
+<p class="note">The student takes the known endpoint and the mid-point <span class="m">M</span> as if they were the segment&#x27;s two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.</p>
+<p class="advice"><span class="tag attention">checker refused</span> The claimed misconception (averaging the known endpoint A with the midpoint M, i.e. treating A and M as the segment&#x27;s two endpoints) is a specific, deterministic construction: avg(A,M) = ((1+2)/2,(4+1)/2) = (1.5, 2.5). That is a computable, recognisable point (off by a fixed, describable transformation from the correct answer), not a patternless miss. The &#x27;off-target&#x27; predicate is defined as firing precisely when there IS no recognisable pattern — i.e. it is the residual/catch-all bucket for essentially any wrong click that isn&#x27;t one of the named signature errors. A catch-all with no pattern requirement will fire for many different underlying mistakes (miscopied A, arithmetic slips, guesses) far more often than for this one specific averaging error, and it cannot distinguish this construction from those other causes. So the predicate does not target what this misconception actually produces; it mostly fires for other reasons.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">B = 2M − A = (2·2−1, 2·1−4) = (3, −2). Plot the single lattice point (3, −2) — within the ±5 grid, whole-number pair.</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-2:w001#off-target" role="group" aria-label="Verdict for q:g10m8s4-1-2:w001#off-target"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-2:w001#off-target" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-2:plot-endpoint</span>
+<span class="tag plain">pair_plotter</span><span class="id">q:g10m8s4-1-2:w002#off-target</span></header>
+<p class="stem"><span class="m">M(-1, -1)</span> is the mid-point of <span class="m">AB</span>. Given <span class="m">A(-3, 2)</span>, plot the other end point <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: &quot;[1, -4]&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>off-target</b>
+(“Neither coordinate matches, with no recognisable pattern”) holds
+<b>Averages the known point with the midpoint</b></p>
+<p class="note">The student takes the known endpoint and the mid-point <span class="m">M</span> as if they were the segment&#x27;s two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Averaging A(−3,2) and M(−1,−1) gives ((−3−1)/2,(2−1)/2) = (−2, 0.5): a specific, computable point (x-coordinate lands exactly on −2), not a patternless one. &#x27;Off-target&#x27; is defined as the no-pattern case, so by construction it cannot be the signature check for a deterministic misconception like this — it is a generic catch-all that would also fire for unrelated slips (sign errors, transcription mistakes, random guesses). Attributing it specifically to the averaging misconception is unsupported.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">B = 2M − A = (2·−1−(−3), 2·−1−2) = (1, −4). Plot the single lattice point (1, −4) — within the ±5 grid, whole-number pair.</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-2:w002#off-target" role="group" aria-label="Verdict for q:g10m8s4-1-2:w002#off-target"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-2:w002#off-target" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-2:plot-endpoint</span>
+<span class="tag plain">pair_plotter</span><span class="id">q:g10m8s4-1-2:w003#off-target</span></header>
+<p class="stem"><span class="m">M(0, 0)</span> is the mid-point of <span class="m">AB</span>. Given <span class="m">A(4, -3)</span>, plot the other end point <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: &quot;[-4, 3]&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>off-target</b>
+(“Neither coordinate matches, with no recognisable pattern”) holds
+<b>Averages the known point with the midpoint</b></p>
+<p class="note">The student takes the known endpoint and the mid-point <span class="m">M</span> as if they were the segment&#x27;s two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Averaging A(4,−3) and M(0,0) gives (2, −1.5) — again a specific, derivable (if half-integer) point, not one with &#x27;no recognisable pattern&#x27;. The predicate&#x27;s own definition (patternless miss) is the opposite of what this misconception produces, and as a catch-all it would trigger for many unrelated wrong placements too, so it isn&#x27;t a reliable signature for this specific error.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">B = 2M − A = (2·0−4, 2·0−(−3)) = (−4, 3). Plot the single lattice point (−4, 3) — within the ±5 grid, whole-number pair.</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-2:w003#off-target" role="group" aria-label="Verdict for q:g10m8s4-1-2:w003#off-target"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-2:w003#off-target" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag sample">wt:g10m8s4-1-2:plot-endpoint</span>
+<span class="tag plain">pair_plotter</span><span class="id">q:g10m8s4-1-2:w004#off-target</span></header>
+<p class="stem"><span class="m">M(-3, -1)</span> is the mid-point of <span class="m">AB</span>. Given <span class="m">A(-2, -4)</span>, plot the other end point <span class="m">B</span>.</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{&quot;target&quot;: &quot;[-4, 2]&quot;}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>off-target</b>
+(“Neither coordinate matches, with no recognisable pattern”) holds
+<b>Averages the known point with the midpoint</b></p>
+<p class="note">The student takes the known endpoint and the mid-point <span class="m">M</span> as if they were the segment&#x27;s two endpoints and averages those two, instead of solving the mid-point formula for the true unknown endpoint.</p>
+<p class="advice"><span class="tag attention">checker refused</span> Averaging A(−2,−4) and M(−3,−1) gives (−2.5, −2.5): a specific, symmetric, computable point, not a patternless miss. Since &#x27;off-target&#x27; is explicitly the bucket for answers with no discernible pattern, it structurally cannot be the targeted check for this well-defined arithmetic misconception, and as a broad catch-all it would fire for many other kinds of errors just as easily.</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">B = 2M − A = (2·−3−(−2), 2·−1−(−4)) = (−4, 2). Plot the single lattice point (−4, 2) — within the ±5 grid, whole-number pair.</p></details>
+<div class="verdict" data-id="q:g10m8s4-1-2:w004#off-target" role="group" aria-label="Verdict for q:g10m8s4-1-2:w004#off-target"><button type="button" data-v="keep" aria-pressed="false">Keep the claim</button><button type="button" data-v="drop" aria-pressed="false">Drop it</button></div><textarea rows="2" aria-label="Note on q:g10m8s4-1-2:w004#off-target" placeholder="Note (optional)"></textarea></article></main>
+<footer class="bar"><div class="shell">
+<span class="count"></span><span class="status note" aria-live="polite"></span>
+<div class="verdict" style="margin:0"><button type="button" id="copy">Copy verdicts</button>
+<button type="button" id="download">Download</button></div>
+</div></footer>
+<script type="application/json" id="meta">{"gate": "G3", "page": "g3-a0bd280a98a4", "bundle": "pending-review.json", "format": "ainext.widget-mapping-review/1", "held": 23, "sampled": ["q:g10m8s1-1-2:w004#swapped-coordinates", "q:g10m8s2-1-2:w001#extra-values", "q:g10m8s2-1-2:w002#extra-values", "q:g10m8s2-1-2:w003#extra-values", "q:g10m8s2-1-2:w004#missed-values", "q:g10m8s3-1-2:w002#slope-inverted", "q:g10m8s3-1-2:w002#slope-sign-flipped", "q:g10m8s3-1-2:w003#slope-inverted", "q:g10m8s3-1-2:w003#slope-sign-flipped", "q:g10m8s3-1-2:w004#slope-inverted", "q:g10m8s3-2-1:w001#slope-sign-flipped", "q:g10m8s3-2-1:w002#slope-sign-flipped", "q:g10m8s3-2-1:w003#slope-inverted", "q:g10m8s3-2-1:w003#slope-sign-flipped", "q:g10m8s3-2-2:w001#off-target", "q:g10m8s3-2-2:w002#off-target", "q:g10m8s4-1-1:w001#wrong-quadrant", "q:g10m8s4-1-1:w002#wrong-quadrant", "q:g10m8s4-1-1:w004#wrong-quadrant", "q:g10m8s4-1-2:w001#off-target", "q:g10m8s4-1-2:w002#off-target", "q:g10m8s4-1-2:w003#off-target", "q:g10m8s4-1-2:w004#off-target"]}</script>
+<script>
+(() => {
+  const PAGE = document.body.dataset.page, GATE = document.body.dataset.gate;
+  const KEY = 'review:' + PAGE;
+  let state = {reviewer: '', verdicts: {}, notes: {}};
+  try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (_) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
+  const boxes = [...document.querySelectorAll('.verdict[data-id]')];
+  const count = document.querySelector('.count');
+  const paint = () => {
+    boxes.forEach((b) => b.querySelectorAll('button').forEach((x) =>
+      x.setAttribute('aria-pressed', String(state.verdicts[b.dataset.id] === x.dataset.v))));
+    const n = boxes.filter((b) => state.verdicts[b.dataset.id]).length;
+    if (count) count.textContent = n + ' of ' + boxes.length + ' decided';
+  };
+  boxes.forEach((b) => {
+    b.querySelectorAll('button').forEach((x) => x.addEventListener('click', () => {
+      state.verdicts[b.dataset.id] = x.dataset.v; save(); paint(); }));
+    const t = b.parentElement.querySelector('textarea');
+    if (t) { t.value = state.notes[b.dataset.id] || '';
+             t.addEventListener('input', () => { state.notes[b.dataset.id] = t.value; save(); }); }
+  });
+  const who = document.querySelector('#reviewer');
+  if (who) { who.value = state.reviewer || '';
+             who.addEventListener('input', () => { state.reviewer = who.value; save(); }); }
+  const doc = () => JSON.stringify(Object.assign(JSON.parse(document.querySelector('#meta').textContent),
+    {reviewer: state.reviewer, verdicts: state.verdicts, notes: state.notes}), null, 2);
+  const status = document.querySelector('.status');
+  document.querySelector('#copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(doc()); status.textContent = 'copied'; }
+    catch (_) { status.textContent = 'copy failed — use Download'; }
+  });
+  document.querySelector('#download').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([doc()], {type: 'application/json'}));
+    a.download = PAGE + '.verdicts.json'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  paint();
+})();
+</script>
+</body>
+</html>

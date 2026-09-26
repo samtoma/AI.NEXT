@@ -84,7 +84,8 @@ export const meta = {
  */
 
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
-const PROMPTS_VERSION = 's5-v3'   // v2: packet by reference; v3: by-ref shards unclipped (whole solutions and evidence)
+const PROMPTS_VERSION = 's5-v4'   // v2: packet by reference; v3: by-ref shards unclipped (whole solutions and evidence);
+                                  // v4: each question names its figure image files, and the agents may open them
 
 // ---- the house style (was build_misconceptions.py's mc() docstring; retired by decision 22) ----
 const HOUSE_STYLE = `HOUSE STYLE for a refutation (the live catalogue's style; extraction-pipeline.md §3.8):
@@ -227,6 +228,10 @@ const N_SOURCES = REF ? ((ARGS.counts || {}).sources || 0) : SOURCES.length
 const READ_RULE = 'Parts of this message are kept in files: wherever it shows [[file: <path>]], read that file with the Read tool (read them all in one turn); its whole content belongs in that place. Those files are the only files you may open.'
 const refFile = (name) => `[[file: ${REF.dir}/${name}]]`
 const readRule = () => (REF ? `\n\n${READ_RULE}` : '')
+// s5-v4 (the pilot's S5 draft): a question whose stem shows [figure] names its image files; the agent
+// must SEE the diagram (points A–E, shapes W–Z) to name the error an option encodes. In both modes.
+const FIGURE_RULE = 'Some questions list Figure(s): the image files of the diagrams their stems show as [figure]. Read every figure image of a question you use, with the Read tool, before you judge that question or its options; you may open those image files as well.'
+const figureRule = (p) => ((REF ? (oref(p.lo).figures || 0) : p.qs.reduce((n, q) => n + ((q.figures || []).length), 0)) ? `\n\n${FIGURE_RULE}` : '')
 const DISTRACTORS = ARGS.distractors || []
 for (const d of DISTRACTORS) {
   need(['book', 'S6', 'S7'].includes(d.origin), `distractor origin must be book, S6 or S7: ${JSON.stringify(d).slice(0, 120)}`)
@@ -260,6 +265,7 @@ const solText = (q) => (q.canonical_solution || q.solution || []).map((s, i) => 
 const questionBlock = (qs, notes) => clip(qs.map((q) => [
   `[${q.id}]${q.kind ? ` (${q.kind})` : ''}${q.source_page ? ` p.${q.source_page}` : ''}${q.solution_provenance ? ` — solution: ${q.solution_provenance}` : ''}`,
   `  Q: ${q.stem}`,
+  q.figures && q.figures.length ? `  Figure(s): ${q.figures.join(', ')}` : null,
   q.choices && q.choices.length ? `  Options: ${q.choices.map((c) => `${c.key}) ${c.text}`).join('   ')}` : null,
   q.answer != null ? `  Answer: ${q.answer}` : null,
   `  Canonical solution:\n${solText(q)}`,
@@ -333,7 +339,7 @@ YOUR TASK
    new entry, or "" when the option encodes no error you can name honestly.
 6. List under flags any term you were unsure the book uses, and any evidence you could not use.
 
-Output AUTHOR_SCHEMA with lo="${lo.id}".${readRule()}`
+Output AUTHOR_SCHEMA with lo="${lo.id}".${readRule()}${ctx.figureRule || ''}`
 
 const verifyPrompt = (lo, ctx) => `You are a DIFFERENT teacher checking a colleague's misconception catalogue. You did not write it.
 These refutations will reach real students WITHOUT human review, and you are the only check. Be
@@ -367,7 +373,7 @@ this error would choose exactly this option, or trigger exactly this predicate.
 Only CONFIRMED entries are kept. When in doubt, do NOT confirm: a dropped entry costs a fallback to
 the canonical solution; a wrong one teaches a child the error it was meant to fix.
 
-Output VERIFY_SCHEMA with lo="${lo.id}".${readRule()}`
+Output VERIFY_SCHEMA with lo="${lo.id}".${readRule()}${ctx.figureRule || ''}`
 
 // ---- per objective -----------------------------------------------------------------------------------
 const los = ARGS.objectives.filter((lo) => !ONLY || ONLY.includes(lo.id))
@@ -433,6 +439,7 @@ const author = async (p) => {
     existing: entryBlock(carried),
     distractors: open.length ? open.map((d, i) => distractorLine(d, i)).join('\n') : '(none)',
     capacity,
+    figureRule: figureRule(p),
   }
   const out = await agent(authorPrompt(lo, ctx), {
     label: `author:${lo.id}`, phase: 'Author', model: 'sonnet', schema: AUTHOR_SCHEMA,
@@ -502,6 +509,7 @@ const verify = async (p) => {
   const ctx = {
     questions: questionsFor(p, []),
     sources: sourcesFor(p, []),
+    figureRule: figureRule(p),
     entries: all.map((e) => [
       `ENTRY ${e.id} — ${e.label}`,
       `  What the student does: ${e.description}`,

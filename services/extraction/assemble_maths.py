@@ -49,6 +49,14 @@ THE DETERMINISTIC RECOVERY (`recover`) hashes candidate strings and keeps exact 
              every contiguous window of it, with and without \\text{} on each number
 A candidate can only ever be accepted by its hash, so recall is the only thing these
 heuristics affect; precision is exact.
+
+AN ALIGNED DERIVATION'S HASH (found 2026-09-26 on Chapter 8; see `hash_forms`). The EPUB names a
+multi-line derivation by md5 of its lines WITHOUT the align environment and with every `&` written as
+the XML entity `&amp;` (whitespace removed, as for every image) — 75 of Chapter 8's 247 aligned images
+prove exactly that form, and none any other. The LaTeX STORED is always the renderable one: a real `&`, inside `\\begin{align*}…\\end{align*}`
+(the house style). `canonical` turns an entity-escaped transcription back into that form, so an
+`&amp;` never reaches accepted.json, a lesson or a student; `hash_forms` tries both forms against the
+name, so such an image can still be proved by its hash; `md5check` does the same for a transcriber.
 """
 
 from __future__ import annotations
@@ -98,6 +106,38 @@ UNICODE_TEX = {"−": "-", "–": "-", "×": "\\times", "÷": "\\div", "±": "\\
 
 def md5(s: str) -> str:
     return hashlib.md5(s.encode("utf-8")).hexdigest()
+
+
+_ENV_RE = re.compile(r"\\begin\{(align\*?|aligned)\}(.*)\\end\{\1\}", re.S)
+
+
+def canonical(latex: str | None) -> str | None:
+    """A transcription as it is stored: HTML/XML entities unescaped (`&amp;` is `&`), and a multi-line
+    aligned derivation written without its environment wrapped in align* (the house style)."""
+    if latex is None:
+        return None
+    s = latex.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
+    if "&" in s and "\\\\" in s and not _ENV_RE.fullmatch(s):
+        s = "\\begin{align*}" + s + "\\end{align*}"
+    return s
+
+
+def hash_forms(latex: str) -> list[str]:
+    """Every string whose md5 can name this transcription's image: the LaTeX as written and with its
+    whitespace removed (the EPUB hashed its sources without whitespace), and for an aligned derivation
+    the EPUB's own source form — its lines without the environment, `&` as `&amp;`."""
+    forms = []
+    for x in (latex, re.sub(r"\s+", "", latex)):
+        forms.append(x)
+        m = _ENV_RE.fullmatch(x)
+        inner = m.group(2) if m else x
+        if "&" in inner:
+            forms.append(re.sub(r"&(?!amp;)", "&amp;", inner))
+    return list(dict.fromkeys(forms))
+
+
+def hash_ok(latex: str | None, h: str) -> bool:
+    return latex is not None and any(md5(f) == h for f in hash_forms(latex))
 
 
 # ============================================================================ normalisation
@@ -626,12 +666,13 @@ def load_runs(paths: list) -> dict:
             ps = x.get("pass") or d["pass"]
             if x.get("latex") is None:
                 continue
+            latex = canonical(x["latex"])          # never an entity-escaped `&amp;`: see hash_forms
             prev = by_pass[ps].get(x["md5"])
-            if prev is not None and prev != x["latex"]:
+            if prev is not None and prev != latex:
                 # a pass that read one image twice and disagreed with itself does not count
                 by_pass[ps][x["md5"]] = False
             elif prev is None:
-                by_pass[ps][x["md5"]] = x["latex"]
+                by_pass[ps][x["md5"]] = latex
         meta.append({"file": str(p), "pass": d["pass"], "run_id": d.get("run_id"), "results": len(d["results"])})
     return {"by_pass": {k: {h: v for h, v in d.items() if v is not False} for k, d in by_pass.items()},
             "self_disagreements": {k: sorted(h for h, v in d.items() if v is False) for k, d in by_pass.items()},
@@ -695,8 +736,8 @@ def assemble(book, work: Path, run_paths: list, human_path: Path | None) -> dict
         cand_hash = None
         # 1. hash: re-verified here for every source (deterministic, the three passes, human)
         for src, latex in (("recover", recovered.get(h, {}).get("latex")), ("A", A.get(h)), ("B", B.get(h)),
-                           ("C", C.get(h)), ("human", (human.get(h) or {}).get("latex"))):
-            if latex is not None and md5(latex) == h:
+                           ("C", C.get(h)), ("human", canonical((human.get(h) or {}).get("latex")))):
+            if hash_ok(latex, h):
                 cand_hash = (src, latex)
                 break
         if cand_hash:
@@ -711,8 +752,8 @@ def assemble(book, work: Path, run_paths: list, human_path: Path | None) -> dict
             hm = human[h]
             if not hm.get("by") or not hm.get("latex"):
                 raise SystemExit(f"human resolution for {h} must carry latex and by")
-            accepted[h] = {"latex": hm["latex"], "accepted_by": "human", "by": hm["by"], "date": hm.get("date"),
-                           "cross_check": cross_check(hm["latex"], rec, scan, offset, streams)}
+            accepted[h] = {"latex": canonical(hm["latex"]), "accepted_by": "human", "by": hm["by"], "date": hm.get("date"),
+                           "cross_check": cross_check(canonical(hm["latex"]), rec, scan, offset, streams)}
             tally(h, rec, "human")
             continue
         if rec["class"] == "teacher_only":
@@ -805,7 +846,9 @@ def main(argv=None) -> int:
             if not line.strip():
                 continue
             d = json.loads(line)
-            hit = next((c for c in d.get("candidates", []) if md5(c) == d["md5"]), None)
+            # a candidate is tested in every form that can name the image (an aligned derivation's own
+            # source form included) and the match is returned as it is STORED: a real &, in align*
+            hit = next((canonical(c) for c in d.get("candidates", []) if hash_ok(canonical(c), d["md5"])), None)
             print(json.dumps({"md5": d["md5"], "match": hit}))
         return 0
 

@@ -86,6 +86,25 @@ nothing in it.
 - **Every exercise item is typed** for marking (FR-4303, FR-4320): `numeric`, `choice` (only where
   natural), `expression` (with `choices.marker` per [answer-marker.md](./answer-marker.md)), or
   `not_markable`, which becomes a worked example and not a question row.
+- **Two G2 fields in `choices`** (decisions 41 and 43, 2026-09-26; `services/extraction/schemas.py`):
+  - **`less_specific`** — a multiple-choice question whose key is the most specific answer while other
+    options are also true, less precisely (a square is also a rhombus, a rectangle and, in this book, a
+    kite). Its `choices` is then an OBJECT, because a JSON list cannot carry the field:
+    `{"options": [{"key", "text"}, …], "less_specific": ["B", "C"]}`. Each listed key is an existing
+    option, listed once, and never the answer key. The app returns such a pick for re-entry ("true, but be
+    more precise") and **never marks it wrong** — FR-4320's re-entry rule, extended to a less specific true
+    option. Every other multiple-choice question keeps its plain list. Misconception stamps live on the
+    `options` (the loaders carry them over).
+  - **`answer_only: true`** — beside `"marker"` on a marked expression question: `{"marker": {…},
+    "answer_only": true}`. The book has no working for the item, so it is marked on its answer alone and
+    **the tutor gives no step-by-step explanation**. It requires a key agreed by the printed answer and the
+    blind re-solve, and the item's `solution` stays exactly as the book has it (a G2 fix that sets it may not
+    also rewrite the solution). Absent otherwise — never `false` — so every other marker question's stored
+    JSON is unchanged.
+
+  Both are validated on the lesson-run item (`assemble_lesson_bundle.py` `RunItem`), at assembly, by the
+  bundle schema the loader applies (`schemas.McqChoices`, `schemas.MarkerChoices`), and in the loaders'
+  stored shape (`load_seed.py`, `load_misconceptions.py`); tests in `tests/test_g2_choices.py`.
 - **Solution source** per book question: `book_worked`, **`book_worked_epub`**, or `teachers_guide`
   (FR-4302).
 - **Maths** in stems, solutions and claims comes from S0b's accepted transcriptions (FR-4407). No

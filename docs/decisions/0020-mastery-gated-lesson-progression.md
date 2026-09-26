@@ -211,6 +211,20 @@ another curriculum. This is a per-course setting (`CourseDef`'s "Arabic touches"
 National course exactly as before, off for G10 only. National prompts are unaffected; this narrows what
 the fourth exception's own new G10 captures may say, it does not add a new prompt path.)*
 
+*(A seventh exception — Samuel, 2026-09-26, answer 17: "Allow (Recommended)",
+[decisions.md](../../specs/003-curriculum-tracks/decisions.md) decision 38; the curriculum-isolation audit.
+(The labels above run first to sixth with "fourth" used twice, so this is the eighth recorded exception and
+the seventh by the ADR's own numbering.) The hold is lifted for **two things in a lesson prompt, and only
+for a student who cannot see the course they point at**: the cross-subject rule's handoff line offers no
+`{{switch_subject:…}}` to a subject with no course open to her — narrowed to the open ones, or, when none
+is, a line that acknowledges, declines and returns to the lesson — and a curated cross-subject connection
+into a course she cannot see is not given to the tutor. Every student who can see the courses involved gets a
+byte-identical prompt, and so do both goldens (`national-prompts.test.mts`, `g10-prompts.test.mts`, whose
+fixtures render with no student). It is a privacy and dead-end fix of the same shape as the Ask book-list
+difference the fourth exception records, and it is written into spec 003 FR-4206 beside it. With it, a
+handoff card to a closed subject that a reply still carries is removed on the server
+(`app/src/lib/handoff-filter.ts`), so a student never lands on a not-found page.)*
+
 **Revisit when**: a date or school-calendar signal enters the system (the pointer
 would then compete with it for authority over "today's lesson"); or the
 prerequisite graph gains real lesson-level edges, at which point book order can

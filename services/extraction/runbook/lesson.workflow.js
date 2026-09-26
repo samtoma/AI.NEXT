@@ -66,7 +66,13 @@ export const meta = {
 //   uv run meter_run.py record --book <book> --stage S2-S4,S8 --run <runId>
 // ---------------------------------------------------------------------------------------------
 
-const PROMPTS_VERSION = 'lesson-v3'   // v3: ids are asked for WITHOUT their brackets, and read either way
+const PROMPTS_VERSION = 'lesson-v4'   // v3: ids are asked for WITHOUT their brackets, and read either way
+// v4 (2026-09-26, the Chapter 8 pilot): a choice's options may be the labels a figure shows ("Which point lies
+// at (5; −4)?" A–E, shape W–Z): options_source "figure". Only the TYPING prompt changed; on a resume the
+// claims replay, and typing and every agent after it run again.
+// The script's own deterministic collection is versioned apart from the prompts: a change here replays
+// every cached agent on a resume (no prompt changed) and re-decides what they answered.
+const COLLECT_VERSION = 'collect-4'   // collect-2/-3/-4: the Chapter 8 pilot's S3 fixes (see "COLLECT-2" and "COLLECT-3" below)
 const ARGS = typeof args === 'string' ? (args ? JSON.parse(args) : {}) : (args || {})
 const BOOK = ARGS.book || {}
 if (ARGS.stage !== 'S2-S4,S8' || !Array.isArray(ARGS.lessons) || !ARGS.lessons.length) {
@@ -100,7 +106,7 @@ const TYPING_SCHEMA = { type: 'object', required: ['items'], properties: { items
     subject: { type: 'string' },
     variables: { type: 'array', items: { type: 'string' } },
     options: { type: 'array', items: { type: 'string' } },
-    options_source: { type: 'string', enum: ['', 'stem', 'lesson'] },
+    options_source: { type: 'string', enum: ['', 'stem', 'figure', 'lesson'] },
     book_final: { type: 'string' },
     not_markable_reason: { type: 'string' },
     tier: { type: 'string', enum: ['basic', 'standard', 'advanced'] },
@@ -127,6 +133,36 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
       missing_items: { type: 'array', items: { type: 'string' } } } } } } }
 
 // ---- deterministic helpers ---------------------------------------------------------------------
+// COLLECT-2 (the Chapter 8 pilot's lesson runs, 2026-09-26). Causes of false "disputed" items, fixed in
+// this script's deterministic collection only — no prompt changed, so a resume replays every agent:
+//   * "book_final is not in the book solution": the solutions are aligned derivations
+//     (d&=\sqrt{45}\\&\approx 6,71) and a final answer states the left side with the last line
+//     (d \approx 6,71). The check now reads each continuation line with its implicit left side, ignores
+//     the alignment marker &, and checks every maths segment of a final written as a sentence. It still
+//     refuses a final the solution does not contain (a final copied from another item, a changed value).
+//   * a final answer written as a sentence ("Therefore $y=-3$ or $y=21$.") is compared by its maths;
+//     a printed list "A(3; −4), … and E(5; −4)." reads its "and" as the list's comma; a flattened
+//     printed left side ("mAC = −15 7") is a left side like "m_{AC} =".
+//   * a batch an agent answered in part, or off task, is asked again ONCE for the items it left out
+//     (label …:again), and anything still missing is reported as UNCHECKED — never as a disagreement
+//     between the book's sources. (The pilot's cause: the Workflow harness relays the latest user
+//     message to every agent and tells it that message wins; agents answered that instead.)
+// COLLECT-3 (the five lesson-v4 runs of Chapter 8, 2026-09-26), again deterministic only:
+//   * the typing check read a correct key as not matching: a named point ("M (1; 0)" is the pair
+//     (1; 0)), a chain of names ("dAC = dBD = √26"), a key typed as a set of values ("3; 9" is
+//     "x = 3 or x = 9"), a sentence final whose maths names things ("The coordinates of $D$ are
+//     $(4;-10)$"), a list joined by "and" on either side, an alignment & left in a copied line;
+//   * "book_final is not in the book solution" refused a final listing several statements
+//     ("d_{FG}=\sqrt{26}, d_{GH}=\sqrt{8}"), a chain the typing agent wrote out ("A=…=42,5" where the
+//     solution holds A=42,5), {m}_{AB} for m_{AB}, and a value the solution states as a whole segment;
+//   * an item typing AND the blind solver both call not markable (a proof) is not "missing" a check;
+//   * a stem that refers to a figure the blind solver was not given (the question's figure was not
+//     attached to its parts — fixed in assemble_objectives lesson-args): a blind answer that does not
+//     agree is UNCHECKED, not a book dispute;
+//   * three pairwise verdicts that contradict each other (equivalent, equivalent, different) are
+//     flagged `inconsistent`: the judge got one wrong. The item stays held.
+// COLLECT-4 (the final Chapter 8 runs): a numeric key is stored as the bare number the check read,
+//   without the book's \text{…} wrapper ("\text{0,5}"), which assembly refused as not a number.
 const norm = (s) => String(s || '').normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
   .replace(/\$/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8 && norm(hay).includes(n) }
@@ -139,30 +175,156 @@ function normTex(s) {
   t = t.replace(/\\(?:left|right|displaystyle)(?![a-zA-Z])/g, '').replace(/\\[,;:! ]|\\q?quad(?![a-zA-Z])|~/g, '')
   t = t.replace(/\\[dt]frac(?![a-zA-Z])/g, '\\frac')
   for (let k = 0; k < 3; k++) t = t.replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1')
+  t = t.replace(/\s+and\s+/g, ', ')                                      // a list's "and" is its comma (COLLECT-3: both sides)
+  t = t.replace(/&/g, '')                                                  // alignment markup, never maths (COLLECT-3)
+  t = t.replace(/\{([A-Za-z])\}(?=[_^])/g, '$1')                          // {m}_{AB} is m_{AB} (COLLECT-3)
   t = t.replace(/\\(?:cdot|times)(?![a-zA-Z])/g, '*').replace(/[×·]/g, '*')
   t = t.replace(/[−–]/g, '-')
   t = t.replace(/\\geq?(?![a-zA-Z])/g, '≥').replace(/\\leq?(?![a-zA-Z])/g, '≤').replace(/>=/g, '≥').replace(/<=/g, '≤')
   t = t.replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(/(\d),(\d)/g, '$1.$2').replace(/;/g, ',')
   t = t.replace(/([\^_])\{([A-Za-z0-9])\}/g, '$1$2')
+  t = t.replace(/\\frac\{-([^{}]+)\}\{([^{}]+)\}/g, '-\\frac{$1}{$2}')   // \frac{-2}{3} is -\frac{2}{3} (COLLECT-2)
   t = t.replace(/\s+/g, '').replace(/^\\therefore/, '').replace(/^(?:answer|ans)[:=]/i, '').replace(/\.$/, '')
   return t
 }
-const stripLhs = (t) => t.replace(/^[A-Za-z](?:_[A-Za-z0-9]+)?=/, '')
+// a named left side: x=, y_1=, m_{AB}=, d_{AB}\approx, the text layer's flattened mAC=, and a named point
+// with its variables, P(x,y)= (COLLECT-2, COLLECT-3)
+const stripLhs = (t) => t.replace(/^[A-Za-z]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx)/, '')
+// a point's name before its coordinates: M(1,0) is the pair (1,0); only a name directly before ONE
+// parenthesised pair, so f(2) or 3(x+1) is never touched (COLLECT-3)
+const stripPointName = (t) => (/^[A-Za-z]{1,2}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]))?\([^()]*,[^()]*\)$/.test(t) ? t.replace(/^[^(]+/, '') : t)
 // digits, letters and relations: what survives the PDF text layer's flattening of maths
 const sig = (s) => normTex(s).replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, '')
 
 // The PDF text layer flattens the book's raised multiplication dot to " . " between digits; this
 // book writes decimals with a comma, so there it is always a product.
 const RAISED_DOT = /(\d)\s+\.\s+(\d)/g
-const printedTex = (s) => (BOOK.multiplication_dot ? String(s == null ? '' : s).replace(RAISED_DOT, '$1*$2') : s)
+// a trailing "units" / "square units" is a unit word, not maths ("42,5 units") — COLLECT-3
+const printedTex = (s) => { const t = String(s == null ? '' : s).replace(/\s+(?:square\s+)?units?\s*\.?\s*$/i, ''); return BOOK.multiplication_dot ? t.replace(RAISED_DOT, '$1*$2') : t }
+
+// The maths of an answer written as a sentence. A segment that only NAMES something ($AB$, $D$,
+// $\triangle ABC$) carries no value and is set aside (COLLECT-3); of the rest, the one segment, or the
+// span from the first to the last with the words between kept ("$y=-3$ or $y=21$"). COLLECT-2.
+const NAME_SEG = /^\$\s*(?:\\triangle\s*)?[A-Z]{1,4}(?:_\{?[A-Za-z0-9]+\}?)?\s*\$$/
+function mathsSpan(s) {
+  const t = String(s == null ? '' : s)
+  const segs = (t.match(/\$[^$]+\$/g) || []).filter((x) => !NAME_SEG.test(x))
+  if (!segs.length) return t
+  return segs.length === 1 ? segs[0] : t.slice(t.indexOf(segs[0]), t.lastIndexOf(segs[segs.length - 1]) + segs[segs.length - 1].length)
+}
+
+// an equation read either way round: 4=y is y=4 (COLLECT-2)
+const swapEq = (t) => { const i = t.indexOf('='); return i > 0 && t.indexOf('=', i + 1) < 0 ? t.slice(i + 1) + '=' + t.slice(0, i) : null }
+// the forms one answer may be compared in: as written, without its named left side(s) — a chain
+// d_{AC}=d_{BD}=\sqrt{26} names two things equal to one value (COLLECT-3) — either way round, and a
+// point's coordinates without its name
+const eqForms = (t) => {
+  const w = swapEq(t)
+  // a worked chain L=m1=…=R states its last value R (COLLECT-3); a single equation keeps its left side
+  const last = workedChain(t) ? t.split('=').pop() : null
+  const base = [t, stripLhs(t), stripLhs(stripLhs(t)), ...(w ? [w, stripLhs(w)] : []), ...(last ? [last] : [])]
+  return new Set(base.flatMap((x) => [x, stripPointName(x)]).filter(Boolean))
+}
+const sameForm = (x, y) => { const fy = eqForms(y); return [...eqForms(x)].some((f) => fy.has(f)) }
+// L=m1=…=R is a WORKED CHAIN only when everything after its left side is arithmetic: no letter outside
+// a LaTeX command, no top-level comma. So "x=2 or x=3" (a word, a second unknown) and a list of
+// equations "FG=\sqrt{26},GH=2\sqrt{2}" are never read as a chain ending in their last value (COLLECT-3)
+function workedChain(t) {
+  const parts = String(t).split('=')
+  return parts.length > 2 && topLevelParts(t).length === 1 &&
+    parts.slice(1).every((x) => !/[A-Za-z]/.test(x.replace(/\\[a-zA-Z]+/g, '')))
+}
+function settleOne(a, b, textLayer) {
+  if (textLayer) b = printedTex(b)
+  const na = normTex(a), nb = normTex(b)
+  if (na && sameForm(na, nb)) return { route: 'normalised', verdict: 'equivalent' }
+  if (textLayer) {
+    // the signature of each side, and of a named point's pair without its name ("T ( −1; 1 2 )")
+    const sigs = (n) => [...new Set([n, stripPointName(n)])].map((x) => x.replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, ''))
+    const sa = sigs(na), sb = sigs(nb)
+    if (sa[0] && sa.some((x) => sb.some((y) => sameForm(x, y)))) return { route: 'signature', verdict: 'equivalent' }
+  }
+  return null
+}
 
 function settle(a, b, textLayer) {
   if (!a || !b) return { route: 'missing', verdict: 'missing' }
-  if (textLayer) b = printedTex(b)
-  const na = normTex(a), nb = normTex(b)
-  if (na && (na === nb || stripLhs(na) === stripLhs(nb))) return { route: 'normalised', verdict: 'equivalent' }
-  if (textLayer) { const sa = sig(a), sb = sig(b); if (sa && (sa === sb || stripLhs(sa) === stripLhs(sb))) return { route: 'signature', verdict: 'equivalent' } }
+  for (const x of [...new Set([a, mathsSpan(a)])]) {
+    for (const y of [...new Set([b, mathsSpan(b)])]) {
+      const r = settleOne(x, y, textLayer)
+      if (r) return r
+    }
+  }
   return { route: 'judge', verdict: null }
+}
+
+// A set of values ("x = 3 or x = 9", "3; 9", "a = 1 and b = 7 2") as the sorted list of its values,
+// each without its named left side — the marker's "values" kind is exactly such a set (COLLECT-3).
+// Only the TYPING check uses it, and only for a key typed as values: the three-way pairs are not
+// read as sets here (the judge reads "values in any order").
+function valueSet(s, textLayer) {
+  const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ')
+  const parts = t.split(/\s+or\s+|\s+and\s+|\\text\{\s*(?:or|and)\s*\}|;|,(?![^()]*\))/).map((x) => x.trim()).filter(Boolean)
+  const one = (x) => { const n = normTex(x); return textLayer ? stripLhs(n).replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, '') : stripLhs(n) }
+  return parts.map(one).filter(Boolean).sort()
+}
+const sameValues = (key, against, textLayer) => {
+  const k = valueSet(key, textLayer), a = valueSet(against, textLayer)
+  return k.length > 1 && k.length === a.length && k.every((x, i) => x === a[i])
+}
+
+// Is a final answer in the book solution? The solution's text, and each line of an aligned
+// derivation read with its left side (d&=\sqrt{45}\\&\approx 6,71 states "d \approx 6,71"). Every maths
+// segment of the final must be there; a final with no maths must be there whole. COLLECT-2.
+function alignStatements(text) {
+  const out = []
+  const re = /\\begin\{(align\*?|aligned)\}([\s\S]*?)\\end\{\1\}/g
+  let m
+  while ((m = re.exec(String(text || '')))) {
+    let lhs = ''
+    for (const raw of m[2].split(/\\\\/)) {
+      const line = raw.trim()
+      if (!line) continue
+      const i = line.indexOf('&')
+      if (i < 0) { out.push(line); continue }
+      const left = line.slice(0, i).trim()
+      if (left) lhs = left
+      out.push(lhs + line.slice(i + 1))
+    }
+  }
+  return out
+}
+const containNorm = (s) => normTex(String(s == null ? '' : s).replace(/\\therefore(?![a-zA-Z])/g, ' therefore ')
+  .replace(/\\because(?![a-zA-Z])/g, ' because ')).toLowerCase()
+// top-level commas of one segment ("d_{FG}=\sqrt{26}, d_{GH}=\sqrt{8}"), never inside (), {} or []
+function topLevelParts(seg) {
+  const out = []; let depth = 0, cur = ''
+  for (const ch of seg) {
+    if ('({['.includes(ch)) depth++
+    if (')}]'.includes(ch)) depth--
+    if (ch === ',' && depth === 0) { out.push(cur); cur = '' } else cur += ch
+  }
+  out.push(cur)
+  return out.map((x) => x.trim()).filter(Boolean)
+}
+function inBookSolution(solution, final) {
+  const hay = [solution.join(' '), ...solution.flatMap(alignStatements)].map(containNorm)
+  // the solution's maths segments, whole: "the appropriate value is $\text{3}$" states 3 (COLLECT-3)
+  const wholeSegs = new Set(solution.flatMap((x) => String(x).match(/\$[^$]+\$/g) || []).map(containNorm))
+  const found = (p) => {
+    const n = containNorm(p)
+    if (!n) return false
+    if (hay.some((h) => h.includes(n))) return true
+    const parts = n.split('=')
+    // a worked chain L=m1=…=R the typing agent wrote out states L=R, which the solution must hold (COLLECT-3)
+    if (workedChain(n) && hay.some((h) => h.includes(`${parts[0]}=${parts[parts.length - 1]}`))) return true
+    // x=3 where the solution states the value as a whole segment of its own (COLLECT-3)
+    return parts.length === 2 && /^[a-z]{1,2}(?:_[a-z0-9{}]+)?$/.test(parts[0]) && wholeSegs.has(parts[1])
+  }
+  const segs = String(final).match(/\$[^$]+\$/g) || [String(final)]
+  // a segment that lists several statements must have each of them in the solution (COLLECT-3)
+  return segs.every((p) => found(p) || (() => { const ps = topLevelParts(p.replace(/\$/g, ''))
+    return ps.length > 1 && ps.every((x) => x.includes('=') && found(x)) })())
 }
 
 // The S1 pilot (Chapter 8) found models copying a bracketed id WITH its brackets ("[EMA69]"). Every
@@ -260,7 +422,7 @@ const typingPrompt = (L, batch) => `Type each book item below for automatic mark
 For each item:
 - answer_type:
   numeric — the answer is one number (integer or decimal, possibly with a unit or currency: put the number alone in key, as printed, and the unit in unit);
-  choice — a verbal or choice answer ("irrational", "rhombus", "(ii)"). Give options: the alternatives the stem itself offers (options_source "stem"), or, when the stem offers none, the natural closed set this lesson uses for such answers (options_source "lesson"), 2–5 options with the key among them;
+  choice — a verbal or choice answer ("irrational", "rhombus", "(ii)"). Give options: the alternatives the stem itself offers in its words (options_source "stem"); or, when the answer is one of the labels a figure of the item shows (a point, a shape), those labels as the figure prints them, each option one label, optionally after the one word the stem uses for them ("E", "shape Z") (options_source "figure"); or, when neither offers any, the natural closed set this lesson uses for such answers (options_source "lesson"); 2–5 options with the key among them;
   expression — an algebraic expression, factorised or expanded form, equation, several values, interval, inequality or set, coordinates, surd or π, recurring decimal. Give marker_kind (expression | equation | values | interval | coordinates | surd | recurring), form when the question asks for one (factorised | expanded | simplest | subject, with subject = the variable), variables (the letters in the answer), and key in LaTeX;
   not_markable — a proof, a sketch or drawing, "show that", "represent", "complete the table", or an explanation: give not_markable_reason.
 - key: the PRINTED ANSWER's value, in LaTeX the marker can read. Keep decimal commas and (x; y) as printed. The printed answer is the PDF's flattened text: a fraction's numerator and denominator sit side by side ("y = 1 3 x" is $y = \\frac{1}{3}x$), a root loses its bar ("√ 29" is \\sqrt{29}), a power drops to the line ("x2" is x^{2}) — read its structure from the book solution's final line, which is LaTeX, and never change a value. Only when there is no printed answer, from the book solution's final answer.
@@ -284,22 +446,45 @@ ${batch.map((it) => `[${it.ref}] ${it.stem}${it.figures.length ? `\n  figure(s):
 
 Return BLIND_SCHEMA with one row per problem; ref is the problem's id as shown in brackets, written without the brackets.`
 
+// options_source "figure" (lesson-v4): the item has a figure, and every option is ONE label as a figure
+// prints it (a letter, with an index or a prime), all after the same optional word, which the stem uses
+// ("shape Z" when the stem speaks of shapes). The labels are distinct. The book gives no figure's label
+// set as data (the EPUB's figures are images; the PDF's are vector forms with no position on the page), so
+// whether each label is in the figure is not checked here: the blind re-solve reads the figure and must
+// pick the same label as the printed answer.
+const FIGURE_LABEL = /^(?:([A-Za-z]+)\s+)?\$?([A-Za-z](?:_\{?\d{1,2}\}?|\d)?(?:'|′){0,2})\$?$/
+function figureOptionProblems(it, opts) {
+  const problems = []
+  if (!(it.figures || []).length) problems.push('options said to be a figure\'s labels, but the item has no figure')
+  const parsed = opts.map((o) => FIGURE_LABEL.exec(String(o).trim()))
+  if (parsed.some((m) => !m)) { problems.push('options said to be a figure\'s labels are not all single labels'); return problems }
+  const words = new Set(parsed.map((m) => (m[1] || '').toLowerCase()))
+  if (words.size > 1) problems.push('options said to be a figure\'s labels do not name them alike')
+  const w = [...words][0]
+  if (w && !norm(it.stem).includes(w)) problems.push(`options said to be a figure's labels call them "${w}", a word the stem does not use`)
+  if (new Set(parsed.map((m) => m[2])).size !== parsed.length) problems.push('options said to be a figure\'s labels repeat a label')
+  return problems
+}
+
 function checkTyping(it, t) {
   const problems = []
   if (!t) return { problems: ['typing returned nothing'] }
-  const solText = it.solution.join(' ')
-  if (t.book_final && !normTex(solText).includes(normTex(t.book_final))) problems.push('book_final is not in the book solution')
+  if (t.book_final && !inBookSolution(it.solution, t.book_final)) problems.push('book_final is not in the book solution')
   if (!t.book_final && t.answer_type !== 'not_markable') problems.push('no book_final')
   const typed = { answer_type: t.answer_type, answer: null, choices: null, marker: null, unit: t.unit || null, options_source: null }
   if (t.answer_type === 'numeric') {
     const k = normTex(t.key).replace(/[A-Za-z%°]+[0-9]*$/, '')
     if (!/^-?\d+(?:\.\d+)?(?:\/\d+)?$/.test(k)) problems.push(`numeric key "${t.key}" is not a number`)
-    typed.answer = String(t.key).replace(/\s*[A-Za-z%°][A-Za-z%°0-9\s]*$/, '').replace(/\$/g, '').trim()
+    // the number the check above read: without the book's \text{…} wrapper ("\text{0,5}" is 0,5) —
+    // assembly reads a numeric key as a bare number (COLLECT-4)
+    typed.answer = String(t.key).replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1')
+      .replace(/\s*[A-Za-z%°][A-Za-z%°0-9\s]*$/, '').replace(/\$/g, '').trim()
   } else if (t.answer_type === 'choice') {
     const opts = (t.options || []).filter((o) => o && o.trim())
     const at = opts.findIndex((o) => norm(o) === norm(t.key))
     if (opts.length < 2 || at < 0) problems.push('a choice needs 2–5 options with the key among them')
     if (t.options_source === 'stem' && opts.some((o) => !norm(it.stem).includes(norm(o)))) problems.push('options said to be the stem\'s are not all in the stem')
+    if (t.options_source === 'figure') problems.push(...figureOptionProblems(it, opts))
     typed.choices = opts.map((o, k) => ({ key: 'ABCDE'[k], text: o }))
     typed.answer = at >= 0 ? 'ABCDE'[at] : null
     typed.options_source = t.options_source || null
@@ -327,8 +512,10 @@ function checkTyping(it, t) {
   }
   if (t.answer_type !== 'not_markable' && t.key) {
     const against = it.printed_answer || t.book_final
-    const numOf = (x) => { const m = normTex(x).match(/-?\d+(?:\.\d+)?(?:\/\d+)?/); return m ? m[0] : null }
+    // the number an answer states: after its last "=" ("f(2) = 5" states 5, never 2) — COLLECT-3
+    const numOf = (x) => { const m = normTex(x).split('=').pop().match(/-?\d+(?:\.\d+)?(?:\/\d+)?/); return m ? m[0] : null }
     if (against && !(settle(t.key, against, !!it.printed_answer).verdict === 'equivalent' ||
+      (t.answer_type === 'expression' && t.marker_kind === 'values' && sameValues(t.key, against, !!it.printed_answer)) ||
       (t.answer_type === 'numeric' && numOf(typed.answer) !== null && numOf(typed.answer) === numOf(against)) ||
       (t.answer_type === 'choice' && norm(against).includes(norm(t.key))))) {
       problems.push(`the key "${t.key}" does not read as the ${it.printed_answer ? 'printed answer' : 'book final answer'} "${against}"`)
@@ -355,8 +542,28 @@ async function runS3(L) {
   const typing = {}, blind = {}, tier2 = {}
   const REFS = new Set(items.map((it) => it.ref))
   const isRef = (k) => REFS.has(k)
-  res.slice(0, typingBatches.length).forEach((r) => ((r && r.items) || []).forEach((t) => { t.ref = unbr(t.ref, isRef); typing[t.ref] = t }))
-  res.slice(typingBatches.length, typingBatches.length + blindBatches.length).forEach((r) => ((r && r.answers) || []).forEach((a) => { blind[unbr(a.ref, isRef)] = a }))
+  const offTask = []                       // refs an agent answered that it was never asked (COLLECT-2)
+  const collect = (rows, into, asked, what) => rows.forEach((x) => {
+    const ref = unbr(x.ref, isRef)
+    if (!asked.has(ref)) { offTask.push(`${what}: ${String(x.ref).slice(0, 60)}`); return }
+    x.ref = ref
+    into[ref] = x
+  })
+  typingBatches.forEach((b, k) => collect(((res[k] || {}).items) || [], typing, new Set(b.map((it) => it.ref)), `typing ${k + 1}`))
+  blindBatches.forEach((b, k) => collect(((res[typingBatches.length + k] || {}).answers) || [], blind, new Set(b.map((it) => it.ref)), `blind ${k + 1}`))
+  // a batch answered in part (or off task) is asked again, once, for the items it left out
+  const again = []
+  typingBatches.forEach((b, k) => { const left = b.filter((it) => !typing[it.ref]); if (left.length) again.push({ kind: 'type', k, left }) })
+  blindBatches.forEach((b, k) => { const left = b.filter((it) => !blind[it.ref]); if (left.length) again.push({ kind: 'blind', k, left }) })
+  if (again.length) {
+    log(`${s}: ${again.map((a) => `${a.kind} batch ${a.k + 1} left ${a.left.length} item(s) unanswered`).join('; ')}` +
+      (offTask.length ? `; off-task answers: ${offTask.slice(0, 3).join(', ')}` : '') + ' — asking again once')
+    const redo = await parallel(again.map((a) => () => (a.kind === 'type'
+      ? call('S3 Typing', s, `S3:type:${s}:${a.k + 1}:again`, typingPrompt(L, a.left), { model: 'haiku', effort: 'low', schema: TYPING_SCHEMA })
+      : call('S3 Blind re-solve', s, `S3:blind:${s}:${a.k + 1}:again`, blindPrompt(L, a.left), { model: 'sonnet', schema: BLIND_SCHEMA }))))
+    again.forEach((a, i) => collect(((redo[i] || {})[a.kind === 'type' ? 'items' : 'answers']) || [],
+      a.kind === 'type' ? typing : blind, new Set(a.left.map((it) => it.ref)), `${a.kind} ${a.k + 1} again`))
+  }
   const tierRes = sampled.length ? res[res.length - 1] : null
   ;((tierRes && tierRes.tiers) || []).forEach((t) => { tier2[unbr(t.ref, isRef)] = t.tier })
 
@@ -367,6 +574,18 @@ async function runS3(L) {
     const b = blind[it.ref]
     const blindAns = b && b.markable !== false && b.final_answer ? b.final_answer : null
     const bookFinal = problems.includes('book_final is not in the book solution') ? null : (t.book_final || null)
+    // what a missing pair is missing, so an unchecked item is never read as the book disagreeing
+    const missing = []
+    if (!typing[it.ref]) missing.push('no typing answer')
+    if (!b) missing.push('no blind re-solve answer')
+    else if (!blindAns && t.answer_type !== 'not_markable' && b.markable !== false) missing.push('an empty blind answer')
+    if (t.book_final && !bookFinal) missing.push('book_final is not in the book solution')
+    // not a missing check: the blind solver ran and judged the item not markable (typing said it is)
+    const blindSaysNotMarkable = !!b && b.markable === false && t.answer_type && t.answer_type !== 'not_markable'
+    // both say there is no answer to mark (a proof, a "show that"): the blind pairs agree on that (COLLECT-3)
+    const bothNotMarkable = !!b && b.markable === false && t.answer_type === 'not_markable'
+    // the stem refers to a figure the blind solver was never given: its answer is no check (COLLECT-3)
+    const figureWithheld = /\[figure\]/.test(it.stem) && !(it.figures || []).length
     const pairs = []
     if (it.kind === 'worked_example' || !it.printed_answer) {
       pairs.push({ pair_id: `${it.ref}|blind~book`, a: blindAns, b: bookFinal, ...settle(blindAns, bookFinal, false) })
@@ -375,7 +594,13 @@ async function runS3(L) {
       pairs.push({ pair_id: `${it.ref}|blind~book`, a: blindAns, b: bookFinal, ...settle(blindAns, bookFinal, false) })
       pairs.push({ pair_id: `${it.ref}|book~printed`, a: bookFinal, b: it.printed_answer, ...settle(bookFinal, it.printed_answer, true) })
     }
-    return { it, typed, problems, t, blindAns, bookFinal, pairs }
+    if (blindSaysNotMarkable) {
+      for (const p of pairs) if (p.verdict === 'missing' && /^.+\|blind~/.test(p.pair_id)) p.reason = 'the blind solver judged the item not markable; typing says it is'
+    }
+    if (bothNotMarkable) {
+      for (const p of pairs) if (/^.+\|blind~/.test(p.pair_id)) Object.assign(p, { route: 'not_markable', verdict: 'equivalent', reason: 'typing and the blind solver agree it has no answer to mark' })
+    }
+    return { it, typed, problems, t, blindAns, bookFinal, pairs, missing, figureWithheld }
   })
   const pending = rows.flatMap((r) => r.pairs.filter((p) => p.route === 'judge').map((p) => ({ p, stem: r.it.stem })))
   if (pending.length) {
@@ -385,6 +610,18 @@ async function runS3(L) {
     const v = {}
     judged.forEach((r) => ((r && r.verdicts) || []).forEach((x) => { v[x.pair_id] = x }))
     for (const { p } of pending) { const x = v[p.pair_id]; p.verdict = x ? x.verdict : 'unclear'; p.reason = x ? x.reason : 'the judge returned no verdict' }
+  }
+  for (const r of rows) {
+    // a blind answer given without the figure the stem refers to: agreement stands (the text sufficed),
+    // anything else is UNCHECKED — the check was never made, it is not the book disagreeing (COLLECT-3)
+    if (r.figureWithheld) {
+      let hit = false
+      for (const p of r.pairs) if (/^.+\|blind~/.test(p.pair_id) && p.verdict !== 'equivalent') { Object.assign(p, { verdict: 'missing', reason: 'the blind solver was not shown the figure its stem refers to' }); hit = true }
+      if (hit) r.missing.push('the blind solver was not shown the figure')
+    }
+    // three answers cannot be pairwise "equivalent, equivalent, different": one verdict is wrong (COLLECT-3)
+    const vs = r.pairs.filter((p) => p.route !== 'not_markable' && (p.verdict === 'equivalent' || p.verdict === 'different'))
+    r.judgeInconsistent = r.pairs.length === 3 && vs.length === 3 && vs.filter((p) => p.verdict === 'different').length === 1
   }
 
   const out = []
@@ -411,7 +648,9 @@ async function runS3(L) {
       verification, tier, printed_page: it.printed_page, shortcode: it.shortcode || null,
       // diagnostics for G2 and the coverage audit
       verify: { agreed_with_book_solution: it.kind === 'exercise' && !it.printed_answer ? r.pairs[0].verdict === 'equivalent' : undefined,
-        pairs: r.pairs.map((p) => ({ pair_id: p.pair_id, route: p.route, verdict: p.verdict, reason: p.reason })) },
+        pairs: r.pairs.map((p) => ({ pair_id: p.pair_id, route: p.route, verdict: p.verdict, reason: p.reason })),
+        ...(r.missing.length && r.pairs.some((p) => p.verdict === 'missing') ? { unchecked: r.missing } : {}),
+        ...(r.judgeInconsistent ? { inconsistent: 'the three pairwise verdicts contradict each other: one is wrong' } : {}) },
       typing_problems: problems, unit: typed && typed.unit, options_source: typed && typed.options_source,
       not_markable_reason: t.not_markable_reason || null, tier_source: tierSource,
       printed_answer_scope: it.printed_answer_scope || null, figures: it.figures, figures_missing: it.figures_missing || [],
@@ -419,7 +658,7 @@ async function runS3(L) {
       form_unsupported: formUnsupported,
     })
   }
-  return { items: out, tier_checks: tierChecks }
+  return { items: out, tier_checks: tierChecks, off_task: offTask }
 }
 
 // ---- S4 visuals -------------------------------------------------------------------------------------
@@ -529,7 +768,11 @@ async function runLesson(L) {
     // `caught` counts claims that echoed one anyway and were dropped; none reaches a claim.
     teacher_only: { seen: tchr, dropped: tchr, reached_claim: 0, caught_in_claims: (s2 && s2.teacher_caught) || 0 },
     verify: {
-      disagreements: items.filter((i) => i.verification === 'disputed').map((i) => ({ ref: i.ref, printed: i.printed_answer, book: i.epub_final_answer, blind: i.blind_answer, pairs: i.verify.pairs, typing_problems: i.typing_problems })),
+      disagreements: items.filter((i) => i.verification === 'disputed').map((i) => ({ ref: i.ref, printed: i.printed_answer, book: i.epub_final_answer, blind: i.blind_answer, pairs: i.verify.pairs, typing_problems: i.typing_problems,
+        ...(i.verify.unchecked ? { unchecked: i.verify.unchecked } : {}) })),
+      // COLLECT-2: items a check never ran on (an agent answered in part or off task): re-run, not G2's to judge
+      unchecked: items.filter((i) => i.verify.unchecked).map((i) => ({ ref: i.ref, missing: i.verify.unchecked })),
+      off_task: (s3 && s3.off_task) || [],
       no_printed_answer: items.filter((i) => i.verification === 'no_printed_answer').map((i) => ({ ref: i.ref, book: i.epub_final_answer, blind: i.blind_answer, agreed_with_book_solution: i.verify.agreed_with_book_solution, answer_type: i.answer_type })),
       typing_problems: items.filter((i) => i.typing_problems.length).map((i) => ({ ref: i.ref, problems: i.typing_problems })),
       printed_not_in_asked_form: items.filter((i) => i.printed_form_defect).map((i) => ({ ref: i.ref, printed: i.printed_answer, ...i.printed_form_defect })),
@@ -555,7 +798,7 @@ lessons.forEach((r, i) => { if (!r) log(`${ARGS.lessons[i].slug}: the lesson fai
 const perLesson = {}
 for (const c of Object.values(calls)) for (const [s, n] of Object.entries(c.by_lesson)) perLesson[s] = (perLesson[s] || 0) + n
 return {
-  stage: 'S2-S4,S8', workflow: 'lesson', prompts_version: PROMPTS_VERSION, book: BOOK.book,
+  stage: 'S2-S4,S8', workflow: 'lesson', prompts_version: PROMPTS_VERSION, collect_version: COLLECT_VERSION, book: BOOK.book,
   ...(ARGS.embedded ? { embedded: ARGS.embedded } : {}),
   lessons: lessons.filter(Boolean),
   failed_lessons: ARGS.lessons.filter((l, i) => !lessons[i]).map((l) => l.slug),

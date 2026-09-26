@@ -631,7 +631,9 @@ solution and check it three ways".*
   deterministic check confirms it:
   - `numeric` (after decision 15's normalisation);
   - `choice`: verbal or choice answers ("irrational", "rhombus"). **Multiple choice only here, where
-    it is natural.** Distractors come from S5 and S6;
+    it is natural.** Distractors come from S5 and S6. The options are the stem's own alternatives,
+    the labels of a figure of the item ("Which point lies at (5; −4)?", from `lesson-v4`: each option
+    one label; the blind re-solve reads the figure), or the lesson's closed set;
   - `expression`, with its kind (algebraic, factorised, equation, several values, interval,
     inequality or set, coordinates, surd or π, recurring decimal) and **the form the question asks
     for** (factorised, simplest, subject of a formula). This is marked by the app's expression marker
@@ -754,17 +756,25 @@ distractor really is the mistake it claims to be.
   → `misconception_id`, likeliest error first.
 - **Deterministic checks, all mandatory:**
   - `widget_spec.validate_widget` (predicate names from the contract);
-  - reachability (the FR-1207 rule: no target the instrument cannot hit);
+  - reachability (the FR-1207 rule: no target the instrument cannot hit) — `parseMathWidget` and
+    `curveReachable` ported for every contract kind, cross-checked against the TypeScript kind by kind;
+    two rules are stricter than the app and say so (a `sample_space` event with no outcome, a
+    `venn_builder` clue that is not its set's size);
   - the FR-1215 prerequisite rule **against the graph** — S10 runs this on a scratch DB, so
     `--dsn` stops being optional;
   - `parent_question_id` set to the objective's anchor book question, closing G5.
 - **Independent check:** a different Sonnet agent solves each widget blind in words ("what
   construction satisfies this?"). It confirms the target is reachable and that every predicate's
-  misconception is the error that construction reveals.
+  misconception is the error that construction reveals. **Decision 47 (specs/003 FR-4306):** an
+  unreachable target, a stem that reads otherwise, or no verdict refuses the template; a mapping the
+  checker does not confirm is **held** (`choices.pending_review`, with its reason) — inactive: never
+  shown, never a diagnosis, never S5 evidence — until a human keeps or drops it on the G3 held-mappings
+  page (`render_review_page.py --gate g3-mappings`, exported as `--mapping-review`).
 - **Coverage:** at least one widget per module (FR-1201), or a signed-off **widget gap report**.
-  The 11 current kinds were built for Prep-3 topics, so G10 functions, probability (Venn),
-  statistics (box plot) and measurement will likely need new kinds. Those are app components
-  outside this line.
+  The 11 Prep-3 kinds were built for Prep-3 topics; the six kinds of decision 27 (polygon_builder,
+  solid_scaler, box_plot_builder, venn_builder, area_model, curve_sketcher's five G10 families) are
+  app components outside this line, registered for it with the instrument text the tutor is given
+  (`widget-docs.ts`), their reachability rules and their blind-reading fields (`s7-v5`).
 - **Output:** the same row shape as today, loaded through the same loader and review gate.
 
 ### 3.11 S8 Coverage audit
@@ -908,13 +918,17 @@ Prices checked on 2026-09-25 against the `claude-api` reference, per million tok
 - Per lesson: about **$3.2**, with S4 doubled and S1 enlarged by the end-of-chapter mapping. Dropping
   S3's derivation step roughly cancels the extra re-solves.
 - **Revised again, 2026-09-25, third round (decisions 31–32):** misconception verification runs **per
-  objective** (decision 10, "per topic"), at **$22–32 per objective** for S5 — replacing the per-lesson
-  S5 figure above as the number that drives the book's total, once the per-objective run is priced
-  rather than estimated per lesson. S0b is **$24–44 per book**, depending on the Chapter-8-pilot's
+  objective** (decision 10, "per topic"). This section first said "$22–32 **per objective**" for S5: a
+  **mislabel** (corrected 2026-09-26) — $22–32 was the S5 estimate for the **whole book** (it sits inside the
+  $220–260 book total below; per objective it would have been $3,700+ for ~170 objectives). The Chapter 8
+  pilot measures S5 at **≈ $0.70 per objective** (draft + final, dry meter calibrated ×5.5–6.3 against the
+  pilot's real runs), ≈ $120 projected for the book. S0b is **$24–44 per book**, depending on the Chapter-8-pilot's
   batch-setting decision (above), not the earlier fixed $20–25.
-- **The total for Grade 10 is about $220–260 one-time**, including S0b and the per-objective S5 figure.
-  Earlier drafts said $120–190, then $210–230; this is the number to plan against until the Chapter 8
-  pilot's meter data (§5's meter, below) replaces every estimate in this section with a measured one.
+- **The total for Grade 10 was planned at about $220–260 one-time**, including S0b and the S5 figure.
+  Earlier drafts said $120–190, then $210–230. **The Chapter 8 pilot's meter replaces it (2026-09-26):
+  ≈ $0.85–1.1k one-time** — S0b $250–520 (batch 50 vs 25), S1 ≈ $93, S2–S4 ≈ $146, S5–S7 ≈ $350
+  (S5 ≈ $120 of it) — projected from the pilot's measured runs and the dry meter calibrated ×5.5–6.3
+  (`docs/WIP-g10-pilot/pilot-report.md`, "Cost: calibrated projection").
 - The PDF-only fallback is not needed for Grade 10. It would have cost $30–90 per book.
 - Batch pricing (§10 D9 option b) would lower S0b toward the bottom of its $24–44 range. The decision is
   to stay on Workflow.

@@ -128,14 +128,37 @@ export function SubjectHome({
         className="anim-rise mt-8 flex flex-col gap-4"
         style={{ animationDelay: "110ms" }}
       >
+        {/* One card per COURSE (FR-4009, T372): keyed by course, so a
+            tester who sees two courses of one subject gets two cards. */}
         {summaries.map((s) => (
-          <SubjectCard key={s.subject} summary={s} />
+          <SubjectCard
+            key={s.courseId ?? s.subject}
+            summary={s}
+            href={cardHref(s, summaries)}
+          />
         ))}
 
         <MoreSubjectsComing />
       </section>
     </main>
   );
+}
+
+/**
+ * Where a card leads. `?subject=` names a SUBJECT, and the student page reads
+ * it as her own curriculum's course of that subject (`courseForSubject`) — so
+ * for every student with one course per subject the link is exactly what it
+ * always was. When two of her courses share a subject (a tester's exception
+ * for the other curriculum's maths, FR-4009), `?subject=` alone would open
+ * the same course from both cards; the second names its first lesson too,
+ * and the page takes the course from that lesson (`student/page.tsx`).
+ */
+function cardHref(s: SubjectSummary, all: readonly SubjectSummary[]): string {
+  const base = `/student?subject=${s.subject}`;
+  const shared = all.filter((o) => o.subject === s.subject).length > 1;
+  return shared && s.defaultSlug
+    ? `${base}&lesson=${encodeURIComponent(s.defaultSlug)}`
+    : base;
 }
 
 /**
@@ -153,7 +176,7 @@ export function SubjectHome({
  * unknown-subject fallback) is not a translation of a Arabic default here —
  * it is the default, per constitution v3.2.0 Principle V.
  */
-function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
+function SubjectCard({ summary: s, href }: { summary: SubjectSummary; href: string }) {
   const def = spineSubjectDef(s.subject);
   const tile = def?.accent.tile ?? "bg-card text-ink";
   const dim = def?.accent.tileDim ?? "text-ink-soft";
@@ -171,7 +194,7 @@ function SubjectCard({ summary: s }: { summary: SubjectSummary }) {
 
   return (
     <Link
-      href={`/student?subject=${s.subject}`}
+      href={href}
       dir={rtl ? "rtl" : "ltr"}
       className={cx(
         STROKE,

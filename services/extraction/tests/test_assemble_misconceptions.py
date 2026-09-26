@@ -292,6 +292,20 @@ class AssemblerTest(unittest.TestCase):
         self.assertEqual(p.read_text(), json.dumps(s7, ensure_ascii=False))
         self.assertEqual(before, json.dumps(s7))
 
+    def test_a_widget_whose_mappings_are_all_held_is_reconciled_not_refused(self):
+        # decision 47: held mappings follow the catalogue (aliases rewritten, unknown ids dropped); a widget with
+        # only held mappings ships as right/wrong — it is refused only when nothing, active or held, is left
+        s7 = json.loads(self.s7.read_text())
+        ch = s7["questions"][0]["choices"]
+        ch["pending_review"] = ch.pop("diagnostics") + [
+            {"predicate": "bases-multiplied", "misconception_id": "mc:zz1s1-1-1:not-in-any-catalogue", "why": "…"}]
+        ch["diagnostics"] = []
+        p = self.write("s7held.json", s7)
+        self.assertEqual(self.assemble(self.run_path, bundles=(self.s6, p)), 0)
+        got = json.loads(p.read_text())["questions"][0]["choices"]
+        self.assertEqual(got["diagnostics"], [])
+        self.assertEqual([h["misconception_id"] for h in got["pending_review"]], ["mc:zz1s1-1-2:exponents-added"])
+
     def test_an_unfit_item_no_bundle_carries_refuses(self):
         # without the S6 bundle, the unfit a^(n-m) attachment cannot be stripped anywhere
         self.assertEqual(self.assemble(self.run_path, bundles=(self.s7,)), 1)
@@ -355,6 +369,14 @@ class S5ArgsFromTheLine(unittest.TestCase):
         book = book_config.load_book("g10-math")
         bundles, _ = alb.assemble(book, fix / "manifest.json", fix / "objectives", fix / "runs" / "lesson")
         runs = [json.loads(p.read_text()) for p in sorted((fix / "runs" / "lesson").glob("*.json"))]
+        # a disagreement is a student's error only once G2 kept the book's answer and the re-solve really
+        # differed (the Chapter 8 S5 draft): unreviewed, it is not evidence yet
+        disputed = [it for r in runs for it in r["items"] if it.get("verification") == "disputed" and it.get("blind_answer")]
+        self.assertTrue(disputed)
+        self.assertNotIn("resolve_disagreement", {s["kind"] for s in am.s5_args(book, list(bundles.values()), runs, "draft")["sources"]})
+        for it in disputed:
+            it["g2"] = {"verdict": "accept", "by": "Samuel"}
+            it["verify"] = {"pairs": [{"pair_id": f"{it['ref']}|blind~printed", "verdict": "different"}]}
         a = am.s5_args(book, list(bundles.values()), runs, "draft")
         self.assertEqual(a["stage"], "draft")
         self.assertEqual(len(a["objectives"]),

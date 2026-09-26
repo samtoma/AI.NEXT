@@ -1,0 +1,63 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m8s3-2-1:line-through-two-points",
+ "lo_id": "lo:g10m8s3-2-1",
+ "parent_question_id": "q:g10m8s3-2-1:ex8-6-10a",
+ "tier": "advanced",
+ "kind": "line_drawer",
+ "instances": [
+  {
+   "x1": -3,
+   "y1": 1,
+   "x2": 3,
+   "y2": 3
+  },
+  {
+   "x1": -4,
+   "y1": -2,
+   "x2": 2,
+   "y2": -5
+  },
+  {
+   "x1": -2,
+   "y1": -3,
+   "x2": 4,
+   "y2": 3
+  }
+ ],
+ "spec": {
+  "mode": "points",
+  "through": [
+   [
+    "{=x1}",
+    "{=y1}"
+   ],
+   [
+    "{=x2}",
+    "{=y2}"
+   ]
+  ]
+ },
+ "stem": "Draw the straight line through $A({=x1}, {=y1})$ and $B({=x2}, {=y2})$.",
+ "solution": [
+  "Find the gradient between A and B: m = (y2 − y1) / (x2 − x1).",
+  "Keep the sign of each difference exactly as it comes out — do not drop a sign when a coordinate is already negative.",
+  "Starting from A, step according to that gradient (rise over run) to fix the line's direction.",
+  "Any two points lying on this same line are an acceptable construction — it is the line itself that is graded, not the two named points."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "slope-inverted",
+   "misconception_id": "mc:g10m8s3-2-1:gradient-formula-inversion"
+  },
+  {
+   "predicate": "points-swapped",
+   "misconception_id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
+  },
+  {
+   "predicate": "slope-sign-flipped",
+   "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip"
+  }
+ ],
+ "notes": "Tests the geometric core of LO1 (the unique line two points determine) rather than the symbolic y = mx + c form; graded on the property (any two collinear points are correct, FR-1205). Anchor ex8-6-10a's own points (A(-6,1)) fall outside the instrument's ±5 lattice limit, so instance parameters were rescaled to the same gradient family (1/3) while two further instances stress negative coordinates and a whole-number gradient. intercept-wrong and vertical-line are valid predicates for this kind but have no clean, non-strained match among this LO's own misconceptions, so they are left undiagnosed rather than forced."
+}

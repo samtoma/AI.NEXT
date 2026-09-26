@@ -1,0 +1,190 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s6-v4",
+ "records": [],
+ "revised": [
+  {
+   "format": "ainext.family/1",
+   "id": "tpl:g10m8s4-1-1:unknown-coordinate-from-midpoint",
+   "kind": "family",
+   "lo_id": "lo:g10m8s4-1-1",
+   "parent_question_id": "q:g10m8s4-1-1:ex8-6-17",
+   "source_page": 320,
+   "tier": "advanced",
+   "version": 2,
+   "answer_type": "numeric",
+   "context": null,
+   "params": [
+    {
+     "name": "xQ",
+     "randint": [
+      -10,
+      10
+     ]
+    },
+    {
+     "name": "yP",
+     "randint": [
+      -10,
+      10
+     ]
+    },
+    {
+     "name": "yQ",
+     "randint": [
+      -10,
+      10
+     ],
+     "resample_while": "(yP + yQ) % 2 != 0"
+    },
+    {
+     "name": "t_true",
+     "randint": [
+      -10,
+      10
+     ],
+     "resample_while": "(t_true + xQ) % 2 != 0 or t_true == xQ"
+    },
+    {
+     "name": "xM",
+     "let": "(t_true + xQ) / 2"
+    },
+    {
+     "name": "b",
+     "let": "(yP + yQ) / 2"
+    }
+   ],
+   "constraints": [],
+   "stem": "$P(t, {=yP})$ and $Q({=xQ}, {=yQ})$ are points in the Cartesian plane. $M({=xM}, {=b})$ is the mid-point of $PQ$. Find the value of $t$.",
+   "answer": "t_true",
+   "solution": [
+    "Let the coordinates of $P$ be $(t, {=yP})$ and the coordinates of $Q$ be $({=xQ}, {=yQ})$, with mid-point $M({=xM}, {=b})$.",
+    "The mid-point formula is $M(x, y)=\\left(\\frac{x_{1}+x_{2}}{2}, \\frac{y_{1}+y_{2}}{2}\\right)$.",
+    "Using the $x$-coordinates: $\\frac{t+({=xQ})}{2}={=xM}$, so $t=2({=xM})-({=xQ})={=t_true}$.",
+    "Therefore $t={=t_true}$."
+   ],
+   "proposed_misconceptions": [],
+   "notes": "v2 fix (v1 was refused by --check and a reviewer). Two things were wrong, not the underlying maths: (1) marker.answer was 't = {=t_true} and b = {=b}', which after interpolation renders e.g. 't = 9 and b = -3' — the plain-maths parser (families/evaluator.py parse_plain) splits on top-level '=' and only accepts exactly two parts either side of ONE '=', so a string with two '=' and the word 'and' is Unreadable('more than one '='') on every attempt; no instance could evaluate, so the family produced no question. (2) Even had that parsed, marker.kind 'values' grades by sorting both the key and the submission (families/evaluator.py ~line 897) and comparing the sorted lists — it cannot tell a correct (t, b) from a swapped (b, t), so asking for two separate values this way is unmarkable, exactly as the reviewer said. Fix: ask for ONE thing, t, as answer_type 'numeric' with a plain 'answer': 't_true' (no marker, no choices, per families/spec.py's numeric rule) — this is the 'find t' resolution the refusal itself suggested. b is kept as a computed param and now simply renders as M's known y-coordinate in the stem/solution ('M({=xM}, {=b})'), the same way xM, xQ, yQ are already given as known numbers; it is no longer something the student must produce, so the marker ambiguity cannot recur. This keeps the intended advanced-tier twist — reversing the mid-point formula to recover P's unknown x-coordinate from a fully-given mid-point, per parent q:g10m8s4-1-1:ex8-6-17 and the unknown-endpoint pattern of ex8-5-3c, both listed under this LO's own exercise_items in objectives/g10-math/g10m8s4-1.json — while dropping the second, unaskable half. Verified by hand and by re-running families.spec.check_spec + generate_questions.spec_problems locally against this exact JSON: both return [] (schema OK, 30/30 sampled instances evaluate and none are rejected). Spot-checked two instantiated instances including one with xQ negative: stem 'P(t,-9), Q(-4,-7)... M(-6,-8)... Find t', solution step 't=2(-6)-(-4)=-8', correct_answer '-8' — the double-negative '-(-4)' renders correctly and 2*xM-xQ recovers t_true exactly, so the reviewer's original sign-handling concern is confirmed fine and no longer needs a standing flag."
+  },
+  {
+   "format": "ainext.family/1",
+   "id": "tpl:g10m8s1-1-3:pentagon-partial-arc",
+   "kind": "family",
+   "lo_id": "lo:g10m8s1-1-3",
+   "parent_question_id": "q:g10m8s1-1-3:ex8-6-3",
+   "source_page": 316,
+   "tier": "advanced",
+   "answer_type": "mcq",
+   "context": null,
+   "version": 2,
+   "params": [
+    {
+     "name": "v",
+     "choice": [
+      [
+       "E",
+       "F",
+       "G",
+       "H",
+       "B"
+      ],
+      [
+       "C",
+       "D",
+       "E",
+       "F",
+       "M"
+      ],
+      [
+       "G",
+       "H",
+       "I",
+       "J",
+       "A"
+      ],
+      [
+       "K",
+       "L",
+       "M",
+       "N",
+       "C"
+      ],
+      [
+       "P",
+       "Q",
+       "R",
+       "S",
+       "F"
+      ],
+      [
+       "B",
+       "C",
+       "D",
+       "E",
+       "T"
+      ],
+      [
+       "M",
+       "N",
+       "O",
+       "P",
+       "B"
+      ],
+      [
+       "S",
+       "T",
+       "U",
+       "V",
+       "D"
+      ],
+      [
+       "D",
+       "E",
+       "F",
+       "G",
+       "Q"
+      ],
+      [
+       "N",
+       "O",
+       "P",
+       "Q",
+       "H"
+      ]
+     ]
+    }
+   ],
+   "stem": "A pentagon has 5 vertices, each labelled with a different letter. Going around the shape clockwise, the labels are, in order: {=v[0]}, {=v[1]}, {=v[2]}, {=v[3]}, {=v[4]}. A student checks the first four labels, sees that they climb the alphabet one letter at a time, and concludes that the pentagon is correctly named. Is the student right, and why?",
+   "solution": [
+    "Check every consecutive pair of vertices going around the shape, not just the first few: {=v[0]}→{=v[1]}, {=v[1]}→{=v[2]}, {=v[2]}→{=v[3]} each climb one letter at a time.",
+    "The next edge, {=v[3]}→{=v[4]}, is where the pattern already breaks: for the naming to hold, {=v[4]} would have to be the very next letter after {=v[3]}, but it is not.",
+    "There is still one edge left in the cycle — the one that actually closes the loop back to the start, {=v[4]}→{=v[0]} — but a single break is already enough to fail the naming, so that edge cannot rescue it. The pentagon is not correctly named as given, and checking only the first four labels, as the student did, would have missed the break entirely."
+   ],
+   "choices": {
+    "correct": "No — the convention requires the letters to climb one at a time all the way around the shape and back to the start. After {=v[3]} the next vertex is {=v[4]}, which does not continue the sequence, so the pentagon is not correctly named as given.",
+    "distractors": [
+     {
+      "text": "Yes — the first four vertices climb one letter at a time, so the pentagon is correctly named.",
+      "misconception_id": "mc:g10m8s1-1-3:partial-arc-check"
+     },
+     {
+      "text": "No — the labels must be read going anticlockwise instead, since a clockwise reading is never the correct convention.",
+      "misconception_id": "mc:g10m8s1-1-3:assumes-only-one-direction-counts"
+     },
+     {
+      "text": "No — the naming is wrong because the sequence does not start with the letter A.",
+      "misconception_id": "mc:g10m8s1-1-3:expects-labels-to-start-at-a"
+     }
+    ]
+   },
+   "proposed_misconceptions": [],
+   "notes": "Advanced twist on the same book device (ex8-6-3, p.316, viewed its figure): four of five vertices climb consecutively but the 4th edge breaks, so a partial check (misconception already catalogued) looks correct. All three distractors reuse the three catalogued misconceptions for this LO verbatim; no new ids needed. The five-letter tuples are hand-verified literals (no chr()/letter-arithmetic exists in the family DSL) so every instance is guaranteed clean: first four strictly consecutive ascending, fifth distinct from all four and never the true next letter. v2 fix: the blind grader (wf_c9fa108d-2eb) correctly caught that solution step 2 mislabeled v[3]→v[4] (just the 4th of 5 cycle edges) as 'the edge that closes the loop back to the start' — the real closing edge is v[4]→v[0], which the template never examined. Verified by hand on instance E,F,G,H,B: the true closing edge is B→E, not H→B. The key answer was never wrong (the break found at v[3]→v[4] is on its own sufficient to fail the naming, regardless of what the closing edge does), so only the solution wording needed fixing — rewrote step 2 to correctly describe v[3]→v[4] as the next edge (where the break is found) and added step 3 to correctly name the true closing edge v[4]→v[0] and explain why it's moot once a break is already found."
+  }
+ ],
+ "changes": [
+  "Root cause (confirmed by reading families/evaluator.py, families/spec.py and the sibling test in tests/test_family_widget_workflows.py, and by re-running the real checkers against my fix):\n1. marker.answer = \"t = {=t_true} and b = {=b}\" interpolates to text with two '=' signs plus the word \"and\" (e.g. \"t = 9 and b = -3\"). The plain-maths grader (parse_plain in families/evaluator.py) requires exactly one top-level '=' when it's an equation-shaped answer, so every instance raised Unreadable(\"more than one '='\") and no question was ever produced — matching both deterministic-check failures verbatim.\n2. Independently, marker.kind \"values\" grades by sorting the key's and the submission's numbers and comparing the sorted lists (evaluator.py ~L897), so it structurally cannot distinguish a correct (t, b) from a swapped (b, t) — matching the reviewer's third objection.\n\nFix: switched from answer_type \"expression\" (marker, two unknowns t and b) to answer_type \"numeric\" asking for ONE value, t, with a plain \"answer\": \"t_true\" (no marker/choices, per the numeric schema rule in families/spec.py). b is kept as a computed param but is now folded into the stem/solution as a plain given number in M's coordinates (M({=xM}, {=b})), the same way xM/xQ/yQ are already given — so the \"twist\" (reversing the mid-point formula to recover P's unknown x-coordinate from a fully-specified mid-point) survives, but nothing ambiguous is asked. Kept the id; bumped version to 2 (was unversioned/v1). Also trimmed the solution from 5 steps to 4 (dropped the now-pointless \"solve for b\" step) and reworded the stem to ask only \"Find the value of $t$.\"\n\nVerified directly (not just by inspection): loaded the fixed JSON with families.spec.check_spec (0 problems) and generate_questions.spec_problems (0 problems, 30/30 sampled instances instantiate with 0 rejections). Manually inspected two concrete instantiated instances, including one with a negative xQ, and confirmed both the arithmetic (2*xM - xQ recovers t_true exactly) and the LaTeX sign rendering (\"-(-4)\") are correct — the original reviewer note asking to double-check that sign case is now resolved, not just carried forward.\n\nFiles read (no repo files modified — only the spec is returned for the workflow to apply): families/g10-math/_held--g10m8s4-1-1--unknown-coordinate-from-midpoint.json (the spec under fix), families/evaluator.py, families/spec.py, generate_questions.py, tests/test_family_widget_workflows.py, families/g10-math/g10m8s4-1-2--endpoint-from-midpoint.json and g10m8s3-1-2--unknown-x-from-gradient.json (sibling examples for numeric/coordinates marker conventions), objectives/g10-math/g10m8s4-1.json (confirms ex8-6-17 and ex8-5-3c are both catalogued exercise_items of lo:g10m8s4-1-1, grounding the tier-advanced twist).",
+  "Confirmed the blind grader's finding by hand-working instance g005 (E,F,G,H,B): the pentagon's 5-cycle edges are E→F, F→G, G→H, H→B, and B→E (the true loop-closing edge back to the start). The original solution's step 2 mislabeled H→B — which is just the 4th of 5 edges — as \"the last step [that] closes the loop back to the start,\" when the actual closing edge (B→E) was never mentioned. This same substitution recurred in every instance (also confirmed for P,Q,R,S,F → true closing edge F→P, and G,H,I,J,A → true closing edge A→G). The grader was right: this is a template-level geometry error that would actively teach students to misidentify which edge closes a polygon's vertex cycle.\n\nThe MCQ key itself was never wrong: the break found at v[3]→v[4] is by itself sufficient to conclude the pentagon isn't correctly named, regardless of the mislabeling, so no change was needed to params, distractors, the correct-choice text, or the stem (all already passed their checks).\n\nFix: rewrote solution step 2 to correctly describe {v[3]}→{v[4]} as just the next edge in the cycle (where the break is actually found), and added a new step 3 that correctly identifies the true closing edge {v[4]}→{v[0]} and explains that it doesn't need separate checking once an earlier break has already been found. Bumped version 1 → 2; id, params, stem, choices, and all other fields unchanged."
+ ],
+ "run_id": "wf_c8f00d37-c28"
+}

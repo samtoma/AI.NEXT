@@ -8,6 +8,7 @@ import katex from "katex";
 // critical path of every route — including the Arabic and Social Studies
 // lessons, which render no maths at all.
 import "katex/dist/katex.min.css";
+import { inlineSafeTex } from "@/lib/math-text";
 
 /**
  * Renders a string containing inline $...$ LaTeX segments (the format used by
@@ -50,7 +51,9 @@ function renderMixed(text: string): string {
     .map((part) => {
       if (part.startsWith("$") && part.endsWith("$") && part.length > 2) {
         try {
-          return katex.renderToString(part.slice(1, -1), {
+          // `align*` is display-only and fails inline; `aligned` is the same
+          // layout, legal here (lib/math-text.ts `inlineSafeTex`).
+          return katex.renderToString(inlineSafeTex(part.slice(1, -1)), {
             throwOnError: false,
             output: "html",
           });

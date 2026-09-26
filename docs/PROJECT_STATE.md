@@ -118,9 +118,11 @@ and T433 (the third-reading rule, FR-4407).
     kind can draw get native renderers too, once Samuel approves the kind (FR-4321);
   - one source for the misconception catalogue (B19, now **built and verified**, T423's CI proof
     still to run);
-  - misconception verification runs per objective, **$22–32/objective**; S0b is **$24–44/book**
-    (batch-setting dependent, fixed after the Chapter 8 pilot); **the book total is about $220–260**
-    one-time.
+  - misconception verification runs per objective; the "$22–32" was the **whole-book** S5 estimate,
+    first mislabelled "per objective" (corrected 2026-09-26: the Chapter 8 pilot measures **≈ $0.70 per
+    objective**); S0b is **$24–44/book** (batch-setting dependent). The planned book total of $220–260 is
+    superseded by the pilot's calibrated projection, **≈ $0.85–1.1k one-time**
+    (`docs/WIP-g10-pilot/pilot-report.md`).
 - **Every curriculum**: a book section's parts stay together, for recommendations, progression, a
   roll-up score, the skill map, the Ask context, the printed number and the console.
 

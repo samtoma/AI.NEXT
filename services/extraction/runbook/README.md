@@ -167,6 +167,12 @@ uv run assemble_maths.py books/<book>.json runs/<book>/maths/*.json    # [verifi
 #     runs/<book>/maths/queue.json     images neither rule accepted, or the PDF cross-check contradicted
 ```
 
+**An aligned derivation's hash.** The book names an `align*` image `md5` of its lines **without** the
+environment and with `&` written as the HTML entity `&amp;` (its source was HTML-escaped before hashing;
+proven on the hash-accepted Chapter 8 images). `assemble_maths.py` proves a transcription by either form
+(`hash_forms`) and **stores** it canonical: real `&`, inside `\begin{align*}…\end{align*}` (`canonical`).
+No entity is ever stored. `md5check` answers the canonical form too.
+
 **GATE G0b (Samuel, or someone he names):** supply the LaTeX for every image on the queue. Nothing is
 guessed. S1, S2 and S3 do not start until the queue is empty.
 
@@ -246,11 +252,68 @@ What it does that matters for review:
 - **S2**: `teacher_only` blocks are dropped before any claim.
 - **S3**: an exercise's canonical solution is **its EPUB worked solution** (`book_worked_epub`).
 - **Blind re-solve**: it must agree with the printed answer **and** the EPUB solution.
-- **Answer typing**: `numeric`, `choice` (only where natural), `expression` (with its kind and the form
-  asked, for the app's marker) or `not_markable`, which becomes a worked example.
+- **Answer typing**: `numeric`, `choice` (only where natural; its options come from the stem, from the
+  labels of a figure of the item, or from the lesson's closed set), `expression` (with its kind and the
+  form asked, for the app's marker) or `not_markable`, which becomes a worked example.
 
 Resume a stopped run with the same script, the same args and `resumeFromRunId`. Cached agents return
 instantly.
+
+**Launch or resume a workflow only in a turn whose latest user message is the go-ahead for it.** The
+Workflow harness relays the operator's latest message to every agent and tells it that message wins; the
+Chapter 8 pilot's 8.1 and 8.3a (and the stopped 8.3b and 8.4) were launched under an unrelated question and
+their blind solvers answered that question instead of the items. COLLECT-2 detects it and asks once more,
+but only a clean launch prevents it.
+
+**lesson-v4** (`PROMPTS_VERSION`, 2026-09-26): a choice's options may be the labels a figure of the
+item shows ("Which point lies at (5; −4)?", A–E; shape W–Z): `options_source: "figure"`. The check: the
+item has a figure; every option is one label (a letter, with an index or a prime), all after the same
+optional word, which the stem uses ("shape Z"); no label repeats. The book gives no figure's label set as
+data, so membership is not checked here — the blind re-solve reads the figure and must pick the printed
+label. Only the typing prompt changed, but typing is the first S3 call: on a resume only S2 replays.
+
+**COLLECT-2** (`COLLECT_VERSION`, 2026-09-26; no prompt changed by it, so on its own a resume would replay
+every agent except the judge, whose pair list the collection decides). Deterministic only:
+- "book_final is in the book solution" reads each line of an aligned derivation with its left side
+  (`d&=\sqrt{45}\\&\approx 6,71` states `d\approx 6,71`), ignores `&`, and checks every maths segment of
+  a final written as a sentence. A final the solution does not contain is still refused.
+- The three-way comparison reads a sentence final by its maths span, a printed list's "and" as its comma,
+  a named or flattened left side (`m_{AC}=`, `mAC =`), an equation either way round, and
+  `\frac{-a}{b}` as `-\frac{a}{b}`. One value is still never the answer of two (`x=3` vs `x=2 or x=3`).
+- A typing or blind batch that left items unanswered, or answered off task, is asked again **once** for
+  the missing items only (label `…:again`). Whatever is still missing goes to `verify.unchecked`
+  (`[{ref, missing}]`) and `verify.off_task`; the item stays `disputed` but is **unchecked**, never a
+  disagreement between the book's sources — re-run it, do not send it to G2 as a book error.
+
+**COLLECT-3** (2026-09-26, the five lesson-v4 runs; deterministic only, the prompts are unchanged):
+- the typing check reads a named point ("M (1; 0)" is (1; 0)), a chain of names ("dAC = dBD = √26"), a
+  key typed as a set of values ("3; 9" is "x = 3 or x = 9"), a sentence final whose maths names things,
+  "and" as a list's comma on either side, and an alignment `&` copied into a final; a numeric key's
+  number is the one after the answer's last "=" ("f(2) = 5" states 5);
+- "book_final is in the book solution" accepts a final listing several statements when EACH is in the
+  solution, a worked chain L=…=R the solution holds as L=R (arithmetic only — "x = 2 or x = 3" and a
+  list of equations are never chains), `{m}_{AB}`, and a value the solution states as a segment of its own;
+- typing and the blind solver both calling an item not markable (a proof) is agreement, not a missing check;
+- a stem that refers to a figure the blind solver was not given: a blind answer that does not agree is
+  UNCHECKED (re-solve it), never a book dispute. The cause — a question's shared figure ("Given the
+  following diagram: [figure]") was not attached to its parts — is fixed in `lesson-args`;
+- three pairwise verdicts that contradict each other are flagged `inconsistent` (the judge got one wrong).
+
+**Re-collect a saved run, no model call** (when only the collection changed):
+
+```sh
+uv run recollect_lessons.py runs/<book>/lessons/<runId>.json … [--dry-run]    # [on the branch]
+#   → runs/<book>/lessons/recollected/<runId>.json  (the saved run is never overwritten)
+uv run recollect_lessons.py runs/<book>/lessons/<runId>.json … --resume-preview
+#   → what a Workflow resume with today's generated copy would replay, run live, and cost
+```
+
+It runs today's script, with the saved run's own args, through the stub runtime, every agent answered
+from the run's journal. It reuses an answer only when today's script sends the recorded prompt (from the
+agent's transcript), and a judge verdict only for the same pair id with the same two answers; anything
+else is reported (and stays `unclear`/unchecked), never guessed. A collection change usually changes the
+JUDGE's prompt (the pairs it is sent), which is why a Workflow resume would run the judge and everything
+after it live, and this does not.
 
 **Split the saved run into per-lesson files** before G2 or assembly read any of it:
 
@@ -266,6 +329,8 @@ items before the split is written.
 
 What to read in the output before G2:
 - `verify.disagreements[]`: the three-way check failed (printed answer, EPUB solution, blind re-solve);
+  an entry with `unchecked` was never checked (a missing answer), not a book dispute;
+- `verify.unchecked[]` and `verify.off_task[]` (COLLECT-2): non-empty means re-run those items;
 - `verify.no_printed_answer[]`: checked against the EPUB solution alone;
 - `prov.unsupported[]`;
 - `viz_gaps[]`;
@@ -302,13 +367,41 @@ uv run assemble_misconceptions.py runs/<book>/misconceptions/final-<runId>.json 
 proves the widget prerequisite rule (FR-1215); `--check` validates and reports without writing.
 `--validate <catalogue.json> [--book <book>]` re-checks an already-assembled catalogue on its own.
 
+**What S5, S6 and S7 are shown (s5-v4, s6-v4, s7-v4; the Chapter 8 S5 draft).** A book question whose stem
+shows `[figure]` names its image files (from the lesson runs: `assemble_misconceptions.figures_by_question`),
+and the agents may open them — S5's author and verifier ("Figure(s): …"), S6's author (`figures` on each book
+question), S7's author (`figures` on each anchor). A widget template's stem may never point at a `[figure]`
+(`check_template`): the student and the blind verifier see only the instrument. S5 also reads the book's
+teaching items (worked examples) as canonical solutions, and treats a three-way disagreement as evidence of a
+STUDENT error only when G2 kept the book's answer and the re-solve really differed (`g2.changed`, which
+`lesson-runs --g2` now records for a fix). A marked question's answer text is never a printed answer G2
+corrected (assembly).
+
+**S7 before any catalogue is loaded (the Chapter 8 pilot).** S7's author and verifier read misconceptions from
+the scratch database, which holds none of the new book's until S5 final is assembled and loaded. Pass the S5
+DRAFT run with `--catalogue runs/<book>/misconceptions/draft-<runId>.json` to both `--author-args` and
+`--verify-args`: its entries are overlaid on the database's (`CatalogueOverlay`), so the author can name them
+and the verifier reads their labels. **Notation in the catalogue (FR-4308)** is enforced where it is assembled
+(`validate_catalogue`, fail-closed): no decimal comma outside a bracket, no `(x; y)` pair. S5 writes in the
+app's notation, so its text is never passed through the bundle's book-notation normaliser (that would read the
+pair `(-2,3)` as the decimal −2.3).
+
 **S6, generated families (declarative specs, decision 16).** Workflow: `runbook/families.workflow.js`
 [exists] (by-ref [on the branch], prompts `s6-v2`) → `families/<book>/*.json`.
 
 ```sh
 uv run generate_questions.py --families families/<book> --book <book> --catalogue runs/<book>/misconceptions/draft-<runId>.json \
     --author-args args/s6-author.json --by-ref            # mode author; Chapter 8: 5,370 bytes
-#   → save to runs/<book>/families/author-<runId>.json, write each spec, then --check
+#   → save to runs/<book>/families/author-<runId>.json, write each spec, then --check. Two refusals are
+#     mechanical and fixed by the pipeline, recorded in the spec's notes as a PIPELINE NORMALISATION (a
+#     redundant top-level "answer" beside marker.answer; a param named like a built-in):
+#       uv run python -m families.normalise families/<book>/<file>.json …   (--dry-run to preview)
+#     every other refusal goes back to the author; hold that spec out as families/<book>/_held--<file>.json
+#     and re-author it alone, through the shared revise prompt (s6 prompts unchanged), with its reasons:
+#       uv run generate_questions.py --families families/<book> --book <book> --revise-args A.json \
+#           --revise families/<book>/_held--<file>.json … --revise-problem <family id> "<reason>" …
+#     (the check's own reasons are added for you); the run returns `revised` — write it back without the
+#     _held-- prefix, --check it, and grade it
 uv run generate_questions.py --families families/<book> --book <book> \
     --grading-set runs/<book>/families/grading-set.json --grade-args args/s6-grade.json --by-ref \
     --s5-distractors runs/<book>/families/s5-distractors.json     # mode grade; Chapter 8: 14,408 bytes
@@ -328,7 +421,33 @@ uv run generate_questions.py --families families/<book> --course <course-id> \
 1. `--author-args A.json --by-ref` (by-ref [on the branch], prompts `s7-v2`; Chapter 8: 3,275 bytes)
    writes the author pass's args — shards `contract.txt` and `lessons/<lesson>.txt`; run the workflow
    with them (`mode: "author"`: pick an existing kind only where it genuinely fits, write the template,
-   or record the gap); save its return to `runs/<book>/widgets/author-<runId>.json`.
+   or record the gap); save its return to `runs/<book>/widgets/author-<runId>.json`. To re-author some
+   lessons only (prompts `s7-v5`, after the six kinds of decision 27 were registered), add
+   `--only-lessons g10m8s3-2[,…]`: the packet holds those lessons and nothing else. Then merge the runs,
+   OLDEST FIRST — a lesson's record in a later run replaces its earlier one whole (templates and gaps
+   together) — and write the templates from the merge (no database; never overwrites, and refuses while a
+   superseded template file is still in the directory):
+   ```sh
+   uv run generate_widget_questions.py --merge-author-runs runs/<book>/widgets/author-<old>.json \
+       runs/<book>/widgets/author-<new>.json --merged runs/<book>/widgets/author-merged.json \
+       --write-templates widgets/<book>
+   ```
+   and pass only `author-merged.json` to `--gaps` below (every file given to `--gaps` contributes its gaps).
+   Before S5 final, write S7's mappings again WITH `--verdicts`: only verified templates and CONFIRMED
+   mappings reach S5 (the pre-catalogue file holds every mapping, refused ones included). Decision 47: a
+   mapping the verifier did not confirm is held (`choices.pending_review`), not dropped — add
+   `--pending-review runs/<book>/widgets/pending-review.json` and render the **G3 held-mappings page**
+   (part of gate G3): `uv run render_review_page.py --gate g3-mappings --mappings runs/<book>/widgets/pending-review.json
+   --out runs/<book>/g3-mappings-chNN.review.html`. Its export goes to the final pass as
+   `--mapping-review <file>` (keep → active, drop → deleted); then re-reconcile the tags with
+   `assemble_misconceptions.py … --bundle` as usual. The same for S6: `--s5-distractors` with
+   `--grades` holds only the families the blind grade passed.
+   Two author errors the pre-catalogue pass refuses are fixed mechanically and recorded in the template's
+   notes: a diagnostic naming a misconception outside the objective and its prerequisites (dropped while an
+   own one remains, FR-1215), and a predicate mapped twice (its first mapping kept):
+   `uv run generate_widget_questions.py --dsn … --catalogue <S5 draft> --normalise-templates <files> [--dry-run]`.
+   Anything else goes back to the author. From `s7-v6` the author prompt states both as rules (ids from the
+   objective's own list only; one predicate, one misconception), so fan-out should rarely need them.
 2. Pre-catalogue pass, so the reachability/prerequisite checks below have something to check against
    before S5's final catalogue is loaded:
    ```sh
@@ -404,6 +523,10 @@ uv run parity_check.py --candidate "$AINEXT_DB_DSN" --all-courses               
 uv run parity_check.py --candidate "$AINEXT_DB_DSN" --course <course-id>           # [verified] B10, the new course against its manifest
 ```
 
+- **Aligned derivations render inline.** The app renders every `$…$` inline with KaTeX, which draws
+  `align*` only in display mode (inline it shows a red error span whose escaped source reads `&amp;`).
+  The bundle writes `align*` inside `$…$` as `aligned` (counted as `aligned`, presentation only), and
+  the coverage audit fails (`residual_notation`) on any display-only environment left in a bundle.
 - **The drift check must stay GREEN for every existing course.** It is scoped per course (B10), so a
   second maths course no longer turns Prep-3 RED. If it does, that is real drift: do not "fix" it by
   editing `EXPECTED`.
@@ -430,6 +553,31 @@ uv run apply_review_verdicts.py verdicts.json                # [exists]
   - a 10% sample of `book_worked_epub` solutions.
 
   Nobody corrects a printed answer or a book solution silently.
+
+  G2's page must show items whose typing G2 has still to fix, which the real split refuses. So:
+
+  ```sh
+  uv run assemble_objectives.py lesson-runs <book> <run> --draft        # → runs/<book>/lesson-draft/ (pending_g2 listed; assembly refuses a draft)
+  uv run render_review_page.py --gate g2 --book <book> --chapter 8 --runs runs/<book>/lesson-draft \
+      --recommend runs/<book>/g2-ch08.recommended.json --out runs/<book>/g2-ch08.review.html
+  uv run render_review_page.py --gate g2 --book <book> --export <page>.verdicts.json \
+      --recommend runs/<book>/g2-ch08.recommended.json --out runs/<book>/g2.json   # the page's export → G2's file
+  uv run assemble_objectives.py lesson-runs <book> <run> --g2 runs/<book>/g2.json   # the real split
+  ```
+
+  G2's file is `{"by": "<reviewer>", "items": {"<lesson>:<ref>": {"verdict": "accept"|"fix"|"hold"|"exclude",
+  "note": "…", "fields": {…}}}}` (what `lesson-runs --g2` and `apply_review_verdicts.py --g2` read). A
+  recommendations file has the same shape, unsigned, plus `class`, `confidence` (`low` = the maths is
+  checked but the verdict is a content decision — the page marks it "your call", with `why_low`). On the
+  page, Fix with an empty note takes the recommended `fields`; Fix with a note of your own is listed as a
+  TODO until its fields are written. A resumed Workflow run appends to its journal:
+  `recollect_lessons.py` reads each label's LATEST agent.
+
+  Two G2-only fields (decisions 41 and 43, contract `specs/003-curriculum-tracks/contracts/pipeline-handoff.md`):
+  a choice item's `less_specific: [option keys]` (other TRUE options, returned for re-entry, never wrong; the
+  question's `choices` becomes `{"options": […], "less_specific": […]}`), and an expression item's
+  `answer_only: true` (no book working: marked on the answer, no step-by-step explanation; needs printed =
+  blind, and the solution is left as the book has it). The run item, assembly and the schema check both.
 - **GATE G3 (Samuel):** the 10% family-stratified sample of the generated and widget questions.
 - **GATE G4 (Samuel):** a sample of refutations, and the count of refutations the verifier dropped.
 

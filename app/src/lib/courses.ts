@@ -105,6 +105,16 @@ export interface CourseDef {
    */
   cite: { name: string; edition: string };
   /**
+   * How the signed-in home page (`app/(student)/page.student.tsx`) words
+   * where the material comes from: `source` completes "a knowledge graph
+   * extracted from …", and `syllabus` sits under the prerequisite count. A
+   * National student reads exactly what that page has always said (FR-4206);
+   * a Grade 10 student is not told her book is the Egyptian Ministry textbook
+   * or the 2025–2026 syllabus (FR-4205). `sourceWordingFor`, below, picks the
+   * words for the courses she may see.
+   */
+  homeCopy: { source: string; syllabus: string };
+  /**
    * The extraction pipeline's name for this book — its config in
    * `services/extraction/books/<pipelineBook>.json`, whose `course_id` is
    * this course's id — and so the name of its S8 coverage audit,
@@ -311,6 +321,12 @@ const NATIONAL_BOOK = {
 /** How the student surfaces have always cited a National book. */
 const NATIONAL_CITE = { name: "Ministry textbook", edition: "MOETE 2025–2026" } as const;
 
+/** What the home page has always said about a National book — text unchanged. */
+const NATIONAL_HOME = {
+  source: "the Egyptian Ministry textbook",
+  syllabus: "syllabus 2025–2026",
+} as const;
+
 /* ------------------------------------------------------------------ */
 /* The registry                                                        */
 /* ------------------------------------------------------------------ */
@@ -331,6 +347,7 @@ export const COURSES = {
     label: "Mathematics — Prep 3",
     book: "Mathematics — Student's Book, Preparatory Year Three, First Term",
     cite: NATIONAL_CITE,
+    homeCopy: NATIONAL_HOME,
     pipelineBook: "prep3-math-en",
     // Term-1 algebra, then Term-2 algebra (`module:t2-*`), then geometry
     // (`module:geo*`, which the syllabus also teaches in Term 2). THE ORDER
@@ -360,6 +377,7 @@ export const COURSES = {
     label: "Social Studies — Prep 3",
     book: "الدراسات الاجتماعية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",
     cite: NATIONAL_CITE,
+    homeCopy: NATIONAL_HOME,
     pipelineBook: "prep3-social-ar",
     // No rule: every module reads Term 1, as the check-in has always printed.
     terms: { rules: [], defaultTerm: 1 },
@@ -380,6 +398,7 @@ export const COURSES = {
     label: "Arabic — Prep 3",
     book: "اللغة العربية — كتاب الطالب، الصف الثالث الإعدادي، الفصل الدراسي الأول",
     cite: NATIONAL_CITE,
+    homeCopy: NATIONAL_HOME,
     pipelineBook: "prep3-arabic-ar",
     terms: { rules: [], defaultTerm: 1 },
     probing: false,
@@ -401,6 +420,12 @@ export const COURSES = {
     book: "Everything Maths — Grade 10 (Siyavula)",
     // The book's own name, never "Ministry textbook" (FR-4205; backlog #36).
     cite: { name: "Everything Maths", edition: "Siyavula · Grade 10" },
+    // Its own book and no syllabus year, which the book does not print
+    // (FR-4205, decision 10).
+    homeCopy: {
+      source: "Everything Maths, the Siyavula Grade 10 textbook",
+      syllabus: "Everything Maths · Grade 10",
+    },
     pipelineBook: "g10-math",
     // The book is chapters and sections, with no school terms (FR-4203).
     terms: null,
@@ -479,4 +504,44 @@ export function courseRank(raw: unknown): number {
 /** Registry-order comparator for course ids (unknown last). */
 export function compareCourses(a: unknown, b: unknown): number {
   return courseRank(a) - courseRank(b);
+}
+
+/* ------------------------------------------------------------------ */
+/* Student-facing wording                                              */
+/* ------------------------------------------------------------------ */
+
+/**
+ * When a student's courses do not agree on one book — a tester's exception
+ * for another curriculum's course — or she may see none yet: words true of
+ * any book, naming none.
+ */
+export const NEUTRAL_HOME_COPY = {
+  source: "the textbooks of your own courses",
+  syllabus: "from your own textbooks",
+} as const;
+
+/**
+ * The home page's wording about where her material comes from, for the
+ * courses she may see (FR-4205, FR-4206; the 2026-09-26 isolation audit). The
+ * courses' own `homeCopy` when they all agree — every National student reads
+ * the National wording, byte for byte; a Grade 10 student reads her book's —
+ * and the neutral wording when they do not, or when she may see nothing yet,
+ * so a page is never attributed to a book she is not using. A course the
+ * registry does not know has no wording, and makes the set disagree.
+ */
+export function sourceWordingFor(
+  courseIds: Iterable<string>
+): { source: string; syllabus: string } {
+  const words = new Map<string, { source: string; syllabus: string }>();
+  let unknown = false;
+  for (const id of courseIds) {
+    const copy = courseDef(id)?.homeCopy;
+    if (!copy) {
+      unknown = true;
+      continue;
+    }
+    words.set(`${copy.source}\u0000${copy.syllabus}`, copy);
+  }
+  if (unknown || words.size !== 1) return NEUTRAL_HOME_COPY;
+  return [...words.values()][0];
 }

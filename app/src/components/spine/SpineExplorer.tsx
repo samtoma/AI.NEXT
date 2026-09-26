@@ -4,6 +4,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type {
   AttemptResult,
+  SpineCourse,
   SpineData,
   SpineQuestion,
   SpineSubject,
@@ -16,11 +17,7 @@ import { QuestionModal } from "./QuestionModal";
 import { NoorPanel } from "./NoorPanel";
 import type { CiteInfo } from "@/components/chat/CitationChip";
 import { MASTERY_LEGEND, masteryStage, masteryPhrase } from "@/lib/mastery";
-import {
-  SPINE_SUBJECT_KEYS,
-  displayLabelOfSpineKey,
-  spineSubjectDef,
-} from "@/lib/subjects";
+import { displayLabelOfSpineKey, spineSubjectDef } from "@/lib/subjects";
 import { HEADING, HONEY_BAND, STROKE_SM, cx } from "@/components/sticker";
 
 /** "mathematics" → "Mathematics". The subject, never a unit name. */
@@ -75,26 +72,40 @@ const segment = (on: boolean) =>
  * the map shows ONE subject at a time, as this design intends, with a subject
  * picker when more than one is visible to her. It never mixes subjects in one
  * tree; the branch's version would have, the moment a second course went live.
+ * Since 003 the unit is the COURSE, not the subject (FR-4009): two maths
+ * books are two maps, each in its own book's order and citing its own book.
  */
 export function SpineExplorer({ data }: { data: SpineData }) {
   const router = useRouter();
   const [asOf, setAsOf] = useState<AsOf>("today");
-  // Subjects present in what the gate let through, registry order.
-  const subjectsPresent = useMemo(() => {
-    const present = new Set(data.los.map((l) => l.subject));
-    return SPINE_SUBJECT_KEYS.filter((k) => present.has(k));
-  }, [data.los]);
-  const [subjectPick, setSubjectPick] = useState<SpineSubject | null>(null);
-  const subject: SpineSubject | null =
-    subjectPick && subjectsPresent.includes(subjectPick)
-      ? subjectPick
-      : (subjectsPresent[0] ?? null);
+  /* COURSE, NOT SUBJECT (FR-4009, T372). The courses on the map, in course
+     order, each with its own book (`getSpineData`). A National student sees
+     one course per subject, so this is the subject picker she always had —
+     same entries, same order, same labels. A tester whose exception shows her
+     the other curriculum's maths gets TWO maths entries, named by their
+     course labels, and never one "Mathematics" tree merging two books. */
+  const coursesPresent = data.courses;
+  /** a course's picker label: its subject's, unless another course shares it */
+  const courseLabel = useCallback(
+    (c: SpineCourse) =>
+      c.subject !== null &&
+      coursesPresent.filter((o) => o.subject === c.subject).length === 1
+        ? displayLabelOfSpineKey(c.subject)
+        : c.label,
+    [coursesPresent]
+  );
+  const [coursePick, setCoursePick] = useState<string | null>(null);
+  const course: SpineCourse | null =
+    coursesPresent.find((c) => c.id === coursePick) ?? coursesPresent[0] ?? null;
+  const subject: SpineSubject | null = course?.subject ?? null;
+  /** the book of the course being looked at — never the first course's */
+  const courseDoc = course?.doc ?? data.doc;
   const visibleLos = useMemo(
     () =>
-      subject === null || subjectsPresent.length <= 1
+      course === null || coursesPresent.length <= 1
         ? data.los
-        : data.los.filter((l) => l.subject === subject),
-    [data.los, subject, subjectsPresent.length]
+        : data.los.filter((l) => l.courseId === course.id),
+    [data.los, course, coursesPresent.length]
   );
   /* BOOK SECTIONS (feature 003; FR-4315, FR-4317). Each split section's
      topics, keyed for the map, which frames them as one group labelled
@@ -276,12 +287,23 @@ export function SpineExplorer({ data }: { data: SpineData }) {
             }
           : null;
       }
+      // A page is a page of the book of the course on screen (FR-4205):
+      // Noor's answer here is about the map being looked at, and naming the
+      // first course's book for another course's page is a wrong citation.
       return {
-        title: data.doc.title,
-        sub: `${data.doc.publisher} · page ${c.id}`,
+        title: courseDoc.title,
+        sub: `${courseDoc.publisher} · page ${c.id}`,
       };
     },
-    [losById, questionsById, questionCounts, data.doc]
+    [losById, questionsById, questionCounts, courseDoc]
+  );
+  /** the book a question's own course is built from (its provenance plate) */
+  const docOfLo = useCallback(
+    (loId: string) => {
+      const id = losById.get(loId)?.courseId;
+      return data.courses.find((c) => c.id === id)?.doc ?? courseDoc;
+    },
+    [losById, data.courses, courseDoc]
   );
 
   const handleChatAttempt = useCallback(
@@ -323,7 +345,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
       >
         <div>
           <p className="font-display text-[0.78rem] font-bold leading-none text-[color:var(--play-text-muted)]">
-            {subject ? displayLabelOfSpineKey(subject) : titleCase(data.doc.subject)}
+            {course ? courseLabel(course) : titleCase(data.doc.subject)}
           </p>
           {/* main's HEADING (Baloo 800 at a 1.2 leading — Baloo is tall, and
               the 1.1 this carried makes a wrapped title collide) at the
@@ -333,20 +355,20 @@ export function SpineExplorer({ data }: { data: SpineData }) {
           </h1>
         </div>
 
-        {subjectsPresent.length > 1 && (
+        {coursesPresent.length > 1 && (
           <div className={SEGMENTED} role="group" aria-label="Subject">
-            {subjectsPresent.map((key) => (
+            {coursesPresent.map((c) => (
               <button
-                key={key}
+                key={c.id}
                 onClick={() => {
-                  setSubjectPick(key);
-                  // a topic from another subject is about to leave the view
+                  setCoursePick(c.id);
+                  // a topic from another course is about to leave the view
                   setSelectedLoId(null);
                 }}
-                aria-pressed={subject === key}
-                className={segment(subject === key)}
+                aria-pressed={course?.id === c.id}
+                className={segment(course?.id === c.id)}
               >
-                {displayLabelOfSpineKey(key)}
+                {courseLabel(c)}
               </button>
             ))}
           </div>
@@ -447,7 +469,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         <QuestionModal
           question={openQuestion}
           lo={data.los.find((l) => l.id === openQuestion.loId) ?? null}
-          doc={data.doc}
+          doc={docOfLo(openQuestion.loId)}
           onClose={() => setOpenQuestion(null)}
         />
       )}

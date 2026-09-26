@@ -10,6 +10,7 @@ import { currentSessionSnapshot } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { markAnswer, type AttemptRetry } from "@/lib/attempt-grading";
 import { MarkerKeyError } from "@/lib/answer-marker";
+import { choiceOptions } from "@/lib/question-flags";
 import {
   acceptedRetryOf,
   attemptProbingDeclaration,
@@ -209,7 +210,11 @@ export async function POST(req: Request) {
       // `markAnswer` decides which, and the replay proves the second half on
       // every recorded attempt (SC-212). A re-entry is decided HERE, before
       // the session below is adopted or opened and before any write, and it
-      // leaves by throwing so the unit of work rolls back whole.
+      // leaves by throwing so the unit of work rolls back whole. The same
+      // re-entry answers a choice question's TRUE but less precise option
+      // (`choices.less_specific`, Samuel's G2 answer 20; lib/question-flags.ts):
+      // not wrong, not an attempt, asked again. A malformed flag is ignored
+      // with a server-log warning, never a failed request.
       const verdict = isWidget ? null : markAnswer(q, givenAnswer);
       if (verdict?.verdict === "retry") {
         throw new ReentryRequested({
@@ -233,9 +238,9 @@ export async function POST(req: Request) {
       // thing she clicked. A numeric answer gets no diagnosis at all rather than
       // an invented one.
       const chosenOption: { text?: string; misconception_id?: string } | null =
-        !isCorrect && q.question_type === "mcq" && Array.isArray(q.choices)
-          ? (q.choices.find(
-              (c: { key?: string }) => c.key === givenAnswer.trim().toUpperCase()
+        !isCorrect && q.question_type === "mcq"
+          ? ((choiceOptions(q.choices) as { key?: string; text?: string; misconception_id?: string }[] | null)?.find(
+              (c) => c.key === givenAnswer.trim().toUpperCase()
             ) ?? null)
           : null;
 

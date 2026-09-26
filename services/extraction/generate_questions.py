@@ -1477,6 +1477,32 @@ def declarative_families(specs) -> list[Family]:
     return out
 
 
+def spec_problems(raw: dict, per_family: int = 10, seed: int = 20260925) -> list[str]:
+    """What --check says about ONE spec, as the author should read it: its structural problems, else each
+    distinct evaluation error and whether it produced nothing. Empty: the spec passes."""
+    import hashlib
+
+    from families import spec as FS
+    found = FS.check_spec(raw, str(raw.get("id") if isinstance(raw, dict) else "<spec>"))
+    if found:
+        return found
+    spec = FS.FamilySpec(raw=raw, path=None, sha=hashlib.sha256(FS._canonical(raw)).hexdigest())
+    questions, rejected, counts = run_specs([spec], per_family, seed)
+    errors = sorted({r.split(": evaluation error: ", 1)[1] for r in rejected if ": evaluation error: " in r})
+    out = [f"every attempt to instantiate it failed to evaluate: {e}" if not questions else
+           f"some attempts failed to evaluate: {e}" for e in errors]
+    if not questions:
+        out.append("the family produced no question")
+    return out
+
+
+def revise_args(book, entries: list[dict]) -> dict:
+    """families.workflow.js args (mode author) that re-author only these specs: [{spec, problems}]. The
+    workflow's revise prompt is the shared one; each spec carries its own reasons (s6 prompts unchanged)."""
+    import book_config
+    return book_config.workflow_args(book, extra={"mode": "author", "revise": entries})
+
+
 def run_specs(specs, per_family: int, seed: int) -> tuple[list[dict], list[str], dict[str, int]]:
     """Instantiate declarative specs with the shared driver (pre-rebalance)."""
     from families import evaluator as FE
@@ -1616,6 +1642,33 @@ def _decimals(s: str) -> int:
     return len(s.split(".", 1)[1]) if "." in s else 0
 
 
+def blind_plain(kind: str, text: str, variables: list[str]) -> str:
+    """A blind answer's NAMES removed, as the app's marker removes them (answer-marker.ts parseElements: a named
+    value "x = 2", values joined by "or"/"and"/";", a point's name "A(1; 2)" or "A = (1, 2)"), so the pipeline
+    never refuses an answer the app would mark correct. Only names go; every value still has to match the key.
+      values        "x = [0, 8]", "x = 0 or x = 8", "x = 0; x = 8"  ->  "[0, 8]"
+      coordinates   "H = (3, 1)", "H(3; 1)", "(3; 1)"               ->  "(3, 1)"
+    """
+    import re
+    t = text.strip()
+    if kind == "values":
+        names = "|".join(re.escape(v) for v in variables) or r"(?!)"
+        body = re.sub(rf"^\s*(?:{names})\s*=\s*(?=\[)", "", t)
+        if body != t:
+            return body
+        parts = re.split(r"\s*(?:\bor\b|\band\b|;)\s*", t)
+        if len(parts) > 1:
+            vals = [re.sub(rf"^\s*(?:{names})\s*=\s*", "", p) for p in parts]
+            if all(v and "=" not in v for v in vals):
+                return "[" + ", ".join(vals) + "]"
+        return re.sub(rf"^\s*(?:{names})\s*=\s*(?=[^=]*$)", "", t)
+    if kind == "coordinates":
+        m = re.fullmatch(r"(?:[A-Z][A-Za-z0-9_']*\s*=?\s*)?\(\s*([^;,()]+?)\s*[;,]\s*([^;,()]+?)\s*\)", t)
+        if m:
+            return f"({m.group(1)}, {m.group(2)})"
+    return t
+
+
 def answer_agrees(q: dict, given: dict) -> tuple[bool, str]:
     """Deterministic comparison of one blind answer with the family's computed key."""
     from families import evaluator as FE
@@ -1635,8 +1688,8 @@ def answer_agrees(q: dict, given: dict) -> tuple[bool, str]:
         return abs(got - float(key)) <= tol, f"answered {raw}, key {key}"
     m = q["choices"]["marker"]
     try:
-        ok = FE.equivalent(m["kind"], q["answer_check"], str(given.get("plain", "")), m["variables"],
-                           (m.get("tolerance") or {}).get("abs"))
+        ok = FE.equivalent(m["kind"], q["answer_check"], blind_plain(m["kind"], str(given.get("plain", "")), m["variables"]),
+                           m["variables"], (m.get("tolerance") or {}).get("abs"))
     except FE.Unreadable as e:
         return False, f"unreadable answer ({e})"
     return ok, f"answered {given.get('plain')!r}, key {q['answer_check']!r}"
@@ -1736,8 +1789,12 @@ def tier_floor(objectives: dict[str, dict], generated: list[dict]) -> dict:
             "below_floor": below, "by_objective": cells}
 
 
-def author_args(book, specs, objectives: dict, entries: dict, all_objectives: bool, generated: list[dict]) -> dict:
-    """``args`` for families.workflow.js (mode "author"): the gap list and its evidence."""
+def author_args(book, specs, objectives: dict, entries: dict, all_objectives: bool, generated: list[dict],
+                figures: dict | None = None) -> dict:
+    """``args`` for families.workflow.js (mode "author"): the gap list and its evidence. `figures`
+    (question id -> image files, assemble_misconceptions.figures_by_question) puts each book question's
+    diagram beside it, so the author sees what a [figure] stem shows (s6-v4)."""
+    figures = figures or {}
     import book_config
     floor = tier_floor(objectives, generated)
     gaps = {b["lo_id"]: b["missing"] for b in floor["below_floor"]}
@@ -1755,8 +1812,9 @@ def author_args(book, specs, objectives: dict, entries: dict, all_objectives: bo
             "lo_id": lo, "label": rec["label"], "description": rec["description"],
             "module": rec["module"], "lesson": book_config.lesson_slug(lo),
             "tier_gaps": gaps.get(lo, []), "existing_families": existing.get(lo, []),
-            "book_questions": [{k: q.get(k) for k in ("id", "tier", "type", "stem", "choices", "answer",
-                                                       "solution", "source_page")} for q in qs],
+            "book_questions": [{**{k: q.get(k) for k in ("id", "tier", "type", "stem", "choices", "answer",
+                                                          "solution", "source_page")},
+                                **({"figures": figures[q["id"]]} if figures.get(q.get("id")) else {})} for q in qs],
             "misconceptions": [{"id": m["id"], "label": m.get("label"), "description": m.get("description")}
                                for m in entries.values() if m.get("lo_id") == lo],
         })
@@ -1791,8 +1849,10 @@ def author_args_by_ref(args: dict, directory: Path) -> dict:
         tail = o["lo_id"].removeprefix("lo:")
         shards.put(f"o/{tail}.book-questions.txt", packet_ref.js_json(packet_ref.js_or(o.get("book_questions"), []), 1))
         shards.put(f"o/{tail}.misconceptions.txt", packet_ref.js_json(packet_ref.js_or(o.get("misconceptions"), []), 1))
-        refs.append({k: o.get(k) for k in ("lo_id", "label", "description", "module", "lesson", "tier_gaps",
-                                           "existing_families")})
+        n_fig = sum(len(q.get("figures") or []) for q in o.get("book_questions") or [])
+        refs.append({**{k: o.get(k) for k in ("lo_id", "label", "description", "module", "lesson", "tier_gaps",
+                                              "existing_families")},
+                     **({"figures": n_fig} if n_fig else {})})
     out = {k: v for k, v in args.items() if k not in ("objectives", "book")}
     out["book"] = _small_book(args["book"])
     out["by_ref"] = shards.finish({"book": args["book"]["book"], "mode": "author"})
@@ -1971,12 +2031,22 @@ def main_families(argv: list[str]) -> int:
     ap.add_argument("--out", type=Path, help="the generated-questions bundle (graded families only)")
     ap.add_argument("--floor-report", type=Path, help="FR-4305 tier floor, book and generated together")
     ap.add_argument("--author-args", type=Path, help="write args for families.workflow.js (mode author)")
+    ap.add_argument("--lesson-runs", type=Path,
+                    help="with --author-args: the lesson runs whose items name each book question's figure images "
+                         "(default runs/<book>/lesson/)")
     ap.add_argument("--all-objectives", action="store_true", help="author args for every objective, not only gaps")
     ap.add_argument("--s5-distractors", type=Path, help="write S6's distractors for S5's final pass")
     ap.add_argument("--grade-args", type=Path, help="write families.workflow.js's args for mode grade (the grading set)")
     ap.add_argument("--by-ref", nargs="?", const="", default=None, metavar="DIR",
                     help="with --author-args or --grade-args: packet by reference (packet_ref.py) — the prompts' big "
                          "blocks to shard files in DIR (default work/<book>/packets/s6-<mode>/), compact args naming them")
+    ap.add_argument("--revise-args", type=Path,
+                    help="write families.workflow.js args (mode author, args.revise) re-authoring only the --revise "
+                         "specs, each with its refusal: what --check says, plus every --revise-problem")
+    ap.add_argument("--revise", type=Path, nargs="+", default=[], metavar="SPEC", help="with --revise-args")
+    ap.add_argument("--revise-problem", nargs=2, action="append", default=[], metavar=("FAMILY_ID", "TEXT"),
+                    help="with --revise-args: a reviewer's (or the blind judge's) reason for ONE of the --revise "
+                         "specs, given to its author beside the check's own; repeatable")
     ap.add_argument("--compare-legacy", action="store_true", help="prove specs reproduce their hand-written twins")
     ap.add_argument("--export", type=Path, help="with --compare-legacy: the committed bank to compare against")
     args = ap.parse_args(argv)
@@ -1994,6 +2064,34 @@ def main_families(argv: list[str]) -> int:
                   "(ADR-0006, variant_engine.assert_variable).", file=sys.stderr)
             return 2
     course = args.course or (book.course_id if book else None)
+
+    if args.revise_args:
+        if not book or not args.revise:
+            print("--revise-args needs --book and --revise SPEC …", file=sys.stderr)
+            return 2
+        entries = []
+        import assemble_misconceptions as am
+        runs_dir = args.lesson_runs or Path(__file__).resolve().parent / "runs" / book.book / "lesson"
+        figs = am.figures_by_question([json.loads(p.read_text()) for p in sorted(runs_dir.glob("*.json"))])
+        raws = [json.loads(Path(f).read_text()) for f in args.revise]
+        unknown = {fid for fid, _ in args.revise_problem} - {r.get("id") for r in raws}
+        if unknown:
+            print(f"--revise-problem names {sorted(unknown)}, which no --revise spec is", file=sys.stderr)
+            return 2
+        for f, raw in zip(args.revise, raws):
+            found = spec_problems(raw, args.per_family, args.seed)
+            given = [t for fid, t in args.revise_problem if fid == raw.get("id")]
+            if not found and not given:
+                print(f"REFUSING: {f} passes --check and no --revise-problem says why it is re-authored", file=sys.stderr)
+                return 2
+            parent_figs = figs.get(raw.get("parent_question_id")) or []
+            entries.append({"spec": raw, "problems": found + given, **({"figures": parent_figs} if parent_figs else {})})
+        ra = revise_args(book, entries)
+        args.revise_args.parent.mkdir(parents=True, exist_ok=True)
+        args.revise_args.write_text(json.dumps(ra, indent=2, ensure_ascii=False) + "\n")
+        print(f"wrote {args.revise_args} — {len(entries)} spec(s) to re-author: "
+              + "; ".join(f"{e['spec'].get('id')} ({len(e['problems'])} reason(s))" for e in entries))
+        return 0
 
     specs, problems = FS.load_dir(args.families)
     for p in problems:
@@ -2036,7 +2134,10 @@ def main_families(argv: list[str]) -> int:
             print("--author-args needs --book (the objectives and book questions come from its bundles)",
                   file=sys.stderr)
             return 2
-        a = author_args(book, specs, objectives, entries, args.all_objectives, [])
+        import assemble_misconceptions as am
+        runs_dir = args.lesson_runs or Path(__file__).resolve().parent / "runs" / book.book / "lesson"
+        figs = am.figures_by_question([json.loads(p.read_text()) for p in sorted(runs_dir.glob("*.json"))])
+        a = author_args(book, specs, objectives, entries, args.all_objectives, [], figs)
         n_obj, extra = len(a["objectives"]), ""
         if args.by_ref is not None:
             import packet_ref
@@ -2087,11 +2188,18 @@ def main_families(argv: list[str]) -> int:
         print(f"  x {len(eval_errors)} attempt(s) failed to evaluate — a spec bug, fix it with a "
               "constraint or a require", file=sys.stderr)
     if args.s5_distractors:
-        ds = s5_distractors(specs, questions)
+        # with the blind grades, S5 is told only about the families that passed: a refused family's distractors
+        # must not become a misconception's evidence
+        graded = None
+        if args.grades:
+            ok, _ = apply_grades(specs, questions, args.grades)
+            graded = [s for s in specs if s.id in ok]
+        ds = s5_distractors(specs if graded is None else graded, questions)
         args.s5_distractors.parent.mkdir(parents=True, exist_ok=True)
         args.s5_distractors.write_text(json.dumps({"distractors": ds}, indent=2, ensure_ascii=False) + "\n")
         print(f"wrote {args.s5_distractors} — {len(ds)} distractor(s) for S5 (misconceptions.workflow.js, "
-              "stage final, args.distractors)")
+              "stage final, args.distractors)"
+              + ("" if graded is None else f", from the {len(graded)} of {len(specs)} famil(ies) the blind grade passed"))
 
     status = 1 if (problems or empty or eval_errors) and args.check else 0
     if args.out:

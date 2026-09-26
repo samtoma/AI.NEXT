@@ -230,6 +230,8 @@ TEMPLATE = Path(__file__).with_name("review_page_template.html").read_text()
 #               printed answer, and a seeded 10% sample of the rest    (after S3)
 #   --gate g3   generated families and widgets: a seeded 10% sample stratified by
 #               family, so every family is read at least once          (after S6/S7)
+#   --gate g3-mappings   part of G3: EVERY widget mapping the blind verifier did not
+#               confirm, held by decision 47 until kept or dropped      (after S7 verify)
 #   --gate g4   misconceptions: the verifier's dropped count, and a seeded 10%
 #               sample of the kept entries with their refutations      (after S5)
 #
@@ -258,7 +260,12 @@ DOSSIER_SYMBOLS = {**SYMBOLS, r"\infty": "\u221e", r"\leq": "\u2264", r"\geq": "
 
 def tex_html(tex: str) -> str:
     """LaTeX -> readable HTML (sub/superscripts as tags). Falls back to the raw source,
-    marked as such, rather than failing the page or showing a half-converted formula."""
+    marked as such, rather than failing the page or showing a half-converted formula. An aligned
+    derivation is read line by line (its `&` is alignment, its `\\\\` a new line)."""
+    env = re.fullmatch(r"\s*\\begin\{(align\*?|aligned)\}(.*)\\end\{\1\}\s*", tex, re.S)
+    if env:
+        lines = [x.replace("&", "").strip() for x in env.group(2).split("\\\\")]
+        return "<br>".join(tex_html(x) for x in lines if x)
     try:
         out = re.sub(r"\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}", r"\1", tex)
         out = out.replace(r"\dfrac", r"\frac").replace(r"\tfrac", r"\frac")
@@ -362,6 +369,7 @@ ul.choices{list-style:none;padding:0;margin:6px 0;display:grid;gap:6px}
 ul.choices li{padding:8px 10px;border-radius:var(--play-radius-sm);border:var(--play-stroke-sm) solid var(--play-inactive-border);background:var(--play-inactive-fill)}
 ul.choices li.key{border-color:var(--play-ink);background:var(--play-leaf);color:var(--play-on-leaf)}
 .note{font-size:.9rem;color:var(--play-text-dim)}
+.advice{border-inline-start:var(--play-stroke) solid var(--play-sky);padding:4px 10px;margin:8px 0;background:var(--play-bg-warm)}
 details{margin-top:8px}
 summary{cursor:pointer;color:var(--play-text-link);min-height:32px}
 .verdict{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
@@ -525,19 +533,29 @@ def dossier_g1(book, manifest: dict, objectives_dir: Path, chapters: set[int] | 
 
 # ---- G2: book questions ------------------------------------------------------
 def dossier_g2(book, manifest: dict, runs_dir: Path, chapters: set[int] | None,
-               percent: float, seed: int) -> str:
+               percent: float, seed: int, recommend: dict | None = None) -> str:
+    """Every disagreement, every item with no printed answer, every item whose typing G2 must fix,
+    every item a recommendation names, and a seeded sample of the rest. With `recommend` (a
+    verdicts file in G2's own shape, unsigned: {items: {key: {verdict, class, note, fields}}}) each
+    card shows the recommended verdict and the exact fields a fix would change — a recommendation,
+    never a verdict: the reviewer's buttons start empty."""
     from assemble_lesson_bundle import LessonRun, manifest_lessons
-    must, rest, items = [], defaultdict(list), {}
+    recs = (recommend or {}).get("items") or {}
+    must, rest, items, drafts = [], defaultdict(list), {}, set()
     for mod, les in manifest_lessons(manifest):
         if chapters and mod["chapter"] not in chapters:
             continue
         p = runs_dir / f"{les['id']}.json"
         if not p.exists():
             continue
-        for it in LessonRun.model_validate_json(p.read_text()).items:
+        run = LessonRun.model_validate_json(p.read_text())
+        if (run.model_extra or {}).get("draft"):
+            drafts.add(les["id"])
+        for it in run.items:
             key = f"{les['id']}:{it.ref}"
             items[key] = (les, it)
-            if it.verification in ("disputed", "no_printed_answer"):
+            extra = it.model_extra or {}
+            if it.verification in ("disputed", "no_printed_answer") or extra.get("typing_problems") or key in recs:
                 must.append(key)
             else:
                 rest[les["id"]].append(key)
@@ -546,14 +564,26 @@ def dossier_g2(book, manifest: dict, runs_dir: Path, chapters: set[int] | None,
     cards = []
     for key in shown:
         les, it = items[key]
+        extra = it.model_extra or {}
+        ver = extra.get("verify") or {}
         why = ("disagreement" if it.verification == "disputed" else
-               "no printed answer" if it.verification == "no_printed_answer" else "sample")
+               "no printed answer" if it.verification == "no_printed_answer" else
+               "typing" if extra.get("typing_problems") else
+               "named" if key in recs else "sample")
         rows_ = [("Printed answer", it.printed_answer), ("EPUB solution's answer", it.epub_final_answer),
                  ("Blind re-solve", it.blind_answer)]
         vals = {v for _, v in rows_ if v}
         cls = "disagree" if len(vals) > 1 else ""
         table = "".join(f'<tr class="{cls}"><th>{k}</th><td>{md_html("$" + v + "$") if v else "—"}</td></tr>'
                         for k, v in rows_)
+        checks = "".join(
+            f'<li><b>{html.escape(p["pair_id"].split("|")[-1])}</b> · {html.escape(str(p.get("route")))} · '
+            f'{html.escape(str(p.get("verdict")))}' + (f' — {html.escape(p["reason"])}' if p.get("reason") else "") + "</li>"
+            for p in ver.get("pairs") or [])
+        flags = "".join(f'<p class="note"><b>{html.escape(lbl)}</b> {html.escape(txt)}</p>' for lbl, txt in (
+            [("Typing:", "; ".join(extra.get("typing_problems") or []))] if extra.get("typing_problems") else []) + (
+            [("Unchecked:", "; ".join(ver.get("unchecked") or []))] if ver.get("unchecked") else []) + (
+            [("Judge:", ver["inconsistent"])] if ver.get("inconsistent") else []))
         choices = ""
         if it.choices:
             choices = '<ul class="choices">' + "".join(
@@ -564,26 +594,81 @@ def dossier_g2(book, manifest: dict, runs_dir: Path, chapters: set[int] | None,
                   + f' · key {md_html("$" + it.marker.get("key", "") + "$")}</p>') if it.marker else ""
         prior = (f'<p class="note">Already at G2: {html.escape(it.g2.verdict)} by {html.escape(it.g2.by)}'
                  + (f' — {html.escape(it.g2.note)}' if it.g2.note else "") + "</p>") if it.g2 else ""
-        tag = {"disagreement": "attention", "no printed answer": "info", "sample": "sample"}[why]
+        r = recs.get(key)
+        advice = ""
+        if r:
+            fields = r.get("fields") or {}
+            shown_fields = "".join(
+                f'<li><b>{html.escape(k)}</b>: ' + (steps_html(v) if k == "solution" else
+                                                    html.escape(json.dumps(v, ensure_ascii=False))) + "</li>"
+                for k, v in fields.items())
+            advice = (f'<div class="advice"><p><span class="tag plain">recommended</span> <b>{html.escape(r["verdict"])}</b>'
+                      f' · {html.escape(r.get("class", ""))}'
+                      + (' <span class="tag attention">low confidence — your call</span>' if r.get("confidence") == "low" else "")
+                      + f'</p><p>{html.escape(r.get("note", ""))}</p>'
+                      + (f'<p class="note"><b>Why it is your call:</b> {html.escape(r["why_low"])}</p>' if r.get("why_low") else "")
+                      + (f'<details><summary>What the fix changes ({len(fields)})</summary><ul class="list">{shown_fields}</ul></details>'
+                         if fields else "") + "</div>")
+        tag = {"disagreement": "attention", "no printed answer": "info", "typing": "attention",
+               "named": "info", "sample": "sample"}[why]
         cards.append(f"""<article class="card"><header><span class="tag {tag}">{why}</span>
 <span class="tag plain">{html.escape(it.answer_type)}</span><span class="tag plain">{html.escape(it.tier)}</span>
 <span class="id">{html.escape(key)} · p.{it.printed_page}</span></header>
 <p class="stem">{md_html(it.stem)}</p>{choices}{marker}
 <table class="answers">{table}</table>
+{f'<details open><summary>The checks</summary><ul class="list">{checks}</ul></details>' if checks else ''}{flags}
 <details {'open' if why != 'sample' else ''}><summary>Canonical solution ({html.escape(it.solution_provenance)})</summary>{steps_html(it.solution)}</details>
-{prior}{verdict_box(key, [("accept", "Accept"), ("fix", "Fix"), ("exclude", "Exclude"), ("hold", "Hold")])}</article>""")
+{advice}{prior}{verdict_box(key, [("accept", "Accept"), ("fix", "Fix"), ("exclude", "Exclude"), ("hold", "Hold")])}</article>""")
     n_dis = sum(1 for k in must if items[k][1].verification == "disputed")
+    n_npa = sum(1 for k in must if items[k][1].verification == "no_printed_answer")
+    brief = ["Every book question is checked three ways: the printed answer, the EPUB worked "
+             "solution's final answer and a blind re-solve (FR-4302). Where they disagree the "
+             "row is highlighted. Books have errata: nothing here was corrected silently.",
+             "Accept keeps the item as the book gives it; Fix means the note says what to change; "
+             "Exclude drops it with a reason; Hold keeps it out of the live set for now."]
+    if recs:
+        n_low = sum(1 for k in must if (recs.get(k) or {}).get("confidence") == "low")
+        if n_low:
+            brief.append(f"<b>{n_low}</b> recommendation(s) are marked <b>low confidence — your call</b>: "
+                         "the mathematics is checked, the choice between verdicts is a content decision.")
+        brief.append("Each card shows a <b>recommended</b> verdict with its reason and, for a fix, the exact "
+                     "fields it would change. It is a recommendation, not a verdict: your buttons start empty. "
+                     "Choosing Fix with an empty note takes the recommended fields.")
+    if drafts:
+        brief.append(f"<b>DRAFT</b> run files ({', '.join(sorted(drafts))}): split before G2 ruled on their "
+                     "typing, for this page only. Assembly never reads them.")
     return page("g2", f"G2 · Book questions — {book.book}",
-                [f"<b>{n_dis}</b> disagreements", f"<b>{len(must) - n_dis}</b> without a printed answer",
+                [f"<b>{n_dis}</b> disagreements", f"<b>{n_npa}</b> without a printed answer",
+                 f"<b>{len(must) - n_dis - n_npa}</b> with typing to fix or named",
                  f"<b>{len(sample)}</b> sampled of {sum(len(v) for v in rest.values())} agreed "
                  f"({percent:g}%, seed {seed}, at least one per lesson)"],
-                ["Every book question is checked three ways: the printed answer, the EPUB worked "
-                 "solution's final answer and a blind re-solve (FR-4302). Where they disagree the "
-                 "row is highlighted. Books have errata: nothing here was corrected silently.",
-                 "Accept keeps the item as the book gives it; Fix means the note says what to change; "
-                 "Exclude drops it with a reason; Hold keeps it out of the live set for now."],
-                cards, {"book": book.book, "seed": seed, "sample_percent": percent,
-                        "sampled": sample, "must_review": must})
+                brief, cards, {"book": book.book, "seed": seed, "sample_percent": percent,
+                               "sampled": sample, "must_review": must, "draft": sorted(drafts)})
+
+
+def g2_file(export: dict, recommend: dict | None) -> tuple[dict, list[str]]:
+    """The page's export ({reviewer, verdicts, notes}) -> G2's verdicts file ({by, items: {key:
+    {verdict, note, fields}}}), which `assemble_objectives.py lesson-runs --g2` and
+    `apply_review_verdicts.py --g2` read. A Fix with an empty note takes the recommendation's
+    fields when the recommendation was a fix; a Fix with a note carries no fields (the note says
+    what to change, and someone must write them) and is listed. Nothing is signed without a name."""
+    by = (export.get("reviewer") or "").strip()
+    if not by:
+        raise ValueError("the export names no reviewer: an unattributed review is not a review")
+    recs = (recommend or {}).get("items") or {}
+    items, todo = {}, []
+    for key, verdict in sorted((export.get("verdicts") or {}).items()):
+        note = ((export.get("notes") or {}).get(key) or "").strip()
+        entry = {"verdict": verdict, **({"note": note} if note else {})}
+        r = recs.get(key) or {}
+        if verdict == "fix":
+            if not note and r.get("verdict") == "fix" and r.get("fields"):
+                entry["fields"] = r["fields"]
+                entry["note"] = "as recommended: " + r.get("note", "")
+            else:
+                todo.append(f"{key}: Fix with {'a note' if note else 'no note and no recommended fields'} — write its fields")
+        items[key] = entry
+    return {"by": by, "items": items}, todo
 
 
 # ---- G3: generated families and widgets --------------------------------------
@@ -596,7 +681,11 @@ def family_of(q: dict) -> str:
 
 
 def dossier_g3(bundles: list[dict], catalogue: dict | None, percent: float, seed: int,
-               queue: dict | None) -> str:
+               queue: dict | None, flags: dict | None = None) -> str:
+    """`flags` ({family id: note}, --flags): what the pipeline already asks the reviewer to look at in a family
+    — e.g. a tier that no longer fits after a re-author. Shown on every sampled item of that family, and a
+    flagged family is always in the sample (every family is)."""
+    flags = flags or {}
     qs = {q["id"]: q for b in bundles for q in b.get("questions", [])}
     mc = {m["id"]: m for m in (catalogue or {}).get("misconceptions", [])}
     fams: dict[str, list[str]] = defaultdict(list)
@@ -629,6 +718,8 @@ def dossier_g3(bundles: list[dict], catalogue: dict | None, percent: float, seed
                     f'<p class="note">Wrong constructions it diagnoses:</p><ul class="list">{diags}</ul>')
         else:
             body = f'<p class="note">Answer: {md_html("$" + str(q["correct_answer"]) + "$")}</p>'
+        flag = flags.get(family_of(q))
+        body = (f'<p class="advice"><span class="tag attention">flagged</span> {html.escape(flag)}</p>' if flag else "") + body
         cards.append(f"""<article class="card"><header><span class="tag sample">{html.escape(family_of(q))}</span>
 <span class="tag plain">{html.escape(q["question_type"])}</span><span class="tag plain">{html.escape(q["tier"])}</span>
 <span class="id">{html.escape(qid)}</span></header>
@@ -649,6 +740,41 @@ def dossier_g3(bundles: list[dict], catalogue: dict | None, percent: float, seed
 
 
 # ---- G4: misconceptions ------------------------------------------------------
+# ---- G3, widget mappings held for review (decision 47) -------------------------
+def dossier_g3_mappings(queue: dict, source: str) -> str:
+    """Every mapping the blind S7 verifier did not confirm (generate_widget_questions.py --pending-review): the
+    widget's stem, what the verifier read off it, the claim, the verifier's reason, and keep / drop. Not a
+    sample — each held claim is inactive until a human decides it. The export is the --mapping-review file:
+    keep turns the mapping on, drop deletes it."""
+    items = queue.get("items") or []
+    cards = []
+    for it in items:
+        reading = it.get("reading")
+        cards.append(f"""<article class="card"><header><span class="tag sample">{html.escape(it.get("template_id") or "")}</span>
+<span class="tag plain">{html.escape(it.get("kind") or "")}</span><span class="id">{html.escape(it["key"])}</span></header>
+<p class="stem">{md_html(it.get("stem"))}</p>
+<p class="note">What the blind checker read off the question:</p>
+<pre class="note" style="white-space:pre-wrap;overflow-wrap:anywhere">{html.escape(json.dumps(reading, ensure_ascii=False))}</pre>
+<p><span class="tag info">claim</span> a student whose construction fires <b>{html.escape(it["predicate"])}</b>
+{f'(“{html.escape(it["predicate_meaning"])}”)' if it.get("predicate_meaning") else ""} holds
+<b>{md_html(it.get("misconception_label") or it["misconception_id"])}</b></p>
+{f'<p class="note">{md_html(it["misconception_description"])}</p>' if it.get("misconception_description") else ""}
+<p class="advice"><span class="tag attention">checker refused</span> {md_html(it.get("why") or "no verdict")}</p>
+<details><summary>How the checker built a correct answer</summary><p class="note">{md_html(it.get("construction") or "—")}</p></details>
+{verdict_box(it["key"], [("keep", "Keep the claim"), ("drop", "Drop it")])}</article>""")
+    by_tpl = Counter(it.get("template_id") for it in items)
+    return page("g3", "G3 · Widget diagnoses held for review",
+                [f"<b>{len(items)}</b> held claim(s)", f"<b>{len(by_tpl)}</b> widget template(s)", "every one, no sample"],
+                ["Decision 47: a claim that a wrong construction reveals a named misconception, which the blind "
+                 "checker did not confirm, is held — the widget still marks right and wrong, but never names that "
+                 "misconception to a student and S5 never uses it as evidence — until you decide it.",
+                 "Keep a claim only if a student holding that misconception would build exactly what fires the "
+                 "predicate, on this question's numbers. Drop it if the predicate would mostly fire for another "
+                 "reason, or never for this error. A dropped claim is deleted; the widget stays."],
+                cards, {"bundle": source, "format": queue.get("format"), "held": len(items),
+                        "sampled": [it["key"] for it in items]})
+
+
 def dossier_g4(catalogue: dict, s5_runs: list[dict], percent: float, seed: int) -> str:
     entries = catalogue.get("misconceptions", [])
     dropped = [d for run in s5_runs for r in run.get("records") or [] for d in r.get("dropped") or []]
@@ -694,7 +820,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("bundle", type=Path, nargs="?",
                     help="(legacy G3 page) a generated question bundle")
-    ap.add_argument("--gate", choices=["g1", "g2", "g3", "g4"],
+    ap.add_argument("--gate", choices=["g1", "g2", "g3", "g3-mappings", "g4"],
                     help="write a gate dossier instead of the legacy G3 page")
     ap.add_argument("--book", help="g1/g2: the book (name or config path)")
     ap.add_argument("--chapter", type=int, action="append")
@@ -708,6 +834,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--sample", type=float, default=10)
     ap.add_argument("--seed", type=int, default=20260925)
     ap.add_argument("--queue", type=Path, help="the *.review-queue.json written at load time")
+    ap.add_argument("--mappings", type=Path, help="g3-mappings: the held-mapping queue (--pending-review)")
+    ap.add_argument("--flags", type=Path, help='g3: {"flags": {family id: note}} — a family the reviewer must look at')
+    ap.add_argument("--recommend", type=Path, help="g2: recommended verdicts ({items: {key: {verdict, class, note, fields}}})")
+    ap.add_argument("--export", type=Path,
+                    help="g2: instead of a page, turn the page's exported verdicts into G2's verdicts file at --out")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--sampled-only", action="store_true",
                     help="(legacy) render only the drawn sample. Reading one item validates its "
@@ -729,14 +860,27 @@ def main(argv: list[str] | None = None) -> int:
                 out = dossier_g1(book, manifest, args.objectives or here / "objectives" / book.book,
                                  chapters)
             else:
+                rec = json.loads(args.recommend.read_text()) if args.recommend else None
+                if args.export:
+                    doc, todo = g2_file(json.loads(args.export.read_text()), rec)
+                    args.out.parent.mkdir(parents=True, exist_ok=True)
+                    args.out.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
+                    print(f"wrote {args.out}: G2 by {doc['by']}, {len(doc['items'])} verdict(s)"
+                          + "".join(f"\n  TODO {t}" for t in todo))
+                    return 1 if todo else 0
                 out = dossier_g2(book, manifest, args.runs or here / "runs" / book.book / "lesson",
-                                 chapters, args.sample, args.seed)
+                                 chapters, args.sample, args.seed, rec)
+        elif args.gate == "g3-mappings":
+            if not args.mappings:
+                ap.error("--gate g3-mappings needs --mappings (generate_widget_questions.py --pending-review)")
+            out = dossier_g3_mappings(json.loads(args.mappings.read_text()), args.mappings.name)
         elif args.gate == "g3":
             bundles = [json.loads(p.read_text()) | {"bundle": p.name} for p in args.bundles]
             if not bundles:
                 ap.error("--gate g3 needs --bundles")
             cat = json.loads(args.catalogue.read_text()) if args.catalogue else None
-            out = dossier_g3(bundles, cat, args.sample, args.seed, queue)
+            flags = json.loads(args.flags.read_text()).get("flags", {}) if args.flags else None
+            out = dossier_g3(bundles, cat, args.sample, args.seed, queue, flags)
         else:
             if not args.catalogue:
                 ap.error("--gate g4 needs --catalogue")

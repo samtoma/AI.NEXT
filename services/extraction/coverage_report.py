@@ -508,9 +508,10 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
 
     # ---- notation ---------------------------------------------------------------------
     c = Check("notation", "Un-normalised decimal commas and (x; y) pairs left in the bundles = 0 "
-              "(decision 15)")
+              "(decision 15); no display-only environment (align*) inside the app's inline maths")
     printed = sum(1 for it in run_items.values()
-                  if any(normalise(t)[1] for t in [it.stem, *it.solution, it.answer or "",
+                  if any((lambda c: c.get("decimal") or c.get("pair"))(normalise(t)[1])
+                         for t in [it.stem, *it.solution, it.answer or "",
                          (it.marker or {}).get("key", ""), *[x.get("text", "") for x in it.choices or []]]))
     residual = []
     for b in bundles:

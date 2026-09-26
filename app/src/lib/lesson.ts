@@ -14,6 +14,7 @@ import { getLessonBridges } from "./subject-queries";
 import { resolveStudentScope, visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
+import { ANSWER_ONLY_INSTRUCTION, isAnswerOnly } from "./question-flags";
 import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
 import { COURSE_RANK, MODULE_ORDER } from "./module-order";
 import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
@@ -802,7 +803,13 @@ export function lessonDataBlock(data: LessonData): string {
         : q.questionType === "widget" && q.choices
           ? `(construction: ${(q.choices as WidgetQuestionSpec).kind})`
           : "(numeric)";
-      return `- ${q.id} | ${q.loId} | ${q.tier} | ${q.questionType} | p.${q.provenance.sourcePage ?? "—"}\n  Stem: ${q.stem}\n  Choices: ${choices}\n  Correct: ${q.correctAnswer}\n  ${solutionLabel}${q.solutionVersion}, human-reviewed): ${fmtSteps(q.solution)}`;
+      // An `answer_only` question (Samuel's G2 answer 22): the book prints no
+      // working, so the tutor is given none to walk — only the instruction
+      // not to invent one. Every other question reads exactly as before.
+      const solutionLine = isAnswerOnly(q.choices)
+        ? ANSWER_ONLY_INSTRUCTION
+        : `${solutionLabel}${q.solutionVersion}, human-reviewed): ${fmtSteps(q.solution)}`;
+      return `- ${q.id} | ${q.loId} | ${q.tier} | ${q.questionType} | p.${q.provenance.sourcePage ?? "—"}\n  Stem: ${q.stem}\n  Choices: ${choices}\n  Correct: ${q.correctAnswer}\n  ${solutionLine}`;
     })
     .join("\n");
 

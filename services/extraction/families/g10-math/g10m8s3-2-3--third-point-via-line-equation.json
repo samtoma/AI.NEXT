@@ -1,0 +1,98 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m8s3-2-3:third-point-via-line-equation",
+ "kind": "family",
+ "lo_id": "lo:g10m8s3-2-3",
+ "parent_question_id": "q:g10m8s3-2-3:ex8-6-47a",
+ "source_page": 327,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "x1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "dx",
+   "choice": [
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "x2",
+   "let": "x1 + dx"
+  },
+  {
+   "name": "y1",
+   "randint": [
+    -6,
+    6
+   ]
+  },
+  {
+   "name": "m",
+   "choice": [
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "y2",
+   "let": "y1 + m*dx"
+  },
+  {
+   "name": "dx3",
+   "choice": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "resample_while": "dx3 == dx"
+  },
+  {
+   "name": "x3",
+   "let": "x1 + dx3"
+  },
+  {
+   "name": "c",
+   "let": "y1 - m*x1"
+  },
+  {
+   "name": "a",
+   "let": "m*x3 + c"
+  }
+ ],
+ "constraints": [
+  "abs(a) <= 30"
+ ],
+ "stem": "On the Cartesian plane, $A({=x1}, {=y1})$ , $B({=x2}, {=y2})$ and $C({=x3}, a)$ are collinear. Determine the value of $a$ .",
+ "answer": "a",
+ "solution": [
+  "First find the gradient of $AB$ :\n$\\begin{aligned}m&=\\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\\\\&=\\frac{{=y2}-{=paren(y1)}}{{=x2}-{=paren(x1)}}\\\\&={=m}\\end{aligned}$",
+  "Therefore we have $y={=m}x+c$ . Now substitute in $A$ :\n$\\begin{aligned}{=y1}&={=m}({=x1})+c\\\\c&={=c}\\end{aligned}$",
+  "Now we can substitute in $C$ to solve for $a$ :\n$\\begin{aligned}a&={=m}({=x3}){=signed(c)}\\\\\\therefore a&={=a}\\end{aligned}$"
+ ],
+ "notes": "Fills the advanced-tier gap. Generalises the harder, multi-step method the book itself uses in ex8-6-47a (page 327): find the gradient from two known points, form the full line equation y = mx + c, solve for c by substituting the first point, then evaluate at the third point's x-coordinate to get its missing coordinate. This is a genuine step up from the standard-tier questions on this LO, which all resolve in one line via m_AB = m_BC; here the student must additionally derive and hold onto the y-intercept c before they can answer. Only the collinearity-relevant part of ex8-6-47a is used (finding a given A, B, C collinear) — the original book question's later sub-parts about a fourth point D and other properties belong to a different LO and are not reused here. dx (=x2-x1) and dx3 (=x3-x1) are both drawn nonzero and forced unequal to each other, so x1, x2 and x3 are always three distinct x-values: no repeated points and no division by zero when computing the gradient of AB. m is chosen directly as a nonzero integer and y2 is derived from it, so the fraction in the first solution step always simplifies exactly to the integer shown, matching the clean numbers the book prints. The signed() call in the final step renders c with its own sign (e.g. \"3(3)-22\" when c is negative, \"3(3)+15\" when c is positive), matching the book's own concatenated style rather than an explicit +(-22)."
+}
