@@ -655,6 +655,37 @@ def reachability(kind: str, spec: dict) -> list[str]:
     return [f"unknown widget kind {kind!r}"]
 
 
+# Consistency review 2026-09-27, A10: the handles an instrument OPENS at, as the app's component sets them (its
+# useState). A "points" line_drawer target — or that target with x and y exchanged — on an opening handle starts the
+# widget half-answered, and a handle the student never moved can then not be told from one she placed or swapped:
+# LineDrawer.tsx read an untouched handle at (-3, -2) as the swap of a target (-2, -3), a false "you swapped the
+# points" (q:g10m8s3-2-1:w003); and q:g10m8s3-1-2:w004 put A itself on (-3, -2). The app now diagnoses a swap only
+# when BOTH handles moved; the pipeline refuses such targets anyway, since an unmoved swapped handle still hides a
+# real swap. tests/test_widget_templates.py reads the literal from LineDrawer.tsx, so the two cannot drift.
+OPENING_HANDLES = {"line_drawer": ((-3, -2), (1, 1))}
+
+
+def opening_collisions(kind: str, spec: dict) -> list[str]:
+    """Why this (kind, spec) puts a target on an opening handle ([] when it does not). Stricter than the app."""
+    s = spec if isinstance(spec, dict) else {}
+    handles = OPENING_HANDLES.get(kind)
+    if not handles or kind != "line_drawer" or s.get("mode") != "points" or not isinstance(s.get("through"), list):
+        return []
+    out = []
+    for pt in s["through"]:
+        p = _intpair(pt, 99)
+        if not p:
+            continue
+        for h in handles:
+            if tuple(p) == h:
+                out.append(f"the point {tuple(p)} is where a handle opens — the widget would start half-answered "
+                           f"(pipeline rule A10, stricter than the app)")
+            elif (p[1], p[0]) == h:
+                out.append(f"the point {tuple(p)} swapped is {h}, where a handle opens — an untouched handle would "
+                           f"read as a swapped point (pipeline rule A10, stricter than the app)")
+    return out
+
+
 def _is_str(v) -> bool:
     return isinstance(v, str)
 
@@ -923,7 +954,7 @@ class FixtureGraph:
 # ==========================================================================
 
 TEMPLATE_KEYS = {"format", "id", "lo_id", "parent_question_id", "tier", "kind", "instances", "spec",
-                 "stem", "solution", "diagnostics", "notes", "source_page"}
+                 "stem", "solution", "diagnostics", "notes", "source_page", "verified_as"}
 
 
 def _render_value(v, env):
@@ -1083,6 +1114,7 @@ def check_questions(questions: list[dict], graph, pre_catalogue: bool = False) -
     for q in questions:
         problems += W.validate_widget(q)
         problems += [f"{q['id']}: unreachable — {r}" for r in reachability(q["choices"]["kind"], q["choices"]["spec"])]
+        problems += [f"{q['id']}: {r}" for r in opening_collisions(q["choices"]["kind"], q["choices"]["spec"])]
         if not q.get("parent_question_id"):
             problems.append(f"{q['id']}: no parent_question_id")
         if graph is None:
