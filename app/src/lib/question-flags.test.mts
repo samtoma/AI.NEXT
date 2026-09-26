@@ -179,7 +179,8 @@ test("the wrong-answer cards show the answer and the pointer — never steps, ne
   assert.match(card, /const answerOnly = result\?\.answerOnly === true \|\| isAnswerOnly\(q\.choices\);/);
   assert.match(card, /\{result\.refutation && !result\.isCorrect && !answerOnly && \(/);
   assert.match(card, /\{!result\.refutation && !result\.isCorrect && !answerOnly && result\.solution\.length > 0 && \(/);
-  assert.match(card, /answerOnly && !cardWithholdsAnswer\(probing, revealAnswer\) && \(\s*<p[^>]*>\{ANSWER_ONLY_CARD_NOTE\}<\/p>/);
+  // the pointer sits with the answer chip, under the same withholding rule (probing)
+  assert.match(card, /!cardWithholdsAnswer\(probing, revealAnswer\) && \(\s*<>[\s\S]{0,200}\{answerOnly && <p[^>]*>\{ANSWER_ONLY_CARD_NOTE\}<\/p>\}/);
   const loop = src("../components/student/StudentLoop.tsx");
   assert.match(loop, /lastResult\?\.answerOnly === true \|\| isAnswerOnly\(/);
   const start = loop.indexOf("{lastAnswerOnly ? (");

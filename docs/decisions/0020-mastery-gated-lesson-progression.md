@@ -134,7 +134,15 @@ move teaching behaviour, and ADR-0010 keeps metrics unpooled across solutions, s
 a mid-stream prompt change wants its own deliberate cut. **Samuel, 2026-09-22:
 "do not make changes to the prompt for now."** The check-in card and the tutor
 therefore disagree about the premise until that follow-up lands; this is a known,
-accepted, temporary inconsistency. *(This hold has one recorded exception: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md)'s
+accepted, temporary inconsistency.
+
+**The hold's exceptions, in one list.** *(Put in one place and one numbering on 2026-09-27: until then
+two exceptions were both called "the fourth", and the last four sat under the book-section note below.
+The first four keep the wording they have on `main`; the first was written when it was the only one.
+Eight as of 2026-09-27. Each is a named, narrow lift — none reopens the hold, and the self-paced
+reframing of the school-day premise is still held for every course.)*
+
+*(This hold has one recorded exception: [ADR-0021](./0021-runtime-teaching-toggle-and-testers.md)'s
 2026-09-24 "reveal threshold" amendment, Samuel authorising one specific rule — not a reopening of the hold generally.)*
 *(A second exception, narrower still — Samuel, 2026-09-25: "OK". The hold is lifted for **one label string
 only**: `module:geo-u1`'s "Term 2 · Unit 4 — The Circle", which was "Unit 4 — The Circle" (FR-3218, migration

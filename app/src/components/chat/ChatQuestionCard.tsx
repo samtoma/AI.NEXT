@@ -386,6 +386,10 @@ export function ChatQuestionCard({
               !result.isCorrect &&
               q.questionType !== "widget" &&
               !cardWithholdsAnswer(probing, revealAnswer) && (
+              <>
+              {/* ANSWER ONLY (A6): the book prints no working, so the card
+                  shows no steps — the answer, and where the method is. */}
+              {answerOnly && <p className="mt-1.5 text-[0.85rem]">{ANSWER_ONLY_CARD_NOTE}</p>}
               <p
                 dir={lang === "ar" ? "rtl" : "ltr"}
                 className="mt-1.5 text-[0.85rem]"
@@ -423,12 +427,9 @@ export function ChatQuestionCard({
                   </button>
                 )}
               </p>
+              </>
             )}
-            {/* ANSWER ONLY (A6): the book prints no working, so the card shows
-                no steps — only the answer above and where the method is. */}
-            {!result.isCorrect && answerOnly && !cardWithholdsAnswer(probing, revealAnswer) && (
-              <p className="mt-1.5 text-[0.85rem]">{ANSWER_ONLY_CARD_NOTE}</p>
-            )}
+
             {/* THE REFUTATION — the entry authored for the error this student
                 actually made, not the question's generic solution. Before
                 ADR-0009 this was looked up, logged to analytics and then
