@@ -1736,11 +1736,20 @@ def only_lessons(args: dict, lessons) -> dict:
 #                             diagnostic of its own remains; a template left with none goes back to the author
 #   drop-duplicate-predicate  a predicate mapped to more than one misconception keeps its FIRST mapping (the
 #                             author lists the likeliest error first, as the prompt asks); the others are dropped
+#   drop-dead-predicate       (W1, consistency review 2026-09-27) a diagnostic whose predicate the template's spec
+#                             can never emit, in ANY of its instances (the contract's can_emit) — only while another
+#                             diagnostic remains; a template left with none goes back to the author
+#   drop-opening-instance     (A10) an instance whose "points" target, or its swap, sits on a handle's opening
+#                             position (OPENING_HANDLES) — only while another instance remains
+# The last two were first applied AFTER the blind verifier had judged the Chapter 8 templates. So when either
+# applies, the template records itself as it was in "verified_as" (its sha and its whole text): a change that only
+# REMOVED diagnostics or instances cannot make a verified construction unreachable or a confirmed mapping wrong,
+# and verdict_scan carries the verdicts across it (carried_verification) — never across any other edit.
 NORMALISED = "PIPELINE NORMALISATION (not an author edit)"
 
 
 def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
-    """The template with both normalisations applied, and what was done (empty: nothing to do)."""
+    """The template with the normalisations applied, and what was done (empty: nothing to do)."""
     import copy
     out = copy.deepcopy(raw)
     done: list[str] = []
@@ -1763,11 +1772,47 @@ def normalise_template(raw: dict, graph) -> tuple[dict, list[str]]:
         ds = kept
         done.append("drop-duplicate-predicate: kept the first mapping of each predicate, dropped " + ", ".join(
             f"{d['predicate']} → {d['misconception_id']}" for d in dup))
+    later = _normalise_after_verification(out, ds)
+    if later:
+        ds = later.pop("diagnostics")
+        done += later["done"]
     if done:
         out["diagnostics"] = ds
         stamp = f"{NORMALISED}: " + "; ".join(done) + "."
         out["notes"] = (out.get("notes") or "").rstrip() + ("\n\n" if out.get("notes") else "") + stamp
+        if later and "verified_as" not in raw:
+            before = {k: v for k, v in raw.items() if k != "_sha"}
+            out["verified_as"] = {"sha": template_sha(before), "template": copy.deepcopy(before)}
     return out, done
+
+
+def _normalise_after_verification(out: dict, ds: list[dict]) -> dict | None:
+    """drop-dead-predicate and drop-opening-instance on `out` (its instances edited in place) and `ds`; None when
+    neither applies, else {"diagnostics": the kept ones, "done": [what was done]}."""
+    kind = out.get("kind")
+    insts = out.get("instances") or [{}]
+    try:
+        specs = [_render_value(out.get("spec"), env) for env in insts]
+    except Exception:  # noqa: BLE001 — a template that does not render is the checks' to refuse, not ours
+        return None
+    done = []
+    emits = [W.can_emit(kind, sp)[0] for sp in specs]
+    if all(e is not None for e in emits):
+        dead = [d for d in ds if all(d.get("predicate") not in e for e in emits)]
+        if dead and len(dead) < len(ds):
+            ds = [d for d in ds if d not in dead]
+            where = sorted({W.can_emit(kind, sp)[1] for sp in specs})
+            done.append("drop-dead-predicate: dropped " + ", ".join(f"{d['predicate']} → {d['misconception_id']}"
+                                                                     for d in dead)
+                        + f" — {kind} with {' / '.join(where)} can never emit "
+                        + ("it" if len(dead) == 1 else "them") + " (contract can_emit; consistency review W1)")
+    bad = [i for i, sp in enumerate(specs) if opening_collisions(kind, sp)]
+    if bad and len(bad) < len(insts):
+        why = "; ".join(f"instance {i + 1} {json.dumps(insts[i], ensure_ascii=False)}: {opening_collisions(kind, specs[i])[0]}"
+                        for i in bad)
+        out["instances"] = [x for i, x in enumerate(insts) if i not in bad]
+        done.append(f"drop-opening-instance: {why}")
+    return {"diagnostics": ds, "done": done} if done else None
 
 
 def merge_author_runs(files: list[Path]) -> dict:
