@@ -630,6 +630,13 @@ class Report:
         self.content: dict[str, dict] = {}     # slug -> the lesson-content file (S2's claims)
         self.held_by_marker: list[dict] = []   # questions held: the app's marker cannot mark their key
         self.marker_check = "run"
+        self.ambiguous_pairs: list[str] = []   # A4: "(a,b)" sides of an equation not provably a pair → G2
+        self.respaced = 0                      # A2: glued LaTeX commands re-spaced (accepted.json untouched)
+        self.assignments_split = 0             # A2: "x_1=…y_1=…" chains written as separate assignments
+        self.katex_errors: list[dict] = []     # A2: segments the app's KaTeX cannot parse (must be 0)
+        self.forms_from_rules: list[dict] = [] # A9: marker forms set from the book's form rules
+        self.visuals_dropped: list[dict] = []  # A8: a figure that draws the question's unknown
+        self.held_for_figure: list[str] = []   # A3: a stem that shows [figure] with no figure: review
 
     def as_dict(self) -> dict:
         return {"counts": dict(sorted(self.counts.items())),
@@ -638,7 +645,11 @@ class Report:
                 "by_solution_provenance": dict(sorted(self.by_provenance.items())),
                 "by_answer_type": dict(sorted(self.by_answer_type.items())),
                 "excluded": self.excluded, "derived_part_edges": self.derived_part_edges,
-                "marker_check": self.marker_check, "held_by_marker": self.held_by_marker}
+                "marker_check": self.marker_check, "held_by_marker": self.held_by_marker,
+                "ambiguous_pairs_for_g2": sorted(set(self.ambiguous_pairs)), "latex_respaced": self.respaced,
+                "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
+                "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
+                "held_for_figure": self.held_for_figure}
 
 
 def _norm(text: str | None, where: str, report: Report) -> str | None:
@@ -647,6 +658,319 @@ def _norm(text: str | None, where: str, report: Report) -> str | None:
         report.notation.update(c)
         if c.get("decimal") or c.get("pair"):       # decision 15's items; `aligned` is presentation only
             report.notation_items.add(where)
+        if c.get("pair_ambiguous"):
+            report.ambiguous_pairs.append(where)
+    return out
+
+
+# =============================================================================
+# S0b LaTeX re-spacing and the app's KaTeX (consistency review A2)
+# =============================================================================
+# S0b stores its transcriptions whitespace-stripped (the hash proofs in runs/<book>/maths/accepted.json are over
+# that text, so accepted.json is never rewritten): "\triangle ABC" came back as "\triangleABC", "\ m" (a control
+# space) as "\m", and the book's four assignments "x_1 = −2   y_1 = −5 …" as one chain. KaTeX refuses the first
+# two as undefined commands and the app showed them as red error text. Assembly re-spaces every string it emits:
+# a command run KaTeX does not know is split after its LONGEST known prefix ("\therefore"+"y"), or, with no known
+# prefix, read as the control space it was ("\ m"). Deterministic: KaTeX (the app's own) decides what is known.
+KATEX_CHECK = HERE / "katex_check.mjs"
+_KNOWN: dict[str, bool] = {}
+_ASSIGN_TOKEN = re.compile(r"([xy])_(?:\{([12])\}|([12]))\s*=")
+
+
+def _katex(mode: str, rows: list[dict]) -> dict:
+    import shutil
+    import subprocess
+    node = shutil.which("node")
+    if not node:
+        raise AssemblyError("the KaTeX check needs node (it runs the app's own KaTeX)")
+    r = subprocess.run([node, "--no-warnings", str(KATEX_CHECK), mode], capture_output=True, text=True,
+                       input="".join(json.dumps(x, ensure_ascii=False) + "\n" for x in rows), timeout=600)
+    if r.returncode != 0:
+        raise AssemblyError(f"the KaTeX check could not run: {r.stderr.strip()[-400:]}")
+    return json.loads(r.stdout)
+
+
+def _command_runs(text: str) -> list[tuple[int, int]]:
+    """(start, end) of every `\\letters` command in `text`; the second backslash of `\\\\` starts none."""
+    out, i, n = [], 0, len(text)
+    while i < n:
+        if text[i] == "\\":
+            if i + 1 < n and text[i + 1] == "\\":
+                i += 2
+                continue
+            j = i + 1
+            while j < n and text[j].isalpha():
+                j += 1
+            if j > i + 1:
+                out.append((i, j))
+            i = max(j, i + 1)
+            continue
+        i += 1
+    return out
+
+
+def prime_known(texts) -> None:
+    """Ask KaTeX, once, about every command run in `texts` and each of its prefixes."""
+    names: set[str] = set()
+    for t in texts:
+        if isinstance(t, str) and "\\" in t:
+            for a, b in _command_runs(t):
+                run = t[a + 1:b]
+                names.update(run[:k] for k in range(1, len(run) + 1))
+    todo = sorted(names - set(_KNOWN))
+    if todo:
+        known = set(_katex("known", [{"name": x} for x in todo])["known"])
+        _KNOWN.update({x: x in known for x in todo})
+
+
+def _split_assignments(seg: str) -> str:
+    """"x_{1}=-2y_{1}=-5x_{2}=7y_{2}=-2" → "x_{1}=-2 \\quad y_{1}=-5 \\quad …": only when the segment is nothing
+    but three or more DIFFERENT coordinate assignments (x_1, y_1, x_2, y_2), each once, and no other '=' —
+    as a chain of equalities that string means nothing, so the book's separate assignments are the reading."""
+    t = seg.strip()
+    toks = list(_ASSIGN_TOKEN.finditer(t))
+    if len(toks) < 3 or toks[0].start() != 0 or t.count("=") != len(toks) or "\\begin" in t:
+        return seg
+    names = [(m.group(1), m.group(2) or m.group(3)) for m in toks]
+    if len(set(names)) != len(names):
+        return seg
+    parts = [t[m.start():(toks[k + 1].start() if k + 1 < len(toks) else len(t))].strip() for k, m in enumerate(toks)]
+    if any(p.endswith("=") for p in parts):
+        return seg
+    return " \\quad ".join(parts)
+
+
+def respace_latex(text: str) -> tuple[str, int, int]:
+    """(text, commands re-spaced, assignment chains split). Needs prime_known() for its commands."""
+    if not isinstance(text, str) or "\\" not in text and "=" not in text:
+        return text, 0, 0
+    runs = _command_runs(text)
+    missing = [text[a + 1:b] for a, b in runs if text[a + 1:b] not in _KNOWN]
+    if missing:
+        prime_known([text])
+    out, last, n = [], 0, 0
+    for a, b in runs:
+        run = text[a + 1:b]
+        out.append(text[last:a])
+        if _KNOWN.get(run):
+            out.append(text[a:b])
+        else:
+            k = next((k for k in range(len(run) - 1, 0, -1) if _KNOWN.get(run[:k])), 0)
+            out.append("\\" + (run[:k] + " " + run[k:] if k else " " + run))
+            n += 1
+        last = b
+    out.append(text[last:])
+    text = "".join(out)
+    split = 0
+
+    def seg(m):
+        nonlocal split
+        new = _split_assignments(m.group(1))
+        split += new != m.group(1)
+        return "$" + new + "$"
+    text = re.sub(r"\$([^$]+)\$", seg, text)
+    return text, n, split
+
+
+_NOT_TEXT = {"assembled_from", "source_document", "extraction_run", "provenance", "source", "file_path", "src"}
+
+
+def respace_tree(obj, report: Report):
+    """Every student-facing string of a bundle or a lesson-content file, re-spaced (metadata keys skipped)."""
+    if isinstance(obj, str):
+        t, n, k = respace_latex(obj)
+        report.respaced += n
+        report.assignments_split += k
+        return t
+    if isinstance(obj, list):
+        return [respace_tree(x, report) for x in obj]
+    if isinstance(obj, dict):
+        return {key: (v if key in _NOT_TEXT else respace_tree(v, report)) for key, v in obj.items()}
+    return obj
+
+
+def _strings(v, skip=_NOT_TEXT):
+    if isinstance(v, str):
+        yield v
+    elif isinstance(v, list):
+        for x in v:
+            yield from _strings(x, skip)
+    elif isinstance(v, dict):
+        for k, x in v.items():
+            if k not in skip:
+                yield from _strings(x, skip)
+
+
+def student_texts(bundle: dict, where: str) -> list[dict]:
+    """[{where, text}] for everything a student can be shown from a bundle or a lesson-content file."""
+    rows = []
+    for q in bundle.get("questions") or []:
+        rows += [{"where": q["id"], "text": t} for t in _strings({k: q.get(k) for k in
+                                                                  ("stem", "choices", "answer", "solution")})]
+    for e in bundle.get("explanation_entries") or []:
+        rows += [{"where": e["id"], "text": t} for t in _strings(e.get("content"))]
+    for v in bundle.get("visuals") or []:
+        rows += [{"where": v["id"], "text": t} for t in _strings({"caption": v.get("caption"), "spec": v.get("spec")})]
+    for c in bundle.get("claims") or []:
+        rows += [{"where": f"claim:{c.get('lo')}", "text": c.get("text")}]
+    if "questions" not in bundle and "claims" in bundle:          # a lesson-content file: all of it is shown
+        rows += [{"where": f"content:{where}", "text": t} for t in _strings(bundle)]
+    return [r for r in rows if isinstance(r["text"], str) and "$" in r["text"]]
+
+
+def katex_errors(rows: list[dict]) -> list[dict]:
+    return _katex("check", rows)["errors"] if rows else []
+
+
+# =============================================================================
+# The answer text, from the marker key (consistency review A1)
+# =============================================================================
+def _split_top(text: str, sep: str) -> list[str]:
+    out, depth, cur = [], 0, []
+    for ch in text:
+        if ch in "{([":
+            depth += 1
+        elif ch in "})]":
+            depth -= 1
+        if ch == sep and depth == 0:
+            out.append("".join(cur))
+            cur = []
+        else:
+            cur.append(ch)
+    out.append("".join(cur))
+    return [x.strip() for x in out if x.strip()]
+
+
+def answer_text(marker: dict) -> str:
+    """What a typed question shows as its correct answer: the marker's key, rendered — never the PDF's text layer,
+    which flattens a printed fraction 9/11 to "9 11" (A1). Several values read "x = 3 \\text{ or } x = 9" when the
+    answer names one variable (the families' marker_key does the same)."""
+    key = str(marker.get("key") or "")
+    if marker.get("kind") == "values":
+        parts = _split_top(key, ";")
+        vs = marker.get("variables") or []
+        if len(vs) == 1:
+            return r" \text{ or } ".join(f"{vs[0]} = {p}" for p in parts)
+        return ",\\ ".join(parts)
+    return key
+
+
+def answer_problems(bundle: dict) -> list[str]:
+    """A typed question's answer text must be its marker key, rendered (A1) — the load and coverage check."""
+    out = []
+    for q in bundle.get("questions") or []:
+        ch = q.get("choices")
+        if isinstance(ch, dict) and isinstance(ch.get("marker"), dict):
+            want = answer_text(ch["marker"])
+            if q.get("answer") != want:
+                out.append(f"{q['id']}: answer {q.get('answer')!r} is not its marker key rendered ({want!r})")
+    return out
+
+
+# =============================================================================
+# Figures a question needs (consistency review A3, A8)
+# =============================================================================
+_POINT_WITH_UNKNOWN = re.compile(r"(?<![A-Za-z\\])([A-Z])(?:_\{?\w+\}?)?\s*\(\s*([^;,()]+?)\s*[;,]\s*([^;,()]+?)\s*\)")
+
+
+def _unknown_points(text: str) -> set[str]:
+    """Names of points written with a letter for a coordinate: B(1; y), B(x, 3), M(x; y), B(2; a)."""
+    out = set()
+    for m in _POINT_WITH_UNKNOWN.finditer(text or ""):
+        coords = [re.sub(r"\\text\{([^}]*)\}", r"\1", c).strip("$ ") for c in (m.group(2), m.group(3))]
+        if any(re.fullmatch(r"[a-z]", c) for c in coords):
+            out.add(m.group(1))
+    return out
+
+
+def _spec_points(spec) -> list[dict]:
+    if isinstance(spec, dict):
+        here = [spec] if isinstance(spec.get("x"), (int, float)) and isinstance(spec.get("y"), (int, float)) else []
+        return here + [p for v in spec.values() for p in _spec_points(v)]
+    if isinstance(spec, list):
+        return [p for v in spec for p in _spec_points(v)]
+    return []
+
+
+def visual_gives_answer(question: dict, visual: dict) -> str | None:
+    """Why a figure must not be shown with its question (A8), or None. Never draw the unknown: a point the question
+    (or the figure's own label) writes with a letter coordinate is the thing asked for, so drawing it anywhere either
+    gives the answer away or contradicts the key; and a figure never draws a point at a coordinates answer."""
+    unknown = _unknown_points(question.get("stem") or "")
+    for p in _spec_points(visual.get("spec")):
+        label = str(p.get("label") or "")
+        name = re.match(r"\s*([A-Z])", label)
+        if _unknown_points(label) or (name and name.group(1) in unknown):
+            return f"draws the unknown point {label or name.group(1)} at ({p['x']}, {p['y']})"
+    ch = question.get("choices")
+    if isinstance(ch, dict) and isinstance(ch.get("marker"), dict) and ch["marker"].get("kind") == "coordinates":
+        m = re.fullmatch(r"\(\s*(-?[\d.]+)\s*[,;]\s*(-?[\d.]+)\s*\)", str(ch["marker"].get("key") or "").strip())
+        if m:
+            at = (float(m.group(1)), float(m.group(2)))
+            for p in _spec_points(visual.get("spec")):
+                if (float(p["x"]), float(p["y"])) == at:
+                    return f"draws a point at the answer {m.group(0)}"
+    return None
+
+
+def police_figures(bundle: dict, report: Report) -> None:
+    """A8: drop a figure that draws its question's unknown. A3: a question whose stem shows [figure] and has no
+    figure is not verified, so it loads as `review`, never `live`, until its figure exists."""
+    qs = {q["id"]: q for q in bundle.get("questions") or []}
+    kept = []
+    for v in bundle.get("visuals") or []:
+        why = visual_gives_answer(qs[v["question"]], v) if v.get("question") in qs else None
+        if why:
+            report.visuals_dropped.append({"visual": v["id"], "question": v["question"], "why": why})
+            continue
+        kept.append(v)
+    bundle["visuals"] = kept
+    drawn = {v.get("question") for v in kept}
+    for q in bundle.get("questions") or []:
+        if "[figure]" in (q.get("stem") or "") and q["id"] not in drawn:
+            if q.get("verified"):
+                q["verified"] = False
+            report.held_for_figure.append(q["id"])
+
+
+# =============================================================================
+# Forms the book's rules ask for (consistency review A9)
+# =============================================================================
+def apply_form_rules(bundle: dict, book, report: Report) -> None:
+    """A stem that asks for a form the book's rules name carries that form on its marker spec, whatever S3 typed
+    (deterministic; book_config.AnswerRules.forms_from_stem). A subject form needs an equation."""
+    rules = getattr(getattr(book, "answer_rules", None), "forms_from_stem", None) or []
+    for q in bundle.get("questions") or []:
+        ch = q.get("choices")
+        if not (isinstance(ch, dict) and isinstance(ch.get("marker"), dict)):
+            continue
+        for r in rules:
+            if not re.search(r.match, q.get("stem") or "", re.I):
+                continue
+            form = {"subject": r.subject} if r.form == "subject" else r.form
+            if r.form == "subject" and ch["marker"].get("kind") != "equation":
+                break
+            if ch["marker"].get("form") != form:
+                report.forms_from_rules.append({"id": q["id"], "form": form, "was": ch["marker"].get("form")})
+                ch["marker"]["form"] = form
+            break
+
+
+def form_problems(bundle: dict, book) -> list[str]:
+    rules = getattr(getattr(book, "answer_rules", None), "forms_from_stem", None) or []
+    out = []
+    for q in bundle.get("questions") or []:
+        ch = q.get("choices")
+        if not (isinstance(ch, dict) and isinstance(ch.get("marker"), dict)):
+            continue
+        for r in rules:
+            if re.search(r.match, q.get("stem") or "", re.I):
+                if r.form == "subject" and ch["marker"].get("kind") != "equation":
+                    break
+                want = {"subject": r.subject} if r.form == "subject" else r.form
+                if ch["marker"].get("form") != want:
+                    out.append(f"{q['id']}: the stem asks for {want}, the marker checks {ch['marker'].get('form')}")
+                break
     return out
 
 
@@ -784,8 +1108,9 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
                 # answer when all three agreed and G2 changed nothing; otherwise the key G2 approved —
                 # never a printed answer G2 corrected (the S5 pilot read "y = 2x + 12" beside the key
                 # y = 2x + 7 of a book error G2 had fixed)
-                trusted = it.verification == "agreed" and not (it.g2 and it.g2.verdict == "fix")
-                q["answer"] = _norm((it.printed_answer if trusted else None) or marker["key"], wkey, report)
+                # A1 (consistency review 2026-09-27): the answer text is the marker key, rendered — never the
+                # printed answer's PDF text layer ("9 11" for 9/11); `trusted` no longer decides anything here
+                q["answer"] = answer_text(marker)
             else:
                 ans = _norm(it.answer, wkey, report).replace(" ", "")
                 if not re.fullmatch(r"-?\d+(?:\.\d+)?(?:/\d+)?", ans.replace("−", "-")):
@@ -992,6 +1317,17 @@ def assemble(book, manifest_path: Path, objectives_dir: Path, runs_dir: Path,
                                              report, inputs[mid] | {"manifest": manifest_path})
         except (ValidationError, ValueError) as exc:
             raise AssemblyError(f"{name}: {exc}") from exc
+    for name, b in bundles.items():
+        if "questions" in b:
+            apply_form_rules(b, book, report)
+            police_figures(b, report)
+    prime_known(t for b in bundles.values() for t in _strings(b))
+    bundles = {name: respace_tree(b, report) for name, b in bundles.items()}
+    for b in bundles.values():               # the answer text follows the re-spaced key
+        for q in b.get("questions") or []:
+            ch = q.get("choices")
+            if isinstance(ch, dict) and isinstance(ch.get("marker"), dict):
+                q["answer"] = answer_text(ch["marker"])
     if check_markers:
         apply_marker_check(bundles, report)
     else:
@@ -1013,7 +1349,13 @@ def assemble(book, manifest_path: Path, objectives_dir: Path, runs_dir: Path,
         lesson_inputs = {k: v for k, v in inputs[mod["id"]].items() if k.endswith(f"/{les.slug}.json")}
         report.content[les.slug] = lesson_content(book, les, objectives[les.slug],
                                                   claims_by_lesson.get(les.slug, []), lesson_inputs)
+    prime_known(t for c in report.content.values() for t in _strings(c))
+    report.content = {slug: respace_tree(c, report) for slug, c in report.content.items()}
     report.counts["content_files"] = len(report.content)
+    if check_markers:     # the same node run as the marker check; skipped with it
+        rows = [r for name, b in bundles.items() for r in student_texts(b, name)]
+        rows += [r for slug, c in report.content.items() for r in student_texts(c, slug)]
+        report.katex_errors = katex_errors(rows)
     # every lesson of the book is checked, not only the assembled chapters
     problems = validate_bundles(bundles, all_lessons)
     if problems:

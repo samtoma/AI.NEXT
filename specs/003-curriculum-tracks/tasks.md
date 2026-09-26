@@ -76,7 +76,7 @@ package's task (named in *Dependencies*) and does not edit the file itself.
 **⚠️ No story work starts until T304–T313 are done.** These tasks create the registries, the gate
 and the migration every reader depends on.
 
-- [ ] T304 (WP-A) Create `app/src/lib/curricula.ts` per data-model §1: the `CurriculumId` union, labels, `labelAr`, `gradeLabels`, `programNodeId` and order; `DEFAULT_CURRICULUM`; `isKnownCurriculum`.
+- [x] T304 (WP-A) Create `app/src/lib/curricula.ts` per data-model §1: the `CurriculumId` union, labels, `labelAr`, `gradeLabels`, `programNodeId` and order; `DEFAULT_CURRICULUM`; `isKnownCurriculum`. **Verified 2026-09-27**: `curricula.ts` exports `CURRICULA` (label, `labelAr`, description, `gradeLabels`, `programNodeId`; the key order is the listing order), `CurriculumId`, `CURRICULUM_IDS`, `DEFAULT_CURRICULUM = "eg-national-en"`, `asCurriculumId`, `isKnownCurriculum`, `curriculumLabel`, `curriculumGradeLabel`; `curricula-registry.test.mts` (12 tests) passes.
 - [ ] T305 (WP-A) Create `app/src/lib/courses.ts` with all four `CourseDef`s. Prep-3 facts are copied **verbatim** from `lib/lesson.ts`, `lib/module-order.ts` and `lib/socratic-probing.ts`; the G10 entry follows data-model §1. Derive `SubjectDef.courseId` from it as a **deprecated alias**, so the ~19 importers still compile until their own packages move them (T397 removes it). **Verified 2026-09-25, not ticked**: `courses.ts` exists with all four `CourseDef`s and the Prep-3 facts genuinely look copied verbatim (matching lesson titles, "Egyptian ministry textbook", the fallback figure id). But `subjects.ts` has no `SubjectDef.courseId` alias at all — it was removed outright, not deprecated — so the code is already at T397's end state without T305's transitional step ever existing. No importer is broken by this (none was found still reading `.courseId`), but the task as written is not what shipped; note it rather than tick it, and consider whether T397 should simply absorb this task.
 - [x] T306 (WP-A) Rewrite `isCourseVisible` in `app/src/lib/catalog.ts` as the five-step rule, and add `offeredCurricula` and `resolveInitialCurriculum`, both pure. Add `resolveOnGradeChange` for FR-4008: a chosen curriculum is kept and flagged, an implied one is re-resolved. Add `gradeLabel(grade, curriculum)` for FR-4013. Correct the stale "no requirement" header. Contract: `contracts/registry-and-gate.md`.
 - [x] T307 (WP-A) Add `resolveStudentScope` in `app/src/lib/catalog-queries.ts`, with one read and one graph walk. `visibleCoursesFor` and `visibleGraphFor` become wrappers. The gate-off branch keeps curriculum scoping (FR-4015). Add `courseForSubject`.
@@ -220,7 +220,7 @@ database" step also depends on T318.
 - [ ] T354 [US1] ⛔ HUMAN GATES **G1–G5 for the pilot chapter**. Samuel reviews the objectives, disputed solutions, the family sample, the refutations, then gives go or no-go. The pilot's findings go back into WP-P packages as fixes before fan-out. Record it in `specs/003-curriculum-tracks/decisions.md` → *Gate record*.
 - [ ] T355 [US1] (WP-I) Run S7 across all chapters and produce the **widget-gap list**, with the kind each gap would need.
 - [ ] T356 [US1] ⛔ HUMAN GATE — Samuel approves or declines each proposed **new widget kind** (decision 11, FR-4306). Record each answer in `specs/003-curriculum-tracks/decisions.md`.
-- [ ] T357 [P] [US1] (WP-W) Build each **approved** kind: component, `contracts/widget-predicates.json` entry, validator and renderer registration. It uses Play tokens only and follows FR-1202–FR-1210. Then re-run S7 for its chapters. Skip this task if T356 approves none.
+- [ ] T357 [P] [US1] (WP-W) Build each **approved** kind: component, `contracts/widget-predicates.json` entry, validator and renderer registration. It uses Play tokens only and follows FR-1202–FR-1210. Then re-run S7 for its chapters. Skip this task if T356 approves none. **Checked 2026-09-27, not ticked**: all six kinds of decision 27 are built in the app — `PolygonBuilder.tsx` (shape builder), `SolidScaler.tsx` (3-D solid scaler), `BoxPlotBuilder.tsx`, `VennBuilder.tsx`, `AreaModel.tsx` (algebra tiles) and the curve sketcher's five G10 families — with contract entries in `contracts/widget-predicates.json` and pipeline registration (`generate_widget_questions.py`, `s7-v5`). Two things keep it open: (1) they were built **before** T355's gap list existed, whereas decision 27 and FR-4306 say each kind is built only for the chapters that list names — whether "built ahead" stands is **Samuel's decision** (open question in `docs/PROJECT_STATE.md`); (2) "re-run S7 for its chapters" has run for Chapter 8 only.
 - [ ] T358 [US1] (WP-I) Fan out: run S1 per chapter.
 - [ ] T359 [US1] ⛔ HUMAN GATE **G1** per chapter — derived objectives with their evidence (ADR-0005 amendment). Record it in `specs/003-curriculum-tracks/decisions.md` → *Gate record*.
 - [ ] T360 [US1] (WP-I) Run S2–S4 and S8 per lesson, then S5–S7 per objective, across the book.
@@ -432,21 +432,31 @@ Samuel answered thirteen more questions one by one the same day
 ([decisions.md](./decisions.md), "Third round"). T413 (the marker) is recorded above, in Phase 8c,
 and is now passed. These are the remaining build items that round adds.
 
-- [ ] T427 [US2] (WP-P2) **Second blind mapper for chapter-end exercises** (decision 33, S1's design):
-  `services/extraction/runbook/objectives.workflow.js` already carries the flag
-  (`args.options.second_mapper`, currently `false`) but its disagreement handling is not built. Turn it
-  on for Grade 10; wire a second, independent mapper's item→objective assignment for the 1,228
-  chapter-end items alongside the existing one, and surface any disagreement at gate **G1**, next to
-  the chapter's objectives, rather than trusting a single mapper's assignment. Extend
-  `assemble_objectives.py`'s rule-2 check (`tests/test_objectives.py`'s `test_rule2_every_item_to_exactly_one_objective`)
-  accordingly.
-- [ ] T428 [US2] (WP-P2) **G10's prerequisite-link stage** (decision 25, new FR-4410): the pipeline
+- [x] T427 [US2] (WP-P2) **Second blind mapper for chapter-end exercises** (decision 33, S1's design):
+  `services/extraction/runbook/objectives.workflow.js` carries the flag (`args.options.second_mapper`;
+  it was `false` when this task was written, 2026-09-25). Turn it on for Grade 10; wire a second,
+  independent mapper's item→objective assignment for the 1,228 chapter-end items alongside the existing
+  one, and surface any disagreement at gate **G1**, next to the chapter's objectives, rather than
+  trusting a single mapper's assignment. Extend `assemble_objectives.py`'s rule-2 check
+  (`tests/test_objectives.py`'s `test_rule2_every_item_to_exactly_one_objective`) accordingly.
+  **Verified 2026-09-27**: the flag now defaults to `true` (`objectives.workflow.js:111`) and the
+  workflow runs two blind mappers; `assemble_objectives.py` records every disagreement as a
+  `mappers_disagree` decision G1 owes, shown on the G1 page;
+  `test_the_second_mapper_is_required_and_its_disagreement_goes_to_g1` passes (`test_objectives.py`).
+  Used in the Chapter 8 pilot: 132 end-of-chapter items distributed by two blind mappers, G1 passed.
+- [x] T428 [US2] (WP-P2) **G10's prerequisite-link stage** (decision 25, new FR-4410): the pipeline
   finds this book's prerequisite links in the book itself, each cited to the evidence it rests on
   (a cross-reference, a "recall" note, a worked example reusing an earlier method — never inferred from
   outside curriculum knowledge). A second, independent AI checks each candidate link before it reaches
   a human. Samuel approves each chapter's prerequisite links together with that chapter's objectives, at
   gate **G1**. New stage in `objectives.workflow.js` / `assemble_objectives.py`, or a sibling stage —
-  WP-P2's call which.
+  WP-P2's call which. **Verified 2026-09-27**: inside S1 — the workflow's linker and an independent
+  link checker (`links: true` by default); `assemble_objectives.py` keeps a link only with its quote at
+  its anchor and the checker's agreement, sends backward links and a dead linker to G1 as decisions,
+  refuses cycles, writes kept links as `prerequisites` (assembled as `prerequisite_of` edges) and lists
+  every link, kept or dropped, on the G1 page. `test_objectives.py`'s three link tests pass. Used in the
+  Chapter 8 pilot: 1 link confirmed and kept at G1. (Chapter 8 ran first, so it could propose no link
+  to Chapters 1–7; its links are re-run after those chapters pass G1.)
 - [ ] T429 [US1] (WP-P7 for the inventory; WP-W for any approved kind) **The figure-gap inventory**
   (decision 26, new FR-4321): extend S4's `viz-gaps.json` reporting so a figure no existing kind can
   draw is not just recorded but counted by the native kind it would need (geometry diagram, trig graph,

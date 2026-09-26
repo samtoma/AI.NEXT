@@ -513,3 +513,28 @@ test("isolation: the home page names her own book and syllabus, never another cu
   const t = await getHomeStats(T);
   assert.ok(!/Ministry|Everything Maths/.test(`${t.sourceWording.source} ${t.sourceWording.syllabus}`), "two books: named neither");
 });
+
+test("a question's own figure rides on it to the card — lesson, skill map and practice (consistency review A3)", { skip }, async () => {
+  // Give one Grade 10 question its own figure (the fixture's figures hang off
+  // objectives only) — the shape the pipeline writes: `visuals.question_id`.
+  const qid = `q:${G10_LO.slice(3)}:001`;
+  await db!.query(
+    `INSERT INTO visuals (id, lo_id, question_id, kind, spec) VALUES ('v:iso:own', $1, $2, 'figure', '{}')
+     ON CONFLICT (id) DO NOTHING`,
+    [G10_LO, qid]
+  );
+  const lesson = await getLessonData("g10m1s1-1", A, asClient());
+  assert.deepEqual(lesson?.questions.find((q) => q.id === qid)?.figures, ["v:iso:own"]);
+  const map = await getSpineData(A);
+  assert.deepEqual(map.questions.find((q) => q.id === qid)?.figures, ["v:iso:own"]);
+  // a question with no figure of its own carries none (not its objective's)
+  assert.equal(map.questions.find((q) => q.id !== qid && q.loId === G10_LO)?.figures, undefined);
+  // practice: whichever questions the plan picks, each carries exactly its own figures
+  const plan = await getStudentPlan(A);
+  for (const item of plan.items) {
+    assert.deepEqual(item.figures ?? [], item.questionId === qid ? ["v:iso:own"] : [], item.questionId);
+  }
+  // and a National student's map never carries it
+  const n = await getSpineData(N);
+  assert.ok(!n.questions.some((q) => q.figures?.includes("v:iso:own")));
+});
