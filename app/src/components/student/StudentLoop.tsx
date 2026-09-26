@@ -14,6 +14,7 @@ import { MathAnswerInput } from "@/components/chat/MathAnswerInput";
 import { ReentryNote } from "@/components/chat/ReentryNote";
 import { markerInputOf } from "@/lib/answer-marker";
 import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
+import { ANSWER_ONLY_CARD_NOTE, isAnswerOnly } from "@/lib/question-flags";
 import { FeedbackPrompt } from "@/components/student/FeedbackPrompt";
 import { masteryColor, masteryLabel, pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
@@ -114,6 +115,10 @@ export function StudentLoop({
 
   const item = plan[idx];
   const lastResult = records[records.length - 1]?.result;
+  // `answer_only` (the book prints no working): its wrong-answer card shows the
+  // answer and where the method is, never steps (consistency review A6)
+  const lastAnswerOnly =
+    lastResult?.answerOnly === true || isAnswerOnly(records[records.length - 1]?.item.choices);
   // A typed maths question (FR-4320): its `choices` carry a marker spec, and
   // it is answered in the maths input — same rule ChatQuestionCard applies.
   const markerInput = useMemo(
@@ -423,6 +428,28 @@ export function StudentLoop({
                       "anim-pop mt-6 rounded-[var(--play-radius)] px-5 py-4"
                     )}
                   >
+                    {lastAnswerOnly ? (
+                      // ANSWER ONLY (A6): the book prints no working — right or
+                      // wrong, the answer, and where the method is. No steps.
+                      <>
+                        <p className="font-display text-[1.25rem] font-extrabold leading-[1.25] text-ink anim-nudge">
+                          Not quite.
+                        </p>
+                        <p className="mt-3 text-[1rem] text-ink">
+                          Correct answer:{" "}
+                          <strong dir="ltr">
+                            <TeX
+                              text={
+                                lastResult.correctAnswer.includes("$") || !markerInput
+                                  ? lastResult.correctAnswer
+                                  : `$${lastResult.correctAnswer}$`
+                              }
+                            />
+                          </strong>
+                        </p>
+                        <p className="mt-1.5 text-[0.95rem] text-ink-soft">{ANSWER_ONLY_CARD_NOTE}</p>
+                      </>
+                    ) : (
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <p className="font-display text-[1.25rem] font-extrabold leading-[1.25] text-ink anim-nudge">
                         Not quite — let&apos;s look at it step by step.
@@ -431,8 +458,9 @@ export function StudentLoop({
                         grounded in the worked solution ✓
                       </span>
                     </div>
+                    )}
                     <ol className="mt-4 space-y-2.5">
-                      {lastResult.solution.map((s, i) => (
+                      {(lastAnswerOnly ? [] : lastResult.solution).map((s, i) => (
                         <li
                           key={s.step}
                           className={cx(STROKE_SM, "anim-rise flex gap-3 rounded-[var(--play-radius-sm)] bg-card px-4 py-3")}

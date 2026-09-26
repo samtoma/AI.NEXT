@@ -6,7 +6,10 @@
  * builders over the fake pool. The same question without the flag is
  * unchanged, which is also why both prompt goldens are.
  *
- * @covers FR-4320
+ * FR-4302 states the answer-only rule since 2026-09-27 (decisions.md #43);
+ * FR-4320 carries the marker side of the same flag.
+ *
+ * @covers FR-4320, FR-4302
  */
 import { test } from "node:test";
 import assert from "node:assert/strict";

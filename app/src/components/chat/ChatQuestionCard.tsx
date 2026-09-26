@@ -14,6 +14,7 @@ import { displayStem } from "@/lib/question-figures";
 import { pct } from "@/lib/mastery";
 import { track } from "@/lib/ga";
 import { AttemptRetryError, submitAttempt } from "@/lib/attempts-client";
+import { ANSWER_ONLY_CARD_NOTE, isAnswerOnly } from "@/lib/question-flags";
 import {
   BUTTON_PRIMARY,
   BUTTON_TERTIARY,
@@ -109,6 +110,10 @@ export function ChatQuestionCard({
   );
   // The marker's message when the server sent the answer back unrecorded.
   const [reentry, setReentry] = useState<string | null>(null);
+  // `answer_only` (the book prints no working): no steps on this card (A6).
+  // The server says so on the result; the question's own flag covers a card
+  // shown before any result.
+  const answerOnly = result?.answerOnly === true || isAnswerOnly(q.choices);
 
   const submit = async (widget?: WidgetOutcome) => {
     const given = widget
@@ -358,7 +363,10 @@ export function ChatQuestionCard({
                       : `Not quite — answer: ${result.correctAnswer}`
                     : lang === "ar"
                       ? "مش مظبوطة — تعالى نشوفها مع بعض"
-                      : "Not quite — let's look at it together"}
+                      : answerOnly
+                        ? // no working to look at together (A6)
+                          "Not quite"
+                        : "Not quite — let's look at it together"}
               </span>
               {debug && (
                 <span className="font-mono text-[0.72rem]">
@@ -416,6 +424,11 @@ export function ChatQuestionCard({
                 )}
               </p>
             )}
+            {/* ANSWER ONLY (A6): the book prints no working, so the card shows
+                no steps — only the answer above and where the method is. */}
+            {!result.isCorrect && answerOnly && !cardWithholdsAnswer(probing, revealAnswer) && (
+              <p className="mt-1.5 text-[0.85rem]">{ANSWER_ONLY_CARD_NOTE}</p>
+            )}
             {/* THE REFUTATION — the entry authored for the error this student
                 actually made, not the question's generic solution. Before
                 ADR-0009 this was looked up, logged to analytics and then
@@ -447,7 +460,7 @@ export function ChatQuestionCard({
               </div>
             ) : (
               <>
-                {result.refutation && !result.isCorrect && (
+                {result.refutation && !result.isCorrect && !answerOnly && (
                   <div
                     className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
                   >
@@ -476,7 +489,7 @@ export function ChatQuestionCard({
                     guessing at one of the LO's OTHER misconceptions — which used
                     to repeat the same borrowed explanation across unrelated
                     questions on the same objective. */}
-                {!result.refutation && !result.isCorrect && result.solution.length > 0 && (
+                {!result.refutation && !result.isCorrect && !answerOnly && result.solution.length > 0 && (
                   <div
                     className={cx(STROKE_SM, "mt-2 rounded-[var(--play-radius-sm)] bg-card px-3 py-2.5 text-ink")}
                   >
