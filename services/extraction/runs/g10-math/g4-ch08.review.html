@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>G4 · Misconceptions — g10-math-misconceptions</title>
+<style>
+:root{--play-bg-page:#FFF6E6;--play-bg-surface:#FFFFFF;--play-bg-warm:#FFE9BD;--play-ink:#241F3D;
+--play-text-dim:#4A4266;--play-text-muted:#5A5570;--play-text-label:#615B7D;--play-text-link:#136386;
+--play-action:#F0A22F;--play-on-action:#241F3D;--play-mastery:#2F9E8F;--play-on-mastery:#241F3D;
+--play-celebrate:#7B4FC9;--play-on-celebrate:#FFFFFF;--play-sky:#7FD1F0;--play-on-sky:#0F3D51;
+--play-berry:#FFA8C5;--play-on-berry:#7A2447;--play-leaf:#B6E88F;--play-on-leaf:#1F3D12;
+--play-text-amber:#A34F0A;--play-inactive-fill:#F6F5FA;--play-inactive-border:#9890B5;
+--play-stroke:3px;--play-stroke-sm:2.5px;--play-shadow:4px 4px 0 var(--play-ink);
+--play-shadow-sm:3px 3px 0 var(--play-ink);--play-radius-sm:14px;--play-radius:20px;
+--play-radius-lg:28px;--play-radius-pill:999px;--play-target-min:52px;
+--play-font-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;
+--play-font-read:"Cairo",system-ui,sans-serif;--play-font-mono:"IBM Plex Mono",ui-monospace,monospace;
+--play-text-title:1.5rem;--play-text-ui:1.15rem;--play-text-label-size:.85rem;--play-text-read:1rem;
+--play-text-data:.72rem;--play-leading-latin:1.75;--play-press:90ms cubic-bezier(.2,.7,.3,1)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--play-bg-page);color:var(--play-ink);font-family:var(--play-font-read);
+font-size:var(--play-text-read);line-height:var(--play-leading-latin);-webkit-text-size-adjust:100%}
+.shell{max-width:860px;margin:0 auto;padding:0 16px}
+header.top{background:var(--play-bg-warm);border-bottom:var(--play-stroke) solid var(--play-ink);padding:24px 0 20px}
+h1,h2,h3{font-family:var(--play-font-display);font-weight:800;line-height:1.2;margin:0}
+h1{font-size:clamp(1.4rem,5vw,var(--play-text-title))}
+h2{font-size:var(--play-text-ui);margin:28px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-family:var(--play-font-mono);
+font-size:var(--play-text-data);color:var(--play-text-dim)}
+.brief{margin:18px 0 0;color:var(--play-text-dim)}
+.brief p{margin:0 0 8px}
+.card{background:var(--play-bg-surface);border:var(--play-stroke) solid var(--play-ink);
+border-radius:var(--play-radius);box-shadow:var(--play-shadow);padding:16px;margin:18px 0}
+.card header{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:8px}
+.id{font-family:var(--play-font-mono);font-size:var(--play-text-data);color:var(--play-text-label);
+overflow-wrap:anywhere}
+.tag{font-family:var(--play-font-mono);font-size:var(--play-text-data);padding:2px 10px;
+border-radius:var(--play-radius-pill);border:var(--play-stroke-sm) solid var(--play-ink)}
+.tag.attention{background:var(--play-action);color:var(--play-on-action)}
+.tag.ok{background:var(--play-mastery);color:var(--play-on-mastery)}
+.tag.info{background:var(--play-sky);color:var(--play-on-sky)}
+.tag.sample{background:var(--play-celebrate);color:var(--play-on-celebrate)}
+.tag.plain{background:var(--play-inactive-fill);color:var(--play-text-muted);border-color:var(--play-inactive-border)}
+.stem{font-size:1.05rem;margin:4px 0 10px}
+.m{font-family:var(--play-font-mono);font-size:.95em;unicode-bidi:isolate;direction:ltr}
+code.tex{font-family:var(--play-font-mono);font-size:.85em;background:var(--play-inactive-fill);
+border-radius:6px;padding:0 4px;overflow-wrap:anywhere}
+table.answers{border-collapse:collapse;width:100%;margin:8px 0;font-size:.95rem}
+table.answers th,table.answers td{text-align:start;padding:6px 8px;border-bottom:1px solid var(--play-inactive-border);vertical-align:top}
+table.answers tr.disagree td{background:var(--play-bg-warm)}
+ul.list,ol.steps{margin:6px 0;padding-inline-start:22px}
+ul.choices{list-style:none;padding:0;margin:6px 0;display:grid;gap:6px}
+ul.choices li{padding:8px 10px;border-radius:var(--play-radius-sm);border:var(--play-stroke-sm) solid var(--play-inactive-border);background:var(--play-inactive-fill)}
+ul.choices li.key{border-color:var(--play-ink);background:var(--play-leaf);color:var(--play-on-leaf)}
+.note{font-size:.9rem;color:var(--play-text-dim)}
+.advice{border-inline-start:var(--play-stroke) solid var(--play-sky);padding:4px 10px;margin:8px 0;background:var(--play-bg-warm)}
+details{margin-top:8px}
+summary{cursor:pointer;color:var(--play-text-link);min-height:32px}
+.verdict{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.verdict button{font-family:var(--play-font-display);font-weight:700;font-size:1rem;min-height:var(--play-target-min);
+min-width:var(--play-target-min);padding:0 16px;border-radius:var(--play-radius);border:var(--play-stroke) solid var(--play-ink);
+background:var(--play-bg-surface);color:var(--play-ink);box-shadow:var(--play-shadow-sm);cursor:pointer;
+transition:transform var(--play-press),box-shadow var(--play-press)}
+.verdict button:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--play-ink)}
+.verdict button[aria-pressed="true"]{background:var(--play-action);color:var(--play-on-action)}
+.verdict button:focus-visible,textarea:focus-visible,input:focus-visible{outline:var(--play-stroke) solid var(--play-text-link);outline-offset:2px}
+textarea,input[type=text]{width:100%;font:inherit;border:var(--play-stroke-sm) solid var(--play-ink);border-radius:var(--play-radius-sm);
+padding:8px;background:var(--play-bg-surface);color:var(--play-ink);margin-top:8px}
+footer.bar{position:sticky;bottom:0;background:var(--play-bg-warm);border-top:var(--play-stroke) solid var(--play-ink);padding:10px 0;margin-top:24px}
+footer.bar .shell{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+footer.bar .count{font-family:var(--play-font-mono);font-size:var(--play-text-data);margin-inline-end:auto}
+.stat{display:inline-block;margin-inline-end:18px}
+.stat b{font-family:var(--play-font-display);font-size:1.4rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="g4-24c2c467a02c" data-gate="g4">
+<header class="top"><div class="shell">
+<h1>G4 · Misconceptions — g10-math-misconceptions</h1>
+<div class="meta"><span><b>2</b> dropped by the verifier</span><span><b>3</b> of 29 kept entries sampled</span><span>10%, seed 20260925, at least one per kind</span></div>
+<div class="brief"><p>Each refutation was worked by a second agent against the canonical solutions and kept only when CONFIRMED (fail-closed). Read the sample for the house style: step 1 names the student's thinking without calling it wrong-headed, the last step leaves them with the move that works, and nothing corrects them with a convention the book does not teach (FR-1114).</p></div>
+<label for="reviewer" class="note">Reviewer (your name goes on every verdict)</label>
+<input id="reviewer" type="text" autocomplete="name">
+</div></header>
+<main class="shell"><section class="card"><h3>What the verifier dropped</h3>
+<p><span class="stat"><b>2</b> dropped</span>
+<span class="stat"><b>29</b> kept by the S5 run(s)</span>
+<span class="stat"><b>29</b> in the catalogue</span></p>
+<p class="note">UNSUPPORTED 2.
+A dropped entry never ships; only the count is shown here (§3.13).</p></section><article class="card"><header><span class="tag info">conceptual</span>
+<span class="id">mc:g10m8s3-2-1:negative-coordinate-subtraction-slip</span></header>
+<h3>Loses a sign subtracting negative coordinates</h3><p class="stem">When working out <span class="m">y<sub>2</sub>-y<sub>1</sub></span> or <span class="m">x<sub>2</sub>-x<sub>1</sub></span> and one of the values is already negative, the student simplifies <span class="m">a-(-b)</span> as <span class="m">a-b</span> instead of <span class="m">a+b</span>.</p>
+
+<details open><summary>Refutation</summary><ol class="steps"><li>You know how to subtract two coordinates — the trouble starts only when one of them is already negative, and the two minus signs sitting together get collapsed into one instead of cancelling to a plus.</li><li>The book&#x27;s own working for <span class="m">B(-6,-3)</span> and <span class="m">C(-2,3)</span> writes the gradient as <span class="m">m<sub>BC</sub>=(3-(-3))/(-2-(-6))</span> and turns it into <span class="m">(3+3)/(-2+6)=6/4=3/2</span> — every <span class="m">-(- )</span> becomes a <span class="m">+</span> before anything else happens.</li><li>Skip that step instead and read <span class="m">3-(-3)</span> as <span class="m">3-3</span> and <span class="m">-2-(-6)</span> as <span class="m">-2-6</span>: you&#x27;d get <span class="m">0/-8=0</span> — a horizontal line, nowhere near the book&#x27;s <span class="m">y=3/2x+6</span>.</li><li>Whenever you see two minus signs next to each other, rewrite <span class="m">a-(-b)</span> as <span class="m">a+b</span> first, before you simplify anything else.</li></ol></details>
+
+
+<div class="verdict" data-id="mc:g10m8s3-2-1:negative-coordinate-subtraction-slip" role="group" aria-label="Verdict for mc:g10m8s3-2-1:negative-coordinate-subtraction-slip"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="send_back" aria-pressed="false">Send back</button></div><textarea rows="2" aria-label="Note on mc:g10m8s3-2-1:negative-coordinate-subtraction-slip" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag info">generated_distractor</span>
+<span class="id">mc:g10m8s3-2-1:swaps-coordinates-when-substituting</span></header>
+<h3>Swaps which number is <span class="m">x</span> and which is <span class="m">y</span></h3><p class="stem">The student substitutes a point&#x27;s two values into the wrong slots — putting the <span class="m">y</span>-value where <span class="m">x</span> belongs, or the reverse — when solving for <span class="m">c</span> in <span class="m">y=mx+c</span> or for a missing coordinate.</p>
+<p class="note">Signal: The reported value equals what you&#x27;d get by putting the point&#x27;s coordinates in the opposite slots — e.g. a constant of <span class="m">-1</span> instead of the book&#x27;s <span class="m">5/2</span> for a line through <span class="m">P(-3,4)</span>.</p>
+<details open><summary>Refutation</summary><ol class="steps"><li>You&#x27;ve got the right idea — substitute a known point into the equation — but the two numbers from the point have gone into the wrong places: the <span class="m">y</span>-value where <span class="m">x</span> should be, or the other way round.</li><li>This objective&#x27;s question on <span class="m">PQ</span> finds <code class="tex" title="raw LaTeX">m=-\tfrac12</code> and uses point <span class="m">P(-3,4)</span>. The book substitutes <span class="m">x=-3, y=4</span>: <code class="tex" title="raw LaTeX">4=-\tfrac12(-3)+c</code>, so <span class="m">c=5/2</span>, giving <code class="tex" title="raw LaTeX">y=-\tfrac12x+\tfrac52</code>.</li><li>Swap the two numbers instead — put <span class="m">x=4, y=-3</span> — and you&#x27;d get <code class="tex" title="raw LaTeX">-3=-\tfrac12(4)+c</code>, so <span class="m">c=-1</span>: a completely different line, <code class="tex" title="raw LaTeX">y=-\tfrac12x-1</code>, that doesn&#x27;t even pass through <span class="m">P</span>.</li><li>The same mix-up shows up the other way in the &#x27;find the missing coordinate&#x27; questions: the diagram for point <span class="m">B(2, a)</span> tells you <span class="m">x=2</span>, so substitute it for <span class="m">x</span> in the equation and solve for <span class="m">y</span> — never plug the labelled number in for <span class="m">y</span> just because it&#x27;s the one you&#x27;re given first.</li></ol></details>
+
+
+<div class="verdict" data-id="mc:g10m8s3-2-1:swaps-coordinates-when-substituting" role="group" aria-label="Verdict for mc:g10m8s3-2-1:swaps-coordinates-when-substituting"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="send_back" aria-pressed="false">Send back</button></div><textarea rows="2" aria-label="Note on mc:g10m8s3-2-1:swaps-coordinates-when-substituting" placeholder="Note (optional)"></textarea></article><article class="card"><header><span class="tag info">book_distractor</span>
+<span class="id">mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property</span></header>
+<h3>Names the shape from only one of the properties that build up to it</h3><p class="stem">The student correctly checks one defining property of the quadrilateral (one pair of sides parallel, one pair of sides equal in length, or one right angle / one perpendicular or equal pair of diagonals) but doesn&#x27;t go on to check the other property the book combines with it, so answers with the less-specific relative that matches only what was checked.</p>
+<p class="note">Signal: final answer names a related shape (parallelogram, trapezium, rhombus, rectangle or kite) that the working partly supports, rather than the single most specific shape (isosceles trapezium or square) the full check gives.</p>
+<details open><summary>Refutation</summary><ol class="steps"><li>They did do a real, correct check — finding one pair of sides parallel, or the diagonals perpendicular, or one right angle — and that check is a genuine, useful piece of the answer, just not the whole of it.</li><li>For the quadrilateral with <span class="m">A(0, 3)</span>, <span class="m">B(4, 3)</span>, <span class="m">C(5, -1)</span> and <span class="m">D(-1, -1)</span>, <span class="m">AB∥ DC</span> (both gradient <span class="m">0</span>) is true and is the book&#x27;s first fact — but the book then also compares the lengths of the other pair of opposite sides, <span class="m">AD</span> and <span class="m">BC</span>, and finds them equal; only that second check earns &#x27;isosceles.&#x27; Stopping after the parallel check alone gives &#x27;trapezium&#x27;; assuming the other pair must also be parallel because it&#x27;s equal in length gives &#x27;parallelogram&#x27; — but <span class="m">m<sub>AD</sub>=4</span> and <span class="m">m<sub>BC</sub>=-4</span> are not equal, so that pair is not parallel.</li><li>For the parallelogram <span class="m">LMNP</span> with <span class="m">L(-1, -1)</span>, <span class="m">M(-2, 4)</span> and <span class="m">P(4, 0)</span>, showing <span class="m">m<sub>MP</sub>× m<sub>LN</sub>=-1</span> (diagonals perpendicular) proves <span class="m">LMNP</span> is a rhombus — true, but only half the picture; it takes a right angle as well, <span class="m">LM⊥ MN</span>, to earn &#x27;square&#x27;. A square is also a rectangle, a rhombus and a kite, so those names are true, just less precise — not wrong, just not the finished answer.</li><li>Once one property is confirmed, ask what shape it proves on its own — then go back and check the book&#x27;s other property (the missing side-length, angle, or diagonal fact) before naming the quadrilateral, so the answer is the single most specific shape both facts together support.</li></ol></details>
+<details><summary>Book options it is stamped on (6)</summary><ul class="list"><li>q:g10m8s3-2-2:ex8-6-21c: “parallelogram”</li><li>q:g10m8s3-2-2:ex8-6-21c: “trapezium”</li><li>q:g10m8s3-2-2:ex8-6-36b: “rhombus”</li><li>q:g10m8s3-2-2:ex8-6-42e: “rectangle”</li><li>q:g10m8s3-2-2:ex8-6-42e: “rhombus”</li><li>q:g10m8s3-2-2:ex8-6-42e: “kite”</li></ul></details>
+
+<div class="verdict" data-id="mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property" role="group" aria-label="Verdict for mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property"><button type="button" data-v="accept" aria-pressed="false">Accept</button><button type="button" data-v="send_back" aria-pressed="false">Send back</button></div><textarea rows="2" aria-label="Note on mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property" placeholder="Note (optional)"></textarea></article></main>
+<footer class="bar"><div class="shell">
+<span class="count"></span><span class="status note" aria-live="polite"></span>
+<div class="verdict" style="margin:0"><button type="button" id="copy">Copy verdicts</button>
+<button type="button" id="download">Download</button></div>
+</div></footer>
+<script type="application/json" id="meta">{"gate": "G4", "page": "g4-24c2c467a02c", "catalogue": "g10-math-misconceptions", "course_id": "course:us-g10-math-en", "seed": 20260925, "sample_percent": 10, "sampled": ["mc:g10m8s3-2-1:negative-coordinate-subtraction-slip", "mc:g10m8s3-2-1:swaps-coordinates-when-substituting", "mc:g10m8s3-2-2:stops-at-partial-quadrilateral-property"], "dropped": 2}</script>
+<script>
+(() => {
+  const PAGE = document.body.dataset.page, GATE = document.body.dataset.gate;
+  const KEY = 'review:' + PAGE;
+  let state = {reviewer: '', verdicts: {}, notes: {}};
+  try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (_) {}
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (_) {} };
+  const boxes = [...document.querySelectorAll('.verdict[data-id]')];
+  const count = document.querySelector('.count');
+  const paint = () => {
+    boxes.forEach((b) => b.querySelectorAll('button').forEach((x) =>
+      x.setAttribute('aria-pressed', String(state.verdicts[b.dataset.id] === x.dataset.v))));
+    const n = boxes.filter((b) => state.verdicts[b.dataset.id]).length;
+    if (count) count.textContent = n + ' of ' + boxes.length + ' decided';
+  };
+  boxes.forEach((b) => {
+    b.querySelectorAll('button').forEach((x) => x.addEventListener('click', () => {
+      state.verdicts[b.dataset.id] = x.dataset.v; save(); paint(); }));
+    const t = b.parentElement.querySelector('textarea');
+    if (t) { t.value = state.notes[b.dataset.id] || '';
+             t.addEventListener('input', () => { state.notes[b.dataset.id] = t.value; save(); }); }
+  });
+  const who = document.querySelector('#reviewer');
+  if (who) { who.value = state.reviewer || '';
+             who.addEventListener('input', () => { state.reviewer = who.value; save(); }); }
+  const doc = () => JSON.stringify(Object.assign(JSON.parse(document.querySelector('#meta').textContent),
+    {reviewer: state.reviewer, verdicts: state.verdicts, notes: state.notes}), null, 2);
+  const status = document.querySelector('.status');
+  document.querySelector('#copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(doc()); status.textContent = 'copied'; }
+    catch (_) { status.textContent = 'copy failed — use Download'; }
+  });
+  document.querySelector('#download').addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([doc()], {type: 'application/json'}));
+    a.download = PAGE + '.verdicts.json'; a.click(); URL.revokeObjectURL(a.href);
+  });
+  paint();
+})();
+</script>
+</body>
+</html>
