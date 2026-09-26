@@ -240,3 +240,10 @@ carries `form: {subject: y}`; 16 figures that drew the unknown withheld; 59 book
 one held at review (99 live). Re-run plan `runs/g10-math/visual-reruns.plan.json` (34 figures, 4 lessons); copies
 `work/g10-math/packets/embedded/lesson-visuals.<lesson>.workflow.js`; merge with `merge_visual_reruns.py`, then
 re-assemble, `load_seed --replace`, `apply_review_verdicts --g2`, `load_misconceptions`, export, coverage.
+**Visuals re-runs merged; 7 G2 stem fixes in (2026-09-27).** Re-split from `runs/g10-math/lessons/wf_*.json` with
+`g2.json` (7 items changed), the four re-runs re-merged, re-assembled, reloaded (`--replace`): 105 book questions live,
+53 held at review for a missing figure, 0 KaTeX errors, coverage RED only on objective_evidence and tier_floor;
+parity GREEN; tester setup unchanged. Next copies: `lesson-visuals-v6.<lesson>.workflow.js` (18 figures,
+plan `runs/g10-math/visual-reruns-v6.plan.json`), `widgets.s7-author-r3.workflow.js` (g10m8s3-1, s7-v7),
+`widgets.s7-verify-r2.workflow.js` (s3-2-1 with the replacement instance, staged in
+`work/g10-math/pilot/widgets-staged/` — copy it into `widgets/g10-math/` only after the verify returns).

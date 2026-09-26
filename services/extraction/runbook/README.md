@@ -720,3 +720,11 @@ does, and what `ci-cd.yml` "Curriculum (only when none is loaded)" does on first
   then re-assemble and reload (`load_seed.py … --replace` prunes a withheld figure).
 - **Forms** (A9): `answer_rules.forms_from_stem` may name `"form": "subject", "subject": "y"` ("in the form y = …");
   the assembly puts it on the marker and S3 (collect-5) does too; the audit counts a miss (`asked_forms`).
+- **lesson-v6 visuals** (2026-09-27): an EXERCISE figure names the unknown it leaves out in `withheld` and draws
+  the rest (Compare accepts exactly that omission); a worked example's figure is drawn whole; every element a figure
+  shows is drawn, or the figure is a gap whose `needed_kind` says exactly what is missing. The figure gate marks
+  what it holds (`[held: figure missing]`) and a load that brings the figure puts exactly those back live.
+- **G2 attribution**: an item another agent fixed on top of Samuel's verdict carries `samuel_verdict` and `stem_fix_by`
+  in g2.json; the lesson runs and the DB stamp say both ("Samuel Toma (G2 accept); stem fixed by …").
+- **Dry runs**: one at a time per chapter — `dryrun_chapter.py` holds `work/<book>/dryrun/.chNN.lock` and a second
+  run waits for it.
