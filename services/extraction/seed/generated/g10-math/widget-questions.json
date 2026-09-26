@@ -6,13 +6,15 @@
   "templates": {
     "wt:g10m8s1-1-2:plot-the-point": "085a06f70e4863f758fab3745314b7dd2ca4c1e693d78438baa5d0dcb5c44a72",
     "wt:g10m8s2-1-2:missing-coord-number-line": "2c17b77e19dd5bb4b1a2175bbaed33bf5720e0bcd12db49feef2443961a3cb42",
-    "wt:g10m8s3-1-2:gradient-to-missing-coord": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a",
-    "wt:g10m8s3-2-1:line-through-two-points": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f",
+    "wt:g10m8s3-2-1:line-through-two-points": "07fa6f7705addbb9ab2efedb7191d44b182df706e1e042f922d299ddf2f60d53",
     "wt:g10m8s3-2-2:parallel-perpendicular-line": "03c31fc9a4e119f7ed00b9abb6a66294c758a82803c8e34c3ee1e0952ae11375",
     "wt:g10m8s4-1-1:plot-midpoint": "69d5b6190c717b11c543ec1fea2fa297f30f5101636d451e047b78c10f31ed13",
     "wt:g10m8s4-1-2:plot-endpoint": "7a170a351c05963ac15f818787e48eabec310ef72e4faef14715a8f6d1ccfc7f"
   },
   "rejected_templates": {},
+  "carried_verification": {
+    "wt:g10m8s3-2-1:line-through-two-points": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f"
+  },
   "questions": [
     {
       "id": "q:g10m8s1-1-2:w001",
@@ -450,238 +452,6 @@
       "template_sha": "2c17b77e19dd5bb4b1a2175bbaed33bf5720e0bcd12db49feef2443961a3cb42"
     },
     {
-      "id": "q:g10m8s3-1-2:w001",
-      "lo_id": "lo:g10m8s3-1-2",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Line $AB$ has gradient $m = 2$. $A$ is at $(-1, 0)$ and $B$ is at $(1, y)$ for some value $y$. Place $A$ and $B$.",
-      "choices": {
-        "kind": "line_drawer",
-        "spec": {
-          "mode": "points",
-          "through": [
-            [
-              -1,
-              0
-            ],
-            [
-              1,
-              4
-            ]
-          ]
-        },
-        "diagnostics": [
-          {
-            "predicate": "slope-inverted",
-            "misconception_id": "mc:g10m8s3-1-2:inverted-gradient-ratio"
-          },
-          {
-            "predicate": "slope-sign-flipped",
-            "misconception_id": "mc:g10m8s3-1-2:mismatched-point-order"
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Write the gradient formula using the known point: $m = \\dfrac{y - y_1}{x - x_1}$, with $(x_1, y_1) = A$."
-        },
-        {
-          "step": 2,
-          "text_md": "Substitute the given gradient and the known $x$-coordinate of $B$, then solve for the missing $y$-coordinate: $y = y_1 + m(x - x_1)$."
-        },
-        {
-          "step": 3,
-          "text_md": "Plot $A$ at its given coordinates, then plot $B$ at $(x, y)$ using the value just found."
-        }
-      ],
-      "parent_question_id": "q:g10m8s3-1-2:ex8-3-5",
-      "source_note": "Generated from template family wt:g10m8s3-1-2:gradient-to-missing-coord.",
-      "family": "wt:g10m8s3-1-2:gradient-to-missing-coord",
-      "template_sha": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a"
-    },
-    {
-      "id": "q:g10m8s3-1-2:w002",
-      "lo_id": "lo:g10m8s3-1-2",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Line $AB$ has gradient $m = 2$. $A$ is at $(-2, -2)$ and $B$ is at $(1, y)$ for some value $y$. Place $A$ and $B$.",
-      "choices": {
-        "kind": "line_drawer",
-        "spec": {
-          "mode": "points",
-          "through": [
-            [
-              -2,
-              -2
-            ],
-            [
-              1,
-              4
-            ]
-          ]
-        },
-        "diagnostics": [],
-        "pending_review": [
-          {
-            "predicate": "slope-inverted",
-            "misconception_id": "mc:g10m8s3-1-2:inverted-gradient-ratio",
-            "why": "Following the question's own point (x=1), the inverted-ratio setup 3/(y+2)=2 gives y=-0.5 — not a lattice point, so this exact wrong value cannot be placed on this instrument at all. A student forced to snap to an integer y near x=1 (e.g. -1 or 0) produces a slope of 1/3 or 2/3 from A, neither of which is 1/m (0.5), m (2), nor -m (-2) — an unclassifiable answer, not the reciprocal-ratio signature. The predicate would essentially never fire cleanly for a student making this exact error on this widget, so diagnosing it here is unreliable.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
-          },
-          {
-            "predicate": "slope-sign-flipped",
-            "misconception_id": "mc:g10m8s3-1-2:mismatched-point-order",
-            "why": "The mismatched-order setup (y+2)/(-3)=2 gives y=-8, which is outside the ±5 lattice entirely — this construction cannot be placed on the instrument at any x matching the question. There is no way for a student to express this exact misconception here, so the predicate cannot correspond to an actual student action for this question.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Write the gradient formula using the known point: $m = \\dfrac{y - y_1}{x - x_1}$, with $(x_1, y_1) = A$."
-        },
-        {
-          "step": 2,
-          "text_md": "Substitute the given gradient and the known $x$-coordinate of $B$, then solve for the missing $y$-coordinate: $y = y_1 + m(x - x_1)$."
-        },
-        {
-          "step": 3,
-          "text_md": "Plot $A$ at its given coordinates, then plot $B$ at $(x, y)$ using the value just found."
-        }
-      ],
-      "parent_question_id": "q:g10m8s3-1-2:ex8-3-5",
-      "source_note": "Generated from template family wt:g10m8s3-1-2:gradient-to-missing-coord.",
-      "family": "wt:g10m8s3-1-2:gradient-to-missing-coord",
-      "template_sha": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a"
-    },
-    {
-      "id": "q:g10m8s3-1-2:w003",
-      "lo_id": "lo:g10m8s3-1-2",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Line $AB$ has gradient $m = -1$. $A$ is at $(-4, 3)$ and $B$ is at $(2, y)$ for some value $y$. Place $A$ and $B$.",
-      "choices": {
-        "kind": "line_drawer",
-        "spec": {
-          "mode": "points",
-          "through": [
-            [
-              -4,
-              3
-            ],
-            [
-              2,
-              -3
-            ]
-          ]
-        },
-        "diagnostics": [],
-        "pending_review": [
-          {
-            "predicate": "slope-inverted",
-            "misconception_id": "mc:g10m8s3-1-2:inverted-gradient-ratio",
-            "why": "Because m=-1 is its own reciprocal, the inverted-ratio setup 6/(y-3)=-1 gives the SAME y=-3 as the correct method — the 'wrong' construction is literally the correct answer, B=(2,-3). This predicate would fire on a student who got the question exactly right, so it cannot discriminate this misconception here; flagging it would refute a mistake the student never made.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
-          },
-          {
-            "predicate": "slope-sign-flipped",
-            "misconception_id": "mc:g10m8s3-1-2:mismatched-point-order",
-            "why": "The mismatched-order setup (y-3)/(-6)=-1 gives y=9, outside the ±5 lattice — unplaceable on this instrument. A student cannot express this exact error here, so the predicate would never fire for this misconception on this question.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Write the gradient formula using the known point: $m = \\dfrac{y - y_1}{x - x_1}$, with $(x_1, y_1) = A$."
-        },
-        {
-          "step": 2,
-          "text_md": "Substitute the given gradient and the known $x$-coordinate of $B$, then solve for the missing $y$-coordinate: $y = y_1 + m(x - x_1)$."
-        },
-        {
-          "step": 3,
-          "text_md": "Plot $A$ at its given coordinates, then plot $B$ at $(x, y)$ using the value just found."
-        }
-      ],
-      "parent_question_id": "q:g10m8s3-1-2:ex8-3-5",
-      "source_note": "Generated from template family wt:g10m8s3-1-2:gradient-to-missing-coord.",
-      "family": "wt:g10m8s3-1-2:gradient-to-missing-coord",
-      "template_sha": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a"
-    },
-    {
-      "id": "q:g10m8s3-1-2:w004",
-      "lo_id": "lo:g10m8s3-1-2",
-      "tier": "basic",
-      "question_type": "widget",
-      "stem": "Line $AB$ has gradient $m = 0.5$. $A$ is at $(-3, -2)$ and $B$ is at $(1, y)$ for some value $y$. Place $A$ and $B$.",
-      "choices": {
-        "kind": "line_drawer",
-        "spec": {
-          "mode": "points",
-          "through": [
-            [
-              -3,
-              -2
-            ],
-            [
-              1,
-              0
-            ]
-          ]
-        },
-        "diagnostics": [
-          {
-            "predicate": "slope-sign-flipped",
-            "misconception_id": "mc:g10m8s3-1-2:mismatched-point-order"
-          }
-        ],
-        "pending_review": [
-          {
-            "predicate": "slope-inverted",
-            "misconception_id": "mc:g10m8s3-1-2:inverted-gradient-ratio",
-            "why": "The inverted-ratio setup 4/(y+2)=0.5 gives y=6, outside the ±5 lattice — this exact wrong value cannot be placed on the instrument at the question's own x=1. There is no clean lattice construction expressing this misconception here, so the predicate would not reliably fire for it.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Write the gradient formula using the known point: $m = \\dfrac{y - y_1}{x - x_1}$, with $(x_1, y_1) = A$."
-        },
-        {
-          "step": 2,
-          "text_md": "Substitute the given gradient and the known $x$-coordinate of $B$, then solve for the missing $y$-coordinate: $y = y_1 + m(x - x_1)$."
-        },
-        {
-          "step": 3,
-          "text_md": "Plot $A$ at its given coordinates, then plot $B$ at $(x, y)$ using the value just found."
-        }
-      ],
-      "parent_question_id": "q:g10m8s3-1-2:ex8-3-5",
-      "source_note": "Generated from template family wt:g10m8s3-1-2:gradient-to-missing-coord.",
-      "family": "wt:g10m8s3-1-2:gradient-to-missing-coord",
-      "template_sha": "86388bddd64f16312487d90a1b1b3c23dd065c00854f7270791b34e83ad8a79a"
-    },
-    {
       "id": "q:g10m8s3-2-1:w001",
       "lo_id": "lo:g10m8s3-2-1",
       "tier": "advanced",
@@ -704,22 +474,8 @@
         },
         "diagnostics": [
           {
-            "predicate": "slope-inverted",
-            "misconception_id": "mc:g10m8s3-2-1:gradient-formula-inversion"
-          },
-          {
             "predicate": "points-swapped",
             "misconception_id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
-          }
-        ],
-        "pending_review": [
-          {
-            "predicate": "slope-sign-flipped",
-            "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip",
-            "why": "The named mechanism is x2-x1 = 3-(-3) miscomputed as a-(-b)->a-b, i.e. 3-3=0, since only the x-coordinate involves subtracting a negative here (y1=1 is positive, so dy=2 is unaffected). That yields dx=0 - a vertical/degenerate line - not a line with the same slope magnitude (1/3) and flipped sign (-1/3). A clean mirror-image line would only come from a different error (e.g. reversing subtraction order in just one difference), not from this misconception's actual arithmetic on these numbers.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
           }
         ]
       },
@@ -736,16 +492,12 @@
         {
           "step": 3,
           "text_md": "Starting from A, step according to that gradient (rise over run) to fix the line's direction."
-        },
-        {
-          "step": 4,
-          "text_md": "Any two points lying on this same line are an acceptable construction — it is the line itself that is graded, not the two named points."
         }
       ],
       "parent_question_id": "q:g10m8s3-2-1:ex8-6-10a",
       "source_note": "Generated from template family wt:g10m8s3-2-1:line-through-two-points.",
       "family": "wt:g10m8s3-2-1:line-through-two-points",
-      "template_sha": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f"
+      "template_sha": "07fa6f7705addbb9ab2efedb7191d44b182df706e1e042f922d299ddf2f60d53"
     },
     {
       "id": "q:g10m8s3-2-1:w002",
@@ -770,22 +522,8 @@
         },
         "diagnostics": [
           {
-            "predicate": "slope-inverted",
-            "misconception_id": "mc:g10m8s3-2-1:gradient-formula-inversion"
-          },
-          {
             "predicate": "points-swapped",
             "misconception_id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
-          }
-        ],
-        "pending_review": [
-          {
-            "predicate": "slope-sign-flipped",
-            "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip",
-            "why": "Here both differences involve subtracting a negative (y1=-2, x1=-4), so the described slip (a-(-b)->a-b) gives dy_wrong = -5-2 = -7 and/or dx_wrong = 2-4 = -2. None of the resulting slopes (-7/6, -3/-2=1.5, or -7/-2=3.5) equal the clean sign-flip of the correct slope (+1/2). This misconception's actual arithmetic does not produce the mirrored line the predicate is meant to catch for these coordinates.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
           }
         ]
       },
@@ -802,86 +540,12 @@
         {
           "step": 3,
           "text_md": "Starting from A, step according to that gradient (rise over run) to fix the line's direction."
-        },
-        {
-          "step": 4,
-          "text_md": "Any two points lying on this same line are an acceptable construction — it is the line itself that is graded, not the two named points."
         }
       ],
       "parent_question_id": "q:g10m8s3-2-1:ex8-6-10a",
       "source_note": "Generated from template family wt:g10m8s3-2-1:line-through-two-points.",
       "family": "wt:g10m8s3-2-1:line-through-two-points",
-      "template_sha": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f"
-    },
-    {
-      "id": "q:g10m8s3-2-1:w003",
-      "lo_id": "lo:g10m8s3-2-1",
-      "tier": "advanced",
-      "question_type": "widget",
-      "stem": "Draw the straight line through $A(-2, -3)$ and $B(4, 3)$.",
-      "choices": {
-        "kind": "line_drawer",
-        "spec": {
-          "mode": "points",
-          "through": [
-            [
-              -2,
-              -3
-            ],
-            [
-              4,
-              3
-            ]
-          ]
-        },
-        "diagnostics": [
-          {
-            "predicate": "points-swapped",
-            "misconception_id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting"
-          }
-        ],
-        "pending_review": [
-          {
-            "predicate": "slope-inverted",
-            "misconception_id": "mc:g10m8s3-2-1:gradient-formula-inversion",
-            "why": "Correct gradient is dy/dx = 6/6 = 1. Because dx and dy are numerically identical (both 6) for this pair of points, the inverted formula dx/dy also equals 6/6 = 1 - the exact same value as the correct slope. A student making this error would draw a line indistinguishable from the correct answer, so this predicate can never fire as a genuine, distinguishing signal on this particular problem.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
-          },
-          {
-            "predicate": "slope-sign-flipped",
-            "misconception_id": "mc:g10m8s3-2-1:negative-coordinate-subtraction-slip",
-            "why": "Both differences involve subtracting a negative (y1=-3, x1=-2). The described slip gives dy_wrong = 3-3 = 0 and/or dx_wrong = 4-2 = 2, producing wrong slopes of 0/6=0, 6/2=3, or 0/2=0 - none equal the clean sign-flip of the correct slope (-1). As with W1 and W2, this misconception's arithmetic does not actually produce a mirrored-slope line for these coordinates, so the predicate would be firing (if at all) for reasons unrelated to this specific misconception.",
-            "verifier_runs": [
-              "wf_dbca7b50-327"
-            ]
-          }
-        ]
-      },
-      "correct_answer": "ok",
-      "canonical_solution": [
-        {
-          "step": 1,
-          "text_md": "Find the gradient between A and B: m = (y2 − y1) / (x2 − x1)."
-        },
-        {
-          "step": 2,
-          "text_md": "Keep the sign of each difference exactly as it comes out — do not drop a sign when a coordinate is already negative."
-        },
-        {
-          "step": 3,
-          "text_md": "Starting from A, step according to that gradient (rise over run) to fix the line's direction."
-        },
-        {
-          "step": 4,
-          "text_md": "Any two points lying on this same line are an acceptable construction — it is the line itself that is graded, not the two named points."
-        }
-      ],
-      "parent_question_id": "q:g10m8s3-2-1:ex8-6-10a",
-      "source_note": "Generated from template family wt:g10m8s3-2-1:line-through-two-points.",
-      "family": "wt:g10m8s3-2-1:line-through-two-points",
-      "template_sha": "d826721d2535427f540530e3a1d2edc8bd7ffbb837772e33e255b040b5b0394f"
+      "template_sha": "07fa6f7705addbb9ab2efedb7191d44b182df706e1e042f922d299ddf2f60d53"
     },
     {
       "id": "q:g10m8s3-2-2:w001",
@@ -1361,64 +1025,15 @@
       "template_sha": "7a170a351c05963ac15f818787e48eabec310ef72e4faef14715a8f6d1ccfc7f"
     }
   ],
-  "misconceptions": [
-    {
-      "id": "mc:g10m8s1-1-2:flips-a-coordinate-sign",
-      "lo_id": "lo:g10m8s1-1-2",
-      "label": "Flips the sign of one coordinate",
-      "description": "The student reads the right size for one of the two numbers in the pair but gives it the wrong sign, so they look on the wrong side for that value instead of the right one."
-    },
-    {
-      "id": "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
-      "lo_id": "lo:g10m8s2-1-2",
-      "label": "Keeps both roots when the question narrows it down",
-      "description": "Solves the quadratic and finds both values, then reports both even when the question's figure or a stated condition on the coordinate has already ruled one of them out."
-    },
-    {
-      "id": "mc:g10m8s2-1-2:stops-at-first-root",
-      "lo_id": "lo:g10m8s2-1-2",
-      "label": "Only writes down one root",
-      "description": "Clears the square root and reaches the quadratic correctly, then writes only one of its two solutions as the final answer, not realising a squared difference gives two values."
-    },
-    {
-      "id": "mc:g10m8s3-1-2:inverted-gradient-ratio",
-      "lo_id": "lo:g10m8s3-1-2",
-      "label": "Writes the gradient as run over rise",
-      "description": "The student sets up $\\dfrac{x_2-x_1}{y_2-y_1}=m$ instead of $\\dfrac{y_2-y_1}{x_2-x_1}=m$, putting the horizontal difference on top and the vertical difference on the bottom."
-    },
-    {
-      "id": "mc:g10m8s3-1-2:mismatched-point-order",
-      "lo_id": "lo:g10m8s3-1-2",
-      "label": "Takes the rise and the run from different point orders",
-      "description": "Writing $m=\\dfrac{y_2-y_1}{x_2-x_1}$, the student subtracts the two points one way round for the top and the opposite way round for the bottom, so the top and bottom no longer come from the same point pair."
-    },
-    {
-      "id": "mc:g10m8s3-2-1:gradient-formula-inversion",
-      "lo_id": "lo:g10m8s3-2-1",
-      "label": "Inverts the gradient formula (swaps rise and run)",
-      "description": "The student writes the gradient as $\\dfrac{x_2-x_1}{y_2-y_1}$ — the reciprocal of $\\dfrac{y_2-y_1}{x_2-x_1}$ — putting the $x$-difference on top instead of the $y$-difference."
-    },
-    {
-      "id": "mc:g10m8s3-2-1:swaps-coordinates-when-substituting",
-      "lo_id": "lo:g10m8s3-2-1",
-      "label": "Swaps which number is $x$ and which is $y$",
-      "description": "The student substitutes a point's two values into the wrong slots — putting the $y$-value where $x$ belongs, or the reverse — when solving for $c$ in $y=mx+c$ or for a missing coordinate."
-    },
-    {
-      "id": "mc:g10m8s4-1-1:drops-sign-adding-negatives",
-      "lo_id": "lo:g10m8s4-1-1",
-      "label": "Adding two negative coordinates loses the sign",
-      "description": "When the two values being added in the mid-point formula are both negative, the student adds their sizes correctly but writes the total as positive instead of keeping it negative."
-    }
-  ],
+  "misconceptions": [],
   "mapping_review": {
     "rule": "decision 47",
     "verifier_runs": [
       "wf_dbca7b50-327"
     ],
     "counts": {
-      "active": 17,
-      "held": 22,
+      "active": 11,
+      "held": 13,
       "kept_by_review": 0,
       "dropped_by_review": 0
     },

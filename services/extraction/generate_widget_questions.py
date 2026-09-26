@@ -2061,7 +2061,12 @@ def main_templates(args) -> int:
         keep = [q for q in questions if q["family"] in accepted]
         bundle = {"generator": GENERATOR + " --templates", "question_type": "widget", "book": args.book,
                   "course_id": course, "templates": {t["id"]: t["_sha"] for t in templates if t["id"] in accepted},
-                  "rejected_templates": rejected, "questions": keep, "misconceptions": [],
+                  "rejected_templates": rejected,
+                  # a template normalised after verification whose verdicts carried (only removals: verified_as)
+                  **({"carried_verification": carried} if (carried := {t: sha for t, sha in
+                                                                       carried_verification(templates, questions)[0].items()
+                                                                       if t in accepted}) else {}),
+                  "questions": keep, "misconceptions": [],
                   "mapping_review": {"rule": "decision 47", "verifier_runs": runs, "counts": counts,
                                      "reviews": sorted({v["file"] for v in reviews.values()})}}
         args.out.parent.mkdir(parents=True, exist_ok=True)
