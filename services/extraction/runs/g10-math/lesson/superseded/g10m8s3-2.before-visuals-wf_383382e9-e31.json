@@ -3946,7 +3946,7 @@
    "ref": "Ex8-6:21c",
    "kind": "exercise",
    "lo": "lo:g10m8s3-2-2",
-   "stem": "$ABCD$ is a quadrilateral with vertices $A(0;3)$ , $B(4;3)$ , $C(5;-1)$ and $D(-1;-1)$ . Show by calculation that: What type of quadrilateral is $ABCD$ ?",
+   "stem": "$ABCD$ is a quadrilateral with vertices $A(0;3)$ , $B(4;3)$ , $C(5;-1)$ and $D(-1;-1)$ . What type of quadrilateral is $ABCD$ ?",
    "answer_type": "choice",
    "answer": "C",
    "choices": [
@@ -4009,17 +4009,19 @@
    "g2": {
     "verdict": "fix",
     "by": "Samuel Toma",
-    "note": "Most specific only (Samuel, G2 answer 20 → decision 41): key 'isosceles trapezium'; also true, less precisely, and returned for re-entry, never marked wrong: 'trapezium'.",
+    "note": "Most specific only (Samuel, G2 answer 20 → decision 41): key 'isosceles trapezium'; also true, less precisely, and returned for re-entry, never marked wrong: 'trapezium'. STEM (orchestrator-applied G2 fix, not Samuel's verdict; consistency review 2026-09-27 A7, under the orchestrator's per-item G2-fix decision for the two-lead-in case): the item splitter joined the book's part lead-ins (Q21: 'Show by calculation that:' for 21a–b; Q22: 'Show that:' for 22a–b, 'Calculate:' for 22c–d) onto a part they do not govern. Removed 'Show by calculation that:'; this part's own lead-in is none (its own question). Nothing else in the stem changed. Flagged for Samuel's G3/G4 review.",
     "changed": [
-     "less_specific"
-    ]
+     "less_specific",
+     "stem"
+    ],
+    "stem_fix_by": "orchestrator (data-engineer agent), 2026-09-27 — not Samuel"
    }
   },
   {
    "ref": "Ex8-6:22b",
    "kind": "exercise",
    "lo": "lo:g10m8s3-2-2",
-   "stem": "$P$ , $Q$ , $R$ and $S$ are the points $(-2;0)$ , $(2;3)$ , $(5;3)$ and $(-3;-3)$ respectively. Show that: Calculate: $SR\\parallelPQ$",
+   "stem": "$P$ , $Q$ , $R$ and $S$ are the points $(-2;0)$ , $(2;3)$ , $(5;3)$ and $(-3;-3)$ respectively. Show that: $SR\\parallelPQ$",
    "answer_type": "not_markable",
    "answer": null,
    "choices": null,
@@ -4076,22 +4078,24 @@
    "g2": {
     "verdict": "fix",
     "by": "Samuel Toma",
-    "note": "as recommended (Samuel, G2 answer 18 → decision 39): 'Show that SR ∥ PQ' is a proof (the blind solver says not markable); 'i. √10 ii. 3' is the PDF's 22b = the EPUB's 22c (PS) and 22d (QR), and the typing agent keyed it from that. Make it teaching; remove the printed answer.",
+    "note": "as recommended (Samuel, G2 answer 18 → decision 39): 'Show that SR ∥ PQ' is a proof (the blind solver says not markable); 'i. √10 ii. 3' is the PDF's 22b = the EPUB's 22c (PS) and 22d (QR), and the typing agent keyed it from that. Make it teaching; remove the printed answer. STEM (orchestrator-applied G2 fix, not Samuel's verdict; consistency review 2026-09-27 A7, under the orchestrator's per-item G2-fix decision for the two-lead-in case): the item splitter joined the book's part lead-ins (Q22: 'Show by calculation that:' for 21a–b; Q22: 'Show that:' for 22a–b, 'Calculate:' for 22c–d) onto a part they do not govern. Removed 'Calculate:'; this part's own lead-in is 'Show that:'. Nothing else in the stem changed. Flagged for Samuel's G3/G4 review.",
     "changed": [
      "answer",
      "answer_type",
      "marker",
      "not_markable_reason",
      "printed_answer",
-     "printed_answer_scope"
-    ]
+     "printed_answer_scope",
+     "stem"
+    ],
+    "stem_fix_by": "orchestrator (data-engineer agent), 2026-09-27 — not Samuel"
    }
   },
   {
    "ref": "Ex8-6:22e",
    "kind": "exercise",
    "lo": "lo:g10m8s3-2-2",
-   "stem": "$P$ , $Q$ , $R$ and $S$ are the points $(-2;0)$ , $(2;3)$ , $(5;3)$ and $(-3;-3)$ respectively. Show that: Calculate: What kind of quadrilateral is $PQRS$ ? Give reasons for your answer.",
+   "stem": "$P$ , $Q$ , $R$ and $S$ are the points $(-2;0)$ , $(2;3)$ , $(5;3)$ and $(-3;-3)$ respectively. What kind of quadrilateral is $PQRS$ ? Give reasons for your answer.",
    "answer_type": "choice",
    "answer": "B",
    "choices": [
@@ -4149,9 +4153,14 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "accept",
+    "verdict": "fix",
     "by": "Samuel Toma",
-    "note": "Mark the name, discuss reasons (Samuel, G2 answer 21 → decision 42): the shape name is marked as a choice; the book's reasons stay in the stored solution."
+    "note": "Mark the name, discuss reasons (Samuel, G2 answer 21 → decision 42): the shape name is marked as a choice; the book's reasons stay in the stored solution. [Samuel's verdict on this item was 'accept'; it still stands for everything but the stem.] STEM (orchestrator-applied G2 fix, not Samuel's verdict; consistency review 2026-09-27 A7, under the orchestrator's per-item G2-fix decision for the two-lead-in case): the item splitter joined the book's part lead-ins (Q22: 'Show by calculation that:' for 21a–b; Q22: 'Show that:' for 22a–b, 'Calculate:' for 22c–d) onto a part they do not govern. Removed 'Show that: Calculate:'; this part's own lead-in is none (its own question). Nothing else in the stem changed. Flagged for Samuel's G3/G4 review.",
+    "changed": [
+     "stem"
+    ],
+    "reviewer_verdict": "accept",
+    "stem_fix_by": "orchestrator (data-engineer agent), 2026-09-27 — not Samuel"
    }
   },
   {
