@@ -141,6 +141,20 @@ class CoverageTest(unittest.TestCase):
         c = self.check(rep, "notation")
         self.assertEqual((c["got"], c["state"]), (2, "fails"))
 
+    def test_a_held_mappings_reviewer_prose_is_not_app_notation(self):
+        # decision 47: `pending_review` carries the blind verifier's reason for the human reviewer, never shown
+        # in the app — "{3,9}" there is not a decimal comma the app would show. A shown field still counts.
+        def hold(d):
+            q = d["questions"][0]
+            q["choices"]["pending_review"] = [{"predicate": "off-target", "misconception_id": "mc:x:y",
+                                               "why": "{3,9} is the whole answer set"}]
+        self.edit("generated/widget-questions.json", hold)
+        _, rep = self.audit()
+        self.assertEqual(self.check(rep, "notation")["got"], 0)
+        self.edit("generated/widget-questions.json", lambda d: d["questions"][0].update(stem="Mark 3,9."))
+        _, rep = self.audit()
+        self.assertEqual(self.check(rep, "notation")["got"], 1)
+
     def test_a_dropped_misconception_in_the_catalogue_is_red(self):
         self.edit("generated/misconceptions.json", lambda d: d["misconceptions"].append(
             {**d["misconceptions"][2], "id": "mc:g10m8s2-1-1:subtracts-in-wrong-order"}))
