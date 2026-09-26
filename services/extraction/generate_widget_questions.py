@@ -1596,8 +1596,9 @@ def verify_args(book, graph, questions: list[dict]) -> dict:
             "lo_id": q["lo_id"], "kind": kind, "spec": q["choices"]["spec"], "stem": q["stem"],
             "instrument": INSTRUMENTS.get(kind, ""),
             "reading_fields": READING_FIELDS.get(kind, {}),
-            # W1: the predicates THIS question can report (its mode / ask / element / fn), from the contract
-            "can_emit": sorted(W.can_emit(kind, q["choices"]["spec"])[0] or []),
+            # W1: the KIND's can_emit table — never this question's own mode, which would leak the spec to the
+            # blind verifier; it reads the mode from the stem, as it reads every other field
+            "can_emit": W.contract()["kinds"][kind].get("can_emit"),
             "diagnostics": [{"predicate": d["predicate"], "predicate_meaning": preds.get(d["predicate"]),
                              "misconception_id": d["misconception_id"],
                              "misconception_label": (mcs.get(d["misconception_id"]) or {}).get("label"),
@@ -1768,10 +1769,9 @@ def _js_verify_section(ws: list[dict]) -> str:
         diag = "\n".join(f"  - {js(d.get('predicate'))} (\"{js(d.get('predicate_meaning'))}\") → {js(d.get('misconception_id'))}: "
                          f"{js(js_or(d.get('misconception_label'), '?'))} — {js(js_or(d.get('misconception_description'), ''))}"
                          for d in w["diagnostics"])
-        emits = ", ".join(js(p) for p in w.get("can_emit") or []) or "(not given)"
         out.append(f"WIDGET W{i} (kind {js(w.get('kind'))})\nQuestion: {js(w.get('stem'))}\nInstrument: {js(w.get('instrument'))}\n"
                    f"Fields to read from the question: {js_json(js_or(w.get('reading_fields'), {}))}\n"
-                   f"Predicates this question can emit: {emits}\n"
+                   f"What this kind can emit, per its spec field: {js_json(js_or(w.get('can_emit'), None))}\n"
                    f"Claimed diagnoses (predicate → misconception):\n{diag}")
     return "\n\n".join(out)
 

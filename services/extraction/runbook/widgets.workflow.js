@@ -90,8 +90,9 @@ const PROMPTS_VERSION = 's7-v7'   // v2: packet by reference; v3: by-ref shards 
                                   // v7 (consistency review 2026-09-27, W1): the contract carries each kind's can_emit
                                   //     table and the author maps only predicates its spec can emit; every instrument
                                   //     is the app's DOCS text word for word (line_drawer's paraphrase said "any two
-                                  //     points on the right line" after BOTH modes); the verifier is told what each
-                                  //     question can emit and refuses a mapping outside it
+                                  //     points on the right line" after BOTH modes); the verifier gets the KIND's
+                                  //     can_emit table (never the question's own mode: it stays blind to the spec)
+                                  //     and refuses a mapping the question's mode cannot emit
 const need = (cond, msg) => { if (!cond) throw new Error(msg) }
 need(ARGS.mode === 'author' || ARGS.mode === 'verify', 'args.mode must be "author" or "verify" (see the header of this script)')
 need(ARGS.book && ARGS.book.book, 'args.book must be the book config (generate_widget_questions.py writes it)')
@@ -268,7 +269,7 @@ ${REF ? refFile(`t/t${String(gi + 1).padStart(3, '0')}.txt`) : ws.map((w, i) => 
 Question: ${w.stem}
 Instrument: ${w.instrument}
 Fields to read from the question: ${JSON.stringify(w.reading_fields || {})}
-Predicates this question can emit: ${(w.can_emit || []).join(', ') || '(not given)'}
+What this kind can emit, per its spec field: ${JSON.stringify(w.can_emit || null)}
 Claimed diagnoses (predicate → misconception):
 ${w.diagnostics.map((d) => `  - ${d.predicate} ("${d.predicate_meaning}") → ${d.misconception_id}: ${d.misconception_label || '?'} — ${d.misconception_description || ''}`).join('\n')}`).join('\n\n')}
 
@@ -284,7 +285,8 @@ For EACH widget:
    decide whether that construction is what a student holding THAT misconception would build.
    "predicate" is the predicate's NAME exactly as listed (e.g. slope-inverted) — nothing else.
    matches = false if the predicate would mostly fire for a different reason, or never for this error —
-   and always false for a predicate this question cannot emit (not in its list): it never fires.
+   and always false for a predicate the kind's can_emit table does not list for what THIS question asks
+   (its mode, ask, element or fn, which you read from the question's words): it never fires.
 When in doubt, false: a wrong diagnosis serves a student the refutation of a mistake she did not make.
 Return VERIFY_SCHEMA with widget = "W1", "W2", … as labelled.${readRule()}`
 
