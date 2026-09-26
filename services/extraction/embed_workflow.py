@@ -174,6 +174,19 @@ def cmd_lesson_args(a) -> int:
     p, manifest, blocks, maths = ao._inputs(book, a)
     lessons = [s.strip() for s in a.lessons.split(",") if s.strip()]
     args = ao.lesson_args(book, manifest, blocks, maths, p["objectives"], lessons, p["work"])
+    if a.visuals_only:
+        # S4 alone, for the figures the plan names per lesson ({slug: [figure_id]}); merge its return into the
+        # lesson runs with merge_visual_reruns.py (consistency review A3/A8)
+        plan = json.loads(Path(a.visuals_only).read_text())
+        args["visuals_only"] = True
+        for L in args["lessons"]:
+            want = plan.get(L["slug"]) or []
+            have = {f["figure_id"] for f in L.get("figures") or []}
+            if not want or set(want) - have:
+                print(f"--visuals-only: lesson {L['slug']}: " + (f"figures {sorted(set(want) - have)} are not its figures"
+                      if want else "the plan names no figure"), file=sys.stderr)
+                return 2
+            L["rerun_figures"] = list(want)
     if a.args_out:
         Path(a.args_out).write_text(json.dumps(args, ensure_ascii=False, indent=1) + "\n")
     tag = lessons[0] if len(lessons) == 1 else f"{lessons[0]}..{lessons[-1]}"
@@ -218,6 +231,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--lessons", required=True)
     p.add_argument("--out", help="the copy (default work/<book>/packets/embedded/lesson.<lessons>.workflow.js)")
     p.add_argument("--args-out", help="also write the args themselves here (for reading; not for pasting)")
+    p.add_argument("--visuals-only", metavar="PLAN",
+                   help="re-run S4 (visuals) alone for the figures PLAN names ({lesson: [figure_id]}); "
+                        "merge the return with merge_visual_reruns.py")
     p.set_defaults(fn=cmd_lesson_args)
     p = sub.add_parser("embed", help="any builder's args file as a copy of its workflow")
     p.add_argument("--script", required=True)
