@@ -74,6 +74,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -90,6 +91,11 @@ COVERAGE_VERSION = 1
 
 def _pages(rng) -> set[int]:
     return set(range(rng[0], rng[1] + 1)) if rng else set()
+
+
+# a gap that is the pipeline failing, not a figure no kind can draw (consistency review A3)
+VIZ_ERROR = re.compile(r"^(the visuals agent returned nothing|unknown objective|no crop file|\".*\" is not an existing "
+                       r"VIZ kind|empty spec)|no compare verdict")
 
 
 def _strings(v):
@@ -399,25 +405,34 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
     # Per CHAPTER: a figure printed with an end-of-chapter or shared exercise (its problem or its
     # question's header) reaches whichever lesson G1 gave that item, so the manifest can only say
     # how many the chapter holds: its lessons' own book figures + those of the sets S1 distributes.
-    c = Check("figures", "Manifest figures = visuals + viz gaps with a reason (per chapter)")
+    c = Check("figures", "Manifest figures = visuals + viz gaps with a reason + figures withheld for giving the "
+              "answer away (per chapter); a gap whose reason is a pipeline error is a failure (consistency review A3)")
+    shown = {v["id"] for v in visuals}
     for mid, m in modules.items():
         mine = [l for mm, l in lessons if mm is m]
         want = sum((l.get("figures") or {}).get("book", 0) for l in mine)
         want += ((m.get("end_of_chapter_exercise") or {}).get("figures") or {}).get("in_problems", 0)
         want += sum((ex.get("figures") or {}).get("in_problems", 0)
                     for g in m.get("section_exercises_to_map") or [] for ex in g.get("exercises") or [])
-        got, unreasoned = 0, []
+        got, unreasoned, errors = 0, [], []
         for l in mine:
             got += sum(1 for v in visuals if v["id"].startswith(f"v:{l['id']}:"))
-            gaps = runs[l["id"]].viz_gaps if l["id"] in runs else []
-            got += sum(1 for g in gaps if g.get("reason"))
+            run = runs.get(l["id"])
+            # a visual the assembly withheld (it drew the question's unknown, A8) is accounted, not lost
+            got += sum(1 for v in (run.visuals if run else []) if f"v:{l['id']}:{v.n:03d}" not in shown)
+            gaps = run.viz_gaps if run else []
+            got += sum(1 for g in gaps if g.get("reason") and not VIZ_ERROR.search(g["reason"]))
+            errors += [f"{l['id']} {g.get('ref') or g.get('figure_id')}: {g['reason'][:60]}" for g in gaps
+                       if g.get("reason") and VIZ_ERROR.search(g["reason"])]
             if any(not g.get("reason") for g in gaps):
                 unreasoned.append(l["id"])
         c.want += want
         c.got += got
         if want != got:
             c.fail(mid, f"{want} figure(s) in the manifest, {got} visual(s) + reasoned gap(s)"
-                        + (f"; a gap with no reason in {', '.join(unreasoned)}" if unreasoned else ""))
+                        + (f"; a gap with no reason in {', '.join(unreasoned)}" if unreasoned else "")
+                        + (f"; {len(errors)} gap(s) are pipeline errors — re-run their visuals: {errors[:4]}"
+                           if errors else ""))
     checks.append(c)
 
     # ---- maths images (S0b) -----------------------------------------------------------

@@ -2,7 +2,9 @@
 
 - **Status:** Accepted · **Amended 2026-09-25** — derived objectives for books with no objectives box,
   and the v2 line for the Grade 10 book; see [Amendment](#amendment--samuel-2026-09-25-derived-objectives-and-the-v2-line)
-  (accepted 2026-09-25, "ok for all"; not committed)
+  (accepted 2026-09-25, "ok for all"; on the feature branch as unreviewed WIP snapshots, not merged) ·
+  **Note 2026-09-27** — later decisions that change the line (#25, #32, #33, #36, #47) and the Chapter 8
+  pilot's measured cost; see [Note](#note--2026-09-27-later-decisions-that-change-the-line-and-the-chapter-8-pilot)
 - **Date:** 2026-07-21
 - **Decided by:** Samuel (CTO/Architect)
 
@@ -165,8 +167,40 @@ console is the gate (ADR-0019 note, 2026-09-25). The 10% family sample is still 
   families, widgets and misconceptions are now inside the line, and figures are about twice the
   assumed volume. S0b adds about $20–25 per book. **The Grade 10 book is about $210–230 one-time**
   (it was $120–190 before the S0 report). It is metered per stage. Samuel's standing call is quality
-  over cost, with the meters on.
+  over cost, with the meters on. *(Superseded 2026-09-26/27 by the Chapter 8 pilot's measurements:
+  S0b is $250–520 for the book (batch 50 vs 25), S5 ≈ $1.3 per objective as metered, and the book
+  ≈ $0.85–1.1k one-time; Chapter 8 itself metered $153.30. See the note below.)*
 - **G1 is new work for a human**: approving every chapter's derived objectives, with their evidence,
   before anything else runs. It is the gate that keeps "derived" from drifting into "invented".
 - **The build list is B1–B21** in `docs/specs/extraction-pipeline.md` §9, where each item's state is
   marked. Spec 003's `tasks.md` carries them.
+
+## Note — 2026-09-27: later decisions that change the line, and the Chapter 8 pilot
+
+Samuel's third and later rounds (spec 003 `decisions.md`; his answers are in
+`docs/WIP-g10-pilot/samuel-answers.md`, answer N = decision N + 21) change the line in these places.
+Each is written into `docs/specs/extraction-pipeline.md` where it applies; this note records them against
+the amendment above rather than rewriting it.
+
+- **#25 — prerequisite links are found in the book** (answer 4). S1 gains a linker, which proposes the
+  links the book itself evidences, each quoting its evidence, and an independent link checker. Samuel
+  approves each chapter's links with its objectives at **G1**. Built (T428), on by default. Spec 003
+  carries it as FR-4410; whether it stays a requirement or becomes pipeline policy like the objectives
+  method is an open question for Samuel.
+- **#32 — a third reading at S0b** (answer 11). Where the two blind passes disagree, a third blind pass
+  decides, accepted only as two of three; an image found only in an EPUB worked solution follows the same
+  rule. This narrows item 9's G0b queue to what no rule accepts. Built (T433).
+- **#33 — a second blind mapper** (answer 12) for the end-of-chapter items; disagreements go to **G1**.
+  Built (T427), on by default. Pipeline policy, like #12.
+- **#36 — end-of-chapter items outside a chapter** (answer 15). The finders read the end-of-chapter items
+  in their lesson's scope; G1 may rule an item "outside this chapter's objectives", which keeps it out of
+  practice and lists it in the coverage audit as a named exception. Pipeline policy, like #12.
+- **#47 — held widget mappings** (answer 26). A widget mapping the blind verifier does not confirm is
+  held for human review at **G3**, not dropped with its template.
+- So **G1** now covers objectives, mapper disagreements, items ruled outside, and prerequisite links;
+  **G3** also covers the held widget mappings.
+
+**The Chapter 8 pilot** (#35, answer 14; 2026-09-26/27) ran S0b to S7 on the real book: S0b 853/853
+accepted (13 by the third reading, so G0b was not needed); G1 and G2 passed; S5, S6 and S7 run; results
+loaded into a private scratch database. It metered **$153.30** API-equivalent and replaced the cost
+estimate above (see Consequences).

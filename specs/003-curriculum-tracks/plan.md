@@ -11,12 +11,20 @@ catalogue's single source).
 (pipeline; §9 build list B1–B21, with each item's state) · `services/extraction/runbook/g10-s0-report.md`
 (the Grade 10 S0 report) · [privacy-review.md](./privacy-review.md) (security-privacy-officer)
 **ADRs**: [0024](../../docs/decisions/0024-curriculum-as-a-visibility-dimension.md) (accepted
-2026-09-25, not committed), plus 2026-09-25 notes on [0005](../../docs/decisions/0005-extraction-pipeline.md),
+2026-09-25), [0025](../../docs/decisions/0025-answer-marker-build-in-house.md) (accepted 2026-09-25,
+the marker built in-house), plus 2026-09-25/26 notes on [0005](../../docs/decisions/0005-extraction-pipeline.md),
 [0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md) and
 [0020](../../docs/decisions/0020-mastery-gated-lesson-progression.md)
-**Constitution**: **v3.3.0**. An amendment to v3.4.0 is proposed in
-[constitution-amendment-proposal.md](./constitution-amendment-proposal.md) and **not applied**.
-**Status**: rev. 2 of the plan (2026-09-25). Being built on the branch by other agents; **not committed**.
+**Constitution**: **v3.4.0** — the amendment in
+[constitution-amendment-proposal.md](./constitution-amendment-proposal.md) was approved (decision 28)
+and applied on 2026-09-25. (This plan was written against v3.3.0.)
+**Status**: rev. 2 of the plan (2026-09-25), against spec rev. 3. **Note 2026-09-27**: the spec is now
+rev. 4 with 2026-09-26/27 amendments (decisions 23–47: FR-4321, FR-4410, the restore mode, the third
+reading, English-only G10 prompts, and the G2 answers written into FR-4302 and FR-4320); `tasks.md`
+Phase 9b carries the build items this plan does not describe. The branch was brought up to `v0.9.3`
+and its migrations renumbered **033** and **034**, so where this plan says the CI migration proof runs
+"from v0.9.2", `scripts/ci-migrations.sh` now uses the previous release, `v0.9.3`. The work is committed
+only as unreviewed WIP snapshots on the pushed branch.
 
 ## Summary
 
@@ -245,7 +253,9 @@ B16, B18 and B20 is on the branch, unverified. Decisions fixed by Samuel:
 - the pipeline stays on Workflow (C).
 
 `docs/specs/extraction-pipeline.md` §10 records each decision as taken, and the runbook is current
-(T350, done 2026-09-25). The revised one-time cost is about **$210–230** for the book.
+(T350, done 2026-09-25). The revised one-time cost is about **$210–230** for the book. *(Superseded
+2026-09-26/27 by the Chapter 8 pilot: ≈ $0.85–1.1k one-time for the book, S0b $250–520 of it; Chapter 8
+itself metered $153.30. See `docs/specs/extraction-pipeline.md` §5.)*
 
 ### A12. Book sections and their parts (FR-4311…FR-4319; decision 18; ADR-0020 note)
 
