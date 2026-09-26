@@ -144,6 +144,8 @@ function fakeClient(
       }));
     }
     if (sql.startsWith("SELECT display_name FROM students")) return [{ display_name: "Nour Adel" }];
+    // each chosen question's own figures (the practice card, consistency review A3): none here
+    if (sql.startsWith("SELECT id, lo_id, question_id FROM visuals")) return [];
     // the book-section store (migration 034): no split section unless a test
     // declares one, so the plan's prerequisites are the book's alone
     if (sql.includes("FROM course_lessons")) return lessons;

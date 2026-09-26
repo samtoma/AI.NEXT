@@ -15,6 +15,7 @@ import type {
 } from "./types";
 
 import { spineSubjectOf, spineSubjectOfCourse } from "./subjects";
+import { figuresByQuestion, noteFigureless } from "./question-figures";
 import { PREREQ_GATE, type ProgressionLesson } from "./progression";
 import { computeLayers } from "./spine-layout";
 import { SPINE_LO_SQL, SPINE_LO_SQL_NO_SUBJECT_VIEW } from "./spine-lo-query";
@@ -175,6 +176,26 @@ export async function sourceBooksFor(
         subject: r.subject as string,
       },
     }));
+}
+
+/**
+ * Each gated question's OWN stored figures (`visuals.question_id`), for its
+ * card (consistency review A3; lib/question-figures.ts). A figure is kept only
+ * when its objective is inside the scope, like every other figure read.
+ */
+async function questionFiguresOn(
+  db: Db,
+  gate: StudentGraphScope,
+  questionIds: readonly string[]
+): Promise<Map<string, string[]>> {
+  if (questionIds.length === 0) return new Map();
+  const res = await db.query(
+    `SELECT id, lo_id, question_id FROM visuals WHERE question_id = ANY($1) ORDER BY question_id, id`,
+    [[...questionIds]]
+  );
+  return figuresByQuestion(
+    (res.rows as { id: string; lo_id: string; question_id: string }[]).filter((r) => gate.lo(r.lo_id))
+  );
 }
 
 /**
@@ -490,7 +511,9 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
       rationale: (r.rationale as string) ?? "",
     }));
 
+  const figures = await questionFiguresOn(db, gate, questionsRes.rows.map((r) => r.id as string));
   const questions: SpineQuestion[] = questionsRes.rows.map((r) => ({
+    ...(figures.has(r.id) ? { figures: figures.get(r.id) } : {}),
     id: r.id,
     loId: r.lo_id,
     tier: r.tier as Tier,
@@ -516,6 +539,8 @@ async function spineDataOn(db: Db, studentId: number): Promise<SpineData> {
         : null,
     },
   }));
+
+  for (const q of questions) noteFigureless(q);
 
   return {
     los,
@@ -742,6 +767,14 @@ async function studentPlanOn(
   while (items.length < 5 && bi < byScoreAsc.length) {
     add(byScoreAsc[bi], "weakest");
     bi++;
+  }
+
+  // each chosen question's own figures, for the practice card (A3)
+  const figures = await questionFiguresOn(db, gate, items.map((i) => i.questionId));
+  for (const item of items) {
+    const own = figures.get(item.questionId);
+    if (own) item.figures = own;
+    noteFigureless({ id: item.questionId, stem: item.stem, figures: own });
   }
 
   return {

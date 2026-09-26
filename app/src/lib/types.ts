@@ -119,6 +119,9 @@ export interface SpineQuestion {
   solutionVersion: number;
   status: string;
   provenance: Provenance;
+  /** the question's OWN stored figures (`visuals.question_id`), shown on its
+   *  card (lib/question-figures.ts); absent or empty when it has none */
+  figures?: string[];
 }
 
 export interface SpineLo {
@@ -267,6 +270,8 @@ export interface PlanItem {
   choices: Choice[] | WidgetQuestionSpec | null;
   reason: PlanReason;
   sourcePage: number | null;
+  /** the question's own stored figures, shown on the practice card */
+  figures?: string[];
 }
 
 /* ---- Ask the Spine (grounded chat) ---- */
@@ -438,6 +443,10 @@ export interface UnderstandingCheck {
 }
 
 export interface AttemptResult {
+  /** The question is `answer_only` (the book prints no working): `solution`
+   *  is empty, and the card shows the answer and a pointer to the lesson's
+   *  worked examples instead of steps (consistency review A6). */
+  answerOnly?: boolean;
   /** this attempt's own row id — carried back so a following attempt can
    *  link to it via `retry_of_attempt_id` (Socratic-probing confirmation
    *  retries; see api/attempts/route.ts). */

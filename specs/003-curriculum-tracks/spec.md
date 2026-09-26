@@ -1,6 +1,7 @@
 # Feature Specification: Curriculum Tracks and the Grade 10 American Mathematics Course
 
-**Feature Branch**: `feat/003-curriculum-tracks-g10-american-math` (from `main` at `v0.9.2`)
+**Feature Branch**: `feat/003-curriculum-tracks-g10-american-math` (from `main` at `v0.9.2`, brought up
+to `v0.9.3` on 2026-09-25)
 **Created**: 2026-09-25
 **Status**: Approved in substance, planned, being built. **Rev. 2 (2026-09-25)**: every
 `[NEEDS CLARIFICATION]` is resolved by Samuel's decisions of the same day
@@ -29,13 +30,24 @@ that a mapping it does not confirm is held for human review instead of refusing 
 **2026-09-26 (curriculum-isolation audit; decisions 37–38)**: FR-4011's last sentence and its edge case
 now say an open conversation reads the new scope on its next turn; FR-4206 names a second expected
 difference in the National prompts, the handoff line and the cross-subject connections for a student
-who cannot see a subject (ADR-0020's seventh exception).
+who cannot see a subject (ADR-0020's eighth exception).
 
-**Not committed.** Code is being written on the branch by other agents.
-**Authority level**: a **derived spec** (Spec Kit). It turns Samuel's direction and his seventeen
-decisions of 2026-09-25 into testable obligations. The architecture those decisions imply is recorded
-in [ADR-0024](../../docs/decisions/0024-curriculum-as-a-visibility-dimension.md) (drafted, awaiting
-Samuel's read).
+**2026-09-26 (Chapter 8 pilot, G1; decision 36)**: FR-4303 names one more fate an item can have — an
+end-of-chapter item G1 rules outside its chapter is kept out of practice and listed in the coverage audit.
+
+**2026-09-27 (G2 decisions 41 and 43–45, and decision 34, written in)**: FR-4320 now states the "true, but be
+more precise" re-entry for a less specific choice (decision 41) and carries decision 24's detail; FR-4302 now
+states answer-only marking and Samuel's approved corrections to the book's working (decisions 43–45); FR-4206 and
+SC-207 name a third expected difference, the Arabic lessons' printed names (decision 34, ADR-0020's sixth
+exception).
+
+**Status of the code.** Committed only as unreviewed WIP snapshots on the pushed feature branch (an
+auto-snapshot job commits every 30 seconds, `[skip ci]`); nothing is reviewed by Samuel or merged to `main`.
+**Authority level**: a **derived spec** (Spec Kit). It turns Samuel's direction and his decisions of
+2026-09-25 and 2026-09-26 ([decisions.md](./decisions.md), 1–47) into testable obligations. The architecture
+those decisions imply is recorded in
+[ADR-0024](../../docs/decisions/0024-curriculum-as-a-visibility-dimension.md) (accepted 2026-09-25, "ok for
+all").
 **Input**: Samuel's direction, 2026-09-25, quoted where it is quoted:
 
 - *"we need to digest this book"* — the Grade 10 Mathematics book, which Samuel names the
@@ -672,6 +684,11 @@ through the attempts route and confirm identical outcomes.
   is open, none at all), and a curated cross-subject connection into a course she cannot see is not
   given to the tutor. For a student who sees every course it touches, the prompt is byte-identical.
   Any handoff card to a closed subject that a reply still carries is removed before it reaches her.
+  **A third difference is expected and deliberate** *(added 2026-09-27, decision 34; ADR-0020's sixth
+  exception)*: a National Arabic lesson whose working title differs from the book's printed lesson name
+  is shown, and given to the tutor, under the printed name (for example «عِبادُ الرَّحمنِ», not its first
+  objective «فهم النص والاستماع»). Nothing else in those prompts changes, and every maths and Social
+  Studies prompt stays byte-identical.
 - **FR-4207**: The solution's content drift guard MUST know this book, by its source fingerprint and
   its counts, and MUST fail loudly if the loaded course drifts from them. It MUST keep guarding the
   Prep-3 Mathematics set exactly as it does today (Principle XI, FR-1103).
@@ -746,6 +763,17 @@ through the attempts route and confirm identical outcomes.
   Siyavula's Teacher's Guide is used only where it adds something the book and its EPUB lack. Each
   solution MUST record its source: the book's worked example, **the EPUB worked solution (not printed
   in the PDF)**, or the Teacher's Guide. Nothing is solved from scratch and served.
+
+  *(Amended 2026-09-27, decisions 43–45, Samuel's G2 answers 22–25.)* At the solutions gate Samuel
+  may also:
+  - **mark an item on its answer only** when the book prints no working for it (`choices.answer_only`).
+    The tutor then confirms, gives the answer and points to the lesson's worked examples. It MUST NOT
+    present a working of its own or a method the book does not give;
+  - **correct a typo in the book's working, or append a line to it**, where the final answer is right
+    but a step is wrong or missing (for example a substituted point that is not the stem's, or a
+    conclusion that stops short of the key). Each such change MUST be recorded on the item's G2 fix,
+    with who approved it and when. The rest of the book's working MUST stay as printed, and the
+    change is never presented to a student as the book's own history.
 - **FR-4303** *(changed rev. 2, decision 14; changed rev. 3, decision 20)*: A book exercise whose
   answer is a maths expression, several values, an interval or inequality, a coordinate pair, an exact
   surd or a recurring decimal MUST be a **typed question marked by FR-4320**. Multiple choice MUST be

@@ -15,6 +15,7 @@ import { resolveStudentScope, visibleCoursesFor } from "./catalog-queries";
 import { getVisualsForLos } from "./visuals";
 import { mcqChoices } from "./types";
 import { ANSWER_ONLY_INSTRUCTION, isAnswerOnly } from "./question-flags";
+import { figuresByQuestion, noteFigureless } from "./question-figures";
 import { effectiveProbing, learnWrongAnswerRules, PROBING_SURFACE } from "./socratic-probing";
 import { COURSE_RANK, MODULE_ORDER } from "./module-order";
 import { DEFAULT_LESSON_SLUG, sanitizeLessonSlug, slugOfLo } from "./lesson-slug";
@@ -539,7 +540,12 @@ async function lessonDataOn(
     masteryRes.rows.map((r) => [r.lo_id, Number(r.score)])
   );
 
+  // Each question's OWN figures, from the lesson's figure rows already read
+  // (`visuals.question_id`): shown on its card (lib/question-figures.ts,
+  // consistency review A3). Nothing here reaches the prompt.
+  const ownFigures = figuresByQuestion(visuals);
   const questions: SpineQuestion[] = qRes.rows.map((r) => ({
+    ...(ownFigures.has(r.id) ? { figures: ownFigures.get(r.id) } : {}),
     id: r.id,
     loId: r.lo_id,
     tier: r.tier as Tier,
@@ -563,6 +569,7 @@ async function lessonDataOn(
       extractionFinishedAt: null,
     },
   }));
+  for (const q of questions) noteFigureless(q);
 
   const first = losRes.rows[0];
   // A lesson IS its subject: the contract, the grounding rules and the widget
