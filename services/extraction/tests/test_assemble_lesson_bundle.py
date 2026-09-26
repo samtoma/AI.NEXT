@@ -366,6 +366,15 @@ class ConsistencyReviewTest(unittest.TestCase):
         alb.police_figures(b, rep)
         self.assertEqual([q["verified"] for q in b["questions"]], [False, True, True])
         self.assertEqual(rep.held_for_figure, ["q:1"])
+        # a worked example's figure may show its answer (the book's does); an exercise's may not
+        we = {"questions": [{"id": "q:x-1:we07", "stem": "Find $y$ given $D(7, y)$.", "verified": True},
+                            {"id": "q:x-1:ex8-4-15", "stem": "[figure] Find $a$ for $B(2, a)$.", "verified": True}],
+              "visuals": [{"id": "v:1", "question": "q:x-1:we07", "spec": {"points": [{"x": 7, "y": 4, "label": "D"}]}},
+                          {"id": "v:2", "question": "q:x-1:ex8-4-15", "spec": {"points": [{"x": 2, "y": 0.8, "label": "B"}]}}]}
+        rep = alb.Report()
+        alb.police_figures(we, rep)
+        self.assertEqual([v["id"] for v in we["visuals"]], ["v:1"])
+        self.assertEqual([x["visual"] for x in rep.visuals_dropped], ["v:2"])
 
     def test_a9_a_form_rule_reaches_the_marker(self):
         book = book_config.load_book("g10-math")

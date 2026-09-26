@@ -909,12 +909,16 @@ def visual_gives_answer(question: dict, visual: dict) -> str | None:
 
 
 def police_figures(bundle: dict, report: Report) -> None:
-    """A8: drop a figure that draws its question's unknown. A3: a question whose stem shows [figure] and has no
-    figure is not verified, so it loads as `review`, never `live`, until its figure exists."""
+    """A8: drop an EXERCISE figure that draws its question's unknown (a worked example's may show its answer).
+    A3: a question whose stem shows [figure] and has no figure is not verified, so it loads as `review`, never
+    `live`, until its figure exists."""
     qs = {q["id"]: q for q in bundle.get("questions") or []}
     kept = []
     for v in bundle.get("visuals") or []:
-        why = visual_gives_answer(qs[v["question"]], v) if v.get("question") in qs else None
+        # exercises only: a worked example's figure may show its answer, as the book's does (the solution is
+        # shown with it); refusing WE7's figure was the rule over-reaching (coordinator, 2026-09-27)
+        exercise = v.get("question") in qs and not re.search(r":we\d+$", v["question"])
+        why = visual_gives_answer(qs[v["question"]], v) if exercise else None
         if why:
             report.visuals_dropped.append({"visual": v["id"], "question": v["question"], "why": why})
             continue
