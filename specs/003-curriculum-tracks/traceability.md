@@ -1,11 +1,13 @@
 # Traceability — Curriculum Tracks and the Grade 10 American Mathematics Course
 
-**Status date**: 2026-09-25 (rev. 3, after Samuel's third round of decisions) · **Branch**:
-`feat/003-curriculum-tracks-g10-american-math` (from `main` at `v0.9.2`), **not committed**
-**Authority**: [spec.md](./spec.md) rev. 4 · [decisions.md](./decisions.md) (Samuel, 2026-09-25) ·
+**Status date**: 2026-09-27 (rev. 6; rev. 3 was the last full re-read of the rows) · **Branch**:
+`feat/003-curriculum-tracks-g10-american-math` (from `main` at `v0.9.2`, brought up to `v0.9.3`),
+committed only as unreviewed WIP snapshots on the pushed branch — not reviewed, not merged
+**Authority**: [spec.md](./spec.md) rev. 4 with its 2026-09-26/27 amendments · [decisions.md](./decisions.md)
+(Samuel, 2026-09-25 and 2026-09-26, decisions 1–47) ·
 constitution [v3.4.0](../../.specify/memory/constitution.md) (amended 2026-09-25 —
 [constitution-amendment-proposal.md](./constitution-amendment-proposal.md) applied) ·
-[ADR-0024](../../docs/decisions/0024-curriculum-as-a-visibility-dimension.md) (drafted) ·
+[ADR-0024](../../docs/decisions/0024-curriculum-as-a-visibility-dimension.md) (accepted 2026-09-25) ·
 [ADR-0025](../../docs/decisions/0025-answer-marker-build-in-house.md) (T413 closed) · the 2026-09-25
 notes on [ADR-0005](../../docs/decisions/0005-extraction-pipeline.md),
 [ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md) and
@@ -82,7 +84,7 @@ notes on [ADR-0005](../../docs/decisions/0005-extraction-pipeline.md),
 > unchanged and passing): their fixtures render with no student, whose scope refuses nothing.
 > **Same day, after Samuel's answers 16–17 (decisions 37–38):** FR-4011 and its edge case reworded
 > ("next turn"); the handoff/bridge difference for a student who cannot see a subject allowed as
-> ADR-0020's seventh exception and written into FR-4206; and a server-side filter
+> ADR-0020's seventh exception (renumbered the **eighth** on 2026-09-27) and written into FR-4206; and a server-side filter
 > (`lib/handoff-filter.ts`, wired into `/api/ask` for every delta and the ledger's copy) removes any
 > `{{switch_subject:…}}` card to a subject she may not open (`handoff-filter.test.mts`). Separately, a
 > display-only `align`/`align*` inside `$...$` is rewritten to `aligned` before KaTeX renders it

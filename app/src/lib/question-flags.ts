@@ -106,3 +106,12 @@ export const ANSWER_ONLY_INSTRUCTION =
   "or explain it step by step, and never invent a method for it: say whether the student's answer is " +
   "right or wrong, give the correct answer, and point the student to this lesson's own worked examples " +
   "(the book's worked examples, or a question here that carries a worked solution) for the method.";
+
+/**
+ * What a wrong-answer card says for an `answer_only` question instead of its
+ * working (consistency review 2026-09-27, A6): right or wrong, the answer,
+ * and where the method is. English and gender-neutral; for product-designer's
+ * review with the other card copy.
+ */
+export const ANSWER_ONLY_CARD_NOTE =
+  "The book doesn't show the working for this one — look back at this lesson's worked examples for the method.";

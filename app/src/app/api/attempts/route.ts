@@ -10,7 +10,7 @@ import { currentSessionSnapshot } from "@/lib/sessions";
 import type { AttemptResult, SolutionStep } from "@/lib/types";
 import { markAnswer, type AttemptRetry } from "@/lib/attempt-grading";
 import { MarkerKeyError } from "@/lib/answer-marker";
-import { choiceOptions } from "@/lib/question-flags";
+import { ANSWER_ONLY_CARD_NOTE, choiceOptions, isAnswerOnly } from "@/lib/question-flags";
 import {
   acceptedRetryOf,
   attemptProbingDeclaration,
@@ -412,12 +412,19 @@ export async function POST(req: Request) {
         ]
       );
 
-      // 3. wrong answer → log the canonical-grounded explanation
-      const solution: SolutionStep[] = q.canonical_solution ?? [];
+      // 3. wrong answer → log the canonical-grounded explanation. An
+      // `answer_only` question (the book prints no working; Samuel's G2
+      // answer 22) has none to give: its steps are never sent to a card, and
+      // the log records what the card shows instead — the answer and where
+      // the method is (consistency review A6; lib/question-flags.ts).
+      const answerOnly = isAnswerOnly(q.choices);
+      const solution: SolutionStep[] = answerOnly ? [] : (q.canonical_solution ?? []);
       if (!isCorrect) {
-        const outputMd = solution
-          .map((s) => `**Step ${s.step}.** ${s.text_md}`)
-          .join("\n\n");
+        const outputMd = answerOnly
+          ? `**Answer:** ${q.correct_answer}\n\n${ANSWER_ONLY_CARD_NOTE}`
+          : solution
+              .map((s) => `**Step ${s.step}.** ${s.text_md}`)
+              .join("\n\n");
         await client.query(
           `INSERT INTO explanation_log
              (attempt_id, question_id, solution_version, model, prompt_version,
@@ -474,6 +481,7 @@ export async function POST(req: Request) {
         oldScore,
         newScore,
         solution,
+        answerOnly,
       };
     });
 
@@ -490,6 +498,7 @@ export async function POST(req: Request) {
       oldScore,
       newScore,
       solution,
+      answerOnly,
     } = outcome;
 
     // Fire-and-forget, and deliberately AFTER commit: an analytics failure must
@@ -516,7 +525,10 @@ export async function POST(req: Request) {
       steps: { step: number; text_md: string }[];
     } | null = null;
 
-    if (!isCorrect) {
+    if (!isCorrect && !answerOnly) {
+      // (An `answer_only` question gets no stored explanation of any kind on
+      // its card — A6 — so no library entry is looked up for it either.)
+      //
       // Ask for THE refutation of the error she actually made, not whichever
       // entry this objective happens to have first. Serving a refutation of a
       // mistake the student did not make is worse than serving the plain
@@ -604,6 +616,7 @@ export async function POST(req: Request) {
     });
 
     const result: AttemptResult = {
+      ...(answerOnly ? { answerOnly: true } : {}),
       attemptId,
       isCorrect,
       correctAnswer: q.correct_answer,

@@ -1095,9 +1095,15 @@ written; see the dated notes in rows IX and "Additional constraints".)*
 2. **ADR-0005 amendment** (2026-09-25) — derived objectives with at least two kinds of evidence, and
    the pipeline decisions 12–16.
 3. **ADR-0019 note** (2026-09-25) — the G10 course is covered; switching it on is the gate.
-4. **ADR-0020 note** (2026-09-25) — a fourth exception to the prompt hold, for the G10 course's
-   prompts only.
-5. **[constitution-amendment-proposal.md](./constitution-amendment-proposal.md)** — not applied.
+4. **ADR-0020 note** (2026-09-25) — an exception to the prompt hold for the G10 course's prompts only
+   (numbered the **fifth** since 2026-09-27; the list is renumbered in one place in ADR-0020). Later
+   exceptions from this feature: the **sixth**, National Arabic lessons' printed names (decision 34);
+   the **seventh**, the G10 course's English-only setting (decision 30); the **eighth**, the handoff
+   line and hidden bridge for a student who cannot see a subject (decision 38).
+5. **[constitution-amendment-proposal.md](./constitution-amendment-proposal.md)** — approved as
+   decision 28 and applied 2026-09-25 (v3.4.0).
+6. **[ADR-0025](../../docs/decisions/0025-answer-marker-build-in-house.md)** — the expression marker is
+   built in-house (decision 23, T413).
 
 **Requirements elsewhere that this spec touches.** They are listed here and not edited. Each is
 stamped in its own spec when this feature's rows move past OPEN, so the chain stays readable
@@ -1120,9 +1126,10 @@ stamped in its own spec when this feature's rows move past OPEN, so the chain st
 | 001 delta-matrix §2 — curriculum system *"held constant for this build"* | no longer held constant | this feature |
 | [ADR-0018](../../docs/decisions/0018-course-availability.md) | amended by ADR-0024 | Governance item 1 |
 | [ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md) | extended to the G10 course | Governance item 3 |
-| [ADR-0020](../../docs/decisions/0020-mastery-gated-lesson-progression.md) prompt hold | fourth exception, G10 prompts only | Governance item 4 |
+| [ADR-0020](../../docs/decisions/0020-mastery-gated-lesson-progression.md) prompt hold | fifth exception, G10 prompts only; sixth, National Arabic lessons' printed names; seventh, G10 English-only; eighth, the handoff line for a student who cannot see a subject | Governance item 4 |
 | 002 **FR-3202** — the place moves on when every objective passes | a section's parts are one unit: the place never moves past a section until every part passes | FR-4313; ADR-0020 note (rev. 3) |
-| 001 **FR-C03** — deterministic server-side grading | typed maths answers marked by equivalence; numbers and choices unchanged | FR-4320 |
+| 001 **FR-C03** — deterministic server-side grading | typed maths answers marked by equivalence; numbers unchanged; choices unchanged except that a choice question listing less specific true options (`choices.less_specific`, decision 41) returns such a pick for re-entry — no existing question carries the flag, so every recorded attempt marks identically | FR-4320 |
+| 001 **FR-C01** — grounded teaching, never solved from scratch | a question marked on its answer only (`choices.answer_only`, decision 43) reaches the tutor with an instruction to give the answer and point to the worked examples, never a working of its own; dated note on the FR-C01 row (2026-09-26), status unchanged | FR-4302 |
 | 001 **FR-304** — explanation library, and its traceability row | the refutation workflow the row cites is retired; the library students get is the catalogue's refutations | FR-4409; row corrected 2026-09-25 |
 
 ## Assumptions
