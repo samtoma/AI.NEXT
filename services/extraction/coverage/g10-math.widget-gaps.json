@@ -1,181 +1,486 @@
 {
-  "format": "ainext.widget-gaps/1",
-  "book": "g10-math",
-  "course_id": "course:us-g10-math-en",
-  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
-  "chapters": [
-    {
-      "module": "module:g10m-c08",
-      "label": "Chapter 8 — Analytical geometry",
-      "status": "covered",
-      "widgets": 25,
-      "kinds": [
-        "line_drawer",
-        "number_line_marker",
-        "pair_plotter"
-      ],
-      "objectives_with_widgets": [
-        "lo:g10m8s1-1-2",
-        "lo:g10m8s2-1-2",
-        "lo:g10m8s3-1-2",
-        "lo:g10m8s3-2-1",
-        "lo:g10m8s3-2-2",
-        "lo:g10m8s4-1-1",
-        "lo:g10m8s4-1-2"
-      ],
-      "gaps": 7
-    }
-  ],
-  "uncovered_chapters": [],
-  "proposed_kinds": {
-    "vertex-set plotter (multi-point figure constructor)": {
-      "modules": [
-        "module:g10m-c08"
-      ],
-      "objectives": [
-        "lo:g10m8s1-1-1"
-      ],
-      "why": [
-        "No anchor book question is listed for this objective in the lesson packet (anchor_questions: []), and independently no existing, instrumented kind lets a student place more than one named point — the two blockers compound: there is nothing to anchor a template to, and nothing that could construct the mathematics even if there were."
-      ]
-    },
-    "vertex-labelling sequence checker (alphabetical naming convention)": {
-      "modules": [
-        "module:g10m-c08"
-      ],
-      "objectives": [
-        "lo:g10m8s1-1-3"
-      ],
-      "why": [
-        "Every anchor question for this objective (ex8-1-5, ex8-1-6, ex8-6-3) is 'which of these 4 identical shapes is labelled correctly' — a pure comparison of labelling direction/order across diagram variants. Forcing this into, say, polygon_builder's property predicates (parallel sides, right angles, equal sides) would grade a different, unrelated property and call it this objective's mathematics — exactly the forced fit the task asks to avoid; it belongs to Samuel as a gap instead."
-      ]
-    },
-    "distance_ruler": {
-      "modules": [
-        "module:g10m-c08"
-      ],
-      "objectives": [
-        "lo:g10m8s2-1-1"
-      ],
-      "why": [
-        "None of the existing kinds grades the length of a segment between two arbitrary points. pair_plotter only grades where a single point lands against one fixed target coordinate, not a distance the student computes; line_drawer grades a line's slope and intercept, and circle_builder grades a radius/chord/diameter/tangent property against a fixed circle â€” neither is a finite segment's length. None of their predicate sets contain anything resembling a coordinate sign-subtraction slip or a triangle-classification judgement, so mapping this objective's two misconceptions onto any of them would grade a property other than the one the lesson teaches (an answer box in disguise), not a genuine construction of the distance formula."
-      ]
-    },
-    "gradient_builder (proposed; does not exist)": {
-      "modules": [
-        "module:g10m-c08"
-      ],
-      "objectives": [
-        "lo:g10m8s3-1-1"
-      ],
-      "why": [
-        "No existing kind fits without forcing a different skill. line_drawer's 'points' mode takes both endpoints as the already-known target and grades only the final line's slope/intercept — with two fully-given points the student just plots two dots exactly as told and the line's slope falls out unearned; no calculation is required or exercised, so it would test coordinate-plotting, not 'calculate the gradient using the formula'. triangle_ratio does force a rise/run-shaped construction, but it is bound to sin/cos/tan semantics and a fixed positive open-interval range, so grading a signed gradient through it would misrepresent gradient as a trigonometric ratio, confusing the concept rather than testing it. That is a forced fit either way, so this is reported as a gap rather than stretched into a template."
-      ]
-    },
-    "line_relationship_classifier": {
-      "modules": [
-        "module:g10m-c08"
-      ],
-      "objectives": [
-        "lo:g10m8s3-2-2"
-      ],
-      "why": [
-        "line_drawer only grades one freshly-drawn line's own slope and intercept against a single target; it has no mechanism for a student to compare two already-given gradients or classify a pre-drawn shape's sides, so these three misconceptions (all about mis-judging an existing relationship, not about drawing a new line) have no home. polygon_builder's construct mode is graded on the shape the student itself builds, not on classifying a pre-drawn one, so it does not fit either without inverting the whole interaction. treats-contradiction-as-a-k-value (recognising an equation with no solution) is purely algebraic and fits no visual construction kind at all."
-      ]
-    },
-    "collinearity_checker": {
-      "modules": [
-        "module:g10m-c08"
-      ],
-      "objectives": [
-        "lo:g10m8s3-2-3"
-      ],
-      "why": [
-        "Collinearity is a three-point equality judgement, not the construction of one line. line_drawer mode='points' only grades whether the drawn line passes through two given points and never involves or grades a third, so building it here would just re-test LO1's two-point-line skill under a different name rather than this LO's actual comparison step — the stretch the rules warn against. No other listed kind offers a multi-value numeric-equality comparison interaction (gradient-vs-gradient or surd-length-vs-surd-length)."
-      ]
-    },
-    "a diagonal-aware vertex solver (no existing kind)": {
-      "modules": [
-        "module:g10m-c08"
-      ],
-      "objectives": [
-        "lo:g10m8s4-1-3"
-      ],
-      "why": [
-        "Every existing kind either doesn't touch coordinate geometry at all, or (pair_plotter) only grades one placed point against generic swapped-coordinates/wrong-quadrant/off-target predicates. Reusing pair_plotter here would push the objective's actual content (which pair is the diagonal) into the stem text instead of the graded construction — a student who guesses the right diagonal and one who derives it would look identical to the grader, and diagonal-vs-side-confusion, midpoint-formula-subtraction and shared-midpoint-as-vertex would all collapse into the same unspecific off-target bucket already used for lo:g10m8s4-1-2, with no way to tell them apart. polygon_builder's predicates (only-one-pair-parallel, sides-not-equal, no-right-angle, midsegment-not-half, area-missing-half) classify a shape's properties, not solve for an unknown vertex from coordinates, so it doesn't fit either, and its instrument is left empty in the contract in any case."
-      ]
-    }
+ "format": "ainext.widget-gaps/1",
+ "book": "g10-math",
+ "course_id": "course:us-g10-math-en",
+ "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+ "status_note": "PRE-S7 DESK PROPOSAL, 2026-09-25. No Grade 10 widget question exists yet, so every chapter is 'gap' today. `proposal.expected_after_s7` is a judgement from the manifest's sections, made so Samuel can approve kinds early (plan risk table; tasks T355/T356). The S7 run (generate_widget_questions.py --gap-report) rewrites this file from evidence and keeps every signed gap. Objectives are not derived yet (S1), so gaps name printed sections, not lo_ids.",
+ "signing": "To accept a chapter without a widget, set that chapter-scope gap's signed_off to {\"by\": \"<name>\", \"at\": \"<date>\", \"note\": \"…\"}. coverage_report.py counts a module as covered only by a signed gap of scope \"chapter\"; signing a lesson-scope gap records an accepted missing kind and never covers a chapter. Approving a NEW KIND is a separate decision, recorded in specs/003-curriculum-tracks/decisions.md.",
+ "chapters": [
+  {
+   "module": "module:g10m-c01",
+   "label": "Chapter 1: Algebraic expressions",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "number_line_marker"
+    ],
+    "sections_they_serve": [
+     "1.5"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 1
   },
-  "gaps": [
-    {
-      "module": "module:g10m-c08",
-      "lo_id": "lo:g10m8s1-1-1",
-      "need_kind": "vertex-set plotter (multi-point figure constructor)",
-      "description": "The construction this objective needs is: given a short list of named vertex coordinates (e.g. A(-2,1), B(3,1), C(1,-3)), the student places all of them on a lattice grid and the figure they bound is checked as a whole — each vertex within tolerance of its target, and (for the misconceptions this would diagnose) able to say per-vertex whether a coordinate pair was swapped, one sign was flipped, or a vertex was placed off-target entirely, plus a figure-level check that the vertices were placed as a closed shape in the stated order. pair_plotter is the closest existing kind but its instrument places exactly ONE point, so it cannot pose 'draw a figure from several vertices' without either dropping vertices (answering a different, easier question) or stitching several one-point widgets together and losing the point of the objective, which is the figure as a whole, not one coordinate. polygon_builder is named in the contract but its instrument string is empty — no grid, no vertex-count range, no coordinate range are specified, so there is nothing to validate a target against (FR-1207: an instrument with no stated limits can't be checked for reachability) and its own predicates (parallel-sides, equal-sides, right-angle, midsegment, area) are about a shape's geometric properties, not about plotting stated vertex coordinates, so even a built-out polygon_builder would be answering a different question than this LO asks.",
-      "why": "No anchor book question is listed for this objective in the lesson packet (anchor_questions: []), and independently no existing, instrumented kind lets a student place more than one named point — the two blockers compound: there is nothing to anchor a template to, and nothing that could construct the mathematics even if there were.",
-      "source": "author-merged.json",
-      "signed_off": null,
-      "scope": "lesson"
-    },
-    {
-      "module": "module:g10m-c08",
-      "lo_id": "lo:g10m8s1-1-3",
-      "need_kind": "vertex-labelling sequence checker (alphabetical naming convention)",
-      "description": "This objective is about a labelling convention, not a measurable geometric quantity: given an unlabelled polygon, the student assigns letters to its vertices, and the construction is graded on whether the letters climb by one, in a single consistent rotational direction (either clockwise or counter-clockwise, starting from any vertex), all the way around the shape. That would let it diagnose exactly the three misconceptions this objective owns: assumes-only-one-direction-counts (reject a shape correctly labelled the 'wrong' way round), expects-labels-to-start-at-a (reject a correct labelling because A isn't first), and partial-arc-check (approve a labelling after checking only a few neighbouring vertices, missing a break further round). No kind in the contract touches vertex order or labelling at all — the geometry kinds that build shapes (circle_builder, angle_setter, triangle_ratio, polygon_builder) all grade coordinates, angles or ratios, never the sequence in which vertices are named, and polygon_builder additionally has no instrument defined.",
-      "why": "Every anchor question for this objective (ex8-1-5, ex8-1-6, ex8-6-3) is 'which of these 4 identical shapes is labelled correctly' — a pure comparison of labelling direction/order across diagram variants. Forcing this into, say, polygon_builder's property predicates (parallel sides, right angles, equal sides) would grade a different, unrelated property and call it this objective's mathematics — exactly the forced fit the task asks to avoid; it belongs to Samuel as a gap instead.",
-      "source": "author-merged.json",
-      "signed_off": null,
-      "scope": "lesson"
-    },
-    {
-      "module": "module:g10m-c08",
-      "lo_id": "lo:g10m8s2-1-1",
-      "need_kind": "distance_ruler",
-      "description": "A 'distance_ruler' kind: a lattice grid spanning at least ±10 on both axes (to host questions like $A(2, 7)$ and $B(-3, 5)$), where the student drags a point so its distance from a fixed first point matches a target length, which may be given as a surd; a three-point variant would let the student place $P$, $Q$ and $R$ and would grade the triangle type the three constructed side lengths actually produce. This would diagnose this objective's own misconceptions directly: a predicate for 'the point landed where it would if a subtraction of a negative coordinate had its sign dropped' (e.g. treating $3-(-2)$ as $3-2$) would catch drops-double-negative-sign, and, on the three-point variant, a predicate comparing the constructed side lengths against the triangle's true classification rather than its on-screen appearance would catch reads-triangle-type-off-sketch.",
-      "why": "None of the existing kinds grades the length of a segment between two arbitrary points. pair_plotter only grades where a single point lands against one fixed target coordinate, not a distance the student computes; line_drawer grades a line's slope and intercept, and circle_builder grades a radius/chord/diameter/tangent property against a fixed circle â€” neither is a finite segment's length. None of their predicate sets contain anything resembling a coordinate sign-subtraction slip or a triangle-classification judgement, so mapping this objective's two misconceptions onto any of them would grade a property other than the one the lesson teaches (an answer box in disguise), not a genuine construction of the distance formula.",
-      "source": "author-merged.json",
-      "signed_off": null,
-      "scope": "lesson"
-    },
-    {
-      "module": "module:g10m-c08",
-      "lo_id": "lo:g10m8s3-1-1",
-      "need_kind": "gradient_builder (proposed; does not exist)",
-      "description": "The construction this LO needs is: given two points as plain coordinates in the stem (both already fully known — nothing to solve for their position), the student builds the rise-over-run relationship itself, e.g. by dragging a horizontal leg spanning the signed run $x_2-x_1$ and a vertical leg spanning the signed rise $y_2-y_1$ anchored at the two named points, with the ratio of the two signed legs graded as the gradient. That would diagnose exactly this objective's misconception (mc:g10m8s3-1-1:gradient-mismatched-subscript-order) by checking whether the two legs were each measured starting from the same point, plus a run-over-rise inversion and a wrong-axis reading, as separate predicates.",
-      "why": "No existing kind fits without forcing a different skill. line_drawer's 'points' mode takes both endpoints as the already-known target and grades only the final line's slope/intercept — with two fully-given points the student just plots two dots exactly as told and the line's slope falls out unearned; no calculation is required or exercised, so it would test coordinate-plotting, not 'calculate the gradient using the formula'. triangle_ratio does force a rise/run-shaped construction, but it is bound to sin/cos/tan semantics and a fixed positive open-interval range, so grading a signed gradient through it would misrepresent gradient as a trigonometric ratio, confusing the concept rather than testing it. That is a forced fit either way, so this is reported as a gap rather than stretched into a template.",
-      "source": "author-merged.json",
-      "signed_off": null,
-      "scope": "lesson"
-    },
-    {
-      "module": "module:g10m-c08",
-      "lo_id": "lo:g10m8s3-2-2",
-      "need_kind": "line_relationship_classifier",
-      "description": "A widget showing two already-drawn line segments (or a quadrilateral's four vertices) on a lattice, where the student builds the comparison itself — e.g. exposing each segment's own rise-over-run and then classifying the pair as parallel, perpendicular, or neither, or for a quadrilateral, checking each side-pair in turn — rather than drawing one new line. This would diagnose: calling sides parallel/perpendicular from how the sketch looks rather than the computed gradients (judges-parallel-by-appearance); confirming only one defining property of a quadrilateral and stopping there instead of checking the second the book pairs with it (stops-at-partial-quadrilateral-property); and blurring the parallel test (equal gradients) with the perpendicular test (product of exactly -1) when reading the comparison (swaps-parallel-perpendicular-tests, as a judgement rather than a construction error).",
-      "why": "line_drawer only grades one freshly-drawn line's own slope and intercept against a single target; it has no mechanism for a student to compare two already-given gradients or classify a pre-drawn shape's sides, so these three misconceptions (all about mis-judging an existing relationship, not about drawing a new line) have no home. polygon_builder's construct mode is graded on the shape the student itself builds, not on classifying a pre-drawn one, so it does not fit either without inverting the whole interaction. treats-contradiction-as-a-k-value (recognising an equation with no solution) is purely algebraic and fits no visual construction kind at all.",
-      "source": "author-merged.json",
-      "signed_off": null,
-      "scope": "lesson"
-    },
-    {
-      "module": "module:g10m-c08",
-      "lo_id": "lo:g10m8s3-2-3",
-      "need_kind": "collinearity_checker",
-      "description": "A widget presenting three points on a lattice where the student builds the actual comparison the book teaches — either the two gradients between consecutive point-pairs (confirming or denying they are the exact same fraction), or the two shorter segment lengths against the longest (confirming or denying they sum to it) — rather than drawing any single line. This would diagnose: treating two gradients that merely share a sign as equal instead of checking they are the same fraction exactly (same-sign-gradients-mistaken-for-equal); and leaving distances as separate, un-simplified surds so a genuine match is missed and the points are wrongly called non-collinear (unsimplified-surds-look-unequal).",
-      "why": "Collinearity is a three-point equality judgement, not the construction of one line. line_drawer mode='points' only grades whether the drawn line passes through two given points and never involves or grades a third, so building it here would just re-test LO1's two-point-line skill under a different name rather than this LO's actual comparison step — the stretch the rules warn against. No other listed kind offers a multi-value numeric-equality comparison interaction (gradient-vs-gradient or surd-length-vs-surd-length).",
-      "source": "author-merged.json",
-      "signed_off": null,
-      "scope": "lesson"
-    },
-    {
-      "module": "module:g10m-c08",
-      "lo_id": "lo:g10m8s4-1-3",
-      "need_kind": "a diagonal-aware vertex solver (no existing kind)",
-      "description": "This objective's distinguishing step is not 'solve for a point from two given points' — lo:g10m8s4-1-2's widget already covers that arithmetic. What's new here is recognising, among three NAMED vertices of a parallelogram (e.g. E, F, G of EFGH), which pair is the diagonal already fully known (the 'skip-one' pair, E & G) rather than a side (E & F, a common trap), before applying the shared-midpoint property to solve for the fourth vertex. A genuine widget would show the three given vertices on a lattice and have the student both mark/select which pair is the diagonal and place the fourth vertex, so the construction itself can tell apart: picking the wrong pair as the diagonal, finding that diagonal's midpoint by subtracting instead of adding the known coordinates, and stopping at that midpoint instead of solving on for the vertex.",
-      "why": "Every existing kind either doesn't touch coordinate geometry at all, or (pair_plotter) only grades one placed point against generic swapped-coordinates/wrong-quadrant/off-target predicates. Reusing pair_plotter here would push the objective's actual content (which pair is the diagonal) into the stem text instead of the graded construction — a student who guesses the right diagonal and one who derives it would look identical to the grader, and diagonal-vs-side-confusion, midpoint-formula-subtraction and shared-midpoint-as-vertex would all collapse into the same unspecific off-target bucket already used for lo:g10m8s4-1-2, with no way to tell them apart. polygon_builder's predicates (only-one-pair-parallel, sides-not-equal, no-right-angle, midsegment-not-half, area-missing-half) classify a shape's properties, not solve for an unknown vertex from coordinates, so it doesn't fit either, and its instrument is left empty in the contract in any case.",
-      "source": "author-merged.json",
-      "signed_off": null,
-      "scope": "lesson"
-    }
-  ]
+  {
+   "module": "module:g10m-c02",
+   "label": "Chapter 2: Exponents",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [],
+    "sections_they_serve": [],
+    "expected_after_s7": "gap"
+   },
+   "gaps": 1
+  },
+  {
+   "module": "module:g10m-c03",
+   "label": "Chapter 3: Number patterns",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "line_drawer",
+     "pair_plotter"
+    ],
+    "sections_they_serve": [
+     "3.2"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 0
+  },
+  {
+   "module": "module:g10m-c04",
+   "label": "Chapter 4: Equations and inequalities",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "number_line_marker",
+     "line_drawer",
+     "pair_plotter"
+    ],
+    "sections_they_serve": [
+     "4.3",
+     "4.4",
+     "4.7"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 0
+  },
+  {
+   "module": "module:g10m-c05",
+   "label": "Chapter 5: Trigonometry",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "triangle_ratio",
+     "pair_plotter"
+    ],
+    "sections_they_serve": [
+     "5.3",
+     "5.7",
+     "5.8"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 0
+  },
+  {
+   "module": "module:g10m-c06",
+   "label": "Chapter 6: Functions",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "curve_sketcher",
+     "line_drawer"
+    ],
+    "sections_they_serve": [
+     "6.2",
+     "6.3"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 1
+  },
+  {
+   "module": "module:g10m-c07",
+   "label": "Chapter 7: Euclidean geometry",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [],
+    "sections_they_serve": [],
+    "expected_after_s7": "gap"
+   },
+   "gaps": 1
+  },
+  {
+   "module": "module:g10m-c08",
+   "label": "Chapter 8: Analytical geometry",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "line_drawer",
+     "pair_plotter"
+    ],
+    "sections_they_serve": [
+     "8.1",
+     "8.3",
+     "8.4"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 1
+  },
+  {
+   "module": "module:g10m-c09",
+   "label": "Chapter 9: Finance and growth",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "ratio_balance"
+    ],
+    "sections_they_serve": [
+     "9.5"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 1
+  },
+  {
+   "module": "module:g10m-c10",
+   "label": "Chapter 10: Statistics",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "bar_builder"
+    ],
+    "sections_they_serve": [
+     "10.2",
+     "10.4"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 1
+  },
+  {
+   "module": "module:g10m-c11",
+   "label": "Chapter 11: Trigonometry",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "triangle_ratio"
+    ],
+    "sections_they_serve": [
+     "11.1"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 0
+  },
+  {
+   "module": "module:g10m-c12",
+   "label": "Chapter 12: Euclidean geometry",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [],
+    "sections_they_serve": [],
+    "expected_after_s7": "gap"
+   },
+   "gaps": 1
+  },
+  {
+   "module": "module:g10m-c13",
+   "label": "Chapter 13: Measurements",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [],
+    "sections_they_serve": [],
+    "expected_after_s7": "gap"
+   },
+   "gaps": 2
+  },
+  {
+   "module": "module:g10m-c14",
+   "label": "Chapter 14: Probability",
+   "status": "gap",
+   "widgets": 0,
+   "kinds": [],
+   "objectives_with_widgets": [],
+   "proposal": {
+    "existing_kinds_that_fit": [
+     "sample_space"
+    ],
+    "sections_they_serve": [
+     "14.1",
+     "14.7"
+    ],
+    "expected_after_s7": "covered"
+   },
+   "gaps": 1
+  }
+ ],
+ "uncovered_chapters": [
+  "module:g10m-c01",
+  "module:g10m-c02",
+  "module:g10m-c03",
+  "module:g10m-c04",
+  "module:g10m-c05",
+  "module:g10m-c06",
+  "module:g10m-c07",
+  "module:g10m-c08",
+  "module:g10m-c09",
+  "module:g10m-c10",
+  "module:g10m-c11",
+  "module:g10m-c12",
+  "module:g10m-c13",
+  "module:g10m-c14"
+ ],
+ "proposed_kinds": {
+  "polygon_builder": {
+   "size": "L",
+   "modules": [
+    "module:g10m-c07",
+    "module:g10m-c12",
+    "module:g10m-c13",
+    "module:g10m-c08"
+   ],
+   "description": "The student drags three or four vertices on a lattice to construct a triangle (scalene, isosceles, right-angled) or a quadrilateral (parallelogram, rectangle, rhombus, square, trapezium, kite), graded by its properties — side lengths, parallel and perpendicular sides, diagonals — so every valid figure is correct (FR-1205). A mid-point mode joins two mid-points and reads the segment against the third side; an area mode asks for a polygon of a given area. Predicates: only-one-pair-parallel, sides-not-equal, no-right-angle, diagonals-not-bisecting, midsegment-not-half, area-missing-half. An equilateral triangle cannot sit on a square lattice, so it is never asked (FR-1207)."
+  },
+  "curve_sketcher (extended)": {
+   "size": "M",
+   "modules": [
+    "module:g10m-c06",
+    "module:g10m-c09"
+   ],
+   "description": "An extension of an existing kind: new fn values hyperbola (y = a/x + q), exponential (y = a·b^x + q), sine and cosine (y = a·sin θ + q, θ in degrees 0–360) and tangent, sketched freehand and graded against the curve. New predicates: asymptote-crossed, wrong-quadrants (the sign of a), wrong-intercept, amplitude-wrong, period-wrong; vertically-displaced exists. It changes the contract and the validator of a live kind, so it needs the same approval."
+  },
+  "venn_builder": {
+   "size": "M",
+   "modules": [
+    "module:g10m-c14"
+   ],
+   "description": "Two events in a sample space drawn as a Venn diagram. The student enters the count in each region, or shades the region an expression names (A or B, A and B, not A, A only). Predicates: overlap-counted-twice, and-for-or, complement-inside-A, exclusive-drawn-overlapping, outside-region-missed."
+  },
+  "box_plot_builder": {
+   "size": "M",
+   "modules": [
+    "module:g10m-c10"
+   ],
+   "description": "Given a data set, the student drags the five markers of the five-number summary (minimum, lower quartile, median, upper quartile, maximum) onto a number line. Predicates: median-of-unsorted-data, iqr-given-as-range, quartile-method (the book's quartile convention must be confirmed first), whisker-not-to-extreme."
+  },
+  "area_model": {
+   "size": "L",
+   "modules": [
+    "module:g10m-c01"
+   ],
+   "description": "Algebra tiles: x², x and unit tiles, positive and negative, arranged into a rectangle to expand a product or to factorise a trinomial, the sides reading the factors. Predicates: missing-cross-term ((a + b)² as a² + b²), middle-term-sign, constant-sign, common-factor-left-in. Negative tiles need Play tokens that do not rely on colour alone."
+  },
+  "solid_scaler": {
+   "size": "L+",
+   "modules": [
+    "module:g10m-c13"
+   ],
+   "description": "A right prism, cylinder, pyramid or cone whose dimensions the student drags, with live surface-area and volume readouts; asks such as 'make the volume 8 times larger'. Predicates: volume-scaled-linearly (k, not k³), area-scaled-as-volume, slant-height-for-height. 3-D on iPad Safari with full keyboard operation (FR-1204) is the cost. Recommended: defer; chapter 13 gets its widget from polygon_builder's area mode."
+  }
+ },
+ "gaps": [
+  {
+   "module": "module:g10m-c01",
+   "lo_id": null,
+   "sections": [
+    "1.6",
+    "1.7 (3 parts)",
+    "1.8"
+   ],
+   "need_kind": "area_model",
+   "scope": "lesson",
+   "description": "Algebra tiles: x², x and unit tiles, positive and negative, arranged into a rectangle to expand a product or to factorise a trinomial, the sides reading the factors. Predicates: missing-cross-term ((a + b)² as a² + b²), middle-term-sign, constant-sign, common-factor-left-in. Negative tiles need Play tokens that do not rely on colour alone.",
+   "why": "Products and factorisation are the chapter's mass (five lessons after G0); no existing kind builds an expression.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c02",
+   "lo_id": null,
+   "sections": [
+    "2.2",
+    "2.3",
+    "2.4"
+   ],
+   "need_kind": "none",
+   "scope": "chapter",
+   "description": "",
+   "why": "Exponent laws and exponential equations are symbolic manipulation. No construction fits; typed answers marked by FR-4320 serve them. Recommended: Samuel signs this chapter gap.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c06",
+   "lo_id": null,
+   "sections": [
+    "6.4",
+    "6.5",
+    "6.6 (3 parts)"
+   ],
+   "need_kind": "curve_sketcher (extended)",
+   "scope": "lesson",
+   "description": "An extension of an existing kind: new fn values hyperbola (y = a/x + q), exponential (y = a·b^x + q), sine and cosine (y = a·sin θ + q, θ in degrees 0–360) and tangent, sketched freehand and graded against the curve. New predicates: asymptote-crossed, wrong-quadrants (the sign of a), wrong-intercept, amplitude-wrong, period-wrong; vertically-displaced exists. It changes the contract and the validator of a live kind, so it needs the same approval.",
+   "why": "curve_sketcher draws only lines and parabolas; hyperbolic, exponential and trigonometric graphs are five lessons.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c07",
+   "lo_id": null,
+   "sections": [
+    "7.2",
+    "7.3",
+    "7.4"
+   ],
+   "need_kind": "polygon_builder",
+   "scope": "chapter",
+   "description": "The student drags three or four vertices on a lattice to construct a triangle (scalene, isosceles, right-angled) or a quadrilateral (parallelogram, rectangle, rhombus, square, trapezium, kite), graded by its properties — side lengths, parallel and perpendicular sides, diagonals — so every valid figure is correct (FR-1205). A mid-point mode joins two mid-points and reads the segment against the third side; an area mode asks for a polygon of a given area. Predicates: only-one-pair-parallel, sides-not-equal, no-right-angle, diagonals-not-bisecting, midsegment-not-half, area-missing-half. An equilateral triangle cannot sit on a square lattice, so it is never asked (FR-1207).",
+   "why": "Grade 10 geometry is triangles and quadrilaterals on straight lines; the existing geometry kinds are circle-based.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c08",
+   "lo_id": null,
+   "sections": [
+    "8.2"
+   ],
+   "need_kind": "none",
+   "scope": "lesson",
+   "description": "",
+   "why": "Distance between two points has many correct constructions and pair_plotter grades one target; the rest of the chapter is covered.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c09",
+   "lo_id": null,
+   "sections": [
+    "9.2",
+    "9.3",
+    "9.4"
+   ],
+   "need_kind": "curve_sketcher (extended)",
+   "scope": "lesson",
+   "description": "An extension of an existing kind: new fn values hyperbola (y = a/x + q), exponential (y = a·b^x + q), sine and cosine (y = a·sin θ + q, θ in degrees 0–360) and tangent, sketched freehand and graded against the curve. New predicates: asymptote-crossed, wrong-quadrants (the sign of a), wrong-intercept, amplitude-wrong, period-wrong; vertically-displaced exists. It changes the contract and the validator of a live kind, so it needs the same approval.",
+   "why": "Simple and compound growth would be served by the exponential curve of the extended curve_sketcher; 9.5 exchange rates are covered by ratio_balance.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c10",
+   "lo_id": null,
+   "sections": [
+    "10.4 (percentiles, quartiles)",
+    "10.5"
+   ],
+   "need_kind": "box_plot_builder",
+   "scope": "lesson",
+   "description": "Given a data set, the student drags the five markers of the five-number summary (minimum, lower quartile, median, upper quartile, maximum) onto a number line. Predicates: median-of-unsorted-data, iqr-given-as-range, quartile-method (the book's quartile convention must be confirmed first), whisker-not-to-extreme.",
+   "why": "bar_builder reads mean, median, mode and range; quartiles and the five-number summary need their own instrument.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c12",
+   "lo_id": null,
+   "sections": [
+    "12.1"
+   ],
+   "need_kind": "polygon_builder",
+   "scope": "chapter",
+   "description": "The student drags three or four vertices on a lattice to construct a triangle (scalene, isosceles, right-angled) or a quadrilateral (parallelogram, rectangle, rhombus, square, trapezium, kite), graded by its properties — side lengths, parallel and perpendicular sides, diagonals — so every valid figure is correct (FR-1205). A mid-point mode joins two mid-points and reads the segment against the third side; an area mode asks for a polygon of a given area. Predicates: only-one-pair-parallel, sides-not-equal, no-right-angle, diagonals-not-bisecting, midsegment-not-half, area-missing-half. An equilateral triangle cannot sit on a square lattice, so it is never asked (FR-1207).",
+   "why": "Proofs are worked examples, not graded items; a conjecture mode of polygon_builder (build, then observe the diagonals) is the only construction that fits.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c13",
+   "lo_id": null,
+   "sections": [
+    "13.1"
+   ],
+   "need_kind": "polygon_builder",
+   "scope": "chapter",
+   "description": "The student drags three or four vertices on a lattice to construct a triangle (scalene, isosceles, right-angled) or a quadrilateral (parallelogram, rectangle, rhombus, square, trapezium, kite), graded by its properties — side lengths, parallel and perpendicular sides, diagonals — so every valid figure is correct (FR-1205). A mid-point mode joins two mid-points and reads the segment against the third side; an area mode asks for a polygon of a given area. Predicates: only-one-pair-parallel, sides-not-equal, no-right-angle, diagonals-not-bisecting, midsegment-not-half, area-missing-half. An equilateral triangle cannot sit on a square lattice, so it is never asked (FR-1207).",
+   "why": "The area mode of polygon_builder gives the chapter its widget (area of a polygon).",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c13",
+   "lo_id": null,
+   "sections": [
+    "13.2 (2 parts)",
+    "13.3 (2 parts)",
+    "13.4"
+   ],
+   "need_kind": "solid_scaler",
+   "scope": "chapter",
+   "description": "A right prism, cylinder, pyramid or cone whose dimensions the student drags, with live surface-area and volume readouts; asks such as 'make the volume 8 times larger'. Predicates: volume-scaled-linearly (k, not k³), area-scaled-as-volume, slant-height-for-height. 3-D on iPad Safari with full keyboard operation (FR-1204) is the cost. Recommended: defer; chapter 13 gets its widget from polygon_builder's area mode.",
+   "why": "Surface area, volume and scaling of solids need a 3-D instrument. Recommended: defer.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  },
+  {
+   "module": "module:g10m-c14",
+   "lo_id": null,
+   "sections": [
+    "14.3",
+    "14.4",
+    "14.5",
+    "14.6"
+   ],
+   "need_kind": "venn_builder",
+   "scope": "lesson",
+   "description": "Two events in a sample space drawn as a Venn diagram. The student enters the count in each region, or shades the region an expression names (A or B, A and B, not A, A only). Predicates: overlap-counted-twice, and-for-or, complement-inside-A, exclusive-drawn-overlapping, outside-region-missed.",
+   "why": "sample_space covers grids of outcomes; Venn diagrams, union and intersection are four lessons.",
+   "source": "desk proposal (ai-engineer, WP-P6), before the S7 run",
+   "signed_off": null
+  }
+ ]
 }
