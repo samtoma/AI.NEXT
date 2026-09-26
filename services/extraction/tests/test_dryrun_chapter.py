@@ -98,7 +98,13 @@ class ChapterEightDryRun(unittest.TestCase):
             if f.name.startswith("maths"):
                 continue
             a = json.loads(f.read_text())
-            b = json.loads((byref / f.name).read_text())
+            if (byref / f.name).exists():
+                b = json.loads((byref / f.name).read_text())
+            else:   # a by-ref packet too big for one call runs in PARTS (s6-grade-part1, -part2 …): together they are the one run
+                stem = f.name.removesuffix(".calls.json")
+                parts = sorted(byref.glob(f"{stem}-part*.calls.json"), key=lambda p: int(p.name.split("-part")[1].split(".")[0]))
+                self.assertTrue(parts, f"{f.name}: no by-ref run and no parts")
+                b = [x for p in parts for x in json.loads(p.read_text())]
             self.assertEqual([x["label"] for x in a], [x["label"] for x in b], f.name)
             for xa, xb in zip(a, b):
                 x, y = same_as_inline(xa["prompt"], xb["prompt"])
