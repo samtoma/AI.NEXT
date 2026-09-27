@@ -50,3 +50,9 @@ G2, Chapter 8 (2026-09-26), asked one topic at a time:
     "Keep them, and let's human review": keep all 7 widget templates; the rejected claims go to a human review
     instead of being auto-dropped. Orchestrator's implementation: until reviewed, a rejected claim is held (never
     shown to a student, never used as evidence); the reviewer confirms or drops each one.
+
+Consistency-review decisions (2026-09-27), one at a time:
+27. "Load a course" restore (answer 8 / FR-4208/4210) → "Build the safe restore (Recommended)": restore replays a
+    previously exported, reviewed bundle for one course, keeping every student's progress or refusing; today's
+    whole-database rollback stays as a separate, clearly named emergency `rollback` mode, documented as undoing
+    student data.
