@@ -56,3 +56,5 @@ Consistency-review decisions (2026-09-27), one at a time:
     previously exported, reviewed bundle for one course, keeping every student's progress or refusing; today's
     whole-database rollback stays as a separate, clearly named emergency `rollback` mode, documented as undoing
     student data.
+28. Grade gate default (AINEXT_COURSE_GATING) → "Refuse to start (Recommended)": in the student product (mvp1) the app
+    refuses to start unless the setting is explicitly on or off, with a clear message; production (already on) unchanged.
