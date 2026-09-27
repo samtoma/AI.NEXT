@@ -58,3 +58,6 @@ Consistency-review decisions (2026-09-27), one at a time:
     student data.
 28. Grade gate default (AINEXT_COURSE_GATING) → "Refuse to start (Recommended)": in the student product (mvp1) the app
     refuses to start unless the setting is explicitly on or off, with a clear message; production (already on) unchanged.
+29. Figures for the other 13 chapters → "Native only, wait": decision 26 stands strictly — no book images; a question
+    whose figure needs a native type that doesn't exist yet stays held until that type is built (chapters may launch
+    with large held sets).
