@@ -55,14 +55,29 @@ in UTC, so the file does not depend on the exporting session's time zone.
 MATERIALISED ROWS ARE NOT EXPORTED. A widget the tutor improvised for one
 student (ADR-0009 §3) is that session's artefact awaiting review, not content to
 seed another machine with.
+
+THE EXPORT RECORD (T430, decision 29, FR-4208). A `--course` export also writes
+`export-record.json` beside the three bundles: the course and book it was taken
+from, the course's source-document sha and objective set AS THE DATABASE HELD THEM,
+and the sha256 of each bundle exactly as written. It is what makes a bundle
+RESTORABLE: "Load a course"'s `restore` mode (restore_course_bundle.py) replays an
+export only when every hash matches this record and the course in the database is
+the one the record names. A freshly generated bundle has no record, and a
+hand-edited export no longer matches its own — both are refused, because
+provenance is not something a bundle gets to assert about itself. The record is
+deterministic (no timestamp), so re-exporting unchanged content rewrites nothing
+and `--check` stays meaningful; git history says when. Never edit it by hand:
+re-export instead. An unscoped export writes no record (a record names one course).
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
+from collections import Counter
 from datetime import timezone
 from pathlib import Path
 
@@ -74,6 +89,8 @@ GENERATOR = ("exported from the live comparison database — "
 ENTRY_ORDER = ("id", "lo_id", "label", "description", "signal", "kind", "refutation", "maps",
                "aliases")
 FILES = ("generated-questions.json", "widget-questions.json", "misconceptions.json")
+RECORD = "export-record.json"
+RECORD_FORMAT = "ainext-export-record/1"
 
 
 def rows(cur, sql: str, args: tuple = ()) -> list[dict]:
@@ -283,6 +300,53 @@ def courses_with_generated(cur) -> list[str]:
 
 def dump(bundle: dict) -> str:
     return json.dumps(bundle, indent=2, ensure_ascii=False) + "\n"
+
+
+def course_fingerprint(cur, course: str) -> dict:
+    """What the database says the course IS: its source document(s) and its objective set.
+    The same source-sha rule as parity_check.fingerprint (every sha stamped on the course
+    node and its objectives), plus a digest of the sorted objective ids."""
+    los = "SELECT node_id FROM node_subject WHERE course_id = %(c)s"
+    cur.execute(f"""SELECT string_agg(DISTINCT source_sha256, '+' ORDER BY source_sha256)
+                      FROM graph_nodes
+                     WHERE (id IN ({los}) OR id = %(c)s) AND source_sha256 IS NOT NULL""",
+                {"c": course})
+    sha = cur.fetchone()[0]
+    cur.execute(f"SELECT node_id FROM ({los}) t ORDER BY node_id", {"c": course})
+    ids = [r[0] for r in cur.fetchall()]
+    return {"source_sha256": sha, "objectives": len(ids),
+            "objective_digest": hashlib.sha256("\n".join(ids).encode()).hexdigest()}
+
+
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def export_record(course: str, book: str, fingerprint: dict, texts: dict[str, str]) -> dict:
+    """The record written beside a `--course` export (see the module docstring)."""
+    files = {}
+    for name in FILES:
+        b = json.loads(texts[name])
+        entry = {"sha256": sha256_text(texts[name])}
+        if name == "misconceptions.json":
+            entry["records"] = len(b.get("misconceptions") or [])
+        else:
+            qs = b.get("questions") or []
+            entry["records"] = len(qs)
+            entry["reviewed"] = sum(1 for q in qs if q.get("reviewed_by"))
+            entry["status"] = dict(sorted(Counter(q.get("status") for q in qs).items()))
+        files[name] = entry
+    return {
+        "record": RECORD_FORMAT,
+        "note": ("Written by services/extraction/export_generated_content.py beside the bundles it "
+                 "wrote. 'Load a course' restore replays these bundles only when every sha256 below "
+                 "matches and the course in the database is this one (FR-4208, decision 29). Never "
+                 "edit by hand: re-export instead."),
+        "course_id": course,
+        "book": book,
+        "course": fingerprint,
+        "files": files,
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
