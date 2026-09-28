@@ -384,17 +384,197 @@ postflight() {  # <database> <digest-before> <student-digest-before or "">
   return "$failed"
 }
 
+# --- restore: ONE course's generated content, from its committed export ----------
+# (decision 29; Samuel's answer 27. Header, step 8.)
+STAGE=""; SCRATCH=""; REHEARSE_DUMP=""
+restore_cleanup() {
+  local rc=$?
+  if [ -n "$SCRATCH" ]; then
+    case "$SCRATCH" in
+      ainext_rehearse_*)
+        if dbq "DROP DATABASE IF EXISTS \"$SCRATCH\" WITH (FORCE)" >/dev/null 2>&1; then info "dropped the throwaway database $SCRATCH"
+        else warn "could not drop $SCRATCH — drop it by hand: $(dc_hint) exec db psql -U ainext -d $OPS_DB -c 'DROP DATABASE \"$SCRATCH\" WITH (FORCE)'"; fi ;;
+    esac
+  fi
+  if [ -n "$REHEARSE_DUMP" ] && [ -f "$REHEARSE_DUMP" ]; then
+    rm -f "$REHEARSE_DUMP" && info "removed the rehearsal's copy of the database ($REHEARSE_DUMP)"
+  fi
+  case "$STAGE" in */ainext-restore-*) rm -rf "$STAGE" ;; esac
+  exit "$rc"
+}
+
+# restore_run <database> [--dry-run | --verify-only] — restore_course_bundle.py, as
+# ainext_maint, reading the staged export at /restore (read-only).
+restore_run() {
+  local db="$1"; shift
+  loader_run_mounted "$STAGE" /restore "$db" restore_course_bundle.py --course "$COURSE" --dir /restore "$@"
+}
+
+# Every course's content, one digest per course (other_courses_digest's rows, this one included).
+all_courses_digest() {  # <database>
+  local keep="$COURSE" d
+  COURSE="course:-"; d="$(other_courses_digest "$1")"; COURSE="$keep"
+  printf '%s\n' "$d"
+}
+
+DRIFT_BEFORE=0
+restore_postflight() {  # <database> <other-courses digest before> <student digest before or "">
+  local db="$1" before="$2" sbefore="$3" failed=0 after safter rc
+  say "Post-flight on $db (read-only)"
+  rc=0; restore_run "$db" --verify-only || rc=$?
+  if [ "$rc" = 0 ]; then ok "read-back: $COURSE exports to exactly the export that was restored"
+  else warn "read-back FAILED (above)"; failed=1; fi
+  info "what students of $COURSE get (their visibility rules are unchanged):"
+  course_summary "$db"
+  info "drift guard, every loaded course:"
+  if drift_guard "$db"; then ok "drift guard GREEN for every loaded course"
+  elif [ "$DRIFT_BEFORE" = 1 ]; then warn "drift guard is RED — it was already red BEFORE this restore (above), so it is not this restore's doing; raise it with Samuel"
+  else warn "drift guard RED (see above), and it was green before"; failed=1; fi
+  after="$(other_courses_digest "$db")"
+  if [ "$after" = "$before" ]; then ok "every other course's content is byte-identical to before ($(wc -l <<<"$after" | tr -d ' ') course(s))"
+  else warn "ANOTHER COURSE'S CONTENT CHANGED:"; diff <(printf '%s\n' "$before") <(printf '%s\n' "$after") | sed 's/^/      /' || true; failed=1; fi
+  if [ -n "$sbefore" ]; then
+    safter="$(student_digest "$db")"
+    if [ "$safter" = "$sbefore" ]; then ok "every student table is byte-identical to before ($(wc -l <<<"$safter" | tr -d ' ') tables)"
+    else warn "STUDENT DATA CHANGED:"; diff <(printf '%s\n' "$sbefore") <(printf '%s\n' "$safter") | sed 's/^/      /' || true; failed=1; fi
+  fi
+  return "$failed"
+}
+
+# what the replay's own exit code means, for every restore mode
+replay_failed() {  # <rc> <what was touched>
+  case "$1" in
+    2) refuse "the restore of $COURSE was refused (the REFUSED lines above name every row and why). Nothing was written.$2" ;;
+    3) printf '%s\nTHE REPLAY DID NOT READ BACK AS THE EXPORT (above). Its transaction was rolled back: nothing was written.\nThis is a defect, not an operator error — tell Samuel.%s%s\n' "$C_R" "$2" "$C_0" >&2; exit 5 ;;
+    *) printf '%s\nTHE REPLAY STOPPED (exit %s, above). It runs in one transaction, which rolled back: nothing was written.%s%s\n' "$C_R" "$1" "$2" "$C_0" >&2; exit 1 ;;
+  esac
+}
+
+restore_course() {
+  local ref="${1:-HEAD}" sha f rc digest_all
+  say "Restore a course from its export — $COURSE — $MODE"
+  info "stack      project $OPS_PROJECT, database $OPS_DB"
+  info "checkout   $OPS_REPO @ $(git -C "$OPS_REPO" rev-parse --short HEAD 2>/dev/null || echo '(not a git checkout)')"
+  info "backups    $OPS_BACKUP_DIR"
+  if [ "$MODE" = restore ] && [ "${CONFIRM:-}" != "$COURSE" ]; then
+    refuse "mode 'restore' replaces $COURSE's generated content with its export. Retype the course id to confirm:
+       CONFIRM=$COURSE bash $OPS_HERE/load-course.sh $COURSE restore${1:+ $1}
+       (the GitHub Action's 'confirm' box sets it). Run restore-dry-run and restore-rehearse first. Nothing was touched."
+  fi
+  [[ "$ref" =~ ^[A-Za-z0-9][A-Za-z0-9._/-]*$ ]] && [[ "$ref" != *..* ]] \
+    || refuse "'$ref' is not a tag, branch or commit name. Nothing was touched."
+  ops_preflight
+  ops_build_loader
+  trap restore_cleanup EXIT
+
+  say "1. The export — committed, read from the box's checkout at $ref (the checkout is not moved)"
+  book_facts
+  [ -n "$BOOK" ] || { for f in "${PROBLEMS[@]}"; do warn "$f"; done; refuse "no book config names $COURSE in this checkout. Nothing was touched."; }
+  info "book $BOOK — $TITLE (curriculum $CURRICULUM)"
+  [ -n "$EXPORT_DIR" ] || refuse "cannot tell where $COURSE's export lives (export_generated_content.out_dir_for). Nothing was touched."
+  sha="$(git -C "$OPS_REPO" rev-parse --verify --quiet "$ref^{commit}" 2>/dev/null)" \
+    || refuse "the box's checkout has no commit or tag '$ref'. Tags arrive with every deploy — list them: git -C $OPS_REPO tag --list 'v*'. Nothing was touched."
+  info "export     $EXPORT_DIR at $ref = $(git -C "$OPS_REPO" log -1 --format='%h %cs %s' "$sha")"
+  if ! git -C "$OPS_REPO" cat-file -e "$sha:$EXPORT_DIR/export-record.json" 2>/dev/null; then
+    refuse "$EXPORT_DIR/export-record.json is not in $ref. Only an export taken with
+       'export_generated_content.py --course $COURSE' carries a record: what is committed there is a freshly
+       generated bundle, or an export older than export records. Export the course, commit it, deploy, then
+       restore — or pick the ref of an export that has a record. Nothing was touched."
+  fi
+  STAGE="$(mktemp -d "${TMPDIR:-/tmp}/ainext-restore-XXXXXX")"
+  for f in export-record.json generated-questions.json widget-questions.json misconceptions.json; do
+    git -C "$OPS_REPO" show "$sha:$EXPORT_DIR/$f" > "$STAGE/$f" 2>/dev/null \
+      || refuse "$EXPORT_DIR/$f is not in $ref, but its export record is — the export is incomplete. Nothing was touched."
+  done
+  # The staged files are course content (no student row): readable by the loader's `nobody`.
+  chmod 755 "$STAGE"; chmod 644 "$STAGE"/*
+  ok "export staged from ${sha:0:12} (read-only for the loader): export-record.json + 3 bundles"
+
+  say "2. The drift guard BEFORE (every loaded course) — information; the post-flight compares against it"
+  if drift_guard "$OPS_DB"; then ok "drift guard GREEN before the restore"
+  else DRIFT_BEFORE=1; warn "the drift guard is already RED before this restore (above) — the post-flight will not blame the restore for it"; fi
+  DIGEST_BEFORE="$(other_courses_digest "$OPS_DB")"
+
+  case "$MODE" in
+  # ---------------------------------------------------------------------------
+  restore-dry-run)
+    say "3. Dry run — provenance, students, and the whole replay in a transaction that is ROLLED BACK"
+    digest_all="$(all_courses_digest "$OPS_DB")"
+    rc=0; restore_run "$OPS_DB" --dry-run || rc=$?
+    [ "$rc" = 0 ] || replay_failed "$rc" ""
+    if [ "$(all_courses_digest "$OPS_DB")" = "$digest_all" ]; then
+      ok "nothing was written: every course's content, $COURSE included, is byte-identical to before"
+    else
+      die "the database CHANGED during a restore dry run — a defect in restore_course_bundle.py --dry-run; stop and tell Samuel"
+    fi
+    say "RESTORE DRY RUN CLEAN — next: mode 'restore-rehearse' (the whole restore on a throwaway copy), then 'restore'"
+    exit 0 ;;
+
+  # ---------------------------------------------------------------------------
+  restore-rehearse)
+    say "3. Rehearsal — the real database is only READ; the replay runs on a throwaway copy"
+    ops_backup "rehearse-restore-$SLUG" transient
+    REHEARSE_DUMP="$LAST_BACKUP"
+    SCRATCH="ainext_rehearse_$(date -u +%Y%m%d%H%M%S)_$$"
+    dbq "CREATE DATABASE \"$SCRATCH\"" >/dev/null || die "could not create the throwaway database $SCRATCH"
+    info "restoring the verified backup into $SCRATCH"
+    dc exec -T db sh -c 'PGPASSWORD="$POSTGRES_PASSWORD" pg_restore --exit-on-error --single-transaction -U ainext -d "$1"' -- "$SCRATCH" < "$REHEARSE_DUMP" \
+      || die "the verified backup did not restore into $SCRATCH — the rollback path is broken; do NOT run 'restore' until this is understood"
+    ok "the backup restores cleanly (the emergency rollback path, proven)"
+    [ "$(other_courses_digest "$SCRATCH")" = "$DIGEST_BEFORE" ] || die "the restored copy differs from the live database — the backup is not faithful"
+    STUDENTS_BEFORE="$(student_digest "$SCRATCH")"
+    say "4. The replay, on $SCRATCH"
+    rc=0; restore_run "$SCRATCH" || rc=$?
+    [ "$rc" = 0 ] || replay_failed "$rc" " (This was the rehearsal: the real database was never written.)"
+    if ! restore_postflight "$SCRATCH" "$DIGEST_BEFORE" "$STUDENTS_BEFORE"; then
+      printf '%s\nREHEARSAL FAILED its post-flight (above). The real database was not touched.%s\n' "$C_R" "$C_0" >&2
+      exit 4
+    fi
+    say "REHEARSAL CLEAN — the backup restores, the replay applies and reads back, no student row moved"
+    info "the real database was only read. Next: mode 'restore' (retype the course id)."
+    exit 0 ;;
+
+  # ---------------------------------------------------------------------------
+  restore)
+    say "3. Backup"
+    ops_backup "restore-$SLUG"
+    ROLLBACK="bash $OPS_HERE/load-course.sh rollback $LAST_BACKUP"
+    info "roll back with:  $ROLLBACK"
+    warn "that line is the EMERGENCY lever: it puts back the WHOLE database, and so also undoes everything"
+    warn "students do after this moment. A refused or failed replay below writes nothing and needs no rollback."
+    say "4. The replay — one transaction; it commits only if no student row moved and the course reads back as the export"
+    rc=0; restore_run "$OPS_DB" || rc=$?
+    [ "$rc" = 0 ] || replay_failed "$rc" " (The backup above is unused.)"
+    if ! restore_postflight "$OPS_DB" "$DIGEST_BEFORE" ""; then
+      printf '%s\nPOST-FLIGHT FAILED (above), after the replay committed. Decide with Samuel; the emergency\nrollback (the WHOLE database, undoing students'"'"' work since the backup) is:\n  %s%s\n' "$C_R" "$ROLLBACK" "$C_0" >&2
+      exit 4
+    fi
+    info "students' rows were proven untouched INSIDE the replay's transaction (every student table identical before and after its writes)"
+    say "RESTORED — $COURSE's generated content is its export at $ref, row for row; every student's progress is kept"
+    info "roll back with:  $ROLLBACK   (the WHOLE database — emergencies only)"
+    exit 0 ;;
+  esac
+}
+
 # =============================================================================
 case "${1:-}" in
   ""|-h|--help|help) usage 0 ;;
   restore)
+    # The old spelling of `rollback`. Never guessed: `restore` now means a course's export.
+    refuse "'load-course.sh restore <backup>' is now called ROLLBACK — it puts back the WHOLE database and
+       undoes every student's work since that backup:
+         bash $OPS_HERE/load-course.sh rollback ${2:-<file.dump>}
+       To put ONE course's generated content back to its export, keeping every student's progress:
+         CONFIRM=<course-id> bash $OPS_HERE/load-course.sh <course-id> restore
+       Nothing was touched." ;;
+  rollback)
     [ $# -eq 2 ] || usage
     ops_preflight
     ops_build_loader
     say "ROLLBACK — restoring $2 over $OPS_DB"
     warn "everything students did after that backup was taken is replaced by the backup."
     warn "a pre-restore backup is taken first, so this too can be undone."
-    ops_restore "$2"
+    ops_restore "$2" "bash $OPS_HERE/load-course.sh rollback"
     say "Post-flight (read-only): the drift guard for every course now in the database"
     book_facts ""
     info "courses in the database now: $(present_courses "$OPS_DB")"
@@ -403,7 +583,7 @@ case "${1:-}" in
     elif drift_guard "$OPS_DB"; then
       ok "drift guard GREEN for every loaded course"
     else
-      warn "drift guard is NOT green after the restore (above) — this restore put back exactly what the backup held; if the guard is red, the backup itself predates a fix. Tell Samuel before anyone uses this environment."
+      warn "drift guard is NOT green after the rollback (above) — this rollback put back exactly what the backup held; if the guard is red, the backup itself predates a fix. Tell Samuel before anyone uses this environment."
     fi
     say "Done"
     exit 0 ;;
@@ -415,10 +595,16 @@ case "${1:-}" in
 esac
 
 COURSE="${1:-}"; MODE="${2:-}"
-[ $# -eq 2 ] || usage
+case "$MODE" in
+  dry-run|rehearse|load) [ $# -eq 2 ] || usage ;;
+  restore-dry-run|restore-rehearse|restore) [ $# -eq 2 ] || [ $# -eq 3 ] || usage ;;
+  "") usage ;;
+  *) refuse "mode must be dry-run, rehearse, load, restore-dry-run, restore-rehearse or restore (got '$MODE')" ;;
+esac
 [[ "$COURSE" =~ ^course:[a-z0-9-]+$ ]] || refuse "'$COURSE' is not a course node id (e.g. course:us-g10-math-en)"
-case "$MODE" in dry-run|rehearse|load) ;; *) refuse "mode must be dry-run, rehearse or load (got '$MODE')" ;; esac
 SLUG="$(printf '%s' "${COURSE#course:}" | tr -c 'a-z0-9-' '-')"
+
+case "$MODE" in restore*) restore_course "${3:-}" ;; esac
 
 say "Load a course — $COURSE — $MODE"
 info "stack      project $OPS_PROJECT, database $OPS_DB"
@@ -581,7 +767,7 @@ rehearse)
 load)
   say "4. Backup"
   ops_backup "load-$SLUG"
-  ROLLBACK="bash $OPS_HERE/load-course.sh restore $LAST_BACKUP"
+  ROLLBACK="bash $OPS_HERE/load-course.sh rollback $LAST_BACKUP"
   info "roll back with:  $ROLLBACK"
   info "(by hand, if this script cannot run: $(dc_hint) exec -T db sh -c 'PGPASSWORD=\"\$POSTGRES_PASSWORD\" pg_restore --clean --if-exists --single-transaction -U ainext -d $OPS_DB' < $LAST_BACKUP )"
   say "5. Load (add-only)"
