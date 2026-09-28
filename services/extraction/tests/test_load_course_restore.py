@@ -267,7 +267,8 @@ class RestoreBundleTest(unittest.TestCase):
                             (SELECT node_id FROM node_subject WHERE course_id = %s)""", (PREP3,))
         self.db.q("""UPDATE questions SET choices = (SELECT jsonb_agg(c - 'misconception_id')
                                                       FROM jsonb_array_elements(choices) c)
-                      WHERE source = 'seed' AND question_type = 'mcq' AND jsonb_typeof(choices) = 'array'
+                      WHERE source IN ('seed', 'authored') AND question_type = 'mcq'
+                        AND jsonb_typeof(choices) = 'array'
                         AND lo_id LIKE 'lo:u1-%%'""")
         code, out = restore(self.db.dsn, "--course", PREP3, "--dir", str(d))
         self.assertEqual(code, 0, out)
