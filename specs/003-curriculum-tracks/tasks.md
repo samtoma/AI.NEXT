@@ -463,18 +463,31 @@ and is now passed. These are the remaining build items that round adds.
   3-D solid, or another), with how many figures of that kind occur and their sizes. Put the inventory to
   Samuel before any native figure type is built — the same gate decision 11 already sets for widget
   questions (T355/T356). No figure ships as an approximated static image in place of an unmatched kind.
-- [ ] T430 [US1] (WP-H) **"Load a course"'s restore mode** (decision 29; FR-4208, FR-4210 amended):
+- [x] T430 [US1] (WP-H) **"Load a course"'s restore mode** (decision 29; FR-4208, FR-4210 amended):
   add a `restore` mode to `.github/workflows/load-course.yml` / `deploy/load-course.sh` — replays a
   previously exported, reviewed bundle for a course, keeping each row's own status and review stamp,
   gated by a **typed confirmation of the course id**, with the same backup-first, verified-readback
   discipline as the load mode, refusing if the restore target's provenance does not match the course
-  already present. **Checked 2026-09-27, not ticked**: the workflow has a `restore` mode, but it is a
-  different thing — it rolls the **whole database** back to a named `pg_dump` backup, confirmed by
-  retyping the backup's file name, and so also undoes every student's progress since that backup
-  (`load-course.yml:16–22`, `deploy/load-course.sh` step 7). That conflicts with FR-4210 ("keeps every
-  student's progress or refuses"). Which one is right is **Samuel's decision** (open question in
-  `docs/PROJECT_STATE.md`): build the bundle replay described here, or keep the rollback and amend
-  decision 29, FR-4208/FR-4210 and constitution X.
+  already present. **Samuel's answer 27 (2026-09-27): "Build the safe restore"** — the bundle replay,
+  keeping every student's progress or refusing; the whole-database mode stays, renamed `rollback`.
+  **Done 2026-09-28.** Modes `restore-dry-run` → `restore-rehearse` → `restore [export_ref]`
+  (`deploy/load-course.sh` step 8; the workflow's `export_ref` input; `CONFIRM` re-checked on the box).
+  The replay is `services/extraction/restore_course_bundle.py`: provenance from the new
+  `export-record.json` that `export_generated_content.py --course` now writes (course, book, source
+  document, sha256 of each file) — no record, an edited file, another course or book, a different
+  source document, or a moved id → refused; any content row the replay would remove, or any question
+  whose asked-or-accepted content it would change, that a student row names (every text/JSON column
+  of every student table) → refused, naming it; otherwise one REPEATABLE READ transaction that
+  commits only if every student table is identical before and after and the course re-exports to
+  the restored bytes; backup first via `ops_backup`; post-flight read-back, drift guard, other courses
+  byte-identical, (rehearse) student tables byte-identical. The old whole-database mode is
+  `rollback`, behaviour unchanged; `restore <file>` is refused with the new spelling. Proof:
+  `services/extraction/tests/test_load_course_restore.py` (21 tests: restore_course_bundle.py
+  directly, including the real Prep-3 bank round trip, and the real `load-course.sh` end to end via
+  `tests/fake_docker` — dry run, rehearse, restore, refusals, rollback), wired into `ci-cd.yml`'s
+  migrations job. Runbook: `deploy/DEPLOY-MVP1.md` → "Restoring a course from its export".
+  **Not yet run on the box**, and no committed export carries a record yet: the first restore point
+  of each course is its next `--course` export.
 - [x] T431 [US1] (WP-E) **The per-course "Arabic touches" setting** (decision 30; FR-4205 amended): add
   an `arabicTouches` (or similarly named) flag to `CourseDef`, `true` for every National course
   (unchanged) and `false` for G10. Where G10's prompts are built, no Egyptian-Arabic phrase or
