@@ -694,10 +694,12 @@ def main(argv: list[str] | None = None) -> int:
             say(f"   read-back: {args.course} exports to exactly the restored files, byte for byte")
         if args.dry_run:
             conn.rollback()
-            say("DRY RUN — every write above was rolled back; nothing was written")
+            say(f"DRY RUN — every write above was rolled back; nothing was written (database "
+                f"{conn.info.dbname})")
         else:
             conn.commit()
-            say(f"RESTORED — {args.course}'s generated content is the export's, row for row")
+            say(f"RESTORED — {args.course}'s generated content is the export's, row for row "
+                f"(database {conn.info.dbname})")
         return 0
     finally:
         conn.close()

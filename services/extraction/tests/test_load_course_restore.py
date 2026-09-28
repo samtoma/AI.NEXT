@@ -83,6 +83,9 @@ def golden() -> dict:
     tmp = Path(tempfile.mkdtemp(prefix="restore_test_"))
     run_loader(db.dsn, "--all", "--course", PREP3)
     load_bank(db.dsn, GEN)
+    # production's state (ADR-0019): the whole Prep-3 maths book is live, so its drift guard is GREEN
+    db.q("""UPDATE questions SET status = 'live' WHERE source IN ('seed', 'authored') AND lo_id IN
+            (SELECT node_id FROM node_subject WHERE course_id = %s)""", (PREP3,))
     bundles, _ = alb.assemble(book_config.load_book("g10-math"), FIX / "manifest.json",
                               FIX / "objectives", FIX / "runs" / "lesson")
     paths = []
