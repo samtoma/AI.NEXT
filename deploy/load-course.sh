@@ -48,7 +48,7 @@
 #   2  a precondition REFUSED — nothing was written
 #   3  the backup failed or did not verify — nothing was written
 #   4  a load step or the post-flight failed — the rollback line was printed
-#   5  (restore) the replay did not read back as the export — rolled back, nothing written
+#   5  (restore) the replay failed its own verification — rolled back, nothing written
 #
 # WHAT IT NEVER DOES: touch another course's content, touch a student row, write
 # a visibility rule (course_availability / student_course_access), run inside a
@@ -445,7 +445,7 @@ restore_postflight() {  # <database> <other-courses digest before> <student dige
 replay_failed() {  # <rc> <what was touched>
   case "$1" in
     2) refuse "the restore of $COURSE was refused (the REFUSED lines above name every row and why). Nothing was written.$2" ;;
-    3) printf '%s\nTHE REPLAY DID NOT READ BACK AS THE EXPORT (above). Its transaction was rolled back: nothing was written.\nThis is a defect, not an operator error — tell Samuel.%s%s\n' "$C_R" "$2" "$C_0" >&2; exit 5 ;;
+    3) printf '%s\nTHE REPLAY FAILED ITS OWN VERIFICATION (above: it did not read back as the export, or it moved a student row).\nIts transaction was rolled back: nothing was written. This is a defect, not an operator error — tell Samuel.%s%s\n' "$C_R" "$2" "$C_0" >&2; exit 5 ;;
     *) printf '%s\nTHE REPLAY STOPPED (exit %s, above). It runs in one transaction, which rolled back: nothing was written.%s%s\n' "$C_R" "$1" "$2" "$C_0" >&2; exit 1 ;;
   esac
 }

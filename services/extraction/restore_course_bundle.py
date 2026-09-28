@@ -630,7 +630,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     f = record["files"]
     say(f"export for {args.course} (book {record['book']}): "
-        + ", ".join(f"{n} {f[n]['records']} record(s) sha256 {f[n]['sha256'][:12]}…" for n in FILES))
+        + ", ".join(f"{n} {f[n].get('records', '?')} record(s) sha256 {str(f[n].get('sha256'))[:12]}…"
+                    for n in FILES))
     say("   provenance: every file matches its export record")
 
     import psycopg
@@ -656,53 +657,67 @@ def main(argv: list[str] | None = None) -> int:
                   file=sys.stderr)
             return 2
         conn.isolation_level = psycopg.IsolationLevel.REPEATABLE_READ
-        with conn.cursor() as cur:
-            try:
-                p = plan(cur, args.course, record, bundles)
-            except Refused as exc:
-                conn.rollback()
-                print(f"REFUSED: {exc}", file=sys.stderr)
-                return 2
-            say("what the replay does:")
-            print_plan(p)
-            if p.refusals:
-                conn.rollback()
-                print(f"\nREFUSED: {len(p.refusals)} problem(s); nothing was written:", file=sys.stderr)
-                for r in p.refusals:
-                    print(f"  x {r}", file=sys.stderr)
-                return 2
-            say("   students: nothing the replay removes or re-words is named by any student row")
-            before = student_digest(cur)
-            apply(cur, p)
-            after = student_digest(cur)
-            if after != before:
-                conn.rollback()
-                changed = [f"{a[0]}" for a, b in zip(before, after) if a != b]
-                print(f"FAILED: the replay changed student rows ({', '.join(changed)}). Rolled back; "
-                      "nothing was written. This is a defect — tell Samuel.", file=sys.stderr)
-                return 3
-            say(f"   students: all {len(before)} student tables identical before and after the "
-                "replay (inside the transaction)")
-            diff = readback(cur, args.course, texts, bundles)
-            if diff:
-                conn.rollback()
-                print("READ-BACK FAILED: the replayed course does not export to the restored files. "
-                      "Rolled back; nothing was written. Tell Samuel:", file=sys.stderr)
-                for d in diff:
-                    print(f"  x {d}", file=sys.stderr)
-                return 3
-            say(f"   read-back: {args.course} exports to exactly the restored files, byte for byte")
-        if args.dry_run:
+        try:
+            return replay(conn, args, record, texts, bundles)
+        except psycopg.Error as exc:
+            # a student's session touching a row this replay removes, a serialization failure
+            # under REPEATABLE READ, a constraint: the transaction is rolled back whole
             conn.rollback()
-            say(f"DRY RUN — every write above was rolled back; nothing was written (database "
-                f"{conn.info.dbname})")
-        else:
-            conn.commit()
-            say(f"RESTORED — {args.course}'s generated content is the export's, row for row "
-                f"(database {conn.info.dbname})")
-        return 0
+            print(f"STOPPED: {type(exc).__name__}: {str(exc).strip()}\nThe replay runs in one "
+                  "transaction, which was rolled back: nothing was written. If a student was using "
+                  "the course at that moment, run it again.", file=sys.stderr)
+            return 1
     finally:
         conn.close()
+
+
+def replay(conn, args, record: dict, texts: dict[str, str], bundles: dict[str, dict]) -> int:
+    """Plan, refuse or apply, verify, then commit (or roll back a dry run). Exit code as main."""
+    with conn.cursor() as cur:
+        try:
+            p = plan(cur, args.course, record, bundles)
+        except Refused as exc:
+            conn.rollback()
+            print(f"REFUSED: {exc}", file=sys.stderr)
+            return 2
+        say("what the replay does:")
+        print_plan(p)
+        if p.refusals:
+            conn.rollback()
+            print(f"\nREFUSED: {len(p.refusals)} problem(s); nothing was written:", file=sys.stderr)
+            for r in p.refusals:
+                print(f"  x {r}", file=sys.stderr)
+            return 2
+        say("   students: nothing the replay removes or re-words is named by any student row")
+        before = student_digest(cur)
+        apply(cur, p)
+        after = student_digest(cur)
+        if after != before:
+            conn.rollback()
+            changed = [f"{a[0]}" for a, b in zip(before, after) if a != b]
+            print(f"FAILED: the replay changed student rows ({', '.join(changed)}). Rolled back; "
+                  "nothing was written. This is a defect — tell Samuel.", file=sys.stderr)
+            return 3
+        say(f"   students: all {len(before)} student tables identical before and after the "
+            "replay (inside the transaction)")
+        diff = readback(cur, args.course, texts, bundles)
+        if diff:
+            conn.rollback()
+            print("READ-BACK FAILED: the replayed course does not export to the restored files. "
+                  "Rolled back; nothing was written. Tell Samuel:", file=sys.stderr)
+            for d in diff:
+                print(f"  x {d}", file=sys.stderr)
+            return 3
+        say(f"   read-back: {args.course} exports to exactly the restored files, byte for byte")
+    if args.dry_run:
+        conn.rollback()
+        say(f"DRY RUN — every write above was rolled back; nothing was written (database "
+            f"{conn.info.dbname})")
+    else:
+        conn.commit()
+        say(f"RESTORED — {args.course}'s generated content is the export's, row for row "
+            f"(database {conn.info.dbname})")
+    return 0
 
 
 if __name__ == "__main__":
