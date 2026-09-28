@@ -5,6 +5,8 @@ the OS user, is used), maps every `-d <database>` through the fake docker's map 
 `ainext_mvp1` can only ever mean the test's own database), then runs the real binary.
 """
 
+from __future__ import annotations
+
 import os
 import sys
 from pathlib import Path
