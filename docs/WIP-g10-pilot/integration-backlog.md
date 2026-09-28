@@ -190,3 +190,15 @@
     value), but every template has at least one mapping the verifier refused, and the documented rule rejects
     a template on ANY refused mapping. Option: drop refused mappings and keep a template with one mapping
     confirmed on every instance (2 templates: s1-1-2 plot-the-point, s3-2-1 line-through-two-points).
+84. CLOSED (T430, Samuel's answer 27 "Build the safe restore"; decision 29; FR-4208/FR-4210 wording unchanged, now matched) —
+    **"Load a course" restore is a per-course bundle replay; the whole-database mode is `rollback`.** New modes
+    `restore-dry-run` → `restore-rehearse` → `restore [export_ref]` replay ONE course's committed export
+    (`restore_course_bundle.py`): provenance from the `export-record.json` that `export_generated_content.py --course`
+    now writes beside the three bundles; refuses — naming the row — if the replay would remove or re-word anything a
+    student's row names; one transaction that commits only if every student table is unchanged and the course
+    re-exports to the restored bytes. The old `restore <file.dump>` is `rollback`, behaviour unchanged, and the old
+    spelling is refused with the new one. Proof: `tests/test_load_course_restore.py` (21, incl. the real
+    `load-course.sh` end to end through `tests/fake_docker`), in `ci-cd.yml`'s migrations job. **Open for the box**:
+    no committed export has a record yet — each course's first restore point is its next `--course` export
+    (Prep-3 maths re-exports byte-identical plus the record; G10's generated dir still holds fresh generator
+    bundles). Not yet run on noor.
