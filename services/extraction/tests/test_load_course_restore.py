@@ -49,6 +49,7 @@ import sys
 import tempfile
 import threading
 import unittest
+from datetime import timezone
 from pathlib import Path
 
 from _scratchdb import EX, REPO, SERVER, ScratchDB, mini_course, run_loader, skip_without_db, write_bundle
@@ -226,7 +227,7 @@ class RestoreBundleTest(unittest.TestCase):
             status, by, at = rows[qid]
             self.assertEqual(status, q["status"], qid)
             self.assertEqual(by, q["reviewed_by"], qid)
-            self.assertEqual(at.isoformat() if at else None, q["reviewed_at"], qid)
+            self.assertEqual(at.astimezone(timezone.utc).isoformat() if at else None, q["reviewed_at"], qid)
         self.assertEqual(rows["q:g10m8s3-2-2:g001-yesno"][0], "review")
         self.assertEqual(rows["q:g10m8s3-2-1:g002-perp-num"][:2], ("retired", "samuel"))
         self.assertEqual(rows["q:g10m8s1-1-1:g001-fourth"][1], "fixture reviewer (sampled)")
@@ -425,9 +426,6 @@ class LoadCourseScriptTest(unittest.TestCase):
 
     def tearDown(self):
         self.db.drop()
-        left = self.db.q("SELECT datname FROM pg_database WHERE datname LIKE 'ainext_rehearse_%%'") \
-            if False else []
-        self.assertEqual(left, [])
 
     def sh(self, *args: str, confirm: str | None = None) -> tuple[int, str]:
         env = dict(os.environ)
