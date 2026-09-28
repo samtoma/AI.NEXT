@@ -2,30 +2,57 @@
 # load-course interface: 1
 # =============================================================================
 # AI.Next — "Load a course": put ONE course that is not yet in noor's database
-# into it. Add-only, backed up and verified first, never visible to a student
-# until an operator sets a rule. (FR-4208, FR-4209; contracts/load-course.md;
-# privacy review F13-F17; ADR-0024)
+# into it (add-only), or put ONE loaded course's generated content back to a
+# previously exported, reviewed state (restore). Backed up and verified first.
+# (FR-4208, FR-4209, FR-4210; contracts/load-course.md; privacy review F13-F17;
+# ADR-0024; decision 29)
 #
-#   bash deploy/load-course.sh <course-id> dry-run    what a load would do; writes NOTHING
-#   bash deploy/load-course.sh <course-id> rehearse   the whole load on a throwaway COPY of
-#                                                     the database, checked, then dropped
-#   bash deploy/load-course.sh <course-id> load       back up, verify, load, check
-#   bash deploy/load-course.sh restore <file.dump>    roll back to a backup (the printed line)
-#   bash deploy/load-course.sh verify-backup <file>   does this backup read back end to end?
+#   bash deploy/load-course.sh <course-id> dry-run      what a load would do; writes NOTHING
+#   bash deploy/load-course.sh <course-id> rehearse     the whole load on a throwaway COPY of
+#                                                       the database, checked, then dropped
+#   bash deploy/load-course.sh <course-id> load         back up, verify, load, check
+#   bash deploy/load-course.sh <course-id> restore-dry-run  [ref]   replay the course's committed
+#                                                       export: every check, every write, rolled back
+#   bash deploy/load-course.sh <course-id> restore-rehearse [ref]   the whole replay on a throwaway
+#                                                       COPY of the database, checked, then dropped
+#   CONFIRM=<course-id> bash deploy/load-course.sh <course-id> restore [ref]
+#                                                       back up, replay ONE course's export, read it
+#                                                       back — every student's progress is KEPT
+#   bash deploy/load-course.sh rollback <file.dump>     EMERGENCY: the WHOLE database back to a backup
+#                                                       — UNDOES EVERY STUDENT'S WORK since that backup
+#   bash deploy/load-course.sh verify-backup <file>     does this backup read back end to end?
+#
+#   [ref] is a tag or commit in the box's checkout (default HEAD, the deployed commit);
+#   the export is read from it with `git show` — the checkout is never moved.
 #
 # Normally started from GitHub: Actions -> "Load a course (manual)". Runbook:
-# deploy/DEPLOY-MVP1.md -> "Loading a course".
+# deploy/DEPLOY-MVP1.md -> "Loading a course" and "Restoring a course from its export".
+#
+# RESTORE IS NOT ROLLBACK (Samuel's answer 27, 2026-09-27: "Build the safe restore").
+#   restore   ONE course, from a reviewed EXPORT (export_generated_content.py --course
+#             and the export-record.json it writes): its generated questions, its
+#             misconception catalogue and refutations, the catalogue's stamps on
+#             the book's options — each row with its own status and review stamp.
+#             Students' rows are never touched, and if the replay would remove or
+#             re-word anything a student's row names, it REFUSES and lists it.
+#             The book itself (graph, book questions, figures, lessons) is not in
+#             an export; changing it is a content refresh (refresh-content.sh).
+#   rollback  the WHOLE database, from a pg_dump backup. It also undoes every
+#             attempt, every mastery change, every lesson advanced and every
+#             account made since that backup, for every student and every course.
+#             It is the emergency lever, not a content tool.
 #
 # EXIT CODES (the workflow summary explains each):
-#   0  loaded; or already loaded, nothing to do; or the dry run / rehearsal is clean
-#   1  usage, or an unexpected error
+#   0  loaded / restored; or already loaded, nothing to do; or the dry run / rehearsal is clean
+#   1  usage, or an unexpected error (a restore that stops here rolled its transaction back)
 #   2  a precondition REFUSED — nothing was written
 #   3  the backup failed or did not verify — nothing was written
-#   4  a load step or the post-flight check failed — the rollback line was printed
+#   4  a load step or the post-flight failed — the rollback line was printed
+#   5  (restore) the replay did not read back as the export — rolled back, nothing written
 #
-# WHAT IT NEVER DOES: touch another course's content, touch a student row,
-# write a visibility rule (course_availability / student_course_access), run
-# inside a deploy, or re-load a course that is already present.
+# WHAT IT NEVER DOES: touch another course's content, touch a student row, write
+# a visibility rule (course_availability / student_course_access), run inside a
+# deploy, or re-load a course that is already present.
 #
 # THE ORDER, and why:
 #   1. the course's book config is read and checked in the loader container
@@ -53,7 +80,7 @@
 #      course's content byte-identical to before; (rehearse) every student row
 #      byte-identical to before.
 #
-#   7. RESTORE (separate mode, not part of the numbered flow above): verifies
+#   7. ROLLBACK (separate mode, called `restore` until 2026-09-27): verifies
 #      the named backup (never touches the database on a backup that does not
 #      read back end to end), takes a pre-restore backup of its own so this too
 #      is undoable, stops the student app and the console, restores in one
@@ -62,7 +89,26 @@
 #      every course now in the database (F17), and what is now present. This
 #      undoes a `load`, but it also undoes everything else students did since
 #      the backup, which is why it always takes its own undo-the-undo backup
-#      first.
+#      first. `restore <file.dump>` (the old spelling) is refused, not guessed.
+#
+#   8. RESTORE (restore-dry-run, restore-rehearse, restore) — the course's export:
+#      a. the typed confirmation (restore only): CONFIRM must equal the course id;
+#      b. the export is staged from the box's checkout at [ref] with `git show`
+#         (export-record.json + the three bundles), into a temp directory the
+#         loader container reads, read-only;
+#      c. restore_course_bundle.py, as ainext_maint, checks PROVENANCE (the
+#         record names this course and its book; every file's sha256 matches
+#         the record; the course is loaded from the same source document), then
+#         STUDENTS (nothing it would remove or re-word is named by any student
+#         row), and refuses (exit 2) on either, naming each row;
+#      d. BACKUP first (restore): the load mode's own ops_backup, verified; the
+#         printed rollback line is the WHOLE-database one, for emergencies;
+#      e. the replay, in ONE transaction that commits only if every student
+#         table is identical before and after it, and the course exports back
+#         to exactly the restored files (verified read-back);
+#      f. POST-FLIGHT, reading only: the read-back again, committed; the drift
+#         guard for every loaded course; every other course byte-identical;
+#         (rehearse) every student table byte-identical.
 # =============================================================================
 set -euo pipefail
 
@@ -71,7 +117,7 @@ OPS_HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$OPS_HERE/ops-lib.sh"
 
 usage() {
-  sed -n '9,14p' "$0" | sed 's/^# \{0,1\}//'
+  sed -n '10,26p' "$0" | sed 's/^# \{0,1\}//'
   exit "${1:-1}"
 }
 
@@ -105,6 +151,13 @@ if book is None:
         + ", ".join(b.course_id for b in books) + ")")
     sys.exit(0)
 out("BOOK", book.book); out("TITLE", book.title); out("CURRICULUM", book.curriculum)
+try:
+    # where this course's export lives (restore reads it from git at a ref)
+    import export_generated_content as egc
+    rel = egc.out_dir_for(course).relative_to(bc.REPO_ROOT).as_posix()
+    out("EXPORT_DIR", rel if SAFE.match(rel) else "")
+except BaseException as e:
+    out("EXPORT_DIR", "")
 try:
     problems = bc.check_book(book, books)
 except BaseException as e:
@@ -140,7 +193,7 @@ for rel in book.content_files:
         out("CONTENT", hashlib.sha256(p.read_bytes()).hexdigest() + " " + rel)
 '
 
-BOOK=""; TITLE=""; CURRICULUM=""; MC_FILE=""; MC_N=0; GQ_N=0
+BOOK=""; TITLE=""; CURRICULUM=""; MC_FILE=""; MC_N=0; GQ_N=0; EXPORT_DIR=""
 MC_IDS_SQL="ARRAY[]::text[]"; GQ_IDS_SQL="ARRAY[]::text[]"
 PROBLEMS=(); CONFIGURED=(); GQ_FILES=(); CONTENT=()
 
@@ -157,6 +210,7 @@ book_facts() {  # [course] — omit (or pass "") for every CONFIGURED book, no p
       MC_FILE) MC_FILE="$v" ;; MC_N) MC_N="$v" ;; MC_IDS_SQL) MC_IDS_SQL="$v" ;;
       GQ_FILE) GQ_FILES+=("$v") ;; GQ_N) GQ_N="$v" ;; GQ_IDS_SQL) GQ_IDS_SQL="$v" ;;
       CONTENT) CONTENT+=("$v") ;;
+      EXPORT_DIR) EXPORT_DIR="$v" ;;
     esac
   done <<<"$facts"
 }
