@@ -40,8 +40,10 @@ name: Load a course (manual)
 # NO NEW SECRET. It runs on the box and uses what the deploy already put there
 # (deploy/.env): backups as the database owner inside the db container, content
 # as `ainext_maint` through the loader service (privacy review F16). No secret
-# is passed to, or printed by, any step here. Restore uses the exact same
-# credentials and the exact same box path — nothing new to leak.
+# is passed to, or printed by, any step here. Restore and rollback use the exact
+# same credentials and the exact same box path — nothing new to leak. Restore
+# stages the export (course content only, never a student row) in a temp
+# directory the loader container mounts read-only, removed when the run ends.
 #
 # THE BOX'S CHECKOUT IS NOT MOVED. The load uses the bundles and the
 # deploy/load-course.sh of the commit that is DEPLOYED, because the lesson
