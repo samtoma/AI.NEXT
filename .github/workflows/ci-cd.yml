@@ -205,6 +205,27 @@ jobs:
         env:
           AINEXT_TEST_PG: "host=127.0.0.1 port=5432"
         run: uv run --with pytest python -m pytest -q tests/test_misconception_catalogue.py
+      # T430 (FR-4208, FR-4210): "Load a course"'s safe restore and its whole-database
+      # rollback, on the same Postgres service, in their own ainext_test_r* databases.
+      # Two halves: restore_course_bundle.py directly (provenance and student refusals,
+      # statuses and review stamps put back, student tables byte-identical), and the REAL
+      # deploy/load-course.sh driven end to end through tests/fake_docker (docker answered
+      # on the runner; the stack's database name mapped onto the test's own). The second
+      # half needs a pg_dump at least as new as the service (17); the runner's own may be
+      # older, so the next step installs 17 — best effort: if it cannot, that half SKIPS
+      # (reported, with the reason) and the first half still gates.
+      - name: pg_dump 17, to match the Postgres service (load-course.sh end-to-end test)
+        continue-on-error: true
+        run: |
+          if pg_dump --version | grep -qE ' (1[7-9]|[2-9][0-9])\.'; then pg_dump --version; exit 0; fi
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          sudo apt-get install -y postgresql-client-17
+          pg_dump --version
+      - name: Load a course — restore keeps students' progress, rollback unchanged (T430, FR-4208/4210)
+        working-directory: services/extraction
+        env:
+          AINEXT_TEST_PG: "host=127.0.0.1 port=5432"
+        run: uv run --with pytest python -m pytest -q -rs tests/test_load_course_restore.py
 
   # ---- Stage 2: deploy on the OCI box — ONLY if build passed, ONLY from THIS branch ----
   #
