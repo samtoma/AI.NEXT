@@ -251,6 +251,31 @@ class RestoreBundleTest(unittest.TestCase):
         self.assertEqual(code, 0, out)
         self.assertRegex(out, r"questions\s+add 0 · change 0 · unchanged \d+ · remove 0")
 
+    def test_the_real_prep3_bank_round_trips(self):
+        # 591 generated questions and 103 catalogue entries, whose maps stamp the book's own
+        # options: exported with a record, knocked about, restored, and exported again unchanged.
+        d = Path(tempfile.mkdtemp(prefix="prep3_export_", dir=self.g["tmp"]))
+        code, text = run_main("export_generated_content",
+                              ["--course", PREP3, "--out-dir", str(d), "--prior", str(GEN),
+                               "--dsn", self.db.dsn], self.db.dsn)
+        self.assertEqual(code, 0, text)
+        for f in FILES:
+            self.assertTrue(filecmp.cmp(d / f, GEN / f, shallow=False), f"{f}: the committed bank drifted")
+        before = students(self.db)
+        self.db.q("""UPDATE questions SET status = 'review', reviewed_by = NULL
+                      WHERE source = 'variant' AND lo_id IN
+                            (SELECT node_id FROM node_subject WHERE course_id = %s)""", (PREP3,))
+        self.db.q("""UPDATE questions SET choices = (SELECT jsonb_agg(c - 'misconception_id')
+                                                      FROM jsonb_array_elements(choices) c)
+                      WHERE source = 'seed' AND question_type = 'mcq' AND jsonb_typeof(choices) = 'array'
+                        AND lo_id LIKE 'lo:u1-%%'""")
+        code, out = restore(self.db.dsn, "--course", PREP3, "--dir", str(d))
+        self.assertEqual(code, 0, out)
+        self.assertRegex(out, r"book options re-stamped by the catalogue: [1-9]\d* question")
+        self.assertEqual(students(self.db), before)
+        code, out = restore(self.db.dsn, "--course", PREP3, "--dir", str(d), "--verify-only")
+        self.assertEqual(code, 0, out)
+
     def test_a_dry_run_writes_nothing(self):
         self.damage()
         before = self.db.one(CONTENT)
