@@ -121,6 +121,21 @@ loader_run() {
     --entrypoint python loader "$@"
 }
 
+# loader_run_mounted <host-dir> <container-dir> <database> <python args…>
+# loader_run, plus ONE extra directory mounted READ-ONLY — the restore's staged
+# export (content only, never student data). Everything else is loader_run's.
+loader_run_mounted() {
+  local host="$1" inside="$2" db="$3"; shift 3
+  [[ "$db" =~ ^[a-z0-9_]+$ ]] || die "internal: bad database name '$db'"
+  [ -d "$host" ] || die "internal: no directory $host to mount"
+  [[ "$inside" =~ ^/[a-z]+$ ]] || die "internal: bad mount point '$inside'"
+  dc --profile tools run --rm -T --no-deps \
+    -v "$host:$inside:ro" \
+    -e AINEXT_ENVIRONMENT=mvp1 \
+    -e AINEXT_DB_DSN="host=db port=5432 dbname=$db user=ainext_maint" \
+    --entrypoint python loader "$@"
+}
+
 # ---- backups -------------------------------------------------------------------
 # Custom format (pg_dump -Fc): restorable over a populated database with
 # --clean --if-exists --single-transaction, which is what makes the rollback
@@ -213,8 +228,10 @@ ops_health() {  # <port> <what>
 #   backup may predate one) → start both → health.
 # Everything students did after the backup was taken is LOST by a restore. The
 # pre-restore backup keeps it recoverable by hand.
+# [undo-command]: what the "undo" line should run with the pre-restore backup
+# (load-course.sh passes its own `rollback`; the default is refresh-content's).
 ops_restore() {
-  local f="$1" pre
+  local f="$1" pre undo="${2:-bash $OPS_HERE/refresh-content.sh restore}"
   [ -f "$f" ] || die "no such backup: $f"
   case "$f" in *.dump) ;; *) die "$f is not a .dump backup taken by these scripts";; esac
   say "Checking $f before using it"
@@ -238,5 +255,5 @@ ops_restore() {
   dc start app console >/dev/null 2>&1 || dc up -d --no-deps app console >/dev/null 2>&1 || true
   ops_health "$OPS_APP_PORT" "student app" app || true
   ops_health "$OPS_CONSOLE_PORT" "console" console || true
-  info "undo this restore with:  bash $OPS_HERE/refresh-content.sh restore $pre"
+  info "undo this restore with:  $undo $pre"
 }
