@@ -61,3 +61,5 @@ Consistency-review decisions (2026-09-27), one at a time:
 29. Figures for the other 13 chapters → "Native only, wait": decision 26 stands strictly — no book images; a question
     whose figure needs a native type that doesn't exist yet stays held until that type is built (chapters may launch
     with large held sets).
+30. Step-level working checker → "Yes, add it (Recommended)": one checking agent per book solution + a free numeric
+    pre-check; flagged steps go to G2, never silently corrected; ≈$0.03–0.05/solution; re-run on Chapter 8 too.
