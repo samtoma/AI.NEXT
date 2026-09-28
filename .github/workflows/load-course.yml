@@ -181,9 +181,9 @@ jobs:
         if: ${{ inputs.mode != 'rollback' }}
         run: |
           set -euo pipefail
-          python3 - "$COURSE" <<'PY'
+          python3 - "$COURSE" "$MODE" <<'PY'
           import json, pathlib, sys
-          course = sys.argv[1]
+          course, mode = sys.argv[1], sys.argv[2]
           hits = []
           for p in sorted(pathlib.Path("services/extraction/books").glob("*.json")):
               b = json.loads(p.read_text())
@@ -194,9 +194,13 @@ jobs:
                     "A course is loadable only once its book config is committed.")
               sys.exit(1)
           p, b = hits[0]
-          if not b.get("parity"):
+          if not b.get("parity") and not mode.startswith("restore"):
               print(f"::error::{p} has no parity constant: the drift guard could not check the course after the load (FR-4207).")
               sys.exit(1)
+          if not b.get("parity"):
+              # a restore replays generated content only; the book's counts, which the constant
+              # guards, are not in an export and cannot move
+              print(f"::warning::{p} has no parity constant: the restore's post-flight cannot drift-check this course (the other courses it still checks).")
           print(f"book config: {p} ({b.get('title')}), curriculum {b.get('curriculum')}")
           PY
 
@@ -258,10 +262,10 @@ jobs:
       # — it never sees the box's disk. Read-only (an `ls`); nothing here stops
       # a container or writes to the database. If this step fails, nothing
       # past it runs (`needs`-style ordering by default), so a bad or
-      # mismatched name never reaches `load-course.sh restore`.
-      - name: Resolve the backup (restore mode)
+      # mismatched name never reaches `load-course.sh rollback`.
+      - name: Resolve the backup (rollback mode)
         id: resolve
-        if: ${{ inputs.mode == 'restore' }}
+        if: ${{ inputs.mode == 'rollback' }}
         run: |
           set -euo pipefail
           SLUG="$(printf '%s' "${COURSE#course:}" | tr -c 'a-z0-9-' '-')"
