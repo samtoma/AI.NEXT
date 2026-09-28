@@ -152,7 +152,7 @@ if book is None:
     sys.exit(0)
 out("BOOK", book.book); out("TITLE", book.title); out("CURRICULUM", book.curriculum)
 try:
-    # where this course's export lives (restore reads it from git at a ref)
+    # where the export of this course lives (restore reads it from git at a ref)
     import export_generated_content as egc
     rel = egc.out_dir_for(course).relative_to(bc.REPO_ROOT).as_posix()
     out("EXPORT_DIR", rel if SAFE.match(rel) else "")
