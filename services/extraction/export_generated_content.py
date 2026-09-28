@@ -349,6 +349,20 @@ def export_record(course: str, book: str, fingerprint: dict, texts: dict[str, st
     }
 
 
+def build_bundles(cur, los: list[str] | None, prior) -> dict[str, dict]:
+    """The three bundles for `los` (None: the whole database), each keeping the header, kind,
+    aliases and order of `prior(name)`'s file. Raises CatalogueDrift. Also the restore's
+    readback (restore_course_bundle.py): a replayed export must export to itself."""
+    mc_bundle, _gone = misconception_bundle(cur, GENERATOR, los, prior("misconceptions.json"))
+    return {
+        "generated-questions.json": question_bundle(cur, False, GENERATOR, los,
+                                                    prior("generated-questions.json")),
+        "widget-questions.json": question_bundle(cur, True, GENERATOR, los,
+                                                 prior("widget-questions.json")),
+        "misconceptions.json": mc_bundle,
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -385,23 +399,32 @@ def main(argv: list[str] | None = None) -> int:
                 return 2
         los = course_los(cur, args.course)
         try:
-            mc_bundle, gone = misconception_bundle(cur, GENERATOR, los,
-                                                   prior("misconceptions.json"))
+            bundles = build_bundles(cur, los, prior)
         except CatalogueDrift as exc:
             print(f"REFUSING: {exc}", file=sys.stderr)
             return 1
-        bundles = {
-            "generated-questions.json": question_bundle(cur, False, GENERATOR, los,
-                                                        prior("generated-questions.json")),
-            "widget-questions.json": question_bundle(cur, True, GENERATOR, los,
-                                                     prior("widget-questions.json")),
-            "misconceptions.json": mc_bundle,
-        }
+        texts = {name: dump(bundles[name]) for name in FILES}
+        if args.course:
+            book = book_config.book_for_course(args.course)
+            texts[RECORD] = dump(export_record(args.course, book.book if book else None,
+                                               course_fingerprint(cur, args.course), texts))
 
     changed = []
-    for name in FILES:
+    for name in texts:
+        if name == RECORD:
+            path = out_dir / name
+            same = path.exists() and path.read_text() == texts[name]
+            if not same:
+                changed.append(name)
+            if args.check:
+                print(f"{'unchanged' if same else 'WOULD CHANGE'} {path} — the export record")
+            else:
+                path.write_text(texts[name])
+                print(f"wrote {path} — the export record (course, book, source fingerprint, "
+                      "each bundle's sha256)" + ("" if not same else " (unchanged)"))
+            continue
         bundle, path = bundles[name], out_dir / name
-        text = dump(bundle)
+        text = texts[name]
         same = path.exists() and path.read_text() == text
         n = len(bundle.get("questions") or bundle.get("misconceptions") or [])
         reviewed = sum(1 for q in (bundle.get("questions") or []) if q.get("reviewed_by"))
@@ -415,7 +438,7 @@ def main(argv: list[str] | None = None) -> int:
         path.write_text(text)
         print(f"wrote {path} — {n} record(s){extra}" + ("" if not same else " (unchanged)"))
     scope = args.course or "the whole database"
-    print(f"exported {scope}: {len(changed)} of {len(FILES)} file(s) "
+    print(f"exported {scope}: {len(changed)} of {len(texts)} file(s) "
           f"{'would change' if args.check else 'changed'}")
     return 1 if args.check and changed else 0
 
