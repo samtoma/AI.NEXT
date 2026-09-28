@@ -75,6 +75,38 @@ jobs:
 **What it never does**: touch another course's subtree, write a visibility rule, run in a deploy, or
 run `--course` on a course that is present.
 
+## The `restore` modes and `rollback` (decision 29, Samuel's answer 27; T430)
+
+*Added 2026-09-28.* The workflow's `mode` choice is
+`[dry-run, rehearse, load, restore-dry-run, restore-rehearse, restore, rollback]`, with two more
+inputs: `export_ref` (restore modes only; a tag or commit, default the deployed commit) and `backup`
+(rollback only).
+
+- **`restore-dry-run` / `restore-rehearse` / `restore`** —
+  `deploy/load-course.sh <course-id> <mode> [ref]`. Replays ONE loaded course's committed export — the
+  three bundles `export_generated_content.py --course` writes, plus the `export-record.json` it now
+  writes beside them (course, book, source-document fingerprint, sha256 of each file) — read from the
+  box's checkout at `ref` with `git show` (never moved), through
+  `services/extraction/restore_course_bundle.py` as `ainext_maint`. Every row keeps its own status and
+  review stamp. `restore` needs the course id retyped (`confirm`; `CONFIRM` again on the box), takes the
+  load mode's verified backup first, and prints the whole-database rollback line.
+  - **Refuses (exit 2), nothing written**, on provenance: no record; a file whose sha256 is not its
+    record's; another course or book; the course absent, or loaded from a different source document; a
+    bundle id the database holds as another kind of row or on another objective; a catalogue map whose
+    book option no longer exists; a book carrying scripture.
+  - **Refuses (exit 2), nothing written**, on students (FR-4210): any content row the replay would
+    remove, and any question whose objective, type, stem, choices or answer key it would change, that a
+    row of any student table names (every text and JSON column) — listed with counts, never a student.
+  - **One REPEATABLE READ transaction** that commits only if every student table is identical before and
+    after its writes and the course re-exports to exactly the restored bytes; else rolled back (exit 5).
+  - Post-flight, read-only: the read-back again, the drift guard for every course (a guard already red
+    before the restore is reported, not blamed on it), every other course byte-identical, and (rehearse)
+    every student table byte-identical. Exit 4 if it fails after the commit.
+- **`rollback`** — `deploy/load-course.sh rollback <file.dump>`: the mode called `restore` until
+  2026-09-27, behaviour unchanged. The WHOLE database back to a verified backup, which **undoes every
+  student's work since that backup**; the emergency lever. `load-course.sh restore <file>` (the old
+  spelling) is refused with the new command.
+
 ## `refresh-content` on noor (FR-4210, privacy review F15)
 
 `refresh-content.yml` and `deploy/refresh-content.sh` gain a `stack` input (`mvp1`, the default, or
