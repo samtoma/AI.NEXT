@@ -71,3 +71,5 @@ Consistency-review decisions (2026-09-27), one at a time:
 33. What counts as "reviewed" → "Only human stamps count (Recommended)": a question is reviewed only when a human
     signed it; AI-only checks show in the console as "AI-checked, awaiting human"; nothing changes for students;
     applies to Prep 3 too with the next release.
+34. A decimal comma typed in a Grade 10 numeric answer ("7,21") → "Accept it as a decimal (Recommended)": read as 7.21
+    and marked normally when unambiguous (a clear pair in a coordinates answer stays a pair); Prep 3 marking unchanged.
