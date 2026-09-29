@@ -1046,6 +1046,16 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   rollback), because deploys do not reload the curriculum graph. The label reaches the tutor's
   prompts; Samuel approved that on 2026-09-25 ("OK") as an exception to ADR-0020's prompt hold for
   this one string only, recorded in ADR-0020.
+- **FR-3219** **[ADDED 2026-09-29 — requested 2026-09-29, not yet released]**: The student build's
+  header MUST offer exactly two tabs to a signed-in student: "Study" (`/student`) and "Skills Map"
+  (`/spine`). The map's heading and every button that leads to it MUST call it "Skills Map".
+  "Where you stand" is off the header for now; `/dashboard` still resolves and stays linked from the
+  outstanding-account screen. This partly reverses #12: that issue removed an internal tool called
+  "Evidence Walk", and the page behind the returning tab is the student's own map, rebuilt since.
+- **FR-3220** **[ADDED 2026-09-29 — requested 2026-09-29, not yet released]**: On the student build,
+  `/` MUST redirect a signed-in student to `/student` and MUST NOT render the investor-preview ledger
+  (corpus counts, "AI turns logged", demo cards) or fetch its stats. A signed-out visitor MUST keep
+  the welcome page with "Start with Noor" and "Sign in". The frozen baseline keeps its ledger.
 
 > *Written with their code, in the same pass. FR-3217's order is the one v0.9.1 shipped — the text of
 > `MODULE_ORDER` is pinned by a test, so the progression's sequence does not move; what changed is

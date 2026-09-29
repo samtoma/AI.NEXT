@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { STUDENT_NAV_LINKS } from "@/lib/student-nav";
 
 /**
  * The investor-preview nav. "Gallery" and "Pipeline" are no longer here
@@ -17,8 +18,9 @@ const LINKS = [
 ];
 
 /**
- * On the comparison build the student is the audience, and the nav is the two
- * surfaces she actually uses.
+ * On the comparison build the student is the audience, and the nav is the
+ * surfaces she actually uses — the list and its reasons live in
+ * `lib/student-nav.ts` (FR-3219), where a test can read them.
  *
  * It used to carry "Evidence Walk", "Content" and "Pipeline" beside "Study" —
  * a graph explorer, a content review queue and an extraction pipeline, offered
@@ -29,10 +31,7 @@ const LINKS = [
  * graph →" and #15 asks for more of it. What was wrong was the tab, and its
  * investor-facing name.
  */
-const MVP1_LINKS = [
-  { href: "/student", label: "Study" },
-  { href: "/dashboard", label: "Where you stand" },
-];
+const MVP1_LINKS = STUDENT_NAV_LINKS;
 
 /**
  * The internal links are GONE from this build, not hidden in it (ADR-0014).

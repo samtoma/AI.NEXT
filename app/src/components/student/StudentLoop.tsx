@@ -544,7 +544,7 @@ export function StudentLoop({
 
           <div className="anim-rise flex flex-wrap gap-3" style={{ animationDelay: "250ms" }}>
             <Link href="/spine" className={cx(BUTTON_PRIMARY, "flex-1")}>
-              See it on the graph →
+              See it on your Skills Map →
             </Link>
             <button onClick={() => window.location.reload()} className={BUTTON_SECONDARY}>
               New plan

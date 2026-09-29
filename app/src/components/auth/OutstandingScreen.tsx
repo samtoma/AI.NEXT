@@ -65,7 +65,7 @@ export function OutstandingScreen({ studentName }: { studentName: string }) {
               href="/spine"
               className="play-pressable flex min-h-[52px] items-center rounded-[20px] border-[3px] border-ink bg-card px-4 font-display text-[1rem] font-bold text-ink sticker-shadow-sm"
             >
-              Have a look at the map
+              Have a look at your Skills Map
             </Link>
           </li>
           <li>
