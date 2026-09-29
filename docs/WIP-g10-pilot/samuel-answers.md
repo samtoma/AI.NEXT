@@ -63,3 +63,6 @@ Consistency-review decisions (2026-09-27), one at a time:
     with large held sets).
 30. Step-level working checker → "Yes, add it (Recommended)": one checking agent per book solution + a free numeric
     pre-check; flagged steps go to G2, never silently corrected; ≈$0.03–0.05/solution; re-run on Chapter 8 too.
+31. Live Prep 3 fixes (14 dead widget links; angle widget opening on its own answer) → "Ship as a small hotfix
+    (Recommended)": split out of the Grade 10 branch into a small release off main (like v0.9.3) — data migration for
+    the widget links + the opening fix, CI, deploy only on Samuel's explicit go.
