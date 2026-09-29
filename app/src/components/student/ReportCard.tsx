@@ -305,7 +305,7 @@ export function ReportCard({
             52px floor on all three doors; only the fill says which one is
             the primary. Amber on the graph — the ONE amber on this screen. */}
         <Link href="/spine" className={cx(BUTTON_PRIMARY, "flex-1 py-3")}>
-          {rtl ? "شوفها على خريطة المهارات ←" : "See it on your Skills Map →"}
+          {rtl ? "شوف تقدمك ←" : "See your progress →"}
         </Link>
         {/* The third door (#29). Two options after a lesson meant a student
             who had just been shown her gaps could look at the graph or leave

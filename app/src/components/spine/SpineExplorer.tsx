@@ -47,7 +47,7 @@ const segment = (on: boolean) =>
   );
 
 /**
- * The Skills Map (FR-3219) — the student's mastery, subject-wide.
+ * Your Progress (FR-3219) — the student's mastery, subject-wide.
  *
  * This screen used to be "The Evidence Walk": the same tree and the same
  * chat, wrapped in an internal tool. What came off, and why (Noor Play skill
@@ -304,7 +304,7 @@ export function SpineExplorer({ data }: { data: SpineData }) {
               the 1.1 this carried makes a wrapped title collide) at the
               handoff's title step, 1.5rem. */}
           <h1 className={cx(HEADING, "mt-1 text-[1.5rem]")}>
-            Skills Map
+            Your Progress
           </h1>
         </div>
 

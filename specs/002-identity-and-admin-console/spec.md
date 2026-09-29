@@ -1047,8 +1047,8 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   prompts; Samuel approved that on 2026-09-25 ("OK") as an exception to ADR-0020's prompt hold for
   this one string only, recorded in ADR-0020.
 - **FR-3219** **[ADDED 2026-09-29 — requested 2026-09-29, not yet released]**: The student build's
-  header MUST offer exactly two tabs to a signed-in student: "Study" (`/student`) and "Skills Map"
-  (`/spine`). The map's heading and every button that leads to it MUST call it "Skills Map".
+  header MUST offer exactly two tabs to a signed-in student: "Study" (`/student`) and "Your Progress"
+  (`/spine`). The map's heading and title MUST read "Your Progress" and every button that leads to it "See your progress".
   "Where you stand" is off the header for now; `/dashboard` still resolves and stays linked from the
   outstanding-account screen. This partly reverses #12: that issue removed an internal tool called
   "Evidence Walk", and the page behind the returning tab is the student's own map, rebuilt since.
