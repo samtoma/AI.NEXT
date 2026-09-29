@@ -66,3 +66,5 @@ Consistency-review decisions (2026-09-27), one at a time:
 31. Live Prep 3 fixes (14 dead widget links; angle widget opening on its own answer) → "Ship as a small hotfix
     (Recommended)": split out of the Grade 10 branch into a small release off main (like v0.9.3) — data migration for
     the widget links + the opening fix, CI, deploy only on Samuel's explicit go.
+32. Misconception tags on "true but less precise" options → "Remove those tags (Recommended)": such an option is never
+    a mistake; the pipeline refuses misconception tags on it and S5 is told which options they are.
