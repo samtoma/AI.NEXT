@@ -68,3 +68,6 @@ Consistency-review decisions (2026-09-27), one at a time:
     the widget links + the opening fix, CI, deploy only on Samuel's explicit go.
 32. Misconception tags on "true but less precise" options → "Remove those tags (Recommended)": such an option is never
     a mistake; the pipeline refuses misconception tags on it and S5 is told which options they are.
+33. What counts as "reviewed" → "Only human stamps count (Recommended)": a question is reviewed only when a human
+    signed it; AI-only checks show in the console as "AI-checked, awaiting human"; nothing changes for students;
+    applies to Prep 3 too with the next release.
