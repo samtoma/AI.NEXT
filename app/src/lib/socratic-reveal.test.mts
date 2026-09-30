@@ -114,7 +114,7 @@ test("probing on: asking to be told the answer does not get it before REVEALED",
     assert.ok(ask, `gender=${g}: the ask rule is missing`);
     assert.equal(
       ask,
-      `  · If ${a.they} explicitly ask${a.s} to just be told the answer / give${a.s} up before the "SOCRATIC PROBE — REVEALED" event for this LO (that is, before ${a.their} second attempt), do NOT reveal, hint at, or confirm the answer — warmly insist on an attempt at your guiding question first ("no worries — even a guess helps, take your best shot"). Once REVEALED has fired, answer the ask by walking the material's own steps, same as the REVEALED case above.`
+      `  · If ${a.they} explicitly ask${a.s} to just be told the answer / give${a.s} up before the "SOCRATIC PROBE — REVEALED" event for this learning objective (that is, before ${a.their} second attempt), do NOT reveal, hint at, or confirm the answer — warmly insist on an attempt at your guiding question first ("no worries — even a guess helps, take your best shot"). Once REVEALED has fired, answer the ask by walking the material's own steps, same as the REVEALED case above.`
     );
     // the old permission is gone, and so is every mention of the directive
     assert.doesNotMatch(rules, /reveal_answer/, `gender=${g}`);
@@ -136,7 +136,7 @@ test("the confirmation-pending live-event note holds the material until REVEALED
   const core = src("components/chat/ChatCore.tsx");
   assert.ok(
     core.includes(
-      "(do not quote, hint at or assert it until the SOCRATIC PROBE — REVEALED event for this LO — the student's second attempt — even if the student asks you to just say it)"
+      "(do not quote, hint at or assert it until the SOCRATIC PROBE — REVEALED event for this learning objective — the student's second attempt — even if the student asks you to just say it)"
     )
   );
   assert.ok(!core.includes("or explicitly asks you to just say it"), "the old escape hatch is gone");

@@ -997,11 +997,11 @@ export function ChatCore({
             cardRevealUnlocked(wrongCountAfter)
               ? `\nSOCRATIC PROBE — REVEALED — ${q.loId}: that's two attempts without landing it. The card is now showing the student the correct answer and the reference material directly — stop withholding. Walk the student through it PLAINLY, in the material's own steps, in order (never just the final value): ${
                   material ??
-                  "no reviewed material matches this specific error — walk the LO's own definition through to the correct answer instead, still step by step."
+                  "no reviewed material matches this specific error — walk the learning objective's own definition through to the correct answer instead, still step by step."
                 } Once the student seems ready, your next check on ${q.loId} must still be a fresh same-tier question before you can treat it as resolved.`
-              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote, hint at or assert it until the SOCRATIC PROBE — REVEALED event for this LO — the student's second attempt — even if the student asks you to just say it): ${
+              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote, hint at or assert it until the SOCRATIC PROBE — REVEALED event for this learning objective — the student's second attempt — even if the student asks you to just say it): ${
                   material ??
-                  "no reviewed material matches this specific error — reason from the LO's own definition instead, still without stating the answer outright."
+                  "no reviewed material matches this specific error — reason from the learning objective's own definition instead, still without stating the answer outright."
                 } Ask ONE short guiding question toward it now.`;
         } else if (wasPending?.loId === q.loId) {
           note += `\n✓ confirmation received for ${q.loId} — resolved, safe to move on.`;
