@@ -78,6 +78,10 @@ const STUBS = {
       // address forms with probing off and compares them, whole, against the
       // pre-toggle capture (ADR-0021). Same import chain; no principal.
       "probing-prompts.test.mts",
+      // renders `askSystemPrompt` for the Your Progress chat and the in-lesson
+      // question chat (2026-09-30: no quizzing, addressed to the student).
+      // `lib/ask.ts` -> `auth/principal.ts`; no principal.
+      "ask-progress-chat.test.mts",
       // drives the REAL `currentSession` (lib/sessions.ts) against a fake
       // PoolClient to prove the per-lesson snapshot is resolved once, stored,
       // and handed back on reuse (ADR-0021). Reaches `lib/student-context.ts`

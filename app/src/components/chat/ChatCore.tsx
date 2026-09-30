@@ -188,6 +188,10 @@ export interface ChatCoreProps {
   leading?: React.ReactNode;
   /** auto-send a hidden "Continue." turn after each widget/question result */
   autoContinue?: boolean;
+  /** false: a {{show_question}} directive renders nothing. The Your Progress
+   *  chat explains and plans, it never quizzes — its prompt says so, and this
+   *  holds even if the model emits one anyway. */
+  questionCards?: boolean;
   /**
    * Whiteboard interception (pure predicate, safe to call during render):
    * true ⇒ the surface owns this card on its board and the transcript renders
@@ -267,6 +271,7 @@ export function ChatCore({
   renderPassage,
   leading,
   autoContinue,
+  questionCards = true,
   interceptWidget,
   onDirective,
   handleRef,
@@ -1137,6 +1142,7 @@ export function ChatCore({
           <MessageRow
             key={i}
             msg={m}
+            questionCards={questionCards}
             debug={debug}
             arabicUi={arabicUi}
             writing={lessonSurface}
@@ -1281,6 +1287,7 @@ export function ChatCore({
  */
 const MessageRow = memo(function MessageRow({
   msg: m,
+  questionCards,
   debug,
   arabicUi,
   writing,
@@ -1304,6 +1311,8 @@ const MessageRow = memo(function MessageRow({
   onSwitchSubject,
 }: {
   msg: ChatMsg;
+  /** see ChatCoreProps.questionCards */
+  questionCards: boolean;
   debug: boolean;
   /** RTL/Arabic-script subject — forwarded to question-card/citation strings */
   arabicUi: boolean;
@@ -1429,6 +1438,7 @@ const MessageRow = memo(function MessageRow({
               ) : null;
             },
             question: (b, i) => {
+              if (!questionCards) return null;
               if (interceptWidget?.("question", { qid: b.qid })) {
                 const qid = b.qid;
                 return (
