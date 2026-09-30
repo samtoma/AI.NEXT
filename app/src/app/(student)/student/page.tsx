@@ -219,7 +219,7 @@ export default async function StudentPage({
       : null;
 
   // Terminal state — this is the course's last lesson and every lesson in the
-  // course passes the gate (`courseComplete`, lib/progression.ts). NOT "no
+  // course is mastered (`courseComplete`, lib/progression.ts — the strict reading). NOT "no
   // later lesson is ready": that is also true of a student parked mid-course.
   const courseComplete = await isCourseComplete(
     studentId,
@@ -234,7 +234,7 @@ export default async function StudentPage({
   const weakestSubskill = deriveWeakestSubskill(lesson.los);
   // Why a clean review can leave a lesson unfinished: review mode scripts
   // its questions from the first three objectives only, so a fourth never
-  // gets an attempt and the gate cannot cross. Naming it beats leaving the
+  // gets an attempt and the gate (every objective attempted) cannot cross. Naming it beats leaving the
   // student to infer it from a card that did not move.
   const untried = untriedObjectives(lesson.los);
   const recommendation = deriveRecommendation(masteryStage);

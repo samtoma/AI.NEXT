@@ -213,3 +213,23 @@ first lesson, both on `/student` and when an attempt advances the pointer.
 Before this, the page showed the first lesson but the advance never matched
 it, so the student could not move again.
 
+## Amendment 2026-09-30 — the gate is the ramp's second stage
+
+**Status**: **Proposed** — Tamer Deif, 2026-09-30, on `tamer-mvp-fixes`. Not accepted until Samuel accepts it. Implemented behind one function, so it is one revert to undo.
+
+**Why.** The gate above (every objective at 0.75) was reached by almost no one. A tester finished lesson 1-1 with a 95% report, saw the ramp stop on the third bar, and the "Revisit" row never appeared on the live site. The cause is structural, not a fault in mastery updates: "Quick review" scripts its questions from the first three objectives only (`lib/lesson.ts`, `data.los.slice(0, 3)`), 1-1 has four, and the strict gate needs all four at 0.75. A student can do everything right and the saved place never moves.
+
+**Decision.** A lesson is *finished* — it moves the pointer and earns the "Revisit" row — when **both**:
+
+1. **every objective has been attempted at least once** (`mastery > 0`; an attempted objective never reads 0, because every BKT update clamps to `MIN_SCORE`), and
+2. **the lesson's average reaches "Getting there"**, the ramp's second stage (`GATE_MIN_STAGE = 2`, 0.35 and above) — the same average the card's ramp shows.
+
+The first condition is the floor under the average. Without it, two well-answered objectives out of four average about 0.46 and would call half a lesson done. With one correct answer taking an objective to about 0.69 and two to about 0.92, the second condition needs roughly half the lesson answered well.
+
+**What stays strict.** The course-complete banner ("You've been through every topic here") still requires every objective in every lesson at 0.75 (`lessonMastered`, used by `courseComplete`). The pointer moving on is a lower bar than telling a student they have finished the course.
+
+**What this gives up, knowingly.** The Context above rejected averaging as a gate because 0.98 / 0.98 / 0.29 reads as mastered. This amendment accepts that for the pointer: a weak but attempted objective no longer holds a lesson back. Two things limit the harm: the attempted floor, and `PREREQ_GATE`, which still guards entry to later lessons per objective, so a hole a later lesson builds on parks the pointer rather than being walked past. Mastery is also reversible (two wrong answers take a 0.98 objective to about 0.52), so a lesson sitting near 0.35 can lose its "Revisit" row on a later render; the pointer itself never moves back.
+
+**Not fixed here.** "Quick review" still asks the first three objectives only, so on a four-objective lesson it can never supply the fourth attempt. The card's "hasn't come up yet" line names what is missing and points at the walk-through. Widening review to every objective changes the review prompt, which this ADR holds, so it needs its own approval.
+
+**Affects.** `app/src/lib/progression.ts` (`lessonGatePassed`, new `lessonMastered`, `courseComplete`), `app/src/lib/progression.test.mts`; FR-3202 and FR-3203 amended and FR-3221 added in spec 002.

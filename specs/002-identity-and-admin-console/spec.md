@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
+**Last amended**: 2026-09-30 (student header, home page and the lesson gate — `tamer-mvp-fixes`, **not released**) — **FR-3219, FR-3220, FR-3221** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is a proposed amendment to ADR-0020 awaiting Samuel. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
 review) — **FR-3217, FR-3218** added: every reader of curriculum order uses the one catalogue order
 (`MODULE_ORDER`), a list of several subjects splits by subject first (Samuel, 2026-09-25), guarded by a
 source test, the tutor's Ask-the-Spine context included (Samuel lifted ADR-0020's hold for that ordering
@@ -977,14 +977,15 @@ password sign-in.
 
 - **FR-3201**: Each student MUST have their own saved place in each course, separate per course, and
   no student's place may be read or changed by any other student's request.
-- **FR-3202**: A student's place MUST move on when **every** objective in the lesson they are on
-  reaches the mastery gate, to the next lesson in course order whose prerequisites that student has
-  met — never onto a lesson whose prerequisites are not met; unready lessons are skipped. *(Reworded
-  2026-09-24, fix pass: "never past a lesson they are not ready for" said the opposite of what the
-  code does.)*
+- **FR-3202**: A student's place MUST move on when the lesson they are on is **finished** (FR-3221),
+  to the next lesson in course order whose prerequisites that student has met — never onto a lesson
+  whose prerequisites are not met; unready lessons are skipped. *(Reworded 2026-09-24, fix pass:
+  "never past a lesson they are not ready for" said the opposite of what the code does. Amended
+  2026-09-30: "every objective reaches the mastery gate" became "finished", FR-3221.)*
 - **FR-3203**: A student's place MUST never move backwards. When nothing later is ready yet it MUST
   stay where it is, and the course MUST read as complete only when the student is on its last lesson
-  and every lesson has passed the gate.
+  and every lesson is **mastered** — every objective at the mastered band, the strict reading, not the
+  looser "finished" of FR-3221. *(Amended 2026-09-30: "passed the gate" became "mastered".)*
 - **FR-3204**: A saved place that no longer names a lesson the student can see MUST read as the
   course's first lesson, and advance from there by the same rule.
 - **FR-3205**: No student's place may be guessed from history: everyone MUST start on a course's
@@ -1056,6 +1057,16 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   `/` MUST redirect a signed-in student to `/student` and MUST NOT render the investor-preview ledger
   (corpus counts, "AI turns logged", demo cards) or fetch its stats. A signed-out visitor MUST keep
   the welcome page with "Start with Noor" and "Sign in". The frozen baseline keeps its ledger.
+- **FR-3221** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released; proposed amendment to
+  ADR-0020, awaiting Samuel]**: A lesson counts as **finished** — moving the saved place on (FR-3202)
+  and earning the collapsed "Revisit" row — when **every** one of its objectives has been attempted at
+  least once **and** the lesson's average reaches the ramp's second stage, "Getting there" (0.35 or
+  above), the same average the card's ramp shows. It MUST NOT count a lesson with an unattempted
+  objective, however high the others are. The strict every-objective-at-0.75 reading MUST remain for
+  the course-complete banner (FR-3203). Not covered: the weakest attempted objective is not checked, and
+  "Quick review" still asks about a lesson's first three objectives only, so a four-objective lesson
+  reaches this only through the walk-through or a further attempt on the fourth — the card names what
+  has not come up yet.
 
 > *Written with their code, in the same pass. FR-3217's order is the one v0.9.1 shipped — the text of
 > `MODULE_ORDER` is pinned by a test, so the progression's sequence does not move; what changed is

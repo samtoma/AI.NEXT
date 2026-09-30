@@ -4,12 +4,14 @@ import {
   untriedObjectives,
   previousCompletedSlug,
   lessonGatePassed,
+  lessonMastered,
   lessonPrereqsMet,
   nextLessonSlug,
   resolvePointer,
   advanceTarget,
   courseComplete,
   MASTERED_GATE,
+  GATE_MIN_STAGE,
   PREREQ_GATE,
   type ProgressionLesson,
 } from "./progression.ts";
@@ -21,6 +23,7 @@ import {
  * @covers FR-3204
  * @covers FR-3205
  * @covers FR-3207
+ * @covers FR-3221
  *
  * (The FR annotations were added 2026-09-24, when spec 002 wrote down what
  * ADR-0020 shipped without a requirement — FR-3201…FR-3207.)
@@ -70,9 +73,66 @@ const allAt = (score: number) =>
 /* The gate                                                          */
 /* ---------------------------------------------------------------- */
 
-// This is the whole reason the gate is `every` and not the average: the ramp
-// the student is looking at DOES average, and would call this mastered.
-test("one weak objective fails the gate even when the others are at ceiling", () => {
+// Amended 2026-09-30 (ADR-0020, "The gate is the ramp's second stage"): a lesson
+// is done when every objective has been attempted AND the average reaches
+// "Getting there" (0.35). The strict every-objective-at-0.75 reading survives
+// as `lessonMastered`, for the whole-course banner only.
+
+// The floor under the average. An untried objective counts as zero in the
+// average, but two well-answered objectives out of four still average 0.46,
+// which is "Getting there" — so the average alone would call half a lesson done.
+test("the gate needs every objective attempted, however high the rest are", () => {
+  const los = [
+    { id: "a", mastery: 0.98 },
+    { id: "b", mastery: 0.98 },
+    { id: "c", mastery: 0 },
+    { id: "d", mastery: 0 },
+  ];
+  const average = los.reduce((s, l) => s + l.mastery, 0) / los.length;
+  assert.ok(average >= 0.35, "fixture must be one the average alone would pass");
+  assert.equal(lessonGatePassed(los), false);
+});
+
+// The case that made the old gate unreachable: "Quick review" asks about the
+// first three objectives only. Three at 0.92 and a fourth never asked stays
+// unfinished; once the fourth has ANY attempt — even a wrong one (0.146) — the
+// lesson passes.
+test("three objectives answered and a fourth never asked is unfinished; one attempt on it finishes the lesson", () => {
+  const three = [0.92, 0.92, 0.92].map((m, i) => ({ id: `lo${i}`, mastery: m }));
+  assert.equal(lessonGatePassed([...three, { id: "lo3", mastery: 0 }]), false);
+  assert.equal(lessonGatePassed([...three, { id: "lo3", mastery: 0.146 }]), true);
+});
+
+test("the average must reach Getting there — the boundary itself counts", () => {
+  assert.equal(GATE_MIN_STAGE, 2, "the gate is the ramp's second stage");
+  const at = (m: number) => [{ id: "a", mastery: m }, { id: "b", mastery: m }];
+  assert.equal(lessonGatePassed(at(0.35)), true);
+  assert.equal(lessonGatePassed(at(0.35 - 1e-9)), false);
+});
+
+// Accepted knowingly (ADR-0020 amendment): the gate no longer checks the
+// weakest objective, so one poor score among attempted ones does not hold a
+// lesson back. Prerequisites still guard entry to later lessons.
+test("one weak but attempted objective no longer fails the gate", () => {
+  const los = [
+    { id: "a", mastery: 0.98 },
+    { id: "b", mastery: 0.98 },
+    { id: "c", mastery: 0.1 },
+  ];
+  assert.equal(lessonGatePassed(los), true);
+  assert.equal(lessonMastered(los), false, "but it is not mastered");
+});
+
+// An empty lesson passing the gate would advance a student past content that
+// does not exist yet — a re-extraction artefact must not look like mastery.
+test("a lesson with no objectives never passes the gate, nor counts as mastered", () => {
+  assert.equal(lessonGatePassed([]), false);
+  assert.equal(lessonMastered([]), false);
+});
+
+// This is the whole reason the strict reading is kept for the banner: the ramp
+// averages, and would call this mastered.
+test("one weak objective fails lessonMastered even when the others are at ceiling", () => {
   const los = [
     { id: "a", mastery: 0.98 },
     { id: "b", mastery: 0.98 },
@@ -80,25 +140,12 @@ test("one weak objective fails the gate even when the others are at ceiling", ()
   ];
   const average = los.reduce((s, l) => s + l.mastery, 0) / los.length;
   assert.ok(average >= MASTERED_GATE, "fixture must be one the average passes");
-  assert.equal(lessonGatePassed(los), false);
+  assert.equal(lessonMastered(los), false);
 });
 
-test("the gate passes only when every objective is at or above it", () => {
-  assert.equal(
-    lessonGatePassed([{ id: "a", mastery: MASTERED_GATE }]),
-    true,
-    "the boundary itself counts as passing"
-  );
-  assert.equal(
-    lessonGatePassed([{ id: "a", mastery: MASTERED_GATE - 1e-9 }]),
-    false
-  );
-});
-
-// An empty lesson passing the gate would advance a student past content that
-// does not exist yet — a re-extraction artefact must not look like mastery.
-test("a lesson with no objectives never passes the gate", () => {
-  assert.equal(lessonGatePassed([]), false);
+test("lessonMastered passes only when every objective is at or above 0.75", () => {
+  assert.equal(lessonMastered([{ id: "a", mastery: MASTERED_GATE }]), true);
+  assert.equal(lessonMastered([{ id: "a", mastery: MASTERED_GATE - 1e-9 }]), false);
 });
 
 /* ---------------------------------------------------------------- */
@@ -242,8 +289,15 @@ test("only an attempt on the lesson the pointer is on can move it", () => {
 });
 
 test("the pointer does not move until the current lesson passes the gate", () => {
-  const cat = scored({ "u1-1": MASTERED_GATE - 0.01 });
+  // 0.2 is "Just started" — below the gate. (0.74 used to sit here, back when
+  // the gate was 0.75; it now passes.)
+  const cat = scored({ "u1-1": 0.2 });
   assert.equal(advanceTarget(cat, "u1-1", "u1-1", masteryOf(cat), prereqs), null);
+});
+
+test("Getting there is enough to move on, where 0.75 used to be needed", () => {
+  const cat = scored({ "u1-1": 0.5 });
+  assert.equal(advanceTarget(cat, "u1-1", "u1-1", masteryOf(cat), prereqs), "u1-2");
 });
 
 test("passing the gate moves the pointer to the next ready lesson", () => {
@@ -288,7 +342,7 @@ test("the last lesson, with the whole course mastered, is complete", () => {
   assert.equal(courseComplete(cat, "u5-1"), true);
 });
 
-test("the last lesson is not complete until it passes the gate itself", () => {
+test("the last lesson is not complete until it is mastered itself", () => {
   const all = Object.fromEntries(catalog.map((l) => [l.slug, 0.98]));
   const cat = scored({ ...all, "u5-1": MASTERED_GATE - 0.01 });
   assert.equal(courseComplete(cat, "u5-1"), false);
@@ -300,6 +354,15 @@ test("the last lesson is not complete until it passes the gate itself", () => {
 test("reaching the last lesson with an earlier lesson unmastered is not complete", () => {
   const all = Object.fromEntries(catalog.map((l) => [l.slug, 0.98]));
   const cat = scored({ ...all, "u1-3": 0.3 });
+  assert.equal(courseComplete(cat, "u5-1"), false);
+});
+
+// The strict reading on purpose (ADR-0020 amendment): every lesson passing the
+// looser gate moves the pointer along, but the banner says she has been through
+// every topic, so it still needs every objective at 0.75.
+test("a course that only passes the gate is not complete", () => {
+  const cat = scored(Object.fromEntries(catalog.map((l) => [l.slug, 0.5])));
+  assert.ok(cat.every((l) => lessonGatePassed(l.los)));
   assert.equal(courseComplete(cat, "u5-1"), false);
 });
 
@@ -334,7 +397,7 @@ test("nothing is shown at the start of a course", () => {
 // A student mid-way through with nothing yet mastered must not be handed a
 // "finished" row for a lesson they only opened.
 test("an unfinished earlier lesson is not shown as finished", () => {
-  const cat = scored({ "u1-1": 0.5 });
+  const cat = scored({ "u1-1": 0.2 });
   assert.equal(previousCompletedSlug(cat, "u1-2"), null);
 });
 

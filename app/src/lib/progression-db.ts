@@ -199,8 +199,8 @@ export async function advanceIfMastered(
 
 /**
  * Whether the check-in for `slug` shows the terminal state: `slug` is the
- * course's LAST catalogue lesson and every lesson in the course passes the
- * gate (`courseComplete`, lib/progression.ts). Read-side only.
+ * course's LAST catalogue lesson and every lesson in the course
+ * is mastered (`courseComplete`, lib/progression.ts). Read-side only.
  *
  * It no longer asks "is any later lesson ready?" — that is null mid-course
  * too, whenever everything after the current lesson is waiting on a
