@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-30 (student header, home page and the lesson gate — `tamer-mvp-fixes`, **not released**) — **FR-3219, FR-3220, FR-3221, FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is a proposed amendment to ADR-0020 awaiting Samuel. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
+**Last amended**: 2026-09-30 (student header, home page and the lesson gate — `tamer-mvp-fixes`, **not released**) — **FR-2016** and **FR-3219…FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is a proposed amendment to ADR-0020 awaiting Samuel. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
 review) — **FR-3217, FR-3218** added: every reader of curriculum order uses the one catalogue order
 (`MODULE_ORDER`), a list of several subjects splits by subject first (Samuel, 2026-09-25), guarded by a
 source test, the tutor's Ask-the-Spine context included (Samuel lifted ADR-0020's hold for that ordering
@@ -435,6 +435,18 @@ password sign-in.
 
 ### Isolation & authorisation (FR-2101…)
 
+- **FR-2016** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released]**: A signed-in student
+  whose short-lived credential (FR-2008) expires while a page is open MUST NOT lose a request to it:
+  a request refused as signed-out MUST be retried once after one silent renewal. While the page is
+  visible and the student has interacted in the last 15 minutes, the credential MUST be renewed before
+  it expires. Renewals MUST never overlap — within a tab or across tabs — because FR-2008 treats a
+  reused renewal credential as theft and ends every sign-in. An idle page MUST NOT renew on its own, so
+  the server's idle expiry keeps applying. When renewal itself fails, the tutor chat MUST show "You
+  have been signed out — try refreshing this page, or sign in again." in place of its error message,
+  and never an AI-failure message; no other surface shows it (product call, 2026-09-30).
+  *(Found 2026-09-30: after 15 minutes on one lesson page the next message returned 401 and read "AI
+  backend unavailable"; background widget attempts were most likely dropped silently. `proxy.ts`
+  described a client refresh that did not exist.)*
 - **FR-2101**: Per-student isolation MUST be enforced beneath the application, so a read or write of
   student data carrying no student scope returns nothing and changes nothing. A missing scope MUST
   fail closed, and application-level filtering MUST NOT be the only thing between one student's data

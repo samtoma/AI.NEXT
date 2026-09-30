@@ -12,6 +12,7 @@ import { TeX } from "@/components/TeX";
 import { Visual } from "@/components/viz/Visual";
 import { learnHrefForLo } from "@/lib/lesson-slug";
 import type { AsOf } from "./GraphCanvas";
+import { authFetch } from "@/lib/auth/client-session";
 
 const TIER_ORDER: Tier[] = ["basic", "standard", "advanced"];
 
@@ -480,7 +481,7 @@ function VisualsStrip({ loId }: { loId: string }) {
   useEffect(() => {
     let alive = true;
     setVisuals([]);
-    fetch(`/api/visuals?lo=${encodeURIComponent(loId)}`)
+    authFetch(`/api/visuals?lo=${encodeURIComponent(loId)}`)
       .then((r) => (r.ok ? r.json() : { visuals: [] }))
       .then((j: { visuals?: VisualRow[] }) => {
         if (alive) setVisuals(j.visuals ?? []);

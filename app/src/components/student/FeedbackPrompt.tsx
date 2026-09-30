@@ -9,6 +9,7 @@ import {
   STROKE,
   cx,
 } from "@/components/sticker";
+import { authFetch } from "@/lib/auth/client-session";
 
 /**
  * "How did that go?" — the one place the product asks a student about itself
@@ -180,7 +181,7 @@ export function FeedbackPrompt({
     // Any failure — offline, 500, a database that cannot answer — lands in the
     // `catch` and the prompt simply never exists, which is the correct
     // behaviour for the least important element on the screen.
-    fetch(`/api/feedback?moment=${encodeURIComponent(moment)}`, {
+    authFetch(`/api/feedback?moment=${encodeURIComponent(moment)}`, {
       signal: controller.signal,
     })
       .then((r) => (r.ok ? r.json() : { ask: false }))
@@ -198,7 +199,7 @@ export function FeedbackPrompt({
 
   async function post(body: Record<string, unknown>): Promise<boolean> {
     try {
-      const res = await fetch("/api/feedback", {
+      const res = await authFetch("/api/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ moment, ...body }),

@@ -50,6 +50,7 @@ import {
   offsetTopWithin,
   scrollTopFor,
 } from "@/lib/chat-scroll";
+import { SIGNED_OUT_MESSAGE, authFetch } from "@/lib/auth/client-session";
 import { useUploadAttachment } from "./upload-attachment";
 import {
   BUTTON_SECONDARY,
@@ -723,7 +724,9 @@ export function ChatCore({
       track("question_asked", { surface });
 
       try {
-        const res = await fetch("/api/ask", {
+        // `authFetch`: an expired access cookie is renewed and the turn retried
+        // once (FR-2016), instead of surfacing as "AI backend unavailable".
+        const res = await authFetch("/api/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -744,6 +747,13 @@ export function ChatCore({
               .map((m) => ({ role: m.role, text: m.text })),
           }),
         });
+        if (res.status === 401) {
+          // renewal failed too: the student really is signed out, and saying
+          // "try again" would send them round the same loop (FR-2016)
+          cancelReveal();
+          patchLast({ streaming: false, error: true, text: SIGNED_OUT_MESSAGE });
+          return;
+        }
         if (!res.ok || !res.body) throw new Error(`API ${res.status}`);
 
         const reader = res.body.getReader();

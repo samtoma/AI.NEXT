@@ -625,7 +625,7 @@ test("a declared Off un-sticks the client: pending dropped, cards reveal (ADR-00
 
 test("the client never sends a probing flag; it adopts what the server declares", () => {
   const core = code("components/chat/ChatCore.tsx");
-  const askBody = core.slice(core.indexOf('fetch("/api/ask"'), core.indexOf("if (!res.ok || !res.body)"));
+  const askBody = core.slice(core.indexOf('authFetch("/api/ask"'), core.indexOf("if (!res.ok || !res.body)"));
   assert.ok(askBody.length > 0);
   assert.doesNotMatch(askBody, /probing/, "the /api/ask request body must not carry probing");
   assert.match(core, /j\.type === "session"/);

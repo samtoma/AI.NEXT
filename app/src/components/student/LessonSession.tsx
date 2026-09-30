@@ -67,6 +67,7 @@ import {
   STROKE,
   cx,
 } from "@/components/sticker";
+import { authFetch } from "@/lib/auth/client-session";
 
 /**
  * The adaptive lesson surface — same engine, two temperaments.
@@ -581,7 +582,7 @@ export function LessonSession({
       const transcript = msgsRef.current
         .filter((m) => !m.hidden && m.text && !m.streaming)
         .map((m) => ({ role: m.role, text: m.text }));
-      const res = await fetch("/api/understanding", {
+      const res = await authFetch("/api/understanding", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -733,7 +734,7 @@ export function LessonSession({
           // memoised callback for one word of granularity that `sessions.kind`
           // already carries in the first-party store.
           track("retrieval_attempt_submitted", { surface: "lesson_widget" });
-          void fetch("/api/attempts", {
+          void authFetch("/api/attempts", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

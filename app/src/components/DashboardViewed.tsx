@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 
 import { track } from "@/lib/ga";
+import { authFetch } from "@/lib/auth/client-session";
 
 /**
  * Emits `dashboard_viewed` once per mount (PRD §13).
@@ -21,7 +22,7 @@ export function DashboardViewed() {
   useEffect(() => {
     if (sent.current) return;
     sent.current = true;
-    void fetch("/api/analytics", {
+    void authFetch("/api/analytics", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ event: "dashboard_viewed" }),

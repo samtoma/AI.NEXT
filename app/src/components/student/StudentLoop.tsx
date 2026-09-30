@@ -26,6 +26,7 @@ import {
   VERDICT_INK,
   cx,
 } from "@/components/sticker";
+import { authFetch } from "@/lib/auth/client-session";
 
 /**
  * Noor Play anatomy throughout (`components/sticker.ts`): the reason tags are
@@ -133,7 +134,7 @@ export function StudentLoop({
     setError(null);
     track("retrieval_attempt_submitted", { surface: "practice" });
     try {
-      const res = await fetch("/api/attempts", {
+      const res = await authFetch("/api/attempts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

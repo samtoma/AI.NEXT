@@ -46,6 +46,7 @@ import {
   STROKE_SM,
   cx,
 } from "@/components/sticker";
+import { authFetch } from "@/lib/auth/client-session";
 
 /* ---------------- board model ---------------- */
 
@@ -125,7 +126,7 @@ const refCache = new Map<string, Promise<VisualDto | null>>();
 function fetchVisual(id: string): Promise<VisualDto | null> {
   let p = refCache.get(id);
   if (!p) {
-    p = fetch(`/api/visuals?id=${encodeURIComponent(id)}`)
+    p = authFetch(`/api/visuals?id=${encodeURIComponent(id)}`)
       .then(async (res) => {
         if (!res.ok) return null;
         const j = (await res.json()) as { visual?: VisualDto };

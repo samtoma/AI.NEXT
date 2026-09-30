@@ -9,6 +9,7 @@
 
 import { useEffect, useState } from "react";
 import { VizCard } from "./VizCard";
+import { authFetch } from "@/lib/auth/client-session";
 
 interface VisualDto {
   id: string;
@@ -29,7 +30,7 @@ export function VizRefCard({ id }: { id: string }) {
   useEffect(() => {
     let alive = true;
     setState({ s: "loading" });
-    fetch(`/api/visuals?id=${encodeURIComponent(id)}`)
+    authFetch(`/api/visuals?id=${encodeURIComponent(id)}`)
       .then(async (res) => {
         if (!alive) return;
         if (!res.ok) {
