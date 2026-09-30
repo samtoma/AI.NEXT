@@ -120,6 +120,26 @@ export function lessonGatePassed(los: readonly ProgressionLo[]): boolean {
   return masteryStage(average) >= GATE_MIN_STAGE;
 }
 
+/**
+ * Can this attempt have crossed the gate — is it worth the (not cheap) catalogue
+ * read that decides whether the pointer moves?
+ *
+ * Used by /api/attempts. It used to be `isCorrect` alone, which was right while
+ * the gate was "every objective at 0.75": a wrong answer only ever lowers a
+ * score, so only a correct one could newly pass a lesson. The gate now also
+ * needs every objective ATTEMPTED (`lessonGatePassed`), and the FIRST attempt on
+ * an objective satisfies that even when it is wrong — a student whose last
+ * untouched objective got a wrong answer has just met the gate and would sit on
+ * the same lesson until some later correct answer happened to re-check it.
+ *
+ * A wrong answer on an objective that already has a score cannot newly pass:
+ * it lowers one score, and the gate needs the average up and every objective
+ * already attempted.
+ */
+export function attemptCanCrossGate(isCorrect: boolean, hadScore: boolean): boolean {
+  return isCorrect || !hadScore;
+}
+
 /** Every LO at or above `MASTERED_GATE` — the strict reading, kept for the
  *  "whole course" banner, which tells her she has been through every topic.
  *  An empty lesson is never mastered. */

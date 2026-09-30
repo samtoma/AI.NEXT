@@ -1,10 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import {
   untriedObjectives,
   previousCompletedSlug,
   lessonGatePassed,
   lessonMastered,
+  attemptCanCrossGate,
   lessonPrereqsMet,
   nextLessonSlug,
   resolvePointer,
@@ -146,6 +148,23 @@ test("one weak objective fails lessonMastered even when the others are at ceilin
 test("lessonMastered passes only when every objective is at or above 0.75", () => {
   assert.equal(lessonMastered([{ id: "a", mastery: MASTERED_GATE }]), true);
   assert.equal(lessonMastered([{ id: "a", mastery: MASTERED_GATE - 1e-9 }]), false);
+});
+
+// The bug this guards, seen on a real sitting (2026-09-30): both Functions
+// objectives attempted, the last one answered WRONG, average 0.56 — the gate
+// met — and the pointer stayed put because the advance was only checked after a
+// correct answer.
+test("a wrong first attempt on an objective can cross the gate; a wrong repeat cannot", () => {
+  assert.equal(attemptCanCrossGate(true, true), true, "a correct answer always can");
+  assert.equal(attemptCanCrossGate(true, false), true);
+  assert.equal(attemptCanCrossGate(false, false), true, "the first attempt satisfies the attempted floor");
+  assert.equal(attemptCanCrossGate(false, true), false, "a wrong repeat only lowers a score");
+});
+
+test("the attempts route asks attemptCanCrossGate, not isCorrect alone", () => {
+  const src = readFileSync(new URL("../app/api/attempts/route.ts", import.meta.url), "utf8");
+  assert.match(src, /attemptCanCrossGate\(isCorrect, row !== null\)/);
+  assert.doesNotMatch(src, /if \(isCorrect\) \{\s*await client\.query\("SAVEPOINT lesson_progress"\)/);
 });
 
 /* ---------------------------------------------------------------- */

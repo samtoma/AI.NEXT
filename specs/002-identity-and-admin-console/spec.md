@@ -1067,6 +1067,10 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   "Quick review" still asks about a lesson's first three objectives only, so a four-objective lesson
   reaches this only through the walk-through or a further attempt on the fourth — the card names what
   has not come up yet.
+  The saved place MUST be re-checked after a correct answer **and after the first attempt on an
+  objective**, because that first attempt can complete the "every objective attempted" condition
+  even when it is wrong; a wrong answer on an objective that already has a score cannot newly pass a
+  lesson and does not trigger the check.
 
 > *Written with their code, in the same pass. FR-3217's order is the one v0.9.1 shipped — the text of
 > `MODULE_ORDER` is pinned by a test, so the progression's sequence does not move; what changed is

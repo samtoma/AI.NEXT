@@ -230,6 +230,8 @@ The first condition is the floor under the average. Without it, two well-answere
 
 **What this gives up, knowingly.** The Context above rejected averaging as a gate because 0.98 / 0.98 / 0.29 reads as mastered. This amendment accepts that for the pointer: a weak but attempted objective no longer holds a lesson back. Two things limit the harm: the attempted floor, and `PREREQ_GATE`, which still guards entry to later lessons per objective, so a hole a later lesson builds on parks the pointer rather than being walked past. Mastery is also reversible (two wrong answers take a 0.98 objective to about 0.52), so a lesson sitting near 0.35 can lose its "Revisit" row on a later render; the pointer itself never moves back.
 
+**Trigger.** The pointer is re-checked after a correct answer **and after the first attempt on an objective** (`attemptCanCrossGate`). It used to be after a correct answer only, which was enough while passing needed a high score; with the attempted floor, a wrong first attempt on the last untouched objective can complete the gate, and was missed on a real sitting (Functions, both objectives attempted, average 0.56, pointer unmoved).
+
 **Not fixed here.** "Quick review" still asks the first three objectives only, so on a four-objective lesson it can never supply the fourth attempt. The card's "hasn't come up yet" line names what is missing and points at the walk-through. Widening review to every objective changes the review prompt, which this ADR holds, so it needs its own approval.
 
 **Affects.** `app/src/lib/progression.ts` (`lessonGatePassed`, new `lessonMastered`, `courseComplete`), `app/src/lib/progression.test.mts`; FR-3202 and FR-3203 amended and FR-3221 added in spec 002.
