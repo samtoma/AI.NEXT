@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-30 (student header, home page and the lesson gate — `tamer-mvp-fixes`, **not released**) — **FR-3219, FR-3220, FR-3221** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is a proposed amendment to ADR-0020 awaiting Samuel. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
+**Last amended**: 2026-09-30 (student header, home page and the lesson gate — `tamer-mvp-fixes`, **not released**) — **FR-3219, FR-3220, FR-3221, FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is a proposed amendment to ADR-0020 awaiting Samuel. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
 review) — **FR-3217, FR-3218** added: every reader of curriculum order uses the one catalogue order
 (`MODULE_ORDER`), a list of several subjects splits by subject first (Samuel, 2026-09-25), guarded by a
 source test, the tutor's Ask-the-Spine context included (Samuel lifted ADR-0020's hold for that ordering
@@ -1088,6 +1088,16 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
 
 **The rest of v0.6.0**
 
+- **FR-3222** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released]**:
+  In a lesson's transcript, when the newest tutor message contains an interactive block a student has
+  to act on — a widget, a question card or a sealed passage — and pinning the view to the bottom would
+  cut off the top of that **message** (its explanation included, not only the block), the view MUST
+  show the message from its top (with a small margin) instead, so the student reads the explanation
+  first and scrolls down to the block, never up. A message that fits when pinned to the bottom, and any
+  message without such a block, MUST keep the bottom-follow. The check MUST repeat when that message
+  changes size (a widget keeps laying out after it appears). Aligning MUST NOT switch following off:
+  only the student's own scroll away from the bottom does. Not covered: a message taller than the
+  screen still needs scrolling down to reach its block.
 - **FR-3211**: No student surface may say whether content was reviewed. Review status is an operator
   fact, shown in the console only ([ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md));
   what a student may be told is where a question came from.

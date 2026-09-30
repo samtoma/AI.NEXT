@@ -45,6 +45,11 @@ import {
   TutorBubble,
   renderChatBlocks,
 } from "./message-blocks";
+import {
+  CHAT_INTERACTIVE_ATTR,
+  offsetTopWithin,
+  scrollTopFor,
+} from "@/lib/chat-scroll";
 import { useUploadAttachment } from "./upload-attachment";
 import {
   BUTTON_SECONDARY,
@@ -477,10 +482,38 @@ export function ChatCore({
     onTotalChange?.(totalUsd, turns);
   }, [totalUsd, turns, onTotalChange]);
 
-  useEffect(() => {
+  // Where our own last programmatic scroll left `scrollTop`, so `onScroll` can
+  // tell it from the student's. Without it, aligning to a message's top (which
+  // is not the bottom) would read as "scrolled away" and switch following off.
+  const programmaticTop = useRef<number | null>(null);
+  const follow = useCallback(() => {
     const el = scrollRef.current;
-    if (el && stuckToBottom.current) el.scrollTop = el.scrollHeight;
-  }, [messages]);
+    if (!el || !stuckToBottom.current) return;
+    // The newest row is the container's last element: a hidden message renders
+    // null, and nothing else sits after the list. When it holds something the
+    // student has to act on, its FRAME — the explanation above the widget or
+    // question, not just the block — is what must not be cut off at the top
+    // (FR-3222, lib/chat-scroll.ts).
+    const row = el.lastElementChild as HTMLElement | null;
+    const acts = !!row?.querySelector(`[${CHAT_INTERACTIVE_ATTR}]`);
+    el.scrollTop = scrollTopFor({
+      scrollHeight: el.scrollHeight,
+      clientHeight: el.clientHeight,
+      frameTop: row && acts ? offsetTopWithin(el, row) : null,
+    });
+    programmaticTop.current = el.scrollTop;
+  }, []);
+  useEffect(() => {
+    follow();
+    // A widget keeps laying out after it mounts (KaTeX, figures, the pop-in),
+    // so a message that fitted when it arrived can outgrow the view with no
+    // message change to re-check it. Follow the newest row's size too.
+    const row = scrollRef.current?.lastElementChild;
+    if (!row || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => follow());
+    ro.observe(row);
+    return () => ro.disconnect();
+  }, [messages, follow]);
 
   const emitNewCites = useCallback(
     (text: string) => {
@@ -1074,10 +1107,18 @@ export function ChatCore({
           // user scrolled away from the bottom → stop auto-scrolling;
           // back within 40px of the bottom → resume
           const el = e.currentTarget;
+          // our own alignment to a block's top is not the student leaving
+          if (
+            programmaticTop.current !== null &&
+            Math.abs(el.scrollTop - programmaticTop.current) <= 1
+          ) {
+            return;
+          }
           stuckToBottom.current =
             el.scrollHeight - el.scrollTop - el.clientHeight <= 40;
         }}
-        className="thin-scroll min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4"
+        // `relative` so `offsetTop` chains end here (lib/chat-scroll.ts)
+        className="thin-scroll relative min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4"
       >
         {leading}
         {messages.length === 0 && !streaming && emptyState}
@@ -1371,7 +1412,11 @@ const MessageRow = memo(function MessageRow({
                 onWidgetNote && renderWidget
                   ? renderWidget(b.name, b.props, onWidgetNote)
                   : null;
-              return card ? <div key={i}>{card}</div> : null;
+              return card ? (
+                <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }}>
+                  {card}
+                </div>
+              ) : null;
             },
             question: (b, i) => {
               if (interceptWidget?.("question", { qid: b.qid })) {
@@ -1389,8 +1434,8 @@ const MessageRow = memo(function MessageRow({
               }
               const q = lookupQuestion?.(b.qid);
               return q ? (
+                <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }}>
                 <ChatQuestionCard
-                  key={i}
                   question={q}
                   debug={debug}
                   lang={arabicUi ? "ar" : "en"}
@@ -1407,6 +1452,7 @@ const MessageRow = memo(function MessageRow({
                       : undefined
                   }
                 />
+                </div>
               ) : (
                 <p key={i} className="my-1 font-mono text-[0.72rem] text-ink-faint">
                   → {b.qid}
@@ -1441,7 +1487,7 @@ const MessageRow = memo(function MessageRow({
                 );
               }
               return renderPassage ? (
-                <div key={i}>
+                <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }}>
                   {renderPassage(b.id, {
                     quote: b.quote,
                     unit: b.unit,
