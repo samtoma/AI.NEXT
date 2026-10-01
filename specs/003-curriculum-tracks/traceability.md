@@ -153,7 +153,7 @@ but has never been executed is not done.
 | F9 no names through the headcount | SHOULD | FR-4103 | T376 |
 | F10 once-only Google step | **MUST** | FR-4014 | T312, T369, T370 |
 | F11 FR-4008 vs decision 4 | **MUST** | FR-4008 (resolved in line with decision 4) | T306 |
-| F12 not-offered at submit | SHOULD | FR-4005 | T306, T368 |
+| F12 not-offered at submit | SHOULD | FR-4005 — **moot since 2026-10-01, answer 36**: sign-up now always asks and accepts any known curriculum regardless of what the grade offers, so this race no longer arises | T306, T368, T434 |
 | F13 readers scoped before any load | **MUST** | FR-4202 | T314–T319, T325 |
 | §5.1 Ask context's book list | **MUST** | FR-4202, FR-4006, FR-4206 | T314 |
 | §5.2 `/dashboard` | **MUST** | FR-4006 | T315 |

@@ -43,8 +43,11 @@ export const metadata = { title: "Courses — Noor Console" };
  *     rule reaches only students of that course's curriculum (`lib/catalog.ts`).
  *   · **What sign-up offers, per grade** (FR-4102), by the ONE offer rule
  *     (`offeredCurricula`, FR-4004) that sign-up and the first-Google-sign-in
- *     step also use, so an operator sees what a new student of a grade will be
- *     asked before changing a rule.
+ *     step also use. Since Samuel's 2026-10-01 reversal sign-up always asks
+ *     every grade, naming every curriculum; this table shows which of them
+ *     have something live today, so an operator sees which options a new
+ *     student would see marked "nothing to study here yet" before changing a
+ *     rule.
  *   · **Headcounts, as numbers only** (FR-4103): before a change hides a
  *     curriculum's last live course for a grade, the cell asks, stating how
  *     many students it would leave with nothing to study. Read through the

@@ -332,20 +332,23 @@ test("003: offeredCurricula with the switch off — a LOADED course written for 
   assert.deepEqual(offeredCurricula("10", LAUNCH, [], false), []);
 });
 
-test("003: resolveInitialCurriculum — ask only on a real choice; never store a hidden one as chosen (FR-4005, F12)", () => {
+test("003: resolveInitialCurriculum — always chosen when known, required when blank, invalid when unknown (2026-10-01 reversal)", () => {
+  // Samuel's reversal, 2026-10-01 ("yes the sign up should always ask";
+  // decision 1, superseded): `offered` is no longer a gate on what may be
+  // picked — only what a `curriculum_required` refusal carries back. A known
+  // curriculum is stored exactly as sent, `chosen`, whatever the grade offers.
   const two = [NATIONAL, AMERICAN] as const;
-  assert.deepEqual(resolveInitialCurriculum(AMERICAN, two), { ok: true, curriculum: AMERICAN, source: "chosen", resolvedFrom: null });
-  assert.deepEqual(resolveInitialCurriculum(undefined, two), { ok: false, error: "curriculum_required", offered: two });
-  assert.deepEqual(resolveInitialCurriculum("", two), { ok: false, error: "curriculum_required", offered: two });
-  // one offered: stored as implied, whatever was sent — and a known other one is noted
-  assert.deepEqual(resolveInitialCurriculum(undefined, [AMERICAN]), { ok: true, curriculum: AMERICAN, source: "implied", resolvedFrom: null });
-  assert.deepEqual(resolveInitialCurriculum(NATIONAL, [AMERICAN]), { ok: true, curriculum: AMERICAN, source: "implied", resolvedFrom: NATIONAL });
-  // the one sent was hidden after the page loaded, and one remains: that one,
-  // implied — never the hidden one as chosen — and the switch is noted
-  assert.deepEqual(resolveInitialCurriculum(AMERICAN, [NATIONAL]), { ok: true, curriculum: NATIONAL, source: "implied", resolvedFrom: AMERICAN });
-  // none offered: National, implied
-  assert.deepEqual(resolveInitialCurriculum(undefined, []), { ok: true, curriculum: NATIONAL, source: "implied", resolvedFrom: null });
-  // an unknown value is always refused, even where nothing is needed
+  for (const offered of [[], [NATIONAL], [AMERICAN], two] as const) {
+    assert.deepEqual(resolveInitialCurriculum(AMERICAN, offered), { ok: true, curriculum: AMERICAN, source: "chosen" });
+    assert.deepEqual(resolveInitialCurriculum(NATIONAL, offered), { ok: true, curriculum: NATIONAL, source: "chosen" });
+  }
+  // blank (missing or "") is always required, whatever is offered — including
+  // a grade with nothing live for anybody
+  for (const offered of [[], [NATIONAL], two] as const) {
+    assert.deepEqual(resolveInitialCurriculum(undefined, offered), { ok: false, error: "curriculum_required", offered });
+    assert.deepEqual(resolveInitialCurriculum("", offered), { ok: false, error: "curriculum_required", offered });
+  }
+  // an unknown value is always refused, even where nothing is offered
   for (const offered of [[], [NATIONAL], two] as const) {
     assert.deepEqual(resolveInitialCurriculum("us-american", offered), { ok: false, error: "invalid_curriculum", offered });
   }
