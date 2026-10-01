@@ -478,8 +478,32 @@ function alignStatements(text) {
   }
   return out
 }
-const containNorm = (s) => normTex(String(s == null ? '' : s).replace(/\\therefore(?![a-zA-Z])/g, ' therefore ')
+// A final copied as plain text ("θ ≈ 26,6°", "x ≈ 76,60", "sin B̂ = AC/AB") against a solution in LaTeX (`\theta\approx\text{26,6}^{\circ}`,
+// `x&\approx\text{76,60}`, `\sin\hat{B}=\frac{AC}{AB}`): both are read as the same SIGNS (≈, °, a hat, a function name, a simple fraction as a/b,
+// \text{…} unwrapped). Only a sign is ever changed, never a digit (COLLECT-6, Chapter 5).
+function plainSigns(s) {
+  let t = String(s == null ? '' : s)
+  for (let k = 0; k < 3; k++) t = t.replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1')
+  return t.replace(/\\(?:approx|simeq)(?![a-zA-Z])/g, '≈')
+    .replace(/\^\s*\{\s*\\circ\s*\}|\^\s*\\circ(?![a-zA-Z])|\\circ(?![a-zA-Z])/g, '°')
+    .replace(/\\(?:widehat|hat)\s*\{\s*([A-Za-z])\s*\}|\\(?:widehat|hat)\s*([A-Za-z])/g, (_m, a, b) => `${a || b}̂`)
+    .replace(/ˆ\s*([A-Za-z])/g, '$1̂')
+    .replace(/\\(sin|cos|tan|cot|sec|csc)(?![a-zA-Z])/g, '$1')
+    .replace(/\\[dt]?frac\s*\{\s*(-?[A-Za-z0-9.,]+)\s*\}\s*\{\s*(-?[A-Za-z0-9.,]+)\s*\}/g, '$1/$2')
+}
+const containNorm = (s) => normTex(plainSigns(s).replace(/\\therefore(?![a-zA-Z])/g, ' therefore ')
   .replace(/\\because(?![a-zA-Z])/g, ' because ')).toLowerCase()
+// `n` is in `h` AS A WHOLE VALUE: a number is not found inside a longer one ("76,6" is not in "76,60", "x=2" not in "x=2/3" or "x=25", "5" not in
+// "-5"), so a different rounding or a different digit is refused (COLLECT-6, Chapter 5)
+function hasValue(h, n) {
+  for (let i = h.indexOf(n); i >= 0; i = h.indexOf(n, i + 1)) {
+    const before = i > 0 ? h[i - 1] : '', after = h[i + n.length] || ''
+    if (/\d/.test(n[0]) && /[\d.\-]/.test(before)) continue
+    if (/\d/.test(n[n.length - 1]) && (/[\d^/!]/.test(after) || (after === '.' && /\d/.test(h[i + n.length + 1] || '')))) continue
+    return true
+  }
+  return false
+}
 // top-level commas of one segment ("d_{FG}=\sqrt{26}, d_{GH}=\sqrt{8}"), never inside (), {} or []
 function topLevelParts(seg) {
   const out = []; let depth = 0, cur = ''
@@ -498,19 +522,19 @@ function inBookSolution(solution, final) {
   const found = (p) => {
     const n = containNorm(p)
     if (!n) return false
-    if (hay.some((h) => h.includes(n))) return true
+    if (hay.some((h) => hasValue(h, n))) return true
     // an equation the other way round: the final "a=\frac{…}{t^{2}}" is the solution's last line "\frac{…}{t^{2}}&=a" (COLLECT-6)
     const sw = swapEq(n)
-    if (sw && hay.some((h) => h.includes(sw))) return true
+    if (sw && hay.some((h) => hasValue(h, sw))) return true
     const parts = n.split('=')
     // a worked chain L=m1=…=R the typing agent wrote out states L=R, which the solution must hold (COLLECT-3)
-    if (workedChain(n) && hay.some((h) => h.includes(`${parts[0]}=${parts[parts.length - 1]}`))) return true
+    if (workedChain(n) && hay.some((h) => hasValue(h, `${parts[0]}=${parts[parts.length - 1]}`))) return true
     // x=3 where the solution states the value as a whole segment of its own (COLLECT-3)
     if (parts.length === 2 && /^[a-z]{1,2}(?:_[a-z0-9{}]+)?$/.test(parts[0]) && wholeSegs.has(parts[1])) return true
     // a worked chain L=m1=m2=…=R whose middle terms hold letters (d=T_2-T_1=7-4=3) is the derivation's aligned lines `d=T_2-T_1`,
     // `=7-4`, `=3` written on one line: it is in the solution when EVERY link L=mi is a statement the solution makes (the
     // lines are read with their carried left side). A changed link (…=7-5=3) is not, so that final is still refused (COLLECT-6)
-    return parts.length > 2 && !n.includes(',') && parts.every(Boolean) && parts.slice(1).every((m) => hay.some((h) => h.includes(`${parts[0]}=${m}`)))
+    return parts.length > 2 && !n.includes(',') && parts.every(Boolean) && parts.slice(1).every((m) => hay.some((h) => hasValue(h, `${parts[0]}=${m}`)))
   }
   const segs = String(final).match(/\$[^$]+\$/g) || [String(final)]
   // a segment that lists several statements must have each of them in the solution (COLLECT-3); a list joined by "and"

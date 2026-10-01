@@ -251,21 +251,41 @@ def g2_items(run: dict, chapter: int | None, prefix: str) -> dict[str, dict]:
     return out
 
 
+# Why each retype rule of the collection (lesson.workflow.js COLLECT-6) happened, in the words the gate record shows Samuel. A rule this table
+# does not know gets a neutral sentence, never another rule's reason: the record is his, and a wrong reason is worse than a plain one.
+RETYPE_BASIS = {
+    # a choice whose options were the typing agent's inventions, typed again from the key the book printed
+    "numeric": "the options were the typing agent's inventions, not the book's",
+    "values": "the options were the typing agent's inventions, not the book's",
+    # the key is kept exactly; only the KIND (or the type) the app's marker reads it under changes
+    "kind-for-form": "the typing agent named a marker kind the asked form cannot apply to; the key is algebra in its variables, kept exactly",
+    "fraction-key": "the typing agent typed a fraction as a number: the app's numeric grader reads \"a/b\" as a, so the key is kept exactly and "
+                    "typed as an expression (an exact fraction), which the expression marker marks",
+    "kind-for-list": "the typing agent named a marker kind the key cannot be read under: the key lists values; kept exactly, only its kind "
+                     "changes to values",
+    "kind-for-relations": "the typing agent named a marker kind the key cannot be read under: the key is an inequality or a set-membership "
+                          "list; kept exactly, only its kind changes to interval",
+    "kind-for-equation": "the typing agent named a marker kind the key cannot be read under: the key has an equals sign; kept exactly, only "
+                         "its kind changes to equation",
+}
+
+
+def retype_basis(rule: str | None) -> str:
+    return RETYPE_BASIS.get(rule or "", f"the collection typed this item again (rule {rule or 'unnamed'}); the key is kept exactly")
+
+
 def g2_retyped(run: dict, chapter: int | None, prefix: str) -> list[dict]:
-    """The items the collection typed again (lesson.workflow.js COLLECT-6: a choice from the book's printed key, or a marker kind
-    its asked form cannot apply to): informational
-    decisions for the record — they carry no verdict, and Samuel sees them beside the verdicts."""
+    """The items the collection typed again (lesson.workflow.js COLLECT-6: a choice from the book's printed key, a fraction typed numeric, a
+    marker kind the key or its asked form cannot be read under): informational decisions for the record — they carry no verdict, and Samuel
+    sees them beside the verdicts. The basis says which rule it was (RETYPE_BASIS)."""
     run = run.get("result", run)
     out: list[dict] = []
     for l in run.get("lessons") or []:
         if not l or (chapter is not None and not str(l.get("lesson", "")).startswith(f"{prefix}{chapter}s")):
             continue
         for r in (l.get("verify") or {}).get("retyped") or []:
-            # a marker kind the asked form cannot apply to: the key is kept as it is, only its kind changes
-            basis = ("the typing agent named a marker kind the asked form cannot apply to; the key is algebra in its variables, kept exactly"
-                     if r.get("rule") == "kind-for-form" else "the options were the typing agent's inventions, not the book's")
             out.append({"key": f"{l['lesson']}:{r['ref']}", "decision": f"typed again as {r['as']} (key {r.get('key')})",
-                        "basis": basis + (f" ({'; '.join(r.get('because') or [])[:200]})" if r.get("because") else "")})
+                        "basis": retype_basis(r.get("rule")) + (f" ({'; '.join(r.get('because') or [])[:200]})" if r.get("because") else "")})
     return out
 
 

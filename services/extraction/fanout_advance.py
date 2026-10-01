@@ -168,6 +168,33 @@ def write_json(path: Path, obj, indent: int | None = 1) -> None:
     os.replace(tmp, path)
 
 
+@contextlib.contextmanager
+def advance_lock(P: Paths, timeout_s: float = 1800.0, say=None):
+    """One advance (or `ready --prepare`) at a time: two lessons that finish together must not both conclude the other is still to come,
+    and two prepares of one run must not race. flock on work/<book>/fanout/advance.lock (gitignored); the OS drops it if the process dies."""
+    import fcntl
+    P.fan.mkdir(parents=True, exist_ok=True)
+    fh = open(P.fan / "advance.lock", "a+")
+    t0, told = time.time(), False
+    while True:
+        try:
+            fcntl.flock(fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            break
+        except BlockingIOError:
+            if time.time() - t0 > timeout_s:
+                fh.close()
+                raise Refuse(f"another `fanout.py advance` held {P.rel(P.fan / 'advance.lock')} for more than {int(timeout_s)} s: nothing was changed")
+            if not told and say:
+                say("  waiting for another advance to finish …")
+                told = True
+            time.sleep(0.25)
+    try:
+        yield
+    finally:
+        fcntl.flock(fh, fcntl.LOCK_UN)
+        fh.close()
+
+
 def read_json(path: Path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -646,6 +673,7 @@ class Opts:
     running: tuple = ()
     verbose: bool = False
     no_prepare: bool = False
+    lock_timeout: float = 1800.0
 
 
 @dataclasses.dataclass
@@ -1419,101 +1447,103 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
     rep = new_report(run_id, wf, opts.dry)
     fl = Flow(P, ex, dry=opts.dry, redo=opts.redo, say=say)
     S: State | None = None
+    lock = contextlib.nullcontext() if opts.dry else advance_lock(P, opts.lock_timeout, say)
     try:
-        if not WF_RE.match(wf):
-            raise Refuse(f"--wf {wf!r} is not a Workflow run id (wf_xxxxxxxx-xxx)")
-        if not P.plan.exists():
-            raise Refuse(f"no {P.rel(P.plan)}: run `uv run fanout.py plan` first")
-        plan = read_json(P.plan)
-        r = next((x for x in plan["runs"] if x["id"] == run_id), None)
-        if r is None:
-            raise Refuse(f"{run_id}: not a run of the plan")
-        kind = kind_of(run_id)
-        if run_id == "wcheck-ch08":
-            raise Refuse("wcheck-ch08 is finished (both sw-v3 passes saved as working-check/ch08-v3-A/B-…, flags in ch08.flags.json): "
-                         "nothing to advance")
-        S = State(P, plan)
-        rep["checkpoint"] = r.get("checkpoint")
-        rec = find_record(wf)
-        wrapper, result = load_return(task_output, rec, wf)
-        if rec is None:
-            raise Refuse(f"{wf}: no run record under ~/.claude/projects/*/*/workflows/ — its status and its transcripts (the "
-                         "meter reads them) cannot be found")
-        if rec.get("status") != "completed":
-            raise Refuse(f"{wf} has status {rec.get('status')!r}, not completed: nothing to save — resume it with the same copy "
-                         "(resumeFromRunId), then advance with --resumed")
-        cs = S.copies(r)
-        if not cs or not all(c.exists for c in cs):
-            raise Refuse(f"{run_id}: no generated copy on disk ({P.rel(P.here / r['embedded_script'])}): was it prepared? "
-                         "(`uv run fanout.py prepare`)")
-        cp = resolve_copy(cs, result, rec, opts.copy, opts.force)
+        with lock:
+            if not WF_RE.match(wf):
+                raise Refuse(f"--wf {wf!r} is not a Workflow run id (wf_xxxxxxxx-xxx)")
+            if not P.plan.exists():
+                raise Refuse(f"no {P.rel(P.plan)}: run `uv run fanout.py plan` first")
+            plan = read_json(P.plan)
+            r = next((x for x in plan["runs"] if x["id"] == run_id), None)
+            if r is None:
+                raise Refuse(f"{run_id}: not a run of the plan")
+            kind = kind_of(run_id)
+            if run_id == "wcheck-ch08":
+                raise Refuse("wcheck-ch08 is finished (both sw-v3 passes saved as working-check/ch08-v3-A/B-…, flags in ch08.flags.json): "
+                             "nothing to advance")
+            S = State(P, plan)
+            rep["checkpoint"] = r.get("checkpoint")
+            rec = find_record(wf)
+            wrapper, result = load_return(task_output, rec, wf)
+            if rec is None:
+                raise Refuse(f"{wf}: no run record under ~/.claude/projects/*/*/workflows/ — its status and its transcripts (the "
+                             "meter reads them) cannot be found")
+            if rec.get("status") != "completed":
+                raise Refuse(f"{wf} has status {rec.get('status')!r}, not completed: nothing to save — resume it with the same copy "
+                             "(resumeFromRunId), then advance with --resumed")
+            cs = S.copies(r)
+            if not cs or not all(c.exists for c in cs):
+                raise Refuse(f"{run_id}: no generated copy on disk ({P.rel(P.here / r['embedded_script'])}): was it prepared? "
+                             "(`uv run fanout.py prepare`)")
+            cp = resolve_copy(cs, result, rec, opts.copy, opts.force)
 
-        # ---- 1. save the return value and the whole wrapper (the record lives in records/, never beside the results)
-        existing = S.copy_saved(cp)
-        target = existing or save_path(P, r, cp.label, wf)
-        rec_path = P.records / (target.stem + ".record.json")
-        same = bool(existing) and not opts.resumed and unwrap(read_json(existing)) == result
-        if opts.dry:
-            rep["saved"] = f"{P.rel(target)} ({'already saved' if same else 'would write'})"
-            rep["record"] = P.rel(rec_path)
-        else:
-            if not same:
-                write_json(target, result, indent=1)
-            wrapped = dict(wrapper)
-            wrapped.setdefault("runId", wf)
-            if not (rec_path.exists() and read_json(rec_path) == wrapped):
-                rec_path.parent.mkdir(parents=True, exist_ok=True)
-                tmp = rec_path.with_name(rec_path.name + ".tmp")
-                tmp.write_text(json.dumps(wrapped, ensure_ascii=False), encoding="utf-8")
-                os.replace(tmp, rec_path)
-            rep["saved"] = P.rel(target) + (" (already saved)" if same else "")
-            rep["record"] = P.rel(rec_path)
-            S.mark_saved(run_id, cp.label, wf, target)
-            if cp.sha:
-                S.idx[cp.sha] = target
-            fl.marks = S.ledger(run_id).setdefault("steps", {})
+            # ---- 1. save the return value and the whole wrapper (the record lives in records/, never beside the results)
+            existing = S.copy_saved(cp)
+            target = existing or save_path(P, r, cp.label, wf)
+            rec_path = P.records / (target.stem + ".record.json")
+            same = bool(existing) and not opts.resumed and unwrap(read_json(existing)) == result
+            if opts.dry:
+                rep["saved"] = f"{P.rel(target)} ({'already saved' if same else 'would write'})"
+                rep["record"] = P.rel(rec_path)
+            else:
+                if not same:
+                    write_json(target, result, indent=1)
+                wrapped = dict(wrapper)
+                wrapped.setdefault("runId", wf)
+                if not (rec_path.exists() and read_json(rec_path) == wrapped):
+                    rec_path.parent.mkdir(parents=True, exist_ok=True)
+                    tmp = rec_path.with_name(rec_path.name + ".tmp")
+                    tmp.write_text(json.dumps(wrapped, ensure_ascii=False), encoding="utf-8")
+                    os.replace(tmp, rec_path)
+                rep["saved"] = P.rel(target) + (" (already saved)" if same else "")
+                rep["record"] = P.rel(rec_path)
+                S.mark_saved(run_id, cp.label, wf, target)
+                if cp.sha:
+                    S.idx[cp.sha] = target
+                fl.marks = S.ledger(run_id).setdefault("steps", {})
 
-        if opts.dry and not same:
-            fl.dirty = True                           # a new or changed save is newer than everything downstream of it
+            if opts.dry and not same:
+                fl.dirty = True                           # a new or changed save is newer than everything downstream of it
 
-        # ---- 2. meter (the ledger takes one line per run id; --resumed meters only the agents it has not seen)
-        stage, lesson = meter_args(r)
-        have = [l for l in read_cost(P) if l.get("run_id") == wf]
-        if have and not opts.resumed:
-            rep["metered"] = {"stage": stage, "already": True, "usd": round(sum(l["totals"]["usd"] for l in have), 4)}
-        elif opts.dry:
-            rep["metered"] = {"stage": stage, "would": True}
-        else:
-            argv = ["meter_run.py", "record", "--book", BOOK, "--stage", stage, "--run", wf] + (["--lesson", lesson] if lesson else []) \
-                + (["--resumed"] if opts.resumed else [])
-            m = ex.py(argv)
-            if m.rc != 0:
-                fl._rec("meter", "failed", f"exit {m.rc}", shlex.join(argv))
-                raise StepFailed("meter", f"exit {m.rc}: {shlex.join(argv)}\n{m.key_lines()}")
-            after = [l for l in read_cost(P) if l.get("run_id") == wf]
-            new = after[len(have):]
-            rep["metered"] = {"stage": stage, "already": False, "usd": round(sum(l["totals"]["usd"] for l in new), 4),
-                              "run_total_usd": round(sum(l["totals"]["usd"] for l in after), 4),
-                              "agents": sum(len(l.get("agents") or []) for l in new)}
-            if after and not after[-1].get("complete", True):
-                rep["warnings"].append("the meter marked the run incomplete (missing transcripts or an unpriced model)")
-            if opts.resumed and not new:
-                rep["metered"]["note"] = "the resume ran no new agent"
+            # ---- 2. meter (the ledger takes one line per run id; --resumed meters only the agents it has not seen)
+            stage, lesson = meter_args(r)
+            have = [l for l in read_cost(P) if l.get("run_id") == wf]
+            if have and not opts.resumed:
+                rep["metered"] = {"stage": stage, "already": True, "usd": round(sum(l["totals"]["usd"] for l in have), 4)}
+            elif opts.dry:
+                rep["metered"] = {"stage": stage, "would": True}
+            else:
+                argv = ["meter_run.py", "record", "--book", BOOK, "--stage", stage, "--run", wf] + (["--lesson", lesson] if lesson else []) \
+                    + (["--resumed"] if opts.resumed else [])
+                m = ex.py(argv)
+                if m.rc != 0:
+                    fl._rec("meter", "failed", f"exit {m.rc}", shlex.join(argv))
+                    raise StepFailed("meter", f"exit {m.rc}: {shlex.join(argv)}\n{m.key_lines()}")
+                after = [l for l in read_cost(P) if l.get("run_id") == wf]
+                new = after[len(have):]
+                rep["metered"] = {"stage": stage, "already": False, "usd": round(sum(l["totals"]["usd"] for l in new), 4),
+                                  "run_total_usd": round(sum(l["totals"]["usd"] for l in after), 4),
+                                  "agents": sum(len(l.get("agents") or []) for l in new)}
+                if after and not after[-1].get("complete", True):
+                    rep["warnings"].append("the meter marked the run incomplete (missing transcripts or an unpriced model)")
+                if opts.resumed and not new:
+                    rep["metered"]["note"] = "the resume ran no new agent"
 
-        # ---- 3. the after-steps for this kind of run
-        A = Adv(P=P, plan=plan, run=r, kind=kind, S=S, fl=fl, result=result, wf=wf, copy=cp, saved=target, rep=rep, db=db, opts=opts)
-        done = bool(HANDLERS[kind](A))
-        rep["after_done"] = done
+            # ---- 3. the after-steps for this kind of run
+            A = Adv(P=P, plan=plan, run=r, kind=kind, S=S, fl=fl, result=result, wf=wf, copy=cp, saved=target, rep=rep, db=db, opts=opts)
+            done = bool(HANDLERS[kind](A))
+            rep["after_done"] = done
 
-        # ---- 4. what comes next
-        if done and not opts.dry:
-            S.ledger(run_id)["after_done"] = True
-        running = parse_running(opts.running)
-        if opts.dry:                                 # nothing was saved: do not offer this very copy as launchable
-            running.add((run_id, cp.label or None))
-        if not opts.no_prepare:
-            prepare_ready(P, S, fl, rep, running, opts)
-        rep.update(ready_list(P, S, running, opts))
+            # ---- 4. what comes next
+            if done and not opts.dry:
+                S.ledger(run_id)["after_done"] = True
+            running = parse_running(opts.running)
+            if opts.dry:                                 # nothing was saved: do not offer this very copy as launchable
+                running.add((run_id, cp.label or None))
+            if not opts.no_prepare:
+                prepare_ready(P, S, fl, rep, running, opts)
+            rep.update(ready_list(P, S, running, opts))
     except Refuse as e:
         rep.update(ok=False, refused=str(e))
         return 2, finish(rep, fl, P, None, run_id, opts)
