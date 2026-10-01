@@ -10,6 +10,8 @@ import { subjectOfCourse } from "@/lib/subjects";
 import { resolveStudentContext } from "@/lib/student-context";
 import { getCurrentLesson, isCourseComplete } from "@/lib/progression-db";
 import { previousCompletedSlug, untriedObjectives } from "@/lib/progression";
+import { getCourseOutline } from "@/lib/course-outline-queries";
+import { hasUnpreparedLessons, preparedSlugs } from "@/lib/course-outline";
 import {
   deriveMasteryStage,
   deriveRecommendation,
@@ -292,6 +294,22 @@ export default async function StudentPage({
     lesson.courseId
   );
 
+  // THE WHOLE BOOK (migration 037, lib/course-outline.ts; Samuel 2026-10-01).
+  // The outline of the courses the picker shows — already gated, since
+  // `lessons` is her gated catalogue — so the picker lists every chapter and
+  // lesson of the book, the ones not prepared yet shown and not openable.
+  // Empty for every National course, which then renders exactly as before.
+  // Readiness is the catalogue: nothing here can make a lesson startable, and
+  // the lesson on the card, the pointer and the doors are decided above
+  // without it.
+  const outline = await getCourseOutline(
+    lessons.map((l) => l.courseId).filter((c): c is string => c != null)
+  );
+  // "That's the whole course" is not true while the book has lessons still
+  // being prepared: the terminal banner says so instead.
+  const morePreparing =
+    courseComplete && hasUnpreparedLessons(lesson.courseId, outline, preparedSlugs(allLessons));
+
   // Check-in card derivation (Noor Play brief). recommendationReason is
   // logged here and stops here — it must never become a prop, so a client
   // component can never render it (docs/design/handoffs/noor-play).
@@ -314,6 +332,7 @@ export default async function StudentPage({
     <LessonCheckIn
       lesson={lesson}
       lessons={lessons}
+      outline={outline}
       hasContent={hasContent}
       masteryStage={masteryStage}
       weakestSubskill={weakestSubskill?.label ?? null}
@@ -321,6 +340,7 @@ export default async function StudentPage({
       estimates={estimates}
       completedToday={false /* no real "attempted today" signal yet — never inferred from time of day */}
       courseComplete={courseComplete}
+      morePreparing={morePreparing}
       untriedSubskills={untried}
       justFinished={
         justFinished

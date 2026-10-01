@@ -557,8 +557,9 @@ through the attempts route and confirm identical outcomes.
 > decided them (decision 3). Numbering starts at **FR-4001** so nothing collides with 000/001
 > (`FR-0xx…FR-12xx`) or 002 (`FR-20xx…FR-34xx`): **FR-40xx** curriculum as a dimension · **FR-41xx**
 > console · **FR-42xx** the Grade 10 American Mathematics course · **FR-43xx** content completeness ·
-> **FR-44xx** the extraction pipeline. Success criteria are **SC-2xx**, after 001's `SC-0xx` and 002's
-> `SC-1xx`. Status is tracked in [traceability.md](./traceability.md), using the vocabulary in
+> **FR-44xx** the extraction pipeline · **FR-45xx** the internal review backlog (**[ADDED 2026-10-01,
+> answer 37]**). Success criteria are **SC-2xx**, after 001's `SC-0xx` and 002's `SC-1xx`. Status is
+> tracked in [traceability.md](./traceability.md), using the vocabulary in
 > `docs/VERSIONING.md`. Every requirement below is OPEN.
 
 ### Curriculum as a dimension (FR-4001…)

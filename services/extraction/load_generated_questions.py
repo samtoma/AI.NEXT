@@ -18,7 +18,16 @@ this file has exists to make that fact impossible to lose track of:
     accident at 2am.
   * Rows land as `status='review'` unless `--promote` is passed. Generation and
     exposure-to-students are two separate acts and should require two separate
-    decisions, even when the same person makes both a second apart.
+    decisions, even when the same person makes both a second apart. EXCEPT A MATHS
+    COURSE (Samuel's answer 37a, 2026-10-01, review_policy.py): its students are always
+    full, so a load for a maths course (`--course`, or the bundle's own `course_id`) is
+    live as if `--promote` had been passed — review stays internal, in the console
+    backlog (every row with no human stamp). `--review` keeps the old two-act behaviour.
+  * ONLY A HUMAN STAMP IS A REVIEW (migration 035, answer 33). A fresh load writes the AI
+    checks its items passed to `ai_checked_by` (S6's blind grade, S7's verifier) and never
+    `reviewed_by`. A reload never revives a retired or rejected row, never releases a
+    human's hold, and keeps a human's stamp only while the item still says exactly what
+    the human read (stem, choices, key, solution).
 
 Course scope (B15): `--course <id>` refuses any item whose objective is not one of
 that course's, before anything is written, and prints the course's own counts at
@@ -60,6 +69,7 @@ import random
 import sys
 from pathlib import Path
 
+import review_policy
 import widget_spec
 
 REQUIRED_QUESTION_KEYS = {
@@ -214,7 +224,10 @@ def main() -> int:
     ap.add_argument("--dsn", default=os.environ.get("AINEXT_DB_DSN"))
     ap.add_argument("--promote", action="store_true",
                     help="load as status='live' instead of 'review' — this is the act that puts "
-                         "unreviewed mathematics in front of students")
+                         "unreviewed mathematics in front of students (implied for a maths course, "
+                         "answer 37a)")
+    ap.add_argument("--review", action="store_true",
+                    help="load as status='review' even for a maths course (the pre-37a two-act load)")
     ap.add_argument("--sample", type=int, default=10,
                     help="percent of loaded items to write to the human review queue (default 10)")
     ap.add_argument("--seed", type=int, default=None,
@@ -310,7 +323,9 @@ def main() -> int:
         by_tier: dict[str, int] = {}
         for q in questions:
             by_tier[q["tier"]] = by_tier.get(q["tier"], 0) + 1
-        print(f"  dry run — would load as status={'live' if args.promote else 'review'}; tiers {by_tier}")
+        full = review_policy.students_always_full(args.course or bundle.get("course_id"))
+        print(f"  dry run — would load as status={'live' if (args.promote or full) and not args.review else 'review'};"
+              f" tiers {by_tier}")
         return 0
 
     if not args.dsn:
@@ -334,7 +349,17 @@ def main() -> int:
             )
             return 2
 
-        status = "live" if args.promote else "review"
+        review_policy.require_review_columns(cur)
+        course_id = args.course or bundle.get("course_id")
+        always_full = review_policy.students_always_full(course_id)
+        if args.promote and args.review:
+            print("ERROR: --promote and --review contradict each other", file=sys.stderr)
+            return 2
+        status = "live" if (args.promote or always_full) and not args.review else "review"
+        # The AI checks every item of this bundle passed before it could be in it (S6: only families the
+        # blind grader passed; S7: only verified templates). Never a review (answer 33).
+        ai_by = ("ai widget verify (S7)" if "templates" in bundle
+                 else "ai blind grade (S6)" if bundle.get("family_grades") else None)
 
         if args.course:
             cur.execute("SELECT node_id FROM node_subject WHERE course_id = %s", (args.course,))
@@ -367,24 +392,63 @@ def main() -> int:
             created_mc += cur.rowcount
 
         loaded = kept = 0
-        conflict = ("ON CONFLICT (id) DO NOTHING" if args.add_only else
-                    """ON CONFLICT (id) DO UPDATE"""
-                    )
-        for q in questions:
-            cur.execute(
-                """INSERT INTO questions
-                     (id, lo_id, tier, question_type, stem, choices, correct_answer,
-                      canonical_solution, solution_version, status, source,
-                      parent_question_id, source_page, source_note, reviewed_by, reviewed_at)
-                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,1,%s,'variant',%s,%s,%s,%s,%s)
-                   """ + conflict + ("" if args.add_only else """
+        # A RESTORE replays what the export recorded, columns and all. A fresh reload of an
+        # existing row is careful (migration 035): a retired or rejected row stays so, a human's
+        # hold stays held, a human's stamp survives only while the item says exactly what the
+        # human read, and a live row never keeps a hold reason (CHECK questions_held_not_live).
+        same = """questions.stem = EXCLUDED.stem
+                  AND questions.choices IS NOT DISTINCT FROM EXCLUDED.choices
+                  AND questions.correct_answer = EXCLUDED.correct_answer
+                  AND questions.canonical_solution = EXCLUDED.canonical_solution"""
+        new_status = ("EXCLUDED.status" if args.restore else
+                      f"""CASE WHEN questions.status IN ('retired', 'rejected') THEN questions.status
+                               WHEN questions.hold_reason = '{review_policy.HUMAN_HOLD}' THEN questions.status
+                               ELSE EXCLUDED.status END""")
+        update = f"""
                      SET stem = EXCLUDED.stem,
                          choices = EXCLUDED.choices,
                          correct_answer = EXCLUDED.correct_answer,
                          canonical_solution = EXCLUDED.canonical_solution,
-                         status = EXCLUDED.status,
-                         reviewed_by = EXCLUDED.reviewed_by,
-                         reviewed_at = EXCLUDED.reviewed_at"""),
+                         status = {new_status},
+                         reviewed_by = {"EXCLUDED.reviewed_by" if args.restore else
+                                        f"CASE WHEN {same} THEN questions.reviewed_by END"},
+                         reviewed_at = {"EXCLUDED.reviewed_at" if args.restore else
+                                        f"CASE WHEN {same} THEN questions.reviewed_at END"},
+                         ai_checked_by = {"EXCLUDED.ai_checked_by" if args.restore else
+                                          "coalesce(EXCLUDED.ai_checked_by, questions.ai_checked_by)"},
+                         ai_checked_at = {"EXCLUDED.ai_checked_at" if args.restore else
+                                          "coalesce(EXCLUDED.ai_checked_at, questions.ai_checked_at)"},
+                         hold_reason = CASE WHEN {new_status} = 'live' THEN NULL
+                                            ELSE {"EXCLUDED.hold_reason" if args.restore
+                                                  else "questions.hold_reason"} END,
+                         review_note = {"EXCLUDED.review_note" if args.restore else "questions.review_note"}"""
+        conflict = "ON CONFLICT (id) DO NOTHING" if args.add_only else "ON CONFLICT (id) DO UPDATE" + update
+        for q in questions:
+            # RESTORE honours the stamps an export carries (an export written before migration 035 is
+            # split the way 035 splits it); a normal load forces reviewed_by NULL, because the point of
+            # this loader is that a generator never asserts its own provenance (ADR-0008).
+            if args.restore:
+                legacy = review_policy.split_legacy_stamp(q.get("reviewed_by"))
+                r_by = legacy["reviewed_by"]
+                r_at = q.get("reviewed_at") if r_by else None
+                a_by = q.get("ai_checked_by") or legacy["ai_checked_by"]
+                a_at = q.get("ai_checked_at") or (q.get("reviewed_at") if legacy["ai_checked_by"] else None)
+                row_status = q.get("status") or status
+                hold = q.get("hold_reason") or (review_policy.FIGURE_MISSING
+                                                if legacy["figure_hold"] and row_status == "review" else None)
+                note = review_policy.join_notes(q.get("review_note"), legacy["note"])
+            else:
+                r_by = r_at = hold = note = None
+                a_by, a_at, row_status = ai_by, None, status
+            cur.execute(
+                """INSERT INTO questions
+                     (id, lo_id, tier, question_type, stem, choices, correct_answer,
+                      canonical_solution, solution_version, status, source,
+                      parent_question_id, source_page, source_note, reviewed_by, reviewed_at,
+                      ai_checked_by, ai_checked_at, hold_reason, review_note)
+                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,1,%s,'variant',%s,%s,%s,%s,%s,
+                           %s, coalesce(%s::timestamptz, CASE WHEN %s IS NOT NULL THEN now() END), %s, %s)
+                   """ + conflict,
                 (
                     q["id"], q["lo_id"], q["tier"], q["question_type"], q["stem"],
                     json.dumps(q.get("choices")) if q.get("choices") else None,
@@ -392,15 +456,12 @@ def main() -> int:
                     json.dumps(q["canonical_solution"]),
                     # A restore replays the status each row actually had; a fresh
                     # load applies one status to the whole bundle.
-                    (q.get("status") or status) if args.restore else status,
+                    row_status,
                     q.get("parent_question_id"),
                     q.get("source_page"),
                     q.get("source_note"),
-                    # RESTORE honours the stamps an export carries; a normal load
-                    # forces them NULL, because the point of this loader is that a
-                    # generator never asserts its own provenance (ADR-0008).
-                    q.get("reviewed_by") if args.restore else None,
-                    q.get("reviewed_at") if args.restore else None,
+                    r_by, r_at,
+                    a_by, a_at, a_by, None if row_status == "live" else hold, note,
                 ),
             )
             if cur.rowcount:
@@ -431,8 +492,10 @@ def main() -> int:
     if misconceptions:
         print(f"  catalogue: {created_mc} declared misconception(s) created, "
               f"{len(misconceptions) - created_mc} already loaded and left exactly as they are")
-    print(f"  loaded {loaded} questions as status={status if not args.restore else 'as exported'}, "
-          f"source='variant', reviewed_by={'as exported' if args.restore else 'NULL'}")
+    print(f"  loaded {loaded} questions as status={status if not args.restore else 'as exported'}"
+          + (" (a maths course is always full, answer 37a)" if status == "live" and not args.promote
+             and not args.restore else "")
+          + f", source='variant', reviewed_by={'as exported' if args.restore else 'NULL (only a human stamp is a review)'}")
 
     if args.sample > 0:
         # STRATIFIED BY FAMILY, not uniform across items.

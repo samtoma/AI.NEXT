@@ -9,7 +9,7 @@ import {
   claudeEnv,
   classifyCliFailure,
 } from "@/lib/claude-cli";
-import { buildLessonContext, lessonCourseId } from "@/lib/lesson";
+import { buildLessonContext, isUnpreparedLesson, lessonCourseId } from "@/lib/lesson";
 import { getAllSacredPassages } from "@/lib/lesson-content";
 import {
   makeSacredGuard,
@@ -218,6 +218,20 @@ export async function POST(req: Request) {
   let handoffOpen: ReadonlySet<string>;
   try {
     const pre = await withPrincipal(studentId, async (client) => {
+      // A LESSON OF THE BOOK NOT PREPARED YET (migration 037,
+      // lib/course-outline.ts): the outline lists it, nothing is loaded to
+      // teach from. Refused FIRST — before a session is opened, a turn is
+      // counted or a context is built — so no sitting is left behind and no
+      // model is ever started for it (constitution II). `buildLessonContext`
+      // would refuse it too (`getLessonData` → null); this is the earlier,
+      // cheaper door.
+      if (
+        (surface === "lesson_learn" || surface === "lesson_review") &&
+        (await isUnpreparedLesson(body.lesson, client))
+      ) {
+        return null;
+      }
+
       // Server-side turn count for this chat session: every row, whatever its
       // outcome. It drives `turn_index`, which stays monotonic across every
       // row in the conversation so a failed turn and the retry after it are
@@ -330,7 +344,9 @@ export async function POST(req: Request) {
       };
     });
 
-    if (!pre.ctx) {
+    if (pre === null || !pre.ctx) {
+      // An unprepared lesson (`pre === null`, above) gets this same answer.
+      //
       // THE COURSE GATE (migration 023, lib/catalog.ts). `body.lesson` is a
       // client-supplied slug: without this, a student who could not open a
       // hidden lesson's page could still be taught it turn by turn, which is

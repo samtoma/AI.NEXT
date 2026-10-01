@@ -50,7 +50,11 @@ because the 10% human sample (ADR-0008) is the only thing separating "a human
 read this" from "a machine wrote it", and a reload that silently dropped it
 would quietly re-assert content as unreviewed — or worse, leave a surface
 claiming a review that no longer has a record behind it. `reviewed_at` is written
-in UTC, so the file does not depend on the exporting session's time zone.
+in UTC, so the file does not depend on the exporting session's time zone. Since
+migration 035 `reviewed_by` is a HUMAN stamp only; the AI checks (`ai_checked_by`,
+`ai_checked_at`), a safety hold (`hold_reason`) and a note (`review_note`) travel
+too — each written only when set, so an export of rows that carry none of them is
+byte for byte what it was before 035.
 
 MATERIALISED ROWS ARE NOT EXPORTED. A widget the tutor improvised for one
 student (ADR-0009 §3) is that session's artefact awaiting review, not content to
@@ -122,7 +126,8 @@ def question_bundle(cur, widgets: bool, generator: str, los: list[str] | None = 
         cur,
         f"""SELECT id, lo_id, tier, question_type, stem, choices, correct_answer,
                    canonical_solution, status, parent_question_id, source_page,
-                   source_note, reviewed_by, reviewed_at
+                   source_note, reviewed_by, reviewed_at,
+                   ai_checked_by, ai_checked_at, hold_reason, review_note
               FROM questions
              WHERE source = 'variant'
                AND question_type {op} 'widget'
@@ -134,6 +139,11 @@ def question_bundle(cur, widgets: bool, generator: str, los: list[str] | None = 
         # record of what was served rather than a request to re-derive.
         ts = q["reviewed_at"]
         q["reviewed_at"] = ts.astimezone(timezone.utc).isoformat() if ts else None
+        if q.get("ai_checked_at"):
+            q["ai_checked_at"] = q["ai_checked_at"].astimezone(timezone.utc).isoformat()
+        for k in ("ai_checked_by", "ai_checked_at", "hold_reason", "review_note"):
+            if q.get(k) is None:
+                q.pop(k, None)
     return _header(prior, {"generator": generator, "questions": qs, "misconceptions": []},
                    "questions")
 
