@@ -126,6 +126,26 @@ notes on [ADR-0005](../../docs/decisions/0005-extraction-pipeline.md),
 > the change to the new one — left unticked until the code lands and is read. The main session adds this
 > row's evidence when it does.
 >
+> **Rev. 8 (2026-10-01) — T434 lands, and answer 37's new and changed requirements.** T434's code (the
+> sign-up and Google-step reversal, answer 36) was read and is real: evidence is now on the FR-4004,
+> FR-4005 and FR-4102 rows above, and `tasks.md` ticks T434. FR-4205's row gains answer 35's evidence
+> (the American course shows no Arabic anywhere, not only in its prompts) under a new task, **T435**,
+> ticked with it. **Samuel's answer 37** ("fan out the full book for me, and in the background create
+> agents with the review process"; decisions.md decisions 56–58) adds a new block, **FR-4501…FR-4509,
+> the internal review backlog** (§4c below) and **SC-214**, both **OPEN** — this is new-written
+> requirement, not yet built; the four engineer agents working on this branch build it next. It also
+> amends three existing rows, in spec.md and here: **FR-4302** (a non-disputed item — agreed printed
+> answer, EPUB solution and blind re-solve, or an EPUB-only item with no disagreement — now reaches
+> students without waiting at the solutions gate; a genuine disagreement still holds it, unchanged —
+> the "answers vs the book" automatic check decision 58c names); **FR-4410** (a chapter's prerequisite
+> links move on the second AI's agreement alone during the fan-out, confirmed afterwards through the
+> backlog; an unevidenced or cyclic link is still refused automatically, unchanged); **FR-4306** (noted,
+> not changed — decision 47's hold-for-human rule already has this backlog's shape). **FR-4321** gains
+> **FR-4508** beside it: a figure with no native type yet MAY show as the book's own image for now
+> (`stand_in: true`), reversing decision 50 (answer 29, "native only, wait") for students only, never
+> for the kind-approval gate itself. None of these four amendments has file:line evidence yet; code is
+> in progress on the branch, same as T434 was before this pass.
+
 > **Rev. 1 is the pre-implementation matrix, and every row is OPEN by construction.** The
 > requirements and this matrix are written before any code, following `docs/BRANCHING.md`'s
 > discipline. Rows move only when evidence exists, and the counting rule below applies from the first
