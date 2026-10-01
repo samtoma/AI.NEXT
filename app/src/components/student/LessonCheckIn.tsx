@@ -15,6 +15,7 @@ import { deriveMasteryStage, type Recommendation } from "@/lib/checkin";
 import { buildSectionIndex, sectionRecommendation } from "@/lib/book-sections";
 import {
   BEING_PREPARED,
+  bookOpenByDefault,
   pickerGroups,
   type OutlineLesson,
 } from "@/lib/course-outline";
@@ -192,6 +193,215 @@ function PlayCheckIn({
   const anyPreparing = modules.some((m) => m.entries.some((e) => !e.ready));
   const q = (slug: string, subject?: LessonInfo["subject"]) =>
     `/student?${subject ? `subject=${spineKeyOf(subject)}&` : ""}lesson=${encodeURIComponent(slug)}`;
+
+  // "Everything in the book" — the course map. Collapsed behind "Pick
+  // something else" for every National course, as it always was; OPEN on the
+  // page for a course whose book has an outline (Samuel, 2026-10-01: the
+  // Grade 10 whole-book list open by default), where it is how she sees the
+  // whole book, chapters still being prepared included. One element, so the
+  // two placements cannot drift apart.
+  {/* Open, this is a map of the course, not a list of links. Every
+      row carries how solid the student is on it — a unit ramp with
+      its stage in words, and a dot per lesson — because the whole
+      question being answered here is "what should I do instead?"
+      and bare lesson numbers cannot answer it. The dots and the
+      ramp read off the SAME banding the card above uses, so the
+      picker can never disagree with the topic it opens. */}
+  const bookPanel = (
+    <div className={cx(STICKER_PANEL, "mt-3 w-full overflow-clip")}>
+      <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2.5")}>
+        <span className="font-display text-[0.9rem] font-bold leading-none text-[var(--play-text-amber-warm)]">
+          Everything in the book
+        </span>
+        {/* The legend earns its place: a coloured dot with nothing
+            explaining it is decoration. */}
+        <span className="ms-auto flex items-center gap-1.5">
+          <span
+            aria-hidden
+            className={cx(STROKE_SM, "size-3 rounded-[var(--play-radius-pill)]")}
+            style={{ background: MASTERY_LEGEND[3].color }}
+          />
+          <span className="font-read text-[0.78rem] leading-none text-[color:var(--play-text-muted)]">
+            = how solid you are on it
+          </span>
+        </span>
+        {/* Only with a lesson not prepared yet in the list: the dashed
+            outline is this design system's "not ready yet" (globals.css,
+            the disabled anatomy; SubjectHome's MoreSubjectsComing), and
+            a dashed chip with nothing explaining it is decoration. */}
+        {anyPreparing && (
+          <span className="flex items-center gap-1.5">
+            <span aria-hidden className={PREPARING_SWATCH} />
+            <span className="font-read text-[0.78rem] leading-none text-[color:var(--play-text-muted)]">
+              = {BEING_PREPARED.toLowerCase()}
+            </span>
+          </span>
+        )}
+      </div>
+
+      <div className="px-4 py-1">
+        {modules.map((m, mi) => {
+          const geo = m.id.startsWith("module:geo");
+          const term = termOfModule(m.id, m.courseId);
+          // "Unit 1 — Relations and Functions" arrives as one string;
+          // the design wants the number as a mono eyebrow and the
+          // name as the row title, so split on the em dash and fall
+          // back to the whole label when there isn't one.
+          const plain = withoutTerm(m.label);
+          const [unitRef, ...rest] = plain.split(" — ");
+          const unitName = rest.join(" — ") || plain;
+          return (
+            <div
+              key={m.id}
+              className="flex flex-col gap-2.5 py-3.5"
+              style={
+                mi < modules.length - 1
+                  ? {
+                      // a divider inside a panel: the line-soft token
+                      borderBlockEndWidth: "var(--play-stroke-sm)",
+                      borderBlockEndStyle: "solid",
+                      borderBlockEndColor: "var(--line-soft)",
+                    }
+                  : undefined
+              }
+            >
+              {/* No unit-level ramp. It aggregated the very lessons
+                  listed directly underneath it, so the row said the
+                  same thing twice and the louder copy was the vaguer
+                  one — a unit average cannot tell you WHICH lesson is
+                  weak, which is the only question this list exists to
+                  answer. The dots do, one per lesson. */}
+              <div className="flex flex-col gap-0.5">
+                {term != null ? (
+                  <span className="font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em] text-[var(--play-text-amber-warm)]">
+                    Term <span dir="ltr">{term}</span>
+                    {unitRef !== unitName && ` · ${unitRef}`}
+                  </span>
+                ) : (
+                  // A course without terms (FR-4203): the unit's own
+                  // reference is the eyebrow, and no term is named.
+                  unitRef !== unitName && (
+                    <span
+                      className={cx(
+                        "font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em]",
+                        m.preparing
+                          ? "text-[color:var(--play-text-muted)]"
+                          : "text-[var(--play-text-amber-warm)]"
+                      )}
+                    >
+                      {unitRef}
+                    </span>
+                  )
+                )}
+                {m.preparing ? (
+                  // A chapter of the book with no lesson prepared yet
+                  // (lib/course-outline.ts): its name, quiet, and the
+                  // words that say so — never a link, never a ramp.
+                  <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                    <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-[color:var(--play-text-muted)]">
+                      {unitName}
+                    </span>
+                    <span className={PREPARING_TAG}>{BEING_PREPARED}</span>
+                  </span>
+                ) : (
+                  <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-ink">
+                    {unitName}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {m.entries.map((e) => {
+                  if (!e.ready) {
+                    // A lesson of the book not prepared yet: shown in
+                    // its place, named as it will be once loaded
+                    // ("1.7 · part 2"), and NOT a link — nothing opens
+                    // it, so nothing can start it (the server refuses
+                    // it too: lib/lesson.ts). The dashed outline is
+                    // the design system's "not ready yet"; the words
+                    // reach a screen reader and the tooltip.
+                    const h = lessonHeading(e.outline.provenance);
+                    const label = lessonChipText(h, e.outline.provenance);
+                    return (
+                      <span
+                        key={e.slug}
+                        title={`${lessonHeadingText(h)} — ${BEING_PREPARED}`}
+                        className={PREPARING_CHIP}
+                      >
+                        <span dir="ltr">{label}</span>
+                        <span className="sr-only"> — {BEING_PREPARED}</span>
+                      </span>
+                    );
+                  }
+                  const l = e.lesson;
+                  const selected = l.slug === lesson.slug;
+                  const stage = deriveMasteryStage(l.los);
+                  // A Grade 10 lesson's chip is its printed section,
+                  // and a part says which ("1.7 · part 2") — the three
+                  // parts of 1.7 all print "1.7" as their reference,
+                  // so the ref alone would be three identical chips
+                  // (FR-4318). National chips are unchanged.
+                  const book = l.provenance
+                    ? { h: lessonHeading(l.provenance), p: l.provenance }
+                    : null;
+                  const chip = book
+                    ? lessonChipText(book.h, book.p)
+                    : l.ref.replace(/^Lesson /, "");
+                  // What the chip SHOWS, so the accessible name
+                  // starts with the visible label (WCAG 2.5.3) — it
+                  // used to drop "Geo", and "Unit 4" exists in both
+                  // terms.
+                  const visible = `${geo ? "Geo " : ""}${chip}`;
+                  return (
+                    <Link
+                      key={l.slug}
+                      href={q(l.slug, m.subject)}
+                      scroll={false}
+                      prefetch={false}
+                      aria-current={selected ? "true" : undefined}
+                      aria-label={`${visible} — ${masteryPhrase(stage)}`}
+                      title={`${book ? lessonHeadingText(book.h) : l.title} — ${masteryPhrase(stage)}`}
+                      className={cx(
+                        "flex min-h-[var(--noor-touch-min)] items-center gap-2 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-solid px-3.5 font-display text-[0.85rem] leading-none transition-colors",
+                        selected
+                          ? "border-ink bg-ink font-bold text-paper"
+                          : "border-[color:var(--play-inactive-border)] bg-card font-semibold text-ink hover:border-ink"
+                      )}
+                    >
+                      {/* The legend swatch's anatomy: the thin
+                          stroke round the ramp colour. Unoutlined, the
+                          dot was colour-only and under 3:1 against
+                          white on four of five stages; outlined, it
+                          reads as filled-vs-empty like the fill
+                          segments do, and not-started can be the
+                          ramp's own step 0 instead of a borrowed
+                          grey. The band is also in the chip's name
+                          and `title`. Paper outline on the selected
+                          (ink) chip, where an ink one would vanish. */}
+                      <span
+                        aria-hidden
+                        className={cx(
+                          STROKE_WIDTH_SM,
+                          "size-3 shrink-0 rounded-[var(--play-radius-pill)]",
+                          selected ? "border-paper" : "border-ink"
+                        )}
+                        style={{
+                          background: MASTERY_LEGEND[stage].color,
+                        }}
+                      />
+                      {geo && <span>Geo</span>}
+                      <span dir="ltr">{chip}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+  const bookOpen = bookOpenByDefault(lesson.courseId, outline ?? []);
 
   return (
     <div className="flex min-h-full flex-col bg-paper">
@@ -541,6 +751,15 @@ function PlayCheckIn({
             — that class carries the rows' own 5px shadow, which is what
             made the old "smaller shadow" here untrue, and it outranked the
             amber focus ring. */}
+        {/* The whole book, open on the page (a course with an outline only):
+            no trigger to find it behind. Labelled for a screen reader by what
+            its band already says. */}
+        {bookOpen && (
+          <section aria-label="Everything in the book" className="shrink-0">
+            {bookPanel}
+          </section>
+        )}
+
         <div className="mt-auto flex flex-wrap items-start gap-3 pt-1.5">
           {/* `w-fit` closed so the trigger stays a button beside its
               neighbour; `open:w-full` so the panel underneath gets the whole
@@ -548,6 +767,7 @@ function PlayCheckIn({
               Without the pair, opening the picker stretched the trigger to
               full width and shoved "Just practise" onto its own line for no
               reason. */}
+          {!bookOpen && (
           <details className="group w-fit open:w-full">
             <summary className={cx(STROKE_SM, "play-pressable play-pressable-sm sticker-shadow-sm flex min-h-[var(--noor-touch-min)] w-fit cursor-pointer list-none items-center gap-2 rounded-[var(--play-radius-sm)] bg-card px-4 font-display text-[0.92rem] font-bold text-ink [&::-webkit-details-marker]:hidden")}>
               Pick something else
@@ -559,206 +779,9 @@ function PlayCheckIn({
               </span>
             </summary>
 
-            {/* Open, this is a map of the course, not a list of links. Every
-                row carries how solid the student is on it — a unit ramp with
-                its stage in words, and a dot per lesson — because the whole
-                question being answered here is "what should I do instead?"
-                and bare lesson numbers cannot answer it. The dots and the
-                ramp read off the SAME banding the card above uses, so the
-                picker can never disagree with the topic it opens. */}
-            <div className={cx(STICKER_PANEL, "mt-3 w-full overflow-clip")}>
-              <div className={cx(HONEY_BAND, "flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2.5")}>
-                <span className="font-display text-[0.9rem] font-bold leading-none text-[var(--play-text-amber-warm)]">
-                  Everything in the book
-                </span>
-                {/* The legend earns its place: a coloured dot with nothing
-                    explaining it is decoration. */}
-                <span className="ms-auto flex items-center gap-1.5">
-                  <span
-                    aria-hidden
-                    className={cx(STROKE_SM, "size-3 rounded-[var(--play-radius-pill)]")}
-                    style={{ background: MASTERY_LEGEND[3].color }}
-                  />
-                  <span className="font-read text-[0.78rem] leading-none text-[color:var(--play-text-muted)]">
-                    = how solid you are on it
-                  </span>
-                </span>
-                {/* Only with a lesson not prepared yet in the list: the dashed
-                    outline is this design system's "not ready yet" (globals.css,
-                    the disabled anatomy; SubjectHome's MoreSubjectsComing), and
-                    a dashed chip with nothing explaining it is decoration. */}
-                {anyPreparing && (
-                  <span className="flex items-center gap-1.5">
-                    <span aria-hidden className={PREPARING_SWATCH} />
-                    <span className="font-read text-[0.78rem] leading-none text-[color:var(--play-text-muted)]">
-                      = {BEING_PREPARED.toLowerCase()}
-                    </span>
-                  </span>
-                )}
-              </div>
-
-              <div className="px-4 py-1">
-                {modules.map((m, mi) => {
-                  const geo = m.id.startsWith("module:geo");
-                  const term = termOfModule(m.id, m.courseId);
-                  // "Unit 1 — Relations and Functions" arrives as one string;
-                  // the design wants the number as a mono eyebrow and the
-                  // name as the row title, so split on the em dash and fall
-                  // back to the whole label when there isn't one.
-                  const plain = withoutTerm(m.label);
-                  const [unitRef, ...rest] = plain.split(" — ");
-                  const unitName = rest.join(" — ") || plain;
-                  return (
-                    <div
-                      key={m.id}
-                      className="flex flex-col gap-2.5 py-3.5"
-                      style={
-                        mi < modules.length - 1
-                          ? {
-                              // a divider inside a panel: the line-soft token
-                              borderBlockEndWidth: "var(--play-stroke-sm)",
-                              borderBlockEndStyle: "solid",
-                              borderBlockEndColor: "var(--line-soft)",
-                            }
-                          : undefined
-                      }
-                    >
-                      {/* No unit-level ramp. It aggregated the very lessons
-                          listed directly underneath it, so the row said the
-                          same thing twice and the louder copy was the vaguer
-                          one — a unit average cannot tell you WHICH lesson is
-                          weak, which is the only question this list exists to
-                          answer. The dots do, one per lesson. */}
-                      <div className="flex flex-col gap-0.5">
-                        {term != null ? (
-                          <span className="font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em] text-[var(--play-text-amber-warm)]">
-                            Term <span dir="ltr">{term}</span>
-                            {unitRef !== unitName && ` · ${unitRef}`}
-                          </span>
-                        ) : (
-                          // A course without terms (FR-4203): the unit's own
-                          // reference is the eyebrow, and no term is named.
-                          unitRef !== unitName && (
-                            <span
-                              className={cx(
-                                "font-mono text-[0.7rem] uppercase leading-[1.4] tracking-[0.06em]",
-                                m.preparing
-                                  ? "text-[color:var(--play-text-muted)]"
-                                  : "text-[var(--play-text-amber-warm)]"
-                              )}
-                            >
-                              {unitRef}
-                            </span>
-                          )
-                        )}
-                        {m.preparing ? (
-                          // A chapter of the book with no lesson prepared yet
-                          // (lib/course-outline.ts): its name, quiet, and the
-                          // words that say so — never a link, never a ramp.
-                          <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                            <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-[color:var(--play-text-muted)]">
-                              {unitName}
-                            </span>
-                            <span className={PREPARING_TAG}>{BEING_PREPARED}</span>
-                          </span>
-                        ) : (
-                          <span className="font-display text-[1.05rem] font-bold leading-[1.35] text-ink">
-                            {unitName}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {m.entries.map((e) => {
-                          if (!e.ready) {
-                            // A lesson of the book not prepared yet: shown in
-                            // its place, named as it will be once loaded
-                            // ("1.7 · part 2"), and NOT a link — nothing opens
-                            // it, so nothing can start it (the server refuses
-                            // it too: lib/lesson.ts). The dashed outline is
-                            // the design system's "not ready yet"; the words
-                            // reach a screen reader and the tooltip.
-                            const h = lessonHeading(e.outline.provenance);
-                            const label = lessonChipText(h, e.outline.provenance);
-                            return (
-                              <span
-                                key={e.slug}
-                                title={`${lessonHeadingText(h)} — ${BEING_PREPARED}`}
-                                className={PREPARING_CHIP}
-                              >
-                                <span dir="ltr">{label}</span>
-                                <span className="sr-only"> — {BEING_PREPARED}</span>
-                              </span>
-                            );
-                          }
-                          const l = e.lesson;
-                          const selected = l.slug === lesson.slug;
-                          const stage = deriveMasteryStage(l.los);
-                          // A Grade 10 lesson's chip is its printed section,
-                          // and a part says which ("1.7 · part 2") — the three
-                          // parts of 1.7 all print "1.7" as their reference,
-                          // so the ref alone would be three identical chips
-                          // (FR-4318). National chips are unchanged.
-                          const book = l.provenance
-                            ? { h: lessonHeading(l.provenance), p: l.provenance }
-                            : null;
-                          const chip = book
-                            ? lessonChipText(book.h, book.p)
-                            : l.ref.replace(/^Lesson /, "");
-                          // What the chip SHOWS, so the accessible name
-                          // starts with the visible label (WCAG 2.5.3) — it
-                          // used to drop "Geo", and "Unit 4" exists in both
-                          // terms.
-                          const visible = `${geo ? "Geo " : ""}${chip}`;
-                          return (
-                            <Link
-                              key={l.slug}
-                              href={q(l.slug, m.subject)}
-                              scroll={false}
-                              prefetch={false}
-                              aria-current={selected ? "true" : undefined}
-                              aria-label={`${visible} — ${masteryPhrase(stage)}`}
-                              title={`${book ? lessonHeadingText(book.h) : l.title} — ${masteryPhrase(stage)}`}
-                              className={cx(
-                                "flex min-h-[var(--noor-touch-min)] items-center gap-2 rounded-[var(--play-radius-pill)] border-[length:var(--play-stroke-sm)] border-solid px-3.5 font-display text-[0.85rem] leading-none transition-colors",
-                                selected
-                                  ? "border-ink bg-ink font-bold text-paper"
-                                  : "border-[color:var(--play-inactive-border)] bg-card font-semibold text-ink hover:border-ink"
-                              )}
-                            >
-                              {/* The legend swatch's anatomy: the thin
-                                  stroke round the ramp colour. Unoutlined, the
-                                  dot was colour-only and under 3:1 against
-                                  white on four of five stages; outlined, it
-                                  reads as filled-vs-empty like the fill
-                                  segments do, and not-started can be the
-                                  ramp's own step 0 instead of a borrowed
-                                  grey. The band is also in the chip's name
-                                  and `title`. Paper outline on the selected
-                                  (ink) chip, where an ink one would vanish. */}
-                              <span
-                                aria-hidden
-                                className={cx(
-                                  STROKE_WIDTH_SM,
-                                  "size-3 shrink-0 rounded-[var(--play-radius-pill)]",
-                                  selected ? "border-paper" : "border-ink"
-                                )}
-                                style={{
-                                  background: MASTERY_LEGEND[stage].color,
-                                }}
-                              />
-                              {geo && <span>Geo</span>}
-                              <span dir="ltr">{chip}</span>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            {bookPanel}
           </details>
+          )}
 
           <Link
             href="/student?mode=practice"
