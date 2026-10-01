@@ -716,19 +716,19 @@ Items 10, 13 and 14 are engineering's.
 
 | | Count |
 |---|---|
-| Functional requirements | **154** |
+| Functional requirements | **159** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **168 / 168** |
-| — verified | 98 |
-| — built | 19 |
+| Traced (every one needs a row) | **173 / 173** |
+| — verified | 100 |
+| — built | 22 |
 | — partial | 44 |
 | — open | 2 |
 | — blocked | 1 |
 | — deferred | 4 |
-| Requirements a test declares | **92** |
+| Requirements a test declares | **97** |
 | Tasks complete / total | **0 / 0** |
 
-**Of 98 requirements marked VERIFIED, 52 have an automated test declaring them.** The remaining 46 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
+**Of 100 requirements marked VERIFIED, 54 have an automated test declaring them.** The remaining 46 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 
 Counted from the artifacts by `scripts/traceability.py`, which fails CI when the spec, the matrix and the tests disagree. The hand-maintained table this replaced had drifted five requirements out of date, and an entire deferred block had no row at all.
 
