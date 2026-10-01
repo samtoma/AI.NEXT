@@ -1256,7 +1256,7 @@ class ChapterSixForms(TypedItem, unittest.TestCase):
 
     def test_a_trigonometric_label_is_stripped_against_a_side_that_names_none(self):
         """Chapter 5's flattened chains and its "=\\frac…" finals settled before function names were kept in the signature; they must still settle (a
-        whole-corpus A/B of every recorded pair found 3 chain items and 2 label items that went to the judge), while a side that names ANOTHER function
+        whole-corpus A/B of every recorded pair found 3 chain items and 3 label items of Chapter 5 that went to the judge), while a side that names ANOTHER function
         is a different answer."""
         def routes(blind, book, printed):
             it = item("Ex5-4:2a", "Write the ratios.", [book], printed)
