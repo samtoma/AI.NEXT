@@ -23,6 +23,11 @@ WHAT IT GUARANTEES, and refuses to write otherwise:
     verdict and drops anything else, rather than trusting the file.
   * One error, one entry (FR-1115): no id twice, no objective in two runs, no two entries of one
     objective with the same label, and every alias names exactly one entry and no live id.
+    The one thing it does not refuse any more is an S5 author listing an id that must never fold as an
+    entry's alias (a live entry of this catalogue, or an id in ANOTHER objective's namespace — Chapter 5:
+    `swapped-coordinates` of one objective aliasing a live entry of another): that alias is STRIPPED from
+    that entry and a warning is printed and recorded on it (`provenance.aliases_stripped`). A link is
+    removed; no entry is deleted, edited or merged. See `strip_unfoldable_aliases`.
   * At most 4 entries per objective, `mc:<objective>:<slug>` ids, objectives the book owns, and
     a refutation of at least two steps on every entry (a label with nothing to teach is not an
     entry, FR-1112).
@@ -247,6 +252,70 @@ def validate_catalogue(bundle: dict, *, new_ids: set[str] | None = None,
     return problems
 
 
+# ------------------------------------------------------------------ aliases that must never fold
+# An alias is a FOLD INSTRUCTION: `load_misconceptions.py` re-points every question option stamped with it to the entry
+# and DELETES the alias's row (and its refutation) from the database. That is right for the id a generator invented for
+# an error the entry now owns, and ruinous for an id that is itself a live entry: the S5 author for Chapter 5 listed
+# `mc:g10m5s3-1-2:reads-sides-from-other-angle` — a live, CONFIRMED entry of another objective — as an alias of
+# `mc:g10m5s8-1-3:swapped-coordinates`, which would have deleted it. The assembler used to refuse the whole run, and
+# the run could not be corrected (the driver re-saves it from the workflow's output every time), so a human could only
+# edit the saved run by hand.
+#
+# What is stripped (from THAT entry's `aliases`, nothing else):
+#   * an alias that is a live id of this catalogue — another objective's entry, this objective's other entry, or the
+#     entry's own id (a self-link is harmless but means nothing);
+#   * an alias in ANOTHER objective's namespace, `mc:<other objective tail>:<slug>`, live here or not: this assembler
+#     sees one chapter's catalogue, the loader sees the whole database, and a cross-objective fold is never right
+#     (FR-1106: an objective's misconception never serves another objective's questions) — it would delete or re-point
+#     another objective's row (a dropped entry of another objective, a chapter loaded earlier).
+#
+# Why this stays fail-closed: stripping REMOVES a link, it never creates one. Nothing is deleted, merged or edited, no
+# entry and no question changes, and the loader folds one alias fewer. The only way it can go wrong is by losing a
+# redirect the author wanted, which leaves two entries where the author asked for one — noisier, never wrong, and the
+# warning names each one (printed, and `provenance.aliases_stripped` on the entry, kept by the export). Every OTHER alias
+# rule still refuses, in `validate_catalogue`, which is deliberately left as strict as ever: it runs after this on the
+# stripped entries, runs alone under `--validate` on a stored catalogue (where a live-id alias is still a defect), and
+# is the backstop should this ever be bypassed. An unknown alias, and a same-objective id that is not live (a draft id
+# the author merged away), fold exactly as before.
+def alias_warning(entry_id: str, stripped: dict) -> str:
+    return (f"{entry_id}: alias {stripped['alias']} STRIPPED — {stripped['reason']}. The link is removed; "
+            f"no entry is deleted or edited")
+
+
+def strip_unfoldable_aliases(kept: list[dict]) -> list[str]:
+    """Remove from each CONFIRMED entry in `kept` (in place) the aliases that must never fold; the entry gets
+    `aliases_stripped` = [{"alias", "reason"}]. Returns the warnings, one per stripped alias, as printable lines."""
+    live = {e["id"]: e for e in kept}
+    warnings: list[str] = []
+    for e in kept:
+        keep, stripped = [], []
+        for a in e.get("aliases") or []:
+            reason = None
+            if a in live:
+                other = live[a]
+                if other["id"] == e["id"]:
+                    reason = "it is the entry's own id"
+                elif other["lo_id"] != e["lo_id"]:
+                    reason = (f"it is a live entry of another objective ({other['lo_id']}); folding it would delete "
+                              f"that entry")
+                else:
+                    reason = "it is another live entry of this objective; folding it would delete that entry"
+            else:
+                m = MC_RE.match(a or "")
+                if m and f"lo:{m.group(1)}" != e["lo_id"]:
+                    reason = (f"it is an id in another objective's namespace (lo:{m.group(1)}) and may be live in the "
+                              f"database; folding it would delete that row")
+            if reason:
+                stripped.append({"alias": a, "reason": reason})
+                warnings.append(alias_warning(e["id"], stripped[-1]))
+            else:
+                keep.append(a)
+        if stripped:
+            e["aliases"] = keep
+            e["aliases_stripped"] = stripped
+    return warnings
+
+
 # ------------------------------------------------------------------ pipeline normalisations of an S5 run
 # A student-facing text S5 wrote wrongly in a way that needs no new model call — an id where the example should be
 # described in words, a page number, review history (consistency review 2026-09-27, A5) — is patched by the
@@ -371,6 +440,7 @@ def to_loader_shape(e: dict) -> dict:
             "sources": e.get("sources") or [],
             "covers": e.get("covers") or [],
             **({"normalisations": e["normalisations"]} if e.get("normalisations") else {}),
+            **({"aliases_stripped": e["aliases_stripped"]} if e.get("aliases_stripped") else {}),
         },
     }
 
@@ -573,7 +643,9 @@ def assemble(run_paths: list[Path], book_name: str) -> tuple[dict, list[dict], l
     book = book_config.load_book(book_name)
     kept, dropped, stripped, problems = load_runs(run_paths, book.book)
     kept.sort(key=lambda e: (e["lo_id"], e["id"]))
+    strip_unfoldable_aliases(kept)       # before validate_catalogue: see the section above; main() prints the warnings
     patched = sum(len(e.get("normalisations") or []) for e in kept)
+    n_stripped = sum(len(e.get("aliases_stripped") or []) for e in kept)
     catalogue = {
         "catalogue": f"{book.book}-misconceptions",
         "course_id": book.course_id,
@@ -583,6 +655,9 @@ def assemble(run_paths: list[Path], book_name: str) -> tuple[dict, list[dict], l
                       f"via assemble_misconceptions.py — runs {', '.join(sorted({e['_run'] for e in kept}))}; "
                       + (f"{patched} PIPELINE NORMALISATION(S) on {sum(1 for e in kept if e.get('normalisations'))} "
                          f"entries (provenance.normalisations says who and why); " if patched else "")
+                      + (f"{n_stripped} ALIAS LINK(S) STRIPPED on {sum(1 for e in kept if e.get('aliases_stripped'))} "
+                         f"entries (provenance.aliases_stripped says which and why; no entry was deleted); "
+                         if n_stripped else "")
                       + "pipeline-generated, UNREVIEWED"),
         "misconceptions": [to_loader_shape(e) for e in kept],
     }
@@ -951,6 +1026,9 @@ def main(argv: list[str] | None = None) -> int:
             f"--catalogue-only), or remove the tag at its "
             f"{'family spec' if u['origin'] == 'S6' else 'widget template'} and re-instantiate.")
 
+    for m in catalogue["misconceptions"]:
+        for st in (m["provenance"].get("aliases_stripped") or []):
+            print(f"  WARNING {alias_warning(m['id'], st)} (provenance.aliases_stripped)")
     by_kind = Counter(m["kind"] for m in catalogue["misconceptions"])
     n_lo = len({m["lo_id"] for m in entries.values()})
     print(f"{catalogue['book']}: {len(entries)} misconceptions on {n_lo} objectives "
