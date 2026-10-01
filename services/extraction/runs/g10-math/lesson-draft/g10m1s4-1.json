@@ -214,7 +214,7 @@
    "printed_answer": null,
    "epub_final_answer": null,
    "blind_answer": "1{,}212;\\ 3{,}1416;\\ 1{,}7321;\\ 2{,}790",
-   "verification": "disputed",
+   "verification": "agreed",
    "tier": "basic",
    "printed_page": 13,
    "shortcode": null,
@@ -222,8 +222,9 @@
     "pairs": [
      {
       "pair_id": "WE4|blind~book",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "not_markable",
+      "verdict": "equivalent",
+      "reason": "typed not markable: nothing is marked, so the book's final is not compared"
      }
     ]
    },
@@ -3140,13 +3141,24 @@
  "source_run": {
   "prompts_version": "lesson-v7",
   "stage": "S2-S4,S8",
-  "collect_version": "collect-5",
+  "collect_version": "collect-6",
+  "run_id": "wf_791f61b5-0bb",
   "embedded": {
    "source": "runbook/lesson.workflow.js",
-   "source_sha256": "cec93b6b4da6583666c038727078be9eaabcf9b47abf17f3196b1d908dd3adfe",
+   "source_sha256": "335591169602daefb63db78651e71c40c7cbac1cd61a492796bd2c27ebbfe83a",
    "args_sha256": "aa8cf2d16ccd454611289814c2fea1dd216e8b5fb009d3aab0bd32e124d9ff95",
-   "generated_sha256": "0716793e145177c577fa9fb076d31d85379bed9cf41488b36b70f40351e75739",
+   "generated_sha256": "7a5862a894931c31abf7cd4918938f8d7174858cb7da6a42f3d1bb9b123a2e11",
    "generator": "services/extraction/embed_workflow.py v1"
+  },
+  "recollected": {
+   "from_run": "wf_791f61b5-0bb",
+   "collect_version": "collect-6",
+   "script": {
+    "source": "runbook/lesson.workflow.js",
+    "source_sha256": "335591169602daefb63db78651e71c40c7cbac1cd61a492796bd2c27ebbfe83a",
+    "args_sha256": "aa8cf2d16ccd454611289814c2fea1dd216e8b5fb009d3aab0bd32e124d9ff95",
+    "generated_sha256": "7a5862a894931c31abf7cd4918938f8d7174858cb7da6a42f3d1bb9b123a2e11"
+   }
   }
  },
  "draft": true,
@@ -3156,20 +3168,6 @@
  "checks": {
   "verify": {
    "disagreements": [
-    {
-     "ref": "WE4",
-     "printed": null,
-     "book": null,
-     "blind": "1{,}212;\\ 3{,}1416;\\ 1{,}7321;\\ 2{,}790",
-     "pairs": [
-      {
-       "pair_id": "WE4|blind~book",
-       "route": "missing",
-       "verdict": "missing"
-      }
-     ],
-     "typing_problems": []
-    },
     {
      "ref": "Ex1-11:17a",
      "printed": "Irrational number.",
@@ -3474,6 +3472,7 @@
    "printed_not_in_asked_form": [],
    "forms_from_book_rules": [],
    "forms_the_marker_cannot_check": [],
+   "retyped": [],
    "tier_checks": [
     {
      "ref": "Ex1-2:2c",
@@ -3561,8 +3560,8 @@
     "book_worked_epub": 52
    },
    "by_verification": {
-    "disputed": 11,
-    "agreed": 38,
+    "agreed": 39,
+    "disputed": 10,
     "no_printed_answer": 4
    },
    "visuals": 0,
