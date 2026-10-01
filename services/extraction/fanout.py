@@ -349,10 +349,9 @@ def build_runs(inv: dict) -> list[dict]:
             after=[f"uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/{t}-<wf_id>.json "
                    "--maths runs/g10-math/maths/book/accepted.json",
                    f"# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → "
-                   f"runs/g10-math/objectives/g1-{t}.auto.json (the gates' auto-pass mode — another data-engineer's "
-                   "work; until it lands, the main session writes them as it did for Chapter 8), then:",
-                   f"uv run assemble_objectives.py approve g10-math --chapter {ch} --maths runs/g10-math/maths/book/accepted.json "
-                   f"--by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-{t}.auto.json",
+                   f"runs/g10-math/objectives/g1-{t}.auto.json and the gate record runs/g10-math/gates/g1-{t}.json, "
+                   "then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+                   f"uv run auto_pass_gates.py g1 g10-math --chapter {ch} --maths runs/g10-math/maths/book/accepted.json --approve",
                    "# every G1 decision → the console backlog"],
             checkpoint="chapter 1: objectives per lesson, decisions owed, and that the auto-pass verdicts cover them"
                        if i == 0 else None)
@@ -376,13 +375,17 @@ def build_runs(inv: dict) -> list[dict]:
                 save_to="runs/g10-math/lessons/<wf_id>.json", meter=_meter("S2-S4", l["slug"]),
                 after=[f"uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft "
                        "--maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-                       f"# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → "
-                       f"runs/g10-math/g2-{t}.json (never the pilot's g2.json); every verdict → the console backlog",
-                       f"uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json "
-                       f"--g2 runs/g10-math/g2-{t}.json"],
+                       f"# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): "
+                       f"see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-{t}.json — never the "
+                       "pilot's g2.json)"],
                 checkpoint=("first lesson of the book: script size, disputed rate, cost per item against "
                             "$0.056–0.10") if (i == 0 and len(lesson_ids) == 1) else None)
-        assemble = [f"uv run assemble_lesson_bundle.py --book g10-math --chapter {ch} --report runs/g10-math/fanout/assembly-{t}.json",
+        lesson_runs_args = " ".join(f"--lesson-run runs/g10-math/lessons/<{rid}'s wf_id>.json" for rid in lesson_ids)
+        assemble = [f"uv run auto_pass_gates.py g2 g10-math --chapter {ch} {lesson_runs_args} --into runs/g10-math/g2-{t}.json "
+                    "--split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI "
+                    f"checks' recommendation → runs/g10-math/g2-{t}.json (auto: true), the gate record runs/g10-math/gates/g2-{t}.json "
+                    "(every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+                    f"uv run assemble_lesson_bundle.py --book g10-math --chapter {ch} --report runs/g10-math/fanout/assembly-{t}.json",
                     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c%02d.json, seed/content/<slug>.json "
                     "(answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, "
                     "another data-engineer's work)" % ch,
