@@ -1,0 +1,46 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s5-1-1:sqrt-bracket",
+ "kind": "family",
+ "lo_id": "lo:g10m1s5-1-1",
+ "parent_question_id": "q:g10m1s5-1-1:ex1-11-20c",
+ "source_page": 38,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "n",
+   "randint": [
+    6,
+    12
+   ]
+  },
+  {
+   "name": "r",
+   "randint": [
+    1,
+    "2 * n"
+   ]
+  },
+  {
+   "name": "N",
+   "let": "n ** 2 + r"
+  }
+ ],
+ "stem": "Determine between which two consecutive integers the following irrational number lies, without using a calculator. Give the smaller integer first. $\\sqrt{{=N}}$",
+ "solution": [
+  "Find the perfect squares on either side of ${=N}$: ${=n}^{2} = {=n ** 2}$ and ${=n + 1}^{2} = {=(n + 1) ** 2}$.",
+  "Since ${=n ** 2} < {=N} < {=(n + 1) ** 2}$, taking square roots gives ${=n} < \\sqrt{{=N}} < {=n + 1}$.",
+  "So $\\sqrt{{=N}}$ lies between ${=n}$ and ${=n + 1}$."
+ ],
+ "marker": {
+  "kind": "values",
+  "answer": "[{=n}, {=n + 1}]",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Same skeleton as the book's ex1-11-20a to d (find the two perfect squares that sandwich the radicand), with larger radicands than the book prints (the book stops at root 30; here the lower integer n runs 6 to 12, so the radicand runs 37 to 168 and the squares needed are 36 up to 169). The radicand is n^2 + r with 1 <= r <= 2n, so it is strictly between consecutive squares, is never a perfect square, and the answer is always n and n + 1. The stem adds 'Give the smaller integer first' only to make the two-value answer unambiguous. Basic tier (book) already covers the small radicands, so this tier is the same method at the size of numbers a Grade 10 learner is expected to recall (squares to 13^2)."
+}

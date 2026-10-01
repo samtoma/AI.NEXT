@@ -1,0 +1,66 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-1-2:switch-then-diffsq",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-1-2",
+ "parent_question_id": "q:g10m1s7-1-2:ex1-11-29m",
+ "source_page": 39,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "s",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "t",
+   "randint": [
+    2,
+    9
+   ],
+   "resample_while": "gcd(s, t) != 1"
+  },
+  {
+   "name": "n",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "ss",
+   "let": "s * s"
+  },
+  {
+   "name": "tt",
+   "let": "t * t"
+  }
+ ],
+ "constraints": [
+  "gcd(s, t) == 1"
+ ],
+ "stem": "Factorise fully: ${=ss}(a-{=n})+{=tt}x^2({=n}-a)$",
+ "solution": [
+  "The two brackets hold the same terms in a different order. Switch the second bracket around and change the sign in front: ${=n}-a=-(a-{=n})$, so ${=tt}x^2({=n}-a)=-{=tt}x^2(a-{=n})$.",
+  "Both terms now contain the common binomial $(a-{=n})$: ${=ss}(a-{=n})-{=tt}x^2(a-{=n})$.",
+  "Take out the common binomial factor $(a-{=n})$: $(a-{=n})({=ss}-{=tt}x^2)$.",
+  "The second bracket is a difference of two squares: ${=ss}-{=tt}x^2={=s}^2-({=t}x)^2=({=s}-{=t}x)({=s}+{=t}x)$.",
+  "The fully factorised answer is $(a-{=n})({=s}-{=t}x)({=s}+{=t}x)$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "(a - {=n})*({=s} - {=t}*x)*({=s} + {=t}*x)",
+  "form": "factorised",
+  "variables": [
+   "a",
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the book's exercise 4(a-3)-81x^2(a-3) with the book's switch-around twist added, so the common binomial only appears after the second bracket is turned around, and the leftover bracket must then be factorised as a difference of two squares. The book list holds two questions with the id ex1-11-29m, both on page 39; this family models the one with 4(a-3)-81x^2(a-3), and the instance s=2, t=9, n=3 gives 4(a-3)+81x^2(3-a) = (a-3)(2-9x)(2+9x), the book's own answer. Parameters: s and t from 2 to 9 with gcd(s, t) = 1, so there is no numerical common factor left in s^2 - t^2x^2 and the answer is fully factorised in one shape up to order and sign of factors; n from 2 to 9. 304 distinct instances. Checked numerically: s^2(a-n) + t^2x^2(n-a) = (a-n)(s-tx)(s+tx) for every admitted (s, t, n). The second term is added in the stem (not subtracted) so that, after the switch-around, a difference of squares appears rather than a sum of squares. Trap named by the catalogued misconception mc:g10m1s7-1-2:switch-around-sign-not-flipped: keeping the plus sign would give (a-n)(s^2 + t^2x^2), which does not factorise further and is wrong. Expression answer, so no distractors are needed and none are declared."
+}

@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-1-2:diffsq-then-switch",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-1-2",
+ "parent_question_id": "q:g10m1s7-1-2:ex1-11-29m",
+ "source_page": 39,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "k",
+   "randint": [
+    3,
+    9
+   ]
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    "k - 1"
+   ],
+   "resample_while": "gcd(k, c) != 1"
+  },
+  {
+   "name": "m",
+   "let": "k - c"
+  },
+  {
+   "require": "m >= 1",
+   "why": "the constant in the second bracket stays positive, so the printed answer always has the shape (p - 1)(kp + m)"
+  }
+ ],
+ "constraints": [
+  "gcd(k, c) == 1",
+  "c >= 2",
+  "c < k"
+ ],
+ "stem": "Factorise fully: ${=k}(p^2-1)+{=c}(1-p)$",
+ "solution": [
+  "Look for a hidden common binomial. The first bracket is a difference of two squares: $p^2-1=(p-1)(p+1)$, so the first term is ${=k}(p-1)(p+1)$.",
+  "The second bracket is the first one turned around. Switch it around and change the sign in front: $1-p=-(p-1)$, so ${=c}(1-p)=-{=c}(p-1)$.",
+  "Now both terms contain the binomial $(p-1)$: ${=k}(p-1)(p+1)-{=c}(p-1)$.",
+  "Take out the common binomial factor $(p-1)$: $(p-1)[{=k}(p+1)-{=c}]$.",
+  "Simplify inside the square bracket: ${=k}(p+1)-{=c}={=k}p+{=k}-{=c}={=k}p+{=m}$.",
+  "The factorised form is $(p-1)({=k}p+{=m})$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "(p - 1)*({=k}*p + {=m})",
+  "form": "factorised",
+  "variables": [
+   "p"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Advanced: two of the book's own moves in one question. The difference of two squares exposes the common binomial (the book does exactly this in the exercise factorising -3(1-p^2)+p+1, answer (1+p)(-2+3p), printed page 39), and the second bracket must be switched around with a sign change (the book's ex1-6-1 and ex1-6-5 move, page 22). Note that the book question list holds two questions with the id ex1-11-29m, both on page 39; this family models the one with -3(1-p^2)+p+1. Parameters: k from 3 to 9, c from 2 to k-1 with gcd(k, c) = 1, so the final bracket kp + (k - c) has no numerical common factor, has a positive constant, and cannot be a multiple of (p - 1); the answer is therefore fully factorised in exactly one shape up to the order and sign of factors. 19 distinct instances. Checked: k(p^2-1)+c(1-p) = (p-1)(kp + k - c) for every admitted (k, c). Trap named by the catalogued misconception mc:g10m1s7-1-2:switch-around-sign-not-flipped: keeping +c(p-1) would give (p-1)(kp + k + c). Expression answer, so no distractors are needed and none are declared."
+}

@@ -1,0 +1,73 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s8-1-2:divide-trinomial-squares",
+ "kind": "family",
+ "lo_id": "lo:g10m1s8-1-2",
+ "parent_question_id": "q:g10m1s8-1-2:ex1-10-2a",
+ "source_page": 34,
+ "tier": "standard",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "q",
+   "randint": [
+    2,
+    11
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    12
+   ],
+   "resample_while": "p == q"
+  },
+  {
+   "name": "c",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "d",
+   "choice": [
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "r",
+   "choice": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "name": "n",
+   "let": "r * c * d"
+  }
+ ],
+ "constraints": [
+  "p != q",
+  "n <= 100"
+ ],
+ "stem": "Simplify (assume all denominators are non-zero): $\\dfrac{x^2+{=p+q}x+{=p*q}}{{=c}(x^2-{=q*q})}\\div\\dfrac{{=d}x^2+{=d*p}x}{{=n}x^2-{=n*q}x}$",
+ "answer": "r",
+ "solution": [
+  "Change the division to multiplication by the reciprocal, that is, flip the second fraction: $\\frac{x^2+{=p+q}x+{=p*q}}{{=c}(x^2-{=q*q})}\\times\\frac{{=n}x^2-{=n*q}x}{{=d}x^2+{=d*p}x}$",
+  "Factorise every numerator and denominator: $x^2+{=p+q}x+{=p*q}=(x+{=p})(x+{=q})$, $x^2-{=q*q}=(x-{=q})(x+{=q})$, ${=d}x^2+{=d*p}x={=d}x(x+{=p})$ and ${=n}x^2-{=n*q}x={=n}x(x-{=q})$",
+  "Write the product with every factor showing: $\\frac{(x+{=p})(x+{=q})}{{=c}(x-{=q})(x+{=q})}\\times\\frac{{=n}x(x-{=q})}{{=d}x(x+{=p})}$",
+  "Cancel the common factors $(x+{=p})$, $(x+{=q})$, $(x-{=q})$ and $x$: $=\\frac{1}{{=c}}\\times\\frac{{=n}}{{=d}}$",
+  "Multiply and simplify: $=\\frac{{=n}}{{=c*d}}={=r}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Parametrises the book's most repeated exercise (ex1-10-2a/b/c, ex1-11-31f/j; ex1-11-31e has the same skeleton). Skeleton: (x+p)(x+q) / [c(x-q)(x+q)] divided by d*x(x+p) / [n*x(x-q)], with n = r*c*d so the result n/(c*d) = r is a whole number by construction, exactly as in the book (answers 5, 3, 4, 2, 5, 5). The trinomial is written in expanded form x^2+(p+q)x+pq and the student must factorise it; p != q so the trinomial is not a perfect square. Ranges chosen to match the book's magnitudes: q 2..11, p 2..12, largest coefficient n*q <= 100*11 = 1100, as in ex1-11-31j (100d^2-1100d). Verified by exact rational evaluation at several x over all 4800 parameter combinations (answer r, never depends on x). The variable letter is fixed at x (the book varies it; the answer is a number so nothing is lost)."
+}

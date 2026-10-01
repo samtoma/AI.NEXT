@@ -1,0 +1,69 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-3-4:common-cube-bracket",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-3-4",
+ "parent_question_id": "q:g10m1s7-3-4:ex1-9-26",
+ "source_page": 30,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "c",
+   "randint": [
+    2,
+    6
+   ]
+  },
+  {
+   "name": "sg",
+   "choice": [
+    1,
+    -1
+   ]
+  },
+  {
+   "name": "o1",
+   "let": "'+' if sg == 1 else '-'"
+  },
+  {
+   "name": "o2",
+   "let": "'-' if sg == 1 else '+'"
+  },
+  {
+   "name": "w",
+   "let": "'sum' if sg == 1 else 'difference'"
+  },
+  {
+   "name": "k",
+   "let": "c ** 3"
+  },
+  {
+   "name": "m",
+   "let": "c * c"
+  }
+ ],
+ "constraints": [],
+ "stem": "Factorise: $a(x^3 {=o1} {=k}) + b(x^3 {=o1} {=k})$",
+ "solution": [
+  "Both terms contain the same bracket, $(x^3 {=o1} {=k})$, so take it out as a common factor: $a(x^3 {=o1} {=k}) + b(x^3 {=o1} {=k}) = (a + b)(x^3 {=o1} {=k})$.",
+  "Look at the bracket that is left: $x^3 {=o1} {=k}$ is a {=w} of two cubes, because ${=k} = {=c}^3$. So $x^3 {=o1} {=k} = x^3 {=o1} {=c}^3$.",
+  "Factorise the {=w} of cubes: $x^3 {=o1} {=c}^3 = (x {=o1} {=c})(x^2 {=o2} {=c}x + {=c}^2) = (x {=o1} {=c})(x^2 {=o2} {=c}x + {=m})$.",
+  "The quadratic factor $x^2 {=o2} {=c}x + {=m}$ cannot be factorised any further.",
+  "Write all the factors together: $a(x^3 {=o1} {=k}) + b(x^3 {=o1} {=k}) = (a + b)(x {=o1} {=c})(x^2 {=o2} {=c}x + {=m})$."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "(a + b)*(x {=o1} {=c})*(x^2 {=o2} {=c}*x + {=m})",
+  "form": "factorised",
+  "variables": [
+   "a",
+   "b",
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic tier: the entry point of the skill. Two terms with letter multipliers a and b share one bracket that is x^3 plus or minus a small perfect cube (c from 2 to 6, so 8, 27, 64, 125 or 216); the cube root of x^3 is just x (monic), so there is no coefficient-cube step. Take the common bracket out, then factorise the sum or difference of two cubes once. Standard book exercises (ex1-9-26 and ex1-11-30x) add a coefficient cube such as 125w^3 with a second letter; advanced ones (ex1-9-25, ex1-9-27, ex1-11-29o) add a further quadratic or difference-of-squares factorisation or a sign twist, and none of that is used here. Parent is ex1-9-26 (p. 30): same skeleton, common bracket then cubes, with the simplest cube. The sign is sampled (sum or difference) so both cube identities are practised; sum gives (x + c)(x^2 - cx + c^2), difference gives (x - c)(x^2 + cx + c^2), and the factor of cx is always at least 2x so no coefficient of 1 is printed. The strings '+' '-' 'sum' 'difference' are produced by let params with string literals and interpolated with {=...}; if the engine does not allow string literals in let, replace them with a pair of sibling families (one per sign). The final answer is accepted in any factor order (marker form factorised). The catalogue of misconceptions for this objective is empty and the family is expression-typed with no distractors, so none are attached; likely errors a reviewer may see in student work are a wrong sign in the middle term (x^2 + cx + c^2 for a sum) and stopping at (a + b)(x^3 + c^3)."
+}

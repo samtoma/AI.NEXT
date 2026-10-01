@@ -1,0 +1,83 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-2-2:perfect-square-trinomial",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-2-2",
+ "parent_question_id": "q:g10m1s7-2-2:ex1-11-29g",
+ "source_page": 39,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "choice": [
+    2,
+    3,
+    5,
+    7
+   ]
+  },
+  {
+   "name": "q",
+   "choice": [
+    2,
+    3,
+    5,
+    7
+   ],
+   "resample_while": "q == p"
+  },
+  {
+   "name": "a",
+   "let": "p * p"
+  },
+  {
+   "name": "c",
+   "let": "q * q"
+  },
+  {
+   "name": "b",
+   "let": "2 * p * q"
+  },
+  {
+   "name": "m1",
+   "let": "a + c"
+  },
+  {
+   "name": "m2",
+   "let": "a * c + 1"
+  },
+  {
+   "name": "m3",
+   "let": "q * a + q"
+  },
+  {
+   "name": "m4",
+   "let": "p * c + p"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1",
+  "b != m1 and b != m2 and b != m3 and b != m4"
+ ],
+ "stem": "Factorise: ${=a}x^{2}+{=b}x+{=c}$",
+ "solution": [
+  "Write down the factors. The first coefficient ${=a}$ has the factor pairs $1\\times{=a}$ and ${=p}\\times{=p}$. The constant term ${=c}$ has the factor pairs $1\\times{=c}$ and ${=q}\\times{=q}$.",
+  "Every term of ${=a}x^{2}+{=b}x+{=c}$ is positive, so every bracket contains a plus sign. Set out the possible pairs of brackets from the factor pairs: $(x+1)({=a}x+{=c})$, $(x+{=c})({=a}x+1)$, $(x+{=q})({=a}x+{=q})$, $({=p}x+1)({=p}x+{=c})$ and $({=p}x+{=q})({=p}x+{=q})$.",
+  "Expand each pair of brackets to find its middle term. $(x+1)({=a}x+{=c})={=a}x^{2}+{=c}x+{=a}x+{=c}={=a}x^{2}+{=m1}x+{=c}$. $(x+{=c})({=a}x+1)={=a}x^{2}+x+{=a*c}x+{=c}={=a}x^{2}+{=m2}x+{=c}$. $(x+{=q})({=a}x+{=q})={=a}x^{2}+{=q}x+{=a*q}x+{=c}={=a}x^{2}+{=m3}x+{=c}$. $({=p}x+1)({=p}x+{=c})={=a}x^{2}+{=p*c}x+{=p}x+{=c}={=a}x^{2}+{=m4}x+{=c}$. $({=p}x+{=q})({=p}x+{=q})={=a}x^{2}+{=p*q}x+{=p*q}x+{=c}={=a}x^{2}+{=b}x+{=c}$.",
+  "The trinomial has middle term ${=b}x$, and only the last pair of brackets gives this. Here the first term and the last term are both perfect squares and the two brackets are identical: ${=a}x^{2}+{=b}x+{=c}=({=p}x+{=q})({=p}x+{=q})$.",
+  "Check by multiplying out. The first terms give ${=p}x\\times{=p}x={=a}x^{2}$, the last terms give ${=q}\\times{=q}={=c}$, and the middle term is $({=p}\\times{=q}+{=q}\\times{=p})x=({=p*q}+{=p*q})x={=b}x$. This is the original trinomial, so the factorisation is correct."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=p}*x + {=q})*({=p}*x + {=q})",
+  "form": "factorised",
+  "variables": [
+   "x"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "The twist the book itself uses in ex1-11-29g (16b^2+56b+49 = (4b+7)(4b+7)): a perfect-square trinomial, where the two brackets are identical. Here a = p^2 and c = q^2 with p, q distinct primes from 2, 3, 5, 7, so each of a and c has exactly two factor pairs (1 x n and root x root) and there are exactly five candidate bracket pairs, all listed and expanded; their middle terms are pairwise different from the correct 2pq (checked over the whole parameter space, constraint included). gcd(p, q) = 1 keeps the trinomial primitive. The book's own example has a composite root (4), which is left out on purpose so that every factor-pair list in the solution is complete. The marker answer is the repeated product, as in the book's key; if the form check rejects a power, (px+q)^2 is the same answer. Every equation in every rendered solution was checked by evaluation over the whole parameter space (12 instances)."
+}

@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s4-1-2:people-needed",
+ "kind": "family",
+ "lo_id": "lo:g10m1s4-1-2",
+ "parent_question_id": "q:g10m1s4-1-2:ex1-2-5",
+ "source_page": 14,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": "Boxes have to be carried, and every person can carry the same fixed number of boxes. The number of people needed must be a whole number.",
+ "params": [
+  {
+   "name": "b",
+   "choice": [
+    3,
+    6,
+    7,
+    9
+   ]
+  },
+  {
+   "name": "n",
+   "randint": [
+    20,
+    70
+   ],
+   "resample_while": "n % b == 0 or 2 * (n % b) >= b"
+  },
+  {
+   "name": "q",
+   "let": "fixed((n * 10000 // b) / 10000, 4)"
+  },
+  {
+   "name": "low",
+   "let": "n // b"
+  },
+  {
+   "name": "carried",
+   "let": "b * (n // b)"
+  },
+  {
+   "name": "ans",
+   "let": "n // b + 1"
+  }
+ ],
+ "constraints": [
+  "n % b != 0",
+  "2 * (n % b) < b"
+ ],
+ "stem": "If it takes $1$ person to carry ${=b}$ boxes, how many people are needed to carry ${=n}$ boxes?",
+ "answer": "ans",
+ "solution": [
+  "Each person can carry ${=b}$ boxes, so we divide the number of boxes by ${=b}$ to find out how many people are needed.",
+  "$\\frac{{=n}}{{=b}}={=q}...$",
+  "We cannot have part of a person, so the answer must be a whole number. Rounding to the nearest whole number would give ${=low}$ people, but ${=low}$ people can carry only ${=carried}$ boxes, which is fewer than ${=n}$ boxes.",
+  "So we round up to the next whole number. Therefore ${=ans}$ people are needed to carry ${=n}$ boxes."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "The book's own twist (ex1-2-5): the sensible rounding is UP, not to the nearest. Wording of the stem is the book's. The parameters are chosen so that the nearest whole number is always the wrong one (the remainder is always less than half of b, so n/b ends in a fraction below one half); that is exactly the situation in which the catalogued error mc:g10m1s4-1-2:round-to-nearest-when-whole-needed is visible, and its signature wrong answer is n // b, which step 3 of the solution names and refutes. The family is numeric rather than mcq: a count of people is a natural typed answer, and a multiple-choice list would give away the twist. With b in {3, 6, 7, 9} and a non-zero remainder the quotient is always a non-terminating decimal, so the '...' in step 2 is always true; the displayed value is truncated to 4 decimal places. Answer = floor(n / b) + 1, which equals the ceiling because the remainder is never 0.",
+ "version": 1
+}

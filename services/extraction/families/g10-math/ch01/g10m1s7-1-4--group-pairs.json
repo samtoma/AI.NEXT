@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-1-4:group-pairs",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-1-4",
+ "parent_question_id": "q:g10m1s7-1-4:ex1-11-30e",
+ "source_page": 39,
+ "tier": "basic",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "p",
+   "randint": [
+    2,
+    7
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    7
+   ],
+   "resample_while": "gcd(p, q) != 1"
+  },
+  {
+   "name": "c",
+   "randint": [
+    2,
+    6
+   ]
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1",
+  "p >= 2",
+  "q >= 2",
+  "c >= 2"
+ ],
+ "stem": "Factorise the following: ${=c*p}m + {=c*q}n + {=p}jm + {=q}jn$",
+ "solution": [
+  "Group the terms in pairs: $({=c*p}m + {=c*q}n) + ({=p}jm + {=q}jn)$.",
+  "Take out the common factor of each pair, ${=c}$ from the first pair and $j$ from the second pair: $({=c*p}m + {=c*q}n) + ({=p}jm + {=q}jn) = {=c}({=p}m + {=q}n) + j({=p}m + {=q}n)$.",
+  "Both terms now contain the same binomial $({=p}m + {=q}n)$, so take it out as a common factor: ${=c}({=p}m + {=q}n) + j({=p}m + {=q}n) = ({=p}m + {=q}n)({=c} + j)$.",
+  "Check by expanding: $({=p}m + {=q}n)({=c} + j) = {=c*p}m + {=p}jm + {=c*q}n + {=q}jn$, which has the same four terms as the original expression."
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "({=p}*m + {=q}*n)*({=c} + j)",
+  "form": "factorised",
+  "variables": [
+   "j",
+   "m",
+   "n"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Basic tier: the entry point of grouping in pairs. It is the exact skeleton of book question ex1-11-30e (14m-4n+7jm-2jn = 2(7m-2n)+j(7m-2n) = (7m-2n)(2+j)) with every sign positive, so the learner meets the pair-and-common-binomial idea before having to handle subtraction signs (the standard book exercises). The expression is built as c*p*m + c*q*n + p*j*m + q*j*n, so the terms already sit in the order that the pairs are the first two and the last two; the first pair's common factor is the number c, the second pair's is the letter j, and the two brackets are identical (p*m + q*n), exactly as in the book solution. Parameter choices: p, q in 2..7 and c in 2..6, so every coefficient is a plain whole number of at most 42 and no coefficient of 1 (which would need the letter printed bare) ever occurs. gcd(p, q) = 1 guarantees the binomial (p*m + q*n) has no further common factor, so the answer is fully factorised and the first pair's greatest common factor is exactly c; p and q are therefore never equal. c >= 2 guarantees the first pair needs a visible numerical common factor (never a factor of 1). Alternative grouping (first with third term, second with fourth) gives the same factorised answer (p*m + q*n)(c + j) up to the order of factors, so the marker is unambiguous. No distractors (not an mcq), hence no misconception ids; none are catalogued for this objective. The variable j is used as an ordinary letter, as in the book question; if the marker's parser treats j as the imaginary unit, rename j to another letter (for example k) in the stem, solution and marker together."
+}

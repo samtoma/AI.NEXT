@@ -1,0 +1,145 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s5-1-3:rank-mixed-numbers",
+ "kind": "family",
+ "lo_id": "lo:g10m1s5-1-3",
+ "parent_question_id": "q:g10m1s5-1-3:ex1-3-3",
+ "source_page": 16,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "q",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "name": "p",
+   "randint": [
+    "q + 1",
+    "5*q - 1"
+   ],
+   "resample_while": "gcd(p, q) != 1"
+  },
+  {
+   "name": "cf",
+   "let": "p // q"
+  },
+  {
+   "name": "a",
+   "randint": [
+    5,
+    50
+   ],
+   "resample_while": "is_square(a) or isqrt(a) == cf"
+  },
+  {
+   "name": "ca",
+   "let": "isqrt(a)"
+  },
+  {
+   "name": "k",
+   "choice": [
+    2,
+    3
+   ]
+  },
+  {
+   "name": "ck",
+   "let": "6 if k == 2 else 9"
+  },
+  {
+   "name": "m",
+   "randint": [
+    0,
+    8
+   ],
+   "resample_while": "m == ck"
+  },
+  {
+   "name": "b",
+   "randint": [
+    5,
+    80
+   ],
+   "resample_while": "is_square(b) or isqrt(b) == m or isqrt(b) == ck"
+  },
+  {
+   "name": "cb",
+   "let": "isqrt(b)"
+  },
+  {
+   "name": "d",
+   "randint": [
+    11,
+    98
+   ],
+   "resample_while": "d % 10 == 0"
+  },
+  {
+   "name": "d1",
+   "let": "d // 10"
+  },
+  {
+   "name": "o",
+   "let": "[x % 10 for x in sorted([(cb + 50)*100 + 1, (49 - cf)*100 + 2, (m + 50)*100 + 13, (ck + 50)*100 + 4, (49 - ca)*100 + 5, (m + 50)*100 + 6])]"
+  },
+  {
+   "name": "oneg",
+   "let": "[x % 10 for x in sorted([(cb + 50)*100 + 1, (20 + cf)*100 + 2, (m + 50)*100 + 13, (ck + 50)*100 + 4, (20 + ca)*100 + 5, (m + 50)*100 + 6])]"
+  },
+  {
+   "name": "orep",
+   "let": "[x % 10 for x in sorted([(cb + 50)*100 + 1, (49 - cf)*100 + 2, (m + 50)*100 + 3, (ck + 50)*100 + 4, (49 - ca)*100 + 5, (m + 50)*100 + 16])]"
+  }
+ ],
+ "constraints": [
+  "gcd(p, q) == 1",
+  "ca != cf",
+  "cb != ck",
+  "cb != m",
+  "m != ck"
+ ],
+ "stem": "Without using a calculator, rank the following numbers in ascending order (smallest first): (1) $\\sqrt{{=b}}$, (2) $-\\frac{{=p}}{{=q}}$, (3) ${=m}.\\overline{{=d}}$, (4) ${=k}\\pi$, (5) $-\\sqrt{{=a}}$, (6) ${=m}.{=d}$. Which option lists the numbers in ascending order?",
+ "solution": [
+  "Negative numbers are smaller than positive numbers. Numbers (2) and (5) are negative and the other four are positive, so (2) and (5) come first.",
+  "Place each surd between two whole numbers. Since {=ca*ca} < {=a} < {=(ca+1)*(ca+1)}, $\\sqrt{{=a}}$ lies between {=ca} and {=ca+1}, so $-\\sqrt{{=a}}$ lies between ${=-(ca+1)}$ and ${=-ca}$. Since {=cb*cb} < {=b} < {=(cb+1)*(cb+1)}, $\\sqrt{{=b}}$ lies between {=cb} and {=cb+1}.",
+  "Place the fraction between two whole numbers. Since {=cf*q} < {=p} < {=(cf+1)*q}, $\\frac{{=p}}{{=q}}$ lies between {=cf} and {=cf+1}, so $-\\frac{{=p}}{{=q}}$ lies between ${=-(cf+1)}$ and ${=-cf}$.",
+  "Estimate the multiple of pi using $\\pi \\approx 3.14$: ${=k}\\pi \\approx {=k} \\times 3.14 = {=fixed(k * 314 / 100, 2)}$, which lies between {=ck} and {=ck+1}.",
+  "Compare the two decimals. Both lie between {=m} and {=m+1}. Written out, ${=m}.{=d} = {=m}.{=d}000\\ldots$ and ${=m}.\\overline{{=d}} = {=m}.{=d}{=d}{=d}\\ldots$. They agree in the first two decimal places, and then the next digit is 0 for the first and {=d1} for the second, so ${=m}.{=d} < {=m}.\\overline{{=d}}$.",
+  "The numbers lie between different pairs of whole numbers, except for the two decimals, which were compared in the previous step. Ordering the numbers by these positions on the number line, negative numbers first, gives ({=o[0]}), ({=o[1]}), ({=o[2]}), ({=o[3]}), ({=o[4]}), ({=o[5]})."
+ ],
+ "choices": {
+  "correct": "({=o[0]}), ({=o[1]}), ({=o[2]}), ({=o[3]}), ({=o[4]}), ({=o[5]})",
+  "distractors": [
+   {
+    "text": "({=o[5]}), ({=o[4]}), ({=o[3]}), ({=o[2]}), ({=o[1]}), ({=o[0]})",
+    "misconception_id": "mc:g10m1s5-1-3:descending-instead-of-ascending"
+   },
+   {
+    "text": "({=oneg[0]}), ({=oneg[1]}), ({=oneg[2]}), ({=oneg[3]}), ({=oneg[4]}), ({=oneg[5]})",
+    "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign"
+   },
+   {
+    "text": "({=orep[0]}), ({=orep[1]}), ({=orep[2]}), ({=orep[3]}), ({=orep[4]}), ({=orep[5]})",
+    "misconception_id": "mc:g10m1s5-1-3:repeating-decimal-same-as-terminating"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s5-1-3:descending-instead-of-ascending",
+   "label": "Listing the numbers from largest to smallest",
+   "description": "The student ranks the numbers correctly but writes them from the largest to the smallest, so the list is in descending order when the question asked for ascending order."
+  }
+ ],
+ "notes": "Mixed list of six numbers in fixed slots: a surd, a negative fraction, a repeating decimal, a multiple of pi (2 pi or 3 pi), a negative surd, and the terminating decimal with the same digits as the repeating one. Answer is an mcq of LABEL ORDERS (see the basic family's notes for why). Every pair of numbers lies between different pairs of whole numbers (enforced by the resample_while clauses and the constraints), except the two decimals, which are ordered by comparing digits: the terminating decimal is e.d000... and the repeating one is e.dddd..., so the repeating one is always the larger (d is two digits, 11 to 98, with no trailing zero, so the third digit is 0 against the tens digit of d). Pi is taken as 3.14, so 2 pi = 6.28 and 3 pi = 9.42 lie in 6 to 7 and 9 to 10; the integer part of the decimals, and the surd, never share those brackets. Some pairs are close in value but still decided by whole-number brackets, e.g. 7.\\overline{98} (about 7.99) against a surd just above 8; the repeating decimal is always below its next whole number. The three wrong options use the two catalogued misconceptions (the two negatives swapped; the repeating decimal placed before the terminating one) and descending order; none can coincide with the right answer or each other, by construction (checked on 3000 simulated instances). Fractions p/q have q from 2 to 8, p/q between 1 and 5, in lowest terms; the surd radicands are 5 to 50 (negative) and 5 to 80 (positive). The book's cube roots, square roots of fractions and the non-real and undefined entries of ex1-11-5b are left to the advanced tier."
+}

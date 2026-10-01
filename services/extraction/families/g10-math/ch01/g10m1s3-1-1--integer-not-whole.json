@@ -1,0 +1,91 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s3-1-1:integer-not-whole",
+ "kind": "family",
+ "lo_id": "lo:g10m1s3-1-1",
+ "parent_question_id": "q:g10m1s3-1-1:ex1-11-5e",
+ "source_page": 37,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    2,
+    30
+   ]
+  },
+  {
+   "name": "roots",
+   "sample": {
+    "from": "[v for v in range(2, 31) if not is_square(v)]",
+    "k": 2
+   }
+  },
+  {
+   "name": "n",
+   "let": "roots[0]"
+  },
+  {
+   "name": "q",
+   "let": "roots[1]"
+  },
+  {
+   "name": "s",
+   "let": "isqrt(n)"
+  },
+  {
+   "name": "fr",
+   "choice": "[1/2, 3/2, 5/2, 7/2, 1/3, 2/3, 4/3, 5/3, 7/3, 1/4, 3/4, 5/4, 7/4, 2/5, 3/5, 4/5, 6/5, 7/5, 9/4, 22/7]"
+  },
+  {
+   "name": "lo",
+   "let": "floor(fr)"
+  },
+  {
+   "name": "hi",
+   "let": "ceil(fr)"
+  }
+ ],
+ "constraints": [],
+ "stem": "In the Venn diagram of the special sets, $\\mathbb{N}$ lies inside $\\mathbb{N}_0$, and $\\mathbb{N}_0$ lies inside $\\mathbb{Z}$. Recall that $\\mathbb{N}_0 = \\{0, 1, 2, 3, \\ldots\\}$ and $\\mathbb{Z} = \\{\\ldots, -2, -1, 0, 1, 2, \\ldots\\}$. Which one of the following numbers lies inside $\\mathbb{Z}$ but outside $\\mathbb{N}_0$?",
+ "choices": {
+  "correct": "$-{=a}$",
+  "distractors": [
+   {
+    "text": "$\\frac{0}{\\sqrt{{=q}}}$",
+    "misconception_id": "mc:g10m1s3-1-1:zero-not-whole"
+   },
+   {
+    "text": "${=-fr}$",
+    "misconception_id": "mc:g10m1s3-1-1:negative-non-integer-called-integer"
+   },
+   {
+    "text": "$-\\sqrt{{=n}}$",
+    "misconception_id": "mc:g10m1s3-1-1:negative-non-integer-called-integer"
+   }
+  ]
+ },
+ "solution": [
+  "A number that lies inside $\\mathbb{Z}$ but outside $\\mathbb{N}_0$ is an integer that is not a whole number. $\\mathbb{N}_0$ already contains $0$ and every positive integer, so the number must be a negative integer.",
+  "$\\frac{0}{\\sqrt{{=q}}}$ is real, because its denominator $\\sqrt{{=q}}$ is not zero, so nothing is divided by zero. The zero on top makes it equal to $0$, and $0$ is in $\\mathbb{N}_0$, so it is not outside $\\mathbb{N}_0$.",
+  "${=-fr}$ is negative, but it lies between ${=-hi}$ and ${=-lo}$, so it is a fraction and not an integer. It is outside $\\mathbb{Z}$.",
+  "$-\\sqrt{{=n}}$ has its minus sign outside the root, so it is real, but it lies between $-{=s + 1}$ and $-{=s}$, so it is not an integer. It is outside $\\mathbb{Z}$.",
+  "$-{=a}$ is a negative integer. It is in $\\mathbb{Z}$, but it is negative, so it is not in $\\mathbb{N}_0$.",
+  "The number that lies inside $\\mathbb{Z}$ but outside $\\mathbb{N}_0$ is $-{=a}$."
+ ],
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m1s3-1-1:zero-not-whole",
+   "label": "Treats zero as not a whole number",
+   "description": "The student thinks the whole numbers start at 1, like the natural numbers, so places 0 (or a number equal to 0, such as a zero over a non-zero denominator) among the integers that are not whole numbers."
+  },
+  {
+   "id": "mc:g10m1s3-1-1:negative-non-integer-called-integer",
+   "label": "Calls any negative number an integer",
+   "description": "The student sees that the number is negative and concludes it is a negative integer, even when it is a negative fraction or a negative square root that is not a whole value."
+  }
+ ],
+ "notes": "Venn-diagram placement at the N0/Z boundary, the skill named in the objective description. The correct option is a negative integer; the three distractors are the book's own twists: a zero over a root (ex1-1-3b prints 0 over root 2 as real, so the student must see it equals 0, which is whole), a negative fraction (like the book's -8 4/5) and a minus-outside-the-root surd (like the book's -sqrt 8). The non-integer options use a fraction from a fixed table of reduced non-integers and a non-square radicand lying strictly between s^2 and (s+1)^2, so 'not an integer' is true for every instance, and the floor/ceiling bounds quoted in the solution are exact (for 1/2 the bounds are -1 and 0). No simplification of roots or fractions to integers is required anywhere. Two distractors share one proposed misconception id because they are two surface forms of the same error. Options are expected to be shuffled by the engine."
+}

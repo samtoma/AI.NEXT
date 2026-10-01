@@ -1,0 +1,109 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m1s7-1-1:highest-common-factor-three-letters",
+ "kind": "family",
+ "lo_id": "lo:g10m1s7-1-1",
+ "parent_question_id": "q:g10m1s7-1-1:ex1-5-12",
+ "source_page": 21,
+ "tier": "advanced",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "g",
+   "choice": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  {
+   "name": "u",
+   "randint": [
+    2,
+    5
+   ]
+  },
+  {
+   "name": "v",
+   "randint": [
+    2,
+    5
+   ],
+   "resample_while": "v == u"
+  },
+  {
+   "name": "w",
+   "choice": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "resample_while": "gcd(gcd(u, v), w) != 1"
+  },
+  {
+   "name": "ra",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "rb",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "ea",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "fb",
+   "choice": [
+    1,
+    2
+   ]
+  },
+  {
+   "name": "pa",
+   "let": "['a', 'a^{2}', 'a^{3}', 'a^{4}']"
+  },
+  {
+   "name": "pb",
+   "let": "['b', 'b^{2}', 'b^{3}', 'b^{4}']"
+  }
+ ],
+ "constraints": [
+  "gcd(gcd(u, v), w) == 1",
+  "u != v"
+ ],
+ "stem": "Factorise completely: ${=g*u}{=pa[ra + ea - 1]}{=pb[rb - 1]}-{=g*v}{=pa[ra - 1]}{=pb[rb + fb - 1]}c+{=g*w}{=pa[ra - 1]}{=pb[rb - 1]}$",
+ "solution": [
+  "Find the highest common factor of the numbers {=g*u}, {=g*v} and {=g*w}. It is {=g}.",
+  "Now the letters. $a$ and $b$ are in every term, so take the lowest power of each: ${=pa[ra - 1]}$ and ${=pb[rb - 1]}$. The letter $c$ is in only one term, so it is not a common factor.",
+  "So the highest common factor is ${=g}{=pa[ra - 1]}{=pb[rb - 1]}$. Divide each term by it, keeping the sign of each term: ${=g*u}{=pa[ra + ea - 1]}{=pb[rb - 1]}\\div {=g}{=pa[ra - 1]}{=pb[rb - 1]}={=u}{=pa[ea - 1]}$, then $-{=g*v}{=pa[ra - 1]}{=pb[rb + fb - 1]}c\\div {=g}{=pa[ra - 1]}{=pb[rb - 1]}=-{=v}{=pb[fb - 1]}c$, and ${=g*w}{=pa[ra - 1]}{=pb[rb - 1]}\\div {=g}{=pa[ra - 1]}{=pb[rb - 1]}={=w}$.",
+  "Write the common factor in front of a bracket that holds what is left: ${=g*u}{=pa[ra + ea - 1]}{=pb[rb - 1]}-{=g*v}{=pa[ra - 1]}{=pb[rb + fb - 1]}c+{=g*w}{=pa[ra - 1]}{=pb[rb - 1]}={=g}{=pa[ra - 1]}{=pb[rb - 1]}({=u}{=pa[ea - 1]}-{=v}{=pb[fb - 1]}c+{=w})$"
+ ],
+ "marker": {
+  "kind": "expression",
+  "answer": "{=g}*a^{=ra}*b^{=rb}*({=u}*a^{=ea} - {=v}*b^{=fb}*c + {=w})",
+  "form": "factorised",
+  "variables": [
+   "a",
+   "b",
+   "c"
+  ],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Modelled on book ex1-5-12 (2xy^2 + xy^2z + 3xy = xy(2y + yz + 3)), pushed to its harder form: three letters, a numeric highest common factor that must be found from three coefficients, powers of two letters (take the LOWEST power of each), and one letter (c) that is in only one term and so must NOT be taken out. Pure common-factor skill, no other technique. Construction: terms are g*u*a^(ra+ea)*b^rb, minus g*v*a^ra*b^(rb+fb)*c, plus g*w*a^ra*b^rb. Since ea >= 1 and fb >= 1 the lowest power of a is exactly ra and of b exactly rb; gcd(u, v, w) = 1 so the numeric factor is exactly g; the bracket u*a^ea - v*b^fb*c + w is irreducible (linear in c, with no letter shared between its parts), so 'completely' has one answer. The first term is always positive, so the positive highest common factor is the only natural one (no sign-convention ambiguity). Exponent-1 letters print as plain a / b via the string tables pa and pb (indexes stay within 0..3). Largest coefficient is 6*5 = 30."
+}
