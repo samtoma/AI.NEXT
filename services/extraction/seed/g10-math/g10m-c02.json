@@ -1,0 +1,4550 @@
+{
+  "source_document": {
+    "title": "Everything Maths, Grade 10 Mathematics (Siyavula, Version 1.1 CAPS)",
+    "publisher": "Siyavula Education (with volunteers)",
+    "edition": "Version 1.1 CAPS",
+    "language": "en",
+    "grade": "10",
+    "subject": "mathematics",
+    "file_path": "docs/Source/Gr10_Mathematics_Learner_Eng_v11.pdf"
+  },
+  "extraction_run": {
+    "extractor": "extraction line v2 (assemble_lesson_bundle.py)",
+    "extractor_version": "b8-1",
+    "schema_version": "1"
+  },
+  "syllabus_version": "Version 1.1 CAPS",
+  "nodes": [
+    {
+      "id": "module:g10m-c02",
+      "kind": "module",
+      "label": "Chapter 2 — Exponents",
+      "syllabus_ref": "Chapter 2",
+      "source_page": 43,
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:g10m2s2-1-1",
+      "kind": "learning_objective",
+      "label": "Apply the exponent laws",
+      "description": "Simplify exponential expressions without a calculator by applying the product, quotient and power laws together with the zero and negative exponent identities.",
+      "syllabus_ref": "2.2",
+      "source_page": 44,
+      "order_in_parent": 1
+    },
+    {
+      "id": "lo:g10m2s2-1-2",
+      "kind": "learning_objective",
+      "label": "Reduce to prime bases",
+      "description": "Simplify exponential expressions whose terms have different bases by reducing the bases to prime bases and then applying the exponent laws.",
+      "syllabus_ref": "2.2",
+      "source_page": 46,
+      "order_in_parent": 2
+    },
+    {
+      "id": "lo:g10m2s2-1-3",
+      "kind": "learning_objective",
+      "label": "Factorise exponential expressions",
+      "description": "Simplify exponential fractions with more than one term by factorising, taking out a common factor or using the difference of squares, and cancelling.",
+      "syllabus_ref": "2.2",
+      "source_page": 48,
+      "order_in_parent": 3
+    },
+    {
+      "id": "lo:g10m2s3-1-1",
+      "kind": "learning_objective",
+      "label": "Simplify expressions with rational exponents",
+      "description": "Simplify expressions with rational exponents, including products and quotients of powers and rational powers of products, by applying the exponent laws",
+      "syllabus_ref": "2.3",
+      "source_page": 50,
+      "order_in_parent": 4
+    },
+    {
+      "id": "lo:g10m2s3-1-2",
+      "kind": "learning_objective",
+      "label": "Evaluate numeric rational powers",
+      "description": "Evaluate, without a calculator, a number raised to a rational exponent, including a decimal base or a negative rational exponent, by rewriting the base as a fraction or a prime power.",
+      "syllabus_ref": "2.3",
+      "source_page": 50,
+      "order_in_parent": 5
+    },
+    {
+      "id": "lo:g10m2s4-1-1",
+      "kind": "learning_objective",
+      "label": "Equate exponents, same base",
+      "description": "Solve an exponential equation by writing both sides as a single power of the same base (changing to prime bases and using a^0 = 1 where needed) and equating the exponents.",
+      "syllabus_ref": "2.4",
+      "source_page": 52,
+      "order_in_parent": 6
+    },
+    {
+      "id": "lo:g10m2s4-1-2",
+      "kind": "learning_objective",
+      "label": "Take out common factor",
+      "description": "Solve an exponential equation containing terms with different exponents of the same base by rewriting the terms, taking out the common factor, simplifying and then equating exponents.",
+      "syllabus_ref": "2.4",
+      "source_page": 53,
+      "order_in_parent": 7
+    },
+    {
+      "id": "lo:g10m2s4-1-3",
+      "kind": "learning_objective",
+      "label": "Solve by factorising",
+      "description": "Solve an exponential equation that reduces to a trinomial, a difference of two squares or a product of factors equal to zero by rewriting and factorising, solving each factor and rejecting factors that cannot be satisfied.",
+      "syllabus_ref": "2.4",
+      "source_page": 53,
+      "order_in_parent": 8
+    },
+    {
+      "id": "lo:g10m2s4-1-4",
+      "kind": "learning_objective",
+      "label": "Trial and error estimates",
+      "description": "Use trial and error to find the value of x, correct to 2 decimal places, in an exponential equation whose sides cannot be written with the same base.",
+      "syllabus_ref": "2.4",
+      "source_page": 52,
+      "order_in_parent": 9
+    }
+  ],
+  "edges": [
+    {
+      "src": "module:g10m-c02",
+      "dst": "course:us-g10-math-en",
+      "type": "part_of"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s2-1-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s2-1-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s2-1-3",
+      "type": "teaches"
+    },
+    {
+      "src": "lo:g10m2s2-1-1",
+      "dst": "lo:g10m2s2-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s2-1-1",
+      "dst": "lo:g10m2s2-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s2-1-2",
+      "dst": "lo:g10m2s2-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s7-1-1",
+      "dst": "lo:g10m2s2-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s7-1-3",
+      "dst": "lo:g10m2s2-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s8-1-1",
+      "dst": "lo:g10m2s2-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s3-1-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s3-1-2",
+      "type": "teaches"
+    },
+    {
+      "src": "lo:g10m2s2-1-1",
+      "dst": "lo:g10m2s3-1-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s2-1-1",
+      "dst": "lo:g10m2s3-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s3-1-4",
+      "dst": "lo:g10m2s3-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s4-1-1",
+      "type": "teaches"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s4-1-2",
+      "type": "teaches"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s4-1-3",
+      "type": "teaches"
+    },
+    {
+      "src": "module:g10m-c02",
+      "dst": "lo:g10m2s4-1-4",
+      "type": "teaches"
+    },
+    {
+      "src": "lo:g10m2s2-1-2",
+      "dst": "lo:g10m2s4-1-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s2-1-1",
+      "dst": "lo:g10m2s4-1-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s3-1-4",
+      "dst": "lo:g10m2s4-1-1",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s4-1-1",
+      "dst": "lo:g10m2s4-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s7-1-1",
+      "dst": "lo:g10m2s4-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s2-1-1",
+      "dst": "lo:g10m2s4-1-2",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s7-2-1",
+      "dst": "lo:g10m2s4-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s7-1-3",
+      "dst": "lo:g10m2s4-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s3-1-1",
+      "dst": "lo:g10m2s4-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s2-1-1",
+      "dst": "lo:g10m2s4-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m2s4-1-1",
+      "dst": "lo:g10m2s4-1-3",
+      "type": "prerequisite_of"
+    },
+    {
+      "src": "lo:g10m1s4-1-1",
+      "dst": "lo:g10m2s4-1-4",
+      "type": "prerequisite_of"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q:g10m2s2-1-2:we02",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify: $\\dfrac{{2}^{2n}\\times{4}^{n}\\times2}{{16}^{n}}$",
+      "answer": "2",
+      "solution": [
+        "Change the bases to prime numbers: At first glance it appears that we cannot simplify this expression. However, if we reduce the bases to prime bases, then we can apply the exponent laws. $\\dfrac{{2}^{2n}\\times{4}^{n}\\times2}{{16}^{n}}=\\dfrac{{2}^{2n}\\times{\\left({2}^{2}\\right)}^{n}\\times{2}^{1}}{{\\left({2}^{4}\\right)}^{n}}$",
+        "Simplify the exponents: $\\begin{aligned}&=\\frac{2^{2n}\\times2^{2n}\\times2^{1}}{2^{4n}}\\\\&=\\frac{2^{2n+2n+1}}{2^{4n}}\\\\&=\\frac{2^{4n+1}}{2^{4n}}\\\\&=2^{4n+1-(4n)}\\\\&=2\\end{aligned}$"
+      ],
+      "source_page": 46,
+      "source_note": "Worked example 2 · p.46 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s2-1-2:we03",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{{5}^{2x-1}\\cdot{9}^{x-2}}{{15}^{2x-3}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{25}{3}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{25}{3}",
+      "solution": [
+        "Change the bases to prime numbers: $\\begin{aligned}\\dfrac{{5}^{2x-1}\\cdot{9}^{x-2}}{{15}^{2x-3}}&=\\dfrac{{5}^{2x-1}\\cdot{\\left({3}^{2}\\right)}^{x-2}}{{\\left(5\\times3\\right)}^{2x-3}}\\\\&=\\dfrac{{5}^{2x-1}\\cdot{3}^{2x-4}}{{5}^{2x-3}\\cdot{3}^{2x-3}}\\end{aligned}$",
+        "Subtract the exponents (same base): $\\begin{aligned}&=5^{(2x-1)-(2x-3)}\\times3^{(2x-4)-(2x-3)}\\\\&=5^{2x-1-2x+3}\\times3^{2x-4-2x+3}\\\\&=5^{2}\\times3^{-1}\\end{aligned}$",
+        "Write the answer as a fraction: $\\begin{aligned}&=\\frac{5^{2}}{3}\\\\&=\\frac{25}{3}\\end{aligned}$"
+      ],
+      "source_page": 47,
+      "source_note": "Worked example 3 · p.47 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s2-1-3:we04",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{{2}^{t}-{2}^{t-2}}{3\\cdot{2}^{t}-{2}^{t}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{3}{8}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{3}{8}",
+      "solution": [
+        "Simplify to a form that can be factorised: For each of the exponent laws we can “undo” the law - in other words we can work backwards. For this expression we can reverse the multiplication law to write $2^{t-2}$ as $2^{t}\\cdot2^{-2}$ . $\\frac{{2}^{t}-{2}^{t-2}}{3\\cdot{2}^{t}-{2}^{t}}=\\frac{{2}^{t}-\\left({2}^{t}\\cdot{2}^{-2}\\right)}{3\\cdot{2}^{t}-{2}^{t}}$",
+        "Take out a common factor: $=\\frac{{2}^{t}\\left(1-{2}^{-2}\\right)}{{2}^{t}\\left(3-1\\right)}$",
+        "Cancel the common factor and simplify: $\\begin{aligned}&=\\frac{1-2^{-2}}{3-1}\\\\&=\\frac{1-\\frac{1}{4}}{2}\\\\&=\\frac{3}{4}\\times\\frac{1}{2}\\\\&=\\frac{3}{8}\\end{aligned}$"
+      ],
+      "source_page": 48,
+      "source_note": "Worked example 4 · p.48 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-1",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Simplify without using a calculator: $16^{0}$",
+      "answer": "1",
+      "solution": [
+        "$16^{0}=1$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 1 (2DZG) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-2",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Simplify without using a calculator: $16a^{0}$",
+      "answer": "16",
+      "solution": [
+        "$\\begin{aligned}16a^{0}&=16(1)\\\\&=16\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 2 (2DZH) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-3",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\text{11}^{9x}\\times\\text{11}^{2x}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "11^{11x}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "11^{11x}",
+      "solution": [
+        "$\\begin{aligned}\\text{11}^{9x}\\times\\text{11}^{2x}&=\\text{11}^{9x+2x}\\\\&=\\text{11}^{11x}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 3 (2DZJ) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-4",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\text{10}^{6x}\\times\\text{10}^{2x}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "10^{8x}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "10^{8x}",
+      "solution": [
+        "$\\begin{aligned}\\text{10}^{6x}\\times\\text{10}^{2x}&=\\text{10}^{6x+2x}\\\\&=\\text{10}^{8x}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 4 (2DZK) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-5",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $(\\text{6}c)^{\\text{3}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "216c^{3}",
+          "form": null,
+          "variables": [
+            "c"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "216c^{3}",
+      "solution": [
+        "$\\begin{aligned}(\\text{6}c)^{\\text{3}}&=\\text{6}^{\\text{3}}c^{\\text{3}}\\\\&=\\text{216}c^{\\text{3}}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 5 (2DZM) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-6",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $(\\text{5}n)^{\\text{3}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "125n^{3}",
+          "form": null,
+          "variables": [
+            "n"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "125n^{3}",
+      "solution": [
+        "$\\begin{aligned}(\\text{5}n)^{\\text{3}}&=\\text{5}^{\\text{3}}n^{\\text{3}}\\\\&=\\text{125}n^{\\text{3}}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 6 (2DZN) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-7",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{2^{-2}}{3^{2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{36}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{36}",
+      "solution": [
+        "$\\begin{aligned}\\frac{2^{-2}}{3^{2}}&=\\frac{\\frac{1}{2^{2}}}{9}\\\\&=\\frac{1}{4}\\times\\dfrac{1}{9}\\\\&=\\frac{1}{36}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 7 (2DZP) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-8",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Simplify without using a calculator: $\\dfrac{5}{2^{-3}}$",
+      "answer": "40",
+      "solution": [
+        "$\\begin{aligned}\\frac{5}{2^{-3}}&=\\dfrac{5}{\\frac{1}{2^{3}}}\\\\&=\\frac{5}{1}\\times\\frac{8}{1}\\\\&=40\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 8 (2DZQ) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-9",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(\\dfrac{2}{3}\\right)^{-3}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{27}{8}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{27}{8}",
+      "solution": [
+        "$\\begin{aligned}\\left(\\frac{2}{3}\\right)^{-3}&=\\frac{2^{-3}}{3^{-3}}\\\\&=\\frac{1}{8}\\times\\dfrac{27}{1}\\\\&=\\frac{27}{8}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 9 (2DZR) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-10",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{a^2}{a^{-1}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "a^3",
+          "form": null,
+          "variables": [
+            "a"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "a^3",
+      "solution": [
+        "$\\frac{a^2}{a^{-1}}=a^3$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 10 (2DZS) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-11",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{xy^{-3}}{x^4y}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{x^3y^4}",
+          "form": null,
+          "variables": [
+            "x",
+            "y"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{x^3y^4}",
+      "solution": [
+        "$\\frac{xy^{-3}}{x^4y}=\\frac{1}{x^3y^4}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 11 (2DZT) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-12",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $x^{2}x^{3t+1}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "x^{3t+3}",
+          "form": null,
+          "variables": [
+            "x",
+            "t"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x^{3t+3}",
+      "solution": [
+        "$\\begin{aligned}x^{2}x^{3t+1}&=x^{2}x^{3t}x^{1}\\\\&=x^{2+1}x^{3t}\\\\&=x^{3}x^{3t}\\\\&=x^{3t+3}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 12 (2DZV) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-13",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $3\\times3^{2a}\\times3^{2}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3^{2a+3}",
+          "form": null,
+          "variables": [
+            "a"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3^{2a+3}",
+      "solution": [
+        "$\\begin{aligned}3\\times3^{2a}\\times3^{2}&=3^{1+2a+2}\\\\&=3^{2a+3}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 13 (2DZW) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-14",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Simplify without using a calculator: $\\dfrac{\\text{2}^{m+20}}{\\text{2}^{m+20}}$",
+      "answer": "1",
+      "solution": [
+        "$\\begin{aligned}\\frac{\\text{2}^{m+20}}{\\text{2}^{m+20}}&=\\text{2}^{(m+20)-(m+20)}\\\\&=\\text{2}^{m+20-m-20}\\\\&=\\text{2}^{0}\\\\&=\\text{1}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 14 (2DZX) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-15",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Simplify without using a calculator: $\\dfrac{\\text{2}^{x+4}}{\\text{2}^{x+3}}$",
+      "answer": "2",
+      "solution": [
+        "$\\begin{aligned}\\frac{\\text{2}^{x+4}}{\\text{2}^{x+3}}&=\\text{2}^{(x+4)-(x+3)}\\\\&=\\text{2}^{x+4-x-3}\\\\&=\\text{2}^{1}\\\\&=\\text{2}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 15 (2DZY) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-16",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $(2a^4)(3ab^2)$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "6a^5b^2",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "6a^5b^2",
+      "solution": [
+        "$(2a^4)(3ab^2)=6a^5b^2$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 16 (2DZZ) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-17",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $(7m^4n)(8m^6n^8)$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "56m^{10}n^{9}",
+          "form": null,
+          "variables": [
+            "m",
+            "n"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "56m^{10}n^{9}",
+      "solution": [
+        "$(7m^4n)(8m^6n^8)=56m^{10}n^{9}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 17 (2F22) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-18",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $2(-a^7b^8)(-4a^3b^6)(-9a^6b^2)$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "-72a^{16}b^{16}",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "-72a^{16}b^{16}",
+      "solution": [
+        "$\\begin{aligned}2(-a^7b^8)(-4a^3b^6)(-9a^6b^2)&=-72a^{7+3+6}b^{8+6+2}\\\\&=-72a^{16}b^{16}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 18 (2F23) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-19",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $(-9x^3y^6)\\left(\\dfrac{1}{9}x^8y^7\\right)\\left(\\dfrac{1}{5}x^3y^6\\right)$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "-\\frac{1}{5}x^{14}y^{19}",
+          "form": null,
+          "variables": [
+            "x",
+            "y"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "-\\frac{1}{5}x^{14}y^{19}",
+      "solution": [
+        "$(-9x^3y^6)\\left(\\frac{1}{9}x^8y^7\\right)\\left(\\frac{1}{5}x^3y^6\\right)=-\\frac{1}{5}x^{14}y^{19}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 19 (2F24) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-20",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{a^{3x}}{a^{x}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "a^{2x}",
+          "form": null,
+          "variables": [
+            "a",
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "a^{2x}",
+      "solution": [
+        "$\\begin{aligned}\\frac{a^{3x}}{a^{x}}&=a^{3x}\\times a^{-x}\\\\&=a^{3x-x}\\\\&=a^{2x}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 20 (2F25) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-21",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{\\text{20}x^{\\text{10}}a^{\\text{4}}}{\\text{4}x^{\\text{9}}a^{\\text{3}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "5ax",
+          "form": null,
+          "variables": [
+            "a",
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "5ax",
+      "solution": [
+        "$\\begin{aligned}&\\frac{20x^{10}a^{4}}{4x^{9}a^{3}}\\\\&=5x^{(10-9)}a^{(4-3)}\\\\&=5ax\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 21 (2F26) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-22",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{\\text{18}c^{\\text{10}}p^{\\text{8}}}{\\text{9}c^{\\text{6}}p^{\\text{5}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "2c^{4}p^{3}",
+          "form": null,
+          "variables": [
+            "c",
+            "p"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "2c^{4}p^{3}",
+      "solution": [
+        "$\\begin{aligned}&\\frac{18c^{10}p^{8}}{9c^{6}p^{5}}\\\\&=2c^{(10-6)}p^{(8-5)}\\\\&=2c^{4}p^{3}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 22 (2F27) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-23",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{\\text{6}m^{\\text{8}}a^{\\text{10}}}{\\text{2}m^{\\text{3}}a^{\\text{5}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3a^{5}m^{5}",
+          "form": null,
+          "variables": [
+            "a",
+            "m"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3a^{5}m^{5}",
+      "solution": [
+        "$\\begin{aligned}&\\frac{6m^{8}a^{10}}{2m^{3}a^{5}}\\\\&=3m^{(8-3)}a^{(10-5)}\\\\&=3a^{5}m^{5}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 23 (2F28) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-24",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Simplify without using a calculator: $3^{12}\\div3^9$",
+      "answer": "27",
+      "solution": [
+        "$\\begin{aligned}3^{12}\\div3^{9}&=3^{12-9}\\\\&=3^{3}\\\\&=27\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 24 (2F29) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-25",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{7(a^3)^3}{a^7}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "7a^2",
+          "form": null,
+          "variables": [
+            "a"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "7a^2",
+      "solution": [
+        "$\\begin{aligned}\\frac{7(a^3)^3}{a^7}&=\\frac{7a^9}{a^7}\\\\&=7a^2\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 25 (2F2B) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-26",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{9(ab^4)^8}{a^3b^5}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "9a^{5}b^{27}",
+          "form": "simplest",
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "9a^{5}b^{27}",
+      "solution": [
+        "$\\begin{aligned}\\frac{9(ab^4)^8}{a^3b^5}&=\\frac{9a^8b^{32}}{a^3b^5}\\\\&=9a^5b^{27}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 26 (2F2C) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-27",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{2^2}{6^2}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{9}",
+          "form": "simplest",
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{9}",
+      "solution": [
+        "$\\begin{aligned}\\frac{2^2}{6^2}&=\\left(\\frac{2}{6}\\right)^2\\\\&=\\frac{1}{3^2}\\\\&=\\frac{1}{9}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 27 (2F2D) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-28",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(\\dfrac{a^6}{b^7}\\right)^5$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{a^{30}}{b^{35}}",
+          "form": "simplest",
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{a^{30}}{b^{35}}",
+      "solution": [
+        "$\\left(\\frac{a^6}{b^7}\\right)^5=\\frac{a^{30}}{b^{35}}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 28 (2F2F) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-29",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(2t^{4}\\right)^{3}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "8t^{12}",
+          "form": "simplest",
+          "variables": [
+            "t"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "8t^{12}",
+      "solution": [
+        "$\\begin{aligned}\\left(2t^{4}\\right)^{3}&=2^{3}t^{(4)(3)}\\\\&=8t^{12}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 29 (2F2G) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-1-30",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(3^{n+3}\\right)^{2}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3^{2n+6}",
+          "form": "simplest",
+          "variables": [
+            "n"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3^{2n+6}",
+      "solution": [
+        "$\\begin{aligned}\\left(3^{n+3}\\right)^{2}&=3^{(n+3)(2)}\\\\&=3^{2n+6}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 30 (2F2H) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-1-31",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{3^{n}9^{n-3}}{27^{n-1}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{27}",
+          "form": "simplest",
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{27}",
+      "solution": [
+        "$\\begin{aligned}\\frac{3^{n}9^{n-3}}{27^{n-1}}&=\\frac{3^{n}3^{2(n-3)}}{3^{3(n-1)}}\\\\&=\\frac{3^{n}3^{2n-6}}{3^{3n-3}}\\\\&=\\frac{3^{n+2n-6}}{3^{3n-3}}\\\\&=\\frac{3^{3n-6}}{3^{3n-3}}\\\\&=3^{(3n-6)-(3n-3)}\\\\&=3^{3n-6-3n+3}\\\\&=3^{-3}\\\\&=\\frac{1}{27}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 31 (2F2J) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-1-32",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "Simplify without using a calculator: $\\dfrac{\\text{13}^{c}+\\text{13}^{c+2}}{\\text{3}\\times\\text{13}^{c}-\\text{13}^{c}}$",
+      "answer": "85",
+      "solution": [
+        "$\\begin{aligned}\\frac{\\text{13}^{c}+\\text{13}^{c+2}}{\\text{3}\\times\\text{13}^{c}-\\text{13}^{c}}&=\\frac{\\text{13}^{c}(\\text{1}+\\text{13}^{2})}{\\text{13}^{c}(\\text{3}-\\text{1})}\\\\&=\\frac{(\\text{1}+\\text{13}^{2})}{(\\text{3}-\\text{1})}\\\\&=\\frac{\\text{1}+\\text{169}}{\\text{3}-\\text{1}}\\\\&=\\frac{\\text{170}}{\\text{2}}\\\\&=\\frac{\\text{85}}{\\text{1}}\\\\&=\\text{85}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 32 (2F2K) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-1-33",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{3^{5x}\\times81^{5x}\\times3^{3}}{9^{8x}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3^{9x+3}",
+          "form": "simplest",
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3^{9x+3}",
+      "solution": [
+        "$\\begin{aligned}\\frac{3^{5x}\\times81^{5x}\\times3^{3}}{9^{8x}}&=\\frac{3^{5x}\\times\\left(3^{4}\\right)^{5x}\\times3^{3}}{\\left(3^{2}\\right)^{8x}}\\\\&=\\frac{3^{5x}\\times3^{20x}\\times3^{3}}{3^{16x}}\\\\&=\\frac{3^{5x+20x+3}}{3^{16x}}\\\\&=\\frac{3^{25x+3}}{3^{16x}}\\\\&=3^{25x+3-16x}\\\\&=3^{9x+3}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 33 (2F2M) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-1-34",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{\\text{16}^{x}-\\text{144}^{b}}{\\text{4}^{x}-\\text{12}^{b}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "4^{x}+12^{b}",
+          "form": "simplest",
+          "variables": [
+            "b",
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "4^{x}+12^{b}",
+      "solution": [
+        "$\\begin{aligned}\\frac{16^{x}-144^{b}}{4^{x}-12^{b}}&=\\frac{\\left(4^{2}\\right)^{x}-\\left(12^{2}\\right)^{b}}{4^{x}-12^{b}}\\\\&=\\frac{\\left(4^{x}\\right)^{2}-\\left(12^{b}\\right)^{2}}{4^{x}-12^{b}}\\\\&=\\frac{\\left(4^{x}-12^{b}\\right)\\left(4^{x}+12^{b}\\right)}{4^{x}-12^{b}}\\\\&=4^{x}+12^{b}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 34 (2F2N) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-1-35",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{\\text{5}^{\\text{2}y-3}\\text{2}^{\\text{4}y+4}}{\\text{10}^{-\\text{5}y+5}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "5^{7y-8}\\times 2^{9y-1}",
+          "form": "simplest",
+          "variables": [
+            "y"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "5^{7y-8}\\times 2^{9y-1}",
+      "solution": [
+        "$\\begin{aligned}\\frac{5^{2y-3}2^{4y+4}}{10^{-5y+5}}&=\\frac{5^{2y-3}\\cdot2^{4y+4}}{(5\\times2)^{-5y+5}}\\\\&=\\frac{5^{2y-3}2^{4y+4}}{5^{-5y+5}2^{-5y+5}}\\\\&=5^{(2y-3)-(-5y+5)}\\times2^{(4y+4)-(-5y+5)}\\\\&=5^{7y-8}\\times2^{9y-1}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 35 (2F2P) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-1-36",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{6^4\\times12^3\\times4^5}{30^3\\times3^6}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{2^{17}}{3^{2}5^{3}}",
+          "form": "simplest",
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{2^{17}}{3^{2}5^{3}}",
+      "solution": [
+        "$\\begin{aligned}\\frac{6^{4}\\times12^{3}\\times4^{5}}{30^{3}\\times3^{6}}&=\\frac{\\left(3^{4}\\times2^{4}\\right)\\times\\left(3^{3}\\times4^{3}\\right)\\times4^{5}}{\\left(3^{3}\\times10^{3}\\right)\\times3^{6}}\\\\&=\\frac{3^{4}\\times2^{4}\\times3^{3}\\times2^{6}\\times2^{10}}{3^{3}\\times2^{3}\\times5^{3}\\times3^{6}}\\\\&3^{4+3-3-6}\\cdot2^{4+6+10-3}\\cdot5^{-3}\\\\&=\\frac{2^{17}}{3^{2}5^{3}}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 36 (2F2Q) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-1-37",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify without using a calculator: $\\dfrac{9^3\\times20^2}{4\\times5^2\\times3^5}$",
+      "answer": "12",
+      "solution": [
+        "$\\begin{aligned}\\frac{9^3\\times20^2}{4\\times5^2\\times3^5}&=\\frac{3^64^25^2}{4\\times5^23^5}\\\\&=\\frac{3^62^45^2}{2^25^23^5}\\\\&=3^{6-5}2^{4-2}5^{2-2}\\\\&=3\\times2^2\\\\&=12\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 37 (2F2R) · p.49 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-1-38",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{7^{b}+7^{b-2}}{4\\times7^{b}+3\\times7^{b}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{51}{49}",
+          "form": "simplest",
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{51}{49}",
+      "solution": [
+        "$\\begin{aligned}\\frac{7^{b}+7^{b-2}}{4\\times7^{b}-3\\times7^{b}}&=\\frac{7^{b}(1+7^{-2})}{7^{b}(4-3)}\\\\&=\\frac{(1+7^{-2})}{1}\\\\&=\\frac{1+\\frac{1}{49}}{1}\\\\&=\\frac{51}{49}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 38 (2F2S) · p.49 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-1-39",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{12^{y}-96^{y}}{3^{y}+6^{y}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{4^{y}-2^{5y}}{3}",
+          "form": "simplest",
+          "variables": [
+            "y"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{4^{y}-2^{5y}}{3}",
+      "solution": [
+        "$\\begin{aligned}\\frac{12^{y}-96^{y}}{3^{y}+6^{y}}&=\\frac{(4\\cdot3)^{y}-\\left(2^{5}\\cdot3\\right)^{y}}{3^{y}+\\left(2\\cdot3\\right)^{y}}\\\\&=\\frac{3^{y}\\left(4^{y}-2^{5y}\\right)}{3^{y}\\left(2+1\\right)}\\\\&=\\frac{4^{y}-2^{5y}}{3}\\end{aligned}$"
+      ],
+      "source_page": 49,
+      "source_note": "Exercise 2-1, question 39 (2F2T) · p.49 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1a",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $(\\text{8}x)^{\\text{3}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "512x^{3}",
+          "form": "simplest",
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "512x^{3}",
+      "solution": [
+        "$\\begin{aligned}(\\text{8}x)^{\\text{3}}&=\\text{8}^{\\text{3}}x^{\\text{3}}\\\\&=\\text{512}x^{\\text{3}}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1a (2F45) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1b",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $t^{3}\\times2t^{0}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "2t^{3}",
+          "form": "simplest",
+          "variables": [
+            "t"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "2t^{3}",
+      "solution": [
+        "$\\begin{aligned}t^{3}\\times2t^{0}&=t^{3}\\times2(1)\\\\&=2t^{3}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1b (2F46) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1c",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $5^{2x+y}\\times5^{3(x+z)}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "5^{5x+y+3z}",
+          "form": "simplest",
+          "variables": [
+            "x",
+            "y",
+            "z"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "5^{5x+y+3z}",
+      "solution": [
+        "$\\begin{aligned}5^{2x+y}\\times5^{3(x+z)}&=5^{2x+y+3x+3z}\\\\&=5^{5x+y+3z}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1c (2F47) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1d",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $\\text{15}^{3x}\\times\\text{15}^{12x}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "15^{15x}",
+          "form": "simplest",
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "15^{15x}",
+      "solution": [
+        "$\\begin{aligned}\\text{15}^{3x}\\times\\text{15}^{12x}&=\\text{15}^{3x+12x}\\\\&=\\text{15}^{15x}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1d (2F48) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1e",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Simplify: $\\dfrac{\\text{7}^{y+7}}{\\text{7}^{y+6}}$",
+      "answer": "7",
+      "solution": [
+        "$\\frac{\\text{7}^{y+7}}{\\text{7}^{y+6}}=\\text{7}^{(y+7)-(y+6)}$",
+        "$\\begin{aligned}\\text{7}^{(y+7)-(y+6)}&=\\text{7}^{y+7-y-6}\\\\&=\\text{7}^{1}\\\\&=\\text{7}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1e (2F49) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1f",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $3(d^4)(7d^3)$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "21d^{7}",
+          "form": "simplest",
+          "variables": [
+            "d"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "21d^{7}",
+      "solution": [
+        "$3(d^4)(7d^3)=21d^7$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1f (2F4B) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1g",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $(\\frac{1}{7}a^2b^9)(6a^6b^2)(-3a^7b)$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "-\\frac{18}{7}a^{15}b^{12}",
+          "form": "simplest",
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "-\\frac{18}{7}a^{15}b^{12}",
+      "solution": [
+        "$\\left(\\frac{1}{7}a^2b^9\\right)(6a^6b^2)(-3a^7b)=-\\frac{18}{7}a^{15}b^{12}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1g (2F4C) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1h",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $\\left(b^{k+1}\\right)^{k}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "b^{k^{2}+k}",
+          "form": "simplest",
+          "variables": [
+            "b",
+            "k"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "b^{k^{2}+k}",
+      "solution": [
+        "$\\left(b^{k+1}\\right)^{k}=b^{k^{2}+k}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1h (2F4D) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1i",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{\\text{24}c^{\\text{8}}m^{\\text{7}}}{\\text{6}c^{\\text{2}}m^{\\text{5}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "4c^{6}m^{2}",
+          "form": "simplest",
+          "variables": [
+            "c",
+            "m"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "4c^{6}m^{2}",
+      "solution": [
+        "$\\begin{aligned}&\\frac{24c^{8}m^{7}}{6c^{2}m^{5}}\\\\&=4c^{(8-2)}m^{(7-5)}\\\\&=4c^{6}m^{2}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1i (2F4F) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1j",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify: $\\dfrac{2(x^4)^{3}}{x^{12}}$",
+      "answer": "2",
+      "solution": [
+        "$\\begin{aligned}\\frac{2(x^4)^3}{x^{12}}&=\\frac{2x^{12}}{x^{12}}\\\\&=2\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1j (2F4G) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1k",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{a^6b^5}{7(a^8b^3)^2}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{7a^{10}b}",
+          "form": "simplest",
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{7a^{10}b}",
+      "solution": [
+        "$\\begin{aligned}\\frac{a^6b^5}{7(a^8b^3)^2}&=\\frac{a^6b^5}{7a^{16}b^6}\\\\&=\\frac{1}{7a^{10}b}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1k (2F4H) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1l",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $\\left(\\frac{a^7}{b^4}\\right)^2$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{a^{14}}{b^{8}}",
+          "form": "simplest",
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{a^{14}}{b^{8}}",
+      "solution": [
+        "$\\left(\\frac{a^7}{b^4}\\right)^2=\\frac{a^{14}}{b^8}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1l (2F4J) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1n",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $m^{-2t}\\times\\left(3m^{t}\\right)^{3}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "27m^{t}",
+          "form": "simplest",
+          "variables": [
+            "m",
+            "t"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "27m^{t}",
+      "solution": [
+        "$\\begin{aligned}m^{-2t}\\times\\left(3m^{t}\\right)^{3}&=m^{-2t}\\times3^{3}m^{3t}\\\\&=m^{-2t+3t}.27\\\\&=27m^{t}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1n (2F4M) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1o",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{3x^{-3}}{\\left(3x\\right)^{2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{3x^{5}}",
+          "form": "simplest",
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{3x^{5}}",
+      "solution": [
+        "$\\begin{aligned}\\frac{3x^{-3}}{\\left(3x\\right)^{2}}&=3^{1-2}.x^{-3-2}\\\\&=3^{-1}.x^{-5}\\\\&=\\frac{1}{3x^{5}}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1o (2F4N) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1p",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{5^{b-3}}{5^{b+1}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{625}",
+          "form": "simplest",
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{625}",
+      "solution": [
+        "$\\begin{aligned}\\frac{5^{b-3}}{5^{b+1}}&=5^{b-3-b-1}\\\\&=5^{-4}\\\\&=\\frac{1}{625}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1p (2F4P) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1t",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{x^{-1}}{x^4y^{-2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{y^{2}}{x^{5}}",
+          "form": null,
+          "variables": [
+            "x",
+            "y"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{y^{2}}{x^{5}}",
+      "solution": [
+        "$\\frac{x^{-1}}{x^4y^{-2}}=\\frac{y^{2}}{x^{5}}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1t (2F4T) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1u",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify: $\\dfrac{(-1)^4}{(-2)^{-3}}$",
+      "answer": "-8",
+      "solution": [
+        "$\\begin{aligned}\\frac{(-1)^4}{(-2)^{-3}}&=\\frac{1}{(-2)^{-3}}\\\\&=(-2)^3\\\\&=-8\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1u (2F4V) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1v",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\left(\\dfrac{2x^{2a}}{y^{-b}}\\right)^{3}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "8x^{6a}y^{3b}",
+          "form": null,
+          "variables": [
+            "x",
+            "y",
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "8x^{6a}y^{3b}",
+      "solution": [
+        "$\\begin{aligned}\\left(\\dfrac{2x^{2a}}{y^{-b}}\\right)^{3}&=\\dfrac{2^{3}\\left(x^{2a}\\right)^{3}}{\\left(y^{-b}\\right)^{3}}\\\\&=\\dfrac{2^{3}x^{6a}}{y^{-3b}}\\\\&=2^{3}x^{6a}y^{3b}\\\\&=8x^{6a}y^{3b}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1v (2F4W) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-1w",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{2^{3x-1}8^{x+1}}{4^{2x-2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "4^{x+3}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "4^{x+3}",
+      "solution": [
+        "$\\begin{aligned}\\dfrac{2^{3x-1}8^{x+1}}{4^{2x-2}}&=\\dfrac{2^{3x-1}.2^{3(x+1)}}{2^{2(2x-2)}}\\\\&=2^{3x-1+3x+3-4x+4}\\\\&=2^{2x+6}\\\\&=4^{x+3}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1w (2F4X) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-1x",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify: $\\dfrac{6^{2x}11^{2x}}{22^{2x-1}3^{2x}}$",
+      "answer": "22",
+      "solution": [
+        "$\\begin{aligned}\\frac{6^{2x}11^{2x}}{22^{2x-1}3^{2x}}&=\\frac{\\left(3\\cdot2\\right)^{2x}\\cdot11^{2x}}{\\left(2\\cdot11\\right)^{2x-1}\\cdot3^{2x}}\\\\&=\\frac{3^{2x}\\cdot2^{2x}\\cdot11^{2x}}{2^{2x-1}\\cdot11^{2x-1}\\cdot3^{2x}}\\\\&=3^{2x-2x}\\cdot2^{2x-2x+1}\\cdot11^{2x-2x+1}\\\\&=3^{0}\\cdot2^{1}\\cdot11^{1}\\\\&=22\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1x (2F4Y) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-1:ex2-4-1y",
+      "lo": "lo:g10m2s2-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify: $\\dfrac{\\left(-3\\right)^{-3}\\left(-3\\right)^{2}}{\\left(-3\\right)^{-4}}$",
+      "answer": "-27",
+      "solution": [
+        "$\\begin{aligned}\\frac{\\left(-3\\right)^{-3}\\left(-3\\right)^{2}}{\\left(-3\\right)^{-4}}&=\\left(-3\\right)^{-3+2+4}\\\\&=\\left(-3\\right)^{3}\\\\&=-27\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 1y (2F4Z) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-4-2c",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify: $\\dfrac{3^{t+3}+3^{t}}{2\\times3^{t}}$",
+      "answer": "14",
+      "solution": [
+        "$\\begin{aligned}\\dfrac{3^{t+3}+3^{t}}{2\\times3^{t}}&=\\dfrac{3^{t}.3^{3}+3^{t}}{2.3^{t}}\\\\&=\\dfrac{3^{t}(3^{3}+1)}{2.3^{t}}\\\\&=\\dfrac{3^{3}+1}{2}\\\\&=\\dfrac{28}{2}\\\\&=14\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2c (2F55) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-4-2d",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{2^{3p}+1}{2^{p}+1}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "2^{2p}-2^p+1",
+          "form": null,
+          "variables": [
+            "p"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "2^{2p}-2^p+1",
+      "solution": [
+        "$\\begin{aligned}\\frac{2^{3p}+1}{2^p+1}&=\\frac{(2^p+1)\\left(2^{2p}-2^p+1\\right)}{(2^p+1)}\\\\&=2^{2p}-2^p+1\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2d (2F56) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-4-2g",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify: $\\dfrac{\\text{13}^{a}+\\text{13}^{a+2}}{\\text{6}\\times\\text{13}^{a}-\\text{13}^{a}}$",
+      "answer": "34",
+      "solution": [
+        "$\\begin{aligned}\\frac{\\text{13}^{a}+\\text{13}^{a+2}}{\\text{6}\\times\\text{13}^{a}-\\text{13}^{a}}&=\\frac{\\text{13}^{a}(\\text{1}+\\text{13}^{2})}{\\text{13}^{a}(\\text{6}-\\text{1})}\\\\&=\\frac{(\\text{1}+\\text{13}^{2})}{(\\text{6}-\\text{1})}\\\\&=\\frac{\\text{1}+\\text{169}}{\\text{6}-\\text{1}}\\\\&=\\frac{\\text{170}}{\\text{5}}\\\\&=\\frac{\\text{34}}{\\text{1}}\\\\&=\\text{34}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2g (2F59) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-2h",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{3^{8z}\\times27^{8z}\\times3^{2}}{9^{6z}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3^{20z+2}",
+          "form": null,
+          "variables": [
+            "z"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3^{20z+2}",
+      "solution": [
+        "$\\begin{aligned}\\frac{3^{8z}\\times27^{8z}\\times3^{2}}{9^{6z}}&=\\frac{3^{8z}\\times\\left(3^{3}\\right)^{8z}\\times3^{2}}{\\left(3^{2}\\right)^{6z}}\\\\&=\\frac{3^{8z}\\times3^{24z}\\times3^{2}}{3^{12z}}\\\\&=\\frac{3^{8z+24z+2}}{3^{12z}}\\\\&=\\frac{3^{32z+2}}{3^{12z}}\\\\&=3^{32z+2-12z}\\\\&=3^{20z+2}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2h (2F5B) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-4-2i",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{\\text{121}^{b}-\\text{16}^{p}}{\\text{11}^{b}+\\text{4}^{p}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "11^{b}-4^{p}",
+          "form": null,
+          "variables": [
+            "b",
+            "p"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "11^{b}-4^{p}",
+      "solution": [
+        "$\\begin{aligned}\\frac{121^{b}-16^{p}}{11^{b}+4^{p}}&=\\frac{\\left(11^{2}\\right)^{b}-\\left(4^{2}\\right)^{p}}{11^{b}+4^{p}}\\\\&=\\frac{\\left(11^{b}\\right)^{2}-\\left(4^{p}\\right)^{2}}{11^{b}+4^{p}}\\\\&=\\frac{\\left(11^{b}-4^{p}\\right)\\left(11^{b}+4^{p}\\right)}{11^{b}+4^{p}}\\\\&=\\frac{\\left(11^{b}-4^{p}\\right)\\left(11^{b}+4^{p}\\right)}{11^{b}+4^{p}}\\\\&=11^{b}-4^{p}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2i (2F5C) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-2j",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{\\text{11}^{-\\text{4}c-4}\\text{4}^{\\text{4}c-3}}{\\text{22}^{-\\text{6}c-2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "11^{2c-2}\\times2^{14c-4}",
+          "form": null,
+          "variables": [
+            "c"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "11^{2c-2}\\times2^{14c-4}",
+      "solution": [
+        "$\\begin{aligned}\\frac{11^{-4c-4}4^{4c-3}}{22^{-6c-2}}&=\\frac{11^{-4c-4}\\left(2^{2}\\right)^{4c-3}}{\\left(11\\times2\\right)^{-6c-2}}\\\\&=\\frac{11^{-4c-4}2^{8c-6}}{11^{-6c-2}2^{-6c-2}}\\\\&=11^{(-4c-4)-(-6c-2)}\\times2^{(8c-6)-(-6c-2)}\\\\&=11^{2c-2}\\times2^{14c-4}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2j (2F5D) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-2k",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{12^4\\times2^4}{16^6\\times10}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{3^{4}}{2^{13}\\times5}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{3^{4}}{2^{13}\\times5}",
+      "solution": [
+        "$\\begin{aligned}\\frac{12^{4}\\times2^{4}}{16^{6}\\times10}&=\\frac{(3\\times2^{2})^{4}\\times2^{4}}{(2^{4})^{6}\\times(2\\times5)}\\\\&\\frac{3^{4}\\times2^{8}\\times2^{4}}{2^{24}\\times2\\times5}\\\\&=\\frac{3^{4}}{2^{13}\\times5}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2k (2F5F) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-3:ex2-4-2p",
+      "lo": "lo:g10m2s2-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\dfrac{a^{-1}-b^{-1}}{a-b}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "-(ab)^{-1}",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "-(ab)^{-1}",
+      "solution": [
+        "$\\begin{aligned}\\frac{a^{-1}-b^{-1}}{a-b}&=\\frac{\\frac{1}{a}-\\frac{1}{b}}{a-b}\\\\&=\\frac{\\frac{b-a}{ab}}{a-b}\\\\&=\\frac{-(a-b)}{ab(a-b)}\\\\&=-\\frac{1}{ab}\\\\&=-(ab)^{-1}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2p (2F5M) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s2-1-2:ex2-4-2r",
+      "lo": "lo:g10m2s2-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\left(\\dfrac{2}{3}\\right)^{x+y}\\cdot\\left(\\dfrac{3}{2}\\right)^{x-y}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\left(\\frac{2}{3}\\right)^{2y}",
+          "form": null,
+          "variables": [
+            "y"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\left(\\frac{2}{3}\\right)^{2y}",
+      "solution": [
+        "$\\begin{aligned}\\left(\\frac{2}{3}\\right)^{x+y}\\cdot\\left(\\frac{3}{2}\\right)^{x-y}&=\\left(\\frac{2}{3}\\right)^{x+y}\\cdot\\left(\\frac{2}{3}\\right)^{-(x-y)}\\\\&=\\left(\\frac{2}{3}\\right)^{x+y-(x-y)}\\\\&=\\left(\\frac{2}{3}\\right)^{2y}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2r (2F5P) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:we06",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Simplify: $2{x}^{\\frac{1}{2}}\\times4{x}^{-\\frac{1}{2}}$",
+      "answer": "8",
+      "solution": [
+        "$\\begin{aligned}2{x}^{\\frac{1}{2}}\\times4{x}^{-\\frac{1}{2}}&=8{x}^{\\frac{1}{2}-\\frac{1}{2}}\\\\&=8{x}^{0}\\\\&=8\\left(1\\right)\\\\&=8\\end{aligned}$"
+      ],
+      "source_page": 50,
+      "source_note": "Worked example 6 · p.50 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s3-1-2:we07",
+      "lo": "lo:g10m2s3-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: ${\\left(\\text{0.008}\\right)}^{\\frac{1}{3}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{5}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{5}",
+      "solution": [
+        "Write as a fraction and simplify: $\\begin{aligned}(\\text{0.008})^{\\frac{1}{3}}&=\\left(\\frac{8}{1000}\\right)^{\\frac{1}{3}}\\\\&=\\left(\\frac{1}{125}\\right)^{\\frac{1}{3}}\\\\&=\\left(\\frac{1}{5^{3}}\\right)^{\\frac{1}{3}}\\\\&=\\frac{1^{\\frac{1}{3}}}{5^{\\left(3\\cdot\\frac{1}{3}\\right)}}\\\\&=\\frac{1}{5}\\end{aligned}$"
+      ],
+      "source_page": 50,
+      "source_note": "Worked example 7 · p.50 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-2-1",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $t^{\\frac{1}{4}}\\times3t^{\\frac{7}{4}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3t^{2}",
+          "form": null,
+          "variables": [
+            "t"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3t^{2}",
+      "solution": [
+        "$\\begin{aligned}t^{\\frac{1}{4}}\\times3t^{\\frac{7}{4}}&=3t^{\\frac{1}{4}+\\frac{7}{4}}\\\\&=3t^{\\frac{8}{4}}\\\\&=3t^{2}\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 1 (2F2W) · p.51 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-2-2",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\dfrac{16x^{2}}{\\left(4x^{2}\\right)^{\\frac{1}{2}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "8x",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "8x",
+      "solution": [
+        "$\\begin{aligned}\\frac{16x^{2}}{(4x^{2})^{\\frac{1}{2}}}&=\\frac{4^{2}x^{2}}{4^{\\frac{1}{2}}x^{(2)\\left(\\frac{1}{2}\\right)}}\\\\&=\\frac{4^{2}x^{2}}{4^{\\frac{1}{2}}x}\\\\&=4^{2-\\frac{1}{2}}\\cdot x^{2-1}\\\\&=\\left(2^{2}\\right)^{\\frac{3}{2}}x\\\\&=2^{3}x\\\\&=8x\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 2 (2F2X) · p.51 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-2:ex2-2-3",
+      "lo": "lo:g10m2s3-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(\\text{0.25}\\right)^{\\frac{1}{2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{2}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{2}",
+      "solution": [
+        "$\\begin{aligned}(\\text{0.25})^{\\frac{1}{2}}&=\\left(\\frac{1}{4}\\right)^{\\frac{1}{2}}\\\\&=\\left(\\frac{1}{2^{2}}\\right)^{\\frac{1}{2}}\\\\&=\\left(2^{-2}\\right)^{\\frac{1}{2}}\\\\&=2^{-1}\\\\&=\\frac{1}{2}\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 3 (2F2Y) · p.51 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-2:ex2-2-4",
+      "lo": "lo:g10m2s3-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(27\\right)^{-\\frac{1}{3}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{3}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{3}",
+      "solution": [
+        "$\\begin{aligned}(27)^{-\\frac{1}{3}}&=\\left(3^{3}\\right)^{-\\frac{1}{3}}\\\\&=3^{-1}\\\\&=\\frac{1}{3}\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 4 (2F2Z) · p.51 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-2-5",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(3p^{2}\\right)^{\\frac{1}{2}}\\times\\left(3p^{4}\\right)^{\\frac{1}{2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3p^{3}",
+          "form": null,
+          "variables": [
+            "p"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3p^{3}",
+      "solution": [
+        "$\\begin{aligned}\\left(3p^{2}\\right)^{\\frac{1}{2}}\\times\\left(3p^{4}\\right)^{\\frac{1}{2}}&=3^{\\frac{1}{2}}p\\times3^{\\frac{1}{2}}p^{2}\\\\&=3^{\\frac{1}{2}+\\frac{1}{2}}\\times p^{1+2}\\\\&=3p^{3}\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 5 (2F32) · p.51 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-2-6",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\text{12}{\\left(a^\\text{4}b^\\text{8}\\right)}^{\\frac{\\text{1}}{\\text{2}}}\\times{\\left(\\text{512}a^\\text{3}b^\\text{3}\\right)}^{\\frac{\\text{1}}{\\text{3}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "96a^{3}b^{5}",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "96a^{3}b^{5}",
+      "solution": [
+        "$\\begin{aligned}12\\left(a^{4}b^{8}\\right)^{\\frac{1}{2}}\\times\\left(512a^{3}b^{3}\\right)^{\\frac{1}{3}}&=12a^{\\frac{4}{2}}b^{\\frac{8}{2}}\\times\\left(512\\right)^{\\frac{1}{3}}a^{\\frac{3}{3}}b^{\\frac{3}{3}}\\\\&=12a^{2}b^{4}\\times\\left(8^{3}\\right)^{\\frac{1}{3}}a^{1}b^{1}\\\\&=12a^{2}b^{4}\\times8a^{1}b^{1}\\\\&=96a^{3}b^{5}\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 6 (2F33) · p.51 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-2-7",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left((-2)^4a^6b^2\\right)^{\\frac{1}{2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "4a^{3}b",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "4a^{3}b",
+      "solution": [
+        "$\\begin{aligned}\\left((-2)^4a^6b^2\\right)^{\\frac{1}{2}}&=(-2)^2(a^3b)\\\\&=4a^3b\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 7 (2F34) · p.51 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-2-8",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(a^{-2}b^6\\right)^{\\frac{1}{2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{b^{3}}{a}",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{b^{3}}{a}",
+      "solution": [
+        "$\\begin{aligned}\\left(a^{-2}b^6\\right)^{\\frac{1}{2}}&=a^{-1}b^3\\\\&=\\frac{b^3}{a}\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 8 (2F35) · p.51 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-2-9",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify without using a calculator: $\\left(16x^{12}b^6\\right)^{\\frac{1}{3}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "2\\cdot2^{\\frac{1}{3}}a^{4}b^{2}",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "2\\cdot2^{\\frac{1}{3}}a^{4}b^{2}",
+      "solution": [
+        "$\\begin{aligned}\\left(16x^{12}b^6\\right)^{\\frac{1}{3}}&=\\left((8\\times2)x^{12}b^6\\right)^{\\frac{1}{3}}\\\\&=2\\cdot2^{\\frac{1}{3}}a^4b^2\\end{aligned}$"
+      ],
+      "source_page": 51,
+      "source_note": "Exercise 2-2, question 9 (2F36) · p.51 · solution: book_worked_epub",
+      "verified": false,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub",
+      "hold_reason": "answer_mismatch"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-4-2e",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $\\left(a^{10}b^{6}\\right)^{\\frac{1}{2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "a^{5}b^{3}",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "a^{5}b^{3}",
+      "solution": [
+        "$\\left(a^{10}b^{6}\\right)^{\\frac{1}{2}}=a^5b^3$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2e (2F57) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-4-2f",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $\\left(9x^8y^4\\right)^{\\frac{1}{2}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "3x^{4}y^{2}",
+          "form": null,
+          "variables": [
+            "x",
+            "y"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "3x^{4}y^{2}",
+      "solution": [
+        "$\\left(9x^8y^4\\right)^{\\frac{1}{2}}=3x^4y^2$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2f (2F58) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-2:ex2-4-2m",
+      "lo": "lo:g10m2s3-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $(\\text{0.81})^{\\frac{\\text{1}}{\\text{2}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{9}{10}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{9}{10}",
+      "solution": [
+        "$\\begin{aligned}(\\text{0.81})^{\\frac{1}{2}}&=\\left(\\frac{81}{100}\\right)^{\\frac{1}{2}}\\\\&=\\left(\\frac{9^{2}}{10^{2}}\\right)^{\\frac{1}{2}}\\\\&=\\left[\\left(\\frac{9}{10}\\right)^{2}\\right]^{\\frac{1}{2}}\\\\&=\\frac{9}{10}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2m (2F5H) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-4-2n",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Simplify: $\\text{12}{\\left(a^\\text{10}b^\\text{20}\\right)}^{\\frac{\\text{1}}{\\text{5}}}\\times{\\left(\\text{729}a^\\text{12}b^\\text{15}\\right)}^{\\frac{\\text{1}}{\\text{3}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "108a^{6}b^{9}",
+          "form": null,
+          "variables": [
+            "a",
+            "b"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "108a^{6}b^{9}",
+      "solution": [
+        "$\\begin{aligned}12\\left(a^{10}b^{20}\\right)^{\\frac{1}{5}}\\times\\left(729a^{12}b^{15}\\right)^{\\frac{1}{3}}&=12a^{\\frac{10}{5}}b^{\\frac{20}{5}}\\times\\left(729\\right)^{\\frac{1}{3}}a^{\\frac{12}{3}}b^{\\frac{15}{3}}\\\\&=12a^{2}b^{4}\\times\\left(9^{3}\\right)^{\\frac{1}{3}}a^{4}b^{5}\\\\&=12a^{2}b^{4}\\times9a^{4}b^{5}\\\\&=108a^{6}b^{9}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2n (2F5J) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-4-2o",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Simplify: $\\text{2}{\\left(p^\\text{30}q^\\text{20}\\right)}^{\\frac{\\text{1}}{\\text{5}}}\\times{\\left(\\text{1331}p^\\text{12}q^\\text{6}\\right)}^{\\frac{\\text{1}}{\\text{3}}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "22p^{10}q^{6}",
+          "form": null,
+          "variables": [
+            "p",
+            "q"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "22p^{10}q^{6}",
+      "solution": [
+        "$\\begin{aligned}2\\left(p^{30}q^{20}\\right)^{\\frac{1}{5}}\\times\\left(1331p^{12}q^{6}\\right)^{\\frac{1}{3}}&=2p^{\\frac{30}{5}}q^{\\frac{20}{5}}\\times\\left(1331\\right)^{\\frac{1}{3}}p^{\\frac{12}{3}}q^{\\frac{6}{3}}\\\\&=2p^{6}q^{4}\\times\\left(11^{3}\\right)^{\\frac{1}{3}}p^{4}q^{2}\\\\&=2p^{6}q^{4}\\times11p^{4}q^{2}\\\\&=22p^{10}q^{6}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2o (2F5K) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-4-2q",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Simplify: $\\left(\\left(x^{36}\\right)^{\\frac{1}{2}}\\right)^{\\frac{1}{3}}$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "x^{6}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x^{6}",
+      "solution": [
+        "$\\begin{aligned}\\left(\\left(x^{36}\\right)^{\\frac{1}{2}}\\right)^{\\frac{1}{3}}&=\\left(x^{18}\\right)^{\\frac{1}{3}}\\\\&=x^6\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2q (2F5N) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-1:ex2-4-2s",
+      "lo": "lo:g10m2s3-1-1",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "Simplify: $(a^{\\frac{1}{2}}+a^{-\\frac{1}{2}})^2-(a^{\\frac{1}{2}}-a^{-\\frac{1}{2}})^2$",
+      "answer": "4",
+      "solution": [
+        "$\\begin{aligned}(a^{\\frac{1}{2}}+a^{-\\frac{1}{2}})^{2}-(a^{\\frac{1}{2}}-a^{-\\frac{1}{2}})^{2}&=(a^{\\frac{1}{2}}+a^{-\\frac{1}{2}}-(a^{\\frac{1}{2}}-a^{-\\frac{1}{2}}))(a^{\\frac{1}{2}}+a^{-\\frac{1}{2}}+(a^{\\frac{1}{2}}-a^{-\\frac{1}{2}}))\\\\&=(2a^{-\\frac{1}{2}})(2a^{\\frac{1}{2}})\\\\&=4a^{\\frac{1}{2}-\\frac{1}{2}}\\\\&=4a^{0}\\\\&=4\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 2s (2F5Q) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-2:ex2-4-3i",
+      "lo": "lo:g10m2s3-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $z^{\\frac{3}{2}}=64$",
+      "answer": "16",
+      "solution": [
+        "$\\begin{aligned}z^{\\frac{3}{2}}&=64\\\\z^{\\frac{3}{2}}&=4^{3}\\\\\\left(z^{\\frac{3}{2}}\\right)^{\\frac{2}{3}}&=\\left(4^{3}\\right)^{\\frac{2}{3}}\\\\z&=4^{2}\\\\z&=16\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3i (2F62) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s3-1-2:ex2-4-3j",
+      "lo": "lo:g10m2s3-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve: $16x^{\\frac{1}{2}}-4=0$",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "\\frac{1}{16}",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "\\frac{1}{16}",
+      "solution": [
+        "$\\begin{aligned}16x^{\\frac{1}{2}}-4&=0\\\\16x^{\\frac{1}{2}}&=4\\\\x^{\\frac{1}{2}}&=\\frac{4}{16}\\\\x^{\\frac{1}{2}}&=\\frac{1}{4}\\\\\\left(x^{\\frac{1}{2}}\\right)^{2}&=\\left(\\frac{1}{4}\\right)^{2}\\\\x&=\\frac{1}{16}\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3j (2F63) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:we08",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Solve for $x$ : ${3}^{x+1}=9$ .",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "1",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 1",
+      "solution": [
+        "Change the bases to prime numbers: ${3}^{x+1}={3}^{2}$",
+        "The bases are the same so we can equate exponents: $\\begin{aligned}x+1&=2\\\\\\therefore x&=1\\end{aligned}$"
+      ],
+      "source_page": 52,
+      "source_note": "Worked example 8 · p.52 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s4-1-1:we09",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Solve for $t$ : ${3}^{t}=1$ .",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "0",
+          "form": null,
+          "variables": [
+            "t"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "t = 0",
+      "solution": [
+        "Solve for: We know from the exponent identities that $a^{0}=1$ , therefore: $\\begin{aligned}3^{t}&=1\\\\3^{t}&=3^{0}\\\\\\therefore t&=0\\end{aligned}$"
+      ],
+      "source_page": 52,
+      "source_note": "Worked example 9 · p.52 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s4-1-2:we10",
+      "lo": "lo:g10m2s4-1-2",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for $t$ : ${5}^{t}+3\\cdot{5}^{t+1}=400$ .",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "2",
+          "form": null,
+          "variables": [
+            "t"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "t = 2",
+      "solution": [
+        "Rewrite the expression: ${5}^{t}+3\\left({5}^{t}\\cdot5\\right)=400$",
+        "Take out a common factor: $\\begin{aligned}{5}^{t}\\left(1+3\\cdot5\\right)&=400\\\\{5}^{t}\\left(1+15\\right)&=400\\end{aligned}$",
+        "Simplify: $\\begin{aligned}5^t(16)&=400\\\\5^t&=25\\end{aligned}$",
+        "Change the bases to prime numbers: ${5}^{t}={5}^{2}$",
+        "The bases are the same so we can equate exponents: $\\therefore t=2$"
+      ],
+      "source_page": 53,
+      "source_note": "Worked example 10 · p.53 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s4-1-3:we11",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for $x$ : $3^{2x}-80\\cdot3^{x}-81=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "4",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 4",
+      "solution": [
+        "Factorise the trinomial: $(3^{x}-81)(3^{x}+1)=0$",
+        "Solve for: $3^x=81$ or $3^x=-1$ . However $3^x=-1$ is undefined, so: $\\begin{aligned}3^{x}&=81\\\\3^{x}&=3^{4}\\\\x&=4\\end{aligned}$ Therefore $x=4$"
+      ],
+      "source_page": 53,
+      "source_note": "Worked example 11 · p.53 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s4-1-3:we12",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for $p$ : $p-13{p}^{\\frac{1}{2}}+36=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "81; 16",
+          "form": null,
+          "variables": [
+            "p"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "p = 81 \\text{ or } p = 16",
+      "solution": [
+        "Rewrite the equation: We notice that ${\\left({p}^{\\frac{1}{2}}\\right)}^{2}=p$ so we can rewrite the equation as: ${\\left({p}^{\\frac{1}{2}}\\right)}^{2}-13{p}^{\\frac{1}{2}}+36=0$",
+        "Factorise as a trinomial: $\\left({p}^{\\frac{1}{2}}-9\\right)\\left({p}^{\\frac{1}{2}}-4\\right)=0$",
+        "Solve to find both roots: $\\begin{aligned}p^{\\frac{1}{2}}-9&=0&\\text{or}&&p^{\\frac{1}{2}}-4&=0\\\\p^{\\frac{1}{2}}&=9&&&p^{\\frac{1}{2}}&=4\\\\\\left(p^{\\frac{1}{2}}\\right)^{2}&=(9)^{2}&&&\\left(p^{\\frac{1}{2}}\\right)^{2}&=(4)^{2}\\\\p&=81&&&p&=16\\end{aligned}$ Therefore $p=81$ or $p=16$ ."
+      ],
+      "source_page": 54,
+      "source_note": "Worked example 12 · p.54 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s4-1-3:we13",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for $x$ : $2^{x}-2^{4-x}=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "2",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 2",
+      "solution": [
+        "Rewrite the equation: In order to get the equation into a form which we can factorise, we need to rewrite the equation: $\\begin{aligned}2^{x}-2^{4-x}&=0\\\\2^{x}-2^{4}\\cdot2^{-x}&=0\\\\2^{x}-\\frac{2^{4}}{2^{x}}&=0\\end{aligned}$ Now eliminate the fraction by multiplying both sides of the equation by the denominator, $2^{x}$ . $\\begin{aligned}\\left(2^{x}-\\frac{2^{4}}{2^{x}}\\right)\\times2^{x}&=0\\times2^{x}\\\\2^{2x}-16&=0\\end{aligned}$",
+        "Factorise the equation: Now that we have rearranged the equation, we can see that we are left with a difference of two squares. Therefore: $\\begin{aligned}2^{2x}-16&=0\\\\(2^{x}-4)(2^{x}+4)&=0\\\\2^{x}&=4&\\qquad2^{x}\\neq-4\\quad\\text{(apositiveintegerwithanexponentisalwayspositive)}\\\\2^{x}=2^{2}&=4\\\\x&=2\\end{aligned}$ Therefore $x=2$ ."
+      ],
+      "source_page": 54,
+      "source_note": "Worked example 13 · p.54 · solution: book_worked",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1a",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Solve for the variable: $2^{x+5}=32$",
+      "answer": "0",
+      "solution": [
+        "$\\begin{aligned}2^{x+5}&=32\\\\2^{x+5}&=2^{5}\\\\\\therefore x+5&=5\\\\x&=0\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1a (2F37) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1b",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Solve for the variable: $5^{2x+2}=\\dfrac{1}{125}$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "-\\frac{5}{2}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = -\\frac{5}{2}",
+      "solution": [
+        "$\\begin{aligned}5^{2x+2}&=\\dfrac{1}{125}\\\\5^{2x+2}&=\\dfrac{1}{5^{3}}\\\\5^{2x+2}&=5^{-3}\\\\\\therefore2x+2&=-3\\\\2x&=-5\\\\x&=-\\dfrac{5}{2}\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1b (2F38) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1c",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve for the variable: $64^{y+1}=16^{2y+5}$",
+      "answer": "-7",
+      "solution": [
+        "$\\begin{aligned}64^{y+1}&=16^{2y+5}\\\\2^{6(y+1)}&=2^{4(2y+5)}\\\\2^{6y+6}&=2^{8y+20}\\\\\\therefore6y+6&=8y+20\\\\2y&=-14\\\\y&=-7\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1c (2F39) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1d",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Solve for the variable: $3^{9x-2}=27$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\frac{5}{9}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = \\frac{5}{9}",
+      "solution": [
+        "$\\begin{aligned}3^{9x-2}&=27\\\\3^{9x-2}&=3^{3}\\\\\\therefore9x-2&=3\\\\9x&=5\\\\x&=\\dfrac{5}{9}\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1d (2F3B) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1e",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Solve for the variable: $\\text{25}=\\text{5}^{z-4}$",
+      "answer": "6",
+      "solution": [
+        "$\\begin{aligned}\\text{25}&=\\text{5}^{z-4}\\\\\\text{5}^\\text{2}&=\\text{5}^{z-4}\\\\\\text{2}&=z-4\\\\\\text{2}+4&=z\\\\\\text{6}&=z\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1e (2F3C) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1f",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve for the variable: $-\\frac{1}{2}\\cdot6^{\\frac{m}{2}+3}=-18$",
+      "answer": "-2",
+      "solution": [
+        "$\\begin{aligned}\\left(-2\\right)\\left(-\\frac{1}{2}6^{\\frac{m}{2}+3}\\right)&=\\left(-18\\right)\\left(-2\\right)\\\\6^{\\frac{m}{2}+3}&=36\\\\6^{\\frac{m}{2}+3}&=6^{2}\\\\\\frac{m}{2}+3&=2\\\\\\frac{m}{2}&=-1\\\\m&=-2\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1f (2F3D) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1g",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve for the variable: $81^{k+2}=27^{k+4}$",
+      "answer": "4",
+      "solution": [
+        "$\\begin{aligned}81^{k+2}&=27^{k+4}\\\\3^{4(k+2)}&=3^{3(k+4)}\\\\\\therefore4k+8&=3k+12\\\\k&=4\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1g (2F3F) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1h",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Solve for the variable: $25^{1-2x}-5^{4}=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "-\\frac{1}{2}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = -\\frac{1}{2}",
+      "solution": [
+        "$\\begin{aligned}25^{1-2x}-5^{4}&=0\\\\5^{2(1-2x)}&=5^{4}\\\\5^{2-4x}&=5^{4}\\\\\\therefore2-4x&=4\\\\4x&=-2\\\\x&=-\\dfrac{1}{2}\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1h (2F3G) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1i",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for the variable: $27^{x}\\times9^{x-2}=1$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\frac{4}{5}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = \\frac{4}{5}",
+      "solution": [
+        "$\\begin{aligned}27^{x}\\times9^{x-2}&=1\\\\3^{3x}\\times3^{2(x-2)}&=1\\\\3^{3x+2x-4}&=3^{0}\\\\\\therefore5x-4&=0\\\\5x&=4\\\\x&=\\frac{4}{5}\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1i (2F3H) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-2:ex2-3-1j",
+      "lo": "lo:g10m2s4-1-2",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve for the variable: $2^{t}+2^{t+2}=40$",
+      "answer": "3",
+      "solution": [
+        "$\\begin{aligned}2^{t}+2^{t+2}&=40\\\\2^{t}(1+2^{2})&=40\\\\2^{t}(5)&=40\\\\2^{t}&=8\\\\2^{t}&=2^{3}\\\\\\therefore t&=3\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1j (2F3J) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-3-1k",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for the variable: $(7^x-49)(3^x-27)=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "2; 3",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 2 \\text{ or } x = 3",
+      "solution": [
+        "$\\begin{aligned}(7^x-49)(3^x-27)&=0\\\\(7^x-7^2)(3^x-3^3)&=0\\\\\\therefore7^x-7^2=0&\\text{or}3^x-3^3=0\\\\\\therefore7^x=7^2&\\text{or}3^x=3^3\\\\\\therefore x=2&\\text{or}x=3\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1k (2F3K) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-3-1l",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for the variable: $(2\\cdot2^x-16)(3^{x+1}-9)=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "3; 1",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 3 \\text{ or } x = 1",
+      "solution": [
+        "$\\begin{aligned}(2\\cdot2^x-16)(3^{x+1}-9)&=0\\\\(2^{x+1}-2^4)(3^{x+1}-3^2)&=0\\\\\\therefore2^{x+1}-2^4=0&\\text{or}3^{x+1}-3^2=0\\\\x+1=4&\\text{or}x+1=2\\\\\\therefore x=3&\\text{or}x=1\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1l (2F3M) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-3-1m",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for the variable: $(10^x-1)(3^x-81)=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "0; 4",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 0 \\text{ or } x = 4",
+      "solution": [
+        "$\\begin{aligned}(10^x-1)(3^x-81)&=0\\\\(10^x-10^0)(3^x-3^4)&=0\\\\\\therefore10^x-10^0=0&\\text{or}3^x-3^4=0\\\\\\therefore x=0&\\text{or}x=4\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1m (2F3N) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-3-1n",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "Solve for the variable: $2\\times5^{2-x}=5+5^{x}$",
+      "answer": "1",
+      "solution": [
+        "$\\begin{aligned}2\\times5^{2-x}&=5+5^{x}\\\\2(5^{2})(5^{-x})&=5+5^{x}\\\\\\frac{2(5^{2})}{5^{x}}-5-5^{x}&=0\\\\\\left(\\frac{50}{5^{x}}\\right)\\times5^{x}-5\\times5^{x}-5^{x}\\times5^{x}&=0\\\\50-5(5^{x})-(5^{x})^{2}&=0\\\\(5^{x}-5)(5^{x}+10)&=0\\\\5^{x}-5=0\\text{or}&5^{x}+10=0\\\\5^{x}=5\\text{or}&5^{x}=-10\\\\x=1\\text{or}&\\text{undefined}\\\\\\therefore x&=1\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1n (2F3P) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-3-1o",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for the variable: $9^{m}+3^{3-2m}=28$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "\\frac{3}{2}; 0",
+          "form": null,
+          "variables": [
+            "m"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "m = \\frac{3}{2} \\text{ or } m = 0",
+      "solution": [
+        "$\\begin{aligned}9^{m}+3^{3-2m}&=28\\\\3^{2m}+3^{3}.3^{-2m}&=28\\\\3^{2m}+\\frac{27}{3^{2m}}-28&=0\\\\\\left(3^{2m}\\right)^{2}-28\\left(3^{2m}\\right)+27&=0\\\\\\left(3^{2m}-27\\right)\\left(3^{2m}-1\\right)&=0\\\\3^{2m}-27=0\\text{or}&3^{2m}-1=0\\\\3^{2m}=3^{3}\\text{or}&3^{2m}=3^{0}\\\\2m=3\\text{or}&2m=0\\\\\\therefore m&=\\frac{3}{2}\\text{or}0\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1o (2F3Q) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-3-1p",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve for the variable: $y-2y^{\\frac{1}{2}}+1=0$",
+      "answer": "1",
+      "solution": [
+        "$\\begin{aligned}y-2y^{\\frac{1}{2}}+1&=0\\\\\\left(y^{\\frac{1}{2}}-1\\right)\\left(y^{\\frac{1}{2}}-1\\right)&=0\\\\y^{\\frac{1}{2}}-1&=0\\\\y^{\\frac{1}{2}}&=1\\\\y^{\\frac{1}{2}\\times2}&=1^{1\\times2}\\\\y&=1^{2}\\\\\\therefore y&=1\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1p (2F3R) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1q",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Solve for the variable: $4^{x+3}=\\text{0.5}$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "-\\frac{7}{2}",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = -\\frac{7}{2}",
+      "solution": [
+        "$\\begin{aligned}4^{x+3}&=\\text{0.5}\\\\2^{2x+6}&=\\dfrac{1}{2}\\\\2^{2x+6}&=2^{-1}\\\\\\therefore2x+6&=-1\\\\2x&=-7\\\\x&=-\\dfrac{7}{2}\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1q (2F3S) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1r",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Solve for the variable: $2^{a}=\\text{0.125}$",
+      "answer": "-3",
+      "solution": [
+        "$\\begin{aligned}2^{a}&=\\text{0.125}\\\\2^{a}&=\\dfrac{1}{8}\\\\2^{a}&=2^{-3}\\\\\\therefore a&=-3\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1r (2F3T) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1s",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Solve for the variable: $10^{x}=\\text{0.001}$",
+      "answer": "-3",
+      "solution": [
+        "$\\begin{aligned}10^{x}&=\\text{0.001}\\\\10^{x}&=\\dfrac{1}{\\text{1000}}\\\\10^{x}&=10^{-3}\\\\\\therefore x&=-3\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1s (2F3V) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-1t",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve for the variable: $2^{x^{2}-2x-3}=1$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "3; -1",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 3 \\text{ or } x = -1",
+      "solution": [
+        "$\\begin{aligned}2^{x^{2}-2x-3}&=1\\\\2^{x^{2}-2x-3}&=2^{0}\\\\\\therefore x^{2}-2x-3&=0\\\\(x-3)(x+1)&=0\\\\\\therefore x&=3\\text{or}-1\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1t (2F3W) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-3-1u",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "Solve for the variable: $\\dfrac{8^x-1}{2^x-1}=8.2^x+9$",
+      "answer": "3",
+      "solution": [
+        "$\\begin{aligned}\\frac{8^{x}-1}{2^{x}-1}&=8.2^{x}+9\\\\\\frac{2^{3x}-1}{2^{x}-1}&=8.2^{x}+9\\\\\\frac{(2^{x}-1)(2^{2x}+2^{x}+1)}{2^{x}-1}&=8.2^{x}+9\\\\2^{2x}+2^{x}+1&=8.2^{x}+9\\\\2^{2x}+2^{x}&=8.2^{x}+8\\\\2^{x}.2^{x}+2^{x}&=8(2^{x}+1)\\\\2^{x}(2^{x}+1)&=8(2^{x}+1)\\\\2^{x}&=2^{3}\\\\\\therefore x&=3\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1u (2F3X) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-3-1v",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "Solve for the variable: $\\dfrac{27^x-1}{9^x+3^x+1}=-\\dfrac{8}{9}$",
+      "answer": "-2",
+      "solution": [
+        "$\\begin{aligned}\\frac{27^{x}-1}{9^{x}+3^{x}+1}&=-\\frac{8}{9}\\\\\\frac{3^{3x}-1}{9^{x}+3^{x}+1}&=-\\frac{8}{9}\\\\\\frac{(3^{x}-1)(9^{x}+3^{x}+1)}{9^{x}+3^{x}+1}&=-\\frac{8}{9}\\\\3^{x}-1&=-\\frac{8}{9}\\\\3^{x}&=\\frac{1}{9}\\\\3^{x}&=\\frac{1}{3^{2}}\\\\3^{x}&=3^{-2}\\\\\\therefore x&=-2\\end{aligned}$"
+      ],
+      "source_page": 55,
+      "source_note": "Exercise 2-3, question 1v (2F3Y) · p.55 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-3-2",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "The growth of algae can be modelled by the function $f(t)=2^{t}$ . Find the value of $t$ such that $f(t)=128$ .",
+      "answer": "7",
+      "solution": [
+        "$\\begin{aligned}f(t)=2^{t}&=128\\\\2^{t}&=2^{7}\\\\\\therefore t&=7\\end{aligned}$"
+      ],
+      "source_page": 56,
+      "source_note": "Exercise 2-3, question 2 (2F3Z) · p.56 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-4:ex2-3-3",
+      "lo": "lo:g10m2s4-1-4",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Use trial and error to find the value of $x$ correct to 2 decimal places $2^x=7$",
+      "answer": "2.81",
+      "solution": [
+        "$\\begin{aligned}2^{2}=4&\\text{and}2^{3}=8\\\\\\text{so}2<&x<3\\text{butcloserto}3\\\\\\text{Test}\\\\2^{\\text{2.9}}&=\\text{7.464}\\\\2^{\\text{2.8}}&=\\text{6.964}\\\\2^{\\text{2.81}}&=\\text{7.01}\\\\2^{\\text{2.805}}&=\\text{6.989}\\\\2^{\\text{2.809}}&=\\text{7.007}\\\\\\therefore x&\\approx\\text{2.81}\\end{aligned}$"
+      ],
+      "source_page": 56,
+      "source_note": "Exercise 2-3, question 3 (2F42) · p.56 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3a",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $3^{x}=\\dfrac{1}{27}$",
+      "answer": "-3",
+      "solution": [
+        "$\\begin{aligned}3^{x}&=\\frac{1}{27}\\\\3^{x}&=\\frac{1}{3^{3}}\\\\3^{x}&=3^{-3}\\\\\\therefore x&=-3\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3a (2F5R) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3b",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $\\text{121}=\\text{11}^{m-1}$",
+      "answer": "3",
+      "solution": [
+        "$\\begin{aligned}\\text{121}&=\\text{11}^{m-1}\\\\\\text{11}^\\text{2}&=\\text{11}^{m-1}\\\\\\therefore\\text{2}&=m-1\\\\\\text{2}+1&=m\\\\\\text{3}&=m\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3b (2F5S) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3c",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Solve: $5^{t-1}=1$",
+      "answer": "1",
+      "solution": [
+        "$\\begin{aligned}5^{t-1}&=1\\\\5^{t-1}&=5^{0}\\\\\\therefore t-1&=0\\\\t&=1\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3c (2F5T) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3e",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $-\\frac{64}{3}=-\\frac{4}{3}2^{-\\frac{c}{3}+1}$",
+      "answer": "-9",
+      "solution": [
+        "$\\begin{aligned}\\left(-\\frac{3}{4}\\right)\\left(-\\frac{64}{3}\\right)&=\\left(-\\frac{4}{3}\\cdot2^{-\\frac{c}{3}+1}\\right)\\left(-\\frac{3}{4}\\right)\\\\16&=2^{-\\frac{c}{3}+1}\\\\\\therefore2^{4}&=2^{-\\frac{c}{3}+1}\\\\4&=-\\frac{c}{3}+1\\\\-9&=c\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3e (2F5W) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3f",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $-\\frac{1}{2}6^{-n-3}=-18$",
+      "answer": "-5",
+      "solution": [
+        "$\\begin{aligned}\\left(-2\\right)\\left(-\\frac{1}{2}\\cdot6^{-n-3}\\right)&=\\left(-18\\right)\\left(-2\\right)\\\\6^{-n-3}&=36\\\\6^{-n-3}&=6^{2}\\\\\\therefore-n-3&=2\\\\n&=-5\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3f (2F5X) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3h",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "basic",
+      "type": "numeric",
+      "stem": "Solve: $3^{y+1}=5^{y+1}$",
+      "answer": "-1",
+      "solution": [
+        "$\\begin{aligned}3^{y+1}&=5^{y+1}\\\\\\therefore y+1&=0\\\\y&=-1\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3h (2F5Z) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3k",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $m^{0}+m^{-1}=0$",
+      "answer": "-1",
+      "solution": [
+        "$\\begin{aligned}m^{0}+m^{-1}&=0\\\\1+m^{-1}&=0\\\\m^{-1}&=-1\\\\\\left(m^{-1}\\right)^{-1}&=\\left(-1\\right)^{-1}\\\\m&=-1\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3k (2F64) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-4-3l",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "advanced",
+      "type": "short",
+      "stem": "Solve: $t^{\\frac{1}{2}}-3t^{\\frac{1}{4}}+2=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "1; 16",
+          "form": null,
+          "variables": [
+            "t"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "t = 1 \\text{ or } t = 16",
+      "solution": [
+        "$\\begin{aligned}t^{\\frac{1}{2}}-3t^{\\frac{1}{4}}+2&=0\\\\\\left(t^{\\frac{1}{4}}-1\\right)\\left(t^{\\frac{1}{4}}-2\\right)&=0\\\\t^{\\frac{1}{4}}-1=0&\\text{or}t^{\\frac{1}{4}}-2=0\\\\t^{\\frac{1}{4}}=1&\\text{or}t^{\\frac{1}{4}}=2\\\\\\left(t^{\\frac{1}{4}}\\right)^{4}=(1)^{4}&\\text{or}\\left(t^{\\frac{1}{4}}\\right)^{4}=(2)^{4}\\\\t&=1\\text{or}16\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3l (2F65) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3m",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $3^{p}+3^{p}+3^{p}=27$",
+      "answer": "2",
+      "solution": [
+        "$\\begin{aligned}3^{p}+3^{p}+3^{p}&=27\\\\3.3^{p}&=27\\\\3^{p+1}&=3^{3}\\\\\\therefore p+1&=3\\\\p&=2\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3m (2F66) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-4-3o",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "Solve: $x^{\\frac{1}{2}}+3x^{\\frac{1}{4}}-18=0$",
+      "answer": "81",
+      "solution": [
+        "$\\begin{aligned}\\left(x^{\\frac{1}{4}}+6\\right)\\left(x^{\\frac{1}{4}}-3\\right)&=0\\\\x^{\\frac{1}{4}}+6=0&\\text{or}x^{\\frac{1}{4}}-3=0\\\\x^{\\frac{1}{4}}=-6&\\text{or}x^{\\frac{1}{4}}=3\\\\\\left(x^{\\frac{1}{4}}\\right)^{4}=(-6)^{4}&\\text{or}\\left(x^{\\frac{1}{4}}\\right)^{4}=(3)^{4}\\\\x&=1296\\text{or}81\\end{aligned}$",
+        "We check both answers and find that $x=81$ is the only solution."
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3o (2F68) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-4-3q",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve: $(2^x-8)(3^x-9)=0$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "3; 2",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 3 \\text{ or } x = 2",
+      "solution": [
+        "$\\begin{aligned}(2^x-8)(3^x-9)&=0\\\\(2^x-2^3)(3^x-3^2)&=0\\\\\\therefore2^x-2^3=0&\\text{or}3^x-3^2=0\\\\\\therefore x=3&\\text{or}x=2\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3q (2F6B) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-4-3r",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $(6^x-36)(16-4^x)=0$",
+      "answer": "2",
+      "solution": [
+        "$\\begin{aligned}(6^x-36)(16-4^x)&=0\\\\(6^x-6^2)(4^2-4^x)&=0\\\\\\therefore6^x-6^2=0&\\text{or}4^2-4^x=0\\\\\\therefore x&=2\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3r (2F6C) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3s",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve: $5.2^{x^2+1}=20$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "1; -1",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = 1 \\text{ or } x = -1",
+      "solution": [
+        "$\\begin{aligned}5.2^{x^{2}+1}&=20\\\\2^{x^{2}+1}&=4\\\\2^{x^{2}+1}&=2^{2}\\\\\\therefore x^{2}+1&=2\\\\x^{2}-1&=0\\\\(x+1)(x-1)&=0\\\\\\\\\\therefore x=1&\\text{or}x=-1\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3s (2F6D) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3t",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $27^{x-2}=9^{2x+1}$",
+      "answer": "-8",
+      "solution": [
+        "$\\begin{aligned}27^{x-2}&=9^{2x+1}\\\\(3^3)^{x-2}&=(3^2)^{2x+1}\\\\3^{3x-6}&=3^{4x+2}\\\\\\therefore3x-6&=4x+2\\\\x&=-8\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3t (2F6F) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-3:ex2-4-3u",
+      "lo": "lo:g10m2s4-1-3",
+      "tier": "advanced",
+      "type": "numeric",
+      "stem": "Solve: $\\dfrac{8^x-1}{2^x-1}=7$",
+      "answer": "1",
+      "solution": [
+        "$\\begin{aligned}\\frac{8^{x}-1}{2^{x}-1}&=7\\\\\\frac{(2^{3})^{x}-1}{2^{x}-1}&=7\\\\\\frac{(2^{x})^{3}-1}{2^{x}-1}&=7\\\\\\frac{(2^{x}-1)((2^{x})^{2}+2^{x}+1)}{(2^{x}-1)}&=7\\\\(2^{2x}+2^{x}+1)&=7\\\\2^{2x}+2^{x}-6&=0\\\\(2^{x}+3)(2^{x}-2)&=0\\\\\\therefore2^{x}+3=0&\\text{or}2^{x}-2=0\\\\2^{x}\\neq-3&\\text{or}2^{x}-2=0\\\\&2^{x}=2\\\\&x=1\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3u (2F6G) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3v",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "numeric",
+      "stem": "Solve: $\\dfrac{35^x}{5^x}=\\dfrac{1}{7}$",
+      "answer": "-1",
+      "solution": [
+        "$\\begin{aligned}\\frac{35^x}{5^x}&=\\frac{1}{7}\\\\\\frac{7^x5^x}{5^x}&=\\frac{1}{7}\\\\7^x&=7^{-1}\\\\\\therefore x&=-1\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3v (2F6H) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
+      "id": "q:g10m2s4-1-1:ex2-4-3w",
+      "lo": "lo:g10m2s4-1-1",
+      "tier": "standard",
+      "type": "short",
+      "stem": "Solve: $\\dfrac{a^{3x}\\cdot a^{\\frac{1}{x}}}{a^{-4}}=1$",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "-\\frac{1}{3}; -1",
+          "form": null,
+          "variables": [
+            "x"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "x = -\\frac{1}{3} \\text{ or } x = -1",
+      "solution": [
+        "$\\begin{aligned}\\frac{a^{3x}.a^{\\frac{1}{x}}}{a^{-4}}&=1\\\\a^{3x+\\frac{1}{x}+4}&=a^{0}\\\\\\therefore3x+\\frac{1}{x}+4&=0\\\\3x^{2}+1+4x&=0\\\\(3x+1)(x+1)&=0\\\\\\therefore x=-\\frac{1}{3}&\\text{or}x=-1\\end{aligned}$"
+      ],
+      "source_page": 57,
+      "source_note": "Exercise 2-4, question 3w (2F6J) · p.57 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    }
+  ],
+  "visuals": [],
+  "external_node_refs": [
+    "course:us-g10-math-en",
+    "lo:g10m1s3-1-4",
+    "lo:g10m1s4-1-1",
+    "lo:g10m1s7-1-1",
+    "lo:g10m1s7-1-3",
+    "lo:g10m1s7-2-1",
+    "lo:g10m1s8-1-1"
+  ],
+  "explanation_entries": [
+    {
+      "id": "expl:g10m2s2-1-1:we01",
+      "lo": "lo:g10m2s2-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Simplify: ${2}^{3x}\\times{2}^{4x}$ $\\dfrac{4x^{3}}{2x^{5}}$ $\\dfrac{12{p}^{2}{t}^{5}}{3p{t}^{3}}$ ${\\left(3x\\right)}^{2}$ ${\\left({3}^{4}{5}^{2}\\right)}^{3}$ $6p^{0}\\times\\left(7p\\right)^{0}$ ${\\left(\\dfrac{2xp}{6x^2}\\right)}^{3}$ ${\\left({2}^{-2}\\right)}^{2x+1}$"
+        },
+        {
+          "step": 1,
+          "text_md": "${2}^{3x}\\times{2}^{4x}={2}^{3x+4x}={2}^{7x}$ $\\dfrac{4x^{3}}{2x^{5}}=2x^{3-5}=2x^{-2}=\\dfrac{2}{x^{2}}$ $\\dfrac{12{p}^{2}{t}^{5}}{3p{t}^{3}}=4{p}^{\\left(2-1\\right)}{t}^{\\left(5-3\\right)}=4p{t}^{2}$ ${\\left(3x\\right)}^{2}={3}^{2}{x}^{2}=9{x}^{2}$ ${\\left({3}^{4}\\times{5}^{2}\\right)}^{3}={3}^{\\left(4\\times3\\right)}\\times{5}^{\\left(2\\times3\\right)}={3}^{12}\\times{5}^{6}$ $6p^{0}\\times\\left(7p\\right)^{0}=6(1)\\times1=6$ ${\\left(\\dfrac{2xp}{6x^2}\\right)}^{3}=\\left(\\dfrac{p}{3x}\\right)^{3}=\\dfrac{p^{3}}{27x^{3}}$ ${\\left({2}^{-2}\\right)}^{2x+1}=2^{-2(2x+1)}=2^{-4x-2}$"
+        }
+      ],
+      "source_page": 46,
+      "generated_by": "book (book_worked); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m2s2-1-1:ex2-4-6a",
+      "lo": "lo:g10m2s2-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Explain why the following statements are false: $\\dfrac{1}{a^{-1}+b^{-1}}=a+b$"
+        },
+        {
+          "step": 1,
+          "text_md": "The sum of two powers of the same degree is not the power of the sum of the bases"
+        },
+        {
+          "step": 2,
+          "text_md": "$a+b=\\frac{1}{(a+b)^{-1}}\\neq\\frac{1}{a^{-1}+b^{-1}}$"
+        }
+      ],
+      "source_page": 58,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m2s2-1-1:ex2-4-6b",
+      "lo": "lo:g10m2s2-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Explain why the following statements are false: $(a+b)^2=a^2+b^2$"
+        },
+        {
+          "step": 1,
+          "text_md": "The sum of two powers of the same degree is not the power of the sum of the bases"
+        },
+        {
+          "step": 2,
+          "text_md": "$(a+b)^2=a^2+2ab+b^2\\neq a^2+b^2$"
+        }
+      ],
+      "source_page": 58,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m2s2-1-2:ex2-4-6d",
+      "lo": "lo:g10m2s2-1-2",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Explain why the following statements are false: $2.3^x=6^x$"
+        },
+        {
+          "step": 1,
+          "text_md": "We cannot multiply bases unless they are raised to the same power"
+        },
+        {
+          "step": 2,
+          "text_md": "$6^x=(2\\times3)^x=2^x.3^x\\neq2.3^x$"
+        }
+      ],
+      "source_page": 58,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m2s2-1-1:ex2-4-6f",
+      "lo": "lo:g10m2s2-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Explain why the following statements are false: $(3x^4y^2)^3=3x^{12}y^6$"
+        },
+        {
+          "step": 1,
+          "text_md": "The power of a product is the product of all the bases raised to the same power"
+        },
+        {
+          "step": 2,
+          "text_md": "$\\begin{aligned}(3x^4y^2)^3&=(3)^3(x^4)^3(y^2)^3\\\\&=27x^{12}y^6\\neq3x^{12}y^6\\end{aligned}$"
+        }
+      ],
+      "source_page": 58,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m2s2-1-3:ex2-4-8",
+      "lo": "lo:g10m2s2-1-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Prove that $\\dfrac{2^{n+1}+2^n}{2^n-2^{n-1}}=\\dfrac{3^{n+1}+3^n}{3^n-3^{n-1}}$"
+        },
+        {
+          "step": 1,
+          "text_md": "$\\begin{aligned}\\frac{2^{n+1}+2^{n}}{2^{n}-2^{n-1}}&=\\frac{3^{n+1}+3^{n}}{3^{n}-3^{n-1}}\\\\\\\\\\text{R.H.S}&=\\frac{3^{n+1}+3^{n}}{3^{n}-3^{n-1}}\\\\&=\\frac{3^{n}(3^{1}+3^{0})}{3^{n}(3^{0}-3^{-1})}\\\\&=\\frac{4}{1-\\frac{1}{3}}\\\\&=\\frac{4}{\\frac{2}{3}}\\\\&=\\frac{12}{2}\\\\&=6\\\\\\\\\\text{L.H.S}&=\\frac{2^{n+1}+2^{n}}{2^{n}-2^{n-1}}\\\\&=\\frac{2^{n}(2^{1}+2^{0})}{2^{n}(2^{0}-2^{-1})}\\\\&=\\frac{3}{1-\\frac{1}{2}}\\\\&=\\frac{3}{\\frac{1}{2}}\\\\&=6\\\\\\\\\\therefore\\text{R.H.S}&=\\text{L.H.S}\\end{aligned}$"
+        }
+      ],
+      "source_page": 58,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m2s3-1-1:ex2-4-6c",
+      "lo": "lo:g10m2s3-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Explain why the following statements are false: $\\left(\\frac{1}{a^2}\\right)^{\\frac{1}{3}}=a^{\\frac{2}{3}}$"
+        },
+        {
+          "step": 1,
+          "text_md": "A negative sign is missing, when a power is moved from the denominator to the numerator, the sign of the exponent changes. From the question we must note that $a\\neq0$"
+        },
+        {
+          "step": 2,
+          "text_md": "$\\begin{aligned}\\left(\\frac{1}{a^2}\\right)^{\\frac{1}{3}}&=\\left(a^{-2}\\right)^{\\frac{1}{3}}\\\\&=a^{-\\frac{2}{3}}\\end{aligned}$"
+        }
+      ],
+      "source_page": 58,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m2s3-1-1:ex2-4-6e",
+      "lo": "lo:g10m2s3-1-1",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Explain why the following statements are false: $x^{-\\frac{1}{2}}=\\dfrac{1}{-x^{\\frac{1}{2}}}$"
+        },
+        {
+          "step": 1,
+          "text_md": "The sign of a base is not changed when an exponent is moved from the denominator to the numerator in a fraction"
+        },
+        {
+          "step": 2,
+          "text_md": "$x^{-\\frac{1}{2}}=\\frac{1}{x^{\\frac{1}{2}}}\\neq\\frac{1}{-x^{\\frac{1}{2}}}$"
+        }
+      ],
+      "source_page": 58,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    },
+    {
+      "id": "expl:g10m2s4-1-3:ex2-4-3x",
+      "lo": "lo:g10m2s4-1-3",
+      "entry_type": "worked_example",
+      "content": [
+        {
+          "kind": "problem",
+          "text_md": "Solve: $2x^{\\frac{1}{2}}+1=-x$"
+        },
+        {
+          "step": 1,
+          "text_md": "$\\begin{aligned}2x^{\\frac{1}{2}}+1&=-x\\\\x+2x^{\\frac{1}{2}}+1&=0\\\\(x^{\\frac{1}{2}})^2+2x^{\\frac{1}{2}}+1^2&=0\\\\(x^{\\frac{1}{2}}+1)^2&=0\\\\x^{\\frac{1}{2}}&=-1\\\\x&=1\\end{aligned}$"
+        },
+        {
+          "step": 2,
+          "text_md": "However $2(1)^{\\frac{1}{2}}+1=2\\neq-(1)~\\therefore$ no solution exists"
+        }
+      ],
+      "source_page": 57,
+      "generated_by": "book (book_worked_epub); extraction line v2 (assemble_lesson_bundle.py)"
+    }
+  ],
+  "lessons": [
+    {
+      "slug": "g10m2s2-1",
+      "title": "Revision of exponent laws",
+      "module": "module:g10m-c02",
+      "sections": [
+        {
+          "number": "2.2",
+          "title": "Revision of exponent laws"
+        }
+      ],
+      "group_key": "2.2"
+    },
+    {
+      "slug": "g10m2s3-1",
+      "title": "Rational exponents",
+      "module": "module:g10m-c02",
+      "sections": [
+        {
+          "number": "2.3",
+          "title": "Rational exponents"
+        }
+      ],
+      "group_key": "2.3"
+    },
+    {
+      "slug": "g10m2s4-1",
+      "title": "Exponential equations",
+      "module": "module:g10m-c02",
+      "sections": [
+        {
+          "number": "2.4",
+          "title": "Exponential equations"
+        }
+      ],
+      "group_key": "2.4"
+    }
+  ],
+  "claims": [
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "Product law: a^m × a^n = a^(m+n), multiplying powers of the same base adds the exponents.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00833",
+      "evidence_page": 45,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "Quotient law: a^m / a^n = a^(m-n), dividing powers of the same base subtracts the exponents.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00833",
+      "evidence_page": 45,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "Power of a product: (ab)^n = a^n b^n.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00833",
+      "evidence_page": 45,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "Power of a quotient: (a/b)^n = a^n / b^n.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00833",
+      "evidence_page": 45,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "Power law: (a^m)^n = a^(mn), raising a power to a power multiplies the exponents.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00833",
+      "evidence_page": 45,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "The exponent laws as listed hold where a > 0, b > 0 and m, n are real numbers.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00833",
+      "evidence_page": 45,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "To multiply powers of the same base, write the base once and add the exponents: 2^(3x) × 2^(4x) = 2^(3x+4x) = 2^(7x).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "To divide terms with coefficients and powers, divide the coefficients and subtract the exponents of the same variable: 4x^3 / 2x^5 = 2x^(3-5).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "A factor with a negative exponent is written in the denominator with the positive exponent: 2x^(-2) = 2 / x^2.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "With several variables, divide the numerical coefficients and subtract the exponents of each variable separately: 12p^2 t^5 / 3p t^3 = 4p^(2-1) t^(5-3) = 4p t^2.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "To raise a product to a power, raise each factor to that power: (3x)^2 = 3^2 x^2 = 9x^2.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "To raise a product of powers to a power, multiply each exponent by the outer exponent: (3^4 × 5^2)^3 = 3^(4×3) × 5^(2×3) = 3^12 × 5^6.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "Zero exponent: each power with exponent 0 is replaced by 1, so 6p^0 × (7p)^0 = 6(1) × 1 = 6.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "To simplify a fraction raised to a power, first simplify the fraction inside the brackets, then raise numerator and denominator to the power: (2xp / 6x^2)^3 = (p / 3x)^3 = p^3 / 27x^3.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-1",
+      "claim": "To raise a power to a power with a negative exponent, multiply the exponents, expanding the bracket: (2^(-2))^(2x+1) = 2^(-2(2x+1)) = 2^(-4x-2).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE1",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "When a fraction is one term over one term, use the method of Finding Prime Bases, that is, use prime factorisation on the bases.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b00837",
+      "evidence_page": 46,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "An expression whose terms have different bases may seem impossible to simplify, but if the bases are reduced to prime bases the exponent laws can be applied.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "Change each base to a prime base: 4^n is written as (2^2)^n, 16^n as (2^4)^n, and the lone factor 2 as 2^1.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "Simplify a power of a power by multiplying the exponents: (2^2)^n becomes 2^(2n) and (2^4)^n becomes 2^(4n).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "Multiply powers of the same base in the numerator by adding the exponents: 2^(2n) × 2^(2n) × 2^1 = 2^(2n+2n+1) = 2^(4n+1).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "Divide powers of the same base by subtracting the exponents: 2^(4n+1) / 2^(4n) = 2^(4n+1-(4n)), which gives 2.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE2",
+      "evidence_page": 46,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "Change the bases to primes: 9 is written as 3^2, giving (3^2)^(x-2), and 15 is written as 5 × 3, giving (5×3)^(2x-3).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 47,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "A power of a power is simplified by multiplying the exponents: (3^2)^(x-2) becomes 3^(2x-4).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 47,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "A power of a product of prime bases is split by applying the exponent to each prime base: (5×3)^(2x-3) becomes 5^(2x-3) · 3^(2x-3).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 47,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "Subtract the exponents for each base separately, the powers of 5 with the powers of 5 and the powers of 3 with the powers of 3.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 47,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "When subtracting exponents, remove the brackets and change the signs of the subtracted exponent: (2x-1)-(2x-3) = 2x-1-2x+3 = 2.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 47,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "Write the answer as a fraction: a negative exponent is moved to the denominator, so 5^2 × 3^(-1) = 5^2 / 3 = 25/3.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE3",
+      "evidence_page": 47,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-2",
+      "claim": "Change the base to a prime base: 9^x is written as (3^2)^x and simplified to 3^(2x).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE5",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "When working with exponents, all the laws of operation for algebra apply.",
+      "lang": "en",
+      "claim_type": "caution",
+      "anchor": "b00839",
+      "evidence_page": 48,
+      "evidence_kind": "box",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "When a fraction has more than one term in the numerator or denominator, change to prime bases if necessary and then factorise.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b00841",
+      "evidence_page": 48,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "Each exponent law can be undone, that is, worked backwards, to make an expression factorisable.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "Reverse the multiplication law to write 2^(t-2) as 2^t · 2^(-2), so that 2^t appears in every term.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "Take out the common factor 2^t in the numerator and in the denominator: (2^t − 2^t · 2^(-2)) / (3 · 2^t − 2^t) = 2^t(1 − 2^(-2)) / 2^t(3 − 1).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "Cancel the common factor 2^t, leaving (1 − 2^(-2)) / (3 − 1).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "After cancelling, evaluate the negative power numerically: 2^(-2) = 1/4, giving (1 − 1/4) / 2.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "Simplify the resulting numerical fraction: (1 − 1/4) / 2 is written as 3/4 × 1/2 = 3/8.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE4",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "Recognise that 3^(2x) = (3^x)^2, so the numerator 3^(2x) − 1 has the form of a difference of two squares.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE5",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "Factorise the numerator using the difference of squares: 3^(2x) − 1 = (3^x − 1)(3^x + 1).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE5",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s2-1-3",
+      "claim": "Cancel the common factor (3^x + 1) from numerator and denominator, leaving 3^x − 1.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE5",
+      "evidence_page": 48,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-1",
+      "claim": "The exponent laws can also be applied to expressions with rational exponents.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00884",
+      "evidence_page": 50,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-1",
+      "claim": "To simplify a product of powers of the same base with rational exponents, add the exponents: in 2x^(1/2) × 4x^(-1/2) the powers of x combine as x^(1/2 - 1/2).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE6",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-1",
+      "claim": "When simplifying 2x^(1/2) × 4x^(-1/2), the coefficients 2 and 4 are multiplied to give 8.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE6",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-1",
+      "claim": "Adding the exponents 1/2 and -1/2 gives the exponent 0, so 2x^(1/2) × 4x^(-1/2) becomes 8x^0.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE6",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-1",
+      "claim": "A power with exponent 0 is replaced by 1, so 8x^0 = 8(1) = 8.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE6",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-2",
+      "claim": "To simplify a decimal base raised to a rational exponent, write the base as a fraction and simplify it.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE7",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-2",
+      "claim": "The decimal 0.008 is written as the fraction 8/1000, so (0.008)^(1/3) = (8/1000)^(1/3).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE7",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-2",
+      "claim": "The fraction 8/1000 is simplified to 1/125, so (8/1000)^(1/3) = (1/125)^(1/3).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE7",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-1",
+      "claim": "A rational exponent on a fraction is applied to the numerator and to the denominator separately: (1/5^3)^(1/3) = 1^(1/3) / 5^(3 · 1/3).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE7",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-1",
+      "claim": "A power raised to a rational exponent has its exponents multiplied: (5^3)^(1/3) = 5^(3 · 1/3).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE7",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-2",
+      "claim": "Evaluating by this method gives (0.008)^(1/3) = 1/5.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE7",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s3-1-2",
+      "claim": "The book writes a decimal number with a comma as the decimal separator, for example 0.008.",
+      "lang": "en",
+      "claim_type": "convention",
+      "anchor": "WE7",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "checked"
+    },
+    {
+      "lo": "lo:g10m2s3-1-2",
+      "claim": "The denominator 125 is rewritten as the prime power 5^3, so (1/125)^(1/3) = (1/5^3)^(1/3).",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE7",
+      "evidence_page": 50,
+      "evidence_kind": "worked_example",
+      "provenance": "checked"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "An exponential equation is an equation that has the unknown variable in the exponent.",
+      "lang": "en",
+      "claim_type": "definition",
+      "anchor": "b00900",
+      "evidence_page": 52,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "If a single term with the same base can be written on each side of an exponential equation, the exponents can be equated; this is one method for solving exponential equations.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "b00902",
+      "evidence_page": 52,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "The rule for equating exponents holds when the base a satisfies a > 0 and a is not equal to 1.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00903",
+      "evidence_page": 52,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "If a^x = a^y (same base), then x = y.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "b00904",
+      "evidence_page": 52,
+      "evidence_kind": "heading",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "If the base a = 1, then x and y can be different, so the exponents cannot be equated.",
+      "lang": "en",
+      "claim_type": "caution",
+      "anchor": "b00905",
+      "evidence_page": 52,
+      "evidence_kind": "box",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "To solve 3^(x+1) = 9, change the bases to prime numbers by writing 9 as 3^2, so that 3^(x+1) = 3^2.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE8",
+      "evidence_page": 52,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "Once the bases are the same, equate the exponents and solve the resulting equation: x + 1 = 2, therefore x = 1.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE8",
+      "evidence_page": 52,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "From the exponent identities, a^0 = 1.",
+      "lang": "en",
+      "claim_type": "rule",
+      "anchor": "WE9",
+      "evidence_page": 52,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-1",
+      "claim": "To solve 3^t = 1, write the 1 as a power of the same base using a^0 = 1, so 3^t = 3^0, and equate the exponents to get t = 0.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE9",
+      "evidence_page": 52,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-2",
+      "claim": "When terms have different exponents of the same base, as in 5^t + 3.5^(t+1) = 400, first rewrite the term with the different exponent: 5^(t+1) is written as 5^t . 5.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE10",
+      "evidence_page": 53,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-2",
+      "claim": "Take out the common factor 5^t, giving 5^t(1 + 3.5) = 400, which becomes 5^t(1 + 15) = 400.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE10",
+      "evidence_page": 53,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-2",
+      "claim": "Simplify the bracket and the equation to leave a single power: 5^t(16) = 400 gives 5^t = 25.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE10",
+      "evidence_page": 53,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-2",
+      "claim": "Change the bases to prime numbers by writing 25 as 5^2, so 5^t = 5^2, then equate the exponents (same base) to get t = 2.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE10",
+      "evidence_page": 53,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "To solve 3^(2x) - 80.3^x - 81 = 0, factorise the trinomial: (3^x - 81)(3^x + 1) = 0.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE11",
+      "evidence_page": 53,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "Solve each factor by setting it equal to zero, giving 3^x = 81 or 3^x = -1.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE11",
+      "evidence_page": 53,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "3^x = -1 is undefined, so that factor is rejected and only 3^x = 81 is kept.",
+      "lang": "en",
+      "claim_type": "caution",
+      "anchor": "WE11",
+      "evidence_page": 53,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "For the remaining factor, write 81 as 3^4 so 3^x = 3^4, then equate the exponents to get x = 4.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE11",
+      "evidence_page": 53,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "When an equation such as p - 13p^(1/2) + 36 = 0 is not yet in factorisable form, notice that (p^(1/2))^2 = p and rewrite it as (p^(1/2))^2 - 13p^(1/2) + 36 = 0.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE12",
+      "evidence_page": 54,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "Factorise the rewritten equation as a trinomial: (p^(1/2) - 9)(p^(1/2) - 4) = 0.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE12",
+      "evidence_page": 54,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "Solve each factor to find both roots: set p^(1/2) - 9 = 0 and p^(1/2) - 4 = 0, then square both sides of each (for example (p^(1/2))^2 = 9^2) to get p = 81 or p = 16.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE12",
+      "evidence_page": 54,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "Both roots are the solution: p = 81 or p = 16.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE12",
+      "evidence_page": 54,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "To solve 2^x - 2^(4-x) = 0, first rewrite the equation into a form that can be factorised: 2^(4-x) = 2^4 . 2^(-x) = 2^4 / 2^x.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE13",
+      "evidence_page": 54,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "Eliminate the fraction by multiplying both sides of the equation by the denominator, 2^x, which gives 2^(2x) - 16 = 0.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE13",
+      "evidence_page": 54,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "The rearranged equation 2^(2x) - 16 = 0 is a difference of two squares and factorises as (2^x - 4)(2^x + 4) = 0.",
+      "lang": "en",
+      "claim_type": "method",
+      "anchor": "WE13",
+      "evidence_page": 54,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    },
+    {
+      "lo": "lo:g10m2s4-1-3",
+      "claim": "2^x = -4 is rejected because a positive integer with an exponent is always positive; only 2^x = 4 = 2^2 is kept, so x = 2.",
+      "lang": "en",
+      "claim_type": "caution",
+      "anchor": "WE13",
+      "evidence_page": 54,
+      "evidence_kind": "worked_example",
+      "provenance": "containment"
+    }
+  ],
+  "assembled_from": {
+    "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
+    "objectives/g10m2s2-1.json": "ff99c73800e9984f89051b444ceba83b72036a0e61d8afa6bc0b2c16af982fa2",
+    "objectives/g10m2s3-1.json": "fc679cf8d6ae1de800805f66f1a5300d9f9e3622b2300e4e84fad9cd6a42886f",
+    "objectives/g10m2s4-1.json": "0e953643263ee4c0adb1354f7c649b36d1ec5483940870cef9e5448d2c90397c",
+    "runs/lesson/g10m2s2-1.json": "2600c82cc0719174da1c18cbf6faa18af05bdf9d17e5ae02bf2e4b8c0853341b",
+    "runs/lesson/g10m2s3-1.json": "9c5de27e13e7f3d80cc8eaaa9855d9da91e9a71369e1c6b764335c9daa41e1eb",
+    "runs/lesson/g10m2s4-1.json": "a69369e7cba55826c7a56562b7f4882183b69ffc8ea09b7c1fd53f7eb6efea03"
+  }
+}
