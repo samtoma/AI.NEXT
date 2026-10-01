@@ -16,7 +16,9 @@ EPUB names every equation image md5(its LaTeX source). A transcription is ACCEPT
   by hash       md5(latex) == the file name — an exact proof, however the string was found; or
   by agreement  two INDEPENDENT vision passes (A and B, blind to each other) agree after
                 normalisation (spacing, \\left/\\right, \\dfrac, \\text{} wrappers, alignment
-                markup — never a symbol); or
+                markup and an array's column rules, braces round a single token, U+2212 for `-`
+                — semantically null rewrites only (see `normalise`), never a symbol, digit, sign,
+                exponent or fraction); or
   by a third reading   when A and B did NOT agree (they differ, or only one of them could read
                 the image), a THIRD independent pass C — blind to both — reads it, and the
                 image is accepted only when C agrees with A or with B after the same
