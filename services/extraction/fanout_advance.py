@@ -885,9 +885,9 @@ def h_wcheck(A: Adv) -> bool:
     argv = ["working_check.py", "collect"]
     for a in args:
         argv += ["--args", A.P.rel(a)]
-    t0 = time.time()
+    t0 = time.time_ns()
     r = A.fl.run("working_check collect", argv + ["--runs", *A.rels(*runs), "--out", A.P.rel(out)], inputs=runs, outputs=[out], ok=(0, 1))
-    if r.rc == 1 and not r.dry and not (out.exists() and out.stat().st_mtime >= t0 - 2):
+    if r.rc == 1 and not r.dry and not written_since(out, t0):
         raise StepFailed("working_check collect", f"exit 1 and no flags file was written: {r.key_lines()}")     # a refusal, not unchecked solutions
     if out.exists():
         d = read_json(out)
@@ -901,6 +901,11 @@ def h_wcheck(A: Adv) -> bool:
 
 
 # ---- S5 draft and the chapter's load
+def written_since(path: Path, t0_ns: int, slack_ms: int = 20) -> bool:
+    """The file exists and was (re)written after t0: the step that was meant to write it did (a crash leaves an older one)."""
+    return path.exists() and path.stat().st_mtime_ns >= t0_ns - slack_ms * 1_000_000
+
+
 def last_line(text: str, prefix: str = "") -> str | None:
     hits = [l.strip() for l in (text or "").splitlines() if l.strip().startswith(prefix)]
     return hits[-1][:200] if hits else None
@@ -1146,11 +1151,11 @@ def h_s5_final(A: Adv) -> bool:
                    mark_inputs=[auto3])
     fl.run("G4 auto-pass", ["auto_pass_gates.py", "g4", BOOK, "--chapter", str(A.ch), "--catalogue", P.rel(cat), "--s5", P.rel(A.saved)],
            inputs=[cat, A.saved], outputs=[K.gates / f"g4-{K.t}.json"])
-    t0 = time.time()
+    t0 = time.time_ns()
     r = fl.run("coverage", ["coverage_report.py", "--book", P.rel(cfg), "--chapter", str(A.ch), "--maths", P.rel(P.maths_book / "summary.json"),
                             "--widget-gaps", P.rel(K.widget_gaps), "--s5", P.rel(A.saved), "--generated", P.rel(K.gen), "--out", P.rel(K.cov)],
                inputs=[A.saved, K.widget_gaps, *bundles, K.seed, P.maths_book / "summary.json"], outputs=[K.cov], ok=(0, 1))
-    if r.rc == 1 and not r.dry and not (K.cov.exists() and K.cov.stat().st_mtime >= t0 - 2):     # RED writes the report; a crash does not
+    if r.rc == 1 and not r.dry and not written_since(K.cov, t0):     # RED writes the report; a crash does not
         raise StepFailed("coverage", f"exit 1 and no report was written: {r.key_lines()}")
     coverage_verdict(A, K.cov)
     fl.run("parity (every course)", ["parity_check.py", "--candidate", F.DSN, "--all-courses"], fresh=False)

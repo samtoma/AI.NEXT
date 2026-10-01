@@ -691,7 +691,8 @@ class WorkingCheck(Base):
         self.assertTrue(any("no checking agent answered" in w for w in rep["warnings"]))
         self.assertTrue(any("a result names x" in w for w in rep["warnings"]))
         # a refusal (not a working-check run, say) exits 1 without writing: that is a stop
-        (b.runs / "working-check" / "ch04.flags.json").unlink()
+        flags = b.runs / "working-check" / "ch04.flags.json"
+        os.utime(flags, (flags.stat().st_atime, flags.stat().st_mtime - 60))                 # the earlier file stays; it was not rewritten
         self.ex.on("working_check.py", lambda argv: A.Result(1, "not a working-check run (stage is not SW)"))
         wf2, task = b.finish("wcheck-ch04", "B.part2", self.res("B", 2), wf=wf)
         rc, rep = b.adv("wcheck-ch04", wf, task)
@@ -1114,8 +1115,9 @@ class S5Final(Base):
     def test_a_coverage_report_that_crashed_is_a_failure_not_a_stale_file_read(self):
         b = self.box
         (b.here / "coverage").mkdir(exist_ok=True)
-        (b.here / "coverage" / f"{BOOK}.ch04.json").write_text(json.dumps({"status": "GREEN", "checks": []}))   # last chapter-run's report
-        old = self.ex.rules["coverage_report.py"]
+        stale = b.here / "coverage" / f"{BOOK}.ch04.json"
+        stale.write_text(json.dumps({"status": "GREEN", "checks": []}))                      # an earlier report
+        os.utime(stale, (stale.stat().st_atime, stale.stat().st_mtime - 60))
         self.ex.on("coverage_report.py", lambda argv: A.Result(1, "Traceback (most recent call last): boom"))
         rc, rep, wf = b.go("s5-final-ch04", result={"stage": "final"})
         self.assertEqual(rc, 1)

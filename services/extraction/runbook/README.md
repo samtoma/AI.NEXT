@@ -870,9 +870,10 @@ refused: that is Samuel's to approve, decisions 43-45); keep a stem repair small
 class `unconfirmed` / `not grounded` / `refused` / `marker cannot check`, and listed in the report. A person's verdict in G2's file is
 never overwritten. The gate record lists every low-confidence recommendation for Samuel beside the holds and exclusions.
 
-**Cost** (API-equivalent, MODELLED until the first run is metered, stage `G2R`): $0.10-0.20 per item recommended plus $0.05-0.10 per
-verdict verified, about $11-21 for Chapter 1's 82 items (11 + up to 7 agents) and $3-5 for Chapter 2's 20. Tests:
-`tests/test_g2_recommend.py` (the workflow under the stub runtime, the policy, the oracles on the app's real marker, the commands).
+**Cost** (API-equivalent, MODELLED until the first run is metered, stage `G2R`): the harness's fixed ~$0.09 per agent plus a derivation per item at effort high, so
+$0.30-0.75 per recommending agent (a batch of 8) and $0.20-0.50 per verifying agent (at most one per batch that has an accept or a fix): Chapter 1's 82 items,
+11 + up to 11 agents, about $4-14; Chapter 2's 20 items, 3 + up to 3 agents, about $1-4. Tests: `tests/test_g2_recommend.py` (the workflow under the stub runtime, the
+policy, the oracles on the app's real marker, the commands).
 
 ## 8. Cost ledger and go / no-go
 

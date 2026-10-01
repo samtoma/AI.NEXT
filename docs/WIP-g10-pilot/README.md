@@ -929,8 +929,8 @@ right answers beside it — an errata list for the book. **Ex1-9:17 is not a "li
 so the book has no correct key; the typed key is the typing agent's correction, which the collector refuses to put live (an exclude with `if_corrected` for Samuel).
 
 **Prepared, verified (`embed_workflow.py verify` OK), in `work/g10-math/packets/embedded/fanout/`** (args beside them in `work/g10-math/packets/fanout/g2rec-chNN.args.json`):
-`g2rec-ch01.workflow.js` (82 items: 47 held + 35 excluded; 11 recommending + up to 11 verifying agents; modelled ≈ $11-21) and `g2rec-ch02.workflow.js` (20 items:
-3 + 17; 3 + up to 3 agents; ≈ $3-5). Run each with `Workflow({scriptPath})` and NO args (a copy refuses args), save to `runs/g10-math/g2rec/chNN-<runId>.json`, meter with
+`g2rec-ch01.workflow.js` (82 items: 47 held + 35 excluded; 11 recommending + up to 11 verifying agents; modelled ≈ $4-14) and `g2rec-ch02.workflow.js` (20 items:
+3 + 17; 3 + up to 3 agents; ≈ $1-4). Run each with `Workflow({scriptPath})` and NO args (a copy refuses args), save to `runs/g10-math/g2rec/chNN-<runId>.json`, meter with
 `meter_run.py record --book g10-math --stage G2R --run <runId>`. `fanout.py close-chapter N` now prepares `g2rec-chNN` for every chapter (it already did for Chapter 3 when the
 chapters were closed) and, once `runs/g10-math/g2-chNN.recommended.json` exists, passes it to G2 (`--recommend`): without it every re-run recomputes the checks' own rule and
 undoes the recommendation.

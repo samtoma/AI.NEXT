@@ -794,11 +794,25 @@ def main(argv: list[str] | None = None) -> int:
                 into[s] = model.model_validate_json(p.read_text())
                 inputs[f"{key}/{p.name}"] = sha256(p)
     bundles = []
+    elsewhere = []
     for p in sorted(seed_d.glob("*.json")) if seed_d.exists() else []:
         b = json.loads(p.read_text())
-        if "extraction_run" in b:
-            bundles.append(b)
-            inputs[f"seed/{p.name}"] = sha256(p)
+        if "extraction_run" not in b:
+            continue
+        # A chapter audit reads ITS bundles. The seed directory holds every chapter assembled so far, and the checks
+        # that look at every bundle (solution sources, notation, KaTeX, the answer text, the book pictures) would
+        # otherwise report another chapter's content as this one's — Chapter 2's "940 book questions" were chapters
+        # 1–4's — and flip this chapter RED or NO-GO when another chapter is re-assembled. A bundle is a chapter's when
+        # it carries one of the audited lessons; the course bundle (no lessons) and the other chapters' are left to
+        # their own audits, and the whole-book run (no --chapter) reads them all.
+        if chapters and not any(l.get("slug") in set(slugs) for l in b.get("lessons") or []):
+            elsewhere.append(p.name)
+            continue
+        bundles.append(b)
+        inputs[f"seed/{p.name}"] = sha256(p)
+    if elsewhere:
+        print(f"  seed: {len(elsewhere)} bundle(s) with none of chapter(s) {sorted(chapters)}'s lessons are not audited "
+              f"here ({', '.join(elsewhere[:6])}{', …' if len(elsewhere) > 6 else ''})")
     generated = {}
     for key in ("generated-questions", "widget-questions", "misconceptions"):
         p = gen_d / f"{key}.json"
