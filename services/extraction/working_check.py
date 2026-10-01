@@ -794,7 +794,7 @@ def main(argv: list[str] | None = None) -> int:
         if a.out:
             a.out.parent.mkdir(parents=True, exist_ok=True)
             a.out.write_text(text)
-        print(f"{n} solution(s), {len(flags)} numeric flag(s)" + (f" → {a.out}" if a.out else ""))
+        print(f"{n} solution(s), {len(flags)} free pre-check flag(s)" + (f" → {a.out}" if a.out else ""))
         for f in flags[:20]:
             print(f"  {f['solution_id']} step {f['step']}: {f['why']}")
         return 0
