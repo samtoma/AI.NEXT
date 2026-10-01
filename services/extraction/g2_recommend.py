@@ -636,6 +636,7 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
     # ("Simplify: …"), and is it equal to the answer the book states? (no model; g2rec_identity.mjs)
     ident = identity_fn(identity_rows(afters)) if afters else {}
     agree = identity_fn(agreement_rows(afters, {k: recs[k].get("book_quote") for k in afters})) if afters else {}
+    ident_typed = identity_fn(identity_rows({k: e["item"] for k, e in by_key.items()}))
     items: dict[str, dict] = {}
     log: dict[str, dict] = {}
     for e in entries:
@@ -663,10 +664,9 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
         "corrections_proposed": sorted(k for k, v in items.items() if v.get("if_corrected")),
         "off_task": off_task,
         "by_state": dict(Counter(e["state"] for e in entries)),
-        # an agent that excluded an item as a book error where the app's marker finds the key equal to the stem's expression, for a person
-        "excluded_though_the_key_equals_the_stem": sorted(k for k, v in items.items() if v["verdict"] == "exclude" and ident.get(k) == "equal"
-                                                          or (v["verdict"] == "exclude" and k in ident_all_equal)),
-        "app_marker_identity": dict(Counter(ident.values())),
+        # the app's own marker on the TYPED key of every item whose stem is "Simplify / Expand / Factorise: …" (informational): for a person
+        # to set beside an agent's "book error" (a typed key can itself be a typing agent's correction of the book's)
+        "app_marker_identity_of_the_typed_key": {w: sorted(k for k, v in ident_typed.items() if v == w) for w in ("equal", "different", "unreadable")},
     }
     return {"status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs "
                       f"each verdict `{SIGNER}`; a person's verdict in G2's file is never overwritten.",

@@ -125,7 +125,7 @@ NO_MARKER = staticmethod(lambda rows: {})
 def collect(entries, results: dict, **kw) -> dict:
     """results: {key: (rec, ver)} -> the recommendation file, with the app's marker faked (or real when NODE and asked)."""
     run = {"results": [{"key": k, "state": by_key(entries)[k]["state"], "rec": r, "ver": v} for k, (r, v) in results.items()]}
-    return G.collect(entries, [run], marker_fn=kw.pop("marker_fn", lambda rows: {}), **kw)
+    return G.collect(entries, [run], marker_fn=kw.pop("marker_fn", lambda rows: {}), identity_fn=kw.pop("identity_fn", lambda rows: {}), **kw)
 
 
 # ---------------------------------------------------------------------------------------------- which items, the packet
@@ -388,13 +388,13 @@ class Policy(unittest.TestCase):
                             marker={"kind": "expression", "key": "\\frac{1}{a+4}", "form": None, "variables": ["a"], "tolerance": None})}]
         run = {"results": [{"key": es[0]["key"], "rec": rec("fix", "item wording", "high", book_quote="\\frac{a-4}{(a+4)(a+1)}",
                                                             fix={"stem": "Simplify: $\\frac{a-4}{a^2+5a+4}$"}), "ver": CONFIRMED}]}
-        e = G.collect(es, [run], marker_fn=lambda rows: {})["items"][es[0]["key"]]
+        e = G.collect(es, [run], marker_fn=lambda rows: {}, identity_fn=lambda rows: {})["items"][es[0]["key"]]
         self.assertEqual((e["verdict"], e["confidence"]), ("fix", "low"), "a stem repair is always 'your call'")
         self.assertEqual(list(e["fields"]), ["stem"])
         self.assertIn("not Samuel", e["stem_fix_by"])
         self.assertIn("repaired", e["why_low"])
         run["results"][0]["rec"]["fix"]["stem"] = "A different question about $a$ entirely, please do it"
-        e = G.collect(es, [run], marker_fn=lambda rows: {})["items"][es[0]["key"]]
+        e = G.collect(es, [run], marker_fn=lambda rows: {}, identity_fn=lambda rows: {})["items"][es[0]["key"]]
         self.assertEqual((e["verdict"], e["class"]), ("hold", "refused"), "a rewrite is not a repair")
 
     def test_a_teaching_only_retype_is_not_verified_and_is_low_confidence(self):
@@ -418,9 +418,9 @@ class Policy(unittest.TestCase):
 
     def test_off_task_answers_are_ignored_and_a_stale_prompts_version_refused(self):
         run = {"results": [{"key": "g10m9s1-1:Ex9-1:99", "rec": rec("exclude")}]}
-        self.assertEqual(G.collect(self.es, [run])["report"]["off_task"], ["g10m9s1-1:Ex9-1:99"])
+        self.assertEqual(G.collect(self.es, [run], marker_fn=lambda r: {}, identity_fn=lambda r: {})["report"]["off_task"], ["g10m9s1-1:Ex9-1:99"])
         with self.assertRaises(G.RecommendError):
-            G.collect(self.es, [{"prompts_version": "g2rec-v0", "results": []}])
+            G.collect(self.es, [{"prompts_version": "g2rec-v0", "results": []}], marker_fn=lambda r: {}, identity_fn=lambda r: {})
 
     def test_every_entry_is_what_g2_merge_reads(self):
         doc = collect(self.es, {self.k1: (rec(book_quote="x^{2}"), CONFIRMED), self.k2: (rec("exclude", "book error"), None)})
@@ -804,7 +804,7 @@ class WorkflowUnderTheStub(unittest.TestCase):
         self.assertEqual(out["result"]["tally"].get("accept/unverified"), 1)
         # the collector then recommends hold, never accept
         es = G.recommendable([self.lrun], 9, "g10m", self.g2)
-        doc = G.collect(es, [out["result"]], marker_fn=lambda rows: {})
+        doc = G.collect(es, [out["result"]], marker_fn=lambda rows: {}, identity_fn=lambda rows: {})
         self.assertEqual(doc["items"][k1]["verdict"], "hold")
         self.assertEqual(doc["items"][k1]["class"], "unconfirmed")
 
@@ -844,7 +844,7 @@ class WorkflowUnderTheStub(unittest.TestCase):
         k1, k2, k3, k7 = self.keys
         out = self.stub(self.rows(), {k1: self.VER, k2: self.VER})
         es = G.recommendable([self.lrun], 9, "g10m", self.g2)
-        doc = G.collect(es, [out["result"]], marker_fn=lambda rows: {})
+        doc = G.collect(es, [out["result"]], marker_fn=lambda rows: {}, identity_fn=lambda rows: {})
         self.assertEqual({k: v["verdict"] for k, v in doc["items"].items()}, {k1: "accept", k2: "fix", k3: "exclude", k7: "exclude"},
                          "k7's hold becomes exclude: its typed shape (invented options, no key) cannot be emitted")
 

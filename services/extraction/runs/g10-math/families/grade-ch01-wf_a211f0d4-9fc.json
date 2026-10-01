@@ -1,0 +1,724 @@
+{
+ "mode": "grade",
+ "book": "g10-math",
+ "prompts_version": "s6-v5",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch01",
+  "stage": "S6 grade",
+  "shards_sha256": "bd11c8469e4cb67dc29bf92b6e599890404765592f0474f1e007e99fdd0af741",
+  "files": 180
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "acfc4775a565b22e6056f9f2e4f8b5b4b6f9eac7b95a046b7a0b0e8e1068095a",
+  "args_sha256": "b8f9b91a63746606a6f94cb0b1fb097d17af7e5f446ee2bc3c8f8c5a756376ab",
+  "generated_sha256": "79679f5d54dec618a9ec3e3efbd7d4e607618efc5d4196231f36bfc7ba1f4408",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "family_id": "tpl:g10m1s7-1-4:group-pairs",
+   "spec_sha": "ceaf30ccfd4687444d1f16e7439d815c48cdcd59c6dd7d24316010f93bf100b1",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-1-4:g001-group-",
+     "stem_sha": "86be89fafc1902bc",
+     "answer": {
+      "plain": "(2 + j)*(5*m + 6*n)"
+     },
+     "working": "Group terms with a common factor: (10m + 12n) + (5jm + 6jn). Factor each pair: 2(5m + 6n) + j(5m + 6n). Take out the common bracket (5m + 6n). Check: (2 + j)(5m + 6n) = 10m + 12n + 5jm + 6jn, which matches."
+    },
+    {
+     "instance_id": "q:g10m1s7-1-4:g006-group-",
+     "stem_sha": "361d53788cec1a31",
+     "answer": {
+      "plain": "(5 + j)*(6*m + 5*n)"
+     },
+     "working": "Group terms with a common factor: (30m + 25n) + (6jm + 5jn). Factor each pair: 5(6m + 5n) + j(6m + 5n). Take out the common bracket (6m + 5n). Check: (5 + j)(6m + 5n) = 30m + 25n + 6jm + 5jn, which matches."
+    },
+    {
+     "instance_id": "q:g10m1s7-1-4:g007-group-",
+     "stem_sha": "f71457e62b400c78",
+     "answer": {
+      "plain": "(3 + j)*(4*m + 7*n)"
+     },
+     "working": "Group terms with a common factor: (12m + 21n) + (4jm + 7jn). Factor each pair: 3(4m + 7n) + j(4m + 7n). Take out the common bracket (4m + 7n). Check: (3 + j)(4m + 7n) = 12m + 21n + 4jm + 7jn, which matches."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-answer (expression) with no options, so there are no distractors to judge. I checked all three instances by hand.\n\ng001: 10m+12n = 2(5m+6n) and 5jm+6jn = j(5m+6n). This gives (5m+6n)(2+j). Expanding gives 10m+5jm+12n+6jn, which matches the original.\n\ng006: 30m+25n = 5(6m+5n) and 6jm+5jn = j(6m+5n). This gives (6m+5n)(5+j). Expanding gives 30m+6jm+25n+5jn, which matches.\n\ng007: 12m+21n = 3(4m+7n) and 4jm+7jn = j(4m+7n). This gives (4m+7n)(3+j). Expanding gives 12m+4jm+21n+7jn, which matches.\n\nIn each instance the numeric factor taken out of the first pair is the highest common factor (2, 5, 3). The binomial has no further common factor, so the key is fully factorised, as the stem asks. In each instance answer_check is the same expression as the LaTeX key, with explicit multiplication signs. The worked solutions follow the book's group-in-pairs method (group, take out the common factor of each pair, take out the common binomial, check by expanding) and every step is correct. There is no word problem, so context is not at issue.\n\nTwo cosmetic points that do not affect correctness. The instance ids look truncated (\"g001-group-\"). In g006 the number 5 appears both as a factor and inside the binomial, but each use is correct and unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-2-1:many-factor-pairs",
+   "spec_sha": "f453f20e5476144b432bcc3a4ff494e44a3706571d5be13166ff2712cd7cad3d",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-2-1:g001-many-f",
+     "stem_sha": "392de4684da6391b",
+     "answer": {
+      "plain": "(x + 10)*(x - 9)"
+     },
+     "working": "Need two numbers with product -90 and sum +1: 10 and -9. So x^2 + x - 90 = (x + 10)(x - 9). Check: x^2 - 9x + 10x - 90 = x^2 + x - 90."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-1:g004-many-f",
+     "stem_sha": "07b691b6e520dc0f",
+     "answer": {
+      "plain": "(x - 6)*(x + 4)"
+     },
+     "working": "Need two numbers with product -24 and sum -2: -6 and 4. So x^2 - 2x - 24 = (x - 6)(x + 4). Check: x^2 + 4x - 6x - 24 = x^2 - 2x - 24."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-1:g005-many-f",
+     "stem_sha": "8eac1547cd0e4e1a",
+     "answer": {
+      "plain": "(x + 8)*(x - 6)"
+     },
+     "working": "Need two numbers with product -48 and sum +2: 8 and -6. So x^2 + 2x - 48 = (x + 8)(x - 6). Check: x^2 - 6x + 8x - 48 = x^2 + 2x - 48."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-expression only, so there are no options and distractors_ok is true by default. I checked all three instances by hand.\n\ng001, x^2 + x - 90: the pair -9 and 10 gives product -90 and sum 1. The factor pairs of 90 listed (1/90, 2/45, 3/30, 5/18, 6/15, 9/10) are complete. The middle terms 89x, 43x, 27x, 13x, 9x and x are all correct, and so is the expansion check.\n\ng004, x^2 - 2x - 24: the pair -6 and 4 gives product -24 and sum -2. The factor pairs of 24 are complete. The middle terms -23x, -10x, -5x and -2x are correct, and so is the expansion check.\n\ng005, x^2 + 2x - 48: the pair -6 and 8 gives product -48 and sum 2. The factor pairs of 48 are complete. The middle terms 47x, 22x, 13x, 8x and 2x are correct, and so is the expansion check.\n\nKey form: each key is a product of two linear factors, which is the factorised form the stem asks for. Each answer_check is the same expression as its key, with an explicit * between the brackets.\n\nSign reasoning: the sign-reasoning step matches the signs of the key in all three instances. The worked solutions use the book's method of searching factor pairs and checking by expansion.\n\nContext: there is no word problem, so context_ok is true.\n\nMinor note, not a defect: in g004 the step-4 listing writes (x + 4)(x - 6) while the key is (x - 6)(x + 4). These are the same expression. If the marker's form check is order-insensitive, which it should be for a commutative product, there is no issue."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-2-2:composite-a-negative-middle",
+   "spec_sha": "d80a07482654451d6c34d2ff158122d94cc88a7bb28d11fb7fc870c8900029e0",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-2-2:g004-compos",
+     "stem_sha": "a5e592dbb632ad15",
+     "answer": {
+      "plain": "(2*x - 1)*(7*x - 5)"
+     },
+     "working": "a*c = 14*5 = 70, need two numbers with product 70 and sum -17: -7 and -10. Split: 14x^2 - 7x - 10x + 5 = 7x(2x - 1) - 5(2x - 1) = (2x - 1)(7x - 5). Check: 14x^2 - 10x - 7x + 5 = 14x^2 - 17x + 5."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-2:g005-compos",
+     "stem_sha": "97376dc9cb73043f",
+     "answer": {
+      "plain": "(3*x - 1)*(5*x - 7)"
+     },
+     "working": "a*c = 15*7 = 105, need product 105 and sum -26: -21 and -5. Split: 15x^2 - 21x - 5x + 7 = 3x(5x - 7) - 1(5x - 7) = (3x - 1)(5x - 7). Check: 15x^2 - 21x - 5x + 7 = 15x^2 - 26x + 7."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-2:g009-compos",
+     "stem_sha": "f8983d5034a3c34c",
+     "answer": {
+      "plain": "(3*x - 1)*(5*x - 2)"
+     },
+     "working": "a*c = 15*2 = 30, need product 30 and sum -11: -5 and -6. Split: 15x^2 - 5x - 6x + 2 = 5x(3x - 1) - 2(3x - 1) = (3x - 1)(5x - 2). Check: 15x^2 - 6x - 5x + 2 = 15x^2 - 11x + 2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-expression only: all three instances (g004, g005, g009) have no options and no misconception tags, so distractors_ok is vacuously true.\n\nKey form: each stem says \"Factorise\", and each key is a product of two brackets, which is the factorised form the marker asks for. Each answer_check is the same expression as its key with explicit multiplication signs, for example \"(2*x - 1)*(7*x - 5)\" against \"(2x - 1)(7x - 5)\". The factorisation is unique up to factor order, so any equivalent bracket order is also correct.\n\nSolutions: I re-expanded every candidate in steps 3 and 4 and every key.\n- g004, 14x^2-17x+5: the four candidates have middle terms -19x, -71x, -17x and -37x. Only (2x-1)(7x-5) gives -17x. The step 6 check -(2*5+1*7) = -17 is correct.\n- g005, 15x^2-26x+7: the candidates give -22x, -106x, -26x and -38x. Only (3x-1)(5x-7) gives -26x. The step 6 check -(21+5) = -26 is correct.\n- g009, 15x^2-11x+2: the candidates give -17x, -31x, -11x and -13x. Only (3x-1)(5x-2) gives -11x. The step 6 check -(6+5) = -11 is correct.\n\nEach solution lists the right factor pairs of the leading coefficient and the constant. The sign argument in step 2 is valid (positive constant and negative middle term, so both constants are negative). The \"both ways round\" enumeration in step 3 covers all four candidate bracket pairs, since swapping the order of the first-term factors only reorders the brackets. The method (factor pairs, sign analysis, trial expansion, check by multiplying out) is the standard Grade 10 trinomial method.\n\nContext: there is no word problem. The stems are plain trinomials with leading coefficient greater than 1, which suits the advanced tier. The numbers are small and unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-2-2:perfect-square-trinomial",
+   "spec_sha": "5ea852d26981d43e239de52f89ceabce24dab31d5b4da378afb6372636569cb7",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-2-2:g003-perfec",
+     "stem_sha": "13317c92bf805702",
+     "answer": {
+      "plain": "(2*x+3)^2"
+     },
+     "working": "4x^2 = (2x)^2 and 9 = 3^2. The middle term 2*(2x)*3 = 12x matches, so this is a perfect square trinomial: (2x+3)^2. Expanding gives 4x^2+12x+9."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-2:g004-perfec",
+     "stem_sha": "4818c2c360d58180",
+     "answer": {
+      "plain": "(2*x+7)^2"
+     },
+     "working": "4x^2 = (2x)^2 and 49 = 7^2. The middle term 2*(2x)*7 = 28x matches, so this is a perfect square trinomial: (2x+7)^2. Expanding gives 4x^2+28x+49."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-2:g010-perfec",
+     "stem_sha": "910ebad9a6b4101b",
+     "answer": {
+      "plain": "(3*x+7)^2"
+     },
+     "working": "9x^2 = (3x)^2 and 49 = 7^2. The middle term 2*(3x)*7 = 42x matches, so this is a perfect square trinomial: (3x+7)^2. Expanding gives 9x^2+42x+49."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-answer family with no options, so distractors_ok is trivially true. I checked all three instances (g003, g004, g010) by hand.\n\nKeys: 4x^2+12x+9 = (2x+3)(2x+3), 4x^2+28x+49 = (2x+7)(2x+7), 9x^2+42x+49 = (3x+7)(3x+7). Each key is factorised, as the stem \"Factorise\" asks. Each answer_check (\"(2*x + 3)*(2*x + 3)\" and so on) is the same expression as its key. A student who writes (2x+3)^2 should be accepted if the checker compares expressions algebraically. I did not verify that.\n\nSolutions: the factor pairs are correct (4 = 1x4, 2x2; 9 = 1x9, 3x3; 49 = 1x49, 7x7). The list of candidate bracket pairs is complete for each trinomial, with no duplicates. I re-expanded every candidate and each middle term is right:\n- g003: 13x, 37x, 15x, 20x, 12x.\n- g004: 53x, 197x, 35x, 100x, 28x.\n- g010: 58x, 442x, 70x, 150x, 42x.\n\nOnly the last pair gives the required middle term in each case. The step 4 observation (both end terms are perfect squares and the brackets are identical) is correct. The step 5 check by multiplying out is correct. The method (factor pairs, candidate brackets, expand, compare) is the book's trial-and-error method.\n\nContext: there is no word problem, and the numbers are clean and realistic."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-2-2:positive-primes",
+   "spec_sha": "711c5664669983bfcc2180803f5b6014966e0a45bb6361192e010db7519e367e",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-2-2:g002-positi",
+     "stem_sha": "49ccc498ef3623b8",
+     "answer": {
+      "plain": "(2*x+1)*(x+3)"
+     },
+     "working": "Need two numbers with product 2*3=6 and sum 7: 1 and 6. Split 7x = x + 6x: 2x^2 + 6x + x + 3 = 2x(x+3) + 1(x+3) = (2x+1)(x+3). Expanding back: 2x^2+6x+x+3 = 2x^2+7x+3, which matches."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-2:g003-positi",
+     "stem_sha": "a4cc8b62fb50e362",
+     "answer": {
+      "plain": "(7*x+1)*(x+2)"
+     },
+     "working": "Need two numbers with product 7*2=14 and sum 15: 1 and 14. Split 15x = 14x + x: 7x^2 + 14x + x + 2 = 7x(x+2) + 1(x+2) = (7x+1)(x+2). Expanding back: 7x^2+14x+x+2 = 7x^2+15x+2, which matches."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-2:g009-positi",
+     "stem_sha": "25912de9d49ced6c",
+     "answer": {
+      "plain": "(7*x+1)*(x+5)"
+     },
+     "working": "Need two numbers with product 7*5=35 and sum 36: 1 and 35. Split 36x = 35x + x: 7x^2 + 35x + x + 5 = 7x(x+5) + 1(x+5) = (7x+1)(x+5). Expanding back: 7x^2+35x+x+5 = 7x^2+36x+5, which matches."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is typed-expression only, so there are no wrong options to judge and distractors is empty. I checked all three instances by hand.\n\nKeys and form:\n- g002: (2x+1)(x+3) expands to 2x^2+6x+x+3 = 2x^2+7x+3. It is a valid factorisation and is in factorised form.\n- g003: (7x+1)(x+2) expands to 7x^2+14x+x+2 = 7x^2+15x+2.\n- g009: (7x+1)(x+5) expands to 7x^2+35x+x+5 = 7x^2+36x+5.\n- In each instance the key and answer_check are the same expression (the key with explicit * signs), and marker.form is \"factorised\", matching the \"Factorise:\" stem.\n- The stems are plain trinomials with positive coefficients, a prime leading coefficient and a prime constant, so only one non-trivial bracket arrangement works. The leading coefficient and constant are coprime, so the factorisation is unique up to order. Either bracket order is the same expression.\n\nContext: there is no word problem, and the numbers are small and realistic.\n\nSolutions: all five steps are correct in every instance and follow the usual trial-and-error method for factorising trinomials.\n- Step 1 lists the factor pairs: 1x2 and 1x3 for g002, 1x7 and 1x2 for g003, 1x7 and 1x5 for g009.\n- Step 2 gives the two bracket arrangements, with plus signs because every term is positive.\n- Step 3 expands both arrangements correctly. The middle terms are 7x and 5x for g002, 15x and 9x for g003, and 36x and 12x for g009.\n- Step 4 picks the arrangement whose middle term matches.\n- Step 5 checks the cross-multiplication: (6+1)x, (14+1)x and (35+1)x respectively.\n- I found no arithmetic slips and no unjustified jumps."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-2-3:common-factor-monic",
+   "spec_sha": "0e361cf173509e688b6e43dabcfd30a26d3c611f94ace6064c0c159159cee9c9",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-2-3:g003-common",
+     "stem_sha": "73885f71a10a1166",
+     "answer": {
+      "plain": "3*(x+5)*(x+7)"
+     },
+     "working": "Take out the common factor 3: 3(x^2+12x+35). Need two numbers with product 35 and sum 12: 5 and 7. So x^2+12x+35=(x+5)(x+7). Check: 3(x^2+12x+35)=3x^2+36x+105."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-3:g005-common",
+     "stem_sha": "f05d6de15d1a9161",
+     "answer": {
+      "plain": "3*(x+1)*(x+5)"
+     },
+     "working": "Take out the common factor 3: 3(x^2+6x+5). Need two numbers with product 5 and sum 6: 1 and 5. So x^2+6x+5=(x+1)(x+5). Check: 3(x^2+6x+5)=3x^2+18x+15."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-3:g007-common",
+     "stem_sha": "4f92225f94fb707e",
+     "answer": {
+      "plain": "2*(x+4)*(x+7)"
+     },
+     "working": "Take out the common factor 2: 2(x^2+11x+28). Need two numbers with product 28 and sum 11: 4 and 7. So x^2+11x+28=(x+4)(x+7). Check: 2(x^2+11x+28)=2x^2+22x+56."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "I expanded each key by hand and checked the worked solution step by step. The family is typed-expression only (no multiple-choice options), so there are no distractors to judge.\n\n- g003, 3x^2+36x+105: dividing by 3 gives x^2+12x+35, with 5*7=35 and 5+7=12, so the key 3(x + 5)(x + 7) is correct. Expanding it returns 3x^2+36x+105.\n- g005, 3x^2+18x+15: dividing by 3 gives x^2+6x+5, with 1*5=5 and 1+5=6, so the key 3(x + 1)(x + 5) is correct. Expanding it returns 3x^2+18x+15.\n- g007, 2x^2+22x+56: dividing by 2 gives x^2+11x+28, with 4*7=28 and 4+7=11, so the key 2(x + 4)(x + 7) is correct. Expanding it returns 2x^2+22x+56.\n\nKey form: the stem asks for \"factorise completely\". Each key has the common factor out front and a fully factorised monic trinomial, which cannot be split further over the integers. Each answer_check (for example \"3*(x + 5)*(x + 7)\") is the same expression as the LaTeX key, with only the multiplication signs made explicit. The marker form is \"factorised\", which matches the stem.\n\nContext: there is no word problem, and the numbers are small and realistic.\n\nSolutions: all three use the same method. Take out the HCF of the coefficients, divide, find two numbers with the given product and sum, factorise the trinomial, then put the common factor back. This is the usual Grade 10 factorisation method, with no skipped or wrong steps.\n\nI found no defects."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-2-4:two-variable-monic",
+   "spec_sha": "e1db901355a238254c47387385005fd16bf61565e15752147a509c3102882961",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-2-4:g002-two-va",
+     "stem_sha": "367a4308fa684f41",
+     "answer": {
+      "plain": "(x + 2*y)*(x + 9*y)"
+     },
+     "working": "Treat x^2+11xy+18y^2 as a quadratic in x with y as a constant. Find two numbers with product 18 and sum 11: 2 and 9. So the factors are (x+2y)(x+9y). Expanding gives x^2+11xy+18y^2."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-4:g004-two-va",
+     "stem_sha": "f258dff570fc4e65",
+     "answer": {
+      "plain": "(x + 3*y)*(x + 9*y)"
+     },
+     "working": "Find two numbers with product 27 and sum 12: 3 and 9. So the factors are (x+3y)(x+9y). Expanding gives x^2+12xy+27y^2."
+    },
+    {
+     "instance_id": "q:g10m1s7-2-4:g008-two-va",
+     "stem_sha": "5319b3a79741855d",
+     "answer": {
+      "plain": "(x + 3*y)*(x + 7*y)"
+     },
+     "working": "Find two numbers with product 21 and sum 10: 3 and 7. So the factors are (x+3y)(x+7y). Expanding gives x^2+10xy+21y^2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-expression family with no options, so there are no distractors to judge. I checked all three instances by hand.\n\n- g002, x^2+11xy+18y^2: 2*9=18 and 2+9=11. The key (x + 2y)(x + 9y) is correct, and the expansion check gives x^2+9xy+2xy+18y^2 = x^2+11xy+18y^2.\n- g004, x^2+12xy+27y^2: 3*9=27 and 3+9=12. The key (x + 3y)(x + 9y) is correct, and the expansion check holds. The pair 1,27 sums to 28, so 3,9 is the only valid pair.\n- g008, x^2+10xy+21y^2: 3*7=21 and 3+7=10. The key (x + 3y)(x + 7y) is correct, and the expansion check holds. The pair 1,21 sums to 22, so 3,7 is the only valid pair.\n\nKey form: each stem says \"Factorise\" and each key is a product of two linear factors, matching marker.form \"factorised\". The LaTeX keys are the same expressions as answer_check, with 2*y written as 2y and the same factor order. All three keys are monic, so there is no common factor left to take out.\n\nSolutions: all three follow the book's method. The steps are to find two numbers whose product is the y^2 coefficient and whose sum is the xy coefficient, attach each to y in its own bracket, then check by expanding. The arithmetic is correct and the step wording is accurate.\n\nContext: no word problem. The numbers are small and unambiguous."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-3-1:diff-of-cubes-coeff",
+   "spec_sha": "cc3e50496c4d955aa78731dc00e95cc7637c91e64457d7adc3799b2b2d2b75db",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-3-1:g003-diff-o",
+     "stem_sha": "79387c14839f99e3",
+     "answer": {
+      "plain": "(6*a - 5*b)*(36*a^2 + 30*a*b + 25*b^2)"
+     },
+     "working": "216a^3 = (6a)^3 and 125b^3 = (5b)^3. Difference of cubes: x^3 - y^3 = (x - y)(x^2 + xy + y^2) with x = 6a, y = 5b. Gives (6a - 5b)(36a^2 + 30ab + 25b^2)."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-1:g006-diff-o",
+     "stem_sha": "eb102e0a5f49265c",
+     "answer": {
+      "plain": "(4*a - 5*b)*(16*a^2 + 20*a*b + 25*b^2)"
+     },
+     "working": "64a^3 = (4a)^3 and 125b^3 = (5b)^3. Difference of cubes with x = 4a, y = 5b: (4a - 5b)(16a^2 + 20ab + 25b^2)."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-1:g008-diff-o",
+     "stem_sha": "fb2fa431c0564520",
+     "answer": {
+      "plain": "(3*a - 5*b)*(9*a^2 + 15*a*b + 25*b^2)"
+     },
+     "working": "27a^3 = (3a)^3 and 125b^3 = (5b)^3. Difference of cubes with x = 3a, y = 5b: (3a - 5b)(9a^2 + 15ab + 25b^2)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "distractors": [],
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "Family has no options (typed expression answers), so there are no distractors to judge. I checked all three instances by hand.\n\ng003, 216a^3 - 125b^3: 6^3 = 216 and 5^3 = 125, so x = 6a and y = 5b. The key (6a - 5b)(36a^2 + 30ab + 25b^2) is correct, with (6a)(5b) = 30ab.\ng006, 64a^3 - 125b^3: x = 4a and y = 5b. The key (4a - 5b)(16a^2 + 20ab + 25b^2) is correct.\ng008, 27a^3 - 125b^3: x = 3a and y = 5b. The key (3a - 5b)(9a^2 + 15ab + 25b^2) is correct.\n\nKey form: the stem says \"Factorise\" and each key is the linear factor times the quadratic trinomial. The trinomial cannot be factorised further over the integers (discriminant negative in each case), so the key is fully factorised. Each LaTeX key is the same expression as its answer_check, which uses ** for powers and * for products.\n\nSolutions: all five steps in each instance follow the book's difference-of-cubes method. They state the identity, take cube roots, substitute, simplify each term of the second bracket, and state the result. The arithmetic is correct and the final line matches the key.\n\nContext: there is no word problem. The stems are plain factorising exercises.\n\nMinor, not blocking: all three instances share the 125b^3 term and vary only the first coefficient, so the family is narrow. The \"advanced\" tier label is generous for a direct substitution into the identity."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-3-1:sum-of-cubes-coeff",
+   "spec_sha": "120d81f883fdf2073e6f30f4f488aa2abbc579925a2bb5a71d1dbf3c1e024a91",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-3-1:g004-sum-of",
+     "stem_sha": "12676e55794daeee",
+     "answer": {
+      "plain": "(4*m + 3*n)*(16*m^2 - 12*m*n + 9*n^2)"
+     },
+     "working": "Sum of cubes: 64m^3 = (4m)^3 and 27n^3 = (3n)^3. Use a^3 + b^3 = (a + b)(a^2 - ab + b^2) with a = 4m, b = 3n: a^2 = 16m^2, ab = 12mn, b^2 = 9n^2. Expanding back gives 64m^3 + 27n^3 (the m^2 n and m n^2 terms cancel)."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-1:g005-sum-of",
+     "stem_sha": "fb9b49d35eda1893",
+     "answer": {
+      "plain": "(3*m + 2*n)*(9*m^2 - 6*m*n + 4*n^2)"
+     },
+     "working": "Sum of cubes: 27m^3 = (3m)^3 and 8n^3 = (2n)^3. With a = 3m, b = 2n: a + b = 3m + 2n, a^2 = 9m^2, ab = 6mn, b^2 = 4n^2. So (3m + 2n)(9m^2 - 6mn + 4n^2). Expanding back gives 27m^3 + 8n^3."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-1:g009-sum-of",
+     "stem_sha": "04a3680879d35b4d",
+     "answer": {
+      "plain": "(2*m + 3*n)*(4*m^2 - 6*m*n + 9*n^2)"
+     },
+     "working": "Sum of cubes: 8m^3 = (2m)^3 and 27n^3 = (3n)^3. With a = 2m, b = 3n: a + b = 2m + 3n, a^2 = 4m^2, ab = 6mn, b^2 = 9n^2. So (2m + 3n)(4m^2 - 6mn + 9n^2). Expanding back gives 8m^3 + 27n^3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Family f037 (sum-of-cubes-coeff, expression answer type) has 3 instances (g004, g005, g009) and no multiple-choice options or misconception tags, so there are no distractors to judge. I checked all three by expanding each key. Each cross term cancels and the cubes come out right: g004 gives 64m^3 + 27n^3 (cross terms +/-48m^2n and +/-36mn^2), g005 gives 27m^3 + 8n^3 (+/-18m^2n and +/-12mn^2), and g009 gives 8m^3 + 27n^3 (+/-12m^2n and +/-18mn^2). Each key is in the asked factorised form, as (x+y)(x^2-xy+y^2). Each quadratic factor has a negative discriminant (e.g. 144-576 for g004), so it does not factor further over the reals and the key is fully factorised. In every instance the LaTeX key is the same expression as answer_check (for g004, (4*m + 3*n)*(16*m**2 - 12*m*n + 9*n**2)). The marker form is \"factorised\" with variables m and n. The stems are pure algebra with no word problem, so context is fine at advanced tier. Each 5-step solution uses the book's sum-of-cubes identity: identify the cube roots, substitute, simplify the bracket. Every intermediate value is correct ((4m)^3=64m^3, (4m)(3n)=12mn, and so on). Two minor points, neither a defect. g005 and g009 are mirror images (27m^3+8n^3 versus 8m^3+27n^3), so they are close to redundant as a pair. Also, answer_check is only an expression-equivalence string, so the factorised-only requirement depends on the marker enforcing form='factorised'. Otherwise the unfactored 64m^3+27n^3 would be equivalent to the key. I could not verify that from the packet."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-3-2:coefficient-cubes",
+   "spec_sha": "8012a2827dbacf3cd91d63bdb2092f4eaf70487b420614b300a5c87bce47cef8",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-3-2:g004-coeffi",
+     "stem_sha": "ef00e0d99122d03d",
+     "answer": {
+      "plain": "3*(x - 3*y)*(x^2 + 3*x*y + 9*y^2)"
+     },
+     "working": "Take out the common factor 3: 3x^3 - 81y^3 = 3(x^3 - 27y^3). Since 27y^3 = (3y)^3, use a^3 - b^3 = (a - b)(a^2 + ab + b^2) with a = x, b = 3y: (x - 3y)(x^2 + 3xy + 9y^2). Checked by expanding: x^3 - 27y^3."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-2:g008-coeffi",
+     "stem_sha": "f0bd7b822c04ba15",
+     "answer": {
+      "plain": "5*(4*x - 3*y)*(16*x^2 + 12*x*y + 9*y^2)"
+     },
+     "working": "Take out the common factor 5: 320x^3 - 135y^3 = 5(64x^3 - 27y^3). Since 64x^3 = (4x)^3 and 27y^3 = (3y)^3, use a^3 - b^3 = (a - b)(a^2 + ab + b^2) with a = 4x, b = 3y: (4x - 3y)(16x^2 + 12xy + 9y^2). Checked by expanding: 64x^3 - 27y^3."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-2:g010-coeffi",
+     "stem_sha": "582742e521965a29",
+     "answer": {
+      "plain": "4*(3*x - y)*(9*x^2 + 3*x*y + y^2)"
+     },
+     "working": "Take out the common factor 4: 108x^3 - 4y^3 = 4(27x^3 - y^3). Since 27x^3 = (3x)^3, use a^3 - b^3 = (a - b)(a^2 + ab + b^2) with a = 3x, b = y: (3x - y)(9x^2 + 3xy + y^2). Checked by expanding: 27x^3 - y^3."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has three typed-expression instances and no options, so there are no distractors to check. I expanded each key by hand and compared it with its answer_check.\n\n- g004, 3x^3 - 81y^3: the highest common factor is 3, which leaves 3(x^3 - 27y^3). With a = x and b = 3y the difference of cubes gives 3(x - 3y)(x^2 + 3xy + 9y^2). The key and answer_check are the same expression, with a harmless \"1*x\" coefficient in answer_check.\n- g008, 320x^3 - 135y^3: gcd(320, 135) = 5, giving 5(64x^3 - 27y^3). The cube roots are 4x and 3y, so the factorisation is 5(4x - 3y)(16x^2 + 12xy + 9y^2). The numbers 64 and 27 share no factor, so no larger common factor is left. The key matches answer_check.\n- g010, 108x^3 - 4y^3: gcd(108, 4) = 4, giving 4(27x^3 - y^3). The cube roots are 3x and y, so the factorisation is 4(3x - y)(9x^2 + 3xy + y^2). The key matches answer_check.\n\nKey form: the stem says \"Factorise\" and each key is fully factorised, with the common factor in front and an irreducible quadratic. That agrees with marker.form = factorised. There is no word problem, so context is fine. Each worked solution follows the book's method in order: take out the common factor, write each term as a cube, apply the difference-of-cubes identity, then simplify. All four steps are arithmetically correct in all three instances.\n\nMinor wording only: step 1 says \"largest number that divides both\", where the book may say \"highest common factor\". This is not an error."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-3-2:equal-coefficients",
+   "spec_sha": "37d640b122f77fa98b2826cabc52fa3ccc9b9ff8fbd42d3ca3e4feefb5738901",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-3-2:g001-equal-",
+     "stem_sha": "3e017c617e37199d",
+     "answer": {
+      "plain": "9*(x - y)*(x^2 + x*y + y^2)"
+     },
+     "working": "Take out the common factor 9: 9(x^3 - y^3). Difference of cubes: x^3 - y^3 = (x - y)(x^2 + xy + y^2). The quadratic factor does not factorise further over the reals."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-2:g009-equal-",
+     "stem_sha": "5d26424cf95cdaae",
+     "answer": {
+      "plain": "5*(x + y)*(x^2 - x*y + y^2)"
+     },
+     "working": "Take out the common factor 5: 5(x^3 + y^3). Sum of cubes: x^3 + y^3 = (x + y)(x^2 - xy + y^2). The quadratic factor does not factorise further over the reals."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-2:g010-equal-",
+     "stem_sha": "835827fe6303a823",
+     "answer": {
+      "plain": "6*(x + y)*(x^2 - x*y + y^2)"
+     },
+     "working": "Take out the common factor 6: 6(x^3 + y^3). Sum of cubes: x^3 + y^3 = (x + y)(x^2 - xy + y^2). The quadratic factor does not factorise further over the reals."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "distractors": [],
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "notes": "The family is typed-answer (expression) with no options, so there are no distractors to judge. I expanded each key to check it. 9(x-y)(x^2+xy+y^2) gives 9x^3-9y^3 (g001). 5(x+y)(x^2-xy+y^2) gives 5x^3+5y^3 (g009). 6(x+y)(x^2-xy+y^2) gives 6x^3+6y^3 (g010). Each key is fully factorised: the quadratic factor has a negative discriminant in x/y, so it cannot be factored further over the reals. The asked form is \"Factorise\", marker form \"factorised\", and each LaTeX key matches its answer_check expression (9*(x - y)*(x^2 + x*y + y^2), and so on). All three stems are bare algebra with no word problem, so context is fine. Each worked solution takes the common factor first, then applies the difference or sum of cubes identity with the correct sign pattern, then restores the factor. Every step is correct and in the book's order. Two minor non-blocking points. The solution's \"(x)^3\" restatement is redundant but harmless. The checker must enforce the factorised form, since an unfactorised input would be numerically equal to the key."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-3-2:letter-in-common-factor",
+   "spec_sha": "6cd19c69f8c6de95f6cdfb848dc68974050b8508579386670368c60a888ece1e",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-3-2:g002-letter",
+     "stem_sha": "8cd5b9a9c4c07d3a",
+     "answer": {
+      "plain": "5*z^2*(1 - 4*z)*(1 + 4*z + 16*z^2)"
+     },
+     "working": "Common factor 5z^2: 5z^2 - 320z^5 = 5z^2(1 - 64z^3). 64z^3 = (4z)^3, so use the difference of cubes 1 - a^3 = (1 - a)(1 + a + a^2) with a = 4z: (1 - 4z)(1 + 4z + 16z^2). Expanding 5z^2(1 - 64z^3) gives back the original."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-2:g007-letter",
+     "stem_sha": "6de9e4728daacedb",
+     "answer": {
+      "plain": "2*z^2*(1 - 3*z)*(1 + 3*z + 9*z^2)"
+     },
+     "working": "Common factor 2z^2: 2z^2 - 54z^5 = 2z^2(1 - 27z^3). 27z^3 = (3z)^3, so use 1 - a^3 = (1 - a)(1 + a + a^2) with a = 3z: (1 - 3z)(1 + 3z + 9z^2). Expanding 2z^2(1 - 27z^3) gives back the original."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-2:g009-letter",
+     "stem_sha": "18aba0a3264e5913",
+     "answer": {
+      "plain": "3*z^2*(1 - 3*z)*(1 + 3*z + 9*z^2)"
+     },
+     "working": "Common factor 3z^2: 3z^2 - 81z^5 = 3z^2(1 - 27z^3). 27z^3 = (3z)^3, so use 1 - a^3 = (1 - a)(1 + a + a^2) with a = 3z: (1 - 3z)(1 + 3z + 9z^2). Expanding 3z^2(1 - 27z^3) gives back the original."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family has no options (typed expression answers), so distractors_ok is vacuously true. I checked each of the three instances by hand.\n\ng002, 5z^2 - 320z^5: 320/5 = 64 and z^5/z^2 = z^3, so the common-factor step 5z^2(1 - 64z^3) is correct. 64z^3 = (4z)^3, so a = 1, b = 4z. The cube-difference formula gives (1 - 4z)(1 + 4z + 16z^2). Expanding that gives 1 - 64z^3, which confirms it.\n\ng007, 2z^2 - 54z^5: 54/2 = 27 and 27z^3 = (3z)^3. The result is 2z^2(1 - 3z)(1 + 3z + 9z^2), which is correct.\n\ng009, 3z^2 - 81z^5: 81/3 = 27 and 27z^3 = (3z)^3. The result is 3z^2(1 - 3z)(1 + 3z + 9z^2), which is correct.\n\nKey form: each key is the fully factorised answer, as the stem asks. The common factor is HCF-complete, and the quadratic factors have a negative discriminant (16 - 64 < 0, 9 - 36 < 0), so they do not factor further over the reals. Each answer_check is the same expression as its LaTeX key.\n\nSolutions: each follows the same four steps, common factor with the smaller power of z, recognise the difference of cubes, apply a^3 - b^3 = (a - b)(a^2 + ab + b^2), then state the whole factorisation. The numbers and intermediate expressions are correct, and the \"smaller power of z\" instruction is accurate.\n\nContext: there is no word problem, and the numbers (2, 3, 5 with 27 and 64) are clean.\n\nMinor observations, not defects:\n- g007 and g009 share the same bracket, (1 - 3z)(1 + 3z + 9z^2), and differ only in the leading constant (2 vs 3). That is low variety but both are correct.\n- The marker says form \"factorised\". Because the bare expanded polynomial is algebraically equivalent to the key, the checker must enforce that form so an unfactorised answer is not accepted. I cannot confirm that from this file.\n- I cannot confirm that LO g10m1s7-3-2 covers difference of cubes at the advanced tier, because I was only allowed to open the one file. The family name (letter-in-common-factor) suggests the cube step is an advanced extension."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s7-3-4:common-cube-bracket",
+   "spec_sha": "27facdfa52e706404cd6df070c7b7ebdb622e67700eb2fc7eac9ac043385ad57",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s7-3-4:g001-common",
+     "stem_sha": "c7c6110190db8b5d",
+     "answer": {
+      "plain": "(a + b) * (x + 2) * (x^2 - 2*x + 4)"
+     },
+     "working": "Common factor (x^3+8): a(x^3+8)+b(x^3+8) = (a+b)(x^3+8). Then x^3+8 = x^3+2^3 is a sum of cubes: (x+2)(x^2-2x+4)."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-4:g005-common",
+     "stem_sha": "4cd9b4af8481a654",
+     "answer": {
+      "plain": "(a + b) * (x + 4) * (x^2 - 4*x + 16)"
+     },
+     "working": "Common factor (x^3+64): (a+b)(x^3+64). Then x^3+64 = x^3+4^3, a sum of cubes: (x+4)(x^2-4x+16)."
+    },
+    {
+     "instance_id": "q:g10m1s7-3-4:g008-common",
+     "stem_sha": "829bc2a18d4344e7",
+     "answer": {
+      "plain": "(a + b) * (x - 6) * (x^2 + 6*x + 36)"
+     },
+     "working": "Common factor (x^3-216): (a+b)(x^3-216). Then x^3-216 = x^3-6^3, a difference of cubes: (x-6)(x^2+6x+36)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-expression family with no options, so there are no distractors to judge. I expanded the three keys by hand and each returns the original bracket. (x+2)(x^2-2x+4) = x^3+8. (x+4)(x^2-4x+16) = x^3+64. (x-6)(x^2+6x+36) = x^3-216. The sum-of-cubes and difference-of-cubes signs are correct in all three. The final quadratic factors do not factorise further. Their discriminants are 4-16, 16-64 and 36-144, all negative, so the step-4 claims hold. The stems have no word problem, so context is fine. Each key is fully factorised, as the \"factorised\" marker asks, and the LaTeX key is the same expression as answer_check in all three instances: the spacing and braces differ, and answer_check writes the implicit products as * and 2x as 2*x. The worked solutions follow the common-bracket step, then sum or difference of cubes with the book's identity, then a no-further-factorisation check, then the combined answer. One caveat: the stem says only \"Factorise\", and the partial form (a+b)(x^3+8) is also a factorisation. The checker must require the full factorisation, which the \"factorised\" marker implies. I did not find this to be a defect in the family itself."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s8-1-2:divide-common-factor-squares",
+   "spec_sha": "a91e7051ab9f2737858dc099ee459f75a7c7663504577cda751425b866d5d1a1",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s8-1-2:g003-divide",
+     "stem_sha": "9cb2f4b13868ab8c",
+     "answer": {
+      "plain": "6/(x-2)"
+     },
+     "working": "Factor: 6x+30 = 6(x+5); x^2-4 = (x-2)(x+2). Divide by (x+5)/(x+2) means multiply by (x+2)/(x+5). Product = 6(x+5)/((x-2)(x+2)) * (x+2)/(x+5). Cancel (x+5) and (x+2), leaving 6/(x-2)."
+    },
+    {
+     "instance_id": "q:g10m1s8-1-2:g005-divide",
+     "stem_sha": "cef7ee7cdb09a249",
+     "answer": {
+      "plain": "3/(x-8)"
+     },
+     "working": "Factor: 3x+12 = 3(x+4); x^2-64 = (x-8)(x+8). Divide by (x+4)/(x+8) means multiply by (x+8)/(x+4). Product = 3(x+4)/((x-8)(x+8)) * (x+8)/(x+4). Cancel (x+4) and (x+8), leaving 3/(x-8)."
+    },
+    {
+     "instance_id": "q:g10m1s8-1-2:g009-divide",
+     "stem_sha": "e07300d701df76d3",
+     "answer": {
+      "plain": "6/(x-9)"
+     },
+     "working": "Factor: 6x+18 = 6(x+3); x^2-81 = (x-9)(x+9). Divide by (x+3)/(x+9) means multiply by (x+9)/(x+3). Product = 6(x+3)/((x-9)(x+9)) * (x+9)/(x+3). Cancel (x+3) and (x+9), leaving 6/(x-9)."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "Typed-answer (expression) family with no options, so there are no distractors to judge. I checked all three instances (g003, g005, g009) by hand and each reaches its key.\n\n- g003: (6x+30)/(x^2-4) x (x+2)/(x+5) = 6(x+5)/((x-2)(x+2)) x (x+2)/(x+5) = 6/(x-2). Matches the key.\n- g005: 3(x+4)/((x-8)(x+8)) x (x+8)/(x+4) = 3/(x-8). Matches the key.\n- g009: 6(x+3)/((x-9)(x+9)) x (x+9)/(x+3) = 6/(x-9). Matches the key.\n\nKey form: the stem says \"Simplify\" and each key is fully cancelled with no common factor left, so it is in simplest form. In every instance the LaTeX key (\\frac{6}{x - 2} etc.) is the same expression as answer_check (6/(x - 2) etc.). Marker form is \"simplest\".\n\nSolution: every worked solution follows the same three steps: flip the second fraction, factorise (common factor plus difference of two squares), then cancel. The arithmetic is correct in all three, and the common factors and squares (6x+30 = 6(x+5), x^2-4 = (x-2)(x+2), 3x+12 = 3(x+4), x^2-64 = (x-8)(x+8), 6x+18 = 6(x+3), x^2-81 = (x-9)(x+9)) are right.\n\nContext: there is no word problem, and the numbers are clean and standard. The phrase \"assume all denominators are non-zero\" is slightly loose. It covers x+5 only once the second fraction is flipped. The cancellation is valid under that assumption, so this is not a defect."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s8-1-2:reversed-divide-squares",
+   "spec_sha": "d4e5954bbb20112fd4e4f91c158b0d0d45c9f058980f0e723563aedeb2a24e3f",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s8-1-2:g005-revers",
+     "stem_sha": "31a09809f8702eac",
+     "answer": {
+      "value": "-6"
+     },
+     "working": "64-x^2 = (8-x)(8+x) = -(x-8)(x+8). x^2-6x-16 = (x-8)(x+2). First fraction = -(x+8)/(x+2). Dividing by (x+8)/(6x+12) means multiplying by 6(x+2)/(x+8). Product = -(x+8)/(x+2) * 6(x+2)/(x+8) = -6."
+    },
+    {
+     "instance_id": "q:g10m1s8-1-2:g006-revers",
+     "stem_sha": "f8bd1ef9b6b77800",
+     "answer": {
+      "value": "-4"
+     },
+     "working": "36-x^2 = -(x-6)(x+6). x^2-3x-18 = (x-6)(x+3). First fraction = -(x+6)/(x+3). Dividing by (x+6)/(4x+12) means multiplying by 4(x+3)/(x+6). Product = -(x+6)/(x+3) * 4(x+3)/(x+6) = -4."
+    },
+    {
+     "instance_id": "q:g10m1s8-1-2:g008-revers",
+     "stem_sha": "93db67e207d20658",
+     "answer": {
+      "value": "-2"
+     },
+     "working": "81-x^2 = -(x-9)(x+9). x^2-2x-63 = (x-9)(x+7). First fraction = -(x+9)/(x+7). Dividing by (x+9)/(2x+14) means multiplying by 2(x+7)/(x+9). Product = -(x+9)/(x+7) * 2(x+7)/(x+9) = -2."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "The family is a typed numeric answer with no options, so there are no distractors to judge and distractors_ok is true by default. No answer_check was in the packet, so I could not compare it with the keys. Each key is the plain constant that the stem's \"simplify\" produces, and I treated that as the asked form.\n\nI re-derived all three instances independently and each matches its key.\n- g005: 64-x^2 = (8-x)(8+x). x^2-6x-16 = (x-8)(x+2), since -8*2 = -16 and -8+2 = -6. 6x+12 = 6(x+2). After flipping the divisor, the product reduces to 6(8-x)/(x-8) = -6.\n- g006: 36-x^2 = (6-x)(6+x). x^2-3x-18 = (x-6)(x+3), since -6*3 = -18 and -6+3 = -3. 4x+12 = 4(x+3). The result is 4(6-x)/(x-6) = -4.\n- g008: 81-x^2 = (9-x)(9+x). x^2-2x-63 = (x-9)(x+7), since -9*7 = -63 and -9+7 = -2. 2x+14 = 2(x+7). The result is 2(9-x)/(x-9) = -2.\n\nIn every worked solution the five steps are correct and in the right order: flip the second fraction, factorise, write out the product, cancel the common factors, then use a-b = -(b-a) to cancel the remaining pair and leave -1. Treating (8+x) and (x+8) as the same factor in step 4 is valid. The stem's \"assume all denominators are non-zero\" covers the restrictions, including the flipped divisor. No word problem is involved, and the numbers are clean and realistic for Grade 10 algebraic fractions."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s8-1-2:trinomial-divide-squares",
+   "spec_sha": "bdd3b257ac5d0c93ff2a8f03112cce73b351dfce7a1bd370437854339f5b681f",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s8-1-2:g004-trinom",
+     "stem_sha": "49b95e1d4f9eec25",
+     "answer": {
+      "value": "3"
+     },
+     "working": "Factor: x^2+10x+16=(x+2)(x+8); 2(x^2-4)=2(x-2)(x+2); 3x^2+24x=3x(x+8); 18x^2-36x=18x(x-2). Multiply by reciprocal: [(x+2)(x+8)/(2(x-2)(x+2))] * [18x(x-2)/(3x(x+8))]. Cancel (x+2),(x+8),(x-2),x leaving 18/(2*3)=3."
+    },
+    {
+     "instance_id": "q:g10m1s8-1-2:g005-trinom",
+     "stem_sha": "dd68ce2f7b853d9a",
+     "answer": {
+      "value": "5"
+     },
+     "working": "Factor: x^2+19x+90=(x+9)(x+10); 2(x^2-100)=2(x-10)(x+10); 2x^2+18x=2x(x+9); 20x^2-200x=20x(x-10). Multiply by reciprocal: [(x+9)(x+10)/(2(x-10)(x+10))] * [20x(x-10)/(2x(x+9))]. Cancel (x+9),(x+10),(x-10),x leaving 20/(2*2)=5."
+    },
+    {
+     "instance_id": "q:g10m1s8-1-2:g009-trinom",
+     "stem_sha": "a412b3c94923cb80",
+     "answer": {
+      "value": "4"
+     },
+     "working": "Factor: x^2+12x+20=(x+2)(x+10); 5(x^2-100)=5(x-10)(x+10); 2x^2+4x=2x(x+2); 40x^2-400x=40x(x-10). Multiply by reciprocal: [(x+2)(x+10)/(5(x-10)(x+10))] * [40x(x-10)/(2x(x+2))]. Cancel (x+2),(x+10),(x-10),x leaving 40/(5*2)=4."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [],
+    "notes": "All three instances (g004, g005, g009) are numeric with no options, so there are no distractors to judge. I checked each by hand. g004: x^2+10x+16=(x+8)(x+2), x^2-4=(x-2)(x+2), 3x^2+24x=3x(x+8), 18x^2-36x=18x(x-2). After cancelling, (1/2)(18/3)=3, which matches the key. g005: x^2+19x+90=(x+9)(x+10), x^2-100=(x-10)(x+10), 2x^2+18x=2x(x+9), 20x^2-200x=20x(x-10). The result is (1/2)(20/2)=5, which matches the key. g009: x^2+12x+20=(x+2)(x+10), x^2-100=(x-10)(x+10), 2x^2+4x=2x(x+2), 40x^2-400x=40x(x-10). The result is (1/5)(40/2)=4, which matches the key. Each factorisation is correct. In each solution the cancelled factors are exactly the ones that appear in both the numerator and the denominator, and the remaining constants multiply to the key. The steps follow the book's method: flip the divisor, factorise, cancel, simplify. The stem is a pure algebra \"Simplify\" with a stated non-zero-denominator assumption, so there is no word-problem context to check. The constant result is a legitimate simplified form. One very minor point: the divisor numerator (18x(x-2) etc.) must also be non-zero, which the stem's phrasing only implicitly covers. That does not make the question ambiguous or wrong for a Grade 10 student."
+   }
+  },
+  {
+   "family_id": "tpl:g10m1s8-1-3:sum-numeric-denominators",
+   "spec_sha": "b31fc0692cb59473a964ef10a2231ff1678d5e326f7e35a8044dc197914a0691",
+   "answers": [
+    {
+     "instance_id": "q:g10m1s8-1-3:g002-sum-nu",
+     "stem_sha": "739a7442d5945be1",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\dfrac{5x+14}{6}$"
+     },
+     "working": "Common denominator 6: [3(x+2) + 2(x+4)]/6 = (3x+6+2x+8)/6 = (5x+14)/6."
+    },
+    {
+     "instance_id": "q:g10m1s8-1-3:g005-sum-nu",
+     "stem_sha": "56e23baba65b0a0c",
+     "answer": {
+      "choice": "A",
+      "choice_text": "$\\dfrac{10x+29}{21}$"
+     },
+     "working": "Common denominator 21: [7(x+2) + 3(x+5)]/21 = (7x+14+3x+15)/21 = (10x+29)/21."
+    },
+    {
+     "instance_id": "q:g10m1s8-1-3:g008-sum-nu",
+     "stem_sha": "a5e192a737046ccd",
+     "answer": {
+      "choice": "D",
+      "choice_text": "$\\dfrac{12x+22}{35}$"
+     },
+     "working": "Common denominator 35: [7(x+1) + 5(x+3)]/35 = (7x+7+5x+15)/35 = (12x+22)/35."
+    }
+   ],
+   "judge": {
+    "distractors_ok": true,
+    "key_form_ok": true,
+    "context_ok": true,
+    "solution_ok": true,
+    "distractors": [
+     {
+      "instance_id": "q:g10m1s8-1-3:g002-sum-nu",
+      "option": "B (2x+6)/6",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Numerators x+2 and x+4 are added without being multiplied by 3 and 2, then put over the common denominator 6. This gives 2x+6 over 6, which is exactly the numerator-not-scaled error. It is not equal to (5x+14)/6."
+     },
+     {
+      "instance_id": "q:g10m1s8-1-3:g002-sum-nu",
+      "option": "C (2x+6)/5",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Adds numerators (x+2)+(x+4)=2x+6 and denominators 2+3=5. This is exactly the add-across error. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m1s8-1-3:g002-sum-nu",
+      "option": "D (5x+6)/6",
+      "verdict": "IS_THAT_ERROR",
+      "why": "The factor multiplies only the first term of each bracket: 3(x+2) becomes 3x+2 and 2(x+4) becomes 2x+4. The sum is 5x+6. This is exactly the missing-distribution error, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m1s8-1-3:g005-sum-nu",
+      "option": "B (2x+7)/10",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Numerators x+2 and x+5 add to 2x+7 and denominators 3+7 add to 10. This is exactly the add-across error. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m1s8-1-3:g005-sum-nu",
+      "option": "C (2x+7)/21",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Numerators are added unscaled (2x+7) over the common denominator 21. This is exactly the numerator-not-scaled error. It is not equal to (10x+29)/21."
+     },
+     {
+      "instance_id": "q:g10m1s8-1-3:g005-sum-nu",
+      "option": "D (10x+7)/21",
+      "verdict": "IS_THAT_ERROR",
+      "why": "7(x+2) becomes 7x+2 and 3(x+5) becomes 3x+5, giving 10x+7. This is exactly the missing-distribution error, and it is wrong."
+     },
+     {
+      "instance_id": "q:g10m1s8-1-3:g008-sum-nu",
+      "option": "A (2x+4)/12",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Numerators x+1 and x+3 add to 2x+4 and denominators 5+7 add to 12. This is exactly the add-across error. It is wrong."
+     },
+     {
+      "instance_id": "q:g10m1s8-1-3:g008-sum-nu",
+      "option": "B (2x+4)/35",
+      "verdict": "IS_THAT_ERROR",
+      "why": "Numerators are added unscaled (2x+4) over the common denominator 35. This is exactly the numerator-not-scaled error. It is not equal to (12x+22)/35."
+     },
+     {
+      "instance_id": "q:g10m1s8-1-3:g008-sum-nu",
+      "option": "C (12x+4)/35",
+      "verdict": "IS_THAT_ERROR",
+      "why": "7(x+1) becomes 7x+1 and 5(x+3) becomes 5x+3, giving 12x+4. This is exactly the missing-distribution error, and it is wrong."
+     }
+    ],
+    "notes": "I recomputed all three instances independently. g002 gives (3x+6+2x+8)/6 = (5x+14)/6, key A. g005 gives (7x+14+3x+15)/21 = (10x+29)/21, key A. g008 gives (7x+7+5x+15)/35 = (12x+22)/35, key D. Each key matches its stem, and each is the single simplest fraction asked for. No option is a non-simplified equivalent of the key.\n\nAll nine tagged distractors reproduce the claimed misconception exactly, and none equals the key. The three patterns are the same in every instance. Add across gives (sum of numerators)/(sum of denominators). Unscaled numerators give (sum of numerators)/(LCD). Missing distribution gives the factor applied to the first term of each bracket only, which I checked numerically as 5x+6, 10x+7 and 12x+4.\n\nEvery worked solution follows the same five steps: LCD, rewrite over the LCD, expand, collect like terms, check for further simplification. The arithmetic is correct at each step. The step-5 reasoning that the coefficient of x and the denominator are coprime is valid for 5 and 6, 10 and 21, and 12 and 35. There is no word problem, so context is fine."
+   }
+  }
+ ]
+}
