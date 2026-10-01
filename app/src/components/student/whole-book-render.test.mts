@@ -21,13 +21,21 @@
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { createRequire, registerHooks } from "node:module";
+import * as nodeModule from "node:module";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
 import type { OutlineLesson, OutlineRow } from "../../lib/course-outline.ts";
 import { outlineFromRows } from "../../lib/course-outline.ts";
 
+// `registerHooks` (Node 22.15+) is newer than this repo's @types/node; the
+// shape used here is the documented one (scripts/ts-resolver.mjs uses it too).
+type Loaded = { format: string; source: string; shortCircuit?: boolean };
+type LoadHook = (url: string, context: unknown, nextLoad: (url: string, context: unknown) => Loaded) => Loaded;
+const { createRequire, registerHooks } = nodeModule as unknown as {
+  createRequire: typeof nodeModule.createRequire;
+  registerHooks: (hooks: { load: LoadHook }) => void;
+};
 const require = createRequire(import.meta.url);
 const ts = require("typescript") as typeof import("typescript");
 registerHooks({

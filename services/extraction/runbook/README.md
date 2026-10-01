@@ -662,55 +662,56 @@ uv run apply_review_verdicts.py verdicts.json                # [exists]
 
 `auto_pass_gates.py` writes the AI checks' recommendation as the gate's verdict — signed
 `auto-pass G<n> (AI recommendation)`, marked `"auto": true`, **never a human stamp** (the loaders put it
-in `ai_checked_by`) — and records every decision for Samuel's review. The **automatic safety checks
-still block**: a G1 pipeline failure, an item G2 has no recommendation for (held `answer_mismatch` /
-`unverified`), the figure gates, a coverage *safety* check, parity. Nothing here deploys or promotes
-anything to production.
+in `ai_checked_by`) — and records every decision for Samuel's review in the console. The **automatic
+safety checks still block**: a G1 pipeline failure, a G2 item nothing supports a verdict for (held
+`answer_mismatch` / `unverified`), the figure gates, a coverage *safety* check, parity. A human verdict
+already in a gate's file is never overwritten. Nothing here deploys or promotes anything to production.
 
 ```sh
-# G1 — objectives (owed decisions answered on the AI line's recommendation; a pipeline failure blocks, exit 1)
-uv run auto_pass_gates.py g1 <book> --chapter 8
-uv run assemble_objectives.py approve <book> --chapter 8 --by "auto-pass G1 (AI recommendation)" \
-    --verdicts runs/<book>/objectives/g1-ch08.auto.json
-# G2 — book questions: the recommendation file's verdicts, as auto, into G2's file (a human verdict there is kept)
-uv run auto_pass_gates.py g2 <book> --chapter 8 --recommend runs/<book>/g2-ch08.recommended.json
-uv run assemble_objectives.py lesson-runs <book> <run> --g2 runs/<book>/g2.json     # then assemble, load …
+# G1 — objectives: owed decisions on the AI line's recommendation (a pipeline failure blocks, exit 1);
+#      --approve then runs `assemble_objectives.py approve … --by "auto-pass G1 (AI recommendation)"`
+uv run auto_pass_gates.py g1 <book> --chapter 9 --approve
+# G2 — book questions: a human verdict stands; else the recommendation file's; else the checks' own rule
+#      (no printed answer + re-solve agreed with the book's solution → accept; typing problem → exclude);
+#      a three-way disagreement gets no verdict and stays held
+uv run auto_pass_gates.py g2 <book> --chapter 9 --lesson-run runs/<book>/lessons/<runId>.json \
+    [--recommend runs/<book>/g2-ch09.recommended.json]                      # → runs/<book>/g2.json
+uv run assemble_objectives.py lesson-runs <book> runs/<book>/lessons/<runId>.json --g2 runs/<book>/g2.json
+#      … assemble, load, then:
 uv run apply_review_verdicts.py --g2 runs/<book>/g2.json --book <book>               # auto items → ai_checked_by
 # G3 — generated sample accepted on S6/S7; held predicate claims stay held (no --mapping-review step)
-uv run auto_pass_gates.py g3 <book> --chapter 8 --queue seed/generated/<book>/generated-questions.review-queue.json \
+uv run auto_pass_gates.py g3 <book> --chapter 9 --queue seed/generated/<book>/generated-questions.review-queue.json \
     --queue seed/generated/<book>/widget-questions.review-queue.json --widgets seed/generated/<book>/widget-questions.json
-uv run apply_review_verdicts.py runs/<book>/g3-ch08.auto.json                        # adds to ai_checked_by
+uv run apply_review_verdicts.py runs/<book>/g3-ch09.auto.json                        # adds to ai_checked_by
 # G4 — the catalogue S5's verifier kept (a record)
-uv run auto_pass_gates.py g4 <book> --chapter 8 --catalogue seed/generated/<book>/misconceptions.json \
+uv run auto_pass_gates.py g4 <book> --chapter 9 --catalogue seed/generated/<book>/misconceptions.json \
     --s5 runs/<book>/misconceptions/final-<run>.json
 # G5 — go/no-go on coverage + the drift guard for every course + cost (exit 1 = NO-GO)
-AINEXT_DB_DSN=<the load's database> uv run auto_pass_gates.py g5 <book> --chapter 8 \
+AINEXT_DB_DSN=<the load's database> uv run auto_pass_gates.py g5 <book> --chapter 9 \
     --coverage coverage/<book>.json [--book-config <the loaded book config>] [--dryrun <report>]
 ```
 
-Loads for a maths course need no `--promote` any more (it is implied); `--promote` still works.
+Every subcommand takes `--run <name>` (recorded as the decision's `run`) and `--gates-dir`. Loads for a
+maths course need no `--promote` any more (it is implied); `--promote` still works.
 
-**Gate decision records.** Every subcommand writes one record per gate and scope to
-`runs/<book>/gates/<book>__<scope>__<gate>.json` (`:` → `__`; e.g. `g10-math__ch08__G3.json`) and — when a
-database is given (`--dsn` or `AINEXT_DB_DSN`) — upserts the same record into `gate_decisions`
-(migration 035; id `<book>:<scope>:<gate>`, `record` jsonb, `record_sha256` = sha256 of the file's bytes,
-which the console uses as the item's fingerprint). A re-run replaces the record for that gate and scope.
-The console's review gate lists each as a "gate decision" item for Samuel. Format
-`ainext.gate-decision/1`, stable:
+**Gate decision records** — the shape the console's review gate reads
+(`app/src/lib/review-gate-records.ts`, format `ainext.gate-decision/1`). One JSON file per gate and
+scope, `runs/<book>/gates/<id>.json` with id `g<n>-chNN` (or `g<n>-book`); a re-run replaces it, and the
+console fingerprints the content, so a changed decision is back in front of Samuel. Each becomes one
+backlog item of kind `gate_decision` that only Samuel can decide.
 
 | field | meaning |
 |---|---|
-| `format`, `id` | `"ainext.gate-decision/1"`; `"<book>:<scope>:<gate>"` — scope `chNN` or `book` |
-| `gate`, `book`, `course_id`, `scope`, `chapter` | which gate, for what |
-| `outcome` | `passed` or `blocked` (`blocked` iff `blocking` is non-empty) |
-| `auto`, `decided_by`, `decided_at` | always `true`, `"auto-pass G<n> (AI recommendation)"`, UTC ISO time — never a human |
+| `format`, `gate`, `book`, `id` | `"ainext.gate-decision/1"`, `G1`–`G5`, the book, `g<n>-chNN` (the item is `<book>/<id>`) |
+| `chapter`, `run` | the chapter (null for a whole-book decision); the run it belongs to (optional) |
+| `decided_at`, `by`, `auto` | UTC ISO time (`Z`); always `"auto-pass G<n> (AI recommendation)"`; always `true` — never a person |
+| `outcome` | `pass`, `pass_with_holds` (something was held, excluded or left for a person), or `blocked` (iff `blocked` is non-empty) |
 | `summary` | one sentence |
-| `decided[]` | `{item, verdict, why}` per decision taken (G3 also lists each held predicate claim) |
-| `rests_on[]` | the automatic and AI checks the decision relies on |
-| `blocking[]` | the automatic checks that failed (a G1 pipeline failure, a coverage safety check, parity) |
-| `for_review[]` | what Samuel should read first (moves, outside items, fixes, held claims, completeness findings) |
-| `evidence{}` | repo-relative paths: verdict files, check/coverage files, the review page, the other gates' records |
-| `review.status` | `"awaiting_samuel"` — a human's verdict on it is the console's (`review_decisions`), never written here |
+| `decisions[]` | `{key, decision, detail?, basis?}` per decision taken (G3 also lists each held predicate claim; G2 each item left held) |
+| `checks[]` | `{name, state, detail?}`: the automatic and AI checks the decision rests on (G5: every coverage check and the drift guard per course, and the cost) |
+| `evidence[]` | `{label, path}`, repository-relative: verdict files, the check/coverage files, the review page, the other gates' records |
+| `blocked[]` | what did NOT auto-pass (a G1 pipeline failure, a coverage safety check, parity) |
+| `course_id`, `for_review[]` | extra (the console ignores them): the course; what Samuel should read first |
 
 ## 8. Cost ledger and go / no-go
 
