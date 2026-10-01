@@ -588,6 +588,10 @@ def g2_recommend_main(a, book) -> int:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
         rep = doc["report"]
+        if a.ids_out:
+            a.ids_out.parent.mkdir(parents=True, exist_ok=True)
+            a.ids_out.write_text(json.dumps(rep["live_question_ids"], indent=1) + "\n")
+            print(f"  {len(rep['live_question_ids'])} newly live question id(s) -> {_hr(a.ids_out)}")
         print(f"G2 recommendation (ch{t}): {rep['recommended']} of {rep['items']} item(s) recommended -> {_hr(out)}\n"
               f"  verdicts {rep['by_verdict']}; confidence {rep['by_confidence']}; classes {rep['by_class']}")
         print(f"  would be LIVE (accept or fix, each confirmed by the independent verifier): {len(rep['live'])}"
@@ -678,6 +682,8 @@ def main(argv: list[str] | None = None) -> int:
     rc.add_argument("--run", type=Path, action="append", required=True, help="a saved run (runs/<book>/g2rec/chNN-<runId>.json)")
     rc.add_argument("--out", type=Path, help="the recommendation file (default runs/<book>/g2-chNN.recommended.json); keys these "
                                              "runs did not answer keep an earlier file's recommendation")
+    rc.add_argument("--ids-out", type=Path, help="also write the question ids the live recommendations become (a JSON list: what a delta "
+                                                 "working check is limited to, working_check.py args --only)")
     rc.add_argument("--fresh", action="store_true", help="ignore an existing --out file (otherwise a re-run adds to it)")
     rc.add_argument("--allow-stale", action="store_true", help="collect a run whose packet no longer matches the lesson runs")
     a = ap.parse_args(argv)

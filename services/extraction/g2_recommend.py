@@ -613,6 +613,14 @@ def decide(entry: dict, rec: dict | None, ver: dict | None, marker_why: str | No
     return _entry(verdict, klass, conf, note, why_low=why_low, fields=fields or None, verified=verified), {"outcome": verdict}
 
 
+def question_id(item: dict) -> str:
+    """The id the assembly mints for a book item's question (schemas.exercise_question_id / worked_example_question_id)."""
+    import schemas
+    if item.get("kind") == "worked_example":
+        return schemas.worked_example_question_id(item["lo"], int(str(item["ref"])[2:]))
+    return schemas.exercise_question_id(item["lo"], item["ref"])
+
+
 def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None, run_names: dict[str, str] | None = None,
             marker_fn=run_marker_check, identity_fn=run_identity_check, chapter: int | None = None) -> dict:
     """The recommendation file from the saved run(s). `prior` is an earlier file for the same chapter: its items for keys these runs
@@ -664,6 +672,10 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
         "by_verdict": dict(c_verdict), "by_class": dict(Counter(v["class"] for v in items.values())),
         "by_confidence": dict(Counter(v["confidence"] for v in items.values())),
         "live": sorted(k for k, v in items.items() if v["verdict"] in ("accept", "fix")),
+        # the question ids those become (a teaching-only retype is no question): what a delta working check is limited to
+        "live_question_ids": sorted(question_id(by_key[k]["item"]) for k, v in items.items()
+                                    if v["verdict"] in ("accept", "fix") and (v.get("fields") or {}).get("answer_type") != "not_markable"
+                                    and by_key[k]["item"].get("answer_type") != "not_markable"),
         "not_live": {k: {"agent_verdict": w.get("agent_verdict"), "recommended": items[k]["verdict"], "kind": w.get("kind"), "why": w["why"]}
                      for k, w in log.items() if w["outcome"] == "not live" and k in items},
         "low_confidence": sorted(k for k, v in items.items() if v["confidence"] == "low"),
@@ -767,13 +779,21 @@ def follow_ups(book: str, chapter: int, lesson_runs: list[str], *, recommended: 
     dsn = f"host=127.0.0.1 port=5432 dbname={db}"
     return [
         f"uv run auto_pass_gates.py g2-recommend-collect {book} --chapter {chapter} {lr} --run runs/{book}/g2rec/ch{t}-<runId>.json "
-        f"--out {recommended}",
+        f"--out {recommended} --ids-out runs/{book}/g2rec/ch{t}.live-ids.json",
         f"uv run auto_pass_gates.py g2 {book} --chapter {chapter} {lr} --recommend {recommended} --into {g2_file} --split "
         f"--maths runs/{book}/maths/book/accepted.json {gl}".rstrip(),
         f"uv run assemble_lesson_bundle.py --book {book} --chapter {chapter} --report runs/{book}/fanout/assembly-ch{t}.json",
         f"uv run load_seed.py seed/{book}/g10m-course.json seed/{book}/g10m-c{t}.json --validate-only",
         f"# or, if chapter {chapter}'s working check and S5 draft are NOT launched yet, one command does the three steps above and re-prepares them:",
         f"#   uv run fanout.py close-chapter {chapter}",
+        f"# if its working check ALREADY ran, check only the newly live questions (the collector wrote their ids; two independent passes, A then B reshuffled):",
+        f"#   uv run working_check.py args --book {book} --seed seed/{book}/g10m-c{t}.json --chapter {chapter} --pass-id A --only runs/{book}/g2rec/ch{t}.live-ids.json "
+        f"--by-ref work/{book}/packets/fanout/wcheck-ch{t}-g2rec-A --out work/{book}/packets/fanout/wcheck-ch{t}-g2rec-A.args.json "
+        f"--embed work/{book}/packets/embedded/fanout/wcheck-ch{t}-g2rec-A.workflow.js",
+        f"#   uv run working_check.py args --book {book} --seed seed/{book}/g10m-c{t}.json --chapter {chapter} --pass-id B --order shuffled --order-seed 11 "
+        f"--only runs/{book}/g2rec/ch{t}.live-ids.json --by-ref work/{book}/packets/fanout/wcheck-ch{t}-g2rec-B "
+        f"--out work/{book}/packets/fanout/wcheck-ch{t}-g2rec-B.args.json --embed work/{book}/packets/embedded/fanout/wcheck-ch{t}-g2rec-B.workflow.js",
+        f"#   (run both copies; then working_check.py collect --args A.json --args B.json --runs <A run> <B run> --out runs/{book}/working-check/ch{t}.g2rec.flags.json)",
         f"# only if chapter {chapter} is ALREADY loaded in {db} (it adds the newly live questions, releases the held ones, rejects the excluded):",
         f"pg_dump -h 127.0.0.1 -Fc {db} > work/{book}/backups/pilot-before-g2rec-ch{t}.dump",
         f'AINEXT_DB_DSN="{dsn}" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/{book}/g10m-course.json seed/{book}/g10m-c{t}.json '

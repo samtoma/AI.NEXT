@@ -184,8 +184,8 @@ being printed nowhere in the PDF, is not cross-checked. Chapter 8: 853/853 accep
 282 agreement, 13 third reading — so G0b was not needed.
 
 **An image's hash is of its HTML-escaped source.** The book names an image `md5` of its LaTeX source
-**after** that source was HTML-escaped: `&` is `&amp;`, `<` is `&lt;`, `>` is `&gt;` (proven on the
-hash-accepted Chapter 8 images for `&`, and on Chapter 6's `y>0` and `x<9` readings for `<` and `>`). An
+**after** that source was HTML-escaped: `&` is `&amp;`, `<` is `&lt;`, `>` is `&gt;` (proven for `&` by the
+hash-accepted Chapter 8 images, and for `<` and `>` by 131 images in Chapters 1, 2, 4, 5, 6 and 10 on 2026-10-01). An
 `align*` image is hashed as its lines **without** the environment. `assemble_maths.py` proves a
 transcription by either form (`hash_forms`: as written, whitespace removed, and each of those HTML-escaped
 with all three characters together) and **stores** it canonical: real `&`, `<` and `>`, inside
