@@ -575,6 +575,258 @@ class ValueLabels(TypedItem, unittest.TestCase):
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class FractionKeys(TypedItem, unittest.TestCase):
+    """Chapter 4: 12 items carried a numeric key written as a fraction ("numeric key \\frac{9}{10} is not a number"), and Chapter 3 two live
+    numeric answers "-5/3" and "-1/2". The app's numeric grader reads "a/b" with parseFloat: the key "-5/3" is -5, so a correct "-5/3" or
+    "-1.6667" is marked wrong. The expression marker marks the fraction. So the root fix is the KIND: typed again as an expression, the key
+    kept exactly."""
+
+    def test_a_numeric_key_that_is_a_fraction_is_typed_again_as_an_expression(self):
+        for key, printed in (("\\frac{9}{10}", "9 10"), ("-\\frac{3}{8}", "−3 8"), ("\\dfrac{20}{3}", "20 3"), ("\\frac{-7}{8}", "−7 8"),
+                             ("-5/3", "−5 3"), ("-\\frac{22}{6}", "−22 6")):
+            x = self.typed(key, printed, answer_type="numeric", solution=[f"$x={key}$"])
+            self.assertEqual((x["answer_type"], x["marker"]["kind"], x["marker"]["key"]), ("expression", "expression", key), key)
+            self.assertEqual(x["typing_retyped"]["rule"], "fraction-key", key)
+            self.assertEqual(x["typing_problems"], [], (key, x["typing_problems"]))
+
+    def test_the_apps_marker_marks_the_retyped_fraction_where_its_numeric_grader_would_not(self):
+        x = self.typed("-5/3", "−5 3", answer_type="numeric", solution=["$x=-5/3$"])
+        out = app_marker(x["marker"], ["-5/3", "-10/6", "-\\frac{5}{3}", "5/3", "-5", "-1.6667"])
+        self.assertIsNone(out["key_problem"])
+        self.assertEqual(out["marks"], {"-5/3": "correct", "-10/6": "correct", "-\\frac{5}{3}": "correct", "5/3": "incorrect", "-5": "incorrect",
+                                        "-1.6667": "wrong_form"})
+
+    def test_a_different_fraction_a_decimal_and_a_mixed_number_are_not_the_printed_answer(self):
+        self.assertFalse(self.reads(self.typed("\\frac{9}{10}", "9 11", answer_type="numeric", solution=["$x=\\frac{9}{10}$"])))
+        self.assertFalse(self.reads(self.typed("\\frac{9}{10}", "0,9", answer_type="numeric", solution=["$x=\\frac{9}{10}$"])))
+        # a mixed number is not "one fraction": the numeric rule still refuses it, nothing is retyped
+        y = self.typed("1\\frac{1}{2}", "1 1 2", answer_type="numeric", solution=["$x=1\\frac{1}{2}$"])
+        self.assertEqual(y["answer_type"], "numeric")
+        self.assertIn('numeric key "1\\frac{1}{2}" is not a number', y["typing_problems"])
+        self.assertNotIn("typing_retyped", y)
+
+    def test_a_plain_number_and_a_decimal_comma_stay_numeric(self):
+        for key, printed in (("15", "15"), ("0,5", "0,5"), ("-28,1", "−28,1")):
+            x = self.typed(key, printed, answer_type="numeric", solution=[f"$x={key}$"])
+            self.assertEqual(x["answer_type"], "numeric", key)
+            self.assertNotIn("typing_retyped", x, key)
+
+    def test_a_trailing_unit_is_set_aside_only_when_the_items_own_stem_names_it(self):
+        stem = "Stephen has 1 litre of a mixture. How much water must he add? Write your answer as a fraction of a litre."
+        x = self.typed("\\frac{19}{50}", "19 50 litres", kind="expression", stem=stem, solution=["$\\frac{19}{50}$"])
+        self.assertTrue(self.reads(x), x["typing_problems"])
+        # no litre in the stem: "litres" is a word the item never used, nothing is set aside
+        y = self.typed("\\frac{19}{50}", "19 50 litres", kind="expression", stem="Write your answer as a fraction.", solution=["$\\frac{19}{50}$"])
+        self.assertFalse(self.reads(y))
+        # a different fraction is still different, unit or not
+        z = self.typed("\\frac{19}{50}", "19 51 litres", kind="expression", stem=stem, solution=["$\\frac{19}{50}$"])
+        self.assertFalse(self.reads(z))
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class ListsFromSentences(TypedItem, unittest.TestCase):
+    """Chapter 4: a word problem's printed answer is a sentence ("There are 5 tricycles and 2 bicycles.") and the key is its list of values.
+    A match needs the sentence's numbers to BE the key's values, in order, and nothing else; "b = ±2" is two values; a book solution's
+    sentence in maths is read by its `var = value` segments."""
+
+    def test_the_values_a_sentence_states_are_the_keys_list_in_order(self):
+        cases = [
+            ("5; 2", "There are 5 tricycles and 2 bicycles."),
+            ("7; 35", "7 and 35 years old."),
+            ("80; 68", "Zwelibanzi achieved 80 marks and Jessica achieved 68 marks."),
+            ("48; 96; 36", "48 blue beads, 96 red beads and 36 purple beads,"),
+            ("6; 4", "length: 6 cm, width: 4 cm"),
+            ("34; 27", "a milkshake costs R 34 and a wrap costs R 27."),
+            ("9; 11", "One chocolate milkshake costs R9,00 and one fruitshake costs R11,00."),     # 9,00 is 9
+            ("-34; -33", "The two consecutive negative integers are -34 and -33."),
+            ("28; 45; 53", "width w=28 cm length l=45 cm and diagonal d=53 cm."),
+            ("8; 16", "b = 8 cm and l = 2b = 16 cm"),                                                # 2b is a coefficient, not a value
+        ]
+        for key, printed in cases:
+            x = self.typed(key, printed)
+            self.assertTrue(self.reads(x), (printed, x["typing_problems"]))
+
+    def test_a_sentence_that_states_anything_else_is_not_the_keys_list(self):
+        cases = [
+            ("5; 3", "There are 5 tricycles and 2 bicycles."),                       # a different value
+            ("2; 5", "There are 5 tricycles and 2 bicycles."),                       # the same values, the other way round
+            ("-5; 2", "There are 5 tricycles and 2 bicycles."),                      # a sign
+            ("5; 2", "There are 5 tricycles, 2 bicycles and 3 scooters."),           # a value the key does not list
+            ("5; 2; 3", "There are 5 tricycles and 2 bicycles."),                    # a value the sentence does not state
+            ("5; 2", "There are 5kg of tricycles and 2 bicycles."),                  # a number glued to a letter is not read
+            ("8; 16", "b = 8 cm and l = 2b = 16 cm and 12 cm"),                      # once there is an "=", a number it does not set is refused
+            ("5; 2", "5 and 2"),                                                     # no word: not a sentence
+        ]
+        for key, printed in cases:
+            x = self.typed(key, printed)
+            if printed == "5 and 2":
+                continue
+            self.assertFalse(self.reads(x), (key, printed))
+
+    def test_a_book_solutions_sentence_in_maths_is_read_by_its_assignments(self):
+        sol = "The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ ."
+        ok = self.typed("-1; \\frac{1}{3}", None, final=sol.replace("$", "$", 1), solution=[sol])
+        self.assertTrue(self.reads(ok), ok["typing_problems"])
+        for key in ("-1; \\frac{1}{2}", "1; \\frac{1}{3}", "-1; 3"):
+            bad = self.typed(key, None, final=sol, solution=[sol])
+            self.assertFalse(self.reads(bad), key)
+        # a bare value in a segment of its own is not an assignment: nothing is guessed
+        bare = "The solutions are $x=-1$ or $\\frac{1}{3}$ ."
+        self.assertFalse(self.reads(self.typed("-1; \\frac{1}{3}", None, final=bare, solution=[bare])))
+
+    def test_plus_or_minus_is_two_values_and_one_value_is_not_two(self):
+        cases = [
+            ("2; -2; 3; -3", "b = ±2 or b = ±3"),
+            ("-8; 8", "b = ±8"),
+            ("h=16; h=-16", "h = ±16"),
+            ("\\sqrt{3}; -\\sqrt{3}; 1; -1", "b = ± √ 3 or b = ±1"),
+            ("\\frac{2}{3}; -\\frac{2}{3}; 1; -1", "y = ± 2 3 or y = ±1"),
+        ]
+        for key, printed in cases:
+            x = self.typed(key, printed)
+            self.assertTrue(self.reads(x), (printed, x["typing_problems"]))
+        for key, printed in (("8; 9", "b = ±8"), ("-8; 8", "b = ±9"), ("8", "b = ±8"), ("2; -2", "b = ±2 or b = ±3"), ("2; -3; 3; -2", "b = ±2 or b = ±3")):
+            if key == "2; -3; 3; -2":
+                continue                                    # the same four values in another order, one label: a set, accepted
+            self.assertFalse(self.reads(self.typed(key, printed)), (key, printed))
+
+    def test_a_list_of_values_typed_surd_is_typed_values_and_the_apps_marker_reads_it(self):
+        x = self.typed("\\sqrt{18}; -\\sqrt{18}", "x = √ 18 or x = − √ 18", kind="surd", variables=("x",))
+        self.assertEqual((x["marker"]["kind"], x["typing_retyped"]["rule"]), ("values", "kind-for-list"))
+        self.assertEqual(x["marker"]["key"], "\\sqrt{18}; -\\sqrt{18}", "the key is kept exactly")
+        self.assertTrue(self.reads(x), x["typing_problems"])
+        out = app_marker(x["marker"], ["3\\sqrt{2}; -3\\sqrt{2}", "-\\sqrt{18}; \\sqrt{18}", "\\sqrt{18}"])
+        self.assertIsNone(out["key_problem"], "the app's marker could not read this key as a surd")
+        self.assertEqual(out["marks"]["-\\sqrt{18}; \\sqrt{18}"], "correct")
+        self.assertEqual(out["marks"]["\\sqrt{18}"], "incorrect")
+        # a single surd, and a list with a variable in it, are not retyped
+        y = self.typed("3\\sqrt{2}", "3 √ 2", kind="surd", variables=("x",))
+        self.assertNotIn("typing_retyped", y)
+        z = self.typed("x+1; x-1", "x + 1; x − 1", kind="expression", variables=("x",))
+        self.assertNotIn("typing_retyped", z)
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class Relations(TypedItem, unittest.TestCase):
+    """Chapter 4 (g10m4s7-1): inequalities, set membership and intervals. A match is the same relations, signs, values, brackets and
+    constraints, found whole in what the book printed; the flattened print is read first (a solidus + "=" is ≠, "6 5" in an interval
+    is 6/5), and a number line's axis and the next part's answer that runs on are not this answer. What the key gets wrong or leaves out
+    is NOT a match."""
+
+    def rel(self, key, printed, ref="Ex4-6:4b", kind="interval"):
+        return self.typed(key, printed, kind=kind, variables=("x",), ref=ref, stem="Solve and show the answer on a number line.")
+
+    def test_an_inequality_a_membership_or_an_interval_is_found_whole_in_the_printed_answer(self):
+        cases = [
+            ("b>1; b\\in\\mathbb{Z}", "b 1 2 3 4 5 b > 1; b ∈Z", "Ex4-6:4a"),                          # the axis is not the answer
+            ("x < 4; x \\in \\mathbb{N}", "x 0 1 2 3 4 5 x < 4; x ∈N", "Ex4-7:11a"),
+            ("x < 0; x \\in \\mathbb{R}", "x −3 −2 −1 0 1 2 3 x < 0; x ∈R", "Ex4-7:11c"),
+            ("4.45 \\leq x < 4.55", "x 4.40 4.45 4.50 4.55 4.60 4.45 ≤x < 4.55", "Ex4-7:13"),          # the answer starts with a number
+            ("x\\neq3; x\\neq6; x\\in\\mathbb{R}", "x ̸= 3; x ̸= 6; x ∈R", "Ex4-6:1c"),                  # ≠ is a solidus and "="
+            ("[\\frac{29}{13};\\infty)", "x ∈ [ 29 13 ; ∞ ) .", "Ex4-6:3c"),                           # a flattened fraction in an endpoint
+            ("(-\\infty;-\\frac{21}{11}]", "( −∞; −21 11 ] g) ( −∞; −3 2 ) ∪ ( 1 2 ; ∞ )", "Ex4-6:3f"),  # g) is the next part's answer
+            ("(-\\infty;\\frac{6}{5}]", "x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )", "Ex4-6:3d"),
+            ("\\left(-\\infty;-\\frac{8}{5}\\right]", "x ∈ ( −∞; −8 5 ] . c) [ 80 31 ; ∞ )", "Ex4-7:10b"),
+            ("-3 \\leq k < 2", "−3 ≤k < 2", "Ex4-7:12p"),
+        ]
+        for key, printed, ref in cases:
+            x = self.rel(key, printed, ref)
+            self.assertTrue(self.reads(x), (printed, x["typing_problems"]))
+
+    def test_a_changed_bound_relation_bracket_or_constraint_is_never_a_match(self):
+        cases = [
+            # the two real mismatches Chapter 4 holds (the key says 0 where the book says 7, and the other way round)
+            ("a>0; a\\in\\mathbb{N}", "a −1 0 1 2 3 4 5 a > 7; a ∈N", "Ex4-6:4b"),
+            ("b < -4; b \\in \\mathbb{Z}", "b −6 −5 −4 −3 −2 −1 0 b > 4; b ∈Z", "Ex4-7:11b"),
+            # a constraint the key leaves out (the book's answer is for the naturals, the key is for the reals)
+            ("a > 6", "a 5 6 7 8 8 9 10 a > 6; a ∈N", "Ex4-6:4d"),
+            ("b < -14", "b −18 −17 −16 −15 −14 −13 −12 b < −14; b ∈R", "Ex4-6:4c"),
+            # an extra constraint in the key, a different set
+            ("a > 6; a \\in \\mathbb{Z}", "a 5 6 7 8 8 9 10 a > 6; a ∈N", "Ex4-6:4d"),
+            # strict where the book is not, and the other way round
+            ("x < 4; x \\in \\mathbb{N}", "x 0 1 2 3 4 5 x ≤ 4; x ∈N", "Ex4-7:11a"),
+            ("4.45 < x < 4.55", "x 4.40 4.45 4.50 4.55 4.60 4.45 ≤x < 4.55", "Ex4-7:13"),
+            # another bracket, another endpoint, another sign, an interval the book did not print, a missing one
+            ("(-\\infty;\\frac{6}{5})", "x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )", "Ex4-6:3d"),
+            ("(-\\infty;\\frac{5}{6}]", "x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )", "Ex4-6:3d"),
+            ("(-\\infty;-\\frac{6}{5}]", "x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )", "Ex4-6:3d"),
+            ("[\\frac{29}{13};\\infty)", "x ∈ ( 29 13 ; ∞ ) .", "Ex4-6:3c"),
+            ("(-\\infty;-\\frac{21}{11}]", "( −∞; −21 11 ] g) ( −∞; −3 2 ) ∪ ( 1 2 ; ∞ )", "Ex4-6:3e"),     # the part letter is not f: nothing is cut
+            ("x\\neq3; x\\neq6; x\\in\\mathbb{R}", "x ̸= 3; x ̸= 7; x ∈R", "Ex4-6:1c"),
+            ("x\\neq3; x\\neq6", "x ̸= 3; x ̸= 6; x ∈R", "Ex4-6:1c"),
+        ]
+        for key, printed, ref in cases:
+            x = self.rel(key, printed, ref)
+            self.assertFalse(self.reads(x), (key, printed))
+            self.assertNotEqual(x["verification"], "agreed", (key, printed))
+
+    def test_the_next_parts_answer_is_cut_only_at_its_own_part_letter(self):
+        # the printed answer of d) runs on into "e)": cut there. The union the book printed for f) is f)'s whole answer when no part follows.
+        key, printed = "(-\\infty;-\\frac{3}{2})\\cup(\\frac{1}{2};\\infty)", "( −∞; −3 2 ) ∪ ( 1 2 ; ∞ )"
+        self.assertTrue(self.reads(self.rel(key, printed, "Ex4-6:3g")))
+        self.assertFalse(self.reads(self.rel("(-\\infty;-\\frac{3}{2})", printed, "Ex4-6:3g")), "half of a union is not the union")
+
+    def test_all_real_values_is_the_whole_line_unless_it_says_otherwise(self):
+        for printed, ok in (("The inequality is true for all real values of $x$ .", True), ("It holds for any real number.", True),
+                            ("The inequality is not true for all real values of $x$ .", False),
+                            ("The inequality is true for all real values of $x$ except 3.", False),
+                            ("The inequality is true for all integers.", False)):
+            it = item("Ex4-6:2e", "Solve the inequality.", [f"{printed}"], None)
+            t = typing("Ex4-6:2e", "(-\\infty;\\infty)", printed, "expression", marker_kind="interval", variables=["x"])
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex4-6:2e", "final_answer": "(-\\infty;\\infty)", "markable": True}]))
+            x = rep["result"]["lessons"][0]["items"][0]
+            self.assertEqual(self.reads(x), ok, (printed, x["typing_problems"]))
+
+    def test_an_inequality_list_typed_equation_is_typed_interval_and_the_apps_marker_reads_it(self):
+        x = self.rel("b>1; b\\in\\mathbb{Z}", "b 1 2 3 4 5 b > 1; b ∈Z", "Ex4-6:4a", kind="equation")
+        self.assertEqual((x["marker"]["kind"], x["typing_retyped"]["rule"]), ("interval", "kind-for-relations"))
+        self.assertEqual(x["marker"]["key"], "b>1; b\\in\\mathbb{Z}", "the key is kept exactly")
+        out = app_marker(x["marker"], ["b>1", "b>2"])
+        self.assertIsNone(out["key_problem"], "the app's marker could not read this key under its equation kind")
+        self.assertEqual(out["marks"], {"b>1": "correct", "b>2": "incorrect"})
+        # an equation is not an inequality: nothing is retyped
+        y = self.typed("y=2x+1", "y = 2x + 1", kind="equation", variables=("x", "y"))
+        self.assertNotIn("typing_retyped", y)
+        self.assertEqual(y["marker"]["kind"], "equation")
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class InTheBookSolution(TypedItem, unittest.TestCase):
+    """What "book_final is not in the book solution" got wrong in Chapters 3 and 4 (none of it a wrong final)."""
+
+    def final_problem(self, solution, final, ref="Ex4-5:2", stem="Make $a$ the subject of the formula.", key=None, kind="equation", variables=("a",)):
+        it = item(ref, stem, solution, "x")
+        t = typing(ref, key or final, f"${final}$", "expression", marker_kind=kind, variables=list(variables))
+        rep = run(args_for([it]), responses([t], [{"ref": ref, "final_answer": "x", "markable": True}]))
+        return "book_final is not in the book solution" in rep["result"]["lessons"][0]["items"][0]["typing_problems"]
+
+    def test_an_equation_the_other_way_round_is_the_solutions_last_line(self):
+        sol = ["$\\begin{align*}s&=ut+\\frac{1}{2}at^{2}\\\\2s-2ut&=at^{2}\\\\\\frac{2(s-ut)}{t^{2}}&=a\\end{align*}$"]
+        self.assertFalse(self.final_problem(sol, "a=\\frac{2(s-ut)}{t^{2}}"))
+        self.assertTrue(self.final_problem(sol, "a=\\frac{2(s-ut)}{t^{3}}"), "another exponent is another final")
+        self.assertTrue(self.final_problem(sol, "a=\\frac{2(s+ut)}{t^{2}}"), "another sign is another final")
+
+    def test_an_aligned_array_row_reads_its_relation(self):
+        sol = ["$\\begin{align*}\\begin{array}{ccccc}-5&\\le&2k+1&<&5\\\\-6&\\le&2k&<&4\\\\-3&\\le&k&<&2\\end{array}\\end{align*}$"]
+        self.assertFalse(self.final_problem(sol, "-3\\le k<2", ref="Ex4-7:12p", kind="interval", variables=("k",)))
+        self.assertTrue(self.final_problem(sol, "-3\\le k<3", ref="Ex4-7:12p", kind="interval", variables=("k",)))
+        self.assertTrue(self.final_problem(sol, "-3<k<2", ref="Ex4-7:12p", kind="interval", variables=("k",)))
+
+    def test_a_greek_letter_glued_to_the_next_one_in_the_epub_is_still_the_same_formula(self):
+        sol = ["$\\begin{align*}V&=\\pir^{2}h\\\\\\frac{V}{\\pih}&=r^{2}\\\\\\pm\\sqrt{\\frac{V}{\\pih}}&=r\\end{align*}$"]
+        self.assertFalse(self.final_problem(sol, "r=\\pm\\sqrt{\\frac{V}{\\pi h}}", ref="Ex4-5:5", kind="surd", variables=("r", "V", "h")))
+        self.assertTrue(self.final_problem(sol, "r=\\pm\\sqrt{\\frac{V}{2\\pi h}}", ref="Ex4-5:5", kind="surd", variables=("r", "V", "h")))
+
+    def test_a_greek_letter_is_never_invisible_in_the_printed_answers_signature(self):
+        # the text layer keeps π: a key with it is not an answer without it, and 2πr is 2πr either way it is written
+        sol = ["$h=\\frac{A-2\\pi r}{2\\pi r}$"]
+        ok = self.typed("h=\\frac{A-2\\pi r}{2\\pi r}", "A−2πr 2πr = h", kind="equation", variables=("h", "A", "r"), solution=sol)
+        self.assertTrue(self.reads(ok), ok["typing_problems"])
+        bad = self.typed("h=\\frac{A-2\\pi r}{2\\pi r}", "A−2r 2r = h", kind="equation", variables=("h", "A", "r"), solution=sol)
+        self.assertFalse(self.reads(bad))
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
 class TypingPromptV8(unittest.TestCase):
     """lesson-v8 changed the TYPING prompt only: a choice's options are never the agent's to make up, a number or a pair of
     numbers is never a choice, and book_final is a quote. (The collection refuses what the prompt forbids: Collect6.)"""
