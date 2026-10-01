@@ -210,6 +210,22 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
 //     cannot be settled that way (an interval, coordinates, a list of values, no variable in the key) the item keeps a typing
 //     problem naming the form and the kind, so it is held for G2 instead of crashing the split. The app's marker reads a surd
 //     inside an `expression` key (tests/test_typing_seam.py runs it on this very key).
+// COLLECT-6 (Chapters 3 and 4, 2026-10-01; the prompts are unchanged, so a saved run is re-collected with recollect_lessons.py and no model
+// call). G2's auto-pass excluded 24 of 93 items of g10m3s2-1 and 75 of 88 owed items of Chapter 4, nearly all of them correct answers the
+// typing check could not match to what the book printed. runbook/README.md §3 has the rules; tests/test_lesson_collect6.py pins each one
+// beside the real mismatch it must not accept (and NoSingleEditIsAccepted: any one-character change of an accepted key is refused). In short:
+//   * a printed list that labels its values (T4 = …; T5 = …, T1 = −3 and T2 = 3, Tn = …, T10 = …) is the key's list: labels set aside, "and" a
+//     separator, a decimal comma never one, the order kept where the labels differ; a printed "= …" is read by its right side; "±8" is two values;
+//   * a values key of plain numbers matches a sentence that states exactly those numbers, in order; a book sentence in maths by its `var = value`;
+//   * an inequality, a membership or an interval is compared whole (relations, signs, brackets, constraints); a number line's axis and the next
+//     part's answer are not the answer; a printed fraction after ≠ is not read (Ex1-11:37a stays held);
+//   * the KIND the app's marker cannot read is normalised, the key kept exactly, the retype recorded: a fraction typed numeric → expression
+//     ('fraction-key': the numeric grader reads "-5/3" as -5), a list typed surd/expression → values ('kind-for-list'), inequalities typed
+//     equation/expression/values → interval ('kind-for-relations'), one "=" typed expression/surd → equation ('kind-for-equation'); Greek
+//     marker variables by name, π not a variable;
+//   * in the book solution: an equation the other way round, a relation row of an aligned array, \text{and} with its spaces lost, "T_2=23 and
+//     T_4=53", a chain d=T_2-T_1=7-4=3 whose every link is stated; the signature keeps ± and Greek letters.
+// The collection is still `collect-6` (same day, as kind-for-form): the recollected file records the script's sha.
 const norm = (s) => String(s || '').normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
   .replace(/\$/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8 && norm(hay).includes(n) }
@@ -401,7 +417,7 @@ function assignedList(text) {
 // fraction in an interval's endpoint is "6 5" (6/5), ∈ and ∞ are signs, a number line's axis ("x 0 1 2 3 4 5 …") and the next
 // part's answer that runs on ("… ] . e) ( −∞; −55 13 )") are not this answer.
 function canonRel(s, printed) {
-  let t = String(s == null ? '' : s).normalize('NFKC').replace(/[−–—]/g, '-').replace(/̸\s*=|=\s*̸/g, '≠').replace(/\\neq?(?![a-zA-Z])/g, '≠')
+  let t = String(s == null ? '' : s).normalize('NFKC').replace(/[−–—]/g, '-').replace(/\u0338\s*=|=\s*\u0338/g, '≠').replace(/\\neq?(?![a-zA-Z])/g, '≠')
   if (printed) t = t.replace(/(?<=[;(\[]\s*)(?<![\d.])(-?\d+)\s+(\d+)(?![\d.])(?=\s*[;)\]])/g, '$1/$2')
   t = normTex(t).replace(/\\in(?![a-zA-Z])/g, '∈').replace(/\\mathbb\{([A-Za-z])\}/g, '$1').replace(/[ℝℕℤℚ]/g, (c) => ({ 'ℝ': 'R', 'ℕ': 'N', 'ℤ': 'Z', 'ℚ': 'Q' })[c])
     .replace(/\\infty(?![a-zA-Z])/g, '∞').replace(/\\cup(?![a-zA-Z])/g, '∪').replace(/\\frac\{(-?\d+)\}\{(\d+)\}/g, '$1/$2')
@@ -418,7 +434,7 @@ function relReadings(printed, ref) {
     if (i > 0) t = t.slice(0, i)
   }
   const out = [t]
-  const ax = /^\s*([A-Za-z])\s+(?:-?\d+(?:[.,]\d+)?\s+){2,}?(?=\1\s*[<>≤≥=∈≠̸]|-?\d+(?:[.,]\d+)?\s*[<≤>≥])/.exec(t)
+  const ax = /^\s*([A-Za-z])\s+(?:-?\d+(?:[.,]\d+)?\s+){2,}?(?=\1\s*[<>≤≥=∈≠\u0338]|-?\d+(?:[.,]\d+)?\s*[<≤>≥])/.exec(t)
   if (ax) out.push(t.slice(ax[0].length))
   return out
 }
