@@ -293,7 +293,9 @@ const eqForms = (t) => {
   const w = swapEq(t)
   // a worked chain L=m1=…=R states its last value R (COLLECT-3); a single equation keeps its left side
   const last = workedChain(t) ? t.split('=').pop() : null
-  const base = [t, stripLhs(t), stripLhs(stripLhs(t)), ...(w ? [w, stripLhs(w)] : []), ...(last ? [last] : [])]
+  // a final that opens with its sign ("≈53,1°", "= −14n + 7"): the text layer or the typing agent dropped the left side, the value is what it states
+  const bare = /^[≈=]/.test(t) && t.length > 1 ? t.slice(1) : null
+  const base = [t, stripLhs(t), stripLhs(stripLhs(t)), ...(bare ? [bare] : []), ...(w ? [w, stripLhs(w)] : []), ...(last ? [last] : [])]
   return new Set(base.flatMap((x) => [x, stripPointName(x)]).filter(Boolean))
 }
 const sameForm = (x, y) => { const fy = eqForms(y); return [...eqForms(x)].some((f) => fy.has(f)) }

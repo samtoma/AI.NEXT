@@ -986,7 +986,7 @@ class ApproximateFinals(TypedItem, unittest.TestCase):
         rep = run(args_for([it]), responses([t], [{"ref": "Ex5-8:17a", "final_answer": "\\theta \\approx 42{,}07^{\\circ}", "markable": True}]))
         x = rep["result"]["lessons"][0]["items"][0]
         routes = {p["pair_id"].split("|")[1]: p["route"] for p in x["verify"]["pairs"]}
-        self.assertEqual(routes["blind~printed"], "signature")
+        self.assertIn(routes["blind~printed"], ("normalised", "signature"))
         self.assertEqual(x["verification"], "agreed")
         self.assertEqual([c["label"] for c in rep["calls"] if c["label"].startswith("S3:judge:")], [])
         # …and a different angle, or π that is not in the printed answer, is still different
@@ -994,7 +994,7 @@ class ApproximateFinals(TypedItem, unittest.TestCase):
             it2 = item("Ex5-8:17a", "Find it.", ["$x$"], printed)
             rep2 = run(args_for([it2]), responses([typing("Ex5-8:17a", "1", "$x$", "numeric")], [{"ref": "Ex5-8:17a", "final_answer": blind, "markable": True}]))
             y = rep2["result"]["lessons"][0]["items"][0]
-            self.assertNotEqual({p["pair_id"].split("|")[1]: p["route"] for p in y["verify"]["pairs"]}["blind~printed"], "signature", blind)
+            self.assertEqual({p["pair_id"].split("|")[1]: p["route"] for p in y["verify"]["pairs"]}["blind~printed"], "judge", blind)
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")

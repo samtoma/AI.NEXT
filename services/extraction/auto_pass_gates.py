@@ -289,10 +289,16 @@ def g2_retyped(run: dict, chapter: int | None, prefix: str) -> list[dict]:
     return out
 
 
-def g2_merge(owed: dict[str, dict], recommended: dict | None, existing: dict | None) -> tuple[dict, dict, list[dict]]:
+def g2_merge(owed: dict[str, dict], recommended: dict | None, existing: dict | None,
+             scope: set[str] | None = None) -> tuple[dict, dict, list[dict]]:
     """G2's file with an auto verdict for every owed item no human has decided: the recommendation's when there
     is one, else the AI checks' rule; an item neither covers stays without a verdict (held). A human verdict
-    already there is kept as it is. Returns (file, counts, decisions)."""
+    already there is kept as it is. Returns (file, counts, decisions).
+
+    `scope`: the lessons the runs given cover. An AUTO verdict the file holds for an item of one of them that is NOT owed any more (a newer
+    collection of the same runs typed it again and the checks now accept it: 2026-10-01, COLLECT-6 widened) is dropped, with a decision
+    line saying so: without it the old exclusion would outlive the typing problem it was written for. A human's verdict is never dropped,
+    and with no scope (the default) nothing is."""
     by = review_policy.auto_pass_by("G2")
     out = dict(existing or {})
     items = dict(out.get("items") or {})
@@ -301,6 +307,14 @@ def g2_merge(owed: dict[str, dict], recommended: dict | None, existing: dict | N
     recs = (recommended or {}).get("items") or {}
     c = {"human": 0, "recommended": 0, "rule": 0, "held": 0}
     decisions: list[dict] = []
+    if owed and str((recommended or {}).get("prepared_by") or "").startswith("g2_recommend.py"):
+        # a G2 recommendation RUN (g2_recommend.py) is about the items that were owed when it was collected. A newer collection of the lesson
+        # runs (2026-10-01: COLLECT-6 widened) can leave one of them owed no more, the checks' own rule having decided it: an older reading
+        # must not override that, so it is not applied (and the file's own collector skips such keys; this is the same line, in the merge)
+        for k in sorted(k for k in recs if k not in owed):
+            decisions.append({"key": k, "decision": "recommendation not applied — no longer owed",
+                              "basis": "the checks' own rule decides this item now; an older recommendation never overrides it"})
+        recs = {k: v for k, v in recs.items() if k in owed}
     for key in sorted(set(owed) | set(recs)):
         if key in items and not (items[key].get("auto") or review_policy.is_auto(items[key].get("by"))):
             c["human"] += 1
@@ -333,6 +347,15 @@ def g2_merge(owed: dict[str, dict], recommended: dict | None, existing: dict | N
         items[key] = entry
         decisions.append({"key": key, "decision": entry["verdict"], "detail": r.get("note") if r else None,
                           "basis": basis})
+    if scope:
+        for key in sorted(items):
+            lesson = key.split(":", 1)[0]
+            v = items[key]
+            if lesson in scope and key not in owed and key not in recs and (v.get("auto") or review_policy.is_auto(v.get("by"))):
+                del items[key]
+                c["dropped"] = c.get("dropped", 0) + 1
+                decisions.append({"key": key, "decision": "earlier auto verdict dropped — no longer owed",
+                                  "basis": "a newer collection of the same run no longer flags it: the checks accept it as it is"})
     out["items"] = items
     return out, c, decisions
 
@@ -785,7 +808,9 @@ def main(argv: list[str] | None = None) -> int:
         if rec_in and ch is not None:      # a recommendation file may hold other chapters: this one only
             rec_in = {**rec_in, "items": {k: v for k, v in (rec_in.get("items") or {}).items()
                                           if k.startswith(f"{book.id_prefixes[0]}{ch}s")}}
-        doc, c, decisions = g2_merge(owed, rec_in, existing)
+        scope = {l.get("lesson") for p in a.lesson_run for l in (json.loads(p.read_text()).get("result", json.loads(p.read_text())).get("lessons") or [])
+                 if l and (ch is None or str(l.get("lesson", "")).startswith(f"{book.id_prefixes[0]}{ch}s"))}
+        doc, c, decisions = g2_merge(owed, rec_in, existing, scope)
         into.parent.mkdir(parents=True, exist_ok=True)
         into.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
         held = [d["key"] for d in decisions if d["decision"].startswith(("no verdict", "hold", "exclude"))]
