@@ -180,6 +180,35 @@ class AssembleFixtureTest(unittest.TestCase):
                                                                    "form": "prime_factors"}}}])
         self.assertIn("unknown form", res["specs_rejected"][0]["why"])
 
+    @unittest.skipUnless(shutil.which("node"), "the marker check runs the app's answer-marker.ts in node")
+    def test_a_key_the_typing_agent_wrapped_in_dollars_is_bare_maths_not_a_hold(self):
+        # Chapter 1 (2026-10-01): the typing agent copied the EPUB's final "$(a-3)(a+3)$" as the key; the app's marker refuses the
+        # "$", and 29 correct questions were held "unanswerable" for a delimiter. The assembly removes one enclosing pair, records it.
+        self.assertEqual(self.report.keys_unwrapped, [])
+        root = fixture_copy()
+        edit(root / "runs" / "lesson" / "g10m8s2-1.json", lambda d: next(
+            i for i in d["items"] if i["ref"] == "Ex8-2:1")["marker"].update(key="$" + next(
+                i for i in d["items"] if i["ref"] == "Ex8-2:1")["marker"]["key"] + "$"))
+        bundles, report = assemble(root)
+        q = {x["id"]: x for x in bundles["g10m-c08.json"]["questions"]}["q:g10m8s2-1-1:ex8-2-1"]
+        self.assertNotIn("$", q["choices"]["marker"]["key"])
+        self.assertNotIn("$", q["answer"], "the answer text is the bare key, rendered")
+        self.assertTrue(q["verified"], "marked live, not held for a delimiter")
+        self.assertEqual(report.held_by_marker, [])
+        self.assertEqual([x["id"] for x in report.keys_unwrapped], ["q:g10m8s2-1-1:ex8-2-1"])
+        self.assertTrue(report.keys_unwrapped[0]["was"].startswith("$"))
+
+    def test_unwrap_math_delimiters_only_removes_one_enclosing_pair(self):
+        un = alb.unwrap_math_delimiters
+        self.assertEqual(un("$(a-3)(a+3)$"), "(a-3)(a+3)")
+        self.assertEqual(un("  $$x^{2}$$ "), "x^{2}")
+        self.assertEqual(un("$\\frac{(a+3b)^{2}(a-3b)}{3}$"), "\\frac{(a+3b)^{2}(a-3b)}{3}")
+        self.assertEqual(un("(a-3)(a+3)"), "(a-3)(a+3)", "a bare key is untouched")
+        self.assertEqual(un("$a$ and $b$"), "$a$ and $b$", "two formulas are not one wrapped key")
+        self.assertEqual(un("$5"), "$5", "an unbalanced dollar is left for the marker to refuse")
+        self.assertIsNone(un(None))
+        self.assertEqual(un(""), "")
+
     def test_reassembly_is_byte_identical(self):
         again, _ = assemble()
         self.assertEqual({k: alb.dump(v) for k, v in again.items()},
