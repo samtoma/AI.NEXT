@@ -728,3 +728,41 @@ does, and what `ci-cd.yml` "Curriculum (only when none is loaded)" does on first
   in g2.json; the lesson runs and the DB stamp say both ("Samuel Toma (G2 accept); stem fixed by …").
 - **Dry runs**: one at a time per chapter — `dryrun_chapter.py` holds `work/<book>/dryrun/.chNN.lock` and a second
   run waits for it.
+
+## 10. The full-book fan-out and the step-level working checker (2026-10-01)
+
+**The fan-out** (Samuel's answer 37e; plan and inventory in `docs/WIP-g10-pilot/README.md` → "Fan-out plan"):
+
+```sh
+uv run fanout.py inventory             # runs/<book>/fanout/inventory.json: per chapter lessons, items, maths, figures
+uv run fanout.py plan                  # runs/<book>/fanout-plan.json: every run in order, inputs, agents, cost, steps
+uv run fanout.py prepare <run-id>      # its packet and its copy work/<book>/packets/embedded/fanout/NNN-<run>.workflow.js
+uv run fanout.py prepare --ready       # every run whose inputs now exist
+uv run fanout.py status                # prepared / saved / metered, per run
+uv run fanout.py config <chapter>      # the per-chapter config S5–S7 read (bundles: course + that chapter)
+uv run fanout.py config --final [--write]   # T364: the whole book's `generated` + `parity`, once every bundle exists
+```
+
+Every run is a generated copy (`embed_workflow.py`), launched with `Workflow({scriptPath})` and NO args, at most two at
+a time and never two S0b passes at once. S0b and S1 copies echo `embedded` like the others. S1 by reference now
+carries an earlier chapter's objectives as shards (`prior.txt`, `prior/<id tail>.txt`; args `prior_by_ref`), so a late
+chapter's args stay small. A chapter whose S6 author writes no family, or whose S7 author writes no template, skips
+the grade / verify run, and its widget bundle is not written (the gap report alone) — never an unverified bundle.
+
+**The step-level working checker** (answer 30; stage `SW`, prompts `sw-v1`), per assembled chapter bundle:
+
+```sh
+uv run working_check.py precheck --seed seed/<book>/<prefix>-cNN.json          # free: the numeric pre-check only
+uv run working_check.py args --book <book> --seed seed/<book>/<prefix>-cNN.json --chapter N \
+    --by-ref work/<book>/packets/fanout/wcheck-chNN --out A.json --embed <copy>.workflow.js   # parts past 300 solutions
+# run the copy; save to runs/<book>/working-check/chNN-<runId>.json; meter --stage SW
+uv run working_check.py collect --args A.json --runs runs/<book>/working-check/chNN-<runId>.json \
+    --out runs/<book>/working-check/chNN.flags.json
+```
+
+One Sonnet agent per canonical solution (book questions and worked-example entries with working) reads the question,
+the key and the numbered steps and reports every step that does not follow (a value not the question's, arithmetic,
+a sign, a label, a copy error, a last step that is not the key). It never re-solves its own way and never corrects.
+The pre-check evaluates purely numeric relation chains (rounding with "=" to the places shown, mixed numbers, a stated
+contradiction and "= undefined" are not flags) and sits beside the shards, never in a prompt. Every flag, with its
+sources (agent, numeric), is a backlog item for a human; the content is not changed.

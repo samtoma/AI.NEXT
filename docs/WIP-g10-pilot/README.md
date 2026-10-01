@@ -260,3 +260,113 @@ points-swapped unconfirmed on all three → held. Pilot reloaded: **119 book que
 (4 retired, the held s3-1-2 template); mappings 9 active / 16 held (G3 page re-rendered); 8 widget gaps in
 `coverage/g10-math.ch08.widget-gaps.json`. Coverage RED only on objective_evidence (s1-1-1) and tier_floor
 (pre-G3); parity GREEN; tester setup unchanged.
+
+## Fan-out plan — 2026-10-01 (data-engineer; preparation only, nothing launched, nothing spent)
+
+**Approved by Samuel, 2026-10-01** (`samuel-answers.md` 37a–e): fan out the other 13 chapters (≈ $0.85–1.1k);
+gates G1–G4 auto-pass on the AI checks' recommendation, every decision into the console backlog (37c); the book's own
+picture stands in for a figure no native type draws (37d). Answer 30: the step-level working checker, re-run on Chapter 8.
+
+**Where everything is** (paths relative to `services/extraction/`):
+- The plan: `runs/g10-math/fanout-plan.json` — 190 runs in launch order; each has its embedded copy, what it reads,
+  expected agents, cost range, dependencies, the deterministic `before`/`after` commands, where to save the return
+  value and the meter command; checkpoints are marked; `closing_steps` finish the book.
+- Per-chapter inventory: `runs/g10-math/fanout/inventory.json`. The driver: `fanout.py` (`inventory`, `plan`,
+  `prepare <run-id>` / `prepare --ready`, `status`, `config <ch>` / `config --final`, `write-specs`).
+- Copies to launch: `work/g10-math/packets/embedded/fanout/NNN-<run>.workflow.js` — `Workflow({scriptPath})` with
+  NO args; NNN is the plan order. A run whose inputs do not exist yet is prepared later by `fanout.py prepare <id>`,
+  which refuses, naming what is missing, until then.
+
+**Per chapter** (from the EPUB extraction and the G0 manifest; objectives estimated at Chapter 8's 2.6 per lesson):
+
+| Ch | Title | Lessons (sections) | Worked ex. | Items (lessons + end of ch. + shared) | Solutions | Maths images (unique / still to read) | Figures (book / in solutions) | Objectives (est.) | S0b group |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Algebraic expressions | 8 (1.2–1.8) | 21 | 554 (343 + 211) | 575 | 1416 / 880 | 6 / 0 | 21 | g1 |
+| 2 | Exponents | 3 (2.2–2.4) | 13 | 152 (73 + 79) | 165 | 421 / 327 | 2 / 0 | 8 | g2 |
+| 3 | Number patterns | 1 (3.2) | 3 | 90 (43 + 47) | 93 | 399 / 261 | 12 / 2 | 3 | g2 |
+| 4 | Equations and inequalities | 6 (4.2–4.7) | 19 | 270 (169 + 101) | 289 | 1059 / 666 | 17 / 31 | 16 | g3 |
+| 5 | Trigonometry | 5 (5.2–5.8) | 12 | 240 (160 + 80) | 252 | 842 / 657 | 69 / 19 | 13 | g4 |
+| 6 | Functions | 9 (6.1–6.7) | 25 | 347 (142 + 164 + 41) | 372 | 1266 / 757 | 128 / 82 | 23 | g5 |
+| 7 | Euclidean geometry | 4 (7.1–7.4) | 8 | 159 (75 + 84) | 167 | 639 / 355 | 155 / 23 | 10 | g6 |
+| 8 | Analytical geometry (pilot, done) | 5 (8.1–8.4) | 13 | 191 (59 + 132) | 204 | 857 / 0 | 58 / 33 | 13 | — |
+| 9 | Finance and growth | 4 (9.2–9.5) | 12 | 135 (75 + 60) | 147 | 546 / 328 | 3 / 0 | 10 | g6 |
+| 10 | Statistics | 5 (10.1–10.5) | 14 | 102 (51 + 51) | 116 | 650 / 321 | 23 / 20 | 13 | g7 |
+| 11 | Trigonometry | 1 (11.1) | 5 | 33 (6 + 27) | 38 | 174 / 55 | 18 / 22 | 3 | g7 |
+| 12 | Euclidean geometry | 1 (12.1) | 1 | 40 (15 + 25) | 41 | 230 / 104 | 25 / 7 | 3 | g7 |
+| 13 | Measurements | 6 (13.1–13.4) | 20 | 100 (51 + 49) | 120 | 462 / 272 | 136 / 18 | 16 | g8 |
+| 14 | Probability | 7 (14.1–14.7) | 8 | 118 (41 + 77) | 126 | 368 / 177 | 40 / 34 | 18 | g8 |
+
+S0b: 5,160 images still to read, each assigned to the first chapter that uses it (none of Chapter 8's re-read),
+in 8 groups at batch 50: g1 880 (18 batches), g2 588, g3 666, g4 657, g5 757, g6 683, g7 480, g8 449.
+
+**The order** (≤ 2 runs at a time, never two S0b runs at once; simulated with the pilot's run durations):
+1. `001-s6-author-ch08-s111` (S6 for lo:g10m8s1-1-1, the main session's request; ≈ $0.6–1.5) and `002-wcheck-ch08`
+   (the working checker on Chapter 8's 192 solutions with working; ≈ $5.8–9.6) — together.
+2. S0b by group, pass A → pass B → third reading C (prepared after A and B are saved), g1 (chapter 1) first.
+3. S1 chapter by chapter (1–7, 9–14), each after its group's S0b and the previous chapter's G1 auto-pass; prior
+   objectives travel by reference (backlog 68).
+4. Chapter 1 end to end: its 8 lesson runs → G2 auto-pass → assembly → working check → S5 draft → S6 author/grade
+   and S7 author/verify → S5 final → load, coverage, parity. **Go / no-go checkpoint at run 40 (≈ 6.4 h in)**: no other
+   chapter's lessons start before it (S0b and S1 continue meanwhile).
+5. The other 12 chapters in chapter order, the same chain; the working checks run alongside.
+
+Checkpoints marked in the plan: after run 1 (did s1-1-1 get a family?), run 2 (read every working-check flag before
+any other chapter's check), S0b g1 (per-image cost vs $0.024), S1 ch01 (auto-pass verdicts cover every owed
+decision), the first lesson run (script size, dispute rate, cost per item), and chapter 1 complete (go / no-go).
+
+**Cost** (API-equivalent; the pilot's measured unit costs, `UNIT_COST` in `fanout.py`):
+
+| Stage | Low | High | Basis |
+|---|---|---|---|
+| S0b | $260 | $378 | 5,160 images × 2 passes × $0.024–0.035, + pass C on ≈ 3.6% |
+| S1 | $78 | $108 | $1.30–1.80 per lesson (60) |
+| S2–S4 | $140 | $250 | $0.056–0.10 per item (≈ 2,500) |
+| S5 | $151 | $207 | $0.96–1.32 per objective (≈ 157) |
+| S6 | $104 | $143 | $0.66–0.90 per objective |
+| S7 | $57 | $79 | $0.36–0.50 per objective |
+| Working checker (SW) | $81 | $135 | $0.03–0.05 per solution (≈ 2,700, Chapter 8 included) |
+| **Total** | **$870** | **$1,299** | + 10–15% contingency (re-authors, visual re-runs, resumes) |
+
+Without the working checker the book's stages come to $789–1,164: the top is ≈ $65 above 37e's $1.1k. The dry runs
+× the pilot's real/dry ratios agree (chapter 5: S1 ≈ $6.5, S2–S4 ≈ $13, S5 ≈ $12.6, S6 ≈ $9.2, S7 ≈ $3.2). Wall
+clock: ≈ 22.5 h of run time on two lanes, plus checkpoints and the deterministic steps — 2–3 working days.
+
+**Chapter 8 is not re-run and its outputs are not overwritten**: the full book's S0b assembly goes to
+`runs/g10-math/maths/book/` (the pilot's `accepted/queue/summary.json` stay); new chapters write
+`families|widgets/g10-math/chNN/`, `seed/generated/g10-math/chNN/`, `runs/g10-math/g2-chNN.json`; the whole-book
+export is `seed/generated/g10-math/book-export/`; the scratch DB is a new `ainext_fanout_g10` (never
+`ainext_pilot_g10_ch08`). The only Chapter 8 runs are the two the plan starts with.
+
+**Built for it (unreviewed, in the auto-snapshots):** `fanout.py` + `tests/test_fanout.py`; `working_check.py` +
+`runbook/working-check.workflow.js` + `tests/test_working_check.py` (backlog 78); the S1 prior-objectives shard
+(`assemble_objectives.py`, `runbook/objectives.workflow.js`, `tests/test_packet_ref.py`; backlog 68); S0b and S1 echo
+`embedded` so they can run as copies (`transcribe-maths.workflow.js`, `objectives.workflow.js`,
+`tests/test_embed_workflow.py`); the S0b self-probe command quoted (the worktree path has spaces;
+`assemble_maths.py`); the dry run's no-widget-template path (`dryrun_chapter.py`). Prompts adopted: s1-v5,
+lesson-v7/collect-5, s5-v5, s6-v5, s7-v7 (the current runbook scripts; the pilot ran older ones).
+
+**Checks (2026-10-01):** dry runs (`dryrun_chapter.py`, stubbed, no spend) pass for chapters 1–8, 11, 12, 14; chapters
+9, 10 and 13 stop at the load's KaTeX gate (first blocker below). Pipeline suite: 616 pass; 7 fail in modules being
+changed in parallel (loader status policy, migration 035 stamps, the book-picture VIZ kind, a new coverage check) —
+none in a file this work touched.
+
+**Blocking, or for Samuel:**
+1. **KaTeX: a stripped control space before digits.** Hash-proved S0b LaTeX writes the book's thousands space
+   `\text{57\ 000\ 000}` as `\text{57\000\000}` (whitespace removed before hashing); KaTeX refuses `\0`, so
+   `load_seed.py` refuses chapters 9 (8 items), 10 (1) and 13 (2) — 14 images today, more once the vision passes
+   land. Fix in the assembly's re-spacing (`respace_latex`: a backslash followed by a digit is a control space,
+   `\ `), owned by the engineer changing `assemble_lesson_bundle.py` today. Not a gate 37c passes: broken maths blocks.
+2. **lo:g10m8s1-1-1 has no parent question.** Its six items are drawings G2 made teaching-only, so they are worked-
+   example entries, not question rows; FR-1101 and `questions.parent_question_id REFERENCES questions(id)` need a
+   question row. Run 001 gives the author those items (with the book's drawn answers) as models and parent
+   candidates — without them it reported "infeasible" in the pilot — but a family it writes cannot load until Samuel
+   decides: let a teaching item be a family's parent (loader + FR-1101 wording), or keep s1-1-1 as a named coverage
+   exception. No widget kind plots given vertices (`polygon_builder` grades shape properties).
+3. **The auto-pass verdicts** for G1 (`approve --verdicts`) and G2 (`lesson-runs --g2`; `"auto": true`, migration 035)
+   come from the gates' auto-pass mode, in flight elsewhere; needed from run 6 (S1 ch01) on.
+4. **Chapter 8's prerequisite links to chapters 1–7** (consistency review D4) need a links-only S1 pass after
+   chapter 7's G1 (≈ $0.5–1); not built, not in the plan — decide whether to add it.
+5. **Chapter 8 into the book's seed** (closing steps): copy the reviewed pilot bundle, or re-assemble it with the
+   book-picture stand-ins (37d), deterministic, $0.
+6. **Budget**: the top of the range passes $1.1k; the plan's rule is to stop and ask if the metered total does.
+7. **Spec Kit**: the working checker (answer 30) needs its FR/traceability lines (tech-writer).

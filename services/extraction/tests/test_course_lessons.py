@@ -108,12 +108,16 @@ class G10ProvenanceTest(unittest.TestCase):
                                      "WHERE id = 'q:g10m8s2-1-1:ex8-2-1'"), "short")
 
     def test_the_figure_gate_holds_until_the_figure_exists_and_then_releases(self):
-        # consistency review A3: a live question whose stem shows [figure] with no figure is held at review, marked;
-        # the load that brings its figure puts it back live; a question a human held is never released here
+        # consistency review A3, as migration 035 records it: a live question whose stem shows [figure] with no
+        # figure is held at review with hold_reason figure_missing — its stamps untouched; the load that brings its
+        # figure (or a book-picture stand-in, answer 37d) puts it back live; a question a human held is never
+        # released here
         qid = "q:g10m8s2-1-1:ex8-2-2a"
         human = "q:g10m8s2-1-1:ex8-6-1"
-        self.db.q("UPDATE questions SET status = 'live', reviewed_by = 'ai dual-check (pending Samuel)' WHERE id = %s", (qid,))
-        self.db.q("UPDATE questions SET status = 'review', reviewed_by = 'Samuel (G2 hold)' WHERE id = %s", (human,))
+        self.db.q("UPDATE questions SET status = 'live', ai_checked_by = 'ai dual-check', reviewed_by = NULL "
+                  "WHERE id = %s", (qid,))
+        self.db.q("UPDATE questions SET status = 'review', reviewed_by = 'Samuel (G2 hold)', hold_reason = 'human_hold' "
+                  "WHERE id = %s", (human,))
 
         def no_figure(d):
             for q in d["questions"]:
@@ -121,21 +125,42 @@ class G10ProvenanceTest(unittest.TestCase):
                     q["stem"] += " [figure]"
             d["visuals"] = [v for v in d["visuals"] if v.get("question") not in (qid, human)]
         run_loader(self.db.dsn, str(self.variant(no_figure)), "--course", G10, "--update")
-        st, by = self.db.q("SELECT status, reviewed_by FROM questions WHERE id = %s", (qid,))[0]
-        self.assertEqual(st, "review")
-        self.assertTrue(by.endswith("[held: figure missing]"))
+        self.assertEqual(self.db.q("SELECT status, hold_reason, reviewed_by, ai_checked_by FROM questions "
+                                   "WHERE id = %s", (qid,))[0],
+                         ("review", "figure_missing", None, "ai dual-check"))
 
         def with_figure(d):
             no_figure(d)
             lo = next(q["lo"] for q in d["questions"] if q["id"] == qid)
-            d["visuals"].append({"id": "v:g10m8s2-1:099", "lo": lo, "question": qid, "kind": "coordinate_plot",
-                                 "spec": {"xRange": [-6, 6], "yRange": [-6, 6], "points": [{"x": 1, "y": 2, "label": "A"}],
-                                          "animate": "none"}, "caption": "A", "source_page": 292})
+            d["visuals"].append({"id": "v:g10m8s2-1:bk-ex8-2-2a", "lo": lo, "question": qid, "kind": "book_image",
+                                 "spec": {"src": "/book-figures/g10-math/tikzpicture__x.png",
+                                          "alt": "The textbook's diagram for this question, printed on page 292.",
+                                          "stand_in": True, "native_kind_needed": "coordinate_plot"},
+                                 "caption": None, "source_page": 292})
         run_loader(self.db.dsn, str(self.variant(with_figure)), "--course", G10, "--update")
-        self.assertEqual(self.db.q("SELECT status, reviewed_by FROM questions WHERE id = %s", (qid,))[0],
-                         ("live", "ai dual-check (pending Samuel)"))
-        self.assertEqual(self.db.q("SELECT status, reviewed_by FROM questions WHERE id = %s", (human,))[0],
-                         ("review", "Samuel (G2 hold)"), "a human's hold is never released by the gate")
+        self.assertEqual(self.db.q("SELECT status, hold_reason, reviewed_by, ai_checked_by FROM questions "
+                                   "WHERE id = %s", (qid,))[0],
+                         ("live", None, None, "ai dual-check"), "a book-picture stand-in IS its figure")
+        self.assertEqual(self.db.q("SELECT status, reviewed_by, hold_reason FROM questions WHERE id = %s", (human,))[0],
+                         ("review", "Samuel (G2 hold)", "human_hold"), "a human's hold is never released by the gate")
+
+    def test_a_held_reason_from_the_assembly_holds_and_a_live_row_never_keeps_one(self):
+        # migration 035: the assembly's own reason (here, a picture that shows the unknown) holds the question even
+        # if it was live; the database refuses a live row with a hold reason (CHECK questions_held_not_live)
+        qid = "q:g10m8s2-1-1:ex8-2-2a"
+
+        def reveals(d):
+            q = next(x for x in d["questions"] if x["id"] == qid)
+            q["hold_reason"], q["verified"] = "figure_reveals_answer", False
+        run_loader(self.db.dsn, str(self.variant(reveals)), "--course", G10, "--update")
+        self.assertEqual(self.db.q("SELECT status, hold_reason FROM questions WHERE id = %s", (qid,))[0],
+                         ("review", "figure_reveals_answer"))
+        import psycopg
+        with self.assertRaises(psycopg.errors.CheckViolation):
+            self.db.q("UPDATE questions SET status = 'live' WHERE id = %s", (qid,))
+        run_loader(self.db.dsn, str(self.b["g10m-c08.json"]), "--course", G10, "--update")
+        self.assertEqual(self.db.q("SELECT status, hold_reason FROM questions WHERE id = %s", (qid,))[0],
+                         ("live", None), "the cause is gone: a maths question is released live (answer 37a)")
 
     def test_update_refuses_to_change_an_attempted_marker_key(self):
         self.db.q("INSERT INTO students (display_name, grade) VALUES ('Grade 10 student', '10')")
