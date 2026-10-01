@@ -1263,7 +1263,9 @@ def verify(item: Item) -> list[str]:
 
 
 MARKER_KINDS = {"expression", "equation", "values", "interval", "coordinates", "surd", "recurring"}
-MARKER_FORMS = {None, "factorised", "expanded", "simplest"}
+# schemas.AnswerSpec.form, families.spec.FORMS and the app's FORM_NAMES: "decimal" is the per-question flag for
+# "write it as a decimal" (without it the app accepts a fraction for a recurring decimal, T413).
+MARKER_FORMS = {None, "factorised", "expanded", "simplest", "decimal"}
 
 
 def _verify_marker(item: Item) -> list[str]:
