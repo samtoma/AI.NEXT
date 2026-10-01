@@ -40,8 +40,13 @@ export type AdminQuestionRow = {
   stem: string;
   status: string;
   source: string;
+  /** a HUMAN's stamp only (migration 035, answer 33) */
   reviewedBy: string | null;
   reviewedAt: string | null;
+  /** the AI check that passed it — never a review ("AI-checked, awaiting human") */
+  aiCheckedBy: string | null;
+  /** why an automatic safety check holds it at `review` (migration 035) */
+  holdReason: string | null;
   parentQuestionId: string | null;
   generatedBy: string | null;
   sourcePage: number | null;
@@ -100,7 +105,8 @@ export async function getContentAdminView(operatorId: number): Promise<ContentAd
       () =>
         db.query(
           `SELECT q.id, q.lo_id, q.tier, q.question_type, q.stem, q.status, q.source,
-                q.reviewed_by, q.reviewed_at, q.parent_question_id, q.source_page,
+                q.reviewed_by, q.reviewed_at, q.ai_checked_by, q.hold_reason,
+                q.parent_question_id, q.source_page,
                 lo.label AS lo_label,
                 mod.label AS module_label,
                 er.extractor AS generated_by,
@@ -140,6 +146,8 @@ export async function getContentAdminView(operatorId: number): Promise<ContentAd
     source: r.source,
     reviewedBy: r.reviewed_by ?? null,
     reviewedAt: r.reviewed_at ? new Date(r.reviewed_at).toISOString() : null,
+    aiCheckedBy: r.ai_checked_by ?? null,
+    holdReason: r.hold_reason ?? null,
     parentQuestionId: r.parent_question_id ?? null,
     generatedBy: r.generated_by ?? null,
     sourcePage: r.source_page ?? null,

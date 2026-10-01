@@ -29,6 +29,16 @@
  * Derivation lives here rather than in each component so that the four states
  * cannot drift apart between surfaces — a badge on one screen saying "book"
  * while another calls the same row generated is worse than no badge at all.
+ *
+ * ONLY A HUMAN STAMP IS A REVIEW (Samuel's answer 33, migration 035). Since
+ * 035 `reviewed_by` holds a human's stamp and nothing else; an AI check lives
+ * in `ai_checked_by` ("ai dual-check" on a book question two independent AI
+ * readings confirmed, "auto-pass G3 (AI recommendation)" on a gate the fan-out
+ * passed on the AI's word). A book question is therefore no longer "reviewed
+ * through the normal gate" by being a book question: it is human-checked when
+ * a human signed it, and "AI-checked, awaiting human" when only an AI did —
+ * the console's review backlog (answer 37b). Students never see any of this
+ * (ADR-0019, FR-3211).
  */
 
 export type Origin = "book" | "generated";
@@ -37,6 +47,8 @@ export type ProvenanceVerdict = {
   origin: Origin;
   /** true when a named human has accepted this item, directly or through its family */
   humanChecked: boolean;
+  /** true when an AI check passed it and no human has signed it yet (answer 33) */
+  aiCheckedOnly: boolean;
   /**
    * true when the human read a SIBLING of this item rather than this one.
    *
@@ -69,23 +81,42 @@ export function questionProvenance(row: {
   source: string | null;
   reviewedBy?: string | null;
   reviewed_by?: string | null;
+  aiCheckedBy?: string | null;
+  ai_checked_by?: string | null;
 }): ProvenanceVerdict {
   const reviewedBy = row.reviewedBy ?? row.reviewed_by ?? null;
+  const aiCheckedBy = row.aiCheckedBy ?? row.ai_checked_by ?? null;
   const source = (row.source ?? "").trim();
 
   // Anything not explicitly generated is treated as book content. An unknown
   // source is a data problem, but it is not a reason to label a row
   // "generated" — that would overstate what we know about it.
   if (BOOK_SOURCES.has(source) || source === "") {
+    if (reviewedBy) {
+      return {
+        origin: "book",
+        humanChecked: true,
+        aiCheckedOnly: false,
+        viaFamily: false,
+        short: "Book ✓",
+        label: "From the textbook, signed by a human",
+        detail: `Extracted from the textbook and signed by ${reviewedBy}.`,
+        tone: "confirmed",
+      };
+    }
     return {
       origin: "book",
-      humanChecked: true,
+      humanChecked: false,
+      aiCheckedOnly: Boolean(aiCheckedBy),
       viaFamily: false,
-      short: "Book",
-      label: "From the textbook",
-      detail:
-        "Extracted from the ministry textbook and reviewed through the normal gate.",
-      tone: "neutral",
+      short: aiCheckedBy ? "Book · AI-checked" : "Book",
+      label: aiCheckedBy
+        ? "From the textbook, AI-checked, awaiting human"
+        : "From the textbook, awaiting a human",
+      detail: aiCheckedBy
+        ? `Extracted from the textbook; ${aiCheckedBy} passed it. No human has signed it yet.`
+        : "Extracted from the textbook. No human has signed it yet.",
+      tone: aiCheckedBy ? "attention" : "neutral",
     };
   }
 
@@ -97,6 +128,7 @@ export function questionProvenance(row: {
     return {
       origin: "generated",
       humanChecked: true,
+      aiCheckedOnly: false,
       viaFamily,
       short: viaFamily ? "Generated · family ✓" : "Generated ✓",
       label: viaFamily
@@ -109,9 +141,23 @@ export function questionProvenance(row: {
     };
   }
 
+  if (aiCheckedBy) {
+    return {
+      origin: "generated",
+      humanChecked: false,
+      aiCheckedOnly: true,
+      viaFamily: false,
+      short: "Generated · AI-checked",
+      label: "Generated, AI-checked, awaiting human",
+      detail: `Machine-authored; ${aiCheckedBy} passed it. No human has read this item yet.`,
+      tone: "attention",
+    };
+  }
+
   return {
     origin: "generated",
     humanChecked: false,
+    aiCheckedOnly: false,
     viaFamily: false,
     short: "Generated · unchecked",
     label: "Generated, not yet checked",
@@ -124,6 +170,8 @@ export function questionProvenance(row: {
 /** Aggregate counts for an operator screen — the shape of the FR-1108 answer. */
 export type ProvenanceTally = {
   book: number;
+  /** book items a human signed (answer 33); the rest of `book` awaits a human */
+  bookHumanChecked: number;
   /** read directly by a named human */
   generatedChecked: number;
   /** validated through a sibling of the same template family */
@@ -133,10 +181,17 @@ export type ProvenanceTally = {
 };
 
 export function tallyProvenance(
-  rows: { source: string | null; reviewedBy?: string | null; reviewed_by?: string | null }[]
+  rows: {
+    source: string | null;
+    reviewedBy?: string | null;
+    reviewed_by?: string | null;
+    aiCheckedBy?: string | null;
+    ai_checked_by?: string | null;
+  }[]
 ): ProvenanceTally {
   const tally: ProvenanceTally = {
     book: 0,
+    bookHumanChecked: 0,
     generatedChecked: 0,
     generatedFamilyChecked: 0,
     generatedUnchecked: 0,
@@ -144,7 +199,10 @@ export function tallyProvenance(
   };
   for (const row of rows) {
     const v = questionProvenance(row);
-    if (v.origin === "book") tally.book += 1;
+    if (v.origin === "book") {
+      tally.book += 1;
+      if (v.humanChecked) tally.bookHumanChecked += 1;
+    }
     else if (v.viaFamily) tally.generatedFamilyChecked += 1;
     else if (v.humanChecked) tally.generatedChecked += 1;
     else tally.generatedUnchecked += 1;

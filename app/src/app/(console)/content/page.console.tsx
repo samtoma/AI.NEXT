@@ -155,7 +155,7 @@ async function ContentAdminPage({
             <Tile
               n={view.live.book}
               k="From the book · live"
-              note="Extracted and gated normally"
+              note={`${view.live.bookHumanChecked} signed by a human; the rest AI-checked or awaiting one`}
             />
             <Tile
               n={view.live.generatedUnchecked}
@@ -234,9 +234,14 @@ async function ContentAdminPage({
                   )}
                   <td className="py-2.5 pr-3">
                     <ProvenanceBadge question={r} size="md" />
-                    {r.reviewedBy && (
+                    {(r.reviewedBy ?? r.aiCheckedBy) && (
                       <span className="mt-1 block font-mono text-[10px] text-ink-faint">
-                        {r.reviewedBy}
+                        {r.reviewedBy ?? r.aiCheckedBy}
+                      </span>
+                    )}
+                    {r.holdReason && (
+                      <span className="mt-1 block font-mono text-[10px] text-ink-faint">
+                        held: {r.holdReason.replace(/_/g, " ")}
                       </span>
                     )}
                   </td>
