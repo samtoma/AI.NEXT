@@ -265,6 +265,95 @@ class S1ByRef(unittest.TestCase):
                              self.ao.egyptian_vocabulary())
 
 
+@unittest.skipUnless(NODE, "node is needed to run workflow scripts through the stub runtime")
+class S1PriorObjectivesByRef(unittest.TestCase):
+    """Backlog 68 (the full-book fan-out): a late chapter's earlier objectives are shards, not args.
+    prior.txt is the linker's list and prior/<tail>.txt one statement for the link checker; the args
+    keep the ids. Splice equality holds for every prompt, a link FROM an earlier chapter included."""
+
+    PRIOR = [{"id": "lo:g10m1s3-1-1", "statement": "Classify a number as rational or irrational", "lesson": "g10m1s3-1",
+              "section": "1.3", "chapter": 1},
+             {"id": "lo:g10m2s2-1-2", "statement": "Solve a linear equation with $x$ on both sides", "lesson": "g10m2s2-1",
+              "section": None, "chapter": 2}]
+
+    @classmethod
+    def setUpClass(cls):
+        import _objectives_fixture as fx
+        import assemble_objectives as ao
+        import book_config
+        from test_objectives import WORKFLOW, good_responses
+        cls.fx, cls.ao, cls.WF = fx, ao, WORKFLOW
+        cls._tmp = tempfile.TemporaryDirectory()
+        cls.tmp = Path(cls._tmp.name)
+        cls.f = fx.build(cls.tmp)
+        cls.book = book_config.load_book(cls.f["book"])
+        manifest = json.loads(cls.f["manifest"].read_text())
+        cls.args = ao.s1_args(cls.book, manifest, ao.load_blocks(cls.f["blocks"]), ao.load_maths(cls.f["maths"]), 8,
+                              prior=cls.PRIOR)
+        cls.compact = ao.s1_args_by_ref(cls.args, cls.tmp / "packets" / "s1-ch08-prior")
+        cls.responses = good_responses(cls.args)
+        link = copy.deepcopy(cls.responses["S1:links:ch08"]["links"][0])
+        link["src"] = "lo:g10m2s2-1-2"                    # a link from an EARLIER chapter's objective
+        cls.responses["S1:links:ch08"]["links"].append(link)
+        cls.responses["S1:linkcheck:ch08"]["checks"].append({"i": 3, "verdict": "CONFIRMED"})
+        cls.inline = fx.run_workflow(WORKFLOW, cls.args, cls.responses, cls.tmp)
+        cls.byref = fx.run_workflow(WORKFLOW, cls.compact, cls.responses, cls.tmp)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._tmp.cleanup()
+
+    def test_prior_statements_are_shards_and_the_args_keep_ids(self):
+        self.assertTrue(self.compact["prior_by_ref"])
+        self.assertEqual(self.compact["prior_objectives"], [{"id": o["id"]} for o in self.PRIOR])
+        text = json.dumps(self.compact, ensure_ascii=False)
+        for o in self.PRIOR:
+            self.assertNotIn(o["statement"], text)
+        d = Path(self.compact["by_ref"]["dir"])
+        self.assertEqual((d / "prior.txt").read_text(),
+                         "  lo:g10m1s3-1-1: Classify a number as rational or irrational (section 1.3)\n"
+                         "  lo:g10m2s2-1-2: Solve a linear equation with $x$ on both sides")
+        self.assertEqual((d / "prior" / "g10m2s2-1-2.txt").read_text(), self.PRIOR[1]["statement"])
+
+    def test_same_result_and_splice_equality_with_a_link_from_an_earlier_chapter(self):
+        self.assertTrue(self.inline["ok"], self.inline["error"])
+        self.assertTrue(self.byref["ok"], self.byref["error"])
+        self.assertEqual(without_ref(self.inline["result"]), without_ref(self.byref["result"]))
+        self.assertEqual(self.byref["result"]["links"]["prior_objectives"], 2)
+        spliced_equals_inline(self, self.inline, self.byref)
+        d = Path(self.compact["by_ref"]["dir"])
+        for c in self.byref["calls"]:
+            names = [Path(p).relative_to(d).as_posix() for p in files_named(c)]
+            kind = c["label"].split(":")[1]
+            if kind == "links":
+                self.assertIn("prior.txt", names)
+            elif kind == "linkcheck":
+                self.assertIn("prior/g10m2s2-1-2.txt", names)
+                self.assertNotIn("prior.txt", names)
+            else:
+                self.assertFalse([n for n in names if n.startswith("prior")], f"{c['label']} reads {names}")
+
+    def test_the_assembler_rechecks_the_prior_shards(self):
+        run = dict(self.byref["result"])
+        self.ao.check_s1_by_ref(run, self.args)                  # the run read this packet's rendering
+        other = dict(self.args, prior_objectives=self.PRIOR[:1])
+        with self.assertRaises(self.ao.StageError):
+            self.ao.check_s1_by_ref(run, other)
+
+    def test_no_prior_writes_no_prior_shard_so_earlier_runs_still_verify(self):
+        texts, _ = self.ao.s1_shards(self.args["chapter"], int(self.args["options"]["pool_batch"]))
+        self.assertFalse([n for n in texts if n.startswith("prior")])
+        plain = self.ao.s1_args_by_ref(dict(self.args, prior_objectives=[]), self.tmp / "packets" / "s1-noprior")
+        self.assertNotIn("prior_by_ref", plain)
+        self.assertEqual(plain["prior_objectives"], [])
+
+    def test_prior_by_ref_without_by_ref_is_refused(self):
+        rep = self.fx.run_workflow(self.WF, dict(self.args, prior_by_ref=True), self.responses, self.tmp)
+        self.assertFalse(rep["ok"])
+        self.assertIn("prior_by_ref needs args.by_ref", rep["error"])
+        self.assertEqual(rep["calls"], [])
+
+
 # ============================================================================ S5
 @unittest.skipUnless(NODE, "node is needed to run workflow scripts through the stub runtime")
 class S5ByRef(unittest.TestCase):
