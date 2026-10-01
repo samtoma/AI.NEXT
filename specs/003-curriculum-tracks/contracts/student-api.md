@@ -26,9 +26,15 @@ awaiting Samuel's confirmation of the note's wording)*. This is catalogue inform
 
 | Case | Result |
 |---|---|
-| `curriculum` missing | `409 { "error": "curriculum_required", "offered": [every known id] }`; the account is not created |
-| `curriculum` present and not a known id | `400 { "error": "invalid_curriculum" }` — same shape as `invalid_grade` |
+| `curriculum` missing | `422 { "error": "curriculum_required", "field": "curriculum", "offered": [every known id] }`; the account is not created |
+| `curriculum` present and not a known id | `422 { "error": "invalid_curriculum", "field": "curriculum" }` — same shape as `invalid_grade` |
 | `curriculum` present and a known id | stored as `chosen`, whether or not FR-4004 says the grade offers it: a curriculum with nothing live for the grade is still a valid, selectable answer |
+
+**Corrected 2026-10-01**: this table said `409` for `curriculum_required` and `400` for
+`invalid_curriculum`. The code (`curriculumRefusal`, `lib/auth/onboarding.ts`) has always answered
+**422** for both, the same family `invalid_grade` already answers in — a bad request (a required
+answer is missing, or the one given is not in the registry), not a conflict with server state. Fixed
+here to match what the route actually returns; no behaviour changed.
 
 **Superseded by answer 36** (kept for the record): the three rows that made the field optional and
 silently stored `implied` when the grade offered fewer than two curricula — a known curriculum the grade
@@ -67,8 +73,8 @@ FR-4204).
 | Case | Result |
 |---|---|
 | not signed in | `401` |
-| grade invalid or curriculum unknown | `400 invalid_grade` / `invalid_curriculum` |
-| curriculum missing | `409 curriculum_required` *(changed 2026-10-01, answer 36 — no longer conditioned on whether the grade offers it)* |
+| grade invalid or curriculum unknown | `422 invalid_grade` / `invalid_curriculum` *(corrected 2026-10-01: both are a bad request, not a conflict — see the note above `POST /api/auth/signup`'s table)* |
+| curriculum missing | `422 curriculum_required` *(changed 2026-10-01, answer 36 — no longer conditioned on whether the grade offers it; corrected the same day from the `409` this row used to say)* |
 | valid | calls `complete_student_onboarding(grade, curriculum)`, then `204`; the next request sees `onboardingPending: false` |
 | **already completed** (the function raises) | **`409 { "error": "onboarding_already_completed" }`** — never a silent `204` (FR-4014, privacy review F10) |
 
