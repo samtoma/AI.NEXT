@@ -6,6 +6,8 @@
         [--bundle seed/generated/<book>/generated-questions.json] \\
         [--bundle seed/generated/<book>/widget-questions.json] [--check]
 
+    uv run assemble_misconceptions.py <final run> --book <book> --out <catalogue> --catalogue-only   # pass 1 (below)
+
     uv run assemble_misconceptions.py --validate seed/generated/misconceptions.json [--book prep3-math-en]
 
 INPUT: the return value of `runbook/misconceptions.workflow.js` with `stage: "final"`, saved by
@@ -36,6 +38,18 @@ WHAT IT GUARANTEES, and refuses to write otherwise:
     `misconceptions` list is rewritten to the verified entries it references, so
     `load_generated_questions.py` never creates an unverified row.
   * Any problem means NOTHING is written: not the catalogue, not a bundle.
+
+TWO PASSES when S5 final refused an S6/S7 attachment of an entry it CONFIRMED (the Chapter 1 deadlock). The
+bundles are generated FROM this catalogue (`generate_questions.py --catalogue`, `generate_widget_questions.py`
+against the loaded catalogue), so they cannot exist when it is first assembled, yet the refusal above needs a
+bundle to strip the attachment from. Pass 1, `--catalogue-only`, writes the catalogue and no bundle (it takes
+no --bundle): every rule on the entries still refuses, and the attachments the verifier refused are printed as
+DEFERRED. Pass 2, the same command with each --bundle, strips them — a generated option by its family and the
+error it was tagged with (or its exact text), a widget predicate by its template and name (both read from the
+attachment's `ref`, `<family>#<error or predicate>`) — and refuses, writing nothing, if any is not carried by a
+bundle it was given. Without --catalogue-only the command is as strict as before: a refused attachment no
+--bundle carries refuses. Pass 1 skips nothing a bundle could still carry out of the database: load
+(load_misconceptions.py) only after pass 1, but load the BUNDLES only after pass 2.
 
 `--s5-args OUT --stage draft|final` BUILDS the workflow's args from what the line has already
 made, so no stage is hand-stitched: the objectives and book questions of the assembled bundles
@@ -357,8 +371,17 @@ def to_loader_shape(e: dict) -> dict:
 
 
 # ------------------------------------------------------------------ S6/S7 bundles
+def _split_ref(ref: str | None) -> tuple[str | None, str | None]:
+    """An S5 attachment's `ref` as the two generators write it: S6 `<family>#<tagged error or untagged>`, S7
+    `<template>#<predicate name>` — (family, the part after the `#`). The fixtures' older bare `<family>` gives
+    (family, None). Matching the whole string against a bundle's `family` never matched anything real."""
+    fam, sep, tail = (ref or "").partition("#")
+    return (fam or None), ((tail or None) if sep else None)
+
+
 def _in_family(q: dict, ref: str | None) -> bool:
-    return bool(ref) and (q.get("family") == ref or ref in (q.get("source_note") or ""))
+    fam, _ = _split_ref(ref)
+    return bool(fam) and (q.get("family") == fam or fam in (q.get("source_note") or ""))
 
 
 def prerequisites(bundle_paths: list[Path]) -> dict[str, set[str]]:
@@ -424,9 +447,14 @@ def reconcile_bundle(bundle: dict, entries: dict[str, dict], alias_of: dict[str,
             ut = u.get("tagged")
             if (ut if ut in entries else alias_of.get(ut or "")) != target:
                 continue
-            if predicate is not None and u.get("origin") == "S7" and u.get("text") == predicate:
-                applied.add(i)
-                return True
+            if predicate is not None and u.get("origin") == "S7":
+                # real S7 records: ref = `<template>#<predicate name>`, `text` is the predicate's MEANING (the
+                # contract's sentence), so the name is matched through the ref and the family it names; the
+                # fixtures' older records carry the name itself as `text`
+                _, name = _split_ref(u.get("ref"))
+                if (name is not None and name == predicate and _in_family(q, u.get("ref"))) or u.get("text") == predicate:
+                    applied.add(i)
+                    return True
             if text is not None and u.get("origin") == "S6" and (_in_family(q, u.get("ref")) or u.get("text") == text):
                 applied.add(i)
                 return True
@@ -732,6 +760,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--graph", type=Path, action="append", default=[],
                     help="a SeedBundle of the book, for the prerequisite edges a widget's diagnostic "
                          "may lean on (FR-1215); repeatable")
+    ap.add_argument("--catalogue-only", action="store_true",
+                    help="the FIRST pass, before any S6/S7 bundle exists (they are generated from this catalogue): "
+                         "write the catalogue only. Every rule on the entries still refuses; the S6/S7 attachments the "
+                         "verifier judged not to encode a confirmed entry are listed as DEFERRED, to be stripped by the "
+                         "bundle pass (the same run with --bundle), which refuses if it cannot. Takes no --bundle")
     ap.add_argument("--check", action="store_true", help="validate and report; write nothing")
     ap.add_argument("--validate", type=Path, help="validate an existing catalogue file and exit")
     ap.add_argument("--s5-args", type=Path, help="write misconceptions.workflow.js args here and exit")
@@ -798,6 +831,9 @@ def main(argv: list[str] | None = None) -> int:
     if not a.runs or not a.book or (not a.out and not a.check):
         ap.error("pass run files, --book and --out (or --check)")
 
+    if a.catalogue_only and a.bundle:
+        ap.error("--catalogue-only is the pass BEFORE the bundles exist; the bundle pass is this command with "
+                 "--bundle and without --catalogue-only")
     catalogue, dropped, unfit, problems = assemble(a.runs, a.book)
     entries = {m["id"]: m for m in catalogue["misconceptions"]}
     alias_of = {al: m["id"] for m in catalogue["misconceptions"] for al in m["aliases"]}
@@ -811,13 +847,19 @@ def main(argv: list[str] | None = None) -> int:
         reconciled.append((bp, new))
         for line in lines:
             print(f"  {bp.name}: {line}")
+    deferred = []
     for i, u in enumerate(unfit):
-        if i not in applied:
-            problems.append(
-                f"{u['lo']}: {u['origin']} {u.get('ref')} {u.get('text')!r} was judged not to encode "
-                f"{u.get('tagged')} ({u.get('reason')}), and no bundle passed with --bundle carries it. Remove "
-                f"the tag at its {'family spec' if u['origin'] == 'S6' else 'widget template'} and "
-                f"re-instantiate, or pass the bundle.")
+        if i in applied:
+            continue
+        if a.catalogue_only:
+            deferred.append(u)       # no bundle exists yet: the bundle pass strips it or refuses (below)
+            continue
+        problems.append(
+            f"{u['lo']}: {u['origin']} {u.get('ref')} {u.get('text')!r} was judged not to encode "
+            f"{u.get('tagged')} ({u.get('reason')}), and no bundle passed with --bundle carries it. Pass the "
+            f"bundle that carries it (the bundles are generated from this catalogue, so the first pass is "
+            f"--catalogue-only), or remove the tag at its "
+            f"{'family spec' if u['origin'] == 'S6' else 'widget template'} and re-instantiate.")
 
     by_kind = Counter(m["kind"] for m in catalogue["misconceptions"])
     n_lo = len({m["lo_id"] for m in entries.values()})
@@ -826,6 +868,9 @@ def main(argv: list[str] | None = None) -> int:
           f"{len(dropped)} dropped")
     for d in dropped:
         print(f"  dropped {d.get('id')} ({d.get('verdict')}): {d.get('reason')}")
+    for u in deferred:
+        print(f"  deferred to the bundle pass: {u['lo']} {u['origin']} {u.get('ref')} — judged not to encode "
+              f"{u.get('tagged')}")
     if problems:
         for p in problems:
             print(f"  x {p}", file=sys.stderr)
@@ -838,7 +883,10 @@ def main(argv: list[str] | None = None) -> int:
     a.out.write_text(json.dumps(catalogue, indent=2, ensure_ascii=False) + "\n")
     for bp, new in reconciled:
         bp.write_text(json.dumps(new, indent=2, ensure_ascii=False) + "\n")
-    print(f"wrote {a.out}" + (f" and reconciled {len(reconciled)} bundle(s)" if reconciled else ""))
+    print(f"wrote {a.out}" + (f" and reconciled {len(reconciled)} bundle(s)" if reconciled else "")
+          + (f"; CATALOGUE ONLY — {len(deferred)} S6/S7 attachment(s) the verifier refused are still to be stripped "
+             f"by the bundle pass (rerun with --bundle for each bundle written from this catalogue)" if a.catalogue_only
+             else ""))
     return 0
 
 

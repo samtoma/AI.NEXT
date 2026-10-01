@@ -51,13 +51,14 @@ class CoverageTest(unittest.TestCase):
                 "--s5", str(r / "runs" / "misconceptions" / "s5-final.json"), "--out", str(self.out)])
         return code, json.loads(self.out.read_text())
 
-    def run_main(self, chapter: int = 8) -> tuple[int, str, str]:
-        """coverage_report.main() as the pipeline calls it, with its stdout and stderr."""
+    def run_main(self, chapter: int | None = 8) -> tuple[int, str, str]:
+        """coverage_report.main() as the pipeline calls it (the whole book when `chapter` is None), with its
+        stdout and stderr."""
         r = self.root
         out, err = io.StringIO(), io.StringIO()
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = coverage_report.main([
-                "--book", "g10-math", "--chapter", str(chapter), "--manifest", str(r / "manifest.json"),
+                "--book", "g10-math", *(["--chapter", str(chapter)] if chapter else []), "--manifest", str(r / "manifest.json"),
                 "--objectives", str(r / "objectives"), "--runs", str(r / "runs" / "lesson"),
                 "--seed", str(self.seed), "--generated", str(r / "generated"),
                 "--maths", str(r / "maths-summary.json"), "--widget-gaps", str(r / "widget-gaps.json"),
@@ -414,6 +415,40 @@ class CoverageTest(unittest.TestCase):
             for r in rows:
                 r["lo_id"] = r["lo_id"].replace("g10m8", f"g10m{n}")
         self.edit(rel, go)
+
+    def test_a_chapter_audit_reads_its_own_bundles_and_the_whole_book_audit_reads_them_all(self):
+        """The seed directory holds every chapter assembled so far. Chapter 2's audit counted chapters 1–4's questions
+        ("940 book questions") and would have gone RED on a defect in chapter 3's bundle."""
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assemble()
+        _, alone = self.audit(assemble=False)
+        want = {c["id"]: (c["want"], c["got"]) for c in alone["checks"]}
+        b = json.loads((self.seed / "g10m-c08.json").read_text())
+        other = json.loads(json.dumps(b))
+        for l in other["lessons"]:
+            l["slug"] = l["slug"].replace("g10m8", "g10m9")
+        for q in other["questions"]:
+            q["solution_provenance"] = None                    # a defect in the OTHER chapter's bundle
+        other["questions"][0]["stem"] += r" $\frac{1}{$"       # and a KaTeX error in it
+        (self.seed / "g10m-c09.json").write_text(json.dumps(other))
+        code, out, _ = self.run_main(chapter=8)
+        rep = json.loads(self.out.read_text())
+        self.assertEqual((code, rep["status"]), (0, "GREEN"))
+        self.assertEqual({c["id"]: (c["want"], c["got"]) for c in rep["checks"]}, want)
+        self.assertNotIn("seed/g10m-c09.json", rep["inputs"], "so its re-assembly never changes this chapter's report")
+        self.assertIn("with none of chapter(s) [8]'s lessons are not audited here (g10m-c09.json, g10m-course.json)", out)
+        # the whole-book audit reads every bundle: the same defect is RED there
+        code, _, _ = self.run_main(chapter=None)
+        rep = json.loads(self.out.read_text())
+        self.assertEqual(code, 1)
+        self.assertEqual({c["id"] for c in rep["checks"] if c["state"] == "fails"}, {"solution_sources", "katex"})
+        # and a defect in THIS chapter's own bundle is still RED for the chapter
+        p = self.seed / "g10m-c08.json"
+        b["questions"][0]["solution_provenance"] = None
+        p.write_text(json.dumps(b))
+        code, _, _ = self.run_main(chapter=8)
+        self.assertEqual(code, 1)
+        self.assertEqual(self.check(json.loads(self.out.read_text()), "solution_sources")["state"], "fails")
 
     def test_a_chapter_audit_refuses_a_generated_directory_that_holds_no_row_of_the_chapter(self):
         for f, key in (("generated-questions", "questions"), ("widget-questions", "questions"),
