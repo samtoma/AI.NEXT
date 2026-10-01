@@ -51,6 +51,19 @@ class CoverageTest(unittest.TestCase):
                 "--s5", str(r / "runs" / "misconceptions" / "s5-final.json"), "--out", str(self.out)])
         return code, json.loads(self.out.read_text())
 
+    def run_main(self, chapter: int = 8) -> tuple[int, str, str]:
+        """coverage_report.main() as the pipeline calls it, with its stdout and stderr."""
+        r = self.root
+        out, err = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+            code = coverage_report.main([
+                "--book", "g10-math", "--chapter", str(chapter), "--manifest", str(r / "manifest.json"),
+                "--objectives", str(r / "objectives"), "--runs", str(r / "runs" / "lesson"),
+                "--seed", str(self.seed), "--generated", str(r / "generated"),
+                "--maths", str(r / "maths-summary.json"), "--widget-gaps", str(r / "widget-gaps.json"),
+                "--s5", str(r / "runs" / "misconceptions" / "s5-final.json"), "--out", str(self.out)])
+        return code, out.getvalue(), err.getvalue()
+
     def edit(self, rel: str, fn) -> None:
         p = self.root / rel
         d = json.loads(p.read_text())
@@ -264,6 +277,180 @@ class CoverageTest(unittest.TestCase):
         self.edit("widget-gaps.json", lambda d: d.update(gaps=[{**gap, "scope": "chapter", "signed_off": None}]))
         _, rep = self.audit()
         self.assertEqual(self.check(rep, "module_widgets")["state"], "fails", "an unsigned gap covers nothing")
+
+    # ---- which generated items are live: the loader's rule, not the bundle's (2026-10-01, Chapter 2) ------------
+    def strip_status(self, course_id: str | None = "course:us-g10-math-en") -> None:
+        """What the generator writes: no `status` on any row (the loader decides it)."""
+        for f in ("generated-questions.json", "widget-questions.json"):
+            def go(d, course_id=course_id):
+                for q in d["questions"]:
+                    q.pop("status", None)
+                    q.pop("reviewed_by", None)
+                    q.pop("reviewed_at", None)
+                if course_id:
+                    d["course_id"] = course_id
+            self.edit(f"generated/{f}", go)
+
+    def test_a_generated_bundle_with_no_status_is_live_for_a_maths_course(self):
+        """The Chapter 2 finding: the report counted only rows that say `status: live`, and a bundle straight from the
+        generator says nothing, so 11 filled cells read as empty. A maths course loads its whole bundle live (answer
+        37a, review_policy.students_always_full): the report must count what the loader will make live."""
+        _, before = self.audit()
+        want = {c["id"]: (c["want"], c["got"]) for c in before["checks"]}
+        self.strip_status()
+        code, rep = self.audit(assemble=False)
+        self.assertEqual((code, rep["status"]), (0, "GREEN"))
+        self.assertEqual({c["id"]: (c["want"], c["got"]) for c in rep["checks"]}, want)
+        self.assertEqual(rep["widgets_per_chapter"], {"module:g10m-c08": 1}, "a widget row with no status is live too")
+        self.assertIn("by the loader's rule", self.check(rep, "tier_floor")["notes"][0])
+
+    def test_the_same_bundle_is_not_live_for_a_course_that_is_not_maths(self):
+        """Social Studies and Arabic keep their review queue: a row with no status there is awaiting a human."""
+        self.strip_status(course_id="course:prep3-social-ar")
+        _, rep = self.audit()
+        c = self.check(rep, "tier_floor")
+        self.assertEqual(c["state"], "fails")
+        self.assertIn({"scope": "lo:g10m8s3-2-2", "detail": "no live item at tier(s) basic, advanced"}, c["failures"])
+        self.assertEqual(self.check(rep, "module_widgets")["state"], "fails")
+
+    def test_an_exported_row_that_is_held_retired_or_in_review_is_not_live(self):
+        """An export says what each loaded row is, and is believed over the course's default."""
+        def hold(d):
+            by = {q["id"]: q for q in d["questions"]}
+            by["q:g10m8s3-2-2:g001-yesno"]["status"] = "retired"        # a human retired the family
+            by["q:g10m8s3-2-2:g002-find-k"]["hold_reason"] = "katex_error"   # an automatic check holds it
+            by["q:g10m8s3-2-1:g001-perp"]["status"] = "review"
+        self.edit("generated/generated-questions.json", hold)
+        _, rep = self.audit()
+        scopes = {(f["scope"], f["detail"]) for f in self.check(rep, "tier_floor")["failures"]}
+        self.assertEqual(scopes, {("lo:g10m8s3-2-2", "no live item at tier(s) basic, advanced"),
+                                  ("lo:g10m8s3-2-1", "no live item at tier(s) standard")})
+
+    def test_the_one_genuinely_empty_cell_still_fails_when_the_bundle_has_no_status(self):
+        """The fix must not turn the report green: a cell no row fills is named, with or without a status."""
+        self.strip_status()
+        self.edit("generated/generated-questions.json",
+                  lambda d: d.update(questions=[q for q in d["questions"] if q["id"] != "q:g10m8s3-2-2:g001-yesno"]))
+        code, rep = self.audit()
+        c = self.check(rep, "tier_floor")
+        self.assertEqual((code, c["state"]), (1, "fails"))
+        self.assertEqual(c["failures"], [{"scope": "lo:g10m8s3-2-2", "detail": "no live item at tier(s) basic"}])
+
+    def test_a_book_question_a_check_holds_does_not_fill_a_tier_even_when_verified(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assemble()
+        p = self.seed / "g10m-c08.json"
+        b = json.loads(p.read_text())
+        q = next(q for q in b["questions"] if q["lo"] == "lo:g10m8s2-1-1" and q["tier"] == "advanced")
+        self.assertTrue(q["verified"])
+        q["hold_reason"] = "katex_error"
+        p.write_text(json.dumps(b))
+        _, rep = self.audit(assemble=False)
+        self.assertIn({"scope": "lo:g10m8s2-1-1", "detail": "no live item at tier(s) advanced"},
+                      self.check(rep, "tier_floor")["failures"])
+
+    # ---- a chapter's widget gap an auto-pass signed (answer 37c): counted, named, never a person's ----------------
+    AUTO = {"by": "auto-pass G3 (AI recommendation)", "auto": True, "at": "2026-10-01T10:00:00Z", "note": "n"}
+
+    def gap_only(self, signed_off, scope="chapter") -> None:
+        """The chapter has no widget question; its one gap carries `signed_off`."""
+        self.edit("generated/widget-questions.json", lambda d: d.update(questions=[]))
+        gap = {"module": "module:g10m-c08", "lo_id": "lo:g10m8s1-1-1", "need_kind": "vertex-set plotter",
+               "scope": scope, "signed_off": signed_off}
+        self.edit("widget-gaps.json", lambda d: d.update(gaps=[gap]))
+
+    def test_an_auto_passed_chapter_gap_covers_the_chapter_and_the_report_says_so(self):
+        self.gap_only(self.AUTO)
+        code, rep = self.audit()
+        c = self.check(rep, "module_widgets")
+        self.assertEqual((code, rep["status"], c["state"], c["want"], c["got"]), (0, "GREEN", "auto_passed", 1, 1))
+        self.assertEqual(c["failures"], [])
+        self.assertEqual([(a["scope"], a["by"], a["at"]) for a in c["auto_passed"]],
+                         [("module:g10m-c08", "auto-pass G3 (AI recommendation)", "2026-10-01T10:00:00Z")])
+        self.assertIn("not signed by a person", c["auto_passed"][0]["detail"])
+        self.assertEqual(rep["widgets_per_chapter"], {"module:g10m-c08": 0}, "still no widget question")
+        self.assertEqual(rep["summary"], {"checks": 23, "hold": 22, "excepted": 0, "auto_passed": 1, "fail": 0})
+        self.assertEqual(rep["auto_passed"], [{"check": "module_widgets", "scope": "module:g10m-c08",
+                                               "by": "auto-pass G3 (AI recommendation)", "at": "2026-10-01T10:00:00Z"}])
+        text = self.out.read_text()
+        self.audit(assemble=False)
+        self.assertEqual(self.out.read_text(), text, "an auto sign-off keeps the report deterministic")
+
+    def test_a_signoff_that_says_it_is_automatic_is_never_a_persons(self):
+        # the stamp alone, the flag alone: either marks it
+        for so in ({"by": "auto-pass G3 (AI recommendation)", "at": "x"}, {"by": "Samuel", "auto": True, "at": "x"}):
+            self.gap_only(so)
+            _, rep = self.audit()
+            self.assertEqual(self.check(rep, "module_widgets")["state"], "auto_passed", so)
+        # a person's holds outright, with no auto_passed anywhere
+        self.gap_only({"by": "Samuel", "at": "2026-10-01", "note": "kind accepted as missing"})
+        _, rep = self.audit()
+        self.assertEqual(self.check(rep, "module_widgets")["state"], "holds")
+        self.assertNotIn("auto_passed", rep)
+        self.assertNotIn("auto_passed", rep["summary"])
+
+    def test_a_person_beats_an_auto_pass_on_the_same_chapter(self):
+        self.gap_only(self.AUTO)
+        gaps = json.loads((self.root / "widget-gaps.json").read_text())["gaps"]
+        human = dict(gaps[0], lo_id="lo:g10m8s2-1-1", signed_off={"by": "Samuel", "at": "2026-10-01"})
+        self.edit("widget-gaps.json", lambda d: d.update(gaps=gaps + [human]))
+        _, rep = self.audit()
+        self.assertEqual(self.check(rep, "module_widgets")["state"], "holds")
+
+    def test_an_auto_passed_lesson_scope_gap_covers_no_chapter(self):
+        self.gap_only(self.AUTO, scope="lesson")
+        _, rep = self.audit()
+        self.assertEqual(self.check(rep, "module_widgets")["state"], "fails")
+
+    def test_an_unsigned_gap_still_covers_nothing(self):
+        self.gap_only(None)
+        code, rep = self.audit()
+        self.assertEqual((code, self.check(rep, "module_widgets")["state"]), (1, "fails"))
+
+    # ---- a --chapter audit refuses another chapter's generated directory (the Chapter 2 s5_catalogue false alarm) ------
+    def to_chapter(self, rel: str, n: int, key: str = "questions", only_first: bool = False) -> None:
+        def go(d):
+            rows = d[key][:1] if only_first else d[key]
+            for r in rows:
+                r["lo_id"] = r["lo_id"].replace("g10m8", f"g10m{n}")
+        self.edit(rel, go)
+
+    def test_a_chapter_audit_refuses_a_generated_directory_that_holds_no_row_of_the_chapter(self):
+        for f, key in (("generated-questions", "questions"), ("widget-questions", "questions"),
+                       ("misconceptions", "misconceptions")):
+            self.to_chapter(f"generated/{f}.json", 9, key)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assemble()
+        code, out, err = self.run_main()
+        self.assertEqual(code, 2)
+        self.assertFalse(self.out.exists(), "a refused audit writes no report")
+        self.assertEqual(err.count("REFUSING"), 3)
+        self.assertIn("another chapter's", err)
+        self.assertIn("chapter(s) [9] and none of chapter(s) [8]", err)
+        self.assertIn("--generated seed/generated/<book>/chNN", err)
+
+    def test_a_directory_holding_the_chapter_and_others_is_audited_with_a_warning(self):
+        def add_other(d):
+            d["questions"].append({**d["questions"][0], "id": "q:g10m9s1-1-1:x", "lo_id": "lo:g10m9s1-1-1"})
+        self.edit("generated/generated-questions.json", add_other)
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assemble()
+        code, out, err = self.run_main()
+        self.assertEqual((code, err), (0, ""))
+        rep = json.loads(self.out.read_text())
+        self.assertEqual(len(rep["warnings"]), 1)
+        self.assertIn("also holds rows of chapter(s) [9]", rep["warnings"][0])
+        self.assertIn("! generated-questions.json also holds", out)
+
+    def test_an_empty_generated_bundle_is_not_another_chapters(self):
+        """A chapter whose S6 wrote no family has an empty bundle: nothing foreign was read."""
+        self.edit("generated/generated-questions.json", lambda d: d.update(questions=[]))
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assemble()
+        code, _, err = self.run_main()
+        self.assertNotEqual(code, 2)
+        self.assertEqual(err, "")
+        self.assertNotIn("warnings", json.loads(self.out.read_text()))
 
     def test_maths_images_are_audited_for_the_chapter_and_count_the_third_reading(self):
         def queue_two(d):

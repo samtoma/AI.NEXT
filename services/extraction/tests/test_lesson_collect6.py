@@ -672,9 +672,10 @@ class ListsFromSentences(TypedItem, unittest.TestCase):
         for key in ("-1; \\frac{1}{2}", "1; \\frac{1}{3}", "-1; 3"):
             bad = self.typed(key, None, final=sol, solution=[sol], raw_final=True)
             self.assertFalse(self.reads(bad), key)
-        # a bare value in a segment of its own is not an assignment: nothing is guessed
-        bare = "The solutions are $x=-1$ or $\\frac{1}{3}$ ."
-        self.assertFalse(self.reads(self.typed("-1; \\frac{1}{3}", None, final=bare, solution=[bare], raw_final=True)))
+        # a bare value after "or" is the same list ("x=-1 or 1/3"), and a different bare value is not
+        for printed_final, ok_ in (("The solutions are $x=-1$ or $\\frac{1}{3}$ .", True), ("The solutions are $x=-1$ or $\\frac{1}{2}$ .", False)):
+            y = self.typed("-1; \\frac{1}{3}", None, final=printed_final, solution=[printed_final], raw_final=True)
+            self.assertEqual(self.reads(y), ok_, printed_final)
 
     def test_plus_or_minus_is_two_values_and_one_value_is_not_two(self):
         cases = [
@@ -693,7 +694,7 @@ class ListsFromSentences(TypedItem, unittest.TestCase):
         self.assertFalse(self.reads(self.typed("8", "b = ±8")))
         self.assertFalse(self.reads(self.typed("8", "b = ±8", kind="expression", variables=("b",))))
         # the same four values in another order, with one label, are a set
-        self.assertTrue(self.reads(self.typed("2; -3; 3; -2", "b = ±2 or b = ±3")) is False or True)
+        self.assertTrue(self.reads(self.typed("2; -3; 3; -2", "b = ±2 or b = ±3")))
 
     def test_a_list_of_values_typed_surd_is_typed_values_and_the_apps_marker_reads_it(self):
         x = self.typed("\\sqrt{18}; -\\sqrt{18}", "x = √ 18 or x = − √ 18", kind="surd", variables=("x",))

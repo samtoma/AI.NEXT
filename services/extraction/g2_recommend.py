@@ -449,6 +449,55 @@ def identity_preview(entries: list[dict], check=run_identity_check) -> dict:
     return out
 
 
+def _final_piece(src) -> str | None:
+    """The expression a piece of the book's own text ends on: the last row of an aligned working, the right-hand side of its last "="."""
+    t = str(src or "")
+    if not t.strip():
+        return None
+    t = re.sub(r"\\(?:begin|end)\{(?:align\*?|aligned|array\{[^}]*\})\}", "", t).replace("$", "")
+    t = t.split("\\\\")[-1] if "\\\\" in t else t
+    t = t.replace("&", "")
+    t = re.sub(r"\\q?quad.*$", "", t)
+    t = t.rsplit("=", 1)[-1] if "=" in t else t
+    t = re.sub(r"[\s.]+$", "", t).strip()
+    return t or None
+
+
+def book_candidates(item: dict, quote: str | None) -> list[str]:
+    """Where the book states its answer, as expressions the app's marker may read: the EPUB's final answer, the quote the agent grounded
+    the key in, and the last line of the book's working. Prose is harmless: the marker cannot read it and says nothing."""
+    out: list[str] = []
+    for src in (item.get("epub_final_answer"), quote, (item.get("solution") or [None])[-1]):
+        p = _final_piece(src)
+        if p and p not in out:
+            out.append(p)
+    return out
+
+
+def agreement_rows(key_to_after: dict[str, dict], quotes: dict[str, str | None]) -> list[dict]:
+    rows = []
+    for key, a in key_to_after.items():
+        spec = None
+        if a.get("answer_type") == "expression" and isinstance(a.get("marker"), dict) and a["marker"].get("kind") == "expression":
+            spec = {"kind": "expression", "key": unwrap_math_delimiters(a["marker"].get("key")), "form": None, "tolerance": None}
+        elif a.get("answer_type") == "numeric" and a.get("answer") and _as_number(a["answer"]):
+            spec = {"kind": "expression", "key": _norm_number(a["answer"]), "form": None, "tolerance": None}
+        if not spec:
+            continue
+        for i, c in enumerate(book_candidates(a, quotes.get(key))):
+            rows.append({"id": f"{key}#{i}", "expr": c, "marker": {**spec, "variables": sorted(set(_letters(c)) | set(_letters(spec["key"])))}})
+    return rows
+
+
+def agreement_of(results: dict[str, str], key: str) -> str | None:
+    """'equal' when the marker finds the key equal to ANY place the book states its answer; 'different' when it read at least one and
+    every one it read differs; None when it read none (prose, a sentence: no signal)."""
+    mine = [v for k, v in results.items() if k.rsplit("#", 1)[0] == key and v in ("equal", "different")]
+    if not mine:
+        return None
+    return "equal" if "equal" in mine else "different"
+
+
 # ============================================================================ the policy
 def _clip(s, n) -> str:
     s = re.sub(r"\s+", " ", str(s or "")).strip()
@@ -471,7 +520,8 @@ def _entry(verdict: str, klass: str, conf: str, note: str, *, why_low: str | Non
     return e
 
 
-def decide(entry: dict, rec: dict | None, ver: dict | None, marker_why: str | None = None) -> tuple[dict | None, dict]:
+def decide(entry: dict, rec: dict | None, ver: dict | None, marker_why: str | None = None, identity: str | None = None,
+           agreement: str | None = None) -> tuple[dict | None, dict]:
     """One item's recommended entry (or None: no recommendation) and a log line {outcome, why}. The policy of the module docstring."""
     item, state = entry["item"], entry["state"]
     if not rec:
@@ -529,6 +579,13 @@ def decide(entry: dict, rec: dict | None, ver: dict | None, marker_why: str | No
             return down(f"the re-typed key {_clip(k, 80)!r} is not the quoted book answer re-typed", NOT_GROUNDED)
     if marker_why:
         return down(marker_why, "marker cannot check")
+    if identity == "different":
+        return down("the app's own marker finds the key NOT equal to the expression the stem asks to transform (a book error, or a stem "
+                    "the extraction damaged) — the independent derivations did not catch it", UNCONFIRMED)
+    if agreement == "different":
+        return down("the app's own marker finds the typed key NOT equal to the answer the book states (its EPUB answer, the quoted span, "
+                    "the last line of its working): a key the typing agent corrected is not the book's, and correcting a book's answer is "
+                    "Samuel's to approve", NOT_GROUNDED)
     verified = None
     if not teaching:
         if not ver:
@@ -538,7 +595,8 @@ def decide(entry: dict, rec: dict | None, ver: dict | None, marker_why: str | No
                    + (", and another answer is also correct" if ver.get("other_correct_answers") else "")
                    + f" (its own answer: {_clip(ver.get('own_answer'), 120)}; {_clip(ver.get('note'), 200)})")
             return down(why, UNCONFIRMED)
-        verified = {"by": "g2rec-v1 independent verifier", "own_answer": _clip(ver.get("own_answer"), 200), "verdict": "confirmed"}
+        verified = {"by": "g2rec-v1 independent verifier", "own_answer": _clip(ver.get("own_answer"), 200), "verdict": "confirmed",
+                    **({"app_marker_identity": identity} if identity else {}), **({"app_marker_book_answer": agreement} if agreement else {})}
     if "stem" in fields and conf != "low":
         conf, why_low = "low", "the stem was repaired from the book's own working: it changes the question's text"
     if teaching and conf != "low":
@@ -548,7 +606,7 @@ def decide(entry: dict, rec: dict | None, ver: dict | None, marker_why: str | No
 
 
 def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None, run_names: dict[str, str] | None = None,
-            marker_fn=run_marker_check, chapter: int | None = None) -> dict:
+            marker_fn=run_marker_check, identity_fn=run_identity_check, chapter: int | None = None) -> dict:
     """The recommendation file from the saved run(s). `prior` is an earlier file for the same chapter: its items for keys these runs
     do not cover are kept (a re-run of the unanswered), these runs' answers win."""
     by_key = {e["key"]: e for e in entries}
@@ -574,11 +632,15 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
             fields = typed_fields(by_key[k]["item"], rec.get("fix"))[0] if rec["verdict"] == "fix" else {}
             afters[k] = {**by_key[k]["item"], **fields}
     markers = marker_fn(marker_rows(afters)) if afters else {}
+    # the app's own marker as a deterministic oracle, twice: is the key equal to the expression the stem asks to transform
+    # ("Simplify: …"), and is it equal to the answer the book states? (no model; g2rec_identity.mjs)
+    ident = identity_fn(identity_rows(afters)) if afters else {}
+    agree = identity_fn(agreement_rows(afters, {k: recs[k].get("book_quote") for k in afters})) if afters else {}
     items: dict[str, dict] = {}
     log: dict[str, dict] = {}
     for e in entries:
         k = e["key"]
-        out, why = decide(e, recs.get(k), vers.get(k), markers.get(k))
+        out, why = decide(e, recs.get(k), vers.get(k), markers.get(k), ident.get(k), agreement_of(agree, k))
         log[k] = why
         if out:
             items[k] = out
@@ -601,6 +663,10 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
         "corrections_proposed": sorted(k for k, v in items.items() if v.get("if_corrected")),
         "off_task": off_task,
         "by_state": dict(Counter(e["state"] for e in entries)),
+        # an agent that excluded an item as a book error where the app's marker finds the key equal to the stem's expression, for a person
+        "excluded_though_the_key_equals_the_stem": sorted(k for k, v in items.items() if v["verdict"] == "exclude" and ident.get(k) == "equal"
+                                                          or (v["verdict"] == "exclude" and k in ident_all_equal)),
+        "app_marker_identity": dict(Counter(ident.values())),
     }
     return {"status": "RECOMMENDATION ONLY — an AI line's, never a review. `auto_pass_gates.py g2 --recommend` reads `items` and signs "
                       f"each verdict `{SIGNER}`; a person's verdict in G2's file is never overwritten.",
