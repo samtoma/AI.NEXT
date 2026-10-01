@@ -112,32 +112,44 @@ name is not in the practice plan's recommendation), T410 (the part label now sho
 — re-verify, then tick). Not built: T429 (the figure-gap inventory). T430 is built differently from what
 was decided (below).
 
-**Open — decisions for Samuel** (one at a time; the orchestrator's list is
-`consistency-review-2026-09-27.md` §B):
-1. **"Load a course" restore** (decision 29): as built it rolls the **whole database** back to a backup,
-   undoing students' progress since then; FR-4210 says restore keeps every student's progress or refuses.
-   Build the bundle replay, or keep it as a "rollback" and amend decision 29, FR-4208/4210 and
-   constitution X?
+**Open — decisions for Samuel** (one at a time; the orchestrator's list was
+`consistency-review-2026-09-27.md` §B; items 1, 3, 5–8, 10 and 11 below are **answered** — Samuel's
+answers 27–37, 2026-09-27/2026-10-01, decisions 48–58 — kept here struck through rather than deleted, so
+the record shows what was asked and what was decided; see `specs/003-curriculum-tracks/decisions.md`):
+1. ~~**"Load a course" restore** (decision 29): as built it rolls the **whole database** back to a
+   backup… Build the bundle replay, or keep it as a "rollback" and amend decision 29, FR-4208/4210 and
+   constitution X?~~ **Answered (decision 48, answer 27): "Build the safe restore."** Built 2026-09-28
+   (T430); the whole-database mode is the separate, clearly named `rollback`.
 2. **The six new widget kinds were built before the gap list existed**; decision 27 and FR-4306 say each
    is built only for chapters the list names. Confirm "built ahead" (T357 stays unticked until then).
-3. **The G10 language line** tells the tutor to "write no Arabic at all … even if the student writes to
-   you in Arabic" — more than decision 30's "no Egyptian-Arabic phrases". Keep or narrow? (backlog 53)
+3. ~~**The G10 language line** tells the tutor to "write no Arabic at all … even if the student writes to
+   you in Arabic" — more than decision 30's "no Egyptian-Arabic phrases". Keep or narrow? (backlog 53)~~
+   **Answered (decision 56, answer 35): KEPT** — read as also answering consistency-review B7 — and
+   widened: the American course now shows no Arabic anywhere, not only in its prompts (T435).
 4. **FR-4410** (prerequisite links): keep it as a requirement, or move it to pipeline policy like the
-   objectives method (decision 12)?
-5. **`AINEXT_COURSE_GATING` code default "off"** (grade ignored when off; production has it on): default
-   "on", or refuse to start without it? (backlog 71/74)
-6. **Misconception tags on "true but less precise" options** can never fire. Refuse such tags, or send
-   the refutation with the re-entry message?
-7. **What "reviewed" means**: 123 Grade 10 questions carry "ai dual-check (pending Samuel)", which the app
-   counts as reviewed, so "unreviewed teaching seen" is undercounted.
-8. **A decimal comma typed by a student** in a numeric question is marked wrong, not returned; change it
-   for Grade 10 only?
+   objectives method (decision 12)? *(Decision 58c, 2026-10-01, amends what FR-4410 requires during the
+   fan-out without answering this question — it is still a requirement, just one whose G1 now auto-passes.)*
+5. ~~**`AINEXT_COURSE_GATING` code default "off"**… default "on", or refuse to start without it?
+   (backlog 71/74)~~ **Answered (decision 49, answer 28): "Refuse to start."** Built
+   (`app/src/lib/env.ts` `resolveCourseGating`); production (already `on`) unchanged.
+6. ~~**Misconception tags on "true but less precise" options** can never fire. Refuse such tags, or send
+   the refutation with the re-entry message?~~ **Answered (decision 53, answer 32): "Remove those tags."**
+   Extends FR-4307/FR-4320; not yet built.
+7. ~~**What "reviewed" means**: 123 Grade 10 questions carry "ai dual-check (pending Samuel)"…~~
+   **Answered (decision 54, answer 33): "Only human stamps count."** Now FR-4506 (answer 37b); an
+   AI-only pass reads "AI-checked, awaiting human", never "reviewed"; not yet built.
+8. ~~**A decimal comma typed by a student** in a numeric question is marked wrong, not returned; change
+   it for Grade 10 only?~~ **Answered (decision 55, answer 34): "Accept it as a decimal."** Read as 7.21
+   when unambiguous; extends FR-4320's notation rule; not yet built.
 9. **Lesson text about the book's notation** ("separated by a semicolon") now contradicts the converted
    notation. Reword or drop?
-10. **A step-level working checker** before G2 (backlog 78; ≈ $70–125 for the book).
-11. **Figure policy for fan-out**: native figure kinds (decision 26) are weeks of work for a far more
-    figure-heavy rest of the book; a minimum hold rule plus figures on question cards, or reopen static
-    images?
+10. **A step-level working checker** before G2 (backlog 78; ≈ $70–125 for the book). **Answered (decision
+    51, answer 30): "Yes, add it."** Not yet built.
+11. ~~**Figure policy for fan-out**: native figure kinds (decision 26) are weeks of work…~~ **Answered
+    twice**: first (decision 50, answer 29) "Native only, wait" — decision 26 stands strictly; then
+    (decision 58d, answer 37d, 2026-10-01) **TEMPORARILY REVERSED for students**: a figure with no native
+    type yet shows as the book's own image until one exists, each one a backlog item "needs native
+    figure" (new FR-4508). Not yet built.
 12. **Smaller items**: Ex8-5:5's detailed review (backlog 75); "draw figures from coordinates" has no
     marked question (tier floor); decision 31's "per topic" was recorded as "per objective" — confirm;
     the Arabic lesson data line names the lesson twice (backlog 52); where #60 (`curve_sketcher_g10`)
@@ -146,6 +158,22 @@ was decided (below).
 13. **Constitution, listed not edited**: its "Target cohort: 10–20 invited pilot students behind
     Cloudflare Access" line contradicts ADR-0019, which lifted the Access bound on noor. A wording fix is
     a constitution change and needs Samuel.
+
+**New, 2026-10-01** (from this pass; see `specs/003-curriculum-tracks/spec.md` → *Open questions for
+Samuel* for the full text):
+14. **The "nothing to study here yet" note's wording** — keep the orchestrator's default copy, change it,
+    or drop the note entirely?
+15. **The `/pipeline` page's static explainer** still shows illustrative Arabic words even when the
+    American course is selected — a gap against decision 56, or an exempt, course-agnostic explainer?
+16. **The sacred-text guard's redaction message is hardcoded Arabic** regardless of a course's
+    `arabicTouches` setting — latent (the American course has no sealed scripture to trigger it), but
+    worth scoping or leaving as is?
+17. **A possible constitution PATCH** making explicit that "reviewed" means a human stamp only, and that
+    an operator may reject one item from the maths exception without reinstating the whole gate —
+    proposed wording only, not decided (spec.md names it; no file is edited).
+18. **Does decision 58c's gate auto-pass also cover G5** (the dry-run/coverage/drift/cost go-or-no-go
+    before production promotion), or only G1–G4 as answer 37c literally says? `tasks.md` T443 assumes
+    G5 stays a human gate until told otherwise.
 
 **Open — gates and chores:**
 - **Samuel — gates G3, G4, G5** for Chapter 8; then G1–G5 for 13 more chapters, which puts him on the

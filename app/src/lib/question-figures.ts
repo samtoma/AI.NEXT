@@ -58,3 +58,29 @@ export function figuresByQuestion(
   }
   return out;
 }
+
+/**
+ * "BOOK PICTURE FOR NOW" (Samuel's answer 37d, 2026-10-01). A figure no native
+ * kind can draw yet is shown as the book's own image — a `visuals` row of kind
+ * `book_image`, spec `{src, alt, stand_in: true, native_kind_needed}` — until
+ * a native figure replaces it. The image is a static file the app itself
+ * serves from `public/book-figures/<book>/` (the pipeline copies it there),
+ * so the only address a spec may name is `/book-figures/<book>/<file>`: never
+ * an external host, never a path that climbs out of the folder. The same rule
+ * as the pipeline's (`services/extraction/schemas.py`, BOOK_IMAGE_SRC_RE).
+ */
+export const BOOK_FIGURE_SRC =
+  /^\/book-figures\/[a-z0-9][a-z0-9-]*\/[A-Za-z0-9_.-]+\.(?:png|jpe?g|gif|svg|webp)$/;
+
+export type BookImage = { src: string; alt: string; nativeKindNeeded: string | null };
+
+/** A book picture a card may show, or null — a bad address or no alt text shows nothing. */
+export function bookImageOf(spec: unknown): BookImage | null {
+  if (!spec || typeof spec !== "object" || Array.isArray(spec)) return null;
+  const s = spec as Record<string, unknown>;
+  const src = typeof s.src === "string" ? s.src : "";
+  const alt = typeof s.alt === "string" ? s.alt.trim() : "";
+  if (!BOOK_FIGURE_SRC.test(src) || src.includes("..") || !alt) return null;
+  const kind = typeof s.native_kind_needed === "string" && s.native_kind_needed.trim() ? s.native_kind_needed : null;
+  return { src, alt, nativeKindNeeded: kind };
+}

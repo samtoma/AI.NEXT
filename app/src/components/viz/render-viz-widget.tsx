@@ -26,6 +26,10 @@ export function renderVizWidget(
   if (name === "viz") {
     const kind = props.kind;
     const spec = props.spec;
+    // The book's picture is a STORED stand-in only (answer 37d): the pipeline
+    // attaches it to one question after checking it does not show that
+    // question's unknown. A composed one would skip that check.
+    if (kind === "book_image") return null;
     if (
       typeof kind === "string" &&
       spec !== null &&
