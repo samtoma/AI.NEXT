@@ -1,0 +1,602 @@
+{
+  "format": "ainext.widget-gaps/1",
+  "book": "g10-math",
+  "course_id": "course:us-g10-math-en",
+  "rule": "FR-4306 / FR-1201: every chapter has at least one widget question, or a gap a human has signed. A new kind is built only after Samuel approves it (decision 11, T356).",
+  "chapters": [
+    {
+      "module": "module:g10m-c01",
+      "label": "Chapter 1 — Algebraic expressions",
+      "status": "covered",
+      "widgets": 19,
+      "kinds": [
+        "area_model",
+        "number_line_marker"
+      ],
+      "objectives_with_widgets": [
+        "lo:g10m1s3-1-1",
+        "lo:g10m1s5-1-3",
+        "lo:g10m1s7-2-1"
+      ],
+      "gaps": 28
+    },
+    {
+      "module": "module:g10m-c02",
+      "label": "Chapter 2 — Exponents",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    },
+    {
+      "module": "module:g10m-c08",
+      "label": "Chapter 8 — Analytical geometry",
+      "status": "gap",
+      "widgets": 0,
+      "kinds": [],
+      "objectives_with_widgets": [],
+      "gaps": 1
+    }
+  ],
+  "uncovered_chapters": [
+    "module:g10m-c02",
+    "module:g10m-c08"
+  ],
+  "proposed_kinds": {
+    "nested_set_placer": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s3-1-1",
+        "lo:g10m1s3-1-2"
+      ],
+      "why": [
+        "venn_builder draws overlapping circles with generic regions and takes a named region to shade, never a number to place. $\\mathbb{N} \\subset \\mathbb{N}_0 \\subset \\mathbb{Z}$ is nesting, so a 3-circle Venn would show regions that cannot hold any number and teach nesting as overlap, and its diagnostics (exclusive-drawn-overlapping and the like) match none of this objective's misconceptions. number_line_marker is integers only within plus or minus 20, so it cannot hold $-\\sqrt{3}$ or $\\dfrac{0}{\\sqrt{2}}$ as cards.",
+        "No kind accepts a number as the thing being placed. venn_builder shades or counts regions, and rational and irrational are disjoint, so two overlapping circles misrepresent them. number_line_marker takes only whole numbers within plus or minus 20, so it cannot mark $\\pi^2$ or $\\sqrt[3]{19}$. Every other kind is geometric or statistical."
+      ]
+    },
+    "repeat_block_marker": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s3-1-3"
+      ],
+      "why": [
+        "No existing kind works on the digits of a decimal or places an overbar or dot. All eighteen are coordinate, geometric, set-selection or numeric-slider instruments. The book's own items are typed notation, which an answer box would only grade as a string. This objective has no recorded misconceptions, so the diagnostics above would need to be authored in the curriculum graph before any widget could map to them."
+      ]
+    },
+    "place_value_fraction_builder": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s3-1-4"
+      ],
+      "why": [
+        "area_model is algebra tiles for $(x+a)(x+b)$ and has nothing to do with place value. ratio_balance finds a whole-number fourth term for a proportion, so using it for $\\dfrac{12}{100} = \\dfrac{3}{x}$ would be simplification in disguise. number_line_marker is integers only. This objective has no recorded misconceptions, so the diagnostics above would need to be authored first."
+      ]
+    },
+    "recurring_subtraction_aligner": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s3-1-5"
+      ],
+      "why": [
+        "No existing kind represents a decimal expansion or the multiply-and-subtract step. area_model and ratio_balance are algebra tiles and a proportion balance, and forcing this process into either would test none of the objective's mathematics. A typed-answer question can only check the final fraction, and cannot show why a multiplier of 10 fails when two digits recur."
+      ]
+    },
+    "decimal_rounder (place-value rounding instrument)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s4-1-1"
+      ],
+      "why": [
+        "number_line_marker is the nearest kind, but it accepts only whole-number targets inside a range of at most 24 wide, so it cannot hold 3.142 or 0.50 on a grid. Using it for rounding to the nearest whole number would not be this objective, which is rounding to 2 and 3 decimal places. Every other kind builds a different mathematical object (coordinates, lines, statistics, tiles). Asking the student to type 3.142 in a box would be an answer box in disguise with no construction, so no template was written."
+      ]
+    },
+    "rounding_propagation (carry-forward precision pipeline)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s4-1-2"
+      ],
+      "why": [
+        "None of the existing kinds has a live calculation whose intermediate precision the student controls. bar_builder, number_line_marker and ratio_balance build a set, a point or a balance, and none of them carries a value through a formula. A numeric answer box would only grade the final number and could not show why rounding early loses accuracy, which is the point of this objective. Forcing a kind here would put a question in front of a student that cannot diagnose either listed misconception."
+      ]
+    },
+    "root_locator": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s5-1-1",
+        "lo:g10m1s5-1-2"
+      ],
+      "why": [
+        "number_line_marker only accepts whole-number targets, so it can mark the two bracketing integers but never the surd's own position. Asking the student to tap two integers (or set an interval with two open ends) is an answer box in disguise: the mathematics of this objective is locating the surd by its square, and nothing on the existing line lets her construct that. A second, independent blocker: this lesson records no misconceptions for this objective, and a template needs at least one diagnostic drawn from the objective's own list, so none could be filed even for a fit.",
+        "The available instruments snap to whole numbers or take freehand curves, and none shows the square of the student's chosen value changing as she refines. A numeric box would be an answer box in disguise. This lesson also lists no misconceptions for this objective, so a template could not carry a valid diagnostic until that list is filled in."
+      ]
+    },
+    "order_sorter": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s5-1-3"
+      ],
+      "why": [
+        "Ranking a list is the actual task of this objective and no existing kind orders a set of cards. number_line_marker places whole numbers only, so the one template filed above reaches the sign misconception by a side door (integers between negative surds) and never touches the recurring-decimal misconception, which has no predicate anywhere in the contract. A sorter is the instrument that would let both recorded misconceptions fire on the construction they come from."
+      ]
+    },
+    "polynomial_grid": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s6-1-1",
+        "lo:g10m1s6-1-3"
+      ],
+      "why": [
+        "area_model only builds (x+a)(x+b) from one x^2 tile of coefficient 1, with |a|,|b| <= 4. The only monomial-times-bracket it reaches is x(x+4), as b = 0, and none of the book's questions (2y(y+4), 9(8y^2-2y+3), 5f^2(3f+5)) has that form. The other kinds take numbers or geometry, not algebraic terms. This objective also has an empty misconception list in this lesson's data, so no template could name a diagnosis (FR-1215) even with a kind that fitted.",
+        "area_model cannot hold this: it has one x^2 tile and two x runs, so it only builds binomial times binomial with an x^2 coefficient of 1, never six partial products or terms with letters like ab. product_builder was considered, because skipping products is exactly a missing pair of the product of two sets, but it takes plain numbers. Reduced to coefficients it loses the letters, the powers and the signs, which are where three of the four misconceptions arise, and the answer becomes a pairs-picking exercise rather than an expansion. Using it would be a forced fit."
+      ]
+    },
+    "factor_extractor (new kind)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-1-1"
+      ],
+      "why": [
+        "No existing kind builds or rewrites an algebraic expression. area_model is tied to one anchored x^2 tile with unit coefficients, and none of the others touch symbolic terms, so any fit would be an answer box in disguise. The lesson file also lists no misconceptions for this objective (the list is empty), so even with a new kind the diagnostic ids would have to be catalogued first."
+      ]
+    },
+    "bracket_switcher (new kind)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-1-2"
+      ],
+      "why": [
+        "The central step, turning a bracket around and changing the sign in front of it, is an operation on algebraic terms. No existing kind carries an expression, a bracket or a sign. number_line_marker's sign-flipped predicate concerns solution sets, not factors, and area_model cannot hold a binomial times a non-unit coefficient. This is the one objective in the lesson with an own misconception, so a purpose-built construction would diagnose it directly."
+      ]
+    },
+    "none new: area_model (factor, a=3, b=-3) fits but needs an own misconception for this objective": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-1-3"
+      ],
+      "why": [
+        "The objective's misconception list holds only four entries, none of them its own. Three are about reading the x term when expanding (x + k)(x - 4), from objective s6-1-2. The fourth is the sign-switch error from s7-1-2. For this spec area_model can only report off-target, constant-sign or not-a-rectangle. Mapping those to any of the four would be a forced fit, because none of them describes the errors this construction reveals. A template needs at least one diagnostic from the objective's own list. A misconception such as 'reads a^2 - b^2 as (a - b)^2', or 'thinks a^2 + b^2 also factorises', would have to be catalogued first. Then the template can be written."
+      ]
+    },
+    "grouping_grid (new kind: a generic 2x2 factor grid)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-1-4"
+      ],
+      "why": [
+        "area_model is the nearest existing kind, since x^2 + ax + bx + ab is itself a 2x2 grid. But it only builds x^2 + (a + b)x + ab with unit coefficients and one variable, and it grades the finished rectangle, not the pairing. The anchors here (7x^2 - 14x + 7xy - 14y, 16v + 24h + 2j^5 v + 3j^5 h) have non-unit coefficients and two variables, so using it would be a stretch."
+      ]
+    },
+    "area_model with a leading coefficient: algebra tiles for ax^2+bx+c, a not 1": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-2-2"
+      ],
+      "why": [
+        "area_model is monic by construction: one $x^2$ tile, a target of the form $(x+a)(x+b)$, and more than one $x^2$ tile is graded not-a-rectangle. A trinomial with a not 1 therefore cannot be asked, and the checked ranges (|a|, |b| at most 4) cannot reach the anchors anyway. No other existing kind constructs a factorisation. Using area_model here would mean asking monic questions under an a-not-1 objective, which is a forced fit."
+      ]
+    },
+    "common-factor tile grouping, an extension of the tile kind above": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-2-3"
+      ],
+      "why": [
+        "No existing kind holds coefficients or has a grouping step. area_model has one $x^2$ tile and no multiplier, and nothing else builds an algebraic expression. The objective is about order of operations (common factor first, then the trinomial), which only a two-stage construction shows."
+      ]
+    },
+    "area_model with two-variable tiles ($x^2$, $xy$, $y^2$), covering only part of this objective": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-2-4"
+      ],
+      "why": [
+        "area_model offers only one variable and only $x^2$, $x$ and unit tiles. No existing kind builds a two-variable product. Even the extended kind would cover just one strand of this objective, so it should be added only with the kind for the previous objective."
+      ]
+    },
+    "cube_factoriser": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-3-1",
+        "lo:g10m1s7-3-3"
+      ],
+      "why": [
+        "No existing kind builds a cubic identity. area_model is the two-dimensional analogue (an x^2 tile, x tiles and unit tiles tiling a rectangle for (x + a)(x + b)); it has no third dimension and no x^2, xy, y^2 trinomial, so using it here would be a forced fit. solid_scaler scales one solid and reads V0*k^3, which is a different idea from factorising a difference of volumes. number_line_marker could ask the student to mark a cube root, but that is an answer box in disguise and never reaches the factorisation. Note for whoever builds it: this objective's misconception list holds only prerequisite items (mc:g10m1s6-1-2 and mc:g10m1s6-1-3, about the x term of a quadratic and about multiplying brackets). None names the cube-for-root, square-for-trinomial or sign-pattern errors above, so those misconceptions must be authored before any diagnostics can be mapped. The anchor ex1-9-11 (25x^3 + 1) has a non-integer cube root and should be kept out of the widget's targets.",
+        "The objective is exactly the finding of the cube root of each compound term, which is a construction (choose a coefficient and the exponents, then check by cubing). No existing kind has an instrument for building a term from its parts and checking by cubing. polygon_builder, area_model and solid_scaler all work on geometric quantities, not on algebraic terms. The lesson file lists no misconceptions for this objective, so the diagnostics above need authoring first. Two anchors (ex1-11-29r, with a fraction, and ex1-11-29t, with brackets) also need a common factor taken out first, so the widget would have to share its input rules with the common-factor instrument."
+      ]
+    },
+    "factor_extractor": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s7-3-2",
+        "lo:g10m1s7-3-4"
+      ],
+      "why": [
+        "The skill is a construction on the structure of the expression, and no existing kind supplies that. area_model factorises x^2 + bx + c as a rectangle but offers no way to take a common factor out of a cubic or a quartic. The lesson file has no misconceptions for this objective. This is lower priority than the cube instruments, because the first step of every anchor is a simple common-factor extraction that the ordinary question bank can already practise.",
+        "Recognising a hidden common bracket, including one with reversed signs, and moving it out is a construction on the expression, and no existing kind offers it. None of the sixteen instruments takes algebraic expressions as the thing the student manipulates, apart from area_model, whose quadratic tiles do not extend to brackets. The lesson file lists no misconceptions for this objective. Priority is lower than the cube instruments, and the same remark applies as for -2: the book's own exercises already drill the extraction itself."
+      ]
+    },
+    "fraction_canceller (new kind)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s8-1-1"
+      ],
+      "why": [
+        "No existing kind constructs or manipulates a fraction. area_model (factor mode) was considered and rejected: it builds only the rectangle of a monic trinomial $x^2+(a+b)x+ab$, which is the mathematics of the prerequisite g10m1s7-2-1 and not of this objective; none of the six anchor questions (1a to 1f) is a monic trinomial, since they are common-factor and linear-factor fractions, and the instrument has no way to represent a common factor like $3$ or $2a$ or to express cancelling. Its predicates (missing-cross-term, middle-term-sign, constant-sign) could never refute this objective's own two misconceptions, cancel-terms-not-factors and reversed-factor-sign-lost, which are the heart of the objective. Mapping them onto prerequisite ids would credit this objective's mastery for a different skill, so a template would be a forced fit."
+      ]
+    },
+    "fraction_canceller (new kind, product/quotient mode)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s8-1-2"
+      ],
+      "why": [
+        "No existing kind builds a product or quotient of fractions or the cancelling that this objective is about. area_model could draw the trinomial factorisation inside an anchor (for example $b^2+10b+21$ in ex1-10-2a) but that is only one sub-step and the prerequisite's mathematics, not changing ÷ into × or cancelling across fractions. Note for the lesson data: this objective's own misconception list is empty (every entry is own=false), so diagnoses for a future widget can only use ids borrowed from g10m1s8-1-1 and the prerequisites. A misconception for dividing by a fraction without inverting it, or inverting the wrong one, would need to be added to this objective before a template could name it."
+      ]
+    },
+    "fraction_combiner (new kind)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s8-1-3"
+      ],
+      "why": [
+        "No existing kind represents fractions or a common denominator. area_model, product_builder and ratio_balance all construct something other than a sum of algebraic fractions, and sample_space and venn_builder are for counting. All three of this objective's own misconceptions are errors in a written procedure (a wrong denominator, a numerator left unscaled, a sign change that stops after the first term), so an answer box would see only a wrong final line, and a construction that exposes each step is the one place they can be told apart. A widget forced onto another kind would test nothing of this objective."
+      ]
+    },
+    "number_line_marker (EXISTING kind, points mode; blocked by missing lesson data, not a new kind)": {
+      "modules": [
+        "module:g10m-c01"
+      ],
+      "objectives": [
+        "lo:g10m1s8-1-4"
+      ],
+      "why": [
+        "The lesson file lists lo:g10m1s8-1-4 with an empty anchor_questions list and an empty misconceptions list. A template needs a parent_question_id taken from the objective's anchor questions and at least one diagnostic whose misconception id comes from the objective's own list, so none can be written without inventing ids or borrowing another objective's, which FR-1215 refuses. Samuel (or the data step) needs to add at least one anchor question (for example 'state the restrictions on $x$ for $\\frac{x+1}{(x-3)(x+2)}$') and the three misconceptions above to lo:g10m1s8-1-4. Then the number_line_marker templates can be authored with no new widget kind."
+      ]
+    }
+  },
+  "gaps": [
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s3-1-1",
+      "need_kind": "nested_set_placer",
+      "description": "A nested-set diagram: rings for the natural numbers inside the whole numbers inside the integers inside the rationals inside the reals, with a separate zone outside the rings for non-real numbers and another for undefined expressions. The student drags number cards ($-5$, $0$, $7$, $\\dfrac{0}{\\sqrt{2}}$, $\\sqrt{-9}$, $-\\sqrt{3}$, $\\dfrac{-\\sqrt{7}}{0}$) into the smallest region that holds each one, and any card in a region that does not hold it is refuted live. It would diagnose: 0 placed among the natural numbers, a negative integer placed among the whole numbers, $\\sqrt{-9}$ placed among the reals, $-\\sqrt{15}$ placed in the non-real zone (minus sign outside the root read as inside), $\\dfrac{0}{\\sqrt{2}}$ placed as undefined (zero on top mistaken for a zero denominator), and non-real and undefined swapped between the two outer zones. The two number-line templates cover only the real, non-real and undefined test; placing a number in $\\mathbb{N}$, $\\mathbb{N}_0$ or $\\mathbb{Z}$, which the objective names, is not covered by any widget. No misconception about the N, N0, Z placement is recorded for this objective, so those would need to be authored.",
+      "why": "venn_builder draws overlapping circles with generic regions and takes a named region to shade, never a number to place. $\\mathbb{N} \\subset \\mathbb{N}_0 \\subset \\mathbb{Z}$ is nesting, so a 3-circle Venn would show regions that cannot hold any number and teach nesting as overlap, and its diagnostics (exclusive-drawn-overlapping and the like) match none of this objective's misconceptions. number_line_marker is integers only within plus or minus 20, so it cannot hold $-\\sqrt{3}$ or $\\dfrac{0}{\\sqrt{2}}$ as cards.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s3-1-2",
+      "need_kind": "nested_set_placer",
+      "description": "The same nested-set placer as for the previous objective, with the real numbers split into a rational ring and an irrational zone that do not overlap. The student drags cards ($-\\dfrac{1}{3}$, $\\text{0.651268962154862...}$, $\\pi^2$, $\\pi^4$, $\\sqrt[3]{19}$, $\\pi+3$, $\\sqrt{16}$, $0.\\dot{3}$, $\\dfrac{\\pi}{2}$) into rational (and then natural, whole or integer) or irrational, with a card's decimal and fraction forms available to inspect (does the expansion repeat or stop, or can it be written as a ratio of integers). It would diagnose, in the objective's own misconceptions: a rounded decimal such as $\\pi^2$ placed as rational because it shows digits (any-decimal-is-rational); $\\dfrac{\\pi}{2}$ placed as rational because it has a bar (fraction-bar-means-rational); $0.\\dot{3}$ or $\\dfrac{7}{3}$ placed as irrational because it does not come out neat (rational-must-come-out-neat); and $\\sqrt{16}$ placed as irrational because of the root sign (root-sign-means-irrational), with the second step (which of the rational rings it falls in) catching $-\\dfrac{1}{3}$ taken for an integer.",
+      "why": "No kind accepts a number as the thing being placed. venn_builder shades or counts regions, and rational and irrational are disjoint, so two overlapping circles misrepresent them. number_line_marker takes only whole numbers within plus or minus 20, so it cannot mark $\\pi^2$ or $\\sqrt[3]{19}$. Every other kind is geometric or statistical.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s3-1-3",
+      "need_kind": "repeat_block_marker",
+      "description": "The student sees a long strip of digit tiles for a decimal ($0.11414541454145...$, or the expansion of $\\dfrac{7}{33}$ that the widget computes) and taps the tiles that repeat to put a dot over the first and last digit of the block, or a bar over the whole block. A live read-back expands the student's notation into digits and lays it beside the given strip, so a notation that does not reproduce the decimal is visible at once. Any minimal block that reproduces the digits is accepted, which grades the property and not one position. It would diagnose: a bar that includes the non-repeating start ($0.\\overline{114145}$ for $0.11\\overline{4145}$), a block too short (a single dot on the $4$), a block that is a multiple of the true period, dots on the wrong digits, and a bar over a block that does not actually repeat. For the fraction half of the objective, the widget would run the long division and the student taps where a remainder first repeats, which fixes the block's length.",
+      "why": "No existing kind works on the digits of a decimal or places an overbar or dot. All eighteen are coordinate, geometric, set-selection or numeric-slider instruments. The book's own items are typed notation, which an answer box would only grade as a string. This objective has no recorded misconceptions, so the diagnostics above would need to be authored in the curriculum graph before any widget could map to them.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s3-1-4",
+      "need_kind": "place_value_fraction_builder",
+      "description": "The student enters a terminating decimal on a place-value chart (tenths, hundredths, thousandths, ten-thousandths) and builds the fraction from it in two moves. First, they set the numerator from the digits after the point and the denominator by choosing the power of 10 of the last place used, and the widget shows $0.006$ as $\\dfrac{6}{1000}$ against the chart. Second, they divide top and bottom by a common factor, one step at a time, until no common factor is left, while a number-line marker confirms the value has not moved. It would diagnose: the wrong power of 10 (0.006 as $\\dfrac{6}{100}$, or 0.12 as $\\dfrac{12}{10}$, from counting digits wrongly or misreading the place), leading zeros kept in the numerator, an answer left unsimplified ($\\dfrac{12}{100}$), and a simplification that changes the value.",
+      "why": "area_model is algebra tiles for $(x+a)(x+b)$ and has nothing to do with place value. ratio_balance finds a whole-number fourth term for a proportion, so using it for $\\dfrac{12}{100} = \\dfrac{3}{x}$ would be simplification in disguise. number_line_marker is integers only. This objective has no recorded misconceptions, so the diagnostics above would need to be authored first.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s3-1-5",
+      "need_kind": "recurring_subtraction_aligner",
+      "description": "The student is given $x = 0.6\\dot{3}$ as a digit strip with the repeating digits flagged. They pick a power of 10 with a slider, and the widget stacks $x$ and $10^k x$ aligned at the decimal point so they can see whether the recurring tails coincide; they choose which two lines to subtract (for a non-pure recurring decimal such as $0.6\\dot{3}$, that takes two multipliers, $10x$ and $100x$), the widget shows the difference with the recurring part cancelled or left over, and they finish the equation ($90x = 57$) and simplify. Any pair of multipliers whose tails line up is accepted. It would diagnose the objective's recorded misconception, reading the decimal as if it stopped ($0.\\dot{4}$ as $\\dfrac{4}{10}$), which shows as the student not multiplying at all, plus a multiplier that matches the wrong number of recurring digits (multiplying by 10 when two digits recur, so a stray recurring tail survives the subtraction), counting the non-repeating digits in the multiplier, and subtracting lines whose tails do not align.",
+      "why": "No existing kind represents a decimal expansion or the multiply-and-subtract step. area_model and ratio_balance are algebra tiles and a proportion balance, and forcing this process into either would test none of the objective's mathematics. A typed-answer question can only check the final fraction, and cannot show why a multiplier of 10 fails when two digits recur.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s4-1-1",
+      "need_kind": "decimal_rounder (place-value rounding instrument)",
+      "description": "The student would see a long decimal such as 3.141592654..., 1.618033989... or 0.99999111... as a strip of digits, drag a cut-off marker to the required decimal place (2 or 3), see the next digit lit up, and then choose to leave the kept digit or round it up, carrying over through any 9s. A zoomed number line would show the two neighbouring multiples of 0.01 or 0.001 with the number sitting between them, so the student can see that 'nearer to' is the reason for the rule. Graded on the rounded value and on the steps taken, so it can name each error. Truncating without rounding (3.141 for 3.142). Rounding up when the next digit is below 5. Not carrying when a 9 is rounded up (0.99999 written as 0.910 or 0.100 instead of 1.00). Counting places from the wrong position (3.14 given for 3 decimal places). Dropping the trailing zeros (0.5 or 1 given for 0.50 or 1.00). A second mode could reveal digits as the place count grows, so that the student sees a root such as the square root of 2 keep going while the square root of 4 stops, which targets the two own misconceptions: calling a number rational because its rounded answer stops, and calling every root irrational.",
+      "why": "number_line_marker is the nearest kind, but it accepts only whole-number targets inside a range of at most 24 wide, so it cannot hold 3.142 or 0.50 on a grid. Using it for rounding to the nearest whole number would not be this objective, which is rounding to 2 and 3 decimal places. Every other kind builds a different mathematical object (coordinates, lines, statistics, tiles). Asking the student to type 3.142 in a box would be an answer box in disguise with no construction, so no template was written.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s4-1-2",
+      "need_kind": "rounding_propagation (carry-forward precision pipeline)",
+      "description": "The student would work a chain of calculation as a small pipeline. For example i = 7.4/600, then A = P(1+i)^n with P = 200 000 and n = 96. Or the square of side pi and a right triangle with legs pi, whose areas are added. At the middle value the student sets how many decimal places to keep, using a slider from 0 to 6 or more. The final answer is then recomputed live beside the answer from the unrounded value, with the gap between the two shown. The task is stated by a property: for example, 'keep enough places that A is correct to the nearest rand', so any sufficient choice is accepted. A second mode is a counting problem where the division gives 10.333... and the student picks the rounding rule (nearest, up or down) and sees the resource run short or not. Errors diagnosed. Rounding the middle value to 2 decimal places and trusting the result (i = 0.01 gives A = 519 854.59, while the unrounded value gives 648 768.22, a difference of over R128 000), which is round-early-then-trust-answer. Rounding to the nearest whole number where the answer has to go up (10 workers or vehicles instead of 11), which is round-to-nearest-when-whole-needed.",
+      "why": "None of the existing kinds has a live calculation whose intermediate precision the student controls. bar_builder, number_line_marker and ratio_balance build a set, a point or a balance, and none of them carries a value through a formula. A numeric answer box would only grade the final number and could not show why rounding early loses accuracy, which is the point of this objective. Forcing a kind here would put a question in front of a student that cannot diagnose either listed misconception.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s5-1-1",
+      "need_kind": "root_locator",
+      "description": "A continuous (non-snapping) number line, say 0 to 10, with one draggable marker and a live readout of the marker's value squared (or cubed, when the question is a cube root), with the perfect squares or cubes ticked along the line. The student is asked to put the marker where $x^2 = 5$ (or $x^3 = 10$), then states the two consecutive whole numbers the marker sits between. Graded on the property (the readout is within tolerance of the radicand), so every close-enough position is accepted. Errors it would diagnose: halving instead of rooting (placing $\\sqrt{10}$ at 5); using the squaring readout for a cube root (placing $\\sqrt[3]{5}$ near 2.2 instead of 1.7); rounding to the nearest perfect square instead of bracketing between two (answering 'between 2 and 3' for $\\sqrt{5}$ but marking exactly 2); treating $\\sqrt{10}$ as 3 because $\\sqrt{9} = 3$.",
+      "why": "number_line_marker only accepts whole-number targets, so it can mark the two bracketing integers but never the surd's own position. Asking the student to tap two integers (or set an interval with two open ends) is an answer box in disguise: the mathematics of this objective is locating the surd by its square, and nothing on the existing line lets her construct that. A second, independent blocker: this lesson records no misconceptions for this objective, and a template needs at least one diagnostic drawn from the objective's own list, so none could be filed even for a fit.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s5-1-2",
+      "need_kind": "root_locator",
+      "description": "The same root_locator instrument as the first objective, with a zoom: after bracketing between whole numbers, the student zooms the line to tenths and drags the marker until the squared readout straddles the radicand, for example $3.6^2 = 12.96$ and $3.7^2 = 13.69$ around 14 gives $\\sqrt{14} \\approx 3.7$. The final answer is graded as the nearest tenth, and any marker position that rounds to it is accepted. Errors it would diagnose: truncating instead of rounding to the nearest tenth (3.0 when the true value is 3.16, so 3.1 rather than 3.2); picking the tenth whose square is closest to the radicand by comparing the wrong pair of squares; stopping at the whole-number bracket; reading the decimal part of $\\sqrt{14}$ as the decimal part of 14.",
+      "why": "The available instruments snap to whole numbers or take freehand curves, and none shows the square of the student's chosen value changing as she refines. A numeric box would be an answer box in disguise. This lesson also lists no misconceptions for this objective, so a template could not carry a valid diagnostic until that list is filled in.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s5-1-3",
+      "need_kind": "order_sorter",
+      "description": "The student gets 6 to 10 cards of mixed form (surds, cube roots, fractions, terminating and recurring decimals, multiples and powers of pi, negative surds) and drags them into ascending order on a track, with a live number line that shows each card's position once it is placed; approximations stay hidden until then, so the student has to reason from perfect squares and cubes. Graded on the order (any arrangement consistent with the true values is accepted, and genuinely equal values may swap). Errors it would diagnose: negative surds ordered by size of the number, ignoring the minus sign (-$\\sqrt{8}$ placed after -$\\sqrt{\\frac{9}{4}}$); a recurring decimal tied with or placed before its terminating cousin ($0.\\overline{45}$ against $0.45$); pi approximated as 3 or taken as $\\frac{22}{7}$ and so misplaced against nearby surds; comparing radicands across different root indices (a square root against a cube root of the same radicand); $\\frac{27}{7}$ against $\\sqrt{19}$ by numerator.",
+      "why": "Ranking a list is the actual task of this objective and no existing kind orders a set of cards. number_line_marker places whole numbers only, so the one template filed above reaches the sign misconception by a side door (integers between negative surds) and never touches the recurring-decimal misconception, which has no predicate anywhere in the contract. A sorter is the instrument that would let both recorded misconceptions fire on the construction they come from.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s6-1-1",
+      "need_kind": "polynomial_grid",
+      "description": "A general area-model grid for a monomial times a bracket. The student sets the height of a rectangle to the monomial (for example 2y or 5f^2) and cuts its width into one strip per term of the bracket (y and 4, or 3f and 5). They then enter the partial product in each cell, and the total is read off as the sum of the cells. The grid would diagnose: the monomial applied to only the first term of the bracket (an empty cell), the coefficient multiplied into one term but not the other (2y x 4 written as 4y), the variable dropped from a product with a constant (2y x 4 written as 8), and exponents mishandled (y x y written as 2y, or the coefficient squared along with the letter). It would also catch the monomial multiplied into the second bracket of a longer sum.",
+      "why": "area_model only builds (x+a)(x+b) from one x^2 tile of coefficient 1, with |a|,|b| <= 4. The only monomial-times-bracket it reaches is x(x+4), as b = 0, and none of the book's questions (2y(y+4), 9(8y^2-2y+3), 5f^2(3f+5)) has that form. The other kinds take numbers or geometry, not algebraic terms. This objective also has an empty misconception list in this lesson's data, so no template could name a diagnosis (FR-1215) even with a kind that fitted.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s6-1-3",
+      "need_kind": "polynomial_grid",
+      "description": "The same general grid, with rows for the terms of the first factor (two for a binomial, three for a second trinomial, or a third factor as a second pass) and columns for the terms of the second. The student fills each cell with its partial product, signs included, and then collects like terms into the final polynomial. A leading number outside the brackets, as in 3(a-3b)(a^2+3ab-b^2), would be a separate multiplier that the grid applies once, to the finished product. Errors diagnosed: an empty cell, meaning some of the products were never written (skips-some-products). A cell whose sign is wrong where a negative row or column meets it (loses-a-sign-on-negative-terms). A collected term that merges cells with different letters or powers, such as 4a^2b with 5ab^2 (merges-unlike-terms). The outside number applied to both brackets, so the answer comes out too large (outside-number-into-every-bracket).",
+      "why": "area_model cannot hold this: it has one x^2 tile and two x runs, so it only builds binomial times binomial with an x^2 coefficient of 1, never six partial products or terms with letters like ab. product_builder was considered, because skipping products is exactly a missing pair of the product of two sets, but it takes plain numbers. Reduced to coefficients it loses the letters, the powers and the signs, which are where three of the four misconceptions arise, and the answer becomes a pairs-picking exercise rather than an expansion. Using it would be a forced fit.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-1-1",
+      "need_kind": "factor_extractor (new kind)",
+      "description": "The student sees an expression as a row of term chips, for example 6x^2 + 2x + 10x^3, 2xy^2 + xy^2z + 3xy or 3a^2 + 6a - 18, with an empty factor slot in front of an empty bracket. She builds the factorisation by dragging a coefficient chip and variable-power chips into the factor slot. Each term chip then shows its quotient live and the bracket fills in. Grading is on the property. The factor times the bracket must expand back to the original, checked by evaluating at several points, and the bracket's terms must share no further common factor. Any order of factors is accepted. Predicates it would report: factor-not-highest (took 2 where 4 was available, or x where xy was), factor-not-common (took a factor that divides only some terms, leaving a fractional bracket), dropped-one (the term equal to the factor left a 1 behind and the student left it out, giving 2x(3x + 5x^2) for 2x(3x + 1 + 5x^2)), and lowest-power-wrong (took x^3 instead of x).",
+      "why": "No existing kind builds or rewrites an algebraic expression. area_model is tied to one anchored x^2 tile with unit coefficients, and none of the others touch symbolic terms, so any fit would be an answer box in disguise. The lesson file also lists no misconceptions for this objective (the list is empty), so even with a new kind the diagnostic ids would have to be catalogued first.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-1-2",
+      "need_kind": "bracket_switcher (new kind)",
+      "description": "The student sees two terms that each carry a bracket, for example 4(y - 3) + k(3 - y). Each bracket has a flip control that rewrites it as the negative of its reverse, so (3 - y) becomes -(y - 3), and the sign in front of the term toggles with it. When both brackets read the same, the common binomial lifts out as a shared factor and the leftover coefficients assemble in the second bracket. Grading is on the property. The product must expand back to the original at sample values, and the binomial must have been taken out as one factor. Predicates it would report: sign-not-flipped, where the answer equals the correct one with the sign of the turned-around term reversed, such as (y - 3)(4 + k) for (y - 3)(4 - k). That maps to mc:g10m1s7-1-2:switch-around-sign-not-flipped, which is own for this objective. It would also report brackets-left-unmatched (stopped without a common binomial) and binomial-taken-incompletely (a leftover factor such as 4 - 9x^2 not factorised).",
+      "why": "The central step, turning a bracket around and changing the sign in front of it, is an operation on algebraic terms. No existing kind carries an expression, a bracket or a sign. number_line_marker's sign-flipped predicate concerns solution sets, not factors, and area_model cannot hold a binomial times a non-unit coefficient. This is the one objective in the lesson with an own misconception, so a purpose-built construction would diagnose it directly.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-1-3",
+      "need_kind": "none new: area_model (factor, a=3, b=-3) fits but needs an own misconception for this objective",
+      "description": "area_model in factor mode with a = 3 and b = -3 would carry the objective's anchor, a^2 - 9. The student places three positive and three hatched, minus-marked x-tiles on the two edges and sees that they cancel as zero pairs. That cancellation is the reason a difference of two squares has no middle term. The tiles are the geometry of (a - 3)(a + 3), and a wrong build, such as the (x - 3)^2 that gives x^2 - 6x + 9, would be the error to name. The numeric anchors (17^2 - 15^2 and so on) are the same factorisation used as a calculation shortcut, and no kind constructs that.",
+      "why": "The objective's misconception list holds only four entries, none of them its own. Three are about reading the x term when expanding (x + k)(x - 4), from objective s6-1-2. The fourth is the sign-switch error from s7-1-2. For this spec area_model can only report off-target, constant-sign or not-a-rectangle. Mapping those to any of the four would be a forced fit, because none of them describes the errors this construction reveals. A template needs at least one diagnostic from the objective's own list. A misconception such as 'reads a^2 - b^2 as (a - b)^2', or 'thinks a^2 + b^2 also factorises', would have to be catalogued first. Then the template can be written.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-1-4",
+      "need_kind": "grouping_grid (new kind: a generic 2x2 factor grid)",
+      "description": "The student gets a four-term expression with free monomials, for example 7x^2 - 14x + 7xy - 14y or 16v + 24h + 2j^5 v + 3j^5 h. It is shown as four cells of a 2x2 grid. She fills the two column headers and the two row headers so that the four products reproduce the four terms. Pairing the terms and taking out each row's common factor is then something she does, not something she recites. Grading is on the property: the headers' product must equal the expression at sample values, and the two column binomials must be identical. Any valid pairing is accepted, so 8(2v + 3h) + j^5(2v + 3h) and the pairing taken in the other order both pass. Predicates it would report: columns-differ-by-sign, where a column reads (x - 2) and the other (2 - x), which maps to mc:g10m1s7-1-2:switch-around-sign-not-flipped (a prerequisite misconception for this objective); factor-not-fully-taken (a leftover factor in a row header); and pairing-leaves-no-common-binomial (the pairs chosen share no binomial).",
+      "why": "area_model is the nearest existing kind, since x^2 + ax + bx + ab is itself a 2x2 grid. But it only builds x^2 + (a + b)x + ab with unit coefficients and one variable, and it grades the finished rectangle, not the pairing. The anchors here (7x^2 - 14x + 7xy - 14y, 16v + 24h + 2j^5 v + 3j^5 h) have non-unit coefficients and two variables, so using it would be a stretch.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-2-2",
+      "need_kind": "area_model with a leading coefficient: algebra tiles for ax^2+bx+c, a not 1",
+      "description": "The student is given a trinomial such as $6a^2-17a+5$ as a pile of tiles (six $a^2$ tiles, seventeen negative $a$ tiles, five unit tiles) and must arrange them into one rectangle. She chooses how the $a^2$ tiles are laid out (3 columns by 2 rows, or 6 by 1), then fills the two strips with $a$ tiles and the corner block with unit tiles. The sides of the finished rectangle, $(pa+q)$ and $(ra+s)$, are the factors. Grading would be on the tile totals matching the target trinomial, not on any one arrangement. This builds the book's method with the hands: write the factors of $a$ and of $c$, set out the possible bracket pairs, expand to find which gives the middle term. Errors it would diagnose: (1) the right factors of $a$ and $c$ paired the wrong way round, so the constant is right and the middle term is wrong, as in $(3x+6)(x+1)$ built for $(3x+1)(x+6)$; (2) the right pair with the wrong sign on the middle term; (3) the wrong factor pair of $a$ (6x1 against 3x2) with the constant right; (4) the leading coefficient dropped, so only one $a^2$ tile is laid. Predicates would be close to the existing area_model ones, plus a leading-coefficient and a cross-pairing predicate. Because this objective's misconception list holds only prerequisite items, a misconception for the pairing error would need authoring first.",
+      "why": "area_model is monic by construction: one $x^2$ tile, a target of the form $(x+a)(x+b)$, and more than one $x^2$ tile is graded not-a-rectangle. A trinomial with a not 1 therefore cannot be asked, and the checked ranges (|a|, |b| at most 4) cannot reach the anchors anyway. No other existing kind constructs a factorisation. Using area_model here would mean asking monic questions under an a-not-1 objective, which is a forced fit.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-2-3",
+      "need_kind": "common-factor tile grouping, an extension of the tile kind above",
+      "description": "The student starts from a tile pile whose coefficients all share a factor, such as $6a^2+14a+8$. She first splits the pile into $k$ identical groups, choosing $k$ herself, and sees what is left in one group ($3a^2+7a+4$). She then builds that one group into a rectangle, as in the tile kind above. The answer is $k$ copies of the rectangle, $2(a+1)(3a+4)$. Errors it would diagnose: (1) stopping at a $k$ that is not the greatest, leaving a group that still shares a factor; (2) building the rectangle for one group and forgetting the $k$, so the tile total is $1/k$ of the target; (3) pushing $k$ into both brackets, which makes $k^2$ copies of the pile; (4) trying to factorise the whole pile without taking the common factor out, with large $a$ and $c$, and never finding a rectangle. The objective's misconception list is empty, so ids for these would need authoring.",
+      "why": "No existing kind holds coefficients or has a grouping step. area_model has one $x^2$ tile and no multiplier, and nothing else builds an algebraic expression. The objective is about order of operations (common factor first, then the trinomial), which only a two-stage construction shows.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-2-4",
+      "need_kind": "area_model with two-variable tiles ($x^2$, $xy$, $y^2$), covering only part of this objective",
+      "description": "For the two-variable strand, for example $2x^2+7xy+5y^2$, the student would build the rectangle from $x^2$, $xy$ and $y^2$ tiles, as in the leading-coefficient tile kind. The sides are $(2x+5y)$ and $(x+y)$ and the tile shapes make plain why the middle term is an $xy$ term. Errors it would diagnose: the $y$ left off the second term of a bracket, the $xy$ tiles treated as $x$ tiles, and the factor pairing wrong as in the leading-coefficient kind. This is a lower-priority gap. The $x^4$ forms ($4x^4+11x^2+6$) and the repeated-bracket forms ($(2+b)^2-11(2+b)-12$) are about seeing a chunk as one variable, a symbolic substitution that no construction here would teach, and no widget is proposed for those. The objective's misconception list is empty.",
+      "why": "area_model offers only one variable and only $x^2$, $x$ and unit tiles. No existing kind builds a two-variable product. Even the extended kind would cover just one strand of this objective, so it should be added only with the kind for the previous objective.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-3-1",
+      "need_kind": "cube_factoriser",
+      "description": "A three-dimensional block instrument for x^3 + y^3 and x^3 - y^3. Given a binomial such as g^3 - 27 or z^3 + 125, the student (1) sets x and y by dragging the edge of a large cube and a small cube until their volumes match the two terms, so the cube roots are found by construction; (2) picks the sign of the binomial factor, (x - y) or (x + y); and (3) builds the trinomial from three face tiles x^2, xy and y^2, each with a sign toggle. For a difference, the solid left when the small cube is cut from the corner of the large one is shown as three slabs of thickness (x - y) with bases x^2, xy and y^2, so the volume check equals x^3 - y^3 only for the right trinomial. For a sum, a live expansion of the student's product shows the cross terms cancelling only when the middle sign is opposite to the binomial's. Grading is on the property (the expanded product equals the binomial), so any ordering of the factors is accepted. Errors it would diagnose, likeliest first: the cube used where the cube root belongs (g^3 - 27 read as (g - 27)(...)); the trinomial built as the square (x +/- y)^2 with a 2xy middle term; the middle or last sign of the trinomial wrong; the binomial sign taken from the trinomial pattern; a sum of cubes declared unfactorisable; a cube root of a coefficient taken as the coefficient divided by 3.",
+      "why": "No existing kind builds a cubic identity. area_model is the two-dimensional analogue (an x^2 tile, x tiles and unit tiles tiling a rectangle for (x + a)(x + b)); it has no third dimension and no x^2, xy, y^2 trinomial, so using it here would be a forced fit. solid_scaler scales one solid and reads V0*k^3, which is a different idea from factorising a difference of volumes. number_line_marker could ask the student to mark a cube root, but that is an answer box in disguise and never reaches the factorisation. Note for whoever builds it: this objective's misconception list holds only prerequisite items (mc:g10m1s6-1-2 and mc:g10m1s6-1-3, about the x term of a quadratic and about multiplying brackets). None names the cube-for-root, square-for-trinomial or sign-pattern errors above, so those misconceptions must be authored before any diagnostics can be mapped. The anchor ex1-9-11 (25x^3 + 1) has a non-integer cube root and should be kept out of the widget's targets.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-3-3",
+      "need_kind": "cube_factoriser",
+      "description": "The same cube_factoriser instrument with compound terms: a coefficient (8r^3 + z^3), two variables (27r^3s^3 - 1), higher powers (8x^6 - 125y^9), a fraction (a cube root of 1/27) or a bracket ((2 + p)^3 - 8(p + 1)^3, where the student sets x = 2 + p and y = 2(p + 1)). Instead of one edge handle per term, the student builds each term's cube root from parts: a coefficient picker and an exponent stepper for each letter. A live readout cubes the student's root and compares it with the given term, so a wrong root is visible before the trinomial is built. The student then assembles the trinomial with x^2, xy and y^2 tiles whose coefficients and exponents are computed from the roots they chose. Errors it would diagnose, likeliest first: the exponent divided by 2, or left alone, instead of by 3 (x^6 -> x^3); the coefficient not cube-rooted (8 -> 8/3 or 4); one of two variables left uncubed (27r^3s^3 -> 3r s^3); the trinomial's x^2 and y^2 terms given the root's coefficient instead of its square (2x^2 -> 4x^4 written as 2x^4); the middle term's coefficient not the product of the two roots' coefficients.",
+      "why": "The objective is exactly the finding of the cube root of each compound term, which is a construction (choose a coefficient and the exponents, then check by cubing). No existing kind has an instrument for building a term from its parts and checking by cubing. polygon_builder, area_model and solid_scaler all work on geometric quantities, not on algebraic terms. The lesson file lists no misconceptions for this objective, so the diagnostics above need authoring first. Two anchors (ex1-11-29r, with a fraction, and ex1-11-29t, with brackets) also need a common factor taken out first, so the widget would have to share its input rules with the common-factor instrument.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-3-2",
+      "need_kind": "factor_extractor",
+      "description": "A factor-taking instrument for expressions such as z - 125z^4, 128m^3 + 2f^3, 72g^3 + (1/3)v^3 and 16y^3 - 432. Each term is shown as a block that splits into its coefficient and letter parts. The student drags a common factor (a number, a letter power, or both) out to the front, and the remainder of each term is recomputed live. The live display flags whether the remaining coefficients are perfect cubes, so the student sees that the point of taking the factor out is to leave a sum or difference of cubes. Any factor that leaves cubes is accepted if the product restores the original expression, and the highest such factor ends the question. Errors it would diagnose, likeliest first: a whole term removed and its 1 dropped (z - 125z^4 -> z(-125z^3)); only the number or only the letter taken out; a factor that does not leave cubes (taking 1 or 4 from 128m^3 + 2f^3); the factor not divided out of every term; a fractional common factor (1/3) misapplied.",
+      "why": "The skill is a construction on the structure of the expression, and no existing kind supplies that. area_model factorises x^2 + bx + c as a rectangle but offers no way to take a common factor out of a cubic or a quartic. The lesson file has no misconceptions for this objective. This is lower priority than the cube instruments, because the first step of every anchor is a simple common-factor extraction that the ordinary question bank can already practise.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s7-3-4",
+      "need_kind": "factor_extractor",
+      "description": "The bracket mode of the same factor_extractor. Given 4b(x^3 - 1) + x(1 - x^3), j(64n^3 - b^3) + k(64n^3 - b^3) or x^2(27p^3 + w^3) - 5x(27p^3 + w^3) - 6(27p^3 + w^3), the student selects the bracket that every term shares and drags it out to the front as a single block. The remainder of each term is shown live. A reversed bracket such as (1 - x^3) beside (x^3 - 1) must be flipped with a negation control, and the widget shows the sign moving onto the other term's coefficient. Once the bracket is out, the student continues by factorising the shared bracket as a sum or difference of cubes with the cube_factoriser step. Graded on the property that the product of the extracted pieces restores the original expression. Errors it would diagnose, likeliest first: expanding the brackets instead of taking one out; failing to see (1 - x^3) as -(x^3 - 1); stopping after the common bracket without factorising the cubes inside it; the sign of a term wrong after the bracket is removed; a bracket partly extracted so that a stray term remains outside.",
+      "why": "Recognising a hidden common bracket, including one with reversed signs, and moving it out is a construction on the expression, and no existing kind offers it. None of the sixteen instruments takes algebraic expressions as the thing the student manipulates, apart from area_model, whose quadratic tiles do not extend to brackets. The lesson file lists no misconceptions for this objective. Priority is lower than the cube instruments, and the same remark applies as for -2: the book's own exercises already drill the extraction itself.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s8-1-1",
+      "need_kind": "fraction_canceller (new kind)",
+      "description": "The student is shown an algebraic fraction such as $\\frac{5a+20}{a+4}$ or $\\frac{3a^2-9a}{2a-6}$ with the numerator and the denominator as separate rows. Step 1: tap an expression and split it into bracket chips (a short menu of correct and decoy factorisations, so nothing is typed). Step 2: tap the chips the student thinks are common to top and bottom, which strike through as a cancelled pair. The answer is graded on the property, not the route: every factor common to both rows is cancelled, no cancelled pair is a mere term of a sum, and what remains is equivalent to the original and fully simplified. Errors it would diagnose: (1) tapping a loose term inside an unfactorised sum, such as the $a$ in $\\frac{a^2-4a}{a-4}$ or the $3$ in $\\frac{3a}{3a+9}$, which is mc:g10m1s8-1-1:cancel-terms-not-factors; (2) pairing $(2-b)$ with $(b-2)$ as if they were the same chip, which is mc:g10m1s8-1-1:reversed-factor-sign-lost; (3) stopping with a common chip left uncancelled; (4) a factorisation chip whose product does not rebuild the original expression, which could be mapped to the prerequisite misconception mc:g10m1s7-2-1:factor-pair-middle-term-untested.",
+      "why": "No existing kind constructs or manipulates a fraction. area_model (factor mode) was considered and rejected: it builds only the rectangle of a monic trinomial $x^2+(a+b)x+ab$, which is the mathematics of the prerequisite g10m1s7-2-1 and not of this objective; none of the six anchor questions (1a to 1f) is a monic trinomial, since they are common-factor and linear-factor fractions, and the instrument has no way to represent a common factor like $3$ or $2a$ or to express cancelling. Its predicates (missing-cross-term, middle-term-sign, constant-sign) could never refute this objective's own two misconceptions, cancel-terms-not-factors and reversed-factor-sign-lost, which are the heart of the objective. Mapping them onto prerequisite ids would credit this objective's mastery for a different skill, so a template would be a forced fit.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s8-1-2",
+      "need_kind": "fraction_canceller (new kind, product/quotient mode)",
+      "description": "The same instrument as for g10m1s8-1-1, extended to two fractions joined by × or ÷, for example $\\frac{3a+9}{14}\\div\\frac{7a+21}{a+3}$ or $\\frac{a^2-5a}{2a+10}\\times\\frac{4a}{3a+15}$. For a quotient the student first taps the second fraction to flip it, which turns ÷ into × and shows the reciprocal; she then factorises all four expressions into bracket chips and cancels a chip in any numerator against a matching chip in any denominator, across the two fractions as well as within one. The result is graded as a property: fully simplified and equivalent to the product, whichever cancelling order was used. Errors it would diagnose: cancelling a term of a sum rather than a factor (mc:g10m1s8-1-1:cancel-terms-not-factors), cancelling $(2-b)$ against $(b-2)$ (mc:g10m1s8-1-1:reversed-factor-sign-lost), flipping the first fraction or neither fraction when dividing, cancelling only within one fraction and leaving cross-fraction pairs, and stopping before the expression is fully simplified.",
+      "why": "No existing kind builds a product or quotient of fractions or the cancelling that this objective is about. area_model could draw the trinomial factorisation inside an anchor (for example $b^2+10b+21$ in ex1-10-2a) but that is only one sub-step and the prerequisite's mathematics, not changing ÷ into × or cancelling across fractions. Note for the lesson data: this objective's own misconception list is empty (every entry is own=false), so diagnoses for a future widget can only use ids borrowed from g10m1s8-1-1 and the prerequisites. A misconception for dividing by a fraction without inverting it, or inverting the wrong one, would need to be added to this objective before a template could name it.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s8-1-3",
+      "need_kind": "fraction_combiner (new kind)",
+      "description": "The student combines two or three algebraic fractions such as $\\frac{x+4}{3}-\\frac{x-2}{2}$, $\\frac{2x-4}{9}-\\frac{x-3}{4}+1$ or $\\frac{11}{a+11}+\\frac{8}{a-8}$ in three constructed steps. (1) Build the lowest common denominator by tapping factor tiles from the factorised denominators, each distinct factor at its highest power. (2) For each fraction, pick the missing factor and multiply top and bottom by it; a whole-number term such as the $+1$ gets its own tile that must also be scaled, and the multiplied numerators are shown in brackets. (3) Combine the numerators over the single denominator, where a subtracted bracket must be opened by changing every sign inside it. It is graded on the property that the single fraction equals the original sum over the lowest common denominator, so any valid order of steps is accepted. Errors it would diagnose: building the denominator as a sum of denominators or writing one numerator over a sum of denominators (mc:g10m1s8-1-3:adds-numerators-and-denominators-separately), scaling the denominator but leaving the numerator or the whole number as it was (mc:g10m1s8-1-3:numerator-or-whole-number-not-scaled), changing only the first sign when removing the brackets of a subtracted numerator (mc:g10m1s8-1-3:sign-changed-on-first-term-only), and an unnecessarily large (non-lowest) common denominator.",
+      "why": "No existing kind represents fractions or a common denominator. area_model, product_builder and ratio_balance all construct something other than a sum of algebraic fractions, and sample_space and venn_builder are for counting. All three of this objective's own misconceptions are errors in a written procedure (a wrong denominator, a numerator left unscaled, a sign change that stops after the first term), so an answer box would see only a wrong final line, and a construction that exposes each step is the one place they can be told apart. A widget forced onto another kind would test nothing of this objective.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s8-1-4",
+      "need_kind": "number_line_marker (EXISTING kind, points mode; blocked by missing lesson data, not a new kind)",
+      "description": "The existing number_line_marker fits this objective genuinely. For a fraction such as $\\frac{x+1}{(x-3)(x+2)}$ the stem would ask: for which values of $x$ is the fraction undefined? Mark every restriction on the number line. In points mode the answer is a set: spec {mode:'points', range:[-6,6], targets:[3,-2]}, with the instances varying the factors (for example $\\frac{5}{x-4}$, $\\frac{x+2}{(x-1)(x+3)}$, $\\frac{3}{x^2-4}$, which gives targets 2 and -2). The student constructs the restriction set, and the predicates it can emit are missed-values, extra-values and sign-flipped. Errors it would diagnose: sign-flipped, reading the factor $(x-3)$ as $x=-3$; missed-values, restricting only one of two factors (or none for a difference of two squares); extra-values, marking the value that makes the numerator zero, as if the numerator controlled the restriction. These would need three misconceptions on this objective to point to.",
+      "why": "The lesson file lists lo:g10m1s8-1-4 with an empty anchor_questions list and an empty misconceptions list. A template needs a parent_question_id taken from the objective's anchor questions and at least one diagnostic whose misconception id comes from the objective's own list, so none can be written without inventing ids or borrowing another objective's, which FR-1215 refuses. Samuel (or the data step) needs to add at least one anchor question (for example 'state the restrictions on $x$ for $\\frac{x+1}{(x-3)(x+2)}$') and the three misconceptions above to lo:g10m1s8-1-4. Then the number_line_marker templates can be authored with no new widget kind.",
+      "source": "author-merged-ch01.json",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c01",
+      "lo_id": "lo:g10m1s6-1-2",
+      "need_kind": "no-diagnostic",
+      "description": "template wt:g10m1s6-1-2:x-plus-k-times-x-minus-4 (3 widget question(s)) was not shipped: it could not say why a wrong answer is wrong",
+      "why": "every misconception its mappings name was dropped by S5's fail-closed verifier (mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round); a widget with no diagnostic could mark an answer wrong and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept the lesson without it",
+      "source": "generate_widget_questions.py (S5 dropped the mapping)",
+      "signed_off": null,
+      "scope": "lesson"
+    },
+    {
+      "module": "module:g10m-c02",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    },
+    {
+      "module": "module:g10m-c08",
+      "lo_id": null,
+      "need_kind": "unexamined",
+      "description": "",
+      "why": "no widget question, and no author recorded a gap for this chapter",
+      "source": "generate_widget_questions.py",
+      "signed_off": null,
+      "scope": "chapter"
+    }
+  ]
+}

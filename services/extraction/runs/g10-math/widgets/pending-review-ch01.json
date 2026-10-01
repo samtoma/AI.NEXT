@@ -116,63 +116,6 @@
       "why": "The predicate fires on {2,3}. The claimed misconception is about ordering two negative surds, and here one of them is a cube root, which the misconception text never describes. Even for the intended case, the ordering error does not move the student's taps to the positive side. A {2,3} response is a different slip, dropping the sign of n or of both endpoints, so the diagnosis would mostly fire for another reason."
     },
     {
-      "key": "q:g10m1s6-1-2:w001#middle-term-sign",
-      "question_id": "q:g10m1s6-1-2:w001",
-      "template_id": "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4",
-      "lo_id": "lo:g10m1s6-1-2",
-      "kind": "area_model",
-      "stem": "Build the rectangle with sides $x + 1$ and $x - 4$ from algebra tiles (negative tiles are hatched and marked −). The tiles that fill it are the expansion of $(x + 1)(x - 4)$.",
-      "reading": {
-        "a": 1,
-        "b": -4
-      },
-      "construction": "Target (x+1)(x-4) = x^2 - 3x - 4. Anchor one x^2 tile. Top run: 1 plain (positive) x-tile, the +1 side. Left run: 4 hatched, minus-marked x-tiles, the -4 side. The 1-by-4 block those runs bound takes 4 hatched, minus-marked unit tiles, because ab = -4 is negative. In total: x^2, one +x, four -x (net -3x), four -1. |a| = 1 and |b| = 4 are within the limit of 4, and the block is 1x4, so every tile fits. Reachable.",
-      "predicate": "middle-term-sign",
-      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
-      "misconception_id": "mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round",
-      "misconception_label": "Turns k - 4 round the wrong way",
-      "misconception_description": "The student combines the two $x$ terms but reverses the subtraction, reading $kx-4x$ as if it were $4-k$, so a value of $k$ below $4$ seems to make $b$ positive.",
-      "why": "This predicate fires when the constant -4 is right and the net x-term is not, e.g. 1 hatched tile on top, 4 plain tiles on the left and a 4-tile hatched block, which is (x-1)(x+4) = x^2 + 3x - 4. That build comes from putting the minus on the wrong edge or swapping which number carries it. The claimed misconception is a symbolic slip while collecting like terms, kx - 4x written as (4-k)x. Here the sides x+1 and x-4 are given and the student places each run's tiles by sign. There is no combining step, and the tile picture itself shows 1 plain x-tile against 4 hatched ones leaving 3 hatched. A student holding this misconception would still build the sides as stated and would not fire the predicate. The students who do fire it mostly made an edge or sign-placement slip, so the refutation 'you turned k - 4 round the wrong way' would be aimed at a mistake they did not make. The question also has no k or b."
-    },
-    {
-      "key": "q:g10m1s6-1-2:w002#middle-term-sign",
-      "question_id": "q:g10m1s6-1-2:w002",
-      "template_id": "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4",
-      "lo_id": "lo:g10m1s6-1-2",
-      "kind": "area_model",
-      "stem": "Build the rectangle with sides $x + 2$ and $x - 4$ from algebra tiles (negative tiles are hatched and marked −). The tiles that fill it are the expansion of $(x + 2)(x - 4)$.",
-      "reading": {
-        "a": 2,
-        "b": -4
-      },
-      "construction": "Target (x+2)(x-4) = x^2 - 2x - 8. Anchor one x^2 tile. Top run: 2 plain x-tiles. Left run: 4 hatched, minus-marked x-tiles. The 2-by-4 block takes 8 hatched, minus-marked unit tiles (ab = -8). In total: x^2, two +x, four -x (net -2x), eight -1. All within |a|,|b| <= 4. Reachable.",
-      "predicate": "middle-term-sign",
-      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
-      "misconception_id": "mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round",
-      "misconception_label": "Turns k - 4 round the wrong way",
-      "misconception_description": "The student combines the two $x$ terms but reverses the subtraction, reading $kx-4x$ as if it were $4-k$, so a value of $k$ below $4$ seems to make $b$ positive.",
-      "why": "A build that fires it keeps the constant -8 but nets +2x, e.g. 2 hatched tiles on top, 4 plain on the left and 8 hatched units, which is (x-2)(x+4). Alternatively the numbers are swapped between edges as (x+4)(x-2). Either way the cause is a sign or edge-assignment slip. The claimed misconception is a symbolic subtraction-order slip, k - 4 read as 4 - k, with no combining step on this instrument. The sides are given in the question and the plain-against-hatched tiles visibly cancel to a negative net. A holder of the misconception would build x+2 and x-4 correctly, so the predicate would mostly fire for a different reason."
-    },
-    {
-      "key": "q:g10m1s6-1-2:w003#middle-term-sign",
-      "question_id": "q:g10m1s6-1-2:w003",
-      "template_id": "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4",
-      "lo_id": "lo:g10m1s6-1-2",
-      "kind": "area_model",
-      "stem": "Build the rectangle with sides $x + 3$ and $x - 4$ from algebra tiles (negative tiles are hatched and marked −). The tiles that fill it are the expansion of $(x + 3)(x - 4)$.",
-      "reading": {
-        "a": 3,
-        "b": -4
-      },
-      "construction": "Target (x+3)(x-4) = x^2 - x - 12. Anchor one x^2 tile. Top run: 3 plain x-tiles. Left run: 4 hatched, minus-marked x-tiles. The 3-by-4 block takes 12 hatched, minus-marked unit tiles (ab = -12). In total: x^2, three +x, four -x (net -1x), twelve -1. All within |a|,|b| <= 4. Reachable.",
-      "predicate": "middle-term-sign",
-      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
-      "misconception_id": "mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round",
-      "misconception_label": "Turns k - 4 round the wrong way",
-      "misconception_description": "The student combines the two $x$ terms but reverses the subtraction, reading $kx-4x$ as if it were $4-k$, so a value of $k$ below $4$ seems to make $b$ positive.",
-      "why": "A build that fires it keeps the constant -12 but nets +1x, e.g. 3 hatched tiles on top, 4 plain on the left and 12 hatched units, which is (x-3)(x+4) = x^2 + x - 12, or the numbers swapped as (x+4)(x-3). That is a sign or edge-placement error. The claimed misconception, reading kx - 4x as (4-k)x when collecting terms, has nothing to act on here. The sides are fixed by the question, the tiles are placed per side, and 3 plain against 4 hatched visibly leaves 1 hatched. A student holding the misconception would still build the correct rectangle, and the predicate would mostly fire for a different slip. Matching is false."
-    },
-    {
       "key": "q:g10m1s7-2-1:w001#middle-term-sign",
       "question_id": "q:g10m1s7-2-1:w001",
       "template_id": "wt:g10m1s7-2-1:factor-by-tiles-positive",

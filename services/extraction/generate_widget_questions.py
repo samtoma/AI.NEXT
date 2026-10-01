@@ -2021,9 +2021,22 @@ def main_templates(args) -> int:
     graph = _with_catalogue(PgGraph(args.dsn), args.catalogue)
     questions, render_problems = build_from_templates(templates)
     s5_view = json.loads(json.dumps(questions))  # before any diagnostic is dropped
-    checks, dropped = check_questions(questions, graph, pre_catalogue=args.pre_catalogue)
+    orphans: list = []
+    checks, dropped = check_questions(questions, graph, pre_catalogue=args.pre_catalogue, orphans=orphans)
     for n in dropped:
         print(f"  ! {n}", file=sys.stderr)
+    # A template whose every mapping names a misconception S5 did not keep is NOT shipped — never as a widget that
+    # could mark an answer wrong and not say why (ADR-0009) — but it no longer refuses the chapter's other templates:
+    # it is left out, named here, in the bundle's rejected templates and in the gap report. Question ids keep their
+    # holes on purpose: the blind verifier's verdicts are keyed by them.
+    orphaned = orphaned_templates(orphans)
+    if orphaned:
+        questions = [q for q in questions if q["family"] not in orphaned]
+        s5_view = [q for q in s5_view if q["family"] not in orphaned]
+        for tid, o in sorted(orphaned.items()):
+            print(f"  - NOT SHIPPED {tid}: {len(o['questions'])} widget(s) left with no diagnostic, every mapping "
+                  f"names a misconception S5 did not keep ({', '.join(o['dropped'])}) — recorded as a widget gap",
+                  file=sys.stderr)
     problems = render_problems + checks
 
     if args.verify_args:
@@ -2059,6 +2072,9 @@ def main_templates(args) -> int:
         except ValueError as e:
             print(f"--mapping-review: {e}", file=sys.stderr)
             return 2
+        for tid, o in orphaned.items():     # its own reason, not the scan's "no instances"
+            rejected_v[tid] = [f"not shipped: every mapping names a misconception S5 did not keep "
+                               f"({', '.join(o['dropped'])}), so no widget of it could say why an answer is wrong"]
         runs = sorted({json.loads(Path(f).read_text()).get("run_id") or Path(f).stem for f in args.verdicts})
         counts = hold_pending(questions, status, reviews, runs)
         hold_pending(s5_view, status, reviews, runs)
@@ -2083,7 +2099,7 @@ def main_templates(args) -> int:
             return 2
         previous = json.loads(args.gap_report.read_text()) if args.gap_report.exists() else None
         counted = questions if verified is None else [q for q in questions if q["family"] in verified]
-        rep = gap_report(book.book if book else "?", course, graph, counted, args.gaps, previous)
+        rep = gap_report(book.book if book else "?", course, graph, counted, args.gaps, previous, orphaned)
         args.gap_report.parent.mkdir(parents=True, exist_ok=True)
         args.gap_report.write_text(json.dumps(rep, indent=2, ensure_ascii=False) + "\n")
         print(f"wrote {args.gap_report} — {len(rep['chapters']) - len(rep['uncovered_chapters'])}/"
