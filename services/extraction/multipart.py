@@ -606,35 +606,50 @@ def plan_items(items) -> tuple[dict[str, Carry], list[Unresolved]]:
 
 # --------------------------------------------------------------------------------------------- the CLI
 def main(argv: list[str] | None = None) -> int:
+    """The plan for a book's saved lesson runs — what the assembly will do, before it does it (stems are the runs'
+    own, not yet through the assembly's notation pass)."""
     import book_config
     from assemble_lesson_bundle import LessonRun
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--book", required=True)
     ap.add_argument("--chapter", type=int, help="only this chapter's exercises")
     ap.add_argument("--runs", type=Path, help="default runs/<book>/lesson/")
-    ap.add_argument("--json", action="store_true")
+    ap.add_argument("--json", action="store_true", help="print the plan as JSON")
+    ap.add_argument("--out", type=Path, help="write the plan (JSON) here: the list for the review backlog")
     a = ap.parse_args(argv)
     book = book_config.load_book(a.book)
     runs = a.runs or HERE / "runs" / book.book / "lesson"
-    items = []
+    items, slug_of = [], {}
     for f in sorted(runs.glob("*.json")):
-        items += LessonRun.model_validate_json(f.read_text()).items
-    if a.chapter:
-        items = [it for it in items if re.match(rf"^Ex{a.chapter}-", it.ref) or it.ref.startswith(f"WE")]
+        run = LessonRun.model_validate_json(f.read_text())
+        for it in run.items:
+            if a.chapter is None or it.ref.startswith(f"Ex{a.chapter}-"):
+                items.append(it)
+                slug_of[it.ref] = run.lesson
     carries, unresolved = plan_items(items)
+    emitted = {it.ref for it in items if it.fate() != "excluded"}       # an excluded item is no question: never shown
+    doc = {"book": book.book, "chapter": a.chapter,
+           "carried": [{"ref": r, "lesson": slug_of.get(r), "rules": sorted({i["rule"] for i in c.items}),
+                        "from": sorted({i["from"] for i in c.items}), "sentences": c.sentences,
+                        "before": c.before, "after": c.after} for r, c in sorted(carries.items()) if r in emitted],
+           "unresolved": [{**u.as_dict(), "lesson": slug_of.get(u.ref)} for u in unresolved if u.ref in emitted]}
+    if a.out:
+        a.out.parent.mkdir(parents=True, exist_ok=True)
+        a.out.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
     if a.json:
-        print(json.dumps({"carried": {r: {"sentences": c.sentences, "items": c.items, "before": c.before,
-                                           "after": c.after} for r, c in sorted(carries.items())},
-                          "unresolved": [u.as_dict() for u in unresolved]}, indent=2, ensure_ascii=False))
+        print(json.dumps(doc, indent=2, ensure_ascii=False))
         return 0
-    print(f"{len(carries)} part(s) carry what they depend on; {len({u.ref for u in unresolved})} part(s) unresolved")
-    for r, c in sorted(carries.items()):
-        print(f"\n{r}  [{', '.join(i['rule'] + ' from ' + i['from'] for i in c.items)}]")
-        print(f"  before: {c.before}")
-        print(f"  after:  {c.after}")
+    print(f"{len(doc['carried'])} part(s) carry what they depend on; "
+          f"{len({u['ref'] for u in doc['unresolved']})} part(s) unresolved")
+    for x in doc["carried"]:
+        print(f"\n{x['ref']}  [{', '.join(x['rules'])} from {', '.join(x['from'])}]")
+        print(f"  before: {x['before']}")
+        print(f"  after:  {x['after']}")
     print("\nUNRESOLVED (for the review backlog)")
-    for u in unresolved:
-        print(f"  {u.ref}  {u.reason}: {u.detail}")
+    for u in doc["unresolved"]:
+        print(f"  {u['ref']}  {u['reason']}: {u['detail']}")
+    if a.out:
+        print(f"\nwrote {a.out}")
     return 0
 
 
