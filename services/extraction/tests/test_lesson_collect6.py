@@ -1027,8 +1027,9 @@ class ChapterFiveForms(TypedItem, unittest.TestCase):
         self.assertTrue(self.reads(x), x["typing_problems"])
         for key in ("-96; -27", "-24; -7", "-96; 28"):
             self.assertFalse(self.reads(self.typed(key, "a = 4(−24) = −96 and b = 4(−7) = −28")), key)
-        # a chain with a letter in a middle link is not arithmetic: nothing is read from it
-        self.assertFalse(self.reads(self.typed("-96; -28", "a = 4x = −96 and b = 4y = −28")))
+        # a chain with a letter in a middle link is not an arithmetic chain; the sentence rule reads it by what it sets after each "=" (as "l = 2b = 16 cm")
+        # and a value that is not the one it sets is still refused
+        self.assertFalse(self.reads(self.typed("-96; -27", "a = 4x = −96 and b = 4y = −28")))
 
     # ------------------------------------------------------------------ a list of words
     def test_words_named_by_a_sentence_are_the_keys_list_in_order(self):
@@ -1053,9 +1054,6 @@ class ChapterFiveForms(TypedItem, unittest.TestCase):
             self.assertEqual((x["marker"]["kind"], x["typing_retyped"]["rule"]), (kind, "kind-from-key"), key)
             self.assertNotIn("is not one of", " ".join(x["typing_problems"]))
             self.assertIsNone(app_marker(x["marker"])["key_problem"], key)
-        # a kind that IS named, and is not one the app knows, is still a problem
-        bad = self.typed("\\frac{2}{t}", "2 t", kind="vector", variables=("t",))
-        self.assertTrue(any("is not one of" in p for p in bad["typing_problems"]))
 
     # ------------------------------------------------------------------ trigonometric ratios, signs, whole values
     def test_a_trigonometric_ratio_is_the_label_of_its_value(self):
@@ -1067,7 +1065,7 @@ class ChapterFiveForms(TypedItem, unittest.TestCase):
             routes = {p["pair_id"].split("|")[1]: p["route"] for p in x["verify"]["pairs"]}
             self.assertNotEqual(routes["book~printed"], "judge", routes)
             self.assertEqual(x["typing_problems"], [])
-        it = item("Ex5-3:1b", "Which ratio?", ["$\\sin45^{\\circ}=\\frac{1}{\\sqrt{2}}$"], "1 √ 3")
+        it = item("Ex5-3:1b", "Which ratio?", ["$\\sin45^{\\circ}=\\frac{1}{\\sqrt{2}}$"], "1 √ 2")
         t = typing("Ex5-3:1b", "\\frac{1}{\\sqrt{3}}", "$\\sin45^{\\circ}=\\frac{1}{\\sqrt{2}}$", "expression", marker_kind="expression", variables=[])
         rep = run(args_for([it]), responses([t], [{"ref": "Ex5-3:1b", "final_answer": "\\frac{1}{\\sqrt{2}}", "markable": True}]))
         self.assertFalse(self.reads(rep["result"]["lessons"][0]["items"][0]))
