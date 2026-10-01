@@ -93,6 +93,13 @@ const STUBS = {
       // narrowing resolve a lesson's course the same way (fix pass 2). Same
       // `lib/lesson.ts` -> `auth/principal.ts` import; no principal.
       "lesson-course.test.mts",
+      // drives the REAL `getLessonData` / `lessonCourseId` /
+      // `buildLessonContext` / `isUnpreparedLesson` against a fake PoolClient
+      // to prove a lesson the book's outline lists but whose content is not
+      // prepared is refused, never taught as another (migration 037). Same
+      // `lib/lesson.ts` -> `auth/principal.ts` import; the student id is a
+      // parameter, no principal.
+      "course-outline-guard.test.mts",
       // drives the REAL `getStudentPlan` (lib/queries.ts) over a fake
       // PoolClient to prove catalogue order breaks the plan's ties (FR-3217).
       // Reaches `lib/student-context.ts` -> `auth/principal.ts`; the student

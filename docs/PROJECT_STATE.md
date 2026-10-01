@@ -1,9 +1,10 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-27 (`main` at `v0.9.3`, **deployed** to noor 2026-09-25; constitution **v3.4.0**;
+> Last updated: 2026-10-01 (`main` at `v0.9.3`, **deployed** to noor 2026-09-25; constitution **v3.4.0**;
 > **v0.10 — spec 003 on its feature branch, committed only as unreviewed WIP snapshots; the Chapter 8 pilot
-> has passed G1 and G2; nothing of Grade 10 is in production**)
+> has passed G1 and G2; the full fan-out to the rest of the book is now approved (decision 58e); nothing
+> of Grade 10 is in production**)
 
 ## 🧭 v0.10 — curriculum tracks and the Grade 10 American maths course (IN PROGRESS, not reviewed, not merged)
 
@@ -22,10 +23,11 @@ Curriculum, Math" — and *"When the user sign up for grade 10, they can have at
 American, National, etc.. … and consider that in the console, to choose which subject for which grade,
 should be done also per curriculum."*
 
-**Decisions: 47, in seven rounds** (`specs/003-curriculum-tracks/decisions.md`; 46 is unused). 1–17, the
+**Decisions: 58, in eight rounds** (`specs/003-curriculum-tracks/decisions.md`; 46 is unused). 1–17, the
 first round (*"I would take your recommendations"*); 18–22 and A–E, the second (*"ok for all"*); 23–34, the
 third, one question at a time; 35–36, the Chapter 8 pilot; 37–38, the curriculum-isolation audit; 39–45,
-gate G2 for Chapter 8; 47, the widget verifier. From the third round on, Samuel's words are in
+gate G2 for Chapter 8; 47, the widget verifier; 48–58, the consistency review and filling the Grade 10
+course (2026-09-27/2026-10-01). From the third round on, Samuel's words are in
 [`docs/WIP-g10-pilot/samuel-answers.md`](WIP-g10-pilot/samuel-answers.md): **answer N is decision N + 21**.
 Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
 
@@ -34,9 +36,18 @@ Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
   curriculum; the gate stays (course, grade); the kill switch suspends rules, not curriculum scoping.
   Sign-up always asks which curriculum, naming every curriculum in the registry — one with nothing live
   for the grade is still offered, with a note — and refuses to create the account without an answer
-  (changed 2026-10-01, answer 36, reverses decision 1; code in progress). A change of curriculum is
+  (changed 2026-10-01, answer 36, reverses decision 1; **built and verified, T434**: both refusals are
+  `422`). The American course shows no Arabic anywhere, not only in its prompts (answer 35, decision 56;
+  **built and verified, T435**). A change of curriculum is
   console-only, recorded, and loses nothing; an open chat reads the new scope on its next turn
   (decision 37).
+- **Filling the Grade 10 course**: the full fan-out to the other 13 chapters is approved, ≈ $0.85–1.1k
+  (decision 58e). Maths content now reaches students as if reviewed as it is extracted — gates G1–G4
+  proceed on the AI checks' own recommendation rather than wait for a human per chapter (decision 58c);
+  a new internal console backlog lets Samuel, Tamer and Kamil review every unstamped item afterwards, one
+  at a time, goal zero (decision 58b, FR-4501…FR-4507); "reviewed" means only a human stamp (decision 54);
+  a figure with no native type yet shows as the book's own image, temporarily, rather than holding the
+  lesson (decision 58d, FR-4508). None of FR-4501…FR-4509 is built yet.
 - **The G10 course** is the only course live for grade 10 at launch; Play design, probing off, covered by
   ADR-0019 once switched on; its prompts name its own book and are English-only (decision 30).
 - **The prompt hold (ADR-0020)** has eight named exceptions, listed in one place in the ADR since
