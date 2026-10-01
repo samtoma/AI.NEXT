@@ -146,6 +146,25 @@ def prompt_item(it: dict) -> dict:
     return d
 
 
+# What the agents JUDGE on, as opposed to what the checks reported about it: the question, the book's working and answers, the blind answer,
+# the figure, the typed KEY and the options a student would see. If one of these differs from what an agent was shown, its answer was about
+# another item; a change of the typing's shape (a marker kind, a form), of the checks' pair verdicts or of the typing problems is not, because
+# the collector re-validates every verdict on the item as it is NOW (RunItem, the app's marker, both oracles) and a fix is re-derived against it.
+SUBSTANTIVE = ("ref", "kind", "stem", "solution", "solution_provenance", "printed_answer", "epub_final_answer", "blind_answer", "figures",
+               "options_source", "less_specific", "asked_form", "printed_form_defect", "raised_dot")
+
+
+def facts(item: dict) -> dict:
+    d = {k: item.get(k) for k in SUBSTANTIVE}
+    m = item.get("marker") if isinstance(item.get("marker"), dict) else {}
+    ch = [c for c in item.get("choices") or [] if isinstance(c, dict)]
+    d["typed_key"] = (m.get("key") if item.get("answer_type") == "expression" else
+                      next((c.get("text") for c in ch if c.get("key") == item.get("answer")), None) if item.get("answer_type") == "choice"
+                      else item.get("answer"))
+    d["options"] = [c.get("text") for c in ch]
+    return d
+
+
 def items_sha256(entries: list[dict]) -> str:
     blob = json.dumps([{"key": e["key"], "state": e["state"], "item": prompt_item(e["item"])} for e in entries],
                       ensure_ascii=False, sort_keys=True, separators=(",", ":"))
@@ -651,8 +670,8 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
     later collection (lesson-v8 → COLLECT-6 widened, 2026-10-01) can change what is owed. So, per item and never twice-decided:
       * a key the run answered that is no longer owed (the checks' own rule decides it now, or a person did) is SKIPPED with a note
         (`no_longer_owed`): its recommendation is not written, so g2 never overrides the rule's decision with an older reading;
-      * a key still owed whose item is NOT what the agents were shown (`packets`: each run's args, as embedded in its copy; the item's
-        prompt fields or its state differ) is REFUSED for that item (`stale_items`): nothing is recommended, it stays as the checks
+      * a key still owed whose item is NOT what the agents were shown (`packets`: each run's args, as embedded in its copy; a fact
+        they judged on differs: facts()) is REFUSED for that item (`stale_items`): nothing is recommended, it stays as the checks
         leave it, and `g2-recommend-args --only-missing` asks about it again;
       * the others are collected as before, so the agents' paid answers for the items still owed stay valid."""
     by_key = {e["key"]: e for e in entries}
@@ -677,7 +696,7 @@ def collect(entries: list[dict], runs: list[dict], *, prior: dict | None = None,
                 else:
                     off_task.append(str(k))
                 continue
-            if k in pk and not (same(pk[k].get("item"), prompt_item(by_key[k]["item"])) and pk[k].get("state") == by_key[k]["state"]):
+            if k in pk and not same(facts(pk[k].get("item") or {}), facts(prompt_item(by_key[k]["item"]))):
                 stale.add(k)
                 continue
             if r.get("rec"):

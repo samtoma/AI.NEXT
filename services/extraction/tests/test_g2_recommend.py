@@ -625,12 +625,44 @@ class AfterARecollection(unittest.TestCase):
 
     def test_an_item_the_agents_did_not_see_is_refused_for_that_item_only(self):
         now = copy.deepcopy(self.es)
-        by_key(now)[self.k1]["item"]["typing_problems"] = ["a new typing problem the newer collection found"]
-        by_key(now)[self.k3]["state"] = "held"                     # an excluded item the newer collection leaves disputed instead
+        by_key(now)[self.k1]["item"]["stem"] += " (typed again)"                           # a fact the agent judged on
+        by_key(now)[self.k3]["item"]["options_source"] = "figure"
+        by_key(now)[self.k7]["item"]["printed_answer"] = "something else"
         doc = self.collect(now, packets=[self.packet])
-        self.assertEqual(doc["report"]["stale_items"], sorted([self.k1, self.k3]))
-        self.assertEqual(set(doc["items"]), {self.k2, self.k7}, "the others are collected as before: their paid answers stay valid")
-        self.assertEqual(set(doc["unanswered"]), {self.k1, self.k3}, "listed, so g2-recommend-args --only-missing asks again")
+        self.assertEqual(doc["report"]["stale_items"], sorted([self.k1, self.k3, self.k7]))
+        self.assertEqual(set(doc["items"]), {self.k2}, "the others are collected as before: their paid answers stay valid")
+        self.assertEqual(set(doc["unanswered"]), {self.k1, self.k3, self.k7}, "listed, so g2-recommend-args --only-missing asks again")
+
+    def test_what_the_checks_reported_is_not_what_the_agent_judged_on(self):
+        # a newer collection types the SAME key another way, re-judges a pair, finds another typing problem, leaves a disputed item disputed
+        # instead of excluded: the agents' answers are still about this item, and the collector re-validates them on it as it is now
+        now = copy.deepcopy(self.es)
+        by_key(now)[self.k1]["item"]["marker"] = {**by_key(now)[self.k1]["item"]["marker"], "kind": "equation", "form": "simplest"}
+        by_key(now)[self.k1]["item"]["verify"] = pairs("Ex9-1:1", "equivalent", "equivalent", "equivalent")
+        by_key(now)[self.k1]["item"]["typing_problems"] = ["a new typing problem"]
+        by_key(now)[self.k3]["state"] = "held"
+        by_key(now)[self.k2]["item"].update(answer_type="expression", marker={"kind": "expression", "key": "\\frac{1}{2}", "form": None,
+                                                                              "variables": [], "tolerance": None}, typing_problems=[])
+        doc = self.collect(now, packets=[self.packet])
+        self.assertEqual(doc["report"]["stale_items"], [])
+        self.assertEqual(set(doc["items"]), {self.k1, self.k2, self.k3, self.k7})
+        self.assertEqual(doc["items"][self.k2]["verdict"], "accept", "the agent's fix to expression changes nothing now: an accept")
+        key = by_key(now)[self.k2]["item"]
+        self.assertNotEqual(G.facts(self.packet["items"][1]["item"])["typed_key"], None)
+        self.assertEqual(G.facts(key)["typed_key"], "\\frac{1}{2}")
+
+    def test_the_typed_key_and_the_options_are_facts(self):
+        a = item("Ex9-1:5", answer_type="choice", answer="B", marker=None, choices=[{"key": "A", "text": "x"}, {"key": "B", "text": "y"}])
+        b = copy.deepcopy(a)
+        b["answer"] = "A"
+        self.assertNotEqual(G.facts(a), G.facts(b), "another option is the key")
+        c = copy.deepcopy(a)
+        c["choices"][0]["text"] = "z"
+        self.assertNotEqual(G.facts(a), G.facts(c))
+        d = item("Ex9-1:6")
+        e = copy.deepcopy(d)
+        e["marker"]["key"] = "x^{3}"
+        self.assertNotEqual(G.facts(d), G.facts(e))
 
     def test_a_prior_file_never_brings_a_stale_item_back(self):
         prior = {"items": {self.k1: {"verdict": "accept", "class": "book answer confirmed", "confidence": "high", "note": "an old reading"}}}
