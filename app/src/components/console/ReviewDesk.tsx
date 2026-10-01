@@ -216,7 +216,7 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
       }
       if (e.metaKey || e.ctrlKey || e.altKey || busy || !item) return;
       const k = e.key.toLowerCase();
-      if (k === "a" && canDecide(item.kind, "approve").ok) {
+      if (k === "a" && !item.readOnly && canDecide(item.kind, "approve").ok) {
         e.preventDefault();
         void decide("approve");
       } else if (k === "f" && !item.readOnly) {
