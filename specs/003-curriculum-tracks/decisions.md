@@ -30,7 +30,7 @@ rewritten.
 
 | # | Decision | Recorded in |
 |---|---|---|
-| 1 | **Sign-up asks for a curriculum only when the grade has live courses in two or more curricula**, as decided in the console. When there is only one curriculum it is stored without asking. (Spec Q1, option A.) | FR-4004, FR-4005; ADR-0024 |
+| 1 | ~~**Sign-up asks for a curriculum only when the grade has live courses in two or more curricula**, as decided in the console. When there is only one curriculum it is stored without asking. (Spec Q1, option A.)~~ **Superseded 2026-10-01 by Samuel's answer 36** (`docs/WIP-g10-pilot/samuel-answers.md`): *"yes the sign up should always ask."* Sign-up (the password form and the first Google sign-in step) now always asks which curriculum, naming every curriculum in the registry and pre-selecting none; the account is not created without an answer. A curriculum with nothing live yet for the chosen grade is still offered and selectable, with a short note that there is nothing to study there yet (the orchestrator's default, awaiting Samuel's confirmation). | FR-4004, FR-4005; ADR-0024 (amended 2026-10-01) |
 | 2 | **One course belongs to exactly one curriculum.** The gate stays keyed by (course, grade). No new rule table. | FR-4002, FR-4101; ADR-0024 |
 | 3 | **Ids.** National = `eg-national-en`; American = `us-american-en`, with the label "American". The book is written for South Africa's CAPS curriculum; state that neutrally, once. | FR-4001, FR-4201; ADR-0024 |
 | 4 | **At launch, only the console changes a student's curriculum.** No student settings control. Switching never deletes progress, and switching back restores it. The change is made by an operator and recorded. | FR-4010…FR-4012; US5 |
