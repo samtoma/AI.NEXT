@@ -301,9 +301,9 @@ def build_runs(inv: dict) -> list[dict]:
                  "after both are saved; skipped when there are none)",
             agents=math.ceil(nc / BATCH), cost=_cost("s0b_c_image", nc), minutes=MINUTES["s0b_c"], priority=(2, gi, 1),
             depends_on=[f"s0b-A-{g}", f"s0b-B-{g}"], s0b=True,
-            before=["uv run assemble_maths.py assemble g10-math runs/g10-math/maths/*.json --out-dir runs/g10-math/maths/book"],
+            before=["uv run assemble_maths.py assemble g10-math runs/g10-math/maths/[ABC]-*.json --out-dir runs/g10-math/maths/book"],
             save_to="runs/g10-math/maths/C-<wf_id>.json", meter=_meter("S0b"),
-            after=["uv run assemble_maths.py assemble g10-math runs/g10-math/maths/*.json --out-dir runs/g10-math/maths/book",
+            after=["uv run assemble_maths.py assemble g10-math runs/g10-math/maths/[ABC]-*.json --out-dir runs/g10-math/maths/book",
                    f"# summary.json by_chapter: {', '.join(ch_tag(c) for c in gchs)} must show unresolved 0; anything "
                    "queued goes to G0b (a human; it is not a gate 37c auto-passes — nothing is guessed, FR-4407)"],
             checkpoint="first group only: per-image cost against $0.024, hash-claim and agreement rates" if g == "g1" else None)
@@ -599,15 +599,16 @@ def prep_s0b(run: dict) -> dict:
         for f in batch_dir.glob(f"{p}-b*.json"):
             f.unlink()
     else:
-        mine = [f for f in _saved_runs("maths/*.json") if _run_in_dir(f, batch_dir)]
+        mine = [f for f in _saved_runs("maths/[ABC]-*.json") if _run_in_dir(f, batch_dir)]
         passes = {json.loads(f.read_text()).get("pass") for f in mine}
         if not {"A", "B"} <= passes:
             raise NotReady(f"pass C reads passes A and B of {g}: save both runs (runs/g10-math/maths/A-…, B-…) first; "
                            f"have {sorted(x for x in passes if x)}")
-        q = [x for x in am.third_reading_queue(part["eqs"], part["recovered"], am.load_runs(_saved_runs("maths/*.json")))
+        q = [x for x in am.third_reading_queue(part["eqs"], part["recovered"], am.load_runs(_saved_runs("maths/[ABC]-*.json")))
              if x["md5"] in group_imgs]
         if not q:
-            return {"skipped": f"passes A and B agree on every {g} image: no third reading needed"}
+            return {"skipped": f"passes A and B agree on every {g} image: no third reading needed — run this run's "
+                               "after-steps (the S0b assemble) anyway"}
     args = am.vision_args(book, WORK, q, [p], BATCH, None, batch_dir)
     out = _embed("transcribe-maths.workflow.js", args, run)
     return {**out, "images": len(q), "batches": len(args["batch_files"])}
@@ -618,7 +619,7 @@ def _run_in_dir(run_file: Path, d: Path) -> bool:
         r = json.loads(run_file.read_text())
     except json.JSONDecodeError:
         return False
-    return any(str(f).startswith(str(d.resolve()) + "/") for f in r.get("batch_files") or [])
+    return isinstance(r, dict) and any(str(f).startswith(str(d.resolve()) + "/") for f in r.get("batch_files") or [])
 
 
 def _approved(slug: str) -> bool:

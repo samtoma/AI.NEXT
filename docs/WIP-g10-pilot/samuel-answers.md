@@ -114,3 +114,8 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     in the manifest's order — with not-yet-prepared lessons visible but not startable ("Being prepared"), each
     becoming startable automatically when the fan-out loads it. Grounded teaching unchanged: nothing is taught
     from an unprepared lesson.
+39. (2026-10-01, decision 60) Does the gate auto-pass (answer 37c, G1–G4) also cover G5, the final go/no-go
+    (dry run, coverage, drift, cost)? → "YES, and Make sure to mark them for my review in the console view":
+    G5 auto-passes too; every auto-passed gate decision (G1–G5) is recorded and shown in the console backlog
+    as a gate decision for Samuel, cleared only by him. G5 passing deploys nothing — production moves only on
+    Samuel's explicit go, through CI.

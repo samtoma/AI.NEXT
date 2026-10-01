@@ -1178,16 +1178,19 @@ through the attempts route and confirm identical outcomes.
   FR-4321's own rule MUST still hold without exception: a stand-in image MUST NOT draw or reveal the
   question's own unknown or answer; one that does is withheld, and the lesson ships without it, exactly
   as FR-4321 already requires of a native figure.
-- **FR-4509** *(decision 58c, answer 37c)*: During the fan-out to the rest of the book, the pipeline's
-  gates **G1** (objectives and prerequisite links, FR-4410), **G2** (solution disputes, FR-4302), **G3**
-  (the family and widget-mapping sample, FR-4306) and **G4** (misconceptions and refutations, FR-4307)
-  MUST proceed on the AI checks' own recommendation rather than hold a chapter waiting for a human to
-  clear it. Every decision reached this way MUST land in the backlog (FR-4501) as an auto-passed item,
-  never counted as a human stamp. The pipeline's **automatic safety checks are unaffected**: broken
-  maths, an answer that disagrees with the book (FR-4302), and the parity drift guard (FR-4207) still
-  hold an item exactly as before this decision. *(This requirement names G1–G4 only, matching Samuel's
-  answer 37c. Whether it also covers G5 — the dry-run delta, coverage, drift and cost go/no-go before
-  production promotion, FR-4209 — is not decided; see Open questions for Samuel, below.)*
+- **FR-4509** *(decision 58c, answer 37c; G5 added 2026-10-01, decision 60, answer 39)*: During the fan-out
+  to the rest of the book, the pipeline's gates **G1** (objectives and prerequisite links, FR-4410), **G2**
+  (solution disputes, FR-4302), **G3** (the family and widget-mapping sample, FR-4306), **G4**
+  (misconceptions and refutations, FR-4307) and **G5** (the dry-run delta, coverage, drift and cost
+  go/no-go, FR-4209) MUST proceed on the AI or automatic checks' own recommendation rather than hold a
+  chapter waiting for a human to clear it. Every decision reached this way MUST be recorded (gate,
+  chapter or run, what was decided, the checks it rests on, links to their evidence) and MUST land in the
+  backlog (FR-4501) as a **gate decision marked for Samuel's review**: shown to him as his, and cleared
+  (approve or reject) only by Samuel; other reviewers may view it. It is never counted as a human stamp.
+  The pipeline's **automatic safety checks are unaffected**: broken maths, an answer that disagrees with
+  the book (FR-4302), and the parity drift guard (FR-4207) still hold an item exactly as before this
+  decision. **G5 passing does not deploy or promote anything**: production still changes only on
+  Samuel's explicit go, through CI.
 
 ### Key Entities
 
@@ -1383,11 +1386,10 @@ Working defaults the decisions left to the design. Each is reversible.
    > review. An operator MAY reject one item from this exception at any time, removing only that item
    > from what students are served, without reinstating the gate for anything else."*
    This is a proposal for Samuel's wording and approval, not an edit made to the constitution file.
-5. **Does decision 58c's "gates G1–G4 auto-pass" also cover G5** (the dry-run delta, coverage, drift and
-   cost ledger go/no-go before promoting a course to production, FR-4209, `tasks.md` T363)? Answer 37c
-   names G1–G4 only; `tasks.md` T443 leaves G5 as a human gate until told otherwise, since it reads as a
-   production-readiness check rather than a per-item content review — but that is this pass's inference,
-   not something Samuel said directly.
+5. ~~**Does decision 58c's "gates G1–G4 auto-pass" also cover G5**?~~ **Answered 2026-10-01 (decision 60,
+   answer 39): "YES, and make sure to mark them for my review in the console view."** G5 auto-passes like
+   G1–G4; every auto-passed gate decision is a backlog item marked for Samuel (FR-4509). G5 passing deploys
+   nothing — production moves only on his explicit go, through CI.
 
 **Every other question and confirmation raised in rev. 1 and rev. 2 is answered**
 ([decisions.md](./decisions.md)):
