@@ -28,9 +28,12 @@ THE POLICY THE COLLECTOR ENFORCES (the workflow's prompts ask for it; nothing is
     pipeline's own models accept (RunItem, the choice-option rules, the marker-spec rules, a numeric key that is a number, the
     options of a "stem" choice present in the stem); (3) for a fix, re-type the key from that quote, never from nowhere (the
     key's letters and digits are a subsequence of the quote's); (4) have every expression key read by THE APP'S OWN MARKER
-    (marker_check.mjs: the same module the assembly runs); (5) keep a stem repair a repair (a few characters, never a
-    rewrite, the [figure] marker kept); (6) be CONFIRMED by the independent verifier (it worked the stem alone and the key is
-    right and no other answer is also right). Anything that fails any of them is not recommended live: it is recommended
+    (marker_check.mjs: the same module the assembly runs) — and, where that marker can say (g2rec_identity.mjs, no model, deterministic),
+    the key must be EQUAL TO THE EXPRESSION THE STEM ASKS TO TRANSFORM ("Simplify: …": a NOT-equal key is a book error or a damaged stem the
+    agents did not catch) and EQUAL TO THE ANSWER THE BOOK STATES (its EPUB answer, the quoted span, the working's last line: a key the typing
+    agent corrected is not the book's, and correcting a book's answer is Samuel's to approve); (5) keep a stem repair a repair (a few
+    characters, never a rewrite, the [figure] marker kept); (6) be CONFIRMED by the independent verifier (it worked the stem alone and the
+    key is right and no other answer is also right). Anything that fails any of them is not recommended live: it is recommended
     `hold` (the item's typing is sound) or `exclude` (the item is already excluded for a typing problem, so its typed
     shape may be unusable), with the reason, and listed in the report.
   * a recommendation never overwrites a human verdict (auto_pass_gates.g2_merge keeps those); an exclude may carry the

@@ -904,7 +904,7 @@ No Workflow launched, no model call, nothing loaded, no G2 file or DB row touche
 decision recorded for Samuel's review): the items the G2 auto-pass **held** (a three-way disagreement) or **excluded** (a typing problem) get a
 recommended verdict each, as the Chapter 8 pilot's per-item G2 recommendations did, now as a stage. Runbook §7c; code `services/extraction/g2_recommend.py`,
 `runbook/g2-recommend.workflow.js` (prompts `g2rec-v1`), `g2rec_identity.mjs`; `auto_pass_gates.py g2-recommend-args | g2-recommend-collect`; tests
-`tests/test_g2_recommend.py` (69; the whole suite is green).
+`tests/test_g2_recommend.py` (70; the whole suite is green: 1068 passed).
 
 **How it works.** One Sonnet agent (effort high) per batch of 8 sees each item's stem, figure, the book's own working, printed answer, EPUB final answer, blind
 answer, the three-way pairs, the typed shape and typing problems, and recommends accept / fix (the item's new typing, only the book's own answer re-typed) / hold /
