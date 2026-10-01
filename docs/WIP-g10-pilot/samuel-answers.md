@@ -86,3 +86,21 @@ Consistency-review decisions (2026-09-27), one at a time:
     Orchestrator's default, to confirm: a curriculum with nothing live yet for the chosen grade is still offered and
     selectable, with a short note saying there is nothing to study there yet. (decisions.md number assigned with
     answers 27–35.)
+37. (2026-10-01) "How do you want to fill the Grade 10 American course?" → Samuel: "I am on an early phase, and I
+    always always want to see the whole extraction appear. And let's prepare in the console a review gate, just
+    internal and the aim will be that the console has zero backlog, so I, Tamer and Kamil will be reviewing one by
+    one, but this is for us, and keep the student always full as if everything has been reviewed as for now we are
+    the ones who use the app for testing, so please consider and fan out the full book for me, and in the background
+    create agents with the review process so we can review from the console page." Follow-ups, same day:
+    a. Students always full (MATHS ONLY — "Maths only (Recommended)"): everything extracted for a maths course goes
+       live to students as if reviewed; review status stays internal (console only). Social Studies and Arabic keep
+       their review queue; Quran/Hadith stay sealed regardless.
+    b. Internal console review gate: every item without a human stamp is a backlog item; Samuel, Tamer and Kamil
+       review one by one; the goal is zero backlog. (Only human stamps count — answer 33.)
+    c. Gates G1–G4 during the fan-out → "Auto-pass, review later (Recommended)": the pipeline proceeds on the AI
+       checks' recommendation; every decision lands in the console backlog; automatic safety checks (broken maths,
+       answers vs the book, parity) still block.
+    d. Figures no native type can draw yet → "Book picture for now": show the book's own image until the native
+       figure exists. TEMPORARILY REVERSES answer 29 for students; each such question stays in the backlog as
+       "needs native figure".
+    e. Fan out the full book (the other 13 chapters, ≈ $0.85–1.1k) — approved.
