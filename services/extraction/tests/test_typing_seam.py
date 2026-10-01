@@ -11,6 +11,10 @@ The eight validation errors the first Chapter 1 lesson (g10m1s3-1) died on, as f
   * 4 choice items typed with a list of 14 numbers to select from (options without a key, answer None).
 `lesson-runs --draft` could not even write G2's page for them. Now such an item is a pending typing problem: G2 (a person, or
 the auto-pass's exclusion) rules on it, and the full shape is required again the moment it is accepted, fixed or held.
+A ninth, from the second Chapter 1 lesson (g10m1s7-3, Ex1-9:11 "Factorise: 25x^3 + 1"): the key (∛25·x+1)(…) typed marker kind
+"surd" with form "factorised", which schemas.AnswerSpec refuses, so the whole lesson's split failed. The collection now normalises
+the kind (tests/test_lesson_collect6.py: KindForForm); here the seam holds the same line for a run an older collection made, and the
+app's own marker is shown to read the key as an `expression`.
 No model is called.
 """
 
@@ -18,6 +22,8 @@ from __future__ import annotations
 
 import io
 import json
+import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -140,6 +146,94 @@ class Validator(unittest.TestCase):
         self.assertTrue(rec["items"][0]["typing_problems"][0].startswith(alb.INVENTED_OPTIONS))
         with self.assertRaisesRegex(ao.StageError, r"needs a G2 fix or exclude"):
             ao.lesson_runs(run_of([old]), None)
+
+
+NODE = shutil.which("node")
+CUBE_KEY = "(\\sqrt[3]{25}x+1)((\\sqrt[3]{25})^2x^2-\\sqrt[3]{25}x+1)"
+
+
+def surd_factorised(ref="Ex1-9:11", kind="surd", **kw) -> dict:
+    return item(ref, answer_type="expression", answer=CUBE_KEY, choices=None, options_source=None, tier="basic", printed_page=30,
+                stem="Factorise: $25x^{3}+1$", solution=["$25x^{3}+1=" + CUBE_KEY + "$"], printed_answer="( 3√ 25x + 1)(( 3√ 25)2x2 −3√ 25x + 1)",
+                marker={"kind": kind, "key": CUBE_KEY, "form": "factorised", "variables": ["x"], "tolerance": None}, **kw)
+
+
+class MarkerKindForForm(unittest.TestCase):
+    """Ex1-9:11: a factorised expression that contains surds is an `expression`, and the app's marker reads it so."""
+
+    @unittest.skipUnless(NODE, "node runs the app's own marker")
+    def test_the_apps_marker_reads_a_cube_root_in_an_expression_key_and_marks_it_against_itself_and_a_reordering(self):
+        script = (EX.parent.parent / "app" / "src" / "lib" / "answer-marker.ts").as_uri()
+        js = (f"const M = await import({json.dumps(script)});\n"
+              "const key = process.argv[2];\n"
+              "const out = {};\n"
+              "for (const kind of ['expression', 'surd']) {\n"
+              "  const spec = { kind, key, form: 'factorised', variables: ['x'], tolerance: null };\n"
+              "  out[kind] = { key_problem: M.validateKey(spec), marks: {} };\n"
+              "  const tries = { self: key,\n"
+              "    reordered: '((\\\\sqrt[3]{25})^2x^2-\\\\sqrt[3]{25}x+1)(\\\\sqrt[3]{25}x+1)',\n"
+              "    commuted: '(1+\\\\sqrt[3]{25}x)((\\\\sqrt[3]{25})^2x^2-\\\\sqrt[3]{25}x+1)',\n"
+              "    expanded: '25x^3+1',\n"
+              "    wrong: '(\\\\sqrt[3]{25}x-1)((\\\\sqrt[3]{25})^2x^2+\\\\sqrt[3]{25}x+1)' };\n"
+              "  for (const [k, v] of Object.entries(tries)) out[kind].marks[k] = M.mark(v, spec).result;\n"
+              "}\n"
+              "console.log(JSON.stringify(out));\n")
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d, "m.mjs")
+            f.write_text(js)
+            proc = subprocess.run([NODE, "--no-warnings", str(f), CUBE_KEY], capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        out = json.loads(proc.stdout)
+        for kind in ("expression", "surd"):
+            self.assertIsNone(out[kind]["key_problem"], kind)
+            self.assertEqual(out[kind]["marks"], {"self": "correct", "reordered": "correct", "commuted": "correct",
+                                                  "expanded": "wrong_form", "wrong": "incorrect"}, kind)
+
+    def test_the_same_item_typed_expression_is_a_valid_marker_spec(self):
+        self.assertEqual(alb.marker_spec_problems(surd_factorised(kind="expression")), [])
+        schemas_ok = alb.RunItem.model_validate(surd_factorised(kind="expression"))
+        self.assertEqual(schemas_ok.fate(), "verified")
+
+    def test_a_run_an_older_collection_made_gets_the_problem_added_and_the_draft_is_written(self):
+        old = surd_factorised(verification="agreed")                # collect-6 before the rule: kind "surd", no typing problem
+        probs = alb.marker_spec_problems(old)
+        self.assertEqual(len(probs), 1)
+        self.assertTrue(probs[0].startswith(alb.MARKER_INCOHERENT), probs)
+        self.assertIn("form 'factorised' applies to an expression or an equation, not to kind 'surd'", probs[0])
+        files = ao.lesson_runs(run_of([old, item("Ex1-1:4a")]), None, draft=True)
+        rec = files["g10m1s3-1"]
+        self.assertEqual(rec["pending_g2"], ["g10m1s3-1:Ex1-9:11"])
+        self.assertEqual(rec["items"][0]["marker"]["key"], CUBE_KEY, "the key is not touched")
+        # a split that is final still refuses it until a person rules (a fix with the corrected marker, or an exclusion)
+        with self.assertRaisesRegex(ao.StageError, r"Ex1-9:11.*needs a G2 fix or exclude"):
+            ao.lesson_runs(run_of([old]), None)
+        fix = {"by": "Samuel Toma", "items": {"g10m1s3-1:Ex1-9:11": {"verdict": "fix", "fields": {"marker": {**old["marker"], "kind": "expression"}}}}}
+        self.assertEqual(ao.lesson_runs(run_of([old]), fix)["g10m1s3-1"]["items"][0]["marker"]["kind"], "expression")
+
+    def test_a_flagged_item_is_not_audited_again_and_a_coherent_one_never(self):
+        flagged = surd_factorised(typing_problems=["form 'factorised' applies to an expression or an equation, not to kind 'surd'"])
+        self.assertEqual(alb.marker_spec_problems(flagged), [])
+        self.assertEqual(alb.marker_spec_problems(surd_factorised(kind="expression")), [])
+        ok = surd_factorised(kind="surd")
+        ok["marker"]["form"] = "simplest"                             # 'simplest' fits a surd: nothing to flag
+        self.assertEqual(alb.marker_spec_problems(ok), [])
+        self.assertEqual(alb.marker_spec_problems(item()), [], "a choice has no marker")
+
+    def test_the_auto_pass_owes_g2_a_verdict_on_it_and_excludes_it(self):
+        owed = apg.g2_items(run_of([surd_factorised(verification="agreed")]), 1, "g10m")
+        self.assertIn("g10m1s3-1:Ex1-9:11", owed)
+        self.assertEqual(apg.g2_rule(owed["g10m1s3-1:Ex1-9:11"])[0], "exclude")
+
+    def test_the_record_says_why_a_kind_was_retyped(self):
+        run = run_of([surd_factorised(kind="expression")])
+        run["lessons"][0]["verify"] = {"retyped": [
+            {"ref": "Ex1-9:11", "as": "expression, kind expression (was surd)", "rule": "kind-for-form", "key": CUBE_KEY,
+             "because": ["form 'factorised' applies to an expression or an equation, not to kind 'surd'"]},
+            {"ref": "Ex1-3:1a", "as": "expression (values)", "key": "4; 5", "because": ["options said to be the lesson's closed set are not categories"]}]}
+        out = {d["key"]: d for d in apg.g2_retyped(run, 1, "g10m")}
+        self.assertIn("kind the asked form cannot apply to", out["g10m1s3-1:Ex1-9:11"]["basis"])
+        self.assertIn("kept exactly", out["g10m1s3-1:Ex1-9:11"]["basis"])
+        self.assertIn("the options were the typing agent's inventions", out["g10m1s3-1:Ex1-3:1a"]["basis"])
 
 
 class AutoPass(unittest.TestCase):

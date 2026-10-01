@@ -318,7 +318,7 @@ class KindForForm(unittest.TestCase):
         self.assertEqual(x["answer"], CUBE_KEY)
         self.assertEqual(x["typing_problems"], [], x["typing_problems"])
         self.assertEqual(x["typing_retyped"]["rule"], "kind-for-form")
-        self.assertEqual(x["typing_retyped"]["as"], "expression (expression)")
+        self.assertEqual(x["typing_retyped"]["as"], "expression, kind expression (was surd)")
         self.assertEqual(x["typing_retyped"]["from"], "expression (surd)")
         self.assertIn("not to kind 'surd'", x["typing_retyped"]["because"][0])
         r = rep["result"]["lessons"][0]["verify"]["retyped"]
@@ -339,7 +339,7 @@ class KindForForm(unittest.TestCase):
         self.assertEqual(x["marker"]["kind"], "equation")
         self.assertEqual(x["marker"]["form"], {"subject": "x"})
         self.assertEqual(x["typing_problems"], [], x["typing_problems"])
-        self.assertEqual(x["typing_retyped"]["as"], "expression (equation)")
+        self.assertEqual(x["typing_retyped"]["as"], "expression, kind equation (was surd)")
         _, y = self.cube(key="(x+\\sqrt{2})(x-\\sqrt{2})=0", variables=("x",), blind="(x+\\sqrt{2})(x-\\sqrt{2})=0",
                          solution=["$(x+\\sqrt{2})(x-\\sqrt{2})=0$"], printed="(x + √ 2)(x − √ 2) = 0", stem="Factorise $x^2-2=0$.")
         self.assertEqual(y["marker"]["kind"], "equation")

@@ -704,7 +704,7 @@ function checkTyping(it, t, lessonText) {
     const formWhy = MARKER_KINDS.includes(kind) ? formKindProblem(form, kind) : null
     if (formWhy) {
       const to = kindForForm(t, form)
-      if (to) { typed.retyped = { from: `expression (${kind})`, as: `expression (${to})`, rule: 'kind-for-form', form, because: [formWhy] }; kind = to }
+      if (to) { typed.retyped = { from: `expression (${kind})`, as: `expression, kind ${to} (was ${kind})`, rule: 'kind-for-form', form, because: [formWhy] }; kind = to }
       else problems.push(formWhy)
     }
     typed.marker = { kind, key: t.key, form, variables: t.variables || [], tolerance: null }
