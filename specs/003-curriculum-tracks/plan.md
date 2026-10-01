@@ -92,8 +92,8 @@ content live" covers it once switched on.
 (Postgres 16).
 **Primary Dependencies**: unchanged. There is no new library; the registries are plain modules. The
 pipeline stays on Claude Workflow (decisions.md C).
-**Storage**: Postgres, one database per stack. Migration **033** only; migration 023's tables are
-untouched.
+**Storage**: Postgres, one database per stack. Migrations **033–037** (the table under *Migrations*; **038** is planned, decision 61);
+migration 023's tables are untouched. *(Was "033 only" before 034–037 landed.)*
 **Testing**: `node --test` suites (`*.test.mts`, `@covers FR-…`); source-scan guard tests; pytest for
 the pipeline; `scripts/ci-migrations.sh all` (fresh ×3, upgrade from v0.9.2, rollback onto v0.9.2);
 the prompt capture harness (`app/scripts/capture-prompts.mts`) for byte-identity; `selfcheck_arabic.py`

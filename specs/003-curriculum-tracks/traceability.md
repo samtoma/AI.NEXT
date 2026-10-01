@@ -402,17 +402,17 @@ shows how each was closed.
 
 | | Count |
 |---|---|
-| Functional requirements | **74** |
+| Functional requirements | **81** |
 | Success criteria | **14** |
-| Traced (every one needs a row) | **88 / 88** |
+| Traced (every one needs a row) | **95 / 95** |
 | — verified | 0 |
 | — built | 1 |
 | — partial | 0 |
-| — open | 87 |
+| — open | 94 |
 | — blocked | 0 |
 | — deferred | 0 |
 | Requirements a test declares | **51** |
-| Tasks complete / total | **87 / 138** |
+| Tasks complete / total | **99 / 143** |
 
 **Of 0 requirements marked VERIFIED, 0 have an automated test declaring them.** The remaining 0 were verified by running the product — a browser session, a query against a loaded database — which is real evidence and is not re-checked on any later commit. That gap is the honest measure of this build's regression risk, and it is the number to drive down.
 

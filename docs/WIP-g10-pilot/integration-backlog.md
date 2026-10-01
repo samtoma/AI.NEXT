@@ -14,7 +14,7 @@
 6. G10 book config `bundles`: `g10m-course.json` first (T364); parity constant null until T364.
 7. Format alignment: manifest `exercises[].item_refs`, module `excluded_pages` (P1 vs P4); S0b `runs/<book>/maths/summary.json` (P8 vs P4); widget-gaps shape (done).
 8. Prerequisite-edges stage for G10 (decision 7, pending Samuel). → **Answered** (answer 4 = decisions.md #25: find them in the book); **built** (T428, FR-4410), used in the Chapter 8 pilot.
-9. Static book-figure display kind (decision 8, pending Samuel) — pipeline side + frontend. → **Answered, and declined** (answer 5 = decisions.md #26): figures no kind can draw get **native** figure types, not static images (FR-4321; the figure-gap inventory is T429, open). The consolidated review of 2026-09-27 (D1) asked whether to reopen this for fan-out — **reopened, for students only, answer 37d (decision 58d), 2026-10-01**: until a native kind is built, a maths course MAY show the book's own image as a stand-in (`visuals.kind: "book_image"`, `stand_in: true`), each one a backlog item "needs native figure" (new FR-4508). The figure-gap inventory and kind-by-kind approval (FR-4321) are unchanged. Not yet built (`tasks.md` T442).
+9. Static book-figure display kind (decision 8, pending Samuel) — pipeline side + frontend. → **Answered, and declined** (answer 5 = decisions.md #26): figures no kind can draw get **native** figure types, not static images (FR-4321; the figure-gap inventory is T429, open). The consolidated review of 2026-09-27 (D1) asked whether to reopen this for fan-out — **reopened, for students only, answer 37d (decision 58d), 2026-10-01**: until a native kind is built, a maths course MAY show the book's own image as a stand-in (`visuals.kind: "book_image"`, `stand_in: true`), each one a backlog item "needs native figure" (new FR-4508). The figure-gap inventory and kind-by-kind approval (FR-4321) are unchanged. **Built 2026-10-01** (`tasks.md` T442, read by the tech-writer: `assemble_lesson_bundle.py`, `BookImage.tsx`, `question-figures.ts`; 9 Chapter 8 questions held because the picture reveals the answer). Stale text left: see #88.
 10. Second blind mapper for chapter-distributed items (decision 9, pending Samuel). → **Answered** (answer 12 = decisions.md #33); **built** (T427), used in the Chapter 8 pilot.
 11. Real-data dry run of the whole line on Chapter 8 with stubbed model calls (no spend).
 
@@ -172,6 +172,8 @@
     agent per solution), `tests/test_working_check.py`. Flags → `runs/g10-math/working-check/chNN.flags.json` → the
     console backlog (answer 37c), never corrected. The pre-check alone, on the pilot seed, flags 3 real book typos G2
     missed (Ex8-6:42a, Ex8-6:38d, Ex8-6:42d). Chapter 8's run is prepared (`002-wcheck-ch08`, 192 solutions).
+    **Run done 2026-10-01** (`wf_957393ec-d74`): 21 solutions flagged (25 flags), $31.0 metered — 3–5× the estimate; now
+    **FR-4411** (spec rev. 9, `tasks.md` T447). Open: classify the 25 flags; calibration `sw-v2`; the console reading the flags (#87).
 79. CLOSED (`s7-v5`; `tests/test_widget_templates.py`) — **The six kinds of decision 27 were in the widget contract
     but never registered for the pipeline**: S7 author `wf_816352f4-fbc` saw polygon_builder, solid_scaler,
     box_plot_builder, venn_builder and area_model with an empty instrument, curve_sketcher with only linear and
@@ -215,3 +217,26 @@
     no committed export has a record yet — each course's first restore point is its next `--course` export
     (Prep-3 maths re-exports byte-identical plus the record; G10's generated dir still holds fresh generator
     bundles). Not yet run on noor.
+85. OPEN — **Answer 40 / decision 61: a book teaching item as a family's parent** (FR-4304 amended; proposed wording for
+    001's FR-1101, which the tech-writer may not edit from this worktree — stamp `specs/001-student-mvp1-delta/spec.md`
+    FR-1101 and its traceability row when the code lands). **Code in progress, not built** (`tasks.md` T448): migration 038
+    (`questions.parent_kind`, a trigger in place of the `parent_question_id` foreign key), `families/spec.py`,
+    `generate_questions.py`, `load_generated_questions.py`, the review desk's "Generated from" line; the plan is the
+    family-parent handoff in README. Blocks fan-out run `001-s6-author-ch08-s111` and lo:g10m8s1-1-1's family. Also update
+    `data-model.md`'s "Planned, not built" section and `plan.md`'s 038 row in the same work.
+86. OPEN (test owners) — **No test declares `@covers` for the new requirements.** FR-4322…FR-4327 (`course-outline.test.mts`
+    and `whole-book-render.test.mts` declare nothing; `course-outline-guard.test.mts` says `@covers constitution II`;
+    `test_course_outline.py` nothing), FR-4411 (`test_working_check.py` nothing) and FR-4501…FR-4509 (the three
+    `review-gate*.test.mts` declare `@covers FR-2204` only). `scripts/traceability.py` therefore counts none of them as
+    test-declared. The tech-writer may not edit `app/` or `services/`.
+87. OPEN — **The console does not read the step checker's flags.** No app code references
+    `runs/<book>/working-check/*.flags.json` (`ainext.working-check/1`), so a flag is not yet a backlog item as FR-4411 and
+    FR-4501 require. Needs a derivation in `lib/review-gate-queries.ts` (a new item kind or a reason on `book_question` /
+    `worked_example`) and a widening of migration 036's `item_kind` CHECK — a new migration, never a re-run of 036.
+88. OPEN — **FR-4508 leftovers**: `services/extraction/coverage/g10-math.figure-gaps.json`'s rule text still says "never a
+    static book image" (answer 29, reversed for students by 37d); ~420 pictures from another run's default `--figures-out`
+    sit in `app/public/book-figures/g10-math/` (check with the fan-out agent); and the 9 held questions plus s4-1-2's
+    advanced tier are Samuel's to decide.
+89. OPEN — **Log "no leave it as it is" verbatim in `samuel-answers.md`**: Samuel's reply on whether Noor should be told
+    which lessons are still being prepared (decision 59 follow-up) was relayed by the coordinating session, not written
+    into the answers file. FR-4206 and decision 59 cite it as relayed.
