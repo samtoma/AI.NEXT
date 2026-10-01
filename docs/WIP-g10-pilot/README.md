@@ -875,3 +875,25 @@ was not made by this agent (the shell refused it as a change to the shared chapt
 `044-wcheck-ch01.workflow.js` + `044-wcheck-ch01.part2.workflow.js` (pass A, 300 + 240 solutions) and `044-wcheck-ch01-B.workflow.js` + `044-wcheck-ch01-B.part2.workflow.js` (pass B reshuffled, 300 + 240; no batch shared with A) (stage SW):
 540 solutions, 108 agents a pass, 3 figures offered, 0 free pre-check flags; ≈ $29–38. After the runs: `working_check.py collect --args` every part's args (A, A.part2, B, B.part2) `--runs` the four saved files `--out runs/g10-math/working-check/ch01.flags.json`.
 S6/S7 (author, grade, verify) and S5 final cannot be prepared before the S5 draft is saved (and, for S7, chapter 1 loaded).
+
+## S0b agreement recognises semantically null differences — 2026-10-01 (data-engineer)
+
+Image `bde9de9fa698b641b04fd37ff2dc1fed` (ch.3, the remainder table of lesson g10m3s2-1) sat "unresolved" after three blind readings that
+agree on every value: A and C differed in `{7}^{1}` vs `7^{1}` (a brace round one token), B in its rule markup (`{|l|l}` + `\Big|` for
+`{|l|l|}`). `assemble_maths.normalise` (the agreement key; FR-4407: nothing is guessed, this only recognises readings that already agree) now
+also drops, and ONLY these, semantically null differences: braces round a single letter, whole number, Greek letter or one parenthesised
+expression when the group stands alone (`{7}^{1}`, `{12}^{2}`, `{(3x)}^{2}`; never a group that is a command's/script's argument or holds
+several tokens: `x^{12}`, `{a+b}^{2}`, `\frac{7}{5}` keep theirs), doubled and outer braces; `\bigl`/`\Biggr` sizes and the null delimiters
+`\left.` `\right.`; `\tfrac` `\cfrac`; `\hspace`, `\phantom`, `\enspace` … and `\\[2pt]`; an array/tabular's column spec (`{|l|l|}`, `{c|c}`,
+`{@{}c@{}}`), `\hline`/`\cline`, and a vertical rule drawn as a cell's UNBALANCED leading/trailing bar (`…=2\Big|`; a balanced `|x|`, a bar
+mid-cell and a `\left.…\right|` evaluation bar are kept); the minus sign spelt U+2212 (`−` is `-`; an en dash is not touched). Also fixed: a
+row separator followed by a space (`\\ x`) lost one backslash to the `\ ` rule, so `a\\ b` never agreed with `a\\b`. A command that takes no
+argument (`\cdot{h}`) no longer holds its following group as an argument. Digits, signs, operators, exponents, fraction structure and the
+decimal comma are never touched: `tests/test_assemble_maths.py::Normalise` pins both halves, and 28,539 digit/sign and 86,233 structural
+mutations of the 6,386 accepted transcriptions produced no false agreement (normalise is idempotent on all of them).
+
+**Effect** on the 14 saved A/B/C runs: agreement 560 → 564, unresolved 2164 → 2163 (images that agreed after normalisation only; none lost,
+none re-read by any model). Newly accepted: `bde9de9f…`, the blocked image, by agreement of A and B. Three more, `1555e56c…`, `86f0bd28…`,
+`ed18dc6a…` (U+2212 and `\cdot{\text{h}}`), had ALREADY been accepted by a third reading (pass C's text; third reading 15 → 12); with A and B now
+agreeing, the assembly takes the first rule that applies, agreement, and stores pass A's text instead of C's (same maths under the key; the
+differences are spacing inside `\text{}` and the minus glyph). No other accepted image changed route or text. `lesson-g10m3s2-1` now prepares.
