@@ -242,7 +242,7 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
 // otherwise match, so a changed bound, relation or extra constraint is refused; (3) "a=-1; q=1" against a sentence that states both and then the equation (assignedList cuts at
 // the first "so / therefore / hence / thus"); (4) trig names (\sin, \cos, …) are plain letters in the comparison and a trig ratio (sinθ=, cosθ/sinθ=) is a ONE-sided label,
 // stripped against a side that names NO trig function (a bare value, "=1/√2", the text layer's flattened chain "AC AB = AD BD"), so sin never settles against cos (a whole-corpus A/B
-// of the 5,901 recorded pairs, ch1-9, found 9 pairs of 6 ch5 items this had sent to the judge, fixed; no settled pair became unsettled); \therefore glued by the EPUB (\thereforeh) and "◦" for the degree sign are read like their spelled forms. Not changed: the 2–5 option cap, options not in the stem or lesson.
+// of the ~6,000 recorded pairs, ch1-9 (tests/settle_ab.mjs), found 9 pairs of 6 ch5 items this had sent to the judge, fixed; no settled pair became unsettled); \therefore glued by the EPUB (\thereforeh) and "◦" for the degree sign are read like their spelled forms. Not changed: the 2–5 option cap, options not in the stem or lesson.
 const norm = (s) => String(s || '').normalize('NFKC').replace(/[−–—]/g, '-').replace(/[“”]/g, '"').replace(/[’‘]/g, "'")
   .replace(/\$/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
 const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8 && norm(hay).includes(n) }

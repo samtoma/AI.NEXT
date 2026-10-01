@@ -406,7 +406,7 @@ every agent except the judge, whose pair list the collection decides). Determini
     (never a mix; invented options are still refused). A relation reads past units attached to each bound (`0 m ≤ s(t) ≤ 10 m`, `The domain is 0 s ≤ t ≤ 20 s…`): one unit per
     bound, never a letter the key uses as a variable, set braces and `Domain:`/`Range:` labels dropped; a changed bound, relation or extra constraint is refused. A sentence that
     states the assignments and then the equation (`a=-1; q=1`). `\sin`/`\cos`/`\tan` are their letters (sin and cos are two answers, as they were not before), and a trigonometric
-    ratio (`sinθ=`, `cosθ/sinθ=`) is a label of ONE side only, stripped against a side naming no trigonometric function. A whole-corpus A/B of every recorded pair (5,901, chapters 1–9)
+    ratio (`sinθ=`, `cosθ/sinθ=`) is a label of ONE side only, stripped against a side naming no trigonometric function. A whole-corpus A/B of every recorded pair (about 6,000, chapters 1–9: `node tests/settle_ab.mjs <old script> <new script>`, exit 1 on any settled pair that is no longer settled)
     is the check to run after any change to `settle`: it found 9 pairs of Chapter 5 sent to the judge by a first draft. The 2–5 option cap and invented options are untouched.
   - *`assemble_lesson_bundle.normalise_dollars` (Chapter 9).* A dollar sign the book writes `\$` inside maths cuts the app's `/(\$[^$]+\$)/g` splitter (KaTeX reads it fine; the splitter has
     no escape, nor do `lib/math-text.ts`, `lib/voice.ts`, `lib/tts/sanitize.ts`). Written without a `$`: `\text{\textdollar}` in running maths, `\textdollar{}` inside `\text{…}`,
