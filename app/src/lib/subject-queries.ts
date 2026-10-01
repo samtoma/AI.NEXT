@@ -243,6 +243,11 @@ async function subjectSummariesOn(
     [...coursesOfSubject].filter(([, ids]) => ids.length > 1).map(([s]) => s)
   );
 
+  const outlineCountOf = (courseId: string, prepared: ReadonlySet<string>) => {
+    const ready = readyCount(courseId, outline, prepared);
+    return ready ? { outline: ready } : {};
+  };
+
   // Course order — curriculum, then subject, then course (`lib/courses.ts`).
   // For a National student that IS the registry subject order the home has
   // always used (maths, Social Studies, Arabic), and two courses of one
@@ -266,7 +271,7 @@ async function subjectSummariesOn(
       // "k of m parts mastered" per split section; [] for every National course
       sections: sectionProgress([...a.lessons.values()], sections),
       // "5 of 65 lessons ready" for a course with an outline; no key otherwise
-      ...((c) => (c ? { outline: c } : {}))(readyCount(a.courseId, outline, a.slugs)),
+      ...outlineCountOf(a.courseId, a.slugs),
     }));
 }
 
