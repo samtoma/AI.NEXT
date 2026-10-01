@@ -222,6 +222,7 @@ return {
   batch: BATCH,
   images: TOTAL,
   batch_files: BATCH_FILES.length ? BATCH_FILES.map((b) => b.file) : undefined,
+  ...(ARGS.embedded ? { embedded: ARGS.embedded } : {}),   // a generated copy (embed_workflow.py) says which script ran
   results,
   problems,
 }

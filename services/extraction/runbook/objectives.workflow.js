@@ -110,6 +110,12 @@ if (BOOK.objectives_mode !== 'derived') {
 }
 const OPT = Object.assign({ second_mapper: true, pool_batch: 60, links: true }, ARGS.options || {})
 const PRIOR = Array.isArray(ARGS.prior_objectives) ? ARGS.prior_objectives : []
+// Backlog 68 (the full-book fan-out): by reference, the earlier chapters' objectives are shards too —
+// prior.txt is the linker's list (exactly priorText() inline) and prior/<id tail>.txt one statement (the
+// link checker's statementOf()) — and args.prior_objectives carries the ids only. `prior_by_ref` says so;
+// by-ref args built before it (Chapter 8, no prior objectives) carry the statements and read them as before.
+const PRIOR_BY_REF = !!(REF && ARGS.prior_by_ref)
+if (ARGS.prior_by_ref && !REF) throw new Error('args.prior_by_ref needs args.by_ref: the prior objectives\' shards live in its directory')
 if (REF && OPT.pool_batch !== CHR.pool_batch) {
   throw new Error(`options.pool_batch is ${OPT.pool_batch} but the pool shards were cut in batches of ${CHR.pool_batch}: rebuild with s1-args --by-ref`)
 }
@@ -397,7 +403,7 @@ const objectivesByLesson = () => lessonsOut.map((r) => {
 }).join('\n')
 
 const priorText = () => PRIOR.length
-  ? PRIOR.map((o) => `  ${o.id}: ${o.statement}${o.section ? ` (section ${o.section})` : ''}`).join('\n')
+  ? (PRIOR_BY_REF ? refFile('prior.txt') : PRIOR.map((o) => `  ${o.id}: ${o.statement}${o.section ? ` (section ${o.section})` : ''}`).join('\n'))
   : '  (none: no earlier chapter has passed G1)'
 
 const linkPrompt = () => `Find the PREREQUISITE LINKS between learning objectives that this textbook chapter itself shows. A link "SRC -> DST" means a student must be able to do SRC before DST, and the book shows it in one of three ways:
@@ -434,7 +440,7 @@ const statementOf = (id) => {
     if (o) return o.statement
   }
   const p = PRIOR.find((x) => x.id === id)
-  return p ? p.statement : '(not an objective of this book)'
+  return p ? (PRIOR_BY_REF ? refFile(`prior/${String(p.id).replace(/^lo:/, '')}.txt`) : p.statement) : '(not an objective of this book)'
 }
 
 const linkCheckPrompt = (links) => `Check each claimed prerequisite link below against the book text it cites. You decide from the text shown only.
@@ -538,6 +544,7 @@ return {
   stage: 'S1', workflow: 'objectives', prompts_version: PROMPTS_VERSION,
   book: BOOK.book, chapter: CHN, module: CHMODULE, packet_sha256: ARGS.packet_sha256,
   ...(REF ? { by_ref: REF } : {}),
+  ...(ARGS.embedded ? { embedded: ARGS.embedded } : {}),   // a generated copy (embed_workflow.py) says which script ran
   teacher_only_dropped: ARGS.teacher_only_dropped || 0,
   lessons: lessonsOut,
   pool: { items: POOL_N, batches: chunks.length, mappers, second_mapper: !!OPT.second_mapper },
