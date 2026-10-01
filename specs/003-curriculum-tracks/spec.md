@@ -1295,7 +1295,10 @@ written; see the dated notes in rows IX and "Additional constraints".)*
    visibility dimension, amending ADR-0018, with the production load path decided alongside it.
 2. **ADR-0005 amendment** (2026-09-25) — derived objectives with at least two kinds of evidence, and
    the pipeline decisions 12–16.
-3. **ADR-0019 note** (2026-09-25) — the G10 course is covered; switching it on is the gate.
+3. **ADR-0019 note** (2026-09-25) — the G10 course is covered; switching it on is the gate. **A second
+   note (2026-10-01, decision 58, answer 37)** extends it to the fan-out itself: gates G1–G4 proceed on
+   the AI checks' own recommendation, and a new internal review backlog (FR-4501…FR-4509) replaces the
+   pre-promotion human sign-off, maths only.
 4. **ADR-0020 note** (2026-09-25) — an exception to the prompt hold for the G10 course's prompts only
    (numbered the **fifth** since 2026-09-27; the list is renumbered in one place in ADR-0020). Later
    exceptions from this feature: the **sixth**, National Arabic lessons' printed names (decision 34);

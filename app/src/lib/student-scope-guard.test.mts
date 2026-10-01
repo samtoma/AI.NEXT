@@ -369,6 +369,10 @@ export const SCOPED_EXEMPT: Readonly<Record<string, Readonly<Record<string, stri
       "resolves which objectives a slug names; its two callers gate before anything reaches a student — " +
       "lessonDataOn refuses the lesson's course first thing, and lessonCourseId returns only a course id " +
       "for the probing snapshot, the lesson itself refused in the same request",
+    isUnpreparedLesson:
+      "answers one yes/no — is this slug listed by a book's outline (migration 037) with no objectives " +
+      "loaded — and returns no content; /api/ask uses it only to refuse an unprepared lesson earlier, with the " +
+      "same 404 the gate gives a hidden one, so it reveals nothing the refusal does not",
   },
 };
 
@@ -467,7 +471,14 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
   "src/app/api/ask/route.ts": {
     // resolveStudentScope: her scope keys the per-session snapshot, so a
     // change of scope reaches an open chat on its next turn (lib/session-cache.ts)
-    reads: ["buildAskContext", "buildLessonContext", "lessonCourseId", "getAllSacredPassages", "resolveStudentScope"],
+    reads: [
+      "buildAskContext",
+      "buildLessonContext",
+      "lessonCourseId",
+      "isUnpreparedLesson",
+      "getAllSacredPassages",
+      "resolveStudentScope",
+    ],
   },
   "src/app/api/attempts/route.ts": {
     reads: ["visibleCoursesFor", "getLibraryEntries", "flagAuthoringGap", "advanceIfMastered"],
@@ -612,6 +623,12 @@ export const READERS: Readonly<Record<string, Gate>> = {
     noContent:
       "answers only the course id of a lesson slug, for the probing snapshot; the lesson itself is refused " +
       "by buildLessonContext → getLessonData in the same request",
+    file: "src/lib/lesson.ts",
+  },
+  isUnpreparedLesson: {
+    noContent:
+      "a yes/no — the slug is a lesson of some book's outline with nothing loaded to teach from — used to " +
+      "refuse the turn (404) before a session opens; it returns no curriculum content",
     file: "src/lib/lesson.ts",
   },
   lessonAnchorLo: {
