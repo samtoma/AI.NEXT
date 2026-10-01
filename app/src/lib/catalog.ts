@@ -272,19 +272,21 @@ export function courseForSubject(
 }
 
 /**
- * Which curricula a grade OFFERS (FR-4004; decision 1: "only when the grade
- * has live courses in two or more curricula, as decided in the console").
+ * Which curricula a grade OFFERS — has something LIVE for (FR-4004).
  *
  * A curriculum is offered for a grade when some registry course of it has a
  * `live` rule for that grade in this environment. With the kill switch off
  * (`gatingOn === false`, FR-4015), when some LOADED registry course of it is
  * written for that grade (`CourseDef.grades`). Registry order.
  *
- * ONE rule for sign-up, the first-Google-sign-in step, the console's per-grade
- * "offered" line (FR-4102) and the grade-change re-resolution (FR-4008), so
- * they can never disagree about what a grade offers. It reads the RULES only —
- * never an exception, which belongs to one student and says nothing about a
- * grade.
+ * Since Samuel's reversal of 2026-10-01 ("yes the sign up should always ask"
+ * — decision 1, superseded; `specs/003-curriculum-tracks/decisions.md`) this
+ * no longer decides WHETHER sign-up asks — it always does — only which of the
+ * always-shown options get the "nothing to study here yet" note
+ * (`resolveInitialCurriculum` below, `CurriculumChoice`). It still answers the
+ * console's per-grade "offered" line (FR-4102) and the grade-change
+ * re-resolution (FR-4008). It reads the RULES only — never an exception,
+ * which belongs to one student and says nothing about a grade.
  */
 export function offeredCurricula(
   grade: string | null | undefined,

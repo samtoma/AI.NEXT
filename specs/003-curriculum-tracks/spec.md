@@ -537,21 +537,38 @@ through the attempts route and confirm identical outcomes.
   other data changed, and MUST see exactly what they saw before. A student whose curriculum value is
   not one the product knows MUST see no course except what an exception grants, and the console MUST
   flag the value as unknown.
-- **FR-4004** *(resolved rev. 2 — was Q1; decision 1)*: A grade **offers** a curriculum when at least
-  one course of that curriculum is live for that grade, by the console's rules, in this environment.
-  While the course gate is switched off (FR-4015), a grade offers a curriculum when one of its courses
-  is written for that grade. Sign-up, the first-Google-sign-in step, the console's "offered" line
-  (FR-4102) and every other reader MUST use this one rule, so they can never disagree about what a
-  grade offers.
-- **FR-4005** *(changed rev. 2, decision 1)*: At sign-up, once a student has given their grade, a
-  grade that offers two or more curricula MUST ask which curriculum their school follows, naming only
-  those curricula and pre-selecting none, and store the answer as chosen. A grade that offers exactly
-  one MUST NOT ask, and MUST store that curriculum as implied. A grade that offers none MUST NOT ask,
-  and MUST store National as implied. The server MUST reject a curriculum the product does not know.
-  A known curriculum the grade no longer offers when the form is submitted (an operator hid it after
-  the page loaded) MUST NOT be stored as chosen: the server MUST store what the grade offers at that
-  moment, by the rules above, and record that it did so. The question MUST be the only thing this
-  feature adds to sign-up (FR-2002). *(Last two sentences: privacy review F12.)*
+- **FR-4004** *(resolved rev. 2 — was Q1; decision 1; superseded 2026-10-01 by answer 36 — see
+  decisions.md)*: A grade **offers** a curriculum when at least one course of that curriculum is live
+  for that grade, by the console's rules, in this environment. While the course gate is switched off
+  (FR-4015), a grade offers a curriculum when one of its courses is written for that grade. **This rule
+  no longer decides whether sign-up or the first-Google-sign-in step ask** — FR-4005 now always asks,
+  naming every curriculum the product knows. It decides: which curriculum carries sign-up's "nothing to
+  study here yet" note (FR-4005); the automatic resolution used when an implied curriculum is
+  re-resolved on a grade change (FR-4008), which answer 36 does not touch; and the console's "offered"
+  line (FR-4102). Those three readers MUST use this one rule, so they never disagree about what a grade
+  offers.
+- **FR-4005** *(changed rev. 2, decision 1; changed 2026-10-01, answer 36 — "yes the sign up should
+  always ask")*: At sign-up, once a student has given their grade, the form MUST always ask which
+  curriculum their school follows, naming **every curriculum the product knows**, not only the ones
+  FR-4004 says the grade offers, and pre-selecting none. A curriculum with nothing live yet for the
+  chosen grade MUST still be shown and selectable, carrying a short note that there is nothing to study
+  there yet *(the orchestrator's default; Samuel has not yet confirmed this note's wording, or that it
+  belongs at all)*. The server MUST reject a curriculum the product does not know, and MUST refuse to
+  create the account when the curriculum answer is missing: an account is never created without one.
+  The chosen curriculum is always stored as chosen. *(Privacy review F12's race condition — a curriculum
+  the grade stopped offering between page load and submit — no longer arises here: every known
+  curriculum is acceptable at sign-up regardless of whether anything is live for the grade.)*
+
+  **For the automatic re-resolution of an implied curriculum when a grade changes** (FR-4008), which
+  answer 36 does not touch, the FR-4004 "offered" rule still applies without asking: a grade that offers
+  exactly one curriculum resolves to that one, implied; a grade that offers none resolves to National,
+  implied.
+
+  The question remains the only thing this feature adds to sign-up (FR-2002).
+
+  *(Superseded text, decision 1: "a grade that offers two or more curricula MUST ask … naming only
+  those curricula … A grade that offers exactly one MUST NOT ask … A grade that offers none MUST NOT
+  ask." Kept here for the record; see decisions.md.)*
 - **FR-4006** *(changed rev. 2)*: A student's curriculum MUST scope everything the course gate
   already scopes (FR-2705) and the readers that do not yet go through it: the lesson catalogue, the
   subject summaries, the lesson data, the progression and saved place, the skill map, the practice
@@ -629,9 +646,11 @@ through the attempts route and confirm identical outcomes.
   course's rule for a grade MUST apply only to students of that grade who follow that course's
   curriculum, or who hold an exception for it (FR-4009). Everything FR-2701…FR-2711 requires holds
   unchanged, except FR-2709 as FR-4015 amends it.
-- **FR-4102**: The console MUST show, per grade, which curricula sign-up offers today, by the one
-  rule of FR-4004, so an operator can see what a new student of that grade will be asked before
-  changing a rule.
+- **FR-4102** *(changed 2026-10-01, answer 36)*: The console MUST show, per grade, which curricula have
+  at least one live course, by the one rule of FR-4004, so an operator can see which curricula sign-up's
+  always-asked question (FR-4005) will show with the "nothing to study here yet" note for that grade,
+  before changing a rule. *(Before answer 36 this line showed which curricula sign-up would ask among;
+  now sign-up always names every curriculum, so this line shows what is live, not what is asked.)*
 - **FR-4103**: Before a change hides the last live course of a curriculum for a grade that has
   students following it, the console MUST state, in the page (FR-2710), how many students it leaves
   with nothing to study. It MUST show a count only; the `content-review` role MUST NOT learn a
