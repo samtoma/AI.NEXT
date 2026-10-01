@@ -476,7 +476,37 @@ function canonRel(s, printed) {
   if (printed) t = t.replace(/(?<=[;(\[]\s*)(?<![\d.])(-?\d+)\s+(\d+)(?![\d.])(?=\s*[;)\]])/g, '$1/$2')
   t = normTex(t).replace(/\\in(?![a-zA-Z])/g, '∈').replace(/\\mathbb\{([A-Za-z])\}/g, '$1').replace(/[ℝℕℤℚ]/g, (c) => ({ 'ℝ': 'R', 'ℕ': 'N', 'ℤ': 'Z', 'ℚ': 'Q' })[c])
     .replace(/\\infty(?![a-zA-Z])/g, '∞').replace(/\\cup(?![a-zA-Z])/g, '∪').replace(/\\frac\{(-?\d+)\}\{(\d+)\}/g, '$1/$2')
-  return t.replace(/^[A-Za-z]∈(?=[(\[])/, '')               // "x ∈ (−∞; 6/5]" is the interval
+  return t.replace(/\\?[{}]/g, '').replace(/^[A-Za-z]∈(?=[(\[])/, '')               // "x ∈ (−∞; 6/5]" is the interval; set braces are no part of the sets (Chapter 6)
+}
+// What a printed relation or set may carry without changing it (Chapter 6; each reading is tried beside the printed one, and only an EXACT canonical
+// match counts): the unit of a quantity ("0 m ≤ s(t) ≤ 10 m": one unit, never a letter the key uses as a variable); a sentence round one relation
+// chain, its other words carrying no digit, no relation, no negation ("The domain is 0 s ≤t ≤20 s. It represents the total time …"); the "Domain h:" /
+// "Range f(x):" label of each interval; a capital point's name before its coordinates ("M(0; 1) and N(0; −1)")
+const REL_UNIT = '(?:mm|cm|dm|km|m|s|min|h|hr|kg|mg|g|ml|l|years?|days?|hours?|minutes?|seconds?|metres?|meters?|litres?)'
+const REL_ATOM = String.raw`(?:-?\d+(?:[.,]\d+)?°?|[A-Za-z](?:\([a-z]\))?)`
+const REL_CHAIN = new RegExp(`${REL_ATOM}(?:\\s*[<>≤≥≠]\\s*${REL_ATOM})+`)
+function relationVariants(r, kc) {
+  const out = [r]
+  const units = new Set()
+  const u = r.replace(new RegExp(`(\\d)\\s+(${REL_UNIT})(?![A-Za-z°(])`, 'g'), (m, d, w) => {
+    if (w.length === 1 && new RegExp(`(?<![A-Za-z])${w}(?![A-Za-z])`).test(kc)) return m
+    units.add(w.toLowerCase()); return d
+  })
+  const bare = units.size === 1 ? u : r
+  if (bare !== r) out.push(bare)
+  const m = REL_CHAIN.exec(bare)
+  if (m) {
+    const rest = `${bare.slice(0, m.index)} ${bare.slice(m.index + m[0].length)}`
+    if (!/[\d<>≤≥≠=∈]/.test(rest) && !/\b(?:not|no|never|except|cannot)\b/i.test(rest) && /^[A-Za-z\s.,;:'’()-]*$/.test(rest)) out.push(m[0])
+  }
+  const lab = bare.split(/\b(?:domain|range)\b[^:]{0,24}:/i)
+  if (lab.length > 1 && !lab.slice(0, -1).some((x, i) => i > 0 && /[<>≤≥≠∈]/.test(x))) {
+    const items = lab.map((x) => x.trim().replace(/[.,;]+$/, '')).filter(Boolean)
+    if (items.length && !items.some((x) => /^[A-Za-z]+$/.test(x))) out.push(items.join('; '))
+  }
+  const named = r.replace(/(?<![A-Za-z])[A-Z]{1,2}\s*(?=\()/g, '')
+  if (named !== r) out.push(named)
+  return out
 }
 // the readings of a printed answer that is no more than its own answer: as printed; without the next part's answer (the item's part
 // letter is the only thing it is cut at: "d" runs on into "e)"); without a number line's axis, a variable and its ticks
@@ -498,7 +528,7 @@ function relEquivalent(key, printed, ref) {
   if (!RELATION_KEY.test(String(key))) return false
   const k = canonRel(key, false)
   if (k.length < 3) return false
-  if (relReadings(printed, ref).some((r) => canonRel(r, true) === k)) return true
+  if (relReadings(printed, ref).some((r) => relationVariants(r, k).some((v) => canonRel(v, true) === k))) return true
   // "true for all real values of x" says the whole line, (-∞;∞); a negation or an exception says something else
   return /^(?:[A-Za-z]∈)?(?:\(-∞,∞\)|R)$/.test(k) && /\b(?:all|any|every)\s+real\s+(?:values?|numbers?)\b/i.test(printed) &&
     !/\b(?:not|no|except|other\s+than|never|cannot)\b|n't/i.test(printed)
