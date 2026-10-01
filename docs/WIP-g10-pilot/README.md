@@ -1158,3 +1158,52 @@ The five delta working checks (ch01 18 solutions, ch02 16, ch03 1, ch04 8, ch05 
 file, which now covers every live solution; a `delta_runs` list records each merge; no app change (the console ignores keys it does not know, and it deliberately reads no non-canonical flags file, because the
 calibration files are not backlog). Applied to chapters 1–5 (originals kept in the session scratchpad, every original flag verified unchanged and in the same order). The printed `g2-recommend-args` sequence and
 runbook §7c now carry the merge as a standard step; `tests/test_g2_recommend.py::DeltaMerge`.
+
+## Chapter 6 re-collected and closed: figure labels, units inside a relation, a sentence that states the equation — 2026-10-01 (data-engineer)
+
+Chapter 6 (functions) closed with 168 questions, 144 live and **92 of its 97 flagged items excluded** by G2 (111 not-markable teaching items aside). 57 of the 92 were false: the typing check compared a correct key with a correct printed answer
+written another way. `lesson.workflow.js` (still `collect-6`; the collection is deterministic, so the nine saved runs were re-collected with `recollect_lessons.py`, **no model call, no Workflow launch, no DB write**), `tests/test_lesson_collect6.py`
+(`ChapterSixForms`, plus 10 more cases in `NoSingleEditIsAccepted`).
+
+| class (the 92) | before | after | what changed |
+|---|---|---|---|
+| "options said to be a figure's labels are not all single labels" | 38 | **0** | a figure's label may be a function label (`f(x)`, `g(x)`, `y(t)`, `s(t)`) as well as a letter; mixing the two in one list is refused; options the figure does not print are still refused |
+| key vs printed answer, units inside a relation or set | 29 | 13, all real | `0 m ≤ s(t) ≤ 10 m` and `The domain is 0 s ≤ t ≤ 20 s. It represents…` read as the key's relation: ONE unit per bound, never a letter the key itself uses as a variable, set braces and `Domain:`/`Range:` labels and a capital point name dropped; a changed bound, a changed relation or an extra constraint is refused |
+| `a=-1; q=1` against a sentence that states both and then the equation | 2 | **0** | `assignedList` stops at the first "so / therefore / hence / thus" |
+| 6-option lists, options not in the stem, closed-set options named neither in stem nor lesson | 21 | 21 | left, as asked: the 2–5 cap is Samuel's call |
+| `book_final is not in the book solution` | 2 | 1 | Ex6-8:27a (a typo in the book's own solution) stays |
+
+Also read alike now (each with a pin that a changed digit, sign, relation or function stays refused): `\sin`/`\cos`/`\tan` are their letters, so **sin and cos are different answers** (the old signature dropped every command and made them the same); a trigonometric ratio
+(`sinθ=`, `cosθ/sinθ=`) is a label of ONE side only, stripped against a side that names no trigonometric function; the EPUB's glued `\thereforeh`, `\lex`, and the text layer's `◦` for the degree sign; `and` between non-letters; `…, en y=…`.
+
+**Chapter 6, before → after.** G2: 92 excluded → **35** (5 accept, 12 held, 69 teaching, 8 retyped unchanged). Assembly: **168 → 225 questions, 144 → 196 live**, held 24 → 29 (answer_mismatch 11, unanswerable 14, figure_reveals_answer 3, unverified 1),
+KaTeX errors 0, validation passes. Copies re-prepared, **not launched**: `109-wcheck-ch06` A and B (150 agents, 331 solutions, about $20.1–26.0), `108-s5-draft-ch06` (23 agents, about $9.9–13.7), `g2rec-ch06` (12 agents, 47 items, about $2.4–7.5). `close-chapter 6` re-run a second and a third time:
+the G2 file, the seed and the copies are identical (only the provenance hashes and the new report counter move). `g2-ch06.json`: the 97 auto entries were dropped first (no human verdict existed).
+
+**Still excluded, 35.** 21 option-class (above). 14 others, all genuine: Ex6-4:6b (key "yes" against a printed sentence: a yes/no choice), Ex6-8:27a (typo in the book's solution), Ex6-8:31c (key "6; 9" against "6 R 5 coins and 9 R 2 coins": the denominations are part of the answer), and a **run of printed
+answers that do not belong to the question they sit beside**: Ex6-6:14a, 14b, 15, 16 (the printed answer is the previous part's: a θ-interval for a question whose key is a function), 18a, 18c, 18d, 19a–d (counts and coordinate lists shifted by one part). Those need a person or a book-answer realignment, not a looser check.
+
+**Held by the app's marker, 20 (was 15)**: keys no marker kind reads. Eight are lists of points (`(-0.63, 0); (0.63, 0)`, `A(90°, 1); B(90°, -1)…`, `(-3, 12); (2, 2)`: "not a coordinate pair"), four are lists of equations (`x+y=15; y=x+3`, `y=-2x; y=x^2-3`, `y = 0; x = 0`: "more than one '='"), six are a degree-sign
+interval or set-builder under kind `interval` (`60^{\circ}<\theta<300^{\circ}`: "unexpected ')'", Ex6-6:17, Ex6-8:42–44, 55a, Ex6-6:20a), one is an inequality with no variable (`0 \le s(t) \le 10`, Ex6-1:8b). They stay held (not live). Whether the marker grows a point-list / equation-list kind or a degree-aware interval is a backend and Samuel decision
+(the `AnswerSpec` contract); nothing was added here. **The judge:** 4 pairs (Ex6-8:27f, 27g: blind~book and book~printed) have no recorded verdict and need a live judge, as in the main session's first recollect; those two items are held.
+
+**What the chapter-6 rules do to chapters 1–5 — a whole-corpus A/B.** Every pair of every saved lesson run, chapters 1–9, original and recollected files (5,901 pairs), settled by the script of the end of the Chapter 5 round and by today's: 5,866 identical; **0 pairs that were settled became unsettled**; 12 pairs that went to a judge now settle (4 in chapter 5:
+Ex5-7:1c book~printed, 7a blind~book, 8e blind~book and book~printed; 8 in chapter 6, `f(x)=-3,5cos θ`-type forms); 23 only change their route label, same verdict (the `◦` sign now reads as `°` before the signature). **No item of chapters 1–5 changes its typing outcome**; the recollected files of chapters 1–5 are not rewritten (chapter 5's copies and G2 file are in flight). *A catch worth keeping:* the first draft of the
+function-name rule sent 9 pairs of 6 chapter-5 items (flattened chains `AC AB = AD BD`, `=\frac{1}{\sqrt{2}}` finals, `cosθ/sinθ=`) to the judge, 3 of them with no recorded verdict; the A/B found them and `tests/test_lesson_collect6.py::ChapterSixForms::test_a_trigonometric_label_is_stripped_against_a_side_that_names_none` pins them.
+Four chapter-1 runs (g10m1s3-1, 4-1, 5-1, 6-1) cannot be re-collected at all any more: the typing prompts changed with `lesson-v8` (13:17) after they were recorded (12:53); their recollected files stand as the main session left them.
+
+## Escaped dollar signs: `\$` inside maths cut the app's maths splitter (Chapter 9) — 2026-10-01 (data-engineer)
+
+`close-chapter 9` failed `load_seed --validate-only`: `KaTeX cannot parse $\text{\$ — Unexpected character: '\'` on the exchange-rate lessons (g10m9s5-1: `$\text{\$ 7.00}$`, `$\text{\$1}&=\text{R11.42}\\…$`, `( $\$$ )`, `$\$\text{12}$`).
+
+**Root cause, and where.** KaTeX reads `\$` fine. The **app's splitter does not**: `components/TeXRenderer.tsx` splits on `text.split(/(\$[^$]+\$)/g)` (its own comment: "no escaped-dollar handling needed for this corpus"), so the `$` of a `\$` closes the segment, KaTeX is handed half a command, and **every later `$…$` of the same string
+pairs its dollars the wrong way round** (the whole stem is garbled, not one symbol). The same unescaped split sits in four more places: `lib/math-text.ts` (`hasMath`, `plainMath`), `lib/voice.ts` and `lib/tts/sanitize.ts`. `katex_check.mjs` mirrors the app, which is why it caught this. So the right fix is at assembly, not in the validator (which stays strict, and a test
+pins that it still flags a raw `\$`), and not in five app splitters.
+
+**The fix.** `assemble_lesson_bundle.normalise_dollars` (first step of `respace_tree`, so the entity and re-spacing passes that follow also split on well-formed segments): a dollar sign is written without a `$` character — `\text{\textdollar}` in running maths, `\textdollar{}` inside a `\text{…}` group (KaTeX 0.17 defines `\textdollar` in text mode only; the `{}` keeps the space or letter after it), and the segment
+`$\text{\textdollar}$` in prose. The scan honours the escape, so `\\$` (a line break, then the closing `$`: `…\\$`, which Chapter 1's solutions carry) is not touched. `_KNOWN['textdollar']` is pre-set so the re-spacer does not split the new command into `\text dollar`. Counted like `html_entities_unescaped`: the report's **`escaped_dollars_normalised`** (chapter 9: 9;
+chapters 1–6: 0). `tests/test_assemble_lesson_bundle.py::EscapedDollarTest` (8: the forms, nothing else touched, undoing the rewrite gives the input back, idempotent, the app's own split and KaTeX refuse the raw form and accept the new one, the text between segments still pairs, a bundle and a lesson-content file, the entity pass after it).
+
+**Scan, every seed bundle.** `seed/g10-math/g10m-c01…c06`, `c09` and all 71 `seed/content` files (chapters 7 and 8 have no seed bundle in this worktree): a raw `\$` occurred only in chapter 9 (5 strings, 9 signs: 2 stems, 3 worked-example/content steps); none now. The lesson-run files keep theirs (`blind_answer`s and the S2 `quote`; not student-facing, not touched). **Also found, not changed:** a LONE unescaped `$` in prose — "the American dollar ($)" in g10m9s5-1's exposition and a claim (3 strings): harmless today (no other `$` in the string, so the app prints it), but it would pair with the next `$…$` if one were added.
+**`close-chapter 9`** re-run: exit 0, KaTeX errors 0, **132 questions, 126 live** (the 2 stems the first run held as `katex_error` are live: 124 → 126), held 6 (answer_mismatch), G2 exclude 10 / held 6 / teaching 3 (the same as the first run: nothing stale, the G2 file is identical). Copies prepared, **not launched**: `130-wcheck-ch09` A and B (60 agents, 137 solutions, about $7.94–10.29), `129-s5-draft-ch09` (10 agents, about $4.32–5.94), `g2rec-ch09` (4 agents, 16 items, about $0.8–2.5).
+For frontend: the speech and plain-text paths drop an unknown command (`\textdollar`), so a read-aloud of those stems is silent at the sign; a one-line mapping to "dollar" in `lib/voice.ts`, `lib/tts/sanitize.ts` and `plainSegment` would speak it. Not done: it is app code.
