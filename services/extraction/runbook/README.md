@@ -325,6 +325,37 @@ every agent except the judge, whose pair list the collection decides). Determini
   following diagram: [figure]") was not attached to its parts — is fixed in `lesson-args`;
 - three pairwise verdicts that contradict each other are flagged `inconsistent` (the judge got one wrong).
 
+**COLLECT-6 and lesson-v8** (2026-10-01, the first four Chapter 1 lessons; `tests/test_lesson_collect6.py`,
+`tests/test_typing_seam.py`). What an algebra chapter showed that the geometry pilot never did:
+- **Verbal finals.** A classification's book solution is a sentence ("… so it is real."), and the typing agent
+  copies a sentence with its parenthetical dropped, so `book_final is not in the book solution` fired on 24 of one
+  lesson's 96 items, none of them wrong. A final written as a sentence is now in the solution when its words,
+  numbers and symbols are an *ordered subsequence* of the solution's and no skipped word negates ("not", "no",
+  "non-"). A computation the solution never wrote, a changed value or a dropped "not" is still refused.
+- **Options that were never the book's.** `options_source: "lesson"` is a closed set of one-word categories the book
+  uses (rational / irrational, real / non-real / undefined, true / false, a yes/no question's two sentences), named in
+  the stem or the lesson. Numbers, pairs ("4 and 5" among "3 and 4" and "5 and 6"), values and combinations of
+  categories ("rational, integer") are the book's *answer*, never options: 28 of one lesson's 34 items were MCQs
+  whose distractors the typing agent placed around the printed answer. More than five options is a list to select
+  from, not a choice; an option never goes without its key; a key that is no option leaves no answer.
+- **Typed again from the book's key**, deterministically, only where the key is plainly one number (`numeric`) or a list of
+  numbers (`expression`, marker kind `values`, key `4; 5`, in any order; "between which two consecutive integers" accepts the
+  chain `5 < √26 < 6` as the book's final). Anything else keeps the choice's problems and G2 decides. Recorded on the
+  item (`typing_retyped`) and in the lesson's `verify.retyped`; the G2 gate record lists every one.
+- **A verbal choice settles by the option each source names** (route `options`, no judge call): whole words, so
+  "rational" is not in "irrational"; a negation settles nothing; the printed and the blind answer must be words
+  only (a number is a second part the option does not cover); the book side is the solution's last sentence, else
+  its whole text. An item typed not markable marks nothing, so a loose copy of the book's final is no problem.
+- **The seam** (`assemble_lesson_bundle.RunItem`, `assemble_objectives.lesson_runs`): an item the pipeline flagged
+  (`typing_problems`) and G2 has not ruled on, or has excluded, need not be well formed (a choice with no key was the
+  error that stopped Chapter 1's G2 draft: 8 items); an accept, a fix or a hold requires the full shape again. The same
+  options audit (`choice_option_problems`) runs on every run, so a run an older collection made cannot carry invented
+  options past G2. It only ever adds a typing problem; Samuel's G2 verdict is still the last word (Ex8-6:33a stands).
+- **lesson-v8** changed the TYPING prompt only (a choice's options are never the agent's to make up; a number or a
+  pair is numeric / expression; `book_final` is a quote; a two-part answer of different kinds is not markable). The runs
+  made before it are re-collected, not re-run; a copy prepared before it carries lesson-v7 / collect-5 and must be
+  prepared again (`uv run fanout.py prepare <run-id>`) before it runs.
+
 **Re-collect a saved run, no model call** (when only the collection changed):
 
 ```sh
@@ -337,7 +368,11 @@ uv run recollect_lessons.py runs/<book>/lessons/<runId>.json … --resume-previe
 It runs today's script, with the saved run's own args, through the stub runtime, every agent answered
 from the run's journal. It reuses an answer only when today's script sends the recorded prompt (from the
 agent's transcript), and a judge verdict only for the same pair id with the same two answers; anything
-else is reported (and stays `unclear`/unchecked), never guessed. A collection change usually changes the
+else is reported (and stays `unclear`/unchecked), never guessed. The coverage oracle is shown each item's answer
+type, so a collection that types an item again changes its prompt: it is reused when the prompts are equal once
+the answer types and the tally are set aside (the sub-headings it audits did not change). A saved return value
+names no run (`runs/<book>/lessons/<wf_id>.json` is the name); the run id is read from the file name. Because the
+script is today's, a prompt bump (lesson-v8) makes the earlier runs un-recollectable afterwards: re-collect first. A collection change usually changes the
 JUDGE's prompt (the pairs it is sent), which is why a Workflow resume would run the judge and everything
 after it live, and this does not.
 
@@ -670,15 +705,22 @@ already in a gate's file is never overwritten. Nothing here deploys or promotes 
 ```sh
 # G1 — objectives: owed decisions on the AI line's recommendation (a pipeline failure blocks, exit 1);
 #      --approve then runs `assemble_objectives.py approve … --by "auto-pass G1 (AI recommendation)"`
-uv run auto_pass_gates.py g1 <book> --chapter 9 --approve
+uv run auto_pass_gates.py g1 <book> --chapter 9 --maths runs/<book>/maths/book/accepted.json --approve
+#      (the same maths the objectives were assembled with: without it `approve` reads the PILOT's accepted.json;
+#       the default is runs/<book>/maths/book/accepted.json when it exists)
 # G2 — book questions: a human verdict stands; else the recommendation file's; else the checks' own rule
 #      (no printed answer + re-solve agreed with the book's solution → accept; typing problem → exclude);
 #      a three-way disagreement gets no verdict and stays held
-uv run auto_pass_gates.py g2 <book> --chapter 9 --lesson-run runs/<book>/lessons/<runId>.json \
-    [--recommend runs/<book>/g2-ch09.recommended.json]                      # → runs/<book>/g2.json
-uv run assemble_objectives.py lesson-runs <book> runs/<book>/lessons/<runId>.json --g2 runs/<book>/g2.json
+uv run auto_pass_gates.py g2 <book> --chapter 9 --lesson-run runs/<book>/lessons/<runId>.json [--lesson-run …all the chapter's runs] \
+    --into runs/<book>/g2-ch09.json [--recommend runs/<book>/g2-ch09.recommended.json] [--split]
+#      ALWAYS --into for a fan-out chapter (the default, runs/<book>/g2.json, is the pilot's file; the command refuses it when
+#      it holds another chapter's verdicts). One call per chapter with every lesson's run: it writes ONE complete gate record
+#      (runs/<book>/gates/g2-ch09.json). An item typed not markable owes no verdict (teaching material either way); a choice
+#      with options the book never printed that the collection could not type again from the book's key is a typing problem:
+#      excluded and listed. `--split` then runs the next line for each --lesson-run (with the same --maths).
+uv run assemble_objectives.py lesson-runs <book> runs/<book>/lessons/<runId>.json --g2 runs/<book>/g2-ch09.json
 #      … assemble, load, then:
-uv run apply_review_verdicts.py --g2 runs/<book>/g2.json --book <book>               # auto items → ai_checked_by
+uv run apply_review_verdicts.py --g2 runs/<book>/g2-ch09.json --book <book>          # auto items → ai_checked_by
 # G3 — generated sample accepted on S6/S7; held predicate claims stay held (no --mapping-review step)
 uv run auto_pass_gates.py g3 <book> --chapter 9 --queue seed/generated/<book>/generated-questions.review-queue.json \
     --queue seed/generated/<book>/widget-questions.review-queue.json --widgets seed/generated/<book>/widget-questions.json
