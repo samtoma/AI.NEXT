@@ -1022,7 +1022,7 @@ change (chapters 5+) carries the old collection: re-collect its run afterwards (
 hand: save the return value (`save_to`) and the wrapper (`runs/g10-math/records/`), meter it (`--stage`/`--lesson` read from the plan, append-once), run the plan's after-steps for that
 kind of run, prepare and verify every run whose dependencies are now saved, and print a one-JSON summary (what was saved and metered with its cost, the key numbers of each step, warnings, the first
 failing step, the runs prepared / skipped / not ready, and the READY scripts in plan order). `uv run fanout.py ready [--running …] [--prepare] [--paths]` lists only what can be launched. Code:
-`fanout_advance.py` (the CLI is wired in `fanout.py`); tests `tests/test_fanout_advance.py` (75 tests, no model call, no DB); documented in `runbook/README.md` §10 ("Advancing a finished run").
+`fanout_advance.py` (the CLI is wired in `fanout.py`); tests `tests/test_fanout_advance.py` (84 tests, no model call, no DB; one real `pg_dump` helper check was run by hand into a scratch dir); documented in `runbook/README.md` §10 ("Advancing a finished run").
 **Kinds covered:** S0b A/B/C, S1 (G1), lessons (+ `close-chapter` when the chapter's lessons are all saved), the working check (both passes, every part), S5 draft (+ the chapter's load after a fresh `pg_dump`), S6 author / grade (parts),
 S7 author / verify, S5 final (+ G3, G4, coverage, parity, G5). **Left manual:** launching, G0b, a G1 ruling, the G2-recommendation runs (`g2rec-chNN`, not plan runs: `ready` lists a prepared one under `extra_ready` and holds the chapter's check and S5 draft behind it),
 S6/S7 contingency re-runs, killed runs (advance refuses a run that is not `completed`), the book-level closing steps.

@@ -380,9 +380,12 @@ const PLAIN_NUMBER = /^-?\d+(?:\.\d+)?$/
 // "b = 8 cm and l = 2b = 16 cm" → 8, 16 (once the sentence has an "=", only the numbers it sets after one count: 2b is a
 // coefficient, and a number it does not set is refused); "R9,00" is 9. A sentence with maths in it, with no word, or whose numbers are
 // glued to letters ("5kg") is not read (null), so nothing is guessed.
+const UNIT_WORD = /^(?:mm|cm|dm|m|km|g|mg|kg|ml|l|s|min|h|hr|rand|cents?)$/i
 function sentenceNumbers(text) {
   let t = String(text == null ? '' : text).normalize('NFKC').replace(/[−–—]/g, '-')
-  if (/[\\$]/.test(t) || !(t.includes('=') || t.replace(/\b(?:and|or)\b/gi, ' ').match(/[A-Za-z]{3,}/))) return null
+  // a sentence has a word, or only units after its numbers ("9,96 mm and 8,35 mm", "5,65 cm"); a bare variable or a glued unit is not read
+  const words = t.replace(/\b(?:and|or)\b/gi, ' ').match(/[A-Za-z]+/g) || []
+  if (/[\\$]/.test(t) || !(t.includes('=') || words.some((w) => w.length >= 3) || (words.length && words.every((w) => UNIT_WORD.test(w))))) return null
   t = t.replace(/\bR\s?(?=\d)/g, '')
   const hasEq = t.includes('=')
   const out = []
@@ -539,8 +542,9 @@ function inBookSolution(solution, final) {
   const segs = String(final).match(/\$[^$]+\$/g) || [String(final)]
   // a segment that lists several statements must have each of them in the solution (COLLECT-3); a list joined by "and"
   // ("T_2=23 and T_4=53") is the same list, "and" being its comma (COLLECT-6)
-  return segs.every((p) => found(p) || (() => { const ps = topLevelParts(p.replace(/\$/g, '').replace(/\\text\{\s*and\s*\}|\s+and\s+/g, ', '))
-    return ps.length > 1 && ps.every((x) => x.includes('=') && found(x)) })()) || verbalElision(solution, final)
+  // (statements are "L = value" or "L ≈ value"; a decimal comma is not a separator: "x ≈ 3,26, y ≈ 7,72" is two statements)
+  return segs.every((p) => found(p) || (() => { const ps = topLevelParts(plainSigns(p).replace(/\$/g, '').replace(/(\d),(\d)/g, '$1.$2').replace(/\\text\{\s*and\s*\}|\s+and\s+/g, ', '))
+    return ps.length > 1 && ps.every((x) => /[=≈]/.test(x) && found(x)) })()) || verbalElision(solution, final)
 }
 
 // ---- COLLECT-6 helpers ----------------------------------------------------------------------------

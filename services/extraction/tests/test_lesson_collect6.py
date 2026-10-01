@@ -642,6 +642,8 @@ class ListsFromSentences(TypedItem, unittest.TestCase):
             ("-34; -33", "The two consecutive negative integers are -34 and -33."),
             ("28; 45; 53", "width w=28 cm length l=45 cm and diagonal d=53 cm."),
             ("8; 16", "b = 8 cm and l = 2b = 16 cm"),                                                # 2b is a coefficient, not a value
+            ("9,96; 8,35", "9,96 mm and 8,35 mm"),                                                     # units alone are no word, and no number
+            ("8,7; 5,65; 5,65", "8,7 cm, 5,65 cm and 5,65 cm"),
         ]
         for key, printed in cases:
             x = self.typed(key, printed)
@@ -657,6 +659,10 @@ class ListsFromSentences(TypedItem, unittest.TestCase):
             ("5; 2", "There are 5kg of tricycles and 2 bicycles."),                  # a number glued to a letter is not read
             ("8; 16", "b = 8 cm and l = 2b = 16 cm and 12 cm"),                      # once there is an "=", a number it does not set is refused
             ("5; 2", "5 and 2"),                                                     # no word: not a sentence
+            ("9,96; 8,35", "9,96 mm and 8,36 mm"),                                   # units do not make a number right
+            ("9,96; 8,35", "8,35 mm and 9,96 mm"),                                   # nor its order
+            ("9,96; 8,35", "9,96 mm and 8,35 mm and 4 mm"),
+            ("9,96; 8,35", "9,96 mm and 8,35 x"),                                    # a bare variable is not a unit
         ]
         for key, printed in cases:
             x = self.typed(key, printed)
@@ -975,7 +981,7 @@ class ApproximateFinals(TypedItem, unittest.TestCase):
     def test_a_greek_label_on_the_blind_answer_is_a_label_not_a_difference(self):
         # `\theta \approx 42{,}07^{\circ}` against the printed "42,07°": settled by the signature, no judge (the key kept Greek letters visible, so
         # these 13 pairs of g10m5s7-1 were sent to a judge for a label)
-        it = item("Ex5-8:17a", "Find θ.", ["$\\theta=\\text{42,07...}\\approx\\text{42,07}^{\\circ}$"], "42,07°")
+        it = item("Ex5-8:17a", "Find θ.", ["$\\begin{align*}\\theta&=\\text{42,07...}\\\\&\\approx\\text{42,07}^{\\circ}\\end{align*}$"], "42,07°")
         t = typing("Ex5-8:17a", "42,07", "$\\theta\\approx\\text{42,07}^{\\circ}$", "numeric", unit="°")
         rep = run(args_for([it]), responses([t], [{"ref": "Ex5-8:17a", "final_answer": "\\theta \\approx 42{,}07^{\\circ}", "markable": True}]))
         x = rep["result"]["lessons"][0]["items"][0]
