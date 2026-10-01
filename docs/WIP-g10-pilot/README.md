@@ -728,3 +728,42 @@ Nothing was launched, no model was called, no packet or embedded copy under `wor
   the agent's report): FR-1101 (001), FR-4304 (003), 003 `data-model.md` "Planned, not built — questions.parent_kind",
   `plan.md` migration row 038, `tasks.md` T448 (tick), the 003 traceability row for FR-1101, ADR-0008 §4,
   `docs/specs/extraction-pipeline.md` §3.9/§3.10, constitution line ~203.
+
+## Multi-part exercises: a part carries what it depends on — 2026-10-01 (data-engineer; before any other chapter is assembled)
+
+**The defect** (the sw-v2 calibration, "findings for others"): the line serves each part of a multi-part exercise on its
+own, so a later part's words (or its worked answer) can name points or values only an earlier part gives — 39d "Prove
+that ST ∥ PR" (S, T are 39b's mid-points), 44b's "= E" (44a), 46c's m_MN (46a). One systematic defect, not three.
+**The rule** is `services/extraction/multipart.py` (docs: `runbook/README.md` §11): over a question's parts in book order
+— the shared preamble was already carried (the packet's `item_stem` puts the set's instruction and the question's header
+in front of every part) — a part carries, straight after the preamble and in the book's own words, **R1** the names an
+earlier part introduces ("S and T are the mid-points of PQ and QR", with the point's key when the earlier part is a
+marked question), **R2** the preamble's unknown points/variables an earlier marked part works out (`N(x;y)` → "N=(3, 5)",
+`U(6;a)` → "a=5"), **R3** a gradient its worked answer uses without working out ("m_MN=−1/3"). Deterministic; never solves
+or invents (G2's keys, the book's words); a carry that would state the part's own answer, a held/excluded/teaching/unkeyed
+source, or a name in words no pattern reads is **listed, not guessed**. Wired in three places: `assemble_objectives.lesson-args`
+(R1 names only — S2–S4's blind solver and typing check now read what a student will; 39c was "undefined" for want of this),
+`assemble_lesson_bundle.py` (all rules, whole chapter, across lessons; report `stem_carry`), `apply_review_verdicts.py --g2`
+(the human-stamp note). **Chapter 8, reloaded** (assembly → `load_seed --update` → G2 re-applied; scratch DB
+`ainext_pilot_g10_ch08` only): **17 stems changed** (8 question rows + 9 teaching entries); the diff against the previous
+seed is exactly those 17, status, stamps and hold reasons untouched; 0 KaTeX errors; coverage RED only on the same two
+decisions as before (objective_evidence s1-1-1; tier_floor s1-1-1, s1-1-2 std/adv, s4-1-2 adv); both Chapter 8 dry runs
+rc=0 and parity GREEN. Examples — 39d: "…$R(1,-2)$ . **$S$ and $T$ are the mid-points of $PQ$ and $QR$.** Prove that
+$ST\parallel PR$ ."; 44b: "…[figure] **$E(\frac12,-\frac32)$ is the mid-point of $BD$.** Prove that $ABCD$ is a
+parallelogram."; 46c: "…[figure] **$m_{MN}=-\frac13$.** Show that $AB\parallel MN$ ."; also 36b/36c (N=(3,5)), 38d/38e,
+42c/42d, 44d, 45b (a=5), 41b (t=−1), 34d/35c/32b/44f (gradients), 35d. **Human stamps:** four carried rows had a G2
+stamp (35c, 36b, 41b, 45b): the stamp stays and the review note now reads "stem fixed by pipeline carry-over (…) — not
+Samuel", which the console shows as "changed after a human signed it" (the orchestrator-stem-fix rule); an auto-pass leaves
+no such note. **Unresolved — for the review backlog** (`runs/g10-math/multipart-ch08.json`, each with the earlier parts'
+words and keys): 16 parts — `refers_by_words` 13 (8-4:20b, 20c; 8-6:24d, 25e, 29b, 30c, 30e, 31d "Hence", 32b, 35d, 37e,
+42d, 42e; 32b/35d/42d are also partly carried), `no_source` 4 gradients no earlier part asks for (30e m_AB, which is also a `refers_by_words`, 43d m_AB,
+44d m_BD, 44f m_BD). Not detectable by any rule and not listed: a worked answer that uses a bare number from an earlier part
+(46e uses A and B from 46c). **For others:** qa-engineer — a sw-v2 re-run on Chapter 8 will no longer say "unclear" for
+39d/44b nor REAL-BUT-ELSEWHERE for 46c (the saved sw-v1 flags and `work/.../wcheck-ch08` packets are untouched);
+tech-writer (I did not touch `specs/`) — FR-4303 says none is "reshaped silently into a different question": the carry is
+recorded (report + review note), but the requirement needs the rule itself (suggested: a part of a multi-part exercise
+MUST be served with what it depends on — the names an earlier part introduces and the values it works out — in the book's
+words, every changed stem recorded, anything the rule cannot settle listed for a human) and a traceability row; Samuel —
+whether values given in a stem (R1 key, R2, R3) are what he wants for the tutor's grounded explanations (they make the
+book's working traceable to the stem, and make the part slightly easier than the book's standalone question), and the 16
+listed parts.
