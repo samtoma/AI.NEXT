@@ -152,7 +152,7 @@ def hash_ok(latex: str | None, h: str) -> bool:
 _BRACE_BODY = r"(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*"      # the inside of one brace group, nested twice
 _TABLE_ENVS = {"array": 1, "tabular": 1, "longtable": 1, "tabular*": 2, "tabularx": 2}   # name → leading {…} args
 _SIZED = r"\\(?:big|Big|bigg|Bigg)[lmr]?"                   # \Big, \bigl, \Biggr …: the size of a delimiter only
-_SINGLE_TOKEN = re.compile(r"[A-Za-z0-9]|\\(?:" + "|".join(GREEK) + r")(?![A-Za-z])")
+_SINGLE_TOKEN = re.compile(r"[A-Za-z]|[0-9]+(?:\.[0-9]+)?|\\(?:" + "|".join(GREEK) + r")(?![A-Za-z])")   # letter, number, Greek
 # commands that take NO argument: a group after one of them is a bare group, not its argument (`\\cdot{h}`)
 _NO_ARG_CMDS = frozenset(GREEK) | {
     "cdot", "times", "div", "pm", "mp", "leq", "geq", "le", "ge", "neq", "ne", "approx", "equiv", "sim", "cong",
@@ -226,14 +226,38 @@ def _strip_table_markup(s: str) -> str:
     return "".join(out)
 
 
+def _is_delimited_unit(x: str) -> bool:
+    """x is exactly one parenthesised or bracketed expression — `(…)` or `[…]` — whose first delimiter is
+    closed by its last character (so `(a)+(b)` and the half-open `[0;1[` are not)."""
+    if len(x) < 2 or x[0] not in "([":
+        return False
+    op, cl = ("(", ")") if x[0] == "(" else ("[", "]")
+    depth, j = 0, 0
+    while j < len(x):
+        c = x[j]
+        if c == "\\":
+            j += 2
+            continue
+        if c == op:
+            depth += 1
+        elif c == cl:
+            depth -= 1
+            if depth == 0:
+                return j == len(x) - 1
+        j += 1
+    return False
+
+
 def _simplify_braces(s: str) -> str:
-    """Braces that only group, removed — never a brace that scopes something. A group is dropped when it
-    is a single letter, digit or Greek letter standing on its own (`{7}^{1}` → `7^{1}`; `{x}^{2}`), and a
-    doubled group is collapsed (`{{a+b}}` → `{a+b}`). A group that follows a command, a script mark or
-    another group is an ARGUMENT (`\\frac{7}{5}`, `x^{12}`, `\\sqrt[3]{8}`) and stays; so does any group of
-    more than one token, because it decides what a following `^` or `_` attaches to (`{a+b}^{2}` is not
-    `a+b^{2}`, `{12}^{2}` is not `12^{2}`)."""
-    out, i, n, last = [], 0, len(s), ""        # last: what the previous item was: cmd | close | script | other
+    """Braces that only group, removed — never a brace that scopes something. A group standing on its own
+    is dropped when what it holds renders the same without it: a single letter, a whole number or a Greek
+    letter (`{7}^{1}` → `7^{1}`, `{12}^{2}` → `12^{2}`, `{x}^{2}`) or one parenthesised expression
+    (`{(3x)}^{2}` → `(3x)^{2}`); a doubled group is collapsed (`{{a+b}}` → `{a+b}`). A group that follows a
+    command, a script mark or a command's other argument is an ARGUMENT (`\\frac{7}{5}`, `x^{12}`,
+    `\\sqrt[3]{8}`) and stays — `x^{12}` is not `x^{1}2` — and so does any group of several tokens, because
+    it decides what a following `^` or `_` attaches to (`{a+b}^{2}` is not `a+b^{2}`)."""
+    out, i, n = [], 0, len(s)
+    last = ""      # what the previous item was: cmd (takes arguments) | argclose | script (^ or _) | other
     while i < n:
         c = s[i]
         if c == "\\":
@@ -256,12 +280,13 @@ def _simplify_braces(s: str) -> str:
             inner = _simplify_braces(s[i + 1:j]).strip()
             while inner.startswith("{") and _match_brace(inner, 0) == len(inner) - 1:
                 inner = inner[1:-1].strip()
-            if last not in ("cmd", "close", "script") and _SINGLE_TOKEN.fullmatch(inner):
-                out.append(inner)
-                last = "other"
-            else:
+            if last in ("cmd", "argclose", "script"):        # an argument: the braces are part of the syntax
                 out.append("{" + inner + "}")
-                last = "close"
+                last = "other" if last == "script" else "argclose"   # `x^{2}{y}`: the {y} is not 2nd arg of ^
+            else:
+                out.append(inner if _SINGLE_TOKEN.fullmatch(inner) or _is_delimited_unit(inner)
+                           else "{" + inner + "}")
+                last = "other"
             i = j + 1
         else:
             out.append(c)
@@ -269,7 +294,7 @@ def _simplify_braces(s: str) -> str:
             if c in "^_":
                 last = "script"
             elif c == "]":
-                last = "close"
+                last = "argclose"
             elif not c.isspace():
                 last = "other"
     return "".join(out)

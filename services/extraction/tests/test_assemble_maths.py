@@ -78,7 +78,12 @@ class Normalise(unittest.TestCase):
     def test_braces_around_a_single_token_are_null(self):
         self.agree([("{7}^{1}", "7^{1}"), ("{x}^{2}", "x^{2}"), ("{x}^{2}", "x^2"), ("{7}^{1}", "7^1"),
                     ("{\\pi}^{2}", "\\pi^{2}"), ("{n}_{1}", "n_{1}"), ("\\frac{{7}^{1}}{5}", "\\frac{7^{1}}{5}"),
-                    ("a+{b}", "a+b"), ("x^{{2}}", "x^{2}")])
+                    ("a+{b}", "a+b"), ("x^{{2}}", "x^{2}"),
+                    # a whole number renders the same bare; a parenthesised unit too; and a bare group after a
+                    # script's argument is not a second argument of that script
+                    ("{12}^{2}", "12^{2}"), ("{3.5}^{2}", "3.5^{2}"), ("{(3x)}^{2}", "(3x)^{2}"),
+                    ("{\\left(ax+b\\right)}^{2}", "\\left(ax+b\\right)^{2}"), ("{[a;b]}^{2}", "[a;b]^{2}"),
+                    ("{a}^{2}{x}^{2}", "a^{2}x^{2}"), ("{a}^{2}{x}^{2}", "{a}^{2}{x}^{2}"), ("{2}{3}", "23")])
 
     def test_doubled_and_outer_braces_are_null(self):
         self.agree([("\\frac{{a+b}}{c}", "\\frac{a+b}{c}"), ("{x+1}", "x+1"), ("{{x+1}}", "x+1"),
@@ -86,7 +91,8 @@ class Normalise(unittest.TestCase):
 
     def test_braces_that_scope_something_are_never_dropped(self):
         # a group of several tokens decides what a following ^ or _ attaches to; an argument is not a bare group
-        self.differ([("{12}^{2}", "12^{2}"), ("{a+b}^{2}", "a+b^{2}"), ("{ab}_{1}", "ab_{1}"),
+        self.differ([("{a+b}^{2}", "a+b^{2}"), ("{ab}_{1}", "ab_{1}"), ("{(a)+(b)}^{2}", "(a)+(b)^{2}"),
+                     ("{[0;1[}^{2}", "[0;1[^{2}"), ("{12}^{2}", "{13}^{2}"), ("{12}^{2}", "1^{2}2"),
                      ("\\frac{12}{5}", "\\frac{1}{25}"), ("\\frac{1}{2}", "\\frac{2}{1}"), ("x^{12}", "x^{1}2"),
                      ("\\sqrt[3]{8}", "\\sqrt[3]{9}"), ("\\sqrt{x}y", "\\sqrt{xy}"), ("\\frac{a}{b}c", "\\frac{a}{bc}"),
                      ("{-}3", "3"), ("{-}3", "{+}3"), ("{7}^{1}", "{7}^{2}"), ("{7}^{1}", "{8}^{1}")])
