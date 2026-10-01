@@ -821,7 +821,7 @@ uv run auto_pass_gates.py g2-recommend-args <book> --chapter N [--lesson-run RUN
 #      → runs/<book>/g2rec/chNN-<runId>.json        uv run meter_run.py record --book <book> --stage G2R --run <runId>
 # 3. check it into the recommendation file the `g2 --recommend` line of §7b reads (merges with an earlier file; --fresh starts over)
 uv run auto_pass_gates.py g2-recommend-collect <book> --chapter N [--lesson-run RUN …] --run runs/<book>/g2rec/chNN-<runId>.json \
-    --out runs/<book>/g2-chNN.recommended.json
+    --out runs/<book>/g2-chNN.recommended.json --ids-out runs/<book>/g2rec/chNN.live-ids.json   # the newly live question ids (for a delta working check)
 # 4. apply: G2's auto verdicts from it, the split finals, then assemble / validate / (load) as §10 says
 uv run auto_pass_gates.py g2 <book> --chapter N --lesson-run … --recommend runs/<book>/g2-chNN.recommended.json \
     --into runs/<book>/g2-chNN.json --split --maths runs/<book>/maths/book/accepted.json
@@ -830,7 +830,8 @@ uv run auto_pass_gates.py g2 <book> --chapter N --lesson-run … --recommend run
 **Launch it BEFORE the chapter's working check and S5 draft:** both are built from the assembled bundle, which a recommendation changes
 (questions become live, stems and typed keys change). After applying it, `fanout.py close-chapter N` (which passes the recommendation file
 to G2 from then on: without it every re-run would recompute the checks' own rule and undo the recommendation) re-assembles and
-re-prepares them. If they were launched already, run the explicit commands `g2-recommend-args` prints and a delta working check on the newly live items.
+re-prepares them. If they were launched already (Chapters 1 and 2's were), run the explicit commands `g2-recommend-args` prints, then a delta working check limited to the newly live
+questions: `working_check.py args … --only runs/<book>/g2rec/chNN.live-ids.json`, pass A and pass B reshuffled (the commands are in the printed list).
 
 **What runs** (`runbook/g2-recommend.workflow.js`, prompts `g2rec-v1`; a generated copy, args embedded, `embed_workflow.py`): one Sonnet agent
 (effort high) per batch of 8 held or excluded items sees each item's stem, its figure, the book's own working, the printed answer, the

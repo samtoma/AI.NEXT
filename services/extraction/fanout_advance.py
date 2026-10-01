@@ -709,8 +709,9 @@ def assemble_maths(P: Paths, fl: Flow) -> None:
     """The S0b assembly of every saved A/B/C run: the plan's `before` of the third reading and its `after`."""
     files = sorted(P.runs.glob("maths/[ABC]-*.json"))
     out = P.maths_book
+    # exit 4 is "the book's maths is not complete yet" — the normal state until the last group is read; the three files are written either way
     fl.run("S0b assembly (A+B+C)", ["assemble_maths.py", "assemble", BOOK, *[P.rel(f) for f in files], "--out-dir", P.rel(out)],
-           inputs=files, outputs=[out / "summary.json", out / "accepted.json", out / "queue.json"])
+           inputs=files, outputs=[out / "summary.json", out / "accepted.json", out / "queue.json"], ok=(0, 4))
 
 
 def maths_summary(P: Paths, rep: dict, chapters: list[int]) -> None:
@@ -884,7 +885,10 @@ def h_wcheck(A: Adv) -> bool:
     argv = ["working_check.py", "collect"]
     for a in args:
         argv += ["--args", A.P.rel(a)]
-    A.fl.run("working_check collect", argv + ["--runs", *A.rels(*runs), "--out", A.P.rel(out)], inputs=runs, outputs=[out])
+    t0 = time.time()
+    r = A.fl.run("working_check collect", argv + ["--runs", *A.rels(*runs), "--out", A.P.rel(out)], inputs=runs, outputs=[out], ok=(0, 1))
+    if r.rc == 1 and not r.dry and not (out.exists() and out.stat().st_mtime >= t0 - 2):
+        raise StepFailed("working_check collect", f"exit 1 and no flags file was written: {r.key_lines()}")     # a refusal, not unchecked solutions
     if out.exists():
         d = read_json(out)
         A.count(working_check={"solutions": d.get("solutions"), "verdicts": d.get("verdicts"), "flagged_solutions": d.get("flagged_solutions"),

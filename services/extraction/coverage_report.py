@@ -13,7 +13,12 @@ WHAT IT READS (defaults from the book config; every one can be overridden):
     seed            seed/<book>/*.json                 (the assembled bundles, S9)
     content         seed/content/<slug>.json           (the lesson-content files, S9; default the
                                                         bundles' sibling content/)
-    generated       seed/generated/<book>/             (the reviewed exports, B15)
+    generated       seed/generated/<book>/             (the generated bundles or the reviewed exports, B15). The default
+                                                        is the Chapter 8 pilot's: a --chapter audit of any other chapter
+                                                        MUST pass its own (--generated seed/generated/<book>/chNN) — one
+                                                        that reads a directory holding rows and none of the audited
+                                                        chapters is REFUSED (exit 2), and one that also holds other
+                                                        chapters' rows is warned about (`warnings` in the report)
     maths           runs/<book>/maths/summary.json     (S0b counts)
     s5              runs/<book>/misconceptions/*.json  (S5 final runs; drafts are skipped)
     widget gaps     coverage/<book>.widget-gaps.json   (S7)
@@ -22,6 +27,11 @@ It trusts none of them to report on itself: every count is recomputed from the r
 WHAT IT WRITES: coverage/<book>.json — every check, its two sides, and each failure with the
 scope it failed in (a lesson, a chapter, an objective or the book). The file is
 deterministic: no timestamps, so an unchanged book re-audits byte-identically.
+
+A check has one of four states: `holds`; `excepted` (every failure is covered by a SIGNED exception, below);
+`auto_passed` (it holds only because an auto-pass stands in for a person — answer 37c, `auto-pass G<n> (AI
+recommendation)` — counted, listed under `auto_passed` with who signed and when, in `summary.auto_passed` and on the
+console line, NEVER counted as a human sign-off); `fails`. Only `fails` makes the audit RED.
 
 GREEN means every equality holds, or every failure is covered by a SIGNED exception. A human
 signs one by adding it to the `exceptions` list of the coverage file:
@@ -44,10 +54,17 @@ THE CHECKS (§3.11, one per row, plus two the brief adds):
     mapped_items_accounted  mapped items = book questions + items excluded with a reason
     objective_evidence      objectives = objectives with a claim, a book question, and worked-
                             example-or-exercise evidence of two kinds or more
-    tier_floor              objectives × 3 tiers = cells with a live item, book or generated (FR-4305)
-    module_widgets          modules = modules with a widget question + signed CHAPTER-scope widget gaps
+    tier_floor              objectives × 3 tiers = cells with a live item, book or generated (FR-4305). LIVE is
+                            the loader's rule (review_policy): a book question G2 kept and no check holds; a
+                            generated row that says `live`, or that says nothing in a bundle for a MATHS course
+                            (load_generated_questions.py loads it live, answer 37a). A row that says review,
+                            retired or rejected, or names a hold_reason, is not live; a course that is not maths
+                            keeps its review queue.
+    module_widgets          modules = modules with a live widget question + signed CHAPTER-scope widget gaps
                             (FR-4306). A lesson-scope gap records an accepted missing kind; signing
-                            one never covers a chapter.
+                            one never covers a chapter. A gap is signed by a person, or auto-passed by G3
+                            (`auto_pass_gates.py g3 --widget-gaps`: the chapter ships without a widget for now,
+                            no new kind approved): that is state `auto_passed`, and a person's sign-off wins.
     distractor_refutations  tagged distractors and predicates = those whose misconception has a
                             refutation (FR-1112)
     misconception_refutations  catalogue entries = entries with a refutation

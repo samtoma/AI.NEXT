@@ -939,5 +939,8 @@ undoes the recommendation.
 runs/g10-math/g2-chNN.json --split`; assemble and validate (or `fanout.py close-chapter N`); and, because **Chapters 1 and 2 are both loaded in `ainext_pilot_g10_ch08`** (ch1: 483 live,
 47 `answer_mismatch`, 3 `unanswerable`; ch2: 136 live, 3 `answer_mismatch`), a fresh `pg_dump` and then `load_seed.py … --course course:us-g10-math-en --update --dry-run` (and the same
 without it: adds the newly live questions, releases the held ones the recommendation accepts, applies the typed fixes and stem repairs to unattempted rows) and `apply_review_verdicts.py --g2
-runs/g10-math/g2-chNN.json --book g10-math --runs runs/g10-math/lesson` (stamps `ai_checked_by`, rejects what was excluded). **Order:** launch it before the chapter's working check and S5 draft,
-which are built from the assembled bundle; Chapter 2's have been run, so apply its recommendation and then run a delta working check on the questions it makes live.
+runs/g10-math/g2-chNN.json --book g10-math --runs runs/g10-math/lesson` (stamps `ai_checked_by`, rejects what was excluded). **Order:** a chapter's working check and S5 draft are built from the assembled bundle, which a recommendation changes, so the recommendation belongs BEFORE them;
+Chapters 1 and 2's working checks have already run (`working-check/ch01-A/B`, `ch02-A/B`), so after applying a recommendation run a **delta working check on the newly live
+questions only**: `g2-recommend-collect … --ids-out runs/g10-math/g2rec/chNN.live-ids.json`, then `working_check.py args … --only <that file>`, pass A and pass B reshuffled (the exact
+commands are in the list `g2-recommend-args` prints). The newly live questions' working has not been step-checked until then. (For a chapter closed from now on, close-chapter prepares the recommendation copy beside the working check's and the S5 draft's, but it is not in the plan's run list, so
+nothing orders it: launch it first, apply it, re-run `close-chapter N`, and only then launch the working check.)

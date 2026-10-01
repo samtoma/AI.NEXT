@@ -456,7 +456,7 @@ def build_runs(inv: dict) -> list[dict]:
             agents=nobj, cost=[round(x * 0.45, 2) for x in _cost("s5_objective", nobj)], minutes=MINUTES["s5-draft"],
             priority=(3, i, 1), depends_on=lesson_ids, before=assemble,
             save_to=f"runs/g10-math/misconceptions/draft-{t}-<wf_id>.json", meter=_meter("S5"))
-        add(id=f"s6-author-{t}", stage="S6", chapter=ch, workflow="families.workflow.js (s6-v5, author)",
+        add(id=f"s6-author-{t}", stage="S6", chapter=ch, workflow="families.workflow.js (s6-v6, author)",
             what=f"S6 family authoring for chapter {ch}'s objectives below the tier floor",
             agents=round(0.8 * nobj), cost=[round(x * 0.45, 2) for x in _cost("s6_objective", nobj)],
             minutes=MINUTES["s6-author"], priority=(3, i, 1), depends_on=[f"s5-draft-{t}"],
@@ -466,7 +466,7 @@ def build_runs(inv: dict) -> list[dict]:
                    f"uv run generate_questions.py --families {fam} --book {cfg} --check",
                    "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args "
                    "(a contingency run, ≈ $0.7 each; not in the estimate)"])
-        add(id=f"s6-grade-{t}", stage="S6", chapter=ch, workflow="families.workflow.js (s6-v5, grade; parts if > 15 KB)",
+        add(id=f"s6-grade-{t}", stage="S6", chapter=ch, workflow="families.workflow.js (s6-v6, grade; parts if > 15 KB)",
             what=f"S6 blind grading of chapter {ch}'s families (blind solver per sampled instance + judge); "
                  "skipped when the author wrote no family",
             agents=round(1.8 * nobj), cost=[round(x * 0.55, 2) for x in _cost("s6_objective", nobj)],

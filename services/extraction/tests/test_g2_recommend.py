@@ -576,6 +576,10 @@ class ReachesG2(unittest.TestCase):
         self.assertIn("--update --dry-run", text)
         self.assertIn("--split", text)
         self.assertIn("fanout.py close-chapter 1", text)
+        self.assertIn("--ids-out runs/g10-math/g2rec/ch01.live-ids.json", text)
+        self.assertIn("working_check.py args --book g10-math --seed seed/g10-math/g10m-c01.json --chapter 1 --pass-id A --only "
+                      "runs/g10-math/g2rec/ch01.live-ids.json", text, "a delta working check on the newly live questions")
+        self.assertIn("--pass-id B --order shuffled --order-seed 11", text)
         self.assertTrue(any(c.startswith("pg_dump") for c in cmds), "a fresh dump before the update")
 
 
@@ -673,8 +677,12 @@ class TheCommands(unittest.TestCase):
         saved.write_text(json.dumps(out["result"]))
         target = self.tmp / "g2-ch09.recommended.json"
         code, text, err = self.cli("g2-recommend-collect", "g10-math", "--chapter", 9, "--lesson-run", self.tmp / "run.json",
-                                   "--g2", self.tmp / "g2.json", "--run", saved, "--out", target)
+                                   "--g2", self.tmp / "g2.json", "--run", saved, "--out", target, "--ids-out", self.tmp / "ids.json")
         self.assertEqual(code, 0, err)
+        ids = json.loads((self.tmp / "ids.json").read_text())
+        self.assertEqual(ids, sorted(G.question_id(by_key(self.es)[k]["item"]) for k in (k1, k2)),
+                         "the newly live questions only: the accept and the fix, not the two exclusions")
+        self.assertTrue(all(i.startswith("q:g10m9s1-1-1:ex9-1-") for i in ids))
         doc = json.loads(target.read_text())
         self.assertEqual({k: v["verdict"] for k, v in doc["items"].items()}, {k1: "accept", k2: "fix", k3: "exclude", k7: "exclude"})
         self.assertIn("would be LIVE", text)
