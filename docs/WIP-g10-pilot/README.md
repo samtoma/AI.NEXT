@@ -767,3 +767,42 @@ words, every changed stem recorded, anything the rule cannot settle listed for a
 whether values given in a stem (R1 key, R2, R3) are what he wants for the tutor's grounded explanations (they make the
 book's working traceable to the stem, and make the part slightly easier than the book's standalone question), and the 16
 listed parts.
+
+## Chapter 1 first lessons — the checkpoint, COLLECT-6 / lesson-v8, and the G2 auto-pass — 2026-10-01 (data-engineer)
+
+Four lessons are finished (g10m1s3-1 `wf_cab88c79-c65`, s4-1 `wf_791f61b5-0bb`, s5-1 `wf_6ffd9ec1-5d6`, s6-1 `wf_796b7644-0fb`;
+308 items, 56 agents, $6.36 metered). No Workflow was launched and no model was called by this work.
+
+**The 8 validation errors of g10m1s3-1** were not a defect of the run: the saved answers were enough. Four choice items
+(Ex1-1:4c, 4g, 8a, 8e) were typed with a key no option carries (the typing agent *invented* the options "rational, integer" and
+"rational, integer, whole number and natural number" around a compound answer, or keyed a two-part answer "555; rational"); four
+(Ex1-11:5c–f) were "which of these 14 numbers are …?" typed as a choice with the whole list as options (`'ABCDE'[5]` was `undefined`:
+options without a key, answer `None`). `RunItem` refused them, so G2's draft page could not even be written. Fix, deterministic and tested
+(`tests/test_typing_seam.py`): an item the pipeline flagged and G2 has not ruled on — or has excluded — need not be well formed; an accept,
+a fix or a hold requires the full shape again.
+
+**Two systemic defects the checkpoint found** (both in the collection, fixed as COLLECT-6, tests `tests/test_lesson_collect6.py`):
+1. *`book_final is not in the book solution`* fired on 24 of s3-1's 96 items, none wrong: a classification's book solution is a sentence and
+   the typing agent copies it with a parenthetical dropped. It made 23 items "disputed" (unchecked, not a book disagreement) and, because
+   the auto-pass excludes every typing problem, would have excluded them. A final is now in the solution when it is an ordered subsequence
+   of it with no skipped negation; a verbal choice settles by the option each source names (no judge).
+2. *Invented options.* `options_source: "lesson"` was stretched to constructed responses: s5-1's 28 of 34 items were MCQs of the form
+   "3 and 4 / 4 and 5 / 5 and 6" (also "3,0 / 3,1 / 3,2"), the book printing no options. Refused now (a closed set is one-word categories the
+   stem or lesson names); typed again from the book's printed key where it is plainly a number (`numeric`) or numbers (`expression`, kind
+   `values`, key `4; 5`); anything else keeps the problem and G2 decides. 32 items were typed again in these four lessons.
+
+**Re-collected, not re-run** (`recollect_lessons.py`, journals replayed with identical prompts; the oracle reused when only the answer types
+differ; judge verdicts reused for 164 pairs; two new pairs on Ex1-1:1a would need a live judge, but that item is excluded for its figure-label
+options anyway): `runs/g10-math/lessons/recollected/<wf_id>.json`. **lesson-v8** (typing prompt only; `runbook/lesson.workflow.js`) is for the
+runs still to come: s7-1, s7-2, s7-3, s8-1 and the other chapters. Their copies in `work/g10-math/packets/embedded/fanout/` carry lesson-v7 /
+collect-5 and are NOT touched here: prepare them again (`uv run fanout.py prepare lesson-g10m1s7-1` …) before launching. Re-collect before
+bumping a prompt (the earlier runs cannot be recollected by a later script).
+
+**G2 auto-pass** (`auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json --split`; the pilot's `g2.json` untouched; record
+`runs/g10-math/gates/g2-ch01.json`, `ainext.gate-decision/1`; per-lesson finals in `runs/g10-math/lesson/`): 22 exclude (typing problems:
+19 in s3-1), 4 accept (s4-1, no printed answer and the blind re-solve agreed), 23 held with no verdict (three-way disagreement), 4 typed not
+markable (teaching, no verdict owed), 32 retyped listed. By fate of the 308 items: 256 verified, 23 held, 22 excluded, 7 teaching.
+Also fixed: `auto_pass_gates.py g1 --approve` called `approve` without `--maths` (it read the PILOT's `maths/accepted.json`; now the book's
+own `maths/book/accepted.json`, with `--objectives-dir`); `fanout.py`'s G1 stamp now is `auto-pass G1 (AI recommendation)` (the console and
+`review_policy.is_auto` only know "auto-pass …") and the plan runs `auto_pass_gates.py g1/g2` itself. `auto_pass_gates.py g2` reads no maths
+(nothing in it does); `--maths` is forwarded to the `lesson-runs` step `--split` runs.
