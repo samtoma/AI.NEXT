@@ -153,6 +153,39 @@ export function hasUnpreparedLessons(
   return outlineOf(courseId, outline).some((o) => !prepared.has(o.slug));
 }
 
+/**
+ * Is the check-in's "Everything in the book" list OPEN on the page rather than
+ * behind "Pick something else"? Only when the lesson's course has an outline
+ * (Samuel, 2026-10-01: the Grade 10 whole-book list open by default). Every
+ * other course — every National one — keeps the collapsed picker, unchanged.
+ */
+export function bookOpenByDefault(
+  courseId: string | null | undefined,
+  outline: readonly OutlineLesson[]
+): boolean {
+  return outlineOf(courseId, outline).length > 0;
+}
+
+/**
+ * The course card's count for a course with an outline (Samuel, 2026-10-01):
+ * prepared lessons of the book's total — "5 of 65 lessons ready" — growing by
+ * itself as chapters load. `null` for a course with no outline, whose card
+ * keeps its "N lessons".
+ */
+export function readyCount(
+  courseId: string,
+  outline: readonly OutlineLesson[],
+  prepared: ReadonlySet<string>
+): { ready: number; total: number } | null {
+  const c = outlineCounts(courseId, outline, prepared);
+  return c.lessons > 0 ? { ready: c.prepared, total: c.lessons } : null;
+}
+
+/** "5 of 65 lessons ready" — the course card's words for `readyCount`. Student copy. */
+export function readyCountText(c: { ready: number; total: number }): string {
+  return `${c.ready} of ${c.total} lessons ready`;
+}
+
 /** A chapter of the book with no lesson prepared yet — the skill map's placeholder. */
 export interface PreparingChapter {
   id: string;

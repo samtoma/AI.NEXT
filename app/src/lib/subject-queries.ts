@@ -19,6 +19,8 @@ import {
   type SectionIndex,
 } from "./book-sections";
 import { sectionProgress } from "./section-label";
+import { getCourseOutline } from "./course-outline-queries";
+import { readyCount } from "./course-outline";
 
 
 /**
@@ -195,6 +197,12 @@ async function subjectSummariesOn(
       : ((await db.query(BOOK_SECTIONS_SQL, [courseIds])).rows as BookSectionRow[])
   );
 
+  // The book outline of the courses she may see (migration 037), for the
+  // card's "5 of 65 lessons ready" — after the gate, like the sections above:
+  // the outline holds chapter and lesson titles. Prepared = a lesson with
+  // objectives here, the catalogue's rule. Empty for every National course.
+  const outline = await getCourseOutline(courseIds, db);
+
   // Last comprehension check per COURSE (checks are newest-first already),
   // read through the check's own objective: the `subject` tag cannot tell two
   // maths books apart. A check on an objective of a course she may not see
@@ -257,6 +265,8 @@ async function subjectSummariesOn(
       lastCheck: lastCheck.get(a.courseId) ?? null,
       // "k of m parts mastered" per split section; [] for every National course
       sections: sectionProgress([...a.lessons.values()], sections),
+      // "5 of 65 lessons ready" for a course with an outline; no key otherwise
+      ...((c) => (c ? { outline: c } : {}))(readyCount(a.courseId, outline, a.slugs)),
     }));
 }
 

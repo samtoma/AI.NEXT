@@ -754,10 +754,32 @@ def _split_assignments(seg: str) -> str:
     return " \\quad ".join(parts)
 
 
+def _digit_escapes(text: str) -> tuple[str, int]:
+    """A backslash before a DIGIT written back as a control space: the book's thousands space survives S0b as
+    `\\text{57\\000\\000}` (whitespace stripped before hashing), and KaTeX refuses `\\0` — so it becomes
+    `57\\ 000\\ 000`, which renders. The second backslash of `\\\\` (a line break) is never touched."""
+    out, i, n, k = [], 0, len(text), 0
+    while i < n:
+        c = text[i]
+        if c == "\\" and i + 1 < n and text[i + 1] == "\\":
+            out.append("\\\\")
+            i += 2
+            continue
+        if c == "\\" and i + 1 < n and text[i + 1].isdigit():
+            out.append("\\ ")
+            k += 1
+            i += 1
+            continue
+        out.append(c)
+        i += 1
+    return "".join(out), k
+
+
 def respace_latex(text: str) -> tuple[str, int, int]:
     """(text, commands re-spaced, assignment chains split). Needs prime_known() for its commands."""
     if not isinstance(text, str) or "\\" not in text and "=" not in text:
         return text, 0, 0
+    text, digits = _digit_escapes(text)
     runs = _command_runs(text)
     missing = [text[a + 1:b] for a, b in runs if text[a + 1:b] not in _KNOWN]
     if missing:
@@ -783,7 +805,7 @@ def respace_latex(text: str) -> tuple[str, int, int]:
         split += new != m.group(1)
         return "$" + new + "$"
     text = re.sub(r"\$([^$]+)\$", seg, text)
-    return text, n, split
+    return text, n + digits, split
 
 
 _NOT_TEXT = {"assembled_from", "source_document", "extraction_run", "provenance", "source", "file_path", "src"}

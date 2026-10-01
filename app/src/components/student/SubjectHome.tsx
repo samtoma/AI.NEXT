@@ -3,6 +3,7 @@ import type { SubjectSummary } from "@/lib/types";
 import { spineSubjectDef } from "@/lib/subjects";
 import { masteryColor, pct } from "@/lib/mastery";
 import { rollupText, rollupTextAr } from "@/lib/section-label";
+import { readyCountText } from "@/lib/course-outline";
 import { MathText } from "@/components/MathText";
 import { BADGE, HEADING, STROKE, STROKE_SM, cx } from "@/components/sticker";
 
@@ -210,7 +211,17 @@ function SubjectCard({ summary: s, href }: { summary: SubjectSummary; href: stri
             {s.courseLabel}
           </h2>
           <span className={cx(BADGE, "shrink-0 bg-card text-ink")}>
-            {rtl ? `${s.lessonsCount} دروس` : `${s.lessonsCount} lessons`}
+            {/* A course whose book has an outline counts what is READY of the
+                whole book ("5 of 65 lessons ready", lib/course-outline.ts),
+                growing as chapters load; every other card says "N lessons"
+                as it always has. The outline count is English copy for an
+                LTR card only — no Arabic-taught course has an outline, and
+                one that ever does keeps its count until it has its words. */}
+            {s.outline && !rtl
+              ? readyCountText(s.outline)
+              : rtl
+                ? `${s.lessonsCount} دروس`
+                : `${s.lessonsCount} lessons`}
           </span>
         </div>
         <p className={cx("mt-1 text-[0.85rem] font-bold", dim)}>

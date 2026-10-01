@@ -342,6 +342,17 @@ class ConsistencyReviewTest(unittest.TestCase):
         errs = alb.katex_errors([{"where": "a", "text": r"$\triangleABC$"}, {"where": "b", "text": r"$\triangle ABC$"}])
         self.assertEqual([e["where"] for e in errs], ["a"])
 
+    def test_a2_a_backslash_before_a_digit_becomes_a_control_space(self):
+        # S0b keeps the book's thousands space as \text{57\000\000} (whitespace stripped before hashing); KaTeX
+        # refuses \0, which made load_seed refuse chapters 9, 10 and 13. A line break \\ before a digit stays.
+        self.assertEqual(alb._digit_escapes(r"$\text{57\000\000}$"), (r"$\text{57\ 000\ 000}$", 2))
+        self.assertEqual(alb._digit_escapes(r"$57\000$ and $x\\2$"), (r"$57\ 000$ and $x\\2$", 1))
+        self.assertEqual(alb._digit_escapes(r"$\frac{1}{2}$"), (r"$\frac{1}{2}$", 0))
+        if shutil.which("node"):
+            text, n, _ = alb.respace_latex(r"The population is $\text{57\000\000}$ people.")
+            self.assertEqual((text, n), (r"The population is $\text{57\ 000\ 000}$ people.", 2))
+            self.assertEqual(alb.katex_errors([{"where": "a", "text": text}]), [])
+
     def test_a8_a_figure_never_draws_the_unknown(self):
         q = {"id": "q:1", "stem": "[figure] Line $AB$ has gradient 2. Find the missing co-ordinate of $B(1, y)$."}
         drawn = {"spec": {"points": [{"x": -1, "y": 0, "label": "A"}, {"x": 1, "y": 4, "label": "B"}]}}

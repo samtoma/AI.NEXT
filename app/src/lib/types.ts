@@ -525,4 +525,12 @@ export interface SubjectSummary {
    * every National course — so nothing its card shows changes.
    */
   sections: SectionProgress[];
+  /**
+   * For a course whose book has an outline (migration 037,
+   * `lib/course-outline.ts` `readyCount`): its prepared lessons of the book's
+   * total, for the card's "5 of 65 lessons ready" — growing by itself as
+   * chapters load. Absent for every course with no outline (every National
+   * course), whose card keeps "N lessons".
+   */
+  outline?: { ready: number; total: number };
 }
