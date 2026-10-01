@@ -567,7 +567,9 @@ export async function POST(req: Request) {
               misconception_id: misconceptionId,
               // The question's own review stamp (ADR-0019 keeps it in the
               // data): SC-011 counts unreviewed teaching SEEN, and a worked
-              // solution nobody has read is exactly that.
+              // solution nobody has read is exactly that. Since migration 035
+              // `reviewed_by` is a HUMAN stamp only (answer 33): an AI check
+              // (`ai_checked_by`) is not a review and counts as unreviewed here.
               reviewed: q.solution_reviewed === true,
             },
           });

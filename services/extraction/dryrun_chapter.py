@@ -698,7 +698,8 @@ def coverage(line: Line) -> dict:
             "--seed", line.p("seed", book.book, "x").parent, "--content", line.p("seed", "content", "x").parent,
             "--generated", line.p("export", "x").parent, "--maths", line.p("maths", "summary.json"),
             "--widget-gaps", line.p("coverage", f"{book.book}.widget-gaps.json"),
-            "--s5", line.p("runs", "misconceptions", "final-dryrun.json"), "--out", out, ok=(0, 1))
+            "--s5", line.p("runs", "misconceptions", "final-dryrun.json"), "--out", out,
+            "--public", line.p("public", "x").parent, ok=(0, 1))
     rep = json.loads(out.read_text())
     line.count(status=rep["status"], summary=rep["summary"],
                checks={c["id"]: f"{c['state']} ({c['got']}/{c['want']})" for c in rep["checks"]})

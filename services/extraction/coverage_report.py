@@ -730,7 +730,7 @@ def main(argv: list[str] | None = None) -> int:
             content[s] = json.loads(p.read_text())
             inputs[f"content/{p.name}"] = sha256(p)
     checks, extra = audit(book, manifest, objectives, runs, bundles, generated, maths, gaps, chapters,
-                          s5_runs, content)
+                          s5_runs, content, public=a.public)
     # G1's named rulings (answer 15) except their own failures; they are regenerated from the objectives
     # files on every run and reported apart from the hand-signed `exceptions` list
     rows = [c.as_dict(exceptions + extra.get("g1_exceptions", [])) for c in checks]

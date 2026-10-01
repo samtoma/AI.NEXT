@@ -1988,7 +1988,9 @@ def compare_with_export(specs, per_family: int, seed: int, export: Path) -> dict
     questions, _, _ = instantiate(spliced, per_family, seed, to_row=row, spec_errors=(FE.EvalError,))
     rebalance_keys(questions, random.Random(seed))
     committed = {q["id"]: q for q in json.loads(Path(export).read_text())["questions"]}
-    export_only = {"status", "reviewed_by", "reviewed_at"}
+    export_only = {"status", "reviewed_by", "reviewed_at",
+                   # migration 035: what the database learned about a row, never what the generator wrote
+                   "ai_checked_by", "ai_checked_at", "hold_reason", "review_note"}
     out = {"export": str(export), "items": len(questions), "spliced_items": 0, "spliced_differences": [],
            "other_items_differing_only_in_misconception_ids": 0, "other_differences": []}
     for q in questions:
