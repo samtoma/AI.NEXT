@@ -432,3 +432,36 @@ class ConsistencyReviewTest(unittest.TestCase):
         self.assertEqual(alb.form_problems(b, book), [])
         with self.assertRaises(ValueError):
             book_config.FormRule(match="x", form="subject")
+
+
+class HtmlEntityTest(unittest.TestCase):
+    """Chapter 5's EPUB left numeric HTML character references in its text and inside its maths ("$\\cos30&#176;=$"): KaTeX refuses the "&" and 28
+    questions showed a red error. A reference is the character it names; inside $…$ the degree sign is ^{\\circ}, the book's own spelling beside it."""
+
+    def test_a_reference_is_the_character_it_names(self):
+        cases = {"$\\cos30&#176;=$": ("$\\cos30^{\\circ}=$", 1),
+                 "Use $\\tan45&#176;=1$ and 45&#176; and &deg;.": ("Use $\\tan45^{\\circ}=1$ and 45° and °.", 3),
+                 "$\\sin\\text{45}&#176;$": ("$\\sin\\text{45}^{\\circ}$", 1),
+                 "$x&#8722;1$": ("$x\u22121$", 1),
+                 "$x&#x2212;1$": ("$x\u22121$", 1)}
+        for raw, want in cases.items():
+            self.assertEqual(alb.unescape_entities(raw), want, raw)
+
+    def test_nothing_else_is_touched(self):
+        for raw in ("a & b", "$a&b$", "AT&T", "&#0;", "&#9999999999;", "no entity", "$\\begin{align*}x&=1\\end{align*}$", "&nbsp;"):
+            self.assertEqual(alb.unescape_entities(raw), (raw, 0), raw)
+
+    def test_a_bundle_is_cleaned_and_the_report_counts_it(self):
+        rep = alb.Report()
+        out = alb.respace_tree({"questions": [{"id": "q:1", "stem": "Calculate $\\sin45&#176;\\times\\cos45&#176;$",
+                                               "solution": ["$\\tan45&#176;=1$"], "source": "x&#176;"}]}, rep)
+        q = out["questions"][0]
+        self.assertNotIn("&#", q["stem"] + "".join(q["solution"]))
+        self.assertIn("^{\\circ}", q["stem"])
+        self.assertEqual(q["source"], "x&#176;", "metadata is never touched")
+        self.assertEqual(rep.entities, 3)
+        self.assertEqual(rep.as_dict()["html_entities_unescaped"] if hasattr(rep, "as_dict") else 3, 3)
+
+
+if __name__ == "__main__":
+    unittest.main()

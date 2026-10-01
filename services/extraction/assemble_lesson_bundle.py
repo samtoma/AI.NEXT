@@ -733,6 +733,7 @@ class Report:
         self.ambiguous_pairs: list[str] = []   # A4: "(a,b)" sides of an equation not provably a pair → G2
         self.respaced = 0                      # A2: glued LaTeX commands re-spaced (accepted.json untouched)
         self.assignments_split = 0             # A2: "x_1=…y_1=…" chains written as separate assignments
+        self.entities = 0                      # Chapter 5: numeric HTML character references the EPUB left in the text ("&#176;" for °)
         self.katex_errors: list[dict] = []     # A2: segments the app's KaTeX cannot parse (must be 0)
         self.forms_from_rules: list[dict] = [] # A9: marker forms set from the book's form rules
         self.visuals_dropped: list[dict] = []  # A8: a figure that draws the question's unknown
@@ -762,7 +763,7 @@ class Report:
                 "marker_check": self.marker_check, "held_by_marker": self.held_by_marker,
                 "marker_keys_unwrapped": self.keys_unwrapped,
                 "ambiguous_pairs_for_g2": sorted(set(self.ambiguous_pairs)), "latex_respaced": self.respaced,
-                "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
+                "html_entities_unescaped": self.entities, "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
                 "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
                 "held_for_figure": self.held_for_figure, "captions_fixed": self.captions_fixed,
                 "book_pictures": "on" if self.book_pictures else "off (--no-book-pictures)",
@@ -915,9 +916,44 @@ def respace_latex(text: str) -> tuple[str, int, int]:
 _NOT_TEXT = {"assembled_from", "source_document", "extraction_run", "provenance", "source", "file_path", "src"}
 
 
+_ENTITY = re.compile(r"&#(?:[xX]([0-9a-fA-F]+)|(\d+));|&deg;")
+_MATH_SEG = re.compile(r"\$[^$]+\$")
+
+
+def unescape_entities(text: str) -> tuple[str, int]:
+    """(text, references replaced). Chapter 5's EPUB left numeric HTML character references in its text and inside its maths ("$\\cos30&#176;=$",
+    "$\\tan45&#176;=1$"): KaTeX refuses the "&" and the question showed a red error. A reference is the character it names; inside `$…$` the degree
+    sign is the book's own spelling of it everywhere else in the same stems, ^{\\circ}. Nothing else is touched."""
+    if not isinstance(text, str) or "&" not in text:
+        return text, 0
+    n = 0
+
+    def char(m, in_math):
+        nonlocal n
+        if m.group(0) == "&deg;":
+            c = "\u00b0"
+        else:
+            code = int(m.group(1), 16) if m.group(1) else int(m.group(2))
+            if not 0 < code < 0x110000:
+                return m.group(0)
+            c = chr(code)
+        n += 1
+        return "^{\\circ}" if in_math and c == "\u00b0" else c
+
+    out, last = [], 0
+    for seg in _MATH_SEG.finditer(text):
+        out.append(_ENTITY.sub(lambda m: char(m, False), text[last:seg.start()]))
+        out.append(_ENTITY.sub(lambda m: char(m, True), seg.group(0)))
+        last = seg.end()
+    out.append(_ENTITY.sub(lambda m: char(m, False), text[last:]))
+    return "".join(out), n
+
+
 def respace_tree(obj, report: Report):
     """Every student-facing string of a bundle or a lesson-content file, re-spaced (metadata keys skipped)."""
     if isinstance(obj, str):
+        obj, e = unescape_entities(obj)
+        report.entities += e
         t, n, k = respace_latex(obj)
         report.respaced += n
         report.assignments_split += k
