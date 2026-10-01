@@ -1356,7 +1356,40 @@ Working defaults the decisions left to the design. Each is reversible.
 
 ## Open questions for Samuel
 
-**None is open.** Every question and confirmation raised in rev. 1 and rev. 2 is answered
+**Open as of 2026-10-01** (none of these blocks the build; they are flagged so they are not lost):
+
+1. **The "nothing to study here yet" note's wording** (FR-4005, answer 36): "Nothing to study here yet
+   for {grade label}" is the orchestrator's default copy, on `CurriculumChoice.tsx`. Keep it, or word it
+   differently — or decide a curriculum with nothing live for the grade should not carry a note at all?
+2. **The `/pipeline` page's static explainer still has illustrative Arabic words**
+   (`app/src/app/(console)/pipeline/page.console.tsx`, e.g. «أهداف الدرس», «بم تفسر») even when an
+   operator is looking at the explainer with the American course selected — it is one fixed description
+   of the pipeline concept, not scoped per course. Is this a gap against decision 56 ("no Arabic
+   anywhere" for the American course), or is a console-only, operator-facing explainer page exempt
+   because it describes the *pipeline*, not the *course*?
+3. **The sacred-text containment guard's redaction message is hardcoded Arabic on every surface**
+   (`app/src/app/api/ask/route.ts`, "النص الكريم لا يُكتب هنا…"), independent of a course's
+   `arabicTouches` setting. In practice the guard never trips for the American course (it has no sealed
+   scripture), so this is latent, not reachable — but it is not scoped by course either, unlike every
+   other Arabic surface this feature touched. Worth a line scoping it, or leave as dead code for a
+   course with no sacred content?
+4. **A possible constitution PATCH, proposed wording only — not decided.** Principle III's text already
+   says the whole maths bank is live regardless of review (see the Constitution check, row III, above).
+   It does not yet name, in so many words, (a) that "reviewed" means only a human stamp, or (b) that an
+   operator may pull back one item (reject) during the backlog review this feature adds, separately from
+   revoking the whole course. A possible addition, after the 2026-09-23 extension's bullet list:
+   > *"**Clarified 2026-10-01 (decision 58, answer 37a/b):** 'reviewed' means a human operator's own
+   > stamp and nothing else — an automated check, however many independent passes it had, is never a
+   > review. An operator MAY reject one item from this exception at any time, removing only that item
+   > from what students are served, without reinstating the gate for anything else."*
+   This is a proposal for Samuel's wording and approval, not an edit made to the constitution file.
+5. **Does decision 58c's "gates G1–G4 auto-pass" also cover G5** (the dry-run delta, coverage, drift and
+   cost ledger go/no-go before promoting a course to production, FR-4209, `tasks.md` T363)? Answer 37c
+   names G1–G4 only; `tasks.md` T443 leaves G5 as a human gate until told otherwise, since it reads as a
+   production-readiness check rather than a per-item content review — but that is this pass's inference,
+   not something Samuel said directly.
+
+**Every other question and confirmation raised in rev. 1 and rev. 2 is answered**
 ([decisions.md](./decisions.md)):
 - Rev. 1: Q1 → FR-4004 (decision 1), Q2 → FR-4202 (decision 9), Q3 → FR-4205 (decision 10).
 - Rev. 2, all answered on **2026-09-25** by *"ok for all"*:

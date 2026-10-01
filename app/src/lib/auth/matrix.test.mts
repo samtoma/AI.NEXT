@@ -95,6 +95,13 @@ const EXPECTED: Record<string, readonly OperatorRole[]> = {
   // transcribed in EXPECTED_ALL_OF below, and asserted on its own.
   "/api/console/students/[id]/tester": [],
   "/content": ["content-review"],
+  // The review gate (migration 036; Samuel's answer 37): the backlog page,
+  // its queue endpoint and its fix-list export. `content-review` alone — the
+  // safety control that decides what unreviewed content reaches a child
+  // (FR-2204); none of the three names a student.
+  "/review": ["content-review"],
+  "/api/console/review": ["content-review"],
+  "/api/console/review/fix-requests": ["content-review"],
   // ADR-0021 — the teaching switches. The page is readable by any ONE of the
   // five roles (it discloses no student: a position, who moved it, a count) —
   // and, since the fix pass, by nobody holding none. The write is

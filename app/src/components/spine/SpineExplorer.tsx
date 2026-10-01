@@ -20,6 +20,7 @@ import type { CiteInfo } from "@/components/chat/CitationChip";
 import { MASTERY_LEGEND, masteryStage, masteryPhrase } from "@/lib/mastery";
 import { displayLabelOfSpineKey, spineSubjectDef } from "@/lib/subjects";
 import { HEADING, HONEY_BAND, STROKE_SM, cx } from "@/components/sticker";
+import { BEING_PREPARED, type PreparingChapter } from "@/lib/course-outline";
 
 /** "mathematics" → "Mathematics". The subject, never a unit name. */
 const titleCase = (s: string) =>
@@ -400,6 +401,16 @@ export function SpineExplorer({ data }: { data: SpineData }) {
         <StageTally counts={tally} />
       </header>
 
+      {/* THE REST OF THE BOOK (migration 037, lib/course-outline.ts): the
+          chapters of this course's book with no lesson prepared yet, in book
+          order — one placeholder each, named and nothing more. No objective
+          is invented for them and nothing here opens or starts anything; a
+          chapter joins the map above by itself, as topics, the moment its
+          content is loaded. Absent for every course with no outline. */}
+      {course?.preparing && course.preparing.length > 0 && (
+        <ChaptersBeingPrepared chapters={course.preparing} />
+      )}
+
       {/* Below 1024 (iPad portrait, the collapse the handoff's device
           table names) the row becomes a column: the map on top, Noor docked
           under it as a collapsible bottom sheet — so the map gets the whole
@@ -479,6 +490,63 @@ export function SpineExplorer({ data }: { data: SpineData }) {
 }
 
 /* ------------------------------------------------------------------ */
+
+/**
+ * The chapters still being prepared, as one quiet row under the header.
+ *
+ * Placeholders, not topics: each is a chapter's name in the design system's
+ * "not ready yet" anatomy — a dashed `--play-disabled-border` outline, no
+ * fill, no shadow, no press (globals.css; SubjectHome's MoreSubjectsComing) —
+ * with its text in `--play-text-muted` (6.9:1), because they are not
+ * controls. They sit OUTSIDE the map: the map is a graph of objectives and
+ * their prerequisites, and an unprepared chapter has neither, so a card for
+ * it on the canvas would be a fake objective. One row that scrolls sideways,
+ * so thirteen chapters cost the map one short strip rather than a block.
+ *
+ * "Chapter 1 — Algebraic expressions" arrives as one label; split on the em
+ * dash like the check-in's units, the reference as a mono eyebrow.
+ */
+function ChaptersBeingPrepared({ chapters }: { chapters: readonly PreparingChapter[] }) {
+  return (
+    <section
+      aria-labelledby="chapters-being-prepared"
+      className="thin-scroll flex shrink-0 items-center gap-3 overflow-x-auto px-6 py-2.5"
+      style={{
+        borderBlockEndWidth: "var(--play-stroke-sm)",
+        borderBlockEndStyle: "solid",
+        borderBlockEndColor: "var(--line-soft)",
+      }}
+    >
+      <h2
+        id="chapters-being-prepared"
+        className="shrink-0 font-display text-[0.78rem] font-bold leading-none text-[color:var(--play-text-muted)]"
+      >
+        {BEING_PREPARED}
+      </h2>
+      <ul className="flex gap-2">
+        {chapters.map((c) => {
+          const [ref, ...rest] = c.label.split(" — ");
+          const name = rest.join(" — ") || c.label;
+          return (
+            <li
+              key={c.id}
+              className="flex shrink-0 items-center gap-2 rounded-[var(--play-radius-sm)] border-[length:var(--play-stroke-sm)] border-dashed border-[color:var(--play-disabled-border)] px-3 py-1.5"
+            >
+              {ref !== name && (
+                <span className="font-mono text-[0.66rem] uppercase leading-none tracking-[0.06em] text-[color:var(--play-text-muted)]">
+                  {ref}
+                </span>
+              )}
+              <span className="whitespace-nowrap font-display text-[0.8rem] font-bold leading-none text-[color:var(--play-text-muted)]">
+                {name}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
 
 /**
  * The header's summary: how many topics sit on each step of the ramp.

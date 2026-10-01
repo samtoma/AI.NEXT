@@ -286,6 +286,38 @@ export const CONSOLE_ROUTES: readonly ConsoleRoute[] = [
     nav: "Content review",
   },
   {
+    // The review gate (migration 036; Samuel's answer 37, 2026-10-01): the
+    // backlog of every maths item no human has signed, reviewed one by one
+    // toward zero. `content-review` alone — the same safety control as
+    // `/content` (FR-2204): signing an item as reviewed, retiring it from
+    // students or switching a widget claim on is exactly "what unreviewed
+    // content reaches a child". It names no student. Next to `/content`
+    // because the two are the same job seen two ways.
+    path: "/review",
+    file: "(console)/review/page.console.tsx",
+    roles: ["content-review"],
+    nav: "Review",
+  },
+  {
+    // The queue behind `/review`: "next item" (claims it) and "decide"
+    // (records the decision, applies its effect, releases the claim). Same
+    // role as the page, for the reason every console write endpoint here has.
+    path: "/api/console/review",
+    file: "api/console/review/route.console.ts",
+    kind: "route",
+    roles: ["content-review"],
+    nav: null,
+  },
+  {
+    // The fix list as JSON, linked from `/review`. Read-only; the same role,
+    // because it carries the reviewers' notes and the content they flagged.
+    path: "/api/console/review/fix-requests",
+    file: "api/console/review/fix-requests/route.console.ts",
+    kind: "route",
+    roles: ["content-review"],
+    nav: null,
+  },
+  {
     // ADR-0021: the teaching switches — today one, Socratic probing (Off /
     // Test accounts only / Everyone, the last locked until #53).
     //
