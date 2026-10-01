@@ -404,7 +404,7 @@ class Gate2(BaseModel):
 # book's ANSWER to type; the typing agent that wrote options around a printed answer invented them (Chapter 1: "4 and 5"
 # among "3 and 4" and "5 and 6"). lesson.workflow.js refuses them (COLLECT-6); this is the same check on a run's item, for
 # a run an older collection made. It only ever ADDS a typing problem: G2 (a person, or the auto-pass's exclusion) rules.
-_CATEGORY = re.compile(r"^[A-Za-z][A-Za-z'’]*(?:[ -][A-Za-z][A-Za-z'’]*){0,3}$")
+_CATEGORY = re.compile(r"^[A-Za-z][A-Za-z'’]*(?:[ -][A-Za-z][A-Za-z'’]*){0,6}$")
 _LISTISH = re.compile(r"[,;/]|\s(?:and|or)\s", re.I)
 INVENTED_OPTIONS = "options said to be the lesson's closed set are not categories"
 TOO_MANY_OPTIONS = "a choice needs 2–5 options, not"

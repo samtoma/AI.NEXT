@@ -387,8 +387,9 @@ function verbalElision(solution, final) {
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const plainOption = (o) => String(o == null ? '' : o).replace(/\$/g, '').replace(/\\(?:text|mathrm|textrm|mbox)\{([^{}]*)\}/g, '$1').trim()
-// one verbal category: a word, or up to four joined by a space or hyphen; never a list ("rational, integer", "a and b")
-const VERBAL_OPTION = /^[A-Za-z][A-Za-z'’]*(?:[ -][A-Za-z][A-Za-z'’]*){0,3}$/
+// one verbal category: a word, or up to seven joined by a space or hyphen (a yes/no question's two sentences: "opposite sides are
+// parallel" / "opposite sides are not parallel"); never digits or maths, never a list ("rational, integer", "a and b")
+const VERBAL_OPTION = /^[A-Za-z][A-Za-z'’]*(?:[ -][A-Za-z][A-Za-z'’]*){0,6}$/
 const LIST_OPTION = /[,;/]|\s(?:and|or)\s/i
 const isCategory = (o) => { const w = plainOption(o); return VERBAL_OPTION.test(w) && !LIST_OPTION.test(w) }
 const STOCK_CLOSED = new Set(['true', 'false', 'yes', 'no'])
@@ -399,10 +400,11 @@ function closedSetProblems(it, opts, lessonText) {
     return [`options said to be the lesson's closed set are not categories: ${bad.slice(0, 3).map((o) => `"${o}"`).join(', ')}` +
       ' — numbers, pairs, values and combinations are the book\'s answer to type, never options to invent']
   }
-  const hay = norm(`${it.stem} ${lessonText}`)
-  // "Irrational number" is named where the stem says "irrational": the noun "number" alone is not a category
-  const core = (o) => norm(plainOption(o)).replace(/\bnumbers?\b/g, '').replace(/\s+/g, ' ').trim()
-  const unnamed = opts.filter((o) => !STOCK_CLOSED.has(norm(plainOption(o))) && !hay.includes(norm(plainOption(o))) && !(core(o) && hay.includes(core(o))))
+  // named in the stem or the lesson: every word of the option is a word they use ("Irrational number" where the stem says
+  // "irrational"; "opposite sides are not parallel" where the question asks whether opposite sides are parallel)
+  const hayWords = new Set(norm(`${it.stem} ${lessonText}`).match(/[a-z]+(?:-[a-z]+)*/g) || [])
+  const unnamed = opts.filter((o) => !STOCK_CLOSED.has(norm(plainOption(o))) &&
+    !(norm(plainOption(o)).match(/[a-z]+(?:-[a-z]+)*/g) || []).every((w) => hayWords.has(w) || w === 'number' || w === 'numbers'))
   return unnamed.length ? [`options said to be the lesson's closed set are named neither in the stem nor in the lesson: ${unnamed.slice(0, 3).map((o) => `"${o}"`).join(', ')}`] : []
 }
 const NUM_RE = /^-?\d+(?:[.,]\d+)?$/
