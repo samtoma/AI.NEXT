@@ -518,9 +518,15 @@ def build_runs(inv: dict) -> list[dict]:
                    f"--out {gen}/misconceptions.json --bundle {gen}/generated-questions.json --bundle {gen}/widget-questions.json "
                    "(each --bundle only if written) "
                    f"--graph seed/g10-math/g10m-c{ch:02d}.json --graph seed/g10-math/g10m-course.json",
-                   f"# load both bundles (37a/37c: students see them; review status internal) — the loader's status "
+                   f"# load both bundles (37a/37c: students see them; review status internal), each only if written — the loader's status "
                    f"policy is another data-engineer's work: load_generated_questions.py {gen}/<bundle> --course "
-                   "course:us-g10-math-en … against the fan-out DB",
+                   "course:us-g10-math-en --sample 10 --seed 20260926 --catalogue-only (the pilot's flags: the sample is the review queue "
+                   "G3 reads) against the fan-out DB; `fanout.py advance` runs it as a --dry-run (structure) first, after a fresh pg_dump",
+                   f"uv run auto_pass_gates.py g3 g10-math --chapter {ch} --queue {gen}/generated-questions.review-queue.json "
+                   f"--queue {gen}/widget-questions.review-queue.json --widgets {gen}/widget-questions.json   # G3 AUTO-PASS (runbook §7b); "
+                   f"then: AINEXT_DB_DSN=\"{DSN}\" uv run apply_review_verdicts.py runs/g10-math/g3-{t}.auto.json (adds to ai_checked_by)",
+                   f"uv run auto_pass_gates.py g4 g10-math --chapter {ch} --catalogue {gen}/misconceptions.json "
+                   f"--s5 runs/g10-math/misconceptions/final-{t}-<wf_id>.json   # G4 AUTO-PASS: a record of what S5 kept",
                    f"uv run coverage_report.py --book {cfg} --chapter {ch} --maths runs/g10-math/maths/book/summary.json "
                    f"--widget-gaps coverage/g10-math.{t}.widget-gaps.json --s5 runs/g10-math/misconceptions/final-{t}-<wf_id>.json "
                    f"--generated {gen} --out coverage/g10-math.{t}.json   # --generated: without it the report reads the pilot's top-level bundles",

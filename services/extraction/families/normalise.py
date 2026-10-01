@@ -212,6 +212,7 @@ class Rename:
     raw: dict          # the spec after: new id, recorded in its notes
     old_id: str
     new_id: str
+    what: str          # what was done, as the notes and the command line say it
 
 
 def rename_colliding(siblings: list[Sibling]) -> tuple[list[Rename], list[str]]:
@@ -255,29 +256,26 @@ def rename_colliding(siblings: list[Sibling]) -> tuple[list[Rename], list[str]]:
             new_name = m.name[:-len(suffix)] + f"--{new_slug}.json" if m.name.endswith(suffix) else m.name
             out = copy.deepcopy(m.raw)
             out["id"] = new_id
-            record(out, [f"rename-colliding-slug: id {m.raw['id']} -> {new_id}"
-                         + (" (file renamed to match)" if new_name != m.name else "")
-                         + f". The first six letters of the slug were shared with a sibling family on the same "
-                           f"objective ({_slug(keeper.raw)}), so their item ids (q:<objective>:g001-<six letters>) "
-                           "would collide; --check refuses that. Nothing else changed"])
-            renames.append(Rename(m.name, new_name, out, m.raw["id"], new_id))
+            what = (f"rename-colliding-slug: id {m.raw['id']} -> {new_id}"
+                    + (" (file renamed to match)" if new_name != m.name else ""))
+            record(out, [what + f". The first six letters of the slug were shared with a sibling family on the same "
+                                f"objective ({_slug(keeper.raw)}), so their item ids (q:<objective>:g001-<six letters>) "
+                                "would collide; --check refuses that. Nothing else changed"])
+            renames.append(Rename(m.name, new_name, out, m.raw["id"], new_id, what))
     return renames, unresolved
 
 
-def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("files", type=Path, nargs="+")
-    ap.add_argument("--dry-run", action="store_true", help="say what would change; write nothing")
-    args = ap.parse_args(argv)
-
+def process(files: list[Path], *, dry_run: bool = False, loaded: set[str] | None = None) -> tuple[list[str], list[str]]:
+    """Normalise each file, then fix slug collisions in the directories they sit in; write unless ``dry_run``.
+    Returns (one line per file, the collisions that need a person). ``loaded`` defaults to the families the
+    bundles under seed/generated name."""
     # 1. the rules that need one spec only
     after: dict[Path, tuple[dict, list[str]]] = {}
-    for f in args.files:
-        raw = json.loads(f.read_text())
-        after[f] = normalise(raw)
+    for f in files:
+        after[f] = normalise(json.loads(f.read_text()))
 
     # 2. slug collisions, per directory: the siblings are every spec file beside those named
-    loaded = loaded_family_ids()
+    loaded = loaded_family_ids() if loaded is None else loaded
     moved: dict[Path, Rename] = {}
     unresolved: list[str] = []
     for directory in sorted({f.parent for f in after}):
@@ -301,18 +299,29 @@ def main(argv: list[str] | None = None) -> int:
         for r in renames:
             moved[directory / r.name] = r
 
-    # 3. say it, and write it
-    for f in args.files:
+    # 3. write it, and say it
+    lines = []
+    for f in files:
         raw, done = after[f]
         r = moved.get(f)
         if r:
-            raw, done = r.raw, done + [r.raw["notes"].rsplit(MARK + ": ", 1)[-1].rstrip(".").split(". The first six")[0]]
-        print(f"{f.name}: " + ("; ".join(done) if done else "nothing to normalise"))
-        if done and not args.dry_run:
+            raw, done = r.raw, done + [r.what]
+        lines.append(f"{f.name}: " + ("; ".join(done) if done else "nothing to normalise"))
+        if done and not dry_run:
             target = f.with_name(r.new_name) if r else f
             target.write_text(json.dumps(raw, indent=1, ensure_ascii=False) + "\n")
             if target != f:
                 f.unlink()
+    return lines, unresolved
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("files", type=Path, nargs="+")
+    ap.add_argument("--dry-run", action="store_true", help="say what would change; write nothing")
+    args = ap.parse_args(argv)
+    lines, unresolved = process(args.files, dry_run=args.dry_run)
+    print("\n".join(lines))
     for u in unresolved:
         print(f"UNRESOLVED: {u}", file=sys.stderr)
     return 1 if unresolved else 0
