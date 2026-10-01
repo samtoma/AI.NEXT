@@ -165,7 +165,7 @@ class Check:
 def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dict[str, LessonRun],
           bundles: list[dict], generated: dict, maths: dict | None, widget_gaps: dict | None,
           chapters: set[int] | None, s5_runs: list[dict] | None = None,
-          content: dict[str, dict] | None = None) -> tuple[list[Check], dict]:
+          content: dict[str, dict] | None = None, public: Path | None = None) -> tuple[list[Check], dict]:
     pairs = [(m, l) for m, l in manifest_lessons(manifest)
              if chapters is None or m["chapter"] in chapters]
     modules = {m["id"]: m for m, _ in pairs}
@@ -571,7 +571,7 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
               "app/public at its /book-figures/ path")
     qids = {q["id"]: q for q in questions}
     pics = [v for v in visuals if v.get("kind") == "book_image"]
-    public = book_config.REPO_ROOT / "app" / "public"
+    public = public or book_config.REPO_ROOT / "app" / "public"
     for v in pics:
         spec, q = v.get("spec") or {}, qids.get(v.get("question"))
         why = schemas.book_image_problems(spec)
@@ -666,6 +666,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--s5", type=Path, action="append",
                     help="S5 final run output(s) (default runs/<book>/misconceptions/*.json)")
     ap.add_argument("--out", type=Path, help="default coverage/<book>.json")
+    ap.add_argument("--public", type=Path, help="where the app's static files are, for the book_pictures check "
+                                                 "(default app/public; the dry run passes its scratch copy)")
     ap.add_argument("--check", action="store_true", help="print the audit, write nothing")
     a = ap.parse_args(argv)
 

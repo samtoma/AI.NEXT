@@ -478,10 +478,14 @@ def s9(line: Line) -> list[Path]:
     line.stage("S9", "assemble the chapter bundle and the lesson-content files")
     seed = line.p("seed", book.book, "x").parent
     content = line.p("seed", "content", "x").parent
+    # the book-picture stand-ins' images (answer 37d) go to the dry run's own scratch, never app/public
     line.uv("assemble_lesson_bundle.py", "--book", book.book, "--chapter", line.ch,
             "--objectives", line.p("objectives", "x").parent, "--runs", line.p("runs", "lesson", "x").parent,
-            "--out", seed, "--content-out", content, "--report", line.p("assembly-report.json"))
+            "--out", seed, "--content-out", content, "--report", line.p("assembly-report.json"),
+            "--figures-out", line.p("public", "book-figures", book.book, "x").parent)
     rep = json.loads(line.p("assembly-report.json").read_text())
+    line.count(book_picture_stand_ins=len(rep.get("stand_ins") or []), held_reveals=len(rep.get("held_reveals") or []),
+               held_for_figure=len(rep.get("held_for_figure") or []))
     line.count(**{k: rep["counts"].get(k) for k in ("objectives", "questions", "visuals", "worked_example_entries",
                                                     "claims", "content_files")},
                by_answer_type=rep["by_answer_type"], by_solution_provenance=rep["by_solution_provenance"],
