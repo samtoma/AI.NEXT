@@ -876,3 +876,59 @@ FALSE) and a 51-solution subset. It is sw-v1's OWN findings, so it flatters sw-v
 each (a changed coordinate, a swapped label, a flipped sign, a changed key, a renamed point in the question), the
 truth written down — and `calibrate --mutants` scores recall by defect class. Run both on a new prompt version, or a
 new model, before it checks a book.
+
+## 11. Multi-part exercises: a part carries what it depends on (2026-10-01, `multipart.py`)
+
+**The defect.** The book prints a question once and its parts (a), (b), (c) … beneath it; the pipeline serves every
+part on its own, so a part's words can name points or values that only an earlier part defines (Ex8-6:39d "Prove that
+ST ∥ PR" — S and T are part (b)'s mid-points; 44b's worked answer ends "= E", E being 44a's) and a student who meets it
+alone cannot answer it. The working-checker calibration found it (`ch08.calibration.json`, "unclear" and
+REAL-BUT-ELSEWHERE). What a part already carries: the set's instruction and the question's header — the packet's
+`item_stem` puts them in front of every part, so the shared preamble is the words every part has in common.
+
+**The rule** (deterministic; reads only what the book printed and G2's keys; never solves or invents). For a part P and
+the parts before it in the same question, in book order, wherever they were served:
+- **R1 names** — an earlier part introduces a name ("S and T, the mid-points of PQ and QR", "M where the diagonals
+  meet", "E (the mid-point of BD)", "the mid-point M of AB"), P (its words or its worked answer) uses it, and neither P
+  nor the preamble gives it: P gets one sentence in the book's words straight after the preamble — the shape Samuel's
+  G2 fix gave 39c by hand. When the earlier part is a marked question whose key is that one point, the key travels with
+  the name ("$E(\frac{1}{2},-\frac{3}{2})$ is the mid-point of $BD$").
+- **R2 unknowns** — the preamble leaves a point unknown (`N(x;y)`, `U(6;a)`), an earlier marked part works exactly that
+  out, P uses the point and does not ask for it itself: "$N=(3,5)$." / "$a=5$.".
+- **R3 gradients** — P's worked answer uses a gradient `m_{MN}` it never works out (never followed by "=") and an
+  earlier marked part asked for "the gradient of MN": "$m_{MN}=-\frac{1}{3}$.".
+Refused, and listed: a carried sentence that would state P's own answer; a key that is not one value or one point;
+an earlier part that is held, excluded, teaching-only or unkeyed (nothing the book printed to carry).
+
+**Where it runs.** `assemble_objectives.lesson-args` carries R1 (names only — no key exists at S2–S4) so the blind
+solver and the typing check read what a student will (39c came back "undefined" for want of this). The S9 assembly
+(`assemble_lesson_bundle.py`) runs all three over the whole chapter's items (a question's parts are spread across
+lessons), adds the key to a sentence the packet wrote (in place), and reports every changed stem in
+`assembly-report.json` → `stem_carry.carried` (before → after) and what it could not settle in `stem_carry.unresolved`.
+Running it twice changes nothing (a part's own sentence binds the name).
+
+**What it lists, never changes** (`stem_carry.unresolved`, the review backlog; `uv run multipart.py --book <b> --chapter N
+--out runs/<b>/multipart-chNN.json` writes the same list from the saved runs, each entry with the earlier parts' words and
+keys so one look settles it): `refers_by_words` ("Hence", "from the previous question", "from above", "we have just
+calculated" — which earlier part, and what it gave, is a human's call), `no_source` / `no_key` (a gradient or value
+needed that no earlier keyed part gives), `conflict` (two earlier parts give a name two meanings), `would_reveal_key`,
+`not_extractable` (a name an earlier part mentions that no pattern could read a definition from, no figure). A value used
+by a worked answer without its name (a bare number from an earlier part) cannot be seen by a rule and is not listed.
+
+**Human stamps.** A stem the assembly changes is no longer the text a human read at G2. `apply_review_verdicts.py --g2`
+(`CARRY_NOTE`) keeps the stamp and writes the review note "stem fixed by pipeline carry-over (…) — not <reviewer>", which
+the console reads as "changed after a human signed it" (`changedAfterHumanReview`), exactly as for an orchestrator's
+stem fix: the item is back in the backlog. An auto-passed verdict carries no such note. Re-running changes nothing.
+
+**Re-running a chapter** (pilot recipe; then `load_seed --update`, `apply_review_verdicts --g2`):
+
+```sh
+uv run assemble_lesson_bundle.py --book g10-math --chapter 8 --out work/g10-math/pilot/seed \
+    --content-out work/g10-math/pilot/seed/content --report work/g10-math/pilot/assembly-report.json
+uv run load_seed.py work/g10-math/pilot/seed/g10m-course.json work/g10-math/pilot/seed/g10m-c08.json \
+    --course course:us-g10-math-en --update
+uv run apply_review_verdicts.py --g2 runs/g10-math/g2.json --book g10-math
+```
+
+Tests: `tests/test_multipart.py` (the rules, the packet hook, the assembly across lessons, the review note; the DB half
+needs `AINEXT_TEST_PG`).

@@ -69,6 +69,15 @@ An aligned derivation `\\begin{align*}…\\end{align*}` inside `$…$` becomes `
 inline it shows a red parse error with the raw source (the Chapter 8 pilot's "&amp;": KaTeX's error
 text, HTML-escaped). The coverage audit counts any align left in a bundle as residual.
 
+MULTI-PART EXERCISES (multipart.py, 2026-10-01): the book prints a question once and its parts beneath it, and the
+line serves every part on its own — so a part can name a point or a value only an earlier part gives (Ex8-6:39d "Prove
+that ST ∥ PR", S and T being part (b)'s). Over the WHOLE chapter's items (a question's parts are spread across
+lessons) each such part's stem carries the sentence that makes it answerable: R1 the names an earlier part introduces,
+R2 the preamble's unknowns an earlier marked part works out, R3 the gradients its worked answer uses without working
+out — all in the book's words and G2's keys, never solved or invented. Every changed stem is in the report
+(`stem_carry.carried`, before → after) and what the rule cannot settle in `stem_carry.unresolved` (the review backlog).
+A stem changed under a human G2 stamp gets the stem-fix review note in `apply_review_verdicts.py --g2`.
+
 PART PREREQUISITES (FR-4317) are DERIVED — every objective of part n-1 before every objective
 of part n — and checked for cycles together with the book's own edges. They are never written
 into `edges`: the book's edges stay exactly the book's (migration 034, data-model.md §2).
