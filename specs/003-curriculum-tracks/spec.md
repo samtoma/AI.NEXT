@@ -448,9 +448,10 @@ through the attempts route and confirm identical outcomes.
 
 ### Edge Cases
 
-- **A grade has no live course in any curriculum** (for example grade 7 today). Sign-up does not ask.
-  The student is stored as National and sees the product's existing empty state, as a new grade does
-  today.
+- **A grade has no live course in any curriculum** (for example grade 7 today). *(Changed 2026-10-01,
+  answer 36.)* Sign-up still asks, naming every curriculum; every one of them carries the "nothing to
+  study here yet" note, since none is live for this grade. Whichever the student chooses is stored as
+  chosen, and the student sees the product's existing empty state, as a new grade does today.
 - **An operator's rule change leaves a student's curriculum with nothing live for their grade.** The
   student is not moved automatically. Only an operator changes a curriculum (decision 4). The student
   sees the empty state, and the console counts such students before the change (FR-4103) and lists
