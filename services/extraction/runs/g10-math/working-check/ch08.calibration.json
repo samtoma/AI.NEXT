@@ -264,5 +264,29 @@
   "q:g10m8s4-1-3:ex8-6-31e",
   "q:g10m8s4-1-3:ex8-6-46e",
   "q:g10m8s4-1-3:we13"
- ]
+ ],
+ "bias": "This truth is sw-v1's OWN findings, classified by hand. sw-v1 therefore scores 100% against it by construction, and any other configuration looks worse next to it; it cannot contain a defect no run has found. Two sw-v2 runs (2026-10-01, 51-solution subset) raised no agent flag outside it (0 on the 28 controls), which is evidence, not proof: every run shares one model's blind spots. For recall that does not depend on sw-v1, use ch08.mutants.json (known-good solutions with one injected defect each).",
+ "sw_v2_runs": {
+  "batch8_medium": {
+   "run": "ch08-cal-wf_b4278cc8-8ff",
+   "usd_per_solution": 0.0188,
+   "real_solutions_caught_by_agents": "12/16",
+   "missed": [
+    "ex8-6-36c",
+    "ex8-4-19b",
+    "ex8-6-17",
+    "ex8-6-24a (the free stub rule catches it)"
+   ]
+  },
+  "batch5_high": {
+   "run": "ch08-cal-b5h-wf_72c2481f-301",
+   "usd_per_solution": 0.0271,
+   "real_solutions_caught_by_agents": "14/16",
+   "missed": [
+    "ex8-4-19b",
+    "ex8-6-46e"
+   ]
+  },
+  "union": "15/16 by the agents (only ex8-4-19b, which needs its figure: back-solved, not read); both runs: 0 false flags, 0 flags outside this truth"
+ }
 }
