@@ -421,6 +421,9 @@ def g5_evaluate(coverage: dict, parity: list[tuple[str, str, list[str]]]) -> tup
     for c in coverage.get("checks") or []:
         state = c.get("state")
         first = "; ".join(f"{f['scope']}: {f['detail']}" for f in (c.get("failures") or [])[:3])
+        if state == "auto_passed":
+            first = "; ".join(f"{a['scope']}: AUTO-PASSED by {a.get('by')} — not a human sign-off"
+                              for a in (c.get("auto_passed") or [])[:3])
         safety = c["id"] in SAFETY_CHECKS
         checks.append({"name": f"coverage {c['id']}" + (" (safety)" if safety else ""),
                        "state": {"holds": "green", "excepted": "excepted", "fails": "red"}.get(state, state),
@@ -864,7 +867,8 @@ def main(argv: list[str] | None = None) -> int:
                     "basis": "parity GREEN for every course and no coverage safety check failing"}]
                   + g5_findings(coverage),
         checks=checks, blocked=blocked, for_review=review, run=a.run,
-        evidence=[("coverage", a.coverage), ("dry run", a.dryrun), ("cost ledger", ledger if cost else None)]
+        evidence=[("coverage", a.coverage), ("dry run", a.dryrun), ("cost ledger", ledger if cost else None),
+                  ("book config the drift guard compared the database with", a.book_config)]
                  + [(label, p) for label, p in gates if p.exists()])
     where = write_record(rec, gates_dir)
     print(f"G5 auto-pass ({scope}): {rec['outcome'].upper()} — {rec['summary']}\n  record: {_rel(where)}")
