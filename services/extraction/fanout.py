@@ -483,7 +483,7 @@ def build_runs(inv: dict) -> list[dict]:
             after=[f"uv run generate_widget_questions.py --merge-author-runs runs/g10-math/widgets/author-{t}-<wf_id>.json "
                    f"--merged runs/g10-math/widgets/author-merged-{t}.json --write-templates {wid}",
                    f"AINEXT_DB_DSN=\"{DSN}\" uv run generate_widget_questions.py --dsn \"{DSN}\" --catalogue "
-                   f"runs/g10-math/misconceptions/draft-{t}-<wf_id>.json --normalise-templates {wid}/*.json   # recorded; only the two mechanical kinds"])
+                   f"runs/g10-math/misconceptions/draft-{t}-<s5-draft wf_id>.json --normalise-templates {wid}/*.json   # recorded; only the two mechanical kinds"])
         add(id=f"s7-verify-{t}", stage="S7", chapter=ch, workflow="widgets.workflow.js (s7-v7, verify)",
             what=f"S7 blind reachability verification of chapter {ch}'s widget templates; skipped when the "
                  "author wrote no template (every lesson a gap — the dry run meets this on every non-geometry chapter)",
@@ -491,9 +491,13 @@ def build_runs(inv: dict) -> list[dict]:
             minutes=MINUTES["s7-verify"], priority=(3, i, 1), depends_on=[f"s7-author-{t}"],
             save_to=f"runs/g10-math/widgets/verify-{t}-<wf_id>.json", meter=_meter("S7"),
             after=[f"AINEXT_DB_DSN=\"{DSN}\" uv run generate_widget_questions.py --templates {wid} --book {cfg} --dsn \"{DSN}\" "
+                   f"--catalogue runs/g10-math/misconceptions/draft-{t}-<s5-draft wf_id>.json "
                    f"--verdicts runs/g10-math/widgets/verify-{t}-<wf_id>.json --gaps runs/g10-math/widgets/author-merged-{t}.json "
-                   f"--s5-distractors runs/g10-math/widgets/s5-distractors-{t}.json "
-                   f"--pending-review runs/g10-math/widgets/pending-review-{t}.json   # refused mappings held (decision 47) → backlog"])
+                   f"--pre-catalogue --s5-distractors runs/g10-math/widgets/s5-distractors-{t}.json "
+                   f"--pending-review runs/g10-math/widgets/pending-review-{t}.json   # refused mappings held (decision 47) → backlog",
+                   "# --catalogue <the chapter's S5 draft> --pre-catalogue are what prepare uses too: every diagnostic names a misconception "
+                   "that only S5 final puts in the catalogue, so without them this prints WIDGET TEMPLATES REJECTED and never writes "
+                   "s5-distractors-{t}.json (S5 final then stays NotReady)".replace("{t}", t)])
         add(id=f"s5-final-{t}", stage="S5", chapter=ch, workflow="misconceptions.workflow.js (s5-v5, final; embedded)",
             what=f"S5 final for chapter {ch}: the catalogue with S6/S7 distractors attached, fail-closed verifier",
             agents=nobj + 2, cost=[round(x * 0.55, 2) for x in _cost("s5_objective", nobj)], minutes=MINUTES["s5-final"],
@@ -519,7 +523,7 @@ def build_runs(inv: dict) -> list[dict]:
                    "course:us-g10-math-en … against the fan-out DB",
                    f"uv run coverage_report.py --book {cfg} --chapter {ch} --maths runs/g10-math/maths/book/summary.json "
                    f"--widget-gaps coverage/g10-math.{t}.widget-gaps.json --s5 runs/g10-math/misconceptions/final-{t}-<wf_id>.json "
-                   f"--out coverage/g10-math.{t}.json",
+                   f"--generated {gen} --out coverage/g10-math.{t}.json   # --generated: without it the report reads the pilot's top-level bundles",
                    f"uv run parity_check.py --candidate \"{DSN}\" --all-courses"],
             checkpoint=("chapter 1 complete: its whole cost against the estimate, coverage, parity, the console backlog — "
                         "go / no-go for the remaining 12 chapters") if i == 0 else None)

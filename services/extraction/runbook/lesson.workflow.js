@@ -797,15 +797,16 @@ function semicolonParts(key) {
   return out.map((x) => x.trim()).filter(Boolean)
 }
 // The kind a KEY needs when the typing agent's kind cannot read it (see checkTyping): "values" for a list of plain values (numbers, fractions,
-// surds: no variable, no relation) typed "surd" or "expression"; "interval" for inequalities and set membership typed "equation" or
-// "expression" (the app's interval kind reads x<4; x∈ℕ, x≠3 and 3<x<6; the equation kind refuses them). null: the kind stands.
+// surds: no variable, no relation) typed "surd" or "expression"; "interval" for inequalities and set membership typed "equation", "expression"
+// or "values" (the app's interval kind reads x<4; x∈ℕ, x≠3 and 3<x<6; its equation and values kinds refuse them); "equation" for one equals
+// sign typed "expression" or "surd". null: the kind stands.
 function kindForKey(key, kind) {
   const k = String(key == null ? '' : key)
   if (kind === 'surd' || kind === 'expression') {
     const parts = semicolonParts(k)
     if (parts.length >= 2 && parts.every((x) => { const n = normTex(x); return !/[=<>≤≥≠∈]/.test(n) && !/[A-Za-z]/.test(n.replace(/\\[a-zA-Z]+/g, '')) })) return 'values'
   }
-  if (kind === 'equation' || kind === 'expression') {
+  if (kind === 'equation' || kind === 'expression' || kind === 'values') {
     const n = normTex(k)
     if (/[<>≤≥∈≠]|\\neq?(?![a-zA-Z])|\\in(?![a-zA-Z])/.test(n) && !/=/.test(n)) return 'interval'
   }

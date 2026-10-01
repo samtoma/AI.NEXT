@@ -790,6 +790,10 @@ class Relations(TypedItem, unittest.TestCase):
         out = app_marker(x["marker"], ["b>1", "b>2"])
         self.assertIsNone(out["key_problem"], "the app's marker could not read this key under its equation kind")
         self.assertEqual(out["marks"], {"b>1": "correct", "b>2": "incorrect"})
+        # the same for a restriction typed "values" (Ex1-11:37b: "a ≠ b and a ≠ −3")
+        r = self.typed("a \\neq b \\text{ and } a \\neq -3", "a ̸= b and a ̸= −3", kind="values", variables=("a",))
+        self.assertEqual((r["marker"]["kind"], r["typing_retyped"]["rule"], r["typing_problems"]), ("interval", "kind-for-relations", []))
+        self.assertIsNone(app_marker(r["marker"])["key_problem"])
         # an equation is not an inequality: nothing is retyped
         y = self.typed("y=2x+1", "y = 2x + 1", kind="equation", variables=("x", "y"))
         self.assertNotIn("typing_retyped", y)

@@ -183,11 +183,14 @@ one. An image used only inside an EPUB worked solution (`solution_only`) follows
 being printed nowhere in the PDF, is not cross-checked. Chapter 8: 853/853 accepted — 558 hash,
 282 agreement, 13 third reading — so G0b was not needed.
 
-**An aligned derivation's hash.** The book names an `align*` image `md5` of its lines **without** the
-environment and with `&` written as the HTML entity `&amp;` (its source was HTML-escaped before hashing;
-proven on the hash-accepted Chapter 8 images). `assemble_maths.py` proves a transcription by either form
-(`hash_forms`) and **stores** it canonical: real `&`, inside `\begin{align*}…\end{align*}` (`canonical`).
-No entity is ever stored. `md5check` answers the canonical form too.
+**An image's hash is of its HTML-escaped source.** The book names an image `md5` of its LaTeX source
+**after** that source was HTML-escaped: `&` is `&amp;`, `<` is `&lt;`, `>` is `&gt;` (proven on the
+hash-accepted Chapter 8 images for `&`, and on Chapter 6's `y>0` and `x<9` readings for `<` and `>`). An
+`align*` image is hashed as its lines **without** the environment. `assemble_maths.py` proves a
+transcription by either form (`hash_forms`: as written, whitespace removed, and each of those HTML-escaped
+with all three characters together) and **stores** it canonical: real `&`, `<` and `>`, inside
+`\begin{align*}…\end{align*}` for a derivation (`canonical`). No entity is ever stored. `md5check` answers
+the canonical form too. Only exact md5 equality accepts, so a misreading is never let through by this.
 
 **GATE G0b (Samuel, or someone he names):** supply the LaTeX for every image on the queue. Nothing is
 guessed. S1, S2 and S3 do not start until the queue is empty.
