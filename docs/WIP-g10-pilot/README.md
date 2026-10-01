@@ -411,3 +411,18 @@ uv run dryrun_chapter.py --book g10-math --chapter 8 && uv run dryrun_chapter.py
 uv run parity_check.py --candidate "host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08" --all-courses
 cd ../../app && npm test && npx tsc --noEmit
 ```
+
+## PAUSED AGAIN 2026-10-01 — app restart for Sonnet 5.5
+Samuel: Sonnet 5.5 exists; the app needs a restart to get it. Every pipeline script and agent asks for the alias
+`sonnet` (newest Sonnet the app knows), so after the restart everything runs on Sonnet 5.5 with no code change.
+**Check first after the restart:** a new agent's transcript should show the new model id (the old one was
+`claude-sonnet-5`) — e.g. `grep -o '"model":"[^"]*"' <agent transcript>`.
+- Done and saved: **002** working check Ch 8 (`wf_957393ec-d74`, $31.0 metered — 3–5× the estimate; calibration
+  sw-v2 in progress, see its handoff note), collected → `runs/g10-math/working-check/ch08.flags.json` (21 flagged).
+- Stopped mid-way (resume if the session id is the same, else continue from the journal):
+  - **003** S0b pass A, group 1 — `wf_bfd09dab-0e6`, script `work/g10-math/packets/embedded/fanout/003-s0b-A-g1.workflow.js`
+  - **001** S6 author for lo:g10m8s1-1-1 — `wf_b6ba10e8-7d3`, script `.../fanout/001-s6-author-ch08-s111.workflow.js`
+  - `Workflow({scriptPath, resumeFromRunId})` replays finished agents from cache. NOTE: a resume after the model
+    changes re-runs nothing that finished; agents still to run will run on the new Sonnet.
+- Agents told to stop with handoff notes: spec records (outline/checker/answer 40), family parent (answer 40),
+  working-checker calibration (sw-v2). Re-launch them on `model: "sonnet"` from their notes.
