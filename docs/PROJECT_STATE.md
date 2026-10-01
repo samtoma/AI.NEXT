@@ -3,8 +3,9 @@
 > Living document. Read at session start; update when progress or decisions land.
 > Last updated: 2026-10-01 (`main` at `v0.9.3`, **deployed** to noor 2026-09-25; constitution **v3.4.0**;
 > **v0.10 — spec 003 on its feature branch, committed only as unreviewed WIP snapshots; the Chapter 8 pilot
-> has passed G1 and G2; the full fan-out to the rest of the book is now approved (decision 58e); nothing
-> of Grade 10 is in production**)
+> has passed G1 and G2; the full fan-out to the rest of the book is approved (decision 58e) and **held on
+> Samuel's word (2026-10-01)**; the internal review backlog, the whole-book outline and the step checker are
+> built; nothing of Grade 10 is in production**)
 
 ## 🧭 v0.10 — curriculum tracks and the Grade 10 American maths course (IN PROGRESS, not reviewed, not merged)
 
@@ -23,11 +24,11 @@ Curriculum, Math" — and *"When the user sign up for grade 10, they can have at
 American, National, etc.. … and consider that in the console, to choose which subject for which grade,
 should be done also per curriculum."*
 
-**Decisions: 58, in eight rounds** (`specs/003-curriculum-tracks/decisions.md`; 46 is unused). 1–17, the
+**Decisions: 61, in eight rounds** (`specs/003-curriculum-tracks/decisions.md`; 46 is unused). 1–17, the
 first round (*"I would take your recommendations"*); 18–22 and A–E, the second (*"ok for all"*); 23–34, the
 third, one question at a time; 35–36, the Chapter 8 pilot; 37–38, the curriculum-isolation audit; 39–45,
-gate G2 for Chapter 8; 47, the widget verifier; 48–58, the consistency review and filling the Grade 10
-course (2026-09-27/2026-10-01). From the third round on, Samuel's words are in
+gate G2 for Chapter 8; 47, the widget verifier; 48–61, the consistency review, filling the Grade 10
+course and showing the whole book (2026-09-27/2026-10-01). From the third round on, Samuel's words are in
 [`docs/WIP-g10-pilot/samuel-answers.md`](WIP-g10-pilot/samuel-answers.md): **answer N is decision N + 21**.
 Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
 
@@ -47,7 +48,21 @@ Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
   a new internal console backlog lets Samuel, Tamer and Kamil review every unstamped item afterwards, one
   at a time, goal zero (decision 58b, FR-4501…FR-4507); "reviewed" means only a human stamp (decision 54);
   a figure with no native type yet shows as the book's own image, temporarily, rather than holding the
-  lesson (decision 58d, FR-4508). None of FR-4501…FR-4509 is built yet.
+  lesson (decision 58d, FR-4508). **FR-4501…FR-4509 are built and read** (2026-10-01: migrations 035 and 036,
+  the `/review` console page, the book-picture stand-ins, `auto_pass_gates.py`; `tasks.md` T436–T443
+  ticked); their matrix rows stay OPEN until T387. G5 auto-passes too, each auto-passed gate decision marked
+  for Samuel and cleared only by his account (decision 60); passing deploys nothing.
+- **The student sees the whole book** (decision 59, answer 38, *"I want the students to see all chapters as
+  well not only 8!"*): every chapter and lesson in the book's order; a lesson not yet prepared reads "Being
+  prepared", is not startable and is refused on the server (404, no model call); readiness is derived, not
+  stored; the course card reads "5 of 65 lessons ready"; Noor's prompts are unchanged. **Built** (migration
+  037, `load_course_outline.py`; FR-4322…FR-4327, T444–T446).
+- **A step-level working checker** (decision 51, answer 30; FR-4411, T447): built; the Chapter 8 run flagged 21
+  of 192 solutions for a human and cost **$31.0, 3–5× the estimate** — a calibration pass (`sw-v2`) is in
+  progress, and the console does not yet read its flags.
+- **A teaching item may be a family's parent** (decision 61, answer 40): a family may be modelled on a book
+  item marked teaching-only, with an explicit `parent_kind`; needed by lo:g10m8s1-1-1. **Code in progress, not
+  built** (T448; migration 038 planned).
 - **The G10 course** is the only course live for grade 10 at launch; Play design, probing off, covered by
   ADR-0019 once switched on; its prompts name its own book and are English-only (decision 30).
 - **The prompt hold (ADR-0020)** has eight named exceptions, listed in one place in the ADR since
@@ -104,7 +119,8 @@ per course (T372), the chat snapshot keyed by scope, home-page wording per cours
 filter that strips a handoff card to a closed subject. Both prompt goldens unchanged. Production has
 `AINEXT_COURSE_GATING=on` (read 2026-09-26).
 
-**Build status.** `tasks.md`: **84 of 128** ticked (2026-09-27: T303, T304, T427, T428, T431, T432 and
+**Build status (2026-10-01).** `tasks.md`: **99 of 143** ticked; the matrix **traced 95/95** (81 FRs and 14
+SCs; 1 BUILT, 94 OPEN). *Older figures follow, as of 2026-09-27:* `tasks.md`: 84 of 128 ticked (2026-09-27: T303, T304, T427, T428, T431, T432 and
 T433 ticked after their code and tests were read and run). The matrix: 65 FRs and 13 SCs, **traced
 78/78**; 1 BUILT (FR-4409), 77 OPEN — where OPEN now means **"not yet re-graded (T387)"**, not "not
 started": most rows have code and passing tests behind them. Known gaps in built work: T305 (the alias
@@ -145,7 +161,8 @@ the record shows what was asked and what was decided; see `specs/003-curriculum-
 9. **Lesson text about the book's notation** ("separated by a semicolon") now contradicts the converted
    notation. Reword or drop?
 10. **A step-level working checker** before G2 (backlog 78; ≈ $70–125 for the book). **Answered (decision
-    51, answer 30): "Yes, add it."** Not yet built.
+    51, answer 30): "Yes, add it."** **Built** (FR-4411); the real cost is 3–5× the estimate, see the new
+    question 20.
 11. ~~**Figure policy for fan-out**: native figure kinds (decision 26) are weeks of work…~~ **Answered
     twice**: first (decision 50, answer 29) "Native only, wait" — decision 26 stands strictly; then
     (decision 58d, answer 37d, 2026-10-01) **TEMPORARILY REVERSED for students**: a figure with no native
@@ -172,24 +189,37 @@ Samuel* for the full text):
 17. **A possible constitution PATCH** making explicit that "reviewed" means a human stamp only, and that
     an operator may reject one item from the maths exception without reinstating the whole gate —
     proposed wording only, not decided (spec.md names it; no file is edited).
-18. **Does decision 58c's gate auto-pass also cover G5** (the dry-run/coverage/drift/cost go-or-no-go
-    before production promotion), or only G1–G4 as answer 37c literally says? `tasks.md` T443 assumes
-    G5 stays a human gate until told otherwise.
+18. ~~**Does decision 58c's gate auto-pass also cover G5** (the dry-run/coverage/drift/cost go-or-no-go
+    before production promotion), or only G1–G4 as answer 37c literally says?~~ **Answered (decision 60,
+    answer 39): "YES, and make sure to mark them for my review in the console view."**
+
+**New, 2026-10-01 (later; the spec-records pass):**
+19. **Two stamp classifications** (students-full handoff): are `samuel (poc bulk)` and `local-dev` stamps "not
+    a review", and do family-propagated G3 stamps count as human? Also the 9 questions held because the book
+    picture reveals the answer (and s4-1-2's advanced tier, now short).
+20. **The step checker's cost**: $31.0 for 192 Chapter 8 solutions (≈ $0.16 each) against $0.03–0.05 planned;
+    at that rate the book's checker is ≈ $430, not $81–135. Re-run Chapter 8 on the calibrated `sw-v2`, or keep
+    `sw-v1`? And the console must read the flag files before they are backlog items.
+21. **"No leave it as it is"** (Noor's prompts and the whole-book outline) was relayed, not logged: should it
+    be recorded verbatim in `samuel-answers.md`?
 
 **Open — gates and chores:**
-- **Samuel — gates G3, G4, G5** for Chapter 8 (still human gates for the pilot chapter, not yet passed).
+- **Samuel — gates G3, G4, G5** for Chapter 8 (recorded as auto-passed gate decisions waiting in the console
+  backlog for his account, since decision 60).
   **For the other 13 chapters this is no longer the critical path** (decision 58c, 2026-10-01): G1–G4
   now auto-pass on the AI checks' own recommendation during the fan-out, landing in the new console
   backlog (FR-4501…FR-4509) for Samuel, Tamer and Kamil to review afterwards, one at a time — he is off
-  the fan-out's critical path, on an ongoing review queue instead. **G5 is unresolved** (open question 18
-  above): whether it also auto-passes, or stays a human go/no-go before production promotion.
+  the fan-out's critical path, on an ongoing review queue instead. **G5 auto-passes too** (decision 60).
+  **The fan-out is held** (Samuel, 2026-10-01: wait for his next instruction); two runs stopped mid-way and
+  resume from their journals (`docs/WIP-g10-pilot/README.md`).
 - **Samuel — T388** (review and merge the ADRs: ADR-0024, ADR-0025 and the notes) and **T389** (the
   constitution amendment is applied; the checkbox is his).
 - **Engineering**: run the branch's CI once, deliberately; T423 (the catalogue's CI proof) and T424 (its
   rehearsal) before merge, because B19 touches live Prep-3 content; T425/T426 (stale "deletes on reload"
   comments in migrations 027/028 and the deploy scripts); the full 438-file National prompt capture over
-  a real database (backlog 58); T387 (re-grade spec 003's rows); **T436–T443** (new, unbuilt: the internal
-  review backlog and the book-image stand-in, decisions 56–58).
+  a real database (backlog 58); T387 (re-grade spec 003's rows, and add `@covers` tags — none of the new
+  FRs has a test declaring it); **T448** (a teaching item as a family's parent: code in progress); the
+  console reading the step checker's flags.
 
 ## 🩹 v0.9.3 hotfix — three widget answers corrected (released and deployed 2026-09-25; Samuel: "Full fix + deploy")
 
