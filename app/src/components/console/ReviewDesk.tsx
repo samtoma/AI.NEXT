@@ -219,10 +219,10 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
       if (k === "a" && canDecide(item.kind, "approve").ok) {
         e.preventDefault();
         void decide("approve");
-      } else if (k === "f") {
+      } else if (k === "f" && !item.readOnly) {
         e.preventDefault();
         open("fix_requested");
-      } else if (k === "r") {
+      } else if (k === "r" && !item.readOnly) {
         e.preventDefault();
         open("reject");
       } else if (k === "s") {
@@ -236,7 +236,12 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [item, busy, mode, decide, open, skipThis]);
 
-  const approvable = item ? canDecide(item.kind, "approve") : { ok: false as const, why: "" };
+  const readOnly = item?.readOnly === true;
+  const approvable = !item
+    ? { ok: false as const, why: "" }
+    : readOnly
+      ? { ok: false as const, why: "A gate decision is Samuel's to sign (answer 39). You can read it." }
+      : canDecide(item.kind, "approve");
 
   return (
     <div>
@@ -263,7 +268,10 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
       {problem ? (
         <div className="mb-3 rounded-md border border-gold/50 bg-gold-wash px-3 py-2 text-[13px] text-ink" role="alert">
           <span className="font-semibold">Not saved.</span> {problem.message}{" "}
-          {problem.code === "changed" || problem.code === "claimed_by_other" || problem.code === "gone" ? (
+          {problem.code === "changed" ||
+          problem.code === "claimed_by_other" ||
+          problem.code === "gone" ||
+          problem.code === "owner_only" ? (
             <button type="button" className="ds-control-quiet underline" onClick={() => void next(skip)} disabled={busy}>
               {problem.code === "changed" ? "Open it again" : "Next item"}
             </button>
@@ -363,7 +371,7 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
                 <button
                   type="button"
                   onClick={() => open("fix_requested")}
-                  disabled={busy}
+                  disabled={busy || readOnly}
                   title={decisionEffect(item.kind, "fix_requested")}
                   className="ds-control play-pressable rounded border border-gold/50 bg-gold-wash px-3.5 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
                 >
@@ -373,7 +381,7 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
                 <button
                   type="button"
                   onClick={() => open("reject")}
-                  disabled={busy}
+                  disabled={busy || readOnly}
                   title={decisionEffect(item.kind, "reject")}
                   className="ds-control play-pressable rounded border border-line bg-card px-3.5 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
                 >

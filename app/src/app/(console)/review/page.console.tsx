@@ -17,6 +17,7 @@ import {
   type BacklogFilters,
   type Tally,
 } from "@/lib/review-gate";
+import { GATE_LABEL, type Gate } from "@/lib/review-gate-records";
 import { getReviewOverview, type ReviewOverview } from "@/lib/review-gate-queries";
 
 export const dynamic = "force-dynamic";
@@ -81,6 +82,8 @@ export default async function ReviewConsolePage({
 
       <ZeroBacklog all={s} />
 
+      <ForSamuel view={view} />
+
       <Filters view={view} />
 
       <Panel
@@ -115,7 +118,7 @@ export default async function ReviewConsolePage({
 /* ------------------------------------------------------------ helpers */
 
 function filterKey(f: BacklogFilters): string {
-  return [f.kind ?? "", f.course ?? "", f.module ?? "", f.reason ?? ""].join("|");
+  return [f.kind ?? "", f.course ?? "", f.module ?? "", f.reason ?? "", f.assignee ?? ""].join("|");
 }
 
 function hrefFor(f: BacklogFilters, patch: Partial<Record<keyof BacklogFilters, string | null>>): string {
@@ -124,6 +127,9 @@ function hrefFor(f: BacklogFilters, patch: Partial<Record<keyof BacklogFilters, 
     const v = k in patch ? patch[k] : f[k];
     if (v) next[k] = v;
   }
+  // "For Samuel" is `?for=samuel` in the address.
+  const who = "assignee" in patch ? patch.assignee : f.assignee;
+  if (who) next.for = who;
   // A chapter belongs to a course: changing the course drops the chapter.
   if ("course" in patch && patch.course !== f.course) delete next.module;
   const qs = new URLSearchParams(next).toString();
@@ -187,12 +193,88 @@ function ZeroBacklog({ all }: { all: Tally }) {
   );
 }
 
+/**
+ * Answer 39: every auto-passed gate decision (G1–G5, per chapter or run) is
+ * Samuel's to sign. Listed here for everybody; decided only from his account.
+ */
+function ForSamuel({ view }: { view: ReviewOverview }) {
+  const open = view.forSamuel.filter((r) => r.state === "open" || r.state === "fix_requested");
+  return (
+    <Panel
+      title="For Samuel — auto-passed gates"
+      tone={open.length > 0 ? "attention" : "neutral"}
+      note={
+        <>
+          The fan-out passes G1–G5 on the AI checks&rsquo; recommendation (answers 37c, 39); each pass is a decision
+          Samuel signs here. An auto-pass is never a human stamp, and G5 moves nothing into production — that is
+          still only his explicit go through CI.{" "}
+          {view.viewerIsOwner
+            ? "You are signed in as Samuel: these are in your queue."
+            : view.gateOwnerConfigured
+              ? "You can read them; only Samuel's account can decide them."
+              : "No account is configured as Samuel's (AINEXT_GATE_OWNER_EMAIL or AINEXT_BOOTSTRAP_OPERATOR_EMAIL), so nobody can decide them yet."}
+        </>
+      }
+      right={
+        <Link href={hrefFor({}, { assignee: "samuel" })} className="text-[12px] font-semibold text-ink hover:underline">
+          Review them one by one →
+        </Link>
+      }
+    >
+      {view.forSamuel.length === 0 ? (
+        <Empty>No auto-passed gate decision is on record for a maths course.</Empty>
+      ) : (
+        <table className="w-full text-[13px] text-ink">
+          <thead>
+            <tr className="border-b border-line">
+              <Th>Gate</Th>
+              <Th>Chapter / run</Th>
+              <Th>What was auto-decided</Th>
+              <Th>When</Th>
+              <Th>State</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {view.forSamuel.map((r) => (
+              <tr key={r.ref} className="border-b border-line-soft align-top">
+                <Td>{GATE_LABEL[r.gate as Gate] ?? r.gate}</Td>
+                <Td>
+                  {r.chapter != null ? `chapter ${r.chapter}` : "whole book"}
+                  {r.run ? <div className="font-mono text-[11px] text-ink-faint">{r.run}</div> : null}
+                </Td>
+                <Td>
+                  {r.summary || "—"}
+                  <div className="font-mono text-[11px] text-ink-faint">{r.ref}</div>
+                </Td>
+                <Td>{stamp(r.decidedAt)}</Td>
+                <Td>
+                  <Chip tone={r.state === "open" ? "attention" : r.state === "approved" ? "good" : "neutral"}>
+                    {r.state.replace("_", " ")}
+                  </Chip>
+                </Td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </Panel>
+  );
+}
+
 function Filters({ view }: { view: ReviewOverview }) {
   const f = view.filters;
   const kinds = view.summary.byKind;
   const modules = view.options.modules.filter((m) => !f.course || m.courseId === f.course);
   return (
     <Panel title="Filters" note="Every combination is a URL. The queue below and its count follow them.">
+      <FilterGroup label="Whose">
+        <FilterLink href={hrefFor(f, { assignee: null })} active={!f.assignee}>
+          {view.viewerIsOwner ? "everything" : "everything I can decide"}
+        </FilterLink>
+        <FilterLink href={hrefFor(f, { assignee: "samuel" })} active={f.assignee === "samuel"}>
+          For Samuel · {view.forSamuel.filter((r) => r.state === "open").length}
+        </FilterLink>
+      </FilterGroup>
       <FilterGroup label="Kind">
         <FilterLink href={hrefFor(f, { kind: null })} active={!f.kind}>
           every kind

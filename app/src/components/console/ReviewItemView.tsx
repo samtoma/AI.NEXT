@@ -17,6 +17,7 @@ import { VizCard } from "@/components/viz/VizCard";
 import { markerInputOf } from "@/lib/answer-marker";
 import { displayStem, hasFigurePlaceholder } from "@/lib/question-figures";
 import { ANSWER_ONLY_CARD_NOTE, choiceOptions, isAnswerOnly, lessSpecificKeys } from "@/lib/question-flags";
+import { GATE_LABEL } from "@/lib/review-gate-records";
 import {
   DECISION_LABEL,
   KIND_LABEL,
@@ -76,6 +77,8 @@ function ItemHeader({ item }: { item: ReviewItemPayload }) {
     <header>
       <div className="flex flex-wrap items-center gap-1.5">
         <Chip>{KIND_LABEL[item.kind]}</Chip>
+        {item.assignee === "samuel" ? <Chip tone="attention">for Samuel</Chip> : null}
+        {item.readOnly ? <Chip>read only — Samuel decides</Chip> : null}
         {item.state !== "open" ? <Chip>{item.state.replace("_", " ")}</Chip> : null}
         {item.reasons.map((r, i) => (
           <span key={i} title={r.detail}>
@@ -215,6 +218,8 @@ function StudentSide({ item }: { item: ReviewItemPayload }) {
       ) : (
         <Missing />
       );
+    case "gate_decision":
+      return item.gate ? <GateDecided gate={item.gate} /> : <Missing />;
     case "figure_stand_in":
       return item.figure ? (
         <>
@@ -567,6 +572,8 @@ function SourceSide({ item }: { item: ReviewItemPayload }) {
           </Fact>
         </dl>
       ) : null;
+    case "gate_decision":
+      return item.gate ? <GateChecks gate={item.gate} /> : null;
     case "prerequisite_link":
       return item.link ? (
         <dl>
@@ -580,6 +587,132 @@ function SourceSide({ item }: { item: ReviewItemPayload }) {
         </dl>
       ) : null;
   }
+}
+
+/** What an auto-passed gate decided — the part Samuel signs. Not a student surface: there is none. */
+function GateDecided({ gate }: { gate: NonNullable<ReviewItemPayload["gate"]> }) {
+  const shown = gate.decisions.slice(0, 200);
+  return (
+    <div className="rounded-lg border border-line bg-card">
+      <div className="border-b border-line px-3.5 py-2.5">
+        <p className="font-display text-[15px] font-bold text-ink">{GATE_LABEL[gate.gate]}</p>
+        <p className="mt-0.5 text-[12.5px] text-ink-soft">
+          {gate.book}
+          {gate.chapter != null ? ` · chapter ${gate.chapter}` : ""}
+          {gate.run ? ` · run ${gate.run}` : ""} · decided {gate.decidedAt.slice(0, 16).replace("T", " ")} UTC
+        </p>
+        <p className="mt-1.5 flex flex-wrap items-center gap-1.5 text-[13px] text-ink">
+          <Chip tone={gate.outcome === "blocked" ? "attention" : "neutral"}>{gate.outcome.replace(/_/g, " ")}</Chip>
+          {gate.summary}
+        </p>
+        <p className="mt-1 text-[12px] text-ink-soft">
+          Signed {gate.by} — an automatic pass, never a human stamp. Nothing here moves production: that is still
+          only Samuel&rsquo;s explicit go through CI.
+        </p>
+      </div>
+      {gate.blocked.length > 0 ? (
+        <div className="border-b border-line bg-gold-wash px-3.5 py-2 text-[12.5px] text-ink">
+          <p className="font-semibold">Did not auto-pass</p>
+          <ul className="mt-1 list-disc ps-5">
+            {gate.blocked.map((b, i) => (
+              <li key={i}>{b}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      {shown.length === 0 ? (
+        <p className="px-3.5 py-3 text-[12.5px] text-ink-soft">The record lists no individual decisions.</p>
+      ) : (
+        <div className="max-h-[28rem] overflow-auto">
+          <table className="w-full text-[12.5px] text-ink">
+            <thead>
+              <tr className="border-b border-line">
+                <th scope="col" className="px-3 py-1.5 text-start font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-faint">
+                  Item
+                </th>
+                <th scope="col" className="px-3 py-1.5 text-start font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-faint">
+                  Auto-decided
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {shown.map((d, i) => (
+                <tr key={i} className="border-b border-line-soft align-top">
+                  <td className="px-3 py-1.5 font-mono text-[11px]">{d.key}</td>
+                  <td className="px-3 py-1.5">
+                    {d.decision}
+                    {d.detail ? <div className="text-ink-soft">{d.detail}</div> : null}
+                    {d.basis ? <div className="text-ink-faint">basis: {d.basis}</div> : null}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {gate.decisions.length > shown.length ? (
+            <p className="px-3 py-2 text-[12px] text-ink-soft">
+              …and {gate.decisions.length - shown.length} more in {gate.source}.
+            </p>
+          ) : null}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** The checks behind an auto-pass, and where its evidence is. */
+function GateChecks({ gate }: { gate: NonNullable<ReviewItemPayload["gate"]> }) {
+  return (
+    <dl>
+      <Fact label="Signed">{gate.by}</Fact>
+      <Fact label="Read from">
+        <span className="font-mono text-[11px]">{gate.source}</span>
+        {gate.origin === "auto-file" ? <div className="text-ink-soft">an auto-pass file (no gate record yet)</div> : null}
+      </Fact>
+      <Fact label="Checks">
+        {gate.checks.length === 0 ? (
+          "none listed"
+        ) : (
+          <ul className="grid gap-0.5">
+            {gate.checks.map((c, i) => (
+              <li key={i}>
+                <span className="font-semibold">{c.name}</span>: {c.state}
+                {c.detail ? <span className="text-ink-soft"> — {c.detail}</span> : null}
+              </li>
+            ))}
+          </ul>
+        )}
+      </Fact>
+      <Fact label="Coverage (S8)">
+        {gate.coverage ? (
+          <>
+            {gate.coverage.state.toUpperCase()}
+            {gate.coverage.summary
+              ? ` · ${gate.coverage.summary.checks} checks, ${gate.coverage.summary.fail} failing`
+              : ""}
+            {gate.coverage.failing.length > 0 ? (
+              <div className="text-ink-soft">failing: {gate.coverage.failing.join(", ")}</div>
+            ) : null}
+            <div className="font-mono text-[11px] text-ink-faint">{gate.coverage.file}</div>
+          </>
+        ) : (
+          "no audit on record for this book"
+        )}
+      </Fact>
+      <Fact label="Evidence">
+        {gate.evidence.length === 0 ? (
+          "none listed"
+        ) : (
+          <ul className="grid gap-0.5">
+            {gate.evidence.map((e, i) => (
+              <li key={i}>
+                {e.label}: <span className="font-mono text-[11px]">{e.path}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Fact>
+    </dl>
+  );
 }
 
 function History({ item }: { item: ReviewItemPayload }) {
