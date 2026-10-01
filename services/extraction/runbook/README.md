@@ -365,6 +365,41 @@ every agent except the judge, whose pair list the collection decides). Determini
   line on a run an older collection made: it adds a typing problem to an unflagged item whose marker `AnswerSpec` refuses, so the split
   writes G2's draft instead of stopping. The collection is still `collect-6` (same day; the fan-out plan names it) — the recollected file
   records the script's sha, so it says which script ran. **Re-collect a run made before this rule** (`recollect_lessons.py`).
+- **A key against an answer the book printed another way** (Chapters 3 and 4, 2026-10-01: G2's auto-pass excluded 24 of 93 items of g10m3s2-1
+  and 75 of 88 owed items of Chapter 4, most of them correct; `tests/test_lesson_collect6.py`: `ValueLabels`, `FractionKeys`,
+  `ListsFromSentences`, `Relations`, `InTheBookSolution`). The comparison only ACCEPTS a key, and only when every value, relation, sign,
+  bracket and constraint of the key is in the printed (or book-final) answer and the answer states nothing else; a different bound or
+  sign, another relation or bracket, a constraint the key leaves out, an extra number or a reordered sequence is a mismatch as before.
+  - *Labels.* A printed list that labels each value (`T4 = −28,1; T5 = −33,1`, `T1 = −3 and T2 = 3`, `Tn = …, T10 = …`, `x1 =`, `T_{10} =`)
+    is the key's list: the label (a letter or short name, a subscript, or the text layer's flattened `T4`) is set aside, "and" separates,
+    a decimal comma is never a separator (`-28,1` is one number; `1,\overline{34}` too), and where the labels DIFFER the order is kept
+    (one label, `x = 3 or x = 9`, or none is a set). A printed answer that opens with `=` (the text layer lost `T_n`) is read by its right side.
+  - *Sentences.* A values key of plain numbers matches a sentence when the sentence's numbers ARE the key's values, in order, nothing else
+    (`There are 5 tricycles and 2 bicycles.` ↔ `5; 2`; with an `=` only the numbers set after one count, `l = 2b = 16 cm` → 16; `R9,00` is 9;
+    a number glued to a letter, a number not set, a missing or extra value are refused). A book solution's sentence in maths is read by its
+    `var = value` segments (`… is $x=-1$ or $x=\frac{1}{3}$`; a given equation beside them is ignored).
+  - *± is two values* (`b = ±2` ↔ `2; -2`); the signature no longer drops `±` or a Greek letter, so a key `8` is not `±8` and `2\pi r` is not `2r`.
+  - *Relations.* An inequality, set membership or interval is one canonical string (relations, signs, brackets, connectors, order): `≠` is
+    a solidus + `=`, `6 5` in an interval endpoint is 6/5, `∈ℝ`, `∞`, `\left(`. A number line's axis (`x 0 1 2 3 4 5 x < 4; x ∈N`) and the next part's
+    answer that runs on (`… ] . e) ( −∞; …`, cut only at the item's own next part letter) are not the answer. `(-∞;∞)` is "true for all real
+    values" unless the sentence negates or excepts. `a>0; a∈ℕ` for `a > 7; a ∈N` and `b < -4` for `b > 4` stay refused, as do a key that
+    drops `b ∈ R` and another bracket.
+  - *Kinds the app's marker cannot read* (checked against the app's own marker in the tests; the key is kept exactly, recorded `typing_retyped`,
+    rules `fraction-key`, `kind-for-list`, `kind-for-relations`, `kind-for-equation`): a numeric key that is a fraction is typed `expression` (the numeric
+    grader reads `-5/3` with parseFloat as −5: Chapter 3 had two live questions that marked a correct answer wrong); a list of plain
+    values typed `surd` / `expression` is `values`; an inequality list typed `equation` / `expression` / `values` is `interval`; one `=` typed
+    `expression` / `surd` is `equation` (`T_n=4n-1`: ten Chapter 3 questions were held "unanswerable"). Marker variables are told by name
+    (`λ` → `\lambda`) and π is not a variable (the seam refused both).
+  - *In the book solution.* An equation the other way round is the solution's last line (`a=\frac{…}` for `\frac{…}&=a`); a relation row of an
+    aligned array (`-3&\le&k&<&2`); `\text{and}` with its spaces lost, `T_2=23 and T_4=53`; a chain `d=T_2-T_1=7-4=3` whose every link
+    `d=…` the solution states; `\pih` (the EPUB's glued π h) is π·h. A changed link or value is still refused.
+  Still held for a person: a choice with one option or more than five (a phrase answer, a letter of a stem's list), a typing agent's
+  copy of a typo or a copy-paste error in the book's solution, a printed answer that adds a restriction the key lacks (`, b ≠ 0`), a
+  flattened root the signature cannot order, a figure as the solution. **Both the collection and its retypes change a saved run**: the
+  collection is still `collect-6` (same day), so re-collect a run made before this change (`recollect_lessons.py`, no model call) and
+  prepare a lesson copy made before it again (`uv run fanout.py prepare <run-id>`). The close-out keeps an auto G2 verdict for an item no longer
+  owed, so a re-collected chapter's G2 file needs its auto verdicts dropped first (humans' stay) — see the 2026-10-01 note in
+  `docs/WIP-g10-pilot/README.md`.
 - **lesson-v8** changed the TYPING prompt only (a choice's options are never the agent's to make up; a number or a
   pair is numeric / expression; `book_final` is a quote; a two-part answer of different kinds is not markable). The runs
   made before it are re-collected, not re-run; a copy prepared before it carries lesson-v7 / collect-5 and must be
