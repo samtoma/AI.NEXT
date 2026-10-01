@@ -1628,6 +1628,20 @@ def orphaned_templates(orphans: list) -> dict[str, dict]:
     return out
 
 
+def no_diagnostic_gap(tid: str, o: dict, module: str | None, source: str) -> dict:
+    """The gap record of a template that was NOT shipped because every mapping of it was refused by S5 (`o`: lo_id,
+    questions, dropped). Recorded where coverage reads it, at lesson scope (a chapter left with no widget at all gets
+    a chapter-scope gap, which a human signs); `no-diagnostic` is no new kind, so nothing is proposed from it."""
+    return {"module": module, "lo_id": o["lo_id"], "need_kind": "no-diagnostic",
+            "description": f"template {tid} ({len(o['questions'])} widget question(s)) was not shipped: "
+                           f"it could not say why a wrong answer is wrong",
+            "why": "every misconception its mappings name was refused by S5's fail-closed verifier ("
+                   + ", ".join(o["dropped"]) + "); a widget with no diagnostic could mark an answer wrong "
+                   "and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept "
+                   "the lesson without it",
+            "source": source, "signed_off": None}
+
+
 def gap_report(book: str, course: str, graph, questions: list[dict], gap_files: list[Path],
                previous: dict | None = None, orphaned: dict[str, dict] | None = None) -> dict:
     """coverage/<book>.widget-gaps.json: every chapter, its widgets, and every gap (FR-4306).
@@ -1653,17 +1667,7 @@ def gap_report(book: str, course: str, graph, questions: list[dict], gap_files: 
                          "description": g.get("description", ""), "why": g.get("why", ""),
                          "source": Path(f).name, "signed_off": None})
     for tid, o in sorted((orphaned or {}).items()):
-        # a template that was NOT shipped: recorded where coverage reads it, at lesson scope (a chapter that is
-        # left with no widget at all gets a chapter-scope gap below, which a human signs). `no-diagnostic` is no
-        # new kind: nothing is proposed from it
-        gaps.append({"module": module_of.get(o["lo_id"]), "lo_id": o["lo_id"], "need_kind": "no-diagnostic",
-                     "description": f"template {tid} ({len(o['questions'])} widget question(s)) was not shipped: "
-                                    f"it could not say why a wrong answer is wrong",
-                     "why": "every misconception its mappings name was dropped by S5's fail-closed verifier ("
-                            + ", ".join(o["dropped"]) + "); a widget with no diagnostic could mark an answer wrong "
-                            "and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept "
-                            "the lesson without it",
-                     "source": "generate_widget_questions.py (S5 dropped the mapping)", "signed_off": None})
+        gaps.append(no_diagnostic_gap(tid, o, module_of.get(o["lo_id"]), "generate_widget_questions.py"))
     modules = graph.modules(course)
     chapters, uncovered = [], []
     for m in modules:
