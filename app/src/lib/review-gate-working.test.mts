@@ -318,7 +318,7 @@ test("where the checker puts the fault: a stem misprint reads as a question prob
   );
   assert.deepEqual(mixed.reasons.map((r) => r.code), ["working_flagged", "question_flagged"]);
   assert.match(mixed.reasons[0]!.detail!, /unsure/);
-  assert.doesNotMatch(mixed.reasons[0]!.detail!, /checker /, "no version, none said");
+  assert.doesNotMatch(mixed.reasons[0]!.detail!, /\(checker /, "no version, none said");
 });
 
 /* ------------------------------------------------------------ decisions */

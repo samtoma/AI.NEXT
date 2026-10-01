@@ -134,7 +134,7 @@ export const solutionKindOf = (id: string): "question" | "worked_example" => (id
  * `ch08-cal-b5h.flags.json`), a raw run file (`ch08-wf_….json`), a truth file.
  */
 export function canonicalFlagsChapter(file: string): number | null {
-  const m = file.match(/^ch(\d{1,2})\.flags\.json$/);
+  const m = file.match(/^ch(\d{2})\.flags\.json$/);
   return m ? Number(m[1]) : null;
 }
 

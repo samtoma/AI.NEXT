@@ -130,8 +130,8 @@ export async function readWorkingFlags(root: string = defaultRunsRoot()): Promis
   const out: WorkingFlagGroup[] = [];
   for (const [book, courseId] of mathsBooks()) {
     const dir = path.join(root, book, "working-check");
-    const truths = new Set((await list(dir, /^ch\d{1,2}\.calibration\.json$/)).map((f) => path.basename(f)));
-    for (const file of await list(dir, /^ch\d{1,2}\.flags\.json$/)) {
+    const truths = new Set((await list(dir, /^ch\d{2}\.calibration\.json$/)).map((f) => path.basename(f)));
+    for (const file of await list(dir, /^ch\d{2}\.flags\.json$/)) {
       const chapter = canonicalFlagsChapter(path.basename(file));
       if (chapter == null) continue;
       const doc = await readJson(file);

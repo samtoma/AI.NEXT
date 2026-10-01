@@ -80,11 +80,35 @@ VALID = {"accept", "reject", "fix"}
 G2_VERDICTS = {"accept", "fix", "hold", "exclude"}
 
 
+# A part whose stem the assembly changes (multipart.py: it carries what it depends on) is no longer the text a
+# human read at G2: the stamp stays, the NOTE says who changed it and the console lists the item as "changed after
+# a human signed it" (review-gate.ts changedAfterHumanReview), exactly as for an orchestrator's stem fix. A constant
+# string, so re-running the apply changes nothing.
+CARRY_NOTE = "stem fixed by pipeline carry-over (multipart.py: the part carries what it depends on), 2026-10-01 — not {who}"
+
+
+def carried_refs(runs_dir: Path) -> set[str]:
+    """The refs of every item whose stem the assembly carries into (multipart.plan over the whole runs dir: the
+    parts of a question are spread across lessons, so every run is read). A run that does not validate is
+    skipped here — the assembly reports it."""
+    import multipart
+    from assemble_lesson_bundle import LessonRun
+    from pydantic import ValidationError
+    items = []
+    for f in sorted(runs_dir.glob("*.json")):
+        try:
+            items += LessonRun.model_validate_json(f.read_text()).items
+        except (ValidationError, ValueError):
+            continue
+    return set(multipart.plan_items(items)[0])
+
+
 def g2_targets(g2: dict, runs_dir: Path) -> tuple[list[dict], list[str]]:
     """Each G2 verdict with the question id it lands on (the assembler's own minting), and the
     problems that stop the whole apply (an unknown lesson or item, an unknown verdict)."""
     from assemble_lesson_bundle import LessonRun
     targets, problems, cache = [], [], {}
+    carried = carried_refs(runs_dir)
     for key, v in sorted((g2.get("items") or {}).items()):
         slug, _, ref = key.partition(":")
         verdict = (v or {}).get("verdict")
@@ -106,6 +130,7 @@ def g2_targets(g2: dict, runs_dir: Path) -> tuple[list[dict], list[str]]:
                         "question_id": item.question_id(), "teaching": item.answer_type == "not_markable",
                         "reviewer_verdict": (v or {}).get("samuel_verdict") or verdict,
                         "stem_fix_by": (v or {}).get("stem_fix_by"),
+                        "stem_carried": item.ref in carried,
                         "auto": bool((v or {}).get("auto")) or review_policy.is_auto((v or {}).get("by")),
                         "by": (v or {}).get("by")})
     return targets, problems
@@ -152,7 +177,10 @@ def apply_g2(cur, g2: dict, runs_dir: Path, course: str, dry_run: bool) -> dict:
         stamp = f"{who} (G2 {verdict})"
         # the pre-035 "held: its figure is missing" annotation is hold_reason's job now (figure_missing)
         kept = "; ".join(n for n in (note or "").split("; ") if n.strip() != "held: its figure is missing")
-        want_note = review_policy.join_notes(kept, f"stem fixed by {t['stem_fix_by']}" if t.get("stem_fix_by") else None)
+        who_read = (by.split() or ["the reviewer"])[0]
+        want_note = review_policy.join_notes(
+            kept, f"stem fixed by {t['stem_fix_by']}" if t.get("stem_fix_by") else None,
+            CARRY_NOTE.format(who=who_read) if t.get("stem_carried") and not auto else None)
         # (status, reviewed_by, ai_checked_by, hold_reason, review_note)
         human = reviewed_by if auto else stamp
         robot = stamp if auto else ai_by

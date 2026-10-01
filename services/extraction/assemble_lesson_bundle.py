@@ -1254,6 +1254,15 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
             edges.append({"src": pr.src, "dst": pr.dst, "type": "prerequisite_of"})
         report.counts["objectives"] += len(obj.objectives)
 
+    # A part of a multi-part exercise carries what it depends on (multipart.py): the plan is made over the WHOLE
+    # chapter's items first — a question's parts are spread across lessons — and applied to each stem below.
+    chapter_items = [(les.slug, it) for les in lessons if runs.get(les.slug) is not None
+                     for it in runs[les.slug].items]
+    carries, unresolved = multipart.plan_items([it for _, it in chapter_items])
+    slug_of = {it.ref: slug for slug, it in chapter_items}
+    emitted = {it.ref for _, it in chapter_items if it.fate() != "excluded"}
+    report.multipart_unresolved += [{**u.as_dict(), "lesson": slug_of.get(u.ref)} for u in unresolved
+                                    if u.ref in emitted]
     for les in lessons:
         run = runs.get(les.slug)
         if run is None:
@@ -1295,6 +1304,15 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
             report.by_answer_type[it.answer_type] += 1
             wkey = f"{les.slug}:{it.ref}"
             stem = _norm(it.stem, wkey, report)
+            carry = carries.get(it.ref)
+            if carry is not None and fate != "excluded":
+                stem = _norm(carry.after, wkey, report)
+                report.counts["stems_carried"] += 1
+                report.carried_stems.append({
+                    "question": qid if fate != "teaching" else "expl:" + qid.removeprefix("q:"),
+                    "lesson": les.slug, "ref": it.ref, "rules": sorted({x["rule"] for x in carry.items}),
+                    "from": sorted({x["from"] for x in carry.items}), "sentences": carry.sentences,
+                    "before": _norm(it.stem, wkey, report), "after": stem})
             solution = [_norm(s, wkey, report) for s in it.solution]
             if fate in ("excluded", "teaching"):
                 detached.add(it.ref)
@@ -1703,6 +1721,13 @@ def main(argv: list[str] | None = None) -> int:
               f"and have no figure" + ("" if report.book_pictures else " (--no-book-pictures)"))
     if rep["held_katex"]:
         print(f"  held (review, not live): {len(rep['held_katex'])} question(s) the app's KaTeX cannot render")
+    sc = rep["stem_carry"]
+    print(f"  multi-part exercises: {len(sc['carried'])} part(s) carry what they depend on (multipart.py), "
+          f"{len({u['ref'] for u in sc['unresolved']})} part(s) listed unresolved for the review backlog")
+    for x in sc["carried"]:
+        print(f"    carried: {x['ref']} [{', '.join(x['rules'])} from {', '.join(x['from'])}]")
+    for u in sc["unresolved"]:
+        print(f"    unresolved: {u['ref']} {u['reason']} — {u['detail'][:110]}")
     if a.report:
         a.report.parent.mkdir(parents=True, exist_ok=True)
         a.report.write_text(json.dumps(rep, indent=2, ensure_ascii=False) + "\n")
