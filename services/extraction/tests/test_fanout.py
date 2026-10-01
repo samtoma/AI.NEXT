@@ -289,5 +289,32 @@ class CloseChapter(unittest.TestCase):
         self.assertEqual(out["then"], ["fanout.py config 9", "fanout.py prepare wcheck-ch09", "fanout.py prepare s5-draft-ch09"])
 
 
+class S7AuthorPrep(unittest.TestCase):
+    """The S7 author reads the DATABASE's graph, which holds every chapter loaded so far (Chapter 8 from the pilot first): the run for
+    chapter N must be limited to chapter N's lessons, or it authors Chapter 8 again (paid) into chapter N's directory."""
+
+    def test_the_author_args_are_limited_to_the_chapters_lessons(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            plan = {"runs": [{"id": "lesson-g10m1s3-1", "stage": "S2-S4", "chapter": 1, "lesson": "g10m1s3-1"},
+                             {"id": "lesson-g10m1s4-1", "stage": "S2-S4", "chapter": 1, "lesson": "g10m1s4-1"},
+                             {"id": "lesson-g10m2s2-1", "stage": "S2-S4", "chapter": 2, "lesson": "g10m2s2-1"}]}
+            (t / "plan.json").write_text(json.dumps(plan))
+            keep = (F.PLAN_PATH, F._chapter_inputs, F._latest, F._py, F._embed, F.PACKETS)
+            seen = []
+            F.PLAN_PATH, F.PACKETS = t / "plan.json", t
+            F._chapter_inputs = lambda ch: (t / "cfg.json", t)
+            F._latest = lambda pat: t / "draft.json"
+            F._py = lambda *a, **k: (seen.append(a), (t / "s7-author-ch01.args.json").write_text("{}"))
+            F._embed = lambda script, args, run: {"script": "x"}
+            try:
+                self.assertEqual(F.chapter_lessons(1), ["g10m1s3-1", "g10m1s4-1"])
+                F.prep_s7_author({"chapter": 1, "embedded_script": "x"})
+            finally:
+                F.PLAN_PATH, F._chapter_inputs, F._latest, F._py, F._embed, F.PACKETS = keep
+            argv = seen[0]
+            self.assertEqual(argv[argv.index("--only-lessons") + 1], "g10m1s3-1,g10m1s4-1")
+
+
 if __name__ == "__main__":
     unittest.main()

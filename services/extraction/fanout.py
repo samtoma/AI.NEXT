@@ -917,14 +917,24 @@ def prep_s6_grade(run: dict) -> dict:
     return {**outs[0], "parts": [o["script"] for o in outs]}
 
 
+def chapter_lessons(ch: int) -> list[str]:
+    """The chapter's lesson slugs, in book order (from the plan's S2–S4 runs)."""
+    return [r["lesson"] for r in json.loads(PLAN_PATH.read_text())["runs"] if r["stage"] == "S2-S4" and r.get("chapter") == ch]
+
+
 def prep_s7_author(run: dict) -> dict:
+    """The S7 author reads the curriculum graph from the DATABASE, and the database holds every chapter loaded so far (Chapter 8 from the
+    pilot, then each fan-out chapter): `author_args` lists every objective of the course it finds. Without `--only-lessons` chapter 1's
+    run would have authored Chapter 8's thirteen objectives again (five more lessons, paid, their templates written into chapter 1's
+    directory). `--only-lessons` also refuses, naming them, a lesson the database does not hold yet: load the chapter's book bundle first
+    (load_seed.py by path, the s5-draft step's `before` list)."""
     ch = run["chapter"]
     t = ch_tag(ch)
     cfg, _ = _chapter_inputs(ch)
     draft = _latest(f"misconceptions/draft-{t}-*.json")
     a = PACKETS / f"s7-author-{t}.args.json"
     _py("generate_widget_questions.py", "--author-args", str(a), "--book", str(cfg), "--dsn", DSN, "--catalogue", str(draft),
-        "--by-ref", str(PACKETS / f"s7-author-{t}"), env={"AINEXT_DB_DSN": DSN})
+        "--only-lessons", ",".join(chapter_lessons(ch)), "--by-ref", str(PACKETS / f"s7-author-{t}"), env={"AINEXT_DB_DSN": DSN})
     return _embed("widgets.workflow.js", json.loads(a.read_text()), run)
 
 
