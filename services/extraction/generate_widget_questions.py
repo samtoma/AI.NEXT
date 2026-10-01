@@ -1122,13 +1122,21 @@ def build_from_templates(templates: list[dict]) -> tuple[list[dict], list[str]]:
     return questions, problems
 
 
-def check_questions(questions: list[dict], graph, pre_catalogue: bool = False) -> tuple[list[str], list[str]]:
+def check_questions(questions: list[dict], graph, pre_catalogue: bool = False,
+                    orphans: list | None = None) -> tuple[list[str], list[str]]:
     """Every mandatory S7 check. Returns (problems, dropped-diagnostic notes).
 
     ``pre_catalogue``: S7 runs before S5's final catalogue exists (§3.2), so a
     predicate may name an id S5 has not written. The prerequisite rule still
     holds — the objective is read from the id itself (``mc:<lo tail>:…``) — and
     nothing is dropped; the caller refuses to write a bundle in this phase.
+
+    ``orphans``: by default a widget whose every mapping names a misconception S5 did not keep is a PROBLEM
+    ("no diagnostic left"), which refuses the whole run. Given a list, such a widget is appended to it as
+    ``(question, [the dropped misconception ids])`` instead and is no problem of the run: the caller leaves it out
+    of the bundle (it is never shipped) and records it as a widget gap (Chapter 1: one template's only mapping was
+    an entry S5 dropped as speculative, and it refused the other five templates with it). A widget that had no
+    mapping at all, or whose mappings fail the prerequisite rule, is still a problem.
     """
     problems, notes = [], []
     mcs = graph.misconceptions() if graph else None
@@ -1151,7 +1159,7 @@ def check_questions(questions: list[dict], graph, pre_catalogue: bool = False) -
         elif parent["lo_id"] != q["lo_id"]:
             problems.append(f"{q['id']}: parent {q['parent_question_id']} is on {parent['lo_id']}, not {q['lo_id']}")
         allowed = graph.closure(q["lo_id"])
-        kept = []
+        kept, gone = [], []
         for d in q["choices"]["diagnostics"]:
             mid = d["misconception_id"]
             if pre_catalogue and mid not in mcs:
@@ -1165,6 +1173,7 @@ def check_questions(questions: list[dict], graph, pre_catalogue: bool = False) -
                 # §3.8: a predicate whose misconception S5 dropped loses its mapping
                 # rather than pointing at nothing (FR-1112).
                 notes.append(f"{q['id']}: {d['predicate']} → {mid} is not in the catalogue — diagnostic dropped")
+                gone.append(mid)
                 continue
             if mcs[mid]["lo_id"] not in allowed:
                 problems.append(f"{q['id']}: names {mid!r} on {mcs[mid]['lo_id']}, which is neither this "
@@ -1172,7 +1181,10 @@ def check_questions(questions: list[dict], graph, pre_catalogue: bool = False) -
             kept.append(d)
         q["choices"]["diagnostics"] = kept
         if not kept:
-            problems.append(f"{q['id']}: no diagnostic left — a widget that cannot say why is not shipped")
+            if orphans is not None and gone and not any(p.startswith(q["id"] + ":") for p in problems):
+                orphans.append((q, gone))
+            else:
+                problems.append(f"{q['id']}: no diagnostic left — a widget that cannot say why is not shipped")
     return problems, notes
 
 
@@ -1601,8 +1613,23 @@ def _gap_key(g: dict) -> tuple:
     return (g.get("module"), g.get("lo_id"), g.get("need_kind"))
 
 
+# A gap that asks for no new widget kind: a template that could not be shipped as written (see `orphaned_templates`)
+NOT_A_KIND = ("unexamined", "none", "unspecified", "no-diagnostic")
+
+
+def orphaned_templates(orphans: list) -> dict[str, dict]:
+    """{template id: {lo_id, questions, dropped}} from `check_questions(..., orphans=)`: the templates every
+    instance of which is left with no diagnostic because S5 did not keep any misconception they name."""
+    out: dict[str, dict] = {}
+    for q, gone in orphans:
+        o = out.setdefault(q["family"], {"lo_id": q["lo_id"], "questions": [], "dropped": []})
+        o["questions"].append(q["id"])
+        o["dropped"] += [m for m in gone if m not in o["dropped"]]
+    return out
+
+
 def gap_report(book: str, course: str, graph, questions: list[dict], gap_files: list[Path],
-               previous: dict | None = None) -> dict:
+               previous: dict | None = None, orphaned: dict[str, dict] | None = None) -> dict:
     """coverage/<book>.widget-gaps.json: every chapter, its widgets, and every gap (FR-4306).
 
     The shape coverage_report.py reads (S8, check `module_widgets`): a flat `gaps` list,
@@ -1625,6 +1652,18 @@ def gap_report(book: str, course: str, graph, questions: list[dict], gap_files: 
                          "lo_id": g.get("lo_id"), "need_kind": g.get("need_kind") or "unspecified",
                          "description": g.get("description", ""), "why": g.get("why", ""),
                          "source": Path(f).name, "signed_off": None})
+    for tid, o in sorted((orphaned or {}).items()):
+        # a template that was NOT shipped: recorded where coverage reads it, at lesson scope (a chapter that is
+        # left with no widget at all gets a chapter-scope gap below, which a human signs). `no-diagnostic` is no
+        # new kind: nothing is proposed from it
+        gaps.append({"module": module_of.get(o["lo_id"]), "lo_id": o["lo_id"], "need_kind": "no-diagnostic",
+                     "description": f"template {tid} ({len(o['questions'])} widget question(s)) was not shipped: "
+                                    f"it could not say why a wrong answer is wrong",
+                     "why": "every misconception its mappings name was dropped by S5's fail-closed verifier ("
+                            + ", ".join(o["dropped"]) + "); a widget with no diagnostic could mark an answer wrong "
+                            "and never say why (ADR-0009). Re-author it against a misconception S5 kept, or accept "
+                            "the lesson without it",
+                     "source": "generate_widget_questions.py (S5 dropped the mapping)", "signed_off": None})
     modules = graph.modules(course)
     chapters, uncovered = [], []
     for m in modules:
@@ -1652,7 +1691,7 @@ def gap_report(book: str, course: str, graph, questions: list[dict], gap_files: 
         gaps.append(dict(g, carried=True))
     proposed: dict[str, dict] = {}
     for g in gaps:
-        if g["need_kind"] in ("unexamined", "none", "unspecified"):
+        if g["need_kind"] in NOT_A_KIND:
             continue
         rec = proposed.setdefault(g["need_kind"], {"modules": [], "objectives": [], "why": []})
         if g["module"] not in rec["modules"]:
