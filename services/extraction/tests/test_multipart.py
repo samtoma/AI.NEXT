@@ -518,6 +518,15 @@ class Assembly(unittest.TestCase):
         schemas.SeedBundle.model_validate_json(json.dumps(self.ch8))
         self.assertEqual(self.report.katex_errors, [])
 
+    def test_the_command_writes_the_same_plan_from_the_saved_runs(self):
+        out = self.root / "plan.json"
+        self.assertEqual(mp.main(["--book", "g10-math", "--runs", str(self.root / "runs" / "lesson"), "--chapter", "8",
+                                  "--out", str(out)]), 0)
+        doc = json.loads(out.read_text())
+        self.assertEqual([(x["ref"], x["lesson"], x["rules"]) for x in doc["carried"]],
+                         [("Ex8-6:3b", "g10m8s3-2", ["R1"])])
+        self.assertEqual(doc["unresolved"], [])
+
     def test_assembling_again_gives_the_same_bundle(self):
         again, _ = self.t.assemble(self.root)
         self.assertEqual(again["g10m-c08.json"], self.ch8)
