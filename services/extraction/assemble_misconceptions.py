@@ -404,6 +404,11 @@ def prerequisites(bundle_paths: list[Path]) -> dict[str, set[str]]:
     return out
 
 
+def _unfit_key(u: dict) -> list:
+    """What identifies a refused S6/S7 attachment in a bundle's `s5_reconciled` stamp."""
+    return [u.get("lo"), u.get("origin"), u.get("ref"), u.get("tagged"), u.get("text")]
+
+
 def module_of_los(bundle_paths: list[Path]) -> dict[str, str]:
     """{objective: its module}, from SeedBundles' `teaches` edges (module -> objective)."""
     out: dict[str, str] = {}
@@ -898,17 +903,32 @@ def main(argv: list[str] | None = None) -> int:
     applied: set[int] = set()
     prereqs = prerequisites(a.graph) if a.graph else None
     dropped_widgets: list[dict] = []
+    runs_named = sorted(p.name for p in a.runs)
+    prior: set[tuple] = set()     # refused attachments an EARLIER pass of these same runs already stripped (the stamp)
     for bp in a.bundle:
-        new, lines, errs, hit = reconcile_bundle(json.loads(bp.read_text()), entries, alias_of, unfit, prereqs,
+        doc = json.loads(bp.read_text())
+        old_stamp = doc.get("s5_reconciled") if (doc.get("s5_reconciled") or {}).get("runs") == runs_named else {}
+        prior |= {tuple(k) for k in (old_stamp or {}).get("refused_attachments_stripped", [])}
+        new, lines, errs, hit = reconcile_bundle(doc, entries, alias_of, unfit, prereqs,
                                                  dropped_widgets if a.drop_undiagnosed_widgets else None)
         problems += [f"{bp.name}: {e}" for e in errs]
         applied |= hit
+        # the stamp: this bundle has had the S5 refusals applied (and by which runs), so a rerun over it is a no-op
+        # rather than a refusal, and whoever loads it can see the pass was made
+        new["s5_reconciled"] = {
+            "runs": runs_named, "catalogue": catalogue["catalogue"],
+            "refused_attachments_stripped": sorted([list(k) for k in
+                                                    {tuple(k) for k in (old_stamp or {}).get("refused_attachments_stripped", [])}
+                                                    | {tuple(_unfit_key(unfit[i])) for i in hit}]),
+            "widgets_left_out": sorted(set((old_stamp or {}).get("widgets_left_out", []))
+                                       | {r["question_id"] for r in dropped_widgets if r["question_id"] in
+                                          {q.get("id") for q in doc.get("questions", [])}})}
         reconciled.append((bp, new))
         for line in lines:
             print(f"  {bp.name}: {line}")
     deferred = []
     for i, u in enumerate(unfit):
-        if i in applied:
+        if i in applied or tuple(_unfit_key(u)) in prior:
             continue
         if a.catalogue_only:
             deferred.append(u)       # no bundle exists yet: the bundle pass strips it or refuses (below)
