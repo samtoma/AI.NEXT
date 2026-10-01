@@ -302,8 +302,8 @@ export const REASON_LABEL: Record<ReasonCode, string> = {
   held_mapping: "Held inactive: the AI verifier refused it",
   ai_authored: "AI-authored, awaiting human",
   needs_native_figure: "Needs native figure",
-  working_flagged: "Working step flagged",
-  question_flagged: "Question text flagged",
+  working_flagged: "Checker flagged a step",
+  question_flagged: "Checker flagged the question text",
   no_human_review: "No human review recorded",
   auto_passed: "Auto-passed gate, for Samuel",
 };

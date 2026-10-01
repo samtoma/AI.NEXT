@@ -308,7 +308,8 @@ test("a flagged solution derives to one open item that no machine can close", ()
   assert.equal(resolveItem(item, null).state, "open");
   assert.equal(item.assignee, undefined, "any reviewer decides it");
   assert.equal(KIND_LABEL.working_flag, "Working step flagged");
-  assert.equal(REASON_LABEL.working_flagged, "Working step flagged");
+  assert.equal(REASON_LABEL.working_flagged, "Checker flagged a step");
+  assert.notEqual(REASON_LABEL.working_flagged, KIND_LABEL.working_flag, "the header does not say the same words twice");
 });
 
 test("where the checker puts the fault: a stem misprint reads as a question problem", () => {
