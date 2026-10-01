@@ -51,12 +51,22 @@ never `reviewed_by`. A human verdict already in a gate's file is never overwritt
         `-collect` checks the saved run (the book quote, the pipeline's own models, the app's marker, the verifier) into the
         recommendation file the `g2 --recommend` line above reads. The lesson runs default to the chapter's G2 record's evidence.
     uv run auto_pass_gates.py g3 <book> --chapter 9 --queue <bundle>.review-queue.json [--queue …] \\
-              [--widgets seed/generated/<book>/widget-questions.json]
+              [--widgets seed/generated/<book>/widget-questions.json] [--widget-gaps coverage/<book>.chNN.widget-gaps.json]
         the sampled items accepted on the AI checks (S6's blind grade passed every family in the bundle,
         S7's verifier every template) → runs/<book>/g3-chNN.auto.json; apply with
         `apply_review_verdicts.py <that file>`, which ADDS the auto-pass to ai_checked_by. Held
         predicate→misconception claims (decision 47) follow the verifier: they stay held (inactive) and are
         listed in the record — there is no `--mapping-review` step.
+        WIDGET GAPS belong to G3 (FR-4306: S7 is the widget stage, G3 its sample). A chapter whose S7 author wrote no
+        template has no widget question, and coverage's `module_widgets` needs its chapter-scope gaps signed. With
+        `--widget-gaps` the gap report's chapter-scope gaps for THIS chapter are signed
+        {"by": "auto-pass G3 (AI recommendation)", "auto": true, "at", "note"}: the chapter ships without a widget
+        question for now, which is all a person's sign-off accepts either. It is never a human sign-off (coverage counts
+        it as `auto_passed` and names it); it never approves a new widget kind (each proposed kind is listed in the
+        record for Samuel, decision 11, and nothing is built on it); a person's sign-off already in the file is kept;
+        a re-run changes nothing; and a chapter NO author examined (gap kind `unexamined`: S7 never ran, or recorded
+        nothing) is a pipeline gap, not a recommendation, so it blocks (exit 1) and nothing is signed. Lesson-scope
+        gaps (the chapter has widgets) are listed and not signed: they cover nothing.
     uv run auto_pass_gates.py g4 <book> --chapter 9 --catalogue seed/generated/<book>/misconceptions.json \\
               --s5 runs/<book>/misconceptions/final-<run>.json
         a record: the catalogue holds exactly what S5's verifier kept (the loader refuses anything else).
@@ -329,6 +339,69 @@ def held_claims(bundles: list[dict]) -> list[dict]:
     return out
 
 
+def gap_chapter(g: dict, prefixes: list[str]) -> int | None:
+    """The chapter a widget gap belongs to: its module (`module:g10m-c02`), else its objective (`lo:g10m2s2-1-1`)."""
+    alt = "|".join(re.escape(x) for x in prefixes)
+    for field, pat in (("module", rf"^module:(?:{alt})-c(\d+)$"), ("lo_id", rf"^lo:(?:{alt})(\d+)s")):
+        m = re.match(pat, g.get(field) or "")
+        if m:
+            return int(m.group(1))
+    return None
+
+
+def widget_gap_decisions(report: dict, book, chapter: int, at: str | None = None) -> tuple[dict, list[dict], list[str], dict]:
+    """G3's widget-gap auto-pass (FR-4306, answer 37c): (the report with this chapter's chapter-scope gaps signed,
+    the decisions, what blocks, the counts).
+
+    A chapter-scope gap is the report's own mark that its chapter has no widget question (gap_report: scope `chapter`
+    iff the chapter is uncovered). Signing it accepts the chapter without a widget FOR NOW — what a person's sign-off
+    means, no more: no kind is approved (decision 11: a new kind is built only after Samuel says so), and every
+    proposed kind is listed for him. A person's sign-off is never overwritten, an auto one is kept as it is (a re-run
+    changes nothing, not even `at`), and a chapter nobody examined — a gap of kind `unexamined`: S7 never ran or
+    recorded nothing — is not a recommendation to accept: it blocks and nothing in the chapter is signed."""
+    by = review_policy.auto_pass_by("G3")
+    at = at or _now()
+    out = {**report, "gaps": [dict(g) for g in report.get("gaps") or []]}
+    mine = [g for g in out["gaps"] if gap_chapter(g, book.id_prefixes) == chapter]
+    counts = {"signed": 0, "kept_auto": 0, "kept_human": 0, "lesson_scope": 0, "kinds": 0}
+    decisions: list[dict] = []
+    blocked: list[str] = []
+    if any(g.get("need_kind") == "unexamined" for g in mine):
+        blocked.append(f"widget gaps: chapter {chapter} has no widget question and no author recorded a gap "
+                       "(S7 never examined it) — a pipeline gap, not a recommendation; run S7 for it")
+        return out, decisions, blocked, counts
+    kinds: set[str] = set()
+    for g in mine:
+        kind, key = g.get("need_kind") or "unspecified", g.get("lo_id") or g.get("module") or "?"
+        if g.get("scope") != "chapter":
+            counts["lesson_scope"] += 1
+            decisions.append({"key": f"widget gap {key}", "decision": "listed — not signed (the chapter has widgets)",
+                              "detail": f"proposed kind: {kind}",
+                              "basis": "a lesson-scope gap records a missing kind; it covers no chapter"})
+        else:
+            so = g.get("signed_off") or {}
+            if so.get("by") and not (so.get("auto") or review_policy.is_auto(so.get("by"))):
+                counts["kept_human"] += 1
+                state = f"already signed by {so['by']} — kept"
+            elif so.get("by"):
+                counts["kept_auto"] += 1
+                state = "already auto-passed — kept"
+            else:
+                g["signed_off"] = {"by": by, "auto": True, "at": at,
+                                   "note": f"{by}: S7's author found no existing widget kind that fits this objective, "
+                                           "so the chapter ships without a widget question for now; no new kind is "
+                                           "approved by this (decision 11)"}
+                counts["signed"] += 1
+                state = "accepted without a widget for now (auto-pass)"
+            decisions.append({"key": f"widget gap {key}", "decision": state,
+                              "detail": f"proposed kind: {kind} — NOT approved, needs Samuel (decision 11)",
+                              "basis": (g.get("why") or "S7's author recorded no reason")[:300]})
+        if g.get("need_kind") not in (None, "", "none", "unspecified"):
+            kinds.add(kind)
+    counts["kinds"] = len(kinds)
+    return out, decisions, blocked, counts
+
+
 def g4_lists(catalogue: dict, s5: dict) -> tuple[list[str], list[str]]:
     s5 = s5.get("result", s5)
     kept = sorted(m["id"] for m in catalogue.get("misconceptions") or [])
@@ -352,11 +425,35 @@ def g5_evaluate(coverage: dict, parity: list[tuple[str, str, list[str]]]) -> tup
         checks.append({"name": f"coverage {c['id']}" + (" (safety)" if safety else ""),
                        "state": {"holds": "green", "excepted": "excepted", "fails": "red"}.get(state, state),
                        "detail": f"{c.get('got')}/{c.get('want')}" + (f" — {first}" if first else "")})
+        if state == "auto_passed":
+            # holds only because an auto-pass stands in for a person (a widget gap, answer 37c): it passes, and it is
+            # Samuel's to see — never a human sign-off
+            review.append(f"coverage check {c['id']} holds only on an auto-pass: "
+                          + "; ".join(f"{a['scope']} ({a.get('by')})" for a in (c.get("auto_passed") or [])[:3]))
         if state != "fails":
             continue
         (blocked if safety else review).append(
             f"coverage {'safety ' if safety else ''}check {c['id']} fails ({c.get('got')}/{c.get('want')}): {first}")
     return blocked, review, checks
+
+
+def g5_findings(coverage: dict) -> list[dict]:
+    """A decision line for every completeness finding and every scope that holds only on an auto-pass, one per scope:
+    the console shows a record's `decisions` and `checks` to Samuel but not its `for_review`, so a content gap (an
+    objective with no claim, an empty tier cell) must be a line of its own to reach his backlog. A failing SAFETY
+    check is in `blocked`, not here."""
+    out: list[dict] = []
+    for c in coverage.get("checks") or []:
+        got = f"{c.get('got')}/{c.get('want')}"
+        if c.get("state") == "fails" and c["id"] not in SAFETY_CHECKS:
+            for f in (c.get("failures") or [])[:200]:
+                out.append({"key": f"{c['id']} {f['scope']}", "decision": "completeness finding — for Samuel, not fixed",
+                            "detail": f["detail"], "basis": f"coverage {c['id']} {got}: a completeness check lists the "
+                            "gap and does not block (answer 37c); the content stays as loaded"})
+        for a in c.get("auto_passed") or []:
+            out.append({"key": f"{c['id']} {a['scope']}", "decision": "holds only on an auto-pass — never a human sign-off",
+                        "detail": a.get("detail"), "basis": f"{a.get('by')}, {a.get('at')}"})
+    return out
 
 
 def parity_results(dsn: str, book, book_config_path: Path | None) -> list[tuple[str, str, list[str]]]:
@@ -534,6 +631,9 @@ def main(argv: list[str] | None = None) -> int:
     a3.add_argument("--queue", type=Path, action="append", required=True)
     a3.add_argument("--widgets", type=Path, action="append", default=[],
                     help="widget bundle(s), to list their held claims in the record")
+    a3.add_argument("--widget-gaps", type=Path,
+                    help="coverage/<book>.chNN.widget-gaps.json: sign this chapter's chapter-scope widget gaps as an "
+                         "auto-pass (the file is rewritten in place; a person's sign-off is kept; needs --chapter)")
     a3.add_argument("--out", type=Path)
     a4 = common(sub.add_parser("g4", help="catalogue: a record of what S5 kept"))
     a4.add_argument("--catalogue", type=Path, required=True)
@@ -683,22 +783,49 @@ def main(argv: list[str] | None = None) -> int:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
         held = held_claims([json.loads(p.read_text()) for p in a.widgets])
+        gap_dec, gap_blocked, gap_counts, gap_review = [], [], None, []
+        if a.widget_gaps:
+            if ch is None:
+                ap.error("--widget-gaps needs --chapter")
+            report = json.loads(a.widget_gaps.read_text())
+            new_report, gap_dec, gap_blocked, gap_counts = widget_gap_decisions(report, book, ch)
+            if new_report != report:
+                a.widget_gaps.write_text(json.dumps(new_report, indent=2, ensure_ascii=False) + "\n")
+            gap_review = sorted({f"widget gap, chapter {ch}: the proposed kind {g.get('need_kind')!r} needs your approval "
+                                 "before anything is built (decision 11); nothing is built on this auto-pass"
+                                 for g in new_report["gaps"] if gap_chapter(g, book.id_prefixes) == ch
+                                 and g.get("need_kind") not in (None, "", "none", "unspecified", "unexamined")})
+        n_gap = (gap_counts or {}).get("signed", 0) + (gap_counts or {}).get("kept_auto", 0)
         rec = decision_record(
             "G3", book, ch, f"{len(doc['verdicts'])} sampled item(s) accepted on the AI checks; {len(held)} "
-                            "predicate claim(s) stay held, as the verifier recommends",
+                            "predicate claim(s) stay held, as the verifier recommends"
+                            + (f"; {n_gap} widget gap(s) accepted on the AI recommendation (the chapter ships without a "
+                               f"widget question for now; {gap_counts['kinds']} proposed kind(s) NOT approved, listed for "
+                               "Samuel)" if n_gap else "")
+                            + ("; widget gaps NOT auto-passed" if gap_blocked else ""),
             decisions=[{"key": q, "decision": "accept", "basis": "its family passed S6's blind grade / S7's verifier"}
-                       for q in doc["verdicts"]] + held,
-            held=bool(held), for_review=[h["key"] for h in held], run=a.run,
+                       for q in doc["verdicts"]] + held + gap_dec,
+            held=bool(held) or bool(gap_dec), for_review=[h["key"] for h in held] + gap_review, run=a.run,
+            blocked=gap_blocked,
             checks=[{"name": "S6 blind grader, every family in the bundle", "state": "pass"},
                     {"name": "S7 verifier, every template", "state": "pass"},
-                    {"name": "the app's marker on every typed key (load)", "state": "pass"}],
+                    {"name": "the app's marker on every typed key (load)", "state": "pass"}]
+                   + ([{"name": "S7 author examined the chapter (a gap with a reason, or a template)",
+                        "state": "fail" if gap_blocked else "pass"}] if a.widget_gaps else []),
             evidence=[("G3 verdicts (auto)", out)] + [(f"review queue {p.name}", p) for p in a.queue]
-                     + [(f"widget bundle {p.name}", p) for p in a.widgets])
+                     + [(f"widget bundle {p.name}", p) for p in a.widgets]
+                     + ([("widget gaps (auto-passed)", a.widget_gaps)] if a.widget_gaps and n_gap else []))
         where = write_record(rec, gates_dir)
         print(f"G3 auto-pass ({scope}): {len(doc['verdicts'])} sampled item(s) accepted on the AI checks -> {_rel(out)}\n"
               f"  record: {_rel(where)}\n"
               f"  next: uv run apply_review_verdicts.py {_rel(out)}   (adds to ai_checked_by, never reviewed_by)")
-        return 0
+        if gap_counts is not None:
+            print(f"  widget gaps ({scope}): {gap_counts['signed']} signed by the auto-pass, {gap_counts['kept_auto']} already "
+                  f"auto-passed, {gap_counts['kept_human']} signed by a person, {gap_counts['lesson_scope']} lesson-scope "
+                  f"(not signed); {gap_counts['kinds']} proposed kind(s) listed for Samuel, none approved")
+        for b in gap_blocked:
+            print(f"  BLOCKED {b}", file=sys.stderr)
+        return 1 if gap_blocked else 0
 
     if a.gate == "g4":
         kept, dropped = g4_lists(json.loads(a.catalogue.read_text()), json.loads(a.s5.read_text()))
@@ -734,7 +861,8 @@ def main(argv: list[str] | None = None) -> int:
          "GO for the fan-out on the dev/pilot database (deploys and promotes nothing)")
         + f"; coverage {coverage.get('status')}, {len(review)} completeness finding(s) for Samuel",
         decisions=[{"key": "go/no-go", "decision": "no-go" if blocked else "go",
-                    "basis": "parity GREEN for every course and no coverage safety check failing"}],
+                    "basis": "parity GREEN for every course and no coverage safety check failing"}]
+                  + g5_findings(coverage),
         checks=checks, blocked=blocked, for_review=review, run=a.run,
         evidence=[("coverage", a.coverage), ("dry run", a.dryrun), ("cost ledger", ledger if cost else None)]
                  + [(label, p) for label, p in gates if p.exists()])

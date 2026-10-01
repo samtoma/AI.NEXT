@@ -489,6 +489,14 @@ class ChapterOneEngineFixes(unittest.TestCase):
         self.assertEqual(counts[raw["id"]], 4)
         self.assertTrue(all(q["choices"]["marker"]["form"] == "decimal" for q in qs))
         self.assertTrue(all(q["correct_answer"].startswith("0.\\dot{") for q in qs))
+        # the blind grader may write the book's dots, a bar, a fraction or an ellipsis: all the same number, and
+        # an unreadable answer would otherwise reject the family for notation, not for maths
+        for q in qs:
+            d = q["correct_answer"][-2]
+            for said in (q["correct_answer"], "0.\\overline{%s}" % d, "%s/9" % d, "0.%s%s%s..." % (d, d, d)):
+                self.assertTrue(G.answer_agrees(q, {"plain": said})[0], (q["stem"], said))
+            for said in ("0.%s" % d, "0.%s%s" % (d, d), "%s/10" % d):
+                self.assertFalse(G.answer_agrees(q, {"plain": said})[0], (q["stem"], said))
 
     def test_the_values_key_is_a_plain_comma_the_apps_marker_reads(self):
         self.assertEqual(FS.marker_key("values", "[7, 8]", []), "7, 8")

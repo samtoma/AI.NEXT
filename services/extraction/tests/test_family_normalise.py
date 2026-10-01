@@ -4,7 +4,7 @@
 
 A normalisation is MECHANICAL: the items a normalised spec instantiates are the items the author's spec
 meant, number for number, and the spec's notes say what the pipeline changed. Anything that is not one of
-the two named defects is the author's to fix and is left alone.
+the named defects is the author's to fix and is left alone.
 
     uv run --with pytest python -m pytest -q tests/test_family_normalise.py
 """

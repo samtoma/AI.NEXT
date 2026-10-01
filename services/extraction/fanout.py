@@ -9,6 +9,9 @@
     uv run fanout.py write-specs <S6 author run.json> --into families/g10-math/chNN    # the specs the author wrote
     uv run fanout.py close-chapter <N> [--dry-run]   # a chapter's lessons are all saved: G2 auto-pass, assembly, validate,
                                                      # then prepare its working check + S5 draft (no load, no model call)
+    uv run fanout.py advance <run-id> --wf <wf_id> [--task-output F] [--resumed] [--dry-run]   # a FINISHED run: save, meter, the
+                                                     # plan's after-steps, prepare what is next, print what is ready (fanout_advance.py)
+    uv run fanout.py ready [--running <run-id>…]     # the scripts that can be launched now, in plan order (fanout_advance.py)
 
 WHAT IT IS. Chapter 8 was the pilot (docs/WIP-g10-pilot/). Samuel approved running the line over the other
 13 chapters (answer 37e), with gates G1–G4 passing on the AI checks' recommendation into the console backlog
@@ -1243,8 +1246,14 @@ def status() -> dict:
 
 # ================================================================ CLI
 def main(argv: list[str] | None = None) -> int:
+    args_list = sys.argv[1:] if argv is None else list(argv)
+    if args_list and args_list[0] in ("advance", "ready"):      # fanout_advance.py: its own arguments, imported only when asked for
+        import fanout_advance
+        return fanout_advance.main(args_list)
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("advance", help="a finished run: save, meter, the plan's after-steps, prepare what is next (see `advance -h`)")
+    sub.add_parser("ready", help="the scripts that can be launched now, in plan order (see `ready -h`)")
     sub.add_parser("inventory")
     sub.add_parser("plan")
     p = sub.add_parser("prepare")
