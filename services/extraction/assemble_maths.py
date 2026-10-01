@@ -68,6 +68,7 @@ import itertools
 import json
 import math
 import re
+import shlex
 import string
 import sys
 from pathlib import Path
@@ -630,7 +631,8 @@ def vision_args(book, work: Path, queue: list, pass_, batch: int, limit: int | N
     args.update({
         "pass": pass_,
         "batch": batch,
-        "md5check": f"uv run --project {HERE} {HERE / 'assemble_maths.py'} md5check",
+        # quoted: the checkout path may hold spaces (this worktree's does), and an agent pastes the command as is
+        "md5check": f"uv run --project {shlex.quote(str(HERE))} {shlex.quote(str(HERE / 'assemble_maths.py'))} md5check",
     })
     if batch_dir is None:
         args["images"] = images

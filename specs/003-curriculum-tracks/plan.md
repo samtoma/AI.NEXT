@@ -27,8 +27,19 @@ and its migrations renumbered **033** and **034**, so where this plan says the C
 only as unreviewed WIP snapshots on the pushed branch. **Note 2026-10-01**: decision 1 is superseded by
 Samuel's answer 36, *"yes the sign up should always ask"* — sign-up and the Google step now always ask
 which curriculum, naming every curriculum the product knows, rather than only when a grade offers two or
-more (spec FR-4004, FR-4005, [decisions.md](./decisions.md)). Code for this reversal is in progress on the
-branch; no evidence is cited here yet.
+more (spec FR-4004, FR-4005, [decisions.md](./decisions.md)). **Built and verified the same day (T434)**:
+both refusals answer `422`; evidence is on the FR-4004/FR-4005/FR-4102 rows of `traceability.md`.
+
+**Note 2026-10-01, second entry**: Samuel approved filling the Grade 10 course by fanning out the whole
+book now rather than chapter by chapter (answer 37, decision 58) — *"I always always want to see the
+whole extraction appear… keep the student always full as if everything has been reviewed… fan out the
+full book for me, and in the background create agents with the review process so we can review from the
+console page."* This adds a new requirement block, FR-4501…FR-4509 (the internal review backlog,
+decisions 56–58 — `spec.md`), amends FR-4302/FR-4410/FR-4321, and adds a second note on
+[ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md). **The fan-out itself is approved, ≈
+$0.85–1.1k** (decision 58e) — the same projection `docs/PROJECT_STATE.md` already carried for the whole
+book; nothing about the number changes, only that it now proceeds without waiting at gates G1–G4 per
+chapter. No code exists yet for FR-4501…FR-4509.
 
 ## Summary
 

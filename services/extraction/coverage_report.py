@@ -53,7 +53,10 @@ THE CHECKS (§3.11, one per row, plus two the brief adds):
     misconception_refutations  catalogue entries = entries with a refutation
     s5_catalogue            entries S5 kept (`totals.entries`) = those in the catalogue; none of
                             `records[].dropped[]` is in it (the verifier is fail-closed)
-    figures                 manifest figures = visuals + viz gaps with a reason
+    figures                 manifest figures = visuals + viz gaps with a reason (a book_image
+                            stand-in is not counted: its figure already is)
+    book_pictures           book_image stand-ins (answer 37d) that are not servable = 0: alt text,
+                            stand_in, a /book-figures/ src whose image is in app/public
     maths_images            images to transcribe = by hash + by agreement + by the third reading +
                             resolved at G0b; unresolved 0. Teacher-only images no rule accepted are
                             never transcribed (FR-4408) and are not in the count. With --chapter,
@@ -82,6 +85,7 @@ from pathlib import Path
 import book_config
 from assemble_lesson_bundle import (LessonRun, ObjectivesFile, book_lesson, check_lessons,
                                     manifest_lessons, normalise, residual_notation)
+import schemas
 from schemas import Lesson
 
 HERE = Path(__file__).resolve().parent
@@ -416,7 +420,9 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
                     for g in m.get("section_exercises_to_map") or [] for ex in g.get("exercises") or [])
         got, unreasoned, errors = 0, [], []
         for l in mine:
-            got += sum(1 for v in visuals if v["id"].startswith(f"v:{l['id']}:"))
+            # a book_image stand-in (answer 37d) is not a figure of its own: its figure is already counted
+            # (a reasoned gap, or the native visual drawn from the same image)
+            got += sum(1 for v in visuals if v["id"].startswith(f"v:{l['id']}:") and v.get("kind") != "book_image")
             run = runs.get(l["id"])
             # a visual the assembly withheld (it drew the question's unknown, A8) is accounted, not lost
             got += sum(1 for v in (run.visuals if run else []) if f"v:{l['id']}:{v.n:03d}" not in shown)
@@ -559,6 +565,28 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
     c.want, c.got = 0, len(errs)
     for e in errs[:40]:
         c.fail(e["where"], f"{e['segment'][:80]} — {e['why'][:120]}")
+    checks.append(c)
+    c = Check("book_pictures", "Book-picture stand-ins (answer 37d) that are not servable = 0: each stands in "
+              "for a question of its own objective, carries alt text and stand_in, and its image is in "
+              "app/public at its /book-figures/ path")
+    qids = {q["id"]: q for q in questions}
+    pics = [v for v in visuals if v.get("kind") == "book_image"]
+    public = book_config.REPO_ROOT / "app" / "public"
+    for v in pics:
+        spec, q = v.get("spec") or {}, qids.get(v.get("question"))
+        why = schemas.book_image_problems(spec)
+        if q is None or q.get("lo") != v.get("lo"):
+            why.append("its question is not a question of this objective")
+        if not why and not (public / str(spec["src"]).lstrip("/")).is_file():
+            why.append(f"{spec['src']} is not in app/public (re-run the assembly, which copies it)")
+        if why:
+            c.fail(v["id"], "; ".join(why))
+    c.want, c.got = 0, len(c.failures)
+    if pics:
+        c.notes.append(f"{len(pics)} stand-in(s) for {len({v['question'] for v in pics})} question(s), each in the "
+                       "console backlog as 'needs native figure'; "
+                       f"{sum(1 for q in questions if q.get('hold_reason') == 'figure_reveals_answer')} question(s) "
+                       "held because the book's picture shows the unknown")
     checks.append(c)
     c = Check("captions", "Figure captions that describe a withheld point (the exercise's unknown) as marked or "
               "shown = 0")
