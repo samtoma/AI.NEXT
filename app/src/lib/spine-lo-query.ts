@@ -33,7 +33,8 @@ import { LO_MODULE_JOIN, MODULE_ORDER } from "./module-order";
 /** With the `node_subject` view. */
 export const SPINE_LO_SQL = `
         SELECT lo.id, lo.label, lo.description, lo.syllabus_ref, lo.source_page,
-               lo.order_in_parent, ns.subject
+               lo.order_in_parent, ns.subject,
+               m.id AS module_id, m.label AS module_label
         FROM graph_nodes lo${LO_MODULE_JOIN}
         LEFT JOIN node_subject ns ON ns.node_id = lo.id
         WHERE lo.kind = 'learning_objective'
@@ -43,7 +44,8 @@ export const SPINE_LO_SQL = `
 /** Without it — an older database, before the multi-subject contract. */
 export const SPINE_LO_SQL_NO_SUBJECT_VIEW = `
         SELECT lo.id, lo.label, lo.description, lo.syllabus_ref, lo.source_page,
-               lo.order_in_parent
+               lo.order_in_parent,
+               m.id AS module_id, m.label AS module_label
         FROM graph_nodes lo${LO_MODULE_JOIN}
         WHERE lo.kind = 'learning_objective'
         ORDER BY ${MODULE_ORDER}

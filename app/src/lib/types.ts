@@ -144,6 +144,10 @@ export interface SpineLo {
    * never silently folded into maths.
    */
   subject: SpineSubject | null;
+  /** The chapter (module) teaching this objective, and its label; null when
+   *  the objective hangs off no module (it then sits in its own chapter). */
+  moduleId: string | null;
+  moduleLabel: string | null;
 }
 
 /**
@@ -175,6 +179,8 @@ export interface SpineData {
   currentDate: string;
   counts: { los: number; questions: number; edges: number; attempts: number };
   studentName: string;
+  /** Short display name per lesson slug, where one exists (`lib/lesson-titles`). */
+  lessonTitles: Record<string, string>;
 }
 
 export type PlanReason = "weakest" | "review" | "stretch";

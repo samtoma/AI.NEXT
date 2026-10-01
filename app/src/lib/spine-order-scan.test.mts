@@ -76,7 +76,9 @@ test("both variants of the query join the module and ORDER BY MODULE_ORDER, whic
   // deterministic: the last key is the primary key
   assert.match(squash(MODULE_ORDER), /lo\.id$/);
   assert.match(squash(SPINE_LO_SQL), /LEFT JOIN node_subject ns ON ns\.node_id = lo\.id/);
-  assert.match(squash(SPINE_LO_SQL), /, ns\.subject FROM/);
+  assert.match(squash(SPINE_LO_SQL), /, ns\.subject, m\.id AS module_id, m\.label AS module_label FROM/);
+  // the chapter the Your Progress Map groups by (FR-3224), on both variants
+  assert.match(squash(SPINE_LO_SQL_NO_SUBJECT_VIEW), /, m\.id AS module_id, m\.label AS module_label FROM/);
   assert.doesNotMatch(SPINE_LO_SQL_NO_SUBJECT_VIEW, /node_subject|ns\./);
 });
 
@@ -102,8 +104,9 @@ test("nothing on the skill map re-sorts topics by their position in the module",
     assert.doesNotMatch(c, /orderInParent/, f);
     assert.doesNotMatch(c, /\blos\b[\w.]*\.sort\(|\bLos\b[\w.]*\.sort\(/, `${f} sorts the topics`);
   }
-  // GraphCanvas renders the pure layout rather than carrying its own copy
-  const canvas = code("components/spine/GraphCanvas.tsx");
-  assert.match(canvas, /layoutSpine\(los, width\)/);
-  assert.doesNotMatch(canvas, /function layout\(/);
+  // The Your Progress Map (FR-3224) builds its clusters in the order the
+  // query returns — catalogue order — and never re-sorts the objectives.
+  const map = code("lib/skill-map.ts");
+  assert.doesNotMatch(map, /\.sort\(/);
+  assert.doesNotMatch(map, /orderInParent/);
 });

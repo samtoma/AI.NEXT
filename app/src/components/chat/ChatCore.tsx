@@ -51,12 +51,15 @@ import {
   scrollTopFor,
 } from "@/lib/chat-scroll";
 import { SIGNED_OUT_MESSAGE, authFetch } from "@/lib/auth/client-session";
+import type { MapFocus } from "@/lib/map-focus";
+import { NoorMark } from "@/components/NoorMark";
 import { useUploadAttachment } from "./upload-attachment";
 import {
   BUTTON_SECONDARY,
   BUTTON_TERTIARY,
   HEADING,
   STROKE,
+  STROKE_SM,
   cx,
 } from "@/components/sticker";
 
@@ -192,6 +195,14 @@ export interface ChatCoreProps {
    *  chat explains and plans, it never quizzes — its prompt says so, and this
    *  holds even if the model emits one anyway. */
   questionCards?: boolean;
+  /** Hide the suggestions once the conversation has this many messages. */
+  suggestionsUntil?: number;
+  /** Show Noor's avatar beside each of her messages (it wiggles while she
+   *  thinks) — the Your Progress Map chat. */
+  tutorAvatar?: boolean;
+  /** What is selected on the Your Progress Map. Only kind and id are sent;
+   *  the server resolves them (FR-3224, lib/map-focus.ts). */
+  mapFocus?: MapFocus | null;
   /**
    * Whiteboard interception (pure predicate, safe to call during render):
    * true ⇒ the surface owns this card on its board and the transcript renders
@@ -272,6 +283,9 @@ export function ChatCore({
   leading,
   autoContinue,
   questionCards = true,
+  suggestionsUntil,
+  tutorAvatar = false,
+  mapFocus = null,
   interceptWidget,
   onDirective,
   handleRef,
@@ -492,6 +506,10 @@ export function ChatCore({
   // tell it from the student's. Without it, aligning to a message's top (which
   // is not the bottom) would read as "scrolled away" and switch following off.
   const programmaticTop = useRef<number | null>(null);
+  const mapFocusRef = useRef(mapFocus);
+  useEffect(() => {
+    mapFocusRef.current = mapFocus;
+  }, [mapFocus]);
   const follow = useCallback(() => {
     const el = scrollRef.current;
     if (!el || !stuckToBottom.current) return;
@@ -747,6 +765,10 @@ export function ChatCore({
             // somebody who is already stuck. The remove button on the strip is
             // how it goes out of scope.
             uploadId: attachedUploadId,
+            // read at send time, so the turn carries what is selected NOW
+            ...(mapFocusRef.current
+              ? { mapFocus: { kind: mapFocusRef.current.kind, id: mapFocusRef.current.id } }
+              : {}),
             messages: transcript
               .filter((m) => !m.localOnly)
               .map((m) => ({ role: m.role, text: m.text })),
@@ -1143,6 +1165,7 @@ export function ChatCore({
             key={i}
             msg={m}
             questionCards={questionCards}
+            tutorAvatar={tutorAvatar}
             debug={debug}
             arabicUi={arabicUi}
             writing={lessonSurface}
@@ -1168,8 +1191,12 @@ export function ChatCore({
         ))}
       </div>
 
-      {/* suggestion chips — stay clickable after every stream */}
-      {suggestions.length > 0 && (
+      {/* suggestion chips — stay clickable after every stream, unless the
+          surface retires them once the conversation is under way */}
+      {suggestions.length > 0 &&
+        (suggestionsUntil == null ||
+          messages.filter((m) => !m.hidden && (m.role === "user" || m.role === "assistant")).length <
+            suggestionsUntil) && (
         <div
           className={
             suggestionLayout === "stacked"
@@ -1288,6 +1315,7 @@ export function ChatCore({
 const MessageRow = memo(function MessageRow({
   msg: m,
   questionCards,
+  tutorAvatar,
   debug,
   arabicUi,
   writing,
@@ -1313,6 +1341,8 @@ const MessageRow = memo(function MessageRow({
   msg: ChatMsg;
   /** see ChatCoreProps.questionCards */
   questionCards: boolean;
+  /** see ChatCoreProps.tutorAvatar */
+  tutorAvatar: boolean;
   debug: boolean;
   /** RTL/Arabic-script subject — forwarded to question-card/citation strings */
   arabicUi: boolean;
@@ -1383,7 +1413,7 @@ const MessageRow = memo(function MessageRow({
     m.streaming && m.reveal != null ? m.text.slice(0, m.reveal) : m.text;
   const blocks = parseMessage(visibleText, !!m.streaming);
 
-  return (
+  const bubble = (
     <TutorBubble error={!!m.error} style={dimStyle}>
         {m.streaming && visibleText.length === 0 && (
           <Thinking writing={writing} arabicUi={arabicUi} />
@@ -1537,6 +1567,26 @@ const MessageRow = memo(function MessageRow({
           </p>
         )}
     </TutorBubble>
+  );
+
+  if (!tutorAvatar) return bubble;
+  // Noor beside her own words (the Your Progress Map chat). The avatar
+  // wiggles while she is thinking — before the first word arrives.
+  const thinking = !!m.streaming && visibleText.length === 0;
+  return (
+    <div className="flex items-start gap-2.5">
+      <span
+        aria-hidden
+        className={cx(
+          STROKE_SM,
+          "mt-0.5 flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[var(--play-radius-pill)] bg-card",
+          thinking && "skillmap-wiggle"
+        )}
+      >
+        <NoorMark className="h-6 w-6" />
+      </span>
+      <div className="min-w-0 flex-1">{bubble}</div>
+    </div>
   );
 });
 

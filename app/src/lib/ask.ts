@@ -10,6 +10,9 @@ import { figureDirectivesDoc, visualsCatalogLines } from "./viz-prompt";
 import { requireSubjectOfCourse } from "./subjects";
 import { masteryLabel } from "./mastery";
 import type { Subject } from "./types";
+import type { MapFocusKind } from "./map-focus";
+import { slugOfLo } from "./lesson-slug";
+import { LESSON_TITLES } from "./lesson-titles";
 
 /**
  * "Ask the Spine" — server-side grounding assembly.
@@ -628,6 +631,7 @@ ${kit.reExplainMode(student, a)}`;
 MODE — YOUR PROGRESS (you are talking directly to ${student}, next to ${a.their} own progress map; address ${a.them} as "you"):
 Typical asks: what to work on next and why (reason over mastery + prerequisite edges — the weakest objective whose prerequisites are met; the readiness gate is 50%), why a topic is still weak (look at its prerequisites' mastery), how things have changed since ${a.they} started, or a study plan before a test.
 Explain, plan and cite — never quiz: do NOT emit {{show_question:...}}. When ${a.they} want${a.s} to practise, point ${a.them} to the lesson on Study ("Walk me through it" or "Quick review") or to "Just practise — today's plan".
+When the conversation ends with a "MAP SELECTION RIGHT NOW" line, that is what ${a.they} ${a.is} looking at on the map: answer about it first, and when it helps say what it builds on and what builds on it (the PREREQUISITE EDGES), naming the other chapter when a link crosses one. Never repeat the line itself.
 Ground every recommendation in the data and cite as you go — cited objectives light up on ${a.their} map while you speak. Never quote a mastery number, percentage or score to ${a.them}; say it in words ("still shaky", "nearly there", "nailed it").`;
 }
 
@@ -650,3 +654,75 @@ ${a.They} answered the QUESTION IN SCOPE wrongly and the canonical steps were al
 - Never introduce a different solution method and never change the final answer. If in doubt, quote the canonical step.
 - Do NOT emit {{show_question:...}} in this mode. Cite [[q:...]], [[lo:...]] and [[page:...]] as usual.
 - End with one short encouraging line. Address ${a.them} as "you".`;
+
+
+/* ------------------------------------------------------------------ */
+/* What is selected on the Your Progress Map (FR-3224)                 */
+/* ------------------------------------------------------------------ */
+
+const FOCUS_NOUN: Record<MapFocusKind, string> = {
+  chapter: "chapter",
+  lesson: "lesson",
+  objective: "learning objective",
+};
+
+/** The per-turn line the Your Progress chat reads. Pure, for the tests. */
+export function formatMapFocus(
+  kind: MapFocusKind,
+  label: string,
+  objectiveIds: readonly string[]
+): string {
+  return `MAP SELECTION RIGHT NOW: the ${FOCUS_NOUN[kind]} "${label}" — its objectives: ${objectiveIds.join(", ")}.`;
+}
+
+/**
+ * Resolve a map selection into that line, or "" when it does not resolve.
+ *
+ * Every id is checked against `visibleLoIds` — the objectives this student's
+ * context was built from, already through the course gate — and every label
+ * comes from the curriculum, never from the request. A selection the student
+ * cannot see, or one that names nothing, is dropped rather than refused: the
+ * question is still answered, just without the map's context.
+ */
+export async function mapFocusNote(
+  studentId: number,
+  focus: { kind: MapFocusKind; id: string },
+  visibleLoIds: readonly string[]
+): Promise<string> {
+  const visible = new Set(visibleLoIds);
+  return scoped(studentId, undefined, async (db) => {
+    if (focus.kind === "objective") {
+      if (!visible.has(focus.id)) return "";
+      const r = await db.query(
+        `SELECT label FROM graph_nodes WHERE id = $1 AND kind = 'learning_objective'`,
+        [focus.id]
+      );
+      return r.rows[0] ? formatMapFocus("objective", String(r.rows[0].label), [focus.id]) : "";
+    }
+    if (focus.kind === "lesson") {
+      const ids = visibleLoIds.filter((id) => slugOfLo(id) === focus.id);
+      if (ids.length === 0) return "";
+      const title =
+        LESSON_TITLES[focus.id] ??
+        String(
+          (
+            await db.query(`SELECT label FROM graph_nodes WHERE id = $1`, [ids[0]])
+          ).rows[0]?.label ?? focus.id
+        );
+      return formatMapFocus("lesson", title, ids);
+    }
+    const r = await db.query(
+      `SELECT m.label, e.dst_id
+         FROM graph_nodes m
+         JOIN graph_edges e
+           ON e.src_id = m.id AND e.edge_type = 'teaches' AND e.system_to IS NULL
+        WHERE m.id = $1 AND m.kind = 'module'`,
+      [focus.id]
+    );
+    const ids = r.rows.map((x) => String(x.dst_id)).filter((id) => visible.has(id));
+    if (ids.length === 0) return "";
+    const order = new Map(visibleLoIds.map((id, i) => [id, i]));
+    ids.sort((a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0));
+    return formatMapFocus("chapter", String(r.rows[0]!.label), ids);
+  });
+}

@@ -11,12 +11,12 @@ import { STUDENT_NAV_LINKS, rootDestination } from "./student-nav.ts";
 
 const read = (p: string) => readFileSync(new URL(p, import.meta.url), "utf8");
 
-test("FR-3219: the header offers Study and Your Progress, and nothing else", () => {
+test("FR-3219: the header offers Study and Your Progress Map, and nothing else", () => {
   assert.deepEqual(
     STUDENT_NAV_LINKS.map((l) => [l.href, l.label]),
     [
       ["/student", "Study"],
-      ["/spine", "Your Progress"],
+      ["/spine", "Your Progress Map"],
     ]
   );
 });
@@ -32,9 +32,9 @@ test("FR-3219: the nav renders the shared list, not a copy of it", () => {
   assert.doesNotMatch(nav, /"Where you stand"/);
 });
 
-test("FR-3219: the page is titled Your Progress and every button to it says 'See your progress'", () => {
-  assert.match(read("../components/spine/SpineExplorer.tsx"), />\s*Your Progress\s*<\/h1>/);
-  assert.match(read("../app/(student)/spine/page.tsx"), /title: "Your Progress — Noor"/);
+test("FR-3219: the page is titled Your Progress Map and every button to it says 'See your progress'", () => {
+  assert.match(read("../components/spine/SpineExplorer.tsx"), />\s*Your Progress Map\s*<\/h1>/);
+  assert.match(read("../app/(student)/spine/page.tsx"), /title: "Your Progress Map — Noor"/);
   for (const f of ["../components/student/StudentLoop.tsx", "../components/student/ReportCard.tsx"]) {
     const src = read(f);
     assert.doesNotMatch(src, /See it on the graph/, f);
