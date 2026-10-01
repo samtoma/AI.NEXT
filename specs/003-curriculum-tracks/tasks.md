@@ -583,7 +583,7 @@ number assigned).
 
 ---
 
-## Phase 9d: Fifth round of decisions — T435–T444 **[ADDED 2026-10-01, answers 35 and 37]**
+## Phase 9d: Fifth round of decisions — T435–T443 **[ADDED 2026-10-01, answers 35 and 37]**
 
 - [x] T435 [US1] (WP-E, WP-A, WP-G) **No Arabic anywhere in the American course** (decision 56, answer
   35, "this is american course we said no arabic"): extend T431's per-course `arabicTouches` setting
@@ -611,8 +611,8 @@ ticked: code is in progress on the branch, not yet read and run for this pass.
   `review_backlog` (or similar) holding one row per item without a human stamp, across book questions
   and corrections, orchestrator stem fixes, generated questions, widget questions and mapping claims
   (including AI-refused ones), misconceptions, objectives and prerequisite links, figure stand-ins
-  (T443), and the gate decisions G1–G4 now reach on the AI checks' own recommendation during the
-  fan-out (T444) — maths courses only (Prep-3 and G10); Social Studies, Arabic and sealed Quran/Hadith
+  (T442), and the gate decisions G1–G4 now reach on the AI checks' own recommendation during the
+  fan-out (T443) — maths courses only (Prep-3 and G10); Social Studies, Arabic and sealed Quran/Hadith
   content never appear in it.
 - [ ] T437 [US1] (WP-G) **Review verdicts** (FR-4502): approve / fix requested / reject, restricted to
   `content-review` holders (Samuel, Tamer, Kamil); reject stops a question reaching students without
