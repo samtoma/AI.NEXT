@@ -265,6 +265,20 @@ def normalise(text: str | None) -> tuple[str | None, Counter]:
     return out, counts
 
 
+_MATH_WRAPPED = re.compile(r"^\s*(\${1,2})([^$]+)\1\s*$")
+
+
+def unwrap_math_delimiters(key: str | None) -> str | None:
+    """A marker key is bare maths: the typing agent sometimes copies the EPUB's final as the book wrote it, `$(a-3)(a+3)$`,
+    and the app's marker refuses the `$` ("unexpected character"), which held 29 of Chapter 1's questions for a delimiter, not
+    a wrong answer. One enclosing `$…$` (or `$$…$$`) pair around the whole key is removed; a `$` anywhere inside means
+    the key is not one wrapped formula and is left as it is."""
+    if not key:
+        return key
+    m = _MATH_WRAPPED.match(key)
+    return m.group(2).strip() if m else key
+
+
 def residual_notation(text: str | None) -> list[str]:
     """Un-normalised decimal commas or `;`-pairs left in a text (the coverage audit's probe)."""
     if not text:
@@ -710,6 +724,7 @@ class Report:
         self.derived_part_edges = 0
         self.content: dict[str, dict] = {}     # slug -> the lesson-content file (S2's claims)
         self.held_by_marker: list[dict] = []   # questions held: the app's marker cannot mark their key
+        self.keys_unwrapped: list[dict] = []   # a marker key the typing agent wrote as `$…$`, delimiters removed {id, was, now}
         self.marker_check = "run"
         self.ambiguous_pairs: list[str] = []   # A4: "(a,b)" sides of an equation not provably a pair → G2
         self.respaced = 0                      # A2: glued LaTeX commands re-spaced (accepted.json untouched)
@@ -741,6 +756,7 @@ class Report:
                 "by_answer_type": dict(sorted(self.by_answer_type.items())),
                 "excluded": self.excluded, "derived_part_edges": self.derived_part_edges,
                 "marker_check": self.marker_check, "held_by_marker": self.held_by_marker,
+                "marker_keys_unwrapped": self.keys_unwrapped,
                 "ambiguous_pairs_for_g2": sorted(set(self.ambiguous_pairs)), "latex_respaced": self.respaced,
                 "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
                 "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
@@ -1425,7 +1441,10 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
                 q["answer"] = it.answer
             elif it.answer_type == "expression":
                 marker = dict(it.marker)
-                marker["key"] = _norm(marker["key"], wkey, report)
+                bare = unwrap_math_delimiters(marker["key"])
+                if bare != marker["key"]:
+                    report.keys_unwrapped.append({"id": qid, "was": marker["key"], "now": bare})
+                marker["key"] = _norm(bare, wkey, report)
                 q["choices"] = {"marker": marker, **({"answer_only": True} if it.answer_only else {})}
                 # the answer as text, for the tutor and the console (schemas.Question): the printed
                 # answer when all three agreed and G2 changed nothing; otherwise the key G2 approved —
@@ -1773,6 +1792,8 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  derived part prerequisites (not written as edges): {rep['derived_part_edges']}")
     for x in rep["excluded"]:
         print(f"  not a question: {x['lesson']} {x['ref']} — {x['reason']}")
+    if rep["marker_keys_unwrapped"]:
+        print(f"  marker keys written as `$…$` by the typing agent, delimiters removed: {len(rep['marker_keys_unwrapped'])}")
     print(f"  the app's marker: {rep['counts'].get('marker_specs_checked', 0)} spec(s) checked, "
           f"{len(rep['held_by_marker'])} question(s) HELD because it cannot mark their key"
           + ("" if rep["marker_check"] == "run" else f" — {rep['marker_check']}"))
