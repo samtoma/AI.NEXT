@@ -35,21 +35,26 @@ This covers:
 
 1. In the console (`:3002/courses`), under **American**, set Mathematics live for **Grade 10**. Under
    **National**, leave Prep-3 Mathematics hidden for grade 10 (FR-4211).
-2. Sign up at `:3000/signup` with grade **10**. **No curriculum question appears**, because grade 10
-   has live courses in one curriculum. The student is stored `us-american-en`, implied.
+2. Sign up at `:3000/signup` with grade **10**. *(Changed 2026-10-01, answer 36 — supersedes decision 1.)*
+   The curriculum question **always appears**, naming **National** and **American**, nothing
+   pre-selected; National carries a short note that there is nothing to study there yet for grade 10
+   (the orchestrator's default, awaiting Samuel's confirmation). Choose American. The student is stored
+   `us-american-en`, **chosen**.
 3. Open the lesson list, the skill map, the progress page and the home page, and ask the tutor
    something. Only the G10 course appears, and the tutor says "this book".
 4. Paste a Prep-3 lesson address (`/student?lesson=u1-1`). The answer is **404**, identical to a
    lesson that does not exist.
-5. To see the question: also set **Prep-3 Mathematics** live for grade 10 (a fixture; not the launch
-   state). Sign up again at grade 10. The question appears with **National** and **American** and
-   nothing pre-selected. Set the rule back afterwards.
-6. As a **grade-9** student, nothing changes: sign up, open everything, compare with `v0.9.2`.
+5. To see the question with neither option carrying the note: also set **Prep-3 Mathematics** live for
+   grade 10 (a fixture; not the launch state). Sign up again at grade 10 — the question still appears
+   (it always does now), naming **National** and **American** with nothing pre-selected, and neither
+   carries the "nothing to study" note because both are live. Set the rule back afterwards.
+6. As a **grade-9** student, nothing changes except that sign-up now always asks there too: sign up,
+   open everything, compare with `v0.9.2`.
 
 ## 4. Walk it as an operator
 
 1. Open Student 360 for the grade-10 student. It shows "Curriculum: American (us-american-en) ·
-   implied". Change it to National. The page names what the student will stop and start seeing. After
+   chosen". Change it to National. The page names what the student will stop and start seeing. After
    confirming, one history row appears.
 2. As the student: the G10 course is gone and nothing else is live for grade 10, so the empty state
    shows. Change it back as the operator. The student's G10 mastery and lesson place are exactly as

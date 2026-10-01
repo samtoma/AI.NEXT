@@ -441,7 +441,16 @@ export type CourseCatalogRow = {
   /** spine/DB key (`math`) — what `graph_nodes.subject` holds */
   spineKey: SpineSubject;
   label: string;
-  labelAr: string;
+  /**
+   * The subject's Arabic name, or `null` for a course whose tutor carries no
+   * Arabic at all (`CourseDef.tutor.arabicTouches`, Samuel's answer 35,
+   * 2026-10-01). `labelAr` is keyed on the SUBJECT in `lib/subjects.ts`, and
+   * `math-en` is now taught from two books — Prep-3 (National) and Grade 10
+   * (American) — so printing the subject's Arabic name unconditionally would
+   * put «الرياضيات» on the American course's row too. `arabicTouches` is the
+   * per-COURSE fact, so it decides this per row rather than per subject.
+   */
+  labelAr: string | null;
   dir: TextDirection;
   book: string;
   grade: string;
@@ -569,7 +578,7 @@ export async function courseCatalog(
         subject,
         spineKey: def.key,
         label: def.label,
-        labelAr: def.labelAr,
+        labelAr: course.tutor.arabicTouches ? def.labelAr : null,
         dir: def.dir,
         book: course.book,
         grade: g.value,
@@ -700,7 +709,9 @@ export type StudentAccessRow = {
   courseLabel: string;
   subject: Subject;
   label: string;
-  labelAr: string;
+  /** `null` for a course whose tutor carries no Arabic at all — see
+   *  `CourseCatalogRow.labelAr`, the same per-course fact applied here. */
+  labelAr: string | null;
   dir: TextDirection;
   /** the course's curriculum, and whether it is the student's own (FR-4105) */
   curriculum: CurriculumId;

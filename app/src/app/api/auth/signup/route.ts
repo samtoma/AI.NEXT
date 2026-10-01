@@ -17,17 +17,20 @@
  * in and resolve to nobody.
  *
  * **The curriculum** (feature 003, FR-4005; contracts/student-api.md) is the
- * one field 003 adds, and it is optional in the body because it is asked only
- * when the grade offers two or more curricula. The server never trusts the
- * form's idea of what the grade offers: it reads the offer again, now, and
- * resolves with `resolveInitialCurriculum` — the same function the Google step
- * uses. One offered → stored `implied`, whatever was sent (a different known
- * value is recorded as `curriculum_resolved_from`); none → National,
- * `implied`; two or more → the student's answer, `chosen`, or a 409
- * `curriculum_required` carrying what the grade offers NOW, so the form asks
- * again when an operator changed the offer after the page loaded. An id the
- * registry does not know is always a 422. The INSERT writes the curriculum and
- * how it was set; `account_created` records both, first-party only (FR-4016).
+ * field 003 adds. Since Samuel's reversal of 2026-10-01 ("yes the sign up
+ * should always ask"; decision 1, superseded) it is required in the body for
+ * every grade, not only where the grade offers two or more curricula: the form
+ * always asks, naming every registry curriculum, and the account is not
+ * created without an answer. The server never trusts the form's idea of what
+ * the grade offers: it reads the offer again, now, only to carry it back on a
+ * refusal — `offeredCurriculaFor` no longer decides what may be chosen — and
+ * resolves with `resolveInitialCurriculum`, the same function the Google step
+ * uses. A known id sent → stored exactly as sent, `chosen`, whether or not it
+ * has anything live for this grade; blank or missing → 422
+ * `curriculum_required` carrying what the grade offers NOW (for the form's
+ * "nothing yet" notes); an id the registry does not know → 422
+ * `invalid_curriculum`, always. The INSERT writes the curriculum and how it
+ * was set; `account_created` records both, first-party only (FR-4016).
  */
 
 import { hashPassword, checkPolicy } from "@/lib/auth/password";
