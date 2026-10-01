@@ -216,22 +216,19 @@ class Landing(unittest.TestCase):
             bundle.write_text(json.dumps({"questions": [{"id": "q:g10m8s1-1-1:ex8-1-2"}],
                                           "explanation_entries": [{"id": EXPL, "entry_type": "worked_example"}]}))
             book = Book(bundle)
-            ok = FS.load_spec({**self.spec(parent_question_id=EXPL, parent_kind="teaching"), **_rest()})
-            gone = FS.load_spec({**self.spec(parent_question_id="expl:g10m8s1-1-1:nowhere", parent_kind="teaching"),
-                                 **_rest()})
-            twin = FS.load_spec({**self.spec(parent_question_id="q:g10m8s1-1-1:ex8-6-4a"), **_rest()})
-            fine = FS.load_spec({**self.spec(parent_question_id="q:g10m8s1-1-1:ex8-1-2"), **_rest()})
-            unlisted = FS.load_spec({**self.spec(parent_question_id="q:g10m8s1-1-1:not-in-this-bundle"), **_rest()})
+            # unchecked specs (FamilySpec, not load_spec): only their parent fields are read here
+            def fam(**kw):
+                return FS.FamilySpec(raw=self.spec(**kw))
+            ok = fam(parent_question_id=EXPL, parent_kind="teaching")
+            gone = fam(parent_question_id="expl:g10m8s1-1-1:nowhere", parent_kind="teaching")
+            twin = fam(parent_question_id="q:g10m8s1-1-1:ex8-6-4a")
+            fine = fam(parent_question_id="q:g10m8s1-1-1:ex8-1-2")
+            unlisted = fam(parent_question_id="q:g10m8s1-1-1:not-in-this-bundle")
             self.assertEqual(G.parent_problems_in_book([ok, fine, unlisted], book), [],
                              "a question parent the book does not list is not refused here: it never was")
             ps = G.parent_problems_in_book([gone, twin], book)
             self.assertTrue(any("is not a teaching item" in p for p in ps), ps)
             self.assertTrue(any(f"expl:g10m8s1-1-1:ex8-6-4a is: write that id" in p for p in ps), ps)
-
-
-def _rest() -> dict:
-    """The parts of a spec these tests do not look at (check_spec is not run on it, only parent fields read)."""
-    return {"answer_type": "numeric", "params": [], "stem": "s", "answer": "1", "solution": ["x"]}
 
 
 # ----------------------------------------------------------------------------------- the loader, no DB
@@ -324,7 +321,6 @@ class TheDatabase(unittest.TestCase):
                  (EXPL, LO, json.dumps(CONTENT)))
         # a snapshot BEFORE any teaching family: the restore tests start from it
         cls.before = Copy(cls.db.name).create()
-        cls.base = cls.db.one("SELECT md5(string_agg(q::text, E'\\n' ORDER BY q.id)) FROM questions q")
 
     @classmethod
     def tearDownClass(cls):
@@ -395,22 +391,31 @@ class TheDatabase(unittest.TestCase):
 
     def test_a_parent_is_never_deleted_from_under_its_children(self):
         import psycopg
+        # a parent question of its own, so the fixture's book questions are never touched
+        self.insert("q:g10m8s1-1-1:t-parent", None, "question")
+        self.insert("q:g10m8s1-1-1:t-kid-q", "q:g10m8s1-1-1:t-parent", "question")
         self.insert("q:g10m8s1-1-1:t-kid-t", EXPL, "teaching")
-        self.insert("q:g10m8s1-1-1:t-kid-q", "q:g10m8s1-1-1:ex8-1-2", "question")
         with self.assertRaises(psycopg.errors.ForeignKeyViolation):
             self.db.q("DELETE FROM explanation_library WHERE id = %s", (EXPL,))
         with self.assertRaises(psycopg.errors.ForeignKeyViolation):
             self.db.q("UPDATE explanation_library SET entry_type = 'faded' WHERE id = %s", (EXPL,))
         with self.assertRaises(psycopg.errors.ForeignKeyViolation):
-            self.db.q("DELETE FROM questions WHERE id = 'q:g10m8s1-1-1:ex8-1-2'")
+            self.db.q("DELETE FROM questions WHERE id = 'q:g10m8s1-1-1:t-parent'")
+        with self.assertRaises(psycopg.errors.ForeignKeyViolation):
+            self.db.q("UPDATE questions SET id = 'q:g10m8s1-1-1:t-renamed' WHERE id = 'q:g10m8s1-1-1:t-parent'")
         # an update that touches neither the id nor the type is no business of the trigger
         self.db.q("UPDATE explanation_library SET source_page = 316 WHERE id = %s", (EXPL,))
-        # a parent goes together with its children, in one statement: the finished state is what counts
-        self.db.q("DELETE FROM questions WHERE id IN ('q:g10m8s1-1-1:t-kid-q', 'q:g10m8s1-1-1:ex8-1-2')"
-                  " OR id LIKE 'q:g10m8s1-1-1:ex8-1-2%'")
-        self.assertEqual(self.count("SELECT count(*) FROM questions WHERE id = 'q:g10m8s1-1-1:ex8-1-2'"), 0)
+        self.db.q("UPDATE questions SET status = 'review' WHERE id = 'q:g10m8s1-1-1:t-parent'")
+        # a parent goes together with its child in ONE statement: the finished state is what counts
+        self.db.q("DELETE FROM questions WHERE id IN ('q:g10m8s1-1-1:t-parent', 'q:g10m8s1-1-1:t-kid-q')")
+        self.assertEqual(self.count("SELECT count(*) FROM questions WHERE id LIKE 'q:g10m8s1-1-1:t-%'"), 1)
+        # with its teaching child gone, the worked example can go too (and the delete is undone here)
         self.db.q("DELETE FROM questions WHERE id = 'q:g10m8s1-1-1:t-kid-t'")
-        self.db.q("UPDATE explanation_library SET source_page = 316 WHERE id = %s", (EXPL,))
+        with self.db.connect() as c:
+            c.execute("BEGIN")
+            c.execute("DELETE FROM explanation_library WHERE id = %s", (EXPL,))
+            c.execute("ROLLBACK")
+        self.assertEqual(self.count("SELECT count(*) FROM explanation_library WHERE id = %s", EXPL), 1)
 
     # ---- the loader ---------------------------------------------------------------------------
     def test_a_teaching_family_loads_live_with_no_human_stamp_so_it_is_in_the_backlog(self):
