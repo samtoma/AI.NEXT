@@ -124,7 +124,7 @@ def _unlatex(seg: str) -> str:
     seg = re.sub(r"\\(?:mathbb|mathrm|mathbf|mathit|operatorname)\{[^{}]*\}", " ", seg)
     # \text{words}: the words, minus the capitalised ones ("Area", "Therefore" are no point); an all-capital
     # run ("AB") is a name and stays
-    seg = re.sub(r"\\textbf?\{([^{}]*)\}",
+    seg = re.sub(r"\\text(?:bf)?\{([^{}]*)\}",
                  lambda m: " " + re.sub(r"\b[A-Z][a-z]+\b", " ", m.group(1)) + " ", seg)
 
     def cmd(m: re.Match) -> str:
@@ -380,7 +380,7 @@ def _reveals(P: Part, sentence: str) -> bool:
     if not P.keyed:
         return False
     key = _flat(P.key)
-    return bool(key) and re.search(r"(?<![\w.])" + re.escape(key) + r"(?![\w.])", _flat(sentence)) is not None
+    return bool(key) and re.search(r"(?<![\w.])" + re.escape(key) + r"(?!\w|\.\d)", _flat(sentence)) is not None
 
 
 def _states(own: str, symbol: str) -> bool:
@@ -524,8 +524,8 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
                 notes.append(Unresolved(P.ref, "refers_by_words", said, [_source(Q, tail[Q.ref]) for Q in earlier]))
             elif earlier and not figure:
                 mention = {n for Q in earlier for n in names_in(tail[Q.ref])}
-                free = sorted(n for n in names_in(own)
-                              if n not in bound and n in mention and n not in {m for it in items for m in it.get("names", [])})
+                taken = {m for it in items for m in it.get("names", [])} | {n for Q in earlier for d in defs[Q.ref] for n in d.names}
+                free = sorted(n for n in names_in(own) if n not in bound and n in mention and n not in taken)
                 if free:
                     notes.append(Unresolved(P.ref, "not_extractable",
                                             f"its words use {', '.join(free)}, which an earlier part mentions but no "
