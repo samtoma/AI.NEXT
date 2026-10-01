@@ -565,17 +565,38 @@ def figures_for(lesson_runs_dir: Path | None) -> dict[str, list[str]]:
     return am.figures_by_question([json.loads(p.read_text()) for p in sorted(Path(lesson_runs_dir).glob("*.json"))])
 
 
+def load_only(path: Path | None) -> set[str] | None:
+    """The solution ids a run is limited to (a calibration subset): a JSON list, or a calibration file's `subset`."""
+    if path is None:
+        return None
+    v = json.loads(Path(path).read_text())
+    ids = v.get("subset") if isinstance(v, dict) else v
+    if not isinstance(ids, list) or not all(isinstance(x, str) for x in ids):
+        raise SystemExit(f"{path}: not a list of solution ids (or a calibration file with a `subset`)")
+    return set(ids)
+
+
 def build_args(book, bundle: dict, chapter: int, directory: Path, figures: dict | None = None,
-               max_per_run: int = MAX_PER_RUN) -> list[dict]:
-    """The compact args of runbook/working-check.workflow.js, one per part (≤ max_per_run solutions),
-    and the shard directories they name. Every solution with working gets one shard; the pre-check's
-    result goes BESIDE the shard directory (<dir>.precheck.json, outside it, so no agent is ever pointed at
-    it) for the collector — never into an agent's prompt: the agent is blind to it."""
+               max_per_run: int = MAX_PER_RUN, batch: int = BATCH, effort: str = EFFORT, model: str = MODEL,
+               only: set[str] | None = None) -> list[dict]:
+    """The compact args of runbook/working-check.workflow.js, one per part (≤ max_per_run solutions, a
+    whole number of batches), and the shard directories they name. Every solution with working gets one
+    shard; the agents read `batch` of them each. The pre-check's result goes BESIDE the shard directory
+    (<dir>.precheck.json, outside it, so no agent is ever pointed at it) for the collector — never into an
+    agent's prompt: the agent is blind to it. `only`: limit the run to those solution ids (a calibration
+    subset); the others are neither sent nor listed as skipped."""
     import packet_ref
-    sols = solutions_from_bundle(bundle, figures)
+    if not 1 <= batch <= 12:
+        raise SystemExit(f"--batch {batch}: between 1 and 12 solutions per agent")
+    if effort not in EFFORTS or model not in MODELS:
+        raise SystemExit(f"--effort must be one of {EFFORTS} and --model one of {MODELS}")
+    per_run = max(batch, max_per_run - max_per_run % batch)
+    sols = [s for s in solutions_from_bundle(bundle, figures) if only is None or s["id"] in only]
+    if only is not None and (missing := only - {s["id"] for s in sols}):
+        raise SystemExit(f"--only names {len(missing)} solution(s) the bundle does not have: {sorted(missing)[:3]}")
     todo = [s for s in sols if has_working(s)]
     skipped = [{"id": s["id"], "why": "no working to check (the solution is a drawing)"} for s in sols if not has_working(s)]
-    parts = [todo[i:i + max_per_run] for i in range(0, len(todo), max_per_run)] or [[]]
+    parts = [todo[i:i + per_run] for i in range(0, len(todo), per_run)] or [[]]
     out = []
     for k, chunk in enumerate(parts, start=1):
         d = Path(directory) if len(parts) == 1 else Path(directory) / f"part{k}"
@@ -586,14 +607,21 @@ def build_args(book, bundle: dict, chapter: int, directory: Path, figures: dict 
         pre = [f for s in chunk for f in precheck_solution(s)]
         precheck_path(d).write_text(json.dumps({
             "format": "ainext.working-precheck/1", "book": book.book, "chapter": chapter,
+            "prompts_version": PROMPTS_VERSION, "batch": batch,
             "solutions": [{"id": s["id"], "lo": s.get("lo"), "kind": s["kind"], "steps": len(s["steps"]),
                            "shard": f"s/{i:04d}.txt", "sha256": sha(render_shard(s))}
                           for i, s in enumerate(chunk, start=1)],
             "skipped": skipped if k == 1 else [], "flags": pre}, ensure_ascii=False, indent=1) + "\n")
         out.append({"book": {"book": book.book}, "stage": "SW", "prompts_version": PROMPTS_VERSION,
-                    "chapter": chapter, "part": k, "parts": len(parts),
+                    "chapter": chapter, "part": k, "parts": len(parts), "batch": batch, "fig_cap": FIG_CAP,
+                    "effort": effort, "model": model,
                     "solutions": [s["id"] for s in chunk], "by_ref": ref})
     return out
+
+
+def agents_for(solutions: int, batch: int = BATCH) -> int:
+    """Checking agents a chapter of `solutions` solutions with working needs."""
+    return math.ceil(solutions / batch)
 
 
 # ============================================================================ collect
@@ -637,29 +665,85 @@ def collect(args_list: list[dict], runs: list[dict]) -> dict:
                 problems.append(f"{sid}: a flag names step {step!r}, which the solution does not have (1–{meta['steps']})")
                 continue
             flags.append({"solution_id": sid, "lo": meta.get("lo"), "step": step, "kind": f.get("kind") or "other",
+                          "where": f.get("where") if f.get("where") in FLAG_WHERE else "working",
                           "quote": f.get("quote") or "", "expected": f.get("expected") or "",
                           "why": f.get("why") or "", "sources": ["agent"]})
-    for p in pre:                                           # the numeric pre-check: merged by step
+    for p in pre:                                           # the free pre-check: merged by step
+        src = p.get("source") or "numeric"
+        detail = {k: p[k] for k in ("left", "relation", "right", "why") if k in p}
         same = next((f for f in flags if f["solution_id"] == p["solution_id"] and f["step"] == p["step"]), None)
         if same:
-            same["sources"].append("numeric")
-            same["numeric"] = {k: p[k] for k in ("left", "relation", "right", "why") if k in p}
+            if src not in same["sources"]:
+                same["sources"].append(src)
+            same.setdefault("numeric", detail)
         else:
-            flags.append({"solution_id": p["solution_id"], "lo": p.get("lo"), "step": p["step"], "kind": "arithmetic",
-                          "quote": p["quote"], "expected": "", "why": p["why"], "sources": ["numeric"],
-                          "numeric": {k: p[k] for k in ("left", "relation", "right", "why") if k in p}})
+            flags.append({"solution_id": p["solution_id"], "lo": p.get("lo"), "step": p["step"],
+                          "kind": p.get("kind") or "arithmetic", "where": "working",
+                          "quote": p["quote"], "expected": "", "why": p["why"], "sources": [src], "numeric": detail})
     flags.sort(key=lambda f: (f["solution_id"], f["step"]))
     a0 = args_list[0]
+    rv = {r.get("result", r).get("prompts_version") for r in runs} - {None}
     return {
-        "format": FORMAT, "book": a0["book"]["book"], "chapter": a0["chapter"], "prompts_version": PROMPTS_VERSION,
+        "format": FORMAT, "book": a0["book"]["book"], "chapter": a0["chapter"],
+        "prompts_version": sorted(rv)[0] if len(rv) == 1 else a0.get("prompts_version", PROMPTS_VERSION),
         "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the "
                 "content stays as the book and G2 have it until a human decides.",
         "solutions": len(by_id), "skipped": skipped, "verdicts": verdicts,
         "flags": flags, "flagged_solutions": len({f["solution_id"] for f in flags}),
         "unclear": unclear, "unchecked": unchecked, "problems": problems,
+        "checked_ids": sorted(sid for sid in by_id if sid in answered and answered[sid].get("verdict")),
         "runs": [r.get("result", r).get("run_id") or r.get("result", r).get("embedded", {}).get("generated_sha256")
                  for r in runs],
     }
+
+
+# ============================================================================ calibrate
+def calibrate(truth: dict, rep: dict) -> dict:
+    """Score a flags file (`collect`'s output) against a calibration truth file (the classified flags of an earlier
+    run on the same chapter). The measure that matters is recall of the REAL defects: a sw-v2 that costs a third
+    and misses the typos is no saving. Nothing here calls a model."""
+    flags: dict[str, list[dict]] = {}
+    for f in rep["flags"]:
+        flags.setdefault(f["solution_id"], []).append(f)
+    checked = set(rep.get("checked_ids") or [])                 # absent: a run that predates it, treat all as run
+    ran = (lambda sid: sid in checked) if checked else (lambda sid: True)
+    out: dict = {"prompts_version": rep.get("prompts_version"), "real": [], "elsewhere": [], "false_repeat": [],
+                 "unclear": [], "controls_new_flags": [], "not_run": []}
+    for lab in truth["labels"]:
+        sid, step, v = lab["solution_id"], lab["step"], lab["verdict"]
+        if not ran(sid):
+            out["not_run"].append(sid)
+            continue
+        hit = flags.get(sid, [])
+        row = {"solution_id": sid, "step": step, "solution_flagged": bool(hit),
+               "step_flagged": any(f["step"] == step for f in hit), "sources": sorted({s for f in hit for s in f["sources"]})}
+        if v == "REAL":
+            out["real"].append(row)
+        elif v == "REAL-BUT-ELSEWHERE":
+            out["elsewhere"].append(row)
+        else:
+            out["false_repeat"].append(row)
+    for u in truth.get("unclear") or []:
+        if ran(u["solution_id"]):
+            hit = flags.get(u["solution_id"], [])
+            out["unclear"].append({"solution_id": u["solution_id"], "flagged": bool(hit),
+                                   "said_unclear": any(x["id"] == u["solution_id"] for x in rep.get("unclear") or [])})
+    for sid in (truth.get("controls") or {}).get("ids", []):
+        if ran(sid) and flags.get(sid):
+            out["controls_new_flags"].append({"solution_id": sid, "flags": [(f["step"], f["kind"], f["why"][:120]) for f in flags[sid]]})
+    real_sols = {r["solution_id"] for r in out["real"]}
+    caught = {r["solution_id"] for r in out["real"] if r["solution_flagged"]}
+    out["summary"] = {
+        "real_solutions": len(real_sols), "real_solutions_caught": len(caught),
+        "real_recall_solution": round(len(caught) / len(real_sols), 3) if real_sols else None,
+        "real_flags": len(out["real"]), "real_flags_at_the_step": sum(r["step_flagged"] for r in out["real"]),
+        "elsewhere_caught": f"{sum(r['solution_flagged'] for r in out['elsewhere'])}/{len(out['elsewhere'])}",
+        "false_flags_repeated": sum(r["solution_flagged"] for r in out["false_repeat"]),
+        "unclear_kept_unclear_or_flagged": sum(u["flagged"] or u["said_unclear"] for u in out["unclear"]),
+        "controls_flagged_for_a_human_to_read": len(out["controls_new_flags"]),
+        "missed_real": sorted(real_sols - caught),
+    }
+    return out
 
 
 # ============================================================================ CLI
@@ -682,6 +766,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--out", type=Path, required=True, help="the args file (a second part gets .part2 …)")
     p.add_argument("--lesson-runs", type=Path, help="runs/<book>/lesson/ (the stems' figure images); default that")
     p.add_argument("--max-per-run", type=int, default=MAX_PER_RUN)
+    p.add_argument("--batch", type=int, default=BATCH, help=f"solutions per checking agent (default {BATCH})")
+    p.add_argument("--effort", default=EFFORT, choices=EFFORTS, help=f"the agents' reasoning effort (default {EFFORT})")
+    p.add_argument("--model", default=MODEL, choices=MODELS, help=f"the agents' model (default {MODEL})")
+    p.add_argument("--only", type=Path, metavar="FILE",
+                   help="limit the run to these solutions: a JSON list of ids, or a calibration file's `subset`")
     p.add_argument("--embed", type=Path, metavar="FILE",
                    help="also write a generated copy of runbook/working-check.workflow.js with the args embedded "
                         "(a second part gets .part2 …)")
@@ -689,6 +778,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--args", type=Path, action="append", required=True)
     p.add_argument("--runs", type=Path, nargs="+", required=True)
     p.add_argument("--out", type=Path, required=True)
+    p = sub.add_parser("calibrate", help="score a flags file against a calibration truth file (recall of the real defects)")
+    p.add_argument("--truth", type=Path, required=True)
+    p.add_argument("--flags", type=Path, required=True)
     a = ap.parse_args(argv)
 
     if a.cmd == "precheck":
@@ -712,14 +804,16 @@ def main(argv: list[str] | None = None) -> int:
         book = _book(a.book)
         runs_dir = a.lesson_runs or HERE / "runs" / book.book / "lesson"
         parts = build_args(book, json.loads(a.seed.read_text()), a.chapter, a.by_ref, figures_for(runs_dir),
-                           a.max_per_run)
+                           a.max_per_run, a.batch, a.effort, a.model, load_only(a.only))
         for k, args in enumerate(parts, start=1):
             out = a.out if k == 1 else a.out.with_name(f"{a.out.stem}.part{k}{a.out.suffix}")
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(packet_ref.dumps(args) + "\n")
             pre = json.loads(precheck_path(Path(args["by_ref"]["dir"])).read_text())
-            print(f"wrote {out} — part {k} of {len(parts)}: {len(args['solutions'])} solution(s), "
-                  f"{len(pre['skipped'])} skipped, {len(pre['flags'])} numeric flag(s); " + packet_ref.report(args, "by ref"))
+            print(f"wrote {out} — part {k} of {len(parts)}: {len(args['solutions'])} solution(s) in "
+                  f"{agents_for(len(args['solutions']), a.batch)} agent(s) of ≤ {a.batch} ({a.model}, effort {a.effort}), "
+                  f"{len(pre['skipped'])} skipped, {len(pre['flags'])} free pre-check flag(s); "
+                  + packet_ref.report(args, "by ref"))
             if a.embed:
                 import embed_workflow
                 e = a.embed if k == 1 else a.embed.with_name(a.embed.name.replace(".workflow.js", f".part{k}.workflow.js"))
@@ -739,6 +833,20 @@ def main(argv: list[str] | None = None) -> int:
         for p in rep["problems"]:
             print(f"  x {p}", file=sys.stderr)
         return 1 if rep["problems"] or rep["unchecked"] else 0
+
+    if a.cmd == "calibrate":
+        rep = calibrate(json.loads(a.truth.read_text()), json.loads(a.flags.read_text()))
+        sm = rep["summary"]
+        print(f"prompts {rep['prompts_version']}: real defects caught {sm['real_solutions_caught']}/{sm['real_solutions']} "
+              f"solutions (recall {sm['real_recall_solution']}), {sm['real_flags_at_the_step']}/{sm['real_flags']} at the step; "
+              f"real-but-elsewhere {sm['elsewhere_caught']}; false flags repeated {sm['false_flags_repeated']}; "
+              f"controls flagged (read them) {sm['controls_flagged_for_a_human_to_read']}")
+        if sm["missed_real"]:
+            print("  MISSED: " + ", ".join(sm["missed_real"]))
+        for c in rep["controls_new_flags"]:
+            print(f"  control flagged: {c['solution_id']}: {c['flags']}")
+        print(json.dumps(sm, ensure_ascii=False))
+        return 0 if not sm["missed_real"] and not sm["false_flags_repeated"] else 1
     return 2
 
 
