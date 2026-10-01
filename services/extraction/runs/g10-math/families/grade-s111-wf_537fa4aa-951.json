@@ -1,0 +1,465 @@
+{
+ "summary": "S6 (B12): declarative question families per objective (mode author), and a blind instance grader (mode grade) — decision 16",
+ "agentCount": 6,
+ "logs": [
+  "grading 3 famil(ies), 9 instance(s), blind; packet by reference: 12 shard(s) in /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch08-s111",
+  "answers returned; generate_questions.py --grades compares them with the computed keys (one disagreement rejects the family)"
+ ],
+ "result": {
+  "mode": "grade",
+  "book": "g10-math",
+  "prompts_version": "s6-v5",
+  "by_ref": {
+   "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch08-s111",
+   "stage": "S6 grade",
+   "shards_sha256": "a46a04327972e8a7676df9a8fd4d8e8521add80e0f5c847d6c2d09f987c459a4",
+   "files": 12
+  },
+  "embedded": {
+   "source": "runbook/families.workflow.js",
+   "source_sha256": "acfc4775a565b22e6056f9f2e4f8b5b4b6f9eac7b95a046b7a0b0e8e1068095a",
+   "args_sha256": "5fd43021696d35753cd6b80f5b9aaa5183e0c99db62fadfc2a5158657947a603",
+   "generated_sha256": "5ca9d3c83c2bdcf399b246081eecb3e06a739ccd5a492e6abdc1260c3f5e151e",
+   "generator": "services/extraction/embed_workflow.py v1"
+  },
+  "results": [
+   {
+    "family_id": "tpl:g10m8s1-1-1:plot-a-vertex",
+    "spec_sha": "d0c2e408b5fa151d22602ff2299ed9fdb4a62d2e9f7457584cb513f002d9b355",
+    "answers": [
+     {
+      "instance_id": "q:g10m8s1-1-1:g004-plot-a",
+      "stem_sha": "6513a021979c5fdd",
+      "answer": {
+       "choice": "B",
+       "choice_text": "3 units to the left, then 5 units down"
+      },
+      "working": "F(-3, -5): x = -3 means 3 units left of the origin, y = -5 means 5 units down. Option B matches (3 left, then 5 down)."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-1:g007-plot-a",
+      "stem_sha": "2328744b8c68900b",
+      "answer": {
+       "choice": "A",
+       "choice_text": "5 units to the left, then 4 units down"
+      },
+      "working": "F(-5, -4): x = -5 means 5 units left, y = -4 means 4 units down. Option A matches (5 left, then 4 down)."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-1:g009-plot-a",
+      "stem_sha": "1cf31f0c3dcf9154",
+      "answer": {
+       "choice": "D",
+       "choice_text": "3 units to the left, then 4 units up"
+      },
+      "working": "F(-3, 4): x = -3 means 3 units left, y = 4 means 4 units up. Option D matches (3 left, then 4 up)."
+     }
+    ],
+    "judge": {
+     "distractors_ok": true,
+     "key_form_ok": true,
+     "context_ok": true,
+     "solution_ok": true,
+     "distractors": [
+      {
+       "instance_id": "q:g10m8s1-1-1:g004-plot-a",
+       "option": "A",
+       "verdict": "IS_THAT_ERROR",
+       "why": "F(-3,-5): 3 left then 5 UP is what a student produces by reading the negative y as upward (y-direction-flipped). Wrong, since y=-5 is down."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g004-plot-a",
+       "option": "C",
+       "verdict": "IS_THAT_ERROR",
+       "why": "3 right then 5 down reverses the x direction only (x-direction-flipped). Wrong, since x=-3 is left."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g004-plot-a",
+       "option": "D",
+       "verdict": "IS_THAT_ERROR",
+       "why": "5 left then 3 down is the pair read as (-5,-3), the coordinates swapped (swap-xy). Wrong."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g007-plot-a",
+       "option": "B",
+       "verdict": "IS_THAT_ERROR",
+       "why": "F(-5,-4) swapped gives (-4,-5): 4 left, 5 down. Matches swap-xy and is wrong."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g007-plot-a",
+       "option": "C",
+       "verdict": "IS_THAT_ERROR",
+       "why": "5 right then 4 down reverses x only (x-direction-flipped). Wrong."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g007-plot-a",
+       "option": "D",
+       "verdict": "IS_THAT_ERROR",
+       "why": "5 left then 4 up reverses y only (y-direction-flipped). Wrong."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g009-plot-a",
+       "option": "A",
+       "verdict": "IS_THAT_ERROR",
+       "why": "F(-3,4): 3 right then 4 up reverses x only (x-direction-flipped). Wrong, since x=-3 is left."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g009-plot-a",
+       "option": "B",
+       "verdict": "IS_THAT_ERROR",
+       "why": "Swapping (-3,4) gives (4,-3): 4 right, 3 down, which is exactly this option (swap-xy). Wrong."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g009-plot-a",
+       "option": "C",
+       "verdict": "IS_THAT_ERROR",
+       "why": "3 left then 4 down reverses y only (y-direction-flipped). Wrong, since y=4 is up."
+      }
+     ],
+     "notes": "I checked all three instances (g004 F(-3,-5), g007 F(-5,-4), g009 F(-3,4)). Each key matches the computed correct instruction: B, A and D respectively, each a unique option. Every tagged distractor is exactly the output of its named error. y-direction-flipped reverses only the vertical direction, x-direction-flipped reverses only the horizontal, and swap-xy exchanges the two coordinates and then applies the correct signs. No distractor is also correct. The worked solutions are correct and step by step: read the pair as (x, y), move horizontally by the sign of x, then vertically by the sign of y, then mark the point. The key text states the instruction the stem asks for. The stem is unambiguous. The unused step order (down then left) lands on the same point, but no option offers it, so it causes no ambiguity. The mention of triangle DEF is harmless context, and the numbers are realistic Grade 10 values."
+    }
+   },
+   {
+    "family_id": "tpl:g10m8s1-1-1:vertex-on-axis",
+    "spec_sha": "0009dc56eb64569214de1bce5ca221bbbf8d5f1067fd4a7a137deaddb6c34524",
+    "answers": [
+     {
+      "instance_id": "q:g10m8s1-1-1:g002-vertex",
+      "stem_sha": "fac76125d1e9e654",
+      "answer": {
+       "choice": "B",
+       "choice_text": "$B$"
+      },
+      "working": "A vertex is on the x-axis when its y-coordinate is 0. A(4,5), B(3,0), C(0,-2), D(-3,4). Only B has y = 0. B is option B."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-1:g004-vertex",
+      "stem_sha": "263c2126263e4075",
+      "answer": {
+       "choice": "A",
+       "choice_text": "$C$"
+      },
+      "working": "A vertex is on the x-axis when its y-coordinate is 0. A(-2,-2), B(5,-4), C(3,0), D(0,5). Only C has y = 0 (D is on the y-axis, not the x-axis). C is option A."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-1:g010-vertex",
+      "stem_sha": "802f890caddb4d2f",
+      "answer": {
+       "choice": "B",
+       "choice_text": "$D$"
+      },
+      "working": "A vertex is on the y-axis when its x-coordinate is 0. A(4,5), B(-1,4), C(-4,0), D(0,-3). Only D has x = 0 (C is on the x-axis, not the y-axis). D is option B."
+     }
+    ],
+    "judge": {
+     "distractors_ok": true,
+     "key_form_ok": true,
+     "context_ok": true,
+     "solution_ok": true,
+     "distractors": [
+      {
+       "instance_id": "q:g10m8s1-1-1:g002-vertex",
+       "option": "A: $D$",
+       "verdict": "UNTAGGED_OK",
+       "why": "D(-3,4) has y=4, not 0, so it is not on the x-axis."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g002-vertex",
+       "option": "C: $C$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "C(0,-2) has x=0, so it is on the y-axis. A student who swaps the axes (zero coordinate means x-axis) picks exactly this. It is definitely wrong, and it is the only vertex with x=0."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g002-vertex",
+       "option": "D: $A$",
+       "verdict": "UNTAGGED_OK",
+       "why": "A(4,5) has y=5, not 0, so it is not on the x-axis."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g004-vertex",
+       "option": "B: $B$",
+       "verdict": "UNTAGGED_OK",
+       "why": "B(5,-4) has y=-4, so it is not on the x-axis."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g004-vertex",
+       "option": "C: $A$",
+       "verdict": "UNTAGGED_OK",
+       "why": "A(-2,-2) has y=-2, so it is not on the x-axis."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g004-vertex",
+       "option": "D: $D$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "D(0,5) has x=0, so it is on the y-axis. This is the axis-swap error, and it is the only vertex with x=0. It is definitely wrong."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g010-vertex",
+       "option": "A: $C$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "C(-4,0) has y=0, so it is on the x-axis. A student who swaps the axes (zero coordinate means y-axis) picks exactly this. It is definitely wrong, and it is the only vertex with y=0."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g010-vertex",
+       "option": "C: $B$",
+       "verdict": "UNTAGGED_OK",
+       "why": "B(-1,4) has x=-1, so it is not on the y-axis."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g010-vertex",
+       "option": "D: $A$",
+       "verdict": "UNTAGGED_OK",
+       "why": "A(4,5) has x=4, so it is not on the y-axis."
+      }
+     ],
+     "notes": "I checked all three instances against their coordinates.\n- g002: asks for the x-axis, so y must be 0. Only B(3,0) qualifies. Key B is the option \"$B$\". Correct.\n- g004: only C(3,0) has y=0. Key A is the option \"$C$\". Correct.\n- g010: asks for the y-axis, so x must be 0. Only D(0,-3) qualifies. Key B is the option \"$D$\". Correct.\n- Each family has exactly one vertex on the asked axis. Each tagged distractor is the one vertex with the other coordinate 0, so the zero-on-wrong-axis error maps to a single unambiguous wrong option. No distractor is also correct.\n- Solutions: the coordinate lists in step 3 match the stems. The axis rule is stated correctly (\"on the x-axis iff y=0\"). Step 5 correctly rules out the swap vertex.\n- Context: I checked that A-B-C-D is a simple, non-self-intersecting quadrilateral in all three stems. The numbers are realistic.\n- Minor presentation risk, not an error: the option letters (A-D) are the same letters as the vertex names, so a student sees things like \"A. C\" or \"D. A\". The text is unambiguous because the options are written as $C$ etc. and the stem asks for a vertex. If the renderer shows the key letter next to the option text, the repeated letters could momentarily confuse. This is cosmetic and I do not treat it as a failure."
+    }
+   },
+   {
+    "family_id": "tpl:g10m8s1-1-1:vertical-side",
+    "spec_sha": "c680e110e26dc4df625ce76acac08806c6a1136cd7d4582a304875347937cd32",
+    "answers": [
+     {
+      "instance_id": "q:g10m8s1-1-1:g008-vertic",
+      "stem_sha": "822cf41997c5da24",
+      "answer": {
+       "choice": "D",
+       "choice_text": "$CD$"
+      },
+      "working": "A(0,1), B(-1,4), C(-4,4), D(-4,1). A vertical side needs both endpoints to have the same x. AB: x=0 and -1, no. BC: x=-1 and -4, no (y=4 on both, so it is horizontal). CD: x=-4 and -4, yes. DA: x=-4 and 0, no (horizontal). So CD is the vertical side."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-1:g009-vertic",
+      "stem_sha": "63e6be42b69227d9",
+      "answer": {
+       "choice": "A",
+       "choice_text": "$AB$"
+      },
+      "working": "A(3,0), B(3,2), C(-3,2), D(1,0). AB: x=3 and 3, same x, so vertical. BC: x=3 and -3, no (horizontal at y=2). CD: x=-3 and 1, no (slanted). DA: x=1 and 3, no (horizontal at y=0). So AB is the vertical side."
+     },
+     {
+      "instance_id": "q:g10m8s1-1-1:g010-vertic",
+      "stem_sha": "df06b2d8220d8dda",
+      "answer": {
+       "choice": "A",
+       "choice_text": "$AB$"
+      },
+      "working": "A(4,3), B(4,-1), C(2,-1), D(-1,3). AB: x=4 and 4, same x, so vertical. BC: x=4 and 2, no (horizontal at y=-1). CD: x=2 and -1, no (slanted). DA: x=-1 and 4, no (horizontal at y=3). So AB is the vertical side."
+     }
+    ],
+    "judge": {
+     "distractors_ok": true,
+     "key_form_ok": true,
+     "context_ok": true,
+     "solution_ok": true,
+     "notes": "I recomputed every side of all three quadrilaterals. Each stem has exactly one vertical side, the key names it, and each worked solution reaches that key.\n\ng008, A(0,1) B(-1,4) C(-4,4) D(-4,1):\n- AB is slanted, because both coordinates differ.\n- BC is horizontal at y=4.\n- CD is vertical at x=-4.\n- DA is horizontal at y=1.\n- Key D = CD is correct.\n\ng009, A(3,0) B(3,2) C(-3,2) D(1,0):\n- AB is vertical at x=3.\n- BC is horizontal at y=2.\n- CD is slanted.\n- DA is horizontal at y=0.\n- Key A = AB is correct.\n\ng010, A(4,3) B(4,-1) C(2,-1) D(-1,3):\n- AB is vertical at x=4.\n- BC is horizontal at y=-1.\n- CD is slanted.\n- DA is horizontal at y=3.\n- Key A = AB is correct.\n\nDistractors: in every instance the options tagged horizontal-vertical-mixup are the two horizontal sides. A student who swaps \"vertical\" and \"horizontal\" would pick exactly those, and both are definitely not vertical. The untagged option is the slanted side, which is wrong and needs no tag. No option is also correct, since each stem has exactly one vertical side.\n\nKey form: the stem asks \"Which side is it?\" and the key is a side name such as $CD$, which matches.\n\nSolution: step 3 lists the x-coordinates correctly in each instance. Step 4 correctly finds the one shared x-value and the adjacent pair. Step 5 classifies the remaining three sides correctly (two horizontal, one slanted) in all three instances.\n\nContext: there is no word problem. The coordinates are small and realistic, each figure is a simple non-self-intersecting trapezoid, and the plotting order is unambiguous.\n\nMinor observation, not a defect: the question is very easy for an 'advanced' tier. That is a tiering matter, not a correctness one.",
+     "distractors": [
+      {
+       "instance_id": "q:g10m8s1-1-1:g008-vertic",
+       "option": "A: $BC$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "BC runs from (-1,4) to (-4,4), so it is horizontal. A student who mixes up horizontal and vertical would pick it. It is not vertical."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g008-vertic",
+       "option": "B: $DA$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "DA runs from (-4,1) to (0,1), so it is horizontal. A student who mixes up horizontal and vertical would pick it. It is not vertical."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g008-vertic",
+       "option": "C: $AB$",
+       "verdict": "UNTAGGED_OK",
+       "why": "AB runs from (0,1) to (-1,4), so it is slanted and definitely not vertical."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g009-vertic",
+       "option": "B: $DA$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "DA runs from (1,0) to (3,0), so it is horizontal. A student who mixes up horizontal and vertical would pick it. It is not vertical."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g009-vertic",
+       "option": "C: $BC$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "BC runs from (3,2) to (-3,2), so it is horizontal. A student who mixes up horizontal and vertical would pick it. It is not vertical."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g009-vertic",
+       "option": "D: $CD$",
+       "verdict": "UNTAGGED_OK",
+       "why": "CD runs from (-3,2) to (1,0), so it is slanted and definitely not vertical."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g010-vertic",
+       "option": "B: $BC$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "BC runs from (4,-1) to (2,-1), so it is horizontal. A student who mixes up horizontal and vertical would pick it. It is not vertical."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g010-vertic",
+       "option": "C: $CD$",
+       "verdict": "UNTAGGED_OK",
+       "why": "CD runs from (2,-1) to (-1,3), so it is slanted and definitely not vertical."
+      },
+      {
+       "instance_id": "q:g10m8s1-1-1:g010-vertic",
+       "option": "D: $DA$",
+       "verdict": "IS_THAT_ERROR",
+       "why": "DA runs from (-1,3) to (4,3), so it is horizontal. A student who mixes up horizontal and vertical would pick it. It is not vertical."
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "workflowProgress": [
+  {
+   "type": "workflow_phase",
+   "index": 1,
+   "title": "Author"
+  },
+  {
+   "type": "workflow_phase",
+   "index": 2,
+   "title": "Solve"
+  },
+  {
+   "type": "workflow_phase",
+   "index": 3,
+   "title": "Judge"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 1,
+   "label": "solve:tpl:g10m8s1-1-1:plot-a-vertex",
+   "phaseIndex": 2,
+   "phaseTitle": "Solve",
+   "agentId": "a3b872c7a6add2a37",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790842378621,
+   "queuedAt": 1790842378611,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "Solve these 3 questions. They are independent; work each one carefully\nfrom its own words. You have no answer key and no worked solution — you are the check.\n\nQUESTION Q1\n[[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch08-s111/solve/f001-q1.txt]]\nOptions:\n  A. 3 units to the lef…",
+   "promptFramed": true,
+   "lastProgressAt": 1790842386312,
+   "tokens": 61998,
+   "toolCalls": 4,
+   "durationMs": 7690,
+   "resultPreview": "{\"answers\":[{\"question\":\"Q1\",\"working\":\"F(-3, -5): x = -3 means 3 units left of the origin, y = -5 means 5 units down. Option B matches (3 left, then 5 down).\",\"choice\":\"B\"},{\"question\":\"Q2\",\"working\":\"F(-5, -4): x = -5 means 5 units left, y = -4 means 4 units down. Option A matches (5 left, then 4 down).\",\"choice\":\"A\"},{\"question\":\"Q3\",\"working\":\"F(-3, 4): x = -3 means 3 units left, y = 4 means 4…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 2,
+   "label": "solve:tpl:g10m8s1-1-1:vertex-on-axis",
+   "phaseIndex": 2,
+   "phaseTitle": "Solve",
+   "agentId": "a86c9d67a383046c3",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790842378621,
+   "queuedAt": 1790842378612,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "Solve these 3 questions. They are independent; work each one carefully\nfrom its own words. You have no answer key and no worked solution — you are the check.\n\nQUESTION Q1\n[[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch08-s111/solve/f002-q1.txt]]\nOptions:\n  A. $D$\n  B. $B$\n  C. …",
+   "promptFramed": true,
+   "lastProgressAt": 1790842388156,
+   "tokens": 62058,
+   "toolCalls": 4,
+   "durationMs": 7630,
+   "resultPreview": "{\"answers\":[{\"question\":\"Q1\",\"working\":\"A vertex is on the x-axis when its y-coordinate is 0. A(4,5), B(3,0), C(0,-2), D(-3,4). Only B has y = 0. B is option B.\",\"choice\":\"B\",\"value\":\"B\"},{\"question\":\"Q2\",\"working\":\"A vertex is on the x-axis when its y-coordinate is 0. A(-2,-2), B(5,-4), C(3,0), D(0,5). Only C has y = 0 (D is on the y-axis, not the x-axis). C is option A.\",\"choice\":\"A\",\"value\":\"C\"…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 3,
+   "label": "solve:tpl:g10m8s1-1-1:vertical-side",
+   "phaseIndex": 2,
+   "phaseTitle": "Solve",
+   "agentId": "a1977d1b365a8ee3a",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790842378622,
+   "queuedAt": 1790842378612,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "promptPreview": "Solve these 3 questions. They are independent; work each one carefully\nfrom its own words. You have no answer key and no worked solution — you are the check.\n\nQUESTION Q1\n[[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch08-s111/solve/f003-q1.txt]]\nOptions:\n  A. $BC$\n  B. $DA$\n  C…",
+   "promptFramed": true,
+   "lastProgressAt": 1790842390018,
+   "tokens": 62120,
+   "toolCalls": 4,
+   "durationMs": 9492,
+   "resultPreview": "{\"answers\":[{\"question\":\"Q1\",\"working\":\"A(0,1), B(-1,4), C(-4,4), D(-4,1). A vertical side needs both endpoints to have the same x. AB: x=0 and -1, no. BC: x=-1 and -4, no (y=4 on both, so it is horizontal). CD: x=-4 and -4, yes. DA: x=-4 and 0, no (horizontal). So CD is the vertical side.\",\"choice\":\"D\",\"value\":\"CD\"},{\"question\":\"Q2\",\"working\":\"A(3,0), B(3,2), C(-3,2), D(1,0). AB: x=3 and 3, same …"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 4,
+   "label": "judge:tpl:g10m8s1-1-1:plot-a-vertex",
+   "phaseIndex": 3,
+   "phaseTitle": "Judge",
+   "agentId": "a60198f74113081a2",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790842388128,
+   "queuedAt": 1790842388117,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "lastToolSummary": "I checked all three instances (g004 F(-3,-5), g007 F(-5,-4)…",
+   "promptPreview": "You are checking a generated question family after it has been solved blind. You see\nthe computed key, the worked solution and every wrong option's claimed error.\n\n[[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch08-s111/judge/f001.txt]]\n\nJudge, adversarially:\n- distractors_ok: f…",
+   "promptFramed": true,
+   "lastProgressAt": 1790842407291,
+   "tokens": 63684,
+   "toolCalls": 2,
+   "durationMs": 19163,
+   "resultPreview": "{\"distractors_ok\":true,\"key_form_ok\":true,\"context_ok\":true,\"solution_ok\":true,\"distractors\":[{\"instance_id\":\"q:g10m8s1-1-1:g004-plot-a\",\"option\":\"A\",\"verdict\":\"IS_THAT_ERROR\",\"why\":\"F(-3,-5): 3 left then 5 UP is what a student produces by reading the negative y as upward (y-direction-flipped). Wrong, since y=-5 is down.\"},{\"instance_id\":\"q:g10m8s1-1-1:g004-plot-a\",\"option\":\"C\",\"verdict\":\"IS_THAT_…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 5,
+   "label": "judge:tpl:g10m8s1-1-1:vertex-on-axis",
+   "phaseIndex": 3,
+   "phaseTitle": "Judge",
+   "agentId": "aa139af70add4a0ac",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790842389982,
+   "queuedAt": 1790842389981,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "lastToolSummary": "I checked all three instances against their coordinates. - …",
+   "promptPreview": "You are checking a generated question family after it has been solved blind. You see\nthe computed key, the worked solution and every wrong option's claimed error.\n\n[[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch08-s111/judge/f002.txt]]\n\nJudge, adversarially:\n- distractors_ok: f…",
+   "promptFramed": true,
+   "lastProgressAt": 1790842416335,
+   "tokens": 63712,
+   "toolCalls": 2,
+   "durationMs": 26352,
+   "resultPreview": "{\"distractors_ok\":true,\"key_form_ok\":true,\"context_ok\":true,\"solution_ok\":true,\"distractors\":[{\"instance_id\":\"q:g10m8s1-1-1:g002-vertex\",\"option\":\"A: $D$\",\"verdict\":\"UNTAGGED_OK\",\"why\":\"D(-3,4) has y=4, not 0, so it is not on the x-axis.\"},{\"instance_id\":\"q:g10m8s1-1-1:g002-vertex\",\"option\":\"C: $C$\",\"verdict\":\"IS_THAT_ERROR\",\"why\":\"C(0,-2) has x=0, so it is on the y-axis. A student who swaps the a…"
+  },
+  {
+   "type": "workflow_agent",
+   "index": 6,
+   "label": "judge:tpl:g10m8s1-1-1:vertical-side",
+   "phaseIndex": 3,
+   "phaseTitle": "Judge",
+   "agentId": "a01c9c170f7d6c624",
+   "model": "claude-sonnet-5-5",
+   "state": "done",
+   "startedAt": 1790842392071,
+   "queuedAt": 1790842392069,
+   "attempt": 1,
+   "lastToolName": "StructuredOutput",
+   "lastToolSummary": "I recomputed every side of all three quadrilaterals. Each s…",
+   "promptPreview": "You are checking a generated question family after it has been solved blind. You see\nthe computed key, the worked solution and every wrong option's claimed error.\n\n[[file: /Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-grade-ch08-s111/judge/f003.txt]]\n\nJudge, adversarially:\n- distractors_ok: f…",
+   "promptFramed": true,
+   "lastProgressAt": 1790842413609,
+   "tokens": 64074,
+   "toolCalls": 2,
+   "durationMs": 21538,
+   "resultPreview": "{\"distractors_ok\":true,\"key_form_ok\":true,\"context_ok\":true,\"solution_ok\":true,\"notes\":\"I recomputed every side of all three quadrilaterals. Each stem has exactly one vertical side, the key names it, and each worked solution reaches that key.\\n\\ng008, A(0,1) B(-1,4) C(-4,4) D(-4,1):\\n- AB is slanted, because both coordinates differ.\\n- BC is horizontal at y=4.\\n- CD is vertical at x=-4.\\n- DA is h…"
+  }
+ ],
+ "totalTokens": 377646,
+ "totalToolCalls": 18,
+ "runId": "wf_537fa4aa-951"
+}
