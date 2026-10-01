@@ -50,8 +50,16 @@ THE FORMAT (``"format": "ainext.family/1"``), one family per file::
         "tolerance": null
       },
       "proposed_misconceptions": [],           # ids this spec uses that S5 has not written yet
+      "distinct_by_choices": false,            # optional, mcq only — see DUPLICATES
       "notes": "for the reviewer"
     }
+
+DUPLICATES. Two instances with the same stem are one question, and the second is dropped. For a multiple-choice
+family whose stem is the same sentence in every instance ("Exactly one of the following numbers is irrational.
+Which one?") and whose options carry the variation, that would leave one item. ``"distinct_by_choices": true``
+says the options tell instances apart: the filter then reads stem plus the SET of options (a reshuffle is not a
+difference). It is off unless declared, so a family filtered on its stem keeps exactly the items, and the item
+ids, it always had.
 
 PARENT. A family derives from ONE book item of its objective: by default a book question
 (``parent_question_id`` ``q:<lo tail>:<item>``). Where the book gave the objective no markable

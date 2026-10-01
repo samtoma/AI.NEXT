@@ -52,7 +52,7 @@ PARENT_KINDS = ("question", "teaching")   # questions.parent_kind (migration 038
 TOP_KEYS = {
     "format", "id", "kind", "lo_id", "parent_question_id", "parent_kind", "source_page", "tier", "answer_type",
     "context", "params", "constraints", "stem", "answer", "solution", "choices", "marker",
-    "proposed_misconceptions", "notes", "version",
+    "proposed_misconceptions", "notes", "version", "distinct_by_choices",
 }
 FAMILY_ID_RE = re.compile(r"^tpl:([a-z0-9-]+):([a-z0-9][a-z0-9-]*)$")
 LO_RE = re.compile(r"^lo:([a-z0-9-]+)$")
@@ -279,6 +279,12 @@ def check_spec(raw: Any, where: str = "<spec>") -> list[str]:
         p.append("context, when present, is the word problem's fixed situation in words")
     if raw.get("version") is not None and (not isinstance(raw["version"], int) or raw["version"] < 1):
         p.append("version, when present, is a whole number >= 1")
+    if "distinct_by_choices" in raw:
+        if not isinstance(raw["distinct_by_choices"], bool):
+            p.append("distinct_by_choices is true or false")
+        elif raw["distinct_by_choices"] and at != "mcq":
+            p.append("distinct_by_choices applies to an mcq family: it says the options, not only the stem, "
+                     "tell its instances apart")
 
     # ---- params
     names: set[str] = set()

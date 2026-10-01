@@ -157,6 +157,10 @@ class Family:
     page: int | None
     build: Callable[[random.Random], Item]
     misconceptions: list = field(default_factory=list)
+    # A multiple-choice family whose stem does not tell its instances apart (the options do) declares it, and
+    # the duplicate filter then reads stem AND options. Off by default: every family that does not say so is
+    # filtered on its stem alone, so no shipped bank's item ids can move.
+    distinct_by_choices: bool = False
 
 
 REGISTRY: list[Family] = []
@@ -1334,15 +1338,16 @@ def legacy_item_id(fam: Family, made: int) -> str:
     return f"{fam.lo_id.replace('lo:', 'q:')}:g{made:03d}-{fam.id.split(':')[-1][:6]}"
 
 
-def same_question(item: Item) -> tuple:
+def same_question(item: Item, by_choices: bool = False) -> tuple:
     """What makes two instances of one family the SAME question, for the duplicate filter.
 
-    Its stem, and for a multiple-choice item also its options (as a set: the shuffle is not a difference):
-    "Exactly one of the following numbers is irrational. Which one?" is the whole stem of a family whose
-    instances differ only in what the four options are, so two of them are different questions, not duplicates.
-    Every other kind of item is its stem alone, as it always was.
+    Its stem. A family that says its options distinguish its instances (``Family.distinct_by_choices``) is read
+    as stem plus options, the options as a set because the shuffle is not a difference: "Exactly one of the
+    following numbers is irrational. Which one?" is the whole stem of a family whose instances differ only in
+    what the four options are, so two of them are different questions, not duplicates. Opt-in, because relaxing
+    the filter for a family that has always been filtered on its stem would shift the ids of the items after it.
     """
-    if item.question_type == "mcq" and isinstance(item.choices, list):
+    if by_choices and item.question_type == "mcq" and isinstance(item.choices, list):
         texts = {c["key"]: c["text"] for c in item.choices}
         return (item.stem, tuple(sorted(texts.values())), texts.get(item.correct_answer))
     return (item.stem,)
@@ -1385,13 +1390,13 @@ def instantiate(
                 continue
             if item is None:
                 continue
-            if same_question(item) in seen_stems:
+            if same_question(item, fam.distinct_by_choices) in seen_stems:
                 continue
             problems = verify(item)
             if problems:
                 rejected.append(f"{fam.id}: {'; '.join(problems)}")
                 continue
-            seen_stems.add(same_question(item))
+            seen_stems.add(same_question(item, fam.distinct_by_choices))
             made += 1
             qid = item_id(fam, made)
             questions.append(to_row(item, qid, fam) if to_row else item.as_question(qid))
@@ -1492,6 +1497,7 @@ def declarative_families(specs) -> list[Family]:
     for s in specs:
         fam = FS.as_family(s)
         fam.spec = s  # the driver's to_row reads it back
+        fam.distinct_by_choices = bool(s.raw.get("distinct_by_choices"))
         out.append(fam)
     return out
 
