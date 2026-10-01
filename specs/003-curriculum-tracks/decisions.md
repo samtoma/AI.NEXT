@@ -4,12 +4,14 @@
 plan and ADR-0024 are cut against it. Where a later decision changes one of these, the change is
 stamped here with its date, not rewritten.
 
-**Numbering.** Decisions 1–47, in seven rounds (46 is not used). From the third round on, Samuel's
+**Numbering.** Decisions 1–58, in eight rounds (46 is not used). From the third round on, Samuel's
 answers are logged verbatim in [`docs/WIP-g10-pilot/samuel-answers.md`](../../docs/WIP-g10-pilot/samuel-answers.md),
 and **answer N there is decision N + 21 here** (answer 1, the v0.9.3 hotfix, is not a decision of this
 feature; answer 25 extends decision 45). Code comments and older notes that say "decision 9" or
 "decision 13" for a third-round answer mean the *answer* number: answer 9 is decision 30, answer 13 is
-decision 34.
+decision 34. The eighth round (2026-10-01) gives answers 27–37 their numbers — 48–58 — closing the gap
+left when the third-round table recorded some of that ground early (decision 29 already carries answer
+27's confirmation, stamped where it happened rather than moved here).
 
 **Commit status (2026-09-27).** This file and the work it governs are committed only as unreviewed WIP
 snapshots on the pushed feature branch; Samuel has not reviewed or merged them.
@@ -141,6 +143,27 @@ Relayed by the coordinating session and logged as answer 26 in `docs/WIP-g10-pil
 | # | Decision | Recorded in |
 |---|---|---|
 | 47 | **Answer 26: widget mappings the blind checker refused → "Keep them, and let's human review."** The verifier (`wf_dbca7b50-327`) found all 25 Chapter 8 widgets answerable and read correctly, confirmed 20 predicate → misconception claims and refused 23; the all-or-nothing rule would have shipped no widget. Now all 7 templates ship; a refused claim is **held** (`choices.pending_review`, with the verifier's reason) — never shown to a student, never a diagnosis, never S5 evidence — until a human keeps it (it becomes active) or drops it (deleted). A widget whose every claim is held ships as a plain right/wrong widget. The human review is part of gate G3 (`render_review_page.py --gate g3-mappings`; its export is `--mapping-review`). An unreachable target, a stem that reads otherwise or a missing verdict still refuses the template. | FR-4306 (amended); `generate_widget_questions.py` (`verdict_scan`, `hold_pending`); `widget_spec.validate_widget`; `assemble_misconceptions.py --bundle`; runbook README (S7, G3) |
+
+## Eighth round — Samuel, 2026-09-27 (the consistency review) and 2026-10-01 (filling the Grade 10 course)
+
+Relayed by the coordinating session and logged in `docs/WIP-g10-pilot/samuel-answers.md` as answers
+27–37 (answer N is decision N + 21, as every round since the third gives it: 27 → 48 … 37 → 58).
+Answers 27–34 answer the consistency review of 2026-09-27
+(`docs/WIP-g10-pilot/consistency-review-2026-09-27.md`); 35–37 are later the same week and the next.
+
+| # | Decision | Recorded in |
+|---|---|---|
+| 48 | **Answer 27: "Load a course" restore, reconfirmed.** *"Build the safe restore (Recommended)."* This is the confirmation that triggered decision 29's build (T430, 2026-09-28): restore replays a previously exported, reviewed bundle, keeping every row's own status and review stamp, or refuses, naming what would be lost; the whole-database mode is the separate, clearly named `rollback`. | FR-4208, FR-4210 (decision 29, amended); T430 |
+| 49 | **Answer 28: the course gate's default when `AINEXT_COURSE_GATING` is unset → "Refuse to start (Recommended)."** In the student product (mvp1) the app now refuses to start unless the setting is explicitly `on` or `off`, with a clear message; production, already `on`, is unchanged. | `app/src/lib/env.ts` (`resolveCourseGating`) — an operational default, not itself a numbered FR, the same way decision 12's pipeline policy is not |
+| 50 | **Answer 29: figures for the other 13 chapters → "Native only, wait."** Decision 26 stands strictly: no book images; a question whose figure needs a native type that does not exist yet stays held until that type is built. **Temporarily reversed for students only by decision 58d (answer 37d), 2026-10-01** — see below. | FR-4321 |
+| 51 | **Answer 30: a step-level working checker before G2 → "Yes, add it (Recommended)."** One checking agent per book solution, plus a free numeric pre-check; flagged steps go to G2, never silently corrected; ≈ $0.03–0.05/solution; re-run on Chapter 8 too. | pipeline policy, extends FR-4302's G2 (no new FR, like decision 12) — not yet built |
+| 52 | **Answer 31: live Prep 3 fixes (14 dead widget links; the angle widget opening on its own answer) → "Ship as a small hotfix (Recommended)."** Split out of the Grade 10 branch into a small release off `main` (like v0.9.3): a data migration for the widget links and the opening fix, CI, deploy only on Samuel's explicit go. | out of 003's scope — a separate hotfix release off `main`; recorded in `docs/PROJECT_STATE.md` when it ships |
+| 53 | **Answer 32: misconception tags on a "true but less precise" option → "Remove those tags (Recommended)."** Such an option is never a mistake; the pipeline refuses misconception tags on it, and S5 is told which options they are. | extends FR-4307 and FR-4320's decision 41 (`less_specific`) — not yet built |
+| 54 | **Answer 33: what counts as "reviewed" → "Only human stamps count (Recommended)."** A question is reviewed only when a human signed it; AI-only checks show in the console as "AI-checked, awaiting human"; nothing changes for students; applies to Prep 3 too with its next release. | FR-4506 (answer 37b) |
+| 55 | **Answer 34: a decimal comma typed in a Grade 10 numeric answer ("7,21") → "Accept it as a decimal (Recommended)."** Read as 7.21 and marked normally when unambiguous (a clear pair in a coordinates answer stays a pair); Prep 3 marking unchanged. | extends FR-4320's notation rule (decision 15) — not yet built |
+| 56 | **Answer 35 (2026-10-01): the American course showed an Arabic subtitle** («الرياضيات», the shared maths subject's Arabic name) **→ "change, this is american course we said no arabic."** The American course shows no Arabic anywhere — console and student surfaces, its lessons, the curriculum's own name — chosen per course (the `arabicTouches` setting); every National course is unchanged. Also answers consistency-review B7: the G10 tutor's "write no Arabic at all, even if the student writes in Arabic" line is **kept**. | FR-4205 (widened); T435 (built and verified 2026-10-01) |
+| 57 | **Answer 36 (2026-10-01): sign-up asked no curriculum question for grade 10**, where only American is live, per decision 1's "ask only when the grade has live courses in two or more curricula" **→ "yes the sign up should always ask."** **Supersedes decision 1.** Sign-up and the first-Google-sign-in step always ask which curriculum, naming every curriculum, pre-selecting none; the account is not created without an answer; a curriculum with nothing live for the chosen grade is still offered and selectable, carrying a short note. | FR-4004, FR-4005, FR-4102 (amended); T434 (built and verified 2026-10-01) |
+| 58 | **Answer 37 (2026-10-01, a–e): "fan out the full book for me, and in the background create agents with the review process so we can review from the console page."** **(a)** Everything extracted for a maths course (Prep-3 or Grade 10) goes live to students as if reviewed; review status stays internal; Social Studies and Arabic keep their own review queue; Quran/Hadith stay sealed. **(b)** A new internal console review backlog: every item without a human stamp is a row; Samuel, Tamer and Kamil review one at a time; approve / fix requested / reject; a claim lock; an append-only audit; counts by kind/course/chapter/reviewer; goal zero. **(c)** Gates G1–G4 auto-pass on the AI checks' own recommendation during the fan-out, landing in the backlog; automatic safety checks (broken maths, answers vs the book, parity) still block. **(d)** A figure with no native type yet is shown as the book's own image, temporarily, for students only — TEMPORARILY reverses decision 50. **(e)** The full fan-out (the other 13 chapters) is **approved**, ≈ $0.85–1.1k. | new FR-4501…FR-4509; ADR-0019 (second note, 2026-10-01); FR-4321 (amended; see FR-4508); `docs/PROJECT_STATE.md`, `plan.md` (decision 58e) |
 
 ## Adopted under "all recommendations", not in the relayed list
 

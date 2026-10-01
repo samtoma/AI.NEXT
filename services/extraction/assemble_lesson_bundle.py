@@ -638,6 +638,15 @@ class Report:
         self.visuals_dropped: list[dict] = []  # A8: a figure that draws the question's unknown
         self.held_for_figure: list[str] = []   # A3: a stem that shows [figure] with no figure: review
         self.captions_fixed: list[dict] = []   # a caption that described a withheld point as shown
+        # answer 37d, "book picture for now": the book's own image stands in for a figure no native kind drew
+        self.book_pictures = True              # --no-book-pictures: native figures only (answer 29's rule)
+        self.figures_dir: Path | None = None   # where the book's images are (work/<book>/figures)
+        self.figure_kinds: dict[str, str] = {} # image file -> the native kind it needs (figure-gaps.json)
+        self.book_figures: dict[str, dict] = {}   # question id -> {files, page, slug, gap_kind}
+        self.native_by_file: dict[str, list[dict]] = defaultdict(list)  # image file -> native transcriptions
+        self.stand_ins: list[dict] = []        # book_image visuals attached (question, file, native kind)
+        self.held_reveals: list[dict] = []     # a book picture that shows the unknown: held, never shown
+        self.held_katex: list[str] = []        # A2: a question whose own text KaTeX cannot parse: held
 
     def as_dict(self) -> dict:
         return {"counts": dict(sorted(self.counts.items())),
@@ -650,7 +659,9 @@ class Report:
                 "ambiguous_pairs_for_g2": sorted(set(self.ambiguous_pairs)), "latex_respaced": self.respaced,
                 "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
                 "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
-                "held_for_figure": self.held_for_figure, "captions_fixed": self.captions_fixed}
+                "held_for_figure": self.held_for_figure, "captions_fixed": self.captions_fixed,
+                "book_pictures": "on" if self.book_pictures else "off (--no-book-pictures)",
+                "stand_ins": self.stand_ins, "held_reveals": self.held_reveals, "held_katex": self.held_katex}
 
 
 def _norm(text: str | None, where: str, report: Report) -> str | None:
@@ -1177,7 +1188,16 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
                                f"{it.solution_provenance}",
                 "verified": fate == "verified", "source": "seed",
                 "solution_provenance": it.solution_provenance})
+            if fate == "held":
+                # why an automatic check (or a human at G2) holds it — migration 035's hold_reason
+                q["hold_reason"] = hold_reason_of(it)
             questions.append(q)
+            extra = it.model_extra or {}
+            gap = next((g for g in run.viz_gaps if g.get("ref") == it.ref), None)
+            report.book_figures[qid] = {
+                "files": [Path(str(f)).name for f in extra.get("figures") or []],
+                "page": it.printed_page, "slug": les.slug,
+                "gap_kind": needed_kind_of(gap)}
         for v in run.visuals:
             if v.lo not in own:
                 raise AssemblyError(f"{les.slug}: visual {v.n} on {v.lo}, not this lesson's")
@@ -1188,6 +1208,10 @@ def assemble_chapter(book, manifest: dict, mod: dict, lessons: list[Lesson],
                 # the figure is the book's and stays with the objective; the item it
                 # illustrated is teaching material or was excluded at G2
                 report.counts["visuals_detached_from_non_questions"] += 1
+            if getattr(v, "src", None):
+                report.native_by_file[str(v.src).replace("/", "__")].append(
+                    {"labels": [str(p.get("label") or "") for p in _spec_points(v.spec)],
+                     "withheld": list(getattr(v, "withheld", None) or []), "caption": v.caption})
             visuals.append({"id": f"v:{les.slug}:{v.n:03d}", "lo": v.lo,
                             "question": refs.get(v.question) if v.question else None,
                             "kind": v.kind, "spec": _norm_spec(v.spec, f"{les.slug}:v{v.n}", report),
