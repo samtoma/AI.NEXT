@@ -540,11 +540,13 @@ def copy_status(c: Copy) -> tuple[str, str]:
 
 # ================================================================ the Workflow run and its return value
 def find_record(wf: str) -> dict | None:
+    """The Workflow run's own record (status, script that ran, taskId, the same keys as the task output). The meter finds the run the
+    same way; its refusal (not found, or in more than one session) is passed on in its words."""
     import meter_run
     try:
         rec, _ = meter_run.find_run(wf)
-    except SystemExit:
-        return None
+    except SystemExit as e:
+        raise Refuse(str(e.code) if e.code else f"{wf}: no Workflow run record") from e
     return read_json(rec) if rec else None
 
 

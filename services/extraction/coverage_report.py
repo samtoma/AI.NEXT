@@ -10,7 +10,11 @@ WHAT IT READS (defaults from the book config; every one can be overridden):
     manifest        the S0 manifest with G0 applied
     objectives      objectives/<book>/<slug>.json      (S1 after G1)
     runs            runs/<book>/lesson/<slug>.json     (S2–S4 after G2)
-    seed            seed/<book>/*.json                 (the assembled bundles, S9)
+    seed            seed/<book>/*.json                 (the assembled bundles, S9). A --chapter audit reads only the
+                                                        bundles that carry one of its lessons — the directory holds every
+                                                        chapter assembled so far, and another chapter's content (or its
+                                                        re-assembly) must not change this chapter's report; the
+                                                        whole-book run reads them all
     content         seed/content/<slug>.json           (the lesson-content files, S9; default the
                                                         bundles' sibling content/)
     generated       seed/generated/<book>/             (the generated bundles or the reviewed exports, B15). The default

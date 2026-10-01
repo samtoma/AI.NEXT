@@ -485,8 +485,12 @@ def book_candidates(item: dict, quote: str | None, multiplication_dot: bool = Fa
     the key in, and the last line of the book's working. A sentence is left out (the marker cannot read prose). A book that prints
     multiplication as a raised dot (this one: decimals take a comma) has it flattened to "." even in the EPUB: it is read as a product."""
     out: list[str] = []
-    for src in (item.get("epub_final_answer"), quote, (item.get("solution") or [None])[-1]):
-        p = _final_piece(src)
+    # where the working states its answer: its last line, a "Note restrictions: …" line not counting; a last line that is a sentence is
+    # the book's prose answer, and the line above it is only a step: no candidate then
+    body = [x for x in item.get("solution") or [] if not re.match(r"\s*note\b", str(x), re.I)]
+    last = _final_piece(body[-1]) if body else None
+    last = None if last and _is_prose(last) else last
+    for p in (_final_piece(item.get("epub_final_answer")), _final_piece(quote), last):
         if p and multiplication_dot:
             p = _RAISED_DOT.sub(r"\\cdot ", p)
         if p and not _is_prose(p) and p not in out:

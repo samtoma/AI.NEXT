@@ -453,7 +453,9 @@ class Oracles(unittest.TestCase):
         c = G.book_candidates(it, "\\frac{1}{a+4}")
         self.assertEqual(c[0], "\\frac{1}{a+4}")
         self.assertEqual(len(c), len(set(c)), "each place once")
-        self.assertIn("Note restriction: a\\ne-4", c[-1], "prose is a candidate the marker simply cannot read")
+        self.assertEqual(len(c), 1, "the working's last line here is a restriction note (prose): the answer line above it is the same")
+        c2 = G.book_candidates(item("Ex9-1:1", epub_final_answer=None, solution=["$\\begin{align*}x&=2\\\\&=\\frac{3}{4}\\end{align*}$", "Note restriction: $a\\ne-4$ ."]), None)
+        self.assertEqual(c2, ["\\frac{3}{4}"], "no EPUB final: the working's own last answer line, the note skipped")
         self.assertEqual(G.book_candidates(item("x", epub_final_answer="x = \\frac{2}{3}", solution=["x"]), None)[0], "\\frac{2}{3}")
 
     def test_a_sentence_is_not_a_candidate_and_a_raised_dot_is_a_product(self):
