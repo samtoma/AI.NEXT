@@ -253,7 +253,7 @@ function normTex(s) {
   t = t.replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(/(\d),(\d)/g, '$1.$2').replace(/;/g, ',')
   t = t.replace(/([\^_])\{([A-Za-z0-9])\}/g, '$1$2')
   t = t.replace(/\\frac\{-([^{}]+)\}\{([^{}]+)\}/g, '-\\frac{$1}{$2}')   // \frac{-2}{3} is -\frac{2}{3} (COLLECT-2)
-  t = t.replace(/\s+/g, '').replace(/^\\therefore/, '').replace(/^(?:answer|ans)[:=]/i, '').replace(/\.$/, '')
+  t = t.replace(/\s+/g, '').replace(/^(?:\\therefore|∴|therefore)/i, '').replace(/^(?:answer|ans)[:=]/i, '').replace(/\.$/, '')
   return t
 }
 // a named left side: x=, y_1=, m_{AB}=, d_{AB}\approx, the text layer's flattened mAC=, and a named point
@@ -519,7 +519,7 @@ function plainSigns(s) {
     .replace(/ˆ\s*([A-Za-z])/g, '$1̂')
     .replace(/\\(sin|cos|tan|cot|sec|csc)/g, '$1')                 // \sin A and the EPUB's glued \sinA are the same text
     .replace(/\\triangle(?![a-z])/g, '△').replace(/∴/g, ' therefore ').replace(/²/g, '^2').replace(/³/g, '^3')
-    .replace(/\\[dt]?frac\s*\{\s*(-?[A-Za-z0-9.,]+)\s*\}\s*\{\s*(-?[A-Za-z0-9.,]+)\s*\}/g, '$1/$2')
+    .replace(/\\[dt]?frac\s*\{\s*(-?[A-Za-z0-9.,\s]+?)\s*\}\s*\{\s*(-?[A-Za-z0-9.,\s]+?)\s*\}/g, (_m, a, b) => `${a.replace(/\s+/g, '')}/${b.replace(/\s+/g, '')}`)
 }
 const containNorm = (s) => normTex(plainSigns(s).replace(/\\therefore(?![a-zA-Z])/g, ' therefore ')
   .replace(/\\because(?![a-zA-Z])/g, ' because ')).toLowerCase()
@@ -528,7 +528,10 @@ const containNorm = (s) => normTex(plainSigns(s).replace(/\\therefore(?![a-zA-Z]
 function hasValue(h, n) {
   for (let i = h.indexOf(n); i >= 0; i = h.indexOf(n, i + 1)) {
     const before = i > 0 ? h[i - 1] : '', after = h[i + n.length] || ''
-    if (/\d/.test(n[0]) && /[\d.\-]/.test(before)) continue
+    // before a number that starts with a digit: not a digit, not the point of a decimal ("6" in "7.6"; "3.1" after a sentence's full stop is fine: it has
+    // a point of its own), not the sign of a negative ("5" in "-5", though "4-5" is a difference)
+    if (/\d/.test(n[0]) && (/\d/.test(before) || (before === '.' && !n.includes('.') && /\d/.test(h[i - 2] || '')) ||
+        (before === '-' && !/[A-Za-z0-9)}\]]/.test(h[i - 2] || '')))) continue
     if (/\d/.test(n[n.length - 1]) && (/[\d^/!]/.test(after) || (after === '.' && /\d/.test(h[i + n.length + 1] || '')))) continue
     return true
   }
