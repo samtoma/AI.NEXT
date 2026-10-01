@@ -1066,14 +1066,11 @@ def book_picture_reveals(question: dict, natives: list[dict]) -> str | None:
     return None
 
 
-def stand_in_alt(question: dict, natives: list[dict], page: int | None) -> str:
-    """Alt text for the book's picture: a native transcription's caption of the same image when there is
-    one (captions describe only what is drawn), else what it is and where it is printed."""
-    for n in natives:
-        if (n.get("caption") or "").strip():
-            # an attribute is plain text: no "$" maths delimiters for a screen reader to spell out
-            return re.sub(r"\s{2,}", " ", n["caption"].replace("$", "")).strip()
-    return "The textbook's own diagram for this question" + (f" (printed on page {page})." if page else ".")
+def stand_in_alt(page: int | None) -> str:
+    """Alt text for the book's picture: what it is and where it is printed. Deliberately NOT a native
+    transcription's caption of the same image — that caption was written for another item's figure (it can
+    name another item's task, or the very point this item asks for); the stem itself describes the givens."""
+    return "The textbook's diagram for this question" + (f", printed on page {page}." if page else ".")
 
 
 def police_figures(bundle: dict, report: Report) -> None:
@@ -1108,10 +1105,11 @@ def police_figures(bundle: dict, report: Report) -> None:
             for i, f in enumerate(files, 1):
                 tail = q["id"].split(":", 2)[-1]
                 vid = f"v:{src['slug']}:bk-{tail}" + (f"-{i}" if len(files) > 1 else "")
-                kind = report.figure_kinds.get(f) or src.get("gap_kind")
+                # the visuals stage's own judgement of this item's figure first, else the inventory's kind
+                kind = src.get("gap_kind") or report.figure_kinds.get(f)
                 kept.append({"id": vid, "lo": q["lo"], "question": q["id"], "kind": "book_image",
                              "spec": {"src": f"/book-figures/{report.book_name}/{f}",
-                                      "alt": stand_in_alt(q, natives, src.get("page")),
+                                      "alt": stand_in_alt(src.get("page")),
                                       "stand_in": True, "native_kind_needed": kind},
                              "caption": None, "source_page": src.get("page")})
                 report.stand_ins.append({"question": q["id"], "visual": vid, "file": f, "native_kind_needed": kind})

@@ -106,6 +106,7 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
        figure exists. TEMPORARILY REVERSES answer 29 for students; each such question stays in the backlog as
        "needs native figure".
     e. Fan out the full book (the other 13 chapters, ≈ $0.85–1.1k) — approved.
+    (decisions.md decision 58; FR-4501…FR-4509.)
 38. (2026-10-01) "I want the students to see all chapters as well not only 8! you did ingest the full book" →
     the whole book is read (EPUB text, figures, and S0b maths for all 14 chapters; G0 manifest: 14 chapters,
     65 lessons), but only Chapter 8 has been through the teaching stages (objectives, lessons, solutions,
