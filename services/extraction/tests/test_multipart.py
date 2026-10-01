@@ -101,6 +101,23 @@ class Definitions(unittest.TestCase):
         self.assertEqual(self.read("$S$ and $T$ are the mid-points of $PQ$ and $QR$ . Find the gradient of $ST$ ."),
                          ["$S$ and $T$ are the mid-points of $PQ$ and $QR$."])
 
+    def test_what_the_rule_writes_it_reads_back_as_the_same_definition(self):
+        """The invariant behind 'running it twice changes nothing': every sentence a Definition produces is read by
+        `definitions` as that same Definition (so a part that already carries it is bound), and in its value form
+        the point has its coordinates (bound by `point_bound`)."""
+        tails = ["Find the coordinates of points $S$ and $T$ , the mid-points of $PQ$ and $QR$ .",
+                 "Determine the coordinates of $E$ , the mid-point of $BD$ .",
+                 "Find the line from $P$ to $S$ ( the mid-point of $QR$ ) .",
+                 "Find the mid-point $M$ of $AB$ .",
+                 "Find the coordinates of $M$ where the diagonals meet .",
+                 "Find the coordinates of $M$ where the diagonals intersect .",
+                 "$S$ and $T$ are the mid-points of $PQ$ and $QR$ ."]
+        for tail in tails:
+            for d in mp.definitions(tail):
+                self.assertIn(d, mp.definitions(d.clause()), d.clause())
+                if len(d.names) == 1:
+                    self.assertIn(d.names[0], mp.point_bound(d.with_value("(1; 2)")), d.with_value("(1; 2)"))
+
     def test_a_value_goes_with_one_name_only(self):
         d = mp.definitions("Determine the coordinates of $E$ , the mid-point of $BD$ .")[0]
         self.assertEqual(d.with_value("(\\frac{1}{2};-\\frac{3}{2})"),

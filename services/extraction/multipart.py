@@ -207,7 +207,8 @@ _DEFS = (
     # the mid-point M of AB
     ("prefix", re.compile(rf"\bthe\s+(?P<noun>{_NOUN})\s+(?P<names>{_N})\s+of\s+(?P<rest>{_SEG})(?![A-Za-z])")),
     # M where the diagonals meet
-    ("where", re.compile(rf"{_B}(?P<names>{_NAMES})\s+where\s+the\s+diagonals\s+(?P<verb>meet|intersect)(?![A-Za-z])")),
+    ("where", re.compile(rf"{_B}(?P<names>{_NAMES})\s+(?:(?:is|are)\s+)?where\s+the\s+diagonals\s+(?P<verb>meet|intersect)"
+                         rf"(?![A-Za-z])")),
 )
 
 
