@@ -387,11 +387,16 @@ function inBookSolution(solution, final) {
     // a worked chain L=m1=…=R the typing agent wrote out states L=R, which the solution must hold (COLLECT-3)
     if (workedChain(n) && hay.some((h) => h.includes(`${parts[0]}=${parts[parts.length - 1]}`))) return true
     // x=3 where the solution states the value as a whole segment of its own (COLLECT-3)
-    return parts.length === 2 && /^[a-z]{1,2}(?:_[a-z0-9{}]+)?$/.test(parts[0]) && wholeSegs.has(parts[1])
+    if (parts.length === 2 && /^[a-z]{1,2}(?:_[a-z0-9{}]+)?$/.test(parts[0]) && wholeSegs.has(parts[1])) return true
+    // a worked chain L=m1=m2=…=R whose middle terms hold letters (d=T_2-T_1=7-4=3) is the derivation's aligned lines `d=T_2-T_1`,
+    // `=7-4`, `=3` written on one line: it is in the solution when EVERY link L=mi is a statement the solution makes (the
+    // lines are read with their carried left side). A changed link (…=7-5=3) is not, so that final is still refused (COLLECT-6)
+    return parts.length > 2 && !n.includes(',') && parts.every(Boolean) && parts.slice(1).every((m) => hay.some((h) => h.includes(`${parts[0]}=${m}`)))
   }
   const segs = String(final).match(/\$[^$]+\$/g) || [String(final)]
-  // a segment that lists several statements must have each of them in the solution (COLLECT-3)
-  return segs.every((p) => found(p) || (() => { const ps = topLevelParts(p.replace(/\$/g, ''))
+  // a segment that lists several statements must have each of them in the solution (COLLECT-3); a list joined by "and"
+  // ("T_2=23 and T_4=53") is the same list, "and" being its comma (COLLECT-6)
+  return segs.every((p) => found(p) || (() => { const ps = topLevelParts(p.replace(/\$/g, '').replace(/\\text\{\s*and\s*\}|\s+and\s+/g, ', '))
     return ps.length > 1 && ps.every((x) => x.includes('=') && found(x)) })()) || verbalElision(solution, final)
 }
 
@@ -741,7 +746,10 @@ function checkTyping(it, t, lessonText) {
     const against = it.printed_answer || t.book_final
     // the number an answer states: after its last "=" ("f(2) = 5" states 5, never 2) — COLLECT-3
     const numOf = (x) => { const m = normTex(x).split('=').pop().match(/-?\d+(?:\.\d+)?(?:\/\d+)?/); return m ? m[0] : null }
-    if (against && !(settle(t.key, against, !!it.printed_answer).verdict === 'equivalent' ||
+    // a printed answer that opens with "=" has lost its left side to the text layer ("= −14n + 7" for "T_n = −14n + 7"): its right side
+    // is what it states, and the key's own left side is not what the book printed (COLLECT-6; the value is never touched)
+    const readAs = against ? [against, ...(it.printed_answer && /^\s*=\s*\S/.test(against) ? [against.replace(/^\s*=\s*/, '')] : [])] : []
+    if (against && !(readAs.some((ag) => settle(t.key, ag, !!it.printed_answer).verdict === 'equivalent') ||
       (t.answer_type === 'expression' && t.marker_kind === 'values' && sameValues(t.key, against, !!it.printed_answer)) ||
       (t.answer_type === 'numeric' && numOf(typed.answer) !== null && numOf(typed.answer) === numOf(against)) ||
       (t.answer_type === 'expression' && t.marker_kind === 'values' && betweenEnds(it.stem, against, t.key)) ||
