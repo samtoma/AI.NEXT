@@ -17,31 +17,39 @@ solves and never invents, and what it cannot settle it LISTS instead of guessing
 
 THE RULES (a part P of a question, the parts before it Q):
 
-  R1 DEFINITIONS. Q's own words introduce a name — "S and T, the mid-points of PQ and QR", "M where the diagonals
-     meet", "E (the mid-point of BD)", "the mid-point M of AB" — and P (its words, or its worked answer) uses that
-     name without P's own words or the preamble giving it. P gets one sentence in the book's words: "$S$ and $T$ are
-     the mid-points of $PQ$ and $QR$ ." When Q is a marked question whose key is that one point's coordinates, the
-     key travels too: "$E(\\frac{1}{2};-\\frac{3}{2})$ is the mid-point of $BD$ ." (the book's printed answer, G2's key).
-     This is the shape Samuel's G2 fix gave Ex8-6:39c by hand ("S and T are the mid-points of PQ and QR").
-  R2 VALUES OF THE PREAMBLE'S UNKNOWNS. The preamble gives a point unknown coordinates (`N(x;y)`, `U(6;a)`), an
+  R1 NAMES. Q's own words introduce a name — "S and T, the mid-points of PQ and QR", "M where the diagonals
+     meet", "E (the mid-point of BD)", "the mid-point M of AB", "the point of intersection of AB and CD" — and P (its
+     words, or its worked answer) uses that name without P's own words or the preamble giving it. P gets one sentence
+     in the book's words: "$S$ and $T$ are the mid-points of $PQ$ and $QR$." When Q is a marked question whose key is
+     that one point's coordinates, the key travels too: "$E(\\frac{1}{2};-\\frac{3}{2})$ is the mid-point of $BD$."
+     (the book's printed answer, G2's key). This is the shape Samuel's G2 fix gave Ex8-6:39c by hand. A question
+     ("Is M the mid-point of AB?", "whether …", "if …") is no definition.
+  R2 UNKNOWNS. The preamble gives a point unknown coordinates (`N(x;y)`, `U(6;a)`; a function `P(x)` is no point), an
      earlier part asks for exactly that ("the coordinates of N", "the value of a"), has a marked key, and P uses the
-     point and does not ask for it itself: "$N=(3;5)$ ." / "$a=5$ ."
-  R3 NAMED GRADIENTS. P's worked answer uses a gradient symbol `m_{MN}` it never computes (it is never followed by
-     "="), and an earlier marked part asked for "the gradient of MN": "$m_{MN}=-\\frac{1}{3}$ ."
+     point and does not ask for it itself: "$N=(3;5)$." / "$a=5$."
+  R3 GRADIENTS. P's worked answer uses a gradient symbol `m_{MN}` it never works out (never followed by "=", and not an
+     operand: `m_{AC}\\times m_{BD}=…` works out neither), and an earlier marked part asked for "the gradient of MN":
+     "$m_{MN}=-\\frac{1}{3}$."
 
-The sentences go straight after the preamble, before the part's own words, joined with a space: the same place and
-style as the hand fix on 39c. A part with no earlier part to lean on, or that leans on nothing, is untouched; running
-the rule on a stem that already carries a sentence changes nothing (a part's own words bind a name too).
+The sentences go straight after the preamble, before the part's own words, joined with a space: the same place as the
+hand fix on 39c. A part with no earlier part to lean on, or that leans on nothing, is untouched. Running the rule on a
+stem that already carries a sentence changes nothing (a part's own words bind a name; every sentence the rule writes is
+read back as the definition that wrote it). `plan(parts, rules=("R1",))` is the form the lesson packet uses at S2–S4,
+before any key exists: the blind solver and the typing check then read what a student will, and the assembly later adds
+the book's key to that sentence in place.
 
 WHAT IT LISTS (`Unresolved`, for the review backlog — never changed):
   refers_by_words    the part's words or its worked answer point back by words ("Hence", "from the previous question",
-                     "from above", "we have just calculated"): the fix is a human's (which earlier part, what it
-                     gave), and the earlier parts are listed with their keys so that it takes one look;
-  no_key             a name or value is needed from an earlier part that is held, excluded, teaching-only or unkeyed,
-                     so there is nothing the book printed to carry;
+                     "from above", "we have just calculated"): which earlier part, and what it gave, is a human's call;
+                     the earlier parts are listed with their keys so that it takes one look;
+  no_source          its worked answer uses a gradient it does not work out and no earlier part asks for it;
+  no_key             a value is needed from an earlier part that is held, excluded, teaching-only or whose key is not one
+                     value or one point, so there is nothing the book printed that can be carried;
+  would_reveal_key   the carried sentence would state the part's own answer;
   conflict           two earlier parts give the same name two meanings;
-  not_extractable    an earlier part introduces a name in words this module's patterns cannot restate safely;
-  unbound_name       (no figure only) the part's words name a point nothing defines.
+  not_extractable    (no figure only) the part's words use a name an earlier part mentions but no definition could be
+                     read from.
+What no rule can see: a worked answer that uses a bare number from an earlier part, never naming it.
 """
 
 from __future__ import annotations
