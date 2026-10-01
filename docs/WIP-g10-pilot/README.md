@@ -426,3 +426,103 @@ Samuel: Sonnet 5.5 exists; the app needs a restart to get it. Every pipeline scr
     changes re-runs nothing that finished; agents still to run will run on the new Sonnet.
 - Agents told to stop with handoff notes: spec records (outline/checker/answer 40), family parent (answer 40),
   working-checker calibration (sw-v2). Re-launch them on `model: "sonnet"` from their notes.
+
+## Handoff — family-parent agent (answer 40), paused 2026-10-01
+
+Stopped on the coordinator's word (app restart for Sonnet 5.5), mid-investigation, before any file was
+written. **Nothing applied to the pilot DB — no migration exists yet, nothing was run against
+`ainext_pilot_g10_ch08` or any scratch DB.**
+
+**Done (research only, no edits):**
+- Read answer 40 and confirmed the shape of the fix: `questions.parent_question_id TEXT REFERENCES
+  questions(id)` (`db/schema.sql:86`) is a hard FK that cannot point at the explanation-library row a
+  teaching-only item actually lives in. `lo:g10m8s1-1-1`'s six drawings are stored (once assembled) as
+  `explanation_library` rows (migration 009), id `expl:<lo tail>:<slug>` — e.g.
+  `expl:g10m8s1-1-1:ex8-6-4a` — never as `questions` rows, per `assemble_lesson_bundle.py`'s own id table
+  (`q:<lo tail>:we03 | q:<lo tail>:ex8-2-5b` for a markable item, `expl:<lo tail>:we03 | expl:<lo
+  tail>:ex8-2-5b` for "a not-markable item: teaching material, not a question row, FR-4303").
+- Read the prepared candidate shard the author will see:
+  `services/extraction/work/g10-math/packets/fanout/s6-author-ch08-s111/o/g10m8s1-1-1.book-questions.txt`
+  — each of the six items carries BOTH a `q:`-shaped `id` (e.g. `q:g10m8s1-1-1:ex8-6-4a`, even though no
+  such question row exists) AND the real `library_entry` (`expl:g10m8s1-1-1:ex8-6-4a`), plus
+  `teaching_only: true`. The embedded packet
+  (`work/g10-math/packets/embedded/fanout/001-s6-author-ch08-s111.workflow.js`) is frozen at an OLDER
+  prompt that never mentions `teaching_only`/`library_entry`/`parent_kind` — so whatever the author
+  writes to `parent_question_id` is not guaranteed to be the `expl:` id. **Not edited** (it is a packet;
+  told not to touch it). `runbook/families.workflow.js` (the live script, not frozen, safe to edit later)
+  was read but not yet changed either.
+- Traced every file that enforces or reads the parent link, confirming the task's list and sizing the
+  work: `db/schema.sql` (the FK), `families/spec.py` (`QID_RE`/`check_spec`, `TOP_KEYS`,
+  `FamilySpec.parent`), `generate_questions.py` (`Item` dataclass/`as_question`, `build_item` in
+  `families/spec.py` which actually assembles `common = dict(..., parent_question_id=spec.parent, ...)`),
+  `load_generated_questions.py` (`validate()`, the INSERT column list ~line 444–465 — `parent_kind` is
+  not a column yet and the `ON CONFLICT DO UPDATE` clause never touches `parent_question_id`, so adding
+  `parent_kind` the same way, INSERT-only, matches existing behaviour), and the app readers:
+  `app/src/lib/review-gate-queries.ts` (`questionPayload`: `LEFT JOIN questions p ON p.id =
+  q.parent_question_id` — degrades to a null `parentStem` for a teaching parent today, not a crash, but
+  loses the "what was this modelled on" context the reviewer needs) plus
+  `app/src/components/console/ReviewItemView.tsx` (`Fact label="Generated from"`),
+  `app/src/lib/review-gate.ts` (`QuestionPayload.parentId/parentStem`), and the plain-display-only readers
+  `app/src/lib/content-admin.ts`, `app/src/lib/queries.ts`, `app/src/lib/lesson.ts`,
+  `app/src/lib/types.ts` (`Provenance.parentQuestionId`), `app/src/components/spine/QuestionModal.tsx`,
+  `app/src/app/(console)/content/page.console.tsx` — these last ones just print the id string and are not
+  strictly broken by an `expl:` value, but were in scope to annotate with the kind.
+- Confirmed migration numbering: **038** is free, rollback alongside it, and
+  `deploy/apply-migrations.sh`'s floor comment/check (`172–176`) needs `36` → `37` only if 038 lands.
+  Confirmed grants need no change (`questions`/`explanation_library` already carry table-level
+  SELECT/UPDATE for `ainext_app`/`ainext_operator`, migration 017 — no column-level restriction on
+  `questions` that a new column would fall outside of).
+
+**Decided but NOT written (the plan for whoever resumes this):**
+1. **Migration 038** (+ `rollback/038-*.down.sql`): add `questions.parent_kind TEXT NOT NULL DEFAULT
+   'question' CHECK (parent_kind IN ('question','teaching'))`; drop the blanket
+   `questions_parent_question_id_fkey`; replace it with a `BEFORE INSERT OR UPDATE OF
+   parent_question_id, parent_kind` trigger that checks existence in `questions(id)` when
+   `parent_kind='question'`, or in `explanation_library(id) WHERE entry_type='worked_example'` when
+   `parent_kind='teaching'` (a trigger, not a second FK column, because Postgres has no either-or FK —
+   two nullable FK columns was the other option considered and rejected: it would mean touching every
+   writer twice instead of once). Existing rows get `parent_kind='question'` for free from the column
+   default — no backfill statement needed, no behaviour change for any existing family.
+2. **`families/spec.py`**: add `EXPL_RE = re.compile(r"^expl:([a-z0-9-]+):[A-Za-z0-9._-]+$")`,
+   `PARENT_KINDS = ("question", "teaching")`, `"parent_kind"` to `TOP_KEYS`, a `FamilySpec.parent_kind`
+   property defaulting to `"question"` (so every existing spec file, which has no `parent_kind` key, is
+   unchanged), and in `check_spec` pick `QID_RE` or `EXPL_RE` by `parent_kind` before the existing
+   lo-tail-match check. **Must keep the exact substring "not a question of"** in the question-kind
+   error — `tests/test_family_spec.py::RefusedSpecs.test_each_rule` asserts on it — and give the
+   teaching-kind mismatch a parallel but distinct message ("not a teaching item of").
+3. **`generate_questions.py`**: add `parent_kind: str = "question"` to the `Item` dataclass and to the
+   dict `as_question()` builds. **`families/spec.py::build_item`**: add `parent_kind=spec.parent_kind` to
+   its `common` dict (one line, next to the existing `parent_question_id=spec.parent`).
+4. **`load_generated_questions.py`**: add `parent_kind` validation in `validate()` (unknown kind refused;
+   a `teaching`-kind id must match the `expl:` shape, a `question`-kind id the `q:` shape) and one more
+   column in the INSERT list/VALUES (`q.get("parent_kind") or "question"`) — INSERT-only, not added to
+   the `ON CONFLICT DO UPDATE SET` clause, matching how `parent_question_id` itself is already excluded
+   from that clause today (a reload never changes what a family was modelled on).
+5. **App**: widen `review-gate-queries.ts`'s `questionPayload` join to
+   `LEFT JOIN questions p ON p.id = q.parent_question_id AND q.parent_kind = 'question'` plus
+   `LEFT JOIN explanation_library te ON te.id = q.parent_question_id AND q.parent_kind = 'teaching'`,
+   select `q.parent_kind`, and for the teaching case read `te.content->0->>'text_md'` as `parent_stem`
+   (the first content element of a book-extracted teaching entry is always `{"kind": "problem",
+   "text_md": <the original stem>}` — confirmed at `assemble_lesson_bundle.py` around its `fate ==
+   "teaching"` branch). Add `parentKind` to `QuestionPayload` (`review-gate.ts`) and show it in
+   `ReviewItemView.tsx`'s `Fact label="Generated from"` (e.g. "Generated from (teaching item)"). The
+   other four plain-display readers are lower priority — they just print the id string, which is already
+   self-describing via its `expl:`/`q:` prefix — but add `parentKind` through `types.ts`,
+   `content-admin.ts`, `queries.ts`, `lesson.ts` for consistency if time allows.
+6. **Tests to write**: `tests/test_family_spec.py` (a `parent_kind: "teaching"` + `expl:` parent spec
+   loads and instantiates; an unknown `parent_kind` value is refused by `check_spec`); a
+   `load_generated_questions.py` test (teaching-kind question with an `expl:` parent loads; an unknown
+   `parent_kind` is refused before any DB write); a DB-level test for migration 038 (insert with
+   `parent_kind='teaching'` pointing at a real `explanation_library` row succeeds; pointing at a
+   nonexistent row, or at one with `entry_type != 'worked_example'`, is rejected by the trigger; every
+   existing `parent_kind='question'` row and insert is unaffected) — run on a **scratch DB first**, per
+   the task's instruction, before anything touches `ainext_pilot_g10_ch08`. Re-run both Chapter 8 dry
+   runs (`--mode` default and `--mode inline`) after, to confirm nothing else moved.
+7. **Spec IDs for the tech-writer**: FR-1101 (the parent is "a book question" today; needs "a book
+   question or a book teaching item"), and whatever traceability row cites the
+   `parent_question_id REFERENCES questions(id)` FK by name.
+
+Nothing here was applied — no file was edited (this handoff is the only write this agent made), no
+migration was created, no test was run. The next agent should re-read `services/extraction/
+work/g10-math/packets/fanout/s6-author-ch08-s111/o/g10m8s1-1-1.book-questions.txt` and
+`db/schema.sql:71-92` before starting, to confirm nothing moved under it during the restart.
