@@ -595,11 +595,24 @@ def sample_params(spec: FamilySpec, rng: random.Random) -> dict | None:
     return env
 
 
+def _is_formatted_number(tree, lets: dict[str, str], depth: int = 0) -> bool:
+    """A hole that formats a number: a call of a numeric formatter ({=fixed(c / 100, 2)}), or a name whose
+    ``let`` is one (``tot`` = ``fixed(c / 100, 2)``, then {=tot}). Formatters return text, so the value alone
+    cannot tell a price from a word; where it came from can."""
+    if isinstance(tree, E.ast.Call):
+        return isinstance(tree.func, E.ast.Name) and tree.func.id in NUMERIC_FORMATTERS
+    if isinstance(tree, E.ast.Name) and tree.id in lets and depth < 8:
+        return _is_formatted_number(E.parse(lets[tree.id]).body, lets, depth + 1)
+    return False
+
+
 def _stem_holes_are_numbers(spec: FamilySpec, env: dict) -> None:
     """Word problems: the context is fixed, only numbers vary (§3.9)."""
+    lets = {p["name"]: p["let"] for p in spec.raw.get("params", [])
+            if isinstance(p, dict) and "name" in p and isinstance(p.get("let"), str)}
     for src in E.holes(spec.raw["stem"]):
         tree = E.parse(src).body
-        if isinstance(tree, E.ast.Call) and tree.func.id in NUMERIC_FORMATTERS:
+        if _is_formatted_number(tree, lets):
             continue
         v = E.evaluate(src, env)
         if isinstance(v, bool) or not E._is_num(v):
