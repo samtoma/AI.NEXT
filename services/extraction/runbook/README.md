@@ -477,6 +477,37 @@ uv run assemble_misconceptions.py runs/<book>/misconceptions/final-<runId>.json 
 proves the widget prerequisite rule (FR-1215); `--check` validates and reports without writing.
 `--validate <catalogue.json> [--book <book>]` re-checks an already-assembled catalogue on its own.
 
+**Two passes (the Chapter 1 deadlock).** S5 final may refuse an S6 option or an S7 predicate for an entry it
+CONFIRMED ("does not encode"). That link must be stripped from the bundle, but the bundles are generated FROM the
+catalogue (`generate_questions.py --catalogue`, `generate_widget_questions.py` against the loaded catalogue), so on
+the first assembly there is no bundle to strip it from and the command refuses. The designed way through, without
+touching a family spec (its blind grade is keyed by `spec_sha`) or a widget template:
+
+```sh
+# pass 1 — the catalogue only; every rule on the entries still refuses; the refused links are listed as DEFERRED
+uv run assemble_misconceptions.py runs/<book>/misconceptions/final-<runId>.json --book <book> \
+    --out seed/generated/<book>/misconceptions.json --catalogue-only --graph … --graph …
+uv run load_misconceptions.py seed/generated/<book>/misconceptions.json --course <course-id>
+# generate_questions.py … then generate_widget_questions.py … (the bundles, from the loaded catalogue)
+# pass 2 — the bundle pass: strips each deferred link (an option by its family and the error it was tagged with, or its
+# exact text; a predicate by its template and name — both read from the refusal's `ref`) and refuses, writing nothing,
+# if a link is not carried by a bundle it was given
+uv run assemble_misconceptions.py runs/<book>/misconceptions/final-<runId>.json --book <book> \
+    --out seed/generated/<book>/misconceptions.json --bundle …/generated-questions.json --bundle …/widget-questions.json \
+    --graph … --graph … --drop-undiagnosed-widgets --widget-gaps coverage/<book>.chNN.widget-gaps.json
+# only now load the bundles (load_generated_questions.py … --catalogue-only)
+```
+
+Without `--catalogue-only` the command is as strict as ever. A reconciled bundle carries an `s5_reconciled` stamp
+(the S5 runs it was reconciled against, the refused links stripped, the widgets left out), so pass 2 can be run again
+and changes nothing; a bundle without the stamp, or stamped by another run, proves nothing and a refused link no bundle
+carries still refuses. `--drop-undiagnosed-widgets` is the one way a stripped widget with no diagnostic left (it could
+mark an answer wrong and never say why, ADR-0009) is dealt with other than an error: it is LEFT OUT of the bundle —
+never shipped, its template moved to the bundle's `rejected_templates` — and recorded as a `no-diagnostic` lesson-scope
+gap in the chapter's widget-gaps report (a chapter left with no widget at all gets a chapter-scope gap, which a human
+signs); it needs `--widget-gaps` and `--graph`, and nothing is re-authored. `generate_widget_questions.py` does the same
+for a template whose every mapping names an entry S5 DROPPED (it used to refuse the whole chapter's widgets for it).
+
 **What a student reads carries no bookkeeping (consistency review 2026-09-27, A5; prompts `s5-v5`).** A label,
 description, signal or refutation step that names a question id or book reference (`q:…`, `ex8-1-4`,
 `Ex8-6:21c`), a page number, a numbered figure, or review history (a reviewer's note, a gate, a correction,

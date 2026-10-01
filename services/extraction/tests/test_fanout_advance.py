@@ -1447,6 +1447,43 @@ class Ready(Base):
         self.save("s0b-A-g3")
         self.assertEqual(self.ready()["unprepared"], ["s0b-B-g3"])
 
+    def test_a_prepared_unsaved_g2_recommendation_run_is_shown_and_holds_the_chapters_check_and_s5_draft(self):
+        b = self.box
+        self.save("s0b-A-g3"); self.save("s0b-B-g3"); self.save("s0b-C-g3"); self.save("s1-ch04")
+        b.legacy("lesson-g10m4s2-1"); b.legacy("lesson-g10m4s3-1")
+        b.copy("wcheck-ch04", "A"); b.copy("wcheck-ch04", "B"); b.copy("s5-draft-ch04")
+        (F.EMBED / "g2rec-ch04.workflow.js").write_text("// g2rec copy")
+        r = self.ready()
+        holds = {e["id"]: e.get("hold") for e in r["ready"]}
+        self.assertIn("g2rec-ch04 is prepared and not saved", holds["wcheck-ch04"])
+        self.assertIn("g2rec-ch04 is prepared and not saved", holds["s5-draft-ch04"])
+        self.assertEqual(r["extra_ready"][0]["id"], "g2rec-ch04")
+        self.assertEqual(r["extra_ready"][0]["scripts"], [str(F.EMBED / "g2rec-ch04.workflow.js")])
+        self.assertNotIn("g2rec-ch04", r["ready_scripts"])
+        r2 = self.ready(running=["g2rec-ch04"])
+        self.assertNotIn("extra_ready", r2)
+        self.assertIsNone({e["id"]: e.get("hold") for e in r2["ready"]}["wcheck-ch04"])
+        b.put("runs/g10-math/g2-ch04.recommended.json", {})                  # collected
+        self.assertNotIn("extra_ready", self.ready())
+
+    def test_close_chapter_reports_the_g2_recommendation_copy_it_prepared(self):
+        b = self.box
+        orig = b.fake_close
+
+        def close(ch, dry_run=False):
+            info = orig(ch)
+            info["prepared"]["g2rec-ch04"] = {"copies": ["work/g10-math/packets/embedded/fanout/g2rec-ch04.workflow.js"], "items": 47, "agents": 8,
+                                              "cost_usd": [1, 2], "launch": "BEFORE this chapter's working check and S5 draft"}
+            return info
+        F.close_chapter = close
+        b.copies_for("lesson-g10m4s2-1", "lesson-g10m4s3-1")
+        b.go("lesson-g10m4s2-1", result={"lessons": [{"lesson": "g10m4s2-1", "items": []}]})
+        rc, rep, wf = b.go("lesson-g10m4s3-1", result={"lessons": [{"lesson": "g10m4s3-1", "items": []}]})
+        self.assertEqual(rc, 0, rep)
+        self.assertEqual(rep["counts"]["g2rec"]["items"], 47)
+        self.assertTrue(rep["counts"]["g2rec"]["copies"][0].endswith("g2rec-ch04.workflow.js"))
+        self.assertNotIn("g2rec-ch04", rep["counts"]["close_chapter"]["prepared"])
+
     def test_a_second_s0b_is_held_while_one_is_in_flight(self):
         b = self.box
         b.copies_for("s0b-A-g3", "s0b-B-g3")

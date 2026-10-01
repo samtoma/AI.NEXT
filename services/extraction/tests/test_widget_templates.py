@@ -657,11 +657,9 @@ class GapReport(unittest.TestCase):
 
     def test_a_template_left_out_is_a_lesson_gap_that_proposes_no_kind(self):
         _, questions = built()
-        keep = [q for q in questions if q["family"] != "wt:u2-3-1:direct-inverse"] if any(
-            q["family"] == "wt:u2-3-1:direct-inverse" for q in questions) else questions[1:]
-        left = {"wt:g10m8s3-1-2:gradient-line": {"lo_id": "lo:g10m8s3-1-2", "questions": ["q:g10m8s3-1-2:w001"],
-                                                 "dropped": ["mc:g10m8s3-1-2:x"]}}
-        rep = GW.gap_report("g10-math", "course:us-g10-math-en", graph(), keep, [], orphaned=left)
+        left = {"wt:g10m8s3-1-2:gone": {"lo_id": "lo:g10m8s3-1-2", "questions": ["q:g10m8s3-1-2:w009"],
+                                        "dropped": ["mc:g10m8s3-1-2:x"]}}
+        rep = GW.gap_report("g10-math", "course:us-g10-math-en", graph(), questions, [], orphaned=left)
         mine = [g for g in rep["gaps"] if g["need_kind"] == "no-diagnostic"]
         self.assertEqual(len(mine), 1)
         self.assertEqual((mine[0]["lo_id"], mine[0]["signed_off"]), ("lo:g10m8s3-1-2", None))
@@ -675,7 +673,7 @@ class GapReport(unittest.TestCase):
         self.assertEqual(c8["status"], "covered")
         left = {"wt:x:gone": {"lo_id": "lo:g10m8s3-1-2", "questions": ["q:g10m8s3-1-2:w009"], "dropped": ["mc:a", "mc:b"]}}
         mod = g.module_of()
-        kept = [q for q in questions if q["lo_id"] != "lo:g10m8s3-1-2"] if False else questions
+        kept = questions
         new = GW.add_no_diagnostic_gaps(rep, left, mod, kept, "assemble_misconceptions.py")
         self.assertEqual(rep, GW.gap_report("g10-math", "course:us-g10-math-en", g, questions, []))   # the input is untouched
         added = [x for x in new["gaps"] if x["need_kind"] == "no-diagnostic"]

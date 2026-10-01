@@ -856,11 +856,15 @@ def close_chapter(A: Adv) -> None:
         return
     n = info.get("numbers") or {}
     asm = n.get("assembly") or {}
+    g2rec = (info.get("prepared") or {}).get(f"g2rec-{A.K.t}") or {}
+    if g2rec.get("copies"):
+        A.count(g2rec={"copies": [str(A.P.here / c) for c in g2rec["copies"]], "items": g2rec.get("items"), "agents": g2rec.get("agents"),
+                       "launch": g2rec.get("launch")})
     A.count(close_chapter={"g2": (n.get("g2") or {}).get("decisions"),
                            "assembly": {k: v for k, v in asm.items() if k in ("questions", "live", "held_by_reason", "excluded",
                                                                               "stand_ins", "katex_errors")},
                            "prepared": {k: {"agents": v.get("agents"), "usd": v.get("cost_usd")}
-                                        for k, v in (info.get("prepared") or {}).items()}})
+                                        for k, v in (info.get("prepared") or {}).items() if k != f"g2rec-{A.K.t}"}})
     if asm.get("katex_errors"):
         A.warn(f"chapter {A.ch}: {asm['katex_errors']} KaTeX error(s) in the assembled bundle")
     held = (n.get("g2") or {}).get("decisions", {}).get("held") or 0
@@ -1325,12 +1329,31 @@ def prepare_ready(P: Paths, S: State, fl: Flow, rep: dict, running: set, opts: O
             break
 
 
+def g2rec_pending(P: Paths, S: State, running: set) -> dict[str, list[Path]]:
+    """Chapters with a G2 recommendation copy (g2rec-chNN[.partK].workflow.js, g2_recommend.py) that has no saved run
+    (runs/<book>/g2rec/chNN-*.json) and no recommendation file yet, and whose working check and S5 draft are not saved (the
+    recommendation is launched BEFORE them: after, it is moot). It is NOT a plan run: advance does not process it."""
+    out: dict[str, list[Path]] = {}
+    for f in sorted(P.embed.glob("g2rec-ch[0-9][0-9]*.workflow.js")) if P.embed.is_dir() else []:
+        m = re.match(r"g2rec-(ch\d{2})(?:\.part\d+)?\.workflow\.js$", f.name)
+        if not m or is_running(running, f"g2rec-{m.group(1)}"):
+            continue
+        t = m.group(1)
+        if list((P.runs / "g2rec").glob(f"{t}-*.json")) or (P.runs / f"g2-{t}.recommended.json").exists():
+            continue
+        if any(S.by.get(rid) and S.is_saved(S.by[rid]) for rid in (f"wcheck-{t}", f"s5-draft-{t}")):
+            continue
+        out.setdefault(t, []).append(f)
+    return out
+
+
 def ready_list(P: Paths, S: State, running: set, opts: Opts) -> dict:
     """The scripts that can be launched now, in plan order: dependencies satisfied (the chapter-1 gate lifted unless asked),
     the run neither saved nor in flight. A copy that does not exist yet is `unprepared`; a saved run whose after-steps did not
     complete is `incomplete`."""
     ready, unprepared, incomplete, stale = [], [], [], []
     s0b_running = any(S.by.get(rid, {}).get("s0b") for rid, _ in running)
+    g2rec = g2rec_pending(P, S, running)
     for r in S.runs:
         rid = r["id"]
         if S.satisfied(r) or is_running(running, rid):
@@ -1360,6 +1383,10 @@ def ready_list(P: Paths, S: State, running: set, opts: Opts) -> dict:
                 e["verify"] = bad
             if r.get("s0b") and s0b_running:
                 e["hold"] = "an S0b run is in flight (never two at once)"
+            t = F.ch_tag(r["chapter"]) if r.get("chapter") else None
+            if t in g2rec and kind_of(rid) in ("wcheck", "s5_draft"):
+                e["hold"] = "; ".join(filter(None, [e.get("hold"), f"g2rec-{t} is prepared and not saved: its G2 recommendation changes the "
+                                                                  "chapter's bundle, which this run reads — launch it first"]))
             ready.append(e)
     n = len(running)
     paths = [s["path"] for e in ready for s in e["_scripts"] if s["verify"] != "broken"]
@@ -1369,6 +1396,10 @@ def ready_list(P: Paths, S: State, running: set, opts: Opts) -> dict:
            "lanes": {"max": MAX_LANES, "in_flight": n, "free": max(0, MAX_LANES - n)}}
     if stale:
         out["stale_copies"] = stale
+    if g2rec:        # not plan runs: close-chapter prepared them (the G2 agent's flow); listed so they are not forgotten, never processed here
+        out["extra_ready"] = [{"id": f"g2rec-{t}", "scripts": [str(f) for f in fs], "note": f"not a plan run: advance does not process it; "
+                                                                                            f"save to runs/{BOOK}/g2rec/{t}-<wf_id>.json"}
+                              for t, fs in sorted(g2rec.items())]
     return out
 
 
@@ -1496,7 +1527,7 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
 
 ORDER = ("run", "wf", "ok", "refused", "dry_run", "saved", "record", "metered", "steps", "counts", "backups", "warnings", "notes",
          "waiting", "failure", "checkpoint", "prepared", "skipped", "not_ready", "would_prepare", "after_done", "ready",
-         "ready_scripts", "unprepared", "incomplete", "stale_copies", "lanes")
+         "ready_scripts", "extra_ready", "unprepared", "incomplete", "stale_copies", "lanes")
 
 
 def finish(rep: dict, fl: Flow, P: Paths, S: State | None, run_id: str, opts: Opts) -> dict:
