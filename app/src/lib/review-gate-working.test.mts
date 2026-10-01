@@ -157,6 +157,8 @@ const CALIBRATION = {
 };
 
 const read = (raw: unknown, chapter: number | null = 8) => parseFlagsFile(raw, "g10-math", chapter);
+/** One of the fixture's flags, to copy into another file (`FLAGS_V1.flags` also holds the malformed ones). */
+const flag = (i: number) => FLAGS_V1.flags[i] as Record<string, unknown>;
 
 /* ------------------------------------------------------------ which files */
 
@@ -192,13 +194,13 @@ test("the folder is read for maths books, canonical files only, with the truth f
   put("ch08.flags.json", FLAGS_V1);
   put("ch08.calibration.json", CALIBRATION);
   // calibration experiments flag OTHER things on the same chapter — none of it is a finding about the book
-  put("ch08-cal.flags.json", { ...FLAGS_V1, flags: [{ ...FLAGS_V1.flags[0], solution_id: "q:g10m8s9-9-9:from-a-calibration-copy" }] });
-  put("ch08-cal-b5h.flags.json", { ...FLAGS_V1, flags: [{ ...FLAGS_V1.flags[0], solution_id: "q:g10m8s9-9-9:from-another-copy" }] });
+  put("ch08-cal.flags.json", { ...FLAGS_V1, flags: [{ ...flag(0), solution_id: "q:g10m8s9-9-9:from-a-calibration-copy" }] });
+  put("ch08-cal-b5h.flags.json", { ...FLAGS_V1, flags: [{ ...flag(0), solution_id: "q:g10m8s9-9-9:from-another-copy" }] });
   put("ch08-wf_957393ec-d74.json", { stage: "SW", results: [{ solution_id: "q:g10m8s9-9-9:from-a-raw-run", verdict: "flagged" }] });
   put("ch09.flags.json", { ...FLAGS_V1, chapter: 9, book: "some-other-book" }); // another book's
   put("ch10.flags.json", "{ not json"); // unreadable
   put("ch11.flags.json", { ...FLAGS_V1, format: "ainext.something-else/1" }); // not the checker's
-  put("ch12.flags.json", { ...FLAGS_V1, chapter: 12, flags: [{ ...FLAGS_V1.flags[2], solution_id: "q:g10m12s1-1-1:ex12-1" }] }); // no truth file beside it
+  put("ch12.flags.json", { ...FLAGS_V1, chapter: 12, flags: [{ ...flag(2), solution_id: "q:g10m12s1-1-1:ex12-1" }] }); // no truth file beside it
   // a book that is not maths has its own review queue
   writeFileSync(path.join(runs, "prep3-social-ar", "working-check", "ch01.flags.json"), JSON.stringify({ ...FLAGS_V1, book: "prep3-social-ar" }));
 
