@@ -3,25 +3,6 @@
   "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
   "items": [
     {
-      "key": "q:g10m5s6-1-1:w001#used-tangent",
-      "question_id": "q:g10m5s6-1-1:w001",
-      "template_id": "wt:g10m5s6-1-1:cos-one-over-root-two",
-      "lo_id": "lo:g10m5s6-1-1",
-      "kind": "triangle_ratio",
-      "stem": "Drag the legs to make a right-angled triangle in which $\\cos\\theta = \\dfrac{1}{\\sqrt{2}}$. Any size of triangle that works is correct: it is the ratio that has to match.",
-      "reading": {
-        "ask": "cos",
-        "target": 0.7071067811865476
-      },
-      "construction": "Make the two legs equal, for example 3 and 3 (or 1 and 1, or 5 and 5). The hypotenuse is then 3*sqrt(2), so for the angle between a leg and the hypotenuse cos = 3/(3*sqrt(2)) = 1/sqrt(2) = 0.70710678, which is the target exactly. This is the 45-45-90 triangle, and sin also reads 0.7071 while tan reads 1. The question's own line says any size is accepted because only the ratio is graded. The target is above 0 and below 1, so it is valid for cos. An isosceles right triangle is a normal point on the instrument, so equal legs should be reachable.",
-      "predicate": "used-tangent",
-      "predicate_meaning": "Built the tangent where another ratio was asked for",
-      "misconception_id": "mc:g10m5s6-1-1:wrong-ratio-same-angle",
-      "misconception_label": "Gives the value of a different ratio of the same angle",
-      "misconception_description": "The student picks a genuine special-angle value for the angle asked, but it is the value of another ratio: a sin or cos value for a tan question, the tan value for a sin or cos at $45^{\\circ}$, or the sin and cos values swapped at $60^{\\circ}$.",
-      "why": "The predicate is in the cos can_emit list, so it can fire. It fires when the built triangle has tan = 0.7071 and not cos = 0.7071, for example legs 5 and 7 (tan 0.714). That triangle has an angle of about 35.3 degrees, not 45 degrees. The claimed misconception, wrong-ratio-same-angle, is about knowing the angle (here 45 degrees, which equal legs give) and then quoting another ratio's value at that same angle, such as tan 45 = 1 for cos 45. This question gives the ratio value and asks for a triangle, and a student who knows the genuine special-angle values would build equal legs, which is correct. A student who builds tan = 1/sqrt(2) has misread which sides make up cosine (opposite over adjacent instead of adjacent over hypotenuse). That is a different error from the one the diagnosis would tell her about, so a refutation of 'gave another ratio's value at the same angle' would not fit what she did."
-    },
-    {
       "key": "q:g10m5s8-1-3:w001#swapped-coordinates",
       "question_id": "q:g10m5s8-1-3:w001",
       "template_id": "wt:g10m5s8-1-3:plot-point-from-ratio-and-quadrant",
