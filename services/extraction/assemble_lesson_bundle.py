@@ -735,6 +735,7 @@ class Report:
         self.respaced = 0                      # A2: glued LaTeX commands re-spaced (accepted.json untouched)
         self.assignments_split = 0             # A2: "x_1=…y_1=…" chains written as separate assignments
         self.entities = 0                      # Chapter 5: numeric HTML character references the EPUB left in the text ("&#176;" for °)
+        self.dollars = 0                       # Chapter 9: escaped dollar signs (`\\$`) the app's maths splitter cannot carry, written without a `$`
         self.katex_errors: list[dict] = []     # A2: segments the app's KaTeX cannot parse (must be 0)
         self.forms_from_rules: list[dict] = [] # A9: marker forms set from the book's form rules
         self.visuals_dropped: list[dict] = []  # A8: a figure that draws the question's unknown
@@ -764,7 +765,7 @@ class Report:
                 "marker_check": self.marker_check, "held_by_marker": self.held_by_marker,
                 "marker_keys_unwrapped": self.keys_unwrapped,
                 "ambiguous_pairs_for_g2": sorted(set(self.ambiguous_pairs)), "latex_respaced": self.respaced,
-                "html_entities_unescaped": self.entities, "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
+                "html_entities_unescaped": self.entities, "escaped_dollars_normalised": self.dollars, "assignments_split": self.assignments_split, "katex_errors": self.katex_errors,
                 "forms_from_rules": self.forms_from_rules, "visuals_dropped": self.visuals_dropped,
                 "held_for_figure": self.held_for_figure, "captions_fixed": self.captions_fixed,
                 "book_pictures": "on" if self.book_pictures else "off (--no-book-pictures)",
@@ -921,6 +922,52 @@ _ENTITY = re.compile(r"&#(?:[xX]([0-9a-fA-F]+)|(\d+));|&deg;")
 _MATH_SEG = re.compile(r"\$[^$]+\$")
 
 
+_TEXT_CMD = re.compile(r"\\(?:text|textrm|textbf|textit|textsf|texttt|textnormal|mbox|hbox)(?![A-Za-z])\s*\{")
+
+
+def normalise_dollars(text: str) -> tuple[str, int]:
+    """(text, escaped dollar signs rewritten). Chapter 9's exchange-rate lessons carry a dollar sign the book writes `\\$` ("$\\text{\\$ 7.00}$",
+    "$\\text{\\$1}&=\\text{R11.42}$", "( $\\$$ )"). The app's maths splitter, TeXRenderer's `text.split(/(\\$[^$]+\\$)/g)`, knows no escape: the `$` of a `\\$`
+    closes the segment, KaTeX is handed half a command ("\\text{\\") and the rest of the text pairs its dollars the wrong way round (every later
+    segment of the string is garbled, not only this one). KaTeX itself reads `\\$` fine; it is the splitter. So no `$` character may stand inside a
+    maths segment: in running maths the sign is `\\text{\\textdollar}`, inside a `\\text{…}` group it is `\\textdollar{}` (KaTeX 0.17 has
+    `\\textdollar` in text mode only; `{}` ends the command so that the space or the letter after it is kept), and in prose, where a lone `$`
+    would pair with the next one, it is the maths segment `$\\text{\\textdollar}$`. The scan honours the escape itself, so "\\\\" (a line
+    break, as in `…\\\\$`) is not mistaken for one, and nothing else is touched."""
+    if not isinstance(text, str) or "\\$" not in text:
+        return text, 0
+    out, i, n, k = [], 0, len(text), 0
+    in_math = False
+    braces: list[bool] = []                  # one entry per open "{" inside maths: is it text mode?
+    while i < n:
+        c = text[i]
+        if c == "\\" and i + 1 < n:
+            if text[i + 1] == "$":
+                k += 1
+                out.append(("\\textdollar{}" if braces and braces[-1] else "\\text{\\textdollar}") if in_math else "$\\text{\\textdollar}$")
+                i += 2
+                continue
+            m = _TEXT_CMD.match(text, i) if in_math else None
+            if m:
+                out.append(m.group(0))
+                braces.append(True)
+                i = m.end()
+                continue
+            out.append(text[i:i + 2])        # a control symbol or "\\\\": the next character is never a delimiter or a brace
+            i += 2
+            continue
+        if c == "$":
+            in_math = not in_math
+            braces = []
+        elif in_math and c == "{":
+            braces.append(bool(braces and braces[-1]))
+        elif in_math and c == "}" and braces:
+            braces.pop()
+        out.append(c)
+        i += 1
+    return "".join(out), k
+
+
 def unescape_entities(text: str) -> tuple[str, int]:
     """(text, references replaced). Chapter 5's EPUB left numeric HTML character references in its text and inside its maths ("$\\cos30&#176;=$",
     "$\\tan45&#176;=1$"): KaTeX refuses the "&" and the question showed a red error. A reference is the character it names; inside `$…$` the degree
@@ -953,6 +1000,8 @@ def unescape_entities(text: str) -> tuple[str, int]:
 def respace_tree(obj, report: Report):
     """Every student-facing string of a bundle or a lesson-content file, re-spaced (metadata keys skipped)."""
     if isinstance(obj, str):
+        obj, d = normalise_dollars(obj)      # first: every later pass splits maths on `$…$`, which a `\\$` would cut in two
+        report.dollars += d
         obj, e = unescape_entities(obj)
         report.entities += e
         t, n, k = respace_latex(obj)
