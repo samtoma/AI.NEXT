@@ -92,7 +92,7 @@ class Normalise(unittest.TestCase):
     def test_braces_that_scope_something_are_never_dropped(self):
         # a group of several tokens decides what a following ^ or _ attaches to; an argument is not a bare group
         self.differ([("{a+b}^{2}", "a+b^{2}"), ("{ab}_{1}", "ab_{1}"), ("{(a)+(b)}^{2}", "(a)+(b)^{2}"),
-                     ("{[0;1[}^{2}", "[0;1[^{2}"), ("{12}^{2}", "{13}^{2}"), ("{12}^{2}", "1^{2}2"),
+                     ("{[0;1[}^{2}", "[0;1[^{2}"), ("{12}^{2}", "{13}^{2}"), ("{12}^{2}", "1^{2}2"), ("{3.5}^{2}", "{3,5}^{2}"), ("3{,}5", "3.5"),
                      ("\\frac{12}{5}", "\\frac{1}{25}"), ("\\frac{1}{2}", "\\frac{2}{1}"), ("x^{12}", "x^{1}2"),
                      ("\\sqrt[3]{8}", "\\sqrt[3]{9}"), ("\\sqrt{x}y", "\\sqrt{xy}"), ("\\frac{a}{b}c", "\\frac{a}{bc}"),
                      ("{-}3", "3"), ("{-}3", "{+}3"), ("{7}^{1}", "{7}^{2}"), ("{7}^{1}", "{8}^{1}")])
