@@ -1,0 +1,2410 @@
+{
+ "stage": "S2-S4,S8",
+ "workflow": "lesson",
+ "prompts_version": "lesson-v8",
+ "collect_version": "collect-6",
+ "book": "g10-math",
+ "embedded": {
+  "source": "runbook/lesson.workflow.js",
+  "source_sha256": "f4528e79f14d2cf424c5f64250b04cd50a422729f111edea930bfa9f66510fcc",
+  "args_sha256": "e8b43108048e1c8b35d86b971f6756430555cefbda2c9efe98e0f8ed250210af",
+  "generated_sha256": "87d71e8c70f042ad3a4b942de24eaf90e6ca172f746a9d4b44a824ebdfb0de5c",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "lessons": [
+  {
+   "lesson": "g10m9s3-1",
+   "claims": [
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "definition",
+     "text": "Compound interest is the interest earned on the principal amount and on its accumulated interest.",
+     "anchor": "b03498",
+     "printed_page": 335,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Compound interest is the interest earned on the principal amount and on its accumulated interest.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "definition",
+     "text": "Compound interest allows interest to be earned on interest.",
+     "anchor": "b03496",
+     "printed_page": 335,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Compound interest allows interest to be earned on interest.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "rule",
+     "text": "With simple interest only the original investment earns interest; with compound interest the original investment and the interest earned on it both earn interest.",
+     "anchor": "b03496",
+     "printed_page": 335,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "With simple interest, only the original investment earns interest, but with compound interest, the original investment and the interest earned on it, both earn interest.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "caution",
+     "text": "Compound interest is advantageous for investing money but not for taking out a loan.",
+     "anchor": "b03497",
+     "printed_page": 335,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Compound interest is advantageous for investing money but not for taking out a loan.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "With an opening balance P and an interest rate i, the closing balance at the end of the first year is P(1 + i).",
+     "anchor": "b03509",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\text{Closingbalanceafter1year}=P\\left(1+i\\right)",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "rule",
+     "text": "The closing balance after one year is the same for compound interest as for simple interest because it only covers a single year.",
+     "anchor": "b03510",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "This is the same as simple interest because it only covers a single year.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "The closing balance after one year becomes the opening balance for the second year of investment.",
+     "anchor": "b03510",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "This closing balance becomes the opening balance for the second year of investment.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "The closing balance after 2 years is [P(1 + i)] x (1 + i), which equals P(1 + i)^2.",
+     "anchor": "b03511",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "P{(1+i)}^{2}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "The closing balance after 3 years is [P(1 + i)^2] x (1 + i), which equals P(1 + i)^3.",
+     "anchor": "b03513",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "P{(1+i)}^{3}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "rule",
+     "text": "The power of the term (1 + i) is the same as the number of years.",
+     "anchor": "b03514",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the power of the term $\\left(1+i\\right)$ is the same as the number of years",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "rule",
+     "text": "The general formula for calculating compound interest is A = P(1 + i)^n.",
+     "anchor": "b03515",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "A&=P(1+i)^{n}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "convention",
+     "text": "In A = P(1 + i)^n, A is the accumulated amount.",
+     "anchor": "b03515",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "A&=\\text{accumulatedamount}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "convention",
+     "text": "In A = P(1 + i)^n, P is the principal amount.",
+     "anchor": "b03515",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "P&=\\text{principalamount}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "convention",
+     "text": "In A = P(1 + i)^n, i is the interest written as a decimal.",
+     "anchor": "b03515",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "i&=\\text{interestwrittenasadecimal}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "convention",
+     "text": "In A = P(1 + i)^n, n is the number of years.",
+     "anchor": "b03515",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "n&=\\text{numberofyears}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "The accumulated amount at the end of the first year becomes the new principal amount for calculating the accumulated amount at the end of the second year.",
+     "anchor": "b03502",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "becomes the new principal amount for calculating the accumulated amount at the end of the second year",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "For R1000 invested at 5 % p.a. compound interest, the accumulated amount at the end of the second year is A2 = 1000(1 + 0,05)^2.",
+     "anchor": "b03503",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\text{1000}(1+\\text{0,05})^{2}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "For R1000 invested at 5 % p.a. compound interest, the accumulated amount at the end of the third year is A3 = 1000(1 + 0,05)^3.",
+     "anchor": "b03505",
+     "printed_page": 336,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\text{1000}\\left(1+\\text{0,05}\\right)^{3}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "To find the accumulated amount, first write down the known variables P, i and n.",
+     "anchor": "WE5",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Write down the known variables",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "Next, write down the formula A = P(1 + i)^n.",
+     "anchor": "WE5",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Write down the formula: $A=P(1+i)^{n}$",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "convention",
+     "text": "An interest rate of 6 % p.a. is entered in the formula as i = 0,06.",
+     "anchor": "WE5",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "i&=\\text{0,06}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "Substitute the values into the formula: with P = 30 000, i = 0,06 and n = 4, A = 30 000(1 + 0,06)^4 = 37 874,31.",
+     "anchor": "WE5",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "A&=\\text{30 000}(\\text{1}+\\text{0,06})^{\\text{4}}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-1",
+     "type": "method",
+     "text": "Write the final answer as a sentence: Mpho will have R37874,31 in the account at the end of 4 years.",
+     "anchor": "WE5",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Mpho will have $\\text{R37874,31}$ in the account at the end of $\\text{4}$ years.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "method",
+     "text": "To find the compound interest rate, first write down the known variables A, P and n.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "Write down the known variables",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "method",
+     "text": "Substitute the known values into A = P(1 + i)^n and solve for i, giving 10 000 = 5000(1 + i)^2 in the example.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\text{10 000}&=5000(1+i)^{2}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "method",
+     "text": "Divide both sides by the principal amount P so that (1 + i)^n is on its own: 10 000 divided by 5000 equals (1 + i)^2.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\frac{\\text{10 000}}{5000}&=(1+i)^{2}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "method",
+     "text": "Take the square root of both sides (n = 2 in the example) to get the square root of 10 000/5000 equal to 1 + i.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\sqrt{\\frac{\\text{10 000}}{5000}}&=1+i",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "method",
+     "text": "Subtract 1 from both sides to isolate i: the square root of 10 000/5000, minus 1, equals i.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\sqrt{\\frac{\\text{10 000}}{5000}}-1&=i",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "convention",
+     "text": "The value of i is given as the decimal 0,4142, to four decimal places.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "i&=\\text{0,4142}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "convention",
+     "text": "The decimal i = 0,4142 is stated in the final answer as a compound interest rate of 41,42 % p.a.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "offers a compound interest rate of $\\text{41,42}$ % p.a.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "caution",
+     "text": "Comment on the answer by comparing it with realistic returns: a typical savings account gives a return of approximately 2 % p.a. and an aggressive investment portfolio approximately 13 % p.a.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "A typical savings account gives a return of approximately $\\text{2}$ % p.a. and an aggressive investment portfolio gives a return of approximately $\\text{13}$ % p.a.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-2",
+     "type": "caution",
+     "text": "Because the required rate of 41,42 % p.a. is far above these returns, it seems unlikely that Charlie will be able to invest his money at that rate.",
+     "anchor": "WE6",
+     "printed_page": 337,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "It therefore seems unlikely that Charlie will be able to invest his money at an interest rate of $\\text{41,42}$ % p.a.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "method",
+     "text": "To compare simple and compound interest, compare the closing balances of an investment earning simple interest and an investment earning compound interest over the same period.",
+     "anchor": "b03519",
+     "printed_page": 338,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "we compare the difference in closing balances for an investment earning simple interest and an investment earning compound interest",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "rule",
+     "text": "The closing balance for an investment earning simple interest is A = P(1 + in).",
+     "anchor": "b03521",
+     "printed_page": 338,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "A&=P\\left(1+in\\right)",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "method",
+     "text": "For R10 000 invested for 10 years at 9 % p.a., the closing balance with simple interest is R19 000.",
+     "anchor": "b03521",
+     "printed_page": 338,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\text{R19 000}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "method",
+     "text": "For R10 000 invested for 10 years at 9 % p.a., the closing balance with compound interest, A = 10 000(1 + 0,09)^10, is R 23 673,64.",
+     "anchor": "b03523",
+     "printed_page": 338,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "\\text{R 23 673,64}",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "rule",
+     "text": "When the two investments are plotted on the same axes, their rates of change differ significantly.",
+     "anchor": "b03524",
+     "printed_page": 338,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "note the significant different in their rate of change",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "rule",
+     "text": "Simple interest gives a straight line graph and compound interest gives an exponential graph.",
+     "anchor": "b03524",
+     "printed_page": 338,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "simple interest is a straight line graph and compound interest is an exponential graph",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "caution",
+     "text": "The vast difference in growth is easier to see if the time period is extended to 50 years.",
+     "anchor": "b03526",
+     "printed_page": 339,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "It is easier to see the vast difference in growth if we extend the time period to $\\text{50}$ years",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "caution",
+     "text": "When earning interest on money invested, compound interest helps that amount to grow exponentially.",
+     "anchor": "b03528",
+     "printed_page": 339,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "When earning interest on money invested, compound interest helps that amount to grow exponentially.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "caution",
+     "text": "If money is borrowed, the accumulated amount of money owed will also increase exponentially.",
+     "anchor": "b03528",
+     "printed_page": 339,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "if money is borrowed the accumulated amount of money owed will increase exponentially too.",
+     "provenance": "containment"
+    },
+    {
+     "lo": "lo:g10m9s3-1-3",
+     "type": "convention",
+     "text": "The video on simple and compound interest uses dollars, but the calculation is the same for rands.",
+     "anchor": "b03529",
+     "printed_page": 339,
+     "supported": true,
+     "teacher_only": false,
+     "quote": "the video uses dollars but the calculation is the same for rands",
+     "provenance": "containment"
+    }
+   ],
+   "claims_dropped": [],
+   "items": [
+    {
+     "ref": "WE5",
+     "kind": "worked_example",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "Mpho wants to invest $\\text{R30000}$ into an account that offers a compound interest rate of $\\text{6}$ % p.a. How much money will be in the account at the end of $\\text{4}$ years?",
+     "answer_type": "numeric",
+     "answer": "37874,31",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Write down the known variables: $\\begin{align*}P&=\\text{30 000}\\\\i&=\\text{0,06}\\\\n&=4\\end{align*}$",
+      "Write down the formula: $A=P(1+i)^{n}$",
+      "Substitute the values: $\\begin{align*}A&=\\text{30 000}(\\text{1}+\\text{0,06})^{\\text{4}}\\\\&=\\text{37 874,31}\\end{align*}$",
+      "Write the final answer: Mpho will have $\\text{R37874,31}$ in the account at the end of $\\text{4}$ years."
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "Mpho will have R37874,31 in the account at the end of 4 years.",
+     "blind_answer": "\\text{R}\\,37\\,874{,}31",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 337,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE5|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "30000*1.06^4 = 37874.31; both give R37874,31."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "WE6",
+     "kind": "worked_example",
+     "lo": "lo:g10m9s3-1-2",
+     "stem": "Charlie has been given $\\text{R5000}$ for his sixteenth birthday. Rather than spending it, he has decided to invest it so that he can put down a deposit of $\\text{R10000}$ on a car on his eighteenth birthday. What compound interest rate does he need to achieve this growth? Comment on your answer.",
+     "answer_type": "numeric",
+     "answer": "41,42",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Write down the known variables: $\\begin{align*}A&=\\text{10\\ 000}\\\\P&=\\text{5000}\\\\n&=2\\end{align*}$",
+      "Write down the formula: $A=P{\\left(1+i\\right)}^{n}$",
+      "Substitute the values and solve for: $\\begin{align*}\\text{10 000}&=5000(1+i)^{2}\\\\\\frac{\\text{10 000}}{5000}&=(1+i)^{2}\\\\\\sqrt{\\frac{\\text{10 000}}{5000}}&=1+i\\\\\\sqrt{\\frac{\\text{10 000}}{5000}}-1&=i\\\\i&=\\text{0,4142}\\end{align*}$",
+      "Write the final answer and comment: Charlie needs to find an account that offers a compound interest rate of $\\text{41,42}$ % p.a. to achieve the desired growth. A typical savings account gives a return of approximately $\\text{2}$ % p.a. and an aggressive investment portfolio gives a return of approximately $\\text{13}$ % p.a. It therefore seems unlikely that Charlie will be able to invest his money at an interest rate of $\\text{41,42}$ % p.a."
+     ],
+     "solution_provenance": "book_worked",
+     "printed_answer": null,
+     "epub_final_answer": "Charlie needs to find an account that offers a compound interest rate of 41,42 % p.a. to achieve the desired growth.",
+     "blind_answer": "i = \\sqrt{2}-1 \\approx 41{,}42\\,\\%\\text{ p.a.}",
+     "verification": "agreed",
+     "tier": "advanced",
+     "printed_page": 337,
+     "shortcode": null,
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "WE6|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "sqrt2 - 1 is about 41.42% p.a.; both give 41,42%."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "% p.a.",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:1",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "An amount of $\\text{R3500}$ is invested in a savings account which pays a compound interest rate of $\\text{7,5}$ % p.a. Calculate the balance accumulated by the end of $\\text{2}$ years.",
+     "answer_type": "numeric",
+     "answer": "4044,69",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}P&=\\text{3500}\\\\i&=\\text{0,075}\\\\n&=2\\\\A=?\\\\\\\\A&=P(1+i)^{n}\\\\&=\\text{3500}(1+\\text{0,075})^{2}\\\\&=\\text{R 4044,69}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 4044,69",
+     "epub_final_answer": "R 4044,69",
+     "blind_answer": "\\text{R}\\,4\\,044{,}69",
+     "verification": "agreed",
+     "tier": "basic",
+     "printed_page": 339,
+     "shortcode": "2GH4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:1|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-2:1|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-2:1|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "tier check",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:2",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "An amount of $\\text{R3070}$ is invested in a savings account which pays a compound interest rate of $\\text{11,6}$ % p.a. Calculate the balance accumulated by the end of $\\text{6}$ years. As usual with financial calculations, round your answer to two decimal places, but do not round off until you have reached the solution.",
+     "answer_type": "numeric",
+     "answer": "5930,94",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}P&=\\text{3070}\\\\i&=\\frac{\\text{11,6}}{\\text{100}}=\\text{0,116}\\\\n&=6\\\\A&=?\\end{align*}$",
+      "The accumulated amount is:",
+      "$\\begin{align*}A&=P(1+i)^n\\\\&=\\text{3070}\\left(1+\\text{0,116}\\right)^{\\text{6}}\\\\&=\\text{R 5930,94}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 5930,94",
+     "epub_final_answer": "R 5930,94",
+     "blind_answer": "\\text{R}\\,5\\,930{,}94",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 339,
+     "shortcode": "2GH5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:2|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-2:2|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-2:2|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:3",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "An amount of $\\text{R6970}$ is invested in a savings account which pays a compound interest rate of $\\text{10,2}$ % p.a. Calculate the balance accumulated by the end of $\\text{3}$ years. As usual with financial calculations, round your answer to two decimal places, but do not round off until you have reached the solution.",
+     "answer_type": "numeric",
+     "answer": "9327,76",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}P&=\\text{6970}\\\\i&=\\frac{\\text{10,2}}{\\text{100}}=\\text{0,102}\\\\n&=3\\\\A&=?\\end{align*}$",
+      "The accumulated amount is:",
+      "$\\begin{align*}A&=P(1+i)^n\\\\&=\\text{6970}\\left(1+\\text{0,102}\\right)^{\\text{3}}\\\\&=\\text{R 9327,76}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 9327,76",
+     "epub_final_answer": "R 9327,76",
+     "blind_answer": "\\text{R}\\,9\\,327{,}76",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 339,
+     "shortcode": "2GH6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:3|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-2:3|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-2:3|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:4",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-4",
+     "stem": "Nicola wants to invest some money at a compound interest rate of $\\text{11}$ % p.a. How much money (to the nearest rand) should be invested if she wants to reach a sum of $\\text{R100000}$ in five years time?",
+     "answer_type": "numeric",
+     "answer": "59345,13",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}A&=\\text{100 000}\\\\P&=?\\\\i&=\\text{0,11}\\\\n&=5\\\\\\\\A&=P(1+i)^{n}\\\\\\text{100 000}&=P(1+\\text{0,11})^{5}\\\\\\frac{\\text{100 000}}{(\\text{1,11})^{5}}&=P\\\\P&=\\text{R 59 345,13}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 59 345,13",
+     "epub_final_answer": "R 59 345,13",
+     "blind_answer": "\\text{R}\\,59\\,345",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 340,
+     "shortcode": "2GH7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:4|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Problem asks for the nearest rand. R59345 meets that; R59345,13 is unrounded and does not."
+       },
+       {
+        "pair_id": "Ex9-2:4|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Problem asks for the nearest rand. R59345 meets that; R59345,13 is unrounded and does not."
+       },
+       {
+        "pair_id": "Ex9-2:4|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:5",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-4",
+     "stem": "Thobeka wants to invest some money at a compound interest rate of $\\text{11,8}$ % p.a. How much money should be invested if she wants to reach a sum of $\\text{R30000}$ in $\\text{2}$ years' time? Round up your answer to the nearest rand.",
+     "answer_type": "numeric",
+     "answer": "24002,00",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=\\text{R30000}\\\\P&=?\\\\i&=\\frac{\\text{11,8}}{\\text{100}}=\\text{0,118}\\\\n&=2\\end{align*}$",
+      "To determine the amount she must invest, we need to make $P$ the subject of the formula:",
+      "$\\begin{align*}A&=P(1+i)^{n}\\\\\\frac{A}{(1+i)^{n}}&=P\\\\\\frac{\\text{R30 000}}{(1+\\text{0,118})^{2}}&=P\\\\P&=\\text{R24 001,46}\\end{align*}$",
+      "She must invest $\\text{R24002,00}$ ."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 24 002,00",
+     "epub_final_answer": "She must invest R24002,00.",
+     "blind_answer": "\\text{R}\\,24\\,002",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 340,
+     "shortcode": "2GH8",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:5|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "R24002 and R24002,00 are the same value, rounded to the nearest rand."
+       },
+       {
+        "pair_id": "Ex9-2:5|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R24002."
+       },
+       {
+        "pair_id": "Ex9-2:5|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R24002."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:6",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-4",
+     "stem": "Likengkeng wants to invest some money at a compound interest rate of $\\text{11,4}$ % p.a. How much money should be invested if she wants to reach a sum of $\\text{R38200}$ in $\\text{7}$ years' time? Round up your answer to the nearest rand.",
+     "answer_type": "numeric",
+     "answer": "17942,00",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=\\text{38\\200}\\\\i&=\\frac{\\text{11,4}}{\\text{100}}=\\text{0,114}\\\\n&=7\\\\P&=?\\end{align*}$",
+      "To determine the amount she must invest, we need to make $P$ the subject of the formula:",
+      "$\\begin{align*}A&=P(1+i)^{n}\\\\\\frac{A}{(1+i)^{n}}&=P\\\\\\frac{\\text{38 200}}{\\left(1+\\frac{\\text{11,4}}{100}\\right)^{7}}&=P\\\\P&=\\text{R17 941,84}\\\\\\text{Therefore,theansweris:R17 942,00}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 17 942,00",
+     "epub_final_answer": "Therefore, the answer is: R17 942,00",
+     "blind_answer": "\\text{R}\\,17\\,942",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 340,
+     "shortcode": "2GH9",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:6|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R17942; the exact value is about 17941.9, rounded up."
+       },
+       {
+        "pair_id": "Ex9-2:6|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R17942."
+       },
+       {
+        "pair_id": "Ex9-2:6|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R17942."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:7",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-2",
+     "stem": "Morgan invests $\\text{R5000}$ into an account which pays out a lump sum at the end of $\\text{5}$ years. If he gets $\\text{R7500}$ at the end of the period, what compound interest rate did the bank offer him?",
+     "answer_type": "numeric",
+     "answer": "8,45",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}A&=\\text{7500}\\\\P&=\\text{5000}\\\\i&=?\\\\n&=5\\\\\\\\A&=P(1+i)^{n}\\\\\\\\\\text{7500}&=\\text{5000}(1+i)^{5}\\\\\\frac{\\text{7500}}{\\text{5000}}&=(1+i)^5\\\\\\sqrt[5]{\\frac{\\text{7500}}{\\text{5000}}}&=(1+i)\\\\\\sqrt[5]{\\frac{\\text{7500}}{\\text{5000}}}-1&=i\\\\i&=\\text{0,0844717712}\\end{align*}$",
+      "The interest rate is $\\text{8,45}$ % p.a"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "8,45% p.a",
+     "epub_final_answer": "The interest rate is 8,45 % p.a",
+     "blind_answer": "i = 1{,}5^{1/5}-1 \\approx 8{,}45\\,\\%\\text{ p.a.}",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 340,
+     "shortcode": "2GHB",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:7|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "1.5^(1/5) - 1 is about 8.45%; both give 8,45% p.a."
+       },
+       {
+        "pair_id": "Ex9-2:7|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 8,45% p.a."
+       },
+       {
+        "pair_id": "Ex9-2:7|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 8,45% p.a."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "% p.a.",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:8",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-2",
+     "stem": "Kabir invests $\\text{R1790}$ into an account which pays out a lump sum at the end of $\\text{9}$ years. If he gets $\\text{R2613,40}$ at the end of the period, what compound interest rate did the bank offer him? Give the answer correct to one decimal place.",
+     "answer_type": "numeric",
+     "answer": "4,3",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=\\text{R2613,40}\\\\P&=\\text{R1790}\\\\i&=?\\\\n&=9\\end{align*}$",
+      "To calculate the interest rate, we need to make $i$ the subject of the formula:",
+      "$\\begin{align*}A&=P(1+i)^n\\\\\\frac{A}{P}&=(1+i)^n\\\\\\left(\\frac{A}{P}\\right)^{\\frac{1}{n}}&=1+i\\\\\\left(\\frac{A}{P}\\right)^{\\frac{1}{n}}-1&=i\\\\\\text{Therefore }i&=\\left(\\frac{\\text{2613,40}}{\\text{1790}}\\right)^{\\frac{1}{\\text{9}}}-1\\\\&=\\text{0,043}\\\\&=\\text{4,3}\\%\\text{ per annum}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "4,3% per annum",
+     "epub_final_answer": null,
+     "blind_answer": "4{,}3\\,\\%\\text{ p.a.}",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 340,
+     "shortcode": "2GHC",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:8|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 4,3% per annum."
+       },
+       {
+        "pair_id": "Ex9-2:8|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex9-2:8|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": "% per annum",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-2:9",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-2",
+     "stem": "Bongani invests $\\text{R6110}$ into an account which pays out a lump sum at the end of $\\text{7}$ years. If he gets $\\text{R6904,30}$ at the end of the period, what compound interest rate did the bank offer him? Give the answer correct to one decimal place.",
+     "answer_type": "numeric",
+     "answer": "1,8",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=\\text{R6904,30}\\\\P&=\\text{R6110}\\\\i&=?\\\\n&=7\\end{align*}$",
+      "To calculate the interest rate, we need to make $i$ the subject of the formula:",
+      "$\\begin{align*}A&=P(1+i)^n\\\\\\frac{A}{P}&=(1+i)^n\\\\\\left(\\frac{A}{P}\\right)^{\\frac{1}{n}}&=1+i\\\\\\left(\\frac{A}{P}\\right)^{\\frac{1}{n}}-1&=i\\\\\\text{Therefore }i&=\\left(\\frac{\\text{6904,30}}{\\text{6110}}\\right)^{\\frac{1}{\\text{7}}}-1\\\\&=\\text{0,018}\\\\&=\\text{1,8}\\%\\text{ per annum}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,8% per annum",
+     "epub_final_answer": null,
+     "blind_answer": "1{,}8\\,\\%\\text{ p.a.}",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 340,
+     "shortcode": "2GHD",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:9|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 1,8% per annum."
+       },
+       {
+        "pair_id": "Ex9-2:9|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex9-2:9|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": "% per annum",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:9",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "An amount of $\\text{R3270}$ is invested in a savings account which pays a compound interest rate of $\\text{12,2}$ % p.a. Calculate the balance accumulated by the end of $\\text{7}$ years. As usual with financial calculations, round your answer to two decimal places, but do not round off until you have reached the solution.",
+     "answer_type": "numeric",
+     "answer": "7319,78",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=?\\\\P&=\\text{R3270}\\\\i&=\\frac{\\text{12,2}}{100}=\\text{0,122}\\\\n&=7\\end{align*}$",
+      "The accumulated amount is:",
+      "$\\begin{align*}A&=P(1+i)^n\\\\&=\\text{3270}\\left(1+\\text{0,122}\\right)^{\\text{7}}\\\\&=\\text{R 7319,78}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 7319,78",
+     "epub_final_answer": "R 7319,78",
+     "blind_answer": "\\text{R}\\,7\\,319{,}78",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GJT",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:9|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:9|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:9|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:10",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "An amount of $\\text{R2380}$ is invested in a savings account which pays a compound interest rate of $\\text{8,3}$ % p.a. Calculate the balance accumulated by the end of $\\text{7}$ years. As usual with financial calculations, round your answer to two decimal places, but do not round off until you have reached the solution.",
+     "answer_type": "numeric",
+     "answer": "4158,88",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=?\\\\P&=\\text{R2380}\\\\i&=\\frac{\\text{8,3}}{100}=\\text{0,083}\\\\n&=7\\end{align*}$",
+      "The accumulated amount is:",
+      "$\\begin{align*}A&=P(1+i)^n\\\\&=\\text{2380}\\left(1+\\text{0,083}\\right)^{\\text{7}}\\\\&=\\text{R 4158,88}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 4158,88",
+     "epub_final_answer": "R 4158,88",
+     "blind_answer": "\\text{R}\\,4\\,158{,}88",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GJV",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:10|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:10|blind~book",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:10|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:11",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-4",
+     "stem": "Emma wants to invest some money at a compound interest rate of $\\text{8,2}$ % p.a. How much money should be invested if she wants to reach a sum of $\\text{R61500}$ in $\\text{4}$ years' time? Round up your answer to the nearest rand.",
+     "answer_type": "numeric",
+     "answer": "44872",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=\\text{R61500}\\\\P&=?\\\\i&=\\frac{\\text{8,2}}{100}=\\text{0,082}\\\\n&=4\\end{align*}$",
+      "To determine the amount she must invest, we need to make $P$ the subject of the formula:",
+      "$\\begin{align*}A&=P(1+i)^{n}\\\\\\frac{A}{(1+i)^{n}}&=P\\\\\\frac{\\text{61 500}}{(1+\\text{0,082})^{4}}&=P\\\\P&=\\text{R44 871,03}\\\\\\text{Therefore,theansweris:R44 872}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 44 872",
+     "epub_final_answer": "Therefore, the answer is: R44 872",
+     "blind_answer": "\\text{R}\\,44\\,872",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GJW",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:11|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:11|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R44872."
+       },
+       {
+        "pair_id": "Ex9-7:11|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R44872."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:12",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-4",
+     "stem": "Limpho wants to invest some money at a compound interest rate of $\\text{13,9}$ % p.a. How much money should be invested if she wants to reach a sum of $\\text{R24300}$ in $\\text{2}$ years' time? Round up your answer to the nearest rand.",
+     "answer_type": "numeric",
+     "answer": "18731,00",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=\\text{R24300}\\\\P&=?\\\\i&=\\frac{\\text{13,9}}{100}=\\text{0,139}\\\\n&=2\\end{align*}$",
+      "To determine the amount she must invest, we need to make $P$ the subject of the formula:",
+      "$\\begin{align*}A&=P(1+i)^{n}\\\\\\frac{A}{(1+i)^{n}}&=P\\\\\\frac{\\text{24 300}}{(1+\\text{0,139})^{2}}&=P\\\\P&=\\text{R18 730,91}\\\\\\text{Therefore,theansweris:R18 731,00}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 18 731,00",
+     "epub_final_answer": "Therefore, the answer is: R18 731,00",
+     "blind_answer": "\\text{R}\\,18\\,731",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GJX",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:12|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R18731."
+       },
+       {
+        "pair_id": "Ex9-7:12|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R18731."
+       },
+       {
+        "pair_id": "Ex9-7:12|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R18731."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:13a",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "Calculate the compound interest for the following problems. A $\\text{R2000}$ loan for $\\text{2}$ years at $\\text{5}$ % p.a.",
+     "answer_type": "numeric",
+     "answer": "205",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}P&=\\text{2000}\\\\i&=\\text{0,05}\\\\n&=2\\\\A&=?\\\\\\\\A&=P(1+i)^{n}\\\\\\\\A&=\\text{2000}(1+\\text{0,05})^{2}\\\\A&=\\text{R 2205}\\\\\\text{So the amount of interest is:}&\\text{2205}-\\text{2000}=\\text{R 205}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 205",
+     "epub_final_answer": "So the amount of interest is: R 205",
+     "blind_answer": "\\text{R}\\,205",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GJY",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:13a|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:13a|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Interest is 2000(1.05^2-1) = R205 in both."
+       },
+       {
+        "pair_id": "Ex9-7:13a|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R205."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:13b",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "Calculate the compound interest for the following problems. A $\\text{R1500}$ investment for $\\text{3}$ years at $\\text{6}$ % p.a.",
+     "answer_type": "numeric",
+     "answer": "286,52",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}P&=\\text{1500}\\\\i&=\\text{0,06}\\\\n&=3\\\\A&=?\\\\\\\\A&=P(1+i)^{n}\\\\\\\\A&=\\text{1500}(1+\\text{0,06})^{3}\\\\A&=\\text{R 1786,52}\\\\\\text{So the amount of interest is:}&\\text{1786,52}-\\text{1500}=\\text{R 286,52}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 286,52",
+     "epub_final_answer": "So the amount of interest is: R 286,52",
+     "blind_answer": "R286,52",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GJZ",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:13b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:13b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R286,52."
+       },
+       {
+        "pair_id": "Ex9-7:13b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R286,52."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:13c",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "Calculate the compound interest for the following problems. A $\\text{R800}$ loan for $\\text{1}$ year at $\\text{16}$ % p.a.",
+     "answer_type": "numeric",
+     "answer": "128",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}P&=\\text{800}\\\\i&=\\text{0,16}\\\\n&=1\\\\A&=?\\\\\\\\A&=P(1+i)^{n}\\\\\\\\A&=\\text{800}(1+\\text{0,16})^{1}\\\\A&=\\text{R 928}\\\\\\text{So the amount of interest is: }&\\text{928}-\\text{800}=\\text{R 128}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 128",
+     "epub_final_answer": "So the amount of interest is: R 128",
+     "blind_answer": "R128",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GK2",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:13c|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:13c|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R128."
+       },
+       {
+        "pair_id": "Ex9-7:13c|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R128."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:14",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-2",
+     "stem": "Ali invests $\\text{R1110}$ into an account which pays out a lump sum at the end of $\\text{12}$ years. If he gets $\\text{R1642,80}$ at the end of the period, what compound interest rate did the bank offer him? Give your answer correct to one decimal place.",
+     "answer_type": "numeric",
+     "answer": "3,3",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=\\text{R1642,80}\\\\P&=\\text{R1110}\\\\i&=?\\\\n&=12\\end{align*}$",
+      "$\\begin{align*}A&=P(1+i)^n\\\\\\text{R1642,80}&=\\text{R1110}(1+i)^{12}\\\\\\text{R1,48}&=(1+i)^{12}\\\\\\sqrt[12]{\\text{R1,48}}&=(1+i)\\\\i&=\\text{1,033...}-1\\\\&=\\text{0,033...}\\\\&\\approx\\text{3,3}\\%\\text{perannum}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "3,3% per annum",
+     "epub_final_answer": null,
+     "blind_answer": "3,3\\% p.a.",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GK3",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:14|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 3,3% p.a."
+       },
+       {
+        "pair_id": "Ex9-7:14|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex9-7:14|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": "% per annum",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:15",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-2",
+     "stem": "Christopher invests $\\text{R4480}$ into an account which pays out a lump sum at the end of $\\text{7}$ years. If he gets $\\text{R6496,00}$ at the end of the period, what compound interest rate did the bank offer him? Give your answer correct to one decimal place.",
+     "answer_type": "numeric",
+     "answer": "5,5",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Read the question carefully and write down the given information:",
+      "$\\begin{align*}A&=\\text{R6496}\\\\P&=\\text{R4480}\\\\i&=?\\\\n&=7\\end{align*}$",
+      "$\\begin{align*}A&=P(1+i)^n\\\\\\text{R6496}&=\\text{R4480}(1+i)^7\\\\\\text{R1,45}&=(1+i)^7\\\\\\sqrt[7]{\\text{R1,45}}&=(1+i)\\\\i&=\\text{1,0545...}-1\\\\&=\\text{0,0545...}\\\\&\\approx\\text{5,5}\\%\\text{perannum}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "5,5% per annum",
+     "epub_final_answer": null,
+     "blind_answer": "5,5\\% p.a.",
+     "verification": "disputed",
+     "tier": "standard",
+     "printed_page": 350,
+     "shortcode": "2GK4",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:15|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 5,5% p.a."
+       },
+       {
+        "pair_id": "Ex9-7:15|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex9-7:15|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     "typing_problems": [
+      "book_final is not in the book solution"
+     ],
+     "unit": "% per annum",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:16b",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "Calculate how much you will earn if you invested $\\text{R500}$ for $\\text{1}$ year at the following interest rates: $\\text{4,00}$ % compound interest",
+     "answer_type": "numeric",
+     "answer": "520",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}P&=500\\\\i&=\\text{0,04}\\\\n&=1\\\\A&=?\\\\\\\\A&=P(1+i)^{n}\\\\A&=500(1+\\text{0,04})^{1}\\\\A&=\\text{R520}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 520",
+     "epub_final_answer": "A = R520",
+     "blind_answer": "R20",
+     "verification": "disputed",
+     "tier": "basic",
+     "printed_page": 350,
+     "shortcode": "2GK5",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:16b|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks how much is earned, which is R20. R520 is the accumulated total, not the earnings."
+       },
+       {
+        "pair_id": "Ex9-7:16b|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks how much is earned, which is R20. A = R520 is the total amount, not the earnings."
+       },
+       {
+        "pair_id": "Ex9-7:16b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:17",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-3",
+     "stem": "Bianca has $\\text{R1450}$ to invest for $\\text{3}$ years. Bank A offers a savings account which pays simple interest at a rate of $\\text{11}$ % per annum, whereas Bank B offers a savings account paying compound interest at a rate of $\\text{10,5}$ % per annum. Which account would leave Bianca with the highest accumulated balance at the end of the $\\text{3}$ year period?",
+     "answer_type": "choice",
+     "answer": "B",
+     "choices": [
+      {
+       "key": "A",
+       "text": "Bank A"
+      },
+      {
+       "key": "B",
+       "text": "Bank B"
+      }
+     ],
+     "marker": null,
+     "solution": [
+      "Bank A:",
+      "$\\begin{align*}P&=\\text{1450}\\\\i&=\\text{0,11}\\\\n&=3\\\\A&=?\\\\\\\\A&=P(1+in)\\\\A&=\\text{1450}(1+(\\text{0,11})(3))\\\\A&=\\text{1450}(\\text{1,33})\\\\A&=\\text{R 1928,50}\\end{align*}$",
+      "Bank B:",
+      "$\\begin{align*}P&=\\text{1450}\\\\i&=\\text{0,105}\\\\n&=3\\\\A&=?\\\\\\\\A&=P(1+i)^{n}\\\\A&=\\text{1450}(1+\\text{0,105})^{3}\\\\A&=\\text{R 1956,39}\\end{align*}$",
+      "She should choose Bank B as it will give her more money after 3 years."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "Bank B",
+     "epub_final_answer": "She should choose Bank B as it will give her more money after 3 years.",
+     "blind_answer": "Bank B (compound interest): R1956,39 versus R1928,50 at Bank A",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 351,
+     "shortcode": "2GK6",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:17|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both choose Bank B. The extra figures (R1956,39 vs R1928,50) in answer 1 are correct."
+       },
+       {
+        "pair_id": "Ex9-7:17|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both choose Bank B."
+       },
+       {
+        "pair_id": "Ex9-7:17|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both choose Bank B."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": "stem",
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:18b",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-1",
+     "stem": "Given: A loan of $\\text{R2000}$ for a year at an interest rate of $\\text{10}$ % p.a. How much compound interest is payable on the loan?",
+     "answer_type": "numeric",
+     "answer": "200",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}P&=\\text{2000}\\\\i&=\\text{0,10}\\\\n&=1\\\\A&=?\\\\\\\\A&=P(1+i)^{n}\\\\\\\\A&=\\text{2000}(1+\\text{0,10})^{1}\\\\A&=\\text{R 2200}\\\\\\text{So the amount of interest is: }&\\text{2200}-\\text{2000}=\\text{R 200}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "R 200",
+     "epub_final_answer": "So the amount of interest is: R 200",
+     "blind_answer": "R200",
+     "verification": "agreed",
+     "tier": "standard",
+     "printed_page": 351,
+     "shortcode": "2GK7",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:18b|blind~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       },
+       {
+        "pair_id": "Ex9-7:18b|blind~book",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R200."
+       },
+       {
+        "pair_id": "Ex9-7:18b|book~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both are R200."
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": "R",
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:19",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-3",
+     "stem": "$\\text{R2250}$ is invested at an interest rate of $\\text{5,25}$ % per annum. Complete the following table. Number of yearsSimple interestCompound interest $\\text{1}$ $\\text{2}$ $\\text{3}$ $\\text{4}$ $\\text{20}$",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "We need to calculate the amount accumulated if the interest rate is simple interest. We use $A=P(1+in)$ to do this. We also need to calculate the amount accumulated if the interest rate is compound interest. We use $A=P(1+i)^{n}$ to do this. For both cases we note that:",
+      "$\\begin{align*}A&=?\\\\P&=\\text{R2250}\\\\i&=\\text{6,25}\\%\\end{align*}$",
+      "Number of yearsSimple interestCompound interest $\\text{1}$ $\\text{R2390,63}$ $\\text{R2390,63}$ $\\text{2}$ $\\text{R2531,25}$ $\\text{R2540,04}$ $\\text{3}$ $\\text{R2671,88}$ $\\text{R2698,79}$ $\\text{4}$ $\\text{R2812,50}$ $\\text{R2867,47}$ $\\text{20}$ $\\text{R5062,50}$ $\\text{R7564,17}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "advanced",
+     "printed_page": 351,
+     "shortcode": "2GK8",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:19|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "complete the table",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:20a",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-3",
+     "stem": "Discuss: Which type of interest would you like to use if you are the borrower?",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Simple interest. Interest is only calculated on the principal amount and not on the interest earned during prior periods. This will lead to the borrower paying less interest."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 351,
+     "shortcode": "2GK9",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:20a|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "explanation",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:20b",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-3",
+     "stem": "Discuss: Which type of interest would you like to use if you were the banker?",
+     "answer_type": "not_markable",
+     "answer": null,
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "Compound interest. Interest is calculated from the principal amount as well as interest earned from prior periods. This will lead to the banker getting more money for the bank."
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": null,
+     "epub_final_answer": null,
+     "blind_answer": null,
+     "verification": "no_printed_answer",
+     "tier": "basic",
+     "printed_page": 351,
+     "shortcode": "2GK9",
+     "verify": {
+      "agreed_with_book_solution": true,
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:20b|blind~book",
+        "route": "not_markable",
+        "verdict": "equivalent",
+        "reason": "typing and the blind solver agree it has no answer to mark"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": "explanation",
+     "tier_source": "typing",
+     "printed_answer_scope": null,
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    },
+    {
+     "ref": "Ex9-7:31b",
+     "kind": "exercise",
+     "lo": "lo:g10m9s3-1-2",
+     "stem": "According to the latest census, South Africa currently has a population of $\\text{57\\000\\000}$ . If it is found after $\\text{10}$ years that the population has actually increased by $\\text{10}$ million to $\\text{67}$ million, what was the growth rate?",
+     "answer_type": "numeric",
+     "answer": "1,7",
+     "choices": null,
+     "marker": null,
+     "solution": [
+      "$\\begin{align*}67&=57\\left(1+\\frac{i}{100}\\right)^{10}\\\\\\sqrt[10]{\\frac{67}{57}}&=1+\\frac{i}{100}\\\\\\frac{i}{100}&=\\text{1,01629}-1\\\\i&=100(\\text{0,016})\\\\i&=\\text{1,69}\\\\i&\\approx\\text{1,7}\\end{align*}$"
+     ],
+     "solution_provenance": "book_worked_epub",
+     "printed_answer": "1,7",
+     "epub_final_answer": "1,7",
+     "blind_answer": "approximately 1,63\\% per year",
+     "verification": "disputed",
+     "tier": "advanced",
+     "printed_page": 352,
+     "shortcode": "2GKP",
+     "verify": {
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:31b|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "(67/57)^(1/10) - 1 is about 1.63%. A value of 1,7 is a different number and not a correct rounding of 1.63."
+       },
+       {
+        "pair_id": "Ex9-7:31b|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "(67/57)^(1/10) - 1 is about 1.63%. A value of 1,7 is a different number and not a correct rounding of 1.63."
+       },
+       {
+        "pair_id": "Ex9-7:31b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ]
+     },
+     "typing_problems": [],
+     "unit": null,
+     "options_source": null,
+     "not_markable_reason": null,
+     "tier_source": "typing",
+     "printed_answer_scope": "item",
+     "figures": [],
+     "figures_missing": [],
+     "asked_form": null,
+     "printed_form_defect": null,
+     "form_overridden": null,
+     "form_unsupported": null,
+     "blocked_on_figure": false
+    }
+   ],
+   "visuals": [],
+   "viz_gaps": [
+    {
+     "figure_id": "b03525:1",
+     "src": "tikzpicture/27eea35d4bd35b9d5aed4725e83423d6.png",
+     "ref": null,
+     "printed_page": 338,
+     "reason": "The figure plots two curves on one set of axes over 10 years, starting at R10 000: a straight line for simple interest (reaching R19 000) and an exponential curve for compound interest (reaching about R23 674). function_graph draws only one linear or quadratic function, so it cannot draw the exponential curve or put two functions on the same axes. A coordinate_plot polyline would pass off an exponential curve as straight segments, which misrepresents exponential growth.",
+     "needed_kind": "function_graph with two functions on one set of axes, one linear (simple interest A = 10000(1 + 0.09n)) and one exponential (compound interest A = 10000(1.09)^n), with a rands y-axis and a years x-axis"
+    },
+    {
+     "figure_id": "b03527:2",
+     "src": "tikzpicture/c1297796edca96ff2caba903117ed463.png",
+     "ref": null,
+     "printed_page": 339,
+     "reason": "The figure plots the same simple-versus-compound comparison stretched to 50 years, starting at R1 000: a nearly flat straight line (about R5 500 at year 50) and a steeply rising exponential curve (about R74 000 at year 50). The point of the figure is how sharply the exponential curve pulls away from the line. function_graph has no exponential function and cannot draw two functions on one set of axes. A coordinate_plot polyline would flatten the exponential shape the figure is there to show.",
+     "needed_kind": "function_graph with two functions on one set of axes, one linear (simple interest) and one exponential (compound interest), with a long domain (0 to 50 years) and a rands y-axis"
+    }
+   ],
+   "teacher_only": {
+    "seen": 0,
+    "dropped": 0,
+    "reached_claim": 0,
+    "caught_in_claims": 0
+   },
+   "verify": {
+    "disagreements": [
+     {
+      "ref": "Ex9-2:4",
+      "printed": "R 59 345,13",
+      "book": "R 59 345,13",
+      "blind": "\\text{R}\\,59\\,345",
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:4|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Problem asks for the nearest rand. R59345 meets that; R59345,13 is unrounded and does not."
+       },
+       {
+        "pair_id": "Ex9-2:4|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "Problem asks for the nearest rand. R59345 meets that; R59345,13 is unrounded and does not."
+       },
+       {
+        "pair_id": "Ex9-2:4|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex9-2:8",
+      "printed": "4,3% per annum",
+      "book": null,
+      "blind": "4{,}3\\,\\%\\text{ p.a.}",
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:8|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 4,3% per annum."
+       },
+       {
+        "pair_id": "Ex9-2:8|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex9-2:8|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-2:9",
+      "printed": "1,8% per annum",
+      "book": null,
+      "blind": "1{,}8\\,\\%\\text{ p.a.}",
+      "pairs": [
+       {
+        "pair_id": "Ex9-2:9|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 1,8% per annum."
+       },
+       {
+        "pair_id": "Ex9-2:9|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex9-2:9|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-7:14",
+      "printed": "3,3% per annum",
+      "book": null,
+      "blind": "3,3\\% p.a.",
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:14|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 3,3% p.a."
+       },
+       {
+        "pair_id": "Ex9-7:14|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex9-7:14|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-7:15",
+      "printed": "5,5% per annum",
+      "book": null,
+      "blind": "5,5\\% p.a.",
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:15|blind~printed",
+        "route": "judge",
+        "verdict": "equivalent",
+        "reason": "Both give 5,5% p.a."
+       },
+       {
+        "pair_id": "Ex9-7:15|blind~book",
+        "route": "missing",
+        "verdict": "missing"
+       },
+       {
+        "pair_id": "Ex9-7:15|book~printed",
+        "route": "missing",
+        "verdict": "missing"
+       }
+      ],
+      "typing_problems": [
+       "book_final is not in the book solution"
+      ],
+      "unchecked": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-7:16b",
+      "printed": "R 520",
+      "book": "A = R520",
+      "blind": "R20",
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:16b|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks how much is earned, which is R20. R520 is the accumulated total, not the earnings."
+       },
+       {
+        "pair_id": "Ex9-7:16b|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "The problem asks how much is earned, which is R20. A = R520 is the total amount, not the earnings."
+       },
+       {
+        "pair_id": "Ex9-7:16b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     },
+     {
+      "ref": "Ex9-7:31b",
+      "printed": "1,7",
+      "book": "1,7",
+      "blind": "approximately 1,63\\% per year",
+      "pairs": [
+       {
+        "pair_id": "Ex9-7:31b|blind~printed",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "(67/57)^(1/10) - 1 is about 1.63%. A value of 1,7 is a different number and not a correct rounding of 1.63."
+       },
+       {
+        "pair_id": "Ex9-7:31b|blind~book",
+        "route": "judge",
+        "verdict": "different",
+        "reason": "(67/57)^(1/10) - 1 is about 1.63%. A value of 1,7 is a different number and not a correct rounding of 1.63."
+       },
+       {
+        "pair_id": "Ex9-7:31b|book~printed",
+        "route": "normalised",
+        "verdict": "equivalent"
+       }
+      ],
+      "typing_problems": []
+     }
+    ],
+    "unchecked": [
+     {
+      "ref": "Ex9-2:8",
+      "missing": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-2:9",
+      "missing": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-7:14",
+      "missing": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-7:15",
+      "missing": [
+       "book_final is not in the book solution"
+      ]
+     }
+    ],
+    "off_task": [],
+    "no_printed_answer": [
+     {
+      "ref": "Ex9-7:19",
+      "book": null,
+      "blind": null,
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex9-7:20a",
+      "book": null,
+      "blind": null,
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     },
+     {
+      "ref": "Ex9-7:20b",
+      "book": null,
+      "blind": null,
+      "agreed_with_book_solution": true,
+      "answer_type": "not_markable"
+     }
+    ],
+    "typing_problems": [
+     {
+      "ref": "Ex9-2:8",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-2:9",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-7:14",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     },
+     {
+      "ref": "Ex9-7:15",
+      "problems": [
+       "book_final is not in the book solution"
+      ]
+     }
+    ],
+    "printed_not_in_asked_form": [],
+    "forms_from_book_rules": [],
+    "forms_the_marker_cannot_check": [],
+    "retyped": [],
+    "tier_checks": [
+     {
+      "ref": "Ex9-2:1",
+      "typing": "standard",
+      "check": "basic"
+     },
+     {
+      "ref": "Ex9-7:13b",
+      "typing": "standard",
+      "check": "standard"
+     },
+     {
+      "ref": "Ex9-7:19",
+      "typing": "advanced",
+      "check": "advanced"
+     },
+     {
+      "ref": "Ex9-7:31b",
+      "typing": "advanced",
+      "check": "advanced"
+     }
+    ]
+   },
+   "figure_blocked": [],
+   "oracle": {
+    "tally": {
+     "claims": 42,
+     "questions": 24,
+     "worked_examples_kept_as_teaching": 3,
+     "by_objective": [
+      {
+       "lo": "lo:g10m9s3-1-1",
+       "claims": 19,
+       "items": 11
+      },
+      {
+       "lo": "lo:g10m9s3-1-2",
+       "claims": 9,
+       "items": 7
+      },
+      {
+       "lo": "lo:g10m9s3-1-3",
+       "claims": 14,
+       "items": 4
+      },
+      {
+       "lo": "lo:g10m9s3-1-4",
+       "claims": 0,
+       "items": 5
+      }
+     ]
+    },
+    "verdict": "GREEN",
+    "subheadings": [
+     {
+      "anchor": "EMA6N",
+      "status": "covered",
+      "missing_items": [
+       "Minor, worked-illustration step only: A1 = 1000(1 + 0,05) = 1050 at the end of year 1 (b03500, b03501). The general year-1 result P(1 + i) is covered via b03509.",
+       "Minor: the statement that A2 becomes the new principal for year 3 (b03504). The general opening-balance chain is covered via b03510 to b03513."
+      ]
+     },
+     {
+      "anchor": "EMA6P",
+      "status": "covered",
+      "missing_items": []
+     }
+    ]
+   },
+   "counts": {
+    "claims": 42,
+    "claims_dropped": 0,
+    "items": 27,
+    "worked_examples": 2,
+    "exercises": 25,
+    "by_answer_type": {
+     "numeric": 23,
+     "choice": 1,
+     "not_markable": 3
+    },
+    "by_solution_provenance": {
+     "book_worked": 2,
+     "book_worked_epub": 25
+    },
+    "by_verification": {
+     "agreed": 17,
+     "disputed": 7,
+     "no_printed_answer": 3
+    },
+    "visuals": 0,
+    "viz_gaps": 2,
+    "figure_blocked": 0,
+    "unmapped_worked_examples": 0
+   },
+   "failed": {
+    "s2": false,
+    "s3": false
+   }
+  }
+ ],
+ "failed_lessons": [],
+ "calls": {
+  "by_phase": {
+   "S2 Claims": 1,
+   "S3 Typing": 1,
+   "S3 Blind re-solve": 2,
+   "S3 Tier check": 1,
+   "S3 Judge": 1,
+   "S4 Visuals": 1,
+   "S8 Oracle": 1
+  },
+  "per_lesson": {
+   "g10m9s3-1": 8
+  },
+  "total": 8
+ },
+ "meter": {
+  "stage": "S2-S4,S8",
+  "record": "uv run meter_run.py record --book g10-math --stage S2-S4,S8 --run <runId>",
+  "by_stage": "uv run meter_run.py summary --book g10-math --by phase",
+  "by_lesson": "uv run meter_run.py summary --book g10-math --by lesson",
+  "note": "Phase titles start with their stage (S2, S3, S4, S8), so `--by phase` is the per-stage cost; every label carries the lesson slug (S3:blind:<slug>:1), so `--by lesson` is the per-lesson cost."
+ }
+}

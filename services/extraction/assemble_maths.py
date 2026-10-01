@@ -111,6 +111,9 @@ UNICODE_TEX = {"−": "-", "–": "-", "×": "\\times", "÷": "\\div", "±": "\\
                "∗": "\\ast", "…": "\\ldots", "{": "\\{", "}": "\\}", "|": "|", "ˆ": "\\hat"}
 
 
+BRACES = ("\\{", "\\}")      # a set's braces as `line_atoms` yields them (the text layer's `{` and `}`)
+
+
 def md5(s: str) -> str:
     return hashlib.md5(s.encode("utf-8")).hexdigest()
 
@@ -433,18 +436,25 @@ class Recoverer:
         self.tried = 0
         self.by_source = collections.Counter()
 
-    def offer(self, s: str, source: str):
+    def offer(self, s: str, source: str, escaped: bool = False):
+        """Try one candidate: as written and with its whitespace removed. With `escaped`, a candidate that
+        holds `&`, `<` or `>` is also tried in the form the EPUB's source was hashed in (HTML-escaped,
+        see `html_escaped`), and then STORED unescaped, as every transcription is (`canonical`)."""
         self._offer(s, source)
         t = re.sub(r"\s+", "", s)
         if t != s:
             # Siyavula hashed its LaTeX with the whitespace removed: `(A\cupB)'` is a real file name
             self._offer(t, source)
+        if escaped:
+            for x in dict.fromkeys((s, t)):
+                if any(ch in x for ch in "&<>"):
+                    self._offer(html_escaped(x), source, stored=x)
 
-    def _offer(self, s: str, source: str):
+    def _offer(self, s: str, source: str, stored: str | None = None):
         self.tried += 1
         h = md5(s)
         if h in self.targets and h not in self.found:
-            self.found[h] = {"latex": s, "source": source}
+            self.found[h] = {"latex": s if stored is None else stored, "source": source}
             self.by_source[source] += 1
 
 
@@ -619,8 +629,9 @@ def line_atoms(spans: list, fonts: list):
 
 
 def render(atoms: list, wrap: tuple, lr: bool, brace_base: bool = False, bare_script: bool = False,
-           unit_space: bool = False) -> str:
-    """Compact LaTeX from atoms; wrap[k] says whether the k-th number goes in \\text{}."""
+           unit_space: bool = False, lr_brace: bool = False) -> str:
+    """Compact LaTeX from atoms; wrap[k] says whether the k-th number goes in \\text{}. `lr` sizes the
+    parentheses (\\left( … \\right)), `lr_brace` the set braces (\\left\\{ … \\right\\}), as the book does."""
     parts = []
     k = 0
     cur_role, buf = "base", []
@@ -670,6 +681,8 @@ def render(atoms: list, wrap: tuple, lr: bool, brace_base: bool = False, bare_sc
             buf, cur_role = [], role
         if lr and tex in ("(", ")"):
             tex = "\\left(" if tex == "(" else "\\right)"
+        elif lr_brace and tex in BRACES:
+            tex = "\\left\\{" if tex == "\\{" else "\\right\\}"
         buf.append(tex)
     flush()
     return join(parts)
@@ -692,13 +705,19 @@ def gen_pdf_lines(r: Recoverer, scan: dict, max_window: int = 30):
                         else:
                             wraps = [(False,) * k, (True,) * k]
                         has_paren = any(x[1] in ("(", ")") for x in win)
+                        has_brace = any(x[1] in BRACES for x in win)
                         has_script = any(x[2] != "base" for x in win)
                         styles = [(False, False)] + ([(True, False), (False, True), (True, True)] if has_script else [])
+                        # the delimiter sizings worth trying: none, \left( \right) when a parenthesis is there, and
+                        # \left\{ \right\} when a set brace is (alone, and with the parentheses') — a handful,
+                        # so a set is tried as `\{1;2\}` and as `\left\{1;2\right\}`, the house's two spellings
+                        sizings = [(False, False)] + ([(True, False)] if has_paren else []) + \
+                                  ([(False, True)] if has_brace else []) + \
+                                  ([(True, True)] if has_paren and has_brace else [])
                         for w in wraps:
                             for bb, bs in styles:
-                                r.offer(render(win, w, False, bb, bs), "pdf_lines")
-                                if has_paren:
-                                    r.offer(render(win, w, True, bb, bs), "pdf_lines")
+                                for lr, lrb in sizings:
+                                    r.offer(render(win, w, lr, bb, bs, lr_brace=lrb), "pdf_lines", escaped=has_brace)
 
 
 def recover(book, work: Path) -> dict:
@@ -717,7 +736,7 @@ def recover(book, work: Path) -> dict:
     streams: dict = {}
     accepted = {}
     for h, x in sorted(r.found.items()):
-        assert md5(x["latex"]) == h
+        assert hash_ok(x["latex"], h)
         accepted[h] = {"latex": x["latex"], "accepted_by": "hash", "found_by": x["source"],
                        "cross_check": cross_check(x["latex"], eqs[h], scan, offset, streams)}
     return {"accepted": accepted, "steps": steps, "candidates_tried": r.tried}
