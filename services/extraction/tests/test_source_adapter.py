@@ -16,6 +16,7 @@ Two layers of test:
 from __future__ import annotations
 
 import json
+import re
 import struct
 import tempfile
 import unittest
@@ -268,6 +269,49 @@ class SyntheticBook(unittest.TestCase):
         self.assertEqual(cat[M["x"]]["size"], (4, 3))
 
 
+STEP_TITLE_XML = f"""<html xmlns="http://www.w3.org/1999/xhtml"><head><title>t</title></head><body>
+<div class="worked_example"><h1 class="title">Worked example 4: Extend a line</h1>
+<div class="question"><p>Prove the demonstration claim {eq("we")}.</p></div>
+<div class="workstep"><h2 class="title">Extend {eq("x")} to {eq("two")} so that {eq("x")} equals {eq("two")} and join</h2><p>Draw it.</p></div>
+<div class="workstep"><h2 class="title">Prove it is a parallelogram</h2><p>Use {eq("x")}.</p></div>
+<div class="workstep"><p>{eq("two", True)}</p></div>
+</div></body></html>"""
+
+
+class StepTitleMaths(unittest.TestCase):
+    """A worked-example step TITLE keeps its maths exactly as the step text does (the Grade 10 defect: titles read
+    "Extend to so that and join" because the equation images in a heading were dropped; 138 of 571 step titles)."""
+
+    @classmethod
+    def setUpClass(cls):
+        root = ET.fromstring(STEP_TITLE_XML)
+        cls.we = sa.Blocks(root, "07-demo-01.cnxmlplus.html", "x", 7).run()[0]
+
+    def test_title_carries_the_maths_references_in_the_form_step_text_uses(self):
+        t0 = self.we["steps"][0]
+        self.assertEqual(t0["title"], f"Extend ⟦m:{M['x']}⟧ to ⟦m:{M['two']}⟧ so that ⟦m:{M['x']}⟧ equals "
+                                      f"⟦m:{M['two']}⟧ and join")
+        self.assertEqual(t0["title_maths"], [M["x"], M["two"], M["x"], M["two"]], "in order, repeats included")
+
+    def test_a_title_without_maths_is_unchanged_and_lists_none(self):
+        t1 = self.we["steps"][1]
+        self.assertEqual((t1["title"], t1["title_maths"]), ("Prove it is a parallelogram", []))
+
+    def test_a_step_without_a_heading_has_no_title(self):
+        t2 = self.we["steps"][2]
+        self.assertEqual((t2["title"], t2["title_maths"]), (None, []))
+
+    def test_the_step_body_is_still_the_body_alone(self):
+        t0, t1 = self.we["steps"][:2]
+        self.assertEqual((t0["text"], t0["maths"]), ("Draw it.", []), "the heading's maths is not the body's")
+        self.assertEqual(t1["maths"], [M["x"]])
+
+    def test_every_reference_is_still_in_exactly_one_block(self):
+        # the block-level inventory (the adapter's self-check) counts the title's images once, as before
+        self.assertEqual(self.we["maths"], [M["we"], M["x"], M["two"], M["x"], M["two"], M["x"], M["two"]])
+        self.assertIn(f"⟦m:{M['x']}⟧ to ⟦m:{M['two']}⟧", self.we["text"])
+
+
 class PageOffsetConfigCheck(unittest.TestCase):
     def test_a_config_anchor_that_disagrees_with_the_footers_is_reported(self):
         import book_config
@@ -318,6 +362,24 @@ class Grade10Outputs(unittest.TestCase):
                 else:
                     self.assertNotIn("According to CAPS", b.get("text", ""), b["id"])
         self.assertEqual(n, 32)
+
+    def test_every_step_title_keeps_its_maths_and_lists_it(self):
+        """The title-maths defect (138 of 571 Grade 10 step titles lost an equation image): the references are
+        in `title`, in order, and in `title_maths`; a block file from before the fix has no `title_maths`."""
+        steps = titles = refs = 0
+        with open(WORK / "blocks.jsonl") as f:
+            for line in f:
+                b = json.loads(line)
+                if b["type"] != "worked_example":
+                    continue
+                for s in b["steps"]:
+                    steps += 1
+                    self.assertIn("title_maths", s, f"{b['id']}: blocks.jsonl predates the extractor fix; re-run source_adapter.py")
+                    found = re.findall(r"⟦m:([0-9a-f]{32})⟧", s["title"] or "")
+                    self.assertEqual(found, s["title_maths"], b["id"])
+                    titles += bool(found)
+                    refs += len(found)
+        self.assertEqual((steps, titles, refs), (571, 138, 209))
 
 
 if __name__ == "__main__":
