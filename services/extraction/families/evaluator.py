@@ -718,6 +718,89 @@ def render(template: str, env: dict) -> str:
 # sqrt/abs/pi and — for intervals — interval(lo, hi, closed_lo, closed_hi).
 MATHS_FUNCTIONS = {"sqrt", "abs", "interval"}
 MATHS_CONSTANTS = {"pi", "inf", "true", "false"}
+# ---------------------------------------------------------------- recurring decimals
+# The book writes a recurring decimal with a dot over the first and the last digit of the block that repeats
+# (0.\dot{3}, 0.8\dot{3}, 0.\dot{1}4285\dot{7}, 9.2\dot{8}\dot{7}) or a bar over the whole block
+# (0.\overline{45}, 0.1\overline{045}). The app's marker reads those two (answer-marker.ts: fromLatex, numberToken),
+# a bracketed period (0.(45)) and a trailing ellipsis (0.4545...). The pipeline reads the same set, so a key or a
+# blind grader's answer in the book's own notation is the exact fraction it stands for, never "cannot read".
+# Every form is replaced by "(p/q)", an exact fraction the rest of the parser already understands.
+_DOT = r"\\dot\s*\{\s*(\d)\s*\}"
+_RECURRING_NUMERAL = re.compile(
+    r"(?<![\d.])(?P<ip>\d+)\.(?P<fp>(?:\d|" + _DOT + r")*)"
+    r"(?:(?P<bar>\\(?:overline|bar)\s*\{\s*(?P<barblock>\d+)\s*\})"
+    r"|\((?P<bracket>\d+)\)"
+    r"|(?P<ellipsis>\.\.\.|…))?")
+_DOT_ONE = re.compile(_DOT)
+_LATEX_RECURRING = re.compile(r"\\(?:dot|overline|bar)\b")
+
+
+def _recurring_fraction(ip: str, pre: str, rep: str) -> Fraction:
+    """ip.pre(rep) with the block ``rep`` repeating for ever, exactly."""
+    tail_scale = 10 ** len(pre)
+    value = Fraction(int(ip)) + (Fraction(int(pre), tail_scale) if pre else 0)
+    return value + Fraction(int(rep), tail_scale * (10 ** len(rep) - 1))
+
+
+def _ellipsis_block(frac: str) -> tuple[str, str]:
+    """Split a decimal tail written out and ended with "..." into (non-repeating, block), as the app's marker
+    does: the shortest block that the written digits repeat at least twice. None found: unreadable."""
+    for p in range(1, len(frac) // 2 + 1):
+        block = frac[-p:]
+        if frac[-2 * p:-p] == block:
+            pre = frac
+            while pre.endswith(block):
+                pre = pre[:-p]
+            return pre, block
+    raise Unreadable("an ellipsis needs a block that repeats at least twice (0.4545...)")
+
+
+def _read_recurring(text: str) -> str:
+    """Replace every recurring-decimal numeral in ``text`` with the exact fraction ``(p/q)`` it stands for.
+
+    A numeral with no recurring mark is left alone (a terminating decimal stays a decimal). A mark that cannot
+    be read — digits after the last dot, a bar over nothing, an ellipsis with no block — is
+    :class:`Unreadable`: never guessed.
+    """
+    s = re.sub(r"(\d)\u0307", r"\\dot{\1}", text)                  # a combining dot above the digit
+    if _LATEX_RECURRING.search(s):
+        s = s.replace("$", "")                                      # the answer was copied with its math delimiters
+
+    def one(m: re.Match) -> str:
+        fp = m.group("fp")
+        marks = [(d.group(0)) for d in _DOT_ONE.finditer(fp)]
+        kinds = sum(bool(x) for x in (marks, m.group("bar"), m.group("bracket"), m.group("ellipsis")))
+        if not kinds:
+            return m.group(0)                                       # an ordinary decimal
+        if kinds > 1:
+            raise Unreadable("more than one recurring mark in one decimal")
+        ip = m.group("ip")
+        if marks:
+            digits, dotted, pos = [], [], 0
+            for tok in re.finditer(r"\d|" + _DOT, fp):
+                dig = tok.group(1) or tok.group(0)
+                if tok.group(1):
+                    dotted.append(pos)
+                digits.append(dig)
+                pos += 1
+            a, b = dotted[0], dotted[-1]
+            if b != len(digits) - 1:
+                raise Unreadable("digits after the last dot are not part of any repeating block")
+            pre, rep = "".join(digits[:a]), "".join(digits[a:b + 1])
+        elif m.group("bar"):
+            pre, rep = fp, m.group("barblock")
+        elif m.group("bracket"):
+            pre, rep = fp, m.group("bracket")
+        else:
+            if not fp:
+                raise Unreadable("an ellipsis with no digits before it")
+            pre, rep = _ellipsis_block(fp)
+        v = _recurring_fraction(ip, pre, rep)
+        return f"({v.numerator}/{v.denominator})"
+
+    return _RECURRING_NUMERAL.sub(one, s)
+
+
 _IMPLICIT = [
     (re.compile(r"(\d)\s*([A-Za-z(])"), r"\1*\2"),       # 2x, 2(…), 2sqrt(3)
     (re.compile(r"\)\s*([A-Za-z0-9(])"), r")*\1"),       # (…)(…), (…)x
@@ -763,7 +846,7 @@ def parse_plain(text: str, variables: list[str] | tuple[str, ...] = ()) -> ast.A
         raise Unreadable("empty answer")
     if len(text) > 400:
         raise Unreadable("answer too long")
-    s = _normalise_plain(text)
+    s = _normalise_plain(_read_recurring(text))
     eq = None
     # an equation: split at a single top-level '='
     if re.search(r"(?<![<>=!])=(?!=)", s):
@@ -1098,8 +1181,9 @@ def _is_true(n) -> bool:
     return (isinstance(n, ast.Constant) and n.value is True) or (isinstance(n, ast.Name) and n.id == "true")
 
 
-def recurring_latex(value: Fraction) -> str:
-    """A rational as a recurring decimal with dots over the repetend (0.\\dot{1}\\dot{4})."""
+def recurring_latex(value: Fraction, style: str = "dot") -> str:
+    """A rational as a recurring decimal: dots over the first and last digit of the repetend (0.\\dot{1}\\dot{4}),
+    or, with ``style="bar"``, a bar over the whole repetend (0.\\overline{14}). Both are the book's own."""
     value = Fraction(value)
     sign = "-" if value < 0 else ""
     value = abs(value)
@@ -1114,7 +1198,9 @@ def recurring_latex(value: Fraction) -> str:
         return f"{sign}{whole}" + ("." + "".join(digits) if digits else "")
     start = seen[rem]
     fixed, rep = "".join(digits[:start]), digits[start:]
-    if len(rep) == 1:
+    if style == "bar":
+        dotted = r"\overline{" + "".join(rep) + "}"
+    elif len(rep) == 1:
         dotted = r"\dot{" + rep[0] + "}"
     else:
         dotted = r"\dot{" + rep[0] + "}" + "".join(rep[1:-1]) + r"\dot{" + rep[-1] + "}"

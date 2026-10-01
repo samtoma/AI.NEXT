@@ -426,6 +426,12 @@ def approve_argv(book, chapter: int, verdicts: Path, maths: Path | None, objecti
 def g2_recommend_main(a, book) -> int:
     """`g2-recommend-args` and `g2-recommend-collect` (g2_recommend.py): deterministic, no model is called."""
     import g2_recommend as G
+
+    def _hr(p) -> str:                      # relative to services/extraction/, where every command here is run
+        try:
+            return str(Path(p).resolve().relative_to(HERE))
+        except ValueError:
+            return str(p)
     ch = a.chapter
     t = f"{ch:02d}"
     g2_path = a.g2 or HERE / "runs" / book.book / f"g2-ch{t}.json"
@@ -446,11 +452,11 @@ def g2_recommend_main(a, book) -> int:
                   f"{est['recommend_agents']} recommending + up to {est['verify_agents_max']} verifying agents, "
                   f"≈ ${est['usd_low']:.0f}–{est['usd_high']:.0f} (modelled)")
             for c in info["copies"]:
-                print(f"  copy: {_rel(c['script'])} ({c['bytes']} bytes) — run it with Workflow scriptPath and NO args")
+                print(f"  copy: {_hr(c['script'])} ({c['bytes']} bytes) — run it with Workflow scriptPath and NO args")
             if not info["copies"]:
                 print("  (nothing written: pass --embed <copy>.workflow.js)")
-            lrs = [_rel(p) for p in lesson_runs]
-            for cmd in G.follow_ups(book.book, ch, lrs, recommended=_rel(recommended), g2_file=_rel(g2_path),
+            lrs = [_hr(p) for p in lesson_runs]
+            for cmd in G.follow_ups(book.book, ch, lrs, recommended=_hr(recommended), g2_file=_hr(g2_path),
                                     run_label=", ".join(Path(p).stem for p in lesson_runs)):
                 print(("  " if cmd.startswith("#") else "  $ ") + cmd)
             return 0
@@ -465,17 +471,17 @@ def g2_recommend_main(a, book) -> int:
             if keys and not a.allow_stale:
                 now = G.items_sha256([e for e in entries if e["key"] in set(keys)])
                 if r.get("items_sha256") and now != r["items_sha256"]:
-                    raise G.RecommendError(f"{_rel(p)}: the run was made on a packet that no longer matches the lesson runs / G2 file "
+                    raise G.RecommendError(f"{_hr(p)}: the run was made on a packet that no longer matches the lesson runs / G2 file "
                                            f"(items sha256 {str(r['items_sha256'])[:12]}…, now {now[:12]}…): a person's verdict or a "
                                            "re-collected run changed an item; rebuild the packet, or pass --allow-stale")
         out = a.out or recommended
         prior = json.loads(out.read_text()) if out.exists() and not a.fresh else None
-        names = {_rel(p): ((r.get("result", r).get("embedded") or {}).get("generated_sha256")) for p, r in zip(runs_files, runs)}
+        names = {_hr(p): ((r.get("result", r).get("embedded") or {}).get("generated_sha256")) for p, r in zip(runs_files, runs)}
         doc = G.collect(entries, runs, prior=prior, run_names=names, chapter=ch)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
         rep = doc["report"]
-        print(f"G2 recommendation (ch{t}): {rep['recommended']} of {rep['items']} item(s) recommended -> {_rel(out)}\n"
+        print(f"G2 recommendation (ch{t}): {rep['recommended']} of {rep['items']} item(s) recommended -> {_hr(out)}\n"
               f"  verdicts {rep['by_verdict']}; confidence {rep['by_confidence']}; classes {rep['by_class']}")
         print(f"  would be LIVE (accept or fix, each confirmed by the independent verifier): {len(rep['live'])}"
               f"; stem repairs {len(rep['stem_repairs'])}; retyped {len(rep['retyped'])}; corrections proposed (not applied) "
@@ -487,8 +493,8 @@ def g2_recommend_main(a, book) -> int:
                   "— they stay as the checks left them; re-run them with g2-recommend-args --only-missing")
         if rep["off_task"]:
             print(f"  off task (not items of this chapter's packet, ignored): {rep['off_task'][:5]}")
-        print("  next: uv run auto_pass_gates.py g2 " + f"{book.book} --chapter {ch} " + " ".join(f"--lesson-run {_rel(p)}" for p in lesson_runs)
-              + f" --recommend {_rel(out)} --into {_rel(g2_path)} --split --maths runs/{book.book}/maths/book/accepted.json")
+        print("  next: uv run auto_pass_gates.py g2 " + f"{book.book} --chapter {ch} " + " ".join(f"--lesson-run {_hr(p)}" for p in lesson_runs)
+              + f" --recommend {_hr(out)} --into {_hr(g2_path)} --split --maths runs/{book.book}/maths/book/accepted.json")
         return 0
     except G.RecommendError as e:
         print(f"g2 recommendation: {e}", file=sys.stderr)

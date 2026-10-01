@@ -633,8 +633,11 @@ def marker_key(kind: str, plain: str, variables: list[str]) -> str:
         if isinstance(v, int):
             v = Fraction(v)
         if not isinstance(v, Fraction):
-            raise E.EvalError("a recurring answer must be an exact fraction, e.g. 7/9")
-        return E.recurring_latex(v)
+            raise E.EvalError("a recurring answer must be an exact fraction (7/9) or a recurring decimal "
+                              "(0.\\dot{7}, 0.\\overline{7})")
+        # The key prints in the notation the author wrote it in (a stem that asks for a bar keeps its bar);
+        # an author who gave the plain fraction gets the dots.
+        return E.recurring_latex(v, "bar" if re.search(r"\\(?:overline|bar)\b", plain) else "dot")
     if kind == "values":
         body = tree.body if isinstance(tree, E.ast.Expression) else tree
         items = body.elts if isinstance(body, (E.ast.Tuple, E.ast.List)) else [body]
