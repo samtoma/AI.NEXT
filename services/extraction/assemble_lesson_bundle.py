@@ -60,6 +60,10 @@ mark itself correct, HOLDS its question (verified false, so it loads at review a
 no student can ever be marked right against it. `--no-marker-check` skips this and says so in the
 report; nothing the line ships should use it.
 
+MARKER KEYS ARE BARE MATHS (2026-10-01): a key the typing agent copied as the EPUB wrote the final, `$(a-3)(a+3)$`, has its one enclosing
+`$…$` pair removed (`unwrap_math_delimiters`; the report's `marker_keys_unwrapped` lists each, before → after): the app's marker refuses the
+"$", which held 25 of Chapter 1's correct questions as "unanswerable" for a delimiter. A "$" inside the key leaves it alone.
+
 NOTATION (decision 15, FR-4308): a decimal comma becomes a point and `(x; y)` becomes
 `(x, y)` — likewise intervals `[a; b)` and sets `\\{a; b\\}` — in stems, choices, answers,
 marker keys, solutions, captions, claims and worked-example entries. Words and contexts (the

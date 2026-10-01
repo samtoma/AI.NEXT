@@ -352,8 +352,10 @@ class Listed(unittest.TestCase):
 
     def test_a_typo_in_the_book_still_points_back(self):
         # Ex1-2:3c prints "Using you answers in (a) and (b)": listed for the backlog like any other part that points back by words
-        p = Part("Ex1-2:3c", "Using you answers in (a) and (b) calculate the area of $ABCDE$ .", "")
-        self.assertEqual([x.reason for x in plan([p])[1]], ["refers_by_words"])
+        a = part("Ex1-2:3a", "Calculate the area of $ABDE$ to 2 decimal places .", key="9.87")
+        b = part("Ex1-2:3b", "Calculate the area of $BCD$ to 2 decimal places .", key="4.93")
+        c = part("Ex1-2:3c", "Using you answers in (a) and (b) calculate the area of $ABCDE$ .", key="14.80")
+        self.assertIn(("Ex1-2:3c", "refers_by_words"), [(x.ref, x.reason) for x in carried([a, b, c])[1]])
 
     def test_the_carry_that_would_hand_over_the_answer_is_refused(self):
         pre = "$U(6;a)$ is on $f$ ."
