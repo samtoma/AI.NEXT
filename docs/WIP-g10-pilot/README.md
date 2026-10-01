@@ -492,13 +492,15 @@ are correct: their stems name points (S, T; E) defined in earlier parts.
 
 **Findings for others.** (1) data-engineer: the assembly serves each part of a multi-part exercise alone, so some stems name points an earlier part
 defines (39d, 44b, and 46c's m_MN): one systematic defect, not three; ex8-6-24a has no worked solution at all (sketch only) — answer-only or
-teaching-only is a content decision; the two stem misprints (27, we01) are the book's. (2) tech-writer: FR-4411's "≈ $0.03–0.05 per solution" holds only
-for sw-v2 (modelled), not sw-v1 (measured $0.161).
+teaching-only is a content decision; the two stem misprints (27, we01) are the book's. (2) tech-writer (I did not touch `specs/`): decision 51, FR-4411 (`spec.md:1156`,
+`traceability.md:357`) and `tasks.md:718` still say "one blind agent **per solution**", prompts `sw-v1`, "≈ $0.03–0.05/solution" and "calibration in progress, none classified":
+now one agent per batch of ≤ 8 solutions, prompts `sw-v2`, sw-v1 measured $0.161 (the $0.03–0.05 is sw-v2's modelled target), 25 flags classified as above; FR-4411 should also say a flag
+records whether the fault sits in a step or in the question text (`where`) and that a numeric-key solution with no calculation is flagged for free (the stub rule).
 
 **Why $31.0.** Re-priced from the 207 agent transcripts (matches the meter to the cent): cache writes 6.4 M tokens = **$16.1 (52 %)**, cache reads
 29.2 M = $5.8, output 0.91 M of which 0.78 M thinking = **$9.1 (29 %)**. Every agent pays ~30 K cache-write and ~95 K cache-read tokens (the harness's
 skills list, CLAUDE.md, tool list) before it reads a shard: **$0.094 per agent**, 65 % of a no-figure agent ($0.137). Figures were only $4–5 (86 opens
-in 66 agents, +$0.063 each). So one agent per solution cannot reach $0.05 whatever the prompt says; the fix is to share the fixed cost.
+in 66 agents, +$0.063 per such agent). So one agent per solution cannot reach $0.05 whatever the prompt says; the fix is to share the fixed cost.
 
 **sw-v2** (`PROMPTS_VERSION`, workflow `meta`/prompts, `working_check.py`; tests `tests/test_working_check.py`, `tests/test_fanout.py`):
 - one agent per **batch of 8** solutions (`--batch`), `effort: medium` (`--effort`), `--model` (so a Haiku comparison on the subset is one flag, no code);
@@ -514,7 +516,7 @@ in 66 agents, +$0.063 each). So one agent per solution cannot reach $0.05 whatev
   label/sign typos is unmeasured; `--model haiku` on the subset answers it for ≈ $0.3.
 
 **Cost (API-equivalent).** sw-v1 measured **$0.161 / solution**. sw-v2 is MODELLED, not metered: ≈ **$0.035 expected, range $0.032–0.05** (fixed
-$0.094 ÷ 8, + thinking 1–2 K tokens a solution at medium, + ≤ 3 images a batch). Whole book (2,705 solutions, 339 agents instead of 2,705): **$86–135**
+$0.094 ÷ 8, + thinking 1–2 K tokens a solution at medium, + ≤ 3 images a batch). Whole book (2,705 solutions, 342 agents instead of 2,705): **$86–135**
 (`fanout-plan.json` SW stage; unchanged in total because the plan's old $0.03–0.05 was right as a target and wrong as a mechanism: sw-v1 on the same
 book would have been ≈ $435). Chapter 8 re-run: 24 agents, ≈ $6–10; the 51-solution subset: 7 agents, ≈ $1.5–2.
 

@@ -135,3 +135,9 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     whole book (this is the go-ahead the dismissed question asked for). Every agent and run on Sonnet ("sonnet" =
     Sonnet 5, the newest Sonnet available; pipeline stages already pin it, with Haiku only for small yes/no checks).
     Runs 002 and 003 resumed under their run ids; answer 40 and the remaining spec FRs handed to Sonnet agents.
+42. (2026-10-01) S0b group 1 pass A measured $0.040/image vs the plan's $0.024 (whole book ≈ $1.1–1.4k metered) →
+    "keep the quality, continue, actually I raised the credit that you can proceed as you want for the quality
+    higher": keep the full-quality method (no cap on hash-proof attempts); the orchestrator may choose
+    higher-quality options without asking about cost. Orchestrator's first use: the "never two S0b passes at once"
+    usage-limit rule is relaxed — S0b passes of different chapter groups run in parallel (packets are deduplicated
+    across groups at prepare time, so no image is read twice).
