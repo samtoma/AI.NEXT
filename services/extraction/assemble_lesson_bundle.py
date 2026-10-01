@@ -440,6 +440,25 @@ def choice_option_problems(item: dict) -> list[str]:
     return out
 
 
+# ---- the marker spec's coherence (collect-6, 2026-10-01) ---------------------------------------------------
+# A kind the asked form cannot apply to ("Factorise: 25x^3 + 1", key (∛25·x+1)(…) typed kind "surd", form "factorised") is
+# refused by schemas.AnswerSpec, and a refused item used to stop the whole lesson's split — the G2 draft could not be written.
+# lesson.workflow.js normalises the kind where the key is plainly algebra (COLLECT-6, rule 'kind-for-form') and otherwise flags
+# the item; this is the same line for a run an older collection made. It only ever ADDS a typing problem, and only to an item
+# the collection did not already flag (a flagged item need not be well formed): G2, a person or the auto-pass, rules on it.
+MARKER_INCOHERENT = "the marker spec is not coherent"
+
+
+def marker_spec_problems(item: dict) -> list[str]:
+    if item.get("answer_type") != "expression" or not isinstance(item.get("marker"), dict) or item.get("typing_problems"):
+        return []
+    try:
+        schemas.AnswerSpec.model_validate(item["marker"])
+    except ValidationError as e:
+        return [f"{MARKER_INCOHERENT}: " + "; ".join(str(x["msg"]).removeprefix("Value error, ") for x in e.errors())]
+    return []
+
+
 class RunItem(BaseModel):
     """One S3 book item after gate G2 (extraction-pipeline.md §3.6)."""
     model_config = ConfigDict(extra="allow")

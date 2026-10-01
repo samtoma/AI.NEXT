@@ -89,7 +89,7 @@ from pathlib import Path
 
 import book_config
 import review_policy
-from assemble_lesson_bundle import choice_option_problems
+from assemble_lesson_bundle import choice_option_problems, marker_spec_problems
 
 HERE = Path(__file__).resolve().parent
 FORMAT = "ainext.gate-decision/1"
@@ -221,7 +221,7 @@ def g2_items(run: dict, chapter: int | None, prefix: str) -> dict[str, dict]:
             ref = it.get("ref")
             # options the book never printed that an older collection let through (COLLECT-6 refuses them at the source;
             # lesson-runs adds the same problem to the item, so G2 must rule on it)
-            audit = choice_option_problems(it)
+            audit = [*choice_option_problems(it), *marker_spec_problems(it)]
             if ref in typing or ref in nopa or ref in dis or audit:
                 out[f"{l['lesson']}:{ref}"] = {
                     "typing_problems": [*(typing.get(ref) or it.get("typing_problems") or []), *audit],
@@ -233,7 +233,8 @@ def g2_items(run: dict, chapter: int | None, prefix: str) -> dict[str, dict]:
 
 
 def g2_retyped(run: dict, chapter: int | None, prefix: str) -> list[dict]:
-    """The choices the collection typed again from the book's printed key (lesson.workflow.js COLLECT-6): informational
+    """The items the collection typed again (lesson.workflow.js COLLECT-6: a choice from the book's printed key, or a marker kind
+    its asked form cannot apply to): informational
     decisions for the record — they carry no verdict, and Samuel sees them beside the verdicts."""
     run = run.get("result", run)
     out: list[dict] = []
@@ -241,9 +242,11 @@ def g2_retyped(run: dict, chapter: int | None, prefix: str) -> list[dict]:
         if not l or (chapter is not None and not str(l.get("lesson", "")).startswith(f"{prefix}{chapter}s")):
             continue
         for r in (l.get("verify") or {}).get("retyped") or []:
+            # a marker kind the asked form cannot apply to: the key is kept as it is, only its kind changes
+            basis = ("the typing agent named a marker kind the asked form cannot apply to; the key is algebra in its variables, kept exactly"
+                     if r.get("rule") == "kind-for-form" else "the options were the typing agent's inventions, not the book's")
             out.append({"key": f"{l['lesson']}:{r['ref']}", "decision": f"typed again as {r['as']} (key {r.get('key')})",
-                        "basis": "the options were the typing agent's inventions, not the book's"
-                                 + (f" ({'; '.join(r.get('because') or [])[:200]})" if r.get("because") else "")})
+                        "basis": basis + (f" ({'; '.join(r.get('because') or [])[:200]})" if r.get("because") else "")})
     return out
 
 
@@ -527,7 +530,7 @@ def main(argv: list[str] | None = None) -> int:
                             f"({c['recommended']} from the recommendation file, {c['rule']} by the checks' own rule); "
                             f"{c['held']} held for a person; {c['human']} already decided by a person"
                             + (f"; {c['teaching']} typed not markable (teaching only, no verdict owed)" if c.get("teaching") else "")
-                            + (f"; {len(retyped)} choice(s) typed again from the book's printed key" if retyped else ""),
+                            + (f"; {len(retyped)} item(s) typed again (a choice from the book's printed key, or a marker kind its form cannot apply to)" if retyped else ""),
             decisions=decisions + retyped, held=bool(held), for_review=held, run=a.run,
             checks=[{"name": "S3 three-way answer check (printed, EPUB solution, blind re-solve)", "state": "done"},
                     {"name": "S3 answer typing check", "state": "done"},

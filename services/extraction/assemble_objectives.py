@@ -1924,7 +1924,7 @@ def lesson_runs(run: dict, g2: dict | None = None, draft: bool = False) -> dict[
     `draft` is for G2's own page, which must show those items BEFORE G2 has ruled on them: the
     files go to runs/<book>/lesson-draft/ (never read by assembly, the coverage audit or the loader),
     each marked `draft: true` with the items still owed a G2 verdict in `pending_g2`."""
-    from assemble_lesson_bundle import LessonRun, choice_option_problems  # WP-P4's model: the handoff's other side
+    from assemble_lesson_bundle import LessonRun, choice_option_problems, marker_spec_problems  # WP-P4's model: the handoff's other side
     g2 = g2 or {}
     by = g2.get("by")
     verdicts = g2.get("items") or {}
@@ -1939,7 +1939,7 @@ def lesson_runs(run: dict, g2: dict | None = None, draft: bool = False) -> dict[
             it = dict(it)
             # options the book never printed (lesson.workflow.js COLLECT-6 refuses them too): a run an older collection made
             # may carry them, and they must reach G2 as a typing problem, never as a choice
-            extra = choice_option_problems(it)
+            extra = [*choice_option_problems(it), *marker_spec_problems(it)]     # (a marker kind its form cannot carry: same line)
             if extra:
                 it["typing_problems"] = [*(it.get("typing_problems") or []), *extra]
             if v:
