@@ -94,9 +94,12 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
   hidden. Run CI once deliberately.
 
 ## D. Before fanning out to the other 13 chapters (60 lessons)
-1. **Figure policy (blocker)**: the rest of the book is far more figure-heavy (ch13: 153 figures, ch7: 157, ch6: 126;
-   979 teaching figures). Native figure kinds are weeks of work; alternatively reopen static images (decision 8).
-   Minimum: the hold rule + question-card figure display (≈1.5 days).
+1. ~~**Figure policy (blocker)**: the rest of the book is far more figure-heavy…~~ **No longer a blocker.**
+   First answered (answer 29, decision 50): "Native only, wait" — decision 26 stood strictly. **Then reversed for
+   students (answer 37d, decision 58d, 2026-10-01)**: while a needed native kind is not yet built, the course MAY
+   show the book's own image in its place instead of holding the lesson, and every such stand-in is a backlog item
+   "needs native figure" (new FR-4508). The figure-gap inventory and Samuel's kind-by-kind approval (FR-4321) are
+   unchanged — this changes only what a student sees while waiting. Not yet built (`tasks.md` T442).
 2. S0b: ≈5,160 images left — ≈$250 (batch 50) / $520 (batch 25); run passes one at a time; add the re-spacing +
    KaTeX check first.
 3. Pair-vs-decimal ambiguity rule (A4); form rule (A9); per-mode widget table (A10/W1) + re-author 4 S7 lessons (≈$5).
@@ -105,7 +108,12 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
 5. Run the never-used prompt versions (s6-v5, s7-v6) once on Chapter 8 (≈$15).
 6. Book config: output paths into `seed/g10-math` + `seed/content`, `generated` and `parity` constants (T364).
 7. Expect larger embedded scripts (≈200–250 KB); split per lesson if needed.
-8. Human gates G1–G4 for 13 chapters put Samuel on the critical path.
+8. ~~Human gates G1–G4 for 13 chapters put Samuel on the critical path.~~ **Answered (answer 37c, decision
+   58c, 2026-10-01): "Auto-pass, review later."** G1–G4 now proceed on the AI checks' own recommendation during
+   the fan-out; every decision lands in a new internal console backlog (FR-4501…FR-4509) for Samuel, Tamer and
+   Kamil to review afterwards, one at a time. Automatic safety checks (broken maths, answers vs the book, parity)
+   are unaffected. **Not decided**: whether this also covers G5 (the dry-run/coverage/drift/cost go/no-go before
+   production promotion) — see spec.md's *Open questions for Samuel*. Not yet built (`tasks.md` T436–T443).
 9. Cost: ≈$0.85–1.1k one-time for the book, plus the working checker (≈$70–125) and the check run (≈$15).
 
 ## Progress on fixes (2026-09-27)

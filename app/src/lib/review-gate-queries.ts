@@ -824,9 +824,13 @@ export async function decide(
   }
 
   // 1. The claim. Somebody else's live claim refuses; an expired one, or none, does not.
+  // A plain read, never `FOR UPDATE`: row locking also applies 036's UPDATE
+  // policy, which hides another operator's live claim from this operator —
+  // the very row this check exists to see. (The content rows below are what
+  // gets locked; the fingerprint check is what makes a late decision safe.)
   const claim = await c.query(
     `SELECT operator_id, expires_at > now() AS live FROM review_claims
-      WHERE environment = $1 AND item_kind = $2 AND item_ref = $3 FOR UPDATE`,
+      WHERE environment = $1 AND item_kind = $2 AND item_ref = $3`,
     [environment, input.kind, input.ref]
   );
   const holder = claim.rows[0];

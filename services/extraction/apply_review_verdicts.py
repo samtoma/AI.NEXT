@@ -246,6 +246,12 @@ def main() -> int:
     # An auto-passed G3 (answer 37c) is the AI's verdict: it goes to ai_checked_by, never reviewed_by.
     auto = bool(doc.get("auto")) or review_policy.is_auto(reviewer)
     stamp_col, stamp_at = ("ai_checked_by", "ai_checked_at") if auto else ("reviewed_by", "reviewed_at")
+    # an AI verdict is ADDED to the AI checks the item already carries ("ai blind grade (S6); auto-pass G3 …");
+    # a human's stamp is the stamp
+    set_stamp = (f"{stamp_col} = concat_ws('; ', {stamp_col}, %s::text), {stamp_at} = now()" if auto
+                 else f"{stamp_col} = %s, {stamp_at} = now()")
+    not_yet = (f"(ai_checked_by IS NULL OR strpos(ai_checked_by, %s) = 0) AND reviewed_by IS NULL" if auto
+               else "reviewed_by IS NULL AND %s::text IS NOT NULL")
     # (an auto file keeps its signer: "auto-pass G3 (AI recommendation)" from auto_pass_gates.py, or a stub's name)
     verdicts: dict[str, str] = doc["verdicts"]
     bad = {v for v in verdicts.values()} - VALID
@@ -290,10 +296,10 @@ def main() -> int:
                 accepted_families.setdefault(fam, qid)
                 if not args.dry_run:
                     cur.execute(
-                        f"""UPDATE questions
-                              SET {stamp_col} = %s, {stamp_at} = now()
-                            WHERE id = %s""",
-                        (f"{reviewer} (sampled)", qid),
+                        # a human's direct read always wins (it replaces a family stamp); an AI's is added once
+                        f"""UPDATE questions SET {set_stamp}
+                            WHERE id = %s AND {not_yet if auto else "%s::text IS NOT NULL"}""",
+                        (f"{reviewer} (sampled)", qid, reviewer),
                     )
             elif verdict == "reject":
                 if not args.dry_run:
@@ -328,17 +334,16 @@ def main() -> int:
                 cur.execute(
                     f"""SELECT count(*) FROM questions
                         WHERE source = 'variant' AND status = 'live'
-                          AND {stamp_col} IS NULL AND reviewed_by IS NULL AND source_note LIKE %s""",
-                    (f"%template family {fam}.%",),
+                          AND {not_yet} AND source_note LIKE %s""",
+                    (reviewer, f"%template family {fam}.%"),
                 )
                 by_family += cur.fetchone()[0]
                 continue
             cur.execute(
-                f"""UPDATE questions
-                      SET {stamp_col} = %s, {stamp_at} = now()
+                f"""UPDATE questions SET {set_stamp}
                     WHERE source = 'variant' AND status = 'live'
-                      AND {stamp_col} IS NULL AND reviewed_by IS NULL AND source_note LIKE %s""",
-                (f"{reviewer} (family {fam} via {via})", f"%template family {fam}.%"),
+                      AND {not_yet} AND source_note LIKE %s""",
+                (f"{reviewer} (family {fam} via {via})", reviewer, f"%template family {fam}.%"),
             )
             by_family += cur.rowcount
 
@@ -347,8 +352,12 @@ def main() -> int:
 
     verb = "would mark" if args.dry_run else "marked"
     print(f"{args.verdicts.name}: {len(verdicts)} verdict(s) from {reviewer}")
-    print(f"  {verb} {direct} item(s) reviewed directly")
-    print(f"  {verb} {by_family} sibling(s) validated through their family")
+    if auto:
+        print(f"  {verb} {direct} sampled item(s) and {by_family} sibling(s) AI-checked by the auto-pass "
+              "(ai_checked_by; not a review — they stay in the console backlog)")
+    else:
+        print(f"  {verb} {direct} item(s) reviewed directly")
+        print(f"  {verb} {by_family} sibling(s) validated through their family")
     if retired:
         print(f"  {verb} {retired} item(s) retired — a rejected template is wrong in every instance")
     if pulled:

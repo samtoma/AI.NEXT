@@ -247,7 +247,7 @@ def build_runs(inv: dict) -> list[dict]:
         what="S6 family authoring for lo:g10m8s1-1-1 ('Drawing figures from coordinates') only — the last empty "
              "objective of Chapter 8. Its six items are drawings G2 made teaching-only, so the packet lists them "
              "(with the book's drawn answers) as the author's models and parent candidates.",
-        agents=1, cost=[0.6, 1.5], minutes=MINUTES["s6-author-s111"], priority=0,
+        agents=1, cost=[0.6, 1.5], minutes=MINUTES["s6-author-s111"], priority=(0, 0, 0),
         save_to="runs/g10-math/families/author-s111-<wf_id>.json", meter=_meter("S6"),
         after=["uv run fanout.py write-specs runs/g10-math/families/author-s111-<wf_id>.json "
                "--into work/g10-math/fanout/families-s111     # staging: never families/g10-math/ until it is graded",
@@ -266,7 +266,7 @@ def build_runs(inv: dict) -> list[dict]:
     add(id="wcheck-ch08", stage="SW", chapter=8, workflow="working-check.workflow.js (sw-v1)",
         what="The step-level working checker on Chapter 8's 198 served solutions (answer 30: re-run on Chapter 8). "
              "Reads the pilot seed; writes nothing to it.",
-        agents=None, cost=None, minutes=None, priority=1,
+        agents=None, cost=None, minutes=None, priority=(0, 0, 1),
         save_to="runs/g10-math/working-check/ch08-<wf_id>.json", meter=_meter("SW"),
         after=["uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-ch08.args.json "
                "--runs runs/g10-math/working-check/ch08-<wf_id>.json --out runs/g10-math/working-check/ch08.flags.json",
@@ -283,7 +283,7 @@ def build_runs(inv: dict) -> list[dict]:
     # --- 1. S0b: per group, pass A, pass B, the third reading C ---------------------------------------------
     prev = None
     s0b_by_g = {g["group"]: g for g in inv["s0b"]["groups"]}
-    for g, gchs in S0B_GROUPS:
+    for gi, (g, gchs) in enumerate(S0B_GROUPS):
         n = s0b_by_g[g]["images"]
         b = s0b_by_g[g]["batches"]
         tag = "-".join(ch_tag(c) for c in gchs)
@@ -292,14 +292,14 @@ def build_runs(inv: dict) -> list[dict]:
             add(id=rid, stage="S0b", chapters=gchs, workflow="transcribe-maths.workflow.js",
                 what=f"S0b pass {p} over {n} images first used in {tag} (batch {BATCH}, {b} batches)",
                 agents=b, cost=_cost("s0b_image_pass", n), minutes=MINUTES["s0b_wave"] * math.ceil(b / CONCURRENT_AGENTS),
-                priority=2, depends_on=[prev] if prev else [], s0b=True,
+                priority=(2, gi, 0), depends_on=[prev] if prev else [], s0b=True,
                 save_to=f"runs/g10-math/maths/{p}-<wf_id>.json", meter=_meter("S0b"))
             prev = rid
         nc = max(1, round(n * UNIT_COST["s0b_c_share"]))
         add(id=f"s0b-C-{g}", stage="S0b", chapters=gchs, workflow="transcribe-maths.workflow.js",
             what=f"S0b third reading (pass C) of the {tag} images passes A and B did not agree on (≈ {nc}; prepared "
                  "after both are saved; skipped when there are none)",
-            agents=math.ceil(nc / BATCH), cost=_cost("s0b_c_image", nc), minutes=MINUTES["s0b_c"], priority=2,
+            agents=math.ceil(nc / BATCH), cost=_cost("s0b_c_image", nc), minutes=MINUTES["s0b_c"], priority=(2, gi, 1),
             depends_on=[f"s0b-A-{g}", f"s0b-B-{g}"], s0b=True,
             before=["uv run assemble_maths.py assemble g10-math runs/g10-math/maths/*.json --out-dir runs/g10-math/maths/book"],
             save_to="runs/g10-math/maths/C-<wf_id>.json", meter=_meter("S0b"),
@@ -321,7 +321,7 @@ def build_runs(inv: dict) -> list[dict]:
             what=f"S1 objectives for chapter {ch} ({c['lessons']} lesson(s), {pool} end-of-chapter/shared items to map; "
                  f"links may name the {'earlier chapters' if i else 'no earlier'} chapters' approved objectives)",
             agents=4 * c["lessons"] + 2 * math.ceil(pool / 60) + 2, cost=_cost("s1_lesson", c["lessons"]),
-            minutes=MINUTES["s1_base"] + MINUTES["s1_lesson"] * c["lessons"], priority=1, depends_on=s1_deps,
+            minutes=MINUTES["s1_base"] + MINUTES["s1_lesson"] * c["lessons"], priority=(1, i, 0), depends_on=s1_deps,
             save_to=f"runs/g10-math/objectives/{t}-<wf_id>.json", meter=_meter("S1"),
             after=[f"uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/{t}-<wf_id>.json "
                    "--maths runs/g10-math/maths/book/accepted.json",
@@ -333,6 +333,9 @@ def build_runs(inv: dict) -> list[dict]:
                    "# every G1 decision → the console backlog"],
             checkpoint="chapter 1: objectives per lesson, decisions owed, and that the auto-pass verdicts cover them"
                        if i == 0 else None)
+        # the go / no-go after the first chapter: no other chapter's lessons (or anything after them) start before
+        # chapter 1 is complete end to end and the main session has looked at it; S0b and S1 go on meanwhile
+        gate = [f"s5-final-{ch_tag(order[0])}"] if i else []
         lesson_ids = []
         for l in c["lessons_detail"]:
             n_items = l["exercise_items"] + l["worked_examples"]
@@ -346,7 +349,7 @@ def build_runs(inv: dict) -> list[dict]:
                      f"{l['figures']} book figure(s))",
                 agents=round(7 + n_items / 9), cost=_cost("s2s4_item", n_items),
                 minutes=max(MINUTES["lesson_min"], MINUTES["lesson_base"] + MINUTES["lesson_item"] * n_items),
-                priority=3, depends_on=[f"s1-{t}"], items=n_items,
+                priority=(3, i, 0), depends_on=[f"s1-{t}"] + gate, items=n_items,
                 save_to="runs/g10-math/lessons/<wf_id>.json", meter=_meter("S2-S4", l["slug"]),
                 after=[f"uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft "
                        "--maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
@@ -369,7 +372,7 @@ def build_runs(inv: dict) -> list[dict]:
         add(id=f"wcheck-{t}", stage="SW", chapter=ch, workflow="working-check.workflow.js (sw-v1)",
             what=f"the step-level working checker on chapter {ch}'s ≈ {c['solutions']} solutions (one agent each)",
             agents=c["solutions"], cost=_cost("sw_solution", c["solutions"]),
-            minutes=MINUTES["sw_wave"] * math.ceil(c["solutions"] / CONCURRENT_AGENTS), priority=5,
+            minutes=MINUTES["sw_wave"] * math.ceil(c["solutions"] / CONCURRENT_AGENTS), priority=(3, i, 2),
             depends_on=lesson_ids + ["wcheck-ch08"], before=assemble,
             save_to=f"runs/g10-math/working-check/{t}-<wf_id>.json", meter=_meter("SW"),
             after=[f"uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-{t}.args.json "
@@ -382,12 +385,12 @@ def build_runs(inv: dict) -> list[dict]:
         add(id=f"s5-draft-{t}", stage="S5", chapter=ch, workflow="misconceptions.workflow.js (s5-v5, draft)",
             what=f"S5 draft misconceptions for chapter {ch}'s ≈ {nobj} objectives",
             agents=nobj, cost=[round(x * 0.45, 2) for x in _cost("s5_objective", nobj)], minutes=MINUTES["s5-draft"],
-            priority=4, depends_on=lesson_ids, before=assemble,
+            priority=(3, i, 1), depends_on=lesson_ids, before=assemble,
             save_to=f"runs/g10-math/misconceptions/draft-{t}-<wf_id>.json", meter=_meter("S5"))
         add(id=f"s6-author-{t}", stage="S6", chapter=ch, workflow="families.workflow.js (s6-v5, author)",
             what=f"S6 family authoring for chapter {ch}'s objectives below the tier floor",
             agents=round(0.8 * nobj), cost=[round(x * 0.45, 2) for x in _cost("s6_objective", nobj)],
-            minutes=MINUTES["s6-author"], priority=4, depends_on=[f"s5-draft-{t}"],
+            minutes=MINUTES["s6-author"], priority=(3, i, 1), depends_on=[f"s5-draft-{t}"],
             save_to=f"runs/g10-math/families/author-{t}-<wf_id>.json", meter=_meter("S6"),
             after=[f"uv run fanout.py write-specs runs/g10-math/families/author-{t}-<wf_id>.json --into {fam}",
                    f"uv run python -m families.normalise {fam}/*.json   # the two mechanical refusals only (recorded)",
@@ -398,7 +401,7 @@ def build_runs(inv: dict) -> list[dict]:
             what=f"S6 blind grading of chapter {ch}'s families (blind solver per sampled instance + judge); "
                  "skipped when the author wrote no family",
             agents=round(1.8 * nobj), cost=[round(x * 0.55, 2) for x in _cost("s6_objective", nobj)],
-            minutes=MINUTES["s6-grade"], priority=4, depends_on=[f"s6-author-{t}"],
+            minutes=MINUTES["s6-grade"], priority=(3, i, 1), depends_on=[f"s6-author-{t}"],
             save_to=f"runs/g10-math/families/grade-{t}-<wf_id>.json   (one file per part)", meter=_meter("S6"),
             after=[f"uv run generate_questions.py --families {fam} --book {cfg} --grades runs/g10-math/families/grade-{t}-*.json "
                    f"--s5-distractors runs/g10-math/families/s5-distractors-{t}.json",
@@ -406,7 +409,7 @@ def build_runs(inv: dict) -> list[dict]:
         add(id=f"s7-author-{t}", stage="S7", chapter=ch, workflow="widgets.workflow.js (s7-v7, author)",
             what=f"S7 widget templates for chapter {ch}'s {c['lessons']} lesson(s) (kinds that genuinely fit, or a gap)",
             agents=c["lessons"], cost=[round(x * 0.55, 2) for x in _cost("s7_objective", nobj)],
-            minutes=MINUTES["s7-author"], priority=4, depends_on=[f"s5-draft-{t}"],
+            minutes=MINUTES["s7-author"], priority=(3, i, 1), depends_on=[f"s5-draft-{t}"],
             save_to=f"runs/g10-math/widgets/author-{t}-<wf_id>.json", meter=_meter("S7"),
             after=[f"uv run generate_widget_questions.py --merge-author-runs runs/g10-math/widgets/author-{t}-<wf_id>.json "
                    f"--merged runs/g10-math/widgets/author-merged-{t}.json --write-templates {wid}",
@@ -416,7 +419,7 @@ def build_runs(inv: dict) -> list[dict]:
             what=f"S7 blind reachability verification of chapter {ch}'s widget templates; skipped when the "
                  "author wrote no template (every lesson a gap — the dry run meets this on every non-geometry chapter)",
             agents=round(1.4 * c["lessons"]), cost=[round(x * 0.45, 2) for x in _cost("s7_objective", nobj)],
-            minutes=MINUTES["s7-verify"], priority=4, depends_on=[f"s7-author-{t}"],
+            minutes=MINUTES["s7-verify"], priority=(3, i, 1), depends_on=[f"s7-author-{t}"],
             save_to=f"runs/g10-math/widgets/verify-{t}-<wf_id>.json", meter=_meter("S7"),
             after=[f"AINEXT_DB_DSN=\"{DSN}\" uv run generate_widget_questions.py --templates {wid} --book {cfg} --dsn \"{DSN}\" "
                    f"--verdicts runs/g10-math/widgets/verify-{t}-<wf_id>.json --gaps runs/g10-math/widgets/author-merged-{t}.json "
@@ -425,7 +428,7 @@ def build_runs(inv: dict) -> list[dict]:
         add(id=f"s5-final-{t}", stage="S5", chapter=ch, workflow="misconceptions.workflow.js (s5-v5, final; embedded)",
             what=f"S5 final for chapter {ch}: the catalogue with S6/S7 distractors attached, fail-closed verifier",
             agents=nobj + 2, cost=[round(x * 0.55, 2) for x in _cost("s5_objective", nobj)], minutes=MINUTES["s5-final"],
-            priority=4, depends_on=[f"s6-grade-{t}", f"s7-verify-{t}"],
+            priority=(3, i, 1), depends_on=[f"s6-grade-{t}", f"s7-verify-{t}"],
             save_to=f"runs/g10-math/misconceptions/final-{t}-<wf_id>.json", meter=_meter("S5"),
             after=[f"uv run assemble_misconceptions.py runs/g10-math/misconceptions/final-{t}-<wf_id>.json --book {cfg} "
                    f"--out {gen}/misconceptions.json --graph seed/g10-math/g10m-c{ch:02d}.json --graph seed/g10-math/g10m-course.json",
@@ -498,9 +501,13 @@ def plan() -> dict:
     for n, rid in enumerate(sch["order"], start=1):
         r = by[rid]
         r["order"] = n
-        r["embedded_script"] = rel(EMBED / f"{n:03d}-{rid}.workflow.js")
+        # a copy already prepared keeps its name (its number is the order it was prepared under), so a
+        # regenerated plan never strands a copy the main session may be running
+        prepared = sorted(EMBED.glob(f"[0-9][0-9][0-9]-{rid}.workflow.js"))
+        path = prepared[0] if prepared else EMBED / f"{n:03d}-{rid}.workflow.js"
+        r["embedded_script"] = rel(path)
         r["launch"] = f"Workflow({{scriptPath: \"<abs>/services/extraction/{r['embedded_script']}\"}})   # NO args"
-        r["prepared"] = (EMBED / f"{n:03d}-{rid}.workflow.js").exists()
+        r["prepared"] = path.exists()
         ordered.append(r)
     lo = round(sum(r["cost"][0] for r in ordered if r.get("cost")), 2)
     hi = round(sum(r["cost"][1] for r in ordered if r.get("cost")), 2)
