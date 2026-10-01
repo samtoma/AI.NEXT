@@ -292,7 +292,8 @@ def normalise(latex: str) -> str:
     s = re.sub(r"\\(?:left|right)\s*\.", "", s)
     s = re.sub(r"\\(displaystyle|textstyle|scriptstyle|scriptscriptstyle|left|right|(?:big|Big|bigg|Bigg)[lmr]?)"
                r"(?![a-zA-Z])", "", s)
-    s = re.sub(r"\\(,|;|:|!| |quad|qquad)", "", s)
+    # `\\` first: a row separator followed by a space is `\\` + space, not `\` + `\ ` (which ate one backslash)
+    s = re.sub(r"(\\\\)|\\(?:,|;|:|!| |quad|qquad)", lambda m: m.group(1) or "", s)
     s = re.sub(r"\\(?:enspace|thinspace|negthinspace|medspace|negmedspace|thickspace|negthickspace|hfill)"
                r"(?![a-zA-Z])", "", s)
     s = re.sub(r"\\hspace\*?\{[^{}]*\}", "", s)

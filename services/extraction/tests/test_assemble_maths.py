@@ -105,7 +105,8 @@ class Normalise(unittest.TestCase):
     def test_spacing_commands_are_null(self):
         self.agree([("a\\enspace b", "ab"), ("a\\thinspace b", "ab"), ("a\\hspace{1em}b", "ab"),
                     ("a\\hspace*{2cm}b", "ab"), ("\\phantom{-}3", "3"), ("a\\\\[2pt]b", "a\\\\b"),
-                    ("a\\qquad b\\,c", "abc")])
+                    ("a\\qquad b\\,c", "abc"),
+                    ("x=1\\\\ y=2", "x=1\\\\y=2")])    # a row separator then a space: `\\` + space, not `\ `
         self.differ([("a\\\\b", "ab"), ("a\\\\[2]b", "a\\\\b")])   # `[2]` is no length: it is text, kept
 
     def test_an_arrays_column_spec_and_rules_are_null(self):
