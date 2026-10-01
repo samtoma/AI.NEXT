@@ -1637,7 +1637,7 @@
     "The general form of a cosine graph is $y=a\\cos\\theta+q$ . We note that in this case the graph is not shifted. We also note the graph is stretched by $-\\text{2}$ units. Therefore $y=-2\\cos\\theta$ ."
    ],
    "solution_provenance": "book_worked_epub",
-   "printed_answer": "90◦< θ < 270◦",
+   "printed_answer": "y=-2\\cos\\theta",
    "epub_final_answer": "Therefore $y=-2\\cos\\theta$",
    "blind_answer": "$f(\\theta)=-2\\cos\\theta$",
    "verification": "disputed",
@@ -1684,10 +1684,13 @@
    "form_unsupported": null,
    "blocked_on_figure": true,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"$y=-2\\cos\\theta$\" does not read as the printed answer \"90◦< θ < 270◦\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): The figure has f(0)=-2, f(90)=0, f(180)=2, f(270)=0, f(360)=-2, which is $-2\\cos\\theta$. The book's working and EPUB final agree. The printed answer '90 < theta < 270' belongs to question 15 and is misaligned. Re-type the printed answer from the EPUB. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "printed_answer"
+    ]
    }
   },
   {
@@ -1760,7 +1763,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"$90^{\\circ}<\\theta<270^{\\circ}$\" does not read as the printed answer \"0◦< θ < 210◦and 330◦< θ < 360◦\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the app's marker cannot read the key '90^{\\\\circ}<\\\\theta<270^{\\\\circ}': unreadable (unexpected \")\")). The agent's reading: The figure shows $y=\\sin\\theta+1$, with a minimum at 90 and a maximum at 270, so it is increasing for $90^\\circ<\\theta<270^\\circ$. The EPUB working and final agree. The printed answer '0 to 210 and 330 to 360' belongs to question 16 and is misaligned. Re-type the printed answer from the EPUB.",
     "auto": true
    }
   },
@@ -1834,7 +1837,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"$0^{\\circ}<\\theta<210^{\\circ}\\text{ and }330^{\\circ}<\\theta<360^{\\circ}$\" does not read as the printed answer \"60◦< θ < 300◦\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the app's marker cannot read the key '0^{\\\\circ}<\\\\theta<210^{\\\\circ}\\\\text{ and }330^{\\\\circ}<\\\\theta<360^{\\\\circ}': unreadable (unexpected \")\")). The agent's reading: The figure shows $y=-2\\sin\\theta-1$. It is below zero from 0 to 210, crosses zero at 210 and 330 and is above zero between them, then is negative again to 360. The book's key matches apart from the endpoints. The printed answer '60 to 300' belongs to question 17 and is misaligned. Re-type from the EPUB.",
     "auto": true
    }
   },
@@ -2220,7 +2223,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "hold",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the app's marker cannot read the key '0^{\\\\circ}<\\\\theta<180^{\\\\circ}': unreadable (unexpected \")\")). The agent's reading: The figure shows $y=2\\cos\\theta+1$, falling from 3 at 0 to -1 at 180 and then rising. So it is decreasing for $0^\\circ<\\theta<180^\\circ$. The printed answer, EPUB final and working all agree. The blind difference is only open versus closed endpoints.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex6-8:43",
@@ -2285,7 +2294,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "hold",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the app's marker cannot read the key '0^{\\\\circ}<\\\\theta<90^{\\\\circ}\\\\text{ and }270^{\\\\circ}<\\\\theta<360^{\\\\circ}': unreadable (unexpected \")\")). The agent's reading: The figure shows $y=3\\sin\\theta$, rising to 3 at 90, falling to -3 at 270, then rising to 360. So it is increasing for $0<\\theta<90$ and $270<\\theta<360$. Printed answer, EPUB final and working agree. The blind difference is only endpoint inclusion.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex6-8:44",
@@ -2350,7 +2365,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true
+   "blocked_on_figure": true,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Figure: $y=\\cos\\theta+\\tfrac32$, range $[0.5,2.5]$, so positive at every plotted $\\theta$ including $0^\\circ$ and $360^\\circ$. The book's open interval omits the endpoints. Blind answer is closed, which fits the figure. Right answer by the agent's own derivation: 0°≤θ≤360° (positive everywhere on the plotted interval, endpoints included).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex6-8:46c",

@@ -1075,19 +1075,19 @@
    "choices": [
     {
      "key": "A",
-     "text": "(i)"
+     "text": "1\\le\\theta\\le2"
     },
     {
      "key": "B",
-     "text": "(ii)"
+     "text": "-2\\le\\theta\\le2"
     },
     {
      "key": "C",
-     "text": "(iii)"
+     "text": "-1\\le\\theta\\le3"
     },
     {
      "key": "D",
-     "text": "(iv)"
+     "text": "-2\\le\\theta\\le3"
     }
    ],
    "marker": null,
@@ -1139,10 +1139,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $y=2\\sin\\theta+1$: sine runs from -1 to 1, so $y$ runs from $-1$ to $3$. The book's (iii) is the third option, $-1\\le\\theta\\le3$. The typed options (i) to (iv) are not in the stem, so re-type with the stem's own four ranges as options. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -1155,19 +1158,19 @@
    "choices": [
     {
      "key": "A",
-     "text": "(i)"
+     "text": "-6\\le\\theta\\le2"
     },
     {
      "key": "B",
-     "text": "(ii)"
+     "text": "-4\\le\\theta\\le-2"
     },
     {
      "key": "C",
-     "text": "(iii)"
+     "text": "-6\\le\\theta\\le1"
     },
     {
      "key": "D",
-     "text": "(iv)"
+     "text": "-6\\le\\theta\\le-2"
     }
    ],
    "marker": null,
@@ -1219,10 +1222,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): $y=2\\cos\\theta-4$: cosine runs from -1 to 1, so $y$ runs from $-6$ to $-2$. The book's (iv) is the fourth option, $-6\\le\\theta\\le-2$. Re-type with the stem's own ranges as options, since the labels (i) to (iv) are not in the stem. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -1235,19 +1241,19 @@
    "choices": [
     {
      "key": "A",
-     "text": "(i)"
+     "text": "3"
     },
     {
      "key": "B",
-     "text": "(ii)"
+     "text": "1"
     },
     {
      "key": "C",
-     "text": "(iii)"
+     "text": "2"
     },
     {
      "key": "D",
-     "text": "(iv)"
+     "text": "0"
     }
    ],
    "marker": null,
@@ -1299,10 +1305,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): The y-intercept is at $x=0$, so $y=2^0+1=2$. The book's (iii) is the third option, 2. The typed labels (i) to (iv) are not in the stem. Re-type with the stem's own four values as options. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -1315,19 +1324,19 @@
    "choices": [
     {
      "key": "A",
-     "text": "(i)"
+     "text": "y=\\frac{7}{x}"
     },
     {
      "key": "B",
-     "text": "(ii)"
+     "text": "y=2x+3"
     },
     {
      "key": "C",
-     "text": "(iii)"
+     "text": "y=\\frac{4}{x}"
     },
     {
      "key": "D",
-     "text": "(iv)"
+     "text": "y=x^2+1"
     }
    ],
    "marker": null,
@@ -1379,10 +1388,13 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "fix",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (options said to be the stem's are not all in the stem); a fix needs fields a person or a recommendation must write",
-    "auto": true
+    "note": "auto-pass G2 (AI recommendation): At $x=1$: $7/x=7$, $2x+3=5$, $4/x=4$, $x^2+1=2$. Only $y=\\frac{7}{x}$ passes through $(1;7)$, the book's (i). The typed labels (i) to (iv) are not in the stem. Re-type with the stem's own four equations as options. Verified independently: the verifier's own answer matches the key.",
+    "auto": true,
+    "changed": [
+     "choices"
+    ]
    }
   },
   {
@@ -1660,9 +1672,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"6; 9\" does not read as the printed answer \"6 R 5 coins and 9 R 2 coins\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): With $x+y=15$ and $y=x+3$: $2x+3=15$, so $x=6$ and $y=9$. That gives 6 R5 coins and 9 R2 coins, as the book states. The key '6; 9' is that answer in the order R5, R2. The typing complaint is only a text comparison against the PDF's wording. Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },

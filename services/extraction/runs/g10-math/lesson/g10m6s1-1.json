@@ -2142,7 +2142,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "exclude",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): Stem asks for petrol: $P=13{,}61V$, so $V=275/13{,}61\\approx 20{,}21$ L. The book's working solves $D(V)=275$ (diesel, $12{,}46V$) and gets 22,071 L. Printed answer and working agree with each other but answer the wrong function. Right answer by the agent's own derivation: 20,21 L (275/13,61 using the petrol function P).",
+    "auto": true
+   }
   },
   {
    "ref": "Ex6-1:7e",
@@ -3342,9 +3348,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): $f(7)=3-7=-4$. Printed answer $-4$ and the working's last line agree; the working has a typo $f(1)$ for $f(7)$ but substitutes (7). The typing complaint is only a text comparison (no EPUB final answer). Verified independently: the verifier's own answer matches the key.",
     "auto": true
    }
   },
@@ -3631,7 +3637,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $g(-2)=2(4)-4=4$, $h(4)=3^4-4=81-4=77$. Printed answer, EPUB final and blind solver all give 77; the judge simply returned no verdict. Typed as one number, correct. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex6-8:27g",
@@ -3692,7 +3704,13 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false
+   "blocked_on_figure": false,
+   "g2": {
+    "verdict": "accept",
+    "by": "auto-pass G2 (AI recommendation)",
+    "note": "auto-pass G2 (AI recommendation): $f(6)=-3$, $k(-3)=\\frac{3}{2(-3)}-1=-\\frac12-1=-\\frac32$. Printed (flattened -3 2), EPUB final and blind solver agree. Typed key $-\\frac{3}{2}$ is right; the judge returned no verdict. Verified independently: the verifier's own answer matches the key.",
+    "auto": true
+   }
   },
   {
    "ref": "Ex6-8:30",
