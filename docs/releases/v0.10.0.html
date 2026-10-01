@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noor v0.10.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Cairo:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  /* Tokens from the product's Noor Play layer. No red anywhere (FR-1002):
+     attention is amber, done is teal, open is slate. */
+  :root {
+    --ink: #241f3d; --ink-soft: #574f75; --paper: #fff6e6; --card: #ffffff;
+    --honey: #ffe9bd; --amber: #a34f0a; --teal: #1f7a6e; --slate: #5a5570;
+    --line: #241f3d; --hair: rgba(36, 31, 61, 0.14); --shadow: 4px 4px 0 var(--ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+      --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+      --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f3eee1; --ink-soft: #c0b8d4; --paper: #17142a; --card: #221d3c;
+    --honey: #3a2f1c; --amber: #e8a93f; --teal: #5cc4b3; --slate: #a79fc4;
+    --line: #f3eee1; --hair: rgba(243, 238, 225, 0.18); --shadow: 4px 4px 0 rgba(243, 238, 225, 0.85);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "Cairo", system-ui, sans-serif; }
+  main { max-width: 900px; margin: 0 auto; padding: 48px 16px 80px; }
+  h1, h2 { font-family: "Baloo Bhaijaan 2", system-ui, sans-serif; line-height: 1.2; margin: 0; }
+  h1 { font-size: 2.4rem; font-weight: 800; }
+  h2 { font-size: 1.45rem; font-weight: 800; margin-top: 44px; }
+  .eyebrow { font: 500 0.78rem/1.4 "IBM Plex Mono", monospace; letter-spacing: 0.08em; color: var(--ink-soft); text-transform: uppercase; }
+  .lead { font-size: 1.1rem; color: var(--ink-soft); margin: 12px 0 0; }
+  .card { background: var(--card); border: 3px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 20px 22px; margin-top: 18px; }
+  .card h3 { font: 700 1.1rem/1.35 "Cairo", sans-serif; margin: 0 0 6px; }
+  .row { display: grid; grid-template-columns: 140px 1fr; gap: 6px 16px; margin: 0; }
+  .row dt { font: 500 0.78rem/1.9 "IBM Plex Mono", monospace; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .row dd { margin: 0; }
+  .tag { display: inline-block; font: 700 0.8rem/1 "Cairo", sans-serif; padding: 5px 10px; border-radius: 999px; border: 2px solid var(--line); margin-right: 6px; }
+  .done { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .off { background: var(--honey); color: var(--ink); }
+  .open { background: transparent; color: var(--slate); border-color: var(--slate); }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.95rem; }
+  th, td { text-align: start; padding: 8px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 500 0.75rem/1.4 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+  code { font: 500 0.88em "IBM Plex Mono", monospace; }
+  a { color: var(--teal); }
+  @media (max-width: 600px) { .row { grid-template-columns: 1fr; } h1 { font-size: 1.9rem; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Noor · release v0.10.0 · 2026-10-01</p>
+  <h1>Lessons that finish, and a tutor that stays signed in</h1>
+  <p class="lead">Tamer tested the product on 29–30 September and fixed what he found. Samuel reviewed the eight changes and accepted them all on 1 October.</p>
+
+  <h2>What changes for a student</h2>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> The map is back in the header, as "Your Progress"</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>The header said "Study" and "Where you stand". The map was only reachable from buttons that said "See it on the graph".</dd>
+      <dt>Now</dt><dd>The header says "Study" and "Your Progress". Every button to the map says "See your progress". The "Where you stand" page still exists but is off the header.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> Opening the site goes straight to Study</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>A signed-in student who opened the home page saw the July investor preview: corpus counts, "AI turns logged", demo cards.</dd>
+      <dt>Now</dt><dd>They land on Study. Signed-out visitors still see the welcome page.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> A lesson can be finished</h3>
+    <dl class="row">
+      <dt>Reported</dt><dd>A tester finished lesson 1-1 with a 95% report, and the lesson never moved on.</dd>
+      <dt>What was wrong</dt><dd>Finishing needed every objective at 75%. "Quick review" only asks about the first three objectives, and 1-1 has four, so it could never pass.</dd>
+      <dt>Now</dt><dd>A lesson is finished when every objective has been tried at least once and the lesson's average reaches "Getting there". The "whole course complete" banner still needs 75% everywhere. A wrong first answer can now finish a lesson too.</dd>
+      <dt>Trade-off</dt><dd>One weak objective no longer holds a lesson back. The lessons that build on it still check it.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> No more "AI backend unavailable" after 15 minutes</h3>
+    <dl class="row">
+      <dt>Reported</dt><dd>After about 15 minutes in one lesson, the next message failed with "AI backend unavailable", and retrying did not help.</dd>
+      <dt>What was wrong</dt><dd>The sign-in lasts 15 minutes and nothing renewed it while the page was open. Answers given in widgets were probably lost without any sign.</dd>
+      <dt>Now</dt><dd>The page renews the sign-in while the student is active, and retries once if a request is refused. If the student really is signed out, the chat says so instead of blaming the AI.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Fixed</span> The explanation above a widget stays on screen</h3>
+    <dl class="row">
+      <dt>Before</dt><dd>A tall widget pushed the tutor's explanation, and sometimes the question itself, off the top of the screen.</dd>
+      <dt>Now</dt><dd>The message is shown from its top. The student reads the explanation, then scrolls down to the widget.</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3><span class="tag done">Changed</span> How the tutor talks</h3>
+    <dl class="row">
+      <dt>"LO"</dt><dd>The tutor used to say "this LO" to students. It now says "learning objective" or names the idea.</dd>
+      <dt>Your Progress chat</dt><dd>It was still the investor-demo version, talking about the student to "an observer" and offering quizzes. It now talks to the student, explains and plans, sends them to Study to practise, and describes progress in words, never as a number.</dd>
+      <dt>Data</dt><dd>These are prompt changes, so tutoring data before and after this release should not be compared directly.</dd>
+    </dl>
+  </div>
+
+  <h2>Still open</h2>
+  <div class="card">
+    <h3><span class="tag open">Open</span> The chat can jump after answering a widget</h3>
+    <p>If a widget grows after the student answers it (for example, to show feedback), the chat can scroll back to the top of that message. Found in review; to be fixed next.</p>
+  </div>
+  <div class="card">
+    <h3><span class="tag open">Open</span> Not yet tried on an iPad</h3>
+    <p>All of this was checked on a desktop browser and by automated tests. None of it has been run on iPad Safari yet.</p>
+  </div>
+</main>
+</body>
+</html>

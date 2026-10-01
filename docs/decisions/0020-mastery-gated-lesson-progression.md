@@ -158,6 +158,18 @@ values with the wrong signs, the note now names that error ("right numbers, wron
 back in to check its sign"), as FR-1206 requires of a widget note. It is emitted only by the new
 `sign-flipped` predicate. Every other widget note, and every system prompt, is unchanged.)*
 
+*(A fifth and a sixth exception — Samuel, 2026-10-01: "I accept all the changes", on Tamer's
+`tamer-mvp-fixes` review, released in v0.10.0. **Fifth — no "LO" to a student** (`f374c39`): "LO"/"LOs" in
+prompt prose becomes "learning objective(s)", and one rule forbidding the abbreviation is appended to every
+lesson's language contract and to the Ask-the-Spine prompt; data-table column headers keep "LO". 82 of 234
+captured prompt files change, by those wording edits only; `probing-prompts.golden.json` was regenerated, so
+the FR-3108 "probing Off changes nothing else" baseline is now this wording. **Sixth — the Your Progress
+chat** (`ea51826`): the `spine_chat` surface is addressed to the student, never quizzes (no
+`{{show_question}}`, and the panel draws no question card), and never quotes a mastery number; the
+practice re-explain chat (`student_chat`) no longer calls itself a demo. 9 of 234 files change. Both are
+deliberate cuts in the comparison data from v0.10.0. The lesson-prompt reframing this hold waits for is
+still not done.)*
+
 **Revisit when**: a date or school-calendar signal enters the system (the pointer
 would then compete with it for authority over "today's lesson"); or the
 prerequisite graph gains real lesson-level edges, at which point book order can
@@ -215,7 +227,7 @@ it, so the student could not move again.
 
 ## Amendment 2026-09-30 — the gate is the ramp's second stage
 
-**Status**: **Proposed** — Tamer Deif, 2026-09-30, on `tamer-mvp-fixes`. Not accepted until Samuel accepts it. Implemented behind one function, so it is one revert to undo.
+**Status**: **Accepted** — proposed by Tamer Deif, 2026-09-30, on `tamer-mvp-fixes`; accepted by Samuel, 2026-10-01 ("I accept all the changes"), released in v0.10.0. Implemented behind one function, so it is one revert to undo.
 
 **Why.** The gate above (every objective at 0.75) was reached by almost no one. A tester finished lesson 1-1 with a 95% report, saw the ramp stop on the third bar, and the "Revisit" row never appeared on the live site. The cause is structural, not a fault in mastery updates: "Quick review" scripts its questions from the first three objectives only (`lib/lesson.ts`, `data.los.slice(0, 3)`), 1-1 has four, and the strict gate needs all four at 0.75. A student can do everything right and the saved place never moves.
 

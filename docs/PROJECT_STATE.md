@@ -1,7 +1,17 @@
 # Project State — AI Tutor MVP
 
 > Living document. Read at session start; update when progress or decisions land.
-> Last updated: 2026-09-25 (`main`; `v0.9.2` deployed; `v0.9.3` hotfix released, deploy approved by Samuel; constitution v3.3.0)
+> Last updated: 2026-10-01 (`main`; `v0.10.0` released, deploy approved by Samuel; constitution v3.3.0)
+
+## 🧭 v0.10.0 — Tamer's testing fixes (released 2026-10-01; Samuel: "I accept all the changes, please merge to main, and deploy")
+
+Tamer's eight commits on `tamer-mvp-fixes` (2026-09-29/30), merged onto `main` with their history.
+FR-2016 (session renewal, BUILT), FR-3219/FR-3220 (Your Progress tab, `/` → Study, VERIFIED), FR-3221
+(lesson finished = every objective attempted + average at "Getting there", BUILT — ADR-0020 amendment
+**accepted**), FR-3222 (chat shows a widget's message from its top, VERIFIED). ADR-0020 prompt-hold
+exceptions five ("LO" wording) and six (Your Progress chat) recorded. **Open:** the chat can jump back to
+a message's top when a widget grows after the student answers it (found in review, not fixed); no iPad
+Safari run of any of it; the tag needs a human (VERSIONING.md, step 3).
 
 ## 🩹 v0.9.3 hotfix — three widget answers corrected (released 2026-09-25; Samuel: "Full fix + deploy")
 

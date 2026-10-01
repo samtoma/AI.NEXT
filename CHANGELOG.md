@@ -10,6 +10,58 @@ requirement names it.
 
 ## [Unreleased]
 
+## [v0.10.0] — 2026-10-01
+
+Tamer's fixes from testing on 29–30 September, reviewed and accepted by Samuel on 2026-10-01. The map is
+back in the header as "Your Progress", lessons can actually be finished, a student stays signed in
+through a long lesson, and the tutor stops using internal words. Student-facing; no migration.
+
+### Changed — the header and the front door (FR-3219, FR-3220)
+- **The header reads "Study" and "Your Progress".** "Your Progress" opens the student's map (`/spine`);
+  its heading, its title and every button to it ("See your progress →", Arabic "شوف تقدمك ←") use that
+  name. "Where you stand" is off the header; `/dashboard` still works and is still linked from the
+  outstanding-account screen.
+- **A signed-in student who opens `/` goes straight to Study.** The investor-preview page (corpus counts,
+  "AI turns logged", demo cards) is no longer shown to students, and its stats are not fetched. Signed out,
+  `/` is still the welcome page.
+
+### Fixed — a lesson can be finished (FR-3221, FR-3202, FR-3203; ADR-0020 amendment)
+- **A lesson is finished when every objective has been tried at least once and the lesson's average
+  reaches "Getting there".** It used to need every objective at 0.75, which almost nobody reached:
+  "Quick review" only asks about a lesson's first three objectives, so a four-objective lesson like 1-1
+  never moved on, even after a 95% report. Finishing moves the saved place to the next ready lesson and
+  shows the "Revisit" row.
+- The "whole course" banner still needs every objective of every lesson at 0.75.
+- **A wrong first answer can finish a lesson too.** The check used to run after a correct answer only.
+- Accepted knowingly: one weak objective no longer holds a lesson back; prerequisites still guard the
+  lessons after it. "Quick review" still asks the first three objectives only.
+
+### Fixed — the explanation above a widget is no longer scrolled away (FR-3222)
+- When the tutor's newest message holds a widget, question or passage and would not fit, the chat shows
+  it from its top, so the student reads the explanation first and scrolls down to the question.
+
+### Fixed — staying signed in during a lesson (FR-2016)
+- **After 15 minutes on one lesson page, the next message no longer fails with "AI backend
+  unavailable".** The sign-in cookie lasts 15 minutes and nothing renewed it. Now every student request
+  renews the session once and retries if it was refused, and an open, active page renews every 10
+  minutes. An idle tab is not kept alive, so the 7-day idle sign-out still applies. Renewals never
+  overlap, within a tab or across tabs, because a reused renewal signs the student out everywhere
+  (FR-2008).
+- If renewal itself fails, the tutor chat says "You have been signed out — try refreshing this page, or
+  sign in again." instead of blaming the AI.
+
+### Changed — what the tutor says (ADR-0020 exceptions five and six)
+- **The tutor no longer says "LO" to students.** It says "learning objective" or names the idea.
+- **The chat beside Your Progress talks to the student and never quizzes.** It was still the July demo
+  prompt, written for "an observer" and "the audience". It now explains, plans and cites, sends a
+  student who wants practice to Study, and describes progress in words, never as a number. The practice
+  chat no longer calls itself a demo.
+- Both are prompt changes, so comparison data has a cut at this release.
+
+### Known issues
+- After the student answers a widget, the chat can jump back to the top of that message if the widget
+  grows (for example, to show feedback). Found in review; not fixed in this release.
+
 ## [v0.9.3] — 2026-09-25
 
 Hotfix. Three maths questions marked correct answers wrong;

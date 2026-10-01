@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-30 (student header, home page and the lesson gate — `tamer-mvp-fixes`, **not released**) — **FR-2016** and **FR-3219…FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is a proposed amendment to ADR-0020 awaiting Samuel. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
+**Last amended**: 2026-10-01 (student header, home page and the lesson gate — `tamer-mvp-fixes`, accepted by Samuel 2026-10-01, **released in v0.10.0**) — **FR-2016** and **FR-3219…FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is ADR-0020's 2026-09-30 amendment, accepted by Samuel 2026-10-01. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
 review) — **FR-3217, FR-3218** added: every reader of curriculum order uses the one catalogue order
 (`MODULE_ORDER`), a list of several subjects splits by subject first (Samuel, 2026-09-25), guarded by a
 source test, the tutor's Ask-the-Spine context included (Samuel lifted ADR-0020's hold for that ordering
@@ -435,7 +435,7 @@ password sign-in.
 
 ### Isolation & authorisation (FR-2101…)
 
-- **FR-2016** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released]**: A signed-in student
+- **FR-2016** **[ADDED 2026-09-30 — requested 2026-09-30, released v0.10.0]**: A signed-in student
   whose short-lived credential (FR-2008) expires while a page is open MUST NOT lose a request to it:
   a request refused as signed-out MUST be retried once after one silent renewal. While the page is
   visible and the student has interacted in the last 15 minutes, the credential MUST be renewed before
@@ -1059,18 +1059,18 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   rollback), because deploys do not reload the curriculum graph. The label reaches the tutor's
   prompts; Samuel approved that on 2026-09-25 ("OK") as an exception to ADR-0020's prompt hold for
   this one string only, recorded in ADR-0020.
-- **FR-3219** **[ADDED 2026-09-29 — requested 2026-09-29, not yet released]**: The student build's
+- **FR-3219** **[ADDED 2026-09-29 — requested 2026-09-29, released v0.10.0]**: The student build's
   header MUST offer exactly two tabs to a signed-in student: "Study" (`/student`) and "Your Progress"
   (`/spine`). The map's heading and title MUST read "Your Progress" and every button that leads to it "See your progress".
   "Where you stand" is off the header for now; `/dashboard` still resolves and stays linked from the
   outstanding-account screen. This partly reverses #12: that issue removed an internal tool called
   "Evidence Walk", and the page behind the returning tab is the student's own map, rebuilt since.
-- **FR-3220** **[ADDED 2026-09-29 — requested 2026-09-29, not yet released]**: On the student build,
+- **FR-3220** **[ADDED 2026-09-29 — requested 2026-09-29, released v0.10.0]**: On the student build,
   `/` MUST redirect a signed-in student to `/student` and MUST NOT render the investor-preview ledger
   (corpus counts, "AI turns logged", demo cards) or fetch its stats. A signed-out visitor MUST keep
   the welcome page with "Start with Noor" and "Sign in". The frozen baseline keeps its ledger.
-- **FR-3221** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released; proposed amendment to
-  ADR-0020, awaiting Samuel]**: A lesson counts as **finished** — moving the saved place on (FR-3202)
+- **FR-3221** **[ADDED 2026-09-30 — requested 2026-09-30, released v0.10.0; ADR-0020 amendment,
+  accepted by Samuel 2026-10-01]**: A lesson counts as **finished** — moving the saved place on (FR-3202)
   and earning the collapsed "Revisit" row — when **every** one of its objectives has been attempted at
   least once **and** the lesson's average reaches the ramp's second stage, "Getting there" (0.35 or
   above), the same average the card's ramp shows. It MUST NOT count a lesson with an unattempted
@@ -1100,7 +1100,7 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
 
 **The rest of v0.6.0**
 
-- **FR-3222** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released]**:
+- **FR-3222** **[ADDED 2026-09-30 — requested 2026-09-30, released v0.10.0]**:
   In a lesson's transcript, when the newest tutor message contains an interactive block a student has
   to act on — a widget, a question card or a sealed passage — and pinning the view to the bottom would
   cut off the top of that **message** (its explanation included, not only the block), the view MUST
