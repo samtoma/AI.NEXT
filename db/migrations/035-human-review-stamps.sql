@@ -56,7 +56,9 @@
 --                                                       the unknown (withheld)
 --                                katex_error            the maths does not render
 --                                answer_mismatch        answer key != the book's
---                                unanswerable           cannot be answered as typed
+--                                unanswerable           the marker cannot mark the key
+--                                unverified             the independent checks did
+--                                                       not confirm the key
 --                                sacred                 ADR-0006's sealed gate
 --                                human_hold             a human held it (G2 hold,
 --                                                       G3 "fix") — the one reason
@@ -111,8 +113,8 @@ COMMENT ON COLUMN questions.ai_checked_by IS
   '(AI recommendation)"). Never a review (migration 035).';
 COMMENT ON COLUMN questions.hold_reason IS
   'Why an automatic safety check holds this question at review (figure_missing, '
-  'figure_reveals_answer, katex_error, answer_mismatch, unanswerable, sacred) or '
-  'human_hold. Never set on a live row (migration 035).';
+  'figure_reveals_answer, katex_error, answer_mismatch, unanswerable, unverified, '
+  'sacred) or human_hold. Never set on a live row (migration 035).';
 COMMENT ON COLUMN questions.review_note IS
   'Free-text review annotations that are not a stamp (migration 035).';
 
@@ -164,6 +166,12 @@ UPDATE questions q
                                         c.notes), '')
   FROM cls c
  WHERE q.id = c.id;
+
+-- A human's G2 "hold" is the one hold no loader may release (it was a person's call, not a
+-- check's). Before 035 it was only readable from the stamp; give it its reason, once.
+UPDATE questions
+   SET hold_reason = 'human_hold'
+ WHERE status = 'review' AND hold_reason IS NULL AND reviewed_by ~ '\(G2 hold\)$';
 
 -- ---------------------------------------------------------------------------
 -- 3. A live question never carries a hold reason
