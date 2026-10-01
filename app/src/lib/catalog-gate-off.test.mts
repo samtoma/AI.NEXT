@@ -84,6 +84,8 @@ function fakeClient(f: Fixture): PoolClient {
     if (text.includes("FROM mastery") || text.includes("FROM understanding_checks")) return [];
     // the book-section store (migration 034): no split section here
     if (text.includes("FROM course_lessons")) return [];
+    // the book outline (migration 037): none here — the switch is this file's subject
+    if (text.includes("to_regclass('public.course_outline')")) return [{ present: false }];
     return null;
   };
   const query = async (text: string, values?: unknown[]) => {

@@ -151,11 +151,46 @@ function answer(text: string, values: unknown[] | undefined, f: Fixture): Row[] 
   // the book-section store (migration 034), read for the VISIBLE courses only
   // — no National course has a split section, so it holds nothing to change
   if (text.includes("FROM course_lessons")) return [];
+  // the book outline (migration 037): the Grade 10 book's, served only for the
+  // course ids asked — and every id asked is recorded, so a test can prove a
+  // student's home never asks for a course she may not see
+  if (text.includes("to_regclass('public.course_outline')")) return [{ present: true }];
+  if (/FROM course_outline\s+WHERE course_id = ANY/.test(text)) {
+    const ids = (values?.[0] as string[] | undefined) ?? [];
+    OUTLINE_ASKED.push(...ids);
+    return G10_OUTLINE.filter((r) => ids.includes(String(r.course_id)));
+  }
 
   // `questions`, `visuals`, `source_documents` — content. Reaching any of them
   // from a refused lesson is the bug this returns null to catch.
   return null;
 }
+
+/** Course ids the outline was read for, since the last reset. */
+const OUTLINE_ASKED: string[] = [];
+
+/** The Grade 10 book's outline: 1.1 loaded (it is in LO_ROWS), two lessons not yet. */
+const G10_OUTLINE: Row[] = [
+  ["g10m1s1-1", "module:g10m-c01", "Chapter 1 — Algebraic expressions", 1, 1, "1.1", "Simplify expressions"],
+  ["g10m1s2-1", "module:g10m-c01", "Chapter 1 — Algebraic expressions", 1, 2, "1.2", "The real number system"],
+  ["g10m2s1-1", "module:g10m-c02", "Chapter 2 — Exponents", 2, 3, "2.1", "Exponent laws"],
+].map(([slug, moduleId, moduleLabel, moduleOrder, bookOrder, number, title]) => ({
+  course_id: G10,
+  lesson_slug: slug,
+  module_id: moduleId,
+  module_label: moduleLabel,
+  module_order: moduleOrder,
+  book_order: bookOrder,
+  title,
+  sections: [number],
+  section_titles: [title],
+  part_n: null,
+  part_of: null,
+  chapter_intro: false,
+  group_key: number,
+  page_from: null,
+  page_to: null,
+}));
 
 /** Maths live for Prep 3; social explicitly off; Arabic never mentioned. */
 const SEEDED: Fixture = {
@@ -289,6 +324,29 @@ test("003: an American grade-10 student sees the Grade 10 book and nothing Natio
   assert.deepEqual(home.map((s) => [s.subject, s.courseId]), [["math", G10]]);
   // the app's name for the course, never the node's book title (consistency review I4)
   assert.equal(home[0].courseLabel, "Mathematics — Grade 10");
+});
+
+test("003: the Grade 10 card counts what is READY of the whole book; National cards and students never read it", async () => {
+  // Samuel, 2026-10-01: "5 of 65 ready"-style counts for a course with an outline
+  OUTLINE_ASKED.length = 0;
+  const g10 = await getSubjectSummaries(STUDENT, fakeClient(AMERICAN_10));
+  assert.deepEqual(g10.map((s) => [s.courseId, s.lessonsCount, s.outline]), [[G10, 1, { ready: 1, total: 3 }]]);
+  assert.deepEqual(OUTLINE_ASKED, [G10], "the outline is read for her visible course only");
+
+  // a National student: no outline count on any card, and the Grade 10 outline never asked for
+  OUTLINE_ASKED.length = 0;
+  const national = await getSubjectSummaries(STUDENT, fakeClient(LAUNCH));
+  assert.ok(national.length > 0);
+  assert.ok(national.every((s) => !("outline" in s)), "every National card is exactly as before");
+  assert.ok(!OUTLINE_ASKED.includes(G10), "a National student's home never reads the Grade 10 outline");
+
+  // a tester who sees both maths books: only the Grade 10 card counts the book
+  const tester: Fixture = { ...LAUNCH, overrides: [{ course_id: G10, state: "live" }] };
+  const both = await getSubjectSummaries(STUDENT, fakeClient(tester));
+  assert.deepEqual(
+    both.filter((s) => s.outline).map((s) => s.courseId),
+    [G10]
+  );
 });
 
 test("003: the same live G10 rule reaches no National grade-10 student", async () => {
