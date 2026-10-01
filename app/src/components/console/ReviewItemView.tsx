@@ -632,7 +632,7 @@ function WorkingFlagFindings({ item, wf }: { item: ReviewItemPayload; wf: Workin
         ))}
       </ul>
       <dl className="mt-3">
-        <Fact label="Students">see it as the book prints it — nothing was corrected, and no decision here changes it</Fact>
+        <Fact label="Nothing corrected">students see the working as the book prints it; no decision on a flag changes that</Fact>
         <Fact label="Checker">
           prompts {wf.promptsVersion ?? "unrecorded"}
           {wf.runs.length > 0 ? (

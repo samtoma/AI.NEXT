@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 
 import { ReviewItemView } from "@/components/console/ReviewItemView";
 import {
-  DECISION_LABEL,
   KIND_LABEL,
   MAX_CORRECTION,
   MAX_NOTE,
   canDecide,
+  decisionButton,
   decisionEffect,
+  decisionLabel,
   type BacklogFilters,
   type Decision,
   type ReviewItemPayload,
@@ -28,6 +29,10 @@ import {
  *                     nothing changes for students; it goes on the fix list
  *   R  Reject       — a note (required); a question is retired, a claim
  *                     switched off, a stand-in's question held
+ *
+ * The three say what they mean per kind (`decisionButton`): on a working step
+ * the checker flagged, A is "Not an error", F is "Fix needed", and there is no
+ * Reject — a flag is not served to students, so there is nothing to retire.
  *   S  Skip         — not now; the next item, and this one is left for others
  *
  * The decision carries the fingerprint of the content the reviewer saw; if the
@@ -166,7 +171,7 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
         );
         setTally((t) => ({ ...t, [decision]: t[decision] + 1 }));
         setLast(
-          `${DECISION_LABEL[decision]}: ${KIND_LABEL[decided.kind]} ${decided.ref} — ${describeChanges(body.decided?.changes ?? {})}`
+          `${decisionLabel(decided.kind, decision)}: ${KIND_LABEL[decided.kind]} ${decided.ref} — ${describeChanges(body.decided?.changes ?? {})}`
         );
         accept(body);
         router.refresh();
@@ -196,6 +201,10 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
       if (m === "fix_requested" && item.kind === "figure_stand_in" && !note) {
         setNote(`Needs a native figure${typeof item.figure?.spec.native_kind_needed === "string" ? ` (${item.figure.spec.native_kind_needed})` : ""}: `);
       }
+      if (m === "fix_requested" && item.kind === "working_flag" && item.workingFlag && !note) {
+        const steps = [...new Set(item.workingFlag.flags.map((f) => f.step))].sort((a, b) => a - b);
+        setNote(`Step${steps.length === 1 ? "" : "s"} ${steps.join(", ")}: `);
+      }
       requestAnimationFrame(() => noteRef.current?.focus());
     },
     [item, note]
@@ -222,7 +231,7 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
       } else if (k === "f" && !item.readOnly) {
         e.preventDefault();
         open("fix_requested");
-      } else if (k === "r" && !item.readOnly) {
+      } else if (k === "r" && !item.readOnly && canDecide(item.kind, "reject").ok) {
         e.preventDefault();
         open("reject");
       } else if (k === "s") {
@@ -332,7 +341,11 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
                       onChange={(e) => setCorrection(e.target.value)}
                       rows={3}
                       disabled={busy}
-                      placeholder="The corrected stem, answer key or step — LaTeX in $…$ as the book writes it"
+                      placeholder={
+                        item.kind === "working_flag"
+                          ? "What the step should read, as the book prints it — LaTeX in $…$"
+                          : "The corrected stem, answer key or step — LaTeX in $…$ as the book writes it"
+                      }
                       className="ds-field mt-1 w-full rounded border border-line bg-card px-2 py-1.5 font-mono text-[12.5px] text-ink"
                     />
                   </label>
@@ -345,7 +358,11 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
                     disabled={busy}
                     className="ds-control play-pressable rounded border border-line bg-ink px-3 py-1.5 text-[13px] font-semibold text-paper disabled:opacity-50"
                   >
-                    {busy ? "Saving…" : mode === "fix_requested" ? "Request the fix (⌘↵)" : "Reject (⌘↵)"}
+                    {busy
+                      ? "Saving…"
+                      : mode === "fix_requested"
+                        ? `${item.kind === "working_flag" ? "Send to the fix list" : "Request the fix"} (⌘↵)`
+                        : "Reject (⌘↵)"}
                   </button>
                   <button
                     type="button"
@@ -366,7 +383,7 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
                   title={approvable.ok ? decisionEffect(item.kind, "approve") : approvable.why}
                   className="ds-control play-pressable rounded border border-line bg-progress/15 px-3.5 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
                 >
-                  Approve <kbd className="ms-1 font-mono text-[11px] text-ink-soft">A</kbd>
+                  {decisionButton(item.kind, "approve")} <kbd className="ms-1 font-mono text-[11px] text-ink-soft">A</kbd>
                 </button>
                 <button
                   type="button"
@@ -375,18 +392,20 @@ export function ReviewDesk({ filters }: { filters: BacklogFilters }) {
                   title={decisionEffect(item.kind, "fix_requested")}
                   className="ds-control play-pressable rounded border border-gold/50 bg-gold-wash px-3.5 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
                 >
-                  {item.kind === "figure_stand_in" ? "Needs native figure" : "Needs fix"}{" "}
+                  {decisionButton(item.kind, "fix_requested")}{" "}
                   <kbd className="ms-1 font-mono text-[11px] text-ink-soft">F</kbd>
                 </button>
-                <button
-                  type="button"
-                  onClick={() => open("reject")}
-                  disabled={busy || readOnly}
-                  title={decisionEffect(item.kind, "reject")}
-                  className="ds-control play-pressable rounded border border-line bg-card px-3.5 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
-                >
-                  Reject <kbd className="ms-1 font-mono text-[11px] text-ink-soft">R</kbd>
-                </button>
+                {canDecide(item.kind, "reject").ok ? (
+                  <button
+                    type="button"
+                    onClick={() => open("reject")}
+                    disabled={busy || readOnly}
+                    title={decisionEffect(item.kind, "reject")}
+                    className="ds-control play-pressable rounded border border-line bg-card px-3.5 py-1.5 text-[13px] font-semibold text-ink hover:bg-line-soft disabled:opacity-50"
+                  >
+                    {decisionButton(item.kind, "reject")} <kbd className="ms-1 font-mono text-[11px] text-ink-soft">R</kbd>
+                  </button>
+                ) : null}
                 <button
                   type="button"
                   onClick={skipThis}

@@ -7,11 +7,11 @@ import { consoleAccess } from "@/lib/console-auth";
 import { courseName } from "@/lib/console-course-names";
 import { consoleRoute } from "@/lib/console-routes";
 import {
-  DECISION_LABEL,
   ITEM_KINDS,
   KIND_LABEL,
   REASON_CODES,
   REASON_LABEL,
+  decisionLabel,
   doneShare,
   parseFilters,
   type BacklogFilters,
@@ -74,9 +74,10 @@ export default async function ReviewConsolePage({
         <p className="mt-1 max-w-[80ch] text-[14px] text-ink-soft">
           Every maths item no human has signed — questions and their worked solutions, generated
           and widget questions, widget mappings, misconceptions, worked examples, objectives,
-          prerequisite links and book-picture stand-ins. Students already see all of it as if it
-          were reviewed; this is where we make that true, one item at a time. Only a human stamp
-          counts: an AI check is shown as <em>AI-checked, awaiting human</em>.
+          prerequisite links, book-picture stand-ins and the working steps the step-level checker
+          flagged. Students already see all of it as if it were reviewed; this is where we make that
+          true, one item at a time. Only a human stamp counts: an AI check is shown as{" "}
+          <em>AI-checked, awaiting human</em>.
         </p>
       </header>
 
@@ -93,7 +94,9 @@ export default async function ReviewConsolePage({
             The oldest open item that matches the filters and that nobody else has open. Keys:{" "}
             <kbd className="font-mono">A</kbd> approve · <kbd className="font-mono">F</kbd> needs fix ·{" "}
             <kbd className="font-mono">R</kbd> reject · <kbd className="font-mono">S</kbd> skip ·{" "}
-            <kbd className="font-mono">⌘/Ctrl ↵</kbd> send the note · <kbd className="font-mono">Esc</kbd> back.
+            <kbd className="font-mono">⌘/Ctrl ↵</kbd> send the note · <kbd className="font-mono">Esc</kbd> back. On a
+            flagged working step <kbd className="font-mono">A</kbd> is &ldquo;Not an error&rdquo; and{" "}
+            <kbd className="font-mono">F</kbd> is &ldquo;Fix needed&rdquo;; there is no reject.
           </>
         }
         right={<span className="text-[12px] text-ink-soft">{view.openMatching} open match</span>}
@@ -565,7 +568,7 @@ function Reviewers({ view }: { view: ReviewOverview }) {
             <li key={d.id}>
               <span className="text-ink-faint">{stamp(d.decidedAt)}</span> · {d.operatorName} ·{" "}
               <Chip tone={d.decision === "approve" ? "good" : d.decision === "fix_requested" ? "attention" : "neutral"}>
-                {DECISION_LABEL[d.decision]}
+                {decisionLabel(d.kind, d.decision)}
               </Chip>{" "}
               {KIND_LABEL[d.kind]} <span className="font-mono text-[11px] text-ink-faint">{d.ref}</span>
             </li>
