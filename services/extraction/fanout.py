@@ -395,8 +395,12 @@ def build_runs(inv: dict) -> list[dict]:
                     "another data-engineer's work)" % ch,
                     f"uv run fanout.py config {ch}",
                     f"uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c{ch:02d}.json --validate-only",
-                    f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en "
-                    f"--book work/g10-math/fanout/books/{t}/g10-math.json   # scratch DB only (127.0.0.1)",
+                    # by path, add-only: books/g10-math.json is status "ingest" until the whole book is done, so `--all --course` refuses it
+                    # (and load_seed has no --book). Dry run first; a bundle already loaded changes nothing (--update applies edits).
+                    f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json "
+                    f"seed/g10-math/g10m-c{ch:02d}.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+                    f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json "
+                    f"seed/g10-math/g10m-c{ch:02d}.json --course course:us-g10-math-en",
                     f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-{t}.json "
                     f"--book g10-math --runs runs/g10-math/lesson"]
         add(id=f"wcheck-{t}", stage="SW", chapter=ch, workflow="working-check.workflow.js (sw-v3, two passes A and B)",
@@ -429,7 +433,7 @@ def build_runs(inv: dict) -> list[dict]:
             agents=round(0.8 * nobj), cost=[round(x * 0.45, 2) for x in _cost("s6_objective", nobj)],
             minutes=MINUTES["s6-author"], priority=(3, i, 1), depends_on=[f"s5-draft-{t}"],
             save_to=f"runs/g10-math/families/author-{t}-<wf_id>.json", meter=_meter("S6"),
-            after=[f"uv run fanout.py write-specs runs/g10-math/families/author-{t}-<wf_id>.json --into {fam}",
+            after=[f"uv run fanout.py write-specs runs/g10-math/families/author-{t}-<wf_id>.json --into {fam} --book {cfg}",
                    f"uv run python -m families.normalise {fam}/*.json   # the two mechanical refusals only (recorded)",
                    f"uv run generate_questions.py --families {fam} --book {cfg} --check",
                    "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args "
