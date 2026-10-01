@@ -79,9 +79,26 @@ decision 58; `docs/WIP-g10-pilot/samuel-answers.md`, answer 37). Five follow-ups
 - **(e) The full fan-out is approved**, ≈ $0.85–1.1k (decision 58e) — recorded in `plan.md` and
   `docs/PROJECT_STATE.md`.
 
-**Code is in progress on this branch for all of FR-4501…FR-4509; none has file:line evidence yet**
-(added when it lands). Two things this pass could not resolve and puts to Samuel: see *Open questions
-for Samuel*, below.
+**Code for FR-4501…FR-4509 is built and read** (2026-10-01; `tasks.md` T436…T443 ticked, file:line
+evidence on the FR-4501…FR-4509 rows of [traceability.md](./traceability.md), rows still OPEN until T387's
+full re-grading). Two things this pass could not resolve and puts to Samuel: see *Open questions for
+Samuel*, below.
+
+**2026-10-01 (answers 38–40, the same day, later; decisions 59–61)**:
+- **Answer 38 — the student sees the whole book** (decision 59; new **FR-4322…FR-4327**, section *The
+  whole-book outline*): *"I want the students to see all chapters as well not only 8!"* Every chapter and
+  lesson of a course with an outline is listed in the book's order under its own titles; a lesson not yet
+  prepared is shown and not startable ("Being prepared"), refused on the server, and becomes startable by
+  itself when the fan-out loads it. Readiness is derived (a lesson is prepared when its objectives are
+  loaded), never stored. Noor's prompts are unchanged. **Built and read** (`tasks.md` T444…T446; migration
+  037).
+- **Answer 39 — G5 auto-passes too** (decision 60): already carried in FR-4509.
+- **Answer 40 — a teaching item may be a family's parent** (decision 61): FR-4304 now says so and carries
+  the proposed wording for **001's FR-1101**, which lives outside this feature's edit scope and is stamped
+  when the code lands. **Code in progress, not built** (`tasks.md` T448, unticked).
+- **The step-level working checker** (decision 51, answer 30, built): new **FR-4411** in the pipeline
+  block, with `tasks.md` T447. The console does not yet read its flag files into the backlog; named on the
+  FR-4411 row.
 
 **Status of the code.** Committed only as unreviewed WIP snapshots on the pushed feature branch (an
 auto-snapshot job commits every 30 seconds, `[skip ci]`); nothing is reviewed by Samuel or merged to `main`.
@@ -196,6 +213,13 @@ producing generated questions, widget questions and the misconception library, a
   landing in that backlog (FR-4509);
 - a figure with no native type yet shown as the book's own image, temporarily, instead of holding the
   lesson (FR-4508).
+
+**Added 2026-10-01** (answers 30, 38 and 40, decisions 51, 59 and 61):
+- the student sees the whole book, with lessons not yet prepared shown and not startable (FR-4322…FR-4327);
+- a step-level check of every canonical solution's working, flagged and never corrected silently
+  (FR-4411);
+- a book teaching item allowed as a generated family's parent (FR-4304; proposed wording for 001's
+  FR-1101) — **not built**.
 
 **Deliberately not written as requirements here:**
 
@@ -619,7 +643,10 @@ through the attempts route and confirm identical outcomes.
   given to the tutor, the Ask-the-Spine context and its list of books, matching an uploaded photo to
   course material, and answer checking. A course of another curriculum MUST be refused where the data
   is read, exactly as a hidden course is. A direct request for one MUST answer exactly as a course
-  that does not exist (FR-2706).
+  that does not exist (FR-2706). *(Amended 2026-10-01, decision 59.)* The whole-book outline (FR-4322) is
+  one more reader under this rule: it MUST be read only for a course this student's gate already admits,
+  never by looking a course up on its own, because it holds a book's chapter and lesson titles and a
+  hidden course's are not hers to read.
 - **FR-4007** *(changed rev. 2, decision 4)*: A student's curriculum MUST change only in three ways:
   an operator changes it (FR-4010); it is set at sign-up or in the first-Google-sign-in step; or an
   implied curriculum is re-resolved when the grade changes (FR-4008). It MUST NOT change
@@ -779,7 +806,14 @@ through the attempts route and confirm identical outcomes.
   exception)*: a National Arabic lesson whose working title differs from the book's printed lesson name
   is shown, and given to the tutor, under the printed name (for example «عِبادُ الرَّحمنِ», not its first
   objective «فهم النص والاستماع»). Nothing else in those prompts changes, and every maths and Social
-  Studies prompt stays byte-identical.
+  Studies prompt stays byte-identical. *(Noted 2026-10-01, decision 59 — not a fourth difference.)* The
+  whole-book outline changes no National course. Only a course with outline rows is touched, and no
+  National course has any: it gets exactly the check-in grouping, the course-card count ("N lessons") and
+  the skill map it had before. Noor's prompts are not touched either: asked whether the tutor should know
+  which lessons are still being prepared, Samuel answered "no leave it as it is" (relayed by the
+  coordinating session; not yet logged verbatim in `samuel-answers.md`), so every prompt capture stays
+  byte-identical. Render evidence is on the FR-4322…FR-4327 rows of
+  [traceability.md](./traceability.md).
 - **FR-4207**: The solution's content drift guard MUST know this book, by its source fingerprint and
   its counts, and MUST fail loudly if the loaded course drifts from them. It MUST keep guarding the
   Prep-3 Mathematics set exactly as it does today (Principle XI, FR-1103).
@@ -896,6 +930,15 @@ through the attempts route and confirm identical outcomes.
   two separate acts (FR-1104); and a reproducible sample of at least 10% of each bundle written to the
   review queue with its seed (FR-1105). Each family MUST be written as a **declarative spec that can be
   regenerated** from the repository, and no model-written code MAY be executed to produce it.
+  *(Amended 2026-10-01, decision 61, answer 40 — **code in progress, not built**.)* FR-1101's parent link
+  names "the reviewed book question it derives from". An objective whose book items are all teaching-only
+  (lo:g10m8s1-1-1, "Drawing figures from coordinates": six drawings) has none. A family MAY therefore be
+  modelled on a **book teaching item** instead, and every generated item MUST then carry an **explicit
+  parent kind** (`question` or `teaching`; `question` is the default, so every existing family reads
+  exactly as before). A teaching parent is a worked-example entry in the explanation library, not a
+  question row. The family goes live like any other and is a backlog item (FR-4501). *Proposed wording
+  for 001's FR-1101, stamped there when the code lands: "…and a `parent_question_id` naming the reviewed
+  book question, or the reviewed book teaching item, it derives from, with a `parent_kind` saying which."*
 - **FR-4305**: The course MUST reach the **tier floor**: every objective carries at least one question
   at each of the three difficulty tiers, book and generated questions together. Any objective below
   the floor at load MUST be listed by name in the console and in the load report. *(This makes
@@ -978,7 +1021,8 @@ through the attempts route and confirm identical outcomes.
 - **FR-4314**: Each part MUST be scored on its own objectives, as any lesson is. The section MUST also
   have a roll-up, "*k* of *m* parts mastered", and MUST read as mastered only when every part is.
 - **FR-4315**: The skill map MUST show the parts of one section as one visible group, labelled by the
-  section.
+  section. *(Noted 2026-10-01, decision 59: a chapter with no lesson prepared yet is not a group on the
+  map at all. It is a name in the "Being prepared" strip above the map, FR-4327.)*
 - **FR-4316**: The tutor's Ask context MUST treat sibling parts as closely related. While a student
   works in one part, the other parts of the same section are the nearest related material, ahead of
   other lessons.
@@ -987,7 +1031,9 @@ through the attempts route and confirm identical outcomes.
   than stated by the book.
 - **FR-4318**: A student MUST always see a lesson's printed section number beside its title, with
   "part *n* of *m*" for a part. Where a course already shows its printed lesson number, as the National
-  courses do, that display is unchanged.
+  courses do, that display is unchanged. *(Noted 2026-10-01, decision 59.)* A lesson not yet prepared is
+  named the same way, its printed section number, "part *n* of *m*" and book title read from the outline
+  (FR-4322), so the name a student sees does not change when the lesson is loaded.
 - **FR-4319**: The console MUST report per lesson and per section: completeness (FR-4309), mastery and
   activity can each be read either way. A section's figures MUST be computed from its parts' rows.
 
@@ -1101,6 +1147,27 @@ through the attempts route and confirm identical outcomes.
   whose evidence is not at its cited anchor, that the second AI does not confirm, or that would close a
   cycle, is still refused automatically before it ever reaches a human — unchanged.
 
+- **FR-4411** **[ADDED 2026-10-01, decision 51, answer 30; built]**: The line MUST check the **working** of
+  every canonical solution a student can be taught from — each book question's solution and each worked
+  example's steps — **step by step**, as it will be served (after gate G2's approved corrections) and
+  before the misconception stage reads it. FR-4302's three-way check compares final answers only, so a
+  typo inside the book's working passes whenever the final answer is right, and the grounded tutor teaches
+  that working. Two independent signals:
+  - **one blind AI agent per solution** reads the question, the key and the numbered working and flags
+    any step that does not follow from the question or from the steps before it — a substituted value that
+    is not the question's, arithmetic that does not equal the next line, a sign or bracket lost, a label
+    that changes, a last step that does not state the key. It MUST NOT re-solve the problem its own way and
+    MUST NOT write a correction;
+  - **a free numeric pre-check**, deterministic and with no model call, evaluates the neighbouring sides
+    of every relation chain whose sides are both purely numeric. A side it cannot evaluate is skipped,
+    never guessed. The agent is blind to it.
+
+  Every flag MUST be recorded with its solution, step, exact quote, kind and source (agent, numeric or
+  both), and MUST be a **backlog item** (FR-4501) — "working step flagged, needs a human". The stored
+  solution MUST NOT change until a human decides: a flag is **never corrected silently**. A solution the
+  agent could not judge is listed as unchecked and is never counted as passed; one with no working to
+  check (only a drawing) is listed as skipped. The run's cost is metered (FR-4403).
+
 ### Native figure types (FR-4321) **[ADDED rev. 4, decision 26]**
 
 - **FR-4321**: Where the pipeline's visual stage finds a figure that no existing figure kind can draw
@@ -1134,7 +1201,8 @@ through the attempts route and confirm identical outcomes.
 > reviewed… and in the background create agents with the review process so we can review from the
 > console page."* This block is for maths courses only — Prep-3 Mathematics and the Grade 10 American
 > course — and does not touch Social Studies' or Arabic's existing review queue, or the sacred-content
-> gate (Principle IV). None of it has file:line evidence yet; see [tasks.md](./tasks.md) T436…T443.
+> gate (Principle IV). Built and read 2026-10-01: file:line evidence is on the FR-4501…FR-4509 rows of
+> [traceability.md](./traceability.md); see [tasks.md](./tasks.md) T436…T443.
 
 - **FR-4501**: For every maths course, the console MUST hold a **backlog**: one row per content item
   that carries no human stamp (FR-4506 defines the stamp). The backlog MUST list, at minimum: a book
@@ -1142,8 +1210,9 @@ through the attempts route and confirm identical outcomes.
   (FR-4302); a generated question (FR-4304); a widget question and its predicate → misconception
   mapping, including one the blind verifier refused (FR-4306); a misconception entry (FR-4307); an
   objective or a prerequisite link (FR-4410); a figure shown as the book's own image because its native
-  type does not exist yet (FR-4508); and a decision a gate reached on the AI checks' recommendation
-  rather than a human's during the fan-out (FR-4509).
+  type does not exist yet (FR-4508); a working step the step-level checker flagged (FR-4411); and a
+  decision a gate reached on the AI checks' recommendation rather than a human's during the fan-out
+  (FR-4509).
 - **FR-4502**: An operator holding `content-review` MUST be able to review one backlog item at a time
   and record exactly one of three verdicts: **approve** (the human stamp FR-4506 requires; the item now
   reads reviewed), **fix requested** (a student sees the item completely unchanged; the flag travels
@@ -1191,6 +1260,48 @@ through the attempts route and confirm identical outcomes.
   the book (FR-4302), and the parity drift guard (FR-4207) still hold an item exactly as before this
   decision. **G5 passing does not deploy or promote anything**: production still changes only on
   Samuel's explicit go, through CI.
+
+### The whole-book outline (FR-4322…FR-4327) **[ADDED 2026-10-01, decision 59, answer 38; built]**
+
+> Samuel, 2026-10-01: *"I want the students to see all chapters as well not only 8! you did ingest the
+> full book."* The book's whole structure is known from its manifest (gate G0: 14 chapters, 65 lessons),
+> while its teaching content reaches the database a chapter at a time. These requirements let a student see
+> the whole book now, honestly: a lesson with nothing loaded to teach from is shown as such, never
+> started, never taught from nothing (constitution II, grounded teaching). They apply to **any course
+> with an outline**; today that is the Grade 10 course alone, and a course without one changes in no way
+> (FR-4206).
+
+- **FR-4322**: A course whose book has an outline MUST show the student **every chapter and every lesson
+  of that book**, in the order the book's manifest gives and under the book's own titles, whether or not
+  the lesson's content is prepared yet. A lesson MUST carry its printed section number(s), its "part *n*
+  of *m*" where it is a part and its title (FR-4311, FR-4318), read from the outline, so it is named the
+  same before and after it is loaded. The outline MUST come from the book's manifest, written by its own
+  loader, and MUST NOT be a second copy of the loaded lessons: a later content load MUST NOT remove an
+  outline row, and an outline row MUST NOT make any other reader treat a lesson as taught.
+- **FR-4323**: A lesson's **readiness MUST be derived, never stored**: a lesson is *prepared* exactly when
+  its objectives are loaded in the student's catalogue — the rule that has always decided what a lesson
+  is. A lesson that is not prepared MUST be **shown and not startable**: marked "Being prepared", with
+  nothing on it that opens, starts or quizzes it. A chapter with no lesson prepared MUST read "Being
+  prepared" as a whole. A lesson, or a whole chapter, MUST become startable **by itself** the moment its
+  content is loaded, with no change to the outline and no step the fan-out must remember. "Up next", the
+  practice plan and every tutor surface MUST read the prepared lessons alone, and the check-in MUST NOT
+  say the student has finished "the whole course" while some lesson of the book is still being prepared.
+- **FR-4324**: A request that names a lesson the outline lists but whose content is not prepared MUST be
+  **refused on the server**, answered exactly as a hidden course is — `404 not_found` (FR-4006) — **before
+  any session is opened, any context built or any model called**. It MUST NOT fall back to the default
+  lesson, which would teach a different lesson under this one's name. A slug no outline lists, and a
+  database that has no outline yet, MUST behave exactly as they did before. Nothing about the outline
+  reaches the tutor: Noor is not told which lessons are being prepared, and her prompts are unchanged.
+- **FR-4325**: On the check-in of a course with an outline, the list of everything in the book MUST be
+  **open by default** — the student does not have to find a "Pick something else" control to see the whole
+  book. A course with no outline keeps its collapsed picker exactly as it was.
+- **FR-4326**: The home page's card for a course with an outline MUST count what is ready of the whole
+  book — "**{ready} of {total} lessons ready**" — and the figure MUST grow by itself as chapters load. A
+  course with no outline keeps "N lessons".
+- **FR-4327**: The skill map of a course with an outline MUST show the chapters with **no lesson prepared**
+  as one **"Being prepared" strip of chapter names**, in book order, outside the map. It MUST NOT invent a
+  topic, an objective or a link for a chapter that has none, and nothing on the strip opens or starts
+  anything. A chapter joins the map by itself, as its real topics, once content is loaded.
 
 ### Key Entities
 
@@ -1328,6 +1439,7 @@ stamped in its own spec when this feature's rows move past OPEN, so the chain st
 | 002 **FR-3212** — Content page per subject | per course | FR-4104 |
 | 002 **FR-3217** — one curriculum order, split by subject | also split by course where a list holds two courses of one subject | FR-4009, FR-4104 |
 | 001 **FR-302** — student model holds curriculum system | becomes load-bearing | FR-4003, FR-4006 |
+| 001 **FR-1101** — a generated item names the reviewed book question it derives from | **proposed, code in progress (decision 61, answer 40):** it MAY name a book teaching item instead, with an explicit `parent_kind` (`question` default, `teaching`); not stamped on 001's row until the code lands | FR-4304 (amended) |
 | 001 **FR-1109** — tier floor (SHOULD) | a MUST for this course | FR-4305 |
 | 001 **FR-1201** — a widget per Prep-3 module | applied to this course per chapter | FR-4306 |
 | 001 delta-matrix §2 — curriculum system *"held constant for this build"* | no longer held constant | this feature |
