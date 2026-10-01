@@ -350,6 +350,11 @@ class Listed(unittest.TestCase):
         p = Part("Ex8-6:12", "Using your answer to the previous question , find $x$ .", "")
         self.assertEqual([x.reason for x in plan([p])[1]], ["refers_by_words"])
 
+    def test_a_typo_in_the_book_still_points_back(self):
+        # Ex1-2:3c prints "Using you answers in (a) and (b)": listed for the backlog like any other part that points back by words
+        p = Part("Ex1-2:3c", "Using you answers in (a) and (b) calculate the area of $ABCDE$ .", "")
+        self.assertEqual([x.reason for x in plan([p])[1]], ["refers_by_words"])
+
     def test_the_carry_that_would_hand_over_the_answer_is_refused(self):
         pre = "$U(6;a)$ is on $f$ ."
         c = part("Ex8-6:13a", "Find the value of $a$ .", pre=pre, key="5")

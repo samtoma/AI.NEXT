@@ -344,8 +344,9 @@ def _one_point(key: str | None) -> bool:
 
 
 # ------------------------------------------------------------------------------------ referential words
+# "your?" because the book prints "Using you answers in (a) and (b)" (Ex1-2:3c): a typo is still a part that points back
 _REF_TAIL = re.compile(
-    r"\b(hence|thus|(?:using|use|from|with) (?:your|the) (?:answer|result)s?|the (?:previous|preceding) (?:question|part)|"
+    r"\b(hence|thus|(?:using|use|from|with) (?:your?|the) (?:answer|result)s?|the (?:previous|preceding) (?:question|part)|"
     r"(?:in|from|of) (?:part|question) \(?[a-e]\)?|(?:your|the) (?:answer|result) (?:to|from|of|in) (?:part|question|\(?[a-e]\)))\b", re.I)
 _REF_WORK = re.compile(
     r"\b(from (?:the )?(?:previous|preceding|first|above|earlier)|from above|from earlier|we found earlier|"
