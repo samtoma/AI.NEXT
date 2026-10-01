@@ -38,31 +38,42 @@ widgets in u4-1-2 diagnose nothing) — no wrong content is shown, just plain "n
 ## B. Decisions for Samuel (one at a time)
 1. **"Load a course" restore** (decision 29, FR-4208/4210): as built it rolls the WHOLE database back to a backup —
    undoing students' progress since then — whereas the requirement says restore keeps every student's progress or
-   refuses. Build the bundle-replay restore, or keep it as a "rollback" and amend the requirements?
+   refuses. Build the bundle-replay restore, or keep it as a "rollback" and amend the requirements? →
+   **Decided (answer 27, decision 48): "Build the safe restore."** Built 2026-09-28, T430.
 2. **Course-gating default "off"**: with it off, grade is ignored, and every new Grade-10 sign-up is stored as American
-   without being asked. Default "on", or refuse to start without the setting? (production has it on)
+   without being asked. Default "on", or refuse to start without the setting? (production has it on) →
+   **Decided (answer 28, decision 49): "Refuse to start."** Built (`lib/env.ts` `resolveCourseGating`).
 3. **Misconception tags on "true but less precise" options** can never fire (the re-entry comes first). Refuse such
-   tags, or send the refutation with the re-entry message?
+   tags, or send the refutation with the re-entry message? →
+   **Decided (answer 32, decision 53): "Remove those tags."** Not yet built.
 4. **What "reviewed" means**: 123 Grade-10 questions (and Prep 3, same loader) carry "ai dual-check (pending Samuel)",
    which the app counts as reviewed — so "unreviewed teaching seen" (SC-011) is undercounted. Change the loader or
-   the contract?
+   the contract? → **Decided (answer 33, decision 54): "Only human stamps count."** Now spec 003's FR-4506 (answer
+   37b); an AI-only pass reads "AI-checked, awaiting human". Not yet built.
 5. **Decimal comma typed by a student** ("7,21") in a numeric question is marked wrong, not returned for re-entry
-   (the numeric grader must stay identical for Prep 3). Change it for Grade 10 only?
+   (the numeric grader must stay identical for Prep 3). Change it for Grade 10 only? →
+   **Decided (answer 34, decision 55): "Accept it as a decimal."** Read as 7.21 when unambiguous; Prep 3 unchanged.
+   Not yet built.
 6. **Lesson text about the book's notation** ("coordinates separated by a semicolon, e.g. A(1, 1)") now contradicts
-   what it shows after FR-4308's conversion. Reword or drop those lines?
+   what it shows after FR-4308's conversion. Reword or drop those lines? — still open.
 7. **Grade 10 "write no Arabic at all, even if the student writes in Arabic"** goes beyond decision 30 (no Egyptian
    phrases). Keep or narrow? → **Decided 2026-10-01 (answer 35): keep** — and no Arabic on any screen of the
-   American course either (FR-4205 widened).
-8. **FR-4410 (prerequisite links)** — keep as a requirement, or move to pipeline policy like the objectives method?
+   American course either (FR-4205 widened; built and verified, T435).
+8. **FR-4410 (prerequisite links)** — keep as a requirement, or move to pipeline policy like the objectives method? —
+   still open. (Decision 58c, 2026-10-01, changes what FR-4410 requires during the fan-out — G1 now auto-passes on
+   the second AI's agreement — without answering this question either way.)
 9. **The six new widget types were built before the gap list** existed (decision 27 said "only for chapters that name
-   them") — confirm "built ahead".
-10. **Step-level working checker** (backlog 78, ≈$70–125 for the book).
+   them") — confirm "built ahead". — still open.
+10. **Step-level working checker** (backlog 78, ≈$70–125 for the book). →
+    **Decided (answer 30, decision 51): "Yes, add it."** Not yet built.
 12. **"A question's own figure is shown with it"** (built in fixing A3) has no requirement — write it as an FR, or
-    leave it unfiled?
+    leave it unfiled? — still open.
 13. **Two more LIVE Prep-3 widget issues** (found fixing W1): q:geo2-2-2:w002 opens already solved (the angle
     widget starts at its own target); u4-1-2's tan mapping names the wrong misconception. Plus: the corrected Prep-3
     widget bank (14 dead links re-mapped/dropped) is ready in the repo and needs a data migration + a release to reach
-    production — on Samuel's go.
+    production — on Samuel's go. → **The angle-widget and dead-link part decided (answer 31, decision 52): "Ship as
+    a small hotfix"** — a small release off `main`, like v0.9.3, migration + CI, deploy on Samuel's explicit go. The
+    u4-1-2 tan-mapping fix is not named separately in answer 31; confirm it rides in the same hotfix before shipping.
 11. Still open from before: "draw figures from coordinates" has no marked question (tier floor); Ex8-5:5 detailed review.
 
 ## C. Requirements and documents out of sync (fix; no decision needed)
