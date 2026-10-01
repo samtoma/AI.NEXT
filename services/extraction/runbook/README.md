@@ -834,20 +834,32 @@ carries an earlier chapter's objectives as shards (`prior.txt`, `prior/<id tail>
 chapter's args stay small. A chapter whose S6 author writes no family, or whose S7 author writes no template, skips
 the grade / verify run, and its widget bundle is not written (the gap report alone) — never an unverified bundle.
 
-**The step-level working checker** (answer 30; stage `SW`, prompts `sw-v1`), per assembled chapter bundle:
+**The step-level working checker** (answer 30; stage `SW`, prompts `sw-v2` since the Chapter 8 calibration of
+2026-10-01), per assembled chapter bundle:
 
 ```sh
-uv run working_check.py precheck --seed seed/<book>/<prefix>-cNN.json          # free: the numeric pre-check only
+uv run working_check.py precheck --seed seed/<book>/<prefix>-cNN.json          # free: the pre-check only
 uv run working_check.py args --book <book> --seed seed/<book>/<prefix>-cNN.json --chapter N \
     --by-ref work/<book>/packets/fanout/wcheck-chNN --out A.json --embed <copy>.workflow.js   # parts past 300 solutions
+#   [--batch 8] [--effort medium] [--model sonnet] [--only <ids.json | calibration.json>]
 # run the copy; save to runs/<book>/working-check/chNN-<runId>.json; meter --stage SW
 uv run working_check.py collect --args A.json --runs runs/<book>/working-check/chNN-<runId>.json \
     --out runs/<book>/working-check/chNN.flags.json
+uv run working_check.py calibrate --truth runs/<book>/working-check/chNN.calibration.json --flags <flags.json>
 ```
 
-One Sonnet agent per canonical solution (book questions and worked-example entries with working) reads the question,
-the key and the numbered steps and reports every step that does not follow (a value not the question's, arithmetic,
-a sign, a label, a copy error, a last step that is not the key). It never re-solves its own way and never corrects.
-The pre-check evaluates purely numeric relation chains (rounding with "=" to the places shown, mixed numbers, a stated
-contradiction and "= undefined" are not flags) and sits beside the shards, never in a prompt. Every flag, with its
-sources (agent, numeric), is a backlog item for a human; the content is not changed.
+One Sonnet agent per BATCH of up to 8 canonical solutions (book questions and worked-example entries with working)
+reads each one's question, its multiple-choice options, the key and the numbered steps and reports every step that
+does not follow (a value not the question's, arithmetic, a sign, a label, a copy error, a last step that is not the
+key, or a conclusion the steps do not support), says whether the fault sits in a step or in the question text, and
+never re-solves its own way or corrects. Why batches: sw-v1 (one agent per solution) metered $0.161 per solution on
+Chapter 8, of which ~$0.094 is the harness's fixed cost per agent (~30K cache-write and ~95K cache-read tokens
+before a shard is read); a batch shares it. A figure image is offered only when the question text does not give
+its points, and a batch opens at most 3, in one turn; the agents' effort is `medium`; notes only on flags. The tool
+budget is an instruction in the prompt (the `agent()` hook has no turn cap): the metered run is where it is checked.
+The free pre-check evaluates purely numeric relation chains (rounding with "=" to the places shown, mixed numbers,
+a stated contradiction and "= undefined" are not flags), and flags a numeric-key question whose working never
+calculates (the "stub" rule); it sits beside the shards, never in a prompt. Every flag, with its sources (agent,
+numeric, stub), is a backlog item for a human; the content is not changed. `runs/<book>/working-check/chNN.calibration.json`
+is a chapter's classified flags (REAL / REAL-BUT-ELSEWHERE / FALSE) and a 51-solution subset: run the subset first,
+`collect` it, and `calibrate` must show every real defect still caught before a new prompt version runs on a book.

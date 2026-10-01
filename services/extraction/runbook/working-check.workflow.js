@@ -109,17 +109,17 @@ For EVERY step of EVERY solution, decide whether it follows from the question, t
 - wrong_value: a value used or substituted (a coordinate, a length, a coefficient, a given) is not the one the question or an earlier step gives;
 - arithmetic: a line's arithmetic or algebra does not equal what it is set equal to (check each "=" in a chain, and each line of an aligned derivation against the line before it);
 - sign: a minus sign or a bracket is lost or flipped;
-- label: a named point, side, variable or quantity changes (the working says T where the question says Q);
+- label: a named point, side, variable or quantity changes (the working says N where the question says M);
 - copy: an expression is copied wrongly from an earlier step (a formula with a term changed);
 - final_answer: the last step does not state the FINAL ANSWER given as the key. When the key is a letter, OPTIONS says which answer it stands for, and the working's conclusion must name that same answer;
-- other: any other step that does not follow, including a conclusion the earlier steps do not support (for instance "all sides equal, so a square" for a parallelogram).
+- other: any other step that does not follow, including a conclusion the earlier steps do not support.
 Rules:
 - Judge the working AS WRITTEN. Do not solve the problem your own way, do not judge the choice of method, and never rewrite the solution or propose a corrected one.
 - Rounding the book does on purpose is not an error when it is right to the places shown (e.g. √90 = 9.5 to one decimal place). A step that only states a formula correctly, describes the method, or draws a sketch ([figure]) is fine.
 - The maths is LaTeX; read it as the mathematics it typesets (spacing and \\text{…} wrappers mean nothing).
 - FIGURES: a file lists a FIGURE image only when its question text does not give the points. Open an image ONLY when a value the working uses (a coordinate, a length, a label) is in no text of that file and a step's correctness depends on it. Open every image the batch needs together, in your one figure turn, at most ${FIG_CAP} in all; read printed labels and coordinates, never measure pixels. When a value is in no text and no figure is offered, it comes from the book's figure or from an earlier part of the exercise: do not flag it for that reason.
 - A solution whose id ends in a letter (…ex8-6-46c) is one part of a multi-part exercise; it may use a result of an earlier part you cannot see. Never flag a value only because it is not in its file. If its conclusion cannot be judged without that part, the verdict is "unclear" with a one-sentence note.
-- where: "working" when a step is wrong; "question" when the QUESTION TEXT (or an option) is what conflicts with an otherwise consistent working (the question calls a point Q, the working and its figure call it T); "unsure" when they conflict and you cannot tell which is wrong. The flag's step is the step where the conflict shows.
+- where: "working" when a step is wrong; "question" when the QUESTION TEXT (or an option) is what conflicts with an otherwise consistent working (the question names a side XY, the working and its figure name it ZY); "unsure" when they conflict and you cannot tell which is wrong. The flag's step is the step where the conflict shows.
 - Report every step that does not follow: its number, quote (a short EXACT span copied from that step), kind, where, expected, why. "flagged" when you report any; "consistent" (no flags) when every step follows; "unclear" only when you cannot judge — the working depends on something you cannot see, or a step is unreadable.
 - Be strict but not pedantic: a flag must point at a real inconsistency a student would be taught.
 - Be brief: quote at most one short span; why is ONE sentence of at most 25 words; expected is at most 12 words naming only the value or label the earlier text gives (never a rewritten step), or empty; note is only for "unclear" (one sentence). A consistent solution needs only its id and verdict.
