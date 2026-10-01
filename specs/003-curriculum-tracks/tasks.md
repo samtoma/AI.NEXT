@@ -8,8 +8,9 @@ description: "Task list for 003 — Curriculum Tracks and the Grade 10 American 
 [data-model.md](./data-model.md) · [contracts/](./contracts/) · [research.md](./research.md) ·
 [privacy-review.md](./privacy-review.md) · [decisions.md](./decisions.md) (decisions 1–47) ·
 `docs/specs/extraction-pipeline.md` §9 (B1–B21)
-**Status**: rev. 3, 2026-09-27. Rev. 2 (2026-09-25, after Samuel's *"ok for all"*) added the phases up to
-8c; Phase 9b (T427–T433) came with the third round of decisions. G0 is passed; for the Chapter 8 pilot,
+**Status**: rev. 4, 2026-10-01. Rev. 2 (2026-09-25, after Samuel's *"ok for all"*) added the phases up to
+8c; Phase 9b (T427–T433) came with the third round of decisions; Phase 9c (T434) adds answer 36's
+reversal of decision 1 (sign-up always asks). G0 is passed; for the Chapter 8 pilot,
 G1 and G2 are passed (decisions.md, *Gate record*). Code is on the branch, committed only as unreviewed
 WIP snapshots (an auto-snapshot job, `[skip ci]`) — nothing is reviewed or merged. A task is ticked only
 when its evidence exists. Where code exists but nobody has verified it, the task says so and stays
@@ -18,8 +19,8 @@ unticked.
 require byte-identity captures and migration proofs. Every test file declares what it proves with
 `// @covers FR-…` (or `# @covers` in Python), so `scripts/traceability.py` can see it.
 
-**Numbering**: tasks are **T301–T433** (planned as T301–T399; T400–T433 were added with rev. 2's and the
-third round's work). Spec 001 uses T001–T143, and `scripts/traceability.py` reads
+**Numbering**: tasks are **T301–T434** (planned as T301–T399; T400–T433 were added with rev. 2's and the
+third round's work; T434 with answer 36 on 2026-10-01). Spec 001 uses T001–T143, and `scripts/traceability.py` reads
 task ids from every spec's `tasks.md` into one set, so 003 starts at T301 to keep each id unique
 across the repository. That matters when an id is cited in an issue or a commit.
 
@@ -582,6 +583,7 @@ Phase 1 (T301–T303)
         Phase 7 US4 (after Phase 2; T375 after T308 + T374)
         Phase 8 US5 (after T312 + T380)
         Phase 9 (T384 after every importer moved; T392–T393 last)
+        Phase 9c: T434 (after T368, T369 — reverses their "offered ≥ 2" gate)
 ```
 
 - **G0 → the pipeline's lesson unit**: T402 and T403 apply G0's 65 lessons before any S1 run (T358). S0b (T418–T421) comes before S1–S3 read any maths.

@@ -91,12 +91,21 @@ export function StudentLoop({
   plan,
   studentName,
   bookCite = null,
+  arabicTouches = true,
 }: {
   plan: PlanItem[];
   studentName: string;
   /** how a page receipt names the book (`CourseDef.cite`); `null` when the
    *  plan's courses cite different books, or none (backlog #36) */
   bookCite?: { name: string; edition: string } | null;
+  /**
+   * Whether the header may show its Arabic title. `true` — the default, so
+   * every existing render is byte-identical — unless the caller (`student/
+   * page.tsx`) knows every course in this plan is Arabic-free
+   * (`CourseDef.tutor.arabicTouches`, Samuel's answer 35, 2026-10-01): the
+   * American course today.
+   */
+  arabicTouches?: boolean;
 }) {
   const [phase, setPhase] = useState<Phase>("plan");
   const [idx, setIdx] = useState(0);
@@ -209,8 +218,12 @@ export function StudentLoop({
               span resolves to its right edge and the two scripts render flush. */}
           <h1 className={cx(HEADING, "flex flex-wrap items-baseline gap-x-3 text-[1.9rem] md:text-[2.4rem]")}>
             <span>Today&apos;s Plan</span>
-            <span className="text-ink-faint">/</span>
-            <span dir="rtl" className="text-accent-deep">خطة اليوم</span>
+            {arabicTouches && (
+              <>
+                <span className="text-ink-faint">/</span>
+                <span dir="rtl" className="text-accent-deep">خطة اليوم</span>
+              </>
+            )}
           </h1>
           {phase !== "plan" && phase !== "summary" && (
             <div className="flex items-center gap-1.5">

@@ -185,10 +185,16 @@ export default async function CoursesConsolePage() {
 
 /**
  * What sign-up offers, per grade (FR-4102) — by the one offer rule (FR-4004).
- * A grade offering two or more curricula asks which one the school follows;
- * one is stored without asking; none stores National, without asking
- * (FR-4005). A grade is named in every curriculum's words, because the same
- * stored year is "Secondary 1" to one and "Grade 10" to the other (FR-4013).
+ *
+ * Since Samuel's reversal of 2026-10-01 ("yes the sign up should always ask";
+ * decision 1, superseded) sign-up asks EVERY grade, naming every curriculum
+ * the registry knows and pre-selecting none — an answer is required either
+ * way. What this table still reports, truthfully, is the catalogue fact
+ * `offeredCurricula` answers: which of those curricula have something LIVE
+ * for a grade today, so an operator can see which options a new student would
+ * see marked "nothing to study here yet" before she picks one. A grade is
+ * named in every curriculum's words, because the same stored year is
+ * "Secondary 1" to one and "Grade 10" to the other (FR-4013).
  */
 function OfferedLine({ offered }: { offered: { grade: string; curricula: CurriculumId[] }[] }) {
   return (
@@ -199,20 +205,23 @@ function OfferedLine({ offered }: { offered: { grade: string; curricula: Curricu
       <p className="mt-1 max-w-[80ch] text-[12.5px] leading-relaxed text-ink-soft">
         A grade offers a curriculum when one of that curriculum&rsquo;s courses is live for it
         {COURSE_GATING ? "" : " — with the gate off, when one of its loaded courses is written for it"}.
-        Sign-up asks only when a grade offers two or more, names only those, and pre-selects none.
+        Sign-up always asks, names every curriculum in the registry and pre-selects none; a
+        curriculum with nothing live for the grade is still offered, marked with a short note
+        saying there is nothing to study there yet.
       </p>
       <div className="mt-2 overflow-x-auto rounded-lg border border-line bg-card">
         <table className="w-full border-collapse text-[13px]">
           <thead>
             <tr className="border-b border-line text-ink-soft">
               <Th>Grade</Th>
-              <Th>Offers</Th>
+              <Th>Live today</Th>
               <Th>A new student of this grade</Th>
             </tr>
           </thead>
           <tbody>
             {GRADES.map((g) => {
               const curricula = offered.find((o) => o.grade === g.value)?.curricula ?? [];
+              const nothingLiveAnywhere = curricula.length === 0;
               return (
                 <tr key={g.value} className="border-b border-line-soft last:border-0">
                   <td className="px-3 py-2 align-top">
@@ -224,18 +233,19 @@ function OfferedLine({ offered }: { offered: { grade: string; curricula: Curricu
                     </span>
                   </td>
                   <td className="px-3 py-2 align-top text-ink">
-                    {curricula.length === 0
+                    {nothingLiveAnywhere
                       ? "nothing live"
                       : curricula.map((c) => CURRICULA[c].label).join(" and ")}
                   </td>
                   <td className="px-3 py-2 align-top text-ink-soft">
-                    {curricula.length === 0
-                      ? `is not asked, and is stored as ${CURRICULA["eg-national-en"].label} — with nothing to study yet`
-                      : curricula.length === 1
-                        ? `is not asked, and is stored as ${CURRICULA[curricula[0]].label}`
-                        : `is asked which curriculum the school follows: ${curricula
+                    {`is asked: ${CURRICULUM_IDS.map((c) => CURRICULA[c].label).join(" or ")}`}
+                    {nothingLiveAnywhere
+                      ? " — every option marked nothing to study here yet"
+                      : CURRICULUM_IDS.some((c) => !curricula.includes(c))
+                        ? ` (${CURRICULUM_IDS.filter((c) => !curricula.includes(c))
                             .map((c) => CURRICULA[c].label)
-                            .join(" or ")}`}
+                            .join(" and ")}: nothing live yet)`
+                        : ""}
                   </td>
                 </tr>
               );
