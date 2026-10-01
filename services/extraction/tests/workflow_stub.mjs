@@ -14,7 +14,7 @@
 // the no-spend dry run's DETERMINISTIC stub answers, built from the real book data in `args`
 // (dryrun_chapter.py). A label neither answers fails the run. Each call records its response.
 //
-// Prints JSON: { ok, result, error, calls: [{label, phase, model, prompt}], logs, phases, meta }.
+// Prints JSON: { ok, result, error, calls: [{label, phase, model, effort, prompt}], logs, phases, meta }.
 // The runtime's own rules are enforced: `meta` must be a pure literal, `Date.now()`, argless
 // `new Date()` and `Math.random()` throw, and a schema's root must be an object whose required
 // keys are all properties.
@@ -70,7 +70,7 @@ function checkSchemaShape(schema, label) {
 let currentPhase = null
 const agent = async (prompt, opts = {}) => {
   const label = opts.label || `agent-${out.calls.length}`
-  const call = { label, phase: opts.phase || currentPhase, model: opts.model || null, prompt }
+  const call = { label, phase: opts.phase || currentPhase, model: opts.model || null, effort: opts.effort || null, prompt }
   out.calls.push(call)
   if (opts.schema) checkSchemaShape(opts.schema, label)
   let r

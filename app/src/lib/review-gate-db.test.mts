@@ -47,7 +47,7 @@ import pg from "pg";
 // Samuel's account, for the gate decisions (answer 39): configuration, read per call.
 process.env.AINEXT_GATE_OWNER_EMAIL = "samuel@example.invalid";
 
-const { claimItem, decide, fixList, loadBacklog, nextFor } = await import("./review-gate-queries.ts");
+const { claimItem, decide, fixList, loadBacklog, nextFor, questionPayload } = await import("./review-gate-queries.ts");
 const { parseRecord } = await import("./review-gate-records.ts");
 const { itemKey } = await import("./review-gate.ts");
 
@@ -155,7 +155,8 @@ before(async () => {
       id text PRIMARY KEY, lo_id text NOT NULL, tier text NOT NULL, question_type text NOT NULL,
       stem text NOT NULL, choices jsonb, correct_answer text NOT NULL, canonical_solution jsonb NOT NULL,
       solution_version int NOT NULL DEFAULT 1, status text NOT NULL, source text NOT NULL,
-      parent_question_id text, source_page int, source_note text, reviewed_by text, reviewed_at timestamptz,
+      parent_question_id text, parent_kind text NOT NULL DEFAULT 'question',
+      source_page int, source_note text, reviewed_by text, reviewed_at timestamptz,
       materialised_from bigint, created_at timestamptz NOT NULL DEFAULT now()
     );
     CREATE TABLE visuals (
@@ -316,6 +317,69 @@ test("the fingerprint follows the content, never the stamp or the status", { ski
   await a!.query(`UPDATE questions SET reviewed_by = NULL, status = 'live' WHERE id = 'q:book1'`);
   await a!.query(`UPDATE visuals SET spec = '{"points": [[1, 2]]}' WHERE id = 'v:native'`);
   assert.equal(await fp(), before1);
+});
+
+/* ------------------------------------------------------------ a family's parent (answer 40) */
+
+test("a family modelled on a book teaching item reads its parent from the library, in the backlog without a stamp", { skip }, async () => {
+  // Migration 038: parent_kind says which table parent_question_id names. A question-kind parent is a
+  // `questions` row; a teaching-kind one is a worked example of `explanation_library`, whose stem is
+  // the entry's `problem` element. Both are read here, and neither disturbs the other tests' counts:
+  // the rows are removed at the end.
+  const sol = JSON.stringify([{ step: 1, text_md: "$3$" }]);
+  await a!.query(
+    `INSERT INTO explanation_library (id, lo_id, entry_type, content, generated_by) VALUES
+       ('expl:a:ex8-6-4a', 'lo:a', 'worked_example',
+        '[{"kind": "problem", "text_md": "Draw triangle $DEF$ with $D(1, 2)$."}, {"step": 1, "text_md": "Plot each vertex."}]',
+        'book (book_worked_epub)'),
+       ('expl:a:odd-shape', 'lo:a', 'worked_example', '{"unexpected": "an object, not a list"}', 'book (test)')`
+  );
+  try {
+    await a!.query(
+      `INSERT INTO questions (id, lo_id, tier, question_type, stem, correct_answer, canonical_solution, status, source,
+                              parent_question_id, parent_kind, source_note, created_at)
+       VALUES ('q:a:g001-draw', 'lo:a', 'standard', 'numeric', 'Plot $(1, 2)$ and name its quadrant.', '1', $1, 'live', 'variant',
+               'expl:a:ex8-6-4a', 'teaching', 'Generated from template family tpl:a:draw.', '2026-09-26 16:40Z'),
+              ('q:a:g002-plot', 'lo:a', 'basic', 'numeric', 'How far is $(0, 3)$ from the origin?', '3', $1, 'live', 'variant',
+               'q:book1', 'question', 'Generated from template family tpl:a:plot.', '2026-09-26 16:41Z'),
+              ('q:a:g003-odd', 'lo:a', 'basic', 'numeric', 'Another one.', '3', $1, 'live', 'variant',
+               'expl:a:odd-shape', 'teaching', 'Generated from template family tpl:a:odd.', '2026-09-26 16:42Z')`,
+      [sol]
+    );
+
+    // the review backlog lists it: live, generated, no human stamp (answer 37a/37b)
+    const items = await asOperator(a!, SAMUEL, (db) => loadBacklog(db, ENV, null, GATES));
+    const row = items.find((i) => i.ref === "q:a:g001-draw");
+    assert.ok(row, "a family modelled on a teaching item is in the backlog");
+    assert.equal(row.kind, "generated_question");
+    assert.equal(row.state, "open");
+
+    // the reviewer sees what it was modelled on — the teaching item's own problem text, and says so
+    const teaching = await asOperator(a!, SAMUEL, (db) => questionPayload(db, "q:a:g001-draw"));
+    assert.equal(teaching!.parentId, "expl:a:ex8-6-4a");
+    assert.equal(teaching!.parentKind, "teaching");
+    assert.equal(teaching!.parentStem, "Draw triangle $DEF$ with $D(1, 2)$.");
+    assert.equal(teaching!.reviewedBy, null);
+
+    // a question-kind parent reads exactly as before: the parent question's stem
+    const plain = await asOperator(a!, SAMUEL, (db) => questionPayload(db, "q:a:g002-plot"));
+    assert.equal(plain!.parentId, "q:book1");
+    assert.equal(plain!.parentKind, "question");
+    assert.equal(plain!.parentStem, "Stem of q:book1 [figure]");
+
+    // a worked example whose content is not the usual list shows no parent text — and no failure
+    const odd = await asOperator(a!, SAMUEL, (db) => questionPayload(db, "q:a:g003-odd"));
+    assert.equal(odd!.parentKind, "teaching");
+    assert.equal(odd!.parentStem, null);
+
+    // a row that predates the column (the default) is a question-kind parent
+    const book = await asOperator(a!, SAMUEL, (db) => questionPayload(db, "q:gen1"));
+    assert.equal(book!.parentKind, "question");
+    assert.equal(book!.parentId, null);
+  } finally {
+    await a!.query(`DELETE FROM questions WHERE id IN ('q:a:g001-draw', 'q:a:g002-plot', 'q:a:g003-odd')`);
+    await a!.query(`DELETE FROM explanation_library WHERE id IN ('expl:a:ex8-6-4a', 'expl:a:odd-shape')`);
+  }
 });
 
 /* ------------------------------------------------------------ claims */

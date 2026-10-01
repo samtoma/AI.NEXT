@@ -472,8 +472,11 @@ function QuestionFacts({ q }: { q: QuestionPayload }) {
         {q.sourceNote ? <div className="text-ink-soft">{q.sourceNote}</div> : null}
       </Fact>
       {q.parentId ? (
-        <Fact label={q.parentKind === "teaching" ? "Generated from (book teaching item)" : "Generated from"}>
+        <Fact label="Generated from">
           <span className="font-mono text-[11px]">{q.parentId}</span>
+          {q.parentKind === "teaching" ? (
+            <div className="text-ink-faint">a book teaching item (worked example), not a book question</div>
+          ) : null}
           {q.parentStem ? (
             <div className="mt-0.5 text-ink-soft">
               <TeX text={displayStem(q.parentStem)} />
