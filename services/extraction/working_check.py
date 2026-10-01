@@ -47,10 +47,23 @@ solutions ($0.161 each; the plan said $0.03-0.05). The harness gives every agent
 and ~95K of cache reads before it has read one shard ($0.094: 65% of an agent that opened no figure) and the
 agent's thinking added $0.034 on average; opening figures added ~$0.06 to the 66 agents that did. No prompt
 can lower the fixed part of one-agent-per-solution below $0.09, so sw-v2 shares it: 8 solutions per agent
-(~$0.012 each), a capped figure policy (a figure is offered only when the question text does not give its
-points, and a batch opens at most 3 images, all in one turn), reasoning effort `medium`, and notes only on
+(~$0.012 each), a figure policy (a figure is offered only when the question text does not give its points,
+and every offered figure is read in the agent's first turn), reasoning effort `medium`, and notes only on
 flags. Measured sw-v1 precision on the same chapter: 23 of 25 flags were real book defects; the two false ones
 came from the shard (it omitted the multiple-choice options), which sw-v2 now prints.
+
+SW-V3 (2026-10-01, after the two sw-v2 calibration runs: batch 8 / medium recall 12 of 16 real solutions by the
+agents alone, batch 5 / high 14 of 16, both $0.019-0.027 a solution). Both missed Ex8-4:19b, whose points exist
+only in its figure: the agents were told to open a figure "only if" a value was in no text, reconstructed
+A, B, C from the working itself (circular, and the swapped labels vanish) and judged it consistent. So an
+offered figure is now READ in the first turn, with the shards, and the prompt forbids back-solving a
+figure's values. Their other misses (Ex8-6:17, 36c, 46e, 24a's stub) differed between the runs: lapses
+of a shallow pass over 5-8 solutions, which an independent second pass catches (the union of the two runs
+misses only 19b). So the whole-book configuration is TWO independent blind passes whose flags are UNIONED
+(`args --order shuffled --pass-id B`, then `collect` with both runs), a flag two passes both raised
+ranking above one a single pass raised. The truth set is sw-v1's own findings: recall against it is 100%
+for sw-v1 by construction and overstates it, so `working_check_mutate.py` builds an unbiased set (known-good
+solutions with one injected defect each, the truth written down) to measure recall by defect class.
 
 WHAT COMES OUT (`collect`): runs/<book>/working-check/chNN.flags.json, format
 "ainext.working-check/1": every flagged step with its sources (agent, numeric, stub), the agents'
@@ -72,17 +85,17 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-PROMPTS_VERSION = "sw-v2"
+PROMPTS_VERSION = "sw-v3"
 FORMAT = "ainext.working-check/1"
 MAX_PER_RUN = 300                       # keeps a part's compact args well under packet_ref.COMPACT_LIMIT
 FLAG_KINDS = ("wrong_value", "arithmetic", "sign", "label", "copy", "final_answer", "other")
 FLAG_WHERE = ("working", "question", "unsure")      # where the fault sits (sw-v2): a step, or the question text
 BATCH = 8                               # solutions per checking agent: shares the ~$0.09 fixed cost of an agent
-FIG_CAP = 3                             # figure images one agent may open, all in one turn
 EFFORT = "medium"                       # the agents' reasoning effort ("low" once a calibration run allows it)
 MODEL = "sonnet"
 EFFORTS = ("low", "medium", "high")
 MODELS = ("sonnet", "haiku")
+ORDERS = ("bundle", "shuffled")         # shuffled: a second, independent pass batches the solutions differently
 # What one checking agent cost (API-equivalent USD per solution), for the fan-out plan. sw-v1 measured: 31.0 / 192.
 # sw-v2 is MODELLED from sw-v1's measured token mix (fixed 30K cache-write + 95K cache-read per agent shared by a
 # batch; thinking 1.2-3.4K tokens per solution at medium..default effort; at most 3 images per batch) and stays
@@ -127,7 +140,8 @@ def solutions_from_bundle(bundle: dict, figures: dict[str, list[str]] | None = N
         steps = [c.get("text_md", "") for c in content if c.get("kind") != "problem"]
         out.append({"id": e["id"], "lo": e.get("lo"), "kind": "worked_example", "stem": stem, "key": None,
                     "options": [], "type": None,
-                    "steps": steps, "page": e.get("source_page"), "figures": list(figures.get(e["id"]) or [])})
+                    "steps": steps, "page": e.get("source_page"),
+                    "figures": list(figures.get(e["id"]) or [])})
     return out
 
 
@@ -185,7 +199,8 @@ def render_shard(sol: dict) -> str:
         lines.append(f"step {i}: {s}")
     figs = figures_offered(sol)
     if figs:
-        lines += ["", "FIGURE (the question shows it; open it ONLY if a value the working uses is in no text above):"]
+        lines += ["", "FIGURE (the question's points, lengths or labels are shown only in this picture; the prompt "
+                      "names it so you read it in your first turn):"]
         lines += [f"  {f}" for f in figs]
     elif sol.get("figures"):
         lines += ["", "FIGURE: not offered (the question text already gives its points)."]
