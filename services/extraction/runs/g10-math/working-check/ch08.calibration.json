@@ -1,0 +1,268 @@
+{
+ "format": "ainext.working-check-calibration/1",
+ "book": "g10-math",
+ "chapter": 8,
+ "source_run": "wf_957393ec-d74 (prompts sw-v1), runs/g10-math/working-check/ch08.flags.json",
+ "classified_on": "2026-10-01",
+ "classified_by": "qa-engineer, each flag read against the book's own equation images (work/g10-math/equations/<md5>.png), figures and sibling parts (blocks.jsonl), and the seed bundle",
+ "rule": "REAL = a defect in the book's working or key that a student would meet; REAL-BUT-ELSEWHERE = a real content defect that is not a working step (the stem, or context lost between the parts of an exercise); FALSE = the checker's mistake. Provenance: the equation images show every REAL and REAL-BUT-ELSEWHERE defect is the book's own, faithfully transcribed, not an extraction error.",
+ "counts": {
+  "flags": 25,
+  "REAL": 18,
+  "REAL-BUT-ELSEWHERE": 5,
+  "FALSE": 2,
+  "flagged_solutions": 21,
+  "real_solutions": 16,
+  "false_flag_rate": 0.08
+ },
+ "labels": [
+  {
+   "solution_id": "expl:g10m8s2-1-1:ex8-6-36c",
+   "step": 3,
+   "verdict": "REAL",
+   "evidence": "The book's working proves four equal sides of a given parallelogram (a rhombus) and concludes 'square'; no right angle or equal diagonals shown (the true claim: LM.LP = 0). Equation images match the transcription."
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+   "step": 4,
+   "verdict": "REAL",
+   "evidence": "The book's image prints m_PR x m_QR = -1/7 x 7/1: -1/7 is m_PQ (step 2), m_PR = -4/3. Faithful transcription of the book's own label slip."
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-26",
+   "step": 5,
+   "verdict": "REAL",
+   "evidence": "The book's image prints PR perp QR, and in the same line names the right angle PQ^R (at Q): the right angle is between PQ and QR."
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-38d",
+   "step": 1,
+   "verdict": "REAL",
+   "evidence": "The book's image prints m_QR = (-2-1)/(1-4) = 3/4; with R(5, 1) (stem and figure) the denominator is 1-5 = -4. (-3)/(-3) = 1, not 3/4. Also caught by the free pre-check."
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-46c",
+   "step": 6,
+   "verdict": "REAL-BUT-ELSEWHERE",
+   "evidence": "m_MN = -1/3 is derived in the sibling part ex8-6-46a (printed answer m_MN = -1/3) and the book's 46c working relies on it; the pipeline serves each part alone, so the value is unexplained to a student. Multi-part context lost at assembly, not a step error."
+  },
+  {
+   "solution_id": "expl:g10m8s3-2-3:ex8-6-42d",
+   "step": 1,
+   "verdict": "REAL",
+   "evidence": "The book's image prints m_MC = (-5-(-4,5))/(-2-(-0,5)); C is (2, -5) so the denominator is 2-(-0.5) = 2.5, as the next line uses. Also caught by the free pre-check."
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-27",
+   "step": 1,
+   "verdict": "REAL-BUT-ELSEWHERE",
+   "evidence": "The STEM (book image) says N is the mid-point of BC, but the working computes N = ((-3+3)/2, (4-2)/2) = (0, 1) = mid-point of AB, and its claims (MN parallel to BC, MN = 1/2 BC) are right for that. The misprint is in the question text; the checker pointed at the working and its suggested fix (AB) was wrong."
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-1:ex8-6-27",
+   "step": 2,
+   "verdict": "REAL-BUT-ELSEWHERE",
+   "evidence": "Same defect as step 1: stem says mid-point of BC, working uses mid-point of AB (book misprint in the stem)."
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-1-5",
+   "step": 1,
+   "verdict": "FALSE",
+   "evidence": "CHECKER SHARD DEFECT, not a content defect: the seed has choices A shape W, B shape X, C shape Y, D shape Z, key D, and the book's printed answer is 'shape Z'. render_shard (sw-v1) never printed the choices, so the agent saw a bare 'D'."
+  },
+  {
+   "solution_id": "q:g10m8s1-1-3:ex8-6-3",
+   "step": 1,
+   "verdict": "FALSE",
+   "evidence": "Same shard defect: choices D = Shape Z in the seed; the book prints 'Shape Z'."
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-24a",
+   "step": 1,
+   "verdict": "REAL",
+   "evidence": "The book's own solution for part (a) is only 'First draw a sketch: [figure]': no calculation, never reaches the key sqrt(34) (printed answer sqrt 34). Caught for free by the sw-v2 stub rule."
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:ex8-6-42a",
+   "step": 1,
+   "verdict": "REAL",
+   "evidence": "The book's image prints sqrt(5^2 (-1)^2) between sqrt((2-(-3))^2+(-5-(-4))^2) and sqrt(25+1): the plus sign is missing. Also caught by the free pre-check."
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:we01",
+   "step": 2,
+   "verdict": "REAL-BUT-ELSEWHERE",
+   "evidence": "The STEM (book image) names the second point Q(7; -2); the figure, the working and the book's own step 5 name it T. Misprint in the question text (Q for T)."
+  },
+  {
+   "solution_id": "q:g10m8s2-1-1:we01",
+   "step": 5,
+   "verdict": "REAL-BUT-ELSEWHERE",
+   "evidence": "Same defect as step 2: the stem's Q versus the working's T."
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-10",
+   "step": 3,
+   "verdict": "REAL",
+   "evidence": "The book's text says 'to solve for x' but B(2, y) is substituted and y is found (step 4, key -2)."
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+   "step": 2,
+   "verdict": "REAL",
+   "evidence": "Figure: A(-5;2), B(2;-4), C(8;3). The step headed 'The length of BC' substitutes A and B (that is AB). Labels swapped between steps 2 and 4; both lengths are sqrt(85), so the key stands."
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-19b",
+   "step": 4,
+   "verdict": "REAL",
+   "evidence": "The step headed 'The length of AB' substitutes B and C (that is BC): the other half of the swap in step 2."
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-4-1b",
+   "step": 5,
+   "verdict": "REAL",
+   "evidence": "The book's image prints m_AB x (1/m_CD) != -1; with m_AB = 3 and m_CD = -3 that product is -1, so the printed test contradicts its own conclusion (the intended test: m_AB x m_CD = -9 != -1)."
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-42e",
+   "step": 1,
+   "verdict": "REAL",
+   "evidence": "Equal diagonals do not make a square (a rectangle has them): the book's inference 'must be a square' does not follow from the earlier step; the key (square) is right."
+  },
+  {
+   "solution_id": "q:g10m8s3-2-2:ex8-6-44d",
+   "step": 2,
+   "verdict": "REAL",
+   "evidence": "The book's image prints -3/2 = (3)(1/2) + c; the gradient just found is -3. The next line (c = -3/2 + 3/2) only follows from -3."
+  },
+  {
+   "solution_id": "q:g10m8s3-2-3:ex8-4-5",
+   "step": 5,
+   "verdict": "REAL",
+   "evidence": "The book's image prints m_PR = m_QR = -1/2; step 1 and 2 use m_PQ (P, Q), m_PR is never computed."
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-17",
+   "step": 1,
+   "verdict": "REAL",
+   "evidence": "B is (2, 6): the book's image prints (-2-2)/2 for the x-coordinate; it should be (-2+2)/2. The result a = 0 is right."
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:ex8-6-24c",
+   "step": 1,
+   "verdict": "REAL",
+   "evidence": "The question asks for the mid-point of PR; the book's image labels the result M_QR (values are P's and R's)."
+  },
+  {
+   "solution_id": "q:g10m8s4-1-1:we10",
+   "step": 2,
+   "verdict": "REAL",
+   "evidence": "The book's image prints x_1 = -2, y_1 = -2, x_1 = 2, y_2 = 1: the third label should be x_2 (steps 3-4 use x_2 = 2)."
+  },
+  {
+   "solution_id": "q:g10m8s4-1-3:ex8-6-46e",
+   "step": 2,
+   "verdict": "REAL",
+   "evidence": "The book's image prints (8; 12) = (x_p/2; y_p/2) right after (4; 6) = (x_p/2; y_p/2) is cleared: as written the equation is false (it would give x_p = 16); the next line takes x_p = 8, y_p = 12. The key (8, 12) is right."
+  }
+ ],
+ "unclear": [
+  {
+   "solution_id": "expl:g10m8s3-2-2:ex8-6-39d",
+   "verdict": "REAL-BUT-ELSEWHERE",
+   "evidence": "S and T are defined in sibling part ex8-6-39b (mid-points of PQ and QR) and m_ST in 39c; the served stem 'Prove that ST parallel PR' names points it never defines. Multi-part context lost at assembly; an 'unclear' is the right answer."
+  },
+  {
+   "solution_id": "expl:g10m8s4-1-3:ex8-6-44b",
+   "verdict": "REAL-BUT-ELSEWHERE",
+   "evidence": "E is defined in sibling part ex8-6-44a (mid-point of BD) and only shown in the figure; 'M_AC = E' is unexplained alone. Multi-part context lost at assembly; 'unclear' is the right answer."
+  }
+ ],
+ "controls": {
+  "note": "sw-v1 called these consistent; that is its verdict, not verified truth. A new flag on one is read by a human before it counts as false. The 16 multiple-choice solutions are here because sw-v2 is the first run that shows the checker their options.",
+  "ids": [
+   "q:g10m8s1-1-2:ex8-1-3",
+   "q:g10m8s1-1-2:ex8-1-4",
+   "q:g10m8s1-1-3:ex8-1-6",
+   "q:g10m8s1-1-2:ex8-6-2",
+   "q:g10m8s2-1-1:ex8-6-39a",
+   "q:g10m8s3-2-2:ex8-4-1a",
+   "q:g10m8s3-2-3:ex8-4-2a",
+   "q:g10m8s3-2-3:ex8-4-2b",
+   "q:g10m8s3-2-3:ex8-4-2c",
+   "q:g10m8s3-2-2:ex8-6-19b",
+   "q:g10m8s3-2-2:ex8-6-19d",
+   "q:g10m8s3-2-2:ex8-6-21c",
+   "q:g10m8s3-2-2:ex8-6-22e",
+   "q:g10m8s3-2-2:ex8-6-33a",
+   "q:g10m8s3-2-2:ex8-6-36b",
+   "q:g10m8s4-1-1:ex8-6-19c",
+   "q:g10m8s1-1-2:ex8-1-1",
+   "q:g10m8s2-1-2:ex8-6-6",
+   "q:g10m8s3-1-1:we03",
+   "q:g10m8s3-1-2:ex8-6-9",
+   "q:g10m8s3-2-2:we07",
+   "q:g10m8s3-2-3:ex8-4-18",
+   "q:g10m8s3-2-1:ex8-6-30d",
+   "q:g10m8s3-2-1:ex8-6-40e",
+   "q:g10m8s4-1-3:we13",
+   "q:g10m8s4-1-3:ex8-6-31e",
+   "expl:g10m8s2-1-1:ex8-6-22a",
+   "expl:g10m8s3-2-2:ex8-6-30e"
+  ]
+ },
+ "subset": [
+  "expl:g10m8s2-1-1:ex8-6-22a",
+  "expl:g10m8s2-1-1:ex8-6-36c",
+  "expl:g10m8s3-2-2:ex8-6-26",
+  "expl:g10m8s3-2-2:ex8-6-30e",
+  "expl:g10m8s3-2-2:ex8-6-38d",
+  "expl:g10m8s3-2-2:ex8-6-39d",
+  "expl:g10m8s3-2-2:ex8-6-46c",
+  "expl:g10m8s3-2-3:ex8-6-42d",
+  "expl:g10m8s4-1-1:ex8-6-27",
+  "expl:g10m8s4-1-3:ex8-6-44b",
+  "q:g10m8s1-1-2:ex8-1-1",
+  "q:g10m8s1-1-2:ex8-1-3",
+  "q:g10m8s1-1-2:ex8-1-4",
+  "q:g10m8s1-1-2:ex8-6-2",
+  "q:g10m8s1-1-3:ex8-1-5",
+  "q:g10m8s1-1-3:ex8-1-6",
+  "q:g10m8s1-1-3:ex8-6-3",
+  "q:g10m8s2-1-1:ex8-6-24a",
+  "q:g10m8s2-1-1:ex8-6-39a",
+  "q:g10m8s2-1-1:ex8-6-42a",
+  "q:g10m8s2-1-1:we01",
+  "q:g10m8s2-1-2:ex8-6-6",
+  "q:g10m8s3-1-1:we03",
+  "q:g10m8s3-1-2:ex8-6-9",
+  "q:g10m8s3-2-1:ex8-6-30d",
+  "q:g10m8s3-2-1:ex8-6-40e",
+  "q:g10m8s3-2-2:ex8-4-10",
+  "q:g10m8s3-2-2:ex8-4-19b",
+  "q:g10m8s3-2-2:ex8-4-1a",
+  "q:g10m8s3-2-2:ex8-4-1b",
+  "q:g10m8s3-2-2:ex8-6-19b",
+  "q:g10m8s3-2-2:ex8-6-19d",
+  "q:g10m8s3-2-2:ex8-6-21c",
+  "q:g10m8s3-2-2:ex8-6-22e",
+  "q:g10m8s3-2-2:ex8-6-33a",
+  "q:g10m8s3-2-2:ex8-6-36b",
+  "q:g10m8s3-2-2:ex8-6-42e",
+  "q:g10m8s3-2-2:ex8-6-44d",
+  "q:g10m8s3-2-2:we07",
+  "q:g10m8s3-2-3:ex8-4-18",
+  "q:g10m8s3-2-3:ex8-4-2a",
+  "q:g10m8s3-2-3:ex8-4-2b",
+  "q:g10m8s3-2-3:ex8-4-2c",
+  "q:g10m8s3-2-3:ex8-4-5",
+  "q:g10m8s4-1-1:ex8-6-17",
+  "q:g10m8s4-1-1:ex8-6-19c",
+  "q:g10m8s4-1-1:ex8-6-24c",
+  "q:g10m8s4-1-1:we10",
+  "q:g10m8s4-1-3:ex8-6-31e",
+  "q:g10m8s4-1-3:ex8-6-46e",
+  "q:g10m8s4-1-3:we13"
+ ]
+}

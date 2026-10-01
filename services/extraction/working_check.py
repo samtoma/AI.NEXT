@@ -3,8 +3,10 @@
     uv run working_check.py precheck --seed <chapter bundle.json> [--out flags.json]        # free, no model
     uv run working_check.py args     --book g10-math --seed <chapter bundle.json> --chapter N \\
                                      --by-ref DIR --out A.json [--lesson-runs runs/<book>/lesson] [--max-per-run 300]
+                                     [--batch 8] [--effort medium] [--model sonnet] [--only FILE] [--embed COPY]
     uv run working_check.py collect  --args A.json [--args A.part2.json] --runs R.json [R2.json …] \\
                                      --out runs/<book>/working-check/chNN.flags.json
+    uv run working_check.py calibrate --truth runs/<book>/working-check/chNN.calibration.json --flags <flags.json>
 
 WHY. The three-way check of S3 compares FINAL answers only (printed answer, EPUB solution, blind
 re-solve), so a typo INSIDE the book's working passes whenever the final answer is right — and the
@@ -30,13 +32,23 @@ the evaluator does not know is skipped, never guessed. It catches "9 − 5 = 5" 
 (the §8.3 misprint m = (3−7)/(3−3)); it cannot catch a wrong value substituted from the question —
 that is the agent's job.
 
-THE AGENT (runbook/working-check.workflow.js, prompts sw-v1). One Sonnet agent per solution reads
-the question, the key and the numbered working (one shard each, packet by reference) and judges each
-step against the question and the steps before it: a substituted value that is not the question's, a
-line whose arithmetic does not equal the next, a sign or bracket lost, a label that changes (T for Q),
-a last step that does not state the key. It never re-solves the problem its own way and never writes
-a correction; it reports the step, an exact quote, the kind, what would follow, and why. It is blind
-to the pre-check (two independent signals).
+THE AGENT (runbook/working-check.workflow.js, prompts sw-v2). One Sonnet agent per BATCH of up to 8 solutions
+reads each one's question, its options (multiple choice), the key and the numbered working (one shard each,
+packet by reference) and judges each step against the question and the steps before it: a substituted value that
+is not the question's, a line whose arithmetic does not equal the next, a sign or bracket lost, a label that
+changes (T for Q), a last step that does not state the key. It never re-solves the problem its own way and
+never writes a correction; it reports the step, an exact quote, the kind, whether the fault sits in a step or in
+the question text, and why. It is blind to the pre-check (two independent signals).
+
+WHY BATCHES (the Chapter 8 calibration, 2026-10-01). sw-v1 ran one agent per solution and metered $31.0 for 192
+solutions ($0.161 each; the plan said $0.03-0.05). The harness gives every agent ~30K tokens of cache writes
+and ~95K of cache reads before it has read one shard ($0.094: 65% of an agent that opened no figure) and the
+agent's thinking added $0.034 on average; opening figures added ~$0.06 to the 66 agents that did. No prompt
+can lower the fixed part of one-agent-per-solution below $0.09, so sw-v2 shares it: 8 solutions per agent
+(~$0.012 each), a capped figure policy (a figure is offered only when the question text does not give its
+points, and a batch opens at most 3 images, all in one turn), reasoning effort `medium`, and notes only on
+flags. Measured sw-v1 precision on the same chapter: 23 of 25 flags were real book defects; the two false ones
+came from the shard (it omitted the multiple-choice options), which sw-v2 now prints.
 
 WHAT COMES OUT (`collect`): runs/<book>/working-check/chNN.flags.json, format
 "ainext.working-check/1": every flagged step with its sources (agent, numeric, or both), the agents'
