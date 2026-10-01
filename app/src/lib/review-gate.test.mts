@@ -81,7 +81,7 @@ function qrow(over: Partial<QuestionRow>): QuestionRow {
     id: "q:g10m8s3-1-1:ex8-6-32a",
     course_id: G10,
     module_id: "module:g10m-c08",
-    module_order: 8,
+    catalogue_rank: 8,
     lo_id: "lo:g10m8s3-1-1",
     question_type: "short",
     source: "seed",
@@ -101,7 +101,7 @@ function crow(over: Partial<ClaimRow>): ClaimRow {
     question_id: "q:g10m8s2-1-2:w001",
     course_id: G10,
     module_id: "module:g10m-c08",
-    module_order: 8,
+    catalogue_rank: 8,
     lo_id: "lo:g10m8s2-1-2",
     predicate: "extra-values",
     misconception_id: "mc:g10m8s2-1-2:keeps-both-roots-ignores-restriction",
@@ -118,7 +118,7 @@ function content(over: Partial<ContentRow>): ContentRow {
     ref: "mc:g10m8s1-1-2:flips-a-coordinate-sign",
     course_id: G10,
     module_id: "module:g10m-c08",
-    module_order: 8,
+    catalogue_rank: 8,
     lo_id: "lo:g10m8s1-1-2",
     fingerprint: "d".repeat(32),
     created_at: T0,
@@ -392,7 +392,7 @@ function open(over: Partial<DerivedItem>): DerivedItem {
     humanStamped: false,
     exposure: "live",
     reasons: [{ code: "ai_checked" }],
-    moduleOrder: 8,
+    catalogueRank: 8,
     ...over,
   };
 }
@@ -426,7 +426,7 @@ test("oldest first, then book order; never an item another reviewer holds; my ow
 test("filters: kind, course, chapter, reason — anything else is dropped", () => {
   const items = [
     open({ ref: "q:1" }),
-    open({ ref: "q:2", courseId: P3, moduleId: "module:u1", moduleOrder: 1 }),
+    open({ ref: "q:2", courseId: P3, moduleId: "module:u1", catalogueRank: 1 }),
     open({ ref: "mc:1", kind: "misconception", reasons: [{ code: "ai_authored" }] }),
   ].map((d) => resolveItem(d, null));
   const refs = (f: Record<string, unknown>) =>
@@ -445,7 +445,7 @@ test("the summary counts toward zero backlog, by kind and by course and chapter"
     resolveItem(open({ ref: "q:1" }), null),
     resolveItem(open({ ref: "q:2" }), decision({ fingerprint: "f".repeat(32) })),
     resolveItem(open({ ref: "q:3" }), decision({ decision: "fix_requested", note: "x", fingerprint: "f".repeat(32) })),
-    resolveItem(open({ ref: "q:4", courseId: P3, moduleId: "module:u1", moduleOrder: 1 }), null),
+    resolveItem(open({ ref: "q:4", courseId: P3, moduleId: "module:u1", catalogueRank: 1 }), null),
   ];
   const s = summarize(items);
   assert.deepEqual(s.all, { open: 2, fixRequested: 1, approved: 1, rejected: 0, total: 4 });

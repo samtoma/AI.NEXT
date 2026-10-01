@@ -49,7 +49,6 @@ import argparse
 import hashlib
 import json
 import sys
-from pathlib import Path
 
 import book_config
 from assemble_lesson_bundle import book_lesson, manifest_lessons

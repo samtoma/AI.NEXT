@@ -89,7 +89,7 @@ export const SCOPE_SQL = `
   scope AS (
     SELECT DISTINCT ON (lo.id)
            lo.id AS lo_id, m.id AS module_id,
-           coalesce(m.order_in_parent, 0) AS module_order, c.id AS course_id
+           coalesce(m.order_in_parent, 0) AS catalogue_rank, c.id AS course_id
       FROM graph_nodes lo
       JOIN graph_edges te ON te.dst_id = lo.id AND te.edge_type = 'teaches' AND te.system_to IS NULL
       JOIN graph_nodes m  ON m.id = te.src_id AND m.kind = 'module'
@@ -111,7 +111,7 @@ export const QUESTION_FP = `md5(concat_ws(chr(31),
 
 const QUESTIONS_SQL = (where: string) => `
   WITH ${SCOPE_SQL}
-  SELECT q.id, s.course_id, s.module_id, s.module_order, q.lo_id, q.question_type, q.source,
+  SELECT q.id, s.course_id, s.module_id, s.catalogue_rank, q.lo_id, q.question_type, q.source,
          q.status, q.reviewed_by, q.ai_checked_by, q.hold_reason, q.review_note,
          ${QUESTION_FP} AS fingerprint, q.created_at
     FROM questions q JOIN scope s ON s.lo_id = q.lo_id
@@ -119,7 +119,7 @@ const QUESTIONS_SQL = (where: string) => `
 
 const CLAIMS_SQL = (where: string) => `
   WITH ${SCOPE_SQL}
-  SELECT q.id AS question_id, s.course_id, s.module_id, s.module_order, q.lo_id,
+  SELECT q.id AS question_id, s.course_id, s.module_id, s.catalogue_rank, q.lo_id,
          d.e->>'predicate' AS predicate, d.e->>'misconception_id' AS misconception_id,
          d.state, d.e->>'why' AS why,
          md5(concat_ws(chr(31), ${QUESTION_FP}, d.e->>'predicate', d.e->>'misconception_id')) AS fingerprint,
@@ -141,7 +141,7 @@ const CLAIMS_SQL = (where: string) => `
 
 const MISCONCEPTIONS_SQL = (where: string) => `
   WITH ${SCOPE_SQL}
-  SELECT mc.id AS ref, s.course_id, s.module_id, s.module_order, mc.lo_id, mc.generated_by,
+  SELECT mc.id AS ref, s.course_id, s.module_id, s.catalogue_rank, mc.lo_id, mc.generated_by,
          md5(concat_ws(chr(31), mc.lo_id, mc.label, mc.description, coalesce(mc.signal, ''),
              coalesce((SELECT string_agg(e.content::text, chr(30) ORDER BY e.id)
                          FROM explanation_library e
@@ -152,7 +152,7 @@ const MISCONCEPTIONS_SQL = (where: string) => `
 
 const WORKED_SQL = (where: string) => `
   WITH ${SCOPE_SQL}
-  SELECT e.id AS ref, s.course_id, s.module_id, s.module_order, e.lo_id, e.generated_by,
+  SELECT e.id AS ref, s.course_id, s.module_id, s.catalogue_rank, e.lo_id, e.generated_by,
          e.reviewed, e.reviewed_by,
          md5(concat_ws(chr(31), e.lo_id, e.entry_type, coalesce(e.misconception_id, ''),
                        e.content::text, coalesce(e.source_page::text, ''))) AS fingerprint,
@@ -162,7 +162,7 @@ const WORKED_SQL = (where: string) => `
 
 const OBJECTIVES_SQL = (where: string) => `
   WITH ${SCOPE_SQL}
-  SELECT lo.id AS ref, s.course_id, s.module_id, s.module_order, lo.id AS lo_id,
+  SELECT lo.id AS ref, s.course_id, s.module_id, s.catalogue_rank, lo.id AS lo_id,
          md5(concat_ws(chr(31), lo.label, coalesce(lo.description, ''), coalesce(lo.syllabus_ref, ''),
                        coalesce(s.module_id, ''))) AS fingerprint,
          lo.created_at
@@ -172,7 +172,7 @@ const OBJECTIVES_SQL = (where: string) => `
 const LINKS_SQL = (where: string) => `
   WITH ${SCOPE_SQL}
   SELECT DISTINCT ON (e.src_id, e.dst_id)
-         e.src_id || '>' || e.dst_id AS ref, s.course_id, s.module_id, s.module_order, e.dst_id AS lo_id,
+         e.src_id || '>' || e.dst_id AS ref, s.course_id, s.module_id, s.catalogue_rank, e.dst_id AS lo_id,
          md5(concat_ws(chr(31), e.src_id, e.dst_id, coalesce(e.rationale, ''))) AS fingerprint,
          e.system_from AS created_at
     FROM graph_edges e JOIN scope s ON s.lo_id = e.dst_id
@@ -181,7 +181,7 @@ const LINKS_SQL = (where: string) => `
 
 const FIGURES_SQL = (where: string) => `
   WITH ${SCOPE_SQL}
-  SELECT v.id AS ref, s.course_id, s.module_id, s.module_order, v.lo_id, q.status AS question_status,
+  SELECT v.id AS ref, s.course_id, s.module_id, s.catalogue_rank, v.lo_id, q.status AS question_status,
          md5(concat_ws(chr(31), v.kind, v.spec::text, coalesce(v.caption, ''), coalesce(v.question_id, ''))) AS fingerprint,
          v.created_at
     FROM visuals v JOIN scope s ON s.lo_id = v.lo_id

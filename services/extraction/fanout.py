@@ -545,6 +545,20 @@ def plan() -> dict:
                        "note": "two lanes, the pilot's run durations, 3 minutes between runs for the deterministic "
                                "steps; checkpoints and the main session's own pace come on top"},
         "runs": ordered,
+        "closing_steps": [
+            "# 1. Chapter 8 into the book's seed (its pilot bundle lives in work/g10-math/pilot/seed/): DECISION — copy it "
+            "as reviewed (cp work/g10-math/pilot/seed/g10m-c08.json seed/g10-math/; cp work/g10-math/pilot/seed/content/g10m8*.json "
+            "seed/content/) or re-assemble it deterministically with today's assembly (book-picture stand-ins, answer 37d): "
+            "uv run assemble_lesson_bundle.py --book g10-math --chapter 8 --report runs/g10-math/fanout/assembly-ch08.json",
+            f"# 2. the whole book in the fan-out DB, every course's drift guard: uv run parity_check.py --candidate \"{DSN}\" --all-courses",
+            f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run export_generated_content.py --course course:us-g10-math-en "
+            f"--out-dir {BOOK_EXPORT.removeprefix('services/extraction/')} --dsn \"{DSN}\"",
+            "uv run fanout.py config --final            # preview: generated + parity from the bundles",
+            "uv run fanout.py config --final --write    # T364: books/g10-math.json loadable (review with Samuel first)",
+            "uv run book_config.py check",
+            "uv run coverage_report.py --book g10-math --maths runs/g10-math/maths/book/summary.json --out coverage/g10-math.book.json",
+            "# 3. the cost ledger for G5: uv run meter_run.py summary --book g10-math --by stage",
+        ],
     }
 
 
@@ -891,6 +905,40 @@ def write_config(ch: int) -> Path:
     return out
 
 
+BOOK_EXPORT = f"services/extraction/seed/generated/{BOOK}/book-export"
+
+
+def final_config(write: bool = False) -> dict:
+    """The whole book's config (T364): books/g10-math.json with status loadable, `generated` the full book's
+    export (seed/generated/g10-math/book-export/ — never the Chapter 8 export beside it) and `parity` the
+    constant the assembled bundles define. Refuses while any planned bundle, content file or export is
+    missing: book_config.check fails on a generated path that does not exist, so it is written last."""
+    import book_config
+    path = HERE / "books" / f"{BOOK}.json"
+    raw = json.loads(path.read_text())
+    gen = {"misconceptions": f"{BOOK_EXPORT}/misconceptions.json",
+           "questions": [f"{BOOK_EXPORT}/generated-questions.json", f"{BOOK_EXPORT}/widget-questions.json"],
+           "note": "the whole book's course export (export_generated_content.py --course course:us-g10-math-en), "
+                   "written after the fan-out; Chapter 8's own export stays in seed/generated/g10-math/export/"}
+    missing = [x for x in raw["bundles"] + raw["content_files"] + [gen["misconceptions"], *gen["questions"]]
+               if not (REPO / x).exists()]
+    if missing:
+        raise NotReady(f"{len(missing)} planned file(s) missing, e.g. {missing[:4]} — the whole-book config is written last")
+    raw.update(status="loadable", generated=gen)
+    tmp = FAN / "books" / "final" / f"{BOOK}.json"
+    tmp.parent.mkdir(parents=True, exist_ok=True)
+    tmp.write_text(json.dumps(raw, indent=2, ensure_ascii=False) + "\n")
+    want = book_config.expected_from_bundles(book_config.load_book(tmp))
+    raw["parity"] = {**want, "require_all_live": False,
+                     "note": "from the assembled bundles at the end of the fan-out (book_config.expected_from_bundles); "
+                             "not all live: questions held for a figure or by the marker stay at review (answer 37d)"}
+    text = json.dumps(raw, indent=2, ensure_ascii=False) + "\n"
+    tmp.write_text(text)
+    if write:
+        path.write_text(text)
+    return {"config": rel(path if write else tmp), "written": write, "parity": raw["parity"]}
+
+
 def write_specs(run_file: Path, into: Path) -> list[Path]:
     r = json.loads(run_file.read_text())
     r = r.get("result", r)
@@ -950,7 +998,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--ready", action="store_true", help="every run whose inputs exist and that has no copy yet")
     sub.add_parser("status")
     p = sub.add_parser("config")
-    p.add_argument("chapter", type=int)
+    p.add_argument("chapter", type=int, nargs="?")
+    p.add_argument("--final", action="store_true", help="the whole book's config (generated + parity), once every "
+                                                         "bundle, content file and the book export exist")
+    p.add_argument("--write", action="store_true", help="with --final: write books/g10-math.json (otherwise a preview "
+                                                        "under work/g10-math/fanout/books/final/)")
     p = sub.add_parser("write-specs")
     p.add_argument("run", type=Path)
     p.add_argument("--into", type=Path, required=True)
@@ -1003,7 +1055,16 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{st['prepared']} prepared, {st['saved']} saved, of {st['total']}")
         return 0
     if a.cmd == "config":
-        print(rel(write_config(a.chapter)))
+        try:
+            if a.final:
+                print(json.dumps(final_config(a.write), indent=1))
+            elif a.chapter is not None:
+                print(rel(write_config(a.chapter)))
+            else:
+                ap.error("config <chapter> or config --final")
+        except NotReady as e:
+            print(f"not ready: {e}")
+            return 3
         return 0
     if a.cmd == "write-specs":
         for p in write_specs(a.run, a.into):

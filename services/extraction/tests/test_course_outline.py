@@ -20,13 +20,13 @@ from __future__ import annotations
 
 import copy
 import io
-import json
 import tempfile
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
 
 from _scratchdb import ScratchDB, run_loader, skip_without_db
+
 import assemble_lesson_bundle as alb
 import book_config
 import load_course_outline as lco
@@ -199,7 +199,7 @@ class OutlineLoadTest(unittest.TestCase):
         self.assertEqual(done["added"], [dropped["lesson_slug"]])
 
     def test_5_the_app_reads_it_and_only_the_loader_writes_it(self):
-        priv = lambda role, p: self.db.one("SELECT has_table_privilege(%s, 'course_outline', %s)", (role, p))  # noqa: E731
+        priv = lambda role, p: self.db.one("SELECT has_table_privilege(%s, 'course_outline', %s)", (role, p))
         self.assertTrue(priv("ainext_app", "SELECT"))
         self.assertTrue(priv("ainext_operator", "SELECT"))
         self.assertFalse(priv("ainext_app", "INSERT"))

@@ -286,7 +286,7 @@ export interface DerivedItem {
   /** why it needs a human, before any decision */
   reasons: Reason[];
   /** book order, for ties on `createdAt` */
-  moduleOrder: number;
+  catalogueRank: number;
 }
 
 /** The SQL row every question-backed reader returns (lib/review-gate-queries.ts). */
@@ -294,7 +294,7 @@ export interface QuestionRow {
   id: string;
   course_id: string;
   module_id: string | null;
-  module_order: number | null;
+  catalogue_rank: number | null;
   lo_id: string;
   question_type: string;
   source: string;
@@ -355,7 +355,7 @@ export function deriveQuestion(row: QuestionRow): DerivedItem | null {
     humanStamped: human && !changedAfter,
     exposure: row.status === "live" ? "live" : "held",
     reasons,
-    moduleOrder: row.module_order ?? 0,
+    catalogueRank: row.catalogue_rank ?? 0,
   };
 }
 
@@ -364,7 +364,7 @@ export interface ClaimRow {
   question_id: string;
   course_id: string;
   module_id: string | null;
-  module_order: number | null;
+  catalogue_rank: number | null;
   lo_id: string;
   predicate: string;
   misconception_id: string;
@@ -402,7 +402,7 @@ export function deriveClaim(row: ClaimRow): DerivedItem {
         ? { code: "active_mapping" }
         : { code: "held_mapping", detail: row.why ?? undefined },
     ],
-    moduleOrder: row.module_order ?? 0,
+    catalogueRank: row.catalogue_rank ?? 0,
   };
 }
 
@@ -411,7 +411,7 @@ export interface ContentRow {
   ref: string;
   course_id: string;
   module_id: string | null;
-  module_order: number | null;
+  catalogue_rank: number | null;
   lo_id: string | null;
   fingerprint: string;
   created_at: string | Date;
@@ -464,7 +464,7 @@ export function deriveContent(kind: Exclude<ItemKind, "book_question" | "generat
     humanStamped,
     exposure,
     reasons,
-    moduleOrder: row.module_order ?? 0,
+    catalogueRank: row.catalogue_rank ?? 0,
   };
 }
 
@@ -562,7 +562,7 @@ export function compareItems(a: DerivedItem, b: DerivedItem): number {
   return (
     a.createdAt.localeCompare(b.createdAt) ||
     a.courseId.localeCompare(b.courseId) ||
-    a.moduleOrder - b.moduleOrder ||
+    a.catalogueRank - b.catalogueRank ||
     (a.moduleId ?? "").localeCompare(b.moduleId ?? "") ||
     (a.loId ?? "").localeCompare(b.loId ?? "") ||
     (KIND_RANK.get(a.kind)! - KIND_RANK.get(b.kind)!) ||
@@ -653,7 +653,7 @@ function add(t: Tally, s: ItemState) {
 export interface BacklogSummary {
   all: Tally;
   byKind: Record<ItemKind, Tally>;
-  byCourse: { courseId: string; tally: Tally; modules: { moduleId: string | null; moduleOrder: number; tally: Tally }[] }[];
+  byCourse: { courseId: string; tally: Tally; modules: { moduleId: string | null; catalogueRank: number; tally: Tally }[] }[];
   /** open items per reason (an item with two reasons counts under both) */
   openByReason: Partial<Record<ReasonCode, number>>;
 }
@@ -661,7 +661,7 @@ export interface BacklogSummary {
 export function summarize(items: readonly ResolvedItem[]): BacklogSummary {
   const all = zero();
   const byKind = Object.fromEntries(ITEM_KINDS.map((k) => [k, zero()])) as Record<ItemKind, Tally>;
-  const courses = new Map<string, { tally: Tally; modules: Map<string, { moduleId: string | null; moduleOrder: number; tally: Tally }> }>();
+  const courses = new Map<string, { tally: Tally; modules: Map<string, { moduleId: string | null; catalogueRank: number; tally: Tally }> }>();
   const openByReason: Partial<Record<ReasonCode, number>> = {};
   for (const i of items) {
     add(all, i.state);
@@ -671,7 +671,7 @@ export function summarize(items: readonly ResolvedItem[]): BacklogSummary {
     add(c.tally, i.state);
     const mk = i.moduleId ?? "";
     let m = c.modules.get(mk);
-    if (!m) c.modules.set(mk, (m = { moduleId: i.moduleId, moduleOrder: i.moduleOrder, tally: zero() }));
+    if (!m) c.modules.set(mk, (m = { moduleId: i.moduleId, catalogueRank: i.catalogueRank, tally: zero() }));
     add(m.tally, i.state);
     if (i.state === "open") {
       for (const code of new Set(i.reasons.map((r) => r.code))) openByReason[code] = (openByReason[code] ?? 0) + 1;
@@ -686,7 +686,7 @@ export function summarize(items: readonly ResolvedItem[]): BacklogSummary {
         courseId,
         tally: c.tally,
         modules: [...c.modules.values()].sort(
-          (a, b) => a.moduleOrder - b.moduleOrder || (a.moduleId ?? "").localeCompare(b.moduleId ?? "")
+          (a, b) => a.catalogueRank - b.catalogueRank || (a.moduleId ?? "").localeCompare(b.moduleId ?? "")
         ),
       })),
     openByReason,

@@ -7204,5 +7204,15 @@
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/190-s5-final-ch14.workflow.js\"})   # NO args",
    "prepared": false
   }
+ ],
+ "closing_steps": [
+  "# 1. Chapter 8 into the book's seed (its pilot bundle lives in work/g10-math/pilot/seed/): DECISION — copy it as reviewed (cp work/g10-math/pilot/seed/g10m-c08.json seed/g10-math/; cp work/g10-math/pilot/seed/content/g10m8*.json seed/content/) or re-assemble it deterministically with today's assembly (book-picture stand-ins, answer 37d): uv run assemble_lesson_bundle.py --book g10-math --chapter 8 --report runs/g10-math/fanout/assembly-ch08.json",
+  "# 2. the whole book in the fan-out DB, every course's drift guard: uv run parity_check.py --candidate \"host=127.0.0.1 port=5432 dbname=ainext_fanout_g10\" --all-courses",
+  "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_fanout_g10\" AINEXT_ENVIRONMENT=mvp1 uv run export_generated_content.py --course course:us-g10-math-en --out-dir seed/generated/g10-math/book-export --dsn \"host=127.0.0.1 port=5432 dbname=ainext_fanout_g10\"",
+  "uv run fanout.py config --final            # preview: generated + parity from the bundles",
+  "uv run fanout.py config --final --write    # T364: books/g10-math.json loadable (review with Samuel first)",
+  "uv run book_config.py check",
+  "uv run coverage_report.py --book g10-math --maths runs/g10-math/maths/book/summary.json --out coverage/g10-math.book.json",
+  "# 3. the cost ledger for G5: uv run meter_run.py summary --book g10-math --by stage"
  ]
 }
