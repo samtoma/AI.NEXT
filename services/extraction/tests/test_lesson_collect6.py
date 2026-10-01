@@ -849,14 +849,15 @@ def run_all_unanswered_null(args, responses):
     return rep
 
 
-def single_edits(key):
-    """Every single-character change of a key that changes what it says: a digit, a sign dropped, a relation or a bracket turned over."""
+def single_edits(key, brackets=True):
+    """Every single-character change of a key that changes what it says: a digit, a sign dropped, a relation or a bracket turned over
+    (the bracket only where brackets mean something: an interval, a pair of coordinates)."""
     out = set()
     for i, c in enumerate(key):
         if c.isdigit():
             out |= {key[:i] + d + key[i + 1:] for d in "0123456789" if d != c}
         for a, b in (("<", ">"), (">", "<"), ("[", "("), ("(", "["), ("]", ")"), (")", "]")):
-            if c == a:
+            if c == a and (brackets or a in "<>"):
                 out.add(key[:i] + b + key[i + 1:])
         if c == "-":
             out.add(key[:i] + key[i + 1:])
@@ -909,7 +910,7 @@ class NoSingleEditIsAccepted(unittest.TestCase):
         n = 0
         for key, printed, ref, kind, variables in self.CASES:
             part = ref[-1] if ref[-1].isalpha() else ""
-            for k in [key, *sorted(single_edits(key))]:
+            for k in [key, *sorted(single_edits(key, brackets=kind in ("interval", "coordinates")))]:
                 n += 1
                 r = f"{ref.split(':')[0]}:{n}{part}"
                 items.append(item(r, "Write down the answer.", [f"${k}$"], printed))
@@ -1155,7 +1156,7 @@ class ChapterSixForms(TypedItem, unittest.TestCase):
     sentence, a "Domain h:" label or a point's name, 2 a pair of values in a sentence. What stays refused is pinned beside each."""
 
     def labels(self, options, key, figures=("fig.png",), stem="Given the following graph, identify the function that matches the equation: [figure] $y=x^2$"):
-        it = item("Ex6-3:5b", stem, ["The graph of $y=x^2$ is $g(x)$."], options[int(key)], figures=figures)
+        it = item("Ex6-3:5b", stem, ["The graphs are " + ", ".join(f"${o}$" for o in options) + "."], options[int(key)], figures=figures)
         t = typing("Ex6-3:5b", options[int(key)], f"${options[int(key)]}$", "choice", options=list(options), options_source="figure")
         rep = run(args_for([it]), responses([t], [{"ref": "Ex6-3:5b", "final_answer": options[int(key)], "markable": True}]))
         return rep["result"]["lessons"][0]["items"][0]

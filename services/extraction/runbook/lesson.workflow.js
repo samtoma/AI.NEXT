@@ -270,7 +270,7 @@ function normTex(s) {
 }
 // a named left side: x=, y_1=, m_{AB}=, d_{AB}\approx, the text layer's flattened mAC=, and a named point
 // with its variables, P(x,y)= (COLLECT-2, COLLECT-3)
-const stripLhs = (t) => t.replace(/^[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx|≈)/, '')
+const stripLhs = (t) => t.replace(/^(?!(?:sin|cos|tan|cot|sec|csc))[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?(?:=|\\approx|≈)/, '')
 // a trigonometric ratio of an angle names what the value is of, as a letter does (sin45°=, tan{30°}=, sin Â=, cosθ≈): stripped from ONE side
 // only, against a bare value on the other, so "sin A = 3/5" and "cos A = 3/5" are still different (Chapters 5 and 6)
 const TRIG_LHS = /^(?:sin|cos|tan|cot|sec|csc)[^=≈]{1,16}(?:=|≈)/
@@ -363,7 +363,7 @@ function settle(a, b, textLayer) {
 //   * the separators are ";", "and", "or", and a comma that is not a decimal comma (a comma BETWEEN TWO DIGITS, "-28,1", or between
 //     a digit and a recurring bar, "1,\overline{34}", is a decimal point, as normTex reads it; the old split broke it in two on both
 //     sides, so "1,5; 2" and "5; 1,2" read alike) and not inside a bracket ("(1,2)").
-const VALUE_LABEL = /^(?:[A-Za-z]{1,2}-?[a-z]{3,12}|[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx|≈)/
+const VALUE_LABEL = /^(?:(?!(?:sin|cos|tan|cot|sec|csc))[A-Za-z]{1,2}-?[a-z]{3,12}|(?!(?:sin|cos|tan|cot|sec|csc))[A-Za-zπλθαβγδμσφω]{1,4}(?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?(?:\([a-z](?:,[a-z])*\))?|[A-Za-z]\d{1,3})(?:=|\\approx|≈)/
 const DECIMAL_COMMA = /(?<=\d),(?=\d|\\(?:overline|bar|dot|ddot)\s*\{?\s*\d)/g
 function valueList(s, textLayer) {
   const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(DECIMAL_COMMA, '.')

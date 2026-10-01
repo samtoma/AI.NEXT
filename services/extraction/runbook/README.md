@@ -924,6 +924,9 @@ typed key, options) is refused for that item (`stale_items`, listed as unanswere
 check: `auto_pass_gates.py g2-recommend-delta` lists the assembled bundle's solutions `working-check/chNN.flags.json` (`checked_ids`) never covered, which is everything
 the recommendation AND the newer collection made part of the bundle.
 
+**The errata list.** `auto_pass_gates.py g2-recommend-errata <book> --chapter N [--chapter M …] --out docs/WIP-g10-pilot/errata-g10.md` writes every "book error" and "stem damaged" finding of the chapters'
+recommendation files as plain sentences (the question, the book's answer, what is wrong, the right answer by the AI's own working, and whether the app's marker confirmed it); regenerate it whenever a chapter is added.
+
 **Cost** (API-equivalent, MODELLED until the first run is metered, stage `G2R`): the harness's fixed ~$0.09 per agent plus a derivation per item at effort high, so
 $0.30-0.75 per recommending agent (a batch of 8) and $0.20-0.50 per verifying agent (at most one per batch that has an accept or a fix): Chapter 1's 82 items,
 11 + up to 11 agents, about $4-14; Chapter 2's 20 items, 3 + up to 3 agents, about $1-4. Tests: `tests/test_g2_recommend.py` (the workflow under the stub runtime, the

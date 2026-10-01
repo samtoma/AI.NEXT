@@ -1120,3 +1120,33 @@ even marks the plain `AC/AB=AD/BD` correct, but with the contract's single lette
 **Tests (Chapter 5 round):** `tests/test_lesson_collect6.py` 60 → 73 (`ApproximateFinals` 4, `ChapterFiveForms` 8, `NoSingleEditOfAFinal` 1; the pins on what stays refused pass on last round's script too, the rest fail on it),
 `tests/test_assemble_lesson_bundle.py::HtmlEntityTest` 3. Whole suite, one run: **1,126 passed, 1 skipped, 0 failed** (including `ChapterEightDryRun`, both modes). Containment still accepts any statement the solution itself makes (a working line):
 over the 1,175 accepted finals of chapters 1–5, 38,430 one-digit edits, 348 are accepted for that reason (last round's script: 470 of 36,135 for 1,098 finals) — a final is not required to be the solution's LAST line.
+
+## The G2 recommendations applied to Chapters 1–4 (loaded) and Chapter 5 (seed only) — 2026-10-01 (data-engineer)
+
+Each chapter in the order the sequence above gives: re-collect (only where the collect had changed), G2 without `--recommend`, `g2-recommend-collect`, G2 with `--recommend --split`, assemble, validate, `pg_dump`,
+`load_seed --update` (dry run first), `apply_review_verdicts --g2`, delta working-check copies. Every verdict is an AI recommendation (`ai_checked_by` "auto-pass G2 (AI recommendation) (G2 accept|fix|hold|exclude)";
+`reviewed_by` untouched: the pilot DB's 35 human stamps are Chapter 8's); a stem repair carries `review_note` "stem fixed by auto-pass G2 recommendation (g2rec-v1) — not Samuel". Nothing went live that the
+independent verifier had not confirmed; no book answer was changed.
+
+| chapter | live before → after | not live before → after | rows rejected (book errors, damaged stems, partial answers) | recommended / owed | the DB |
+|---|---|---|---|---|---|
+| 1 | 483 → **517** (+34) | 50 (47 answer_mismatch, 3 unanswerable) → 6 (3 unverified, 3 unanswerable) | 27 | 81 / 81 (22 accept, 12 fix, 3 hold, 44 exclude) | loaded: 17 added, 4 stems repaired |
+| 2 | 136 → **152** (+16) | 3 → 0 | 3 | 7 / 7 (3 accept, 4 exclude) | loaded: 16 added |
+| 3 | 71 → **75** (+4) | 6 → 1 unverified | 2 | 11 / 11 | loaded: 1 added, 1 retyped |
+| 4 | 247 → **259** (+12) | 19 → 6 (5 unverified, 1 unanswerable) | 9 | 37 / 37 | loaded: 8 added, 3 updated |
+| 5 | seed: 195 → **210** (+15) | seed: 28 → 8 (7 unverified, 1 unanswerable) | 14 not emitted, 9 added | 42 / 42 | **not loaded** (the advance driver loads it) |
+
+Backups (before each chapter's load, `pg_restore -l` read back): `work/g10-math/backups/pilot-before-g2rec-ch01.dump`, `-ch02`, `-ch03`, `-ch04` (about 1 MB each). Chapter 2's three "stale" items turned out not to be owed any more
+with today's collect (Ex2-3:4, Ex2-4:4, Ex2-4:5 are agreed now), so no `--only-missing` run was needed. Chapters 3 and 4 were re-collected first (the collect had changed: 5474a2758d84 → 11ac17d5aa35) and owed the same items.
+Delta working-check copies (A and B, not launched), `work/g10-math/packets/embedded/fanout/wcheck-chNN-g2rec-A|B.workflow.js`: ch01 18 solutions, ch02 16, ch03 1, ch04 8, ch05 10 (ch05: for after its load; its working check ran on the earlier seed).
+
+**Found and fixed on the way (all small, all tested).** (1) Five "product of prime factors" items recommended `hold` stopped Chapter 1's whole assembly: the assembly puts the book's asked form on the marker spec and the app rejects a form it
+does not know. Such an item, and any held item whose spec the marker rejects, is now `exclude` (a rejected spec is fatal, an unreadable KEY only holds the question). (2) Ex1-11:37a's working uses `\begin{gather*}`, which KaTeX draws only in display mode and which
+refused the bundle: `assemble_lesson_bundle.normalise` now writes `gathered` for `gather*`, as it already wrote `aligned` for `align*` (presentation only). (3) The gate record listed teaching items "for review"; it no longer does.
+(4) New `auto_pass_gates.py g2-recommend-errata` writes the errata list: `docs/WIP-g10-pilot/errata-g10.md` (61 printed answers that look wrong and 10 damaged questions, chapters 1–5).
+
+**For Samuel.** (a) 20 live generated questions have a rejected parent: the 10 variants of family `common-factor-monic` (parent Ex1-8:11, whose printed answer 2(x+1)(x+10) is wrong) and the 10 of `factor-a` (parent Ex4-7:12s). They were blind-graded
+on their own; they are listed here because their model question is a book error. (b) The S5 draft running for Chapter 5 was built from the seed BEFORE this: it saw the 27 held questions' working, of which 14 are now not used. (c) Ex3-1:3 ("C") went live as an expression key: the app's marker reads every capital
+letter A–Z as a symbol (it marks itself correct and another letter incorrect, is case-sensitive, and `E` is not Euler's e; only an undeclared `U` fails, being the union sign), so the held reason the agent gave for Ex3-1:18 ("E may read as Euler's constant") is wrong: it was excluded for six options, and could be
+typed as an expression like Ex3-1:3. (d) Four stem repairs are live in Chapter 1 and some more in Chapters 4 and 5, each marked for your review; 2p changes a digit (7 to 11) and is the one to look at first. (e) The verifier refused, conservatively, items whose key has two correct FORMS
+(WE3 and Ex1-11:26c: a fraction and a mixed number): the marker marks equivalent values correct, so these are probably fine to accept.
