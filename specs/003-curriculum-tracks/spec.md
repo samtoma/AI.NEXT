@@ -41,6 +41,9 @@ states answer-only marking and Samuel's approved corrections to the book's worki
 SC-207 name a third expected difference, the Arabic lessons' printed names (decision 34, ADR-0020's sixth
 exception).
 
+**2026-10-01 (answer 35)**: FR-4205 now says the American course shows no Arabic anywhere, console and
+student, not only in its prompts; the G10 tutor's "write no Arabic at all" line stands (review B7: kept).
+
 **Status of the code.** Committed only as unreviewed WIP snapshots on the pushed feature branch (an
 auto-snapshot job commits every 30 seconds, `[skip ci]`); nothing is reviewed by Samuel or merged to `main`.
 **Authority level**: a **derived spec** (Spec Kit). It turns Samuel's direction and his decisions of
@@ -661,7 +664,8 @@ through the attempts route and confirm identical outcomes.
   keyed by grade. A grade-10 student MUST render the **Play** design while ADR-0017's Master switch is
   off. This MUST be shown with a real grade-10 student account, not assumed because the grade list
   already contains 10.
-- **FR-4205** *(resolved rev. 2 — was Q3; decision 10; changed rev. 4, decision 30)*: Everything the
+- **FR-4205** *(resolved rev. 2 — was Q3; decision 10; changed rev. 4, decision 30; widened 2026-10-01,
+  answer 35)*: Everything the
   product tells a student, or gives the tutor, about where this course's material comes from MUST name
   this course's own source: the tutor's instructions for this course refer to "this book" and its
   pages, and never name the Egyptian ministry textbook, another course's book or another course's
@@ -672,6 +676,14 @@ through the attempts route and confirm identical outcomes.
   address term "Egyptian student" MUST be kept — the audience is still an Egyptian student, following a
   book written for another curriculum. This MUST be a **per-course setting** (an "Arabic touches" flag
   on `CourseDef`): unchanged (on) for every National course, off for this course only.
+
+  **This course MUST show no Arabic anywhere** *(answer 35, 2026-10-01: "this is american course we said no
+  arabic")*: no Arabic subject name, curriculum name, book wording ("كتاب الوزارة") or heading on any console
+  or student surface for this course, its lessons, or the American curriculum. The same per-course setting
+  governs it, chosen per course and never per subject (Prep 3 maths and this course share a subject).
+  The tutor's instruction to write no Arabic at all, even when the student writes in Arabic, stands
+  (consistency review B7: kept). The surfaces stay Arabic-capable (constitution V): every National
+  course's Arabic is unchanged.
 - **FR-4206**: Adding this course MUST NOT change any National course. What a National student sees,
   every student's progress, and the tutor's instructions for every existing course MUST be identical
   before and after, proven byte for byte with the prompt capture harness (Principle IX). This
