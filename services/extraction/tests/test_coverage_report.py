@@ -64,8 +64,9 @@ class CoverageTest(unittest.TestCase):
     def test_the_fixture_is_green_and_every_equality_is_counted(self):
         code, rep = self.audit()
         self.assertEqual((code, rep["status"]), (0, "GREEN"))
-        # 18 + the consistency review's katex (A2), answer_text (A1) and asked_forms (A9)
-        self.assertEqual(rep["summary"], {"checks": 22, "hold": 22, "excepted": 0, "fail": 0})   # + captions
+        # 18 + the consistency review's katex (A2), answer_text (A1) and asked_forms (A9), captions, and
+        # answer 37d's book_pictures
+        self.assertEqual(rep["summary"], {"checks": 23, "hold": 23, "excepted": 0, "fail": 0})
         served = self.check(rep, "claims_served")
         self.assertEqual((served["want"], served["got"]), (served["want"], served["want"]))
         self.assertGreater(served["want"], 0)

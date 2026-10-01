@@ -125,7 +125,35 @@ class AgainstTheCatalogue(unittest.TestCase):
                                           ("q:g10m8s2-1-1:g001-surd",))[0]
         self.assertEqual(choices["marker"]["kind"], "surd")
         self.assertIn("template family tpl:g10m8s2-1-1:surd", note)
-        self.assertEqual(status, "review")
+        # answer 37a: a maths course is always full — live, with no human stamp (it is in the backlog)
+        self.assertEqual(status, "live")
+        self.assertIsNone(self.db.one("SELECT reviewed_by FROM questions WHERE id = %s", ("q:g10m8s2-1-1:g001-surd",)))
+
+    def test_review_keeps_the_two_act_load_and_a_reload_never_revives_or_unstamps(self):
+        qid = "q:g10m8s2-1-1:g001-surd"
+        code, out = self.load({"generator": "S6 test", "questions": [typed()], "misconceptions": []},
+                              "--course", G10, "--review")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.db.one("SELECT status FROM questions WHERE id = %s", (qid,)), "review")
+        # a human read it; a reload of the SAME item keeps the stamp, a retired row stays retired
+        self.db.q("UPDATE questions SET status = 'live', reviewed_by = 'Samuel (sampled)', reviewed_at = now() "
+                  "WHERE id = %s", (qid,))
+        code, out = self.load({"generator": "S6 test", "questions": [typed()], "misconceptions": []}, "--course", G10)
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.db.q("SELECT status, reviewed_by FROM questions WHERE id = %s", (qid,))[0],
+                         ("live", "Samuel (sampled)"))
+        self.db.q("UPDATE questions SET status = 'retired' WHERE id = %s", (qid,))
+        code, out = self.load({"generator": "S6 test", "questions": [typed()], "misconceptions": []},
+                              "--course", G10, "--promote")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.db.one("SELECT status FROM questions WHERE id = %s", (qid,)), "retired")
+        # a changed item is no longer what the human read: the stamp does not survive it
+        self.db.q("UPDATE questions SET status = 'live' WHERE id = %s", (qid,))
+        changed = typed()
+        changed["stem"] = changed["stem"] + " (Give your answer in surd form.)"
+        code, out = self.load({"generator": "S6 test", "questions": [changed], "misconceptions": []}, "--course", G10)
+        self.assertEqual(code, 0, out)
+        self.assertIsNone(self.db.one("SELECT reviewed_by FROM questions WHERE id = %s", (qid,)))
 
     def test_an_unknown_tag_is_refused_and_nothing_is_written(self):
         code, out = self.load({"generator": "S6 test", "questions": [mcq(qid="q:g10m8s2-1-1:g002-x",

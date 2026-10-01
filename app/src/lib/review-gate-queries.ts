@@ -562,7 +562,8 @@ export async function itemPayload(
   c: Db,
   environment: string,
   item: ResolvedItem,
-  claimExpiresAt: string | null
+  claimExpiresAt: string | null,
+  opts: { readOnly?: boolean; gates?: () => Promise<GateRecordRow[]> } = {}
 ): Promise<ReviewItemPayload> {
   const names = await labels(c, [item.moduleId, item.loId]);
   const base: ReviewItemPayload = {
@@ -579,6 +580,8 @@ export async function itemPayload(
     loLabel: item.loId ? (names.get(item.loId)?.label ?? null) : null,
     createdAt: item.createdAt,
     claimExpiresAt,
+    ...(item.assignee ? { assignee: item.assignee } : {}),
+    ...(opts.readOnly ? { readOnly: true } : {}),
     history: await history(c, environment, item),
   };
 
@@ -727,6 +730,24 @@ export async function itemPayload(
       };
       return base;
     }
+    case "gate_decision": {
+      const record = (await (opts.gates ?? readGateRecords)()).find((r) => r.ref === item.ref);
+      if (record) {
+        const { fingerprint: _fp, courseId: _course, ...rest } = record;
+        void _fp;
+        void _course;
+        const course = isCourseId(record.courseId) ? COURSES[record.courseId] : null;
+        const cov = course ? await coverageStatus(course.pipelineBook) : null;
+        base.gate = {
+          ...rest,
+          coverage:
+            cov && cov.state !== "none"
+              ? { state: cov.state, file: cov.file, summary: cov.summary, failing: cov.failing }
+              : null,
+        };
+      }
+      return base;
+    }
     case "figure_stand_in": {
       const res = await c.query(
         `SELECT id, kind, spec, caption, source_page, question_id FROM visuals WHERE id = $1`,
@@ -769,6 +790,14 @@ export function snapshotOf(p: ReviewItemPayload): Record<string, unknown> {
       return { link: p.link };
     case "figure_stand_in":
       return { figure: p.figure, question: q && { id: q.id, stem: q.stem, status: q.status } };
+    case "gate_decision":
+      return {
+        gate: p.gate && {
+          ...p.gate,
+          decisions: p.gate.decisions.slice(0, 300),
+          decisionCount: p.gate.decisions.length,
+        },
+      };
     default:
       return { question: q };
   }
@@ -794,24 +823,39 @@ export async function nextFor(
   environment: string,
   operatorId: number,
   filters: BacklogFilters,
-  skip: ReadonlySet<string>
+  skip: ReadonlySet<string>,
+  gateSource: () => Promise<GateRecordRow[]> = readGateRecords
 ): Promise<NextResult> {
-  const items = await loadBacklog(c, environment);
+  const records = await gateSource();
+  const gates = async () => records;
+  const items = await loadBacklog(c, environment, null, gates);
   const claims = await activeClaims(c, environment);
+  const owner = await isGateOwner(c, operatorId);
   const mine = claims.find((cl) => cl.operatorId === operatorId) ?? null;
   const others = claims.filter((cl) => cl.operatorId !== operatorId);
   const candidates = pickCandidates(items, filters, {
     mine,
     heldByOthers: new Set(others.map((cl) => itemKey(cl.kind, cl.ref))),
     skip,
+    viewerIsOwner: owner,
   });
   const othersReviewing = others.map((cl) => ({ operatorName: cl.operatorName, kind: cl.kind, ref: cl.ref }));
   for (const cand of candidates.slice(0, 25)) {
+    if (cand.assignee && !owner) {
+      // Samuel's item, shown to another reviewer under "For Samuel": to read,
+      // never to decide — and never claimed, so it is never kept from him.
+      await releaseOtherClaims(c, environment, operatorId, null);
+      return {
+        item: await itemPayload(c, environment, cand, null, { readOnly: true, gates }),
+        openMatching: candidates.length,
+        othersReviewing,
+      };
+    }
     const expires = await claimItem(c, environment, operatorId, cand.kind, cand.ref);
     if (!expires) continue; // taken a moment ago by somebody else
     await releaseOtherClaims(c, environment, operatorId, cand);
     return {
-      item: await itemPayload(c, environment, cand, expires),
+      item: await itemPayload(c, environment, cand, expires, { gates }),
       openMatching: candidates.length,
       othersReviewing,
     };
@@ -835,8 +879,16 @@ export type DecideResult =
   | { ok: true; decisionId: number; changes: Record<string, unknown> }
   | {
       ok: false;
-      status: 400 | 404 | 409;
-      error: "invalid" | "note_required" | "not_allowed" | "gone" | "changed" | "claimed_by_other" | "conflict";
+      status: 400 | 403 | 404 | 409;
+      error:
+        | "invalid"
+        | "note_required"
+        | "not_allowed"
+        | "owner_only"
+        | "gone"
+        | "changed"
+        | "claimed_by_other"
+        | "conflict";
       message: string;
     };
 
@@ -888,7 +940,8 @@ export async function decide(
   c: Db,
   environment: string,
   operatorId: number,
-  input: DecideInput
+  input: DecideInput,
+  gates: () => Promise<GateRecordRow[]> = readGateRecords
 ): Promise<DecideResult> {
   const allowed = canDecide(input.kind, input.decision);
   if (!allowed.ok) return { ok: false, status: 400, error: "not_allowed", message: allowed.why };
@@ -921,7 +974,15 @@ export async function decide(
       [input.ref]
     );
   }
-  const [item] = await loadBacklog(c, environment, { kind: input.kind, ref: input.ref });
+  const [item] = await loadBacklog(c, environment, { kind: input.kind, ref: input.ref }, gates);
+  if (item?.assignee === "samuel" && !(await isGateOwner(c, operatorId))) {
+    return {
+      ok: false,
+      status: 403,
+      error: "owner_only",
+      message: "A gate decision is Samuel's to sign (answer 39). You can read it; only his account decides it.",
+    };
+  }
   if (!item) {
     return { ok: false, status: 404, error: "gone", message: "This item is no longer in the backlog's scope (retired, or reloaded away)." };
   }
@@ -929,7 +990,7 @@ export async function decide(
     return { ok: false, status: 409, error: "changed", message: "The item changed while you were reviewing it. Open it again." };
   }
 
-  const payload = await itemPayload(c, environment, item, null);
+  const payload = await itemPayload(c, environment, item, null, { gates });
   const who = await c.query(`SELECT display_name FROM operators WHERE id = $1`, [operatorId]);
   const operatorName = (who.rows[0]?.display_name as string | undefined)?.trim();
   if (!operatorName) return { ok: false, status: 400, error: "invalid", message: "operator not found" };

@@ -259,7 +259,36 @@ class Ids(unittest.TestCase):
                 bad()
 
     def test_viz_kinds_are_unchanged(self):
-        self.assertEqual(len(schemas.VIZ_KINDS), 12)
+        # 12 native kinds + answer 37d's book_image stand-in (never a kind the lesson AI may pick)
+        self.assertEqual(len(schemas.VIZ_KINDS), 13)
+        self.assertIn("book_image", schemas.VIZ_KINDS)
+        import assemble_objectives
+        self.assertNotIn("book_image", assemble_objectives.MATH_VIZ_KINDS)
+
+    def test_a_book_image_is_a_servable_stand_in_for_one_question(self):
+        ok = {"id": "v:g10m8s4-1:bk-ex8-6-38a", "lo": "lo:g10m8s4-1-1", "question": "q:g10m8s4-1-1:ex8-6-38a",
+              "kind": "book_image", "spec": {"src": "/book-figures/g10-math/tikzpicture__118b.png",
+                                             "alt": "The textbook's diagram for this question, printed on page 324.",
+                                             "stand_in": True, "native_kind_needed": "polygon_scene"}}
+        schemas.Visual.model_validate(ok)
+        for bad in ({"src": "https://example.org/x.png"}, {"src": "/book-figures/g10-math/../../etc/x.png"},
+                    {"src": "/book-figures/g10-math/x.exe"}, {"alt": ""}, {"stand_in": False},
+                    {"native_kind_needed": ""}, {"onload": "x"}):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                schemas.Visual.model_validate({**ok, "spec": {**ok["spec"], **bad}})
+        with self.assertRaises(ValueError):
+            schemas.Visual.model_validate({**ok, "question": None})
+
+    def test_a_hold_reason_is_from_the_vocabulary_and_never_on_a_verified_question(self):
+        import review_policy
+        base = {"id": "q:g10m8s2-1-1:ex8-2-1", "lo": "lo:g10m8s2-1-1", "tier": "basic", "type": "numeric",
+                "stem": "Find AB.", "answer": "5", "solution": ["AB = 5"], "source_page": 292,
+                "source_note": "test"}
+        for r in sorted(review_policy.HOLD_REASONS):
+            schemas.Question.model_validate({**base, "hold_reason": r})
+        for bad in ({"hold_reason": "looks odd"}, {"hold_reason": "figure_missing", "verified": True}):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                schemas.Question.model_validate({**base, **bad})
 
 
 if __name__ == "__main__":
