@@ -834,32 +834,45 @@ carries an earlier chapter's objectives as shards (`prior.txt`, `prior/<id tail>
 chapter's args stay small. A chapter whose S6 author writes no family, or whose S7 author writes no template, skips
 the grade / verify run, and its widget bundle is not written (the gap report alone) — never an unverified bundle.
 
-**The step-level working checker** (answer 30; stage `SW`, prompts `sw-v2` since the Chapter 8 calibration of
-2026-10-01), per assembled chapter bundle:
+**The step-level working checker** (answer 30; stage `SW`, prompts `sw-v3` since the Chapter 8 calibration of
+2026-10-01), per assembled chapter bundle, as TWO independent blind passes (A, then B reshuffled) whose flags are unioned:
 
 ```sh
 uv run working_check.py precheck --seed seed/<book>/<prefix>-cNN.json          # free: the pre-check only
-uv run working_check.py args --book <book> --seed seed/<book>/<prefix>-cNN.json --chapter N \
-    --by-ref work/<book>/packets/fanout/wcheck-chNN --out A.json --embed <copy>.workflow.js   # parts past 300 solutions
-#   [--batch 8] [--effort medium] [--model sonnet] [--only <ids.json | calibration.json>]
-# run the copy; save to runs/<book>/working-check/chNN-<runId>.json; meter --stage SW
-uv run working_check.py collect --args A.json --runs runs/<book>/working-check/chNN-<runId>.json \
+uv run working_check.py args --book <book> --seed seed/<book>/<prefix>-cNN.json --chapter N --pass-id A \
+    --by-ref work/<book>/packets/fanout/wcheck-chNN --out A.json --embed <copy>.workflow.js         # parts past 300 solutions
+uv run working_check.py args … --pass-id B --order shuffled --order-seed 11 \
+    --by-ref work/<book>/packets/fanout/wcheck-chNN-B --out B.json --embed <copy>-B.workflow.js      # `fanout.py prepare` does both
+#   [--batch 5] [--effort high] [--model sonnet] [--only <ids.json | calibration.json>] [--aliases mutants.json]
+# run both copies (≤ 2 runs at a time); save each to runs/<book>/working-check/chNN-<A|B>-<runId>.json; meter --stage SW
+uv run working_check.py collect --args A.json --args B.json --runs <A run>.json <B run>.json \
     --out runs/<book>/working-check/chNN.flags.json
-uv run working_check.py calibrate --truth runs/<book>/working-check/chNN.calibration.json --flags <flags.json>
+uv run working_check.py calibrate --truth runs/<book>/working-check/chNN.calibration.json \
+    --mutants runs/<book>/working-check/chNN.mutants.json --flags <flags.json>
+uv run working_check_mutate.py --seed <bundle> --calibration <calibration.json> --out-bundle <b.json> --out-truth <m.json>
 ```
 
-One Sonnet agent per BATCH of up to 8 canonical solutions (book questions and worked-example entries with working)
-reads each one's question, its multiple-choice options, the key and the numbered steps and reports every step that
-does not follow (a value not the question's, arithmetic, a sign, a label, a copy error, a last step that is not the
-key, or a conclusion the steps do not support), says whether the fault sits in a step or in the question text, and
-never re-solves its own way or corrects. Why batches: sw-v1 (one agent per solution) metered $0.161 per solution on
-Chapter 8, of which ~$0.094 is the harness's fixed cost per agent (~30K cache-write and ~95K cache-read tokens
-before a shard is read); a batch shares it. A figure image is offered only when the question text does not give
-its points, and a batch opens at most 3, in one turn; the agents' effort is `medium`; notes only on flags. The tool
-budget is an instruction in the prompt (the `agent()` hook has no turn cap): the metered run is where it is checked.
-The free pre-check evaluates purely numeric relation chains (rounding with "=" to the places shown, mixed numbers,
-a stated contradiction and "= undefined" are not flags), and flags a numeric-key question whose working never
-calculates (the "stub" rule); it sits beside the shards, never in a prompt. Every flag, with its sources (agent,
-numeric, stub), is a backlog item for a human; the content is not changed. `runs/<book>/working-check/chNN.calibration.json`
-is a chapter's classified flags (REAL / REAL-BUT-ELSEWHERE / FALSE) and a 51-solution subset: run the subset first,
-`collect` it, and `calibrate` must show every real defect still caught before a new prompt version runs on a book.
+One Sonnet agent per BATCH of up to 5 canonical solutions (book questions and worked-example entries with working)
+reads each one's question, its multiple-choice options, its figure when the question text does not give the points,
+the key and the numbered steps, and reports every step that does not follow (a value not the question's or the
+figure's, arithmetic, a sign, a label, a copy error, a last step that is not the key, or a conclusion the steps do not
+support), says whether the fault sits in a step or in the question text, and never re-solves its own way or
+corrects. Every offered figure is READ in the first turn, with the shards (the prompt names it); the agent is told
+never to reconstruct a figure's values from the working (sw-v2 did, and missed Ex8-4:19b in both calibration runs).
+Why batches: sw-v1 (one agent per solution) metered $0.161 per solution on Chapter 8, of which ~$0.094 is the
+harness's fixed cost per agent (~30K cache-write and ~95K cache-read tokens before a shard is read); a batch shares
+it. The tool budget is an instruction in the prompt (the `agent()` hook has no turn cap): the metered run checks it.
+Why two passes: the Chapter 8 calibration runs (51 solutions) caught 12 (batch 8 / medium, $0.019 a solution) and
+14 (batch 5 / high, $0.027) of the 16 real solutions with the agents alone, and the two missed different ones, so
+their union misses only the figure case: independent passes find what a shallow one skipped. A flag both passes
+raised (`passes: ["A", "B"]`) outranks one raised by a single pass; every flag goes to a human either way. The free
+pre-check evaluates purely numeric relation chains (rounding with "=" to the places shown, mixed numbers, a stated
+contradiction and "= undefined" are not flags), and flags a numeric-key question whose working never calculates (the
+"stub" rule); it sits beside the shards, never in a prompt. Every flag, with its sources (agent, numeric, stub), is a
+backlog item for a human; the content is not changed.
+`runs/<book>/working-check/chNN.calibration.json` holds a chapter's classified flags (REAL / REAL-BUT-ELSEWHERE /
+FALSE) and a 51-solution subset. It is sw-v1's OWN findings, so it flatters sw-v1 (100% by construction):
+`working_check_mutate.py` builds the unbiased set — known-good solutions outside the subset with one injected defect
+each (a changed coordinate, a swapped label, a flipped sign, a changed key, a renamed point in the question), the
+truth written down — and `calibrate --mutants` scores recall by defect class. Run both on a new prompt version, or a
+new model, before it checks a book.

@@ -287,12 +287,17 @@ _GRADIENT_SYM = re.compile(r"m_\{?([A-Z]{2})\}?")
 
 
 def gradients_used_not_computed(working: str) -> list[str]:
-    """Gradient symbols `m_{XY}` the worked answer uses but never computes (never followed by "=")."""
+    """Gradient symbols `m_{XY}` the worked answer uses but never computes: computing is `m_{XY} = …` at the
+    start of a statement — followed by "=" and not itself an operand (`m_{AC}\\times m_{BD} = …` computes
+    neither; `m_{QR} = m_{PQ}` computes only the first)."""
     text = re.sub(r"\\text\{[^{}]*\}", " ", working or "")
+    text = re.sub(r"\\(?:times|cdot|div)", " * ", text)
     used, computed = [], set()
     for m in _GRADIENT_SYM.finditer(text):
         xy = m.group(1)
-        if re.match(r"\s*&?\s*=", text[m.end():]):
+        before = text[:m.start()].rstrip()
+        operand = bool(before) and before[-1] in "*+-/("
+        if not operand and re.match(r"\s*&?\s*=", text[m.end():]):
             computed.add(xy)
         used.append(xy)
     out = []
@@ -300,6 +305,25 @@ def gradients_used_not_computed(working: str) -> list[str]:
         if xy not in computed and xy not in out:
             out.append(xy)
     return out
+
+
+def _scalar(key: str | None) -> bool:
+    """A key that is one value — a number or an expression — not an equation, a list or a point."""
+    return bool(key) and not re.search(r"[=,;<>]", key)
+
+
+def _one_point(key: str | None) -> bool:
+    """A key that is exactly one point `(a; b)`."""
+    k = (key or "").strip()
+    if not (k.startswith("(") and k.endswith(")")):
+        return False
+    depth = 0
+    for i, ch in enumerate(k):
+        depth += ch == "("
+        depth -= ch == ")"
+        if depth == 0 and i < len(k) - 1:
+            return False
+    return depth == 0 and ";" in k or "," in k
 
 
 # ------------------------------------------------------------------------------------ referential words
@@ -361,7 +385,11 @@ def _reveals(P: Part, sentence: str) -> bool:
 
 def _states(own: str, symbol: str) -> bool:
     """Does P's own text already say what `symbol` is ("$N=(3;5)$", "$a=5$", "$m_{MN}=…$")?"""
-    return re.search(rf"(?<![A-Za-z]){re.escape(symbol)}\s*=", _math_plain(own).replace("{", "").replace("}", "")) is not None
+    return re.search(rf"(?<![A-Za-z]){re.escape(symbol)}\s*=", _math_plain(own)) is not None
+
+
+def _states_gradient(own: str, xy: str) -> bool:
+    return re.search(rf"m_\{{?{xy}\}}?\s*=", own) is not None
 
 
 def _group_parts(parts: list[Part]) -> list[list[Part]]:
@@ -434,7 +462,7 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
                     if n in conflicts or d in done:
                         continue
                     done.append(d)
-                    val = (Q.key.strip() if Q.keyed and Q.kind == "coordinates" and len(d.names) == 1
+                    val = (Q.key.strip() if Q.keyed and Q.kind == "coordinates" and _one_point(Q.key) and len(d.names) == 1
                            and d.names[0] not in asked_coordinates(own) else None)
                     text = d.with_value(val) if val else d.clause()
                     if val and _reveals(P, text):
@@ -460,15 +488,19 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
                             notes.append(Unresolved(P.ref, "no_key",
                                                     f"uses {L}, which {Q.ref} works out, but {Q.ref} is {Q.fate} with no "
                                                     "key to carry", [_source(Q, t)]))
-                        elif byc and Q.kind == "coordinates":
+                        elif byc and Q.kind == "coordinates" and _one_point(Q.key):
                             add("R2", Q, f"${L}={Q.key.strip()}$.", names=[L])
-                        elif byv and Q.kind in (None, "values", "expression"):
+                        elif byv and Q.kind in (None, "expression") and _scalar(Q.key):
                             add("R2", Q, f"${byv[0]}={Q.key.strip()}$.", names=[L], variable=byv[0])
+                        else:
+                            notes.append(Unresolved(P.ref, "no_key",
+                                                    f"uses {L}, which {Q.ref} works out, but its key is not one value "
+                                                    f"this module can restate ({Q.key})", [_source(Q, t)]))
                         break
 
                 # R3 — a gradient the worked answer uses and never computes
                 for xy in gradients_used_not_computed(P.working):
-                    if _states(own, f"m_{xy}"):
+                    if _states_gradient(own, xy):
                         continue
                     src = next((Q for Q in reversed(earlier)
                                 if {xy, xy[::-1]} & asked_gradients(tail[Q.ref])), None)
@@ -476,7 +508,7 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
                         notes.append(Unresolved(P.ref, "no_source",
                                                 f"its worked answer uses the gradient m_{{{xy}}} without working it out, and "
                                                 "no earlier part asks for it", [_source(Q, tail[Q.ref]) for Q in earlier]))
-                    elif not src.keyed:
+                    elif not (src.keyed and src.kind in (None, "expression") and _scalar(src.key)):
                         notes.append(Unresolved(P.ref, "no_key",
                                                 f"uses m_{{{xy}}}, which {src.ref} works out, but {src.ref} is {src.fate} "
                                                 "with no key to carry", [_source(src, tail[src.ref])]))
