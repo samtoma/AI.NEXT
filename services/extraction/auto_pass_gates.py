@@ -270,7 +270,11 @@ RETYPE_BASIS = {
 }
 
 
-def retype_basis(rule: str | None) -> str:
+def retype_basis(rule: str | None, as_: str | None = None) -> str:
+    """The reason for one retype. A run recorded before the rule was named is read by what it was typed as: a choice typed again as a
+    number or as values is the options rule (the only one that existed then)."""
+    if not rule and as_ in ("numeric", "expression (values)"):
+        rule = "numeric" if as_ == "numeric" else "values"
     return RETYPE_BASIS.get(rule or "", f"the collection typed this item again (rule {rule or 'unnamed'}); the key is kept exactly")
 
 
@@ -285,7 +289,7 @@ def g2_retyped(run: dict, chapter: int | None, prefix: str) -> list[dict]:
             continue
         for r in (l.get("verify") or {}).get("retyped") or []:
             out.append({"key": f"{l['lesson']}:{r['ref']}", "decision": f"typed again as {r['as']} (key {r.get('key')})",
-                        "basis": retype_basis(r.get("rule")) + (f" ({'; '.join(r.get('because') or [])[:200]})" if r.get("because") else "")})
+                        "basis": retype_basis(r.get("rule"), r.get("as")) + (f" ({'; '.join(r.get('because') or [])[:200]})" if r.get("because") else "")})
     return out
 
 
@@ -795,8 +799,9 @@ def main(argv: list[str] | None = None) -> int:
         if not a.lesson_run and not a.recommend:
             ap.error("g2 needs --lesson-run (the S2–S4 run) and/or --recommend")
         owed: dict[str, dict] = {}
-        for p in a.lesson_run:
-            owed.update(g2_items(json.loads(p.read_text()), ch, book.id_prefixes[0]))
+        loaded = [json.loads(p.read_text()) for p in a.lesson_run]
+        for r_ in loaded:
+            owed.update(g2_items(r_, ch, book.id_prefixes[0]))
         into = a.into or HERE / "runs" / book.book / "g2.json"
         existing = json.loads(into.read_text()) if into.exists() else None
         if a.into is None and ch is not None and existing:
@@ -808,7 +813,7 @@ def main(argv: list[str] | None = None) -> int:
         if rec_in and ch is not None:      # a recommendation file may hold other chapters: this one only
             rec_in = {**rec_in, "items": {k: v for k, v in (rec_in.get("items") or {}).items()
                                           if k.startswith(f"{book.id_prefixes[0]}{ch}s")}}
-        scope = {l.get("lesson") for p in a.lesson_run for l in (json.loads(p.read_text()).get("result", json.loads(p.read_text())).get("lessons") or [])
+        scope = {l.get("lesson") for r_ in loaded for l in (r_.get("result", r_).get("lessons") or [])
                  if l and (ch is None or str(l.get("lesson", "")).startswith(f"{book.id_prefixes[0]}{ch}s"))}
         doc, c, decisions = g2_merge(owed, rec_in, existing, scope)
         into.parent.mkdir(parents=True, exist_ok=True)
@@ -818,7 +823,7 @@ def main(argv: list[str] | None = None) -> int:
         # partial answer): listed for Samuel beside the holds and exclusions, whatever its verdict (g2_recommend.py)
         low = [d["key"] for d in decisions if "confidence low" in (d.get("basis") or "")]
         review = held + [k for k in low if k not in held]
-        retyped = [r for p in a.lesson_run for r in g2_retyped(json.loads(p.read_text()), ch, book.id_prefixes[0])]
+        retyped = [r for r_ in loaded for r in g2_retyped(r_, ch, book.id_prefixes[0])]
         rec = decision_record(
             "G2", book, ch, f"{c['recommended'] + c['rule']} book item(s) decided on the AI recommendation "
                             f"({c['recommended']} from the recommendation file, {c['rule']} by the checks' own rule); "

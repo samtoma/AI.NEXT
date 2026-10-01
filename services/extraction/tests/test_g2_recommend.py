@@ -559,6 +559,16 @@ class RetypedBasis(unittest.TestCase):
         self.assertIn("inequality", self.run_with("kind-for-relations")[0]["basis"])
         self.assertIn("equals sign", self.run_with("kind-for-equation")[0]["basis"])
 
+    def test_a_run_recorded_before_rules_had_names_is_read_by_what_it_was_typed_as(self):
+        run = {"lessons": [{"lesson": "g10m9s1-1", "verify": {"retyped": [
+            {"ref": "Ex9-1:1", "as": "expression (values)", "key": "4; 5", "because": ["x"]},
+            {"ref": "Ex9-1:2", "as": "numeric", "key": "3", "because": ["x"]},
+            {"ref": "Ex9-1:3", "as": "expression, kind equation (was surd)", "key": "x=2", "because": ["x"]}]}}]}
+        by = {d["key"].split(":")[-1]: d["basis"] for d in A.g2_retyped(run, 9, "g10m")}
+        self.assertIn("inventions", by["Ex9-1:1"])
+        self.assertIn("inventions", by["Ex9-1:2"])
+        self.assertNotIn("inventions", by["Ex9-1:3"], "an unnamed rule that is not an options retype gets the neutral sentence")
+
     def test_a_rule_the_table_does_not_know_is_never_given_another_rules_reason(self):
         (d,) = self.run_with("some-future-rule")
         self.assertNotIn("inventions", d["basis"])
