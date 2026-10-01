@@ -126,3 +126,8 @@ Consistency-review decisions (2026-09-27), one at a time (decisions.md decisions
     Same day: the fan-out's cost question ("keep going until the whole book is done?") was dismissed by Samuel
     — "do not proceed, wait for next instruction". No new runs launched after 002 (wf_957393ec-d74, Chapter 8
     working check) and 003 (wf_bfd09dab-0e6, S0b pass A, chapter group 1), which were already running.
+41. (2026-10-01) After the pause, on the map question ("placeholder cards would not be linked") → "wait for the fan,
+    I charged my credit, continue, but sonnet 5.5 please": no placeholder topic cards; the fan-out CONTINUES to the
+    whole book (this is the go-ahead the dismissed question asked for). Every agent and run on Sonnet ("sonnet" =
+    Sonnet 5, the newest Sonnet available; pipeline stages already pin it, with Haiku only for small yes/no checks).
+    Runs 002 and 003 resumed under their run ids; answer 40 and the remaining spec FRs handed to Sonnet agents.
