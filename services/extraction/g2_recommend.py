@@ -247,7 +247,13 @@ def typed_fields(item: dict, fix: dict | None) -> tuple[dict, list[str]]:
     at = fix.get("answer_type")
     key = str(fix.get("key") or "").strip()
     f: dict = {}
-    if at == "numeric":
+    if not at:
+        # no change of typing: a repair of the stem or the printed answer alone (the key stays the book's)
+        if not (fix.get("stem") or fix.get("printed_answer") or fix.get("unit")):
+            return {}, ["a fix names no answer type and nothing else to change"]
+        if fix.get("less_specific") or fix.get("answer_only") or fix.get("options") or key:
+            return {}, ["a fix that does not name an answer type may only repair the stem, the printed answer or the unit"]
+    elif at == "numeric":
         k = _clean_numeric(key)
         if not _as_number(k):
             problems.append(f"a numeric key is ONE number; {key!r} is not (a fraction, a mixed number or an expression is typed expression)")
@@ -295,9 +301,14 @@ def typed_fields(item: dict, fix: dict | None) -> tuple[dict, list[str]]:
             problems.append(f"less_specific names text that is not an option: {bad}")
         if at_i >= 0 and LETTERS[at_i] in less:
             problems.append("the key is the most specific answer, not a less specific one")
+        src = fix.get("options_source") or None
+        if src not in ("stem", "figure", "lesson"):
+            problems.append("a choice fix names where its options come from: the stem, a figure or the lesson's closed set")
+        elif src == "figure" and not item.get("figures"):
+            problems.append("options said to be a figure's labels, but the item has no figure")
         f = {"answer_type": "choice", "answer": LETTERS[at_i] if at_i >= 0 else None, "marker": None,
              "choices": [{"key": LETTERS[i], "text": o} for i, o in enumerate(opts[:5])],
-             "options_source": fix.get("options_source") or None}
+             "options_source": src}
         if less:
             f["less_specific"] = less
     elif at == "not_markable":
@@ -316,8 +327,8 @@ def typed_fields(item: dict, fix: dict | None) -> tuple[dict, list[str]]:
     if fix.get("stem") and str(fix["stem"]).strip() != str(item.get("stem") or "").strip():
         f["stem"] = str(fix["stem"]).strip()
         problems += stem_repair_problems(item.get("stem") or "", f["stem"])
-    # what the new type no longer carries is cleared, so no stale option set or flag rides along
-    for stale in ("less_specific", "options_source", "answer_only", "not_markable_reason"):
+    # what the new type no longer carries is cleared, so no stale option set or flag rides along (only when the typing changes)
+    for stale in ("less_specific", "options_source", "answer_only", "not_markable_reason") if at else ():
         if stale not in f and item.get(stale) not in (None, "", False):
             f[stale] = None
     return {k: v for k, v in f.items() if item.get(k) != v}, problems
