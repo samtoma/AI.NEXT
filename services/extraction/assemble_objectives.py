@@ -621,6 +621,8 @@ def s1_args(book, manifest, blocks, maths, chapter: int, options: dict | None = 
 #   lessons/<slug>.B.txt     lessonText(l, ['we', 'ex', 'text'])       finder B
 #   pool/b0001.txt …         one mapper batch's item lines             both blind mappers
 #   anchors/a0001.txt …      ANCHORS[key], in the index's own key order the evidence check, the link check
+#   prior.txt                priorText() (only with prior objectives)  the linker
+#   prior/<id tail>.txt      one earlier objective's statement         the link check (statementOf)
 #
 # None of them holds an agent's output (they are written before any agent runs), a solution, a
 # printed answer or a teacher-only block (the S1 packet never has them).
@@ -725,8 +727,26 @@ def _js_anchor_index(ch: dict) -> dict[str, str]:
 S1_FINDER_ORDER = {"A": ["text", "we", "ex", "pool"], "B": ["we", "ex", "pool", "text"], "L": ["text", "we", "ex"]}
 
 
-def s1_shards(packet: dict, pool_batch: int) -> tuple[dict[str, str], list[str]]:
-    """{shard name: text} for one chapter packet, and the ANCHORS key order."""
+def _js_prior_text(prior: list[dict]) -> str:
+    """objectives.workflow.js's priorText() for a non-empty list: the linker's EARLIER CHAPTERS block."""
+    from packet_ref import js, js_truthy
+    return "\n".join(f"  {js(o['id'])}: {js(o.get('statement'))}"
+                     + (f" (section {js(o.get('section'))})" if js_truthy(o.get("section")) else "")
+                     for o in prior)
+
+
+def prior_shard_name(lo: str) -> str:
+    """The shard holding one earlier objective's statement (the link checker's), as the workflow names it."""
+    return f"prior/{lo.removeprefix('lo:')}.txt"
+
+
+def s1_shards(packet: dict, pool_batch: int, prior: list[dict] | None = None) -> tuple[dict[str, str], list[str]]:
+    """{shard name: text} for one chapter packet, and the ANCHORS key order.
+
+    With `prior` (the earlier chapters' approved objectives, backlog 68) the list is a shard too:
+    `prior.txt` is the linker's block (priorText()) and `prior/<id tail>.txt` one objective's
+    statement (statementOf(), the link checker's), so a late chapter's args carry ids only. With no
+    prior objectives no prior shard exists, so a chapter run before this (Chapter 8) hashes as before."""
     texts = {"context.txt": _js_chapter_context(packet)}
     for l in packet["lessons"]:
         for side, order in S1_FINDER_ORDER.items():
@@ -736,6 +756,11 @@ def s1_shards(packet: dict, pool_batch: int) -> tuple[dict[str, str], list[str]]
     idx = _js_anchor_index(packet)
     for n, key in enumerate(idx, start=1):
         texts[f"anchors/a{n:04d}.txt"] = idx[key]
+    if prior:
+        from packet_ref import js
+        texts["prior.txt"] = _js_prior_text(prior)
+        for o in prior:
+            texts[prior_shard_name(o["id"])] = js(o.get("statement"))
     return texts, list(idx)
 
 
@@ -745,7 +770,8 @@ def s1_args_by_ref(args: dict, directory: Path) -> dict:
     import packet_ref
     ch = args["chapter"]
     pool_batch = int(args["options"]["pool_batch"])
-    texts, keys = s1_shards(ch, pool_batch)
+    prior = list(args.get("prior_objectives") or [])
+    texts, keys = s1_shards(ch, pool_batch, prior)
     shards = packet_ref.Shards(directory, "S1")
     for name, text in texts.items():
         shards.put(name, text)
@@ -753,6 +779,11 @@ def s1_args_by_ref(args: dict, directory: Path) -> dict:
                          "pool_batch": pool_batch})
     ref["pool_batch"] = pool_batch            # echoed by the run: the pool shards' batch size
     compact = {k: v for k, v in args.items() if k != "chapter"}
+    if prior:
+        # backlog 68: the statements live in prior.txt / prior/<tail>.txt; the args keep the ids, which the
+        # script's control flow reads (which ids a link may start at, and the count it echoes)
+        compact["prior_objectives"] = [{"id": o["id"]} for o in prior]
+        compact["prior_by_ref"] = True
     compact["by_ref"] = ref
     compact["chapter_ref"] = {
         "n": ch["n"], "module": ch["module"], "title": ch.get("title"),
@@ -768,7 +799,8 @@ def check_s1_by_ref(run: dict, packet_args: dict) -> None:
     """A by-ref S1 run read the shards its args named; prove they were this packet's own rendering."""
     import packet_ref
     for ref in run.get("_by_refs") or ([run["by_ref"]] if run.get("by_ref") else []):
-        texts, _ = s1_shards(packet_args["chapter"], int(ref.get("pool_batch") or packet_args["options"]["pool_batch"]))
+        texts, _ = s1_shards(packet_args["chapter"], int(ref.get("pool_batch") or packet_args["options"]["pool_batch"]),
+                             packet_args.get("prior_objectives") or [])
         if packet_ref.shards_sha256_of_texts(texts) != ref.get("shards_sha256"):
             raise StageError("the run read shard files that are not this chapter packet's rendering "
                              "(by_ref.shards_sha256 differs): re-run S1 from fresh `s1-args --by-ref` output")
