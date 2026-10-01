@@ -268,7 +268,10 @@ test("an account that never owed the step — a password sign-up — cannot use 
   }
   const before = await row(id);
   assert.equal(before.onboarding_pending, false);
-  const attempt = await completeOnboarding(id, { grade: "10" });
+  // A valid, explicit curriculum (required since the 2026-10-01 reversal) is
+  // what gets this call past validation and into the definer, which is the
+  // thing actually under test: that it refuses a non-pending student.
+  const attempt = await completeOnboarding(id, { grade: "10", curriculum: AMERICAN });
   assert.deepEqual(attempt, { ok: false, reason: "already_completed" });
   assert.deepEqual(await row(id), before);
 });
@@ -280,7 +283,7 @@ test("a grade offering two curricula: no pick is curriculum_required and writes 
 
     const none = await completeOnboarding(g.studentId, { grade: "10" });
     assert.deepEqual(none, { ok: false, reason: "curriculum_required", offered: [NATIONAL, AMERICAN] });
-    assert.equal(onboardingAnswer(none).status, 409);
+    assert.equal(onboardingAnswer(none).status, 422, "a missing curriculum is 422, not 409 (2026-10-01 reversal)");
     assert.equal((await row(g.studentId)).onboarding_pending, true, "still owed: nothing was written");
 
     const unknown = await completeOnboarding(g.studentId, { grade: "10", curriculum: "british-igcse" });
@@ -288,7 +291,7 @@ test("a grade offering two curricula: no pick is curriculum_required and writes 
     assert.equal(onboardingAnswer(unknown).status, 422);
 
     const picked = await completeOnboarding(g.studentId, { grade: "10", curriculum: AMERICAN });
-    assert.deepEqual(picked, { ok: true, grade: "10", curriculum: AMERICAN, source: "chosen", resolvedFrom: null });
+    assert.deepEqual(picked, { ok: true, grade: "10", curriculum: AMERICAN, source: "chosen" });
     assert.deepEqual(await row(g.studentId), {
       grade: "10",
       curriculum_system: AMERICAN,
@@ -302,9 +305,12 @@ test("a grade offering two curricula: no pick is curriculum_required and writes 
 
 test("two submissions racing each other write once — the loser is already_completed", { skip }, async () => {
   const g = await googleSignIn("race@example.com", "g-race");
+  // Both carry an explicit curriculum: since the 2026-10-01 reversal a missing
+  // one never reaches the database at all, so the race under test is between
+  // two otherwise-valid writes, not a validation refusal.
   const results = await Promise.all([
-    completeOnboarding(g.studentId, { grade: "10" }),
-    completeOnboarding(g.studentId, { grade: "9" }),
+    completeOnboarding(g.studentId, { grade: "10", curriculum: AMERICAN }),
+    completeOnboarding(g.studentId, { grade: "9", curriculum: NATIONAL }),
   ]);
   const won = results.filter((r) => r.ok);
   const lost = results.filter((r) => !r.ok);

@@ -315,9 +315,11 @@ is stored. Sign in with Google for the first time and confirm the one-screen ste
 ### User Story 4 — The console decides availability per curriculum, grade and course, and never pools curricula (Priority: P4)
 
 On the course availability page Samuel sees courses grouped by curriculum, decides per grade whether
-each is live, and sees for each grade which curricula sign-up will offer. On the Content page, the
-Overview and every other console view, a figure for "Mathematics" always says which course it counts;
-the Overview splits by course.
+each is live, and sees for each grade which curricula have something live there *(changed 2026-10-01,
+answer 36: sign-up itself now always offers every curriculum at every grade; this line shows what is
+live, so an operator can see which curricula will carry sign-up's "nothing to study yet" note)*. On the
+Content page, the Overview and every other console view, a figure for "Mathematics" always says which
+course it counts; the Overview splits by course.
 
 **Why this priority**: it is where the curriculum dimension is decided. Because a course belongs to
 exactly one curriculum, the existing per-(course, grade) rule already carries most of the meaning;
@@ -331,7 +333,9 @@ figure counts two maths courses together.
 
 1. **Given** the course availability page, **When** an operator opens it, **Then** courses are grouped
    under their curriculum, each section labels grades in its own curriculum's words, and each grade
-   shows which curricula a new student of that grade will be offered.
+   shows which curricula have something live for a new student of that grade *(changed 2026-10-01,
+   answer 36: every grade's sign-up names every curriculum regardless; this line names what is live,
+   not what will be asked)*.
 2. **Given** an operator is about to hide the last live course of a curriculum for a grade that has
    students following it, **When** they make the change, **Then** the page first says how many
    students it leaves with nothing to study, as part of the page rather than a browser dialog.

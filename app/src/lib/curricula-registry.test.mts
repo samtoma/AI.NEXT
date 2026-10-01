@@ -169,6 +169,29 @@ test("the subject registry names no course: two courses share maths (decision E)
   assert.deepEqual(coursesOfSpineKey("geography"), []);
 });
 
+test("a course's Arabic label follows ITS OWN arabicTouches, not the subject it shares (Samuel's answer 35, 2026-10-01)", () => {
+  // math-en is one subject taught from two books; only the American one is
+  // Arabic-free, so the same subject's Arabic name must not leak onto it.
+  assert.equal(COURSES[US_G10_MATH_EN].subject, COURSES[PREP3_MATH_EN].subject, "both math-en");
+  assert.equal(COURSES[US_G10_MATH_EN].tutor.arabicTouches, false);
+  assert.equal(courseLabelAr(US_G10_MATH_EN), null, "the American course prints no Arabic subject name");
+  assert.equal(
+    courseLabelAr(PREP3_MATH_EN),
+    SUBJECTS["math-en"].labelAr,
+    "the National course of the same subject is unaffected"
+  );
+  // every National course keeps carrying its Arabic label unchanged
+  for (const id of [PREP3_MATH_EN, PREP3_SOCIAL_AR, PREP3_ARABIC_AR] as const) {
+    assert.equal(COURSES[id].tutor.arabicTouches, true, id);
+    const label = courseLabelAr(id);
+    assert.ok(label, `${id}: still carries an Arabic label`);
+    assert.match(label!, ARABIC_SCRIPT, `${id}: label is Arabic script`);
+  }
+  // and an unknown course prints nothing rather than guessing
+  assert.equal(courseLabelAr("course:unknown"), null);
+  assert.equal(courseLabelAr(null), null);
+});
+
 test("probing: exactly one course may probe, it is Prep-3 maths, and the G10 course does not (FR-4212, decision 7)", () => {
   const probing = COURSE_IDS.filter((id) => COURSES[id].probing);
   assert.deepEqual(probing, [PROBING_COURSE_ID]);

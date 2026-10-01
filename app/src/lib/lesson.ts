@@ -917,7 +917,7 @@ ${sections.join("\n")}`;
  * the Grade 10 course, whose block (and its bilingual coaching example) stays
  * entirely in English.
  */
-function bridgeBlock(bridges: LessonBridge[], arabic = true): string {
+export function bridgeBlock(bridges: LessonBridge[], arabic = true): string {
   if (bridges.length === 0) return "";
   const lines = bridges
     .map(
