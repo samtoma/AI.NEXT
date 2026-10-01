@@ -639,16 +639,23 @@ def main(argv: list[str] | None = None) -> int:
         into.parent.mkdir(parents=True, exist_ok=True)
         into.write_text(json.dumps(doc, ensure_ascii=False, indent=1) + "\n")
         held = [d["key"] for d in decisions if d["decision"].startswith(("no verdict", "hold", "exclude"))]
+        # a recommendation the agent marked "low confidence" is a content decision (a stem repair, a teaching-only retype, a
+        # partial answer): listed for Samuel beside the holds and exclusions, whatever its verdict (g2_recommend.py)
+        low = [d["key"] for d in decisions if "confidence low" in (d.get("basis") or "") and d["key"] not in held]
+        review = held + low
         retyped = [r for p in a.lesson_run for r in g2_retyped(json.loads(p.read_text()), ch, book.id_prefixes[0])]
         rec = decision_record(
             "G2", book, ch, f"{c['recommended'] + c['rule']} book item(s) decided on the AI recommendation "
                             f"({c['recommended']} from the recommendation file, {c['rule']} by the checks' own rule); "
                             f"{c['held']} held for a person; {c['human']} already decided by a person"
+                            + (f"; {len(low)} recommended with low confidence (your call)" if low else "")
                             + (f"; {c['teaching']} typed not markable (teaching only, no verdict owed)" if c.get("teaching") else "")
                             + (f"; {len(retyped)} item(s) typed again (a choice from the book's printed key, or a marker kind its form cannot apply to)" if retyped else ""),
-            decisions=decisions + retyped, held=bool(held), for_review=held, run=a.run,
+            decisions=decisions + retyped, held=bool(review), for_review=review, run=a.run,
             checks=[{"name": "S3 three-way answer check (printed, EPUB solution, blind re-solve)", "state": "done"},
                     {"name": "S3 answer typing check", "state": "done"},
+                    *([{"name": "G2 recommendation run: recommender + independent verifier (g2_recommend.py)", "state": "done"}]
+                      if c["recommended"] else []),
                     {"name": "the app's marker on every typed key (assembly)", "state": "on load"}],
             evidence=[("G2 verdicts", into), ("recommendation", a.recommend)]
                      + [(f"S2–S4 run {p.stem}", p) for p in a.lesson_run])

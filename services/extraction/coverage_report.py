@@ -83,6 +83,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 import book_config
+import review_policy
 from assemble_lesson_bundle import (LessonRun, ObjectivesFile, book_lesson, check_lessons,
                                     manifest_lessons, normalise, residual_notation)
 import schemas
@@ -146,6 +147,9 @@ class Check:
         self.want = self.got = 0
         self.failures: list[dict] = []
         self.notes: list[str] = []
+        # scopes that hold ONLY because an auto-pass (answer 37c, "auto-pass G<n> (AI recommendation)") stands in
+        # for a person: counted as covered, never as a human sign-off, and shown as such (state `auto_passed`)
+        self.auto_passed: list[dict] = []
 
     def fail(self, scope: str, detail: str) -> None:
         self.failures.append({"scope": scope, "detail": detail})
@@ -154,12 +158,21 @@ class Check:
         signed = [e for e in exceptions if e.get("check") == self.id and e.get("signed_by")]
         excepted = [f for f in self.failures
                     if any(e.get("scope") in ("*", f["scope"]) for e in signed)]
-        state = ("holds" if not self.failures else
-                 "excepted" if len(excepted) == len(self.failures) else "fails")
+        state = ("fails" if len(excepted) != len(self.failures) else
+                 "auto_passed" if self.auto_passed else
+                 "excepted" if self.failures else "holds")
         return {"id": self.id, "title": self.title, "want": self.want, "got": self.got,
                 "state": state, "failures": self.failures,
                 "excepted_scopes": sorted({f["scope"] for f in excepted}),
+                **({"auto_passed": self.auto_passed} if self.auto_passed else {}),
                 **({"notes": self.notes} if self.notes else {})}
+
+
+def is_auto_signoff(signed_off: dict | None) -> bool:
+    """A sign-off that is an auto-pass, never a person's: marked `auto`, or signed "auto-pass G<n> (AI recommendation)".
+    Either is enough — a sign-off that says it is a person's must be one."""
+    so = signed_off or {}
+    return bool(so.get("auto")) or review_policy.is_auto(so.get("by"))
 
 
 def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dict[str, LessonRun],
@@ -184,6 +197,12 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
     b_lessons = [lsn for b in bundles for lsn in b.get("lessons", [])]
     gen_q = [q for key in ("generated-questions", "widget-questions")
              for q in (generated.get(key) or {}).get("questions", [])]
+    # Which generated items are LIVE is the loader's rule, not the bundle's: a bundle straight from the generator
+    # carries no `status` and load_generated_questions.py loads a maths course's whole bundle live (answer 37a); an
+    # export of loaded rows says what each row is. review_policy is the one place that rule lives.
+    gen_live = [q for key in ("generated-questions", "widget-questions")
+                for q in (generated.get(key) or {}).get("questions", [])
+                if review_policy.generated_item_is_live(q, (generated[key].get("course_id") or book.course_id))]
     catalogue = (generated.get("misconceptions") or {}).get("misconceptions", [])
     run_items = {(s, it.ref): it for s in slugs if s in runs for it in runs[s].items}
     checks: list[Check] = []
@@ -320,11 +339,16 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
               "generated (FR-4305)")
     cells: dict[str, set[str]] = defaultdict(set)
     for q in questions:
-        if q.get("verified"):
+        if review_policy.book_item_is_live(q):
             cells[q["lo"]].add(q["tier"])
-    for q in gen_q:
-        if q.get("status") == "live" and q.get("lo_id") in lesson_of_lo:
+    for q in gen_live:
+        if q.get("lo_id") in lesson_of_lo:
             cells[q["lo_id"]].add(q["tier"])
+    in_scope = [q for q in gen_q if q.get("lo_id") in lesson_of_lo]
+    by_own_status = sum(1 for q in gen_live if q.get("status") and q.get("lo_id") in lesson_of_lo)
+    c.notes.append(f"generated items live: {sum(1 for q in gen_live if q.get('lo_id') in lesson_of_lo)} of "
+                   f"{len(in_scope)} ({by_own_status} by the row's own status, the rest by the loader's rule: a maths "
+                   "course loads its bundle live, answer 37a — review_policy.generated_item_is_live)")
     for lo in all_los:
         c.want += 3
         c.got += len(cells[lo] & set(TIERS))
@@ -338,17 +362,35 @@ def audit(book, manifest: dict, objectives: dict[str, ObjectivesFile], runs: dic
     widgets_per_chapter: dict[str, int] = {}
     # Only a CHAPTER-scope gap stands in for a chapter's widget. A lesson-scope gap records that
     # one lesson's kind is missing; signing it accepts the missing kind, not a widgetless chapter.
-    signed_gaps = {g.get("module") for g in (widget_gaps or {}).get("gaps", [])
-                   if (g.get("signed_off") or {}).get("by") and g.get("scope") == "chapter"}
+    # A gap is signed by a PERSON, or auto-passed (answer 37c: G3 owns the widget sample and signs
+    # "auto-pass G3 (AI recommendation)", `auto: true`). The two are never the same: an auto-passed gap covers
+    # the chapter and the check says so (state `auto_passed`, the sign-off named), a person's holds outright.
+    chapter_gaps = [g for g in (widget_gaps or {}).get("gaps", []) if g.get("scope") == "chapter"
+                    and (g.get("signed_off") or {}).get("by")]
+    signed_gaps = {g.get("module") for g in chapter_gaps if not is_auto_signoff(g["signed_off"])}
+    auto_gaps: dict[str, list[dict]] = defaultdict(list)
+    for g in chapter_gaps:
+        if is_auto_signoff(g["signed_off"]):
+            auto_gaps[g.get("module")].append(g)
     for mid in modules:
-        n = sum(1 for q in gen_q if q.get("question_type") == "widget"
+        n = sum(1 for q in gen_live if q.get("question_type") == "widget"
                 and module_of_lesson.get(lesson_of_lo.get(q.get("lo_id"), "")) == mid)
         widgets_per_chapter[mid] = n
         c.want += 1
         if n or mid in signed_gaps:
             c.got += 1
+        elif mid in auto_gaps:
+            c.got += 1
+            so = auto_gaps[mid][0]["signed_off"]
+            c.auto_passed.append({
+                "scope": mid, "by": so.get("by"), "at": so.get("at"),
+                "detail": f"no widget question; {len(auto_gaps[mid])} widget gap(s) of the chapter were AUTO-PASSED "
+                          f"({so.get('by')}), not signed by a person — in Samuel's backlog; no new kind is approved"})
         else:
             c.fail(mid, "no widget question and no signed-off widget gap")
+    if c.auto_passed:
+        c.notes.append(f"{len(c.auto_passed)} chapter(s) covered ONLY by an auto-passed widget gap, 0 widget "
+                       "questions: " + ", ".join(a["scope"] for a in c.auto_passed))
     checks.append(c)
 
     # ---- distractors / predicates -> refutations -------------------------------------

@@ -501,8 +501,8 @@ export async function respond({ label, prompt, schema, phase, args, stub }) {
   stub.seen = stub.seen || {}
   if (label.includes(':rec:')) {
     const first = !label.endsWith(':again')
-    const rows = keys.filter((k) => !(first && (stub.omit_first || []).includes(k))).map((k) => Object.assign({ key: k }, stub.rec[k]))
-    return { results: rows }
+    const rows = keys.filter((k) => !(first && (stub.omit_first || []).includes(k))).map((k) => Object.assign({ key: stub.bracket ? `[${k}]` : k }, stub.rec[k]))
+    return { results: rows.concat(first ? (stub.extra_rec || []) : []) }
   }
   return { results: keys.map((k) => Object.assign({ key: k }, stub.ver[k])) }
 }
@@ -647,9 +647,21 @@ class WorkflowUnderTheStub(unittest.TestCase):
 
     def test_an_answer_for_another_batch_or_twice_is_ignored_and_reported(self):
         k1, k2, k3, k7 = self.keys
-        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER})
+        extra = [dict(key=k7, **rec("accept", note="WRONG BATCH")), dict(key=k1, **rec("exclude", note="TWICE"))]
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, extra_rec=extra)
+        self.assertTrue(out["ok"], out["error"])
+        probs = " | ".join(out["result"]["problems"])
+        self.assertIn("not an item of this batch", probs)
+        self.assertIn("answered twice", probs)
+        res = {r["key"]: r for r in out["result"]["results"]}
+        self.assertEqual(res[k1]["rec"]["verdict"], "accept", "the first answer is kept")
+        self.assertEqual(res[k7]["rec"]["verdict"], "hold", "the batch that owns k7 answered it")
+
+    def test_an_id_written_with_its_brackets_is_read(self):
+        k1, k2, *_ = self.keys
+        out = self.stub(self.rows(), {k1: self.VER, k2: self.VER}, bracket=True)
         self.assertEqual(out["result"]["problems"], [])
-        self.assertEqual([c["label"] for c in out["calls"]].count(out["calls"][0]["label"]), 1)
+        self.assertEqual(sum(1 for r in out["result"]["results"] if r["rec"]), 4)
 
     def test_the_classes_the_prompt_offers_are_the_classes_the_collector_knows(self):
         src = WORKFLOW.read_text()

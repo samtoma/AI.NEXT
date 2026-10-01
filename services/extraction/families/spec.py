@@ -663,7 +663,9 @@ def marker_key(kind: str, plain: str, variables: list[str]) -> str:
         parts = [E.to_latex(i) for i in items]
         if len(variables) == 1:
             return r" \text{ or } ".join(f"{variables[0]} = {x}" for x in parts)
-        return ",\\ ".join(parts)
+        # a plain comma and space: the LaTeX space ",\\ " is a command the app's marker cannot read, so a key written
+        # with it is refused at load (marker_check.mjs: unexpected character "\\") and its items are held
+        return ", ".join(parts)
     return E.to_latex(tree)
 
 
