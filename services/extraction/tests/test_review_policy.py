@@ -10,9 +10,9 @@ Samuel's answers 33 and 37 (docs/WIP-g10-pilot/samuel-answers.md), migration 035
     automatic safety check holds it (with a reason); any other course keeps its review queue;
   * the assembly attaches the book's own picture as a `book_image` stand-in, and holds a question
     whose picture would show its unknown (`figure_reveals_answer`);
-  * auto_pass_gates.py writes the AI's recommendation as an AUTO verdict and records every decision
-    (runs/<book>/gates/*.json and gate_decisions); a safety check still blocks; an auto decision can
-    never be stored as a human's.
+  * auto_pass_gates.py writes the AI's recommendation as an AUTO verdict and records every decision in the
+    console's `ainext.gate-decision/1` shape (runs/<book>/gates/<id>.json, read by
+    app/src/lib/review-gate-records.ts); a safety check still blocks; an auto decision is never a human's.
 
 @covers FR-4302, FR-4304
 """
@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -122,19 +123,12 @@ class Migration035(unittest.TestCase):
         psql_file(self.db, MIG)           # and forward again
         self.assertEqual(self.cols(a), ("live", None, "ai dual-check", None, None))
 
-    def test_a_live_row_never_keeps_a_hold_and_an_auto_decision_is_never_a_humans(self):
+    def test_a_live_row_never_keeps_a_hold(self):
         import psycopg
         with self.assertRaises(psycopg.errors.CheckViolation):
             self.db.q("UPDATE questions SET status = 'live', hold_reason = 'figure_missing' WHERE id = %s",
                       (self.ids[0],))
-        base = ("g10-math:ch08:G3", "G3", "g10-math", "course:us-g10-math-en", "ch08", "passed")
-        sql = ("INSERT INTO gate_decisions (id, gate, book, course_id, scope, outcome, decided_by, auto, decided_at, "
-               "record, record_sha256) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,now(),'{}'::jsonb,%s)")
-        with self.assertRaises(psycopg.errors.CheckViolation):
-            self.db.q(sql, (*base, "Samuel Toma", True, "0" * 64))
-        with self.assertRaises(psycopg.errors.CheckViolation):
-            self.db.q(sql, (*base, "auto-pass G3 (AI recommendation)", False, "0" * 64))
-        self.db.q(sql, (*base, "auto-pass G3 (AI recommendation)", True, "0" * 64))
+        self.db.q("UPDATE questions SET status = 'review', hold_reason = 'figure_missing' WHERE id = %s", (self.ids[0],))
 
 
 @skip_without_db()
@@ -279,62 +273,85 @@ class AutoPassGates(unittest.TestCase):
                                {"key": "pool:Ex8-6:9", "kind": "mappers_disagree", "item": "Ex8-6:9", "detail": "x"},
                                {"key": "single:lo:g10m8s1-1-1", "kind": "single", "objective": "lo:g10m8s1-1-1",
                                 "detail": "x"}]}
-        v, blocked, decided = apg.g1_verdicts(check)
+        v, blocked, decisions = apg.g1_verdicts(check)
         self.assertEqual(blocked, [])
         self.assertEqual((v["terminology"], v["move_items"], list(v["outside_items"])),
                          ({"gradient": "keep"}, {"Ex8-6:9": "lo:g10m8s3-1-2"}, ["Ex8-6:28a"]))
         self.assertTrue(v["auto"] and v["by"] == "auto-pass G1 (AI recommendation)")
-        self.assertEqual(len(decided), 4)
+        self.assertEqual(len(decisions), 4)
         check["undecided"].append({"key": "links:failed", "kind": "links_failed", "detail": "the linker failed"})
         _, blocked, _ = apg.g1_verdicts(check)
         self.assertEqual(len(blocked), 1)
 
-    def test_g2_keeps_a_humans_verdict_and_adds_the_rest_as_auto(self):
-        rec = {"items": {"a:Ex1:1": {"verdict": "fix", "class": "book error", "fields": {"answer": "5"}},
-                         "a:Ex1:2": {"verdict": "accept", "class": "no printed answer"},
-                         "a:Ex1:3": {"verdict": "maybe"}}}
-        doc, c, decided = apg.g2_merge(rec, {"by": "Samuel Toma", "items": {"a:Ex1:2": {"verdict": "hold"}}})
+    def test_g2_a_human_verdict_stands_then_the_recommendation_then_the_checks_rule(self):
+        run = {"lessons": [{"lesson": "g10m8s2-1", "items": [{"ref": r} for r in ("Ex1", "Ex2", "Ex3", "Ex4", "Ex5")],
+                            "verify": {"typing_problems": [{"ref": "Ex1", "problems": ["key does not read"]}],
+                                       "no_printed_answer": [{"ref": "Ex2", "agreed_with_book_solution": True},
+                                                             {"ref": "Ex5", "agreed_with_book_solution": False}],
+                                       "disagreements": [{"ref": "Ex3"}, {"ref": "Ex4"}]}},
+                           {"lesson": "g10m9s1-1", "items": [{"ref": "Ex9"}],
+                            "verify": {"disagreements": [{"ref": "Ex9"}]}}]}
+        owed = apg.g2_items(run, 8, "g10m")
+        self.assertEqual(sorted(owed), ["g10m8s2-1:Ex1", "g10m8s2-1:Ex2", "g10m8s2-1:Ex3", "g10m8s2-1:Ex4",
+                                        "g10m8s2-1:Ex5"], "this chapter's items only")
+        rec = {"items": {"g10m8s2-1:Ex3": {"verdict": "fix", "class": "book error", "fields": {"answer": "5"}}}}
+        human = {"by": "Samuel Toma", "items": {"g10m8s2-1:Ex4": {"verdict": "hold"}}}
+        doc, c, decisions = apg.g2_merge(owed, rec, human)
+        it = doc["items"]
         self.assertEqual(doc["by"], "Samuel Toma")
-        self.assertEqual(doc["items"]["a:Ex1:2"], {"verdict": "hold"}, "the human's verdict is untouched")
-        self.assertEqual({k: (v["verdict"], v["auto"], v["fields"]) for k, v in doc["items"].items() if v.get("auto")},
-                         {"a:Ex1:1": ("fix", True, {"answer": "5"})})
-        self.assertEqual(c, {"added": 1, "kept_human": 1, "recommended": 3})
-        doc2, _, _ = apg.g2_merge(rec, None)
+        self.assertEqual(it["g10m8s2-1:Ex4"], {"verdict": "hold"}, "the human's verdict is untouched")
+        self.assertEqual((it["g10m8s2-1:Ex3"]["verdict"], it["g10m8s2-1:Ex3"]["fields"]), ("fix", {"answer": "5"}))
+        self.assertEqual(it["g10m8s2-1:Ex1"]["verdict"], "exclude", "a typing problem is kept out, for Samuel")
+        self.assertEqual(it["g10m8s2-1:Ex2"]["verdict"], "accept", "re-solve agreed with the book's solution")
+        self.assertNotIn("g10m8s2-1:Ex5", it, "nothing supports a verdict: it stays held")
+        self.assertTrue(all(v.get("auto") and v["by"] == "auto-pass G2 (AI recommendation)"
+                            for k, v in it.items() if k != "g10m8s2-1:Ex4"))
+        self.assertEqual(c, {"human": 1, "recommended": 1, "rule": 2, "held": 1})
+        doc2, _, _ = apg.g2_merge(owed, None, None)
         self.assertEqual((doc2["by"], doc2["auto"]), ("auto-pass G2 (AI recommendation)", True))
 
     def test_g5_blocks_on_a_safety_check_or_parity_and_lists_completeness_for_samuel(self):
         cov = {"status": "RED", "checks": [
             {"id": "tier_floor", "state": "fails", "want": 39, "got": 33, "failures": [{"scope": "lo:x", "detail": "y"}]},
             {"id": "katex", "state": "holds", "want": 0, "got": 0, "failures": []}]}
-        blocking, review, _ = apg.g5_evaluate(cov, [("course:prep3-math-en", "GREEN", [])])
-        self.assertEqual((blocking, len(review)), ([], 1))
+        blocked, review, checks = apg.g5_evaluate(cov, [("course:prep3-math-en", "GREEN", [])])
+        self.assertEqual((blocked, len(review), len(checks)), ([], 1, 3))
         cov["checks"][1].update(state="fails", got=1, failures=[{"scope": "q:1", "detail": "bad TeX"}])
-        blocking, _, _ = apg.g5_evaluate(cov, [("course:prep3-math-en", "RED", ["visuals 211 != 212"])])
-        self.assertEqual(len(blocking), 2)
+        blocked, _, _ = apg.g5_evaluate(cov, [("course:prep3-math-en", "RED", ["visuals 211 != 212"])])
+        self.assertEqual(len(blocked), 2)
 
-    def test_a_record_is_auto_signed_and_its_outcome_agrees_with_what_blocked(self):
-        rec = apg.decision_record("G3", self.book, 8, "passed", "s", decided=[{"item": "q", "verdict": "accept",
-                                                                                 "why": "w"}])
-        self.assertEqual((rec["id"], rec["format"], rec["auto"], rec["decided_by"], rec["review"]),
-                         ("g10-math:ch08:G3", "ainext.gate-decision/1", True, "auto-pass G3 (AI recommendation)",
-                          {"status": "awaiting_samuel"}))
-        with self.assertRaises(ValueError):
-            apg.decision_record("G5", self.book, 8, "passed", "s", blocking=["parity RED"])
-        path, where = apg.write_record(rec, self.gates, None)
-        self.assertEqual(path.name, "g10-math__ch08__G3.json")
-        self.assertEqual(json.loads(path.read_text())["id"], "g10-math:ch08:G3")
+    def test_a_record_is_the_consoles_shape_auto_signed_and_its_outcome_follows_what_held(self):
+        rec = apg.decision_record("G3", self.book, 8, "s", decisions=[{"key": "q", "decision": "accept",
+                                                                      "basis": "w", "detail": None}],
+                                  evidence=[("verdicts", apg.HERE / "auto_pass_gates.py"), ("none", None)])
+        self.assertEqual({k: rec[k] for k in ("format", "gate", "book", "id", "chapter", "by", "auto", "outcome")},
+                         {"format": "ainext.gate-decision/1", "gate": "G3", "book": "g10-math", "id": "g3-ch08",
+                          "chapter": 8, "by": "auto-pass G3 (AI recommendation)", "auto": True, "outcome": "pass"})
+        self.assertEqual(rec["decisions"], [{"key": "q", "decision": "accept", "basis": "w"}])
+        self.assertEqual(rec["evidence"], [{"label": "verdicts", "path": "services/extraction/auto_pass_gates.py"}])
+        self.assertTrue(rec["decided_at"].endswith("Z"))
+        self.assertEqual(apg.decision_record("G3", self.book, 8, "s", held=True)["outcome"], "pass_with_holds")
+        self.assertEqual(apg.decision_record("G5", self.book, None, "s", blocked=["parity RED"])["outcome"], "blocked")
+        self.assertEqual(apg.decision_record("G5", self.book, None, "s")["id"], "g5-book")
+        path = apg.write_record(rec, self.gates)
+        self.assertEqual(path.name, "g3-ch08.json")
+        self.assertEqual(json.loads(path.read_text())["id"], "g3-ch08")
 
-    @unittest.skipUnless(SERVER, "set AINEXT_TEST_PG")
-    def test_a_record_reaches_gate_decisions_and_a_rerun_replaces_it(self):
-        db = ScratchDB("gates").create()
-        try:
-            rec = apg.decision_record("G4", self.book, 8, "passed", "first")
-            apg.write_record(rec, self.gates, db.dsn)
-            apg.write_record(dict(rec, summary="second"), self.gates, db.dsn)
-            rows = db.q("SELECT id, auto, decided_by, record->>'summary', length(record_sha256) FROM gate_decisions")
-            self.assertEqual(rows, [("g10-math:ch08:G4", True, "auto-pass G4 (AI recommendation)", "second", 64)])
-        finally:
-            db.drop()
+    @unittest.skipUnless(shutil.which("node"), "the console's parser runs in node")
+    def test_the_consoles_own_parser_reads_the_record(self):
+        rec = apg.decision_record("G2", self.book, 9, "s", decisions=[{"key": "g10m9s1-1:Ex9-1:1", "decision": "accept"}],
+                                  checks=[{"name": "three-way check", "state": "done"}], held=True)
+        path = apg.write_record(rec, self.gates)
+        app = REPO / "app"
+        script = (f"const {{ parseRecord }} = await import({json.dumps(str(app / 'src/lib/review-gate-records.ts'))});"
+                  f"const fs = await import('node:fs');"
+                  f"const r = parseRecord(JSON.parse(fs.readFileSync({json.dumps(str(path))}, 'utf8')), 'x', '');"
+                  "console.log(JSON.stringify([r.ref, r.gate, r.chapter, r.outcome, r.auto, r.decisions.length]));")
+        out = subprocess.run(["node", "--import", "./scripts/ts-resolver.mjs", "--input-type=module", "-e", script],
+                             capture_output=True, text=True, cwd=app)
+        self.assertEqual(out.returncode, 0, out.stderr)
+        self.assertEqual(json.loads(out.stdout.strip().splitlines()[-1]),
+                         ["g10-math/g2-ch09", "G2", 9, "pass_with_holds", True, 1])
 
 
 if __name__ == "__main__":
