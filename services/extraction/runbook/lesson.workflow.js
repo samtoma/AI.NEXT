@@ -483,7 +483,7 @@ function canonRel(s, printed) {
 // chain, its other words carrying no digit, no relation, no negation ("The domain is 0 s ≤t ≤20 s. It represents the total time …"); the "Domain h:" /
 // "Range f(x):" label of each interval; a capital point's name before its coordinates ("M(0; 1) and N(0; −1)")
 const REL_UNIT = '(?:mm|cm|dm|km|m|s|min|h|hr|kg|mg|g|ml|l|years?|days?|hours?|minutes?|seconds?|metres?|meters?|litres?)'
-const REL_ATOM = String.raw`(?:-?\d+(?:[.,]\d+)?°?|[A-Za-z](?:\([a-z]\))?)`
+const REL_ATOM = String.raw`(?:-?\d+(?:[.,]\d+)?°?|[A-Za-zπλθαβγδμσφω](?:\([a-z]\))?)`
 const REL_CHAIN = new RegExp(`${REL_ATOM}(?:\\s*[<>≤≥≠]\\s*${REL_ATOM})+`)
 function relationVariants(r, kc) {
   const out = [r]
@@ -499,10 +499,10 @@ function relationVariants(r, kc) {
     const rest = `${bare.slice(0, m.index)} ${bare.slice(m.index + m[0].length)}`
     if (!/[\d<>≤≥≠=∈]/.test(rest) && !/\b(?:not|no|never|except|cannot)\b/i.test(rest) && /^[A-Za-z\s.,;:'’()-]*$/.test(rest)) out.push(m[0])
   }
-  const lab = bare.split(/\b(?:domain|range)\b[^:]{0,24}:/i)
-  if (lab.length > 1 && !lab.slice(0, -1).some((x, i) => i > 0 && /[<>≤≥≠∈]/.test(x))) {
-    const items = lab.map((x) => x.trim().replace(/[.,;]+$/, '')).filter(Boolean)
-    if (items.length && !items.some((x) => /^[A-Za-z]+$/.test(x))) out.push(items.join('; '))
+  const lab = bare.split(/(\b(?:domain|range)\b[^:]{0,24}:)/i)             // even places: what stands between labels; odd places: the labels
+  if (lab.length > 2 && !lab.some((x, i) => i % 2 === 1 && /[<>≤≥≠∈]/.test(x))) {
+    const items = lab.filter((_x, i) => i % 2 === 0).map((x) => x.trim().replace(/[.,;]+$/, '')).filter(Boolean)
+    if (items.length && !items.some((x) => /^[A-Za-z\s]+$/.test(x))) out.push(items.join('; '))
   }
   const named = r.replace(/(?<![A-Za-z])[A-Z]{1,2}\s*(?=\()/g, '')
   if (named !== r) out.push(named)

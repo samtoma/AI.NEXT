@@ -880,6 +880,98 @@ def delta_ids(bundle: dict, flags: dict) -> list[str]:
     return sorted(s["id"] for s in W.solutions_from_bundle(bundle) if W.has_working(s) and s["id"] not in checked)
 
 
+# ============================================================================ the errata list
+def _where(item: dict) -> str:
+    ref = str(item.get("ref") or "")
+    m = re.match(r"^Ex(\d+-\d+):(.+)$", ref)
+    if m:
+        return f"Exercise {m.group(1)}, question {m.group(2)}"
+    w = re.match(r"^WE(\d+)$", ref)
+    return f"Worked example {w.group(1)}" if w else ref
+
+
+def _chap_titles(book) -> dict[int, str]:
+    try:
+        manifest = json.loads(book.repo_path(book.manifest).read_text())
+    except (OSError, ValueError, AttributeError, TypeError):
+        return {}
+    return {int(m["chapter"]): m.get("title", "") for m in manifest.get("modules") or [] if str(m.get("chapter", "")).isdigit()}
+
+
+def errata_items(rec: dict, entries_by_key: dict[str, dict]) -> dict[str, list[dict]]:
+    """The recommendation file's findings about the BOOK, for the errata list: the printed answer is wrong (`wrong`), or the question text
+    lost or garbled something (`damaged`: excluded, or repaired and live)."""
+    typed_diff = set((rec.get("report") or {}).get("app_marker_identity_of_the_typed_key", {}).get("different") or [])
+    out: dict[str, list[dict]] = {"wrong": [], "damaged": []}
+    for k, v in (rec.get("items") or {}).items():
+        e = entries_by_key.get(k)
+        if not e:
+            continue
+        repaired = "stem" in (v.get("fields") or {})
+        if v["class"] == "book error" and v["verdict"] == "exclude":
+            kind = "wrong"
+        elif v["class"] in ("stem damaged", "item wording") and (v["verdict"] == "exclude" or repaired or v["verdict"] == "hold"):
+            kind = "damaged"
+        else:
+            continue
+        out[kind].append({"key": k, "item": e["item"], "entry": v, "repaired": repaired, "computer_checked": k in typed_diff})
+    return out
+
+
+def errata_markdown(book, chapters: list[int], recs: dict[int, dict], items_by_ch: dict[int, dict[str, dict]]) -> str:
+    titles = _chap_titles(book)
+    total_w = total_d = 0
+    body = []
+    for ch in chapters:
+        found = errata_items(recs[ch], items_by_ch[ch])
+        if not (found["wrong"] or found["damaged"]):
+            continue
+        total_w += len(found["wrong"])
+        total_d += len(found["damaged"])
+        body.append(f"\n## Chapter {ch} — {titles.get(ch, '')}\n")
+        for kind, head in (("wrong", "The book's printed answer is wrong"),
+                           ("damaged", "The question's text lost or garbled something")):
+            rows = found[kind]
+            if not rows:
+                continue
+            body.append(f"\n### {head} ({len(rows)})\n")
+            for r in sorted(rows, key=lambda r: [int(x) if x.isdigit() else x for x in re.split(r"(\d+)", r["key"].split(":", 1)[1])]):
+                it, v = r["item"], r["entry"]
+                book_ans = it.get("epub_final_answer") or it.get("printed_answer") or "(none printed)"
+                ic = v.get("if_corrected") or {}
+                body.append(f"\n**{_where(it)}**, page {it.get('printed_page', '?')}\n")
+                body.append(f"- The question as we have it: {_clip(it.get('stem'), 300)}")
+                body.append(f"- The book's answer: {_clip(book_ans, 200)}")
+                if ic.get("defect"):
+                    body.append(f"- What is wrong: {_clip(ic['defect'], 420)}")
+                else:
+                    body.append(f"- What is wrong: {_clip(v.get('note'), 420)}")
+                if ic.get("answer"):
+                    body.append(f"- The right answer (our own working, not applied to the book): {_clip(ic['answer'], 200)}")
+                if r["computer_checked"]:
+                    body.append("- A plain computer check, with no AI in it, agrees: the book's answer is not equal to the expression in the question.")
+                if r["repaired"]:
+                    body.append(f"- In the question bank: **live, with the question text repaired** to: {_clip(v['fields']['stem'], 300)}. "
+                                "Marked as an AI repair for you to review.")
+                elif v["verdict"] == "hold":
+                    body.append("- In the question bank: kept out for now (held), waiting for a person.")
+                else:
+                    body.append("- In the question bank: **not used**. The book's answer was never changed.")
+    head = f"""# Errata found in the Grade 10 maths book while checking the question bank
+
+Source book: Everything Maths, Grade 10 (Siyavula), the copy in `docs/Source`. Written by the AI checking line on 2026-10-01, from its own working through each
+question. **No person has read this yet.** Where a line says a plain computer check agrees, the app's own answer marker compared the book's answer with the
+expression in the question and found them different; every other finding rests on the AI's own working (a second AI re-did the working only for questions it
+wanted to put live). Treat each entry as a lead to confirm against the printed page, not as a ruling.
+
+Nothing here changed the book's answers. A question whose printed answer is wrong was left out of the question bank rather than corrected. A question whose text
+lost something in extraction (a missing sign or exponent) is listed with the repair, if there was one.
+
+So far: **{total_w}** printed answers that look wrong and **{total_d}** questions whose text lost or garbled something, in chapters {', '.join(str(c) for c in chapters)}.
+"""
+    return head + "\n".join(body) + "\n"
+
+
 # ============================================================================ the commands (auto_pass_gates.py)
 def follow_ups(book: str, chapter: int, lesson_runs: list[str], *, recommended: str, g2_file: str,
                db: str = "ainext_pilot_g10_ch08", run_label: str = "") -> list[str]:

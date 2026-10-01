@@ -758,6 +758,10 @@ def main(argv: list[str] | None = None) -> int:
     rd.add_argument("--seed", type=Path, help="the assembled chapter bundle (default seed/<book>/<prefix>-cNN.json)")
     rd.add_argument("--flags", type=Path, help="the chapter's working-check flags (default runs/<book>/working-check/chNN.flags.json): its checked_ids")
     rd.add_argument("--out", type=Path, help="write the ids here (a JSON list: working_check.py args --only)")
+    re_ = sub.add_parser("g2-recommend-errata", help="the book's errata the recommendation runs found, as one plain-language markdown file")
+    re_.add_argument("book")
+    re_.add_argument("--chapter", type=int, action="append", required=True, help="a chapter whose runs/<book>/g2-chNN.recommended.json to read (repeat)")
+    re_.add_argument("--out", type=Path, required=True)
     rc = g2rec(sub.add_parser("g2-recommend-collect", help="G2 recommendation run: the saved run(s), checked, as a recommendation file"))
     rc.add_argument("--run", type=Path, action="append", required=True, help="a saved run (runs/<book>/g2rec/chNN-<runId>.json)")
     rc.add_argument("--out", type=Path, help="the recommendation file (default runs/<book>/g2-chNN.recommended.json); keys these "
@@ -769,6 +773,27 @@ def main(argv: list[str] | None = None) -> int:
     a = ap.parse_args(argv)
 
     book = book_config.load_book(a.book)
+    if a.gate == "g2-recommend-errata":
+        import g2_recommend as G
+        recs, items_by_ch = {}, {}
+        for c in sorted(a.chapter):
+            rp = HERE / "runs" / book.book / f"g2-ch{c:02d}.recommended.json"
+            recs[c] = json.loads(rp.read_text())
+            g2f = HERE / "runs" / book.book / f"g2-ch{c:02d}.json"
+            ents = G.recommendable([G.load_run(p) for p in G.record_runs(book, c)], c, book.id_prefixes[0],
+                                   json.loads(g2f.read_text()) if g2f.exists() else None)
+            # the items the run was about, as the lesson runs hold them NOW (an item decided since is still in the run's own results)
+            by = {e["key"]: e for e in ents}
+            runs = [G.load_run(p) for p in G.record_runs(book, c)]
+            for run in runs:
+                for l in run.get("lessons") or []:
+                    for it in l.get("items") or []:
+                        by.setdefault(f"{l['lesson']}:{it['ref']}", {"key": f"{l['lesson']}:{it['ref']}", "item": it})
+            items_by_ch[c] = by
+        a.out.parent.mkdir(parents=True, exist_ok=True)
+        a.out.write_text(G.errata_markdown(book, sorted(a.chapter), recs, items_by_ch))
+        print(f"errata -> {a.out}")
+        return 0
     if a.gate.startswith("g2-recommend"):
         return g2_recommend_main(a, book)
     gates_dir = a.gates_dir or HERE / "runs" / book.book / "gates"
