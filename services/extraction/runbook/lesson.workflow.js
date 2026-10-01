@@ -615,7 +615,8 @@ function checkTyping(it, t, lessonText) {
       return r
     }
   }
-  if (t.book_final && !inBookSolution(it.solution, t.book_final)) problems.push('book_final is not in the book solution')
+  // (collect-6: an item typed not markable marks no answer, so a copy of the book's final that is not faithful is no problem)
+  if (t.answer_type !== 'not_markable' && t.book_final && !inBookSolution(it.solution, t.book_final)) problems.push('book_final is not in the book solution')
   if (!t.book_final && t.answer_type !== 'not_markable') problems.push('no book_final')
   const typed = { answer_type: t.answer_type, answer: null, choices: null, marker: null, unit: t.unit || null, options_source: null }
   if (t.answer_type === 'numeric') {
@@ -725,13 +726,14 @@ async function runS3(L) {
     const t = typing[it.ref] || {}
     const b = blind[it.ref]
     const blindAns = b && b.markable !== false && b.final_answer ? b.final_answer : null
-    const bookFinal = problems.includes('book_final is not in the book solution') ? null : (t.book_final || null)
+    const typedNotMarkable = t.answer_type === 'not_markable'
+    const bookFinal = typedNotMarkable || problems.includes('book_final is not in the book solution') ? null : (t.book_final || null)
     // what a missing pair is missing, so an unchecked item is never read as the book disagreeing
     const missing = []
     if (!typing[it.ref]) missing.push('no typing answer')
     if (!b) missing.push('no blind re-solve answer')
     else if (!blindAns && t.answer_type !== 'not_markable' && b.markable !== false) missing.push('an empty blind answer')
-    if (t.book_final && !bookFinal) missing.push('book_final is not in the book solution')
+    if (t.book_final && !bookFinal && !typedNotMarkable) missing.push('book_final is not in the book solution')
     // not a missing check: the blind solver ran and judged the item not markable (typing said it is)
     const blindSaysNotMarkable = !!b && b.markable === false && t.answer_type && t.answer_type !== 'not_markable'
     // both say there is no answer to mark (a proof, a "show that"): the blind pairs agree on that (COLLECT-3)
@@ -752,6 +754,15 @@ async function runS3(L) {
     if (bothNotMarkable) {
       for (const p of pairs) if (/^.+\|blind~/.test(p.pair_id)) Object.assign(p, { route: 'not_markable', verdict: 'equivalent', reason: 'typing and the blind solver agree it has no answer to mark' })
     }
+    // collect-6: an item typed not markable has nothing to mark, so the book's final is not compared; only what the blind
+    // solver and the printed answer say of each other can still disagree
+    if (typedNotMarkable) {
+      for (const p of pairs) {
+        if (/\|(?:blind~book|book~printed)$/.test(p.pair_id) && p.verdict !== 'equivalent') {
+          Object.assign(p, { route: 'not_markable', verdict: 'equivalent', reason: 'typed not markable: nothing is marked, so the book\'s final is not compared' })
+        }
+      }
+    }
     // collect-6: a verbal choice settles by the option each source names (no judge). The printed and the blind answer must be
     // words only; the book side is the solution's own text (digits and maths allowed in its explanation), so a typing agent's
     // faulty copy of the book's final does not hold the item up when the solution itself names the key option.
@@ -760,7 +771,12 @@ async function runS3(L) {
       const opts = typed.choices.map((c) => c.text)
       const kIdx = typed.choices.findIndex((c) => c.key === typed.answer)
       const says = (x) => wordsOnly(x) && namesOnly(x, opts, kIdx)
-      const bookSays = namesOnly(it.solution.join(' '), opts, kIdx)
+      // the book's conclusion is its last sentence ("Therefore π + 3 is irrational."); when that names no option the whole
+      // solution is read ("… is rational. Note that b cannot be 0 …")
+      const whole = it.solution.join(' ')
+      const sentences = whole.split(/(?<=[.!?])\s+/).map((x) => x.trim()).filter(Boolean)
+      const lastS = sentences.length ? sentences[sentences.length - 1] : ''
+      const bookSays = optionsNamed(lastS, opts).named.size ? namesOnly(lastS, opts, kIdx) : namesOnly(whole, opts, kIdx)
       const same = { route: 'options', verdict: 'equivalent', reason: `both name only "${opts[kIdx]}"` }
       let bookSettled = false
       for (const p of pairs) {
