@@ -104,3 +104,10 @@ Consistency-review decisions (2026-09-27), one at a time:
        figure exists. TEMPORARILY REVERSES answer 29 for students; each such question stays in the backlog as
        "needs native figure".
     e. Fan out the full book (the other 13 chapters, ≈ $0.85–1.1k) — approved.
+38. (2026-10-01) "I want the students to see all chapters as well not only 8! you did ingest the full book" →
+    the whole book is read (EPUB text, figures, and S0b maths for all 14 chapters; G0 manifest: 14 chapters,
+    65 lessons), but only Chapter 8 has been through the teaching stages (objectives, lessons, solutions,
+    questions). Orchestrator's implementation: the student sees the whole book now — every chapter and lesson
+    in the manifest's order — with not-yet-prepared lessons visible but not startable ("Being prepared"), each
+    becoming startable automatically when the fan-out loads it. Grounded teaching unchanged: nothing is taught
+    from an unprepared lesson.
