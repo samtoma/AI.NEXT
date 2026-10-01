@@ -81,7 +81,11 @@ UNIT_COST = {
     "s0b_c_image": (0.064, 0.09),       # pass C: $0.96 / 15 images
     "s1_lesson": (1.30, 1.80),          # $7.16 / 5 lessons (s1-v5); high: later chapters' linkers read prior objectives
     "s2s4_item": (0.056, 0.10),         # 5 clean lesson-v4 runs $11.22 / 201 items; high: + resumes and S4 re-runs
-    "sw_solution": (0.03, 0.05),        # answer 30 (≈ 1.5–2.5× the blind re-solve's $0.017 per item)
+    # answer 30's checker, sw-v2 (batches of 8 per agent). sw-v1 was measured on Chapter 8: $31.0 / 192 = $0.161 per
+    # solution (the original 0.03–0.05 assumed one agent per solution; the harness's fixed ~$0.094 per agent made that
+    # impossible). sw-v2's range is MODELLED, not yet metered: low = 8 per agent, effort low; high = 6 per agent
+    # worth of overhead, effort medium, every batch opening its 3 images. Meter the calibration subset first.
+    "sw_solution": (0.032, 0.05),
     "s5_objective": (0.96, 1.32),       # draft + final $12.54 / 13 clean; $17.13 / 13 with the superseded draft
     "s6_objective": (0.66, 0.90),       # author + grade + revise $8.63 / 13
     "s7_objective": (0.36, 0.50),       # author + verify $4.66 / 13, + the re-authors ≈ $1.5
@@ -89,7 +93,7 @@ UNIT_COST = {
 OBJECTIVES_PER_LESSON = 2.6             # Chapter 8: 13 objectives in 5 lessons
 # minutes, for the wall-clock estimate (the pilot's run records: duration_ms)
 MINUTES = {"s0b_wave": 18, "s0b_c": 8, "s1_base": 8, "s1_lesson": 1.0, "lesson_base": 1.5, "lesson_item": 0.22,
-           "lesson_min": 5, "sw_wave": 2.0, "s5-draft": 13, "s6-author": 8, "s6-grade": 5, "s7-author": 9,
+           "lesson_min": 5, "sw_wave": 5.0, "s5-draft": 13, "s6-author": 8, "s6-grade": 5, "s7-author": 9,
            "s7-verify": 5, "s5-final": 20, "s6-author-s111": 6, "between": 3}
 CONCURRENT_AGENTS = 16                  # the Workflow tool's per-run cap
 
@@ -264,22 +268,32 @@ def build_runs(inv: dict) -> list[dict]:
         checkpoint="Did the author write a family, or report it infeasible again (as wf_41c0663f-36d did with an empty "
                    "packet)? Its parent is one of the teaching items (parent_kind \"teaching\"): check the write-specs "
                    "output names the expl: id, and that --check passes.")
-    add(id="wcheck-ch08", stage="SW", chapter=8, workflow="working-check.workflow.js (sw-v1)",
+    add(id="wcheck-ch08", stage="SW", chapter=8, workflow="working-check.workflow.js (sw-v1: run wf_957393ec-d74, saved; "
+                                                          "sw-v2 re-run optional — see checkpoint)",
         what="The step-level working checker on Chapter 8's 198 served solutions (answer 30: re-run on Chapter 8). "
-             "Reads the pilot seed; writes nothing to it.",
+             "Reads the pilot seed; writes nothing to it. DONE with sw-v1 (192 agents, metered $31.0; 21 flagged "
+             "solutions, 18 real flags / 5 real-but-elsewhere / 2 false; runs/g10-math/working-check/ch08.calibration.json). "
+             "The cost below is the sw-v2 re-run (`fanout.py prepare wcheck-ch08` writes its packet and copy BESIDE the "
+             "sw-v1 ones: wcheck-ch08-v2, never over them).",
         agents=None, cost=None, minutes=None, priority=(0, 0, 1),
         save_to="runs/g10-math/working-check/ch08-<wf_id>.json", meter=_meter("SW"),
         after=["uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-ch08.args.json "
                "--runs runs/g10-math/working-check/ch08-<wf_id>.json --out runs/g10-math/working-check/ch08.flags.json",
                "# every flag → the console backlog ('working step flagged'); nothing is corrected"],
-        checkpoint="Calibrate before the other chapters: read every flag. The free pre-check already flags 3 real "
-                   "book typos the pilot's G2 missed (Ex8-6:42a '\\sqrt{5^2(-1)^2}', Ex8-6:38d, Ex8-6:42d). If the "
-                   "agent's false-flag rate is high, fix the prompt (sw-v2) before wcheck-ch01.")
+        checkpoint="CALIBRATED 2026-10-01 (sw-v1 read flag by flag against the book's images): 23 of 25 flags are real "
+                   "book defects (18 in the working + 5 in the question text or lost between exercise parts), 2 false — "
+                   "both from a shard that omitted the multiple-choice options. Cost was the problem: $0.161 per solution "
+                   "against a plan of $0.03-0.05. sw-v2 batches 8 solutions per agent (modelled $0.032-0.05). Before "
+                   "wcheck-ch01: run the 51-solution calibration subset (`working_check.py args … --only "
+                   "runs/g10-math/working-check/ch08.calibration.json`, ≈ $1-2), `collect` it, and `working_check.py "
+                   "calibrate --truth …ch08.calibration.json --flags …` must show every real defect still caught and the "
+                   "2 false flags gone; the metered cost per solution must be ≤ $0.06. Then wcheck-ch01 and on.")
     # wcheck-ch08's size from the pilot seed
     import working_check as W
     sols = W.solutions_from_bundle(json.loads((PILOT_SEED / "g10m-c08.json").read_text()))
     n8 = sum(1 for s in sols if W.has_working(s))
-    runs[-1].update(agents=n8, cost=_cost("sw_solution", n8), minutes=MINUTES["sw_wave"] * math.ceil(n8 / CONCURRENT_AGENTS))
+    runs[-1].update(agents=W.agents_for(n8), cost=_cost("sw_solution", n8),
+                    minutes=MINUTES["sw_wave"] * math.ceil(W.agents_for(n8) / CONCURRENT_AGENTS))
 
     # --- 1. S0b: per group, pass A, pass B, the third reading C ---------------------------------------------
     prev = None
@@ -370,10 +384,11 @@ def build_runs(inv: dict) -> list[dict]:
                     f"--book work/g10-math/fanout/books/{t}/g10-math.json   # scratch DB only (127.0.0.1)",
                     f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-{t}.json "
                     f"--book g10-math --runs runs/g10-math/lesson"]
-        add(id=f"wcheck-{t}", stage="SW", chapter=ch, workflow="working-check.workflow.js (sw-v1)",
-            what=f"the step-level working checker on chapter {ch}'s ≈ {c['solutions']} solutions (one agent each)",
-            agents=c["solutions"], cost=_cost("sw_solution", c["solutions"]),
-            minutes=MINUTES["sw_wave"] * math.ceil(c["solutions"] / CONCURRENT_AGENTS), priority=(3, i, 2),
+        add(id=f"wcheck-{t}", stage="SW", chapter=ch, workflow="working-check.workflow.js (sw-v2)",
+            what=f"the step-level working checker on chapter {ch}'s ≈ {c['solutions']} solutions "
+                 f"({W.BATCH} per agent, effort {W.EFFORT}; ≤ {W.FIG_CAP} figure images per agent)",
+            agents=W.agents_for(c["solutions"]), cost=_cost("sw_solution", c["solutions"]),
+            minutes=MINUTES["sw_wave"] * math.ceil(W.agents_for(c["solutions"]) / CONCURRENT_AGENTS), priority=(3, i, 2),
             depends_on=lesson_ids + ["wcheck-ch08"], before=assemble,
             save_to=f"runs/g10-math/working-check/{t}-<wf_id>.json", meter=_meter("SW"),
             after=[f"uv run working_check.py collect --args work/g10-math/packets/fanout/wcheck-{t}.args.json "
@@ -682,15 +697,20 @@ def prep_wcheck(run: dict) -> dict:
     seed = PILOT_SEED / "g10m-c08.json" if ch == PILOT_CH else HERE / "seed" / BOOK / f"g10m-c{ch:02d}.json"
     if not seed.exists():
         raise NotReady(f"no assembled bundle {rel(seed)}: assemble chapter {ch} first")
-    parts = W.build_args(book, json.loads(seed.read_text()), ch, PACKETS / f"wcheck-{ch_tag(ch)}",
+    # Chapter 8 was checked with sw-v1: its packet, args, pre-check and copy are the record the saved flags were
+    # collected from, so the sw-v2 re-run is built beside them (…-v2), never over them.
+    tag = ch_tag(ch) + ("-v2" if ch == PILOT_CH else "")
+    parts = W.build_args(book, json.loads(seed.read_text()), ch, PACKETS / f"wcheck-{tag}",
                          W.figures_for(RUNS / "lesson"))
     outs = []
     for k, a in enumerate(parts, start=1):
         suffix = "" if k == 1 else f".part{k}"
-        (PACKETS / f"wcheck-{ch_tag(ch)}.args{suffix}.json").write_text(json.dumps(a, ensure_ascii=False) + "\n")
+        (PACKETS / f"wcheck-{tag}.args{suffix}.json").write_text(json.dumps(a, ensure_ascii=False) + "\n")
         r = dict(run)
+        if ch == PILOT_CH:
+            r["embedded_script"] = run["embedded_script"].replace(".workflow.js", "-v2.workflow.js")
         if k > 1:
-            r["embedded_script"] = run["embedded_script"].replace(".workflow.js", f".part{k}.workflow.js")
+            r["embedded_script"] = r["embedded_script"].replace(".workflow.js", f".part{k}.workflow.js")
         outs.append(_embed("working-check.workflow.js", a, r))
     pre = [json.loads(W.precheck_path(Path(a["by_ref"]["dir"])).read_text()) for a in parts]
     return {**outs[0], "parts": [o["script"] for o in outs], "solutions": sum(len(a["solutions"]) for a in parts),
