@@ -1,0 +1,577 @@
+{
+ "objectives_version": 1,
+ "book": "g10-math",
+ "chapter": 9,
+ "module": "module:g10m-c09",
+ "lesson": "g10m9s2-1",
+ "title": "Simple interest",
+ "provenance": {
+  "sections": [
+   {
+    "number": "9.2",
+    "title": "Simple interest"
+   }
+  ],
+  "part": null,
+  "chapter_intro": false
+ },
+ "status": "approved",
+ "g1": {
+  "approved_by": "auto-pass G1 (AI recommendation)",
+  "approved_at": "2026-10-01T18:17:03+00:00",
+  "verdicts": {
+   "auto": true,
+   "by": "auto-pass G1 (AI recommendation)",
+   "terminology": {
+    "simple interest": "keep",
+    "accumulated amount": "keep",
+    "interest rate": "keep",
+    "principal": "keep",
+    "simple interest rate": "keep",
+    "investment period": "keep",
+    "compound interest": "keep",
+    "principal amount": "keep",
+    "balance": "keep",
+    "compound interest rate": "keep",
+    "closing balance": "keep",
+    "straight line graph": "keep",
+    "exponential graph": "keep",
+    "hire purchase": "keep",
+    "cash price": "keep",
+    "deposit": "keep",
+    "insurance premium": "keep",
+    "monthly instalment": "keep",
+    "instalment": "keep",
+    "inflation": "keep",
+    "rate of inflation": "keep",
+    "p.a.": "keep",
+    "population growth": "keep",
+    "foreign exchange rate": "keep",
+    "exchange rate": "keep",
+    "currency": "keep",
+    "rand": "keep",
+    "weaker (the rand weakens)": "keep"
+   },
+   "move_items": {},
+   "links": {},
+   "acknowledged": [],
+   "objectives": {},
+   "outside_items": {}
+  }
+ },
+ "source_run": {
+  "file": "runs/g10-math/objectives/ch09-wf_31ca534c-cf4.json",
+  "sha256": "3de42c7d28f29f2d8af05211355c437ee67e87464a3267aa8b970d79e1c8074c",
+  "prompts_version": "s1-v5",
+  "packet_sha256": "868e95627aa66b669e4f47f1414b83fc9fc30ded37e5b06c6923916f1248a1d8"
+ },
+ "objectives": [
+  {
+   "id": "lo:g10m9s2-1-1",
+   "provisional_id": "lo:g10m9s2-1-1",
+   "n": 1,
+   "statement": "Calculate the accumulated amount of a simple-interest deposit or loan using A = P(1 + in), with the interest rate written as a decimal and the time in years.",
+   "label": "Calculate accumulated amount",
+   "evidence": [
+    {
+     "kind": "definition",
+     "anchor": "b03460",
+     "printed_page": 330,
+     "quote": "interest calculated only on the initial amount that you invested",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "intro",
+     "anchor": "b03472",
+     "printed_page": 331,
+     "quote": "The general formula for calculating simple interest is",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "definition",
+     "anchor": "b03473",
+     "printed_page": 331,
+     "quote": "A&=P\\left(1+in\\right)",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE1",
+     "printed_page": 331,
+     "quote": "How much will be in her account at the end of the investment term?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE2",
+     "printed_page": 332,
+     "quote": "She will pay back the loan in one lump sum at the end of",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-1:1",
+     "printed_page": 334,
+     "quote": "Calculate the balance accumulated by the end of",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-7:1",
+     "printed_page": 350,
+     "quote": "Calculate the balance accumulated by the end of",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex9-1:1",
+    "Ex9-1:2",
+    "Ex9-1:3",
+    "Ex9-1:4",
+    "Ex9-1:5a",
+    "Ex9-1:5b",
+    "Ex9-7:1",
+    "Ex9-7:2",
+    "Ex9-7:8",
+    "Ex9-7:16a",
+    "Ex9-7:18a"
+   ],
+   "worked_examples": [
+    "WE1",
+    "WE2"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A1"
+    ],
+    "b": [
+     "B1"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "simple interest",
+    "accumulated amount",
+    "interest rate"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 1,
+   "node": {
+    "id": "lo:g10m9s2-1-1",
+    "kind": "learning_objective",
+    "label": "Calculate accumulated amount",
+    "description": "Calculate the accumulated amount of a simple-interest deposit or loan using A = P(1 + in), with the interest rate written as a decimal and the time in years.",
+    "source_page": 330,
+    "syllabus_ref": "9.2",
+    "order_in_parent": 1
+   }
+  },
+  {
+   "id": "lo:g10m9s2-1-2",
+   "provisional_id": "lo:g10m9s2-1-2",
+   "n": 2,
+   "statement": "Determine the principal that must be invested now to reach a given accumulated amount, at a given simple interest rate over a given number of years.",
+   "label": "Determine the principal to invest",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b03476",
+     "printed_page": 333,
+     "quote": "use the simple interest formula to find pieces of missing information",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-1:6",
+     "printed_page": 334,
+     "quote": "how much should you invest now?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-7:3",
+     "printed_page": 350,
+     "quote": "how much money should he invest now to reach his goal?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex9-1:6",
+    "Ex9-7:3"
+   ],
+   "worked_examples": [],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A2"
+    ],
+    "b": [
+     "B4"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "principal",
+    "accumulated amount",
+    "simple interest rate"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 2,
+   "node": {
+    "id": "lo:g10m9s2-1-2",
+    "kind": "learning_objective",
+    "label": "Determine the principal to invest",
+    "description": "Determine the principal that must be invested now to reach a given accumulated amount, at a given simple interest rate over a given number of years.",
+    "source_page": 333,
+    "syllabus_ref": "9.2",
+    "order_in_parent": 2
+   }
+  },
+  {
+   "id": "lo:g10m9s2-1-3",
+   "provisional_id": "lo:g10m9s2-1-3",
+   "n": 3,
+   "statement": "Determine the number of years needed for a simple-interest investment to grow to a goal amount by rearranging A = P(1 + in) to solve for n.",
+   "label": "Determine the investment period",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b03476",
+     "printed_page": 333,
+     "quote": "finding the length of time we would need to invest the money",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE3",
+     "printed_page": 333,
+     "quote": "How many years must he invest for to generate",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-1:7",
+     "printed_page": 335,
+     "quote": "How many years will it take for the money to grow to",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-7:6",
+     "printed_page": 350,
+     "quote": "How many years will it take for the money to grow to",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex9-1:7",
+    "Ex9-1:12",
+    "Ex9-1:13",
+    "Ex9-7:6",
+    "Ex9-7:7"
+   ],
+   "worked_examples": [
+    "WE3"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A3"
+    ],
+    "b": [
+     "B2"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "simple interest",
+    "investment period"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 3,
+   "node": {
+    "id": "lo:g10m9s2-1-3",
+    "kind": "learning_objective",
+    "label": "Determine the investment period",
+    "description": "Determine the number of years needed for a simple-interest investment to grow to a goal amount by rearranging A = P(1 + in) to solve for n.",
+    "source_page": 333,
+    "syllabus_ref": "9.2",
+    "order_in_parent": 3
+   }
+  },
+  {
+   "id": "lo:g10m9s2-1-4",
+   "provisional_id": "lo:g10m9s2-1-4",
+   "n": 4,
+   "statement": "Determine the simple interest rate needed for an investment to grow from a principal to an accumulated amount over a given number of years by rearranging A = P(1 + in) to solve for i.",
+   "label": "Determine the simple interest rate",
+   "evidence": [
+    {
+     "kind": "intro",
+     "anchor": "b03476",
+     "printed_page": 333,
+     "quote": "we can rearrange the variables to solve for the required interest rate",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "worked_example",
+     "anchor": "WE4",
+     "printed_page": 333,
+     "quote": "At what simple interest rate should Fritha invest",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-1:8",
+     "printed_page": 335,
+     "quote": "calculate the rate at which the money was invested",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-7:4",
+     "printed_page": 350,
+     "quote": "At what rate was the money invested?",
+     "contained": true,
+     "present": true,
+     "supports": true
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-7:25",
+     "printed_page": 352,
+     "quote": "Determine the rate of simple interest that was charged",
+     "contained": true,
+     "present": true,
+     "supports": true
+    }
+   ],
+   "evidence_dropped": [],
+   "exercise_items": [
+    "Ex9-1:8",
+    "Ex9-1:9",
+    "Ex9-1:10",
+    "Ex9-1:11",
+    "Ex9-7:4",
+    "Ex9-7:5",
+    "Ex9-7:25"
+   ],
+   "worked_examples": [
+    "WE4"
+   ],
+   "confidence": "agreed",
+   "from": {
+    "a": [
+     "A4"
+    ],
+    "b": [
+     "B3"
+    ]
+   },
+   "derivation": "derived",
+   "terms": [
+    "simple interest rate",
+    "principal",
+    "accumulated amount"
+   ],
+   "edited_at_g1": false,
+   "order_in_parent": 4,
+   "node": {
+    "id": "lo:g10m9s2-1-4",
+    "kind": "learning_objective",
+    "label": "Determine the simple interest rate",
+    "description": "Determine the simple interest rate needed for an investment to grow from a principal to an accumulated amount over a given number of years by rearranging A = P(1 + in) to solve for i.",
+    "source_page": 333,
+    "syllabus_ref": "9.2",
+    "order_in_parent": 4
+   }
+  }
+ ],
+ "pool_items": [
+  "Ex9-7:1",
+  "Ex9-7:16a",
+  "Ex9-7:18a",
+  "Ex9-7:2",
+  "Ex9-7:25",
+  "Ex9-7:3",
+  "Ex9-7:4",
+  "Ex9-7:5",
+  "Ex9-7:6",
+  "Ex9-7:7",
+  "Ex9-7:8"
+ ],
+ "prerequisites": [
+  {
+   "src": "lo:g10m9s2-1-1",
+   "dst": "lo:g10m9s2-1-2",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b03476",
+     "printed_page": 333,
+     "quote": "We can use the simple interest formula to find pieces of missing information"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Quote is in a0030. The passage frames finding missing quantities as uses of the simple interest formula, which is the formula from the src objective. It names only rate and time, not the principal specifically, so this is the weakest of the confirmed rows."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m9s2-1-1",
+   "dst": "lo:g10m9s2-1-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b03476",
+     "printed_page": 333,
+     "quote": "The same principles apply to finding the length of time we would need to invest the money"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Both quotes are in the anchored text. a0030 says the same principles apply to finding the time, and WE3 begins by writing down A=P(1+in) and then rearranges it for n."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m9s2-1-1",
+   "dst": "lo:g10m9s2-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b03476",
+     "printed_page": 333,
+     "quote": "we can rearrange the variables to solve for the required interest rate"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "Both quotes are in the anchored text. a0030 says to rearrange for the required rate, and WE4 writes A=P(1+in) and rearranges it for i."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m4s6-1-1",
+   "dst": "lo:g10m9s2-1-3",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE3",
+     "printed_page": 333,
+     "quote": "\\frac{\\text{45 000}}{\\text{30 000}}-1&=\\text{0,075}\\timesn"
+    },
+    {
+     "kind": "text",
+     "anchor": "b03476",
+     "printed_page": 333,
+     "quote": "The same principles apply to finding the length of time we would need to invest the money"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE3 divides, subtracts 1, then divides by 0.075 to isolate n. That is the make-the-subject method of the src objective used as a step, and the quote is in a0034."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m4s6-1-1",
+   "dst": "lo:g10m9s2-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "worked_example",
+     "anchor": "WE4",
+     "printed_page": 333,
+     "quote": "\\frac{\\text{4000}}{\\text{2500}}-1&=i\\times5"
+    },
+    {
+     "kind": "text",
+     "anchor": "b03476",
+     "printed_page": 333,
+     "quote": "we can rearrange the variables to solve for the required interest rate"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "WE4 isolates i by dividing, subtracting 1 and dividing by 5. That is the src make-the-subject method used as a step, and the quote is in a0035."
+   },
+   "backward": false
+  },
+  {
+   "src": "lo:g10m1s4-1-2",
+   "dst": "lo:g10m9s2-1-4",
+   "signal": "uses_method",
+   "evidence": [
+    {
+     "kind": "text",
+     "anchor": "b03477",
+     "printed_page": 333,
+     "quote": "This will prevent rounding off errors from influencing your final answer"
+    },
+    {
+     "kind": "exercise",
+     "anchor": "Ex9-1:9",
+     "printed_page": 335,
+     "quote": "Give the answer correct to one decimal place"
+    }
+   ],
+   "check": {
+    "verdict": "CONFIRMED",
+    "note": "a0031 warns that rounding too early causes errors, and the exercise requires rounding the rate to one decimal place. Both draw on the src rounding objective, and both quotes are in the anchored text."
+   },
+   "backward": false
+  }
+ ],
+ "checks": {
+  "ok": true,
+  "failures": [],
+  "warnings": [
+   "g10m9s2-1: objectives are not numbered in the order the book practises them (rule 6)"
+  ]
+ },
+ "outside_items": []
+}
