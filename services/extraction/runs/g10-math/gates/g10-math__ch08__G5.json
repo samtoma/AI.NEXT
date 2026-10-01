@@ -1,0 +1,70 @@
+{
+ "format": "ainext.gate-decision/1",
+ "id": "g10-math:ch08:G5",
+ "gate": "G5",
+ "book": "g10-math",
+ "course_id": "course:us-g10-math-en",
+ "scope": "ch08",
+ "chapter": 8,
+ "outcome": "passed",
+ "auto": true,
+ "decided_by": "auto-pass G5 (AI recommendation)",
+ "decided_at": "2026-10-01T07:02:22+00:00",
+ "summary": "GO for the fan-out on the dev/pilot database (deploys and promotes nothing); coverage RED, 2 completeness finding(s) for Samuel",
+ "decided": [
+  {
+   "item": "drift guard course:prep3-math-en",
+   "verdict": "GREEN",
+   "why": "holds"
+  },
+  {
+   "item": "drift guard course:prep3-social-ar",
+   "verdict": "GREEN",
+   "why": "holds"
+  },
+  {
+   "item": "drift guard course:prep3-arabic-ar",
+   "verdict": "GREEN",
+   "why": "holds"
+  },
+  {
+   "item": "drift guard course:us-g10-math-en",
+   "verdict": "GREEN",
+   "why": "matches its bundles: {'modules': 1, 'learning_objectives': 13, 'prerequisite_edges': 1, 'questions_total': 158, 'visuals': 90}"
+  },
+  {
+   "item": "coverage objective_evidence",
+   "verdict": "fails",
+   "why": "completeness — for Samuel"
+  },
+  {
+   "item": "coverage tier_floor",
+   "verdict": "fails",
+   "why": "completeness — for Samuel"
+  },
+  {
+   "item": "cost",
+   "verdict": "$156.98 metered for the book, $69.9 on this chapter's lessons",
+   "why": "the cost ledger (meter_run.py)"
+  }
+ ],
+ "rests_on": [
+  "coverage_report.py (safety checks: answer_text, asked_forms, book_pictures, captions, distractor_refutations, katex, notation, s5_catalogue, solution_sources, teacher_only)",
+  "parity_check.py, the per-solution drift guard, for every course",
+  "the gate records G1–G4 for this scope"
+ ],
+ "blocking": [],
+ "for_review": [
+  "coverage objective_evidence fails (12/13): lo:g10m8s1-1-1: no book question",
+  "coverage tier_floor fails (33/39): lo:g10m8s1-1-1: no live item at tier(s) basic, standard, advanced; lo:g10m8s1-1-2: no live item at tier(s) standard, advanced; lo:g10m8s4-1-2: no live item at tier(s) advanced"
+ ],
+ "evidence": {
+  "coverage": "services/extraction/coverage/g10-math.json",
+  "ledger": "services/extraction/runs/g10-math/cost.jsonl",
+  "gate_G3": "services/extraction/runs/g10-math/gates/g10-math__ch08__G3.json",
+  "gate_G4": "services/extraction/runs/g10-math/gates/g10-math__ch08__G4.json"
+ },
+ "review": {
+  "status": "awaiting_samuel"
+ }
+}

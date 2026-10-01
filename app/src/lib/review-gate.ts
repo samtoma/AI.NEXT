@@ -36,6 +36,8 @@
  * components import its labels.
  */
 
+import type { GateRecord } from "./review-gate-records";
+
 /* ------------------------------------------------------------------ kinds */
 
 export const ITEM_KINDS = [
@@ -48,6 +50,7 @@ export const ITEM_KINDS = [
   "objective",
   "prerequisite_link",
   "figure_stand_in",
+  "gate_decision",
 ] as const;
 
 export type ItemKind = (typeof ITEM_KINDS)[number];
@@ -66,6 +69,7 @@ export const KIND_LABEL: Record<ItemKind, string> = {
   objective: "Objective",
   prerequisite_link: "Prerequisite link",
   figure_stand_in: "Figure stand-in",
+  gate_decision: "Gate decision",
 };
 
 /** One line on what a reviewer is signing, per kind. */
@@ -84,6 +88,8 @@ export const KIND_SCOPE: Record<ItemKind, string> = {
   prerequisite_link: "A claim that one objective must come before another.",
   figure_stand_in:
     "The book's own picture, shown to students until a native figure exists (answer 37d).",
+  gate_decision:
+    "A pipeline gate (G1–G5) the fan-out passed on the AI checks' recommendation (answers 37c, 39). Samuel's to sign: anyone may read it, only his account decides it.",
 };
 
 const QUESTION_KINDS: ReadonlySet<ItemKind> = new Set([
@@ -150,6 +156,8 @@ export function decisionEffect(kind: ItemKind, decision: Decision): string {
       case "objective":
       case "prerequisite_link":
         return "Recorded. Nothing changes for students.";
+      case "gate_decision":
+        return "Signs the auto-passed gate as Samuel's. Nothing changes for students or in production.";
       case "figure_stand_in":
         return "Not available for a stand-in.";
     }
@@ -231,6 +239,7 @@ export const REASON_CODES = [
   "ai_authored",
   "needs_native_figure",
   "no_human_review",
+  "auto_passed",
 ] as const;
 
 export type ReasonCode = (typeof REASON_CODES)[number];
@@ -250,6 +259,7 @@ export const REASON_LABEL: Record<ReasonCode, string> = {
   ai_authored: "AI-authored, awaiting human",
   needs_native_figure: "Needs native figure",
   no_human_review: "No human review recorded",
+  auto_passed: "Auto-passed gate, for Samuel",
 };
 
 export type Reason = { code: ReasonCode; detail?: string };
@@ -287,6 +297,8 @@ export interface DerivedItem {
   reasons: Reason[];
   /** the objective's rank in the catalogue order (`lib/module-order.ts`), for ties on `createdAt` */
   catalogueRank: number;
+  /** only this person may decide it (others may view): a gate decision is Samuel's (answer 39) */
+  assignee?: "samuel";
 }
 
 /** The SQL row every question-backed reader returns (lib/review-gate-queries.ts). */
@@ -468,6 +480,31 @@ export function deriveContent(kind: Exclude<ItemKind, "book_question" | "generat
   };
 }
 
+/**
+ * An auto-passed gate decision (answers 37c, 39): never a human stamp, always
+ * Samuel's to sign. Placed at its chapter's first objective in book order
+ * when the chapter is loaded, so a chapter's gates sit with its content.
+ */
+export function deriveGate(
+  r: GateRecord & { fingerprint: string; courseId: string },
+  chapter: { moduleId: string; catalogueRank: number } | null
+): DerivedItem {
+  return {
+    kind: "gate_decision",
+    ref: r.ref,
+    courseId: r.courseId,
+    moduleId: chapter?.moduleId ?? null,
+    loId: null,
+    fingerprint: r.fingerprint,
+    createdAt: r.decidedAt,
+    humanStamped: false,
+    exposure: "content",
+    reasons: [{ code: "auto_passed", detail: `${r.by}${r.summary ? ` — ${r.summary}` : ""}` }],
+    catalogueRank: chapter?.catalogueRank ?? 0,
+    assignee: "samuel",
+  };
+}
+
 /* ------------------------------------------------------------- resolution */
 
 export type ItemState = "open" | "fix_requested" | "approved" | "rejected";
@@ -575,6 +612,8 @@ export interface BacklogFilters {
   course?: string;
   module?: string;
   reason?: ReasonCode;
+  /** "For Samuel": only the items assigned to him (`?for=samuel`) */
+  assignee?: "samuel";
 }
 
 const COURSE_ID = /^course:[a-z0-9-]{1,80}$/;
@@ -588,6 +627,7 @@ export function parseFilters(raw: Record<string, unknown> | null | undefined): B
   const course = one(raw?.course);
   const mod = one(raw?.module);
   const reason = one(raw?.reason);
+  if (one(raw?.for) === "samuel" || one(raw?.assignee) === "samuel") out.assignee = "samuel";
   if (isItemKind(kind)) out.kind = kind;
   if (typeof course === "string" && COURSE_ID.test(course)) out.course = course;
   if (typeof mod === "string" && MODULE_ID.test(mod)) out.module = mod;
@@ -600,6 +640,7 @@ export function matchesFilters(item: ResolvedItem, f: BacklogFilters): boolean {
   if (f.course && item.courseId !== f.course) return false;
   if (f.module && item.moduleId !== f.module) return false;
   if (f.reason && !item.reasons.some((r) => r.code === f.reason)) return false;
+  if (f.assignee && item.assignee !== f.assignee) return false;
   return true;
 }
 
@@ -611,11 +652,18 @@ export function matchesFilters(item: ResolvedItem, f: BacklogFilters): boolean {
 export function pickCandidates(
   items: readonly ResolvedItem[],
   f: BacklogFilters,
-  opts: { mine?: { kind: ItemKind; ref: string } | null; heldByOthers: ReadonlySet<string>; skip?: ReadonlySet<string> }
+  opts: {
+    mine?: { kind: ItemKind; ref: string } | null;
+    heldByOthers: ReadonlySet<string>;
+    skip?: ReadonlySet<string>;
+    /** Samuel's account: his items are in his queue; anyone else sees them only under "For Samuel" */
+    viewerIsOwner?: boolean;
+  }
 ): ResolvedItem[] {
   const key = (i: { kind: string; ref: string }) => `${i.kind}\u0000${i.ref}`;
   const open = items
     .filter((i) => i.state === "open" && matchesFilters(i, f))
+    .filter((i) => !i.assignee || opts.viewerIsOwner === true || f.assignee === i.assignee)
     .filter((i) => !opts.heldByOthers.has(key(i)))
     .filter((i) => !opts.skip?.has(key(i)))
     .sort(compareItems);
@@ -806,6 +854,7 @@ export const REJECT_NEEDS_PIPELINE: ReadonlySet<ItemKind> = new Set([
   "worked_example",
   "objective",
   "prerequisite_link",
+  "gate_decision",
 ]);
 
 /** Which resolved items belong on the export. */
@@ -950,5 +999,13 @@ export interface ReviewItemPayload {
     rationale: string | null;
   };
   figure?: FigurePayload & { questionId: string | null };
+  gate?: GateRecord & {
+    /** the book's S8 coverage audit on record, when there is one */
+    coverage: { state: string; file: string; summary: { checks: number; hold: number; excepted: number; fail: number } | null; failing: string[] } | null;
+  };
+  /** only this person may decide it */
+  assignee?: "samuel";
+  /** shown to a reviewer who may not decide it (a gate decision, to anyone but Samuel) */
+  readOnly?: boolean;
   history: HistoryEntry[];
 }

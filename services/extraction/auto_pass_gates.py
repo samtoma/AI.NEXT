@@ -301,7 +301,8 @@ def parity_results(dsn: str, book, book_config_path: Path | None) -> list[tuple[
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
             code, _ = parity_check.check_course(b.course_id, dsn, None)
-        problems = [l.strip() for l in buf.getvalue().splitlines() if l.strip().startswith(("-", "x", "!"))]
+        problems = [l.strip().lstrip("✗").strip() for l in buf.getvalue().splitlines()
+                    if l.strip().startswith(("✗", "ERROR"))]
         out.append((b.course_id, {0: "GREEN", 1: "RED"}.get(code, "ERROR"), problems))
     if not book.parity:
         cfg = book_config.load_book(book_config_path) if book_config_path else book
