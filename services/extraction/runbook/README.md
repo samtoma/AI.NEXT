@@ -1101,6 +1101,50 @@ passes `--only-lessons <the chapter's lessons>`: without it chapter 1's run woul
 written their templates into chapter 1's directory. The same flag refuses, naming the lessons, a chapter whose book bundle is not loaded yet, so the
 `load_seed` step above comes BEFORE `prepare s7-author-chNN` (after the S5 draft), not after S7.
 
+**Advancing a finished run: `fanout.py advance` and `fanout.py ready`** (2026-10-01; `fanout_advance.py`, tested in `tests/test_fanout_advance.py`).
+What the main session did by hand for every finished Workflow run is one command. It calls no model and launches nothing; it stops at the FIRST step
+that fails and says which (never guessing past it); it prints one JSON summary (a key per line).
+
+```sh
+uv run fanout.py advance <run-id> --wf <wf_id> [--task-output <task>.output] [--resumed] [--dry-run] [--running <run-id>[@copy] …]
+uv run fanout.py ready [--running <run-id>[@copy] …] [--prepare] [--paths]
+#   <run-id>  the plan's id (s1-ch04, lesson-g10m4s3-1, wcheck-ch03, s5-draft-ch03 …)       --wf  the Workflow run id (wf_xxxxxxxx-xxx)
+#   --task-output  the harness's task output file; without it the run's own record under ~/.claude/projects/*/*/workflows/<wf_id>.json (same keys)
+#   --running  runs in flight (or one copy: wcheck-ch01@B.part2): never prepared, never listed ready    --dry-run  every step shown, nothing run or written
+#   --redo  ignore skip-when-fresh and "already loaded"   --no-close-chapter   --no-prepare   --honor-gate (the chapter-1 go/no-go)   --refresh-stale
+#   put the run id FIRST: `--running` takes any number of ids
+```
+
+| the run | what `advance` does after the save (`runs/<book>/<save_to>`; the wrapper with `runId` to `runs/<book>/records/`, never beside `maths/[ABC]-*.json`) and the meter (`--stage` and `--lesson` read from the plan's meter line) |
+|---|---|
+| `s0b-A`, `s0b-B` | B: the S0b assembly (`assemble_maths.py assemble … --out-dir runs/<book>/maths/book`; **exit 4 = "the book's maths is not complete yet", normal, not a failure**) |
+| `s0b-C` | the assembly; the group's chapters with `unresolved` > 0 are a WARNING (G0b is a human); a third reading nobody needs is marked SKIPPED (the assembly still runs) |
+| `s1-chNN` | **G1, never a bare `assemble` on an approved chapter** (it re-derives the rejected state and overwrites the approved files): approved lessons → left alone (`--redo` too); `runs/<book>/objectives/g1-chNN.auto.json` newer than the run → `assemble_objectives.py approve --verdicts` of it (rulings kept); else `assemble` + `auto_pass_gates.py g1 --approve`. A BLOCKED G1 (a pipeline failure, an exercise-only objective: rule 1) STOPS, with the gate's own BLOCKED lines: a ruling or a pipeline fix, never advance's |
+| `lesson-<slug>` | `lesson-runs --draft`; when every lesson of the chapter is saved: `close-chapter N` once (a closed chapter is not closed again; `--redo` never re-closes one whose working check or S5 draft is launched). The G2-recommendation copy `close-chapter` now prepares is shown under `counts.g2rec` |
+| `wcheck-chNN` | nothing until every copy (pass A and B, each part) is saved (`waiting`); then `working_check.py collect` (exit 1 with unchecked solutions is a WARNING; one that wrote no flags file is a failure) |
+| `s5-draft-chNN` | the chapter into the pilot DB if it is not there: `load_seed --dry-run`, **fresh `pg_dump`**, `load_seed`, `apply_review_verdicts --g2`; then the chapter joins `runs/<book>/fanout/loaded/g10-math.json` (the config G5's parity reads: every bundle in the DB) |
+| `s6-author-chNN` | `write-specs` (never over a spec; a directory worked on by hand is not resurrected), `families.normalise` (an UNRESOLVED slug collision stops), `generate_questions --check` |
+| `s6-grade-chNN` | when every part is saved: `generate_questions --grades` → the S5 distractors |
+| `s7-author-chNN` | merge into templates (never overwriting), `--normalise-templates`; no template → the verify is skipped |
+| `s7-verify-chNN` | `generate_widget_questions --verdicts … --catalogue <S5 draft> --pre-catalogue` (without those flags every template is REJECTED and no distractor file is written) |
+| `s5-final-chNN` | catalogue → load → generated bundles → reconcile → loads (fresh `pg_dump` once) → G3 (`--widget-gaps`) + apply → G4 → coverage (a SAFETY check failing, or no report written, stops; `--generated seed/generated/<book>/chNN`) → parity (RED stops) → G5 (`--book-config` the loaded config; NO-GO stops) |
+
+Then every run whose dependencies are satisfied and that has no copy is **prepared and verified** (`fanout.prepare`, `embed_workflow verify`); a run that cannot be prepared yet is in `not_ready` with the reason; a
+third reading, S6 grade or S7 verify its input says is not needed is SKIPPED, which releases what waits on it. **A copy that exists is never re-prepared** (it may be running: its hash is its resume cache):
+`--refresh-stale` is the one opt-in (and warns if you gave no `--running`). A copy whose runbook script changed since it was generated is `stale` in `ready`: still launchable, it runs the script as it was.
+
+*Summary keys.* `ok`, `saved`, `record`, `metered` (`usd`, `already`), `steps` (`ok` / `skipped` / `failed` / `dry` / `would-skip`), `counts` (the key numbers of each step), `warnings`, `waiting` (another part or lesson to come), `failure`
+(`step` + `detail`), `checkpoint` (the plan's), `prepared`, `skipped`, `not_ready`, `ready` + `ready_scripts` (absolute paths, plan order), `extra_ready` (a prepared G2-recommendation copy: not a plan run, advance does not
+process it, and it holds the chapter's `wcheck` / `s5-draft` in `ready`), `unprepared`, `incomplete` (saved, after-steps not done), `lanes`. Exit 0 done (or waiting), 1 a step failed, 2 refused (nothing changed).
+
+*Idempotent.* A second `advance` re-saves and re-meters nothing; steps with files as outputs are skipped when the outputs are newer than the inputs (a gate record rewritten would change its console fingerprint); DB loads are skipped when
+the rows are there; `runs/<book>/fanout/advance/<run-id>.json` records the copy saved by which run, `after_done`, the failed step, DB writes done, or `skipped`. A saved run whose after-steps did not finish does not release its dependents.
+A run saved by hand before this existed has no ledger and counts as done (re-advancing a hand-processed `s5-final` re-runs G3/G4/G5: their records are rewritten).
+
+*Left manual, by design:* launching; resuming a killed run (`advance` refuses a run that is not `completed`: resume with the same copy, then `--resumed`); G0b; a G1 ruling; G2 holds and the G2-recommendation runs (`g2rec-chNN`: not in the plan, their
+collect / re-close steps are the G2 agent's); S6 contingency runs (revise, re-author), S7 re-authors, re-running the unchecked solutions of a working check; the book-level closing steps (`plan['closing_steps']`); the two finished one-offs
+(`wcheck-ch08` is refused, `s6-author-ch08-s111` is saved and metered only). The chapter-1 go/no-go (`s5-final-ch01` before other chapters' lessons) is lifted by default, as the main session did on 2026-10-01.
+
 ## 11. Multi-part exercises: a part carries what it depends on (2026-10-01, `multipart.py`)
 
 **The defect.** The book prints a question once and its parts (a), (b), (c) … beneath it; the pipeline serves every
