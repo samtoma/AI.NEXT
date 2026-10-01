@@ -546,7 +546,7 @@ reversing decision 1, after the console showed no curriculum question for grade 
 is live. Recorded in [decisions.md](./decisions.md) as a supersession of decision 1 (no new decision
 number assigned).
 
-- [ ] T434 [US3] (WP-D) Sign-up and the Google step always ask which curriculum (FR-4004, FR-4005
+- [x] T434 [US3] (WP-D) Sign-up and the Google step always ask which curriculum (FR-4004, FR-4005
   changed 2026-10-01): remove the "two or more offered" gate before showing the question in
   `app/src/components/auth/SignupForm.tsx` and `app/src/app/(auth)/welcome/page.student.tsx` /
   `OnboardingForm.tsx`; list every curriculum the product knows (the full registry from
@@ -563,6 +563,89 @@ number assigned).
   `onboarding.test.mts`) for the new behaviour. Supersedes T368's "only when two or more are offered" and
   T369's offered-gated Google step. Walk US3's scenarios again (T373) and record the result in
   `traceability.md` once this lands; the main session ticks this task with that evidence.
+
+  **Verified 2026-10-01**: built exactly as above, with one correction the code already made and this
+  task's own text had wrong — both refusals answer **422**, not 409/400 (`curriculumRefusal`,
+  `app/src/lib/auth/onboarding.ts`; `contracts/student-api.md` corrected to match). `SignupForm.tsx` and
+  `OnboardingForm.tsx` render `app/src/components/auth/CurriculumChoice.tsx` (every registry curriculum,
+  radio group, nothing pre-selected, the "nothing to study here yet" note per unoffered option, flat
+  labels); `resolveInitialCurriculum` in `app/src/lib/catalog.ts` is now the three-outcome function
+  `contracts/registry-and-gate.md` describes (blank → `curriculum_required`, unknown → `invalid_curriculum`,
+  known → always `chosen`); the signup and onboarding routes call `offeredCurriculaFor` fresh at submit
+  time only to carry the offer back on a refusal, never to gate what may be chosen; `curriculum_resolved_from`
+  is gone from `account_created` (`data-model.md` noted). `app/src/app/(console)/courses/page.console.tsx`'s
+  `OfferedLine` (FR-4102) states the new rule in its own copy. Proof: `catalog.test.mts`
+  ("resolveInitialCurriculum — always chosen when known, required when blank, invalid when unknown
+  (2026-10-01 reversal)"); `onboarding.test.mts` ("sign-up always asks the curriculum, after grade, with
+  none pre-selected"); `onboarding-db.test.mts` (the real `completeOnboarding` path against Postgres,
+  always `chosen`); `curriculum-queries.test.mts`. Evidence recorded on the FR-4004/FR-4005/FR-4102 rows
+  of `traceability.md` (rev. 8). US3's scenarios (T373) and SC-206 are still to be walked.
+
+---
+
+## Phase 9d: Fifth round of decisions — T435–T444 **[ADDED 2026-10-01, answers 35 and 37]**
+
+- [x] T435 [US1] (WP-E, WP-A, WP-G) **No Arabic anywhere in the American course** (decision 56, answer
+  35, "this is american course we said no arabic"): extend T431's per-course `arabicTouches` setting
+  beyond the tutor's prompts to every surface — the curriculum's own label, the course's Arabic subtitle
+  wherever a course name is shown, and a cross-subject bridge FROM a G10 lesson. **Verified 2026-10-01**:
+  `app/src/lib/curricula.ts` (`CurriculumDef.labelAr` optional, American carries none); `app/src/lib/subjects.ts`
+  (`courseLabelAr`, `labelOfSpineKey` — `null` for a course whose tutor carries no Arabic, never falling
+  back to the shared subject's Arabic name); `app/src/lib/catalog-queries.ts` (`labelAr: string | null` on
+  both the catalog row and the student-access row); `app/src/components/console/CourseAvailabilityGrid.tsx`
+  and `app/src/app/(console)/students/[id]/page.console.tsx` (print `labelAr` only when non-null);
+  `app/src/lib/lesson.ts` (`bridgeBlock(bridges, arabic = true)` — a bridge FROM a G10 lesson carries no
+  Arabic regardless of the other end); `app/src/components/student/StudentLoop.tsx` (`arabicTouches?: boolean`
+  prop) and `app/src/app/(student)/student/page.tsx` (computed `true` only while some visible course still
+  has Arabic touches). Proof: `curricula-registry.test.mts` ("the American curriculum has no Arabic
+  name; National keeps its", "the American course prints no Arabic subject name"); `g10-prompts.test.mts`
+  ("a cross-subject bridge FROM a Grade 10 lesson carries no Arabic either"); `national-prompts.test.mts`
+  unchanged. Evidence recorded on the FR-4205 row of `traceability.md` (rev. 8).
+
+### Answer 37 — fill the Grade 10 course, and build its internal review gate (decisions 56–58)
+
+New requirements, FR-4501…FR-4509 (`specs/003-curriculum-tracks/spec.md`). None of the tasks below is
+ticked: code is in progress on the branch, not yet read and run for this pass.
+
+- [ ] T436 [US1] (WP-G, WP-P7) **The backlog itself** (FR-4501, FR-4507, FR-4509): a console view,
+  `review_backlog` (or similar) holding one row per item without a human stamp, across book questions
+  and corrections, orchestrator stem fixes, generated questions, widget questions and mapping claims
+  (including AI-refused ones), misconceptions, objectives and prerequisite links, figure stand-ins
+  (T443), and the gate decisions G1–G4 now reach on the AI checks' own recommendation during the
+  fan-out (T444) — maths courses only (Prep-3 and G10); Social Studies, Arabic and sealed Quran/Hadith
+  content never appear in it.
+- [ ] T437 [US1] (WP-G) **Review verdicts** (FR-4502): approve / fix requested / reject, restricted to
+  `content-review` holders (Samuel, Tamer, Kamil); reject stops a question reaching students without
+  deleting it; fix requested changes nothing a student sees and is exportable with the item.
+- [ ] T438 [US1] (WP-G) **Claim lock** (FR-4503): an item claimed by one reviewer is not handed to a
+  second until released or decided; a stale claim (the reviewer navigates away) eventually releases.
+- [ ] T439 [US1] (WP-B, WP-G) **Append-only audit** (FR-4504): item, operator, when, verdict, note —
+  never overwritten; a changed mind is a new row.
+- [ ] T440 [US1] (WP-G) **Backlog counts** (FR-4505): by kind, course, chapter and reviewer, on the
+  console page the backlog lives on.
+- [ ] T441 [US1] (WP-G, WP-P7) **"Reviewed" means a human stamp only** (FR-4506, decision 54, answer
+  33): an AI-only pass reads "AI-checked, awaiting human" in the console, never "reviewed"; no student
+  surface says either word (unchanged from ADR-0019).
+- [ ] T442 [US1] (WP-DOC) No separate task — folded into T436 (FR-4507's course/kind scoping is part of
+  the backlog's own definition). *Reserved, not used.*
+- [ ] T443 [US1] (WP-P4, WP-P7) **Book-image stand-ins** (FR-4508, decision 58d, answer 37d — TEMPORARY
+  reversal of decision 50/answer 29 for students): where no native figure type exists yet (FR-4321),
+  load the figure as `visuals.kind: "book_image"`, `stand_in: true`, instead of shipping the lesson
+  without it; register each as a backlog item "needs native figure" (T436); keep FR-4321's existing
+  rule — a stand-in that would draw or reveal the question's own unknown or answer is withheld, same as
+  today, and the lesson ships without it in that one case.
+- [ ] T444 [US1] (WP-P2, WP-P3, WP-P4, WP-P5) **Gates G1–G4 auto-pass during the fan-out** (FR-4509,
+  decision 58c, answer 37c): `objectives.workflow.js` / `assemble_objectives.py` (G1, FR-4410),
+  `lesson.workflow.js` / `assemble_lesson_bundle.py` (G2, FR-4302), the widget stage (G3, FR-4306 —
+  unchanged, decision 47 already has this shape) and the misconceptions stage (G4, FR-4307) each
+  proceed on their own AI checks' recommendation rather than wait for a human per chapter; every
+  decision reached this way is written as an auto-passed backlog item (T436), not a human stamp.
+  Automatic safety checks are NOT relaxed: broken maths, an answer that disagrees with the book
+  (FR-4302's printed-answer/EPUB-solution/blind-resolve disagreement), and the drift guard
+  (`parity_check.py`) still hold an item exactly as before. **Open for Samuel** (see spec.md, Open
+  questions): whether this also covers **G5** (the dry-run delta/coverage/drift/cost go-or-no-go before
+  promotion, T363) — answer 37c names only G1–G4, and G5 looks like a production-readiness check rather
+  than a content review, so this task leaves G5 as a human gate until told otherwise.
 
 ---
 
