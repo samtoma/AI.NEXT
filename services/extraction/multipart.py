@@ -304,12 +304,12 @@ def gradients_used_not_computed(working: str) -> list[str]:
 
 # ------------------------------------------------------------------------------------ referential words
 _REF_TAIL = re.compile(
-    r"\b(hence|thus|your (?:answer|result)|the (?:previous|preceding|above)|previous (?:question|part)|"
-    r"(?:in|from|of) (?:part|question) \(?[a-e]\)?|the answer (?:to|from)|the result (?:of|from))\b", re.I)
+    r"\b(hence|thus|(?:using|use|from|with) (?:your|the) (?:answer|result)s?|the (?:previous|preceding) (?:question|part)|"
+    r"(?:in|from|of) (?:part|question) \(?[a-e]\)?|(?:your|the) (?:answer|result) (?:to|from|of|in) (?:part|question|\(?[a-e]\)))\b", re.I)
 _REF_WORK = re.compile(
     r"\b(from (?:the )?(?:previous|preceding|first|above|earlier)|from above|from earlier|we found earlier|"
-    r"earlier we|just (?:calculated|found)|(?:the )?previous (?:question|part)|previous questions|as above|"
-    r"in the previous|from question|from part)\b", re.I)
+    r"earlier we|(?:just|already) (?:calculated|found)|we have (?:just |already )?(?:calculated|found|worked out)|"
+    r"(?:the )?previous (?:question|part)s?|as above|in the previous|from question|from part)\b", re.I)
 
 
 def referential(tail: str, working: str) -> list[str]:
@@ -347,34 +347,47 @@ def _source(p: Part, tail: str) -> dict:
     return {"ref": p.ref, "words": plain(tail), "key": p.key if p.keyed else None, "fate": p.fate}
 
 
-def _value_of(p: Part) -> str | None:
-    return p.key.strip() if p.keyed and p.key else None
+def _flat(text: str) -> str:
+    return re.sub(r"[\s$\\{}]", "", text or "")
+
+
+def _reveals(P: Part, sentence: str) -> bool:
+    """Would the carried sentence hand P's own answer to the student? (the key standing alone in it)"""
+    if not P.keyed:
+        return False
+    key = _flat(P.key)
+    return bool(key) and re.search(r"(?<![\w.])" + re.escape(key) + r"(?![\w.])", _flat(sentence)) is not None
+
+
+def _states(own: str, symbol: str) -> bool:
+    """Does P's own text already say what `symbol` is ("$N=(3;5)$", "$a=5$", "$m_{MN}=…$")?"""
+    return re.search(rf"(?<![A-Za-z]){re.escape(symbol)}\s*=", _math_plain(own).replace("{", "").replace("}", "")) is not None
+
+
+def _group_parts(parts: list[Part]) -> list[list[Part]]:
+    groups: dict[tuple, list[tuple[tuple, Part]]] = {}
+    for p in parts:
+        m = _PART_REF.match(p.ref)
+        if m:
+            groups.setdefault((m["ex"], int(m["q"])), []).append(((m["sub"], m["roman"] or ""), p))
+    out = []
+    for key in sorted(groups, key=lambda k: (tuple(int(x) for x in k[0].split("-")), k[1])):
+        ps = [p for _, p in sorted(groups[key], key=lambda kp: kp[0])]
+        if len(ps) >= 2:
+            out.append(ps)
+    return out
 
 
 def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
     """What every part carries and what stays unresolved, over any set of parts (a chapter, a book): they are
     grouped by the exercise and question number in their refs, and a part is only ever helped by the parts
-    before it in its own question."""
-    groups: dict[tuple, list[tuple[tuple, Part]]] = {}
-    by_ref: dict[str, Part] = {}
-    for p in parts:
-        by_ref[p.ref] = p
-        m = _PART_REF.match(p.ref)
-        if m:
-            groups.setdefault((m["ex"], int(m["q"])), []).append(
-                ((m["sub"], m["roman"] or ""), p))
+    before it in its own question. Deterministic: the same parts give the same plan."""
     carries: dict[str, Carry] = {}
     unresolved: list[Unresolved] = []
-
-    for (ex, q), members in sorted(groups.items(), key=lambda kv: (tuple(int(x) for x in kv[0][0].split("-")), kv[0][1])):
-        members.sort(key=lambda kp: kp[0])
-        ps = [p for _, p in members]
-        if len(ps) < 2:
-            continue
+    for ps in _group_parts(parts):
         ends = preamble_end([p.stem for p in ps])
-        pre = {p.ref: p.stem[:e] for p, e in zip(ps, ends)}
         tail = {p.ref: p.stem[e:].strip() for p, e in zip(ps, ends)}
-        H = pre[ps[0].ref]
+        H = ps[0].stem[:ends[0]]
         figure = "[figure]" in H
         h_names = names_in(H)
         unknown_h = unknown_points(H)
@@ -382,114 +395,117 @@ def plan(parts: list[Part]) -> tuple[dict[str, Carry], list[Unresolved]]:
 
         for i, P in enumerate(ps):
             earlier = ps[:i]
-            if not earlier:
-                continue
             own = tail[P.ref]
-            uses = names_in(own) | names_in(P.working)
-            bound = set(h_names) | set(point_bound(own)) | {n for d in defs[P.ref] for n in d.names}
             sentences: list[str] = []
             items: list[dict] = []
             notes: list[Unresolved] = []
 
-            # R1 — an earlier part introduces a name P uses without having it
-            wanted: dict[str, Definition] = {}
-            owner: dict[str, Part] = {}
-            for Q in earlier:
-                for d in defs[Q.ref]:
-                    for n in d.names:
-                        if n in uses and n not in bound:
-                            if n in wanted and (wanted[n].names, wanted[n].noun, wanted[n].rest, wanted[n].verb) != \
-                                    (d.names, d.noun, d.rest, d.verb):
-                                notes.append(Unresolved(P.ref, "conflict",
-                                                        f"{n} is introduced differently by {owner[n].ref} and {Q.ref}",
-                                                        [_source(owner[n], tail[owner[n].ref]), _source(Q, tail[Q.ref])]))
-                            else:
-                                wanted[n], owner[n] = d, Q
-            done: set[tuple] = set()
-            for n, d in wanted.items():
-                sig = (d.names, d.noun, d.rest, d.verb)
-                if sig in done:
-                    continue
-                done.add(sig)
-                Q = owner[n]
-                val = _value_of(Q) if (len(d.names) == 1 and Q.kind == "coordinates") else None
-                text = d.with_value(val) if val else d.clause()
+            def add(rule: str, Q: Part, text: str, **more) -> None:
+                if _reveals(P, text):
+                    notes.append(Unresolved(P.ref, "would_reveal_key",
+                                            f"the {rule} sentence from {Q.ref} would state this part's own answer: {text}",
+                                            [_source(Q, tail[Q.ref])]))
+                    return
                 sentences.append(text)
-                items.append({"rule": "R1", "from": Q.ref, "names": list(d.names), "text": text,
-                              **({"key_from": Q.ref} if val else {})})
+                items.append({"rule": rule, "from": Q.ref, "text": text, **more})
 
-            # R2 — the preamble's unknowns, solved by an earlier part
-            for L, vs in sorted(unknown_h.items()):
-                if L not in uses or L in concrete_points(own):
-                    continue
-                for Q in reversed(earlier):
-                    t = tail[Q.ref]
-                    byc = L in asked_coordinates(t)
-                    byv = sorted(v for v in vs if v in asked_values(t))
-                    if not (byc or byv):
+            if earlier:
+                uses = names_in(own) | names_in(P.working)
+                bound = set(h_names) | set(point_bound(own)) | {n for d in defs[P.ref] for n in d.names}
+
+                # R1 — an earlier part introduces a name P uses without having it
+                wanted: dict[str, tuple[Definition, Part]] = {}
+                conflicts: set[str] = set()
+                for Q in earlier:
+                    for d in defs[Q.ref]:
+                        for n in d.names:
+                            if n not in uses or n in bound:
+                                continue
+                            if n not in wanted:
+                                wanted[n] = (d, Q)
+                            elif wanted[n][0] != d:
+                                conflicts.add(n)
+                                notes.append(Unresolved(P.ref, "conflict",
+                                                        f"{n} is introduced differently by {wanted[n][1].ref} and {Q.ref}",
+                                                        [_source(wanted[n][1], tail[wanted[n][1].ref]),
+                                                         _source(Q, tail[Q.ref])]))
+                done: list[Definition] = []
+                for n, (d, Q) in wanted.items():
+                    if n in conflicts or d in done:
+                        continue
+                    done.append(d)
+                    val = (Q.key.strip() if Q.keyed and Q.kind == "coordinates" and len(d.names) == 1
+                           and d.names[0] not in asked_coordinates(own) else None)
+                    text = d.with_value(val) if val else d.clause()
+                    if val and _reveals(P, text):
+                        val, text = None, d.clause()          # the name, not its value
+                    add("R1", Q, text, names=list(d.names), **({"with_key": True} if val else {}))
+
+                # R2 — the preamble's unknowns, solved by an earlier part
+                for L, vs in sorted(unknown_h.items()):
+                    if L not in uses or L in concrete_points(own):
                         continue
                     if L in asked_coordinates(own) or any(v in asked_values(own) for v in vs):
-                        break               # P solves for it itself
-                    if not Q.keyed:
-                        notes.append(Unresolved(P.ref, "no_key",
-                                                f"uses {L}, which {Q.ref} works out, but {Q.ref} is {Q.fate} with no key",
-                                                [_source(Q, t)]))
+                        continue                                  # P solves for it itself
+                    for Q in reversed(earlier):
+                        t = tail[Q.ref]
+                        byc = L in asked_coordinates(t)
+                        byv = sorted(v for v in vs if v in asked_values(t))
+                        if not (byc or byv):
+                            continue
+                        symbol = L if byc else byv[0]
+                        if _states(own, symbol):
+                            break
+                        if not Q.keyed:
+                            notes.append(Unresolved(P.ref, "no_key",
+                                                    f"uses {L}, which {Q.ref} works out, but {Q.ref} is {Q.fate} with no "
+                                                    "key to carry", [_source(Q, t)]))
+                        elif byc and Q.kind == "coordinates":
+                            add("R2", Q, f"${L}={Q.key.strip()}$.", names=[L])
+                        elif byv and Q.kind in (None, "values", "expression"):
+                            add("R2", Q, f"${byv[0]}={Q.key.strip()}$.", names=[L], variable=byv[0])
                         break
-                    if byc and Q.kind == "coordinates":
-                        text = f"${L}={Q.key.strip()}$ ."
-                    elif byv and Q.kind in (None, "values", "expression"):
-                        text = f"${byv[0]}={Q.key.strip()}$ ."
-                    else:
-                        break
-                    sentences.append(text)
-                    items.append({"rule": "R2", "from": Q.ref, "names": [L], "text": text})
-                    break
 
-            # R3 — a gradient the worked answer uses and never computes
-            for xy in gradients_used_not_computed(P.working):
-                for Q in reversed(earlier):
-                    if xy not in asked_gradients(tail[Q.ref]) and xy[::-1] not in asked_gradients(tail[Q.ref]):
+                # R3 — a gradient the worked answer uses and never computes
+                for xy in gradients_used_not_computed(P.working):
+                    if _states(own, f"m_{xy}"):
                         continue
-                    asked = xy if xy in asked_gradients(tail[Q.ref]) else xy[::-1]
-                    if not Q.keyed:
+                    src = next((Q for Q in reversed(earlier)
+                                if {xy, xy[::-1]} & asked_gradients(tail[Q.ref])), None)
+                    if src is None:
+                        notes.append(Unresolved(P.ref, "no_source",
+                                                f"its worked answer uses the gradient m_{{{xy}}} without working it out, and "
+                                                "no earlier part asks for it", [_source(Q, tail[Q.ref]) for Q in earlier]))
+                    elif not src.keyed:
                         notes.append(Unresolved(P.ref, "no_key",
-                                                f"uses m_{{{xy}}}, which {Q.ref} works out, but {Q.ref} is {Q.fate} with no key",
-                                                [_source(Q, tail[Q.ref])]))
+                                                f"uses m_{{{xy}}}, which {src.ref} works out, but {src.ref} is {src.fate} "
+                                                "with no key to carry", [_source(src, tail[src.ref])]))
                     else:
-                        text = f"$m_{{{xy}}}={Q.key.strip()}$ ."
-                        sentences.append(text)
-                        items.append({"rule": "R3", "from": Q.ref, "symbol": f"m_{{{xy}}}", "asked": asked,
-                                      "text": text})
-                    break
-
-            if sentences:
-                end = ends[i]
-                carry = " ".join(sentences)
-                after = (P.stem[:end].rstrip() + " " + carry + " " + P.stem[end:].lstrip()).strip()
-                carries[P.ref] = Carry(P.ref, sentences, items, P.stem, after)
-            unresolved.extend(notes)
+                        add("R3", src, f"$m_{{{xy}}}={src.key.strip()}$.", symbol=f"m_{{{xy}}}")
 
             # what words alone point back to, and a point nothing gives
             hits = referential(own, P.working)
             if hits:
-                unresolved.append(Unresolved(
-                    P.ref, "refers_by_words", "says " + "; ".join(sorted({h.lower() for h in hits})),
-                    [_source(Q, tail[Q.ref]) for Q in earlier]))
-            elif not figure:
+                said = "says " + "; ".join(sorted({h.lower() for h in hits}))
+                if sentences:
+                    said += f" (partly carried: {', '.join(sorted({it['rule'] for it in items}))} — check the words still point at it)"
+                notes.append(Unresolved(P.ref, "refers_by_words", said, [_source(Q, tail[Q.ref]) for Q in earlier]))
+            elif earlier and not figure:
+                mention = {n for Q in earlier for n in names_in(tail[Q.ref])}
                 free = sorted(n for n in names_in(own)
-                              if n not in bound and not any(n in d.names for Q in earlier for d in defs[Q.ref]))
+                              if n not in bound and n in mention and n not in {m for it in items for m in it.get("names", [])})
                 if free:
-                    unresolved.append(Unresolved(P.ref, "unbound_name",
-                                                 f"its words use {', '.join(free)}, which nothing in the question defines",
-                                                 [_source(Q, tail[Q.ref]) for Q in earlier]))
+                    notes.append(Unresolved(P.ref, "not_extractable",
+                                            f"its words use {', '.join(free)}, which an earlier part mentions but no "
+                                            "definition could be read from", [_source(Q, tail[Q.ref]) for Q in earlier]))
+            unresolved.extend(notes)
 
-        # the first part of a question points back by words too (to a question before it)
-        first = ps[0]
-        hits = referential(tail[first.ref], first.working)
-        if hits:
-            unresolved.append(Unresolved(first.ref, "refers_by_words", "says " + "; ".join(sorted({h.lower() for h in hits})), []))
+            if sentences:
+                end = ends[i]
+                after = " ".join(x for x in (P.stem[:end].strip(), " ".join(sentences), P.stem[end:].strip()) if x)
+                carries[P.ref] = Carry(P.ref, sentences, items, P.stem, after)
 
-    # items that are not parts at all (a whole question) can still point back by words
+    # an item that is no part at all (a whole question) can still point back by words
     for p in parts:
         m = _ANY_REF.match(p.ref)
         if m and not m["sub"]:
