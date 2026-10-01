@@ -1,0 +1,794 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 5,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [
+  "q:g10m5s5-1-3:ex5-2-2d"
+ ],
+ "solutions": 237,
+ "skipped": [],
+ "verdicts": {
+  "consistent": 214,
+  "flagged": 23,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m5s3-1-2:we01",
+   "lo": "lo:g10m5s3-1-2",
+   "step": 2,
+   "kind": "label",
+   "where": "question",
+   "quote": "$\\sin\\theta&=\\frac{\\text{opposite}}{\\text{hypotenuse}}=\\frac{CB}{AC}$",
+   "expected": "theta at C: opposite AB, adjacent CB",
+   "why": "The question's figure puts theta at C and alpha at A, so opposite theta is AB, not CB; the working matches the other figure with theta at A.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "wrong_value"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m5s7-1-1:ex5-8-11",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 7,
+   "kind": "label",
+   "where": "unsure",
+   "quote": "\\approx\\text{7.78}\\text{ cm}",
+   "expected": "5 m",
+   "why": "The figure prints the 5 length as '5 m', but the working gives d in cm.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m5s7-1-1:ex5-8-11",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 9,
+   "kind": "other",
+   "where": "working",
+   "quote": "\\text{85.5284}",
+   "expected": "subtract: 7.78^2 - 5^2",
+   "why": "In the figure d is the hypotenuse with 5 m a leg, so the altitude needs 7.78 squared minus 5 squared, not their sum.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m5s7-1-1:ex5-8-11",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 13,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "(\\text{5.34})^{2}+(\\text{7.78})^{2}&=\\text{89.0044...}",
+   "expected": "altitude and e, not d",
+   "why": "7.78 is d, not the altitude; the shared side should come from the altitude and e. Also 5.34 squared plus 7.78 squared is 89.044, not 89.0044.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m5s7-1-1:ex5-8-11",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 15,
+   "kind": "label",
+   "where": "working",
+   "quote": "\\tan80^{\\circ}&=\\frac{\\text{9.44}}{g}",
+   "expected": "g opposite 80 degrees, hypotenuse 9.44",
+   "why": "In the figure 9.44 is the hypotenuse of the right triangle, g is the opposite side to 80 degrees, and f is adjacent; the working's g is f's short side.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m5s7-1-1:ex5-8-11",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 17,
+   "kind": "copy",
+   "where": "working",
+   "quote": "(\\text{1.65})^{2}",
+   "expected": "1.66",
+   "why": "Step 15 gives g as 1.66, but step 17 uses 1.65.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "expl:g10m5s8-1-3:we12",
+   "lo": "lo:g10m5s8-1-3",
+   "step": 1,
+   "kind": "label",
+   "where": "question",
+   "quote": "Sketch point in the Cartesian plane",
+   "expected": "X position as in figure",
+   "why": "The question puts X on the positive x-axis, but the figure shows X on the negative x-axis.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s3-1-2:ex5-1-3a",
+   "lo": "lo:g10m5s3-1-2",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "=\\dfrac{m}{o}",
+   "expected": "m/n",
+   "why": "The step identifies n as the hypotenuse, so adjacent over hypotenuse is m/n, not m/o; o is the opposite side.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s5-1-1:ex5-8-18c",
+   "lo": "lo:g10m5s5-1-1",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\sin(114)",
+   "expected": "(29)(38)(47) = 51794",
+   "why": "The product (29)(38)(47) is 51794, not 114; 114 is the sum, which the question's product sign does not give.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s5-1-2:ex5-2-1z",
+   "lo": "lo:g10m5s5-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "question",
+   "quote": "\\cot85^{\\circ}",
+   "expected": "cot103° per question",
+   "why": "The question gives cot103°, but the working uses cot85°, and only cot85° gives the 0.2611 and the key 0.21.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s5-1-2:ex5-8-18b",
+   "lo": "lo:g10m5s5-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "\\text{cosec}(c-b)&=\\sin(47-38)",
+   "expected": "cosec(47-38)",
+   "why": "The first line changes cosec to sin, but the next line goes back to cosec 9, so the line does not equal the one before.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "copy"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s5-1-3:ex5-2-2b",
+   "lo": "lo:g10m5s5-1-3",
+   "step": 4,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\approx\\text{1.86}",
+   "expected": "1.87",
+   "why": "1.86716... rounds to 1.87 at two decimal places, not 1.86.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s5-1-3:ex5-2-2d",
+   "lo": "lo:g10m5s5-1-3",
+   "step": 2,
+   "kind": "sign",
+   "where": "working",
+   "quote": "\\cos39^{\\circ}+21^{\\circ}",
+   "expected": "cos(39° + 21°)",
+   "why": "The bracket around x+y is dropped, so the line reads cos39° plus 21°, which does not equal 0.5.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s6-1-2:ex5-3-2",
+   "lo": "lo:g10m5s6-1-2",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "\\cos{\\theta}&=\\frac{\\text{opposite}}{\\text{hypotenuse}}",
+   "expected": "cos θ = adjacent/hypotenuse",
+   "why": "Cosine is adjacent over hypotenuse; the working names the opposite side, though the 5 used is correct for both legs here.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "other"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s7-1-1:ex5-4-1a",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "unsure",
+   "quote": "62(\\text{0.6018...})&=a\\\\a&=\\text{36.10890...}",
+   "expected": "62 × 0.6018... ≈ 37.31",
+   "why": "62 times 0.6018 is about 37.31, not 36.109; the figure's 62 and the result 36.11 do not agree.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s7-1-1:ex5-4-1e",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "unsure",
+   "quote": "\\sin17^{\\circ}&=\\frac{e}{12}",
+   "expected": "sin 17 = 12/e",
+   "why": "In the figure e is the hypotenuse and 12 is opposite the 17 degree angle, so the ratio is inverted.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s7-1-1:ex5-4-1j",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "x&=\\text{9.06}",
+   "expected": "x = 4.23 tan 65° = 9.07",
+   "why": "tan 65° is about 2.1445, so 4.23 times 2.1445 is about 9.071, which rounds to 9.07, not 9.06.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s7-1-1:ex5-8-9",
+   "lo": "lo:g10m5s7-1-1",
+   "step": 5,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "8.35",
+   "expected": "8.36 mm, from step 4",
+   "why": "Step 4 computes b = 8.3562... = 8.36 mm, but step 5 states the other side as 8.35 mm.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "copy"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s7-1-2:ex5-5-3",
+   "lo": "lo:g10m5s7-1-2",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "\\sin\\alpha&=\\frac{\\text{1.7}}{\\text{2.2}}",
+   "expected": "cos α = 1.7/2.2",
+   "why": "In the figure 1.7 is the side adjacent to α and 2.2 the hypotenuse, so the ratio is cosine, not sine; 39.40 follows from cosine only.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s7-1-2:ex5-8-13",
+   "lo": "lo:g10m5s7-1-2",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "DC&=9\\tan41^{\\circ}",
+   "expected": "DC = 9 / tan 41°",
+   "why": "From tan41° = 9/DC, DC = 9/tan41°, not 9·tan41°; the wrong DC carries into BC and the final angle.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s7-1-3:ex5-8-17f",
+   "lo": "lo:g10m5s7-1-3",
+   "step": 1,
+   "kind": "other",
+   "where": "working",
+   "quote": "3\\theta&=90",
+   "expected": "",
+   "why": "sin 3θ = -1 does not give 3θ = 90°, since sin 90° = 1; the conclusion contradicts the previous line.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s8-1-1:ex5-8-21",
+   "lo": "lo:g10m5s8-1-1",
+   "step": 1,
+   "kind": "label",
+   "where": "working",
+   "quote": "the distance from $D$ to the $x$ -axis is $\\text{12}$",
+   "expected": "distance from D to the y-axis is 12",
+   "why": "12 is the horizontal distance from D to the y-axis, the axis the question asks about, not the x-axis.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s8-1-1:ex5-8-21",
+   "lo": "lo:g10m5s8-1-1",
+   "step": 3,
+   "kind": "final_answer",
+   "where": "working",
+   "quote": "angle between line $CD$ and the $x$ -axis",
+   "expected": "angle between line CD and the y-axis",
+   "why": "The question asks for the angle with the y-axis, and the computed 23.96 is that angle, not the one with the x-axis.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "label"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s8-1-3:ex5-7-3d",
+   "lo": "lo:g10m5s8-1-3",
+   "step": 2,
+   "kind": "other",
+   "where": "working",
+   "quote": "\\left(\\frac{y}{x}\\right)^{2}+\\left(\\frac{x}{y}\\right)^{2}",
+   "expected": "tan^2 minus (r/x)^2",
+   "why": "sec^2 is written as (x/y)^2 and added, but the next line subtracts (sqrt(t^2+4)/2)^2, so the line does not follow.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "copy"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s8-1-3:ex5-7-4b",
+   "lo": "lo:g10m5s8-1-3",
+   "step": 6,
+   "kind": "sign",
+   "where": "working",
+   "quote": "\\frac{-12}{3}+\\frac{18}{25}",
+   "expected": "3(-4)/(-3) = 12/3",
+   "why": "The previous line is 3(-4)/(-3), which equals +4, but the minus sign is kept, giving -12/3 and -4.",
+   "sources": [
+    "agent",
+    "numeric"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "numeric": {
+    "left": "\\frac{3(-4)}{-3}+\\frac{2(-3)^{2}}{(5)^{2}}",
+    "relation": "=",
+    "right": "\\frac{-12}{3}+\\frac{18}{25}",
+    "why": "\\frac{3(-4)}{-3}+\\frac{2(-3)^{2}}{(5)^{2}} = \\frac{-12}{3}+\\frac{18}{25} does not hold (4.72 vs -3.28)"
+   }
+  },
+  {
+   "solution_id": "q:g10m5s8-1-3:ex5-7-7a",
+   "lo": "lo:g10m5s8-1-3",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "17\\cos\\theta=-8&=0",
+   "expected": "17cosθ=-8, no '=0'",
+   "why": "The chain sets 17cosθ=-8 equal to 0, which is false; the equation given is 17cosθ=-8 only.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s8-1-3:ex5-7-7a",
+   "lo": "lo:g10m5s8-1-3",
+   "step": 6,
+   "kind": "label",
+   "where": "working",
+   "quote": "\\frac{y}{r}\\times\\frac{1}{\\frac{x}{r}}",
+   "expected": "cosθ=x/r, sinθ=y/r",
+   "why": "cosθ equals x/r and sinθ equals y/r, but the working swaps them, giving y/x instead of x/y.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "wrong_value"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s8-1-3:ex5-7-7b",
+   "lo": "lo:g10m5s8-1-3",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "$x=-15$ , $y=-8$ and $r=17$",
+   "expected": "x=-8, y=-15, r=17",
+   "why": "17cosθ=-8 gives x=-8, and tanθ>0 with x<0 gives y=-15; the values are swapped, and step 2 then uses y=-15, x=-8.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m5s8-1-3:ex5-7-9a",
+   "lo": "lo:g10m5s8-1-3",
+   "step": 3,
+   "kind": "sign",
+   "where": "working",
+   "quote": "$a=24$ and $b=-7$",
+   "expected": "a=-24",
+   "why": "Step 1 gives x=-24 and A lies left of the y-axis, so a should be -24, matching the key (-24, -7).",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  }
+ ],
+ "flagged_solutions": 23,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m5s3-1-1:ex5-1-7a",
+  "expl:g10m5s3-1-1:ex5-1-7b",
+  "expl:g10m5s3-1-2:we01",
+  "expl:g10m5s5-1-1:we02",
+  "expl:g10m5s6-1-3:ex5-3-6a",
+  "expl:g10m5s6-1-3:ex5-3-6b",
+  "expl:g10m5s6-1-3:ex5-3-6c",
+  "expl:g10m5s6-1-4:ex5-3-7a",
+  "expl:g10m5s6-1-4:ex5-3-7b",
+  "expl:g10m5s6-1-4:ex5-3-7c",
+  "expl:g10m5s7-1-1:ex5-8-11",
+  "expl:g10m5s7-1-3:we10",
+  "expl:g10m5s8-1-2:we11",
+  "expl:g10m5s8-1-3:we12",
+  "q:g10m5s3-1-1:ex5-1-2a",
+  "q:g10m5s3-1-1:ex5-1-2b",
+  "q:g10m5s3-1-1:ex5-1-2c",
+  "q:g10m5s3-1-1:ex5-1-2d",
+  "q:g10m5s3-1-1:ex5-1-2e",
+  "q:g10m5s3-1-1:ex5-1-2f",
+  "q:g10m5s3-1-2:ex5-1-1a",
+  "q:g10m5s3-1-2:ex5-1-1b",
+  "q:g10m5s3-1-2:ex5-1-1c",
+  "q:g10m5s3-1-2:ex5-1-1d",
+  "q:g10m5s3-1-2:ex5-1-1e",
+  "q:g10m5s3-1-2:ex5-1-1f",
+  "q:g10m5s3-1-2:ex5-1-3a",
+  "q:g10m5s3-1-2:ex5-1-3b",
+  "q:g10m5s3-1-2:ex5-1-3c",
+  "q:g10m5s3-1-2:ex5-1-3d",
+  "q:g10m5s3-1-2:ex5-1-5",
+  "q:g10m5s3-1-2:ex5-8-15b",
+  "q:g10m5s5-1-1:ex5-2-1a",
+  "q:g10m5s5-1-1:ex5-2-1b",
+  "q:g10m5s5-1-1:ex5-2-1c",
+  "q:g10m5s5-1-1:ex5-2-1d",
+  "q:g10m5s5-1-1:ex5-2-1e",
+  "q:g10m5s5-1-1:ex5-2-1f",
+  "q:g10m5s5-1-1:ex5-2-1g",
+  "q:g10m5s5-1-1:ex5-2-1h",
+  "q:g10m5s5-1-1:ex5-2-1q",
+  "q:g10m5s5-1-1:ex5-2-1r",
+  "q:g10m5s5-1-1:ex5-2-1s",
+  "q:g10m5s5-1-1:ex5-2-1t",
+  "q:g10m5s5-1-1:ex5-2-1u",
+  "q:g10m5s5-1-1:ex5-2-1x",
+  "q:g10m5s5-1-1:ex5-8-18a",
+  "q:g10m5s5-1-1:ex5-8-18c",
+  "q:g10m5s5-1-1:ex5-8-18d",
+  "q:g10m5s5-1-1:ex5-8-2a",
+  "q:g10m5s5-1-1:ex5-8-2b",
+  "q:g10m5s5-1-1:ex5-8-2c",
+  "q:g10m5s5-1-1:ex5-8-2d",
+  "q:g10m5s5-1-1:ex5-8-2e",
+  "q:g10m5s5-1-1:ex5-8-2k",
+  "q:g10m5s5-1-1:ex5-8-2m",
+  "q:g10m5s5-1-1:ex5-8-2n",
+  "q:g10m5s5-1-1:ex5-8-2o",
+  "q:g10m5s5-1-1:ex5-8-2r",
+  "q:g10m5s5-1-2:ex5-2-1i",
+  "q:g10m5s5-1-2:ex5-2-1j",
+  "q:g10m5s5-1-2:ex5-2-1k",
+  "q:g10m5s5-1-2:ex5-2-1l",
+  "q:g10m5s5-1-2:ex5-2-1m",
+  "q:g10m5s5-1-2:ex5-2-1n",
+  "q:g10m5s5-1-2:ex5-2-1o",
+  "q:g10m5s5-1-2:ex5-2-1p",
+  "q:g10m5s5-1-2:ex5-2-1w",
+  "q:g10m5s5-1-2:ex5-2-1z",
+  "q:g10m5s5-1-2:ex5-8-18b",
+  "q:g10m5s5-1-2:ex5-8-2f",
+  "q:g10m5s5-1-2:ex5-8-2g",
+  "q:g10m5s5-1-2:ex5-8-2h",
+  "q:g10m5s5-1-2:ex5-8-2i",
+  "q:g10m5s5-1-2:ex5-8-2j",
+  "q:g10m5s5-1-2:ex5-8-2l",
+  "q:g10m5s5-1-2:ex5-8-2p",
+  "q:g10m5s5-1-2:ex5-8-2q",
+  "q:g10m5s5-1-3:ex5-2-2a",
+  "q:g10m5s5-1-3:ex5-2-2b",
+  "q:g10m5s5-1-3:ex5-2-2c",
+  "q:g10m5s5-1-3:ex5-2-2d",
+  "q:g10m5s5-1-3:we03",
+  "q:g10m5s5-1-4:ex5-2-3",
+  "q:g10m5s6-1-1:ex5-3-1a",
+  "q:g10m5s6-1-1:ex5-3-1b",
+  "q:g10m5s6-1-1:ex5-3-1c",
+  "q:g10m5s6-1-1:ex5-3-1d",
+  "q:g10m5s6-1-1:ex5-3-1e",
+  "q:g10m5s6-1-1:ex5-3-1f",
+  "q:g10m5s6-1-1:ex5-3-1g",
+  "q:g10m5s6-1-1:ex5-3-1h",
+  "q:g10m5s6-1-1:ex5-3-4a",
+  "q:g10m5s6-1-1:ex5-3-4b",
+  "q:g10m5s6-1-1:ex5-3-4c",
+  "q:g10m5s6-1-1:ex5-3-5a",
+  "q:g10m5s6-1-1:ex5-3-5c",
+  "q:g10m5s6-1-1:ex5-3-5d",
+  "q:g10m5s6-1-1:ex5-3-5e",
+  "q:g10m5s6-1-1:ex5-3-5f",
+  "q:g10m5s6-1-1:ex5-3-5g",
+  "q:g10m5s6-1-1:ex5-8-3a",
+  "q:g10m5s6-1-1:ex5-8-3b",
+  "q:g10m5s6-1-1:ex5-8-3c",
+  "q:g10m5s6-1-1:ex5-8-3d",
+  "q:g10m5s6-1-1:ex5-8-3e",
+  "q:g10m5s6-1-1:ex5-8-3f",
+  "q:g10m5s6-1-1:ex5-8-4a",
+  "q:g10m5s6-1-1:ex5-8-4b",
+  "q:g10m5s6-1-1:ex5-8-4c",
+  "q:g10m5s6-1-1:ex5-8-5a",
+  "q:g10m5s6-1-1:ex5-8-5b",
+  "q:g10m5s6-1-1:ex5-8-5c",
+  "q:g10m5s6-1-1:ex5-8-5d",
+  "q:g10m5s6-1-1:ex5-8-5e",
+  "q:g10m5s6-1-1:ex5-8-5f",
+  "q:g10m5s6-1-1:ex5-8-5g",
+  "q:g10m5s6-1-1:ex5-8-5h",
+  "q:g10m5s6-1-1:ex5-8-6",
+  "q:g10m5s6-1-2:ex5-3-2",
+  "q:g10m5s6-1-2:ex5-3-3",
+  "q:g10m5s6-1-2:ex5-8-7",
+  "q:g10m5s6-1-2:ex5-8-8",
+  "q:g10m5s7-1-1:ex5-4-1a",
+  "q:g10m5s7-1-1:ex5-4-1b",
+  "q:g10m5s7-1-1:ex5-4-1c",
+  "q:g10m5s7-1-1:ex5-4-1d",
+  "q:g10m5s7-1-1:ex5-4-1e",
+  "q:g10m5s7-1-1:ex5-4-1f",
+  "q:g10m5s7-1-1:ex5-4-1g",
+  "q:g10m5s7-1-1:ex5-4-1h",
+  "q:g10m5s7-1-1:ex5-4-1i",
+  "q:g10m5s7-1-1:ex5-4-1j",
+  "q:g10m5s7-1-1:ex5-4-4",
+  "q:g10m5s7-1-1:ex5-8-10a",
+  "q:g10m5s7-1-1:ex5-8-10b",
+  "q:g10m5s7-1-1:ex5-8-10c",
+  "q:g10m5s7-1-1:ex5-8-10d",
+  "q:g10m5s7-1-1:ex5-8-10e",
+  "q:g10m5s7-1-1:ex5-8-10f",
+  "q:g10m5s7-1-1:ex5-8-10g",
+  "q:g10m5s7-1-1:ex5-8-10h",
+  "q:g10m5s7-1-1:ex5-8-10i",
+  "q:g10m5s7-1-1:ex5-8-12a",
+  "q:g10m5s7-1-1:ex5-8-12b",
+  "q:g10m5s7-1-1:ex5-8-14",
+  "q:g10m5s7-1-1:ex5-8-15a",
+  "q:g10m5s7-1-1:ex5-8-16",
+  "q:g10m5s7-1-1:ex5-8-23",
+  "q:g10m5s7-1-1:ex5-8-24",
+  "q:g10m5s7-1-1:ex5-8-9",
+  "q:g10m5s7-1-1:we04",
+  "q:g10m5s7-1-1:we05",
+  "q:g10m5s7-1-1:we06",
+  "q:g10m5s7-1-2:ex5-5-1",
+  "q:g10m5s7-1-2:ex5-5-2",
+  "q:g10m5s7-1-2:ex5-5-3",
+  "q:g10m5s7-1-2:ex5-5-4",
+  "q:g10m5s7-1-2:ex5-5-5",
+  "q:g10m5s7-1-2:ex5-5-6",
+  "q:g10m5s7-1-2:ex5-5-7",
+  "q:g10m5s7-1-2:ex5-8-12c",
+  "q:g10m5s7-1-2:ex5-8-13",
+  "q:g10m5s7-1-2:ex5-8-15c",
+  "q:g10m5s7-1-2:we07",
+  "q:g10m5s7-1-3:ex5-6-1a",
+  "q:g10m5s7-1-3:ex5-6-1b",
+  "q:g10m5s7-1-3:ex5-6-1c",
+  "q:g10m5s7-1-3:ex5-6-1d",
+  "q:g10m5s7-1-3:ex5-6-1e",
+  "q:g10m5s7-1-3:ex5-6-1f",
+  "q:g10m5s7-1-3:ex5-6-1h",
+  "q:g10m5s7-1-3:ex5-6-1i",
+  "q:g10m5s7-1-3:ex5-6-1j",
+  "q:g10m5s7-1-3:ex5-6-1l",
+  "q:g10m5s7-1-3:ex5-6-1n",
+  "q:g10m5s7-1-3:ex5-6-1o",
+  "q:g10m5s7-1-3:ex5-6-1p",
+  "q:g10m5s7-1-3:ex5-6-2a",
+  "q:g10m5s7-1-3:ex5-6-2b",
+  "q:g10m5s7-1-3:ex5-6-2c",
+  "q:g10m5s7-1-3:ex5-6-2d",
+  "q:g10m5s7-1-3:ex5-6-2e",
+  "q:g10m5s7-1-3:ex5-6-2f",
+  "q:g10m5s7-1-3:ex5-6-2g",
+  "q:g10m5s7-1-3:ex5-6-2h",
+  "q:g10m5s7-1-3:ex5-6-3a",
+  "q:g10m5s7-1-3:ex5-6-3b",
+  "q:g10m5s7-1-3:ex5-6-3c",
+  "q:g10m5s7-1-3:ex5-6-3d",
+  "q:g10m5s7-1-3:ex5-6-3e",
+  "q:g10m5s7-1-3:ex5-6-3f",
+  "q:g10m5s7-1-3:ex5-8-17a",
+  "q:g10m5s7-1-3:ex5-8-17b",
+  "q:g10m5s7-1-3:ex5-8-17c",
+  "q:g10m5s7-1-3:ex5-8-17d",
+  "q:g10m5s7-1-3:ex5-8-17e",
+  "q:g10m5s7-1-3:ex5-8-17f",
+  "q:g10m5s7-1-3:ex5-8-17g",
+  "q:g10m5s7-1-3:ex5-8-17h",
+  "q:g10m5s7-1-3:we08",
+  "q:g10m5s7-1-3:we09",
+  "q:g10m5s8-1-1:ex5-8-20",
+  "q:g10m5s8-1-1:ex5-8-21",
+  "q:g10m5s8-1-1:ex5-8-22",
+  "q:g10m5s8-1-2:ex5-7-1a",
+  "q:g10m5s8-1-2:ex5-7-1b",
+  "q:g10m5s8-1-2:ex5-7-1c",
+  "q:g10m5s8-1-2:ex5-7-1d",
+  "q:g10m5s8-1-2:ex5-7-8a",
+  "q:g10m5s8-1-2:ex5-7-8b",
+  "q:g10m5s8-1-2:ex5-7-8c",
+  "q:g10m5s8-1-2:ex5-7-8d",
+  "q:g10m5s8-1-2:ex5-7-8e",
+  "q:g10m5s8-1-2:ex5-7-8f",
+  "q:g10m5s8-1-2:ex5-7-8g",
+  "q:g10m5s8-1-2:ex5-7-8h",
+  "q:g10m5s8-1-3:ex5-7-10",
+  "q:g10m5s8-1-3:ex5-7-2a",
+  "q:g10m5s8-1-3:ex5-7-2b",
+  "q:g10m5s8-1-3:ex5-7-3a",
+  "q:g10m5s8-1-3:ex5-7-3b",
+  "q:g10m5s8-1-3:ex5-7-3c",
+  "q:g10m5s8-1-3:ex5-7-3d",
+  "q:g10m5s8-1-3:ex5-7-4a",
+  "q:g10m5s8-1-3:ex5-7-4b",
+  "q:g10m5s8-1-3:ex5-7-5a",
+  "q:g10m5s8-1-3:ex5-7-5b",
+  "q:g10m5s8-1-3:ex5-7-5c",
+  "q:g10m5s8-1-3:ex5-7-6",
+  "q:g10m5s8-1-3:ex5-7-7a",
+  "q:g10m5s8-1-3:ex5-7-7b",
+  "q:g10m5s8-1-3:ex5-7-9a",
+  "q:g10m5s8-1-3:ex5-7-9b",
+  "q:g10m5s8-1-3:ex5-7-9c",
+  "q:g10m5s8-1-3:ex5-8-19a",
+  "q:g10m5s8-1-3:ex5-8-19b"
+ ],
+ "runs": [
+  "8a013af11c301a3c3c50e313196002c9e596179e6d9262724f14e57f5054df3a",
+  "805c5cb66dcf25f9b49b09268cd65f9f68a876b06bdc7074e44285cc81673910"
+ ]
+}

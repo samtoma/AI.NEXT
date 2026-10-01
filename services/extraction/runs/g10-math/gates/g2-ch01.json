@@ -5,11 +5,11 @@
  "id": "g2-ch01",
  "chapter": 1,
  "run": "wf_cab88c79-c65, wf_791f61b5-0bb, wf_6ffd9ec1-5d6, wf_796b7644-0fb, wf_38cd93f2-4a1, wf_5acb7902-ff6, wf_552eebe2-d46, wf_2cd2d32d-a3f",
- "decided_at": "2026-10-01T18:09:56Z",
+ "decided_at": "2026-10-01T18:11:06Z",
  "by": "auto-pass G2 (AI recommendation)",
  "auto": true,
  "outcome": "pass_with_holds",
- "summary": "85 book item(s) decided on the AI recommendation (81 from the recommendation file, 4 by the checks' own rule); 0 held for a person; 0 already decided by a person; 37 recommended with low confidence (your call); 4 typed not markable (teaching only, no verdict owed); 35 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
+ "summary": "85 book item(s) decided on the AI recommendation (81 from the recommendation file, 4 by the checks' own rule); 0 held for a person; 0 already decided by a person; 42 recommended with low confidence (your call); 4 typed not markable (teaching only, no verdict owed); 35 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
  "decisions": [
   {
    "key": "g10m1s3-1:Ex1-11:10a",
@@ -323,33 +323,33 @@
   },
   {
    "key": "g10m1s7-1:Ex1-11:28a",
-   "decision": "hold",
-   "detail": "$143=11\\times13$ is correct (12^2-1) and matches the book working. The stem asks for a product of prime factors, a form the app's marker cannot check; typed as an expression, '143' would also be accepted.",
-   "basis": "marker cannot check · confidence high"
+   "decision": "exclude",
+   "detail": "$143=11\\times13$ is correct (12^2-1) and matches the book working. The stem asks for a product of prime factors, a form the app's marker cannot check; typed as an expression, '143' would also be accepted. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28b",
-   "decision": "hold",
-   "detail": "$168=2^3\\times3\\times7$ checks (8*21=168) and matches the EPUB. The printed '23' is a flattened $2^3$. The prime-factor form cannot be checked by the marker, so the typed expression would accept '168' or any equal product.",
-   "basis": "marker cannot check · confidence high"
+   "decision": "exclude",
+   "detail": "$168=2^3\\times3\\times7$ checks (8*21=168) and matches the EPUB. The printed '23' is a flattened $2^3$. The prime-factor form cannot be checked by the marker, so the typed expression would accept '168' or any equal product. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28c",
-   "decision": "hold",
-   "detail": "$899=30^2-1=29\\times31$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so the item cannot be marked faithfully today.",
-   "basis": "marker cannot check · confidence high"
+   "decision": "exclude",
+   "detail": "$899=30^2-1=29\\times31$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so the item cannot be marked faithfully today. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28d",
-   "decision": "hold",
-   "detail": "$99=10^2-1=9\\times11=3^2\\times11$, correct and matching the EPUB (printed '32' is a flattened $3^2$). A product of prime factors cannot be checked by the marker.",
-   "basis": "marker cannot check · confidence high"
+   "decision": "exclude",
+   "detail": "$99=10^2-1=9\\times11=3^2\\times11$, correct and matching the EPUB (printed '32' is a flattened $3^2$). A product of prime factors cannot be checked by the marker. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s7-1:Ex1-11:28e",
-   "decision": "hold",
-   "detail": "$1599=40^2-1=39\\times41=3\\times13\\times41$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so it is held.",
-   "basis": "marker cannot check · confidence high"
+   "decision": "exclude",
+   "detail": "$1599=40^2-1=39\\times41=3\\times13\\times41$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so it is held. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m1s7-1:Ex1-11:29n",

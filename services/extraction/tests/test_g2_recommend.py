@@ -397,15 +397,14 @@ class Policy(unittest.TestCase):
             self.assertIn("prime_factors", e["note"])
 
     def test_a_held_item_whose_spec_the_apps_marker_rejects_is_excluded(self):
+        """A held item is emitted too (held at review), so a spec the app's marker REJECTS would stop the whole chapter's assembly."""
         e, _ = self.one(self.k1, rec("hold", "needs the page image", note="x"),
                         marker_fn=lambda rows: {r["id"]: "the app's marker rejects the spec: unknown form" for r in rows})
-        self.assertEqual(e["verdict"], "hold", "a held item of a well-formed state: the marker is not asked about it, only about excluded ones' hold")
-        es = [{**self.es[1]}]
-        rows_seen = []
-        doc = G.collect(es, [{"results": [{"key": es[0]["key"], "rec": rec("hold", "needs the page image", note="x"), "ver": None}]}],
-                        marker_fn=lambda rows: (rows_seen.extend(r["id"] for r in rows), {r["id"]: "the app's marker rejects the spec: unknown form" for r in rows})[1],
-                        identity_fn=lambda r: {})
-        self.assertEqual(rows_seen, [], "this item is typed numeric: it has no marker spec to ask about")
+        self.assertEqual(e["verdict"], "exclude")
+        self.assertIn("rejects the spec", e["note"])
+        e, _ = self.one(self.k1, rec("hold", "needs the page image", note="x"),
+                        marker_fn=lambda rows: {r["id"]: "the app's marker cannot read the key 'x': nope" for r in rows})
+        self.assertEqual(e["verdict"], "hold", "an unreadable KEY is only held by the assembly (unanswerable), never fatal")
 
     def test_a_stem_repair_is_small_flagged_and_low_confidence(self):
         es = [{"key": "g10m9s1-1:Ex9-1:8", "lesson": "g10m9s1-1", "ref": "Ex9-1:8", "state": "held",

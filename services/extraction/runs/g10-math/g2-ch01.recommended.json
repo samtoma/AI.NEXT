@@ -651,34 +651,39 @@
    }
   },
   "g10m1s7-1:Ex1-11:28a": {
-   "verdict": "hold",
+   "verdict": "exclude",
    "class": "marker cannot check",
-   "confidence": "high",
-   "note": "$143=11\\times13$ is correct (12^2-1) and matches the book working. The stem asks for a product of prime factors, a form the app's marker cannot check; typed as an expression, '143' would also be accepted."
+   "confidence": "low",
+   "note": "$143=11\\times13$ is correct (12^2-1) and matches the book working. The stem asks for a product of prime factors, a form the app's marker cannot check; typed as an expression, '143' would also be accepted. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "why_low": "a hold needs a well-formed item; this one's typing is unusable"
   },
   "g10m1s7-1:Ex1-11:28b": {
-   "verdict": "hold",
+   "verdict": "exclude",
    "class": "marker cannot check",
-   "confidence": "high",
-   "note": "$168=2^3\\times3\\times7$ checks (8*21=168) and matches the EPUB. The printed '23' is a flattened $2^3$. The prime-factor form cannot be checked by the marker, so the typed expression would accept '168' or any equal product."
+   "confidence": "low",
+   "note": "$168=2^3\\times3\\times7$ checks (8*21=168) and matches the EPUB. The printed '23' is a flattened $2^3$. The prime-factor form cannot be checked by the marker, so the typed expression would accept '168' or any equal product. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "why_low": "a hold needs a well-formed item; this one's typing is unusable"
   },
   "g10m1s7-1:Ex1-11:28c": {
-   "verdict": "hold",
+   "verdict": "exclude",
    "class": "marker cannot check",
-   "confidence": "high",
-   "note": "$899=30^2-1=29\\times31$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so the item cannot be marked faithfully today."
+   "confidence": "low",
+   "note": "$899=30^2-1=29\\times31$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so the item cannot be marked faithfully today. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "why_low": "a hold needs a well-formed item; this one's typing is unusable"
   },
   "g10m1s7-1:Ex1-11:28d": {
-   "verdict": "hold",
+   "verdict": "exclude",
    "class": "marker cannot check",
-   "confidence": "high",
-   "note": "$99=10^2-1=9\\times11=3^2\\times11$, correct and matching the EPUB (printed '32' is a flattened $3^2$). A product of prime factors cannot be checked by the marker."
+   "confidence": "low",
+   "note": "$99=10^2-1=9\\times11=3^2\\times11$, correct and matching the EPUB (printed '32' is a flattened $3^2$). A product of prime factors cannot be checked by the marker. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "why_low": "a hold needs a well-formed item; this one's typing is unusable"
   },
   "g10m1s7-1:Ex1-11:28e": {
-   "verdict": "hold",
+   "verdict": "exclude",
    "class": "marker cannot check",
-   "confidence": "high",
-   "note": "$1599=40^2-1=39\\times41=3\\times13\\times41$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so it is held."
+   "confidence": "low",
+   "note": "$1599=40^2-1=39\\times41=3\\times13\\times41$, correct and matching the book. The prime-factor form is not checkable by the app's marker, so it is held. (kept out as exclude, not hold: its typed shape cannot be emitted — the stem asks for 'prime_factors', a form the app's marker does not know: the assembly would put it on the spec and the marker would reject it (it cannot be emitted, not even held))",
+   "why_low": "a hold needs a well-formed item; this one's typing is unusable"
   },
   "g10m1s7-1:Ex1-11:29n": {
    "verdict": "exclude",
@@ -1004,9 +1009,9 @@
   "recommended": 81,
   "unanswered": [],
   "by_verdict": {
-   "exclude": 39,
+   "exclude": 44,
    "accept": 22,
-   "hold": 8,
+   "hold": 3,
    "fix": 12
   },
   "by_class": {
@@ -1026,8 +1031,8 @@
    "stem damaged": 4
   },
   "by_confidence": {
-   "low": 37,
-   "high": 44
+   "low": 42,
+   "high": 39
   },
   "live": [
    "g10m1s3-1:Ex1-11:10a",
@@ -1150,6 +1155,11 @@
    "g10m1s4-1:Ex1-11:17j",
    "g10m1s4-1:Ex1-2:3d",
    "g10m1s6-1:Ex1-11:26c",
+   "g10m1s7-1:Ex1-11:28a",
+   "g10m1s7-1:Ex1-11:28b",
+   "g10m1s7-1:Ex1-11:28c",
+   "g10m1s7-1:Ex1-11:28d",
+   "g10m1s7-1:Ex1-11:28e",
    "g10m1s7-1:Ex1-5:15",
    "g10m1s7-1:Ex1-6:13",
    "g10m1s7-1:Ex1-6:14",
