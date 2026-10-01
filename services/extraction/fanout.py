@@ -388,7 +388,9 @@ def build_runs(inv: dict) -> list[dict]:
         assemble = [f"uv run auto_pass_gates.py g2 g10-math --chapter {ch} {lesson_runs_args} --into runs/g10-math/g2-{t}.json "
                     "--split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI "
                     f"checks' recommendation → runs/g10-math/g2-{t}.json (auto: true), the gate record runs/g10-math/gates/g2-{t}.json "
-                    "(every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+                    "(every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   "
+                    "# a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed "
+                    "in place of the saved one",
                     f"uv run assemble_lesson_bundle.py --book g10-math --chapter {ch} --report runs/g10-math/fanout/assembly-{t}.json",
                     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c%02d.json, seed/content/<slug>.json "
                     "(answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, "

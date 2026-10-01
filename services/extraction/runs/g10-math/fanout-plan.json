@@ -550,7 +550,7 @@
    "order": 14,
    "embedded_script": "work/g10-math/packets/embedded/fanout/014-s1-ch03.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/014-s1-ch03.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s0b-B-g3",
@@ -696,7 +696,7 @@
    "order": 18,
    "embedded_script": "work/g10-math/packets/embedded/fanout/018-s0b-C-g3.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/018-s0b-C-g3.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s1-ch04",
@@ -1117,12 +1117,13 @@
     "lesson-g10m1s8-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 1 --lesson-run runs/g10-math/lessons/<lesson-g10m1s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s8-1's wf_id>.json --into runs/g10-math/g2-ch01.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch01.json (auto: true), the gate record runs/g10-math/gates/g2-ch01.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 1 --lesson-run runs/g10-math/lessons/<lesson-g10m1s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s8-1's wf_id>.json --into runs/g10-math/g2-ch01.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch01.json (auto: true), the gate record runs/g10-math/gates/g2-ch01.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 1 --report runs/g10-math/fanout/assembly-ch01.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c01.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 1",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c01.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch01/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c01.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c01.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch01.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch01-<wf_id>.json",
@@ -1270,7 +1271,7 @@
    "save_to": "runs/g10-math/families/author-ch01-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch01-<wf_id>.json --into families/g10-math/ch01",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch01-<wf_id>.json --into families/g10-math/ch01 --book work/g10-math/fanout/books/ch01/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch01/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch01 --book work/g10-math/fanout/books/ch01/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -1639,12 +1640,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 1 --lesson-run runs/g10-math/lessons/<lesson-g10m1s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s8-1's wf_id>.json --into runs/g10-math/g2-ch01.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch01.json (auto: true), the gate record runs/g10-math/gates/g2-ch01.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 1 --lesson-run runs/g10-math/lessons/<lesson-g10m1s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s8-1's wf_id>.json --into runs/g10-math/g2-ch01.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch01.json (auto: true), the gate record runs/g10-math/gates/g2-ch01.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 1 --report runs/g10-math/fanout/assembly-ch01.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c01.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 1",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c01.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch01/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c01.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c01.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch01.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch01-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -2094,12 +2096,13 @@
     "lesson-g10m2s4-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 2 --lesson-run runs/g10-math/lessons/<lesson-g10m2s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s4-1's wf_id>.json --into runs/g10-math/g2-ch02.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch02.json (auto: true), the gate record runs/g10-math/gates/g2-ch02.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 2 --lesson-run runs/g10-math/lessons/<lesson-g10m2s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s4-1's wf_id>.json --into runs/g10-math/g2-ch02.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch02.json (auto: true), the gate record runs/g10-math/gates/g2-ch02.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 2 --report runs/g10-math/fanout/assembly-ch02.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c02.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 2",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c02.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch02/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c02.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c02.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch02.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch02-<wf_id>.json",
@@ -2172,7 +2175,7 @@
    "save_to": "runs/g10-math/families/author-ch02-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch02-<wf_id>.json --into families/g10-math/ch02",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch02-<wf_id>.json --into families/g10-math/ch02 --book work/g10-math/fanout/books/ch02/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch02/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch02 --book work/g10-math/fanout/books/ch02/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -2347,12 +2350,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 2 --lesson-run runs/g10-math/lessons/<lesson-g10m2s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s4-1's wf_id>.json --into runs/g10-math/g2-ch02.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch02.json (auto: true), the gate record runs/g10-math/gates/g2-ch02.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 2 --lesson-run runs/g10-math/lessons/<lesson-g10m2s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s4-1's wf_id>.json --into runs/g10-math/g2-ch02.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch02.json (auto: true), the gate record runs/g10-math/gates/g2-ch02.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 2 --report runs/g10-math/fanout/assembly-ch02.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c02.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 2",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c02.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch02/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c02.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c02.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch02.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch02-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -2542,12 +2546,13 @@
     "lesson-g10m3s2-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 3 --lesson-run runs/g10-math/lessons/<lesson-g10m3s2-1's wf_id>.json --into runs/g10-math/g2-ch03.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch03.json (auto: true), the gate record runs/g10-math/gates/g2-ch03.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 3 --lesson-run runs/g10-math/lessons/<lesson-g10m3s2-1's wf_id>.json --into runs/g10-math/g2-ch03.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch03.json (auto: true), the gate record runs/g10-math/gates/g2-ch03.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 3 --report runs/g10-math/fanout/assembly-ch03.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c03.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 3",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c03.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch03/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c03.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c03.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch03.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch03-<wf_id>.json",
@@ -2582,12 +2587,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 3 --lesson-run runs/g10-math/lessons/<lesson-g10m3s2-1's wf_id>.json --into runs/g10-math/g2-ch03.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch03.json (auto: true), the gate record runs/g10-math/gates/g2-ch03.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 3 --lesson-run runs/g10-math/lessons/<lesson-g10m3s2-1's wf_id>.json --into runs/g10-math/g2-ch03.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch03.json (auto: true), the gate record runs/g10-math/gates/g2-ch03.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 3 --report runs/g10-math/fanout/assembly-ch03.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c03.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 3",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c03.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch03/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c03.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c03.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch03.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch03-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -2627,7 +2633,7 @@
    "save_to": "runs/g10-math/families/author-ch03-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch03-<wf_id>.json --into families/g10-math/ch03",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch03-<wf_id>.json --into families/g10-math/ch03 --book work/g10-math/fanout/books/ch03/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch03/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch03 --book work/g10-math/fanout/books/ch03/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -3030,12 +3036,13 @@
     "lesson-g10m4s7-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 4 --lesson-run runs/g10-math/lessons/<lesson-g10m4s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s7-1's wf_id>.json --into runs/g10-math/g2-ch04.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch04.json (auto: true), the gate record runs/g10-math/gates/g2-ch04.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 4 --lesson-run runs/g10-math/lessons/<lesson-g10m4s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s7-1's wf_id>.json --into runs/g10-math/g2-ch04.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch04.json (auto: true), the gate record runs/g10-math/gates/g2-ch04.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 4 --report runs/g10-math/fanout/assembly-ch04.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c04.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 4",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c04.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch04/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c04.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c04.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch04.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch04-<wf_id>.json",
@@ -3075,12 +3082,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 4 --lesson-run runs/g10-math/lessons/<lesson-g10m4s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s7-1's wf_id>.json --into runs/g10-math/g2-ch04.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch04.json (auto: true), the gate record runs/g10-math/gates/g2-ch04.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 4 --lesson-run runs/g10-math/lessons/<lesson-g10m4s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s7-1's wf_id>.json --into runs/g10-math/g2-ch04.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch04.json (auto: true), the gate record runs/g10-math/gates/g2-ch04.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 4 --report runs/g10-math/fanout/assembly-ch04.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c04.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 4",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c04.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch04/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c04.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c04.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch04.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch04-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -3120,7 +3128,7 @@
    "save_to": "runs/g10-math/families/author-ch04-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch04-<wf_id>.json --into families/g10-math/ch04",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch04-<wf_id>.json --into families/g10-math/ch04 --book work/g10-math/fanout/books/ch04/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch04/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch04 --book work/g10-math/fanout/books/ch04/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -3448,12 +3456,13 @@
     "lesson-g10m5s8-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 5 --lesson-run runs/g10-math/lessons/<lesson-g10m5s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s8-1's wf_id>.json --into runs/g10-math/g2-ch05.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch05.json (auto: true), the gate record runs/g10-math/gates/g2-ch05.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 5 --lesson-run runs/g10-math/lessons/<lesson-g10m5s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s8-1's wf_id>.json --into runs/g10-math/g2-ch05.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch05.json (auto: true), the gate record runs/g10-math/gates/g2-ch05.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 5 --report runs/g10-math/fanout/assembly-ch05.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c05.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 5",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c05.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch05/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c05.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c05.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch05.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch05-<wf_id>.json",
@@ -3489,7 +3498,7 @@
    "save_to": "runs/g10-math/families/author-ch05-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch05-<wf_id>.json --into families/g10-math/ch05",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch05-<wf_id>.json --into families/g10-math/ch05 --book work/g10-math/fanout/books/ch05/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch05/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch05 --book work/g10-math/fanout/books/ch05/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -3629,12 +3638,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 5 --lesson-run runs/g10-math/lessons/<lesson-g10m5s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s8-1's wf_id>.json --into runs/g10-math/g2-ch05.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch05.json (auto: true), the gate record runs/g10-math/gates/g2-ch05.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 5 --lesson-run runs/g10-math/lessons/<lesson-g10m5s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s8-1's wf_id>.json --into runs/g10-math/g2-ch05.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch05.json (auto: true), the gate record runs/g10-math/gates/g2-ch05.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 5 --report runs/g10-math/fanout/assembly-ch05.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c05.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 5",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c05.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch05/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c05.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c05.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch05.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch05-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -4054,12 +4064,13 @@
     "lesson-g10m6s7-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 6 --lesson-run runs/g10-math/lessons/<lesson-g10m6s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s7-1's wf_id>.json --into runs/g10-math/g2-ch06.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch06.json (auto: true), the gate record runs/g10-math/gates/g2-ch06.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 6 --lesson-run runs/g10-math/lessons/<lesson-g10m6s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s7-1's wf_id>.json --into runs/g10-math/g2-ch06.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch06.json (auto: true), the gate record runs/g10-math/gates/g2-ch06.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 6 --report runs/g10-math/fanout/assembly-ch06.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c06.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 6",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c06.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch06/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c06.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c06.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch06.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch06-<wf_id>.json",
@@ -4102,12 +4113,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 6 --lesson-run runs/g10-math/lessons/<lesson-g10m6s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s7-1's wf_id>.json --into runs/g10-math/g2-ch06.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch06.json (auto: true), the gate record runs/g10-math/gates/g2-ch06.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 6 --lesson-run runs/g10-math/lessons/<lesson-g10m6s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s7-1's wf_id>.json --into runs/g10-math/g2-ch06.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch06.json (auto: true), the gate record runs/g10-math/gates/g2-ch06.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 6 --report runs/g10-math/fanout/assembly-ch06.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c06.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 6",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c06.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch06/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c06.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c06.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch06.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch06-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -4147,7 +4159,7 @@
    "save_to": "runs/g10-math/families/author-ch06-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch06-<wf_id>.json --into families/g10-math/ch06",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch06-<wf_id>.json --into families/g10-math/ch06 --book work/g10-math/fanout/books/ch06/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch06/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch06 --book work/g10-math/fanout/books/ch06/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -4511,12 +4523,13 @@
     "lesson-g10m7s4-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 7 --lesson-run runs/g10-math/lessons/<lesson-g10m7s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s4-1's wf_id>.json --into runs/g10-math/g2-ch07.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch07.json (auto: true), the gate record runs/g10-math/gates/g2-ch07.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 7 --lesson-run runs/g10-math/lessons/<lesson-g10m7s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s4-1's wf_id>.json --into runs/g10-math/g2-ch07.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch07.json (auto: true), the gate record runs/g10-math/gates/g2-ch07.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 7 --report runs/g10-math/fanout/assembly-ch07.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c07.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 7",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c07.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch07/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c07.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c07.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch07.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch07-<wf_id>.json",
@@ -4554,12 +4567,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 7 --lesson-run runs/g10-math/lessons/<lesson-g10m7s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s4-1's wf_id>.json --into runs/g10-math/g2-ch07.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch07.json (auto: true), the gate record runs/g10-math/gates/g2-ch07.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 7 --lesson-run runs/g10-math/lessons/<lesson-g10m7s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s4-1's wf_id>.json --into runs/g10-math/g2-ch07.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch07.json (auto: true), the gate record runs/g10-math/gates/g2-ch07.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 7 --report runs/g10-math/fanout/assembly-ch07.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c07.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 7",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c07.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch07/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c07.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c07.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch07.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch07-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -4599,7 +4613,7 @@
    "save_to": "runs/g10-math/families/author-ch07-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch07-<wf_id>.json --into families/g10-math/ch07",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch07-<wf_id>.json --into families/g10-math/ch07 --book work/g10-math/fanout/books/ch07/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch07/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch07 --book work/g10-math/fanout/books/ch07/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -4852,12 +4866,13 @@
     "lesson-g10m9s5-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 9 --lesson-run runs/g10-math/lessons/<lesson-g10m9s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s5-1's wf_id>.json --into runs/g10-math/g2-ch09.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch09.json (auto: true), the gate record runs/g10-math/gates/g2-ch09.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 9 --lesson-run runs/g10-math/lessons/<lesson-g10m9s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s5-1's wf_id>.json --into runs/g10-math/g2-ch09.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch09.json (auto: true), the gate record runs/g10-math/gates/g2-ch09.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 9 --report runs/g10-math/fanout/assembly-ch09.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c09.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 9",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c09.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch09/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c09.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c09.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch09.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch09-<wf_id>.json",
@@ -4895,12 +4910,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 9 --lesson-run runs/g10-math/lessons/<lesson-g10m9s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s5-1's wf_id>.json --into runs/g10-math/g2-ch09.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch09.json (auto: true), the gate record runs/g10-math/gates/g2-ch09.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 9 --lesson-run runs/g10-math/lessons/<lesson-g10m9s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s5-1's wf_id>.json --into runs/g10-math/g2-ch09.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch09.json (auto: true), the gate record runs/g10-math/gates/g2-ch09.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 9 --report runs/g10-math/fanout/assembly-ch09.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c09.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 9",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c09.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch09/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c09.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c09.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch09.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch09-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -4940,7 +4956,7 @@
    "save_to": "runs/g10-math/families/author-ch09-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch09-<wf_id>.json --into families/g10-math/ch09",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch09-<wf_id>.json --into families/g10-math/ch09 --book work/g10-math/fanout/books/ch09/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch09/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch09 --book work/g10-math/fanout/books/ch09/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -5342,12 +5358,13 @@
     "lesson-g10m10s5-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 10 --lesson-run runs/g10-math/lessons/<lesson-g10m10s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s5-1's wf_id>.json --into runs/g10-math/g2-ch10.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch10.json (auto: true), the gate record runs/g10-math/gates/g2-ch10.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 10 --lesson-run runs/g10-math/lessons/<lesson-g10m10s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s5-1's wf_id>.json --into runs/g10-math/g2-ch10.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch10.json (auto: true), the gate record runs/g10-math/gates/g2-ch10.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 10 --report runs/g10-math/fanout/assembly-ch10.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c10.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 10",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c10.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch10/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c10.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c10.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch10.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch10-<wf_id>.json",
@@ -5386,12 +5403,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 10 --lesson-run runs/g10-math/lessons/<lesson-g10m10s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s5-1's wf_id>.json --into runs/g10-math/g2-ch10.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch10.json (auto: true), the gate record runs/g10-math/gates/g2-ch10.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 10 --lesson-run runs/g10-math/lessons/<lesson-g10m10s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s5-1's wf_id>.json --into runs/g10-math/g2-ch10.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch10.json (auto: true), the gate record runs/g10-math/gates/g2-ch10.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 10 --report runs/g10-math/fanout/assembly-ch10.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c10.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 10",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c10.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch10/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c10.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c10.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch10.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch10-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -5431,7 +5449,7 @@
    "save_to": "runs/g10-math/families/author-ch10-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch10-<wf_id>.json --into families/g10-math/ch10",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch10-<wf_id>.json --into families/g10-math/ch10 --book work/g10-math/fanout/books/ch10/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch10/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch10 --book work/g10-math/fanout/books/ch10/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -5533,12 +5551,13 @@
     "lesson-g10m11s1-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 11 --lesson-run runs/g10-math/lessons/<lesson-g10m11s1-1's wf_id>.json --into runs/g10-math/g2-ch11.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch11.json (auto: true), the gate record runs/g10-math/gates/g2-ch11.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 11 --lesson-run runs/g10-math/lessons/<lesson-g10m11s1-1's wf_id>.json --into runs/g10-math/g2-ch11.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch11.json (auto: true), the gate record runs/g10-math/gates/g2-ch11.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 11 --report runs/g10-math/fanout/assembly-ch11.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c11.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 11",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c11.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch11/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c11.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c11.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch11.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch11-<wf_id>.json",
@@ -5648,7 +5667,7 @@
    "save_to": "runs/g10-math/families/author-ch11-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch11-<wf_id>.json --into families/g10-math/ch11",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch11-<wf_id>.json --into families/g10-math/ch11 --book work/g10-math/fanout/books/ch11/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch11/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch11 --book work/g10-math/fanout/books/ch11/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -5784,12 +5803,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 11 --lesson-run runs/g10-math/lessons/<lesson-g10m11s1-1's wf_id>.json --into runs/g10-math/g2-ch11.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch11.json (auto: true), the gate record runs/g10-math/gates/g2-ch11.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 11 --lesson-run runs/g10-math/lessons/<lesson-g10m11s1-1's wf_id>.json --into runs/g10-math/g2-ch11.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch11.json (auto: true), the gate record runs/g10-math/gates/g2-ch11.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 11 --report runs/g10-math/fanout/assembly-ch11.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c11.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 11",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c11.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch11/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c11.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c11.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch11.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch11-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -5905,12 +5925,13 @@
     "lesson-g10m12s1-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 12 --lesson-run runs/g10-math/lessons/<lesson-g10m12s1-1's wf_id>.json --into runs/g10-math/g2-ch12.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch12.json (auto: true), the gate record runs/g10-math/gates/g2-ch12.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 12 --lesson-run runs/g10-math/lessons/<lesson-g10m12s1-1's wf_id>.json --into runs/g10-math/g2-ch12.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch12.json (auto: true), the gate record runs/g10-math/gates/g2-ch12.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 12 --report runs/g10-math/fanout/assembly-ch12.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c12.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 12",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c12.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch12/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c12.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c12.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch12.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch12-<wf_id>.json",
@@ -5945,12 +5966,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 12 --lesson-run runs/g10-math/lessons/<lesson-g10m12s1-1's wf_id>.json --into runs/g10-math/g2-ch12.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch12.json (auto: true), the gate record runs/g10-math/gates/g2-ch12.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 12 --lesson-run runs/g10-math/lessons/<lesson-g10m12s1-1's wf_id>.json --into runs/g10-math/g2-ch12.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch12.json (auto: true), the gate record runs/g10-math/gates/g2-ch12.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 12 --report runs/g10-math/fanout/assembly-ch12.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c12.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 12",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c12.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch12/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c12.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c12.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch12.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch12-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -5990,7 +6012,7 @@
    "save_to": "runs/g10-math/families/author-ch12-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch12-<wf_id>.json --into families/g10-math/ch12",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch12-<wf_id>.json --into families/g10-math/ch12 --book work/g10-math/fanout/books/ch12/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch12/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch12 --book work/g10-math/fanout/books/ch12/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -6430,12 +6452,13 @@
     "lesson-g10m13s4-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 13 --lesson-run runs/g10-math/lessons/<lesson-g10m13s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s4-1's wf_id>.json --into runs/g10-math/g2-ch13.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch13.json (auto: true), the gate record runs/g10-math/gates/g2-ch13.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 13 --lesson-run runs/g10-math/lessons/<lesson-g10m13s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s4-1's wf_id>.json --into runs/g10-math/g2-ch13.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch13.json (auto: true), the gate record runs/g10-math/gates/g2-ch13.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 13 --report runs/g10-math/fanout/assembly-ch13.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c13.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 13",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c13.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch13/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c13.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c13.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch13.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch13-<wf_id>.json",
@@ -6475,12 +6498,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 13 --lesson-run runs/g10-math/lessons/<lesson-g10m13s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s4-1's wf_id>.json --into runs/g10-math/g2-ch13.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch13.json (auto: true), the gate record runs/g10-math/gates/g2-ch13.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 13 --lesson-run runs/g10-math/lessons/<lesson-g10m13s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s4-1's wf_id>.json --into runs/g10-math/g2-ch13.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch13.json (auto: true), the gate record runs/g10-math/gates/g2-ch13.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 13 --report runs/g10-math/fanout/assembly-ch13.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c13.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 13",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c13.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch13/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c13.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c13.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch13.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch13-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -6520,7 +6544,7 @@
    "save_to": "runs/g10-math/families/author-ch13-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch13-<wf_id>.json --into families/g10-math/ch13",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch13-<wf_id>.json --into families/g10-math/ch13 --book work/g10-math/fanout/books/ch13/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch13/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch13 --book work/g10-math/fanout/books/ch13/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
@@ -6924,12 +6948,13 @@
     "lesson-g10m14s7-1"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 14 --lesson-run runs/g10-math/lessons/<lesson-g10m14s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s7-1's wf_id>.json --into runs/g10-math/g2-ch14.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch14.json (auto: true), the gate record runs/g10-math/gates/g2-ch14.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 14 --lesson-run runs/g10-math/lessons/<lesson-g10m14s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s7-1's wf_id>.json --into runs/g10-math/g2-ch14.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch14.json (auto: true), the gate record runs/g10-math/gates/g2-ch14.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 14 --report runs/g10-math/fanout/assembly-ch14.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c14.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 14",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c14.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch14/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c14.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c14.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch14.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/misconceptions/draft-ch14-<wf_id>.json",
@@ -6970,12 +6995,13 @@
     "wcheck-ch08"
    ],
    "before": [
-    "uv run auto_pass_gates.py g2 g10-math --chapter 14 --lesson-run runs/g10-math/lessons/<lesson-g10m14s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s7-1's wf_id>.json --into runs/g10-math/g2-ch14.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch14.json (auto: true), the gate record runs/g10-math/gates/g2-ch14.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
+    "uv run auto_pass_gates.py g2 g10-math --chapter 14 --lesson-run runs/g10-math/lessons/<lesson-g10m14s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s7-1's wf_id>.json --into runs/g10-math/g2-ch14.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch14.json (auto: true), the gate record runs/g10-math/gates/g2-ch14.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json   # a lesson run that was re-collected (recollect_lessons.py → runs/g10-math/lessons/recollected/<wf_id>.json) is passed in place of the saved one",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 14 --report runs/g10-math/fanout/assembly-ch14.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c14.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 14",
     "uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c14.json --validate-only",
-    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py --all --course course:us-g10-math-en --book work/g10-math/fanout/books/ch14/g10-math.json   # scratch DB only (127.0.0.1)",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c14.json --course course:us-g10-math-en --dry-run   # local DB only (127.0.0.1); then the same without --dry-run",
+    "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run load_seed.py seed/g10-math/g10m-course.json seed/g10-math/g10m-c14.json --course course:us-g10-math-en",
     "AINEXT_DB_DSN=\"host=127.0.0.1 port=5432 dbname=ainext_pilot_g10_ch08\" AINEXT_ENVIRONMENT=mvp1 uv run apply_review_verdicts.py --g2 runs/g10-math/g2-ch14.json --book g10-math --runs runs/g10-math/lesson"
    ],
    "save_to": "runs/g10-math/working-check/ch14-<pass A|B>-<wf_id>.json   (one file per pass)",
@@ -7015,7 +7041,7 @@
    "save_to": "runs/g10-math/families/author-ch14-<wf_id>.json",
    "meter": "uv run meter_run.py record --book g10-math --stage S6 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
-    "uv run fanout.py write-specs runs/g10-math/families/author-ch14-<wf_id>.json --into families/g10-math/ch14",
+    "uv run fanout.py write-specs runs/g10-math/families/author-ch14-<wf_id>.json --into families/g10-math/ch14 --book work/g10-math/fanout/books/ch14/g10-math.json",
     "uv run python -m families.normalise families/g10-math/ch14/*.json   # the two mechanical refusals only (recorded)",
     "uv run generate_questions.py --families families/g10-math/ch14 --book work/g10-math/fanout/books/ch14/g10-math.json --check",
     "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args (a contingency run, ≈ $0.7 each; not in the estimate)"
