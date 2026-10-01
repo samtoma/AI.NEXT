@@ -494,7 +494,9 @@ function relationVariants(r, kc) {
   })
   const bare = units.size === 1 ? u : r
   if (bare !== r) out.push(bare)
-  const m = REL_CHAIN.exec(bare)
+  // a unit that was not set aside (another unit, or a letter the key uses as a variable) is a difference, never a word
+  const stray = new RegExp(`(\\d)\\s+(${REL_UNIT})(?![A-Za-z°(])`).test(bare)
+  const m = stray ? null : REL_CHAIN.exec(bare)
   if (m) {
     const rest = `${bare.slice(0, m.index)} ${bare.slice(m.index + m[0].length)}`
     if (!/[\d<>≤≥≠=∈]/.test(rest) && !/\b(?:not|no|never|except|cannot)\b/i.test(rest) && /^[A-Za-z\s.,;:'’()-]*$/.test(rest)) out.push(m[0])

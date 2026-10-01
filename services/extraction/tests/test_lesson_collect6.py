@@ -891,6 +891,17 @@ class NoSingleEditIsAccepted(unittest.TestCase):
         ("(-\\infty;\\frac{6}{5}]", "x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )", "Ex4-6:3d", "interval", ("x",)),
         ("\\left(-\\infty;-\\frac{8}{5}\\right]", "x ∈ ( −∞; −8 5 ] . c) [ 80 31 ; ∞ )", "Ex4-7:10b", "interval", ("x",)),
         ("-3 \\leq k < 2", "−3 ≤k < 2", "Ex4-7:12p", "interval", ("k",)),
+        # Chapter 6
+        ("0 \\le s(t) \\le 10", "0 m ≤s(t) ≤10 m", "Ex6-1:8b", "interval", ("s", "t")),
+        ("0 \\le t \\le 20", "The domain is 0 s ≤t ≤20 s. It represents the total time taken to reach the bottom of the slide", "Ex6-1:8c", "interval", ("t",)),
+        ("(-\\infty;\\infty); [-4;\\infty)", "Domain h: (−∞; ∞). Range h: [−4; ∞)", "Ex6-8:51d", "interval", ("x",)),
+        ("(0;\\infty); (-\\infty;1]", "Range f(x): (0; ∞), Range g(x): (−∞; 1]", "Ex6-8:50f", "interval", ("x",)),
+        ("(0;1); (0;-1)", "M(0; 1) and N(0; −1)", "Ex6-8:48a", "coordinates", ()),
+        ("\\{\\theta:0^{\\circ}\\le\\theta\\le360^{\\circ},\\theta\\ne90^{\\circ};270^{\\circ}\\}", "{θ : 0° ≤θ ≤360°, θ ̸= 90°; 270°}", "Ex6-8:55a", "interval", ("\\theta",)),
+        ("$0^{\\circ}<\\theta<90^{\\circ}\\text{ and }270^{\\circ}<\\theta<360^{\\circ}$", "0◦< θ < 90◦and 270◦< θ < 360◦", "Ex6-8:43", "interval", ("\\theta",)),
+        ("-\\frac{5}{3}; -5", "x-intercept = −5 3 and y-intercept = −5", "Ex6-8:4a", "values", ()),
+        ("f(x)=-3,5\\cos\\theta", "f(x) = −3,5 cos θ", "Ex6-8:36", "equation", ("x", "\\theta")),
+        ("y=-2x; y=x^2-3", "y = −2x en y = x2 −3", "Ex6-8:56a", "equation", ("x", "y")),
     ]
 
     def test_every_single_edit_of_a_true_match_is_refused(self):
@@ -1135,6 +1146,129 @@ class NoSingleEditOfAFinal(TypedItem, unittest.TestCase):
                  if ("book_final is not in the book solution" not in by[r]["typing_problems"]) != ok]
         self.assertEqual(wrong, [], f"{len(wrong)} of {len(items)}")
         self.assertGreater(len(items), 40)
+
+
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class ChapterSixForms(TypedItem, unittest.TestCase):
+    """Chapter 6 (functions): G2's auto-pass excluded 92 items. 38 were match-the-graph items whose options are the figure's own function labels
+    (f(x), g(x), h(x), k(x): all ten figures were read and print exactly those), 29 a key against a printed relation, interval or set with units, a
+    sentence, a "Domain h:" label or a point's name, 2 a pair of values in a sentence. What stays refused is pinned beside each."""
+
+    def labels(self, options, key, figures=("fig.png",), stem="Given the following graph, identify the function that matches the equation: [figure] $y=x^2$"):
+        it = item("Ex6-3:5b", stem, ["The graph of $y=x^2$ is $g(x)$."], options[int(key)], figures=figures)
+        t = typing("Ex6-3:5b", options[int(key)], f"${options[int(key)]}$", "choice", options=list(options), options_source="figure")
+        rep = run(args_for([it]), responses([t], [{"ref": "Ex6-3:5b", "final_answer": options[int(key)], "markable": True}]))
+        return rep["result"]["lessons"][0]["items"][0]
+
+    def test_a_graphs_own_function_labels_are_its_options(self):
+        for opts in (["f(x)", "g(x)", "h(x)", "k(x)"], ["g(x)", "f(x)", "h(x)"], ["A", "B", "C"], ["y_1", "y_2"]):
+            x = self.labels(opts, 1)
+            self.assertEqual(x["typing_problems"], [], opts)
+            self.assertEqual(x["answer_type"], "choice")
+            self.assertEqual(x["answer"], "B")
+
+    def test_options_that_are_not_the_figures_labels_are_still_refused(self):
+        for opts, why in ((["f(x)", "g(x)", "A"], "mix letters and function labels"), (["f(x)", "f(x)", "g(x)"], "repeat"),
+                          (["f(x)", "g(x)+1", "h(x)"], "not all single labels"), (["f(x)", "2x", "h(x)"], "not all single labels"),
+                          (["f(x, y)", "g(x)"], "not all single labels")):
+            x = self.labels(opts, 0)
+            self.assertTrue(any(why in p for p in x["typing_problems"]), (opts, x["typing_problems"]))
+        # no figure on the item: options "said to be a figure's labels" are never believed
+        y = self.labels(["f(x)", "g(x)", "h(x)"], 0, figures=())
+        self.assertTrue(any("the item has no figure" in p for p in y["typing_problems"]))
+
+    def rel(self, key, printed, ref="Ex6-1:8b", kind="interval", variables=("t",)):
+        return self.typed(key, printed, kind=kind, variables=variables, ref=ref, stem="Write down the domain.")
+
+    def test_units_a_sentence_labels_and_point_names_do_not_change_a_relation(self):
+        cases = [
+            ("0 \\le s(t) \\le 10", "0 m ≤s(t) ≤10 m", ("s", "t")),
+            ("0 \\le t \\le 20", "The domain is 0 s ≤t ≤20 s. It represents the total time taken to reach the bottom of the slide", ("t",)),
+            ("0 \\le t \\le 120", "The domain is 0 ≤t ≤120 min.", ("t",)),
+            ("0 \\le s \\le 100", "The range is 0 ≤s ≤100 km, it represents the total distance travelled.", ("s",)),
+            ("(-\\infty;\\infty); [-4;\\infty)", "Domain h: (−∞; ∞). Range h: [−4; ∞)", ("x",)),
+            ("(0;\\infty); (-\\infty;0)", "Range y = 2x: (0; ∞) Range y = −2x: (−∞; 0)", ("x",)),
+            ("(0;\\infty); (-\\infty;1]", "Range f(x): (0; ∞), Range g(x): (−∞; 1]", ("x",)),
+            ("\\{x:x\\in\\mathbb{R},-13\\le x<4\\}", "{x : x ∈R, −13 ≤x < 4}", ("x",)),
+            ("\\{\\theta:0^{\\circ}\\le\\theta\\le360^{\\circ},\\theta\\ne90^{\\circ};270^{\\circ}\\}", "{θ : 0° ≤θ ≤360°, θ ̸= 90°; 270°}", ("\\theta",)),
+            ("$0^{\\circ}<\\theta<90^{\\circ}\\text{ and }270^{\\circ}<\\theta<360^{\\circ}$", "0◦< θ < 90◦and 270◦< θ < 360◦", ("\\theta",)),
+        ]
+        for key, printed, variables in cases:
+            x = self.rel(key, printed, variables=variables)
+            self.assertTrue(self.reads(x), (printed, x["typing_problems"]))
+        y = self.rel("(0;1); (0;-1)", "M(0; 1) and N(0; −1)", kind="coordinates", variables=())
+        self.assertTrue(self.reads(y), y["typing_problems"])
+
+    def test_a_unit_that_changes_the_relation_or_adds_one_is_refused(self):
+        cases = [
+            ("0 \\le s(t) \\le 10", "0 m ≤s(t) ≤10 s", ("s", "t")),                                    # two different units
+            ("0 \\le t \\le 120", "The domain is 0 ≤t ≤130 min.", ("t",)),                           # another bound
+            ("0 \\le t \\le 120", "The domain is 0 <t ≤120 min.", ("t",)),                           # another relation
+            ("0 \\le t \\le 120", "The domain is 0 ≤t ≤120 min and t ≠ 60.", ("t",)),                # an extra constraint
+            ("0 \\le t \\le 120", "The domain is 0 ≤t ≤120 min, not 0 ≤t ≤12 min.", ("t",)),         # a second chain, a negation
+            ("0 \\le t \\le 120", "It is never true that 0 ≤t ≤120 min.", ("t",)),
+            ("0 \\le t \\le 120", "The domain is 0 ≤t ≤120 min and the range is 0 ≤s ≤100 km.", ("t",)),
+            ("0 \\le m \\le 5", "0 m ≤m ≤5 m", ("m",)),                                              # m is the variable: "0 m" is not a unit
+            ("0 \\le t \\le 120", "The domain is 5 ≤t ≤120 min.", ("t",)),
+            ("(-\\infty;\\infty); [-4;\\infty)", "Domain h: (−∞; ∞). Range h: (−4; ∞)", ("x",)),    # another bracket
+            ("(-\\infty;\\infty); [-4;\\infty)", "Range h: [−4; ∞). Domain h: (−∞; ∞)", ("x",)),    # another order
+            ("(-\\infty;\\infty); [-4;\\infty)", "Domain h: (−∞; ∞). Range h: [−4; ∞) Range k: [0; ∞)", ("x",)),   # an interval the key lacks
+            ("(0;\\infty); (-\\infty;0)", "Range y = 2x: (0; ∞) Range y = −2x: (−∞; 1)", ("x",)),
+            ("(0;1); (0;-1)", "M(0; 1) and N(0; 1)", ("x",)),
+            ("(0;1); (0;-1)", "M(0; 1) and N(1; −1)", ("x",)),
+            ("\\{x:x\\in\\mathbb{R},-13\\le x<4\\}", "{x : x ∈R, −13 ≤x ≤ 4}", ("x",)),
+        ]
+        for key, printed, variables in cases:
+            kind = "coordinates" if key.startswith("(0;1)") else "interval"
+            x = self.rel(key, printed, kind=kind, variables=variables)
+            self.assertFalse(self.reads(x), (key, printed))
+
+    def test_a_word_label_and_a_consequence_are_not_part_of_the_values(self):
+        x = self.typed("-\\frac{5}{3}; -5", "x-intercept = −5 3 and y-intercept = −5")
+        self.assertTrue(self.reads(x), x["typing_problems"])
+        for key in ("-5; -\\frac{5}{3}", "-\\frac{5}{3}; 5", "-\\frac{5}{2}; -5"):
+            self.assertFalse(self.reads(self.typed(key, "x-intercept = −5 3 and y-intercept = −5")), key)
+        sol = "$a=-1$ and $q=1$ , so the equation of the parabola is $y=-{x}^{2}+1$ ."
+        ok = self.typed("a=-1; q=1", None, final=sol, solution=[sol], raw_final=True)
+        self.assertTrue(self.reads(ok), ok["typing_problems"])
+        for key in ("a=-1; q=2", "a=1; q=1", "q=1; a=-1", "a=-1; q=1; y=-x^2+1"):
+            self.assertFalse(self.reads(self.typed(key, None, final=sol, solution=[sol], raw_final=True)), key)
+        # without the connecting word a third assignment is part of what the book states
+        three = "$a=-1$ and $q=1$ and $y=-{x}^{2}+1$ ."
+        self.assertFalse(self.reads(self.typed("a=-1; q=1", None, final=three, solution=[three], raw_final=True)))
+
+    def test_a_trigonometric_function_is_its_name_and_two_names_are_two_answers(self):
+        for key, printed in (("f(x)=-3,5\\cos\\theta", "f(x) = −3,5 cos θ"), ("y=-\\tan\\theta-2", "y = −tan θ −2"), ("y=5\\sin\\theta+1", "y = 5 sin θ + 1"),
+                             ("g(x)=4\\sin{\\theta}", "g(x) = 4 sin θ")):
+            x = self.typed(key, printed, kind="equation", variables=("x", "y", "\\theta"))
+            self.assertTrue(self.reads(x), (key, x["typing_problems"]))
+        # the old signature dropped every command, so sin and cos were the same answer
+        for key, printed in (("y=5\\sin\\theta+1", "y = 5 cos θ + 1"), ("y=-\\tan\\theta-2", "y = −sin θ −2"), ("f(x)=-3,5\\cos\\theta", "f(x) = −3,5 cos θ + 1")):
+            self.assertFalse(self.reads(self.typed(key, printed, kind="equation", variables=("x", "y", "\\theta"))), (key, printed))
+        # a trigonometric ratio is a label of ONE side only: "sin A = 3/5" and "cos A = 3/5" are different
+        for blind, printed, same in (("\\cos A=\\frac{3}{5}", "cos A = 3 5", True), ("\\sin A=\\frac{3}{5}", "cos A = 3 5", False), ("\\frac{3}{5}", "sin A = 3 5", True)):
+            it = item("Ex6-6:1", "Find the ratio.", ["$\\cos A=\\frac{3}{5}$"], printed)
+            t = typing("Ex6-6:1", "\\frac{3}{5}", "$\\cos A=\\frac{3}{5}$", "expression", marker_kind="expression", variables=[])
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex6-6:1", "final_answer": blind, "markable": True}]))
+            p = {q["pair_id"].split("|")[1]: q["route"] for q in rep["result"]["lessons"][0]["items"][0]["verify"]["pairs"]}
+            self.assertEqual(p["blind~printed"] != "judge", same, (blind, printed, p))
+
+    def test_the_epubs_glued_and_the_text_layers_signs_in_a_final(self):
+        sol = ["$\\begin{align*}g(-2)&=2(-2)^2-4\\\\&=4\\\\\\thereforeh(g(-2))&=h(4)\\\\&=3^4-4\\\\&=77\\end{align*}$"]
+        it = item("Ex6-8:27f", "Find h(g(-2)).", sol, "77")
+        for final, ok in (("Therefore h(g(-2))=h(4)=3^4-4=77", True), ("Therefore h(g(-2))=h(4)=3^4-4=78", False), ("Therefore h(g(-2))=h(5)=3^4-4=77", False)):
+            t = typing("Ex6-8:27f", "77", final, "numeric")
+            rep = run(args_for([it]), responses([t], [{"ref": "Ex6-8:27f", "final_answer": "77", "markable": True}]))
+            probs = rep["result"]["lessons"][0]["items"][0]["typing_problems"]
+            self.assertEqual("book_final is not in the book solution" not in probs, ok, (final, probs))
+        glued = ["$\\left\\{x:x\\in\\mathbb{R},-13\\lex<4\\right\\}$"]
+        for final, ok in (("$\\left\\{x:x\\in\\mathbb{R},-13\\le x<4\\right\\}$", True), ("$\\left\\{x:x\\in\\mathbb{R},-13\\le x\\le4\\right\\}$", False),
+                          ("$\\left\\{x:x\\in\\mathbb{R},-12\\le x<4\\right\\}$", False)):
+            it2 = item("Ex6-1:1b", "Write in set notation.", glued, "{x : x ∈R, −13 ≤x < 4}")
+            t = typing("Ex6-1:1b", "\\{x:x\\in\\mathbb{R},-13\\le x<4\\}", final, "expression", marker_kind="interval", variables=["x"])
+            rep = run(args_for([it2]), responses([t], [{"ref": "Ex6-1:1b", "final_answer": "1", "markable": True}]))
+            probs = rep["result"]["lessons"][0]["items"][0]["typing_problems"]
+            self.assertEqual("book_final is not in the book solution" not in probs, ok, (final, probs))
 
 
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
