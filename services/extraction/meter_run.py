@@ -80,6 +80,9 @@ import book_config
 # so a run on it shows as unpriced rather than mispriced.)
 PRICES: dict[str, dict[str, float]] = {
     "claude-haiku-4-5": {"input": 1.00, "output": 5.00},
+    # Sonnet 5.5 (`claude-sonnet-5-5`): the pipeline's agents run on it since the app update of
+    # 2026-10-01; same list price and cache multipliers as Sonnet 5 (platform.claude.com pricing).
+    "claude-sonnet-5-5": {"input": 2.00, "output": 10.00},
     "claude-sonnet-5": {"input": 2.00, "output": 10.00},
     "claude-opus-5": {"input": 5.00, "output": 25.00},
     "claude-fable-5": {"input": 10.00, "output": 50.00},
@@ -87,7 +90,7 @@ PRICES: dict[str, dict[str, float]] = {
 CACHE_READ = 0.10
 CACHE_WRITE_5M = 1.25
 CACHE_WRITE_1H = 2.00
-PRICES_AS_OF = "2026-09-25"
+PRICES_AS_OF = "2026-10-01"
 TOKEN_KEYS = ("input", "cache_write_5m", "cache_write_1h", "cache_read", "output")
 
 CLAUDE_HOME = Path(os.environ.get("CLAUDE_CONFIG_DIR", Path.home() / ".claude"))
