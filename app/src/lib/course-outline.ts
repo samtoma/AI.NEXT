@@ -7,8 +7,9 @@
  * chapter at a time, as the teaching pipeline prepares it. The structure is
  * stored in `course_outline` (migration 037, written by
  * `services/extraction/load_course_outline.py`); this module holds the RULES
- * that read it. Pure: no database, no React — so the client skill map can use
- * it and every branch is a `node --test` case (`course-outline.test.mts`).
+ * that read it, and `lib/course-outline-queries.ts` the reads. Pure: no
+ * database, no SQL, no React — so the client skill map can use it and every
+ * branch is a `node --test` case (`course-outline.test.mts`).
  *
  * ---------------------------------------------------------------------------
  * READINESS IS DERIVED, NEVER STORED
@@ -44,28 +45,8 @@
 import { provenanceFromRow, type BookSectionRow, type LessonProvenance } from "./book-sections";
 
 /* ------------------------------------------------------------------ */
-/* The store (migration 037)                                          */
+/* The store's rows (migration 037; read by lib/course-outline-queries.ts) */
 /* ------------------------------------------------------------------ */
-
-/**
- * Is the store there? The outline is an overlay on what a student already
- * sees: a database without migration 037 has no outline, and every surface
- * then shows exactly what it showed before 037 — so the reader asks first
- * rather than failing a check-in over a missing table.
- */
-export const OUTLINE_PRESENT_SQL = `SELECT to_regclass('public.course_outline') IS NOT NULL AS present`;
-
-/** Every outline row of the given courses (`$1`, already gated), in reading order. */
-export const COURSE_OUTLINE_SQL = `
-  SELECT course_id, lesson_slug, module_id, module_label, module_order, book_order,
-         title, sections, section_titles, part_n, part_of, chapter_intro, group_key,
-         page_from, page_to
-    FROM course_outline
-   WHERE course_id = ANY($1::text[])
-   ORDER BY course_id, book_order`;
-
-/** Is `$1` a lesson some book's outline lists? The guard's read (lib/lesson.ts). */
-export const OUTLINE_LESSON_SQL = `SELECT course_id FROM course_outline WHERE lesson_slug = $1 LIMIT 1`;
 
 /** One row of `course_outline`, as `COURSE_OUTLINE_SQL` returns it. */
 export interface OutlineRow extends BookSectionRow {

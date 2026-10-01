@@ -109,8 +109,12 @@
   (embed_workflow.py); clips lifted in by-ref mode (s5-v3, s6-v3, s7-v3); inline unchanged. 404 tests + dry run both modes.
 67. AFTER S1 is assembled: make S0a's write of work/<book>/blocks.jsonl atomic AND stop the test suite / dry run from
     rewriting the real work dir (use a temp copy). Record embedded hashes per lesson in lesson-runs.
-68. Q3 deferred: S1 prior_objectives into a shard (needed around chapter 5–7 of a full book).
-69. S2–S4: run per-lesson copies (first g10m8s2-1 as the size check), not one 230 KB run.
+68. CLOSED (2026-10-01, the fan-out preparation) — Q3 deferred: S1 prior_objectives into a shard (needed around chapter 5–7 of a full book).
+    Built: by reference, `prior.txt` (the linker's list) and `prior/<id tail>.txt` (one statement, the link
+    checker's) are shards; the args keep the ids (`prior_by_ref`); splice-equal to inline
+    (`tests/test_packet_ref.py` S1PriorObjectivesByRef); a chapter with no prior objectives (Chapter 8) hashes as before.
+69. CLOSED (2026-10-01, adopted by the fan-out plan) — S2–S4: run per-lesson copies (first g10m8s2-1 as the size check), not one 230 KB run.
+    `runs/g10-math/fanout-plan.json` has one `lesson-<slug>` run per lesson (60), each its own embedded copy.
 
 ## S1 fixes + answer 15 (2026-09-26) — built by the by-ref agent
 - Faults 1–4 fixed at cause (s1-v5): bracketed anchors (prompt + tolerant strip recorded as anchor_written; same in
@@ -163,7 +167,11 @@
     "working checker" (one agent per canonical solution, flags inconsistent lines) — cost to be measured; decide before fan-out.
     → **Answered (answer 30, decision 51, 2026-10-01): "Yes, add it."** One checking agent per book solution + a free
     numeric pre-check; flagged steps go to G2, never silently corrected; ≈ $0.03–0.05/solution; re-run on Chapter 8
-    too. Not yet built.
+    too. **BUILT 2026-10-01** (CLOSED as a build; its runs are in the fan-out plan): `services/extraction/working_check.py`
+    (packet builder, free numeric pre-check, collector), `runbook/working-check.workflow.js` (sw-v1, one blind Sonnet
+    agent per solution), `tests/test_working_check.py`. Flags → `runs/g10-math/working-check/chNN.flags.json` → the
+    console backlog (answer 37c), never corrected. The pre-check alone, on the pilot seed, flags 3 real book typos G2
+    missed (Ex8-6:42a, Ex8-6:38d, Ex8-6:42d). Chapter 8's run is prepared (`002-wcheck-ch08`, 192 solutions).
 79. CLOSED (`s7-v5`; `tests/test_widget_templates.py`) — **The six kinds of decision 27 were in the widget contract
     but never registered for the pipeline**: S7 author `wf_816352f4-fbc` saw polygon_builder, solid_scaler,
     box_plot_builder, venn_builder and area_model with an empty instrument, curve_sketcher with only linear and

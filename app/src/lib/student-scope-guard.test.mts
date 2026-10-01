@@ -58,7 +58,7 @@ export function stripComments(source: string): string {
 
 /** A SQL read of a curriculum table. */
 export const CONTENT_READ =
-  /\b(FROM|JOIN)\s+(graph_nodes|graph_edges|questions|visuals|source_documents|node_subject|misconceptions|explanation_library)\b/i;
+  /\b(FROM|JOIN)\s+(graph_nodes|graph_edges|questions|visuals|source_documents|node_subject|misconceptions|explanation_library|course_outline)\b/i;
 
 /** A call into the student scope. */
 export const SCOPE_CALL =
@@ -206,6 +206,16 @@ export const MODULES: Readonly<Record<string, ModuleKind>> = {
     ],
   },
 
+  // A book's chapter and lesson titles (migration 037), the not-yet-prepared
+  // lessons included — content of a course, so only for courses she may see.
+  "src/lib/course-outline-queries.ts": {
+    kind: "upstream",
+    why:
+      "the book outline (chapter and lesson titles) of the course ids its caller passes, already gated: the " +
+      "check-in passes the courses of her gated catalogue, the skill map the courses its graph scope put on " +
+      "the map; lib/lesson.ts asks only whether a slug with no objectives is an outline lesson, to refuse it.",
+    importers: ["src/app/(student)/student/page.tsx", "src/lib/lesson.ts", "src/lib/queries.ts"],
+  },
   "src/lib/module-order.ts": {
     kind: "sql-text",
     why: "the catalogue order's SQL fragments; it reads nothing itself (catalogueObjectivesSql returns text).",
@@ -463,6 +473,8 @@ export const ENTRIES: Readonly<Record<string, Entry>> = {
       "getSubjectSummaries",
       "getCurrentLesson",
       "isCourseComplete",
+      // the book's whole outline for the picker — of her gated catalogue's courses (migration 037)
+      "getCourseOutline",
       "resolveStudentScope",
       // the practice loop's book citation: which courses she sees, nothing more (#36)
       "visibleCoursesFor",
@@ -598,6 +610,12 @@ export const READERS: Readonly<Record<string, Gate>> = {
   isCourseComplete: {
     caller: "walks the course of the lesson getLessonData just admitted",
     gates: ["getLessonData"],
+  },
+  getCourseOutline: {
+    caller:
+      "the outline of the courses of her GATED catalogue only — the page passes the course ids of the " +
+      "lessons getLessonCatalog returned, so a hidden course's chapter titles are never read",
+    gates: ["getLessonCatalog"],
   },
   advanceIfMastered: {
     caller: "walks the course of the objective whose question the route just gated",
