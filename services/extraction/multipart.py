@@ -179,12 +179,16 @@ def concrete_points(text: str) -> set[str]:
 
 
 def unknown_points(text: str) -> dict[str, set[str]]:
-    """Points the text leaves unknown — `N(x;y)`, `U(6;a)`, `S(t+1;2.5)` — and the variables in them."""
+    """Points the text leaves unknown — `N(x;y)`, `U(6;a)`, `S(t+1;2.5)` — and the variables in them. A point has two
+    coordinates: `P(x)` is a function of one variable, not a point."""
     out: dict[str, set[str]] = {}
     for L, ins in point_bound(text).items():
-        vs = {v for x in ins for v in re.findall(r"[a-z]", x)}
-        if vs:
-            out[L] = vs
+        for x in ins:
+            if not re.search(r"[;,]", x):
+                continue
+            vs = set(re.findall(r"[a-z]", x))
+            if vs:
+                out.setdefault(L, set()).update(vs)
     return out
 
 
@@ -193,7 +197,7 @@ _N = r"[A-Z]"
 _NAMES = rf"{_N}(?:\s*,\s*{_N})*(?:\s*,?\s*and\s+{_N})?"
 _SEG = r"[A-Z]{2,3}"
 _SEGS = rf"{_SEG}(?:\s*(?:,|and)\s*{_SEG})*"
-_NOUN = r"(?:mid-?points?|midpoints?)"
+_NOUN = r"(?:mid-?points?|midpoints?|points? of intersection|intersections?)"
 _B = r"(?<![A-Za-z])"
 _DEFS = (
     # S and T, the mid-points of PQ and QR   (Find the coordinates of points S and T, the mid-points of …)
@@ -252,6 +256,10 @@ def definitions(tail: str) -> list[Definition]:
         for m in rx.finditer(text):
             names = _split_names(m.group("names"))
             if not names:
+                continue
+            # a question or a condition is no definition: "Is M the mid-point of AB?", "whether M is …", "if M is …"
+            sentence_start = max(text.rfind(x, 0, m.start()) for x in (". ", "? ", ": ", "! ")) + 1
+            if re.search(r"\b(whether|if|is it|can you|true or false|not)\b", text[sentence_start:m.start()], re.I):
                 continue
             d = Definition(names, (m.groupdict().get("noun") or None), (m.groupdict().get("rest") or None),
                            m.groupdict().get("verb"))

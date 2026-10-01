@@ -77,6 +77,9 @@ class Names(unittest.TestCase):
         self.assertEqual(mp.names_in("A line through PQRS is drawn"), {"P", "Q", "R", "S"})
         self.assertEqual(mp.names_in("A line is drawn"), set(), "the article A is no point")
 
+    def test_a_function_of_one_variable_is_no_unknown_point(self):
+        self.assertEqual(mp.unknown_points("Given $P(x)=x^3-2x$ and $Q(x;y)$ ."), {"Q": {"x", "y"}})
+
     def test_unknown_and_concrete_points(self):
         h = "$L(-1;-1)$ , $N(x;y)$ and $U(6;a)$ and $S(t+1,\\text{2,5})$ ; $P(4;0)$ ."
         self.assertEqual(mp.unknown_points(h), {"N": {"x", "y"}, "U": {"a"}, "S": {"t"}})
@@ -100,6 +103,16 @@ class Definitions(unittest.TestCase):
                          ["$M$ is where the diagonals meet."])
         self.assertEqual(self.read("$S$ and $T$ are the mid-points of $PQ$ and $QR$ . Find the gradient of $ST$ ."),
                          ["$S$ and $T$ are the mid-points of $PQ$ and $QR$."])
+
+    def test_a_question_or_a_condition_defines_nothing(self):
+        for tail in ("Determine whether $M$ is the mid-point of $AB$ .", "If $M$ is the mid-point of $AB$ , find $x$ .",
+                     "Is $M$ the mid-point of $AB$ ?", "Check if $D$ , the mid-point of $AB$ , lies on $l$ ."):
+            self.assertEqual(self.read(tail), [], tail)
+        self.assertEqual(self.read("Show that $M$ is the mid-point of $AB$ ."), ["$M$ is the mid-point of $AB$."])
+
+    def test_a_point_of_intersection_reads_like_a_mid_point(self):
+        self.assertEqual(self.read("Find the coordinates of $E$ , the point of intersection of $AB$ and $CD$ ."),
+                         ["$E$ is the point of intersection of $AB$ and $CD$."])
 
     def test_what_the_rule_writes_it_reads_back_as_the_same_definition(self):
         """The invariant behind 'running it twice changes nothing': every sentence a Definition produces is read by
