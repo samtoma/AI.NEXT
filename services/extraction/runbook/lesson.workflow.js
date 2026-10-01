@@ -82,7 +82,7 @@ const PROMPTS_VERSION = 'lesson-v8'   // v3: ids are asked for WITHOUT their bra
 // uses (rational / irrational; real / non-real / undefined). A number, a pair of numbers ("4 and 5"), several values or a
 // list to select from is numeric or expression (values), never a choice with options placed around the printed answer
 // (28 of one lesson's 34 items were). book_final is a quote of the solution's last sentence, a parenthetical left out at
-// most — never a summary, never a computation of the agent's own (24 of 96 items of one lesson failed that containment).
+// most — never a summary, never a computation of the agent's own (23 of 96 items of one lesson failed that containment).
 // A two-part answer of different kinds is not markable. The collection (COLLECT-6) refuses what this prompt forbids.
 // The script's own deterministic collection is versioned apart from the prompts: a change here replays
 // every cached agent on a resume (no prompt changed) and re-decides what they answered.
@@ -183,7 +183,7 @@ const ORACLE_SCHEMA = { type: 'object', required: ['verdict', 'subheadings'], pr
 //   without the book's \text{…} wrapper ("\text{0,5}"), which assembly refused as not a number.
 // COLLECT-6 (the first four Chapter 1 lessons, 2026-10-01; the prompts are unchanged, so a saved run is re-collected
 // with recollect_lessons.py and no model call). What the algebra chapter showed that Chapter 8 never did:
-//   * "book_final is not in the book solution" fired on 24 of 96 items of one lesson, none of them wrong. The book's
+//   * "book_final is not in the book solution" fired on 23 of 96 items of one lesson, none of them wrong. The book's
 //     solution for a classification is a SENTENCE ("… and is not divided by zero, so it is real.") and the typing
 //     agent copies a sentence with its parenthetical dropped. A copy with ELISIONS is the book's text: the final's
 //     words, numbers and symbols are an ordered subsequence of the solution's, and no skipped word negates

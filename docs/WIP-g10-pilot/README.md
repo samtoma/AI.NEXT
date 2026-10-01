@@ -782,7 +782,7 @@ options without a key, answer `None`). `RunItem` refused them, so G2's draft pag
 a fix or a hold requires the full shape again.
 
 **Two systemic defects the checkpoint found** (both in the collection, fixed as COLLECT-6, tests `tests/test_lesson_collect6.py`):
-1. *`book_final is not in the book solution`* fired on 24 of s3-1's 96 items, none wrong: a classification's book solution is a sentence and
+1. *`book_final is not in the book solution`* fired on 23 of s3-1's 96 items, none wrong: a classification's book solution is a sentence and
    the typing agent copies it with a parenthetical dropped. It made 23 items "disputed" (unchecked, not a book disagreement) and, because
    the auto-pass excludes every typing problem, would have excluded them. A final is now in the solution when it is an ordered subsequence
    of it with no skipped negation; a verbal choice settles by the option each source names (no judge).

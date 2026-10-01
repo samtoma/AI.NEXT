@@ -328,7 +328,7 @@ every agent except the judge, whose pair list the collection decides). Determini
 **COLLECT-6 and lesson-v8** (2026-10-01, the first four Chapter 1 lessons; `tests/test_lesson_collect6.py`,
 `tests/test_typing_seam.py`). What an algebra chapter showed that the geometry pilot never did:
 - **Verbal finals.** A classification's book solution is a sentence ("… so it is real."), and the typing agent
-  copies a sentence with its parenthetical dropped, so `book_final is not in the book solution` fired on 24 of one
+  copies a sentence with its parenthetical dropped, so `book_final is not in the book solution` fired on 23 of one
   lesson's 96 items, none of them wrong. A final written as a sentence is now in the solution when its words,
   numbers and symbols are an *ordered subsequence* of the solution's and no skipped word negates ("not", "no",
   "non-"). A computation the solution never wrote, a changed value or a dropped "not" is still refused.
