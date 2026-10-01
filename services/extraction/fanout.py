@@ -395,7 +395,8 @@ def build_runs(inv: dict) -> list[dict]:
                    "# a spec --check still refuses: move it aside as _held--<file>.json; re-author it with --revise-args "
                    "(a contingency run, ≈ $0.7 each; not in the estimate)"])
         add(id=f"s6-grade-{t}", stage="S6", chapter=ch, workflow="families.workflow.js (s6-v5, grade; parts if > 15 KB)",
-            what=f"S6 blind grading of chapter {ch}'s families (blind solver per sampled instance + judge)",
+            what=f"S6 blind grading of chapter {ch}'s families (blind solver per sampled instance + judge); "
+                 "skipped when the author wrote no family",
             agents=round(1.8 * nobj), cost=[round(x * 0.55, 2) for x in _cost("s6_objective", nobj)],
             minutes=MINUTES["s6-grade"], priority=4, depends_on=[f"s6-author-{t}"],
             save_to=f"runs/g10-math/families/grade-{t}-<wf_id>.json   (one file per part)", meter=_meter("S6"),
@@ -412,7 +413,8 @@ def build_runs(inv: dict) -> list[dict]:
                    f"AINEXT_DB_DSN=\"{DSN}\" uv run generate_widget_questions.py --dsn \"{DSN}\" --catalogue "
                    f"runs/g10-math/misconceptions/draft-{t}-<wf_id>.json --normalise-templates {wid}/*.json   # recorded; only the two mechanical kinds"])
         add(id=f"s7-verify-{t}", stage="S7", chapter=ch, workflow="widgets.workflow.js (s7-v7, verify)",
-            what=f"S7 blind reachability verification of chapter {ch}'s widget templates",
+            what=f"S7 blind reachability verification of chapter {ch}'s widget templates; skipped when the "
+                 "author wrote no template (every lesson a gap — the dry run meets this on every non-geometry chapter)",
             agents=round(1.4 * c["lessons"]), cost=[round(x * 0.45, 2) for x in _cost("s7_objective", nobj)],
             minutes=MINUTES["s7-verify"], priority=4, depends_on=[f"s7-author-{t}"],
             save_to=f"runs/g10-math/widgets/verify-{t}-<wf_id>.json", meter=_meter("S7"),
@@ -784,6 +786,8 @@ def prep_s6_grade(run: dict) -> dict:
     cfg, _ = _chapter_inputs(ch)
     fam = HERE / "families" / BOOK / t
     if not any(fam.glob("*.json")):
+        if _saved_runs(f"families/author-{t}-*.json"):
+            return {"skipped": f"the S6 author wrote no family for chapter {ch} (every gap infeasible): nothing to grade"}
         raise NotReady(f"no family specs in {rel(fam)}: write the author run's specs (fanout.py write-specs) first")
     a = PACKETS / f"s6-grade-{t}.args.json"
     _py("generate_questions.py", "--families", str(fam), "--book", str(cfg), "--grading-set",
@@ -816,6 +820,8 @@ def prep_s7_verify(run: dict) -> dict:
     cfg, _ = _chapter_inputs(ch)
     wid = HERE / "widgets" / BOOK / t
     if not any(wid.glob("*.json")):
+        if (RUNS / "widgets" / f"author-merged-{t}.json").exists():
+            return {"skipped": f"the S7 author wrote no template for chapter {ch} (every lesson a gap): nothing to verify"}
         raise NotReady(f"no templates in {rel(wid)}: merge and write the author run's templates first")
     draft = _latest(f"misconceptions/draft-{t}-*.json")
     a = PACKETS / f"s7-verify-{t}.args.json"
@@ -831,14 +837,17 @@ def prep_s5_final(run: dict) -> dict:
     t = ch_tag(ch)
     cfg, seed_dir = _chapter_inputs(ch)
     draft = _latest(f"misconceptions/draft-{t}-*.json")
-    dist = [RUNS / "families" / f"s5-distractors-{t}.json", RUNS / "widgets" / f"s5-distractors-{t}.json"]
-    missing = [rel(d) for d in dist if not d.exists()]
-    if missing:
-        raise NotReady(f"S5 final reads the graded/verified distractors: {missing} (the s6-grade and s7-verify after-steps)")
+    # the graded families' and the verified widgets' distractors — each only where its stage produced anything
+    dist = []
+    for has, d in ((any((HERE / "families" / BOOK / t).glob("*.json")), RUNS / "families" / f"s5-distractors-{t}.json"),
+                   (any((HERE / "widgets" / BOOK / t).glob("*.json")), RUNS / "widgets" / f"s5-distractors-{t}.json")):
+        if has and not d.exists():
+            raise NotReady(f"S5 final reads {rel(d)} (the s6-grade / s7-verify after-step) — write it first")
+        if has:
+            dist += ["--distractors", str(d)]
     a = PACKETS / f"s5-final-{t}.args.json"
     _py("assemble_misconceptions.py", "--s5-args", str(a), "--book", str(cfg), "--stage", "final", "--seed-dir", str(seed_dir),
-        "--lesson-runs", str(RUNS / "lesson"), "--draft", str(draft), "--distractors", str(dist[0]),
-        "--distractors", str(dist[1]), "--by-ref", str(PACKETS / f"s5-final-{t}"))
+        "--lesson-runs", str(RUNS / "lesson"), "--draft", str(draft), *dist, "--by-ref", str(PACKETS / f"s5-final-{t}"))
     return _embed("misconceptions.workflow.js", json.loads(a.read_text()), run)
 
 

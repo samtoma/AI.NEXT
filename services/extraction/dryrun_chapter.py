@@ -608,14 +608,20 @@ def s5_s6_s7(line: Line) -> None:
             (wdir / f"{tail}--{slug}.json").write_text(json.dumps(t, indent=1, ensure_ascii=False) + "\n")
     line.stubbed("a pair_plotter or line_drawer template per lesson whose title names distance, mid-point, "
                  "gradient or straight lines; its one diagnostic names the draft's placeholder error")
-    line.count(templates=sum(len(r["templates"]) for r in rep["result"]["records"]), gaps=len(rep["result"]["gaps"]))
+    n_templates = sum(len(r["templates"]) for r in rep["result"]["records"])
+    line.count(templates=n_templates, gaps=len(rep["result"]["gaps"]))
     va = line.p("args", "s7-verify.json")
     line.uv("generate_widget_questions.py", "--templates", wdir, "--book", cfg, "--pre-catalogue",
             "--verify-args", va, "--s5-distractors", line.p("runs", "widgets", "s5-distractors.json"),
             *line.packets("s7-verify"), db=True)
-    line.workflow("S7", "s7-verify", "widgets.workflow.js", json.loads(va.read_text()), "widgets",
-                  save=line.p("runs", "widgets", "verify-dryrun.json"))
-    line.stubbed("the verifier's 'reading' is copied from the stored spec (a real one reads the stem blind)")
+    if n_templates:
+        line.workflow("S7", "s7-verify", "widgets.workflow.js", json.loads(va.read_text()), "widgets",
+                      save=line.p("runs", "widgets", "verify-dryrun.json"))
+        line.stubbed("the verifier's 'reading' is copied from the stored spec (a real one reads the stem blind)")
+    else:
+        # a chapter whose every lesson is a widget gap (the fan-out meets it: fanout.py skips s7-verify-chNN):
+        # the verify pass has nothing to read, and the workflow refuses empty args
+        line.note("the S7 author wrote no template (every lesson a gap): the verify pass is skipped")
 
     line.stage("S5 final", "the catalogue with S6/S7 distractors attached; fail-closed verifier; assembled")
     a = line.p("args", "s5-final.json")
@@ -640,8 +646,9 @@ def s5_s6_s7(line: Line) -> None:
             "--grades", *graded, "--out", gen / "generated-questions.json",
             "--floor-report", line.p("coverage", "tier-floor.json"))
     gaps = line.p("coverage", f"{book.book}.widget-gaps.json")
-    line.uv("generate_widget_questions.py", "--templates", wdir, "--book", cfg, "--verdicts",
-            line.p("runs", "widgets", "verify-dryrun.json"), "--gaps", line.p("runs", "widgets", "author-dryrun.json"),
+    verify = line.p("runs", "widgets", "verify-dryrun.json")
+    line.uv("generate_widget_questions.py", "--templates", wdir, "--book", cfg,
+            *(["--verdicts", verify] if verify.exists() else []), "--gaps", line.p("runs", "widgets", "author-dryrun.json"),
             "--gap-report", gaps, "--out", gen / "widget-questions.json", db=True)
     line.uv("assemble_misconceptions.py", final, "--book", cfg, "--out", gen / "misconceptions.json",
             "--bundle", gen / "generated-questions.json", "--bundle", gen / "widget-questions.json",

@@ -90,7 +90,8 @@ Gate records (G0, T413, G1 and G2 for Chapter 8) are in the same decisions file.
   answer" display on 29 questions, KaTeX errors, missing question figures, …) and what fan-out to the
   other 13 chapters needs first, above all a figure policy.
 
-**Cost for the whole book** (corrected 2026-09-27): ≈ **$0.85–1.1k** one-time, projected from the pilot —
+**Cost for the whole book** (corrected 2026-09-27; **the fan-out itself approved 2026-10-01, decision
+58e**): ≈ **$0.85–1.1k** one-time, projected from the pilot —
 S0b **$250–520** (batch 50 vs 25), S1 ≈ $93, S2–S4 ≈ $146, S5–S7 ≈ $350–400. S5 metered **≈ $1.3 per
 objective** on Chapter 8 ($17.13 for 13, including one superseded draft). The "$22–32" once labelled "per
 objective" was the planned whole-book S5 figure; "$0.70 per objective" was a projection before S5 ran;
@@ -176,14 +177,19 @@ Samuel* for the full text):
     G5 stays a human gate until told otherwise.
 
 **Open — gates and chores:**
-- **Samuel — gates G3, G4, G5** for Chapter 8; then G1–G5 for 13 more chapters, which puts him on the
-  critical path.
+- **Samuel — gates G3, G4, G5** for Chapter 8 (still human gates for the pilot chapter, not yet passed).
+  **For the other 13 chapters this is no longer the critical path** (decision 58c, 2026-10-01): G1–G4
+  now auto-pass on the AI checks' own recommendation during the fan-out, landing in the new console
+  backlog (FR-4501…FR-4509) for Samuel, Tamer and Kamil to review afterwards, one at a time — he is off
+  the fan-out's critical path, on an ongoing review queue instead. **G5 is unresolved** (open question 18
+  above): whether it also auto-passes, or stays a human go/no-go before production promotion.
 - **Samuel — T388** (review and merge the ADRs: ADR-0024, ADR-0025 and the notes) and **T389** (the
   constitution amendment is applied; the checkbox is his).
 - **Engineering**: run the branch's CI once, deliberately; T423 (the catalogue's CI proof) and T424 (its
   rehearsal) before merge, because B19 touches live Prep-3 content; T425/T426 (stale "deletes on reload"
   comments in migrations 027/028 and the deploy scripts); the full 438-file National prompt capture over
-  a real database (backlog 58); T387 (re-grade spec 003's rows).
+  a real database (backlog 58); T387 (re-grade spec 003's rows); **T436–T443** (new, unbuilt: the internal
+  review backlog and the book-image stand-in, decisions 56–58).
 
 ## 🩹 v0.9.3 hotfix — three widget answers corrected (released and deployed 2026-09-25; Samuel: "Full fix + deploy")
 

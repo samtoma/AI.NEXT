@@ -139,7 +139,14 @@ class OutlineLoadTest(unittest.TestCase):
         done, out = self.load()
         self.assertEqual(len(done["added"]), 65)
         self.assertIn("prepared     5 of 65", out)
-        self.assertNotIn("WARNING", out, "Chapter 8 is named the same in course_lessons and the manifest")
+        # The fixture's Chapter 8 bundle is assembled from the SCOUTING manifest, which titled
+        # the two parts of 8.3 "Gradient between two points" / "Straight lines"; the G0 manifest
+        # titles both "Gradient of a line". The drift check names exactly them — reported, not
+        # fixed (course_lessons is load_seed.py's). On the pilot database, loaded from the G0
+        # manifest's own bundle, there is no drift.
+        self.assertIn("WARNING: 2 loaded lesson(s) are named differently", out)
+        self.assertIn("g10m8s3-1 (title)", out)
+        self.assertIn("g10m8s3-2 (title)", out)
         self.assertEqual(self.db.one("SELECT count(*) FROM course_outline WHERE course_id = %s", (G10,)), 65)
         self.assertEqual(
             [r[0] for r in self.db.q("SELECT lesson_slug FROM course_outline WHERE course_id = %s "
@@ -159,14 +166,19 @@ class OutlineLoadTest(unittest.TestCase):
         self.assertFalse({"ready", "prepared", "status", "state", "available"} & cols, cols)
 
     def test_3_outline_matches_course_lessons_for_the_loaded_chapter(self):
+        # every provenance column but the two fixture titles above: same slugs, sections,
+        # parts, introductions and section keys as the loaded chapter
         self.load()
         diff = self.db.q(
-            """SELECT lesson_slug, title, sections, section_titles, part_n, part_of, chapter_intro, group_key
+            """SELECT lesson_slug, sections, section_titles, part_n, part_of, chapter_intro, group_key
                  FROM course_lessons WHERE course_id = %s
                EXCEPT
-               SELECT lesson_slug, title, sections, section_titles, part_n, part_of, chapter_intro, group_key
+               SELECT lesson_slug, sections, section_titles, part_n, part_of, chapter_intro, group_key
                  FROM course_outline WHERE course_id = %s""", (G10, G10))
         self.assertEqual(diff, [])
+        # the outline keeps the MANIFEST's names; it never adopts course_lessons'
+        self.assertEqual(self.db.one("SELECT title FROM course_outline WHERE lesson_slug = 'g10m8s3-2'"),
+                         "Gradient of a line")
 
     def test_4_a_moved_or_dropped_lesson_is_followed_exactly(self):
         self.load()
