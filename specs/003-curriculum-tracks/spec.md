@@ -851,6 +851,15 @@ through the attempts route and confirm identical outcomes.
   be corrected silently. An item the book prints no answer for is verified against the EPUB solution
   alone and listed at the solutions gate.
 
+  *(Amended 2026-10-01, decision 58c, answer 37c — maths only, during the fan-out.)* An item with **no
+  disagreement** — the blind answer, the printed answer and the EPUB solution's final answer all agree,
+  or the book prints no answer and the EPUB solution alone verifies it — MUST reach students as part of
+  the live maths bank without waiting at the solutions gate for Samuel; it is entered in the internal
+  review backlog instead (FR-4501), so a human still reads it, just not before a student does. A
+  **genuine disagreement** between the printed answer, the EPUB solution and the blind re-solve is
+  unchanged: this is the "answers vs the book" automatic safety check decision 58c names, and it still
+  holds the item — never corrected silently, and a printed answer is never silently overwritten.
+
   Siyavula's Teacher's Guide is used only where it adds something the book and its EPUB lack. Each
   solution MUST record its source: the book's worked example, **the EPUB worked solution (not printed
   in the PDF)**, or the Teacher's Guide. Nothing is solved from scratch and served.
@@ -909,12 +918,18 @@ through the attempts route and confirm identical outcomes.
   misconception stage as evidence — until a human keeps it (it becomes active) or drops it (it is
   deleted). A widget whose every mapping is held ships as a plain right/wrong widget. *(001's FR-1213 and
   FR-1218 are unchanged: a held mapping is not a diagnosis, so no refutation is owed for it; SC-204 counts
-  active diagnostics.)*
+  active diagnostics.)* *(Noted 2026-10-01, decision 58c, answer 37c — not changed by it.)* This
+  requirement already has the shape the internal review backlog (FR-4501) gives everything else: a
+  widget ships live on the verifier's own checks, with any unconfirmed mapping held inactive until a
+  human confirms it — now through that backlog rather than a page of its own.
 - **FR-4307**: The course MUST carry a misconception catalogue written against this book's own
   objectives (FR-1111). It MUST cover the book's own distractors, the generated ones and the widget
   diagnostics, and include conceptual entries for confusions no distractor encodes (FR-1114). Every
   misconception a distractor or diagnostic points at MUST exist and MUST have a refutation that can be
-  served (FR-1112, FR-3214). One error MUST have one entry within the course (FR-1115).
+  served (FR-1112, FR-3214). One error MUST have one entry within the course (FR-1115). *(Amended
+  2026-10-01, decision 58c, answer 37c.)* During the fan-out, a misconception and its refutation reach
+  students on the AI checks' own recommendation; each is a backlog item (FR-4501), not a human stamp,
+  until Samuel, Tamer or Kamil confirms it.
 - **FR-4308** *(changed rev. 2, decision 15)*: This course's content MUST be shown in the app's
   notation: a decimal comma becomes a decimal point, and a coordinate pair written `(x; y)` becomes
   `(x, y)`, everywhere a student sees the book's mathematics. The book's vocabulary and its

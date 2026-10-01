@@ -14,6 +14,11 @@ import { courseDef } from "@/lib/courses";
 import { deriveMasteryStage, type Recommendation } from "@/lib/checkin";
 import { buildSectionIndex, sectionRecommendation } from "@/lib/book-sections";
 import {
+  BEING_PREPARED,
+  pickerGroups,
+  type OutlineLesson,
+} from "@/lib/course-outline";
+import {
   continueText,
   lessonChipText,
   lessonHeading,
@@ -41,6 +46,14 @@ import {
 type CheckInProps = {
   lesson: LessonData;
   lessons: LessonInfo[];
+  /**
+   * The book's outline for the picker's courses (migration 037,
+   * lib/course-outline.ts): every chapter and lesson, in reading order, so
+   * "Everything in the book" lists the lessons not prepared yet too — shown,
+   * never openable. Absent or empty for every National course, whose picker
+   * is then exactly what it was.
+   */
+  outline?: OutlineLesson[];
   /** true when this lesson has a rich «شرح الدرس» content bundle to read */
   hasContent?: boolean;
   masteryStage: 0 | 1 | 2 | 3 | 4;
@@ -54,6 +67,9 @@ type CheckInProps = {
    *  finished everything must still be able to reopen the last lesson, or
    *  "complete" becomes a dead end. */
   courseComplete: boolean;
+  /** With `courseComplete`: the book still has lessons being prepared, so the
+   *  banner must not say "the whole course" (lib/course-outline.ts). */
+  morePreparing?: boolean;
   /** Objective labels in THIS lesson with no attempt yet, empty when the
    *  lesson is untouched (see lib/checkin.ts). Rendered because a lesson
    *  completes only when every objective is mastered, while review mode can
@@ -121,12 +137,14 @@ export function LessonCheckIn(props: CheckInProps) {
 function PlayCheckIn({
   lesson,
   lessons,
+  outline,
   masteryStage,
   weakestSubskill,
   recommendation,
   estimates,
   completedToday,
   courseComplete,
+  morePreparing = false,
   untriedSubskills,
   justFinished,
   trial,
@@ -165,7 +183,13 @@ function PlayCheckIn({
     sectionIndex
   );
 
-  const modules = groupByModule(lessons);
+  // The picker's groups: the catalogue by unit, as always — and, for a course
+  // with an outline (the Grade 10 book), its chapters in book order with every
+  // lesson listed, the ones not prepared yet as entries to show and not to
+  // open (lib/course-outline.ts `pickerGroups`). With no outline this is the
+  // grouping `groupByModule` built, entry for entry.
+  const modules = pickerGroups(lessons, outline ?? []);
+  const anyPreparing = modules.some((m) => m.entries.some((e) => !e.ready));
   const q = (slug: string, subject?: LessonInfo["subject"]) =>
     `/student?${subject ? `subject=${spineKeyOf(subject)}&` : ""}lesson=${encodeURIComponent(slug)}`;
 

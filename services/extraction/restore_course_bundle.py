@@ -47,7 +47,8 @@ restored (export_generated_content.build_bundles with the restored files as the 
 check failing rolls the whole replay back: the database is exactly as it was.
 
 WHAT IS KEPT FROM THE BUNDLE, PER ROW: each question's own status, reviewed_by and reviewed_at
-(the semantics `load_generated_questions.py --restore` has); the catalogue's labels,
+(the semantics `load_generated_questions.py --restore` has) and, since migration 035, its AI checks
+(ai_checked_by, ai_checked_at), its safety hold (hold_reason) and its review_note; the catalogue's labels,
 descriptions and signals; each refutation's steps. A refutation whose text changes loses its
 review mark, because the export carries none for refutations and a review of other words is
 not a review of these. A question whose worked solution changes gets a new solution_version,
@@ -82,7 +83,9 @@ STUDENT_TABLES = ("students accounts guardians attempts mastery understanding_ch
                   "feedback student_course_access student_curriculum_changes student_testers "
                   "course_availability").split()
 Q_COLS = ("tier", "question_type", "stem", "choices", "correct_answer", "canonical_solution",
-          "status", "parent_question_id", "source_page", "source_note", "reviewed_by", "reviewed_at")
+          "status", "parent_question_id", "source_page", "source_note", "reviewed_by", "reviewed_at",
+          # migration 035
+          "ai_checked_by", "ai_checked_at", "hold_reason", "review_note")
 MATERIAL = ("question_type", "stem", "choices", "correct_answer")
 
 
@@ -116,7 +119,7 @@ def _item(choices):
 def _norm(field: str, v):
     if v is None:
         return None
-    if field == "reviewed_at" and not isinstance(v, str):
+    if field in ("reviewed_at", "ai_checked_at") and not isinstance(v, str):
         return v.astimezone(timezone.utc).isoformat()
     if field in ("source_page", "correct_answer"):
         return str(v)
@@ -553,19 +556,24 @@ def apply(cur, p: Plan) -> None:
         return (q["tier"], q["question_type"], q["stem"],
                 json.dumps(q["choices"]) if q.get("choices") is not None else None,
                 str(q["correct_answer"]), json.dumps(q["canonical_solution"]), q.get("status"),
-                q.get("source_page"), q.get("source_note"), q.get("reviewed_by"), q.get("reviewed_at"))
+                q.get("source_page"), q.get("source_note"), q.get("reviewed_by"), q.get("reviewed_at"),
+                q.get("ai_checked_by"), q.get("ai_checked_at"),
+                None if q.get("status") == "live" else q.get("hold_reason"), q.get("review_note"))
     for q in p.q_add:
         cur.execute("""INSERT INTO questions
                          (id, lo_id, tier, question_type, stem, choices, correct_answer,
                           canonical_solution, status, source_page, source_note, reviewed_by,
-                          reviewed_at, solution_version, source)
-                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 1, 'variant')""",
+                          reviewed_at, ai_checked_by, ai_checked_at, hold_reason, review_note,
+                          solution_version, source)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                               1, 'variant')""",
                     (q["id"], q["lo_id"], *vals(q)))
     for q, _, solution_changed in p.q_update:
         cur.execute("""UPDATE questions
                           SET tier = %s, question_type = %s, stem = %s, choices = %s,
                               correct_answer = %s, canonical_solution = %s, status = %s,
                               source_page = %s, source_note = %s, reviewed_by = %s, reviewed_at = %s,
+                              ai_checked_by = %s, ai_checked_at = %s, hold_reason = %s, review_note = %s,
                               solution_version = solution_version + %s
                         WHERE id = %s""", (*vals(q), 1 if solution_changed else 0, q["id"]))
     # parents last: a parent may itself be a row this replay adds
