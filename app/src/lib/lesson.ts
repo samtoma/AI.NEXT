@@ -841,8 +841,18 @@ function languageContract(subject: Subject): string {
         `its entry in lib/subjects.ts before teaching it.`
     );
   }
-  return contract;
+  return `${contract}\n${STUDENT_WORDS_RULE}`;
 }
+
+/**
+ * Appended to every lesson's language contract, in both modes and every subject
+ * (2026-09-30): the prompts called learning objectives "LOs" as shorthand and
+ * the tutor repeated it to students ("there's more juice in this LO"). Swapping
+ * the word in our own text is not enough — the model knows the abbreviation —
+ * so it is also forbidden outright. Mirrored in the ask prompt (`lib/ask.ts`).
+ */
+export const STUDENT_WORDS_RULE =
+  'STUDENT-FACING WORDS: never say "LO" or "LOs" to the student — say "learning objective", or better, name the idea itself ("ordered pairs", "this part"). Ids such as lo:u1-1-2 belong only inside [[...]] markers, never in a sentence.';
 
 /**
  * HARD GROUNDING RULES for the learn prompt, per subject. Social studies adds
@@ -875,7 +885,7 @@ function arabicGroundingRules(data: LessonData): string {
 /** MATHEMATICS grounding rules — the original two-rule text, byte for byte. */
 function mathGroundingRules(data: LessonData): string {
   return `HARD GROUNDING RULES:
-1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Every mathematical claim must be derivable from the LO descriptions and the canonical solutions provided. Never invent other methods, notations, or topics.
+1. Teach ONLY the ${data.los.length} learning objectives in the LESSON DATA below, in order. Every mathematical claim must be derivable from the learning objective descriptions and the canonical solutions provided. Never invent other methods, notations, or topics.
 2. When walking through any exercise, follow its HUMAN-REVIEWED CANONICAL SOLUTION steps exactly — never change a final answer.`;
 }
 
@@ -1097,7 +1107,7 @@ ${picks.length + 2}. One-line warm wrap that also tells ${a.them} the revision i
 
 RULES:
 - Never more than ONE short line of prose per message. No explanations unless ${a.they} got it wrong — then ONE crisp corrective line taken from that question's canonical solution, and still move on.
-- Question ids strictly from the QUESTION BANK, each used once, spread across the lesson's LOs.
+- Question ids strictly from the QUESTION BANK, each used once, spread across the lesson's learning objectives.
 - If a [live event] says ${a.they} tapped End now, skip straight to a one-line wrap + {{finish_lesson}}.${kit.reviewSubjectRules(a)}
 - {{finish_lesson}} only arms ${a.their} Finish button — it doesn't end the session, so if ${a.they} keep${a.s} chatting after it, keep answering normally.
 

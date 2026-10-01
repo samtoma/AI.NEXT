@@ -1,4 +1,5 @@
 import type { AttemptResult } from "./types";
+import { authFetch } from "@/lib/auth/client-session";
 
 /**
  * The one client-side path to POST /api/attempts. Pulled out of
@@ -20,7 +21,7 @@ export async function submitAttempt(params: {
    *  opened with probing on (ADR-0021). */
   retryOfAttemptId?: number;
 }): Promise<AttemptResult> {
-  const res = await fetch("/api/attempts", {
+  const res = await authFetch("/api/attempts", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

@@ -25,6 +25,7 @@ import {
   type UploadLang,
   type UploadPhase,
 } from "@/lib/upload-contract";
+import { authFetch } from "@/lib/auth/client-session";
 
 /**
  * "Send me a photo of it" — the student half of the upload path (PRD B10,
@@ -225,7 +226,7 @@ export function useUploadAttachment({
         try {
           const controller = new AbortController();
           inFlight.current = controller;
-          const res = await fetch(`/api/uploads/${uploadId}`, {
+          const res = await authFetch(`/api/uploads/${uploadId}`, {
             signal: controller.signal,
           });
           if (res.status === 404) {
@@ -287,7 +288,7 @@ export function useUploadAttachment({
       try {
         const controller = new AbortController();
         inFlight.current = controller;
-        const res = await fetch("/api/uploads", {
+        const res = await authFetch("/api/uploads", {
           method: "POST",
           body: form,
           signal: controller.signal,

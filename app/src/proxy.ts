@@ -27,8 +27,10 @@
  * and `ainext_rt` is scoped to `/api/auth`, so a browser whose access cookie
  * has expired presents no cookie here and is redirected to `/signin` even
  * though its refresh token would still work. The client refreshes ahead of
- * expiry (the same scheduling Talent's frontend does), and `/signin` is the
- * right place to land when it has not. The alternative — a non-HttpOnly
+ * expiry while the student is active, and renews-and-retries once on a 401
+ * (FR-2016, `lib/auth/client-session.ts` — until 2026-09-30 this sentence
+ * described a scheduler that did not exist), and `/signin` is the right place
+ * to land when it has not. The alternative — a non-HttpOnly
  * "presence" cookie — puts a session signal somewhere a script can read, for a
  * redirect we do not need.
  */

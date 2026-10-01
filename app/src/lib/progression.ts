@@ -25,6 +25,8 @@
  * everything here is a function of its arguments, which is what makes the
  * branching graph testable without a database.
  */
+import { masteryStage } from "@/lib/mastery";
+
 /**
  * The rules need four fields, not the whole `LessonInfo`: a slug, its course,
  * and each objective's id and score. Declaring that narrowly keeps this module
@@ -44,18 +46,29 @@ export interface ProgressionLesson {
 }
 
 /**
- * The gate: EVERY learning objective in the lesson at or above this score.
+ * The MASTERED cut: every learning objective at or above this score.
  *
  * 0.75 is the existing `mastered` band cut in lib/mastery.ts, not a new
- * number — the gate and the ramp the student is looking at must never
+ * number — this cut and the ramp the student is looking at must never
  * disagree about the word "mastered".
  *
- * It is `every`, not the average, and that is the whole point. The ramp
- * averages (`deriveMasteryStage`), which means 0.98 / 0.98 / 0.29 renders as
- * mastered — tolerable for a progress bar, not as the rule that decides a
- * student is done with an objective they are still at 0.29 on.
+ * **Since 2026-09-30 this is no longer the gate that moves a student on.** It
+ * is the bar for `lessonMastered`, which only "the whole course" (`courseComplete`)
+ * still asks for. See `lessonGatePassed` for what moves the pointer and why.
+ *
+ * It is `every`, not the average, and that is the whole point of keeping it for
+ * the banner. The ramp averages (`deriveMasteryStage`), which means
+ * 0.98 / 0.98 / 0.29 renders as mastered — tolerable for a progress bar, not as
+ * the rule that tells a student they have been through every topic.
  */
 export const MASTERED_GATE = 0.75;
+
+/**
+ * The lowest ramp stage that lets a lesson count as done: 2, "Getting there".
+ * Read off the same banding the card shows (`masteryStage`), so the gate and
+ * the word on the card cannot disagree about where "Getting there" starts.
+ */
+export const GATE_MIN_STAGE = 2;
 
 /**
  * Prerequisite readiness threshold — a prerequisite objective counts as met at
@@ -70,9 +83,67 @@ export const MASTERED_GATE = 0.75;
  */
 export const PREREQ_GATE = 0.5;
 
-/** Every LO at or above the gate. An empty lesson never passes: there is no
- *  evidence of mastery in the absence of anything to have mastered. */
+/**
+ * THE GATE — what moves the pointer, and what makes a lesson "finished".
+ *
+ * Amended 2026-09-30 (ADR-0020, "The gate is the ramp's second stage"). It used
+ * to be every objective at 0.75, which almost nobody reached: "Quick review"
+ * asks about the first three objectives only, so a four-objective lesson could
+ * never pass through it, and a student could score well on everything they were
+ * asked and still watch the saved place and the "Revisit" row not move.
+ *
+ * It now takes BOTH of:
+ *
+ *  1. **Every objective has been attempted.** A score of 0 means no mastery row
+ *     exists (every BKT update clamps to `MIN_SCORE`, so an attempted objective
+ *     never reads 0 — see `untriedObjectives`). This is the floor under the
+ *     average, and it is what stops a lesson counting as done with half of it
+ *     never touched: the average counts an untried objective as zero, but two
+ *     well-answered objectives out of four still average high enough to reach
+ *     "Getting there" on their own.
+ *  2. **The lesson's average reaches "Getting there"** (`GATE_MIN_STAGE`, 0.35),
+ *     the same average `deriveMasteryStage` puts on the ramp.
+ *
+ * What it does NOT do is check the weakest objective: 0.98 / 0.98 / 0.10 passes.
+ * ADR-0020 rejected the average as a gate for that reason, and the amendment
+ * accepts it knowingly, with the floor above as the mitigation. `PREREQ_GATE`
+ * still guards entry into later lessons, per objective, so a hole a later lesson
+ * builds on parks the pointer rather than being walked past.
+ *
+ * An empty lesson never passes: there is no evidence in the absence of anything
+ * to have learned.
+ */
 export function lessonGatePassed(los: readonly ProgressionLo[]): boolean {
+  if (los.length === 0) return false;
+  if (los.some((l) => !(l.mastery > 0))) return false;
+  const average = los.reduce((sum, l) => sum + l.mastery, 0) / los.length;
+  return masteryStage(average) >= GATE_MIN_STAGE;
+}
+
+/**
+ * Can this attempt have crossed the gate — is it worth the (not cheap) catalogue
+ * read that decides whether the pointer moves?
+ *
+ * Used by /api/attempts. It used to be `isCorrect` alone, which was right while
+ * the gate was "every objective at 0.75": a wrong answer only ever lowers a
+ * score, so only a correct one could newly pass a lesson. The gate now also
+ * needs every objective ATTEMPTED (`lessonGatePassed`), and the FIRST attempt on
+ * an objective satisfies that even when it is wrong — a student whose last
+ * untouched objective got a wrong answer has just met the gate and would sit on
+ * the same lesson until some later correct answer happened to re-check it.
+ *
+ * A wrong answer on an objective that already has a score cannot newly pass:
+ * it lowers one score, and the gate needs the average up and every objective
+ * already attempted.
+ */
+export function attemptCanCrossGate(isCorrect: boolean, hadScore: boolean): boolean {
+  return isCorrect || !hadScore;
+}
+
+/** Every LO at or above `MASTERED_GATE` — the strict reading, kept for the
+ *  "whole course" banner, which tells her she has been through every topic.
+ *  An empty lesson is never mastered. */
+export function lessonMastered(los: readonly ProgressionLo[]): boolean {
   if (los.length === 0) return false;
   return los.every((l) => l.mastery >= MASTERED_GATE);
 }
@@ -193,7 +264,9 @@ export function advanceTarget(
 /**
  * The terminal state (ADR-0020): the card for `slug` renders "that's the whole
  * course" only when `slug` is the course's LAST catalogue lesson — where the
- * pointer parks — AND every lesson in the course passes the gate.
+ * pointer parks — AND every lesson in the course is MASTERED (`lessonMastered`,
+ * the strict every-objective-at-0.75 reading — not the looser gate that moves
+ * the pointer).
  *
  * The stricter of the two readings, on purpose. "The last lesson is mastered"
  * alone would still celebrate a student whose pointer reached the end by
@@ -210,7 +283,7 @@ export function courseComplete(
 ): boolean {
   const last = inCourse[inCourse.length - 1];
   if (!last || last.slug !== slug) return false;
-  return inCourse.every((l) => lessonGatePassed(l.los));
+  return inCourse.every((l) => lessonMastered(l.los));
 }
 
 /**
@@ -252,12 +325,13 @@ export function previousCompletedSlug(
  *
  * It lives beside the gate rather than with the check-in card's other
  * derivations because it answers a question about the gate: why has this
- * lesson not completed? A lesson completes only when EVERY objective reaches
- * `MASTERED_GATE`, but review mode scripts its questions from the first three
- * objectives alone, so on a four-objective lesson (u1-1 among them, the course
- * opener) a student can pick "Quiz me on it", answer everything correctly,
- * score `got_it` on the report, and come back to the very same card. This is
- * what lets the card say why instead of leaving them to infer it.
+ * lesson not completed? A lesson completes only when EVERY objective has been
+ * attempted (and the average reaches "Getting there"), but review mode scripts
+ * its questions from the first three objectives alone, so on a four-objective
+ * lesson (u1-1 among them, the course opener) a student can pick "Quiz me on
+ * it", answer everything correctly, score `got_it` on the report, and come back
+ * to the very same card. This is what lets the card say why instead of leaving
+ * them to infer it.
  *
  * `mastery === 0` means no mastery row exists, which is exactly "never
  * attempted": every BKT update clamps to MIN_SCORE (0.02), so an objective

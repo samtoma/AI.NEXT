@@ -15,6 +15,7 @@ import {
   effectiveProbing,
 } from "@/lib/socratic-probing";
 import { advanceIfMastered } from "@/lib/progression-db";
+import { attemptCanCrossGate } from "@/lib/progression";
 
 /**
  * A refusal decided INSIDE the unit of work.
@@ -425,8 +426,10 @@ export async function POST(req: Request) {
       // advance sees the mastery row written above and runs under the same
       // student principal (ADR-0012).
       //
-      // Only a CORRECT answer can cross the gate, so the catalogue read — which
-      // is not cheap — is skipped entirely on the common path.
+      // Only a correct answer, or the FIRST attempt on an objective (which is
+      // what the gate's "every objective attempted" floor waits on, and can be
+      // wrong), can cross the gate — `attemptCanCrossGate` — so the catalogue
+      // read, which is not cheap, is skipped on the common path.
       //
       // Under a SAVEPOINT (trial merge): a failure in the pointer code rolls
       // back the pointer alone and leaves the graded attempt exactly as main
@@ -436,7 +439,7 @@ export async function POST(req: Request) {
       // (deploy/apply-migrations.sh, the compose `migrate` service), and
       // /student reads the pointer with no such cover.
       let advancedTo: string | null = null;
-      if (isCorrect) {
+      if (attemptCanCrossGate(isCorrect, row !== null)) {
         await client.query("SAVEPOINT lesson_progress");
         try {
           advancedTo = await advanceIfMastered(client, studentId, q.lo_id);

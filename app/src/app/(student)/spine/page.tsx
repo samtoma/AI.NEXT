@@ -7,7 +7,7 @@ import { SpineExplorer } from "@/components/spine/SpineExplorer";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "How you’re doing — Noor",
+  title: "Your Progress — Noor",
 };
 
 /**

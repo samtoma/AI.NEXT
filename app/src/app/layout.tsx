@@ -7,6 +7,7 @@ import { GaScript } from "@/components/GaScript";
 import { NavLinks } from "@/components/NavLinks";
 import { NoorMark } from "@/components/NoorMark";
 import { VerificationBanner } from "@/components/auth/VerificationBanner";
+import { SessionKeepAlive } from "@/components/auth/SessionKeepAlive";
 import { documentVariant } from "@/lib/design-variant-queries";
 import { IS_CONSOLE, IS_MVP1 } from "@/lib/env";
 import { resolveStudentContext } from "@/lib/student-context";
@@ -154,6 +155,9 @@ export default async function RootLayout({
                 />
               </div>
             </header>
+            {/* FR-2016: renew ahead of expiry while she is here, and say so
+                when she has been signed out. Student build, signed in only. */}
+            {student !== null && <SessionKeepAlive />}
             {student !== null && !student.emailVerified && <VerificationBanner />}
             <div className="relative z-10 flex-1">{children}</div>
             <footer className="relative z-10 border-t border-line-soft">

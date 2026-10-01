@@ -45,6 +45,12 @@ import {
   TutorBubble,
   renderChatBlocks,
 } from "./message-blocks";
+import {
+  CHAT_INTERACTIVE_ATTR,
+  offsetTopWithin,
+  scrollTopFor,
+} from "@/lib/chat-scroll";
+import { SIGNED_OUT_MESSAGE, authFetch } from "@/lib/auth/client-session";
 import { useUploadAttachment } from "./upload-attachment";
 import {
   BUTTON_SECONDARY,
@@ -182,6 +188,10 @@ export interface ChatCoreProps {
   leading?: React.ReactNode;
   /** auto-send a hidden "Continue." turn after each widget/question result */
   autoContinue?: boolean;
+  /** false: a {{show_question}} directive renders nothing. The Your Progress
+   *  chat explains and plans, it never quizzes — its prompt says so, and this
+   *  holds even if the model emits one anyway. */
+  questionCards?: boolean;
   /**
    * Whiteboard interception (pure predicate, safe to call during render):
    * true ⇒ the surface owns this card on its board and the transcript renders
@@ -261,6 +271,7 @@ export function ChatCore({
   renderPassage,
   leading,
   autoContinue,
+  questionCards = true,
   interceptWidget,
   onDirective,
   handleRef,
@@ -477,10 +488,38 @@ export function ChatCore({
     onTotalChange?.(totalUsd, turns);
   }, [totalUsd, turns, onTotalChange]);
 
-  useEffect(() => {
+  // Where our own last programmatic scroll left `scrollTop`, so `onScroll` can
+  // tell it from the student's. Without it, aligning to a message's top (which
+  // is not the bottom) would read as "scrolled away" and switch following off.
+  const programmaticTop = useRef<number | null>(null);
+  const follow = useCallback(() => {
     const el = scrollRef.current;
-    if (el && stuckToBottom.current) el.scrollTop = el.scrollHeight;
-  }, [messages]);
+    if (!el || !stuckToBottom.current) return;
+    // The newest row is the container's last element: a hidden message renders
+    // null, and nothing else sits after the list. When it holds something the
+    // student has to act on, its FRAME — the explanation above the widget or
+    // question, not just the block — is what must not be cut off at the top
+    // (FR-3222, lib/chat-scroll.ts).
+    const row = el.lastElementChild as HTMLElement | null;
+    const acts = !!row?.querySelector(`[${CHAT_INTERACTIVE_ATTR}]`);
+    el.scrollTop = scrollTopFor({
+      scrollHeight: el.scrollHeight,
+      clientHeight: el.clientHeight,
+      frameTop: row && acts ? offsetTopWithin(el, row) : null,
+    });
+    programmaticTop.current = el.scrollTop;
+  }, []);
+  useEffect(() => {
+    follow();
+    // A widget keeps laying out after it mounts (KaTeX, figures, the pop-in),
+    // so a message that fitted when it arrived can outgrow the view with no
+    // message change to re-check it. Follow the newest row's size too.
+    const row = scrollRef.current?.lastElementChild;
+    if (!row || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => follow());
+    ro.observe(row);
+    return () => ro.disconnect();
+  }, [messages, follow]);
 
   const emitNewCites = useCallback(
     (text: string) => {
@@ -690,7 +729,9 @@ export function ChatCore({
       track("question_asked", { surface });
 
       try {
-        const res = await fetch("/api/ask", {
+        // `authFetch`: an expired access cookie is renewed and the turn retried
+        // once (FR-2016), instead of surfacing as "AI backend unavailable".
+        const res = await authFetch("/api/ask", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -711,6 +752,13 @@ export function ChatCore({
               .map((m) => ({ role: m.role, text: m.text })),
           }),
         });
+        if (res.status === 401) {
+          // renewal failed too: the student really is signed out, and saying
+          // "try again" would send them round the same loop (FR-2016)
+          cancelReveal();
+          patchLast({ streaming: false, error: true, text: SIGNED_OUT_MESSAGE });
+          return;
+        }
         if (!res.ok || !res.body) throw new Error(`API ${res.status}`);
 
         const reader = res.body.getReader();
@@ -954,11 +1002,11 @@ export function ChatCore({
             cardRevealUnlocked(wrongCountAfter)
               ? `\nSOCRATIC PROBE — REVEALED — ${q.loId}: that's two attempts without landing it. The card is now showing the student the correct answer and the reference material directly — stop withholding. Walk the student through it PLAINLY, in the material's own steps, in order (never just the final value): ${
                   material ??
-                  "no reviewed material matches this specific error — walk the LO's own definition through to the correct answer instead, still step by step."
+                  "no reviewed material matches this specific error — walk the learning objective's own definition through to the correct answer instead, still step by step."
                 } Once the student seems ready, your next check on ${q.loId} must still be a fresh same-tier question before you can treat it as resolved.`
-              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote, hint at or assert it until the SOCRATIC PROBE — REVEALED event for this LO — the student's second attempt — even if the student asks you to just say it): ${
+              : `\nSOCRATIC PROBE — ${q.loId} is now confirmation-pending. Reference material for YOUR use only, not the student's yet (do not quote, hint at or assert it until the SOCRATIC PROBE — REVEALED event for this learning objective — the student's second attempt — even if the student asks you to just say it): ${
                   material ??
-                  "no reviewed material matches this specific error — reason from the LO's own definition instead, still without stating the answer outright."
+                  "no reviewed material matches this specific error — reason from the learning objective's own definition instead, still without stating the answer outright."
                 } Ask ONE short guiding question toward it now.`;
         } else if (wasPending?.loId === q.loId) {
           note += `\n✓ confirmation received for ${q.loId} — resolved, safe to move on.`;
@@ -1074,10 +1122,18 @@ export function ChatCore({
           // user scrolled away from the bottom → stop auto-scrolling;
           // back within 40px of the bottom → resume
           const el = e.currentTarget;
+          // our own alignment to a block's top is not the student leaving
+          if (
+            programmaticTop.current !== null &&
+            Math.abs(el.scrollTop - programmaticTop.current) <= 1
+          ) {
+            return;
+          }
           stuckToBottom.current =
             el.scrollHeight - el.scrollTop - el.clientHeight <= 40;
         }}
-        className="thin-scroll min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4"
+        // `relative` so `offsetTop` chains end here (lib/chat-scroll.ts)
+        className="thin-scroll relative min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4"
       >
         {leading}
         {messages.length === 0 && !streaming && emptyState}
@@ -1086,6 +1142,7 @@ export function ChatCore({
           <MessageRow
             key={i}
             msg={m}
+            questionCards={questionCards}
             debug={debug}
             arabicUi={arabicUi}
             writing={lessonSurface}
@@ -1230,6 +1287,7 @@ export function ChatCore({
  */
 const MessageRow = memo(function MessageRow({
   msg: m,
+  questionCards,
   debug,
   arabicUi,
   writing,
@@ -1253,6 +1311,8 @@ const MessageRow = memo(function MessageRow({
   onSwitchSubject,
 }: {
   msg: ChatMsg;
+  /** see ChatCoreProps.questionCards */
+  questionCards: boolean;
   debug: boolean;
   /** RTL/Arabic-script subject — forwarded to question-card/citation strings */
   arabicUi: boolean;
@@ -1371,9 +1431,14 @@ const MessageRow = memo(function MessageRow({
                 onWidgetNote && renderWidget
                   ? renderWidget(b.name, b.props, onWidgetNote)
                   : null;
-              return card ? <div key={i}>{card}</div> : null;
+              return card ? (
+                <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }}>
+                  {card}
+                </div>
+              ) : null;
             },
             question: (b, i) => {
+              if (!questionCards) return null;
               if (interceptWidget?.("question", { qid: b.qid })) {
                 const qid = b.qid;
                 return (
@@ -1389,8 +1454,8 @@ const MessageRow = memo(function MessageRow({
               }
               const q = lookupQuestion?.(b.qid);
               return q ? (
+                <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }}>
                 <ChatQuestionCard
-                  key={i}
                   question={q}
                   debug={debug}
                   lang={arabicUi ? "ar" : "en"}
@@ -1407,6 +1472,7 @@ const MessageRow = memo(function MessageRow({
                       : undefined
                   }
                 />
+                </div>
               ) : (
                 <p key={i} className="my-1 font-mono text-[0.72rem] text-ink-faint">
                   → {b.qid}
@@ -1441,7 +1507,7 @@ const MessageRow = memo(function MessageRow({
                 );
               }
               return renderPassage ? (
-                <div key={i}>
+                <div key={i} {...{ [CHAT_INTERACTIVE_ATTR]: "" }}>
                   {renderPassage(b.id, {
                     quote: b.quote,
                     unit: b.unit,

@@ -6,7 +6,7 @@
 `feat/002-identity-and-admin-console` on 2026-09-21. *(Was "Draft — requirements only, no
 implementation"; corrected 2026-09-22, when this spec also gained the course-availability
 requirements, which were written after their code and are stamped as such.)*
-**Last amended**: 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
+**Last amended**: 2026-09-30 (student header, home page and the lesson gate — `tamer-mvp-fixes`, **not released**) — **FR-2016** and **FR-3219…FR-3222** added; **FR-3202** and **FR-3203** amended in place, each marked; FR-3221 is a proposed amendment to ADR-0020 awaiting Samuel. Before that, 2026-09-25 (one curriculum order, v0.9.2 — **not committed**, awaiting Samuel's
 review) — **FR-3217, FR-3218** added: every reader of curriculum order uses the one catalogue order
 (`MODULE_ORDER`), a list of several subjects splits by subject first (Samuel, 2026-09-25), guarded by a
 source test, the tutor's Ask-the-Spine context included (Samuel lifted ADR-0020's hold for that ordering
@@ -435,6 +435,18 @@ password sign-in.
 
 ### Isolation & authorisation (FR-2101…)
 
+- **FR-2016** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released]**: A signed-in student
+  whose short-lived credential (FR-2008) expires while a page is open MUST NOT lose a request to it:
+  a request refused as signed-out MUST be retried once after one silent renewal. While the page is
+  visible and the student has interacted in the last 15 minutes, the credential MUST be renewed before
+  it expires. Renewals MUST never overlap — within a tab or across tabs — because FR-2008 treats a
+  reused renewal credential as theft and ends every sign-in. An idle page MUST NOT renew on its own, so
+  the server's idle expiry keeps applying. When renewal itself fails, the tutor chat MUST show "You
+  have been signed out — try refreshing this page, or sign in again." in place of its error message,
+  and never an AI-failure message; no other surface shows it (product call, 2026-09-30).
+  *(Found 2026-09-30: after 15 minutes on one lesson page the next message returned 401 and read "AI
+  backend unavailable"; background widget attempts were most likely dropped silently. `proxy.ts`
+  described a client refresh that did not exist.)*
 - **FR-2101**: Per-student isolation MUST be enforced beneath the application, so a read or write of
   student data carrying no student scope returns nothing and changes nothing. A missing scope MUST
   fail closed, and application-level filtering MUST NOT be the only thing between one student's data
@@ -977,14 +989,15 @@ password sign-in.
 
 - **FR-3201**: Each student MUST have their own saved place in each course, separate per course, and
   no student's place may be read or changed by any other student's request.
-- **FR-3202**: A student's place MUST move on when **every** objective in the lesson they are on
-  reaches the mastery gate, to the next lesson in course order whose prerequisites that student has
-  met — never onto a lesson whose prerequisites are not met; unready lessons are skipped. *(Reworded
-  2026-09-24, fix pass: "never past a lesson they are not ready for" said the opposite of what the
-  code does.)*
+- **FR-3202**: A student's place MUST move on when the lesson they are on is **finished** (FR-3221),
+  to the next lesson in course order whose prerequisites that student has met — never onto a lesson
+  whose prerequisites are not met; unready lessons are skipped. *(Reworded 2026-09-24, fix pass:
+  "never past a lesson they are not ready for" said the opposite of what the code does. Amended
+  2026-09-30: "every objective reaches the mastery gate" became "finished", FR-3221.)*
 - **FR-3203**: A student's place MUST never move backwards. When nothing later is ready yet it MUST
   stay where it is, and the course MUST read as complete only when the student is on its last lesson
-  and every lesson has passed the gate.
+  and every lesson is **mastered** — every objective at the mastered band, the strict reading, not the
+  looser "finished" of FR-3221. *(Amended 2026-09-30: "passed the gate" became "mastered".)*
 - **FR-3204**: A saved place that no longer names a lesson the student can see MUST read as the
   course's first lesson, and advance from there by the same rule.
 - **FR-3205**: No student's place may be guessed from history: everyone MUST start on a course's
@@ -1046,6 +1059,30 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
   rollback), because deploys do not reload the curriculum graph. The label reaches the tutor's
   prompts; Samuel approved that on 2026-09-25 ("OK") as an exception to ADR-0020's prompt hold for
   this one string only, recorded in ADR-0020.
+- **FR-3219** **[ADDED 2026-09-29 — requested 2026-09-29, not yet released]**: The student build's
+  header MUST offer exactly two tabs to a signed-in student: "Study" (`/student`) and "Your Progress"
+  (`/spine`). The map's heading and title MUST read "Your Progress" and every button that leads to it "See your progress".
+  "Where you stand" is off the header for now; `/dashboard` still resolves and stays linked from the
+  outstanding-account screen. This partly reverses #12: that issue removed an internal tool called
+  "Evidence Walk", and the page behind the returning tab is the student's own map, rebuilt since.
+- **FR-3220** **[ADDED 2026-09-29 — requested 2026-09-29, not yet released]**: On the student build,
+  `/` MUST redirect a signed-in student to `/student` and MUST NOT render the investor-preview ledger
+  (corpus counts, "AI turns logged", demo cards) or fetch its stats. A signed-out visitor MUST keep
+  the welcome page with "Start with Noor" and "Sign in". The frozen baseline keeps its ledger.
+- **FR-3221** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released; proposed amendment to
+  ADR-0020, awaiting Samuel]**: A lesson counts as **finished** — moving the saved place on (FR-3202)
+  and earning the collapsed "Revisit" row — when **every** one of its objectives has been attempted at
+  least once **and** the lesson's average reaches the ramp's second stage, "Getting there" (0.35 or
+  above), the same average the card's ramp shows. It MUST NOT count a lesson with an unattempted
+  objective, however high the others are. The strict every-objective-at-0.75 reading MUST remain for
+  the course-complete banner (FR-3203). Not covered: the weakest attempted objective is not checked, and
+  "Quick review" still asks about a lesson's first three objectives only, so a four-objective lesson
+  reaches this only through the walk-through or a further attempt on the fourth — the card names what
+  has not come up yet.
+  The saved place MUST be re-checked after a correct answer **and after the first attempt on an
+  objective**, because that first attempt can complete the "every objective attempted" condition
+  even when it is wrong; a wrong answer on an objective that already has a score cannot newly pass a
+  lesson and does not trigger the check.
 
 > *Written with their code, in the same pass. FR-3217's order is the one v0.9.1 shipped — the text of
 > `MODULE_ORDER` is pinned by a test, so the progression's sequence does not move; what changed is
@@ -1063,6 +1100,16 @@ context: *"yes for sure, for decision 2, it is part of the overall consistency, 
 
 **The rest of v0.6.0**
 
+- **FR-3222** **[ADDED 2026-09-30 — requested 2026-09-30, not yet released]**:
+  In a lesson's transcript, when the newest tutor message contains an interactive block a student has
+  to act on — a widget, a question card or a sealed passage — and pinning the view to the bottom would
+  cut off the top of that **message** (its explanation included, not only the block), the view MUST
+  show the message from its top (with a small margin) instead, so the student reads the explanation
+  first and scrolls down to the block, never up. A message that fits when pinned to the bottom, and any
+  message without such a block, MUST keep the bottom-follow. The check MUST repeat when that message
+  changes size (a widget keeps laying out after it appears). Aligning MUST NOT switch following off:
+  only the student's own scroll away from the bottom does. Not covered: a message taller than the
+  screen still needs scrolling down to reach its block.
 - **FR-3211**: No student surface may say whether content was reviewed. Review status is an operator
   fact, shown in the console only ([ADR-0019](../../docs/decisions/0019-serve-the-whole-maths-bank.md));
   what a student may be told is where a question came from.

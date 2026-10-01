@@ -160,6 +160,8 @@ export function NoorPanel({
             test.
           </p>
         }
+        // explains and plans, never quizzes (the prompt says so too)
+        questionCards={false}
         lookupQuestion={lookupQuestion}
         resolveCite={resolveCite}
         onCite={onCite}

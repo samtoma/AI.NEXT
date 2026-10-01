@@ -243,7 +243,7 @@ test("on: the learn prompt carries the probing block, voiced for the student", (
     // FR-3112: asking is not an attempt — the answer waits for REVEALED, and
     // the prompt no longer tells the model to emit {{reveal_answer}}
     // (the rule itself is pinned word for word in socratic-reveal.test.mts).
-    assert.ok(p.includes('before the "SOCRATIC PROBE — REVEALED" event for this LO'), `gender=${g}`);
+    assert.ok(p.includes('before the "SOCRATIC PROBE — REVEALED" event for this learning objective'), `gender=${g}`);
     assert.ok(!p.includes("reveal_answer"), `gender=${g}: the prompt still mentions reveal_answer`);
   }
 });

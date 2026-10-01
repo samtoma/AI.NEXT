@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { IS_MVP1 } from "@/lib/env";
+import { rootDestination } from "@/lib/student-nav";
 import { getHomeStats } from "@/lib/queries";
 import { resolveStudentContext } from "@/lib/student-context";
 import { NoorMark } from "@/components/NoorMark";
@@ -17,6 +20,9 @@ export const dynamic = "force-dynamic";
 
 /**
  * `/` — the front door, and the only page that answers for both states.
+ *
+ * **On the student build (FR-3220) a signed-in student is redirected to
+ * `/student`**, and the ledger below survives only for the frozen baseline.
  *
  * It is **not** redirected to `/signin`. Sign-in and signup have to be
  * reachable from somewhere, and a product whose root bounces a first-time
@@ -39,7 +45,12 @@ export const dynamic = "force-dynamic";
  */
 export default async function Home() {
   const me = await resolveStudentContext();
-  if (!me) return <SignedOutLanding />;
+  // FR-3220: on the student build a signed-in visitor never sees the ledger
+  // below — it is the investor preview, not her page. `redirect` throws, so
+  // nothing after this line runs for her.
+  const dest = rootDestination({ mvp1: IS_MVP1, signedIn: !!me });
+  if (dest === "welcome" || !me) return <SignedOutLanding />;
+  if (dest === "/student") redirect("/student");
 
   const stats = await getHomeStats(me.studentId);
 
