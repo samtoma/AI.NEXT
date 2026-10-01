@@ -6,8 +6,13 @@ for a sample (ADR-0008, ADR-0019), so a defect has to be caught here or by the
 blind grader, not by a child:
 
 * **one objective, one parent.** The id names the objective (``tpl:<lo tail>:…``)
-  and the parent book question must be a question of that objective
-  (``q:<lo tail>:…``), so a rejected family traces to its book item (FR-1101).
+  and the parent must be a book item of that objective, so a rejected family traces
+  to its book item (FR-1101): a book question (``q:<lo tail>:…``, the default), or —
+  where the book gave the objective no markable question, only items that are
+  teaching material (answer 40, 2026-10-01) — a book TEACHING item, a worked example
+  of the explanation library (``expl:<lo tail>:…``). Which of the two is never
+  inferred: the spec says it (``parent_kind``), and the check refuses an id whose
+  shape disagrees with the kind it declares.
 * **distractors name a misconception of the same objective** (``mc:<lo tail>:…``),
   the rule the loader enforces (FR-1106) moved to where the spec is written.
 * **the answer is computed**, by the same evaluator from the same parameters as
@@ -43,14 +48,16 @@ MARKER_KINDS = ("expression", "equation", "values", "interval", "coordinates", "
 NUMERIC_MARKER_KINDS = ("values", "interval", "coordinates", "recurring")   # schemas.NUMERIC_MARKER_KINDS
 FORMS = (None, "factorised", "expanded", "simplest", "decimal")   # the app's FORM_NAMES (answer-marker.ts)
 DRAWS = ("randint", "choice", "sample", "shuffle", "let")
+PARENT_KINDS = ("question", "teaching")   # questions.parent_kind (migration 038); "question" is the default
 TOP_KEYS = {
-    "format", "id", "kind", "lo_id", "parent_question_id", "source_page", "tier", "answer_type",
+    "format", "id", "kind", "lo_id", "parent_question_id", "parent_kind", "source_page", "tier", "answer_type",
     "context", "params", "constraints", "stem", "answer", "solution", "choices", "marker",
     "proposed_misconceptions", "notes", "version",
 }
 FAMILY_ID_RE = re.compile(r"^tpl:([a-z0-9-]+):([a-z0-9][a-z0-9-]*)$")
 LO_RE = re.compile(r"^lo:([a-z0-9-]+)$")
 QID_RE = re.compile(r"^q:([a-z0-9-]+):[A-Za-z0-9._-]+$")
+EXPL_RE = re.compile(r"^expl:([a-z0-9-]+):[A-Za-z0-9._-]+$")   # a book teaching item: a worked example
 MC_RE = re.compile(r"^mc:([a-z0-9-]+):[a-z0-9][a-z0-9-]*$")
 NAME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
 # The formatting calls whose output is a number however it is dressed.
@@ -96,6 +103,12 @@ class FamilySpec:
     @property
     def parent(self) -> str:
         return self.raw["parent_question_id"]
+
+    @property
+    def parent_kind(self) -> str:
+        """What ``parent`` is: a book ``question`` (default; every spec written before answer 40) or a
+        book ``teaching`` item."""
+        return self.raw.get("parent_kind", "question")
 
     @property
     def page(self) -> int | None:
@@ -156,6 +169,77 @@ def _check_value_or_expr(v: Any, where: str, problems: list[str]) -> None:
         problems.append(f"{where}: a list of values or an expression string")
 
 
+def parent_problems(raw: dict, lo_tail: str | None) -> list[str]:
+    """The family's parent (FR-1101): a book question, or — when ``parent_kind`` says so — a book
+    teaching item, of the family's own objective. The kind is declared, never guessed from the id, and
+    an id whose shape disagrees with the declared kind is refused with the fix named."""
+    kind = raw.get("parent_kind", "question")
+    parent = raw.get("parent_question_id")
+    shown = str(parent or "")
+    if kind not in PARENT_KINDS:
+        return [f"parent_kind must be one of {PARENT_KINDS} (omit it for a book question)"]
+    if kind == "question":
+        m = QID_RE.match(shown)
+        if not m:
+            hint = (' — that is a teaching item\'s library id: write "parent_kind": "teaching"'
+                    if EXPL_RE.match(shown) else "")
+            return ["parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101)" + hint]
+        if lo_tail and m.group(1) != lo_tail:
+            return [f"parent {parent!r} is not a question of {raw.get('lo_id')!r}: a family derives from "
+                    "a book question of its own objective"]
+        return []
+    m = EXPL_RE.match(shown)
+    if not m:
+        hint = (" — that is the id the item would have as a question; a teaching item is the library entry "
+                f"{'expl:' + shown.removeprefix('q:')!r}" if QID_RE.match(shown) else "")
+        return ['parent_question_id is required and, with "parent_kind": "teaching", must look like '
+                "expl:<objective tail>:<item> (the worked example's library id; FR-1101)" + hint]
+    if lo_tail and m.group(1) != lo_tail:
+        return [f"parent {parent!r} is not a teaching item of {raw.get('lo_id')!r}: a family derives from "
+                "a book teaching item of its own objective"]
+    return []
+
+
+def _as_teaching(raw: dict, parent: str) -> dict:
+    """``raw`` with this parent and ``parent_kind: "teaching"`` written right after it (key order kept)."""
+    out: dict = {}
+    for k, v in raw.items():
+        out[k] = parent if k == "parent_question_id" else v
+        if k == "parent_question_id":
+            out["parent_kind"] = "teaching"
+    return out
+
+
+def resolve_teaching_parent(raw: dict, question_ids: set[str], teaching_ids: set[str]) -> tuple[dict, str | None]:
+    """The author's spec with its parent kind made explicit, and the sentence saying what changed (or None).
+
+    The S6 author is shown a teaching-only item under the id it WOULD have as a question
+    (``q:<tail>:<item>``, fanout.py ``_teaching_items_s111``) beside its real library entry
+    (``expl:<tail>:<item>``), and may write either — without a ``parent_kind``, which its prompt
+    predates. The landing step (``fanout.py write-specs``) calls this with what the book actually
+    holds, so the file on disk says plainly which it is. Only a spec that does NOT declare a
+    ``parent_kind`` is touched (a declared kind is never overridden):
+
+    * a ``q:`` parent that is no book question while its ``expl:`` twin is a book teaching item
+      becomes that ``expl:`` id with ``parent_kind: "teaching"``;
+    * an ``expl:`` parent that is a book teaching item gains ``parent_kind: "teaching"``;
+    * anything else is returned untouched, for ``check_spec`` and ``--check`` to refuse in words.
+    """
+    parent = raw.get("parent_question_id")
+    if "parent_kind" in raw or not isinstance(parent, str):
+        return raw, None
+    if QID_RE.match(parent) and parent not in question_ids:
+        twin = "expl:" + parent.removeprefix("q:")
+        if twin in teaching_ids:
+            return (_as_teaching(raw, twin),
+                    f"{raw.get('id')}: parent {parent} is not a book question; its teaching item is {twin} "
+                    "— written as that, with parent_kind \"teaching\"")
+    if EXPL_RE.match(parent) and parent in teaching_ids:
+        return (_as_teaching(raw, parent),
+                f"{raw.get('id')}: parent {parent} is a book teaching item — parent_kind \"teaching\" made explicit")
+    return raw, None
+
+
 def check_spec(raw: Any, where: str = "<spec>") -> list[str]:
     """Every structural problem with one spec, as sentences. Empty means well-formed."""
     p: list[str] = []
@@ -181,13 +265,7 @@ def check_spec(raw: Any, where: str = "<spec>") -> list[str]:
     elif lo_tail and id_m.group(1) != lo_tail:
         p.append(f"id {raw['id']!r} does not name its objective {raw.get('lo_id')!r}")
 
-    parent = raw.get("parent_question_id")
-    q_m = QID_RE.match(str(parent or ""))
-    if not q_m:
-        p.append("parent_question_id is required and must look like q:<objective tail>:<n> (FR-1101)")
-    elif lo_tail and q_m.group(1) != lo_tail:
-        p.append(f"parent {parent!r} is not a question of {raw.get('lo_id')!r}: a family derives from "
-                 "a book question of its own objective")
+    p += parent_problems(raw, lo_tail)
 
     if raw.get("source_page") is not None and (not isinstance(raw["source_page"], int)
                                                or isinstance(raw["source_page"], bool)):
@@ -583,7 +661,8 @@ def build_item(spec: FamilySpec, rng: random.Random):
     stem = E.render(raw["stem"], env)
     steps = [G.step(i, E.render(t, env)) for i, t in enumerate(raw["solution"], 1)]
     common = dict(lo_id=spec.lo_id, tier=spec.tier, canonical_solution=steps,
-                  parent_question_id=spec.parent, source_page=spec.page, family=spec.id)
+                  parent_question_id=spec.parent, parent_kind=spec.parent_kind,
+                  source_page=spec.page, family=spec.id)
     at = spec.answer_type
     if at == "numeric":
         return G.Item(question_type="numeric", stem=stem,

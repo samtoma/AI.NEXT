@@ -124,6 +124,10 @@ class Item:
     source_page: int | None = None
     choices: list | None = None
     family: str = ""
+    # What parent_question_id names: a book "question" (every family before answer 40) or a book
+    # "teaching" item (a worked example of the explanation library, id expl:…). Written to the row
+    # only when it is not the default, so every existing bundle and export stays byte for byte.
+    parent_kind: str = "question"
 
     def as_question(self, qid: str) -> dict:
         q = {
@@ -133,6 +137,7 @@ class Item:
             "question_type": self.question_type,
             "source": "variant",
             "parent_question_id": self.parent_question_id,
+            **({"parent_kind": self.parent_kind} if self.parent_kind != "question" else {}),
             "source_page": self.source_page,
             "source_note": f"Generated from template family {self.family}.",
             "stem": self.stem,
@@ -1764,6 +1769,42 @@ def book_objectives(book) -> dict[str, dict]:
     return los
 
 
+def book_parents(book) -> tuple[set[str], set[str]]:
+    """(the book questions' ids, the book teaching items' library ids), from the book's bundles.
+
+    A family's parent is one or the other (FR-1101, answer 40): a question row, or a worked example
+    of the explanation library, which is what a not-markable item becomes (assemble_lesson_bundle.py:
+    ``expl:<lo tail>:<item>``, entry_type ``worked_example``)."""
+    questions: set[str] = set()
+    teaching: set[str] = set()
+    for path in book.bundle_paths():
+        if not path.exists():
+            continue
+        b = json.loads(path.read_text())
+        questions |= {q["id"] for q in b.get("questions", []) if q.get("id")}
+        teaching |= {e["id"] for e in b.get("explanation_entries", [])
+                     if e.get("id") and e.get("entry_type") == "worked_example"}
+    return questions, teaching
+
+
+def parent_problems_in_book(specs, book) -> list[str]:
+    """What the book says about each spec's parent: a teaching-kind parent must be a book teaching item
+    of the spec's own objective, and a question-kind parent that is really a teaching item's twin is
+    named as such. A question-kind parent the book simply does not list is NOT refused here (that is
+    how every family before answer 40 behaved); the database's own check refuses it at load."""
+    questions, teaching = book_parents(book)
+    out = []
+    for s in specs:
+        if s.parent_kind == "teaching":
+            if s.parent not in teaching:
+                out.append(f"{s.id}: parent {s.parent} is not a teaching item (worked example) of {book.book}'s "
+                           "bundles — a teaching parent must be a book item the assembly kept as teaching material")
+        elif s.parent not in questions and "expl:" + s.parent.removeprefix("q:") in teaching:
+            out.append(f"{s.id}: parent {s.parent} is not a book question, but its teaching item "
+                       f"expl:{s.parent.removeprefix('q:')} is: write that id with \"parent_kind\": \"teaching\"")
+    return out
+
+
 def tier_floor(objectives: dict[str, dict], generated: list[dict]) -> dict:
     """FR-4305 / FR-1109: every objective × tier cell, book and generated together.
 
@@ -2103,6 +2144,9 @@ def main_families(argv: list[str]) -> int:
             if not book.owns_lo(s.lo_id):
                 problems.append(f"{s.id}: {s.lo_id} is not an objective of {book.book}")
                 print(f"  x {problems[-1]}", file=sys.stderr)
+        for pp in parent_problems_in_book(specs, book):
+            problems.append(pp)
+            print(f"  x {pp}", file=sys.stderr)
     if problems:
         print(f"{len(problems)} spec problem(s); nothing instantiated from a malformed spec.", file=sys.stderr)
         if not args.check:
