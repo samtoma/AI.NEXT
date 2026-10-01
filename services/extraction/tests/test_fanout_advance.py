@@ -1303,8 +1303,9 @@ class S5Final(Base):
         self.assertEqual(again, ["parity_check.py"], f"only the read-only parity ran again: {again}")
         self.assertEqual(len(self.ex.tools), tools, "no dump: nothing was written")
         st = dict(b.steps(rep2))
-        for name in ("S5 catalogue", "load catalogue", "generated questions", "widget questions", "reconcile tags with the catalogue",
-                     "load generated-questions.json", "load widget-questions.json", "G3 auto-pass", "apply G3 verdicts", "G4 auto-pass", "coverage"):
+        for name in ("S5 catalogue (pass 1)", "load catalogue", "generated questions", "widget questions", "S5 reconcile (pass 2)",
+                     "load generated-questions.json", "load widget-questions.json", "G3 auto-pass", "apply G3 verdicts", "G4 auto-pass", "coverage",
+                     "G5 auto-pass"):
             self.assertEqual(st[name], "skipped", name)
 
     def test_the_dump_is_not_taken_when_the_first_db_write_fails_to_need_one(self):

@@ -267,6 +267,8 @@ RETYPE_BASIS = {
                           "list; kept exactly, only its kind changes to interval",
     "kind-for-equation": "the typing agent named a marker kind the key cannot be read under: the key has an equals sign; kept exactly, only "
                          "its kind changes to equation",
+    "kind-from-key": "the typing agent named no marker kind; the key decides it (expression, unless it plainly reads as another kind), "
+                     "and the key is kept exactly",
 }
 
 

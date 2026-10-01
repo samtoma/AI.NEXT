@@ -535,7 +535,7 @@ class RetypedBasis(unittest.TestCase):
     """The gate record's reason for each retype is the rule's own (2026-10-01: it said "the options were the typing agent's inventions"
     for every rule but kind-for-form, which was wrong for a fraction typed numeric and for the three kind rules COLLECT-6 added)."""
 
-    RULES = ("numeric", "values", "kind-for-form", "fraction-key", "kind-for-list", "kind-for-relations", "kind-for-equation")
+    RULES = ("numeric", "values", "kind-for-form", "fraction-key", "kind-for-list", "kind-for-relations", "kind-for-equation", "kind-from-key")
 
     def run_with(self, rule: str) -> list[dict]:
         run = {"lessons": [{"lesson": "g10m9s1-1", "verify": {"retyped": [
@@ -549,8 +549,8 @@ class RetypedBasis(unittest.TestCase):
             self.assertTrue(d["decision"].startswith("typed again as expression (an exact fraction) (key "), rule)
             self.assertIn("the reason the collection gave", d["basis"], "the collection's own reason is kept beside it")
             self.assertEqual("inventions" in d["basis"], rule in ("numeric", "values"), rule)
-        self.assertEqual(len({self.run_with(r)[0]["basis"].split(" (the reason")[0] for r in self.RULES}), 6,
-                         "six distinct reasons: numeric and values share the options one")
+        self.assertEqual(len({self.run_with(r)[0]["basis"].split(" (the reason")[0] for r in self.RULES}), 7,
+                         "seven distinct reasons: numeric and values share the options one")
 
     def test_the_new_rules_say_what_they_did(self):
         self.assertIn("fraction as a number", self.run_with("fraction-key")[0]["basis"])
@@ -582,6 +582,149 @@ class RetypedBasis(unittest.TestCase):
                                                               {"kind-for-list", "kind-for-equation", "kind-for-relations"})
         self.assertTrue({"numeric", "values", "kind-for-form", "fraction-key"} <= rules, rules)
         self.assertFalse({r for r in rules if r not in A.RETYPE_BASIS}, "a rule lesson.workflow.js writes has no reason in RETYPE_BASIS")
+
+
+# ---------------------------------------------------------------------------------------------- a newer collection after the run
+class AfterARecollection(unittest.TestCase):
+    """2026-10-01: lesson.workflow.js COLLECT-6 was widened after the first recommendation runs were launched, so what is owed changed under
+    them: fractions typed numeric (excluded) now pass, a typing problem can turn into a disputed answer. The run's paid answers for the items
+    still owed stay valid; the collector must never decide an item twice, and must never apply an answer to an item the agents did not see."""
+
+    def setUp(self):
+        self.run, self.g2 = make_run()
+        self.es = G.recommendable([self.run], 9, "g10m", self.g2)
+        self.k1, self.k2, self.k3, self.k7 = (e["key"] for e in self.es)
+        self.packet = G.build_args(book_config.load_book("g10-math"), 9, self.es)
+        fix = {"answer_type": "expression", "key": "\\frac{1}{2}", "marker_kind": "expression", "form": "", "variables": []}
+        rows = {self.k1: (rec(book_quote="x^{2}"), CONFIRMED),
+                self.k2: (rec("fix", "typing error", book_quote="\\frac{1}{2}", fix=fix), CONFIRMED),
+                self.k3: (rec("exclude", "stem damaged"), None), self.k7: (rec("exclude", "partial answer"), None)}
+        self.saved = {"prompts_version": "g2rec-v1", "keys": self.packet["items"] and [x["key"] for x in self.packet["items"]],
+                      "results": [{"key": k, "rec": r, "ver": v} for k, (r, v) in rows.items()]}
+
+    def collect(self, entries, **kw):
+        return G.collect(entries, [self.saved], marker_fn=lambda r: {}, identity_fn=lambda r: {}, **kw)
+
+    def test_an_item_the_checks_decide_now_is_skipped_never_decided_twice(self):
+        # the second item (a fraction typed numeric) no longer has a typing problem: it is not owed any more
+        now = [e for e in self.es if e["key"] != self.k2]
+        doc = self.collect(now, packets=[self.packet])
+        self.assertNotIn(self.k2, doc["items"], "its recommendation is not written: g2 would override the rule's decision with an older reading")
+        self.assertEqual(doc["report"]["no_longer_owed"], [self.k2])
+        self.assertEqual(set(doc["items"]), {self.k1, self.k3, self.k7})
+        self.assertEqual(doc["report"]["off_task"], [])
+        self.assertNotIn(self.k2, doc["unanswered"])
+
+    def test_without_a_packet_the_run_still_knows_its_keys(self):
+        now = [e for e in self.es if e["key"] != self.k2]
+        doc = self.collect(now)                                    # no packet: the run's own `keys` say the key was in it
+        self.assertEqual(doc["report"]["no_longer_owed"], [self.k2])
+        saved = dict(self.saved, keys=None)
+        doc = G.collect(now, [saved], marker_fn=lambda r: {}, identity_fn=lambda r: {})
+        self.assertEqual((doc["report"]["no_longer_owed"], doc["report"]["off_task"]), ([], [self.k2]), "an older run: unknown key, off task")
+
+    def test_an_item_the_agents_did_not_see_is_refused_for_that_item_only(self):
+        now = copy.deepcopy(self.es)
+        by_key(now)[self.k1]["item"]["typing_problems"] = ["a new typing problem the newer collection found"]
+        by_key(now)[self.k3]["state"] = "held"                     # an excluded item the newer collection leaves disputed instead
+        doc = self.collect(now, packets=[self.packet])
+        self.assertEqual(doc["report"]["stale_items"], sorted([self.k1, self.k3]))
+        self.assertEqual(set(doc["items"]), {self.k2, self.k7}, "the others are collected as before: their paid answers stay valid")
+        self.assertEqual(set(doc["unanswered"]), {self.k1, self.k3}, "listed, so g2-recommend-args --only-missing asks again")
+
+    def test_a_prior_file_never_brings_a_stale_item_back(self):
+        prior = {"items": {self.k1: {"verdict": "accept", "class": "book answer confirmed", "confidence": "high", "note": "an old reading"}}}
+        now = copy.deepcopy(self.es)
+        by_key(now)[self.k1]["item"]["stem"] += " (typed again)"
+        doc = self.collect(now, packets=[self.packet], prior=prior)
+        self.assertNotIn(self.k1, doc["items"])
+        doc = self.collect(self.es, packets=[self.packet], prior=prior)
+        self.assertEqual(doc["items"][self.k1]["note"].startswith("an old reading"), False, "this run's answer wins over the prior file's")
+
+    def test_the_merge_does_not_apply_a_recommendation_for_an_item_that_is_not_owed(self):
+        now_run = copy.deepcopy(self.run)
+        it = now_run["lessons"][0]["items"][1]                    # Ex9-1:2: typed expression now, its typing problem gone
+        it.update(answer_type="expression", answer="\\frac{1}{2}", typing_problems=[],
+                  marker={"kind": "expression", "key": "\\frac{1}{2}", "form": None, "variables": [], "tolerance": None})
+        now_run["lessons"][0]["verify"]["typing_problems"] = [x for x in now_run["lessons"][0]["verify"]["typing_problems"] if x["ref"] != "Ex9-1:2"]
+        doc = collect(self.es, {self.k2: (rec("exclude", "book error"), None), self.k1: (rec(book_quote="x^{2}"), CONFIRMED)})
+        self.assertEqual(doc["prepared_by"], f"g2_recommend.py {G.PROMPTS_VERSION}")
+        owed = A.g2_items(now_run, 9, "g10m")
+        self.assertNotIn(self.k2, owed)
+        merged, c, decisions = A.g2_merge(owed, doc, {"by": "auto-pass G2 (AI recommendation)", "auto": True, "items": {}})
+        self.assertNotIn(self.k2, merged["items"], "an older recommendation never overrides the checks' own decision")
+        self.assertEqual(merged["items"][self.k1]["verdict"], "accept", "the still-owed item's recommendation applies")
+        self.assertTrue(any(d["key"] == self.k2 and "not applied" in d["decision"] for d in decisions))
+        # a recommendation file that is not a g2_recommend.py one (the pilot's, written by hand) names whatever it likes
+        pilot = {"items": {self.k2: {"verdict": "exclude", "note": "x"}}}
+        merged, _, _ = A.g2_merge(owed, pilot, {"by": "auto-pass G2 (AI recommendation)", "auto": True, "items": {}})
+        self.assertEqual(merged["items"][self.k2]["verdict"], "exclude")
+
+    def test_an_auto_verdict_for_an_item_no_longer_owed_is_dropped_from_g2s_file_but_a_persons_never(self):
+        owed = A.g2_items(self.run, 9, "g10m")
+        existing = {"by": "auto-pass G2 (AI recommendation)", "auto": True, "items": {
+            "g10m9s1-1:Ex9-1:8": {"verdict": "exclude", "auto": True, "by": "auto-pass G2 (AI recommendation)", "note": "typing, long ago"},
+            "g10m9s1-1:Ex9-1:9": {"verdict": "hold", "by": "Samuel Toma", "note": "mine"},
+            "g10m8s1-1:Ex8-1:1": {"verdict": "exclude", "auto": True, "by": "auto-pass G2 (AI recommendation)"}}}
+        merged, c, decisions = A.g2_merge(owed, None, existing)
+        self.assertIn("g10m9s1-1:Ex9-1:8", merged["items"], "no scope given: nothing is ever dropped (the old behaviour)")
+        merged, c, decisions = A.g2_merge(owed, None, existing, scope={"g10m9s1-1"})
+        self.assertNotIn("g10m9s1-1:Ex9-1:8", merged["items"], "the lesson's run says it is not flagged any more")
+        self.assertEqual(merged["items"]["g10m9s1-1:Ex9-1:9"]["by"], "Samuel Toma")
+        self.assertIn("g10m8s1-1:Ex8-1:1", merged["items"], "another lesson's verdict is outside the runs given")
+        self.assertEqual(c["dropped"], 1)
+        self.assertTrue(any(d["key"] == "g10m9s1-1:Ex9-1:8" and "dropped" in d["decision"] for d in decisions))
+
+    def test_the_packet_is_archived_by_its_sha_so_a_regenerated_copy_does_not_lose_it(self):
+        with tempfile.TemporaryDirectory() as t:
+            copy_ = Path(t) / "g2rec-ch09.workflow.js"
+            p = G.archive_packet(copy_, "ab" * 32, self.packet)
+            self.assertEqual(p, Path(t) / G.ARCHIVE / ("ab" * 32 + ".args.json"))
+            self.assertEqual(json.loads(p.read_text())["items_sha256"], self.packet["items_sha256"])
+            before = p.read_text()
+            G.archive_packet(copy_, "ab" * 32, {"other": 1})
+            self.assertEqual(p.read_text(), before, "the first packet of a sha is the packet")
+            self.assertIsNone(G.find_packet(book_config.load_book("g10-math"), None))
+            self.assertIsNone(G.find_packet(book_config.load_book("g10-math"), "0" * 64))
+
+    def test_prepare_archives_each_copys_packet(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            (t / "run.json").write_text(json.dumps(self.run))
+            (t / "g2.json").write_text(json.dumps(self.g2))
+            info = G.prepare(book_config.load_book("g10-math"), 9, [t / "run.json"], t / "g2.json", t / "g2rec-ch09.workflow.js")
+            sha = info["copies"][0]["generated_sha256"]
+            self.assertTrue((t / G.ARCHIVE / f"{sha}.args.json").exists())
+            self.assertEqual(json.loads((t / G.ARCHIVE / f"{sha}.args.json").read_text()), embed_workflow.read_args(Path(info["copies"][0]["script"])))
+
+    def test_the_delta_is_what_the_bundle_gained_since_the_working_check(self):
+        bundle = {"questions": [
+            {"id": "q:a:1", "stem": "s", "solution": ["$x=1$"], "choices": None, "type": "short", "answer": "1"},
+            {"id": "q:a:2", "stem": "s", "solution": ["$x=2$"], "choices": None, "type": "short", "answer": "2"},
+            {"id": "q:a:3", "stem": "s", "solution": ["[figure]"], "choices": None, "type": "short", "answer": "3"}],
+            "explanation_entries": [{"id": "expl:a:4", "lo": "lo:a", "content": [{"kind": "problem", "text_md": "p"}, {"step": 1, "text_md": "$y=3$"}]}]}
+        flags = {"checked_ids": ["q:a:1"]}
+        self.assertEqual(G.delta_ids(bundle, flags), ["expl:a:4", "q:a:2"], "a drawing-only solution has no working to check; a checked one is not repeated")
+        self.assertEqual(G.delta_ids(bundle, {"checked_ids": ["q:a:1", "q:a:2", "expl:a:4"]}), [])
+
+    def test_the_delta_command(self):
+        with tempfile.TemporaryDirectory() as t:
+            t = Path(t)
+            (t / "seed.json").write_text(json.dumps({"questions": [{"id": "q:a:1", "stem": "s", "solution": ["$x=1$"], "choices": None, "type": "short",
+                                                                    "answer": "1"}]}))
+            (t / "flags.json").write_text(json.dumps({"checked_ids": []}))
+            import contextlib
+            import io
+            out, err = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                code = A.main(["g2-recommend-delta", "g10-math", "--chapter", "9", "--seed", str(t / "seed.json"), "--flags", str(t / "flags.json"),
+                               "--out", str(t / "ids.json")])
+            self.assertEqual(code, 0, err.getvalue())
+            self.assertEqual(json.loads((t / "ids.json").read_text()), ["q:a:1"])
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                code = A.main(["g2-recommend-delta", "g10-math", "--chapter", "9", "--seed", str(t / "nope.json"), "--flags", str(t / "flags.json")])
+            self.assertEqual(code, 2)
+            self.assertIn("does not exist", err.getvalue())
 
 
 # ---------------------------------------------------------------------------------------------- the file reaches G2
@@ -642,9 +785,10 @@ class ReachesG2(unittest.TestCase):
         self.assertIn("--update --dry-run", text)
         self.assertIn("--split", text)
         self.assertIn("fanout.py close-chapter 1", text)
-        self.assertIn("--ids-out runs/g10-math/g2rec/ch01.live-ids.json", text)
+        self.assertIn("g2-recommend-delta g10-math --chapter 1 --out runs/g10-math/g2rec/ch01.delta-ids.json", text)
         self.assertIn("working_check.py args --book g10-math --seed seed/g10-math/g10m-c01.json --chapter 1 --pass-id A --only "
-                      "runs/g10-math/g2rec/ch01.live-ids.json", text, "a delta working check on the newly live questions")
+                      "runs/g10-math/g2rec/ch01.delta-ids.json", text, "a delta working check on what the bundle gained since the check")
+        self.assertLess(text.index("assemble_lesson_bundle"), text.index("g2-recommend-delta"), "the delta is read from the re-assembled bundle")
         self.assertIn("--pass-id B --order shuffled --order-seed 11", text)
         self.assertTrue(any(c.startswith("pg_dump") for c in cmds), "a fresh dump before the update")
 

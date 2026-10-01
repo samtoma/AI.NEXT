@@ -506,39 +506,42 @@ def build_runs(inv: dict) -> list[dict]:
             priority=(3, i, 1), depends_on=[f"s6-grade-{t}", f"s7-verify-{t}"],
             save_to=f"runs/g10-math/misconceptions/final-{t}-<wf_id>.json", meter=_meter("S5"),
             after=[f"uv run assemble_misconceptions.py runs/g10-math/misconceptions/final-{t}-<wf_id>.json --book {cfg} "
-                   f"--out {gen}/misconceptions.json --graph seed/g10-math/g10m-c{ch:02d}.json --graph seed/g10-math/g10m-course.json",
-                   f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run load_misconceptions.py {gen}/misconceptions.json --course course:us-g10-math-en",
+                   f"--out {gen}/misconceptions.json --catalogue-only --graph seed/g10-math/g10m-c{ch:02d}.json "
+                   "--graph seed/g10-math/g10m-course.json   # 1: PASS 1, the catalogue alone (the bundles are generated FROM it)",
+                   f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run load_misconceptions.py {gen}/misconceptions.json "
+                   "--course course:us-g10-math-en   # 2",
                    f"uv run generate_questions.py --families {fam} --book {cfg} --catalogue {gen}/misconceptions.json "
                    f"--grades runs/g10-math/families/grade-{t}-*.json --out {gen}/generated-questions.json "
-                   f"--floor-report coverage/g10-math.{t}.tier-floor.json",
+                   f"--floor-report coverage/g10-math.{t}.tier-floor.json   # 3",
                    f"AINEXT_DB_DSN=\"{DSN}\" uv run generate_widget_questions.py --templates {wid} --book {cfg} --dsn \"{DSN}\" "
-                   f"--verdicts runs/g10-math/widgets/verify-{t}-<wf_id>.json --gaps runs/g10-math/widgets/author-merged-{t}.json "
+                   f"--verdicts runs/g10-math/widgets/verify-{t}-<s7-verify wf_id>.json --gaps runs/g10-math/widgets/author-merged-{t}.json "
                    f"--gap-report coverage/g10-math.{t}.widget-gaps.json --pending-review runs/g10-math/widgets/pending-review-{t}.json "
-                   f"--out {gen}/widget-questions.json   # no template in the chapter (s7-verify skipped): drop --verdicts, "
-                   "--pending-review and --out — the gap report alone; a widget bundle is never written unverified",
+                   f"--out {gen}/widget-questions.json   # 4; no template in the chapter (s7-verify skipped): drop --verdicts, "
+                   "--pending-review and --out — the gap report alone; a widget bundle is never written unverified. NEVER re-run 4 after 5 "
+                   "without re-running 5",
                    f"uv run assemble_misconceptions.py runs/g10-math/misconceptions/final-{t}-<wf_id>.json --book {cfg} "
                    f"--out {gen}/misconceptions.json --bundle {gen}/generated-questions.json --bundle {gen}/widget-questions.json "
-                   "(each --bundle only if written) "
-                   f"--graph seed/g10-math/g10m-c{ch:02d}.json --graph seed/g10-math/g10m-course.json",
-                   f"# load both bundles (37a/37c: students see them; review status internal), each only if written — the loader's status "
-                   f"policy is another data-engineer's work: load_generated_questions.py {gen}/<bundle> --course "
-                   "course:us-g10-math-en --sample 10 --seed 20260926 --catalogue-only (the pilot's flags: the sample is the review queue "
-                   "G3 reads) against the fan-out DB; `fanout.py advance` runs it as a --dry-run (structure) first, after a fresh pg_dump",
+                   f"--graph seed/g10-math/g10m-c{ch:02d}.json --graph seed/g10-math/g10m-course.json --drop-undiagnosed-widgets "
+                   f"--widget-gaps coverage/g10-math.{t}.widget-gaps.json   # 5: PASS 2 (each --bundle only if written; no widget template: "
+                   "no widget --bundle). It stamps each bundle `s5_reconciled` with the run files it was reconciled with",
+                   f"AINEXT_DB_DSN=\"{DSN}\" AINEXT_ENVIRONMENT=mvp1 uv run load_generated_questions.py {gen}/<bundle> --dsn \"{DSN}\" "
+                   "--course course:us-g10-math-en --catalogue-only --seed 20261001   # 6: each bundle that was written, --dry-run first, after a fresh "
+                   "pg_dump; BEFORE it assert the bundle's s5_reconciled.runs == [this S5 final run's file name] (`fanout.py advance` does both)",
                    f"uv run auto_pass_gates.py g3 g10-math --chapter {ch} --queue {gen}/generated-questions.review-queue.json "
                    f"[--queue {gen}/widget-questions.review-queue.json --widgets {gen}/widget-questions.json] "
-                   f"--widget-gaps coverage/g10-math.{t}.widget-gaps.json   # G3 AUTO-PASS (runbook §7b); the bracket only when the chapter has a "
+                   f"--widget-gaps coverage/g10-math.{t}.widget-gaps.json   # 7: G3 AUTO-PASS (runbook §7b); the bracket only when the chapter has a "
                    f"widget bundle; --widget-gaps signs the chapter-scope widget gaps as auto-pass G3 (in place), so G3 runs BEFORE coverage; "
                    f"then: AINEXT_DB_DSN=\"{DSN}\" uv run apply_review_verdicts.py runs/g10-math/g3-{t}.auto.json (adds to ai_checked_by)",
-                   f"uv run auto_pass_gates.py g4 g10-math --chapter {ch} --catalogue {gen}/misconceptions.json "
-                   f"--s5 runs/g10-math/misconceptions/final-{t}-<wf_id>.json   # G4 AUTO-PASS: a record of what S5 kept",
+                   f"uv run auto_pass_gates.py g4 g10-math --chapter {ch} --run <wf_id> --catalogue {gen}/misconceptions.json "
+                   f"--s5 runs/g10-math/misconceptions/final-{t}-<wf_id>.json   # 8: G4 AUTO-PASS: a record of what S5 kept",
                    f"uv run coverage_report.py --book {cfg} --chapter {ch} --maths runs/g10-math/maths/book/summary.json "
                    f"--widget-gaps coverage/g10-math.{t}.widget-gaps.json --s5 runs/g10-math/misconceptions/final-{t}-<wf_id>.json "
-                   f"--generated {gen} --out coverage/g10-math.{t}.json   # --generated: without it the report reads the pilot's top-level bundles",
-                   f"uv run parity_check.py --candidate \"{DSN}\" --all-courses",
+                   f"--generated {gen} --out coverage/g10-math.{t}.json   # 9: --generated: without it the report reads the pilot's top-level bundles",
                    f"AINEXT_DB_DSN=\"{DSN}\" uv run auto_pass_gates.py g5 g10-math --chapter {ch} --coverage coverage/g10-math.{t}.json "
                    "--book-config runs/g10-math/fanout/loaded/g10-math.json   # G5 AUTO-PASS: the go/no-go (exit 1 = NO-GO). That config lists "
                    f"every bundle in the pilot DB (the loaded set), so parity checks the whole loaded course; the chapter's seed/g10-math/g10m-c{ch:02d}.json "
-                   "joins it when the chapter loads (`fanout.py advance` does that at the S5 draft's load step)"],
+                   "joins it when the chapter loads (`fanout.py advance` does that at the S5 draft's load step)",
+                   f"uv run parity_check.py --candidate \"{DSN}\" --all-courses"],
             checkpoint=("chapter 1 complete: its whole cost against the estimate, coverage, parity, the console backlog — "
                         "go / no-go for the remaining 12 chapters") if i == 0 else None)
     return runs

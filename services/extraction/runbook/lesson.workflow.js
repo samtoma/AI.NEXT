@@ -936,7 +936,7 @@ function checkTyping(it, t, lessonText) {
     typed.answer = c.at >= 0 ? LETTERS[c.at] : null
     typed.options_source = t.options_source || null
   } else if (t.answer_type === 'expression') {
-    if (!MARKER_KINDS.includes(t.marker_kind)) problems.push(`marker kind "${t.marker_kind}" is not one of ${MARKER_KINDS.join(', ')}`)
+    if (t.marker_kind && !MARKER_KINDS.includes(t.marker_kind)) problems.push(`marker kind "${t.marker_kind}" is not one of ${MARKER_KINDS.join(', ')}`)
     if (!String(t.key || '').trim()) problems.push('empty marker key')
     let form = null
     if (t.form === 'subject') form = t.subject ? { subject: t.subject } : (problems.push('form "subject" names no variable'), null)
@@ -958,7 +958,7 @@ function checkTyping(it, t, lessonText) {
     // the typing agent named no kind (g10m5s8-1: ten fractions): the KEY decides, as it does for a kind the key cannot be read under, and it is recorded
     if (!kind) {
       const k0 = String(t.key || '')
-      const inferred = kindForKey(k0, 'expression') || (semicolonParts(k0).length >= 2 ? 'values' : 'expression')
+      const inferred = kindForKey(k0, 'expression') || 'expression'
       typed.retyped = { from: 'expression (no marker kind)', as: `expression, kind ${inferred}`, rule: 'kind-from-key', because: ['the typing named no marker kind; the key decides it'] }
       kind = inferred
     }
