@@ -67,11 +67,20 @@ Source documents: each bundle defines its own `source_document`, names one via
 DB), or inherits the previous bundle's. Multiple documents per load are supported;
 rows dedupe on sha256. Every row is stamped with ITS bundle's source sha.
 
-Question status: verified=true -> live (reviewed_by='ai dual-check (pending Samuel)'),
-else review — for questions this load INSERTS. A question already in the database
-keeps the status it has (a human or ADR-0019 may have promoted it since), with one
-exception that no mode overrides: a question the sacred gate holds is never left
-live. WITHOUT --course, re-running truncates and reloads ALL content tables
+Question status (migration 035; Samuel's answers 33 and 37, review_policy.py) — for questions
+this load INSERTS:
+  * no loader ever writes a review: reviewed_by stays NULL (only a human stamp is a review);
+    a question two independent AI readings confirmed (verified=true) records that as
+    ai_checked_by='ai dual-check'; --approve-all records "promoted without review" in review_note;
+  * a MATHS course is always full (37a): live, unless an AUTOMATIC SAFETY CHECK holds it — the
+    bundle's own hold_reason (the assembly's: figure_missing, figure_reveals_answer, katex_error,
+    answer_mismatch, unanswerable, unverified, human_hold), the figure gate, the sacred gate;
+  * any other course: verified=true (or --approve-all) -> live, else review, awaiting a human.
+A held question is 'review' with its hold_reason. A question already in the database keeps
+the status it has (a human or ADR-0019 may have promoted it since), with two exceptions that no
+mode overrides: a question an automatic check holds NOW is never left live (sacred, figure,
+the bundle's hold reasons), and a maths question an automatic check held BEFORE is released to
+live once the cause is gone (its figure or stand-in arrived) — never one a human held. WITHOUT --course, re-running truncates and reloads ALL content tables
 (legacy single-course semantics — a loud warning fires if >1 course is in the DB,
 and it refuses outright while real students exist, see --wipe-students).
 
@@ -114,6 +123,7 @@ import sys
 from pathlib import Path
 
 import book_config
+import review_policy
 from arabic_text import SEALED_SENSITIVITY_CLASSES
 from schemas import ClaimStep, SeedBundle, SourceDocument
 
@@ -367,14 +377,12 @@ def db_courses_of(cur, lo_ids: list[str]) -> dict[str, str]:
     return {lo: c for lo, c in cur.fetchall()}
 
 
-FIGURE_MARK = " [held: figure missing]"
-
-
 def figure_gate(paths: list[Path]) -> set[str]:
     """Consistency review A3: a book question whose stem shows [figure] and whose bundle has no figure for it
-    cannot be answered, so it is held at review — on insert and, like the sacred gate, even if it was live —
-    until a load brings its figure. Only for bundles the extraction line assembled (they carry
-    `assembled_from`); older bundles are not re-judged."""
+    cannot be answered, so it is held at review (hold_reason figure_missing) — on insert and, like the sacred
+    gate, even if it was live — until a load brings its figure. A book picture stand-in (`book_image`,
+    answer 37d) IS its figure. Only for bundles the extraction line assembled (they carry `assembled_from`);
+    older bundles are not re-judged."""
     held: set[str] = set()
     for p in paths:
         raw = json.loads(Path(p).read_text())
@@ -1216,7 +1224,15 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
     content = [(p, b) for p, b in zip(paths, bundles) if p not in doc_only]
     held = sacred_gate([p for p, _ in content], [b for _, b in content], approve_all)
     figure_held = figure_gate([p for p, _ in content])
-    held |= figure_held
+    # Every automatic hold of this batch, with its reason (migration 035). The sacred gate wins,
+    # then the assembly's own reason, then the figure gate.
+    hold_reasons: dict[str, str] = {qid: review_policy.FIGURE_MISSING for qid in figure_held}
+    hold_reasons.update({q.id: q.hold_reason for _, b in content for q in b.questions if q.hold_reason})
+    hold_reasons.update({qid: review_policy.SACRED for qid in held})
+    held |= set(hold_reasons)
+    assembled_qids = {q["id"] for p, _ in content
+                      for raw in [json.loads(Path(p).read_text())] if "assembled_from" in raw
+                      for q in raw.get("questions") or []}
     repo_root = HERE.parents[1]
 
     dsn = db_dsn()
@@ -1226,6 +1242,7 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
           + ("   *** DRY RUN — the transaction will be rolled back ***" if dry_run else ""))
     report = LoadReport()
     with psycopg.connect(dsn) as conn, conn.cursor() as cur:
+        review_policy.require_review_columns(cur)
         cur.execute(SNAPSHOT_SQL)
         before = cur.fetchone()
 
@@ -1407,6 +1424,11 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
         db_visuals = {r[0]: dict(zip(VISUAL_FIELDS, r[1:])) for r in cur.fetchall()}
 
         editing = mode in ("update", "replace")
+        # Which course each objective of the batch belongs to — a maths course is always full (37a)
+        batch_los = sorted({q.lo for _, b in content for q in b.questions})
+        lo_course = course_of_objectives(batch_edges, db_courses_of(cur, batch_los) if course else None)
+        full_q = {q.id for _, b in content for q in b.questions
+                  if review_policy.students_always_full(lo_course.get(q.lo) or course)}
         refused_edits: list[str] = []
         total_q = total_v = 0
         total_m = total_x = 0   # misconceptions, explanation-library entries
@@ -1502,23 +1524,36 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
                     if source not in ("seed", "authored"):
                         raise SystemExit(f"{q.id}: a seed bundle question has source "
                                          f"'{source}'; only 'seed' or 'authored' is allowed")
-                    # `held` is the sacred gate: no flag promotes what it holds.
-                    live = (approve_all or q.verified) and q.id not in held
-                    reviewer = (None if q.id in held
-                                else "samuel (poc bulk)" if approve_all
-                                else "ai dual-check (pending Samuel)" if q.verified else None)
+                    # `held` is every automatic hold (sacred, figure, the assembly's): no flag
+                    # promotes what it holds. A maths question an assembled bundle left unverified
+                    # with no reason is held as `unverified` — never live on no evidence.
+                    reason = hold_reasons.get(q.id)
+                    if (reason is None and q.id in full_q and q.id in assembled_qids
+                            and not q.verified and not approve_all):
+                        reason = review_policy.UNVERIFIED
+                    if reason:
+                        live = False
+                    elif q.id in full_q:
+                        live = True          # answer 37a: a maths course is always full
+                    else:
+                        live = approve_all or q.verified
+                    # Only a human stamp is a review (answer 33): a loader never writes reviewed_by.
+                    ai_by = review_policy.AI_DUAL_CHECK if q.verified else None
+                    note = (review_policy.BULK_NOTE.format(stamp="samuel (poc bulk)")
+                            if approve_all and live else None)
                     cur.execute(
                         """INSERT INTO questions
                            (id, lo_id, tier, question_type, stem, choices, correct_answer,
                             canonical_solution, status, source, source_sha256, source_page,
-                            source_note, extraction_run_id, reviewed_by, reviewed_at)
-                           VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                                   CASE WHEN %s THEN now() END)""",
+                            source_note, extraction_run_id, reviewed_by, reviewed_at,
+                            ai_checked_by, ai_checked_at, hold_reason, review_note)
+                           VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,NULL,NULL,
+                                   %s, CASE WHEN %s IS NOT NULL THEN now() END, %s, %s)""",
                         (q.id, q.lo, q.tier, q.type, q.stem,
                          json.dumps(new["choices"]) if new["choices"] else None,
                          new["correct_answer"], json.dumps(new["canonical_solution"]),
                          "live" if live else "review", source, sha, q.source_page, q.source_note,
-                         run_id(), reviewer, live))
+                         run_id(), ai_by, ai_by, None if live else reason, note))
                     report.note("questions", "added", q.id)
                     total_q += 1
                     total_v += live
@@ -1677,44 +1712,49 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
             apply_prune(cur, prune, report)
             prune_lessons(cur, course, lessons, report)
 
-        # THE SACRED GATE IS NOT A LOAD-TIME DEFAULT. A question it holds is never
-        # left live by any load, in any mode — including one inserted earlier and
-        # promoted since, whose passage approval has now gone stale (ADR-0006).
-        sacred_held = held - figure_held
-        if sacred_held:
-            cur.execute("UPDATE questions SET status = 'review' WHERE id = ANY(%s) "
-                        "AND status = 'live' RETURNING id", (list(sacred_held),))
-            demoted = [r[0] for r in cur.fetchall()]
-            if demoted:
-                print("!" * 72)
-                print(f"!! sacred gate: {len(demoted)} live question(s) demoted to review — "
-                      f"{', '.join(demoted[:6])}{' …' if len(demoted) > 6 else ''}")
-                print("!" * 72)
-        # THE FIGURE GATE (consistency review A3) holds a question until its figure exists, and only until then:
-        # it marks what it demotes, and a later load that brings the figure puts exactly those back — a question
-        # a human held (G2 hold, the console) carries no mark and is never released here
-        figure_ids = [q["id"] for p in paths if p not in doc_only
-                      for q in (json.loads(Path(p).read_text()).get("questions") or [])
-                      if "assembled_from" in json.loads(Path(p).read_text())]
-        if figure_held:
-            cur.execute(f"""UPDATE questions SET status = 'review',
-                                  reviewed_by = coalesce(reviewed_by, '') || '{FIGURE_MARK}'
-                             WHERE id = ANY(%s) AND status = 'live' RETURNING id""", (list(figure_held),))
-            demoted = [r[0] for r in cur.fetchall()]
-            if demoted:
-                print(f"!! figure gate: {len(demoted)} live question(s) held at review until their figure exists — "
-                      f"{', '.join(demoted[:6])}{' …' if len(demoted) > 6 else ''}")
-        released = []
-        if figure_ids:
-            cur.execute(f"""UPDATE questions SET status = 'live',
-                                  reviewed_by = nullif(replace(reviewed_by, '{FIGURE_MARK}', ''), '')
-                             WHERE id = ANY(%s) AND NOT (id = ANY(%s)) AND status = 'review'
-                               AND reviewed_by LIKE %s RETURNING id""",
-                        (figure_ids, list(held), f"%{FIGURE_MARK}%"))
-            released = [r[0] for r in cur.fetchall()]
-            if released:
-                print(f"   figure gate: {len(released)} question(s) whose figure now exists are live again — "
-                      f"{', '.join(released[:6])}{' …' if len(released) > 6 else ''}")
+        # THE AUTOMATIC HOLDS ARE NOT LOAD-TIME DEFAULTS (migration 035). A question one holds now is
+        # never left live by any load, in any mode — the sacred gate's (ADR-0006: including one promoted
+        # since, whose passage approval has gone stale), the figure gate's (A3) and the assembly's own
+        # reasons. Each demotion records its reason; an existing human hold is never overwritten.
+        if hold_reasons:
+            ids, reasons = zip(*sorted(hold_reasons.items()))
+            cur.execute("""UPDATE questions q
+                              SET status = 'review',
+                                  hold_reason = CASE WHEN q.hold_reason = %s THEN q.hold_reason ELSE h.reason END
+                             FROM unnest(%s::text[], %s::text[]) AS h(id, reason)
+                            WHERE q.id = h.id
+                              AND (q.status = 'live' OR (q.status = 'review'
+                                                         AND q.hold_reason IS DISTINCT FROM h.reason
+                                                         AND q.hold_reason IS DISTINCT FROM %s))
+                        RETURNING q.id, h.reason, (q.status = 'review')""",
+                        (review_policy.HUMAN_HOLD, list(ids), list(reasons), review_policy.HUMAN_HOLD))
+            demoted = cur.fetchall()
+            for why in sorted({r for _, r, _ in demoted}):
+                these = [i for i, r, _ in demoted if r == why]
+                loud = "!!" if why == review_policy.SACRED else "  "
+                print(f"{loud} {why}: {len(these)} question(s) held at review — "
+                      f"{', '.join(these[:6])}{' …' if len(these) > 6 else ''}")
+        # ... and only until then. A question an automatic check held BEFORE whose cause is gone (its
+        # figure or book-picture stand-in arrived, its key now checks) is released: live on a maths course
+        # (answer 37a), else live only when two AI readings confirmed it. A human's hold (G2 hold, the
+        # console) has its own reason and is never released here. Also answer 37a for a maths question a
+        # pre-035 load left at review with NO reason: it goes live.
+        batch_q = sorted(batch_qids)
+        cur.execute("""UPDATE questions q
+                          SET status = CASE WHEN q.id = ANY(%s) OR q.ai_checked_by IS NOT NULL
+                                            THEN 'live' ELSE 'review' END,
+                              hold_reason = NULL
+                        WHERE q.id = ANY(%s) AND NOT (q.id = ANY(%s)) AND q.status = 'review'
+                          AND q.materialised_from IS NULL
+                          AND (q.hold_reason = ANY(%s)
+                               OR (q.hold_reason IS NULL AND q.id = ANY(%s)))
+                    RETURNING q.id, q.status""",
+                    (sorted(full_q), batch_q, sorted(held), sorted(review_policy.LOADER_RELEASABLE),
+                     sorted(full_q)))
+        released = [i for i, st in cur.fetchall() if st == "live"]
+        if released:
+            print(f"   released: {len(released)} question(s) no automatic check holds any more are live — "
+                  f"{', '.join(released[:6])}{' …' if len(released) > 6 else ''}")
 
         if demo_student:
             seed_demo_student(cur)
@@ -1744,12 +1784,13 @@ def load(paths: list[Path], approve_all: bool, demo_student: bool,
         # exception quietly becomes the norm.
         print(f"  explanation library: {total_m} misconceptions, {total_x} entries "
               f"— ALL stored reviewed=false (ADR-0007, constitution III suspended)")
-    # The review gate, stated out loud on every load: whatever did not clear
-    # verification is in the database but unreachable by a student.
+    # The review gate, stated out loud on every load: whatever did not clear an automatic check
+    # (any course) or is awaiting a human (not maths) is in the database but unreachable by a student.
+    # Nothing a loader writes is a review: reviewed_by stays NULL (answer 33).
     held_back = total_q - total_v
-    print(f"review gate: {held_back} inserted question(s) landed as status='review' — not "
-          f"served to any student until a human promotes them"
-          + ("" if not approve_all else "   [--approve-all was used: PoC bulk approval]"))
+    print(f"review gate: {held_back} inserted question(s) landed as status='review' — held by an "
+          f"automatic check (hold_reason) or, outside maths, awaiting a human; none is served to a student"
+          + ("" if not approve_all else "   [--approve-all was used: PoC bulk promotion, NOT a review]"))
 
 
 """The demo cast — the three students that make the WHOLE journey demonstrable.

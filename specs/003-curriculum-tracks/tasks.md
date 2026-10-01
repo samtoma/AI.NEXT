@@ -626,15 +626,13 @@ ticked: code is in progress on the branch, not yet read and run for this pass.
 - [ ] T441 [US1] (WP-G, WP-P7) **"Reviewed" means a human stamp only** (FR-4506, decision 54, answer
   33): an AI-only pass reads "AI-checked, awaiting human" in the console, never "reviewed"; no student
   surface says either word (unchanged from ADR-0019).
-- [ ] T442 [US1] (WP-DOC) No separate task — folded into T436 (FR-4507's course/kind scoping is part of
-  the backlog's own definition). *Reserved, not used.*
-- [ ] T443 [US1] (WP-P4, WP-P7) **Book-image stand-ins** (FR-4508, decision 58d, answer 37d — TEMPORARY
+- [ ] T442 [US1] (WP-P4, WP-P7) **Book-image stand-ins** (FR-4508, decision 58d, answer 37d — TEMPORARY
   reversal of decision 50/answer 29 for students): where no native figure type exists yet (FR-4321),
   load the figure as `visuals.kind: "book_image"`, `stand_in: true`, instead of shipping the lesson
-  without it; register each as a backlog item "needs native figure" (T436); keep FR-4321's existing
+  without it; register each as a backlog item "needs native figure" (T436). Keep FR-4321's existing
   rule — a stand-in that would draw or reveal the question's own unknown or answer is withheld, same as
   today, and the lesson ships without it in that one case.
-- [ ] T444 [US1] (WP-P2, WP-P3, WP-P4, WP-P5) **Gates G1–G4 auto-pass during the fan-out** (FR-4509,
+- [ ] T443 [US1] (WP-P2, WP-P3, WP-P4, WP-P5) **Gates G1–G4 auto-pass during the fan-out** (FR-4509,
   decision 58c, answer 37c): `objectives.workflow.js` / `assemble_objectives.py` (G1, FR-4410),
   `lesson.workflow.js` / `assemble_lesson_bundle.py` (G2, FR-4302), the widget stage (G3, FR-4306 —
   unchanged, decision 47 already has this shape) and the misconceptions stage (G4, FR-4307) each
