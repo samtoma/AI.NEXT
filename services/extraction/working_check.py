@@ -3,7 +3,8 @@
     uv run working_check.py precheck --seed <chapter bundle.json> [--out flags.json]        # free, no model
     uv run working_check.py args     --book g10-math --seed <chapter bundle.json> --chapter N \\
                                      --by-ref DIR --out A.json [--lesson-runs runs/<book>/lesson] [--max-per-run 300]
-                                     [--batch 8] [--effort medium] [--model sonnet] [--only FILE] [--embed COPY]
+                                     [--batch 5] [--effort high] [--model sonnet] [--only FILE] [--embed COPY]
+                                     [--order shuffled --order-seed 11] [--pass-id B] [--aliases mutants.json]
     uv run working_check.py collect  --args A.json [--args A.part2.json] --runs R.json [R2.json …] \\
                                      --out runs/<book>/working-check/chNN.flags.json
     uv run working_check.py calibrate --truth runs/<book>/working-check/chNN.calibration.json --flags <flags.json>
@@ -34,7 +35,7 @@ that is the agent's job. One more free rule (sw-v2, `precheck_stub`): a book que
 no maths at all and never states a digit of its numeric key is a stub ("First draw a sketch: [figure]"
 for a length the key gives as √34): a final_answer flag, source "stub".
 
-THE AGENT (runbook/working-check.workflow.js, prompts sw-v2). One Sonnet agent per BATCH of up to 8 solutions
+THE AGENT (runbook/working-check.workflow.js, prompts sw-v3). One Sonnet agent per BATCH of up to 5 solutions
 reads each one's question, its options (multiple choice), the key and the numbered working (one shard each,
 packet by reference) and judges each step against the question and the steps before it: a substituted value that
 is not the question's, a line whose arithmetic does not equal the next, a sign or bracket lost, a label that
@@ -47,7 +48,7 @@ solutions ($0.161 each; the plan said $0.03-0.05). The harness gives every agent
 and ~95K of cache reads before it has read one shard ($0.094: 65% of an agent that opened no figure) and the
 agent's thinking added $0.034 on average; opening figures added ~$0.06 to the 66 agents that did. No prompt
 can lower the fixed part of one-agent-per-solution below $0.09, so sw-v2 shares it: 8 solutions per agent
-(~$0.012 each), a figure policy (a figure is offered only when the question text does not give its points,
+(~$0.012 each at 8), a figure policy (a figure is offered only when the question text does not give its points,
 and every offered figure is read in the agent's first turn), reasoning effort `medium`, and notes only on
 flags. Measured sw-v1 precision on the same chapter: 23 of 25 flags were real book defects; the two false ones
 came from the shard (it omitted the multiple-choice options), which sw-v2 now prints.
@@ -90,17 +91,22 @@ FORMAT = "ainext.working-check/1"
 MAX_PER_RUN = 300                       # keeps a part's compact args well under packet_ref.COMPACT_LIMIT
 FLAG_KINDS = ("wrong_value", "arithmetic", "sign", "label", "copy", "final_answer", "other")
 FLAG_WHERE = ("working", "question", "unsure")      # where the fault sits (sw-v2): a step, or the question text
-BATCH = 8                               # solutions per checking agent: shares the ~$0.09 fixed cost of an agent
-EFFORT = "medium"                       # the agents' reasoning effort ("low" once a calibration run allows it)
+BATCH = 5                               # solutions per checking agent: shares the ~$0.09 fixed cost of an agent
+EFFORT = "high"                         # the agents' reasoning effort (batch 8 / medium missed simple typos: see SW-V3)
+PASSES = ("A", "B")                     # two independent blind passes over every chapter, flags unioned
+SHUFFLE_SEED = 11                       # pass B's order: the same solutions, other batch neighbours
 MODEL = "sonnet"
 EFFORTS = ("low", "medium", "high")
 MODELS = ("sonnet", "haiku")
 ORDERS = ("bundle", "shuffled")         # shuffled: a second, independent pass batches the solutions differently
-# What one checking agent cost (API-equivalent USD per solution), for the fan-out plan. sw-v1 measured: 31.0 / 192.
-# sw-v2 is MODELLED from sw-v1's measured token mix (fixed 30K cache-write + 95K cache-read per agent shared by a
-# batch; thinking 1.2-3.4K tokens per solution at medium..default effort; at most 3 images per batch) and stays
-# unvalidated until the calibration subset run (ch08.calibration.json, 51 solutions) is metered.
+# What the checker costs (API-equivalent USD per solution), for the fan-out plan. METERED on the Chapter 8
+# calibration subset (51 solutions, Sonnet 5.5): sw-v1 one agent per solution $0.161 (31.0 / 192); sw-v2 batch 8 /
+# medium $0.0188; sw-v2 batch 5 / high $0.0271. A sw-v3 PASS (batch 5 / high, figures read in the first turn,
+# the trace rule) is modelled at $0.027-0.035; the recommended two passes at $0.054-0.07 until the sw-v3
+# calibration runs are metered.
 MEASURED_SW_V1_PER_SOLUTION = 0.161
+MEASURED_SW_V2_PER_SOLUTION = {"batch8_medium": 0.0188, "batch5_high": 0.0271}
+SW_PASS_COST_PER_SOLUTION = (0.027, 0.035)
 
 
 # ============================================================================ the solutions
@@ -660,9 +666,9 @@ def build_args(book, bundle: dict, chapter: int, directory: Path, figures: dict 
     return out
 
 
-def agents_for(solutions: int, batch: int = BATCH) -> int:
-    """Checking agents a chapter of `solutions` solutions with working needs."""
-    return math.ceil(solutions / batch)
+def agents_for(solutions: int, batch: int = BATCH, passes: int = 1) -> int:
+    """Checking agents a chapter of `solutions` solutions with working needs (`passes` independent passes)."""
+    return math.ceil(solutions / batch) * passes
 
 
 # ============================================================================ collect

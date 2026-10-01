@@ -3,7 +3,7 @@ export const meta = {
   description: 'Step-level working checker (answer 30, backlog 78; sw-v3): one blind Sonnet agent per BATCH of canonical solutions reads each question, its options, its figure, the key and the numbered working, and flags every step that does not follow — never corrects; run twice (two independent passes) and union the flags',
   whenToUse: 'After a chapter is assembled (seed/<book>/<prefix>-cNN.json), before its content is reviewed. Args come from `uv run working_check.py args --book <book> --seed <bundle> --chapter N --by-ref DIR --out A.json` (or its generated copy, --embed).',
   phases: [
-    { title: 'SW Check', detail: 'one agent per batch of up to 12 solutions (default 8): does each step follow from the question, its figure and the steps before it? (Sonnet)' },
+    { title: 'SW Check', detail: 'one agent per batch of up to 12 solutions (default 5): does each step follow from the question, its figure and the steps before it? (Sonnet)' },
   ],
 }
 
