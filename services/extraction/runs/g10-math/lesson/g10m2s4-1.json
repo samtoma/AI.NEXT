@@ -1917,7 +1917,7 @@
     "pairs": [
      {
       "pair_id": "Ex2-3:3|blind~printed",
-      "route": "signature",
+      "route": "normalised",
       "verdict": "equivalent"
      },
      {
@@ -1927,7 +1927,7 @@
      },
      {
       "pair_id": "Ex2-3:3|book~printed",
-      "route": "signature",
+      "route": "normalised",
       "verdict": "equivalent"
      }
     ]
@@ -1960,9 +1960,9 @@
    ],
    "solution_provenance": "book_worked_epub",
    "printed_answer": "x ≈1,49",
-   "epub_final_answer": null,
+   "epub_final_answer": "therefore x ≈ 1,49",
    "blind_answer": "x\\approx 1{,}49",
-   "verification": "disputed",
+   "verification": "agreed",
    "tier": "standard",
    "printed_page": 56,
    "shortcode": "2F43",
@@ -1970,27 +1970,22 @@
     "pairs": [
      {
       "pair_id": "Ex2-3:4|blind~printed",
-      "route": "signature",
+      "route": "normalised",
       "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-3:4|blind~book",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "normalised",
+      "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-3:4|book~printed",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "normalised",
+      "verdict": "equivalent"
      }
-    ],
-    "unchecked": [
-     "book_final is not in the book solution"
     ]
    },
-   "typing_problems": [
-    "book_final is not in the book solution"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2002,13 +1997,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex2-4:3a",
@@ -2039,15 +2028,13 @@
      },
      {
       "pair_id": "Ex2-4:3a|blind~book",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Both x=-3."
+      "route": "normalised",
+      "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-4:3a|book~printed",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Both x=-3."
+      "route": "normalised",
+      "verdict": "equivalent"
      }
     ]
    },
@@ -2176,10 +2163,16 @@
    "kind": "exercise",
    "lo": "lo:g10m2s4-1-1",
    "stem": "Solve: $2\\times7^{3x}=98$",
-   "answer_type": "numeric",
+   "answer_type": "expression",
    "answer": "\\frac{2}{3}",
    "choices": null,
-   "marker": null,
+   "marker": {
+    "kind": "expression",
+    "key": "\\frac{2}{3}",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
    "solution": [
     "$\\begin{align*}2\\times7^{3x}&=98\\\\7^{3x}&=49\\\\7^{3x}&=7^{2}\\\\\\therefore3x&=2\\\\x&=\\dfrac{2}{3}\\end{align*}$"
    ],
@@ -2210,9 +2203,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "numeric key \"\\frac{2}{3}\" is not a number"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2224,13 +2215,15 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (numeric key \"\\frac{2}{3}\" is not a number); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "typing_retyped": {
+    "from": "numeric",
+    "as": "expression (an exact fraction)",
+    "rule": "fraction-key",
+    "because": [
+     "the numeric key \"\\frac{2}{3}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
+    ]
+   },
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex2-4:3e",
@@ -2343,10 +2336,16 @@
    "kind": "exercise",
    "lo": "lo:g10m2s4-1-1",
    "stem": "Solve: $2^{m+1}=\\left(\\text{0,5}\\right)^{m-2}$",
-   "answer_type": "numeric",
+   "answer_type": "expression",
    "answer": "\\frac{1}{2}",
    "choices": null,
-   "marker": null,
+   "marker": {
+    "kind": "expression",
+    "key": "\\frac{1}{2}",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
    "solution": [
     "$\\begin{align*}2^{m+1}&=\\left(\\text{0,5}\\right)^{m-2}\\\\2^{m+1}&=\\left(\\dfrac{1}{2}\\right)^{m-2}\\\\2^{m+1}&=\\left(2^{-1}\\right)^{m-2}\\\\2^{m+1}&=2^{2-m}\\\\\\therefore m+1&=2-m\\\\m&=\\dfrac{1}{2}\\end{align*}$"
    ],
@@ -2377,9 +2376,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "numeric key \"\\frac{1}{2}\" is not a number"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2391,13 +2388,15 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (numeric key \"\\frac{1}{2}\" is not a number); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "typing_retyped": {
+    "from": "numeric",
+    "as": "expression (an exact fraction)",
+    "rule": "fraction-key",
+    "because": [
+     "the numeric key \"\\frac{1}{2}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
+    ]
+   },
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex2-4:3h",
@@ -2626,10 +2625,16 @@
    "kind": "exercise",
    "lo": "lo:g10m2s4-1-3",
    "stem": "Solve: $k^{-1}-7k^{-\\frac{1}{2}}-18=0$",
-   "answer_type": "numeric",
+   "answer_type": "expression",
    "answer": "\\frac{1}{81}",
    "choices": null,
-   "marker": null,
+   "marker": {
+    "kind": "expression",
+    "key": "\\frac{1}{81}",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
    "solution": [
     "$\\begin{align*}k^{-1}-7k^{-\\frac{1}{2}}-18&=0\\\\\\left(k^{-\\frac{1}{2}}-9\\right)\\left(k^{-\\frac{1}{2}}+2\\right)&=0\\\\k^{-\\frac{1}{2}}-9=0&\\text{or}k^{-\\frac{1}{2}}+2=0\\\\k^{-\\frac{1}{2}}=9&\\text{or}k^{-\\frac{1}{2}}=-2\\\\\\left(k^{-\\frac{1}{2}}\\right)^{-2}=(9)^{-2}&\\text{or}\\left(k^{-\\frac{1}{2}}\\right)^{-2}=(-2)^{-2}\\\\k&=\\frac{1}{81}\\text{or}\\frac{1}{4}\\end{align*}$",
     "We check both answers and find that $k=\\frac{1}{81}$ is the only solution."
@@ -2663,9 +2668,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "numeric key \"\\frac{1}{81}\" is not a number"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2677,13 +2680,15 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (numeric key \"\\frac{1}{81}\" is not a number); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "typing_retyped": {
+    "from": "numeric",
+    "as": "expression (an exact fraction)",
+    "rule": "fraction-key",
+    "because": [
+     "the numeric key \"\\frac{1}{81}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
+    ]
+   },
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex2-4:3o",
@@ -2746,10 +2751,16 @@
    "kind": "exercise",
    "lo": "lo:g10m2s4-1-3",
    "stem": "Solve: $\\dfrac{16^x-1}{4^2x+1}=3$",
-   "answer_type": "numeric",
+   "answer_type": "expression",
    "answer": "\\frac{1}{2}",
    "choices": null,
-   "marker": null,
+   "marker": {
+    "kind": "expression",
+    "key": "\\frac{1}{2}",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
    "solution": [
     "$\\begin{align*}\\frac{16^{x}-1}{4^{2}x+1}&=3\\\\\\frac{(4^{2x}-1)(4^{2x}+1)}{4^{2x}+1}&=3\\\\4^{2x}-1&=3\\\\4^{2x}&=4^{1}\\\\\\therefore2x&=1\\\\x&=\\frac{1}{2}\\end{align*}$"
    ],
@@ -2782,9 +2793,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "numeric key \"\\frac{1}{2}\" is not a number"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2796,13 +2805,15 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (numeric key \"\\frac{1}{2}\" is not a number); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "typing_retyped": {
+    "from": "numeric",
+    "as": "expression (an exact fraction)",
+    "rule": "fraction-key",
+    "because": [
+     "the numeric key \"\\frac{1}{2}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
+    ]
+   },
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex2-4:3q",
@@ -2848,9 +2859,8 @@
      },
      {
       "pair_id": "Ex2-4:3q|book~printed",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Same set {2,3}."
+      "route": "normalised",
+      "verdict": "equivalent"
      }
     ]
    },
@@ -2897,15 +2907,13 @@
      },
      {
       "pair_id": "Ex2-4:3r|blind~book",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Both x=2."
+      "route": "normalised",
+      "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-4:3r|book~printed",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Both x=2."
+      "route": "normalised",
+      "verdict": "equivalent"
      }
     ]
    },
@@ -2960,15 +2968,13 @@
      },
      {
       "pair_id": "Ex2-4:3s|blind~book",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Both x=1 or x=-1."
+      "route": "normalised",
+      "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-4:3s|book~printed",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Both x=1 or x=-1 (unicode minus)."
+      "route": "normalised",
+      "verdict": "equivalent"
      }
     ]
    },
@@ -3121,15 +3127,13 @@
      },
      {
       "pair_id": "Ex2-4:3v|blind~book",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Both x=-1."
+      "route": "normalised",
+      "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-4:3v|book~printed",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Both x=-1."
+      "route": "normalised",
+      "verdict": "equivalent"
      }
     ]
    },
@@ -3191,9 +3195,8 @@
      },
      {
       "pair_id": "Ex2-4:3w|book~printed",
-      "route": "judge",
-      "verdict": "equivalent",
-      "reason": "Same set {-1/3, -1}."
+      "route": "signature",
+      "verdict": "equivalent"
      }
     ]
    },
@@ -3282,9 +3285,9 @@
    ],
    "solution_provenance": "book_worked_epub",
    "printed_answer": "x ≈2,73",
-   "epub_final_answer": null,
+   "epub_final_answer": "therefore x ≈ 2,73",
    "blind_answer": "x\\approx 2.73",
-   "verification": "disputed",
+   "verification": "agreed",
    "tier": "standard",
    "printed_page": 58,
    "shortcode": "2F6M",
@@ -3292,27 +3295,22 @@
     "pairs": [
      {
       "pair_id": "Ex2-4:4|blind~printed",
-      "route": "signature",
+      "route": "normalised",
       "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-4:4|blind~book",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "normalised",
+      "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-4:4|book~printed",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "normalised",
+      "verdict": "equivalent"
      }
-    ],
-    "unchecked": [
-     "book_final is not in the book solution"
     ]
    },
-   "typing_problems": [
-    "book_final is not in the book solution"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -3324,13 +3322,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex2-4:5",
@@ -3346,9 +3338,9 @@
    ],
    "solution_provenance": "book_worked_epub",
    "printed_answer": "x ≈3,10",
-   "epub_final_answer": null,
+   "epub_final_answer": "therefore x ≈ 3,10",
    "blind_answer": "x\\approx 3.10",
-   "verification": "disputed",
+   "verification": "agreed",
    "tier": "standard",
    "printed_page": 58,
    "shortcode": "2F6N",
@@ -3356,27 +3348,22 @@
     "pairs": [
      {
       "pair_id": "Ex2-4:5|blind~printed",
-      "route": "signature",
+      "route": "normalised",
       "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-4:5|blind~book",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "normalised",
+      "verdict": "equivalent"
      },
      {
       "pair_id": "Ex2-4:5|book~printed",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "normalised",
+      "verdict": "equivalent"
      }
-    ],
-    "unchecked": [
-     "book_final is not in the book solution"
     ]
    },
-   "typing_problems": [
-    "book_final is not in the book solution"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -3388,59 +3375,35 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   }
  ],
  "source_run": {
   "prompts_version": "lesson-v8",
   "stage": "S2-S4,S8",
   "collect_version": "collect-6",
+  "run_id": "wf_89dbc00a-57a",
   "embedded": {
    "source": "runbook/lesson.workflow.js",
-   "source_sha256": "c79e2c6ea317ffec161f87ed2dd081980264f4d7ff6517d88966e671b3db0eb5",
+   "source_sha256": "11ac17d5aa352617ba01956395ede489f9552307fad5e6ed86e02fcc4d383b31",
    "args_sha256": "6a2847d77daa07d8b8977b09d2778b377f5ffb26c9d280183f64ab9a5b2daf0a",
-   "generated_sha256": "0e0ccf4779c442786818610375efee504d0ba887ae770eba31de207c6d0e0fa9",
+   "generated_sha256": "dfdcd25e20fd354638b41ca338a1a3a3a1b8fb045b4193575270707c157e6230",
    "generator": "services/extraction/embed_workflow.py v1"
+  },
+  "recollected": {
+   "from_run": "wf_89dbc00a-57a",
+   "collect_version": "collect-6",
+   "script": {
+    "source": "runbook/lesson.workflow.js",
+    "source_sha256": "11ac17d5aa352617ba01956395ede489f9552307fad5e6ed86e02fcc4d383b31",
+    "args_sha256": "6a2847d77daa07d8b8977b09d2778b377f5ffb26c9d280183f64ab9a5b2daf0a",
+    "generated_sha256": "dfdcd25e20fd354638b41ca338a1a3a3a1b8fb045b4193575270707c157e6230"
+   }
   }
  },
  "checks": {
   "verify": {
    "disagreements": [
-    {
-     "ref": "Ex2-3:4",
-     "printed": "x ≈1,49",
-     "book": null,
-     "blind": "x\\approx 1{,}49",
-     "pairs": [
-      {
-       "pair_id": "Ex2-3:4|blind~printed",
-       "route": "signature",
-       "verdict": "equivalent"
-      },
-      {
-       "pair_id": "Ex2-3:4|blind~book",
-       "route": "missing",
-       "verdict": "missing"
-      },
-      {
-       "pair_id": "Ex2-3:4|book~printed",
-       "route": "missing",
-       "verdict": "missing"
-      }
-     ],
-     "typing_problems": [
-      "book_final is not in the book solution"
-     ],
-     "unchecked": [
-      "book_final is not in the book solution"
-     ]
-    },
     {
      "ref": "Ex2-4:3p",
      "printed": "1 2",
@@ -3465,139 +3428,54 @@
        "verdict": "equivalent"
       }
      ],
-     "typing_problems": [
-      "numeric key \"\\frac{1}{2}\" is not a number"
-     ]
-    },
-    {
-     "ref": "Ex2-4:4",
-     "printed": "x ≈2,73",
-     "book": null,
-     "blind": "x\\approx 2.73",
-     "pairs": [
-      {
-       "pair_id": "Ex2-4:4|blind~printed",
-       "route": "signature",
-       "verdict": "equivalent"
-      },
-      {
-       "pair_id": "Ex2-4:4|blind~book",
-       "route": "missing",
-       "verdict": "missing"
-      },
-      {
-       "pair_id": "Ex2-4:4|book~printed",
-       "route": "missing",
-       "verdict": "missing"
-      }
-     ],
-     "typing_problems": [
-      "book_final is not in the book solution"
-     ],
-     "unchecked": [
-      "book_final is not in the book solution"
-     ]
-    },
-    {
-     "ref": "Ex2-4:5",
-     "printed": "x ≈3,10",
-     "book": null,
-     "blind": "x\\approx 3.10",
-     "pairs": [
-      {
-       "pair_id": "Ex2-4:5|blind~printed",
-       "route": "signature",
-       "verdict": "equivalent"
-      },
-      {
-       "pair_id": "Ex2-4:5|blind~book",
-       "route": "missing",
-       "verdict": "missing"
-      },
-      {
-       "pair_id": "Ex2-4:5|book~printed",
-       "route": "missing",
-       "verdict": "missing"
-      }
-     ],
-     "typing_problems": [
-      "book_final is not in the book solution"
-     ],
-     "unchecked": [
-      "book_final is not in the book solution"
-     ]
+     "typing_problems": []
     }
    ],
-   "unchecked": [
-    {
-     "ref": "Ex2-3:4",
-     "missing": [
-      "book_final is not in the book solution"
-     ]
-    },
-    {
-     "ref": "Ex2-4:4",
-     "missing": [
-      "book_final is not in the book solution"
-     ]
-    },
-    {
-     "ref": "Ex2-4:5",
-     "missing": [
-      "book_final is not in the book solution"
-     ]
-    }
-   ],
+   "unchecked": [],
    "off_task": [],
    "no_printed_answer": [],
-   "typing_problems": [
-    {
-     "ref": "Ex2-3:4",
-     "problems": [
-      "book_final is not in the book solution"
-     ]
-    },
+   "typing_problems": [],
+   "printed_not_in_asked_form": [],
+   "forms_from_book_rules": [],
+   "forms_the_marker_cannot_check": [],
+   "retyped": [
     {
      "ref": "Ex2-4:3d",
-     "problems": [
-      "numeric key \"\\frac{2}{3}\" is not a number"
+     "as": "expression (an exact fraction)",
+     "rule": "fraction-key",
+     "key": "\\frac{2}{3}",
+     "because": [
+      "the numeric key \"\\frac{2}{3}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
      ]
     },
     {
      "ref": "Ex2-4:3g",
-     "problems": [
-      "numeric key \"\\frac{1}{2}\" is not a number"
+     "as": "expression (an exact fraction)",
+     "rule": "fraction-key",
+     "key": "\\frac{1}{2}",
+     "because": [
+      "the numeric key \"\\frac{1}{2}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
      ]
     },
     {
      "ref": "Ex2-4:3n",
-     "problems": [
-      "numeric key \"\\frac{1}{81}\" is not a number"
+     "as": "expression (an exact fraction)",
+     "rule": "fraction-key",
+     "key": "\\frac{1}{81}",
+     "because": [
+      "the numeric key \"\\frac{1}{81}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
      ]
     },
     {
      "ref": "Ex2-4:3p",
-     "problems": [
-      "numeric key \"\\frac{1}{2}\" is not a number"
-     ]
-    },
-    {
-     "ref": "Ex2-4:4",
-     "problems": [
-      "book_final is not in the book solution"
-     ]
-    },
-    {
-     "ref": "Ex2-4:5",
-     "problems": [
-      "book_final is not in the book solution"
+     "as": "expression (an exact fraction)",
+     "rule": "fraction-key",
+     "key": "\\frac{1}{2}",
+     "because": [
+      "the numeric key \"\\frac{1}{2}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
      ]
     }
    ],
-   "printed_not_in_asked_form": [],
-   "forms_from_book_rules": [],
-   "forms_the_marker_cannot_check": [],
-   "retyped": [],
    "tier_checks": [
     {
      "ref": "WE9",
@@ -3695,8 +3573,8 @@
    "worked_examples": 6,
    "exercises": 49,
    "by_answer_type": {
-    "expression": 20,
-    "numeric": 34,
+    "expression": 24,
+    "numeric": 30,
     "not_markable": 1
    },
    "by_solution_provenance": {
@@ -3704,8 +3582,8 @@
     "book_worked_epub": 49
    },
    "by_verification": {
-    "agreed": 51,
-    "disputed": 4
+    "agreed": 54,
+    "disputed": 1
    },
    "visuals": 0,
    "viz_gaps": 0,

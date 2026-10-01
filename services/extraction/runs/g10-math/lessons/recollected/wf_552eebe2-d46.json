@@ -6,9 +6,9 @@
  "book": "g10-math",
  "embedded": {
   "source": "runbook/lesson.workflow.js",
-  "source_sha256": "7efa3908b7d87e1ac1d1e4f68d43d5353fc06a08eefbb6baf1eb9ad128f6ea37",
+  "source_sha256": "11ac17d5aa352617ba01956395ede489f9552307fad5e6ed86e02fcc4d383b31",
   "args_sha256": "b3fdb7e91f683462245cbffdd54843ac22dd0e85c96d8011da2e377113d5478e",
-  "generated_sha256": "b68d58bb7d5ca49c0babe349c50a7c7fcdd77f0e489affb78a12474a653ade02",
+  "generated_sha256": "cf6356fe70314e3433e2fae2e97c1793e3785da79e4156c5647e9934e6b9fc4e",
   "generator": "services/extraction/embed_workflow.py v1"
  },
  "lessons": [
@@ -1169,9 +1169,8 @@
        },
        {
         "pair_id": "Ex1-9:11|book~printed",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Both are (cbrt(25)x+1)((cbrt(25))^2x^2 - cbrt(25)x + 1); the printed form is flattened."
+        "route": "signature",
+        "verdict": "equivalent"
        }
       ]
      },
@@ -1748,15 +1747,13 @@
        },
        {
         "pair_id": "Ex1-9:20|blind~book",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Same factors; the book form only adds a leading equals sign."
+        "route": "normalised",
+        "verdict": "equivalent"
        },
        {
         "pair_id": "Ex1-9:20|book~printed",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Same factors; the printed form is flattened (1 2 is 1/2, 1 4 is 1/4)."
+        "route": "signature",
+        "verdict": "equivalent"
        }
       ]
      },
@@ -1812,15 +1809,13 @@
        },
        {
         "pair_id": "Ex1-9:21|blind~book",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Same factors written with different LaTeX."
+        "route": "normalised",
+        "verdict": "equivalent"
        },
        {
         "pair_id": "Ex1-9:21|book~printed",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Same factors; the printed form is flattened fractions (3 t is 3/t, 9 t2 is 9/t^2, 3s t is 3s/t)."
+        "route": "signature",
+        "verdict": "equivalent"
        }
       ]
      },
@@ -1876,15 +1871,13 @@
        },
        {
         "pair_id": "Ex1-9:22|blind~book",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Same factors written with different LaTeX."
+        "route": "normalised",
+        "verdict": "equivalent"
        },
        {
         "pair_id": "Ex1-9:22|book~printed",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Same factors; the printed form is flattened fractions (1 4q is 1/(4q), 1 16q2 is 1/(16q^2), h 4q is h/(4q))."
+        "route": "signature",
+        "verdict": "equivalent"
        }
       ]
      },
@@ -1940,15 +1933,13 @@
        },
        {
         "pair_id": "Ex1-9:23|blind~book",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Same factorisation, with the same factor of 1/3 out front."
+        "route": "normalised",
+        "verdict": "equivalent"
        },
        {
         "pair_id": "Ex1-9:23|book~printed",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Same factorisation; the printed form is flattened (1 3 is 1/3)."
+        "route": "signature",
+        "verdict": "equivalent"
        }
       ]
      },
@@ -3061,9 +3052,8 @@
        },
        {
         "pair_id": "Ex1-9:11|book~printed",
-        "route": "judge",
-        "verdict": "equivalent",
-        "reason": "Both are (cbrt(25)x+1)((cbrt(25))^2x^2 - cbrt(25)x + 1); the printed form is flattened."
+        "route": "signature",
+        "verdict": "equivalent"
        }
       ],
       "typing_problems": []
@@ -3307,9 +3297,9 @@
   "journal": "/Users/samueltoma/.claude/projects/-Users-samueltoma-Documents-Claude-Projects-AI-Enthusiasts-PoC-Tutor-School-V1/5dd6b4ce-c4c4-4eab-b8f8-5465c092db24/subagents/workflows/wf_552eebe2-d46/journal.jsonl",
   "script": {
    "source": "runbook/lesson.workflow.js",
-   "source_sha256": "7efa3908b7d87e1ac1d1e4f68d43d5353fc06a08eefbb6baf1eb9ad128f6ea37",
+   "source_sha256": "11ac17d5aa352617ba01956395ede489f9552307fad5e6ed86e02fcc4d383b31",
    "args_sha256": "b3fdb7e91f683462245cbffdd54843ac22dd0e85c96d8011da2e377113d5478e",
-   "generated_sha256": "b68d58bb7d5ca49c0babe349c50a7c7fcdd77f0e489affb78a12474a653ade02"
+   "generated_sha256": "cf6356fe70314e3433e2fae2e97c1793e3785da79e4156c5647e9934e6b9fc4e"
   },
   "collect_version": "collect-6",
   "prompts_version": "lesson-v8",
@@ -3351,7 +3341,7 @@
     "reused": true
    }
   ],
-  "judge_pairs_reused": 29,
+  "judge_pairs_reused": 20,
   "judge_pairs_unjudged": [],
   "missing_calls": [],
   "tool": "services/extraction/recollect_lessons.py"

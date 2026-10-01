@@ -1116,3 +1116,7 @@ even marks the plain `AC/AB=AD/BD` correct, but with the contract's single lette
 
 **Chapters 1–4 (nothing reloaded, nothing re-closed):** with today's script chapters 3 and 4 change nothing (0 items; the recollected files are as last round's, only their script sha would move). Chapter 1: Ex1-11:37b flips (typing OK, kind `values` → `interval`; 37a only its kind), Ex1-10:4c stays excluded; the other lessons nothing. Chapter 2:
 14 items now excluded would pass typing: g10m2s2-1 Ex2-4:1q, 1r, 1s, 1z, 2a, 2b, 2l and g10m2s4-1 Ex2-4:3d, 3g, 3n, 3p (fractions typed `expression`) plus Ex2-3:4, Ex2-4:4, Ex2-4:5 ("therefore x ≈ 1,49": a plain "therefore"); all `agreed` but Ex2-4:3p.
+
+**Tests (Chapter 5 round):** `tests/test_lesson_collect6.py` 60 → 73 (`ApproximateFinals` 4, `ChapterFiveForms` 8, `NoSingleEditOfAFinal` 1; the pins on what stays refused pass on last round's script too, the rest fail on it),
+`tests/test_assemble_lesson_bundle.py::HtmlEntityTest` 3. Whole suite, one run: **1,126 passed, 1 skipped, 0 failed** (including `ChapterEightDryRun`, both modes). Containment still accepts any statement the solution itself makes (a working line):
+over the 1,175 accepted finals of chapters 1–5, 38,430 one-digit edits, 348 are accepted for that reason (last round's script: 470 of 36,135 for 1,098 finals) — a final is not required to be the solution's LAST line.
