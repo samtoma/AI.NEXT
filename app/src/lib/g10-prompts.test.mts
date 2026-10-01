@@ -284,6 +284,47 @@ test("decision 9: English only — no Arabic in any Grade 10 prompt, and the stu
   assert.doesNotMatch(data, /^- Arabic:/m);
 });
 
+test("decision 9 / Samuel's answer 35 (2026-10-01): a cross-subject bridge FROM a Grade 10 lesson carries no Arabic either", () => {
+  // `labelArOfSpineKey` always answers in Arabic regardless of the OTHER
+  // subject's own direction — including "math" itself, so a bridge from the
+  // Grade 10 book to Prep-3 maths (both `math`, both English) would still
+  // print «الرياضيات» if this were not gated on the lesson's own course. This
+  // is a synthetic bridge, not the fixture's — the fixture has none — but it
+  // proves the function itself, independent of whatever is curated later.
+  const ARABIC_SCRIPT = /[؀-ۿ]/;
+  const bridges = [
+    {
+      thisLo: "lo:g10m1s3-1-1",
+      thisLabel: "Factorising a quadratic",
+      otherLo: "lo:u1-4-3",
+      otherLabel: "Polynomial functions",
+      otherSubject: "math" as const,
+      rationale: "both cover factorising a quadratic expression",
+    },
+    {
+      thisLo: "lo:g10m1s3-1-1",
+      thisLabel: "Factorising a quadratic",
+      otherLo: "lo:soc1-2-1",
+      otherLabel: "The Suez Canal",
+      otherSubject: "social" as const,
+      rationale: "a tester's cross-curriculum exception",
+    },
+  ];
+  const g10Block = lesson.bridgeBlock(bridges, false);
+  assert.doesNotMatch(g10Block, ARABIC_SCRIPT, "arabic=false must drop every Arabic character");
+  assert.match(g10Block, /CROSS-SUBJECT CONNECTIONS/);
+  assert.match(g10Block, /Mathematics/, "the other end's name still appears, in English");
+  assert.match(g10Block, /Social Studies/);
+  assert.doesNotMatch(g10Block, /«/, "no Arabic guillemets either");
+  // and the National default is unchanged — byte-identical to before this fix
+  const nationalBlock = lesson.bridgeBlock(bridges);
+  assert.match(nationalBlock, /الرياضيات/, "arabic=true (the default) keeps naming the other subject in its own script");
+  assert.match(nationalBlock, ARABIC_SCRIPT);
+  // an empty bridge list is "" either way — lessons with no bridge are untouched
+  assert.equal(lesson.bridgeBlock([], false), "");
+  assert.equal(lesson.bridgeBlock([]), "");
+});
+
 test("FR-2602, FR-2605: the address rules hold in the Grade 10 prompts", () => {
   const MASCULINE = /\b(he|him|his|himself)\b/i;
   for (const g of ["null", "unspecified"]) {
