@@ -1,0 +1,157 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s6-1-1:crossratio",
+ "kind": "family",
+ "lo_id": "lo:g10m5s6-1-1",
+ "parent_question_id": "q:g10m5s6-1-1:ex5-3-1c",
+ "source_page": 119,
+ "tier": "advanced",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "r1",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "r2",
+   "randint": [
+    0,
+    2
+   ],
+   "resample_while": "r2 == r1"
+  },
+  {
+   "name": "a",
+   "choice": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "ANG",
+   "let": "[30, 45, 60]"
+  },
+  {
+   "name": "ang",
+   "let": "ANG[a]"
+  },
+  {
+   "name": "FN",
+   "let": "[\"sin\", \"cos\", \"tan\"]"
+  },
+  {
+   "name": "f1",
+   "let": "FN[r1]"
+  },
+  {
+   "name": "f2",
+   "let": "FN[r2]"
+  },
+  {
+   "name": "tr",
+   "let": "3 - r1 - r2"
+  },
+  {
+   "name": "VI",
+   "let": "[[0, 2, 1], [1, 2, 0], [3, 5, 4]]"
+  },
+  {
+   "name": "WCMD",
+   "let": "[\"mathrm\", \"sqrt\", \"mathrm\", \"mathrm\", \"sqrt\", \"mathrm\", \"mathrm\", \"mathrm\", \"sqrt\"]"
+  },
+  {
+   "name": "NUM",
+   "let": "[1, 3, 1, 1, 3, 1, 2, 2, 2]"
+  },
+  {
+   "name": "DCMD",
+   "let": "[\"mathrm\", \"mathrm\", \"sqrt\", \"sqrt\", \"mathrm\", \"mathrm\", \"mathrm\", \"sqrt\", \"mathrm\"]"
+  },
+  {
+   "name": "DEN",
+   "let": "[2, 2, 2, 3, 1, 1, 1, 3, 1]"
+  },
+  {
+   "name": "RECIP",
+   "let": "[6, 7, 8, 4, 3, 5]"
+  },
+  {
+   "name": "v1",
+   "let": "VI[r1][a]"
+  },
+  {
+   "name": "v2",
+   "let": "VI[r2][a]"
+  },
+  {
+   "name": "v3",
+   "let": "VI[tr][a]"
+  },
+  {
+   "name": "vw",
+   "let": "VI[r2][1]"
+  },
+  {
+   "name": "vu",
+   "let": "RECIP[v2]"
+  },
+  {
+   "name": "c0",
+   "let": "VI[r1][0]"
+  },
+  {
+   "name": "c1",
+   "let": "VI[r1][1]"
+  },
+  {
+   "name": "c2",
+   "let": "VI[r1][2]"
+  }
+ ],
+ "constraints": [
+  "v1 != v2",
+  "v3 != v1",
+  "v3 != v2",
+  "vw != v1",
+  "vw != v2",
+  "vw != v3",
+  "vu != v1",
+  "vu != v2",
+  "vu != v3",
+  "vu != vw"
+ ],
+ "stem": "The angle $\\theta$ is acute and $\\{=f1}\\theta=\\frac{\\{=WCMD[v1]}{{=NUM[v1]}}}{\\{=DCMD[v1]}{{=DEN[v1]}}}$. Without a calculator, which of the following is the value of $\\{=f2}\\theta$?",
+ "solution": [
+  "List the values of $\\{=f1}$ at the special angles, from the triangle with sides $1$, $1$, $\\sqrt{2}$ and the triangle with sides $1$, $2$, $\\sqrt{3}$: $\\{=f1}30^{\\circ}=\\frac{\\{=WCMD[c0]}{{=NUM[c0]}}}{\\{=DCMD[c0]}{{=DEN[c0]}}}$, $\\{=f1}45^{\\circ}=\\frac{\\{=WCMD[c1]}{{=NUM[c1]}}}{\\{=DCMD[c1]}{{=DEN[c1]}}}$ and $\\{=f1}60^{\\circ}=\\frac{\\{=WCMD[c2]}{{=NUM[c2]}}}{\\{=DCMD[c2]}{{=DEN[c2]}}}$.",
+  "The given value $\\frac{\\{=WCMD[v1]}{{=NUM[v1]}}}{\\{=DCMD[v1]}{{=DEN[v1]}}}$ matches only $\\{=f1}{=ang}^{\\circ}$, so $\\theta={=ang}^{\\circ}$.",
+  "Now find the ratio that was asked for at this angle: $\\{=f2}\\theta=\\{=f2}{=ang}^{\\circ}=\\frac{\\{=WCMD[v2]}{{=NUM[v2]}}}{\\{=DCMD[v2]}{{=DEN[v2]}}}$.",
+  "So $\\{=f2}\\theta=\\frac{\\{=WCMD[v2]}{{=NUM[v2]}}}{\\{=DCMD[v2]}{{=DEN[v2]}}}$. The value $\\frac{\\{=WCMD[v1]}{{=NUM[v1]}}}{\\{=DCMD[v1]}{{=DEN[v1]}}}$ belongs to $\\{=f1}\\theta$, so it is not the value of $\\{=f2}\\theta$."
+ ],
+ "choices": {
+  "correct": "\\frac{\\{=WCMD[v2]}{{=NUM[v2]}}}{\\{=DCMD[v2]}{{=DEN[v2]}}}",
+  "distractors": [
+   {
+    "text": "\\frac{\\{=WCMD[v1]}{{=NUM[v1]}}}{\\{=DCMD[v1]}{{=DEN[v1]}}}",
+    "misconception_id": "mc:g10m5s6-1-1:wrong-ratio-same-angle"
+   },
+   {
+    "text": "\\frac{\\{=WCMD[v3]}{{=NUM[v3]}}}{\\{=DCMD[v3]}{{=DEN[v3]}}}",
+    "misconception_id": "mc:g10m5s6-1-1:wrong-ratio-same-angle"
+   },
+   {
+    "text": "\\frac{\\{=WCMD[vw]}{{=NUM[vw]}}}{\\{=DCMD[vw]}{{=DEN[vw]}}}",
+    "misconception_id": "mc:g10m5s6-1-1:wrong-triangle-for-angle"
+   },
+   {
+    "text": "\\frac{\\{=WCMD[vu]}{{=NUM[vu]}}}{\\{=DCMD[vu]}{{=DEN[vu]}}}",
+    "misconception_id": "mc:g10m5s6-1-1:ratio-upside-down"
+   }
+  ]
+ },
+ "proposed_misconceptions": [],
+ "notes": "ADVANCED gap. A two-step recall of the special-angle table, in the book's own option style (ex5-3-1, values written as a fraction N over D, so tan 45 is 1 over 1 and tan 60 is root 3 over 1, exactly as the book prints them). The student is told an acute angle theta has one ratio equal to a table value, must recognise which special angle that is (30 or 60), then state a DIFFERENT ratio of the same angle. Only the book's special triangles (1,1,root2 and 1,2,root3) are used; no equation solving, no expression evaluation, no calculator. Every instance is exact: 12 distinct instances (3 given ratios x 2 asked ratios x angles 30 or 60), each with a unique special angle because sin, cos and tan are one-to-one on the acute angles. Distractor slots have fixed meanings so the misconception ids are always true: (1) the GIVEN value repeated and (2) the THIRD ratio's value, both mc wrong-ratio-same-angle; (3) the ratio asked, but read at 45 degrees, mc wrong-triangle-for-angle; (4) the correct value upside down (1/2 -> 2/1, root3/2 -> 2/root3, 1/root3 <-> root3/1), mc ratio-upside-down. The generator constraints enforce that all five options are distinct, and I checked all 12 combinations numerically (correct value, uniqueness of the angle, five distinct values and five distinct decimals). Deliberately NOT included: 45 degrees as the base angle, because sin 45 = cos 45 makes the given value or the third ratio coincide with the answer and the four fixed distractor slots collapse; 45 degrees is still tested as the wrong-triangle distractor. Also NOT included: a decimal distractor for mc calculator-decimal-not-surd, because a decimal such as 0.87 is approximately the right value and a careful solver could defend it, which makes the key ambiguous. TEMPLATE NOTE for the reviewer: every value is printed as \\frac{N}{D}. The command name is supplied by a hole (\\sqrt or \\mathrm) so one template can print every value; \\mathrm{2} wraps a plain digit and renders identically to a bare 2. Choice texts carry no dollar signs, like the book's own choices; the stem and solution steps do."
+}

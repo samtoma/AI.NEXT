@@ -1,0 +1,115 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s3-1-1:sidenames",
+ "kind": "family",
+ "lo_id": "lo:g10m5s3-1-1",
+ "parent_question_id": "q:g10m5s3-1-1:ex5-1-2a",
+ "source_page": 112,
+ "tier": "standard",
+ "answer_type": "mcq",
+ "context": null,
+ "params": [
+  {
+   "name": "i",
+   "randint": [
+    0,
+    5
+   ]
+  },
+  {
+   "name": "names",
+   "let": "[[\"A\",\"B\",\"C\"],[\"D\",\"E\",\"F\"],[\"K\",\"L\",\"M\"],[\"P\",\"Q\",\"R\"],[\"X\",\"Y\",\"Z\"],[\"G\",\"H\",\"J\"]]"
+  },
+  {
+   "name": "sidetab",
+   "let": "[[\"BC\",\"AC\",\"AB\"],[\"EF\",\"DF\",\"DE\"],[\"LM\",\"KM\",\"KL\"],[\"QR\",\"PR\",\"PQ\"],[\"YZ\",\"XZ\",\"XY\"],[\"HJ\",\"GJ\",\"GH\"]]"
+  },
+  {
+   "name": "vs",
+   "let": "names[i]"
+  },
+  {
+   "name": "ds",
+   "let": "sidetab[i]"
+  },
+  {
+   "name": "r",
+   "randint": [
+    0,
+    2
+   ]
+  },
+  {
+   "name": "f",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "t",
+   "let": "(r + 1 + f) % 3"
+  },
+  {
+   "name": "u",
+   "let": "(r + 2 - f) % 3"
+  },
+  {
+   "name": "hyp",
+   "let": "ds[r]"
+  },
+  {
+   "name": "opp",
+   "let": "ds[t]"
+  },
+  {
+   "name": "adj",
+   "let": "ds[u]"
+  }
+ ],
+ "constraints": [
+  "r != t and r != u and t != u"
+ ],
+ "stem": "In triangle ${=vs[0]}{=vs[1]}{=vs[2]}$ the right angle is at ${=vs[r]}$. Let $\\theta$ be the angle at ${=vs[t]}$. Which of the following correctly names the hypotenuse, the side opposite $\\theta$ and the side adjacent to $\\theta$?",
+ "solution": [
+  "The hypotenuse is always directly opposite the right angle. The right angle is at ${=vs[r]}$, so the hypotenuse is the side that does not touch ${=vs[r]}$: ${=hyp}$.",
+  "The opposite side is directly across from $\\theta$, the angle at ${=vs[t]}$. It is the side that does not touch ${=vs[t]}$: ${=opp}$.",
+  "The adjacent side is the remaining side. It forms $\\theta$ together with the hypotenuse, so it joins ${=vs[r]}$ and ${=vs[t]}$: ${=adj}$.",
+  "So the hypotenuse is ${=hyp}$, the opposite side is ${=opp}$ and the adjacent side is ${=adj}$."
+ ],
+ "choices": {
+  "correct": "hypotenuse ${=hyp}$, opposite ${=opp}$, adjacent ${=adj}$",
+  "distractors": [
+   {
+    "text": "hypotenuse ${=hyp}$, opposite ${=adj}$, adjacent ${=opp}$",
+    "misconception_id": "mc:g10m5s3-1-1:opposite-adjacent-swapped"
+   },
+   {
+    "text": "hypotenuse ${=opp}$, opposite ${=hyp}$, adjacent ${=adj}$",
+    "misconception_id": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed"
+   },
+   {
+    "text": "hypotenuse ${=adj}$, opposite ${=opp}$, adjacent ${=hyp}$",
+    "misconception_id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle"
+   }
+  ]
+ },
+ "proposed_misconceptions": [
+  {
+   "id": "mc:g10m5s3-1-1:opposite-adjacent-swapped",
+   "label": "Swapping the opposite and adjacent sides",
+   "description": "The student finds the hypotenuse correctly but gives the name opposite to the leg that touches the angle theta and the name adjacent to the leg that lies across from theta."
+  },
+  {
+   "id": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed",
+   "label": "Mixing up the two meanings of opposite",
+   "description": "The student calls the side across from the right angle (the hypotenuse) the opposite side, and then names the side across from theta as the hypotenuse, confusing opposite the right angle with opposite theta."
+  },
+  {
+   "id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle",
+   "label": "Choosing the wrong one of the two sides that form theta as the hypotenuse",
+   "description": "Two sides touch the angle theta, the hypotenuse and the adjacent leg. The student picks the leg as the hypotenuse instead of the side across from the right angle, and so calls the true hypotenuse the adjacent side."
+  }
+ ],
+ "notes": "Text-only version of the book's exercise 5.1.2 (page 112). The figure is replaced by a sentence that fixes the right-angle vertex and the vertex of theta, so a solver needs no diagram. The vertex names come from six alphabetical triples and sidetab holds the side opposite each vertex in alphabetical letter order (checked), so side names such as PQ are written the same way in the stem and the options. Both the right-angle vertex (3 choices) and the vertex of theta (2 choices) vary, giving 36 distinct stems. The three distractors are three of the five wrong ways to assign the three roles to the three sides, each tied to a named error. Solution steps follow the book's own wording: hypotenuse directly opposite the right angle, opposite side directly across from theta, adjacent side the remaining one that forms theta."
+}

@@ -1,0 +1,136 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s5-1-1:fraction",
+ "kind": "family",
+ "lo_id": "lo:g10m5s5-1-1",
+ "parent_question_id": "q:g10m5s5-1-1:ex5-2-1g",
+ "source_page": 117,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "ANG",
+   "let": "[12, 18, 23, 28, 34, 39, 43, 52, 57, 62, 67, 73, 77, 82, 108, 114, 124, 131, 142, 157, 164, 197, 203, 216, 227, 238, 251, 262, 281, 289, 296, 305, 314, 326, 338, 347]"
+  },
+  {
+   "name": "SIN",
+   "let": "[2079116908, 3090169944, 3907311285, 4694715628, 5591929035, 6293203910, 6819983601, 7880107536, 8386705679, 8829475929, 9205048535, 9563047560, 9743700648, 9902680687, 9510565163, 9135454576, 8290375726, 7547095802, 6156614753, 3907311285, 2756373558, -2923717047, -3907311285, -5877852523, -7313537016, -8480480962, -9455185756, -9902680687, -9816271834, -9455185756, -8987940463, -8191520443, -7193398003, -5591929035, -3746065934, -2249510543]"
+  },
+  {
+   "name": "COS",
+   "let": "[9781476007, 9510565163, 9205048535, 8829475929, 8290375726, 7771459615, 7313537016, 6156614753, 5446390350, 4694715628, 3907311285, 2923717047, 2249510543, 1391731010, -3090169944, -4067366431, -5591929035, -6560590290, -7880107536, -9205048535, -9612616959, -9563047560, -9205048535, -8090169944, -6819983601, -5299192642, -3255681545, -1391731010, 1908089954, 3255681545, 4383711468, 5735764364, 6946583705, 8290375726, 9271838546, 9743700648]"
+  },
+  {
+   "name": "TAN",
+   "let": "[2125565617, 3249196962, 4244748162, 5317094317, 6745085168, 8097840332, 9325150861, 12799416322, 15398649638, 18807264653, 23558523658, 32708526185, 43314758743, 71153697224, -30776835372, -22460367739, -14825609685, -11503684072, -7812856265, -4244748162, -2867453858, 3057306815, 4244748162, 7265425280, 10723687100, 16003345290, 29042108777, 71153697224, -51445540160, -29042108777, -20503038416, -14281480067, -10355303138, -6745085168, -4040262258, -2308681911]"
+  },
+  {
+   "name": "p",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "q",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    35
+   ]
+  },
+  {
+   "name": "j",
+   "randint": [
+    0,
+    35
+   ],
+   "resample_while": "j == i"
+  },
+  {
+   "name": "k",
+   "randint": [
+    0,
+    35
+   ],
+   "resample_while": "k == i or k == j"
+  },
+  {
+   "name": "a",
+   "let": "ANG[i]"
+  },
+  {
+   "name": "b",
+   "let": "ANG[j]"
+  },
+  {
+   "name": "c",
+   "let": "ANG[k]"
+  },
+  {
+   "name": "sa",
+   "let": "SIN[i] / 10000000000"
+  },
+  {
+   "name": "cb",
+   "let": "COS[j] / 10000000000"
+  },
+  {
+   "name": "tc",
+   "let": "TAN[k] / 10000000000"
+  },
+  {
+   "name": "N",
+   "let": "p * sa + q * cb"
+  },
+  {
+   "name": "v",
+   "let": "N / tc"
+  },
+  {
+   "name": "va",
+   "let": "(p * round(sa, 4) + q * round(cb, 4)) / round(tc, 4)"
+  },
+  {
+   "require": "abs(tc) >= 3/10 and abs(tc) <= 7/2",
+   "why": "keep the denominator away from 0 and away from the tan 90 blow-up, so the value stays modest"
+  },
+  {
+   "require": "abs(N) >= 1",
+   "why": "no near-cancellation in the numerator"
+  },
+  {
+   "require": "abs(v) >= 1/2 and abs(v) <= 40",
+   "why": "a printable answer that is neither tiny nor huge"
+  },
+  {
+   "require": "abs(v * 100 - floor(v * 100) - 1/2) > 3/100",
+   "why": "the unrounded value is at least 0.0003 away from a rounding boundary, so no solver can land on the wrong side by a stray digit"
+  },
+  {
+   "require": "floor(v * 100 + 1/2) == floor(va * 100 + 1/2)",
+   "why": "the answer is the same even if every ratio is first rounded to 4 decimal places"
+  }
+ ],
+ "constraints": [],
+ "stem": "Use your calculator, set to degrees mode, to evaluate $\\dfrac{{=p}\\sin {=a}^{\\circ}+{=q}\\cos {=b}^{\\circ}}{\\tan {=c}^{\\circ}}$. Do not round any intermediate value; give the final answer correct to $2$ decimal places.",
+ "answer": "fixed(v, 2)",
+ "solution": [
+  "Set the calculator to degrees mode (DEG). Work out each ratio separately and keep all the digits the calculator shows; round only at the very end.",
+  "$\\sin {=a}^{\\circ}\\approx {=fixed(sa, 6)}$",
+  "$\\cos {=b}^{\\circ}\\approx {=fixed(cb, 6)}$",
+  "$\\tan {=c}^{\\circ}\\approx {=fixed(tc, 6)}$",
+  "The numerator is ${=p}\\times({=fixed(sa, 6)})+{=q}\\times({=fixed(cb, 6)})\\approx {=fixed(N, 6)}$",
+  "Divide by the tangent: $\\dfrac{{=fixed(N, 6)}}{{=fixed(tc, 6)}}\\approx {=fixed(v, 4)}$",
+  "Round to $2$ decimal places: ${=fixed(v, 2)}$"
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: one skeleton, (p sin a + q cos b) / tan c with three different angles from all four quadrants (the book's own twist, sin 305 and tan 124 in Ex 5.2 no. 1, is the sign of a ratio beyond 90 degrees). The expression language has no sin/cos/tan, so the ratios are looked up from tables of ten-decimal values stored as integers over 10^10 (exact), computed from the true values in degrees; ANG, SIN, COS, TAN are index-aligned. Each instance is guarded: tan not near 0 or the 90/270 blow-up, no numerator cancellation, |answer| between 0.5 and 40, answer at least 0.0003 from a rounding boundary and unchanged if the ratios are first rounded to 4 dp. The stem forbids intermediate rounding. Special angles (multiples of 15 and 45 degrees) are left out so the calculator is genuinely needed. No distractors (numeric), so the catalogued degrees-mode misconception is not attached here; the worked solution's first step names degrees mode."
+}

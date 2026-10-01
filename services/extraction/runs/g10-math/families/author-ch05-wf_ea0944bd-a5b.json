@@ -1,0 +1,1733 @@
+{
+ "mode": "author",
+ "book": "g10-math",
+ "prompts_version": "s6-v6",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/s6-author-ch05",
+  "stage": "S6 author",
+  "shards_sha256": "e97ea54e44320112b23a06b51ea8051a04cd11c776e93c5394597d3e6b8c061f",
+  "files": 24
+ },
+ "embedded": {
+  "source": "runbook/families.workflow.js",
+  "source_sha256": "ce14b9a275551596540559352d6e1137fc366251ecc65d4b7d34aa4599cbc0b6",
+  "args_sha256": "9c13b9f97c958914b4684689a14100caf3c4a634a1ff1282279fe86dd0f68519",
+  "generated_sha256": "b01f9100a4c2854a5934624e8e6f1d760c3901e838e6c2487f003c9c5764f48e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "records": [
+  {
+   "lo_id": "lo:g10m5s3-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s3-1-1:sidenames",
+     "kind": "family",
+     "lo_id": "lo:g10m5s3-1-1",
+     "parent_question_id": "q:g10m5s3-1-1:ex5-1-2a",
+     "source_page": 112,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "names",
+       "let": "[[\"A\",\"B\",\"C\"],[\"D\",\"E\",\"F\"],[\"K\",\"L\",\"M\"],[\"P\",\"Q\",\"R\"],[\"X\",\"Y\",\"Z\"],[\"G\",\"H\",\"J\"]]"
+      },
+      {
+       "name": "sidetab",
+       "let": "[[\"BC\",\"AC\",\"AB\"],[\"EF\",\"DF\",\"DE\"],[\"LM\",\"KM\",\"KL\"],[\"QR\",\"PR\",\"PQ\"],[\"YZ\",\"XZ\",\"XY\"],[\"HJ\",\"GJ\",\"GH\"]]"
+      },
+      {
+       "name": "vs",
+       "let": "names[i]"
+      },
+      {
+       "name": "ds",
+       "let": "sidetab[i]"
+      },
+      {
+       "name": "r",
+       "randint": [
+        0,
+        2
+       ]
+      },
+      {
+       "name": "f",
+       "randint": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "t",
+       "let": "(r + 1 + f) % 3"
+      },
+      {
+       "name": "u",
+       "let": "(r + 2 - f) % 3"
+      },
+      {
+       "name": "hyp",
+       "let": "ds[r]"
+      },
+      {
+       "name": "opp",
+       "let": "ds[t]"
+      },
+      {
+       "name": "adj",
+       "let": "ds[u]"
+      }
+     ],
+     "constraints": [
+      "r != t and r != u and t != u"
+     ],
+     "stem": "In triangle ${=vs[0]}{=vs[1]}{=vs[2]}$ the right angle is at ${=vs[r]}$. Let $\\theta$ be the angle at ${=vs[t]}$. Which of the following correctly names the hypotenuse, the side opposite $\\theta$ and the side adjacent to $\\theta$?",
+     "solution": [
+      "The hypotenuse is always directly opposite the right angle. The right angle is at ${=vs[r]}$, so the hypotenuse is the side that does not touch ${=vs[r]}$: ${=hyp}$.",
+      "The opposite side is directly across from $\\theta$, the angle at ${=vs[t]}$. It is the side that does not touch ${=vs[t]}$: ${=opp}$.",
+      "The adjacent side is the remaining side. It forms $\\theta$ together with the hypotenuse, so it joins ${=vs[r]}$ and ${=vs[t]}$: ${=adj}$.",
+      "So the hypotenuse is ${=hyp}$, the opposite side is ${=opp}$ and the adjacent side is ${=adj}$."
+     ],
+     "choices": {
+      "correct": "hypotenuse ${=hyp}$, opposite ${=opp}$, adjacent ${=adj}$",
+      "distractors": [
+       {
+        "text": "hypotenuse ${=hyp}$, opposite ${=adj}$, adjacent ${=opp}$",
+        "misconception_id": "mc:g10m5s3-1-1:opposite-adjacent-swapped"
+       },
+       {
+        "text": "hypotenuse ${=opp}$, opposite ${=hyp}$, adjacent ${=adj}$",
+        "misconception_id": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed"
+       },
+       {
+        "text": "hypotenuse ${=adj}$, opposite ${=opp}$, adjacent ${=hyp}$",
+        "misconception_id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle"
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m5s3-1-1:opposite-adjacent-swapped",
+       "label": "Swapping the opposite and adjacent sides",
+       "description": "The student finds the hypotenuse correctly but gives the name opposite to the leg that touches the angle theta and the name adjacent to the leg that lies across from theta."
+      },
+      {
+       "id": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed",
+       "label": "Mixing up the two meanings of opposite",
+       "description": "The student calls the side across from the right angle (the hypotenuse) the opposite side, and then names the side across from theta as the hypotenuse, confusing opposite the right angle with opposite theta."
+      },
+      {
+       "id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle",
+       "label": "Choosing the wrong one of the two sides that form theta as the hypotenuse",
+       "description": "Two sides touch the angle theta, the hypotenuse and the adjacent leg. The student picks the leg as the hypotenuse instead of the side across from the right angle, and so calls the true hypotenuse the adjacent side."
+      }
+     ],
+     "notes": "Text-only version of the book's exercise 5.1.2 (page 112). The figure is replaced by a sentence that fixes the right-angle vertex and the vertex of theta, so a solver needs no diagram. The vertex names come from six alphabetical triples and sidetab holds the side opposite each vertex in alphabetical letter order (checked), so side names such as PQ are written the same way in the stem and the options. Both the right-angle vertex (3 choices) and the vertex of theta (2 choices) vary, giving 36 distinct stems. The three distractors are three of the five wrong ways to assign the three roles to the three sides, each tied to a named error. Solution steps follow the book's own wording: hypotenuse directly opposite the right angle, opposite side directly across from theta, adjacent side the remaining one that forms theta."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s3-1-1:switchangle",
+     "kind": "family",
+     "lo_id": "lo:g10m5s3-1-1",
+     "parent_question_id": "q:g10m5s3-1-1:ex5-1-2c",
+     "source_page": 112,
+     "tier": "advanced",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "names",
+       "let": "[[\"A\",\"B\",\"C\"],[\"D\",\"E\",\"F\"],[\"K\",\"L\",\"M\"],[\"P\",\"Q\",\"R\"],[\"X\",\"Y\",\"Z\"],[\"G\",\"H\",\"J\"]]"
+      },
+      {
+       "name": "sidetab",
+       "let": "[[\"BC\",\"AC\",\"AB\"],[\"EF\",\"DF\",\"DE\"],[\"LM\",\"KM\",\"KL\"],[\"QR\",\"PR\",\"PQ\"],[\"YZ\",\"XZ\",\"XY\"],[\"HJ\",\"GJ\",\"GH\"]]"
+      },
+      {
+       "name": "vs",
+       "let": "names[i]"
+      },
+      {
+       "name": "ds",
+       "let": "sidetab[i]"
+      },
+      {
+       "name": "r",
+       "randint": [
+        0,
+        2
+       ]
+      },
+      {
+       "name": "f",
+       "randint": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "s",
+       "let": "(r + 1 + f) % 3"
+      },
+      {
+       "name": "w",
+       "let": "(r + 2 - f) % 3"
+      },
+      {
+       "name": "hyp",
+       "let": "ds[r]"
+      },
+      {
+       "name": "legs",
+       "let": "ds[s]"
+      },
+      {
+       "name": "legw",
+       "let": "ds[w]"
+      }
+     ],
+     "constraints": [
+      "r != s and r != w and s != w"
+     ],
+     "stem": "Triangle ${=vs[0]}{=vs[1]}{=vs[2]}$ has its right angle at ${=vs[r]}$. With respect to the angle at ${=vs[s]}$, the sides are named like this: hypotenuse ${=hyp}$, opposite ${=legs}$, adjacent ${=legw}$. Now let $\\theta$ be the angle at ${=vs[w]}$ instead. Which of the following correctly names the sides with respect to this new $\\theta$?",
+     "solution": [
+      "The hypotenuse is the side directly opposite the right angle at ${=vs[r]}$. Moving $\\theta$ to the other acute angle does not move the right angle, so the hypotenuse is still ${=hyp}$.",
+      "The new $\\theta$ is the angle at ${=vs[w]}$. The opposite side is directly across from it, the side that does not touch ${=vs[w]}$: ${=legw}$ (it joins ${=vs[r]}$ and ${=vs[s]}$).",
+      "The adjacent side is the remaining side. It touches ${=vs[w]}$ and is not the hypotenuse: ${=legs}$ (it joins ${=vs[r]}$ and ${=vs[w]}$).",
+      "The two sides other than the hypotenuse have swapped names: ${=legw}$ was adjacent and is now opposite, and ${=legs}$ was opposite and is now adjacent. The correct choice is: hypotenuse ${=hyp}$, opposite ${=legw}$, adjacent ${=legs}$."
+     ],
+     "choices": {
+      "correct": "hypotenuse ${=hyp}$, opposite ${=legw}$, adjacent ${=legs}$",
+      "distractors": [
+       {
+        "text": "hypotenuse ${=hyp}$, opposite ${=legs}$, adjacent ${=legw}$",
+        "misconception_id": "mc:g10m5s3-1-1:opposite-adjacent-fixed-by-position"
+       },
+       {
+        "text": "hypotenuse ${=legw}$, opposite ${=hyp}$, adjacent ${=legs}$",
+        "misconception_id": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed"
+       },
+       {
+        "text": "hypotenuse ${=legs}$, opposite ${=legw}$, adjacent ${=hyp}$",
+        "misconception_id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle"
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m5s3-1-1:hypotenuse-and-opposite-mixed",
+       "label": "Mixing up the two meanings of opposite",
+       "description": "The student calls the side across from the right angle (the hypotenuse) the opposite side, and then names the side across from theta as the hypotenuse, confusing opposite the right angle with opposite theta."
+      },
+      {
+       "id": "mc:g10m5s3-1-1:hypotenuse-not-opposite-right-angle",
+       "label": "Choosing the wrong one of the two sides that form theta as the hypotenuse",
+       "description": "Two sides touch the angle theta, the hypotenuse and the adjacent leg. The student picks the leg as the hypotenuse instead of the side across from the right angle, and so calls the true hypotenuse the adjacent side."
+      }
+     ],
+     "notes": "Advanced because the same triangle is labelled twice: the stem gives the naming for one acute angle and the student must re-name for the other. This is the book's central point (opposite and adjacent depend on the angle, only the hypotenuse is fixed by the right angle) and the same triangle in the book's shared figure is read from either acute angle. Option 1 is exactly the stem's own naming, which a student who ties a name to a side rather than to theta will choose (the catalogued position/fixed-name error). All four options are distinct by construction. The stem states a true labelling for the first angle (opposite is the side not touching vertex s, adjacent is the other leg), checked against coordinates for all 36 configurations. 36 distinct stems."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s3-1-1:lengthclue",
+     "kind": "family",
+     "lo_id": "lo:g10m5s3-1-1",
+     "parent_question_id": "q:g10m5s3-1-1:ex5-1-2f",
+     "source_page": 112,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "T",
+       "let": "[[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        3
+       ]
+      },
+      {
+       "name": "k",
+       "choice": [
+        1,
+        2,
+        3
+       ]
+      },
+      {
+       "name": "a",
+       "let": "T[i][0] * k"
+      },
+      {
+       "name": "b",
+       "let": "T[i][1] * k"
+      },
+      {
+       "name": "c",
+       "let": "T[i][2] * k"
+      },
+      {
+       "name": "g",
+       "randint": [
+        0,
+        1
+       ]
+      },
+      {
+       "name": "x",
+       "let": "a if g == 0 else b"
+      },
+      {
+       "name": "y",
+       "let": "b if g == 0 else a"
+      },
+      {
+       "name": "sidelist",
+       "let": "[a, b, c]"
+      },
+      {
+       "name": "L",
+       "shuffle": "sidelist"
+      },
+      {
+       "name": "thetalist",
+       "let": "[x, c]"
+      },
+      {
+       "name": "P",
+       "shuffle": "thetalist"
+      }
+     ],
+     "constraints": [
+      "a * a + b * b == c * c",
+      "a != b"
+     ],
+     "stem": "A right-angled triangle has sides of length ${=L[0]}$ cm, ${=L[1]}$ cm and ${=L[2]}$ cm. The angle $\\theta$ is formed by the sides of length ${=P[0]}$ cm and ${=P[1]}$ cm. What is the length of the side opposite $\\theta$, in cm?",
+     "answer": "y",
+     "solution": [
+      "The hypotenuse is the side opposite the right angle, and in a right-angled triangle it is the longest side. So the hypotenuse is ${=c}$ cm, and the right angle lies between the sides of ${=a}$ cm and ${=b}$ cm.",
+      "The angle $\\theta$ is formed by the sides of ${=x}$ cm and ${=c}$ cm. One of these is the hypotenuse (${=c}$ cm), so the other one, ${=x}$ cm, is the adjacent side.",
+      "The opposite side is the remaining side, the one that does not form $\\theta$: ${=y}$ cm.",
+      "The side opposite $\\theta$ is ${=y}$ cm long."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: the right angle is not given, so the solver must first find the hypotenuse as the longest side (the catalogued hypotenuse-not-longest-side check), then use that theta is formed by the hypotenuse and one leg to name the adjacent leg, and finally the opposite side is the leg left over. Side lengths are Pythagorean triples (3-4-5, 5-12-13, 8-15-17, 7-24-25) scaled by 1, 2 or 3, so the triangle is genuinely right-angled and all lengths are whole numbers up to 75. Theta is always formed by the hypotenuse and a leg, so it can never be the right angle. Which leg forms theta, the order the three lengths are printed in, and the order the two lengths of theta are printed in all vary, so the longest side does not sit in a fixed position. Answer is the length of the opposite side as a whole number of centimetres. No figure is needed."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Three families: one standard (sidenames, mcq, all three roles for a vertex-described triangle) and two advanced (switchangle, mcq, same triangle re-labelled for the other acute angle; lengthclue, numeric, the hypotenuse found as the longest side from lengths alone). No basic family was written because the six book questions already cover basic. All instances are text-only: the book figures are replaced by a sentence naming the right-angle vertex and the vertex of theta, so no diagram is needed. The six figures were read and the vertex and side tables were checked against coordinates for every right-angle and theta placement. A new misconception id declared in two families (hypotenuse-and-opposite-mixed, hypotenuse-not-opposite-right-angle) carries identical label and description in both. Parameter and let names avoid the language's function names (pair, range, list and the like)."
+  },
+  {
+   "lo_id": "lo:g10m5s3-1-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-questions file for lo:g10m5s3-1-3 is an empty list ([]). Every family must name a parent_question_id that is a book question of this objective, with a source_page, and the objective has none. With no book question I also have no canonical solution to model the method, vocabulary or notation on, and the rules forbid teaching a technique the book does not use. Inventing a parent id would be dishonest."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same cause: no book questions or canonical solutions for this objective, so there is no parent_question_id and no 'typical exercise' to calibrate a standard-tier family against."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same cause: no book questions, so there is no harder book exercise to derive an advanced-tier twist from, and no parent to cite."
+    }
+   ],
+   "notes": "Both input files (book-questions.txt and misconceptions.txt) held only an empty list, and I was allowed to open no other files. I did not guess at the book's content from memory, and I did not make up a parent_question_id or a misconception id. Once at least one book question with its canonical solution is attached to lo:g10m5s3-1-3 (for example by re-mapping the reciprocal-ratio exercises from the adjacent lesson g10m5s3-1), this objective can be re-run. Three families are plausible then: basic, write cosec, sec and cot of an angle as 1 over sin, cos and tan; standard, read cosec, sec and cot off a right-angled triangle's sides; advanced, a twist the book's own questions use. The empty misconception list also means any mcq distractors would have to be new ids declared in proposed_misconceptions. Please also check why the objective has no questions mapped to it, because that may be a mapping fault upstream."
+  },
+  {
+   "lo_id": "lo:g10m5s5-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s5-1-1:fraction",
+     "kind": "family",
+     "lo_id": "lo:g10m5s5-1-1",
+     "parent_question_id": "q:g10m5s5-1-1:ex5-2-1g",
+     "source_page": 117,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "ANG",
+       "let": "[12, 18, 23, 28, 34, 39, 43, 52, 57, 62, 67, 73, 77, 82, 108, 114, 124, 131, 142, 157, 164, 197, 203, 216, 227, 238, 251, 262, 281, 289, 296, 305, 314, 326, 338, 347]"
+      },
+      {
+       "name": "SIN",
+       "let": "[2079116908, 3090169944, 3907311285, 4694715628, 5591929035, 6293203910, 6819983601, 7880107536, 8386705679, 8829475929, 9205048535, 9563047560, 9743700648, 9902680687, 9510565163, 9135454576, 8290375726, 7547095802, 6156614753, 3907311285, 2756373558, -2923717047, -3907311285, -5877852523, -7313537016, -8480480962, -9455185756, -9902680687, -9816271834, -9455185756, -8987940463, -8191520443, -7193398003, -5591929035, -3746065934, -2249510543]"
+      },
+      {
+       "name": "COS",
+       "let": "[9781476007, 9510565163, 9205048535, 8829475929, 8290375726, 7771459615, 7313537016, 6156614753, 5446390350, 4694715628, 3907311285, 2923717047, 2249510543, 1391731010, -3090169944, -4067366431, -5591929035, -6560590290, -7880107536, -9205048535, -9612616959, -9563047560, -9205048535, -8090169944, -6819983601, -5299192642, -3255681545, -1391731010, 1908089954, 3255681545, 4383711468, 5735764364, 6946583705, 8290375726, 9271838546, 9743700648]"
+      },
+      {
+       "name": "TAN",
+       "let": "[2125565617, 3249196962, 4244748162, 5317094317, 6745085168, 8097840332, 9325150861, 12799416322, 15398649638, 18807264653, 23558523658, 32708526185, 43314758743, 71153697224, -30776835372, -22460367739, -14825609685, -11503684072, -7812856265, -4244748162, -2867453858, 3057306815, 4244748162, 7265425280, 10723687100, 16003345290, 29042108777, 71153697224, -51445540160, -29042108777, -20503038416, -14281480067, -10355303138, -6745085168, -4040262258, -2308681911]"
+      },
+      {
+       "name": "p",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        35
+       ]
+      },
+      {
+       "name": "j",
+       "randint": [
+        0,
+        35
+       ],
+       "resample_while": "j == i"
+      },
+      {
+       "name": "k",
+       "randint": [
+        0,
+        35
+       ],
+       "resample_while": "k == i or k == j"
+      },
+      {
+       "name": "a",
+       "let": "ANG[i]"
+      },
+      {
+       "name": "b",
+       "let": "ANG[j]"
+      },
+      {
+       "name": "c",
+       "let": "ANG[k]"
+      },
+      {
+       "name": "sa",
+       "let": "SIN[i] / 10000000000"
+      },
+      {
+       "name": "cb",
+       "let": "COS[j] / 10000000000"
+      },
+      {
+       "name": "tc",
+       "let": "TAN[k] / 10000000000"
+      },
+      {
+       "name": "N",
+       "let": "p * sa + q * cb"
+      },
+      {
+       "name": "v",
+       "let": "N / tc"
+      },
+      {
+       "name": "va",
+       "let": "(p * round(sa, 4) + q * round(cb, 4)) / round(tc, 4)"
+      },
+      {
+       "require": "abs(tc) >= 3/10 and abs(tc) <= 7/2",
+       "why": "keep the denominator away from 0 and away from the tan 90 blow-up, so the value stays modest"
+      },
+      {
+       "require": "abs(N) >= 1",
+       "why": "no near-cancellation in the numerator"
+      },
+      {
+       "require": "abs(v) >= 1/2 and abs(v) <= 40",
+       "why": "a printable answer that is neither tiny nor huge"
+      },
+      {
+       "require": "abs(v * 100 - floor(v * 100) - 1/2) > 3/100",
+       "why": "the unrounded value is at least 0.0003 away from a rounding boundary, so no solver can land on the wrong side by a stray digit"
+      },
+      {
+       "require": "floor(v * 100 + 1/2) == floor(va * 100 + 1/2)",
+       "why": "the answer is the same even if every ratio is first rounded to 4 decimal places"
+      }
+     ],
+     "constraints": [],
+     "stem": "Use your calculator, set to degrees mode, to evaluate $\\dfrac{{=p}\\sin {=a}^{\\circ}+{=q}\\cos {=b}^{\\circ}}{\\tan {=c}^{\\circ}}$. Do not round any intermediate value; give the final answer correct to $2$ decimal places.",
+     "answer": "fixed(v, 2)",
+     "solution": [
+      "Set the calculator to degrees mode (DEG). Work out each ratio separately and keep all the digits the calculator shows; round only at the very end.",
+      "$\\sin {=a}^{\\circ}\\approx {=fixed(sa, 6)}$",
+      "$\\cos {=b}^{\\circ}\\approx {=fixed(cb, 6)}$",
+      "$\\tan {=c}^{\\circ}\\approx {=fixed(tc, 6)}$",
+      "The numerator is ${=p}\\times({=fixed(sa, 6)})+{=q}\\times({=fixed(cb, 6)})\\approx {=fixed(N, 6)}$",
+      "Divide by the tangent: $\\dfrac{{=fixed(N, 6)}}{{=fixed(tc, 6)}}\\approx {=fixed(v, 4)}$",
+      "Round to $2$ decimal places: ${=fixed(v, 2)}$"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: one skeleton, (p sin a + q cos b) / tan c with three different angles from all four quadrants (the book's own twist, sin 305 and tan 124 in Ex 5.2 no. 1, is the sign of a ratio beyond 90 degrees). The expression language has no sin/cos/tan, so the ratios are looked up from tables of ten-decimal values stored as integers over 10^10 (exact), computed from the true values in degrees; ANG, SIN, COS, TAN are index-aligned. Each instance is guarded: tan not near 0 or the 90/270 blow-up, no numerator cancellation, |answer| between 0.5 and 40, answer at least 0.0003 from a rounding boundary and unchanged if the ratios are first rounded to 4 dp. The stem forbids intermediate rounding. Special angles (multiples of 15 and 45 degrees) are left out so the calculator is genuinely needed. No distractors (numeric), so the catalogued degrees-mode misconception is not attached here; the worked solution's first step names degrees mode."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s5-1-1:rootpower",
+     "kind": "family",
+     "lo_id": "lo:g10m5s5-1-1",
+     "parent_question_id": "q:g10m5s5-1-1:ex5-2-1c",
+     "source_page": 117,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "ANG",
+       "let": "[12, 18, 23, 28, 34, 39, 43, 52, 57, 62, 67, 73, 77, 82, 108, 114, 124, 131, 142, 157, 164, 197, 203, 216, 227, 238, 251, 262, 281, 289, 296, 305, 314, 326, 338, 347]"
+      },
+      {
+       "name": "SIN",
+       "let": "[2079116908, 3090169944, 3907311285, 4694715628, 5591929035, 6293203910, 6819983601, 7880107536, 8386705679, 8829475929, 9205048535, 9563047560, 9743700648, 9902680687, 9510565163, 9135454576, 8290375726, 7547095802, 6156614753, 3907311285, 2756373558, -2923717047, -3907311285, -5877852523, -7313537016, -8480480962, -9455185756, -9902680687, -9816271834, -9455185756, -8987940463, -8191520443, -7193398003, -5591929035, -3746065934, -2249510543]"
+      },
+      {
+       "name": "AC",
+       "let": "[12, 18, 23, 28, 34, 39, 43, 52, 57, 62, 67, 73, 77, 82, 281, 289, 296, 305, 314, 326, 338, 347]"
+      },
+      {
+       "name": "CAC",
+       "let": "[9781476007, 9510565163, 9205048535, 8829475929, 8290375726, 7771459615, 7313537016, 6156614753, 5446390350, 4694715628, 3907311285, 2923717047, 2249510543, 1391731010, 1908089954, 3255681545, 4383711468, 5735764364, 6946583705, 8290375726, 9271838546, 9743700648]"
+      },
+      {
+       "name": "SQC",
+       "let": "[9890134482, 9752212653, 9594294416, 9396529108, 9105150040, 8815588247, 8551922016, 7846409850, 7379966362, 6851799492, 6250848970, 5407140693, 4742900530, 3730591119, 4368168900, 5705857994, 6620960254, 7573482926, 8334616791, 9105150040, 9629038657, 9871018513]"
+      },
+      {
+       "name": "p",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        21
+       ]
+      },
+      {
+       "name": "j",
+       "randint": [
+        0,
+        35
+       ]
+      },
+      {
+       "name": "a",
+       "let": "AC[i]"
+      },
+      {
+       "name": "b",
+       "let": "ANG[j]"
+      },
+      {
+       "name": "ca",
+       "let": "CAC[i] / 10000000000"
+      },
+      {
+       "name": "r",
+       "let": "SQC[i] / 10000000000"
+      },
+      {
+       "name": "s",
+       "let": "SIN[j] / 10000000000"
+      },
+      {
+       "name": "v",
+       "let": "p * r - q * s * s"
+      },
+      {
+       "name": "va",
+       "let": "p * round(r, 4) - q * round(s, 4) * round(s, 4)"
+      },
+      {
+       "require": "abs(v) >= 3/10",
+       "why": "keep the answer away from 0"
+      },
+      {
+       "require": "abs(v * 100 - floor(v * 100) - 1/2) > 3/100",
+       "why": "the unrounded value is at least 0.0003 away from a rounding boundary"
+      },
+      {
+       "require": "floor(v * 100 + 1/2) == floor(va * 100 + 1/2)",
+       "why": "the answer is the same even if the ratios are first rounded to 4 decimal places"
+      }
+     ],
+     "constraints": [],
+     "stem": "Use your calculator, set to degrees mode, to evaluate ${=p}\\sqrt{\\cos {=a}^{\\circ}}-{=q}\\left(\\sin {=b}^{\\circ}\\right)^{2}$. Do not round any intermediate value; give the final answer correct to $2$ decimal places.",
+     "answer": "fixed(v, 2)",
+     "solution": [
+      "Set the calculator to degrees mode (DEG). Work out each part separately and keep all the digits the calculator shows; round only at the very end.",
+      "$\\cos {=a}^{\\circ}\\approx {=fixed(ca, 6)}$, which is positive, so the square root can be taken",
+      "$\\sqrt{\\cos {=a}^{\\circ}}\\approx {=fixed(r, 6)}$",
+      "$\\sin {=b}^{\\circ}\\approx {=fixed(s, 6)}$",
+      "$\\left(\\sin {=b}^{\\circ}\\right)^{2}\\approx {=fixed(s * s, 6)}$",
+      "Combine the parts: ${=p}\\times {=fixed(r, 6)}-{=q}\\times {=fixed(s * s, 6)}\\approx {=fixed(v, 4)}$",
+      "Round to $2$ decimal places: ${=fixed(v, 2)}$"
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: one skeleton, p sqrt(cos a) - q (sin b)^2. The angle a is drawn only from angles whose cosine is positive (first and fourth quadrant, so the root exists; 305 degrees is the book's own fourth-quadrant angle); b is drawn from all four quadrants, and squaring removes the sign, which is the twist. Ratio and root values are tabulated (integers over 10^10, exact) because the expression language has no sin/cos/tan; AC, CAC, SQC are index-aligned and ANG, SIN are index-aligned. Guards: |answer| at least 0.3, at least 0.0003 from a rounding boundary, unchanged if ratios are first rounded to 4 dp. Special angles left out. Numeric, so no distractors; the worked solution's first step names degrees mode."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Only the advanced gap was listed, so two advanced families are returned, each with one skeleton. \"fraction\" covers a coefficient and a fraction: (p sin a + q cos b) / tan c, all four quadrants. \"rootpower\" covers a root and a power: p sqrt(cos a) - q (sin b)^2. The expression language has no trig functions, so ratios come from index-aligned tables of integers over 10^10, which are exact. I simulated the sampling in Python with exact fractions. I rendered 3000 instances per family and checked every answer against an independent float calculation. Around 63% of the fraction draws and 87% of the rootpower draws pass the guards, and 2998 and 2896 of 3000 stems were distinct. Each instance is at least 0.0003 away from a rounding boundary and keeps its 2 dp answer if the ratios are first rounded to 4 dp. The real engine was not run, because I could not open the engine files. It needs to accept three things: Fraction arithmetic on the table values, floor and round on Fractions, and fixed(Fraction, n). Numeric answers carry no distractors, so the catalogued degrees-mode misconception is not attached to any option; each worked solution's first step tells the student to set degrees mode. Slugs differ in their first six letters (fracti, rootpo)."
+  },
+  {
+   "lo_id": "lo:g10m5s5-1-3",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s5-1-3:which-true",
+     "kind": "family",
+     "lo_id": "lo:g10m5s5-1-3",
+     "parent_question_id": "q:g10m5s5-1-3:we03",
+     "source_page": 117,
+     "tier": "advanced",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "x",
+       "choice": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78
+       ]
+      },
+      {
+       "name": "y",
+       "let": "90 - x"
+      },
+      {
+       "name": "tab",
+       "let": "[0, 1745241, 3489950, 5233596, 6975647, 8715574, 10452846, 12186934, 13917310, 15643447, 17364818, 19080900, 20791169, 22495105, 24192190, 25881905, 27563736, 29237170, 30901699, 32556815, 34202014, 35836795, 37460659, 39073113, 40673664, 42261826, 43837115, 45399050, 46947156, 48480962, 50000000, 51503807, 52991926, 54463904, 55919290, 57357644, 58778525, 60181502, 61566148, 62932039, 64278761, 65605903, 66913061, 68199836, 69465837, 70710678, 71933980, 73135370, 74314483, 75470958, 76604444, 77714596, 78801075, 79863551, 80901699, 81915204, 82903757, 83867057, 84804810, 85716730, 86602540, 87461971, 88294759, 89100652, 89879405, 90630779, 91354546, 92050485, 92718385, 93358043, 93969262, 94551858, 95105652, 95630476, 96126170, 96592583, 97029573, 97437006, 97814760, 98162718, 98480775, 98768834, 99026807, 99254615, 99452190, 99619470, 99756405, 99862953, 99939083, 99984770, 100000000]"
+      },
+      {
+       "name": "sx",
+       "let": "tab[x] / 100000000"
+      },
+      {
+       "name": "cx",
+       "let": "tab[90 - x] / 100000000"
+      },
+      {
+       "name": "sy",
+       "let": "tab[y] / 100000000"
+      },
+      {
+       "name": "cy",
+       "let": "tab[90 - y] / 100000000"
+      },
+      {
+       "name": "v1a",
+       "let": "fixed(sx ** 2, 4)"
+      },
+      {
+       "name": "v1b",
+       "let": "fixed(cx ** 2, 4)"
+      },
+      {
+       "name": "v1",
+       "let": "fixed(sx ** 2 + cx ** 2, 2)"
+      },
+      {
+       "name": "v2b",
+       "let": "fixed(cy ** 2, 4)"
+      },
+      {
+       "name": "v2",
+       "let": "fixed(sx ** 2 + cy ** 2, 2)"
+      },
+      {
+       "name": "v3a",
+       "let": "fixed(cx, 4)"
+      },
+      {
+       "name": "v3b",
+       "let": "fixed(cy, 4)"
+      },
+      {
+       "name": "v3",
+       "let": "fixed(cx + cy, 2)"
+      },
+      {
+       "name": "v4a",
+       "let": "fixed(sy, 4)"
+      },
+      {
+       "name": "v4b",
+       "let": "fixed(sx, 4)"
+      }
+     ],
+     "constraints": [
+      "x + y == 90",
+      "x != y",
+      "abs(x - 45) >= 7"
+     ],
+     "stem": "If $x = {=x}^\\circ$ and $y = {=y}^\\circ$, use a calculator to determine which one of the following statements is true.",
+     "choices": {
+      "correct": "$\\sin^2 x + \\cos^2(90^\\circ - y) = 1$",
+      "distractors": [
+       {
+        "text": "$\\sin^2 x + \\cos^2 y = 1$",
+        "misconception_id": "mc:g10m5s5-1-3:drops-the-complement"
+       },
+       {
+        "text": "$\\cos(x + y) = \\cos x + \\cos y$",
+        "misconception_id": "mc:g10m5s5-1-3:splits-trig-function-over-angle"
+       },
+       {
+        "text": "$\\sin(90^\\circ - x) = \\sin x$",
+        "misconception_id": "mc:g10m5s5-1-3:complement-keeps-the-function"
+       }
+      ]
+     },
+     "solution": [
+      "Test each statement by substituting $x = {=x}^\\circ$ and $y = {=y}^\\circ$ and working out its left-hand side (LHS) and its right-hand side (RHS) on a calculator in degree mode. A statement is true only if the two sides are equal.",
+      "$\\sin^2 x + \\cos^2(90^\\circ - y) = 1$: LHS $= \\sin^2 {=x}^\\circ + \\cos^2(90^\\circ - {=y}^\\circ) = \\sin^2 {=x}^\\circ + \\cos^2 {=90 - y}^\\circ \\approx {=v1a} + {=v1b} \\approx {=v1}$ and RHS $= 1$. The two sides are equal, so this statement is true.",
+      "$\\sin^2 x + \\cos^2 y = 1$: LHS $= \\sin^2 {=x}^\\circ + \\cos^2 {=y}^\\circ \\approx {=v1a} + {=v2b} \\approx {=v2}$ but RHS $= 1$. The two sides are not equal, so this statement is false.",
+      "$\\cos(x + y) = \\cos x + \\cos y$: LHS $= \\cos({=x}^\\circ + {=y}^\\circ) = \\cos {=x + y}^\\circ = 0$ but RHS $= \\cos {=x}^\\circ + \\cos {=y}^\\circ \\approx {=v3a} + {=v3b} \\approx {=v3}$. The two sides are not equal, so this statement is false.",
+      "$\\sin(90^\\circ - x) = \\sin x$: LHS $= \\sin(90^\\circ - {=x}^\\circ) = \\sin {=90 - x}^\\circ \\approx {=v4a}$ but RHS $= \\sin {=x}^\\circ \\approx {=v4b}$. The two sides are not equal, so this statement is false.",
+      "Only $\\sin^2 x + \\cos^2(90^\\circ - y) = 1$ has two equal sides, so it is the true statement."
+     ],
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m5s5-1-3:drops-the-complement",
+       "label": "Drops the 90 degrees minus from a complementary-angle statement",
+       "description": "The student sees sin squared plus cos squared and takes the Pythagorean identity to hold, writing cos^2 y where the true statement needs cos^2(90 - y). They do not substitute both angles, so they never see that the two squared terms are not for the same angle."
+      },
+      {
+       "id": "mc:g10m5s5-1-3:complement-keeps-the-function",
+       "label": "Thinks the sine of the complement equals the sine of the angle",
+       "description": "The student treats 90 degrees minus x as if it changed nothing, so they accept sin(90 - x) = sin x without evaluating either side. The calculator shows sin(90 - x) equals cos x, which is not sin x unless x is 45 degrees."
+      }
+     ],
+     "notes": "Advanced tier, built on the book's worked example 3 (sin^2 x + cos^2(90 - y) = 1 with x = 25, y = 65). Every instance has x + y = 90 (constraint), so the first option is the book's true statement and the other three are false: sin^2 x + cos^2 y = 2 sin^2 x, cos(x + y) = cos 90 = 0 against cos x + cos y > 1, and sin(90 - x) = cos x against sin x. x avoids 39 to 51 degrees so that every false statement misses by at least 0.17 (checked for all 54 values of x); the two sides therefore differ at 2 decimal places and no instance has a second true option. The engine has no trig functions, so the sine of each whole degree is a table of integers in units of 1e-8 (tab) and cosine is read as the sine of the complement. Displayed values were checked against exact trig, rounded half-up, for every x: 4 d.p. for single terms, 2 d.p. for sides. The four options are fixed text and the stem (x and y) tells instances apart, so distinct_by_choices is left off. The solution names statements by their formula, not by position, because options may be shuffled."
+    }
+   ],
+   "infeasible": [],
+   "notes": "One advanced family only, since advanced was the only listed gap and basic/standard are already covered by the book questions. It extends the book's worked example 3 (the cofunction twist). The single mcq asks which of four statements is true, because an mcq needs at least three distractors and a plain true/false item has only one. The expression language has no trig functions, so the family carries a table of sines (integers in 1e-8 units) and reads cosine as the sine of the complement; I checked every displayed value against exact trig for all 54 values of x, and every false option misses by at least 0.17."
+  },
+  {
+   "lo_id": "lo:g10m5s5-1-4",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-questions file for this objective contains only an empty list ([]), so there is no book question to name as parent_question_id, no printed source_page and no canonical solution to model. The misconceptions file is also an empty list, so there are no catalogued ids for distractors. I was allowed to open only those two files, so I could not look for the book's method elsewhere. I would have to invent the parent id and guess at the book's method and notation (angle rounding, calculator use, how it writes sin x = k). That is exactly what the rules forbid."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same cause as basic. Without the book's own exercises I cannot tell what its typical exercise looks like for solving simple trigonometric equations (for example sin, cos or tan of an unknown angle equal to a decimal or fraction, and the rounding it asks for). A family would have no real parent_question_id and no book solution to keep its steps aligned with. Padding it with a made-up parent would give the human reviewer false provenance."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same cause as basic. The book's harder exercises for this objective (for example a multi-step rearrangement before the inverse ratio, or an equation like a*sin(x) + b = c) cannot be identified from an empty question list. Writing one without the book's own model would risk teaching a technique the book does not use. Re-run this objective once its book questions and misconceptions are supplied."
+    }
+   ],
+   "notes": ""
+  },
+  {
+   "lo_id": "lo:g10m5s6-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s6-1-1:crossratio",
+     "kind": "family",
+     "lo_id": "lo:g10m5s6-1-1",
+     "parent_question_id": "q:g10m5s6-1-1:ex5-3-1c",
+     "source_page": 119,
+     "tier": "advanced",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "r1",
+       "randint": [
+        0,
+        2
+       ]
+      },
+      {
+       "name": "r2",
+       "randint": [
+        0,
+        2
+       ],
+       "resample_while": "r2 == r1"
+      },
+      {
+       "name": "a",
+       "choice": [
+        0,
+        2
+       ]
+      },
+      {
+       "name": "ANG",
+       "let": "[30, 45, 60]"
+      },
+      {
+       "name": "ang",
+       "let": "ANG[a]"
+      },
+      {
+       "name": "FN",
+       "let": "[\"sin\", \"cos\", \"tan\"]"
+      },
+      {
+       "name": "f1",
+       "let": "FN[r1]"
+      },
+      {
+       "name": "f2",
+       "let": "FN[r2]"
+      },
+      {
+       "name": "tr",
+       "let": "3 - r1 - r2"
+      },
+      {
+       "name": "VI",
+       "let": "[[0, 2, 1], [1, 2, 0], [3, 5, 4]]"
+      },
+      {
+       "name": "WCMD",
+       "let": "[\"mathrm\", \"sqrt\", \"mathrm\", \"mathrm\", \"sqrt\", \"mathrm\", \"mathrm\", \"mathrm\", \"sqrt\"]"
+      },
+      {
+       "name": "NUM",
+       "let": "[1, 3, 1, 1, 3, 1, 2, 2, 2]"
+      },
+      {
+       "name": "DCMD",
+       "let": "[\"mathrm\", \"mathrm\", \"sqrt\", \"sqrt\", \"mathrm\", \"mathrm\", \"mathrm\", \"sqrt\", \"mathrm\"]"
+      },
+      {
+       "name": "DEN",
+       "let": "[2, 2, 2, 3, 1, 1, 1, 3, 1]"
+      },
+      {
+       "name": "RECIP",
+       "let": "[6, 7, 8, 4, 3, 5]"
+      },
+      {
+       "name": "v1",
+       "let": "VI[r1][a]"
+      },
+      {
+       "name": "v2",
+       "let": "VI[r2][a]"
+      },
+      {
+       "name": "v3",
+       "let": "VI[tr][a]"
+      },
+      {
+       "name": "vw",
+       "let": "VI[r2][1]"
+      },
+      {
+       "name": "vu",
+       "let": "RECIP[v2]"
+      },
+      {
+       "name": "c0",
+       "let": "VI[r1][0]"
+      },
+      {
+       "name": "c1",
+       "let": "VI[r1][1]"
+      },
+      {
+       "name": "c2",
+       "let": "VI[r1][2]"
+      }
+     ],
+     "constraints": [
+      "v1 != v2",
+      "v3 != v1",
+      "v3 != v2",
+      "vw != v1",
+      "vw != v2",
+      "vw != v3",
+      "vu != v1",
+      "vu != v2",
+      "vu != v3",
+      "vu != vw"
+     ],
+     "stem": "The angle $\\theta$ is acute and $\\{=f1}\\theta=\\frac{\\{=WCMD[v1]}{{=NUM[v1]}}}{\\{=DCMD[v1]}{{=DEN[v1]}}}$. Without a calculator, which of the following is the value of $\\{=f2}\\theta$?",
+     "solution": [
+      "List the values of $\\{=f1}$ at the special angles, from the triangle with sides $1$, $1$, $\\sqrt{2}$ and the triangle with sides $1$, $2$, $\\sqrt{3}$: $\\{=f1}30^{\\circ}=\\frac{\\{=WCMD[c0]}{{=NUM[c0]}}}{\\{=DCMD[c0]}{{=DEN[c0]}}}$, $\\{=f1}45^{\\circ}=\\frac{\\{=WCMD[c1]}{{=NUM[c1]}}}{\\{=DCMD[c1]}{{=DEN[c1]}}}$ and $\\{=f1}60^{\\circ}=\\frac{\\{=WCMD[c2]}{{=NUM[c2]}}}{\\{=DCMD[c2]}{{=DEN[c2]}}}$.",
+      "The given value $\\frac{\\{=WCMD[v1]}{{=NUM[v1]}}}{\\{=DCMD[v1]}{{=DEN[v1]}}}$ matches only $\\{=f1}{=ang}^{\\circ}$, so $\\theta={=ang}^{\\circ}$.",
+      "Now find the ratio that was asked for at this angle: $\\{=f2}\\theta=\\{=f2}{=ang}^{\\circ}=\\frac{\\{=WCMD[v2]}{{=NUM[v2]}}}{\\{=DCMD[v2]}{{=DEN[v2]}}}$.",
+      "So $\\{=f2}\\theta=\\frac{\\{=WCMD[v2]}{{=NUM[v2]}}}{\\{=DCMD[v2]}{{=DEN[v2]}}}$. The value $\\frac{\\{=WCMD[v1]}{{=NUM[v1]}}}{\\{=DCMD[v1]}{{=DEN[v1]}}}$ belongs to $\\{=f1}\\theta$, so it is not the value of $\\{=f2}\\theta$."
+     ],
+     "choices": {
+      "correct": "\\frac{\\{=WCMD[v2]}{{=NUM[v2]}}}{\\{=DCMD[v2]}{{=DEN[v2]}}}",
+      "distractors": [
+       {
+        "text": "\\frac{\\{=WCMD[v1]}{{=NUM[v1]}}}{\\{=DCMD[v1]}{{=DEN[v1]}}}",
+        "misconception_id": "mc:g10m5s6-1-1:wrong-ratio-same-angle"
+       },
+       {
+        "text": "\\frac{\\{=WCMD[v3]}{{=NUM[v3]}}}{\\{=DCMD[v3]}{{=DEN[v3]}}}",
+        "misconception_id": "mc:g10m5s6-1-1:wrong-ratio-same-angle"
+       },
+       {
+        "text": "\\frac{\\{=WCMD[vw]}{{=NUM[vw]}}}{\\{=DCMD[vw]}{{=DEN[vw]}}}",
+        "misconception_id": "mc:g10m5s6-1-1:wrong-triangle-for-angle"
+       },
+       {
+        "text": "\\frac{\\{=WCMD[vu]}{{=NUM[vu]}}}{\\{=DCMD[vu]}{{=DEN[vu]}}}",
+        "misconception_id": "mc:g10m5s6-1-1:ratio-upside-down"
+       }
+      ]
+     },
+     "proposed_misconceptions": [],
+     "notes": "ADVANCED gap. A two-step recall of the special-angle table, in the book's own option style (ex5-3-1, values written as a fraction N over D, so tan 45 is 1 over 1 and tan 60 is root 3 over 1, exactly as the book prints them). The student is told an acute angle theta has one ratio equal to a table value, must recognise which special angle that is (30 or 60), then state a DIFFERENT ratio of the same angle. Only the book's special triangles (1,1,root2 and 1,2,root3) are used; no equation solving, no expression evaluation, no calculator. Every instance is exact: 12 distinct instances (3 given ratios x 2 asked ratios x angles 30 or 60), each with a unique special angle because sin, cos and tan are one-to-one on the acute angles. Distractor slots have fixed meanings so the misconception ids are always true: (1) the GIVEN value repeated and (2) the THIRD ratio's value, both mc wrong-ratio-same-angle; (3) the ratio asked, but read at 45 degrees, mc wrong-triangle-for-angle; (4) the correct value upside down (1/2 -> 2/1, root3/2 -> 2/root3, 1/root3 <-> root3/1), mc ratio-upside-down. The generator constraints enforce that all five options are distinct, and I checked all 12 combinations numerically (correct value, uniqueness of the angle, five distinct values and five distinct decimals). Deliberately NOT included: 45 degrees as the base angle, because sin 45 = cos 45 makes the given value or the third ratio coincide with the answer and the four fixed distractor slots collapse; 45 degrees is still tested as the wrong-triangle distractor. Also NOT included: a decimal distractor for mc calculator-decimal-not-surd, because a decimal such as 0.87 is approximately the right value and a careful solver could defend it, which makes the key ambiguous. TEMPLATE NOTE for the reviewer: every value is printed as \\frac{N}{D}. The command name is supplied by a hole (\\sqrt or \\mathrm) so one template can print every value; \\mathrm{2} wraps a plain digit and renders identically to a bare 2. Choice texts carry no dollar signs, like the book's own choices; the stem and solution steps do."
+    }
+   ],
+   "infeasible": [],
+   "notes": "One advanced family (the only listed gap), written in the book's own mcq option style and checked in a local simulation over all 12 parameter combinations. Basic and standard tiers were not listed as gaps and were not written. The family's template writes LaTeX commands through holes (for example \\{=f1}, \\{=WCMD[v1]}) so no backslash appears inside any expression string; if the engine treats backslash-before-brace as an escape, that is the one place it could misrender."
+  },
+  {
+   "lo_id": "lo:g10m5s6-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s6-1-2:readoff",
+     "kind": "family",
+     "lo_id": "lo:g10m5s6-1-2",
+     "parent_question_id": "q:g10m5s6-1-2:ex5-3-2",
+     "source_page": 119,
+     "tier": "basic",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "p",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "name": "q",
+       "randint": [
+        1,
+        5
+       ]
+      },
+      {
+       "require": "p != q",
+       "why": "unequal legs keep the instances varied (the isosceles case is the book's own special triangle)"
+      },
+      {
+       "require": "gcd(p, q) == 1",
+       "why": "coprime legs keep the hypotenuse root already in simplest form"
+      },
+      {
+       "require": "not is_square(p * p + q * q)",
+       "why": "the hypotenuse must be a genuine surd, not a whole number (excludes the 3, 4 pair)"
+      },
+      {
+       "name": "N",
+       "let": "p * p + q * q"
+      }
+     ],
+     "constraints": [
+      "p != q",
+      "gcd(p, q) == 1",
+      "not is_square(p * p + q * q)"
+     ],
+     "stem": "In the right-angled triangle $ABC$ the right angle is at $B$, $AB = {=p}$, $BC = {=q}$ and $AC = \\sqrt{{=N}}$. Let $\\theta$ be the angle at $A$. Solve for $\\cos{\\theta}$ in surd form.",
+     "marker": {
+      "kind": "surd",
+      "answer": "{=p}/sqrt({=N})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "The right angle is at $B$, so $AC$ is the hypotenuse. For the angle $\\theta$ at $A$, the side $AB = {=p}$ is the adjacent side.",
+      "$\\cos{\\theta}=\\frac{\\text{adjacent}}{\\text{hypotenuse}}=\\frac{AB}{AC}$",
+      "Substitute the lengths: $\\cos{\\theta}=\\frac{{=p}}{\\sqrt{{=N}}}$. This is the answer in surd form."
+     ],
+     "notes": "Basic tier: all three sides are given (legs whole numbers, hypotenuse a surd), so the student only has to pick adjacent over hypotenuse and write the fraction. No Pythagoras and no cancelling. The book's figure is replaced by a verbal description with fixed vertex names: right angle at B, theta at A, so AB is adjacent, BC opposite, AC hypotenuse. Legs are drawn from 1..5, coprime and unequal, with p^2+q^2 not a square, which leaves 16 ordered pairs (N in 5, 10, 13, 17, 26, 29, 34, 41; all squarefree). Marker has form null on purpose: 1/sqrt(5) and sqrt(5)/5 are the same number and either is correct. Book model ex5-3-2 (cos theta = 5/(5 sqrt 2) = 1/sqrt 2); note the book's printed solution says 'opposite' where it means 'adjacent'. This family uses the correct word."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s6-1-2:scaled",
+     "kind": "family",
+     "lo_id": "lo:g10m5s6-1-2",
+     "parent_question_id": "q:g10m5s6-1-2:ex5-3-3",
+     "source_page": 119,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "a",
+       "let": "[1, 2, 1, 3, 2, 5][i]"
+      },
+      {
+       "name": "m",
+       "let": "[3, 5, 15, 7, 21, 11][i]"
+      },
+      {
+       "name": "c",
+       "let": "[2, 3, 4, 4, 5, 6][i]"
+      },
+      {
+       "name": "k",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "require": "a * a + m == c * c",
+       "why": "(a, root m, c) must be a right-angled triple"
+      }
+     ],
+     "constraints": [
+      "a * a + m == c * c"
+     ],
+     "stem": "In the right-angled triangle $ABC$ the right angle is at $B$, $AB = {=k}\\sqrt{{=m}}$, $BC = {=k * a}$ and $AC = {=k * c}$. Let $\\theta$ be the angle at $A$. Solve for $\\tan{\\theta}$ in surd form.",
+     "marker": {
+      "kind": "surd",
+      "answer": "{=a}/sqrt({=m})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "For the angle $\\theta$ at $A$, the opposite side is $BC = {=k * a}$ and the adjacent side is $AB = {=k}\\sqrt{{=m}}$. The hypotenuse $AC$ is not needed for $\\tan{\\theta}$.",
+      "$\\tan{\\theta}=\\frac{\\text{opposite}}{\\text{adjacent}}=\\frac{BC}{AB}=\\frac{{=k * a}}{{=k}\\sqrt{{=m}}}$",
+      "Cancel the common factor ${=k}$ in the numerator and the denominator: $\\tan{\\theta}=\\frac{{=a}}{\\sqrt{{=m}}}$"
+     ],
+     "notes": "Standard tier, the book's typical exercise (ex5-3-3 and ex5-8-7 pattern): all three sides are given as the same multiple k of a base triple (a, root m, c), so the ratio needs a common factor cancelled. Base triples satisfy a^2 + m = c^2 with m squarefree: (1,3,2) (the book's own), (2,5,3), (1,15,4), (3,7,4), (2,21,5), (5,11,6). k runs 2..9 so the surd leg never prints as '1 sqrt(m)'. The hypotenuse is given but unused for tan, as in the book. Answer a/sqrt(m) (denominator not rationalised, as the book prints it); marker form null so the rationalised form is also accepted. 6 x 8 = 48 distinct stems. Figure replaced by a verbal description, theta at A, right angle at B."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s6-1-2:pythag",
+     "kind": "family",
+     "lo_id": "lo:g10m5s6-1-2",
+     "parent_question_id": "q:g10m5s6-1-2:ex5-8-7",
+     "source_page": 140,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "i",
+       "randint": [
+        0,
+        17
+       ]
+      },
+      {
+       "name": "row",
+       "let": "[[2, 2, 7, 4, 2], [2, 2, 11, 4, 3], [2, 4, 11, 6, 5], [2, 6, 3, 4, 7], [6, 2, 3, 4, 3], [6, 2, 11, 4, 5], [8, 2, 2, 6, 2], [8, 2, 11, 6, 3], [9, 3, 3, 6, 3], [9, 3, 11, 6, 5], [10, 2, 2, 6, 3], [10, 2, 3, 4, 7], [10, 2, 7, 8, 2], [10, 4, 5, 6, 5], [10, 6, 3, 4, 13], [12, 3, 2, 9, 2], [12, 4, 3, 8, 3], [12, 4, 11, 8, 5]][i]"
+      },
+      {
+       "name": "P",
+       "let": "row[0]"
+      },
+      {
+       "name": "Q",
+       "let": "row[1]"
+      },
+      {
+       "name": "m",
+       "let": "row[2]"
+      },
+      {
+       "name": "c",
+       "let": "row[3]"
+      },
+      {
+       "name": "r",
+       "let": "row[4]"
+      },
+      {
+       "name": "D",
+       "let": "Q * Q * m + P * P"
+      },
+      {
+       "require": "c * c * r == D",
+       "why": "D = c^2 x r with r squarefree, so the hypotenuse is c root r"
+      },
+      {
+       "name": "g",
+       "let": "gcd(P, c)"
+      }
+     ],
+     "constraints": [
+      "c * c * r == Q * Q * m + P * P",
+      "gcd(P, c) > 1",
+      "c // gcd(P, c) > 1"
+     ],
+     "stem": "In the right-angled triangle $ABC$ the right angle is at $B$, $AB = {=Q}\\sqrt{{=m}}$ and $BC = {=P}$. Let $\\theta$ be the angle at $A$. Solve for $\\sin{\\theta}$ in surd form.",
+     "marker": {
+      "kind": "surd",
+      "answer": "{=P // g}/({=c // g}*sqrt({=r}))",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "The hypotenuse $AC$ is not given, so find it with the Theorem of Pythagoras: $AC^2=AB^2+BC^2$.",
+      "$AC^2=({=Q}\\sqrt{{=m}})^2+{=P}^2={=Q * Q * m}+{=P * P}={=D}$",
+      "Simplify the surd: $AC=\\sqrt{{=D}}=\\sqrt{{=c * c}\\times{=r}}={=c}\\sqrt{{=r}}$",
+      "$\\sin{\\theta}=\\frac{\\text{opposite}}{\\text{hypotenuse}}=\\frac{BC}{AC}=\\frac{{=P}}{{=c}\\sqrt{{=r}}}$",
+      "The whole numbers ${=P}$ and ${=c}$ have the highest common factor ${=g}$. Cancel it: $\\sin{\\theta}=\\frac{{=P // g}}{{=c // g}\\sqrt{{=r}}}$"
+     ],
+     "notes": "Advanced tier, modelled on ex5-8-7 (legs 3 root 3 and 9, hypotenuse 6 root 3, sin = 9/(6 root 3) = 3/(2 root 3)): here the hypotenuse is NOT given, so the student must apply Pythagoras and simplify the surd root(D) = c root r before taking the ratio, then cancel. The book's own triangle is row (9,3,3). Table rows are (BC, Q, m, c, r) with BC = P: AB = Q root m (Q >= 2, so never '1 root m'), AC^2 = Q^2 m + P^2 = c^2 r with r squarefree and r >= 2, c >= 2 (a real simplification), gcd(P, c) >= 2 and c / gcd >= 2 (a real cancellation, and the denominator coefficient never prints as 1). Every row checked by script. 18 stems, answers P/g over (c/g) root r, e.g. 3/(2 root 3), 4/(3 root 2), 5/(2 root 7). The denominator is left unrationalised, as the book prints it; marker form null so an equivalent rationalised form (root 3 over 2) is accepted too. D never exceeds 320 and no square of a given side exceeds 144."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s6-1-2:fracsides",
+     "kind": "family",
+     "lo_id": "lo:g10m5s6-1-2",
+     "parent_question_id": "q:g10m5s6-1-2:ex5-8-8",
+     "source_page": 140,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "i",
+       "randint": [
+        0,
+        5
+       ]
+      },
+      {
+       "name": "p",
+       "let": "[2, 3, 2, 5, 6, 4][i]"
+      },
+      {
+       "name": "m",
+       "let": "[5, 7, 21, 11, 13, 33][i]"
+      },
+      {
+       "name": "c",
+       "let": "[3, 4, 5, 6, 7, 7][i]"
+      },
+      {
+       "name": "a",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "require": "p * p + m == c * c",
+       "why": "(p, root m, c) must be a right-angled triple"
+      }
+     ],
+     "constraints": [
+      "p * p + m == c * c"
+     ],
+     "stem": "In the right-angled triangle $ABC$ the right angle is at $B$, $AB = \\frac{{=p * a}}{\\sqrt{{=m}}}$, $BC = {=a}$ and $AC = \\frac{{=c * a}}{\\sqrt{{=m}}}$. Let $\\theta$ be the angle at $A$. Solve for $\\tan{\\theta}$ in surd form.",
+     "marker": {
+      "kind": "surd",
+      "answer": "sqrt({=m})/{=p}",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "solution": [
+      "For the angle $\\theta$ at $A$, the opposite side is $BC = {=a}$ and the adjacent side is $AB = \\frac{{=p * a}}{\\sqrt{{=m}}}$. The hypotenuse $AC$ is not needed for $\\tan{\\theta}$.",
+      "$\\tan{\\theta}=\\frac{\\text{opposite}}{\\text{adjacent}}=\\frac{{=a}}{\\frac{{=p * a}}{\\sqrt{{=m}}}}$",
+      "Dividing by a fraction is the same as multiplying by its reciprocal: $\\tan{\\theta}={=a}\\times\\frac{\\sqrt{{=m}}}{{=p * a}}=\\frac{{=a}\\sqrt{{=m}}}{{=p * a}}$",
+      "Cancel the common factor ${=a}$: $\\tan{\\theta}=\\frac{\\sqrt{{=m}}}{{=p}}$"
+     ],
+     "notes": "Advanced tier, the twist the book itself uses in ex5-8-8 (sides 7, 7/root 3, 14/root 3; tan = 7 / (7/root 3) = root 3): the sides are fractions with a surd denominator, so the student divides by a fraction and cancels. Sides are the base triple (p, root m, c) scaled by a/root m: BC = a, AB = pa/root m, AC = ca/root m; check (pa)^2/m + a^2 = (ca)^2/m. Triples have p >= 2 so the answer root m over p never prints as 'over 1' (the book's own p = 1 case is covered by the standard family 'scaled'). Triples: (2,5,3), (3,7,4), (2,21,5), (5,11,6), (6,13,7), (4,33,7); a runs 2..9, giving 48 distinct stems. Answer has a rational denominator, so there is a single natural form. The hypotenuse is given but unused, as in the book."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Four families, one per tier plus a standard one: readoff (basic, cos, legs whole numbers and hypotenuse a surd, nothing to cancel), scaled (standard, tan, three sides given as k times a base triple, cancel k), pythag (advanced, sin, hypotenuse missing so Pythagoras plus simplifying root(D) = c root r, then cancel), fracsides (advanced, tan, sides are fractions with a surd denominator as in ex5-8-8). Both listed gaps (basic, advanced) are filled; nothing is infeasible. The catalogued misconception list for this objective is empty, so no family uses mcq or distractors and none declares a proposed misconception. Book figures cannot be shown, so every stem describes the triangle in words with fixed labels (right angle at B, theta at A: AB adjacent, BC opposite, AC hypotenuse). Each family keeps one fixed ratio because the solution skeleton differs by ratio; variety comes from the numbers (16, 48, 18 and 48 distinct stems). All markers use kind surd with form null so equivalent forms such as 1/sqrt(2) and sqrt(2)/2 are both accepted. Checked by script over every instance: the sides satisfy Pythagoras, the marker value equals the geometric ratio, no braces are left unbalanced, and no coefficient prints as 1 before a root. Book defect to know about: the printed solution of ex5-3-2 writes 'opposite' for cos where 'adjacent' is meant; the families use the correct word."
+  },
+  {
+   "lo_id": "lo:g10m5s6-1-3",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-questions file for this objective (g10m5s6-1-3.book-questions.txt) contains an empty list, so there is no book question to name as parent_question_id, no printed source_page, and no canonical solution showing the book's method for verifying an identity with special angles. The brief makes the book questions the model and the parent, and I may open no other file, so I could not find the method elsewhere. Inventing a parent id or a page number would be fabrication, so I wrote no family."
+    },
+    {
+     "tier": "standard",
+     "reason": "The same empty book-questions file leaves me no typical exercise to model and no valid parent_question_id. The misconceptions file is also an empty list, so there is no catalogued misconception id to attach to mcq distractors. I would have had to invent the book's notation and level of working without a source, so I wrote no family."
+    },
+    {
+     "tier": "advanced",
+     "reason": "There is no harder book exercise or twist to follow, because the objective has no recorded book questions at all. Any advanced family would be an unsourced guess at what the book does, with no valid parent_question_id and no canonical solution to check it against. Returning none is safer than padding."
+    }
+   ],
+   "notes": "Both input files for lo:g10m5s6-1-3 (book-questions.txt and misconceptions.txt) contain only \"[]\". This looks like an upstream extraction or packet-building gap: either the objective has no linked book questions, or the packet was built without them. Once the packet is regenerated with the book's questions and canonical solutions for \"Verify identities with special angles\", this objective can be re-run. The likely skill is checking identities such as sin^2(theta) + cos^2(theta) = 1 or tan(theta) = sin(theta)/cos(theta) by substituting 30, 45, 60 degrees. I did not write families from that guess, since the book's own method and notation are the stated model."
+  },
+  {
+   "lo_id": "lo:g10m5s6-1-4",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-questions file for this objective is an empty list ([]), so there is no book question to name as parent_question_id (the spec requires one from the list given) and no canonical solution to model the method, vocabulary or notation on. Inventing a parent id would be fabricated provenance. The objective is also an 'explain why' skill, and without the book's own argument I cannot tell which definition-based reasoning it uses (right-triangle ratios with hypotenuse longest, or unit-circle coordinates). I will not guess a technique the book may not use."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same blocker: the book-questions file is empty ([]), so there is no typical book exercise to mirror and no valid parent_question_id or source_page. Any family would rest on my own idea of the book's typical exercise, which breaks the rule to stay inside the book's method and the grounded-teaching rule."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same blocker: no book questions are supplied, so there is no harder exercise or book twist to take as the model, and no parent to cite. This objective is also conceptual and bound by definition (a bound of 1 for sin and cos, and tan being unbounded because its denominator can approach zero). Without a book question to show how the book frames it, an advanced twist would be invented rather than derived."
+    }
+   ],
+   "notes": "Both input files for lo:g10m5s6-1-4 (g10m5s6-1-4.book-questions.txt and g10m5s6-1-4.misconceptions.txt) contain only an empty JSON list ([]). Nothing was written, to avoid invented parents and misconception ids. The likely cause is an upstream extraction gap: the book questions for this lesson were not attached to this objective, or the objective has none. Suggested next step is to re-run the fanout packet for this objective once book questions are linked to it. At that point three families would be natural: an mcq on why sin and cos are at most 1 (opposite or adjacent side is never longer than the hypotenuse), an mcq or numeric on whether tan has a maximum, and an advanced item combining both. Each should carry a real parent_question_id and the book's own argument."
+  },
+  {
+   "lo_id": "lo:g10m5s8-1-1",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s8-1-1:origin-angle",
+     "kind": "family",
+     "lo_id": "lo:g10m5s8-1-1",
+     "parent_question_id": "q:g10m5s8-1-1:ex5-8-20",
+     "source_page": 144,
+     "tier": "basic",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "tbl",
+       "let": "[[5,2,2180],[3,5,5904],[11,4,1998],[1,7,8187],[4,9,6604],[1,10,8429],[12,1,476],[11,10,4227],[1,6,8054],[7,5,3554],[3,2,3369],[2,5,6820],[6,7,4940],[5,11,6556],[5,7,5446],[2,9,7747],[9,8,4163],[4,5,5134],[12,7,3026],[3,4,5313],[10,1,571],[8,11,5397],[3,10,7330],[8,9,4837]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        "len(tbl) - 1"
+       ]
+      },
+      {
+       "name": "a",
+       "let": "tbl[i][0]"
+      },
+      {
+       "name": "b",
+       "let": "tbl[i][1]"
+      },
+      {
+       "name": "r",
+       "let": "tbl[i][2]"
+      },
+      {
+       "require": "a > 0 and b > 0 and a != b",
+       "why": "the point is in the first quadrant and the angle is never exactly 45 degrees"
+      },
+      {
+       "name": "ang",
+       "let": "fixed(r / 100, 2)"
+      }
+     ],
+     "constraints": [
+      "a > 0",
+      "b > 0",
+      "a != b"
+     ],
+     "stem": "The point $P({=a}, {=b})$ is joined to the origin $O(0, 0)$ by a straight line. Find the angle between the line $OP$ and the $x$-axis. Give your answer in degrees, correct to two decimal places.",
+     "answer": "ang",
+     "solution": [
+      "Sketch $O(0, 0)$ and $P({=a}, {=b})$ and join them. Drop a perpendicular from $P$ to the $x$-axis, meeting it at $R({=a}, 0)$. Triangle $ORP$ has a right angle at $R$, and the angle we want, $\\theta$, is at $O$ between $OP$ and the $x$-axis.",
+      "The side opposite $\\theta$ is $PR$. It is the distance from $P$ to the $x$-axis, so $PR = {=b}$ units.",
+      "The side adjacent to $\\theta$ is $OR$. It is the distance from $O$ to $R$ along the $x$-axis, so $OR = {=a}$ units.",
+      "Use the tangent ratio: $\\tan\\theta = \\frac{\\text{opposite}}{\\text{adjacent}} = \\frac{{=b}}{{=a}}$.",
+      "Use the calculator to find the angle: $\\theta = \\tan^{-1}\\left(\\frac{{=b}}{{=a}}\\right) = {=ang}^{\\circ}$, correct to two decimal places.",
+      "Therefore the angle between the line $OP$ and the $x$-axis is ${=ang}^{\\circ}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Entry point of the skill: the book's ex5-8-20 skeleton (draw the right-angled triangle, opposite over adjacent, tan, calculator) with the line starting at the origin, so the adjacent side is just the x-coordinate and no subtraction is needed. The stem and solution are the same for every instance; only the point changes. The calculator has no counterpart in the expression language, so the angle comes from a table of (a, b, angle in hundredths of a degree) computed with atan2 in Python and checked by hand against the book's own 33.69 and 23.96. The table has 24 rows, all with a and b coprime, a != b (no 45 degrees), distinct angles, and a third-and-later-decimal tail at least 0.001 degrees away from a rounding boundary, so there is no ambiguity at 2 decimal places. The answer is formatted exactly from the integer hundredths (fixed(r / 100, 2)), so it keeps a trailing zero where there is one (e.g. 21.80). No mcq: nothing in this family is a natural classification, and the catalogued misconception (a negative coordinate used as a length) cannot arise with a first-quadrant point; it is handled by the advanced family."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s8-1-1:second-quadrant",
+     "kind": "family",
+     "lo_id": "lo:g10m5s8-1-1",
+     "parent_question_id": "q:g10m5s8-1-1:ex5-8-21",
+     "source_page": 144,
+     "tier": "advanced",
+     "answer_type": "numeric",
+     "context": null,
+     "params": [
+      {
+       "name": "tbl",
+       "let": "[[1,4,7596],[13,7,2830],[10,9,4199],[11,14,5184],[10,13,5243],[14,11,3816],[1,6,8054],[1,12,8524],[3,8,6944],[4,3,3687],[3,4,5313],[4,15,7507],[8,13,5839],[3,2,3369],[11,15,5375],[2,5,6820],[12,5,2262],[10,3,1670],[1,10,8429],[7,10,5501],[15,11,3625],[7,15,6498],[13,11,4024],[9,2,1253]]"
+      },
+      {
+       "name": "i",
+       "randint": [
+        0,
+        "len(tbl) - 1"
+       ]
+      },
+      {
+       "name": "a",
+       "let": "tbl[i][0]"
+      },
+      {
+       "name": "b",
+       "let": "tbl[i][1]"
+      },
+      {
+       "name": "r",
+       "let": "tbl[i][2]"
+      },
+      {
+       "require": "a > 0 and b > 0 and a != b",
+       "why": "a and b are lengths, so P is truly in the second quadrant, and the reference angle is never exactly 45 degrees"
+      },
+      {
+       "name": "alpha",
+       "let": "fixed(r / 100, 2)"
+      },
+      {
+       "name": "theta",
+       "let": "fixed((18000 - r) / 100, 2)"
+      }
+     ],
+     "constraints": [
+      "a > 0",
+      "b > 0",
+      "a != b"
+     ],
+     "stem": "The point $P(-{=a}, {=b})$ lies in the second quadrant. The line from the origin $O(0, 0)$ to $P$ makes an angle $\\theta$ with the positive $x$-axis, measured anticlockwise from the positive $x$-axis (the angle in standard position). Find $\\theta$ in degrees, correct to two decimal places.",
+     "answer": "theta",
+     "solution": [
+      "Sketch $O(0, 0)$ and $P(-{=a}, {=b})$, which lies to the left of the $y$-axis and above the $x$-axis. Drop a perpendicular from $P$ to the $x$-axis, meeting it at $R(-{=a}, 0)$. Triangle $ORP$ has a right angle at $R$. Let $\\alpha$ be the angle at $O$ inside this triangle, between $OP$ and the negative $x$-axis.",
+      "The side opposite $\\alpha$ is $PR$, the distance from $P$ to the $x$-axis, so $PR = {=b}$ units.",
+      "The side adjacent to $\\alpha$ is $OR$. The $x$-coordinate of $P$ is $-{=a}$, but a length is never negative, so $OR = {=a}$ units.",
+      "Use the tangent ratio: $\\tan\\alpha = \\frac{\\text{opposite}}{\\text{adjacent}} = \\frac{{=b}}{{=a}}$.",
+      "Use the calculator to find the angle: $\\alpha = \\tan^{-1}\\left(\\frac{{=b}}{{=a}}\\right) = {=alpha}^{\\circ}$.",
+      "The angle in standard position is measured anticlockwise from the positive $x$-axis. The positive and negative $x$-axis together make a straight line of $180^{\\circ}$, so $\\theta = 180^{\\circ} - \\alpha = 180^{\\circ} - {=alpha}^{\\circ} = {=theta}^{\\circ}$.",
+      "Therefore the angle in standard position is $\\theta = {=theta}^{\\circ}$."
+     ],
+     "proposed_misconceptions": [],
+     "notes": "Advanced: the second-quadrant case named in the objective, and the twist the book itself uses in ex5-8-21, where D(-12, 14) has a negative coordinate that must be taken as a positive distance. Steps: right-angled triangle, take the negative x-coordinate as a positive length, tan, calculator for the acute angle alpha, then subtract from 180 to get the standard-position angle. The stem defines theta precisely (positive x-axis, anticlockwise), so there is one answer. A solver who uses tan^-1(b / -a) gets -alpha, and adding 180 gives the same final answer, so both routes agree. The worked solution states outright that a length is never negative, which targets the catalogued mc:g10m5s8-1-1:negative-coordinate-as-length. It is numeric, so there are no distractors to tag. The calculator has no counterpart in the expression language, so the acute angle comes from a table of (a, b, alpha in hundredths of a degree) computed with atan2 in Python; 24 rows, a and b coprime, a != b, distinct angles, tail at least 0.001 degrees from a rounding boundary. theta is computed exactly as (18000 - r) / 100, which equals 180 minus the rounded alpha, so the solution's arithmetic is true for every instance and is not affected by double rounding. The book's own ex5-8-21 skeleton (two points, angle with the y-axis) is deliberately not reused here: the book prints it as standard tier."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Two families, one per listed gap (basic, advanced). The standard tier was not listed as a gap and is already covered by the book's two questions (ex5-8-20 and ex5-8-21), so no standard family was written. Slugs differ in their first six letters (origin / second). Because the expression language has no inverse trig function, both families draw a row from a precomputed table of (a, b, angle in integer hundredths of a degree) and format the answer exactly with fixed(r / 100, 2). The tables were computed with Python atan2 and rows were kept only when the angle is more than 0.001 degrees away from a 2-decimal rounding boundary. The book's own answers (33.69 and 23.96) were re-derived with the same method."
+  },
+  {
+   "lo_id": "lo:g10m5s8-1-2",
+   "families": [
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s8-1-2:cosec-of-point",
+     "kind": "family",
+     "lo_id": "lo:g10m5s8-1-2",
+     "parent_question_id": "q:g10m5s8-1-2:ex5-7-1c",
+     "source_page": 136,
+     "tier": "standard",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "s1",
+       "choice": [
+        -1,
+        1
+       ]
+      },
+      {
+       "name": "s2",
+       "choice": [
+        -1,
+        1
+       ]
+      },
+      {
+       "require": "s1 < 0 or s2 < 0",
+       "why": "the point is not in the first quadrant, so at least one co-ordinate is negative"
+      },
+      {
+       "name": "x",
+       "let": "s1 * a"
+      },
+      {
+       "name": "y",
+       "let": "s2 * b"
+      },
+      {
+       "name": "r2",
+       "let": "x * x + y * y"
+      },
+      {
+       "name": "q",
+       "let": "1 if s1 > 0 and s2 > 0 else (2 if s1 < 0 and s2 > 0 else (3 if s1 < 0 and s2 < 0 else 4))"
+      },
+      {
+       "name": "sqf",
+       "let": "sum([1 for d in range(2, 14) if r2 % (d * d) == 0])"
+      },
+      {
+       "require": "not is_square(r2) and sqf == 0",
+       "why": "r is a surd in lowest terms, the way the book prints it (for example the square root of 10)"
+      }
+     ],
+     "constraints": [
+      "not is_square(x * x + y * y)",
+      "s1 < 0 or s2 < 0"
+     ],
+     "stem": "$P$ is a point with co-ordinates $({=x}, {=y})$ on a Cartesian plane, and $O$ is the origin. $OP$ forms an angle, $\\theta$, measured anticlockwise from the positive $x$-axis. Determine $\\text{cosec}\\theta$ without using a calculator.",
+     "solution": [
+      "Read off the co-ordinates of $P$ and keep their signs: $x={=x}$ and $y={=y}$. The point lies in quadrant {=q}.",
+      "We find $r=OP$ with the theorem of Pythagoras. $r$ is a length, so it is positive in every quadrant: $\\begin{aligned}r^{2}&=x^{2}+y^{2}\\\\&=({=x})^{2}+({=y})^{2}\\\\&={=r2}\\\\r&=\\sqrt{{=r2}}\\end{aligned}$",
+      "The reciprocal ratio $\\text{cosec}\\theta$ is $r$ over $y$: $\\begin{aligned}\\text{cosec}\\theta&=\\frac{r}{y}\\\\&=\\frac{\\sqrt{{=r2}}}{{=y}}\\end{aligned}$"
+     ],
+     "marker": {
+      "kind": "surd",
+      "answer": "sqrt({=r2})/({=y})",
+      "form": null,
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Standard tier: the book's ex5-7-1c (B(1;-3), cosec) with the point moved to quadrant II, III or IV so the signs matter, and r an unsimplifiable surd (squarefree, never a perfect square). cosec puts r on top, so the key has no rationalising question: sqrt(r2)/y. |y| >= 2 avoids a denominator of 1 or -1. The stem fixes the angle as measured anticlockwise from the positive x-axis (the book's figure shows the reflex angle for B), so the sign of cosec is determined. Instances: 129 distinct points."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s8-1-2:sec-choice",
+     "kind": "family",
+     "lo_id": "lo:g10m5s8-1-2",
+     "parent_question_id": "q:g10m5s8-1-2:ex5-7-1c",
+     "source_page": 136,
+     "tier": "standard",
+     "answer_type": "mcq",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        2,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        9
+       ],
+       "resample_while": "b == a"
+      },
+      {
+       "name": "s1",
+       "choice": [
+        -1,
+        1
+       ]
+      },
+      {
+       "name": "s2",
+       "choice": [
+        -1,
+        1
+       ]
+      },
+      {
+       "require": "s1 < 0 or s2 < 0",
+       "why": "the point is not in the first quadrant, so a negative r (the slip in the second distractor) differs from the correct sign"
+      },
+      {
+       "name": "x",
+       "let": "s1 * a"
+      },
+      {
+       "name": "y",
+       "let": "s2 * b"
+      },
+      {
+       "name": "r2",
+       "let": "x * x + y * y"
+      },
+      {
+       "name": "q",
+       "let": "1 if s1 > 0 and s2 > 0 else (2 if s1 < 0 and s2 > 0 else (3 if s1 < 0 and s2 < 0 else 4))"
+      },
+      {
+       "name": "sqf",
+       "let": "sum([1 for d in range(2, 14) if r2 % (d * d) == 0])"
+      },
+      {
+       "require": "not is_square(r2) and sqf == 0",
+       "why": "r is a surd in lowest terms"
+      }
+     ],
+     "constraints": [
+      "abs(x) != abs(y)",
+      "not is_square(x * x + y * y)"
+     ],
+     "stem": "$P$ is a point with co-ordinates $({=x}, {=y})$ on a Cartesian plane, and $O$ is the origin. $OP$ forms an angle, $\\theta$, measured anticlockwise from the positive $x$-axis. Without using a calculator, which of the following is $\\sec\\theta$?",
+     "solution": [
+      "Read off the co-ordinates of $P$ and keep their signs: $x={=x}$ and $y={=y}$. The point lies in quadrant {=q}.",
+      "We find $r=OP$ with the theorem of Pythagoras. $r$ is a length, so it is positive in every quadrant: $\\begin{aligned}r^{2}&=x^{2}+y^{2}\\\\&=({=x})^{2}+({=y})^{2}\\\\&={=r2}\\\\r&=\\sqrt{{=r2}}\\end{aligned}$",
+      "$\\sec\\theta$ is the reciprocal of $\\cos\\theta=\\frac{x}{r}$, so it is $r$ over $x$ (not $r$ over $y$): $\\begin{aligned}\\sec\\theta&=\\frac{r}{x}\\\\&=\\frac{\\sqrt{{=r2}}}{{=x}}\\end{aligned}$"
+     ],
+     "choices": {
+      "correct": "$\\frac{\\sqrt{{=r2}}}{{=x}}$",
+      "distractors": [
+       {
+        "text": "$\\frac{\\sqrt{{=r2}}}{{=y}}$",
+        "misconception_id": "mc:g10m5s8-1-2:reciprocal-named-by-letters"
+       },
+       {
+        "text": "$\\frac{-\\sqrt{{=r2}}}{{=x}}$",
+        "misconception_id": "mc:g10m5s8-1-2:r-takes-sign-of-point"
+       },
+       {
+        "text": "$\\frac{{=x}}{\\sqrt{{=r2}}}$",
+        "misconception_id": "mc:g10m5s8-1-2:ratio-not-turned-over"
+       }
+      ]
+     },
+     "proposed_misconceptions": [
+      {
+       "id": "mc:g10m5s8-1-2:ratio-not-turned-over",
+       "label": "Gives the ratio itself instead of its reciprocal",
+       "description": "The student finds x over r correctly but writes it as sec, the value of cos, instead of turning the fraction over to get r over x."
+      }
+     ],
+     "notes": "Standard tier, a choice question because every distractor is one named slip. Correct: r/x. D1 pairs sec with y (catalogued mc reciprocal-named-by-letters: sec taken as r over y). D2 gives r a negative sign (catalogued mc r-takes-sign-of-point); the point is kept out of quadrant I so that this slip changes the value. D3 is cos (x over r), a new misconception declared here. Constraints keep all four options distinct in value: |x| != |y| (so r/y is neither r/x nor -r/x), r2 neither a square nor divisible by a square. |x| >= 2 avoids a denominator of 1 or -1 in the key. The stem carries the coordinates, so no distinct_by_choices is needed. Instances: 129 distinct points."
+    },
+    {
+     "format": "ainext.family/1",
+     "id": "tpl:g10m5s8-1-2:product-ratios",
+     "kind": "family",
+     "lo_id": "lo:g10m5s8-1-2",
+     "parent_question_id": "q:g10m5s8-1-2:ex5-7-8h",
+     "source_page": 137,
+     "tier": "advanced",
+     "answer_type": "expression",
+     "context": null,
+     "params": [
+      {
+       "name": "a",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "name": "b",
+       "randint": [
+        1,
+        9
+       ]
+      },
+      {
+       "require": "gcd(a, b) == 1",
+       "why": "keeps the product in lowest terms"
+      },
+      {
+       "name": "s1",
+       "choice": [
+        -1,
+        1
+       ]
+      },
+      {
+       "name": "s2",
+       "choice": [
+        -1,
+        1
+       ]
+      },
+      {
+       "name": "x",
+       "let": "s1 * a"
+      },
+      {
+       "name": "y",
+       "let": "s2 * b"
+      },
+      {
+       "name": "r2",
+       "let": "x * x + y * y"
+      },
+      {
+       "name": "sqf",
+       "let": "sum([1 for d in range(2, 14) if r2 % (d * d) == 0])"
+      },
+      {
+       "require": "not is_square(r2) and sqf == 0",
+       "why": "r is a surd in lowest terms, never a whole number"
+      }
+     ],
+     "constraints": [
+      "gcd(abs(x), abs(y)) == 1",
+      "not is_square(x * x + y * y)"
+     ],
+     "stem": "$P$ is a point with co-ordinates $({=x}, {=y})$ on a Cartesian plane, and $O$ is the origin. $OP$ forms an angle, $\\theta$, measured anticlockwise from the positive $x$-axis. Without using a calculator, determine the value of $\\sin\\theta\\cos\\theta$. Give your answer as a fraction in simplest form.",
+     "solution": [
+      "Read off the co-ordinates of $P$ and keep their signs: $x={=x}$ and $y={=y}$.",
+      "We find $r=OP$ with the theorem of Pythagoras. $r$ is a length, so it is positive: $\\begin{aligned}r^{2}&=x^{2}+y^{2}\\\\&=({=x})^{2}+({=y})^{2}\\\\&={=r2}\\\\r&=\\sqrt{{=r2}}\\end{aligned}$",
+      "Write each ratio with $x$, $y$ and $r$: $\\begin{aligned}\\sin\\theta&=\\frac{y}{r}=\\frac{{=y}}{\\sqrt{{=r2}}}\\\\\\cos\\theta&=\\frac{x}{r}=\\frac{{=x}}{\\sqrt{{=r2}}}\\end{aligned}$",
+      "Multiply the two ratios. $\\sqrt{{=r2}}\\times\\sqrt{{=r2}}={=r2}$, so the surds disappear: $\\begin{aligned}\\sin\\theta\\cos\\theta&=\\frac{{=y}}{\\sqrt{{=r2}}}\\times\\frac{{=x}}{\\sqrt{{=r2}}}\\\\&=\\frac{{=x*y}}{{=r2}}\\end{aligned}$",
+      "The numerator and the denominator have no common factor, so the fraction is in simplest form: $\\sin\\theta\\cos\\theta={=(x*y)/r2}$"
+     ],
+     "marker": {
+      "kind": "expression",
+      "answer": "{=x*y}/{=r2}",
+      "form": "simplest",
+      "variables": [],
+      "tolerance": null
+     },
+     "proposed_misconceptions": [],
+     "notes": "Advanced tier: the twist of the book's ex5-7-8h (combine two ratios of one point, with r squared giving the whole number r2) but with a product, so the signs of x and y matter and the surd has to be cleared. P may be in any quadrant. gcd(|x|,|y|) = 1 guarantees xy/r2 is already in lowest terms (any prime dividing xy and x^2+y^2 would divide both x and y). r2 is never a perfect square and never has a square factor. The answer is a fraction, so the marker is an expression in simplest form, and the stem says so. Instances: 204 distinct points."
+    }
+   ],
+   "infeasible": [],
+   "notes": "Three families: two standard (a typed surd answer for cosec, and a choice question for sec carrying both catalogued misconceptions plus one new one declared in proposed_misconceptions) and one advanced (the product sin*cos from the point, a rational answer). Both listed gaps are filled; basic is already covered by the book questions. I read the figure for ex5-7-1 (B(1;-3), reflex angle beta) before building on it. Every family keeps r a squarefree non-square surd so the keys never raise a simplification or rationalising question: cosec and sec put r on top, and the advanced product needs only r squared."
+  },
+  {
+   "lo_id": "lo:g10m5s8-1-4",
+   "families": [],
+   "infeasible": [
+    {
+     "tier": "basic",
+     "reason": "The book-questions packet for lo:g10m5s8-1-4 is an empty list ([]), so there is no book question to name as parent_question_id (a required field that must be a question OF THIS objective) and no canonical solution to model the method and notation on. Any parent id I wrote would be invented provenance, so I wrote no family."
+    },
+    {
+     "tier": "standard",
+     "reason": "Same cause: the book-questions packet is empty, so there is no parent question, no book exercise to define 'typical' for this objective, and no canonical solution to follow. I cannot honestly claim a book method (for example, a special-angle triangle, a table, or direct recall) without seeing one."
+    },
+    {
+     "tier": "advanced",
+     "reason": "Same cause: the book-questions packet is empty, so there is no parent question and no harder book exercise or twist to base the tier on. Without the book's own examples I would be guessing what counts as advanced here, and no honest parent_question_id exists. The catalogued-misconceptions list is empty as well, so distractors would need entirely new ids with no catalogue check."
+    }
+   ],
+   "notes": "Both packet files for this objective (g10m5s8-1-4.book-questions.txt and g10m5s8-1-4.misconceptions.txt) contain only an empty list ([]). Every family needs parent_question_id to be a book question of this objective and has to follow the book's own solution method, so I authored nothing rather than invent a parent. I was not allowed to open any other file, so I could not look for the questions elsewhere. Most likely the extraction left this objective's questions unlinked, or the packet builder missed them. The skill itself (sin, cos and tan of 0, 30, 45, 60 and 90 degrees, with tan 90 undefined, used to evaluate expressions) is easy to write families for once real parent questions are attached. Suggested next step: re-run this objective after linking its book questions and misconceptions to the packet. If the book genuinely has no exercise for this objective, a human should decide whether to allow parent_question_id to be null, because the current spec does not allow it."
+  }
+ ],
+ "revised": []
+}

@@ -1,0 +1,88 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s8-1-2:cosec-of-point",
+ "kind": "family",
+ "lo_id": "lo:g10m5s8-1-2",
+ "parent_question_id": "q:g10m5s8-1-2:ex5-7-1c",
+ "source_page": 136,
+ "tier": "standard",
+ "answer_type": "expression",
+ "context": null,
+ "params": [
+  {
+   "name": "a",
+   "randint": [
+    1,
+    9
+   ]
+  },
+  {
+   "name": "b",
+   "randint": [
+    2,
+    9
+   ]
+  },
+  {
+   "name": "s1",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "name": "s2",
+   "choice": [
+    -1,
+    1
+   ]
+  },
+  {
+   "require": "s1 < 0 or s2 < 0",
+   "why": "the point is not in the first quadrant, so at least one co-ordinate is negative"
+  },
+  {
+   "name": "x",
+   "let": "s1 * a"
+  },
+  {
+   "name": "y",
+   "let": "s2 * b"
+  },
+  {
+   "name": "r2",
+   "let": "x * x + y * y"
+  },
+  {
+   "name": "q",
+   "let": "1 if s1 > 0 and s2 > 0 else (2 if s1 < 0 and s2 > 0 else (3 if s1 < 0 and s2 < 0 else 4))"
+  },
+  {
+   "name": "sqf",
+   "let": "sum([1 for d in range(2, 14) if r2 % (d * d) == 0])"
+  },
+  {
+   "require": "not is_square(r2) and sqf == 0",
+   "why": "r is a surd in lowest terms, the way the book prints it (for example the square root of 10)"
+  }
+ ],
+ "constraints": [
+  "not is_square(x * x + y * y)",
+  "s1 < 0 or s2 < 0"
+ ],
+ "stem": "$P$ is a point with co-ordinates $({=x}, {=y})$ on a Cartesian plane, and $O$ is the origin. $OP$ forms an angle, $\\theta$, measured anticlockwise from the positive $x$-axis. Determine $\\text{cosec}\\theta$ without using a calculator.",
+ "solution": [
+  "Read off the co-ordinates of $P$ and keep their signs: $x={=x}$ and $y={=y}$. The point lies in quadrant {=q}.",
+  "We find $r=OP$ with the theorem of Pythagoras. $r$ is a length, so it is positive in every quadrant: $\\begin{aligned}r^{2}&=x^{2}+y^{2}\\\\&=({=x})^{2}+({=y})^{2}\\\\&={=r2}\\\\r&=\\sqrt{{=r2}}\\end{aligned}$",
+  "The reciprocal ratio $\\text{cosec}\\theta$ is $r$ over $y$: $\\begin{aligned}\\text{cosec}\\theta&=\\frac{r}{y}\\\\&=\\frac{\\sqrt{{=r2}}}{{=y}}\\end{aligned}$"
+ ],
+ "marker": {
+  "kind": "surd",
+  "answer": "sqrt({=r2})/({=y})",
+  "form": null,
+  "variables": [],
+  "tolerance": null
+ },
+ "proposed_misconceptions": [],
+ "notes": "Standard tier: the book's ex5-7-1c (B(1;-3), cosec) with the point moved to quadrant II, III or IV so the signs matter, and r an unsimplifiable surd (squarefree, never a perfect square). cosec puts r on top, so the key has no rationalising question: sqrt(r2)/y. |y| >= 2 avoids a denominator of 1 or -1. The stem fixes the angle as measured anticlockwise from the positive x-axis (the book's figure shows the reflex angle for B), so the sign of cosec is determined. Instances: 129 distinct points."
+}

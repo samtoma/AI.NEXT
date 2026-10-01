@@ -1,0 +1,89 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s3-1-1:lengthclue",
+ "kind": "family",
+ "lo_id": "lo:g10m5s3-1-1",
+ "parent_question_id": "q:g10m5s3-1-1:ex5-1-2f",
+ "source_page": 112,
+ "tier": "advanced",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "T",
+   "let": "[[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    3
+   ]
+  },
+  {
+   "name": "k",
+   "choice": [
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "name": "a",
+   "let": "T[i][0] * k"
+  },
+  {
+   "name": "b",
+   "let": "T[i][1] * k"
+  },
+  {
+   "name": "c",
+   "let": "T[i][2] * k"
+  },
+  {
+   "name": "g",
+   "randint": [
+    0,
+    1
+   ]
+  },
+  {
+   "name": "x",
+   "let": "a if g == 0 else b"
+  },
+  {
+   "name": "y",
+   "let": "b if g == 0 else a"
+  },
+  {
+   "name": "sidelist",
+   "let": "[a, b, c]"
+  },
+  {
+   "name": "L",
+   "shuffle": "sidelist"
+  },
+  {
+   "name": "thetalist",
+   "let": "[x, c]"
+  },
+  {
+   "name": "P",
+   "shuffle": "thetalist"
+  }
+ ],
+ "constraints": [
+  "a * a + b * b == c * c",
+  "a != b"
+ ],
+ "stem": "A right-angled triangle has sides of length ${=L[0]}$ cm, ${=L[1]}$ cm and ${=L[2]}$ cm. The angle $\\theta$ is formed by the sides of length ${=P[0]}$ cm and ${=P[1]}$ cm. What is the length of the side opposite $\\theta$, in cm?",
+ "answer": "y",
+ "solution": [
+  "The hypotenuse is the side opposite the right angle, and in a right-angled triangle it is the longest side. So the hypotenuse is ${=c}$ cm, and the right angle lies between the sides of ${=a}$ cm and ${=b}$ cm.",
+  "The angle $\\theta$ is formed by the sides of ${=x}$ cm and ${=c}$ cm. One of these is the hypotenuse (${=c}$ cm), so the other one, ${=x}$ cm, is the adjacent side.",
+  "The opposite side is the remaining side, the one that does not form $\\theta$: ${=y}$ cm.",
+  "The side opposite $\\theta$ is ${=y}$ cm long."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Advanced: the right angle is not given, so the solver must first find the hypotenuse as the longest side (the catalogued hypotenuse-not-longest-side check), then use that theta is formed by the hypotenuse and one leg to name the adjacent leg, and finally the opposite side is the leg left over. Side lengths are Pythagorean triples (3-4-5, 5-12-13, 8-15-17, 7-24-25) scaled by 1, 2 or 3, so the triangle is genuinely right-angled and all lengths are whole numbers up to 75. Theta is always formed by the hypotenuse and a leg, so it can never be the right angle. Which leg forms theta, the order the three lengths are printed in, and the order the two lengths of theta are printed in all vary, so the longest side does not sit in a fixed position. Answer is the length of the opposite side as a whole number of centimetres. No figure is needed."
+}

@@ -1,0 +1,61 @@
+{
+ "format": "ainext.family/1",
+ "id": "tpl:g10m5s8-1-1:origin-angle",
+ "kind": "family",
+ "lo_id": "lo:g10m5s8-1-1",
+ "parent_question_id": "q:g10m5s8-1-1:ex5-8-20",
+ "source_page": 144,
+ "tier": "basic",
+ "answer_type": "numeric",
+ "context": null,
+ "params": [
+  {
+   "name": "tbl",
+   "let": "[[5,2,2180],[3,5,5904],[11,4,1998],[1,7,8187],[4,9,6604],[1,10,8429],[12,1,476],[11,10,4227],[1,6,8054],[7,5,3554],[3,2,3369],[2,5,6820],[6,7,4940],[5,11,6556],[5,7,5446],[2,9,7747],[9,8,4163],[4,5,5134],[12,7,3026],[3,4,5313],[10,1,571],[8,11,5397],[3,10,7330],[8,9,4837]]"
+  },
+  {
+   "name": "i",
+   "randint": [
+    0,
+    "len(tbl) - 1"
+   ]
+  },
+  {
+   "name": "a",
+   "let": "tbl[i][0]"
+  },
+  {
+   "name": "b",
+   "let": "tbl[i][1]"
+  },
+  {
+   "name": "r",
+   "let": "tbl[i][2]"
+  },
+  {
+   "require": "a > 0 and b > 0 and a != b",
+   "why": "the point is in the first quadrant and the angle is never exactly 45 degrees"
+  },
+  {
+   "name": "ang",
+   "let": "fixed(r / 100, 2)"
+  }
+ ],
+ "constraints": [
+  "a > 0",
+  "b > 0",
+  "a != b"
+ ],
+ "stem": "The point $P({=a}, {=b})$ is joined to the origin $O(0, 0)$ by a straight line. Find the angle between the line $OP$ and the $x$-axis. Give your answer in degrees, correct to two decimal places.",
+ "answer": "ang",
+ "solution": [
+  "Sketch $O(0, 0)$ and $P({=a}, {=b})$ and join them. Drop a perpendicular from $P$ to the $x$-axis, meeting it at $R({=a}, 0)$. Triangle $ORP$ has a right angle at $R$, and the angle we want, $\\theta$, is at $O$ between $OP$ and the $x$-axis.",
+  "The side opposite $\\theta$ is $PR$. It is the distance from $P$ to the $x$-axis, so $PR = {=b}$ units.",
+  "The side adjacent to $\\theta$ is $OR$. It is the distance from $O$ to $R$ along the $x$-axis, so $OR = {=a}$ units.",
+  "Use the tangent ratio: $\\tan\\theta = \\frac{\\text{opposite}}{\\text{adjacent}} = \\frac{{=b}}{{=a}}$.",
+  "Use the calculator to find the angle: $\\theta = \\tan^{-1}\\left(\\frac{{=b}}{{=a}}\\right) = {=ang}^{\\circ}$, correct to two decimal places.",
+  "Therefore the angle between the line $OP$ and the $x$-axis is ${=ang}^{\\circ}$."
+ ],
+ "proposed_misconceptions": [],
+ "notes": "Entry point of the skill: the book's ex5-8-20 skeleton (draw the right-angled triangle, opposite over adjacent, tan, calculator) with the line starting at the origin, so the adjacent side is just the x-coordinate and no subtraction is needed. The stem and solution are the same for every instance; only the point changes. The calculator has no counterpart in the expression language, so the angle comes from a table of (a, b, angle in hundredths of a degree) computed with atan2 in Python and checked by hand against the book's own 33.69 and 23.96. The table has 24 rows, all with a and b coprime, a != b (no 45 degrees), distinct angles, and a third-and-later-decimal tail at least 0.001 degrees away from a rounding boundary, so there is no ambiguity at 2 decimal places. The answer is formatted exactly from the integer hundredths (fixed(r / 100, 2)), so it keeps a trailing zero where there is one (e.g. 21.80). No mcq: nothing in this family is a natural classification, and the catalogued misconception (a negative coordinate used as a length) cannot arise with a first-quadrant point; it is handled by the advanced family."
+}
