@@ -66,6 +66,101 @@ class Normalise(unittest.TestCase):
         for a, b in differ:
             self.assertNotEqual(am.normalise(a), am.normalise(b), (a, b))
 
+    # ---- the semantically null rewrites (2026-10-01, g10 ch3 `bde9de9f…`): readings that already AGREE ----
+    def agree(self, pairs):
+        for a, b in pairs:
+            self.assertEqual(am.normalise(a), am.normalise(b), (a, b))
+
+    def differ(self, pairs):
+        for a, b in pairs:
+            self.assertNotEqual(am.normalise(a), am.normalise(b), (a, b))
+
+    def test_braces_around_a_single_token_are_null(self):
+        self.agree([("{7}^{1}", "7^{1}"), ("{x}^{2}", "x^{2}"), ("{x}^{2}", "x^2"), ("{7}^{1}", "7^1"),
+                    ("{\\pi}^{2}", "\\pi^{2}"), ("{n}_{1}", "n_{1}"), ("\\frac{{7}^{1}}{5}", "\\frac{7^{1}}{5}"),
+                    ("a+{b}", "a+b"), ("x^{{2}}", "x^{2}")])
+
+    def test_doubled_and_outer_braces_are_null(self):
+        self.agree([("\\frac{{a+b}}{c}", "\\frac{a+b}{c}"), ("{x+1}", "x+1"), ("{{x+1}}", "x+1"),
+                    ("{ x + 1 }", "x+1"), ("\\sqrt{{x+1}}", "\\sqrt{x+1}")])
+
+    def test_braces_that_scope_something_are_never_dropped(self):
+        # a group of several tokens decides what a following ^ or _ attaches to; an argument is not a bare group
+        self.differ([("{12}^{2}", "12^{2}"), ("{a+b}^{2}", "a+b^{2}"), ("{ab}_{1}", "ab_{1}"),
+                     ("\\frac{12}{5}", "\\frac{1}{25}"), ("\\frac{1}{2}", "\\frac{2}{1}"), ("x^{12}", "x^{1}2"),
+                     ("\\sqrt[3]{8}", "\\sqrt[3]{9}"), ("\\sqrt{x}y", "\\sqrt{xy}"), ("\\frac{a}{b}c", "\\frac{a}{bc}"),
+                     ("{-}3", "3"), ("{-}3", "{+}3"), ("{7}^{1}", "{7}^{2}"), ("{7}^{1}", "{8}^{1}")])
+
+    def test_left_right_and_sized_delimiters_are_null(self):
+        self.agree([("\\left(x+1\\right)", "(x+1)"), ("\\left[0;1\\right]", "[0;1]"), ("\\bigl(x\\bigr)", "(x)"),
+                    ("\\Biggl(x\\Biggr)", "(x)"), ("\\left\\{1;2\\right\\}", "\\{1;2\\}"),
+                    ("\\left.x^{2}\\right.", "x^{2}"), ("\\left(\\frac{1}{2}\\right)^{2}", "(\\frac{1}{2})^{2}")])
+        self.differ([("\\bigcup A", "\\bigcap A"), ("\\left(x\\right)", "[x]")])
+
+    def test_dfrac_tfrac_cfrac_are_frac(self):
+        self.agree([("\\dfrac{1}{2}", "\\frac{1}{2}"), ("\\tfrac{1}{2}", "\\frac{1}{2}"),
+                    ("\\cfrac{1}{2}", "\\frac{1}{2}")])
+        self.differ([("\\dfrac{1}{2}", "\\dfrac{2}{1}")])
+
+    def test_spacing_commands_are_null(self):
+        self.agree([("a\\enspace b", "ab"), ("a\\thinspace b", "ab"), ("a\\hspace{1em}b", "ab"),
+                    ("a\\hspace*{2cm}b", "ab"), ("\\phantom{-}3", "3"), ("a\\\\[2pt]b", "a\\\\b"),
+                    ("a\\qquad b\\,c", "abc")])
+        self.differ([("a\\\\b", "ab"), ("a\\\\[2]b", "a\\\\b")])   # `[2]` is no length: it is text, kept
+
+    def test_an_arrays_column_spec_and_rules_are_null(self):
+        row = "1&2\\\\3&4"
+        self.agree([("\\begin{array}{|l|l|}" + row + "\\end{array}", "\\begin{array}{ll}" + row + "\\end{array}"),
+                    ("\\begin{array}{c|c}" + row + "\\end{array}", "\\begin{array}{cc}" + row + "\\end{array}"),
+                    ("\\begin{array}{@{}c@{}c}" + row + "\\end{array}", "\\begin{array}{cc}" + row + "\\end{array}"),
+                    ("\\begin{tabular}{|c|c|}\\hline " + row + "\\\\\\hline\\end{tabular}",
+                     "\\begin{array}{cc}" + row + "\\end{array}"),
+                    ("\\begin{array}{ll}\\hline 1&2\\\\\\hline 3&4\\\\\\hline\\end{array}",
+                     "\\begin{array}{ll}" + row + "\\end{array}"),
+                    ("\\begin{array}{|l|l|}1&2\\\\\\cline{1-2}3&4\\end{array}",
+                     "\\begin{array}{ll}" + row + "\\end{array}"),
+                    ("\\begin{array}{ll}" + row + "\\end{array}", row)])
+        # the maths in the cells still counts
+        self.differ([("\\begin{array}{|l|l|}1&2\\\\3&4\\end{array}", "\\begin{array}{|l|l|}1&2\\\\3&5\\end{array}"),
+                     ("\\begin{array}{ll}1&2\\end{array}", "\\begin{array}{ll}1&3\\end{array}"),
+                     ("\\begin{array}{ll}1&2\\\\3&4\\end{array}", "\\begin{array}{ll}1&2\\end{array}")])
+
+    def test_a_rule_drawn_with_an_unbalanced_big_bar_in_a_cell_is_null(self):
+        base = "\\begin{array}{|l|l|}x&y\\\\z&w\\end{array}"
+        self.agree([("\\begin{array}{|l|l}x&y\\Big|\\\\z&w\\Big|\\end{array}", base),     # trailing, last cell too
+                    ("\\begin{array}{ll}x&\\Big|y\\\\z&\\Big|w\\end{array}", base),       # leading
+                    ("\\begin{array}{ll}x\\big|&y\\\\z\\bigg|&w\\end{array}", base),
+                    ("\\begin{array}{ll}x|&y\\\\z|&w\\end{array}", base)])              # a plain bar, same hack
+        # a BALANCED pair is an absolute value (maths), and a bar mid-cell is a divisor or a set-builder bar
+        self.differ([("\\begin{array}{l}\\left|x\\right|\\end{array}", "\\begin{array}{l}x\\end{array}"),
+                     ("\\begin{array}{l}\\Big|x\\Big|\\end{array}", "\\begin{array}{l}x\\end{array}"),
+                     ("\\begin{array}{l}5|10\\end{array}", "\\begin{array}{l}510\\end{array}"),
+                     ("\\begin{array}{l}\\left.F(x)\\right|\\end{array}", "\\begin{array}{l}F(x)\\end{array}")])
+        # outside an array nothing is a rule: an absolute value or a divisor bar is kept
+        self.differ([("|x|", "x"), ("x\\Big|", "x"), ("5|10", "510")])
+
+    def test_the_g10_remainder_table_readings_agree(self):
+        """The three blind readings of image bde9de9f… (g10 ch.3, lesson g10m3s2-1), as the passes wrote
+        them: the same eight remainders; A and C differ in `{7}^{1}` vs `7^{1}`, B in its rule markup."""
+        rem = (2, 4, 3, 1, 2, 4, 3, 1)
+
+        def table(spec, power, tail=""):
+            rows = [f"\\frac{{{power(k)}}}{{5}}:\\text{{Remainder}}={rem[k - 1]}&"
+                    f"\\frac{{{power(k + 4)}}}{{5}}:\\text{{Remainder}}={rem[k + 3]}{tail}" for k in range(1, 5)]
+            return "\\begin{array}{" + spec + "}" + "\\\\".join(rows) + "\\end{array}"
+
+        A = table("|l|l|", lambda k: f"7^{{{k}}}")
+        B = table("|l|l", lambda k: f"7^{{{k}}}", "\\Big|")
+        C = table("|l|l|", lambda k: f"{{7}}^{{{k}}}")
+        self.assertEqual(am.normalise(A), am.normalise(B))
+        self.assertEqual(am.normalise(A), am.normalise(C))
+        self.assertEqual(am.normalise(B), am.normalise(C))
+        # a changed remainder, exponent, base or denominator never agrees
+        self.assertNotEqual(am.normalise(A), am.normalise(A.replace("Remainder}=2", "Remainder}=3", 1)))
+        self.assertNotEqual(am.normalise(A), am.normalise(C.replace("{7}^{3}", "{7}^{2}")))
+        self.assertNotEqual(am.normalise(A), am.normalise(C.replace("{7}^{3}", "{9}^{3}")))
+        self.assertNotEqual(am.normalise(A), am.normalise(B.replace("\\frac{7^{6}}{5}", "\\frac{7^{6}}{3}")))
+
 
 class CrossCheck(unittest.TestCase):
     def test_signature_keeps_digits_letters_and_greek(self):
@@ -210,6 +305,29 @@ class Assemble(unittest.TestCase):
         q = am.third_reading_queue(eqs, {"e" * 32: {}}, runs)
         # a: A = B; b: they differ; c: only A, but C has read it already; d: only B; e: hash; f: teacher
         self.assertEqual([x["md5"] for x in q], ["b" * 32, "d" * 32])
+
+    def test_readings_that_differ_only_in_null_markup_are_accepted_by_agreement_a_value_change_is_not(self):
+        """FR-4407 recognises agreement, it never guesses: braces round a single token and an array's rule
+        markup are the same maths (the accepted LaTeX stays pass A's own words); a changed digit queues."""
+        braced, ruled, value = ("b" * 32, "c" * 32, "d" * 32)
+        images = {h: ("solution_only", []) for h in (braced, ruled, value)}
+        tbl = "\\begin{{array}}{{{spec}}}\\frac{{{p}}}{{5}}&\\text{{R}}={r}{tail}\\end{{array}}"
+        runA = {"pass": "A", "results": [
+            {"md5": braced, "latex": "7^{1}"},
+            {"md5": ruled, "latex": tbl.format(spec="|l|l|", p="7^{1}", r=2, tail="")},
+            {"md5": value, "latex": tbl.format(spec="|l|l|", p="7^{1}", r=2, tail="")}]}
+        runB = {"pass": "B", "results": [
+            {"md5": braced, "latex": "{7}^{1}"},
+            {"md5": ruled, "latex": tbl.format(spec="|l|l", p="7^{1}", r=2, tail="\\Big|")},
+            {"md5": value, "latex": tbl.format(spec="|l|l|", p="7^{1}", r=3, tail="")}]}
+        res = self.run_assemble(images, [runA, runB])
+        acc, q = res["accepted"], {x["md5"]: x for x in res["queue"]}
+        self.assertEqual((acc[braced]["accepted_by"], acc[braced]["latex"], acc[braced]["B"]),
+                         ("agreement", "7^{1}", "{7}^{1}"))
+        self.assertEqual(acc[ruled]["accepted_by"], "agreement")
+        self.assertEqual(acc[ruled]["latex"], runA["results"][1]["latex"])
+        self.assertEqual(q[value]["reason"], "the two passes disagree")
+        self.assertEqual(res["summary"]["accepted_by_agreement"], 2)
 
     def test_counts_per_chapter_from_the_blocks(self):
         one, two = "a" * 32, "b" * 32
