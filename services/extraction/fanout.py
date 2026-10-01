@@ -436,9 +436,11 @@ def build_runs(inv: dict) -> list[dict]:
                    f"AINEXT_DB_DSN=\"{DSN}\" uv run generate_widget_questions.py --templates {wid} --book {cfg} --dsn \"{DSN}\" "
                    f"--verdicts runs/g10-math/widgets/verify-{t}-<wf_id>.json --gaps runs/g10-math/widgets/author-merged-{t}.json "
                    f"--gap-report coverage/g10-math.{t}.widget-gaps.json --pending-review runs/g10-math/widgets/pending-review-{t}.json "
-                   f"--out {gen}/widget-questions.json",
+                   f"--out {gen}/widget-questions.json   # no template in the chapter (s7-verify skipped): drop --verdicts, "
+                   "--pending-review and --out — the gap report alone; a widget bundle is never written unverified",
                    f"uv run assemble_misconceptions.py runs/g10-math/misconceptions/final-{t}-<wf_id>.json --book {cfg} "
                    f"--out {gen}/misconceptions.json --bundle {gen}/generated-questions.json --bundle {gen}/widget-questions.json "
+                   "(each --bundle only if written) "
                    f"--graph seed/g10-math/g10m-c{ch:02d}.json --graph seed/g10-math/g10m-course.json",
                    f"# load both bundles (37a/37c: students see them; review status internal) — the loader's status "
                    f"policy is another data-engineer's work: load_generated_questions.py {gen}/<bundle> --course "
