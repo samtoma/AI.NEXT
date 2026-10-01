@@ -322,13 +322,17 @@ const DECIMAL_COMMA = /(?<=\d),(?=\d|\\(?:overline|bar|dot|ddot)\s*\{?\s*\d)/g
 function valueList(s, textLayer) {
   const t = mathsSpan(textLayer ? printedTex(s) : s).replace(/\$/g, ' ').replace(/(\d)\{,\}(\d)/g, '$1.$2').replace(DECIMAL_COMMA, '.')
   const parts = t.split(/\s+or\s+|\s+and\s+|\\text\{\s*(?:or|and)\s*\}|;|,(?![^()]*\))/).map((x) => x.trim()).filter(Boolean)
+  const flat = (rest) => (textLayer ? rest.replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, '') : rest)
   const one = (x) => {
     const n = normTex(x), m = VALUE_LABEL.exec(n)
     const rest = m ? n.slice(m[0].length) : n
-    return { label: m ? m[0].replace(/(?:=|\\approx)$/, '') : null,
-      value: textLayer ? rest.replace(/\\[a-zA-Z]+/g, '').replace(/[^0-9A-Za-z+\-=<>≤≥.]/g, '') : rest }
+    const label = m ? m[0].replace(/(?:=|\\approx)$/, '') : null
+    // "b = ±2" states TWO values, +2 and -2 (in that order): the sign is read, never dropped (COLLECT-6)
+    const pm = /^(?:±|\\pm(?![a-zA-Z]))(?=[^-+±])/.exec(rest)
+    if (pm) { const v = flat(rest.slice(pm[0].length)); return v ? [{ label, value: v }, { label, value: `-${v}` }] : [] }
+    return [{ label, value: flat(rest) }]
   }
-  const rows = parts.map(one).filter((r) => r.value)
+  const rows = parts.flatMap(one).filter((r) => r.value)
   return { values: rows.map((r) => r.value), labels: rows.map((r) => r.label) }
 }
 // the values as a set (sorted): what the marker's "values" kind compares
@@ -341,6 +345,94 @@ const sameValues = (key, against, textLayer) => {
   const named = new Set([...k.labels, ...a.labels].filter(Boolean)).size > 1
   const kv = named ? k.values : [...k.values].sort(), av = named ? a.values : [...a.values].sort()
   return kv.every((x, i) => x === av[i])
+}
+
+// ---- COLLECT-6 (Chapters 3 and 4): a key against an answer the book printed another way -------------------------------------
+// Everything below only ACCEPTS a key, and only when every value, relation, sign and bracket of the key is found in the printed (or
+// book-final) answer and the answer states nothing else; a different value, sign, relation or bracket, a constraint the key
+// leaves out, or a value the key does not list is a mismatch exactly as before. Nothing is written back.
+const normNum = (x) => { let n = String(x).replace(',', '.').replace(/^\+/, ''); if (n.includes('.')) n = n.replace(/0+$/, '').replace(/\.$/, ''); return n === '-0' ? '0' : n }
+const PLAIN_NUMBER = /^-?\d+(?:\.\d+)?$/
+
+// The numbers a SENTENCE states, in order: "There are 5 tricycles and 2 bicycles." → 5, 2; "7 and 35 years old." → 7, 35;
+// "b = 8 cm and l = 2b = 16 cm" → 8, 16 (once the sentence has an "=", only the numbers it sets after one count: 2b is a
+// coefficient, and a number it does not set is refused); "R9,00" is 9. A sentence with maths in it, with no word, or whose numbers are
+// glued to letters ("5kg") is not read (null), so nothing is guessed.
+function sentenceNumbers(text) {
+  let t = String(text == null ? '' : text).normalize('NFKC').replace(/[−–—]/g, '-')
+  if (/[\\$]/.test(t) || !t.replace(/\b(?:and|or)\b/gi, ' ').match(/[A-Za-z]{3,}/)) return null
+  t = t.replace(/\bR\s?(?=\d)/g, '')
+  const hasEq = t.includes('=')
+  const out = []
+  const re = /(?<![\w.,])(-?\d+(?:[.,]\d+)?)(?![\w])/g
+  let m
+  while ((m = re.exec(t))) {
+    if (hasEq && !/=\s*$/.test(t.slice(0, m.index))) return null
+    out.push(normNum(m[1]))
+  }
+  return out.length ? out : null
+}
+// a values key of plain numbers, listed in the order its sentence states them
+function sentenceMatchesValues(key, text) {
+  const kv = valueList(key, false).values
+  if (kv.length < 2 || !kv.every((v) => PLAIN_NUMBER.test(v.replace(/^\+/, '')))) return false
+  const sn = sentenceNumbers(text)
+  return !!sn && sn.length === kv.length && sn.every((x, i) => x === normNum(kv[i]))
+}
+// A sentence of the book's solution in maths ("The solution to $3x^2+2x-1=0$ is $x=-1$ or $x=\frac{1}{3}$"): the answer is what its
+// `var = value` segments set; a given equation beside them is not an answer, but a bare value in a segment of its own is refused.
+function assignedList(text) {
+  const segs = String(text == null ? '' : text).match(/\$[^$]+\$/g)
+  if (!segs) return null
+  const asg = [], given = []
+  for (const sg of segs) (/^[A-Za-z](?:_(?:\{[A-Za-z0-9]+\}|[A-Za-z0-9]+))?=[^=]+$/.test(normTex(sg)) ? asg : given).push(sg)
+  if (asg.length < 2 || given.some((sg) => !normTex(sg).includes('='))) return null
+  return asg.map((sg) => sg.replace(/\$/g, '')).join('; ')
+}
+
+// Inequalities, set membership and intervals, compared as one canonical string: the same relations, the same signs and values, the same
+// brackets, the same connectors, in the same order. The book's flattened print is read first (never guessed): ≠ is a solidus + "=", a
+// fraction in an interval's endpoint is "6 5" (6/5), ∈ and ∞ are signs, a number line's axis ("x 0 1 2 3 4 5 …") and the next
+// part's answer that runs on ("… ] . e) ( −∞; −55 13 )") are not this answer.
+function canonRel(s, printed) {
+  let t = String(s == null ? '' : s).normalize('NFKC').replace(/[−–—]/g, '-').replace(/̸\s*=|=\s*̸/g, '≠').replace(/\\neq?(?![a-zA-Z])/g, '≠')
+  if (printed) t = t.replace(/(?<=[;(\[]\s*)(?<![\d.])(-?\d+)\s+(\d+)(?![\d.])(?=\s*[;)\]])/g, '$1/$2')
+  t = normTex(t).replace(/\\in(?![a-zA-Z])/g, '∈').replace(/\\mathbb\{([A-Za-z])\}/g, '$1').replace(/[ℝℕℤℚ]/g, (c) => ({ 'ℝ': 'R', 'ℕ': 'N', 'ℤ': 'Z', 'ℚ': 'Q' })[c])
+    .replace(/\\infty(?![a-zA-Z])/g, '∞').replace(/\\cup(?![a-zA-Z])/g, '∪').replace(/\\frac\{(-?\d+)\}\{(\d+)\}/g, '$1/$2')
+  return t.replace(/^[A-Za-z]∈(?=[(\[])/, '')               // "x ∈ (−∞; 6/5]" is the interval
+}
+// the readings of a printed answer that is no more than its own answer: as printed; without the next part's answer (the item's part
+// letter is the only thing it is cut at: "d" runs on into "e)"); without a number line's axis, a variable and its ticks
+function relReadings(printed, ref) {
+  let t = String(printed == null ? '' : printed).normalize('NFKC').replace(/[−–—]/g, '-')
+  const part = /\d([a-z])$/.exec(String(ref || ''))
+  if (part && part[1] < 'z') {
+    const next = String.fromCharCode(part[1].charCodeAt(0) + 1)
+    const i = t.search(new RegExp(`(?:^|[\\s.;,])${next}\\)`))
+    if (i > 0) t = t.slice(0, i)
+  }
+  const out = [t]
+  const ax = /^\s*([A-Za-z])\s+(?:-?\d+(?:[.,]\d+)?\s+){2,}?(?=\1\s*[<>≤≥=∈≠̸]|-?\d+(?:[.,]\d+)?\s*[<≤>≥])/.exec(t)
+  if (ax) out.push(t.slice(ax[0].length))
+  return out
+}
+const RELATION_KEY = /[<>≤≥≠∈]|\\(?:leq?|geq?|neq?|in)(?![a-zA-Z])|^\s*(?:\\left)?[(\[].*[;,].*(?:\\right)?[)\]]\s*$/
+function relEquivalent(key, printed, ref) {
+  if (!RELATION_KEY.test(String(key))) return false
+  const k = canonRel(key, false)
+  if (k.length < 3) return false
+  if (relReadings(printed, ref).some((r) => canonRel(r, true) === k)) return true
+  // "true for all real values of x" says the whole line, (-∞;∞); a negation or an exception says something else
+  return /^(?:[A-Za-z]∈)?(?:\(-∞,∞\)|R)$/.test(k) && /\b(?:all|any|every)\s+real\s+(?:values?|numbers?)\b/i.test(printed) &&
+    !/\b(?:not|no|except|other\s+than|never|cannot)\b|n't/i.test(printed)
+}
+// a printed answer's trailing unit word ("19 50 litres"), when the item's own stem or typing names the unit
+function withoutUnit(text, stem, unit) {
+  const m = /^(.*\d)\s+([A-Za-z]+)\.?\s*$/.exec(String(text == null ? '' : text))
+  if (!m) return null
+  const w = m[2].toLowerCase(), sing = w.replace(/s$/, '')
+  const named = norm(unit || '') === w || norm(unit || '').replace(/s$/, '') === sing || new RegExp(`(?:^|[^a-z])${sing}s?(?:[^a-z]|$)`).test(norm(stem))
+  return named ? m[1] : null
 }
 
 // Is a final answer in the book solution? The solution's text, and each line of an aligned

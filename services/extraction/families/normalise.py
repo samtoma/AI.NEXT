@@ -3,7 +3,7 @@
     uv run python -m families.normalise families/<book>/<file>.json [...] [--dry-run]
 
 An author spec that breaks a FORMAT rule the prompt states is refused by ``--check`` (families/spec.py).
-Most such refusals are the author's to fix, and go back to the author. Two are not a question of content at
+Most such refusals are the author's to fix, and go back to the author. Three are not a question of content at
 all, and this module fixes them the same way every time:
 
   drop-redundant-answer   an expression family carries a top-level "answer" beside marker.answer. Its answer
@@ -11,6 +11,10 @@ all, and this module fixes them the same way every time:
   rename-shadowing-param  a param is named like a built-in (num, frac, gcd …), which would hide it. The param
                           is renamed <name>_v in every expression and every {=…} hole — never where the name is
                           CALLED, which is the built-in — and nothing else changes.
+  distinct-by-choices     a multiple-choice family whose stem has no {=…} hole is the same sentence in every
+                          instance, so the duplicate-stem filter would keep one item of the whole family. The
+                          variation is in the options; the spec is marked "distinct_by_choices": true, which
+                          makes the filter read stem plus the set of options (generate_questions.same_question).
 
 Anything else is an author error and is left alone. Each rule applied is appended to the spec's "notes" as
 "PIPELINE NORMALISATION (not an author edit) …", so the stored spec says what the pipeline changed and why; a
@@ -86,6 +90,13 @@ def normalise(raw: dict) -> tuple[dict, list[str]]:
                     f"an expression family's answer is marker.answer ({json.dumps(marker['answer'], ensure_ascii=False)}), "
                     "unchanged")
         del out["answer"]
+    stem = out.get("stem")
+    if (out.get("answer_type") == "mcq" and isinstance(stem, str) and not out.get("distinct_by_choices")
+            and E.holes(stem) == []):
+        out["distinct_by_choices"] = True
+        done.append("distinct-by-choices: the stem has no {=…} hole, so it is the same sentence in every instance "
+                    "and only the options differ; the duplicate filter now reads stem plus options, so the "
+                    "family is not collapsed to one item")
     names = {p.get("name") for p in out.get("params") or [] if isinstance(p, dict)}
     for prm in list(out.get("params") or []):
         name = prm.get("name") if isinstance(prm, dict) else None
