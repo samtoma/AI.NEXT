@@ -1,0 +1,425 @@
+{
+ "format": "ainext.working-check/1",
+ "book": "g10-math",
+ "chapter": 9,
+ "prompts_version": "sw-v3",
+ "rule": "Each flag is a backlog item for a human (answer 30; answer 37c). Nothing here was corrected: the content stays as the book and G2 have it until a human decides.",
+ "passes": [
+  "A",
+  "B"
+ ],
+ "single_pass_ids": [],
+ "solutions": 137,
+ "skipped": [],
+ "verdicts": {
+  "consistent": 128,
+  "flagged": 9,
+  "unclear": 0
+ },
+ "flags": [
+  {
+   "solution_id": "expl:g10m9s3-1-3:ex9-7-19",
+   "lo": "lo:g10m9s3-1-3",
+   "step": 2,
+   "kind": "wrong_value",
+   "where": "question",
+   "quote": "i&=\\text{6.25}\\%",
+   "expected": "5.25%",
+   "why": "The question gives 5.25% but the working and table use 6.25%; the table values match 6.25%.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-7-16a",
+   "lo": "lo:g10m9s2-1-1",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "i&=\\text{0.685}",
+   "expected": "i = 0.0685",
+   "why": "6.85% as a decimal is 0.0685, not 0.685.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "A",
+    "B",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s3-1-2:ex9-7-31b",
+   "lo": "lo:g10m9s3-1-2",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "i&=100(\\text{0.016})",
+   "expected": "i = 100(0.01629)",
+   "why": "The previous line gives i/100 = 0.01629, not 0.016, and 100(0.016) = 1.6, which does not equal the next line's 1.69.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-8",
+   "lo": "lo:g10m9s4-1-1",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\frac{\\text{8400}}{\\text{2.15}}",
+   "expected": "1 + 0.075 x 2 = 1.15",
+   "why": "1 + (0.075)(2) equals 1.15, not 2.15, so the divisor and the resulting P = 3906.98 are wrong.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-8",
+   "lo": "lo:g10m9s4-1-1",
+   "step": 4,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\frac{\\text{8400}}{\\text{4.3}}",
+   "expected": "1 + 0.075 x 4 = 1.3",
+   "why": "1 + (0.075)(4) equals 1.3, not 4.3, so the divisor and the resulting P = 1953.49 are wrong.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s4-1-2:ex9-3-9",
+   "lo": "lo:g10m9s4-1-2",
+   "step": 5,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "\\frac{\\text{5259.38}}{36}",
+   "expected": "30 months, as in the question and step 1",
+   "why": "The question gives 30 months and step 1 uses n = 30/12, but the payment is divided by 36.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-5-1",
+   "lo": "lo:g10m9s4-1-4",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\text{3879090}\\left(1+\\frac{\\text{1.1}}{\\text{100}}\\right)^{6} = \\text{4142255}",
+   "expected": "",
+   "why": "\\text{3879090}\\left(1+\\frac{\\text{1.1}}{\\text{100}}\\right)^{6} = \\text{4142255} does not hold (4.14225e+06 vs 4.14226e+06)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "\\text{3879090}\\left(1+\\frac{\\text{1.1}}{\\text{100}}\\right)^{6}",
+    "relation": "=",
+    "right": "\\text{4142255}",
+    "why": "\\text{3879090}\\left(1+\\frac{\\text{1.1}}{\\text{100}}\\right)^{6} = \\text{4142255} does not hold (4.14225e+06 vs 4.14226e+06)"
+   }
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-5-2",
+   "lo": "lo:g10m9s4-1-4",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\text{3878970}\\left(1+\\frac{\\text{0.7}}{\\text{100}}\\right)^{12} = \\text{4217645}",
+   "expected": "",
+   "why": "\\text{3878970}\\left(1+\\frac{\\text{0.7}}{\\text{100}}\\right)^{12} = \\text{4217645} does not hold (4.21765e+06 vs 4.21764e+06)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "\\text{3878970}\\left(1+\\frac{\\text{0.7}}{\\text{100}}\\right)^{12}",
+    "relation": "=",
+    "right": "\\text{4217645}",
+    "why": "\\text{3878970}\\left(1+\\frac{\\text{0.7}}{\\text{100}}\\right)^{12} = \\text{4217645} does not hold (4.21765e+06 vs 4.21764e+06)"
+   }
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-7-31a",
+   "lo": "lo:g10m9s4-1-4",
+   "step": 1,
+   "kind": "copy",
+   "where": "working",
+   "quote": "\\text{57\\ 000\\ 000}(\\text{1.0937})^{10}",
+   "expected": "57 000 000 × 1.0937",
+   "why": "The previous line's (1.009)^10 evaluates to 1.0937; the exponent 10 is wrongly kept, and (1.0937)^10 would not give 62.3 million.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ],
+   "also_kinds": [
+    "arithmetic"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-7-33",
+   "lo": "lo:g10m9s4-1-4",
+   "step": 2,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\text{3888420}\\left(1+\\frac{\\text{0.7}}{\\text{100}}\\right)^{7} = \\text{4083001}",
+   "expected": "",
+   "why": "\\text{3888420}\\left(1+\\frac{\\text{0.7}}{\\text{100}}\\right)^{7} = \\text{4083001} does not hold (4.083e+06 vs 4.083e+06)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "\\text{3888420}\\left(1+\\frac{\\text{0.7}}{\\text{100}}\\right)^{7}",
+    "relation": "=",
+    "right": "\\text{4083001}",
+    "why": "\\text{3888420}\\left(1+\\frac{\\text{0.7}}{\\text{100}}\\right)^{7} = \\text{4083001} does not hold (4.083e+06 vs 4.083e+06)"
+   }
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:we11",
+   "lo": "lo:g10m9s4-1-4",
+   "step": 3,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\text{3 888 180}(\\text{1}+\\text{0.021})^{\\text{10}} = \\text{4 786 343}",
+   "expected": "",
+   "why": "\\text{3 888 180}(\\text{1}+\\text{0.021})^{\\text{10}} = \\text{4 786 343} does not hold (4.78634e+06 vs 4.78634e+06)",
+   "sources": [
+    "numeric"
+   ],
+   "passes": [],
+   "numeric": {
+    "left": "\\text{3 888 180}(\\text{1}+\\text{0.021})^{\\text{10}}",
+    "relation": "=",
+    "right": "\\text{4 786 343}",
+    "why": "\\text{3 888 180}(\\text{1}+\\text{0.021})^{\\text{10}} = \\text{4 786 343} does not hold (4.78634e+06 vs 4.78634e+06)"
+   }
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-6-1c",
+   "lo": "lo:g10m9s5-1-2",
+   "step": 1,
+   "kind": "sign",
+   "where": "working",
+   "quote": "Loss $=\\text{R1400}-\\text{R1500}$",
+   "expected": "R1500 - R1400 = R100",
+   "why": "R1400 minus R1500 equals negative R100, not the loss of R100 stated; the subtraction is written in the wrong order.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s5-1-3:ex9-6-4a",
+   "lo": "lo:g10m9s5-1-3",
+   "step": 1,
+   "kind": "arithmetic",
+   "where": "working",
+   "quote": "\\text{21\\ 900}\\times\\frac{\\text{7.04}}{1}=\\text{R154400}",
+   "expected": "21 900 × 7.04 = R154 176",
+   "why": "21 900 × 7.04 equals 154 176, not 154 400, so the stated USA cost is wrong.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  },
+  {
+   "solution_id": "q:g10m9s5-1-3:ex9-6-4b",
+   "lo": "lo:g10m9s5-1-3",
+   "step": 1,
+   "kind": "wrong_value",
+   "where": "working",
+   "quote": "6\\times\\frac{\\text{14.31}}{1}",
+   "expected": "14.13 (UK pound rate in the table)",
+   "why": "The table gives £ = R14.13, but the working uses 14.31, and 6 × 14.31 is not R84.78.",
+   "sources": [
+    "agent"
+   ],
+   "passes": [
+    "A",
+    "B"
+   ]
+  }
+ ],
+ "flagged_solutions": 13,
+ "unclear": [],
+ "unchecked": [],
+ "problems": [],
+ "checked_ids": [
+  "expl:g10m9s3-1-3:ex9-7-19",
+  "expl:g10m9s3-1-3:ex9-7-20a",
+  "expl:g10m9s3-1-3:ex9-7-20b",
+  "expl:g10m9s5-1-3:ex9-6-7a",
+  "expl:g10m9s5-1-3:ex9-6-7b",
+  "q:g10m9s2-1-1:ex9-1-1",
+  "q:g10m9s2-1-1:ex9-1-2",
+  "q:g10m9s2-1-1:ex9-1-3",
+  "q:g10m9s2-1-1:ex9-1-4",
+  "q:g10m9s2-1-1:ex9-1-5a",
+  "q:g10m9s2-1-1:ex9-1-5b",
+  "q:g10m9s2-1-1:ex9-7-1",
+  "q:g10m9s2-1-1:ex9-7-16a",
+  "q:g10m9s2-1-1:ex9-7-18a",
+  "q:g10m9s2-1-1:ex9-7-2",
+  "q:g10m9s2-1-1:ex9-7-8",
+  "q:g10m9s2-1-2:ex9-1-6",
+  "q:g10m9s2-1-2:ex9-7-3",
+  "q:g10m9s2-1-3:ex9-1-12",
+  "q:g10m9s2-1-3:ex9-1-13",
+  "q:g10m9s2-1-3:ex9-1-7",
+  "q:g10m9s2-1-3:ex9-7-6",
+  "q:g10m9s2-1-3:ex9-7-7",
+  "q:g10m9s2-1-4:ex9-1-10",
+  "q:g10m9s2-1-4:ex9-1-11",
+  "q:g10m9s2-1-4:ex9-1-8",
+  "q:g10m9s2-1-4:ex9-1-9",
+  "q:g10m9s2-1-4:ex9-7-25",
+  "q:g10m9s2-1-4:ex9-7-4",
+  "q:g10m9s2-1-4:ex9-7-5",
+  "q:g10m9s2-1-4:we04",
+  "q:g10m9s3-1-1:ex9-2-1",
+  "q:g10m9s3-1-1:ex9-2-2",
+  "q:g10m9s3-1-1:ex9-2-3",
+  "q:g10m9s3-1-1:ex9-7-10",
+  "q:g10m9s3-1-1:ex9-7-13a",
+  "q:g10m9s3-1-1:ex9-7-13b",
+  "q:g10m9s3-1-1:ex9-7-13c",
+  "q:g10m9s3-1-1:ex9-7-16b",
+  "q:g10m9s3-1-1:ex9-7-18b",
+  "q:g10m9s3-1-1:ex9-7-9",
+  "q:g10m9s3-1-1:we05",
+  "q:g10m9s3-1-2:ex9-2-7",
+  "q:g10m9s3-1-2:ex9-7-31b",
+  "q:g10m9s3-1-2:we06",
+  "q:g10m9s3-1-3:ex9-7-17",
+  "q:g10m9s3-1-4:ex9-2-4",
+  "q:g10m9s3-1-4:ex9-2-5",
+  "q:g10m9s3-1-4:ex9-2-6",
+  "q:g10m9s3-1-4:ex9-7-11",
+  "q:g10m9s3-1-4:ex9-7-12",
+  "q:g10m9s4-1-1:ex9-3-1a",
+  "q:g10m9s4-1-1:ex9-3-1b",
+  "q:g10m9s4-1-1:ex9-3-1c",
+  "q:g10m9s4-1-1:ex9-3-1d",
+  "q:g10m9s4-1-1:ex9-3-2a",
+  "q:g10m9s4-1-1:ex9-3-2b",
+  "q:g10m9s4-1-1:ex9-3-2c",
+  "q:g10m9s4-1-1:ex9-3-2d",
+  "q:g10m9s4-1-1:ex9-3-3a",
+  "q:g10m9s4-1-1:ex9-3-3b",
+  "q:g10m9s4-1-1:ex9-3-3c",
+  "q:g10m9s4-1-1:ex9-3-3d",
+  "q:g10m9s4-1-1:ex9-3-4a",
+  "q:g10m9s4-1-1:ex9-3-4b",
+  "q:g10m9s4-1-1:ex9-3-4c",
+  "q:g10m9s4-1-1:ex9-3-5a",
+  "q:g10m9s4-1-1:ex9-3-5b",
+  "q:g10m9s4-1-1:ex9-3-5c",
+  "q:g10m9s4-1-1:ex9-3-6a",
+  "q:g10m9s4-1-1:ex9-3-6b",
+  "q:g10m9s4-1-1:ex9-3-6c",
+  "q:g10m9s4-1-1:ex9-3-7a",
+  "q:g10m9s4-1-1:ex9-3-7b",
+  "q:g10m9s4-1-1:ex9-3-8",
+  "q:g10m9s4-1-1:ex9-7-21a",
+  "q:g10m9s4-1-1:ex9-7-21b",
+  "q:g10m9s4-1-1:ex9-7-21c",
+  "q:g10m9s4-1-1:ex9-7-21d",
+  "q:g10m9s4-1-1:ex9-7-22a",
+  "q:g10m9s4-1-1:ex9-7-22b",
+  "q:g10m9s4-1-1:ex9-7-22c",
+  "q:g10m9s4-1-1:ex9-7-22d",
+  "q:g10m9s4-1-1:ex9-7-23a",
+  "q:g10m9s4-1-1:ex9-7-23b",
+  "q:g10m9s4-1-1:ex9-7-23c",
+  "q:g10m9s4-1-1:ex9-7-24a",
+  "q:g10m9s4-1-1:ex9-7-24b",
+  "q:g10m9s4-1-1:ex9-7-24c",
+  "q:g10m9s4-1-1:we07",
+  "q:g10m9s4-1-2:ex9-3-10",
+  "q:g10m9s4-1-2:ex9-3-9",
+  "q:g10m9s4-1-2:ex9-7-26",
+  "q:g10m9s4-1-2:we08",
+  "q:g10m9s4-1-3:ex9-4-1",
+  "q:g10m9s4-1-3:ex9-4-2",
+  "q:g10m9s4-1-3:ex9-4-3",
+  "q:g10m9s4-1-3:ex9-4-4",
+  "q:g10m9s4-1-3:ex9-4-5",
+  "q:g10m9s4-1-3:ex9-4-6",
+  "q:g10m9s4-1-3:ex9-4-7",
+  "q:g10m9s4-1-3:ex9-7-27",
+  "q:g10m9s4-1-3:ex9-7-28",
+  "q:g10m9s4-1-3:ex9-7-29",
+  "q:g10m9s4-1-3:ex9-7-30",
+  "q:g10m9s4-1-3:we09",
+  "q:g10m9s4-1-3:we10",
+  "q:g10m9s4-1-4:ex9-5-1",
+  "q:g10m9s4-1-4:ex9-5-2",
+  "q:g10m9s4-1-4:ex9-5-3",
+  "q:g10m9s4-1-4:ex9-7-31a",
+  "q:g10m9s4-1-4:ex9-7-32",
+  "q:g10m9s4-1-4:ex9-7-33",
+  "q:g10m9s4-1-4:we11",
+  "q:g10m9s5-1-1:ex9-6-1a",
+  "q:g10m9s5-1-1:ex9-6-2a",
+  "q:g10m9s5-1-1:ex9-6-3a",
+  "q:g10m9s5-1-1:ex9-6-6",
+  "q:g10m9s5-1-1:ex9-6-8",
+  "q:g10m9s5-1-1:ex9-7-34a",
+  "q:g10m9s5-1-1:ex9-7-35a",
+  "q:g10m9s5-1-1:ex9-7-36",
+  "q:g10m9s5-1-1:ex9-7-38",
+  "q:g10m9s5-1-1:ex9-7-40",
+  "q:g10m9s5-1-1:we12",
+  "q:g10m9s5-1-2:ex9-6-1b",
+  "q:g10m9s5-1-2:ex9-6-1c",
+  "q:g10m9s5-1-2:ex9-6-2b",
+  "q:g10m9s5-1-2:ex9-6-2c",
+  "q:g10m9s5-1-2:ex9-6-3b",
+  "q:g10m9s5-1-2:ex9-6-3c",
+  "q:g10m9s5-1-2:ex9-7-34b",
+  "q:g10m9s5-1-2:ex9-7-34c",
+  "q:g10m9s5-1-2:ex9-7-35b",
+  "q:g10m9s5-1-2:ex9-7-35c",
+  "q:g10m9s5-1-3:ex9-6-4a",
+  "q:g10m9s5-1-3:ex9-6-4b"
+ ],
+ "runs": [
+  "2e0021616ff33ac9ccdf7835a2167e3e166a52e0aee0ac9406546da59a3bed66",
+  "ad53448bb2f90de54e2e1cd6fdc3c606d678678e3b90029a2289626f0bcb302e"
+ ]
+}

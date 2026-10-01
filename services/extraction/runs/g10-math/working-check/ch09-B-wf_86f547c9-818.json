@@ -1,0 +1,954 @@
+{
+ "stage": "SW",
+ "workflow": "working-check",
+ "prompts_version": "sw-v3",
+ "book": "g10-math",
+ "chapter": 9,
+ "part": 1,
+ "parts": 1,
+ "batch": 5,
+ "agents": 28,
+ "effort": "high",
+ "model": "sonnet",
+ "pass_id": "B",
+ "order": "shuffled",
+ "by_ref": {
+  "dir": "/Users/samueltoma/Documents/Claude/Projects/AI Enthusiasts/PoC Tutor School V1/.claude/worktrees/g10/services/extraction/work/g10-math/packets/fanout/wcheck-ch09-B",
+  "stage": "SW",
+  "shards_sha256": "6ecd754db021dffc21ecd6b11d9d169d1737835f5a9e8d10a514065be469a422",
+  "files": 137
+ },
+ "embedded": {
+  "source": "runbook/working-check.workflow.js",
+  "source_sha256": "352a846920d85b4c224df7fb36d3f9a8ea598155cc2b4ee4ba9ef7e4791b6385",
+  "args_sha256": "1717e5c68cfa46add7ae73d3d0d8899b98b9f364a6cfa00678ff947cea6aa6d9",
+  "generated_sha256": "ad53448bb2f90de54e2e1cd6fdc3c606d678678e3b90029a2289626f0bcb302e",
+  "generator": "services/extraction/embed_workflow.py v1"
+ },
+ "results": [
+  {
+   "solution_id": "q:g10m9s2-1-4:ex9-1-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-3:ex9-1-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-7-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-7a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-24c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m9s3-1-3:ex9-7-20b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-7-31a",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "(\\text{1.0937})^{10}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "(1.009)^10 = 1.0937",
+     "why": "1.009 raised to the 10th power equals 1.0937, so the line wrongly raises 1.0937 to the 10th power again."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-6c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-4-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-5-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-1b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-4:ex9-2-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-7b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-7-16a",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "i&=\\text{0.685}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "i = 0.0685",
+     "why": "6.85% as a decimal is 0.0685, not 0.685; the working then wrongly uses 1.685."
+    },
+    {
+     "step": 1,
+     "quote": "A&=500(\\text{1.685})\\\\A&=\\text{R534.25}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "",
+     "why": "500 times 1.685 equals 842.50, not 534.25, so the line does not follow from the previous one."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-4-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:we10",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:we12",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-23c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-4-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-2:we08",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-2d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-3:ex9-1-12",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-21c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-6-2a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-3d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-4c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-1-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-4:ex9-1-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-21d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-3c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-4:ex9-7-12",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-3:ex9-6-4b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "6\\times\\frac{\\text{14.31}}{1}=\\text{R84.78}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "R14.13",
+     "why": "The question gives the pound rate as R14.13, not 14.31, and 6 times 14.31 is not 84.78."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-4:ex9-2-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-7-13b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-1-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:we11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-7-13c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-22c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-7-30",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-1-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-7-32",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-6-3b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-4-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-4:we04",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-2:ex9-3-9",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 5,
+     "quote": "\\frac{\\text{5259.38}}{36}",
+     "kind": "wrong_value",
+     "where": "working",
+     "expected": "30 months",
+     "why": "The repayment period is 30 months (n=2.5 years), but the total is divided by 36 months."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-7-40",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-4:ex9-7-11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-7-18b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-5b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-6-1c",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "Loss $=\\text{R1400}-\\text{R1500}$",
+     "kind": "sign",
+     "where": "working",
+     "expected": "R1500 - R1400 = R100",
+     "why": "R1400 minus R1500 equals negative R100, not the loss of R100 stated; the subtraction is written in the wrong order."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-6a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-3:ex9-7-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-5c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-6-3a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-7-36",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-4:ex9-1-11",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-3:ex9-7-17",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-2b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-4:ex9-7-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-7-29",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-1a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-7-27",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-6-2c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-1-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-2:ex9-3-10",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-3:ex9-1-13",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-7-35a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-4:ex9-1-10",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-24a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-1-5b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-2-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-4-5",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-7-18a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-6-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-24b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-7-28",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-7-34c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-1d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-5-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-7-16b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-7-35b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-2:we06",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-7-34b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-2-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-23a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-2:ex9-7-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-7-35c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-22d",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-4-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m9s5-1-3:ex9-6-7a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:we07",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-4:ex9-7-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-22a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-6-8",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:ex9-4-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-6-1a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-1c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-7-9",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-5a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-2:ex9-1-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m9s3-1-3:ex9-7-19",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "i&=\\text{6.25}\\%",
+     "kind": "wrong_value",
+     "where": "question",
+     "expected": "5.25%",
+     "why": "The question gives 5.25% but the working and its table use 6.25%."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-7-2",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-2-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-3:we09",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-7-34a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-6b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-7-33",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-3a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-7-13a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:ex9-7-10",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-1:we05",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-21b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-2:ex9-2-7",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-4:ex9-2-4",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-4:ex9-7-25",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-7-1",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s3-1-2:ex9-7-31b",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "i&=100(\\text{0.016})",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "100(0.01629)=1.629",
+     "why": "100 times 0.016 is 1.6, not 1.69; the line also drops the 0.01629 from the line above."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-6-1b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-23b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-3:ex9-6-4a",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 1,
+     "quote": "=\\text{R154400}",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "R154 176",
+     "why": "21900 times 7.04 equals 154176, not 154400."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-1:ex9-7-38",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-4b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-22b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m9s5-1-3:ex9-6-7b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-2a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-2:ex9-7-26",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-8",
+   "verdict": "flagged",
+   "flags": [
+    {
+     "step": 2,
+     "quote": "P(1+(\\text{0.075})(2))",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "1.15",
+     "why": "1 + 0.075×2 equals 1.15, but the working divides by 2.15."
+    },
+    {
+     "step": 4,
+     "quote": "P(1+(\\text{0.075})(4))",
+     "kind": "arithmetic",
+     "where": "working",
+     "expected": "1.3",
+     "why": "1 + 0.075×4 equals 1.3, but the working divides by 4.3."
+    }
+   ],
+   "note": ""
+  },
+  {
+   "solution_id": "expl:g10m9s3-1-3:ex9-7-20a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-3b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-6-3c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-4:ex9-5-3",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-2c",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-7-21a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s4-1-1:ex9-3-4a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-3:ex9-7-6",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s2-1-1:ex9-1-5a",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  },
+  {
+   "solution_id": "q:g10m9s5-1-2:ex9-6-2b",
+   "verdict": "consistent",
+   "flags": [],
+   "note": ""
+  }
+ ],
+ "problems": [],
+ "meter": {
+  "stage": "SW",
+  "record": "uv run meter_run.py record --book g10-math --stage SW --run <runId>"
+ }
+}

@@ -652,3 +652,170 @@ class S5PromptRule(unittest.TestCase):
         self.assertIn("NOT\nthe book's", author)
         self.assertIn("An entry is also UNSUPPORTED when", verify)
         self.assertIn("review history", verify)
+
+
+class AliasesThatMustNotFold(unittest.TestCase):
+    """Chapter 5 S5-final: the author listed `mc:g10m5s3-1-2:reads-sides-from-other-angle` — a live, CONFIRMED entry of
+    ANOTHER objective — as an alias of `mc:g10m5s8-1-3:swapped-coordinates`. Folding an alias deletes its row, so the
+    assembler refused the whole run; and a saved run cannot be hand-edited (the advance driver re-saves it from the
+    workflow's output every time). It now STRIPS that one link, with a warning, and refuses everything else as before.
+    No node needed: the runs are built by hand."""
+
+    A = "mc:zz1s1-1-1:exponents-multiplied"      # objective 1
+    A2 = "mc:zz1s1-1-1:exponents-subtracted"     # another entry of objective 1
+    B = "mc:zz1s1-1-2:exponents-added"           # objective 2 (the "other angle")
+
+    @staticmethod
+    def entry(mid: str, lo: str, label: str, aliases=()) -> dict:
+        return {"id": mid, "lo_id": lo, "label": label, "description": f"{label}, described.", "signal": None,
+                "kind": "conceptual", "maps": [], "aliases": list(aliases), "sources": [], "covers": [],
+                "refutation": [{"step": 1, "text_md": "You did one thing."}, {"step": 2, "text_md": "Do the other."}],
+                "verdict": {"verdict": "CONFIRMED", "reason": "ok"}}
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="s5_alias_"))
+        self.out = self.tmp / "out" / "misconceptions.json"
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def run_with(self, a_aliases=(), b_aliases=(), with_a2=False, a2_aliases=()) -> Path:
+        o1 = [self.entry(self.A, "lo:zz1s1-1-1", "Multiplies the exponents", a_aliases)]
+        if with_a2:
+            o1.append(self.entry(self.A2, "lo:zz1s1-1-1", "Subtracts the exponents", a2_aliases))
+        run = {"stage": "final", "book": "zz-test", "records": [
+            {"lo": "lo:zz1s1-1-1", "entries": o1},
+            {"lo": "lo:zz1s1-1-2", "entries": [self.entry(self.B, "lo:zz1s1-1-2", "Adds the bases", b_aliases)]}]}
+        p = self.tmp / "final-wf_alias.json"
+        p.write_text(json.dumps(run))
+        return p
+
+    def cat(self, run: Path) -> tuple[dict, list[str]]:
+        c, _, _, problems = am.assemble([run], str(BOOK))
+        return {m["id"]: m for m in c["misconceptions"]}, problems
+
+    def main(self, run: Path, *extra: str) -> tuple[int, str]:
+        import contextlib
+        import io
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
+            rc = am.main([str(run), "--book", str(BOOK), "--out", str(self.out), *extra])
+        return rc, buf.getvalue()
+
+    # ---- the case from Chapter 5 ----------------------------------------------------------------------------------
+    def test_a_live_entry_of_another_objective_is_stripped_with_a_warning_and_both_entries_survive(self):
+        control, problems = self.cat(self.run_with())
+        self.assertEqual(problems, [])
+        cat, problems = self.cat(self.run_with(a_aliases=[self.B]))
+        self.assertEqual(problems, [], "it used to refuse: alias … is itself a live id")
+        self.assertEqual(set(cat), {self.A, self.B}, "no entry is deleted")
+        self.assertEqual(cat[self.A]["aliases"], [])
+        (st,) = cat[self.A]["provenance"]["aliases_stripped"]
+        self.assertEqual(st["alias"], self.B)
+        self.assertIn("another objective (lo:zz1s1-1-2)", st["reason"])
+        # nothing but the link changed: the entries are exactly what the same run without the alias gives
+        for mid in (self.A, self.B):
+            kept = {k: v for k, v in cat[mid].items() if k != "provenance"}
+            self.assertEqual(kept, {k: v for k, v in control[mid].items() if k != "provenance"})
+        self.assertNotIn("aliases_stripped", cat[self.B]["provenance"])
+        # and the stripped catalogue passes the strict validator that refused it
+        self.assertEqual(am.validate_catalogue({"misconceptions": list(cat.values())}, max_per_objective=4), [])
+
+    def test_the_warning_is_printed_recorded_and_the_catalogue_written(self):
+        rc, said = self.main(self.run_with(a_aliases=[self.B]))
+        self.assertEqual(rc, 0, said)
+        self.assertIn(f"WARNING {self.A}: alias {self.B} STRIPPED", said)
+        self.assertIn("no entry is deleted or edited", said)
+        c = json.loads(self.out.read_text())
+        self.assertEqual({m["id"] for m in c["misconceptions"]}, {self.A, self.B})
+        self.assertIn("1 ALIAS LINK(S) STRIPPED on 1 entries", c["generator"])
+        rc, said = self.main(self.run_with(), "--check")
+        self.assertNotIn("WARNING", said)
+
+    def test_a_cross_objective_id_that_is_not_live_is_stripped_too(self):
+        # the loader sees the whole database, not this chapter: another objective's id may be a live row there
+        cat, problems = self.cat(self.run_with(a_aliases=["mc:zz1s1-1-2:dropped-by-the-verifier"]))
+        self.assertEqual(problems, [])
+        self.assertEqual(cat[self.A]["aliases"], [])
+        self.assertIn("another objective's namespace (lo:zz1s1-1-2)", cat[self.A]["provenance"]["aliases_stripped"][0]["reason"])
+
+    def test_a_live_entry_of_the_same_objective_and_the_entrys_own_id_are_stripped(self):
+        cat, problems = self.cat(self.run_with(a_aliases=[self.A2, self.A], with_a2=True))
+        self.assertEqual(problems, [])
+        self.assertEqual(set(cat), {self.A, self.A2, self.B})
+        self.assertEqual(cat[self.A]["aliases"], [])
+        self.assertEqual([s["alias"] for s in cat[self.A]["provenance"]["aliases_stripped"]], [self.A2, self.A])
+
+    # ---- what does not change ---------------------------------------------------------------------------------------
+    def test_a_same_objective_alias_that_is_not_live_still_folds(self):
+        for alias in ("mc:zz1s1-1-1:times-the-exponents", "mc:zz1s1-1-1:merged-draft-id"):
+            with self.subTest(alias):
+                cat, problems = self.cat(self.run_with(a_aliases=[alias]))
+                self.assertEqual(problems, [])
+                self.assertEqual(cat[self.A]["aliases"], [alias])
+                self.assertNotIn("aliases_stripped", cat[self.A]["provenance"])
+        rc, said = self.main(self.run_with(a_aliases=["mc:zz1s1-1-1:times-the-exponents"]))
+        self.assertEqual(rc, 0)
+        self.assertNotIn("STRIPPED", said)
+
+    def test_an_unknown_alias_behaves_as_before(self):
+        # a generator's own id, in no catalogue and in no objective's namespace: kept, folded by the loader if a row exists
+        for alias in ("mc:legacy-generator-id", "gen:times-the-exponents", "something-else"):
+            with self.subTest(alias):
+                cat, problems = self.cat(self.run_with(a_aliases=[alias]))
+                self.assertEqual(problems, [])
+                self.assertEqual(cat[self.A]["aliases"], [alias])
+                self.assertNotIn("aliases_stripped", cat[self.A]["provenance"])
+
+    def test_every_other_alias_rule_still_refuses(self):
+        # one alias claimed by two entries
+        _, problems = self.cat(self.run_with(a_aliases=["mc:legacy-generator-id"], with_a2=True,
+                                             a2_aliases=["mc:legacy-generator-id"]))
+        self.assertTrue(any("claimed by both" in p for p in problems), problems)
+        # an unconfirmed entry is still dropped, so an alias naming IT is not a live id (it folds, as before)
+        run = json.loads(self.run_with().read_text())
+        dropped = self.entry(self.A2, "lo:zz1s1-1-1", "Subtracts the exponents")
+        dropped["verdict"] = {"verdict": "UNSUPPORTED", "reason": "no"}
+        run["records"][0]["entries"] = [self.entry(self.A, "lo:zz1s1-1-1", "Multiplies the exponents", [self.A2]), dropped]
+        p = self.tmp / "final-wf_dropped.json"
+        p.write_text(json.dumps(run))
+        cat, problems = self.cat(p)
+        self.assertEqual(problems, [])
+        self.assertEqual(cat[self.A]["aliases"], [self.A2])
+
+    def test_the_validator_stays_strict_for_a_stored_catalogue(self):
+        cat = {"misconceptions": [am.to_loader_shape(dict(self.entry(self.A, "lo:zz1s1-1-1", "One", [self.B]), _run="r")),
+                                  am.to_loader_shape(dict(self.entry(self.B, "lo:zz1s1-1-2", "Two"), _run="r"))]}
+        self.assertTrue(any("is itself a live id" in p for p in am.validate_catalogue(cat)))
+        stored = self.tmp / "stored.json"
+        stored.write_text(json.dumps(cat))
+        self.assertEqual(am.main(["--validate", str(stored)]), 1)
+
+    # ---- pass 2: a tag naming the stripped alias resolves to the live entry it names, and never folds ----------------
+    def test_pass_two_resolves_a_tag_naming_the_stripped_alias_to_the_entry_it_names(self):
+        run = self.run_with(a_aliases=[self.B])
+        s6 = self.tmp / "s6.json"
+
+        def option(text, mid=None):
+            return {"key": "B", "text": text, **({"misconception_id": mid} if mid else {})}
+
+        def question(qid, lo, mid):
+            return {"id": qid, "lo_id": lo, "tier": "basic", "question_type": "mcq", "stem": "x", "correct_answer": "A",
+                    "choices": [{"key": "A", "text": "ok"}, option("bad", mid)], "canonical_solution": []}
+        s6.write_text(json.dumps({"questions": [
+            question("q:zz1s1-1-2:g001", "lo:zz1s1-1-2", self.B),    # the entry's own objective: stays B
+            question("q:zz1s1-1-1:g001", "lo:zz1s1-1-1", self.B),    # another objective's: stripped, NOT folded into A
+            question("q:zz1s1-1-1:g002", "lo:zz1s1-1-1", self.A),    # A's own tag: untouched
+        ], "misconceptions": []}))
+        rc, said = self.main(run, "--catalogue-only")
+        self.assertEqual(rc, 0, said)
+        first = self.out.read_bytes()
+        rc, said = self.main(run, "--bundle", str(s6))
+        self.assertEqual(rc, 0, said)
+        self.assertEqual(self.out.read_bytes(), first, "the same catalogue in both passes")
+        got = {q["id"]: q["choices"][1].get("misconception_id") for q in json.loads(s6.read_text())["questions"]}
+        self.assertEqual(got, {"q:zz1s1-1-2:g001": self.B, "q:zz1s1-1-1:g001": None, "q:zz1s1-1-1:g002": self.A})
+        self.assertIn("FR-1106", said)                  # B belongs to objective 2, not 1: stripped
+        self.assertNotIn(f"alias {self.B} ->", said)    # never rewritten (folded) to the other entry
+        self.assertEqual(sorted(m["id"] for m in json.loads(s6.read_text())["misconceptions"]), [self.A, self.B])
+        self.assertEqual({m["id"] for m in json.loads(self.out.read_text())["misconceptions"]}, {self.A, self.B})
