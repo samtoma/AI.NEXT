@@ -1,0 +1,233 @@
+{
+  "format": "ainext.widget-mapping-review/1",
+  "rule": "decision 47: a mapping the blind verifier did not confirm is held — never shown, never a diagnosis, never S5 evidence — until a human keeps or drops it",
+  "items": [
+    {
+      "key": "q:g10m1s5-1-3:w001#sign-flipped",
+      "question_id": "q:g10m1s5-1-3:w001",
+      "template_id": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "lo_id": "lo:g10m1s5-1-3",
+      "kind": "number_line_marker",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt{20} < n < -\\sqrt{\\frac{9}{4}} $.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -4,
+          -3,
+          -2
+        ]
+      },
+      "construction": "Range [-6,6], mode points. sqrt(20) is about 4.47 (4^2=16 < 20 < 25=5^2) and sqrt(9/4) = 3/2 = 1.5, so n lies strictly between -4.47 and -1.5. Tap -4, -3, -2 (3 targets, all inside the range, within the 1-4 limit). -5 is excluded because -5 < -4.47; -1 is excluded because -1 > -1.5.",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+      "misconception_label": "Ranking negative surds by the size of the number, ignoring the minus sign",
+      "misconception_description": "The student compares $-\\sqrt{8}$ with $-\\sqrt{\\frac{9}{4}}$ by noticing that $8$ is bigger than $\\frac{9}{4}$, and so puts $-\\sqrt{8}$ after $-\\sqrt{\\frac{9}{4}}$, as if the minus signs were not there.",
+      "why": "The predicate fires on the response {2,3,4}, the negatives of the correct set. A student who ranks -sqrt20 against -sqrt(9/4) by size, ignoring the sign, still believes she is working with negative numbers; her mistake is which of the two endpoints is further left. She would still tap integers in the negative region, so the set is unchanged and the ranking error leaves no sign-flipped trace in a points answer. A {2,3,4} response is far more likely a student who dropped the minus sign on n or misread the line, which is a different mistake, and the ranking refutation would be addressed to a mistake she did not make."
+    },
+    {
+      "key": "q:g10m1s5-1-3:w002#sign-flipped",
+      "question_id": "q:g10m1s5-1-3:w002",
+      "template_id": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "lo_id": "lo:g10m1s5-1-3",
+      "kind": "number_line_marker",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt{30} < n < -\\sqrt{10} $.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -5,
+          -4
+        ]
+      },
+      "construction": "Range [-6,6], mode points. sqrt(30) is about 5.48 (5^2=25 < 30 < 36=6^2) and sqrt(10) is about 3.16 (3^2=9 < 10 < 16), so n lies strictly between -5.48 and -3.16. Tap -5 and -4 (2 targets, inside the range). -6 is excluded (below -5.48) and -3 is excluded (above -3.16).",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+      "misconception_label": "Ranking negative surds by the size of the number, ignoring the minus sign",
+      "misconception_description": "The student compares $-\\sqrt{8}$ with $-\\sqrt{\\frac{9}{4}}$ by noticing that $8$ is bigger than $\\frac{9}{4}$, and so puts $-\\sqrt{8}$ after $-\\sqrt{\\frac{9}{4}}$, as if the minus signs were not there.",
+      "why": "The predicate fires on {4,5}. The claimed misconception is an error in ordering two negative surds, not an error in the sign of the integers the student marks. A student who ranks by size ignoring sign still places the answers among negative numbers, and the ordering error does not change which negative integers lie between the two endpoints. Marking {4,5} would come from dropping the minus on n, a different mistake, so the diagnosis would mostly misfire."
+    },
+    {
+      "key": "q:g10m1s5-1-3:w003#sign-flipped",
+      "question_id": "q:g10m1s5-1-3:w003",
+      "template_id": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "lo_id": "lo:g10m1s5-1-3",
+      "kind": "number_line_marker",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt{14} < n < -\\sqrt{3} $.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -3,
+          -2
+        ]
+      },
+      "construction": "Range [-6,6], mode points. sqrt(14) is about 3.74 (3^2=9 < 14 < 16) and sqrt(3) is about 1.73, so n lies strictly between -3.74 and -1.73. Tap -3 and -2 (2 targets). -4 is excluded (below -3.74) and -1 is excluded (above -1.73).",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+      "misconception_label": "Ranking negative surds by the size of the number, ignoring the minus sign",
+      "misconception_description": "The student compares $-\\sqrt{8}$ with $-\\sqrt{\\frac{9}{4}}$ by noticing that $8$ is bigger than $\\frac{9}{4}$, and so puts $-\\sqrt{8}$ after $-\\sqrt{\\frac{9}{4}}$, as if the minus signs were not there.",
+      "why": "The predicate fires on {2,3}, the negatives of the correct set. The claimed misconception, putting -sqrt(big) to the right of -sqrt(small), is a mistake about the order of the endpoints on the negative side. It does not by itself move the student's taps to the positive side. A {2,3} response comes from reading n as positive or dropping all minus signs, which is a different cause, so this diagnosis would refute a mistake she did not make."
+    },
+    {
+      "key": "q:g10m1s5-1-3:w004#sign-flipped",
+      "question_id": "q:g10m1s5-1-3:w004",
+      "template_id": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "lo_id": "lo:g10m1s5-1-3",
+      "kind": "number_line_marker",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt{20} < n < 0 $.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -4,
+          -3,
+          -2,
+          -1
+        ]
+      },
+      "construction": "Range [-6,6], mode points. sqrt(20) is about 4.47, and the upper bound is 0 with a strict inequality, so n lies strictly between -4.47 and 0. Tap -4, -3, -2, -1 (4 targets, the maximum allowed, all inside the range). Do not tap 0 (excluded by n < 0) or -5 (below -4.47).",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+      "misconception_label": "Ranking negative surds by the size of the number, ignoring the minus sign",
+      "misconception_description": "The student compares $-\\sqrt{8}$ with $-\\sqrt{\\frac{9}{4}}$ by noticing that $8$ is bigger than $\\frac{9}{4}$, and so puts $-\\sqrt{8}$ after $-\\sqrt{\\frac{9}{4}}$, as if the minus signs were not there.",
+      "why": "The predicate fires on {1,2,3,4}. This question compares one negative surd with 0, not two negative surds, so the claimed misconception (ranking two negative surds by size ignoring the sign) has nothing to act on. Nothing in it would send the student to the positive integers; that response would come from dropping the minus signs altogether, so the diagnosis would not be what a student holding this misconception builds."
+    },
+    {
+      "key": "q:g10m1s5-1-3:w005#sign-flipped",
+      "question_id": "q:g10m1s5-1-3:w005",
+      "template_id": "wt:g10m1s5-1-3:integers-between-negative-surds",
+      "lo_id": "lo:g10m1s5-1-3",
+      "kind": "number_line_marker",
+      "stem": "Without a calculator, mark on the number line every whole number $n$ that satisfies $ -\\sqrt[3]{30} < n < -\\sqrt{2} $.",
+      "reading": {
+        "mode": "points",
+        "targets": [
+          -3,
+          -2
+        ]
+      },
+      "construction": "Range [-6,6], mode points. The cube root of 30 is about 3.11 (3^3=27 < 30 < 64=4^3) and sqrt(2) is about 1.41, so n lies strictly between -3.11 and -1.41. Tap -3 and -2 (2 targets). -4 is excluded (below -3.11) and -1 is excluded (above -1.41).",
+      "predicate": "sign-flipped",
+      "predicate_meaning": "Right sizes, wrong signs — a value marked as its negative, as when (x − a) = 0 is read as x = −a",
+      "misconception_id": "mc:g10m1s5-1-3:negative-surds-ranked-by-size-ignoring-sign",
+      "misconception_label": "Ranking negative surds by the size of the number, ignoring the minus sign",
+      "misconception_description": "The student compares $-\\sqrt{8}$ with $-\\sqrt{\\frac{9}{4}}$ by noticing that $8$ is bigger than $\\frac{9}{4}$, and so puts $-\\sqrt{8}$ after $-\\sqrt{\\frac{9}{4}}$, as if the minus signs were not there.",
+      "why": "The predicate fires on {2,3}. The claimed misconception is about ordering two negative surds, and here one of them is a cube root, which the misconception text never describes. Even for the intended case, the ordering error does not move the student's taps to the positive side. A {2,3} response is a different slip, dropping the sign of n or of both endpoints, so the diagnosis would mostly fire for another reason."
+    },
+    {
+      "key": "q:g10m1s6-1-2:w001#middle-term-sign",
+      "question_id": "q:g10m1s6-1-2:w001",
+      "template_id": "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4",
+      "lo_id": "lo:g10m1s6-1-2",
+      "kind": "area_model",
+      "stem": "Build the rectangle with sides $x + 1$ and $x - 4$ from algebra tiles (negative tiles are hatched and marked −). The tiles that fill it are the expansion of $(x + 1)(x - 4)$.",
+      "reading": {
+        "a": 1,
+        "b": -4
+      },
+      "construction": "Target (x+1)(x-4) = x^2 - 3x - 4. Anchor one x^2 tile. Top run: 1 plain (positive) x-tile, the +1 side. Left run: 4 hatched, minus-marked x-tiles, the -4 side. The 1-by-4 block those runs bound takes 4 hatched, minus-marked unit tiles, because ab = -4 is negative. In total: x^2, one +x, four -x (net -3x), four -1. |a| = 1 and |b| = 4 are within the limit of 4, and the block is 1x4, so every tile fits. Reachable.",
+      "predicate": "middle-term-sign",
+      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
+      "misconception_id": "mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round",
+      "misconception_label": "Turns k - 4 round the wrong way",
+      "misconception_description": "The student combines the two $x$ terms but reverses the subtraction, reading $kx-4x$ as if it were $4-k$, so a value of $k$ below $4$ seems to make $b$ positive.",
+      "why": "This predicate fires when the constant -4 is right and the net x-term is not, e.g. 1 hatched tile on top, 4 plain tiles on the left and a 4-tile hatched block, which is (x-1)(x+4) = x^2 + 3x - 4. That build comes from putting the minus on the wrong edge or swapping which number carries it. The claimed misconception is a symbolic slip while collecting like terms, kx - 4x written as (4-k)x. Here the sides x+1 and x-4 are given and the student places each run's tiles by sign. There is no combining step, and the tile picture itself shows 1 plain x-tile against 4 hatched ones leaving 3 hatched. A student holding this misconception would still build the sides as stated and would not fire the predicate. The students who do fire it mostly made an edge or sign-placement slip, so the refutation 'you turned k - 4 round the wrong way' would be aimed at a mistake they did not make. The question also has no k or b."
+    },
+    {
+      "key": "q:g10m1s6-1-2:w002#middle-term-sign",
+      "question_id": "q:g10m1s6-1-2:w002",
+      "template_id": "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4",
+      "lo_id": "lo:g10m1s6-1-2",
+      "kind": "area_model",
+      "stem": "Build the rectangle with sides $x + 2$ and $x - 4$ from algebra tiles (negative tiles are hatched and marked −). The tiles that fill it are the expansion of $(x + 2)(x - 4)$.",
+      "reading": {
+        "a": 2,
+        "b": -4
+      },
+      "construction": "Target (x+2)(x-4) = x^2 - 2x - 8. Anchor one x^2 tile. Top run: 2 plain x-tiles. Left run: 4 hatched, minus-marked x-tiles. The 2-by-4 block takes 8 hatched, minus-marked unit tiles (ab = -8). In total: x^2, two +x, four -x (net -2x), eight -1. All within |a|,|b| <= 4. Reachable.",
+      "predicate": "middle-term-sign",
+      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
+      "misconception_id": "mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round",
+      "misconception_label": "Turns k - 4 round the wrong way",
+      "misconception_description": "The student combines the two $x$ terms but reverses the subtraction, reading $kx-4x$ as if it were $4-k$, so a value of $k$ below $4$ seems to make $b$ positive.",
+      "why": "A build that fires it keeps the constant -8 but nets +2x, e.g. 2 hatched tiles on top, 4 plain on the left and 8 hatched units, which is (x-2)(x+4). Alternatively the numbers are swapped between edges as (x+4)(x-2). Either way the cause is a sign or edge-assignment slip. The claimed misconception is a symbolic subtraction-order slip, k - 4 read as 4 - k, with no combining step on this instrument. The sides are given in the question and the plain-against-hatched tiles visibly cancel to a negative net. A holder of the misconception would build x+2 and x-4 correctly, so the predicate would mostly fire for a different reason."
+    },
+    {
+      "key": "q:g10m1s6-1-2:w003#middle-term-sign",
+      "question_id": "q:g10m1s6-1-2:w003",
+      "template_id": "wt:g10m1s6-1-2:x-plus-k-times-x-minus-4",
+      "lo_id": "lo:g10m1s6-1-2",
+      "kind": "area_model",
+      "stem": "Build the rectangle with sides $x + 3$ and $x - 4$ from algebra tiles (negative tiles are hatched and marked −). The tiles that fill it are the expansion of $(x + 3)(x - 4)$.",
+      "reading": {
+        "a": 3,
+        "b": -4
+      },
+      "construction": "Target (x+3)(x-4) = x^2 - x - 12. Anchor one x^2 tile. Top run: 3 plain x-tiles. Left run: 4 hatched, minus-marked x-tiles. The 3-by-4 block takes 12 hatched, minus-marked unit tiles (ab = -12). In total: x^2, three +x, four -x (net -1x), twelve -1. All within |a|,|b| <= 4. Reachable.",
+      "predicate": "middle-term-sign",
+      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
+      "misconception_id": "mc:g10m1s6-1-2:x-term-subtracted-wrong-way-round",
+      "misconception_label": "Turns k - 4 round the wrong way",
+      "misconception_description": "The student combines the two $x$ terms but reverses the subtraction, reading $kx-4x$ as if it were $4-k$, so a value of $k$ below $4$ seems to make $b$ positive.",
+      "why": "A build that fires it keeps the constant -12 but nets +1x, e.g. 3 hatched tiles on top, 4 plain on the left and 12 hatched units, which is (x-3)(x+4) = x^2 + x - 12, or the numbers swapped as (x+4)(x-3). That is a sign or edge-placement error. The claimed misconception, reading kx - 4x as (4-k)x when collecting terms, has nothing to act on here. The sides are fixed by the question, the tiles are placed per side, and 3 plain against 4 hatched visibly leaves 1 hatched. A student holding the misconception would still build the correct rectangle, and the predicate would mostly fire for a different slip. Matching is false."
+    },
+    {
+      "key": "q:g10m1s7-2-1:w001#middle-term-sign",
+      "question_id": "q:g10m1s7-2-1:w001",
+      "template_id": "wt:g10m1s7-2-1:factor-by-tiles-positive",
+      "lo_id": "lo:g10m1s7-2-1",
+      "kind": "area_model",
+      "stem": "Build a rectangle from algebra tiles whose area is $x^2 + 5x + 6$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
+      "reading": {
+        "a": 2,
+        "b": 3
+      },
+      "construction": "Anchor the x² tile. Run 2 positive x-tiles along one edge and 3 positive x-tiles along the other (a=2, b=3). Fill the 2-by-3 block they bound with 6 positive unit tiles. Area = x² + 3x + 2x + 6 = x² + 5x + 6, so the factors read off are (x+2)(x+3). It fits the grid (|a|,|b| ≤ 4) and every cell is filled, so it is a true rectangle.",
+      "predicate": "middle-term-sign",
+      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
+      "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+      "misconception_label": "Writes a factor pair of c into the brackets without testing the middle term",
+      "misconception_description": "The student finds two numbers that multiply to give c, puts them straight into the brackets and stops, without multiplying out to see whether the middle term comes out right.",
+      "why": "The predicate fires when the constant is right (6) and the linear term is not. The factor pairs of 6 are (1,6), (2,3) and their negatives. (1,6) is the pair an untested-factor-pair student would reach for, but 6 exceeds |b| ≤ 4, so it cannot be built. The only buildable way to fire is the all-negative pair (−2,−3), giving x²−5x+6. That is a sign slip by a student who already had the right numbers, not an untested factor pair. The misconception cannot show up on this instrument, so false."
+    },
+    {
+      "key": "q:g10m1s7-2-1:w002#middle-term-sign",
+      "question_id": "q:g10m1s7-2-1:w002",
+      "template_id": "wt:g10m1s7-2-1:factor-by-tiles-positive",
+      "lo_id": "lo:g10m1s7-2-1",
+      "kind": "area_model",
+      "stem": "Build a rectangle from algebra tiles whose area is $x^2 + 7x + 12$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
+      "reading": {
+        "a": 3,
+        "b": 4
+      },
+      "construction": "Anchor the x² tile. Run 3 positive x-tiles along one edge and 4 positive x-tiles along the other (a=3, b=4). Fill the 3-by-4 block with 12 positive unit tiles. Area = x² + 7x + 12, factors (x+3)(x+4). Both runs are within the limit of 4, so it is reachable.",
+      "predicate": "middle-term-sign",
+      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
+      "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+      "misconception_label": "Writes a factor pair of c into the brackets without testing the middle term",
+      "misconception_description": "The student finds two numbers that multiply to give c, puts them straight into the brackets and stops, without multiplying out to see whether the middle term comes out right.",
+      "why": "The factor pairs of 12 are (1,12), (2,6) and (3,4). The two wrong positive pairs, (1,12) and (2,6), need runs of 12 and 6, past the grid limit of 4, so the student cannot build them. The only buildable way to get constant 12 with a wrong linear term is (−3,−4) or (−4,−3), giving −7x. That is a sign error, not the untested-factor-pair misconception, so false."
+    },
+    {
+      "key": "q:g10m1s7-2-1:w003#middle-term-sign",
+      "question_id": "q:g10m1s7-2-1:w003",
+      "template_id": "wt:g10m1s7-2-1:factor-by-tiles-positive",
+      "lo_id": "lo:g10m1s7-2-1",
+      "kind": "area_model",
+      "stem": "Build a rectangle from algebra tiles whose area is $x^2 + 6x + 8$. The two sides of your rectangle are the factors: read them off to factorise the trinomial.",
+      "reading": {
+        "a": 2,
+        "b": 4
+      },
+      "construction": "Anchor the x² tile. Run 2 positive x-tiles along one edge and 4 positive x-tiles along the other (a=2, b=4). Fill the 2-by-4 block with 8 positive unit tiles. Area = x² + 6x + 8, factors (x+2)(x+4). Both runs are within the limit of 4, so it is reachable.",
+      "predicate": "middle-term-sign",
+      "predicate_meaning": "The constant term is right and the linear (x) term is not — usually its sign",
+      "misconception_id": "mc:g10m1s7-2-1:factor-pair-middle-term-untested",
+      "misconception_label": "Writes a factor pair of c into the brackets without testing the middle term",
+      "misconception_description": "The student finds two numbers that multiply to give c, puts them straight into the brackets and stops, without multiplying out to see whether the middle term comes out right.",
+      "why": "The factor pairs of 8 are (1,8) and (2,4). The wrong pair (1,8) needs a run of 8, past the grid limit of 4, so it cannot be built. The only buildable way to fire is the negative pair (−2,−4) or (−4,−2), giving −6x. That is a sign slip, not an untested pair, so false."
+    }
+  ]
+}

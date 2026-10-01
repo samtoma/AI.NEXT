@@ -298,15 +298,18 @@ class Flow:
     def run(self, name: str, argv: list[str], *, env: dict | None = None, inputs=(), outputs=(), ok=(0,), fresh: bool = True,
             note: str = "", mark: str | None = None, mark_inputs=()) -> Result:
         cmd = short_cmd(argv)
+        skipped = "skipped" if not self.dry else "would-skip"      # a dry run reports what a real one would do, and runs nothing
+        if mark and self.marked(mark, mark_inputs):
+            self._rec(name, skipped, "already done (this run's ledger)")
+            return Result(0, "", dry=self.dry, skipped=True)
+        if fresh and outputs and not self.dirty and not self.redo and self.fresh(inputs, outputs):
+            self._rec(name, skipped, "outputs exist and are newer than the inputs")
+            return Result(0, "", dry=self.dry, skipped=True)
         if self.dry:
             self._rec(name, "dry", note, cmd)
+            if outputs:
+                self.dirty = True
             return Result(0, "", dry=True)
-        if mark and self.marked(mark, mark_inputs):
-            self._rec(name, "skipped", "already done (this run's ledger)")
-            return Result(0, "", skipped=True)
-        if fresh and outputs and not self.dirty and not self.redo and self.fresh(inputs, outputs):
-            self._rec(name, "skipped", "outputs exist and are newer than the inputs")
-            return Result(0, "", skipped=True)
         t0 = time.time()
         r = self.ex.py(list(argv), env)
         if r.rc not in ok:
@@ -906,10 +909,10 @@ def ensure_loaded(A: Adv) -> None:
         raise StepFailed("load chapter", f"no assembled bundle {A.P.rel(K.seed)}: close the chapter first")
     b = read_json(K.seed)
     qids, nids = [q["id"] for q in b.get("questions") or []], [n["id"] for n in b.get("nodes") or []]
-    if fl.dry:
-        fl.skipped("load chapter", f"dry run: the DB is not asked whether chapter {A.ch} is loaded")
+    have_q, have_n = db_count(A, "questions", qids), db_count(A, "graph_nodes", nids)
+    if have_q is None:
+        fl.skipped("load chapter", "dry run: the pilot DB cannot be reached, so whether the chapter is loaded is not known")
         return
-    have_q, have_n = A.db.present("questions", qids), A.db.present("graph_nodes", nids)
     loaded = have_q == len(qids) and have_n == len(nids)
     env = {"AINEXT_DB_DSN": F.DSN, "AINEXT_ENVIRONMENT": "mvp1"}
     apply_ = ["apply_review_verdicts.py", "--g2", A.P.rel(K.g2), "--book", BOOK, "--runs", A.P.rel(A.P.runs / "lesson")]
@@ -1040,8 +1043,18 @@ def h_s7_verify(A: Adv) -> bool:
 
 
 # ---- S5 final
+def db_count(A: Adv, table: str, ids: list[str]) -> int | None:
+    """How many of these ids the pilot DB holds (a read). A dry run that cannot reach it gets None; a real one fails the step."""
+    try:
+        return A.db.present(table, ids)
+    except Exception as e:  # noqa: BLE001 — psycopg's errors are many; any of them means the DB was not asked
+        if A.fl.dry:
+            return None
+        raise StepFailed("pilot DB", f"cannot ask {parse_dsn(F.DSN)['dbname']} about {table}: {type(e).__name__}: {e}") from e
+
+
 def present_all(A: Adv, table: str, ids: list[str]) -> bool:
-    return not A.fl.dry and bool(ids) and A.db.present(table, ids) == len(ids)
+    return bool(ids) and db_count(A, table, ids) == len(ids)
 
 
 def h_s5_final(A: Adv) -> bool:
@@ -1332,6 +1345,9 @@ def advance(run_id: str, wf: str, task_output: Path | None = None, opts: Opts | 
             if cp.sha:
                 S.idx[cp.sha] = target
             fl.marks = S.ledger(run_id).setdefault("steps", {})
+
+        if opts.dry and not same:
+            fl.dirty = True                           # a new or changed save is newer than everything downstream of it
 
         # ---- 2. meter (the ledger takes one line per run id; --resumed meters only the agents it has not seen)
         stage, lesson = meter_args(r)

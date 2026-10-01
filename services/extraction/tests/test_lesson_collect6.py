@@ -814,6 +814,20 @@ class Relations(TypedItem, unittest.TestCase):
             self.assertNotIn("typing_retyped", y, (kind, key))
 
 
+    def test_greek_variables_are_told_to_the_marker_by_name_and_pi_is_not_a_variable(self):
+        # the seam (schemas.AnswerSpec) refuses a variable written as the sign: "λ" held Ex4-5:8 and "π" would hold Ex4-5:5, 13 and 15
+        x = self.typed("\\lambda=\\frac{D}{tf}", "λ = D tf", kind="equation", variables=("λ", "D", "t", "f"))
+        self.assertEqual(x["marker"]["variables"], ["\\lambda", "D", "t", "f"])
+        schemas.AnswerSpec.model_validate(x["marker"])
+        y = self.typed("h=\\frac{A-2\\pi r}{2\\pi r}", "A−2πr 2πr = h", kind="equation", variables=("h", "A", "π", "r"))
+        self.assertEqual(y["marker"]["variables"], ["h", "A", "r"])
+        schemas.AnswerSpec.model_validate(y["marker"])
+        self.assertEqual(alb.marker_spec_problems(y), [])
+        out = app_marker(y["marker"], ["h=\\frac{A-2\\pi r}{2\\pi r}", "h=\\frac{A}{2\\pi r}-1"])
+        self.assertIsNone(out["key_problem"])
+        self.assertEqual(out["marks"], {"h=\\frac{A-2\\pi r}{2\\pi r}": "correct", "h=\\frac{A}{2\\pi r}-1": "correct"})
+
+
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
 class InTheBookSolution(TypedItem, unittest.TestCase):
     """What "book_final is not in the book solution" got wrong in Chapters 3 and 4 (none of it a wrong final)."""

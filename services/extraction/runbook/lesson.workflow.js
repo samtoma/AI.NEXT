@@ -216,6 +216,7 @@ const contains = (hay, needle) => { const n = norm(needle); return n.length >= 8
 
 // The comparison normal form of an answer (LaTeX or printed text). Decision 15's notation is
 // read both ways here; nothing is written back.
+const GREEK_NAME = { 'λ': '\\lambda', 'θ': '\\theta', 'α': '\\alpha', 'β': '\\beta', 'γ': '\\gamma', 'δ': '\\delta', 'μ': '\\mu', 'σ': '\\sigma', 'φ': '\\phi', 'ω': '\\omega' }
 const GREEK = { pi: 'π', lambda: 'λ', theta: 'θ', alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', mu: 'μ', sigma: 'σ', phi: 'φ', omega: 'ω' }
 function normTex(s) {
   let t = String(s == null ? '' : s)
@@ -901,7 +902,10 @@ function checkTyping(it, t, lessonText) {
       if (to) { typed.retyped = { from: `expression (${kind})`, as: `expression, kind ${to} (was ${kind})`, rule: 'kind-for-form', form, because: [formWhy] }; kind = to }
       else problems.push(formWhy)
     }
-    typed.marker = { kind, key: t.key, form, variables: t.variables || [], tolerance: null }
+    // the variables the marker is told (schemas.AnswerSpec: a letter, a subscripted letter or a LaTeX Greek NAME): a Greek letter the typing agent
+    // wrote as the sign ("λ") is its name ("\lambda"); π is the constant, not a variable (declared, it would stop meaning 3,14…) — COLLECT-6
+    const vars = [...new Set((t.variables || []).filter((v) => typeof v === 'string' && v && !/^(?:π|\\pi)$/.test(v)).map((v) => GREEK_NAME[v] || v))]
+    typed.marker = { kind, key: t.key, form, variables: vars, tolerance: null }
     typed.answer = t.key
   } else if (!t.not_markable_reason) problems.push('not_markable without a reason')
   if (it.asked_form === 'prime_factors' && t.answer_type !== 'expression' && t.answer_type !== 'not_markable') {
