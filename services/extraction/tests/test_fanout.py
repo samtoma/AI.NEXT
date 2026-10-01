@@ -122,15 +122,17 @@ class RealBook(unittest.TestCase):
             tmp = Path(t)
             F.PACKETS = tmp / "packets"
             try:
-                run = dict(F._run("wcheck-ch08"), embedded_script=str(tmp / "002-wcheck-ch08.workflow.js"))
-                out = F.prep_wcheck(run)
+                run = dict(F._run("wcheck-ch08"))
+                self.assertTrue(run["embedded_script"].endswith("-wcheck-ch08-v2.workflow.js"), run["embedded_script"])
+                out = F.prep_wcheck(dict(run, embedded_script=str(tmp / Path(run["embedded_script"]).name)))
             finally:
                 F.PACKETS = old
             self.assertTrue((tmp / "packets" / "wcheck-ch08-v2" / "s" / "0001.txt").exists())
             self.assertFalse((tmp / "packets" / "wcheck-ch08").exists(), "the sw-v1 packet's name must stay untouched")
             self.assertTrue((tmp / "packets" / "wcheck-ch08-v2.args.json").exists())
-            self.assertTrue(out["script"].endswith("002-wcheck-ch08-v2.workflow.js"), out["script"])
-            self.assertTrue((tmp / "002-wcheck-ch08-v2.workflow.js").exists())
+            self.assertTrue(out["script"].endswith("-wcheck-ch08-v2.workflow.js"), out["script"])
+            self.assertNotIn("-v2-v2", out["script"])
+            self.assertTrue((tmp / Path(run["embedded_script"]).name).exists())
             self.assertFalse((tmp / "002-wcheck-ch08.workflow.js").exists())
 
     def test_every_run_says_where_to_save_and_how_to_meter(self):

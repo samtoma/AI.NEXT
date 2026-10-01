@@ -521,8 +521,11 @@ def plan() -> dict:
         r["order"] = n
         # a copy already prepared keeps its name (its number is the order it was prepared under), so a
         # regenerated plan never strands a copy the main session may be running
-        prepared = sorted(EMBED.glob(f"[0-9][0-9][0-9]-{rid}.workflow.js"))
-        path = prepared[0] if prepared else EMBED / f"{n:03d}-{rid}.workflow.js"
+        # (Chapter 8's working check was run with sw-v1; its copy 002-wcheck-ch08.workflow.js is the record of that run
+        # and stale against today's script. The plan's entry is the sw-v2 re-run, whose copy is …-v2.)
+        cid = f"{rid}-v2" if rid == "wcheck-ch08" else rid
+        prepared = sorted(EMBED.glob(f"[0-9][0-9][0-9]-{cid}.workflow.js"))
+        path = prepared[0] if prepared else EMBED / f"{n:03d}-{cid}.workflow.js"
         r["embedded_script"] = rel(path)
         r["launch"] = f"Workflow({{scriptPath: \"<abs>/services/extraction/{r['embedded_script']}\"}})   # NO args"
         r["prepared"] = path.exists()
@@ -707,7 +710,7 @@ def prep_wcheck(run: dict) -> dict:
         suffix = "" if k == 1 else f".part{k}"
         (PACKETS / f"wcheck-{tag}.args{suffix}.json").write_text(json.dumps(a, ensure_ascii=False) + "\n")
         r = dict(run)
-        if ch == PILOT_CH:
+        if ch == PILOT_CH and not run["embedded_script"].endswith("-v2.workflow.js"):
             r["embedded_script"] = run["embedded_script"].replace(".workflow.js", "-v2.workflow.js")
         if k > 1:
             r["embedded_script"] = r["embedded_script"].replace(".workflow.js", f".part{k}.workflow.js")
