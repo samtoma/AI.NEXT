@@ -29,6 +29,7 @@ import {
   curriculumGradeLabel,
   curriculumLabel,
   isKnownCurriculum,
+  type CurriculumDef,
 } from "./curricula.ts";
 import {
   COURSES,
@@ -84,14 +85,18 @@ test("curricula are labelled flatly, never as a tier (FR-4016, privacy review F1
 });
 
 test("the American curriculum has no Arabic name; National keeps its (Samuel's answer 35, 2026-10-01)", () => {
-  assert.equal(CURRICULA["us-american-en"].labelAr, undefined);
-  assert.equal(CURRICULA["eg-national-en"].labelAr, "المنهج الوطني");
+  // widened to `CurriculumDef` so a dropped `labelAr` reads as `undefined`
+  // rather than a compile error — the fact under test is that it is GONE.
+  const american: CurriculumDef = CURRICULA["us-american-en"];
+  assert.equal(american.labelAr, undefined);
+  const national: CurriculumDef = CURRICULA["eg-national-en"];
+  assert.equal(national.labelAr, "المنهج الوطني");
   // belt and braces: nothing Arabic-script anywhere in the American entry's
   // own strings (its grade labels are all plain English school-year words).
   for (const text of [
-    CURRICULA["us-american-en"].label,
-    CURRICULA["us-american-en"].description,
-    ...Object.values(CURRICULA["us-american-en"].gradeLabels),
+    american.label,
+    american.description,
+    ...Object.values(american.gradeLabels),
   ]) {
     assert.doesNotMatch(text, ARABIC_SCRIPT, text);
   }
