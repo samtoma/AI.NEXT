@@ -251,8 +251,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch01-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch01.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 1 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch01.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch01.auto.json and the gate record runs/g10-math/gates/g1-ch01.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 1 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": "chapter 1: objectives per lesson, decisions owed, and that the auto-pass verdicts cover them",
@@ -302,7 +302,7 @@
    "stage": "S2-S4",
    "chapter": 1,
    "lesson": "g10m1s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m1s3-1 'Rational and irrational numbers' (≈ 98 items incl. its share of the end-of-chapter set; 3 book figure(s))",
    "agents": 18,
    "cost": [
@@ -323,8 +323,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m1s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch01.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch01.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json — never the pilot's g2.json)"
    ],
    "checkpoint": "first lesson of the book: script size, disputed rate, cost per item against $0.056–0.10",
    "sim_start_min": 114,
@@ -332,7 +331,7 @@
    "order": 8,
    "embedded_script": "work/g10-math/packets/embedded/fanout/008-lesson-g10m1s3-1.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/008-lesson-g10m1s3-1.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s0b-B-g2",
@@ -408,14 +407,14 @@
    "order": 10,
    "embedded_script": "work/g10-math/packets/embedded/fanout/010-s0b-C-g2.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/010-s0b-C-g2.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "lesson-g10m1s4-1",
    "stage": "S2-S4",
    "chapter": 1,
    "lesson": "g10m1s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m1s4-1 'Rounding off' (≈ 35 items incl. its share of the end-of-chapter set; 1 book figure(s))",
    "agents": 11,
    "cost": [
@@ -436,8 +435,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m1s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch01.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch01.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 137,
@@ -445,7 +443,7 @@
    "order": 11,
    "embedded_script": "work/g10-math/packets/embedded/fanout/011-lesson-g10m1s4-1.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/011-lesson-g10m1s4-1.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s1-ch02",
@@ -472,8 +470,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch02-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch02.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 2 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch02.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch02.auto.json and the gate record runs/g10-math/gates/g1-ch02.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 2 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -542,8 +540,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch03-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch03.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 3 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch03.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch03.auto.json and the gate record runs/g10-math/gates/g1-ch03.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 3 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -592,7 +590,7 @@
    "stage": "S2-S4",
    "chapter": 1,
    "lesson": "g10m1s5-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m1s5-1 'Estimating surds' (≈ 27 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 10,
    "cost": [
@@ -613,8 +611,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m1s5-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch01.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch01.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 171,
@@ -622,14 +619,14 @@
    "order": 16,
    "embedded_script": "work/g10-math/packets/embedded/fanout/016-lesson-g10m1s5-1.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/016-lesson-g10m1s5-1.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "lesson-g10m1s6-1",
    "stage": "S2-S4",
    "chapter": 1,
    "lesson": "g10m1s6-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m1s6-1 'Products' (≈ 130 items incl. its share of the end-of-chapter set; 1 book figure(s))",
    "agents": 21,
    "cost": [
@@ -650,8 +647,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m1s6-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch01.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch01.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 178,
@@ -659,7 +655,7 @@
    "order": 17,
    "embedded_script": "work/g10-math/packets/embedded/fanout/017-lesson-g10m1s6-1.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/017-lesson-g10m1s6-1.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s0b-C-g3",
@@ -727,8 +723,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch04-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch04.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 4 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch04.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch04.auto.json and the gate record runs/g10-math/gates/g1-ch04.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 4 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -777,7 +773,7 @@
    "stage": "S2-S4",
    "chapter": 1,
    "lesson": "g10m1s7-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m1s7-1 'Factorisation' (≈ 87 items incl. its share of the end-of-chapter set; 1 book figure(s))",
    "agents": 17,
    "cost": [
@@ -798,8 +794,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m1s7-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch01.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch01.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 215,
@@ -807,7 +802,7 @@
    "order": 21,
    "embedded_script": "work/g10-math/packets/embedded/fanout/021-lesson-g10m1s7-1.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/021-lesson-g10m1s7-1.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s0b-B-g4",
@@ -847,7 +842,7 @@
    "stage": "S2-S4",
    "chapter": 1,
    "lesson": "g10m1s7-2",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m1s7-2 'Factorisation' (≈ 43 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 12,
    "cost": [
@@ -868,8 +863,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m1s7-2   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch01.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch01.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 236,
@@ -877,14 +871,14 @@
    "order": 23,
    "embedded_script": "work/g10-math/packets/embedded/fanout/023-lesson-g10m1s7-2.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/023-lesson-g10m1s7-2.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "lesson-g10m1s7-3",
    "stage": "S2-S4",
    "chapter": 1,
    "lesson": "g10m1s7-3",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m1s7-3 'Factorisation' (≈ 49 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 12,
    "cost": [
@@ -905,8 +899,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m1s7-3   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch01.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch01.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 247,
@@ -914,7 +907,7 @@
    "order": 24,
    "embedded_script": "work/g10-math/packets/embedded/fanout/024-lesson-g10m1s7-3.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/024-lesson-g10m1s7-3.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s0b-C-g4",
@@ -982,8 +975,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch05-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch05.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 5 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch05.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch05.auto.json and the gate record runs/g10-math/gates/g1-ch05.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 5 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -1032,7 +1025,7 @@
    "stage": "S2-S4",
    "chapter": 1,
    "lesson": "g10m1s8-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m1s8-1 'Simplification of fractions' (≈ 107 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 19,
    "cost": [
@@ -1053,8 +1046,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m1s8-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch01.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch01.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch01.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 275,
@@ -1062,7 +1054,7 @@
    "order": 28,
    "embedded_script": "work/g10-math/packets/embedded/fanout/028-lesson-g10m1s8-1.workflow.js",
    "launch": "Workflow({scriptPath: \"<abs>/services/extraction/work/g10-math/packets/embedded/fanout/028-lesson-g10m1s8-1.workflow.js\"})   # NO args",
-   "prepared": false
+   "prepared": true
   },
   {
    "id": "s0b-B-g5",
@@ -1125,6 +1117,7 @@
     "lesson-g10m1s8-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 1 --lesson-run runs/g10-math/lessons/<lesson-g10m1s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s8-1's wf_id>.json --into runs/g10-math/g2-ch01.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch01.json (auto: true), the gate record runs/g10-math/gates/g2-ch01.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 1 --report runs/g10-math/fanout/assembly-ch01.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c01.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 1",
@@ -1208,8 +1201,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch06-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch06.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 6 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch06.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch06.auto.json and the gate record runs/g10-math/gates/g1-ch06.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 6 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -1533,8 +1526,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch07-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch07.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 7 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch07.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch07.auto.json and the gate record runs/g10-math/gates/g1-ch07.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 7 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -1570,8 +1563,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch09-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch09.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 9 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch09.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch09.auto.json and the gate record runs/g10-math/gates/g1-ch09.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 9 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -1646,6 +1639,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 1 --lesson-run runs/g10-math/lessons/<lesson-g10m1s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s7-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m1s8-1's wf_id>.json --into runs/g10-math/g2-ch01.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch01.json (auto: true), the gate record runs/g10-math/gates/g2-ch01.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 1 --report runs/g10-math/fanout/assembly-ch01.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c01.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 1",
@@ -1770,8 +1764,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch10-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch10.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 10 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch10.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch10.auto.json and the gate record runs/g10-math/gates/g1-ch10.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 10 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -1807,8 +1801,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch11-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch11.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 11 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch11.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch11.auto.json and the gate record runs/g10-math/gates/g1-ch11.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 11 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -1844,8 +1838,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch12-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch12.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 12 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch12.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch12.auto.json and the gate record runs/g10-math/gates/g1-ch12.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 12 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -1895,7 +1889,7 @@
    "stage": "S2-S4",
    "chapter": 2,
    "lesson": "g10m2s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m2s2-1 'Revision of exponent laws' (≈ 84 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 16,
    "cost": [
@@ -1917,8 +1911,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m2s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch02.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch02.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch02.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 476,
@@ -1967,7 +1960,7 @@
    "stage": "S2-S4",
    "chapter": 2,
    "lesson": "g10m2s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m2s3-1 'Rational exponents' (≈ 21 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 9,
    "cost": [
@@ -1989,8 +1982,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m2s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch02.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch02.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch02.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 496,
@@ -2005,7 +1997,7 @@
    "stage": "S2-S4",
    "chapter": 2,
    "lesson": "g10m2s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m2s4-1 'Exponential equations' (≈ 59 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 14,
    "cost": [
@@ -2027,8 +2019,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m2s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch02.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch02.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch02.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 502,
@@ -2103,6 +2094,7 @@
     "lesson-g10m2s4-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 2 --lesson-run runs/g10-math/lessons/<lesson-g10m2s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s4-1's wf_id>.json --into runs/g10-math/g2-ch02.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch02.json (auto: true), the gate record runs/g10-math/gates/g2-ch02.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 2 --report runs/g10-math/fanout/assembly-ch02.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c02.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 2",
@@ -2145,8 +2137,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch13-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch13.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 13 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch13.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch13.auto.json and the gate record runs/g10-math/gates/g1-ch13.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 13 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -2218,8 +2210,8 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S1 --run <wf_id>   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py assemble g10-math runs/g10-math/objectives/ch14-<wf_id>.json --maths runs/g10-math/maths/book/accepted.json",
-    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch14.auto.json (the gates' auto-pass mode — another data-engineer's work; until it lands, the main session writes them as it did for Chapter 8), then:",
-    "uv run assemble_objectives.py approve g10-math --chapter 14 --maths runs/g10-math/maths/book/accepted.json --by \"AI auto-pass (answer 37c) — awaiting human review\" --verdicts runs/g10-math/objectives/g1-ch14.auto.json",
+    "# G1 AUTO-PASS (answer 37c): verdicts for every owed decision from the AI recommendation → runs/g10-math/objectives/g1-ch14.auto.json and the gate record runs/g10-math/gates/g1-ch14.json, then approves it as \"auto-pass G1 (AI recommendation)\" (the console reads that stamp) with the same maths:",
+    "uv run auto_pass_gates.py g1 g10-math --chapter 14 --maths runs/g10-math/maths/book/accepted.json --approve",
     "# every G1 decision → the console backlog"
    ],
    "checkpoint": null,
@@ -2355,6 +2347,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 2 --lesson-run runs/g10-math/lessons/<lesson-g10m2s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m2s4-1's wf_id>.json --into runs/g10-math/g2-ch02.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch02.json (auto: true), the gate record runs/g10-math/gates/g2-ch02.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 2 --report runs/g10-math/fanout/assembly-ch02.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c02.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 2",
@@ -2422,7 +2415,7 @@
    "stage": "S2-S4",
    "chapter": 3,
    "lesson": "g10m3s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m3s2-1 'Describing sequences' (≈ 93 items incl. its share of the end-of-chapter set; 5 book figure(s))",
    "agents": 17,
    "cost": [
@@ -2444,8 +2437,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m3s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch03.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch03.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch03.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 585,
@@ -2460,7 +2452,7 @@
    "stage": "S2-S4",
    "chapter": 4,
    "lesson": "g10m4s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m4s2-1 'Solving linear equations' (≈ 58 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 13,
    "cost": [
@@ -2482,8 +2474,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m4s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch04.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch04.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch04.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 587,
@@ -2498,7 +2489,7 @@
    "stage": "S2-S4",
    "chapter": 4,
    "lesson": "g10m4s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m4s3-1 'Solving quadratic equations' (≈ 68 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 15,
    "cost": [
@@ -2520,8 +2511,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m4s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch04.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch04.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch04.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 601,
@@ -2552,6 +2542,7 @@
     "lesson-g10m3s2-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 3 --lesson-run runs/g10-math/lessons/<lesson-g10m3s2-1's wf_id>.json --into runs/g10-math/g2-ch03.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch03.json (auto: true), the gate record runs/g10-math/gates/g2-ch03.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 3 --report runs/g10-math/fanout/assembly-ch03.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c03.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 3",
@@ -2591,6 +2582,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 3 --lesson-run runs/g10-math/lessons/<lesson-g10m3s2-1's wf_id>.json --into runs/g10-math/g2-ch03.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch03.json (auto: true), the gate record runs/g10-math/gates/g2-ch03.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 3 --report runs/g10-math/fanout/assembly-ch03.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c03.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 3",
@@ -2754,7 +2746,7 @@
    "stage": "S2-S4",
    "chapter": 4,
    "lesson": "g10m4s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m4s4-1 'Solving simultaneous equations' (≈ 40 items incl. its share of the end-of-chapter set; 5 book figure(s))",
    "agents": 11,
    "cost": [
@@ -2776,8 +2768,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m4s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch04.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch04.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch04.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 643,
@@ -2833,7 +2824,7 @@
    "stage": "S2-S4",
    "chapter": 4,
    "lesson": "g10m4s5-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m4s5-1 'Word problems' (≈ 38 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 11,
    "cost": [
@@ -2855,8 +2846,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m4s5-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch04.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch04.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch04.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 653,
@@ -2871,7 +2861,7 @@
    "stage": "S2-S4",
    "chapter": 4,
    "lesson": "g10m4s6-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m4s6-1 'Literal equations' (≈ 35 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 11,
    "cost": [
@@ -2893,8 +2883,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m4s6-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch04.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch04.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch04.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 663,
@@ -2909,7 +2898,7 @@
    "stage": "S2-S4",
    "chapter": 4,
    "lesson": "g10m4s7-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m4s7-1 'Solving linear inequalities' (≈ 49 items incl. its share of the end-of-chapter set; 9 book figure(s))",
    "agents": 12,
    "cost": [
@@ -2931,8 +2920,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m4s7-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch04.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch04.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch04.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 672,
@@ -2947,7 +2935,7 @@
    "stage": "S2-S4",
    "chapter": 5,
    "lesson": "g10m5s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m5s3-1 'Defining the trigonometric ratios' (≈ 32 items incl. its share of the end-of-chapter set; 18 book figure(s))",
    "agents": 11,
    "cost": [
@@ -2969,8 +2957,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m5s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch05.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch05.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch05.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 674,
@@ -2985,7 +2972,7 @@
    "stage": "S2-S4",
    "chapter": 5,
    "lesson": "g10m5s5-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m5s5-1 'Calculator skills' (≈ 48 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 12,
    "cost": [
@@ -3007,8 +2994,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m5s5-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch05.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch05.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch05.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 682,
@@ -3044,6 +3030,7 @@
     "lesson-g10m4s7-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 4 --lesson-run runs/g10-math/lessons/<lesson-g10m4s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s7-1's wf_id>.json --into runs/g10-math/g2-ch04.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch04.json (auto: true), the gate record runs/g10-math/gates/g2-ch04.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 4 --report runs/g10-math/fanout/assembly-ch04.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c04.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 4",
@@ -3088,6 +3075,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 4 --lesson-run runs/g10-math/lessons/<lesson-g10m4s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m4s7-1's wf_id>.json --into runs/g10-math/g2-ch04.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch04.json (auto: true), the gate record runs/g10-math/gates/g2-ch04.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 4 --report runs/g10-math/fanout/assembly-ch04.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c04.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 4",
@@ -3292,7 +3280,7 @@
    "stage": "S2-S4",
    "chapter": 5,
    "lesson": "g10m5s6-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m5s6-1 'Special angles' (≈ 38 items incl. its share of the end-of-chapter set; 4 book figure(s))",
    "agents": 11,
    "cost": [
@@ -3314,8 +3302,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m5s6-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch05.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch05.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch05.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 734,
@@ -3330,7 +3317,7 @@
    "stage": "S2-S4",
    "chapter": 5,
    "lesson": "g10m5s7-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m5s7-1 'Solving trigonometric equations' (≈ 86 items incl. its share of the end-of-chapter set; 23 book figure(s))",
    "agents": 17,
    "cost": [
@@ -3352,8 +3339,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m5s7-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch05.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch05.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch05.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 744,
@@ -3368,7 +3354,7 @@
    "stage": "S2-S4",
    "chapter": 5,
    "lesson": "g10m5s8-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m5s8-1 'Defining ratios in the Cartesian plane' (≈ 47 items incl. its share of the end-of-chapter set; 7 book figure(s))",
    "agents": 12,
    "cost": [
@@ -3390,8 +3376,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m5s8-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch05.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch05.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch05.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 754,
@@ -3406,7 +3391,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s1-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s1-1 'Introduction' (≈ 80 items incl. its share of the end-of-chapter set; 5 book figure(s))",
    "agents": 16,
    "cost": [
@@ -3428,8 +3413,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s1-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 764,
@@ -3464,6 +3448,7 @@
     "lesson-g10m5s8-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 5 --lesson-run runs/g10-math/lessons/<lesson-g10m5s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s8-1's wf_id>.json --into runs/g10-math/g2-ch05.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch05.json (auto: true), the gate record runs/g10-math/gates/g2-ch05.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 5 --report runs/g10-math/fanout/assembly-ch05.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c05.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 5",
@@ -3644,6 +3629,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 5 --lesson-run runs/g10-math/lessons/<lesson-g10m5s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s7-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m5s8-1's wf_id>.json --into runs/g10-math/g2-ch05.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch05.json (auto: true), the gate record runs/g10-math/gates/g2-ch05.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 5 --report runs/g10-math/fanout/assembly-ch05.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c05.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 5",
@@ -3711,7 +3697,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s2-1 'Linear functions' (≈ 82 items incl. its share of the end-of-chapter set; 17 book figure(s))",
    "agents": 16,
    "cost": [
@@ -3733,8 +3719,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 824,
@@ -3749,7 +3734,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s3-1 'Quadratic functions' (≈ 51 items incl. its share of the end-of-chapter set; 15 book figure(s))",
    "agents": 13,
    "cost": [
@@ -3771,8 +3756,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 840,
@@ -3787,7 +3771,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s4-1 'Hyperbolic functions' (≈ 60 items incl. its share of the end-of-chapter set; 12 book figure(s))",
    "agents": 14,
    "cost": [
@@ -3809,8 +3793,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 844,
@@ -3825,7 +3808,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s5-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s5-1 'Exponential functions' (≈ 53 items incl. its share of the end-of-chapter set; 16 book figure(s))",
    "agents": 13,
    "cost": [
@@ -3847,8 +3830,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s5-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 853,
@@ -3863,7 +3845,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s6-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s6-1 'Trigonometric functions' (≈ 4 items incl. its share of the end-of-chapter set; 4 book figure(s))",
    "agents": 7,
    "cost": [
@@ -3885,8 +3867,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s6-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 859,
@@ -3901,7 +3882,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s6-2",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s6-2 'Trigonometric functions' (≈ 4 items incl. its share of the end-of-chapter set; 5 book figure(s))",
    "agents": 7,
    "cost": [
@@ -3923,8 +3904,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s6-2   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 864,
@@ -3939,7 +3919,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s6-3",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s6-3 'Trigonometric functions' (≈ 4 items incl. its share of the end-of-chapter set; 8 book figure(s))",
    "agents": 7,
    "cost": [
@@ -3961,8 +3941,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s6-3   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 866,
@@ -3977,7 +3956,7 @@
    "stage": "S2-S4",
    "chapter": 6,
    "lesson": "g10m6s7-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m6s7-1 'Interpretation of graphs' (≈ 31 items incl. its share of the end-of-chapter set; 6 book figure(s))",
    "agents": 10,
    "cost": [
@@ -3999,8 +3978,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m6s7-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch06.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch06.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch06.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 869,
@@ -4015,7 +3993,7 @@
    "stage": "S2-S4",
    "chapter": 7,
    "lesson": "g10m7s1-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m7s1-1 'Introduction' (≈ 40 items incl. its share of the end-of-chapter set; 19 book figure(s))",
    "agents": 11,
    "cost": [
@@ -4037,8 +4015,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m7s1-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch07.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch07.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch07.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 871,
@@ -4077,6 +4054,7 @@
     "lesson-g10m6s7-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 6 --lesson-run runs/g10-math/lessons/<lesson-g10m6s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s7-1's wf_id>.json --into runs/g10-math/g2-ch06.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch06.json (auto: true), the gate record runs/g10-math/gates/g2-ch06.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 6 --report runs/g10-math/fanout/assembly-ch06.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c06.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 6",
@@ -4124,6 +4102,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 6 --lesson-run runs/g10-math/lessons/<lesson-g10m6s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s6-3's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m6s7-1's wf_id>.json --into runs/g10-math/g2-ch06.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch06.json (auto: true), the gate record runs/g10-math/gates/g2-ch06.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 6 --report runs/g10-math/fanout/assembly-ch06.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c06.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 6",
@@ -4328,7 +4307,7 @@
    "stage": "S2-S4",
    "chapter": 7,
    "lesson": "g10m7s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m7s2-1 'Triangles' (≈ 34 items incl. its share of the end-of-chapter set; 37 book figure(s))",
    "agents": 11,
    "cost": [
@@ -4350,8 +4329,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m7s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch07.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch07.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch07.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 932,
@@ -4366,7 +4344,7 @@
    "stage": "S2-S4",
    "chapter": 7,
    "lesson": "g10m7s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m7s3-1 'Quadrilaterals' (≈ 38 items incl. its share of the end-of-chapter set; 23 book figure(s))",
    "agents": 11,
    "cost": [
@@ -4388,8 +4366,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m7s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch07.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch07.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch07.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 941,
@@ -4404,7 +4381,7 @@
    "stage": "S2-S4",
    "chapter": 7,
    "lesson": "g10m7s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m7s4-1 'The mid-point theorem' (≈ 54 items incl. its share of the end-of-chapter set; 23 book figure(s))",
    "agents": 13,
    "cost": [
@@ -4426,8 +4403,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m7s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch07.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch07.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch07.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 946,
@@ -4442,7 +4418,7 @@
    "stage": "S2-S4",
    "chapter": 9,
    "lesson": "g10m9s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m9s2-1 'Simple interest' (≈ 30 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 10,
    "cost": [
@@ -4464,8 +4440,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m9s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch09.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch09.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch09.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 950,
@@ -4480,7 +4455,7 @@
    "stage": "S2-S4",
    "chapter": 9,
    "lesson": "g10m9s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m9s3-1 'Compound interest' (≈ 19 items incl. its share of the end-of-chapter set; 2 book figure(s))",
    "agents": 9,
    "cost": [
@@ -4502,8 +4477,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m9s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch09.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch09.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch09.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 958,
@@ -4537,6 +4511,7 @@
     "lesson-g10m7s4-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 7 --lesson-run runs/g10-math/lessons/<lesson-g10m7s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s4-1's wf_id>.json --into runs/g10-math/g2-ch07.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch07.json (auto: true), the gate record runs/g10-math/gates/g2-ch07.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 7 --report runs/g10-math/fanout/assembly-ch07.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c07.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 7",
@@ -4579,6 +4554,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 7 --lesson-run runs/g10-math/lessons/<lesson-g10m7s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m7s4-1's wf_id>.json --into runs/g10-math/g2-ch07.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch07.json (auto: true), the gate record runs/g10-math/gates/g2-ch07.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 7 --report runs/g10-math/fanout/assembly-ch07.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c07.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 7",
@@ -4742,7 +4718,7 @@
    "stage": "S2-S4",
    "chapter": 9,
    "lesson": "g10m9s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m9s4-1 'Calculations using simple and compound interest' (≈ 69 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 15,
    "cost": [
@@ -4764,8 +4740,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m9s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch09.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch09.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch09.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 999,
@@ -4821,7 +4796,7 @@
    "stage": "S2-S4",
    "chapter": 9,
    "lesson": "g10m9s5-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m9s5-1 'Foreign exchange rates' (≈ 29 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 10,
    "cost": [
@@ -4843,8 +4818,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m9s5-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch09.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch09.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch09.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1016,
@@ -4878,6 +4852,7 @@
     "lesson-g10m9s5-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 9 --lesson-run runs/g10-math/lessons/<lesson-g10m9s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s5-1's wf_id>.json --into runs/g10-math/g2-ch09.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch09.json (auto: true), the gate record runs/g10-math/gates/g2-ch09.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 9 --report runs/g10-math/fanout/assembly-ch09.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c09.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 9",
@@ -4920,6 +4895,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 9 --lesson-run runs/g10-math/lessons/<lesson-g10m9s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m9s5-1's wf_id>.json --into runs/g10-math/g2-ch09.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch09.json (auto: true), the gate record runs/g10-math/gates/g2-ch09.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 9 --report runs/g10-math/fanout/assembly-ch09.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c09.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 9",
@@ -5083,7 +5059,7 @@
    "stage": "S2-S4",
    "chapter": 10,
    "lesson": "g10m10s1-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m10s1-1 'Collecting data' (≈ 9 items incl. its share of the end-of-chapter set; 1 book figure(s))",
    "agents": 8,
    "cost": [
@@ -5105,8 +5081,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m10s1-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch10.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch10.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch10.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1059,
@@ -5121,7 +5096,7 @@
    "stage": "S2-S4",
    "chapter": 10,
    "lesson": "g10m10s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m10s2-1 'Measures of central tendency' (≈ 37 items incl. its share of the end-of-chapter set; 0 book figure(s))",
    "agents": 11,
    "cost": [
@@ -5143,8 +5118,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m10s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch10.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch10.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch10.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1064,
@@ -5200,7 +5174,7 @@
    "stage": "S2-S4",
    "chapter": 10,
    "lesson": "g10m10s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m10s3-1 'Grouping data' (≈ 32 items incl. its share of the end-of-chapter set; 8 book figure(s))",
    "agents": 11,
    "cost": [
@@ -5222,8 +5196,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m10s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch10.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch10.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch10.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1073,
@@ -5238,7 +5211,7 @@
    "stage": "S2-S4",
    "chapter": 10,
    "lesson": "g10m10s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m10s4-1 'Measures of dispersion' (≈ 27 items incl. its share of the end-of-chapter set; 3 book figure(s))",
    "agents": 10,
    "cost": [
@@ -5260,8 +5233,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m10s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch10.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch10.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch10.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1082,
@@ -5276,7 +5248,7 @@
    "stage": "S2-S4",
    "chapter": 10,
    "lesson": "g10m10s5-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m10s5-1 'Five number summary' (≈ 11 items incl. its share of the end-of-chapter set; 4 book figure(s))",
    "agents": 8,
    "cost": [
@@ -5298,8 +5270,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m10s5-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch10.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch10.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch10.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1087,
@@ -5314,7 +5285,7 @@
    "stage": "S2-S4",
    "chapter": 11,
    "lesson": "g10m11s1-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m11s1-1 'Two-dimensional problems' (≈ 38 items incl. its share of the end-of-chapter set; 11 book figure(s))",
    "agents": 11,
    "cost": [
@@ -5336,8 +5307,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m11s1-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch11.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch11.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch11.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1089,
@@ -5372,6 +5342,7 @@
     "lesson-g10m10s5-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 10 --lesson-run runs/g10-math/lessons/<lesson-g10m10s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s5-1's wf_id>.json --into runs/g10-math/g2-ch10.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch10.json (auto: true), the gate record runs/g10-math/gates/g2-ch10.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 10 --report runs/g10-math/fanout/assembly-ch10.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c10.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 10",
@@ -5415,6 +5386,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 10 --lesson-run runs/g10-math/lessons/<lesson-g10m10s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m10s5-1's wf_id>.json --into runs/g10-math/g2-ch10.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch10.json (auto: true), the gate record runs/g10-math/gates/g2-ch10.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 10 --report runs/g10-math/fanout/assembly-ch10.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c10.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 10",
@@ -5561,6 +5533,7 @@
     "lesson-g10m11s1-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 11 --lesson-run runs/g10-math/lessons/<lesson-g10m11s1-1's wf_id>.json --into runs/g10-math/g2-ch11.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch11.json (auto: true), the gate record runs/g10-math/gates/g2-ch11.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 11 --report runs/g10-math/fanout/assembly-ch11.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c11.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 11",
@@ -5811,6 +5784,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 11 --lesson-run runs/g10-math/lessons/<lesson-g10m11s1-1's wf_id>.json --into runs/g10-math/g2-ch11.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch11.json (auto: true), the gate record runs/g10-math/gates/g2-ch11.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 11 --report runs/g10-math/fanout/assembly-ch11.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c11.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 11",
@@ -5878,7 +5852,7 @@
    "stage": "S2-S4",
    "chapter": 12,
    "lesson": "g10m12s1-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m12s1-1 'Proofs and conjectures' (≈ 41 items incl. its share of the end-of-chapter set; 11 book figure(s))",
    "agents": 12,
    "cost": [
@@ -5900,8 +5874,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m12s1-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch12.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch12.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch12.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1174,
@@ -5932,6 +5905,7 @@
     "lesson-g10m12s1-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 12 --lesson-run runs/g10-math/lessons/<lesson-g10m12s1-1's wf_id>.json --into runs/g10-math/g2-ch12.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch12.json (auto: true), the gate record runs/g10-math/gates/g2-ch12.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 12 --report runs/g10-math/fanout/assembly-ch12.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c12.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 12",
@@ -5971,6 +5945,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 12 --lesson-run runs/g10-math/lessons/<lesson-g10m12s1-1's wf_id>.json --into runs/g10-math/g2-ch12.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch12.json (auto: true), the gate record runs/g10-math/gates/g2-ch12.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 12 --report runs/g10-math/fanout/assembly-ch12.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c12.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 12",
@@ -6134,7 +6109,7 @@
    "stage": "S2-S4",
    "chapter": 13,
    "lesson": "g10m13s1-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m13s1-1 'Area of a polygon' (≈ 22 items incl. its share of the end-of-chapter set; 20 book figure(s))",
    "agents": 9,
    "cost": [
@@ -6156,8 +6131,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m13s1-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch13.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch13.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch13.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1219,
@@ -6213,7 +6187,7 @@
    "stage": "S2-S4",
    "chapter": 13,
    "lesson": "g10m13s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m13s2-1 'Right prisms and cylinders' (≈ 19 items incl. its share of the end-of-chapter set; 29 book figure(s))",
    "agents": 9,
    "cost": [
@@ -6235,8 +6209,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m13s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch13.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch13.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch13.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1226,
@@ -6251,7 +6224,7 @@
    "stage": "S2-S4",
    "chapter": 13,
    "lesson": "g10m13s2-2",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m13s2-2 'Right prisms and cylinders' (≈ 15 items incl. its share of the end-of-chapter set; 12 book figure(s))",
    "agents": 9,
    "cost": [
@@ -6273,8 +6246,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m13s2-2   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch13.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch13.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch13.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1231,
@@ -6289,7 +6261,7 @@
    "stage": "S2-S4",
    "chapter": 13,
    "lesson": "g10m13s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m13s3-1 'Right pyramids, right cones and spheres' (≈ 19 items incl. its share of the end-of-chapter set; 22 book figure(s))",
    "agents": 9,
    "cost": [
@@ -6311,8 +6283,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m13s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch13.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch13.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch13.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1236,
@@ -6327,7 +6298,7 @@
    "stage": "S2-S4",
    "chapter": 13,
    "lesson": "g10m13s3-2",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m13s3-2 'Right pyramids, right cones and spheres' (≈ 29 items incl. its share of the end-of-chapter set; 22 book figure(s))",
    "agents": 10,
    "cost": [
@@ -6349,8 +6320,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m13s3-2   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch13.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch13.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch13.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1242,
@@ -6365,7 +6335,7 @@
    "stage": "S2-S4",
    "chapter": 13,
    "lesson": "g10m13s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m13s4-1 'The effect of multiplying a dimension by a factor of k' (≈ 17 items incl. its share of the end-of-chapter set; 11 book figure(s))",
    "agents": 9,
    "cost": [
@@ -6387,8 +6357,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m13s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch13.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch13.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch13.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1243,
@@ -6403,7 +6372,7 @@
    "stage": "S2-S4",
    "chapter": 14,
    "lesson": "g10m14s1-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m14s1-1 'Theoretical probability' (≈ 39 items incl. its share of the end-of-chapter set; 8 book figure(s))",
    "agents": 11,
    "cost": [
@@ -6425,8 +6394,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m14s1-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch14.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch14.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch14.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1248,
@@ -6462,6 +6430,7 @@
     "lesson-g10m13s4-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 13 --lesson-run runs/g10-math/lessons/<lesson-g10m13s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s4-1's wf_id>.json --into runs/g10-math/g2-ch13.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch13.json (auto: true), the gate record runs/g10-math/gates/g2-ch13.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 13 --report runs/g10-math/fanout/assembly-ch13.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c13.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 13",
@@ -6506,6 +6475,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 13 --lesson-run runs/g10-math/lessons/<lesson-g10m13s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s2-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s3-2's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m13s4-1's wf_id>.json --into runs/g10-math/g2-ch13.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch13.json (auto: true), the gate record runs/g10-math/gates/g2-ch13.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 13 --report runs/g10-math/fanout/assembly-ch13.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c13.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 13",
@@ -6636,7 +6606,7 @@
    "stage": "S2-S4",
    "chapter": 14,
    "lesson": "g10m14s2-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m14s2-1 'Relative frequency' (≈ 13 items incl. its share of the end-of-chapter set; 1 book figure(s))",
    "agents": 8,
    "cost": [
@@ -6658,8 +6628,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m14s2-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch14.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch14.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch14.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1285,
@@ -6707,7 +6676,7 @@
    "stage": "S2-S4",
    "chapter": 14,
    "lesson": "g10m14s3-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m14s3-1 'Venn diagrams' (≈ 36 items incl. its share of the end-of-chapter set; 6 book figure(s))",
    "agents": 11,
    "cost": [
@@ -6729,8 +6698,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m14s3-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch14.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch14.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch14.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1290,
@@ -6786,7 +6754,7 @@
    "stage": "S2-S4",
    "chapter": 14,
    "lesson": "g10m14s4-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m14s4-1 'Union and intersection' (≈ 5 items incl. its share of the end-of-chapter set; 11 book figure(s))",
    "agents": 8,
    "cost": [
@@ -6808,8 +6776,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m14s4-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch14.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch14.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch14.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1299,
@@ -6824,7 +6791,7 @@
    "stage": "S2-S4",
    "chapter": 14,
    "lesson": "g10m14s5-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m14s5-1 'Probability identities' (≈ 8 items incl. its share of the end-of-chapter set; 6 book figure(s))",
    "agents": 8,
    "cost": [
@@ -6846,8 +6813,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m14s5-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch14.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch14.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch14.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1304,
@@ -6862,7 +6828,7 @@
    "stage": "S2-S4",
    "chapter": 14,
    "lesson": "g10m14s6-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m14s6-1 'Mutually exclusive events' (≈ 13 items incl. its share of the end-of-chapter set; 5 book figure(s))",
    "agents": 8,
    "cost": [
@@ -6884,8 +6850,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m14s6-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch14.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch14.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch14.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1309,
@@ -6900,7 +6865,7 @@
    "stage": "S2-S4",
    "chapter": 14,
    "lesson": "g10m14s7-1",
-   "workflow": "lesson.workflow.js (lesson-v7, collect-5)",
+   "workflow": "lesson.workflow.js (lesson-v8, collect-6)",
    "what": "S2–S4 for g10m14s7-1 'Complementary events' (≈ 13 items incl. its share of the end-of-chapter set; 5 book figure(s))",
    "agents": 8,
    "cost": [
@@ -6922,8 +6887,7 @@
    "meter": "uv run meter_run.py record --book g10-math --stage S2-S4 --run <wf_id> --lesson g10m14s7-1   # add --resumed when it was a resume",
    "after": [
     "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --draft --maths runs/g10-math/maths/book/accepted.json   # for the G2 recommendations",
-    "# G2 AUTO-PASS (37c): the recommendation per disputed / no-printed-answer item → runs/g10-math/g2-ch14.json (never the pilot's g2.json); every verdict → the console backlog",
-    "uv run assemble_objectives.py lesson-runs g10-math runs/g10-math/lessons/<wf_id>.json --g2 runs/g10-math/g2-ch14.json"
+    "# G2 AUTO-PASS (37c) is run ONCE per chapter, after its last lesson run (one complete gate record): see the chapter's assemble steps (auto_pass_gates.py g2 … --into runs/g10-math/g2-ch14.json — never the pilot's g2.json)"
    ],
    "checkpoint": null,
    "sim_start_min": 1314,
@@ -6960,6 +6924,7 @@
     "lesson-g10m14s7-1"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 14 --lesson-run runs/g10-math/lessons/<lesson-g10m14s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s7-1's wf_id>.json --into runs/g10-math/g2-ch14.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch14.json (auto: true), the gate record runs/g10-math/gates/g2-ch14.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 14 --report runs/g10-math/fanout/assembly-ch14.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c14.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 14",
@@ -7005,6 +6970,7 @@
     "wcheck-ch08"
    ],
    "before": [
+    "uv run auto_pass_gates.py g2 g10-math --chapter 14 --lesson-run runs/g10-math/lessons/<lesson-g10m14s1-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s2-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s3-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s4-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s5-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s6-1's wf_id>.json --lesson-run runs/g10-math/lessons/<lesson-g10m14s7-1's wf_id>.json --into runs/g10-math/g2-ch14.json --split --maths runs/g10-math/maths/book/accepted.json   # G2 AUTO-PASS (37c): the owed items decided on the AI checks' recommendation → runs/g10-math/g2-ch14.json (auto: true), the gate record runs/g10-math/gates/g2-ch14.json (every decision → the console backlog), then lesson-runs --g2 → runs/g10-math/lesson/<slug>.json",
     "uv run assemble_lesson_bundle.py --book g10-math --chapter 14 --report runs/g10-math/fanout/assembly-ch14.json",
     "#   → seed/g10-math/g10m-course.json, seed/g10-math/g10m-c14.json, seed/content/<slug>.json (answer 37d: the book picture stands in where no native figure exists — the assembly's figure step, another data-engineer's work)",
     "uv run fanout.py config 14",

@@ -281,6 +281,25 @@ class Collect6(unittest.TestCase):
         self.assertNotIn("unchecked", x["verify"])
 
 
+@unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
+class TypingPromptV8(unittest.TestCase):
+    """lesson-v8 changed the TYPING prompt only: a choice's options are never the agent's to make up, a number or a pair of
+    numbers is never a choice, and book_final is a quote. (The collection refuses what the prompt forbids: Collect6.)"""
+
+    def test_the_typing_prompt_carries_the_closed_set_rule_and_the_quote_rule(self):
+        it = item("Ex8-2:2", "Round it.", ["$9,1$"], "9,1")
+        rep = run(args_for([it]), responses([typing("Ex8-2:2", "9,1", "$9,1$")], [{"ref": "Ex8-2:2", "final_answer": "9.1", "markable": True}]))
+        self.assertEqual(rep["result"]["prompts_version"], "lesson-v8")
+        prompt = next(c["prompt"] for c in rep["calls"] if c["label"].startswith("S3:type:"))
+        for phrase in ("The options are NEVER yours to make up", "CLOSED SET OF CATEGORIES", 'expression, marker_kind "values", key "4; 5"',
+                       "never a choice with the whole list as options", "QUOTED from its last sentence", 'never drop or add a "not"',
+                       'not_markable with not_markable_reason "two-part answer"'):
+            self.assertIn(phrase, prompt)
+        # the other S3 prompts are the v7 ones: the blind solver is told nothing of the typing
+        blind = next(c["prompt"] for c in rep["calls"] if c["label"].startswith("S3:blind:"))
+        self.assertNotIn("CLOSED SET", blind)
+
+
 class RecollectOracle(unittest.TestCase):
     ORACLE = ("WHAT WAS PRODUCED:\nclaims:\n- (lo:a, B1) a claim\nquestions and worked examples:\n"
               "- Ex1-3:1a (lo:g10m1s5-1-1, {t}): Determine between which integers $\\sqrt{{18}}$ lies\n"

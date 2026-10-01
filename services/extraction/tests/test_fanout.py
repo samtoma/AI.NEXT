@@ -96,6 +96,27 @@ class RealBook(unittest.TestCase):
             self.assertNotIn(f" --out {f}", text)
             self.assertNotIn(f"--out-dir {Path(f).parent} ", text.replace("runs/g10-math/maths/book", "BOOK"))
 
+    def test_the_auto_passed_gates_sign_as_the_console_reads_them_and_g2_never_writes_the_pilots_file(self):
+        """The console (review-gate-records.ts isAutoPassStamp) and review_policy.is_auto read only a stamp that starts
+        "auto-pass ": a G1 approval signed "AI auto-pass …" would be a person's review in the console's eyes."""
+        import re
+        import review_policy
+        text = json.dumps(self.plan["runs"])
+        # the stamp is auto_pass_gates.py's own (approve_argv, tests/test_typing_seam.py); no command in the plan spells another
+        for st in re.findall(r'--by \\"([^"\\]+)\\"', text):
+            self.assertTrue(review_policy.is_auto(st), st)
+        self.assertNotIn("AI auto-pass", text)
+        by = {r["id"]: r for r in self.plan["runs"]}
+        # G1 is the auto-pass command itself, with the book's own maths
+        s1 = " ".join(by["s1-ch01"]["after"])
+        self.assertIn("auto_pass_gates.py g1 g10-math --chapter 1 --maths runs/g10-math/maths/book/accepted.json --approve", s1)
+        # G2 is run once per chapter with every lesson's run, into the chapter's own file
+        asm = " ".join(by["wcheck-ch01"]["before"])
+        self.assertIn("auto_pass_gates.py g2 g10-math --chapter 1", asm)
+        self.assertIn("--into runs/g10-math/g2-ch01.json --split", asm)
+        self.assertNotIn("--into runs/g10-math/g2.json", asm)
+        self.assertEqual(asm.count("--lesson-run"), sum(1 for r in self.plan["runs"] if r["stage"] == "S2-S4" and r["chapter"] == 1))
+
     def test_the_working_checks_are_two_batched_passes_costed_from_the_chapter_8_measurements(self):
         """sw-v1 metered $31.0 / 192 = $0.161 a solution against a plan of $0.03-0.05; the plan now runs two independent
         sw-v3 passes (batch 5, effort high, the second reshuffled) whose flags are unioned."""
