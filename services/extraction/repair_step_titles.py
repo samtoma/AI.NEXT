@@ -538,10 +538,8 @@ def summarise(plans: list[FilePlan], index: Index, chapters: set | None) -> dict
                 c[f"{key}.already_repaired"] += v.already
             else:
                 c[f"{key}.REFUSED"] += 1
-        for qp in fp.quotes:
-            ch = int(qp.where.split(":")[0].split("s")[0].lstrip("g10m") or 0) if False else None
         if fp.quotes:
-            per[-1]["claim_quotes_to_rewrite"] += len(fp.quotes)
+            per[0]["claim_quotes_to_rewrite"] += len(fp.quotes)        # key 0: not tied to a chapter here
     return {str(k): dict(v) for k, v in sorted(per.items())}
 
 
