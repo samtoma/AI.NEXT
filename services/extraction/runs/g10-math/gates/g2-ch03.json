@@ -5,11 +5,11 @@
  "id": "g2-ch03",
  "chapter": 3,
  "run": "wf_535efd2b-e80",
- "decided_at": "2026-10-01T18:13:19Z",
+ "decided_at": "2026-10-01T18:13:59Z",
  "by": "auto-pass G2 (AI recommendation)",
  "auto": true,
  "outcome": "pass_with_holds",
- "summary": "5 book item(s) decided on the AI recommendation (0 from the recommendation file, 5 by the checks' own rule); 6 held for a person; 0 already decided by a person; 6 typed not markable (teaching only, no verdict owed); 12 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
+ "summary": "11 book item(s) decided on the AI recommendation (11 from the recommendation file, 0 by the checks' own rule); 0 held for a person; 0 already decided by a person; 6 recommended with low confidence (your call); 6 typed not markable (teaching only, no verdict owed); 12 item(s) typed again, each with its reason (a choice from the book's printed key, a fraction typed as a number, a marker kind the key or its form cannot be read under)",
  "decisions": [
   {
    "key": "g10m3s2-1:Ex3-1:1",
@@ -34,22 +34,26 @@
   {
    "key": "g10m3s2-1:Ex3-1:14a",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write"
+   "detail": "$T_2-T_1=-3z$ but $T_3-T_2=-2z+3$, so there is no common difference. The book is right. The answer is a phrase, and the only other possible answer is an expression in $z$. A one-option choice is not allowed. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex3-1:14a: a choice item needs >= 2 choices and its key among them)",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m3s2-1:Ex3-1:18",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options, not 6: a list in the stem to select from is not a choice; options said to be the lesson's closed set are named neither in the stem nor in the lesson: \"P\"); a fix needs fields a person or a recommendation must write"
+   "detail": "$649=7\\cdot92+5$, and the 5th letter of PATTERN is E. The key is right. The 6 distinct letters exceed the 5-option cap, and a bare E typed as an expression may be read as Euler's constant. (kept out as exclude, not hold: its typed shape cannot be emitted — a choice needs 2–5 options, not 6: a list in the stem to select from is not a choice)",
+   "basis": "selected from a list · confidence low"
   },
   {
    "key": "g10m3s2-1:Ex3-1:3",
-   "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options, not 8: a list in the stem to select from is not a choice); a fix needs fields a person or a recommendation must write"
+   "decision": "fix",
+   "detail": "$T_n=G$ is the 5th term, so $T_{n-4}=T_1=C$. Book, printed and blind agree. The 8-option choice breaks the 5-option cap, so the single letter is retyped as the book's answer. Verified independently: the verifier's own answer matches the key.",
+   "basis": "selected from a list · confidence low"
   },
   {
    "key": "g10m3s2-1:Ex3-1:9e",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "fix",
+   "detail": "$T_2=6(2)+3=15$ and $T_4=6(4)+3=27$. The stem asks for two missing terms. The printed answer lost the 15, so the numeric key 27 is partial. Retype as two values. Verified independently: the verifier's own answer matches the key.",
+   "basis": "partial answer · confidence high"
   },
   {
    "key": "g10m3s2-1:Ex3-2:1",
@@ -58,18 +62,21 @@
   },
   {
    "key": "g10m3s2-1:Ex3-2:10c",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "Terms 8, 23, 38, 53, 68 fit $T_n=15n-7$: $T_2=30-7=23$, $T_4=60-7=53$. Book, printed answer and blind agree on 23 and 53. The 'unclear' judge verdicts are only a label format ($T_2=23$). The key '23; 53' as values is right. Verified independently: the verifier's own answer matches the key.",
+   "basis": "book answer confirmed · confidence high"
   },
   {
    "key": "g10m3s2-1:Ex3-2:12a",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (the key \"-49; -63; -77\" does not read as the printed answer \"−49 ; −63 ; 77\"); a fix needs fields a person or a recommendation must write"
+   "detail": "Sequence $-7;-21;-35$ has $d=-14$, so the next three terms are $-49;-63;-77$. The book prints $-49;-63;77$ in both PDF and EPUB, with the minus lost on the third term. The typed key matches my derivation but not the book, so it cannot be accepted or fixed. Right answer by the agent's own derivation: -49; -63; -77.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m3s2-1:Ex3-2:17b",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "hold",
+   "detail": "NOT RECOMMENDED LIVE (the quoted span is not in the item's worked solution, EPUB answer or printed answer). The agent's reading: Figure shows matchstick squares in a row. $T_1=4$, $T_2=7$, $T_3=10$, so $d=7-4=3$. The book's working gives 3, the printed answer is 3 and the blind answer is 3. The 'unclear' judge verdicts come from the EPUB final line being a full equation. Numeric key 3 is right.",
+   "basis": "not grounded · confidence low"
   },
   {
    "key": "g10m3s2-1:Ex3-2:25",
@@ -79,22 +86,26 @@
   {
    "key": "g10m3s2-1:Ex3-2:3",
    "decision": "exclude",
-   "basis": "the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write"
+   "detail": "$1.54$, then $1.50$, then $1.42$: the differences are not constant, so the sequence is not linear. The book is right. The answer is a phrase, so the one-option choice is invalid and any other option would be invented. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex3-2:3: a choice item needs >= 2 choices and its key among them)",
+   "basis": "marker cannot check · confidence low"
   },
   {
    "key": "g10m3s2-1:Ex3-2:4",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "The sequence is $T_n=5n-3$. If $n=5$, then $T_{n-3}=T_2=7$, which is the book's answer. As written, $n$ is free, so the blind answer $5n-18$ is also valid. A key of 7 would mark a right reading wrong.",
+   "basis": "item wording · confidence low"
   },
   {
    "key": "g10m3s2-1:Ex3-2:6",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "accept",
+   "detail": "The sequence is $T_n=5n+1$, so $T_6=31$ and $T_8=41$. Book, EPUB and printed agree and my derivation confirms them. The blind answer 26 and 36 is off by one term. The key 31; 41 matches the book. Verified independently: the verifier's own answer matches the key.",
+   "basis": "book answer confirmed · confidence high"
   },
   {
    "key": "g10m3s2-1:Ex3-2:8b",
-   "decision": "no verdict — held (answer_mismatch / unverified)",
-   "basis": "the three-way check disagreed and nothing recommends a verdict"
+   "decision": "exclude",
+   "detail": "Listing the terms gives $5;2;-1;-4;-7;-10$, so $T_6=-10$. The book's $7-3n$ is a simplification slip, and its $-11$ is wrong. The blind answer $-10$ is right, but it is only a witness and not a key. Right answer by the agent's own derivation: -10.",
+   "basis": "book error · confidence high"
   },
   {
    "key": "g10m3s2-1:Ex3-1:16a",
@@ -167,6 +178,10 @@
    "state": "done"
   },
   {
+   "name": "G2 recommendation run: recommender + independent verifier (g2_recommend.py)",
+   "state": "done"
+  },
+  {
    "name": "the app's marker on every typed key (assembly)",
    "state": "on load"
   }
@@ -175,6 +190,10 @@
   {
    "label": "G2 verdicts",
    "path": "services/extraction/runs/g10-math/g2-ch03.json"
+  },
+  {
+   "label": "recommendation",
+   "path": "services/extraction/runs/g10-math/g2-ch03.recommended.json"
   },
   {
    "label": "S2–S4 run wf_535efd2b-e80",
@@ -190,16 +209,13 @@
   "g10m3s2-1:Ex3-1:10c",
   "g10m3s2-1:Ex3-1:14a",
   "g10m3s2-1:Ex3-1:18",
-  "g10m3s2-1:Ex3-1:3",
-  "g10m3s2-1:Ex3-1:9e",
   "g10m3s2-1:Ex3-2:1",
-  "g10m3s2-1:Ex3-2:10c",
   "g10m3s2-1:Ex3-2:12a",
   "g10m3s2-1:Ex3-2:17b",
   "g10m3s2-1:Ex3-2:25",
   "g10m3s2-1:Ex3-2:3",
   "g10m3s2-1:Ex3-2:4",
-  "g10m3s2-1:Ex3-2:6",
-  "g10m3s2-1:Ex3-2:8b"
+  "g10m3s2-1:Ex3-2:8b",
+  "g10m3s2-1:Ex3-1:3"
  ]
 }

@@ -149,6 +149,33 @@
       "solution_provenance": "book_worked_epub"
     },
     {
+      "id": "q:g10m3s2-1-2:ex3-1-3",
+      "lo": "lo:g10m3s2-1-2",
+      "tier": "basic",
+      "type": "short",
+      "stem": "Consider the sequence shown here: $C;D;E;F;G;H;I;J;\\ldots$ If $T_{n}=G$ what is the value of $T_{n-4}$ ?",
+      "choices": {
+        "marker": {
+          "kind": "expression",
+          "key": "C",
+          "form": null,
+          "variables": [
+            "C"
+          ],
+          "tolerance": null
+        }
+      },
+      "answer": "C",
+      "solution": [
+        "$\\begin{aligned}T_{5}&=G\\\\\\therefore T_{n-4}&=C\\end{aligned}$"
+      ],
+      "source_page": 66,
+      "source_note": "Exercise 3-1, question 3 (2F75) · p.66 · solution: book_worked_epub",
+      "verified": true,
+      "source": "seed",
+      "solution_provenance": "book_worked_epub"
+    },
+    {
       "id": "q:g10m3s2-1-1:ex3-1-4a",
       "lo": "lo:g10m3s2-1-1",
       "tier": "standard",
@@ -592,19 +619,27 @@
       "id": "q:g10m3s2-1-4:ex3-1-9e",
       "lo": "lo:g10m3s2-1-4",
       "tier": "standard",
-      "type": "numeric",
+      "type": "short",
       "stem": "The general term is given for each sequence below. Calculate the missing terms (each missing term is represented by $\\ldots$ ). $9;\\ldots;21;\\ldots;33\\qquad T_{n}=6n+3$",
-      "answer": "27",
+      "choices": {
+        "marker": {
+          "kind": "values",
+          "key": "15; 27",
+          "form": null,
+          "variables": [],
+          "tolerance": null
+        }
+      },
+      "answer": "15,\\ 27",
       "solution": [
         "To find the two missing terms, we use the equation for the general term:",
         "$\\begin{aligned}T_n&=\\text{6}n\\text{+3}\\\\T_2&=\\text{6}(\\text{2})\\text{+3}\\\\&=\\text{15}\\\\T_4&=\\text{6}(\\text{4})\\text{+3}\\\\&=\\text{27}\\end{aligned}$"
       ],
       "source_page": 66,
       "source_note": "Exercise 3-1, question 9e (2F7Q) · p.66 · solution: book_worked_epub",
-      "verified": false,
+      "verified": true,
       "source": "seed",
-      "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
+      "solution_provenance": "book_worked_epub"
     },
     {
       "id": "q:g10m3s2-1-1:ex3-1-11a",
@@ -1000,34 +1035,6 @@
       "solution_provenance": "book_worked_epub"
     },
     {
-      "id": "q:g10m3s2-1-2:ex3-2-4",
-      "lo": "lo:g10m3s2-1-2",
-      "tier": "basic",
-      "type": "short",
-      "stem": "Consider the list shown here: $2;7;12;17;22;27;32;37;\\ldots$ If $T_{5}=\\text{22}$ what is the value of $T_{n-3}$ ?",
-      "choices": {
-        "marker": {
-          "kind": "equation",
-          "key": "T_{n-3} = 7",
-          "form": null,
-          "variables": [
-            "n"
-          ],
-          "tolerance": null
-        }
-      },
-      "answer": "T_{n-3} = 7",
-      "solution": [
-        "$\\begin{aligned}T_{5}&=\\text{22}\\\\\\therefore T_{n-3}&=7\\end{aligned}$"
-      ],
-      "source_page": 68,
-      "source_note": "Exercise 3-2, question 4 (2F8B) · p.68 · solution: book_worked_epub",
-      "verified": false,
-      "source": "seed",
-      "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
-    },
-    {
       "id": "q:g10m3s2-1-1:ex3-2-5a",
       "lo": "lo:g10m3s2-1-1",
       "tier": "standard",
@@ -1101,10 +1108,9 @@
       ],
       "source_page": 68,
       "source_note": "Exercise 3-2, question 6 (2F8D) · p.68 · solution: book_worked_epub",
-      "verified": false,
+      "verified": true,
       "source": "seed",
-      "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
+      "solution_provenance": "book_worked_epub"
     },
     {
       "id": "q:g10m3s2-1-2:ex3-2-7",
@@ -1153,29 +1159,6 @@
       "verified": true,
       "source": "seed",
       "solution_provenance": "book_worked_epub"
-    },
-    {
-      "id": "q:g10m3s2-1-1:ex3-2-8b",
-      "lo": "lo:g10m3s2-1-1",
-      "tier": "standard",
-      "type": "numeric",
-      "stem": "Find the sixth term in each of the following sequences: $5\\;;\\;2\\;;\\;-1\\;;\\;-4\\;;\\;\\ldots$",
-      "answer": "-11",
-      "solution": [
-        "We first need to find $d$ :",
-        "$\\begin{aligned}d&=T_{2}-T_{1}\\\\&=2-5\\\\&=-3\\end{aligned}$",
-        "Next we note that for each successive term we add $d$ to the last term. We can express this as:",
-        "$\\begin{aligned}T_{1}&=a=5\\\\T_{2}&=a+d=5+(-3)\\\\&=5+(-3)(1)\\\\T_{3}&=T_{2}+d=5+(-3)+(-3)\\\\&=5+(-3)(2)\\\\T_{n}&=T_{n-1}+d=5+(-3)(n-1)\\\\&=7-3n\\end{aligned}$",
-        "The general formula is $T_n=7-3n$ . $T_{6}$ is:",
-        "$\\begin{aligned}T_{6}&=7-3(6)\\\\&=-11\\end{aligned}$",
-        "$T_{6}=-\\text{11}$"
-      ],
-      "source_page": 68,
-      "source_note": "Exercise 3-2, question 8b (2F8H) · p.68 · solution: book_worked_epub",
-      "verified": false,
-      "source": "seed",
-      "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
     },
     {
       "id": "q:g10m3s2-1-1:ex3-2-8c",
@@ -1324,10 +1307,9 @@
       ],
       "source_page": 68,
       "source_note": "Exercise 3-2, question 10c (2F8M) · p.68 · solution: book_worked_epub",
-      "verified": false,
+      "verified": true,
       "source": "seed",
-      "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
+      "solution_provenance": "book_worked_epub"
     },
     {
       "id": "q:g10m3s2-1-3:ex3-2-11a",
@@ -1613,7 +1595,7 @@
       "verified": false,
       "source": "seed",
       "solution_provenance": "book_worked_epub",
-      "hold_reason": "answer_mismatch"
+      "hold_reason": "unverified"
     },
     {
       "id": "q:g10m3s2-1-3:ex3-2-17c",
@@ -2879,6 +2861,6 @@
   "assembled_from": {
     "manifest": "d749f7d1c4052342298d122b82bcea3117e4303b74e16b75062fd6606146c7b1",
     "objectives/g10m3s2-1.json": "afc8ca9b30f092439e8e0e82513bb005472f916a1861ef622059fcd08a64ec1a",
-    "runs/lesson/g10m3s2-1.json": "0758fc073d4b9d6a17bc501168897b978113d276e892f2df0143faec2c3e9240"
+    "runs/lesson/g10m3s2-1.json": "a9ea3d148f8bb888edd9df322311a0791b5f2dc8fc40ce6e854c4f838bb06ec8"
   }
 }

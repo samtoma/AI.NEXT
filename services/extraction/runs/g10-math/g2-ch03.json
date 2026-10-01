@@ -6,31 +6,94 @@
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $T_2-T_1=-3z$ but $T_3-T_2=-2z+3$, so there is no common difference. The book is right. The answer is a phrase, and the only other possible answer is an expression in $z$. A one-option choice is not allowed. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex3-1:14a: a choice item needs >= 2 choices and its key among them)"
   },
   "g10m3s2-1:Ex3-1:18": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options, not 6: a list in the stem to select from is not a choice; options said to be the lesson's closed set are named neither in the stem nor in the lesson: \"P\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $649=7\\cdot92+5$, and the 5th letter of PATTERN is E. The key is right. The 6 distinct letters exceed the 5-option cap, and a bare E typed as an expression may be read as Euler's constant. (kept out as exclude, not hold: its typed shape cannot be emitted — a choice needs 2–5 options, not 6: a list in the stem to select from is not a choice)"
   },
   "g10m3s2-1:Ex3-1:3": {
-   "verdict": "exclude",
+   "verdict": "fix",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options, not 8: a list in the stem to select from is not a choice); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $T_n=G$ is the 5th term, so $T_{n-4}=T_1=C$. Book, printed and blind agree. The 8-option choice breaks the 5-option cap, so the single letter is retyped as the book's answer. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "answer_type": "expression",
+    "answer": "C",
+    "choices": null,
+    "marker": {
+     "kind": "expression",
+     "key": "C",
+     "form": null,
+     "variables": [
+      "C"
+     ],
+     "tolerance": null
+    },
+    "options_source": null
+   }
   },
   "g10m3s2-1:Ex3-2:12a": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"-49; -63; -77\" does not read as the printed answer \"−49 ; −63 ; 77\"); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): Sequence $-7;-21;-35$ has $d=-14$, so the next three terms are $-49;-63;-77$. The book prints $-49;-63;77$ in both PDF and EPUB, with the minus lost on the third term. The typed key matches my derivation but not the book, so it cannot be accepted or fixed. Right answer by the agent's own derivation: -49; -63; -77."
   },
   "g10m3s2-1:Ex3-2:3": {
    "verdict": "exclude",
    "auto": true,
    "by": "auto-pass G2 (AI recommendation)",
-   "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (a choice needs 2–5 options with the key among them); a fix needs fields a person or a recommendation must write"
+   "note": "auto-pass G2 (AI recommendation): $1.54$, then $1.50$, then $1.42$: the differences are not constant, so the sequence is not linear. The book is right. The answer is a phrase, so the one-option choice is invalid and any other option would be invented. (kept out as exclude, not hold: its typed shape cannot be emitted — Ex3-2:3: a choice item needs >= 2 choices and its key among them)"
+  },
+  "g10m3s2-1:Ex3-1:9e": {
+   "verdict": "fix",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): $T_2=6(2)+3=15$ and $T_4=6(4)+3=27$. The stem asks for two missing terms. The printed answer lost the 15, so the numeric key 27 is partial. Retype as two values. Verified independently: the verifier's own answer matches the key.",
+   "fields": {
+    "answer_type": "expression",
+    "answer": "15; 27",
+    "marker": {
+     "kind": "values",
+     "key": "15; 27",
+     "form": null,
+     "variables": [],
+     "tolerance": null
+    },
+    "printed_answer": "15 and 27"
+   }
+  },
+  "g10m3s2-1:Ex3-2:10c": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Terms 8, 23, 38, 53, 68 fit $T_n=15n-7$: $T_2=30-7=23$, $T_4=60-7=53$. Book, printed answer and blind agree on 23 and 53. The 'unclear' judge verdicts are only a label format ($T_2=23$). The key '23; 53' as values is right. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m3s2-1:Ex3-2:17b": {
+   "verdict": "hold",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): NOT RECOMMENDED LIVE (the quoted span is not in the item's worked solution, EPUB answer or printed answer). The agent's reading: Figure shows matchstick squares in a row. $T_1=4$, $T_2=7$, $T_3=10$, so $d=7-4=3$. The book's working gives 3, the printed answer is 3 and the blind answer is 3. The 'unclear' judge verdicts come from the EPUB final line being a full equation. Numeric key 3 is right."
+  },
+  "g10m3s2-1:Ex3-2:4": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): The sequence is $T_n=5n-3$. If $n=5$, then $T_{n-3}=T_2=7$, which is the book's answer. As written, $n$ is free, so the blind answer $5n-18$ is also valid. A key of 7 would mark a right reading wrong."
+  },
+  "g10m3s2-1:Ex3-2:6": {
+   "verdict": "accept",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): The sequence is $T_n=5n+1$, so $T_6=31$ and $T_8=41$. Book, EPUB and printed agree and my derivation confirms them. The blind answer 26 and 36 is off by one term. The key 31; 41 matches the book. Verified independently: the verifier's own answer matches the key."
+  },
+  "g10m3s2-1:Ex3-2:8b": {
+   "verdict": "exclude",
+   "auto": true,
+   "by": "auto-pass G2 (AI recommendation)",
+   "note": "auto-pass G2 (AI recommendation): Listing the terms gives $5;2;-1;-4;-7;-10$, so $T_6=-10$. The book's $7-3n$ is a simplification slip, and its $-11$ is wrong. The blind answer $-10$ is right, but it is only a witness and not a key. Right answer by the agent's own derivation: -10."
   }
  }
 }
