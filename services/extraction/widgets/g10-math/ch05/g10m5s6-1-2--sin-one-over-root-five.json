@@ -1,0 +1,31 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m5s6-1-2:sin-one-over-root-five",
+ "lo_id": "lo:g10m5s6-1-2",
+ "parent_question_id": "q:g10m5s6-1-2:ex5-8-7",
+ "tier": "standard",
+ "kind": "triangle_ratio",
+ "spec": {
+  "ask": "sin",
+  "target": 0.4472135954999579
+ },
+ "stem": "Drag the legs to make a right-angled triangle in which $\\sin\\theta = \\dfrac{1}{\\sqrt{5}}$. Any size of triangle that works is correct: it is the ratio that has to match.",
+ "solution": [
+  "$\\sin\\theta = \\dfrac{\\text{opposite}}{\\text{hypotenuse}}$, so for $\\sin\\theta = \\dfrac{1}{\\sqrt{5}}$ take the opposite side as 1 and the hypotenuse as $\\sqrt{5}$.",
+  "The hypotenuse follows from the two legs, so find the adjacent leg with the Theorem of Pythagoras: $\\text{adjacent}^2 = (\\sqrt{5})^2 - 1^2 = 4$, so the adjacent side is 2.",
+  "Drag the legs to 1 (the side opposite $\\theta$) and 2 (the side adjacent to $\\theta$). The hypotenuse is $\\sqrt{1^2+2^2} = \\sqrt{5}$, so $\\sin\\theta = \\dfrac{1}{\\sqrt{5}}$, already in surd form.",
+  "Any triangle whose legs are in the ratio 1 : 2 gives the same value. Legs 2 and 4 have hypotenuse $\\sqrt{2^2+4^2} = 2\\sqrt{5}$, and $\\sin\\theta = \\dfrac{2}{2\\sqrt{5}} = \\dfrac{1}{\\sqrt{5}}$.",
+  "With the two legs swapped (opposite 2, adjacent 1) the same triangle gives $\\sin\\theta = \\dfrac{2}{\\sqrt{5}}$ and $\\cos\\theta = \\dfrac{1}{\\sqrt{5}}$. The sine of one acute angle is the cosine of the other, so check which leg faces $\\theta$."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "used-cosine",
+   "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+  },
+  {
+   "predicate": "used-tangent",
+   "misconception_id": "mc:g10m5s3-1-2:sine-as-opposite-over-adjacent"
+  }
+ ],
+ "notes": "Exercises the same skill as the book's surd-triangle questions (Pythagoras gives a surd hypotenuse, the ratio is written in surd form, size is irrelevant) but run backwards, from a surd ratio to whole-number legs. The book's own triangles cannot be built here: 6, 6sqrt(3), 12 and 9, 3sqrt(3), 6sqrt(3) need legs in the ratio 1:sqrt(3), which no lattice drag reaches, so this uses a non-special 1-2-sqrt(5) triangle (see the gap for this objective). 1/sqrt(5) was chosen because no other whole-number leg pair up to 12 has a sine within 0.03 of it, so no accidental near-match is accepted. Own=false ids are the prerequisite misconceptions listed under this objective. used-cosine (legs swapped, so the triangle is the other angle's) is the likeliest error and is listed first. used-tangent fires only when the tangent readout happens to land within the grader's tolerance of 0.4472 (it is irrational, so only an approximate lattice match such as legs 4 and 9 can); if the tolerance is tight it rarely fires. off-target is not mapped: a forgotten Pythagoras (hypotenuse taken as 5 rather than sqrt(5)) and a plain guess land there equally, so neither dominates."
+}

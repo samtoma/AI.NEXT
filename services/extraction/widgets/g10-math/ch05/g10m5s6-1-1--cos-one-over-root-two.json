@@ -1,0 +1,26 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m5s6-1-1:cos-one-over-root-two",
+ "lo_id": "lo:g10m5s6-1-1",
+ "parent_question_id": "q:g10m5s6-1-1:ex5-3-1a",
+ "tier": "basic",
+ "kind": "triangle_ratio",
+ "spec": {
+  "ask": "cos",
+  "target": 0.7071067811865476
+ },
+ "stem": "Drag the legs to make a right-angled triangle in which $\\cos\\theta = \\dfrac{1}{\\sqrt{2}}$. Any size of triangle that works is correct: it is the ratio that has to match.",
+ "solution": [
+  "$\\cos\\theta = \\dfrac{\\text{adjacent}}{\\text{hypotenuse}}$, so $\\cos\\theta = \\dfrac{1}{\\sqrt{2}}$ means the hypotenuse must be $\\sqrt{2}$ times the adjacent side.",
+  "Take the adjacent side as 1 and the hypotenuse as $\\sqrt{2}$. The Theorem of Pythagoras gives the other leg: $\\text{opposite}^2 = (\\sqrt{2})^2 - 1^2 = 1$, so the opposite side is also 1.",
+  "Drag the legs to equal lengths. Legs 1 and 1 work, and so do 3 and 3 or 5 and 5, because the ratio does not depend on the size of the triangle. For legs 5 and 5 the hypotenuse is $\\sqrt{5^2+5^2} = 5\\sqrt{2}$, so $\\cos\\theta = \\dfrac{5}{5\\sqrt{2}} = \\dfrac{1}{\\sqrt{2}}$.",
+  "Read the other two readouts on this triangle: $\\sin\\theta = \\dfrac{1}{\\sqrt{2}}$ and $\\tan\\theta = 1$. A right-angled triangle with equal legs has equal acute angles, so each is $45^\\circ$. That is where $\\cos 45^\\circ = \\sin 45^\\circ = \\dfrac{1}{\\sqrt{2}}$ and $\\tan 45^\\circ = 1$ come from."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "used-tangent",
+   "misconception_id": "mc:g10m5s6-1-1:wrong-ratio-same-angle"
+  }
+ ],
+ "notes": "Only the 45 degree values are reachable by a lattice drag: equal legs give cos = 1/sqrt(2) exactly (hypotenuse sqrt(2) x leg), whereas 30 and 60 degrees need legs in the ratio 1:sqrt(3) (see the gap for this objective). The target is the double nearest 1/sqrt(2), well inside any grading tolerance. used-sine is deliberately NOT mapped: a triangle with sin = 1/sqrt(2) has equal legs, so its cos is the target too and it is simply correct. off-target is not mapped (no single error dominates). used-tangent fires only if the tangent readout lands within the grader's tolerance of 0.7071 (for example legs 5 and 7 give 0.714); if the tolerance is tighter it will rarely fire, and the student gets a plain 'not quite'. Other errors of the objective (upside-down fraction, values from the other triangle, calculator decimals) cannot be expressed by this construction: an upside-down cos would be sqrt(2), above 1 and unbuildable. This template reverses the book's MCQ (the stem hands over the value and asks for the triangle), which is deliberate: it is the book's own derivation of the 45 degree values from the 1, 1, sqrt(2) triangle."
+}

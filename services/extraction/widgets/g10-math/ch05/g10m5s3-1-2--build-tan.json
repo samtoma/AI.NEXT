@@ -1,0 +1,34 @@
+{
+ "format": "ainext.widget-template/1",
+ "id": "wt:g10m5s3-1-2:build-tan",
+ "lo_id": "lo:g10m5s3-1-2",
+ "parent_question_id": "q:g10m5s3-1-2:ex5-1-1c",
+ "tier": "advanced",
+ "kind": "triangle_ratio",
+ "instances": [
+  {
+   "t": 0.6
+  },
+  {
+   "t": 1.5
+  }
+ ],
+ "spec": {
+  "ask": "tan",
+  "target": "{=t}"
+ },
+ "stem": "Build a right-angled triangle in which $\\tan\\theta = {=t}$, where $\\theta$ is the marked angle. Drag the two legs; a triangle of any size with this tangent is correct.",
+ "solution": [
+  "Tangent compares the side opposite $\\theta$ with the side adjacent to it: $\\tan\\theta = \\frac{\\text{opposite}}{\\text{adjacent}}$. The hypotenuse is not used.",
+  "Write the target ${=t}$ as a fraction of whole numbers, opposite over adjacent: for example $0.6 = \\frac{3}{5}$ and $1.5 = \\frac{3}{2}$.",
+  "Drag the legs so the opposite leg is the top of the fraction and the adjacent leg the bottom: opposite 3 and adjacent 5 for 0.6, or opposite 3 and adjacent 2 for 1.5.",
+  "Check the live readout: $\\tan\\theta = {=t}$. A triangle with the two legs the other way round shows the reciprocal ($\\frac{5}{3}$ or $\\frac{2}{3}$), which is the tangent of the other acute angle."
+ ],
+ "diagnostics": [
+  {
+   "predicate": "ratio-inverted",
+   "misconception_id": "mc:g10m5s3-1-2:reads-sides-from-other-angle"
+  }
+ ],
+ "notes": "Mirrors book Ex 5.1 Q1(c). ratio-inverted (adjacent over opposite) is exactly what the other acute angle's tangent is, so it maps to reads-sides-from-other-angle; it also fires on a plain flipped fraction. used-sine and used-cosine can fire (tan 0.6 is matched by the 3-4 triangle's sine or cosine, which are also 0.6) but no misconception in this objective's list names tangent written as opposite-over-hypotenuse or adjacent-over-hypotenuse, so both are left unmapped; the student gets the plain refutation from the live readout. off-target unmapped. Targets: tan 0.6 = 3/5 and tan 1.5 = 3/2 are within the validator's 0 < target <= 12 and reachable with small whole-number legs."
+}
