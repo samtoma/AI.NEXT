@@ -351,6 +351,17 @@ every agent except the judge, whose pair list the collection decides). Determini
   error that stopped Chapter 1's G2 draft: 8 items); an accept, a fix or a hold requires the full shape again. The same
   options audit (`choice_option_problems`) runs on every run, so a run an older collection made cannot carry invented
   options past G2. It only ever adds a typing problem; Samuel's G2 verdict is still the last word (Ex8-6:33a stands).
+- **A form the marker kind cannot carry** (g10m1s7-3, Ex1-9:11 "Factorise: 25x^3 + 1": the key `(\sqrt[3]{25}x+1)(…)` typed kind
+  `surd` with form `factorised`; `schemas.AnswerSpec` refuses it and the whole lesson's `lesson-runs --draft` died). Where the key is
+  plainly algebra in the declared variables (a variable in it; no list, inequality, set or words), the KIND is normalised: `expression`,
+  or `equation` when the key has an `=` (a subject form needs one). The key is kept exactly; recorded like the other retypes
+  (`typing_retyped`, rule `kind-for-form`, and `verify.retyped`; the G2 gate record says why). Where the key cannot settle it (an
+  interval, coordinates, a list of values, no variable in the key, `decimal` on a surd) the item carries the form-and-kind problem and is
+  held, never retyped. `simplest` fits any kind and is never touched. The app's own marker reads `\sqrt[3]{25}` inside an `expression`
+  key and marks it against itself and a reordering (`tests/test_typing_seam.py`). `assemble_lesson_bundle.marker_spec_problems` is the same
+  line on a run an older collection made: it adds a typing problem to an unflagged item whose marker `AnswerSpec` refuses, so the split
+  writes G2's draft instead of stopping. The collection is still `collect-6` (same day; the fan-out plan names it) — the recollected file
+  records the script's sha, so it says which script ran. **Re-collect a run made before this rule** (`recollect_lessons.py`).
 - **lesson-v8** changed the TYPING prompt only (a choice's options are never the agent's to make up; a number or a
   pair is numeric / expression; `book_final` is a quote; a two-part answer of different kinds is not markable). The runs
   made before it are re-collected, not re-run; a copy prepared before it carries lesson-v7 / collect-5 and must be
