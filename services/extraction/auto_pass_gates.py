@@ -81,6 +81,7 @@ from pathlib import Path
 
 import book_config
 import review_policy
+from assemble_lesson_bundle import choice_option_problems
 
 HERE = Path(__file__).resolve().parent
 FORMAT = "ainext.gate-decision/1"
@@ -187,6 +188,8 @@ def g1_verdicts(check: dict) -> tuple[dict, list[str], list[dict]]:
 # ============================================================================ G2
 def g2_rule(item: dict) -> tuple[str, str] | None:
     """The AI checks' own verdict on an S3 item that owes G2 one, or None (no verdict: the assembly holds it)."""
+    if item.get("answer_type") == "not_markable" and not item.get("typing_problems"):
+        return None                          # teaching only: nothing is marked, so G2 owes it no verdict (see g2_merge)
     if item.get("typing_problems"):
         return "exclude", "the answer-typing check flagged it (" + "; ".join(item["typing_problems"])[:300] + \
             "); a fix needs fields a person or a recommendation must write"
@@ -208,12 +211,31 @@ def g2_items(run: dict, chapter: int | None, prefix: str) -> dict[str, dict]:
         dis = {x["ref"] for x in v.get("disagreements") or []}
         for it in l.get("items") or []:
             ref = it.get("ref")
-            if ref in typing or ref in nopa or ref in dis:
+            # options the book never printed that an older collection let through (COLLECT-6 refuses them at the source;
+            # lesson-runs adds the same problem to the item, so G2 must rule on it)
+            audit = choice_option_problems(it)
+            if ref in typing or ref in nopa or ref in dis or audit:
                 out[f"{l['lesson']}:{ref}"] = {
-                    "typing_problems": typing.get(ref) or it.get("typing_problems") or [],
+                    "typing_problems": [*(typing.get(ref) or it.get("typing_problems") or []), *audit],
+                    "answer_type": it.get("answer_type"),
                     "verification": "disputed" if ref in dis else ("no_printed_answer" if ref in nopa
                                                                    else it.get("verification")),
                     "agreed_with_book_solution": bool((nopa.get(ref) or {}).get("agreed_with_book_solution"))}
+    return out
+
+
+def g2_retyped(run: dict, chapter: int | None, prefix: str) -> list[dict]:
+    """The choices the collection typed again from the book's printed key (lesson.workflow.js COLLECT-6): informational
+    decisions for the record — they carry no verdict, and Samuel sees them beside the verdicts."""
+    run = run.get("result", run)
+    out: list[dict] = []
+    for l in run.get("lessons") or []:
+        if not l or (chapter is not None and not str(l.get("lesson", "")).startswith(f"{prefix}{chapter}s")):
+            continue
+        for r in (l.get("verify") or {}).get("retyped") or []:
+            out.append({"key": f"{l['lesson']}:{r['ref']}", "decision": f"typed again as {r['as']} (key {r.get('key')})",
+                        "basis": "the options were the typing agent's inventions, not the book's"
+                                 + (f" ({'; '.join(r.get('because') or [])[:200]})" if r.get("because") else "")})
     return out
 
 
@@ -245,6 +267,12 @@ def g2_merge(owed: dict[str, dict], recommended: dict | None, existing: dict | N
             entry = {"verdict": rule[0], "auto": True, "by": by, "note": f"{by}: {rule[1]}"}
             basis = rule[1]
             c["rule"] += 1
+        elif key in owed and owed[key].get("answer_type") == "not_markable" and not owed[key].get("typing_problems"):
+            # typed not markable: it becomes teaching material whatever G2 says, and nothing is marked, so nothing is held
+            c["teaching"] = c.get("teaching", 0) + 1
+            decisions.append({"key": key, "decision": "no verdict needed — teaching only (typed not markable)",
+                              "basis": "the answer is not marked; the book's solution is shown as the book has it"})
+            continue
         else:
             c["held"] += 1
             decisions.append({"key": key, "decision": "no verdict — held (answer_mismatch / unverified)",
