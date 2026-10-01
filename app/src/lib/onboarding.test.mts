@@ -151,77 +151,53 @@ const BOTH_IN_10: AvailabilityRule[] = [...LAUNCH, { courseId: PREP3_MATH_EN, gr
 /** What the form sends, then what the server decides — the whole round trip. */
 function submit(rules: AvailabilityRule[], grade: string, picked: typeof NATIONAL | typeof AMERICAN | null) {
   const offer = offeredCurricula(grade, rules, [], true);
-  const asked = asksCurriculum(offer);
-  const sent = curriculumToSend(offer, picked);
-  const resolved = resolveInitialCurriculum(sent, offeredCurricula(grade, rules, [], true));
-  return { offer, asked, sent, resolved };
+  const resolved = resolveInitialCurriculum(picked, offer);
+  return { offer, resolved };
 }
 
-test("a grade offering ONE curriculum: no question, nothing sent, stored as implied", () => {
-  const g10 = submit(LAUNCH, "10", null);
+/*
+ * Samuel's reversal, 2026-10-01 ("yes the sign up should always ask";
+ * `specs/003-curriculum-tracks/decisions.md`, decision 1, superseded):
+ * sign-up and the Google step ask every grade the same question, whatever
+ * that grade currently offers. `offeredCurricula` is read only to carry the
+ * current offer back on a `curriculum_required` refusal — which, since the
+ * question is always asked, now fires for EVERY grade when nothing is sent,
+ * not only one offering two or more.
+ */
+
+test("a grade offering ZERO, ONE or TWO curricula all require the same explicit pick", () => {
+  for (const [grade, rules] of [
+    ["7", LAUNCH],
+    ["9", LAUNCH],
+    ["10", LAUNCH],
+    ["10", BOTH_IN_10],
+  ] as const) {
+    const none = submit(rules, grade, null);
+    assert.deepEqual(none.resolved, { ok: false, error: "curriculum_required", offered: none.offer });
+  }
+  // the offer itself is unchanged by the reversal — it is still "what's live"
+  assert.deepEqual(offeredCurricula("7", LAUNCH, [], true), []);
+  assert.deepEqual(offeredCurricula("9", LAUNCH, [], true), [NATIONAL]);
+  assert.deepEqual(offeredCurricula("10", BOTH_IN_10, [], true), [NATIONAL, AMERICAN]);
+});
+
+test("a known curriculum is stored CHOSEN whether or not it has anything live for the grade", () => {
+  // grade 7 offers neither curriculum in LAUNCH — both remain valid, explicit picks
+  const offer = offeredCurricula("7", LAUNCH, [], true);
+  assert.deepEqual(offer, []);
+  assert.deepEqual(resolveInitialCurriculum(NATIONAL, offer), { ok: true, curriculum: NATIONAL, source: "chosen" });
+  assert.deepEqual(resolveInitialCurriculum(AMERICAN, offer), { ok: true, curriculum: AMERICAN, source: "chosen" });
+  // grade 10, offering only American: National is still a valid, explicit pick
+  const g10 = submit(LAUNCH, "10", NATIONAL);
   assert.deepEqual(g10.offer, [AMERICAN]);
-  assert.equal(g10.asked, false);
-  assert.equal(g10.sent, null);
-  assert.deepEqual(g10.resolved, { ok: true, curriculum: AMERICAN, source: "implied", resolvedFrom: null });
-
-  const g9 = submit(LAUNCH, "9", null);
-  assert.equal(g9.asked, false);
-  assert.deepEqual(g9.resolved, { ok: true, curriculum: NATIONAL, source: "implied", resolvedFrom: null });
-
-  // …and a grade that offers none is National, implied (the spec's edge case)
-  const g7 = submit(LAUNCH, "7", null);
-  assert.equal(g7.asked, false);
-  assert.deepEqual(g7.resolved, { ok: true, curriculum: NATIONAL, source: "implied", resolvedFrom: null });
-});
-
-test("a grade offering TWO: the question, the pick stored as chosen; no pick is curriculum_required", () => {
+  assert.deepEqual(g10.resolved, { ok: true, curriculum: NATIONAL, source: "chosen" });
+  // grade 10, offering both: either pick is stored exactly as sent
   const picked = submit(BOTH_IN_10, "10", AMERICAN);
-  assert.deepEqual(picked.offer, [NATIONAL, AMERICAN], "registry order, only what the grade offers");
-  assert.equal(picked.asked, true);
-  assert.equal(picked.sent, AMERICAN);
-  assert.deepEqual(picked.resolved, { ok: true, curriculum: AMERICAN, source: "chosen", resolvedFrom: null });
-
-  const none = submit(BOTH_IN_10, "10", null);
-  assert.equal(none.asked, true);
-  assert.deepEqual(none.resolved, {
-    ok: false,
-    error: "curriculum_required",
-    offered: [NATIONAL, AMERICAN],
-  });
+  assert.deepEqual(picked.offer, [NATIONAL, AMERICAN], "registry order");
+  assert.deepEqual(picked.resolved, { ok: true, curriculum: AMERICAN, source: "chosen" });
 });
 
-test("an offer that changed after the page loaded is re-resolved by the server (FR-4005, F12)", () => {
-  // The page showed two; an operator hid the American course before submit.
-  const page = offeredCurricula("10", BOTH_IN_10, [], true);
-  const sent = curriculumToSend(page, AMERICAN);
-  assert.equal(sent, AMERICAN);
-  const now = offeredCurricula("10", [...LAUNCH.filter((r) => r.courseId !== US_G10_MATH_EN), BOTH_IN_10[2]], [], true);
-  assert.deepEqual(now, [NATIONAL]);
-  // One offered now → stored implied, and the overridden pick is recorded.
-  assert.deepEqual(resolveInitialCurriculum(sent, now), {
-    ok: true,
-    curriculum: NATIONAL,
-    source: "implied",
-    resolvedFrom: AMERICAN,
-  });
-  // The page showed one; an operator added a second before submit → ask again.
-  const sentNothing = curriculumToSend(offeredCurricula("10", LAUNCH, [], true), null);
-  const r = resolveInitialCurriculum(sentNothing, offeredCurricula("10", BOTH_IN_10, [], true));
-  assert.equal(r.ok, false);
-  assert.equal(!r.ok && r.error, "curriculum_required");
-});
-
-test("the form sends a pick only when the grade asks and offers it", () => {
-  assert.equal(curriculumToSend([AMERICAN], AMERICAN), null, "one offered: the server decides");
-  assert.equal(curriculumToSend([], NATIONAL), null);
-  assert.equal(curriculumToSend([NATIONAL, AMERICAN], null), null);
-  assert.equal(curriculumToSend([NATIONAL, AMERICAN], NATIONAL), NATIONAL);
-  assert.equal(asksCurriculum(undefined), false);
-  assert.equal(asksCurriculum([NATIONAL]), false);
-  assert.equal(asksCurriculum([NATIONAL, AMERICAN]), true);
-});
-
-test("an unknown curriculum is always refused, even where none is needed", () => {
+test("an unknown curriculum is always refused, whatever is offered", () => {
   for (const offer of [[], [AMERICAN], [NATIONAL, AMERICAN]] as const) {
     const r = resolveInitialCurriculum("british-igcse", offer);
     assert.equal(r.ok, false);

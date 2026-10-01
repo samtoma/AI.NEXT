@@ -379,6 +379,28 @@ export function labelArOfSpineKey(raw: unknown): string {
   return spineSubjectDef(raw)?.labelAr ?? String(raw ?? "—");
 }
 
+/**
+ * A COURSE's Arabic subject name, or `null` when its tutor carries no Arabic
+ * at all (`CourseDef.tutor.arabicTouches`, Samuel's answer 35, 2026-10-01:
+ * "this is american course we said no arabic").
+ *
+ * `labelAr`/`labelArShort` live on the SUBJECT above, and `math-en` is now
+ * taught from two books — Prep-3 (National) and Grade 10 (American,
+ * `arabicTouches: false`) — so reading `SUBJECTS[subject].labelAr` directly
+ * for a COURSE would print «الرياضيات» on the American course's screens too.
+ * This is the one place that decision is made for a course id; every console
+ * row and student-facing label that would otherwise print a course's Arabic
+ * subject name reads it from here rather than from the subject registry
+ * directly (`lib/catalog-queries.ts` `CourseCatalogRow`/`StudentAccessRow`).
+ *
+ * Unknown course id → `null` (nothing to print, same as any other unknown
+ * lookup in this module).
+ */
+export function courseLabelAr(courseId: unknown): string | null {
+  const def = courseDef(courseId);
+  return def && def.tutor.arabicTouches ? SUBJECTS[def.subject].labelAr : null;
+}
+
 /** Registry-order comparator for spine keys (unknown keys sort last). */
 export function compareSpineSubjects(
   a: SpineSubject | null,
