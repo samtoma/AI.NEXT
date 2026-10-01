@@ -402,6 +402,15 @@ every agent except the judge, whose pair list the collection decides). Determini
     words against the sentence that names them (`$a$ is the adjacent side $b$ is …`, as many labels as words); a sentence's units (`9,96 mm and 8,35 mm`); a plain
     "therefore". A typing with NO marker kind takes the key's (`kind-from-key`). `assemble_lesson_bundle.unescape_entities`: numeric HTML references the EPUB left
     in the maths (`$\cos30&#176;=$`, 28 in Chapter 5) are the characters they name (`^{\circ}` inside `$…$`); without it `load_seed --validate-only` refuses the chapter.
+  - *Chapter 6 (functions; 92 of its 97 flagged items were excluded, 57 of them false).* A figure's labels may be function labels (`f(x)`, `g(x)`, `y(t)`) as well as letters
+    (never a mix; invented options are still refused). A relation reads past units attached to each bound (`0 m ≤ s(t) ≤ 10 m`, `The domain is 0 s ≤ t ≤ 20 s…`): one unit per
+    bound, never a letter the key uses as a variable, set braces and `Domain:`/`Range:` labels dropped; a changed bound, relation or extra constraint is refused. A sentence that
+    states the assignments and then the equation (`a=-1; q=1`). `\sin`/`\cos`/`\tan` are their letters (sin and cos are two answers, as they were not before), and a trigonometric
+    ratio (`sinθ=`, `cosθ/sinθ=`) is a label of ONE side only, stripped against a side naming no trigonometric function. A whole-corpus A/B of every recorded pair (5,901, chapters 1–9)
+    is the check to run after any change to `settle`: it found 9 pairs of Chapter 5 sent to the judge by a first draft. The 2–5 option cap and invented options are untouched.
+  - *`assemble_lesson_bundle.normalise_dollars` (Chapter 9).* A dollar sign the book writes `\$` inside maths cuts the app's `/(\$[^$]+\$)/g` splitter (KaTeX reads it fine; the splitter has
+    no escape, nor do `lib/math-text.ts`, `lib/voice.ts`, `lib/tts/sanitize.ts`). Written without a `$`: `\text{\textdollar}` in running maths, `\textdollar{}` inside `\text{…}`,
+    `$\text{\textdollar}$` in prose; counted as the report's `escaped_dollars_normalised`. The validator (`katex_check.mjs`, the app's own split) still flags a raw `\$`.
   Still held for a person: a choice with one option or more than five (a phrase answer, a letter of a stem's list), a typing agent's
   copy of a typo or a copy-paste error in the book's solution, a printed answer that adds a restriction the key lacks (`, b ≠ 0`), a
   flattened root the signature cannot order, a figure as the solution. **Both the collection and its retypes change a saved run**: the
