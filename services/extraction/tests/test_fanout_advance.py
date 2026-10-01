@@ -143,8 +143,8 @@ class Box:
 
     def build_plan(self):
         add = self.add
-        add("wcheck-ch08", "SW", chapter=8, embedded_script_override=None)
-        add("s5-final-ch01", "S5", chapter=1)
+        add("wcheck-ch08", "SW", chapter=8)
+        add("s5-final-ch01", "S5", ["(never satisfied here)"], chapter=1)
         add("s0b-A-g3", "S0b", chapters=[4], s0b=True)
         add("s0b-B-g3", "S0b", ["s0b-A-g3"], chapters=[4], s0b=True)
         add("s0b-C-g3", "S0b", ["s0b-A-g3", "s0b-B-g3"], chapters=[4], s0b=True)
@@ -160,9 +160,8 @@ class Box:
         add("s7-author-ch04", "S7", ["s5-draft-ch04"], chapter=4)
         add("s7-verify-ch04", "S7", ["s7-author-ch04"], chapter=4)
         add("s5-final-ch04", "S5", ["s6-grade-ch04", "s7-verify-ch04"], chapter=4)
-        for r in self.runs_list:
-            r.pop("embedded_script_override", None)
         self.write_plan()
+        self.legacy("wcheck-ch08", "A", wf="wf_c0ffee00-001")        # chapter 8's check is finished: saved by hand, no ledger
 
     def write_plan(self):
         F.PLAN_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -184,6 +183,18 @@ class Box:
     def copies_for(self, *rids):
         for rid in rids:
             self.copy(rid)
+
+    def legacy(self, rid, label="", wf=None, result=None):
+        """A run saved by hand before advance existed: its result at the plan's save_to, no ledger, no record."""
+        if (rid, label) not in self.copies:
+            self.copy(rid, label)
+        out, emb = self.copies[(rid, label)]
+        self.legacy_n = getattr(self, "legacy_n", 0) + 1
+        wf = wf or "wf_%08x-%03x" % (0xBEEF0000 + self.legacy_n, self.legacy_n)
+        p = A.save_path(A.Paths(), self.run(rid), label, wf)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(dict(result or {}, embedded=emb)))
+        return p
 
     # ---- a finished Workflow run: its task output, its record
     def finish(self, rid, label="", result=None, status="completed", wf=None, wrapper_only=False):
@@ -355,7 +366,7 @@ class SaveAndMeter(Base):
         wf, task = b.finish("s0b-B-g3", result={"stage": "S0b"})
         rc, rep = b.adv("s0b-A-g3", wf, task)
         self.assertEqual(rc, 2)
-        self.assertIn("none of the copies", rep["refused"])
+        self.assertIn("not a copy of this run", rep["refused"])
         self.assertEqual(list((b.runs / "maths").glob("*")), [])
 
     def test_the_embedded_sha_and_the_script_that_ran_must_agree(self):
@@ -374,8 +385,9 @@ class SaveAndMeter(Base):
         b = self.box
         self.assertEqual(b.adv("nope", WF[0], None)[0], 2)
         self.assertEqual(b.adv("s0b-A-g3", "wf_xyz", None)[0], 2)
-        wf, task = b.finish.__func__ and (WF[5], None)
-        self.assertEqual(b.adv("s0b-A-g3", WF[5], None)[0], 2)
+        rc, rep = b.adv("s0b-A-g3", WF[5], None)         # no copy was generated for it, and no record of this run exists
+        self.assertEqual(rc, 2)
+        self.assertEqual(self.ex.calls, [])
 
     def test_dry_run_changes_and_runs_nothing(self):
         b = self.box
@@ -418,12 +430,12 @@ class S0b(Base):
         rc, rep, wf = b.go("s0b-C-g3", result={"stage": "S0b", "pass": "C", "images": 1, "results": [{}]})
         self.assertEqual(rc, 0, rep)
         self.assertEqual(rep["warnings"], ["ch04: 3 maths image(s) unresolved after S0b → G0b (a human; nothing is guessed, FR-4407)"])
-        self.assertEqual(rep["counts"]["maths"], {"accepted": 7, "unresolved": 3, "awaiting_third_reading": None})
+        self.assertEqual(rep["counts"]["maths"], {"accepted": 7, "unresolved": 3, "awaiting_third_reading": 0})
 
     def test_a_third_reading_nobody_needs_is_marked_skipped_and_releases_what_waits_on_it(self):
         b = self.box
-        b.copies_for("s0b-A-g3", "s0b-B-g3")
-        b.put("runs/g10-math/maths/A-wf_a.json", "{}")
+        b.copies_for("s0b-B-g3")
+        b.legacy("s0b-A-g3")
         b.skip_prepare["s0b-C-g3"] = "passes A and B agree on every g3 image: no third reading needed"
         b.preparable = {"s1-ch04"}
         rc, rep, wf = b.go("s0b-B-g3", result={"stage": "S0b", "results": []})
@@ -863,7 +875,7 @@ class S7(Base):
     def setUp(self):
         super().setUp()
         b = self.box
-        b.copies_for("s7-author-ch04", "s7-verify-ch04")
+        b.copies_for("s7-author-ch04")
         b.put("runs/g10-math/misconceptions/draft-ch04-wf_d.json", {})
         b.preparable = {"s7-verify-ch04"}
 
@@ -914,6 +926,7 @@ class S7(Base):
 
     def test_verify_turns_the_verdicts_into_distractors_and_the_held_queue(self):
         b = self.box
+        b.copy("s7-verify-ch04")
         b.put("widgets/g10-math/ch04/g10m4s2-1-1--plot.json", {})
         b.put("runs/g10-math/widgets/author-merged-ch04.json", {})
         rc, rep, wf = b.go("s7-verify-ch04", result={"results": [{}] * 4})
@@ -954,7 +967,7 @@ class S5Final(Base):
             elif s == "generate_widget_questions.py":
                 (b.here / "coverage" / f"{BOOK}.ch04.widget-gaps.json").write_text("{}")
             elif s == "load_generated_questions.py" and "--dry-run" not in argv:
-                Path(argv[1]).with_suffix(".review-queue.json").write_text("{}")
+                (b.here / argv[1]).with_suffix(".review-queue.json").write_text("{}")
             elif s == "auto_pass_gates.py" and argv[1] == "g3":
                 (b.runs / "g3-ch04.auto.json").write_text("{}")
                 (b.runs / "gates" / "g3-ch04.json").write_text("{}")
@@ -1096,12 +1109,10 @@ class S5Final(Base):
 class Next(Base):
     def test_a_saved_run_releases_its_dependents_which_are_prepared_and_verified_and_listed_in_plan_order(self):
         b = self.box
-        b.copies_for("s0b-A-g3", "s0b-B-g3", "s0b-C-g3")
-        b.put("runs/g10-math/maths/A-wf_a.json", "{}")
-        wfs = {}
+        b.copies_for("s0b-C-g3")
+        b.legacy("s0b-A-g3")
+        b.legacy("s0b-B-g3")
         b.preparable = {"s1-ch04"}
-        for rid in ("s0b-A-g3", "s0b-B-g3"):
-            wfs[rid] = b.go(rid, result={"stage": "S0b", "results": []})
         rc, rep, wf = b.go("s0b-C-g3", result={"stage": "S0b", "results": []})
         self.assertEqual(rc, 0, rep)
         self.assertEqual([p["id"] for p in rep["prepared"]], ["s1-ch04"])
@@ -1109,41 +1120,83 @@ class Next(Base):
         self.assertEqual(rep["ready_scripts"], [str(b.copies[("s1-ch04", "")][0])])
         self.assertEqual(rep["not_ready"], {})
 
-    def test_a_run_that_cannot_be_prepared_yet_is_listed_with_the_reason(self):
+    def test_a_run_that_cannot_be_prepared_yet_is_listed_with_the_reason_and_the_advance_still_succeeds(self):
         b = self.box
         b.copies_for("s0b-C-g3")
-        b.put("runs/g10-math/maths/A-wf_a.json", "{}")
-        b.put("runs/g10-math/maths/B-wf_b.json", "{}")
-        for rid in ("s0b-A-g3", "s0b-B-g3"):
-            b.copies_for(rid)
-        rc, rep, wf = b.go("s0b-C-g3", result={"stage": "S0b", "results": []})
-        self.assertEqual(rc, 0, rep)
-        self.assertEqual(rep["not_ready"], {})            # s1-ch04's preparation failed: it is reported, the advance is not
-        b2 = self.box
-
-    def test_not_ready_carries_the_prepare_error(self):
-        b = self.box
-        b.copies_for("s0b-C-g3")
-        for rid in ("s0b-A-g3", "s0b-B-g3"):
-            b.copy(rid)
-        # A and B were saved by hand (no ledger): C's advance releases s1-ch04, whose prepare refuses
-        for rid in ("s0b-A-g3", "s0b-B-g3"):
-            out, emb = b.copies[(rid, "")]
-            b.put(f"runs/g10-math/maths/{rid.split('-')[1]}-wf_x{rid[-3:]}.json", {"embedded": emb})
+        b.legacy("s0b-A-g3")
+        b.legacy("s0b-B-g3")
         rc, rep, wf = b.go("s0b-C-g3", result={"stage": "S0b", "results": []})
         self.assertEqual(rc, 0, rep)
         self.assertEqual(rep["not_ready"], {"s1-ch04": "s1-ch04: inputs missing (test)"})
+        self.assertEqual(rep["prepared"], [])
+        self.assertEqual(rep["unprepared"], ["s1-ch04"])
+
+    def test_a_builder_that_crashes_is_reported_not_fatal(self):
+        b = self.box
+        b.copies_for("s0b-C-g3")
+        b.legacy("s0b-A-g3")
+        b.legacy("s0b-B-g3")
+
+        def boom(rid):
+            raise KeyError("lessons")
+        F.prepare = boom
+        rc, rep, wf = b.go("s0b-C-g3", result={"stage": "S0b", "results": []})
+        self.assertEqual(rc, 0, rep)
+        self.assertIn("ERROR KeyError", rep["not_ready"]["s1-ch04"])
+
+    def test_a_copy_that_does_not_verify_is_a_failure_and_nothing_is_offered(self):
+        b = self.box
+        b.copies_for("s0b-C-g3")
+        b.legacy("s0b-A-g3")
+        b.legacy("s0b-B-g3")
+
+        def prepare(rid):
+            out, _ = b.copy(rid)
+            out.write_text(out.read_text() + "// edited after generation\n")
+            return {"script": str(out)}
+        F.prepare = prepare
+        rc, rep, wf = b.go("s0b-C-g3", result={"stage": "S0b", "results": []})
+        self.assertEqual(rc, 1)
+        self.assertEqual(rep["failure"]["step"], "verify s1-ch04")
+        self.assertNotIn("ready", rep)
+
+    def test_a_copy_that_exists_is_never_regenerated(self):
+        b = self.box
+        b.copies_for("s0b-C-g3", "s1-ch04")
+        b.legacy("s0b-A-g3")
+        b.legacy("s0b-B-g3")
+        calls = []
+        F.prepare = lambda rid: calls.append(rid)
+        rc, rep, wf = b.go("s0b-C-g3", result={"stage": "S0b", "results": []})
+        self.assertEqual(rc, 0, rep)
+        self.assertEqual(calls, [], "s1-ch04 has a copy (it may be running): prepare is not called")
+        self.assertEqual([e["id"] for e in rep["ready"]], ["s1-ch04"])
 
     def test_a_run_in_flight_is_neither_prepared_nor_listed(self):
         b = self.box
-        S = A.State(A.Paths(), json.loads(F.PLAN_PATH.read_text()))
-        b.copies_for("s0b-A-g3", "s0b-B-g3")
+        b.copies_for("s0b-A-g3")
         S = A.State(A.Paths(), json.loads(F.PLAN_PATH.read_text()))
         out = A.ready_list(A.Paths(), S, set(), A.Opts())
         self.assertEqual([e["id"] for e in out["ready"]], ["s0b-A-g3"])
         out = A.ready_list(A.Paths(), S, A.parse_running(["s0b-A-g3"]), A.Opts())
         self.assertEqual(out["ready"], [])
         self.assertEqual(out["lanes"], {"max": 2, "in_flight": 1, "free": 1})
+
+    def test_stale_copies_are_regenerated_only_on_request_and_never_for_a_run_in_flight(self):
+        b = self.box
+        b.copies_for("s0b-A-g3", "s0b-B-g3", "s0b-C-g3")
+        b.legacy("s0b-A-g3")
+        b.legacy("s0b-B-g3")
+        b.stub.write_text(STUB + "// edited\n")
+        b.preparable = {"s0b-C-g3"}
+        P, plan = A.Paths(), json.loads(F.PLAN_PATH.read_text())
+        rep = A.new_report("(ready)", "", False)
+        A.prepare_ready(P, A.State(P, plan), A.Flow(P, b.ex), rep, set(), A.Opts())
+        self.assertEqual(b.prepared, [], "stale but present: left alone by default")
+        A.prepare_ready(P, A.State(P, plan), A.Flow(P, b.ex), rep, A.parse_running(["s0b-C-g3"]), A.Opts(refresh_stale=True))
+        self.assertEqual(b.prepared, [], "in flight: never regenerated")
+        A.prepare_ready(P, A.State(P, plan), A.Flow(P, b.ex), rep, set(), A.Opts(refresh_stale=True))
+        self.assertEqual(b.prepared, ["s0b-C-g3"])
 
 
 class Ready(Base):
@@ -1155,10 +1208,7 @@ class Ready(Base):
 
     def save(self, rid, label="", done=True):
         b = self.box
-        b.copies.get((rid, label)) or b.copy(rid, label)
-        out, emb = b.copies[(rid, label)]
-        d = {"saved": 1, "embedded": emb}
-        b.put(f"runs/g10-math/{ {'s0b': 'maths', 'lesson': 'lessons', 's1': 'objectives'}[rid.split('-')[0] if not rid.startswith('lesson') else 'lesson'] }/{rid}-{label or 'x'}.json", d)
+        b.legacy(rid, label)
         if not done:
             b.put(f"runs/g10-math/fanout/advance/{rid}.json", {"after_done": False, "copies": {}})
 

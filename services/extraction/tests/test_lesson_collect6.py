@@ -796,6 +796,24 @@ class Relations(TypedItem, unittest.TestCase):
         self.assertEqual(y["marker"]["kind"], "equation")
 
 
+    def test_an_equation_typed_expression_or_surd_is_typed_equation_and_the_apps_marker_reads_it(self):
+        # g10m3s2-1: "find the general term" keys T_n=4n-1 typed expression (expanded) were held "unanswerable" at assembly: the app's
+        # expression kind refuses an equals sign; its equation kind reads it and marks the student's own spelling of it
+        for kind, key, printed, variables in (("expression", "T_n=-14n+7", "= −14n + 7", ("n",)), ("expression", "T_n=4n-1", "T_n = 4n − 1", ("n",)),
+                                              ("surd", "r=\\pm\\sqrt{\\frac{V}{\\pi h}}", "± √ V πh = r", ("r", "V", "h"))):
+            x = self.typed(key, printed, kind=kind, variables=variables, form="expanded" if kind == "expression" else None)
+            self.assertEqual((x["marker"]["kind"], x["typing_retyped"]["rule"]), ("equation", "kind-for-equation"), key)
+            self.assertEqual(x["marker"]["key"], key, "the key is kept exactly")
+        x = self.typed("T_n=4n-1", "T_n = 4n − 1", kind="expression", variables=("n",), form="expanded")
+        out = app_marker(x["marker"], ["T_n=4n-1", "T_n = 4n - 1", "4n - 1 = T_n", "T_n=4n+1"])
+        self.assertIsNone(out["key_problem"])
+        self.assertEqual(out["marks"], {"T_n=4n-1": "correct", "T_n = 4n - 1": "correct", "4n - 1 = T_n": "correct", "T_n=4n+1": "incorrect"})
+        # not an equation, or more than one equals sign, or an inequality: the kind stands
+        for kind, key in (("expression", "4n-1"), ("expression", "a=b=c"), ("expression", "x=2, x=3"), ("equation", "y=2x+1"), ("values", "T_n=4n-1")):
+            y = self.typed(key, key, kind=kind, variables=("n",))
+            self.assertNotIn("typing_retyped", y, (kind, key))
+
+
 @unittest.skipUnless(NODE, "node runs the workflow through the stub runtime")
 class InTheBookSolution(TypedItem, unittest.TestCase):
     """What "book_final is not in the book solution" got wrong in Chapters 3 and 4 (none of it a wrong final)."""

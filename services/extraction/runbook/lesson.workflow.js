@@ -808,6 +808,12 @@ function kindForKey(key, kind) {
     const n = normTex(k)
     if (/[<>≤≥∈≠]|\\neq?(?![a-zA-Z])|\\in(?![a-zA-Z])/.test(n) && !/=/.test(n)) return 'interval'
   }
+  // one equals sign (T_n=4n-1, r=\pm\sqrt{…}, y=2x+1) is an equation: the app's expression and surd kinds refuse it ("unexpected input after the
+  // answer"), its equation kind reads it
+  if (kind === 'expression' || kind === 'surd') {
+    const n = normTex(k)
+    if ((n.match(/=/g) || []).length === 1 && !/[<>≤≥∈≠,]|\\neq?(?![a-zA-Z])|\\in(?![a-zA-Z])/.test(n) && !/^=|=$/.test(n)) return 'equation'
+  }
   return null
 }
 
@@ -881,8 +887,11 @@ function checkTyping(it, t, lessonText) {
     // marker reads the same key under "values" / "interval" (checked against the app's marker), so the KIND is normalised, the key kept exactly.
     const reKind = MARKER_KINDS.includes(kind) ? kindForKey(t.key, kind) : null
     if (reKind) {
-      typed.retyped = { from: `expression (${kind})`, as: `expression, kind ${reKind} (was ${kind})`, rule: reKind === 'values' ? 'kind-for-list' : 'kind-for-relations',
-        because: [reKind === 'values' ? `the key lists values, which kind "${kind}" cannot read` : `the key is an inequality or a set-membership list, which kind "${kind}" cannot read`] }
+      typed.retyped = { from: `expression (${kind})`, as: `expression, kind ${reKind} (was ${kind})`,
+        rule: reKind === 'values' ? 'kind-for-list' : reKind === 'equation' ? 'kind-for-equation' : 'kind-for-relations',
+        because: [reKind === 'values' ? `the key lists values, which kind "${kind}" cannot read`
+          : reKind === 'equation' ? `the key has an equals sign, which kind "${kind}" cannot read`
+          : `the key is an inequality or a set-membership list, which kind "${kind}" cannot read`] }
       kind = reKind
     }
     effKind = kind
