@@ -21,8 +21,10 @@ deliberate (decision 2): it keeps every rollback in CI's migration proof safe.
 | `programNodeId` | string | National: `program:bakaloreya-track` (exists). American: `program:us-american-en` (new, written by the loader). |
 | `order` | number | Registry order: National first. Used by the console's sections and `COURSE_RANK`. |
 
-`DEFAULT_CURRICULUM = "eg-national-en"`: the value stored when a grade offers none (FR-4005). It is
-also the existing column default, so existing students already hold it (FR-4003).
+`DEFAULT_CURRICULUM = "eg-national-en"`: the existing column default, so existing students already hold
+it (FR-4003). *(Changed 2026-10-01, answer 36: no longer the value sign-up stores silently when a grade
+offers none — FR-4005 now always asks there. It remains the value an implied curriculum automatically
+re-resolves to on a grade change, FR-4008, when the new grade offers no curriculum.)*
 
 ### Course — `app/src/lib/courses.ts` (new)
 
@@ -100,9 +102,10 @@ yet (FR-2013 PARTIAL). When it does, it writes through a definer function, not a
 
 The initial value is written by the INSERT that creates the student (`ainext_app` keeps INSERT) and
 recorded on the first-party `account_created` event: `properties: { method, grade, curriculum,
-curriculum_source }`. It never goes to GA4 (FR-4016). A curriculum the grade no longer offers at
-submit time is recorded as `curriculum_resolved_from` on the same event (FR-4005, privacy review
-F12).
+curriculum_source }`. It never goes to GA4 (FR-4016). *(Changed 2026-10-01, answer 36 — supersedes the
+`curriculum_resolved_from` property this row used to describe: sign-up now always asks and names every
+curriculum, so a chosen curriculum is never resolved away from what the student picked. `account_created`
+no longer carries `curriculum_resolved_from`; see [contracts/student-api.md](./contracts/student-api.md).)*
 
 ### Privileges on `students` — "console-only" as a database fact (FR-4017, privacy review F8)
 

@@ -4,17 +4,17 @@
  *
  * Google gives us an email and a name, and no grade. The account was created
  * `onboarding_pending` with a placeholder grade (`lib/auth/google.ts`), and no
- * lesson opens until this answers: grade, and — only when that grade offers
- * two or more curricula — curriculum. Nothing else (FR-4014).
+ * lesson opens until this answers: grade, and — always, since Samuel's
+ * 2026-10-01 reversal — curriculum. Nothing else (FR-4014).
  *
- *   { "grade": "10", "curriculum": "us-american-en" }   // curriculum: only when asked
+ *   { "grade": "10", "curriculum": "us-american-en" }   // curriculum: always required
  *
  * | case                                         | answer                                  |
  * |----------------------------------------------|-----------------------------------------|
  * | not signed in as a student                   | 401 `unauthenticated`                   |
  * | not a JSON request                           | 415 `unsupported_media_type`            |
  * | grade not one of ours / curriculum unknown   | 422 `invalid_grade` / `invalid_curriculum` |
- * | grade offers two or more and none was picked | 409 `curriculum_required` + `offered`   |
+ * | curriculum missing or blank (every grade)    | 422 `curriculum_required` + `offered`   |
  * | the step was already completed               | **409 `onboarding_already_completed`**  |
  * | done                                         | 204                                     |
  *
@@ -89,7 +89,6 @@ export async function POST(req: Request) {
         properties: accountCreatedProperties("google", result.grade, {
           curriculum: result.curriculum,
           source: result.source,
-          resolvedFrom: result.resolvedFrom,
         }),
       });
     }

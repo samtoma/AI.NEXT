@@ -288,12 +288,15 @@ const ONBOARDING_ALREADY_COMPLETED = "AN409";
  * of the client's is ever used.
  *
  * Validation happens here, as the sign-up route does it: the grade against
- * `lib/profile.ts`, the curriculum against the registry and against what that
- * grade offers at this moment (`resolveInitialCurriculum`, FR-4005, privacy
- * review F12). The write is `complete_student_onboarding()` (migration 033), a
- * definer function that acts only on the acting student and only while her
- * step is pending, and RAISES otherwise — so "once" is the database's promise,
- * and a second submission is `already_completed`, never a silent success.
+ * `lib/profile.ts`, the curriculum against the registry
+ * (`resolveInitialCurriculum`, FR-4005). Since Samuel's 2026-10-01 reversal
+ * the step always requires an explicit, known curriculum — what the grade
+ * offers (`offeredCurriculaFor`) is read only so a refusal can carry it back
+ * to the form; it no longer decides whether one is required. The write is
+ * `complete_student_onboarding()` (migration 033), a definer function that
+ * acts only on the acting student and only while her step is pending, and
+ * RAISES otherwise — so "once" is the database's promise, and a second
+ * submission is `already_completed`, never a silent success.
  */
 export async function completeOnboarding(
   studentId: number,
@@ -323,6 +326,5 @@ export async function completeOnboarding(
     grade,
     curriculum: resolved.curriculum,
     source: resolved.source,
-    resolvedFrom: resolved.resolvedFrom,
   };
 }

@@ -904,20 +904,35 @@ ${sections.join("\n")}`;
  * with its own rationale — the tutor cites it, never fabricates one. Empty
  * string when the lesson has no bridges (so those lessons' prompts are
  * unchanged). Appended to the data block, like the gazetteer.
+ *
+ * `arabic` (feature 003, Samuel's answer 35, 2026-10-01): whether the block may
+ * name the other end in Arabic script. `labelArOfSpineKey` always answers in
+ * Arabic regardless of that subject's own direction — "a subject's name is not
+ * a translation" — which is exactly wrong for a course whose tutor writes no
+ * Arabic at all (`CourseTutorFacts.arabicTouches`): a bridge FROM the Grade 10
+ * book can land on another `math` LO (Prep-3's — see `ISO-BRIDGE-G10`) and
+ * `labelArOfSpineKey("math")` would still print «الرياضيات», even though both
+ * ends are English maths. `true` — the default, so every existing render is
+ * byte-identical — for every course whose tutor may write Arabic; `false` for
+ * the Grade 10 course, whose block (and its bilingual coaching example) stays
+ * entirely in English.
  */
-function bridgeBlock(bridges: LessonBridge[]): string {
+function bridgeBlock(bridges: LessonBridge[], arabic = true): string {
   if (bridges.length === 0) return "";
   const lines = bridges
     .map(
       (b) =>
-        `- this "${b.thisLabel}" ↔ ${labelArOfSpineKey(b.otherSubject)} «${b.otherLabel}»: ${b.rationale}`
+        `- this "${b.thisLabel}" ↔ ${arabic ? labelArOfSpineKey(b.otherSubject) : displayLabelOfSpineKey(b.otherSubject)} «${b.otherLabel}»: ${b.rationale}`
     )
     .join("\n");
+  const example = arabic
+    ? `e.g. «فكرة الإحداثيات دي شفتها في الرياضيات» / "you already met this coordinates idea in math"`
+    : `e.g. "you already met this coordinates idea in math"`;
   return `
 
 CROSS-SUBJECT CONNECTIONS (curated, human-approved links between THIS lesson and another subject — mention naturally ONLY IF the student reaches this idea; cite the connection, never fabricate one; at most ONE gentle one-line hint per lesson, then move on):
 ${lines}
-The hint is light and optional — e.g. «فكرة الإحداثيات دي شفتها في الرياضيات» / "you already met this coordinates idea in math" — dropped at the natural moment, never forced, never a second lesson.`;
+The hint is light and optional — ${example} — dropped at the natural moment, never forced, never a second lesson.`;
 }
 
 /* ------------------------------------------------------------------ */
@@ -1579,7 +1594,8 @@ export async function buildLessonContext(
   // exist, so lessons without a bridge keep byte-identical data blocks. Both
   // ends must be courses she may see.
   const bridges = bridgeBlock(
-    await getLessonBridges(data.los.map((l) => l.id), scope, client)
+    await getLessonBridges(data.los.map((l) => l.id), scope, client),
+    tutorFacts(data.courseId).arabicTouches
   );
   // The subjects a handoff may name: those with a course she may see. `null`
   // courses is the ungated harness scope — not narrowed, the rule as written.
