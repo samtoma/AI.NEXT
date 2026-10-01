@@ -1389,7 +1389,8 @@ class FlagsExist(unittest.TestCase):
         key = (script, sub)
         if key not in self.help:
             import subprocess
-            argv = ["uv", "run", "--project", str(EX), "python", *script, *([sub] if sub else []), "--help"]
+            dispatch = ["--families", "x"] if script == ("generate_questions.py",) else []      # its v2 parser is chosen by --families
+            argv = ["uv", "run", "--project", str(EX), "python", *script, *([sub] if sub else []), *dispatch, "--help"]
             r = subprocess.run(argv, cwd=EX, capture_output=True, text=True, timeout=120)
             self.help[key] = (r.returncode, r.stdout + r.stderr)
         return self.help[key]

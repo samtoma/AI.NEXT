@@ -622,7 +622,7 @@
    "answer": "x<-1 \\text{ and } x\\geq6; x\\in\\mathbb{R}",
    "choices": null,
    "marker": {
-    "kind": "equation",
+    "kind": "interval",
     "key": "x<-1 \\text{ and } x\\geq6; x\\in\\mathbb{R}",
     "form": null,
     "variables": [
@@ -676,6 +676,14 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
+   "typing_retyped": {
+    "from": "expression (equation)",
+    "as": "expression, kind interval (was equation)",
+    "rule": "kind-for-relations",
+    "because": [
+     "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+    ]
+   },
    "blocked_on_figure": true
   },
   {
@@ -687,7 +695,7 @@
    "answer": "3<x<6; x\\in\\mathbb{R}",
    "choices": null,
    "marker": {
-    "kind": "equation",
+    "kind": "interval",
     "key": "3<x<6; x\\in\\mathbb{R}",
     "form": null,
     "variables": [
@@ -741,6 +749,14 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
+   "typing_retyped": {
+    "from": "expression (equation)",
+    "as": "expression, kind interval (was equation)",
+    "rule": "kind-for-relations",
+    "because": [
+     "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+    ]
+   },
    "blocked_on_figure": true
   },
   {
@@ -752,7 +768,7 @@
    "answer": "x\\neq3; x\\neq6; x\\in\\mathbb{R}",
    "choices": null,
    "marker": {
-    "kind": "equation",
+    "kind": "interval",
     "key": "x\\neq3; x\\neq6; x\\in\\mathbb{R}",
     "form": null,
     "variables": [
@@ -793,9 +809,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"x\\neq3; x\\neq6; x\\in\\mathbb{R}\" does not read as the printed answer \"x ̸= 3; x ̸= 6; x ∈R\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -809,13 +823,15 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": true,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"x\\neq3; x\\neq6; x\\in\\mathbb{R}\" does not read as the printed answer \"x ̸= 3; x ̸= 6; x ∈R\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "typing_retyped": {
+    "from": "expression (equation)",
+    "as": "expression, kind interval (was equation)",
+    "rule": "kind-for-relations",
+    "because": [
+     "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+    ]
+   },
+   "blocked_on_figure": true
   },
   {
    "ref": "Ex4-6:1d",
@@ -826,7 +842,7 @@
    "answer": "x>-10; x\\in\\mathbb{R}",
    "choices": null,
    "marker": {
-    "kind": "equation",
+    "kind": "interval",
     "key": "x>-10; x\\in\\mathbb{R}",
     "form": null,
     "variables": [
@@ -880,6 +896,14 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
+   "typing_retyped": {
+    "from": "expression (equation)",
+    "as": "expression, kind interval (was equation)",
+    "rule": "kind-for-relations",
+    "because": [
+     "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+    ]
+   },
    "blocked_on_figure": true
   },
   {
@@ -1162,9 +1186,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"(-\\infty;\\infty)\" does not read as the book final answer \"The inequality is true for all real values of $x$ .\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -1178,9 +1200,9 @@
    "form_unsupported": null,
    "blocked_on_figure": false,
    "g2": {
-    "verdict": "exclude",
+    "verdict": "accept",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"(-\\infty;\\infty)\" does not read as the book final answer \"The inequality is true for all real values of $x$ .\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): no printed answer; the blind re-solve agreed with the book's worked solution",
     "auto": true
    }
   },
@@ -1830,9 +1852,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"[\\frac{29}{13};\\infty)\" does not read as the printed answer \"x ∈ [ 29 13 ; ∞ ) .\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -1844,13 +1864,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"[\\frac{29}{13};\\infty)\" does not read as the printed answer \"x ∈ [ 29 13 ; ∞ ) .\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-6:3d",
@@ -1903,9 +1917,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"(-\\infty;\\frac{6}{5}]\" does not read as the printed answer \"x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -1917,13 +1929,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"(-\\infty;\\frac{6}{5}]\" does not read as the printed answer \"x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-6:3e",
@@ -2038,9 +2044,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"(-\\infty;-\\frac{21}{11}]\" does not read as the printed answer \"( −∞; −21 11 ] g) ( −∞; −3 2 ) ∪ ( 1 2 ; ∞ )\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2052,13 +2056,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"(-\\infty;-\\frac{21}{11}]\" does not read as the printed answer \"( −∞; −21 11 ] g) ( −∞; −3 2 ) ∪ ( 1 2 ; ∞ )\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-6:3g",
@@ -2195,7 +2193,7 @@
    "answer": "b>1; b\\in\\mathbb{Z}",
    "choices": null,
    "marker": {
-    "kind": "equation",
+    "kind": "interval",
     "key": "b>1; b\\in\\mathbb{Z}",
     "form": null,
     "variables": [
@@ -2237,9 +2235,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"b>1; b\\in\\mathbb{Z}\" does not read as the printed answer \"b 1 2 3 4 5 b > 1; b ∈Z\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2251,13 +2247,15 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"b>1; b\\in\\mathbb{Z}\" does not read as the printed answer \"b 1 2 3 4 5 b > 1; b ∈Z\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "typing_retyped": {
+    "from": "expression (equation)",
+    "as": "expression, kind interval (was equation)",
+    "rule": "kind-for-relations",
+    "because": [
+     "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+    ]
+   },
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-6:4b",
@@ -2268,7 +2266,7 @@
    "answer": "a>0; a\\in\\mathbb{N}",
    "choices": null,
    "marker": {
-    "kind": "equation",
+    "kind": "interval",
     "key": "a>0; a\\in\\mathbb{N}",
     "form": null,
     "variables": [
@@ -2324,6 +2322,14 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
+   "typing_retyped": {
+    "from": "expression (equation)",
+    "as": "expression, kind interval (was equation)",
+    "rule": "kind-for-relations",
+    "because": [
+     "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+    ]
+   },
    "blocked_on_figure": false,
    "g2": {
     "verdict": "exclude",
@@ -2790,9 +2796,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"\\left(-\\infty;-\\frac{8}{5}\\right]\" does not read as the printed answer \"x ∈ ( −∞; −8 5 ] . c) [ 80 31 ; ∞ )\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2804,13 +2808,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\left(-\\infty;-\\frac{8}{5}\\right]\" does not read as the printed answer \"x ∈ ( −∞; −8 5 ] . c) [ 80 31 ; ∞ )\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-7:10c",
@@ -2989,9 +2987,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"x < 4; x \\in \\mathbb{N}\" does not read as the printed answer \"x 0 1 2 3 4 5 x < 4; x ∈N\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -3003,13 +2999,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"x < 4; x \\in \\mathbb{N}\" does not read as the printed answer \"x 0 1 2 3 4 5 x < 4; x ∈N\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-7:11b",
@@ -3135,9 +3125,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"x < 0; x \\in \\mathbb{R}\" does not read as the printed answer \"x −3 −2 −1 0 1 2 3 x < 0; x ∈R\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -3149,13 +3137,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"x < 0; x \\in \\mathbb{R}\" does not read as the printed answer \"x −3 −2 −1 0 1 2 3 x < 0; x ∈R\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-7:12l",
@@ -3425,9 +3407,9 @@
    ],
    "solution_provenance": "book_worked_epub",
    "printed_answer": "−3 ≤k < 2",
-   "epub_final_answer": null,
+   "epub_final_answer": "$-3\\le k<2$",
    "blind_answer": "$-3\\leq k<2$",
-   "verification": "disputed",
+   "verification": "agreed",
    "tier": "advanced",
    "printed_page": 104,
    "shortcode": "2FMT",
@@ -3440,22 +3422,17 @@
      },
      {
       "pair_id": "Ex4-7:12p|blind~book",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "normalised",
+      "verdict": "equivalent"
      },
      {
       "pair_id": "Ex4-7:12p|book~printed",
-      "route": "missing",
-      "verdict": "missing"
+      "route": "normalised",
+      "verdict": "equivalent"
      }
-    ],
-    "unchecked": [
-     "book_final is not in the book solution"
     ]
    },
-   "typing_problems": [
-    "book_final is not in the book solution"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -3467,13 +3444,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-7:12y",
@@ -3589,8 +3560,7 @@
     ]
    },
    "typing_problems": [
-    "book_final is not in the book solution",
-    "the key \"4.45 \\leq x < 4.55\" does not read as the printed answer \"x 4.40 4.45 4.50 4.55 4.60 4.45 ≤x < 4.55\""
+    "book_final is not in the book solution"
    ],
    "unit": null,
    "options_source": null,
@@ -3607,7 +3577,7 @@
    "g2": {
     "verdict": "exclude",
     "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution; the key \"4.45 \\leq x < 4.55\" does not read as the printed answer \"x 4.40 4.45 4.50 4.55 4.60 4.45 ≤x < 4.55\"); a fix needs fields a person or a recommendation must write",
+    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (book_final is not in the book solution); a fix needs fields a person or a recommendation must write",
     "auto": true
    }
   }
@@ -3616,12 +3586,23 @@
   "prompts_version": "lesson-v8",
   "stage": "S2-S4,S8",
   "collect_version": "collect-6",
+  "run_id": "wf_c49a4f2c-b4b",
   "embedded": {
    "source": "runbook/lesson.workflow.js",
-   "source_sha256": "7efa3908b7d87e1ac1d1e4f68d43d5353fc06a08eefbb6baf1eb9ad128f6ea37",
+   "source_sha256": "538070abbf043296f0e037b21ed3592d9a02c9fc37b789ca52a7ba1a63ab509e",
    "args_sha256": "8904bb4fe1827e4af2993bc283d9d1efac20ff6c19f5f672f9ea05969a5369de",
-   "generated_sha256": "4d023163c891b76e0219e7e92e2bb4e9e5abcb83c428d67cc5290cbfe5fa77f9",
+   "generated_sha256": "1358df9a7648fb29f11a5f4d325b9cafb2a7d64d46b5a17a398692522a869cc3",
    "generator": "services/extraction/embed_workflow.py v1"
+  },
+  "recollected": {
+   "from_run": "wf_c49a4f2c-b4b",
+   "collect_version": "collect-6",
+   "script": {
+    "source": "runbook/lesson.workflow.js",
+    "source_sha256": "538070abbf043296f0e037b21ed3592d9a02c9fc37b789ca52a7ba1a63ab509e",
+    "args_sha256": "8904bb4fe1827e4af2993bc283d9d1efac20ff6c19f5f672f9ea05969a5369de",
+    "generated_sha256": "1358df9a7648fb29f11a5f4d325b9cafb2a7d64d46b5a17a398692522a869cc3"
+   }
   }
  },
  "checks": {
@@ -3678,9 +3659,7 @@
        "reason": "The same x != 3; x != 6; x in R in LaTeX and in flattened print."
       }
      ],
-     "typing_problems": [
-      "the key \"x\\neq3; x\\neq6; x\\in\\mathbb{R}\" does not read as the printed answer \"x ̸= 3; x ̸= 6; x ∈R\""
-     ]
+     "typing_problems": []
     },
     {
      "ref": "Ex4-6:4b",
@@ -3788,9 +3767,7 @@
        "reason": "Both give x < 4 (with x in N). The printed text adds a number-line axis and the domain, which do not change the answer."
       }
      ],
-     "typing_problems": [
-      "the key \"x < 4; x \\in \\mathbb{N}\" does not read as the printed answer \"x 0 1 2 3 4 5 x < 4; x ∈N\""
-     ]
+     "typing_problems": []
     },
     {
      "ref": "Ex4-7:11b",
@@ -3846,38 +3823,7 @@
        "reason": "Both give x < 0. The printed text adds the number-line axis and x in R."
       }
      ],
-     "typing_problems": [
-      "the key \"x < 0; x \\in \\mathbb{R}\" does not read as the printed answer \"x −3 −2 −1 0 1 2 3 x < 0; x ∈R\""
-     ]
-    },
-    {
-     "ref": "Ex4-7:12p",
-     "printed": "−3 ≤k < 2",
-     "book": null,
-     "blind": "$-3\\leq k<2$",
-     "pairs": [
-      {
-       "pair_id": "Ex4-7:12p|blind~printed",
-       "route": "normalised",
-       "verdict": "equivalent"
-      },
-      {
-       "pair_id": "Ex4-7:12p|blind~book",
-       "route": "missing",
-       "verdict": "missing"
-      },
-      {
-       "pair_id": "Ex4-7:12p|book~printed",
-       "route": "missing",
-       "verdict": "missing"
-      }
-     ],
-     "typing_problems": [
-      "book_final is not in the book solution"
-     ],
-     "unchecked": [
-      "book_final is not in the book solution"
-     ]
+     "typing_problems": []
     },
     {
      "ref": "Ex4-7:13",
@@ -3904,8 +3850,7 @@
       }
      ],
      "typing_problems": [
-      "book_final is not in the book solution",
-      "the key \"4.45 \\leq x < 4.55\" does not read as the printed answer \"x 4.40 4.45 4.50 4.55 4.60 4.45 ≤x < 4.55\""
+      "book_final is not in the book solution"
      ],
      "unchecked": [
       "book_final is not in the book solution"
@@ -3913,12 +3858,6 @@
     }
    ],
    "unchecked": [
-    {
-     "ref": "Ex4-7:12p",
-     "missing": [
-      "book_final is not in the book solution"
-     ]
-    },
     {
      "ref": "Ex4-7:13",
      "missing": [
@@ -4043,42 +3982,6 @@
    ],
    "typing_problems": [
     {
-     "ref": "Ex4-6:1c",
-     "problems": [
-      "the key \"x\\neq3; x\\neq6; x\\in\\mathbb{R}\" does not read as the printed answer \"x ̸= 3; x ̸= 6; x ∈R\""
-     ]
-    },
-    {
-     "ref": "Ex4-6:2e",
-     "problems": [
-      "the key \"(-\\infty;\\infty)\" does not read as the book final answer \"The inequality is true for all real values of $x$ .\""
-     ]
-    },
-    {
-     "ref": "Ex4-6:3c",
-     "problems": [
-      "the key \"[\\frac{29}{13};\\infty)\" does not read as the printed answer \"x ∈ [ 29 13 ; ∞ ) .\""
-     ]
-    },
-    {
-     "ref": "Ex4-6:3d",
-     "problems": [
-      "the key \"(-\\infty;\\frac{6}{5}]\" does not read as the printed answer \"x ∈ ( −∞; 6 5 ] . e) ( −∞; −55 13 )\""
-     ]
-    },
-    {
-     "ref": "Ex4-6:3f",
-     "problems": [
-      "the key \"(-\\infty;-\\frac{21}{11}]\" does not read as the printed answer \"( −∞; −21 11 ] g) ( −∞; −3 2 ) ∪ ( 1 2 ; ∞ )\""
-     ]
-    },
-    {
-     "ref": "Ex4-6:4a",
-     "problems": [
-      "the key \"b>1; b\\in\\mathbb{Z}\" does not read as the printed answer \"b 1 2 3 4 5 b > 1; b ∈Z\""
-     ]
-    },
-    {
      "ref": "Ex4-6:4b",
      "problems": [
       "the key \"a>0; a\\in\\mathbb{N}\" does not read as the printed answer \"a −1 0 1 2 3 4 5 a > 7; a ∈N\""
@@ -4097,47 +4000,77 @@
      ]
     },
     {
-     "ref": "Ex4-7:10b",
-     "problems": [
-      "the key \"\\left(-\\infty;-\\frac{8}{5}\\right]\" does not read as the printed answer \"x ∈ ( −∞; −8 5 ] . c) [ 80 31 ; ∞ )\""
-     ]
-    },
-    {
-     "ref": "Ex4-7:11a",
-     "problems": [
-      "the key \"x < 4; x \\in \\mathbb{N}\" does not read as the printed answer \"x 0 1 2 3 4 5 x < 4; x ∈N\""
-     ]
-    },
-    {
      "ref": "Ex4-7:11b",
      "problems": [
       "the key \"b < -4; b \\in \\mathbb{Z}\" does not read as the printed answer \"b −6 −5 −4 −3 −2 −1 0 b > 4; b ∈Z\""
      ]
     },
     {
-     "ref": "Ex4-7:11c",
-     "problems": [
-      "the key \"x < 0; x \\in \\mathbb{R}\" does not read as the printed answer \"x −3 −2 −1 0 1 2 3 x < 0; x ∈R\""
-     ]
-    },
-    {
-     "ref": "Ex4-7:12p",
-     "problems": [
-      "book_final is not in the book solution"
-     ]
-    },
-    {
      "ref": "Ex4-7:13",
      "problems": [
-      "book_final is not in the book solution",
-      "the key \"4.45 \\leq x < 4.55\" does not read as the printed answer \"x 4.40 4.45 4.50 4.55 4.60 4.45 ≤x < 4.55\""
+      "book_final is not in the book solution"
      ]
     }
    ],
    "printed_not_in_asked_form": [],
    "forms_from_book_rules": [],
    "forms_the_marker_cannot_check": [],
-   "retyped": [],
+   "retyped": [
+    {
+     "ref": "Ex4-6:1a",
+     "as": "expression, kind interval (was equation)",
+     "rule": "kind-for-relations",
+     "key": "x<-1 \\text{ and } x\\geq6; x\\in\\mathbb{R}",
+     "because": [
+      "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+     ]
+    },
+    {
+     "ref": "Ex4-6:1b",
+     "as": "expression, kind interval (was equation)",
+     "rule": "kind-for-relations",
+     "key": "3<x<6; x\\in\\mathbb{R}",
+     "because": [
+      "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+     ]
+    },
+    {
+     "ref": "Ex4-6:1c",
+     "as": "expression, kind interval (was equation)",
+     "rule": "kind-for-relations",
+     "key": "x\\neq3; x\\neq6; x\\in\\mathbb{R}",
+     "because": [
+      "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+     ]
+    },
+    {
+     "ref": "Ex4-6:1d",
+     "as": "expression, kind interval (was equation)",
+     "rule": "kind-for-relations",
+     "key": "x>-10; x\\in\\mathbb{R}",
+     "because": [
+      "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+     ]
+    },
+    {
+     "ref": "Ex4-6:4a",
+     "as": "expression, kind interval (was equation)",
+     "rule": "kind-for-relations",
+     "key": "b>1; b\\in\\mathbb{Z}",
+     "because": [
+      "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+     ]
+    },
+    {
+     "ref": "Ex4-6:4b",
+     "as": "expression, kind interval (was equation)",
+     "rule": "kind-for-relations",
+     "key": "a>0; a\\in\\mathbb{N}",
+     "because": [
+      "the key is an inequality or a set-membership list, which kind \"equation\" cannot read"
+     ]
+    }
+   ],
    "tier_checks": [
     {
      "ref": "WE18",
@@ -4247,8 +4180,8 @@
     "book_worked_epub": 46
    },
    "by_verification": {
-    "agreed": 23,
-    "disputed": 10,
+    "agreed": 24,
+    "disputed": 9,
     "no_printed_answer": 16
    },
    "visuals": 1,

@@ -315,9 +315,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"-1; \\frac{1}{3}\" does not read as the book final answer \"The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ .\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -327,13 +325,7 @@
    "figures_missing": [],
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"-1; \\frac{1}{3}\" does not read as the book final answer \"The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ .\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "WE5",
@@ -1123,10 +1115,16 @@
    "kind": "exercise",
    "lo": "lo:g10m4s3-1-2",
    "stem": "Solve the following equations: $4x^{2}-12x=-9$",
-   "answer_type": "numeric",
+   "answer_type": "expression",
    "answer": "\\frac{3}{2}",
    "choices": null,
-   "marker": null,
+   "marker": {
+    "kind": "expression",
+    "key": "\\frac{3}{2}",
+    "form": null,
+    "variables": [],
+    "tolerance": null
+   },
    "solution": [
     "$\\begin{align*}4x^{2}-12x&=-9\\\\4x^{2}-12x+9&=0\\\\(2x-3)(2x-3)&=0\\\\2x-3&=0\\\\x&=\\frac{3}{2}\\end{align*}$"
    ],
@@ -1157,9 +1155,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "numeric key \"\\frac{3}{2}\" is not a number"
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -1171,13 +1167,15 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (numeric key \"\\frac{3}{2}\" is not a number); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "typing_retyped": {
+    "from": "numeric",
+    "as": "expression (an exact fraction)",
+    "rule": "fraction-key",
+    "because": [
+     "the numeric key \"\\frac{3}{2}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
+    ]
+   },
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-2:2k",
@@ -1662,7 +1660,7 @@
    "answer": "\\sqrt{18}; -\\sqrt{18}",
    "choices": null,
    "marker": {
-    "kind": "surd",
+    "kind": "values",
     "key": "\\sqrt{18}; -\\sqrt{18}",
     "form": null,
     "variables": [
@@ -1702,9 +1700,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"\\sqrt{18}; -\\sqrt{18}\" does not read as the printed answer \"x = √ 18 or x = − √ 18\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -1716,13 +1712,15 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\sqrt{18}; -\\sqrt{18}\" does not read as the printed answer \"x = √ 18 or x = − √ 18\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "typing_retyped": {
+    "from": "expression (surd)",
+    "as": "expression, kind values (was surd)",
+    "rule": "kind-for-list",
+    "because": [
+     "the key lists values, which kind \"surd\" cannot read"
+    ]
+   },
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-2:2t",
@@ -2673,9 +2671,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"2; -2; 3; -3\" does not read as the printed answer \"b = ±2 or b = ±3\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -2687,13 +2683,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"2; -2; 3; -3\" does not read as the printed answer \"b = ±2 or b = ±3\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-2:3j",
@@ -3880,9 +3870,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"\\sqrt{3}; -\\sqrt{3}; 1; -1\" does not read as the printed answer \"b = ± √ 3 or b = ±1\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -3894,13 +3882,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\sqrt{3}; -\\sqrt{3}; 1; -1\" does not read as the printed answer \"b = ± √ 3 or b = ±1\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-7:12i",
@@ -3952,9 +3934,7 @@
      }
     ]
    },
-   "typing_problems": [
-    "the key \"\\frac{2}{3}; -\\frac{2}{3}; 1; -1\" does not read as the printed answer \"y = ± 2 3 or y = ±1\""
-   ],
+   "typing_problems": [],
    "unit": null,
    "options_source": null,
    "not_markable_reason": null,
@@ -3966,13 +3946,7 @@
    "printed_form_defect": null,
    "form_overridden": null,
    "form_unsupported": null,
-   "blocked_on_figure": false,
-   "g2": {
-    "verdict": "exclude",
-    "by": "auto-pass G2 (AI recommendation)",
-    "note": "auto-pass G2 (AI recommendation): the answer-typing check flagged it (the key \"\\frac{2}{3}; -\\frac{2}{3}; 1; -1\" does not read as the printed answer \"y = ± 2 3 or y = ±1\"); a fix needs fields a person or a recommendation must write",
-    "auto": true
-   }
+   "blocked_on_figure": false
   },
   {
    "ref": "Ex4-7:12j",
@@ -4465,12 +4439,23 @@
   "prompts_version": "lesson-v8",
   "stage": "S2-S4,S8",
   "collect_version": "collect-6",
+  "run_id": "wf_6b3d6321-e16",
   "embedded": {
    "source": "runbook/lesson.workflow.js",
-   "source_sha256": "7efa3908b7d87e1ac1d1e4f68d43d5353fc06a08eefbb6baf1eb9ad128f6ea37",
+   "source_sha256": "538070abbf043296f0e037b21ed3592d9a02c9fc37b789ca52a7ba1a63ab509e",
    "args_sha256": "ccb30f178ac19d89e00fb57293d34d969e1528f96892baca0dd26679b7034013",
-   "generated_sha256": "898b3ba960a9c6236328352de72b14e6e3bcb774c0845a713d4b1e8484cc3426",
+   "generated_sha256": "9202122c7a30219b801c654a7fe64d18092038aca53755367f322c568750b175",
    "generator": "services/extraction/embed_workflow.py v1"
+  },
+  "recollected": {
+   "from_run": "wf_6b3d6321-e16",
+   "collect_version": "collect-6",
+   "script": {
+    "source": "runbook/lesson.workflow.js",
+    "source_sha256": "538070abbf043296f0e037b21ed3592d9a02c9fc37b789ca52a7ba1a63ab509e",
+    "args_sha256": "ccb30f178ac19d89e00fb57293d34d969e1528f96892baca0dd26679b7034013",
+    "generated_sha256": "9202122c7a30219b801c654a7fe64d18092038aca53755367f322c568750b175"
+   }
   }
  },
  "checks": {
@@ -4626,53 +4611,36 @@
    "no_printed_answer": [],
    "typing_problems": [
     {
-     "ref": "WE4",
-     "problems": [
-      "the key \"-1; \\frac{1}{3}\" does not read as the book final answer \"The solution to $3{x}^{2}+2x-1=0$ is $x=-1$ or $x=\\frac{1}{3}$ .\""
-     ]
-    },
-    {
-     "ref": "Ex4-2:2j",
-     "problems": [
-      "numeric key \"\\frac{3}{2}\" is not a number"
-     ]
-    },
-    {
-     "ref": "Ex4-2:2s",
-     "problems": [
-      "the key \"\\sqrt{18}; -\\sqrt{18}\" does not read as the printed answer \"x = √ 18 or x = − √ 18\""
-     ]
-    },
-    {
      "ref": "Ex4-2:3e",
      "problems": [
       "book_final is not in the book solution",
       "the key \"-\\frac{1}{3}; 4\" does not read as the printed answer \"b = −1 3 b or b = 4\""
-     ]
-    },
-    {
-     "ref": "Ex4-2:3i",
-     "problems": [
-      "the key \"2; -2; 3; -3\" does not read as the printed answer \"b = ±2 or b = ±3\""
-     ]
-    },
-    {
-     "ref": "Ex4-7:12h",
-     "problems": [
-      "the key \"\\sqrt{3}; -\\sqrt{3}; 1; -1\" does not read as the printed answer \"b = ± √ 3 or b = ±1\""
-     ]
-    },
-    {
-     "ref": "Ex4-7:12i",
-     "problems": [
-      "the key \"\\frac{2}{3}; -\\frac{2}{3}; 1; -1\" does not read as the printed answer \"y = ± 2 3 or y = ±1\""
      ]
     }
    ],
    "printed_not_in_asked_form": [],
    "forms_from_book_rules": [],
    "forms_the_marker_cannot_check": [],
-   "retyped": [],
+   "retyped": [
+    {
+     "ref": "Ex4-2:2j",
+     "as": "expression (an exact fraction)",
+     "rule": "fraction-key",
+     "key": "\\frac{3}{2}",
+     "because": [
+      "the numeric key \"\\frac{3}{2}\" is a fraction: the numeric grader reads \"a/b\" as a, the expression marker marks the fraction"
+     ]
+    },
+    {
+     "ref": "Ex4-2:2s",
+     "as": "expression, kind values (was surd)",
+     "rule": "kind-for-list",
+     "key": "\\sqrt{18}; -\\sqrt{18}",
+     "because": [
+      "the key lists values, which kind \"surd\" cannot read"
+     ]
+    }
+   ],
    "tier_checks": [
     {
      "ref": "Ex4-2:1a",
@@ -4805,8 +4773,8 @@
    "worked_examples": 2,
    "exercises": 65,
    "by_answer_type": {
-    "expression": 60,
-    "numeric": 5,
+    "expression": 61,
+    "numeric": 4,
     "not_markable": 2
    },
    "by_solution_provenance": {

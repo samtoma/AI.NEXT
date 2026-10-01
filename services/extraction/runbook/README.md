@@ -1002,7 +1002,7 @@ uv run fanout.py close-chapter <N>             # 1. auto_pass_gates.py g2 … --
                                                #    prepared run: copies, agents, cost, meter line, save path
 ```
 
-It is idempotent (a second run changes no byte of the seed, the content, the G2 file or the copies). The load is NOT part of it: a chapter loads
+It also prepares the chapter's **G2 recommendation run** (`prepared.g2rec-chNN`, §7c: the copy `g2rec-chNN.workflow.js`, its agents, modelled cost, the commands to collect and apply it): launch it BEFORE the working check and the S5 draft; once `runs/<book>/g2-chNN.recommended.json` exists, close-chapter passes it to G2 (`--recommend`) on every later run. It is idempotent (a second run changes no byte of the seed, the content, the G2 file or the copies). The load is NOT part of it: a chapter loads
 into the database `fanout.py` names (`FANOUT_DB`, Samuel's preview DB `ainext_pilot_g10_ch08`; `AINEXT_FANOUT_DB` overrides it), by path and add-only
 (`books/g10-math.json` is status `ingest` until the whole book is done, so `load_seed.py --all --course` refuses it, and `load_seed` has no `--book`):
 
