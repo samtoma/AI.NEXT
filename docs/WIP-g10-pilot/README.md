@@ -633,3 +633,63 @@ Nothing here was applied — no file was edited (this handoff is the only write 
 migration was created, no test was run. The next agent should re-read `services/extraction/
 work/g10-math/packets/fanout/s6-author-ch08-s111/o/g10m8s1-1-1.book-questions.txt` and
 `db/schema.sql:71-92` before starting, to confirm nothing moved under it during the restart.
+
+### Done — 2026-10-01 (family-parent agent, answer 40)
+
+**Built, tested, and applied to the local pilot DB (`ainext_pilot_g10_ch08`) after a clean pass on a scratch
+clone of it.** A generated family's parent is now a book question OR a book teaching item, with the kind stored.
+Nothing was launched, no model was called, no packet or embedded copy under `work/g10-math/packets/` was touched.
+
+- **Representation.** `questions.parent_question_id` keeps its name and holds the book item's id; the new
+  `questions.parent_kind` (`'question'` default | `'teaching'`) says which table that id names — a `questions`
+  row (`q:…`) or a `worked_example` of `explanation_library` (`expl:…`, what a not-markable item becomes). The
+  kind is declared in the spec, the bundle and the row, never inferred from the id's prefix. Every existing row
+  and family takes the default and is unchanged (row md5 identical before/after on the pilot DB; no key is
+  written to a bundle or an export unless the kind is `teaching`, so every committed file stays byte for byte).
+- **Migration 038** (`db/migrations/038-family-teaching-parent.sql`, `rollback/038-family-teaching-parent.down.sql`):
+  the column + two CHECKs; the blanket FK is replaced by three CONSTRAINT triggers (not the BEFORE trigger the
+  plan above sketched): `questions_parent_exists` (the parent exists in the table its kind names; a teaching
+  parent must be a worked example), `questions_parent_not_orphaned` and `explanation_teaching_parent_kept`
+  (a parent is never deleted, renamed or retyped from under its children). AFTER ROW, DEFERRABLE INITIALLY
+  IMMEDIATE, error class `foreign_key_violation` — the FK's own semantics, including its end-of-statement timing.
+  Idempotent, lock-free on re-run (030's rule). Rollback refuses while any teaching-kind row exists.
+  `deploy/apply-migrations.sh` floor 36 → 37 (037 files, 002-038).
+- **Pipeline.** `families/spec.py` (`parent_kind`, `EXPL_RE`, `parent_problems`, `resolve_teaching_parent`; the
+  question-kind messages are unchanged); `generate_questions.py` (`Item.parent_kind`, written to a row only when
+  `teaching`; `book_parents`, `parent_problems_in_book` — `--check` now refuses a teaching parent that is not a
+  book worked example, and names the `expl:` twin of a question-shaped id); `load_generated_questions.py`
+  (kind/id-shape validation before any write, `missing_parents` refuses the whole bundle in words, `parent_kind`
+  INSERT-only like `parent_question_id`); `export_generated_content.py` + `restore_course_bundle.py` (the kind
+  round-trips; `_norm` treats absent as `question`); `fanout.py` (`write-specs` makes the kind explicit —
+  see below; the s1-1-1 shard items gain `parent_question_id`/`parent_kind` for a re-prepare; the plan text no
+  longer says "BLOCKED at load").
+- **The in-flight S6 author** was shown each drawing under the id it would have as a question
+  (`q:g10m8s1-1-1:ex8-6-4a`) and its prompt predates `parent_kind`, so it will most likely write that id with no
+  kind. `fanout.py write-specs <run.json> --into work/g10-math/fanout/families-s111` rewrites it, and says so on
+  stdout, to `expl:g10m8s1-1-1:ex8-6-4a` + `"parent_kind": "teaching"` (only when the spec declares no kind, and
+  only when the book's bundles hold that worked example; `--book <config>` overrides the pilot config). Anything
+  it cannot resolve is written as the author wrote it and `--check` refuses it in words. Walked end to end on a
+  fabricated author run against the real pilot bundles: landing → `--check` exit 0 → 3 instances validate and
+  their parents exist in the pilot DB.
+- **App.** `review-gate-queries.ts` joins the parent by its kind (a teaching item's stem is its entry's `problem`
+  element, array-guarded); `QuestionPayload.parentKind`; `ReviewItemView.tsx` says "a book teaching item
+  (worked example), not a book question". A teaching-parent family is a live, unstamped generated question,
+  so it is in the backlog (answer 37a/37b) — asserted in `review-gate-db.test.mts`. The four plain-display readers
+  (`content-admin.ts`, `queries.ts`, `lesson.ts`, `types.ts`) print the id string and were left alone: the
+  `q:`/`expl:` prefix is self-describing.
+- **Tests.** New `services/extraction/tests/test_family_teaching_parent.py` (22: spec accepted / unknown kind /
+  mismatch / other objective / existing unchanged; landing; loader; migration idempotent and trigger behaviour;
+  live load with no stamp; whole-bundle refusal; export writes the kind only when `teaching`; restore puts it
+  back, is a no-op the second time, and refuses a missing teaching parent) and a new case in
+  `app/src/lib/review-gate-db.test.mts`. Pipeline suite 684 passed (baseline 644 before this work, the rest are
+  other agents' new tests); app `npm test` 1539/1539 with `AINEXT_SCRATCH_PG` set (1474 + 65 skipped without);
+  `npx tsc --noEmit` clean; both Chapter 8 dry runs (by-ref and `--mode inline`) exit 0 with output identical to
+  the pre-change run apart from scratch DB names (meter total $14.2778 both); `scripts/ci-migrations.sh all`
+  against v0.9.3 (empty ×3, upgrade ×2, rollback-then-HEAD) passed; `scripts/traceability.py --check` OK.
+- **Not done, on purpose.** `runbook/families.workflow.js` was NOT edited (a prompt, an ai-engineer matter;
+  the pipeline does not depend on it; it would also make the one existing embedded copy "stale"): its
+  `FORMAT_RULES` could learn `parent_kind` in a future `s6-v6`. Widget templates (`generate_widget_questions.py`)
+  still take only a `q:` parent; the database accepts either. Spec/doc amendments are the tech-writer's (list in
+  the agent's report): FR-1101 (001), FR-4304 (003), 003 `data-model.md` "Planned, not built — questions.parent_kind",
+  `plan.md` migration row 038, `tasks.md` T448 (tick), the 003 traceability row for FR-1101, ADR-0008 §4,
+  `docs/specs/extraction-pipeline.md` §3.9/§3.10, constitution line ~203.
