@@ -216,6 +216,63 @@ test("recurring: equal rational values, in any recurring notation", () => {
   for (const a of ["0.21", "0.(12)", "0.2(1)"]) assert.equal(r(a, spec), "incorrect", a);
 });
 
+test("recurring: a bar over the period (\\overline, \\bar) is the bracketed period, as the book writes it", () => {
+  const rec = (key: string, form: MarkerSpec["form"] = null): MarkerSpec => ({ kind: "recurring", key, form, variables: [] });
+  // 0,(45) = 5/11 ; 0,\overline{3} = 1/3 ; 0,1\overline{23} = 61/495 ; 4,8\dot{3} = 29/6
+  const cases: Array<[string, string[], string[]]> = [
+    ["0,\\overline{45}", ["0,\\overline{45}", "0,(45)", "0.(45)", "0,4̇5̇", "0,\\dot{4}\\dot{5}", "0.454545...", "5/11", "\\frac{5}{11}"], ["0,45", "0,(54)", "0,4(5)", "0,(4)", "0,(445)", "0,\\overline{54}", "0,\\overline{4}"]],
+    ["\\text{0,}\\overline{\\text{45}}", ["0,(45)", "0,\\overline{45}", "5/11"], ["0,(54)", "0,\\overline{5}"]],
+    ["0,\\overline{3}", ["0,\\overline{3}", "0,(3)", "0,3̇", "0,\\dot{3}", "0.333...", "1/3"], ["0,3", "0,(6)"]],
+    ["0,\\bar{3}", ["0,(3)", "1/3"], ["0,(6)"]],
+    ["0,\\dot{3}", ["0,\\overline{3}", "0,(3)", "1/3"], ["0,3", "0,(6)"]],
+    ["4,8\\dot{3}", ["4,8\\dot{3}", "4,8\\overline{3}", "4,8(3)", "4,8333...", "29/6", "4\\frac{5}{6}"], ["4,83", "4,8(33)3", "4,(83)", "4,8(6)"]],
+    ["\\text{4,8}\\dot{3}", ["4,8(3)", "29/6"], ["4,(83)"]],
+    ["0,1\\overline{23}", ["0,1\\overline{23}", "0,1(23)", "0,12323...", "0,1\\dot{2}\\dot{3}", "61/495"], ["0,(123)", "0,123", "0,1(32)", "0,12(3)"]],
+    ["1,\\overline{34}", ["1,(34)", "1,\\overline{34}", "1,3434..."], ["1,(43)", "1,34"]],
+  ];
+  for (const [key, good, bad] of cases) {
+    assert.equal(validateKey(rec(key)), null, `key ${key}`);
+    for (const a of good) assert.equal(r(a, rec(key)), "correct", `${a} vs ${key}`);
+    for (const a of bad) assert.notEqual(r(a, rec(key)), "correct", `${a} vs ${key}`);
+  }
+  // wrong period is incorrect, not unreadable
+  assert.equal(r("0,\\overline{54}", rec("0,\\overline{45}")), "incorrect");
+  assert.equal(r("0,(3)", rec("0,\\overline{45}")), "incorrect");
+  // the decimal form flag still holds: the fraction is right, but not a decimal
+  assert.deepEqual(mark("5/11", rec("0,\\overline{45}", "decimal")), { result: "wrong_form", form: "decimal" });
+  assert.equal(r("0,\\overline{45}", rec("0,\\overline{45}", "decimal")), "correct");
+  // the same keys inside a list (Ex1-1:7d, Ex1-3:3), and the bracketed form that already worked
+  const list = (key: string): MarkerSpec => ({ kind: "values", key, form: null, variables: [] });
+  const ex17d = "-3; 0; -8\\frac{4}{5}; \\frac{22}{7}; 7; 1,\\overline{34}; 9\\frac{7}{10}; 11";
+  assert.equal(validateKey(list(ex17d)), null);
+  assert.equal(r("1,(34); -3; 0; -8 4/5; 22/7; 7; 9 7/10; 11", list(ex17d)), "correct");
+  assert.equal(r("1,(43); -3; 0; -8 4/5; 22/7; 7; 9 7/10; 11", list(ex17d)), "incorrect");
+  const ex13 = "-\\sqrt{8};-\\sqrt{\\frac{9}{4}};0.45;0,\\overline{45};\\frac{27}{7};\\sqrt{19};6;2\\pi;\\sqrt{51}";
+  assert.equal(validateKey(list(ex13)), null);
+  assert.equal(validateKey(rec("0.11\\overline{4145}")), null); // Ex1-1:10d, the key as the book prints it
+  assert.equal(r("0.11(4145)", rec("0.11\\overline{4145}")), "correct");
+  assert.equal(r("0.11(4154)", rec("0.11\\overline{4145}")), "incorrect");
+  assert.equal(validateKey(rec("0.11(4145)")), null);
+});
+
+test("recurring: a bar over anything that is not the period of a decimal is lowered exactly as before", () => {
+  // a bar with digits under it but no decimal comma in front is not a period: the same `45_bar` spelling,
+  // which the tokenizer refuses (a key like that is held, never guessed)
+  for (const key of ["\\overline{45}", "3\\overline{45}", "\\text{3}\\overline{45}", "\\dot{3}", "\\overline{45}0,1"]) {
+    const spec: MarkerSpec = { kind: "recurring", key, form: null, variables: [] };
+    const v = validateKey(spec);
+    assert.ok(v && v.startsWith("unreadable"), `${key}: ${v}`);
+  }
+  // and a student typing one is sent back to re-enter, never marked wrong
+  const rec: MarkerSpec = { kind: "recurring", key: "0,\\overline{45}", form: null, variables: [] };
+  for (const a of ["\\overline{45}", "0\\overline{45}", "1\\overline{3}"]) assert.equal(r(a, rec), "unreadable", a);
+  // a bar or dot over a letter keeps its name spelling (x_bar, x'), the same verdict the plain spelling gets
+  for (const [latex, plain] of [["\\overline{AB}", "AB_bar"], ["\\bar{x}", "x_bar"], ["0,5\\overline{x}", "0,5x_bar"], ["\\dot{x}", "x'"]]) {
+    const spec: MarkerSpec = { kind: "expression", key: "x_bar", form: null, variables: ["x", "A", "B"] };
+    assert.deepEqual(mark(latex, spec), mark(plain, spec), latex);
+  }
+});
+
 test("typing: implicit multiplication, ^, √, ², π, ×, − and mixed numbers all read as maths", () => {
   const spec = expr("4\\pi r^{2}", null, ["r"]);
   for (const a of ["4πr²", "4*pi*r^2", "4 pi r^2", "4·π·r^2", "4\\pi r^{2}", "r^2 × 4π"]) assert.equal(r(a, spec), "correct", a);
